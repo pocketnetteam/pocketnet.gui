@@ -1,0 +1,112 @@
+<div class="addressForDeposit">
+
+	<div class="linksubcaption"><%=e('wrecieve')%></div>
+
+	<div class="row table">
+		<div class="address">
+			<div class="labelWrapper"><%=e('wcopyshare')%></div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="copy"> 
+
+			
+
+		</div>
+	</div>
+	<div class="row table">
+		<div class="address">
+			<div class="adr"><%-address%></div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+		<div class="qrcodeWrapper"> 
+
+			<button class="qrcode ghost">
+				<i class="fas fa-qrcode"></i> <%=e('wqrcode')%>
+			</button>
+
+		</div>
+
+		<div class="copy"> 
+
+			<button class="copyaddress">
+				<i class="fas fa-clone"></i> <%=e('wcopeaddress')%>
+			</button>
+
+		</div>
+
+		
+	</div>
+</div>
+
+<div class="linkForDeposit">
+
+	<div class="linksubcaption"><%=e('wcreatelink')%></div>
+
+	<div class="row table">
+		<div class="address">
+			<div class="labelWrapper"><%= d.parameters.depositamount.name %>, <span class="required">*<%=e('required')%></span></div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell"> 
+
+		</div>
+	</div>
+	<div class="row table">
+		
+		<div class="amount">
+			<div class="inputWrapper">
+				<%= d.parameters.depositamount.input() %>
+			</div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell"> 
+
+		</div>
+	</div>
+
+	<div class="row table">
+		<div class="address">
+			<div class="labelWrapper"><%= d.parameters.message.name %>, <span class="required">*<%=e('required')%></span></div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell"> 
+
+		</div>
+	</div>
+	<div class="row table">
+		
+		<div class="amount">
+			<div class="inputWrapper">
+				<%= d.parameters.message.input() %>
+			</div>
+		</div>
+	</div>
+
+	<div class="row table">
+		
+		<div class="cell">
+			<button class="disabled getlink"><i class="fas fa-link"></i> <%=e('wgetlink')%></button>
+		</div>
+
+		
+	</div>
+</div>

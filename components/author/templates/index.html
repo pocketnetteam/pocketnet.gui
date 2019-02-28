@@ -1,0 +1,204 @@
+<% 
+
+var me = null;
+
+if(user.address.value)
+	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+
+
+var telements = function(){ %>
+
+	<% if(!user.isItMe(author.address)) {
+
+		var sclass = '';
+
+		if (me && me.relation(author.address, 'subscribes')){
+			sclass = 'subscribed'
+		}
+
+
+	%>
+
+		<div class="telement sbscr">
+			<div class="subscribebuttons table <%-sclass%>">
+				<div class="item">
+					<button class="contrast subscribe"><span class=""><%=e('sub')%></span> <i class="fas fa-eye"></i></button>
+				</div>
+				<!--<div class="item prv">
+					<button class="contrast subscribeprivate"><i class="fas fa-eye-slash"></i></button>
+				</div>-->
+
+				<div class="item prall">
+					<button class="contrast unsubscribe"><span class=""><%=e('unsub')%></span> <i class="far fa-times-circle"></i></i></button>
+				</div>
+			</div>
+		</div>
+
+	<% } %>
+	
+<% }
+%>
+
+<div id="<%-module.map.id%>">
+
+	<div class="bgCaption">
+		<div class="infoWrapper">
+			<div class="work">
+				<div class="cwrapper table">
+
+					<div class="cell cellforimage">
+						<div class="icon">
+
+							<% var src = deep(author, 'data.image')  %>
+
+							<div class="usericon" image="<%-src || ''%>">
+
+								<% if(!src) {%>
+									<svg width="30" height="30" data-jdenticon-value="<%-author.address%>"></svg>
+
+								<% } %>
+							</div>
+						</div>
+					</div>
+
+					<div class="ccell">
+						<div class="infomain">
+							<div class="caption">
+								<b class="adr"><%-deep(author, 'data.name') || author.address%></b>
+								
+							</div>
+							<div class="tips">
+								
+								<div class="telements">
+
+									<% if(!isMobile() && state) { telements() } %>
+
+									<div class="telement">
+										<div class="usermenu">
+											
+
+										</div>
+									</div>
+								</div>
+								
+								
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<% if(isMobile() && state) { %>
+
+		<div class="subscribewrapperphones">
+			<% telements() %>
+		</div>
+
+	<% } %>
+
+	<div class="mworkwrapper">
+		<div class="work mwork">
+				
+				<div class="leftpanelcell">
+					<div class="authorinfo">
+
+						<% if(deep(author, 'data.name')) {%>
+
+							<div class="item name">
+								<div class="itemtable table">
+									<div class="icon"><i class="fab fa-slack-hash"></i></div>
+									<div class="label"><%-deep(author, 'data.name')%></div>
+								</div>
+							</div>
+
+						<% } %>
+
+						<!--<div class="item place">
+
+							<div class="itemtable table">
+								<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+								<div class="label">Krasnoyarsk, Russia</div>
+							</div>
+						</div>-->
+
+
+						<% 
+
+						var _d = deep(author, 'state.user_reg_date')
+
+						if(_d && _d > -1) {
+
+							var d = new Date();
+								d.setTime(_d * 1000);	
+
+
+
+						%>
+
+							<div class="item date">
+								<div class="itemtable table">
+									<div class="icon"><i class="far fa-calendar"></i></div>
+									<div class="label"><%=e('joined')%>: <b><%-d.yyyymmdd('.')%></b></div>
+								</div>
+							</div>
+
+						<% } %>
+
+						<% if(deep(author, 'data.site')) {%>
+
+							<div class="item site">
+								<div class="itemtable table">
+									<div class="icon"><i class="fas fa-external-link-alt"></i></div>
+									<div class="label"><a href="<%-deep(author, 'data.site')%>"><%-deep(author, 'data.site')%></a></div>
+								</div>
+							</div>
+
+						<% } %>
+
+						<% if(deep(author, 'data.about')) {%>
+
+							<div class="item about">
+								<div class="itemtable table">
+									<div class="icon"><i class="fas fa-pen"></i></div>
+									<div class="label"><%-deep(author, 'data.about')%></div>
+								</div>
+							</div>
+
+						<% } %>
+					</div>
+				</div>
+
+				<div class="mainpanelcell">
+					<div class="cnt fxd">
+						<div class="panel">
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="lentacell">
+
+					<div class="cnt">
+
+
+						<div class="lentaWrapper">
+						</div>
+
+					</div>
+				</div>
+
+				
+				
+
+		</div>
+	</div>
+
+	<div class="upbutton">
+		<i class="fas fa-chevron-up"></i>
+	</div>
+	
+</div>

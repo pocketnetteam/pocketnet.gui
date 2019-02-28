@@ -1,0 +1,34 @@
+<% 
+
+var limit = 5;
+var count = 0;
+
+_.each(notifications, function(notification){
+
+
+	var seen = '';
+	var text = ''
+
+	if(notification.seen) seen = 'seen'
+
+	
+
+ %>
+
+	<div class="notification <%-seen%>" notification="<%-notification.txid%>">
+		<div class="data">
+
+			<%
+
+				var tpl = ws.messages[notification.msg].fastMessage(notification)
+
+			%>
+
+			<%= tpl %>
+
+		</div>
+	</div>
+
+	
+	
+<% }) %>

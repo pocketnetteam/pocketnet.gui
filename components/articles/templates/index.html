@@ -1,0 +1,56 @@
+<div id="<%-module.map.id%>">
+	<div class="top">
+		<div class="topwidthWrapper">
+			<div class="item">
+				<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
+									
+				<div class="icon">
+					
+					<div class="usericon" image="<%-src || ''%>">
+
+						<% if(!src) {%>
+
+							<svg width="30" height="30" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
+
+						<% } %>
+					
+					</div>
+			
+				</div>
+			</div>
+
+			<div class="item username">
+				<div class="label">
+					<b class="adr"><%-deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex')%></b>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel">
+
+		<div class="topwidthWrapper">
+			<div class="item">
+				<div class="iWrapper table add">
+					
+					<div class="label">
+						Write New Article
+					</div>
+
+					<div class="icon">
+						<i class="fas fa-plus"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="articles">
+		<div class="topwidthWrapper">
+			<div class="artwrapper">
+			</div>
+		</div>
+	</div>
+
+
+</div>

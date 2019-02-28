@@ -1,0 +1,26 @@
+
+<div class="fastresultswrapper">
+
+	<% if(results.length) { %>
+
+		<div class="results <%-l%>">
+
+			<% _.each(results, function(result, i){ %>
+
+				<div class="result" result="<%- result %>">
+					#<%- result  %>
+				</div>
+			<% }) %>
+
+		</div>
+
+	<% } else { %>
+	
+		<div class="empty">
+			There aren't any results for this search string
+		</div>
+
+
+	<% } %>
+</div>
+

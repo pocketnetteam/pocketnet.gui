@@ -1,0 +1,26 @@
+<div class="filtersWrapperOvf">
+	<div class="filtersSwipe">
+		<div class="filtersList table">
+			<% _.each(filters, function(filter, id){ 
+
+				var imageId = makeid(true);
+
+				%>
+
+				<div class="preview" filter="<%-id%>" imageId="<%-imageId%>">
+
+					<div class="label">
+						<%-filter.name%>
+					</div>
+
+					<div class="previewImage">
+
+						<img id="<%-imageId%>" crossorigin="anonymous" src="<%-image%>">
+
+					</div>
+				</div>
+				
+			<% }) %>
+		</div>
+	</div>
+</div>

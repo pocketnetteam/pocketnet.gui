@@ -1,0 +1,181 @@
+@import "../../css/__cssvar";
+
+#imagegallery{
+	position: relative;
+	height: 640px;
+	height: 100%;
+
+	.imagePreloader{
+		position: absolute;
+		width: 100px;
+		text-align: center;
+		height: 50px;
+		left: 0;
+		right: 0;
+		top : 0;
+		bottom: 0;
+		margin : auto;
+		display: none;
+	}
+
+	&.loading{
+		.imagePreloader{
+			display: block;
+		}
+
+		.imagesWrapper{
+			opacity: 0;
+		}
+	}
+
+	.imagesWrapper{
+		overflow: hidden;
+		height: 100%;
+		width: 100%;
+		padding-bottom: 60px;
+
+		.imagesAbsWrapper{
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+
+		.imagesTableWrapper{
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.panel{
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 60px;
+
+		.items{
+			height: 100%;
+			margin : 0 auto;
+
+			.item{
+				height: 100%;
+				float: right;
+
+				&.left{
+					float: left;
+				}
+			}
+		}
+
+		
+		.imageNavigation{
+			>div{
+				float: left;
+				height: 100%;
+				font-size: 1.4em;
+				padding : @rhythm;
+
+				&.number{
+					font-size: 1.3em;
+					font-weight: 700;
+				}
+
+				&.arrow{
+					cursor: pointer;
+					.transition(0.3s);
+
+					&:hover{
+						color : @color-good;
+					}
+				}
+
+				&:nth-last-child(1){
+					padding-right: 0;
+				}
+			}
+		}
+	}
+
+	.noImages{
+		text-align: center;
+		font-weight: 700;
+		color : @color-gray;
+	}
+
+	.images{
+		table-layout: fixed;
+		>div{
+			vertical-align: middle;
+			width: 100%;
+			height: 100%;
+		}
+
+		.image{
+			margin : 0 auto;
+			height: 100%;
+			width: 100%;
+			position: relative;
+
+			.imgWrapper{
+				margin : 0 auto;
+				position: relative;
+			}
+
+			
+			img{				
+				display: block;
+				margin : 0 auto;
+
+				&.cropper-hidden{
+					display: block!important;
+				}
+			}
+
+			img{
+				opacity: 0;
+			}
+		}
+		
+	}
+
+	
+}
+
+.wnd{
+
+	&.imageGallery{
+		z-index: 1101;
+		.wndcontent{
+			padding : 0;
+		}
+	}
+	
+	#imageGallery{
+		height: 100%;
+
+		.image{
+			max-width: 1024px;
+			max-height: 768px;
+		}
+
+		.panel{
+			.items{
+				max-width: 1024px;
+			}
+		}
+
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#imageGallery{
+		.panel{
+			padding-right: 2 * @rhythm;
+		}
+	}
+}

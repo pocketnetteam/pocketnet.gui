@@ -1,0 +1,20 @@
+
+
+<div class="imageContainer">
+	<% if(image) {%>
+	
+		<div class="image">
+			<div class="imgWrapper">
+				<img id="galleryImage" crossorigin="anonymous" src="<%=image.original%>">
+			</div>
+		</div>
+
+	<% } else {%>
+
+		<div class="noImages">
+			There aren't Images Here
+		</div>
+
+	<% } %>
+</div>
+

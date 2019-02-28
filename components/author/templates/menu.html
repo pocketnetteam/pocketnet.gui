@@ -1,0 +1,48 @@
+<% _.each(reports, function(report){ 
+
+	if(typeof report.if != 'undefined' && !report.if()) return
+
+	var active = ''
+
+	if(report.active) active = 'active'
+
+
+%> 
+
+
+	<div class="usermenuitem <%-active%>">
+		<% if(report.render) {%>
+
+			<div class="toReport" report="<%-report.id%>">
+
+		<% } %>
+
+		<% if(report.href) {%>
+			<a href="<%-report.href%>">
+		<% } %>
+
+				<span class="<%-report.class%>">
+					<span class="workstation"><%=report.name%></span>
+					<span class="mobiledevice"><%=report.mobile%></span>
+
+					<span class="count">
+
+						<% if(report.count && report.count() > 0) {%>
+
+							<%-report.count()%>
+
+						<% } %>
+
+					</span>
+				</span>
+
+		<% if(report.href) {%>
+			</a>
+		<% } %>
+
+		<% if(report.render) {%>
+			</div>
+		<% } %>
+	</div>
+	
+<% }) %>

@@ -1,0 +1,316 @@
+@import "__cssvar.less";
+
+html *{
+    cursor: pointer;
+}
+body,
+html{
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: fade(#020E1B, 100);
+    font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cnt{
+    width: 100%;
+    height: 75%;
+    overflow: hidden;
+}
+
+.appc{
+    width: 100%;
+    height: 25%;
+    overflow: hidden;
+
+    .aitm{
+        float: right;
+        font-size: 0.7em;
+
+        .label{
+            font-weight: 100;
+
+        }
+
+        .icon{
+            padding-left: 0;
+        }
+
+        .table{
+            width: auto;
+
+            >div{
+                padding : @rhythm 2 * @rhythm;
+                padding-top: 0;
+                vertical-align: middle;
+                color : #fff;
+
+                &.icon{
+                    padding-right: 0;
+                    padding-top: 3px;
+                }
+
+                &.label{
+                    padding-left: @rhythm;
+                }
+            }
+        }
+    }
+}
+
+.table{
+    width: 100%;
+    height: 100%;
+    display: table;
+    table-layout: fixed;
+    >div{
+        display: table-cell;
+    }
+}
+
+.fastMessage{
+
+    .messagestar{
+        color : #FFAE00;
+
+        &[count='3']{
+            color : @color-gray-light; 
+        }
+
+        &[count='2']{
+            color : #F82C06;
+        }
+
+        &[count='1']{
+            color : @color-bad; 
+        }
+    }
+    .subscribeWrapper{
+        >div{
+            &.forsubscribe{
+            }
+        }
+    }
+    .sharepreview{
+        padding-top: @rhythm;
+        .shareprwrapper{
+            >div{
+                vertical-align: middle;
+                padding : @rhythm / 2;
+
+                &.forimage{
+                    width: 25px;
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+
+                &.fortext{
+                    padding-left: @rhythm;
+                    span{
+                        font-size: 0.8em;
+                    }
+                }
+
+                &.extra{
+                    div{
+                        font-size: 0.9em;
+                        float: right;
+                    }
+                }
+            }
+
+            .img{
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                position: relative;
+
+                .vstyle{
+                    position: absolute;
+                    left: 20px;
+                    top: 14px;
+                    font-size: 0.6em;
+                    color : @color-gray-slight;
+                }
+            }
+        }
+    }
+    .cwrapper{
+        >div{
+            vertical-align: top;
+
+            &.cellforimage{
+                width: 50px;
+            }
+
+            .infomain{
+                padding-left:  @rhythm;
+                padding-right: 3 * @rhythm;
+
+                .tips{
+                    padding-top : @rhythm;
+                }
+            }
+        }
+       
+    }
+    .gotoprofileWrapper{
+        text-align: right;
+        margin-top : @rhythm;
+        min-width: 170px;
+        font-size: 0.8em;
+    }  
+}
+
+.fastMessage{
+    height: 100%;
+    width: 100%;
+    color : #fff;
+   
+    padding-left : 2 * @rhythm;
+    font-size: 1em;
+    z-index: 140;
+
+    .caption{
+        font-size: 0.9em;
+        margin-bottom: @rhythm;
+    }
+
+    .fmCnt{
+        padding : 2 * @rhythm 2 * @rhythm;
+        width: 100%;
+        height: 100%;
+        overflow : hidden;
+        text-overflow: ellipsis;
+    }
+    .close:hover {
+      opacity: 1;
+    }
+    .close:before, .close:after {
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 33px;
+      width: 2px;
+      background-color: @color-gray-slight;
+    }
+    .close:before {
+      transform: rotate(45deg);
+    }
+    .close:after {
+      transform: rotate(-45deg);
+    }
+
+    .close{
+        position: absolute;
+        right: @rhythm;
+        top: @rhythm;
+        width: 32px;
+        height: 32px;
+        opacity: 0.3;
+
+        i{
+            display : none;
+        }
+
+    }
+
+    .fastMessageChat{
+       
+        .user{
+            font-weight: 700;
+            color : @color-contrast;
+        }
+
+        .date{
+            text-align: right;
+        }
+
+        .dmessage{
+            margin-bottom: @rhythm;
+        }
+
+        .cantdecrypt{
+            font-style: italic;
+            font-size: 0.9em;
+        }
+    }
+
+    .notification{
+        b{
+            color : @color-contrast;
+        }
+        .date{
+            margin-top: @rhythm;
+            font-size: 0.9em;
+        }
+
+        .seenow{
+            margin-top: 2 * @rhythm;
+        }
+    }
+
+    .dataWrapper{
+        >div{
+            vertical-align: top;
+            padding : @rhythm;
+
+            &.userpicWrapper{
+                padding-left: 0;
+                padding-right: 0;
+                width: 40px;
+            }
+        }
+    }
+
+    .smallusertext{
+        .text{
+            .dataWrapper{
+                >div{
+                    vertical-align: middle;
+                }
+            }
+            font-size: 0.9em;
+        }
+    }
+
+    .progressWrapperTable{
+        >div{
+            font-size: 0.9em;
+            padding : @rhythm;
+            padding-left: 0;
+            vertical-align: middle;
+            &.label{
+                padding : @rhythm 0;
+                width: 80px;
+                text-align: center;
+                font-weight: 700;
+
+                &.good{
+                    color : @color-good;
+                }
+
+            }
+
+            .progressCnt{
+                float: left;
+                height: 6px;
+                background: @color-bright;
+            }
+        }
+    }
+
+}
+
+.usericon{
+    background: #F9F6F6;
+    color : #647CA7;
+    .shadowSmall();
+    border-radius: 50%;
+    height : 6 * @rhythm;
+    width: 6 * @rhythm;
+    text-align: center;
+    line-height : 6 * @rhythm;
+    font-size: 1em;
+    overflow: hidden;
+
+}

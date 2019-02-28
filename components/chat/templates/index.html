@@ -1,0 +1,143 @@
+<div id="<%-module.map.id%>" class="<%- essenseData.class || '' %>">
+	<div class="chatWrapper">
+		<div class="captionfwrapper">
+			<div class="headerWrapper">
+				<div class="header table">
+					<div class="icon">
+						<% if(chat.chat.type == 'share') {
+
+							var n = deep(app, 'platform.sdk.usersl.storage.'+chat.author+'.name') || chat.author
+
+							var src = deep(app, 'platform.sdk.usersl.storage.'+chat.author+'.image')
+
+						%>
+
+							<div class="usericon" image="<%-src || ''%>">
+
+								<% if(!src) {%>
+									<svg width="25" height="25" data-jdenticon-value="<%-chat.author%>"></svg>
+								<% } %>
+								
+							</div>
+
+						<% } else { %>
+
+							<i class="fa fa-comment" aria-hidden="true"></i>
+
+						<% } %>
+
+						
+					</div>
+					<div class="name">
+
+						<% if(chat.chat.type == 'share') { 				
+
+							var m = chat.share.caption || chat.share.message;
+
+							var nm = emojione.toImage(filterXSS(clearScripts(trimHtml(m, 30))));
+
+
+							 %> 
+
+
+							<span><b><%-n%>: </b><%= nm %></span>
+
+						<% } else { %> 
+
+							<%-chat.caption%>
+
+						<% } %> 
+
+						<!--<span class="label">(<%=e('chat')%>)</span>
+
+						<span class="countUnread"></span>-->
+
+						<!--<span class="dealChatClose">
+							<i class="fa fa-external-link" aria-hidden="true"></i>
+						</span>-->
+					</div>
+					<div class="panel">
+
+						<div class="item close">
+							<i class="fa fa-times" aria-hidden="true"></i>
+						</div>
+
+						<!--<div class="item out">
+							<i class="fa fa-angle-right" aria-hidden="true"></i>
+						</div>
+
+						<div class="item minimize">
+							<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+						</div>
+						
+						<div class="item expand">
+							<i class="fa fa-angle-right"></i>
+						</div>
+						-->
+
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="chatwindow">
+			<div class="spacer"></div>
+			<div class="chatmessages">
+			</div>
+
+			<div class="other">
+				<% if(canEnc) {%>
+					<%=e('id21')%>
+				<% } %>
+			</div>
+		</div>
+
+		<div class="bcaptionfwrapper">
+			<div class="formWrapper">
+				<div class="form table">
+					<div class="sendmessage">
+						<div class="inputWrapper">
+
+							<!--<div class="type" placeholder="Send Message"></div>-->
+
+							<input class="type" type="text" placeholder="Send Message">
+						</div>
+					</div>
+					<!--
+					<div class="panel">
+						<div class="item settings">
+							<i class="fa fa-cog" aria-hidden="true"></i>
+						</div>
+						<div class="item attachement">
+							<i class="fa fa-picture-o" aria-hidden="true"></i>
+						</div>
+						
+					</div>-->
+				</div>
+			</div>
+		</div>
+
+		<div class="dragHoverOnChat">
+			<%=e('id22')%>
+		</div>
+
+		<% if(!canEnc) {%>
+			<div class="cantmessages">
+				<div class="table">
+					<div>User haven't private key</div>
+				</div>
+				
+			</div>
+		<% } %>
+
+		<div class="load">
+			<div class="ltable table">
+				<div class="lcell">
+					<div class="preloader5"><span></span><span></span><span></span></div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>

@@ -1,0 +1,189 @@
+@import "../../css/__cssvar";
+
+#ustate{
+	padding : 0;
+
+	.caption{
+		padding : 2 * @rhythm 3 * @rhythm;
+		padding-bottom :3 * @rhythm;
+		font-weight: 700;
+		text-decoration: underline;
+	}
+
+	.preloaderWrapper{
+		padding : 2 * @rhythm 3 * @rhythm;
+	}
+
+	.ustatecontent{
+		
+	}
+	.metrica{
+		>div{
+			padding : @rhythm / 2;
+			vertical-align: middle;
+
+			span{
+				font-size: 0.8em;
+			}
+
+			.value{
+				&.bad{
+					color : @color-contrast;
+					font-weight: 700;
+				}
+			}
+
+			&.label{
+				
+				font-weight: 700;
+				width: 120px;
+			}
+
+			.unspentWrapper{
+				text-align: right;
+			}
+
+			.valueWrapper{
+				text-align: right;
+			}
+
+			&:nth-child(1){
+				padding-left: 3 * @rhythm;
+			}
+
+			&:nth-last-child(1){
+				padding-right: 3 * @rhythm;
+			}
+		}
+
+		&.waitActions{
+			display: block;
+
+			>div{
+				display: block;
+
+				&.label{
+					width: 100%;
+					font-weight: 300;
+				}
+				&.metricaContent{
+					display: none;
+				}
+			}
+		}
+
+		&.profileInfo{
+			>div{
+				&:nth-last-child(1){
+					padding-right: 0;
+
+					button{
+						width: 100%;
+					}
+				}
+			}
+		}
+
+		&.reputation{
+			margin-top: 2 * @rhythm;
+
+			>div{
+				background: #fff;
+				padding-top: 1.5 * @rhythm;
+				padding-bottom: 1.5 * @rhythm;
+				.valueWrapper{
+
+					font-weight: 700;
+					color : @color-main;
+
+					span{
+						font-size: 1em;
+					}
+				}
+			}
+		}
+
+		.scalePoints{
+			>div{
+				vertical-align: middle;
+
+				&.unspentWrapper{
+					width: 60px;
+				}
+
+				&.scaleWrapper{
+					.scaleBack{
+						border-radius: 2px;
+						height: 4px;
+						background: @color-contrast;
+						position: relative;
+						overflow: hidden; 
+
+						.unspentScale{
+							position: absolute;
+							left: 0;
+							bottom: 0;
+							top: 0;
+							background: @color-main;
+
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.profile{
+
+		width: 350px;
+		padding: @rhythm;
+
+		.table{
+			
+		}
+	}
+
+	.totalerror{
+		color : @color-contrast;
+	}
+}
+
+#content{
+	#ustate{
+		background: #F7F7F7;
+		padding : 4 * @rhythm;
+	}
+}
+
+.tooltipster-content{
+	
+	#ustate{
+		.metrica{
+
+			&.profileInfo{
+				>div{
+					&:nth-last-child(1){
+						padding-right: 3 * @rhythm;
+
+						button{
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+
+		.totalerror{
+			padding : 2 * @rhythm 3 * @rhythm;
+		}
+	}
+}
+
+.ustatetooltip{
+	height: auto!important;
+	max-height: none;
+
+	.tooltipster-content{
+		padding : 0;
+	}
+}

@@ -1,0 +1,73 @@
+<% 
+	
+	var my = (user.address.value && share.address == user.address.value.toString('hex'))
+	var value = Number(share.score)
+
+	if (Number(share.scnt)) value = value / Number(share.scnt)
+
+	var liked = ''
+
+	var v = ''
+
+	if (share.myVal) {
+		v = 'value=' + share.myVal
+		liked = 'liked'
+	}
+
+	if(my) liked = 'disabled'
+
+
+	%>
+
+<div class="itemwr table">
+	<div class="starswr">
+		<div class="stars likeAction <%-liked%>" <%-v%>>
+
+			<div class="starsWrapper starsWrapperM">
+				<div class="starWrapper">
+					<i class="far fa-star" value="1"></i>
+				</div>
+				<div class="starWrapper">
+					<i class="far fa-star" value="2"></i>
+				</div>
+				<div class="starWrapper">
+					<i class="far fa-star" value="3"></i>
+				</div>
+				<div class="starWrapper">
+					<i class="far fa-star" value="4"></i>
+				</div>
+				<div class="starWrapper">
+					<i class="far fa-star" value="5"></i>
+				</div>
+			</div>
+
+			<div class="tstars">
+				<div class="tstarsov" style="width: <%-100*(value / 5)%>%">
+					<div class="starsWrapper">
+						<div class="starWrapper">
+							<i class="far fa-star" value="1"></i>
+						</div>
+						<div class="starWrapper">
+							<i class="far fa-star" value="2"></i>
+						</div>
+						<div class="starWrapper">
+							<i class="far fa-star" value="3"></i>
+						</div>
+						<div class="starWrapper">
+							<i class="far fa-star" value="4"></i>
+						</div>
+						<div class="starWrapper">
+							<i class="far fa-star" value="5"></i>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="count">
+		<span class="v"><%-value.toFixed(1)%></span> <% if(Number(share.scnt)) {%> / <span class="c"><%-Number(share.scnt)%></span> <% } %>
+	</div>
+
+</div>

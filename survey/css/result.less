@@ -1,0 +1,916 @@
+/*! HTML5 Boilerplate v5.2.0 | MIT License | https://html5boilerplate.com/ */
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+    font-size: 0.9em;
+    line-height: 1.4;
+    position: relative;
+
+    &.nooverflow{
+        overflow-y: hidden;
+        body{
+            
+            overflow: hidden;
+        }
+    }
+    &.mobile.nooverflow{
+        height: 100%;
+
+        body{
+            height: 100%;
+            overflow: hidden;
+        }
+    }
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+button, 
+button:active, 
+button:focus {
+    outline: none;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+
+
+/* ==========================================================================
+   ========================================================================== */
+
+@color-gray : rgb(60, 65, 70);
+@color-gray2 : rgb(30, 35, 40);
+@color-black : rgb(10, 19, 23);
+@color-black2 : rgb(12, 21, 23);
+@color-gray-light : rgb(208, 201, 202);
+@color-white : rgb(245,245,244);
+
+@color-main : rgb(11, 75, 185);
+@color-add : rgb(24, 80, 255);
+@color-add2: rgb(220, 15, 55);
+@color-add3: rgb(87, 169, 10);
+
+@color-bad : rgb(220,10,45);
+@color-nrml : rgb(255,252,0);
+@color-good : rgb(44,171,0);
+
+@rhythm : 0.5em;
+
+@regular : 'proxima_nova_rgregular';
+@bold : 'proxima_nova_thextrabold';
+@ebold : 'proxima_nova_blblack';
+@light : 'proxima_nova_ltlight';
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    color: @color-black;
+    background:  @color-white;
+    font-family: @light;
+}
+
+button,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+{
+    border: 1px solid @color-gray-light;
+    background: @color-white;
+    color: @color-black;
+    border-radius: 1px;
+    padding: 10px 10px;
+
+    &:disabled{
+        border: 0;
+    };
+}
+button{
+    background: @color-black;
+    color: @color-white;
+    border: 1px solid @color-add;
+    padding: @rhythm 5*@rhythm;
+
+    &:hover{
+        border: 1px solid @color-main;
+        background: @color-main;
+    }
+}
+textarea{
+    color: @color-black2;
+}
+select {
+    background: @color-black2;
+    -webkit-appearance: none;
+    background-image: url(../img/arrow.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+    line-height: 1em;
+    padding-right: 15px;
+    border: 0;
+    outline: none;
+    -moz-appearance: none;
+    text-indent: 0.01px; 
+    text-overflow: '';
+    -ms-appearance: none;
+    appearance: none!important;
+}
+ 
+select::-ms-expand {
+    display: none;
+}
+b{
+    font-family: @bold;
+}
+.good{
+    color : @color-good;
+}
+.obscure{
+    color: @color-gray-light;
+    font-size: 0.8em;
+}
+.bright{
+        color: @color-main;
+    }
+
+.brighthover{
+    &:hover{
+        color: @color-main;
+    }
+}
+
+.checkbox{
+    display: none;
+
+    &+label {
+        display: inline-block;
+        cursor: pointer;
+        position: relative;
+        width: 9px;
+        padding-left: 0px;
+        height: 24px;
+        margin-right: 15px;
+
+        &:before {
+            border: 1px solid @color-gray-light;
+            border-radius: 1px;
+            content: "";
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+            position: absolute;
+            left: 0;
+            background: @color-white;
+            color: @color-black;
+
+        }
+    }
+    &:checked {
+        &+label{
+            &:before {    
+                font-size:1.1em;         
+                content: "\2713";
+                text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+                text-align: center;
+                color: @color-main;
+                border: 1px solid @color-main;
+            }
+        }
+        &:disabled {
+            &+label{
+                &:before {
+                    color: @color-gray;
+                    border: 1px solid @color-good;
+                    }
+                }
+
+        }
+    } 
+}
+
+input[type=radio] {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+input[type=radio] + label {
+    padding-left: 30px;
+    height: 25px;
+    display: inline-block;
+    line-height: 25px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+    margin: 3px 0;
+    background-image: url(../img/csscheckbox.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+input[type=radio]:checked + label {
+    background-position: 0 -25px;
+    color: @color-good;
+}
+
+
+
+.message{
+    position: fixed;
+    right: 0;
+    top: 0;
+    max-width: 500px;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 10px;
+    z-index: 15;
+}
+
+.contentWrapper{
+    #content{
+        width: 768px;
+        margin: 100px auto;
+        overflow: hidden;
+        &.result{
+            width: 98%;
+        }
+        .fnsh{
+            display: none;
+        }
+        .caption{
+            font-size: 1.2em;
+            text-align: center;
+            font-family: @bold;
+            margin-bottom: 20px;
+        }
+        .survey{
+            width: 100%;
+            float: left;
+            overflow: hidden;
+
+            table{
+                margin-top: 50px;
+                margin-bottom: 50px;
+                width: 100%;
+
+                thead{
+                    td{
+                        font-size: 0.9em;
+                    }
+                }
+
+                td{
+                    border: 1px solid @color-gray-light;
+                    text-align: center;
+                    padding: 10px;
+                    position: relative;
+
+                    &.noborder{
+                        border: 0;
+                    }
+
+                    &.name{
+                        text-align: left;
+                    }
+
+                    .manswer{
+                        width: 100px;
+                        text-align: left;
+                        margin-top: 10px;
+                        border-bottom: 1px solid @color-gray-light;
+                    }
+                }
+            }
+        }
+
+        &.finish{
+            #submit,
+            .caption{
+                display: none;
+            }
+            .survey{
+                display: none;
+            }
+            .fnsh{
+                margin-top: 170px;
+                font-size: 1.2em;
+                display: block;
+                text-align: center;
+            }
+        }
+    }
+}
+#submit{
+    position: fixed;
+    right: 30px;
+    bottom: 100px;
+    border-radius: 30px;
+    height: 60px;
+    width: 60px;
+    line-height: 30px;
+    text-align: center;
+    color: @color-good;
+    cursor: pointer;
+
+    i{
+        float: left;
+        width: 100%;
+        font-size: 30px;
+    }
+    span{
+        float: left;
+        width: 100%;
+    }
+    &:hover{
+        color: @color-main;
+    };
+}
+
+#footer{
+     .transition(0.6s);
+    border-bottom: 1px solid @color-gray;
+    background: @color-main;
+    color: @color-white;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    right: 0;   
+    height: 70px;
+
+    .items{
+        overflow: hidden;
+        width: 100%;
+        margin: 0 auto;
+        padding-right: 70px;
+    }
+
+    .item{
+        height: 100%;
+        line-height: 70px;
+    }
+    .right{
+        float: right;
+        margin-right: @rhythm;
+        font-size: 0.8em;
+    }
+}
+
+#loader-wrapper {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(0,0,0,0.01);
+    z-index: 10;
+}
+
+.loader {
+  font-size: 40px;
+  text-indent: -9999em;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -0.5em; 
+  margin-top: -0.5em; 
+  -webkit-animation: load6 1.7s infinite ease;
+  animation: load6 1.7s infinite ease;
+}
+@-webkit-keyframes load6 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.11em -0.83em 0 -0.42em @color-main, -0.11em -0.83em 0 -0.44em @color-main, -0.11em -0.83em 0 -0.46em @color-main, -0.11em -0.83em 0 -0.477em @color-main;
+  }
+  5%,
+  95% {
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.11em -0.83em 0 -0.42em @color-main, -0.11em -0.83em 0 -0.44em @color-main, -0.11em -0.83em 0 -0.46em @color-main, -0.11em -0.83em 0 -0.477em @color-main;
+  }
+  30% {
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.51em -0.66em 0 -0.42em @color-main, -0.75em -0.36em 0 -0.44em @color-main, -0.83em -0.03em 0 -0.46em @color-main, -0.81em 0.21em 0 -0.477em @color-main;
+  }
+  55% {
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.29em -0.78em 0 -0.42em @color-main, -0.43em -0.72em 0 -0.44em @color-main, -0.52em -0.65em 0 -0.46em @color-main, -0.57em -0.61em 0 -0.477em @color-main;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.11em -0.83em 0 -0.42em @color-main, -0.11em -0.83em 0 -0.44em @color-main, -0.11em -0.83em 0 -0.46em @color-main, -0.11em -0.83em 0 -0.477em @color-main;
+  }
+}
+@keyframes load6 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.11em -0.83em 0 -0.42em @color-main, -0.11em -0.83em 0 -0.44em @color-main, -0.11em -0.83em 0 -0.46em @color-main, -0.11em -0.83em 0 -0.477em @color-main;
+  }
+  5%,
+  95% {
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.11em -0.83em 0 -0.42em @color-main, -0.11em -0.83em 0 -0.44em @color-main, -0.11em -0.83em 0 -0.46em @color-main, -0.11em -0.83em 0 -0.477em @color-main;
+  }
+  30% {
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.51em -0.66em 0 -0.42em @color-main, -0.75em -0.36em 0 -0.44em @color-main, -0.83em -0.03em 0 -0.46em @color-main, -0.81em 0.21em 0 -0.477em @color-main;
+  }
+  55% {
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.29em -0.78em 0 -0.42em @color-main, -0.43em -0.72em 0 -0.44em @color-main, -0.52em -0.65em 0 -0.46em @color-main, -0.57em -0.61em 0 -0.477em @color-main;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    box-shadow: -0.11em -0.83em 0 -0.4em @color-main, -0.11em -0.83em 0 -0.42em @color-main, -0.11em -0.83em 0 -0.44em @color-main, -0.11em -0.83em 0 -0.46em @color-main, -0.11em -0.83em 0 -0.477em @color-main;
+  }
+}
+/*  -------------------------------------------------------------------------------------------
+    modules
+    -------------------------------------------------------------------------------------------   */
+
+
+.up{
+    display: none;
+    position: fixed;
+    right: 12px;
+    bottom: 12px;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    line-height: 46px;
+    border-radius: 24px;
+    border: 1px solid @color-white;
+    box-shadow: 2px 1px 12px rgba(0,0,0,0.5);
+    background: fade(@color-black, 80);
+    text-align: center;
+    z-index: 5;
+
+    &:hover{
+        color: @color-main;
+        border: 1px solid @color-main;
+    }
+}
+
+
+.button(){
+    height: 4*@rhythm;
+    line-height: 4*@rhythm;
+    background: @color-add;
+    color: @color-white;
+    cursor: pointer;
+    border-bottom: 2px solid @color-add;
+
+    &:hover{
+        background: transparent;  
+    }
+}
+.center{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.transition(@param)
+{
+    -moz-transition: @param ;
+    -o-transition: @param ;
+    -webkit-transition: @param ;
+    transition: @param ;
+}
+
+@-webkit-keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+}
+@keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+}
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers:
+ */
+
+.hidden {
+    display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (max-width: 1620px) {
+
+    #stress{
+        .scenario{
+            width: 33%;
+        }
+    }
+
+}
+@media only screen and (max-width: 1280px) {
+    
+}
+@media only screen and (max-width: 1024px) {
+    #stress{
+        .scenario{
+            width: 50%;
+        }
+    }
+   
+}
+@media only screen and (max-width: 768px) {
+    
+.contentWrapper{
+    #content{
+        width: 100%;
+        .survey{
+            width: 100%;
+            float: left;
+            overflow: hidden;
+
+            table{
+                margin-top: 50px;
+                margin-bottom: 50px;
+                width: 100%;
+
+                thead{
+                    td{
+                        height: 100px;
+                        font-size: 0.9em;
+                    }
+                }
+                tr{
+                    height: 70px;
+                }
+                tbody{
+                    td{
+                        height: 50px;
+
+                        &.why{
+                            padding: 0;
+                            input{
+                                border: 0;
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                    }
+                }
+
+                td{
+                    
+                    float: left;
+                    width: 33%;
+                    
+
+                    &.noborder{
+                        border: 0;
+                        display: none;
+                    }
+
+                    &.name{
+                        line-height: 30px;
+                        height: 30px;
+                        float: left;
+                        width: 100%;
+                        text-align: center;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+
+        &.finish{
+           
+            .fnsh{
+                padding: 20px;
+                margin-top: 70px;
+            }
+        }
+    }
+}   
+ #footer{
+        .transition(0.4s);
+        right: 0;   
+        height: auto;
+
+        .items{
+            overflow: hidden;
+            width: 95%;
+            margin: 0 auto;
+            padding-right: 0;
+        }
+        .item{
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+#submit{
+    position: static;
+    width: 100%;
+    text-align: center;
+    color: @color-good;
+    cursor: pointer;
+
+    i{
+        font-size: 30px;
+    }
+    span{
+    }
+    &:hover{
+        color: @color-main;
+    };
+}
+
+}
+@media only screen and (max-width: 640px) {
+    html {
+        overflow-y: auto; 
+    }
+   
+
+    
+}
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 1.25dppx),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

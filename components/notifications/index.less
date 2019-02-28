@@ -1,0 +1,182 @@
+@import "../../css/__cssvar";
+
+#notifications{
+	
+	.ncaption{
+		font-weight: 700;
+		
+	}
+
+	.ncaptionWrapper{
+		>div{
+			padding : @rhythm;
+			vertical-align: middle;
+
+			&.showAll{
+
+				text-align: right;
+				color : @color-main;
+				display : none;
+				font-size: 0.8em;
+				.transition(0.3s);
+				cursor: pointer;
+
+				&:hover{
+					color : @color-gray;
+				}
+			}
+		}
+	}
+
+	.nwrapper{
+
+		.notification{
+			border-bottom: 1px solid @color-gray-slight;
+			padding: 2 * @rhythm;
+			cursor: pointer;
+			.transition(0.1s);
+			background: fade(@color-gray2, 5);
+
+			&:nth-last-child(1){
+				border-bottom : 0;
+			}
+
+			&:hover{
+				color : @color-gray;
+			}
+
+
+			&.seen{
+				background: transparent;
+			}
+
+
+
+			.date{
+				font-size: 0.8em;
+				color : @color-main;
+			}
+		}
+	}
+
+	.emptyNew,
+	.empty{
+		color : @color-gray-light;
+		font-size: 0.9em;
+		text-align: center;
+		margin : 3 * @rhythm 0;
+		display: none;
+	}
+
+	.panel{
+		margin-top : @rhythm;
+		font-size: 0.8em;
+		text-align: center;
+	}
+}
+
+#content{
+
+	#notifications{
+		max-width: 900px;
+		padding-top: 4 * @rhythm;
+
+		.ncaption{
+			padding-bottom: 3 * @rhythm;
+		}
+
+		.panel{
+			display: none;
+		}
+	}
+
+		
+}
+
+.notificationTolltip{
+	width: 500px;
+	min-height: 300px; 
+	max-height: 600px; 
+	z-index: 100!important;
+
+	.tooltipster-content{
+		padding: 0;
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+}
+.tooltipster-content{
+	#notifications{
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		position: relative;
+
+		.npWrapper{
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+
+		.ncaptionWrapper{
+			>div{
+
+				&.showAll{
+
+					display : table-cell;
+				}
+			}
+		}
+
+		.nabsWrapper{
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+		}
+
+		.ncaption{
+			
+		}
+
+		.ncaptionAbsWrapper{
+			padding: @rhythm;
+			position: absolute;
+			height: 45px;
+			left: 0;
+			right: 0;
+			top: 0;
+		}
+
+		.nabsContentWrapper{
+			position: absolute;
+			top: 45px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			overflow: auto;
+		}
+
+		.panel{
+			position: absolute;
+			bottom: 0;
+			height: 60px;
+			left: 0;
+			right: 0;
+			padding: 2 * @rhythm;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+#notifications{
+	.nwrapper {
+		.notification{
+			padding-left: @rhythm / 2; 
+			padding-right: @rhythm / 2;
+		}
+	}
+}
+}

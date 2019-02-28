@@ -1,0 +1,82 @@
+<% if(!last) {%>
+<div class="key">
+	<div class="work">	
+
+		<div class="stepTable table">
+			<div class="numberWr">
+				<div class="number">
+					2
+				</div>
+			</div>
+
+			<div class="stepContent">
+				<div class="subcaption">
+
+					<%=e('rtip3')%>
+
+					
+				</div>
+
+				<div class="mnemonicKeyTable table">
+					<div class="iconWrapper">
+
+						<div class="qrcode"></div>
+
+						<!--<svg width="65" height="65" data-jdenticon-value="<%-mainAddress.toString('hex')%>"></svg>-->
+					</div>
+
+					<div class="mnemonicKeyCell">
+						
+						<div class="mnemonicKey">
+						
+						</div>
+						
+					</div>
+
+					
+
+					
+				</div>
+
+				<div class="hiddenMnemonicKey hidden">
+					<%-mnemonicKey%>
+				</div>
+
+				<div class="panel">
+
+					<div class="item right">
+						<button class="continue disabled"><%=e('rcontinue')%> <i class="fas fa-chevron-circle-right"></i></button>
+					</div>
+
+					<div class="item preloader right">
+						<div class="prtable table">
+							<div class="preloaderwr">
+								<div class="preloader5"><span></span><span></span><span></span></div>
+							</div>
+							<div class="preloaderlabel">
+								<span><%=e('idle')%></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="item  workstation">
+						<button class="save"><%=e('saveqrcode')%> <i class="fas fa-save"></i></button>
+					</div>
+
+					<div class="item workstation">
+						<button class="copy ghost"><i class="fas fa-copy"></i></button>
+					</div>
+
+					
+
+					
+
+					
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<% } %>

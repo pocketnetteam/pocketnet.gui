@@ -1,0 +1,452 @@
+@import "../../css/__cssvar";
+
+#imageGalleryEdit{
+	position: relative;
+	height: 100%;
+
+
+	.imagesWrapper{
+		overflow: hidden;
+		height: 100%;
+		width: 100%;
+		padding-bottom: 60px;
+
+		.imagesAbsWrapper{
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+
+		.imagesTableWrapper{
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.panel{
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 60px;
+
+		.items{
+			height: 100%;
+			margin : 0 auto;
+
+			.item{
+				height: 100%;
+				vertical-align: middle;
+
+				
+			}
+		}
+
+		.centerWrapper{
+			margin : 0 auto;
+			width : 200px;
+			overflow-y: hidden;
+			display: none;
+
+			>div{
+				width : 50%;
+				float: left;
+				text-align: center;
+			}
+
+			&.exitPanel{
+				>div{
+					width : 100%;
+				}
+			}
+		}
+
+		.editPanel{
+			>div{
+				float: left;
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				background: fade(#fff, 10);
+				text-align: center;
+				font-size: 1.1em;
+				padding : @rhythm;
+				margin-right: @rhythm;
+				margin-top: 3px;
+				cursor: pointer;
+				.transition(0.2s);
+
+				&.active,
+				&:hover{
+					color : @color-add;
+					background : fade(@color-black, 30);
+				}
+
+				&.active{
+					&:hover{
+						background : fade(@color-black, 10);
+					}
+				}
+
+				&.save{
+					background: transparent;
+					width: auto;
+					font-size: 0.9em;
+					line-height: 40px;
+					padding: 0 @rhythm;
+
+					&:hover{
+						color : @color-good;
+					}
+				}
+
+			}
+		}
+		.centerWrapper{
+
+		}
+
+		.sitem{
+			cursor: pointer;
+			background: transparent;
+			width: auto;
+			font-size: 0.9em;
+			line-height: 40px;
+			padding: 0 @rhythm;
+
+			&:hover{
+				color : @color-bright;
+			}
+		}
+
+		.imageNavigation{
+			overflow-y: hidden;
+			.navigationWrapper{
+				float: right;
+
+				>div{
+					float: left;
+					height: 100%;
+					padding : @rhythm;
+
+					&.number{
+					}
+
+					&.arrow{
+						cursor: pointer;
+						.transition(0.3s);
+
+						&:hover{
+							color : @color-contrast;
+						}
+					}
+
+					&:nth-last-child(1){
+						padding-right: 0;
+					}
+				}
+			}
+			
+		}
+	}
+
+	.noImages{
+		text-align: center;
+		font-weight: 700;
+		color : @color-gray;
+	}
+
+	.images{
+		table-layout: fixed;
+		>div{
+			vertical-align: middle;
+			width: 100%;
+			height: 100%;
+		}
+
+		.image{
+			margin : 0 auto;
+			height: 100%;
+			width: 100%;
+			position: relative;
+
+			.imgWrapper{
+				margin : 0 auto;
+				position: relative;
+			}
+
+			canvas,
+			img{				
+				display: block;
+				margin : 0 auto;
+
+				&.cropper-hidden{
+					display: block!important;
+				}
+			}
+
+			img{
+				opacity: 0;
+			}
+		}
+		
+	}
+
+	.filtersWrapper{
+		display: none;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 70px;
+		height: 100px;
+
+		.filtersContainer{
+			height: 100%;
+			overflow: hidden;
+			margin : 0 auto;
+			width: 100%;
+		}
+
+		.filters{
+			width: 100%;
+			padding : 0 @rhythm;
+
+			.filtersWrapperOvf{
+				overflow: hidden;
+				width: 100%;
+				height: 100%;
+			}
+
+			.filtersSwipe{
+				.transition(0.3s);
+				margin-left: 0;
+			}
+
+			.filtersList{
+				margin : 0 auto;
+				width: auto;
+
+				>div{
+					opacity: 0;
+					vertical-align: middle;
+					text-align: center;
+					height: 100%;
+					position: relative;
+					padding : 0 @rhythm / 2;
+
+					.label{
+						text-align: center;
+						font-size: 0.8em;
+						margin-bottom: @rhythm / 2;
+						overflow: hidden;
+						white-space: nowrap;
+					}
+
+					canvas,
+					img{
+						margin : 0 auto;
+						width: auto;
+					}
+
+					.previewImage{
+						border-radius: 50%;
+						width: 80px;
+						height: 80px;
+						margin : 0 auto;
+						overflow: hidden;
+					}
+				}
+			}
+			
+		}
+	}
+
+	&.filters{
+		.imagesWrapper{
+			padding-bottom: 180px;
+		}
+
+		.filtersWrapper{
+			display: block;
+		}
+	}
+
+	.cropper-container{
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+
+		.cropper-face{
+			background: transparent;
+		}
+
+		.cropper-line{
+			background: transparent;
+		}
+
+		.cropper-point{
+			border-radius: 50%;
+			height: 5px!important;
+			width : 5px!important;
+		}
+
+		.applyCrop{
+			position: absolute;
+			width: 60px;
+			height: 60px;
+			line-height: 60px;
+			border-radius: 50%;
+			text-align: center;
+			font-size: 14px;
+			padding : 0 @rhythm;
+			cursor: pointer;
+			.transition(0.2s);
+			background: fade(#000, 60);
+
+			&.active,
+			&:hover{
+				color : @color-bright;
+				background: fade(#000, 70);
+			}
+		}
+
+		.cropper-crop-box{
+			box-shadow: 0 0 5000px 3000px fade(#000, 80);
+		}
+
+		&.round{
+			.cropper-crop-box{
+				border-radius: 50%;
+			}
+		}
+
+		&.apply{
+			.applyCrop{
+				display: none;
+			}
+		}
+	}
+
+	.cropper-bg{
+		background: transparent;
+	}
+
+	.cropper-modal{
+		background: transparent;
+	}
+}
+
+.wnd{
+
+	&.imageGallery{
+		.wndcontent{
+			padding : 0;
+		}
+	}
+	#imageGallery{
+		height: 100%;
+
+		.image{
+			max-width: 1024px;
+			max-height: 768px;
+		}
+
+		.panel{
+			.items{
+				max-width: 1024px;
+			}
+		}
+
+		.filtersWrapper{
+			.filtersContainer{
+				max-width: 1024px; 
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#imageGalleryEdit{
+		.panel{
+			padding : 0 @rhythm ;
+
+			.centerWrapper{
+				width : 100%;
+
+				>div{
+					width : 50%;
+					float: left;
+					text-align: center;
+				}
+
+				&.exitPanel{
+					>div{
+						width : 100%;
+					}
+				}
+			}
+
+			
+			.sitem{
+				cursor: pointer;
+				background: transparent;
+				width: auto;
+				font-size: 0.9em;
+				line-height: 40px;
+				padding: 0 @rhythm;
+
+				&:hover{
+					color : @color-bright;
+				}
+			}
+
+			.imageNavigation{
+				overflow-y: hidden;
+				.navigationWrapper{
+					float: right;
+
+					>div{
+						float: left;
+						height: 100%;
+						padding : @rhythm;
+
+						&.number{
+						}
+
+						&.arrow{
+							cursor: pointer;
+							.transition(0.3s);
+
+							&:hover{
+								color : @color-contrast;
+							}
+						}
+
+						&:nth-last-child(1){
+							padding-right: 0;
+						}
+					}
+				}
+				
+			}
+		}
+	}
+	.wnd{
+
+		&.imageGalleryEdit{
+			.wndcontent{
+				padding : 0;
+			}
+		}
+	}	
+}

@@ -1,0 +1,41 @@
+<div id="<%-module.map.id%>">
+	<div class="caption">
+		<%= e('contactForm') %>
+	</div>
+	<div class="form">
+
+		<div class="item">
+			<div class="label"><label><%=e('contactName')%></label></div>
+			<input type="text" class="name forminput" systemId="name" value="<%-deep(user, 'data.firstName') || ''%>" />
+			
+		</div>
+		<div class="item">
+			<div class="label"><label><%=e('contactEmail')%></label></div>
+			<input type="email" class="email forminput" value="<%-deep(user, 'data.email') || ''%>" systemId="email"/>
+			
+		</div>
+
+		<div class="item">
+			<div class="label"><label><%=e('contactSubj')%></label></div>
+			<input type="text" class="subject forminput" systemId="subject"/>
+			
+		</div>
+		<div class="item">
+
+			<div class="label"><label><%=e('contactMessage')%></label></div>
+			<textarea class="forminput" systemId="message"></textarea>	
+		</div>
+
+	</div>
+
+	<div class="error">
+		<%=e('contactError')%>
+	</div>
+
+	<div class="sendWrapper">
+
+		<button class="send"><%=e('contactSend')%></button>	
+
+
+	</div>
+</div>

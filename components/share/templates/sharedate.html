@@ -1,0 +1,72 @@
+<div class="selectDateWrapper">
+
+	<div class="selectDateTableWrapper labels table">
+		<div class="dateWrapper"><%=e('sdate')%></div>
+		<div class="timeWrapper"><%=e('stime')%></div>
+	</div>
+
+
+	<div class="selectDateTableWrapper table">
+		<div class="dateWrapper">
+			<select class="day">
+				<% 
+				var today = new Date();
+
+
+				for(var i = 0; i < 15; i++) {
+
+					var d = today.yyyymmdd();
+					var selected = ''
+
+					if (d == date.day) selected = 'selected'
+
+				%>
+
+					<option value="<%-d%>" <%-selected%>><%-convertDate(d)%></option>
+
+				<% 
+
+					today = today.addDays(1)
+
+				} %>
+			</select>
+		</div>
+
+		<div class="hoursWrapper">
+			
+			<select class="hours">
+				<% for(var i = 0; i < 24; i++) {
+
+					var selected = ''
+
+					if (i == date.hour) selected = 'selected'
+
+				%>
+
+					<option value="<%-i%>" <%-selected%>><%-addZero(i)%></option>
+
+				<% } %>
+			</select>
+
+		</div>
+
+		<div class="dWrapper">:</div>
+
+		<div class="minutesWrapper">
+			<select class="minutes">
+				<% for(var i = 0; i < 60; i++) {
+
+					var selected = ''
+
+					if (i == date.minutes) selected = 'selected'
+
+				%>
+
+					<option value="<%-i%>" <%-selected%>><%-addZero(i)%></option>
+
+				<% } %>
+			</select>
+		</div>
+	</div>
+
+</div>

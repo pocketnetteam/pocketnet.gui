@@ -1,0 +1,59 @@
+@import "../../css/__cssvar";
+
+#navigation{
+	display: none;
+	width: 100%;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 50px;
+	z-index: 200;
+	background: fade(#fff, 95);
+
+
+	.items{
+		.item{
+			vertical-align: middle;
+			text-align: center;
+			overflow : hidden;
+
+			i{
+				
+				font-size: 0.9em;
+			}
+		}
+
+		.icon{
+			width: 20px;
+			margin : 0 auto;
+		}
+
+		.iconWrapper{
+			border-radius: 50%;
+			height: 100%;
+			width: 100%;
+			line-height: 50px;
+			margin : 0 auto;
+			
+			color : fade(#000,70);
+			text-align: center;
+
+
+			&.shr{
+				font-size: 1.7em;
+				color : @color-main;
+			}
+
+		}
+	}
+
+}
+
+
+@media only screen and (max-width: 768px) {
+	#navigation{
+		display: block;
+
+	}
+}

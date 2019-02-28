@@ -1,0 +1,487 @@
+@import "../../css/__cssvar";
+
+#registration{
+	padding-bottom : 8 * @rhythm;
+
+	.caption{
+		font-size: 4.1em;
+		font-weight: 100;
+	}
+
+	.subcaption{
+		font-weight: 700;
+		color : @color-gray;
+		margin-bottom: 2 * @rhythm;
+		line-height: 48px;
+	}
+
+	button{
+		min-width: 210px;
+
+		&.repeat{
+			min-width: 290px;
+		}
+
+		&.copy{
+			min-width: 0;
+
+			&.ghost{
+				color : #fff;
+				opacity: 0.5;
+
+				&:hover{
+					opacity : 0.8;
+				}
+
+				&.black{
+					&:hover{
+						background : transparent;
+						border-color: transparent;
+					}
+				}
+			}
+		}
+	}
+
+	.work{
+		padding-top: 4 * @rhythm!important;
+		padding-bottom: 4 * @rhythm!important;		
+	}
+
+	.stepTable{
+		>div{
+			vertical-align: top;
+			padding : 0;
+
+			&.numberWr{
+				width: 80px;
+
+				
+			}
+		}
+	}
+
+	.number{
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+		border: 1px solid @color-gray;
+		line-height: 48px;
+		text-align: center;
+	}
+
+	.panel{
+		margin-top: 4 * @rhythm;
+		overflow : hidden;
+
+		.item{
+			float: left;
+			margin-right : 2 * @rhythm;
+
+			&.right{
+				float: right;
+				margin-left : 2 * @rhythm;
+				margin-right : 0;
+			}
+		}
+
+		.prtable{
+			width: auto;
+			height: 100%;
+
+			>div{
+
+				padding : 0 @rhythm / 2;
+				vertical-align: middle;
+
+				&.preloaderlabel{
+					padding-top : @rhythm ;
+				}
+				span{
+					font-size: 0.8em;
+				}
+			}
+		}
+	}
+
+	.tips{
+		.tip{
+			max-width: 650px;
+		}
+	}
+	.keyStep{
+		.transition(0.3s);
+		background: #FF005A;
+		color : #fff;
+		min-height: 320px;
+	}
+	.key{
+		
+
+		.usericon{
+			background: transparent;
+		}
+
+		.number{
+			border: 1px solid #fff;
+		}
+
+		.subcaption{
+			color : #FFF1F8;
+		}
+
+		.mnemonicKey{
+			max-width: 900px;
+			font-size : 2.1em;
+			min-height: 132px;
+		}
+
+		.mnemonicKeyTable{
+			height: auto;
+			>div{
+				vertical-align: top;
+
+				&.iconWrapper{
+					padding-top: 10px; 
+					width: 280px;
+				}
+			}
+		}
+
+		
+
+		.panel{
+			.item{
+				padding-top: @rhythm;
+
+				&.preloader{
+					padding-top:  @rhythm / 2;
+				}
+			}
+		}
+	}
+
+	.confirm{
+
+		.inputTable{
+
+			>div{
+				vertical-align: middle;
+
+				.upload .fileUploader, .upload .fileUploader .elContent{
+					position: relative;
+				}
+
+				&.fileUploaderWrapper{
+					width: 110px;
+
+					text-align: center;
+
+					.fileUploader{
+						
+					}
+
+					>div{
+						color : @color-main;
+						font-size: 0.8em;
+					}
+				}
+			}
+		}
+
+		.note{
+			font-weight: 400;
+			color : @color-main;
+		}
+
+		.inputWrapperKey{
+			padding: 2 * @rhythm;
+			width: 100%;
+			font-size: 1.5em;
+			font-weight: 100;
+			background: #FAF8F8;
+			color : @color-main;
+			border : 1px solid transparent;
+			.transition(0.4s);
+
+			input{
+				width: 100%;
+				border: 1px solid transparent;
+			}
+
+			.vc_autosearchInput{
+				.placeholder{
+					background: transparent;
+				}
+			}
+			
+
+		}
+	}
+
+	.toSignIn{
+		margin-top: 6 * @rhythm;
+		cursor: pointer;
+		font-size: 0.8em;
+	}
+
+	&.begin,
+	&.last{
+		.keyStep{
+			display: none;
+		}
+	}
+}
+
+.wnd{
+	#registration{
+		padding-bottom : 0 * @rhythm;
+
+		.work{
+			padding-top: 2 * @rhythm!important;
+			padding-bottom: 2 * @rhythm!important;		
+		}
+
+		.panel{
+			margin-top : 2 * @rhythm;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#registration{
+		padding-bottom : 6 * @rhythm;
+
+		.caption{
+			font-size: 2.1em;
+		}
+
+		.subcaption{
+			padding-top : 17px;
+			line-height: 1.2em;
+			text-align: center;
+			padding : 0 6 * @rhythm;
+
+			.note{
+				display: block;
+				margin-top : 2 * @rhythm;
+			}
+		}
+
+		button{
+			width: 100%;
+			min-width: 0;
+
+			&.repeat{
+				min-width: 0;
+			}
+		}
+
+		.work{
+			padding-top: 2 * @rhythm!important;
+			padding-bottom : 2 * @rhythm!important;
+			padding-left : @rhythm!important;
+			padding-right: @rhythm!important;
+		}
+
+		.stepTable{
+			display: block;
+			>div{
+				display: block;
+				&.numberWr{
+					width: 100%;
+					padding-bottom : 2 * @rhythm;
+
+					.number{
+						margin : 0 auto;
+
+					}
+				}
+			}
+		}
+
+		.panel{
+			margin-top: 4 * @rhythm;
+			overflow : hidden;
+
+			.item{
+				padding-top : @rhythm;
+				float: none;
+				width: 100%;
+				margin-right : 0;
+
+				&.right{
+					float: none;
+					margin-left : 0;
+					margin-right : 0;
+				}
+			}
+
+			.prtable{
+				margin : 0 auto;
+
+			
+			}
+		}
+
+		.tips{
+			.tip{
+				max-width: 650px;
+			}
+		}
+
+		.keyStep{
+			.transition(0.3s);
+			background: #FF005A;
+			color : #fff;
+			min-height: 320px;
+
+			.panel{
+				opacity: 0;
+				.transition(0.3s);
+			}
+
+			&.showedPanel{
+				.panel{
+					opacity: 1;
+				}
+			}
+		}
+
+		.key{			
+
+			.usericon{
+				background: transparent;
+			}
+
+			.mnemonicKey{
+				padding-right : 0;
+				padding-top : 2 * @rhythm;
+				font-size : 1.8em;
+			}
+
+			.mnemonicKeyTable{
+				display: block;
+				>div{
+					display: block;
+					&.iconWrapper{
+						padding-top: 0; 
+						width: 100%;
+
+
+						.qrcode{
+							margin : 0 auto;
+							width: 256px;
+						}
+					}
+
+					&.mnemonicKeyCell{
+						padding-right : 0;
+						text-align: center;
+						padding-top : 2 * @rhythm;
+					}
+				}
+			}
+
+			
+
+			.panel{
+				.item{
+					width: 100%;
+				}
+			}
+		}
+
+		.confirm{
+
+			.inputTable{
+
+				>div{
+					vertical-align: middle;
+
+					.upload .fileUploader, .upload .fileUploader .elContent{
+						position: relative;
+					}
+
+					&.fileUploaderWrapper{
+						width: 50%;
+
+						text-align: center;
+
+						.fileUploader{
+							
+						}
+
+						>div{
+							color : @color-main;
+							font-size: 0.8em;
+						}
+					}
+				}
+
+				&.typeactive{
+					>div{
+						&.fileUploaderWrapper{
+							display: none;
+						}
+					}
+				}
+			}
+
+			.note{
+				font-weight: 400;
+				color : @color-main;
+			}
+
+			.inputWrapperKey{
+				padding: 2 * @rhythm;
+				width: 100%;
+				font-size: 1.5em;
+				font-weight: 100;
+				background: #FAF8F8;
+				color : @color-main;
+				border : 1px solid transparent;
+				.transition(0.4s);
+
+				input{
+					width: 100%;
+					border: 1px solid transparent;
+				}
+
+				.vc_autosearchInput{
+					.placeholder{
+						background: transparent;
+					}
+				}
+				
+
+			}
+		}
+
+		.toSignIn{
+			text-align: center;
+		}
+
+		&.begin,
+		&.last{
+			.keyStep{
+				display: none;
+			}
+		}
+	}
+
+	.wnd{
+		#registration{
+			padding-bottom : 0 * @rhythm;
+
+			.work{
+				padding-top: 2 * @rhythm!important;
+				padding-bottom: 2 * @rhythm!important;		
+			}
+
+			.panel{
+				margin-top : 2 * @rhythm;
+			}
+		}
+	}	
+}

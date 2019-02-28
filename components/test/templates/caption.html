@@ -1,0 +1,57 @@
+<div class="infoWrapper">
+	<div class="work">
+		<div class="cwrapper table">
+
+			<div class="cell cellforimage">
+				<div class="icon">
+
+					<% 
+						var src = tempInfo.image 
+					%>
+
+					<div class="usericon" image="<%-src || ''%>">
+
+						<% if(!src) {%>
+
+							<svg width="40" height="40" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
+
+						<% } %>
+
+						<div class="uloader">
+							<div class="preloader5"><span></span><span></span><span></span></div>
+						</div>
+
+						<div class="sbs">
+							<i class="fas fa-plus"></i>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+
+			<div class="ccell">
+				<div class="infomain">
+					<div class="caption">
+						<b class="adr"><%-p2pkh.address%></b>
+					</div>
+					<div class="tips">
+						
+						Address Type: <b><%-app.platform.addressType%></b>
+						
+					</div>
+				</div>
+
+				<div class="uploadTip">
+					Upload Photo
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="imagiconWrapper">
+	<div class="work">
+		<div class="imagejdenticon">
+			<svg width="360" height="360" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
+		</div>
+	</div>				
+</div>

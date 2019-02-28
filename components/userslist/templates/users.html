@@ -1,0 +1,51 @@
+<% _.each(addresses, function(address){ 
+
+%>
+	<div class="wrk">
+
+
+
+		<div class="addressTable table" address="<%-address%>">
+			<div class="iconWrapper">
+				<a href="author?address=<%-address%>">
+					<div class="icon">
+
+						<% 
+
+							var src = deep(app, 'platform.sdk.users.storage.'+address+'.image')  
+							
+						%>
+
+						<div class="usericon" image="<%-src || ''%>">
+
+							<% if(!src) {%>
+
+								<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+
+							<% } %>
+						</div>
+					</div>
+				</a>
+			</div>
+
+			<div class="label">
+				<a href="author?address=<%-address%>">
+					<%- deep(app, 'platform.sdk.users.storage.'+address+'.name') || address %>
+				</a>			
+
+			</div>
+
+			<div class="extra">
+
+				<% 
+
+					var s = _.map(deep(app, 'platform.sdk.users.storage.'+address+'.' + commonkey) || [])
+
+
+				%>		
+
+			</div>
+		</div>
+	</div>
+	
+<% }) %>

@@ -1,0 +1,62 @@
+<% _.each(pack.addresses, function(address){ 
+
+	var cur = ''
+	var ncur = 'ncurrent'
+
+
+	if(address == current){
+		cur = 'current'
+		ncur = ''
+	}
+
+%>
+	<div class="wrk">
+		<div class="addressTable table <%-cur%> <%-ncur%>" address="<%-address%>">
+			<div class="iconWrapper">
+				<div class="icon">
+
+					<% 
+
+						var src = deep(app, 'platform.sdk.users.storage.'+address+'.image')  
+						
+					%>
+
+					<div class="usericon" image="<%-src || ''%>">
+
+						<% if(!src) {%>
+
+							<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+
+						<% } %>
+					</div>
+				</div>
+			</div>
+
+			<div class="label">
+
+				<%- deep(app, 'platform.sdk.users.storage.'+address+'.name') || address %>
+
+				<% if(cur) { %> 
+
+					<span class="cur">(<%=e('acure')%>)</span>
+
+				<% } else {%> 
+
+					<!--<span class="cur"><i class="fas fa-sign-in-alt"></i></span>-->
+
+				<% } %>
+
+			</div>
+
+			<div class="panel">
+				<% if(!cur) {%>
+				<div class="item remove">
+					<i class="fas fa-times-circle"></i>
+				</div>
+
+				<% } %>
+			</div>
+		</div>
+	</div>
+	
+<% }) %>

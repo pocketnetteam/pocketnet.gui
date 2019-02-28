@@ -1,0 +1,112 @@
+<div id="<%-module.map.id%>">
+	<div class="top">
+		<div class="topwidthWrapper">
+
+
+			<div class="item back">
+				
+				<div class="icon">
+					<i class="fas fa-arrow-left"></i>
+				</div>
+			</div>
+
+			<div class="item uic">
+				<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
+									
+				<div class="icon">
+					<a href="author?address=<%-user.address.value.toString('hex')%>">
+						<div class="usericon" image="<%-src || ''%>">
+
+							<% if(!src) {%>
+
+								<svg width="30" height="30" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
+
+							<% } %>
+						
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="item username">
+				<div class="label">
+					<b class="adr"><%-deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex')%></b>
+				</div>
+			</div>
+
+			<div class="item right ready">
+				<div class="item">
+
+					<% if(art.txid) {%>
+
+						<div class="iWrapper table goto">
+								
+							<div class="label">
+								Go To Article
+							</div>
+
+							<div class="icon">
+								<i class="far fa-check-circle"></i>
+							</div>
+						</div>
+
+					<% } else {%>
+
+						<div class="iWrapper table add">
+								
+							<div class="label">
+								Publish
+							</div>
+
+							<div class="icon">
+								<i class="fas fa-arrow-right"></i>
+							</div>
+						</div>
+
+					<% } %>
+
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+	<div class="art">
+		<div class="topwidthWrapper">
+			<div class="widthWrapper">
+				<div class="part">
+					<div class="caption" contenteditable="true" placeholder="Caption"></div>
+					
+				</div>
+
+				<div class="content">
+					<div class="edt">
+						<%= app.platform.sdk.articles.echo(art) %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="apreloader">
+
+		<div class="aprWrapper table">
+
+			<div class="aprcell">
+
+				<div class="apr table">
+					<div class="rnds">
+						<div class="preloader5"><span></span><span></span><span></span></div>
+					</div>
+					<div class="label">
+						Loading to Blockchain
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>

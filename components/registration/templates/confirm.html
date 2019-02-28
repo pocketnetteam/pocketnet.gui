@@ -1,0 +1,54 @@
+<% if(last && !end) {%> 
+<div class="confirm">
+	<div class="work">
+		<div class="stepTable table">
+			<div class="numberWr">
+				<div class="number">
+					3
+				</div>
+			</div>
+
+			<div class="stepContent">
+
+				<div class="subcaption">
+					<%=e('confirmkeyLabel')%> <span class="note"></span>
+				</div>
+
+				<div class="form">
+
+			    	<div class="item ">
+			    		<div class="inputTable table">
+
+				    		<div>
+				    			<div class="inputWrapperKey">
+									<%= keyInput.input() %>
+								</div>
+							</div>
+							<div class="fileUploaderWrapper">
+								<div class="uploadFile">
+									<div class="icon"><i class="fas fa-file-upload"></i></div>
+									<div class="label"><%=e('loadqrcode')%></div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+					<div class="panel">
+
+						<div class="item right">
+							<button class="repeat black"><%=e('repeatetocreate')%> <i class="fas fa-undo"></i></button>
+						</div>
+
+						<div class="item">
+							<button class="registrationButton good notActive"><%=e('confirmcreate')%> <i class="fas fa-chevron-circle-right"></i></button>
+						</div>
+					</div>
+			    </div>	
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<% } %>

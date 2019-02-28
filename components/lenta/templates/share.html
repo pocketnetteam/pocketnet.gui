@@ -1,0 +1,511 @@
+<%
+
+var c = share.renders.caption();
+var m = share.renders.message();
+
+if(typeof ed == 'undefined') ed = {}
+
+if(share.address){
+
+	var my = (user.address.value && share.address == user.address.value.toString('hex'))
+	var subscribed = '';
+
+	if(!my && user.address.value){
+
+		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+
+		if (me && me.relation(share.address, 'subscribes')){
+			subscribed = 'subscribed'
+		}
+	}
+
+var view = 'post';
+
+if(share.settings.v == 'a'){
+	view = 'article'
+}
+	
+
+if (share.txid == '84cc877c67f305374258f4c9d618366870bddedb8a425260de995c675f7c7c8b') {
+	return
+}
+
+
+var metadisplay = function(){ %>
+
+<div class="meta">
+	<div class="metatable table">
+		<div class="metadata">
+			<div class="author">
+
+				<div class="authorTable table">
+					<div class="authorCell">
+						<%
+
+
+						 if(!ed.authAction) {%>
+
+							<a href="author?address=<%-share.address%>">
+
+						<% } %>
+							<b><span><%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %></span></b>
+						
+							
+							
+
+						<% if(!ed.authAction) {%>
+							</a>
+						<% } %>
+					</div>
+
+					<% var c = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.rc');
+
+					if(c > 0) { %>
+
+						<div class="svcCell tooltip" title="<%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %> rescued <%- c %> people from the censored web">
+							<div class="savecrossWrapper table">
+								<div class="fs">
+									<div class="savecross"></div>
+								</div>
+								<div class="po">
+									<span><%- c %></span>
+								</div>
+							</div>
+						</div>
+
+					<% } %>
+
+					
+				</div>
+			</div>
+		
+		</div>
+
+		<div class="metapanel">
+			<div class="metapanelitem metmenu">
+				<i class="fas fa-ellipsis-h"></i>
+			</div>
+		</div>
+
+		<!--
+
+		<% if(state) {
+
+			if(!my && mestate.reputation >= 20) { %>
+
+				<div class="metapanel">
+					<div class="metapanelitem complain">
+						<i class="fas fa-ban"></i> <span class="workstation">Complain</span>
+					</div>
+				</div>
+
+			<% } 
+
+		} %> -->
+	</div>					
+</div>
+	
+<% }
+
+%>
+
+<% var arranges = {
+	
+	cm : function(){ %> 
+
+		<% if(c) {
+
+			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
+
+		%>
+			<div class="paddingWrapper">
+				<div class="sharecaption">
+					<div>
+						<%=emojione.toImage(nl2br(c))%>
+					</div>
+				</div>
+			</div>
+
+		<% } %>
+
+		<% if(m) {
+
+			var bigmessage = false;
+
+			m = (m)
+			
+			var nm = m;
+
+			if(typeof all == 'undefined'){
+
+				nm = trimHtml(m, 750);
+
+				if(nm != m){
+					bigmessage = true;
+				}
+			}
+
+			if(share.settings.v != 'a'){
+				nm = nl2br(nm);
+			}
+			
+
+		%>
+			<div class="paddingWrapper">
+				<div class="message">
+
+					<%=emojione.toImage((clearScripts(((nm)))))%>
+
+				</div>
+			</div>
+
+			<% if(bigmessage || share.settings.v == 'a') {%>
+
+				<div class="paddingWrapper">
+					<div class="showMore">
+
+						<button>
+							Show More
+						</button>
+
+					</div>
+				</div>
+
+			<% } %>
+
+		<% } %>
+		
+	<% },
+
+	
+	i : function(){ %> 
+		<% if(share.images.length) {
+
+				var icClass = '';
+
+				if (share.images.length == 1) icClass = 'one';
+				if (share.images.length == 2) icClass = 'two';
+				if (share.images.length == 4) icClass = 'four';
+
+				
+
+
+				if(share.settings.v == 'a'){ 
+
+					icClass = 'articleImages'
+
+				%>
+
+					<div class="imagecaption">
+						Attached images:
+					</div>
+
+				<% } %>
+ 
+				<div class="images">
+					<div class="imagesContainer <%-icClass%>">
+						<% _.each(share.images, function(image){ %>
+
+							<div class="imagesWrapper">
+								<div class="image imageOpen" image="<%-image%>" i="<%-image%>">
+								</div>
+							</div>
+
+						<% }) %>
+					</div>
+				</div>
+
+		<% } %>
+	<% },
+
+	u : function(){ %> 
+		<% if(share.url) {%>
+
+						<div class="url">
+							<!--<span>
+								<a href="share.url"><%-share.url%></a>
+							</span>-->
+						</div>
+
+					<% } %>
+	<% }
+
+} %>
+
+	<div class="work">
+
+		<div class="shareTable table <%-subscribed%> <%-view%>" address="<%-share.address%>">
+			<div class="iconWrapper">
+
+
+				<% if(!ed.authAction) {%>
+				
+					<a href="author?address=<%-share.address%>">
+
+				<% } %>
+
+					<% var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
+
+					<div class="icon">
+						<div class="usericon usericonsbsa another" image="<%-src || ''%>">
+							<% if(!src) {%>
+								<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+							<% } %>
+						</div>
+					</div>
+
+
+
+				<% if(!ed.authAction) {%>
+					</a>
+				<% } %>
+
+				<!--
+				
+				<% if(!my && state && !ed.byauthor) {%>
+
+					<div class="additional">
+						<i class="fas fa-plus"></i>
+					</div>
+
+				<% } %>
+
+				<% if(!isMobile()) { %> 
+
+					<% if(!share.temp) {%>
+
+						<div class="aitem ashare sharesocial">
+							<i class="fas fa-share-alt"></i>
+						</div>
+
+					<% } %>
+				<% } %>-->
+
+
+
+			</div>
+
+			<% if(isMobile()) { %> 
+				<div class="metawrapper"> 
+					<% metadisplay() %> 
+				</div> 
+			<% } %>
+
+			<div class="shareWrapper">
+
+				<% if(!isMobile()) { metadisplay() } %>
+
+				<div class="shareContent">
+
+
+					<% var a = share.settings.a || share.default.a %>
+
+
+						<% _.each(a, function(key, i){ %> 
+
+							<% if(arranges[key]) arranges[key]() %>
+									
+						<% }) %>
+
+					<div class="paddingWrapper">
+						
+						<% if(share.tags && share.tags.length > 0) {%>
+
+							<div class="tags">
+								<% _.each(share.tags, function(tag){ %>
+
+									<div class="tag">
+										<span>
+											#<%-tag%>
+										</span>
+									</div>
+
+								<% }) %>
+							</div>
+
+						<% } %>
+						<!--
+						<div class="sys">
+
+							<div class="txid">
+								<span><%-share.txid%></span>
+							</div>						
+
+						</div>-->
+
+						<div class="sys">
+							<% if(share.time) {%>
+
+								<span><%- convertDate(dateToStr(share.time)) %></span>
+
+							<% } else { %> 
+
+								<span>New</span>
+
+							<% } %>
+						</div>
+
+						<% if(!share.temp) {%>
+							<div class="panel">
+								<div class="item forstars">
+
+									
+								</div>
+
+								<% if(my){ %> 
+
+									<!--<div class="item promote ">
+
+										<div class="itemwr table">
+											<div class="iconwr">
+												<div class="icon">
+													<i class="fas fa-level-up-alt"></i>
+												</div>
+											</div>
+
+											<div class="count">
+												<span>PROMOTE</span>
+											</div>
+											
+										</div>
+										
+									</div>-->
+
+
+								<% } else { %> 
+
+									<div class="item donate ">
+
+										<div class="itemwr table">
+											<div class="iconwr">
+												<div class="icon">
+													<i class="fas fa-donate"></i>
+												</div>
+											</div>
+											<!--
+											<div class="count">
+												<span>DONATE</span>
+											</div>-->
+											
+										</div>
+										
+									</div>
+
+								<% } %>
+
+								<% if(state) {%>
+								
+									<div class="item discussion right">
+										<div class="itemwr table">
+
+											<div class="count">
+												
+											</div>
+
+											<div class="iconwr">
+												<div class="icon">
+													<i class="fas fa-comments"></i>
+												</div>												
+											</div>
+
+											
+
+										</div>
+									</div>
+
+								<% } %>
+
+								
+
+								<div class="clearfix"></div>
+
+								<!--
+								<div class="item">
+
+									<div class="itemwr table">
+										<div class="iconwr">
+											<div class="icon commentsAction">
+												<i class="fas fa-comment"></i>
+											</div>
+										</div>
+
+										<div class="count">
+											<span>0</span>
+										</div>
+										
+									</div>
+									
+								</div>-->
+							</div>
+						<% } %>
+
+						<% if(share.temp) {%>
+
+							<div class="panel">
+								<div class="item right">
+
+									<div class="itemwr table tempPreloader">
+										
+										<div class="iconwr">
+											<div class="preloader5"><span></span><span></span><span></span></div>
+										</div>
+										
+										<div class="count">
+											<div class="label">
+
+												<span><%=e('postWaitConf')%></span>
+											</div>
+										</div>
+
+										
+										
+									</div>
+
+								</div>
+								<div class="clearfix"></div>
+							</div>
+
+						<% } %>
+
+					</div>
+
+				</div>
+
+				<!--<div class="commentsWrapper">
+				</div>-->
+
+				<div class="subscribeWrapper">
+					<div class="name">
+						<span><b><%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %></b></span>
+					</div>
+
+					<div class="subscribeevent">
+						<div class="item">
+							<button class="asubscribe">SUBSCRIBE
+						</div>
+						<!--
+						<div class="item">
+							<button class="asubscribePrivate">Private Subscribe <i class="fas fa-eye-slash"></i></button>
+						</div>-->
+					</div>
+
+					<div class="unsubscribeevent">
+						<div class="item">
+							<button class="aunsubscribe">UNSUBSCRIBE</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		
+	</div>
+
+	<div class="exitFull roundclosebutton">
+		<i class="fa fa-times" aria-hidden="true"></i>
+	</div>
+
+<% } %>

@@ -1,0 +1,70 @@
+<div class="linkForDeposit">
+
+	<div class="linksubcaption">Please fill this fields</div>
+
+	<div class="row table">
+		<div class="address">
+			<div class="labelWrapper"><%= d.parameters.depositamount.name %>, <span class="required">*Required</span></div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell"> 
+			<div class="labelWrapper workstation"><%= d.parameters.label.name %></div>
+		</div>
+	</div>
+	<div class="row table">
+		
+		<div class="amount">
+			<div class="inputWrapper">
+				<%= d.parameters.depositamount.input() %>
+			</div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell"> 
+			<div class="labelWrapper mobiledevice abs"><%= d.parameters.label.name %></div>
+			<div class="inputWrapper">
+				<%= d.parameters.label.input() %>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row table">
+		<div class="address">
+			<div class="labelWrapper"><%= d.parameters.message.name %></div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell workstation"> 
+
+		</div>
+	</div>
+
+	<div class="row table">
+		
+		<div class="amount">
+			<div class="inputWrapper">
+				<%= d.parameters.message.input() %>
+			</div>
+		</div>
+	</div>
+
+	<div class="row table">
+		
+		<div class="cell">
+			<button class="getlink disabled"><i class="fas fa-qrcode"></i> Create Qr Code</button>
+		</div>
+
+		
+	</div>
+</div>

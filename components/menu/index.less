@@ -1,0 +1,816 @@
+@import "../../css/__cssvar";
+
+
+
+
+#menu{
+	
+	.menuWrapper{
+		width: 100%;
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 65px;
+		z-index: 20;
+		background: #fff;
+		color : @color-black2;
+	}
+
+	&.searchactive{
+		.additionalbar{
+			top: 65px;
+			.shadowSmall();
+		}
+
+		.sections{
+			
+
+			.items{
+				
+				&.searchWrapper{
+					display: block;
+				}
+
+				&.sitenames{
+					display: none;
+				}
+
+				&.mdl{
+					display: none;
+				}
+
+				&.searchIcons{
+					
+
+					.icon{
+						i{
+							&:before{
+								content : '\f138';
+							}
+						}
+					}
+				}
+
+				.item{
+				
+					&.wallets{
+						
+						&:hover{
+							padding-right: 0;
+							padding-left: 0;
+						}
+					}
+
+				}
+			}
+		}
+		
+	}
+
+	.additionalbar{
+		width: 100%;
+		position: fixed;
+		left: 0;
+		right: 0;
+		top : 0;
+		height: 65px;
+		z-index: 19;
+		background: #fff;
+		.transition(0.3s);
+
+		
+
+		.sections{
+			.section{
+				margin : 0;
+				width: 100%;
+
+				.items{
+
+					margin : 0;
+					width: 100%;
+
+					.item{
+						margin : 0 auto;
+
+						>div{
+							font-size: 0.7em;
+							padding : 0 8 * @rhythm;
+							text-transform: uppercase;
+							font-weight: 700;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+
+	.mobilemenu{
+		display: none;
+
+		&.active{
+			display: none;
+		}
+	}
+
+	
+
+	.sections{
+		width: 95%;
+		height: 100%;
+		max-width: 1280px;
+		margin : 0 auto;
+		padding : 0 2 * @rhythm;
+        padding-right : 0;
+
+		.section{
+
+			height: 100%;
+			float: left;
+			padding: 0 2 * @rhythm;
+
+			&.right{
+				float: right;
+				padding-right: 0;
+			}
+
+			&.leftpart{
+				padding-left: 0;
+			}
+
+			&:nth-child(1){
+
+				padding-left: 0;
+				
+			}
+
+			
+		}
+
+		.userpic{
+			.shadowSmall();
+		}
+
+		.items{
+			float: left;
+			height: 100%;
+
+
+			.table{
+				width: auto;
+				height: 100%;
+				>div{
+					padding: @rhythm;
+					padding-right: 0;
+					padding-left: 0;
+					vertical-align: middle;
+				}
+			}
+			&.notificationsWrapper{
+				margin-right : 4 * @rhythm;
+			}
+			&.searchWrapper{
+				display: none;
+				padding-right :  @rhythm;
+
+				.postssearchwrapper{
+					padding : 0;
+				}
+
+				.postssearch{
+					height: 100%;
+					width: 650px;
+
+					.searchInputIcon,
+					.searchInput,
+					.search{
+						height: 100%;
+						width: 100%;
+					}
+
+					.searchInputIcon{
+						>div{
+							vertical-align: middle;
+						}
+					}
+
+					input,
+					.searchInputWrapper,
+					.searchIconLabel{
+						height: 100%;
+					}
+
+					input{
+						color : @color-black2;
+						background: #F8F8F8;
+						height: 65px;
+						border : 0;
+					}
+
+					.searchIconLabel,
+					.searchPanel{
+						color : @color-black2;
+						background: #F8F8F8;
+						border : 0;
+					}
+
+					.searchIconLabel{
+						width: 80px;
+					}
+				}
+			}
+			&.searchIcons{
+				margin-right : 4 * @rhythm;
+
+				.icon{
+					cursor: pointer;
+					.transition(0.3s);
+					&:hover{
+						color : @color-main;
+					}
+				}
+			}
+
+			&.mdl{
+				margin-left : 6 * @rhythm;
+			}
+			.item{
+				width: auto;
+				height: 100%;
+
+
+				.icon{
+					padding: 0;
+					padding-left: @rhythm;
+					padding-right: @rhythm;
+					position: relative;
+					cursor: pointer;
+
+					.amount{
+						position: absolute;
+						left: 50%;
+						top : 50%;
+						padding : 0 @rhythm;
+						min-width: 16px;
+						height: 16px;
+						line-height: 16px;
+						text-align: center;
+						font-size: 0.5em;
+						background: fade(@color-contrast, 80);
+						color : #fff;
+						.shadowSmaller();
+						z-index: 20;
+						border-radius: 50%;
+						display : none;
+					}
+				}
+
+				&.amountHave{
+					.icon{
+						.amount{
+							display : block;
+						}
+					}
+				}
+
+				.label{
+					font-size: 0.95em;
+				}
+
+                &.signout{
+                    margin-right: 6 * @rhythm;
+
+                    .lable{
+                        font-weight: 400;
+                    }
+                }
+
+				
+				&.onlyicon{
+
+					.icon{
+						padding: @rhythm;
+					}
+
+					.count{
+						color: @color-contrast; 
+					}
+				}
+
+				&.newaccount{
+					margin-right : 2 * @rhythm;
+					.prbutton{
+						padding-left: 2 * @rhythm;
+						padding-right: 2 * @rhythm;
+						border-radius: 3 * @rhythm;
+						color : @color-main;
+						cursor: pointer;
+						.transition(0.3s);
+						background : #fff;
+						
+						.shadowSmaller();
+
+						&:hover{
+							.shadowSmall();
+							color : @color-contrast;
+						}
+					}
+					
+
+				}
+
+				&.sitename{
+					.label{
+						font-weight: 700;
+
+					}
+
+					.icon{
+						padding-left: 0;
+					}
+				}
+
+				&.localization{
+					margin-right: 2 * @rhythm;
+					position: relative;
+					
+
+					.label{
+						font-weight: 100;
+						cursor: pointer;
+					}
+					
+					.vc_valuecustom{
+						width: 100px;
+						position: relative;
+
+						.vc_inputWrapper{
+							border: 0;
+						}
+
+						.vc_iconWrapper{
+							border: 0;
+							width: 20px;
+						}
+
+						.vc_selectInput{
+							border: 1px solid @color-gray-slight;
+						}
+
+						input{
+							cursor: pointer!important;
+						}
+					}
+				}
+
+				&.ustate{
+					font-size: 1.2em;
+					color : @color-gray-light;
+					cursor : pointer;
+					.transition(0.3s);
+
+					.waitpreloader{
+						padding-top: 13px;
+						display: none;
+					}
+
+					&:hover{
+						color : @color-main;
+					}
+
+					&.disconected{
+						i{
+							font-size : 0.8em;
+							color : @color-contrast;
+
+							&:before{
+								content : "\f1eb";
+							}
+						}
+					}
+
+					&.wait{
+						.waitpreloader{
+							display: block;
+						}
+
+						i{
+							display: none;
+						}
+					}
+				}
+
+				&.saveCrossObj{
+					margin-right : 4 * @rhythm;
+					cursor: pointer;
+				}
+
+				&.wallets{
+					font-size: 0.8em;
+					font-weight: 700;
+					color : @color-gray;
+					margin-right : 8 * @rhythm;
+					cursor: pointer;
+					.transition(0.3s);
+
+					.icon{
+						width: 30px;
+						opacity: 0;
+						color : #BABABA;
+					}
+
+					&.good{
+						.number{
+							color : @color-good;
+						}
+
+						.icon{
+							opacity: 1;
+							color : @color-good;
+
+							i{
+								
+								&:before{
+									content : "\f067";
+								}
+							}
+						}
+					}
+					&.bad{
+						.number{
+							color : @color-bad;
+						}
+
+						.icon{
+							color : @color-bad;
+							opacity: 1;
+
+							i{
+								&:before{
+									content : "\f068";
+								}
+							}
+
+							
+						}
+					}
+
+
+					&:hover{
+						/*padding-right: 2 * @rhythm;
+						padding-left: 4 * @rhythm;
+						color : @color-main;*/
+						.icon{
+							opacity: 1;
+						}
+					}
+				}
+
+				&.iconround{
+					.icon{
+						.icn{
+							height: 34px;
+							width: 34px;
+							line-height: 34px;
+							text-align : center;
+							border-radius: 50%;
+							background: #F7F8FB;
+							cursor: pointer;
+							.transition(0.3s);
+							.shadowSmall();
+
+							&:hover{
+								background : #211D4B;
+							}
+						}
+						
+					}
+				}
+
+				
+			}
+
+			&.blp{
+				padding-left: 3 * @rhythm;
+			}
+
+			&.hamb{
+				display: none;
+			}
+
+			
+		}
+	}
+
+	.signup,
+    .signout,
+	.signin{
+		cursor: pointer;
+		.transition(0.3s);
+
+		&:hover{
+			color : @color-bright;
+		}
+	}
+
+	.signup{
+		margin-left: 4 * @rhythm;
+	}
+
+	.post{
+		cursor: pointer;
+		text-decoration: underline;
+		.transition(0.3s);
+
+		&:hover{
+			color : @color-bright;
+		}
+	}
+
+	.user{
+		
+	}
+
+	&.aublack{
+		background: fade(@color-black2, 80);
+		color : #fff;
+
+		.currency{
+			display: none;
+		}
+	}
+}
+
+@media only screen and (max-height: 768px) {
+
+
+  
+}
+@media only screen and (max-width: 768px) {
+#menu{
+	z-index: 4;
+	.mobilemenu{
+		display: none;
+
+		position: fixed;
+		top: 50px;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: #F7F8FB;
+		overflow: auto;
+
+		.items{
+			padding : 2 * @rhythm;
+
+			.item{
+				font-size: 1.4em;
+				margin-bottom: @rhythm;
+
+				.signout{
+					margin-top: 2 * @rhythm;
+					font-size: 0.7em;
+				}
+
+			}
+		}
+
+		.close{
+			position: absolute;
+			right:2* @rhythm;
+			bottom: 2* @rhythm;
+			padding : @rhythm;
+			cursor: pointer;
+
+		}
+
+		
+	}
+
+	&.active{
+		.mobilemenu{
+			display: block;
+		}
+	}
+
+	.additionalbar{
+		.sections{
+			padding : 0;
+			.section{
+				.items{
+					.item{
+						>div{
+							padding : 0 2 * @rhythm;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&.searchactive{
+		.sections{
+			
+
+			.items{
+				
+				display: none;
+
+				&.searchIcons{
+					display: none;
+				}
+
+				&.searchWrapper{
+					padding-left: 0;
+					padding-right: 0;
+					display: block;
+				}
+
+				&.mdl{
+					display: none;
+				}
+			}
+		}
+
+		.additionalbar{
+			.sections{
+			
+
+				.items{
+					
+					display: block;
+				}
+			}
+		}
+	}
+
+	
+	
+	.sections{
+		width: 100%;
+		max-width: none;
+		padding : 0 @rhythm;
+		padding-right: 0;
+
+		.section{
+			padding: 0;
+			width: auto;
+
+			&.right{
+				width: auto;
+				float: right;
+				padding-right: 0;
+
+				.items{
+
+				}
+			}
+
+			&.leftpart{
+				float: left;
+
+				.items{
+
+					.item{
+					}
+				}
+			}
+
+			&:nth-child(1){
+				padding-left: 0;				
+			}			
+		}
+
+		.items{
+			float: left;
+			height: 100%;
+
+			&.walletsWrapper{
+				display: none;
+			}
+
+			&.searchIcons{
+				margin-right : 0;
+			}
+
+			&.sitenames{
+				width: auto;
+			}
+
+			.item{
+
+                &.signout,
+				&.signin{
+					text-align: right;
+					padding-right: @rhythm;
+				}
+
+
+
+				&.sitename{
+
+					.icon{
+						
+					}
+				
+					.label{
+						text-align: center;
+						
+					}
+				}
+
+				&.user{
+					margin-right : @rhythm;
+					.userpic{
+						float: right;
+						width: 34px;
+						height: 34px;
+						line-height: 34px;
+						font-size: 0.9em;
+
+					}
+				}
+
+				&.currency{
+					.vc_valuecustom{
+						width: 60px;
+					}
+				}
+
+				
+			}
+
+			&.blp{
+				padding-left: 0;
+				display: none;
+				width: 100%;
+			}
+			/*
+			&.hamb{
+				display: block;
+				width: 30px;
+
+				
+				.item{
+					width: 100%;
+				}
+
+				.icon{
+					text-align: center;
+				}
+				
+			}*/
+
+			&.localizationWrapper{
+				display: none;
+			}
+
+			
+
+		}
+	}
+
+}
+}
+
+
+@media only screen and (max-width: 768px) {
+#menu{
+	background: @color-contrast;
+
+	.sections{
+		.items{
+			.item{
+
+				
+				&.wallets{
+					.amount{
+						display: none;
+					}
+				}
+
+				&.user{
+					margin-right : 0;
+				}
+				
+			}
+
+
+
+			&.hamb{
+
+				.item{
+					width: auto;
+				}
+				
+			}
+
+			&.saveCrossWrapper{
+				display : none;
+			}
+		}
+	}
+}
+}

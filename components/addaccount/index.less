@@ -1,0 +1,107 @@
+@import "../../css/__cssvar";
+
+#addaccount{	
+	.work{
+		padding-top: 4 * @rhythm!important;
+		padding-bottom : 4 * @rhythm!important;
+	}
+	.maket{
+
+		&.leftPart{
+			background: #F7F7F9;
+		}
+	}
+	.caption{
+		font-size: 4.1em;
+		font-weight: 100;
+		margin-bottom : @rhythm!important;
+	}
+
+	button{
+		min-width: 350px;
+
+		&.toRegistration{
+			min-width: 190px;
+		}
+	}
+
+	.inputTable{
+
+		>div{
+			vertical-align: middle;
+
+			.upload .fileUploader, .upload .fileUploader .elContent{
+				position: relative;
+			}
+
+			&.fileUploaderWrapper{
+				width: 90px;
+
+				text-align: center;
+
+				.fileUploader{
+					
+				}
+
+				>div{
+					color : @color-main;
+					font-size: 0.8em;
+				}
+			}
+
+
+		}
+
+	}
+	
+	.sitelogin{
+		.form{
+			margin-top: 3 * @rhythm;
+			.item{
+				margin-bottom: 2 * @rhythm;
+			
+				width: 100%;
+
+				&.e{
+					margin-top: 4 * @rhythm;
+				}
+
+				.label{
+					width: 100%;
+					font-size: 0.9em;
+					color: @color-add;
+					font-weight: 700;
+				}
+
+				input{
+					margin : 0 auto;
+					padding: 2 * @rhythm;
+					width: 100%;
+					font-size: 1.5em;
+					font-weight: 100;
+					background: #fff;
+					color : @color-main;
+					border : 1px solid transparent;
+					.transition(0.4s);
+					
+
+					&:focus{
+						border : 1px solid @color-gray-light;
+						background: #fff;
+						color : @color-black2;
+					}
+				}
+
+				.validationFail{
+
+					color: @color-bad;
+					margin-left: @rhythm;
+					padding: 1.5 * @rhythm @rhythm;
+				}
+			}
+		}
+		
+	}
+
+
+}

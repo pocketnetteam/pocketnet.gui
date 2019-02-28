@@ -1,0 +1,336 @@
+@import "../../css/__cssvar";
+
+#article{
+
+	h1{
+		font-size: 1em;
+	}
+
+	.top{
+		position: fixed;
+		left: 2 * @rhythm;
+		right: 2 * @rhythm;
+		top : 4 * @rhythm;
+		height: 45px;
+
+		
+
+		.item{
+			float: left;
+			margin-right : 10px;
+			line-height: 45px;
+
+			&.right{
+				float: right;
+				margin-right : 0;
+			}
+
+			&.username{
+				cursor: pointer;
+			}
+
+			&.uic{
+				cursor: pointer;
+			}
+
+			&.back{
+				width: 40px;
+				margin-right: 60px;
+				color : @color-gray-slight;
+				margin-left: 20px;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-contrast;
+				}
+			}
+		}
+
+	}
+
+	.topwidthWrapper{
+		max-width: 1280px;
+		margin : 0 auto;
+		height: 100%;		
+	}
+
+	.ready{
+		.iWrapper{
+			width: auto;
+			color : @color-gray2;
+			cursor: pointer;
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-contrast; 
+				border-color: @color-contrast;
+			}
+			>div{
+				vertical-align: middle;
+				padding : 0 @rhythm;
+
+				&:nth-child(1){
+					padding-left : 3 * @rhythm;
+				}
+
+				&:nth-last-child(1){
+					padding-right : 0;
+				}
+
+				&.label{
+				}
+			}
+		}
+	}
+	.art{
+		position: absolute;
+		left: 2 * @rhythm;
+		right: 0;
+		top : 100px;
+		bottom : 0px;
+		padding-top: 4 * @rhythm;
+		overflow-y: auto;
+
+	
+		.topwidthWrapper{
+			padding-left: 105px;
+			padding-bottom : 300px;
+			height: auto;
+		}
+
+		.widthWrapper{
+			max-width: 850px;
+		}
+
+		[contenteditable="true"]{
+			cursor: text;
+			border : 0;
+			outline: 0;
+
+		}
+
+		.content{
+			position: relative;
+			padding-left: 70px;
+		}
+
+		.edt{
+			font-size: 1.4em;
+
+			p{
+				margin-block-start: 0;
+			}
+
+			a{
+				text-decoration: underline;
+			}
+
+			*{
+				box-sizing: content-box;
+			}
+		}
+
+
+
+		.medium-insert-buttons-addons{
+			font-size: 14px;
+			top : -34px;
+		}
+		.medium-editor-placeholder:after {
+		    content: attr(data-placeholder) !important;
+		    font-style: normal;
+		    color : @color-gray-slight;
+		    top : 0;
+		}
+
+		.part{
+			padding-left: 65px;
+
+			.caption{
+				font-weight: 100;
+				font-size: 4.7em;
+				width: 100%;
+				min-height: 60px;
+				padding-bottom: @rhythm;
+			}
+
+			[placeholder]:empty::before {
+			    content: attr(placeholder);
+			    color: @color-gray-slight; 
+			    cursor: text;
+			}
+
+			
+		}
+	}
+
+	.apreloader{
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: fade(#fff, 95);
+		display: none;
+
+		.aprWrapper{
+			>div{
+				vertical-align: middle;
+			}
+
+			.apr{
+				width: auto;
+				height: auto;
+				margin : 0 auto;
+				
+
+				>div{
+					vertical-align: middle;
+					&.rnds{
+						width: 60px;
+					}
+
+					&.label{
+						color : @color-gray2;
+						padding-top : @rhythm;
+					}
+				}
+
+			}
+		}
+	}
+
+	&.loading{
+		.apreloader{
+			display: block;
+		}
+	}
+
+	.plyr__control.plyr__control--overlaid{
+		display: none;
+	}
+
+	.plyr__controls{
+		display: none;
+	}
+}
+.medium-insert-buttons-addons{
+	background: #fff;
+}
+.medium-editor-insert-plugin .medium-insert-buttons button{
+	border-color : @color-gray2;
+	color : @color-gray2;
+}
+.medium-editor-toolbar-form .medium-editor-toolbar-input, .medium-editor-toolbar-form label{
+	width: auto;
+}
+.medium-editor-toolbar-form{
+	padding : 0 @rhythm;
+}
+.wnd{
+	&.articlebtn{
+		._close{
+			display: none;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+#article{
+	.top{
+		left:  @rhythm;
+		right: @rhythm;
+		top : @rhythm;
+
+		.topwidthWrapper{
+			display: table;
+			width: 100%;
+
+			>div{
+				display: table-cell;
+				vertical-align: middle;
+			}
+		}
+
+		.item{
+			&.username{
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			&.back{
+				margin-left: 0;
+				margin-right: 0;
+				width: 40px;
+				padding-right: 10px;
+
+				.icon{
+					text-align: center;
+				}
+			}
+
+			&.ready{
+				width: 30px;
+				.iWrapper {
+					>div{
+						&.label{
+							display: none;
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+
+	
+	.art{
+		
+		left: @rhythm;
+		right: @rhythm;
+		top : 100px;
+		padding-top: @rhythm;
+
+	
+		.topwidthWrapper{
+			padding-left: 0px;
+			padding-bottom : 100px;
+		}
+
+		
+		.edt{
+			font-size: 1em;
+
+			p{
+				margin-block-start: 0;
+			}
+
+			a{
+				text-decoration: underline;
+			}
+
+			*{
+				box-sizing: content-box;
+			}
+		}
+
+		.content{
+			padding-left: 3px;
+		}
+
+		.part{
+			padding-left: 0;
+			.caption{
+				padding-left: 2px;
+				font-size: 3.3em;
+				min-height: 60px;
+			}
+
+			
+		}
+	}
+
+	
+}	
+}

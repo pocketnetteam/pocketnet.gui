@@ -1,0 +1,218 @@
+@import "../../css/__cssvar";
+
+#socialshare{
+	width: 100%;
+	height: 100%;
+
+	.tbl{
+		>div{
+			vertical-align: middle;
+		}
+	}
+
+	.caption{
+		font-size: 1.2em;
+		font-weight: 400;
+		color : @color-gray-slight;
+		text-align: center;
+	}
+
+	.requestwhocaption{
+		font-size: 0.8em;
+		text-align: center;
+		margin-top: @rhythm;
+	}
+
+	.url{
+		margin-top: 20 * @rhythm;
+		font-size: 0.8em;
+		color : @color-gray-slight;
+		text-align: center;
+		padding : 3 * @rhythm 0;
+		border-radius: 3px;
+		background: fade(#000, 60);
+	
+
+		.urlwr{
+			margin : 0 auto;
+			width: 98%;
+			max-width: 500px;
+			overflow : hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.urlwrtable{
+			>div{
+				vertical-align: middle;
+				overflow : hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+				&.copycell{
+					width: 50px;
+					color : @color-main;
+					cursor: pointer;
+					.transition(0.3s);
+					text-align: right;
+
+					&:hover{
+						color : @color-contrast;
+					}
+				}
+			}
+		}
+	}
+
+	.sharewrapper{
+		margin-top: 2 * @rhythm;
+
+	}
+
+	.sharecaption{
+		font-size: 0.8em;
+		font-weight: 400;
+		color : #fff;
+		text-align: center;
+		margin-bottom: 2 * @rhythm;
+	}
+
+	.bignumber{
+		font-size: 8em;
+		font-weight: 100;
+		color : @color-main;
+		text-align: center;
+	}
+
+	.rescued{
+		margin-bottom: 2 * @rhythm;
+	}
+
+	.textAreaWrapper{
+		margin : 2 * @rhythm auto;
+		max-width: 600px;
+
+		textarea{
+			padding : 4 * @rhythm;
+			width: 100%;
+			background: transparent;
+			outline: 0;
+			border: 0;
+			color : #fff;
+			border-radius: 5px;
+			border : 1px solid @color-gray-slight;
+		}
+	}
+
+	.socialsharebtn{
+		width: 50px;
+		height: 50px;
+		background: transparent;
+		border : 0;
+		line-height: 50px;
+		text-align: center;
+		border-radius: 50%;
+		color : #fff; 
+		padding : 0;
+		font-size: 1em;
+		.transition(0.3s);
+		cursor: pointer;
+
+		&:hover{
+			opacity : 0.8;
+		}
+	}
+
+	
+
+	.sharebuttonsTable{
+		width: auto;
+		margin : 0 auto;
+		>div{
+			vertical-align: middle;
+			&.socialWrapper{
+				padding : @rhythm;
+			}
+		}
+	}
+}
+
+
+.wnd.sharingwindow{
+	
+
+	.wndinner{
+		width: 100%;
+		height: 100%;
+		.wndheader{
+			display: none;
+		}
+
+		.wndcontent{
+			top : 0;
+			bottom: 0;
+			padding : 0;
+		}
+
+		>div{
+			&.buttons{
+				display: none;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+#socialshare{
+	width: 100%;
+	height: 100%;
+
+	.url,
+	.sharewrapper{
+		margin-top: 4 * @rhythm;
+		overflow: hidden;
+	}
+
+	.bignumber{
+		font-size: 5em;
+		font-weight: 100;
+		color : @color-main;
+		text-align: center;
+	}
+
+	.socialsharebtn{
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		margin : 0 auto;
+		display: block;
+	}
+
+	.sharebuttonsTable{
+		display: block;
+		>div{
+			width: 25%;
+			display: block;
+			float: left;
+			&.socialWrapper{
+				padding : @rhythm;
+			}
+		}
+	}
+
+}
+.sharingwindow{
+	
+
+	.wndinner{
+		
+
+		.wndcontent{
+			top : 0;
+			bottom: 0;
+			padding : @rhythm;
+		}
+
+	}
+}	
+}

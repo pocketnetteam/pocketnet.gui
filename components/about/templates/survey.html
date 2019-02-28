@@ -1,0 +1,50 @@
+<% 
+
+var s = survey.summary();
+
+if(survey.value && s > 0) {%>
+
+	<div class="results">
+		
+		<% 
+
+
+
+		_.each(survey.answers, function(answer){ 
+
+			var r = survey.findResult(answer.v) || {
+				v : answer.v,
+				count : 0
+			}
+
+		%>
+
+			<div class="result" answer="<%-answer.v%>">
+				<div class="answer table">
+					<div class="answerText"><span><%- answer.t %></span></div>
+					<div class="answerPercent"><span><%- (r.count / s * 100).toFixed(0) %> %</span></div>
+				</div>
+
+				<div class="resultpercentbg">
+					<div class="resultpercent" w="<%-100 * r.count / s%>">
+					</div>
+				</div>
+			</div>
+
+		<% }) %>
+
+	</div>
+
+<% } else { %> 
+
+	<div class="answers">
+		<% _.each(survey.answers, function(answer){ %>
+
+			<div class="answer">
+				<button class="sendanswer ghost" answer="<%-answer.v%>"><%-answer.t%></button>
+			</div>
+
+		<% }) %>
+	</div>
+
+<% } %>

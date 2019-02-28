@@ -1,0 +1,293 @@
+<div id="<%-module.map.id%>">
+
+	<div class="menuWrapper">
+
+		<div class="sections">
+			<div class="section right">
+
+				<% if(!state) { 	%>
+
+				<!--
+
+					<div class="items localizationWrapper">
+
+						<div class="item table right localization">
+							<div class="label"><%= loc.input() %></div>
+						</div>
+
+					</div> --> 
+
+				<% } %>
+
+				<!--
+					<div class="items searchWrapper">
+
+						<div class="item table right" events="searchinit">
+							<div class="postssearchwrapper">
+								<div class="postssearch">
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				
+					<div class="items searchIcons">
+
+						<div class="item table right onlyicon" events="search">
+							<div class="icon">
+								<i class="fas fa-search"></i>
+							</div>
+
+						</div>
+
+					</div>
+-->
+
+				
+				
+
+					<% if(state) { %>
+
+						<div class="items saveCrossWrapper">
+							<div class="item table right onlyicon saveCrossObj" events="savecross">
+
+								<div class="icon">
+									<div class="icn">
+										<div class="savecross"></div>
+									</div>
+									<div class="amount">
+										<%- deep(app, 'platform.sdk.user.storage.me.rc') || 0 %>
+									</div>
+								</div>
+
+								
+
+							</div>
+						</div>
+
+						<div class="items notificationsWrapper">
+							<div class="item table right onlyicon notifications" events="notifications">
+
+								<div class="icon">
+									<div class="icn">
+										<i class="far fa-bell"></i>
+									</div>
+
+									<div class="amount">
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+
+						<div class="items walletsWrapper">
+							<div class="item table right wallets onlyicon" events="wallets">
+
+								<div class="icon">
+									<div class="icn">
+										<i class="fas fa-wallet"></i>
+									</div>
+								</div>
+
+								<div class="amount">
+									<div class="numberWrp">
+										<span class="number">0</span> POC
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+
+						
+
+						<div class="items">
+							<div class="item table right ustate onlyicon hidden" events="ustate">
+
+								<div class="waitpreloader">
+									<div class="preloader5"><span></span><span></span><span></span></div>
+								</div>
+
+								<div class="icon">
+									<div class="icn">
+										<i class="fas fa-exclamation-circle"></i>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<!--<div class="items">
+							<div class="item table right signout" events="signout">
+								<div class="label">
+									Sign Out
+								</div>
+							</div>
+						</div>-->
+
+
+
+						<div class="items">
+							<div class="item table right user" events="userpage">
+
+								<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
+								
+								<div class="icon">
+									<a href="author?address=<%-user.address.value.toString('hex')%>">
+										<div class="usericon" image="<%-src || ''%>">
+
+											<% if(!src) {%>
+
+												<svg width="30" height="30" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
+
+											<% } %>
+
+											
+										
+										</div>
+									</a>
+								</div>
+
+							</div>
+						</div>
+
+						
+
+						
+					<% } else {%>
+
+						
+						<div class="items">
+							<div class="item table right signin" events="signin">
+								<div class="label">
+									<b><%=e('signinmenu')%></b>
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="items workstation">
+
+							<div class="item table right signup" events="signup">
+
+								<div class="label">
+									<b><%=e('signupmenu')%></b>
+								</div>
+
+							</div>
+						</div>
+
+					<% } %>
+				
+			</div>
+			<div class="section leftpart">
+
+				<div class="items sitenames">
+
+					<div class="item table sitename">
+						<div class="icon">
+							<a href="index"><img src="img/logo20.png"></a>
+						</div>
+						<div class="label">
+							<div><a href="index">POCKETNET <span class="workstation">beta</span></a></div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="items mdl workstation">
+
+					<div class="item table">
+						
+						<div class="label">
+							<div><a href="about"><%=e('aboutmenu')%></a></div>
+						</div>
+
+					</div>
+				</div>
+
+
+			</div>
+			
+		</div>
+
+		
+
+		<div class="mobilemenu">
+
+			<div class="items">
+
+				
+
+				<% if(state) { %>
+
+					<div class="itemGroup">
+						
+					</div>
+
+					<div class="item">
+						<div class="label signout" events="signout">
+							<%=e('signout')%>
+						</div>
+					</div>
+
+				<% } %>
+
+
+
+			</div>
+
+			<div class="close" events="hambclose">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="additionalbar">
+
+		<div class="sections">
+			<div class="section">
+
+				<div class="items ">
+
+					<div class="item table">
+
+				
+
+						<div class="taglink">
+							<%=e('tnews')%>
+						</div>
+
+						<div class="taglink">
+							<%=e('timages')%>
+						</div>
+
+						<div class="taglink">
+							<%=e('tvideos')%>
+						</div>
+
+						<div class="taglink">
+							<%=e('tmarket')%>
+						</div>
+
+						<div class="taglink">
+							<%=e('tsport')%>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+		
+	</div>
+
+</div>
+

@@ -1,0 +1,88 @@
+<div class="items table">
+
+	<div class="item">
+
+		<% if(href == 'discussions' || href == 'share' || href == 'userpage' || href == 'author' || href == 'send') { %>
+
+			<div class="item">
+				<a href="index">
+					<div class="iconWrapper">
+						<i class="fas fa-align-justify"></i>
+					</div>
+				</a>
+			</div>
+
+
+		<% } else { %> 
+
+			<% if(href == 'chat') { %>
+
+
+				<a href="discussions">
+					<div class="iconWrapper">
+						<i class="fas fa-chevron-left"></i>
+					</div>
+				</a>
+
+
+			<% } else { %> 
+
+				<a href="discussions">
+					<div class="iconWrapper">
+						<i class="fas fa-comments"></i>
+					</div>
+				</a>
+
+			<% } %>
+
+		<% } %>
+
+		
+	</div>
+
+		
+	<div class="item">
+
+		<% if(href != 'share' && href != 'author' && href != 'send') { %>
+
+			<a href="share">
+				<div class="iconWrapper shr">
+					<i class="fas fa-plus-circle"></i>
+				</div>
+			</a>
+
+		<% } else {%>
+
+			<a href="discussions">
+				<div class="iconWrapper">
+					<i class="fas fa-comments"></i>
+				</div>
+			</a>
+
+		<% } %>
+	</div>
+
+
+	<div class="item">
+
+		<% if(href != 'userpage') { %>
+
+			<a href="userpage?id=wallet&report=wallet">
+				<div class="iconWrapper">
+					<i class="fas fa-wallet"></i>
+				</div>
+			</a>
+
+		<% } else {%>
+
+			<a href="discussions">
+				<div class="iconWrapper">
+					<i class="fas fa-comments"></i>
+				</div>
+			</a>
+
+		<% } %>
+	</div>
+
+
+</div>

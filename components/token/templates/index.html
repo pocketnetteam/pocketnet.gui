@@ -1,0 +1,108 @@
+<div id="<%-module.map.id%>">
+	
+	<% if(type == 'withdrawal') {%>
+		<% if(result) {%>
+			<div class="caption">
+				<%= e('id170') %>
+			</div>
+
+		<% } else {%>
+			<div class="caption">
+				<%= e('id171') %>
+			</div>
+
+			<div class="subcaption">
+				<a href="support"><%= e('id172') %></a>
+			</div>
+		<% } %>
+	<% } %>
+
+	<% if(type == 'activate') {%>
+		<% if(result) {%>
+			<div class="caption">
+				<%= e('id174') %>
+			</div>
+
+		<% } else {%>
+			<div class="caption">
+				<%= e('id175') %>
+			</div>
+
+			<div class="subcaption">
+				<a href="support"><%= e('id172') %></a>
+			</div>
+		<% } %>
+	<% } %>
+
+	<% if(type == 'deal') {%>
+		<% if(result) {%>
+			<div class="caption">
+				<%= e('id176') %>
+			</div>
+
+		<% } else {%>
+			<div class="caption">
+				<%= e('id177') %>
+			</div>
+
+			<div class="subcaption">
+				<a href="support"><%= e('id172') %></a>
+			</div>
+		<% } %>
+	<% } %>
+
+	<% if(type == 'ad') {%>
+		<% if(result) {%>
+			<div class="caption">
+				<%= e('id178') %>
+			</div>
+
+		<% } else {%>
+			<div class="caption">
+				<%= e('id179') %>
+			</div>
+
+			<div class="subcaption">
+				<a href="support"><%= e('id172') %></a>
+			</div>
+		<% } %>
+	<% } %>
+
+	<% if(type == 'invoice') {%>
+		<% if(result) {%>
+
+
+			<div class="caption">
+				Your Invoice has Been Successfully Created
+			</div>
+
+		<% } else {%>
+			<div class="caption">
+				An Error has Occurred During the offer creating process
+			</div>
+
+			<div class="subcaption">
+				<a href="support"><%= e('id172') %></a>
+			</div>
+		<% } %>
+	<% } %>
+
+
+	<% if(result) {%>
+
+		<div class="subcaptionClose">
+			<%= e('id173') %>
+		</div>
+
+	<% } else { %>
+
+		<div class="recom">
+			<%= e('tips') %>:
+		</div>
+		<div class="subcaptionSamePage">
+			<%= e('subcaptionSamePage') %>
+		</div>
+
+	<% } %>
+
+</div>

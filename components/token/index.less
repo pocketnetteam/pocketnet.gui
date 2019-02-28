@@ -1,0 +1,47 @@
+@import "../../css/__cssvar";
+
+#token{
+	.caption{
+		margin-top: 6 * @rhythm;
+		font-size: 1.7em;
+		color : @color-contrast;
+	}
+
+	.subcaptionClose,
+	.subcaption{
+		margin-top: 6 * @rhythm;
+		font-size: 1.3em;
+		color : @color-bright;
+	}
+
+	.recom{
+		margin-top: 6 * @rhythm;
+		font-weight: 700;
+		margin-bottom: @rhythm;
+	}
+
+	.recom,
+	.subcaptionSamePage{
+		
+		font-size: 1em;
+		color : @color-black2;
+	}
+}
+
+
+@media only screen and (max-width: 640px) {
+
+	#token{
+		.caption{
+			margin-top: 3 * @rhythm;
+			font-size: 1.2em;
+		}
+
+		.subcaption{
+			margin-top: 4 * @rhythm;
+			font-size: 1.1em;
+		}
+	}
+
+
+}

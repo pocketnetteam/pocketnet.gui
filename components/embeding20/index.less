@@ -1,0 +1,344 @@
+@import "../../css/__cssvar";
+
+#embeding20{
+	width : 100%;
+	height: 100%;
+
+	.divide{
+		width : 100%;
+		height: 100%;
+
+		>div{
+			width : 50%;
+			padding : 2 * @rhythm;		
+			position: absolute;
+			.transition(0.3s);
+			top: 0;
+			bottom: 0;
+
+			.partPreloader{
+				position: absolute;
+				bottom: 20%;
+				left: 0;
+				right: 0;
+				width : 100%;
+				text-align: center;
+				display: none;
+			}
+			
+			&.leftPart{
+				left: 0;
+				background: #FF0054;
+				background: rgb(5,13,128);
+				background: linear-gradient(180deg, rgba(5,13,128,1) 0%, rgba(255,0,74,0.9416141456582633) 100%);
+				color : #fff;
+
+				.inputWrapper{
+					padding : 2 * @rhythm  4 * @rhythm;
+					input{
+						border: 0;
+						border-bottom: 2px solid #fff;
+						width : 100%;
+						background: transparent;
+						color : #fff;
+						font-size: 1.2em;
+
+					}
+				}
+			}
+
+			&.rightPart{
+				right: 0;
+				background: #FFFFFF;
+
+				.upload{			
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+
+					cursor: pointer;					
+					text-align : center;
+
+					.title{
+						color : @color-main;
+					}
+					.subtitle{
+						font-size: 0.8em;
+						font-weight: 700;
+					}
+				}
+			}
+
+			.partContent{
+				position: absolute;
+				top: 20%;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				width : 100%;
+				overflow: hidden; 
+				.transition(0.3s);
+			}
+
+
+			.caption{
+				text-align: center;
+				font-size: 1.3em;
+				font-weight: 100;
+				padding-bottom: 2 * @rhythm;
+				width : 80%;
+				margin : 0 auto; 
+			}
+		}
+	}
+
+	&.right{
+		.divide{
+			>div{
+				&.leftPart{
+					left: -50%;
+				}
+
+				&.rightPart{
+					width : 100%;
+				}
+
+				.partContent{
+					top : 0;
+					padding-top: 4 * @rhythm;
+				}
+			}
+		}
+	}
+
+	&.left{
+		.divide{
+			>div{
+				&.rightPart{
+					right: -45%;
+				}
+
+				&.leftPart{
+					width : 95%;
+				}
+
+				.partContent{
+					top : 0;
+					padding-top: 4 * @rhythm;
+				}
+			}
+		}
+	}
+
+	.images{
+		overflow: hidden;
+		>div{
+			padding : @rhythm / 2;
+			float: left;
+			width: 33%;
+
+			.imageContainerCnt{
+				position: relative;
+			}
+			.imageWrapper{
+				position: relative;
+
+			}
+
+			img{
+				width: 100%;
+			}			
+
+			.imgpanel{
+				display: none;
+				position: absolute;
+				right: @rhythm;
+				top : @rhythm;
+				background: fade(@color-black, 80);
+				border-radius : 3px;
+				padding : @rhythm / 2;
+				
+				.item{
+					float: right;
+					width: 30px;
+					height: 30px;
+					margin-left: 10px;
+					line-height: 30px;
+					text-align: center;
+					border-radius : 3px;
+					color : fade(@color-gray-slight, 80);
+					cursor: pointer;
+					.transition(0.3s);
+
+					&:hover{
+						background : fade(@color-gray, 60);
+					}
+
+					&:nth-last-child(1){
+						margin-left: 0;
+					}
+
+				}
+			}
+
+			&:hover{
+				.imgpanel{
+					display: block;
+				}
+			}
+
+			.spinnerWrapperCnt{
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				background: fade(#fff, 30);
+
+				.spinnerWrapper{
+					width: 100%;
+					height: 100%;
+
+					>div{
+						vertical-align: middle;
+						text-align: center;
+					}
+				}
+			}
+
+		}
+	}
+
+	.url{
+		.urlcnt{
+
+			.removelink{
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				.transition(0.3s);
+				color : @color-bad;
+
+				&:hover{
+					color : @color-main;
+				}
+			}
+
+			.linkcnt{
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				max-width: 400px;
+				padding : 2 * @rhythm 3 * @rhythm;
+			}
+
+			.videoWrapper{
+				margin-top: @rhythm;
+				margin-bottom : @rhythm;
+			}
+
+			span{
+				font-size: 0.8em;
+				color : @color-main;
+				text-decoration: underline;
+			}
+
+			.urlcnttable{
+				width: auto;
+				display: none;
+				height: auto;
+
+				>div{
+					vertical-align: middle;
+
+					&.removeWrapper{
+						padding-left: @rhythm;
+					}
+				}
+			}
+			
+
+		}
+
+		.urlhtmlcontent{
+			padding: 5 * @rhythm;
+			.ogtable{
+				font-size: 0.8em;
+				>div{
+					vertical-align: top;
+					padding : @rhythm 0;
+
+					&.image{
+						width: 100px;
+						padding-right : 2 * @rhythm;
+
+						img{
+							border-radius : 3px;
+							width: 100%;
+						}
+
+
+					}
+
+					&.cnt{
+						.title{
+							font-weight: 700;
+							color : @color-main;
+						}
+
+						.description{
+							margin-top : @rhythm;
+						}
+					}
+				}
+			}
+		}
+
+		.jsPlayerLoading{
+			display: none;
+		}
+
+		.videoTips{
+			display: none;
+		}
+	}
+}
+
+.embeding20{
+	._close{
+		right: 30px;
+	}
+
+	.wndback{
+		background: transparent;
+		
+	}
+
+	.wndinner{
+		width: 100%;
+		height: 100%;
+		max-height: none;
+		background: transparent;
+
+		>div{
+			&.buttons{
+				display: none;
+				background: transparent;
+			}
+		}
+	}
+	.wndcontent{
+		background: transparent;
+		bottom: 0;
+		top: 0;
+		overflow-y: scroll;
+		padding: 0; 
+	}
+
+
+}

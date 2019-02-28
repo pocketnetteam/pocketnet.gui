@@ -1,0 +1,101 @@
+<% if(url){ 
+
+	var meta = app.platform.parseUrl(url);
+
+	if(typeof share == 'undefined') share = {};
+
+
+	if(meta.type == 'youtube' || meta.type == 'vimeo'){ 
+
+
+	%>
+		<div class="videoWrapper" pid="<%- makeid() %>">
+			<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>">
+				<div class="jsPlayerLoading">
+					<div class="jsPlayerLoadingD table">
+						<div>
+							<div class="preloader5"><span></span><span></span><span></span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="videoTips">
+				<div class="videoTip">
+					<span><%=e('expandvideo')%></span>
+				</div>
+			</div>
+		</div>
+
+	<% } else { %> 
+
+		<% if(og && !_.isEmpty(og)) {%>
+
+			<div class="urlhtmlcontent">
+				<div class="ogtable table">
+					<% if(og.image && !deep(share, 'images.length')) {
+
+						var imagesetting = deep(share, 'settings.image') || 'a'
+
+						if (imagesetting == 'a'){ %>
+
+							<div class="image">							
+								<img src="<%- og.image %>">		
+
+								<div class="removeImage">
+									<i class="fas fa-times-circle"></i>
+								</div>					
+							</div>
+
+						<% } %>
+					<% } %>
+
+					<div class="cnt">
+						<% if(og.title || og.titlePage) {%>
+							<a href="<%- url %>">
+								<div class="title"><%= clearScripts(donottrustLink(findAndReplaceLink(og.title || og.titlePage))) %></div>
+							</a>
+						<% } %>
+
+						<% if(og.description || og.descriptionPage) {%>
+							<a href="<%- url %>">
+								<div class="description"><%= trimHtml(clearScripts(donottrustLink(findAndReplaceLink(og.description || og.descriptionPage))), 100) %></div>
+							</a>
+						<% } %>
+					</div>
+				</div>
+			</div>
+
+		<% } %>
+
+		
+	<% } %> 
+
+	<% if(typeof remove != 'undefined' || (!og || _.isEmpty(og))) {%>
+
+	<div class="urlcnt">
+		<div class="urlcnttable table">
+			<div class="linkcnt">
+				<span>
+					<a href="<%- url %>">
+						<%- url %>
+					</a>
+				</span>
+			</div>
+			<% if(typeof remove != 'undefined') {%>
+
+				<div class="removeWrapper">
+					<div class="removelink">
+						<i class="fas fa-times-circle"></i>
+					</div>
+				</div>
+
+			<% } %>
+			
+	
+
+		</div>
+	</div>
+
+	<% } %>
+
+<% } %>

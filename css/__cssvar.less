@@ -1,0 +1,59 @@
+@rhythm : 0.5em;
+@regular : 'proxima_nova_rgregular';
+@bold : 'proxima_nova_thextrabold';
+@ebold : 'proxima_nova_blblack';
+@light : 'proxima_nova_ltlight';
+
+@color-gray : rgb(60, 65, 70);
+@color-gray2 : rgb(30, 35, 40);
+@color-black : rgb(10, 12, 23);
+@color-black2 : #1F3C46;
+@color-gray-mlight : rgb(178, 171, 172);
+@color-gray-light : rgb(208, 201, 202);
+@color-gray-slight : rgb(228, 221, 222);
+@color-white : #fff;
+
+@color-main : #4AC6F9;
+@color-add : #00CCFF;
+@color-bright : #00A3F7;
+@color-contrast : #FF1975;
+
+
+@color-bad : #F41A4D;
+@color-nrml : #000;
+@color-good : #076C34;
+
+
+@mainTop : 200px;
+@mainLeft : 160px;
+@mainRight : 12 * @rhythm;
+
+
+
+.shadow(){
+    box-shadow: 0 10px 20px -4px rgba(0,0,0,.4);
+}
+
+.shadowSmall(){
+    box-shadow: 0 5px 10px -5px rgba(0,0,0,.4);
+}
+
+.shadowSmaller(){
+    box-shadow: 0 5px 7px -5px rgba(0,0,0,.4);
+}
+
+.transition(@param)
+{
+    -moz-transition: @param ;
+    -o-transition: @param ;
+    -webkit-transition: @param ;
+    transition: @param ;
+}
+
+.transition(@param, @opt)
+{
+    -moz-transition: @opt @param ;
+    -o-transition: @opt @param ;
+    -webkit-transition: @opt @param ;
+    transition: @opt @param ;
+}

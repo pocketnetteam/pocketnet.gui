@@ -1,0 +1,27 @@
+<div class="uploadPhoto">
+	<div class="uploadTable table">
+		<div class="iconWrapper">
+			<div class="icon">
+
+				<% 
+					var src = tempInfo.image 
+				%>
+
+				<div class="usericon" image="<%-src || ''%>">
+
+					<% if(!src) {%>
+
+						<svg width="40" height="40" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
+
+					<% } %>
+				</div>
+			</div>
+		</div>
+
+		<div class="label">
+
+			<%=e('uchangeicon')%>
+
+		</div>
+	</div>
+</div>

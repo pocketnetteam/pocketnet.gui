@@ -1,0 +1,184 @@
+@import "../../css/__cssvar";
+
+#discussions{
+
+	width: 100%;
+	position: relative;
+
+	.disscussionsCaption{
+		padding : @rhythm;
+		margin-bottom: @rhythm;
+
+		span{
+			font-size: 2em;
+			font-weight: 700;
+		}
+	}
+
+	&.forChat{
+		.disscussionsCaption{
+			display : none;
+		}
+	}
+
+	.discussionsWrapper{
+		position: relative;
+		overflow-y: auto;
+	}
+
+	.chatWrapper{
+		display: none;
+	}
+
+	&.forChat{
+		.discussionsWrapper{
+			display: none;
+		}
+
+		.chatWrapper{
+			display: block;
+		}
+	}
+
+	.list{
+		position: relative;
+	}
+
+	.empty{
+		display: none;
+		padding : 2 * @rhythm;
+		text-align: center;
+
+		span{
+			font-size: 0.8em;
+			color : @color-gray-light;
+			
+		}
+	}
+
+	&.sempty{
+
+		.list{
+			display: none;
+		}
+
+		.empty{
+			display: block;
+		}
+	}
+
+	.load{
+		display: none;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: fade(#fff, 80);
+
+		.table{
+			>div{
+				vertical-align: middle;
+				text-align: center;
+			}
+		}
+	}
+
+	&.loading{
+		.load{
+			display: block;
+		}
+	}
+
+	.discussion{
+		padding : @rhythm;
+		min-height: 51px;
+		border-bottom: 1px solid @color-gray-slight;
+		.transition(0.3s);
+
+		&.dempty{
+			opacity: 0;
+		}
+
+		span{
+			font-size: 0.8em;
+		}
+
+		.discussionTable{
+			>div{
+				vertical-align: top;
+				&.author{
+					width: 35px;
+
+					.usericon{
+						width: 35px;
+						line-height: 35px;
+						height : 35px;
+					}
+				}
+
+				&.discussioncnt{
+					cursor: pointer;
+					padding-left: @rhythm;
+
+					.postPreview{
+						
+					}
+				}
+
+				.activity{
+					color: #FF3405;
+				}
+
+				&.panel{
+					width: 30px;
+					text-align: center;
+					color: @color-gray-slight;
+					cursor: pointer;
+
+					.item{
+						.transition(0.3s);
+						&:hover{
+							color: @color-contrast;
+						}
+					}
+				}
+			}
+		}
+
+		.lastMessage{
+			margin-top: @rhythm;
+
+			.ctext{
+				
+			}
+		}
+
+		.lastMessageTable{
+			>div{
+				vertical-align: top;
+				&.lastMessageAuthor{
+					width: 25px;
+
+					.usericon{
+						width: 25px;
+						line-height: 25px;
+						height : 25px;
+						box-shadow: none;
+						background: #fff;
+					}
+				}
+
+				&.message{
+					padding-left: @rhythm;
+				}
+			}
+
+			.lastTime{
+				margin-top: @rhythm;
+				color : @color-main;
+			}
+		}
+	}
+
+}

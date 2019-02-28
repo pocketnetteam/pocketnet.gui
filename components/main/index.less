@@ -1,0 +1,221 @@
+@import "../../css/__cssvar";
+
+#main{
+	background: #2B3F4E;
+	background: #394951;
+	min-height: 1200px;
+
+	
+	
+	.lentacell{
+		margin-right : 350px;
+	}
+
+	.fxd{
+		top : 75px;
+	}
+
+	.fxdsmall{
+		top : 75px;
+	}
+
+	.panel{
+		border-radius:3px;
+	}
+	.work{
+		&.mwork{
+			padding : 0!important;
+		}
+
+		.work{
+			width: 100%!important;
+		}
+	}
+	.caption{
+		font-size: 3.3em;
+		color : @color-main;
+	}
+
+	.bgCaption{
+		height: auto;
+		padding : 2 * @rhythm 0;
+
+		&.sec{
+			color : @color-black;
+			background: #FAFAFA;
+			
+		}
+	}
+
+	#share{
+
+	}
+
+	.share{
+		.work{
+			
+		}
+	}
+
+	.fxdsmall,
+	.fxd{
+		z-index: 10;
+		position: fixed;
+	}
+
+	.smallpanell{
+
+		.iconWrapper{
+			
+			border : 1px solid @color-gray-slight;
+			background: #fff;
+			color : @color-gray;
+			cursor: pointer;
+			height: 44px;
+			width: 44px;
+			line-height: 42px;
+			text-align: center;	
+			border-radius: 50%;
+			.transition(0.3s);
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 2;
+		}
+
+		.itemName{
+			display: none;
+			height: 44px;
+			line-height: 42px;
+			background: #fff;
+			border-radius: 22px;
+			padding : 0 2 * @rhythm;
+			opacity: 0;
+			.transition(0.3s);
+			font-size: 0.8em;
+		}
+
+		.item{
+			position: relative;
+			margin : 0 auto;
+			margin-bottom: @rhythm;
+			height: 44px;
+
+			&.active,
+			&:hover{
+				.iconWrapper{
+					color : @color-main;
+					border-color : @color-main;
+				}
+			}
+
+			&:hover{
+				.iconWrapper{
+					.shadowSmall();
+				}
+				.itemName{
+					.shadowSmall();
+				}
+			}
+
+		}
+		&:hover{
+			
+			.itemName{
+				border : 1px solid @color-main;
+				opacity: 1;
+				display: block;
+				padding-left: 54px; 
+			}
+		}
+	}
+
+}
+
+@media only screen and (max-width: 640px) {
+	#main{
+		min-height: 0;
+
+		.bgCaption{
+			display: none;
+		}
+		
+		.lentacell{
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.fxdsmall{
+			width: 100%;
+			position: static;
+			top : 0;
+		}
+
+		.fxd{
+			display: none;
+		}
+
+		.panel{
+			border-radius:3px;
+		}
+
+		.work{
+			&.mwork{
+				padding : 0!important;
+			}
+
+			.work{
+				width: 100%!important;
+			}
+		}
+		
+
+		#share{
+			max-width: 750px;
+		}
+
+		.share{
+			.work{
+				
+			}
+		}
+
+		.smallpanell{
+			overflow: hidden;
+			background: #EFEFED;
+			padding : @rhythm 0;
+
+			.iconWrapper{
+				position: static;
+				margin : 0 auto;
+			}
+
+			.itemName{
+				display: none;
+			}
+
+			.item{
+				float: left;
+				position: relative;
+				margin : 0;
+				height: auto;
+				width: 33%;
+
+				&.active,
+				&:hover{
+					.iconWrapper{
+						color : @color-main;
+						border-color : @color-main;
+					}
+				}
+			}
+			&:hover{
+				
+				.itemName{
+					display: none;
+				}
+			}
+		}
+
+	}
+}

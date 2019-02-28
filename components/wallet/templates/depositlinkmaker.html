@@ -1,0 +1,71 @@
+<div class="linkForDeposit">
+
+	<div class="linksubcaption"><%=e('wdpleasefill')%></div>
+
+
+
+	<div class="row table">
+		<div class="address">
+			<div class="labelWrapper"><%= d.parameters.depositamount.name %>, <span class="required">*<%=e('required')%></span></div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell"> 
+			<div class="labelWrapper workstation"><%= d.parameters.label.name %></div>
+		</div>
+	</div>
+	<div class="row table">
+		
+		<div class="amount">
+			<div class="inputWrapper">
+				<%= d.parameters.depositamount.input() %>
+			</div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell"> 
+			<div class="labelWrapper mobiledevice abs"><%= d.parameters.label.name %></div>
+			<div class="inputWrapper">
+				<%= d.parameters.label.input() %>
+			</div>
+		</div>
+	</div>
+
+	<div class="row table">
+		<div class="address">
+			<div class="labelWrapper"><%= d.parameters.message.name %>, <span class="required">*<%=e('required')%></span></div>
+		</div>
+
+		<div class="changer">
+
+		</div>
+
+		<div class="cell workstation"> 
+
+		</div>
+	</div>
+
+	<div class="row table">
+		
+		<div class="amount">
+			<div class="inputWrapper">
+				<%= d.parameters.message.input() %>
+			</div>
+		</div>
+	</div>
+
+	<div class="row table">
+		
+		<div class="cell">
+			<button class="disabled getlink"><i class="fas fa-link"></i> <%=e('wdgetlink')%></button>
+		</div>
+
+		
+	</div>
+</div>

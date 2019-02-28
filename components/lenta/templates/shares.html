@@ -1,0 +1,20 @@
+<% 
+var i = index || 0;
+
+_.each(shares, function(share){
+
+if (share.txid == '84cc877c67f305374258f4c9d618366870bddedb8a425260de995c675f7c7c8b' || share.address == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82') {
+	return
+}
+	
+ %>
+	<div class="share" id="<%-share.txid%>" style="">
+		<div class="shareSpacer">
+			
+		</div>
+	</div>
+<% 
+
+i++;
+
+}) %>

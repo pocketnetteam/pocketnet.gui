@@ -1,0 +1,59 @@
+<% 
+
+	var icClass = '';
+
+	if (images.length == 1) icClass = 'one';
+	if (images.length == 2) icClass = 'two';
+	if (images.length == 4) icClass = 'four';
+
+if(images.length){ %>
+
+<div class="imagesEmbWr">
+
+
+
+		<% _.each(images, function(image, index){ %>
+
+			<div class="imageContainer <%-icClass%>" value="<%-index%>">
+
+				<% if(image.src || image.base64) { %>
+					<div class="imageWrapper">
+						<img src="<%- image.src || image.base64 %>" i="<%-image.src%>">
+							
+
+						<% if(image.loading) { %>
+							<div class="spinnerWrapperCnt">
+								<div class="spinnerWrapper table">
+									<div class="spinnerContainer">
+										<div class="previewSpinner">
+											<div class="preloader5"><span></span><span></span><span></span></div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						<% } %>
+
+						
+						<div class="imgpanel">
+							<div class="item remove">
+								<i class="fa fa-times" aria-hidden="true"></i>
+							</div>
+
+							<div class="item edit">
+								<i class="fas fa-magic"></i>
+							</div>
+						</div>
+					</div>
+
+					
+					
+				<% } %>
+
+			</div>
+			
+		<% }) %>
+
+</div>
+<% } %>
+

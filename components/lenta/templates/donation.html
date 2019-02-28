@@ -1,0 +1,40 @@
+<div class="donations">
+	<div class="pnetdonation part">
+		<div class="label">
+			<%=e('donationwel')%>
+		</div>
+		<div class="buttonwrapper">
+			<button class="pnetdnt"><%=e('donationwela')%></button>
+		</div>
+	</div>
+
+	<% if(userinfo.addresses.length) {%>
+
+		<div class="anotherdonation part">
+			<div class="label">
+				<%=e('donationwelan')%>
+			</div>
+			
+			<div class="addresses">
+				<% _.each(userinfo.addresses, function(address){ %> 
+					<div class="addressWrapper">
+						<div class="address table">
+							<div class="copywr">
+								<div class="copy"><i class="far fa-copy"></i></div>
+							</div>
+
+							<div class="system"><%- address.currency.toUpperCase() %></div>
+
+							<div class="addr"><%- address.address %></div>
+
+							
+						</div>
+					</div>
+
+				<% }) %>
+			</div>
+		</div>
+
+	<% } %>
+	
+</div>

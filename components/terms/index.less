@@ -1,0 +1,71 @@
+@import "../../css/__cssvar";
+
+#terms{
+	padding-left: 15%;
+	.caption{
+		margin-top: 6 * @rhythm;
+		font-size: 1.9em;
+		color : @color-gray;
+	}
+
+	.text{
+		color : @color-black2;
+		max-width: 700px;
+		margin-top: 4 * @rhythm;
+		margin-bottom: 8 * @rhythm;
+
+		p{
+			margin-top : 4 * @rhythm;
+			margin-bottom : 4 * @rhythm;
+
+
+			a{
+				color : @color-main;
+			}
+
+			&.subcaption{
+				text-transform: uppercase;
+				margin-bottom : 2 * @rhythm;
+				color: @color-bright;
+				font-size: 1.1em;
+			}
+
+			&.subcaption2{
+				text-transform: uppercase;
+				margin-bottom : 2 * @rhythm;
+				margin-top: 6 * @rhythm;
+				color: @color-main;
+				font-size: 1.1em;
+				font-weight: 500;
+			}
+
+			&.bright{
+				color : @color-contrast;
+			}
+
+
+		}
+	}
+}
+.wnd{
+	#terms{
+		.text{
+			color : @color-gray-slight;
+		}
+
+		.caption{
+			color : @color-gray-light;
+		}
+	}
+}
+@media only screen and (max-width: 768px) {
+	#terms{
+		padding-left:  0;
+	}
+	.wnd{
+		#terms{
+			padding-left: 2 * @rhythm;
+			padding-right:  @rhythm;
+		}
+	}
+}

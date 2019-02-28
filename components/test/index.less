@@ -1,0 +1,757 @@
+@import "../../css/__cssvar";
+
+#test{
+	min-height: 600px;
+	background: #F7F7F7;
+	.caption{
+		max-width: 700px;
+		padding-top: @rhythm;
+		font-size : 3em;
+		font-weight: 100;
+		color : @color-main;
+
+		.sub{
+			color : @color-gray2;
+			font-size: 0.4em;
+		}
+	}
+
+
+
+	.userPanel{
+		padding : 4 * @rhythm 0;
+		position: relative;
+
+		.upanelloader{
+			display: none;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			padding :  4 * @rhythm 4 * @rhythm;
+			background: fade(#F7F7F7, 90);
+
+			.table{
+				>div{
+					vertical-align: middle;
+					text-align: center;
+				}
+			}
+		}
+
+		&.loading{
+			.upanelloader{
+				display: block;
+			}
+		}
+		
+
+		.pgroup{
+			padding-bottom: 6 * @rhythm;
+		}
+
+		.uploadPhoto{
+			height: 60px;
+		}
+
+		.uploadTable{
+
+			>div{
+				vertical-align: middle;
+				&.iconWrapper{
+
+					width : 85px;
+					.usericon{
+						width : 60px;
+						height: 60px;
+						line-height: 60px;
+					}
+					
+				}
+
+				&.label{
+					font-weight: 700;
+					font-size: 0.9em;
+					color : @color-main;
+				}
+			}
+		}
+		.parameter{
+		}
+
+		.referalMaketWrapper{
+			margin-top : @rhythm;
+			>div{
+				vertical-align: middle;
+
+				&.refLabel{
+					padding-top: @rhythm;
+					padding-right : @rhythm;
+					width: 190px;
+
+					.span{
+						color : @color-main;
+						font-weight: 700;
+					}
+				}
+
+				.refNameTable{
+
+					>div{
+						vertical-align: middle;
+
+						&.refAv{
+							width: 40px;
+
+							.usericon{
+								width: 40px;
+								height: 40px;
+							}
+						}
+						&.refName{
+							padding-left: 2 * @rhythm;
+							padding-right: 2 * @rhythm;
+						}
+
+						&.refRemove{
+							width: 30px;
+							text-align: center;
+							.transition(0.3s);
+							cursor: pointer;
+
+							&:hover{
+								color : @color-contrast;
+							}
+						}
+
+
+					}					
+				}
+			}
+		}
+
+		.parameter{
+
+			max-width: 600px;
+
+			.picker{
+				select{
+					height: auto;
+				}
+			}
+
+			>div{
+				padding: @rhythm 0;
+				vertical-align: top;
+			}
+
+			.pName{
+				vertical-align: top;
+				padding-top: 2 * @rhythm;
+				padding-right : @rhythm;
+				width: 190px;
+
+				.pNameW{
+					padding-top : @rhythm  / 3;
+					font-weight: 700;
+					font-size: 0.8em;
+					line-height: 1.4em;
+				}
+
+				.unit{
+					font-weight: 700;
+					color : @color-bright;
+				}
+
+				.require{
+					color : @color-bad;
+				}
+			}
+
+			
+			.pInput{
+				position: relative;
+				vertical-align: top;
+
+				.echo{
+					padding: @rhythm;
+					color : @color-contrast;
+					font-weight: 700;
+				}
+
+				.vm_valuesmulti{
+					padding-top: @rhythm / 2;
+				}
+
+
+			}
+
+			.panel{
+				vertical-align: top;
+				padding-top: 2 * @rhythm;
+				width: 20px;
+
+				.clear{
+					text-align: right;
+					cursor: pointer;
+					color : @color-gray-slight;
+					.transition(0.3s);
+					&:hover{
+						color : @color-main;
+					}
+				}
+				
+			}
+
+			select,
+			textarea,
+			input{
+				width: 100%;
+				padding: @rhythm;
+				border : 1px solid @color-gray-light;
+				border-radius: 2px;
+
+				&.error{
+					border : 1px solid @color-bad;
+				}
+			}
+
+			.error{
+				select,
+				textarea,
+				input{
+					border : 1px solid @color-bad;
+				}
+				
+			}
+
+			select{
+				height: 38px;
+				padding-right: 25px;
+				width: auto;
+			}
+
+			
+
+			.vc_valuecustom{
+				width: 100%;
+			}
+
+			.vc_valuecustom,
+			.vc_valuecustom_multibig{
+				.vc_textInput{
+					background: #fff;
+				}
+			}
+
+			.vmt_valuesmultitree,
+			.vm_value{
+				padding : 0;
+				.checkbox{
+					&+label {
+				        &:before {
+				        	font-size : 1.6em;
+				        	line-height: 19px;
+				        }
+				    }
+				}
+			}
+
+			
+		}
+		.parameterMaketWrapper {
+			&[parameter="addresses"]{
+				.parameter{
+					max-width: 800px;
+				}
+			}
+
+			&[parameter="ref"]{
+				display: none;
+			}
+		}
+		.subcaption{
+			color : @color-contrast;
+			margin-bottom : 2 * @rhythm;
+			font-size: 1.8em;
+			font-weight: 100;
+		}
+
+		.upanel{
+			margin-top: 2 * @rhythm;
+			overflow: hidden;
+			>div{
+				float: left;
+				margin-right: 2 * @rhythm;
+
+				button{
+					min-width : 170px;
+					
+					&.cancel{
+
+					}
+				}
+
+				.save{
+					cursor: default;
+					background: @color-gray;
+					border-color : @color-gray;
+					color: #fff;
+				}
+
+				&.loadingToB{
+
+					display: none;
+
+					.label{
+						font-weight: 500;
+						font-size: 0.85em;
+						color : @color-main;
+						padding-top : @rhythm;
+					}
+				}
+
+				&.cancelwr{
+					display: none;
+
+				}
+			}
+
+
+
+			&.changes{
+				>div{
+					float: left;
+					margin-right: 2 * @rhythm;
+
+					.save{
+						cursor: pointer;
+						background: @color-main;
+						border-color : @color-main;
+
+						&:hover{
+							background : @color-add;
+						}
+					}
+
+					&.cancelwr{
+						display: block;
+					}
+				}
+				
+			}
+
+			&.wait{
+				>div{
+					display: none;
+
+					&.cancelwr{
+						display: none;
+					}
+
+					&.loadingToB{
+						display: block;
+					}
+				}
+			}
+		
+		}
+
+	}
+
+	&.firstTime{
+		.userPanel{
+			.parameterMaketWrapper {
+				&[parameter="ref"]{
+					display: block;
+				}
+			}
+		}
+	}
+	
+	.testPanel{
+		padding-top : 2 * @rhythm;
+		padding : 2 * @rhythm 4 * @rhythm;
+		.showhidetestpanel{
+
+			margin-bottom: 2 * @rhythm;
+			font-size: 0.8em;
+			text-decoration: underline;
+			color : @color-main;
+			cursor: pointer;
+		}
+
+		.mwr{
+			display: none;
+		}
+
+		&.active{
+			.mwr{
+				display: block;
+			}
+		}
+	}
+
+	.adressesInput{
+
+		.addaddress{
+			width: 40px;
+			height: 40px;
+			line-height: 38px;
+			text-align: center;
+			border : 1px solid @color-gray-light;
+			color : @color-gray-light;
+			cursor: pointer;
+			border-radius: 50%;
+			font-size: 0.8em;
+
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-main;
+				border-color: @color-main;
+			}
+		}
+
+		.addedAddressesWrapper{
+			.addedAddressWrapper{
+				margin-top: @rhythm;
+				background: #fff;
+				border-radius: 30px;
+				padding : 0 @rhythm;
+				.shadowSmaller();
+
+				.addedAddress{
+
+					
+					
+					>div{
+						padding : @rhythm;
+						vertical-align: middle;
+
+						&.currencyWrapper{
+							width: 80px;
+							font-weight: 700;
+							color : @color-main;
+						}
+
+						&.panelWrapper{
+							width: 40px;
+
+							.item{
+								width: 100%;
+								text-align: center;
+								cursor : pointer;
+								color : @color-gray-light;
+								.transition(0.3s);
+
+								&:hover{
+									color : @color-bad;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		
+	}
+
+	.signout{
+		margin-top : 2 * @rhythm;
+		margin-bottom : 2 * @rhythm;
+		font-size: 0.8em;
+		color : @color-contrast;
+		cursor: pointer;
+		text-decoration: underline;
+
+		&:hover{
+			color : @color-gray;
+		}
+	}
+
+	.iwrapper{
+		padding: @rhythm 0;
+
+		input{
+			width : 400px;
+		}
+	}
+
+	.mwr{
+		padding-top : 2 * @rhythm;
+	}
+
+	.optionInput{
+		width: auto;
+
+		>div{
+			vertical-align: middle;
+			padding : @rhythm;
+
+			&.label{
+				width: 200px;
+			}
+
+			.vc_valuecustom{
+				width: 400px;
+			}
+
+			&:nth-child(1){
+				padding-left : 0;
+			}
+		}
+	}
+
+	.unspentlist{
+		padding : 4 * @rhythm 0;
+
+		.caption{
+			font-weight: 700;
+			padding : 2 * @rhythm 0;
+		}
+
+		.unspentData{
+			>div{
+				vertical-align: top;
+				width: 50%;
+				padding-right : 2 * @rhythm;
+			}
+
+			.cpt{
+				margin-bottom: 2 * @rhythm;
+				color : @color-main;
+			}
+		}
+	}
+
+	.transactionInfo{
+		margin-top: 2 * @rhythm;
+		max-width: 900px;
+
+		.tratable{
+			.table{
+				>div{
+					vertical-align: top;
+					padding : @rhythm;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					&.label{
+						padding-left: 0;
+						width: 30%;
+					}
+				}
+			}
+		}
+
+		.panel{
+			margin-top: 2 * @rhythm;
+		}
+
+	}
+}
+
+.addaddressDialog{
+
+	background: fade(#151722, 95);
+	color : #fff;
+
+	.thwrapper{
+		background: transparent;
+		border : 0;
+		box-shadow: none;
+		
+	}
+
+	._close{
+		color : fade(#fff, 90);
+	}
+
+	.buttons{
+		>div{
+			float: none;
+			margin : 0 auto;
+			width: 200px;
+
+			button{
+				width: 100%;
+			}
+		}
+	}
+
+	.addaddress{
+		
+		
+		.caption{
+			text-align: center;
+			color : @color-contrast;
+		}
+
+		.inputsWrapper{
+			margin-top: 2 * @rhythm;
+
+			.inputsWrapperTable{
+				>div{
+					vertical-align: middle;
+					&.curWrapper{
+						width: 150px;
+
+						select{
+							border : 0;
+							background: transparent;
+							border-bottom : 2px solid @color-contrast;
+							width : 100%;
+							height: 60px;
+							color : @color-main;
+							-webkit-appearance: none;
+						    background-image: url(../../img/arrow_wh.png);
+						    background-position: right 10px center;
+						    background-repeat: no-repeat;
+						}
+					}
+
+					&.addressWrapper{
+						input{
+							width : 100%;
+							border : 0;
+							background: transparent;
+							border-bottom : 2px solid @color-contrast;
+							color : #fff;
+							height: 60px;
+						}
+					}
+				}
+			}
+
+
+
+			
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	#test{
+
+		background: #fff;
+		padding : 0 @rhythm;
+		.work{
+			
+		}
+
+		.caption{
+			padding-top: 2 * @rhythm;
+			font-size : 2em;
+			font-weight: 300;
+		}
+
+		.userPanel{
+
+			.upanelloader{
+				background: fade(#FFF, 90);
+			}
+
+			
+			.parameter{
+
+				max-width: none;
+				display: block;
+
+				>div{
+					padding: 0;
+					display: block;
+				}
+
+				.pName{
+					width: 100%;
+					padding-bottom : @rhythm;
+				}
+
+				
+				.pInput{
+					width: 100%;
+
+					
+
+
+				}
+
+				
+
+				
+			}
+
+			.upanel{
+				>div{
+					width: 50%;
+					margin-right : 0;
+					button{
+						width: 100%;
+						min-width : 0;
+						
+					}
+				}
+
+				&.changes{
+					>div{
+						margin-right: 0;
+
+						
+					}
+					
+				}
+			}
+			
+
+		}
+
+		.adressesInput{
+
+			.addaddress{
+				width: 100%;
+				border-radius: 20px;
+				height: 35px;
+				background: #fff;
+				line-height: 33px;
+			}
+
+			
+		}
+	}
+
+	.addaddressDialog{
+
+		.thwrapper{
+			position: static;
+		}
+
+		.addaddress{
+			
+
+			.inputsWrapper{
+
+				.inputsWrapperTable{
+					display: block;
+					>div{
+						display: block;
+						width:  100%;
+						&.curWrapper{
+
+							width:  100%;
+							select{
+								border-radius: 0;
+							}
+						}
+
+					}
+				}
+
+
+
+				
+			}
+		}
+	}
+}

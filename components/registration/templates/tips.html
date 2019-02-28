@@ -1,0 +1,32 @@
+<% if(!last) {%>
+<div class="tips">
+	<div class="work">
+		<div class="stepTable table">
+			<div class="numberWr">
+				<div class="number">
+					1
+				</div>
+			</div>
+
+			<div class="stepContent">
+				<div class="subcaption">
+					<%=e('rtip1')%>
+				</div>
+
+				<div class="tip">
+
+					<%=e('rtip2', isMobile())%>
+				
+				</div>
+
+				<div class="panel">
+					<div class="item">
+						<button class="generate"><%=e('generatepkey')%> <i class="fas fa-chevron-circle-right"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<% } %>

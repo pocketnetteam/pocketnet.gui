@@ -1,0 +1,97 @@
+<div class="slideWrapper">
+
+	<div class="subcaptionWrapperTableCnt">
+		<div class="subcaptionWrapperTable table">
+			<div class="subcaption">
+				<span><%=e('waddresses').toUpperCase()%></span>
+			</div>
+			<div class="panel">
+				
+			</div>
+		</div>
+	</div>
+
+	
+
+	<div class="adressesTable captionTable table">
+		<div class="name">
+			<span><%=e('waddress').toUpperCase()%></span>
+		</div>
+
+		<div class="panel">
+			
+		</div>
+
+		<div class="balance">
+			<span><%=e('wbalance').toUpperCase()%></span>
+		</div>
+
+		<div class="percent">
+			<span><%=e('wpercente').toUpperCase()%></span>
+		</div>
+		
+	</div>
+
+	<% _.each(addressesGroup, function(ag){
+
+
+		if(!ag.details.length) return
+
+
+	 %>
+
+		<div class="addressesGroup">
+
+			<% if(ag.caption) {%>
+
+				<div class="addressesGroupCaption">
+					<span><%- ag.caption %></span>
+				</div>
+
+			<% } %>
+
+			<% _.each(ag.details, function(ad){ %> 
+
+				<div class="adressesTable table">
+					<div class="name">
+						<div class="addresscode"><span><%- ad.address %></span></div>
+						<% if(ag.label) {%>
+						<div class="alabel"><%-ag.label%></div>
+						<% } %>
+					</div>
+
+					<div class="panel">
+			
+					</div>
+				
+
+					<div class="balance">
+						<span><%- app.platform.mp.coin(ad.balance) %></span>
+					</div>
+
+					<div class="percent">
+						<% if(total > 0) {%>
+							<span><%- (100 * ad.balance / total).toFixed(1) %> %</span>
+						<% } else {%> 
+
+							<span>&mdash;</span>
+
+						<% } %>
+						
+					</div>
+					
+				</div>
+
+			<% }) %>
+
+		</div>
+
+	<% }) %>
+
+	<div class="bottomPanel">
+		<div class="item addaddress">
+			<button><i class="fas fa-plus-circle"></i> <%=e('waddaddress')%></button>
+		</div>
+	</div>
+
+</div>

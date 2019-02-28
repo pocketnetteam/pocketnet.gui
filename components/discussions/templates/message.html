@@ -1,0 +1,34 @@
+<div class="lastMessageTable table">
+
+	<% 
+
+		var n = deep(app, 'platform.sdk.usersl.storage.'+message.f+'.name') || message.f
+
+		var src = deep(app, 'platform.sdk.usersl.storage.'+message.f+'.image')
+
+	%>
+
+	<div class="lastMessageAuthor">
+
+		<div class="icon">
+			<div class="usericon" image="<%-src || ''%>">
+
+				<% if(!src) {%>
+					<svg width="20" height="20" data-jdenticon-value="<%-message.f%>"></svg>
+				<% } %>
+				
+			</div>
+		</div>
+
+		
+	</div>
+
+	
+
+	<div class="message">
+
+		<span><b><%- n %>:</b> <%= filterXSS(emojione.toImage(trimHtml(message.m, 50)))%></span>
+
+	</div>
+
+</div>

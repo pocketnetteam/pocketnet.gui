@@ -1,0 +1,129 @@
+@import "../../css/__cssvar";
+
+#complain{
+
+	padding : 2 * @rhythm;
+	position: relative;
+	height: 100%;
+	width : 100%;
+
+	.cwrapper{
+		position: relative;
+		height: 100%;
+		width : 100%;
+	}
+
+	.caption{
+		font-size: 1.4em;
+	}
+
+
+	.cbuttons{
+		overflow-y: hidden;
+		>div{
+			float: right;
+
+			button{
+				min-width: 140px;
+			}
+		}
+	}
+
+	.reasons{
+
+		overflow-y: auto;
+
+		.reason{
+			margin-bottom: @rhythm;
+			.reasonWrapper{
+				cursor: pointer;
+
+				>div{
+					vertical-align: middle;
+					&.bulletWrapper{
+						width: 40px;
+					}
+				}
+			}
+
+			.bullet{
+				width: 26px;
+				height: 26px;
+				cursor : pointer;
+				position: relative;
+				border-radius: 50%;
+				border: 2px solid @color-gray-light;
+			}
+
+			.reasongroup{
+				display: none;
+
+				.reasongroupIn{
+					padding : @rhythm;
+					padding-left: 40px;
+				}
+			}
+
+			.vc_valuecustom{
+				width: 100%;
+			}
+
+			&.active{
+				.bullet{
+					&:after{
+						content : '';
+						position: absolute;
+						left: 3px;
+						right: 3px;
+						top: 3px;
+						bottom : 3px;
+						background: @color-contrast;
+						border-radius: 50%;
+					}
+				}
+
+				.reasongroup{
+					display: block;
+				}
+			}
+		}
+
+	}
+}	
+
+.wnd.complain{
+	.wndinner{
+		max-width: 550px;
+	}
+
+	.wndcontent{
+		top : 0;
+		overflow: hidden; 
+	}
+
+	#complain{
+		.caption{
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 55px;
+			position: absolute;
+		}
+
+		.reasons{
+			position: absolute;
+			top: 55px;
+			bottom : 55px;
+			left: 0;
+			right: 0;
+		}
+
+		.cbuttons{
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 55px;
+			position: absolute;
+		}
+	}
+}

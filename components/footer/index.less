@@ -1,0 +1,223 @@
+@import "../../css/__cssvar";
+
+#footer{
+	position: relative;
+	width: 100%;
+	height: 100%;
+    
+
+	.footerCenterWrapper{
+        width: 95%;
+        max-width: 1480px;
+        margin : 0 auto;
+        height: 100%;
+        padding-top: 10*@rhythm;
+        padding-bottom: 10*@rhythm;
+        padding-left: 2 * @rhythm;
+        padding-right: 2 * @rhythm;
+    }
+
+
+    .ftcWrapper{
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        .ye{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            font-size: 0.8em;
+        }
+    }
+
+    .localization{
+        position: relative;
+        color: @color-black;
+        
+        .vc_valuecustom{
+            float: right;
+            width: 140px;
+            position: relative;
+
+            .vc_inputWrapper{
+                input{
+                    text-align: right;
+                    color: #fff;
+                    padding-right: 0;
+                }
+                
+            }
+
+            .vc_inputWrapper{
+                border: 0;
+            }
+
+            .vc_iconWrapper{
+                border: 0;
+                width: 20px;
+            }
+
+            .vc_selectInput{
+                border: 1px solid @color-gray-slight;
+            }
+
+            input{
+                cursor: pointer!important;
+            }
+        }
+    }
+
+    .footerTable{
+        width: 100%;
+        height: 100%;
+
+        >div{
+            vertical-align: top;
+
+            &.logoCellWrapper{
+                width: 350px;
+
+
+            }
+
+            .logoWrapper{
+                overflow: hidden;
+                >div{
+                    float: left;
+                }
+
+                .icon{
+                }
+
+                .label{
+
+                    padding-top: 2px;
+                    font-weight: 700;
+                    padding-left: @rhythm;
+                }
+            }
+
+            .socialWrapper{
+                margin-top: 4 * @rhythm;
+                .table{
+                    width: auto;
+
+                    >div{
+                        padding : @rhythm;
+                        padding-left: 0;
+
+                        .swr{
+                            width: 30px;
+                            height: 30px;
+                            line-height: 30px;
+                            text-align: center;
+                            vertical-align: middle;
+                            cursor: pointer;
+                            background: #181821;
+                            border : 1px solid @color-bright;
+                            opacity: 0.7;
+                            .transition(0.3s);
+                            cursor: pointer;
+                            color : #5F6268;
+                            border-radius: 50%;
+
+                            &.y{
+                                line-height: 28px;
+                            }
+                            &.t{
+                                line-height: 29px;
+                            }
+                            &.v{
+                                line-height: 28px;
+                            }
+
+                            &:hover{
+                                opacity : 1;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        .footerContentTableWrapper{
+            float: right;
+            height: 100%;
+
+            .footerContentTable{
+                width: auto;
+                height: 100%;
+
+                >div{
+                    vertical-align: top;
+                    padding : @rhythm 5 * @rhythm;
+
+                    &:nth-last-child(1){
+                        padding-right: 0;
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 640px) {
+#footer{
+   
+    .footerCenterWrapper{
+        width: 100%;
+        max-width: none;
+        padding-top: 6*@rhythm;
+        padding-bottom: 6*@rhythm;
+        padding-left: 2*@rhythm;
+        padding-right: 2*@rhythm;
+    }
+
+
+
+    .footerTable{
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        >div{
+             display: block;
+
+            &.logoCellWrapper{
+                width: 100%;
+            }
+
+            .socialWrapper{
+                margin-top: 2 * @rhythm;
+            }
+
+            
+        }
+
+
+
+        .footerContentTableWrapper{
+            margin-top: 4 * @rhythm;
+            float: right;
+            height: 100%;
+
+            .footerContentTable{
+                width: 100%;
+                height: 100%;
+
+                >div{
+                    padding : @rhythm;
+
+                    &:nth-last-child(1){
+                        padding-right: 0;
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+}
+}

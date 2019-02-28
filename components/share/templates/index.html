@@ -1,0 +1,235 @@
+
+<% 
+
+var arranges = {
+	
+	cm : function(){ %> 
+
+		<div class="cpt">
+			<input type='text' value="" class="captionshare" placeholder="<%=e('scaption')%>">
+		</div>
+		<div class="txt">
+			<div class="message" placeholder="<%=e('whatsnew')%>" id='emjcontainer'></div>
+		</div>
+		
+	<% },
+
+	
+
+	i : function(){ %> 
+		<div class="imagesWrapper attachements"></div>
+	<% },
+
+	u : function(){ %> 
+		<div class="urlWrapper attachements"></div>
+	<% }
+
+}
+
+
+%>
+
+<div id="<%-module.map.id%>" class="">
+	<div class="mobilecaption">
+		<span><%=e('newShare')%></span>
+	</div>
+	<div class="txtwrapper table">
+
+		<div class="iconWrapper">
+
+			<% 
+			
+				var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || ''  
+
+				if(!src && !essenseData.daddress){
+					src = deep(app, 'platform.sdk.user.storage.me.image') || ''
+				}
+
+			%>
+	
+			<div class="icon">
+				<div class="usericon" image="<%-src%>">
+					<% if(!src) {%>
+						<svg width="30" height="30" data-jdenticon-value="<%-essenseData.daddress || user.address.value.toString('hex')%>"></svg>
+					<% } %>
+				</div>
+			</div>
+
+		</div>
+		<div class="shareWrapper">
+
+			<% if((deep(essenseData, 'pack.addresses.length') || 0) > 1) {%>
+
+				<div class="changeAddressWrapper">
+
+					<select class="changeAddress">
+						<% _.each(deep(essenseData, 'pack.addresses'), function(address){ 
+
+							var selected = '';
+
+
+
+							if(address == (essenseData.daddress || user.address.value.toString('hex'))) selected = 'selected'
+
+							var label = deep(app, 'platform.sdk.users.storage.'+address+'.name') || address
+
+						%> 
+
+							<option value="<%-address%>" <%-selected%>><%-label%></option>
+
+						<% }) %>
+					</select>
+
+				</div>
+
+			<% } %>
+
+			
+
+			
+
+			<% var a = share.settings.a || share.default.a %>
+
+			<div id="sortableBody">
+
+				<% _.each(a, function(key, i){ 
+
+					if(!arranges[key]) return;
+				 %> 
+
+					<div class="draggablepart" part="<%-key%>">
+						<div class="draggablewrapper table">
+							<div class="draggablecontent">
+								<% arranges[key]() %>
+							</div>
+							<div class="draggablemarkerwrapper">
+								<div class="marker">
+									<i class="fas fa-ellipsis-v"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				<% }) %>
+			</div>
+			
+
+			
+
+			<!-- ----------------------- -->
+		
+			<div class="sortablepaddingspacer">
+
+				<div class="tgs">
+					<div class="tagsWrapper table">
+						<div class="tagsInputWrapper">
+							<div class="inputWrapper">
+								<div class="searchWrapper"></div>
+							</div>
+						</div>
+
+						<div class="tagsCont">
+						</div>
+					</div>
+				</div>
+				
+
+				<div class="postpanel table">
+					<div class="panelWrapper">
+						<div class="panel">
+							<!--<div class="item" embeding="embeding20">
+								<i class="fas fa-plus"></i>
+							</div>-->
+
+							<div class="item url tooltip" embeding="url" title="<%=e('saddlink')%>">
+								<i class="fas fa-external-link-alt"></i><span class="mobiledevice"><%=e('saddlink')%></span>
+							</div>
+							<div class="item images tooltip" embeding="images" title="<%=e('saddimages')%>">
+								<i class="fas fa-image"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
+							</div>
+							
+							<div class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
+								<i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="postWrapper">
+
+						<% if(essenseData.exoprtByTime) {%>
+
+							<div class="postTimeWrapper">
+								<select class="postTime">
+									<option value="w"><%=e('snothing')%></option>
+									<option value="t" <% if(essenseData.dtype) {%> selected <% } %>><%=e('sposttime')%></option>
+									<option value="p"><%=e('spostnow')%></option>
+								</select>
+							</div>
+
+							<div class="selectedTimeWrapper">
+								<span class="selectedTime">
+									<% if(essenseData.time) { %> 
+
+										<%- convertDate(dateToStr(essenseData.time))  %>
+
+									<% } else { %> 
+
+										<%=e('stimenotselected')%>
+
+									<% } %>
+									
+
+								</span> 
+
+								<i class="fas fa-clock"></i>
+							</div>
+
+							
+							
+
+						<% } else { %> 
+
+							<div class="postWrapper">
+								<div class="dopost">
+									<button class="post"><%=e('spost')%></button>
+								</div>
+								<div class="waitpost">
+
+									<div class="itemwr table tempPreloader">
+										
+										<div class="count">
+											<div class="label">
+
+												<span><%=e('waitConf')%></span>
+
+											</div>
+										</div>
+
+										<div class="iconwr">
+											<div class="preloader5"><span></span><span></span><span></span></div>
+										</div>
+
+										
+									</div>
+
+								</div>
+							</div>
+							
+
+						<% } %>
+
+						
+					</div>
+				</div>
+				<div class="paddingmobilewrapper">
+					<div class="error"></div>
+				</div>
+			</div>
+			
+		</div>
+
+		
+	</div>
+	<div class="sLoader">
+		<div class="preloader5"><span></span><span></span><span></span></div>
+	</div>
+</div>

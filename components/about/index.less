@@ -1,0 +1,740 @@
+@import "../../css/__cssvar";
+
+#about{
+
+	.fixedButton{
+		z-index: 30;
+		position: fixed;
+		
+		top : -100px;
+		left: 50%;
+		margin-left: -100px;
+		opacity: 0;
+		width: 200px;
+		.transition(0.3s);
+
+		button{
+			width: 100%;
+		}
+
+		&.active{
+			top: 15px;
+			opacity: 1;
+		}
+	}
+
+	.time{
+		.timerwr{
+			margin : 0 auto;
+			width: auto;
+
+			>div{
+				width: 100px;
+				color : #647B8F;
+				vertical-align: center;
+				padding : 4 * @rhythm;
+				text-align: center;
+
+				.bigNumbers{
+					font-weight: 100;
+					font-size: 2.6em;
+				}
+
+				.smallLabel{
+					font-size: 0.7em;
+				}
+			}
+		}
+	}
+
+	.slide{
+
+		padding : 12 * @rhythm 10 * @rhythm;
+
+		.slideSubCaption{
+			font-size: 1.6em;
+			color : fade(#fff, 95);
+
+			span{
+				border-bottom: 2px solid fade(#fff, 95);
+			}
+		}
+
+		.slideCaption{
+			text-align: center;
+			color : @color-contrast;
+		}
+
+		&.surveyWr{
+			background: #FFE400;
+
+			.slideSubCaption{
+				text-align: center;
+				font-size : 0.8em;
+				font-weight: 700;
+				margin-bottom : 2 * @rhythm;
+				color : @color-gray2;
+			}
+
+			.slideCaption{
+				font-weight: 100;
+
+				span{
+					font-size : 3em;
+				}
+			}
+
+			.surveyContent{
+				max-width: 750px;
+				margin : 0 auto;
+			}
+
+			.results,
+			.answers{
+				max-width: 550px;
+				margin : 4 * @rhythm auto;
+			}
+
+			.results{
+
+				.result{
+					margin-bottom : 2 * @rhythm;
+
+					&:nth-last-child(1){
+						margin-bottom : 0;
+					}
+				}
+
+				.answer{
+					>div{
+						vertical-align: middle;
+						padding : @rhythm;
+						color : #fff;
+
+						span{
+							font-size: 1.2em;
+						}
+
+						&.answerText{
+							padding-left : 0;
+							text-decoration: underline;
+							color : #2C2D44;
+						}
+
+						&.answerPercent{
+							padding-right : 0;
+							color : #2C2D44;
+							font-weight: 700;
+							width: 100px;
+							text-align: right;
+						}
+					}
+				}
+
+				.resultpercentbg{
+					margin-top : @rhythm;
+					height: 5px;
+					background: fade(#fff, 50);
+					position: relative;
+					overflow: hidden;
+					border-radius: 5px;
+
+					.resultpercent{
+						background: fade(@color-contrast, 80);
+						position: absolute;
+						left: 0;
+						top : 0;
+						bottom : 0;
+						height: 100%;
+					}
+				}
+			}
+
+			.answers{
+				button{
+					width: 100%;
+					text-align: center;
+					font-size: 1.2em;
+					background: fade(#FFF, 30);
+					border-radius: 100px;
+
+					&:hover{
+						color : @color-contrast;
+					}
+				}
+				.answer{
+					margin-bottom : 2 * @rhythm;
+
+					&:nth-last-child(1){
+						margin-bottom : 0;
+					}
+				}
+			}
+		}
+
+		&.social{
+			background: @color-contrast;
+			color : #fff;
+			padding-top : 2 * @rhythm;
+			padding-bottom : 2 * @rhythm;
+
+
+			.slideCaption{
+				text-align: center;
+				color : fade(#fff, 95);
+			}
+
+			.socialTable{
+				width : auto;
+				margin : 0 auto;
+
+				>div{
+					padding : @rhythm 2 * @rhythm;
+					vertical-align: middle;
+				}
+			}
+		}
+
+		&.join{
+			background: #1B1C1E;
+			color : #000;
+
+			.wrapper{
+				padding : 0 10 * @rhythm;
+			}
+
+			.slideCaption{
+				margin-top: 0.5 * @rhythm;
+				margin-bottom: @rhythm;
+				color : fade(#fff, 90);
+				font-size: 3.0em;
+				text-align: center;
+
+				&.small{
+					font-size : 1.8em;
+					font-weight: 500;
+				}
+			}
+
+			.buttons{
+				
+				.buttonsWrapper{
+					
+					>div{
+						float: none;
+						margin : 0 auto;
+						width: 200px;
+
+						button{
+							width : 100%;
+
+							&.shadowWhite{
+								color : #fff;
+
+								&:hover{
+									color : @color-contrast;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		&.video{
+			.videoContent{
+				max-width: 800px;
+				margin : 0 auto;
+				margin-top : 4 * @rhythm;
+
+			}
+		}
+
+		&.faq{
+			background: #FBFBFB;
+
+			.wrapper{
+				padding : 0 10 * @rhythm;
+			}
+
+			.slideSubCaption{
+				font-size: 4em;
+				font-weight: 700;
+				color : fade(#000, 90);
+			}
+
+			.part{
+				margin-top: 4 * @rhythm;
+				margin-bottom: 4 * @rhythm;
+				padding-bottom: 4 * @rhythm;
+
+				&:nth-last-child(1){
+					border-bottom: 0;
+					margin-bottom: 0;
+					padding-bottom: 0;
+				}
+
+				.faqtext{
+					margin-top: 2 * @rhythm;
+					overflow-y: hidden;
+
+					>div{
+						padding : 4 * @rhythm;
+						float: left;
+
+						&.question{
+							padding-left: 0;
+							width : 25%;
+
+							span{
+								font-size: 1.3em;
+								font-weight: 700;
+							}
+						}
+
+						&.answer{
+							padding-right: 0;
+							width : 75%;
+						}
+					}
+				}
+			}
+		}
+
+		&.withLenta{
+			background: #1B2327;
+			padding: 20 * @rhythm;
+			padding-top: 10 * @rhythm;
+
+			.slideCaption{
+				color : #fff;
+			}
+
+			.slideSubCaption{
+				font-size : 3em;
+				text-align: center;
+				text-transform: uppercase;
+				text-decoration: none;
+			}
+
+			.lenta{
+				margin-top : 8 * @rhythm;
+
+				#lenta{
+					background: transparent;
+
+					.share{
+						border-radius: 3px;
+					}
+				}
+			}
+		}
+
+		&.main{
+			color : #181E27;
+			background: #1da1f2;
+
+			.slideSubCaption{
+				color : fade(@color-contrast, 80);
+				span{
+					border-bottom-color: fade(@color-contrast, 80);
+				}
+				
+			}
+
+			.mainAnimation{
+				margin-top: 6 * @rhythm;
+				.line{
+					font-size: 2em;
+					font-weight: 700;
+
+					&.big{
+						margin-top: 2 * @rhythm;
+						
+						font-size: 4em;
+					}
+
+					&.right{
+						text-align: right;
+					}
+
+					.black{
+						color : fade(@color-contrast, 90);
+					}
+
+					.exe{
+						padding : 0 0.5 * @rhythm;
+						padding-bottom: 0.5 * @rhythm;
+						background: fade(#DD7F10, 80);
+					}
+				}
+			}
+
+			.buttons{
+				margin-top: 6 * @rhythm;
+				.buttonsWrapper{
+					margin : 0 auto;
+					overflow-y: hidden;
+					width : 650px;
+
+					>div{
+						width: 50%;
+						float : left;
+
+						button{
+							width : 100%;
+							font-weight: 100;
+							font-size: 1.3em;
+
+							&.shadowWhite{
+								color : #fff;
+								background: @color-contrast;
+								border-color: @color-contrast;
+
+								&:hover{
+									background : transparent;
+									color : @color-contrast;
+								}
+							}
+
+							&.ghost{
+								color : #1C2686;
+
+								&:hover{
+									color : fade(#1C2686, 60);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.tes{
+				opacity: 0;
+				.transition(0.3s);
+
+				&.slow{
+					.transition(0.6s);
+				}
+
+				&.show{
+					opacity : 1;
+				}
+			}
+		}
+
+
+
+	}
+}
+
+.joinbeta{
+
+	background: fade(#151722, 95);
+	color : #fff;
+
+	.thwrapper{
+		background: transparent;
+		border : 0;
+		box-shadow: none;
+		
+
+		.body{
+			font-size: 2em;
+		}
+	}
+
+	._close{
+		color : fade(#fff, 90);
+	}
+
+	.buttons{
+		>div{
+			float: none;
+			margin : 0 auto;
+			width: 200px;
+
+			button{
+				width: 100%;
+			}
+		}
+	}
+
+	.joinbetawrapper{
+		text-align: center;
+		.text{
+			margin-top : @rhythm;
+			margin-bottom : @rhythm;
+			font-weight: 100;
+			font-size : 0.55em;
+		}
+
+		.caption{
+			color : @color-contrast;
+		}
+
+		.inputWrapper{
+			input{
+				width : 100%;
+				border : 0;
+				background: transparent;
+				border-bottom : 2px solid @color-contrast;
+				color : #fff;
+
+				&:placeholder-shown{
+                	text-align : center;
+                }
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 1024px) {
+	#about{
+
+		
+		.slide{
+
+			padding : 6 * @rhythm 4 * @rhythm;
+
+
+
+			&.faq{
+
+				.wrapper{
+					padding : 0 ;
+				}
+
+				
+			}
+
+			&.withLenta{
+				padding: 10 * @rhythm;
+				padding-top: 6 * @rhythm;
+
+				
+			}
+
+			&.main{
+				
+				.mainAnimation{
+					margin-top: 4 * @rhythm;
+					.line{
+						font-size: 1em;
+
+						&.big{
+							margin-top: 2 * @rhythm;
+							
+							font-size: 1.2em;
+						}
+
+					}
+				}
+
+				.buttons{
+					margin-top: 6 * @rhythm;
+					.buttonsWrapper{
+						width : 100%;
+
+						>div{
+							width: 100%;
+
+							button{
+								
+
+								&.ghost{
+									color : #fff;
+
+									&:hover{
+										color : fade(#fff, 60);
+									}
+								}
+							}
+						}
+					}
+				}
+
+			
+			}
+
+
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#about{
+		.fixedButton{
+			z-index: 30;
+			position: fixed;
+			
+			top : -100px;
+			left: 0;
+			right: 0;
+			margin-left: 0;
+			opacity: 0;
+			width: 100%;
+			.transition(0.3s);
+
+		
+		}
+		.work{
+			padding : 0;
+		}
+
+		.time{
+			.timerwr{
+				width: 100%;
+
+				>div{
+					width: 25%;
+					padding : @rhythm;
+
+					.bigNumbers{
+						font-size: 1.6em;
+					}
+
+					.smallLabel{
+						font-size: 0.7em;
+					}
+				}
+			}
+		}
+
+		.slide{
+
+			padding : 2 * @rhythm 2 * @rhythm;
+
+
+			&.withLenta{
+				padding: 2 * @rhythm 0;
+				padding-top: 2 * @rhythm;
+
+				
+			}
+
+			&.surveyWr{
+
+				
+
+				.slideCaption{
+					font-weight: 100;
+
+					span{
+						font-size : 1.7em;
+					}
+				}
+
+				.results{
+
+					
+
+					.answer{
+						>div{
+
+							span{
+								font-size: 1em;
+							}
+
+							
+						}
+					}
+
+					
+				}
+
+				.answers{
+					button{
+						font-size: 1em;
+					}
+				}
+			}
+
+			&.faq{
+
+				.wrapper{
+					padding : 0 4 * @rhythm;
+				}
+
+				.slideSubCaption{
+					font-size: 1.5em;
+				}
+
+				.part{
+					margin-top: 4 * @rhythm;
+					margin-bottom: 4 * @rhythm;
+					padding-bottom: 4 * @rhythm;
+
+					&:nth-last-child(1){
+						border-bottom: 0;
+						margin-bottom: 0;
+						padding-bottom: 0;
+					}
+
+					.faqtext{
+						margin-top: 2 * @rhythm;
+						overflow-y: hidden;
+
+						>div{
+							padding : 2 * @rhythm 0;
+							float: left;
+
+							&.question{
+								width : 100%;
+
+								span{
+									font-size: 1.1em;
+									font-weight: 700;
+								}
+							}
+
+							&.answer{
+								width : 100%;
+							}
+						}
+					}
+				}
+			}
+
+			&.join{
+				
+				.wrapper{
+					padding : 0 2 * @rhythm;
+				}
+
+				.slideCaption{
+					margin-top: 0.5 * @rhythm;
+					
+					font-size: 2.0em;
+
+				}
+
+				.buttons{
+					
+					.buttonsWrapper{
+						
+						>div{
+							width: 100%;
+
+							button{
+								width : 100%;
+
+								
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}
+	.joinbeta{
+
+       .inputs{
+        display: block;
+        >div{
+            display: block;
+        }
+       }
+    }
+}

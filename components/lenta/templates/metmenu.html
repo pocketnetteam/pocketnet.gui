@@ -1,0 +1,80 @@
+<%
+
+var m = [];
+
+var all = {
+	share : {
+		icon : '<i class="fas fa-share-alt"></i>',
+		text : "Share",
+		class : 'socialshare'
+	},
+
+	subscribe : {
+		icon : '<i class="fas fa-users"></i>',
+		text : 'Follow',
+		class : 'subscribe'
+	},
+
+	unsubscribe : {
+		icon : '<i class="fas fa-user-times"></i>',
+		text : 'Unfollow',
+		class : 'unsubscribe'
+	},
+
+	complain : {
+		icon : '<i class="fas fa-ban"></i>',
+		text : 'Complain',
+		class : 'complain'
+	}
+
+}
+
+m.push('share')
+
+if(share){
+	if(share.address && user.address.value){
+
+		var my = (user.address.value && share.address == user.address.value.toString('hex'))
+		var subscribed = '';
+		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+		if(!my && me){
+
+
+
+			if (!me.relation(share.address, 'subscribes')){
+				m.push('subscribe')
+			}
+			else
+			{
+				m.push('unsubscribe')
+			}
+
+			if(typeof mestate!= 'undefined' && mestate.reputation >= 20){
+				m.push('complain')
+			}
+
+			
+		}
+	}
+}
+
+
+
+
+%>
+
+<div class="sharepostmenu">
+
+	<% _.each(m, function(m){ var mo = all[m] %>
+
+	<div class="menuitem <%-mo.class||''%> table">
+		
+		<div class="icon"><span><%=mo.icon%></span></div>
+		<div class="label"><span><%-mo.text%></span></div>
+
+	</div>
+		
+	<% }) %>
+
+</div>

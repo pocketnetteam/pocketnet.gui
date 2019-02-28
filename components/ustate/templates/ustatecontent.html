@@ -1,0 +1,110 @@
+<% if(mestate) {%>
+
+
+<% _.each(metrics, function(metrica){ 
+
+	if(metrica.if && !metrica.if()) return
+
+	if(metrica.vis == 'profileInfo' && !metrica.bad()) return
+
+%> 
+
+	<div class="metrica  <%-metrica.vis%> <%-metrica.key%> table">
+		<div class="label">
+			<% if(metrica.vis == 'waitActions') { 
+
+			%>
+
+				<%=e('waitConf')%>
+
+				<% if(waitActions != 'inf'){ %> 
+
+					It much take up <b><%-secInTime(waitActions * app.platform.avblocktime)%></b>
+
+				<% } %>
+
+			<% } else {%>	
+				<span><%- metrica.name %></span>
+			<% } %>
+		</div>
+
+		<div class="metricaContent">
+			<% if(metrica.vis == 'scale') {
+
+
+
+				var l = Number(mestate[metrica.key + "_unspent"])
+				var s = Number(mestate[metrica.key + "_spent"])
+
+				var t = l + s
+
+				if (t == 0){
+					t = 1;
+					l = 0;
+				}
+
+				var b = '';
+
+				if(metrica.bad(l)) b = 'bad'
+
+			%>
+
+				<div class="scalePoints table">
+					<div class="scaleWrapper">
+						<div class="scaleBack">
+							<div class="unspentScale" style="width:<%- 100 * l/t %>%">
+							</div>
+						</div>
+					</div>
+
+					<div class="unspentWrapper">
+						<span class="value <%-b%>"><%- l %></span><span>/<%- t %></span>
+					</div>
+				</div>
+
+			<% } %>
+
+			<% if(metrica.vis == 'yesno' || metrica.vis == 'number') { 
+
+				var v = mestate[metrica.key]
+
+				var b = '';
+
+				if(metrica.bad(v)) b = 'bad'
+
+			%>
+
+				<div class="valueWrapper">
+					<span class="value <%-b%>"><%- vis(v, metrica.vis) %></span>
+				</div>
+
+			<% } %>
+
+			<% if(metrica.vis == 'profileInfo') { 
+			%>
+
+				<div class="valueWrapper">
+					<a href="filluser">
+						<button><%=e('suseractivation')%></button>
+					</a>
+				</div>
+
+			<% } %>
+
+			<% if(metrica.vis == 'waitActions') { %>
+
+
+
+			<% } %>
+		</div>
+	</div>
+
+<% }) %>
+
+<% } else { %> 
+
+<div class="totalerror">
+	<%=e('sdisconnected')%>
+</div>
+
+<% } %>

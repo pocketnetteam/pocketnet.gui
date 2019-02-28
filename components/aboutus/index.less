@@ -1,0 +1,171 @@
+@import "../../css/__cssvar";
+
+#aboutus{
+	
+	padding-bottom: 10 * @rhythm;
+
+	.caption{
+		margin-top: 6 * @rhythm;
+		font-size: 1.6em;
+		color : @color-gray;
+	}
+
+	.text{
+		color : @color-black2;
+		max-width: 700px;
+		margin-top: 10 * @rhythm;
+		margin-bottom: 10 * @rhythm;
+
+
+		p{
+			margin-top : 4 * @rhythm;
+
+			a{
+				color : @color-main;
+			}
+
+			&.sign{
+				margin-top : 6 * @rhythm;
+				margin-bottom : 4 * @rhythm;
+				color: @color-main;
+				font-weight: 500;
+			}
+
+			&.address{
+				font-size: 0.9em;
+				margin-bottom: 0;
+				margin-top : 0;
+			}
+		}
+	}
+
+
+	.slide{
+		padding:  8 * @rhythm 0;
+
+		.caption{
+			font-weight: 700;
+			color : #2B2D30;
+			font-size: 2.3em;
+		}
+
+		.thesis{
+			padding-top: @rhythm;
+			padding-bottom:  @rhythm;
+		}
+
+		&.team{
+			.slidecaption{
+				color : #2B2D30;
+				font-weight: 700;
+				font-size: 1.6em;
+			}
+
+			.teamCnt{
+				margin-top: 4 * @rhythm;
+				max-width: 900px;
+			}
+			.person{
+				padding : 4 * @rhythm;
+				
+				padding-left: 0;
+				border-bottom: 1px dashed @color-main;
+				>div{
+					vertical-align: top;
+				}
+				.photo{
+					width: 120px;
+				}
+				.personphoto{
+					border-radius: 50%;
+					width: 100px;
+					height: 100px;
+					margin : 0 auto;
+					.shadowSmall();
+				}
+
+				.name{
+					font-weight: 700;
+					font-size: 1.4em;
+
+					span{
+						border-bottom: 6px solid @color-main;
+					}
+				}
+
+				.about{
+					margin-top: 4 * @rhythm;
+					
+					p{
+						color: @color-gray;
+					}
+				}
+
+				&:nth-last-child(1){
+					border-bottom: 0;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+#aboutus{
+	
+	.slide{
+		padding:  4 * @rhythm 0;
+
+		.caption{
+			font-size: 1.7em;
+		}
+
+		
+
+		&.team{
+			.caption{
+				text-align: center;
+			}
+
+			.teamCnt{
+				margin : 0 auto;
+				margin-top: 4 * @rhythm;
+				max-width: 900px;
+			}
+			.person{
+				padding : 2 * @rhythm;
+				display: block;
+
+				>div{
+					display: block;
+				}
+				.photo{
+					margin : 0 auto;
+					width: 90px;
+					text-align: center;
+				}
+				.personphoto{
+					width: 80px;
+					height: 80px;
+				}
+
+				.name{
+					text-align: center;
+					font-size: 1.3em;
+
+					span{
+						border-bottom: 6px solid @color-main;
+					}
+				}
+
+				.about{
+					margin-top: 3 * @rhythm;
+				
+				}
+
+			}
+		}
+	}
+	
+	
+}
+}

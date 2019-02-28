@@ -1,0 +1,70 @@
+<div class="slideWrapper">
+
+	<div class="subcaptionWrapperTableCnt fadeInByElementStep">
+		<div class="subcaptionWrapperTable table">
+
+			<div class="_stepback"></div>
+
+			<div class="subcaption">
+				<span><%=e('wrecieve').toUpperCase()%></span>
+			</div>
+
+			<div class="_subcaptionlevel">
+				<span></span>
+			</div>
+		</div>
+	</div>
+	
+
+	<div class="action fadeInByElementStep">
+
+
+		<div class="row table">
+			<div class="amount">
+				<div class="labelWrapper">
+					<%= d.parameters.deposit.name %>
+				</div>
+			</div>
+
+			<div class="changer">
+			
+			</div>
+
+			<div class="sendcoins workstation"> 
+
+			</div>
+		</div>
+		<div class="row table">
+			<div class="amount">
+				<div class="inputWrapper">
+					<%= d.parameters.deposit.input() %>
+				</div>
+			</div>
+
+			<div class="changer">
+			
+			</div>
+
+			<div class="recievecoins"> 
+
+				<button class="recieveaddress">
+					<i class="fas fa-chevron-circle-right"></i> <%=e('wrecieveon')%>
+
+					<span class='type'><%-d.parameters.deposit.labelByValue(d.parameters.deposit.value)%></span>
+
+				</button>
+
+			</div>
+		</div>
+
+		
+
+	</div>
+
+	<div class="actionbody fadeInByElementStep">
+			
+	</div>
+
+	<div class="_stepclose fadeInByElementStep"></div>
+
+</div>

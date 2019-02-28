@@ -1,0 +1,58 @@
+<div class="discussionTable table">
+
+	<% if(discussion.author) {
+
+		var n = deep(app, 'platform.sdk.usersl.storage.'+discussion.author+'.name') || discussion.author
+
+		var src = deep(app, 'platform.sdk.usersl.storage.'+discussion.author+'.image')
+	%>
+
+		<div class="author">
+			<div class="icon">
+				<div class="usericon" image="<%-src || ''%>">
+
+					<% if(!src) {%>
+						<svg width="25" height="25" data-jdenticon-value="<%-discussion.author%>"></svg>
+					<% } %>
+					
+				</div>
+			</div>
+		</div>
+
+	<% } %>
+
+	<div class="discussioncnt">
+
+		<% if(discussion.share) {
+
+			var m = discussion.share.caption || discussion.share.message;
+
+			var nm = filterXSS(emojione.toImage(trimHtml(m, 60)));
+
+
+		%>
+		
+			<div class="postPreview">
+				<span><%=nm%></span>
+			</div>
+
+		<% } %>
+
+		<div class="lastMessage">
+			
+
+		</div>
+
+	</div>
+
+	<div class="panel">
+
+		<% if(discussion.chat.id != '6768de97ad495c0110a9e09d43825ef24f1055449a5d368225ac102804397dc1_PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd') {%>
+		
+		<div class="item remove">
+			<i class="fas fa-times"></i>
+		</div>
+
+		<% } %>
+	</div>
+</div>

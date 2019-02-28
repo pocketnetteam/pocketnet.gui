@@ -1,0 +1,30 @@
+<div id="<%-module.map.id%>">
+	
+	<div class="work">
+		<div class="caption">
+			<%=e('useractivation')%>
+		</div>
+	</div>
+	
+	<div class="mWrapper">
+		<div class="work">
+			<div class="stepsWrapper">
+				<div class="stepsWrapperLine">
+					<% _.each(steps, function(step){ %> 
+
+					<div class="step" step="<%-step.id%>">
+						<div class="stepBody">
+						</div>
+					</div>
+
+					<% }) %>
+				</div>
+			</div>
+
+			<div class="panelWrapper">
+			
+			</div>
+
+		</div>
+	</div>
+</div>

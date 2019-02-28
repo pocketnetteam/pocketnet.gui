@@ -1,0 +1,89 @@
+@import "../../css/__cssvar";
+
+#send{
+	.caption{
+		margin-top: 2 * @rhythm;
+		font-size: 5.5em;
+		font-weight: 100;
+
+	}
+
+	.label{
+		color : @color-main;
+	}
+
+	.message{
+		padding : 6 * @rhythm 0;
+	}
+
+	.amount{
+		padding : 6 * @rhythm 0;
+		background: @color-bright;
+		color : #fff;
+
+		span{
+			font-size: 6em;
+			font-weight: 100;
+			
+		}
+	}
+
+	.amredit{
+		border: 0;
+		outline: 0;
+
+		&:focus{
+			border: 0;
+			outline: 0;
+		}
+	}
+
+	.sendwrapper{
+		margin-top: 6 * @rhythm;
+		button{
+			padding : 2 * @rhythm;
+			width: 250px;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#send{
+		.caption{
+			margin-top: 2 * @rhythm;
+			font-size: 2.8em;
+			font-weight: 100;
+			padding : @rhythm / 3;
+
+		}
+
+		
+		.message{
+			padding : 3 * @rhythm @rhythm;
+		}
+
+		.amount{
+			padding : 3 * @rhythm @rhythm;
+
+			.address{
+				margin-top : 2 * @rhythm;
+				font-size: 0.9em;
+			}
+
+			span{
+				font-size: 3em;
+				
+			}
+		}
+
+		
+
+		.sendwrapper{
+			margin-top: 3 * @rhythm;
+			button{
+				padding : @rhythm;
+				width: 100%;
+			}
+		}
+	}	
+}

@@ -1,0 +1,41 @@
+@import "../../css/__cssvar";
+
+#panel{
+
+	background: #fff;
+	
+	#chat{
+		height: 600px;
+	}
+
+	#discussions{
+		.discussionsWrapper{
+			max-height: 250px;
+		}
+		
+	}
+
+	.sections{
+		background: #F0F0F0;
+	
+		>div{
+			padding : @rhythm  0;
+			width: 50%;
+			vertical-align: middle;
+			cursor: pointer;
+			.transition(0.3s);
+			text-align: center;
+
+			span{
+				font-size: 0.8em;
+			}
+
+			&:hover,
+			&.active{
+				background: @color-add;
+				color : #fff;
+			}
+		}
+	}
+
+}

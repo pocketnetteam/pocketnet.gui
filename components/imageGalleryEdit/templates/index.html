@@ -1,0 +1,78 @@
+<div id="<%-module.map.id%>">
+	<div class="imagesWrapper">
+		<div class="imagesAbsWrapper">
+			<div class="imagesTableWrapper">
+				<div class="images table">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<% if(essenseData.edit) {%> 
+
+		<div class="filtersWrapper">
+			<div class="filtersContainer">
+				<div class="filters">
+				</div>
+			</div>
+		</div>
+
+	<% } %>
+
+	<div class='panel'>
+		<div class="items table">
+
+
+			<div class="item editPanel left">
+				<% if(!essenseData.apply) {%> 
+					<div class="eitem" action="crop">
+						<i class="fa fa-crop" aria-hidden="true"></i>
+					</div>
+				<% } %>
+
+				<div class="eitem" action="filters">
+					<i class="fa fa-magic" aria-hidden="true"></i>
+				</div>
+
+			
+				
+			</div>
+
+			<div class="item">
+				<div class="centerWrapper savePanel">
+
+					<div class="sitem cancel" action="cancel">
+						<i class="far fa-times-circle"></i> <span class="workstation">Cancel</span>
+					</div>
+
+					<div class="sitem save" action="save">
+						<span class="workstation">Save</span><i class="far fa-check-circle"></i>
+					</div>
+
+				</div>
+
+				<div class="centerWrapper exitPanel">
+
+					<div class="sitem cancel" action="exit">
+						<i class="far fa-check-circle"></i> Finish
+					</div>
+
+				</div>
+			</div>
+
+			<div class="item imageNavigation">
+
+				<% if(essenseData.images.length > 1) {%>
+
+					<div class="navigationWrapper">
+						<div class='arrow' action="back"><i class='fa fa-chevron-left'></i></div>
+						<div class='number'></div>
+						<div class='arrow' action="next"><i class='fa fa-chevron-right'></i></div>
+					</div>
+
+				<% } %>
+			</div>
+		</div>
+	</div>
+
+</div>

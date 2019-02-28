@@ -1,0 +1,97 @@
+<div id="<%-module.map.id%>">
+
+	<div class="tbl table">
+		<div class="tblcell">
+
+			<% if(rescue) {%>
+
+				<div class="rescued">
+
+					<div class="caption">
+						You rescued
+					</div>
+
+					<div class="bignumber">
+						<%- deep(app, 'platform.sdk.user.storage.me.rc') || 0 %>
+					</div>
+
+					<div class="caption">
+						people from the censored web.
+					</div>
+
+				</div>
+
+			<% } else { %>
+
+				<% if(caption) {%>
+
+				<div class="caption">
+
+					<%- caption %>
+					
+				</div>
+
+				<% } %> 
+
+			<% } %>
+
+				<div class="url">
+					<div class="urlwr">
+						<div class="urlwrtable table">
+							
+							<div class="urlcell">
+								<%-url%>
+							</div>
+
+							<div class="copycell">
+								Copy
+							</div>
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="sharewrapper">
+
+					<div class="sharecaption">
+
+						<% if(rescue) {%>
+
+							Rescue From
+
+						<% } else { %> 
+
+							Social sharing
+
+						<% } %>
+						
+					</div>
+
+					<div class="sharebuttons">
+						<div class="sharebuttonsTable table">
+					        <% _.each(socials, function(social){ %>
+
+						        <div class="socialWrapper">
+
+						            <button class="socialsharebtn s_<%-social.t%>" data-type="<%-social.t%>" style="background:<%-social.c%>"><%=social.i%></button>
+
+						        </div>
+
+					        <% }) %> 
+					    </div>
+
+
+					</div>
+
+				</div>
+
+				<div class="requestwhocaption">
+
+					Anyone who registers through your link will increase your Rescue Team status
+					
+				</div>
+
+				
+		</div>
+	</div>
+</div>

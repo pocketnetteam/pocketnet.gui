@@ -1,0 +1,26 @@
+<% _.each(reasons, function(reason){ %>
+
+	<div class="reason" reason="<%- reason.gid || reason.id %>">
+		<div class="reasonWrapper table">
+			<div class="bulletWrapper">
+				<div class="bullet">
+				</div>
+			</div>
+
+			<div class="labelWrapper">
+				<%- reason.name %>
+			</div>
+		</div>
+
+		<% if(reason.group) {%>
+
+			<div class="reasongroup">
+				<div class="reasongroupIn">
+				</div>
+			</div>
+
+		<% } %>
+
+	</div>
+	
+<% }) %> 

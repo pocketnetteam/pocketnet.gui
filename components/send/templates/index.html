@@ -1,0 +1,50 @@
+<div id="<%-module.map.id%>">
+
+		<div class="work">
+			<div class="caption">
+			
+				<%=e('wssendto')%> 
+
+				<% if(label) {%>
+
+					<span class="label">
+						<b><%-filterXSS(label.toUpperCase())%></b>
+					</span>
+
+				<% } %>
+			</div>
+		</div>
+
+		<div class="work">
+
+			<% if(message) {%>
+				<div class="message">
+					<%= filterXSS(message) %>
+				</div>
+			<% } %>
+
+		</div>
+
+		<% if(amount) {%>
+			<div class="amount">
+				<div class="work">
+					<div><span class="amredit" contenteditable="true"><%= app.platform.mp.coin(amount) %></span> <span>POC</span></div>
+
+					<div class="address">
+						<%=e('wdaddress')%>: <b><%-address%></b>
+					</div>
+				</div>
+			</div>
+		<% } %>
+
+		
+		<div class="work">
+			<div class="sendwrapper">
+				<button class="send orange">
+					<%=e('wssendb')%>
+				</button>
+			</div>
+		</div>
+
+
+</div>

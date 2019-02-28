@@ -1,0 +1,25 @@
+
+
+<div class="imageContainer">
+	<% if(image) {
+
+		var src = image.src;
+
+	%>
+
+	
+		<div class="image">
+			<div class="imgWrapper">
+				<img id="galleryImage" crossorigin="anonymous" original="<%=src%>" src="<%=src%>">
+			</div>
+		</div>
+
+	<% } else {%>
+
+		<div class="noImages">
+			<%=e('id32')%>
+		</div>
+
+	<% } %>
+</div>
+

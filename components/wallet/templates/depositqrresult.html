@@ -1,0 +1,60 @@
+<div class="linkForDepositReady">
+
+	<div class="linksubcaption"><%=e('wduseqr')%></div>
+
+	<div class="linkparams">
+
+		<div class="row table">
+			<div class="label">
+				<span><%=e('wdaddress')%>:</span>
+			</div>
+
+			<div class="value">
+				<b><%-address%></b>
+			</div>
+		</div>
+		<div class="row table">
+			<div class="label">
+				<span><%=e('wdamount')%>:</span>
+			</div>
+
+			<div class="value">
+				<b><%-app.platform.mp.coin(d.parameters.depositamount.value)%></b>
+			</div>
+		</div>
+
+		<% if(d.parameters.label.value) {%>
+			<div class="row table">
+				<div class="label">
+					<span><%=e('wdlabel')%>:</span>
+				</div>
+
+				<div class="value">
+					<%-d.parameters.label.value%>
+				</div>
+			</div>
+		<% } %>
+		
+		<% if(d.parameters.message.value) {%>
+		<div class="row table">
+			<div class="label">
+				<span><%=e('wdmessage')%>:</span>
+			</div>
+
+			<div class="value">
+				<%-d.parameters.message.value%>
+			</div>
+		</div>
+		<% } %>
+	</div>
+
+
+	<div class="row table ">
+		<div class="cell qrcoderesult">
+			<div class="imageqr" image="https://chart.googleapis.com/chart?chs=225x225&chld=L|2&cht=qr&chl=pocketnet:<%-address%>?amount=<%-d.parameters.depositamount.value%>%26label=<%-d.parameters.label.value%>&message=<%-d.parameters.message.value%>">
+		</div>
+
+	</div>
+	
+
+</div>

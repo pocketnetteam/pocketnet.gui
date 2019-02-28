@@ -1,0 +1,167 @@
+@import "../../css/__cssvar";
+
+#video{
+    padding: 6 * @rhythm 12 * @rhythm;
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    background: #fff;
+
+    .caption{
+        font-size: 2em;
+    }
+
+    
+
+    .container{
+        margin-top: 4 * @rhythm;
+        margin-bottom: 4 * @rhythm;
+
+        iframe{
+            display: none;
+        }
+    }
+
+    .description{
+        margin-top: 4 * @rhythm;
+        margin-bottom: 8  * @rhythm;
+        display: none;
+        text-align: justify;
+    }
+
+    .buttonWrapper{
+        text-align: center;
+
+        button{
+            background: #FF4200;
+            border-color: #FF4200;
+            min-width: 220px;
+            .transition(0.3s);
+
+            &:hover{
+                color : #fff;
+                background: @color-good;
+                border-color: @color-good;
+            }
+        }
+    }
+    
+    .fixedbtn{
+        padding-top: @rhythm;
+        position: fixed;
+        top:0;
+        left: 20%;
+        right: 20%;
+        height: 55px;
+        z-index: 1025;
+        text-align: center;
+
+        button{
+            min-width: 220px;
+            background: #FF4200;
+            border-color: #FF4200;
+            
+            .transition(0.3s);
+
+            &:hover{
+                color : #fff;
+                background: @color-good;
+                border-color: @color-good;
+            }
+        }
+
+        &.active{
+            display: block;
+        }
+    }
+}
+.joinbeta{
+
+    background: fade(#151722, 95);
+    color : #fff;
+
+    .thwrapper{
+        background: transparent;
+        border : 0;
+        box-shadow: none;
+        
+
+        .body{
+            font-size: 2em;
+        }
+    }
+
+    ._close{
+        color : fade(#fff, 90);
+    }
+
+
+    .buttons{
+        >div{
+            float: none;
+            margin : 0 auto;
+            width: 200px;
+
+            button{
+                width: 100%;
+            }
+        }
+    }
+
+
+    .joinbetawrapper{
+        text-align: center;
+        .text{
+            margin-top : @rhythm;
+            margin-bottom : @rhythm;
+            font-weight: 100;
+            font-size : 0.55em;
+        }
+
+        .caption{
+            color : @color-contrast;
+        }
+
+        .inputWrapper{
+            input{
+                width : 100%;
+                border : 0;
+                background: transparent;
+                border-bottom : 2px solid @color-contrast;
+                color : #fff;
+
+                &:placeholder-shown{
+                    text-align : center;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    #video{
+        .fixedbtn{
+            display: none;
+        }
+    }
+}
+@media only screen and (max-width: 640px) {
+    #video{
+        padding: @rhythm;
+        padding-bottom : 12 * @rhythm;
+
+        .caption{
+            font-size: 1.4em;
+            margin-top: 3 * @rhythm;
+        }
+    }
+
+    .joinbeta{
+
+       .inputs{
+        display: block;
+        >div{
+            display: block;
+        }
+       }
+    }
+}

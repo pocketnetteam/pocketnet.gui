@@ -1,0 +1,69 @@
+
+
+<div class="mobiledevice selector">
+	<%= selector.input() %>
+</div>
+
+<div class="workstation contentmenu">
+
+<%
+
+	each({
+
+		group : function(report, level, id, clbk){ %>
+
+			<div class="group" level="<%-level%>" levelid="<%-id%>">
+
+				<div class="groupNameTable table">
+
+					<div class="groupName">
+						<div class="reportCaption openReport" rid="<%-id%>">
+							<%= report.name.toUpperCase() %>
+						</div>
+					</div>
+
+					<div class="groupNamePanel">
+						<div class="groupNamePanelWrapper">
+							<i class="fa fa-angle-up" aria-hidden="true"></i>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="groupContent">
+
+					<% clbk(); %>
+
+				</div>
+
+			</div>
+
+		<% 
+		},
+
+		report : function(report, level, id){ 
+
+			if(report.if && !report.if()) return
+
+
+		%>
+			<div class="reportCaption openReport" rid="<%-id%>">
+				<%= report.name.toUpperCase() %>
+			</div>
+		<% 
+
+		}
+
+	})
+
+%>
+
+</div>
+
+<div class="additional">
+
+	<div class="reportCaption signout">
+		<div class="label" action="signout"><%=e('signout').toUpperCase()%> <i class="fas fa-sign-out" aria-hidden="true"></i></div>
+	</div>
+
+</div>

@@ -1,0 +1,309 @@
+@import "../../css/__cssvar";
+
+#articles{
+	.articles{
+		position: absolute;
+		left: 2 * @rhythm;
+		right: 2 * @rhythm;
+		top : 100px;
+		bottom: 6 * @rhythm;
+		overflow-y: auto;
+
+		.artwrapper{
+			overflow-y: hidden;
+			position: relative;
+			padding-bottom: 300px;
+		}
+
+		.art{
+			float: left;
+			height: 430px;
+			width: 290px;
+			padding : 2 * @rhythm;
+			position: relative;
+
+			.apanel{
+				height: 10%;
+				width: 100%;
+				opacity: 0;
+				.transition(0.3s);
+
+				.item{
+					display: none;
+					border-radius: 50%;
+					width: 30px;
+					height: 30px;
+					line-height: 30px;
+					text-align: center;
+					font-size: 0.8em;
+					background: #FAFAFA;
+					cursor: pointer;
+					color : @color-gray-light;
+					.transition(0.3s);
+
+					&:hover{
+						color : @color-contrast;
+					}
+				}
+			}
+
+			&:hover{
+				.apanel{
+					opacity: 1;
+
+					.item{
+						display: block;
+					}
+				}
+			}
+
+			.artcnt{
+				cursor: pointer;
+				background: #FAFAFA;
+				border-radius: 5px;
+				height: 90%;
+				width: 100%;
+				position: relative;
+				overflow: hidden;
+				.transition(0.3s);
+
+				&:hover{
+					.shadowSmall();
+				}
+
+				.mtable{
+					>div{
+						vertical-align: middle;
+						padding : 2 * @rhythm;
+					}
+				}
+
+				.captionBgWrapper{
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					height: 37%;
+					background: @color-contrast;
+					color : #fff;
+					z-index: 1;
+
+					.bgfade,
+					.captionLabel{
+						position: absolute;
+						left: 0;
+						right: 0;
+						top: 0;
+						bottom: 0;
+					}
+
+					.bgfade{
+						background: fade(#000, 40);
+					}
+
+					.shadowSmall();
+
+					
+
+					.caption{
+						text-align: center;
+						font-size: 1.7em;
+					}
+				}
+
+				.cntWrapper{
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 37%;
+					height: 55%;
+
+					.mtable{
+						>div{
+							vertical-align: top;
+						}
+					}
+
+					.cnt{
+						
+					}
+
+					.medium-insert-images{
+						display: none;
+					}
+				}
+
+				.time{
+					position: absolute;
+					left: 0;
+					right: 0;
+					bottom: 0%;
+					height: 8%;
+					text-align: right;
+
+					span{
+						color : @color-main;
+						font-size: 0.8em;
+					}
+
+					.mtable{
+						>div{
+							padding : 0 2 * @rhythm;
+
+							&.ch{
+								text-align: left;
+								width: 60px;
+								color : @color-good;
+							}
+						}
+					}
+				}
+			}
+
+			&.added{
+				.artcnt{
+					.captionBgWrapper{
+						background: @color-main;
+					}
+				}
+			}
+		}
+	}
+	.top{
+		cursor: pointer;
+		position: absolute;
+		left: 2 * @rhythm;
+		right: 2 * @rhythm;
+		top : 4 * @rhythm;
+		height: 45px;
+
+		
+
+		.item{
+			float: left;
+			margin-right : 10px;
+			line-height: 45px;
+		}
+
+	}
+
+	.topwidthWrapper{
+		max-width: 1280px;
+		margin : 0 auto;
+		height: 100%;
+
+		
+	}
+
+	.panel{
+		position: absolute;
+		bottom: 0;
+		right: 100px;
+		left: 0;
+		height: 150px;
+		background: fade(#fff,90);
+		padding: 2 * @rhythm;
+		z-index: 2;
+		.topwidthWrapper{
+			padding-left: 55px;
+		}
+
+		.iWrapper{
+			width: auto;
+			border-bottom: 2px solid @color-gray2;
+			color : @color-gray2;
+			cursor: pointer;
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-contrast; 
+				border-color: @color-contrast;
+			}
+			>div{
+				vertical-align: middle;
+				padding : @rhythm;
+
+				&:nth-child(1){
+					padding-left : 0;
+				}
+
+				&:nth-last-child(1){
+					padding-right : 3 * @rhythm;
+				}
+
+				&.label{
+					font-size: 2em;
+				}
+			}
+		}
+	}
+
+	&.initial{
+		.panel{
+			height: 65%;
+		}
+	}
+
+
+}
+
+@media only screen and (max-width: 640px) {
+#articles{
+	.articles{
+		left: @rhythm;
+		right: @rhythm;
+		top : 60px;
+		bottom: 2 * @rhythm;
+
+		.artwrapper{
+			padding-bottom: 200px;
+		}
+
+		.art{
+			width: 100%;
+			padding : 0;
+
+			
+		}
+	}
+	.top{
+		left: @rhythm;
+		right: @rhythm;
+		top : @rhythm;
+		
+
+	}
+
+
+	.panel{
+		right: @rhythm;
+		left: @rhythm;
+		height: 80px;
+		padding: @rhythm;
+		
+		.topwidthWrapper{
+			padding-left: 0;
+		}
+
+		.iWrapper{
+
+			margin : 0 auto;
+			
+			>div{
+				
+				&.label{
+					font-size: 1.6em;
+				}
+			}
+		}
+	}
+
+	&.initial{
+		.panel{
+			height: 65%;
+		}
+	}
+
+
+}	
+}

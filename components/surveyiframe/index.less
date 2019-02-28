@@ -1,0 +1,35 @@
+@import "../../css/__cssvar";
+
+#surveyiframe{
+
+	width: 100%;
+	height: 100%;
+
+	iframe{
+		border : 0;
+		outline: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.wnd.surveyiframe{
+	.wndinner>div.buttons{
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	.wnd.surveyiframe{
+		.wndcontent{
+
+			padding : 0;
+			
+			bottom : 0;
+		}
+
+		._close{
+			display: none;
+		}
+	}
+}

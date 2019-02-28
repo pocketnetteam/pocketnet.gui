@@ -1,0 +1,184 @@
+@import "../../css/__cssvar";
+
+#usersettings{
+	min-height: 600px;
+	background: #F7F7F7;
+
+	.mwork{
+		padding : 0 8 * @rhythm;
+
+		&.gk{
+			border-bottom: 1px solid @color-gray-light;
+		}
+
+		&.wh{
+			background: #FAFAFA;
+		}
+	}
+
+	.caption{
+		max-width: 700px;
+		padding-top: @rhythm;
+		font-size : 3em;
+		font-weight: 100;
+		color : @color-main;
+	}
+
+	.parameter{
+		max-width: 600px;
+
+		.picker{
+			select{
+				height: auto;
+			}
+		}
+
+		>div{
+			padding: @rhythm 0;
+			vertical-align: top;
+		}
+
+		.pName{
+			vertical-align: top;
+			padding-top: 2 * @rhythm;
+			padding-right : @rhythm;
+			width: 190px;
+
+			.pNameW{
+				padding-top : @rhythm  / 3;
+				font-weight: 700;
+				font-size: 0.8em;
+				line-height: 1.4em;
+			}
+
+			.unit{
+				font-weight: 700;
+				color : @color-bright;
+			}
+
+			.require{
+				color : @color-bad;
+			}
+		}
+
+		
+		.pInput{
+			position: relative;
+			vertical-align: top;
+
+			.echo{
+				padding: @rhythm;
+				color : @color-contrast;
+				font-weight: 700;
+			}
+
+			.vm_valuesmulti{
+				padding-top: @rhythm / 2;
+			}
+
+
+		}
+
+		.panel{
+			vertical-align: top;
+			padding-top: 2 * @rhythm;
+			width: 20px;
+
+			.clear{
+				text-align: right;
+				cursor: pointer;
+				color : @color-gray-slight;
+				.transition(0.3s);
+				&:hover{
+					color : @color-main;
+				}
+			}
+			
+		}
+
+		select,
+		textarea,
+		input{
+			width: 100%;
+			padding: @rhythm;
+			border : 1px solid @color-gray-light;
+			border-radius: 2px;
+
+			&.error{
+				border : 1px solid @color-bad;
+			}
+		}
+
+		.error{
+			select,
+			textarea,
+			input{
+				border : 1px solid @color-bad;
+			}
+			
+		}
+
+		select{
+			height: 38px;
+			padding-right: 25px;
+			width: auto;
+		}
+
+		
+
+		.vc_valuecustom{
+			width: 100%;
+		}
+
+		.vc_valuecustom,
+		.vc_valuecustom_multibig{
+			.vc_textInput{
+				background: #fff;
+			}
+		}
+
+		.vmt_valuesmultitree,
+		.vm_value{
+			padding : 0;
+			.checkbox{
+				&+label {
+			        &:before {
+			        	font-size : 1.6em;
+			        	line-height: 19px;
+			        }
+			    }
+			}
+		}
+
+		
+	}
+
+	.settingsGroup{
+		margin-bottom : 2  @rhythm;
+
+		.groupCaption{
+			padding : 3 * @rhythm 0;
+			font-size: 1.2em;
+			color : @color-contrast;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#usersettings{
+
+		background: #fff;
+
+		.caption{
+			display: none;
+		}
+
+		.mwork{
+			padding : 0 @rhythm;
+
+			&.wh{
+				background: #FAFAFA;
+			}
+		}
+	}
+}

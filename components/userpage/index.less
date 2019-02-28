@@ -1,0 +1,493 @@
+@import "../../css/__cssvar";
+
+#userpage{
+
+	.bgCaption{
+		background: #F1F1F1;
+		color : @color-black2;
+		height: 160px;
+		position: relative;
+		margin-bottom : 4 * @rhythm;
+		margin-top : 2 * @rhythm;
+		.create{
+			min-width: 250px;
+		}
+
+		.tips{
+			margin-top: 2 * @rhythm;
+
+			.profile{
+				padding-left: 6 * @rhythm;
+				padding-right: 6 * @rhythm;
+			}
+		}
+
+		.cellforimage{
+			width: 95px;
+
+			.usericon{
+				width: 75px;
+				height: 75px;
+				line-height: 73px;
+				color : #fff;
+				font-size: 1.5em;
+
+				
+			}
+		}
+
+		.addressseparate{
+			margin-top : @rhythm;
+			font-size: 0.8em;
+		}
+
+		.captionWrapperFloat{
+			overflow : hidden;
+
+			>div{
+
+				float: left;
+
+				&.caption{
+					width : 60%;
+				}
+
+				&.addressseparateWrapper{
+
+					padding-top : 2 * @rhythm;
+					width : 40%;
+					text-align: right;
+				}
+			}
+		}
+
+
+		.infoWrapper{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: 1;
+		}
+
+		.imagiconWrapper{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			z-index: 0;
+
+			.imagejdenticon{
+				position: absolute;
+				left: -60px;
+				right: 0;
+				top: -100px;
+				bottom: 0;
+				z-index: 0;
+				opacity: 0.1;
+			}
+		}
+
+		.work{
+			position: relative;
+			overflow: hidden;
+		}
+	}
+
+	.general{
+		padding-top: @rhythm;
+	}
+
+
+	.profile{
+
+		.table{
+
+			>div{
+				vertical-align: middle;
+			}
+		}
+
+		
+
+		.infoWrapper{
+			.name{
+				font-family: @color-main;
+			}
+			.email{
+				color: @color-gray;
+				font-size: 0.8em;
+			}
+
+			
+		}
+	}
+
+	.maketsWrapper{
+
+		overflow: hidden;
+
+		.maket{
+			&.left{
+				float: left;
+				width: 150px;
+			}
+
+			&.right{
+				padding-left: 2 * @rhythm;
+				margin-left: 150px;
+			}
+		}
+
+
+		.contents{
+
+			
+			padding-top: 4 * @rhythm; 
+
+			.additional{
+				margin-top: 4 * @rhythm;
+			}
+
+			.captionContents{
+				font-size: 0.7em;
+				padding-left: @rhythm / 2;
+				border-bottom: 1px solid @color-main;
+				padding-top: @rhythm / 2;
+				padding-bottom: @rhythm / 2;
+			}
+
+			.reportCaption{
+				font-weight: 700;
+				cursor: pointer;
+				line-height: 26px;
+				padding-top: @rhythm / 2;
+				padding-bottom: @rhythm / 2;
+				padding-left: @rhythm / 2;
+				margin-top: @rhythm / 2;
+				color : #3A373F;
+				.transition(0.3s);
+
+				&.openReport{
+					&.active{
+
+						color : @color-contrast;
+						font-weight: 700!important;
+					}
+				}
+			}
+
+			>div.reportCaption{
+	    		text-transform: uppercase;
+	    		font-weight: 700;
+
+	    	}
+
+			.group{
+				.groupContent{
+					display: none;
+					margin-top: @rhythm;
+					margin-bottom: @rhythm;
+				}
+
+
+		        &.active{
+		            >div.groupContent{
+		                display: block;
+		            }
+
+		            >div.groupNameTable{
+		            	.reportCaption{
+		            		color : @color-contrast;
+		            	}
+		                .groupNamePanelWrapper{
+		                    transform: rotate(180deg);
+		                    -webkit-transform: rotate(180deg);
+
+		                 
+		                }
+		            }
+		        }
+
+		        &[level='0']{
+		        	>div.groupNameTable{
+		            	.reportCaption{
+		            		text-transform: uppercase;
+		            		font-weight: 700;
+		            	}
+		            }
+
+	            	.groupContent{
+	            		.reportCaption{
+	            			font-weight: 400;
+			                font-size: 0.8em;
+			                padding-left:  2 * @rhythm;
+			                padding-top:0;
+							padding-bottom: 0;
+			            }
+	            	}
+		           
+		            
+		        }
+
+		        &[level='1']{
+		        	
+	            	.groupContent{
+	            		.reportCaption{
+			                padding-left:  4 * @rhythm;
+			            }
+	            	}
+		           
+		            
+		        }
+
+		        &[levelid='filings']{
+		        	font-size: 0.8em;
+		        	width : 80%;
+
+		        	margin-top: 4 * @rhythm;
+
+		        	[level="1"]{
+		        		font-size: 1.2em;
+		        	}
+		        }
+
+
+			}
+
+
+
+			.groupNameTable{
+
+		        >div{
+		            vertical-align: middle;
+		        }
+		        .groupNamePanel{
+		            width: 26px;
+		        }
+
+		        .groupName{
+		        	.reportCaption{
+
+		        	}
+		        }
+
+		        .groupNamePanelWrapper{
+
+		            width: 26px;
+		            height: 26px;
+		            margin : 0 auto;
+		            margin-top: 5px;
+		            text-align : center;
+		            line-height: 24px;
+		            border-radius: 50%;
+		            font-size: 0.8em;
+		            
+		            cursor: pointer;
+		            .transition(0.2s);
+
+		            &:hover{
+		                transform: rotate(180deg);
+		                -webkit-webkit-transform: rotate(180deg);
+		            }
+		        }
+		    }
+
+
+		}
+
+
+		
+		.report{
+			.work{
+		    	width : 100%;
+		    }
+
+		    #test{
+		    	.userPanel{
+		    		padding : 4 * @rhythm 4 * @rhythm;
+		    	}
+
+		    	.caption{
+		    		padding-top : 0.5 * @rhythm;
+		    		padding-left: @rhythm;
+		    	}
+		    }
+
+		    #notifications{
+		    	padding : 4 * @rhythm 4 * @rhythm;
+		    	background: #F7F7F7;
+		    }
+		}
+
+	}
+
+	.tooltipPanel{
+		margin-top: @rhythm;
+		text-align: right;
+	}
+
+	.activitiesCnt{
+		padding-top: .5 * @rhythm;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+
+#userpage{
+	padding-top: @rhythm;
+
+	.profile{
+		display: none;
+	}
+	
+	.activitiesWrapper{
+		margin-top: 2 * @rhythm;
+
+		.usermenu{
+			display: none;
+		}
+
+		.usercnt{
+			padding-left: 0;
+			margin-left: 0;
+		}
+
+		
+	}
+}
+}
+@media only screen and (max-width: 640px) {
+
+#userpage{
+	min-height: 0;
+		
+	.bgCaption{
+		display: none;
+	}
+
+	>div{
+		&.work{
+			padding : 0;
+		}
+	}
+	.maketsWrapper{
+		overflow: inherit;
+		.contents{
+			padding-top : 0;
+
+			.additional{
+				display: none;
+			}
+		}
+		.maket{
+			&.left{
+				width: 100%;
+				float: none;
+				padding : 0 ;
+				background: @color-contrast;
+
+				.vc_valuecustom{
+					width: 100%;
+
+					.vc_textInput {
+						.vc_inputWrapper{
+							border: 0;
+
+							input{
+								opacity: 1!important;
+								.transition(0.3s);
+								background: fade(@color-black2, 60);
+								color : #fff;
+								border-top-left-radius: 0px;
+								border-bottom-left-radius: 0px;
+								padding-left : 30px;
+								height: 38px;
+								text-align: center;
+
+								&[disabled="disabled"]{
+									opacity: 1;
+								}
+							}
+						}
+
+						.vc_iconWrapper{
+							color : #fff;
+							.transition(0.3s);
+							background: fade(@color-black2, 60);
+							border-top-right-radius: 0px;
+							border-bottom-right-radius: 0px;
+							border : 0;
+						}
+					}
+
+					&.opened{
+						.vc_textInput {
+							.vc_inputWrapper{
+								border: 0;
+
+								input{
+									border-bottom-left-radius: 0;
+								}
+							}
+
+							.vc_iconWrapper{
+								
+								border-bottom-right-radius: 0;
+								
+							}
+						}
+					}
+
+					.vc_selectInput {
+						max-height: 400px;
+						.shadowSmall();
+						.vc_value{
+							padding : 2 * @rhythm;
+							text-align: center;
+						}
+					}
+				}
+			}
+			
+			&.right{
+				padding-left: 0;
+				margin-left: 0;
+				border : 0;
+
+				
+			}
+
+			
+		}	
+
+		.report{
+			.work{
+		    	width : 100%;
+		    }
+
+		    #test{
+		    	padding-top : 2 * @rhythm;
+
+		    	.userPanel{
+		    		padding: 0;
+		    	}
+
+		    	.caption{
+		    		padding-left: 0;
+		    		padding-bottom : 2 * @rhythm;
+		    	}
+		    }
+
+		    #notifications{
+		    	padding : 2 * @rhythm 0;
+		    	background: #F7F7F7;
+		    }
+		}
+	}
+
+
+}
+}

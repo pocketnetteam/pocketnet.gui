@@ -1,0 +1,27 @@
+<div class="fastresultswrapper">
+
+	<% if(results.length) { %>
+
+		<div class="results">
+
+			<% _.each(results, function(result, i){ %>
+
+				<div class="result" result="<%- result %>">
+					#<%- result  %>
+				</div>
+			<% }) %>
+
+		</div>
+
+	<% } else { %>
+	
+		<div class="empty">
+			<span>
+				<%=e('snotags')%>
+			</span>
+		</div>
+
+
+	<% } %>
+</div>
+

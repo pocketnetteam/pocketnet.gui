@@ -1,0 +1,52 @@
+@import "../../css/__cssvar";
+
+#anothersite{
+	.caption{
+		font-size: 1.4em;
+		margin-bottom: 8 * @rhythm;
+		margin-top: 2 * @rhythm;
+		width: 60%;
+	}
+
+	.disc{
+		font-size: 0.9em;
+		margin-top: 14 * @rhythm;
+		color: @color-gray;
+	}
+
+	.linkWrapper{
+		word-wrap: break-word;
+	}
+
+
+	a{
+		color : @color-bright;
+		text-decoration: underline;
+	}
+}
+
+.wnd.anothersite{
+	._close{
+		color : #000;
+	}
+
+	.wndcontent{
+		overflow-y: auto;
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#anothersite{
+		padding : 0 2 * @rhythm;
+		.caption{
+			font-size: 1.2em;
+			margin-bottom: 4 * @rhythm;
+			width: 90%;
+		}
+
+		.disc{
+			margin-top: 8 * @rhythm;
+		}
+
+	}
+}

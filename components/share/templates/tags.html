@@ -1,0 +1,15 @@
+<% _.each(tags, function(tag) { %> 
+
+	<div class="tag" tag="<%-tag%>">
+		<div class="tagInner table">
+			<div class="label">
+				<span>#<%-tag%></span>
+			</div>
+
+			<div class="remove">
+				<i class="fas fa-times-circle"></i>
+			</div>
+		</div>
+	</div>
+
+<% }) %>

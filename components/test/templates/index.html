@@ -1,0 +1,187 @@
+<% var fcclass = 'firstTime';
+
+if (firstTime){
+	fcclass = 'firstTime'
+}
+
+%>
+
+<div id="<%-module.map.id%>" class="<%-fcclass%>">
+	
+	<div class="work">
+
+		<% if(!user.validate()) {%>
+
+			<div class="caption">
+				<%=e('utip1')%> 
+			</div>
+
+		<% } %>
+
+		
+
+		<div class="userPanel">
+			<div class="pgroup">
+				<div class="subcaption">
+					<% if(essenseData.wizard) {%>
+
+						<%=e('upicset')%>
+
+					<% } else { %> 
+
+						<%=e('upic')%>
+
+					<% }%>
+						
+				</div>
+
+				<div class="parameters iconParameters">
+
+					
+		
+
+				</div>
+
+			</div>
+			<div class="pgroup">
+				<div class="subcaption">
+					<%=e('uuserinfo')%>
+				</div>
+
+				<div class="parameters optionsParameters">
+
+					
+				</div>
+
+				<!--
+
+				<% if(firstTime && ref) {%>
+
+					<div class="referalMaketWrapper table">
+						<div class="refLabel">
+							<span>Referrer</span>
+						</div>
+
+						<div class="refNameWrapper">
+
+							<div class="refNameTable table">
+								<div class="refAv">
+									
+									<% var src = deep(ref, 'image')  %>
+
+									<div class="usericon" image="<%-src || ''%>">
+
+										<% if(!src) {%>
+											<svg width="40" height="40" data-jdenticon-value="<%-ref.address%>"></svg>
+
+										<% } %>
+									</div>
+
+
+								</div>
+								<div class="refName"><%- ref.name || ref.address %></div>
+
+								<div class="refRemove">
+									<i class="far fa-times-circle"></i>
+								</div>
+							</div>
+
+							
+						</div>
+					</div>
+
+				<% } %> -->
+			</div>
+			<% if(!essenseData.wizard) {%>
+				<div class="pgroup">
+					<div class="upanel">
+
+						
+
+						<div class="item">
+							<button class="save"><%=e('usave')%></button>
+						</div>
+
+						<div class="item cancelwr">
+							<button class="cancel ghost"><%=e('ucancel')%></button>
+						</div>
+
+						<div class="item loadingToB">
+							<div class="label">
+								<%=e('uwaitb')%>
+							</div>
+						</div>
+
+						<div class="item loadingToB">
+							<div class="preloader5"><span></span><span></span><span></span></div> 
+						</div>
+
+					
+
+
+
+					</div>
+				</div>
+
+			<% } %>
+
+			<div class="upanelloader">
+				<div class="t table">
+					<div class="t cell">
+						<div class="preloader5"><span></span><span></span><span></span></div>
+					</div>
+				</div>
+				
+			</div>
+
+		</div>
+		
+		<div class="testPanel">
+		
+			<div class="showhidetestpanel">
+				Show/Hide Testing panel
+			</div>
+		
+			<div class="mwr">
+
+				<div class="importAddress optionInput table">
+					<div class="label">
+						Import Address
+					</div>
+
+					<div class="inputWrapper">
+						<button class="import">Import</button>
+					</div>
+				</div>
+
+				<div class="nodeSelect optionInput table">
+					<div class="label">
+						Select Node
+					</div>
+
+					<div class="inputWrapper">
+						<%= setNode.input() %>
+					</div>
+				</div>
+
+				<div class="addresstypeselect optionInput table">
+					<div class="label">
+						Set Address type
+					</div>
+
+					<div class="inputWrapper">
+						<%= setAddressType.input() %>
+					</div>
+				</div>
+
+				<div class="unspentlist">
+					<div class="preloader5"><span></span><span></span><span></span></div>
+				</div>
+
+			</div>
+
+		</div>
+	
+	</div>
+
+</div>

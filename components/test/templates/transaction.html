@@ -1,0 +1,15 @@
+<div class="tratable">
+<% _.each(tx, function(p, n){ %>
+	<div class="row table">
+		<div class="label"><%-n%></div>
+		<div class="value"><%-JSON.stringify(p)%></div>
+	</div>
+<% }) %>
+</div>
+
+<div class="panel">
+	<button class="refresh">
+		Refresh
+	</button>
+</div>
+

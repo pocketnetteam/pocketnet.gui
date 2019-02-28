@@ -1,0 +1,91 @@
+<% _.each(articles, function(art){
+
+	var cl = ''
+
+	if(art.txid){
+		cl = 'added'		
+	}
+
+	var echo = app.platform.sdk.articles.echo(art);
+
+	var image = null;
+
+	var artimages = app.platform.sdk.articles.getImages(echo)
+
+	if(artimages.length){
+		image = artimages[0]
+	}
+%> 
+
+	<div class="art <%-cl%>" art="<%-art.id%>">
+		<div class="apanel">
+			<div class="item remove">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</div>
+		</div>
+		<div class="artcnt">
+			<div class="captionBgWrapper" image="<%-image || ''%>" style="background: <%-art.background%>">
+
+				<% if(image) {%>
+
+				<div class="bgfade">
+				</div>
+
+				<% } %>
+
+				<div class="captionLabel">
+					<div class="mtable table">
+						<div class="mcell">
+							<div class="caption">
+								<%- (deep(art, 'caption.value') || 'Draft') %>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+
+
+				
+			</div>
+
+			<div class="cntWrapper">
+
+				<div class="mtable table">
+					<div class="mcell">
+
+						<div class="cnt">
+
+							<%= trimHtml(echo || "<p>Empty</p>", 90) %>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="time">
+
+				<div class="mtable table">
+					<div class="mcell ch">
+						<% if(art.txid) {%>
+							<i class="far fa-check-circle"></i>
+						<% } %>
+					</div>
+					<div class="mcell">
+
+						<% if(art.time) {%>
+
+							<span><%- convertDate(dateToStr(share.time)) %></span>
+
+						<% } else { %> 
+
+							<span>New</span>
+
+						<% } %>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+<%}) %>

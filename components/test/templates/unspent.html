@@ -1,0 +1,12 @@
+<div class="caption">Unspent List</div>
+<div class="unspentData table">
+	<div class="unspentNew">
+		<div class="cpt">New</div>
+		<div class="data"><%= nl2br(JSON.stringify(unspent, null, "\t")) %></div>
+	</div>
+	<div class="unspentOld">
+		<div class="cpt">Old</div>
+		<div class="data"><%= nl2br(JSON.stringify(unspentOld, null, "\t")) %></div>
+	</div>
+</div>
+
