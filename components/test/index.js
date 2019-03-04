@@ -62,6 +62,25 @@ var test = (function(){
 				if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
 					sitemessage(self.app.localization.e('uchangesvalid'))
 
+					if(!tempInfo.name){	
+						var pn = el.c.find('[parameter="name"] input')
+
+						pn.focus()
+
+						_scrollTo(pn)
+					}
+					else{
+						if(!tempInfo.image){	
+							var pn = el.c.find('.fileUploader')
+
+							pn.focus()
+
+							_scrollTo(pn)
+						}	
+					}
+
+						
+
 					return
 				}
 
@@ -302,7 +321,8 @@ var test = (function(){
 				name : self.app.localization.e('uname'),
 				id : 'name',
 				type : "STRING",
-				onType : true
+				onType : true,
+				require : true
 			}),
 
 			language : new Parameter({
@@ -597,13 +617,14 @@ var test = (function(){
 					name :  'icon',
 					el :   el.icon,
 					data : {
-						tempInfo : tempInfo
+						tempInfo : tempInfo,
+						ed : ed
 					},
 
 				}, function(_p){
 
 					initUpload({
-						el : _p.el.find('.uploadPhoto'),
+						el : _p.el.find('.pgroup'),
 			
 						ext : ['png', 'jpeg', 'jpg'],
 
@@ -906,7 +927,7 @@ var test = (function(){
 				el.showhidetestpanel = p.el.find('.showhidetestpanel')
 				el.import = p.el.find('.import');
 				el.caption = el.c.find('.bgCaption');
-				el.icon = el.c.find('.iconParameters');
+				el.icon = el.c.find('.pgroupIconWrapper');
 
 				el.usericon = el.c.find('.usericon');
 				el.options = el.c.find('.optionsParameters');

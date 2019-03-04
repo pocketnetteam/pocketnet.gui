@@ -154,7 +154,7 @@ ____loclib.wsaddressnotv = "Address is not valid";
 //user profile
 ____loclib.uaddaddressdona = "Add address For Donations";
 ____loclib.uaddaddressdonaplace = "Enter Address";
-____loclib.uchangeicon = "Change Profile Icon";
+____loclib.uchangeicon = "Upload Profile Icon";
 ____loclib.utip1 = "You must create name & avatar on blockchain before using Pocketnet";
 ____loclib.upicset = "Set Profile Icon";
 ____loclib.upic = "Profile Icon";

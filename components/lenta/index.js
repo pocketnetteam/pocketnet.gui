@@ -1643,9 +1643,15 @@ var lenta = (function(){
 				if(!p) p = {};
 
 				if(!p.inner) p.inner = append
+
+				var tpl = 'groupshares';
+
+				if (essenseData.author){
+					tpl = 'shares'
+				}
 				
 				self.shell({
-					name :  'groupshares',
+					name :  tpl,
 					inner : p.inner,
 					el : el.shares,
 					data : {

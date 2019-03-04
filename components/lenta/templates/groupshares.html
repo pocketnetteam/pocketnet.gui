@@ -30,7 +30,7 @@ _.each(groupshares, function(gs, address){ %>
 		<% if(gs.length > 1) { %>
 
 			<div class="showmorebyauthor">
-				Show more posts (<%- gs.length %>) from <%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %>
+				Show more posts (<%- gs.length - 1 %>) from <%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %>
 			</div>
 
 		<% } %>

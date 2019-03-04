@@ -703,21 +703,22 @@ var filluser = (function(){
 					steps : steps
 				};
 
-				if(!self.app.user.validate()){
+				//if(!self.app.user.validate()){
 
 					self.fastTemplate('panel', function(rendered){
 						
 						clbk(data);
 
 					})
-				}
+				/*}
 				else
 				{
 					self.app.nav.api.load({
 						open : true,
 						href : 'index',
+						history : true
 					})
-				}
+				}*/
 
 				
 

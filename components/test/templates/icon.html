@@ -1,27 +1,52 @@
-<div class="uploadPhoto">
-	<div class="uploadTable table">
-		<div class="iconWrapper">
-			<div class="icon">
+<div class="pgroup">
+	<div class="subcaption">
+		<% if(ed.wizard) {%>
 
-				<% 
-					var src = tempInfo.image 
-				%>
+			<%=e('upicset')%> <span class="require">*</span>
 
-				<div class="usericon" image="<%-src || ''%>">
+		<% } else { %> 
 
-					<% if(!src) {%>
+			<%=e('upic')%>
 
-						<svg width="40" height="40" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
+		<% }%>
+			
+	</div>
 
-					<% } %>
+	<div class="parameters iconParameters">
+
+
+		<div class="uploadPhoto">
+			<div class="uploadTable table">
+				<div class="iconWrapper">
+					<div class="icon">
+
+						<% 
+							var src = tempInfo.image 
+						%>
+
+						<div class="usericon" image="<%-src || ''%>">
+
+							<% if(!src) {%>
+
+
+
+								<svg width="40" height="40" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
+
+							<% } %>
+						</div>
+					</div>
+				</div>
+
+				<div class="label">
+
+					<%=e('uchangeicon')%> <span class="require">*</span>
+
 				</div>
 			</div>
 		</div>
 
-		<div class="label">
 
-			<%=e('uchangeicon')%>
 
-		</div>
 	</div>
+
 </div>

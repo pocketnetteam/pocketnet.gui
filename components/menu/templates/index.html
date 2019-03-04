@@ -199,16 +199,20 @@
 					</div>
 				</div>
 
-				<div class="items mdl workstation">
+				<% if(typeof _Electron == 'undefined' && !window.cordova){ %> 
 
-					<div class="item table">
-						
-						<div class="label">
-							<div><a href="about"><%=e('aboutmenu')%></a></div>
+					<div class="items mdl workstation">
+
+						<div class="item table">
+							
+							<div class="label">
+								<div><a href="about"><%=e('aboutmenu')%></a></div>
+							</div>
+
 						</div>
-
 					</div>
-				</div>
+
+				<% } %>
 
 
 			</div>

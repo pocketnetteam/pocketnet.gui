@@ -22,6 +22,15 @@
 		padding : 4 * @rhythm 0;
 		position: relative;
 
+
+		.require{
+			color : @color-bad;
+		}
+
+		.reqsnoska{
+			font-size: 0.7em;
+		}
+
 		.upanelloader{
 			display: none;
 			position: absolute;
@@ -46,9 +55,17 @@
 			}
 		}
 		
-
+		.pgroupIconWrapper{
+			height: 130px;
+			margin-bottom: 6 * @rhythm;
+			
+			.pgroup{
+				height: 100%;
+				margin-bottom : 0;
+			}
+		}
 		.pgroup{
-			padding-bottom: 6 * @rhythm;
+			margin-bottom: 6 * @rhythm;
 		}
 
 		.uploadPhoto{
@@ -164,9 +181,7 @@
 					color : @color-bright;
 				}
 
-				.require{
-					color : @color-bad;
-				}
+				
 			}
 
 			

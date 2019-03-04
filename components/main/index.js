@@ -264,16 +264,15 @@ var main = (function(){
 					currentMode = 'common'
 				}
 
-				if(!p.state && primary)
+				if(!p.state && primary && (typeof _Electron != 'undefined' || window.cordova))
 				{
-
-					/*self.nav.api.load({
+					self.nav.api.load({
 						open : true,
-						href : 'about',
+						href : 'authorization',
 						history : true
 					})
 
-					return*/
+					return
 					
 				}
 				
