@@ -1,64 +1,74 @@
 {
-	"name": "pocketnet",
-	"version": "0.0.1-beta",
-	"description": "Pocketnet desktop application",
-	"author": "Pocketnet Community",
-	"company": "Pocketnet Community",
-	"license": "SEE LICENSE IN License.txt",
-	"main": "main.js",
-	"repository": "github:pocketnetapp/pocketnet.gui",
-	"scripts": {
-		"start": "electron .",
-		"pack": "electron-builder --dir",
-		"dist": "electron-builder -w --x64 --ia32"
-	},
-	"dependencies": {
-		"desandro-matches-selector": "^2.0.2",
-		"emojione": "^4.5.0",
-		"fizzy-ui-utils": "^2.0.7",
-		"get-size": "^2.0.3",
-		"http-proxy": "^1.17.0",
-		"imagesloaded": "^4.1.4",
-		"imports-loader": "^0.8.0",
-		"isotope-layout": "^3.0.6",
-		"isotope-packery": "^2.0.1",
-		"jdenticon": "^2.1.0",
-		"jquery-bridget": "^2.0.1",
-		"jquery-textcomplete": "^1.8.5",
-		"jquery.animate-number": "0.0.14",
-		"masonry-layout": "^4.2.2",
-		"medium-editor": "^5.23.3",
-		"node-reverse-wstunnel": "^1.0.0",
-		"open": "0.0.5",
-		"outlayer": "^2.1.1",
-		"pickadate": "^3.5.6",
-		"pickadate-webpack": "^3.5.6",
-		"sortablejs": "^1.8.3"
-	},
-	"build": {
-		"productName": "Pocketnet",
-		"nsis": {
-			"artifactName": "${productName}Setup.${ext}",
-			"oneClick": false,
-			"perMachine": false,
-			"allowToChangeInstallationDirectory": true,
-			"createDesktopShortcut": true,
-			"displayLanguageSelector": true,
-			"menuCategory": true,
-			"installerIcon": "assets/icons/win/icon.ico",
-			"uninstallerIcon": "assets/icons/win/icon.ico",
-			"deleteAppDataOnUninstall": true,
-			"license": "license.txt"
-		},
-		"mac": {
-			"icon": "assets/icons/mac/icon.icns"
-		},
-		"linux": {
-			"icon": "assets/icons/png"
-		},
-		"win": {
-			"target": "nsis",
-			"icon": "assets/icons/win/icon.ico"
-		}
-	}
+    "name": "pocketnet",
+    "version": "0.0.1-beta",
+    "description": "Pocketnet desktop application",
+    "author": "Pocketnet Community",
+    "company": "Pocketnet Community",
+    "license": "SEE LICENSE IN License.txt",
+    "main": "main.js",
+    "repository": "github:pocketnetapp/pocketnet.gui",
+    "scripts": {
+        "start": "electron .",
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder -w --x64 --ia32",
+        "publish": "build --win -p always"
+    },
+    "dependencies": {
+        "desandro-matches-selector": "^2.0.2",
+        "electron-log": "^3.0.1",
+        "electron-updater": "^4.0.6",
+        "emojione": "^4.5.0",
+        "fizzy-ui-utils": "^2.0.7",
+        "get-size": "^2.0.3",
+        "http-proxy": "^1.17.0",
+        "imagesloaded": "^4.1.4",
+        "imports-loader": "^0.8.0",
+        "isotope-layout": "^3.0.6",
+        "isotope-packery": "^2.0.1",
+        "jdenticon": "^2.1.0",
+        "jquery-bridget": "^2.0.1",
+        "jquery-textcomplete": "^1.8.5",
+        "jquery.animate-number": "0.0.14",
+        "masonry-layout": "^4.2.2",
+        "medium-editor": "^5.23.3",
+        "node-reverse-wstunnel": "^1.0.0",
+        "open": "0.0.5",
+        "outlayer": "^2.1.1",
+        "pickadate": "^3.5.6",
+        "pickadate-webpack": "^3.5.6",
+        "sortablejs": "^1.8.3"
+    },
+    "build": {
+        "productName": "Pocketnet",
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "pocketnetapp",
+                "repo": "pocketnet.gui"
+            }
+        ],
+        "nsis": {
+            "artifactName": "${productName}Setup.${ext}",
+            "oneClick": false,
+            "perMachine": false,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "displayLanguageSelector": true,
+            "menuCategory": true,
+            "installerIcon": "assets/icons/win/icon.ico",
+            "uninstallerIcon": "assets/icons/win/icon.ico",
+            "deleteAppDataOnUninstall": true,
+            "license": "license.txt"
+        },
+        "mac": {
+            "icon": "assets/icons/mac/icon.icns"
+        },
+        "linux": {
+            "icon": "assets/icons/png"
+        },
+        "win": {
+            "target": "nsis",
+            "icon": "assets/icons/win/icon.ico"
+        }
+    }
 }
