@@ -1,0 +1,73 @@
+<div class="authorinfo">
+<% if(deep(author, 'data.name')) {%>
+
+	<div class="item name">
+		<div class="itemtable table">
+			<div class="icon"><i class="fab fa-slack-hash"></i></div>
+			<div class="label"><%-deep(author, 'data.name')%></div>
+		</div>
+	</div>
+
+<% } %>
+
+
+<% 
+
+var _d = deep(author, 'state.user_reg_date')
+
+if(_d && _d > -1) {
+
+	var d = new Date();
+		d.setTime(_d * 1000);	
+
+
+
+%>
+
+	<div class="item date">
+		<div class="itemtable table">
+			<div class="icon"><i class="far fa-calendar"></i></div>
+			<div class="label"><%=e('joined')%>: <b><%-d.yyyymmdd('.')%></b></div>
+		</div>
+	</div>
+
+<% } %>
+
+<% if(deep(author, 'data.site')) {%>
+
+	<div class="item site">
+		<div class="itemtable table">
+			<div class="icon"><i class="fas fa-external-link-alt"></i></div>
+			<div class="label"><a href="<%-deep(author, 'data.site')%>"><%-deep(author, 'data.site')%></a></div>
+		</div>
+	</div>
+
+<% } %>
+
+<% if(deep(author, 'data.about')) {
+
+	var a = deep(author, 'data.about');
+
+	var am = trimHtml(a, 200);
+
+
+
+%>
+
+	<div class="item about">
+		<div class="itemtable table">
+			<div class="icon"><i class="fas fa-pen"></i></div>
+			<div class="label">
+				<div class="aboutwrapper"><%=filterXSS(am)%></div>
+				<% if(am != a){ %> 
+					<div class="showmoreabout">
+						Show more
+					</div>
+				<% } %>
+			</div>
+		</div>
+	</div>
+
+<% } %>
+
+</div>

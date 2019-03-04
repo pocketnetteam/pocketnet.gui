@@ -2,15 +2,51 @@
 
 #panel{
 
-	background: #fff;
+	
 	
 	#chat{
 		height: 600px;
 	}
 
 	#discussions{
+		.disscussionsCaption {
+			margin-bottom: 0;
+			padding-left: 10px;
+
+			.pwrapper{
+				background: #fff;
+			}
+		}
 		.discussionsWrapper{
+			
 			max-height: 250px;
+			padding-left: 10px;
+
+			.pwrapper{
+				background: #fff;
+			}
+		}
+
+		.chatWrapper{
+			padding-left: 10px;
+
+			.load{
+				left: 0;
+			}
+		}
+
+		.load{
+			left: 10px;
+		}
+
+		.gotoDisscussion{
+			background: @color-gray2;
+			color : #fff;
+			padding : @rhythm;
+
+			&.has{
+				display: block;
+			}
 		}
 		
 	}

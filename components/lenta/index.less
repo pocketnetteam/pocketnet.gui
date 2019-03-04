@@ -296,7 +296,37 @@
 			}
 
 			.shareTable{
+
+				.sbtnxs{
+					.subscribedLabel{
+						display : none;
+					}
+
+					span{
+						cursor: pointer;
+						.transition(0.3s);
+						i{
+							color : @color-good;
+						}
+
+						&:hover{
+							color : @color-main;
+						}
+					}
+				}
+
 				&.subscribed{
+
+					.sbtnxs{
+						.subscribedLabel{
+							display : inline;
+						}
+
+						.subscribeLabel{
+							display : none;
+						}
+					}
+
 					.iconWrapper{
 
 						.aunsubscribe{
@@ -441,12 +471,11 @@
 
 
 			.meta{
-				margin-top: 2.2 * @rhythm;
-				overflow: hidden;
+				margin-top: 1.8 * @rhythm;
+	
 				margin-bottom: @rhythm;
 
 				>div{
-					float: left;
 					margin-right: 2 * @rhythm;
 
 					
@@ -462,6 +491,8 @@
 							color : @color-main;
 						}
 					}
+
+					
 				}
 			}
 
@@ -664,7 +695,6 @@
 				
 					.linkcnt{
 						white-space: nowrap;
-						text-overflow: ellipsis;
 						overflow: hidden;
 						max-width: 640px;
 					}
@@ -833,7 +863,6 @@
 
 					&.discussion{
 					
-
 						.count{
 							padding-right : @rhythm / 2;
 
@@ -960,9 +989,23 @@
 					}
 
 					.discussion{
-						display: none;
 					}
 				}
+			}
+		}
+
+		.showmorebyauthor{
+			text-align: center;
+			background: fade(@color-gray2, 100);
+			padding : 2 * @rhythm;
+			cursor: pointer;
+			font-size: 0.8em;
+			.transition(0.3s);
+			color : #fff;
+			margin-bottom : 2 * @rhythm;
+
+			&:hover{
+				background: fade(@color-main, 100)
 			}
 		}
 
@@ -1103,6 +1146,33 @@
 		}
 
 		
+	}
+
+	.icon.savecrossIcon{
+		padding: 0;
+		padding-left: @rhythm;
+		padding-right: @rhythm;
+		position: relative;
+		cursor: pointer;
+		color : #008833;
+		
+
+		.amount{
+			position: absolute;
+			left: 50%;
+			top : 50%;
+			padding : 0 @rhythm;
+			min-width: 16px;
+			height: 16px;
+			line-height: 16px;
+			text-align: center;
+			font-size: 0.5em;
+			background: fade(@color-contrast, 80);
+			color : #fff;
+			.shadowSmaller();
+			z-index: 1;
+			border-radius: 50%;
+		}
 	}
 
 	.zero,
@@ -1283,9 +1353,6 @@
 		}
 
 		&.complain{
-			margin-top : 2 * @rhythm;
-
-
 			&:hover{
 				>div{
 					color : @color-contrast;
@@ -1301,7 +1368,7 @@
 @media only screen and (max-width: 640px) {
 #lenta{
 	background: #F9F9F9;
-
+	
 	.shares{
 		overflow: hidden; 
 		.work{
@@ -1316,9 +1383,14 @@
 				width: 100%;
 			}
 		}
+
+
 		
 		.shareTable{
+			
 			display: block;
+			cursor: default;
+
 			>div{
 				display: block;
 				padding : 0;
@@ -1352,6 +1424,7 @@
 			position : relative;
 
 			.videoTips{
+				cursor: default;
 				position : absolute;
 				left: 0;
 				right: 0;
@@ -1399,6 +1472,12 @@
 			padding : 2 * @rhythm 0;
 			background: #fff;
 			margin-bottom: 2 * @rhythm;
+			cursor: default;
+
+			.shareWrapper,
+			.shareContent{
+				cursor: default;
+			}
 
 			.paddingWrapper{
 				padding : 0 @rhythm;
@@ -1588,7 +1667,14 @@
 			.sharecaption{
 				padding-top : @rhythm;
 				padding-bottom : @rhythm;
-				text-align: center;
+				margin-bottom: @rhythm;
+
+				div{
+					font-size: 1.9em;
+					font-weight: 100;
+				}
+
+
 			}
 			.urlhtmlcontent{
 				font-size: 0.8em;
@@ -1651,7 +1737,13 @@
 						}
 					}
 
+					&.donate{
+						float: left;
+						margin-right : 2 * @rhythm;
+					}
+
 					&.discussion{
+						margin-right : 0;
 						position: relative;
 						display: block;
 					

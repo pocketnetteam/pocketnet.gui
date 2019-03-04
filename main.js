@@ -9,12 +9,14 @@ let win, nwin, badge;
 
 var willquit = false;
 
-const { app, BrowserWindow, Menu, Tray, ipcMain, Notification, nativeImage} = require('electron')
+const { app, BrowserWindow, Menu, Tray, ipcMain, Notification, nativeImage, dialog} = require('electron')
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
+const autoUpdate = require('./updater.js');
 
 let url = require('url')
+let path = require('path')
 
 var defaultTrayIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
 
@@ -126,9 +128,16 @@ var badgeIcon = './assets/icons/win/iconbadge.ico';*/
   function initApp(){
     createWindow();
 
-    createBadge()
+    createBadge();
 
-    createTray()
+    createTray();
+
+    autoUpdate.init(win);
+    autoUpdate.check()
+    
+    setInterval(function(){
+      autoUpdate.check()
+    }, 60000)
   }
 
   function closeNotification(){
@@ -160,32 +169,13 @@ var badgeIcon = './assets/icons/win/iconbadge.ico';*/
         title : 'New notification',
         x : mainScreen.size.width - w - 20,
         y : 20,
-        //opacity  : 0,
         skipTaskbar  : true,
         useContentSize  : true,
         resizable : false,
-        movable : false
+        movable : false,
+        backgroundColor: '#020E1B',
+        alwaysOnTop : true
       })
-
-     /* var html = function(ht){
-
-        var h = '<!DOCTYPE html>\
-          <html>\
-              <head>\
-                  <meta charset="utf-8">\
-                  <link rel="stylesheet" href="css/normalize.css?v=136">\
-                  <link rel="stylesheet" href="css/elnotifications.css">\
-                  <script src="js/jquery.min.js"></script>\
-              </head>\
-              <body id="application" class="menu-hide">'+ht+'\
-              <script src="js/elnotifications.js"></script>\
-              </body>\
-          </html>'
-
-          return h
-      }
-
-      var file = 'data:text/html;charset=UTF-8,' + encodeURIComponent(html(nhtml));*/
 
       nwin.loadFile('notifications.html', {
         search : encodeURIComponent(nhtml)
@@ -210,7 +200,7 @@ var badgeIcon = './assets/icons/win/iconbadge.ico';*/
   
     win.loadFile('index_el.html')
   
-   // win.webContents.openDevTools()
+    //win.webContents.openDevTools()
 
     win.webContents.on('new-window', function(event, url){
       event.preventDefault();
@@ -259,7 +249,25 @@ var badgeIcon = './assets/icons/win/iconbadge.ico';*/
 
     return win
   }
-  
+
+
+var r = app.requestSingleInstanceLock()
+
+if(!r){
+  app.quit()
+}
+else
+{
+  app.on('second-instance', function (event, argv, cwd) {
+    if(win) {
+
+      if(win.isMinimized()) win.restore();
+
+      win.show()
+      win.focus();  
+    }
+  })
+
   // Этот метод будет вызываться, когда Electron закончит 
   // инициализацию и готов к созданию окон браузера.
   // Некоторые интерфейсы API могут использоваться только после возникновения этого события.
@@ -282,13 +290,11 @@ var badgeIcon = './assets/icons/win/iconbadge.ico';*/
     }
   })
 
-  /*app.on('before-quit', (e) => {
-    if(!willquit){
-      e.preventDefault();
+}
 
-      win.hide()
-      badge.destroy()
-    }
-  })*/
+  
 
+
+
+ 
  

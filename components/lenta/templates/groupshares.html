@@ -1,0 +1,42 @@
+<% 
+var i = index || 0;
+
+var groupshares = group(shares, function(s){
+	return s.address
+})
+
+_.each(groupshares, function(gs, address){ %>
+
+	<div class="authorgroup">
+
+		<% _.each(gs, function(share, j){ 
+
+			var h = '';
+
+			if (j) h = 'hidden'
+
+		%>
+				<div class="share <%-h%>" id="<%-share.txid%>" style="">
+					<div class="shareSpacer">
+						
+					</div>
+				</div>
+			<% 
+
+			i++;
+
+		}) %>
+
+		<% if(gs.length > 1) { %>
+
+			<div class="showmorebyauthor">
+				Show more posts (<%- gs.length %>) from <%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %>
+			</div>
+
+		<% } %>
+
+	</div>
+	
+<% }) %>
+
+	

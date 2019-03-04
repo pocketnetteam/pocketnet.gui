@@ -83,6 +83,8 @@ var notifications = (function(){
 		var renders = {
 			notifications : function(p, clbk){
 
+				//console.log('self.app.platform.sdk.notifications.storage.notifications', self.app.platform.sdk.notifications.storage.notifications)
+
 				if(!p) p = {};
 
 				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;

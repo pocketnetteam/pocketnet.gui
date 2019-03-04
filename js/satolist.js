@@ -503,7 +503,7 @@ Platform = function(app){
 				options.onlyOne = true;
 				options.delay = 100;
 				options.trigger = 'click'
-				options.autoClose = false;
+				//options.autoClose = false;
 
 				options.theme || (options.theme = "lighttooltip");
 				options.position || (options.position = "left");
@@ -1458,7 +1458,7 @@ Platform = function(app){
 				seen : {}
 			},
 			load : function(){
-				this.import(JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv10'] || "{}"))
+				this.import(JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv11'] || "{}"))
 			},
 			save : function(){
 
@@ -1466,7 +1466,7 @@ Platform = function(app){
 
 
 				if (e.notifications.length && e.block > 25000 && this.inited == true){
-					localStorage[self.sdk.address.pnet().address + 'notificationsv10'] = JSON.stringify(this.export())
+					localStorage[self.sdk.address.pnet().address + 'notificationsv11'] = JSON.stringify(this.export())
 				}
 				
 				
@@ -1562,7 +1562,7 @@ Platform = function(app){
 
 			init : function(clbk){
 				this.load();
-				this.storage.block || (this.storage.block = self.currentBlock)
+				this.storage.block || (this.storage.block = 1)
 
 				if(this.storage.block < 25000) this.storage.block = 25000;
 
@@ -4569,6 +4569,25 @@ Platform = function(app){
 				self.sdk.chats.save()
 			},
 
+			removeTemp : function(){
+				_.each(self.sdk.chats.clbks, function(c){
+
+					c(null, 'removeTemp')
+
+				})
+			},
+
+			addTemp : function(id, type, count){
+				
+				var e = self.sdk.chats.empty(id, type)
+
+				_.each(self.sdk.chats.clbks, function(c){
+
+					c(e, 'addTemp', count)
+
+				})
+				
+			},
 			add : function(id, type){
 
 				if (self.sdk.chats.storage[id]){
@@ -4598,8 +4617,6 @@ Platform = function(app){
 
 					self.sdk.chats.save()
 				}
-
-				
 				
 			},
 
@@ -5302,10 +5319,12 @@ Platform = function(app){
 
 					if(data.mesType == 'upvoteShare' && data.share){
 
-						var star = self.tempates.star(data.upvoteVal)
+						if(data.upvoteVal > 2){
 
+							var star = self.tempates.star(data.upvoteVal)
 
-						text = platform.app.localization.e('upvoteShareMessage') + self.tempates.share(data.share, star)
+							text = platform.app.localization.e('upvoteShareMessage') + self.tempates.share(data.share, star)
+						}
 					}
 
 					if(text){
@@ -6287,7 +6306,7 @@ Platform = function(app){
 						var t = self.storage.info[id].t
 						var c = platform.currentTime()
 
-						if (c - t > 3){
+						if (c - t > 8){
 							return true
 						}
 					}
@@ -6414,7 +6433,6 @@ Platform = function(app){
 		}
 
 		return dateToStrUTCSS(created)
-
 	}
 	
 	self.currentTime = function(){
@@ -7108,6 +7126,46 @@ Platform = function(app){
 		return self;
 	}
 
+	self.autoUpdater = function(){
+
+		if(!electron) return
+
+		var updateReady = function(){
+			dialog({
+				html : "Updates to Pocketnet are available. Apply the updates now?",
+				btn1text : "Yes",
+				btn2text : "No, later",
+
+				success : function(){
+
+					electron.remote.autoUpdater.quitAndInstall()
+
+				},
+
+				fail : function(){
+					setTimeout(updateReady, 86400000)
+				}
+			})
+		}
+
+		electron.ipcRenderer.on('updater-message', (event, data) => {
+			if(data.type == 'info'){
+				if(data.msg == 'update-downloaded'){
+					updateReady()
+				}
+
+				if(data.msg == 'download-progress'){
+					console.log('download-progress', data)
+				}
+			}
+
+			if(data.type == 'error'){
+				console.log('download-progress', data)
+			}
+		})
+
+	}
+
 	self.autochange = function(){
 		self.nodeid++;
 
@@ -7264,9 +7322,42 @@ Platform = function(app){
 		self.titleManager = new self.TitleManager();
 
 		self.sdk.node.get.time(function(){
-			//self.sdk.node.get.blockNumber(function(){
-				self.prepareUser(clbk, state);
-			//})
+			
+			if(!state && typeof _Electron == 'undefined' && !window.cordova && !localStorage['popupsignup']){
+				setTimeout(function(){
+
+					var href = self.app.nav.get.href()
+
+					if (href != 'registration' && href != 'authorization'){
+
+						localStorage['popupsignup'] = 'showed'
+
+						var h = '<div class="ppheader">Go ahead and become a crypto pioneer!</div>';
+
+						dialog({
+							html : h,
+							class  :'one popupsignup',
+
+							btn1text : 'Join Pocketnet Now & Network on the Blockchain',
+
+							success : function(){
+								
+
+								self.app.nav.api.load({
+									open : true,
+									href : 'registration',
+									history : true
+								})
+							}
+						})
+
+					}
+
+				}, 90000)
+			}
+
+			self.prepareUser(clbk, state);
+			
 		})
 	}
 
@@ -7336,6 +7427,8 @@ Platform = function(app){
 		else
 		{
 			app.user.isState(function(state){
+
+				localStorage['popupsignup'] = 'showed'
 
 				stateclbk(state)
 			})
@@ -7498,6 +7591,8 @@ Platform = function(app){
 	self.app = app;
 
 	self.cryptography = new self.Cryptography();
+
+	self.autoUpdater()
 
 	return self;
 

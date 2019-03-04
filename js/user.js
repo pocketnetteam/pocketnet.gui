@@ -190,15 +190,21 @@ User = function(app, p) {
 			})
 		}
 
+		console.log('self.stay', self.stay)
+
 		if (self.stay){
 
 			app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
+
+				console.log('mnemonic', enc)
+
 				localStorage['mnemonic'] = enc
 			})
 			
 		}
 		else
 		{
+			console.log("ASDASD@@@")
 			localStorage['mnemonic'] = ''
 		}
 
@@ -238,6 +244,8 @@ User = function(app, p) {
 
 		if (tokenDialog)
 			tokenDialog.destroy();
+
+		console.log("signout")
 
 		localStorage['mnemonic'] = ''
 		//localStorage['stay'] = ''
@@ -295,6 +303,9 @@ User = function(app, p) {
 
 					if(m){
 						if(!bitcoin.bip39.validateMnemonic(m)){
+
+							console.log("private", m)
+
 							self.setKeysPairFromPrivate(m, function(){
 								self.isState(clbk)
 							})
@@ -308,7 +319,7 @@ User = function(app, p) {
 					}
 					else
 					{
-
+						console.log("ASDSDASDASDA")
 						localStorage['mnemonic'] = ''
 
 						state = 0;	

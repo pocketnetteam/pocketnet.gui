@@ -25,11 +25,17 @@ var all = {
 		icon : '<i class="fas fa-ban"></i>',
 		text : 'Complain',
 		class : 'complain'
+	},
+
+	donation : {
+		icon : '<i class="fas fa-donate"></i>',
+		text : 'Donate',
+		class : 'donate'
 	}
 
 }
 
-m.push('share')
+/*m.push('share')*/
 
 if(share){
 	if(share.address && user.address.value){
@@ -40,15 +46,18 @@ if(share){
 
 		if(!my && me){
 
+			m.push('donation')
 
-
-			if (!me.relation(share.address, 'subscribes')){
-				m.push('subscribe')
+			if(isMobile()){
+				if (!me.relation(share.address, 'subscribes')){
+					m.push('subscribe')
+				}
+				else
+				{
+					m.push('unsubscribe')
+				}
 			}
-			else
-			{
-				m.push('unsubscribe')
-			}
+			
 
 			if(typeof mestate!= 'undefined' && mestate.reputation >= 20){
 				m.push('complain')

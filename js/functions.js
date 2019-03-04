@@ -498,8 +498,12 @@
 
 			if(p.class) wnd.addClass(p.class);
 
-		    if(!nooverflow)
-		    	app.actions.offScroll(p.offScroll);
+		    if(!nooverflow){
+
+		    	nooverflow = !app.actions.offScroll(p.offScroll);
+		    }
+
+		    console.log("nooverflow", nooverflow)
 
 			wnd.css("display", "block");
 		}
@@ -5375,9 +5379,17 @@
 
 		var inel = $(p.inel);
 
+		var st = inel.scrollTop()
+		var sh = inel.height()
+
 		var range = {
-			top : inel.scrollTop() - p.offset,
-			bottom : inel.scrollTop() + inel.height() + p.offset
+			top : st - p.offset,
+			bottom : st + sh + p.offset
+		}
+
+		var rangeLine = {
+			top : st + p.offsetTop,
+			bottom : st + sh - p.offsetBottom
 		}
 
 		var _fels = els.filter(function(){
@@ -5397,6 +5409,13 @@
 				if(p.debug){
 					console.log('range.top, range.bottom, offsetTop, bottom', range.top, range.bottom, offsetTop, bottom)
 				}
+
+			if (p.mode == 'line'){
+
+				var line = offsetTop - st < rangeLine.top && offsetTop + height > rangeLine.bottom
+
+				return line
+			}
 
 			if (p.mode == 'partall')
 			{
@@ -7926,7 +7945,7 @@
 	    };
 	}
 	nl2br = function(str){	
-		return str.replace(/([^>])\n/g, '$1<br/>');
+		return str.replace(/\n/g, '<br/>');
 	}
 
 	trimHtml = function(str, num){
@@ -8031,6 +8050,9 @@
 			result = str.substr(0, tr) + "&hellip;";
 
 			_.each(openedTags, function(tag){
+
+				if(tag != 'br' && tag!= 'img')
+
 				result = result + "</" + tag + ">";
 			})
 		}

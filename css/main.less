@@ -2790,6 +2790,29 @@ input[type=radio].radio:checked + label {
 
 }
 
+.popupsignup{
+    .ppheader{
+        text-align: center;
+        font-size: 2em;
+        font-weight: 100;
+    }
+
+    .buttons{
+        .btn1wr{
+            width: 100%;
+            margin-right : 0;
+
+            text-align: center;
+        }
+
+        button{
+            font-size: 1.1em;
+            font-weight: 100;
+            padding : @rhythm 4 * @rhythm ;
+        }
+    }
+}
+
 .savecross{
     position: relative;
     border-radius: 50%;
@@ -4076,7 +4099,7 @@ input[type=radio].radio:checked + label {
     #content{
 
         .work{
-            width: 80%;
+            width: 100%;
             padding-left: @rhythm;
             padding-right: @rhythm;
         }
@@ -4263,9 +4286,11 @@ input[type=radio].radio:checked + label {
     .fastMessage{
         position: fixed;
         right: 0px;
-        bottom: 0px;
+        top: 0px;
         max-height: 110px;
         width: 100%;
+        min-width: 0;
+        max-width: none;
 
         .fmCnt{
             width: 100%;

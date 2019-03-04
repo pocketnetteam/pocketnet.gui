@@ -57,21 +57,31 @@ var metadisplay = function(){ %>
 						<% if(!ed.authAction) {%>
 							</a>
 						<% } %>
-					</div>
 
+						<% if(state && !my) { %> 
+
+							<span class="sbtnxs">
+								&middot; <span class="subscribeLabel asubscribe">Follow</span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i> Following</span>
+							</span>
+
+						<% } %>
+					</div>
+					
 					<% var c = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.rc');
 
 					if(c > 0) { %>
 
 						<div class="svcCell tooltip" title="<%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %> rescued <%- c %> people from the censored web">
-							<div class="savecrossWrapper table">
-								<div class="fs">
-									<div class="savecross"></div>
+
+							<div class="icon savecrossIcon">
+								<div class="icn">
+									<i class="fas fa-plus-circle"></i>
 								</div>
-								<div class="po">
-									<span><%- c %></span>
+								<div class="amount">
+									<span><%- c || 0 %></span>
 								</div>
 							</div>
+
 						</div>
 
 					<% } %>
@@ -82,11 +92,15 @@ var metadisplay = function(){ %>
 		
 		</div>
 
+		<% if(!my && state) {%>
+
 		<div class="metapanel">
 			<div class="metapanelitem metmenu">
 				<i class="fas fa-ellipsis-h"></i>
 			</div>
 		</div>
+
+		<% } %>
 
 		<!--
 
@@ -353,6 +367,20 @@ var metadisplay = function(){ %>
 									
 								</div>
 
+								<div class="item sharesocial right">
+
+									<div class="itemwr table">
+										<div class="iconwr">
+											<div class="icon">
+												<i class="fas fa-share-alt"></i>
+											</div>
+										</div>
+										
+										
+									</div>
+									
+								</div>
+
 								<% if(my){ %> 
 
 									<!--<div class="item promote ">
@@ -375,7 +403,7 @@ var metadisplay = function(){ %>
 
 								<% } else { %> 
 
-									<div class="item donate ">
+									<!--<div class="item donate right">
 
 										<div class="itemwr table">
 											<div class="iconwr">
@@ -383,20 +411,17 @@ var metadisplay = function(){ %>
 													<i class="fas fa-donate"></i>
 												</div>
 											</div>
-											<!--
-											<div class="count">
-												<span>DONATE</span>
-											</div>-->
+											
 											
 										</div>
 										
-									</div>
+									</div>-->
 
 								<% } %>
 
 								<% if(state) {%>
 								
-									<div class="item discussion right">
+									<div class="item discussion">
 										<div class="itemwr table">
 
 											<div class="count">
@@ -408,8 +433,6 @@ var metadisplay = function(){ %>
 													<i class="fas fa-comments"></i>
 												</div>												
 											</div>
-
-											
 
 										</div>
 									</div>

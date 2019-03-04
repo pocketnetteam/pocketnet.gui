@@ -27,7 +27,7 @@ var main = (function(){
 				var maxWidth = 1280;
 
 				var paddingR = 15;
-				var paddingL = 10;
+				var paddingL = 0;
 
 				var over = (width - maxWidth) / 2;
 

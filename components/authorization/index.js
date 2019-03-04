@@ -23,6 +23,8 @@ var authorization = (function(){
 
 		var stayH = function(){
 
+			console.log('stayH')
+
 			localStorage['stay'] = '0';
 			localStorage['mnemonic'] || '';
 

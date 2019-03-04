@@ -412,34 +412,51 @@ Application = function(node)
 		}
 	}
 
+	self.scrollRemoved = false;
+
 	self.actions = {
 		up : _scrollTop,
 
 		offScroll : function(js){
 
-			if(!js){
-				$('html').addClass('nooverflow')
+			console.log('self.scrollRemoved', self.scrollRemoved)
 
-				return
+			if(self.scrollRemoved){
+				return false
 			}
 
-			if(typeof window == 'undefined') return;
+			self.scrollRemoved = true
 
-			var winScrollTop = $(window).scrollTop();
+			if(!js){
 
-			$(window).bind('scroll', function(){
+				$('html').addClass('nooverflow')
 
-				$(window).scrollTop(winScrollTop);
+				
+			}
+			else
+			{
+				var winScrollTop = $(window).scrollTop();
 
-			});
+				$(window).bind('scroll', function(){
+
+					$(window).scrollTop(winScrollTop);
+
+				});
+			}
+
+			return true
+
+			
 		},
 
 		onScroll : function(){
 
-			$('html').removeClass('nooverflow')
+			console.log('onScroll', self.actions.onScroll.caller)
 
-			if(typeof window == 'undefined') return;
+			$('html').removeClass('nooverflow')
 			$(window).unbind('scroll');
+
+			self.scrollRemoved = false;
 		}
 	}
 

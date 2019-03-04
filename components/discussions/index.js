@@ -290,6 +290,9 @@ var discussions = (function(){
 				actions.inView(function(d){
 
 					var ids = _.map(d, function(d){
+
+						console.log(d)
+
 						return d.chat.id
 					})
 
@@ -419,7 +422,6 @@ var discussions = (function(){
 
 			inView : function(){
 
-				console.log("inv", block)
 
 				if (block){
 					return
@@ -460,8 +462,6 @@ var discussions = (function(){
 
 			empty : function(){
 
-				console.log('_.toArray(discussions).length', _.toArray(discussions).length, discussions)
-
 				if (_.toArray(discussions).length){
 					el.c.removeClass("sempty")
 				}
@@ -486,9 +486,9 @@ var discussions = (function(){
 				})
 			},
 
+
+
 			discussion : function(discussion, clbk){
-
-
 
 				var _el = el.list.find('[chat="'+discussion.chat.id+'"]');
 
@@ -582,6 +582,48 @@ var discussions = (function(){
 
 					
 				})
+			},
+
+			discussionTemp : function(d, c, clbk){
+
+				self.shell({
+					name :  'discussions',
+					el : el.temp,
+					data : {
+						discussions : d
+					},
+
+				}, function(p){
+
+					var _el = p.el.find('.discussion')
+
+					self.app.platform.sdk.discussions.info(d, function(nds){
+
+						self.shell({
+							name :  'discussion',
+							inner : html,
+							el : _el,
+							data : {
+								discussion : d[0],
+								c : c
+							},
+
+						}, function(p){
+
+							_el.removeClass('dempty')
+							
+							_el.on('click', function(){
+								self.app.platform.sdk.chats.add(d[0].chat.id, 'share')
+							})
+
+							if (clbk)
+								clbk();
+						})
+
+					})
+
+					
+				})
 			}
 		}
 
@@ -597,7 +639,16 @@ var discussions = (function(){
 		var initEvents = function(){			
 			w.on('scroll', events.inViewScroll)
 
-			self.app.platform.sdk.chats.clbks.discussions = function(d, t){
+			self.app.platform.sdk.chats.clbks.discussions = function(d, t, c){
+
+				if(t == 'removeTemp'){
+
+					el.temp.html('')
+					el.temp.fadeOut(1)
+
+					return
+				}
+
 
 				var discussion = _.toArray(self.app.platform.sdk.discussions.fromChats([d]))
 
@@ -610,10 +661,17 @@ var discussions = (function(){
 					renders.discussions(discussion, function(){
 						actions.chatp(discussion[0].chat.id)
 					}, prepend)
+				}
 
-					
+				if(t == 'addTemp'){
+
+					renders.discussionTemp(discussion, c, function(){
+						
+					})
 
 				}
+
+
 
 				if(t == 'addtwice'){
 
@@ -701,6 +759,8 @@ var discussions = (function(){
 				
 
 				el.list = el.c.find('.list')
+
+				el.temp = el.c.find('.gotoDisscussion')
 
 				initEvents();
 

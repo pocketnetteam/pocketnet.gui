@@ -29,6 +29,7 @@ var lenta = (function(){
 			ascroll = 0,
 			ascrollel = null,
 			newmaterials = 0,
+			tempTimer,
 		 	getPreviewTimer;
 
 		var countshares = 0;
@@ -839,12 +840,16 @@ var lenta = (function(){
 						var els = el.c.find('.share');
 
 						var _el = w; 
+
+						var h = $(window).height() / 4
 						
 						var inv = inView(els, {
 							inel : _el,
-							offset : 500,
-							mode : 'part'
+							offsetTop : h,
+							offsetBottom : h,
+							mode : 'line',
 						})
+
 
 						if (inv.length > 0){
 
@@ -857,6 +862,10 @@ var lenta = (function(){
 								return _.find(shares, function(s){
 									return s.txid == id
 								});
+							})
+
+							invshares = _.filter(invshares, function(is){
+								if(!is.temp) return true
 							})
 
 							/*var i = $(inv[0]).attr('index')
@@ -921,6 +930,13 @@ var lenta = (function(){
 		}
 
 		var events = {
+			showmorebyauthor : function(){
+				console.log('showmorebyauthor')
+
+				$(this).closest('.authorgroup').find('.share').removeClass('hidden')
+
+				$(this).remove()
+			},
 			metmenu : function(){
 				var _el = $(this);
 
@@ -978,6 +994,14 @@ var lenta = (function(){
 
 						})
 
+						el.find('.donate').on('click', function(){
+
+							actions.donate(id)
+
+							_el.tooltipster('hide')	
+
+						})
+
 						
 
 					})
@@ -1019,9 +1043,38 @@ var lenta = (function(){
 						return s.txid + '_' + s.address
 					})
 
-					self.app.platform.rtc.load.info(rooms, function(){
-						renders.roomsinfo(rooms)
-					})
+					if(rooms.length){
+
+						var room = rooms[0]
+
+						var load = [room]
+
+						if(isMobile()){
+							load = rooms
+						}
+
+
+						self.app.platform.rtc.load.info([room], function(){
+
+							if(isMobile()){
+								renders.roomsinfo(rooms)
+							}
+							else
+							{
+
+								tempTimer = slowMade(function(){
+
+									self.app.platform.sdk.chats.addTemp(room, 'share', deep(self.app.platform, 'rtc.storage.info.' + room + '.d.users_count') || 0)
+								
+								}, tempTimer, 30)
+
+							}
+						})
+
+					}
+
+
+					
 					
 					if(clbk)
 						clbk();
@@ -1364,7 +1417,6 @@ var lenta = (function(){
 
 					var _id = id.split("_")[0]
 
-					//console.log("COUNT,", count,id, deep(self.app.platform, 'rtc.storage.info'))
 
 					if(typeof count != 'undefined' && el.c)
 					{
@@ -1487,7 +1539,7 @@ var lenta = (function(){
 						
 					action(function(){
 
-
+						renders.stars(share)
 						renders.url(p.el.find('.url'), share.url, share, function(){
 						
 							action(function(){
@@ -1498,8 +1550,10 @@ var lenta = (function(){
 
 									actions.initVideo(p.el, share)
 
-									renders.stars(share, _clbk)
+									
 
+									if( _clbk)
+										_clbk()
 
 									action(function(){
 
@@ -1591,7 +1645,7 @@ var lenta = (function(){
 				if(!p.inner) p.inner = append
 				
 				self.shell({
-					name :  'shares',
+					name :  'groupshares',
 					inner : p.inner,
 					el : el.shares,
 					data : {
@@ -2170,6 +2224,7 @@ var lenta = (function(){
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
 
+			el.c.on('click', '.showmorebyauthor', events.showmorebyauthor)
 			
 			self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
 				renders.shares([share], function(){
@@ -2420,6 +2475,9 @@ var lenta = (function(){
 				delete self.app.platform.ws.messages["new block"].clbks.newsharesLenta
 			 	delete self.app.platform.clbks.api.actions.subscribe.lenta
 				delete self.app.platform.clbks.api.actions.unsubscribe.lenta
+
+				self.app.platform.sdk.chats.removeTemp()
+								
 
 				window.removeEventListener('scroll', events.videosInview);
 				window.removeEventListener('scroll', events.sharesInview);

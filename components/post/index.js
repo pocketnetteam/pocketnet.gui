@@ -96,18 +96,7 @@ var post = (function(){
 
 			
 			},
-			additional : function(el, show){
-				if(show){
-					el.addClass('showAdditional')
-					el.find('.subscribeWrapper').fadeIn();
-				}
-				else
-				{
-					el.removeClass('showAdditional')
-					el.find('.subscribeWrapper').fadeOut();
-				}
-				
-			},
+			
 			position : function(){
 				var h = $(window).height();
 
@@ -229,46 +218,29 @@ var post = (function(){
 				)
 			},			
 
-			unsubscribe : function(address, clbk){
-				var unsubscribe = new Unsubscribe();
-					unsubscribe.address.set(address);
-
-					topPreloader(10)
-
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					unsubscribe,
-
-					function(tx, error){
-
-						topPreloader(100)
-
-						clbk(tx, error)
-
+			unsubscribe : function(clbk){
+				self.app.platform.api.actions.unsubscribe(share.address, function(tx, error){
+					if(!tx){
+						self.app.platform.errorHandler(error, true)	
 					}
-				)	
+
+					if (clbk)
+						clbk(tx, error)
+				})	
 			},
 
-			subscribe : function(address, clbk){
-				var subscribe = new Subscribe();
-					subscribe.address.set(address);
+			subscribe : function(clbk){
 
-					topPreloader(10)
-
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					subscribe,
-
-					function(tx, error){
-
-						console.log(tx, error)
-
-						topPreloader(100)
-
-						clbk(tx, error)
-
+				self.app.platform.api.actions.subscribe(share.address, function(tx, error){
+					if(!tx){
+						self.app.platform.errorHandler(error, true)	
 					}
-				)	
+
+					if (clbk)
+						clbk(tx, error)
+				})
+
+		
 			},
 
 			
@@ -281,11 +253,19 @@ var post = (function(){
 					}
 				})
 
+				var num = findIndex(images, function(image){
+
+					if (image.src == initialValue) return true;						
+
+				})
+
 				self.app.nav.api.load({
 					open : true,
-					id : 'imageGallery',
-					inWnd : true,
 
+					href : 'imagegallery?i=' + share.txid + '&num=' + (num || 0),
+
+					inWnd : true,
+					history : 'true',
 					essenseData : {
 						initialValue : initialValue,
 						idName : 'src',
@@ -296,6 +276,22 @@ var post = (function(){
 		}
 
 		var events = {
+			unsubscribe : function(clbk){
+				actions.unsubscribe(function(){
+					if (tx)
+						el.share.find('.shareTable').removeClass('subscribed');
+				})	
+			},
+
+			subscribe : function(clbk){
+
+				actions.subscribe(function(tx){
+					if (tx)
+						el.share.find('.shareTable').addClass('subscribed');
+				})
+
+		
+			},
 			getTransaction : function(){
 				self.app.platform.sdk.node.transactions.get.tx(share.txid)
 			},
@@ -663,6 +659,9 @@ var post = (function(){
 
 			el.c.on('click', '.sharesocial', events.sharesocial)
 
+			el.c.on('click', '.asubscribe', events.subscribe)
+			el.c.on('click', '.aunsubscribe', events.unsubscribe)
+
 			self.app.platform.ws.messages.transaction.clbks.temppost = function(data){
 
 				if(data.temp){
@@ -698,6 +697,26 @@ var post = (function(){
 				}
 				
 			}
+
+			self.app.platform.clbks.api.actions.subscribe.post = function(address){
+
+				if(address == share.address){
+
+					el.c.find('.shareTable').addClass('subscribed');
+
+				}
+
+				
+			}
+
+			self.app.platform.clbks.api.actions.unsubscribe.post = function(address){
+
+				if(address == share.address){
+
+					el.c.find('.shareTable').removeClass('subscribed');
+
+				}
+			}
 		}
 
 		var make = function(){
@@ -727,7 +746,6 @@ var post = (function(){
 				if (id){
 					share = self.app.platform.sdk.node.shares.storage.trx[id] 
 
-					console.log(id, share, self.app.platform.sdk.node.shares.storage.trx)
 
 					if(!share){
 						var temp = _.find(self.sdk.node.transactions.temp.share, function(s){

@@ -36,9 +36,9 @@ var menu = (function(){
 		var balanceHash;
 
 		var actions = {
-			extraLinks : function(){
+			/*extraLinks : function(){
 				self.app.nav.clbks.history.menu = events.hambclose.click;
-			},
+			},*/
 			autoUpdate : function(){
 
 				self.app.user.isState(function(state){
@@ -457,7 +457,7 @@ var menu = (function(){
 				}
 			},
 
-			hamb : {
+			/*hamb : {
 				click : function(){
 					var _cl = el.c.hasClass('active');
 
@@ -482,7 +482,7 @@ var menu = (function(){
 
 					self.app.actions.onScroll();
 				}
-			}
+			}*/
 		}
 
 		var initEvents = function(){
@@ -526,13 +526,9 @@ var menu = (function(){
 
 		var make = function(){
 
-			actions.extraLinks();
-
 			self.app.user.isState(function(state){
 				
 			})
-
-			
 
 		}
 

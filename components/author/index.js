@@ -13,9 +13,11 @@ var author = (function(){
 		var panel = null, uptimer = null;
 
 		var actions = {
+			showmoreabout : function(){
+				el.c.find('.aboutwrapper').html(filterXSS(deep(author, 'data.about')))
+				el.c.find('.showmoreabout').remove()
+			},
 			showHideUp : function(){
-
-				console.log('showHideUp')
 
 				if (el.w.scrollTop() > 200){
 					el.up.addClass('active')
@@ -56,7 +58,7 @@ var author = (function(){
 				var maxWidth = 1280;
 
 				var paddingR = 0;
-				var paddingL = 10;
+				var paddingL = 0;
 
 				var over = (width - maxWidth) / 2;
 
@@ -66,7 +68,6 @@ var author = (function(){
 
 				var left = width - right - 350 + paddingL + paddingR
 
-				console.log(width, mwork.offset().left ,mwork.width())
 
 
 				cnt.css('right', right + "px")
@@ -258,6 +259,18 @@ var author = (function(){
 				}
 			},
 
+
+			info : {
+				name : 'Info <i class="fas fa-info-circle"></i>',
+				mobile : '<i class="fas fa-info-circle"></i>',
+				id : 'info',
+				class : 'info',
+				render : 'info',
+				if : function(){
+					if(isMobile()) return true
+				}
+			},
+
 			
 			
 		}
@@ -312,7 +325,19 @@ var author = (function(){
 
 				renders[report.render](el.lenta, report)
 
-				renders.menu()
+				renders.menulight()
+			},
+
+			menulight : function(){
+				el.menu.find('.usermenuitem').removeClass('active')
+
+				var r = _.find(reports, function(r){
+					return r.active
+				})
+
+				if(r){
+					el.menu.find('.usermenuitem .c' + r.class).addClass('active')
+				}
 			},
 
 			menu : function(clbk){
@@ -359,6 +384,26 @@ var author = (function(){
 						if (clbk)
 							clbk(e, p)
 					}
+
+				})
+			},
+
+			info : function(_el){
+
+				self.shell({
+
+					name :  'info',
+					el :   _el,
+
+					data : {
+						author : author
+					},
+
+					animation : 'fadeIn',
+
+				}, function(p){
+
+					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
 
 				})
 			},
@@ -440,6 +485,8 @@ var author = (function(){
 			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
 			el.subscribe.find('.subscribeprivate').on('click', events.subscribePrivate)
 
+			
+
 			window.addEventListener('scroll', events.showHideUp);
 
 			self.app.platform.ws.messages.event.clbks.author = function(data){
@@ -488,6 +535,9 @@ var author = (function(){
 			renders.menu()
 
 			renders.panel()
+
+			if(!isMobile())
+				renders.info(el.info)
 		}
 
 		return {
@@ -562,6 +612,8 @@ var author = (function(){
 				el.subscribe = el.c.find('.subscribebuttons');
 				el.up = el.c.find('.upbutton')
 				el.w = $(window)
+
+				el.info = el.c.find('.authorinfoWrapper')
 
 				make();
 				initEvents();

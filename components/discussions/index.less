@@ -6,8 +6,11 @@
 	position: relative;
 
 	.disscussionsCaption{
-		padding : @rhythm;
 		margin-bottom: @rhythm;
+
+		.pwrapper{
+			padding : @rhythm;
+		}
 
 		span{
 			font-size: 2em;
@@ -19,11 +22,50 @@
 		.disscussionsCaption{
 			display : none;
 		}
+
+		.gotoDisscussion{
+			display : none!important;
+		}
 	}
 
 	.discussionsWrapper{
 		position: relative;
 		overflow-y: auto;
+	}
+
+	.gotoDisscussion{
+		display : none;
+
+		.discussion{
+			border : 0;
+
+			.lastMessage{
+				display : none;
+			}
+
+			.panel{
+				display : none;
+			}
+
+
+		}
+	}
+
+	.userscount{
+		margin-top : @rhythm;
+		text-align: right;
+		button{
+			width: 60%;
+			background: transparent;
+			text-align: right;
+			color : @color-contrast;
+			border : 0;
+
+			&:hover{
+				background: transparent;
+				color : #fff;
+			}
+		}			
 	}
 
 	.chatWrapper{
@@ -122,7 +164,7 @@
 					padding-left: @rhythm;
 
 					.postPreview{
-						
+						overflow: hidden;
 					}
 				}
 

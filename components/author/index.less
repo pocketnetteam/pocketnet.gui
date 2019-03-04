@@ -13,38 +13,65 @@
 		}
 	}
 
+	.authorinfo{
+		font-size: 0.9em;
+		.itemtable{
+			>div{
+
+				&.icon{
+					width : 30px;
+					padding-top: @rhythm;
+				}
+
+				&.label{
+					padding-right: @rhythm;						
+				}
+
+				.showmoreabout{
+					margin-top : 2 * @rhythm;
+					font-size: 0.8em;
+					text-decoration: underline;
+					color : @color-main;
+					cursor: pointer;
+
+					&:hover{
+						color : @color-gray;
+					}
+				}
+
+				.aboutwrapper{
+				}
+			}
+		}
+
+		.item{
+			margin-bottom: 2 * @rhythm;
+		}
+
+		.name{
+			font-size: 1.2em;
+			font-weight: 500;
+		}
+
+		.site{
+			text-decoration: underline;
+			color : @color-main;
+		}
+	}
+
+	.lentaWrapper{
+		.authorinfo{
+			padding : @rhythm;
+		}
+	}
+
 	.leftpanelcell{
 		float: left;
 		width : 200px;
 		padding : 5 * @rhythm 0;
 		padding-left: @rhythm;
 
-		.authorinfo{
-			font-size: 0.9em;
-			.itemtable{
-				>div{
-					vertical-align: middle;
-
-					&.icon{
-						width : 30px;
-					}
-				}
-			}
-
-			.item{
-				margin-bottom: 2 * @rhythm;
-			}
-
-			.name{
-				font-size: 1.2em;
-				font-weight: 500;
-			}
-
-			.site{
-				text-decoration: underline;
-				color : @color-main;
-			}
-		}
+		
 	}
 
 	.lentaWrapper{
@@ -54,7 +81,6 @@
 	.mainpanelcell{
 		float: right;
 		width : 350px;
-		padding-left : 10px;
 		padding-top : 10px;
 	}
 
@@ -94,7 +120,6 @@
 				width: 100%;
 
 				&.subscribe{
-					padding-left: 60px;
 				}
 			}
 		}
@@ -221,6 +246,23 @@
 
 		#author{
 
+			.subscribewrapperphones{
+				
+				.subscribebuttons{
+					
+					button{
+						padding-bottom : @rhythm;
+						padding-top : @rhythm;
+						
+					}
+				}
+			}
+
+			.bgCaption .cwrapper>div {
+			    vertical-align: top;
+			    padding-top : 2 * @rhythm;
+			}
+
 			.lentaWrapper{
 				min-height: 0;
 			}
@@ -233,6 +275,7 @@
 
 			.leftpanelcell{
 				float: none;
+				display : none;
 				width : 100%;
 				padding : 2 * @rhythm;
 

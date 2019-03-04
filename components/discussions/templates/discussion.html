@@ -43,6 +43,26 @@
 
 		</div>
 
+		<% if(typeof c != 'undefined') {%>
+
+			<div class="userscount">
+				<% if(!c) {%>
+
+					<button class="startChat">
+						Start discussion
+					</button>
+
+				<% } else { %>
+
+					<button class="startChat">
+						<%- c %> users in chat
+					</button>
+
+				<% } %>
+			</div>
+
+		<% } %>
+
 	</div>
 
 	<div class="panel">

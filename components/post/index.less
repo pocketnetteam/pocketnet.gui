@@ -16,6 +16,39 @@
 	}
 
 	.shareTable{
+
+		.sbtnxs{
+			.subscribedLabel{
+				display : none;
+			}
+
+			span{
+				cursor: pointer;
+				.transition(0.3s);
+				i{
+					color : @color-good;
+				}
+
+				&:hover{
+					color : @color-main;
+				}
+			}
+		}
+
+		&.subscribed{
+
+			.sbtnxs{
+				.subscribedLabel{
+					display : inline;
+				}
+
+				.subscribeLabel{
+					display : none;
+				}
+			}
+
+		}
+
 		>div{
 			vertical-align: top;
 			padding : 2 * @rhythm;
@@ -213,11 +246,9 @@
 
 		.meta{
 			margin-top: 2 * @rhythm;
-			overflow: hidden;
 			margin-bottom: @rhythm;
 
 			>div{
-				float: left;
 				margin-right: 2 * @rhythm;
 
 				
@@ -552,6 +583,32 @@
 			img{
 				max-width: 100%;
 			}
+		}
+	}
+
+	.icon.savecrossIcon{
+		padding: 0;
+		padding-left: @rhythm;
+		padding-right: @rhythm;
+		position: relative;
+		cursor: pointer;
+		color : #008833;
+		
+		.amount{
+			position: absolute;
+			left: 50%;
+			top : 50%;
+			padding : 0 @rhythm;
+			min-width: 16px;
+			height: 16px;
+			line-height: 16px;
+			text-align: center;
+			font-size: 0.5em;
+			background: fade(@color-contrast, 80);
+			color : #fff;
+			.shadowSmaller();
+			z-index: 1;
+			border-radius: 50%;
 		}
 	}
 }
