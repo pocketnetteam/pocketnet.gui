@@ -48,7 +48,7 @@ autoUpdater.on('update-downloaded', (ev) => {
 
     updatesLoading = false
     
-    mainWindow.webContents.send('updater-message', { msg : 'update-downloaded', type : 'info', ev : ev })
+    win.webContents.send('updater-message', { msg : 'update-downloaded', type : 'info', ev : ev })
 });
 //---------------------------------------------------
 
