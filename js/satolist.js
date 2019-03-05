@@ -44,7 +44,7 @@ Platform = function(app){
 
 				if(typeof p.precision == 'undefined'){
 
-					p.precision = 6;
+					p.precision = 2;
 
 					if (value >= 1){
 						p.precision = 2;
@@ -4515,45 +4515,81 @@ Platform = function(app){
 
 			},
 
-			info : function(chats, clbk){
-
-				var shares = _.filter(chats, function(c){
-					if(c.type == 'share') return true;
-				})
-
-				var sharesIds = _.map(shares, function(c){
-					return c.id.split("_")[0]
-				})
-
-
-				self.sdk.node.shares.getbyid(sharesIds, function(){
-
-					var shares = _.map(sharesIds, function(id){
-						return self.sdk.node.shares.storage.trx[id] || null;
+			_info : {
+				shares : function(chats, clbk){
+					var shares = _.filter(chats, function(c){
+						if(c.type == 'share') return true;
 					})
 
-						shares = _.filter(shares, function(s){
-							return s
+					var sharesIds = _.map(shares, function(c){
+						return c.id.split("_")[0]
+					})
+
+					self.sdk.node.shares.getbyid(sharesIds, function(){
+
+						var shares = _.map(sharesIds, function(id){
+							return self.sdk.node.shares.storage.trx[id] || null;
 						})
 
-					self.app.platform.sdk.node.shares.users(shares, function(){
+							shares = _.filter(shares, function(s){
+								return s
+							})
+
+						self.app.platform.sdk.node.shares.users(shares, function(){
+							if (clbk)
+								clbk()
+						})
+
+					})
+				},
+
+				messenger : function(chats, clbk){
+					var users = [];
+
+					_.each(chats, function(c){
+
+						_.each(c.users, function(u){
+							users.push(u)
+						})
+
+						self.app.platform.sdk.users.get(users, function(){
+							if (clbk)
+								clbk()
+						})
+
+					})
+				}
+			},
+
+			info : function(chats, clbk){
+
+				var s = this;
+
+				s._info.shares(chats, function(){
+					s._info.messenger(chats, function(){
+
 						if (clbk)
 							clbk()
-					})
 
+					})
 				})
 
 			},
 
 			empty : function(id, type){
-				return {
 
+				var ec = {
 					id : id || makeid(),
 					type : type || 'sys',
 
-					time : self.currentTime()			
-					
+					time : self.currentTime()	
 				}
+
+				if(type == 'messenger'){
+					ec.users = []
+				}
+
+				return ec
 			},
 
 			remove : function(id){
@@ -6052,7 +6088,7 @@ Platform = function(app){
 
 			//connection.userid = Buffer.from(bitcoin.crypto.hash256(platform.sdk.address.pnet().address + roomid, 'utf8')).toString('hex') 
 
-			connection.userid = makeid()
+			connection.userid = platform.sdk.address.pnet().address + "_" + makeid()
 
 			connection.sdpConstraints.mandatory = {
 			    OfferToReceiveAudio: false,

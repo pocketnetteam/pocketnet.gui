@@ -6745,13 +6745,13 @@
 
 			var elements = [
 
-				'<div class="searchIconLabel">' +
+				'<div class="searchIconLabel">' + (p.icon ||
 					'<i class="fa fa-search" aria-hidden="true"></i>' +
-					'<i class="fas fa-circle-notch fa-spin"></i>' + 
+					'<i class="fas fa-circle-notch fa-spin"></i>') + 
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input class="sminput" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
@@ -6770,6 +6770,12 @@
 				p.class += " right";
 			}
 
+
+			if(p.collectresults){
+				elements[1] = '<div class="searchInputWrapper">' +
+					'<div class="sminput" contenteditable="true" tabindex="2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
+				'</div>'
+			}
 
 
 			var h = '<div class="search ' + (p.class || "") + '">' +
@@ -6808,7 +6814,7 @@
 				}
 			},
 			clear : function(){
-				searchEl.find('input').val('');
+				searchEl.find('.sminput').val('');
 
 				searchEl.removeClass('searchActive');
 				searchEl.removeClass('searchFilled');
@@ -6818,7 +6824,7 @@
 		var events = {
 			clear : function(el){
 
-				searchEl.find('input').val('');
+				searchEl.find('.sminput').val('');
 
 				searchEl.removeClass('searchActive');
 				searchEl.removeClass('searchFilled');
@@ -6928,7 +6934,7 @@
 
 		var initEvents = function(){
 
-			var searchInput = searchEl.find('input')
+			var searchInput = searchEl.find('.sminput')
 
 			var slowMadeTimer;
 

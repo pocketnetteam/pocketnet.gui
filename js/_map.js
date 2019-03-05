@@ -243,6 +243,19 @@ __map =  {
 			
 		},
 
+		messenger : {
+			uri : "messenger",
+			href : "messenger",
+			add : {
+				el : 'content'
+			},
+			redirect : {
+				auth : 'authorization'
+			},
+			
+			
+		},
+
 		/*rep : {
 			uri : "rep",
 			href : "rep",
