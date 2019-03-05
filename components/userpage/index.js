@@ -21,7 +21,7 @@ var userpage = (function(){
 		var init = function(){
 			reports = []
 
-			reports.push({
+			/*reports.push({
 				name :  self.app.localization.e('rstate'),
 				id : 'ustate',
 				report : 'ustate',
@@ -30,6 +30,20 @@ var userpage = (function(){
 				if : function(){
 					if(mestate) return true
 				}
+			})*/
+
+			reports.push({
+				name : "Messenger",
+				id : 'messenger',
+				report : 'messenger',
+				mobile : true
+			})
+
+			reports.push({
+				name : "Notifications",
+				id : 'notifications',
+				report : 'notifications',
+				mobile : true
 			})
 
 			reports.push({
@@ -61,12 +75,7 @@ var userpage = (function(){
 				mobile : true
 			})
 
-			reports.push({
-				name : "Notifications",
-				id : 'notifications',
-				report : 'notifications',
-				mobile : true
-			})
+			
 				
 		}
 

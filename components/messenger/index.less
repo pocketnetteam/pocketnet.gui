@@ -1,0 +1,243 @@
+@import "../../css/__cssvar";
+
+#messenger{
+	max-width: 800px;
+
+	.ccaption{
+		padding : 2 * @rhythm 0;
+		padding-left: 50px;
+		font-weight: 700;
+
+		span{
+			font-size: 1.2em;
+		}
+
+		&.newMessageCC{
+			display : none;
+		}
+	}
+
+	.newChatUsers{
+		display : none;
+		padding-left:  : 50px;
+
+		.ccaption{
+			padding-left: 0;
+		}
+	}
+
+	.header{
+		>div{
+			padding : @rhythm;
+			vertical-align: middle;
+
+			&.backSpacer,
+			&.newMessageWrapper{
+				width: 50px;
+				text-align: center;
+			}
+
+			&.usersSearchWrapper,
+			&.messengerSearchWrapper{
+				padding-left: 0;
+			}
+
+
+			&.createChatWrapper,
+			&.backWrapper{
+				width: 50px;
+				text-align: center;
+
+				display: none;
+			}
+
+			&.usersSearchWrapper{
+				display : none;
+			}
+		}
+	}
+
+	&.toNewChat{
+
+		.ccaption{
+			&.newMessageCC{
+				display : block;
+			}
+
+			&.chatsCC{
+				display : none;
+			}
+		}
+
+		.header{
+			>div{
+
+				&.backSpacer,
+				&.newMessageWrapper{
+					display: none;
+				}
+
+				&.createChatWrapper,
+				&.backWrapper{
+					display: table-cell;
+				}
+				&.messengerSearchWrapper{
+					display: none;
+				}
+
+				&.usersSearchWrapper{
+					display : table-cell;
+				}
+			}
+		}
+
+		.newChatUsers{
+			display : block;
+		}
+
+		.mchats{
+			display : none;
+		}
+	}
+
+	.search{
+		.searchInput{
+			border-radius: 20px;
+			border : 1px solid @color-gray-slight;
+		}
+		.searchInputIcon{
+
+			.searchIconLabel{
+				color : @color-gray-slight;
+			}
+
+			.searchInputWrapper{
+				
+
+				.sminput{
+					background: transparent;
+					border : 0;
+					padding-left: 0;
+				}
+			}
+			.searchPanel{
+				border : 0;
+				background: transparent;
+			}
+		}
+
+		&.recievers{
+			.searchInputIcon{
+
+				.searchIconLabel{
+					width: 110px;
+				}
+			}
+		}
+	}
+
+	.createChatWrapper,
+	.back,
+	.newMessage{
+		cursor: pointer;
+		.transition(0.3s);
+		color : @color-black2;
+
+		&:hover{
+			color : @color-main;
+		}
+	}
+
+	.mchats{
+		padding-top : 2 * @rhythm;
+		padding-left: 50px;
+		
+		.empty{
+			padding : 4 * @rhythm;
+			text-align: center;
+
+			span{
+				font-size: 0.8em;
+				color : @color-gray;
+			}
+		}
+
+	}
+
+	.usersList{
+		.addressTable{
+			cursor: pointer;
+			margin-bottom: @rhythm;
+			>div{
+				padding-bottom: @rhythm;
+				border-bottom : 1px solid @color-gray-slight;
+				vertical-align: middle;
+
+				&.iconWrapper{
+					width: 45px;
+					text-align: center;
+				}
+
+				&.label{
+					padding-left:  2 * @rhythm;
+
+					.cur{
+						color : @color-main;
+					}
+				}
+
+				&.extra{
+					width: 50px;
+
+					.marker{
+						margin : 0 auto;
+						width: 20px;
+						height : 20px;
+						position: relative;
+						cursor: pointer;
+						border-radius: 50%;
+						border : 1px solid @color-gray-slight;
+
+						&:after{
+							content : '';
+							position: absolute;
+							left: 3px;
+							right: 3px;
+							top: 3px;
+							bottom: 3px;
+							background: @color-add;
+							.shadowSmall();
+							border-radius: 50%;
+							.transition(0.3s);
+							opacity : 0;
+						}
+					}
+				}
+
+				
+			}
+
+			&.active{
+				>div{
+					&.extra{
+						
+
+						.marker{
+							
+							&:after{
+								opacity : 1;
+							}
+						}
+					}
+				}
+			}
+
+			&:nth-last-child(1){
+				>div{
+					border-bottom : 0;
+				}
+			}
+
+		}
+	}
+}
