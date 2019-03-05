@@ -26,7 +26,7 @@ function Log(text) {
     log.info(text);
 }
 
-autoUpdater.on('checking-for-update', () => {
+autoUpdater.on('checking-for-update', (ev) => {
     win.webContents.send('updater-message', { msg: 'checking-for-update', type : 'info', ev : ev })
 })
 autoUpdater.on('update-available', (ev) => {
@@ -41,8 +41,8 @@ autoUpdater.on('update-not-available', (ev) => {
 autoUpdater.on('error', (err) => {
     win.webContents.send('updater-message', { msg: `${err}`, type : 'error' })
 })
-autoUpdater.on('download-progress', (progressObj) => {
-    win.webContents.send('updater-message', { msg: 'update-available', type : 'info', ev : progressObj })
+autoUpdater.on('download-progress', (ev) => {
+    win.webContents.send('updater-message', { msg: 'update-available', type : 'info', ev : ev })
 })
 autoUpdater.on('update-downloaded', (ev) => {
 
