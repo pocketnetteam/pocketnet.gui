@@ -169,10 +169,11 @@ function initApp() {
 
     log.info('First check updates...');
 
-    autoUpdater.checkForUpdates()
-
-
-   // autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdates();
+    
+    setTimeout(() => {
+        autoUpdater.checkForUpdates();
+    }, 10*60*1000);
 }
 
 function closeNotification() {
