@@ -44,7 +44,7 @@ autoUpdater.on('error', (err) => {
 autoUpdater.on('download-progress', (progressObj) => {
     win.webContents.send('updater-message', { msg: 'update-available', type : 'info', ev : progressObj })
 })
-autoUpdater.on('update-downloaded', (info) => {
+autoUpdater.on('update-downloaded', (ev) => {
 
     updatesLoading = false
     
