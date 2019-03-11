@@ -1026,7 +1026,7 @@ var lenta = (function(){
 
 					($(window).scrollTop() + $(window).height() > $(document).height() - 400) 
 
-					&& !loading && !ended) {
+					&& !loading && !ended && !recommended) {
 
 					actions.loadmore()
 
@@ -1646,7 +1646,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author){
+				if (essenseData.author || recommended){
 					tpl = 'shares'
 				}
 				
@@ -2086,7 +2086,7 @@ var lenta = (function(){
 
 			},
 			begin : function(clbk){
-				if(beginmaterial && !beginmaterialloaded){
+				if(beginmaterial && !beginmaterialloaded &&  !recommended){
 					self.app.platform.sdk.node.shares.getbyid(beginmaterial, function(shares){
 
 						beginmaterialloaded = true;
@@ -2157,6 +2157,8 @@ var lenta = (function(){
 
 							if (!el.c)
 								return
+
+							console.log(pr)
 
 							if(!shares || !shares.length || shares.length < pr.count){							
 
@@ -2360,7 +2362,7 @@ var lenta = (function(){
 				else
 				{
 
-					if(beginmaterial){
+					if(beginmaterial && !recommended){
 						el.c.addClass('showprev')
 					}
 

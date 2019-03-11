@@ -286,9 +286,21 @@ Platform = function(app){
 			}
 		},
 
+		"18" : {
+			message : function(){
+				return 'This name already use in Pocketnet'
+			}
+		},
+
 		"17" : {
 			message : function(){
-				return 'This post is too long, please break it up. We are working on increasing the size of the post. '
+				return 'This post is too long, please break it up. We are working on increasing the size of the post.'
+			}
+		},	
+
+		"13" : {
+			message : function(){
+				return 'You have already submitted a request for a complaint'
 			}
 		},	
 
@@ -933,7 +945,7 @@ Platform = function(app){
 				},
 
 				transactions : {
-					name : 'Transactions recieve',
+					name : 'Transactions receive',
 					id : 'transactions',
 					type : "BOOLEAN",
 					value : true
@@ -2468,11 +2480,13 @@ Platform = function(app){
 				time : function(clbk){
 
 					self.app.ajax.rpc({
-						method : 'gettime',
+						method : 'getBlockchainInfo',
 						parameters : [],
 						success : function(d){
 
 							var t = deep(d, 'time') || 0
+
+							self.currentBlock = deep(d, 'blocks') || 0
 
 							self.timeDifference = 0;
 
@@ -2897,21 +2911,20 @@ Platform = function(app){
 						}
 						else
 						{
-							p.address = self.sdk.address.pnet().address;
-							p.count || (p.count = 30)
+							p.count || (p.count = '30')
 
 							var storage = self.sdk.node.shares.storage
-							var key = 'recommended' + p.address
+							var key = 'recommended'
 
 							if (storage[key]){
 
 								if (clbk)
-									clbk(storage[key], null)
+									clbk(storage[key], null, p)
 
 							}
 							else
 							{
-								var parameters = [p.address];
+								var parameters = [p.count];
 
 								self.sdk.node.shares.get(parameters, function(shares, error){
 
@@ -2928,7 +2941,7 @@ Platform = function(app){
 											clbk(shares, error, p)
 									}
 
-								}, 'getrecommendedposts')
+								}, 'gethotposts')
 							}
 						}
 
@@ -3938,6 +3951,7 @@ Platform = function(app){
 									},
 									fail : function(data){
 
+
 										if (clbk){
 									    	clbk(null, (deep(data, 'data.code') || deep(data, 'data.message') || 'network').toString(), data)
 									    }
@@ -4507,6 +4521,112 @@ Platform = function(app){
 			}
 		},
 
+		messenger : {
+			clbks : {},
+			load : {
+				messages : function(messages, clbk){
+
+					if(!_.isArray(messages)) messages = [messages]
+
+					var users = _.map(messages, function(m){
+						return m.f
+					})
+
+					self.sdk.users.get(users, clbk, true)
+
+					
+				},
+			},
+
+			getChat : function(chat){
+				chat.rtc = self.clientrtc.api.getChat(chat.id, chat.users);
+			},
+
+			connectToChat : function(chat, clbk){
+				self.clientrtc.api.connectToChat({
+
+					id : chat.id,
+					addresses : chat.addresses
+
+				}, function(id, chat){
+
+					if (clbk)
+						clbk(id, chat)
+
+				})
+			},
+			init : function(clbk){
+
+				var address = self.sdk.address.pnet().address
+				var id = bitcoin.crypto.hash256(address + self.app.options.fingerPrint).toString('hex')
+
+				var keyPair = self.app.user.keys();
+
+				var signature = keyPair.sign(Buffer.from(bitcoin.crypto.hash256(id), 'utf8'));	
+
+				var user = {
+					id : id,
+					address : address,
+					signature : signature.toString('hex'),
+					publicKey : keyPair.publicKey.toString('hex'),
+				}
+
+				self.clientrtc = new platformRTC({
+					user : user,
+					platform : self
+				})
+
+				var chats = self.app.platform.sdk.chats.get('messenger');
+
+
+				self.clientrtc.initChats(chats)
+				self.clientrtc.init(function(){
+					self.clientrtc.api.login(function(){
+
+
+						self.clientrtc.clbks.chat.messenger = function(p, rtc){
+
+
+							if(self.sdk.chats.storage[rtc.id]) return
+
+							p || (p = {})
+
+							var chat = self.sdk.chats.empty(rtc.id, 'messenger');
+								chat.rtc = rtc;
+
+
+							if(p.addresses) chat.users = p.addresses
+
+							self.sdk.chats.storage[rtc.id] = chat
+							self.sdk.chats.info([chat], function(){
+
+								_.each(self.sdk.messenger.clbks || {}, function(c){
+									c('chat', chat)
+								})
+
+							})
+
+							self.sdk.chats.save()
+
+							
+						}
+
+						self.clientrtc.clbks.message.messenger = function(p, rtc){
+
+							_.each(self.sdk.messenger.clbks || {}, function(c){
+								c('message', rtc)
+							})
+							
+						}
+
+					})
+				})
+
+				if (clbk)
+					clbk()
+			}
+		},
+
 		chats : {
 			clbks : {
 
@@ -4545,6 +4665,7 @@ Platform = function(app){
 
 				messenger : function(chats, clbk){
 					var users = [];
+
 
 					_.each(chats, function(c){
 
@@ -4638,6 +4759,8 @@ Platform = function(app){
 
 					})
 
+					return self.sdk.chats.storage[id]
+
 				}
 				else
 				{
@@ -4652,7 +4775,11 @@ Platform = function(app){
 					})
 
 					self.sdk.chats.save()
+
+					return e
 				}
+
+
 				
 			},
 
@@ -4663,7 +4790,8 @@ Platform = function(app){
 					s[id] = {
 						id : chat.id,
 						type : chat.type,
-						time : chat.time
+						time : chat.time,
+						users : chat.users
 					}
 				})
 
@@ -4675,7 +4803,7 @@ Platform = function(app){
 
 				var address = self.sdk.address.pnet().address;
 
-				localStorage[address + 'chats_3'] = JSON.stringify(self.sdk.chats.light());
+				localStorage[address + 'chats_4'] = JSON.stringify(self.sdk.chats.light());
 
 			},
 
@@ -4685,7 +4813,7 @@ Platform = function(app){
 
 				var address = self.sdk.address.pnet().address;
 
-				var local = localStorage[address + 'chats_3'] || "{}";
+				var local = localStorage[address + 'chats_4'] || "{}";
 
 				if (local){
 					try{
@@ -4702,7 +4830,11 @@ Platform = function(app){
 					clbk()
 			},
 
-
+			get : function(type){
+				return _.filter(self.sdk.chats.storage, function(c){
+					return c.type == type
+				})
+			}
 		}
 
 	
@@ -4751,7 +4883,7 @@ Platform = function(app){
 
 					else
 					{
-						if (self.reconnected && !self.loadMissed){
+						if (self.reconnected > 1 && !self.loadMissed){
 							self.getMissed(initOnlineListener);
 						}
 
@@ -4795,9 +4927,7 @@ Platform = function(app){
 							}
 						})
 					})
-
-					
-									
+		
 				},
 				fail : function(){
 
@@ -4952,6 +5082,27 @@ Platform = function(app){
 
 						h += '<i class="far fa-check-circle"></i> '
 						h += 'Follow</button>'
+						h += '</div>'
+					
+					h+= '</div>'
+
+				return h
+			},
+
+			subscribe : function(author, html){
+
+				var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address)
+
+				var d = ''
+
+				var h = '<div class="subscribeWrapper table">'
+						h += '<div class="scell forhtml">'
+						h += html
+						h += '</div>'
+					
+						h += '<div class="scell forsubscribe">'
+						h += 	'<button class="tochat ghost">'
+						h += 	'Go to chat</button>'
 						h += '</div>'
 					
 					h+= '</div>'
@@ -5374,6 +5525,59 @@ Platform = function(app){
 				
 				clbks : {
 				}
+			},
+
+			message : {
+				loadMore : function(data, clbk, wa){
+
+						
+					if (data.address){
+						
+						platform.sdk.users.get([data.address], function(){
+
+							data.user = platform.sdk.users.storage[data.address]
+
+							if (data.user){
+								data.user.address =  data.address
+
+								clbk()
+							}
+						})
+
+					}
+				},
+				
+				refs : {
+
+				},
+				audio : {
+					unfocus : 'water_droplet'
+				},
+
+				fastMessageEvents : function(data, message){
+						
+					message.el.find('.tochat').on('click', function(){
+
+					})
+
+				},
+				
+				fastMessage : function(data){	
+			
+					var text = '';
+					var html = '';
+
+					text = self.tempates.subscribe(data.user, "sent you private message")
+
+					html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', true)
+				
+
+					return html;
+					
+				},
+				
+				clbks : {
+				}
 			}
 		}
 
@@ -5564,9 +5768,9 @@ Platform = function(app){
 					
 					self.isopen = true;
 
-					if (self.reconnected){
-						
-					}
+					self.reconnected = platform.currentBlock
+
+					console.log('platform.currentBlock', platform.currentBlock)
 
 					self.connected = {};
 
@@ -6055,9 +6259,13 @@ Platform = function(app){
 
 			var refresh = false;	
 
-			self.connections[roomid].openOrJoin(roomid, function(){
+			if (clbk)
+				clbk()
 
-				//console.log("OPENED", roomid)
+
+				return
+
+			self.connections[roomid].openOrJoin(roomid, function(){
 
 				self.syncTimer(roomid)
 
@@ -6167,8 +6375,6 @@ Platform = function(app){
 
 		self.message = function(message, to){
 
-
-
 			var m = {
 				tm: platform.currentTimeSS(),
 		        f: platform.sdk.address.pnet().address,
@@ -6184,7 +6390,6 @@ Platform = function(app){
 			signMessage(m)
 
 			return m
-
 			
 		}
 
@@ -7415,7 +7620,7 @@ Platform = function(app){
 					self.sdk.imagesH.load,
 					self.sdk.chats.load,
 					self.sdk.user.subscribeRef,
-
+					//self.sdk.messenger.init,
 
 					], function(){
 					

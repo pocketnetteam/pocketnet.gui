@@ -159,7 +159,34 @@ var menu = (function(){
 			messenger : {
 				init : function(el){
 
-						
+					var rtchttp = self.app.platform.clientrtc.rtchttp;
+
+					var unread = function(){
+
+						var c = 0;
+
+						console.log('rtchttp.storage', rtchttp.storage)
+
+						_.each(rtchttp.storage.chat, function(info, id){
+
+							console.log(info)
+
+							c = c + info.messages.unreaded 
+						})
+
+						return c;
+					}
+
+					self.app.platform.clientrtc.rtchttp.info.allchats(function(){
+
+						actions.ah(el, unread())
+
+					})	
+
+					self.app.platform.sdk.messenger.clbks.menu = function(){
+						actions.ah(el, unread())
+					}
+
 				},
 
 				click : function(el){
@@ -595,6 +622,8 @@ var menu = (function(){
 
 				delete self.app.platform.sdk.notifications.clbks.seen.menu
 				delete self.app.platform.sdk.notifications.clbks.added.menu
+
+				delete self.app.platform.sdk.messenger.clbks.menu
 
 				if(autoUpdate){
 					clearInterval(autoUpdate);

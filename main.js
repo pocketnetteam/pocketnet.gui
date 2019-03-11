@@ -44,11 +44,11 @@ autoUpdater.on('error', (err) => {
 autoUpdater.on('download-progress', (progressObj) => {
     win.webContents.send('updater-message', { msg: 'update-available', type : 'info', ev : progressObj })
 })
-autoUpdater.on('update-downloaded', (info) => {
+autoUpdater.on('update-downloaded', (ev) => {
 
     updatesLoading = false
     
-    mainWindow.webContents.send('updater-message', { msg : 'update-downloaded', type : 'info', ev : ev })
+    win.webContents.send('updater-message', { msg : 'update-downloaded', type : 'info', ev : ev })
 });
 //---------------------------------------------------
 
@@ -236,7 +236,7 @@ function createWindow() {
 
     win.loadFile('index_el.html')
 
-    //win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
