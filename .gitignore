@@ -6,3 +6,4 @@ signaling_server
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
 pocketnet.zip
+package-lock.json
