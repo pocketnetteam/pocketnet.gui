@@ -63,6 +63,9 @@ Application = function(node)
 
 		rtc : 'https://pocketnet.app:9001/',
 
+		rtcws : 'wss://pocketnet.app:9090',
+		rtchttp : 'https://pocketnet.app:9091',
+
 		//rtc : 'https://71af0799d943.sn.mynetname.net:9002/',
 
 		

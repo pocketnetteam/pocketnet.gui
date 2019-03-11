@@ -8,42 +8,210 @@ var messenger = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, chats, selected, openingChat;
 
 		var actions = {
+			toChat : function(chatid){
+				el.c.addClass('toChat')
 
+				renders.chat(chatid)
+			},
+
+			unread : function(chatid){
+
+				var rtchttp = self.app.platform.clientrtc.rtchttp;
+
+				var c = 0;
+
+				var info = deep(rtchttp, 'storage.chat.' + chatid)
+
+				if (info){
+					c = info.messages.unreaded
+				}
+
+				return c;
+			}
 		}
 
+
+
 		var events = {
+
+			toChat : function(){
+
+				var chatid = $(this).closest('.chat').attr('chat')
+
+				actions.toChat(chatid)
+			},
+
 			toNewChat : function(){
 				el.c.addClass('toNewChat')
+
+				selected = [];
 
 				renders.userslist()
 			},
 
 			backToChats : function(){
 				el.c.removeClass('toNewChat')
+				el.c.removeClass('toChat')
 			},
 
 			selectUser : function(){
-				$(this).toggleClass('active')
+				var e = $(this)
+					e.toggleClass('active')
+
+				var a = e.attr('address');
+
+				if(e.hasClass('active')){
+					selected.push(a)
+				}
+				else
+				{
+					removeEqual(selected, a)
+				}				
+			},
+
+			createChat : function(){
+				if(selected.length){
+
+					var uselected = _.sortBy(selected, function(a){
+						return a
+					})
+
+					uselected.unshift(self.app.platform.sdk.address.pnet().address)
+
+					var hash = _.reduce(uselected, function(m, a){
+						return m + '' + a
+					}, '')
+
+					var chat =  self.app.platform.sdk.chats.add(bitcoin.crypto.hash256(hash).toString('hex'), 'messenger') 
+						chat.users = _.clone(uselected)
+
+					self.app.platform.sdk.chats.save()
+
+					self.app.platform.sdk.messenger.getChat(chat)
+
+					chats = self.app.platform.sdk.chats.get('messenger');
+
+					make()
+
+					actions.toChat(chat.id)
+
+
+					
+				}
+				else
+				{
+					dialog({
+						html : "You must select at least one user",
+						class : "one"
+					})
+				}
 			}
 		}
 
 		var loaders = {
 			users : function(list, clbk){
 				self.app.platform.sdk.users.get(list, clbk)
+			},
+
+			info : function(clbk){
+
+				var rtchttp = self.app.platform.clientrtc.rtchttp;
+
+				self.app.platform.clientrtc.rtchttp.info.allchats(function(){
+					if (clbk)
+						clbk()
+				})	
+
 			}
 		}
 
 		var renders = {
+
+			chat : function(chatid){
+				self.shell({
+
+					name :  'chat',
+					el :   el.chat,
+					data : {
+						chatid : chatid
+					},
+
+				}, function(_p){
+					
+					var chat = self.app.platform.sdk.chats.storage[chatid]
+
+
+					var p = {
+						open : true,
+						href : 'mchat',
+						animation : false,
+						history : true
+					}
+
+					
+					p.history = false;
+
+					p.el = _p.el.find('.chatWrapper')	
+
+					p.essenseData = {
+						view : 'buildin',
+
+						chat : chat,
+
+						destroyClbk : function(){
+
+							openedChat = null;
+
+							events.backToChats();
+						}
+					}
+
+					p.clbk = function(r, p){
+
+						openedChat = p;
+					}
+
+
+					self.nav.api.load(p)
+
+
+				})
+			},
+
+			chats : function(chats, clbk){
+				self.app.platform.sdk.chats.info(chats, function(){
+
+					self.shell({
+
+						name :  'chats',
+						el :   el.chats,
+						data : {
+							chats : chats
+						},
+
+
+
+					}, function(_p){
+						
+						_p.el.find('.chatBody').on('click', events.toChat)
+
+						if (clbk){
+							clbk()
+						}
+
+					})
+
+				})
+
+			},
 			userslist : function(){
 
 				var list = [];
 
 				var me = deep(self.app, 'platform.sdk.users.storage.' + self.app.platform.sdk.address.pnet().address)
-
-				console.log("ME", me)
 
 				_.each(deep(me, 'subscribes') || [], function(a){
 					list.push(a.adddress) 
@@ -56,8 +224,6 @@ var messenger = (function(){
 				list = _.uniq(list)
 
 				loaders.users(list, function(){
-
-
 
 					self.shell({
 
@@ -72,6 +238,62 @@ var messenger = (function(){
 					})
 
 				})
+			},
+
+			newmessages : function(chatid, clbk){
+
+				var _el = el.chats.find('[chat="' + chatid + '"] .newMessages')
+
+				var count = actions.unread(chatid);
+
+				if (count){
+					self.shell({
+
+						name :  'newmessages',
+						el :   _el,
+						data : {
+							count : actions.unread(chatid)
+						},
+
+						display : 'table-cell'
+
+					}, function(_p){
+						
+						if (clbk)
+							clbk()
+
+					})
+				}
+				else
+				{
+					_el.css('display', 'none')
+
+					if (clbk)
+						clbk()
+				}
+
+				
+
+
+			},
+
+			newmessagesAll : function(clbk){
+
+				lazyEach({
+					array : _.toArray(chats),
+
+					action : function(p){
+						renders.newmessages(p.item.id, p.success)
+					},
+
+					all : {
+						success : function(){
+							if (clbk)
+								clbk()
+						}
+					}
+				})
+
 			}
 		}
 
@@ -89,6 +311,8 @@ var messenger = (function(){
 			el.newChat.on('click', events.toNewChat)
 
 			el.back.on('click', events.backToChats)
+
+			el.createChat.on('click', events.createChat)
 
 			search(el.messengerSearch, {
 				placeholder : 'Search',
@@ -137,9 +361,32 @@ var messenger = (function(){
 				}
 				
 			})
-
 			
+			self.app.platform.sdk.messenger.clbks.messenger = function(key, data){
 
+				console.log(key, data)
+
+				if (key == 'chat'){
+					chats = self.app.platform.sdk.chats.get('messenger');
+
+					make()
+				}
+
+				if (key == 'message'){
+					renders.newmessages(data.id, p.success)
+				}
+
+				
+			}
+		}
+
+		var make = function(){
+			renders.chats(chats, function(){
+				loaders.info(function(){
+					renders.newmessagesAll()
+				})
+
+			})
 		}
 
 		return {
@@ -149,11 +396,22 @@ var messenger = (function(){
 
 				var data = {};
 
-				clbk(data);
+				chats = self.app.platform.sdk.chats.get('messenger');
+
+				console.log('chats', chats)
+
+				self.loadTemplate({
+					name : 'newmessages'
+				}, function(){
+
+					clbk(data);
+				})
 
 			},
 
 			destroy : function(){
+				delete self.app.platform.sdk.messenger.clbks.messenger
+
 				el = {};
 			},
 			
@@ -168,10 +426,15 @@ var messenger = (function(){
 				el.back = el.c.find('.back')
 				el.messengerSearch = el.c.find('.messengerSearch')
 				el.usersSearch = el.c.find('.usersSearch')
-
+				el.createChat = el.c.find('.createChat')
 				el.userslist = el.c.find('.usersListWrapper')
 
+				el.chats = el.c.find('.mchatsContent')
+				el.chat = el.c.find('.currentChat')
+
 				initEvents();
+
+				make()
 
 				p.clbk(null, p);
 			}

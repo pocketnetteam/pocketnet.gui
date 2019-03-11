@@ -52,13 +52,13 @@
 					<div class="cnt">
 						<% if(og.title || og.titlePage) {%>
 							<a href="<%- url %>">
-								<div class="title"><%= clearScripts(donottrustLink(findAndReplaceLink(og.title || og.titlePage))) %></div>
+								<div class="title"><%= clearScripts(((og.title || og.titlePage))) %></div>
 							</a>
 						<% } %>
 
 						<% if(og.description || og.descriptionPage) {%>
 							<a href="<%- url %>">
-								<div class="description"><%= trimHtml(clearScripts(donottrustLink(findAndReplaceLink(og.description || og.descriptionPage))), 100) %></div>
+								<div class="description"><%= trimHtml(clearScripts((findAndReplaceLink(og.description || og.descriptionPage))), 100) %></div>
 							</a>
 						<% } %>
 					</div>

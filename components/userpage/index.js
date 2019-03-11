@@ -32,12 +32,12 @@ var userpage = (function(){
 				}
 			})*/
 
-			reports.push({
+			/*reports.push({
 				name : "Messenger",
 				id : 'messenger',
 				report : 'messenger',
 				mobile : true
-			})
+			})*/
 
 			reports.push({
 				name : "Notifications",

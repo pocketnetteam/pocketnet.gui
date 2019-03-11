@@ -1,0 +1,151 @@
+<% 
+
+var name = function(address){
+	return deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address 
+}
+
+var image = function(address){
+	var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image') %>
+
+	<div class="icon">
+		<div class="usericon" image="<%-src || ''%>">
+			<% if(!src) {%>
+				<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+			<% } %>
+		</div>
+	</div>
+<% } 
+
+
+
+var users = _.filter(chat.users || [], function(u){
+	return user.address.value != u
+})
+
+
+console.log('chat', users, chat.users, user.address.value)
+
+var usersNames = [];
+
+_.each(users, function(u, i) {
+	if((i > 2 && users.length > 4) || i > 3) return
+
+	usersNames.push(name(u))
+})
+
+var messages = [];
+
+var count = Math.min(users.length, 5)
+
+%>
+
+
+
+
+<div id="<%-module.map.id%>" class="<%- essenseData.class || '' %>">
+	<div class="chatWrapper">
+		<div class="captionfwrapper">
+			<div class="headerWrapper">
+				<div class="header table">
+
+
+					<div class="chatImageWrapper">
+
+
+						<div class="chatImageRound" count="<%-count%>">
+
+							<% _.each(users, function(u, i) { 
+
+								if((i > 2 && users.length > 4) || i > 3) return
+
+
+							%>
+
+								<div class="userIconWrapper">
+									<% image(u) %>
+								</div>
+
+							<% }) %>
+
+						</div>
+
+						
+					</div>
+					<div class="name">
+
+						<%- usersNames.join(',') %>
+
+						<% var c = (users.length - usersNames.length) %>
+
+						<% if (c > 0) {%>
+
+							and more <%- c %> users
+
+						<% } %>
+
+					</div>
+
+					<div class="panel">
+
+						<div class="item close">
+							<i class="fa fa-times" aria-hidden="true"></i>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="chatwindow">
+			<div class="spacer"></div>
+			<div class="chatmessages">
+			</div>
+
+			<div class="other">
+				<% if(canEnc) {%>
+					<%=e('id21')%>
+				<% } %>
+			</div>
+		</div>
+
+		<div class="bcaptionfwrapper">
+			<div class="formWrapper">
+				<div class="form table">
+					<div class="sendmessage">
+						<div class="inputWrapper">
+
+							<!--<div class="type" placeholder="Send Message"></div>-->
+
+							<input class="type" type="text" placeholder="Send Message">
+						</div>
+					</div>
+					<!--
+					<div class="panel">
+						<div class="item settings">
+							<i class="fa fa-cog" aria-hidden="true"></i>
+						</div>
+						<div class="item attachement">
+							<i class="fa fa-picture-o" aria-hidden="true"></i>
+						</div>
+						
+					</div>-->
+				</div>
+			</div>
+		</div>
+
+		<div class="dragHoverOnChat">
+			<%=e('id22')%>
+		</div>
+
+		<% if(!canEnc) {%>
+			<div class="cantmessages">
+				<div class="table">
+					<div>User haven't private key</div>
+				</div>
+				
+			</div>
+		<% } %>
+
+		
+	</div>
+</div>

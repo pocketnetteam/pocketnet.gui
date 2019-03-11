@@ -272,7 +272,7 @@ var discussions = (function(){
 
 					self.app.platform.sdk.chats.remove(id)
 
-					discussions = self.app.platform.sdk.discussions.fromChats(null, ed.author)
+					discussions = self.app.platform.sdk.discussions.fromChats(self.app.platform.sdk.chats.get('share'), ed.author)
 
 					var _el = el.c.find('.discussion[chat="'+id+'"]')
 
@@ -437,7 +437,7 @@ var discussions = (function(){
 							block = false;
 						})
 
-						discussions = self.app.platform.sdk.discussions.fromChats(null, ed.author)
+						discussions = self.app.platform.sdk.discussions.fromChats(self.app.platform.sdk.chats.get('share'), ed.author)
 
 					})
 				}, '.discussion.dempty')
@@ -654,7 +654,7 @@ var discussions = (function(){
 
 				if(t == 'add'){
 
-					discussions = self.app.platform.sdk.discussions.fromChats(null, ed.author)
+					discussions = self.app.platform.sdk.discussions.fromChats(self.app.platform.sdk.chats.get('share'), ed.author)
 
 					renders.empty()
 
@@ -707,7 +707,10 @@ var discussions = (function(){
 
 				var data = {};
 
-					discussions = self.app.platform.sdk.discussions.fromChats(null, ed.author)
+				console.log("self.app.platform.sdk.chats.get('share')", self.app.platform.sdk.chats.get('share'))
+
+
+					discussions = self.app.platform.sdk.discussions.fromChats(self.app.platform.sdk.chats.get('share'), ed.author)
 
 					data.discussions = discussions
 

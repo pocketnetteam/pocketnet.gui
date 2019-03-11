@@ -6154,6 +6154,13 @@
 			self.run(p)
 		}
 
+		self.rtchttp = function(p){
+			
+			p.url = app.rtchttp + "/" + (p.action || "").split('.').join('/')
+
+			self.run(p)
+		}
+
 		self.rpc = function(p){
 
         	if(typeof _Electron != 'undefined' && 1==2){
@@ -6208,8 +6215,12 @@
 							}
 							else
 							{
-								fail()
+								fail(r)
 							}
+						}
+						else
+						{
+							fail(r)
 						}
 						
 					}
@@ -7920,6 +7931,32 @@
 		}
 	}
 
+	hashFnv32a = function(str, asString, seed) {
+	    /*jshint bitwise:false */
+	    var i, l,
+	        hval = (seed === undefined) ? 0x811c9dc5 : seed;
+
+	    for (i = 0, l = str.length; i < l; i++) {
+	        hval ^= str.charCodeAt(i);
+	        hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
+	    }
+	    if( asString ){
+	        // Convert to 8 digit hex string
+	        return ("0000000" + (hval >>> 0).toString(16)).substr(-8);
+	    }
+
+	    return hval >>> 0;
+	}
+
+	hash_32b_to_16b = function(val32b) {
+	    var rightBits = val32b & 0xffff; // Left-most 16 bits
+	    var leftBits = val32b & 0xffff0000; // Right-most 16 bits
+
+	    leftBits = leftBits >>> 16; // Shift the left-most 16 bits to a 16-bit value
+
+	    return rightBits ^ leftBits; // XOR the left-most and right-most bits
+	}
+
 	parseVideo = function(url) {
 
 		var _url = url;
@@ -8330,7 +8367,7 @@
 	        return target;
 	    }
 
-	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%&?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%&?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%&?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%&?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#%&?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%&?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%&?+\/\$.,~=;:]*\)))?)?)/ig,
+	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\)))?)?)/ig,
 	            function () { // copied to notifier.js:3401
 	                var matches = Array.prototype.slice.apply(arguments),
 	                    prefix = matches[1] || '',

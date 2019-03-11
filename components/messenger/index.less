@@ -26,7 +26,13 @@
 		}
 	}
 
-	.header{
+	.currentChat{
+		display : none;
+		padding-left:  : 50px;
+	}
+	
+
+	.chatsheader{
 		>div{
 			padding : @rhythm;
 			vertical-align: middle;
@@ -57,6 +63,29 @@
 		}
 	}
 
+	&.toChat{
+
+		.currentChat{
+			display : block;
+		}
+
+		.ccaption{
+			display : none;
+		}
+
+		.chatsheader{
+			display : none;
+		}
+
+		.newChatUsers{
+			display : none;
+		}
+
+		.mchats{
+			display : none;
+		}
+	}
+
 	&.toNewChat{
 
 		.ccaption{
@@ -69,7 +98,7 @@
 			}
 		}
 
-		.header{
+		.chatsheader{
 			>div{
 
 				&.backSpacer,
@@ -151,15 +180,22 @@
 	.mchats{
 		padding-top : 2 * @rhythm;
 		padding-left: 50px;
-		
+
+		.cempty,
 		.empty{
 			padding : 4 * @rhythm;
 			text-align: center;
+			color : @color-gray-light;
 
 			span{
 				font-size: 0.8em;
-				color : @color-gray;
+				
 			}
+		}
+
+		.cempty{
+			padding : 0;
+			text-align: left;
 		}
 
 	}
@@ -239,5 +275,90 @@
 			}
 
 		}
+	}
+
+	.mchatsContent{
+		.chat{
+			cursor: pointer;
+			>div{
+				padding : @rhythm 0;
+				vertical-align: top;
+
+				&.chatImageWrapper{
+					width: 40px;
+				}
+
+				&.chatBody{
+					padding-left: 2 * @rhythm;
+					padding-right: 2 * @rhythm;
+				}
+
+				&.chatpanel{
+					width: 50px;
+				}
+			}
+		}
+
+		.chatChatsheader{
+			font-weight: 700;
+			font-size: 0.8em;
+			color : @color-gray2;
+		}
+
+		.chatContent{
+			.chatContentTable{
+				>div{
+					padding : @rhythm 0;
+					width: 50%;
+					vertical-align: top;
+
+					&.newMessages{
+						
+					}
+				}
+			}
+
+			.newMessagesTable{
+				width: auto;
+				margin-left: auto;
+				vertical-align: middle;
+				.newMessagesCount{
+					width: 20px;
+				}
+
+				.newMessagesRound{
+					border-radius: 50%;
+					line-height: 20px;
+					height: 20px;
+					width: 20px;
+					text-align: center;
+					color : #fff;
+					background: @color-main;
+					font-size: 0.8em;
+				}
+
+				.newMessagesLabel{
+					padding-left: @rhythm;
+
+					span{
+						font-size: 0.8em;
+						font-weight: 700;
+					}
+				}
+			}
+		}
+
+		.chatImageRound{
+			width: 40px;
+			height: 40px;
+			overflow: hidden;
+			position: relative;
+			border-radius: 50%;
+
+			.usericon{
+				border-radius: 0;
+			}
+		}
+		
 	}
 }
