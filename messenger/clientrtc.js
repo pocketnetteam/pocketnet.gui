@@ -195,6 +195,30 @@ var platformRTC = function(p){
 			}
 		}
 
+		self.get = {
+			relayed : function(clbk){
+
+				ajax({
+					action : "relayed.address",
+					data : {
+						address : user.address
+					},
+
+					success : function(d){
+
+						if (clbk)
+							clbk(d.data)
+					},
+
+					fail : function(){
+						if (clbk)
+							clbk(null)
+					}
+				})
+
+			}
+		}
+
 		return self;
 	}
 
@@ -566,6 +590,10 @@ var platformRTC = function(p){
 		return self;
 	}
 
+	var relayedRTC = function(){
+
+	}
+
 	var relayRTC = function(device, offlineUsers, events){
 		var self = this;
 
@@ -673,12 +701,16 @@ var platformRTC = function(p){
 			    peer.events = events
 			    peer.init()
 
-			   	peer.chats[self.id] = self
 
-		    self.peers[user.id] = peer
-
+		    self.linkPeer(peer, user.id)
 
 		    return peer
+		}
+
+		self.linkPeer = function(peer, id){
+			peer.chats[self.id] = self
+
+		    self.peers[id] = peer
 		}
 
 		self.sync = function(){
@@ -786,6 +818,8 @@ var platformRTC = function(p){
 
 			self.relay = {};
 
+			self.relayed = {};
+
 			self.clbks = {};
 
 
@@ -829,6 +863,83 @@ var platformRTC = function(p){
 			}
 		}
 
+		var relayed = {
+			relay : function(id, offlineUsers){
+
+				if(!self.relayed[id]){
+
+					self.relayed[id] = new relayedRTC(id, {
+						
+					})
+				}
+
+				return self.relayed[id]
+			},
+			direct : function(data){
+				var chs = []
+
+				var chatids = []
+
+				_.each(data.chats, function(chat){
+					var ch = chats.create(chat.chatid, chat.addresses)
+
+						chs.push(ch)
+						chatids.push(ch.id)
+
+				    _.each(clbks.chat || {}, function(c){
+				    	c(data, ch)
+				    })
+
+				})
+			    	
+			    if (chs.length){
+
+			    	var peer = peers[data.id]
+
+					_.each(chs, function(ch){
+
+						if(!peer){
+							peer = ch.peer({
+
+								id : data.id,
+								address : data.address
+
+							}, {
+								candidate : function(candidate){
+
+									send({ 
+						               	type: "candidate", 
+						               	candidate: candidate,
+						               	id : data.id
+						            });
+								},
+
+								offer : function(offer){
+									send({ 
+								        type: "offer", 
+								        id : data.id,
+								        offer : offer,
+								        chat : chs[0].id
+								    }); 
+								}
+							})
+
+							peer.offer()
+						}
+						else
+						{
+							ch.linkPeer(peer, data.id)
+						}
+
+
+						peer.sync(chat.id)
+					})
+					
+
+			    }
+			}
+		}
+
 		var relays = {
 			create : function(id, offlineUsers){
 
@@ -849,7 +960,7 @@ var platformRTC = function(p){
 					})
 				}
 
-				return self.chats[id]
+				return self.relay[id]
 			},
 
 			close : function(id){
@@ -857,7 +968,9 @@ var platformRTC = function(p){
 				if(!self.relay[id]) return
 
 				self.relay[id].close()
-			}
+			},
+
+			
 		}
 
 		var chats = {
@@ -971,6 +1084,10 @@ var platformRTC = function(p){
 						})
 
 						peer.offer()
+					}
+
+					else{
+						chat.linkPeer(peer, data.id)
 					}
 
 					
@@ -1295,6 +1412,44 @@ var platformRTC = function(p){
 		}
 
 		self.api = {
+			getRelayed : function(clbk){
+				self.rtchttp.get.relayed(function(relayed){
+					if(relayed){
+
+						lazyEach({
+							array : relayed.direct || [],
+							action : function(p){
+								var direct = p.item;
+
+								p.success();
+							},
+
+							all : {
+								success : function(){
+									lazyEach({
+										array : relayed.relay || [],
+										action : function(p){
+											var relay = p.item;
+
+											p.success();
+										},
+
+										all : {
+											success : function(){
+												if (clbk)
+													clbk()
+											}
+										}
+									})
+								}
+							}
+						})
+
+						
+
+					}
+				})
+			},	
 			login : function(clbk){
 				if (user){
 

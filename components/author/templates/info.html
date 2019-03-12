@@ -58,7 +58,7 @@ if(_d && _d > -1) {
 		<div class="itemtable table">
 			<div class="icon"><i class="fas fa-pen"></i></div>
 			<div class="label">
-				<div class="aboutwrapper"><%=filterXSS(am)%></div>
+				<div class="aboutwrapper"> <%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%></div>
 				<% if(am != a){ %> 
 					<div class="showmoreabout">
 						Show more

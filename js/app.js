@@ -170,6 +170,16 @@ Application = function(node)
 
 		self.options.platform = self.platform
 
+		self.platform.sdk.users.addressByName(self.ref, function(r){
+			if(r){
+				self.ref = r;
+				localStorage['ref'] = self.ref
+
+				console.log("REF", self.ref)
+			}
+
+		})
+
 	}
 
 	self.module = function(id){
@@ -495,16 +505,11 @@ Application = function(node)
 	
 	}
 
-	
-
-
-
 	self.name = self.options.name;
-	self.ref = localStorage['ref'] || parameters().ref
+	self.ref = localStorage['ref'] || parameters().ref;
 
-	localStorage['ref'] = self.ref
 
-	console.log("REF", self.ref)
+
 
 	return self;
 }

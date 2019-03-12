@@ -469,15 +469,25 @@
                             
                             connection.others[data.id] = users[data.id]
 
-                            send.to(conn, { 
+                            var message = { 
                                 success: true,
                                 type: "offer", 
                                 offer: data.offer, 
                                 id: user.id,
                                 address : user.address,
                                 
-                                chatid : data.chatid
-                            }); 
+                                
+                            }
+
+                            if (data.chatid){
+                                message.chatid = data.chatid
+                            }
+
+                            if (data.relayed){
+                                message.relayed = data.relayed
+                            }
+
+                            send.to(conn, message); 
                         } 
                     }
                         

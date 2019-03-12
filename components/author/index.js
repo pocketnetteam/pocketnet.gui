@@ -14,7 +14,10 @@ var author = (function(){
 
 		var actions = {
 			showmoreabout : function(){
-				el.c.find('.aboutwrapper').html(filterXSS(deep(author, 'data.about')))
+
+				var a = filterXSS(clearScripts((findAndReplaceLink(deep(author, 'data.about'), true))))
+
+				el.c.find('.aboutwrapper').html(a)
 				el.c.find('.showmoreabout').remove()
 			},
 			showHideUp : function(){
@@ -549,32 +552,47 @@ var author = (function(){
 
 				var p = parameters();
 
-				author.address = p.address
 
-				self.sdk.users.get(author.address, function(){
+				self.sdk.users.addressByName(p.address, function(address){
 
-					self.sdk.ustate.get(author.address, function(){
+					if(address){
+						author.address = address
 
-						if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
-							reports.shares.name = self.app.localization.e('uposts')
-						}
-						else
-						{
-							reports.shares.name = self.app.localization.e('myuposts')
-						}
+						self.sdk.users.get(author.address, function(){
+
+							self.sdk.ustate.get(author.address, function(){
+
+								if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+									reports.shares.name = self.app.localization.e('uposts')
+								}
+								else
+								{
+									reports.shares.name = self.app.localization.e('myuposts')
+								}
+							
+
+								author.data = self.sdk.users.storage[author.address]
+								author.state = self.sdk.ustate.storage[author.address]
+
+								var data = {
+									author : author
+								};
+
+								clbk(data);
+
+							})
+						})
+					}
+
+					else
+					{
+						console.log('sd');
+					}
+
 					
-
-						author.data = self.sdk.users.storage[author.address]
-						author.state = self.sdk.ustate.storage[author.address]
-
-						var data = {
-							author : author
-						};
-
-						clbk(data);
-
-					})
 				})
+
+				
 
 				
 

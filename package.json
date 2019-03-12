@@ -39,9 +39,7 @@
         "pickadate-webpack": "^3.5.6",
         "socket.io": "^2.2.0",
         "sortablejs": "^1.8.3",
-        "ws": "^6.1.4",
-        "handlebars/runtime" : "^1.0.12",
-        "jquery-sortable" : "^0.9.13"
+        "ws": "^6.1.4"
     },
     "build": {
         "productName": "Pocketnet",

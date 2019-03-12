@@ -1956,6 +1956,75 @@ Platform = function(app){
 					}
 
 				})
+			},
+
+			addressByName : function(name, clbk){
+
+
+				var valid = true;
+
+				try{
+					bitcoin.address.fromBase58Check(name)
+				}
+
+				catch (e){
+					valid = false;
+				}
+
+				if (valid){
+					if (clbk)
+						clbk(name)
+				}
+				else
+				{
+
+					console.log('name', name)
+
+					self.app.ajax.rpc({
+						method : 'getuseraddress',
+						parameters : [name],
+						success : function(d){
+
+
+							var r = deep(d, '0.address');
+
+							if (clbk)
+								clbk(r || null)
+						},
+						fail : function(){
+
+							if (clbk){
+						    	clbk(null, 'network')
+						    }
+
+						}
+					})
+				}
+
+			},
+
+			nameExist : function(name, clbk){
+
+				self.app.ajax.rpc({
+					method : 'getuseraddress',
+					parameters : [name],
+					success : function(d){
+
+
+						var r = deep(d, '0.address');
+
+						if (clbk)
+							clbk(r || false)
+					},
+					fail : function(){
+
+						if (clbk){
+					    	clbk(false)
+					    }
+
+					}
+				})
+
 			}
 		},
 		wallet : {
@@ -4618,6 +4687,8 @@ Platform = function(app){
 							})
 							
 						}
+
+						self.clientrtc.api.getRelayed()
 
 					})
 				})
