@@ -7461,7 +7461,8 @@ Platform = function(app){
 
 				success : function(){
 
-					electron.remote.autoUpdater.quitAndInstall()
+					electron.ipcRenderer.send('quitAndInstall');
+					//electron.remote.autoUpdater.quitAndInstall()
 
 				},
 
