@@ -179,6 +179,7 @@ User = function(app, p) {
 			self.isState(function(state){
 
 				if(state){
+					localStorage['popupsignup'] = 'showed'
 					self.prepare(clbk)
 				}
 				else
@@ -204,7 +205,6 @@ User = function(app, p) {
 		}
 		else
 		{
-			console.log("ASDASD@@@")
 			localStorage['mnemonic'] = ''
 		}
 
@@ -213,6 +213,9 @@ User = function(app, p) {
 			self.setKeysPairFromPrivate(mnemonic, function(result){
 
 				if(result){
+
+
+
 					setKeysClbk()
 				}
 				else

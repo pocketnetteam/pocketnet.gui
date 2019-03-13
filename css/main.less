@@ -2799,18 +2799,85 @@ input[type=radio].radio:checked + label {
         font-weight: 100;
     }
 
+    ._close{
+        display: none;
+    }
+
+    .thwrapper{
+        padding : 0;
+        border : 0;
+    }
+
+    .dimage{
+        width: 100%;
+        height: 200px;
+        position : relative;
+
+        .ppheader{
+            display: block;
+            position : absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            background: fade(@color-black, 70);
+            color : #fff;
+            bottom: 0;
+
+            .table{
+                >div{
+                    vertical-align: middle;
+                    text-align : center;
+                }
+            }
+        }
+    }
+
+    .body{
+        margin : 0;
+    }
+
     .buttons{
+        padding : 2 * @rhythm 4 * @rhythm;
+        width: 90%;
+        margin : 0 auto;
+
         .btn1wr{
-            width: 100%;
+            width: 70%;
             margin-right : 0;
 
             text-align: center;
+
+            button{
+                border : 1px solid #FF3000;
+                background: #FF3000;
+
+                &:hover{
+                    color : #FF3000;
+                    background: #FFF;
+                }
+            }
+        }
+
+        .btn2wr{
+            width: 30%;
+            margin-right : 0;
+
+            text-align: right;
+            button{
+                background: transparent;
+                border : 0;
+                color : #000;
+                text-decoration: underline;
+
+                &:hover{
+                    color : @color-main;
+                }
+            }
         }
 
         button{
             font-size: 1.1em;
             font-weight: 100;
-            padding : @rhythm 4 * @rhythm ;
         }
     }
 }
@@ -4308,6 +4375,50 @@ input[type=radio].radio:checked + label {
 
         }
 
+    }
+
+    .popupsignup{
+        .ppheader{
+            text-align: center;
+            font-size: 1em;
+            font-weight: 100;
+        }
+
+       
+
+        .body{
+            margin : 0;
+        }
+
+        .buttons{
+            width: 100%;
+
+            .btn1wr{
+                width: 100%;
+            }
+
+            .btn2wr{
+                width: 100%;
+                margin-right : 0;
+
+                text-align: right;
+                button{
+                    background: transparent;
+                    border : 0;
+                    color : #000;
+                    text-decoration: underline;
+
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
+            }
+
+            button{
+                font-size: 1.1em;
+                font-weight: 100;
+            }
+        }
     }
         
 

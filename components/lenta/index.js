@@ -2158,7 +2158,7 @@ var lenta = (function(){
 							if (!el.c)
 								return
 
-							console.log(pr)
+							console.log(pr, shares)
 
 							if(!shares || !shares.length || shares.length < pr.count){							
 
@@ -2442,6 +2442,50 @@ var lenta = (function(){
 				if(_s.r) 	recommended = _s.r;
 
 				else 		recommended = false;		
+
+				if(!p.state){
+
+					if(recommended || essenseData.author){
+
+					}
+					else
+					{
+
+						if(beginmaterial){
+
+							load.begin(function(bshares){
+
+								console.log(p)
+
+								self.app.platform.sdk.node.shares.users(bshares, function(){
+
+									self.nav.api.load({
+										open : true,
+										href : 'post',
+
+										el : p.settings.el,
+
+										essenseData : {
+											share : beginmaterial
+										}
+									})
+								})
+
+							})
+						}
+						else
+						{
+							self.nav.api.load({
+								open : true,
+								href : 'authorization',
+								history : true
+							})
+						}
+
+						return
+					}
+
+				}
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
 

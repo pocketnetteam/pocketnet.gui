@@ -133,7 +133,7 @@ var handles = {
 											online[device] = {
 												number : number,
 												id : p.connect.devices[device],
-
+												address : p.connect.users[p.connect.devices[device]].address
 											}
 										}
 

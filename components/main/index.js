@@ -256,15 +256,19 @@ var main = (function(){
 			},
 
 			getdata : function(clbk, p){
-
-				if (parameters().r){
-					currentMode = parameters().r
+				var _s = parameters()
+				if (_s.r){
+					currentMode = _s.r
 				}
 				else{
 					currentMode = 'common'
 				}
 
-				if(!p.state && primary && (typeof _Electron != 'undefined' || window.cordova))
+				
+
+				beginmaterial = _s.s || _s.i || _s.v || null;
+
+				if(!p.state && primary && (typeof _Electron != 'undefined' || window.cordova || currentMode =='common' && !beginmaterial) )
 				{
 					self.nav.api.load({
 						open : true,

@@ -137,19 +137,19 @@
 
                     } else { 
                         //save user connection on the server 
-                        user = users[data.id + data.deviceModificator] = new User({
+                        user = users[data.id] = new User({
 
                             connection : connection,
                             address :  data.address,
-                            id : data.id + data.deviceModificator,
-                            device : data.id
+                            id : data.id,
+                            device : data.device
 
                         })
 
-                        devices[data.id] || (devices[data.id] = {})
-                        devices[data.id][user.id] = true
+                        devices[user.device] || (devices[user.device] = {})
+                        devices[user.device][user.id] = true
 
-                        user.usersListIndex = usersList.push(user.id)
+                        user.usersListIndex = usersList.push(user.id) - 1
 
                         addresses[data.address] || (addresses[data.address] = new Address({
                             address : data.address
@@ -313,7 +313,8 @@
                                 success: false,
                                 offline : r.offline,
                                 online : online,
-                                chatid : chat.id
+                                chatid : chat.id,
+                                id : data.id
                             }); 
 
                         }
@@ -476,15 +477,18 @@
                                 id: user.id,
                                 address : user.address,
                                 
-                                
                             }
 
                             if (data.chatid){
                                 message.chatid = data.chatid
                             }
 
-                            if (data.relayed){
-                                message.relayed = data.relayed
+                            if (data.relay){
+                                message.relay = data.relay                                
+                            }
+
+                            if (data.get){
+                                message.get = data.get
                             }
 
                             send.to(conn, message); 
@@ -601,16 +605,18 @@
 
                     //remove from online
                     address.devices.remove(connection.id)
-                 
+                    
 
-                usersList.spice(user.usersListIndex, 1) 
+                console.log('usersList', usersList)
+
+                usersList.splice(user.usersListIndex, 1) 
 
                 delete users[connection.id];
                 delete user;
 
-                delete devices[data.id][user.id]
+                delete devices[user.device][user.id]
 
-                if(_.isEmpty(devices[data.id])) delete devices[data.id]
+                if(_.isEmpty(devices[user.device])) delete devices[user.device]
 
                 _.each(connection.others, function(i, id){
 
