@@ -7,3 +7,4 @@ messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
 pocketnet.zip
 package-lock.json
+build/installer2.nsh

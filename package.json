@@ -39,19 +39,15 @@
         "pickadate-webpack": "^3.5.6",
         "socket.io": "^2.2.0",
         "sortablejs": "^1.8.3",
-        "ws": "^6.1.4",
-        "handlebars/runtime" : "^1.0.12",
-        "jquery-sortable" : "^0.9.13"
+        "ws": "^6.1.4"
     },
     "build": {
         "productName": "Pocketnet",
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
-            }
-        ],
+        "publish": [{
+            "provider": "github",
+            "owner": "pocketnetapp",
+            "repo": "pocketnet.gui"
+        }],
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,
@@ -62,8 +58,10 @@
             "menuCategory": true,
             "installerIcon": "assets/icons/win/icon.ico",
             "uninstallerIcon": "assets/icons/win/icon.ico",
+            "uninstallDisplayName": "${productName}, v${version}",
             "deleteAppDataOnUninstall": true,
-            "license": "license.txt"
+            "license": "LICENSE",
+            "include": "build/installer.nsh"
         },
         "mac": {
             "icon": "assets/icons/mac/icon.icns"

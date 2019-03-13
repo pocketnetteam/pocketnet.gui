@@ -230,14 +230,17 @@ function createWindow() {
         height: mainScreen.size.height,
         /*frame: false, */
         //fullscreen : true,
-        title: "Pocketnet"
-    })
+        title: "Pocketnet",
+        show: false
+    });
+    win.maximize();
+    win.show();
 
     Menu.setApplicationMenu(null)
 
     win.loadFile('index_el.html')
 
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
