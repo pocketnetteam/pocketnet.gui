@@ -1,27 +1,31 @@
 <% if(!last) {%>
-<div class="tips">
+<div class="os">
 	<div class="work">
 		<div class="stepTable table">
 			<div class="numberWr">
 				<div class="number">
-					1
+					<%= os.icon %>
 				</div>
 			</div>
 
 			<div class="stepContent">
 				<div class="subcaption">
-					Your Login Information 
+					Pocketnet for <%- os.text.name %>
 				</div>
 
 				<div class="tip">
 
-					To use Pocketnet you need to generate your private cryptographic key which replaces login plus password from centralized social networks. 
+					<%- os.text.download %>
 				
 				</div>
 
 				<div class="panel">
 					<div class="item">
-						<button class="generate"><%=e('generatepkey')%> <i class="fas fa-chevron-circle-right"></i></button>
+						<button class="downloadOs"><%- os.text.label %> <i class="fas fa-download"></i></button>
+					</div>
+
+					<div class="item skipositem">
+						<button class="skip ghost">Skip and proceed to website</button>
 					</div>
 				</div>
 			</div>

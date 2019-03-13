@@ -89,6 +89,14 @@ class MessageStorage {
         localStorage[this._prms.id] = JSON.stringify(this._db);
     }
     //-----------------------
+    // Get Message By Id
+    GetMessage(id) {
+        //-----------------------
+        // Save to DB
+        return this._db[id]
+        
+    }
+    //-----------------------
     // Merge messages from input DB to internal DB
     MergeDB(peer_db={}) {
         // - Loop for received data

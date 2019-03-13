@@ -240,7 +240,7 @@ function createWindow() {
 
     win.loadFile('index_el.html')
 
-    // win.webContents.openDevTools()
+    //win.webContents.openDevTools()
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
@@ -303,6 +303,8 @@ if (!r) {
             win.focus();
         }
     })
+
+    app.setAsDefaultProtocolClient('pocketnet')
 
     // Этот метод будет вызываться, когда Electron закончит 
     // инициализацию и готов к созданию окон браузера.

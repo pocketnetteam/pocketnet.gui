@@ -297,6 +297,21 @@ var test = (function(){
 								self.app.localization.lightSet(a.key);
 							}
 						}
+
+						if (id == 'name'){
+							self.app.platform.sdk.users.nameExist(value, function(exist){
+
+								if(!exist || exist == self.app.platform.sdk.address.pnet().address){
+									el.c.find('.errorname').fadeOut();
+								}
+								else
+								{
+									el.c.find('.errorname').fadeIn();
+								}
+
+								
+							})	
+						}
 					}
 
 					//if(id == 'ref'){
@@ -318,7 +333,7 @@ var test = (function(){
 
 		var userOptions = {
 			name : new Parameter({
-				name : self.app.localization.e('uname'),
+				name : 'Nickname',
 				id : 'name',
 				type : "STRING",
 				onType : true,

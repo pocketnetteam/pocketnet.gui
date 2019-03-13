@@ -55,7 +55,7 @@ var filluser = (function(){
 						}
 
 						_p.Action || (_p.Action = 'ADDTOMAILLIST');
-						_p.TemplateID = '10'
+						_p.TemplateID = '1005'
 
 						$.ajax({
 							type: 'POST',

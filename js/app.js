@@ -170,6 +170,16 @@ Application = function(node)
 
 		self.options.platform = self.platform
 
+		self.platform.sdk.users.addressByName(self.ref, function(r){
+			if(r){
+				self.ref = r;
+				localStorage['ref'] = self.ref
+
+				console.log("REF", self.ref)
+			}
+
+		})
+
 	}
 
 	self.module = function(id){
@@ -229,9 +239,21 @@ Application = function(node)
 
 		if(typeof Fingerprint2 != 'undefined'){
 
-			new Fingerprint2().get(function(result, components){
+			new Fingerprint2.get({
 
-				self.options.fingerPrint = hexEncode(result);
+				excludes: {
+					userAgent: true, 
+					language: true
+				}
+
+			},function(components, r){
+
+				var values = components.map(function (component) { return component.value })
+    			var murmur = Fingerprint2.x64hash128(values.join(''), 31)
+
+				//console.log(components, r)
+
+				self.options.fingerPrint = hexEncode(murmur);
 				
 				fprintClbk()
 			});
@@ -495,16 +517,11 @@ Application = function(node)
 	
 	}
 
-	
-
-
-
 	self.name = self.options.name;
-	self.ref = localStorage['ref'] || parameters().ref
+	self.ref = localStorage['ref'] || parameters().ref;
 
-	localStorage['ref'] = self.ref
 
-	console.log("REF", self.ref)
+
 
 	return self;
 }

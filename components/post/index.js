@@ -6,7 +6,9 @@ var post = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
+		var primary = deep(p, 'history') || deep(p, 'primary');
+
+		console.log('primary', p)
 
 		var el, share, ed;
 
@@ -98,6 +100,10 @@ var post = (function(){
 			},
 			
 			position : function(){
+
+				if(primary) return
+
+
 				var h = $(window).height();
 
 				var wh = el.wr.height();
@@ -298,49 +304,63 @@ var post = (function(){
 
 			like : function(){
 
-				var p = $(this).closest('.stars');
-
-				if (p.attr('value')){
-					return
-				}
-
-				var value = $(this).attr('value')
-
-
-				p.attr('value', value)
-				p.addClass('liked')
-
-				
-				actions.like(value, function(r){
-					if(r){
-						
-
-						share.scnt || (share.scnt = 0)
-						share.score || (share.score = 0)
-
-
-						share.scnt++;
-						share.score = Number(share.score || 0) + Number(value);
-
-						var v = Number(share.score) / Number(share.scnt) 
-
-
-						p.find('.tstarsov').css('width', ((v / 5) * 100) + '%')
-						p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
-
-						renders.stars()
-
-						if (ed.like)
-							ed.like(share)
-
-						//_scrollTo(p)
+				self.app.user.isState(function(state){
+					if(!state){
+						self.nav.api.load({
+							open : true,
+							href : 'authorization',
+							history : true
+						})
 					}
 					else
 					{
-						p.removeAttr('value')
-						p.removeClass('liked')
+						var p = $(this).closest('.stars');
+
+						if (p.attr('value')){
+							return
+						}
+
+						var value = $(this).attr('value')
+
+
+						p.attr('value', value)
+						p.addClass('liked')
+
+						
+						actions.like(value, function(r){
+							if(r){
+								
+
+								share.scnt || (share.scnt = 0)
+								share.score || (share.score = 0)
+
+
+								share.scnt++;
+								share.score = Number(share.score || 0) + Number(value);
+
+								var v = Number(share.score) / Number(share.scnt) 
+
+
+								p.find('.tstarsov').css('width', ((v / 5) * 100) + '%')
+								p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
+
+								renders.stars()
+
+								if (ed.like)
+									ed.like(share)
+
+								//_scrollTo(p)
+							}
+							else
+							{
+								p.removeAttr('value')
+								p.removeClass('liked')
+							}
+						})
 					}
 				})
+
+				
 
 		
 

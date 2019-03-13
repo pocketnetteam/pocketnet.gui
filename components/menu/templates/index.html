@@ -221,7 +221,7 @@
 
 				<% if(typeof _Electron == 'undefined' && !window.cordova){ %> 
 
-					<div class="items mdl workstation">
+					<!--<div class="items mdl workstation">
 
 						<div class="item table">
 							
@@ -230,29 +230,33 @@
 							</div>
 
 						</div>
-					</div>
+					</div>-->
 
 				<% } %>
 
-				 
+				<% if((typeof _Electron == 'undefined' && !window.cordova) || state){ %>  
 
-				<div class="items gethotpostsWrapper">
-					<a href="index?r=recommended">
-					<div class="item table right onlyicon gethotposts">
-						
+					<div class="items gethotpostsWrapper">
+						<a href="index?r=recommended">
+						<div class="item table right onlyicon gethotposts">
 							
-							<div class="icon">
-								<div class="icn">
-									<i class="fas fa-fire"></i>
+								
+								<div class="icon">
+									<div class="icn">
+										<i class="fas fa-fire"></i>
+									</div>
 								</div>
 
-							</div>
+								<div class="label">
+									Top posts
+								</div>
+							
 
-						
-
+						</div>
+						</a>
 					</div>
-					</a>
-				</div>
+
+				<% } %>
 
 			</div>
 			

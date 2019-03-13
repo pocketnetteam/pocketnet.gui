@@ -24,7 +24,14 @@
 				}
 
 				&.label{
-					padding-right: @rhythm;						
+					overflow: hidden;
+					text-overflow: ellipsis;
+					padding-right: @rhythm;	
+
+					a{
+						color : @color-main;
+						text-decoration: underline;
+					}					
 				}
 
 				.showmoreabout{
