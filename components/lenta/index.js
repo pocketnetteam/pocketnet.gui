@@ -249,6 +249,8 @@ var lenta = (function(){
 
 					player.on('ready', function(){
 
+						pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
+
 						players[share.txid].inited = true
 						players[share.txid].inited = true
 

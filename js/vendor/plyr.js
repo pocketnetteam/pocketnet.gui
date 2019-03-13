@@ -5109,6 +5109,9 @@ typeof navigator === "object" && (function (global, factory) {
       iframe.setAttribute('allowfullscreen', '');
       iframe.setAttribute('allowtransparency', '');
       iframe.setAttribute('allow', 'autoplay'); // Get poster, if already set
+      iframe.setAttribute('disable-x-frame-options', 'disable-x-frame-options');
+
+      console.log("PLYTRRTRTRTRTRT")
 
       var poster = player.poster; // Inject the package
 
@@ -5556,7 +5559,9 @@ typeof navigator === "object" && (function (global, factory) {
           // Captions are flaky on YouTube
           cc_load_policy: player.captions.active ? 1 : 0,
           cc_lang_pref: player.config.captions.language,
-   
+          origin : '*',
+
+          enablejsapi  : 1
           
         },
         events: {
@@ -5798,6 +5803,8 @@ typeof navigator === "object" && (function (global, factory) {
 
     }
   };
+
+  console.log("ASDADSDASDASSADSADADSADSDASADSDAS")
 
   // ==========================================================================
   var media = {

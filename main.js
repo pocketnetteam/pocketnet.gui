@@ -231,7 +231,8 @@ function createWindow() {
         /*frame: false, */
         //fullscreen : true,
         title: "Pocketnet",
-        show: false
+        show: false,
+        webSecurity : false
     });
     win.maximize();
     win.show();
@@ -240,7 +241,7 @@ function createWindow() {
 
     win.loadFile('index_el.html')
 
-    //win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
@@ -258,6 +259,16 @@ function createWindow() {
         }
 
 
+    });
+
+    win.webContents.session.webRequest.onHeadersReceived({}, (detail, callback) => {
+        const xFrameOriginKey = Object.keys(detail.responseHeaders).find(header => String(header).match(/^x-frame-options$/i));
+        
+        if (xFrameOriginKey) {
+            delete detail.responseHeaders[xFrameOriginKey];
+        }
+
+        callback({ cancel: false, responseHeaders: detail.responseHeaders });
     });
 
     ipcMain.on('electron-notification', function(e, nhtml) {
