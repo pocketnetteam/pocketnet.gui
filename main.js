@@ -230,8 +230,11 @@ function createWindow() {
         height: mainScreen.size.height,
         /*frame: false, */
         //fullscreen : true,
-        title: "Pocketnet"
-    })
+        title: "Pocketnet",
+        show: false
+    });
+    win.maximize();
+    win.show();
 
     Menu.setApplicationMenu(null)
 

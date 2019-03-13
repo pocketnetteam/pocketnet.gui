@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.0.1-beta",
+    "version": "0.0.2-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community",
     "company": "Pocketnet Community",
@@ -43,13 +43,11 @@
     },
     "build": {
         "productName": "Pocketnet",
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
-            }
-        ],
+        "publish": [{
+            "provider": "github",
+            "owner": "pocketnetapp",
+            "repo": "pocketnet.gui"
+        }],
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,
@@ -60,8 +58,10 @@
             "menuCategory": true,
             "installerIcon": "assets/icons/win/icon.ico",
             "uninstallerIcon": "assets/icons/win/icon.ico",
+            "uninstallDisplayName": "${productName}, v${version}",
             "deleteAppDataOnUninstall": true,
-            "license": "license.txt"
+            "license": "LICENSE",
+            "include": "build/installer.nsh"
         },
         "mac": {
             "icon": "assets/icons/mac/icon.icns"
