@@ -2457,16 +2457,24 @@ var lenta = (function(){
 
 								console.log(p)
 
+
+
 								self.app.platform.sdk.node.shares.users(bshares, function(){
+
+									p.settings.el.closest('#main').addClass('onepost')
 
 									self.nav.api.load({
 										open : true,
 										href : 'post',
-
+										primary : true,
 										el : p.settings.el,
 
 										essenseData : {
 											share : beginmaterial
+										},
+
+										clbk : function(){
+											
 										}
 									})
 								})

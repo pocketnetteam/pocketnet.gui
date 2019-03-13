@@ -280,10 +280,10 @@ var main = (function(){
 					
 				}
 				
-					var data = {};
-				
+				var data = {};
 			
-					clbk(data);
+		
+				clbk(data);
 				
 
 				

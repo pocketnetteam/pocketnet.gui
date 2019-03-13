@@ -6,7 +6,9 @@ var post = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
+		var primary = deep(p, 'history') || deep(p, 'primary');
+
+		console.log('primary', p)
 
 		var el, share, ed;
 
@@ -98,6 +100,10 @@ var post = (function(){
 			},
 			
 			position : function(){
+
+				if(primary) return
+
+
 				var h = $(window).height();
 
 				var wh = el.wr.height();
