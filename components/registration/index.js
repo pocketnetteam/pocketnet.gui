@@ -285,7 +285,7 @@ var registration = (function(){
 			download : function(){
 				actions.download(function(link){
 					el.c.find('.osStep').addClass('rundownloading')
-					el.c.find('.skipositem').html('<div class="downloadstart">Continue registration in Application</div>')
+					el.c.find('.skipositem').html('<div class="downloadstart">You will now continue your registration after you install Pocketnet Desktop.</div>')
 				})
 			}
 
