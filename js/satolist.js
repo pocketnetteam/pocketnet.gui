@@ -2024,7 +2024,7 @@ Platform = function(app){
 
 				self.app.ajax.rpc({
 					method : 'getuseraddress',
-					parameters : [name],
+					parameters : [encodeURIComponent(name)],
 					success : function(d){
 
 
