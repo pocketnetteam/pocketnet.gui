@@ -27,11 +27,10 @@ var filluser = (function(){
 					}	
 					else
 					{
-						self.sdk.users.requestFreeMoney(function(res, err){
 
-							clbk()
-
-						})
+						clbk()
+						
+						self.sdk.users.requestFreeMoney(function(res, err){})
 					}
 					
 					

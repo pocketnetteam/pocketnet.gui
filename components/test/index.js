@@ -25,7 +25,7 @@ var test = (function(){
 			valid : function(v1, v2){
 				if(!actions.equal(v1, v2)){
 
-					if(v1.name && v1.image) return true
+					if(v1.name && v1.image && v1.about) return true
 
 				}
 			},
@@ -73,10 +73,19 @@ var test = (function(){
 						if(!tempInfo.image){	
 							var pn = el.c.find('.fileUploader')
 
-							pn.focus()
-
 							_scrollTo(pn)
 						}	
+
+						else
+						{
+							if(!tempInfo.about){	
+								var pn = el.c.find('[parameter="about"] input')
+
+								pn.focus()
+
+								_scrollTo(pn)
+							}	
+						}
 					}
 
 						
@@ -353,7 +362,9 @@ var test = (function(){
 				name : self.app.localization.e('uabout'),
 				id : 'about',
 				type : "TEXT",
-				onType : true
+				onType : true,
+				require : true,
+				placeholder : 'Please write a few words about yourself to help people decide if they want to follow you'
 			}),
 
 			site : new Parameter({
