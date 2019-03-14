@@ -37,7 +37,7 @@
   };
 
   // Main CircularProgress object exposes on global context
-  var CircularProgress = this.CircularProgress = function (options) {
+  CircularProgress = this.CircularProgress = function (options) {
     var ctx, i, property;
 
     options = options || {};
@@ -123,4 +123,7 @@
     return this;
   };
 
+  return CircularProgress
+
 }).call(this);
+

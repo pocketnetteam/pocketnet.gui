@@ -43,11 +43,13 @@
     },
     "build": {
         "productName": "Pocketnet",
-        "publish": [{
-            "provider": "github",
-            "owner": "pocketnetapp",
-            "repo": "pocketnet.gui"
-        }],
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "pocketnetapp",
+                "repo": "pocketnet.gui"
+            }
+        ],
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,

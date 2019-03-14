@@ -270,11 +270,24 @@ var main = (function(){
 
 				if(!p.state && primary && (typeof _Electron != 'undefined' || window.cordova || currentMode =='common' && !beginmaterial) )
 				{
-					self.nav.api.load({
-						open : true,
-						href : 'authorization',
-						history : true
-					})
+					if(typeof _Electron != 'undefined' || window.cordova){
+
+						self.nav.api.load({
+							open : true,
+							href : 'authorization',
+							history : true
+						})
+						
+					}	
+					else
+					{
+						
+						self.nav.api.load({
+							open : true,
+							href : 'video',
+							history : true
+						})
+					}
 
 					return
 					

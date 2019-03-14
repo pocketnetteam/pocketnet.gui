@@ -5977,8 +5977,9 @@ Platform = function(app){
 
     						platform.sdk.notifications.addFromWs(data)
 
+    						console.log(platform.focus, message.html)
 
-    						if (typeof _Electron != 'undefined' && !self.focus){
+    						if (typeof _Electron != 'undefined' && !platform.focus && message.html){
 								electron.ipcRenderer.send('electron-notification', message.html);
     						}
 							
@@ -7591,6 +7592,12 @@ Platform = function(app){
 
 		self.app.nav.addParameters = null;
 
+		if(electron){
+			electron.ipcRenderer.send('update-badge', null);
+			electron.ipcRenderer.send('update-badge-tray', null);
+		}
+		
+
 		if (self.ws)
 			self.ws.destroy()
 	}
@@ -7924,10 +7931,6 @@ Platform = function(app){
 		load : function(){
 			self.nodeid =  localStorage['nodeid'] || '1';
 			self.addressType =  localStorage['addressType'] || 'p2pkh';
-
-
-			
-
 
 		}
 	}

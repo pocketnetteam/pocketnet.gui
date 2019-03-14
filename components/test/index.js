@@ -664,14 +664,13 @@ var test = (function(){
 
 				})
 			},
-			unspent : function(unspent, unspentOld, clbk){
+			unspent : function(unspent, clbk){
 				self.shell({
 
 					name :  'unspent',
 					el :   el.unspent,
 					data : {
-						unspent : unspent,
-						unspentOld : unspentOld
+						unspent : unspent
 					},
 
 				}, function(_p){
@@ -749,9 +748,7 @@ var test = (function(){
 			renders.options();
 
 			self.sdk.node.transactions.get.unspent(function(unspent){
-				self.sdk.node.transactions.get._unspent(function(unspentOld){
-					renders.unspent(unspent, unspentOld)
-				})
+				renders.unspent(unspent)
 			})
 
 			self.app.platform.ws.messages.transaction.clbks.utemp = function(data){

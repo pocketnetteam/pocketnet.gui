@@ -6173,7 +6173,7 @@
 
 		self.rpc = function(p){
 
-        	if(typeof _Electron != 'undefined' && 1==2){
+        	if(typeof _Electron != 'undefined' && 1 == 2){
         		var id = parseInt(Math.random() * 100000)
 
         		var node = app.platform.nodes[app.platform.nodeid]
@@ -6211,21 +6211,27 @@
 					node : app.platform.nodeid
 				}
 
-				if(!p.nodeFix){
+				if(typeof p.nodeFix == 'undefined'){
+
+					console.log("AUTOUB", app.platform.nodeid)
 
 					var fail = p.fail
+
+					p.nodeFix = Number(app.platform.nodeid || '1')
 
 					p.fail = function(r){
 
 						if(r && r.statusCode == 500 && (!r.data || _.isEmpty(r.data))){
 							app.platform.autochange()
 
-							if(app.platform.nodeid != p.nodeFix){
-								self.rpc(p)
+							console.log(app.platform.nodeid, p.nodeFix)
+
+							if(app.platform.nodeid == p.nodeFix){
+								fail(r)
 							}
 							else
 							{
-								fail(r)
+								self.rpc(p)
 							}
 						}
 						else
@@ -6234,12 +6240,9 @@
 						}
 						
 					}
-
-				}
+				}	
 
 				
-
-				p.nodeFix || (p.nodeFix = app.platform.nodeid)
 
 				var success = p.success;
 

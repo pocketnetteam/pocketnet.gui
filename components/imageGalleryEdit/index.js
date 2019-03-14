@@ -713,12 +713,20 @@ var imageGalleryEdit = (function(){
 				if(essenseData.edit)
 				{
 					self.nav.api.loadRelations({
+
 						relations : [
-							{src : 'js/vendor/caman.full.min.js',			   f : 'js'},
-							{src : 'js/vendor/cropper.js',			   f : 'js'},
+							{src : 'js/vendor/caman.full.min.js',			   f : 'js', require : function(){
+								Caman = require('../../js/vendor/caman.full.min.js').Caman
+
+							}}, 
+							{src : 'js/vendor/cropper.js',			   f : 'js', require : function(){
+								Cropper = require('../../js/vendor/cropper.js')
+								console.log('Cropper', Cropper)
+							}},
 							{src : 'css/cropper.min.css',			   f : 'css'},
 
 						],
+
 					}, clbk)
 				}
 				else
@@ -746,12 +754,14 @@ var imageGalleryEdit = (function(){
 
 				$(window).off('resize', helpers.resize)
 
-
+				console.log("ASDSADDSA")
 
 				el = {};
 			},
 			
 			init : function(p){
+
+				console.log("ASDSADDS122121A")
 
 				editMode = null;
 

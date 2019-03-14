@@ -210,12 +210,19 @@ function notification(nhtml) {
         resizable: false,
         movable: false,
         backgroundColor: '#020E1B',
-        alwaysOnTop: true
+        alwaysOnTop: true,
+        show: false
     })
 
     nwin.loadFile('notifications.html', {
         search: encodeURIComponent(nhtml)
     })
+
+
+    setTimeout(function(){
+        nwin.show()
+    }, 300)
+
     //nwin.webContents.openDevTools()
     setTimeout(closeNotification, 15000)
 }

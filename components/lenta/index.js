@@ -2485,11 +2485,26 @@ var lenta = (function(){
 						}
 						else
 						{
-							self.nav.api.load({
-								open : true,
-								href : 'authorization',
-								history : true
-							})
+
+							if(typeof _Electron != 'undefined' || window.cordova){
+
+								self.nav.api.load({
+									open : true,
+									href : 'authorization',
+									history : true
+								})
+								
+							}	
+							else
+							{
+								
+								self.nav.api.load({
+									open : true,
+									href : 'video',
+									history : true
+								})
+							}
+							
 						}
 
 						return
