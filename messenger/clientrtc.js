@@ -51,6 +51,8 @@ var platformRTC = function(p){
 		}
 	}
 
+	var relaystorage = {}
+
 	var rtchttp = function(){
 
 		var self = this;
@@ -221,6 +223,28 @@ var platformRTC = function(p){
 					}
 				})
 
+			},
+
+			chats : {
+				users : function(ids){
+					ajax({
+						action : "chats.users",
+						data : {
+							chats : ids
+						},
+
+						success : function(d){
+
+							if (clbk)
+								clbk(d.data)
+						},
+
+						fail : function(){
+							if (clbk)
+								clbk(null)
+						}
+					})
+				}
 			}
 		}
 
@@ -239,6 +263,8 @@ var platformRTC = function(p){
 			reliable : true,
 			negotiated : true
 		}; 
+
+		var intervals = {};
 
 		
 		var channelEvents = {
@@ -300,12 +326,16 @@ var platformRTC = function(p){
 
 			},
 
-			receiveRelay : function(message, users){
+			receiveRelay : function(message, chatid){
 				var relay = self.peer.relay;
 
-					relay.storages.addStorage(message.chatid)
-					relay.storages.addMessage(message.m, message.chatid, message.addresses)
+					relay.storages.addStorage(chatid)
+					relay.storages.addMessage(message.message, chatid, message.from, message.addresses)
 
+			},
+
+			receiveRelayForMe : function(data){
+				relay.recieveChats(data.messages)
 			}
 		}
 
@@ -335,6 +365,8 @@ var platformRTC = function(p){
 
 			self.c.onmessage = function (m) { 
 
+				console.log('self.c.onmessage', m)
+
 				var data = {}
 
 				try {
@@ -346,6 +378,9 @@ var platformRTC = function(p){
 
 				var chatid = data.chatid;
 				var message = data.message || {};
+
+
+				console.log('message', message)
 
 				//console.log("Got message:", chatid, message); 
 
@@ -359,14 +394,25 @@ var platformRTC = function(p){
 			        return;
 			    }
 
-			    if (message.relay) {
+			    if (message.relaySend) {
 
-			    	channelEvents.receiveRelay(message, chatid, addresses);
+			    	channelEvents.receiveRelay(message, chatid);
 
 			    	//add to my storage
 
 			        return;
 			    }
+
+			    if (message.relayToReciever) {
+
+			    	channelEvents.receiveRelayForMe(message);
+
+			    	//add to my storage
+
+			        return;
+			    }
+
+			    
 
 			    if (message.typing) {
 			        return;
@@ -385,16 +431,18 @@ var platformRTC = function(p){
 
 			self.opened = false;
 
-			if (syncInterval){
-				clearInterval(syncInterval)
-			}
+			_.each(intervals, function(interval){
+				clearInterval(interval)
+			})
+
+			intervals = {}
 
 		}
 
 		self.api = {
 			sync : function(chatid){
 
-				syncInterval = retry(function(){
+				intervals.sync = retry(function(){
 
 					return self.opened
 
@@ -402,32 +450,92 @@ var platformRTC = function(p){
 
 					channelEvents.sendSyncRequest(chatid)
 
+					delete intervals.sync
+
 				})
 
 			},
 
 			send : function(m, chatid){
 
-				var message = JSON.stringify({
+				intervals['send' + m.id] = retry(function(){
 
-					message : m,
-					chatid : chatid
+					return self.opened
 
+				}, function(){
+
+					var message = JSON.stringify({
+
+						message : m,
+						chatid : chatid
+
+					})
+
+					self.c.send(message)
+
+					delete intervals['send' + m.id]
 				})
 
-				self.c.send(message)
+				
 			},
 
-			relay : function(m, chatid, addresses){
-				
-				var message = JSON.stringify({
+			relaySend : function(m, chatid, from, addresses){
 
-					message : m,
-					addresses : addresses,
-					chatid : chatid,
-					relay : 1
+				intervals['relaySend' + m.id] = retry(function(){
+
+					console.log('self.opened')
+
+					return self.opened
+
+				}, function(){
+
+					var message = JSON.stringify({
+
+						message : {
+
+							message : m,
+							addresses : addresses,
+							from : from,
+							relaySend : 1
+						},
+						
+						chatid : chatid,
+						
+
+					})
+
+					console.log('SEND', message)
+					
+					self.c.send(message)
+
+					delete intervals['relaySend' + m.id]
 
 				})
+				
+				
+			},
+
+			relayToReciever : function(messages){
+
+				intervals.relayToReciever = retry(function(){
+
+					return self.opened
+
+				}, function(){
+
+					var message = JSON.stringify({
+
+						message : messages,
+						relayToReciever : 1
+
+					})
+					
+					self.c.send(message)
+
+					delete intervals.relayToReciever
+
+				})
+				
 				
 			}
 		}
@@ -571,45 +679,21 @@ var platformRTC = function(p){
 			self.channel.api.sync(chatid)
 		}
 
-		self.relaySend = function(message, chatid){
-			self.channel.api.relay(message, chatid, self.relay.users)
+		self.relaySend = function(message, chatid, from){
+			self.channel.api.relaySend(message, chatid, from, self.relay.users)
 		}
 
 		self.relayToReciever = function(id){
 
-			/*self.relay
 
-			self.channel.api.relay(message, chatid, self.relay.users)*/
+			self.channel.api.relay(self.relay.storages.get(id))
+
+			self.relay.release(id)
+
 		}
 
 		return self;
 	}
-
-	/*var relayedRTC = function(id, chatid, from){
-		var self = this;
-
-			self.peer = null;
-			self.id = device;
-
-		self.peer = function(user, events){	
-
-			peers[user.id] || (peers[user.id] = new peerRTC(user, events))	
-
-			self.peer = peers[user.id]
-			self.peer.events = events
-			self.peer.init()
-
-			self.linkPeer(self.peer)
-
-		    return peer
-		}
-
-		self.linkPeer = function(peer){
-			peer.relayed = self
-		}
-
-		return self;
-	}	*/
 
 	var relayRTC = function(device, offlineUsers, events){
 		var self = this;
@@ -617,25 +701,78 @@ var platformRTC = function(p){
 			self.peer = null;
 			self.id = device;
 
-		var storages = {}
-
 	
 		self.storages = {
-			get : storages,
 
-			addStorage : function(chatid){
-				if(!storages[chatid]){
-					storages[chatid] = []
-				}
+			clear : function(userid){
 
-				return storages[chatid]
+				var removechats = [];
+
+				_.each(relaystorage, function(messages, chatid){
+
+					relaystorage[chatid] = _.filter(messages, function(message){
+
+						delete message.a[userid];
+
+						if(!_.isEmpty(message.a)){
+							return true;
+						}
+
+					})
+
+					if (!relaystorage[chatid].length){
+						removechats.push(chatid)
+					}
+				})
+
+				_.each(removechats, function(chatid){
+					delete relaystorage[chatid]
+				})
 			},
 
-			addMessage : function(m, chatid, addresses){
+			get : function(userid){
+				var chats = {};
 
-				storages[chatid].push({
+				_.each(relaystorage, function(chat, chatid){
+					var messages = _.filter(chat, function(message){
+
+						if(message.a[userid]) return true
+
+					})
+
+					if (messages.length){
+						chats[chatid] = _.map(messages, function(mobj){
+							return {
+								message : mobj.m,
+								from : mobj.f
+							}
+						})
+					}
+				})
+
+				return chats;
+			},
+
+			addStorage : function(chatid){
+				if(!relaystorage[chatid]){
+					relaystorage[chatid] = []
+				}
+
+				return relaystorage[chatid]
+			},
+
+			addMessage : function(m, chatid, from, addresses){
+
+				var addressesMap = {};
+
+				_.each(addresses, function(a){
+					addressesMap[a] = true
+				})
+
+				relaystorage[chatid].push({
 					m : m,
-					a : addresses
+					f : from,
+					a : addressesMap
 				})
 
 				if (events.add){
@@ -655,11 +792,33 @@ var platformRTC = function(p){
 
 			self.linkPeer(self.peer)
 
-		    return peer
+		    return self.peer
 		}
 
 		self.linkPeer = function(peer){
 			peer.relay = self
+		}
+
+		self.release = function(userid){
+
+			self.relay.storages.clear(userid)
+
+			if (events.release){
+				events.release(userid)
+			}
+
+		}
+
+		self.recieveChats = function(chats){
+
+
+			if (events.recieveChats){
+				events.recieveChats(chats)
+			}
+
+			
+
+
 		}
 
 		self.users = offlineUsers || []
@@ -1011,6 +1170,56 @@ var platformRTC = function(p){
 								from : id
 
 							})
+						},
+
+						recieveChats : function(chats){
+
+							var ids = _.map(chats, function(m, id){
+								return id
+							});
+
+							chats.createMany(ids, function(){
+
+								_.each(chats, function(messages, chatid){
+
+									var chat = self.chats[chatid]
+
+									_.each(messages, function(message){
+
+										self.rtchttp.update.chat(chatid, 1, chat.addresses)
+
+										chat.receive.message(message.message)
+
+										notification({
+											type : 'message',
+											chatid : chatid,
+											address : message.from
+										})
+
+									})
+								})
+
+							})
+
+							
+
+							/*	
+
+							notification(data)
+
+							self.rtchttp.update.chat(data.chatid, 1, data.addresses)
+
+							_.each(self.clbks.message || {}, function(c){
+						    	c(data, chat)
+						    })
+
+							chat.connect(function(){
+
+								_.each(self.clbks.chat || {}, function(c){
+							    	c(data, chat)
+							    })
+
+							}, 60000)*/
 						}
 					})
 				}
@@ -1029,6 +1238,28 @@ var platformRTC = function(p){
 		}
 
 		var chats = {
+
+			createMany : function(ids, clbk){
+				self.rtchttp.get.chats.users(ids, function(info){
+
+					_.each(ids, function(id){
+
+						addresses = info[id] || [];
+
+						var chat = self.chats[id]
+
+						if(!chat){
+							chat = chats.create(id, addresses)
+						}
+
+					})
+
+					if (clbk)
+						clbk()
+
+				})
+			},
+
 			create : function(id, addresses){
 
 				if(!self.chats[id]){
@@ -1093,7 +1324,7 @@ var platformRTC = function(p){
 
 			relay : function(data){
 
-			    var re = relay.create(data.device, data.offline)
+			    var re = relays.create(data.device, data.offline)
 
 			},
 
@@ -1192,6 +1423,8 @@ var platformRTC = function(p){
 
 				var context = null 
 
+				console.log("OFFER RECIEVED", data)
+
 				var r = retry(function(){
 
 					if (data.chatid){
@@ -1200,16 +1433,19 @@ var platformRTC = function(p){
 
 					if (data.relay)
 					{
-
 						relays.create(data.relay, data.offline)
 
-						context = self.relays[data.id]
+						context = self.relay[data.relay]
 					}
+
+					console.log('context', context)
 
 					if (context) return true
 
 
 				}, function(){
+
+					console.log("OFFER RECIEVED 2", data)
 
 
 					if(!peer){
@@ -1321,10 +1557,14 @@ var platformRTC = function(p){
 
 			message_offline : function(data){
 
+				console.log('data', data)
+
 				_.each(data.online || [], function(user){
 					var relay = relays.create(user.device, data.offline)
 
 					var peer = peers[user.id]
+
+					console.log('relay', relay, peer)
 
 					if(!peer){
 						peer = relay.peer({
@@ -1354,11 +1594,16 @@ var platformRTC = function(p){
 							}
 						})
 
+						console.log('peer.offer')
+
 						peer.offer()
 
 					}
 
-					peer.relaySend(chats[data.chatid].getMessage(data.id), data.chatid) // + messages
+
+					console.log('relaySend', self.chats[data.chatid].get.message(data.id), data.chatid, user.address)
+
+					peer.relaySend(self.chats[data.chatid].get.message(data.id), data.chatid, user.address) // + messages
 						
 				})
 

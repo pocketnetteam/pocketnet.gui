@@ -48,7 +48,7 @@ Application = function(node)
 	self.options = {
 
 		nav : {
-			navPrefix : '/',
+			navPrefix : '/pocketnet/',
 		},
 
 		name : 'PCRB',
@@ -243,7 +243,10 @@ Application = function(node)
 
 				excludes: {
 					userAgent: true, 
-					language: true
+					language: true,
+					language : true,
+					enumerateDevices : true,
+					screenResolution : true
 				}
 
 			},function(components, r){

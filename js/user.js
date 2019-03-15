@@ -179,6 +179,11 @@ User = function(app, p) {
 			self.isState(function(state){
 
 				if(state){
+
+					console.log('signin')
+
+					localStorage['waslogged'] = true
+
 					localStorage['popupsignup'] = 'showed'
 					self.prepare(clbk)
 				}
@@ -293,6 +298,12 @@ User = function(app, p) {
 		
 
 		if (keys.private.value && keys.public.value){
+
+			localStorage['waslogged'] = true
+			localStorage['popupsignup'] = 'showed'
+
+			$('.survicate-widget').remove()
+			
 			state = 1;
 		}
 		else{

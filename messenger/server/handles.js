@@ -17,6 +17,42 @@ var handles = {
 
 	info : {
 
+		chat : {
+			users : function(connect){
+				var chat = connect.rtc.chats[connect.parameters.chats];
+
+				if (chat){
+
+					var data = _.clone(chat.allow)
+
+					response(null, data, connect)
+				}
+				else
+				{
+					response(500, "Chat hasn't been founded", connect)
+				}
+			}
+		},
+
+		chats : {
+			users : function(connect){
+
+				var chats = {}
+
+				_.each(connect.parameters.chats, function(chatid){
+					var chat = connect.rtc.chats[connect.parameters.chats];
+
+					if (chat){
+
+						chats[chatid] = chat.allow
+					}
+				})
+
+				response(null, chats, connect)
+				
+			}
+		},
+
 		address : {
 			chat : {
 				action : function(connect){
@@ -77,99 +113,104 @@ var handles = {
 			}
 		},
 
-		relayed : {
-			address : {
-				action : function(connect){
-					var a = connect.parameters.address;
-					var r = connect.relay;
-
-					var result = {
-						direct : [],
-						relay : []
-					}
-
-					if (r[a]){
-						_.each(r[a], function(chats, from){
-
-							if(connect.users[from]){
-
-								var rchats = _.map(chats, function(c, k){
-
-									if(connect.chats[k]){
-										return {
-											chatid : k,
-											addresses : connect.chats[k].allow
-										}
-									}
-									else
-									{
-										return null;
-									}
-
-									
-								})
-
-								rchats = _.filter(rchats, function(r) {return r})
-
-
-								result.direct.push({
-									id : from,
-									address : connect.users[from].address,
-									chats : rchats
-								})
-
-							}
-
-							else
-							{
-								_.each(chats, function(devices, chatid){
-
-									var online = {}
-
-									_.each(devices, function(number, device){
-
-										if(!_.isEmpty(p.connect.devices[device])){
-
-											online[device] = {
-												number : number,
-												id : p.connect.devices[device],
-												address : p.connect.users[p.connect.devices[device]].address
-											}
-										}
-
-									})
-
-									if(!_.isEmpty(online)){
-
-										var candidate = _.max(online, function(d){
-											return d.number
-										})
-
-										candidate.chatid = chatid
-										candidate.from = from
-
-										result.relay.push(candidate)
-
-									}
-
-									
-
-
-									/// connect with candidate
-
-								})
-							}
-
-						})
-					}
-
-					response(null, result, connect)
-					
-				}
-			}
-		}
+		
 
 		
+	},
+
+	relayed : {
+		address : {
+			action : function(connect){
+				var a = connect.parameters.address;
+				var r = connect.rtc.relay;
+
+
+				console.log('connect.rtc.relay', connect.rtc.relay)
+
+				var result = {
+					direct : [],
+					relay : []
+				}
+
+				if (r[a]){
+					_.each(r[a], function(chats, from){
+
+						if(connect.rtc.users[from]){
+
+							var rchats = _.map(chats, function(c, k){
+
+								if(connect.rtc.chats[k]){
+									return {
+										chatid : k,
+										addresses : connect.rtc.chats[k].allow
+									}
+								}
+								else
+								{
+									return null;
+								}
+
+								
+							})
+
+							rchats = _.filter(rchats, function(r) {return r})
+
+
+							result.direct.push({
+								id : from,
+								address : connect.rtc.users[from].address,
+								chats : rchats
+							})
+
+						}
+
+						else
+						{
+							_.each(chats, function(devices, chatid){
+
+								var online = {}
+
+								_.each(devices, function(number, device){
+
+									if(!_.isEmpty(p.connect.rtc.devices[device])){
+
+										online[device] = {
+											number : number,
+											id : p.connect.rtc.devices[device],
+											address : p.connect.rtc.users[p.connect.devices[device]].address
+										}
+									}
+
+								})
+
+								if(!_.isEmpty(online)){
+
+									var candidate = _.max(online, function(d){
+										return d.number
+									})
+
+									candidate.chatid = chatid
+									candidate.from = from
+
+									result.relay.push(candidate)
+
+								}
+
+								
+
+
+								/// connect with candidate
+
+							})
+						}
+
+					})
+				}
+
+				response(null, result, connect)
+				
+			}
+		}
 	}
 }
 

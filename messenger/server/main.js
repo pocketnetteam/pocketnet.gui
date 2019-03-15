@@ -151,6 +151,8 @@
 
                         user.usersListIndex = usersList.push(user.id) - 1
 
+                        console.log('user.usersListIndex', user.usersListIndex, user.id)
+
                         addresses[data.address] || (addresses[data.address] = new Address({
                             address : data.address
                         }))
@@ -264,7 +266,6 @@
                                     type: "message",
                                     success: true,
                                     chatid : chat.id,
-                                  
                                     address : user.address
                                 }
 
@@ -292,7 +293,10 @@
 
                         if (r.offline.length){
 
-                            var online = helpers.getRelayCandidates()
+                            var online = helpers.getRelayCandidates(user.id)
+
+
+                            console.log('online candidates', online)
 
                             send.exu(online, function(p){
 
@@ -305,12 +309,14 @@
                                     device : user.device
 
                                 }
+
+
                                
                             }) 
 
                             send.s({ 
                                 type: "message_offline", 
-                                success: false,
+                                success: true,
                                 offline : r.offline,
                                 online : online,
                                 chatid : chat.id,
@@ -571,13 +577,16 @@
                         relay[u] || (relay[u] = {})
 
                         relay[u][data.from] || (relay[u][data.from] = {})
-                        relay[u][data.from][chat.id] || (relay[u][data.from][chat.id] = {})
-                        relay[u][data.from][chat.id][user.device] || (relay[u][data.from][chat.id][user.device] = 0)
+                        relay[u][data.from][data.chatid] || (relay[u][data.from][data.chatid] = {})
+                        relay[u][data.from][data.chatid][user.device] || (relay[u][data.from][data.chatid][user.device] = 0)
 
 
-                        relay[u][data.from][chat.id][user.device]++;
+                        relay[u][data.from][data.chatid][user.device]++;
                     })
                    
+
+                    console.log("relay", relay)
+
                     break;  
               
                         
@@ -819,18 +828,20 @@
             })
         },
 
-        getRelayCandidates : function(){
+        getRelayCandidates : function(id){
 
             var candidates = [];
             var added = {}
             var ul = usersList.length
+
+            console.log('usersList getRelayCandidates', usersList)
 
             for(var i = 0; i < maxRelayCount; i++){
                 var index = rand(0, ul - 1)
 
                 var candidate = usersList[index]
 
-                if (candidate != user.id && users[candidate] && !added[candidate]){
+                if (candidate != id && users[candidate] && !added[candidate]){
 
                     added[candidate] = true
 
@@ -840,6 +851,7 @@
                         address : users[candidate].address,
                     })
                 }
+                
             }
 
             return candidates;

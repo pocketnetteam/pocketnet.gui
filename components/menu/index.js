@@ -266,7 +266,7 @@ var menu = (function(){
 
 								searchBlurTimer = slowMade(function(){
 									el.c.removeClass('searchactive')
-								}, searchBlurTimer, 200)
+								}, searchBlurTimer, 10000)
 								
 							})
 
@@ -286,6 +286,11 @@ var menu = (function(){
 
 						events : {
 							fastsearch : function(value, clbk){
+
+								self.app.platform.sdk.search.get(value, function(){
+
+								})
+
 								clbk(null)
 							},
 

@@ -2481,6 +2481,44 @@ Platform = function(app){
 
 			}
 		},
+
+		search : {
+			storage : {},
+
+			get : function(value){
+
+				var s = this.storage;
+
+				if(s[value]){
+
+					if (clbk)
+						clbk(value)
+				}
+				else
+				{
+					self.app.ajax.rpc({
+						method : 'search',
+						parameters : [encodeURIComponent(value)],
+						success : function(d){
+
+							s[value] = d
+
+							if (clbk)
+								clbk(s[value])
+						},
+						fail : function(){
+							if (clbk){
+						    	clbk({})
+						    }
+						}
+					})
+				}
+
+				
+
+			}
+		},
+
 		icons : {
 			fromKey : function(key){
 
@@ -7502,15 +7540,15 @@ Platform = function(app){
 	self.nodes = [
 
 		{
-			full : '216.108.237.11:58081',
-			host : '216.108.237.11',
+			full : '84.52.69.110:58081',
+			host : '84.52.69.110',
 			port : 58081,
 			ws : 8080,
 			path : '',
-			
+			user : 'user',
+			pass : 'secret-password',
 
-			name : 'lasvegas'
-
+			name : 'spb1'
 		},
 
 		{
@@ -7522,6 +7560,18 @@ Platform = function(app){
 
 			name : 'lasvegas'
 
+		},
+
+		{
+			full : '84.52.69.110:48081',
+			host : '84.52.69.110',
+			port : 48081,
+			ws : 8080,
+			path : '',
+			user : 'user',
+			pass : 'secret-password',
+
+			name : 'spbtest'
 		},
 
 		/*{
