@@ -261,7 +261,7 @@ function createWindow() {
 
     win.loadFile('index_el.html')
 
-    win.webContents.openDevTools()
+    //win.webContents.openDevTools()
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
