@@ -72,6 +72,9 @@ var registration = (function(){
 							})
 
 							if (l){
+
+								self.app.platform.m.log('registration_application_download', current.os.github.name)
+
 								var link = document.createElement('a');
 							        link.setAttribute('href', l.browser_download_url);
 							        link.setAttribute('download','download');
@@ -302,7 +305,7 @@ var registration = (function(){
 			os : function(clbk){
 				var _os = os();
 
-				console.log('os', _os)
+				self.app.platform.m.log('registration_application')
 
 				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova){
 
@@ -349,6 +352,8 @@ var registration = (function(){
 
 				renders.step('success', function(p){
 
+					self.app.platform.m.log('registration_success')
+
 					if (clbk)
 						clbk()
 				})
@@ -356,6 +361,8 @@ var registration = (function(){
 			},
 
 			tips : function(clbk){
+
+				self.app.platform.m.log('registration_tips')
 
 				renders.step('tips', function(p){
 					p.el.find('.generate').on('click', events.generate)
@@ -372,6 +379,8 @@ var registration = (function(){
 				current.keyInput = keyInput
 
 				renders.step('confirm', function(p){
+
+					
 
 					p.el.find('.repeat').on('click', events.repeat)
 					p.el.find('.registrationButton').on('click', events.registration)
@@ -404,10 +413,15 @@ var registration = (function(){
 
 
 											if(data == 'error decoding QR Code'){
+
+												self.app.platform.m.log('registration_qr_damaged')
+
 												el.c.find('.note').html(self.app.localization.e('filedamaged'))
 											}
 											else
 											{
+
+												self.app.platform.m.log('registration_qr_success')
 
 												keyInput.value = trim(data)
 
@@ -493,6 +507,8 @@ var registration = (function(){
 			key : function(clbk){
 
 				renders.step('key', function(p){
+
+					self.app.platform.m.log('registration_key')
 
 					var m = p.el.find('.mnemonicKey')
 
@@ -657,6 +673,7 @@ var registration = (function(){
 				}
 				else
 				{
+					self.app.platform.m.log('registration_open')
 					
 					current = {
 						last : false,

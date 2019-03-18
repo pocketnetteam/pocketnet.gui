@@ -116,6 +116,8 @@ var filluser = (function(){
 
 						if(validate(email)){
 
+							self.app.platform.m.log('userwisard_email_add')
+
 							actions.next()
 							localStorage['uei'] = email;
 
@@ -127,6 +129,9 @@ var filluser = (function(){
 					})
 
 					skip.on('click', function(){
+
+						self.app.platform.m.log('userwisard_email_skip')
+
 						actions.next()
 					})
 					
@@ -156,6 +161,8 @@ var filluser = (function(){
 
 											if (amount > 0 && current == 1){
 
+												self.app.platform.m.log('userwisard_money_success')
+
 												actions.next()
 
 											}
@@ -171,6 +178,8 @@ var filluser = (function(){
 									if(err && (err == 'network' || err == 'unspents') ){
 										actions.to(4)
 
+										self.app.platform.m.log('userwisard_money_fail')
+
 										return
 									}
 									else
@@ -178,6 +187,9 @@ var filluser = (function(){
 										self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
 											if (amount > 0){
+
+												self.app.platform.m.log('userwisard_money_success')
+
 												actions.next()
 
 												return
@@ -221,10 +233,15 @@ var filluser = (function(){
 							if(current == 1 || current == 5){
 
 								if(amount > 1){
+
+									self.app.platform.m.log('userwisard_money_success')
+
 									actions.to(2)
 								}
 								else
 								{
+
+									self.app.platform.m.log('userwisard_modey_delay')
 
 									el.find('.subcaption').html(self.app.localization.e('wesentmoneydelay'))
 									steps.money.after(el, pel, 30)
@@ -253,6 +270,9 @@ var filluser = (function(){
 						}
 						else
 						{
+
+							self.app.platform.m.log('userwisard_account')
+
 							clbk()
 						}
 					})					
@@ -281,6 +301,8 @@ var filluser = (function(){
 				render : 'welcome',
 
 				after : function(el){
+
+					self.app.platform.m.log('userwisard_success')
 
 					el.find('.welcome').on('click', function(){
 
@@ -321,6 +343,8 @@ var filluser = (function(){
 
 				prev : function(clbk){
 
+					self.app.platform.m.log('userwisard_network_fail')
+
 					clbk()
 				},
 
@@ -337,6 +361,8 @@ var filluser = (function(){
 						self.app.platform.sdk.ustate.me(function(mestate){
 
 							if(mestate){
+
+								self.app.platform.m.log('userwisard_network_success')
 
 								clearInterval(networkInterval)
 								actions.to(1)
@@ -360,6 +386,8 @@ var filluser = (function(){
 					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
 						if (amount > 0 && current == 5){
+
+							self.app.platform.m.log('userwisard_money_success')
 
 							actions.to(2)
 

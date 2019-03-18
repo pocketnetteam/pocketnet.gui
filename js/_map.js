@@ -541,6 +541,18 @@ __map =  {
 			
 			],
 			anonimus : true,
+		},	
+
+		//search
+
+		s : {
+			uri : "s",
+			href : "s",
+			add : {
+				el : 'content'
+			},
+
+			anonimus : true,
 		},
 
 		send : {

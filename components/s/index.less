@@ -1,0 +1,80 @@
+@import "../../css/__cssvar";
+
+#s{
+	padding-top : 2 * @rhythm;
+
+	.section{
+		padding-bottom: 6 * @rhythm;
+		margin-top: 6 * @rhythm;
+		overflow: hidden;
+		border-bottom: 1px solid @color-gray-slight;
+
+		&:nth-last-child(1){
+			border-bottom : 0;
+		}
+
+		>div{
+			&.sectionname{
+				width: 120px;
+				float: left;
+
+				span{
+					font-size: 2em;
+				}
+			}
+			&.sectioncnt{
+				
+				margin-left: 120px;
+			}
+		}
+
+		.showmore{
+			margin-top: 2 * @rhythm;
+
+			span{
+				cursor: pointer;
+				color : @color-main;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-gray;
+				}
+			}
+			
+ 		}
+	}
+
+	.users{
+
+		.userslistwrapper{
+			overflow : hidden;
+		}
+
+		.userslist{
+			white-space: nowrap;
+		}
+
+		.user{
+			width: 120px;
+			display: inline-block;
+
+			.usericon{
+				margin : 0 auto;
+			}
+
+			.icon{
+				padding-bottom: @rhythm;
+			}
+
+			.name{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				text-align: center;
+				span{
+					font-size: 0.8em;
+				}
+			}
+		}
+	}
+}

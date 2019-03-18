@@ -16,6 +16,8 @@ var chat = (function(){
 		var bottomcaption = null;
 		var getPreviewTimer = null;
 
+		var newmessageslength = 0;
+
 		var chat = null;
 		var lastUpdate = null;
 
@@ -104,9 +106,6 @@ var chat = (function(){
 
 						h = el.c.find('.chatwindow').height() - el.c.find('.chatmessages').height() - 10;
 
-
-						console.log("SPACER", h, el.messages.length)
-
 						if(h < 0) h = 0;
 
 						el.spacer.height((h) + 'px');
@@ -184,8 +183,6 @@ var chat = (function(){
 
 				if(px === null) return;
 
-				console.log('beg', px)
-
 
 				var _el = null;
 				var innerContent = null;
@@ -220,7 +217,6 @@ var chat = (function(){
 
 						px = to[prop]().top + to.height() + bottomoffset - _el.height();
 
-						console.log("SCROLLT", px, _mode, to, to[prop]().top, to.height() , bottomoffset , _el.height())
 						_el.scrollTop(px, 200)
 
 					}
@@ -407,37 +403,48 @@ var chat = (function(){
 
 				if (self.app.platform.focus)
 
-					self.app.platform.sdk.chats.read(chat.messages, function(messages){
+					//self.app.platform.sdk.chats.read(chat.messages, function(messages){
+					//
+					
+
+					setTimeout(function(){
+						newmessageslength = 0;
 
 						actions.countUnread();
+					}, 1000)
 
-						_.each(messages, function(msg){
+						
+
+						/*_.each(messages, function(msg){
 							var el = helpers.findEl(msg);
 
 							el.addClass('read');
-						})
+						})*/
 
-					})
+					//})
 				
 			},
 			countUnread : function(){
 
-				var myid = self.app.user.data.id;
+				/*var myid = self.app.user.data.id;
 
-				/*var unread = _.filter(chat.messages, function(message){
+				var unread = _.filter(chat.messages, function(message){
 					if(message.UserID != myid && !message.Read) return true;
-				})
+				})*/
 
-				var unreadCount = unread.length;
+				var unreadCount = newmessageslength;
+
 
 				if (unreadCount){
 					
-					el.countUnread.html(self.app.localization.e('id21_1', unreadCount))
+					el.countUnread.html(unreadCount + ' <i class="far fa-envelope"></i>')
 				}
 				else
 				{
 					el.countUnread.html("")
-				}*/
+				}
+
+				self.app.platform.api.electron.notifications(unreadCount, 'messages')
 			},
 			checkState : function(){
 				if(!el.c.hasClass('minimized')) return true
@@ -633,6 +640,8 @@ var chat = (function(){
 			},
 
 			safemessages : function(messages, clbk){
+
+				
 				var times = _.map(renderedMessagesTime, function(m, t){
 					return {
 						m : m,
@@ -702,6 +711,12 @@ var chat = (function(){
 
 			messages : function(clbk, messages, saveTempMessages, replace){
 
+				messages = _.filter(messages, function(m, i){
+					if(messages.length - 50 > i) return false
+
+						return true
+				})
+
 				var scrollMode = 'toLast';
 
 				if (messages) scrollMode = 'fixed';
@@ -725,6 +740,7 @@ var chat = (function(){
 				})
 
 				var sorted = _.sortBy(messages, function(msg){
+
 					return Number(msg.tm)
 				})
 
@@ -975,6 +991,9 @@ var chat = (function(){
 
 
 					self.app.platform.rtc.load.users(msg, function(){
+
+						newmessageslength++;
+
 						renders.messages(null, [msg])
 					})
 
@@ -984,9 +1003,11 @@ var chat = (function(){
 
 					self.app.platform.rtc.load.users(msgs, function(){
 
-						console.log("safemessages")
+						//renders.safemessages(msgs)
 
-						renders.safemessages(msgs)
+						renders.messages(null, msgs, true)
+
+						actions.read()
 					})
 
 				}
@@ -1001,7 +1022,6 @@ var chat = (function(){
 
 				var m = _.toArray(self.app.platform.rtc.storages[chat.chat.id]._db || {});
 
-				console.log("RENDER", m)
 
 				self.app.platform.rtc.load.users(m, function(){
 					renders.messages(null, m, true)
@@ -1013,6 +1033,8 @@ var chat = (function(){
 
 		var addMessagesClbk = function(){
 			var ws = self.app.platform.ws;
+
+			$(window).on('focus', actions.read)
 
 			/*
 
@@ -1055,6 +1077,8 @@ var chat = (function(){
 
 		var removeMessagesClbk = function(){
 			var ws = self.app.platform.ws;
+
+			$(window).off('focus', actions.read)
 
 			/*delete ws.messages.ENCRYPTEDMESSAGE.CREATED.clbks['chat' + essenseData.view + chat.ThreadID];
 			delete ws.messages.ENCRYPTEDMESSAGE.READ.clbks['chat' + essenseData.view + chat.ThreadID];
@@ -1148,6 +1172,8 @@ var chat = (function(){
 			
 			init : function(p){
 
+
+
 				renderedMessages = {};
 				renderedMessagesTime = {};
 
@@ -1173,6 +1199,9 @@ var chat = (function(){
 					make();
 
 					addMessagesClbk();
+
+
+				actions.countUnread()
 
 					p.clbk(null, p);
 

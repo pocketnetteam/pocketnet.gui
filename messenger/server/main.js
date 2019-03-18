@@ -147,7 +147,7 @@
                         })
 
                         devices[user.device] || (devices[user.device] = {})
-                        devices[user.device][user.id] = true
+                        devices[user.device][user.id] = user.id
 
                         user.usersListIndex = usersList.push(user.id) - 1
 
@@ -256,6 +256,8 @@
                         var _addresses = _.map(chat.get.allAddresses(), function(index, address){
                             return address;
                         })
+
+                        console.log("ADDRESSES", _addresses)
 
                         var r = send.ex(_addresses, function(p){
 

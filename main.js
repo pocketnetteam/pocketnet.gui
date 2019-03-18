@@ -158,6 +158,14 @@ function createTray() {
     win.on('hide', () => {
         tray.setHighlightMode('never')
     })
+
+   
+
+    autoUpdater.on('before-quit-for-update', (ev) => {
+
+        tray.destroy()
+        
+    });
 }
 
 function initApp() {
@@ -235,14 +243,19 @@ function createWindow() {
     win = new BrowserWindow({
         width: mainScreen.size.width,
         height: mainScreen.size.height,
+
         /*frame: false, */
         //fullscreen : true,
+        
+        /*width : 800,
+        height : 600,*/
         title: "Pocketnet",
-        show: false,
+        //show: false,
         webSecurity : false
     });
+
     win.maximize();
-    win.show();
+    //win.show();
 
     Menu.setApplicationMenu(null)
 
@@ -302,7 +315,7 @@ function createWindow() {
 
     ipcMain.on('quitAndInstall', function(e) {
 
-        autoUpdater.quitAndInstall()
+        autoUpdater.quitAndInstall(true, true)
 
     })
 

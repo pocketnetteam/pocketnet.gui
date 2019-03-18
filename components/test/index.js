@@ -25,7 +25,7 @@ var test = (function(){
 			valid : function(v1, v2){
 				if(!actions.equal(v1, v2)){
 
-					if(v1.name && v1.image && v1.about) return true
+					if(trim(v1.name) && v1.image) return true
 
 				}
 			},
@@ -76,7 +76,7 @@ var test = (function(){
 							_scrollTo(pn)
 						}	
 
-						else
+						/*else
 						{
 							if(!tempInfo.about){	
 								var pn = el.c.find('[parameter="about"] input')
@@ -85,7 +85,7 @@ var test = (function(){
 
 								_scrollTo(pn)
 							}	
-						}
+						}*/
 					}
 
 						
@@ -95,7 +95,7 @@ var test = (function(){
 
 				var userInfo = new UserInfo();
 
-					userInfo.name.set(tempInfo.name);
+					userInfo.name.set(trim(tempInfo.name));
 					userInfo.language.set(tempInfo.language);
 					userInfo.about.set(tempInfo.about);
 					userInfo.site.set(tempInfo.site);
@@ -363,7 +363,7 @@ var test = (function(){
 				id : 'about',
 				type : "TEXT",
 				onType : true,
-				require : true,
+				
 				placeholder : 'Please write a few words about yourself to help people decide if they want to follow you'
 			}),
 

@@ -48,7 +48,7 @@ Application = function(node)
 	self.options = {
 
 		nav : {
-			navPrefix : '/pocketnet/',
+			navPrefix : '/',
 		},
 
 		name : 'PCRB',
@@ -63,10 +63,10 @@ Application = function(node)
 
 		rtc : 'https://pocketnet.app:9001/',
 
+
 		rtcws : 'wss://pocketnet.app:9090',
 		rtchttp : 'https://pocketnet.app:9091',
 
-		//rtc : 'https://71af0799d943.sn.mynetname.net:9002/',
 
 		
 
@@ -221,6 +221,8 @@ Application = function(node)
 				self.user.isState(function(state){
 
 					self.platform.prepare(function(){
+
+						self.platform.m.log('enter', state)
 						
 						self.nav.init(p.nav);
 
@@ -244,9 +246,13 @@ Application = function(node)
 				excludes: {
 					userAgent: true, 
 					language: true,
-					language : true,
 					enumerateDevices : true,
-					screenResolution : true
+					screenResolution : true,
+					pixelRatio : true,
+					fontsFlash : true,
+					doNotTrack : true,
+					timezoneOffset : true,
+					timezone : true
 				}
 
 			},function(components, r){

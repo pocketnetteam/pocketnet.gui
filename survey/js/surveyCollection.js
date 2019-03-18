@@ -78,6 +78,20 @@ var SurveyCollection = function()
 					 value : null
 					},
 
+					{
+					 t : 'select',
+					 q : 'Would you be interested in participating in a live test of Pocketnet over skype? You would earn additional 10 Pocketcoin for it.',
+					 a : [
+
+					 		['Yes', false, true],
+					      	['No', false]
+					    ],
+
+					 value : null
+					},
+
+					
+
 
 				],
 				questionsAdditional : 
@@ -189,7 +203,24 @@ var SurveyCollection = function()
 	self.newSurvey = function(uid, params)
 	{
 		if(!params) params = {};
-		if(!params.send) params.send = function(answers){ sendSurvey(uid, answers); }
+		if(!params.send) params.send = function(answers, finish){
+
+			console.log(answers, finish)
+
+			sendSurvey(uid, answers); 
+			if (finish && answers[4] && answers[4].a == 'Yes'){
+
+
+				var l = 'https://calendly.com/pocketnet/15min';
+
+				var link = document.createElement('a');
+			        link.setAttribute('href', l);
+			        link.click();
+
+
+			}
+
+		}
 		
 		sdata = take(uid);
 		survey = new Survey ($p, params);

@@ -1,0 +1,34 @@
+<div id="<%-module.map.id%>">
+	<div class="work">
+
+		<% if(result.users.length) {%> 
+
+			<div class="section users">
+				<div class="sectionname">
+					<span>Users/</span>
+				</div>
+				<div class="sectioncnt">
+				</div>
+
+				<div class="showmore">
+					<span>Show More</span>
+				</div>
+			</div>
+
+		<% } %>
+
+		<% if(result.posts.length) {%> 
+
+			<div class="section posts">
+				<div class="sectionname">
+					<span>Posts/</span>
+				</div>
+
+				<div class="sectioncnt">
+				</div>
+			</div>
+		<% } %>
+
+	</div>
+	
+</div>

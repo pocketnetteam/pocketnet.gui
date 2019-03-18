@@ -490,7 +490,7 @@ var author = (function(){
 
 			
 
-			window.addEventListener('scroll', events.showHideUp);
+			//window.addEventListener('scroll', events.showHideUp);
 
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
@@ -537,7 +537,7 @@ var author = (function(){
 			renders.report(reports[r])
 			renders.menu()
 
-			renders.panel()
+			//renders.panel()
 
 			if(!isMobile())
 				renders.info(el.info)

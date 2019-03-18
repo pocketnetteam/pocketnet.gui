@@ -4,8 +4,6 @@ if(typeof _Electron != 'undefined'){
 	electron = require('electron');
 }
 
-console.log("ELECTRON", electron)
-
 Platform = function(app){
 
 	var self = this;
@@ -559,13 +557,20 @@ Platform = function(app){
 			_el.tooltipster('show')	
 		},
 		electron : {
-			notifications : function(count){
+			storage : {},
+
+			notifications : function(count, marker){
 				if(typeof _Electron != 'undefined'){
 
 
+					this.storage[marker] = count
 
-					electron.ipcRenderer.send('update-badge', count || null);
-					electron.ipcRenderer.send('update-badge-tray', count || null);
+					var _count = _.reduce(this.storage, function(m, c){
+						return m + c
+					}, 0)
+
+					electron.ipcRenderer.send('update-badge', _count || null);
+					electron.ipcRenderer.send('update-badge-tray', _count || null);
 					
 
 					/*const {remote, nativeImage} = require('electron');
@@ -1995,8 +2000,6 @@ Platform = function(app){
 				else
 				{
 
-					console.log('name', name)
-
 					self.app.ajax.rpc({
 						method : 'getuseraddress',
 						parameters : [name],
@@ -2485,36 +2488,28 @@ Platform = function(app){
 		search : {
 			storage : {},
 
-			get : function(value){
+			get : function(value, type, clbk){
 
 				var s = this.storage;
 
-				if(s[value]){
-
-					if (clbk)
-						clbk(value)
-				}
-				else
-				{
-					self.app.ajax.rpc({
-						method : 'search',
-						parameters : [encodeURIComponent(value)],
-						success : function(d){
-
-							s[value] = d
-
-							if (clbk)
-								clbk(s[value])
-						},
-						fail : function(){
-							if (clbk){
-						    	clbk({})
-						    }
-						}
-					})
-				}
-
+				type || (type = 'fs')
 				
+				self.app.ajax.rpc({
+					method : 'search',
+					parameters : [encodeURIComponent(value), type],
+					success : function(d){
+
+						s[value] = d
+
+						if (clbk)
+							clbk(s[value])
+					},
+					fail : function(){
+						if (clbk){
+					    	clbk({})
+					    }
+					}
+				})
 
 			}
 		},
@@ -4696,7 +4691,6 @@ Platform = function(app){
 
 				var chats = self.app.platform.sdk.chats.get('messenger');
 
-
 				self.clientrtc.initChats(chats)
 				self.clientrtc.init(function(){
 					self.clientrtc.api.login(function(){
@@ -4952,6 +4946,13 @@ Platform = function(app){
 
 			get : function(type){
 				return _.filter(self.sdk.chats.storage, function(c){
+
+					if(type == 'share'){
+						if(c.id == '6768de97ad495c0110a9e09d43825ef24f1055449a5d368225ac102804397dc1_PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd') return true
+					
+							return
+					}
+
 					return c.type == type
 				})
 			}
@@ -4960,107 +4961,24 @@ Platform = function(app){
 	
 	}
 
-	
-
-	self.WS = function(platform){
-
+	self.WSn = function(platform){
 		var self = this;
+		var app = platform.app;
 
 		var socket;
-
+		var opened = false;
+		var closing = false;
+		var lost = 0;
+		var onlinetnterval = null;
 		var wait = null;
 
-
-		var initOnlineListener = function(){
-			if(self.onlineCheck){
-
-				retry(function(){
-
-					var online = deep(window, 'navigator.onLine') && !self.lostConnection;
-
-					if (self.online != online){
-
-						self.online = online;
-
-						return true;
-
-					}
-					else
-					{
-						self.online = online;
-					}
-					
-
-				}, function(){
-
-					if(!self.online){
-						if(!self.reconnected)
-							self.reconnected = platform.currentBlock;
-
-
-						initOnlineListener();
-					}
-
-					else
-					{
-						if (self.reconnected > 1 && !self.loadMissed){
-							self.getMissed(initOnlineListener);
-						}
-
-						
-					}
-
-
-				}, 50)
-
-			}
-		}
-
-		self.getMissed = function(){
-
-			self.loadMissed = true;
-
-			platform.app.ajax.rpc({
-				method : 'getmissedinfo',
-				parameters : [platform.sdk.address.pnet().address, self.reconnected],
-				success : function(d){			
-
-					d || (d = [{block : 1, cntposts : 0}])
-
-					var notifications = (d || []).slice(1)	
-
-					var blockInfo = d[0]
-
-					blockInfo.msg = 'newblocks'
-
-					self.messageHandler(blockInfo, function(){
-						lazyEach({
-							array : notifications,
-							action : function(p){
-								self.messageHandler(p.item, p.success)
-							},
-
-							all : {
-								success : function(){
-									self.loadMissed = false;
-								}
-							}
-						})
-					})
-		
-				},
-				fail : function(){
-
-					
-				}
-			})
-		}
-
-		self.isopen = false;
-		self.fastMessages = [];
-		self.reconnected = false;
-
 		self.connected = {};
+		self.online = false;
+		self.onlineCheck = false;
+		self.fastMessages = [];
+		
+		self.loadingMissed = false;
+
 
 		self.tempates = {
 
@@ -5209,7 +5127,7 @@ Platform = function(app){
 				return h
 			},
 
-			subscribe : function(author, html){
+			/*chat : function(author, html){
 
 				var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address)
 
@@ -5228,8 +5146,7 @@ Platform = function(app){
 					h+= '</div>'
 
 				return h
-			}
-
+			}*/
 		}
 
 		self.messages = {
@@ -5395,13 +5312,16 @@ Platform = function(app){
 
 			'newblocks' : {
 				loadMore : function(data, clbk){
+
+					console.log("newblocks", data)
+
 					var s = platform.sdk.node.transactions;
 
 					var dif = platform.currentBlock - data.block
 
 					platform.currentBlock = data.block;
 
-					self.reconnected = platform.currentBlock;
+					//self.reconnected = platform.currentBlock;
 
 					platform.sdk.notifications.wsBlock(data.height)
 					
@@ -5441,11 +5361,14 @@ Platform = function(app){
 			"new block" : {
 
 				loadMore : function(data, clbk){
+
+					if(data.height <= platform.currentBlock) return
+
 					var s = platform.sdk.node.transactions;
 
 					platform.currentBlock = data.height;
 
-					self.reconnected = platform.currentBlock;
+					//self.reconnected = platform.currentBlock;
 
 					platform.sdk.notifications.wsBlock(data.height)
 					
@@ -5701,6 +5624,777 @@ Platform = function(app){
 			}
 		}
 
+		var auth = function(clbk){
+
+			app.user.isState(function(state){
+
+				if(state)
+				{
+
+					self.addAccount(null, clbk)
+
+				}
+				else
+				{
+					if(clbk)
+						clbk(false)
+				}
+
+				
+			})
+		}
+
+		var initOnlineListener = function(){
+			if(self.onlineCheck){
+
+				onlinetnterval = retry(function(){
+
+					var online = deep(window, 'navigator.onLine');
+
+					if (self.online != online){
+
+						self.online = online;
+
+						return true;
+
+					}
+					
+
+				}, function(){
+
+					if(!self.online){
+
+						if (lost < 2)
+							lost = platform.currentBlock;	
+
+						console.log("SELF CLOSE")
+
+						self.close();
+							
+						initOnlineListener();			
+					}
+					else
+					{
+						self.getMissed(initOnlineListener);
+						
+						initconnection();	
+					}
+
+					
+
+
+				}, 50)
+
+			}
+		}
+
+		var reconnect = function(){
+			if (closing){
+				return;
+			}
+
+			closing = false;
+
+			socket = null;
+
+			lost = platform.currentBlock;	
+
+			self.close();
+
+			initconnection();
+		}
+
+		var initconnection = function(clbk){
+
+			//if(socket) return
+
+			socket = new ReconnectingWebSocket(platform.app.options.ws); 
+
+			socket.onmessage = function(message) { 
+
+
+
+			    message = message.data;
+
+	        	var jm = message;
+
+	        	try{
+
+	        		if(jm.indexOf('registered') > -1){
+	        			message = message.replace("msg", '"msg"')
+	        			message = message.replace("addr", '"addr"')
+	        		}
+	        		
+
+	        		jm = JSON.parse(message || "{}");
+
+	        	}
+	        	catch (e){
+	        
+	        	}
+
+        		if (jm)
+
+        			self.messageHandler(jm);
+			   
+			};
+
+			/*socket.onerror = function (error) { 
+			   
+			   	console.log('error', error)
+
+			   	if (opened)
+			   		socket.close()
+			   
+			};*/
+
+			socket.onopen = function(){
+				
+				lost = platform.currentBlock || 0;
+
+				opened = true;
+
+				auth()
+
+				if (clbk)
+					clbk()
+			}
+
+			/*socket.onclose = function(e){
+
+				reconnect()
+
+			}	*/
+		} 
+
+		self.getMissed = function(clbk){
+
+			if(lost > 1 && self.loadingMissed) return
+
+			self.loadingMissed = true;
+
+			platform.app.ajax.rpc({
+				method : 'getmissedinfo',
+				parameters : [platform.sdk.address.pnet().address, lost],
+				success : function(d){			
+
+					d || (d = [{block : 1, cntposts : 0}])
+
+					var notifications = (d || []).slice(1)	
+
+					var blockInfo = d[0]
+
+					blockInfo.msg = 'newblocks'
+
+					lost = 0;
+
+					self.messageHandler(blockInfo, function(){
+						lazyEach({
+							array : notifications,
+							action : function(p){
+								self.messageHandler(p.item, p.success)
+							},
+
+							all : {
+								success : function(){
+									self.loadingMissed = false;
+								}
+							}
+						})
+					})
+
+					if (clbk)
+						clbk()
+		
+				},
+				fail : function(){
+
+					if (clbk)
+						clbk()
+					
+				}
+			})
+		}
+
+		self.fastMessage = function(html, destroy){
+			var id = makeid(true);
+
+			html = '<div class="fastMessage" id="'+id+'"><div class="fmCnt">' + html + '</div><div class="close"><i class="fa fa-times" aria-hidden="true"></i></div></div>';
+
+			$('body').append(html);
+
+			var el = $('#' + id);
+
+			var message = {
+				id : id,
+				el : el,
+				html : html
+			}
+
+			bgImages(el)
+
+			el.find('[data-jdenticon-value]').each(function(){
+				var t = $(this);
+				var v = t.data('jdenticon-value')
+
+				t.html(jdenticon.toSvg(v, t.width()))
+			})
+
+			self.fastMessages.push(message);
+
+			platform.app.nav.api.links(null, el, function(){
+				destroyMessage(message, 1)
+			});
+
+			var destroyMessage = function(message, time, noarrange, destroyUser){
+
+				if(message.timeout)
+					clearTimeout(message.timeout);
+
+				if(platform.focus)
+				{
+
+					message.timeout = setTimeout(function(){
+						
+						message.el.fadeOut(300)
+
+						setTimeout(function(){
+
+							message.el.remove();
+
+							removeEqual(self.fastMessages, {
+								id : message.id
+							})
+
+							if (destroy && destroyUser){
+								destroy()
+							}
+
+							if(!noarrange)
+								arrangeMessages()
+
+						}, 300)
+
+					}, time)
+				}
+
+				else
+				{
+					setTimeout(function(){
+						destroyMessage(message, time, noarrange)
+					}, 100)
+					
+				}
+
+			}
+
+			var arrangeMessages = function(){
+
+				var offset = 0;
+
+				var maxCount = 4;
+
+				if(isMobile()){
+					maxCount = 1;
+				}
+
+				var remove = self.fastMessages.length - maxCount;
+
+				_.each(self.fastMessages, function(m, i){
+
+					if(i < remove){
+						destroyMessage(m, 1, true)
+					}
+
+					else
+					{
+						if(!isMobile()){
+							offset += 10;
+						}
+						
+
+						m.el.css('bottom', offset + 'px');
+
+						offset += m.el.outerHeight();
+					}
+
+				})
+			}
+
+			destroyMessage(message, 5000, false, true);
+
+			message.el.on('mouseenter', function(){
+				clearTimeout(message.timeout);
+			})
+
+			message.el.on('mouseleave', function(){
+				destroyMessage(message, 5000, false, true);
+			})
+
+			message.el.find('.close').on('click', function(){
+				destroyMessage(message, 1, false, true);
+			})
+
+			arrangeMessages();
+
+
+
+			return message
+		}
+
+		self.messageHandler = function(data, clbk){
+
+
+			if(!data.msg) return
+
+			if (data && data.msg == 'registered'){
+
+				self.connected[data.addr] = true
+
+				return
+
+			}
+
+			if (data.msg){
+
+				var exkey = ''
+
+				if(data.mesType) exkey = '.' + data.mesType;
+
+    			var m = deep(self.messages, data.msg + exkey) || deep(self.messages, data.msg) || {};
+
+    			if (m.checkHandler){
+    				if(!m.checkHandler(data, m)){
+    					return
+    				}
+    			}
+
+    			var clbks = function(loadedData){
+
+    				data.loadedData = true;
+
+    				var audio = deep(m, 'audio')
+
+
+    				if (audio){
+
+    					if(!audio.if || audio.if(data, loadedData)){
+
+    						if (audio.focus && platform.focus){
+    						
+	    						ion.sound.play(audio.focus);
+	    					}
+
+
+	    					if (audio.unfocus && !platform.focus){
+	    						
+	    						ion.sound.play(audio.unfocus);
+	    					}
+
+    					}
+
+    					
+    				}
+
+    				_.each(m.clbks, function(clbk){
+        				clbk(data, loadedData);
+        			})
+
+
+    				if(m.fastMessage && !m.refs.all && !m.refs[data.RefID]){
+
+    					var html = m.fastMessage(data, loadedData);
+
+
+    					if (html){
+
+    						var message = self.fastMessage(html, function(){
+    							platform.sdk.notifications.seen([data.txid])
+    						});
+
+    						if (m.fastMessageEvents){
+    							m.fastMessageEvents(data, message)
+    						}
+
+    						data.loaded = true
+
+    						platform.sdk.notifications.addFromWs(data)
+
+    						if (typeof _Electron != 'undefined' && !platform.focus && message.html){
+								electron.ipcRenderer.send('electron-notification', message.html);
+    						}
+							
+
+    					}
+
+
+    				}	
+
+    				if (m.header && !platform.focus && platform.titleManager){
+
+    					var t = m.header(data);
+
+    					if (t)
+
+    						platform.titleManager.add(t)
+
+    				}	  
+
+    				if (clbk)
+    					clbk()      				
+    				
+    			}
+
+
+    			
+    			if (m.loadMore)
+    			{
+    				m.loadMore(data, clbks);
+    			}
+
+    			else
+    			{
+    				clbks();
+    			}
+
+    			return
+    		}
+		}		
+
+		self.send = function(message){
+
+			if (socket)
+			{
+				try{
+					socket.send(message);
+				}
+				catch(e){
+
+				}
+			}
+
+		}
+
+		self.close = function(){
+
+			if(closing) return
+
+			closing = true;
+			opened = false;
+			wait = null;
+
+			
+			self.connected = {};
+
+			if (socket){
+				socket.close()
+			}
+
+			socket = null;
+
+			closing = false;
+
+		}
+
+		self.destroy = function(){
+
+			self.close()
+			self.loadingMissed = false;
+
+			if (onlinetnterval)
+				clearInterval(onlinetnterval)
+
+
+		}
+
+
+		/////////
+
+			self.wait = function(address, clbk){
+				retry(function(){
+					if(!wait || !wait[address]) {
+						return true
+					}
+
+					if(Math.floor((new Date().getTime()) / 1000) > wait[address] + 1){
+						return true
+					}
+
+					if(self.connected[address]) return true;
+				}, clbk)
+			}
+
+			self.addAccount = function(keyPair, clbk){
+
+				if(!keyPair){
+					keyPair = platform.app.user.keys();
+				}
+
+				var key = platform.sdk.address.pnet(keyPair.publicKey).address  + 'addressesNum'
+
+				var num = localStorage[key] || 1;
+
+				var keyPairs = [{
+					kp : keyPair,
+					n : 0
+				}];
+
+				/*for(var i = 1; i <= num; i++){
+
+					var d = bitcoin.bip32.fromSeed(keyPair.privateKey).derivePath(app.platform.sdk.address.path(i)).toWIF() 
+
+					var kp = bitcoin.ECPair.fromWIF(d)	  
+
+					keyPairs.push({
+						kp : kp,
+						n : i
+					})
+				}*/
+
+				self.addAddresses(keyPairs, clbk)
+
+			}
+
+			self.addAddresses = function(keyPairs, clbk){
+
+				var success = 0;
+
+				lazyEach({
+					array : keyPairs,
+					sync : true,
+					action : function(p){
+						self.addAddress(p.item.kp, p.item.n, function(r){
+							
+							if(r)
+								success++;
+
+							p.success()
+						})
+					},
+
+					all : {
+						success : function(){
+							if (clbk)
+								clbk(success != 0)
+
+						}
+					}
+				})
+			}
+
+			self.addAddress = function(keyPair, n, clbk){
+
+				/*if(!keyPair){
+					keyPair = platform.app.user.keys();
+				}*/
+
+				var	address = '';
+
+
+
+				if(!n){
+					address = platform.sdk.address.pnet(keyPair.publicKey).address
+				}
+				else{
+					address = platform.sdk.address.wallet(n, keyPair.privateKey).address
+				}
+				
+				if (self.connected[address]){
+
+					if (clbk)
+						clbk(true)
+
+					return
+				}			
+
+				var nonce = Math.round(new Date().getTime() / 1000);
+
+				do{
+					nonce = nonce.toString() + '' + rand(0, 9).toString();
+				}
+				while(nonce.length < 32)
+
+				var signature = keyPair.sign(Buffer.from(nonce))		
+		
+				var message = {
+					addr : address,
+					nonce : nonce,
+					sgn : signature.toString('hex'),
+					pub : keyPair.publicKey.toString('hex')
+				}
+
+				if(!wait)
+					wait = {};
+
+				wait[address] = Math.floor((new Date().getTime()) / 1000);
+
+				self.wait(address, function(){
+					if(self.connected[address]){
+
+						if (clbk)
+							clbk(true)
+					}
+					else
+					{
+						if (clbk)
+						clbk(false)
+					}
+				})
+
+				self.send(JSON.stringify(message))
+			}
+
+			self.removeAddresses = function(addresses){
+
+				_.each(addresses, function(i, a){
+					self.removeAddress(a)
+				})
+			}
+
+			self.removeAccount = function(){
+				self.destroy()
+			}
+
+			self.removeAddress = function(address){
+
+				var message = {
+					msg : "unsubscribe", 
+					addr : address
+				}
+
+				delete self.connected[address]
+				delete wait[address]
+
+				self.send(JSON.stringify(message))
+			}
+
+		/////////
+
+		self.init = function(clbk){
+
+			closing = false;
+
+			self.onlineCheck = deep(window, 'navigator.onLine') || false;
+			self.online = self.onlineCheck;
+			self.connected = {};
+
+			self.lostBlock = platform.currentBlock;
+
+			initOnlineListener();
+
+			initconnection();
+
+			if (clbk)
+				clbk()
+
+		}
+	}
+
+	self.WS = function(platform){
+
+		var self = this;
+
+		var socket;
+
+		var wait = null;
+
+			self.isopen = false;
+			self.isopening = false;
+			self.fastMessages = [];
+			self.reconnected = false;
+
+			self.connected = {};
+
+
+		var initOnlineListener = function(){
+			if(self.onlineCheck){
+
+				retry(function(){
+
+					var online = deep(window, 'navigator.onLine') && !self.lostConnection;
+
+					if (self.online != online){
+
+						self.online = online;
+
+						return true;
+
+					}
+					else
+					{
+						self.online = online;
+					}
+					
+
+				}, function(){
+
+					if(!self.online){
+						if(!self.reconnected)
+							self.reconnected = platform.currentBlock;
+
+
+						initOnlineListener();
+					}
+
+					else
+					{
+						if (self.reconnected > 1 && !self.loadMissed){
+							self.getMissed(initOnlineListener);
+						}
+
+						self.authConnect()
+					}
+
+
+				}, 50)
+
+			}
+		}
+
+		self.getMissed = function(){
+
+			self.loadMissed = true;
+
+			platform.app.ajax.rpc({
+				method : 'getmissedinfo',
+				parameters : [platform.sdk.address.pnet().address, self.reconnected],
+				success : function(d){			
+
+					d || (d = [{block : 1, cntposts : 0}])
+
+					var notifications = (d || []).slice(1)	
+
+					var blockInfo = d[0]
+
+					blockInfo.msg = 'newblocks'
+
+					self.messageHandler(blockInfo, function(){
+						lazyEach({
+							array : notifications,
+							action : function(p){
+								self.messageHandler(p.item, p.success)
+							},
+
+							all : {
+								success : function(){
+									self.loadMissed = false;
+								}
+							}
+						})
+					})
+		
+				},
+				fail : function(){
+
+					
+				}
+			})
+		}
+
+		
+
+		
+
 		self.destroy = function(fromsocket){
 
 			self.isopen = false;
@@ -5851,11 +6545,6 @@ Platform = function(app){
 			{
 
 				var address = platform.app.options.ws
-
-
-				//var address = 'wss://'+platform.nodes[1].host+':8088'
-
-
 				
 				if (typeof (WebSocket) !== 'undefined') {
 
@@ -5889,8 +6578,6 @@ Platform = function(app){
 					self.isopen = true;
 
 					self.reconnected = platform.currentBlock
-
-					console.log('platform.currentBlock', platform.currentBlock)
 
 					self.connected = {};
 
@@ -6015,8 +6702,6 @@ Platform = function(app){
 
     						platform.sdk.notifications.addFromWs(data)
 
-    						console.log(platform.focus, message.html)
-
     						if (typeof _Electron != 'undefined' && !platform.focus && message.html){
 								electron.ipcRenderer.send('electron-notification', message.html);
     						}
@@ -6057,11 +6742,6 @@ Platform = function(app){
     			return
     		}
 		}
-
-		//
-		/*setTimeout(function(){
-			self.messageHandler({"addr":"PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82","addrFrom":"PHcHjFVim8hRiMr1Y2wTDNMmcyax5oofSD","msg":"event","txid":"41fc7e76808b28392f058c17817d596f7ec6652b56281d67d4c87918541c80f2","posttxid":"131f30720dc807403941475d90fda12cb12acccf3066a4e87d0296d5b446ddfe","upvoteVal":1, "mesType":"upvoteShare"});
-		}, 10000)*/
 
 		self.auth = function(clbk){
 
@@ -6173,167 +6853,7 @@ Platform = function(app){
 			})
 		}
 
-		/////////
-
-			self.wait = function(address, clbk){
-				retry(function(){
-					if(!wait || !wait[address]) {
-						return true
-					}
-
-					if(Math.floor((new Date().getTime()) / 1000) > wait[address] + 1){
-						return true
-					}
-
-					if(self.connected[address]) return true;
-				}, clbk)
-			}
-
-			self.addAccount = function(keyPair, clbk){
-
-				if(!keyPair){
-					keyPair = platform.app.user.keys();
-				}
-
-				var key = platform.sdk.address.pnet(keyPair.publicKey).address  + 'addressesNum'
-
-				var num = localStorage[key] || 1;
-
-				var keyPairs = [{
-					kp : keyPair,
-					n : 0
-				}];
-
-				for(var i = 1; i <= num; i++){
-
-					var d = bitcoin.bip32.fromSeed(keyPair.privateKey).derivePath(app.platform.sdk.address.path(i)).toWIF() 
-
-					var kp = bitcoin.ECPair.fromWIF(d)	  
-
-					keyPairs.push({
-						kp : kp,
-						n : i
-					})
-				}
-
-				self.addAddresses(keyPairs, clbk)
-
-			},
-
-			self.addAddresses = function(keyPairs, clbk){
-
-				var success = 0;
-
-				lazyEach({
-					array : keyPairs,
-					sync : true,
-					action : function(p){
-						self.addAddress(p.item.kp, p.item.n, function(r){
-							
-							if(r)
-								success++;
-
-							p.success()
-						})
-					},
-
-					all : {
-						success : function(){
-
-							clbk(success != 0)
-
-						}
-					}
-				})
-			}
-
-			self.addAddress = function(keyPair, n, clbk){
-
-				/*if(!keyPair){
-					keyPair = platform.app.user.keys();
-				}*/
-
-				var	address = '';
-
-
-
-				if(!n){
-					address = platform.sdk.address.pnet(keyPair.publicKey).address
-				}
-				else{
-					address = platform.sdk.address.wallet(n, keyPair.privateKey).address
-				}
-				
-				if (self.connected[address]){
-
-					if (clbk)
-						clbk(true)
-
-					return
-				}			
-
-				var nonce = Math.round(new Date().getTime() / 1000);
-
-				do{
-					nonce = nonce.toString() + '' + rand(0, 9).toString();
-				}
-				while(nonce.length < 32)
-
-				var signature = keyPair.sign(Buffer.from(nonce))		
 		
-				var message = {
-					addr : address,
-					nonce : nonce,
-					sgn : signature.toString('hex'),
-					pub : keyPair.publicKey.toString('hex')
-				}
-
-				if(!wait)
-					wait = {};
-
-				wait[address] = Math.floor((new Date().getTime()) / 1000);
-
-				self.wait(address, function(){
-					if(self.connected[address]){
-
-						if (clbk)
-							clbk(true)
-					}
-					else
-					{
-						if (clbk)
-						clbk(false)
-					}
-				})
-
-				self.send(JSON.stringify(message))
-			}
-
-			self.removeAddresses = function(addresses){
-
-				_.each(addresses, function(i, a){
-					self.removeAddress(a)
-				})
-			}
-
-			self.removeAccount = function(){
-				self.destroy()
-			}
-
-			self.removeAddress = function(address){
-
-				var message = {
-					msg : "unsubscribe", 
-					addr : address
-				}
-
-				delete self.connected[address]
-				delete wait[address]
-
-				self.send(JSON.stringify(message))
-			}
-
-		/////////
 
 		return self;
 	}
@@ -6354,6 +6874,7 @@ Platform = function(app){
 		//self.connection = null;
 
 		self.connect = function(roomid, events, clbk){
+
 
 			if(!self.storages[roomid]){
 				self.storages[roomid] = new MessageStorage({id : roomid});
@@ -6379,12 +6900,6 @@ Platform = function(app){
 			})
 
 			var refresh = false;	
-
-			if (clbk)
-				clbk()
-
-
-				return
 
 			self.connections[roomid].openOrJoin(roomid, function(){
 
@@ -6495,6 +7010,7 @@ Platform = function(app){
 		}
 
 		self.message = function(message, to){
+
 
 			var m = {
 				tm: platform.currentTimeSS(),
@@ -6806,6 +7322,7 @@ Platform = function(app){
 
 		return created;
 	}
+
 	self.Cryptography = function(platform){
 
 		var self = this;
@@ -7537,6 +8054,110 @@ Platform = function(app){
 		}
 	}
 
+	self.Marketing = function(platform){
+		var self = this;
+
+		var userid = localStorage['mu'] || makeid();
+					 localStorage['mu'] = userid;
+
+		var ab = {};
+		var _a = ['a', 'b'];
+
+		var device = function(){
+			var device = 'web'
+
+			if(typeof _Electron != 'undefined') device = 'electron'
+
+			if(window.cordova) device = 'cordova'
+
+			else
+			{
+				if(isMobile()){
+
+					device = 'mobile' + device
+
+				}
+			}
+
+			return device 
+		}
+
+		self.log = function(action, note, clbk){
+
+			platform.app.ajax.run({
+				data : {
+					Action : 'ADDLOGS',
+					UserID : userid,
+					Act : action,
+					Note : note || '',
+					Device : device(),
+					System : 'P'
+				},
+
+				success : function(data){
+										
+					if (clbk)
+						clbk()
+
+				},
+
+				fail : function(){
+
+					if (clbk)
+						clbk()
+				}
+			})
+
+		}
+
+		self.ab = {
+			send : function(testid, result){
+
+				platform.app.ajax.run({
+					data : {
+						Action : 'ADDTESTRESULT',
+						UserID : userid,
+						TestID : testid,
+						Note : result || '',
+						Device : device()
+					},
+
+					success : function(data){
+											
+						if (clbk)
+							clbk()
+
+					},
+
+					fail : function(){
+
+						if (clbk)
+							clbk()
+					}
+				})
+
+			},
+			init : function(){	
+
+				ab = JSON.parse(localStorage['ab'] || "{}")
+				
+			},
+			add : function(testid, prev){
+
+				if(ab[testid]){
+					return 
+				}
+
+				ab[testid] = ab[prev] || _a[rand(0, 1)]
+
+				localStorage['ab'] = JSON.stringify(ab)
+			}
+		}
+
+
+		return self;
+	}
+
 	self.nodes = [
 
 		{
@@ -7545,8 +8166,6 @@ Platform = function(app){
 			port : 58081,
 			ws : 8080,
 			path : '',
-			user : 'user',
-			pass : 'secret-password',
 
 			name : 'spb1'
 		},
@@ -7563,13 +8182,11 @@ Platform = function(app){
 		},
 
 		{
-			full : '84.52.69.110:48081',
+			full : '84.52.69.110:37071',
 			host : '84.52.69.110',
-			port : 48081,
+			port : 37071,
 			ws : 8080,
 			path : '',
-			user : 'user',
-			pass : 'secret-password',
 
 			name : 'spbtest'
 		},
@@ -7642,6 +8259,8 @@ Platform = function(app){
 
 		self.app.nav.addParameters = null;
 
+		
+
 		if(electron){
 			electron.ipcRenderer.send('update-badge', null);
 			electron.ipcRenderer.send('update-badge-tray', null);
@@ -7700,13 +8319,15 @@ Platform = function(app){
 
 		if(!_Node)
 		{
-			self.ws = new self.WS(self);
-
-			self.ws.tryInit();
+			self.ws = new self.WSn(self);
 
 			self.rtc = new self.RTC(self);
 
 			self.sdk.node.update()
+
+			self.m = new self.Marketing(self);
+
+			
 
 		}
 
@@ -7780,7 +8401,8 @@ Platform = function(app){
 					self.sdk.imagesH.load,
 					self.sdk.chats.load,
 					self.sdk.user.subscribeRef,
-					//self.sdk.messenger.init,
+					self.ws.init,
+					//self.sdk.messenger.init
 
 					], function(){
 					
@@ -7788,7 +8410,7 @@ Platform = function(app){
 
 						self.sdk.user.get(function(u){
 
-							if(u.postcnt)
+							if(u.postcnt > 0)
 
 								setTimeout(function(){
 									self.sdk.user.survey()
@@ -7843,7 +8465,6 @@ Platform = function(app){
 
 		_.each(self.nodes, function(n, i){
 
-			console.log('u', u)
 
 			var config = {
 			    protocol: 'http',
@@ -7892,10 +8513,16 @@ Platform = function(app){
            	if (self.titleManager){
             	self.titleManager.clear();
             }
+
+            if (self.ws){
+            	//self.ws.authConnect()
+            }
+
 		}
 
 		var uf = function(){
 			self.focus = false;
+			
 		}
 
         window.focus();
@@ -7903,16 +8530,14 @@ Platform = function(app){
         self.focus = true;
 
         if(electron){
+
         	var w = electron.remote.getCurrentWindow();
 
-	        //w.on('show', f)
 	        w.on('hide', uf)
-
 	        w.on('minimize', uf)
 	        w.on('restore', f)
-        }
 
-       
+        }       
 
         $(window).bind('focus', f);
         $(window).bind('blur', uf);        

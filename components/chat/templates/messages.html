@@ -84,6 +84,8 @@ _.each(messages, function(message){
 
 							<div class="text">
 
+
+
 								<%=filterXSS(clearScripts(donottrustLink(findAndReplaceLink(message.decrypted.Message, true))))%>
 							</div>
 
@@ -118,7 +120,15 @@ _.each(messages, function(message){
 					<% } else {%>
 
 						<div class="text">
+							<b>
 
+							<% if(!mine) {%>
+								<span class="name"><%-n%>:</span>
+							<% } else { %>
+								<span class="name">You:</span>
+							<% } %>
+
+							</b><br>
 							<%=filterXSS(emojione.toImage(clearScripts(donottrustLink(findAndReplaceLink(message.m, true)))))%>
 				
 						</div>
@@ -126,9 +136,7 @@ _.each(messages, function(message){
 					<% } %>
 
 					<div class="time">
-						<% if(!mine) {%>
-							<span class="name"><%-n%></span>
-						<% } %>
+						
 						<%-app.platform.convertUTCSS(message.tm)%>
 					</div>
 				</div>

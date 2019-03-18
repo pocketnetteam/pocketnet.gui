@@ -364,8 +364,6 @@ var messenger = (function(){
 			
 			self.app.platform.sdk.messenger.clbks.messenger = function(key, data){
 
-				console.log(key, data)
-
 				if (key == 'chat'){
 					chats = self.app.platform.sdk.chats.get('messenger');
 
@@ -397,8 +395,6 @@ var messenger = (function(){
 				var data = {};
 
 				chats = self.app.platform.sdk.chats.get('messenger');
-
-				console.log('chats', chats)
 
 				self.loadTemplate({
 					name : 'newmessages'

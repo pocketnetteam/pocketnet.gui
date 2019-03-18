@@ -1039,7 +1039,7 @@ var lenta = (function(){
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
 
-					if(isMobile()) return
+					return
 
 					var rooms = _.map(invshares, function(s){
 						return s.txid + '_' + s.address

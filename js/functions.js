@@ -167,7 +167,9 @@
 
 		var s = addZero(now.getUTCSeconds().toString());
 
-		var S = addZero(now.getUTCMilliseconds().toString());
+		var S = now.getUTCMilliseconds().toString();
+
+		if(S.length < 5) S = S + '0'
 
 
 		return y + M + d + h + m + s + S;
@@ -6213,8 +6215,6 @@
 
 				if(typeof p.nodeFix == 'undefined'){
 
-					console.log("AUTOUB", app.platform.nodeid)
-
 					var fail = p.fail
 
 					p.nodeFix = Number(app.platform.nodeid || '1')
@@ -6224,7 +6224,6 @@
 						if(r && r.statusCode == 500 && (!r.data || _.isEmpty(r.data))){
 							app.platform.autochange()
 
-							console.log(app.platform.nodeid, p.nodeFix)
 
 							if(app.platform.nodeid == p.nodeFix){
 								fail(r)
@@ -6877,7 +6876,7 @@
 						if(!fsActive)
 							searchEl.removeClass('searchActive')
 
-					}, events);
+					}, events, helpers);
 				}
 			},
 			showlast : function(el){
@@ -8532,3 +8531,10 @@ if(typeof filterXSS == 'undefined'){
 
 
 /* ______________________________ */
+
+/* EXTRA */
+
+
+
+
+/* */

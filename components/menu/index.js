@@ -121,7 +121,7 @@ var menu = (function(){
 
 						actions.ah(el, l)
 
-						self.app.platform.api.electron.notifications(l)
+						self.app.platform.api.electron.notifications(l, 'notifications')
 
 						if(!isMobile())
 
@@ -140,7 +140,7 @@ var menu = (function(){
 
 						actions.ah(el, l)
 
-						self.app.platform.api.electron.notifications(l)
+						self.app.platform.api.electron.notifications(l, 'notifications')
 					}
 				},
 
@@ -264,9 +264,9 @@ var menu = (function(){
 
 							_el.find('input').on('blur', function(){
 
-								searchBlurTimer = slowMade(function(){
+								/*searchBlurTimer = slowMade(function(){
 									el.c.removeClass('searchactive')
-								}, searchBlurTimer, 10000)
+								}, searchBlurTimer, 10000)*/
 								
 							})
 
@@ -287,15 +287,45 @@ var menu = (function(){
 						events : {
 							fastsearch : function(value, clbk){
 
-								self.app.platform.sdk.search.get(value, function(){
+								self.app.platform.sdk.search.get(value, 'fs', function(r){
+
+									renders.results(r.fastsearch || [], value, function(tpl){
+
+										clbk(tpl, function(el, helpers){
+
+											el.find('.result').on('click', function(){
+
+												var r = $(this).attr('.result')
+
+												self.nav.api.go({
+													href : 's?ss=' + r,
+													history : true,
+													open : true
+												})
+
+												helpers.closeResults()
+
+											})
+										})
+
+									})
 
 								})
-
-								clbk(null)
+								
 							},
 
-							search : function(value, clbk){
+							search : function(value, clbk, e, helpers){
 								
+								self.nav.api.go({
+									href : 's?ss=' + value,
+									history : true,
+									open : true
+								})
+
+								helpers.closeResults()
+
+								if (clbk)
+									clbk(true)
 								
 							}
 						}
@@ -577,12 +607,35 @@ var menu = (function(){
 		}
 
 		var renders = {
-			
+			results : function(results, value, clbk){
+				if(!p) p = {};
+
+				self.shell({
+					name :  'results',
+					data : {
+						results : results,
+						value : value
+					},
+
+				}, function(_p){
+					if (clbk)
+						clbk(_p.rendered);
+				})
+			}
 		}
 
 		var make = function(){
 
 			self.app.user.isState(function(state){
+
+				if(parameters().ss){
+
+					el.c.addClass('searchactive')
+					actions.searchWidth()
+
+					el.postssearch.find('input').val(parameters().ss);
+
+				}
 				
 			})
 
@@ -657,9 +710,11 @@ var menu = (function(){
 				el.currency = el.c.find('.currencyWrapper');
 				el.postssearch =  el.c.find('.postssearch')
 
+				initEvents();
+
 				make();
 
-				initEvents();
+				
 
 				p.clbk(null, p);
 			}

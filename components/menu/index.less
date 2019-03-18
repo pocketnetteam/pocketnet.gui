@@ -17,6 +17,27 @@
 		color : @color-black2;
 	}
 
+	.searchFastResultWrapper{
+		border : 0;
+		padding : 0;
+		left: 0;
+		padding-left: 80px;
+
+		.results{
+			padding : 2 * @rhythm 0;
+		}
+
+		.result{
+			padding : @rhythm;
+			cursor: pointer;
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-main;
+			}
+		}
+	}
+
 	&.searchactive{
 		.additionalbar{
 			top: 65px;

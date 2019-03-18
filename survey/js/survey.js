@@ -187,7 +187,12 @@ var Survey = function(p, params)
 
 		if(pBar) pBar.goFinish();
 
-		sendReply();
+
+		console.log('finish')
+		sendReply(true);
+
+
+
 
 	}
 	var next = function()
@@ -430,7 +435,7 @@ var Survey = function(p, params)
 		$('.bn').on("click", next);
 		$('.bl').on("click", back);
 	}
-	var sendReply = function()
+	var sendReply = function(fin)
 	{
 		var answers = [];
 		for(i in questions)
@@ -458,7 +463,8 @@ var Survey = function(p, params)
 					answers[i].a = questions[i].value;
 			}
 		}
-		options.send(answers);
+
+		options.send(answers, fin);
 	}
 	var replyText = function()
 	{

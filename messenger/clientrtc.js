@@ -12,8 +12,6 @@ var platformRTC = function(p){
 
 	var peers = {};
 
-
-
 	var configuration = { 
 		"iceServers": [
 			{ "url": "stun:stun.l.google.com:19302" }
@@ -139,6 +137,7 @@ var platformRTC = function(p){
 
 			allchats : function(clbk){
 
+				console.log('allchats')
 
 				if (self.storage.allchats){
 					if (clbk)
@@ -226,11 +225,11 @@ var platformRTC = function(p){
 			},
 
 			chats : {
-				users : function(ids){
+				users : function(ids, clbk){
 					ajax({
 						action : "chats.users",
 						data : {
-							chats : ids
+							chats : ids.join(',')
 						},
 
 						success : function(d){
@@ -329,12 +328,19 @@ var platformRTC = function(p){
 			receiveRelay : function(message, chatid){
 				var relay = self.peer.relay;
 
+
+				console.log('message, chatid', message, chatid)
+
 					relay.storages.addStorage(chatid)
 					relay.storages.addMessage(message.message, chatid, message.from, message.addresses)
 
 			},
 
 			receiveRelayForMe : function(data){
+				var relay = self.peer.relay;
+
+				console.log('receiveRelayForMe', data)
+
 				relay.recieveChats(data.messages)
 			}
 		}
@@ -517,6 +523,8 @@ var platformRTC = function(p){
 
 			relayToReciever : function(messages){
 
+				console.log('relayToReciever', messages)
+
 				intervals.relayToReciever = retry(function(){
 
 					return self.opened
@@ -525,8 +533,10 @@ var platformRTC = function(p){
 
 					var message = JSON.stringify({
 
-						message : messages,
-						relayToReciever : 1
+						message : {
+							messages : messages,
+							relayToReciever : 1
+						}
 
 					})
 					
@@ -683,12 +693,11 @@ var platformRTC = function(p){
 			self.channel.api.relaySend(message, chatid, from, self.relay.users)
 		}
 
-		self.relayToReciever = function(id){
+		self.relayToReciever = function(address){
 
+			self.channel.api.relayToReciever(self.relay.storages.get(address))
 
-			self.channel.api.relay(self.relay.storages.get(id))
-
-			self.relay.release(id)
+			self.relay.release(address)
 
 		}
 
@@ -704,7 +713,7 @@ var platformRTC = function(p){
 	
 		self.storages = {
 
-			clear : function(userid){
+			clear : function(address){
 
 				var removechats = [];
 
@@ -712,7 +721,7 @@ var platformRTC = function(p){
 
 					relaystorage[chatid] = _.filter(messages, function(message){
 
-						delete message.a[userid];
+						delete message.a[address];
 
 						if(!_.isEmpty(message.a)){
 							return true;
@@ -730,13 +739,15 @@ var platformRTC = function(p){
 				})
 			},
 
-			get : function(userid){
+			get : function(address){
 				var chats = {};
+
+				console.log('relaystorage, id', relaystorage, address)
 
 				_.each(relaystorage, function(chat, chatid){
 					var messages = _.filter(chat, function(message){
 
-						if(message.a[userid]) return true
+						if(message.a[address]) return true
 
 					})
 
@@ -769,6 +780,8 @@ var platformRTC = function(p){
 					addressesMap[a] = true
 				})
 
+				console.log('relaystorage',relaystorage, chatid)
+
 				relaystorage[chatid].push({
 					m : m,
 					f : from,
@@ -799,13 +812,13 @@ var platformRTC = function(p){
 			peer.relay = self
 		}
 
-		self.release = function(userid){
+		self.release = function(address){
 
-			self.relay.storages.clear(userid)
+			/*self.storages.clear(address)
 
 			if (events.release){
-				events.release(userid)
-			}
+				events.release(address)
+			}*/
 
 		}
 
@@ -1051,6 +1064,8 @@ var platformRTC = function(p){
 
 				}
 
+
+
 				var peer = peers[data.id]
 
 				if(!peer){
@@ -1078,7 +1093,7 @@ var platformRTC = function(p){
 
 						        relay : user.id,
 
-						        getRelay : true
+						        get : true
 						    }); 
 						}
 					})
@@ -1087,7 +1102,9 @@ var platformRTC = function(p){
 
 				}
 
-				return self.relayed[id]
+				console.log(data, self.relay)
+
+				return self.relayed[data.id]
 			},
 			direct : function(data){
 				var chs = []
@@ -1151,7 +1168,9 @@ var platformRTC = function(p){
 					
 
 			    }
-			}
+			},
+
+			
 		}
 
 		var relays = {
@@ -1161,6 +1180,9 @@ var platformRTC = function(p){
 
 					self.relay[id] = new relayRTC(id, offlineUsers, {
 						add : function(chatid, forUsers){
+
+							relays.save();
+
 							send({
 
 								type : 'haveRelay',
@@ -1172,15 +1194,15 @@ var platformRTC = function(p){
 							})
 						},
 
-						recieveChats : function(chats){
+						recieveChats : function(chatsdata){
 
-							var ids = _.map(chats, function(m, id){
+							var ids = _.map(chatsdata, function(m, id){
 								return id
 							});
 
 							chats.createMany(ids, function(){
 
-								_.each(chats, function(messages, chatid){
+								_.each(chatsdata, function(messages, chatid){
 
 									var chat = self.chats[chatid]
 
@@ -1234,6 +1256,14 @@ var platformRTC = function(p){
 				self.relay[id].close()
 			},
 
+			save : function(){
+				localStorage['relayed'] = JSON.stringify(relaystorage)
+			},
+
+			load : function(){
+				relaystorage = JSON.parse(localStorage['relayed'] || "{}")
+			}
+
 			
 		}
 
@@ -1242,17 +1272,21 @@ var platformRTC = function(p){
 			createMany : function(ids, clbk){
 				self.rtchttp.get.chats.users(ids, function(info){
 
-					_.each(ids, function(id){
+					if(info){
+						_.each(ids, function(id){
 
-						addresses = info[id] || [];
+							addresses = info[id] || [];
 
-						var chat = self.chats[id]
+							var chat = self.chats[id]
 
-						if(!chat){
-							chat = chats.create(id, addresses)
-						}
+							if(!chat){
+								chat = chats.create(id, addresses)
+							}
 
-					})
+						})
+					}
+
+					
 
 					if (clbk)
 						clbk()
@@ -1445,7 +1479,7 @@ var platformRTC = function(p){
 
 				}, function(){
 
-					console.log("OFFER RECIEVED 2", data)
+					console.log("OFFER RECIEVED 2", data, context)
 
 
 					if(!peer){
@@ -1488,8 +1522,10 @@ var platformRTC = function(p){
 						peer.sync(data.chatid)
 					}
 
+
+
 					if (data.relay && data.get){
-						peer.relayToReciever(data.id)
+						peer.relayToReciever(data.address)
 
 					}
 
@@ -1559,18 +1595,18 @@ var platformRTC = function(p){
 
 				console.log('data', data)
 
-				_.each(data.online || [], function(user){
-					var relay = relays.create(user.device, data.offline)
+				_.each(data.online || [], function(_user){
+					var relay = relays.create(_user.device, data.offline)
 
-					var peer = peers[user.id]
+					var peer = peers[_user.id]
 
 					console.log('relay', relay, peer)
 
 					if(!peer){
 						peer = relay.peer({
 
-							id : user.id,
-							address : user.address
+							id : _user.id,
+							address : _user.address
 
 						}, {
 							candidate : function(candidate){
@@ -1578,7 +1614,7 @@ var platformRTC = function(p){
 								send({ 
 					               	type: "candidate", 
 					               	candidate: candidate,
-					               	id : user.id
+					               	id : _user.id
 					            });
 
 							},
@@ -1586,7 +1622,7 @@ var platformRTC = function(p){
 							offer : function(offer){
 								send({ 
 							        type: "offer", 
-							        id : user.id,
+							        id : _user.id,
 							        offer : offer,
 
 							        relay : user.device
@@ -1669,7 +1705,7 @@ var platformRTC = function(p){
 
 			connection.onerror = function (error) { 
 			   
-			   console.log('error', error)
+			   	connection.close()
 			   
 			};
 
@@ -1684,27 +1720,16 @@ var platformRTC = function(p){
 			connection.onclose = function(){
 
 				opened = false;
+
+				connection = null;
 				
 				if(closing){
 					return;
 				}
 
-				/*syncInterval = retry(function(){
-
-					return self.opened
-
-				}, function(){
-
-					channelEvents.sendSyncRequest(chatid)
-
-				})*/
-
 				init();
 			}
-
-			self.rtchttp = new rtchttp()
-
-			iniclbks()
+		
 		}
 
 		self.initChats = function(_chats){
@@ -1727,11 +1752,17 @@ var platformRTC = function(p){
 
 		self.api = {
 			getRelayed : function(clbk){
-				self.rtchttp.get.relayed(function(relayed){
-					if(relayed){
+				self.rtchttp.get.relayed(function(relayeddata){
+
+
+					console.log("RELAYED", relayeddata)
+
+					if(relayeddata){
+
+						console.log("direct")
 
 						lazyEach({
-							array : relayed.direct || [],
+							array : relayeddata.direct || [],
 							action : function(p){
 								var direct = p.item;
 
@@ -1740,10 +1771,16 @@ var platformRTC = function(p){
 
 							all : {
 								success : function(){
+
+									console.log("directsuccess")
+
 									lazyEach({
-										array : relayed.relay || [],
+										array : relayeddata.relay || [],
 										action : function(p){
 											var relay = p.item;
+
+
+											relayed.relay(relay)
 
 											p.success();
 										},
@@ -1765,6 +1802,9 @@ var platformRTC = function(p){
 				})
 			},	
 			login : function(clbk){
+
+				console.log("LOGIN", user)
+
 				if (user){
 
 					send({ 
@@ -1811,7 +1851,20 @@ var platformRTC = function(p){
 			})
 		}
 
-		self.init = init
+		self.init = function(clbk){
+
+			init();
+
+			relays.load()
+
+			self.rtchttp = new rtchttp();
+
+			iniclbks();
+
+			if (clbk)
+				clbk()
+
+		}
 
 		return self;
 	}

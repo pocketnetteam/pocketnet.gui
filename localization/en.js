@@ -163,7 +163,7 @@ ____loclib.usave = "Save";
 ____loclib.ucancel = "Cancel";
 ____loclib.uwaitb = "Wait for confirmation to save information ";
 ____loclib.uchanges = "There are no changes";
-____loclib.uchangesvalid = "You need to create a name, avatar and fill in about yourself";
+____loclib.uchangesvalid = "You need to create a name & avatar";
 
 ____loclib.uname = "Name";
 ____loclib.ulanguage = "Language";

@@ -39,7 +39,7 @@ var handles = {
 
 				var chats = {}
 
-				_.each(connect.parameters.chats, function(chatid){
+				_.each((connect.parameters.chats || '').split(','), function(chatid){
 					var chat = connect.rtc.chats[connect.parameters.chats];
 
 					if (chat){
@@ -172,12 +172,16 @@ var handles = {
 
 								_.each(devices, function(number, device){
 
-									if(!_.isEmpty(p.connect.rtc.devices[device])){
+									if(!_.isEmpty(connect.rtc.devices[device])){
+
+										var userid = _.toArray(connect.rtc.devices[device])[0]
+
+										console.log("RELAYUID", userid)
 
 										online[device] = {
 											number : number,
-											id : p.connect.rtc.devices[device],
-											address : p.connect.rtc.users[p.connect.devices[device]].address
+											id : userid,
+											address : connect.rtc.users[userid].address
 										}
 									}
 

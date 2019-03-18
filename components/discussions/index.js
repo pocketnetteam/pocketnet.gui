@@ -25,6 +25,8 @@ var discussions = (function(){
 		var actions = {
 			preloader : function(show){
 
+				if(!el.c) return
+
 				if(show){
 					el.c.addClass('loading')
 				}
@@ -37,7 +39,7 @@ var discussions = (function(){
 			},
 			inView : function(clbk, selector, nv){
  
-				if(_.toArray(discussions).length){
+				if(_.toArray(discussions).length &&  el.c){
 					
 					var els = el.c.find(selector || '.discussion');
 
@@ -189,14 +191,14 @@ var discussions = (function(){
 
 
 
-				if(opening[discussion.chat.id]){
+				/*if(opening[discussion.chat.id]){
 
 					retry(function(){
 						return inited[discussion.chat.id]
 					}, clbk)
 				}
 				else
-				{
+				{*/
 					opening[discussion.chat.id] = true
 
 					self.app.platform.rtc.connect(discussion.chat.id, {
@@ -256,7 +258,7 @@ var discussions = (function(){
 							renders.message(me, discussion.chat.id)
 						})							
 					}
-				}
+				//}
 
 
 				
@@ -683,9 +685,14 @@ var discussions = (function(){
 		}
 
 		var make = function(){
-			renders.empty()
+			//renders.empty()
 
-			renders.discussions()
+			console.log('discussions', discussions)
+			
+			//renders.discussions()
+
+			actions.chatp('6768de97ad495c0110a9e09d43825ef24f1055449a5d368225ac102804397dc1_PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd')
+
 		}
 
 		return {
