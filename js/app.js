@@ -60,10 +60,7 @@ Application = function(node)
 		imageServer : 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 		ws : "wss://pocketnet.app:8088",	
-
 		rtc : 'https://pocketnet.app:9001/',
-
-
 		rtcws : 'wss://pocketnet.app:9090',
 		rtchttp : 'https://pocketnet.app:9091',
 

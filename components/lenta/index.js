@@ -938,6 +938,11 @@ var lenta = (function(){
 				$(this).closest('.authorgroup').find('.share').removeClass('hidden')
 
 				$(this).remove()
+
+				renders.sharesInview(sharesInview, function(){
+						
+				})
+
 			},
 			metmenu : function(){
 				var _el = $(this);
@@ -1611,6 +1616,13 @@ var lenta = (function(){
 			},
 
 			sharesInview : function(shares, clbk){
+
+				shares = _.filter(shares, function(s){
+
+					return !$('#' + s.txid).hasClass('hidden')
+
+				})
+
 				lazyEach({
 					array : shares,
 					//sync : true,

@@ -756,6 +756,12 @@ var chat = (function(){
 					_el = replace;
 				}
 
+				if(!messages.length){
+					if (clbk)
+						clbk();
+					
+					return
+				}
 				
 
 				self.shell({
