@@ -989,7 +989,30 @@ var chat = (function(){
 
 			actions.preloader(true)
 
-			self.app.platform.rtc.connect(chat.chat.id, {
+            setInterval(() => {
+                if (!self.app.platform.rtc.connections[chat.chat.id]) {
+                    connect();
+                    return;
+                }
+
+                let connected = 0;
+                let all = 0;
+                self.app.platform.rtc.connections[chat.chat.id].peers.forEach((p, i) => {
+                    let status = p.peer.connectionState || p.peer.iceConnectionState;
+                    connected += (['connected','connected','completed'].includes(status) ? 1 : 0);
+                    all += 1;
+                });
+
+                if (connected <= 0) {
+                    self.app.platform.rtc.destroy(chat.chat.id, connect);
+                    console.log('Reconnecting to room. Reason: not connected users.');
+                } else {
+                    console.log(`Connected users: ${connected} / ${all}`);
+                }
+            }, 10000);
+
+            function connect() {
+                self.app.platform.rtc.connect(chat.chat.id, {
 
 				sendMessage : function(msg){
 
@@ -1024,11 +1047,11 @@ var chat = (function(){
 
 				}
 			}, function(){
-
 				actions.preloader(false)
-
 			})
+            };
 
+            connect();
 
 			if(chat){
 

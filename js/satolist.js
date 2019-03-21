@@ -7278,6 +7278,8 @@ Platform = function(app){
 			}
 
 			self.events[roomid] = {}
+
+            if (clbk) clbk();
 		}
 
 		self.destoryAll = function(){

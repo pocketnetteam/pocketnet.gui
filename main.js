@@ -9,7 +9,7 @@ let win, nwin, badge;
 
 var willquit = false;
 
-const { app, BrowserWindow, Menu, Tray, ipcMain, Notification, nativeImage, dialog } = require('electron')
+const { app, BrowserWindow, Menu, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut } = require('electron')
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
@@ -21,10 +21,6 @@ var updatesLoading = false;
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
-
-function Log(text) {
-    log.info(text);
-}
 
 autoUpdater.on('checking-for-update', (ev) => {
     win.webContents.send('updater-message', { msg: 'checking-for-update', type : 'info', ev : ev })
@@ -159,12 +155,9 @@ function createTray() {
         tray.setHighlightMode('never')
     })
 
-   
-
     autoUpdater.on('before-quit-for-update', (ev) => {
-
-        tray.destroy()
-        
+        log.info('before-quit-for-update: tray.destroy()');
+        tray.destroy();
     });
 }
 
@@ -231,7 +224,7 @@ function notification(nhtml) {
         nwin.show()
     }, 300)
 
-    //nwin.webContents.openDevTools()
+    // nwin.webContents.openDevTools()
     setTimeout(closeNotification, 15000)
 }
 
@@ -262,6 +255,9 @@ function createWindow() {
     win.loadFile('index_el.html')
 
     //win.webContents.openDevTools()
+    globalShortcut.register('CommandOrControl+Shift+I', () => {
+        win.webContents.toggleDevTools()
+    });
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
