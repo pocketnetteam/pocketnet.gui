@@ -18,6 +18,7 @@
         "electron-log": "^3.0.1",
         "electron-updater": "^4.0.6",
         "emojione": "^4.5.0",
+        "exif-js": "^2.3.0",
         "fizzy-ui-utils": "^2.0.7",
         "get-size": "^2.0.3",
         "http-proxy": "^1.17.0",
@@ -43,11 +44,13 @@
     },
     "build": {
         "productName": "Pocketnet",
-        "publish": [{
-            "provider": "github",
-            "owner": "pocketnetapp",
-            "repo": "pocketnet.gui"
-        }],
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "pocketnetapp",
+                "repo": "pocketnet.gui"
+            }
+        ],
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,

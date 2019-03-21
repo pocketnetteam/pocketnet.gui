@@ -7274,6 +7274,90 @@
 		    }
 		}
 
+		var orientation = function(srcData, exifOrientation, clbk) {
+
+
+			var img = new Image(),
+				canvas   = document.createElement("canvas"),
+				ctx      = canvas.getContext('2d');
+				
+				img.src  = srcData;
+
+			img.onload = function(){
+
+				var width = img.width,
+	            	height = img.height;
+		
+		        // set proper canvas dimensions before transform & export
+		        if ($.inArray(exifOrientation, [5, 6, 7, 8]) > -1) {
+		            canvas.width = height;
+		            canvas.height = width;
+		        } else {
+		            canvas.width = width;
+		            canvas.height = height;
+		        }
+		
+		        // transform context before drawing image
+		        switch (exifOrientation) {
+		            case 2:
+		                ctx.transform(-1, 0, 0, 1, width, 0);
+		                break;
+		            case 3:
+		                ctx.transform(-1, 0, 0, -1, width, height);
+		                break;
+		            case 4:
+		                ctx.transform(1, 0, 0, -1, 0, height);
+		                break;
+		            case 5:
+		                ctx.transform(0, 1, 1, 0, 0, 0);
+		                break;
+		            case 6:
+		                ctx.transform(0, 1, -1, 0, height, 0);
+		                break;
+		            case 7:
+		                ctx.transform(0, -1, -1, 0, height, width);
+		                break;
+		            case 8:
+		                ctx.transform(0, -1, 1, 0, 0, width);
+		                break;
+		            default:
+		                ctx.transform(1, 0, 0, 1, 0, 0);
+		        }
+		
+		        // Draw img into canvas
+		        ctx.drawImage(img, 0, 0, width, height);
+
+				var url = canvas.toDataURL("image/jpeg", 1);
+
+				$(canvas).remove();
+
+				clbk(url);
+
+			}
+	
+	    }
+
+		var autorotation = function(file, image, clbk){
+			if(file.type == 'image/jpeg'){
+				EXIF.getData(file, function() {
+
+					var allMetaData = EXIF.getAllTags(this);
+	            		exifOrientation = allMetaData.Orientation;
+
+            		orientation(image, exifOrientation, function(image){
+            			if (clbk)
+							clbk(image)
+            		})
+				})
+			}
+
+			else
+			{
+				if (clbk)
+					clbk(image)
+			}
+		}
+
 		var upload = function(event){
 
 			var input = $(this);
@@ -7336,105 +7420,112 @@
 
         				readFile(reader, error, file, files, function(fileObject){
 
-        					var fs = ((maxFileSize / 1024 ) / 1024).toFixed(0)
+        					autorotation(file, fileObject.base64, function(base64){
 
-        					var et = {
-        						filesize : "Your photo has size greater than "+fs+"MB. Please upload a photo under "+fs+"MB in size.",
-        						fileext : "Invalid format of picture. Only png and jpeg are allowed"
-        					}
+        						fileObject.base64 = base64;
+
+        						var fs = ((maxFileSize / 1024 ) / 1024).toFixed(0)
+
+	        					var et = {
+	        						filesize : "Your photo has size greater than "+fs+"MB. Please upload a photo under "+fs+"MB in size.",
+	        						fileext : "Invalid format of picture. Only png and jpeg are allowed"
+	        					}
 
 
 
-        					if(error)
-        					{
-        						if(p.onError)
-							    {
-							    	p.onError(error, fileObject, file, et[error]);
-							    }
+	        					if(error)
+	        					{
+	        						if(p.onError)
+								    {
+								    	p.onError(error, fileObject, file, et[error]);
+								    }
 
-							    _p.fail();
-        					}
-        					else
-        					{
-        						var fd = new FormData();		    	
-			        				fd.append('file', file);
+								    _p.fail();
+	        					}
+	        					else
+	        					{
+	        						var fd = new FormData();		    	
+				        				fd.append('file', file);
 
-		        				_.each(p.data, function(data, key){
+			        				_.each(p.data, function(data, key){
 
-		        					if(typeof data == 'function') data = data();
+			        					if(typeof data == 'function') data = data();
 
-		        					if(key == 'data')
-		        					{
-		        						if (p.user)
-					        			{
-					        				p.user.extendAjaxData(data);
+			        					if(key == 'data')
+			        					{
+			        						if (p.user)
+						        			{
+						        				p.user.extendAjaxData(data);
+						        			}
+			        					}
+
+			        					if(_.isArray(data) || _.isObject(data)) 
+					        				data = JSON.stringify(data);
+
+					        			fd.append(key, data);
+			        				})
+
+			        				if (p.beforeUpload){
+			        					p.beforeUpload(fileObject, processId)
+			        				}
+
+			        				if(p.server)
+					        		{
+					        			var xhr = new XMLHttpRequest();
+
+										xhr.onreadystatechange = function(e){
+											stateChange(e, function(response){
+
+												response = deep(response, 'root')
+
+												if(!response || response.Result != 'Success'){
+													if(p.onError)
+												    {
+												    	p.onError('serverError', fileObject, file);
+												    }
+
+												    _p.fail();
+												}
+												else
+												{
+													_p.success(response);
+
+													if (p.onUpload)
+														p.onUpload(response, processId)
+												}
+
+											})
+										};
+
+
+
+										xhr.open('POST', p.server);
+										xhr.send(fd);
+
+										/*setTimeout(function(){
+
+											_p.success();
+
+										},800)*/
+										
+					        		}
+
+					        		else
+					        		{
+
+					        			if (p.action){
+					        				p.action(fileObject, _p.success)
 					        			}
-		        					}
+					        			else
 
-		        					if(_.isArray(data) || _.isObject(data)) 
-				        				data = JSON.stringify(data);
-
-				        			fd.append(key, data);
-		        				})
-
-		        				if (p.beforeUpload){
-		        					p.beforeUpload(fileObject, processId)
-		        				}
-
-		        				if(p.server)
-				        		{
-				        			var xhr = new XMLHttpRequest();
-
-									xhr.onreadystatechange = function(e){
-										stateChange(e, function(response){
-
-											response = deep(response, 'root')
-
-											if(!response || response.Result != 'Success'){
-												if(p.onError)
-											    {
-											    	p.onError('serverError', fileObject, file);
-											    }
-
-											    _p.fail();
-											}
-											else
-											{
-												_p.success(response);
-
-												if (p.onUpload)
-													p.onUpload(response, processId)
-											}
-
-										})
-									};
+					        				_p.success();
+					        		}
 
 
+	        					}
+        					})
 
-									xhr.open('POST', p.server);
-									xhr.send(fd);
-
-									/*setTimeout(function(){
-
-										_p.success();
-
-									},800)*/
-									
-				        		}
-
-				        		else
-				        		{
-
-				        			if (p.action){
-				        				p.action(fileObject, _p.success)
-				        			}
-				        			else
-
-				        				_p.success();
-				        		}
-
-
-        					}
+        					
 
         				})
 

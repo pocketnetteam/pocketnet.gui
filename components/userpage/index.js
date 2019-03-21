@@ -21,7 +21,7 @@ var userpage = (function(){
 		var init = function(){
 			reports = []
 
-			/*reports.push({
+			reports.push({
 				name :  self.app.localization.e('rstate'),
 				id : 'ustate',
 				report : 'ustate',
@@ -30,7 +30,7 @@ var userpage = (function(){
 				if : function(){
 					if(mestate) return true
 				}
-			})*/
+			})
 
 			/*reports.push({
 				name : "Messenger",

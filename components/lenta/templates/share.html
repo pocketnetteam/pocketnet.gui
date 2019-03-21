@@ -155,8 +155,12 @@ var metadisplay = function(){ %>
 
 				nm = trimHtml(m, 750);
 
+
+
 				if(nm != m){
 					bigmessage = true;
+
+
 				}
 			}
 
@@ -174,7 +178,10 @@ var metadisplay = function(){ %>
 				</div>
 			</div>
 
-			<% if(bigmessage || share.settings.v == 'a') {%>
+			<% 
+
+		
+			if(bigmessage /*|| share.settings.v == 'a'*/) {%>
 
 				<div class="paddingWrapper showMorePW">
 					<div class="showMore">

@@ -121,16 +121,26 @@ _.each(messages, function(message){
 					<% } else {%>
 
 						<div class="text">
-							<b>
 
-							<% if(!mine) {%>
-								<span class="name"><a href="author?address=<%-message.f%>"><%-n%>:</a></span>
-							<% } else { %>
-								<span class="name">You:</span>
-							<% } %>
+							<div>
 
-							</b><br>
-							<%=filterXSS(emojione.toImage(clearScripts(donottrustLink(findAndReplaceLink(message.m, true)))))%>
+								<b>
+
+								<% if(!mine) {%>
+									<span class="name"><a href="author?address=<%-message.f%>"><%-n%>:</a></span>
+								<% } else { %>
+									<span class="name">You:</span>
+								<% } %>
+
+								</b>
+
+							</div>
+
+							<div>
+
+								<%=filterXSS(emojione.toImage(clearScripts(donottrustLink(findAndReplaceLink(message.m, true)))))%>
+
+							</div>
 				
 						</div>
 

@@ -223,6 +223,15 @@ __map =  {
 			relationsSunc : true,
 
 			relations : [
+
+				{src : 'js/vendor/exif.js', f : 'js', 
+
+					require : function(){
+
+						Exif = require('exif-js')
+
+				}},
+
 				{src : 'js/vendor/picker.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/picker.date.js', 		f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
 				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
@@ -517,6 +526,13 @@ __map =  {
 			},
 
 			relations : [
+				{src : 'js/vendor/exif.js', f : 'js', 
+
+					require : function(){
+
+						Exif = require('exif-js')
+
+				}},
 
 				{src : 'js/vendor/Sortable.min.js', f : 'js', 
 

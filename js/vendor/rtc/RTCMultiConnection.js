@@ -677,7 +677,16 @@ var RTCMultiConnection = function(roomid, forceOptions) {
 
             userPreferences = connection.setUserPreferences(userPreferences, remoteUserId);
             var localConfig = this.getLocalConfig(null, remoteUserId, userPreferences);
-            connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+
+            if(_.isArray(connection.peers).length < 20){
+                 connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+            }
+            else
+            {
+                console.log("TESTSETSETE")
+            }
+
+           
         };
 
         this.createAnsweringPeer = function(remoteSdp, remoteUserId, userPreferences) {

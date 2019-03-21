@@ -145,6 +145,9 @@ var post = (function(){
 
 				var upvoteShare = share.upvote(value);
 
+
+				console.log('upvoteShare', upvoteShare, value)
+
 				if(!upvoteShare){
 					self.app.platform.errorHandler('4', true)	
 
@@ -160,6 +163,8 @@ var post = (function(){
 					upvoteShare,
 
 					function(tx, error){
+
+						console.log(tx, error)
 
 						topPreloader(100)
 
@@ -304,6 +309,8 @@ var post = (function(){
 
 			like : function(){
 
+				var value = $(this).attr('value')
+				
 				self.app.user.isState(function(state){
 					if(!state){
 						self.nav.api.load({
@@ -320,7 +327,7 @@ var post = (function(){
 							return
 						}
 
-						var value = $(this).attr('value')
+						
 
 
 						p.attr('value', value)

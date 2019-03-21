@@ -8193,6 +8193,16 @@ Platform = function(app){
 			name : 'spbtest'
 		},
 
+		{
+			full : '84.52.69.110:48081',
+			host : '84.52.69.110',
+			port : 48081,
+			ws : 8080,
+			path : '',
+
+			name : 'spbtest'
+		}
+
 		/*{
 			full : '84.52.69.110:48081',
 			host : '84.52.69.110',
