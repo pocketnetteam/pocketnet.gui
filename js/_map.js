@@ -204,7 +204,8 @@ __map =  {
 				el : 'content'
 			},
 			redirect : {
-				auth : 'authorization'
+				auth : 'authorization',
+				validate : 'filluser'
 			},
 			
 			
@@ -237,7 +238,8 @@ __map =  {
 				el : 'content'
 			},
 			redirect : {
-				auth : 'authorization'
+				auth : 'authorization',
+				validate : 'filluser'
 			},
 			
 			
@@ -250,7 +252,8 @@ __map =  {
 				el : 'content'
 			},
 			redirect : {
-				auth : 'authorization'
+				auth : 'authorization',
+				validate : 'filluser'
 			},
 			
 			
@@ -463,7 +466,8 @@ __map =  {
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 			],
 			redirect : {
-				auth : 'authorization'
+				auth : 'authorization',
+				validate : 'filluser'
 			}
 		},
 
@@ -480,7 +484,8 @@ __map =  {
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 			],
 			redirect : {
-				auth : 'authorization'
+				auth : 'authorization',
+				validate : 'filluser'
 			}
 		},
 
@@ -778,7 +783,8 @@ __map =  {
 
 		},
 		redirect : {
-			auth : 'authorization'
+			auth : 'authorization',
+				validate : 'filluser'
 		}
 		/*relationsSunc : true,
 		relations : [

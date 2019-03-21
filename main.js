@@ -179,7 +179,7 @@ function initApp() {
 
     autoUpdater.checkForUpdates();
     
-    setTimeout(() => {
+    setInterval(() => {
         autoUpdater.checkForUpdates();
     }, 10*60*1000);
 }

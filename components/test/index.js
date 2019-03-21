@@ -23,7 +23,7 @@ var test = (function(){
 		var actions = {		
 
 			valid : function(v1, v2){
-				if(!actions.equal(v1, v2)){
+				if(!actions.equal((v1), (v2))){
 
 					if(trim(v1.name) && v1.image) return true
 
@@ -33,7 +33,7 @@ var test = (function(){
 			equal : function(v1, v2){
 
 				var a = function(o){
-					return 'name:' + (o.name || "") + 'image:' + (o.image || "") + 'about:' + (o.about || "") + 'site:' + (o.site || "")  + 'language:' + (o.language || "") + "addresses:" + JSON.stringify(o.addresses || [])
+					return 'name:' + (trim(o.name) || "") + 'image:' + (o.image || "") + 'about:' + (trim(o.about) || "") + 'site:' + (trim(o.site) || "")  + 'language:' + (o.language || "") + "addresses:" + JSON.stringify(o.addresses || [])
 				}
 
 				return a(v1) == a(v2)
@@ -62,7 +62,7 @@ var test = (function(){
 				if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
 					sitemessage(self.app.localization.e('uchangesvalid'))
 
-					if(!tempInfo.name){	
+					if(!trim(tempInfo.name)){	
 						var pn = el.c.find('[parameter="name"] input')
 
 						pn.focus()
@@ -97,8 +97,8 @@ var test = (function(){
 
 					userInfo.name.set(trim(tempInfo.name));
 					userInfo.language.set(tempInfo.language);
-					userInfo.about.set(tempInfo.about);
-					userInfo.site.set(tempInfo.site);
+					userInfo.about.set(trim(tempInfo.about));
+					userInfo.site.set(trim(tempInfo.site));
 					userInfo.image.set(tempInfo.image);
 					userInfo.addresses.set(tempInfo.addresses);
 
@@ -294,7 +294,7 @@ var test = (function(){
 					tempInfo[parameter.id] = parameter.value
 
 					parameter._onChange = function(value){
-						tempInfo[parameter.id] = value;
+						tempInfo[parameter.id] = trim(value);
 
 						actions.upanel()
 
@@ -308,7 +308,7 @@ var test = (function(){
 						}
 
 						if (id == 'name'){
-							self.app.platform.sdk.users.nameExist(value, function(exist){
+							self.app.platform.sdk.users.nameExist(tempInfo[parameter.id], function(exist){
 
 								if(!exist || exist == self.app.platform.sdk.address.pnet().address){
 									el.c.find('.errorname').fadeOut();

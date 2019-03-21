@@ -741,8 +741,14 @@ var chat = (function(){
 
 				var sorted = _.sortBy(messages, function(msg){
 
-					return Number(msg.tm)
+					var t = msg.tm
+
+					if(msg.tm.length == 17) t = t + '0'
+
+					return Number(t)
 				})
+
+				console.log('sorted', sorted)
 
 				if(!saveTempMessages) actions.clearTempMessages()
 

@@ -40,14 +40,15 @@ _.each(messages, function(message){
 	<div class="chatmessage <%-read%> <%-mine%> <%-temp%> <%-imagePreloader%>" id="<%-message.tm + message.f%>">
 		<div class="iconWrapper">
 			<div class="icon">
+				<a href="author?address=<%-message.f%>">
+					<div class="usericon" image="<%-src || ''%>">
 
-				<div class="usericon" image="<%-src || ''%>">
-
-					<% if(!src) {%>
-						<svg width="35" height="35" data-jdenticon-value="<%-message.f%>"></svg>
-					<% } %>
-					
-				</div>
+						<% if(!src) {%>
+							<svg width="35" height="35" data-jdenticon-value="<%-message.f%>"></svg>
+						<% } %>
+						
+					</div>
+				</a>
 
 				
 			</div>
@@ -123,7 +124,7 @@ _.each(messages, function(message){
 							<b>
 
 							<% if(!mine) {%>
-								<span class="name"><%-n%>:</span>
+								<span class="name"><a href="author?address=<%-message.f%>"><%-n%>:</a></span>
 							<% } else { %>
 								<span class="name">You:</span>
 							<% } %>

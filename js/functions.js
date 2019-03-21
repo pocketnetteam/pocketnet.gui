@@ -4989,17 +4989,18 @@
 
 	trim = function(s)
 	{
+
 	  return rtrim(ltrim(s));
 	}
 
 	ltrim = function(s)
 	{
-	  return s.replace(/^\s+/, ''); 
+	  return (s || "").replace(/^\s+/, ''); 
 	}
 
 	rtrim = function(s)
 	{
-	  return s.replace(/\s+$/, ''); 
+	  return (s || "").replace(/\s+$/, ''); 
 	}
 
 	returnDaysInRange = function(k){

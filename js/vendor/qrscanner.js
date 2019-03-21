@@ -687,6 +687,9 @@ _QRscanner = function(){
 				var tltrCentersDimension = Math.round(this.distance(topLeft, topRight) / moduleSize);
 				var tlblCentersDimension = Math.round(this.distance(topLeft, bottomLeft) / moduleSize);
 				var dimension = ((tltrCentersDimension + tlblCentersDimension) >> 1) + 7;
+
+				console.log('dimension', dimension, dimension & 0x03)
+
 				switch (dimension & 0x03)
 				{
 					
@@ -701,6 +704,7 @@ _QRscanner = function(){
 						break;
 					
 					case 3: 
+
 						throw "Error";
 					}
 				return dimension;
@@ -766,10 +770,12 @@ _QRscanner = function(){
 				var bottomLeft = info.BottomLeft;
 				
 				var moduleSize = this.calculateModuleSize(topLeft, topRight, bottomLeft);
+
 				if (moduleSize < 1.0)
 				{
 					throw "Error";
 				}
+				
 				var dimension = this.computeDimension(topLeft, topRight, bottomLeft, moduleSize);
 				var provisionalVersion = Version.getProvisionalVersionForDimension(dimension);
 				var modulesBetweenFPCenters = provisionalVersion.DimensionForVersion - 7;
@@ -818,6 +824,9 @@ _QRscanner = function(){
 				{
 					points = new Array(bottomLeft, topLeft, topRight, alignmentPattern);
 				}
+
+				console.log('bits, points', bits, points)
+
 				return new DetectorResult(bits, points);
 			}
 			
@@ -826,6 +835,8 @@ _QRscanner = function(){
 		this.detect=function()
 		{
 			var info =  new FinderPatternFinder().findFinderPattern(this.image);
+
+			console.log('info', info)
 				
 			return this.processFinderPatternInfo(info); 
 		}
@@ -2464,10 +2475,12 @@ _QRscanner = function(){
 	            }
 	            catch(e)
 	            {
-	                console.log(e);
+	            	console.log(e)
 	                qrcode.result = "error decoding QR Code";
 	            }
-	            if(qrcode.callback!=null)
+
+
+	            if (qrcode.callback!=null)
 	                qrcode.callback(qrcode.result);
 	        }
 	        image.onerror = function ()
@@ -2542,7 +2555,11 @@ _QRscanner = function(){
 	    
 	    var detector = new Detector(image);
 
+	    console.log(detector)
+
 	    var qRCodeMatrix = detector.detect();
+
+	    console.log(qRCodeMatrix)
 	    
 	    if(qrcode.debug)
 	    {
@@ -3256,6 +3273,9 @@ _QRscanner = function(){
 				var currentState = 0;
 				for (var j = 0; j < maxJ; j++)
 				{
+
+
+
 					if (image[j+i*qrcode.width] )
 					{
 						// Black pixel

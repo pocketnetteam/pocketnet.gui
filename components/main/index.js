@@ -248,7 +248,7 @@ var main = (function(){
 
 			authclbk : function(){
 
-				if(el.c){
+				if(typeof el != 'undefined' && el.c){
 
 					el.c.find('.bgCaption').removeClass('hidden')
 				}

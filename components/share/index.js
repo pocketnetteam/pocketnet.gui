@@ -1215,9 +1215,9 @@ var share = (function(){
 							
 							renders.tagsResults(data, function(tpl){
 
-								clbk(tpl, function(el, helpers){
+								clbk(tpl, function(_el, helpers){
 
-									el.find('.result').on('click', function(){
+									_el.find('.result').on('click', function(){
 
 										var tag = $(this).attr('result')
 
@@ -1225,6 +1225,21 @@ var share = (function(){
 										helpers.clear();
 
 										events.addTag(tag)
+
+									})
+
+									_el.find('.empty').on('click', function(){
+
+										var tag = trim(el.tagSearch.find('input').val())
+
+										if (tag){
+											helpers.closeResults();
+											helpers.clear();
+
+											events.addTag(tag)
+										}
+
+										
 
 									})
 

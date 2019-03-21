@@ -246,7 +246,7 @@ var article = (function(){
 			
 			art : function(art, clbk){
 
-				el.caption.value(art.caption.value)
+				el.caption.val(art.caption.value)
 
 				
 			}
