@@ -4995,6 +4995,7 @@
 
 	ltrim = function(s)
 	{
+		console.log('trim', s)
 	  return (s || "").replace(/^\s+/, ''); 
 	}
 
