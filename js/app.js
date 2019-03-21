@@ -48,7 +48,7 @@ Application = function(node)
 	self.options = {
 
 		nav : {
-			navPrefix : '/',
+			navPrefix : '/pocketnet/',
 		},
 
 		name : 'PCRB',
