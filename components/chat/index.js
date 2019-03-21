@@ -18,7 +18,8 @@ var chat = (function(){
 
 		var newmessageslength = 0;
 
-		var chat = null;
+        var chat = null;
+        var chatInterval = null;
 		var lastUpdate = null;
 
 		var renderedMessages = {};
@@ -989,7 +990,11 @@ var chat = (function(){
 
 			actions.preloader(true)
 
-            setInterval(() => {
+            chatInterval = setInterval(function() {
+                if (!chat) {
+                    return;
+                }
+
                 if (!self.app.platform.rtc.connections[chat.chat.id]) {
                     connect();
                     return;
@@ -1009,7 +1014,7 @@ var chat = (function(){
                 } else {
                     console.log(`Connected users: ${connected} / ${all}`);
                 }
-            }, 10000);
+            }, 15000);
 
             function connect() {
                 self.app.platform.rtc.connect(chat.chat.id, {
@@ -1193,7 +1198,8 @@ var chat = (function(){
 
 				self.app.platform.rtc.destroy(chat.chat.id)
 
-				chat = null;
+                chat = null;
+                clearInterval(chatInterval);
 				lastUpdate = 0;
 
 				$('#tawkchat-container').fadeIn();
