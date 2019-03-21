@@ -164,6 +164,10 @@ var main = (function(){
 					animation : false,
 
 					mid : 'main',
+
+					essenseData : {
+						hr : 'index?'
+					},
 					
 					clbk : function(e, p){
 

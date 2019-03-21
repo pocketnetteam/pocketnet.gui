@@ -456,9 +456,14 @@ var author = (function(){
 
 					mid : author.address,
 
+
+
 					essenseData : {
 						author : author.address,
-						byauthor : true
+						byauthor : true,
+
+						hr : 'author?address=' + author.address + '&'
+				
 					},
 					
 					clbk : function(e, p){

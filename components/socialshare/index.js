@@ -143,9 +143,26 @@ var socialshare = (function(){
 				ed.title || (ed.title = 'Pocketnet')
 			    ed.text || (ed.text = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here')
 			    ed.image || (ed.image = 'https://pocketnet.app/img/logobigpadding.png') 
-			    ed.url || (ed.url = 'https://pocketnet.app/' + self.app.nav.get.href())
+			   
 
-				
+			    if(!ed.url){
+
+			    	if(typeof _Electron != 'undefined' || window.cordova){
+
+			    		var p = window.location.pathname.split('/')
+
+			    		var pn = p[p.length - 1]
+
+				    	ed.url = 'https://pocketnet.app/' +  pn + window.location.search
+				    }
+				    else
+				    {
+				    	ed.url = 'https://pocketnet.app/' + self.app.nav.get.href()
+				    }
+
+			    }
+
+			
 				var data = {
 					socials : socials,
 					url : ed.url,

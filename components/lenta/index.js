@@ -456,11 +456,14 @@ var lenta = (function(){
 			},
 
 			sharesocial : function(id, clbk){
+
+
+
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				if (share){
 
-					var url = 'https://pocketnet.app/'+self.app.nav.get.pathname()+'?s='+id+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || '')
+					var url = 'https://pocketnet.app/' + essenseData.hr + 's='+id+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || '')
 
 					var m = share.caption || share.message;
 
