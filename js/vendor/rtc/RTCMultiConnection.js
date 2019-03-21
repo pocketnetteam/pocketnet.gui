@@ -678,12 +678,16 @@ var RTCMultiConnection = function(roomid, forceOptions) {
             userPreferences = connection.setUserPreferences(userPreferences, remoteUserId);
             var localConfig = this.getLocalConfig(null, remoteUserId, userPreferences);
 
-            if(_.isArray(connection.peers).length < 20){
-                 connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+
+           // console.log(connection.peers.getLength())
+
+
+            if(connection.peers.getLength() < 20){
+                connection.peers[remoteUserId] = new PeerInitiator(localConfig);
             }
             else
             {
-                console.log("TESTSETSETE")
+                //console.log("TESTSETSETE")
             }
 
            

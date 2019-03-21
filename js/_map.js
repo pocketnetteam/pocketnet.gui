@@ -228,7 +228,7 @@ __map =  {
 
 					require : function(){
 
-						Exif = require('exif-js')
+						EXIF = require('./js/vendor/exif.js')
 
 				}},
 
@@ -530,7 +530,7 @@ __map =  {
 
 					require : function(){
 
-						Exif = require('exif-js')
+						EXIF = require('./js/vendor/exif.js')
 
 				}},
 
