@@ -1862,7 +1862,7 @@ Platform = function(app){
 				
 			},	
 
-			giveFreeMoney : function(toAddress, mnemonic, clbk){
+			giveFreeMoney : function(toAddress, mnemonic, clbk, amount){
 				this.checkFreeMoney(toAddress, function(r){
 
 					if(!r){
@@ -1873,7 +1873,7 @@ Platform = function(app){
 					{
 						var feerate = 0.000001;
 
-						var amount = 0.01;
+						amount || (amount = 2.55);
 						var outputs = [{
 							address : toAddress,
 							amount : amount
@@ -8348,7 +8348,7 @@ Platform = function(app){
 
 							
 
-							var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Go ahead and become a crypto pioneer!</div></div></div></div>';
+							var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
 
 							var d = dialog({
 								html : h,
@@ -8380,7 +8380,7 @@ Platform = function(app){
 						}
 					})
 
-				}, 90000)
+				}, 15000)
 			}
 
 			self.prepareUser(clbk, state);
