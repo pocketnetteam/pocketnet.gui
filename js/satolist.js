@@ -3464,15 +3464,9 @@ Platform = function(app){
 
 					var inputs = [];
 
-					console.log(t)
-
 					_.each(t, function(ts){
 
-						console.log("tsts", ts)
-
 						_.each(ts, function(alias){
-
-							console.log("ALIAS", alias)
 
 							if(alias.inputs){
 
@@ -3556,8 +3550,6 @@ Platform = function(app){
 						
 					
 					})
-
-					console.log('clearUnspents', cleared, amount)
 
 					if(cleared){
 						_.each(s.clbks, function(c){
@@ -3905,9 +3897,32 @@ Platform = function(app){
 
 							}]
 
-							self.sdk.node.transactions.create[obj.type](inputs, obj, clbk, p)
+							self.sdk.node.transactions.create[obj.type](inputs, obj, function(a, er, data){
 
-						}, deep(p, 'address.address'))
+								console.log('a, er, data', a, er, data)
+
+								if(!a){
+									if(er == -26 && !p.update){
+
+										console.log("update", er)
+										
+										p.update = true;
+
+										self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p)
+
+										return
+									}
+								}
+								
+
+								if (clbk){
+									clbk(a, er, data)
+								}
+								
+
+							}, p)
+
+						}, deep(p, 'address.address'), p.update)
 					},
 
 					wallet : function(inputs, ouputs, _kp){
@@ -4046,9 +4061,6 @@ Platform = function(app){
 
 						    amount = amount * 100000000;
 
-						    console.log('inputs', inputs)
-
-
 							var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
 
 							var opreturnData = [Buffer.from(obj.type, 'utf8'), data];
@@ -4147,8 +4159,8 @@ Platform = function(app){
 
 
 										if (clbk){
-									    	clbk(null, (deep(data, 'data.code') || deep(data, 'data.message') || 'network').toString(), data)
-									    }
+										    clbk(null, (deep(data, 'data.code') || deep(data, 'data.message') || 'network').toString(), data)
+										}
 
 									}
 								})
@@ -5978,7 +5990,12 @@ Platform = function(app){
 				}
 				else
 				{
-					boffset = 60;
+
+					if(typeof _Electron == 'undefined'){
+						boffset = 60;
+					}
+
+					
 				}
 
 				offset = offset + boffset
@@ -7181,7 +7198,6 @@ Platform = function(app){
 
 			sendSyncRequest : function(id, userid){
 
-				console.log("sendSyncRequest")
 
 				if(!self.connections[id]) return
 				
