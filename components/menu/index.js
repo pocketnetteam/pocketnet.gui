@@ -436,69 +436,86 @@ var menu = (function(){
 						el.removeClass('hidden')
 
 						if(add < 0) c = 'bad'
-					
-						al.animateNumber({
-					    	number: add,
 
-					    	numberStep: function(now, tween) {
-
-					    		actions.searchWidth()
-
-					    		el.addClass(c)
-
-					        	var number = Number(value + now).toFixed(8),
-					            	target = $(tween.elem);
-
-					           
-					    		target.text(self.app.platform.mp.coin(number));
-
-					    	},
-
-					    }, rand(400, 1200), function(){
-
-					    	el.removeClass(c)
-
-					    });
-					}
-
-					var setValue = function(added){
-
-
-						var value = current
-
-						if (first || typeof added == 'undefined'){
-
-							first = false;
-
-							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-								set(amount, added)
-
-								current = amount;
-
-								self.app.platform.sdk.wallet.drawSpendLine(el.find('.numberWrp'))
-							})
+						if(add == 0){
+							al.text(self.app.platform.mp.coin(value))
 						}
 						else
 						{
-							set(value, added)
+							al.animateNumber({
+						    	number: add,
 
-							current = value + added
+						    	numberStep: function(now, tween) {
+
+						    		actions.searchWidth()
+
+						    		el.addClass(c)
+
+						        	var number = Number(value + now).toFixed(8),
+						            	target = $(tween.elem);
+
+						           
+						    		target.text(self.app.platform.mp.coin(number));
+
+						    	},
+
+						    }, rand(400, 1200), function(){
+
+						    	el.removeClass(c)
+
+						    });
 						}
+					
+						
+					}
+
+					var setValue = function(){
+
+						
+
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+							var t = self.app.platform.sdk.node.transactions.tempBalance()
+
+							amount = amount + t
+
+							var add = amount - current;
+
+							console.log('self.app.platform.sdk.node.transactions.tempBalance()', t, current, amount, add, first)
+
+
+							if (first) {
+								add = 0;
+								current = amount
+							}
+
+							first = false;
+
+							set(current, add)
+
+							current = amount;
+
+							self.app.platform.sdk.wallet.drawSpendLine(el.find('.numberWrp'))
+						})
 
 					}
 
 					var setNewBalance = function(){
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-							setValue(amount - current)	
+
+							var t = self.app.platform.sdk.node.transactions.tempBalance()
+
+							console.log('self.app.platform.sdk.node.transactions.tempBalance()2', t)
+
+							setValue(amount - current + t)	
 							
 						})
 					}
 
-					var act = function(added){
+					var act = function(){
 
-						setValue(added)
+						setValue()
 						
 					}
 

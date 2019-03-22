@@ -1506,8 +1506,23 @@ Platform = function(app){
 				
 			},
 
+			seenall : function(){
+				var n = this
+
+				_.each(n.storage.notifications, function(notification){
+					notification.seen = self.app.platform.currentTimeSS()
+				})
+
+				n.save()
+
+				_.each(n.clbks.seen, function(f){
+					f()
+				})
+			},
+
 			seen : function(ids){
 				var n = this
+
 
 				_.each(ids, function(id){
 
@@ -3368,6 +3383,8 @@ Platform = function(app){
 
 					var temps = [];
 
+					var deleted = false;
+
 					_.each(t, function(ts){
 
 						_.each(ts, function(alias){
@@ -3386,6 +3403,8 @@ Platform = function(app){
 
 										if(ts[p.item.txid]){
 
+											deleted = true
+
 											delete ts[p.item.txid]
 										}
 
@@ -3400,7 +3419,19 @@ Platform = function(app){
 						},
 
 						all : {
-							success : clbk
+							success : function(){
+
+								if(deleted){
+
+									_.each(self.sdk.node.transactions.clbks, function(c){
+										c();
+									})
+
+								}
+
+								if(clbk)
+									clbk()
+							}
 						}
 					})
 
@@ -3426,6 +3457,49 @@ Platform = function(app){
 					    	clbk(null)
 					    }
 					}
+				},
+
+				tempInputs : function(){
+					var t = this.temp;
+
+					var inputs = [];
+
+					console.log(t)
+
+					_.each(t, function(ts){
+
+						console.log("tsts", ts)
+
+						_.each(ts, function(alias){
+
+							console.log("ALIAS", alias)
+
+							if(alias.inputs){
+
+								_.each(alias.inputs, function(i){
+									inputs.push(i)
+								})
+
+							}
+						})
+					})
+
+
+
+
+					return inputs
+
+				},
+
+				tempBalance : function(){
+					var inputs = this.tempInputs()
+
+
+					return _.reduce(inputs, function(m, i){
+
+						return m + i.amount
+
+					}, 0)
 				},
 
 				haveTemp : function(){
@@ -3482,6 +3556,8 @@ Platform = function(app){
 						
 					
 					})
+
+					console.log('clearUnspents', cleared, amount)
 
 					if(cleared){
 						_.each(s.clbks, function(c){
@@ -3970,6 +4046,8 @@ Platform = function(app){
 
 						    amount = amount * 100000000;
 
+						    console.log('inputs', inputs)
+
 
 							var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
 
@@ -4028,10 +4106,13 @@ Platform = function(app){
 
 										
 										if(!temp[obj.type] || count == 'one')
-
+										{
 											temp[obj.type] = {};
+										}
 
-											temp[obj.type][d] = alias;
+										temp[obj.type][d] = alias;
+
+										alias.inputs = inputs
 
 										self.sdk.node.transactions.saveTemp()
 										
@@ -5313,8 +5394,6 @@ Platform = function(app){
 			'newblocks' : {
 				loadMore : function(data, clbk){
 
-					console.log("newblocks", data)
-
 					var s = platform.sdk.node.transactions;
 
 					var dif = platform.currentBlock - data.block
@@ -5667,8 +5746,6 @@ Platform = function(app){
 						if (lost < 2)
 							lost = platform.currentBlock;	
 
-						console.log("SELF CLOSE")
-
 						self.close();
 							
 						initOnlineListener();			
@@ -5894,9 +5971,17 @@ Platform = function(app){
 
 				var maxCount = 4;
 
+				var boffset = 0;
+
 				if(isMobile()){
 					maxCount = 1;
 				}
+				else
+				{
+					boffset = 60;
+				}
+
+				offset = offset + boffset
 
 				var remove = self.fastMessages.length - maxCount;
 
@@ -6869,6 +6954,8 @@ Platform = function(app){
 
 		self.timers = {};
 
+		var me = makeid();
+
 		////
 
 		//self.connection = null;
@@ -6912,7 +6999,18 @@ Platform = function(app){
 				
 		}
 
-		
+		self.reconnect = function(roomid){
+
+			if (self.connections[roomid])
+				self.connections[roomid].openOrJoin(roomid, function(){
+
+				});
+
+			else{
+				return false;
+			}
+
+		}
 
 		self.settings = function(connection, roomid){
 
@@ -7082,6 +7180,8 @@ Platform = function(app){
 			},
 
 			sendSyncRequest : function(id, userid){
+
+				console.log("sendSyncRequest")
 
 				if(!self.connections[id]) return
 				
@@ -8424,8 +8524,6 @@ Platform = function(app){
 					self.sdk.node.transactions.checkTemps(function(){
 
 						self.sdk.user.get(function(u){
-
-							console.log("UUUU", u)
 
 							if(Number(u.postcnt) > 0)
 

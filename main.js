@@ -254,7 +254,7 @@ function createWindow() {
 
     win.loadFile('index_el.html')
 
-    win.webContents.openDevTools()
+    //win.webContents.openDevTools()
     globalShortcut.register('CommandOrControl+Shift+I', () => {
         win.webContents.toggleDevTools()
     });

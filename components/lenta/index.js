@@ -870,7 +870,7 @@ var lenta = (function(){
 							})
 
 							invshares = _.filter(invshares, function(is){
-								if(!is.temp) return true
+								if(is && !is.temp) return true
 							})
 
 							/*var i = $(inv[0]).attr('index')

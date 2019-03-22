@@ -475,8 +475,8 @@ var RTCMultiConnection = function(roomid, forceOptions) {
                 return allPeers;
             },
             forEach: function(callbcak) {
-                this.getAllParticipants().forEach(function(participant) {
-                    callbcak(connection.peers[participant]);
+                this.getAllParticipants().forEach(function(participant, i) {
+                    callbcak(connection.peers[participant], i);
                 });
             },
             send: function(data, remoteUserId) {
@@ -527,7 +527,7 @@ var RTCMultiConnection = function(roomid, forceOptions) {
                 }
 
                 this.getAllParticipants().forEach(function(participant) {
-                    if (!that[participant].channels.length) {
+                    if (!that[participant].channels.length && connection.peers[participant].createDataChannel) {
 
                         connection.peers[participant].createDataChannel();
                         connection.renegotiate(participant);
@@ -683,7 +683,15 @@ var RTCMultiConnection = function(roomid, forceOptions) {
 
 
             if(connection.peers.getLength() < 20){
-                connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+            
+            
+                var pi = new PeerInitiator(localConfig);
+
+                if (pi){
+                    connection.peers[remoteUserId] = pi
+                }
+
+                
             }
             else
             {
@@ -697,7 +705,13 @@ var RTCMultiConnection = function(roomid, forceOptions) {
             userPreferences = connection.setUserPreferences(userPreferences || {}, remoteUserId);
 
             var localConfig = this.getLocalConfig(remoteSdp, remoteUserId, userPreferences);
-            connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+
+             var pi = new PeerInitiator(localConfig);
+
+            if (pi){
+                connection.peers[remoteUserId] = pi
+            }
+
         };
 
         this.renegotiatePeer = function(remoteUserId, userPreferences, remoteSdp) {
@@ -718,7 +732,13 @@ var RTCMultiConnection = function(roomid, forceOptions) {
 
             var localConfig = this.getLocalConfig(remoteSdp, remoteUserId, userPreferences);
 
-            connection.peers[remoteUserId] = new PeerInitiator(localConfig);
+            var pi = new PeerInitiator(localConfig);
+
+            if (pi){
+                connection.peers[remoteUserId] = pi
+            }
+
+            //connection.peers[remoteUserId] = new PeerInitiator(localConfig);
         };
 
         this.replaceTrack = function(track, remoteUserId, isVideoTrack) {
@@ -771,7 +791,7 @@ var RTCMultiConnection = function(roomid, forceOptions) {
             }
 
             if (message.candidate) {
-                if (connection.peers[remoteUserId]) {
+                if (connection.peers[remoteUserId] && connection.peers[remoteUserId].addRemoteCandidate) {
                     connection.peers[remoteUserId].addRemoteCandidate(message);
                 }
 
@@ -883,7 +903,18 @@ var RTCMultiConnection = function(roomid, forceOptions) {
         }
 
         this.onDataChannelMessage = function(message, remoteUserId) {
-            textReceiver.receive(JSON.parse(message), remoteUserId, connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {});
+
+            var parsed = null;
+
+            try{
+                parsed = JSON.parse(message)
+            }
+            catch(e){
+
+            }
+
+            if (parsed)
+                textReceiver.receive(parsed, remoteUserId, connection.peers[remoteUserId] ? connection.peers[remoteUserId].extra : {});
         };
 
         this.onDataChannelClosed = function(event, remoteUserId) {
@@ -2595,11 +2626,26 @@ var RTCMultiConnection = function(roomid, forceOptions) {
 
                     peer = new RTCPeerConnection(params);
                 } catch (e) {
-                    peer = new RTCPeerConnection();
+
+
+                    try{
+                        peer = new RTCPeerConnection();
+                    }
+                    catch (e) {
+
+                        peer = null;
+
+                    }
+                    
                 }
             }
         } else {
             peer = config.peerRef;
+        }
+
+        if (!peer) {
+            console.log("PEER NULl")
+            return false;
         }
 
         if (!peer.getRemoteStreams && peer.getReceivers) {
@@ -2967,7 +3013,13 @@ var RTCMultiConnection = function(roomid, forceOptions) {
         }
 
         function createOfferOrAnswer(_method) {
+
+            if(!peer) return
+
             peer[_method](defaults.sdpConstraints).then(function(localSdp) {
+
+                if(!peer) return
+
                 if (DetectRTC.browser.name !== 'Safari') {
                     localSdp.sdp = connection.processSdp(localSdp.sdp);
                 }

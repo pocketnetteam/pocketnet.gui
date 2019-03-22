@@ -1258,8 +1258,22 @@ var wallet = (function(){
 						self.app.platform.sdk.node.transactions.get.canSpend(addresses, function(spend, total){
 							var color = '#414244';
 							var samount = 100;
+							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
 							if(total){
+
+								console.log('group.id', group.id, total)
+
+								if(group.id == 'pnetwallet'){
+
+									
+										total = temp + total;
+
+
+										console.log('group.id', temp, total)
+
+								}
+
 								samount = 100 * spend / total
 								color = '#0F8623'
 							}
@@ -1276,6 +1290,12 @@ var wallet = (function(){
 									summary : 100 - samount,
 									color : '#414244'
 								}
+							}
+
+							if(group.id == 'pnetwallet'){
+								
+								amount = temp + amount;
+
 							}
 
 							renders.total({

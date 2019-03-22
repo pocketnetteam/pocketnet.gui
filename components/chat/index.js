@@ -22,6 +22,8 @@ var chat = (function(){
         var chatInterval = null;
 		var lastUpdate = null;
 
+		var lastmessage = null;
+
 		var renderedMessages = {};
 		var renderedMessagesTime = {};
 
@@ -713,6 +715,15 @@ var chat = (function(){
 			messages : function(clbk, messages, saveTempMessages, replace){
 
 				messages = _.filter(messages, function(m, i){
+
+					
+					var t = m.tm
+
+					if(m.tm.length == 17) m.tm = t + '0'
+
+
+					if(lastmessage && lastmessage.tm > m.tm) return
+
 					if(messages.length - 50 > i) return false
 
 						return true
@@ -729,11 +740,15 @@ var chat = (function(){
 				messages = _.filter(messages, function(m){
 					var id = m.tm + m.f
 
+					if(!m.tm) return false
+
 					if(!renderedMessages[id]) {
 
 						renderedMessages[id] = true;
 
 						renderedMessagesTime[m.tm] = m;
+
+
 
 						return true;
 					}
@@ -744,9 +759,9 @@ var chat = (function(){
 
 					var t = msg.tm
 
-					if(msg.tm.length == 17) t = t + '0'
+					if(msg.tm.length == 17) msg.tm = t + '0'
 
-					return Number(t)
+					return Number(msg.tm)
 				})
 
 				console.log('sorted', sorted)
@@ -770,6 +785,7 @@ var chat = (function(){
 					return
 				}
 				
+				lastmessage = sorted[sorted.length - 1]
 
 				self.shell({
 					name :  'messages',
@@ -1003,17 +1019,34 @@ var chat = (function(){
                 let connected = 0;
                 let all = 0;
                 self.app.platform.rtc.connections[chat.chat.id].peers.forEach((p, i) => {
-                    let status = p.peer.connectionState || p.peer.iceConnectionState;
+
+                    let status = deep(p, 'peer.connectionState') || deep(p, 'peer.iceConnectionState') || 'fail';
                     connected += (['connected','connected','completed'].includes(status) ? 1 : 0);
                     all += 1;
+
+
+                    if (status == 'fail'){
+                    	self.app.platform.rtc.connections[chat.chat.id].deletePeer(p.userid)
+                    }
                 });
 
                 if (connected <= 0) {
-                    self.app.platform.rtc.destroy(chat.chat.id, connect);
-                    console.log('Reconnecting to room. Reason: not connected users.');
+
+                	var r = self.app.platform.rtc.reconnect(chat.chat.id)
+
+
+                	if(!r){
+                		self.app.platform.rtc.destroy(chat.chat.id, connect);
+                	}
+
+                    //self.app.platform.rtc.destroy(chat.chat.id, connect);
+                    console.log('Reconnecting to room. Reason: not connected users. ', all);
                 } else {
                     console.log(`Connected users: ${connected} / ${all}`);
                 }
+
+                console.log('self.app.platform.rtc.connections[chat.chat.id].peers', self.app.platform.rtc.connections[chat.chat.id].peers)
+
             }, 15000);
 
             function connect() {
@@ -1042,6 +1075,9 @@ var chat = (function(){
 				receiveMessages : function(msgs){
 
 					self.app.platform.rtc.load.users(msgs, function(){
+
+
+						console.log("messages", msgs)
 
 						//renders.safemessages(msgs)
 
@@ -1170,6 +1206,8 @@ var chat = (function(){
 			},
 
 			destroy : function(){
+
+
 
 				if (el.type)
 

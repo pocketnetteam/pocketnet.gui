@@ -28,6 +28,8 @@ var notifications = (function(){
 
 
 					seenTimer = slowMade(function(){
+
+						self.app.platform.sdk.notifications.seenall()
 						
 						/*var inv = inView(els, {
 							inel : inel,
@@ -44,12 +46,12 @@ var notifications = (function(){
 
 							els.addClass('seen')
 
-							els.each(function(){
+							/*els.each(function(){
 
 								ids.push($(this).attr('notification'))
-							})
+							})*/
 
-							self.app.platform.sdk.notifications.seen(ids)
+							//self.app.platform.sdk.notifications.seen(ids)
 							
 						}
 
