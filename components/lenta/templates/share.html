@@ -31,7 +31,7 @@ if (share.txid == '84cc877c67f305374258f4c9d618366870bddedb8a425260de995c675f7c7
 	return
 }
 
-
+console.log('share', share)
 var metadisplay = function(){ %>
 
 <div class="meta">
@@ -243,13 +243,13 @@ var metadisplay = function(){ %>
 	u : function(){ %> 
 		<% if(share.url) {%>
 
-						<div class="url">
-							<!--<span>
-								<a href="share.url"><%-share.url%></a>
-							</span>-->
-						</div>
+			<div class="url">
+				<!--<span>
+					<a href="share.url"><%-share.url%></a>
+				</span>-->
+			</div>
 
-					<% } %>
+		<% } %>
 	<% }
 
 } %>

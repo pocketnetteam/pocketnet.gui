@@ -426,6 +426,12 @@ Platform = function(app){
 
 
 	self.parseUrl = function(url){
+
+
+		url = url.replace("http:", "https:").replace("http//", "https://")
+
+		console.log('parseUrl', url)
+
 		var meta = parseVideo(url);
 
 		var _url = null;
@@ -3902,7 +3908,7 @@ Platform = function(app){
 								console.log('a, er, data', a, er, data)
 
 								if(!a){
-									if(er == -26 && !p.update){
+									if((er == -26 || er == 16) && !p.update){
 
 										console.log("update", er)
 										

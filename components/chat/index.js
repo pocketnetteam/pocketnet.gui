@@ -1044,6 +1044,8 @@ var chat = (function(){
                     console.log(`Connected users: ${connected} / ${all}`);
                 }
 
+                console.log(all);
+
             }, 15000);
 
             function connect() {
