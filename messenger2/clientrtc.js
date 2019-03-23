@@ -476,6 +476,8 @@ var platformRTC = function(p){
 
 		var closing = false;
 		var opened = false;
+
+		self.online = deep(window, 'navigator.onLine');
 		
 
 		var RTCPeerConnection = window.RTCPeerConnection || 
@@ -483,7 +485,40 @@ var platformRTC = function(p){
 								window.webkitRTCPeerConnection;
 		
 
+		var initOnlineListener = function(){
+			if(self.onlineCheck){
 
+				onlinetnterval = retry(function(){
+
+					var online = deep(window, 'navigator.onLine');
+
+					if (self.online != online){
+
+						self.online = online;
+
+						return true;
+
+					}
+					
+
+				}, function(){
+
+					if(!self.online){
+
+						self.close();	
+
+						initOnlineListener()	
+					}
+					else
+					{
+						
+						initconnection();	
+					}
+
+				}, 50)
+
+			}
+		}						
 
 		var send = function(message){ 
 
@@ -785,9 +820,8 @@ var platformRTC = function(p){
 			return connection 
 		}
 
-		self.destroy = function(){
-
-			if(closing) return
+		self.close = function(){
+			if(closing) return false
 
 			iniclbks()
 
@@ -795,12 +829,21 @@ var platformRTC = function(p){
 
 			connection.close();
 
-			_.each(self.chats || {}, function(c){
-				c.close()
-			})
+			return true
+		}
+
+		self.destroy = function(){
+
+			if(!self.close())
+
+				_.each(self.chats || {}, function(c){
+					c.close()
+				})
 		}
 
 		self.init = function(clbk){
+
+			initOnlineListener()
 
 			init();
 
