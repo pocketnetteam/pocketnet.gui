@@ -764,7 +764,6 @@ var chat = (function(){
 					return Number(msg.tm)
 				})
 
-				console.log('sorted', sorted)
 
 				if(!saveTempMessages) actions.clearTempMessages()
 
@@ -1058,9 +1057,6 @@ var chat = (function(){
                     
                 }
 
-                // console.log('self.app.platform.rtc.connections[chat.chat.id].peers', self.app.platform.rtc.connections[chat.chat.id].peers)
-                console.log(peers_info)
-
             }, 15000);
 
             function connect() {
@@ -1089,9 +1085,6 @@ var chat = (function(){
 				receiveMessages : function(msgs){
 
 					self.app.platform.rtc.load.users(msgs, function(){
-
-
-						console.log("messages", msgs)
 
 						//renders.safemessages(msgs)
 

@@ -48,15 +48,56 @@
 
 		.userslistwrapper{
 			overflow : hidden;
+			position: relative;
+			.arrow{
+				border-radius: 50%;
+				line-height: 32px;
+				width: 33px;
+				height: 33px;
+				text-align: center;
+				font-size: 0.8em;
+				color : @color-gray-light;
+				.transition(0.3s);
+				cursor: pointer;
+				border : 1px solid transparent;
+				top : 7px;
+				background: #fff;
+
+
+				&:hover{
+					color : @color-main;
+					border-color: @color-main;
+				}
+			}
+
+			.uleft{
+				position: absolute;
+				left: -60px;
+
+				&.active{
+					left: 0;
+				}
+			}
+
+			.uright{
+				position: absolute;
+				right: -60px;
+
+				&.active{
+					right: 0;
+				}
+			}
+
 		}
 
 		.userslist{
 			white-space: nowrap;
+			.transition(0.3s);
 		}
 
 		.user{
 			width: 120px;
-			display: inline-block;
+			float: left;
 
 			.usericon{
 				margin : 0 auto;
