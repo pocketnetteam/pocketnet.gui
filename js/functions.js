@@ -7341,7 +7341,7 @@
 	    }
 
 		var autorotation = function(file, image, clbk){
-			if(file.type == 'image/jpeg'){
+			if(file.type == 'image/jpeg' && !p.notexif && EXIF != 'undefined'){
 				EXIF.getData(file, function() {
 
 					var allMetaData = EXIF.getAllTags(this);

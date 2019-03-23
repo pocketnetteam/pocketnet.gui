@@ -430,8 +430,6 @@ Platform = function(app){
 
 		url = url.replace("http:", "https:").replace("http//", "https://")
 
-		console.log('parseUrl', url)
-
 		var meta = parseVideo(url);
 
 		var _url = null;
@@ -4733,6 +4731,54 @@ Platform = function(app){
 			}
 		},
 
+		tempmessenger : {
+			clbks : {},
+			init : function(clbk){
+				var address = self.sdk.address.pnet().address
+				var id = bitcoin.crypto.hash256(address + self.app.options.fingerPrint).toString('hex')
+
+				var keyPair = self.app.user.keys();
+
+				var signature = keyPair.sign(Buffer.from(bitcoin.crypto.hash256(id), 'utf8'));	
+
+				var user = {
+					device : id,
+					address : address,
+					signature : signature.toString('hex'),
+					publicKey : keyPair.publicKey.toString('hex'),
+				}
+
+				self.clientrtctemp = new platformRTC({
+					user : user,
+					platform : self
+				})
+
+				self.clientrtctemp.init(function(){
+					self.clientrtctemp.api.login(function(){
+
+						/*self.clientrtctemp.clbks.message.messenger = function(p, rtc){
+
+							_.each(self.sdk.tempmessenger.clbks || {}, function(c){
+								c('message', rtc)
+							})
+							
+						}*/
+
+
+					})
+				})
+
+				if (clbk)
+					clbk()
+			},
+
+			getChat : function(chat){
+
+				chat.rtc = self.clientrtctemp.api.getChat(chat.id, chat.users);
+			}
+		},
+
+
 		messenger : {
 			clbks : {},
 			load : {
@@ -5048,6 +5094,8 @@ Platform = function(app){
 
 					if(type == 'share'){
 						if(c.id == '6768de97ad495c0110a9e09d43825ef24f1055449a5d368225ac102804397dc1_PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd') return true
+						
+						//if(c.id == 'bb4a3d19b26aa09c4079efc3c93da092054c2dd2d0153cd01ef4b467eb71417f_PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM') return true
 					
 							return
 					}
@@ -6983,11 +7031,11 @@ Platform = function(app){
 
 		//self.connection = null;
 
-		self.connect = function(roomid, events, clbk){
+		self.connect = function(roomid, events, clbk, mstorageid){
 
 
 			if(!self.storages[roomid]){
-				self.storages[roomid] = new MessageStorage({id : roomid});
+				self.storages[roomid] = new MessageStorage({id : mstorageid || roomid});
 			}
 			else
 			{
@@ -7219,7 +7267,6 @@ Platform = function(app){
 			    }
 
 			    if (self.connections[id] && _sync_peer_send) {
-                    console.log(`${self.connections[id].userid}: sendSyncRequest to ${_sync_peer_send}`);
 				    self.connections[id].send({
 				        sync_request: 1,
 				        hv: _hv,
@@ -7428,10 +7475,10 @@ Platform = function(app){
 	self.currentTimeSS = function(){
 		var created = new Date()
 
-		/*if (self.timeDifference){
+		if (self.timeDifference){
 
 			created.addSeconds(self.timeDifference)
-		}*/
+		}
 
 		return dateToStrUTCSS(created)
 	}
@@ -8538,7 +8585,7 @@ Platform = function(app){
 					self.sdk.chats.load,
 					self.sdk.user.subscribeRef,
 					self.ws.init,
-					//self.sdk.messenger.init
+					self.sdk.tempmessenger.init
 
 					], function(){
 					

@@ -693,6 +693,8 @@ var discussions = (function(){
 
 			actions.chatp('6768de97ad495c0110a9e09d43825ef24f1055449a5d368225ac102804397dc1_PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd')
 
+			//actions.chatp('bb4a3d19b26aa09c4079efc3c93da092054c2dd2d0153cd01ef4b467eb71417f_PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM')
+			
 		}
 
 		return {
@@ -709,6 +711,9 @@ var discussions = (function(){
 				//if(!localStorage[k]){
 					localStorage[k] = true
 					self.app.platform.sdk.chats.add('6768de97ad495c0110a9e09d43825ef24f1055449a5d368225ac102804397dc1_PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd', 'share')
+					//
+					
+					//self.app.platform.sdk.chats.add('bb4a3d19b26aa09c4079efc3c93da092054c2dd2d0153cd01ef4b467eb71417f_PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'share')
 				//}
 
 

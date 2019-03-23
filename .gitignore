@@ -9,3 +9,6 @@ pocketnet.zip
 package-lock.json
 build/installer2.nsh
 sign.txt
+*.zip
+messenger2/server/cert/key.pem
+messenger2/server/address.js

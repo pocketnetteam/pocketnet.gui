@@ -32,6 +32,10 @@
 
 						<% if(chat.chat.type == 'share') { 				
 
+							var m = chat.share.caption || chat.share.message;
+
+							var nm = emojione.toImage(filterXSS(clearScripts(trimHtml(m, 30))));
+
 
 							 %> 
 

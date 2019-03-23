@@ -997,41 +997,6 @@ var mchat = (function(){
 				})
 			}
 
-
-			/*self.app.platform.rtc.connect(chat.chat.id, {
-
-				sendMessage : function(msg){
-
-					self.app.platform.rtc.load.users(msg, function(){
-						renders.messages(null, [msg], true)
-					})
-				},
-
-				receiveMessage : function(msg){
-
-
-					self.app.platform.rtc.load.users(msg, function(){
-						renders.messages(null, [msg])
-					})
-
-				},
-
-				receiveMessages : function(msgs){
-
-					self.app.platform.rtc.load.users(msgs, function(){
-
-						console.log("safemessages")
-
-						renders.safemessages(msgs)
-					})
-
-				}
-			}, function(){
-
-				actions.preloader(false)
-
-			})*/
-
 			if(chat){
 
 				var m = _.toArray(chat.rtc.storage._db || {});

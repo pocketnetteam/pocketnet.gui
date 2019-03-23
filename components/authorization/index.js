@@ -194,6 +194,8 @@ var authorization = (function(){
 	
 				ext : ['txt', 'png', 'jpeg', 'jpg'],
 
+				notexif : true,
+
 				dropZone : el.c,
 
 				action : function(file, clbk){

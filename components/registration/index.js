@@ -401,6 +401,8 @@ var registration = (function(){
 				
 							ext : ['txt', 'png', 'jpeg', 'jpg'],
 
+							notexif : true,
+
 							dropZone : el.c.find('.confirm'),
 
 							action : function(file, clbk){

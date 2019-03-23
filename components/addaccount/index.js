@@ -49,6 +49,8 @@ var addaccount = (function(){
 
 	        initUpload({
 				el : el.c.find('.uploadFile'),
+
+				notexif : true,
 	
 				ext : ['txt', 'png', 'jpeg', 'jpg'],
 

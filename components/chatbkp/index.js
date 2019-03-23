@@ -126,7 +126,11 @@ var chat = (function(){
 
 				if (value){
 
-					chat.rtc.send(value)
+					self.app.platform.rtc.send(chat.chat.id, value);
+
+					chat.chat.time = self.app.platform.currentTime();
+
+					self.app.platform.sdk.chats.save();
 
 				}
 				
@@ -251,7 +255,7 @@ var chat = (function(){
 				{
 					var to = el.messages.find('.chatmessage:nth-last-child(1)');
 
-					var offset = -20;
+					var offset = 0;
 					var prop = 'position'
 
 					if (essenseData.view == 'buildin'){
@@ -261,31 +265,26 @@ var chat = (function(){
 
 					var inv = inView(to, {
 						inel : _el,
-						offset : offset,
-						mode : 'partall'
+						offset : offset
+						//mode : 'partall'
 					})
 
-					if(to && to[prop]())
+					if(inv.length)
 					{
 						var h = innerContent.height();
 						var scroll = _el.scrollTop();
-						px = h - to.height() - 150;
+						px = to[prop]().top + to.height() + 70;
 						
 
-						console.log('scroll + _el.height() > px', scroll, _el.height() , px, scroll + _el.height() > px)
-
 						if(scroll + _el.height() > px)
-							px = 'toLast';
+							px = h - scroll;
 						else
 						{
-							px = null;
-							
+							px = 'toLast';
 						}
 						
 
 					}
-
-					console.log("PX", px, inv.length)
 
 
 					
@@ -669,9 +668,7 @@ var chat = (function(){
 					_.each(messages, function(m){
 
 						if( (Number(m.tm) < Number(mt.t) || (index == times.length - 1)) 
-
 							&& (!index ||  Number(times[index - 1].t) > Number(m.tm))){
-
 
 							pack.newmessages.push(m)
 
@@ -681,7 +678,7 @@ var chat = (function(){
 
 					if(pack.newmessages.length)
 					{
-						pack.newmessages.push(pack.oldmessage.m)
+						pack.newmessages.push(pack.oldmessage)
 
 						pack.newmessages = _.sortBy(pack.newmessages, function(m){
 							return Number(mt.t);
@@ -699,7 +696,6 @@ var chat = (function(){
 							var pack = p.item
 
 							var el = helpers.findEl(pack.oldmessage)
-
 
 							renders.messages(p.success, pack.newmessages, null, el)
 						},
@@ -720,7 +716,7 @@ var chat = (function(){
 
 				messages = _.filter(messages, function(m, i){
 
-						
+					
 					var t = m.tm
 
 					if(m.tm.length == 17) m.tm = t + '0'
@@ -1007,53 +1003,113 @@ var chat = (function(){
 
 		var make = function(){
 
-			chat.rtc.clbks.receive.message.messenger = function(message){
-				if(!self.app.platform.focus && self.app.platform.titleManager){
+			actions.preloader(true)
 
-					self.app.platform.titleManager.add("You have new messages")
+            chatInterval = setInterval(function() {
+                if (!chat) {
+                    return;
+                }
 
-				}	
+                if (!self.app.platform.rtc.connections[chat.chat.id]) {
+                    connect();
+                    return;
+                }
 
-				lastmessage = message
+                let connected = 0;
+                let all = 0;
+                let peers_info = '';
+                self.app.platform.rtc.connections[chat.chat.id].peers.forEach((p, i) => {
 
-				self.app.platform.sdk.messenger.load.messages(message, function(){
-					renders.messages(null, [message])
-				})
-			}
+                    let status = deep(p, 'peer.connectionState') || deep(p, 'peer.iceConnectionState') || 'fail';
+                    connected += (['connected','connected','completed'].includes(status) ? 1 : 0);
+                    all += 1;
 
-			chat.rtc.clbks.receive.messages.messenger = function(messages){
+                    peers_info += JSON.stringify({
+                        user: p.userid,
+                        status: status,
+                        channel: p.peer ? p.peer.channel.readyState : 'null'
+                    }) + '\r\n';
 
-			
+                    if (status == 'fail'){
+                        console.log('deletePeer with fail');
+                        console.log(deep(p, 'peer.connectionState') || deep(p, 'peer.iceConnectionState'));
+                        self.app.platform.rtc.connections[chat.chat.id].addToBanlist(p.userid);
+
+                    	self.app.platform.rtc.connections[chat.chat.id].deletePeer(p.userid);
+                        delete self.app.platform.rtc.connections[chat.chat.id].peers[p.userid]
+                    }
+                });
+
+                console.log(`Connected users: ${connected} / ${all}`);
+
+                if (connected <= 0) {
+
+                	//var r = self.app.platform.rtc.reconnect(chat.chat.id)
 
 
+                	// if(!r){
+                	// 	self.app.platform.rtc.destroy(chat.chat.id, connect);
+                	// }
 
-				self.app.platform.sdk.messenger.load.messages(messages, function(){
-					renders.messages(null, messages, true)
-					//renders.safemessages(messages)
-					
-				})
-			}
+                    //self.app.platform.rtc.destroy(chat.chat.id, connect);
+                    //console.log('Reconnecting to room. Reason: not connected users. ', all);
+                } else {
+                    
+                }
 
-			chat.rtc.clbks.send.message.messenger = function(message){
-				self.app.platform.sdk.messenger.load.messages(message, function(){
+                console.log(all);
 
-					lastmessage = message
+            }, 15000);
 
-					renders.messages(null, [message], true)
-				})
-			}
+            function connect() {
+                self.app.platform.rtc.connect(chat.chat.id, {
+
+				sendMessage : function(msg){
+
+
+					self.app.platform.rtc.load.users(msg, function(){
+						renders.messages(null, [msg], true)
+					})
+				},
+
+				receiveMessage : function(msg){
+
+
+					self.app.platform.rtc.load.users(msg, function(){
+
+						newmessageslength++;
+
+						renders.messages(null, [msg])
+					})
+
+				},
+
+				receiveMessages : function(msgs){
+
+					self.app.platform.rtc.load.users(msgs, function(){
+
+						//renders.safemessages(msgs)
+
+						renders.messages(null, msgs, true)
+
+						actions.read()
+					})
+
+				}
+			}, function(){
+				actions.preloader(false)
+			})
+            };
+
+            connect();
 
 			if(chat){
 
-				var m = _.toArray(chat.rtc.storage._db || {});
+				var m = _.toArray(self.app.platform.rtc.storages[chat.chat.id]._db || {});
 
-				self.app.platform.sdk.messenger.load.messages(m, function(){
+
+				self.app.platform.rtc.load.users(m, function(){
 					renders.messages(null, m, true)
-				})
-
-
-				chat.rtc.connect(function(){
-					console.log(chat)
 				})
 
 			}
@@ -1109,11 +1165,10 @@ var chat = (function(){
 
 			$(window).off('focus', actions.read)
 
-			delete chat.rtc.clbks.receive.message.messenger
+			/*delete ws.messages.ENCRYPTEDMESSAGE.CREATED.clbks['chat' + essenseData.view + chat.ThreadID];
+			delete ws.messages.ENCRYPTEDMESSAGE.READ.clbks['chat' + essenseData.view + chat.ThreadID];
 
-			delete chat.rtc.clbks.receive.messages.messenger
-
-			delete chat.rtc.clbks.send.message.messenger
+			delete ws.messages.ENCRYPTEDMESSAGE.CREATED.refs[chat.ThreadID];*/
 		}
 
 
@@ -1138,13 +1193,13 @@ var chat = (function(){
 
 				if (_chat) 
 				{
-					chat = _chat.chat
-					self.app.platform.sdk.chats.info([_chat.chat], function(d){
 
-						data.chat = _chat;
+					self.app.platform.sdk.discussions.info([_chat], function(d){
+
+						chat = _.toArray(d)[0]
 
 
-						self.app.platform.sdk.tempmessenger.getChat(_chat.chat)
+						data.chat = chat;
 
 						data.canEnc = true;
 						
@@ -1188,10 +1243,7 @@ var chat = (function(){
 				bottomcaption = null;
 				topcaption = null;
 
-				
-
-
-
+				self.app.platform.rtc.destroy(chat.chat.id)
 
                 chat = null;
                 clearInterval(chatInterval);

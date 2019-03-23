@@ -936,7 +936,6 @@ var lenta = (function(){
 
 		var events = {
 			showmorebyauthor : function(){
-				console.log('showmorebyauthor')
 
 				$(this).closest('.authorgroup').find('.share').removeClass('hidden')
 
@@ -2175,7 +2174,6 @@ var lenta = (function(){
 							if (!el.c)
 								return
 
-							console.log(pr, shares)
 
 							if(!shares || !shares.length || shares.length < pr.count){							
 
@@ -2184,10 +2182,15 @@ var lenta = (function(){
 								}
 								else
 								{
+									if(shares.length < pr.count && (recommended ||author))
 									el.c.addClass("sharesEnded")
 								}
 
-								ended = true
+								console.log("recommended",recommended, author, shares.length < pr.count && !recommended && !author)
+								////// SHIT
+								if(shares.length < pr.count && (recommended ||author))
+
+									ended = true
 							}
 
 							el.loader.fadeOut()
@@ -2471,8 +2474,6 @@ var lenta = (function(){
 						if(beginmaterial){
 
 							load.begin(function(bshares){
-
-								console.log(p)
 
 
 

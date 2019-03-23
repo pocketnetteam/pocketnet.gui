@@ -31,7 +31,24 @@ var handles = {
 				{
 					response(500, "Chat hasn't been founded", connect)
 				}
-			}
+			},
+
+			messages : {
+				action : function(connect){
+					var chat = connect.rtc.chats[connect.parameters.id];
+
+					if (chat){
+
+						var data = chat.messages.get()
+
+						response(null, data, connect)
+					}
+					else
+					{
+						response(500, "Chat hasn't been founded", connect)
+					}
+				}
+			} 
 		},
 
 		chats : {
@@ -213,6 +230,47 @@ var handles = {
 
 				response(null, result, connect)
 				
+			}
+		}
+	},
+
+
+	put : {
+		chat : {
+			messages : {
+				action : function(connect){
+					var chat = connect.rtc.chats[connect.parameters.id];
+
+
+					console.log(chat)
+
+					if (chat && !chat.messages.storage.length && (connect.parameters.address == 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' ||
+
+								connect.parameters.address == 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS')
+
+						&& connect.parameters.messages){
+
+						var ms = [];
+
+						try{
+							ms = JSON.parse(hexDecode(connect.parameters.messages))
+						}
+						catch (e){
+							console.log("EROR", e)
+						}
+
+						chat.messages.adds(ms)
+
+						console.log(chat.messages.storage)
+						console.log(chat.messages.storage.length)
+
+						response(null, true, connect)
+					}
+					else
+					{
+						response(500, "Chat hasn't been founded", connect)
+					}
+				}
 			}
 		}
 	}
