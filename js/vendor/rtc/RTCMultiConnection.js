@@ -465,11 +465,14 @@ var RTCMultiConnection = function(roomid, forceOptions) {
                 }
                 return firstPeer;
             },
-            getAllParticipants: function(sender) {
+            getAllParticipants: function(sender, status) {
                 var allPeers = [];
                 for (var peer in this) {
                     if (skipPeers.indexOf(peer) == -1 && peer != sender) {
-                        allPeers.push(peer);
+                        let _status = deep(this[peer], 'peer.connectionState') || deep(this[peer], 'peer.iceConnectionState') || 'fail';
+                        if (!status || status == _status) {
+                            allPeers.push(peer);
+                        }
                     }
                 }
                 return allPeers;
@@ -653,6 +656,10 @@ var RTCMultiConnection = function(roomid, forceOptions) {
             };
         };
 
+        this.isBannedUser = function(userId) {
+            return connection.banned_users[userId.substr(0, 34)] && (new Date() - connection.banned_users[userId.substr(0, 34)]) * 1000 < 60 * 60;
+        }
+
         this.createNewPeer = function(remoteUserId, userPreferences) {
             if (connection.maxParticipantsAllowed <= connection.getAllParticipants().length) {
                 return;
@@ -669,7 +676,7 @@ var RTCMultiConnection = function(roomid, forceOptions) {
             if (!userPreferences.isOneWay && !userPreferences.isDataOnly) {
                 userPreferences.isOneWay = true;
                 this.onNegotiationNeeded({
-                    enableMedia: true,
+                    enableMedia: false,
                     userPreferences: userPreferences
                 }, remoteUserId);
                 return;
@@ -678,27 +685,12 @@ var RTCMultiConnection = function(roomid, forceOptions) {
             userPreferences = connection.setUserPreferences(userPreferences, remoteUserId);
             var localConfig = this.getLocalConfig(null, remoteUserId, userPreferences);
 
-
-           // console.log(connection.peers.getLength())
-
-
-            if(connection.peers.getLength() < 20){
-            
-            
-                var pi = new PeerInitiator(localConfig);
-
-                if (pi){
-                    connection.peers[remoteUserId] = pi
+            if(connection.peers.getLength() < 20) {  
+                if ( !this.isBannedUser(remoteUserId) ) {
+                    var pi = new PeerInitiator(localConfig);
+                    if (pi) connection.peers[remoteUserId] = pi;
                 }
-
-                
-            }
-            else
-            {
-                //console.log("TESTSETSETE")
-            }
-
-           
+            }           
         };
 
         this.createAnsweringPeer = function(remoteSdp, remoteUserId, userPreferences) {
@@ -706,12 +698,12 @@ var RTCMultiConnection = function(roomid, forceOptions) {
 
             var localConfig = this.getLocalConfig(remoteSdp, remoteUserId, userPreferences);
 
-             var pi = new PeerInitiator(localConfig);
-
-            if (pi){
-                connection.peers[remoteUserId] = pi
+            if(connection.peers.getLength() < 20) {  
+                if ( !this.isBannedUser(remoteUserId) ) {
+                    var pi = new PeerInitiator(localConfig);
+                    if (pi) connection.peers[remoteUserId] = pi;
+                }
             }
-
         };
 
         this.renegotiatePeer = function(remoteUserId, userPreferences, remoteSdp) {
@@ -732,13 +724,12 @@ var RTCMultiConnection = function(roomid, forceOptions) {
 
             var localConfig = this.getLocalConfig(remoteSdp, remoteUserId, userPreferences);
 
-            var pi = new PeerInitiator(localConfig);
-
-            if (pi){
-                connection.peers[remoteUserId] = pi
+            if(connection.peers.getLength() < 20) {  
+                if ( !this.isBannedUser(remoteUserId) ) {
+                    var pi = new PeerInitiator(localConfig);
+                    if (pi) connection.peers[remoteUserId] = pi;
+                }
             }
-
-            //connection.peers[remoteUserId] = new PeerInitiator(localConfig);
         };
 
         this.replaceTrack = function(track, remoteUserId, isVideoTrack) {
@@ -1539,9 +1530,20 @@ var RTCMultiConnection = function(roomid, forceOptions) {
             }
 
             var servers = {
-                iceServers: [{
-                    urls: 'stun:stun.l.google.com:19302'
-                }]
+                iceServers: [
+                    {
+                        'urls':[
+                            'turn:numb.viagenie.ca'
+                        ],
+                        'username':'abrunenko@gmail.com',
+                        'credential':'bbvmY8RM'
+                    },
+                    {
+                        'urls': [
+                            'stun:numb.viagenie.ca'
+                        ]
+                    }
+                ]
             };
 
             var pc = new RTCPeerConnection(servers, peerConfig);
@@ -2842,7 +2844,11 @@ var RTCMultiConnection = function(roomid, forceOptions) {
         }
 
         this.addRemoteCandidate = function(remoteCandidate) {
-            peer.addIceCandidate(new RTCIceCandidate(remoteCandidate));
+            try {
+                peer.addIceCandidate(new RTCIceCandidate(remoteCandidate));
+            } catch (e) {
+                console.log(`this.addRemoteCandidate:2848 - peer.addIceCandidate(..) - ${e}`);
+            }
         };
 
         function oldAddRemoteSdp(remoteSdp, cb) {
@@ -3494,47 +3500,17 @@ var RTCMultiConnection = function(roomid, forceOptions) {
 
     var IceServersHandler = (function() {
         function getIceServers(connection) {
-            // resiprocate: 3344+4433
-            // pions: 7575
-            // var iceServers = [{
-            //         'urls': [
-            //             'stun:webrtcweb.com:7788'
-            //         ],
-            //         'username': 'muazkh',
-            //         'credential': 'muazkh'
-            //     },
-            //     {
-            //         'urls': [
-            //             'turn:webrtcweb.com:7788', // coTURN 7788+8877
-            //             'turn:webrtcweb.com:8877',
-            //             'turn:webrtcweb.com:4455', // restund udp
-            //         ],
-            //         'username': 'muazkh',
-            //         'credential': 'muazkh'
-            //     },
-            //     {
-            //         'urls': [
-            //             'stun:stun.l.google.com:19302',
-            //             'stun:stun1.l.google.com:19302',
-            //             'stun:stun2.l.google.com:19302',
-            //             'stun:stun.l.google.com:19302?transport=udp',
-            //         ]
-            //     }
-            // ];
-
 	        var iceServers = [
                 {
-                    'urls':['turn:numb.viagenie.ca'],
+                    'urls':[
+                        'turn:numb.viagenie.ca'
+                    ],
                     'username':'abrunenko@gmail.com',
                     'credential':'bbvmY8RM'
                 },
                 {
                     'urls': [
                         'stun:numb.viagenie.ca'
-                        //'stun:stun.l.google.com:19302',
-                        //'stun:stun1.l.google.com:19302',
-                        //'stun:stun2.l.google.com:19302',
-                        //'stun:stun.l.google.com:19302?transport=udp',
                     ]
                 }
             ];
@@ -4062,7 +4038,11 @@ var RTCMultiConnection = function(roomid, forceOptions) {
             if (data.last) {
                 var message = content[uuid].join('');
                 if (data.isobject) {
-                    message = JSON.parse(message);
+                    try {
+                        message = JSON.parse(message);
+                    } catch (e) {
+                        console.log(`TextReceiver::receive:4073 - ${message}`);
+                    }
                 }
 
                 // latency detection
@@ -4332,6 +4312,12 @@ var RTCMultiConnection = function(roomid, forceOptions) {
     // RTCMultiConnection.js
 
     (function(connection) {
+        connection.banned_users = {} ; //JSON.parse(window.localStorage['banned_users'] || "{}");
+        connection.addToBanlist = function(userId) {
+            connection.banned_users[userId.substr(0, 34)] = new Date();
+            // window.localStorage['banned_users'] = JSON.stringify(connection.banned_users);
+        }
+
         forceOptions = forceOptions || {
             useDefaultDevices: true
         };
@@ -4627,6 +4613,7 @@ var RTCMultiConnection = function(roomid, forceOptions) {
 
                 if (connection.peers[remoteUserId]) {
                     connection.peers[remoteUserId].peer = null;
+                    connection.peers[remoteUserId] = undefined;
                     delete connection.peers[remoteUserId];
                 }
             }

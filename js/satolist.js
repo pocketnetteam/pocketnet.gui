@@ -7181,8 +7181,6 @@ Platform = function(app){
 
 			sendSyncRequest : function(id, userid){
 
-				console.log("sendSyncRequest")
-
 				if(!self.connections[id]) return
 				
 
@@ -7192,20 +7190,20 @@ Platform = function(app){
 			    // Random select `peer`
 			    let _sync_peer_send = userid;
 			    if (_sync_peer_send == null) {
-			        let _peers = self.connections[id].peers.getAllParticipants();
+			        let _peers = self.connections[id].peers.getAllParticipants(self.connections[id].userid, 'connected');
 			        let _sync_peer_current = Math.floor(Math.random() * _peers.length);
-			        let _sync_peer_send = _peers[_sync_peer_current];			        
+			        _sync_peer_send = _peers[_sync_peer_current];			        
 			    }
 
-			    if (self.connections[id])
+			    if (self.connections[id] && _sync_peer_send) {
+                    console.log(`${self.connections[id].userid}: sendSyncRequest to ${_sync_peer_send}`);
 				    self.connections[id].send({
 				        sync_request: 1,
 				        hv: _hv,
 				        tm_f: '',
 				        tm_t: '',
 				    }, _sync_peer_send);
-
-
+                }
 			},
 
 			receiveMessages : function(msgs, id) {
