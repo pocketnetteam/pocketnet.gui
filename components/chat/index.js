@@ -1017,31 +1017,44 @@ var chat = (function(){
 
                 let connected = 0;
                 let all = 0;
+                let peers_info = '';
                 self.app.platform.rtc.connections[chat.chat.id].peers.forEach((p, i) => {
 
                     let status = deep(p, 'peer.connectionState') || deep(p, 'peer.iceConnectionState') || 'fail';
                     connected += (['connected','connected','completed'].includes(status) ? 1 : 0);
                     all += 1;
 
+                    peers_info += JSON.stringify({
+                        user: p.userid,
+                        status: status,
+                        channel: p.peer ? p.peer.channel.readyState : 'null'
+                    }) + '\r\n';
 
                     if (status == 'fail'){
-                    	self.app.platform.rtc.connections[chat.chat.id].deletePeer(p.userid)
+                        console.log('deletePeer with fail');
+                        console.log(deep(p, 'peer.connectionState') || deep(p, 'peer.iceConnectionState'));
+                        self.app.platform.rtc.connections[chat.chat.id].addToBanlist(p.userid);
+
+                    	self.app.platform.rtc.connections[chat.chat.id].deletePeer(p.userid);
+                        delete self.app.platform.rtc.connections[chat.chat.id].peers[p.userid]
                     }
                 });
 
+                console.log(`Connected users: ${connected} / ${all}`);
+
                 if (connected <= 0) {
 
-                	var r = self.app.platform.rtc.reconnect(chat.chat.id)
+                	//var r = self.app.platform.rtc.reconnect(chat.chat.id)
 
 
-                	if(!r){
-                		self.app.platform.rtc.destroy(chat.chat.id, connect);
-                	}
+                	// if(!r){
+                	// 	self.app.platform.rtc.destroy(chat.chat.id, connect);
+                	// }
 
                     //self.app.platform.rtc.destroy(chat.chat.id, connect);
-                    console.log('Reconnecting to room. Reason: not connected users. ', all);
+                    //console.log('Reconnecting to room. Reason: not connected users. ', all);
                 } else {
-                    console.log(`Connected users: ${connected} / ${all}`);
+                    
                 }
 
                 console.log(all);

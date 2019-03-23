@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.0.9-beta",
+    "version": "0.0.11-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community",
     "company": "Pocketnet Community",
@@ -13,9 +13,11 @@
         "dist": "electron-builder -w --x64 --ia32",
         "publish": "build --win -p always"
     },
+    "devDependencies": {
+        "electron": "^4.1.1"
+    },
     "dependencies": {
         "desandro-matches-selector": "^2.0.2",
-        "electron": "^4.1.1",
         "electron-log": "^3.0.1",
         "electron-updater": "^4.0.6",
         "emojione": "^4.5.0",
@@ -44,13 +46,11 @@
     },
     "build": {
         "productName": "Pocketnet",
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
-            }
-        ],
+        "publish": [{
+            "provider": "github",
+            "owner": "pocketnetapp",
+            "repo": "pocketnet.gui"
+        }],
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,
