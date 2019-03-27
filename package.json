@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.0.11-beta",
+    "version": "0.0.13-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community",
     "company": "Pocketnet Community",
@@ -14,7 +14,8 @@
         "publish": "build --win -p always"
     },
     "devDependencies": {
-        "electron": "^4.1.1"
+        "electron": "^4.1.1",
+        "electron-builder": "^20.39.0"
     },
     "dependencies": {
         "desandro-matches-selector": "^2.0.2",
