@@ -1,0 +1,187 @@
+@import "../../css/__cssvar";
+
+#toppanel{
+	
+	width: 100%;
+	height: 45px;
+	background: #F1F1F1;
+
+	.work{
+		width: 95%;
+	    height: 100%;
+	    max-width: 1280px;
+	    margin: 0 auto;
+	    padding: 0 1em;
+	}
+
+	.panelitems{
+		height: 100%;
+
+		.panelitem{
+			width: 100px;
+			font-size: 0.8em;
+			
+			line-height: 45px;
+			float: left;
+			margin-right : 2 * @rhythm;
+			color : #6A6A6A;
+
+			&.right{
+				margin-right : 0;
+				margin-left : 2 * @rhythm;
+				float: right;
+				text-align: right;
+			}
+		} 
+
+		.panelitemCenter{
+			margin-right : 100px;
+			margin-left : 100px;
+			height: 100%;
+
+			.centerTable{
+				width: auto;
+				height: 100%;
+				margin : 0 auto;
+
+				>div{
+					vertical-align: middle;
+					padding : 0  @rhythm;
+
+					.pcenterLabel{
+						border : 1px solid transparent;
+						padding : 0 2 * @rhythm;
+						.transition(0.3s);
+						font-weight: 500;
+						
+
+						&.active{
+							color : @color-main;
+							border-bottom : 1px solid @color-main;
+						}
+
+					}
+
+				}
+			}
+
+
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	#toppanel{
+
+		.work{
+			width: 100%;
+		    padding-left: @rhythm;
+		    padding-right: @rhythm;
+		}
+
+		.panelitems{
+			height: 100%;
+
+			.panelitem{
+				width: 50%;
+				margin-right: 0;
+
+				&.right{
+					margin-left : 0;
+				}
+			} 
+
+			/*.panelitemCenter{
+				margin-right : 100px;
+				margin-left : 100px;
+				height: 100%;
+
+				.centerTable{
+					width: auto;
+					height: 100%;
+					margin : 0 auto;
+
+					>div{
+						vertical-align: middle;
+						padding : 0  @rhythm;
+
+						.pcenterLabel{
+							border : 1px solid transparent;
+							padding : 0 2 * @rhythm;
+							.transition(0.3s);
+							font-weight: 500;
+							
+
+							&.active{
+								color : @color-main;
+								border-bottom : 1px solid @color-main;
+							}
+
+						}
+
+					}
+				}
+
+
+			}*/
+		}
+
+		.vc_valuecustom{
+			width: 100%;
+			height: 45px;
+
+			.vc_textInput {
+				.vc_inputWrapper{
+					border: 0;
+
+					input{
+						opacity: 1!important;
+						.transition(0.3s);
+						border-top-left-radius: 0px;
+						border-bottom-left-radius: 0px;
+						height: 45px;
+						font-weight: 700;
+						padding-left: @rhythm;
+
+						&[disabled="disabled"]{
+							opacity: 1;
+						}
+					}
+				}
+
+				.vc_iconWrapper{
+					.transition(0.3s);
+					border-top-right-radius: 0px;
+					border-bottom-right-radius: 0px;
+					border : 0;
+				}
+			}
+
+			&.opened{
+				.vc_textInput {
+					.vc_inputWrapper{
+						border: 0;
+
+						input{
+							border-bottom-left-radius: 0;
+						}
+					}
+
+					.vc_iconWrapper{
+						
+						border-bottom-right-radius: 0;
+						
+					}
+				}
+			}
+
+			.vc_selectInput {
+				max-height: 400px;
+				.shadowSmall();
+				.vc_value{
+					padding :  2 * @rhythm @rhythm;
+				}
+			}
+		}
+	}	
+}

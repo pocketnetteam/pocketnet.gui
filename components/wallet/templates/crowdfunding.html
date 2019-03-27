@@ -1,0 +1,151 @@
+<div class="slideWrapper">
+
+	<div class="subcaptionWrapperTableCnt">
+		<div class="subcaptionWrapperTable table">
+
+			<div class="_stepback"></div>
+
+			<div class="subcaption">
+				<span><%=('crowdfunding').toUpperCase()%></span>
+			</div>
+
+			<div class="_subcaptionlevel">
+				<span></span>
+			</div>
+		</div>
+	</div>
+
+	
+
+	<div class="action">
+
+		<div class="info">
+			<div class="available">
+				<div class="infotable table">
+					<div class="label">Available:</div>
+					<div class="value">
+					 	<b><%- app.platform.mp.coin(amount)  %> POC</b>
+					</div>
+				</div>
+			</div>
+			<div class="rate">
+				<div class="infotable table">
+					<div class="label">Rate:</div>
+					<div class="value">
+					 	<b><%- app.platform.mp.coin(amount)  %> POC</b>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="source">
+				<div class="labelWrapper">
+					<%= d.parameters.reciever.name %> <span class="required hidden">*<%=e('required')%></span> <span class="notvalidaddress"></span>
+				</div>
+			</div>
+
+			<div class="changer">
+				
+			</div>
+
+			<div class="reciever workstation">
+				<div class="labelWrapper workstation">
+					<%= d.parameters.amount.name %> <span class="required hidden">*<%=e('required')%></span> <span class="notvalidaddress"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="source">
+				
+				<div class="inputWrapper">
+					<%= d.parameters.reciever.input() %>
+				</div>
+			</div>
+
+			<div class="changer">
+			</div>
+
+			<div class="reciever">
+				
+				<div class="labelWrapper mobiledevice abs">
+					<%= d.parameters.amount.name %> <span class="required hidden">*<%=e('required')%></span> <span class="notvalidaddress"></span>
+				</div>
+
+				<div class="inputWrapper">
+					<%= d.parameters.amount.input() %>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row table">
+			<div class="amount">
+				<div class="labelWrapper">
+					<%= d.parameters.currency.name %> <span class="required hidden">*<%=e('required')%></span>
+				</div>
+			</div>
+
+			<div class="changer ">
+			
+			</div>
+
+			<div class="sendcoins workstation"> 
+
+				<div class="labelWrapper">
+					<span class="currencyAmountLabel"><%= d.parameters.currencyAmount.name %></span> <span class="required hidden">*<%=e('required')%></span>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="row table">
+			<div class="amount">
+				<div class="inputWrapper">
+					<%= d.parameters.currency.input() %>
+				</div>
+			</div>
+
+			<div class="changer changerremove">
+			
+			</div>
+
+			<div class="sendcoins"> 
+				<div class="labelWrapper mobiledevice abs ">
+					<span class="currencyAmountLabel"><%= d.parameters.currencyAmount.name %></span> <span class="required hidden">*<%=e('required')%></span>
+				</div>
+
+				<div class="inputWrapper">
+					<%= d.parameters.currencyAmount.input() %>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="amount">
+				<div class="listcountWrapper">
+					Crowdfunding List <span class="listcount"></span>
+				</div>
+			</div>
+
+			<div class="changer changerremove">
+			
+			</div>
+
+			<div class="sendcoins"> 
+
+				<button class="newdeal"><i class="fas fa-chevron-circle-right"></i> New deal</button>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="actionbody fadeInByElementStep">
+			
+	</div>
+
+	<div class="_stepclose fadeInByElementStep"></div>
+
+</div>

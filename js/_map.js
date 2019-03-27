@@ -250,8 +250,6 @@ __map =  {
 				auth : 'authorization',
 				validate : 'filluser'
 			},
-			
-			
 		},
 
 		messenger : {
@@ -378,6 +376,24 @@ __map =  {
 		video : {
 			uri : "video",
 			href : "video",
+			add : {
+				el : 'content'
+			},
+			anonimus : true,
+		},
+
+		help : {
+			uri : "help",
+			href : "help",
+			add : {
+				el : 'content'
+			},
+			anonimus : true,
+		},
+
+		faq : {
+			uri : "faq",
+			href : "faq",
 			add : {
 				el : 'content'
 			},
@@ -658,6 +674,18 @@ __map =  {
 		href : "menu",
 		add : {
 			el : 'menu'
+		},
+		now : true,
+		anonimus : true,
+		renew : true,
+		reload : true
+	},
+
+	toppanel : {
+		uri : "toppanel",
+		href : "toppanel",
+		add : {
+			el : 'toppanel'
 		},
 		now : true,
 		anonimus : true,

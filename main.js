@@ -221,10 +221,10 @@ function notification(nhtml) {
 
 
     setTimeout(function(){
-        nwin.show()
+        if (nwin)
+            nwin.show()
     }, 300)
 
-    // nwin.webContents.openDevTools()
     setTimeout(closeNotification, 15000)
 }
 
@@ -254,7 +254,7 @@ function createWindow() {
 
     win.loadFile('index_el.html')
 
-    win.webContents.openDevTools()
+    //win.webContents.openDevTools()
     globalShortcut.register('CommandOrControl+Shift+I', () => {
         win.webContents.toggleDevTools()
     });

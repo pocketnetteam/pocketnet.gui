@@ -1,0 +1,61 @@
+<% var r = parameters().r; %>
+
+
+
+<% if(!state) {%>
+
+<div class="panelitem">
+	<a href="https://pocketnet.app/blockexplorer/"><i class="fas fa-th"></i> Block Explorer</a>
+</div>
+
+<% } %>
+
+
+<% if(state) {%>
+
+ <% if(pathname == 'index' && mobile) {%>
+	<div class="panelitem">
+		<%= selector.input() %>
+	</div>
+
+
+ <% } else { %>
+	<div class="panelitem">
+		<!--<i class="fas fa-sync"></i> Exchange-->
+	</div>
+ <% } %>
+
+<% } %>
+
+
+
+<div class="panelitem right">
+	<a href="help">Help center <i class="fas fa-question-circle"></i></a>
+</div>
+
+<% if(!mobile && state) {%>
+
+	<div class="panelitemCenter">
+		<div class="centerTable table">
+
+			<div class="pcenterCell">
+				<div class="pcenterLabel fresh <% if(!r && pathname=='index') {%> active <% } %> ">
+					<a href="index">All Posts</a>
+				</div>
+			</div>
+
+			<div class="pcenterCell">
+				<div class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
+					<a href="index?r=sub">Your Pocket</a>
+				</div>
+			</div>
+
+			<div class="pcenterCell">
+				<div class="pcenterLabel toppost <% if(r == 'recommended' && pathname=='index') {%> active <% } %>">
+					<a href="index?r=recommended">Top posts</a>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+<% } %>

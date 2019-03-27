@@ -1,0 +1,72 @@
+<div id="<%-module.map.id%>">
+	
+	<div class="contens  roller" roller="contents">
+
+		<div class="cnt">
+
+			<div class="groupnames">
+
+				<% _.each(groups, function(gr){ %>
+
+					<div class="item" group="<%-gr.id%>">
+						<%- gr.name %>
+					</div>
+
+				<% }) %>
+
+			</div>
+
+		</div>
+	</div>
+
+	<div class="faqcnt  roller" roller="faqcnt">
+
+		<div class="cnt">
+			<div class="faqcntContent">
+				<% _.each(groups, function(gr){ %>
+
+					<div class="group" group="<%-gr.id%>">
+						<div class="groupCaption">
+							<%= gr.name %>
+						</div>
+
+
+						<div class="groupCnt">
+
+							<% _.each(gr.group, function(fq){ %>
+
+								<div class="question" question="<%- fq.id %>">
+									<div class="questionName">
+										<%= fq.q %> 
+									</div>
+
+
+									<div class="answer">
+										<%= fq.a %>
+									</div>
+
+									<div class="share">
+										Share answer
+									</div>
+
+									<!--
+									<div class="icon">
+										<i class="fas fa-share-alt"></i>
+									</div> -->
+									
+								</div>
+
+							<% }) %>
+							
+						</div>
+						
+					</div>
+
+				<% }) %>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

@@ -1,0 +1,58 @@
+<% 
+
+	var status = info.status;
+%> 
+
+<div class="pocstatus">
+
+	<div class="current">
+	</div>
+
+	<div class="statustable table">
+
+		<% _.find(segments, function(segment){ 
+
+			if(segment.exlude == status) return
+
+		%>
+
+			<div class="segment" segment="<%-segment.id%>">
+				<div class="segmenttable table">
+					<div class="lineWrapper">
+						<div class="linebg">
+							<div class="line">
+							</div>
+						</div>
+					</div>
+
+					<div class="iconWrapper">
+						<% if(segment.finish) {%>
+
+							<% if(segment.class == 'bad') {%>
+
+								<i class="far fa-times-circle"></i>
+
+							<% } else { %>
+								<i class="fas fa-check-circle"></i>
+
+							<% } %>
+
+						<% } else { %> 
+
+							<i class="far fa-check-circle"></i>
+
+						<% } %>
+					</div>
+				</div>
+			</div>
+
+		<% 
+
+			if(segment.id == status && segment.finish) return true
+
+		}) %>
+
+		
+	</div>
+
+</div>

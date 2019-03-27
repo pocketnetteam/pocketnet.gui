@@ -254,6 +254,7 @@
 
 	}
 
+	.crowdfunding,
 	.deposit,
 	.send{
 
@@ -267,6 +268,31 @@
 		.action{
 			margin-top: 2 * @rhythm;
 			padding :  2 * @rhythm 3 * @rhythm;
+		}
+
+		.info{
+			padding : 0  @rhythm;
+
+			b{
+				color : @color-good;
+			}
+
+			.infotable{
+
+				>div{
+					vertical-align: middle;
+					padding : @rhythm;
+
+					&.label{
+						width: 120px;
+						padding-left : 0;
+					}
+
+					b{
+						font-size: 0.9em;
+					}
+				}
+			}
 		}
 
 		.linkForDepositReady,
@@ -355,7 +381,35 @@
 			color : @color-bad;
 		}
 	}
+	.crowdfunding{
+		border-radius: 0;
+		border : 2px solid @color-main;
 
+		&[view="showListcount"]{
+			.action{
+				display: none;
+			}
+		}
+
+		&[view="newdeal"]{
+			.action{
+				display: none;
+			}
+		}
+
+		.listcountWrapper{
+			font-size: 0.8em;
+			font-weight: 700;
+			cursor: pointer;
+			color : @color-contrast;
+
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-black2;
+			}
+		}
+	}
 	.deposit{
 		border : 0;
 		background: #F8F6F9;
@@ -712,6 +766,7 @@
 
 	}
 
+	.crowdfunding,
 	.deposit,
 	.send{
 
@@ -770,6 +825,11 @@
 				}
 			}
 		}
+	}
+
+	.crowdfunding{
+		border : 0;
+		background: #F8F6F9;
 	}
 
 	.deposit{

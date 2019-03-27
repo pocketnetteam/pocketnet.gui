@@ -110,6 +110,7 @@ Application = function(node)
 		app : 			$('#application'),
 		header : 		$('#headerWrapper'),
 		menu : 			$('#menuWrapper'),
+		toppanel : 		$('#panelWrapper'),
 		navigation : 	$('#navigationWrapper'),
 		footer : 		$('#footerWrapper'),
 		chats : 		$('.chats')
@@ -253,7 +254,13 @@ Application = function(node)
 					fontsFlash : true,
 					doNotTrack : true,
 					timezoneOffset : true,
-					timezone : true
+					timezone : true,
+					webdriver : true,
+					hardwareConcurrency : true,
+					hasLiedLanguages : true,
+					hasLiedResolution : true,
+					hasLiedOs : true,
+					hasLiedBrowser : true
 				}
 
 			},function(components, r){
@@ -264,6 +271,8 @@ Application = function(node)
 				//console.log(components, r)
 
 				self.options.fingerPrint = hexEncode(murmur);
+
+				console.log('self.options.fingerPrint', self.options.fingerPrint, components)
 				
 				fprintClbk()
 			});
@@ -492,6 +501,24 @@ Application = function(node)
 			$(window).unbind('scroll');
 
 			self.scrollRemoved = false;
+		},
+
+		scrollBMenu : function(){
+
+			if(isMobile()){
+				var h = $('#toppanel').height()
+
+				console.log('scrollBMenuscrollBMenuscrollBMenu', h)
+
+				if (h > 0){
+					$(window).scrollTop(h);
+
+					return true
+				}
+			}
+
+			
+
 		}
 	}
 

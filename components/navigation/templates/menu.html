@@ -1,3 +1,5 @@
+<% if(typeof lentakey == 'undefined') lentakey = 'index' %>
+
 <div class="items table">
 
 	<div class="item">
@@ -5,7 +7,7 @@
 		<% if(href == 'discussions' || href == 'share' || href == 'userpage' || href == 'author' || href == 'send') { %>
 
 			<div class="item">
-				<a href="index">
+				<a href="<%- lentakey %>">
 					<div class="iconWrapper">
 						<i class="fas fa-chevron-left"></i>
 					</div>
@@ -25,7 +27,7 @@
 				</a>-->
 
 				<div class="item">
-					<a href="index">
+					<a href="<%- lentakey %>">
 						<div class="iconWrapper">
 							<i class="fas fa-chevron-left"></i>
 						</div>

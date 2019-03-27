@@ -19,14 +19,44 @@ var main = (function(){
 		}
 
 		var actions = {
+			panelTopPosition : function(){
+
+				if(!isMobile()){
+					var s = $(window).scrollTop();
+
+					if (s > 45){
+						el.panel.closest('.fxd').addClass('dfxd')
+					}
+					else
+					{
+						el.panel.closest('.fxd').removeClass('dfxd')
+					}
+
+					actions.panelPosition()
+				}
+
+			},
 			panelPosition : function(){
 				var cnt = el.panel.closest('.fxd');
 				var mwork = el.panel.closest('.mwork');
 				var width = $(window).width();
 
+				if(!cnt.hasClass('dfxd')){
+
+					cnt.removeAttr('style')
+
+
+					/*cnt.css('right', "0px")
+					cnt.css('left', "0px")*/
+
+					return
+				}
+
+
+
 				var maxWidth = 1280;
 
-				var paddingR = 15;
+				var paddingR = 0;
 				var paddingL = 0;
 
 				var over = (width - maxWidth) / 2;
@@ -101,7 +131,7 @@ var main = (function(){
 			},
 
 			up : function(){
-				console.log('up')
+
 				_scrollTop(0)
 			}
 
@@ -147,7 +177,7 @@ var main = (function(){
 						actions.panelPosition()
 
 						window.addEventListener('resize', events.panelPosition)
-
+						window.addEventListener('scroll', actions.panelTopPosition)
 
 					}
 
@@ -235,6 +265,8 @@ var main = (function(){
 
 		var make = function(clbk){
 
+			localStorage['lentakey'] = parameters().r || 'index'
+
 			renders.lenta()
 
 			makeShare()
@@ -311,6 +343,10 @@ var main = (function(){
 			destroy : function(){
 
 				window.removeEventListener('scroll', events.showHideUp);
+
+				window.removeEventListener('scroll', actions.panelTopPosition)
+				window.removeEventListener('resize', events.panelPosition)
+
 
 				if (roller)
 					roller.destroy()

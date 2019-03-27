@@ -20,6 +20,11 @@ var navigation = (function(){
 
 		var renders = {
 			menu : function(href){
+				
+				var k = localStorage['lentakey'] || 'index';
+
+				if (k != 'index') k = 'index?r=' + k
+
 
 				self.shell({
 					name :  'menu',
@@ -27,7 +32,8 @@ var navigation = (function(){
 					el : el.menu,
 
 					data : {
-						href : href
+						href : href,
+						lentakey : k
 					}
 					
 

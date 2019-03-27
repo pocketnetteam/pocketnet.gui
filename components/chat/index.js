@@ -405,7 +405,7 @@ var chat = (function(){
 
 			read : function(){
 
-				if (self.app.platform.focus)
+				//if (self.app.platform.focus)
 
 					//self.app.platform.sdk.chats.read(chat.messages, function(messages){
 					//
@@ -429,6 +429,8 @@ var chat = (function(){
 				
 			},
 			countUnread : function(){
+
+				if(!el.countUnread) return
 
 				/*var myid = self.app.user.data.id;
 
@@ -607,7 +609,7 @@ var chat = (function(){
 					}
 
 					if(inVlastMessages.length > 0){
-						//actions.read();
+						actions.read();
 					}
 
 
@@ -1024,7 +1026,7 @@ var chat = (function(){
 			chat.rtc.clbks.receive.messages.messenger = function(messages){
 
 			
-
+				newmessageslength++;
 
 
 				self.app.platform.sdk.messenger.load.messages(messages, function(){

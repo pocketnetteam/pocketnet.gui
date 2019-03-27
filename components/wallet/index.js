@@ -12,6 +12,8 @@ var wallet = (function(){
 
 		var charts = {};
 
+		var craddress = 'PFF7PevK753eYTwWBScdEAbWQrgu36AdUA'
+
 		var addressesGroup = {
 
 			pnetwallet : {
@@ -140,11 +142,201 @@ var wallet = (function(){
 			}
 		}
 
+		var crowdfunding = {
+			active : false,
+			parameters : {
+
+				reciever : new Parameter({
+					name : self.app.localization.e('wrecieveon'),
+					type : "VALUES",
+					id : 'reciever',
+					defaultValue : 'wallet',
+					possibleValuesLabels : [self.app.localization.e('twallet'), self.app.localization.e('tacaddress')],
+					possibleValues : ['wallet', 'pnetwallet'],
+					placeholder : self.app.localization.e('wdselectfrom')
+				}),
+
+				amount : new Parameter({
+					name : "Pocetcoin Amount",
+					id : 'amount',
+					type : "NUMBER",
+					placeholder : self.app.localization.e('wsamountof'),
+
+					format : {
+						Precision : 6
+					}
+				}),
+
+				currency : new Parameter({
+					name : "Currency",
+					id : 'currency',
+					type : "VALUES",
+
+					defaultValue : 'btc',
+					possibleValuesLabels : ["BTC", "LTC"],
+					possibleValues : ['btc', 'ltc'],
+
+					placeholder : "Select currency"
+				}),
+
+				currencyAmount : new Parameter({
+					name : "Currency Amount",
+					id : 'currencyAmount',
+					type : "NUMBER",
+					placeholder : self.app.localization.e('wsamountof'),
+
+					format : {
+						Precision : 6
+					}
+				}),
+			},
+
+			segments : [
+
+				{
+					id : 'AWAITINGFUNDS',
+					time : 180,
+
+					exclude : 'EXPIREDAWAITINGFUNDS'
+				},
+				{
+					id : 'EXPIREDAWAITINGFUNDS',
+					class : 'bad',
+					finish : true
+				},
+
+				{
+					id : 'CONFIRMATIONS0',
+					time : 10
+				},
+				{
+					id : 'CONFIRMATIONS1',
+					time : 10
+				},
+				{
+					id : 'CONFIRMATIONS2',
+					time : 10
+				},
+				{
+					id : 'CONFIRMATIONS3',
+					time : 10
+				},
+
+				{
+					id : 'POCSENT',
+					time : 4
+				},
+
+				{
+					id : 'POCDELEVERED',
+					finish : true
+				},
+
+			]
+		}
+
 		var history = [];
 		var historyp = [];
 		var mode = 0
 
 		var actions = {
+
+			showCrInStep : function(action, step, name){
+				renders.step(function(el){
+					renders.crowdfunding(function(_el){
+
+						actions[action](_el)
+
+						renders.stepC(_el, name)
+
+
+					}, el)
+				}, step, {
+					class : 'crowdfunding',
+					view : action
+				})
+			},
+
+			newdeal : function(el){
+
+				var p = {
+					currency : crowdfunding.parameters.currency.value,
+					address : crowdfunding.parameters.reciever.value,
+					amount : crowdfunding.parameters.amount.value,
+					currencyAmount : crowdfunding.parameters.amount.value
+				}
+
+				actions.pocAddress(p, function(err, address, info){
+					if(err){
+						sitemessage("Something went wrong. Please reload page and try again")
+					}
+					else
+					{
+
+						renders.crDeal(address, info, el.find('.actionbody'))
+					}
+				})
+			},
+
+			showListcount : function(el){
+				
+				self.app.platform.sdk.exchanges.statuses(function(err, data){
+
+					if(err){
+						sitemessage("Something went wrong. Please reload page and try again")
+					}
+					else
+					{
+
+						renders.showListcount(data, el.find('.actionbody'))
+					}
+
+				})
+
+				
+
+			},
+
+			status : function(){
+
+			},
+
+			pocAddress : function(p, clbk){
+				p || (p = {});
+
+				if(!p.reciever || p.reciever == 'pnetwallet'){
+					p.address = self.app.platform.sdk.address.pnet().address
+				}
+
+				if (p.reciever == 'wallet'){
+					p.address = self.app.platform.sdk.addresses.storage.addresses[0]
+				}
+
+				if(p.currency && p.address){
+
+					self.app.platform.sdk.exchanges.address(p, function(addressobject, info){
+
+						if(addressobject){
+							if (clbk)
+								clbk(null, addressobject, info)
+						}
+						else
+						{
+							if (clbk)
+								clbk('fail', null)
+						}
+
+
+					})
+
+				}
+				else{
+					if (clbk)
+						clbk('no data', null)
+				}
+				
+			},
+
 			sendAddresses : function(){
 				var v = send.parameters.source.value;
 
@@ -517,10 +709,19 @@ var wallet = (function(){
 					el.addresses = el.c.find('.addresses');
 					el.send = el.c.find('.send');
 					el.deposit = el.c.find('.deposit');
+					el.crowdfunding = el.c.find('.crowdfunding');
 
 					if (clbk)
 						clbk();
 				})
+			},
+
+			stepC : function(s, name){
+				s.find('._stepback').html('<div class="backWrapper"><div class="back"><i class="fas fa-arrow-left"></i></div></div>')
+				s.find('._stepclose').html('<div class="closeAdditional"><span><i class="fas fa-undo"></i> '+self.app.localization.e('wreturntoeallet')+'</span></div>')					
+
+
+				s.find('._subcaptionlevel span').html(name || '')
 			},
 
 			stepB : function(s, name){
@@ -572,7 +773,13 @@ var wallet = (function(){
 
 								var s = p.el.find('.step');
 
-								if(_p.class) s.addClass(_p.class)								
+								if(_p.class) s.addClass(_p.class)	
+								if(_p.view) {
+									s.attr('view', _p.view)		
+								}
+								else{
+									s.removeAttr('view')
+								}						
 
 								
 								if (clbk)
@@ -588,6 +795,190 @@ var wallet = (function(){
 
 				
 			},
+
+			//// crowdfunding
+			///
+				
+				showListcount : function(data, el){
+
+					self.shell({
+
+						name :  'listcr',
+						el :   el,
+						data : {
+							data : data,
+							c : crowdfunding
+						},
+
+					}, function(_p){
+
+
+					})
+				},
+
+				listcount : function(el){
+
+					var h = '';
+
+					var c = 0;
+
+					_.each(self.app.platform.sdk.exchanges.storage, function(addresses, t){
+						c += _.toArray(addresses).length
+					})
+
+					var s = el.find('.listcountWrapper')
+
+					if (c > 0){
+						h = '('+c+')'
+
+						el.find('.listcount').html(h)
+
+						s.fadeIn()
+					}
+
+					else
+					{
+						s.fadeOut()
+					}
+
+					
+				},
+
+				crDeal : function(addressobject, info, el){
+					self.shell({
+
+						name :  'crdeal',
+						el :   el,
+						data : {
+							addressobject : addressobject
+						},
+
+					}, function(_p){
+						renders.crStatus(info, _p.el.find('.status'))
+					})
+				},
+
+				crStatus : function(info, el){
+					self.shell({
+
+						name :  'pocstatus',
+						el :   el,
+						data : {
+							info : info,
+							segments : crowdfunding.segments
+						},
+
+					}, function(_p){
+						
+					})
+				},
+
+				crowdRate : function(el, rates, currency){
+					el.find('.rate .value').html('<b>1 POC = ' + (rates[currency]).toFixed(6) + ' '+currency.toUpperCase()+'</b>')
+				},
+
+				crowdCurrencyLabel : function(el, currency){
+					el.find('.currencyAmountLabel').html(currency.toUpperCase() + ' Amount</b>')
+				},
+
+				crowdfunding : function(clbk, _el){
+
+
+					crowdfunding.parameters.currency || (crowdfunding.parameters.currency.value = 'btc')
+
+					self.app.platform.sdk.exchanges.rates(function(rates){
+
+						console.log(rates)
+
+						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+							amount = Math.min(amount, 1000);
+
+							self.shell({
+
+								name :  'crowdfunding',
+								el :   _el || el.crowdfunding,
+								data : {
+									d : crowdfunding,
+									amount : amount
+								},
+
+							}, function(_p){
+
+								ParametersLive(_.toArray(crowdfunding.parameters), _p.el)
+
+								_p.el.on('click', '.closeAdditional', events.closeAdditional)
+
+								renders.crowdRate(_p.el, rates, crowdfunding.parameters.currency.value)
+								renders.crowdCurrencyLabel(_p.el, crowdfunding.parameters.currency.value)
+								renders.listcount(_p.el)
+
+								crowdfunding.parameters.amount._onChange = function(v){
+
+									if (crowdfunding.parameters.amount.value < 0) crowdfunding.parameters.amount.value = 0;
+
+									if (crowdfunding.parameters.amount.value > amount) 
+										crowdfunding.parameters.amount.value = amount
+
+
+									crowdfunding.parameters.currencyAmount.value = crowdfunding.parameters.amount.value * rates[crowdfunding.parameters.currency.value]
+
+									crowdfunding.parameters.amount.el.closest('.inputWrapper').html(crowdfunding.parameters.amount.input())
+									crowdfunding.parameters.currencyAmount.el.closest('.inputWrapper').html(crowdfunding.parameters.currencyAmount.input())
+
+									ParametersLive([crowdfunding.parameters.amount, crowdfunding.parameters.currencyAmount], _p.el)
+
+								}
+
+								crowdfunding.parameters.currency._onChange = function(v){
+									actions.pocRate(function(nrates){
+
+										rates = nrates;
+
+										renders.crowdRate(_p.el, rates, crowdfunding.parameters.currency.value)
+										renders.crowdCurrencyLabel(_p.el, crowdfunding.parameters.currency.value)
+									})
+
+								}
+
+								crowdfunding.parameters.currencyAmount._onChange = function(v){
+
+									if (crowdfunding.parameters.currencyAmount.value < 0) crowdfunding.parameters.currencyAmount.value = 0;
+
+									if (crowdfunding.parameters.currencyAmount.value / rates[crowdfunding.parameters.currency.value] > amount){ 
+										
+										crowdfunding.parameters.currencyAmount.value = Number((amount * rates[crowdfunding.parameters.currency.value]).toFixed(6))
+										
+									}
+
+									crowdfunding.parameters.amount.value = crowdfunding.parameters.currencyAmount.value / rates[crowdfunding.parameters.currency.value]
+
+									crowdfunding.parameters.amount.el.closest('.inputWrapper').html(crowdfunding.parameters.amount.input())
+									crowdfunding.parameters.currencyAmount.el.closest('.inputWrapper').html(crowdfunding.parameters.currencyAmount.input())
+
+									ParametersLive([crowdfunding.parameters.amount, crowdfunding.parameters.currencyAmount], _p.el)
+
+								}
+
+								_p.el.find('.listcountWrapper').on('click', function(){
+									actions.showCrInStep('showListcount', 1, "List of deals")
+								})
+
+								
+								_p.el.find('.newdeal').on('click', function(){
+									actions.showCrInStep('newdeal', 1, "Deal")
+								})
+
+								if (clbk)
+									clbk(_p.el)
+
+							})
+
+						}, craddress, true, true)
+
+					})
+					
+				},
 
 			//// DEPOSIT
 				qrResultForDeposit : function(address, el, clbk){
@@ -1330,7 +1721,7 @@ var wallet = (function(){
 
 			drawCircles(function(){
 
-				lazyActions([renders.send, renders.deposit, renders.addresses], clbk)
+				lazyActions([renders.send, renders.deposit, /*renders.crowdfunding, */renders.addresses], clbk)
 
 				self.app.platform.sdk.node.transactions.clbks.circles = function(){
 

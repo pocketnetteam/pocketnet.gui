@@ -141,6 +141,7 @@ Nav = function(app)
 					href = self.addParameters(href)
 				}
 
+
 				history.pushState({
 
 					href : href,
@@ -226,6 +227,7 @@ Nav = function(app)
 
 			var run = true;
 
+
 			if((p.history || p.loadDefault) && options.history)
 			{
 
@@ -233,7 +235,6 @@ Nav = function(app)
 					if (current.module && current.module.parametersHandler && p.handler){
 						
 						run = false;
-
 
 						historyManager.add(p.completeHref, p);
 
@@ -252,6 +253,7 @@ Nav = function(app)
 				}
 				else
 				{
+
 
 					//if(p.loadDefault || p.reload){
 
@@ -290,7 +292,7 @@ Nav = function(app)
 
 					_.each(self.clbks.history, function(c){
 						
-						c();
+						c(p.href);
 						
 					})
 				}
@@ -485,7 +487,6 @@ Nav = function(app)
  					};
  				})
 
- 				console.log('jsRelations', jsRelations)
 
 				importScripts(jsRelations, relations, function(){
 

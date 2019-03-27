@@ -1035,7 +1035,7 @@ var lenta = (function(){
 
 					($(window).scrollTop() + $(window).height() > $(document).height() - 400) 
 
-					&& !loading && !ended && !recommended) {
+					&& !loading && !ended && recommended != 'recommended') {
 
 					actions.loadmore()
 
@@ -2324,14 +2324,15 @@ var lenta = (function(){
 			var shownewmaterials = function(c){
 				if(!beginmaterial && recommended != 'recommended' && !essenseData.author){
 
+					var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
+
 					var a = 0;
 					
-					if (self.sdk.node.transactions.temp.share && self.sdk.node.transactions.temp.share.length){
+					if (ts.length && !recommended){
 
-						a = a - _.toArray(self.sdk.node.transactions.temp.share).length;
+						a = a - ts.length;
 					}
 
-					
 
 					if(((c || 0) + a > 0)){
 
@@ -2346,13 +2347,29 @@ var lenta = (function(){
 
 			self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = function(data){
 
-				shownewmaterials(data.cntposts)
 				
+				if(recommended == 'sub'){
+					
+					shownewmaterials(data.cntsubscr)
+				}
+				else
+				{
+					shownewmaterials(data.cntposts)
+				}
 			}
 
 			self.app.platform.ws.messages["new block"].clbks.newsharesLenta = function(data){
 
-				shownewmaterials(data['shares'])
+				if(recommended == 'sub'){
+					
+					shownewmaterials(data['sharesSubscr'])
+				}
+				else
+				{
+					shownewmaterials(data['shares'])
+				}
+
+				
 				
 			}
 

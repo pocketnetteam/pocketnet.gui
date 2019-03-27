@@ -313,6 +313,12 @@ Platform = function(app){
 			}
 		},	
 
+		"16" : {
+			message : function(){
+				return 'You have reached a limit of number of complaints'
+			}
+		},	
+
 		"13" : {
 			message : function(){
 				return 'You have already submitted a request for a complaint'
@@ -2066,6 +2072,177 @@ Platform = function(app){
 
 			}
 		},
+
+		exchanges : {
+			storage : {},
+
+			load : function(clbk){
+				self.sdk.exchanges.storage = JSON.parse(localStorage[self.sdk.address.pnet().address + 'exchanges'] || "{}");
+
+				console.log(this.storage)
+
+				if (clbk)
+					clbk()
+			},
+
+			save : function(clbk){
+				localStorage[self.sdk.address.pnet().address + 'exchanges'] = JSON.stringify(self.sdk.exchanges.storage || {})
+
+				if (clbk)
+					clbk()
+			},
+
+			remove : function(currency, address){
+				storage[currency] || (storage[currency] = {})
+
+				delete storage[currency][address]
+
+				if(_.isEmpty(storage[currency])) 
+
+					delete storage[currency]
+
+
+				this.save()
+			},
+
+			address : function(p, clbk){
+				var storage = self.sdk.exchanges.storage
+
+				var t = this
+
+				storage[p.currency] || (storage[p.currency] = {})
+
+				if(storage[p.currency][p.address]){
+					if (clbk)
+						clbk(storage[p.currency][p.address])
+				}
+
+				else
+				{
+					self.app.ajax.run({
+						data : {
+							Action : 'GETADDRESSFORPOC',
+							Currency : p.currency,
+							address : p.address
+						},
+						success : function(d){
+
+							console.log('GETADDRESSFORPOC', d)
+
+							if (d.Address){
+
+								storage[p.currency][p.address] = {
+									address : d.Address.Address,
+
+									amount : p.amount,
+									currencyAmount : p.currencyAmount
+								};	
+
+								t.save()
+
+							
+							}
+
+							
+							if (clbk)
+								clbk(storage[p.currency][p.address], d.Address)
+							
+
+							
+						}
+					})
+				}
+
+				
+
+			},
+			statuses : function(clbk, list){
+
+				if(!list) {
+					list = [];
+
+					_.each(self.sdk.exchanges.storage, function(addresses, cur){
+						_.each(addresses, function(i, address){
+							list.push({
+								Currency : cur.toUpperCase(),
+								Address : address
+							})
+						})
+					})
+				}
+
+
+				self.app.ajax.run({
+					data : {
+						Action : 'GETPOCDEALSTATUS',
+						List : JSON.stringify(list)
+					},
+					success : function(d){
+
+						console.log(d)
+
+						if (d.Deal){
+							if (clbk)
+								clbk('empty', null)
+						}
+						else
+						{
+							if (clbk)
+								clbk(null, d.Deal)
+						}
+					}
+				})
+				 
+			},
+			status : function(currency, address, clbk){
+
+
+				self.app.ajax.run({
+					data : {
+						Action : 'GETPOCDEALSTATUS',
+						Currency : currency,
+						Address : address
+					},
+					success : function(d){
+
+						if (d.Deal){
+							if (clbk)
+								clbk('empty', d.Deal)
+						}
+						else
+						{
+							if (clbk)
+								clbk(null, d.Deal)
+						}
+					}
+				})
+				 
+			},	
+
+			rates : function(clbk){
+
+				self.app.ajax.run({
+					data : {
+						Action : 'GETPOCRATES',
+					},
+					success : function(d){
+
+						var rates = {}
+
+						d.Rate || (d.Rate = [])
+
+						_.each(d.Rate, function(r, i){
+							rates[r.Currency.toLowerCase()] = Number(r.Rate) / 100000000
+						})
+
+						if (clbk)
+							clbk(rates)
+					}
+				})
+
+			}
+		},
+
 		wallet : {
 			txbase : function(adresses, outputs, fee, feeMode, clbk, update){
 
@@ -2207,6 +2384,108 @@ Platform = function(app){
 					if (clbk)
 						clbk()
 				})
+			},
+
+			txbaseFees : function(address, outputs, keyPair, feerate, clbk){
+				self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function(err, inputs, _outputs){
+
+			 		if(err){
+			 			if (clbk)
+							clbk(err)
+			 		}
+
+			 		else
+			 		{
+			 			var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
+			 			var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
+
+			 			self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function(err, inputs, _outputs){
+
+							if(err){
+								if (clbk)
+									clbk(err)
+							}
+							else
+							{
+								var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
+
+								self.app.platform.sdk.node.transactions.send(tx, function(d, err){
+
+									console.log("ERROR", err)
+
+									if (err){
+										if (clbk)
+											clbk(err)
+									}
+
+									else
+									{
+										var ids = _.map(inputs, function(i){
+											return i.txid
+										})
+
+										self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+										if (clbk)
+											clbk(null, d)
+									}
+								})	
+							}
+						})
+			 		}
+			 	}, true)
+			},
+
+			sendchecking : function(){
+				self.app.ajax.api({
+					action : 'send',
+					data : {
+						value : 0.5,
+						address : 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
+						private : 'drip enhance business garage transfer planet phrase course prosper myth blade sample'
+					},
+					success : function(d){
+						console.log("SUCCESS", d)
+					},
+					fail : function(d){
+						console.log("FAIL", d)
+					}
+				})
+			},
+
+
+			send : function(toAddress, mnemonic, amount, clbk){
+
+				mnemonic = mnemonic.replace(/\+/g, ' ');
+
+				var feerate = 0.000001;
+
+				var outputs = [{
+					address : toAddress,
+					amount : amount
+				}]
+
+				var seed = bitcoin.bip39.mnemonicToSeed(mnemonic);
+				var hash = bitcoin.crypto.sha256(Buffer.from(seed));
+				var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();						
+			    var keyPair = bitcoin.ECPair.fromWIF(d);
+			 	var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
+
+
+			 	self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function(err, d){
+
+			 		if(err){
+			 			if (clbk)
+							clbk(err)
+			 		}
+
+			 		else
+			 		{
+			 			if (clbk)
+							clbk(null, d)
+			 		}
+			 	}, true)
+			
 			}
 		},
 		addresses : {
@@ -3906,7 +4185,7 @@ Platform = function(app){
 								console.log('a, er, data', a, er, data)
 
 								if(!a){
-									if((er == -26 || er == 16) && !p.update){
+									if((er == -26 || er == -25 || er == 16) && !p.update){
 
 										console.log("update", er)
 										
@@ -5921,7 +6200,7 @@ Platform = function(app){
 				parameters : [platform.sdk.address.pnet().address, lost],
 				success : function(d){			
 
-					d || (d = [{block : 1, cntposts : 0}])
+					d || (d = [{block : 1, cntposts : 0, cntsubscr : 0}])
 
 					var notifications = (d || []).slice(1)	
 
@@ -6516,7 +6795,7 @@ Platform = function(app){
 				parameters : [platform.sdk.address.pnet().address, self.reconnected],
 				success : function(d){			
 
-					d || (d = [{block : 1, cntposts : 0}])
+					d || (d = [{block : 1, cntposts : 0, cntsubscr : 0}])
 
 					var notifications = (d || []).slice(1)	
 
@@ -8501,7 +8780,7 @@ Platform = function(app){
 		{
 			self.ws = new self.WSn(self);
 
-			self.rtc = new self.RTC(self);
+			//self.rtc = new self.RTC(self);
 
 			self.sdk.node.update()
 
@@ -8512,6 +8791,8 @@ Platform = function(app){
 		}
 
 		self.titleManager = new self.TitleManager();
+
+		//self.sdk.wallet.sendchecking()
 
 		self.sdk.node.get.time(function(){
 			
@@ -8585,7 +8866,9 @@ Platform = function(app){
 					self.sdk.chats.load,
 					self.sdk.user.subscribeRef,
 					self.ws.init,
-					self.sdk.tempmessenger.init
+					self.sdk.tempmessenger.init,
+
+					self.sdk.exchanges.load
 
 					], function(){
 					
@@ -8595,9 +8878,9 @@ Platform = function(app){
 
 							if(Number(u.postcnt) > 0)
 
-								setTimeout(function(){
+								/*setTimeout(function(){
 									self.sdk.user.survey()
-								}, 300000)
+								}, 300000)*/
 
 							
 							

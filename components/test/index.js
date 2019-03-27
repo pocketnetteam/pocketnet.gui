@@ -379,7 +379,7 @@ var test = (function(){
 			site : new Parameter({
 				name : self.app.localization.e('uwebsite'),
 				id : 'site',
-				type : "STRING",
+				type : "TEXT",
 				onType : true,
 				value : ''
 			}),

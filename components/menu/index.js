@@ -86,6 +86,32 @@ var menu = (function(){
 		}
 
 		var events = {
+
+			sitename : {
+
+				click : function(){
+
+					self.app.user.isState(function(state){
+
+						var k = localStorage['lentakey'] || 'index';
+
+						if (k != 'index') k = 'index?r=' + k
+
+						if(!state) k = 'index'
+
+						self.nav.api.go({
+							href : k,
+							history : true,
+							open : true
+						})
+
+					})
+
+					
+				}
+
+			},
+
 			activate : {
 				click : function(){
 
@@ -367,6 +393,8 @@ var menu = (function(){
 					var act = function(){
 						self.app.platform.sdk.user.waitActions(function(r){
 							self.app.platform.sdk.ustate.attention(1, function(error){
+
+								if(isMobile()) return
 
 								if(error || !self.app.user.validate() || r){
 									el.removeClass('hidden')

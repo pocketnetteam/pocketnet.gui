@@ -4,7 +4,7 @@
 	<div class="item name">
 		<div class="itemtable table">
 			<div class="icon"><i class="fab fa-slack-hash"></i></div>
-			<div class="label"><%-deep(author, 'data.name')%></div>
+			<div class="label"><%-filterXSS(deep(author, 'data.name'))%></div>
 		</div>
 	</div>
 
@@ -38,7 +38,7 @@ if(_d && _d > -1) {
 	<div class="item site">
 		<div class="itemtable table">
 			<div class="icon"><i class="fas fa-external-link-alt"></i></div>
-			<div class="label"><a href="<%-deep(author, 'data.site')%>"><%-deep(author, 'data.site')%></a></div>
+			<div class="label"><a href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
 		</div>
 	</div>
 

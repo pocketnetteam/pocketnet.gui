@@ -200,12 +200,12 @@
 
 				<div class="items sitenames">
 
-					<div class="item table sitename">
+					<div class="item table sitename" events="sitename">
 						<div class="icon">
-							<a href="index"><img src="img/logo20.png"></a>
+							<img src="img/logo20.png">
 						</div>
 						<div class="label">
-							<div><a href="index">POCKETNET <span class="workstation">beta</span></a></div>
+							<div>POCKETNET <span class="workstation">beta</span></div>
 						</div>
 
 					</div>
@@ -226,25 +226,25 @@
 
 				<% } %>
 
-				<% if((typeof _Electron == 'undefined' && !window.cordova) || state){ %>  
+				<% if(!state){ %>  
 
 					<div class="items gethotpostsWrapper">
 						<a href="index?r=recommended">
-						<div class="item table right onlyicon gethotposts">
-							
+							<div class="item table right onlyicon gethotposts">
 								
-								<div class="icon">
-									<div class="icn">
-										<i class="fas fa-fire"></i>
+									
+									<div class="icon">
+										<div class="icn">
+											<i class="fas fa-fire"></i>
+										</div>
 									</div>
-								</div>
 
-								<div class="label">
-									Top posts
-								</div>
-							
+									<div class="label">
+										Top posts
+									</div>
+								
 
-						</div>
+							</div>
 						</a>
 					</div>
 

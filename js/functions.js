@@ -505,8 +505,6 @@
 		    	nooverflow = !app.actions.offScroll(p.offScroll);
 		    }
 
-		    console.log("nooverflow", nooverflow)
-
 			wnd.css("display", "block");
 		}
 
@@ -4995,7 +4993,6 @@
 
 	ltrim = function(s)
 	{
-		console.log('trim', s)
 	  return (s || "").replace(/^\s+/, ''); 
 	}
 
@@ -5142,8 +5139,6 @@
 			}
 			else
 			{
-
-				console.log("LOADSRC", pref + src)
 
 				if (_require){
 					_require()
@@ -5937,8 +5932,6 @@
 					}
 
 					if(!status) {
-
-						console.log("NOTSTATUS")
 						
 						error("noResult");
 
@@ -6193,8 +6186,6 @@
 		        var success = p.success;
 
 		        p.success =  function(storage){
-		        	console.log(storage)
-
 					success(deep(storage, 'result') || storage)
 
 				}
@@ -7347,10 +7338,19 @@
 					var allMetaData = EXIF.getAllTags(this);
 	            		exifOrientation = allMetaData.Orientation;
 
-            		orientation(image, exifOrientation, function(image){
-            			if (clbk)
+	            	if(exifOrientation){
+	            		if (clbk)
 							clbk(image)
-            		})
+	            	}
+	            	else
+	            	{
+	            		orientation(image, exifOrientation, function(image){
+	            			if (clbk)
+								clbk(image)
+	            		})
+	            	}
+
+            		
 				})
 			}
 

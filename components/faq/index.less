@@ -1,0 +1,163 @@
+@import "../../css/__cssvar";
+
+#faq{
+	.contens{
+		float: left;
+		width: 250px;
+
+		padding : 6 * @rhythm 4 * @rhythm;
+		padding-left:  0;
+
+		.item{
+			font-weight: 500;
+			margin-bottom: @rhythm;
+			cursor: pointer;
+
+			&.active,
+			&:hover{	
+				color : @color-main;
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.faqcnt{
+		margin-left : 250px;
+		padding : 4 * @rhythm;
+
+		.group{
+			margin-bottom: 4 * @rhythm;
+
+			.groupCaption{
+				font-weight: 100;
+				font-size: 3.4em;
+				color : @color-main;
+				padding-bottom: @rhythm;
+			}
+
+			.groupCnt{
+				.question{
+					font-size: 1.5em;
+					padding-bottom: 6 * @rhythm;
+					max-width: 600px;
+
+					.questionName{
+						padding-bottom: 2 * @rhythm;
+						font-weight: 700;
+						color : @color-gray;
+					}
+
+					.answer{
+						font-size : 0.8em;
+						font-weight: 300;
+
+						a{
+							text-decoration: underline;
+							color : @color-main;
+						}
+
+						div{
+							padding-bottom: @rhythm;
+						}
+					}
+
+					.share{
+						margin-top: @rhythm;
+						text-decoration: underline;
+						color : @color-gray-light;
+						font-size: 0.7em;
+						cursor: pointer;
+						&:hover{
+
+							color : @color-main;
+						}
+					}
+
+					.icon{
+						background: @color-main;
+						color : #fff;
+						cursor: pointer;
+						.transition(0.3s);
+						width: 44px;
+						height: 44px;
+						line-height: 44px;
+						text-align: center;
+						border-radius: 50%;
+						font-size: 0.6em;
+
+						&:hover{
+							background : @color-contrast;
+						}						
+
+						i{
+							
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+#faq{
+	.contens{
+		display: none;
+	}
+
+	.faqcnt{
+		margin-left : 0;
+		padding : @rhythm;
+
+		.group{
+			margin-bottom: 4 * @rhythm;
+
+			.groupCaption{
+				font-size: 1.9em;
+				text-align: center;
+				margin-top: @rhythm;
+				margin-bottom: @rhythm;
+			}
+
+			.groupCnt{
+				.question{
+					font-size: 1.2em;
+					padding-bottom: 2 * @rhythm;
+
+					.questionName{
+						padding-bottom: 2 * @rhythm;
+						font-weight: 700;
+						color : @color-gray;
+					}
+
+					.answer{
+						font-size : 1em;
+						font-weight: 300;
+
+						display: none;
+
+					}
+
+					.share{
+						display: none;
+						font-size: 1em;
+						
+					}
+
+					&.opened{
+						.answer{
+							display: block;
+						}
+
+						.share{
+							display: block;
+						}
+					}
+
+					
+				}
+			}
+		}
+	}
+}	
+}

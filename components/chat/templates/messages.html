@@ -138,7 +138,10 @@ _.each(messages, function(message){
 
 							<div>
 
-								<%=filterXSS(emojione.toImage(clearScripts(donottrustLink(findAndReplaceLink(message.m, true)))))%>
+								<%=emojione.toImage(clearScripts(donottrustLink(findAndReplaceLink(filterXSS(message.m, {
+									whiteList: [],
+									stripIgnoreTag: true
+								}), true))))%>
 
 							</div>
 				

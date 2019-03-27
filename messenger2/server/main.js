@@ -252,46 +252,60 @@
 
                         var chat = chats[data.chatid]
 
-                            /*chat.messages.count[user.address] || (chat.messages.count[user.address] = 0);  
-                            chat.messages.count[user.address] ++;*/
-                            //chat.messages.read(user.id)
                         
+                        try {
+
                             data.message.m = decodeURIComponent(data.message.m)
+                        }
+                        catch (e)
+                        {
+                            send.s({ 
+                                type: "message", 
+                                success: false,
+                                error : "Malformed" 
+                            }); 
 
-                        chat.messages.add(data.message)
+                            data.message.m = null;
+                        }
 
-                        var _addresses = _.map(chat.get.allAddresses(), function(index, address){
-                            return address;
-                        })
+                        if(data.message.m){
+                            chat.messages.add(data.message)
 
-                        console.log("ADDRESSES", _addresses)
+                            var _addresses = _.map(chat.get.allAddresses(), function(index, address){
+                                return address;
+                            })
 
-                        var r = send.ex(_addresses, function(p){
+                            console.log("ADDRESSES", _addresses)
 
-                            if(!p.this && !p.direct){
+                            var r = send.ex(_addresses, function(p){
 
-                                var m = { 
+                                if(!p.this && !p.direct){
 
-                                    type: "message",
-                                    success: true,
-                                    chatid : chat.id,
-                                    address : user.address, 
-                                    message : data.message
+                                    var m = { 
+
+                                        type: "message",
+                                        success: true,
+                                        chatid : chat.id,
+                                        address : user.address, 
+                                        message : data.message
+                                    }
+
+                                    return m;
+
                                 }
 
-                                return m;
+                            }, {
 
-                            }
+                                ignore : {
+                                    direct : true
+                                },
 
-                        }, {
+                            })
 
-                            ignore : {
-                                direct : true
-                            },
+                            console.log(r);
+                        }
 
-                        })
-
-                        console.log(r);
+                        
                         
                     }
 

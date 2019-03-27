@@ -203,7 +203,7 @@ var userpage = (function(){
 				
 				})
 
-				contents.value = parameters().id || 'summary'
+				contents.value = parameters().id || pv[0]
 
 				contents._onChange = function(v){
 
@@ -550,6 +550,9 @@ var userpage = (function(){
 				initEvents();
 
 				make(function(){
+
+					p.noscroll = self.app.actions.scrollBMenu()
+					
 					p.clbk(null, p);
 				})
 

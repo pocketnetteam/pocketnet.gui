@@ -733,15 +733,18 @@
 		font-size: 1em;
 	}
 
+	
+
 	.mobilecaption{
 		display: block;
-		font-weight: 100;
+		font-weight: 700;
 		color : @color-black2;
 		padding : @rhythm;
 		margin-bottom : @rhythm;
+		padding-top: 2 * @rhythm;
 
 		span{
-			font-size: 2.5em;
+			font-size: 1.5em;
 		}
 	}
 
@@ -767,6 +770,12 @@
 	.paddingmobilewrapper{
 		padding : 0 @rhythm;
 	}
+
+	.txt{
+		.emojionearea {
+			box-shadow: none;
+		}
+	}
 	
 	.tgs{
 		margin-bottom: @rhythm;
@@ -786,6 +795,15 @@
 				&.tagsInputWrapper{
 					
 					width: 100%;
+
+					.inputWrapper{
+						box-shadow: none!important;
+
+						.sminput{
+							padding-top : 2 * @rhythm;
+							padding-bottom: 2 * @rhythm;
+						}
+					}
 
 					>div{
 						margin-right: 0;
@@ -988,6 +1006,7 @@
 				display: block;
 				width: 100%;
 				&.draggablemarkerwrapper{
+					display: none;
 					width: 100%;
 					text-align: center;
 				}
@@ -1051,8 +1070,10 @@
 						color : #838688;
 						text-align: left;
 						background: #fff;
+						height: auto;
 						padding-left: @rhythm;
 						padding-right : @rhythm;
+						padding : @rhythm;
 						.mobiledevice{
 							margin-left : @rhythm;
 							display: inline!important;

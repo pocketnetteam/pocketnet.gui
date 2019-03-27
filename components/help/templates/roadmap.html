@@ -1,0 +1,29 @@
+<div class="caption">
+	Pocketnet Roadmap
+</div>
+
+<div class="roadmap">
+	<% _.each(c.roadmap, function(road){ %> 
+
+
+		<div class="road table <% if(road.r) { %> released <% } %>">
+			<div class="time"><%- road.d %></div>
+			<div class="name"><%- road.n %></div>
+			<div class="released">
+				
+				<% if(road.r) {%>
+
+					<i class="far fa-check-circle"></i>
+
+				<% } else { %>
+
+					<i class="far fa-circle"></i>
+
+				<% } %>
+
+			</div>
+		</div>
+
+
+	<% }) %>
+</div>

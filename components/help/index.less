@@ -1,0 +1,167 @@
+@import "../../css/__cssvar";
+
+#help{
+
+	.tips{
+		overflow: hidden;
+		.tipitem{
+			float: left;
+			margin-right: 6 * @rhythm;
+			margin-left: 2px;
+			cursor: pointer;
+			font-size: 1.2em;
+
+			&:hover,
+			&.active{
+				border-bottom: 1px solid #fff;
+			}
+		}
+	}
+
+	.section{
+		padding-bottom: 6 * @rhythm;
+		margin-top: 6 * @rhythm;
+		overflow: hidden;
+		border-bottom: 1px solid @color-gray-slight;
+
+		&:nth-last-child(1){
+			border-bottom : 0;
+		}
+
+		>div{
+			&.sectionname{
+				width: 420px;
+				float: left;
+
+				span{
+					font-size: 2em;
+				}
+			}
+			&.sectioncnt{
+				
+				margin-left: 420px;
+
+				.p{
+					max-width: 600px;
+					margin-top: @rhythm;
+					font-size: 1.1em;
+				}
+			}
+		}
+
+
+	}
+
+	.page{
+		.caption{
+			margin-top: 4 * @rhythm;
+			font-size: 1.5em;
+			font-weight: 700;
+		}
+
+		.roadmap{
+			margin-top: 4 * @rhythm;
+			.road{
+				>div{
+					padding : 2 * @rhythm;
+
+					&.time{
+						width: 140px;
+					}
+
+					&.released{
+						color : @color-good;
+						font-weight: 500;
+						width: 50px;
+						text-align: center;
+					}
+
+					&:nth-child(1){
+						padding-left: 0;
+					}
+				}	
+
+
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+#help{
+
+	.bgCaption{
+		height: auto;
+		.infomain{
+			.caption{
+				font-size: 1em;
+				padding : @rhythm;
+				text-align: left;
+
+				b{
+					font-size: 1.9em;
+				}
+			}
+		}
+		
+	}
+
+	.tips{
+		overflow: hidden;
+		.tipitem{
+			width: 100%;
+			float: none;
+			margin-right: 0;
+			margin-left: 0;
+			padding : @rhythm;
+			text-align: left;
+		}
+	}
+
+	.section{
+		padding-bottom: 2 * @rhythm;
+		margin-top: 2 * @rhythm;
+		overflow: hidden;
+		border-bottom: 1px solid @color-gray-slight;
+
+		&:nth-last-child(1){
+			border-bottom : 0;
+		}
+
+		>div{
+			&.sectionname{
+				width: 100%;
+				float: none;
+
+			}
+			&.sectioncnt{
+				
+				margin-left: 0;
+			}
+		}
+
+
+	}
+
+	.page{
+		padding : @rhythm;
+		.caption{
+			margin-top: 4 * @rhythm;
+			font-size: 1.5em;
+			font-weight: 700;
+		}
+
+		.roadmap{
+			margin-top: 4 * @rhythm;
+			.road{
+				>div{
+
+					&.time{
+						width: 110px;
+					}
+				}
+			}
+		}
+	}
+}	
+}

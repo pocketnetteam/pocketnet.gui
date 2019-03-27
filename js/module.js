@@ -587,7 +587,9 @@ nModule = function(){
 
 					p.clbk = addToFunction(p.clbk, function(){
 
-						if(primary(p) && !p.inWnd) _scrollTop(0, null, 50);
+						
+
+						if(primary(p) && !p.inWnd && !p.noscroll) _scrollTop(0, null, 50);
 
 						if (settings.auto){
 							settings.auto(p)

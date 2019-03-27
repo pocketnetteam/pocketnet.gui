@@ -1340,7 +1340,7 @@ var share = (function(){
 			
 			var list = document.getElementById("sortableBody");
 
-			if (list){
+			if (list && !isMobile()){
 				Sortable.create(list, ps); 
 			}
 			
@@ -1436,9 +1436,13 @@ var share = (function(){
 
 				make();
 
+				p.noscroll = self.app.actions.scrollBMenu()
+
 				p.clbk(null, p);
 
 				actions.waitActions();
+
+
 			},
 
 			id : p._id

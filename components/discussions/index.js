@@ -189,7 +189,7 @@ var discussions = (function(){
 
 			open : function(discussion, clbk){
 
-
+				return
 
 				/*if(opening[discussion.chat.id]){
 
@@ -201,7 +201,7 @@ var discussions = (function(){
 				{*/
 					opening[discussion.chat.id] = true
 
-					self.app.platform.rtc.connect(discussion.chat.id, {
+					/*self.app.platform.rtc.connect(discussion.chat.id, {
 
 						sendMessage : function(msg){
 
@@ -246,7 +246,7 @@ var discussions = (function(){
 						if (clbk)
 							clbk()
 
-					})
+					})*/
 
 					var m = _.toArray(self.app.platform.rtc.storages[discussion.chat.id]._db || {});
 

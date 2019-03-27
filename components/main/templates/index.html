@@ -1,46 +1,11 @@
 <div id="<%-module.map.id%>">
 	<div class="work mwork">
-		<!--
-			<% if(state) {%>
-
-			<div class="smallpanellcell">
-				<div class="cnt fxdsmall">
-					<div class="smallpanell">
-						<div class="item" lenta="common">
-
-							<div class="iconWrapper">
-								<i class="fas fa-book-reader"></i>
-							</div>
-							<div class="itemName">
-								Timeline
-							</div>
-						</div>
-
-						<div class="item" lenta="sub">
-
-							<div class="iconWrapper">
-								<i class="fas fa-users"></i>
-							</div>
-							<div class="itemName">
-								Your Subscriptions 
-							</div>
-						</div>
-
-						<div class="item" lenta="recommended">
-							<div class="iconWrapper">
-								<i class="far fa-heart"></i>
-							</div>
-							<div class="itemName">
-								Your Recommendations
-							</div>
-						</div>
-					</div>
+		<div class="mainpanelcell">
+			<div class="cnt fxd">
+				<div class="panel">
 				</div>
 			</div>
-
-			<% } %>
-		-->
-
+		</div>
 		<div class="lentacell">
 
 			<div class="cnt">
@@ -49,11 +14,13 @@
 
 					var h = 'hidden'
 
-					if(state) {
+					if(state && !parameters().r) {
 
 						h = ''
 						
 					} 
+
+
 
 				%>
 
@@ -79,12 +46,7 @@
 			</div>
 		</div>
 
-		<div class="mainpanelcell">
-			<div class="cnt fxd">
-				<div class="panel">
-				</div>
-			</div>
-		</div>
+		
 
 	</div>
 
