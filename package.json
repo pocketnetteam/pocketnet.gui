@@ -2,15 +2,16 @@
     "name": "pocketnet",
     "version": "0.0.13-beta",
     "description": "Pocketnet desktop application",
-    "author": "Pocketnet Community",
+    "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
-    "license": "SEE LICENSE IN License.txt",
+    "license": "Apache-2.0",
     "main": "main.js",
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
         "start": "electron .",
         "pack": "electron-builder --dir",
         "dist": "electron-builder -w --x64 --ia32",
+        "distl": "electron-builder -l --x64",
         "publish": "build --win -p always"
     },
     "devDependencies": {
@@ -52,6 +53,10 @@
             "owner": "pocketnetapp",
             "repo": "pocketnet.gui"
         }],
+        "files": [],
+        "directories": {
+            "buildResources": "assets"
+        },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,
@@ -68,10 +73,20 @@
             "include": "build/installer.nsh"
         },
         "mac": {
+            "target": "dmg",
             "icon": "assets/icons/mac/icon.icns"
         },
         "linux": {
-            "icon": "assets/icons/png"
+            "target": "deb",
+            "category": "Network",
+            "icon": "assets/icons",
+            "desktop": {
+                "Name": "Pocketnet",
+                "Icon": "assets/icons",
+                "Comment": "Desktop application for Pocketnet",
+                "Categories": "Network"
+            },
+            "description": "Desktop application for Pocketnet"
         },
         "win": {
             "target": "nsis",
