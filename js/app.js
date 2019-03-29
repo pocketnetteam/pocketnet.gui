@@ -270,7 +270,7 @@ Application = function(node)
 
 				//console.log(components, r)
 
-				self.options.fingerPrint = hexEncode(murmur);
+				self.options.fingerPrint = hexEncode('fakefingerprint');
 
 				console.log('self.options.fingerPrint', self.options.fingerPrint, components)
 				

@@ -106,7 +106,7 @@ var ustate = (function(){
 				self.shell({
 
 					name :  'uscnt',
-					el :   el.c,
+					el :   el.c.find('.mwork'),
 					data : {
 						mestate : mestate,
 						metrics : metrics

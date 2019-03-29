@@ -1,0 +1,72 @@
+<div class="address btcltc">
+	<div class="caption">
+		<%- curobj.name %> donation
+	</div>
+
+	<div class="subcaption">
+		<div class="subcaptionTable table">
+			<div class="s"><span>Address:</span></div>
+
+			<div class="s right">
+				<span class="copyaddress"><i class="far fa-copy"></i> Copy</span>
+			</div>
+		</div>
+		 
+	</div>
+
+	<div class="addressline">
+		<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
+			<b><span class="aw"><%- address %></span></b>
+		<% } else { %> 
+
+
+			<b><%- hideString(address) %></b>
+
+		<% } %>
+	</div>
+
+	<div class="status">
+		<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
+
+			Awaitng Funds. Address will be valid for <b> <%- info.MinutesLeft %> minutes</b>
+
+		<% } %>
+
+		<% if(info.Status == 'EXPIREDAWAITINGFUNDS') {%>
+			Time to this deal has been expired. <div class="reactivate">Reactivate</div>
+		<% } %>
+	</div>
+	<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
+
+		<div class="qrcode">
+			<div class="subcaption">
+				<span>Scan this code to send <% curobj.name %></span>
+			</div>
+
+			<div class="qr">
+				<img src="https://chart.googleapis.com/chart?chs=225x225&chld=L|2&cht=qr&chl=<%- curobj.qrname %>:<%- address %>">
+			</div>
+		</div>
+
+	<% } %>
+
+	<div class="backnext table">
+		<div class="backwrapper">
+			<div class="back">
+				<span>
+					Back
+				</span>
+			</div>
+		</div>
+
+		<div class="nextwrapper">
+			<div class="next">
+				<span>
+					<i class="far fa-check-circle"></i> Add your profile to Donors List
+				</span>
+			</div>
+		</div>
+
+	</div>
+
+</div>

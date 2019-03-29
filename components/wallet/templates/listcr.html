@@ -1,0 +1,51 @@
+<div class="listcr">
+	<div class="header">
+		<div class="item table">
+			<div class="amount">
+				<span>Amount</span>
+			</div>
+
+			<div class="address">
+				<span>Recieve Address</span>
+			</div>
+
+			<div class="update">
+			</div>
+
+			<div class="status">
+				<span>Process</span>
+			</div>
+			<div class="remove">
+				
+			</div>
+		</div>
+	</div>
+	<% _.each(list, function(l){ %>
+
+		<div class="item table" item="<%-l.info.address%>">
+
+			<div class="amount">
+				<span><%- app.platform.mp.coin(l.info.amount)  %> POC</span>
+			</div>
+
+			<div class="address">
+				<span><%- l.pocaddress %></span>
+			</div>
+
+			<div class="update">
+				<div class="updatecr">
+					<span><i class="fas fa-sync"></i></span>
+				</div>
+			</div>
+
+			<div class="status">
+			</div>
+			<div class="remove">
+				<div class="removecr">
+					<i class="far fa-trash-alt"></i>
+				</div>
+			</div>
+		</div>
+		
+	<% }) %>
+</div>

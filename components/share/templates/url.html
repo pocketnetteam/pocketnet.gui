@@ -7,6 +7,8 @@
 
 	if(meta.type == 'youtube' || meta.type == 'vimeo'){ 
 
+		if(!app.platform.sdk.usersettings.meta.embedvideo || 
+			app.platform.sdk.usersettings.meta.embedvideo.value) {
 
 	%>
 		<div class="videoWrapper" pid="<%- makeid() %>">
@@ -25,6 +27,8 @@
 				</div>
 			</div>
 		</div>
+
+		<% } %>
 
 	<% } else { %> 
 
@@ -81,6 +85,7 @@
 					</a>
 				</span>
 			</div>
+
 			<% if(typeof remove != 'undefined') {%>
 
 				<div class="removeWrapper">
@@ -90,8 +95,6 @@
 				</div>
 
 			<% } %>
-			
-	
 
 		</div>
 	</div>

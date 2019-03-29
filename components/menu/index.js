@@ -95,6 +95,8 @@ var menu = (function(){
 
 						var k = localStorage['lentakey'] || 'index';
 
+						if (parameters().r == k) k = 'index'
+
 						if (k != 'index') k = 'index?r=' + k
 
 						if(!state) k = 'index'
@@ -102,7 +104,8 @@ var menu = (function(){
 						self.nav.api.go({
 							href : k,
 							history : true,
-							open : true
+							open : true,
+							handler : true
 						})
 
 					})

@@ -246,13 +246,19 @@ var main = (function(){
 
 					if(!isMobile()){
 
+						console.log('currentMode', currentMode)
+
 						if (currentMode == 'common')
 						{
 							renders.share()
+
+							el.c.find('.bgCaption').removeClass('hidden')
 						}
 						else
 						{
 							el.share.html('')
+
+							el.c.find('.bgCaption').addClass('hidden')
 						}
 
 					}
@@ -281,6 +287,28 @@ var main = (function(){
 		
 		return {
 			primary : primary,
+
+			parametersHandler : function(clbk){
+
+
+				localStorage['lentakey'] = parameters().r || 'index'
+
+				if (parameters().r){
+					currentMode = parameters().r
+				}
+				else{
+					currentMode = 'common'
+				}
+				
+
+				renders.lenta()
+
+				makeShare()
+
+				if (clbk)
+					clbk()
+
+			},
 
 			authclbk : function(){
 

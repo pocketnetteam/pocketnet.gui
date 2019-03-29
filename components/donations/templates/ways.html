@@ -1,0 +1,23 @@
+<div class="ways">
+
+	<div class="caption">
+		Please choose donation way
+	</div>
+
+	<div class="waystable">
+		<% _.each(ways, function(way){ %> 
+
+			<div class="way table" way="<%- way.id %>">
+				<div class="icon"><i class="far fa-circle"></i></div>
+				<div class="name"><span><%- way.name %></span></div>
+			</div>
+
+		<% }) %>
+	</div>
+
+	<div class="back">
+		<span>
+			Back
+		</span>
+	</div>
+</div>

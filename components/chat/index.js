@@ -8,7 +8,7 @@ var chat = (function(){
 
 		var primary = deep(p, 'history');
 
-		var id = makeid();
+		var id = makeid(), readinterval;
 
 		var el;
 		var essenseData = {};
@@ -271,9 +271,6 @@ var chat = (function(){
 						var scroll = _el.scrollTop();
 						px = h - to.height() - 150;
 						
-
-						console.log('scroll + _el.height() > px', scroll, _el.height() , px, scroll + _el.height() > px)
-
 						if(scroll + _el.height() > px)
 							px = 'toLast';
 						else
@@ -281,11 +278,7 @@ var chat = (function(){
 							px = null;
 							
 						}
-						
-
 					}
-
-					console.log("PX", px, inv.length)
 
 
 					
@@ -410,12 +403,20 @@ var chat = (function(){
 					//self.app.platform.sdk.chats.read(chat.messages, function(messages){
 					//
 					
+					if(newmessageslength){
 
-					setTimeout(function(){
-						newmessageslength = 0;
+						setTimeout(function(){
+							
+							newmessageslength = 0;
 
-						actions.countUnread();
-					}, 1000)
+							actions.countUnread();
+						})
+
+					}
+
+						readinterval = slowMade(function(){
+							
+						}, readinterval, 1000)
 
 						
 
@@ -429,6 +430,7 @@ var chat = (function(){
 				
 			},
 			countUnread : function(){
+
 
 				if(!el.countUnread) return
 
@@ -1055,7 +1057,7 @@ var chat = (function(){
 
 
 				chat.rtc.connect(function(){
-					console.log(chat)
+					//console.log(chat)
 				})
 
 			}
@@ -1066,7 +1068,7 @@ var chat = (function(){
 			var ws = self.app.platform.ws;
 
 			$(window).on('focus', actions.read)
-
+			$(window).on('mousemove', actions.read)
 			/*
 
 			ws.messages.ENCRYPTEDMESSAGE.CREATED.clbks['chat' + essenseData.view + chat.ThreadID] = function(){
@@ -1110,6 +1112,7 @@ var chat = (function(){
 			var ws = self.app.platform.ws;
 
 			$(window).off('focus', actions.read)
+			$(window).off('mousemove', actions.read)
 
 			delete chat.rtc.clbks.receive.message.messenger
 
@@ -1163,7 +1166,9 @@ var chat = (function(){
 
 			destroy : function(){
 
-
+				if (readinterval){
+					clearInterval(readinterval)
+				}
 
 				if (el.type)
 

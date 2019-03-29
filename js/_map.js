@@ -391,6 +391,19 @@ __map =  {
 			anonimus : true,
 		},
 
+		donations : {
+			uri : "donations",
+			href : "donations",
+			add : {
+				el : 'content'
+			},
+
+			relations : [
+				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
+		
+			],
+		},
+
 		faq : {
 			uri : "faq",
 			href : "faq",

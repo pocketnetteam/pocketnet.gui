@@ -45,6 +45,14 @@ var addaccount = (function(){
 		var initEvents = function(p){
 			
 			el.enter.on('click', events.add);
+
+			el.login.on('focus', function(){
+		    	el.c.find('.inputTable').addClass('typeactive')
+		    })
+
+		    el.login.on('blur', function(){
+		    	el.c.find('.inputTable').removeClass('typeactive')
+		    })
 	        
 
 	        initUpload({

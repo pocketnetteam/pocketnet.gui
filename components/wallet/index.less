@@ -391,11 +391,20 @@
 			}
 		}
 
+		&[view="olddeal"],
 		&[view="newdeal"]{
 			.action{
 				display: none;
 			}
+
+			.todeal{
+				i{
+					display: none;
+				}
+			}
 		}
+
+		
 
 		.listcountWrapper{
 			font-size: 0.8em;
@@ -408,6 +417,289 @@
 			&:hover{
 				color : @color-black2;
 			}
+		}
+
+		.listcr{
+			padding : 4 * @rhythm;
+
+			.item{
+				>div{
+					vertical-align: middle;
+					padding : @rhythm;
+
+					&.amount{
+						padding-left: 0;
+						width: 100px;
+					}
+
+					&.address{
+						
+						width: 270px;
+					}
+
+					&.update{
+						width: 50px;
+					}
+
+					&.remove{
+						width: 50px;
+					}
+
+					span{
+						font-size: 0.8em;
+					}
+
+					.removecr,
+					.updatecr{
+						color : @color-gray-light;
+						cursor: pointer;
+						.transition(0.3s);
+					}
+					.updatecr{
+						&:hover{
+							color : @color-main;
+						}
+					}
+					.removecr{
+						&:hover{
+							color : @color-bad;
+						}
+					}
+				}	
+			}
+
+			.header{
+				.item{
+					font-weight: 700;
+				}
+			}
+		}
+
+		.statustable{
+			>div{
+				vertical-align: middle;
+			}
+
+			.todeal{
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-good;
+				}
+			}
+
+			.segment{
+
+				&.ended{
+					.segmenttable{
+						>div{
+							
+							&.iconWrapper{
+								
+								.iended{
+									display: block;
+								}
+
+								.iwaiting{
+									display: none;
+								}
+							}
+						}
+					}
+				}
+
+				&.bad{
+					.segmenttable{
+						.linebg{
+							
+							.line{
+								background: @color-bad;
+							}
+						}
+					}
+				}
+				
+			}
+
+			.segmenttable{
+				>div{
+					vertical-align: middle;
+					overflow: hidden;
+					.transition(0.3s);
+
+					&.labelWrapper{
+						width: 60%;
+					}
+
+					&.iconWrapper{
+						width: 26px;
+						text-align: center;
+						color : @color-gray-light;
+
+						.iended{
+							display: none;
+						}
+						.finish{
+							color : @color-good;
+						}
+
+						.finishbad{
+							color : @color-bad;
+						}
+					}
+				}
+
+				.linebg{
+					width: 100%;
+					height: 2px;
+					background: @color-gray-light;
+					border-radius: 2px;
+					overflow: hidden;
+					position: relative;
+
+					.line{
+						position: absolute;
+						left: 0;
+						top: 0;
+						height: 100%;
+						.transition(0.3s);
+						background: @color-main;
+					}
+				}
+			}
+		}
+
+		.pocstatus{
+			.current{
+				display: none;
+			}
+		}
+		.copyaddress1,
+		.copyaddress2,{
+			cursor: pointer;
+		}
+		.crdeal{
+			padding : 0 4 * @rhythm;
+
+			.statustable{
+				
+
+				.segment{
+
+					
+				}
+
+				.segmenttable{
+					>div{
+
+						&.labelWrapper{
+							display: none;
+						}
+
+						
+					}
+
+					
+				}
+			}
+
+			.pocstatus{
+				.current{
+					padding : 2 * @rhythm;
+					display: block;
+					color : @color-main;
+					text-align: center;
+				}
+			}
+
+			.reactivate{
+				margin : 0 auto;
+				margin-top : 2 * @rhythm;
+				width: 150px;
+				background: @color-main;
+				color : #fff;
+				text-align: center;
+				padding : @rhythm;
+				cursor: pointer;
+				.transition(0.3s);
+				border : 1px solid @color-main;
+				font-size : 0.8em;
+
+				&:hover{
+					background : #fff;
+					color : @color-main;
+				}
+			}
+
+		}
+
+		.infosteptable{
+			.infostepcaption{
+				padding : @rhythm 0 ;
+
+				span{
+					font-size: 0.8em;
+					font-weight: 700;
+					color : @color-main;
+				}
+			}
+
+			.infostep{
+				margin-top : @rhythm;
+				height: auto;
+				>div{
+					vertical-align: middle;
+					padding : @rhythm 0;
+
+					&.left{
+						width: 70%;
+					}
+				}
+			}
+			.label{
+				padding : @rhythm 0;
+				span{
+					color : @color-gray-light;
+					font-size: 0.8em;
+				}
+			}
+
+			
+		}
+
+		.infowrapper{
+			>div{
+				padding : 2 * @rhythm;
+				&.infostepqrcell{
+					width: 250px;
+
+					.infostepcaption{
+						text-align: center;
+					}
+
+					.qrcodewrapper{
+						text-align: center;
+					}
+				}
+
+				&:nth-child(1){
+					padding-left: 0;
+				}
+
+				&:nth-last-child(1){
+					padding-right: 0;
+				}
+			}
+		}
+
+		.steptext{
+			padding : 2 * @rhythm 0 ;
+			span{
+				font-size: 0.8em;
+				color : @color-contrast;
+			}
+			
 		}
 	}
 	.deposit{

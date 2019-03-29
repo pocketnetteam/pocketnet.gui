@@ -4,10 +4,23 @@
 	padding : 0;
 
 	.caption{
-		padding : 2 * @rhythm 3 * @rhythm;
-		padding-bottom :3 * @rhythm;
-		font-weight: 700;
-		text-decoration: underline;
+		padding : 2 * @rhythm 0;
+		padding-bottom : 3 * @rhythm;
+		font-weight: 100;
+		font-size: 2em;
+	}
+
+	.mwork{
+		padding : 0 8 * @rhythm;
+		padding-bottom: 4 * @rhythm;
+
+		&.gk{
+			border-bottom: 1px solid @color-gray-light;
+		}
+
+		&.wh{
+			background: #FAFAFA;
+		}
 	}
 
 	.preloaderWrapper{
@@ -18,6 +31,8 @@
 		
 	}
 	.metrica{
+
+		max-width: 640px;
 		>div{
 			padding : @rhythm / 2;
 			vertical-align: middle;
@@ -47,13 +62,6 @@
 				text-align: right;
 			}
 
-			&:nth-child(1){
-				padding-left: 3 * @rhythm;
-			}
-
-			&:nth-last-child(1){
-				padding-right: 3 * @rhythm;
-			}
 		}
 
 		&.waitActions{
@@ -88,7 +96,6 @@
 			margin-top: 2 * @rhythm;
 
 			>div{
-				background: #fff;
 				padding-top: 1.5 * @rhythm;
 				padding-bottom: 1.5 * @rhythm;
 				.valueWrapper{
@@ -114,7 +121,7 @@
 				&.scaleWrapper{
 					.scaleBack{
 						border-radius: 2px;
-						height: 4px;
+						height: 2px;
 						background: @color-contrast;
 						position: relative;
 						overflow: hidden; 
@@ -151,14 +158,30 @@
 #content{
 	#ustate{
 		background: #F7F7F7;
-		padding : 4 * @rhythm;
 	}
 }
 
 .tooltipster-content{
 	
 	#ustate{
+
+		.mwork{
+			padding : 2 * @rhythm;
+
+			
+		}
+
+		.caption{
+			font-size: 1em;
+		}
+
 		.metrica{
+
+			>div{
+				&.label{
+					padding-left: 0;
+				}
+			}
 
 			&.profileInfo{
 				>div{

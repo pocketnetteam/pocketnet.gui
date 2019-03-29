@@ -21,6 +21,7 @@
 
  <% } else { %>
 	<div class="panelitem">
+		<a href="donations"><i class="fas fa-hands-helping"></i> Donate</a>
 		<!--<i class="fas fa-sync"></i> Exchange-->
 	</div>
  <% } %>
@@ -40,19 +41,19 @@
 
 			<div class="pcenterCell">
 				<div class="pcenterLabel fresh <% if(!r && pathname=='index') {%> active <% } %> ">
-					<a href="index">All Posts</a>
+					<a href="index" handler="true">All Posts</a>
 				</div>
 			</div>
 
 			<div class="pcenterCell">
 				<div class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
-					<a href="index?r=sub">Your Pocket</a>
+					<a href="index?r=sub"  handler="true">Your Pocket</a>
 				</div>
 			</div>
 
 			<div class="pcenterCell">
 				<div class="pcenterLabel toppost <% if(r == 'recommended' && pathname=='index') {%> active <% } %>">
-					<a href="index?r=recommended">Top posts</a>
+					<a href="index?r=recommended"  handler="true">Top posts</a>
 				</div>
 			</div>
 			

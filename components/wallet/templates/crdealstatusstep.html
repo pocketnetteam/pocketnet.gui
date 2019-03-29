@@ -1,0 +1,107 @@
+
+
+<div class="infosteptable">
+
+	
+
+	<div class="infowrapper table">
+		<div class="infostepcell">
+
+			<div class="infostepcaption">
+				<span>Parameters</span>
+			</div>
+
+			<div class="infostep table">
+				<div class="line left">
+					<div class="label">
+						<span>Pocketnet Recieve Address</span>
+					</div>
+					<div class="value">
+						<%- addressobject.pocaddress %>
+					</div>
+				</div>
+
+				<div class="line">
+					<div class="label">
+						<span>Recieve Pocketcoin Amount</span>
+					</div>
+					<div class="value">
+						<%- self.app.platform.mp.coin(addressobject.info.amount) %>
+					</div>
+				</div>
+			</div>
+
+			<div class="infostep table">
+				<div class="line left">
+					<div class="label">
+						<span><%- addressobject.currency.toUpperCase() %> Send Address</span>
+					</div>
+					<div class="value">
+
+						<b>
+							<% if(info.Status == "AWAITINGFUNDS") {%>
+								<span class="forcopyaddress1"><%- addressobject.info.address %></span> <span class="copyaddress1"><i class="far fa-copy"></i></span>
+							<% } else { %> 
+
+								<%- hideString(addressobject.info.address) %>
+
+							<% } %>
+							
+						</b>
+
+						
+					</div>
+				</div>
+
+				<div class="line">
+					<div class="label">
+						<span><%- addressobject.currency.toUpperCase() %> Send Amount</span>
+					</div>
+					<div class="value">
+						<b><%- addressobject.info.currencyAmount %></b>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<% if(info.Status == "AWAITINGFUNDS") {
+
+			var qrnames = {
+				btc : 'bitcoin',
+				ltc : 'litecoin'
+			}
+
+
+		%>
+			<div class="infostepqrcell">
+				<div class="infostepcaption">
+					<span>QR code</span>
+				</div>
+
+				<div class="qrcodewrapper">
+
+					<img src="https://chart.googleapis.com/chart?chs=225x225&chld=L|2&cht=qr&chl=<%-qrnames[addressobject.currency]%>:<%- addressobject.info.address %>?amount=<%-addressobject.info.currencyAmount%>">
+
+				</div>
+			</div>
+		<% } %>
+		
+	</div>
+
+	
+
+	
+</div>
+
+
+<div class="steptext">
+	<span>
+		<% if(info.Status == "AWAITINGFUNDS") {%>
+
+		<% } %>
+
+		Nakamoto is estimated to have mined one million bitcoins before disappearing in 2010, when he handed the network alert key and control of the code repository over to Gavin Andresen. Andresen later became lead developer at the Bitcoin Foundation.Andresen then sought to decentralize control. This left opportunity for controversy to develop over the future development path of bitcoin
+	</span>
+
+</div>

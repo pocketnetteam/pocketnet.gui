@@ -1,0 +1,67 @@
+<div class="thankyou">
+
+	<div class="caption">
+		Thank you!
+	</div>
+
+	<div class="text">
+		If you would like us to list your Pocketnet profile in the list of donors, please send us information about your donation
+	</div>
+
+	<div class="sendinfo table">
+
+		<div class="currency">
+			<%- curobj.name %>
+		</div>
+		<div class="amount">
+			<%= parameters.amount.input() %>
+		</div>
+		<div class="sendwrapper">
+			<button class="send">Add me to donors list</button>
+		</div>
+		<div class="iconwrapper">
+			<div class="icon">
+				<% 
+
+
+
+					var src = deep(app, 'platform.sdk.usersl.storage.'+ app.platform.sdk.address.pnet().address +'.image')
+
+				%>
+
+					<div class="usericon" image="<%-src || ''%>">
+
+						<% if(!src) {%>
+							<svg width="25" height="25" data-jdenticon-value="<%-app.platform.sdk.address.pnet().address%>"></svg>
+						<% } %>
+						
+					</div>
+
+				
+
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="text textor">
+		<span>
+			Or you can send us an email to <a href="mailto:support@pocketnet.app">support@pocketnet.app</a> with your public key and amount. 
+		</span>
+	</div>
+
+	<div class="back">
+		<span>
+			<% if(second) {%>
+
+				Back
+
+			<% } else { %> 
+
+				Finish
+
+			<% } %>
+			
+		</span>
+	</div>
+</div>

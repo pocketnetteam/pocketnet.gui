@@ -215,6 +215,10 @@ var lenta = (function(){
 				})
 			},
 			initVideo : function(el, share){
+
+				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
+					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
+				
 				var pels = el.find('.js-player');
 				var vel = el.find('.videoWrapper')
 
@@ -446,7 +450,7 @@ var lenta = (function(){
 
 					essenseData : {
 						share : id,
-
+						hr : essenseData.hr,
 						like : function(share){
 							renders.stars(share)
 						}
@@ -751,6 +755,9 @@ var lenta = (function(){
 			///
 
 			videosInview : function(players, action, nvaction){
+
+				if (self.app.platform.sdk.usersettings.meta.videoautoplay && !
+					self.app.platform.sdk.usersettings.meta.videoautoplay.value) return
 
 				var ap = _.filter(players, function(p){
 					if(p.inited && !p.playing && !p.stopped && p.el) return true
@@ -1662,9 +1669,10 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author || recommended){
+				if (essenseData.author || recommended || essenseData.txids){
 					tpl = 'shares'
 				}
+
 				
 				self.shell({
 					name :  tpl,
@@ -2101,8 +2109,28 @@ var lenta = (function(){
 				}
 
 			},
+
+			txids : function(txids, clbk){
+				if(!beginmaterialloaded){
+					self.app.platform.sdk.node.shares.getbyid(txids, function(shares){
+
+						beginmaterialloaded = true;
+
+						clbk(shares)
+					})
+				}
+				else
+				{
+					clbk([])
+				}
+			},
+
 			begin : function(clbk){
-				if(beginmaterial && !beginmaterialloaded &&  !recommended){
+
+				console.log('beginmaterial', beginmaterial, !beginmaterialloaded, recommended)
+
+				if(beginmaterial && !beginmaterialloaded && (!recommended || recommended == 'sub')){
+					console.log("LOAD")
 					self.app.platform.sdk.node.shares.getbyid(beginmaterial, function(shares){
 
 						beginmaterialloaded = true;
@@ -2125,6 +2153,8 @@ var lenta = (function(){
 
 				loading = true;
 
+				console.log("LOAD BEGIN")
+
 				load.begin(function(bshares){
 
 					var author = essenseData.author;
@@ -2140,15 +2170,20 @@ var lenta = (function(){
 						{
 							loader = 'common'
 							author = '1';
-						}
-
-						
+						}						
 					}
+
+					if(essenseData.txids){
+						loader = 'txids'
+
+					}
+
 
 					self.app.platform.sdk.node.shares[loader]({
 
 						author : author,
-						begin : beginmaterial || ''
+						begin : beginmaterial || '',
+						txids : essenseData.txids
 
 					}, function(shares, error, pr){
 
@@ -2186,9 +2221,8 @@ var lenta = (function(){
 									el.c.addClass("sharesEnded")
 								}
 
-								console.log("recommended",recommended, author, shares.length < pr.count && !recommended && !author)
 								////// SHIT
-								if(shares.length < pr.count && (recommended ||author))
+								if(shares.length < pr.count && (recommended || author))
 
 									ended = true
 							}
@@ -2261,65 +2295,69 @@ var lenta = (function(){
 			el.c.find('.loadprev button').on('click', events.loadprev)
 
 			el.c.on('click', '.showmorebyauthor', events.showmorebyauthor)
+
+			if(!essenseData.txids){
+				self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
+					renders.shares([share], function(){
+						renders.sharesInview([share], function(){
+							
+						})
+					}, {
+						inner : prepend
+					})
+				}
+
+				self.app.platform.ws.messages.transaction.clbks.temp = function(data){
+
+					if(data.temp){
+
+						var s = _.find(sharesInview, function(sh){
+							if(sh.txid == data.temp.txid) return true
+						})
+
+						if (s){
+
+							s.temp = false
+
+							s.scnt = "0"
+							s.score = "0"
+							s.myVal = 0
+
+							shareInitedMap[s.txid] = false
+
+							renders.sharesInview([s], function(){
+								
+							})
+
+							
+						}
+
+					}
+					
+				}
+
+				self.app.platform.ws.messages.event.clbks.lenta = function(data){
+
+					if(data.mesType == 'upvoteShare' && data.share){
+
+						var s = _.find(sharesInview, function(sh){
+							if(sh.txid == data.share.txid) return true
+						})
+
+						if (s){
+
+							renders.stars(s, function(){
+								
+							})
+
+						}
+
+					}
+					
+				}
+			}
 			
-			self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
-				renders.shares([share], function(){
-					renders.sharesInview([share], function(){
-						
-					})
-				}, {
-					inner : prepend
-				})
-			}
-
-			self.app.platform.ws.messages.transaction.clbks.temp = function(data){
-
-				if(data.temp){
-
-					var s = _.find(sharesInview, function(sh){
-						if(sh.txid == data.temp.txid) return true
-					})
-
-					if (s){
-
-						s.temp = false
-
-						s.scnt = "0"
-						s.score = "0"
-						s.myVal = 0
-
-						shareInitedMap[s.txid] = false
-
-						renders.sharesInview([s], function(){
-							
-						})
-
-						
-					}
-
-				}
-				
-			}
-
-			self.app.platform.ws.messages.event.clbks.lenta = function(data){
-
-				if(data.mesType == 'upvoteShare' && data.share){
-
-					var s = _.find(sharesInview, function(sh){
-						if(sh.txid == data.share.txid) return true
-					})
-
-					if (s){
-
-						renders.stars(s, function(){
-							
-						})
-
-					}
-
-				}
-				
-			}
+			
 
 			var shownewmaterials = function(c){
 				if(!beginmaterial && recommended != 'recommended' && !essenseData.author){
@@ -2468,9 +2506,7 @@ var lenta = (function(){
 
 				essenseData = p.settings.essenseData || {};
 
-				actions.clear()
-
-				
+				actions.clear()				
 
 				var _s = parameters();
 
@@ -2480,9 +2516,16 @@ var lenta = (function(){
 
 				else 		recommended = false;		
 
+
+				if (essenseData.txids){
+
+					recommended = false;
+
+				}
+
 				if(!p.state){
 
-					if(recommended || essenseData.author){
+					if(recommended || essenseData.author || essenseData.txids){
 
 					}
 					else
@@ -2519,6 +2562,7 @@ var lenta = (function(){
 						else
 						{
 
+							
 							if(typeof _Electron != 'undefined' || window.cordova){
 
 								self.nav.api.load({
@@ -2537,7 +2581,7 @@ var lenta = (function(){
 									history : true
 								})
 							}
-							
+						
 						}
 
 						return
@@ -2545,6 +2589,8 @@ var lenta = (function(){
 
 				}
 
+
+				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
 					mestate = _mestate || {}

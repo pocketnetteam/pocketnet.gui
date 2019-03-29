@@ -1592,7 +1592,10 @@
 	}
 
 	 b64_to_utf8 = function(str) {
-	    return decodeURIComponent(escape(window.atob(str)));
+
+		///??? TEST
+
+	    return decodeURIComponent(window.atob(str));
 	}
 
 	convertStringToArrayBuffer = function(base64) {
@@ -8521,6 +8524,24 @@
 	            });
 
 	    return replacedText;
+	}
+
+
+	hideString = function(str){
+
+		var nstr = ''
+
+		for(var i = 0; i < str.length; i++){
+
+			if(i < str.length * 0.666) nstr += "*"
+
+				else
+					nstr += str[i]
+
+		}
+
+		return nstr
+
 	}
 
 /* ______________________________ */

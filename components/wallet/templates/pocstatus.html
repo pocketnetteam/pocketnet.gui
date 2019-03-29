@@ -1,6 +1,8 @@
 <% 
 
-	var status = info.status;
+	var status = info.Status;
+
+	console.log("STATUS", status)
 %> 
 
 <div class="pocstatus">
@@ -12,12 +14,26 @@
 
 		<% _.find(segments, function(segment){ 
 
-			if(segment.exlude == status) return
+			if(segment.exclude == status) return false
 
+			if(segment.exclude == 'all' && segment.id != status) return false
+
+			var l = '';
+
+			if (segment.label) l = segment.label(status, info, addressobject)
 		%>
 
 			<div class="segment" segment="<%-segment.id%>">
 				<div class="segmenttable table">
+
+					<% if(l) {%>
+
+						<div class="labelWrapper">
+							<%=l%>
+						</div>
+
+					<% } %>
+
 					<div class="lineWrapper">
 						<div class="linebg">
 							<div class="line">
@@ -30,17 +46,37 @@
 
 							<% if(segment.class == 'bad') {%>
 
-								<i class="far fa-times-circle"></i>
+								<div class="iended finishbad">
+									<i class="far fa-times-circle"></i>
+								</div>
+
+								<div class="iwaiting">
+									<i class="fas fa-circle"></i>
+								</div>
+								
 
 							<% } else { %>
-								<i class="fas fa-check-circle"></i>
+								<div class="iended">
+									<i class="fas fa-check-circle"></i>
+								</div>
+
+								<div class="iwaiting">
+									<i class="fas fa-circle"></i>
+								</div>
+								
 
 							<% } %>
 
-						<% } else { %> 
+						<% } else { %>
 
-							<i class="far fa-check-circle"></i>
+							<div class="iended finish">
+								<i class="far fa-check-circle"></i>
+							</div>
 
+							<div class="iwaiting">
+								<i class="far fa-circle"></i>
+							</div>
+						
 						<% } %>
 					</div>
 				</div>
@@ -48,7 +84,7 @@
 
 		<% 
 
-			if(segment.id == status && segment.finish) return true
+			if(segment.id == status && (segment.finish || segment.exclude == 'all')) return true
 
 		}) %>
 

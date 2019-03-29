@@ -35,7 +35,7 @@
 			}
 
 			&.fileUploaderWrapper{
-				width: 90px;
+				width: 120px;
 
 				text-align: center;
 
@@ -104,4 +104,54 @@
 	}
 
 
+}
+
+@media only screen and (max-width: 640px) {
+	#addaccount{	
+		
+		.work{
+			padding-top: 2 * @rhythm!important;
+			padding-bottom : 2 * @rhythm!important;
+			padding-left : @rhythm!important;
+			padding-right: @rhythm!important;
+		}
+		.maket{
+
+			&.leftPart{
+				background: #F7F7F9;
+			}
+		}
+		.caption{
+			font-size: 2.1em;
+		}
+
+		button{
+			width: 100%;
+			min-width: 0;
+
+			&.toRegistration{
+				min-width: 0;
+			}
+		}
+
+		
+		.inputTable{
+
+
+			>div{
+
+				&.fileUploaderWrapper{
+					width: 50%;
+				}
+			}
+
+			&.typeactive{
+				>div{
+					&.fileUploaderWrapper{
+						display: none;
+					}
+				}
+			}
+		}
+	}
 }

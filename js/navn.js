@@ -232,6 +232,7 @@ Nav = function(app)
 			{
 
 				if(p.href == current.href){
+
 					if (current.module && current.module.parametersHandler && p.handler){
 						
 						run = false;
@@ -241,6 +242,13 @@ Nav = function(app)
 						current.module.parametersHandler(function(){							
 
 							p.clbk(null, p);
+
+						})
+
+						_.each(self.clbks.history, function(c){
+								
+							c(p.href);
+							
 						})
 
 						return;
@@ -753,12 +761,14 @@ Nav = function(app)
 							
 							var href = core.thisSiteLink($(this).attr('href'));
 
+							var handler = $(this).attr('handler') || null
 
 							core.go({
 								action : action,
 								href : href,
 								history : true,
-								open : true
+								open : true,
+								handler : handler
 							})
 
 							if (additionalActions){

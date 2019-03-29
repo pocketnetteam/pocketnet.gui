@@ -95,24 +95,34 @@ var notifications = (function(){
 				
 				p.el = el.new;
 
-				var time = self.app.platform.currentTimeSS()
-				var timedif = 86400000
+				var time = self.app.platform.currentTime()
+				var timedif = 86400
+
 				
+
 				if(p.seenFilter){
 					_notifications = _.filter(_notifications, function(n){
-						if(!n.seen || time - n.seen > timedif){
+						if(!n.seen || time - n.seen < timedif){
 							return true
 						}
 					})
+					
 				}
+
+				var watched = - _notifications.length + (p.notifications || self.app.platform.sdk.notifications.storage.notifications).length
+					
+				
+				_notifications = _.sortBy(_notifications, function(n){
+					return Number(-n.nblock)
+				})
 
 				self.shell({
 					name :  'notifications',
 					el :   p.el,
 					data : {
 						notifications : _notifications,
-						ws : self.app.platform.ws
-					},
+						ws : self.app.platform.ws,
+							},
 					inner : prepend
 
 				}, function(_p){
@@ -120,21 +130,24 @@ var notifications = (function(){
 					var f = 'fadeOut'
 					var s = '.empty'
 
+					if(watched){
+						el.c.find('.more').html('('+ watched +')')
+
+					}
+
 					if(self.app.platform.sdk.notifications.storage.notifications.length){
 
-						/*s = '.emptyNew'
+						s = '.emptyNew'
 
 						if(_p.el.find('.notification').length == 0){
 							f = 'fadeIn'
-						}*/
+						}
 
 					}
 					else
 					{
 						f = 'fadeIn'
 					}
-
-					console.log("SF", s, f)
 
 					_.each(_notifications, function(n){
 						var e = self.app.platform.ws.messages[n.msg].fastMessageEvents
@@ -149,7 +162,6 @@ var notifications = (function(){
 
 					if (el.c)
 						el.c.find(s)[f](1);
-
 
 
 					actions.seen()
@@ -175,8 +187,11 @@ var notifications = (function(){
 		}
 
 		var make = function(){
+
+			console.log(p, "PPPP")
+
 			renders.notifications({
-				seenFilter : p.insert == 'tooltip'
+				seenFilter : p.inTooltip
 			});
 		}
 

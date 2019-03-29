@@ -164,8 +164,45 @@ var metadisplay = function(){ %>
 			}
 
 			if(share.settings.v != 'a'){
-				nm = nl2br(nm);
+
+				nm = nl2br(findAndReplaceLink(filterXSS(nm, {
+					whiteList: [],
+					stripIgnoreTag: true
+				})));	
+
 			}
+			else
+			{
+
+				nm = filterXSS(nm,{
+
+					whiteList: {
+						a: ["href", "title", "target"],
+						br : ["style"],
+						b : ["style"],
+						span : ["style"],
+						figure : ["style"],
+						figcaption : ["style", "class"],
+						i : ["style"],
+						img : ["src", "width", "height"],
+						div : ["class", "data-plyr-provider", "data-plyr-embed-id"],
+						p : [],
+						ul : [],
+						ol : [],
+						li : [],
+						h2 : [],
+						h1 : [],
+						h3 : [],
+						h4 : [],
+						h5 : [],
+						em : [],
+						blockquote : []
+					},
+
+				})
+			}
+
+
 			
 
 		%>

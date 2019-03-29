@@ -170,6 +170,10 @@
 				color : #3A373F;
 				.transition(0.3s);
 
+				&:nth-child(1){
+					padding-top: @rhythm ;
+				}
+
 				&.openReport{
 					&.active{
 
@@ -306,6 +310,11 @@
 		    }
 
 		    #test{
+
+		    	.work{
+		    		padding : 0 4 * @rhythm;
+		    	}
+
 		    	.userPanel{
 		    		padding : 4 * @rhythm 4 * @rhythm;
 		    	}
@@ -326,7 +335,6 @@
 		    }
 
 		    #notifications{
-		    	padding : 4 * @rhythm 4 * @rhythm;
 		    	background: #F7F7F7;
 		    }
 		}

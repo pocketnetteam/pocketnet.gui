@@ -73,8 +73,6 @@ var help = (function(){
 					external = null
 				}
 
-				
-
 				el.menuitem.removeClass('active');
 
 				el.c.find('.tipitem[page="'+page+'"]').addClass('active')
@@ -129,6 +127,43 @@ var help = (function(){
 
 				
 
+			},
+			
+			videos : function(page){
+				this.page(page, function(_el){
+
+					self.nav.api.load({
+
+						open : true,
+						id : 'lenta',
+						el : _el.find('.lenta'),
+						animation : false,
+
+						mid : 'videos',
+
+						essenseData : {
+							byauthor : true,
+							/*authAction : function(event){
+
+								actions.join(event)
+
+							},*/
+
+							notscrollloading : true,
+
+							txids : [
+								'ad9067c72a7be97c1752a00566940f372e5b526291278cf9bc203b99f81bbaf0', 
+								'df4064b9e2c8b311fd097804f36802ceb68337dca396bfdea732c0f94c977a3a',
+								'986a6acba795482894876ac87440124e176cc02cff40558a3ec3d423850e2e93'
+							]
+						},
+						
+						clbk : function(e, p){
+							external = p
+						}
+					})
+
+				})
 			},
 
 			page : function(page, clbk){

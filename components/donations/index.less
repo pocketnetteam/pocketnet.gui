@@ -1,0 +1,515 @@
+@import "../../css/__cssvar";
+
+#donations{
+	padding : 6 * @rhythm 0;
+	padding-bottom : 0;
+
+	.caption{
+		font-size : 2em;
+		padding-top : 2 * @rhythm;
+		position: relative;
+
+		&.bright{
+			&:before{
+				content : '';
+				position : absolute;
+				left: 2px;
+				top : 110%;
+				height: 6px;
+				width: 160px;
+				background: #FF4800;
+			}
+		}
+
+	}
+
+	.text{
+		padding : 3 * @rhythm 0;
+		max-width: 640px;
+	}
+
+	.splits{
+		>div{
+			&.textsplit{
+				padding-right: 4 * @rhythm;
+			}
+			&.dsplit{
+				padding: 4 * @rhythm;
+				background: #fafafa;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	.donate{
+		text-align: center;
+
+		button{
+			min-width: 280px;
+		}
+
+		.label{
+			margin-top: 4 * @rhythm;
+			color : @color-gray-light;
+			font-size : 0.8em;
+		}
+	}
+
+	.supporting{
+		margin-top: 3 * @rhythm;
+		background: #fafafa;
+		padding : 6 * @rhythm 0;
+		padding-bottom: 22 * @rhythm;
+		.caption{
+		}
+
+		.users{
+			margin-top: 8 * @rhythm;
+		}
+
+		.user{
+			width: 110px;
+			float: left;
+
+			.usericon{
+				margin : 0 auto;
+			}
+
+			.icon{
+				padding-bottom: @rhythm;
+			}
+
+			.name{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				text-align: center;
+				span{
+					font-size: 0.8em;
+				}
+			}
+		}
+	}
+
+	.ways{
+		max-width: 640px;
+		margin : 0 auto;
+		background: #fafafa;
+		padding : 4 * @rhythm 8 * @rhythm;
+
+		.waystable{
+			padding : 4 * @rhythm 0;
+		}
+
+		.way{
+			margin : 0 auto;
+			cursor: pointer;
+			border-bottom : 1px solid transparent;
+			.transition(0.3s);
+
+			&:hover{
+				color : #FF4800;
+				border-bottom : 1px solid #FF4800;
+			}
+
+			>div{
+				padding : @rhythm 0;
+				&.icon{
+					width: 40px;
+				}
+
+				&.name{
+					span{
+						font-size: 1.4em;
+					}
+				}
+			}
+		}
+
+		.back{
+			margin-top : 4 * @rhythm;
+
+			span{
+				color : @color-gray-light;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-main;
+				}
+			}
+		}
+	}
+
+	.thankyou{
+		max-width: 640px;
+		margin : 0 auto;
+		background: #fafafa;
+		padding : 4 * @rhythm 8 * @rhythm;
+
+		.text{
+			padding : 4 * @rhythm 0;
+		}
+
+		.textor{
+			span{
+				font-size: 0.8em;
+			}
+		}
+
+		a{
+			color : @color-main;
+		}
+		.back{
+			margin-top : 4 * @rhythm;
+
+			span{
+				color : #FF4800;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-main;
+				}
+			}
+		}
+
+		.sendinfo{
+			>div{
+				vertical-align: middle;
+				padding : @rhythm;
+
+				input{
+					width: 100%;
+					background: transparent;
+					border : 0;
+					border-bottom: 2px solid @color-main;
+				}
+
+				button{
+					width: 100%;
+					border-radius: 20px;
+				}
+
+				&.currency{
+					font-weight: 700;
+					width: 100px;
+					padding-left: 0;
+				}
+
+				&.sendwrapper{
+					padding-right: 0;
+				}
+
+				&.iconwrapper{
+					width: 45px;
+				}
+			}
+		}
+	}
+
+	.backnext{
+		margin-top : 4 * @rhythm;
+
+		>div{
+			vertical-align: top;
+
+			&.nextwrapper{
+				text-align: right;
+			}
+		}
+
+		.next{
+			span{
+				color : #FF4800;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-main;
+				}
+			}
+		}
+	}
+
+	.xmraddress{
+		.addressline{
+			padding : 6 * @rhythm;
+		}
+	}
+
+	.address{
+
+		max-width: 640px;
+		margin : 0 auto;
+		background: #fafafa;
+		padding : 4 * @rhythm 8 * @rhythm;
+
+		.back{
+
+			span{
+				color : @color-gray-light;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-main;
+				}
+			}
+		}
+
+		.subcaption{
+			padding : @rhythm 0;
+			span{
+				font-size: 0.8em;
+				color : @color-main;
+			}
+		}
+
+		.subcaptionTable{
+			.right{
+				text-align: right;
+			}
+		}
+
+		.reactivate{
+			margin : 0 auto;
+			margin-top : 2 * @rhythm;
+			width: 150px;
+			background: @color-main;
+			color : #fff;
+			text-align: center;
+			padding : @rhythm;
+			cursor: pointer;
+			.transition(0.3s);
+			border : 1px solid @color-main;
+			font-size : 0.8em;
+
+			&:hover{
+				background : #fff;
+				color : @color-main;
+			}
+		}
+
+		.copyaddress{
+			cursor : pointer;
+		}
+
+		.status{
+			padding : 2 * @rhythm 0;
+			border-top : 1px solid #FF4800;
+			border-bottom : 1px solid #FF4800;
+			margin-bottom: 2 * @rhythm;
+			margin-top: 2 * @rhythm;
+			text-align: center;
+		}
+
+		.addressline{
+			background: #fff;
+			padding : 6 * @rhythm 0;
+			text-align: center;
+		}
+
+		
+
+		.qrcode{
+			margin-top: 2 * @rhythm;
+			text-align: center;
+		}
+
+	}
+}	
+
+@media only screen and (max-width: 768px) {
+#donations{
+	padding : 2 * @rhythm @rhythm;
+	
+	.caption{
+		font-size : 2em;
+
+	}
+
+	.splits{
+		display: block;
+		>div{
+			display: block;
+			&.textsplit{
+				padding-right: 0;
+			}
+			&.dsplit{
+				padding: 8 * @rhythm @rhythm;
+
+				.donate{
+					button{
+						width: 100%;
+					}
+
+				}
+				
+			}
+		}
+	}
+
+	
+
+	.supporting{
+		margin-top: 2 * @rhythm;
+		background: #fafafa;
+		padding : @rhythm;
+		padding-bottom: 14 * @rhythm;
+		.caption{
+		}
+
+		.users{
+			margin-top: 8 * @rhythm;
+		}
+
+		.user{
+			width: 33%;
+			
+		}
+	}
+
+	.ways{
+		max-width: 640px;
+		margin : 0 auto;
+		background: #fafafa;
+		padding : 2 * @rhythm 2 * @rhythm;
+
+		.waystable{
+			padding : 4 * @rhythm 0;
+		}
+
+		
+		.back{
+			margin-top : 4 * @rhythm;
+
+			span{
+				color : @color-gray-light;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-main;
+				}
+			}
+		}
+	}
+
+	.thankyou{
+		max-width: 640px;
+		margin : 0 auto;
+		background: #fafafa;
+		padding : 2 * @rhythm 2 * @rhythm;
+
+		.text{
+			padding : 4 * @rhythm 0;
+		}
+
+		.sendinfo{
+			overflow : hidden;
+			display: block;
+
+			>div{
+
+				display: block;
+				padding : 0;
+				float: left;
+				
+
+				&.currency{
+					padding : @rhythm 0;
+					width: 50%;
+				}
+
+				&.amount{
+					width: 50%;
+				}
+
+				&.sendwrapper{
+					margin-top: 3 * @rhythm;
+					margin-bottom: 3 * @rhythm;
+					width: 80%;
+				}
+
+				&.iconwrapper{
+					width: 20%;
+					margin-top: 1.2em;
+					.icon{
+						width: 45px;
+						margin : 0 auto;
+					}
+				}
+
+
+			}
+		}
+	}
+
+	.backnext{
+		margin-top : 4 * @rhythm;
+
+		>div{
+			vertical-align: top;
+
+			&.nextwrapper{
+				text-align: right;
+			}
+		}
+
+		.next{
+			span{
+				color : #FF4800;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-main;
+				}
+			}
+		}
+	}
+
+	.xmraddress{
+		.addressline{
+			padding : 6 * @rhythm 0;
+			.av{
+
+			}
+			div{
+				font-size: 0.8em;
+			}
+		}
+	}
+
+	.btcltc{
+	}
+
+	.address{
+
+		max-width: 640px;
+		margin : 0 auto;
+		background: #fafafa;
+		padding : 2 * @rhythm 2 * @rhythm;
+
+		.reactivate{
+			width: 100%;
+		}
+
+		.addressline{
+
+			span{
+				font-size: 0.8em;
+			}
+		}
+
+		
+
+		.qrcode{
+			margin-top: 2 * @rhythm;
+			text-align: center;
+		}
+
+	}
+}	
+}

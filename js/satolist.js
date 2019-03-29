@@ -982,6 +982,41 @@ Platform = function(app){
 					type : "BOOLEAN",
 					value : true
 				},
+
+				upvotes : {
+					name : 'Upvotes receive',
+					id : 'upvotes',
+					type : "BOOLEAN",
+					value : true
+				},
+
+				followers : {
+					name : 'New Followers',
+					id : 'followers',
+					type : "BOOLEAN",
+					value : true
+				},
+
+				rescued : {
+					name : 'Rescued Users',
+					id : 'rescued',
+					type : "BOOLEAN",
+					value : true
+				},
+
+				embedvideo : {
+					name : 'Show embed videos',
+					id : 'embedvideo',
+					type : "BOOLEAN",
+					value : true
+				},
+
+				videoautoplay : {
+					name : 'Autoplay videos',
+					id : 'videoautoplay',
+					type : "BOOLEAN",
+					value : true
+				},
 			},
 
 			create : function(id){
@@ -1019,10 +1054,22 @@ Platform = function(app){
 						options : {
 
 							win : options.win,
-							transactions : options.transactions
+							transactions : options.transactions,
+							upvotes : options.upvotes,
+							followers : options.followers,
+							rescued : options.rescued
 
 						}
-					}
+					},
+
+					video : {
+						name : "Video",
+						options : {
+							embedvideo : options.embedvideo,
+							videoautoplay : options.videoautoplay
+
+						}
+					},
 
 				}
 
@@ -1520,7 +1567,8 @@ Platform = function(app){
 				var n = this
 
 				_.each(n.storage.notifications, function(notification){
-					notification.seen = self.app.platform.currentTimeSS()
+					if(!notification.seen)
+						notification.seen = self.app.platform.currentTime()
 				})
 
 				n.save()
@@ -1541,7 +1589,7 @@ Platform = function(app){
 					})
 
 					if (notification)
-						notification.seen = self.app.platform.currentTimeSS()
+						notification.seen = self.currentTime()
 				})
 
 				n.save()
@@ -1627,6 +1675,14 @@ Platform = function(app){
 
 				this.storage.notifications || (this.storage.notifications = [])
 
+				_.each(this.storage.notifications, function(n){
+
+					if (n.seen && n.seen.length >=15){
+						n.seen = self.currentTime();
+					}
+
+				})
+
 				this.getNotifications(clbk)
 			},
 
@@ -1666,7 +1722,7 @@ Platform = function(app){
 				})
 
 				notifications = _.sortBy(notifications, function(n){
-					return -n.nblock
+					return -Number(n.nblock)
 				})
 
 				notifications = lastEls(notifications, 300)
@@ -2076,26 +2132,81 @@ Platform = function(app){
 		exchanges : {
 			storage : {},
 
-			load : function(clbk){
-				self.sdk.exchanges.storage = JSON.parse(localStorage[self.sdk.address.pnet().address + 'exchanges'] || "{}");
+			info : {},
 
-				console.log(this.storage)
+			find : function(address){
+				var ar = self.sdk.exchanges.get();
+
+				return _.find(ar, function(ao){
+					return ao.info.address == address
+				})
+			},
+
+			get : function(){
+				var all = []
+
+				_.each(self.sdk.exchanges.storage, function(addresses, cur){
+					_.each(addresses, function(i, pocaddress){
+
+						_.each(i, function(i){
+
+
+							all.push({
+
+								pocaddress : pocaddress,
+								currency : cur,
+								info : i,
+
+							})
+						})
+						
+					})
+				})
+
+				
+
+				all = _.filter(all, function(a){
+					if (a.info) return true
+				})
+
+				all = _.sortBy(all, function(a){
+					return Number(a.info.time)
+				})
+
+				return all;
+			},
+
+			load : function(clbk){
+				self.sdk.exchanges.storage = JSON.parse(localStorage[self.sdk.address.pnet().address + 'exchanges2'] || "{}");
 
 				if (clbk)
 					clbk()
 			},
 
 			save : function(clbk){
-				localStorage[self.sdk.address.pnet().address + 'exchanges'] = JSON.stringify(self.sdk.exchanges.storage || {})
+				localStorage[self.sdk.address.pnet().address + 'exchanges2'] = JSON.stringify(self.sdk.exchanges.storage || {})
 
 				if (clbk)
 					clbk()
 			},
 
 			remove : function(currency, address){
+
+				var storage = self.sdk.exchanges.storage;
+
 				storage[currency] || (storage[currency] = {})
 
-				delete storage[currency][address]
+				_.each(storage[currency], function(a){
+
+					delete a[address]
+					
+				})
+
+				_.each(storage[currency], function(a, address){
+					if(_.isEmpty(a)) delete storage[currency][address]
+				})
+
+				
 
 				if(_.isEmpty(storage[currency])) 
 
@@ -2105,68 +2216,110 @@ Platform = function(app){
 				this.save()
 			},
 
+			reactivate : function(p, clbk){
+				
+				self.app.ajax.run({
+					data : {
+						Action : 'REACTIVATEPOCDEAL',
+						Currency : p.currency.toUpperCase(),
+						Address : p.address
+					},
+					success : function(d){
+						self.sdk.exchanges.status(p.currency, p.address, clbk)
+					},
+
+					fail : function(){
+						if (clbk){
+							clbk('server')
+						}
+					}
+				})
+			},
+
 			address : function(p, clbk){
 				var storage = self.sdk.exchanges.storage
 
 				var t = this
 
 				storage[p.currency] || (storage[p.currency] = {})
+				storage[p.currency][p.address] || (storage[p.currency][p.address] = {})
+				
+				self.app.ajax.run({
+					data : {
+						Action : 'GETADDRESSFORPOC',
+						Currency : p.currency,
+						address : p.address
+					},
+					success : function(d){
 
-				if(storage[p.currency][p.address]){
-					if (clbk)
-						clbk(storage[p.currency][p.address])
-				}
+						console.log('GETADDRESSFORPOC', d)
 
-				else
-				{
-					self.app.ajax.run({
-						data : {
-							Action : 'GETADDRESSFORPOC',
-							Currency : p.currency,
-							address : p.address
-						},
-						success : function(d){
+						if (d.Address){
 
-							console.log('GETADDRESSFORPOC', d)
+							storage[p.currency][p.address][d.Address.Address] = {
+								address : d.Address.Address,
 
-							if (d.Address){
+								amount : p.amount,
+								currencyAmount : p.currencyAmount,
 
-								storage[p.currency][p.address] = {
-									address : d.Address.Address,
+								time : self.currentTime()
+							};	
 
-									amount : p.amount,
-									currencyAmount : p.currencyAmount
-								};	
+							t.save()
 
-								t.save()
+							self.sdk.exchanges.info[d.Address.Address] = d.Address
 
-							
-							}
 
-							
+								
+
 							if (clbk)
-								clbk(storage[p.currency][p.address], d.Address)
-							
+								clbk(null, {
 
-							
+									pocaddress : p.address,
+									currency : p.currency,
+									info : storage[p.currency][p.address]
+									
+								} , d.Address)
 						}
-					})
-				}
+
+						else
+						{
+							if (clbk)
+								clbk('error', null)
+						}
+						
+						
+
+						
+					},
+
+					fail : function(){
+						if (clbk){
+							clbk('server')
+						}
+					}
+				})
 
 				
 
 			},
 			statuses : function(clbk, list){
 
+				console.log('self.sdk.exchanges.storage', self.sdk.exchanges.storage)
+
 				if(!list) {
 					list = [];
 
 					_.each(self.sdk.exchanges.storage, function(addresses, cur){
-						_.each(addresses, function(i, address){
-							list.push({
-								Currency : cur.toUpperCase(),
-								Address : address
+						_.each(addresses, function(i, pocaddress){
+
+							_.each(i, function(i){
+								list.push({
+									Currency : cur.toUpperCase(),
+									Address : i.address
+								})
 							})
+							
 						})
 					})
 				}
@@ -2182,13 +2335,26 @@ Platform = function(app){
 						console.log(d)
 
 						if (d.Deal){
+
+							if(!_.isArray(d.Deal)) d.Deal = [d.Deal]
+
+							_.each(d.Deal, function(i){
+								self.sdk.exchanges.info[i.Address] = i
+							})
+
 							if (clbk)
-								clbk('empty', null)
+								clbk(null , d.Deal)
 						}
 						else
 						{
 							if (clbk)
-								clbk(null, d.Deal)
+								clbk('empty', null)
+						}
+					},
+
+					fail : function(){
+						if (clbk){
+							clbk('server')
 						}
 					}
 				})
@@ -2205,14 +2371,22 @@ Platform = function(app){
 					},
 					success : function(d){
 
+						console.log(d)
+
 						if (d.Deal){
 							if (clbk)
-								clbk('empty', d.Deal)
+								clbk(null, d.Deal)
 						}
 						else
 						{
 							if (clbk)
-								clbk(null, d.Deal)
+								clbk('empty', null)
+						}
+					},
+
+					fail : function(){
+						if (clbk){
+							clbk('server')
 						}
 					}
 				})
@@ -2237,6 +2411,12 @@ Platform = function(app){
 
 						if (clbk)
 							clbk(rates)
+					},
+
+					fail : function(){
+						if (clbk){
+							clbk('server')
+						}
 					}
 				})
 
@@ -3114,6 +3294,10 @@ Platform = function(app){
 					})
 				},
 
+				txids : function(p, clbk, refresh){
+					this.getbyid(p.txids, clbk, refresh)
+				},
+
 				getbyid : function(txids, clbk, refresh){
 
 					var storage = this.storage;
@@ -3191,11 +3375,13 @@ Platform = function(app){
 									self.sdk.node.shares.tempLikes(loaded)
 
 									if (clbk)
-										clbk(loaded)
+										clbk(loaded, null, {
+											count : txids.length
+										})
 								},
 								fail : function(){
 									if (clbk){
-								    	clbk(null, 'network')
+								    	clbk(null, 'network', {})
 								    }
 								}
 							})
@@ -3220,6 +3406,8 @@ Platform = function(app){
 					var temp = self.sdk.node.transactions.temp;
 
 						storage.trx || (storage.trx = {})
+
+						console.log("PARAMETERS", method, parameters)
 
 					self.app.user.isState(function(state){
 						self.app.ajax.rpc({
@@ -5921,7 +6109,39 @@ Platform = function(app){
 
 				},
 				audio : {
-					unfocus : 'water_droplet'
+					unfocus : 'water_droplet',
+					if : function(data){
+
+						if(data.mesType == 'upvoteShare' && data.share){
+
+							if(data.upvoteVal > 2 && (!platform.sdk.usersettings.meta.upvotes || platform.sdk.usersettings.meta.upvotes.value)){
+							
+								return true
+
+							}
+						}
+
+						if(data.mesType == 'subscribe'){
+							if((!platform.sdk.usersettings.meta.followers || platform.sdk.usersettings.meta.upvotes.followers)){
+								return true
+							}
+						}
+
+						if(data.mesType == 'userInfo'){
+
+							if((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)){
+
+								return true
+
+							}
+
+							
+						}
+
+						
+
+						return false;
+					}
 				},
 
 				fastMessageEvents : function(data, message){
@@ -5957,12 +6177,25 @@ Platform = function(app){
 					var html = '';
 
 					if(data.mesType == 'userInfo'){
-						text = platform.app.localization.e('refferalUserMessage')
+
+						if((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)){
+
+							text = platform.app.localization.e('refferalUserMessage')
+
+						}
+
+						
 					}
 
 
 					if(data.mesType == 'subscribe'){
-						text = self.tempates.subscribe(data.user, platform.app.localization.e('subscribeUserMessage'))
+
+						if((!platform.sdk.usersettings.meta.followers || platform.sdk.usersettings.meta.followers.value)){
+
+							text = self.tempates.subscribe(data.user, platform.app.localization.e('subscribeUserMessage'))
+
+						}
+
 					}
 
 					if(data.mesType == 'unsubscribe'){
@@ -5973,7 +6206,7 @@ Platform = function(app){
 
 					if(data.mesType == 'upvoteShare' && data.share){
 
-						if(data.upvoteVal > 2){
+						if(data.upvoteVal > 2 && (!platform.sdk.usersettings.meta.upvotes || platform.sdk.usersettings.meta.upvotes.value)){
 
 							var star = self.tempates.star(data.upvoteVal)
 

@@ -511,8 +511,12 @@ var platformRTC = function(p){
 					}
 					else
 					{
+
+						_.each(self.chats, function(ch){
+							ch.remote.lastmessages()
+						})
 						
-						initconnection();	
+						init();	
 					}
 
 				}, 50)

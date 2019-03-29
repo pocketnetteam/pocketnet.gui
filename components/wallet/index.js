@@ -150,9 +150,9 @@ var wallet = (function(){
 					name : self.app.localization.e('wrecieveon'),
 					type : "VALUES",
 					id : 'reciever',
-					defaultValue : 'wallet',
-					possibleValuesLabels : [self.app.localization.e('twallet'), self.app.localization.e('tacaddress')],
-					possibleValues : ['wallet', 'pnetwallet'],
+					defaultValue : 'pnetwallet',
+					possibleValuesLabels : [/*self.app.localization.e('twallet'), */self.app.localization.e('tacaddress')],
+					possibleValues : [/*'wallet', */'pnetwallet'],
 					placeholder : self.app.localization.e('wdselectfrom')
 				}),
 
@@ -196,40 +196,97 @@ var wallet = (function(){
 				{
 					id : 'AWAITINGFUNDS',
 					time : 180,
+					exclude : 'all',
 
-					exclude : 'EXPIREDAWAITINGFUNDS'
+					label : function(status, info, addressobject){
+						if(status == this.id){
+
+							return '<div class="todeal">'+addressobject.currency.toUpperCase() + ": " + info.Address+' <i class="fas fa-chevron-circle-right"></i> </div>'
+
+						}
+					},
+
+					currentLabel : function(info){
+
+						return "Awaitng Funds. Address will be valid for <b>" + info.MinutesLeft + " minutes</b>"
+
+					}
 				},
 				{
 					id : 'EXPIREDAWAITINGFUNDS',
 					class : 'bad',
-					finish : true
+					finish : true,
+
+					exclude : 'all',
+
+					label : function(status, info){
+
+						return "Time to this deal has been expired."
+						
+					},
+
+					currentLabel : function(info){
+
+						return 'Time to this deal has been expired. <div class="reactivate">Reactivate</div>'
+
+					}
 				},
 
 				{
 					id : 'CONFIRMATIONS0',
-					time : 10
+					time : 10,
+					currentLabel : function(info){
+
+						return 'Waiting blockchain confirmations (0/4)'
+
+					}
 				},
 				{
 					id : 'CONFIRMATIONS1',
-					time : 10
+					time : 10,
+					currentLabel : function(info){
+
+						return 'Waiting blockchain confirmations (1/4)'
+
+					}
 				},
 				{
 					id : 'CONFIRMATIONS2',
-					time : 10
+					time : 10,
+					currentLabel : function(info){
+
+						return 'Waiting blockchain confirmations (2/4)'
+
+					}
 				},
 				{
 					id : 'CONFIRMATIONS3',
-					time : 10
+					time : 10,
+					currentLabel : function(info){
+
+						return 'Waiting blockchain confirmations (3/4)'
+
+					}
 				},
 
 				{
 					id : 'POCSENT',
-					time : 4
+					time : 4,
+					currentLabel : function(info){
+
+						return 'Send Pocketcoins to You'
+
+					}
 				},
 
 				{
 					id : 'POCDELEVERED',
-					finish : true
+					finish : true,
+					currentLabel : function(info){
+
+						return 'Pocketcoins delivered'
+
+					}
 				},
 
 			]
@@ -241,11 +298,12 @@ var wallet = (function(){
 
 		var actions = {
 
-			showCrInStep : function(action, step, name){
+			showCrInStep : function(action, step, name, data){
 				renders.step(function(el){
 					renders.crowdfunding(function(_el){
 
-						actions[action](_el)
+						if (action)
+							actions[action](_el, data)
 
 						renders.stepC(_el, name)
 
@@ -257,18 +315,23 @@ var wallet = (function(){
 				})
 			},
 
+			olddeal : function(el, addressobject){
+
+				renders.crDeal(addressobject, self.app.platform.sdk.exchanges.info[addressobject.info.address], el.find('.actionbody'))
+			},
+
 			newdeal : function(el){
 
 				var p = {
 					currency : crowdfunding.parameters.currency.value,
 					address : crowdfunding.parameters.reciever.value,
 					amount : crowdfunding.parameters.amount.value,
-					currencyAmount : crowdfunding.parameters.amount.value
+					currencyAmount : crowdfunding.parameters.currencyAmount.value
 				}
 
 				actions.pocAddress(p, function(err, address, info){
 					if(err){
-						sitemessage("Something went wrong. Please reload page and try again")
+						sitemessage("Something went wrong. Please reload page and try again (error: 0003)")
 					}
 					else
 					{
@@ -283,7 +346,7 @@ var wallet = (function(){
 				self.app.platform.sdk.exchanges.statuses(function(err, data){
 
 					if(err){
-						sitemessage("Something went wrong. Please reload page and try again")
+						sitemessage("Something went wrong. Please reload page and try again (error: 0004)")
 					}
 					else
 					{
@@ -314,9 +377,9 @@ var wallet = (function(){
 
 				if(p.currency && p.address){
 
-					self.app.platform.sdk.exchanges.address(p, function(addressobject, info){
+					self.app.platform.sdk.exchanges.address(p, function(error, addressobject, info){
 
-						if(addressobject){
+						if(!error){
 							if (clbk)
 								clbk(null, addressobject, info)
 						}
@@ -799,20 +862,118 @@ var wallet = (function(){
 			//// crowdfunding
 			///
 				
+				
+
 				showListcount : function(data, el){
+
+					var list = self.app.platform.sdk.exchanges.get();
 
 					self.shell({
 
 						name :  'listcr',
 						el :   el,
 						data : {
-							data : data,
-							c : crowdfunding
+							list : list,
+							c : crowdfunding,
+
+
 						},
 
 					}, function(_p){
 
+						var remove = function(addressobject, iel){
 
+							self.app.platform.sdk.exchanges.remove(addressobject.currency, addressobject.info.address);
+							iel.remove()
+							list = self.app.platform.sdk.exchanges.get();
+
+							if(!list.length){
+								renders.step(history[mode - 1], mode - 1, historyp[mode - 1])
+							}
+						}
+
+						_p.el.find('.removecr').on('click', function(){
+							var iel = $(this).closest('.item');
+							var address = iel.attr('item');
+
+							var addressobject = self.app.platform.sdk.exchanges.find(address);
+
+							self.app.platform.sdk.exchanges.status(
+								addressobject.currency,
+								addressobject.info.address
+							, function(err, info){
+								if(err){
+									sitemessage("Something went wrong. Please reload page and try again (error: 0006)")
+								}
+								else
+								{
+									if(info.Status == 'AWAITINGFUNDS' || info.Status == 'EXPIREDAWAITINGFUNDS'){
+
+										remove(addressobject, iel)
+									}
+									else
+									{
+										dialog({
+											html : "Do you really want to delete information about this deal? Deal can't be stop",
+											success : function(){
+												remove(addressobject, iel)
+											}
+										})
+									}
+								}
+							})
+						})
+
+						_p.el.find('.updatecr').on('click', function(){
+							var iel = $(this).closest('.item');
+							var address = iel.attr('item');
+
+							var addressobject = self.app.platform.sdk.exchanges.find(address);
+
+
+							if (addressobject){
+
+								self.app.platform.sdk.exchanges.status({
+									address : addressobject.info.address,
+									currency : addressobject.currency
+
+								}, function(err, info){
+									if(err){
+										sitemessage("Something went wrong. Please reload page and try again (error: 0002)")
+									}
+									else
+									{
+										renders.crStatus(addressobject, info, iel.find('.status'))
+									}
+								})
+							}
+							else
+							{
+								sitemessage("Something went wrong. Please reload page and try again (error: 0001)")
+							}
+						})
+
+						_p.el.on('click', '.todeal', function(){
+							var iel = $(this).closest('.item');
+							var address = iel.attr('item');
+
+							var addressobject = self.app.platform.sdk.exchanges.find(address);
+
+							actions.showCrInStep('olddeal', mode + 1, "Deal", addressobject)
+						})
+
+						lazyEach({
+							array : list,
+							action : function(p){
+								var addressobj = p.item;
+
+								var el = _p.el.find('[item="' + addressobj.info.address + '"] .status')
+
+								var info =  self.app.platform.sdk.exchanges.info[addressobj.info.address]
+
+								renders.crStatus(addressobj, info, el)
+							}
+						})
 					})
 				},
 
@@ -820,31 +981,50 @@ var wallet = (function(){
 
 					var h = '';
 
-					var c = 0;
+					//self.app.platform.sdk.exchanges.statuses(function(){
+						var list = self.app.platform.sdk.exchanges.get();
 
-					_.each(self.app.platform.sdk.exchanges.storage, function(addresses, t){
-						c += _.toArray(addresses).length
-					})
 
-					var s = el.find('.listcountWrapper')
+						var s = el.find('.listcountWrapper')
 
-					if (c > 0){
-						h = '('+c+')'
+						if (list.length > 0){
+							h = '('+list.length+')'
 
-						el.find('.listcount').html(h)
+							el.find('.listcount').html(h)
 
-						s.fadeIn()
-					}
+							s.fadeIn()
+						}
 
-					else
-					{
-						s.fadeOut()
-					}
+						else
+						{
+							s.fadeOut()
+						}
+					//})
+
+					
 
 					
 				},
 
+				crdealstatusstep : function(addressobject, info, el){
+					self.shell({
+
+						name :  'crdealstatusstep',
+						el :   el,
+						data : {
+							addressobject : addressobject,
+							info : info
+						},
+
+					}, function(_p){
+						
+					})
+				},
+
 				crDeal : function(addressobject, info, el){
+
+					console.log('addressobject', addressobject, info)
+
 					self.shell({
 
 						name :  'crdeal',
@@ -854,22 +1034,109 @@ var wallet = (function(){
 						},
 
 					}, function(_p){
-						renders.crStatus(info, _p.el.find('.status'))
+						renders.crStatus(addressobject, info, _p.el.find('.status'))
+						renders.crdealstatusstep(addressobject, info, _p.el.find('.crdealstatusstep'))
+
+						_p.el.on('click', '.copyaddress1', function(){
+
+							copyText(_p.el.find('.forcopyaddress1'))
+
+							sitemessage(self.app.localization.e('waddresswascop'))
+
+						})
+
+						_p.el.on('click', '.copyaddress2', function(){
+
+							copyText(_p.el.find('.forcopyaddress2'))
+
+							sitemessage(self.app.localization.e('waddresswascop'))
+
+						})
+
+						_p.el.on('click', '.reactivate', function(){
+
+							self.app.platform.sdk.exchanges.reactivate({
+								address : addressobject.info.address,
+								currency : addressobject.currency
+
+							}, function(err, _info){
+								if(err){
+									sitemessage("Something went wrong. Please reload page and try again (error: 0002)")
+								}
+								else
+								{
+
+									info = _info
+
+									renders.crStatus(addressobject, info, _p.el.find('.status'))
+									renders.crdealstatusstep(addressobject, info, _p.el.find('.crdealstatusstep'))
+								}
+							})
+
+						})
+
+						
+
 					})
 				},
 
-				crStatus : function(info, el){
+				applyStatus : function(info, el){
+					_.find(crowdfunding.segments, function(s){
+
+						var sel = el.find('.segment[segment="'+s.id+'"]');
+
+						if (s.id == info.Status){
+
+							console.log('Number(info.MinutesLeft) / Number(s.time)', Number(info.MinutesLeft) / Number(s.time), Number(info.MinutesLeft) , Number(s.time))
+
+							var w = Math.min((Number(s.time) - Number(info.MinutesLeft)) / Number(s.time), 0.99) * 100
+
+							sel.find('.line').css('width', w + '%')
+
+							sel.addClass('active')
+
+							if(s.class) sel.addClass(s.class)
+
+							if(s.finish){
+								sel.addClass('ended')
+
+								sel.find('.line').css('width', '100%')
+							}
+
+							if(s.finish || s.exclude == 'all'){
+								el.find('.current').html(s.currentLabel(info))
+							}
+
+							return true
+						}
+
+						sel.addClass('ended')
+
+						sel.find('.line').css('width', '100%')
+
+					})
+				},
+
+				crStatus : function(addressobject, info, el, clbk){
+
 					self.shell({
 
 						name :  'pocstatus',
 						el :   el,
 						data : {
+							addressobject : addressobject,
 							info : info,
 							segments : crowdfunding.segments
 						},
 
 					}, function(_p){
-						
+
+						renders.applyStatus(info, el)
+
+
+
+						if (clbk)
+							clbk()
 					})
 				},
 
@@ -883,16 +1150,24 @@ var wallet = (function(){
 
 				crowdfunding : function(clbk, _el){
 
+					if(mode == 2){
+						history[1] = function(_el){
+							actions.showCrInStep('', 1, "")
+						};
+						historyp[1] = {
+							class : 'crowdfunding'
+						}
+					}
+					
 
 					crowdfunding.parameters.currency || (crowdfunding.parameters.currency.value = 'btc')
 
 					self.app.platform.sdk.exchanges.rates(function(rates){
 
-						console.log(rates)
 
 						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
-							amount = Math.min(amount, 1000);
+							amount = Math.min(amount / 3, 1000);
 
 							self.shell({
 
@@ -931,7 +1206,7 @@ var wallet = (function(){
 								}
 
 								crowdfunding.parameters.currency._onChange = function(v){
-									actions.pocRate(function(nrates){
+									self.app.platform.sdk.exchanges.rates(function(nrates){
 
 										rates = nrates;
 
@@ -961,12 +1236,24 @@ var wallet = (function(){
 								}
 
 								_p.el.find('.listcountWrapper').on('click', function(){
-									actions.showCrInStep('showListcount', 1, "List of deals")
+									actions.showCrInStep('showListcount', 2, "List of deals")
 								})
 
 								
 								_p.el.find('.newdeal').on('click', function(){
-									actions.showCrInStep('newdeal', 1, "Deal")
+
+
+									if(crowdfunding.parameters.amount.value > 0){
+										actions.showCrInStep('newdeal', 2, "Deal")
+
+										_p.el.find('.required').addClass('hidden')
+									}
+									else
+									{
+										_p.el.find('.required').removeClass('hidden')
+									}
+
+									
 								})
 
 								if (clbk)
@@ -1653,15 +1940,10 @@ var wallet = (function(){
 
 							if(total){
 
-								console.log('group.id', group.id, total)
-
-								if(group.id == 'pnetwallet'){
+								if(group.id == 'pnetwallet' || group.id == 'total'){
 
 									
-										total = temp + total;
-
-
-										console.log('group.id', temp, total)
+									total = temp + total;
 
 								}
 
@@ -1721,7 +2003,7 @@ var wallet = (function(){
 
 			drawCircles(function(){
 
-				lazyActions([renders.send, renders.deposit, /*renders.crowdfunding, */renders.addresses], clbk)
+				lazyActions([renders.send, renders.deposit, /*renders.crowdfunding,*/ renders.addresses], clbk)
 
 				self.app.platform.sdk.node.transactions.clbks.circles = function(){
 

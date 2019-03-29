@@ -1,0 +1,9 @@
+<% if(info.Status == 'AWAITINGFUNDS') {%>
+
+	Awaitng Funds. Address will be valid for <b> <%- info.MinutesLeft %> minutes</b>
+
+<% } %>
+
+<% if(info.Status == 'EXPIREDAWAITINGFUNDS') {%>
+	Time to this deal has been expired. <div class="reactivate">Reactivate</div>
+<% } %>

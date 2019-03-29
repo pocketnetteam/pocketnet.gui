@@ -16,7 +16,8 @@ var post = (function(){
 
 			sharesocial : function(clbk){
 		
-				var url = 'https://pocketnet.app/'+self.app.nav.get.pathname()+'?s='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || "")
+				//var url = 'https://pocketnet.app/'+self.app.nav.get.pathname()+'?s='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || "")
+				var url = 'https://pocketnet.app/' + ed.hr + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || '')
 
 				var m = share.caption || share.message;
 
@@ -120,6 +121,10 @@ var post = (function(){
 
 			},
 			initVideo : function(clbk){
+
+				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
+					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
+				
 				var pels = el.c.find('.js-player');
 
 				if (pels.length)
@@ -772,17 +777,22 @@ var post = (function(){
 
 				if (id){
 					share = self.app.platform.sdk.node.shares.storage.trx[id] 
-
+					
 
 					if(!share){
 						var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
 							return s.txid == id
 						})
 
-						share = new pShare();
-						share._import(temp);
-						share.temp = true;
-						share.address = self.app.platform.sdk.address.pnet().address
+
+						if (temp){
+							share = new pShare();
+							share._import(temp);
+							share.temp = true;
+							share.address = self.app.platform.sdk.address.pnet().address
+						}
+
+						
 					}
 				}
 
