@@ -52,7 +52,12 @@ var comments = (function(){
 					}
 					else
 					{
-						actions.send(current, function(alias){
+						actions.send(current, function(err, alias){
+
+							if(err){
+								if (clbk)
+									clbk(false)
+							}
 
 							console.log('alias', alias)
 
@@ -159,12 +164,15 @@ var comments = (function(){
 
 					if(!err){
 						if (clbk)
-							clbk(alias)
+							clbk(null, alias)
 					}
 
 					else
 					{
 						self.app.platform.errorHandler(err, true)
+
+						if (clbk)
+							clbk(err, null)
 					}
 
 				}, editid)
