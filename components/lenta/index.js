@@ -97,6 +97,8 @@ var lenta = (function(){
 					{
 						renders.shares(shares, function(){
 
+							initedcommentes = {}
+
 							renders.sharesInview(shares, function(){
 						
 							})
