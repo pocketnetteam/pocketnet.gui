@@ -247,6 +247,8 @@ Nav = function(app)
 
 						historyManager.add(p.completeHref, p);
 
+						current.completeHref = p.completeHref;
+
 						_scrollTop(0, null, 50);
 
 						current.module.parametersHandler(function(){							
@@ -927,6 +929,8 @@ Nav = function(app)
 			if (p.href == 'blank')
 				p.href  = 'index'
 
+			console.log("LOADDEFAULT", p.href, self.get.pathnameSearch())
+
 			self.api.load(p);
 		},
 
@@ -1026,6 +1030,7 @@ Nav = function(app)
 	}
 
 	self.relations = relations;
+	self.current = current
 
 	return self;
 }

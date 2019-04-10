@@ -98,18 +98,17 @@ var menu = (function(){
 
 				sitenameToNav = slowMade(function(){
 
-					var pn = self.app.nav.get.pathname()
+					var pn = self.app.nav.current.href
 
+					
 					if ((pn == 'index' || pn == 'author') && $(window).scrollTop() > 45){
 
 						el.nav.addClass('active')
 						el.c.addClass('menupanelactive')
 
-						///
-
 						el.nav.find('.pcenterLabel').removeClass('active')
 
-						var r = parameters().r || 'empty'
+						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
 
 						if (pn == 'index')
 							el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
@@ -132,7 +131,7 @@ var menu = (function(){
 			navinit : {
 				init : function(el){
 
-					if(!isMobile()){
+					if(!isTablet()){
 						$(window).on('scroll', actions.sitenameToNav)
 
 						self.app.nav.clbks.history.menu = function(href){

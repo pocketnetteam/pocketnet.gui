@@ -13,7 +13,7 @@ var comments = (function(){
 		var errors = {
 			content : "message empty",
 			share : "hasn't share",
-			messagelength : ">140",
+			messagelength : "Comments have 500 character limit per comment",
 			money : "hasn't money",
 			network : "network error"	
 		}
@@ -537,6 +537,8 @@ var comments = (function(){
 							_el.tooltipster('hide')	
 						})
 
+					}, {
+						theme : 'zindex lighttooltip'
 					})
 
 				}, d)

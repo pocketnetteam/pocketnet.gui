@@ -23,7 +23,7 @@ var toppanel = (function(){
 
 				var vs = _.toArray(links)
 
-				var r = parameters().r || 'index'
+				var r = parameters(self.app.nav.current.completeHref, true).r || 'index'
 
 				var contents = new Parameter({
 					type : "VALUES",
@@ -74,7 +74,7 @@ var toppanel = (function(){
 						data : {
 							pathname : pathname,
 							state : state,
-							mobile : isMobile(),
+							mobile : isTablet(),
 
 							selector : selector
 						},
@@ -137,7 +137,7 @@ var toppanel = (function(){
 
 				initEvents();
 
-				renders.menu(self.app.nav.get.pathname())
+				renders.menu(self.app.nav.current.href)
 
 				p.clbk(null, p);
 			}

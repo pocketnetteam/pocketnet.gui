@@ -491,7 +491,7 @@ var platformRTC = function(p){
 
 
 		var initOnlineListener = function(){
-			if(self.onlineCheck){
+			if(self.onlineCheck && typeof window != 'undefined'){
 
 				onlinetnterval = retry(function(){
 

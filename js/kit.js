@@ -218,7 +218,7 @@ Comment = function(txid){
 			return 'content'
 		}
 
-		if(self.message.v && self.message.v.length > 540){
+		if(self.message.v && self.message.v.length > 500){
 			return 'messagelength'
 		}
 

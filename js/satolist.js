@@ -528,8 +528,10 @@ Platform = function(app){
 	}
 
 	self.api = {
-		tooltip : function(_el, content, clbk){
+		tooltip : function(_el, content, clbk, p){
 			if (_el.hasClass('tooltipstered')) return;
+
+			if(!p) p = {};
 
 			var options = {};
 		
@@ -542,7 +544,7 @@ Platform = function(app){
 				options.trigger = 'click'
 				//options.autoClose = false;
 
-				options.theme || (options.theme = "lighttooltip");
+				options.theme = p.theme || "lighttooltip";
 				options.position || (options.position = "left");
 				options.height || (options.height = 420);
 				options.maxWidth || (options.maxWidth = 270);
@@ -3226,7 +3228,7 @@ Platform = function(app){
 				return c
 			},
 
-			get : function(txid, pid, clbk){
+			get : function(txid, pid, clbk, ccha){
 
 				var s = self.sdk.comments.storage;
 				var i = self.sdk.comments.ini;
@@ -3234,13 +3236,13 @@ Platform = function(app){
 				s[txid] || (s[txid] = {})
 
 
-				if((!pid && s[txid]['0']) || s[txid][pid]){
+				/*if(!ccha && ((!pid && s[txid]['0']) || s[txid][pid])){
 
 					if (clbk)
 						clbk(s[txid][pid])
 
 					return
-				}
+				}*/
 
 
 				self.app.ajax.rpc({
@@ -4035,6 +4037,8 @@ Platform = function(app){
 
 					var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
 
+					console.log("TOUT", tx.pockettx)
+
 					var t = {
 						txid : tx.txid,
 						vout : vout.n,
@@ -4042,7 +4046,8 @@ Platform = function(app){
 						confirmations : tx.confirmations,
 						coinbase : coinbase || tx.coinstake,
 						amount : vout.value,
-						scriptPubKey : vout.scriptPubKey.hex
+						scriptPubKey : vout.scriptPubKey.hex,
+						pockettx : tx.pockettx
 					}
 
 					return t
@@ -4050,6 +4055,9 @@ Platform = function(app){
 				},
 
 				waitSpend : function(tx){
+
+					if(tx.pockettx)
+						console.log('waitSpend', tx.confirmations, tx.pockettx)
 
 					if(tx.confirmations < 10 && tx.pockettx){
 
@@ -4082,7 +4090,6 @@ Platform = function(app){
 
 
 				canSpend : function(tx){
-
 					if (tx.cantspend) return false;
 
 					var wait = self.sdk.node.transactions.waitSpend(tx)
@@ -4743,7 +4750,11 @@ Platform = function(app){
 
 							unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
 
+							console.log('unspent.length', unspent.length)
+
 							if(!unspent.length){
+
+
 
 								if(!p.update){
 									p.update = true;
@@ -6211,6 +6222,8 @@ Platform = function(app){
 
 						if(tx && !err){
 							data.tx = platform.sdk.node.transactions.toUT(tx, data.addr)
+							//data.tx = data.pockettx
+
 							data.btx = tx;
 
 							var a = data.addr;
@@ -9520,6 +9533,8 @@ Platform = function(app){
 			name : 'spb1'
 		},
 
+
+
 		{
 			full : '216.108.237.11:58081',
 			host : '216.108.237.11',
@@ -9531,16 +9546,7 @@ Platform = function(app){
 
 		},
 
-		/*{
-			full : '192.168.0.9:31011',
-			host : '192.168.0.9',
-			port : 31011,
-			ws : 8010,
-			path : '',
-
-			name : 'localtest'
-
-		},*/
+		
 
 		{
 			full : '84.52.69.110:37071',

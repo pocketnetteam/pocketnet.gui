@@ -41,7 +41,6 @@
         "node-static": "^0.7.11",
         "open": "0.0.5",
         "outlayer": "^2.1.1",
-        "paralleljs": "^0.2.1",
         "pbkdf2": "^3.0.17",
         "pickadate": "^3.5.6",
         "pickadate-webpack": "^3.5.6",
