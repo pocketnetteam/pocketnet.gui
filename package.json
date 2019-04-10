@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.0.13-beta",
+    "version": "0.0.14-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -50,17 +50,11 @@
     },
     "build": {
         "productName": "Pocketnet",
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
-            }
-        ],
-        "files": [],
-        "directories": {
-            "buildResources": "assets"
-        },
+        "publish": [{
+            "provider": "github",
+            "owner": "pocketnetapp",
+            "repo": "pocketnet.gui"
+        }],
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,
