@@ -1,0 +1,201 @@
+<%
+
+var commentpanel = function(comment, _class){ %>
+	<div class="commentpanel">
+
+		<div class="items">
+
+			<div class="item reply">
+				<div class="label">
+					<span>REPLY</span>
+				</div>
+			</div>
+
+			<% if(_class == 'firstcomment') {
+
+				var h = 'hidden';
+
+				if(comment.children > 0) h = ''
+
+			%>
+
+				<div class="item replies <%-h%>">
+					<div class="iconlabelWrapper table">
+						<div class="label">
+							<span>REPLIES (<b class="repliescount"><%- comment.children %></b>)</span>
+						</div>
+						<div class="icon">
+							<i class="fas fa-angle-down"></i>
+						</div>
+					</div>
+				</div>
+
+			<% } %> 
+		</div>
+
+	</div>
+<% }
+
+%>
+
+
+<% _.each(comments, function(comment){ 
+
+
+	var m = '' %> 
+
+	<div class="comment <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+
+		<div class="commentPaddingWrapper">
+
+			<div class="commentWrapper table">
+
+				<div class="iconWrapper">
+
+					<% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
+
+					<div class="icon">
+						<div class="usericon" image="<%-src || ''%>">
+							<% if(!src) {%>
+								<svg width="30" height="30" data-jdenticon-value="<%-comment.address%>"></svg>
+							<% } %>
+						</div>
+					</div>
+				
+
+				</div>
+
+				<div class="commentBody">
+
+					<div class="metatable table">
+						<div class="author">
+							
+							<b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b>,
+							<span class="date"><%- convertDate(dateToStr(comment.time)) %></span>
+						</div>
+
+						
+						<div class="panelWrapper">
+							<% if(comment.address == user.address.value) {%>
+
+								<div class="panel">
+									<i class="fas fa-ellipsis-h"></i>
+								</div>
+
+							<% } %>
+						</div>
+
+
+
+					</div>
+
+					<div class="cbodyWrapper">
+
+						<div class="commentcontenttable table">
+							<div class="commentcontent">
+
+								<% if(comment.message) {
+
+									var l = findAndReplaceLink(filterXSS(comment.message, {
+										whiteList: [],
+										stripIgnoreTag: true
+									}), true)
+
+
+									if(comment.answerid){
+										l = app.platform.sdk.users.replacePattern(l, replaceName, {
+											comment : comment.answerid
+										})
+									}
+
+									else
+									{
+										l = app.platform.sdk.users.replacePattern(l, replaceNameNoComment)
+									}
+
+									m = emojione.toImage(l)
+
+								%>
+
+									<div class="commentmessage">
+										<div><%=nl2br(m)%></div>
+									</div>
+
+								<% } %>
+
+
+
+								<!--<% if(comment.url) {%>
+
+									<div class="url">
+										<span>
+											<a href="<%-comment.url%>"><%-comment.url%></a>
+										</span>
+									</div>
+
+								<% } %>-->
+
+								<% if(comment.timeupd > comment.time) {%>
+
+									<div class="edited">
+										<i class="fas fa-pen-alt"></i> <span>Edited</span>
+									</div>
+
+								<% } %>
+							</div>
+
+							<% if(m.length <= 50) {%>
+
+							<% commentpanel(comment, _class) %>
+
+							<% } %>
+							
+						</div>
+
+						<% if(m.length > 50) {%>
+
+							<% commentpanel(comment, _class) %>
+
+						<% } %>
+
+
+					</div>
+
+
+
+					
+					<div class="edit">
+					</div>
+				
+
+					
+
+					<% if(_class == 'firstcomment') {%>
+
+						<div class="repliesloaderWrapper hidden">
+							<div class="preloader5">
+							    <span></span>
+							    <span></span>
+							    <span></span>
+							</div>
+						</div>
+
+						<div class="answers">
+						</div>
+
+					<% } %>
+
+					
+				</div>
+
+			</div>
+
+		</div>
+
+		<% if(_class == 'firstcomment') {%>
+			<div class="answer" for="<%-comment.id%>">
+			</div>
+		<% } %>
+	</div>
+
+<% }) %>

@@ -946,6 +946,11 @@ var chat = (function(){
 		    	search : false,
 		    	tones : false,
 
+		    	attributes: {
+			        spellcheck : true,
+			        autocomplete   : "on",
+			    },
+
 		    	events : {
 		    			
 		    		keyup : events.type,
@@ -1069,43 +1074,7 @@ var chat = (function(){
 
 			$(window).on('focus', actions.read)
 			$(window).on('mousemove', actions.read)
-			/*
-
-			ws.messages.ENCRYPTEDMESSAGE.CREATED.clbks['chat' + essenseData.view + chat.ThreadID] = function(){
-
-				console.log('chat.messages.length', chat.messages.length)
-
-				var lastMessage = _.find(chat.messages, function(m){
-					if(m.EncryptedMessageID == lastUpdate || 0) return true;
-				})
-
-				var newMessages = _.filter(chat.messages, function(m){
-					if(!lastMessage || (Number(m.Created) > Number(lastMessage.Created))) return true;
-				})
-
-				renders.messages(null, newMessages)
-
-				
-			}
-
-			ws.messages.ENCRYPTEDMESSAGE.READ.clbks['chat' + essenseData.view + chat.ThreadID] = function(){
-
-				_.each(chat.messages, function(msg){
-					if(msg.Read)
-					{
-						var el = helpers.findEl(msg);
-
-						el.addClass('read');
-					}
-					
-				})
-
-				
-			}
-
-			ws.messages.ENCRYPTEDMESSAGE.CREATED.refs[chat.ThreadID] = true;
-
-			*/
+			
 		}
 
 		var removeMessagesClbk = function(){

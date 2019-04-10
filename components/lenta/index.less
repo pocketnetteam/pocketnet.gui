@@ -1,12 +1,16 @@
 @import "../../css/__cssvar";
 
 #lenta{
-	background: #F9F9F9;
+	/*background: #F9F9F9;*/
 
 	.loader{
 		background: #fff;
 		margin-top: 2 * @rhythm;
 		padding : 6 * @rhythm 0;
+	}
+
+	.panel{
+		overflow: hidden;
 	}
 
 	.shares{
@@ -109,25 +113,11 @@
 			}
 		}
 
-		.commentWrapper{
-			>div{
-				vertical-align: top;
-				padding : 2 * @rhythm;
-
-				&.iconWrapper{
-					font-size: 0.8em;
-					width: 6 * @rhythm;
-					padding-left: 0;
-					padding-right: 0;
-				}
-
-			}
+		.commentsWrapper{			
+			background: #FAFAFA;
 		}
 
-		.comment{
-			padding : 2 * @rhythm 0;
-			margin-bottom: 2 * @rhythm;
-		}
+		
 
 		.ss{
 			padding : 2 * @rhythm;
@@ -140,11 +130,16 @@
 		.share{
 			padding : 2 * @rhythm 0;
 			background: #fff;
-			margin-bottom: 2 * @rhythm;
+			margin-bottom: @rhythm;
+			padding-bottom : 0;
 
 			.article{
 				.message{
 					p img{
+						width: 100%;
+					}
+
+					figure img{
 						width: 100%;
 					}
 				}
@@ -813,6 +808,9 @@
 					float: left;
 					margin-right: 2 * @rhythm;
 
+					&:nth-last-child(1){
+						margin-right: 0;
+					}
 
 					.stars{
 						height: 40px;
@@ -936,6 +934,11 @@
 					display: none;
 				}
 
+				.commentsWrapper{
+					margin : 0 auto;
+					max-width: 960px;
+				}
+
 				.work{
 					margin : 0 auto;
 					max-width: 960px;
@@ -1014,147 +1017,11 @@
 			font-size: 0.8em;
 			.transition(0.3s);
 			color : #fff;
-			margin-bottom : 2 * @rhythm;
+			margin-bottom :  @rhythm;
 
 			&:hover{
 				background: fade(@color-main, 100)
 			}
-		}
-
-		.comments{
-			.error{
-				text-align : right;
-				color : @color-bad;
-				font-weight: 400;
-				font-size: 0.8em;
-				margin-top: @rhythm;
-				min-height: 20px;
-			}
-
-			.leaveCommentBody{
-				padding : 2 * @rhythm 0;
-			}
-
-			.leaveCommentCnt{
-
-				position: relative;
-
-				.cLoader{
-					display: none;
-					position: absolute;
-					left: 6 * @rhythm;
-					right: 0;
-					top: 0;
-					bottom: 0;
-					padding : 4 * @rhythm;
-					background: fade(#fff, 90);
-				}
-
-				&.loading{
-					.cLoader{
-						display: block;
-					}
-				}
-
-				.commentPanel{
-					display: none;
-				}
-
-				.leavewrapper{
-					>div{
-						vertical-align: top;
-						padding : 2 * @rhythm;
-
-						&.iconWrapper{
-							width: 6 * @rhythm;
-							font-size: 0.8em;
-							
-							padding-top: 2.3 * @rhythm;
-							padding-left: 0;
-							padding-right: 0;
-						}
-
-						&.lcpp{
-							padding-right: 0;
-						}
-
-						.usericon{
-							background: @color-main;
-							color : #fff;
-						}
-
-					}
-				}
-
-				.txt{
-					textarea{
-						width: 100%;
-						min-height: 78px;
-						border-radius: 3px;
-						border : 0;
-						background: #F5F8F8;
-						outline: none;
-						padding : 2 * @rhythm 0;
-						padding-left : @rhythm;
-						padding-right : @rhythm;
-						overflow: auto;
-					}
-				}
-			}
-
-
-
-			.commentPanel{
-
-				display: none;
-
-				>div{
-					width: 50%;
-					vertical-align: middle;
-
-					&.postWrapper{
-						text-align: right;
-						button{
-							width: 160px;
-							font-size: 0.8em;
-						}
-
-						.postWrapper{
-
-						}
-					}
-
-					&.panelWrapper{
-						padding-left : @rhythm;
-
-						.panel{
-							overflow: none;
-							>div{
-								float: left;
-								color : @color-main;
-								font-size: 0.8em;
-								padding-top : @rhythm;
-								margin-right : 3*  @rhythm;
-								cursor: pointer;
-								.transition(0.3s);
-
-								&:hover{
-									color : @color-add;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			.leavewrapper{
-				&.active{
-					.commentPanel{
-						display: table
-					}
-				}
-			}
-			
 		}
 
 		
@@ -1203,8 +1070,8 @@
 
 	.loadprev,
 	.loadmore{
+		background: #F9F9F9;
 		padding : 2 * @rhythm 0;
-		padding-bottom : 4 * @rhythm;
 		text-align: center;
 
 		button{
@@ -1379,7 +1246,7 @@
 
 @media only screen and (max-width: 640px) {
 #lenta{
-	background: #F9F9F9;
+
 	
 	.shares{
 		overflow: hidden; 
@@ -1483,8 +1350,9 @@
 		.share{
 			padding : 2 * @rhythm 0;
 			background: #fff;
-			margin-bottom: 2 * @rhythm;
+			margin-bottom: @rhythm;
 			cursor: default;
+			padding-bottom : 0;
 
 			.shareWrapper,
 			.shareContent{

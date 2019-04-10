@@ -86,6 +86,32 @@ html{
             color : @color-bad; 
         }
     }
+
+     .commentmessagewrapper{
+
+        >div{
+            vertical-align: top;
+
+            &.foranswer{
+                width: 100px;
+
+                text-align: right;
+                button{
+                    display: none;
+                }
+            }
+        }
+
+        .commenttext{
+            cursor: pointer;
+            span{
+                font-size : 0.9em;
+                color : @color-main;
+            }
+            
+        }
+    }
+
     .subscribeWrapper{
         >div{
             &.forsubscribe{
@@ -104,13 +130,13 @@ html{
                 padding : @rhythm / 2;
 
                 &.forimage{
-                    width: 25px;
+                    width: 32px;
+                    padding-right: @rhythm;
                     padding-left: 0;
-                    padding-right: 0;
                 }
 
                 &.fortext{
-                    padding-left: @rhythm;
+                    padding-left:  0;
                     span{
                         font-size: 0.8em;
                     }

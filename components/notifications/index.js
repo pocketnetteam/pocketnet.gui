@@ -127,6 +127,8 @@ var notifications = (function(){
 
 				}, function(_p){
 
+
+
 					var f = 'fadeOut'
 					var s = '.empty'
 
@@ -139,7 +141,7 @@ var notifications = (function(){
 
 						s = '.emptyNew'
 
-						if(_p.el.find('.notification').length == 0){
+						if(p.el.find('.notification').length == 0){
 							f = 'fadeIn'
 						}
 

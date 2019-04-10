@@ -665,7 +665,7 @@ nModule = function(){
 
 		var essense = new Essense(p);
 
-		var id = essense.id || 'secondary';
+		var id = essense.id || p.eid || 'secondary';
 
 
 		if (p.primary || p.loadDefault) essense.primary = true;

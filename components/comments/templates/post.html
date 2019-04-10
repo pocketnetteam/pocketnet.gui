@@ -1,0 +1,90 @@
+<div class="postbody" answer="<%- answer %>" edit="<%- edit %>">
+	<div class="posttable table">
+		<div class="iconWrapper">
+
+			<%
+
+				var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || ''  
+
+			%>
+			
+			<div class="icon">
+				<div class="usericon usericonsbsa another" image="<%-src || ''%>">
+					<% if(!src) {%>
+						<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+					<% } %>
+				</div>
+			</div>
+
+		</div>
+
+		<% if(edit) {%>
+			<div class="closeWrapper">
+				<div class="closeEdit">
+
+					<div class="icon">
+						<i class="far fa-times-circle"></i>
+					</div>
+
+					
+				</div>
+			</div>
+
+		<% } %>
+
+		<div class="lcpp">
+			<div class="txt">
+				<div class="leaveComment" placeholder="<%- placeholder || 'Send Comment' %>"></div>
+			</div>
+
+			<!--<div class="commentPanel table">
+				
+				<div class="panelWrapper">
+					<div class="panel">
+						<div class="item url" embeding="url">
+							<i class="fas fa-external-link-alt"></i>
+						</div>
+						<div class="item images" embeding="images">
+							<i class="fas fa-image"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="attachements">
+					<div class="imagesWrapper att"></div>
+					<div class="videoWrapper att"></div>
+				</div>
+
+			</div> -->
+		</div>
+
+		<div class="postCellWrapper">
+			<div class="cpostWrapper">
+				<div class="postaction">
+
+					<div class="preloaderWrapper">
+						<div class="preloader5">
+						    <span></span>
+						    <span></span>
+						    <span></span>
+						</div>
+					</div>
+
+					<div class="icon">
+						<i class="far fa-paper-plane"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<% if(answer) {%>
+
+	<div class="closeAnswer">
+		<i class="far fa-times-circle"></i>
+	</div>
+
+	<% } %>
+
+</div>

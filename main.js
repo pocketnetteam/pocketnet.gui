@@ -195,8 +195,8 @@ function notification(nhtml) {
         nwin = null;
     }
 
-    var w = Math.min(mainScreen.size.width / 3, 550)
-    var h = 140;
+    var w = Math.min(mainScreen.size.width / 3.5, 450)
+    var h = 120;
 
 
     nwin = new BrowserWindow({

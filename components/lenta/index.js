@@ -12,7 +12,7 @@ var lenta = (function(){
 
 		var mid = p.mid;
 
-		var currentComments = {}, w, essenseData, recomended = [], recommended, mestate;
+		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {};
 
 		var commentsInited = {},
 			shareInitedMap = {},
@@ -63,7 +63,7 @@ var lenta = (function(){
 				countshares = 0;
 
 				recomended = []
-				currentComments = {}
+
 				shareInitedMap = {}
 				shareInitingMap = {}
 				loading = false
@@ -262,19 +262,9 @@ var lenta = (function(){
 					})
 				}
 			},
-			linksFromText : function(text){
-				
-				var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi; 
+			
 
-				var matches = text.match(r);
-
-				if(matches && matches.length > 0){
-					return matches[0]
-				}
-				
-			},
-
-			sendComment : function(comment, clbk){
+			/*sendComment : function(comment, clbk){
 				
 				var id = comment.share.v
 
@@ -306,106 +296,6 @@ var lenta = (function(){
 				)
 			},
 
-			initCommentProcess : function(id){
-
-				commentsInited[id] = true
-
-				if(!currentComments[id]){
-					currentComments[id] = new CommentShare();
-					currentComments[id].share.set(id)
-				}
-
-				var _el = el.c.find('#' + id);
-
-				var error = _el.find('.error');
-
-				var textarea = _el.find('textarea');
-
-				textarea.off('keyup')
-				textarea.on('keyup', function(){
-
-					var v = $(this).val()
-
-					currentComments[id].message.set(v)
-
-					if(!currentComments[id].url.v){
-
-						var l = actions.linksFromText(v);
-
-						if (l)
-						{
-							currentComments[id].url.set(l)
-							renders.newCommentAttachement(id, 'url')
-						}
-					}
-				})
-
-				textarea.off('change')
-				textarea.on('change', function(){
-
-					var v = $(this).val()
-
-					if(!currentComments[id].url.v){
-
-						var l = actions.linksFromText(v);
-
-						if (l)
-						{
-							currentComments[id].url.set(l)
-							renders.newCommentAttachement(id, 'url')
-						}
-					}
-
-				})
-
-
-				_el.find('.leaveCommentCnt .panel .item').off('click').on('click', function(){
-					var type = $(this).attr('embeding')
-
-					actions.embeding(id, type)
-				})
-
-				_el.find('.leaveCommentCnt .post').off('click').on('click', function(){
-					var e = currentComments[id].validation();
-
-					
-
-					if (e){
-						error.html(errors.comments[e])
-					}
-					else
-					{
-
-						_el.find('.leaveCommentCnt').addClass('loading')
-
-						error.html('')
-
-						actions.sendComment(currentComments[id], function(r){
-
-							_el.find('.leaveCommentCnt').removeClass('loading')
-
-							if(r){
-
-								var comment = currentComments[id].alias(r)
-
-								self.app.platform.sdk.node.shares.storage.trx[id].comment(comment)
-
-								delete currentComments[id];
-
-								textarea.blur();
-								textarea.val('');
-								_el.find('.att').html('');
-
-								actions.initCommentProcess(id)
-								
-							}
-							
-						})
-					}
-				})
-			},
-
-			
 
 			embeding : function(id, type){
 
@@ -430,7 +320,7 @@ var lenta = (function(){
 						}
 					}
 				})
-			},
+			},*/
 
 			///
 			openPost : function(id, clbk){
@@ -607,6 +497,11 @@ var lenta = (function(){
 
 				self.app.actions.offScroll()
 
+				if (initedcommentes[id])
+					initedcommentes[id].changein(el.c.find("#" + id), 0)
+
+				renders.comments(id, false, true)
+
 				if (clbk)
 					clbk()
 
@@ -632,6 +527,13 @@ var lenta = (function(){
 					player.p.pause()*/
 
 				self.app.actions.onScroll()
+
+				if (initedcommentes[id]){
+					initedcommentes[id].changein(null)
+
+					initedcommentes[id].hideall()
+
+				}
 			},
 
 			like : function(obj, value, clbk){
@@ -1142,43 +1044,13 @@ var lenta = (function(){
 			toComments : function(){
 				var id = $(this).closest('.share').attr('id');
 
-				if(commentsInited[id]){
-					var txt = $(this).closest('.share').find('textarea');
-
-					_scrollTo(txt)
-
-					txt.focus();
-				}
-				else
-				{
-					renders.comments(id, {
-
-						init : true
-
-					}, function(txt){
-
-						if (txt)
-							txt.focus()
-
-					})
-				}
-
-			},
-
-			initCommentProcess : function(){
-				var _el = $(this).closest('.share');
-				var id = _el.attr('id');
-
-				if(!currentComments[id]){
-					_el.find('.leavewrapper').addClass('active')
-
-					actions.initCommentProcess(id);
-				}
-
 				
-			},
+				console.log('ID', id)
 
-			//
+				renders.comments(id, true)
+				/*}*/
+
+			},
 
 			getTransaction : function(){
 				var id = $(this).closest('.share').attr('id');
@@ -1414,6 +1286,67 @@ var lenta = (function(){
 		}	
 
 		var renders = {
+			comments : function(txid, init, showall){
+
+				if(initedcommentes[txid]) return;
+
+				var _el = el.c.find('#' + txid + " .commentsWrapper");
+
+				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+
+				console.log('share', share)
+
+		
+
+				self.fastTemplate('commentspreview', function(rendered){
+
+					self.nav.api.load({
+						open : true,
+						id : 'comments',
+						el : _el,
+
+						eid : txid + 'lenta',
+
+						essenseData : {
+							close : function(){
+
+								_el.html('')
+
+								_scrollToTop(_el, 0, 0, -65)
+
+								initedcommentes[txid].destroy()
+
+								delete initedcommentes[txid]
+							},
+							totop : el.c.find('#' + txid),
+							caption : rendered,
+							send : function(){
+								var c = el.c.find('#' + txid + " .commentsAction .count span");
+
+								c.html(Number(c.html() || "0") + 1)
+							},
+							txid : txid,
+							init :  init,
+							showall : showall
+						},
+
+						clbk : function(e, p){
+
+							var e = el.c.find('#' + txid);
+							
+							if (e.hasClass('fullScreenVideo')){
+								p.changein(e, 0)
+							}
+
+							initedcommentes[txid] = p
+						}
+					})
+
+				}, {
+					share : share
+				})
+			},
+
 			roomsinfo : function(rooms){
 				
 
@@ -1443,13 +1376,7 @@ var lenta = (function(){
 				})
 
 			},
-			newCommentAttachement : function(id, type){
-				var _el = el.c.find('#' + id + " ." + type + "Wrapper");
 
-				if(type == 'url'){
-
-				}
-			},
 			shareSpacers : function(shares){
 
 				_.each(shares, function(s){
@@ -1556,6 +1483,11 @@ var lenta = (function(){
 					action(function(){
 
 						renders.stars(share)
+
+						/*renders.comments(share.txid, {
+							init : true
+						})*/
+
 						renders.url(p.el.find('.url'), share.url, share, function(){
 						
 							action(function(){
@@ -1841,80 +1773,7 @@ var lenta = (function(){
 				
 			},
 
-			leavecomment : function(shareId, clbk){
-
-				self.shell({
-					name :  'leavecomment',
-					el : el.shares.find('#' + shareId + " .leaveCommentCnt"),
-					data : {
-					
-					},
-
-				}, function(p){
-
-					var txt = p.el.find('textarea');
-
-						txt.on('focus', events.initCommentProcess)
-
-					autosize(txt);
-
-					if (clbk)
-						clbk(txt);
-				})
-			},
-
-			commentslist : function(shareId, p, clbk){
-
-				if(!p) p = {};
-
-				self.shell({
-					name :  'commentslist',
-					el : el.shares.find('#' + shareId + " .commentsCnt"),
-					inner : p.inner || append,
-					data : {
-						comments : p.comments || []
-					},
-
-				}, function(p){
-
-					p.el.find('.commentLikeAction').on('click', events.commentLike)
-					p.el.find('.usericoncmt').off('click').on('click', events.subscribe)
-
-					if (clbk)
-						clbk();
-					
-				})
-			},
-
-			comments : function(shareId, p, clbk){
-
-				if(!p) p = {};
-
-				p.comments || (p.comments = lastEls(self.app.platform.sdk.node.shares.storage.trx[shareId].comments || []), 1)
-				p.init || (p.init = false);
-
-				self.shell({
-					name :  'comments',
-					el : el.shares.find('#' + shareId + " .commentsWrapper"),
-					data : {
-					},
-
-				}, function(_p){
-
-					if(p.init)
-					{
-						renders.leavecomment(shareId, clbk)
-						renders.commentslist(shareId, p)
-					}
-					else
-					{
-						if (clbk)
-							clbk();
-					}
-
-					
-				})
-			},
+			
 
 			url : function(el, url, share, clbk){
 
@@ -2127,10 +1986,9 @@ var lenta = (function(){
 
 			begin : function(clbk){
 
-				console.log('beginmaterial', beginmaterial, !beginmaterialloaded, recommended)
 
 				if(beginmaterial && !beginmaterialloaded && (!recommended || recommended == 'sub')){
-					console.log("LOAD")
+			
 					self.app.platform.sdk.node.shares.getbyid(beginmaterial, function(shares){
 
 						beginmaterialloaded = true;
@@ -2152,8 +2010,6 @@ var lenta = (function(){
 				el.c.addClass('loading');
 
 				loading = true;
-
-				console.log("LOAD BEGIN")
 
 				load.begin(function(bshares){
 
@@ -2198,7 +2054,6 @@ var lenta = (function(){
 							shares = _.filter(shares, essenseData.filter)
 
 						}
-
 
 						self.app.platform.sdk.node.shares.users(shares, function(){
 
@@ -2295,6 +2150,8 @@ var lenta = (function(){
 			el.c.find('.loadprev button').on('click', events.loadprev)
 
 			el.c.on('click', '.showmorebyauthor', events.showmorebyauthor)
+
+			el.c.on('click', '.commentsAction', events.toComments)
 
 			if(!essenseData.txids){
 				self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
@@ -2406,6 +2263,17 @@ var lenta = (function(){
 				{
 					shownewmaterials(data['shares'])
 				}
+				
+			}
+
+			self.app.platform.ws.messages.comment.clbks.lenta = function(data){
+
+
+				if(shareInitedMap[data.posttxid]){
+					var c = el.c.find('#' + data.posttxid + " .commentsAction .count span");
+
+						c.html(Number(c.html() || "0") + 1)
+				}
 
 				
 				
@@ -2503,6 +2371,7 @@ var lenta = (function(){
 			getdata : function(clbk, p){
 				newmaterials = 0;
 				
+				initedcommentes = {};
 
 				essenseData = p.settings.essenseData || {};
 
@@ -2611,13 +2480,31 @@ var lenta = (function(){
 							name : 'url'
 						}, function(){
 
-							self.loadTemplate({
-								name : 'stars'
+							/*self.loadTemplate({
+								name : 'comments',
 							}, function(){
 
-								clbk(data);
+								self.loadTemplate({
+									name : 'leavecomment',
+								}, function(){
 
-							})
+									self.loadTemplate({
+										name : 'commentslist',
+									}, function(){*/
+
+										self.loadTemplate({
+											name : 'stars'
+										}, function(){
+
+											clbk(data);
+
+										})
+
+									/*})
+
+								})
+
+							})*/
 
 						})
 
@@ -2632,6 +2519,11 @@ var lenta = (function(){
 
 			destroy : function(){
 
+				_.each(initedcommentes, function(c){
+					c.destroy()
+				})
+				
+				delete self.app.platform.ws.messages.comment.clbks.lenta
 				delete self.app.platform.sdk.node.shares.clbks.added.lenta
 				delete self.app.platform.ws.messages.transaction.clbks.temp
 				delete self.app.platform.ws.messages.event.clbks.lenta

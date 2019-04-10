@@ -139,3 +139,8 @@ function PBKDF2(password, salt, num_iterations, num_bytes)
 		}
 	}
 }
+
+if(typeof module != "undefined")
+{
+	module.exports = PBKDF2;
+}

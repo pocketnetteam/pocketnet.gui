@@ -1636,10 +1636,12 @@ document = window.document || {};
     EmojioneArea.prototype.setText = function (str) {
         var self = this;
         emojioneReady(function () {
+
             self.editor.html(htmlFromText(str, self));
             self.content = self.editor.html();
             trigger(self, 'change', [self.editor]);
             calcButtonPosition.apply(self);
+            
         });
         return self;
     }

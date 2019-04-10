@@ -2039,6 +2039,15 @@
 
 	}
 
+	getRandomValues = function(arr) {
+
+        for (var i = 0; i < arr.length; i++) {
+        arr[i] = Math.random() * 256 | 0
+        }
+
+        return arr
+    }
+
 /* ______________________________ */
 
 /* OBJECTS */
@@ -5125,7 +5134,7 @@
 
 			var pref = '../';
 
-			if(_Electron) pref = './'
+			if(typeof _Electron != 'undefined' && _Electron == true) pref = './'
 
 
 
@@ -5179,6 +5188,8 @@
 	        script.onload = callback;
 	    }
 
+	    src += "?v=129"
+
 	    script.src = src;
 	    appendTo.appendChild(script);
 	}
@@ -5186,6 +5197,10 @@
 	importCss = function(src) { 
 	    var link = document.createElement('link');
 	    link.rel = 'stylesheet';
+
+
+	    src += "?v=127"
+
 	    link.setAttribute('href', src);
 	    
 	    var appendTo = document.getElementsByTagName('head')[0];
@@ -5308,7 +5323,9 @@
 
 	_scrollTop = function(scrollTop, el, time){
 
-		if(!el) el = $("body,html");
+		if(!el) {
+			el = $("body,html");
+		}
 
 		if(!time) time = 200;
 
@@ -5321,11 +5338,14 @@
 
 		var ofssetObj = to.offset();
 
+
 		var offset = (to.height() - $(window).height()) / 2;
 
 		if(ofssetObj)
 		{
 			var scrollTop = ofssetObj.top + offset;
+
+			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
 
 			_scrollTop(scrollTop, el, time);
 		}
@@ -5340,9 +5360,13 @@
 
 		var ofssetObj = to.offset();
 
+		console.log(ofssetObj)
+
 		if (ofssetObj)
 		{
 			var scrollTop = ofssetObj.top + offset;
+
+			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
 
 			_scrollTop(scrollTop, el, time);
 		}
@@ -5654,11 +5678,14 @@
 	}
 
 	Caption = function (p) {
+
+		
+		
 		var container = p.container,
 			caption = p.caption,
 			offset = p.offset || [0, 0],
 			fixed = false,
-			_in = $(window),
+			_in = p._in || $(window),
 			spacer = null;
 
 		var id = makeid(true);
@@ -5671,6 +5698,12 @@
 		}
 
 		var self = this;
+			self.addscroll = false;
+
+		if (p._in){
+			self.addscroll = true;
+		}
+
 
 		var clear = function () {
 			if (spacer)
@@ -5709,20 +5742,33 @@
 
 			fixed = true;
 
-			spacer = $("<div>", {
-				class: classes.spacer + " " + id,
-				height: caption.height(),
-				width: caption.width()
-			})
+			var w = 0;
 
-			caption.before(spacer);
+			if(!p.removeSpacer){
+				spacer = $("<div>", {
+					class: classes.spacer + " " + id,
+					height: caption.height(),
+					width: caption.width()
+				})
+
+				caption.before(spacer);
+
+				w = spacer.width();
+			}
+
+			else
+			{
+				w = container.width();
+			}
+
+			
 
 			caption.addClass(classes.caption);
 
 			caption.css(pos, offset[0] + 'px');
 			caption.css('z-index', '100');
 
-			caption.width(spacer.width());
+			caption.width(w);
 
 		}
 
@@ -5731,11 +5777,22 @@
 			if (!container.is(":visible"))
 				return;
 
-		
-
 			var s = _in.scrollTop(),
-				top = container.offset().top - offset[0],
-				bottom = container.offset().top + container.height() - offset[0] + offset[1] - caption.height();
+				top = container.position().top - offset[0],
+				bottom = container.position().top + container.height() - offset[0] + offset[1];
+
+			if (self.addscroll){
+				top = top + s 
+				bottom = bottom + s 
+			}
+
+			if(typeof p.iniHeight != 'undefined'){
+				bottom = bottom - p.iniHeight
+			}
+			else
+			{
+				bottom = bottom - caption.height();
+			}
 
 			var sh = s + _in.height()
 
@@ -5761,14 +5818,14 @@
 
 		var initEvents = function () {
 
-			window.addEventListener('scroll', action);
+			_in[0].addEventListener('scroll', action);
 
 			window.addEventListener('resize', resize);
 
 		}
 
 		var removeEvents = function () {
-			window.removeEventListener('scroll', action);
+			_in[0].removeEventListener('scroll', action);
 
 			window.removeEventListener('resize', resize);
 		}
@@ -5793,6 +5850,21 @@
 
 		self.setOffset = function(_offset){
 			offset = _offset;
+			clear();
+			action();
+		}
+
+		self.setIn = function(__in){
+
+			if(!__in){
+				__in = $(window)
+			}
+
+			_in = __in;
+
+			removeEvents();
+			initEvents();
+
 			clear();
 			action();
 		}
@@ -6602,6 +6674,21 @@
 
 /* INPUTS */
 	
+	
+	function ecaretPosition(_el, i, j){
+		var el = _el[0];
+		var range = document.createRange();
+		var sel = window.getSelection();
+
+		range.setStart(el.childNodes[i], j);
+
+		range.collapse(true);
+		sel.removeAllRanges();
+		sel.addRange(range);
+	}
+
+	
+
 	fastars = function(el){
 
 		$.each(el, function(){
@@ -7764,6 +7851,24 @@
 				data[uri] = _data;
 
 			putData(uri);
+
+			return this;
+		}
+
+		self.delete = function(uri, item){
+			if(uri == false) uri = 'general';
+
+			if(typeof item != "undefined") {
+				
+				if(!data[uri]) 
+					data[uri] = {};
+
+				delete data[uri][item];
+
+				putData(uri);
+			}
+
+			
 
 			return this;
 		}

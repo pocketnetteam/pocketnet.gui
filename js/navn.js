@@ -17,9 +17,17 @@ Nav = function(app)
 		links : true,
 	}
 
-	var protocol = window.location.protocol.replace(":",'');
 
-	if (protocol == "http" || protocol == "https")
+
+	var protocol = null;
+
+	if (typeof window != 'undefined'){
+		protocol = window.location.protocol.replace(":",'');
+	}
+
+	
+
+	if (protocol == "http" || protocol == "https" || _Node)
 	{
 		protocol = "web"
 	}
@@ -239,9 +247,13 @@ Nav = function(app)
 
 						historyManager.add(p.completeHref, p);
 
+						_scrollTop(0, null, 50);
+
 						current.module.parametersHandler(function(){							
 
 							p.clbk(null, p);
+
+
 
 						})
 

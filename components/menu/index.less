@@ -38,6 +38,18 @@
 		}
 	}
 
+	&.menupanelactive{
+		.sections{
+			.items{				
+				.item{
+					&.navWrapperItem{
+						display: block;
+					}
+				}
+			}
+		}
+	}
+
 	&.searchactive{
 		.additionalbar{
 			top: 65px;
@@ -90,6 +102,10 @@
 							padding-right: 0;
 							padding-left: 0;
 						}
+					}
+
+					&.navWrapperItem{
+						display: none;
 					}
 
 				}
@@ -202,7 +218,7 @@
 				margin-right : @rhythm;
 			}
 			&.notificationsWrapper{
-				margin-right : 4 * @rhythm;
+				margin-right : 2 * @rhythm;
 			}
 
 			&.gethotpostsWrapper{
@@ -264,7 +280,7 @@
 				}
 			}
 			&.searchIcons{
-				margin-right : 4 * @rhythm;
+				margin-right : 2 * @rhythm;
 
 				.icon{
 					cursor: pointer;
@@ -364,6 +380,42 @@
 
 				}
 
+				&.navWrapperItem{
+					display: none;
+					
+					.panelitemCenter{
+						height: 100%;
+						margin : 0 auto;
+					}
+					.menutoppanel{
+						height: 100%;
+					}
+
+					.centerTable {
+						margin : 0 auto;
+
+						>div{
+							vertical-align: middle;
+							padding : 0  @rhythm;
+
+							.pcenterLabel{
+								border : 1px solid transparent;
+								padding : 0 2 * @rhythm;
+								.transition(0.3s);
+								font-weight: 500;
+								
+
+								&.active{
+									color : @color-main;
+									border-bottom : 1px solid @color-main;
+								}
+
+							}
+
+						}
+					}
+				}
+
 				&.sitename{
 					cursor: pointer;
 					.label{
@@ -373,6 +425,40 @@
 
 					.icon{
 						padding-left: 0;
+					}
+
+					.menutoppanel{
+						display: none;
+
+						>div{
+							vertical-align: middle;
+						}
+
+						.pcenterCell{
+							padding-left: @rhythm;
+							padding-right: 3 * @rhythm;
+						}
+
+						.pcenterLabel{
+							font-size : 0.9em;
+							&.active{
+								color : @color-main;
+								border-bottom: 1px solid @color-main;
+							
+							}
+						}
+
+						
+					}
+
+					&.lentamenu{
+						.menutoppanel{
+							display: table-cell;
+						}
+
+						.label{
+							display: none;
+						}
 					}
 				}
 
@@ -447,7 +533,7 @@
 				}
 
 				&.saveCrossObj{
-					margin-right : 4 * @rhythm;
+					margin-right : 2 * @rhythm;
 					cursor: pointer;
 
 					color : #008833;
@@ -457,7 +543,7 @@
 					font-size: 0.8em;
 					font-weight: 700;
 					color : @color-gray;
-					margin-right : 8 * @rhythm;
+					margin-right : 4 * @rhythm;
 					cursor: pointer;
 					.transition(0.3s);
 
@@ -738,7 +824,6 @@
 			}
 
 			&.searchIcons{
-				margin-right : 0;
 			}
 
 			&.sitenames{
@@ -765,6 +850,8 @@
 						text-align: center;
 						
 					}
+
+					
 				}
 
 				&.user{

@@ -990,6 +990,20 @@ Platform = function(app){
 					value : true
 				},
 
+				comments : {
+					name : 'Comment receive',
+					id : 'comments',
+					type : "BOOLEAN",
+					value : true
+				},
+
+				answers : {
+					name : 'Answer receive',
+					id : 'answers',
+					type : "BOOLEAN",
+					value : true
+				},
+
 				followers : {
 					name : 'New Followers',
 					id : 'followers',
@@ -1056,6 +1070,8 @@ Platform = function(app){
 							win : options.win,
 							transactions : options.transactions,
 							upvotes : options.upvotes,
+							comments : options.comments,
+							answers : options.answers,
 							followers : options.followers,
 							rescued : options.rescued
 
@@ -1608,7 +1624,6 @@ Platform = function(app){
 					_.each(l, function(attr, i){
 
 
-
 						if(attr.exported){
 							var alias = new kits.alias[attr.type]()
 
@@ -1715,8 +1730,14 @@ Platform = function(app){
 			getNotificationsInfo : function(notifications, clbk){
 				var n = this;
 
-				notifications = _.filter(notifications, function(n){
-					if(n.loading || n.loaded) return false;
+				console.log('n.storage.notifications', n.storage.notifications, notifications)
+
+				notifications = _.filter(notifications, function(ns){
+					if(ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
+
+					if(ns.commentid && _.find(n.storage.notifications, function(n){
+						return n.commentid == ns.commentid
+					})) return false
 
 					return true
 				})
@@ -1725,7 +1746,7 @@ Platform = function(app){
 					return -Number(n.nblock)
 				})
 
-				notifications = lastEls(notifications, 300)
+				notifications = lastEls(notifications, 100)
 
 				lazyEach({
 					array : notifications, 
@@ -1734,13 +1755,23 @@ Platform = function(app){
 						var ns = p.item;
 
 						ns.loading = true;
-						self.ws.messages[ns.msg].loadMore(ns, function(){
-							ns.loaded = true;
 
-							ns.loading = false;
+						if (self.ws.messages[ns.msg]){
+							self.ws.messages[ns.msg].loadMore(ns, function(){
+								ns.loaded = true;
 
+								ns.loading = false;
+
+								p.success()
+							}, true)
+						}
+
+						else
+						{
 							p.success()
-						}, true)
+						}
+
+						
 
 					},
 					sync : true,
@@ -1920,7 +1951,6 @@ Platform = function(app){
 									address : a
 								},
 								success : function(d){
-
 									if (clbk)
 										clbk(true)
 
@@ -1928,7 +1958,7 @@ Platform = function(app){
 								fail : function(d){
 
 									if (clbk)
-										clbk(null, d.data)
+										clbk(null, deep(d, 'data') || {})
 								}
 							})
 						}
@@ -1944,6 +1974,7 @@ Platform = function(app){
 			},	
 
 			giveFreeMoney : function(toAddress, mnemonic, clbk, amount){
+
 				this.checkFreeMoney(toAddress, function(r){
 
 					if(!r){
@@ -1954,8 +1985,36 @@ Platform = function(app){
 					{
 						var feerate = 0.000001;
 
-						amount || (amount = 2.55);
+						amount || (amount = 0.5);
+						
 						var outputs = [{
+							address : toAddress,
+							amount : amount
+						},{
+							address : toAddress,
+							amount : amount
+						},{
+							address : toAddress,
+							amount : amount
+						},{
+							address : toAddress,
+							amount : amount
+						},{
+							address : toAddress,
+							amount : amount
+						},{
+							address : toAddress,
+							amount : amount
+						},{
+							address : toAddress,
+							amount : amount
+						},{
+							address : toAddress,
+							amount : amount
+						},{
+							address : toAddress,
+							amount : amount
+						},{
 							address : toAddress,
 							amount : amount
 						}]
@@ -1978,9 +2037,14 @@ Platform = function(app){
 					 			var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
 					 			var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
 
+					 			
+
 					 			self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function(err, inputs, _outputs){
 
 									if(err){
+
+										self.sdk.node.transactions.releaseCS(inputs)
+
 										if (clbk)
 											clbk(err)
 									}
@@ -1990,9 +2054,9 @@ Platform = function(app){
 
 										self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 
-											console.log("ERROR", err)
-
 											if (err){
+												self.sdk.node.transactions.releaseCS(inputs)
+
 												if (clbk)
 													clbk(err)
 											}
@@ -2022,6 +2086,7 @@ Platform = function(app){
 				self.sdk.users.get(address, function(){
 
 					var name = deep(self, 'sdk.users.storage2.' + address + '.name');
+
 
 					if (name){
 
@@ -2125,6 +2190,26 @@ Platform = function(app){
 
 					}
 				})
+
+			},
+
+			replacePattern : function(str, h, p){
+
+
+				var sreg = /@([^,]+),/g
+
+				var name = str.match(sreg);
+
+				if(!name) 
+				{
+					return str
+				}
+				else
+				{
+					var cname = h(name, p)
+
+					return str.replace(sreg, cname)
+				}
 
 			}
 		},
@@ -2252,8 +2337,6 @@ Platform = function(app){
 					},
 					success : function(d){
 
-						console.log('GETADDRESSFORPOC', d)
-
 						if (d.Address){
 
 							storage[p.currency][p.address][d.Address.Address] = {
@@ -2305,8 +2388,6 @@ Platform = function(app){
 			},
 			statuses : function(clbk, list){
 
-				console.log('self.sdk.exchanges.storage', self.sdk.exchanges.storage)
-
 				if(!list) {
 					list = [];
 
@@ -2331,8 +2412,6 @@ Platform = function(app){
 						List : JSON.stringify(list)
 					},
 					success : function(d){
-
-						console.log(d)
 
 						if (d.Deal){
 
@@ -2371,7 +2450,6 @@ Platform = function(app){
 					},
 					success : function(d){
 
-						console.log(d)
 
 						if (d.Deal){
 							if (clbk)
@@ -2438,7 +2516,6 @@ Platform = function(app){
 				if(feeMode != 'include'){
 					total = total + fee;
 				}
-
 
 				if(total <= 0){
 					if (clbk)
@@ -2591,8 +2668,6 @@ Platform = function(app){
 
 								self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 
-									console.log("ERROR", err)
-
 									if (err){
 										if (clbk)
 											clbk(err)
@@ -2625,10 +2700,10 @@ Platform = function(app){
 						private : 'drip enhance business garage transfer planet phrase course prosper myth blade sample'
 					},
 					success : function(d){
-						console.log("SUCCESS", d)
+
 					},
 					fail : function(d){
-						console.log("FAIL", d)
+
 					}
 				})
 			},
@@ -2644,6 +2719,35 @@ Platform = function(app){
 					address : toAddress,
 					amount : amount
 				}]
+
+				var seed = bitcoin.bip39.mnemonicToSeed(mnemonic);
+				var hash = bitcoin.crypto.sha256(Buffer.from(seed));
+				var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();						
+			    var keyPair = bitcoin.ECPair.fromWIF(d);
+			 	var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
+
+
+			 	self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function(err, d){
+
+			 		if(err){
+			 			if (clbk)
+							clbk(err)
+			 		}
+
+			 		else
+			 		{
+			 			if (clbk)
+							clbk(null, d)
+			 		}
+			 	}, true)
+			
+			},
+
+			sendmany : function(mnemonic, outputs, clbk){
+
+				mnemonic = mnemonic.replace(/\+/g, ' ');
+
+				var feerate = 0.000001;
 
 				var seed = bitcoin.bip39.mnemonicToSeed(mnemonic);
 				var hash = bitcoin.crypto.sha256(Buffer.from(seed));
@@ -2992,30 +3096,242 @@ Platform = function(app){
 			}
 		},
 
-		icons : {
-			fromKey : function(key){
+		comments : {
+			storage : {},
+
+			find : function(txid, id, pid){
+				var s = self.sdk.comments.storage;
+
+				var comments = deep(s, txid + '.' + (pid || '0')) || [];
+
+				var comment = _.find(comments, function(c){
+					return c.id == id
+				})
+
+				return comment
+			},
+
+			address : function(txid, id, pid){
+
+				var comment = self.sdk.comments.find(txid, id, pid);
+
+				if(comment) return comment.address
+
+				return '' 
+			},
+
+			users : function(comments, clbk){
+				var addresses = _.map(comments, function(r){
+					return r.address
+				})
+
+				self.sdk.users.get(addresses, function(){
+					if (clbk)
+						clbk()
+				}, true)
+			},
+
+			info : function(ids, clbk){
+				var s = self.sdk.comments.storage;
+				var i = self.sdk.comments.ini;
+
+				self.app.ajax.rpc({
+					method : 'getcomments',
+					parameters : ['', '', ids],
+					success : function(d){
+
+						var m = i(d);
+
+						if (clbk)
+							clbk(null, m)
+						
+					},
+					fail : function(d){
+						if (clbk){
+					    	clbk('network', d)
+					    }
+					}
+				})
+			},
+
+			checkSign : function(comment, signature, pubkey){
+
+				var verify = false
+
+				//try {
+					var keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(pubkey, 'hex'))
+
+					var str = comment.serialize();
+
+					var hash = Buffer.from(bitcoin.crypto.hash256(str), 'utf8')
+
+					verify = keyPair.verify(hash, Buffer.from(signature, 'hex'));
+
+					if(!verify)
+					{
+						console.log(comment)
+						console.log(str, signature, pubkey)
+					}
+				/*}
+
+				catch (e){
+
+				}*/
+
+				return verify
+
+			},
+
+			ini : function(d){
+
+				var c = _.map(d || [], function(data){
+					var comment = new pComment();
+
+					comment.setTime(data.time, data.timeupd)
+
+					comment.txid = data.postid
+					comment.children = data.children
+					comment.address = data.address;
+					comment.id = data.id
+
+					comment.parentid = data.parentid
+					comment.answerid = data.answerid
+
+					var msg = {};
+
+					try{
+
+						msg = JSON.parse(data.msg)
+
+					}
+					catch (e){
+						msg = {
+							m : msg
+						}
+					}
+
+					comment._import(msg)
+
+					console.log(msg)
+
+					comment.verify = self.sdk.comments.checkSign(comment, data.signature, data.pubkey)
+
+					return comment
+				})
+
+				c = _.filter(c, function(comment){
+					if(comment.verify) return true
+				})
+
+				return c
+			},
+
+			get : function(txid, pid, clbk){
+
+				var s = self.sdk.comments.storage;
+				var i = self.sdk.comments.ini;
+
+				s[txid] || (s[txid] = {})
 
 
+				if((!pid && s[txid]['0']) || s[txid][pid]){
 
-				var k = key.substring(key.length - 1);
+					if (clbk)
+						clbk(s[txid][pid])
 
-				var k10 = parseInt(k, 16);
+					return
+				}
 
 
+				self.app.ajax.rpc({
+					method : 'getcomments',
+					parameters : [txid, pid || ''],
+					success : function(d){
 
-				var i = [
-					'fas fa-grimace', 'far fa-grimace',
-					'fas fa-grin', 'far fa-grin',
-					'fas fa-grin-alt', 'far fa-grin-alt',
-					'fas fa-grin-beam', 'far fa-grin-beam',
-					'fas fa-grin-beam-sweat', 'far fa-grin-beam-sweat',
-					'fas fa-grin-hearts', 'far fa-grin-hearts',
-					'fas fa-grin-squint', 'far fa-grin-squint',
-					'fas fa-grin-squint-tear', 'far fa-grin-squint-tear',
-				]
+						var c = i(d)
 
-				return i[k10];
+						s[txid][pid || '0'] = c
 
+						self.sdk.comments.users(c, function(){
+
+							if (clbk)
+								clbk(c)
+
+						})
+
+						
+						
+					},
+					fail : function(d){
+						if (clbk){
+					    	clbk('network', d)
+					    }
+					}
+				})
+			},
+
+			send : function(txid, comment, pid, aid, clbk, editid){
+
+				var s = self.sdk.comments.storage;
+
+				var keyPair = self.app.user.keys();
+
+				//comment.message.v = 'tst'
+				//
+				
+
+				
+				var signature = keyPair.sign(Buffer.from(bitcoin.crypto.hash256(comment.serialize()), 'utf8'));	
+
+				var id = editid || makeid();
+
+				var parameters = [
+					id,
+					txid, 
+					self.app.platform.sdk.address.pnet().address, 
+					keyPair.publicKey.toString('hex'), 
+					signature.toString('hex'), 
+					JSON.stringify(comment.export()), 
+					pid || '', 
+					aid || ''
+				];
+
+				var verify = keyPair.verify(
+					bitcoin.crypto.hash256(comment.serialize()), 
+					Buffer.from(signature.toString('hex'), 'hex')
+				);
+
+
+				self.app.ajax.rpc({
+					method : 'sendcomment',
+					parameters : parameters,
+					success : function(d){
+
+						var temptime = self.currentTime()
+
+						var alias = comment.alias(id, temptime, temptime, 0, self.app.platform.sdk.address.pnet().address);
+
+
+						alias.parentid = pid || ''
+						alias.answerid = aid || ''
+
+						s[txid] || (s[txid] = {})
+
+						s[txid][pid || '0'] || (s[txid][pid || '0'] = [])
+						s[txid][pid || '0'].push(alias)
+
+						alias.verify = true
+
+						if (clbk)
+							clbk(null, alias)
+						
+					},
+					fail : function(d){
+						if (clbk){
+					    	clbk('network', d)
+					    }
+					}
+				})
 			}
 		},
 		
@@ -3105,6 +3421,11 @@ Platform = function(app){
 				},
 
 				address : function(){
+
+					if(typeof _Test != 'undefined' && _Test){
+						return self.nodes_test[0]
+					}
+
 					return self.nodes[1]
 				},
 				callNode : function(action, clbk, cashe){
@@ -3407,7 +3728,7 @@ Platform = function(app){
 
 						storage.trx || (storage.trx = {})
 
-						console.log("PARAMETERS", method, parameters)
+						
 
 					self.app.user.isState(function(state){
 						self.app.ajax.rpc({
@@ -3437,6 +3758,7 @@ Platform = function(app){
 										s.scnt = share.scoreCnt;
 
 										if(state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
+
 
 									storage.trx[s.txid] = s;
 
@@ -3728,6 +4050,13 @@ Platform = function(app){
 				},
 
 				waitSpend : function(tx){
+
+					if(tx.confirmations < 10 && tx.pockettx){
+
+						return 10 - tx.confirmations
+
+					}
+
 					if(tx.confirmations == 0 && !tx.coinbase && !tx.coinstake){
 
 						return 1
@@ -3744,7 +4073,17 @@ Platform = function(app){
 					return 0
 				},
 
+
+				releaseCS : function(inputs){
+					_.each(inputs, function(t){
+		 				delete t.cantspend
+		 			})
+				},
+
+
 				canSpend : function(tx){
+
+					if (tx.cantspend) return false;
 
 					var wait = self.sdk.node.transactions.waitSpend(tx)
 
@@ -3823,6 +4162,25 @@ Platform = function(app){
 						clbk()
 
 					
+				},
+
+				findTemp : function(txid){
+					var t = this.temp;
+
+					var finded = null;
+
+					_.each(t, function(ts){
+
+						if(ts[txid]){
+
+							finded = ts[txid]
+						}
+
+							
+					})
+
+
+					return finded
 				},
 
 				clearTemp : function(txid){
@@ -4181,6 +4539,76 @@ Platform = function(app){
 
 					unspents : function(clbk, addresses, update){
 
+
+						var loadingAddressesClbk = function(){
+							addresses = _.filter(addresses, function(address){
+								if(s.unspent[address] && !update){
+
+									a[address] = s.unspent[address]
+
+									return false;
+								}
+								else
+								{
+									s.unspentLoading[address] = true;
+
+									return true;
+								}
+							})
+
+							if(!addresses.length){
+								if (clbk)
+									clbk(a)
+							}
+
+							else
+							{
+
+								self.app.ajax.rpc({
+									method : 'txunspent',
+									parameters : [addresses, 1, 9999999],
+									success : function(d){
+
+										_.each(addresses, function(address){
+											s.unspentLoading[address] = false;
+											s.unspent[address] = []
+
+											a[address] = [];
+										})
+
+										_.each(d || [], function(tr){
+
+											var address = tr.address
+
+											s.unspent[address].push(tr)
+											a[address].push(tr)
+										})
+
+										_.each(self.sdk.node.transactions.clbks, function(c){
+											c()
+										})
+
+										if (clbk)
+											clbk(a)
+									},
+									fail : function(){
+
+										_.each(addresses, function(address){
+
+											s.unspent[address] = [];
+											s.unspentLoading[address] = false;
+
+											a[address] = [];
+										})
+										
+										if (clbk){
+									    	clbk(a)
+									    }
+									}
+								})
+							}
+						}
+
 						var s = self.sdk.node.transactions;
 
 						if(!s.unspent) 
@@ -4188,72 +4616,37 @@ Platform = function(app){
 
 						var a = {};
 
-						addresses = _.filter(addresses, function(address){
-							if(s.unspent[address] && !update){
-
-								a[address] = s.unspent[address]
-
-								return false;
-							}
-							else
-							{
-								s.unspentLoading[address] = true;
+						var loadingAddresses = _.filter(addresses, function(address){
+							if(s.unspentLoading[address])
 
 								return true;
-							}
 						})
 
-						if(!addresses.length){
-							if (clbk)
-								clbk(a)
-						}
+						if(loadingAddresses.length){
 
+							retry(function(){
+
+								var _loadingAddresses = _.filter(addresses, function(address){
+									if(s.unspentLoading[address])
+
+										return true;
+								})
+
+								if(!_loadingAddresses.length) return true;
+
+							}, function(){
+
+								loadingAddressesClbk()
+
+							}, 10)
+
+						}
 						else
 						{
-
-							self.app.ajax.rpc({
-								method : 'txunspent',
-								parameters : [addresses, 1, 9999999],
-								success : function(d){
-
-									_.each(addresses, function(address){
-										s.unspentLoading[address] = false;
-										s.unspent[address] = []
-
-										a[address] = [];
-									})
-
-									_.each(d || [], function(tr){
-
-										var address = tr.address
-
-										s.unspent[address].push(tr)
-										a[address].push(tr)
-									})
-
-									_.each(self.sdk.node.transactions.clbks, function(c){
-										c()
-									})
-
-									if (clbk)
-										clbk(a)
-								},
-								fail : function(){
-
-									_.each(addresses, function(address){
-
-										s.unspent[address] = [];
-										s.unspentLoading[address] = false;
-
-										a[address] = [];
-									})
-									
-									if (clbk){
-								    	clbk(a)
-								    }
-								}
-							})
+							loadingAddressesClbk()
 						}
+
+						
 
 					},
 					
@@ -4352,6 +4745,14 @@ Platform = function(app){
 
 							if(!unspent.length){
 
+								if(!p.update){
+									p.update = true;
+
+									self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p)
+
+									return
+								}
+
 								if (clbk)
 								{
 									clbk(null, 'money')
@@ -4370,12 +4771,8 @@ Platform = function(app){
 
 							self.sdk.node.transactions.create[obj.type](inputs, obj, function(a, er, data){
 
-								console.log('a, er, data', a, er, data)
-
 								if(!a){
 									if((er == -26 || er == -25 || er == 16) && !p.update){
-
-										console.log("update", er)
 										
 										p.update = true;
 
@@ -5019,7 +5416,7 @@ Platform = function(app){
 
 				self.app.user.isState(function(state){
 
-					if(state){
+					if(state && !_Node){
 						var pool = s.get();
 
 						var address = self.sdk.address.pnet().address;	
@@ -5221,7 +5618,7 @@ Platform = function(app){
 				})
 
 				self.clientrtctemp.init(function(){
-					self.clientrtctemp.api.login(function(){
+					
 
 						/*self.clientrtctemp.clbks.message.messenger = function(p, rtc){
 
@@ -5232,7 +5629,6 @@ Platform = function(app){
 						}*/
 
 
-					})
 				})
 
 				if (clbk)
@@ -5611,6 +6007,9 @@ Platform = function(app){
 
 				var nm = filterXSS(emojione.toImage(trimHtml(m, 20)));
 
+				nm = share.renders.xssmessage(nm)
+			
+
 				var image = share.images[0];
 				var video = null;
 
@@ -5658,15 +6057,47 @@ Platform = function(app){
 				return h;
 			},
 
+			comment : function(comment, share){
+
+
+				var h = '<div class="commentmessage">'
+
+						h += '<div class="commentmessagewrapper table">'
+
+							h+='<div class="tcell fortext">'
+
+								h += '<div class="commenttext"><span>'
+								h += comment.renders.preview()
+								h +='</span></div>'
+
+								if(share){
+									h += '<div class="commentshare">'
+										h += share
+									h +='</div>'
+								}
+
+							h +='</div>'
+
+							h += '<div class="tcell foranswer">'
+							h += 	'<button class="reply ghost">Reply</button>'
+							h += '</div>'
+
+						h +='</div>'
+
+					h += '</div>'
+
+				return h;
+			},
+
 			star : function(count){
-				return '<div class="messagestar" count="'+count+'">'+count+' <i class="fas fa-star"></i></div>'
+				return '<div class="messagestar" count="'+count+'">' + count + ' <i class="fas fa-star"></i></div>'
 			},
 
 			_user : function(author){
 				return filterXSS(deep(author, 'name') || author.address)
 			},
 
-			user : function(author, html, gotoprofile){
+			user : function(author, html, gotoprofile, caption){
 
 				var h = '';
 
@@ -5677,7 +6108,7 @@ Platform = function(app){
 
 				
 
-				h+='<div class="cwrapper table">\
+			h+='<div class="cwrapper table">\
 					<div class="cell cellforimage">\
 						<div class="icon">'
 
@@ -5699,8 +6130,14 @@ Platform = function(app){
 						<div class="infomain">\
 							<div class="caption">'
 								if(gotoprofile) h += link
+
+									if(caption){
+										h += caption + ". "
+									}
+
 									h+= '<b class="adr">'+filterXSS(deep(author, 'name') || author.address)+'</b>'
 								if(gotoprofile) h += clink
+
 							h+= '</div>\
 							<div class="tips">' + (html) + '\
 							</div>\
@@ -5741,26 +6178,7 @@ Platform = function(app){
 				return h
 			},
 
-			/*chat : function(author, html){
-
-				var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address)
-
-				var d = ''
-
-				var h = '<div class="subscribeWrapper table">'
-						h += '<div class="scell forhtml">'
-						h += html
-						h += '</div>'
-					
-						h += '<div class="scell forsubscribe">'
-						h += 	'<button class="tochat ghost">'
-						h += 	'Go to chat</button>'
-						h += '</div>'
-					
-					h+= '</div>'
-
-				return h
-			}*/
+			
 		}
 
 		self.messages = {
@@ -6014,6 +6432,186 @@ Platform = function(app){
 							c()
 						})
 					}
+				}
+			},
+
+			comment : {
+
+				fastMessageEvents : function(data, message){
+
+					message.el.find('.commenttext').on('click', function(){
+
+						platform.sdk.node.shares.getbyid(data.posttxid, function(s, fromcashe){
+
+							platform.app.nav.api.load({
+								open : true,
+								href : 'post?s=' + data.posttxid,
+								inWnd : true,
+
+								essenseData : {
+									share : data.posttxid,
+
+									reply : {
+										answerid : data.commentid,
+										parentid : data.parentid || "",
+										noaction : true
+									}
+								}
+							})
+						
+						})
+
+					})
+						
+					message.el.find('.reply').on('click', function(){
+
+						platform.sdk.node.shares.getbyid(data.posttxid, function(s, fromcashe){
+
+							platform.app.nav.api.load({
+								open : true,
+								href : 'post?s=' + data.posttxid,
+								inWnd : true,
+								
+								clbk : function(){									
+
+								},
+
+								essenseData : {
+									share : data.posttxid,
+
+									reply : {
+										answerid : data.commentid,
+										parentid : data.parentid || ""
+									}
+								}
+							})
+						
+						})
+						
+					})
+
+				},
+
+				loadMore : function(data, clbk, wa){
+
+					var getpost = function(pid, clbk){
+
+						if(pid)
+
+							platform.sdk.node.shares.getbyid(pid, function(s, fromcashe){
+
+								s || (s = []);
+
+								if (s[0]){
+									data.share = s[0];								
+								}
+
+								clbk()
+							
+							})
+
+						else
+
+							clbk()
+					}
+
+					platform.sdk.users.get([data.addrFrom], function(){
+
+						data.user = platform.sdk.users.storage[data.addrFrom] || {}
+						data.user.address =  data.addrFrom
+
+						getpost(data.posttxid, function(){
+
+							var ids = [data.commentid]
+
+							data.txid = data.commentid
+
+							/*if (data.answerid) 
+
+								ids.push(data.answerid)*/
+
+							platform.sdk.comments.info(ids, function(error, c){
+
+								if (error || !c.length) return
+
+								if (c.length){
+									data.comment = c[0];
+								}
+
+								platform.sdk.comments.storage[data.comment.txid] ||
+
+								(platform.sdk.comments.storage[data.comment.txid] = {})
+
+								var pid = data.comment.parentid || '0';
+
+								if (platform.sdk.comments.storage[data.comment.txid][pid]){
+									platform.sdk.comments.storage[data.comment.txid][pid].push(data.comment)
+								}
+
+								/*if (c.length == 2){
+									data.answercomment = c[1];
+								}*/
+
+								clbk()
+							})
+						})
+
+						
+					})
+				},
+				fastMessage : function(data){	
+			
+					var text = '';
+					var html = '';
+
+
+
+					if(data.mesType == 'post' && data.comment && data.share && data.user && 
+						(!platform.sdk.usersettings.meta.comments || platform.sdk.usersettings.meta.comments.value)){
+
+						text = self.tempates.comment(data.comment, self.tempates.share(data.share))
+
+						if(text){
+							html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', false, 'New comment')
+						}
+					}
+
+					if(data.mesType == 'answer' && data.comment && data.share && data.user && 
+						(!platform.sdk.usersettings.meta.answers || platform.sdk.usersettings.meta.answers.value)){
+
+						text = self.tempates.comment(data.comment, self.tempates.share(data.share))
+
+						if(text){
+							html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', false, 'New answer')
+						}
+					}		
+
+
+					return html;
+					
+				},
+				refs : {
+
+				},
+				audio : {
+					unfocus : 'water_droplet',
+					if : function(data){
+
+						if(data.mesType == 'post' && data.comment && data.share && data.user && 
+							(!platform.sdk.usersettings.meta.comments || platform.sdk.usersettings.meta.comments.value)){
+
+							return true
+						}
+
+						if(data.mesType == 'answer' && data.comment && data.share && data.user &&
+							(!platform.sdk.usersettings.meta.answers || platform.sdk.usersettings.meta.answers.value)){
+
+							 return true
+						}	
+					}
+				},
+
+				clbks : {
 				}
 			},
 
@@ -6302,7 +6900,7 @@ Platform = function(app){
 		}
 
 		var initOnlineListener = function(){
-			if(self.onlineCheck){
+			if(self.onlineCheck && !_Node){
 
 				onlinetnterval = retry(function(){
 
@@ -6474,7 +7072,12 @@ Platform = function(app){
 		self.fastMessage = function(html, destroy){
 			var id = makeid(true);
 
-			html = '<div class="fastMessage" id="'+id+'"><div class="fmCnt">' + html + '</div><div class="close"><i class="fa fa-times" aria-hidden="true"></i></div></div>';
+			html = '<div class="fastMessage" id="'+id+'">\
+			<div class="fmCnt">' + html + '</div>\
+			<div class="close">\
+				<i class="fa fa-times" aria-hidden="true"></i>\
+			</div>\
+			</div>';
 
 			$('body').append(html);
 
@@ -6627,9 +7230,9 @@ Platform = function(app){
 
 				var exkey = ''
 
-				if(data.mesType) exkey = '.' + data.mesType;
+				if (data.mesType) exkey = '.' + data.mesType;
 
-    			var m = deep(self.messages, data.msg + exkey) || deep(self.messages, data.msg) || {};
+    			var m = deep(self.messages, (data.msg) + exkey) || deep(self.messages, (data.msg)) || {};
 
     			if (m.checkHandler){
     				if(!m.checkHandler(data, m)){
@@ -6643,70 +7246,72 @@ Platform = function(app){
 
     				var audio = deep(m, 'audio')
 
-
-    				if (audio){
-
-    					if(!audio.if || audio.if(data, loadedData)){
-
-    						if (audio.focus && platform.focus){
-    						
-	    						ion.sound.play(audio.focus);
-	    					}
-
-
-	    					if (audio.unfocus && !platform.focus){
-	    						
-	    						ion.sound.play(audio.unfocus);
-	    					}
-
-    					}
-
-    					
-    				}
-
     				_.each(m.clbks, function(clbk){
         				clbk(data, loadedData);
         			})
 
+        			if(!_Node){
+        				if (audio){
 
-    				if(m.fastMessage && !m.refs.all && !m.refs[data.RefID]){
+	    					if(!audio.if || audio.if(data, loadedData)){
 
-    					var html = m.fastMessage(data, loadedData);
-
-
-    					if (html){
-
-    						var message = self.fastMessage(html, function(){
-    							platform.sdk.notifications.seen([data.txid])
-    						});
-
-    						if (m.fastMessageEvents){
-    							m.fastMessageEvents(data, message)
-    						}
-
-    						data.loaded = true
-
-    						platform.sdk.notifications.addFromWs(data)
-
-    						if (typeof _Electron != 'undefined' && !platform.focus && message.html){
-								electron.ipcRenderer.send('electron-notification', message.html);
-    						}
-							
-
-    					}
+	    						if (audio.focus && platform.focus){
+	    						
+		    						ion.sound.play(audio.focus);
+		    					}
 
 
-    				}	
+		    					if (audio.unfocus && !platform.focus){
+		    						
+		    						ion.sound.play(audio.unfocus);
+		    					}
 
-    				if (m.header && !platform.focus && platform.titleManager){
+	    					}
 
-    					var t = m.header(data);
+	    					
+	    				}
 
-    					if (t)
+	    				if(m.fastMessage && !m.refs.all && !m.refs[data.RefID]){
 
-    						platform.titleManager.add(t)
+	    					var html = m.fastMessage(data, loadedData);
 
-    				}	  
+
+	    					if (html){
+
+	    						var message = self.fastMessage(html, function(){
+	    							platform.sdk.notifications.seen([data.txid])
+	    						});
+
+	    						if (m.fastMessageEvents){
+	    							m.fastMessageEvents(data, message)
+	    						}
+
+	    						data.loaded = true
+
+	    						platform.sdk.notifications.addFromWs(data)
+
+	    						if (typeof _Electron != 'undefined' && !platform.focus && message.html){
+									electron.ipcRenderer.send('electron-notification', message.html);
+	    						}
+								
+
+	    					}
+
+
+	    				}	
+
+	    				if (m.header && !platform.focus && platform.titleManager){
+
+	    					var t = m.header(data);
+
+	    					if (t)
+
+	    						platform.titleManager.add(t)
+
+	    				}	
+        			}
+
+    				  
 
     				if (clbk)
     					clbk()      				
@@ -6941,14 +7546,20 @@ Platform = function(app){
 		self.init = function(clbk){
 
 			closing = false;
+			self.onlineCheck = true;
 
-			self.onlineCheck = deep(window, 'navigator.onLine') || false;
+			if(!_Node)
+
+				self.onlineCheck = deep(window, 'navigator.onLine') || false;
+
 			self.online = self.onlineCheck;
 			self.connected = {};
 
 			self.lostBlock = platform.currentBlock;
 
 			initOnlineListener();
+
+
 
 			initconnection();
 
@@ -6975,7 +7586,7 @@ Platform = function(app){
 
 
 		var initOnlineListener = function(){
-			if(self.onlineCheck){
+			if(self.onlineCheck && !_Node){
 
 				retry(function(){
 
@@ -7084,7 +7695,10 @@ Platform = function(app){
 		self.fastMessage = function(html, destroy){
 			var id = makeid(true);
 
-			html = '<div class="fastMessage" id="'+id+'"><div class="fmCnt">' + html + '</div><div class="close"><i class="fa fa-times" aria-hidden="true"></i></div></div>';
+			html = '<div class="fastMessage" id="'+id+'">\
+				<div class="fmCnt">' + html + '</div>\
+				<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>\
+			</div>';
 
 			$('body').append(html);
 
@@ -8027,18 +8641,29 @@ Platform = function(app){
 		self.helpers = {
 			keyFromString : function(key, l, clbk){
 
-				var mypbkdf2 = new PBKDF2(key, 'helper', 1, l);
+				if(_Node){
+					var derivedKey = PBKDF2.pbkdf2Sync(key, 'helper', 1, 32, 'sha512')
 
-					mypbkdf2.deriveKey(null, function(key){
-						clbk(key)
-					});
+					clbk(key)
+
+				}
+				else
+				{
+					var mypbkdf2 = new PBKDF2(key, 'helper', 1, l);
+
+						mypbkdf2.deriveKey(null, function(key){
+							clbk(key)
+						});
+				}
+
+				
 			},
 
 			keyForAes : function(key, clbk){
 
 				var _clbk = function(key){
 					
-					window.crypto.subtle.importKey(
+					crypto.subtle.importKey(
 					    "raw", 
 					    aesjs.utils.utf8.toBytes(key),
 					    {   //this is the algorithm options
@@ -8082,7 +8707,17 @@ Platform = function(app){
 
 					var random_num = new Uint8Array(bits / 8); 
 
+					if(crypto.getRandomValues) {
+
 						crypto.getRandomValues(random_num);
+					}
+
+					else
+					{
+						getRandomValues(random_num);
+					}
+
+					
 
 					var str = aesjs.utils.hex.fromBytes(random_num)
 
@@ -8729,9 +9364,18 @@ Platform = function(app){
 	}
 
 	self.autochange = function(){
+
+		var key = 'nodes'
+
+		if(typeof _Test != 'undefined' && _Test){
+			key = 'nodes_test'
+		}
+
+
 		self.nodeid++;
 
-		if (self.nodeid >= self.nodes.length){
+
+		if (self.nodeid >= self[key].length){
 			self.nodeid = 0;
 		}
 	}
@@ -8840,6 +9484,30 @@ Platform = function(app){
 		return self;
 	}
 
+	self.nodes_test = [
+		{
+			full : '84.52.69.110:10011',
+			host : '84.52.69.110',
+			port : 10011,
+			ws : 8080,
+			path : '',
+
+			test : true,
+			name : 'performancetest'
+		}
+
+		/*,{
+			full : '84.52.69.110:48081',
+			host : '84.52.69.110',
+			port : 48081,
+			ws : 8080,
+			path : '',
+
+			test : true,
+			name : 'performancetest'
+		}*/
+	]
+
 	self.nodes = [
 
 		{
@@ -8863,6 +9531,17 @@ Platform = function(app){
 
 		},
 
+		/*{
+			full : '192.168.0.9:31011',
+			host : '192.168.0.9',
+			port : 31011,
+			ws : 8010,
+			path : '',
+
+			name : 'localtest'
+
+		},*/
+
 		{
 			full : '84.52.69.110:37071',
 			host : '84.52.69.110',
@@ -8871,67 +9550,7 @@ Platform = function(app){
 			path : '',
 
 			name : 'spbtest'
-		},
-
-		{
-			full : '84.52.69.110:48081',
-			host : '84.52.69.110',
-			port : 48081,
-			ws : 8080,
-			path : '',
-
-			name : 'spbtest'
 		}
-
-		/*{
-			full : '84.52.69.110:48081',
-			host : '84.52.69.110',
-			port : 48081,
-			ws : 8080,
-			path : '',
-			user : 'user',
-			pass : 'secret-password',
-
-			name : 'spb1'
-		},*/
-
-
-		/*{
-			full : '84.52.69.110:58081',
-			host : '84.52.69.110',
-			port : 58081,
-			ws : 8080,
-			path : '',
-			user : 'user',
-			pass : 'secret-password',
-		},*/
-
-
-
-		/*{
-			full : '185.148.147.15:38081',
-			host : '185.148.147.15',
-			port : 38081,
-			ws : 8080,
-			path : '',
-			user : 'user',
-			pass : 'secret-password',
-
-			name : 'pocketnet.app' 
-		},*/
-
-		/*{
-			full : '216.108.237.11:38081',
-			host : '216.108.237.11',
-			port : 38081,
-			ws : 8080,
-			path : '',
-			user : 'user',
-			pass : 'secret-password',
-
-			name : 'pocketnet.app' 
-		},*/
-
 
 	]
 
@@ -9004,14 +9623,14 @@ Platform = function(app){
 	
 	self.prepare = function(clbk, state){	
 
-		self.state.load();
-
-		self.focusListener();
-		self.initSounds();
+		self.ws = new self.WSn(self);
 
 		if(!_Node)
 		{
-			self.ws = new self.WSn(self);
+			self.state.load();
+
+			self.focusListener();
+			self.initSounds();
 
 			//self.rtc = new self.RTC(self);
 
@@ -9019,17 +9638,13 @@ Platform = function(app){
 
 			self.m = new self.Marketing(self);
 
-			
+			self.titleManager = new self.TitleManager();	
 
 		}
 
-		self.titleManager = new self.TitleManager();
-
-		//self.sdk.wallet.sendchecking()
-
 		self.sdk.node.get.time(function(){
 			
-			if(!state && typeof _Electron == 'undefined' && !window.cordova && !localStorage['popupsignup']){
+			if(!state && !_Node && typeof _Electron == 'undefined' && !window.cordova && !localStorage['popupsignup'] && !_Node){
 				setTimeout(function(){
 
 					var href = self.app.nav.get.href();
@@ -9321,5 +9936,10 @@ Platform = function(app){
 
 }
 
+
+if(typeof module != "undefined")
+{
+	module.exports = Platform;
+}
 
 topPreloader(65);

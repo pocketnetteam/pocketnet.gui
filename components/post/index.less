@@ -12,7 +12,53 @@
 }
 #post{
 
-	
+	#comments{
+		.answer,
+		.post{
+			padding-left:  7 * @rhythm;
+			padding-right: 12 * @rhythm;
+		}
+		.caption{
+			padding-left:  7 * @rhythm;
+			padding-right: 12 * @rhythm;
+		}
+		.answer{
+			padding : 0;
+		}
+
+
+
+		.list{
+			.comment{
+
+				.commentPaddingWrapper{
+					padding-left:  7 * @rhythm;
+					padding-right: 14 * @rhythm;
+				}
+			}
+
+			
+
+			.answer{
+				.postbody{
+					padding-left:  7 * @rhythm;
+					padding-right: 14 * @rhythm;
+				}
+				
+			}
+		}
+
+		.answers{		
+			.comment{
+				.commentPaddingWrapper{
+					padding-left:  0;
+					padding-right: 0;
+				}
+				
+			}
+		}
+	}
+
 	.postWrapper{
 		margin : 0 auto;
 		max-width: 930px;
@@ -73,13 +119,16 @@
 		}
 	}
 	.share{
-		padding : 4 * @rhythm 6 * @rhythm;
+		
 		background: #fff;
-		margin-bottom: 2 * @rhythm;
 
 		.work{
-			padding : 0;
+			padding : 4 * @rhythm 6 * @rhythm;
 			margin : 0;
+		}
+
+		.commentsWrapper{			
+			background: #FAFAFA;
 		}
 
 		.exitFull{
@@ -93,6 +142,10 @@
 		.article{
 			.message{
 				p img{
+					width: 100%;
+				}
+
+				figure img{
 					width: 100%;
 				}
 			}
@@ -630,6 +683,8 @@
 	}
 }
 
+
+
 .wnd.postwindow{
 	z-index: 1000;
 
@@ -663,6 +718,52 @@
 @media only screen and (max-width: 640px) {
 #post{
 
+	#comments{
+		.answer,
+		.post{
+			padding-left:  @rhythm;
+			padding-right: @rhythm;
+		}
+		.answer{
+			padding : 0;
+		}
+
+		.caption{
+			padding-left:  @rhythm;
+			padding-right: 7 * @rhythm;
+		}
+
+		.list{
+			.comment{
+
+				.commentPaddingWrapper{
+					padding-left:  @rhythm;
+					padding-right: @rhythm;
+				}
+			}
+
+			
+
+			.answer{
+				.postbody{
+					padding-left:  @rhythm;
+					padding-right: @rhythm;
+				}
+				
+			}
+		}
+
+		.answers{		
+			.comment{
+				.commentPaddingWrapper{
+					padding-left:  0;
+					padding-right: 0;
+				}
+				
+			}
+		}
+	}
+
 	.shareTable{
 		display: block;
 		overflow-y: hidden;
@@ -686,9 +787,10 @@
 		}
 	}
 	.share{
-		padding : 0;
+		
 
 		.work{
+			padding : 0;
 			width: 100%;
 		}
 
@@ -717,6 +819,18 @@
 					margin-right: @rhythm;
 					overflow: hidden;
 					float: left;
+				}
+			}
+
+			figure{
+				width: 100%!important;
+				display: block;
+				margin-bottom : @rhythm;
+
+				img{
+					margin : 0;
+					
+					
 				}
 			}
 			
