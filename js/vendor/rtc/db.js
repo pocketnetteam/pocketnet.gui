@@ -60,6 +60,41 @@ class MessageStorage {
         // yyyyMMddHH - hash
         this._hv[msgKey.substr(0, 8)] = _hash;
     }
+
+    //-----------------------
+    // Save messages
+    _save() {
+
+        var map = _.map(this._db, function(m){
+            return {
+                tm : m.tm,
+                key : m.tm + m.f
+            }
+        })
+
+        map = _.sortBy(map, function(msg){
+
+            var t = msg.tm
+
+            if(msg.tm.length == 17) msg.tm = t + '0'
+
+            return Number(msg.tm)
+        })
+
+        map = lastEls(map, 100)
+
+        var db = {}
+
+        var _db = this._db
+
+        _.each(map, function(m){
+            db[m.key] = _db[m.key]
+        })
+
+
+        localStorage[this._prms.id] = JSON.stringify(db);
+    }
+
     //----------------------------------------------
     get DB() {
         return this._db;
@@ -69,7 +104,7 @@ class MessageStorage {
     // Check message
     // Update storage (add, update)
     // Update vector
-    AddMessage(msg) {
+    AddMessage(msg, save) {
         if (!this._check_message(msg)) return;
         //-----------------------
         // Save to DB
@@ -84,9 +119,14 @@ class MessageStorage {
         //-----------------------
         // Update HistoryVector for current message key
         this._history_vector_update(msg.tm + msg.f);
-
-        // Save current DB to localstorage for future
-        localStorage[this._prms.id] = JSON.stringify(this._db);
+            
+        if (save)
+            this._save()
+    }
+    //-----------------------
+    // Save
+    Save(){
+        this._save()
     }
     //-----------------------
     // Get Message By Id
@@ -103,6 +143,8 @@ class MessageStorage {
         for (let _msg in peer_db) {
             this.AddMessage(peer_db[_msg]);
         }
+
+        this._save()
     }
     //-----------------------
     // Compare history vectors and return diff messages

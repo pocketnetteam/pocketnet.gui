@@ -1517,8 +1517,17 @@ var wallet = (function(){
 
 										var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs)
 
+										_.each(inputs, function(t){
+							 				t.cantspend = true
+							 			})
+
+							 			console.log(inputs)
+
 										self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 											if(err){
+
+												self.app.platform.sdk.node.transactions.releaseCS(inputs)
+
 												sitemessage(err)
 											}
 

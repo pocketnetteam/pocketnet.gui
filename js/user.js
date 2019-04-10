@@ -318,8 +318,6 @@ User = function(app, p) {
 					if(m){
 						if(!bitcoin.bip39.validateMnemonic(m)){
 
-							console.log("private", m)
-
 							self.setKeysPairFromPrivate(m, function(){
 								self.isState(clbk)
 							})
@@ -333,7 +331,6 @@ User = function(app, p) {
 					}
 					else
 					{
-						console.log("ASDSDASDASDA")
 						localStorage['mnemonic'] = ''
 
 						state = 0;	
@@ -406,6 +403,7 @@ User = function(app, p) {
 	self.setKeysPairFromPrivate = function(private, clbk){
 		var keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
 
+		console.log('keyPair', keyPair)
 		
 		self.setKeysPair(keyPair, function(){
 			if (clbk)
@@ -440,3 +438,8 @@ User = function(app, p) {
 }
 
 topPreloader(25);
+
+if(typeof module != "undefined")
+{
+	module.exports = User;
+}

@@ -121,6 +121,8 @@ var toppanel = (function(){
 			},
 
 			destroy : function(){
+				delete self.app.nav.clbks.history.toppanel
+				
 				el = {};
 			},
 			

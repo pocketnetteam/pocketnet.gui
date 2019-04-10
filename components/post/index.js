@@ -10,7 +10,7 @@ var post = (function(){
 
 		console.log('primary', p)
 
-		var el, share, ed;
+		var el, share, ed, inicomments;
 
 		var actions = {
 
@@ -102,6 +102,8 @@ var post = (function(){
 			
 			position : function(){
 
+				if(isMobile()) return
+					
 				if(primary) return
 
 
@@ -435,6 +437,44 @@ var post = (function(){
 		}
 
 		var renders = {
+			comments : function(){
+
+
+				self.fastTemplate('commentspreview', function(rendered){
+
+					var _el = el.c.find(".commentsWrapper");
+
+					self.nav.api.load({
+						open : true,
+						id : 'comments',
+						el : _el,
+
+						eid : share.txid + 'post',
+
+						essenseData : {
+							totop : el.c,
+							caption : rendered,
+							send : function(){
+								var c = el.c.find(".commentsAction .count span");
+
+								c.html(Number(c.html() || "0") + 1)
+							},
+							txid : share.txid,
+							showall : true,
+
+							reply : ed.reply
+						},
+
+						clbk : function(e, p){
+							actions.position()
+							inicomments = p
+						}
+					})
+
+				}, {
+					share : share
+				})
+			},
 			empty : function(){
 				self.shell({
 					name :  'empty',
@@ -754,7 +794,10 @@ var post = (function(){
 		var make = function(){
 
 			if (share){
-				renders.share()
+				renders.share(function(){
+					renders.comments()
+				})
+				
 			}
 			else
 			{
@@ -774,6 +817,8 @@ var post = (function(){
 					ed = deep(p, 'settings.essenseData') || {};
 
 					share = null;
+
+					console.log("ID", id)
 
 				if (id){
 					share = self.app.platform.sdk.node.shares.storage.trx[id] 
@@ -796,9 +841,8 @@ var post = (function(){
 					}
 				}
 
-				/*self.app.nav.api.history.addParameters({
-					s : share.txid
-				})*/
+				console.log("SHARE", share, self.app.platform.sdk.node.shares.storage.trx, id)
+
 
 				var data = {};
 
@@ -808,6 +852,9 @@ var post = (function(){
 
 			destroy : function(){
 				el = {};
+
+				if (inicomments)
+					inicomments.destroy()
 
 				delete self.app.platform.ws.messages.event.clbks.post
 				

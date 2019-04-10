@@ -1,4 +1,6 @@
-﻿if(typeof loclib == 'undefined' || !loclib)
+﻿
+
+if(typeof loclib == 'undefined' || !loclib)
 	loclib = {};
 
 	loclib.en = {};

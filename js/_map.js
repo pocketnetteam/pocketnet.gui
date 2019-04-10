@@ -579,6 +579,29 @@ __map =  {
 			],
 		},
 
+		comments : {
+			uri : "comments",
+			href : "comments",
+			add : {
+				el : 'content'
+			},
+
+			relations : [
+				{src : 'js/vendor/exif.js', f : 'js', 
+
+					require : function(){
+
+						EXIF = require('./js/vendor/exif.js')
+
+				}},
+				
+				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
+				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
+
+		
+			],
+		},
+
 		lenta : {
 			uri : "lenta",
 			href : "lenta",

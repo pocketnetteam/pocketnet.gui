@@ -163,46 +163,9 @@ var metadisplay = function(){ %>
 				}
 			}
 
-			if(share.settings.v != 'a'){
+			nm = share.renders.xssmessage(nm)
 
-				nm = nl2br(findAndReplaceLink(filterXSS(nm, {
-					whiteList: [],
-					stripIgnoreTag: true
-				})));	
-
-			}
-			else
-			{
-
-				nm = filterXSS(nm,{
-
-					whiteList: {
-						a: ["href", "title", "target"],
-						br : ["style"],
-						b : ["style"],
-						span : ["style"],
-						figure : ["style"],
-						figcaption : ["style", "class"],
-						i : ["style"],
-						img : ["src", "width", "height"],
-						div : ["class", "data-plyr-provider", "data-plyr-embed-id"],
-						p : [],
-						ul : [],
-						ol : [],
-						li : [],
-						h2 : [],
-						h1 : [],
-						h3 : [],
-						h4 : [],
-						h5 : [],
-						em : [],
-						blockquote : []
-					},
-
-				})
-			}
-
-
+			
 			
 
 		%>
@@ -484,25 +447,25 @@ var metadisplay = function(){ %>
 
 								
 
-								<div class="clearfix"></div>
+								<!--<div class="clearfix"></div>-->
 
-								<!--
+								
 								<div class="item">
 
-									<div class="itemwr table">
+									<div class="itemwr table commentsAction">
 										<div class="iconwr">
-											<div class="icon commentsAction">
+											<div class="icon">
 												<i class="fas fa-comment"></i>
 											</div>
 										</div>
 
 										<div class="count">
-											<span>0</span>
+											<span><%- share.comments || "0" %></span>
 										</div>
 										
 									</div>
 									
-								</div>-->
+								</div>
 							</div>
 						<% } %>
 
@@ -538,8 +501,7 @@ var metadisplay = function(){ %>
 
 				</div>
 
-				<!--<div class="commentsWrapper">
-				</div>-->
+				
 
 				<div class="subscribeWrapper">
 					<div class="name">
@@ -564,10 +526,10 @@ var metadisplay = function(){ %>
 				</div>
 			</div>
 		</div>
-
-
-
 		
+	</div>
+
+	<div class="commentsWrapper">
 	</div>
 
 	<div class="exitFull roundclosebutton">

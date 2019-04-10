@@ -4,8 +4,14 @@ Localization = function(app){
 
 	var self = this;
 
+	if(typeof window == 'undefined') self.key = 'en'
+	else
+	{
+		self.key = (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
+	}
 
-	self.key = (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
+
+	
 
 	self.available = {
 
@@ -157,7 +163,7 @@ Localization = function(app){
 	}
 
 	self.e = function(id, args){
-		var v = ____loclib[id] || deep(window.loclib, self.key + '.' + id) || "";
+		var v = ____loclib[id] || deep(loclib, self.key + '.' + id) || "";
 
 		if(typeof v == 'function') v = v(args);
 
@@ -167,4 +173,9 @@ Localization = function(app){
 	}
 
 	return self;
+}
+
+if(typeof module != "undefined")
+{
+	module.exports = Localization;
 }

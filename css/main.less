@@ -1758,6 +1758,7 @@ input[type=radio].radio:checked + label {
       
         cursor: pointer;
         color : #fff;
+        z-index: 150;
 
         &:hover{
         }
@@ -3625,6 +3626,51 @@ input[type=radio].radio:checked + label {
             color : @color-bad; 
         }
     }
+
+
+
+    .commentmessagewrapper{
+
+        >div{
+            vertical-align: top;
+
+            &.foranswer{
+                width: 100px;
+
+                text-align: right;
+                button{
+                    padding-top : 0;
+                    text-align: right;
+                    width: auto;
+
+                    i{
+                        display : none;
+                    }
+
+                    &.disabled{
+                        color : @color-good;
+                        background: transparent;
+                        i{
+                            display : inline;
+                        }
+
+                        &:hover{
+                            background: transparent;
+                        }
+                    }
+                }
+            }
+        }
+
+        .commenttext{
+            cursor: pointer;
+            span{
+                font-size : 0.9em;
+                color : @color-main;
+            }
+            
+        }
+    }
     
     .sharepreview{
         padding-top: @rhythm;
@@ -3634,13 +3680,13 @@ input[type=radio].radio:checked + label {
                 padding : @rhythm / 2;
 
                 &.forimage{
-                    width: 25px;
+                    width: 32px;
+                    padding-right: @rhythm;
                     padding-left: 0;
-                    padding-right: 0;
                 }
 
                 &.fortext{
-                    padding-left: @rhythm;
+                    padding-left:  0;
                     span{
                         font-size: 0.8em;
                     }
@@ -3709,8 +3755,11 @@ input[type=radio].radio:checked + label {
             .infomain{
                 padding-left:  @rhythm;
 
+                .caption{
+                    font-size : 0.8em;
+                }
+
                 .tips{
-                    padding-top : @rhythm;
                 }
             }
         }
@@ -3751,7 +3800,28 @@ input[type=radio].radio:checked + label {
         text-overflow: ellipsis;
     }
 
+    .subscribeWrapper{
+        >div{
+            &.forsubscribe{
+                button{
+                    color : @color-main;
+                    
+                }
+            }
+        }
+    }
 
+    .commentmessagewrapper{
+
+        >div{
+
+            &.foranswer{
+                button{
+                    color : @color-main;
+                }
+            }
+        }
+    }
     
 
     .close{

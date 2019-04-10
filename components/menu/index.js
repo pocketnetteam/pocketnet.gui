@@ -9,6 +9,7 @@ var menu = (function(){
 		var el,
 			searchBlurTimer = null,
 			autoUpdate = null,
+			sitenameToNav = null,
 			autoUpdateWallet = null;
 
 		var loc = new Parameter({
@@ -52,20 +53,27 @@ var menu = (function(){
 
 			},
 
-			searchWidth : function(){
+			elswidth : function(){
+				el.c.find('.autowidth.active').each(function(){
+					actions.setWidth($(this))
+				})
+
+			},
+
+			setWidth : function(_el){
 
 
-				if(el.postssearch.offset()){
+				if(_el.offset()){
 					
-					var left = el.postssearch.offset().left;
+					var left = _el.offset().left;
 
-					var w = el.postssearch.width()
+					var w = _el.width()
 
 					var right = el.c.width() - left - w;
 
 					var d = left - right;	
 
-					el.postssearch.width(w + d)
+					_el.width(w + d)
 
 				}
 
@@ -82,10 +90,67 @@ var menu = (function(){
 				}
 
 				el.find('.amount').html(c)
+			},
+
+			sitenameToNav : function(){
+
+				if(!events.navinit.el) return
+
+				sitenameToNav = slowMade(function(){
+
+					var pn = self.app.nav.get.pathname()
+
+					if ((pn == 'index' || pn == 'author') && $(window).scrollTop() > 45){
+
+						el.nav.addClass('active')
+						el.c.addClass('menupanelactive')
+
+						///
+
+						el.nav.find('.pcenterLabel').removeClass('active')
+
+						var r = parameters().r || 'empty'
+
+						if (pn == 'index')
+							el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
+					}
+					else
+					{
+						el.c.removeClass('menupanelactive')
+						el.nav.removeClass('active')
+					}
+
+					actions.elswidth()
+
+				}, sitenameToNav, 10)
+				
 			}
 		}
 
 		var events = {
+
+			navinit : {
+				init : function(el){
+
+					if(!isMobile()){
+						$(window).on('scroll', actions.sitenameToNav)
+
+						self.app.nav.clbks.history.menu = function(href){
+
+							actions.sitenameToNav()
+
+						}
+					}
+
+					
+				},
+
+				destroy : function(){
+					$(window).off('scroll', actions.sitenameToNav)
+
+					delete self.app.nav.clbks.history.menu
+				}
+			},
 
 			sitename : {
 
@@ -93,25 +158,29 @@ var menu = (function(){
 
 					self.app.user.isState(function(state){
 
-						var k = localStorage['lentakey'] || 'index';
+						if(self.app.nav.get.pathname() != 'index'){
+							var k = localStorage['lentakey'] || 'index';
 
-						if (parameters().r == k) k = 'index'
+							if (parameters().r == k) k = 'index'
 
-						if (k != 'index') k = 'index?r=' + k
+							if (k != 'index') k = 'index?r=' + k
 
-						if(!state) k = 'index'
+							if(!state) k = 'index'
 
-						self.nav.api.go({
-							href : k,
-							history : true,
-							open : true,
-							handler : true
-						})
+							self.nav.api.go({
+								href : k,
+								history : true,
+								open : true,
+								handler : true
+							})
+						}
 
 					})
 
 					
-				}
+				},
+
+				
 
 			},
 
@@ -268,16 +337,21 @@ var menu = (function(){
 				click : function(){
 					el.c.toggleClass('searchactive')
 
-					if(el.c.hasClass('searchactive')){
+					if (el.c.hasClass('searchactive')){
 						el.postssearch.find('input').focus();
-
-						actions.searchWidth()
+						el.postssearch.addClass('active')
 
 						if(searchBlurTimer) {
 							clearTimeout(searchBlurTimer)
 							searchBlurTimer = null
 						}
 					}
+					else
+					{
+						el.postssearch.removeClass('active')
+					}
+
+					actions.elswidth()
 				}
 			},
 			searchinit : {
@@ -475,7 +549,7 @@ var menu = (function(){
 
 						    	numberStep: function(now, tween) {
 
-						    		actions.searchWidth()
+						    		actions.elswidth()
 
 						    		el.addClass(c)
 
@@ -623,6 +697,8 @@ var menu = (function(){
 
 				if (events[ekey]){
 
+					events[ekey].el = element
+
 					_.each(events[ekey], function(action, event){
 
 						if(event == 'init')
@@ -641,7 +717,7 @@ var menu = (function(){
 
 			})
 
-			$(window).on('resize', actions.searchWidth)
+			$(window).on('resize', actions.elswidth)
 
 			ParametersLive([loc], el.c);
 
@@ -673,7 +749,7 @@ var menu = (function(){
 				if(parameters().ss){
 
 					el.c.addClass('searchactive')
-					actions.searchWidth()
+					actions.elswidth()
 
 					el.postssearch.find('input').val(parameters().ss);
 
@@ -715,7 +791,7 @@ var menu = (function(){
 
 			destroy : function(){
 
-				$(window).off('resize', actions.searchWidth)
+				$(window).off('resize', actions.elswidth)
 
 				delete self.app.platform.sdk.node.transactions.clbks.menu
 				delete self.app.platform.ws.messages.event.clbks.menusave
@@ -731,6 +807,14 @@ var menu = (function(){
 
 				if(autoUpdateWallet)
 					clearInterval(autoUpdateWallet);
+
+				_.each(events, function(e){
+
+					delete e.el
+
+					if (e.destroy)
+						e.destroy()
+				})
 
 				el = {};
 			},
@@ -751,6 +835,7 @@ var menu = (function(){
 				el.notactive = el.c.find('.notactive');
 				el.currency = el.c.find('.currencyWrapper');
 				el.postssearch =  el.c.find('.postssearch')
+				el.nav = el.c.find('.menutoppanel')
 
 				initEvents();
 

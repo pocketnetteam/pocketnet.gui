@@ -1,0 +1,885 @@
+@import "../../css/__cssvar";
+
+#comments{
+
+	.repliesloaderWrapper,
+	.loaderWrapper{
+		padding : 3 * @rhythm;
+		text-align: center;
+	}
+
+
+	.captionfwrapper{
+		overflow : hidden;
+		height: 0px;
+		.csharetable{
+			display: none;
+		}
+
+		&.cf_caption{
+			height: auto;
+			.csharetable{
+				display: table;
+			}
+		}
+	}
+
+	.caption{
+		padding-left:  3 * @rhythm;
+		padding-right: 6 * @rhythm;
+		background: #fff;
+
+		.captionTable{
+			>div{
+				vertical-align: middle;
+
+				&.captionPanel{
+					width: 160px;
+
+					.items{
+						margin-left: auto;
+						width: auto;
+
+						>div{
+							vertical-align: middle;
+							padding : @rhythm;
+
+							.cact{
+								padding: 0 @rhythm;
+								cursor : pointer;
+								.transition(0.3s);
+
+								&:hover{
+									color : @color-main;
+								}
+							}
+
+							&.close{
+								padding-right: 0;
+
+								.cact{
+									padding-right: 0;
+								}
+							}
+						}
+					}
+
+					span{
+						font-weight: 700;
+						font-size : 0.8em;
+					}
+				}
+			}
+		}
+
+		.csharetable{
+			>div{
+				padding : @rhythm 0;
+				vertical-align: middle;
+
+				&.image{
+					width: 45px;
+
+					.icon{
+						height: 45px;
+						width: 100%;
+					}
+				}
+
+				&.csharecnt{
+					padding-left: @rhythm;
+				}
+			}
+
+			.shareprwrapper{
+	            >div{
+	                vertical-align: middle;
+	                padding : @rhythm / 2;
+
+	                &.forimage{
+	                    width: 25px;
+	                    padding-left: 0;
+	                    padding-right: 0;
+	                }
+
+	                &.fortext{
+	                    padding-left: @rhythm;
+	                    span{
+	                        font-size: 0.8em;
+	                    }
+	                }
+
+	                &.extra{
+	                    div{
+	                        font-size: 0.9em;
+	                        float: right;
+	                    }
+	                }
+	            }
+
+	            .img{
+	                width: 25px;
+	                height: 25px;
+	                border-radius: 50%;
+	                position: relative;
+
+	                .vstyle{
+	                    position: absolute;
+	                    left: 20px;
+	                    top: 14px;
+	                    font-size: 0.6em;
+	                    color : @color-gray-slight;
+	                }
+	            }
+	        }
+		}
+	}
+	
+
+	.list{
+		
+		
+		.comment{
+			border-bottom : 1px solid @color-gray-slight;
+			.transition(0.9s, background);
+			position : relative;
+
+			&:nth-child(1){
+				padding-top : 2 * @rhythm;
+			}
+
+			&.newcommentsn,
+			&.newcomments{
+				background: fade(#fff, 80);
+			}
+
+			&.firstcomment{
+
+				display: none;
+
+				&:nth-last-child(1),
+				&:nth-last-child(2),
+				&:nth-last-child(3),
+				&:nth-last-child(4),
+				&:nth-last-child(5){
+					display: block;
+				}
+			}
+
+			&.editing{
+				.cbodyWrapper{
+					display: none;
+				}
+			}
+
+			.tocommentno,
+			.tocomment{
+				cursor : pointer;
+				color : @color-main;
+			}
+
+			.commentPaddingWrapper{
+				padding-left:  3 * @rhythm;
+				padding-right: 6 * @rhythm;
+			}
+			
+			.answer{
+				.postbody{
+					border-top : 1px solid @color-gray-slight;
+					padding-left:  3 * @rhythm;
+					padding-right: 5 * @rhythm;
+				}
+				
+				background: #fff;
+			}
+
+			.answers{
+				.comment{
+					&:nth-last-child(1){
+						padding-top : 0;
+						border-bottom : 0;
+					}
+				}
+			}
+
+			/*&:nth-last-child(1){
+				border-bottom : 0;
+			}*/
+
+			&.showedreplies{
+				.replies{
+					.icon{
+						i{
+							&:before{
+								content : '\f106';
+							}
+						}
+					}
+				}
+			}
+
+			&:hover{
+				.metatable{
+					>div{
+
+						&.panelWrapper{
+
+							.panel{
+								opacity: 1;
+							}
+						}
+					}
+				}
+			}
+
+
+		}
+		.commentWrapper{
+			>div{
+				vertical-align: top;
+
+				&.iconWrapper{
+					font-size: 0.8em;
+					width: 45px;
+					padding-top : 2 * @rhythm;
+
+					.usericon{
+						position: relative;
+						margin : 0 auto;
+					}
+				}
+
+				&.commentBody{
+					padding-left: @rhythm;
+
+					.cbodyWrapper{
+
+						padding-bottom: 2 * @rhythm;
+					}
+				}
+
+				.commentmessage{
+
+					div{
+						padding-top : @rhythm;
+					}
+
+					a{
+						color : @color-main;
+						text-decoration: underline;
+					}
+				}
+
+				.edited{
+					padding-top : @rhythm;
+
+					i,
+					span{
+						color : @color-gray-light;
+						font-size: 0.8em;
+					}
+				}
+
+			}
+		}
+
+		.metatable{
+			height: auto;
+			>div{
+				vertical-align: middle;
+				padding : @rhythm 0;
+				padding-bottom: 0;
+
+				span{
+					font-size : 0.8em;
+				}
+
+				&.author{
+					color : @color-gray;
+				}
+
+				.date{	
+					color : @color-gray-light;
+				}
+
+				&.panelWrapper{
+					width: 40px;
+
+					.panel{
+						width: 100%;
+						text-align: right;
+						color : @color-gray-light;
+						cursor: pointer;
+						.transition(0.3s);
+						opacity: 0;
+						&:hover{
+							color : @color-main;
+						}
+					}
+
+					
+				}
+
+				
+			}
+
+
+		}
+
+		
+
+		.commentcontenttable{
+			>div{
+				vertical-align: bottom;
+
+				&.commentpanel{
+					margin-top: 0;
+					width: 170px;
+				}
+			}
+		}
+
+		.commentpanel{
+			margin-top: @rhythm;
+			overflow: hidden;
+			
+
+			.items{
+				overflow: hidden; 
+
+				>div{
+					float: right;
+					padding-left: 2 * @rhythm;
+					cursor: pointer;
+					color : @color-main;
+					.transition(0.3s);
+
+					&:hover{
+						color : @color-gray-light;
+					}
+
+					&:nth-last-child(1){
+						padding-left : 0;
+					}
+
+				}	
+			}
+
+			.iconlabelWrapper{
+				width: auto;
+				>div{
+					vertical-align: middle;
+					&.icon{
+						width: 30px;
+						text-align: center;
+						cursor: pointer;
+					}
+
+				}
+				
+			}
+
+			span{
+				font-weight: 700;
+				font-size : 0.8em;
+			}
+					
+		}
+
+	}
+
+	&.showedall{
+		.showall{
+			display: none;
+		}
+
+		.list{
+		
+			.comment{
+
+				&.firstcomment{
+
+					display: block;
+
+				}
+			}
+		}
+
+	}
+
+	.showall{
+		padding : 2 * @rhythm;
+		padding-left:  3 * @rhythm;
+		padding-right: 3 * @rhythm;
+		padding-bottom: 0;
+		text-align: center;
+		color : @color-main;
+		.transition(0.3s);
+		cursor : pointer;
+
+		span{
+			font-size : 0.8em;
+			font-weight: 700;
+		}
+
+		&:hover{
+			color : @color-gray-light;
+		}
+	}
+
+	.edit,
+	.answer,
+	.post{
+		padding-left:  3 * @rhythm;
+		padding-right: 5 * @rhythm;
+
+
+
+		.postbody{
+			padding : 2 * @rhythm 0;
+			position: relative;
+
+			.closeAnswer{
+				right: @rhythm;
+				top : @rhythm;
+				padding : @rhythm;
+				color : @color-gray-light;
+				position: absolute;
+				cursor: pointer;
+				.transition(0.3s);
+				&:hover{
+					color : @color-main;
+				}
+			}
+		}
+
+		.posttable{
+			>div{
+				vertical-align: top;
+				padding : 2 * @rhythm @rhythm;
+
+				&.iconWrapper{	
+					width: 45px;
+					font-size: 0.8em;
+					
+					padding-top: 2.3 * @rhythm;
+					padding-left: 0;
+					padding-right: 0;
+
+					.usericon{
+						position: relative;
+						margin : 0 auto;
+					}
+				}
+
+				&.lcpp{
+					padding-right: 0;
+				}
+
+				&.closeWrapper,
+				&.postCellWrapper{
+					width: 48px;
+					
+					.closeEdit,
+					.postaction{
+						line-height: 36px;
+						text-align: center;
+						
+						.preloaderWrapper{
+							display: none;
+
+							.preloader5{
+								display: block;
+							}
+						}
+
+						
+
+						.icon{
+							cursor: pointer;
+							.transition(0.3s);
+							color : @color-gray-light;
+
+							&:hover{
+								color : @color-main;
+							}
+
+						}
+					}
+				}
+
+				.usericon{
+					background: @color-main;
+					color : #fff;
+				}
+
+			}
+		}
+
+		.txt{
+			textarea{
+				width: 100%;
+				height: 36px;
+				line-height: 34px;
+				border-radius: 3px;
+				border : 0;
+				border : 1px solid @color-gray-light;
+				
+				outline: none;
+				padding : 0;
+				padding-left : @rhythm;
+				padding-right : @rhythm;
+				overflow: auto;
+				resize: none;
+			}
+		}
+
+		.postbody{
+			&.sending{
+				.posttable{
+					>div{
+						&.postCellWrapper{
+							
+							.postaction{
+								
+								.icon{
+									display: none;
+								}
+
+								.preloaderWrapper{
+									display: block;
+								}
+
+							}
+						}
+					}
+				}
+				
+			}
+		}
+
+		
+
+		.emojionearea,
+		.emojionearea.form-control{
+			border : 0;
+			border-radius: 20px;
+			border : 1px solid @color-gray-light;
+			box-shadow: none;
+		}
+
+		.emojionearea{
+			&.focused{
+				border : 1px solid @color-gray-light;
+				box-shadow: none;
+			}
+		}
+
+
+		.emojionearea-editor{
+		
+			border-radius: 3px;
+			padding : 8px;
+			padding-left : 2 * @rhythm;
+			padding-right : 2 * @rhythm;
+			outline: none;
+			border : 0;
+			min-height: 36px;
+		}
+
+		.emojionearea-button{
+			top : 6px;
+		}
+
+		.commentPanel{
+
+			display: none;
+
+			>div{
+				width: 50%;
+				vertical-align: middle;
+
+				&.cpostWrapper{
+					text-align: right;
+					button{
+						width: 160px;
+						font-size: 0.8em;
+					}
+
+					.postWrapper{
+
+					}
+				}
+
+				&.panelWrapper{
+					padding-left : @rhythm;
+
+					.panel{
+						overflow: none;
+						>div{
+							float: left;
+							color : @color-main;
+							font-size: 0.8em;
+							padding-top : @rhythm;
+							margin-right : 3*  @rhythm;
+							cursor: pointer;
+							.transition(0.3s);
+
+							&:hover{
+								color : @color-add;
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	.edit,
+	.answer{
+		padding : 0;
+	}
+
+	.edit{
+		.postbody{
+			padding : 0;
+		}
+		.posttable{
+			>div{
+
+				&.iconWrapper{
+					display: none;
+				}
+
+				&.lcpp{
+					padding-left: 0;
+				}
+
+				&.postCellWrapper{
+					padding-right: 0;
+				}
+
+			}
+		}
+
+
+	}
+
+	.answers{		
+		.comment{
+			.commentPaddingWrapper{
+				padding-left:  0;
+				padding-right: 0;
+			}
+
+			&:nth-child(1){
+				border-top : 1px solid @color-gray-slight;
+			}
+			
+		}
+	}
+
+	&.inited{
+		.post{
+			.commentPanel{
+				display: table
+			}
+		}
+	}
+}
+
+.commentmenu{
+	.menuitem{
+		cursor: pointer;
+		>div{
+			padding : @rhythm;
+			border-bottom: 1px solid @color-gray-slight;
+			.transition(0.3s);
+
+			span{
+				font-size: 0.9em;
+			}
+
+			&.icon{
+				width: 30px;
+				text-align: center;
+			}
+		}
+
+		&:nth-last-child(1){
+			>div{
+				border-bottom: 0;
+			}
+		}
+
+		&:hover{
+			>div{
+				color : @color-main;
+				border-color: @color-main;
+			}
+		}
+
+		&.complain{
+			&:hover{
+				>div{
+					color : @color-contrast;
+					border-color: @color-contrast;
+				}
+			}
+		}
+
+
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	#comments{
+
+		.repliesloaderWrapper,
+		.loaderWrapper{
+			padding : @rhythm;
+		}
+
+		.captionfwrapper{
+			
+		}
+
+		.caption{
+			padding-left:  @rhythm;
+			padding-right: @rhythm;
+			background: #fff;
+		}
+		
+
+		.list{
+			padding-top : 2 * @rhythm;
+			
+			.comment{
+				
+
+				.commentPaddingWrapper{
+					padding-left:  @rhythm;
+					padding-right: @rhythm;
+				}
+				
+				.answer{
+					.postbody{
+						padding-left: @rhythm;
+						padding-right: 0;
+					}
+					
+				}
+
+				
+			}
+			.commentWrapper{
+				>div{
+					vertical-align: top;
+
+					&.iconWrapper{
+						width: 36px;
+						padding-top : @rhythm;
+
+						.usericon{
+							margin : 0;
+						}
+					}
+				}
+			}
+
+			.commentcontenttable{
+				display: block;
+				>div{
+					display: block;
+					width: 100%;
+				}
+			}
+
+			.commentpanel{
+				width: 100%;
+
+				.items{
+					padding-top : @rhythm;
+					>div{
+						float: left;
+						padding-left: 0;
+						padding-right: 3 * @rhythm;
+					}	
+				}
+					
+			}
+
+
+			.comment{
+				margin-bottom: @rhythm;
+			}
+
+			.metatable{
+			
+				>div{
+					
+					&.panelWrapper{
+
+						.panel{
+							text-align: center;
+							opacity: 1;
+							&:hover{
+								color : @color-gray-light;
+							}
+						}
+
+						
+					}
+				}
+
+			}
+		}
+
+	
+		.showall{
+			padding : 2 * @rhythm;
+			padding-left:  @rhythm;
+			padding-right: @rhythm;
+			padding-bottom: 0;
+			
+		}
+
+		.answer,
+		.post{
+			padding-left:  @rhythm;
+			padding-right: 0;
+
+
+
+			.postbody{
+				padding : 0;
+				position: relative;
+
+				.closeAnswer{
+					display: none;
+				}
+			}
+
+			.posttable{
+				>div{
+				}
+			}
+		}
+
+		.answer{
+			padding : 0;
+		}
+
+		.answers{		
+			.comment{
+				.commentPaddingWrapper{
+					padding-left:  0;
+					padding-right: 0;
+				}
+
+				
+			}
+		}
+	}
+}

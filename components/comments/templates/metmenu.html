@@ -1,0 +1,47 @@
+<%
+
+var m = [];
+
+var all = {
+	edit : {
+		icon : '<i class="fas fa-pencil-alt"></i>',
+		text : "Edit",
+		class : 'edit'
+	},
+
+	remove : {
+		icon : '<i class="far fa-times-circle"></i>',
+		text : 'Remove',
+		class : 'remove'
+	}
+
+}
+
+
+	if(address == caddress){
+
+
+		m.push('edit')
+		/*m.push('remove')*/
+
+			
+	}
+
+
+
+%>
+
+<div class="commentmenu">
+
+	<% _.each(m, function(m){ var mo = all[m] %>
+
+	<div class="menuitem <%-mo.class||''%> table">
+		
+		<div class="icon"><span><%=mo.icon%></span></div>
+		<div class="label"><span><%-mo.text%></span></div>
+
+	</div>
+		
+	<% }) %>
+
+</div>

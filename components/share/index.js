@@ -1113,6 +1113,10 @@ var share = (function(){
 		    	search : false,
 		    	tones : false,
 
+		    	attributes: {
+			        spellcheck : true,
+			    },
+
 		    	events : {
 		    		change : events.eTextChange,
 		    		click : events.eTextChange,

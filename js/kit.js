@@ -110,24 +110,10 @@ Unsubscribe = function(){
 	return self;
 }
 
-CommentShare = function(){
+Comment = function(txid){
 	var self = this;
 
-	self.share = {
-		set : function(_v){
-			if(!_v){
-				this.v = ''
-			}
-			else
-
-				this.v = _v
-
-			if (self.on.change)
-				self.on.change('share', this.v)
-
-		},
-		v : ''
-	};
+	self.txid = txid;
 
 	self.message = {
 		set : function(_v){
@@ -218,28 +204,21 @@ CommentShare = function(){
 	self.clear = function(){
 		self.message.set()
 		self.images.set()
-		self.share.set()
 		self.url.set()
 	}
 
 	self.on = {}
 	self.off = function(e){
 		delete self.on[e]
-	}
-
-	
+	}	
 
 	self.validation = function(){
-
-		if(!self.share.v){
-			return 'share'
-		}
 
 		if(!self.images.v.length && !self.url.v && !self.message.v) {
 			return 'content'
 		}
 
-		if(self.message.v && self.message.v.length > 140){
+		if(self.message.v && self.message.v.length > 540){
 			return 'messagelength'
 		}
 
@@ -247,14 +226,13 @@ CommentShare = function(){
 	}
 
 	self.serialize = function(){
-		return self.share.v + self.message.v + self.images.v.join(',') + self.message.url
+		return encodeURIComponent(self.message.v) + self.images.v.join(',') + encodeURIComponent(self.url.v || '')
 	}
 
 	self.export = function(extend){
 
 		if(extend){
 			return {
-				share : self.share.v,
 				message : self.message.v,
 				url : self.url.v,
 				images : self.images.v,
@@ -262,33 +240,33 @@ CommentShare = function(){
 		}
 
 		return {
-			s : self.share.v,
-			m : self.message.v,
-			u : self.url.v,
+			m : encodeURIComponent(self.message.v),
+			u : encodeURIComponent(self.url.v),
 			i : self.images.v,
 		}
 	}
 
 	self.import = function(v){
-		self.share.set(v.s || v.share)
 		self.url.set(v.u || v.url)
 		self.message.set(v.m || v.message)
 		self.images.set(v.i || v.images)
 	}
 
-	self.alias = function(txid){
-		var comment = new pCommentShare();
-
-			comment.time = new Date();
-
+	self.alias = function(id, time, timeupd, children, address){
+		var comment = new pComment();
 			comment._import(self.export())
 
-			comment.txid = txid
+			comment.id = id
+			comment.txid = self.txid
+			comment.children = children
+			comment.address = address
+
+			comment.setTime(time, timeupd)
 
 		return comment;
 	}
 
-	self.type = 'commentShare'
+	self.type = 'comment'
 
 	return self;
 }
@@ -1157,7 +1135,7 @@ pShare = function(){
 	self.txid = '';
 	self.time = null;
 
-	self.comments = [];
+	self.comments = 0;
 
 	self.on = {}
 	self.off = function(e){
@@ -1177,21 +1155,7 @@ pShare = function(){
 		videos : [],
 		image : ''
 	}
-
-	self.comment = function(c){
-
-		if(_.isArray(c)){
-			self.comments = self.comments.concat(c)
-		}
-		else{
-			self.comments.push(c);
-		}
-
-		if (self.on.comment){
-			self.on.comment(c)
-		}
-	}
-
+	
 	self.findComment = function(id){
 		return _.find(self.comments, function(c){
 			return c.txid == id
@@ -1230,6 +1194,9 @@ pShare = function(){
 
 		if(v._time)
 			self._time = v._time
+
+		if(v.comments)
+			self.comments = v.comments
 
 		if (v.s){
 
@@ -1271,6 +1238,8 @@ pShare = function(){
 		self._import(v)
 	}
 
+
+
 	self.renders = {
 		caption : function(){
 			if(!self.caption){
@@ -1293,9 +1262,57 @@ pShare = function(){
 
 			var m = self.message
 
-			if(self.url) m = m.replace(self.url, '')
+			//if(self.url) m = m.replace(self.url, '')
 
 			return m
+		},
+
+		xssmessage : function(nm){
+
+			if(!nm) nm = self.renders.message()
+
+			if(self.settings.v != 'a'){
+
+				nm = nl2br(findAndReplaceLink(filterXSS(nm, {
+					whiteList: [],
+					stripIgnoreTag: true
+				})));	
+
+			}
+			else
+			{
+
+				nm = filterXSS(nm, {
+
+					whiteList: {
+						a: ["href", "title", "target"],
+						br : ["style"],
+						b : ["style"],
+						span : ["style"],
+						figure : ["style"],
+						figcaption : ["style", "class"],
+						i : ["style"],
+						img : ["src", "width", "height"],
+						div : ["class", "data-plyr-provider", "data-plyr-embed-id"],
+						p : [],
+						ul : [],
+						ol : [],
+						li : [],
+						h2 : [],
+						h1 : [],
+						h3 : [],
+						h4 : [],
+						h5 : [],
+						em : [],
+						u : [],
+						blockquote : [],
+						strong : []
+					},
+
+				})
+			}
+
+			return nm
 		}
 	}
 
@@ -1331,30 +1348,49 @@ pShare = function(){
 	return self;
 }
 
-pCommentShare = function(){
+pComment = function(){
 
 	var self = this;
 
 	self.url = ''
 	self.message = ''
-	self.caption = ''
 	self.images = [];
 
 	self.txid = '';
-	self.time = null;
-	self.share = '';
+	self.time = 0;
+	self.timeupd = 0;
+	self.children = 0;
+
+	self.address = '';
+	self.parentid = '';
+	self.answerid = ''
+
 
 	self._import = function(v){
-		self.url = v.u || v.url;
-		self.message = (v.m || v.message || "").replace(/\+/g, " ")
+		self.url = decodeURIComponent(v.u || v.url || "");
+		self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
 		self.images = v.i || v.images || [];
-		self.share = v.s || v.share || ''
 	}
 
 	self.import = function(v){
 		v = JSON.parse(v)
 
 		self._import(v)
+	}
+
+	self.export = function(){
+
+		var v = {}
+		
+		v.m = encodeURIComponent(self.message)
+		v.u = encodeURIComponent(self.url)
+		v.i = _.clone(self.images)
+
+		return v
+	}
+
+	self.serialize = function(){
+		return encodeURIComponent(self.message) + self.images.join(',') + encodeURIComponent(self.url || '')
 	}
 
 
@@ -1366,7 +1402,30 @@ pCommentShare = function(){
 		return upvoteShare;
 	}
 
-	self.type = 'commentShare'
+	self.setTime = function(t, tu){
+		self.time = new Date()
+		self.time.setTime(t * 1000);
+
+		self.timeupd = new Date()
+		self.timeupd.setTime(tu * 1000);
+	}	
+
+	self.renders = {
+		
+		preview : function(){
+			var l = filterXSS(self.message, {
+				whiteList: [],
+				stripIgnoreTag: true
+			})
+
+
+			var m = emojione.toImage(trimHtml(l, 90))
+
+			return nl2br(m)
+		}
+	}
+
+	self.type = 'comment'
 
 	return self;
 }
@@ -1390,6 +1449,7 @@ kits = {
 	},
 	alias : {
 		userInfo : pUserInfo,
-		share : pShare
+		share : pShare,
+		comment : pComment
 	}
 }

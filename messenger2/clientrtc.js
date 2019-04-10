@@ -355,7 +355,7 @@ var platformRTC = function(p){
 		self.send = function(m){
 			var message = createMessage(m)
 
-			self.storage.AddMessage(message);
+			self.storage.AddMessage(message, true);
 
 			if (events.send){
 				events.send(message)
@@ -377,7 +377,7 @@ var platformRTC = function(p){
 		self.receive = {
 			message : function(message){
 
-				self.storage.AddMessage(message);
+				self.storage.AddMessage(message, true);
 
 				_.each(self.clbks.receive.message || {}, function(c){
 					c(message)
@@ -476,14 +476,19 @@ var platformRTC = function(p){
 
 		var closing = false;
 		var opened = false;
+		var RTCPeerConnection = null;
 
-		self.online = deep(window, 'navigator.onLine');
-		
+		self.online = true;
+		self.onlineCheck = true;
 
-		var RTCPeerConnection = window.RTCPeerConnection || 
+		if(typeof window != 'undefined'){
+			self.online = deep(window, 'navigator.onLine') || false;
+
+			RTCPeerConnection = window.RTCPeerConnection || 
 								window.mozRTCPeerConnection || 
 								window.webkitRTCPeerConnection;
-		
+		}
+
 
 		var initOnlineListener = function(){
 			if(self.onlineCheck){
@@ -511,12 +516,18 @@ var platformRTC = function(p){
 					}
 					else
 					{
-
-						_.each(self.chats, function(ch){
-							ch.remote.lastmessages()
-						})
 						
-						init();	
+						self.psinit(function(){
+
+							_.each(self.chats, function(ch){
+								ch.remote.lastmessages()
+
+								ch.connect()
+							})
+
+						});	
+
+						initOnlineListener();
 					}
 
 				}, 50)
@@ -754,6 +765,7 @@ var platformRTC = function(p){
 
 				opened = true;
 
+				console.log("OPENED")
 
 			}
 
@@ -829,6 +841,8 @@ var platformRTC = function(p){
 
 			iniclbks()
 
+			opened = false;
+
 			closing = true;
 
 			connection.close();
@@ -845,6 +859,21 @@ var platformRTC = function(p){
 				})
 		}
 
+		self.psinit = function(clbk){
+			init();
+
+			self.api.login(function(){
+
+			})
+
+			setTimeout(function(){
+				if (clbk)
+					clbk()
+			}, 3000)
+
+			
+		}
+
 		self.init = function(clbk){
 
 			initOnlineListener()
@@ -853,10 +882,14 @@ var platformRTC = function(p){
 
 			self.rtchttp = new rtchttp();
 
-			iniclbks();
+			self.api.login(function(){
 
-			if(clbk)
-				clbk()
+				iniclbks();
+
+				if(clbk)
+					clbk()
+
+			})
 		}
 
 		return self;
@@ -865,3 +898,9 @@ var platformRTC = function(p){
 	return new clientRTC()
 
 }
+
+if(typeof module != "undefined")
+{
+	module.exports = platformRTC;
+}
+

@@ -6,12 +6,47 @@
 			<div class="section right">
 
 				<% if(state) { 	%>
+
+
+					<div class="items navWrapper">
+
+						<div class="item navWrapperItem" events="navinit">
+
+							<div class="menutoppanel autowidth">
+								<div class="panelitemCenter">
+									<div class="centerTable table">
+
+										<div class="pcenterCell">
+											<div class="pcenterLabel fresh" r="empty">
+												<a href="index" handler="true">All Posts</a>
+											</div>
+										</div>
+
+										<div class="pcenterCell">
+											<div class="pcenterLabel " r="sub">
+												<a href="index?r=sub"  handler="true">Your Pocket</a>
+											</div>
+										</div>
+
+										<div class="pcenterCell">
+											<div class="pcenterLabel toppost " r="recommended">
+												<a href="index?r=recommended"  handler="true">Top posts</a>
+											</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
 					
-					<!--<div class="items searchWrapper">
+					<div class="items searchWrapper">
 
 						<div class="item table right" events="searchinit">
 							<div class="postssearchwrapper">
-								<div class="postssearch">
+								<div class="postssearch autowidth">
 								</div>
 							</div>
 
@@ -28,15 +63,9 @@
 
 						</div>
 
-					</div> -->
+					</div>
 
 				<% } %>
-
-				
-					
-
-
-				
 				
 
 					<% if(state) { %>
@@ -206,7 +235,7 @@
 						</div>
 						<div class="label">
 							<div>POCKETNET <span class="workstation">beta</span></div>
-						</div>
+						</div>						
 
 					</div>
 				</div>

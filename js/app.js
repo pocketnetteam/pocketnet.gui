@@ -41,8 +41,11 @@ if(typeof _Node == 'undefined') _Node = false;
 
 chrsz = 8;
 
-Application = function(node)
+Application = function(p)
 {	
+
+	if(!p) p = {}
+
 	var self = this;
 
 	self.options = {
@@ -54,21 +57,23 @@ Application = function(node)
 		name : 'PCRB',
 		fullName : "pocketnet",
 		localStoragePrefix : 'pocketnet',
-		//apiproxy : 'https://localhost:8888',
-		apiproxy : 'https://pocketnet.app:8888',
-		server : 'https://pocketnet.app/Shop/AJAXMain.aspx',
-		imageServer : 'https://api.imgur.com/3/',
-		imageStorage : 'https://api.imgur.com/3/images/',
-		ws : "wss://pocketnet.app:8088",	
-		rtc : 'https://pocketnet.app:9001/',
 
-		rtcws : 'wss://pocketnet.app:9090',
-		rtchttp : 'https://pocketnet.app:9091',
+		//apiproxy : 'https://localhost:8888',
+		apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
+		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx',
+		imageServer : p.imageServer || 'https://api.imgur.com/3/',
+		imageStorage : 'https://api.imgur.com/3/images/',
+
+		//ws : p.ws || "wss://localhost:8088",
+		ws : p.ws || "wss://pocketnet.app:8088",
+
+		rtc : p.rtc || 'https://pocketnet.app:9001/',
+
+		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
+		rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
 
 		/*rtcws : 'wss://localhost:9090',
 		rtchttp : 'https://localhost:9091',*/
-
-
 		
 
 		fingerPrint : null,
@@ -176,8 +181,6 @@ Application = function(node)
 			if(r){
 				self.ref = r;
 				localStorage['ref'] = self.ref
-
-				console.log("REF", self.ref)
 			}
 
 		})
@@ -195,6 +198,32 @@ Application = function(node)
 			module = deep(self, 'modules.' + checkedId + ".module") || null;
 
 		return module;
+	}
+
+	self.initTest = function(mnemokey, clbk){
+		if (typeof localStorage == 'undefined') localStorage = {};
+
+		prepareMap();
+
+		newObjects();
+
+		self.platform.nodeid = 0;
+
+		self.user.setKeysPair(self.user.keysFromMnemo(mnemokey));
+
+		self.user.isState(function(state){
+
+			self.localization.init(function(){
+
+				self.platform.prepare(function(){
+					if (clbk)
+						clbk(state)
+				})
+
+			})
+
+			
+		})
 	}
 
 	self.init = function(p){
@@ -271,8 +300,6 @@ Application = function(node)
 				//console.log(components, r)
 
 				self.options.fingerPrint = hexEncode('fakefingerprint');
-
-				console.log('self.options.fingerPrint', self.options.fingerPrint, components)
 				
 				fprintClbk()
 			});
@@ -362,8 +389,6 @@ Application = function(node)
 	}
 
 	self.deviceReadyInit = function(p){
-
-		console.log('window.cordova', window.cordova)
 
 		if(typeof window.cordova != 'undefined')
 		{
@@ -461,9 +486,13 @@ Application = function(node)
 	self.actions = {
 		up : _scrollTop,
 
-		offScroll : function(js){
+		wscroll : function(){
 
-			console.log('self.scrollRemoved', self.scrollRemoved)
+			$(window).scrollTop(winScrollTop);
+			
+		},
+
+		offScroll : function(js){
 
 			if(self.scrollRemoved){
 				return false
@@ -481,11 +510,7 @@ Application = function(node)
 			{
 				var winScrollTop = $(window).scrollTop();
 
-				$(window).bind('scroll', function(){
-
-					$(window).scrollTop(winScrollTop);
-
-				});
+				$(window).bind('scroll', self.actions.wscroll);
 			}
 
 			return true
@@ -495,10 +520,8 @@ Application = function(node)
 
 		onScroll : function(){
 
-			console.log('onScroll', self.actions.onScroll.caller)
-
 			$('html').removeClass('nooverflow')
-			$(window).unbind('scroll');
+			$(window).unbind('scroll', self.actions.wscroll);
 
 			self.scrollRemoved = false;
 		},
@@ -508,7 +531,6 @@ Application = function(node)
 			if(isMobile()){
 				var h = $('#toppanel').height()
 
-				console.log('scrollBMenuscrollBMenuscrollBMenu', h)
 
 				if (h > 0){
 					$(window).scrollTop(h);
@@ -555,7 +577,10 @@ Application = function(node)
 	}
 
 	self.name = self.options.name;
-	self.ref = localStorage['ref'] || parameters().ref;
+
+
+	if(!_Node)
+		self.ref = localStorage['ref'] || parameters().ref;
 
 
 

@@ -101,8 +101,6 @@
     }
 })(this, function () {
 
-    console.log("ASDSADDSA")
-
    /* if (!('WebSocket' in window)) {
         return;
     }
@@ -207,6 +205,8 @@
         };
 
         this.open = function (reconnectAttempt) {
+
+
             ws = new WebSocket(self.url, protocols || []);
             ws.binaryType = this.binaryType;
 
@@ -283,6 +283,9 @@
                 eventTarget.dispatchEvent(e);
             };
             ws.onerror = function(event) {
+
+                
+                
                 if (self.debug || ReconnectingWebSocket.debugAll) {
                     console.debug('ReconnectingWebSocket', 'onerror', self.url, event);
                 }

@@ -1,0 +1,24 @@
+<%
+
+	var tpl = app.platform.ws.tempates.share(share)
+
+%>
+
+<div class="csharetable table">
+	<div class="image">
+
+		<% var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
+
+		<div class="icon">
+			<div class="usericon usericonsbsa another" image="<%-src || ''%>">
+				<% if(!src) {%>
+					<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+				<% } %>
+			</div>
+		</div>
+		
+	</div>
+	<div class="csharecnt">
+		<%= tpl %>
+	</div>
+</div>

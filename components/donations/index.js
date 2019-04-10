@@ -12,7 +12,7 @@ var donations = (function(){
 
 		var el;
 
-		var donated = ['PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5']
+		var donated = ['PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'PTziv8ym7eJRUfyfAFBejJgEYemTdUgFzH', 'PBE1MLbsFoY3o1YW6t3Goi6spS1y9GY1vj', 'PRV1eoYkhA5PGkASm2tyD12xwdQnigbpkp', 'PRCeHituQ5WN2EXRZz4t9qTYyCBqTc4g4M', 'P9V67HjuApdEhj4DZxNnibxEqSnmCPbxvB']
 
 		var thankparameters = {
 
@@ -261,7 +261,7 @@ var donations = (function(){
 									Action : 'ADDTOMAILLIST',
 									TemplateID : 100,
 									Email : self.app.platform.sdk.address.pnet().address,
-									Name : curobj.name + ", " + thankparameters.amount.value
+									Name : (curobj.name || 'NAN0') + ", " + (thankparameters.amount.value || 0)
 								},
 								dataType: 'json',
 								success : function(){

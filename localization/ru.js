@@ -1,7 +1,7 @@
-﻿if(!window.loclib)
-	window.loclib = {};
+﻿if(typeof loclib == 'undefined' || !loclib)
+	loclib = {};
 
-	window.loclib.ru = {};
+	loclib.ru = {};
 
 var ____loclib = loclib.ru;
 

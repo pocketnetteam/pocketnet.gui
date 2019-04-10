@@ -12,3 +12,5 @@ sign.txt
 *.zip
 messenger2/server/cert/key.pem
 messenger2/server/address.js
+performance/keys.txt
+performance/main.js
