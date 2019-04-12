@@ -5,6 +5,7 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
+const electronLocalshortcut = require('electron-localshortcut');
 let win, nwin, badge;
 
 var willquit = false;
@@ -254,10 +255,9 @@ function createWindow() {
 
     win.loadFile('index_el.html')
 
-    //win.webContents.openDevTools()
-    globalShortcut.register('CommandOrControl+Shift+I', () => {
-        win.webContents.toggleDevTools()
-    });
+    electronLocalshortcut.register(win, 'CommandOrControl+Shift+I', () => {
+		win.webContents.toggleDevTools()
+	});
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
