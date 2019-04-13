@@ -95,9 +95,9 @@ var lenta = (function(){
 					}
 					else
 					{
+						initedcommentes = {}
+						
 						renders.shares(shares, function(){
-
-							initedcommentes = {}
 
 							renders.sharesInview(shares, function(){
 						
@@ -1461,7 +1461,10 @@ var lenta = (function(){
 			            }); */
 
 					renders.stars(share)
-					renders.comments(share.txid, false, false, true)
+
+					if(!share.temp)
+
+						renders.comments(share.txid, false, false, true)
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
 						renders.urlContent(share, function(){

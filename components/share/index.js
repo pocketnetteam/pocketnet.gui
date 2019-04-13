@@ -400,6 +400,7 @@ var share = (function(){
 
 			post : function(clbk, p){
 
+				el.c.addClass('loading')
 				topPreloader(50)
 
 				currentShare.uploadImages(self.app, function(){
@@ -445,8 +446,6 @@ var share = (function(){
 
 									if(!essenseData.notClear){
 										currentShare.clear();
-
-										
 
 										if(!essenseData.share){
 											state.save()

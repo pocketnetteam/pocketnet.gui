@@ -19,6 +19,7 @@
            
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
+
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
 
@@ -61,8 +62,7 @@
        <!-- <script src="cordova.js"></script>-->
                 
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+        <script src="js/vendor/jquery-1.11.3.min.js"></script>
 
         <script type="text/javascript">
 

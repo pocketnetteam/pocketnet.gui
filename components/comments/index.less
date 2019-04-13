@@ -477,8 +477,8 @@
 			position: relative;
 
 			.closeAnswer{
-				right: @rhythm;
-				top : @rhythm;
+				right: 0;
+				top : 0;
 				padding : @rhythm;
 				color : @color-gray-light;
 				position: absolute;
@@ -696,7 +696,25 @@
 	.edit,
 	.answer{
 		padding : 0;
+
+		.postbody{
+			.posttable{
+				>div{
+					&.postCellWrapper{
+						
+						.postaction{
+							
+							
+
+						}
+					}
+				}
+			}
+			
+		}
 	}
+
+
 
 	.edit{
 		.postbody{
@@ -810,7 +828,6 @@
 		
 
 		.list{
-			padding-top : 2 * @rhythm;
 			
 			.comment{
 				

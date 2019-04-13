@@ -1314,7 +1314,10 @@ pShare = function(){
 						em : [],
 						u : [],
 						blockquote : [],
-						strong : []
+						strong : [],
+						picture : ['img-type'],
+						source : ['srcset', 'type']
+
 					},
 
 				})

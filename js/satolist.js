@@ -3384,7 +3384,7 @@ Platform = function(app){
 
 						var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
 
-						if (share) share.comments++
+						if (share && (!pid || pid == '0')) share.comments++
 
 						alias.parentid = pid || ''
 						alias.answerid = aid || ''
@@ -9523,7 +9523,7 @@ Platform = function(app){
 			})
 		}
 
-		electron.ipcRenderer.on('updater-message', (event, data) => {
+		electron.ipcRenderer.on('updater-message', function(event, data){
 			if(data.type == 'info'){
 				if(data.msg == 'update-downloaded'){
 					updateReady()

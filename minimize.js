@@ -34,12 +34,12 @@ fs.exists(mapJs2Path, function (exists) {
 
 		  		var join = {
 		  			data : "",
-		  			path : './js/join.js'
+		  			path : './js/join.min.js'
 		  		}
 
 		  		var vendor = {
 		  			data : "",
-		  			path : './js/vendor.js'
+		  			path : './js/vendor.min.js'
 		  		}
 
 		  		var cssmaster = {
@@ -387,9 +387,9 @@ fs.exists(mapJs2Path, function (exists) {
 
 				            	if(prodaction)
 				            	{
-				            		JS = '<script join src="js/join.js?v='+rand(1, 999999999999)+'"></script>';
+				            		JS = '<script join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
 
-				            		VE = '<script join src="js/vendor.js?v='+vendorversion+'"></script>';
+				            		VE = '<script join src="js/vendor.min.js?v='+vendorversion+'"></script>';
 
 				            		CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
 

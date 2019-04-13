@@ -296,6 +296,17 @@ var comments = (function(){
 				})
 			},
 
+			hideallReplies : function(){
+				_.each(self.app.platform.sdk.comments.storage[txid]['0'], function(r, id){
+
+					actions.replies(id, false)
+
+				})
+				if (ed.lastComment)
+					actions.replies(ed.lastComment.id, false)
+				
+			},
+
 			replies : function(id, show, clbk){
 
 				if(id == '0'){
@@ -335,6 +346,10 @@ var comments = (function(){
 						c.addClass('showedreplies')
 
 						renders.list(p, function(){
+
+
+							if(!caption)
+								renders.caption()
 
 							if (clbk)
 								clbk()
@@ -489,13 +504,15 @@ var comments = (function(){
 				{
 					var counts = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.comments') || 0;
 
+					var lastchildren = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.lastComment.children') || 0;
+
 					if(listpreview){
 						
 
-						if (counts > 1){
+						if (counts - lastchildren > 1){
 							el.showall.removeClass('hidden')
 
-							actions.hiddenCounts(counts - 1)
+							actions.hiddenCounts(counts - lastchildren - 1)
 						}
 						else
 						{
@@ -1154,6 +1171,8 @@ var comments = (function(){
 
 					if (caption)
 						caption.destroy()
+
+					caption = null
 				}
 				else
 				{
@@ -1161,6 +1180,8 @@ var comments = (function(){
 				}
 
 				el.c.removeClass('showedall')
+
+				actions.hideallReplies()
 
 				actions.showhideLabel()
 

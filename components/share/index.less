@@ -39,6 +39,7 @@
 		bottom: 0;
 		padding :  3 * @rhythm 2 * @rhythm;
 		background: fade(#FAFAFA, 90);
+		z-index: 150;
 	}
 
 	&.loading{
@@ -751,6 +752,17 @@
 	.sLoader{
 		left: 0;
 		background: fade(#FAFAFA, 90);
+
+		.prwrapper{
+			position : absolute;
+			left: 0;
+			right: 0;
+			bottom: 6 * @rhythm;
+
+			.prwrappermiddle{
+				text-align: center;
+			}
+		}
 	}
 	
 	

@@ -540,6 +540,8 @@ var menu = (function(){
 
 						if(add == 0){
 							al.text(self.app.platform.mp.coin(value))
+
+							actions.elswidth()
 						}
 						else
 						{
