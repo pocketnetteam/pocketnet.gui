@@ -8,7 +8,7 @@ var filluser = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ext, essenseData, initialParameters;
+		var el, ext, essenseData, initialParameters, fm;
 
 		var scrollel = null;
 
@@ -29,8 +29,11 @@ var filluser = (function(){
 					{
 
 						clbk()
+
+						self.app.platform.sdk.node.transactions.get.allBalance();
 						
 						self.sdk.users.requestFreeMoney(function(res, err){
+
 
 							self.app.platform.sdk.node.transactions.clbks.filluser = function(){
 
@@ -159,6 +162,41 @@ var filluser = (function(){
 						}
 						else
 						{
+							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+								if (amount > 0){
+
+									self.app.platform.m.log('userwisard_money_success')
+
+									actions.next()
+
+									return
+								}
+								else
+								{
+									self.app.platform.sdk.node.transactions.clbks.filluser = function(){
+
+										self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+											if (amount > 0 && current == 1){
+
+												self.app.platform.m.log('userwisard_money_success')
+
+												actions.next()
+
+											}
+										})
+										
+									}
+
+									clbk()
+								}
+
+							})
+
+							
+
+							/*
 							self.sdk.users.requestFreeMoney(function(res, err){		
 
 
@@ -214,10 +252,8 @@ var filluser = (function(){
 								}
 
 								fmclbk()
-								
-							
 
-							})
+							})*/
 						}
 					})
 

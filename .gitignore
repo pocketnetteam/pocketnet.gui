@@ -15,3 +15,6 @@ messenger2/server/address.js
 js/app.local.js
 performance/keys.txt
 performance/main.js
+css/master.css
+js/join.js
+js/vendor.js

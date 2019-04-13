@@ -1,8 +1,8 @@
-<% _.each(users, function(user){ %>
+<% _.each(users, function(user){ console.log(user) %>
 	<div class="user">
 		<div class="pictureWrapper">
 			
-			<% var src = deep(app, 'platform.sdk.usersl.storage.'+user.address+'.image')  %>
+			<% var src = user.i  %>
 			
 			<div class="icon">
 				<div class="usericon" image="<%-src || ''%>">
@@ -15,7 +15,7 @@
 		</div>
 		<div class="nameWrapper">
 			<div class="name">
-				<span><%-deep(app, 'platform.sdk.usersl.storage.'+user.address+'.name') || user.address %></span>
+				<span><%-decodeURIComponent(user.name || user.address) %></span>
 			</div>
 		</div>
 	</div>

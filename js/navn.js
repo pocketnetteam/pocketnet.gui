@@ -126,6 +126,7 @@ Nav = function(app)
 		},
 		add : function(href, p){
 
+
 			if(!p) p = {}
 
 			if (p.inWnd){
@@ -205,6 +206,8 @@ Nav = function(app)
 
 			var deleted = [];
 
+			console.log('self.wnds', self.wnds)
+
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
 
@@ -255,9 +258,11 @@ Nav = function(app)
 
 							p.clbk(null, p);
 
-
+							core.removeWindows(p.completeHref)
 
 						})
+
+						
 
 						_.each(self.clbks.history, function(c){
 								
@@ -308,7 +313,19 @@ Nav = function(app)
 						current.href = p.href;
 						current.completeHref = p.completeHref;
 						current.module = p.module;		
+
+						var c = p.clbk;
+
+						p.clbk = function(a, b, d){
+							core.removeWindows(p.completeHref)
+
+							c(a, b, d)
+						}
+
+						
 					}	
+
+
 
 					p.module.active = true;
 
@@ -464,6 +481,8 @@ Nav = function(app)
 
 							if(relation.f == 'css')
 							{
+								relations[relation.src] = true;
+								
 								importCss(relation.src);
 
 								p.success();

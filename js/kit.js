@@ -218,7 +218,7 @@ Comment = function(txid){
 			return 'content'
 		}
 
-		if(self.message.v && self.message.v.length > 500){
+		if(self.message.v && self.message.v.length > 1000){
 			return 'messagelength'
 		}
 
@@ -1136,6 +1136,7 @@ pShare = function(){
 	self.time = null;
 
 	self.comments = 0;
+	self.lastComment = null;
 
 	self.on = {}
 	self.off = function(e){
@@ -1197,6 +1198,9 @@ pShare = function(){
 
 		if(v.comments)
 			self.comments = v.comments
+		
+		if(v.lastComment)
+			self.lastComment = v.lastComment
 
 		if (v.s){
 
@@ -1252,7 +1256,11 @@ pShare = function(){
 
 			}
 
-			return self.caption;
+			var m = self.caption;
+
+			//if(self.url) m = m.replace(self.url, '')
+
+			return m;
 		},
 
 		message : function(){

@@ -8,12 +8,12 @@ var comments = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, txid, ed, currents = {}, caption, _in, top, eid;
+		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false;
 
 		var errors = {
 			content : "message empty",
 			share : "hasn't share",
-			messagelength : "Comments have 500 character limit per comment",
+			messagelength : "Comments have 1000 character limit per comment",
 			money : "hasn't money",
 			network : "network error"	
 		}
@@ -25,6 +25,96 @@ var comments = (function(){
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
+		var clbks = {
+			post : function(err, alias, _txid, pid, aid, editid, id){
+
+
+				if(_txid != txid) return
+
+				el.c.find('.sending').removeClass('sending')
+
+				if(err){
+					return
+				}
+
+				state.save()
+
+				el.c.find('.emojionearea-editor').blur();
+
+				el.c.find('.att').html('');
+
+				var p = {
+					comments : [alias]
+				}
+
+				delete currents[id]
+
+				if (id == '0')
+				{
+					if (areas[id])
+
+						areas[id].setText('');
+
+					p.class = "firstcomment"
+					
+				}
+
+				else
+				{
+
+					var _el = el.c.find('#' + id);
+
+					if (editid){
+
+						_el.find('.edit').html('');
+
+						alias.timeupd = alias.timeupd.addMinutes(1)
+
+						delete areas[id]
+
+						delete rendered[id]
+
+						_el.removeClass('editing')
+
+						p.inner = replaceWith
+						p.el = _el
+
+					}
+					else
+					{
+						_el.find('.answer').html('');
+
+						_el.find('.repliescount').html(Number(_el.find('.repliescount').html() || "0") + 1)
+
+						_el.find('.replies').removeClass('hidden')
+
+						p.el = el.c.find("#" + id + ' .answers')
+
+						delete areas[id]
+					}								
+					
+				}
+
+				
+				
+
+				p.newcomments = 'newcomments'
+
+				renders.list(p)
+
+				if (!editid && ed.send){
+					ed.send(alias)
+				}
+
+				if(!editid){
+
+					if(ed.comments) ed.comments++
+
+					actions.showhideLabel()
+				}
+			}
+		}
+
 		var actions = {
 
 			removeForm : function(id){
@@ -35,7 +125,7 @@ var comments = (function(){
 				el.c.find("#" + id + ' .edit').html('')
 			},
 
-			post : function(id, pid, aid, clbk, editid){
+			post : function(id, pid, aid, editid){
 
 				id || (id = '0')
 
@@ -45,8 +135,6 @@ var comments = (function(){
 					var e = current.validation();					
 
 					if (e){
-						if (clbk)
-							clbk(false)
 
 						sitemessage(errors[e])
 					}
@@ -54,110 +142,15 @@ var comments = (function(){
 					{
 						actions.send(current, function(err, alias){
 
-							if(err){
-								if (clbk)
-									clbk(false)
-							}
-
-							console.log('alias', alias)
-
-							state.save()
-
-							el.c.find('.emojionearea-editor').blur();
-
-							delete currents[id]
-
-							el.c.find('.att').html('');
-
-							var p = {
-								comments : [alias]
-							}
-
-
-
-							if (id == '0')
-							{
-								areas[id].setText('');
-								p.class = "firstcomment"
-
-								if(!el.c.hasClass('showedall')){
-									el.c.addClass('showedall');
-
-									_scrollTo(el.c.find('.post'), _in, 100)
-								}
-							}
-
-							else
-							{
-
-
-
-								var _el = el.c.find('#' + id);
-
-								if (editid){
-
-									_el.find('.edit').html('');
-
-									alias.timeupd = alias.timeupd.addMinutes(1)
-
-									console.log('alias.timeupd', alias.timeupd)
-
-									delete areas[id]
-
-									delete rendered[id]
-
-									_el.removeClass('editing')
-
-									p.inner = replaceWith
-									p.el = _el
-
-								}
-								else
-								{
-									_el.find('.answer').html('');
-
-									_el.find('.repliescount').html(Number(_el.find('.repliescount').html() || "0") + 1)
-
-									_el.find('.replies').removeClass('hidden')
-
-									p.el = el.c.find("#" + id + ' .answers')
-
-									delete areas[id]
-								}
-								
-									
-
-								
-
-								
-							}
-
+							//clbks.post(err, alias, txid, pid, aid, editid, id)
 							
-
-							p.newcomments = 'newcomments'
-
-							renders.list(p)
-
-							if (!editid && ed.send){
-								ed.send(alias)
-							}
-						
-
-							if (clbk)
-								clbk(true)
-							
-						}, pid, aid, editid)
+						}, pid, aid, editid, id)
 					}
 				}
 
-				else
-				{
-					if (clbk)
-						clbk(false)
-				}
 				
 			},
-			send : function(comment, clbk, pid, aid, editid){	
+			send : function(comment, clbk, pid, aid, editid, id){	
 
 
 				self.app.platform.sdk.comments.send(txid, comment, pid, aid, function(err, alias){
@@ -175,7 +168,7 @@ var comments = (function(){
 							clbk(err, null)
 					}
 
-				}, editid)
+				}, editid, id)
 			},
 
 			links : function(id, text){
@@ -227,8 +220,6 @@ var comments = (function(){
 
 			emessage : function(id, c){
 
-				console.log(id, c)
-
 				var v = c.getText();
 
 				actions.links(id, v);
@@ -250,8 +241,6 @@ var comments = (function(){
 
 							var cel = el.c.find("#" + reply.answerid)
 
-							console.log('cel', cel)
-
 							cel.addClass('newcommentsn')
 
 							setTimeout(function(){
@@ -269,8 +258,6 @@ var comments = (function(){
 
 			reply : function(id, aid){
 
-				console.log("REPLY", id, aid)
-
 				var _el = el.c.find('#' + id);
 				var answer = _el.find('.answer');
 
@@ -281,7 +268,7 @@ var comments = (function(){
 
 					if (aid != id) pid = id
 
-					var address = self.app.platform.sdk.comments.address(txid, aid, pid)
+					var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
 
 
 
@@ -290,8 +277,6 @@ var comments = (function(){
 					if(address == self.app.platform.sdk.address.pnet().address) str = ''
 
 					area.setText(str)
-
-					console.log("AREAUID", id)
 
 					areas[id] = area
 
@@ -441,6 +426,99 @@ var comments = (function(){
 
 					renders.list(p)
 				})
+			},
+			hiddenCounts : function(c){
+				if(c > 0){
+					el.showall.find('.ccounts').html("(" + c + ")")
+					
+				}
+				else
+				{
+					el.showall.find('.ccounts').html()
+					
+				}
+			},
+			showall : function(){
+				showedall = true;
+				el.c.addClass('showedall')
+				
+				actions.showhideLabel()
+
+				if (listpreview){
+
+					listpreview = false;
+
+					el.c.removeClass('listpreview')
+
+					el.c.find('.loaderWrapper').removeClass('hidden')
+
+					renders.caption()
+
+					load.level(null, function(comments){
+
+						rendered = {}
+
+						var p = {}
+
+						p.comments = self.app.platform.sdk.comments.storage[txid]['0']
+						p.class = "firstcomment"
+						p.inner = html
+
+						renders.list(p, function(){
+
+							el.c.find('.loaderWrapper').addClass('hidden')
+
+						})
+					})
+				}
+
+				else
+				{
+					
+				}
+			},
+			showhideLabel : function(){
+
+				if(!el.showall) return
+
+				if (showedall){
+					el.showall.addClass('hidden')
+				}
+
+				else
+				{
+					var counts = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.comments') || 0;
+
+					if(listpreview){
+						
+
+						if (counts > 1){
+							el.showall.removeClass('hidden')
+
+							actions.hiddenCounts(counts - 1)
+						}
+						else
+						{
+							el.showall.addClass('hidden')
+						}
+					}
+					else
+					{
+
+						if(counts > 5){
+							el.showall.removeClass('hidden')
+
+							actions.hiddenCounts(counts - 5)
+						}
+						else
+						{
+							el.showall.addClass('hidden')
+						}
+
+					}
+				}
+
+				
 			}
 		}
 
@@ -464,19 +542,11 @@ var comments = (function(){
 				actions.replies(id)
 			},
 		
-			emessagekeyup : function(editor, e){
-				var char = String.fromCharCode(e.keyCode || e.which);
-				var text = this.getText();
+			/*emessagekeyup : function(editor, e){
 
-				if ((wordsRegExp).test(char)) {
-
-					actions.links(text);
-
-				}
-
-				actions.message(text)
-			},
+			},*/
 			emessage : function(editor, e){
+
 
 				var c = this;
 
@@ -554,6 +624,105 @@ var comments = (function(){
 				
 
 			},
+
+
+		}
+
+		var postEvents = function(p, _p, clbk){
+			var textarea = _p.el.find('.leaveComment');
+
+			var c = _p.el.find('.postbody');
+
+				textarea.emojioneArea({
+			    	pickerPosition : 'bottom',
+			    	
+			    	search : false,
+			    	tones : false,
+			    	autocomplete : false,
+
+			    	attributes: {
+				        spellcheck : true,
+				    },
+
+			    	events : {
+			    		change : events.emessage,
+			    		click : events.emessage,
+			    		keyup : function(editor, e){
+			    			var char = String.fromCharCode(e.keyCode || e.which);
+							var text = this.getText();
+
+
+							if ((wordsRegExp).test(char)) {
+								actions.links(text);
+							}
+
+							if (e.ctrlKey && e.keyCode == 13) {
+
+							   	if (c.hasClass('sending')) return
+
+									c.addClass('sending')
+
+								actions.post(p.id || '0', p.pid, p.aid, p.editid)
+
+								return
+							}
+
+							else
+							{
+								actions.message(p.id || '0', text)
+							}
+
+							
+			    		},
+
+			    		onLoad : function(c, d){
+
+			    			var a = this
+
+			    			if(ed.init || p.init){
+
+								_p.el.find('.emojionearea-editor').focus()
+
+								ed.init = false;
+
+							}
+
+							if(p.value) {
+								this.setText(p.value)
+							}
+
+							if (clbk)
+								clbk(this, _p.el.find('.emojionearea-editor'));
+
+			    		}
+			    	}
+			    });
+
+			    _p.el.find('.emojionearea-editor').on('focus', function(){
+			    	actions.process(p.id || '0')	
+			    })
+
+			    actions.process(p.id || '0')	
+
+				_p.el.find('.postaction').on('click', function(){
+
+					if(c.hasClass('sending')) return
+
+					c.addClass('sending')
+
+					actions.post(p.id || '0', p.pid, p.aid, p.editid)
+
+				})
+
+				if (p.id){
+					_p.el.find('.closeEdit').on('click', function(){
+						actions.closeEdit(p.id)
+					})
+				}
+
+				_p.el.find('.closeAnswer').on('click', function(){
+					actions.removeForm(p.id || '0')
+				})
 		}
 
 		var renders = {
@@ -643,9 +812,9 @@ var comments = (function(){
 			},
 			post : function(clbk, p){
 
-				console.log(p)
-
 				if(!p) p = {};
+
+				var _preview = preview && !p.answer && !p.editid
 
 				self.shell({
 					name :  'post',
@@ -654,107 +823,28 @@ var comments = (function(){
 					data : {
 						placeholder : p.placeholder || '',
 						answer : p.answer || '',
-						edit : p.edit || ''
+						edit : p.edit || '',
+						preview : _preview
 					},
 
 				}, function(_p){
 
-					var textarea = _p.el.find('.leaveComment');
+					if(_preview){
 
-					textarea.emojioneArea({
-				    	pickerPosition : 'bottom',
-				    	
-				    	search : false,
-				    	tones : false,
+						_p.el.find('textarea').on('click', function(){
+							preview = false;
+							
+							$(this).blur();
 
-				    	attributes: {
-					        spellcheck : true,
-					    },
-
-				    	events : {
-				    		change : events.emessage,
-				    		click : events.emessage,
-				    		keyup : events.emessagekeyup,
-
-				    		onLoad : function(c, d){
-
-				    			var a = this
-
-				    			if(ed.init || p.init){
-
-									_p.el.find('.emojionearea-editor').focus()
-
-									ed.init = false;
-
-								}
-					
-								_p.el.find('.emojionearea-editor').pastableContenteditable();
-
-								_p.el.find('.emojionearea-editor').on('pasteImage', function (ev, data){
-
-
-								}).on('pasteImageStart', function(){
-
-									topPreloader(30)
-
-								}).on('pasteImageError', function(ev, data){
-
-								 	topPreloader(100)
-
-								}).on('pasteText', function (ev, data){
-
-									actions.emessage(p.id || '0', a)
-
-								});
-
-								if(p.value) {
-									this.setText(p.value)
-
-									
-								}
-
-								if (clbk)
-									clbk(this, _p.el.find('.emojionearea-editor'));
-
-				    		}
-				    	}
-				    });
-
-				    _p.el.find('.emojionearea-editor').on('focus', function(){
-				    	actions.process(p.id || '0')	
-				    })
-
-				    actions.process(p.id || '0')	
-
-				    var c = _p.el.find('.postbody');			
-
-					_p.el.find('.postaction').on('click', function(){
-
-						if(c.hasClass('sending')) return
-
-						c.addClass('sending')
-
-						actions.post(p.id || '0', p.pid, p.aid, function(r){
-							c.removeClass('sending')
-
-							if(!r){
-								console.log("fail")
-							}
-						}, p.editid)
-
-					})
-
-					if (p.id){
-						_p.el.find('.closeEdit').on('click', function(){
-							actions.closeEdit(p.id)
+							p.init = true;
+							el.c.removeClass('preview')
+							postEvents(p, _p, clbk)
 						})
+
+						return
 					}
 
-					
-
-					_p.el.find('.closeAnswer').on('click', function(){
-						actions.removeForm(p.id || '0')
-					})
+					postEvents(p, _p, clbk)
 
 					
 				})
@@ -770,6 +860,10 @@ var comments = (function(){
 
 						return true
 					}
+				})
+
+				p.comments = _.sortBy(p.comments, function(c){
+					return c.time
 				})
 
 				self.shell({
@@ -813,6 +907,35 @@ var comments = (function(){
 			}
 		}
 
+		var makePreview = function(){
+
+			el.c.find('.loaderWrapper').addClass('hidden')
+
+			el.c.addClass('preview')
+			el.c.addClass('listpreview')
+
+			var p = {};
+
+			renders.post(function(area){
+				areas["0"] = area
+			})
+
+			load.preview(function(c){
+
+				p.comments = c
+				p.class = "firstcomment"
+
+				actions.showhideLabel()
+
+				renders.list(p, function(){
+					
+				})
+
+			})
+
+				
+		}
+
 		var make = function(){
 
 			var p = {};			
@@ -822,9 +945,7 @@ var comments = (function(){
 				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
 				p.class = "firstcomment"
 
-				if(p.comments.length > 5){
-					el.c.find('.showall').removeClass('hidden')
-				}
+				actions.showhideLabel()
 				
 				renders.caption()
 
@@ -842,12 +963,26 @@ var comments = (function(){
 			})
 
 			if (ed.showall){
-				el.c.addClass('showedall');
+				actions.showall()
 			}
 			
 		}
 
 		var load = {
+			preview : function(clbk){
+				var comments = [];
+
+				if (ed.lastComment){
+					comments = self.app.platform.sdk.comments.ini([ed.lastComment])
+				}
+
+				self.sdk.comments.users(comments, function(){
+
+					if (clbk)
+						clbk(comments)
+
+				})
+			},	
 			level : function(pid, clbk){
 
 				self.app.platform.sdk.comments.get(txid, pid || "", function(comments){
@@ -862,6 +997,8 @@ var comments = (function(){
 
 		var state = {
 			save : function(){
+
+				return
 
 				if (currents['0']){
 					self.app.settings.set(self.map.id, txid, currents['0'].export());
@@ -885,12 +1022,16 @@ var comments = (function(){
 		var initEvents = function(){
 				
 			el.c.find('.showall').on('click', function(){
-				el.c.addClass('showedall');
+
+				actions.showall()
+
+				
 			})
+
+			self.app.platform.sdk.comments.sendclbks[eid] = clbks.post
 
 			self.app.platform.ws.messages.comment.clbks[eid] = function(data){
 
-				console.log('DATA', data)
 
 				if (data.posttxid == txid){
 
@@ -920,8 +1061,6 @@ var comments = (function(){
 						p.class = 'firstcomment'
 					}
 
-					console.log(p)
-
 					renders.list(p)
 				}
 			
@@ -940,12 +1079,16 @@ var comments = (function(){
 
 				ed = p.settings.essenseData || {}
 
+				preview = ed.preview || false;
+				listpreview = preview;
+				showedall = false;
+
 				txid = ed.txid || null
 
 				currents['0'] = new Comment(txid);
 
 				if (txid){
-					state.load()
+					//state.load()
 
 					var data = {};
 
@@ -956,6 +1099,7 @@ var comments = (function(){
 
 			destroy : function(){
 
+				delete self.app.platform.sdk.comments.sendclbks[eid]
 				delete self.app.platform.ws.messages.comment.clbks[eid]
 
 				if (caption)
@@ -966,9 +1110,7 @@ var comments = (function(){
 			
 			init : function(p){
 
-				
-
-				state.load();
+				//state.load();
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
@@ -976,6 +1118,7 @@ var comments = (function(){
 				el.post = el.c.find('.post')
 				el.list = el.c.find('.list')
 				el.caption = el.c.find('.captionCnt')
+				el.showall = el.c.find('.showall')
 
 				_in = el.c.closest('.wndcontent');
 
@@ -988,15 +1131,39 @@ var comments = (function(){
 					top = 0
 				}
 
-				initEvents();
+				if(preview){
+					makePreview()
+				}
+				else{
+					make();
+				}
 
-				make();
+				initEvents();
 
 				p.clbk(null, p);
 			},
-			hideall : function(){
-				if (el.c)
-					el.c.removeClass('showedall');
+			hideall : function(preview){
+
+				showedall = false;
+
+				if(typeof preview != 'undefined')
+					listpreview = preview || false;
+
+				if (listpreview){
+					el.c.addClass('listpreview')
+
+					if (caption)
+						caption.destroy()
+				}
+				else
+				{
+					el.c.removeClass('listpreview')
+				}
+
+				el.c.removeClass('showedall')
+
+				actions.showhideLabel()
+
 			},
 			changein : function(cur, _top){
 				if(!cur){

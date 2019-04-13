@@ -1,6 +1,10 @@
 nModule = function(){
 	var self = this;
 
+	var loading = {
+		templates : {}
+	}
+
 	self.storage = {
 		els : {},
 		templates : {} 
@@ -493,6 +497,19 @@ nModule = function(){
 
 		p.name || (p.name = 'index');
 
+		if(loading.templates[p.name]){
+			retry(
+				function(){
+					return !loading.templates[p.name];
+				},
+				function(){
+					self.loadTemplate(p, clbk)
+				}
+			)
+
+			return
+		}
+
 		if(self.storage.templates[p.name] || p.clear)
 		{			
 			if (clbk)
@@ -500,6 +517,8 @@ nModule = function(){
 		}
 		else
 		{
+			loading.templates[p.name] = true;
+
 			var url;
 			var appPath = (self.map.pathtpl || self.map.path || "");	
 
@@ -529,6 +548,8 @@ nModule = function(){
 
 					if (clbk)
 						clbk(self.storage.templates[p.name]);
+
+					loading.templates[p.name] = false;
 
 				}
 			});

@@ -6113,8 +6113,8 @@ module.exports = {
 }
 
 },{}],32:[function(require,module,exports){
-let createHash = require('create-hash')
-let createHmac = require('create-hmac')
+var createHash = require('create-hash')
+var createHmac = require('create-hmac')
 
 function hash160 (buffer) {
   return createHash('rmd160').update(

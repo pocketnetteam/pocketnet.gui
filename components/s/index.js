@@ -10,7 +10,7 @@ var s = (function(){
 
 		var el, value, result;
 
-		var userIndex = 0, maxCount = 7, count = maxCount;
+		var userIndex = 0, maxCount = 10, count = maxCount;
 
 		var actions = {
 
@@ -122,20 +122,6 @@ var s = (function(){
 							clbk(p);
 					})
 				},
-				/*preview : function(clbk){
-					self.shell({
-						name :  'userspre',
-						el : el.users.find(".sectioncnt"),
-						data : {
-							users : result.users
-						}
-
-					}, function(p){
-
-						if (clbk)
-							clbk(p);
-					})
-				},*/
 
 				full : function(){
 

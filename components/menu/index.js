@@ -748,6 +748,10 @@ var menu = (function(){
 				if(parameters().ss){
 
 					el.c.addClass('searchactive')
+
+					el.c.find('.postssearch').addClass('active')
+					
+
 					actions.elswidth()
 
 					el.postssearch.find('input').val(parameters().ss);

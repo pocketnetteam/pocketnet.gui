@@ -1,5 +1,29 @@
 __map =  { 
 
+	__vendor : [
+		"js/vendor/underscore-min.js", 
+		"js/vendor/fingerprint2.js",
+        "js/vendor/tooltipster.core.js",
+        "js/vendor/tooltipster.bundle.js",
+        "js/vendor/jquery-ui.min.js",
+        "js/vendor/imagesloaded.pkgd.min.js",
+        "js/vendor/timer.js",
+        "js/vendor/ion.sound/ion.sound.min.js" ,
+        "js/vendor/aesjs.js",
+        "js/vendor/btc/src/btc.js",
+        "js/vendor/pbkdf2.js",
+        "js/vendor/sha1.js",
+        "js/vendor/jdenticon.js",
+        "js/vendor/paste.js",
+        "js/vendor/jquery.md5.js",
+        "js/vendor/jquery.animate-number.js",
+        "js/vendor/emojione.js",
+        "js/vendor/plyr.js",
+        "js/vendor/reconnectingwebsocket.js",
+        "js/vendor/rtc/db.js",
+        "js/vendor/xss.min.js",
+	],
+
 	__sources : [
 
 		"js/functions.js",     	
@@ -11,15 +35,26 @@ __map =  {
 		"js/localization.js",
 		"js/kit.js",
 		"js/satolist.js",
+		"messenger2/clientrtc.js",
 		"js/app.js",
 		"js/main.js",
 	],
 
 	__css : [
+		"css/normalize.css",
 		"css/tooltipster.core.min.css",
 		"css/tooltipster.bundle.min.css",
 		"css/main.css",
+		"css/plyr.css",
+		"css/jquery-ui.min.css",
+		"css/medium/medium-editor.css",
+        "css/medium/medium-editor-insert-plugin.css",
+        "css/medium/beagle.css"/* ,
+        "css/datetime.css?v=116"  */
 	],
+
+
+              
 
 	about : {
 		uri : "about",

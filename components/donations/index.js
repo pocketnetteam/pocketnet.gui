@@ -12,7 +12,15 @@ var donations = (function(){
 
 		var el;
 
-		var donated = ['PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'PTziv8ym7eJRUfyfAFBejJgEYemTdUgFzH', 'PBE1MLbsFoY3o1YW6t3Goi6spS1y9GY1vj', 'PRV1eoYkhA5PGkASm2tyD12xwdQnigbpkp', 'PRCeHituQ5WN2EXRZz4t9qTYyCBqTc4g4M', 'P9V67HjuApdEhj4DZxNnibxEqSnmCPbxvB']
+		var donated = [
+			'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 
+			'PTziv8ym7eJRUfyfAFBejJgEYemTdUgFzH', 
+			'PBE1MLbsFoY3o1YW6t3Goi6spS1y9GY1vj', 
+			'PRV1eoYkhA5PGkASm2tyD12xwdQnigbpkp', 
+			'PRCeHituQ5WN2EXRZz4t9qTYyCBqTc4g4M', 
+			'P9V67HjuApdEhj4DZxNnibxEqSnmCPbxvB',
+			'PA57U1QmmowNzSaz6ThG2EPs34QCsLyksL'
+		]
 
 		var thankparameters = {
 

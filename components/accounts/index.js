@@ -71,6 +71,15 @@ var accounts = (function(){
 
 			add : function(){
 
+				var l = deep(pack, 'addresses.length')
+
+				if(l >= 5){
+
+					sitemessage('You have reached a maximum of 5 accounts. No more can be added ')
+
+					return
+				}
+
 				self.app.nav.api.load({
 					open : true,
 					id : 'addaccount',

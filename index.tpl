@@ -9,31 +9,16 @@
         
 
         <title>POCKETNET</title>
-        <meta name="description" content="">
+        <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
-        <meta name="keywords" content="" />
-
-        <link rel="stylesheet" href="css/normalize.css?v=136">
-        <!-- Place favicon.ico in the root directory -->        
+        <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
         __CSS__
-
         
-
-        <link rel="stylesheet" href="https://cdn.plyr.io/3.4.4/plyr.css">
-        
-        <link rel="stylesheet" href="css/jquery-ui.min.css?v=136">
-
-        <link rel="stylesheet" href="css/medium/medium-editor.css">
-        <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=136">
-        <link rel="stylesheet" href="css/medium/beagle.css?v=136">
-
-        <link rel="stylesheet" href="css/datetime.css?v=136">        
+           
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-            
-     
-        
+
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
 
@@ -46,6 +31,9 @@
         </div>
 
         <div id="menuWrapper">
+        </div> 
+
+        <div id="panelWrapper">
         </div> 
 
         <div id="navigationWrapper">
@@ -123,29 +111,9 @@
             topPreloader(15)
             
         </script>
-        
-        <script src="js/vendor/underscore-min.js?v=136"></script> 
-        <script src="js/vendor/tooltipster.core.js"></script>
-        <script src="js/vendor/tooltipster.bundle.js"></script>
-        <script src="js/vendor/jquery-ui.min.js"></script>
-        <script src="js/vendor/imagesloaded.pkgd.min.js"></script> 
-        <script src="js/vendor/timer.js"></script>
-        <!--<script src="js/vendor/autosize.min.js"></script>-->
-        <script src="js/vendor/ion.sound/ion.sound.min.js"></script>   
-        <script join src="js/vendor/aesjs.js"></script>
-        <script join src="js/vendor/btc/src/btc.js"></script>
-        <script src="js/vendor/pbkdf2.js"></script>
-        <script src="js/vendor/sha1.js"></script>   
-        <script src="js/vendor/jdenticon.js"></script>
-        <script src="js/vendor/paste.js"></script> 
-        <script src="js/vendor/jquery.md5.js?v=136"></script>
-        <script src="js/vendor/jquery.animateNumber.min.js?v=136"></script>
-        <script src="js/vendor/emojione.js?v=136"></script>
-        <script src="js/vendor/plyr.js?v=136"></script>
-        <script src="js/vendor/rtc/RTCMultiConnection.min.js?v=136"></script>
-        <script src="js/vendor/rtc/socket.io.js"></script>
-        <script src="js/vendor/rtc/db.js"></script>
 
+        __VE__
+        
         __JS__
 
 
@@ -157,20 +125,8 @@
 
         
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131365418-1"></script> 
-            <script>
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'UA-131365418-1');
-            </script> 
-
-        
-          <!--
+        <!--Start of Tawk.to Script-->
         <script type="text/javascript">
-
             if(!isMobile()){
                 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
                 (function(){
@@ -183,8 +139,9 @@
                 })();
             }
 
-      
         </script>
-     -->
+        <!--End of Tawk.to Script-->
+
+
     </body>
 </html>

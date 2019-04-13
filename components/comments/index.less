@@ -8,6 +8,40 @@
 		text-align: center;
 	}
 
+	&.preview{
+		.post{
+			.txt{
+				textarea{
+					display: block;
+				}
+			}
+		}
+
+	}
+
+	&.listpreview{
+		.list{
+			
+			.comment{
+
+				&.firstcomment{
+
+					display: none;
+
+					&:nth-last-child(1){
+						display: block;
+					}
+
+					&:nth-last-child(2),
+					&:nth-last-child(3),
+					&:nth-last-child(4),
+					&:nth-last-child(5){
+						display: none;
+					}
+				}
+			}
+		}
+	}
 
 	.captionfwrapper{
 		overflow : hidden;
@@ -25,7 +59,7 @@
 	}
 
 	.caption{
-		padding-left:  3 * @rhythm;
+		padding-left:  2.5 * @rhythm;
 		padding-right: 6 * @rhythm;
 		background: #fff;
 
@@ -104,6 +138,9 @@
 
 	                &.fortext{
 	                    padding-left: @rhythm;
+	                    overflow: hidden;
+	                    text-overflow: ellipsis;
+	                    white-space: nowrap; 
 	                    span{
 	                        font-size: 0.8em;
 	                    }
@@ -136,12 +173,13 @@
 	}
 	
 
+
 	.list{
 		
 		
 		.comment{
 			border-bottom : 1px solid @color-gray-slight;
-			.transition(0.9s, background);
+			.transition(0.9s, color);
 			position : relative;
 
 			&:nth-child(1){
@@ -150,7 +188,7 @@
 
 			&.newcommentsn,
 			&.newcomments{
-				background: fade(#fff, 80);
+				color : @color-main;
 			}
 
 			&.firstcomment{
@@ -245,7 +283,7 @@
 
 					.usericon{
 						position: relative;
-						margin : 0 auto;
+						/*margin : 0 auto;*/
 					}
 				}
 
@@ -340,7 +378,6 @@
 		}
 
 		.commentpanel{
-			margin-top: @rhythm;
 			overflow: hidden;
 			
 
@@ -436,7 +473,7 @@
 
 
 		.postbody{
-			padding : 2 * @rhythm 0;
+			/*padding : 2 * @rhythm 0;*/
 			position: relative;
 
 			.closeAnswer{
@@ -468,7 +505,7 @@
 
 					.usericon{
 						position: relative;
-						margin : 0 auto;
+						/*margin : 0 auto;*/
 					}
 				}
 
@@ -479,6 +516,7 @@
 				&.closeWrapper,
 				&.postCellWrapper{
 					width: 48px;
+
 					
 					.closeEdit,
 					.postaction{
@@ -508,6 +546,12 @@
 					}
 				}
 
+				&.postCellWrapper{
+					.postaction{
+						text-align: right;
+					}
+				}
+
 				.usericon{
 					background: @color-main;
 					color : #fff;
@@ -518,19 +562,20 @@
 
 		.txt{
 			textarea{
-				width: 100%;
-				height: 36px;
-				line-height: 34px;
-				border-radius: 3px;
-				border : 0;
+				display: none;
+				border-radius: 20px;
 				border : 1px solid @color-gray-light;
-				
-				outline: none;
+				box-shadow: none;
 				padding : 0;
-				padding-left : @rhythm;
-				padding-right : @rhythm;
-				overflow: auto;
+				padding-left : 2 * @rhythm;
+				padding-right : 2 * @rhythm;
+				outline: none;
+				line-height: 36px;
+				height: 38px;
+				width: 100%;
+				overflow: hidden;
 				resize: none;
+				font-size : 14px;
 			}
 		}
 
@@ -558,11 +603,19 @@
 			}
 		}
 
-		
-
+			
+		/*.leaveCommentPreview{
+			border-radius: 20px;
+			border : 1px solid @color-gray-light;
+			box-shadow: none;
+			padding : 8px;
+			padding-left : 2 * @rhythm;
+			padding-right : 2 * @rhythm;
+			outline: none;
+			min-height: 36px;
+		}*/
 		.emojionearea,
 		.emojionearea.form-control{
-			border : 0;
 			border-radius: 20px;
 			border : 1px solid @color-gray-light;
 			box-shadow: none;
@@ -589,6 +642,10 @@
 
 		.emojionearea-button{
 			top : 6px;
+		}
+
+		.leaveComment{
+
 		}
 
 		.commentPanel{
@@ -746,7 +803,7 @@
 		}
 
 		.caption{
-			padding-left:  @rhythm;
+			padding-left:  0.5 * @rhythm;
 			padding-right: @rhythm;
 			background: #fff;
 		}
@@ -793,6 +850,10 @@
 				>div{
 					display: block;
 					width: 100%;
+
+					&.commentpanel{
+						width: 100%;
+					}
 				}
 			}
 

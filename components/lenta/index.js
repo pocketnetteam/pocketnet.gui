@@ -525,16 +525,12 @@ var lenta = (function(){
 
 				self.app.nav.api.history.removeParameters(['v'])
 
-				/*if (player.p.playing)
-					player.p.pause()*/
-
 				self.app.actions.onScroll()
 
 				if (initedcommentes[id]){
-					initedcommentes[id].changein(null)
+					initedcommentes[id].changein(null)	
 
-					initedcommentes[id].hideall()
-
+					initedcommentes[id].hideall(true)
 				}
 			},
 
@@ -1288,17 +1284,13 @@ var lenta = (function(){
 		}	
 
 		var renders = {
-			comments : function(txid, init, showall){
+			comments : function(txid, init, showall, preview){
 
 				if(initedcommentes[txid]) return;
 
 				var _el = el.c.find('#' + txid + " .commentsWrapper");
 
 				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
-
-				console.log('share', share)
-
-		
 
 				self.fastTemplate('commentspreview', function(rendered){
 
@@ -1312,13 +1304,18 @@ var lenta = (function(){
 						essenseData : {
 							close : function(){
 
-								_el.html('')
+								console.log('initedcommentes[txid]', initedcommentes[txid], txid)
+								if (initedcommentes[txid]){
+									initedcommentes[txid].hideall(true)
+								}
+
+								//_el.html('')
 
 								_scrollToTop(_el, 0, 0, -65)
+								
 
-								initedcommentes[txid].destroy()
+								//renders.comments(txid, init, showall, preview)
 
-								delete initedcommentes[txid]
 							},
 							totop : el.c.find('#' + txid),
 							caption : rendered,
@@ -1329,10 +1326,17 @@ var lenta = (function(){
 							},
 							txid : txid,
 							init :  init,
-							showall : showall
+							showall : showall,
+
+							preview : preview,
+
+							lastComment : share.lastComment,
+							count : share.comments
 						},
 
 						clbk : function(e, p){
+
+							if(!el.c) return
 
 							var e = el.c.find('#' + txid);
 							
@@ -1340,7 +1344,9 @@ var lenta = (function(){
 								p.changein(e, 0)
 							}
 
-							initedcommentes[txid] = p
+							if (p)
+
+								initedcommentes[txid] = p
 						}
 					})
 
@@ -1419,14 +1425,8 @@ var lenta = (function(){
 
 				var _el = el.shares.find("#" + share.txid);
 				var h = _el.height()
-				//var index = _el.attr('index');
-
-				el.shares.css('height', el.shares.outerHeight())
 
 				var added = _el.find('.added')
-				var ah = 0;
-
-				if(added.length) ah = added.outerHeight();
 
 				shareInitingMap[share.txid] = true;
 
@@ -1443,87 +1443,41 @@ var lenta = (function(){
 
 					var work = _el.find('.work');
 
-					if (ah){
+					/*if (ah){
 
 						work.outerHeight(ah)
 					}
-
+*/
 					shareInitedMap[share.txid] = true;	
 					
-					h = actions.applyheightEl(h, _el, 'share')
+					//h = actions.applyheightEl(h, _el, 'share')
 
-					if(!isMobile())
+					/*if(!isMobile())
 
 						p.el.find('.tooltip').tooltipster({
 			                theme: 'tooltipster-light',
 			                maxWidth : 600,
 			                zIndex : 20,
-			            }); 
+			            }); */
 
-					var action = function(action){
+					renders.stars(share)
+					renders.comments(share.txid, false, false, true)
+			
+					renders.url(p.el.find('.url'), share.url, share, function(){
+						renders.urlContent(share, function(){
+							actions.initVideo(p.el, share)
 
-						if(shareInitedMap[share.txid]){
-							action()
-						}
-						else
-						{
-							_clbk();
-						}
-						
-
-					}
-
-					var _clbk = function(){
-						work.css('height', 'auto')
-						shareInitingMap[share.txid] = false;					
+							shareInitingMap[share.txid] = false;					
 											
-						if (clbk)
-							clbk();
-					}
+							if (clbk)
+								clbk();
 
-						
-					action(function(){
-
-						renders.stars(share)
-
-						/*renders.comments(share.txid, {
-							init : true
-						})*/
-
-						renders.url(p.el.find('.url'), share.url, share, function(){
-						
-							action(function(){
-
-								renders.urlContent(share, function(){
-
-									//
-
-									actions.initVideo(p.el, share)
-
-									
-
-									if( _clbk)
-										_clbk()
-
-									action(function(){
-
-										renders.images(share, function(){
-											
-											
-										})
-
-									});
-
-								});
-
-							})
-					
-
-						})
+						});
 
 					})
 
-
+					renders.images(share, function(){
+					})
 					
 				})
 
@@ -1605,6 +1559,13 @@ var lenta = (function(){
 
 				if (essenseData.author || recommended || essenseData.txids){
 					tpl = 'shares'
+				}
+
+				if (recommended == 'recommended'){
+
+					shares = _.sortBy(shares, function(s){
+						return -s.time
+					})
 				}
 
 				
@@ -2311,7 +2272,9 @@ var lenta = (function(){
 						el.c.addClass('showprev')
 					}
 
+
 					renders.shares(shares, function(){
+
 						renders.sharesInview(shares, function(){
 
 							events.sharesInview()

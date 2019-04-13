@@ -585,17 +585,6 @@ Platform = function(app){
 					electron.ipcRenderer.send('update-badge-tray', _count || null);
 					
 
-					/*const {remote, nativeImage} = require('electron');
-					const {BrowserWindow} = remote;
-					const win = BrowserWindow.getFocusedWindow();
-
-
-					let image = nativeImage.createFromPath('../assets/icons/notificationOverlay.png')
-
-					console.log(image, win)
-
-    				win.setOverlayIcon(image, count.toString())*/
-
 				}
 			}
 		},
@@ -1732,7 +1721,6 @@ Platform = function(app){
 			getNotificationsInfo : function(notifications, clbk){
 				var n = this;
 
-				console.log('n.storage.notifications', n.storage.notifications, notifications)
 
 				notifications = _.filter(notifications, function(ns){
 					if(ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
@@ -1845,7 +1833,89 @@ Platform = function(app){
 		},
 
 		users : {
+			loading : {},
 			storage : {},
+			getone : function(address, clbk, light){
+				var s = this.storage;
+				var l = this.loading;
+
+				
+
+				if(s[address] || !address){
+					if (clbk)
+						clbk()
+				}
+
+				else
+				{
+
+					if (l[address]){
+						retry(function(){
+
+							return !l[address]
+
+						}, function(){
+
+							if (clbk)
+								clbk()
+
+						})
+
+						return
+					}
+
+					l[address] = true;
+
+					var params = [[address]];
+
+					if (light){
+						params.push('1')
+					}
+
+					self.app.ajax.rpc({
+						method : 'getuserprofile',
+						parameters : params,
+						success : function(d){
+
+							l[address] = false;
+
+							if(typeof pUserInfo != 'undefined'){
+
+								_.each(d || [], function(data){
+									var u = new pUserInfo();
+
+									u._import(data)
+
+									u.regdate = new Date();
+									u.regdate.setTime(data.regdate * 1000);	
+
+									u.address = data.address						
+
+									s[data.address] = u;
+
+									self.sdk.usersl.storage[data.address] = u;
+
+									console.log("USER", u)
+
+								})
+
+							}
+ 
+							if (clbk)
+								clbk()
+
+						},
+
+						fail : function(){
+
+							l[address] = false;
+
+							if (clbk)
+								clbk()
+						}
+					})
+				}
+			},
 			get : function(addresses, clbk, light){
 
 				if(!_.isArray(addresses)) addresses = [addresses]
@@ -1905,12 +1975,9 @@ Platform = function(app){
 
 										self.sdk.usersl.storage[data.address] = u;
 
-
 									})
 
 								}
-
-								
 	 
 								if (clbk)
 									clbk()
@@ -3101,6 +3168,9 @@ Platform = function(app){
 		comments : {
 			storage : {},
 
+			sendclbks : {
+			},
+
 			find : function(txid, id, pid){
 				var s = self.sdk.comments.storage;
 
@@ -3160,7 +3230,7 @@ Platform = function(app){
 
 				var verify = false
 
-				//try {
+				try {
 					var keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(pubkey, 'hex'))
 
 					var str = comment.serialize();
@@ -3171,14 +3241,14 @@ Platform = function(app){
 
 					if(!verify)
 					{
-						console.log(comment)
-						console.log(str, signature, pubkey)
+						//console.log(comment)
+						//console.log(str, signature, pubkey)
 					}
-				/*}
+				}
 
 				catch (e){
 
-				}*/
+				}
 
 				return verify
 
@@ -3214,7 +3284,6 @@ Platform = function(app){
 
 					comment._import(msg)
 
-					console.log(msg)
 
 					comment.verify = self.sdk.comments.checkSign(comment, data.signature, data.pubkey)
 
@@ -3272,7 +3341,7 @@ Platform = function(app){
 				})
 			},
 
-			send : function(txid, comment, pid, aid, clbk, editid){
+			send : function(txid, comment, pid, aid, clbk, editid, fid){
 
 				var s = self.sdk.comments.storage;
 
@@ -3313,6 +3382,9 @@ Platform = function(app){
 
 						var alias = comment.alias(id, temptime, temptime, 0, self.app.platform.sdk.address.pnet().address);
 
+						var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
+
+						if (share) share.comments++
 
 						alias.parentid = pid || ''
 						alias.answerid = aid || ''
@@ -3326,12 +3398,20 @@ Platform = function(app){
 
 						if (clbk)
 							clbk(null, alias)
+
+						_.each(self.sdk.comments.sendclbks, function(c){
+							c(null, alias, txid, pid, aid, editid, fid)
+						})
 						
 					},
 					fail : function(d){
 						if (clbk){
 					    	clbk('network', d)
 					    }
+
+					    _.each(self.sdk.comments.sendclbks, function(c){
+							c('network')
+						})
 					}
 				})
 			}
@@ -3395,19 +3475,21 @@ Platform = function(app){
 				time : function(clbk){
 
 					self.app.ajax.rpc({
-						method : 'getBlockchainInfo',
+						method : 'getnodeinfo',
 						parameters : [],
 						success : function(d){
 
+							console.log("getnodeinfo", d)
+
 							var t = deep(d, 'time') || 0
-
-							self.currentBlock = deep(d, 'blocks') || 0
-
+							self.currentBlock = deep(d, 'lastblock.height') || 0
 							self.timeDifference = 0;
 
 							if (t){
 								self.timeDifference = t - Math.floor((new Date().getTime()) / 1000)
 							}
+
+							console.log('self.currentBlock', self.currentBlock, t)
 
 							if (clbk)
 								clbk()
@@ -3581,8 +3663,15 @@ Platform = function(app){
 				},
 
 				users : function(shares, clbk){
-					var users = _.map(shares || [], function(s){
-						return s.address
+					var users = [];
+
+					_.each(shares || [], function(s){
+						users.push(s.address) 
+
+						var cuser = deep(s, 'lastComment.address')
+
+						if (cuser)
+							users.push(cuser) 
 					})
 
 					self.sdk.users.get(users, clbk, true)
@@ -3998,6 +4087,10 @@ Platform = function(app){
 
 				unspent : null,
 
+				storage : {},
+
+				loading : {},
+
 				unspentLoading : {},
 
 				temp : {},
@@ -4031,13 +4124,12 @@ Platform = function(app){
 
 					var vout = _.find(tx.vout, function(v){
 						return _.find(v.scriptPubKey.addresses, function(a){
-							return a == address
+							return a == address && (typeof n == 'undefined' || n == vout.n)
 						})
 					})
 
 					var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
 
-					console.log("TOUT", tx.pockettx)
 
 					var t = {
 						txid : tx.txid,
@@ -4054,10 +4146,42 @@ Platform = function(app){
 					
 				},
 
+				toUTs : function(tx, address){
+
+					var outs = [];
+
+					_.each(tx.vout, function(vout){
+						var a = _.find(v.scriptPubKey.addresses, function(a){
+							return a == address && (typeof n != 'undefined' && n == vout.n)
+						})
+
+						if (a){
+							var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
+
+							var t = {
+								txid : tx.txid,
+								vout : vout.n,
+								address : address,
+								confirmations : tx.confirmations,
+								coinbase : coinbase || tx.coinstake,
+								amount : vout.value,
+								scriptPubKey : vout.scriptPubKey.hex,
+								pockettx : tx.pockettx
+							}
+
+							outs.push(t)
+
+						}
+					})
+
+					
+
+					return outs
+					
+				},
+
 				waitSpend : function(tx){
 
-					if(tx.pockettx)
-						console.log('waitSpend', tx.confirmations, tx.pockettx)
 
 					if(tx.confirmations < 10 && tx.pockettx){
 
@@ -4722,21 +4846,58 @@ Platform = function(app){
 
 					tx : function(id, clbk){
 
+						if(self.sdk.node.transactions.loading[id]){
 
-						self.app.ajax.rpc({
-							method : 'getrawtransaction',
-							parameters : [id, 1],
-							success : function(d){
+							retry(function(){
 
-								if (clbk)
-									clbk(d)
-							},
-							fail : function(d){
+								if(!self.sdk.node.transactions.loading[id]) return true;
+
+							}, function(){
+
 								if (clbk){
-							    	clbk(d, 'network')
+							    	clbk(self.sdk.node.transactions.storage[id])
 							    }
-							}
-						})
+
+							}, 40)
+
+
+							return
+						}	
+
+						if(self.sdk.node.transactions.storage[id]){
+							if (clbk)
+								clbk(self.sdk.node.transactions.storage[id])
+						}
+
+						else
+						{
+							self.sdk.node.transactions.loading[id] = true;
+
+							self.app.ajax.rpc({
+								method : 'getrawtransaction',
+								parameters : [id, 1],
+								success : function(d){
+
+									self.sdk.node.transactions.loading[id] = false;
+
+									self.sdk.node.transactions.storage[id] = d
+
+									if (clbk)
+										clbk(d)
+								},
+								fail : function(d){
+
+									self.sdk.node.transactions.loading[id] = false;
+
+									if (clbk){
+								    	clbk(d, 'network')
+								    }
+								}
+							})
+						}
+
+
+						
 					}
 				},
 
@@ -4749,8 +4910,6 @@ Platform = function(app){
 						self.sdk.node.transactions.get.unspent(function(unspent){
 
 							unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
-
-							console.log('unspent.length', unspent.length)
 
 							if(!unspent.length){
 
@@ -6221,7 +6380,7 @@ Platform = function(app){
 						}
 
 						if(tx && !err){
-							data.tx = platform.sdk.node.transactions.toUT(tx, data.addr)
+							data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 							//data.tx = data.pockettx
 
 							data.btx = tx;
@@ -6236,17 +6395,19 @@ Platform = function(app){
 
 							if (!wa){
 								removeEqual(s[a], {
-									txid : data.tx.txid
+									txid : data.tx.txid,
+									vout : data.tx.nout
 								})
 
 								s[a].push(data.tx)
 							}
-								
+									
 
 							data.address = platform.sdk.node.transactions.addressFromScryptSig(deep(data.btx, 'vin.0.scriptSig.asm'))
 
-							platform.sdk.users.get(data.address || '', function(){
+							platform.sdk.users.getone(data.address || '', function(){
 
+								console.log('platform.sdk.usersl.storage[data.address]', platform.sdk.usersl.storage[data.address])
 
 								if (data.address){
 									data.user = platform.sdk.usersl.storage[data.address] || {
@@ -6460,6 +6621,10 @@ Platform = function(app){
 								open : true,
 								href : 'post?s=' + data.posttxid,
 								inWnd : true,
+								//history : true,
+								clbk : function(d, p){									
+									app.nav.wnds['post'] = p
+								},
 
 								essenseData : {
 									share : data.posttxid,
@@ -6484,9 +6649,9 @@ Platform = function(app){
 								open : true,
 								href : 'post?s=' + data.posttxid,
 								inWnd : true,
-								
-								clbk : function(){									
-
+								//history : true,
+								clbk : function(d, p){									
+									app.nav.wnds['post'] = p
 								},
 
 								essenseData : {
@@ -8372,7 +8537,7 @@ Platform = function(app){
 		var hlp = {
 			receiveSyncRequest : function(e, id){
 
-			    let _db_diff = self.storages[id].CompareDB(e.data.hv, e.data.tm_f, e.data.tm_t);
+			    var _db_diff = self.storages[id].CompareDB(e.data.hv, e.data.tm_f, e.data.tm_t);
 
 			    if (self.connections[id])
 				    self.connections[id].send({
@@ -8395,13 +8560,13 @@ Platform = function(app){
 				
 
 			    // TODO - Mark existed syncReq as long
-			    let _hv = self.storages[id].HistoryVector();
+			    var _hv = self.storages[id].HistoryVector();
 
 			    // Random select `peer`
-			    let _sync_peer_send = userid;
+			    var _sync_peer_send = userid;
 			    if (_sync_peer_send == null) {
-			        let _peers = self.connections[id].peers.getAllParticipants(self.connections[id].userid, 'connected');
-			        let _sync_peer_current = Math.floor(Math.random() * _peers.length);
+			        var _peers = self.connections[id].peers.getAllParticipants(self.connections[id].userid, 'connected');
+			        var _sync_peer_current = Math.floor(Math.random() * _peers.length);
 			        _sync_peer_send = _peers[_sync_peer_current];			        
 			    }
 

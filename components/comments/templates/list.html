@@ -51,16 +51,17 @@ var commentpanel = function(comment, _class){ %>
 			<div class="commentWrapper table">
 
 				<div class="iconWrapper">
+					<a href="author?address=<%-comment.address%>">
+						<% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
 
-					<% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
-
-					<div class="icon">
-						<div class="usericon" image="<%-src || ''%>">
-							<% if(!src) {%>
-								<svg width="30" height="30" data-jdenticon-value="<%-comment.address%>"></svg>
-							<% } %>
+						<div class="icon">
+							<div class="usericon" image="<%-src || ''%>">
+								<% if(!src) {%>
+									<svg width="30" height="30" data-jdenticon-value="<%-comment.address%>"></svg>
+								<% } %>
+							</div>
 						</div>
-					</div>
+					</a>
 				
 
 				</div>
@@ -69,8 +70,10 @@ var commentpanel = function(comment, _class){ %>
 
 					<div class="metatable table">
 						<div class="author">
+
+							<a href="author?address=<%-comment.address%>">
 							
-							<b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b>,
+							<b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b>, </a>
 							<span class="date"><%- convertDate(dateToStr(comment.time)) %></span>
 						</div>
 

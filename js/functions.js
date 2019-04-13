@@ -6960,6 +6960,8 @@
 
 						helpers.closeResults();
 
+						searchEl.removeClass('searchActive');
+
 						if(!fsActive)
 							searchEl.removeClass('searchActive')
 
@@ -6984,7 +6986,7 @@
 					})
 				}
 			},
-			fastsearch : function(el, e){
+			fastsearch : function(el, e, _currentFastId){
 				var value = el.val();
 
 				if (value && p.events.fastsearch &&!bsActive){
@@ -6992,7 +6994,7 @@
 					searchEl.addClass('searchActive')
 					fsActive = true;
 
-					currentFastId = makeid();
+					currentFastId = (_currentFastId || makeid());
 
 					var thisSearch = currentFastId;
 
@@ -7067,14 +7069,13 @@
 					}
 					else
 					{
+
+						var id = makeid()
+
 						slowMadeTimer = slowMade(function(){
-							events.fastsearch(searchInput, e)
+							events.fastsearch(searchInput, e, id)
 						}, slowMadeTimer, p.time)	
 					}
-
-						
-
-					
 				}
 				
 			});

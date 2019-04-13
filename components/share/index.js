@@ -1112,6 +1112,7 @@ var share = (function(){
 		    	
 		    	search : false,
 		    	tones : false,
+		    	autocomplete : false,
 
 		    	attributes: {
 			        spellcheck : true,
