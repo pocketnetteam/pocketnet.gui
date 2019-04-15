@@ -386,7 +386,7 @@ var menu = (function(){
 						events : {
 							fastsearch : function(value, clbk){
 
-								self.app.platform.sdk.search.get(value, 'fs', function(r){
+								self.app.platform.sdk.search.get(value, 'fs', null, null, null, function(r){
 
 									renders.results(r.fastsearch || [], value, function(tpl){
 

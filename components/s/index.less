@@ -18,9 +18,13 @@
 				width: 120px;
 				float: left;
 
-				span{
-					font-size: 2em;
+				.n{
+					span{
+						font-size: 2em;
+					}
 				}
+
+				
 			}
 			&.sectioncnt{
 				
@@ -46,76 +50,146 @@
 
 	.users{
 
-		.userslistwrapper{
-			overflow : hidden;
-			position: relative;
-			.arrow{
-				border-radius: 50%;
-				line-height: 32px;
-				width: 33px;
-				height: 33px;
-				text-align: center;
-				font-size: 0.8em;
-				color : @color-gray-light;
-				.transition(0.3s);
-				cursor: pointer;
-				border : 1px solid transparent;
-				top : 7px;
-				background: #fff;
-
-
-				&:hover{
-					color : @color-main;
-					border-color: @color-main;
-				}
-			}
-
-			.uleft{
-				position: absolute;
-				left: -60px;
-
-				&.active{
-					left: 0;
-				}
-			}
-
-			.uright{
-				position: absolute;
-				right: -60px;
-
-				&.active{
-					right: 0;
-				}
-			}
-
-		}
-
 		.userslist{
 			white-space: nowrap;
-			.transition(0.3s);
+			overflow: hidden;
+			.transition(0.3s, margin);
 		}
 
-		.user{
-			width: 120px;
-			float: left;
-
-			.usericon{
-				margin : 0 auto;
+		&[view="list"]{
+			.tableview{
+				&.tcaption{
+					display: none;
+				}
+				
 			}
-
-			.icon{
-				padding-bottom: @rhythm;
-			}
-
-			.name{
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				text-align: center;
-				span{
+			.userslistwrapper{
+				overflow : hidden;
+				position: relative;
+				.arrow{
+					border-radius: 50%;
+					line-height: 32px;
+					width: 33px;
+					height: 33px;
+					text-align: center;
 					font-size: 0.8em;
+					color : @color-gray-light;
+					.transition(0.3s);
+					cursor: pointer;
+					border : 1px solid transparent;
+					top : 7px;
+					background: #fff;
+
+
+					&:hover{
+						color : @color-main;
+						border-color: @color-main;
+					}
+				}
+
+				.uleft{
+					position: absolute;
+					left: -60px;
+
+					&.active{
+						left: 0;
+					}
+				}
+
+				.uright{
+					position: absolute;
+					right: -60px;
+
+					&.active{
+						right: 0;
+					}
+				}
+
+			}
+
+			.user{
+				width: 120px;
+				float: left;
+
+				.usericon{
+					margin : 0 auto;
+					opacity: 0;
+					.transition(0.3s, opacity);
+					
+					&.active{
+						opacity: 1;
+					}
+				}
+
+				.icon{
+					padding-bottom: @rhythm;
+				}
+
+				.name{
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					text-align: center;
+					span{
+						font-size: 0.8em;
+					}
+				}
+
+				.postsCountWrapper,
+				.aboutWrapper{
+					display: none;
 				}
 			}
 		}
+
+		&[view="full"]{
+
+			.tableview{
+				width: 100%;
+				display: table;
+
+				&.tcaption{
+					margin-bottom: 2 * @rhythm;
+					span{
+						font-size : 0.8em;
+					}
+				}
+
+				>div{
+					vertical-align: top;
+					padding : @rhythm;
+					display: table-cell;
+					padding-top : 2 * @rhythm;
+
+					&.pictureWrapper{
+						width: 80px;
+						padding-top : 0;
+					}
+
+					&.nameWrapper{
+
+						width: 270px;
+					}
+					
+					&.postsCountWrapper{
+						width: 170px;
+						text-align: center;
+					}
+				}
+			}
+
+			.user{
+				margin-bottom: @rhythm;
+			}
+
+			.userslistwrapper{
+				.arrow{
+					display: none;
+				}
+
+			}
+		}
+
+		
 	}
 }

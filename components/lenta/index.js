@@ -95,7 +95,7 @@ var lenta = (function(){
 					}
 					else
 					{
-						initedcommentes = {}
+						
 						
 						renders.shares(shares, function(){
 
@@ -1277,7 +1277,11 @@ var lenta = (function(){
 
 				actions.clear()
 
+				initedcommentes = {}
+
 				make();
+
+
 
 			}
 
@@ -2490,6 +2494,8 @@ var lenta = (function(){
 				_.each(initedcommentes, function(c){
 					c.destroy()
 				})
+
+				initedcommentes = {}
 				
 				delete self.app.platform.ws.messages.comment.clbks.lenta
 				delete self.app.platform.sdk.node.shares.clbks.added.lenta

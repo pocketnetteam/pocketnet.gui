@@ -10,7 +10,9 @@ var s = (function(){
 
 		var el, value, result;
 
-		var userIndex = 0, maxCount = 10, count = maxCount;
+		var userIndex = 0, maxCount = 10, count = maxCount, fixedBlock;
+
+		var usersView = 'list'
 
 		var actions = {
 
@@ -24,7 +26,10 @@ var s = (function(){
 				if(a == 'right'){
 					userIndex = userIndex + count;
 
-					if (userIndex >= result.users.length) userIndex = result.users.length - 1;
+					if (userIndex >= result.users.count) 
+						userIndex =  result.users.count - 1;
+
+					makenext('users', userIndex, count)
 				}
 
 				actions.slideCarousel()
@@ -39,7 +44,7 @@ var s = (function(){
 					actions.displayArrow('left', false)
 				}
 
-				if(userIndex + count < result.users.length){
+				if(userIndex + count < result.users.count){
 					actions.displayArrow('right', true)
 				}
 				else
@@ -62,10 +67,10 @@ var s = (function(){
 					e.removeClass('active')
 				}
 
-
 			},
 
 			slideCarousel : function(){
+
 				var w = el.c.find('.user').width();
 
 				var m = userIndex * w;
@@ -77,20 +82,39 @@ var s = (function(){
 
 			applyCarousel : function(){
 
-				var w = el.c.find('.user').width();
-				var W = el.c.find('.userslistwrapper').width();
+				if(usersView == 'list'){
+					var w = el.c.find('.user').width();
+					var W = el.c.find('.userslistwrapper').width();
 
-				count = Math.min(Number((W / w).toFixed(0)), maxCount)
+					count = Math.min(Number((W / w).toFixed(0)), maxCount)
 
-				console.log(W, w, Number((W / w).toFixed(0)), count, (W / count))
+					el.c.find('.user').width((W / count).toFixed(0) + 'px');
 
-				el.c.find('.user').width((W / count) + 'px');
+					el.userslist.width((result.users.data.length * (W / count)).toFixed(0) + 1);
 
-				el.userslist.width(result.users.length * (W / count));
+					actions.slideCarousel()
+				}
 
-				actions.slideCarousel()
 
+				else
+				{
+					el.userslist.css('margin-left', 0 + 'px')
+
+					el.userslist.css('width', 'auto')
+
+					el.c.find('.user').css('width', 'auto')
+				}
 				
+	
+			},
+
+			changeUsersView : function(){
+				if  (usersView == 'list') usersView = 'full'
+				else usersView  = 'list'
+
+				el.users.attr('view', usersView)
+
+				actions.applyCarousel()	
 			}
 		}
 
@@ -103,29 +127,75 @@ var s = (function(){
 		}
 
 		var renders = {
-			users : {
-				list : function(clbk){
-					self.shell({
-						name :  'userslist',
-						el : el.users.find(".userslist"),
-						data : {
-							users : result.users
-						},
+			users : function(users, clbk){
 
-						inner : append
+				self.shell({
+					name :  'userslist',
+					el : el.users.find(".userslist"),
+					data : {
+						users : users
+					},
 
-					}, function(p){
+					inner : append,
 
+					bgImages : {
+						clbk : function(i){
+							$(i.elements[0]).addClass('active')
+						}
+					}
+
+				}, function(p){
+
+					if (usersView = 'list'){
 						actions.applyCarousel()
+					}
 
-						if (clbk)
-							clbk(p);
-					})
-				},
+					if (clbk)
+						clbk(p);
+				})
 
-				full : function(){
+			}
+		}
 
-				}
+		var makenext = function(type, view, start, count, clbk){
+
+			var l = result[type].data.length;
+			var L = result[type].count
+
+			if(start + count <= l){
+
+				return
+
+			}
+
+			if (start < l){
+				var d = l - start;
+
+				start = l;
+				count = count - d;
+			}
+			
+			if(start + count > L) count = L - start
+
+			if(count <= 0) return
+
+			
+
+			load[type](function(data){
+
+				renders[type](data)
+
+			}, start, count)	
+
+		}
+
+		var load = {
+			users : function(clbk, start, count){
+				self.app.platform.sdk.search.get(value, 'users', start, count, fixedBlock, function(r){
+
+					clbk(r.data);
+
+				})
 			}
 		}
 
@@ -141,11 +211,12 @@ var s = (function(){
 		var initEvents = function(){
 			
 			el.ua.on('click', events.clickArrow)
+			el.showmore.on('click', actions.changeUsersView)
 		}
 
 		var make = function(){
 
-			renders.users.list()
+			renders.users(result.users.data)
 
 		}
 
@@ -158,9 +229,9 @@ var s = (function(){
 
 				value = parameters().ss || '';
 
-				self.app.platform.sdk.search.get(value, 'all', function(r){
+				self.app.platform.sdk.search.get(value, 'all', 0, maxCount, null, function(r, block){
 
-					console.log(r)
+					fixedBlock = block
 
 					result = r;
 
@@ -197,6 +268,7 @@ var s = (function(){
 				el.uleft = el.c.find('.uleft')
 				el.uright = el.c.find('.uright')
 				el.ua = el.c.find('.arrow')
+				el.showmore = el.c.find('.showmore')
 
 				initEvents();
 

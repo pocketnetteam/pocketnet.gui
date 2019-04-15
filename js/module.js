@@ -108,12 +108,10 @@ nModule = function(){
 					t.html(jdenticon.toSvg(v, t.width()))
 				})
 
-				//jdenticon()
 				bgImages(p.el, p.bgImages)
 				
-
-				//p.el.removeClass("navtransition")
 			}
+
 
 			if (typeof clbk  === 'function'){
 				clbk(p);
@@ -204,8 +202,9 @@ nModule = function(){
 				}
 
 				if(!p.animation)
-
+				{
 					completeClbk(p);
+				}
 			
 
 			} ,p)

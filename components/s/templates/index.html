@@ -1,13 +1,26 @@
 <div id="<%-module.map.id%>">
 	<div class="work">
 
-		<% if(result.users.length) {%> 
+		<% if(result.users.data.length) {%> 
 
-			<div class="section users">
+			<div class="section users" view="list">
 				<div class="sectionname">
-					<span>Users/</span>
+					<div class="n">
+						<span>Users/</span>
+					</div>
+
+					<div class="showmore">
+						<span>Show More</span>
+					</div>
 				</div>
 				<div class="sectioncnt">
+
+					<div class="tableview tcaption">
+						<div class="pictureWrapper"></div>
+						<div class="nameWrapper"><span>User</span></div>
+						<div class="aboutWrapper"><span>About</span></div>
+						<div class="postsCountWrapper"><span>Posts count</span></div>
+					</div>
 
 					<div class="userslistwrapper">
 						<div class="userslist" style="width : 10000px">
@@ -26,18 +39,18 @@
 
 				</div>
 
-				<div class="showmore">
-					<span>Show More</span>
-				</div>
+				
 			</div>
 
 		<% } %>
 
-		<% if(result.posts.length) {%> 
+		<% if(result.posts.data.length) {%> 
 
 			<div class="section posts">
 				<div class="sectionname">
-					<span>Posts/</span>
+					<div class="n">
+						<span>Posts/</span>
+					</div>
 				</div>
 
 				<div class="sectioncnt">

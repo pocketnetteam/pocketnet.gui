@@ -3137,23 +3137,91 @@ Platform = function(app){
 		},
 
 		search : {
-			storage : {},
+			storage : {
+				all : {},
+				fs : {},
+				posts : {},
+				users : {}
+			},
 
-			get : function(value, type, clbk){
-
+			add : function(fixedBlock, type, result, start, count){
 				var s = this.storage;
 
-				type || (type = 'fs')
+				if(!s[type][fixedBlock]){
+					s[type][fixedBlock] = result;
+				}
+
+				else
+				{
+					for(var i = 0; i < count; i++){
+
+						if (result.data[i])
+
+							s[type][fixedBlock].data[start + i] = result.data[i]
+					}
+				}
 				
+			},
+
+			preview : function(fixedBlock, type, start, count){
+				var s = this.storage;
+				
+				if (type != 'fs' && type != 'all'){
+					
+					for(var i = 0; i < count; i++){
+
+						if(!s[type][fixedBlock].data[start + i])
+
+							s[type][fixedBlock].data[start + i] = {
+								preview : true,
+								index : start + i
+							}
+					}
+
+				}
+			},
+
+			get : function(value, type, start, count, fixedBlock, clbk, preview){
+
+				var s = self.sdk.search;
+
+
+				fixedBlock || (fixedBlock = self.currentBlock);
+
+				type || (type = 'fs')
+				console.log(encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString())
+
+				s.preview(fixedBlock, type, start, count)
+
 				self.app.ajax.rpc({
 					method : 'search',
-					parameters : [encodeURIComponent(value), type],
+					parameters : [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()],
 					success : function(d){
 
-						s[value] = d
+
+						if (type != 'fs'){
+
+							if(type == 'all'){
+								_.each(d, function(d, k){
+									s.add(fixedBlock, k, d, start, count)
+								})
+							}
+							else
+							{
+
+								d = d[type] || {
+									data : []
+								}
+
+								s.add(fixedBlock, type, d, start, count)
+							}
+
+						}
+
+						
 
 						if (clbk)
-							clbk(s[value])
+							clbk(d, fixedBlock)
 					},
 					fail : function(){
 						if (clbk){
@@ -9727,6 +9795,10 @@ Platform = function(app){
 
 
 	self.clear = function(){
+		
+
+		self.app.nav.addParameters = null;
+
 		_.each(self.sdk, function(c, id){
 				
 			if (c.storage){
@@ -9734,14 +9806,16 @@ Platform = function(app){
 			}
 		})
 
-		self.sdk.notifications.clbks.seen = {}
-		self.sdk.notifications.clbks.added = {}
+		self.sdk.search.storage = {
+			all : {},
+			fs : {},
+			posts : {},
+			users : {}
+		}
 
-		self.sdk.notifications.inited = false
-
-		self.app.nav.addParameters = null;
-
-		
+		self.sdk.notifications.clbks.seen = {};
+		self.sdk.notifications.clbks.added = {};
+		self.sdk.notifications.inited = false;
 
 		if(electron){
 			electron.ipcRenderer.send('update-badge', null);
