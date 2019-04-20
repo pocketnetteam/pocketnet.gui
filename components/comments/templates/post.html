@@ -1,3 +1,9 @@
+<% dplace = 'Tell Pocketeers what you think';
+
+if(isMobile()) dplace = 'Tell what you think'
+
+ %>
+
 <div class="postbody" answer="<%- answer %>" edit="<%- edit %>">
 	<div class="posttable table">
 		<div class="iconWrapper">
@@ -35,9 +41,9 @@
 		<div class="lcpp">
 			<div class="txt">
 
-				<textarea class="leaveCommentPreview" placeholder="<%- placeholder || 'Tell Pocketeers what you think' %>"></textarea>
+				<textarea class="leaveCommentPreview" placeholder="<%- placeholder || dplace %>"></textarea>
 
-				<div class="leaveComment" placeholder="<%- placeholder || 'Tell Pocketeers what you think' %>"></div>
+				<div class="leaveComment" placeholder="<%- placeholder || dplace %>"></div>
 			</div>
 
 			<!--<div class="commentPanel table">

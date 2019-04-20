@@ -24,8 +24,8 @@
 					</div>
 				</div>
 
-				<div class="aboutWrapper"><% user.about || '' %></div>
-				<div class="postsCountWrapper"><% user.postcnt || 0 %></div>
+				<div class="aboutWrapper"><span><%- decodeURIComponent(user.a || '') %></span></div>
+				<div class="postsCountWrapper"><%- user.postcnt || 0 %></div>
 
 			</div>
 

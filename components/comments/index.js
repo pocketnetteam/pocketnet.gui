@@ -282,6 +282,8 @@ var comments = (function(){
 
 					el.focus();
 
+					el.closest('.answer').addClass('active')
+
 					if (str.length)
 						ecaretPosition(el, 0, str.length)
 
@@ -646,12 +648,13 @@ var comments = (function(){
 		}
 
 		var postEvents = function(p, _p, clbk){
+
 			var textarea = _p.el.find('.leaveComment');
 
 			var c = _p.el.find('.postbody');
 
 				textarea.emojioneArea({
-			    	pickerPosition : 'bottom',
+			    	pickerPosition : 'top',
 			    	
 			    	search : false,
 			    	tones : false,
@@ -700,6 +703,8 @@ var comments = (function(){
 
 								_p.el.find('.emojionearea-editor').focus()
 
+								_p.el.addClass('active')		
+
 								ed.init = false;
 
 							}
@@ -715,8 +720,16 @@ var comments = (function(){
 			    	}
 			    });
 
+
 			    _p.el.find('.emojionearea-editor').on('focus', function(){
 			    	actions.process(p.id || '0')	
+
+			    	_p.el.addClass('active')
+			    })
+
+			    _p.el.find('.emojionearea-editor').on('blur', function(){
+			    	console.log("BLUR")
+			    	_p.el.removeClass('active')
 			    })
 
 			    actions.process(p.id || '0')	

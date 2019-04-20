@@ -1,16 +1,67 @@
 <div class="fastresultswrapper">
-	<% if(results && results.length) {%>
+
+	<% if((results.users && results.users.data.length) || (results.fastsearch && results.fastsearch.length)) {%>
 
 		<div class="results">
+			<% if(results.users && results.users.data.length) {%>
 
-			<% _.each(results, function(result, index){ %>
+				<div class="users">
 
-				<div class="result" result="<%- value %><%- result %>">
-					<div class="name"><b><%- value %></b><%- result %></div>
+					<% _.each(results.users.data, function(user, index){ 
+
+						if(index >=6) return
+
+					%>
+
+						<div class="user" address="<%- user.address %>">
+							<div class="userTable table">
+								<div class="iconWrapper">
+									<div class="icon">
+
+										<% 
+
+											var src = user.i  
+											
+										%>
+
+										<div class="usericon" image="<%-src || ''%>">
+
+											<% if(!src) {%>
+
+												<svg width="30" height="30" data-jdenticon-value="<%-user.address%>"></svg>
+
+											<% } %>
+										</div>
+									</div>
+								</div>
+
+								<div class="label">
+									<%- decodeURIComponent(user.name || user.address) %>
+								</div>
+							</div>
+						</div>
+						
+					<% }) %>
+
 				</div>
-				
-			<% }) %>
 
+			<% } %> 
+
+			<% if(results.fastsearch && results.fastsearch.length) {%>
+
+				<div class="fastsearch">
+
+					<% _.each(results.fastsearch, function(result, index){ %>
+
+						<div class="result" result="<%- value %><%- result %>">
+							<div class="name"><b><%- value %></b><%- result %></div>
+						</div>
+						
+					<% }) %>
+
+				</div>
+
+			<% } %> 
 		</div>
 
 	<% } %> 

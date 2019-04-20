@@ -941,6 +941,11 @@
 
 			.posttable{
 				>div{
+					&.postCellWrapper{
+						.postaction{
+							text-align: center;
+						}
+					}
 				}
 			}
 		}
@@ -959,5 +964,40 @@
 				
 			}
 		}
+
+		.edit,
+		.answer,
+		.post{
+
+			&.active{
+
+				height: 70px;
+
+				.postbody{
+				
+					padding-left : @rhythm;
+					background: #fff;
+					position : fixed;
+					left: 0;
+					right: 0;
+					top: 0;
+					z-index: 1000;
+					
+
+					.posttable{
+						>div{
+							&.lcpp{
+								padding-left : 0;
+							}
+							&.postCellWrapper{
+								padding-left : 0;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		
 	}
 }

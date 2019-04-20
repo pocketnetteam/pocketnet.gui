@@ -1564,7 +1564,10 @@ Platform = function(app){
 
 
 				if (e.notifications.length && e.block > 25000 && this.inited == true){
-					localStorage[self.sdk.address.pnet().address + 'notificationsv11'] = JSON.stringify(this.export())
+
+					e.notifications = firstEls(e.notifications, 100)
+
+					localStorage[self.sdk.address.pnet().address + 'notificationsv11'] = JSON.stringify(e)
 				}
 				
 				
@@ -1895,7 +1898,6 @@ Platform = function(app){
 
 									self.sdk.usersl.storage[data.address] = u;
 
-									console.log("USER", u)
 
 								})
 
@@ -3189,46 +3191,53 @@ Platform = function(app){
 				fixedBlock || (fixedBlock = self.currentBlock);
 
 				type || (type = 'fs')
-				console.log(encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString())
-
+				
 				s.preview(fixedBlock, type, start, count)
 
-				self.app.ajax.rpc({
-					method : 'search',
-					parameters : [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()],
-					success : function(d){
+				value = value.replace(/[^a-zA-Z\# ]+/g, '')
 
+				if(value.length){
+					self.app.ajax.rpc({
+						method : 'search',
+						parameters : [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()],
+						success : function(d){
 
-						if (type != 'fs'){
+							if (type != 'fs'){
 
-							if(type == 'all'){
-								_.each(d, function(d, k){
-									s.add(fixedBlock, k, d, start, count)
-								})
-							}
-							else
-							{
+								if(type == 'all'){
+									_.each(d, function(d, k){
+										s.add(fixedBlock, k, d, start, count)
+									})
+								}
+								else
+								{
+									d = d[type] || {
+										data : []
+									}
 
-								d = d[type] || {
-									data : []
+									s.add(fixedBlock, type, d, start, count)
 								}
 
-								s.add(fixedBlock, type, d, start, count)
 							}
 
+							if (clbk)
+								clbk(d, fixedBlock)
+						},
+						fail : function(){
+							if (clbk){
+						    	clbk({})
+						    }
 						}
+					})
+				}
+				else
+				{
+					if (clbk){
+				    	clbk({})
+				    }
+				}
 
-						
-
-						if (clbk)
-							clbk(d, fixedBlock)
-					},
-					fail : function(){
-						if (clbk){
-					    	clbk({})
-					    }
-					}
-				})
+				
 
 			}
 		},
@@ -3547,8 +3556,6 @@ Platform = function(app){
 						parameters : [],
 						success : function(d){
 
-							console.log("getnodeinfo", d)
-
 							var t = deep(d, 'time') || 0
 							self.currentBlock = deep(d, 'lastblock.height') || 0
 							self.timeDifference = 0;
@@ -3556,8 +3563,6 @@ Platform = function(app){
 							if (t){
 								self.timeDifference = t - Math.floor((new Date().getTime()) / 1000)
 							}
-
-							console.log('self.currentBlock', self.currentBlock, t)
 
 							if (clbk)
 								clbk()
@@ -3734,6 +3739,7 @@ Platform = function(app){
 					var users = [];
 
 					_.each(shares || [], function(s){
+
 						users.push(s.address) 
 
 						var cuser = deep(s, 'lastComment.address')
@@ -3877,6 +3883,48 @@ Platform = function(app){
 					
 				},	
 
+				transform : function(d, state){
+					var storage = this.storage;
+
+						storage.trx || (storage.trx = {})
+
+					var temp = self.sdk.node.transactions.temp;
+
+					d = _.filter(d || [], function(s){
+						if(s.address) return true
+					})
+
+					var shares = _.map(d || [], function(share){
+
+						var s = new pShare();
+
+							s._import(share);
+
+							s.txid = share.txid;
+
+							s.time = new Date();
+
+							s.address = share.address
+
+							s.time.setTime(share.time * 1000);
+
+							s.score = share.scoreSum;
+							s.scnt = share.scoreCnt;
+
+							if(state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
+
+
+						storage.trx[s.txid] = s;
+
+						return s
+
+					})
+
+					self.sdk.node.shares.tempLikes(shares)
+
+					return shares
+				},
+
 				get : function(parameters, clbk, method){
 
 					method || (method = 'getrawtransactionwithmessage')
@@ -3895,37 +3943,7 @@ Platform = function(app){
 							parameters : parameters || [],
 							success : function(d){
 
-								d = _.filter(d || [], function(s){
-									if(s.address) return true
-								})
-
-								var shares = _.map(d || [], function(share){
-
-									var s = new pShare();
-
-										s._import(share);
-
-										s.txid = share.txid;
-
-										s.time = new Date();
-
-										s.address = share.address
-
-										s.time.setTime(share.time * 1000);
-
-										s.score = share.scoreSum;
-										s.scnt = share.scoreCnt;
-
-										if(state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
-
-
-									storage.trx[s.txid] = s;
-
-									return s
-
-								})
-
-								self.sdk.node.shares.tempLikes(shares)
+								var shares = self.sdk.node.shares.transform(d, state)
 
 								if (clbk)
 									clbk(shares)
@@ -4203,7 +4221,7 @@ Platform = function(app){
 						txid : tx.txid,
 						vout : vout.n,
 						address : address,
-						confirmations : tx.confirmations,
+						confirmations : tx.confirmations || 0,
 						coinbase : coinbase || tx.coinstake,
 						amount : vout.value,
 						scriptPubKey : vout.scriptPubKey.hex,
@@ -4251,9 +4269,9 @@ Platform = function(app){
 				waitSpend : function(tx){
 
 
-					if(tx.confirmations < 10 && tx.pockettx){
+					if(tx.confirmations <= 11 && tx.pockettx){
 
-						return 10 - tx.confirmations
+						return 11 - tx.confirmations
 
 					}
 
@@ -6475,8 +6493,6 @@ Platform = function(app){
 
 							platform.sdk.users.getone(data.address || '', function(){
 
-								console.log('platform.sdk.usersl.storage[data.address]', platform.sdk.usersl.storage[data.address])
-
 								if (data.address){
 									data.user = platform.sdk.usersl.storage[data.address] || {
 										address : data.address
@@ -6600,7 +6616,7 @@ Platform = function(app){
 					_.each(s.unspent, function(unspents, address){
 						_.each(unspents, function(txu){
 
-							txu.confirmations = txu.confirmations + dif
+							txu.confirmations = (txu.confirmations || 0) + (dif || 0)
 
 						})
 					})
@@ -6646,6 +6662,8 @@ Platform = function(app){
 					
 					_.each(s.unspent, function(unspents, address){
 						_.each(unspents, function(txu){
+
+							txu.confirmations || (txu.confirmations = 0)
 
 							txu.confirmations++
 

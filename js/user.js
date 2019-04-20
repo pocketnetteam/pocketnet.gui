@@ -180,8 +180,6 @@ User = function(app, p) {
 
 				if(state){
 
-					console.log('signin')
-
 					localStorage['waslogged'] = true
 
 					localStorage['popupsignup'] = 'showed'
@@ -196,13 +194,10 @@ User = function(app, p) {
 			})
 		}
 
-		console.log('self.stay', self.stay)
-
 		if (self.stay){
 
 			app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
 
-				console.log('mnemonic', enc)
 
 				localStorage['mnemonic'] = enc
 			})
@@ -252,8 +247,6 @@ User = function(app, p) {
 
 		if (tokenDialog)
 			tokenDialog.destroy();
-
-		console.log("signout")
 
 		localStorage['mnemonic'] = ''
 		//localStorage['stay'] = ''
@@ -402,8 +395,6 @@ User = function(app, p) {
 
 	self.setKeysPairFromPrivate = function(private, clbk){
 		var keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
-
-		console.log('keyPair', keyPair)
 		
 		self.setKeysPair(keyPair, function(){
 			if (clbk)

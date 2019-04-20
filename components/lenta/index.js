@@ -1292,6 +1292,8 @@ var lenta = (function(){
 
 				if(initedcommentes[txid]) return;
 
+				if(!el.c) return
+
 				var _el = el.c.find('#' + txid + " .commentsWrapper");
 
 				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
@@ -1466,12 +1468,22 @@ var lenta = (function(){
 
 					renders.stars(share)
 
-					if(!share.temp)
-
+					if(!share.temp){
 						renders.comments(share.txid, false, false, true)
+					}
+
+						
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
+
 						renders.urlContent(share, function(){
+
+							if(essenseData.searchValue){
+
+								p.el.find('.canmark').mark(essenseData.searchValue);
+
+							}
+
 							actions.initVideo(p.el, share)
 
 							shareInitingMap[share.txid] = false;					
@@ -1550,6 +1562,8 @@ var lenta = (function(){
 
 					all : {
 						success : function(){
+							
+
 							clbk()
 						}
 					}
@@ -1564,7 +1578,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author || recommended || essenseData.txids){
+				if (essenseData.author || recommended || essenseData.txids || essenseData.search){
 					tpl = 'shares'
 				}
 
@@ -1971,6 +1985,52 @@ var lenta = (function(){
 					clbk([])
 				}
 			},
+
+			sstuff : function(shares, error, pr, clbk){
+
+				var author = essenseData.author;
+
+				self.app.platform.sdk.node.shares.users(shares, function(){
+
+					countshares = countshares + shares.length
+
+					loading = false;
+
+					if (!el.c)
+						return
+
+
+					if(!shares || !shares.length || shares.length < pr.count){							
+
+						if(!beginmaterial && !countshares){
+							el.c.addClass("sharesZero")
+						}
+						else
+						{
+							if (shares.length < pr.count && (recommended ||author || essenseData.search)){
+
+
+								setTimeout(function(){
+									el.c.addClass("sharesEnded")
+								}, 1000)
+								
+							}
+						}
+
+						////// SHIT
+						if(shares.length < pr.count && (recommended || author  || essenseData.search))
+
+							ended = true
+					}
+
+					el.loader.fadeOut()
+
+					if (clbk)
+						clbk(shares, error)
+
+				})	
+			},
+
 			shares : function(clbk, cache){
 
 				if (loading || ended) return
@@ -1981,87 +2041,65 @@ var lenta = (function(){
 
 				loading = true;
 
-				load.begin(function(bshares){
+				if (essenseData.loader){
+					essenseData.loader(function(shares, error, pr){
+						load.sstuff(shares, error, pr, clbk)
+					})
+				}
 
-					var author = essenseData.author;
+				else
+				{
+					load.begin(function(bshares){
 
-					var loader = 'common';
+						var author = essenseData.author;
 
-					if (recommended){
+						var loader = 'common';
 
-						if(recommended == 'recommended'){
-							loader = 'recommended'
+						if (recommended){
+
+							if(recommended == 'recommended'){
+								loader = 'recommended'
+							}
+							else
+							{
+								loader = 'common'
+								author = '1';
+							}						
 						}
-						else
-						{
-							loader = 'common'
-							author = '1';
-						}						
-					}
 
-					if(essenseData.txids){
-						loader = 'txids'
-
-					}
-
-
-					self.app.platform.sdk.node.shares[loader]({
-
-						author : author,
-						begin : beginmaterial || '',
-						txids : essenseData.txids
-
-					}, function(shares, error, pr){
-
-						_.each(bshares, function(bs){
-							if(bs)
-
-								shares.unshift(bs)
-						})
-
-						if (essenseData.filter) {
-
-							shares = _.filter(shares, essenseData.filter)
+						if(essenseData.txids){
+							loader = 'txids'
 
 						}
 
-						self.app.platform.sdk.node.shares.users(shares, function(){
+						self.app.platform.sdk.node.shares[loader]({
 
-							countshares = countshares + shares.length
+							author : author,
+							begin : beginmaterial || '',
+							txids : essenseData.txids
 
-							loading = false;
+						}, function(shares, error, pr){
 
-							if (!el.c)
-								return
+							_.each(bshares, function(bs){
+								if(bs)
 
+									shares.unshift(bs)
+							})
 
-							if(!shares || !shares.length || shares.length < pr.count){							
+							if (essenseData.filter) {
 
-								if(!beginmaterial && !countshares){
-									el.c.addClass("sharesZero")
-								}
-								else
-								{
-									if(shares.length < pr.count && (recommended ||author))
-									el.c.addClass("sharesEnded")
-								}
+								shares = _.filter(shares, essenseData.filter)
 
-								////// SHIT
-								if(shares.length < pr.count && (recommended || author))
-
-									ended = true
 							}
 
-							el.loader.fadeOut()
+							load.sstuff(shares, error, pr, clbk)				
 
-							if (clbk)
-								clbk(shares, error)
+						}, cache)
 
-						})					
+					})
+				}
 
-					}, cache)
 
-				})
 
 				
 			},
@@ -2187,7 +2225,7 @@ var lenta = (function(){
 			
 
 			var shownewmaterials = function(c){
-				if(!beginmaterial && recommended != 'recommended' && !essenseData.author){
+				if(!beginmaterial && recommended != 'recommended' && !essenseData.author && !essenseData.search){
 
 					var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
 
@@ -2429,8 +2467,6 @@ var lenta = (function(){
 					}
 
 				}
-
-
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -2452,35 +2488,15 @@ var lenta = (function(){
 							name : 'url'
 						}, function(){
 
-							/*self.loadTemplate({
-								name : 'comments',
+							self.loadTemplate({
+								name : 'stars'
 							}, function(){
 
-								self.loadTemplate({
-									name : 'leavecomment',
-								}, function(){
+								clbk(data);
 
-									self.loadTemplate({
-										name : 'commentslist',
-									}, function(){*/
-
-										self.loadTemplate({
-											name : 'stars'
-										}, function(){
-
-											clbk(data);
-
-										})
-
-									/*})
-
-								})
-
-							})*/
+							})
 
 						})
-
-						
 
 					})
 				})

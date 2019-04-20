@@ -2039,6 +2039,24 @@
 
 	}
 
+	firstEls = function(array, l){
+		var length = array.length
+
+			l = Math.min(l, length);
+
+		if(!l){
+			return [];
+		}
+
+		else
+		{
+			return _.filter(array, function(e, i){
+				if(i < l) return e;
+			})
+		}
+
+	}
+
 	getRandomValues = function(arr) {
 
         for (var i = 0; i < arr.length; i++) {
@@ -6944,6 +6962,10 @@
 			search : function(el){
 				var value = el.val();
 
+				currentFastId = 0;
+
+				bsActive = false;
+
 				helpers.closeResults();
 
 				if (p.events.search && value){
@@ -7038,7 +7060,7 @@
 					}
 
 					if (p.events.clear)
-						p.events.clear();
+						p.events.clear(true);
 				}
 			}
 		}
@@ -8147,6 +8169,7 @@
 			return 'http://i.vimeocdn.com/video/'+v.id+'_320.jpg'
 		}
 	}
+
 
 	hashFnv32a = function(str, asString, seed) {
 	    /*jshint bitwise:false */

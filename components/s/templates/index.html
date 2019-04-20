@@ -1,8 +1,8 @@
 <div id="<%-module.map.id%>">
-	<div class="work">
+	
 
-		<% if(result.users.data.length) {%> 
-
+		<% if(deep(result, 'users.data.length')) {%> 
+		<div class="work">
 			<div class="section users" view="list">
 				<div class="sectionname">
 					<div class="n">
@@ -10,7 +10,8 @@
 					</div>
 
 					<div class="showmore">
-						<span>Show More</span>
+						<span class="showmorelabel">Show More (<%-result.users.count%>)</span>
+						<span class="hidelabel">Hide</span>
 					</div>
 				</div>
 				<div class="sectioncnt">
@@ -35,29 +36,63 @@
 							<i class="fas fa-angle-right"></i>
 						</div>
 
+						<div class="nextpage">
+							<button>Next Results</button>
+						</div>
+
 					</div>
 
 				</div>
 
 				
 			</div>
+		</div>
 
 		<% } %>
 
-		<% if(result.posts.data.length) {%> 
+		<% if(deep(result, 'posts.data.length')) {%> 
+			<div class="fposts">
+				<div class="work ">
+					<div class="section posts">
+						<div class="sectionname">
+							<div class="n">
+								<span>Posts/</span>
+							</div>
+							<div class="showmore">
+								<span class="showmorelabel"><%-result.posts.count%></span>
+							</div>
+						</div>
 
-			<div class="section posts">
-				<div class="sectionname">
-					<div class="n">
-						<span>Posts/</span>
+						<div class="sectioncnt">
+							<div class="lentasearch">
+							</div>
+						</div>
 					</div>
-				</div>
-
-				<div class="sectioncnt">
 				</div>
 			</div>
 		<% } %>
 
-	</div>
+		<% if(!deep(result, 'posts.data.length') && !deep(result, 'users.data.length')) {%>
+
+		<div class="work">
+			<div class="empty">
+
+				<% if(value) {%>
+
+					Search by "<%- value %>" hasn't any results
+
+				<% } %>
+
+				<% if(!value) {%>
+
+					The search phrase is empty
+
+				<% } %>
+			</div>
+		</div>
+
+		<% } %>
+
+
 	
 </div>

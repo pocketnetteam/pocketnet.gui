@@ -1,7 +1,24 @@
 @import "../../css/__cssvar";
 
 #s{
-	padding-top : 2 * @rhythm;
+
+	.fposts{
+		padding-top : 6 * @rhythm;
+		background: #394951;
+
+		.sectionname{
+			color : #fff;
+		}
+
+		
+	}
+
+	.empty{
+		font-size: 2em;
+		padding : 6 * @rhythm 0;
+		text-align: center;
+		font-weight: 100;
+	}
 
 	.section{
 		padding-bottom: 6 * @rhythm;
@@ -35,13 +52,17 @@
 		.showmore{
 			margin-top: 2 * @rhythm;
 
+			.hidelabel{
+				display: none;
+			}
+
 			span{
 				cursor: pointer;
 				color : @color-main;
 				.transition(0.3s);
 
 				&:hover{
-					color : @color-gray;
+					color : @color-contrast;
 				}
 			}
 			
@@ -66,6 +87,9 @@
 			.userslistwrapper{
 				overflow : hidden;
 				position: relative;
+				.nextpage{
+					display: none;
+				}
 				.arrow{
 					border-radius: 50%;
 					line-height: 32px;
@@ -80,6 +104,9 @@
 					top : 7px;
 					background: #fff;
 
+					.label{
+						display: none;
+					}
 
 					&:hover{
 						color : @color-main;
@@ -140,6 +167,8 @@
 					display: none;
 				}
 			}
+
+
 		}
 
 		&[view="full"]{
@@ -147,6 +176,7 @@
 			.tableview{
 				width: 100%;
 				display: table;
+				table-layout: fixed;
 
 				&.tcaption{
 					margin-bottom: 2 * @rhythm;
@@ -175,6 +205,13 @@
 						width: 170px;
 						text-align: center;
 					}
+
+					&.aboutWrapper{
+						white-space: normal;
+						span{
+							font-size: 0.9em;
+						}
+					}
 				}
 			}
 
@@ -183,13 +220,277 @@
 			}
 
 			.userslistwrapper{
+					
+				.nextpage{
+					display: none;
+					margin-top: 4 * @rhythm;
+					padding-left: 90px;
+
+					button{
+						width: 180px;
+					}
+
+					&.active{
+						display: block;
+					}
+
+				}
 				.arrow{
 					display: none;
 				}
 
 			}
+
+			.showmore{
+				margin-top: 2 * @rhythm;
+
+				.hidelabel{
+					display: inline;
+				}
+
+				.showmorelabel{
+					display: none;
+				}
+				
+	 		}
 		}
 
 		
 	}
+
+	.posts{
+
+		margin-top: 0;
+		
+		.lentasearch{
+			max-width: 960px;
+		}
+
+		.sectioncnt{
+			padding-left: 3.5 * @rhythm;
+		}
+	}
+
+	.work{
+		&.mwork{
+			padding : 0!important;
+		}
+
+		.work{
+			width: 100%!important;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+
+#s{
+
+	.fposts{
+		padding-top : 0;
+
+	}
+
+	.section{
+		padding-bottom: 2 * @rhythm;
+		padding-top: 2 * @rhythm;
+		margin-top: 0;
+
+		>div{
+			&.sectionname{
+				width: 100%;
+				float: none;
+				overflow: hidden;
+				padding : 0 @rhythm;
+				padding-bottom: 2 * @rhythm;
+
+				.n{
+					float: left;
+					width: 50%;
+					span{
+						font-size: 1.5em;
+					}
+				}
+
+				.showmore{
+					padding : @rhythm 0;
+					text-align: right;
+					font-size: 1em;
+					margin-top: 0;
+					float: left;
+					width: 50%;
+				}
+
+				
+			}
+			&.sectioncnt{
+				
+				margin-left: 0;
+			}
+		}
+
+		
+	}
+
+	.users{
+
+		.userslist{
+			white-space: nowrap;
+			overflow: hidden;
+			.transition(0.3s, margin);
+		}
+
+		/*&[view="list"]{
+			.tableview{
+				&.tcaption{
+					display: none;
+				}
+				
+			}
+			.userslistwrapper{
+				overflow : hidden;
+				position: relative;
+				.nextpage{
+					display: none;
+				}
+				.arrow{
+					border-radius: 50%;
+					line-height: 32px;
+					width: 33px;
+					height: 33px;
+					text-align: center;
+					font-size: 0.8em;
+					color : @color-gray-light;
+					.transition(0.3s);
+					cursor: pointer;
+					border : 1px solid transparent;
+					top : 7px;
+					background: #fff;
+
+					.label{
+						display: none;
+					}
+
+					&:hover{
+						color : @color-main;
+						border-color: @color-main;
+					}
+				}
+
+				.uleft{
+					position: absolute;
+					left: -60px;
+
+					&.active{
+						left: 0;
+					}
+				}
+
+				.uright{
+					position: absolute;
+					right: -60px;
+
+					&.active{
+						right: 0;
+					}
+				}
+
+			}
+
+			.user{
+				width: 120px;
+				float: left;
+
+				.usericon{
+					margin : 0 auto;
+					opacity: 0;
+					.transition(0.3s, opacity);
+					
+					&.active{
+						opacity: 1;
+					}
+				}
+
+				.icon{
+					padding-bottom: @rhythm;
+				}
+
+				.name{
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					text-align: center;
+					span{
+						font-size: 0.8em;
+					}
+				}
+
+				.postsCountWrapper,
+				.aboutWrapper{
+					display: none;
+				}
+			}
+
+
+		}*/
+
+		&[view="full"]{
+
+			.tableview{
+				width: 100%;
+				display: table;
+
+				&.tcaption{
+					margin-bottom: 2 * @rhythm;
+					span{
+						font-size : 0.8em;
+					}
+				}
+
+				>div{
+
+					&.pictureWrapper{
+						width: 80px;
+						padding-top : 0;
+					}
+
+					&.nameWrapper{
+
+						width: auto;
+					}
+
+					&.aboutWrapper{
+						display: none;
+					}
+					
+					&.postsCountWrapper{
+						width: 80px;
+						text-align: right;
+					}
+				}
+			}
+			.userslistwrapper{
+					
+				.nextpage{
+					padding-left: 0;
+					text-align: center;
+				}
+				
+			}
+
+		}
+
+		
+	}
+
+	.posts{
+
+		.sectioncnt{
+			padding-left: 0;
+		}
+	}
+
+	
+}	
+
 }

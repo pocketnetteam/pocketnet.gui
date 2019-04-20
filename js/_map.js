@@ -22,6 +22,8 @@ __map =  {
         "js/vendor/reconnectingwebsocket.js",
         "js/vendor/rtc/db.js",
         "js/vendor/xss.min.js",
+        "js/vendor/jquery.mark.js",
+        
 	],
 
 	__sources : [

@@ -125,10 +125,9 @@ var metadisplay = function(){ %>
 		<% if(c) {
 
 			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
-
 		%>
 			<div class="paddingWrapper">
-				<div class="sharecaption">
+				<div class="sharecaption canmark">
 					<div>
 						<%=emojione.toImage(nl2br(c))%>
 					</div>
@@ -165,7 +164,7 @@ var metadisplay = function(){ %>
 
 		%>
 			<div class="paddingWrapper">
-				<div class="message">
+				<div class="message canmark">
 
 					<%=emojione.toImage((clearScripts(((nm)))))%>
 
@@ -327,13 +326,15 @@ var metadisplay = function(){ %>
 						
 						<% if(share.tags && share.tags.length > 0) {%>
 
-							<div class="tags">
+							<div class="tags canmark">
 								<% _.each(share.tags, function(tag){ %>
 
 									<div class="tag">
-										<span>
-											#<%-tag%>
-										</span>
+										<a href="s?ss=tag:<%-tag%>">
+											<span>
+												#<%-tag%>
+											</span>
+										</a>
 									</div>
 
 								<% }) %>

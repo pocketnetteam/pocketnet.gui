@@ -95,6 +95,8 @@ var notifications = (function(){
 				
 				p.el = el.new;
 
+				if(!p.el) return
+
 				var time = self.app.platform.currentTime()
 				var timedif = 86400
 

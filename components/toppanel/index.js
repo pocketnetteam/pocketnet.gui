@@ -62,8 +62,6 @@ var toppanel = (function(){
 		var renders = {
 			menu : function(pathname){
 
-				console.log("CLBK", pathname)
-
 				var selector = actions.selector()
 
 				self.app.user.isState(function(state){

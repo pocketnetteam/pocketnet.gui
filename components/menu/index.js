@@ -337,6 +337,7 @@ var menu = (function(){
 					el.c.toggleClass('searchactive')
 
 					if (el.c.hasClass('searchactive')){
+
 						el.postssearch.find('input').focus();
 						el.postssearch.addClass('active')
 
@@ -348,6 +349,8 @@ var menu = (function(){
 					else
 					{
 						el.postssearch.removeClass('active')
+
+						el.postssearch.find('input').val('')
 					}
 
 					actions.elswidth()
@@ -356,6 +359,29 @@ var menu = (function(){
 			searchinit : {
 				init : function(_el){
 
+					var close = function(cl){
+
+						var pn = self.app.nav.current.href
+
+						if (pn != 's' || cl){
+							_el.find('input').val('')
+							
+							el.c.removeClass('searchactive')
+
+							clearex()
+						}
+
+						
+					}
+
+					var clearex = function(){
+						if(searchBlurTimer)
+						{
+							clearTimeout(searchBlurTimer)
+							searchBlurTimer = null;
+						}
+					}
+
 					search(el.postssearch, {
 						placeholder : 'SEARCH ON POCKETNET...',
 
@@ -363,9 +389,11 @@ var menu = (function(){
 
 							_el.find('input').on('blur', function(){
 
-								/*searchBlurTimer = slowMade(function(){
-									el.c.removeClass('searchactive')
-								}, searchBlurTimer, 10000)*/
+								searchBlurTimer = slowMade(function(){
+
+									close()
+
+								}, searchBlurTimer, 200)
 								
 							})
 
@@ -388,21 +416,45 @@ var menu = (function(){
 
 								self.app.platform.sdk.search.get(value, 'fs', null, null, null, function(r){
 
-									renders.results(r.fastsearch || [], value, function(tpl){
+									console.log("RESULTS", r)
+
+									renders.results(r || {}, value, function(tpl){
 
 										clbk(tpl, function(el, helpers){
 
+											bgImages(el)
+
 											el.find('.result').on('click', function(){
 
-												var r = $(this).attr('.result')
+												var r = $(this).attr('result')
+
+												_el.find('input').val(r)
 
 												self.nav.api.go({
-													href : 's?ss=' + r,
+													href : 's?ss=' + r.replace("#", 'tag:'),
 													history : true,
 													open : true
 												})
 
 												helpers.closeResults()
+
+												clearex()
+
+											})
+
+											el.find('.user').on('click', function(){
+
+												var r = $(this).attr('address')
+
+												self.nav.api.go({
+													href : 'author?address=' + r,
+													history : true,
+													open : true
+												})
+
+												helpers.closeResults()
+												close()
+												clearex()
 
 											})
 										})
@@ -416,15 +468,30 @@ var menu = (function(){
 							search : function(value, clbk, e, helpers){
 								
 								self.nav.api.go({
-									href : 's?ss=' + value,
+									href : 's?ss=' + value.replace("#", 'tag:'),
 									history : true,
 									open : true
 								})
 
 								helpers.closeResults()
 
+								clearex()
+
 								if (clbk)
 									clbk(true)
+								
+							},
+
+							clear : function(fs){
+
+								if(fs) return
+
+								_el.find('input').blur();
+
+								setTimeout(function(){
+									close(true)
+									clearex()
+								}, 100)
 								
 							}
 						}
@@ -756,7 +823,7 @@ var menu = (function(){
 
 					actions.elswidth()
 
-					el.postssearch.find('input').val(parameters().ss);
+					el.postssearch.find('input').val(parameters().ss.replace('tag:', "#"));
 
 				}
 				
@@ -823,6 +890,16 @@ var menu = (function(){
 
 				el = {};
 			},
+
+			closesearch : function(){
+				el.c.removeClass('searchactive')
+			},
+
+			showsearch : function(v){
+				el.c.addClass('searchactive')
+				
+				el.postssearch.find('input').val(v.replace('tag:', "#"));
+			},
 			
 			init : function(p){
 
@@ -870,6 +947,22 @@ var menu = (function(){
 
 		})
 
+	}
+
+	self.closesearch = function(){
+		_.each(essenses, function(essense){
+
+			essense.closesearch();
+
+		})
+	}
+
+	self.showsearch = function(v){
+		_.each(essenses, function(essense){
+
+			essense.showsearch(v);
+
+		})
 	}
 
 	return self;

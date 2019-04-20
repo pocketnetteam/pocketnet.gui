@@ -1291,7 +1291,7 @@ pShare = function(){
 			{
 
 				nm = filterXSS(nm, {
-
+					stripIgnoreTag : true,
 					whiteList: {
 						a: ["href", "title", "target"],
 						br : ["style"],
@@ -1316,7 +1316,7 @@ pShare = function(){
 						blockquote : [],
 						strong : [],
 						picture : ['img-type'],
-						source : ['srcset', 'type']
+						source : ['srcset', 'type'],
 
 					},
 

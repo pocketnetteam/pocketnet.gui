@@ -29,6 +29,10 @@ if(typeof _Electron != 'undefined' && _Electron){
 	jQueryBridget = require('jquery-bridget');
 	jQueryBridget( 'isotope', Isotope, $ );
 	jQueryBridget( 'textcomplete', jquerytextcomplete, $ );
+	//jQueryBridget( 'mark', Mark, $ );
+
+
+	Mark = require('./js/vendor/jquery.mark.js');
 
 	emojionearea = require('./js/vendor/emojionearea.js')
 	

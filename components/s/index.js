@@ -10,12 +10,18 @@ var s = (function(){
 
 		var el, value, result;
 
-		var userIndex = 0, maxCount = 10, count = maxCount, fixedBlock;
+		var userIndex = 0, maxCount = 10, count = maxCount, fixedBlock, lenta;
 
 		var usersView = 'list'
 
 		var actions = {
+			clickNext : function(){
+				userIndex = userIndex + count;
 
+				makenext('users', userIndex, 30)
+
+				actions.displayArrows()
+			},
 			clickArrow : function(a){
 				if(a == 'left'){
 					userIndex = userIndex - count;
@@ -46,10 +52,24 @@ var s = (function(){
 
 				if(userIndex + count < result.users.count){
 					actions.displayArrow('right', true)
+					actions.displayNext(true)
 				}
 				else
 				{
 					actions.displayArrow('right', false)
+
+					actions.displayNext(false)
+				}
+			},
+
+			displayNext : function(s){
+				if(s){
+					el.unext.addClass('active')
+				}
+
+				else
+				{
+					el.unext.removeClass('active')
 				}
 			},
 
@@ -110,7 +130,10 @@ var s = (function(){
 
 			changeUsersView : function(){
 				if  (usersView == 'list') usersView = 'full'
-				else usersView  = 'list'
+				else {
+					usersView  = 'list'
+					userIndex = 0
+				}
 
 				el.users.attr('view', usersView)
 
@@ -123,6 +146,10 @@ var s = (function(){
 				var a = $(this).attr('arrow');
 
 				actions.clickArrow(a)
+			},
+
+			clickNext : function(){
+				actions.clickNext()
 			}
 		}
 
@@ -146,7 +173,7 @@ var s = (function(){
 
 				}, function(p){
 
-					if (usersView = 'list'){
+					if (usersView == 'list'){
 						actions.applyCarousel()
 					}
 
@@ -154,10 +181,68 @@ var s = (function(){
 						clbk(p);
 				})
 
+			},
+
+			posts : function(){
+
+				var fp = false;
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'lenta',
+					el : el.lenta,
+					animation : false,
+
+					mid : 'search',
+
+					essenseData : {
+						search : true,
+
+						searchValue : value,
+
+						loader : function(clbk){
+
+							var _clbk = function(data){
+								var shares = self.app.platform.sdk.node.shares.transform(data) 
+
+								if (clbk)
+									clbk(shares, null, {
+										count : 10
+									})
+							}
+
+							if(!fp){
+								fp = true
+								_clbk(result.posts.data)
+							}
+
+							else
+							{
+								makenext('posts', result.posts.data.length, 10, function(data){
+									_clbk(data)
+								})
+							}
+
+							
+
+							
+						}
+					},
+					
+					clbk : function(e, p){
+					
+						lenta = p;
+				
+					}
+
+				})
+
 			}
 		}
 
-		var makenext = function(type, view, start, count, clbk){
+		var makenext = function(type, start, count, clbk){
+
 
 			var l = result[type].data.length;
 			var L = result[type].count
@@ -179,11 +264,19 @@ var s = (function(){
 
 			if(count <= 0) return
 
-			
-
 			load[type](function(data){
 
-				renders[type](data)
+				if(clbk)
+				{
+					clbk(data)
+				}
+
+				else
+				{
+					renders[type](data)
+				}
+
+				
 
 			}, start, count)	
 
@@ -196,7 +289,15 @@ var s = (function(){
 					clbk(r.data);
 
 				})
-			}
+			},
+
+			posts : function(clbk, start, count){
+				self.app.platform.sdk.search.get(value, 'posts', start, count, fixedBlock, function(r){
+
+					clbk(r.data);
+
+				})
+			},
 		}
 
 		var state = {
@@ -212,11 +313,20 @@ var s = (function(){
 			
 			el.ua.on('click', events.clickArrow)
 			el.showmore.on('click', actions.changeUsersView)
+
+			el.unext.on('click', events.clickNext)
 		}
 
 		var make = function(){
 
-			renders.users(result.users.data)
+			if(deep(result, 'users.data.length'))
+				renders.users(result.users.data)
+
+
+			if(deep(result, 'posts.data.length')){
+				renders.posts()
+			}
+			
 
 		}
 
@@ -227,7 +337,14 @@ var s = (function(){
 
 				var data = {};
 
-				value = parameters().ss || '';
+				lenta = null;
+
+				value = (parameters().ss || '').replace('tag:', "#");
+
+				var c = deep(self, 'app.modules.menu.module.showsearch')
+
+				if (c)
+					c(value)
 
 				self.app.platform.sdk.search.get(value, 'all', 0, maxCount, null, function(r, block){
 
@@ -245,7 +362,22 @@ var s = (function(){
 
 			},
 
-			destroy : function(){
+			destroy : function(nhref){
+
+
+				if (nhref != self.app.nav.current.href){
+					var c = deep(self, 'app.modules.menu.module.closesearch')
+					if (c)
+						c()
+				}
+
+				
+
+				if (lenta)
+					lenta.destroy()
+
+				lenta = null;
+
 				el = {};
 			},
 			
@@ -270,6 +402,10 @@ var s = (function(){
 				el.ua = el.c.find('.arrow')
 				el.showmore = el.c.find('.showmore')
 
+				el.unext = el.c.find('.nextpage')
+
+				el.lenta = el.c.find('.lentasearch')
+
 				initEvents();
 
 				make()
@@ -289,11 +425,11 @@ var s = (function(){
 
 	};
 
-	self.stop = function(){
+	self.stop = function(nhref){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			essense.destroy(nhref);
 
 		})
 

@@ -21,13 +21,42 @@
 		border : 0;
 		padding : 0;
 		left: 0;
-		padding-left: 80px;
+		
 
 		.results{
 			padding : 2 * @rhythm 0;
 		}
 
+		.user{
+			cursor: pointer;
+			.transition(0.3s);
+			
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.userTable{
+			>div{
+				vertical-align: middle;
+
+				&.iconWrapper{
+					width: 70px;
+				}
+			}
+		}
+
+		.fastsearch{
+			padding-left: 80px;
+		}
+
+		.users{
+			padding-left: 20px;
+		}
+
 		.result{
+			
+
 			padding : @rhythm;
 			cursor: pointer;
 			.transition(0.3s);
@@ -65,30 +94,30 @@
 					display: block;
 				}
 
-				&.walletsWrapper,
+				/*&.walletsWrapper,
 				&.notificationsWrapper,
 				&.saveCrossWrapper,
 				&.gethotpostsWrapper{
 					display: none;
-				}
+				}*/
 
-				&.sitenames{
+				/*&.sitenames{
 					.label{
 						display: none;
 					}
-				}
+				}*/
 
 				&.mdl{
 					display: none;
 				}
 
 				&.searchIcons{
-					
 
 					.icon{
 						i{
+							font-weight: 500;
 							&:before{
-								content : '\f138';
+								content : '\f057';
 							}
 						}
 					}
@@ -248,6 +277,11 @@
 						width: 100%;
 					}
 
+					.search {
+						max-width: 700px;
+						margin : 0 auto;
+					}
+
 					.searchInputIcon{
 						>div{
 							vertical-align: middle;
@@ -265,6 +299,10 @@
 						background: #F8F8F8;
 						height: 65px;
 						border : 0;
+
+						&:placeholder-shown{
+							text-align: center;
+						}
 					}
 
 					.searchIconLabel,
@@ -276,6 +314,17 @@
 
 					.searchIconLabel{
 						width: 80px;
+					}
+
+					.searchPanel{
+						width: 80px;
+						.searchPanelWrapper{
+							>div{
+								&[event=clear]{
+									display: none!important;
+								}
+							}
+						}
 					}
 				}
 			}
@@ -913,11 +962,24 @@
 #menu{
 	background: @color-contrast;
 
+	.searchFastResultWrapper{
+
+		.fastsearch{
+			padding-left: 40px;
+		}
+
+		.users{
+			padding-left: 0px;
+		}
+	}
+
+
+
 	.sections{
 		.items{
 			.item{
 
-				
+			
 				&.wallets{
 					.amount{
 						display: none;
@@ -929,6 +991,28 @@
 				}
 				
 			}
+
+			&.searchWrapper{
+				.postssearch{
+					.searchIconLabel{
+						width: 40px;
+					}
+
+					.searchPanel{
+						width: 40px;
+
+						.searchPanelWrapper{
+							>div{
+								&[event=clear]{
+									display: block!important;
+								}
+							}
+						}
+					}
+				}
+
+
+			}	
 
 			&.navWrapperItem{
 				display: none!important;

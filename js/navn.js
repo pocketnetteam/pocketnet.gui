@@ -206,8 +206,6 @@ Nav = function(app)
 
 			var deleted = [];
 
-			console.log('self.wnds', self.wnds)
-
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
 
@@ -291,7 +289,7 @@ Nav = function(app)
 
 					if (current.module && !p.inWnd){
 
-						var stop = current.module.stop();
+						var stop = current.module.stop(p.href);
 
 						if (stop && _.isObject(stop)){
 
@@ -947,8 +945,6 @@ Nav = function(app)
 
 			if (p.href == 'blank')
 				p.href  = 'index'
-
-			console.log("LOADDEFAULT", p.href, self.get.pathnameSearch())
 
 			self.api.load(p);
 		},
