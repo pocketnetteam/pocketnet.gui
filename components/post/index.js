@@ -832,7 +832,7 @@ var post = (function(){
 
 						if (temp){
 							share = new pShare();
-							share._import(temp);
+							share._import(temp, true);
 							share.temp = true;
 							share.address = self.app.platform.sdk.address.pnet().address
 						}

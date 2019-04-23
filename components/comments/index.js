@@ -728,8 +728,10 @@ var comments = (function(){
 			    })
 
 			    _p.el.find('.emojionearea-editor').on('blur', function(){
-			    	console.log("BLUR")
-			    	_p.el.removeClass('active')
+			    	setTimeout(function(){
+						_p.el.removeClass('active')
+					}, 150)
+			    	
 			    })
 
 			    actions.process(p.id || '0')	

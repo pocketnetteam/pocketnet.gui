@@ -313,7 +313,77 @@
 
               
 
-                case "chat" : 
+                case "leave" : 
+
+                    if(!user || !users[user.id] || !data.chatid) { 
+
+                        send.s({ 
+                            type: "chat", 
+                            success: false,
+                            error : "User doesn't exist" 
+                        }); 
+
+                    }
+
+                    else
+                    {
+
+                        var chat = chats[data.chatid];
+
+                        if (chat && chat.users.remove(user.id))
+                        {
+                            console.log("REMOVE USER IN CHAT", user.address, user.id)
+
+                            //online
+                            chat.addresses.remove(user.address) 
+
+                            send.ex(user.address, function(p){
+
+                                if(p.this){
+
+                                    return { 
+
+                                        type: "chat_leave", 
+                                        success: true,
+                                        chatid : data.chatid
+                                    }
+                                }
+
+                            })      
+
+                            send.exu(chat.users.get, function(p){
+
+                                if(!p.this && !p.direct){
+
+                                    return {
+                                        type: "chat_leave_user", 
+                                        success: true,
+                                        id : user.id,
+                                        chatid : data.chatid,
+                                        address : user.address
+                                    }
+
+                                }
+                                
+
+                            })                 
+
+                        }
+                        else
+                        {
+                            send.s({ 
+                                type: "chat_leave", 
+                                success: false,
+                                error : "User can't leave this chat" 
+                            });
+                        }
+
+                  
+                    }
+
+                    break; 
+                    
+                    case "chat" : 
 
                     if(!user || !users[user.id] || !data.chatid) { 
 
@@ -404,7 +474,6 @@
                     }
 
                     break; 
-              
                         
                 default: 
 

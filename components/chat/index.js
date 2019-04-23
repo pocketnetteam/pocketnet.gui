@@ -1167,9 +1167,13 @@ var chat = (function(){
 				
 
 
+				if (chat){
+					chat.rtc.leave()
 
+					chat = null;
+				}
 
-                chat = null;
+               
                 clearInterval(chatInterval);
 				lastUpdate = 0;
 

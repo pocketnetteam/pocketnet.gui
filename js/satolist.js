@@ -3727,7 +3727,7 @@ Platform = function(app){
 
 
 						share = new pShare();
-						share._import(temp);
+						share._import(temp, true);
 						share.temp = true;
 						share.address = self.app.platform.sdk.address.pnet().address
 					}
@@ -4129,7 +4129,7 @@ Platform = function(app){
 											_.each(temp.share, function(ps){
 
 												var s = new pShare();
-													s._import(ps);
+													s._import(ps, true);
 													s.temp = true;
 													s.address = ps.address
 
@@ -6214,7 +6214,7 @@ Platform = function(app){
 					if(type == 'share'){
 						if(c.id == '6768de97ad495c0110a9e09d43825ef24f1055449a5d368225ac102804397dc1_PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd') return true
 						
-						//if(c.id == 'bb4a3d19b26aa09c4079efc3c93da092054c2dd2d0153cd01ef4b467eb71417f_PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM') return true
+						//if(c.id == '9560e4555f644956ed40a420f0a327e9b18fb450508108a5a806e74ebe9b011c_PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM') return true
 					
 							return
 					}
@@ -6453,7 +6453,7 @@ Platform = function(app){
 							if (temp.type == 'share'){
 
 								var share = new pShare();
-									share._import(data.temp);
+									share._import(data.temp, true);
 									share.address = platform.sdk.address.pnet().address
 
 									share.scnt = '0'
@@ -9831,9 +9831,28 @@ Platform = function(app){
 			users : {}
 		}
 
+		self.sdk.articles.storage = []
+
 		self.sdk.notifications.clbks.seen = {};
 		self.sdk.notifications.clbks.added = {};
 		self.sdk.notifications.inited = false;
+
+		self.sdk.ustate.clbks = {};
+
+		self.sdk.node.storage = {
+			balance : {
+
+			}
+		}
+
+		app.platform.sdk.node.shares.storage = {
+			trx : {}
+		}
+
+		app.platform.sdk.node.transactions.storage = {}
+		app.platform.sdk.node.transactions.temp = {}
+		
+		
 
 		if(electron){
 			electron.ipcRenderer.send('update-badge', null);
@@ -9843,12 +9862,27 @@ Platform = function(app){
 
 		if (self.ws)
 			self.ws.destroy()
+
+		if (self.clientrtctemp){
+			self.clientrtctemp.destroy()
+		}
+	}
+
+	self.restart = function(clbk){
+		self.clear();
+
+		app.user.isState(function(state){
+
+			self.prepare(clbk, state)
+
+		})
 	}
 
 	self.update = function(clbk){
 		var methods = [
-			
-		]
+			self.sdk.ustate.me,
+			self.sdk.node.transactions.checkTemps	
+		]	
 
 		var progress = 10;
 
@@ -9978,7 +10012,6 @@ Platform = function(app){
 					self.sdk.user.subscribeRef,
 					self.ws.init,
 					self.sdk.tempmessenger.init,
-
 					self.sdk.exchanges.load
 
 					], function(){

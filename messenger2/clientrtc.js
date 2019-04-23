@@ -369,8 +369,13 @@ var platformRTC = function(p){
 
 		self.connect = function(clbk){
 
-
 			events.connect(clbk)
+
+		}
+
+		self.leave = function(clbk){
+
+			events.leave(clbk)
 
 		}
 
@@ -512,12 +517,18 @@ var platformRTC = function(p){
 
 						self.close();	
 
-						initOnlineListener()	
+						initOnlineListener()
+						
+						console.log("OFFLINE")
 					}
 					else
 					{
+
+						console.log("RECONNECT")
 						
 						self.psinit(function(){
+
+							console.log("RECONNECT TO CHATS")
 
 							_.each(self.chats, function(ch){
 								ch.remote.lastmessages()
@@ -595,6 +606,17 @@ var platformRTC = function(p){
 						    });
 
 						    self.addclbk('chat', makeid(true), clbk)
+						},
+
+						leave : function(clbk){
+							send({ 
+
+						        type: "leave", 
+						        chatid: id
+
+						    });
+
+						    self.addclbk('leave', makeid(true), clbk)
 						}
 					})
 				}
@@ -767,6 +789,9 @@ var platformRTC = function(p){
 
 				console.log("OPENED")
 
+				if (clbk)
+					clbk()
+
 			}
 
 			/*connection.onclose = function(){
@@ -804,6 +829,8 @@ var platformRTC = function(p){
 
 		self.api = {
 			login : function(clbk){
+
+				console.log("RPCLOGIN", user)
 
 				if (user){
 
@@ -853,25 +880,24 @@ var platformRTC = function(p){
 		self.destroy = function(){
 
 			if(!self.close())
-
+			{
 				_.each(self.chats || {}, function(c){
 					c.close()
 				})
+
+				self.chats = {};
+			}
 		}
 
 		self.psinit = function(clbk){
-			init();
+			init(function(){
 
-			self.api.login(function(){
+				self.api.login(function(){
+					if (clbk)
+						clbk()
+				})
 
-			})
-
-			setTimeout(function(){
-				if (clbk)
-					clbk()
-			}, 3000)
-
-			
+			});
 		}
 
 		self.init = function(clbk){

@@ -1019,7 +1019,34 @@ UserInfo = function(){
 }
 
 
-//////////////////////////////////
+var test = new UserInfo()
+test.import({
+	"txid":"5741a02961547b401f9f9be17bd2c220bc6a98b4ff4d7909543e44adf3cb57e9",
+	"block":63667,
+	"time":1553571415,
+	"address":"PLNAsiX7JiE2iSR5CmmLdc8s9SYZCLH1P9",
+	"name":"pedro420",
+	"birthday":0,
+	"gender":0,
+	"regdate":1553198159,
+	"image": "https://i.imgur.com/ejgmvLz.jpg",
+	"about":"Ghost in the machine",
+	"language":"en",
+	"site":"",
+	"pubkey":"",
+	"addresses":"[]",
+	"ref":"",
+	"id":227
+})
+
+var data = Buffer.from(bitcoin.crypto.hash256(test.serialize()), 'utf8');
+
+var opreturnData = [Buffer.from(test.type, 'utf8'), data];
+
+if (test.opreturn){
+	opreturnData.push(Buffer.from(test.opreturn()))
+}
+
 
 
 
@@ -1177,7 +1204,7 @@ pShare = function(){
 
 		}
 		else
-		{
+		{	
 			self.url = decodeURIComponent(v.u || v.url || '');
 			self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
 			self.caption = decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " "))

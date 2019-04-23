@@ -142,6 +142,42 @@ var article = (function(){
 						class : 'zindex',
 
 						success : function(){
+
+							text = filterXSS(text, {
+								stripIgnoreTag : true,
+								whiteList: {
+									a: ["href", "title", "target"],
+									br : ["style"],
+									b : ["style"],
+									span : ["style"],
+									figure : ["style"],
+									figcaption : ["style", "class"],
+									i : ["style"],
+									img : ["src", "width", "height"],
+									div : ["class", "data-plyr-provider", "data-plyr-embed-id"],
+									p : [],
+									ul : [],
+									ol : [],
+									li : [],
+									h2 : [],
+									h1 : [],
+									h3 : [],
+									h4 : [],
+									h5 : [],
+									em : [],
+									u : [],
+									blockquote : [],
+									strong : [],
+									picture : ['img-type'],
+									source : ['srcset', 'type'],
+								}
+							});
+
+							console.log("TESTTESTSTETS")
+
+							share.message.set(text)
+
+
 							actions.trx(share)
 						}
 					})
