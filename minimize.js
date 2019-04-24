@@ -127,7 +127,7 @@ fs.exists(mapJs2Path, function (exists) {
 			  				}
 			  				else
 			  				{
-			  					console.log("notexist (JS) " + module.uri + " in " +  item + innerPath)
+			  					console.log("notexist (JS) " + module.uri + " in " +  innerPath)
 			  				}
 			  			})
 
@@ -139,7 +139,7 @@ fs.exists(mapJs2Path, function (exists) {
 							fs.writeFile(modules.path, modules.data, function(err) {
 
 							    if(err) {
-							    	console.log("Access not permitted", item + innerPath)
+							    	console.log("Access not permitted", innerPath)
 							    	return
 							    }
 

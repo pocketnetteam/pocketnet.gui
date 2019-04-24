@@ -24,6 +24,25 @@ deep = function(obj, key){
 	}
 }
 
+retry = function(_function, clbk, time, notClear){
+	if(!time) time = 20;
+
+	var interval = setInterval(function(){
+
+		if(_function()){
+
+			if(!notClear)
+				clearInterval(interval);
+
+			if(clbk) clbk();
+
+		}
+		
+	}, time);
+
+	return interval;
+}
+
 timestamp = function(){
 	return new Date().getTime();
 }
@@ -154,7 +173,6 @@ trim = function(s)
 
 ltrim = function(s)
 {
-	console.log('trim', s)
   return (s || "").replace(/^\s+/, ''); 
 }
 

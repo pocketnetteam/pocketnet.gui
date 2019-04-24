@@ -879,14 +879,15 @@ var platformRTC = function(p){
 
 		self.destroy = function(){
 
-			if(!self.close())
-			{
-				_.each(self.chats || {}, function(c){
-					c.close()
-				})
+		
+			_.each(self.chats || {}, function(c){
+				c.close()
+			})
 
-				self.chats = {};
-			}
+			self.chats = {};
+		
+
+			self.close()
 		}
 
 		self.psinit = function(clbk){

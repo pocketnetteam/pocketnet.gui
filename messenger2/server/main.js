@@ -125,20 +125,21 @@
                 
                 case "login": 
 
-                    if(!data.id || !data.address || users[data.id]) { 
-
-                        //data.id = address * fingerprint
-
-
-                        console.log(data.id, data.address, users[data.id])
+                    if(!data.id || !data.address) { 
 
                         send.s({ 
                             type: "login", 
                             success: false,
-                            error : 'User exist' 
+                            error : 'No data' 
                         }); 
 
                     } else { 
+
+                        if (users[data.id]){
+                            users[data.id].connection.close()
+                        }
+
+                        
                         //save user connection on the server 
                         user = users[data.id] = new User({
 
@@ -154,8 +155,6 @@
 
                         user.usersListIndex = usersList.push(user.id) - 1
 
-                        console.log('user.usersListIndex', user.usersListIndex, user.id)
-
                         addresses[data.address] || (addresses[data.address] = new Address({
                             address : data.address
                         }))
@@ -168,6 +167,9 @@
                             type: "login", 
                             success: true 
                         }); 
+                    
+                    
+                        
                     } 
                         
                     break; 
@@ -275,8 +277,6 @@
                                 return address;
                             })
 
-                            console.log("ADDRESSES", _addresses)
-
                             var r = send.ex(_addresses, function(p){
 
                                 if(!p.this && !p.direct){
@@ -302,7 +302,6 @@
 
                             })
 
-                            console.log(r);
                         }
 
                         
@@ -332,7 +331,7 @@
 
                         if (chat && chat.users.remove(user.id))
                         {
-                            console.log("REMOVE USER IN CHAT", user.address, user.id)
+                            console.log("REMOVE USER IN CHAT", user.address)
 
                             //online
                             chat.addresses.remove(user.address) 
@@ -381,9 +380,9 @@
                   
                     }
 
-                    break; 
+                break; 
                     
-                    case "chat" : 
+                case "chat" : 
 
                     if(!user || !users[user.id] || !data.chatid) { 
 
@@ -397,7 +396,7 @@
 
                     else
                     {
-
+                        console.log("chat adding")
                         chats[data.chatid] || (chats[data.chatid] = new Chat({
                             addresses : data.addresses,
                             ini : user.address,
@@ -406,9 +405,11 @@
 
                         var chat = chats[data.chatid];
 
-                        if (chat.users.add(user))
+                        var added = chat.users.add(user);
+
+                        if (added)
                         {
-                            console.log("ADD USER IN CHAT", user.address, user.id)
+                            console.log("ADD USER IN CHAT", user.address)
 
                             //forever
                             addresses[user.address].chats.add(chat)
@@ -470,10 +471,30 @@
                             });
                         }
 
-                  
+                
                     }
 
-                    break; 
+                break; 
+
+                case "close" : 
+
+                    if(connection.close()){
+                        send.s({ 
+                            type: "close", 
+                            success: true
+                        }); 
+                    }
+                    else{
+                        send.s({ 
+                            type: "close", 
+                            success: false,
+                            error : "Can't close connection" 
+                        }); 
+                    }
+
+                    
+
+                break; 
                         
                 default: 
 
@@ -485,23 +506,20 @@
                 break; 
             }  
         });  
-        
-        //when user exits, for example closes a browser window 
-        //this may help if we are still in "offer","answer" or "candidate" state 
-        connection.on("close", function() { 
-        
-            if(connection.id) { 
 
+        connection.close = function(){
+
+            if(user && user.id) { 
+
+                console.log("CLOSE", user.address)
 
                 var address = addresses[user.address]
 
-                    address.devices.remove(connection.id)
+                    address.devices.remove(user.id)
 
                 usersList.splice(user.usersListIndex, 1) 
 
-                delete users[connection.id];
-                delete user;
-
+                delete users[user.id];
                 delete devices[user.device][user.id]
 
                 if(_.isEmpty(devices[user.device])) delete devices[user.device]
@@ -514,12 +532,31 @@
                         delete conn.others[connection.id]
 
                         send.to(conn, { 
-                            type: "leave" 
+                            type: "close" 
                         });
                     }
                 })
-            } 
+
+                user = null;
+
+                return true
+            }
+
+            return false
+        }
+        
+        //when user exits, for example closes a browser window 
+        //this may help if we are still in "offer","answer" or "candidate" state 
+        connection.on("close", function() { 
+            
+            connection.close()
+             
         });  
+
+        connection.on("error", function() {
+
+            console.log("ERROR")
+        })
 
         var send = {
 

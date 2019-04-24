@@ -142,8 +142,6 @@ var handles = {
 				var r = connect.rtc.relay;
 
 
-				console.log('connect.rtc.relay', connect.rtc.relay)
-
 				var result = {
 					direct : [],
 					relay : []
@@ -193,7 +191,6 @@ var handles = {
 
 										var userid = _.toArray(connect.rtc.devices[device])[0]
 
-										console.log("RELAYUID", userid)
 
 										online[device] = {
 											number : number,
@@ -242,8 +239,6 @@ var handles = {
 					var chat = connect.rtc.chats[connect.parameters.id];
 
 
-					console.log(chat)
-
 					if (chat && !chat.messages.storage.length && (connect.parameters.address == 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM' ||
 
 								connect.parameters.address == 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS')
@@ -260,9 +255,6 @@ var handles = {
 						}
 
 						chat.messages.adds(ms)
-
-						console.log(chat.messages.storage)
-						console.log(chat.messages.storage.length)
 
 						response(null, true, connect)
 					}
