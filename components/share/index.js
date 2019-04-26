@@ -1164,7 +1164,7 @@ var share = (function(){
 						});
 
 
-						if(typeof _Electron != 'undefined'){
+						/*if(typeof _Electron != 'undefined'){
 							const electronSpellchecker = require('electron-spellchecker');
 
 							// Retrieve required properties
@@ -1186,7 +1186,7 @@ var share = (function(){
 							var contextMenuListener = new ContextMenuListener((info) => {
 								contextMenuBuilder.showPopupMenu(info);
 							});
-						}
+						}*/
 
 						
 

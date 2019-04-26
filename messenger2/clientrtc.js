@@ -822,7 +822,8 @@ var platformRTC = function(p){
 			clbks[event][id] = function(d1, d2){
 				delete clbks[event][id]
 
-		    	clbk(d1, d2)
+				if (clbk && typeof clbk == 'function')
+		    	 	clbk(d1, d2)
 		    }
 
 		}

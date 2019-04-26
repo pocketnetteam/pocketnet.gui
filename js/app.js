@@ -36,6 +36,29 @@ if(typeof _Electron != 'undefined' && _Electron){
 
 	emojionearea = require('./js/vendor/emojionearea.js')
 	
+
+	const electronSpellchecker = require('electron-spellchecker');
+
+	// Retrieve required properties
+	const SpellCheckHandler = electronSpellchecker.SpellCheckHandler;
+	const ContextMenuListener = electronSpellchecker.ContextMenuListener;
+	const ContextMenuBuilder = electronSpellchecker.ContextMenuBuilder;
+
+	// Configure the spellcheckhandler
+	window.spellCheckHandler = new SpellCheckHandler();
+	window.spellCheckHandler.attachToInput();
+
+	// Start off as "US English, America"
+	window.spellCheckHandler.switchLanguage('en-US');
+
+	// Create the builder with the configured spellhandler
+	var contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
+
+	// Add context menu listener
+	var contextMenuListener = new ContextMenuListener((info) => {
+		contextMenuBuilder.showPopupMenu(info);
+	});
+
 }
 
 if(typeof _Node == 'undefined') _Node = false;

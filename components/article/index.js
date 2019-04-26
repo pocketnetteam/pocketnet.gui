@@ -509,7 +509,7 @@ var article = (function(){
 
 				var players = Plyr.setup('.js-player');
 
-				if(typeof _Electron != 'undefined'){
+				/*if(typeof _Electron != 'undefined'){
 					const electronSpellchecker = require('electron-spellchecker');
 
 					// Retrieve required properties
@@ -531,7 +531,7 @@ var article = (function(){
 					var contextMenuListener = new ContextMenuListener((info) => {
 						contextMenuBuilder.showPopupMenu(info);
 					});
-				}
+				}*/
 
 				if (clbk)
 					clbk()

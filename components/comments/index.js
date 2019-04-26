@@ -706,7 +706,7 @@ var comments = (function(){
 
 								ed.init = false;
 
-								if(typeof _Electron != 'undefined'){
+								/*if(typeof _Electron != 'undefined'){
 									const electronSpellchecker = require('electron-spellchecker');
 		
 									// Retrieve required properties
@@ -728,7 +728,7 @@ var comments = (function(){
 									var contextMenuListener = new ContextMenuListener((info) => {
 										contextMenuBuilder.showPopupMenu(info);
 									});
-								}
+								}*/
 
 							}
 
