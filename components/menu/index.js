@@ -603,7 +603,7 @@ var menu = (function(){
 
 						el.removeClass('hidden')
 
-						if(add < 0) c = 'bad'
+						//if(add < 0) c = 'bad'
 
 						if(add == 0){
 							al.text(self.app.platform.mp.coin(value))

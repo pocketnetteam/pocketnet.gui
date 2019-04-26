@@ -5,7 +5,9 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
+
 const electronLocalshortcut = require('electron-localshortcut');
+
 let win, nwin, badge;
 
 var willquit = false;
@@ -61,6 +63,10 @@ console.log('defaultTrayIcon', defaultTrayIcon)
 /*
 var defaultIcon = './assets/icons/win/icon.ico';
 var badgeIcon = './assets/icons/win/iconbadge.ico';*/
+
+
+
+
 
 function showHideWindow(show) {
 
@@ -286,6 +292,10 @@ function createWindow() {
 
         callback({ cancel: false, responseHeaders: detail.responseHeaders });
     });
+
+
+
+    //
 
     ipcMain.on('electron-notification', function(e, nhtml) {
 
