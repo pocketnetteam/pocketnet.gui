@@ -222,7 +222,7 @@ var filluser = (function(){
 					console.log("AFTER")
 
 
-					actions.timer(el.find('.time'), time || 2, function(){
+					actions.timer(el.find('.time'), time || 59, function(){
 
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){							

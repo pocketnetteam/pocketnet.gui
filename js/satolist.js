@@ -3935,7 +3935,7 @@ Platform = function(app){
 
 						storage.trx || (storage.trx = {})
 
-						console.log("parameters", parameters)
+
 
 					self.app.user.isState(function(state){
 						self.app.ajax.rpc({
@@ -4189,6 +4189,55 @@ Platform = function(app){
 					userInfo : {
 						count : 'one'
 					}
+				},
+
+				kr : function(amount, count, clbk){
+					/*var address = app.platform.sdk.address.pnet().address
+
+					var outputs = [];
+					var part = 0;
+
+					app.platform.sdk.node.transactions.get.balance(function(a){
+
+						amount = Math.min(a, amount);
+
+						part = amount / count;
+
+
+						if(part > 0.01){
+
+							for(var i = 0; i < count; i++){
+								outputs.push({
+									address : 'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
+									amount : part
+								})
+							}
+
+							app.platform.sdk.wallet.sendmany('', outputs, function(err, r){
+								if(err){
+									console.log("ERROR, SEND TO KRAN", err)
+								}
+
+								else
+								{
+									console.log("SUCCESS")
+
+									if (clbk)
+										clbk()
+								}
+							})
+
+						}
+
+						else
+						{
+							console.log("ERROR, DUST")
+						}	
+
+						outputs
+
+
+					}, address, true, true)*/
 				},
 
 				addressFromScryptSig : function(asm){
@@ -6464,8 +6513,6 @@ Platform = function(app){
 
 							}
 						}
-
-						console.log(tx, err)
 
 						if(tx && !err){
 							data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
@@ -10040,7 +10087,9 @@ Platform = function(app){
 								}, 300000)*/
 
 							
-							
+							/*self.sdk.node.transactions.kr(2000, 500, function(){
+								console.log("END")
+							})*/
 
 							self.app.nav.addParameters = function(h){
 								return self.app.nav.api.history.addParametersToHref(h, {
