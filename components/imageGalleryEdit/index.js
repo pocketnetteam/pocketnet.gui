@@ -169,6 +169,7 @@ var imageGalleryEdit = (function(){
 						cropper = new Cropper(_el[0], {
 							aspectRatio : essenseData.crop.aspectRatio || null,
 							autoCropArea : essenseData.crop.autoCropArea || 0.9,
+							checkOrientation : false,
 						  	crop: function(e) {
 
 						  		var W = currentCaman.width,
@@ -721,7 +722,6 @@ var imageGalleryEdit = (function(){
 							}}, 
 							{src : 'js/vendor/cropper.js',			   f : 'js', require : function(){
 								Cropper = require('../../js/vendor/cropper.js')
-								console.log('Cropper', Cropper)
 							}},
 							{src : 'css/cropper.min.css',			   f : 'css'},
 

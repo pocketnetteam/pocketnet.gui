@@ -7402,39 +7402,68 @@
 		        } else {
 		            canvas.width = width;
 		            canvas.height = height;
-		        }
-		
+				}
+				
+				console.log('exifOrientation', exifOrientation)
 		        // transform context before drawing image
 		        switch (exifOrientation) {
-		            case 2:
-		                ctx.transform(-1, 0, 0, 1, width, 0);
-		                break;
-		            case 3:
-		                ctx.transform(-1, 0, 0, -1, width, height);
-		                break;
-		            case 4:
-		                ctx.transform(1, 0, 0, -1, 0, height);
-		                break;
-		            case 5:
-		                ctx.transform(0, 1, 1, 0, 0, 0);
-		                break;
-		            case 6:
-		                ctx.transform(0, 1, -1, 0, height, 0);
-		                break;
-		            case 7:
-		                ctx.transform(0, -1, -1, 0, height, width);
-		                break;
-		            case 8:
-		                ctx.transform(0, -1, 1, 0, 0, width);
-		                break;
-		            default:
-		                ctx.transform(1, 0, 0, 1, 0, 0);
+		            case 1:
+          				// normal
+						ctx.drawImage(this, 0, 0, width, height);
+					break;
+					case 2:
+						// flip horizontal
+						ctx.translate(width, 0);
+						ctx.scale(-1, 1);
+						ctx.drawImage(this, 0, 0, width, height);
+					break;
+					case 3:
+						// rotate 180
+						ctx.translate(width, height);
+						ctx.rotate(Math.PI);
+						ctx.drawImage(this, 0, 0, width, height);
+					break;
+					case 4:
+						// flip vertical
+						ctx.translate(0, height);
+						ctx.scale(1, -1);
+						ctx.drawImage(this, 0, 0, width, height);
+					break;
+					case 5:
+						// flip vertical, rotate 90 clockwise
+						ctx.rotate(Math.PI / 2);
+						ctx.scale(1, -1);
+						ctx.drawImage(this, 0, 0, width, height);
+					break;
+					case 6:
+						// rotate 90 clockwise
+						ctx.rotate(Math.PI / 2);
+						ctx.translate(0, -height);
+						ctx.drawImage(this, 0, 0, width, height);
+					break;
+					case 7:
+						// flip horizontal, rotate 90 counter clockwise
+						ctx.rotate(Math.PI / 2);
+						ctx.translate(width, -height);
+						ctx.scale(-1, 1);
+						ctx.drawImage(this, 0, 0, width, height);
+					break;
+					case 8:
+						// rotate 90 counter clockwise
+						ctx.rotate(-Math.PI / 2);
+						ctx.translate(-width, 0);
+						ctx.drawImage(this, 0, 0, width, height);
+					break;
+					default:
+						// normal
+						ctx.drawImage(this, 0, 0, width, height);
+					return;
 		        }
 		
 		        // Draw img into canvas
-		        ctx.drawImage(img, 0, 0, width, height);
+		       	// ctx.drawImage(img, 0, 0, width, height);
 
-				var url = canvas.toDataURL("image/jpeg", 1);
+				var url = canvas.toDataURL("image/jpeg", 0.95);
 
 				$(canvas).remove();
 
@@ -7445,13 +7474,15 @@
 	    }
 
 		var autorotation = function(file, image, clbk){
-			if(file.type == 'image/jpeg' && !p.notexif && EXIF != 'undefined'){
+
+			if((file.type == 'image/jpeg' || file.type == 'image/png') && !p.notexif && typeof EXIF != 'undefined'/* && !$('html').hasClass('iphone')*/){
 				EXIF.getData(file, function() {
 
+					
 					var allMetaData = EXIF.getAllTags(this);
-	            		exifOrientation = allMetaData.Orientation;
+						exifOrientation = allMetaData.Orientation;
 
-	            	if(exifOrientation){
+	            	if(!exifOrientation){
 	            		if (clbk)
 							clbk(image)
 	            	}

@@ -1844,7 +1844,7 @@ Platform = function(app){
 
 				
 
-				if(s[address] || !address){
+				if(!address || s[address]){
 					if (clbk)
 						clbk()
 				}
@@ -3935,7 +3935,7 @@ Platform = function(app){
 
 						storage.trx || (storage.trx = {})
 
-						
+						console.log("parameters", parameters)
 
 					self.app.user.isState(function(state){
 						self.app.ajax.rpc({
@@ -6465,6 +6465,8 @@ Platform = function(app){
 							}
 						}
 
+						console.log(tx, err)
+
 						if(tx && !err){
 							data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 							//data.tx = data.pockettx
@@ -6497,7 +6499,11 @@ Platform = function(app){
 									data.user = platform.sdk.usersl.storage[data.address] || {
 										address : data.address
 									}
-								}								
+								}					
+								
+								_.each(platform.sdk.node.transactions.clbks, function(c){
+									c()
+								})
 
 								if (clbk)
 									clbk(data)
@@ -9590,23 +9596,30 @@ Platform = function(app){
 
 		if(!electron) return
 
+		var d = null;
+
 		var updateReady = function(){
-			dialog({
-				html : "Updates to Pocketnet are available. Apply the updates now?",
-				btn1text : "Yes",
-				btn2text : "No, later",
 
-				success : function(){
-
-					electron.ipcRenderer.send('quitAndInstall');
-					//electron.remote.autoUpdater.quitAndInstall()
-
-				},
-
-				fail : function(){
-					setTimeout(updateReady, 86400000)
-				}
-			})
+			if(!d){
+				d = dialog({
+					html : "Updates to Pocketnet are available. Apply the updates now?",
+					btn1text : "Yes",
+					btn2text : "No, later",
+	
+					success : function(){
+	
+						electron.ipcRenderer.send('quitAndInstall');
+						//electron.remote.autoUpdater.quitAndInstall()
+	
+					},
+	
+					fail : function(){
+						d = null;
+						setTimeout(updateReady, 86400000)
+					}
+				})
+			}
+			
 		}
 
 		electron.ipcRenderer.on('updater-message', function(event, data){

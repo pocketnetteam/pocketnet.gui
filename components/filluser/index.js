@@ -37,7 +37,18 @@ var filluser = (function(){
 
 							self.app.platform.sdk.node.transactions.clbks.filluser = function(){
 
-								self.app.platform.sdk.node.transactions.get.allBalance()
+								self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+									if (amount > 0 && current == 1){
+
+										self.app.platform.m.log('userwisard_money_success')
+
+										delete self.app.platform.sdk.node.transactions.clbks.filluser
+
+										actions.next()
+
+									}
+								})
 								
 							}
 							
@@ -182,6 +193,8 @@ var filluser = (function(){
 
 												self.app.platform.m.log('userwisard_money_success')
 
+												delete self.app.platform.sdk.node.transactions.clbks.filluser
+
 												actions.next()
 
 											}
@@ -194,66 +207,6 @@ var filluser = (function(){
 
 							})
 
-							
-
-							/*
-							self.sdk.users.requestFreeMoney(function(res, err){		
-
-
-								var fmclbk = function(){
-									self.app.platform.sdk.node.transactions.clbks.filluser = function(){
-
-										self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-											if (amount > 0 && current == 1){
-
-												self.app.platform.m.log('userwisard_money_success')
-
-												actions.next()
-
-											}
-										})
-										
-									}
-
-									clbk()
-								}						
-						
-								if(!res){
-
-									if(err && (err == 'network' || err == 'unspents') ){
-										actions.to(4)
-
-										self.app.platform.m.log('userwisard_money_fail')
-
-										return
-									}
-									else
-									{
-										self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-											if (amount > 0){
-
-												self.app.platform.m.log('userwisard_money_success')
-
-												actions.next()
-
-												return
-											}
-											else
-											{
-												fmclbk()
-											}
-
-										})
-
-										return
-									}
-								}
-
-								fmclbk()
-
-							})*/
 						}
 					})
 
@@ -269,7 +222,7 @@ var filluser = (function(){
 					console.log("AFTER")
 
 
-					actions.timer(el.find('.time'), time || 59, function(){
+					actions.timer(el.find('.time'), time || 2, function(){
 
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){							
@@ -428,6 +381,8 @@ var filluser = (function(){
 				self.app.platform.sdk.node.transactions.clbks.filluserm = function(){
 
 					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+						console.log("AMOUNT< CURRENT", amount, current)
 
 						if (amount > 0 && current == 5){
 

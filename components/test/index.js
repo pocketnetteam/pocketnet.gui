@@ -36,6 +36,9 @@ var test = (function(){
 					return 'name:' + (trim(o.name) || "") + 'image:' + (o.image || "") + 'about:' + (trim(o.about) || "") + 'site:' + (trim(o.site) || "")  + 'language:' + (o.language || "") + "addresses:" + JSON.stringify(o.addresses || [])
 				}
 
+				console.log(v1, v2)
+
+
 				return a(v1) == a(v2)
 			},
 			cancel : function(){
@@ -289,6 +292,10 @@ var test = (function(){
 
 				_.each(userOptions, function(parameter, id){
 					var value = self.app.platform.sdk.user.storage.me[parameter.id];
+
+					if(id == 'addresses'){
+						value = _.clone(self.app.platform.sdk.user.storage.me[parameter.id]);
+					}
 					
 					parameter.value = value || parameter.defaultValue || ''
 					tempInfo[parameter.id] = parameter.value
@@ -296,7 +303,7 @@ var test = (function(){
 					parameter._onChange = function(value){
 
 						if(id == 'addresses'){
-							tempInfo[parameter.id] = value;
+							tempInfo[parameter.id] = _.clone(value);
 						}
 						else
 						{

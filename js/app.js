@@ -51,11 +51,18 @@ if(typeof _Electron != 'undefined' && _Electron){
 	// Start off as "US English, America"
 	window.spellCheckHandler.switchLanguage('en-US');
 
+	console.log('window.spellCheckHandler' ,window.spellCheckHandler)
+
 	// Create the builder with the configured spellhandler
 	var contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
 
+		delete contextMenuBuilder.stringTable.searchGoogle
+
 	// Add context menu listener
 	var contextMenuListener = new ContextMenuListener((info) => {
+
+		console.log('info', info, contextMenuBuilder)
+
 		contextMenuBuilder.showPopupMenu(info);
 	});
 
@@ -78,7 +85,7 @@ Application = function(p)
 	self.options = {
 
 		nav : {
-			navPrefix : '/pocketnet/',
+			navPrefix : '/',
 		},
 
 		name : 'PCRB',
