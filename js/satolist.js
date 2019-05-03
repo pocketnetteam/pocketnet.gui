@@ -4192,7 +4192,7 @@ Platform = function(app){
 				},
 
 				kr : function(amount, count, clbk){
-					/*var address = app.platform.sdk.address.pnet().address
+					var address = app.platform.sdk.address.pnet().address
 
 					var outputs = [];
 					var part = 0;
@@ -4208,7 +4208,7 @@ Platform = function(app){
 
 							for(var i = 0; i < count; i++){
 								outputs.push({
-									address : 'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
+									address : 'PJfrGoGaQQcDvg9qRqbDWL8MkPBt3Sse61',
 									amount : part
 								})
 							}
@@ -4237,7 +4237,7 @@ Platform = function(app){
 						outputs
 
 
-					}, address, true, true)*/
+					}, address, true, true)
 				},
 
 				addressFromScryptSig : function(asm){
@@ -10087,9 +10087,15 @@ Platform = function(app){
 								}, 300000)*/
 
 							
-							/*self.sdk.node.transactions.kr(2000, 500, function(){
+							/*self.sdk.node.transactions.kr(1000, 200, function(){
 								console.log("END")
 							})*/
+
+							/*for(var i = 0; i < 1000; i++){
+								setTimeout(function(){
+									console.log('dateToStrUTCSS()', dateToStrUTCSS())
+								},2) 
+							}*/
 
 							self.app.nav.addParameters = function(h){
 								return self.app.nav.api.history.addParametersToHref(h, {

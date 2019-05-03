@@ -14,6 +14,16 @@
         <meta name="fragment" content="!">
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
+        <?php 
+        
+            require_once('php/og.php'); 
+
+            $og = new OG($_GET);
+
+            $og->get();
+            $og->echotags();
+        ?>
+
         __CSS__
         
            

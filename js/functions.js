@@ -169,8 +169,9 @@
 
 		var S = now.getUTCMilliseconds().toString();
 
-		if(S.length < 5) S = S + '0'
+		var c = 4 - S.length;
 
+		if (c > 0) S = (Number(S) * Math.pow(10, c)).toString()
 
 		return y + M + d + h + m + s + S;
 	}
