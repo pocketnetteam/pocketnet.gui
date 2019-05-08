@@ -1310,7 +1310,7 @@ pShare = function(){
 
 				nm = nl2br(findAndReplaceLink(filterXSS(nm, {
 					whiteList: [],
-					stripIgnoreTag: true
+					stripIgnoreTag: true,
 				})));	
 
 			}

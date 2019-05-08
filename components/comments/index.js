@@ -47,16 +47,22 @@ var comments = (function(){
 					comments : [alias]
 				}
 
+				if(listpreview){
+					ed.lastComment = self.app.platform.sdk.comments.toLastComment(alias)
+				}
+
 				delete currents[id]
+
+
+				if (id == '0'){
+					p.class = "firstcomment"
+				}
 
 				if (id == '0')
 				{
 					if (areas[id])
 
 						areas[id].setText('');
-
-					p.class = "firstcomment"
-					
 				}
 
 				else
@@ -69,6 +75,8 @@ var comments = (function(){
 						_el.find('.edit').html('');
 
 						alias.timeupd = alias.timeupd.addMinutes(1)
+
+						if(!alias.parentid) p.class = "firstcomment"
 
 						delete areas[id]
 
@@ -210,8 +218,8 @@ var comments = (function(){
 
 				id || (id = '0')
 
-				if (currents[id])
-					currents[id].message.set(v)
+				if(currents[id])
+					 currents[id].message.set(v)
 
 				state.save()
 
@@ -601,7 +609,8 @@ var comments = (function(){
 			metmenu : function(){
 				var _el = $(this);
 
-				var parent = _el.closest('.comment')
+				var parent = _el.closest('.comment');
+				var localParent = _el.closest('.commentBody')
 
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
@@ -613,6 +622,13 @@ var comments = (function(){
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid)
 				};
 
+				if (listpreview && ed.lastComment){
+
+					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+
+					d.caddress = comment.address
+				}
+
 				self.fastTemplate('metmenu', function(rendered, template){
 
 					self.app.platform.api.tooltip(_el, function(){
@@ -623,7 +639,7 @@ var comments = (function(){
 
 						el.find('.edit').on('click', function(){
 
-							renders.edit(parent, comment)
+							renders.edit(localParent, comment)
 
 							_el.tooltipster('hide')	
 						})
@@ -705,31 +721,6 @@ var comments = (function(){
 								_p.el.addClass('active')		
 
 								ed.init = false;
-
-								/*if(typeof _Electron != 'undefined'){
-									const electronSpellchecker = require('electron-spellchecker');
-		
-									// Retrieve required properties
-									const SpellCheckHandler = electronSpellchecker.SpellCheckHandler;
-									const ContextMenuListener = electronSpellchecker.ContextMenuListener;
-									const ContextMenuBuilder = electronSpellchecker.ContextMenuBuilder;
-							
-									// Configure the spellcheckhandler
-									window.spellCheckHandler = new SpellCheckHandler();
-									window.spellCheckHandler.attachToInput();
-							
-									// Start off as "US English, America"
-									window.spellCheckHandler.switchLanguage('en-US');
-							
-									// Create the builder with the configured spellhandler
-									var contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
-							
-									// Add context menu listener
-									var contextMenuListener = new ContextMenuListener((info) => {
-										contextMenuBuilder.showPopupMenu(info);
-									});
-								}*/
-
 							}
 
 							if(p.value) {
@@ -842,6 +833,8 @@ var comments = (function(){
 			},
 			edit : function(el, comment){
 
+				console.log(comment)
+
 				el.addClass('editing')
 
 				renders.post(function(area, el){
@@ -857,7 +850,7 @@ var comments = (function(){
 					value : comment.message,
 					init : true,
 					edit : 'edit',
-					el : el.find('.edit'),
+					el : el.find('>div.edit'),
 
 					pid : comment.parentid,
 					aid : comment.answerid,
@@ -870,6 +863,8 @@ var comments = (function(){
 				if(!p) p = {};
 
 				var _preview = preview && !p.answer && !p.editid
+
+				console.log(p)
 
 				self.shell({
 					name :  'post',
@@ -921,6 +916,8 @@ var comments = (function(){
 					return c.time
 				})
 
+				p.el || (p.el = el.list)
+
 				self.shell({
 					name :  'list',
 					el : p.el || el.list,
@@ -941,13 +938,13 @@ var comments = (function(){
 
 				}, function(_p){
 
-					_p.el.find('.reply').off('click').on('click', events.replyandreplies);
-					_p.el.find('.replies').off('click').on('click', events.replies);
-					_p.el.find('.panel').off('click').on('click', events.metmenu);
-					_p.el.find('.tocomment').off('click').on('click', events.tocomment)
+					el.list.find('.reply').off('click').on('click', events.replyandreplies);
+					el.list.find('.replies').off('click').on('click', events.replies);
+					el.list.find('.panel').off('click').on('click', events.metmenu);
+					el.list.find('.tocomment').off('click').on('click', events.tocomment)
 
 					setTimeout(function(){
-						_p.el.find('.newcomments').removeClass('newcomments')
+						el.list.find('.newcomments').removeClass('newcomments')
 					}, 600)
 					
 					bgImages(el.list)

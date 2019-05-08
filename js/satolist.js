@@ -3331,6 +3331,30 @@ Platform = function(app){
 
 			},
 
+			toLastComment : function(comment){
+
+				console.log('comment', comment)
+
+				var lc = {
+					address : comment.address,
+					answerid : comment.answerid,
+					parentid : comment.parentid,
+					id : comment.id,
+					children : comment.children || 0,
+					postid : comment.txid,
+					block : self.currentBlock,
+					msg : JSON.stringify({
+						m : comment.message
+					}),
+					time : comment.time,
+					timeupd : comment.timeupd,
+					pubkey : comment.pubkey,
+					signature : comment.signature
+				}
+
+				return  lc;
+			},
+
 			ini : function(d){
 
 				var c = _.map(d || [], function(data){
@@ -3345,6 +3369,9 @@ Platform = function(app){
 
 					comment.parentid = data.parentid
 					comment.answerid = data.answerid
+
+					comment.signature = data.signature
+					comment.pubkey = data.pubkey
 
 					var msg = {};
 
@@ -3466,10 +3493,29 @@ Platform = function(app){
 						alias.parentid = pid || ''
 						alias.answerid = aid || ''
 
+						alias.pubkey = parameters[3]
+						alias.signature = parameters[4]
+
 						s[txid] || (s[txid] = {})
 
 						s[txid][pid || '0'] || (s[txid][pid || '0'] = [])
-						s[txid][pid || '0'].push(alias)
+
+						var i = findIndex(s[txid][pid || '0'], function(c){
+							if(c.id == editid) return true;
+						})
+
+						if(!editid || i == -1){
+							s[txid][pid || '0'].push(alias)
+						}
+						else{
+
+							alias.children = s[txid][pid || '0'][i].children
+
+							s[txid][pid || '0'][i] = alias
+
+						}
+
+						
 
 						alias.verify = true
 
@@ -6300,7 +6346,7 @@ Platform = function(app){
 			_share : function(share){
 				var m = share.caption || share.message;
 
-				var nm = filterXSS(emojione.toImage(trimHtml(m, 20)));
+				var nm = emojione.toImage(filterXSS(trimHtml(m, 20)));
 
 				return nm
 			},
@@ -6310,9 +6356,11 @@ Platform = function(app){
 
 				var m = share.caption || share.message;
 
-				var nm = filterXSS(emojione.toImage(trimHtml(m, 20)));
+				var nm = filterXSS(trimHtml(m, 20));
 
-				nm = share.renders.xssmessage(nm)
+				console.log('nm', nm)
+
+				nm = emojione.toImage(share.renders.xssmessage(nm))
 			
 
 				var image = share.images[0];

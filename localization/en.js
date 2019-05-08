@@ -49,7 +49,7 @@ ____loclib.confirmkey = 'Type your Private Login Key here for confirmation'
 ____loclib.successfullycopied = "Key was successfully copied"
 ____loclib.urlsuccesscopied = "Link was successfully copied"
 
-____loclib.confirmkeyLabel = "Please Confirm You Private Key. Type Key in form or <b>upload QR code</b>"
+____loclib.confirmkeyLabel = "Please Confirm Your Private Key. Type Key in form or <b>upload QR code</b>"
 ____loclib.repeatetocreate = "Repeat to create private key again"
 ____loclib.confirmcreate = "Create Account"
 
