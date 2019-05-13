@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.0.16-beta",
+    "version": "0.0.27-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -8,8 +8,8 @@
     "main": "main.js",
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
-        "start": "electron .",
-        "pack": "electron-builder --dir",
+        "start": "electron . --hidden",
+        "pack": "electron-builder --dir --x64",
         "dist": "electron-builder -w --x64 --ia32",
         "distl": "electron-builder -l --x64",
         "publish": "build --win --x64 --ia32 -p always"
@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "aes-js": "^3.1.2",
+        "auto-launch": "^5.0.5",
         "desandro-matches-selector": "^2.0.2",
         "electron-localshortcut": "^3.1.0",
         "electron-log": "^3.0.1",
