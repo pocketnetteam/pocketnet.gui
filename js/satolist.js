@@ -1148,11 +1148,11 @@ Platform = function(app){
 
 				if(!localStorage['survey1']){
 
-					self.app.nav.api.load({
+					/*self.app.nav.api.load({
 						open : true,
 						href : 'surveyiframe',
 						inWnd : true
-					})
+					})*/
 
 				}
 
@@ -3808,14 +3808,27 @@ Platform = function(app){
 				},
 
 				tempLikes : function(shares){
+
+
+					console.log('self.sdk.node.transactions.temp.upvoteShare, shares', self.sdk.node.transactions.temp.upvoteShare, shares)
+
 					_.each(self.sdk.node.transactions.temp.upvoteShare, function(tempShare){
 
-						var txid = tempShare.txid;
+						var txid = tempShare.share;
 
 						_.find(shares, function(share){
 
 							if(share.txid == txid){
+
 								share.upvote(tempShare.value)
+
+								share.scnt || (share.scnt = 0)
+								share.score || (share.score = 0)
+
+								share.scnt++;
+								share.score = Number(share.score || 0) + Number(tempShare.value);
+
+								console.log("UPVOTE", share)
 
 								return true
 							}
@@ -6358,8 +6371,6 @@ Platform = function(app){
 
 				var nm = filterXSS(trimHtml(m, 20));
 
-				console.log('nm', nm)
-
 				nm = emojione.toImage(share.renders.xssmessage(nm))
 			
 
@@ -6452,14 +6463,19 @@ Platform = function(app){
 
 			user : function(author, html, gotoprofile, caption){
 
+				if(!author){
+					return html
+				}
+
 				var h = '';
 
 				var src = deep(author, 'image')
+				
 
 				var link = '<a href="author?address='+author.address+'">'
 				var clink = "</a>"
 
-				
+			
 
 			h+='<div class="cwrapper table">\
 					<div class="cell cellforimage">\

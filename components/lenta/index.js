@@ -1042,9 +1042,6 @@ var lenta = (function(){
 			toComments : function(){
 				var id = $(this).closest('.share').attr('id');
 
-				
-				console.log('ID', id)
-
 				renders.comments(id, true)
 				/*}*/
 
@@ -1087,7 +1084,6 @@ var lenta = (function(){
 
 							s.scnt || (s.scnt = 0)
 							s.score || (s.score = 0)
-
 
 							s.scnt++;
 							s.score = Number(s.score || 0) + Number(value);
@@ -1310,7 +1306,6 @@ var lenta = (function(){
 						essenseData : {
 							close : function(){
 
-								console.log('initedcommentes[txid]', initedcommentes[txid], txid)
 								if (initedcommentes[txid]){
 									initedcommentes[txid].hideall(true)
 								}
@@ -1623,7 +1618,9 @@ var lenta = (function(){
 				var sel = el.c.find('#' + s.txid)
 
 				if(s.settings.v == "a"){
-					var pl = sel.find('.plyrvideo')
+					var pl = sel.find('[data-plyr-provider][data-plyr-embed-id]')
+
+					console.log("PLYR", pl)
 
 					var map = [];
 

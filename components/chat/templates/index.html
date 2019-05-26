@@ -92,14 +92,23 @@
 		<div class="bcaptionfwrapper">
 			<div class="formWrapper">
 				<div class="form table">
-					<div class="sendmessage">
-						<div class="inputWrapper">
 
-							<!--<div class="type" placeholder="Send Message"></div>-->
+					<% if(mestate.reputation >= 0) { %> 
 
-							<input class="type" type="text" placeholder="Send Message">
+						<div class="sendmessage">
+							<div class="inputWrapper">
+
+								<!--<div class="type" placeholder="Send Message"></div>-->
+
+								<input class="type" type="text" placeholder="Send Message">
+							</div>
 						</div>
-					</div>
+
+					<% } else { %> 
+						<div class="reputationFailCell">
+							You do not have chat priviliges
+						</div>
+					<% } %>
 					<!--
 					<div class="panel">
 						<div class="item settings">

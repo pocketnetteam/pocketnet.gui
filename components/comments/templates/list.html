@@ -4,12 +4,13 @@ var commentpanel = function(comment, _class){ %>
 	<div class="commentpanel">
 
 		<div class="items">
-
-			<div class="item reply">
-				<div class="label">
-					<span>REPLY</span>
+			<% if(mestate.reputation >= 0) { %> 
+				<div class="item reply">
+					<div class="label">
+						<span>REPLY</span>
+					</div>
 				</div>
-			</div>
+			<% } %>
 
 			<% if(_class == 'firstcomment') {
 

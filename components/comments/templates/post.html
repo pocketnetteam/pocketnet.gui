@@ -1,5 +1,6 @@
 <% dplace = 'Tell Pocketpeople what you think';
 
+
 if(isMobile()) dplace = 'Speak up'
 
  %>
@@ -38,53 +39,43 @@ if(isMobile()) dplace = 'Speak up'
 
 		<% } %>
 
-		<div class="lcpp">
-			<div class="txt">
+		<% if(mestate.reputation >= 0) { %> 
+ 
+			<div class="lcpp">
+				<div class="txt">
 
-				<textarea class="leaveCommentPreview" placeholder="<%- placeholder || dplace %>"></textarea>
+					<textarea class="leaveCommentPreview" placeholder="<%- placeholder || dplace %>"></textarea>
 
-				<div class="leaveComment" placeholder="<%- placeholder || dplace %>"></div>
-			</div>
+					<div class="leaveComment" placeholder="<%- placeholder || dplace %>"></div>
+				</div>
 
-			<!--<div class="commentPanel table">
 				
-				<div class="panelWrapper">
-					<div class="panel">
-						<div class="item url" embeding="url">
-							<i class="fas fa-external-link-alt"></i>
+			</div>
+
+			<div class="postCellWrapper">
+				<div class="cpostWrapper">
+					<div class="postaction">
+
+						<div class="preloaderWrapper">
+							<div class="preloader5">
+								<span></span>
+								<span></span>
+								<span></span>
+							</div>
 						</div>
-						<div class="item images" embeding="images">
-							<i class="fas fa-image"></i>
+
+						<div class="icon">
+							<i class="far fa-paper-plane"></i>
 						</div>
-					</div>
-				</div>
-
-				<div class="attachements">
-					<div class="imagesWrapper att"></div>
-					<div class="videoWrapper att"></div>
-				</div>
-
-			</div> -->
-		</div>
-
-		<div class="postCellWrapper">
-			<div class="cpostWrapper">
-				<div class="postaction">
-
-					<div class="preloaderWrapper">
-						<div class="preloader5">
-						    <span></span>
-						    <span></span>
-						    <span></span>
-						</div>
-					</div>
-
-					<div class="icon">
-						<i class="far fa-paper-plane"></i>
 					</div>
 				</div>
 			</div>
-		</div>
+
+		<% } else { %> 
+			<div class="reputationFailCell">
+				You do not have commenting priviliges
+			</div>
+		<% } %>
 
 	</div>
 

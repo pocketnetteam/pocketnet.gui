@@ -18,6 +18,8 @@ var comments = (function(){
 			network : "network error"	
 		}
 
+		var mestate;
+
 		var rendered = {}
 
 		var areas = {};
@@ -833,8 +835,6 @@ var comments = (function(){
 			},
 			edit : function(el, comment){
 
-				console.log(comment)
-
 				el.addClass('editing')
 
 				renders.post(function(area, el){
@@ -864,8 +864,6 @@ var comments = (function(){
 
 				var _preview = preview && !p.answer && !p.editid
 
-				console.log(p)
-
 				self.shell({
 					name :  'post',
 					el : p.el || el.post,
@@ -874,7 +872,8 @@ var comments = (function(){
 						placeholder : p.placeholder || '',
 						answer : p.answer || '',
 						edit : p.edit || '',
-						preview : _preview
+						preview : _preview,
+						mestate : mestate
 					},
 
 				}, function(_p){
@@ -933,7 +932,8 @@ var comments = (function(){
 
 						replaceNameNoComment : function(name, p){
 							return '<span class="tocommentno">' + name + "</span>"
-						}
+						},
+						mestate : mestate
 					},
 
 				}, function(_p){
@@ -1144,7 +1144,13 @@ var comments = (function(){
 
 					var data = {};
 
-					clbk(data); 
+					self.app.platform.sdk.ustate.me(function(_mestate){
+
+						mestate = _mestate
+
+						clbk(data); 
+
+					})
 				}
 
 			},

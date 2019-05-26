@@ -1317,6 +1317,14 @@ pShare = function(){
 			else
 			{
 
+				var whiteclass = {'js-player' : true, 'plyr' : true, 'medium-insert-images' : true, 'medium-insert-images-grid' : true, 'medium-insert-embeds' : true}
+
+				/*nm = nm.replace(/sharecaption/g, '')
+				.replace(/canmark/g, '')
+				.replace(/paddingWrapper/g, '')
+				.replace(/message/g, '')
+				.replace(/showMorePW/g, '')*/
+
 				nm = filterXSS(nm, {
 					stripIgnoreTag : true,
 					whiteList: {
@@ -1325,10 +1333,10 @@ pShare = function(){
 						b : ["style"],
 						span : ["style"],
 						figure : ["style"],
-						figcaption : ["style", "class"],
+						figcaption : ["style"/*, "class"*/],
 						i : ["style"],
-						img : ["src", "width", "height"],
-						div : ["class", "data-plyr-provider", "data-plyr-embed-id"],
+						img : ["src"/*, "width", "height"*/],
+						div : [ /*"class",*/"data-plyr-provider", "data-plyr-embed-id"],
 						p : [],
 						ul : [],
 						ol : [],
@@ -1346,6 +1354,18 @@ pShare = function(){
 						source : ['srcset', 'type'],
 
 					},
+
+					onIgnoreTagAttr: function(tag, name, value, isWhiteAttr) {
+						if (name === "class") {
+						  var v = value.split(' ');
+
+							v = _.filter(v, function(v){
+								return whiteclass[v]
+							})
+
+						  return name + '="' + v.join(' ') + '"';
+						}
+					}
 
 				})
 			}

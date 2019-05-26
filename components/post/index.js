@@ -127,7 +127,7 @@ var post = (function(){
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
 					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
 				
-				var pels = el.c.find('.js-player');
+				var pels = el.c.find('.js-player, [data-plyr-provider][data-plyr-embed-id]');
 
 				if (pels.length)
 				{		

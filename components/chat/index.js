@@ -16,6 +16,8 @@ var chat = (function(){
 		var bottomcaption = null;
 		var getPreviewTimer = null;
 
+		var mestate;
+
 		var newmessageslength = 0;
 
         var chat = null;
@@ -1121,8 +1123,16 @@ var chat = (function(){
 						self.app.platform.sdk.tempmessenger.getChat(_chat.chat)
 
 						data.canEnc = true;
+
+						self.app.platform.sdk.ustate.me(function(_mestate){
+
+							mestate = _mestate
+
+							data.mestate = mestate;
 						
-						clbk(data);
+							clbk(data);
+
+						})
 
 					})
 
