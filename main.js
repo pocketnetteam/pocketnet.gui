@@ -249,13 +249,16 @@ function createWindow() {
         
         /*width : 800,
         height : 600,*/
+
         title: "Pocketnet",
-        //show: false,
         webSecurity : false
     });
 
     win.maximize();
-    //win.show();
+    let isHidden = process.argv.find(function(el) { return el == '--hidden'; })
+    if (isHidden) {
+        win.hide();
+    }
 
     Menu.setApplicationMenu(null)
 
@@ -326,8 +329,6 @@ function createWindow() {
     })
 
     // Вызывается, когда окно будет закрыто.
-
-
     return win
 }
 

@@ -1,5 +1,5 @@
 !macro customInstall
-    CreateShortCut "$SMSTARTUP\${PRODUCT_FILENAME}.lnk" "$INSTDIR\${PRODUCT_FILENAME}.exe"
+    # CreateShortCut "$SMSTARTUP\${PRODUCT_FILENAME}.lnk" "$INSTDIR\${PRODUCT_FILENAME}.exe"
 !macroend
 
 !macro customRemoveFiles

@@ -1021,7 +1021,14 @@ Platform = function(app){
 					id : 'videoautoplay',
 					type : "BOOLEAN",
 					value : true
-				},
+                },
+                
+                autostart : {
+					name : 'Start Pocketnet Automatically',
+					id : 'autostart',
+					type : "BOOLEAN",
+					value : undefined
+                },
 			},
 
 			create : function(id){
@@ -1078,13 +1085,33 @@ Platform = function(app){
 						}
 					},
 
-				}
+                }
+                
+                if (electron) {
+                    c.system = {
+                        name: 'System',
+                        options: {
+                            autostart: options.autostart
+                        }
+                    }
+                }
 
 				_.each(options, function(o, i){
-					o.onChange = function(v){
-						
+					o.onChange = function(v) {
 						m[i].value = boolnum(v);
-						s.save()
+                        s.save();
+                        
+                        if (electron && i == 'autostart') {
+                            const AutoLaunch = require('auto-launch');
+                            let autoLaunch = new AutoLaunch({
+                                name: 'Pocketnet',
+                                path: electron.remote.app.getPath('exe'),
+                                isHidden: true
+                            });
+
+                            if (m[i].value) autoLaunch.enable();
+                            else autoLaunch.disable();
+                        }
 					}
 				})
 
@@ -1130,12 +1157,38 @@ Platform = function(app){
 				var m = self.sdk.usersettings.meta;
 
 				_.each(values, function(v, i){
-
 					m[i].value = v
-				})
+                })
+                
+                if (electron) {
+                    const AutoLaunch = require('auto-launch');
+                    let autoLaunch = new AutoLaunch({
+                        name: 'Pocketnet',
+                        path: electron.remote.app.getPath('exe'),
+                        isHidden: true
+                    });
 
-				if (clbk)
-					clbk()
+                    // First launch
+                    if (m.autostart.value === undefined) {
+                        autoLaunch.enable();
+                        m.autostart.value = true;
+                        self.sdk.usersettings.save();
+                    }
+
+                    // Check autostart
+                    autoLaunch.isEnabled().then((isEnabled) => {
+                        m.autostart.value = isEnabled;
+
+                        if (clbk) {
+                            clbk()
+                        }
+                    });
+                }
+                else {
+				    if (clbk) {
+                        clbk()
+                    }
+                }
 			}
 		},
 
