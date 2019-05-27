@@ -496,13 +496,15 @@ Platform = function(app){
 		_focus : {},
 		focus : function(){
 
-			if(isTablet()){
+			console.log("SELF>CLBKS>FOCUS")
+
+			if(isTablet() || 1==1 || electron){
 
 				app.user.isState(function(state){
 
 					if(state){
 
-						//self.update();
+						self.update();
 
 						
 					}
@@ -1528,7 +1530,11 @@ Platform = function(app){
 
 			},
 
-			me : function(clbk){
+			meUpdate : function(clbk){
+				self.sdk.ustate.me(clbk, true)
+			},
+
+			me : function(clbk, update){
 				var s = self.sdk.ustate.storage;
 
 				self.app.user.isState(function(state){
@@ -1539,7 +1545,7 @@ Platform = function(app){
 						self.sdk.ustate.get(address, function(){
 							if (clbk)
 								clbk(s[address])
-						})
+						}, update)
 					}
 					else
 					{
@@ -1552,15 +1558,17 @@ Platform = function(app){
 
 				
 			},
-			get : function(addresses, clbk){
+			get : function(addresses, clbk, update){
 				if(!_.isArray(addresses)) addresses = [addresses]
 
 				var s = this.storage;
 				var temp = self.sdk.node.transactions.temp;
 
-				addresses = _.filter(addresses, function(a){
-					if(!s[a]) return true
-				})
+				if(!update)
+
+					addresses = _.filter(addresses, function(a){
+						if(!s[a]) return true
+					})
 
 				addresses = _.uniq(addresses)
 
@@ -4802,7 +4810,9 @@ Platform = function(app){
 						}, addresses, update)
 					},
 
-
+					allBalanceUpdate : function(clbk){
+						self.sdk.node.transactions.get.allBalance(clbk, true)
+					},
 
 					allBalance : function(clbk, update){
 						var addresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
@@ -10056,14 +10066,24 @@ Platform = function(app){
 	}
 
 	self.update = function(clbk){
+
+		if (self.updating) return;
+
+		self.updating = makeid()
+
+		setTimeout(function(){
+			self.updating = false;
+		}, 90000)
+
 		var methods = [
-			self.sdk.ustate.me,
-			self.sdk.node.transactions.checkTemps	
+			'ustate.meUpdate',
+			'node.transactions.checkTemps',
+			'node.transactions.get.allBalanceUpdate'
 		]	
 
 		var progress = 10;
 
-		topPreloader(progress);
+		//topPreloader(progress);
 
 		lazyEach({
 			array : methods,
@@ -10076,7 +10096,7 @@ Platform = function(app){
 
 					progress = progress + 15;
 
-					topPreloader(progress);
+					//topPreloader(progress);
 
 					p.success();
 
@@ -10086,7 +10106,8 @@ Platform = function(app){
 			all : {
 				success : function(){
 
-					topPreloader(100);
+					//topPreloader(100);
+
 
 					if (clbk)
 						clbk();
@@ -10404,8 +10425,6 @@ Platform = function(app){
 
 		}
 	}
-
-
 
 	self.app = app;
 
