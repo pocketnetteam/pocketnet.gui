@@ -7,7 +7,7 @@ var author = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var author;
+		var author, _state;
 		var el;
 
 		var panel = null, uptimer = null;
@@ -177,17 +177,31 @@ var author = (function(){
 			},
 			unsubscribe : function(){
 
-				self.app.platform.api.actions.unsubscribe(author.address, function(tx, err){
+				dialog({
+					html : "Do you really want to unfollow user?",
+					btn1text : "Unfollow",
+					btn2text : "Cancel",
 
-					if(tx){
-						
-					}
-					else
-					{
-						self.app.platform.errorHandler(err, true)	
-					}
+					class : 'zindex',
 
+					success : function(){
+
+						self.app.platform.api.actions.unsubscribe(author.address, function(tx, err){
+
+							if(tx){
+								
+							}
+							else
+							{
+								self.app.platform.errorHandler(err, true)	
+							}
+		
+						})
+
+					}
 				})
+
+				
 			},
 			subscribe : function(){
 				self.app.platform.api.actions.subscribe(author.address, function(tx, err){
@@ -262,6 +276,23 @@ var author = (function(){
 				}
 			},
 
+			more : {
+				name : '<i class="fas fa-ellipsis-h"></i>',
+				mobile : '<i class="fas fa-ellipsis-h"></i>',
+				id : 'more',
+				class : 'more',
+
+				if : function(){
+					if(!self.user.isItMe(author.address) && _state) return true
+				},
+
+				events : {
+					click : function(){
+						renders.metmenu($(this))
+					}
+				}
+			},
+
 
 			info : {
 				name : 'Info <i class="fas fa-info-circle"></i>',
@@ -279,7 +310,62 @@ var author = (function(){
 		}
 
 		var renders = {
+			metmenu : function(_el){
 
+				var d = {};
+
+				self.fastTemplate('metmenu', function(rendered, template){
+
+					console.log("ASD", template, rendered)
+
+					self.app.platform.api.tooltip(_el, function(){
+
+						console.log("SADSDAASD")
+
+						d.author = author
+					
+						return template(d);
+
+					}, function(el){
+
+						el.find('.donate').on('click', function(){
+
+							actions.donate(id)
+
+							_el.tooltipster('hide')	
+
+						})
+
+						el.find('.block').on('click', function(){
+
+							self.app.platform.api.actions.blocking(author.address, function(tx, error){
+								if(!tx){
+									self.app.platform.errorHandler(error, true)	
+								}
+							})
+
+							_el.tooltipster('hide')	
+
+						})
+						
+						el.find('.unblock').on('click', function(){
+
+							self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+								if(!tx){
+									self.app.platform.errorHandler(error, true)	
+								}
+							})
+
+							_el.tooltipster('hide')	
+
+						})
+						
+
+					})
+
+				}, d)
+
+			},
 			panel : function(){
 
 				var discussions = {};
@@ -362,6 +448,20 @@ var author = (function(){
 
 						renders.report(reports[r])
 
+					})
+
+					_.each(reports, function(r, j){
+						if(r.events){
+
+							var el = p.el.find('[menuitem="'+j+'"]')
+
+							console.log('events', el)
+
+							_.each(r.events, function(e, i){
+								el.on(i, e)
+							})
+
+						}
 					})
 
 					if (clbk)
@@ -493,7 +593,28 @@ var author = (function(){
 			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
 			el.subscribe.find('.subscribeprivate').on('click', events.subscribePrivate)
 
-			
+			el.caption.find('.unblocking').on('click', function(){
+
+				dialog({
+					html : "Do you really want to unblock user?",
+					btn1text : "Unblock",
+					btn2text : "Cancel",
+
+					class : 'zindex',
+
+					success : function(){
+
+						self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+							if(!tx){
+								self.app.platform.errorHandler(error, true)	
+							}
+						})
+
+					}
+				})
+
+				
+			})
 
 			//window.addEventListener('scroll', events.showHideUp);
 
@@ -531,7 +652,30 @@ var author = (function(){
 				}
 			}
 
+			/*el.c.find('.caption').on('click', function(){
+				self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+					if(!tx){
+						self.app.platform.errorHandler(error, true)	
+					}
+				})
+			})*/
 
+			self.app.platform.clbks.api.actions.blocking.author = function(address){
+
+				if(address == author.address){
+					el.caption.addClass('blocking');
+				}
+
+				
+			}
+
+			self.app.platform.clbks.api.actions.unblocking.author = function(address){
+
+				if(address == author.address){
+					el.caption.removeClass('blocking');
+				}
+
+			}
 
 		}
 
@@ -544,6 +688,22 @@ var author = (function(){
 
 			//renders.panel()
 
+			
+
+			self.app.user.isState(function(state){
+
+				if(state){
+					var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
+
+					if (me.relation(author.address, 'blocking')){
+						el.caption.addClass('blocking');
+					}
+				}
+				
+
+			})
+			
+
 			if(!isMobile())
 				renders.info(el.info)
 		}
@@ -551,12 +711,13 @@ var author = (function(){
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			getdata : function(clbk, settings){
 
 				author = {};
 
 				var p = parameters();
 
+				_state = settings.state
 
 				self.sdk.users.addressByName(p.address, function(address){
 
@@ -632,7 +793,7 @@ var author = (function(){
 				el.panel = el.c.find('.panel')
 				el.caption = el.c.find('.bgCaption')
 				el.fxd = el.c.find('.fxd')
-				el.subscribe = el.c.find('.subscribebuttons');
+				el.subscribe = el.c.find('.subscribebuttonstop');
 				el.up = el.c.find('.upbutton')
 				el.w = $(window)
 

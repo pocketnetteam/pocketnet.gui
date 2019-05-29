@@ -26,7 +26,6 @@ var article = (function(){
 				if (ed.save)
 					ed.save(art)
 
-
 				events.close();
 
 				if (ed.complete)
@@ -53,6 +52,12 @@ var article = (function(){
 
 			trx : function(share, clbk){
 				el.c.addClass('loading')
+
+
+				if(ed.share){
+					share.aliasid = ed.share.txid
+				}
+
 				self.sdk.node.transactions.create.commonFromUnspent(
 
 					share,
@@ -88,6 +93,8 @@ var article = (function(){
 									alias._import(_alias, true)
 									alias.temp = true;
 									alias.address = _alias.address
+									
+								if(currentShare.aliasid) alias.edit = "true"	
 
 								self.app.platform.sdk.node.shares.add(alias)
 
@@ -110,6 +117,17 @@ var article = (function(){
 				)
 			},
 
+			fromShare : function(share){
+				var art = self.app.platform.sdk.articles.empty();
+
+					art.caption.value = share.caption.v
+					art.content = [{
+						value : share.message.v
+					}]
+
+				return art;
+			},	
+
 			add : function(){
 				var share = new Share();
 
@@ -126,16 +144,20 @@ var article = (function(){
 
 					share.settings.v = 'a'
 					share.settings.videos = self.app.platform.sdk.articles.getVideos(text)
-				
-					console.log(share, self.app.platform.sdk.articles.getImages(text))
 
 
 				var error = share.validation()
 
 				if(!error){
 
+					var text = "Do you really want to publish this article?";
+
+					if(ed.share){
+						text = "Do you really want to change and publish this article?";
+					}
+
 					dialog({
-						html : "Do you really want to publish this article?",
+						html : text,
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
 
@@ -173,11 +195,7 @@ var article = (function(){
 								}
 							});
 
-							console.log("TESTTESTSTETS")
-
 							share.message.set(text)
-
-
 							actions.trx(share)
 						}
 					})
@@ -311,8 +329,6 @@ var article = (function(){
 		}
 
 		var make = function(clbk){
-
-			console.log(MediumEditor)
 
 			editor = new MediumEditor('.edt', {
 				delay: 500,
@@ -549,11 +565,13 @@ var article = (function(){
 
 				art = ed.art || actions.newart(parameters().aid)
 
-				
+				if(ed.share) art = actions.fromShare(ed.share)
 
+				console.log(art)
 
 				var data = {
-					art : art
+					art : art,
+					ed : ed
 				};
 
 				clbk(data);

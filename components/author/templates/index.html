@@ -10,35 +10,40 @@ if(user.address.value)
 var telements = function(){ %>
 
 	<% if(!user.isItMe(author.address)) {
+		
+		var _class=''
+		
+		%>
 
-		var sclass = '';
+		<% if (me && me.relation(author.address, 'subscribes')){ 
+			
+			_class="following"
+			
+		%>
 
-		if (me && me.relation(author.address, 'subscribes')){
-			sclass = 'subscribed'
-		}
+		<% } else { %> 
+						
+		<% }%>
+		
+		&middot;
+		<span class="subscribebuttonstop <%-_class%>">
 
+			<span class="unsubscribe funf">You following</span>	
 
-	%>
+			<span class="subscribe funf">Follow</span>	
 
-		<div class="telement sbscr">
-			<div class="subscribebuttons table <%-sclass%>">
-				<div class="item">
-					<button class="contrast subscribe"><span class=""><%=e('sub')%></span></button>
-				</div>
-				<!--<div class="item prv">
-					<button class="contrast subscribeprivate"><i class="fas fa-eye-slash"></i></button>
-				</div>-->
+		</span>
 
-				<div class="item prall">
-					<button class="contrast unsubscribe"><span class=""><%=e('unsub')%></span></button>
-				</div>
-			</div>
-		</div>
+		<span class="blockingWrapper">
 
+			<span class="unblocking funf">Blocked</span>	
+
+		</span>
+					
+				
 	<% } %>
 	
-<% }
-%>
+<% } %>
 
 <div id="<%-module.map.id%>">
 
@@ -66,13 +71,17 @@ var telements = function(){ %>
 						<div class="infomain">
 							<div class="caption">
 								<b class="adr"><%-deep(author, 'data.name') || author.address%></b>
+
+								
+
+								<% if(state) { telements() } %>
 								
 							</div>
 							<div class="tips">
 								
 								<div class="telements">
 
-									<% if(!isMobile() && state) { telements() } %>
+									
 
 									<div class="telement">
 										<div class="usermenu">
@@ -92,13 +101,7 @@ var telements = function(){ %>
 		</div>
 	</div>
 
-	<% if(isMobile() && state) { %>
-
-		<div class="subscribewrapperphones">
-			<% telements() %>
-		</div>
-
-	<% } %>
+	
 
 	<div class="mworkwrapper">
 		<div class="work mwork">

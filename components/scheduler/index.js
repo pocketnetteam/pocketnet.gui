@@ -372,7 +372,6 @@ var scheduler = (function(){
 									actions.post(task, function(){
 										//actions.remove(task.id)
 									})
-
 									
 								}
 

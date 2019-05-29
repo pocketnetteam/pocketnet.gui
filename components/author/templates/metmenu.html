@@ -1,0 +1,61 @@
+<%
+
+var m = [];
+
+var all = {
+
+	block : {
+		icon : '<i class="fas fa-user-slash"></i>',
+		text : 'Block User',
+		class : 'block'
+	},
+
+    unblock : {
+		icon : '<i class="fas fa-user-check"></i>',
+		text : 'Unblock User',
+		class : 'unblock'
+	}
+
+}
+
+if(author){
+
+
+	if(author.address != user.address.value.toString('hex')){
+		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+		if(me){
+			if(me.relation(author.address, 'blocking')){
+				m.push('unblock')
+			}
+			else
+			{
+				m.push('block')
+			}
+		}
+
+        
+        
+
+	}
+}
+
+
+
+
+%>
+
+<div class="sharepostmenu">
+
+	<% _.each(m, function(m){ var mo = all[m] %>
+
+	<div class="menuitem <%-mo.class||''%> table">
+		
+		<div class="icon"><span><%=mo.icon%></span></div>
+		<div class="label"><span><%-mo.text%></span></div>
+
+	</div>
+		
+	<% }) %>
+
+</div>

@@ -1737,6 +1737,25 @@
 		return p.value;
 	}
 
+	replaceEqual = function(arr, el, wi){
+		var _index = -1;
+		var _el = _.find(arr, function(__el, index){
+			if(isEqual(__el, el, false))
+			{
+				_index = index;
+				return __el;
+			}
+		})
+
+		if(_index > -1)
+		{
+			arr.splice(_index, 1, wi);
+			return _el;
+		}
+
+		return false;
+	}
+
 	removeEqual = function(arr, el){
 		var _index = -1;
 		var _el = _.find(arr, function(__el, index){

@@ -4,9 +4,16 @@
 
 
 			<div class="item back">
-				
+
 				<div class="icon">
-					<i class="fas fa-arrow-left"></i>
+
+						<% if(ed.share) {%>
+							<i class="fas fa-times"></i>
+						<% } else { %>
+							<i class="fas fa-arrow-left"></i>	
+						<% } %>
+
+					
 				</div>
 			</div>
 
@@ -55,7 +62,14 @@
 						<div class="iWrapper table add">
 								
 							<div class="label">
-								Publish
+
+								<% if(ed.share) {%>
+									Save
+								<% } else { %>
+									Publish	
+								<% } %>
+
+							 	
 							</div>
 
 							<div class="icon">

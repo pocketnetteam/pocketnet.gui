@@ -110,6 +110,68 @@ Unsubscribe = function(){
 	return self;
 }
 
+Blocking = function(){
+	var self = this;
+
+	self.address = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.validation = function(){
+		if(!self.address.v){
+			return 'address';
+		}
+	}
+
+	self.serialize = function(){
+		return self.address.v
+	}
+
+	self.export = function(){
+		return {
+			address : self.address.v
+		}
+	}
+
+	self.type = 'blocking'
+
+	return self;
+}
+
+Unblocking = function(){
+	var self = this;
+
+	self.address = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.validation = function(){
+		if(!self.address.v){
+			return 'address';
+		}
+	}
+
+	self.serialize = function(){
+		return self.address.v
+	}
+
+	self.export = function(){
+		return {
+			address : self.address.v
+		}
+	}
+
+	self.type = 'unblocking'
+
+	return self;
+}
+
 Comment = function(txid){
 	var self = this;
 
@@ -689,6 +751,9 @@ Share = function(){
 		+ self.images.v.join(',')
 	}
 
+	self.shash = function(){
+		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
+	}
 	
 
 	self.export = function(extend){
@@ -700,8 +765,9 @@ Share = function(){
 				url : self.url.v,
 				tags : self.tags.v,
 				images : self.images.v,
+				settings : _.clone(self.settings),
 
-				settings : _.clone(self.settings)
+				txidEdit : self.aliasid || ""
 			} 
 		}
 
@@ -711,8 +777,9 @@ Share = function(){
 			u : encodeURIComponent(self.url.v),
 			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
 			i : self.images.v,
+			s : _.clone(self.settings),
+			txidEdit : self.aliasid || ""
 
-			s : _.clone(self.settings)
 		}
 	}
 
@@ -722,6 +789,8 @@ Share = function(){
 		self.tags.set(v.t || v.tags)
 		self.message.set(v.m || v.message)
 		self.images.set(v.i || v.images)
+
+		if (v.txidEdit) self.aliasid = v.txidEdit
 
 		if (v.s){
 			
@@ -749,7 +818,7 @@ Share = function(){
 
 			share._import(self.export())
 
-			share.txid = txid
+			share.txid = txid || self.aliasid
 
 		return share;
 	}
@@ -1018,38 +1087,6 @@ UserInfo = function(){
 	return self;
 }
 
-
-var test = new UserInfo()
-test.import({
-	"txid":"5741a02961547b401f9f9be17bd2c220bc6a98b4ff4d7909543e44adf3cb57e9",
-	"block":63667,
-	"time":1553571415,
-	"address":"PLNAsiX7JiE2iSR5CmmLdc8s9SYZCLH1P9",
-	"name":"pedro420",
-	"birthday":0,
-	"gender":0,
-	"regdate":1553198159,
-	"image": "https://i.imgur.com/ejgmvLz.jpg",
-	"about":"Ghost in the machine",
-	"language":"en",
-	"site":"",
-	"pubkey":"",
-	"addresses":"[]",
-	"ref":"",
-	"id":227
-})
-
-var data = Buffer.from(bitcoin.crypto.hash256(test.serialize()), 'utf8');
-
-var opreturnData = [Buffer.from(test.type, 'utf8'), data];
-
-if (test.opreturn){
-	opreturnData.push(Buffer.from(test.opreturn()))
-}
-
-
-
-
 pUserInfo = function(){
 
 	var self = this;
@@ -1218,6 +1255,9 @@ pShare = function(){
 		if (v.txid)
 			self.txid = v.txid;
 
+		if (v.txidEdit)
+			self.txidEdit = v.txidEdit;	
+
 		self.temp = v.temp || null;
 
 		if(v._time)
@@ -1268,8 +1308,6 @@ pShare = function(){
 
 		self._import(v)
 	}
-
-
 
 	self.renders = {
 		caption : function(){
@@ -1401,6 +1439,16 @@ pShare = function(){
 		return complainShare;
 	}
 
+	self.alias = function(){
+		var share = new Share();
+
+		share.import(self)
+
+		share.aliasid = self.txid
+
+		return share;
+	}
+
 	self.type = 'share'
 
 	return self;
@@ -1511,3 +1559,34 @@ kits = {
 		comment : pComment
 	}
 }
+
+
+/////////////////////////////////////
+/*
+var test = new UserInfo()
+	test.import({
+		"txid":"5741a02961547b401f9f9be17bd2c220bc6a98b4ff4d7909543e44adf3cb57e9",
+		"block":63667,
+		"time":1553571415,
+		"address":"PLNAsiX7JiE2iSR5CmmLdc8s9SYZCLH1P9",
+		"name":"pedro420",
+		"birthday":0,
+		"gender":0,
+		"regdate":1553198159,
+		"image": "https://i.imgur.com/ejgmvLz.jpg",
+		"about":"Ghost in the machine",
+		"language":"en",
+		"site":"",
+		"pubkey":"",
+		"addresses":"[]",
+		"ref":"",
+		"id":227
+	})
+
+var data = Buffer.from(bitcoin.crypto.hash256(test.serialize()), 'utf8');
+
+var opreturnData = [Buffer.from(test.type, 'utf8'), data];
+
+if (test.opreturn){
+	opreturnData.push(Buffer.from(test.opreturn()))
+}*/

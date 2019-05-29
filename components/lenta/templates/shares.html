@@ -4,7 +4,7 @@ var i = index || 0;
 _.each(shares, function(share){
 
  %>
-	<div class="share" id="<%-share.txid%>" style="">
+	<div class="share <% if(share.blocking) {%>blocking<% } %>" id="<%-share.txid%>" style="">
 		<div class="shareSpacer">
 			
 		</div>

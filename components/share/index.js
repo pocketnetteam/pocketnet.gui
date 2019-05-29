@@ -400,6 +400,16 @@ var share = (function(){
 
 			post : function(clbk, p){
 
+				
+				el.postWrapper.removeClass('showError');
+
+				if(essenseData.hash == currentShare.shash()){
+
+					el.postWrapper.addClass('showError');
+					el.error.html("There aren't changes in Post")
+					return
+				}
+
 				el.c.addClass('loading')
 				topPreloader(50)
 
@@ -442,6 +452,8 @@ var share = (function(){
 										alias.temp = true;
 										alias.address = _alias.address
 
+									if(currentShare.aliasid) alias.edit = "true"	
+
 									self.app.platform.sdk.node.shares.add(alias)
 
 									if(!essenseData.notClear){
@@ -460,6 +472,10 @@ var share = (function(){
 
 								catch (e){
 									console.log(e)
+								}
+
+								if (essenseData.post){
+									essenseData.post()
 								}
 
 								if (clbk)
@@ -1474,6 +1490,10 @@ var share = (function(){
 				actions.waitActions();
 
 
+			},
+
+			wnd : {
+				class : "smallWnd withoutButtons wndsharepost"
 			},
 
 			id : p._id

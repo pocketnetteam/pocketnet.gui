@@ -137,15 +137,57 @@
 		height: 180px;
 		position: relative;
 		margin-bottom : 0;
+
+		.blockingWrapper{
+			display : none;
+		}
+
+		&.blocking{
+			background: rgb(41, 3, 24);	
+
+			.subscribebuttonstop{
+				display: none;
+			}
+
+			.blockingWrapper{
+				display: inline;
+			}
+		}
 		
 		.create{
 			min-width: 250px;
 		}
 
+
 		.tips{
 		}
 
-		
+		.funf{
+			cursor : pointer;
+			opacity : 0.4;
+
+			.transition(0.3s);
+
+			&:hover{
+				opacity : 1;
+			}
+		}
+
+		.subscribebuttonstop{
+			.unsubscribe{
+				display : none;
+			}
+
+			&.following{
+				.unsubscribe{
+					display : inline;
+				}
+				
+				.subscribe{
+					display : none;
+				}
+			}
+		}
 
 		.telements{
 			overflow: hidden;
@@ -348,8 +390,7 @@
 				}
 
 				.caption{
-					margin-top : @rhythm;
-					font-size: 0.9em;
+					font-size: 1.1em;
 					overflow: hidden;
 					text-overflow: ellipsis;
 					text-align: left;

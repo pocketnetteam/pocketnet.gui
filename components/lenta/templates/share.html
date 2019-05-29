@@ -86,7 +86,7 @@ var metadisplay = function(){ %>
 		
 		</div>
 
-		<% if(!my && state) {%>
+		<% if(state) {%>
 
 		<div class="metapanel">
 			<div class="metapanelitem metmenu">
@@ -249,7 +249,7 @@ var metadisplay = function(){ %>
 
 	<div class="work">
 
-		<div class="shareTable table <%-subscribed%> <%-view%>" address="<%-share.address%>">
+		<div class="shareTable  table <%-subscribed%> <%-view%>" address="<%-share.address%>">
 			<div class="iconWrapper">
 
 
@@ -522,10 +522,22 @@ var metadisplay = function(){ %>
 				</div>
 			</div>
 		</div>
+
+		<div class="blockAuthor">
+			<div class="blockTable table">
+				<div class="blockCell">
+					<div class="label">You have blocked this User</div>
+				</div>
+			</div>
+			
+		</div>
 		
 	</div>
+	<div class="commentsWrapperHb">
+		
+		<div class="commentsWrapper">
+		</div>
 
-	<div class="commentsWrapper">
 	</div>
 
 	<div class="exitFull roundclosebutton">

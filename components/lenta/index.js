@@ -581,6 +581,13 @@ var lenta = (function(){
 				)
 			},
 
+			block : function(address, clbk){
+				
+
+
+
+			},
+
 			complain : function(obj, clbk){
 
 				var complainShare = obj.complain();
@@ -820,6 +827,7 @@ var lenta = (function(){
 			},
 
 			complain : function(id){
+				console.log("CPOMS")
 				self.nav.api.load({
 					open : true,
 					id : 'complain',
@@ -918,6 +926,103 @@ var lenta = (function(){
 
 						})
 
+
+						el.find('.block').on('click', function(){
+
+							self.app.platform.api.actions.blocking(address, function(tx, error){
+								if(!tx){
+									self.app.platform.errorHandler(error, true)	
+								}
+							})
+
+							_el.tooltipster('hide')	
+
+						})
+
+						el.find('.edit').on('click', function(){
+
+							
+							var em = null;
+							var editing = d.share.alias()
+
+							var hash = editing.shash()
+
+							if (editing.settings.v == 'a'){
+
+								self.nav.api.load({
+									open : true,
+									href : 'article',
+									inWnd : true,
+				
+									history : true,
+				
+									essenseData : {
+										share : editing,
+										hash : hash,
+										save : function(art){
+											
+										},
+				
+										close : function(){
+											
+										},
+										complete : function(){
+											
+										},
+										closeContainer : function(){
+											
+										}
+									}
+								})	
+
+							}
+							else{
+								self.nav.api.load({
+
+									open : true,
+									id : 'share',
+									animation : false,
+									inWnd : true,
+									_id : d.share.id,
+			
+									essenseData : {
+										share : editing,
+										notClear : true,
+										hash : hash,
+
+										cancel : function(){
+											
+											var close = deep(em, 'container.close')
+											if (close)
+												close()
+										},
+
+										post : function(){
+
+											var close = deep(em, 'container.close')
+											if (close)
+												close()
+										}
+									},
+									
+									clbk : function(e, p){
+										em = p;
+
+										console.log(em)
+										
+									}
+			
+								})
+							}
+				
+								
+
+						
+
+							_el.tooltipster('hide')	
+
+						})
+	
 						
 
 					})
@@ -1172,16 +1277,30 @@ var lenta = (function(){
 
 				var _el = $(this).closest('.share')
 
-				self.app.platform.api.actions.unsubscribe(address, function(tx, error){
 
-					if(tx){
-						_el.find('.shareTable').removeClass('subscribed');
-					}	
-					else{
-						self.app.platform.errorHandler(error, true)	
+				dialog({
+					html : "Do you really want to unfollow user?",
+					btn1text : "Unfollow",
+					btn2text : "Cancel",
+
+					class : 'zindex',
+
+					success : function(){
+
+						self.app.platform.api.actions.unsubscribe(address, function(tx, error){
+
+							if(tx){
+								_el.find('.shareTable').removeClass('subscribed');
+							}	
+							else{
+								self.app.platform.errorHandler(error, true)	
+							}
+							
+						})
 					}
-					
 				})
+
+				
 			},
 
 			exitFullScreenVideo : function(){
@@ -1584,11 +1703,13 @@ var lenta = (function(){
 					})
 				}
 
+				console.log(shares, p)
+
 				
 				self.shell({
 					name :  tpl,
 					inner : p.inner,
-					el : el.shares,
+					el : p.el || el.shares,
 					data : {
 						shares : shares || [],
 						index : p.index || 0
@@ -1597,12 +1718,16 @@ var lenta = (function(){
 
 				}, function(p){
 
-					if(p.inner == append){
+					if (p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
 					}
 					else
 					{
-						sharesInview = shares.concat(sharesInview)	
+						if(p.inner != replaceWith)
+						{
+							console.log("CONCATS")
+							sharesInview = shares.concat(sharesInview)	
+						}
 					}
 				
 
@@ -2160,13 +2285,45 @@ var lenta = (function(){
 
 			if(!essenseData.txids){
 				self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
-					renders.shares([share], function(){
-						renders.sharesInview([share], function(){
+
+					console.log("TSHARE", share.txidEdit)
+
+					if (share.txidEdit){
+						
+
+						var f = replaceEqual(sharesInview, {
+							txid : share.txidEdit
+						}, share)
+
+						console.log(f, share, sharesInview)
+
+						if (f){
+
+							console.log(el.shares.find('#' + share.txidEdit))
+
+							renders.shares([share], function(){
+								renders.sharesInview([share], function(){
+									
+								})
+							}, {
+								inner : replaceWith,
+								el : el.shares.find('#' + share.txidEdit)
+							})
+
 							
+						}
+					}
+					else{
+						renders.shares([share], function(){
+							renders.sharesInview([share], function(){
+								
+							})
+						}, {
+							inner : prepend
 						})
-					}, {
-						inner : prepend
-					})
+					}
+
+					
 				}
 
 				self.app.platform.ws.messages.transaction.clbks.temp = function(data){
@@ -2296,6 +2453,20 @@ var lenta = (function(){
 				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
 
 				addressEl.removeClass('subscribed');
+			}
+
+			self.app.platform.clbks.api.actions.blocking.lenta = function(address){
+
+				var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+
+				addressEl.addClass('blocking');
+			}
+
+			self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
+
+				var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+
+				addressEl.addClass('unblocking');
 			}
 			
 		}
@@ -2516,8 +2687,11 @@ var lenta = (function(){
 				delete self.app.platform.ws.messages.event.clbks.lenta
 
 				delete self.app.platform.ws.messages["new block"].clbks.newsharesLenta
-			 	delete self.app.platform.clbks.api.actions.subscribe.lenta
+				delete self.app.platform.clbks.api.actions.subscribe.lenta
 				delete self.app.platform.clbks.api.actions.unsubscribe.lenta
+
+				delete self.app.platform.clbks.api.actions.blocking.lenta
+				delete self.app.platform.clbks.api.actions.unblocking.lenta
 
 				self.app.platform.sdk.chats.removeTemp()
 								

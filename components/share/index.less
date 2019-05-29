@@ -580,10 +580,14 @@
 		}
 
 		
-	}
+    }
+    
+    .postlineWrapper{
+        margin-top: 3 * @rhythm;
+    }   
 
 	.postpanel{
-		margin-top: 3 * @rhythm;
+		
 		>div{
 			width: 40%;
 			vertical-align: middle;
@@ -592,14 +596,19 @@
 				width: 60%;
 				padding-right : 0;
 				text-align: right;
+				overflow: hidden;
+
+				.element{
+					float : right;
+				}
 				
 				button{
 					min-width: 160px;
 
-					.shadowSmall();
+					&.shadow{
+						.shadowSmall();
+					}
 				}
-
-
 
 				.selectedTimeWrapper{
 					padding : 2 * @rhythm 0;	
@@ -723,6 +732,93 @@
 
 	.buttons>div{
 		float: right;
+	}
+}
+
+.wnd.wndsharepost{
+    .wndinner{
+		max-height: 650px;
+		
+    }
+	.wndcontent{
+        overflow: hidden;
+        padding-right: 4 * @rhythm;
+		top : 0;
+		background: #FAFAFA;
+
+        .result{
+            margin-top : 0;
+        }
+
+		#share{
+            position: static;
+
+            .mobilecaption{
+                display: block;
+				padding : 2 * @rhythm 0;
+				position: absolute;
+				left : 2 * @rhythm;
+				right : 0;
+				top : 0;
+
+                span{
+                    font-size: 1.5em;
+                }
+			}
+			
+			.absolutetxwrapper{
+				position: absolute;
+				left : 2 * @rhythm;
+				right : 2 * @rhythm;
+				top : 65px;
+				padding-bottom : 6 * @rhythm;
+				bottom : 65px;
+
+				.txtwrapper{
+					height: 100%;
+
+					>div{
+						&.shareWrapper{
+							height: 100%;
+							position: relative;
+							
+							.relativeContainer{
+								width : 100%;
+								height: 100%;
+								position: absolute;
+								overflow-y: auto;
+							}
+						}
+					}
+				}
+			}
+
+			.error{
+				position : absolute;
+				bottom : 65px;
+				left : 0;
+				right : 0;
+				text-align: center;
+				background: fade(#FAFAFA, 70);
+			}
+
+            .postlineWrapper{
+                position : absolute;
+                left : 0;
+                right  :0;
+                bottom : 0;
+                margin-top : 0;
+                padding : 2 * @rhythm;
+
+			}
+			
+			.sLoader{
+				left : 8 * @rhythm;
+				top : 6 * @rhythm;
+				background: fade(#FAFAFA, 90);
+				padding-top : 2.75em;
+			}
+        }
 	}
 }
 
@@ -1034,7 +1130,11 @@
 
 		
 		
-	}
+    }
+    
+    .postlineWrapper{
+        margin-top : 0;
+    }
 
 	.postpanel{
 		display: block;

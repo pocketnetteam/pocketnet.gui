@@ -587,8 +587,21 @@ __map =  {
 		share : {
 			uri : "share",
 			href : "share",
-			add : {
-				el : 'content'
+			add : function(settings, p){
+
+				if(p.inWnd)
+
+					return {
+						insert : 'wnd'
+					}
+
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
 			},
 
 			relations : [

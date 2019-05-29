@@ -3,6 +3,19 @@
 var m = [];
 
 var all = {
+
+	edit : {
+		icon : '<i class="fas fa-pencil-alt"></i>',
+		text : "Edit Post",
+		class : 'edit'
+	},
+
+	remove : {
+		icon : '<i class="far fa-times-circle"></i>',
+		text : "Remove Post",
+		class : 'edit'
+	},
+
 	share : {
 		icon : '<i class="fas fa-share-alt"></i>',
 		text : "Share",
@@ -23,7 +36,7 @@ var all = {
 
 	complain : {
 		icon : '<i class="fas fa-ban"></i>',
-		text : 'Complain',
+		text : 'Complain Post',
 		class : 'complain'
 	},
 
@@ -31,6 +44,12 @@ var all = {
 		icon : '<i class="fas fa-donate"></i>',
 		text : 'Donate',
 		class : 'donate'
+	},
+
+	block : {
+		icon : '<i class="fas fa-user-slash"></i>',
+		text : 'Block User',
+		class : 'block'
 	}
 
 }
@@ -43,6 +62,10 @@ if(share){
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
 		var subscribed = '';
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+		if (my){
+			m.push('edit')
+		}
 
 		if(!my && me){
 
@@ -63,7 +86,7 @@ if(share){
 				m.push('complain')
 			}
 
-			
+			m.push('block')
 		}
 	}
 }

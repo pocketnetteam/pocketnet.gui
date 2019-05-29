@@ -944,7 +944,8 @@ var comments = (function(){
 					el.list.find('.tocomment').off('click').on('click', events.tocomment)
 
 					setTimeout(function(){
-						el.list.find('.newcomments').removeClass('newcomments')
+						if(el.list)
+							 el.list.find('.newcomments').removeClass('newcomments')
 					}, 600)
 					
 					bgImages(el.list)

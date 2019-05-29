@@ -301,6 +301,12 @@ Platform = function(app){
 			}
 		},
 
+		"26" : {
+			message : function(){
+				return "You can't edit posts that older than 24h"
+			}
+		},
+
 		"18" : {
 			message : function(){
 				return 'This name already use in Pocketnet'
@@ -522,7 +528,10 @@ Platform = function(app){
 		api : {
 			actions : {
 				subscribe : {},
-				unsubscribe : {}
+				unsubscribe : {},
+
+				blocking : {},
+				unblocking : {}
 			}
 		},
 
@@ -714,6 +723,72 @@ Platform = function(app){
 							}
 
 							var clbks = deep(self.clbks, 'api.actions.subscribe') || {}
+
+							_.each(clbks, function(c){
+								c(address)
+							})
+						}
+
+						topPreloader(100)
+
+						clbk(tx, error)
+
+					}
+				)	
+			},
+
+			blocking : function(address, clbk){
+				var blocking = new Blocking();
+					blocking.address.set(address);
+
+					topPreloader(10)
+
+				self.sdk.node.transactions.create.commonFromUnspent(
+
+					blocking,
+
+					function(tx, error){
+
+						if(tx){
+							var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+
+							if (me) me.addRelation(address, 'blocking')
+
+							var clbks = deep(self.clbks, 'api.actions.blocking') || {}
+
+							_.each(clbks, function(c){
+								c(address)
+							})
+						}
+
+						topPreloader(100)
+
+						clbk(tx, error)
+
+					}
+				)	
+			},
+
+			unblocking : function(address, clbk){
+				var unblocking = new Unblocking();
+					unblocking.address.set(address);
+
+					topPreloader(10)
+
+				self.sdk.node.transactions.create.commonFromUnspent(
+
+					unblocking,
+
+					function(tx, error){
+
+						if(tx){
+							var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+
+							var u = self.sdk.users.storage[address];
+
+							if (me) me.removeRelation(address, 'blocking')
+
+							var clbks = deep(self.clbks, 'api.actions.unblocking') || {}
 
 							_.each(clbks, function(c){
 								c(address)
@@ -2028,6 +2103,17 @@ Platform = function(app){
 										{
 											u._import(data)
 										}
+
+										if(state && data.address == self.sdk.address.pnet().address){
+
+											_.each(temp.blocking, function(block){
+												u.blocking || (u.blocking = [])
+
+												u.blocking.push(block.address)
+											})
+
+										}
+										
 
 										u.regdate = new Date();
 										u.regdate.setTime(data.regdate * 1000);	
@@ -4077,7 +4163,7 @@ Platform = function(app){
 					})
 				},
 
-				recomended : function(p, clbk){
+				/*recomended : function(p, clbk){
 
 					self.app.user.isState(function(state){
 
@@ -4119,7 +4205,7 @@ Platform = function(app){
 						
 
 					})
-				},
+				},*/
 
 				recommended : function(p, clbk){
 
@@ -4248,14 +4334,32 @@ Platform = function(app){
 										if(!p.author || p.author == p.address){
 											_.each(temp.share, function(ps){
 
+
 												var s = new pShare();
 													s._import(ps, true);
 													s.temp = true;
 													s.address = ps.address
 
-												shares.unshift(s)
+												if(ps.txidEdit){
+													
+													replaceEqual(shares, {
+														txid : ps.txidEdit
+													}, s)
+												}
+
+												else{
+													shares.unshift(s)
+												}
+
+												
 											})
 										}
+
+										_.each(temp.blocking, function(block){
+											_.each(shares, function(s){
+												if(s.address == block.address) s.blocking = true;
+											})
+										})
 									}
 
 									_.each(shares || [], function(s){
@@ -5399,6 +5503,8 @@ Platform = function(app){
 							else
 							{
 
+								console.log(hex, obj.export(), obj.type)
+
 								self.app.ajax.rpc({
 									method : 'sendrawtransactionwithmessage',
 									parameters : [hex, obj.export(), obj.type],
@@ -5494,6 +5600,13 @@ Platform = function(app){
 
 					subscribe : function(inputs, subscribe, clbk, p){
 						this.common(inputs, subscribe, TXFEE, clbk, p)
+					},
+
+					blocking : function(inputs, blocking, clbk, p){
+						this.common(inputs, blocking, TXFEE, clbk, p)
+					},
+					unblocking : function(inputs, unblocking, clbk, p){
+						this.common(inputs, unblocking, TXFEE, clbk, p)
 					},
 
 					subscribePrivate : function(inputs, subscribe, clbk, p){

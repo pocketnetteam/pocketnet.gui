@@ -583,6 +583,7 @@
             vals, val, n,
             numerator, denominator;
 
+
         switch (type) {
             case 1: // byte, 8-bit unsigned int
             case 7: // undefined, 8-bit byte, value depending on field
@@ -779,6 +780,7 @@
 
         tags = readTags(file, tiffOffset, tiffOffset + firstIFDOffset, TiffTags, bigEnd);
 
+
         if (tags.ExifIFDPointer) {
             exifData = readTags(file, tiffOffset, tiffOffset + tags.ExifIFDPointer, ExifTags, bigEnd);
             for (tag in exifData) {
@@ -818,7 +820,7 @@
             }
         }
 
-        if (tags.GPSInfoIFDPointer) {
+        /*if (tags.GPSInfoIFDPointer) {
             gpsData = readTags(file, tiffOffset, tiffOffset + tags.GPSInfoIFDPointer, GPSTags, bigEnd);
             for (tag in gpsData) {
                 switch (tag) {
@@ -831,7 +833,7 @@
                 }
                 tags[tag] = gpsData[tag];
             }
-        }
+        }*/
 
         // extract thumbnail
         tags['thumbnail'] = readThumbnailImage(file, tiffOffset, firstIFDOffset, bigEnd);

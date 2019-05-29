@@ -457,7 +457,7 @@ var chat = (function(){
 				self.app.platform.api.electron.notifications(unreadCount, 'messages')
 			},
 			checkState : function(){
-				if(!el.c.hasClass('minimized')) return true
+				if(el.c && !el.c.hasClass('minimized')) return true
 			}
 		}
 
