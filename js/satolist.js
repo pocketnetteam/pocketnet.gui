@@ -502,8 +502,6 @@ Platform = function(app){
 		_focus : {},
 		focus : function(){
 
-			console.log("SELF>CLBKS>FOCUS")
-
 			if(isTablet() || 1==1 || electron){
 
 				app.user.isState(function(state){
@@ -2106,6 +2104,8 @@ Platform = function(app){
 
 										if(state && data.address == self.sdk.address.pnet().address){
 
+											console.log("temp.blocking", temp.blocking)
+
 											_.each(temp.blocking, function(block){
 												u.blocking || (u.blocking = [])
 
@@ -3480,8 +3480,6 @@ Platform = function(app){
 
 			toLastComment : function(comment){
 
-				console.log('comment', comment)
-
 				var lc = {
 					address : comment.address,
 					answerid : comment.answerid,
@@ -3956,9 +3954,6 @@ Platform = function(app){
 
 				tempLikes : function(shares){
 
-
-					console.log('self.sdk.node.transactions.temp.upvoteShare, shares', self.sdk.node.transactions.temp.upvoteShare, shares)
-
 					_.each(self.sdk.node.transactions.temp.upvoteShare, function(tempShare){
 
 						var txid = tempShare.share;
@@ -3974,8 +3969,6 @@ Platform = function(app){
 
 								share.scnt++;
 								share.score = Number(share.score || 0) + Number(tempShare.value);
-
-								console.log("UPVOTE", share)
 
 								return true
 							}
@@ -4116,6 +4109,8 @@ Platform = function(app){
 
 							s.score = share.scoreSum;
 							s.scnt = share.scoreCnt;
+
+							s.edit = share.edit || false
 
 							if(state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
 
@@ -5502,9 +5497,6 @@ Platform = function(app){
 							}
 							else
 							{
-
-								console.log(hex, obj.export(), obj.type)
-
 								self.app.ajax.rpc({
 									method : 'sendrawtransactionwithmessage',
 									parameters : [hex, obj.export(), obj.type],

@@ -8,8 +8,8 @@ if(!_Node)
 		/*ws : 'wss://bear:8088',
 		apiproxy : 'https://bear:8888',*/
 
-		/*ws : 'wss://localhost:8088',
-		apiproxy : 'https://localhost:8888',*/
+		ws : 'wss://localhost:8088',
+		apiproxy : 'https://localhost:8888',
 
 		/*rtcws : 'wss://localhost:9090',
 		rtchttp : 'https://localhost:9091'*/

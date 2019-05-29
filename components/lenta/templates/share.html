@@ -360,6 +360,10 @@ var metadisplay = function(){ %>
 								<span>New</span>
 
 							<% } %>
+
+							<% if(share.edit == 'true') {%>	
+								<span class="editedLabel"><i class="fas fa-pencil-alt"></i> Edited</span>
+							<% } %>
 						</div>
 
 						<% if(!share.temp) {%>

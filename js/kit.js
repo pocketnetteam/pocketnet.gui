@@ -1102,6 +1102,7 @@ pUserInfo = function(){
 
 	self.subscribes = [];
 	self.subscribers = [];
+	self.blocking = [];
 
 	self.address = ''
 
@@ -1123,6 +1124,9 @@ pUserInfo = function(){
 		if (v.subscribes) self.subscribes = v.subscribes;
 		if (v.subscribers) self.subscribers = v.subscribers;
 
+
+		if (v.blocking) self.blocking = v.blocking;
+
 		if (v.txid)
 			self.txid = v.txid;
 
@@ -1132,6 +1136,7 @@ pUserInfo = function(){
 			self.address = v.adr || v.address
 
 		self.temp = v.temp || null;
+
 	}
 
 	self.export = function(){
@@ -1162,7 +1167,7 @@ pUserInfo = function(){
 		if(!key) key = 'subscribes'
 
 		return _.find(self[key], function(o){
-			return o.adddress == address || o.address == address
+			return o.adddress == address || o.address == address || o == address
 		})
 	}
 
