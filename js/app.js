@@ -79,7 +79,7 @@ Application = function(p)
 	self.options = {
 
 		nav : {
-			navPrefix : '/pocketnet/',
+			navPrefix : '/',
 		},
 
 		name : 'PCRB',

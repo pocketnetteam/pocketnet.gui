@@ -300,34 +300,104 @@ Platform = function(app){
 				return self.app.localization.e('networkerror')
 			}
 		},
-
+		"27" : {
+			message : function(){
+				return "You are trying to edit someone else's post"
+			}
+		},
 		"26" : {
 			message : function(){
-				return "You can't edit posts that older than 24h"
+				return "You have reached your limit of editing 5 posts in a 24 hour period"
+			}
+		},
+
+		"25" : {
+			message : function(){
+				return 'You can only edit once per blockchain block. Please wait a minute, then try again'
+			}
+		},
+		"24" : {
+			message : function(){
+				return 'You cannot block yourself'
+			}
+		},
+		"23" : {
+			message : function(){
+				return 'You have already blocked this user'
+			}
+		},
+		"22" : {
+			message : function(){
+				return 'You have not blocked this user'
+			}
+		},
+		"21" : {
+			message : function(){
+				return 'Transaction is malformed'
+			}
+		},
+		"20" : {
+			message : function(){
+				return 'You cannot refer yourself'
+			}
+		},
+		"19" : {
+			message : function(){
+				return 'This username is too long'
 			}
 		},
 
 		"18" : {
 			message : function(){
-				return 'This name already use in Pocketnet'
+				return 'This username is already in use'
 			}
 		},
 
 		"17" : {
 			message : function(){
-				return 'This post is too long, please break it up. We are working on increasing the size of the post.'
+				return 'This post is too long, please break it up.'
 			}
 		},	
 
 		"16" : {
 			message : function(){
-				return 'You have reached a limit of number of complaints'
+				return 'Your Pocketnet reputation score does not allow for registering of complaints yet'
+			}
+		},	
+
+		"15" : {
+			message : function(){
+				return 'You have reached the limit of complaints in a 24 hour period'
+			}
+		},	
+
+		"14" : {
+			message : function(){
+				return 'Cannot complain about your own post'
 			}
 		},	
 
 		"13" : {
 			message : function(){
-				return 'You have already submitted a request for a complaint'
+				return 'You have already registered your complaint about this post'
+			}
+		},	
+
+		"12" : {
+			message : function(){
+				return self.app.localization.e('unexperror12')
+			}
+		},
+
+		"11" : {
+			message : function(){
+				return self.app.localization.e('unexperror11')
+			}
+		},
+
+		"10" : {
+			message : function(){
+				return self.app.localization.e('unexperror10')
 			}
 		},	
 
@@ -369,13 +439,19 @@ Platform = function(app){
 
 		"3" : {
 			message : function(){
-				return self.app.localization.e('scoreLimitLight')
+				var us = self.sdk.ustate.storage[self.sdk.address.pnet().address] || {}
+
+				return self.app.localization.e('scoreLimitLight', (us.score_unspent || 0) + (us.score_spent || 0))
 			}
 		},	
 
 		"2" : {
 			text : function(){
-				return self.app.localization.e('postLimitLight')
+
+				var us = self.sdk.ustate.storage[self.sdk.address.pnet().address] || {}
+
+				return self.app.localization.e('postLimitLight', (us.post_unspent || 0) + (us.post_spent || 0))
+				
 			}
 		},
 
@@ -1288,6 +1364,10 @@ Platform = function(app){
 
 			},
 
+			extendMe : function(me){
+				var subscribe = deep(self, 'sdk.node.transactions.temp.subscribe')
+			},
+
 			get : function(clbk){
 
 
@@ -1496,6 +1576,17 @@ Platform = function(app){
 				}
 				
 
+			},
+
+			me : function(){
+				var me = null;
+				var address = self.app.platform.sdk.address.pnet()
+
+				if (address){
+					me = self.app.platform.sdk.users.storage[address.address];
+
+					return me
+				}
 			}
 		},
 
@@ -1972,11 +2063,45 @@ Platform = function(app){
 		users : {
 			loading : {},
 			storage : {},
+
+
+			extend : function(u, state){
+
+				var temp = self.sdk.node.transactions.temp;
+
+				console.log("EXTEND USER", state && u.address == self.sdk.address.pnet().address, temp, u)
+
+				if(state && u.address == self.sdk.address.pnet().address){
+
+					_.each(temp.blocking, function(block){
+						u.addRelation(block.vsaddress, 'blocking')
+					})
+
+					_.each(temp.unblocking, function(block){
+						u.removeRelation(block.vsaddress, 'blocking')
+					})
+
+					_.each(temp.subscribe, function(s){
+						
+						uncryptoPair.addRelation({
+							adddress : s.vsaddress,
+							private : false
+						})	
+					})
+
+					_.each(temp.unsubscribe, function(s){
+						
+						u.addRelation({
+							adddress : s.vsaddress,
+							private : false
+						})	
+					})
+				}
+			},
+
 			getone : function(address, clbk, light){
 				var s = this.storage;
 				var l = this.loading;
-
-				
 
 				if(!address || s[address]){
 					if (clbk)
@@ -2009,46 +2134,52 @@ Platform = function(app){
 						params.push('1')
 					}
 
-					self.app.ajax.rpc({
-						method : 'getuserprofile',
-						parameters : params,
-						success : function(d){
+					self.app.user.isState(function(state){
 
-							l[address] = false;
+						self.app.ajax.rpc({
+							method : 'getuserprofile',
+							parameters : params,
+							success : function(d){
 
-							if(typeof pUserInfo != 'undefined'){
+								l[address] = false;
 
-								_.each(d || [], function(data){
-									var u = new pUserInfo();
+								if(typeof pUserInfo != 'undefined'){
 
-									u._import(data)
+									_.each(d || [], function(data){
+										var u = new pUserInfo();
 
-									u.regdate = new Date();
-									u.regdate.setTime(data.regdate * 1000);	
+										u._import(data)
 
-									u.address = data.address						
+										u.regdate = new Date();
+										u.regdate.setTime(data.regdate * 1000);	
 
-									s[data.address] = u;
+										u.address = data.address	
+										
+										self.sdk.users.extend(u, state)
 
-									self.sdk.usersl.storage[data.address] = u;
+										s[data.address] = u;
+
+										self.sdk.usersl.storage[data.address] = u;
 
 
-								})
+									})
 
+								}
+	
+								if (clbk)
+									clbk()
+
+							},
+
+							fail : function(){
+
+								l[address] = false;
+
+								if (clbk)
+									clbk()
 							}
- 
-							if (clbk)
-								clbk()
+						})
 
-						},
-
-						fail : function(){
-
-							l[address] = false;
-
-							if (clbk)
-								clbk()
-						}
 					})
 				}
 			},
@@ -2102,23 +2233,14 @@ Platform = function(app){
 											u._import(data)
 										}
 
-										if(state && data.address == self.sdk.address.pnet().address){
+										u.address = data.address
 
-											console.log("temp.blocking", temp.blocking)
-
-											_.each(temp.blocking, function(block){
-												u.blocking || (u.blocking = [])
-
-												u.blocking.push(block.address)
-											})
-
-										}
-										
+										self.sdk.users.extend(u, state)
 
 										u.regdate = new Date();
 										u.regdate.setTime(data.regdate * 1000);	
 
-										u.address = data.address						
+																
 
 										s[data.address] = u;
 
@@ -2796,7 +2918,7 @@ Platform = function(app){
 
 					})
 
-					if(_total > total){
+					if(_total > total  && (_total.toFixed(8) - total.toFixed(8)) > 0){
 
 						outputs.push({
 							address : inputs[0].address,
@@ -4706,11 +4828,15 @@ Platform = function(app){
 						})
 					})
 
+					console.log("temps", temps)
+
 
 					lazyEach({
 						array : temps,
 						action : function(p){
 							c(p.item, function(result){
+
+								console.log("temp", p.item, result)
 
 								if(result){
 									_.each(t, function(ts){
@@ -4754,7 +4880,6 @@ Platform = function(app){
 					if (alias && alias.txid){
 
 						self.sdk.node.transactions.get.tx(alias.txid, function(d, _error){
-
 
 							if (clbk){
 
@@ -4801,7 +4926,6 @@ Platform = function(app){
 
 				tempBalance : function(){
 					var inputs = this.tempInputs()
-
 
 					return _.reduce(inputs, function(m, i){
 
@@ -5005,7 +5129,6 @@ Platform = function(app){
 
 								self.sdk.node.transactions.get.unspent(function(u){
 
-
 									a[address] = u
 
 									p.success()
@@ -5050,11 +5173,14 @@ Platform = function(app){
 
 							else
 							{
-
 								self.app.ajax.rpc({
 									method : 'txunspent',
 									parameters : [addresses, 1, 9999999],
 									success : function(d){
+
+										_.each(d, function(u){
+											self.sdk.node.transactions.clearTemp(u.txid);
+										})
 
 										_.each(addresses, function(address){
 											s.unspentLoading[address] = false;
@@ -5066,6 +5192,12 @@ Platform = function(app){
 										_.each(d || [], function(tr){
 
 											var address = tr.address
+
+
+											removeEqual(s.unspent[address], {
+												txid : tr.txid,
+												vout : tr.vout
+											})
 
 											s.unspent[address].push(tr)
 											a[address].push(tr)
@@ -5457,7 +5589,7 @@ Platform = function(app){
 
 							var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
 
-							var opreturnData = [Buffer.from(obj.type, 'utf8'), data];
+							var opreturnData = [Buffer.from( obj.typeop ? obj.typeop() : obj.type, 'utf8'), data];
 
 							if (obj.opreturn){
 								opreturnData.push(Buffer.from(obj.opreturn()))
@@ -6170,6 +6302,10 @@ Platform = function(app){
 			getChat : function(chat){
 
 				chat.rtc = self.clientrtctemp.api.getChat(chat.id, chat.users);
+			},
+
+			getChats : function(clbk){
+				self.clientrtctemp.getchats(clbk)
 			}
 		},
 
@@ -6742,6 +6878,7 @@ Platform = function(app){
 									share.myVal = 0
 
 								platform.sdk.node.shares.storage.trx[data.txid] = share
+								
 
 							}
 						}
@@ -6761,9 +6898,10 @@ Platform = function(app){
 							s[a] || (s[a] = []);
 
 							if (!wa){
+
 								removeEqual(s[a], {
 									txid : data.tx.txid,
-									vout : data.tx.nout
+									vout : data.tx.vout
 								})
 
 								s[a].push(data.tx)
@@ -10183,8 +10321,10 @@ Platform = function(app){
 		var methods = [
 			'ustate.meUpdate',
 			'node.transactions.checkTemps',
-			'node.transactions.get.allBalanceUpdate'
+			'node.transactions.get.allBalanceUpdate',
+			'tempmessenger.getChats'
 		]	
+
 
 		var progress = 10;
 
