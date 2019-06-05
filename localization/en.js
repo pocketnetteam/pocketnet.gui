@@ -303,16 +303,24 @@ ____loclib.checkScoreErrorLight = "Account is not activated";
 ____loclib.timestamperror = "Time in application and in node do not match";
 
 
-____loclib.postLimitLight = "You have reached a limit of publications";
-____loclib.scoreLimitLight = "You have reached the grading limit";
-____loclib.doubleLimitLight = "You have already rated this publication";	
+____loclib.postLimitLight = function(v){
+	return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
+}
+____loclib.postLimitLight = function(v){
+	return "You have reached your limit of " + (v || 15) + " grading in a 24 hour period";
+}
 
-____loclib.SelfSubscribeError = "Unable to followe to yourself";
-____loclib.DoubleSubscribeError = "You are already following this account. Please refresh your page";
-____loclib.InvalideSubscribeError = "An error occurred while unfollowing from the account. Please refresh your page";
-____loclib.ChangeInfoLimitError = "You have reached the limit on changing information about yourself. Please try later";
-____loclib.SelfScoreError = "Unable to rate yourself";
+____loclib.doubleLimitLight = "You have already rated this";	
 
+____loclib.SelfSubscribeError = "Cannot subscribe to yourself";
+____loclib.DoubleSubscribeError = "You already follow this user";
+____loclib.InvalideSubscribeError = "You are not subscribed to this user";
+____loclib.ChangeInfoLimitError = "You can only edit your profile once an hour. Please wait and try again. ";
+____loclib.SelfScoreError = "You cannot rate your own post";
+
+____loclib.unexperror10 = "Unknown Error (10)";
+____loclib.unexperror11 = "Unknown Error (11)";
+____loclib.unexperror12 = "Unknown Error (12)";
 
 ____loclib.networkerror = "There are some problems with node";
 

@@ -308,11 +308,12 @@ var comments = (function(){
 			},
 
 			hideallReplies : function(){
-				_.each(self.app.platform.sdk.comments.storage[txid]['0'], function(r, id){
+				_.each(deep(self, 'app.platform.sdk.comments.storage.'+txid + '.0'), function(r, id){
 
 					actions.replies(id, false)
 
 				})
+				
 				if (ed.lastComment)
 					actions.replies(ed.lastComment.id, false)
 				

@@ -11,6 +11,8 @@ var groupshares = group(shares, function(s){
 	return s.address
 })
 
+var me = app.platform.sdk.user.me()
+
 _.each(groupshares, function(gs, address){ %>
 
 	<div class="authorgroup">
@@ -22,7 +24,7 @@ _.each(groupshares, function(gs, address){ %>
 			if (j) h = 'hidden'
 
 		%>
-				<div class="share <%-h%>" id="<%-share.txid%>" style="">
+				<div class="share <%-h%> <% if(me && me.relation(share.address, 'blocking')) {%>blocking<% } %>" id="<%-share.txid%>" style="">
 					<div class="shareSpacer">
 						
 					</div>

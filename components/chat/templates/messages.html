@@ -31,6 +31,8 @@ _.each(messages, function(message){
 		}
 	}
 
+	var me = app.platform.sdk.user.me()
+
 	if (imageExist) imagePreloader = 'imagePreloader'
 
 	if (message.Read && message.Read != "0") read='read';
@@ -79,75 +81,87 @@ _.each(messages, function(message){
 				<% } %>
 				<div class="textWrapper">
 
-					<% if(message.decrypted && (message.decrypted.Message || message.decrypted.AttachmentName)) {%>
+						
 
-						<% if(message.decrypted.Message) {%>
+					<% if(me && me.relation(message.f, 'blocking')) {%>
 
-							<div class="text">
-
-
-
-								<%=filterXSS(clearScripts(donottrustLink(findAndReplaceLink(message.decrypted.Message, true))))%>
-							</div>
-
-						<% } %>
-
-						<% if(message.decrypted.AttachmentName) {%>
-
-							<div class="text">
-								<div class="attachment">
-									<div class="attachmentName">
-										<span class="likelink"><%- message.decrypted.AttachmentName %> </span>
-
-										<% if(message.decrypted.AttachmentPreview == 'pdf') {%>
-
-											<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-
-										<% } %>
-									</div>
-
-									<% if(imageExist) {%>
-
-										<div class="attachmentPreview">
-											<img src="<%-message.decrypted.AttachmentPreview%>">
-										</div>
-
-									<% } %>
-								</div>
-							</div>
-
-						<% } %>
-
-					<% } else {%>
-
-						<div class="text">
-
-							<div>
-
-								<b>
-
-								<% if(!mine) {%>
-									<span class="name"><a href="author?address=<%-message.f%>"><%-n%>:</a></span>
-								<% } else { %>
-									<span class="name">You:</span>
-								<% } %>
-
-								</b>
-
-							</div>
-
-							<div>
-
-								<%=emojione.toImage(clearScripts(donottrustLink(findAndReplaceLink(filterXSS(message.m, {
-									whiteList: [],
-									stripIgnoreTag: true
-								}), true))))%>
-
-							</div>
-				
+						<div class="blocking">
+							You have blocked this User
 						</div>
 
+					<% } else { %> 
+						
+
+						<% if(message.decrypted && (message.decrypted.Message || message.decrypted.AttachmentName)) {%>
+
+							<% if(message.decrypted.Message) {%>
+	
+								<div class="text">
+									<%=filterXSS(clearScripts(donottrustLink(findAndReplaceLink(message.decrypted.Message, true))))%>
+								</div>
+	
+							<% } %>
+	
+							<% if(message.decrypted.AttachmentName) {%>
+	
+								<div class="text">
+									<div class="attachment">
+										<div class="attachmentName">
+											<span class="likelink"><%- message.decrypted.AttachmentName %> </span>
+	
+											<% if(message.decrypted.AttachmentPreview == 'pdf') {%>
+	
+												<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+	
+											<% } %>
+										</div>
+	
+										<% if(imageExist) {%>
+	
+											<div class="attachmentPreview">
+												<img src="<%-message.decrypted.AttachmentPreview%>">
+											</div>
+	
+										<% } %>
+									</div>
+								</div>
+	
+							<% } %>
+	
+						<% } else {%>
+	
+							<div class="text">
+	
+								<div>
+	
+									<b>
+	
+									<% if(!mine) {%>
+										<span class="name"><a href="author?address=<%-message.f%>"><%-n%>:</a></span>
+									<% } else { %>
+										<span class="name">You:</span>
+									<% } %>
+	
+									</b>
+	
+								</div>
+	
+								<div>
+	
+									<%=emojione.toImage(clearScripts(donottrustLink(findAndReplaceLink(filterXSS(message.m, {
+										whiteList: [],
+										stripIgnoreTag: true
+									}), true))))%>
+	
+								</div>
+					
+							</div>
+	
+						<% } %>
+
 					<% } %>
+
+					
 
 					<div class="time">
 						
