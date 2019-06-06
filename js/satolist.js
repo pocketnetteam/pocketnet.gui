@@ -2083,7 +2083,7 @@ Platform = function(app){
 
 					_.each(temp.subscribe, function(s){
 						
-						uncryptoPair.addRelation({
+						u.addRelation({
 							adddress : s.vsaddress,
 							private : false
 						})	
@@ -6305,7 +6305,8 @@ Platform = function(app){
 			},
 
 			getChats : function(clbk){
-				self.clientrtctemp.getchats(clbk)
+				if (self.clientrtctemp)
+					self.clientrtctemp.getchats(clbk)
 			}
 		},
 
