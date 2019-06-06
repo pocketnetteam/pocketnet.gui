@@ -54,10 +54,9 @@ var article = (function(){
 				el.c.addClass('loading')
 
 
-				if(ed.share){
-					share.aliasid = ed.share.txid
+				if (ed.share){
+					share.aliasid = ed.share.aliasid
 				}
-
 				self.sdk.node.transactions.create.commonFromUnspent(
 
 					share,
@@ -94,9 +93,11 @@ var article = (function(){
 									alias.temp = true;
 									alias.address = _alias.address
 									
-								if(currentShare.aliasid) alias.edit = "true"	
+								if (share.aliasid) alias.edit = "true"	
 
 								self.app.platform.sdk.node.shares.add(alias)
+
+								console.log('alias', alias)
 
 								art.txid = alias.txid;
 								art.ptime = Math.floor((new Date().getTime()) / 1000)
@@ -150,14 +151,14 @@ var article = (function(){
 
 				if(!error){
 
-					var text = "Do you really want to publish this article?";
+					var dialogtext = "Do you really want to publish this article?";
 
 					if(ed.share){
-						text = "Do you really want to change and publish this article?";
+						dialogtext = "Do you really want to change and publish this article?";
 					}
 
 					dialog({
-						html : text,
+						html : dialogtext,
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
 

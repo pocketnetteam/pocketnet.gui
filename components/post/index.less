@@ -120,7 +120,51 @@
 	}
 	.share{
 		
+		
 		background: #fff;
+
+		.blockAuthor{
+			display: none;
+			position: absolute;
+			left : 0;
+			right : 0;
+			top : 0;
+			bottom : 0; 
+			background: fade(#fff, 90);
+			z-index : 10;
+
+			.blockTable{
+				height: 100%;
+				>div{
+					vertical-align: middle;
+					text-align: center;
+				}
+
+				.label{
+				}
+
+				.unblockWrapper{
+					margin-top : 3 * @rhythm;
+
+					button{
+						width : 180px;
+						border-radius: 30px;
+						font-size: 0.8em;
+					}
+				}
+			}
+		}
+
+
+		&.blocking{
+			.commentsWrapperHb{
+				display : none;
+			}
+
+			.blockAuthor{
+				display: block;
+			}
+		}
 
 		.work{
 			padding : 4 * @rhythm 6 * @rhythm;
