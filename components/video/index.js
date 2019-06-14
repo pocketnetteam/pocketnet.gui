@@ -198,7 +198,12 @@ var video = (function(){
 
 			if(info.source == 'vimeo'){
 				code = '<iframe src="https://player.vimeo.com/video/'+info.id+'?title=0&byline=0&portrait=0" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'		
-			}
+            }
+            
+            if(info.source == 'bitchute'){
+                code = '<iframe width="560" height="315" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen src="https://www.bitchute.com/embed/'+info.id+'/"></iframe>'
+            }
+            
 			
 			el.c.find('.container').html(code);
 

@@ -560,6 +560,24 @@ Platform = function(app){
 					meta.id = s
 				}
 
+            }	
+            
+            if(meta.type == 'bitchute' && url.indexOf("player") == -1){
+
+                https://www.bitchute.com/video/1Whwjdm0RIwx/
+                var _url = url;
+                if (_url.endsWith('/')) _url = _url.substr(0, _url.length - 1)
+				var s = _url.split("/");
+
+					s = s[s.length - 1];
+
+				if (s[1]){
+
+					_url = `https://www.bitchute.com/video/${s}/`;
+
+					meta.id = s
+				}
+
 			}	
 
 			meta.url = _url;
@@ -2069,7 +2087,7 @@ Platform = function(app){
 
 				var temp = self.sdk.node.transactions.temp;
 
-				console.log("EXTEND USER", state && u.address == self.sdk.address.pnet().address, temp, u)
+				// console.log("EXTEND USER", state && u.address == self.sdk.address.pnet().address, temp, u)
 
 				if(state && u.address == self.sdk.address.pnet().address){
 

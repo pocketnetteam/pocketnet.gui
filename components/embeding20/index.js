@@ -141,8 +141,8 @@ var embeding20 = (function(){
 
 					if(url && !og){
 
-						if (meta.type == 'youtube' || meta.type == 'vimeo'){
-							var players = Plyr.setup('.js-player');
+						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute'){
+							Plyr.setup('.js-player', function(player) { });
 						}
 						else
 						{
