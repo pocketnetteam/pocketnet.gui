@@ -169,6 +169,8 @@ function createTray() {
 }
 
 function initApp() {
+    app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
+    
     createWindow();
 
     createBadge();
