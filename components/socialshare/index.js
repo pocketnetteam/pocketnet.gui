@@ -40,10 +40,10 @@ var socialshare = (function(){
 			},
 
 			{
-				n : 'VK',
-				i : '<i class="fab fa-vk"></i>',
-				t : 'vk',
-				c : '#4c75a3'
+				n : 'Reddit',
+				i : '<i class="fab fa-reddit-alien"></i>',
+				t : 'reddit',
+				c : '#ff5700'
 			},
 
 			{
@@ -54,17 +54,17 @@ var socialshare = (function(){
 			},
 
 			{
+				n : 'VK',
+				i : '<i class="fab fa-vk"></i>',
+				t : 'vk',
+				c : '#4c75a3'
+			},
+
+			{
 				n : 'LinkedIn',
 				i : '<i class="fab fa-linkedin-in"></i>',
 				t : 'linkedin',
 				c : '#0077B5'
-			},
-
-			{
-				n : 'Reddit',
-				i : '<i class="fab fa-reddit-alien"></i>',
-				t : 'reddit',
-				c : '#ff5700'
 			},
 
 			/*{
@@ -93,14 +93,14 @@ var socialshare = (function(){
 				i : '<i class="fab fa-viber"></i>',
 				t : 'viber',
 				c : '#59267c'
-			},
+			},*/
 
 			{
 				n : 'Email',
 				i : '<i class="far fa-envelope"></i>',
 				t : 'email',
 				c : '#f82a53'
-			},*/
+			},
 
 		]
 
@@ -115,15 +115,45 @@ var socialshare = (function(){
 
 		var initEvents = function(){
 
-			el.c.find('.socialsharebtn').ShareLink({
-			    title: ed.title, // title for share message
-			    text: ed.text,
-			    image: ed.image, 
-			    url: ed.url, //'https://pocketnet.app/index?ref=' + self.app.platform.sdk.address.pnet().address,
-			    class_prefix: 's_', 
-			    width: 640, 
-			    height: 480
-			})
+			el.c.find('.socialsharebtn').each(function(){
+				var _el = $(this)
+				
+				if (_el.hasClass('s_email')){
+					
+					_el.on('click', function(){
+
+						var t = '\r\n' + ed.title + '\r\n\r\n' + ed.text 
+							+ '\r\n\r\n\r\n' + ed.url + ''
+							;
+
+						if(deep(app, 'platform.sdk.user.storage.me.name')){
+							t+= '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
+						}
+
+						var m = '';
+							m += 'mailto:';
+							m += '?subject=' + ed.title;
+							m += '&body=';
+							m += encodeURIComponent(t);
+
+						window.location.href = m;
+					})
+					
+
+				}
+				else{
+					_el.ShareLink({
+						title: ed.title, // title for share message
+						text: ed.text,
+						image: ed.image, 
+						url: ed.url, //'https://pocketnet.app/index?ref=' + self.app.platform.sdk.address.pnet().address,
+						class_prefix: 's_', 
+						width: 640, 
+						height: 480
+					})
+				}
+				
+			}) 
 
 			el.c.find('.copycell').on('click', function(){
 				copyText(el.url.find('.urlcell'))
@@ -139,6 +169,8 @@ var socialshare = (function(){
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
+
+				console.log("ED", ed)
 
 				ed.title || (ed.title = 'Pocketnet')
 			    ed.text || (ed.text = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here')

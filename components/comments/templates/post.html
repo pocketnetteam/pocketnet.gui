@@ -13,7 +13,10 @@ if(isMobile()) dplace = 'Speak up'
 
 				var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || ''  
 
-			%>
+				if(!src){
+					src = deep(app, 'platform.sdk.user.storage.me.image') || ''
+				}
+			%>	
 			
 			<div class="icon">
 				<div class="usericon usericonsbsa another" image="<%-src || ''%>">
@@ -47,6 +50,10 @@ if(isMobile()) dplace = 'Speak up'
 					<textarea class="leaveCommentPreview" placeholder="<%- placeholder || dplace %>"></textarea>
 
 					<div class="leaveComment" placeholder="<%- placeholder || dplace %>"></div>
+				</div>
+
+				<div class="limits">
+					
 				</div>
 
 				

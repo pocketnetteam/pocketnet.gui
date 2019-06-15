@@ -258,7 +258,6 @@ var lenta = (function(){
 						pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
 
 						players[share.txid].inited = true
-						players[share.txid].inited = true
 
 						h = actions.applyheightEl(h, el, 'video')
 					})
@@ -359,11 +358,13 @@ var lenta = (function(){
 
 				if (share){
 
-					var url = 'https://pocketnet.app/' + essenseData.hr + 's='+id+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || '')
+					var url = 'https://pocketnet.app/' + essenseData.hr + 's='+id+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
 
-					var m = share.caption || share.message;
+					if (parameters().address) url += '&address=' + (parameters().address || '')
 
-					var nm = trimHtml(m, 20);
+					var m = share.message;
+
+					var nm = trimHtml(m, 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...');
 
 					var image = share.images[0];
 
@@ -373,6 +374,8 @@ var lenta = (function(){
 						if (v){
 							image = v;
 						}
+
+						
 					}
 
 					self.nav.api.load({
@@ -384,8 +387,9 @@ var lenta = (function(){
 						essenseData : {
 							url : url,
 							caption : 'Share publication in social',
-							image : image,
-							title : nm
+							image : image || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image'),
+							title : share.caption || "Pocketnet: " + deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
+							text : nm
 						}
 					})
 				}

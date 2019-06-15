@@ -22,38 +22,42 @@ var filluser = (function(){
 
 				prev : function(clbk){
 
+					self.app.platform.sdk.node.transactions.get.allBalance();
+						
+					self.sdk.users.requestFreeMoney(function(res, err){
+
+
+						self.app.platform.sdk.node.transactions.clbks.filluser = function(){
+
+							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+								if (amount > 0 && current == 1){
+
+									self.app.platform.m.log('userwisard_money_success')
+
+									delete self.app.platform.sdk.node.transactions.clbks.filluser
+
+									actions.next()
+
+								}
+							})
+							
+						}
+						
+					})
+			
+
 					if(localStorage['uei']){
 						actions.next()
 					}	
 					else
 					{
 
-						clbk()
+						clbk()	
 
-						self.app.platform.sdk.node.transactions.get.allBalance();
-						
-						self.sdk.users.requestFreeMoney(function(res, err){
-
-
-							self.app.platform.sdk.node.transactions.clbks.filluser = function(){
-
-								self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-									if (amount > 0 && current == 1){
-
-										self.app.platform.m.log('userwisard_money_success')
-
-										delete self.app.platform.sdk.node.transactions.clbks.filluser
-
-										actions.next()
-
-									}
-								})
-								
-							}
-							
-						})
 					}
+
+						
 					
 					
 				},

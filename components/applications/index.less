@@ -1,0 +1,84 @@
+@import "../../css/__cssvar";
+
+#applications{
+
+    .caption{
+        font-size: 2em;
+        font-weight: 100;
+    }
+
+    .subcaption{
+        font-weight: 700;
+    }
+
+    .os{
+        background: fade(@color-gray-slight, 50);
+        padding : 4 * @rhythm 0;
+
+		.tip{
+			max-width: 650px;
+		}
+
+		.downloadOs{
+			min-width: 310px;
+		}
+
+		.downloadstart{
+			padding : @rhythm;
+			padding-left: 0;
+			width: 100%;
+        }
+        
+        .panel{
+            margin-top : 4 * @rhythm;
+
+            .skipositem{
+                display : none;
+            }
+        }
+
+        &.rundownloading{
+            .panel{
+                .skipositem{
+                    display: block;
+                    width: 100%;
+                    margin-top : 4 * @rhythm;
+                    color : @color-main;
+                }
+            }
+        }
+    }
+
+    
+    
+    .stepTable{
+		>div{
+			vertical-align: top;
+			padding : 0;
+
+			&.numberWr{
+				width: 80px;
+
+				
+			}
+		}
+	}
+
+    .number{
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+		border: 1px solid @color-gray;
+		line-height: 48px;
+		text-align: center;
+    }
+    
+    .currentos{
+        display: none;
+        padding : 4 * @rhythm 0;
+        &.active{
+            display: block;
+            
+        }
+    }
+}

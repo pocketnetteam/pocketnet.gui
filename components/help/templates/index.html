@@ -13,6 +13,8 @@
 						</div>
 						<div class="tips">
 							
+							<div class="tipitem"><a href="https://pocketnet.app/blockexplorer/">Block Explorer</a></div>
+
 							<div class="tipitem" page="faq">F.A.Q.</div>
 							<!--<div class="tipitem" page="curation">Specifics of curation on Pocketnet</div>
 							<div class="tipitem" page="racism">Important Note on Racism</div>
@@ -22,7 +24,12 @@
 
 							<div class="tipitem" page="roadmap">Roadmap</div>
 							<div class="tipitem" page="videos">Videos</div>
-									
+
+							<% if(os() && self.app.platform.applications[os()]) {%>
+								<div class="tipitem">
+									<a href="applications">Applications</a>
+								</div>
+							<% } %>
 						</div>
 					</div>
 

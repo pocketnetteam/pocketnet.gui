@@ -17,11 +17,16 @@ var post = (function(){
 			sharesocial : function(clbk){
 		
 				//var url = 'https://pocketnet.app/'+self.app.nav.get.pathname()+'?s='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || "")
-				var url = 'https://pocketnet.app/' + ed.hr + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || '')
+				var url = 'https://pocketnet.app/' + ed.hr + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
 
-				var m = share.caption || share.message;
+				if (parameters().address){
+					url += '&address=' + (parameters().address || '')
+				}
 
-				var nm = trimHtml(m, 20);
+
+				var m = share.message;
+
+				var nm = trimHtml(m, 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...');
 
 				var image = share.images[0];
 
@@ -43,7 +48,8 @@ var post = (function(){
 						url : url,
 						caption : 'Share publication in social',
 						image : image,
-						title : nm
+						title : share.caption || "Pocketnet: " + deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
+						text : nm
 					}
 				})
 			

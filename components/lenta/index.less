@@ -795,6 +795,21 @@
 							width: 40px;
 						}
 
+						&.labelwr{
+							padding-left : @rhythm;
+							
+							cursor: pointer;
+							span{
+								font-weight: 700;
+								font-size: 0.8em;
+							}
+
+
+							.label{
+								.transition(0.3s);
+							}
+						}
+
 						&.count{
 							padding-left : @rhythm;
 
@@ -803,7 +818,6 @@
 								font-size: 0.8em;
 								color : @color-gray;
 							}
-							
 							
 						}
 					}
@@ -894,6 +908,26 @@
 							.shadowSmall();
 							color : #fff;
 							background: @color-bright;
+						}
+					}
+
+					&.sharesocial{
+
+						.label,
+						.icon{
+							color : #ff2f00;
+						}
+
+						&:hover{
+							.label{
+								color : @color-main;	
+							}
+							.icon{
+								border-radius : 0;
+								box-shadow: none;
+								color : @color-main;
+								background: transparent;
+							}
 						}
 					}
 
