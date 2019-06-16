@@ -524,7 +524,7 @@ var article = (function(){
 
 				renders.art(art)
 
-				var players = Plyr.setup('.js-player');
+                Plyr.setup('.js-player', function(player) { });
 
 				/*if(typeof _Electron != 'undefined'){
 					const electronSpellchecker = require('electron-spellchecker');
