@@ -14,6 +14,7 @@ if(!_Node)
 		/*rtcws : 'wss://localhost:9090',
 		rtchttp : 'https://localhost:9091'*/
 	});
+	
 	app.deviceReadyInit();
 }
 
