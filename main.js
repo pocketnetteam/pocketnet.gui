@@ -251,7 +251,7 @@ function createWindow() {
         /*width : 800,
         height : 600,*/
 
-        title: "Pocketnet",
+        title: "POCKETNET v" + app.getVersion(),
         webSecurity : false
     });
 
