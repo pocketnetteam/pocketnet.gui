@@ -2029,6 +2029,19 @@
 		}
 	}
 
+	nextElH = function(array, el){
+		var index = findIndex(array, el);
+
+		if (index > -1 && index < array.length - 1){
+			return array[index + 1]
+		}
+
+		else
+		{
+			return null
+		}
+	}
+
 	lastEl = function(array){
 		var l = deep(array, 'length');
 
@@ -5049,6 +5062,21 @@
 	rtrim = function(s)
 	{
 	  return (s || "").replace(/\s+$/, ''); 
+	}
+
+	ltrimrn = function(s)
+	{
+	  return (s || "").replace(/^[\r\n\t]+/, ''); 
+	}
+
+	rtrimrn = function(s)
+	{
+	  return (s || "").replace(/[\r\n\t]+$/, ''); 
+	}
+
+	trimrn = function(s)
+	{
+	  return rtrimrn(ltrimrn(s));
 	}
 
 	returnDaysInRange = function(k){

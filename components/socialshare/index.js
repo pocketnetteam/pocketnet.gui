@@ -6,13 +6,25 @@ var socialshare = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history');
+		var primary = deep(p, 'history'), st;
 
-		var el, defaultText = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here';
+		var el, defaultText = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here', defmedtext = 'I want to share this from a decentralized blockchain platform Pocketnet with you. Hope you find it useful and if you sign up, both of will get Pocketcoin cryptocurrency bonus!\r\n';
 		var ed = {};
 
-		var actions = {
+		var calltoActionNotInclude = false;
+		var calltoActionUserText = '';
 
+		var actions = {
+			shareText : function(){
+
+				console.log('calltoActionUserText', calltoActionUserText)
+
+				if (!st || calltoActionNotInclude) return '';
+
+				if (calltoActionUserText) return calltoActionUserText
+				
+				return defmedtext
+			}
 		}
 
 		var events = {
@@ -20,7 +32,19 @@ var socialshare = (function(){
 		}
 
 		var renders = {
+			sharebuttons : function(){
+				self.shell({
 
+					name :  'sharebuttons',
+					el :   el.c.find('.sharebuttons'),
+					data : {
+						socials : socials,
+					},
+
+				}, function(_p){
+					initbuttons()
+				})
+			}
 		}
 
 		var socials = [
@@ -53,12 +77,12 @@ var socialshare = (function(){
 				c : '#bd081c'
 			},
 
-			{
+			/*{
 				n : 'VK',
 				i : '<i class="fab fa-vk"></i>',
 				t : 'vk',
 				c : '#4c75a3'
-			},
+			},*/
 
 			{
 				n : 'LinkedIn',
@@ -102,19 +126,28 @@ var socialshare = (function(){
 				c : '#f82a53'
 			},
 
+			{
+				n : 'Google',
+				i : '<i class="fab fa-google"></i>',
+				t : 'google',
+				c : '#DB4437'
+			},
+
 		]
 
 		var state = {
 			save : function(){
-
+				self.app.settings.set(self.map.id, 'calltoActionNotInclude', calltoActionNotInclude);
+				self.app.settings.set(self.map.id, 'calltoActionUserText', calltoActionUserText);
+				
 			},
 			load : function(){
-				
+				calltoActionUserText = self.app.settings.get(self.map.id, 'calltoActionUserText') || '';
+				calltoActionNotInclude = self.app.settings.get(self.map.id, 'calltoActionNotInclude') || false;
 			}
 		}
 
-		var initEvents = function(){
-
+		var initbuttons = function(){
 			el.c.find('.socialsharebtn').each(function(){
 				var _el = $(this)
 				
@@ -122,12 +155,12 @@ var socialshare = (function(){
 					
 					_el.on('click', function(){
 
-						var t = '\r\n' + ed.title + '\r\n\r\n' + ed.text 
+						var t = actions.shareText() +  '\r\n' + ed.title + '\r\n\r\n' + ed.text 
 							+ '\r\n\r\n\r\n' + ed.url + ''
 							;
 
 						if(deep(app, 'platform.sdk.user.storage.me.name')){
-							t+= '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
+							t += '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
 						}
 
 						var m = '';
@@ -142,9 +175,19 @@ var socialshare = (function(){
 
 				}
 				else{
+
+					var t = ed.text;
+
+					var tit = ed.title;
+
+					/*if(_el.hasClass('s_twitter') || _el.hasClass('s_google')) */t = trim(actions.shareText() + " " + t)
+
+					if(_el.hasClass('s_vk') && !tit) tit = t
+
+
 					_el.ShareLink({
-						title: ed.title, // title for share message
-						text: ed.text,
+						title: tit, // title for share message
+						text: t,
 						image: ed.image, 
 						url: ed.url, //'https://pocketnet.app/index?ref=' + self.app.platform.sdk.address.pnet().address,
 						class_prefix: 's_', 
@@ -154,12 +197,57 @@ var socialshare = (function(){
 				}
 				
 			}) 
+		}
+
+		var initEvents = function(){
+
+			
 
 			el.c.find('.copycell').on('click', function(){
 				copyText(el.url.find('.urlcell'))
 
 				sitemessage(self.app.localization.e('urlsuccesscopied'))
 			})
+
+			el.c.find('.changecallto').on('click', function(){
+				calltoActionNotInclude = !calltoActionNotInclude;
+
+				$('.additionalwrapper').toggleClass('checked')
+
+				if(calltoActionNotInclude){
+					el.c.removeClass('textshowed')
+				}
+
+				state.save()
+
+				renders.sharebuttons()
+			})
+
+			el.c.find('.morecell').on('click', function(){
+				el.c.toggleClass('textshowed')
+				el.c.closest('.wnd').toggleClass('textshowedwnd')
+			})
+
+			el.c.find('.calltoActionUserText').on('keyup', function(){
+
+				calltoActionUserText = $(this).val();
+
+				if (calltoActionUserText == defmedtext) {
+					calltoActionUserText = ''
+				}
+
+				state.save()
+
+				renders.sharebuttons()
+			})
+
+			el.c.find('.calltoActionUserText').on('change', function(){
+				if (!calltoActionUserText) {
+					el.c.find('.calltoActionUserText').val(defmedtext)
+				}
+			})
+
+			
 
 		}
 
@@ -168,9 +256,11 @@ var socialshare = (function(){
 
 			getdata : function(clbk, p){
 
+				st = p.state
+
 				ed = p.settings.essenseData || {}
 
-				console.log("ED", ed)
+				state.load()
 
 				ed.title || (ed.title = 'Pocketnet')
 			    ed.text || (ed.text = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here')
@@ -185,7 +275,8 @@ var socialshare = (function(){
 
 			    		var pn = p[p.length - 1]
 
-				    	ed.url = 'https://pocketnet.app/' +  pn + window.location.search
+						ed.url = 'https://pocketnet.app/' +  pn + window.location.search
+						
 				    }
 				    else
 				    {
@@ -199,7 +290,10 @@ var socialshare = (function(){
 					socials : socials,
 					url : ed.url,
 					rescue : ed.rescue || false,
-					caption : ed.caption
+					caption : ed.caption,
+
+					calltoActionUserText : calltoActionUserText || defmedtext,
+					calltoActionNotInclude : calltoActionNotInclude
 				};
 
 				clbk(data);
@@ -212,6 +306,8 @@ var socialshare = (function(){
 			
 			init : function(p){
 
+				
+
 				state.load();
 
 				el = {};
@@ -221,12 +317,14 @@ var socialshare = (function(){
 
 				initEvents();
 
+				renders.sharebuttons()
+
 				p.clbk(null, p);
 			},
 
 			wnd : {
 				header : "Social sharing",
-				class : 'allscreen sharingwindow black'
+				class : 'sharingwindow'
 			}
 		}
 	};

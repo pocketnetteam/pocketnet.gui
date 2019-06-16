@@ -87,7 +87,35 @@ var lenta = (function(){
 				
 
 			},
-			loadmore : function(){
+
+			next : function(txid, clbk){
+				var next = nextElH(sharesInview, function(el){
+					if(el.txid == txid) return true;
+				})
+
+				if (next){
+					if(clbk){
+						clbk(next.txid)
+					}
+				}
+				else{
+					if(ended){
+						if(clbk){
+							clbk(null)
+						}
+					}
+
+					else{
+						actions.loadmore(function(shares){
+							if(clbk){
+								clbk(deep(shares, '0.txid') || null)
+							}
+						})
+					}
+				}
+			},
+
+			loadmore : function(loadclbk){
 				load.shares(function(shares, error){
 
 					if(!shares){
@@ -95,8 +123,6 @@ var lenta = (function(){
 					}
 					else
 					{
-						
-						
 						renders.shares(shares, function(){
 
 							renders.sharesInview(shares, function(){
@@ -108,6 +134,8 @@ var lenta = (function(){
 						})
 					}
 
+					if (loadclbk)
+						loadclbk(shares)
 
 				})
 			},
@@ -344,7 +372,9 @@ var lenta = (function(){
 						hr : essenseData.hr,
 						like : function(share){
 							renders.stars(share)
-						}
+						},
+
+						next : actions.next
 					}
 				})
 
@@ -378,6 +408,10 @@ var lenta = (function(){
 						
 					}
 
+					var n = 'Post';
+
+					if(share.settings.v == 'a') n = 'Article'
+
 					self.nav.api.load({
 						open : true,
 						href : 'socialshare',
@@ -386,7 +420,7 @@ var lenta = (function(){
 
 						essenseData : {
 							url : url,
-							caption : 'Share publication in social',
+							caption : 'Share this ' + n,
 							image : image || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image'),
 							title : share.caption || "Pocketnet: " + deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
 							text : nm
@@ -1809,7 +1843,7 @@ var lenta = (function(){
 								var _w = el.width();
 								var _h = el.height()
 
-								if(_img.width > _img.height * 1.2 && !isMobile()){
+								if(_img.width > _img.height && !isMobile()){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);
@@ -1825,7 +1859,7 @@ var lenta = (function(){
 									el.width(w);
 								}
 
-								if(_img.height > _img.width * 1.2 || isMobile()){
+								if(_img.height > _img.width || isMobile()){
 									ac = 'h2'
 
 									el.height(_w * (_img.height / _img.width))
@@ -2267,6 +2301,8 @@ var lenta = (function(){
 			el.c.on('click', '.showMore', events.openPost)
 			
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
+			el.c.on('click', '.videoOpen', events.fullScreenVideo)
+			
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			
 			//el.c.on('click', '.subscribe', events.subscribe)
