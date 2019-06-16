@@ -1,97 +1,122 @@
 <div id="<%-module.map.id%>">
 
-	<div class="tbl table">
-		<div class="tblcell">
+	
+	<div class="wrk">
+	<% if(rescue) {%>
 
-			<% if(rescue) {%>
+		<div class="rescued">
 
-				<div class="rescued">
+			<div class="caption">
+				You rescued <b><%- deep(app, 'platform.sdk.user.storage.me.rc') || 0 %></b> people from the censored web.
+			</div>
+		</div>
 
-					<div class="caption">
-						You rescued
-					</div>
+	<% } else { %>
 
-					<div class="bignumber">
-						<%- deep(app, 'platform.sdk.user.storage.me.rc') || 0 %>
-					</div>
+		<% if(caption) {%>
 
-					<div class="caption">
-						people from the censored web.
-					</div>
+		<div class="caption">
 
-				</div>
+			<%- caption %>
+			
+		</div>
 
-			<% } else { %>
+		<% } %> 
 
-				<% if(caption) {%>
+	<% } %>
 
-				<div class="caption">
+		<div class="captionearn">
+			Earn Pocketcoin for each signup through your link
+		</div>
 
-					<%- caption %>
+		<div class="sharecaption">
+
+			Direct link
+			
+		</div>
+
+	</div>
+
+	
+
+	<div class="url">
+
+		<div class="wrk">
+			<div class="urlwr">
+				<div class="urlwrtable table">
 					
-				</div>
-
-				<% } %> 
-
-			<% } %>
-
-				<div class="url">
-					<div class="urlwr">
-						<div class="urlwrtable table">
-							
-							<div class="urlcell">
-								<%-url%>
-							</div>
-
-							<div class="copycell">
-								Copy
-							</div>
-						</div>
-						
-					</div>
-				</div>
-
-				<div class="sharewrapper">
-
-					<div class="sharecaption">
-
-						<% if(rescue) {%>
-
-							Rescue From
-
-						<% } else { %> 
-
-							Social sharing
-
-						<% } %>
-						
+					<div class="urlcell">
+						<%-url%>
 					</div>
 
-					<div class="sharebuttons">
-						<div class="sharebuttonsTable table">
-					        <% _.each(socials, function(social){ %>
-
-						        <div class="socialWrapper">
-
-						            <button class="socialsharebtn s_<%-social.t%>" data-type="<%-social.t%>" style="background:<%-social.c%>"><%=social.i%></button>
-
-						        </div>
-
-					        <% }) %> 
-					    </div>
-
-
+					<div class="copycell">
+						Copy
 					</div>
-
 				</div>
-
-				<div class="requestwhocaption">
-
-					Anyone who registers through your link will increase your Rescue Team status
-					
-				</div>
-
 				
+			</div>
 		</div>
 	</div>
+	
+	<div class="wrk">
+		<div class="sharewrapper">
+
+			
+
+			<div class="sharebuttons">
+				<div class="sharebuttonsTable table">
+					<% _.each(socials, function(social){ %>
+
+						<div class="socialWrapper <%-social.t%>">
+
+							<button class="socialsharebtn s_<%-social.t%>" data-type="<%-social.t%>" style="background:<%-social.c%>"><%=social.i%></button>
+
+						</div>
+
+					<% }) %> 
+				</div>
+
+
+			</div>
+
+		</div>
+
+		<% if(state) {
+			
+			var checked = ''
+
+			if(!calltoActionNotInclude) checked = 'checked'
+			
+			%>
+
+			<div class="additionalwrapper <%-checked%>">
+				<div class="additionaltable table">
+					
+					<div class="checkcell changecallto">
+						<i class="far fa-circle"></i>
+					</div>
+
+					<div class="labelcell changecallto">
+						Include Pocketnet sign up call-to-action 
+					</div>
+
+					<div class="morecell">
+						<span class="showmore">More</span>
+						<span class="hidemore">Hide</span>
+					</div>
+					
+				</div>
+					
+			</div>
+
+		<% } %> 
+	</div>
+
+	<div class="calltoActionUserTextWrapper">
+		<div class="wrk">
+			<textarea class="calltoActionUserText"><%-calltoActionUserText%></textarea>
+		</div>
+	</div>
+
+		
 </div>

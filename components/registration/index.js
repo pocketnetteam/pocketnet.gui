@@ -308,7 +308,7 @@ var registration = (function(){
 
 				self.app.platform.m.log('registration_application')
 
-				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova){
+				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova && !self.app.ref){
 
 					current.os = self.app.platform.applications[_os]
 
@@ -499,10 +499,7 @@ var registration = (function(){
 				var qrcode = new QRCode(el[0], {
 					text: m,
 					width: 256,
-					height: 256,
-					/*colorDark : "#000000",
-					colorLight : "#ffffff",
-					correctLevel : QRCode.CorrectLevel.H*/
+					height: 256
 				});
 
 			},

@@ -15,6 +15,48 @@
 		font-weight: 100;
 	}
 
+	.subcaptionTable{
+		>div{
+			vertical-align: middle;
+			&.backWrapper{
+				width : 50px;
+			}
+
+			.back{
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+				border: 1px solid @color-gray;
+				line-height: 48px;
+				text-align: center;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-main;
+					border: 1px solid @color-main;
+				}
+			}
+
+			&.subcaption{
+				padding-left: @rhythm;
+			}
+		}
+	}
+
+	.dumpaddresspart{
+		display: none;
+	}
+	&.privatedump{
+		.alladdressespart{
+			display: none;
+		}
+
+		.dumpaddresspart{
+			display: block;
+		}
+	}
+
 	.addresses{
 
 	}
@@ -61,9 +103,18 @@
 					.transition(0.3s);
 					color : @color-gray-light;
 
-					&:hover{
-						color : @color-contrast;
+					&.dumpkey{
+						&:hover{
+							color : @color-main;
+						}
 					}
+
+					&.remove{
+						&:hover{
+							color : @color-contrast;
+						}
+					}
+					
 				}
 			}
 		}
@@ -112,6 +163,46 @@
 		text-decoration: underline;
 		text-align: center;
 	}
+
+	.wrk.dmp{
+		margin-top : 4 * @rhythm;
+		padding-top : 4 * @rhythm;
+		padding-bottom : 4 * @rhythm;
+		background: #fff;
+	}
+
+	.dumpedinfo{
+		
+		.infotable{
+			>div{
+				vertical-align: top;
+				padding : 2 * @rhythm;
+
+				&.label{
+					width: 130px;
+				}
+
+				&.value{
+					font-weight: 500;
+				}
+
+				&.forcopy{
+					text-align: center;
+					width : 40px;
+
+					.copyvalue{
+						cursor: pointer;
+						color : @color-gray-light;
+						.transition(0.3s);
+
+						&:hover{
+							color : @color-main;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 @media only screen and (max-width: 640px) {
@@ -126,6 +217,38 @@
 			font-size: 1.4em;
 		}
 
+		.wrk.dmp{
+			margin-top : @rhythm;
+			padding-top : @rhythm;
+			padding-bottom : 4 * @rhythm;
+		}
+	
+		.dumpedinfo{
+			
+			.infotable{
+				display: block;
+				overflow: hidden;
+				>div{
+					display: block;
+					padding : 2 * @rhythm 0;
+					float: left;
+	
+					&.label{
+						width: 80%;
+					}
+	
+					&.value{
+						width: 100%;
+						font-size: 0.7em;
+					}
+	
+					&.forcopy{
+						text-align: right;
+						width : 20%;
+					}
+				}
+			}
+		}
 		
 		.addressTable{
 			margin-bottom: @rhythm;

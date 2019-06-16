@@ -52,141 +52,155 @@ var test = (function(){
 			},
 			save : function(clbk){
 
-				if(el.c.find('.userPanel').hasClass('loading')){
-					return
-				}
+				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet().address, function(resref, err){
 
-				if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
-					sitemessage(self.app.localization.e('uchanges'))
+				
 
-					return
-				}
-
-				if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
-					sitemessage(self.app.localization.e('uchangesvalid'))
-
-					if(!trim(tempInfo.name)){	
-						var pn = el.c.find('[parameter="name"] input')
-
-						pn.focus()
-
-						_scrollTo(pn)
+					if(el.c.find('.userPanel').hasClass('loading')){
+						return
 					}
-					else{
-						if(!tempInfo.image){	
-							var pn = el.c.find('.fileUploader')
+
+					if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
+						sitemessage(self.app.localization.e('uchanges'))
+
+						return
+					}
+
+					if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
+						sitemessage(self.app.localization.e('uchangesvalid'))
+
+						if(!trim(tempInfo.name)){	
+							var pn = el.c.find('[parameter="name"] input')
+
+							pn.focus()
 
 							_scrollTo(pn)
-						}	
-
-						/*else
-						{
-							if(!tempInfo.about){	
-								var pn = el.c.find('[parameter="about"] input')
-
-								pn.focus()
+						}
+						else{
+							if(!tempInfo.image){	
+								var pn = el.c.find('.fileUploader')
 
 								_scrollTo(pn)
 							}	
-						}*/
+
+							/*else
+							{
+								if(!tempInfo.about){	
+									var pn = el.c.find('[parameter="about"] input')
+
+									pn.focus()
+
+									_scrollTo(pn)
+								}	
+							}*/
+						}
+
+							
+
+						return
 					}
 
-						
+					var userInfo = new UserInfo();
 
-					return
-				}
+						userInfo.name.set(trim(tempInfo.name));
+						userInfo.language.set(tempInfo.language);
+						userInfo.about.set(trim(tempInfo.about));
+						userInfo.site.set(trim(tempInfo.site));
+						userInfo.image.set(tempInfo.image);
+						userInfo.addresses.set(tempInfo.addresses);
 
-				var userInfo = new UserInfo();
+						userInfo.ref.set(deep(ref, 'address') || '');
 
-					userInfo.name.set(trim(tempInfo.name));
-					userInfo.language.set(tempInfo.language);
-					userInfo.about.set(trim(tempInfo.about));
-					userInfo.site.set(trim(tempInfo.site));
-					userInfo.image.set(tempInfo.image);
-					userInfo.addresses.set(tempInfo.addresses);
+					topPreloader(40)
 
-					userInfo.ref.set(deep(ref, 'address') || '');
+					el.c.find('.userPanel').addClass('loading')
 
-				topPreloader(40)
+					el.upanel.addClass('loading')
 
-				el.c.find('.userPanel').addClass('loading')
-
-				el.upanel.addClass('loading')
-
-				userInfo.uploadImage(function(){
+					userInfo.uploadImage(function(){
 
 
-					self.sdk.node.transactions.create.commonFromUnspent(
+						self.sdk.node.transactions.create.commonFromUnspent(
 
-						userInfo,
+							userInfo,
 
-						function(tx, error){
+							function(tx, error){
 
-							el.upanel.removeClass('loading')
+								el.upanel.removeClass('loading')
 
-							el.c.find('.userPanel').removeClass('loading')
+								el.c.find('.userPanel').removeClass('loading')
 
-							topPreloader(100)
+								topPreloader(100)
 
-							if(!tx){
+								if(!tx){
 
-								self.app.platform.errorHandler(error, true)	
-							}
-							else
-							{
-
-								self.app.platform.sdk.user.storage.me = tx
-								
-								tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
-								
-								actions.upanel()
-
-								if (ref && firstTime){
-									localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address
+									self.app.platform.errorHandler(error, true)	
 								}
+								else
+								{
 
-								self.app.reloadModules(function(){
+									self.app.platform.sdk.user.storage.me = tx
+									
+									tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
+									
+									actions.upanel()
 
-
-									if (primary){
-
-										self.nav.api.go({
-											href : 'index',
-											history : true,
-											open : true
-										})	
-
+									if (ref && firstTime){
+										localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
 									}
-									else
-									{
 
-										if (ed.success){
-											ed.success()
+									if(ref && resref && firstTime){
+										var refaddress = deep(ref, 'address');		
+
+										self.sdk.users.requestFreeRef(refaddress, function(res, err){
+											console.log(res, err)
+										})
+									}
+
+									self.app.reloadModules(function(){
+
+
+										if (primary){
+
+											self.nav.api.go({
+												href : 'index',
+												history : true,
+												open : true
+											})	
+
 										}
 										else
 										{
-											if (clbk)
-												clbk()
+
+											if (ed.success){
+												ed.success()
+											}
+											else
+											{
+												if (clbk)
+													clbk()
+											}
+
+											
+
 										}
 
 										
 
-									}
+									})
 
 									
+								}
 
-								})
+							},
 
-								
-							}
+							/*{
+								pseudo : true
+							}*/
+						
+						)
+					})
 
-						},
-
-						/*{
-							pseudo : true
-						}*/
-					
-					)
 				})
 				
 		
@@ -353,7 +367,7 @@ var test = (function(){
 				self.app.reload({
 					href : 'authorization'
 				});
-			}
+			},
 		}
 
 		var userOptions = {
@@ -894,7 +908,6 @@ var test = (function(){
 							ref = self.sdk.users.storage[address] || null;
 
 							if(ref) ref.address = address;
-
 							
 							data.ref = ref;
 

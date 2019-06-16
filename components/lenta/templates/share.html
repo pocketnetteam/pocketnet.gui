@@ -25,6 +25,7 @@ var view = 'post';
 if(share.settings.v == 'a'){
 	view = 'article'
 }
+var bigmessage = false;
 
 var metadisplay = function(){ %>
 
@@ -138,8 +139,6 @@ var metadisplay = function(){ %>
 
 		<% if(m) {
 
-			var bigmessage = false;
-
 			m = (m)
 			
 			var nm = m;
@@ -171,17 +170,24 @@ var metadisplay = function(){ %>
 				</div>
 			</div>
 
-			<% 
-
-		
-			if(bigmessage /*|| share.settings.v == 'a'*/) {%>
+			<% if(bigmessage) {%>
 
 				<div class="paddingWrapper showMorePW">
 					<div class="showMore">
-
-						<button>
-							Show More
-						</button>
+						<div class="showmoretable table">
+							<div class="linecell">
+								<div class="line"></div>
+							</div>
+							<div class="buttoncell">
+								<button>
+									Show More
+								</button>
+							</div>
+							<div class="linecell">
+								<div class="line"></div>
+							</div>
+						</div>
+						
 
 					</div>
 				</div>
@@ -197,10 +203,18 @@ var metadisplay = function(){ %>
 		<% if(share.images.length) {
 
 				var icClass = '';
+				var additionall = 0;
+				var imageFromVideo = ''
 
-				if (share.images.length == 1) icClass = 'one';
-				if (share.images.length == 2) icClass = 'two';
-				if (share.images.length == 4) icClass = 'four';
+
+				if(share.url && parseVideo(share.url).type){
+					additionall++;
+					imageFromVideo = videoImage(share.url)
+				}
+
+				if (share.images.length + additionall == 1) icClass = 'one';
+				if (share.images.length + additionall == 2) icClass = 'two';
+				if (share.images.length + additionall == 4) icClass = 'four';
 
 				
 
@@ -227,6 +241,19 @@ var metadisplay = function(){ %>
 							</div>
 
 						<% }) %>
+
+						<% if(imageFromVideo) {%>
+
+							<div class="imagesWrapper forvideo">
+
+								<div class="image videoOpen" image="<%-imageFromVideo%>">
+									<div class="playicon"><i class="fas fa-play"></i></div>
+								</div>
+
+							</div>
+
+						<% } %>
+						
 					</div>
 				</div>
 
@@ -234,12 +261,17 @@ var metadisplay = function(){ %>
 	<% },
 
 	u : function(){ %> 
-		<% if(share.url) {%>
+		<% if(share.url) {
 
-			<div class="url">
-				<!--<span>
-					<a href="share.url"><%-share.url%></a>
-				</span>-->
+			var h = ''
+			
+			if(parseVideo(share.url).type && share.images.length){
+				h = 'hiddenurl'
+			}
+			
+			%>
+
+			<div class="url <%-h%>">
 			</div>
 
 		<% } %>
@@ -376,7 +408,9 @@ var metadisplay = function(){ %>
 								<div class="item sharesocial right">
 
 									<div class="itemwr table">
+										<div class="labelwr"><span class="label">SHARE</span></div>
 										<div class="iconwr">
+											
 											<div class="icon">
 												<i class="fas fa-share-alt"></i>
 											</div>

@@ -1,0 +1,11 @@
+<div class="sharebuttonsTable table">
+    <% _.each(socials, function(social){ %>
+
+        <div class="socialWrapper <%-social.t%>">
+
+            <button class="socialsharebtn s_<%-social.t%>" data-type="<%-social.t%>" style="background:<%-social.c%>"><%=social.i%></button>
+
+        </div>
+
+    <% }) %> 
+</div>

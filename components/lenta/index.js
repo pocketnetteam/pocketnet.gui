@@ -87,7 +87,35 @@ var lenta = (function(){
 				
 
 			},
-			loadmore : function(){
+
+			next : function(txid, clbk){
+				var next = nextElH(sharesInview, function(el){
+					if(el.txid == txid) return true;
+				})
+
+				if (next){
+					if(clbk){
+						clbk(next.txid)
+					}
+				}
+				else{
+					if(ended){
+						if(clbk){
+							clbk(null)
+						}
+					}
+
+					else{
+						actions.loadmore(function(shares){
+							if(clbk){
+								clbk(deep(shares, '0.txid') || null)
+							}
+						})
+					}
+				}
+			},
+
+			loadmore : function(loadclbk){
 				load.shares(function(shares, error){
 
 					if(!shares){
@@ -95,8 +123,6 @@ var lenta = (function(){
 					}
 					else
 					{
-						
-						
 						renders.shares(shares, function(){
 
 							renders.sharesInview(shares, function(){
@@ -108,6 +134,8 @@ var lenta = (function(){
 						})
 					}
 
+					if (loadclbk)
+						loadclbk(shares)
 
 				})
 			},
@@ -240,26 +268,28 @@ var lenta = (function(){
 						s.autoplay = false;
 					}
 
-                    $.each(pels, function(key, el) {
-                        PlyrEx(el, s, function(player) {
-                            players[share.txid] || (players[share.txid] = {})
-    
-                            players[share.txid].p = player
-                            players[share.txid].initing = true
-                            players[share.txid].el = vel
-                            players[share.txid].id = vel.attr('pid')
-    
-                            player.on('ready', function(){
-                                pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
-    
-                                players[share.txid].inited = true
-                                players[share.txid].inited = true
-    
-                                h = actions.applyheightEl(h, el, 'video')
-                            })
-                        })
-                    });
-                    
+
+					var player = new Plyr(pels[0], s)
+
+					
+					players[share.txid] || (players[share.txid] = {})
+
+
+					players[share.txid].p = player
+					players[share.txid].initing = true
+					players[share.txid].el = vel
+					players[share.txid].id = vel.attr('pid')
+
+
+					player.on('ready', function(){
+
+						pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
+
+						players[share.txid].inited = true
+
+						h = actions.applyheightEl(h, el, 'video')
+					})
+
 				}
 			},
 			
@@ -343,7 +373,9 @@ var lenta = (function(){
 						hr : essenseData.hr,
 						like : function(share){
 							renders.stars(share)
-						}
+						},
+
+						next : actions.next
 					}
 				})
 
@@ -357,11 +389,13 @@ var lenta = (function(){
 
 				if (share){
 
-					var url = 'https://pocketnet.app/' + essenseData.hr + 's='+id+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || '')
+					var url = 'https://pocketnet.app/' + essenseData.hr + 's='+id+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
 
-					var m = share.caption || share.message;
+					if (parameters().address) url += '&address=' + (parameters().address || '')
 
-					var nm = trimHtml(m, 20);
+					var m = share.message;
+
+					var nm = trimHtml(m, 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...');
 
 					var image = share.images[0];
 
@@ -371,7 +405,13 @@ var lenta = (function(){
 						if (v){
 							image = v;
 						}
+
+						
 					}
+
+					var n = 'Post';
+
+					if(share.settings.v == 'a') n = 'Article'
 
 					self.nav.api.load({
 						open : true,
@@ -381,9 +421,10 @@ var lenta = (function(){
 
 						essenseData : {
 							url : url,
-							caption : 'Share publication in social',
-							image : image,
-							title : nm
+							caption : 'Share this ' + n,
+							image : image || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image'),
+							title : share.caption || "Pocketnet: " + deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
+							text : nm
 						}
 					})
 				}
@@ -1803,7 +1844,7 @@ var lenta = (function(){
 								var _w = el.width();
 								var _h = el.height()
 
-								if(_img.width > _img.height * 1.2 && !isMobile()){
+								if(_img.width > _img.height && !isMobile()){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);
@@ -1819,7 +1860,7 @@ var lenta = (function(){
 									el.width(w);
 								}
 
-								if(_img.height > _img.width * 1.2 || isMobile()){
+								if(_img.height > _img.width || isMobile()){
 									ac = 'h2'
 
 									el.height(_w * (_img.height / _img.width))
@@ -2261,6 +2302,8 @@ var lenta = (function(){
 			el.c.on('click', '.showMore', events.openPost)
 			
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
+			el.c.on('click', '.videoOpen', events.fullScreenVideo)
+			
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			
 			//el.c.on('click', '.subscribe', events.subscribe)

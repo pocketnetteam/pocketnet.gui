@@ -42,7 +42,7 @@
 
 				<% } else {%> 
 
-					<!--<span class="cur"><i class="fas fa-sign-in-alt"></i></span>-->
+					
 
 				<% } %>
 
@@ -50,11 +50,14 @@
 
 			<div class="panel">
 				<% if(!cur) {%>
-				<div class="item remove">
-					<i class="fas fa-times-circle"></i>
-				</div>
-
-				<% } %>
+					<div class="item remove">
+						<i class="fas fa-times-circle"></i>
+					</div>
+				<% } else { %>
+					<div class="item dumpkey">
+						<i class="fas fa-key"></i>
+					</div>
+				<% }%>
 			</div>
 		</div>
 	</div>

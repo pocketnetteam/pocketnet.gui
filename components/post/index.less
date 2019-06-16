@@ -12,6 +12,19 @@
 }
 #post{
 
+	.nextpost{
+		padding-top : 2 * @rhythm;
+
+		.loader,
+		.ended{
+			padding : 2 * @rhythm;
+			text-align: center;
+			background: #fff;
+			margin: 0 auto;
+    		max-width: 930px;
+		}
+	}
+
 	#comments{
 		.answer,
 		.post{
@@ -398,19 +411,25 @@
 				width: 100%;
 				margin-bottom : 2 * @rhythm;
 			
-				background: @color-gray-slight;
+				background: transparent;
 				
 
 				.image{
 					opacity: 0;
 					width: 100%;
 					height: 100%;
+					margin : 0 auto;
+					
 					.transition(0.3s);
 					cursor: pointer;
 
 					&.active{
 						opacity: 1;
 					}
+				}
+
+				&.forvideo{
+					display : none;
 				}
 
 			}
@@ -488,6 +507,12 @@
 
 		.url{
 			margin-bottom: 2 * @rhythm;
+
+			&.hiddenurl{
+				.videoWrapper{
+					display: block;
+				}
+			}
 
 			span{
 				font-size: 0.8em;
@@ -592,6 +617,16 @@
 						width: 40px;
 					}
 
+					&.labelwr{
+						padding-left : @rhythm;
+						cursor: pointer;
+
+						span{
+							font-weight: 700;
+							font-size: 0.8em;
+						}
+					}
+
 					&.count{
 						padding-left : @rhythm;
 
@@ -675,6 +710,26 @@
 						.shadowSmall();
 						color : #fff;
 						background: @color-bright;
+					}
+				}
+
+				&.sharesocial{
+
+					.label,
+					.icon{
+						color : #ff2f00;
+					}
+
+					&:hover{
+						.label{
+							color : @color-main;	
+						}
+						.icon{
+							border-radius : 0;
+							box-shadow: none;
+							color : @color-main;
+							background: transparent;
+						}
 					}
 				}
 

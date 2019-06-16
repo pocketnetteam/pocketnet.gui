@@ -708,6 +708,9 @@ var comments = (function(){
 							else
 							{
 								actions.message(p.id || '0', text)
+
+								renders.limits(c, text)
+
 							}
 
 							
@@ -775,6 +778,29 @@ var comments = (function(){
 		}
 
 		var renders = {
+			limits : function(el, message){
+
+				var l = 1000 - encodeURIComponent(message).length;
+
+				if (l < 500){
+
+					if(l > 0){
+						el.find('.limits').addClass('active').html(l + ' ' + pluralform(l , ['Character', 'Characters']) + ' Available')
+					}
+					else{
+						el.find('.limits').addClass('active').html('You have reached comment length limit')
+					}
+
+					
+
+				}	
+
+				else{
+					el.find('.limits').removeClass('active')
+				}
+
+				
+			},
 			cpreview : function(h){
 				if(!h){
 					h = ed.caption

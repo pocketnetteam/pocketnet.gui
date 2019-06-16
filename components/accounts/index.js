@@ -60,6 +60,19 @@ var accounts = (function(){
 
 			},						
 
+			dumpkey : function(address){
+				self.app.platform.sdk.pool.expand(pack, function(expandedPack){
+					var index = _.indexOf(expandedPack.addresses, address);
+
+					if (index > -1){
+						var private = expandedPack.private[index];
+
+						renders.dumpkey(address, private)
+					}
+				})
+
+			},
+
 			remove : function(address){
 				self.app.platform.sdk.pool.remove(pack, address)
 
@@ -121,14 +134,57 @@ var accounts = (function(){
 					}
 				})
 
+			},
+
+			back : function(){
+				console.log('bakc')
+				el.dumpkey.html('')
+
+				el.c.find('.dumpaddress').html('')
+
+				el.c.removeClass('privatedump')
 			}
 		}
 
 		var events = {
+
+			dumpkey : function(){
+
+				var address = $(this).closest('.addressTable').attr('address')
+
+				dialog({
+					html : "Do you really want to see private key for this address?",
+					btn1text : "See Private Key",
+					btn2text : "Cancel",
+
+					class : 'zindex',
+
+					success : function(){
+
+						actions.dumpkey(address);
+
+					}
+				})
+			},
+
 			remove : function(){
 				var address = $(this).closest('.addressTable').attr('address')
 
-				actions.remove(address);
+				dialog({
+					html : "Do you really want to remove this address from this device?",
+					btn1text : "Remove",
+					btn2text : "Cancel",
+
+					class : 'zindex',
+
+					success : function(){
+
+						actions.remove(address);
+
+					}
+				})
+
+				
 
 			},
 
@@ -141,9 +197,46 @@ var accounts = (function(){
 		}
 
 		var renders = {
-			addresses : function(clbk){
+			qrcode : function(el, c){
+				var qrcode = new QRCode(el[0], {
+					text: c,
+					width: 256,
+					height: 256
+				});
+			},
+			dumpkey : function(address, private){
 
 				
+				el.c.addClass('privatedump')
+
+				el.c.find('.dumpaddress').html(address)
+
+				self.shell({
+
+					name :  'dumpkey',
+					el :   el.dumpkey,
+
+					data : {
+						private : private,
+						address : address
+					},
+
+					animation : 'fadeIn',
+
+				}, function(p){
+					renders.qrcode(p.el.find('.code'), private)
+
+					p.el.find('.copyvalue').on('click', function(){
+
+						var el = $(this).closest('.infotable').find('.value')
+
+
+						copyText(el)
+						sitemessage("Value was successfully copied")
+					})
+				})
+			},
+			addresses : function(clbk){
 				self.shell({
 
 					name :  'addresses',
@@ -159,6 +252,9 @@ var accounts = (function(){
 				}, function(p){
 
 					p.el.find('.remove').on('click', events.remove)
+					p.el.find('.dumpkey').on('click', events.dumpkey)
+					
+
 					p.el.find('.ncurrent .label').on('click', events.signin)
 
 					if (clbk)
@@ -179,7 +275,7 @@ var accounts = (function(){
 		var initEvents = function(){
 			
 			el.c.find('.add').on('click', actions.add)
-
+			el.c.find('.back').on('click', actions.back)
 		}
 
 		var make = function(){
@@ -231,6 +327,7 @@ var accounts = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				el.addresses = el.c.find('.addresses')
+				el.dumpkey = el.c.find('.dumpkey')
 
 				initEvents();
 

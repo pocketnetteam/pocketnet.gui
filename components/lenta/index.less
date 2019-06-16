@@ -554,29 +554,29 @@
 
 					&.two{
 						.imagesWrapper{
-							width: 300px;
-							height: 300px;
+							width: 200px;
+							height: 200px;
 
 							&.w2{
-								width: 600px
+								width: 400px
 							}
 
 							&.h2{
-								width: 300px; 
+								width: 200px; 
 							}
 						}
 					}
 
 					&.four{
 						.imagesWrapper{
-							width: 300px;
-							height: 300px;
+							width: 200px;
+							height: 200px;
 							&.w2{
-								width: 600px
+								width: 400px
 							}
 
 							&.h2{
-								width: 300px; 
+								width: 200px; 
 							}
 						}
 					}
@@ -591,6 +591,25 @@
 						}
 					}
 				}
+				.videoOpen{
+					position: relative;
+
+					.playicon{
+						background: fade(#000, 50);
+						color : #fff;
+						position: absolute;
+						right : @rhythm;
+						bottom : @rhythm;
+						padding : @rhythm 2 * @rhythm;
+						padding-top: 0.3em;
+						padding-right: 0.8em;
+						border-radius: 3px;
+						i{
+							font-size: 0.8em;
+						}
+					}
+				}
+				
 			}
 
 			.sharecaption{
@@ -616,6 +635,21 @@
 				a{
 					text-decoration: underline;
 					color : @color-main;
+				}
+			}
+
+			.showmoretable{
+				>div{
+					vertical-align: middle;
+
+					&.buttoncell{
+						width: 250px;
+					}
+
+					.line{
+						height: 1px;
+						background: @color-main;
+					}
 				}
 			}
 
@@ -687,6 +721,13 @@
 
 			.url{
 				margin-bottom: 2 * @rhythm;
+
+				&.hiddenurl{
+					.videoWrapper{
+						display: none;
+					}
+					
+				}
 
 				span{
 					font-size: 0.8em;
@@ -795,6 +836,21 @@
 							width: 40px;
 						}
 
+						&.labelwr{
+							padding-left : @rhythm;
+							
+							cursor: pointer;
+							span{
+								font-weight: 700;
+								font-size: 0.8em;
+							}
+
+
+							.label{
+								.transition(0.3s);
+							}
+						}
+
 						&.count{
 							padding-left : @rhythm;
 
@@ -803,7 +859,6 @@
 								font-size: 0.8em;
 								color : @color-gray;
 							}
-							
 							
 						}
 					}
@@ -897,6 +952,26 @@
 						}
 					}
 
+					&.sharesocial{
+
+						.label,
+						.icon{
+							color : #ff2f00;
+						}
+
+						&:hover{
+							.label{
+								color : @color-main;	
+							}
+							.icon{
+								border-radius : 0;
+								box-shadow: none;
+								color : @color-main;
+								background: transparent;
+							}
+						}
+					}
+
 				}
 			}
 
@@ -941,6 +1016,15 @@
 				.commentsWrapper{
 					margin : 0 auto;
 					max-width: 960px;
+				}
+
+				.url{
+					&.hiddenurl{
+						
+						.videoWrapper{
+							display: block;
+						}
+					}
 				}
 
 				.work{

@@ -152,7 +152,20 @@ var imagegallery = (function(){
 				var action = $(this).attr('action');
 
 				actions[action]();
+
+				return false;
 			},
+
+			body : function(e){
+
+				if(making) return;
+
+				action = 'next'
+
+				if(e.pageX < $(window).width() / 2) action = 'back'
+
+				actions[action]();
+			}
 		}
 
 		var renders = {
@@ -238,6 +251,8 @@ var imagegallery = (function(){
 		var initEvents = function(){
 			
 			el.arrows.on('click', events.arrows);
+
+			el.c.on('click', events.body)
 
 		}
 

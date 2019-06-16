@@ -308,7 +308,7 @@ Comment = function(txid){
 			return 'content'
 		}
 
-		if(self.message.v && self.message.v.length > 1000){
+		if(self.message.v && encodeURIComponent(self.message.v).length > 1000){
 			return 'messagelength'
 		}
 
@@ -1361,14 +1361,14 @@ pShare = function(){
 			if(!self.caption){
 
 				if(self.message.length < 100) {
-					return self.message
+					return trimrn(self.message)
 				}
 
 				return ''
 
 			}
 
-			var m = self.caption;
+			var m = trimrn(self.caption);
 
 			//if(self.url) m = m.replace(self.url, '')
 
@@ -1380,7 +1380,7 @@ pShare = function(){
 				return ''
 			}
 
-			var m = self.message
+			var m = trimrn(self.message)
 
 			//if(self.url) m = m.replace(self.url, '')
 
@@ -1455,7 +1455,7 @@ pShare = function(){
 				})
 			}
 
-			return nm
+			return trimrn(nm)
 		}
 	}
 

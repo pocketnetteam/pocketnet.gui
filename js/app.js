@@ -79,7 +79,7 @@ Application = function(p)
 	self.options = {
 
 		nav : {
-			navPrefix : '/',
+			navPrefix : '/pocketnet/',
 		},
 
 		name : 'PCRB',
@@ -87,13 +87,13 @@ Application = function(p)
 		localStoragePrefix : 'pocketnet',
 
 		//apiproxy : 'https://localhost:8888',
-		apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
+		apiproxy : p.apiproxy || 'https://pocketnet.app:8889',
 		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx',
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
 		//ws : p.ws || "wss://localhost:8088",
-		ws : p.ws || "wss://pocketnet.app:8088",
+		ws : p.ws || "wss://pocketnet.app:8089",
 
 		rtc : p.rtc || 'https://pocketnet.app:9001/',
 

@@ -695,7 +695,7 @@ var author = (function(){
 				if(state){
 					var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
 
-					if (me.relation(author.address, 'blocking')){
+					if (me && me.relation(author.address, 'blocking')){
 						el.caption.addClass('blocking');
 					}
 				}
