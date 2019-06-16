@@ -189,18 +189,24 @@ var post = (function(){
 				var pels = el.c.find('.js-player, [data-plyr-provider][data-plyr-embed-id]');
 
 				if (pels.length)
-				{		
-					var player = new Plyr(pels[0], {						
-						autoplay : true,
+				{
+
+                    var options = {						
+						autoplay : pels.length <= 1,
 						resetOnEnd : true
-					})
+					};
 
-					player.on('ready', function(){
-
-						if (clbk)
-							clbk()
-
-					})
+                    $.each(pels, function(key, el) {
+                        PlyrEx(el, options, function(player) {
+                            player.on('ready', function(){
+    
+                                if (clbk)
+                                    clbk()
+        
+                            })
+                        });
+                    });                    
+					
 				}
 			},
 
@@ -764,7 +770,7 @@ var post = (function(){
 
 					if (url && !og){
 
-						if (meta.type == 'youtube' || meta.type == 'vimeo'){
+						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute'){
 							if (clbk)
 								clbk()
 						}

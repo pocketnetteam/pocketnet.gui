@@ -1219,7 +1219,7 @@ this["MediumInsert"]["Templates"]["src/js/templates/images-toolbar.hbs"] = Handl
     Embeds.prototype.parseUrl = function (url, pasted) {
         var html;
 
-        if (!(new RegExp(['youtube', 'youtu.be', 'vimeo', 'instagram', 'twitter', 'facebook'].join('|')).test(url))) {
+        if (!(new RegExp(['youtube', 'youtu.be', 'vimeo', 'bitchute', 'instagram', 'twitter', 'facebook'].join('|')).test(url))) {
             $.proxy(this, 'convertBadEmbed', url)();
             return false;
         }
@@ -1227,6 +1227,7 @@ this["MediumInsert"]["Templates"]["src/js/templates/images-toolbar.hbs"] = Handl
         html = url.replace(/\n?/g, '')
             .replace(/^((http(s)?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|v\/)?)([a-zA-Z0-9\-_]+)(.*)?$/, '<div class="video video-youtube  plyrvideo" provider="youtube" eid="$7"><div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="$7"></div> </div>')
             .replace(/^https?:\/\/vimeo\.com(\/.+)?\/([0-9]+)$/, '<div class="video video-vimeo plyrvideo" provider="vimeo" eid="$2"><div class="js-player" data-plyr-provider="vimeo" data-plyr-embed-id="$2"></div></div>')
+            .replace(/^((http(s)?:\/\/)?(www\.)?(bitchute\.com)\/(video|embed\/)?)([a-zA-Z0-9]+)(.*)?$/, '<div class="video video-bitchute  plyrvideo" provider="bitchute" eid="'+url+'"><div class="js-player" data-plyr-provider="bitchute" data-plyr-embed-id="'+url+'"></div> </div>')
             .replace(/^https:\/\/twitter\.com\/(\w+)\/status\/(\d+)\/?$/, '<blockquote class="twitter-tweet" align="center" lang="en"><a href="https://twitter.com/$1/statuses/$2"></a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>')
             .replace(/^(https:\/\/www\.facebook\.com\/(.*))$/, '<script src="//connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v2.2" async></script><div class="fb-post" data-href="$1"><div class="fb-xfbml-parse-ignore"><a href="$1">Loading Facebook post...</a></div></div>')
             .replace(/^https?:\/\/instagram\.com\/p\/(.+)\/?$/, '<span class="instagram"><iframe src="//instagram.com/p/$1/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe></span>');
@@ -1294,7 +1295,7 @@ this["MediumInsert"]["Templates"]["src/js/templates/images-toolbar.hbs"] = Handl
                 $place.remove();
             }
 
-            var players = Plyr.setup('.js-player');
+            Plyr.setup('.js-player', function(player) { });
 
             this.core.triggerInput();
 
