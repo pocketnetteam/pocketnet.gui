@@ -192,8 +192,9 @@ var post = (function(){
 				{
 
                     var options = {						
-						autoplay : pels.length <= 1,
-						resetOnEnd : true
+						//autoplay : pels.length <= 1,
+						resetOnEnd : true,
+						muted : false
 					};
 
                     $.each(pels, function(key, el) {

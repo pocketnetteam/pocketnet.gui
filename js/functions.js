@@ -8287,7 +8287,8 @@
 
 	    var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
 	    var type = null;
-	    var id = null;
+		var id = null;
+		
 
 	    if(test){
 	    	if(test[3]){

@@ -4374,7 +4374,8 @@ typeof navigator === "object" && (function (global, factory) {
 
       ui.checkPlaying.call(this); // Check for picture-in-picture support
 
-      toggleClass(this.elements.container, this.config.classNames.pip.supported, support.pip && this.isHTML5 && this.isVideo); // Check for airplay support
+
+      toggleClass(this.elements.container, this.config.classNames.pip.supported, false); // Check for airplay support
 
       toggleClass(this.elements.container, this.config.classNames.airplay.supported, support.airplay && this.isHTML5); // Add iOS class
 
@@ -7984,6 +7985,8 @@ typeof navigator === "object" && (function (global, factory) {
             // Detect provider
             url = parseUrl(iframe.getAttribute('src'));
             this.provider = getProviderByUrl(url.toString()); // Rework elements
+
+
 
             this.elements.container = this.media;
             this.media = iframe; // Reset classname

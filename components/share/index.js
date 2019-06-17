@@ -936,7 +936,12 @@ var share = (function(){
 					if(currentShare.url.v && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute') {
-                            Plyr.setup('.js-player', function(player) {});
+							console.log("INITPLAYER")
+                            Plyr.setup('.js-player', function(player) {
+								console.log('player', player)
+
+								player.muted = false
+							});
 						}
 						else
 						{
