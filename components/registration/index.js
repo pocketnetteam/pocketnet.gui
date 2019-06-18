@@ -189,20 +189,35 @@ var registration = (function(){
 			generate : function(){
 				el.c.removeClass('begin');
 
-				current.mnemonicKey = bitcoin.bip39.generateMnemonic();
+				var key = bitcoin.bip39.generateMnemonic();
 
-				current.mnemonicMask = _.shuffle(indexArray(current.mnemonicKey.length));
+				actions.testqrcodeandkey(key, function(result){
 
-				current.mnemonicContent = current.mnemonicKey.split(' ')
+					console.log("result", result)
 
-				var keys = self.app.user.keysFromMnemo(current.mnemonicKey)
+					if(!result){
+						actions.generate()
+					}
+					else
+					{
 
-				current.mainAddress = app.platform.sdk.address.pnet(keys.publicKey).address;
+						current.mnemonicKey = key;
 
-				current.mk = keys.privateKey.toString('hex');
+						current.mnemonicMask = _.shuffle(indexArray(current.mnemonicKey.length));
+
+						current.mnemonicContent = current.mnemonicKey.split(' ')
+
+						var keys = self.app.user.keysFromMnemo(current.mnemonicKey)
+
+						current.mainAddress = app.platform.sdk.address.pnet(keys.publicKey).address;
+
+						current.mk = keys.privateKey.toString('hex');
 
 
-				renders.key()
+						renders.key()
+					}
+				})
+				
 			},
 
 			repeat : function(){
@@ -261,6 +276,40 @@ var registration = (function(){
 
 				el.find('.save').addClass('black')
 				el.find('.copy').addClass('black')
+			},
+
+			testqrcodeandkey : function(hm, clbk){
+
+				var keyPair =  self.app.user.keysFromMnemo(trim(hm))  
+
+				var mk = keyPair.privateKey.toString('hex');
+
+				var qrcode = renders.qrcode(el.c.find('.hiddenqrcode'), mk)
+
+				var src = qrcode._oDrawing._oContext.canvas.toDataURL("image/jpeg");
+
+				grayscaleImage(src, function(image){
+
+					qrscanner.q.callback = function(data){
+
+						if(data == 'error decoding QR Code'){
+
+							if(clbk)
+								clbk(false)
+							
+						}
+						else
+						{
+							if(clbk)
+								clbk(true)
+							
+						}
+					}
+
+					qrscanner.q.decode(image)
+					
+				})
+
 			}
 		}
 
@@ -382,6 +431,7 @@ var registration = (function(){
 				renders.step('confirm', function(p){
 
 					
+					
 
 					p.el.find('.repeat').on('click', events.repeat)
 					p.el.find('.registrationButton').on('click', events.registration)
@@ -465,14 +515,19 @@ var registration = (function(){
 							}
 						})
 
+						/*plissing = self.app.platform.api.plissing({
+							el : p.el.find('.elContent .label'),
+							text : ""
+						})*/
+
 						setTimeout(function(){
 
-							p.el.find('input').bind('paste', function (e) {
+							/*p.el.find('input').bind('paste', function (e) {
 
 								p.el.find('.note').html(self.app.localization.e('removepaste'))
 
 						       	e.preventDefault();
-						    });
+						    });*/
 
 						    p.el.find('input[type="text"]').on('focus', function(){
 						    	p.el.find('.inputTable').addClass('typeactive')
@@ -501,6 +556,8 @@ var registration = (function(){
 					width: 256,
 					height: 256
 				});
+
+				return qrcode
 
 			},
 

@@ -760,19 +760,19 @@ Share = function(){
 
 		if(self.url.v && self.url.v.length){
 
-			var l = self.message.v.length + self.caption.v.length
+			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v.length, '')).length
 
-			if (l - self.url.v.length < 30 && !self.images.v.length){
+			if (l < 30 && !self.images.v.length){
 				return 'url'
 			}
 
 			
 		}
 
-		if(!self.tags.v.length && self.settings.v != 'a'){
+		/*if(!self.tags.v.length && self.settings.v != 'a'){
 
 			return 'tags'
-		}
+		}*/
 
 		return false
 	}

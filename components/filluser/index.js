@@ -47,7 +47,7 @@ var filluser = (function(){
 					})
 			
 
-					if(localStorage['uei']){
+					if (localStorage['uei']){
 						actions.next()
 					}	
 					else
@@ -145,7 +145,7 @@ var filluser = (function(){
 							self.app.platform.m.log('userwisard_email_add')
 
 							actions.next()
-							localStorage['uei'] = email;
+							localStorage['uei'] = true;
 
 							save(email, function(){
 								
@@ -157,6 +157,8 @@ var filluser = (function(){
 					skip.one('click', function(){
 
 						self.app.platform.m.log('userwisard_email_skip')
+
+						localStorage['uei'] = true
 
 						actions.next()
 					})
@@ -446,7 +448,9 @@ var filluser = (function(){
 						renders.panel(step, function(pel){
 							renders.step(step, function(el){
 
-								_scrollTo(el, scrollel)
+								console.log("SCROLLTOTOP")
+
+								_scrollTop(el, scrollel)
 
 								pel.find('.elpanel').addClass('active')
 							
@@ -778,6 +782,8 @@ var filluser = (function(){
 				ext = null
 
 				el = {};
+
+				$("html").removeClass("fillinguser")
 			},
 			
 			init : function(p){
@@ -797,6 +803,8 @@ var filluser = (function(){
 				scrollel = el.c.closest('.wndcontent')
 
 				if(!scrollel.length) scrollel = null;
+
+				$("html").addClass("fillinguser")
 
 				p.clbk(null, p);
 			}

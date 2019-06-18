@@ -14983,7 +14983,8 @@ var PlyrEx = function(target, options, clbk) {
     var _error = function() {
         var new_target = document.createElement('div');
         new_target.setAttribute('error', 'Error loading video');
-        new_target.innerHTML = 'Error loading video.';
+        new_target.innerHTML = '<div class="errorcntplyrex"><div class="errorcntTableWrapper"><div class="errorcntTable"><div class="errorcntCell">Error loading video.</div></div></div>';
+
         target.parentNode.replaceChild(new_target, target);
         target = new_target
     }

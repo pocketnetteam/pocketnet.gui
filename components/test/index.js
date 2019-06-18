@@ -10,7 +10,7 @@ var test = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, lastTransaction, ed, ref; 
+		var el, lastTransaction, ed, ref, plissing; 
 
 		var firstTime = false;
 
@@ -35,9 +35,6 @@ var test = (function(){
 				var a = function(o){
 					return 'name:' + (trim(o.name) || "") + 'image:' + (o.image || "") + 'about:' + (trim(o.about) || "") + 'site:' + (trim(o.site) || "")  + 'language:' + (o.language || "") + "addresses:" + JSON.stringify(o.addresses || [])
 				}
-
-				console.log(v1, v2)
-
 
 				return a(v1) == a(v2)
 			},
@@ -247,15 +244,18 @@ var test = (function(){
 
 									renders.icon()
 
-									actions.upanel()
-
+									actions.upanel()	
 									
+									if (clbk)
+										clbk()
 
 								}
 								else
 								{
 									topPreloader(100);
 								}
+
+								
 							})
 
 						}
@@ -299,8 +299,6 @@ var test = (function(){
 			},
 
 			userOptions : function(){
-
-				console.log('self.app.platform.sdk.user.storage.me', self.app.platform.sdk.user.storage.me)
 
 				tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
 
@@ -374,7 +372,7 @@ var test = (function(){
 			name : new Parameter({
 				name : 'Nickname',
 				id : 'name',
-				type : "STRING",
+				type : "NICKNAME",
 				onType : true,
 				require : true
 			}),
@@ -400,7 +398,7 @@ var test = (function(){
 			site : new Parameter({
 				name : self.app.localization.e('uwebsite'),
 				id : 'site',
-				type : "TEXT",
+				type : "STRINGANY",
 				onType : true,
 				value : ''
 			}),
@@ -679,6 +677,7 @@ var test = (function(){
 
 				}, function(_p){
 
+
 					initUpload({
 						el : _p.el.find('.pgroup'),
 			
@@ -690,7 +689,13 @@ var test = (function(){
 
 						action : function(file, clbk){
 
-							actions.upload(file, function(){								
+							actions.upload(file, function(){		
+								if (plissing)
+									plissing.destroy()
+
+								console.log("el.c.find('.nickname input')", el.c.find('.nickname input'))
+									_scrollTo(el.c.find('.nickname input').focus());
+								
 
 								if (clbk)
 									clbk();
@@ -699,6 +704,13 @@ var test = (function(){
 							
 						}
 					})
+
+					if (ed.wizard && !tempInfo.image)
+
+						plissing = self.app.platform.api.plissing({
+							el : _p.el.find('.iconWrapper'),
+							text : "Upload image"
+						})
 
 					if (clbk)
 						clbk();

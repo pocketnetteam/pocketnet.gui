@@ -688,8 +688,6 @@ _QRscanner = function(){
 				var tlblCentersDimension = Math.round(this.distance(topLeft, bottomLeft) / moduleSize);
 				var dimension = ((tltrCentersDimension + tlblCentersDimension) >> 1) + 7;
 
-				console.log('dimension', dimension, dimension & 0x03)
-
 				switch (dimension & 0x03)
 				{
 					
@@ -825,8 +823,6 @@ _QRscanner = function(){
 					points = new Array(bottomLeft, topLeft, topRight, alignmentPattern);
 				}
 
-				console.log('bits, points', bits, points)
-
 				return new DetectorResult(bits, points);
 			}
 			
@@ -835,8 +831,6 @@ _QRscanner = function(){
 		this.detect=function()
 		{
 			var info =  new FinderPatternFinder().findFinderPattern(this.image);
-
-			console.log('info', info)
 				
 			return this.processFinderPatternInfo(info); 
 		}
@@ -2555,11 +2549,7 @@ _QRscanner = function(){
 	    
 	    var detector = new Detector(image);
 
-	    console.log(detector)
-
 	    var qRCodeMatrix = detector.detect();
-
-	    console.log(qRCodeMatrix)
 	    
 	    if(qrcode.debug)
 	    {
@@ -3252,8 +3242,6 @@ _QRscanner = function(){
 			var maxI = qrcode.height;
 			var maxJ = qrcode.width;
 			var iSkip = Math.floor((3 * maxI) / (4 * MAX_MODULES));
-
-			console.log(maxI, maxJ)
 
 			if (iSkip < MIN_SKIP || tryHarder)
 			{

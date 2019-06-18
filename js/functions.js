@@ -1289,7 +1289,7 @@
 		}
 
 		
-    }
+	}
 
     grayscaleImage = function (srcData, clbk){
 
@@ -1324,7 +1324,7 @@
 					var green=imageData.data[index+1];
 					var blue=imageData.data[index+2];
 					var alpha=imageData.data[index+3];
-					var average = (3 * red+green+blue)/3;
+					var average = (3 * red + green + blue)/3;
 
 					imageData.data[index]  = average;
 					imageData.data[index+1]= average;
@@ -3691,7 +3691,9 @@
 				color : '#1E3DF7',
 				date : '',
 				daterange : ['', ''],
-				email : ''
+				email : '',
+				stringany : '',
+				nickname : ''
 			}
 
 			if(typeof self.defaultValue != 'undefined') return self.defaultValue;	
@@ -3744,7 +3746,10 @@
 
 			var mask = {
 				rightAlign : false,
-				autoUnmask : true
+				autoUnmask : true,
+				showMaskOnHover: false,
+				showMaskOnFocus: false,
+				clearMaskOnLostFocus: true,
 			}
 
 			if(self.type == 'number' || self.type == 'cash')
@@ -3792,6 +3797,32 @@
 				if (self.format.Length) limits[1] = self.format.Length;
 
 				mask.regex = "[а-яА-Яa-zA-Z0-9 ,-.&]{"+limits.join(',')+"}";
+
+				masked = true;
+				
+			}
+
+			if(self.type == 'nickname'){
+
+				var limits = [0,''];
+
+				if (self.require) limits[0] = 1;
+				if (self.format.Length) limits[1] = self.format.Length;
+
+				mask.regex = "[а-яА-Яa-zA-Z0-9_]{"+limits.join(',')+"}";
+
+				masked = true;
+				
+			}
+
+			if(self.type == 'stringany'){
+
+				var limits = [0,''];
+
+				if (self.require) limits[0] = 1;
+				if (self.format.Length) limits[1] = self.format.Length;
+
+				mask.regex = "[^|]{"+limits.join(',')+"}";
 
 				masked = true;
 				

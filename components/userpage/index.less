@@ -29,7 +29,7 @@
 				width: 75px;
 				height: 75px;
 				line-height: 73px;
-				color : #fff;
+				color : @color-gray-light;
 				font-size: 1.5em;
 
 				
@@ -88,6 +88,7 @@
 				z-index: 0;
 				opacity: 0.1;
 			}
+			
 		}
 
 		.work{
@@ -335,7 +336,12 @@
 		    }
 
 		    #notifications{
-		    	background: #F7F7F7;
+				background: #F7F7F7;
+				min-height: 600px;
+
+				.notification {
+					padding-left: 0;
+				}
 		    }
 		}
 

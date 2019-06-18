@@ -45,7 +45,7 @@ ____loclib.creatingpreloader = 'Creating Account'
 ____loclib.removepaste = 'We removed paste possibility for this input.'
 ____loclib.filedamaged = "File is damaged"
 ____loclib.keysnotmatch = 'Private login key does not match'
-____loclib.confirmkey = 'Type your Private Login Key here for confirmation'
+____loclib.confirmkey = 'Type Your Private Login Key or Upload QR Code From Previous Step'
 ____loclib.successfullycopied = "Key was successfully copied"
 ____loclib.urlsuccesscopied = "Link was successfully copied"
 
@@ -61,7 +61,7 @@ ____loclib.wesentmoney = "We sent you a few coins for registration";
 ____loclib.wesentmoneym = "We have already sent you a few coins for registration";
 
 
-____loclib.wesentmoneydelay = "The process is taking more time than usual, please just a little longer";
+____loclib.wesentmoneydelay = "The process is taking more time than usual, please just wait a little longer";
 
 ____loclib.funetworkproblems = "There are some problems with the connection. Please try later";
 

@@ -21,14 +21,14 @@
 		min-width: 210px;
 
 		&.repeat{
-			min-width: 290px;
+			padding-left: 0;
+			min-width: 0;
 		}
 
 		&.copy{
 			min-width: 0;
 
 			&.ghost{
-				color : #fff;
 				opacity: 0.5;
 
 				&:hover{
@@ -140,8 +140,8 @@
 
 	.keyStep{
 		.transition(0.3s);
-		background: #FF005A;
-		color : #fff;
+		background: #F1F1F1;
+		color : @color-gray;
 		min-height: 320px;
 	}
 	.key{
@@ -152,17 +152,18 @@
 		}
 
 		.number{
-			border: 1px solid #fff;
+			border: 1px solid @color-gray;
 		}
 
 		.subcaption{
-			color : #FFF1F8;
+			color : @color-gray;
 		}
 
 		.mnemonicKey{
 			max-width: 900px;
-			font-size : 2.1em;
+			font-size : 4.1em;
 			min-height: 132px;
+			font-weight: 100;
 		}
 
 		.mnemonicKeyTable{
@@ -202,7 +203,7 @@
 				}
 
 				&.fileUploaderWrapper{
-					width: 110px;
+					width: 210px;
 
 					text-align: center;
 
@@ -212,7 +213,6 @@
 
 					>div{
 						color : @color-main;
-						font-size: 0.8em;
 					}
 				}
 			}
@@ -306,7 +306,7 @@
 			line-height: 1.2em;
 			text-align: center;
 			padding : 0 6 * @rhythm;
-
+			margin-bottom : 4 * @rhythm;
 			.note{
 				display: block;
 				margin-top : 2 * @rhythm;
@@ -377,8 +377,8 @@
 
 		.keyStep{
 			.transition(0.3s);
-			background: #FF005A;
-			color : #fff;
+			
+			color : @color-gray;
 			min-height: 320px;
 
 			.panel{
@@ -439,6 +439,17 @@
 
 		.confirm{
 
+			.elContent{
+				.label{
+					position: relative;
+				}
+			}
+
+			.itemrepeate{
+				margin-top : 3 * @rhythm;
+			}
+
+
 			.inputTable{
 
 				>div{
@@ -459,8 +470,9 @@
 
 						>div{
 							color : @color-main;
-							font-size: 0.8em;
 						}
+
+						
 					}
 				}
 

@@ -5,7 +5,6 @@ if(typeof _Electron != 'undefined'){
 
 	var storage = electron.OSBrowser;
 
-	console.log(storage, electron)
 }
 
 Platform = function(app){
@@ -19,6 +18,8 @@ Platform = function(app){
 		self.salt = 'vd45dzxcsOBWjLe2p4jmSMmMDSp90o01lkxvSl34MspyHG9sbu1092';
 
 		self.currentBlock = 1;
+
+	var blockps = 180000;
 
 	var TXFEE = 1
 
@@ -635,6 +636,60 @@ Platform = function(app){
 	}
 
 	self.api = {
+		plissing : function(p){
+
+			var self = this;
+
+			var render = function(){
+
+				var rt = p.el.find('.plissingCnt');
+
+					p.el.append('<div class="plissingCnt"></div>')
+
+					rt = p.el.find('.plissingCnt');
+
+				var h = ''
+					h += '<div class="plissingWrapper">'
+					h += '<div class="plissingWrapperTable table">'
+					h += '			<div class="plissingWrapperCell">'
+					h += '				<div class="pilsing">'
+					h += '					<div></div>'
+					h += '					<div></div>'
+					h += '				</div>'
+					h += '			</div>'
+
+					h += '			<div class="plissingTipCell">'
+					h += '				<div class="plissingTip all">'
+					h += p.text
+					h += '				</div>'
+
+					if(p.textHover){	
+						h += '				<div class="plissingTip hover">'
+						h += p.textHover
+						h += '				</div>'
+					}
+
+					h += '			</div>'
+					h += '	</div>'
+					h += '</div>'
+
+
+				rt.html(h);
+			}
+
+			self.init = function(){
+				render()
+			}
+
+			self.destroy = function(){
+				p.el.find('.plissingCnt').remove()
+			}
+
+			self.init()
+
+			return self;
+
+		},
 		tooltip : function(_el, content, clbk, p){
 			if (_el.hasClass('tooltipstered')) return;
 
@@ -1442,6 +1497,9 @@ Platform = function(app){
 			},
 
 			waitActions : function(clbk){
+
+				var storage = this.storage
+				
 				self.sdk.node.transactions.get.unspent(function(utxo){
 
 					var wait = 'inf';
@@ -1810,7 +1868,7 @@ Platform = function(app){
 				var e = this.export();
 
 
-				if (e.notifications.length && e.block > 25000 && this.inited == true){
+				if (e.notifications.length && e.block > blockps && this.inited == true){
 
 					e.notifications = firstEls(e.notifications, 100)
 
@@ -1927,7 +1985,7 @@ Platform = function(app){
 				this.load();
 				this.storage.block || (this.storage.block = 1)
 
-				if(this.storage.block < 25000) this.storage.block = 25000;
+				if(this.storage.block < blockps) this.storage.block = blockps;
 
 				this.storage.notifications || (this.storage.notifications = [])
 
@@ -2053,7 +2111,7 @@ Platform = function(app){
 					parameters : [self.sdk.address.pnet().address, this.storage.block],
 					success : function(d){	
 
-						d || (d = [{block : 25000, cntposts : 0}])
+						d || (d = [{block : blockps, cntposts : 0}])
 
 						var notifications = (d || []).slice(1)		
 
@@ -2620,9 +2678,7 @@ Platform = function(app){
 					self.sdk.users.get(address, function(){
 
 						var name = deep(self, 'sdk.users.storage2.' + address + '.name');
-						
-						console.log(name)
-	
+							
 						if (name){
 	
 							if (clbk)
@@ -3066,12 +3122,8 @@ Platform = function(app){
 						_.each(ua, function(unspent){
 							if (unspent.amount)
 								allunspents.push(unspent)
-						})
-
-						
+						})						
 					})
-
-					console.log('unspents, allunspents', unspents, allunspents)
 
 					var totalInWallet = _.reduce(allunspents, function(m, u){
 						return m + Number(u.amount)
@@ -3178,8 +3230,6 @@ Platform = function(app){
 
 			txbaseFees : function(address, outputs, keyPair, feerate, clbk){
 				self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function(err, inputs, _outputs){
-
-					console.log('err, inputs, _outputs', err, inputs, _outputs)
 
 			 		if(err){
 			 			if (clbk)
@@ -4068,6 +4118,8 @@ Platform = function(app){
 							var t = deep(d, 'time') || 0
 							self.currentBlock = deep(d, 'lastblock.height') || 0
 							self.timeDifference = 0;
+
+							blockps = self.currentBlock - 5000;
 
 							if (t){
 								self.timeDifference = t - Math.floor((new Date().getTime()) / 1000)
@@ -6858,12 +6910,29 @@ Platform = function(app){
 				return nm
 			},
 
-			share : function(share, extra){
+			share : function(share, extra, extendedpreview){
 				var h = '';
 
 				var m = share.caption || share.message;
 
-				var nm = filterXSS(trimHtml(m, 20));
+				var symbols = 20;
+
+				if (extendedpreview){
+					m = '';
+
+					if(share.caption) m = m + '' + share.caption + ' '
+
+					if(share.message) m = m + '' + share.message + ''
+
+					symbols = 100;
+				}
+
+				var nm = filterXSS(trimHtml(m, symbols), {
+					stripIgnoreTag : true,
+					whiteList: {
+						b : ["style"]
+					}
+				});
 
 				nm = emojione.toImage(share.renders.xssmessage(nm))
 			
@@ -7044,7 +7113,80 @@ Platform = function(app){
 			
 		}
 
+		self.showedIds = {}
+
 		self.messages = {
+
+			sharepocketnet : {
+				loadMore : function(data, clbk, wa){
+
+					data.addrFrom = 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'
+						
+					if (data.addrFrom){
+						
+						platform.sdk.users.get([data.addrFrom], function(){
+
+							data.user = platform.sdk.users.storage[data.addrFrom] || {}
+
+							data.user.address =  data.addrFrom
+
+							var parts = data.txids.split(',')[0]
+
+							data.txids = parts[parts.length - 1]
+						
+							platform.sdk.node.shares.getbyid(data.txids, function(s, fromcashe){
+
+								s || (s = []);
+
+								if (s[0]){
+									data.share = s[0];
+								}
+
+								clbk()
+							})
+
+						})
+
+						return
+					}
+
+					clbk()
+				},
+				
+				refs : {
+
+				},
+				audio : {
+					unfocus : 'water_droplet',
+					if : function(data){
+
+						if(data.share){
+							return true
+						}
+
+						return false;
+					}
+				},
+				
+				fastMessage : function(data){	
+			
+					var text = '';
+					var html = '';
+
+					text = self.tempates.share(data.share, null, true)
+					
+					if(text){
+						html += self.tempates.user(data.user, '<a href="author?address=PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd&report=shares&s='+data.share.txid+'&mpost=true"><div class="text">'+text+'</div></a>', true)
+					}
+
+
+					return html;
+					
+				},
+				
+				clbks : {
+				}
+			},
 
 			"transaction" : {
 				loadMore : function(data, clbk, wa){
@@ -7075,6 +7217,25 @@ Platform = function(app){
 
 						if(tx && !err){
 							data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
+							
+
+							data.amountall = _.reduce(tx.vout, function(m, v){
+
+								var vout = _.find(v.scriptPubKey.addresses, function(a){
+									return a == data.addr
+								})
+
+								if(!vout){
+									return m
+								}
+								else{
+									return m + v.value
+								}
+
+							}, 0)
+
+							console.log('data.amountall, tx, data', data.amountall, tx, data)
+							
 							//data.tx = data.pockettx
 
 							data.btx = tx;
@@ -7096,9 +7257,7 @@ Platform = function(app){
 
 								s[a].push(data.tx)
 								
-							}
-
-									
+							}									
 
 							data.address = platform.sdk.node.transactions.addressFromScryptSig(deep(data.btx, 'vin.0.scriptSig.asm'))
 
@@ -7111,11 +7270,16 @@ Platform = function(app){
 								}					
 								
 								_.each(platform.sdk.node.transactions.clbks, function(c){
-									c()
+									c(data.amountall)
 								})
 
-								if (clbk)
-									clbk(data)
+								if(!self.showedIds[data.tx.txid]){
+									self.showedIds[data.tx.txid] = true
+
+									if (clbk)
+										clbk(data)
+								}
+
 
 							}, true)
 
@@ -7138,16 +7302,19 @@ Platform = function(app){
 
 				},
 				
-				fastMessage : function(data){	
+				fastMessage : function(data, ld){	
 			
 					var html = '';
 
 					if (data.tx){
+
+						
+
 						if(data.tx.coinbase){
 
 							if(platform.sdk.usersettings.meta.win.value)
 							{
-								html += self.tempates.user(platform.sdk.users.storage[platform.sdk.address.pnet().address], '<div class="text">'+platform.app.localization.e('coinbaseSuccess', platform.mp.coin(data.tx.amount)) + '</div>')
+								html += self.tempates.user(platform.sdk.users.storage[platform.sdk.address.pnet().address], '<div class="text">'+platform.app.localization.e('coinbaseSuccess', platform.mp.coin(data.amountall || data.tx.amount)) + '</div>')
 							}
 
 						}
@@ -7158,7 +7325,7 @@ Platform = function(app){
 
 								if(platform.sdk.usersettings.meta.transactions.value)
 
-									html += self.tempates.user(data.user, '<div class="text">'+platform.app.localization.e('userSent', platform.mp.coin(data.tx.amount)) + '</div>')
+									html += self.tempates.user(data.user, '<div class="text">'+platform.app.localization.e('userSent', platform.mp.coin(data.amountall || data.tx.amount)) + '</div>')
 							
 							}
 
@@ -7205,13 +7372,13 @@ Platform = function(app){
 					}
 				},
 				clbks : {
-					transactions : function(data){
+					/*transactions : function(data){
 
 						_.each(platform.sdk.node.transactions.clbks, function(c){
 							c(data.tx.amount)
 						})
 
-					}
+					}*/
 				}
 			},
 
@@ -8213,6 +8380,15 @@ Platform = function(app){
     		}
 		}		
 
+		/*self.messageHandler(
+
+			{
+				"msg":"sharepocketnet",
+				"txids":"737a9141c60e82bebe0d58e234ae15250d6db021b6982be7ef8b38964b93137c"
+			}
+
+		)*/
+
 		self.send = function(message){
 
 			if (socket)
@@ -8846,7 +9022,7 @@ Platform = function(app){
 
     				if(m.fastMessage && !m.refs.all && !m.refs[data.RefID]){
 
-    					var html = m.fastMessage(data, loadedData);
+    					var html = m.fastMessage(data, loadedData, true);
 
 
     					if (html){
