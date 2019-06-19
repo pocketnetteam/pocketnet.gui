@@ -170,7 +170,7 @@ function initApp() {
     
     createWindow();
 
-    createBadge();
+    //createBadge();
 
     createTray();
 
