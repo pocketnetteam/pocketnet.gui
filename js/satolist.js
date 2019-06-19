@@ -1519,11 +1519,11 @@ Platform = function(app){
 
 					}
 
-					if (_.toArray(self.sdk.node.transactions.temp['userInfo']).length){
-						if(!wait){
-							wait = 1;
-						}
-					}
+					// if (_.toArray(self.sdk.node.transactions.temp['userInfo']).length){
+					// 	if(!wait){
+					// 		wait = 1;
+					// 	}
+					// }
 
 					if (clbk)
 						clbk(wait)
