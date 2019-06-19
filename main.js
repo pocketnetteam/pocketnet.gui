@@ -178,13 +178,13 @@ function initApp() {
 
     createTray();
 
-    /**log.info('First check updates...');
+    log.info('First check updates...');
 
     autoUpdater.checkForUpdates();
     
     setInterval(() => {
         autoUpdater.checkForUpdates();
-    }, 10*60*1000); */
+    }, 10*60*1000);
 }
 
 function closeNotification() {
