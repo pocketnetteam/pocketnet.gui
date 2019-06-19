@@ -58,10 +58,9 @@ let path = require('path')
 
 var defaultTrayIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
 var badgeTrayIcon = require('path').join(__dirname, 'assets/icons/win/iconbadge.ico')
-var defaultIconPng = require('path').join(__dirname, 'assets/icons/png/64x64.png')
 
-// console.log('defaultTrayIcon', defaultTrayIcon)
-console.log('defaultIconPng', defaultIconPng)
+var defaultWindowIcon_Linux = require('path').join(__dirname, 'assets/icons/png/64x64.png')
+var defaultTrayIcon_Linux = require('path').join(__dirname, 'assets/icons/png/16x16.png')
 
 function showHideWindow(show) {
 
@@ -105,9 +104,12 @@ function destroyBadge() {
 
 function createTray() {
 
-    const defaultImage = nativeImage.createFromPath(defaultTrayIcon);
-    const badgeImage = nativeImage.createFromPath(badgeTrayIcon);
+    var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
+    var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
 
+    if (is.linux) {
+        defaultImage = defaultTrayIcon_Linux
+    }
 
     const tray = new Tray(defaultImage)
 
@@ -246,7 +248,7 @@ function createWindow() {
         title: "POCKETNET v" + app.getVersion(),
         webSecurity : false,
 
-        icon: defaultIconPng
+        icon: defaultWindowIcon_Linux
     });
 
     win.maximize();
