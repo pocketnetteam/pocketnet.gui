@@ -222,7 +222,8 @@ function notification(nhtml) {
         movable: false,
         backgroundColor: '#020E1B',
         alwaysOnTop: true,
-        show: false
+        show: false,
+        icon: path.join(__dirname, 'assets/icons/png/icon.png')
     })
 
     nwin.loadFile('notifications.html', {
