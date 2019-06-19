@@ -174,7 +174,10 @@ function initApp() {
 
     createTray();
 
-    app.setBadgeCount(99);
+    if (app.isUnityRunning()) {
+        app.setBadgeCount(99);
+        console.log('Unity running!');
+    }
 
     if (!is.linux()) {
         log.info('First check updates...');
