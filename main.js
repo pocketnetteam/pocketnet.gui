@@ -57,19 +57,11 @@ let url = require('url')
 let path = require('path')
 
 var defaultTrayIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
-var defaultIconPng = require('path').join(__dirname, 'assets/icons/png/64x64.ico')
 var badgeTrayIcon = require('path').join(__dirname, 'assets/icons/win/iconbadge.ico')
+var defaultIconPng = require('path').join(__dirname, 'assets/icons/png/64x64.png')
 
-console.log('defaultTrayIcon', defaultTrayIcon)
-console.log('defaultIconPng', defaultIconPng)
-
-/*
-var defaultIcon = './assets/icons/win/icon.ico';
-var badgeIcon = './assets/icons/win/iconbadge.ico';*/
-
-
-
-
+// console.log('defaultTrayIcon', defaultTrayIcon)
+// console.log('defaultIconPng', defaultIconPng)
 
 function showHideWindow(show) {
 
