@@ -56,11 +56,15 @@ autoUpdater.on('update-downloaded', (ev) => {
 let url = require('url')
 let path = require('path')
 
+var defaultIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
 var badgeTrayIcon = require('path').join(__dirname, 'assets/icons/win/iconbadge.ico')
 
-var defaultWindowIcon_Linux = require('path').join(__dirname, 'assets/icons/png/64x64.png')
-var defaultTrayIcon_Linux = require('path').join(__dirname, 'assets/icons/png/16x16.png')
+if (is.linux) {
+    defaultIcon = require('path').join(__dirname, 'assets/icons/png/icon.png')
+    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/png/16x16.png')
+    badgeTrayIcon = require('path').join(__dirname, 'assets/icons/png/iconbadge.png')
+}
 
 function showHideWindow(show) {
 
@@ -106,10 +110,6 @@ function createTray() {
 
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
     var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
-
-    if (is.linux) {
-        defaultImage = defaultTrayIcon_Linux
-    }
 
     const tray = new Tray(defaultImage)
 
@@ -248,7 +248,7 @@ function createWindow() {
         title: "POCKETNET v" + app.getVersion(),
         webSecurity : false,
 
-        icon: defaultWindowIcon_Linux
+        icon: defaultIcon
     });
 
     win.maximize();
