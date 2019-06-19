@@ -61,8 +61,8 @@ var defaultTrayIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico
 var badgeTrayIcon = require('path').join(__dirname, 'assets/icons/win/iconbadge.ico')
 
 if (is.linux) {
-    defaultIcon = require('path').join(__dirname, 'assets/icons/png/icon.png')
-    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/png/16x16.png')
+    defaultIcon = require('path').join(__dirname, 'assets/icons/png/64x64.png')
+    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/png/32x32.png')
     badgeTrayIcon = require('path').join(__dirname, 'assets/icons/png/iconbadge.png')
 }
 
@@ -167,7 +167,8 @@ function createTray() {
 
 function initApp() {
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
-    
+    app.dock.setBadge('99');
+
     createWindow();
 
     createBadge();

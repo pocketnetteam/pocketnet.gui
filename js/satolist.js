@@ -746,7 +746,7 @@ Platform = function(app){
 					electron.ipcRenderer.send('update-badge', _count || null);
 					electron.ipcRenderer.send('update-badge-tray', _count || null);
 					
-
+                    
 				}
 			}
 		},
