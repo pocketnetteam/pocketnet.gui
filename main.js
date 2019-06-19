@@ -167,7 +167,7 @@ function createTray() {
 
 function initApp() {
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
-    app.dock.setBadge('99');
+    app.setBadgeCount(99);
 
     createWindow();
 
