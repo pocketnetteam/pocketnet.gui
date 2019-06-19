@@ -61,7 +61,7 @@ var badgeTrayIcon = require('path').join(__dirname, 'assets/icons/win/iconbadge.
 var defaultIconPng = require('path').join(__dirname, 'assets/icons/png/64x64.png')
 
 // console.log('defaultTrayIcon', defaultTrayIcon)
-// console.log('defaultIconPng', defaultIconPng)
+console.log('defaultIconPng', defaultIconPng)
 
 function showHideWindow(show) {
 
@@ -218,8 +218,7 @@ function notification(nhtml) {
         movable: false,
         backgroundColor: '#020E1B',
         alwaysOnTop: true,
-        show: false,
-        icon: defaultIconPng
+        show: false
     })
 
     nwin.loadFile('notifications.html', {
@@ -244,14 +243,10 @@ function createWindow() {
         width: mainScreen.size.width,
         height: mainScreen.size.height,
 
-        /*frame: false, */
-        //fullscreen : true,
-        
-        /*width : 800,
-        height : 600,*/
-
         title: "POCKETNET v" + app.getVersion(),
-        webSecurity : false
+        webSecurity : false,
+
+        icon: defaultIconPng
     });
 
     win.maximize();
