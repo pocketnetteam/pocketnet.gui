@@ -20,6 +20,7 @@ const Badge = require('./js/vendor/electron-windows-badge.js');
 // AutoUpdate --------------------------------------
 const { autoUpdater } = require("electron-updater");
 const log = require('electron-log');
+const is = require('electron-is')
 
 var updatesLoading = false;
 
@@ -179,13 +180,15 @@ function initApp() {
 
     createTray();
 
-    log.info('First check updates...');
+    if (!is.linux()) {
+        log.info('First check updates...');
 
-    autoUpdater.checkForUpdates();
-    
-    setInterval(() => {
         autoUpdater.checkForUpdates();
-    }, 10*60*1000);
+        
+        setInterval(() => {
+            autoUpdater.checkForUpdates();
+        }, 10*60*1000);
+    }
 }
 
 function closeNotification() {
