@@ -167,13 +167,14 @@ function createTray() {
 
 function initApp() {
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
-    app.setBadgeCount(99);
-
+    
     createWindow();
 
     createBadge();
 
     createTray();
+
+    app.setBadgeCount(99);
 
     if (!is.linux()) {
         log.info('First check updates...');
