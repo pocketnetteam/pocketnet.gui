@@ -170,7 +170,9 @@ function initApp() {
     
     createWindow();
 
-    //createBadge();
+    if (!is.linux()) {
+        createBadge();
+    }
 
     createTray();
 
