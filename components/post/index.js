@@ -890,7 +890,7 @@ var post = (function(){
 				renders.share(function(){
 					renders.comments(function(){
 
-						if(el.wnd.length && ed.next){
+						if(el.wnd.length && ed.next && !isMobile()){
 			
 							el.wnd.on('scroll', events.next)
 

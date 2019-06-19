@@ -5,7 +5,10 @@ if(!_Node)
 {
 	app = new Application({
 
-		/*ws : 'wss://localhost:8088',
+		/*ws : 'wss://bear:8088',
+		apiproxy : 'https://bear:8888',*/
+
+		/*ws : 'wss://localhost:8088',	
 		apiproxy : 'https://localhost:8888',
 
 		ws : 'wss://localhost:8088',

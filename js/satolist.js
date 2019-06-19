@@ -6882,6 +6882,7 @@ Platform = function(app){
 	}
 
 	self.WSn = function(platform){
+		
 		var self = this;
 		var app = platform.app;
 
@@ -7130,9 +7131,10 @@ Platform = function(app){
 
 							data.user.address =  data.addrFrom
 
-							var parts = data.txids.split(',')[0]
+							var parts = data.txids.split(',')
 
 							data.txids = parts[parts.length - 1]
+
 						
 							platform.sdk.node.shares.getbyid(data.txids, function(s, fromcashe){
 
