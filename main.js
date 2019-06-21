@@ -166,11 +166,10 @@ function destroyTray() {
 
     while (!tray.isDestroyed()) {
         tray.destroy()
+        log.info('--- Tray destroyed');
     }
 
-    log('--- Tray destroyed');
-
-    tray = null;
+    // tray = null;
 
 }
 
