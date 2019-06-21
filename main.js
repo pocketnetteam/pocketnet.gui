@@ -344,7 +344,8 @@ function createWindow() {
     })
 
     ipcMain.on('quitAndInstall', function(e) {
-
+        
+        win.setClosable(true);
         autoUpdater.quitAndInstall(true, true)
 
     })

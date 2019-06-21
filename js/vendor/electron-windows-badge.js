@@ -1,5 +1,4 @@
 const { nativeImage, ipcMain } = require('electron');
-const is = require('electron-is')
 
 const badgeDescription = 'New notification';
 const UPDATE_BADGE_EVENT = 'update-badge';
