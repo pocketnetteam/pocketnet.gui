@@ -344,7 +344,10 @@ function createWindow() {
     })
 
     ipcMain.on('quitAndInstall', function(e) {
+
+        app.quit()
         autoUpdater.quitAndInstall(true, true)   
+
     })
 
     // Вызывается, когда окно будет закрыто.
