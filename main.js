@@ -383,6 +383,7 @@ if (!r) {
         // это обычное дело для приложений и их строки меню на macOS
         if (process.platform !== 'darwin') {
             app.quit()
+            app.exit(0)
         }
     })
 
