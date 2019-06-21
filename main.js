@@ -8,7 +8,7 @@ if (setupEvents.handleSquirrelEvent()) {
 
 const electronLocalshortcut = require('electron-localshortcut');
 
-let win, nwin, badge;
+let win, nwin, badge, tray;
 
 var willquit = false;
 
@@ -111,7 +111,7 @@ function createTray() {
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
     var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
 
-    const tray = new Tray(defaultImage)
+    tray = new Tray(defaultImage)
 
     tray.setImage(defaultImage)
     tray.setToolTip('Pocketnet');
@@ -158,11 +158,15 @@ function createTray() {
     win.on('hide', () => {
         tray.setHighlightMode('never')
     })
+}
 
-    autoUpdater.on('before-quit-for-update', (ev) => {
-        log.info('before-quit-for-update: tray.destroy()');
-        tray.destroy();
-    });
+function destroyTray() {
+
+    if (!tray) return
+
+    tray.destroy()
+    tray = null;
+
 }
 
 function createBadgeOS() {
@@ -295,8 +299,9 @@ function createWindow() {
             win.hide();
             destroyBadge()
         } else {
-            win = null
             destroyBadge()
+            destroyTray()
+            win = null
         }
 
 
@@ -378,7 +383,6 @@ if (!r) {
         // это обычное дело для приложений и их строки меню на macOS
         if (process.platform !== 'darwin') {
             app.quit()
-            app.exit(0)
         }
     })
 
