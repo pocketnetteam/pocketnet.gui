@@ -344,10 +344,20 @@ function createWindow() {
     })
 
     ipcMain.on('quitAndInstall', function(e) {
-        
-        win.setClosable(true);
-        autoUpdater.quitAndInstall(true, true)
+        setImmediate(() => {
 
+            var wins = win.getAllWindows();
+            wins.forEach(function(bwin) {
+                bwin.destroy();
+            });
+
+            wins = nwin.getAllWindows();
+            wins.forEach(function(bwin) {
+                bwin.destroy();
+            });
+
+            autoUpdater.quitAndInstall(true, true)
+        })       
     })
 
     // Вызывается, когда окно будет закрыто.
