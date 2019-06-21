@@ -345,7 +345,8 @@ function createWindow() {
 
     ipcMain.on('quitAndInstall', function(e) {
 
-        app.quit()
+        tray.destroy();
+        
         autoUpdater.quitAndInstall(true, true)   
 
     })
