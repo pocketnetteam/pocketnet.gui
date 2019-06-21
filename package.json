@@ -95,6 +95,8 @@
         "linux": {
             "target": "AppImage",
             "category": "Network",
+            "executableName": "Pocketnet",
+            "icon": "assets/icons/png/256x256.png",
             "description": "Pocketnet desktop application"
         },
         "win": {
