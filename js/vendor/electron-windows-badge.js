@@ -104,6 +104,8 @@ module.exports = class Badge {
   initListeners() {
     ipcMain.on(UPDATE_BADGE_EVENT, (event, badgeNumber) => {
         if (is.linux && app.isUnityRunning()) {
+            console.log(app);
+            console.log(badgeNumber);
             app.setBadgeCount(badgeNumber);
         } else {
             this.update(badgeNumber);
