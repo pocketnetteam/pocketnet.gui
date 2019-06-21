@@ -166,12 +166,18 @@ function createTray() {
 }
 
 function createBadgeOS() {
+    log.info('--- createBadgeOS');
     if ((is.linux && app.isUnityRunning()) || is.macOS) {
+        log.info('--- (is.linux && app.isUnityRunning()) || is.macOS');
+
         // Linux or macOS
         ipcMain.on('update-badge', (event, badgeNumber) => {
+            log.info('--- update-badge');
             if (badgeNumber) {
+                log.info('--- badgeNumber != null');
                 app.setBadgeCount(badgeNumber);
             } else {
+                log.info('--- badgeNumber = 1');
                 app.setBadgeCount(0);
             }
           
