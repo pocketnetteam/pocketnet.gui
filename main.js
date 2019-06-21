@@ -141,15 +141,15 @@ function createTray() {
         showHideWindow()
     })
 
-    ipcMain.on('update-badge-tray', function(e, c) {
-        if (!c) {
-            tray.setImage(defaultImage)
-        }
+    // ipcMain.on('update-badge-tray', function(e, c) {
+    //     if (!c) {
+    //         tray.setImage(defaultImage)
+    //     }
 
-        if (c) {
-            tray.setImage(badgeImage)
-        }
-    })
+    //     if (c) {
+    //         tray.setImage(badgeImage)
+    //     }
+    // })
 
     win.on('show', () => {
         tray.setHighlightMode('always')
