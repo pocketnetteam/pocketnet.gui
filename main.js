@@ -197,7 +197,7 @@ function initApp() {
 
     createBadgeOS();
 
-    if (!is.linux) createTray();
+    createTray();
 
     log.info('First check updates...');
 
@@ -294,7 +294,7 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if (!willquit && !is.linux) {
+        if (!willquit) {
             e.preventDefault();
             win.hide();
             destroyBadge()
