@@ -164,12 +164,8 @@ function destroyTray() {
 
     if (!tray) return
 
-    while (!tray.isDestroyed()) {
-        tray.destroy()
-        log.info('--- Tray destroyed');
-    }
-
-    // tray = null;
+    tray.destroy()
+    tray = null;
 
 }
 
@@ -201,7 +197,7 @@ function initApp() {
 
     createBadgeOS();
 
-    createTray();
+    if (!is.linux) createTray();
 
     log.info('First check updates...');
 
@@ -298,7 +294,7 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if (!willquit) {
+        if (!willquit && !is.linux) {
             e.preventDefault();
             win.hide();
             destroyBadge()
