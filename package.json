@@ -94,7 +94,6 @@
         },
         "linux": {
             "target": "AppImage",
-            "systemIntegration": "doNotAsk",
             "artifactName": "${productName}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
