@@ -165,12 +165,32 @@ function createTray() {
     });
 }
 
+function createBadgeOS() {
+    if ((is.linux && app.isUnityRunning()) || is.macOS) {
+        // Linux or macOS
+        ipcMain.on('update-badge', (event, badgeNumber) => {
+            if (badgeNumber) {
+                app.setBadgeCount(badgeNumber);
+            } else {
+                app.setBadgeCount(0);
+            }
+          
+            event.returnValue = 'success';
+        });
+    }
+    
+    if (is.windows) {
+        // Windows use plugin electron-windows-badge
+        createBadge();
+    }
+}
+
 function initApp() {
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
     
     createWindow();
 
-    createBadge();
+    createBadgeOS();
 
     createTray();
 
