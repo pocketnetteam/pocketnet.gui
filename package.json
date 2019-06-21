@@ -97,7 +97,6 @@
             "target": "AppImage",
             "category": "Network",
             "icon": "assets/icons/png/256x256.png",
-            "license": "LICENSE",
             "desktop": {
                 "Name": "Pocketnet",
                 "Comment": "Pocketnet desktop application",
