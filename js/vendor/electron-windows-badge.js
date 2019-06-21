@@ -1,4 +1,5 @@
-const { nativeImage, ipcMain } = require('electron');
+const { app, nativeImage, ipcMain } = require('electron');
+const is = require('electron-is')
 
 const badgeDescription = 'New notification';
 const UPDATE_BADGE_EVENT = 'update-badge';
@@ -102,7 +103,12 @@ module.exports = class Badge {
 
   initListeners() {
     ipcMain.on(UPDATE_BADGE_EVENT, (event, badgeNumber) => {
-      this.update(badgeNumber);
+        if (is.linux && app.isUnityRunning()) {
+            app.setBadgeCount(badgeNumber);
+        } else {
+            this.update(badgeNumber);
+        }
+      
       event.returnValue = 'success';
     });
   }

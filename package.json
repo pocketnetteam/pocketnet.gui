@@ -96,10 +96,10 @@
         "linux": {
             "target": "deb",
             "category": "Network",
-            "icon": "assets/icons",
+            "icon": "assets/icons/png/128x128.png",
             "desktop": {
                 "Name": "Pocketnet",
-                "Icon": "assets/icons",
+                "Icon": "assets/icons/png/128x128.png",
                 "Comment": "Desktop application for Pocketnet",
                 "Categories": "Network"
             },
