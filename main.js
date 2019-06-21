@@ -141,15 +141,15 @@ function createTray() {
         showHideWindow()
     })
 
-    // ipcMain.on('update-badge-tray', function(e, c) {
-    //     if (!c) {
-    //         tray.setImage(defaultImage)
-    //     }
+    ipcMain.on('update-badge-tray', function(e, c) {
+        if (!c) {
+            tray.setImage(defaultImage)
+        }
 
-    //     if (c) {
-    //         tray.setImage(badgeImage)
-    //     }
-    // })
+        if (c) {
+            tray.setImage(badgeImage)
+        }
+    })
 
     win.on('show', () => {
         tray.setHighlightMode('always')
@@ -164,7 +164,12 @@ function destroyTray() {
 
     if (!tray) return
 
-    tray.destroy()
+    while (!tray.isDestroyed()) {
+        tray.destroy()
+    }
+
+    log('--- Tray destroyed');
+
     tray = null;
 
 }
