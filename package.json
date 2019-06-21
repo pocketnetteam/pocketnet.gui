@@ -94,9 +94,13 @@
         },
         "linux": {
             "target": "AppImage",
+            "appImage": {
+                "systemIntegration": "doNotAsk",
+                "license": "LICENSE"
+            },
             "category": "Network",
             "executableName": "Pocketnet",
-            "icon": "assets/icons/png/256x256.png",
+            "icon": "assets/icons/png/128x128.png",
             "description": "Pocketnet desktop application"
         },
         "win": {
