@@ -97,6 +97,7 @@
             "appImage": {
                 "systemIntegration": "doNotAsk"
             },
+            "artifactName": "${productName}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
             "icon": "assets/icons/png/128x128.png",
