@@ -73,6 +73,21 @@
                 "repo": "pocketnet.gui"
             }
         ],
+        "mac": {
+            "target": "dmg",
+            "icon": "assets/icons/mac/icon.icns"
+        },
+        "linux": {
+            "target": "AppImage",
+            "artifactName": "${productName}.${ext}",
+            "category": "Network",
+            "executableName": "Pocketnet",
+            "description": "Pocketnet desktop application"
+        },
+        "win": {
+            "target": "nsis",
+            "icon": "assets/icons/win/icon.ico"
+        },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,
@@ -88,20 +103,15 @@
             "license": "LICENSE",
             "include": "build/installer.nsh"
         },
-        "mac": {
-            "target": "dmg",
-            "icon": "assets/icons/mac/icon.icns"
-        },
-        "linux": {
-            "target": "AppImage",
-            "artifactName": "${productName}.${ext}",
-            "category": "Network",
-            "executableName": "Pocketnet",
-            "description": "Pocketnet desktop application"
-        },
-        "win": {
-            "target": "nsis",
-            "icon": "assets/icons/win/icon.ico"
+        "AppImage": {
+            "license": "LICENSE",
+            "desktop": {
+                "Name": "Pocketnet",
+                "Exec": "pocketnet",
+                "Icon": "pocketnet",
+                "Type": "Application",
+                "Categories": "Utility;"
+            }
         }
     }
 }
