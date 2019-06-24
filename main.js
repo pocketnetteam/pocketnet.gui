@@ -141,6 +141,8 @@ function createTray() {
     })
 
     ipcMain.on('update-badge-tray', function(e, c) {
+        if (!tray) return;
+
         if (!c) {
             tray.setImage(defaultImage)
         }
@@ -151,10 +153,12 @@ function createTray() {
     })
 
     win.on('show', () => {
+        if (!tray) return;
         tray.setHighlightMode('always')
     })
 
     win.on('hide', () => {
+        if (!tray) return;
         tray.setHighlightMode('never')
     })
 }
