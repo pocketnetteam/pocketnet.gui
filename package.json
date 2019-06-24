@@ -82,7 +82,17 @@
             "artifactName": "${productName}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
-            "description": "Pocketnet desktop application"
+            "description": "Pocketnet desktop application",
+            "desktop": {
+                "Name": "Pocketnet",
+                "Icon": "pocketnet",
+                "Type": "Application",
+                "Categories": "Utility;"
+            }
+        },
+        "appImage": {
+            "license": "LICENSE",
+            "systemIntegration": "doNotAsk"
         },
         "win": {
             "target": "nsis",
@@ -102,15 +112,6 @@
             "deleteAppDataOnUninstall": true,
             "license": "LICENSE",
             "include": "build/installer.nsh"
-        },
-        "appImage": {
-            "license": "LICENSE",
-            "desktop": {
-                "Name": "Pocketnet",
-                "Icon": "pocketnet",
-                "Type": "Application",
-                "Categories": "Utility;"
-            }
         }
     }
 }
