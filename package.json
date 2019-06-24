@@ -103,7 +103,7 @@
             "license": "LICENSE",
             "include": "build/installer.nsh"
         },
-        "appimage": {
+        "appImage": {
             "license": "LICENSE",
             "desktop": {
                 "Name": "Pocketnet",
