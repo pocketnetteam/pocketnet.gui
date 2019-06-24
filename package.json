@@ -82,13 +82,7 @@
             "artifactName": "${productName}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
-            "description": "Pocketnet desktop application",
-            "desktop": {
-                "Name": "Pocketnet",
-                "Icon": "pocketnet",
-                "Type": "Application",
-                "Categories": "Utility;"
-            }
+            "description": "Pocketnet desktop application"
         },
         "appImage": {
             "license": "LICENSE",

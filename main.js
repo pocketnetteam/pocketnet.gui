@@ -119,19 +119,18 @@ function createTray() {
     const contextMenu = Menu.buildFromTemplate([{
         label: 'Open Pocketnet',
         click: function() {
-
             showHideWindow(true)
-
-
         }
     }, {
         label: 'Quit',
         click: function() {
-
             willquit = true
-
             app.quit()
-
+        }
+    }, {
+        label: 'Destroy tray',
+        click: function() {
+            destroyTray()
         }
     }]);
 
@@ -197,6 +196,7 @@ function initApp() {
 
     createBadgeOS();
 
+    destroyTray();
     createTray();
 
     log.info('First check updates...');
