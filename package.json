@@ -107,7 +107,6 @@
             "license": "LICENSE",
             "desktop": {
                 "Name": "Pocketnet",
-                "Exec": "pocketnet",
                 "Icon": "pocketnet",
                 "Type": "Application",
                 "Categories": "Utility;"
