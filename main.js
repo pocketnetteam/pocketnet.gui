@@ -106,7 +106,6 @@ function destroyBadge() {
     badge = null;
 }
 
-var contextMenu;
 function createTray() {
 
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
@@ -117,7 +116,7 @@ function createTray() {
     tray.setImage(defaultImage)
     tray.setToolTip('Pocketnet');
 
-    contextMenu = Menu.buildFromTemplate([{
+    var contextMenu = Menu.buildFromTemplate([{
         label: 'Open Pocketnet',
         click: function() {
             showHideWindow(true)
@@ -127,11 +126,6 @@ function createTray() {
         click: function() {
             willquit = true
             app.quit()
-        }
-    }, {
-        label: 'Destroy tray',
-        click: function() {
-            destroyTray()
         }
     }]);
 
@@ -169,7 +163,6 @@ function destroyTray() {
     if (!tray) return
 
     tray.destroy()
-    contextMenu = null;
     tray = null;
 
 }
@@ -202,8 +195,7 @@ function initApp() {
 
     createBadgeOS();
 
-    destroyTray();
-    createTray();
+    if (!is.linux) createTray();
 
     log.info('First check updates...');
 
@@ -300,7 +292,7 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if (!willquit) {
+        if (!willquit && !is.linux) {
             e.preventDefault();
             win.hide();
             destroyBadge()
@@ -309,8 +301,6 @@ function createWindow() {
             destroyTray()
             win = null
         }
-
-
     });
 
     win.webContents.session.webRequest.onHeadersReceived({}, (detail, callback) => {
