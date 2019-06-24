@@ -106,6 +106,7 @@ function destroyBadge() {
     badge = null;
 }
 
+var contextMenu;
 function createTray() {
 
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
@@ -116,7 +117,7 @@ function createTray() {
     tray.setImage(defaultImage)
     tray.setToolTip('Pocketnet');
 
-    const contextMenu = Menu.buildFromTemplate([{
+    contextMenu = Menu.buildFromTemplate([{
         label: 'Open Pocketnet',
         click: function() {
             showHideWindow(true)
@@ -168,6 +169,7 @@ function destroyTray() {
     if (!tray) return
 
     tray.destroy()
+    contextMenu = null;
     tray = null;
 
 }
