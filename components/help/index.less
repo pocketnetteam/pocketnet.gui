@@ -3,6 +3,7 @@
 #help{
 
 	.tips{
+		padding-top : 2 * @rhythm;
 		overflow: hidden;
 		.tipitem{
 			float: left;
@@ -14,6 +15,42 @@
 			&:hover,
 			&.active{
 				border-bottom: 1px solid #fff;
+			}
+		}
+	}
+
+	.bgCaption{
+		.cell{
+			padding-top : 5 * @rhythm;
+			vertical-align: top;
+
+			&.version{
+				width: 230px;
+				.infoversion{
+					padding-top : 4 * @rhythm;
+					font-size: 0.8em;
+					text-align: right;
+				}
+
+				.checkversion{
+					cursor: pointer;
+
+					&:hover{
+						color : @color-gray-light;
+					}
+				}
+				
+				.checking{
+					display: inline-block;
+					width : 30px;
+					text-align: center;
+					opacity: 0;
+
+					&.active{
+						opacity: 1;
+					}
+				}
+				
 			}
 		}
 	}

@@ -154,6 +154,21 @@ Platform = function(app){
 				name : "PocketnetSetup.exe",
 				url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest'
 			} 
+		},
+
+		linux : {
+			text : {
+				name : "Linux",
+				download : 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
+				label : "Download Pocketnet for Linux"
+			},
+
+			icon : '<i class="fab fa-linux"></i>',
+
+			github : {
+				name : "Pocketnet_linux_x64.AppImage",
+				url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest'
+			} 
 		}
 	}
 
@@ -4258,7 +4273,7 @@ Platform = function(app){
 						success : function(d){
 
 							var t = deep(d, 'time') || 0
-							self.currentBlock = deep(d, 'lastblock.height') || 0
+							self.currentBlock = localStorage['lastblock'] || deep(d, 'lastblock.height') || 0
 							self.timeDifference = 0;
 
 							blockps = self.currentBlock - 5000;
@@ -7757,6 +7772,8 @@ Platform = function(app){
 
 					platform.currentBlock = data.block;
 
+					localStorage['lastblock'] = platform.currentBlock
+
 					//self.reconnected = platform.currentBlock;
 
 					platform.sdk.notifications.wsBlock(data.height)
@@ -7803,6 +7820,8 @@ Platform = function(app){
 					var s = platform.sdk.node.transactions;
 
 					platform.currentBlock = data.height;
+
+					localStorage['lastblock'] = platform.currentBlock
 
 					lost = platform.currentBlock;
 
@@ -9017,8 +9036,9 @@ Platform = function(app){
 					nonce : nonce,
 					sgn : signature.toString('hex'),
 					pub : keyPair.publicKey.toString('hex'),
+					id : platform.app.options.device,
 
-					id : platform.app.options.device
+					block : platform.currentBlock || 0
 				}
 
 				if(!wait)

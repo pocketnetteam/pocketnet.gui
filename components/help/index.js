@@ -102,6 +102,17 @@ var help = (function(){
 		}
 
 		var renders = {
+			application : function(page){
+
+				this.page(page, function(_el){
+
+					console.log("PAGE", page)
+
+					
+				})
+
+			},
+
 			faq : function(page){
 
 				this.page(page, function(_el){
@@ -207,6 +218,30 @@ var help = (function(){
 				
 			el.menuitem.on('click', events.menuitem)
 
+			
+
+			el.caption.find('.checkversion').on('click', function(){
+
+				if (typeof _Electron != 'undefined'){
+					el.caption.find('.checking').addClass('active')
+					
+
+					var electron = require('electron');
+
+					setTimeout(function(){
+
+						electron.ipcRenderer.send('electron-checkForUpdates');
+
+						electron.ipcRenderer.on('updater-message', function(event, data){
+							el.caption.find('.checking').removeClass('active')
+						})
+
+					}, 100)
+
+				}
+				
+			})
+
 		}
 
 		return {
@@ -216,7 +251,19 @@ var help = (function(){
 
 				state.load();
 
-				var data = {};
+				var version = null
+
+				if (typeof _Electron != 'undefined'){
+
+					var electron = require('electron');
+
+					version = electron.remote.app.getVersion();
+
+				}
+
+				var data = {
+					version : version
+				};
 
 				clbk(data);
 
@@ -247,6 +294,8 @@ var help = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.page = el.c.find('.page')
 				el.menuitem = el.c.find('.tipitem')
+
+				el.caption = el.c.find('.bgCaption')
 
 				initEvents();
 

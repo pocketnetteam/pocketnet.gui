@@ -343,6 +343,15 @@ function createWindow() {
 
     })
 
+    ipcMain.on('electron-checkForUpdates', function(e) {
+
+        autoUpdater.checkForUpdates();
+
+    })
+
+
+   
+
     // Вызывается, когда окно будет закрыто.
     return win
 }

@@ -25,15 +25,29 @@
 							<div class="tipitem" page="roadmap">Roadmap</div>
 							<div class="tipitem" page="videos">Videos</div>
 
-							<% if(os() && self.app.platform.applications[os()]) {%>
+							<% if(os() && self.app.platform.applications[os()] && typeof _Electron == 'undefined' && !window.cordova) {%>
 								<div class="tipitem">
 									<a href="applications">Applications</a>
 								</div>
 							<% } %>
+							
 						</div>
 					</div>
 
 				</div>
+
+				
+				<% if(version) {%>
+
+					<div class="cell version">
+						<div class="infoversion">
+							<span class="checking"><i class="fas fa-spinner fa-spin"></i></span> <%- version %> <span class="checkversion">Check for updates</span> 
+						</div>
+					</div>				
+				
+				<% } %>
+
+
 			</div>
 		</div>
 	</div>
