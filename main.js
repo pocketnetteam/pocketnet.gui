@@ -8,7 +8,7 @@ if (setupEvents.handleSquirrelEvent()) {
 
 const electronLocalshortcut = require('electron-localshortcut');
 
-let win, nwin, badge;
+let win, nwin, badge, tray;
 
 var willquit = false;
 
@@ -20,6 +20,7 @@ const Badge = require('./js/vendor/electron-windows-badge.js');
 // AutoUpdate --------------------------------------
 const { autoUpdater } = require("electron-updater");
 const log = require('electron-log');
+const is = require('electron-is')
 
 var updatesLoading = false;
 
@@ -55,19 +56,15 @@ autoUpdater.on('update-downloaded', (ev) => {
 let url = require('url')
 let path = require('path')
 
+var defaultIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
-
 var badgeTrayIcon = require('path').join(__dirname, 'assets/icons/win/iconbadge.ico')
 
-console.log('defaultTrayIcon', defaultTrayIcon)
-
-/*
-var defaultIcon = './assets/icons/win/icon.ico';
-var badgeIcon = './assets/icons/win/iconbadge.ico';*/
-
-
-
-
+if (is.linux) {
+    defaultIcon = require('path').join(__dirname, 'assets/icons/png/64x64.png')
+    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/png/32x32.png')
+    badgeTrayIcon = require('path').join(__dirname, 'assets/icons/png/iconbadge.png')
+}
 
 function showHideWindow(show) {
 
@@ -111,31 +108,24 @@ function destroyBadge() {
 
 function createTray() {
 
-    const defaultImage = nativeImage.createFromPath(defaultTrayIcon);
-    const badgeImage = nativeImage.createFromPath(badgeTrayIcon);
+    var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
+    var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
 
-
-    const tray = new Tray(defaultImage)
+    tray = new Tray(defaultImage)
 
     tray.setImage(defaultImage)
     tray.setToolTip('Pocketnet');
 
-    const contextMenu = Menu.buildFromTemplate([{
+    var contextMenu = Menu.buildFromTemplate([{
         label: 'Open Pocketnet',
         click: function() {
-
             showHideWindow(true)
-
-
         }
     }, {
         label: 'Quit',
         click: function() {
-
             willquit = true
-
             app.quit()
-
         }
     }]);
 
@@ -146,6 +136,8 @@ function createTray() {
     })
 
     ipcMain.on('update-badge-tray', function(e, c) {
+        if (!tray) return;
+
         if (!c) {
             tray.setImage(defaultImage)
         }
@@ -156,17 +148,44 @@ function createTray() {
     })
 
     win.on('show', () => {
+        if (!tray) return;
         tray.setHighlightMode('always')
     })
 
     win.on('hide', () => {
+        if (!tray) return;
         tray.setHighlightMode('never')
     })
+}
 
-    autoUpdater.on('before-quit-for-update', (ev) => {
-        log.info('before-quit-for-update: tray.destroy()');
-        tray.destroy();
-    });
+function destroyTray() {
+
+    if (!tray) return
+
+    tray.destroy()
+    tray = null;
+
+}
+
+function createBadgeOS() {
+    if ((is.linux && app.isUnityRunning()) || is.macOS) {
+
+        // Linux or macOS
+        ipcMain.on('update-badge', (event, badgeNumber) => {
+            if (badgeNumber) {
+                app.setBadgeCount(badgeNumber);
+            } else {
+                app.setBadgeCount(0);
+            }
+          
+            event.returnValue = 'success';
+        });
+    }
+    
+    if (is.windows) {
+        // Windows use plugin electron-windows-badge
+        createBadge();
+    }
 }
 
 function initApp() {
@@ -174,9 +193,9 @@ function initApp() {
     
     createWindow();
 
-    createBadge();
+    createBadgeOS();
 
-    createTray();
+    if (!is.linux) createTray();
 
     var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
     
@@ -259,14 +278,10 @@ function createWindow() {
         width: mainScreen.size.width,
         height: mainScreen.size.height,
 
-        /*frame: false, */
-        //fullscreen : true,
-        
-        /*width : 800,
-        height : 600,*/
-
         title: "POCKETNET v" + app.getVersion(),
-        webSecurity : false
+        webSecurity : false,
+
+        icon: defaultIcon
     });
 
     win.maximize();
@@ -289,16 +304,15 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if (!willquit) {
+        if (!willquit && !is.linux) {
             e.preventDefault();
             win.hide();
             destroyBadge()
         } else {
-            win = null
             destroyBadge()
+            destroyTray()
+            win = null
         }
-
-
     });
 
     win.webContents.session.webRequest.onHeadersReceived({}, (detail, callback) => {
@@ -339,7 +353,8 @@ function createWindow() {
 
     ipcMain.on('quitAndInstall', function(e) {
 
-        autoUpdater.quitAndInstall(true, true)
+        willquit = true        
+        autoUpdater.quitAndInstall(true, true)   
 
     })
 

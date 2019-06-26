@@ -15,12 +15,11 @@
         "publish": "build --win --x64 --ia32 -p always"
     },
     "devDependencies": {
-        "electron": "^4.1.1",
-        "electron-builder": "^20.42.0",
-        "electron-rebuild": "^1.8.4",
         "bech32": "^1.1.3",
         "bip32": "^2.0.3",
         "bip66": "^1.1.5",
+        "electron": "^4.2.5",
+        "electron-builder": "^20.42.0",
         "humanize": "0.0.9",
         "jsdom": "^8.5.0",
         "merkle-lib": "^2.0.10",
@@ -35,6 +34,7 @@
         "aes-js": "^3.1.2",
         "auto-launch": "^5.0.5",
         "desandro-matches-selector": "^2.0.2",
+        "electron-is": "^3.0.0",
         "electron-localshortcut": "^3.1.0",
         "electron-log": "^3.0.1",
         "electron-spellchecker": "^2.0.0",
@@ -55,7 +55,7 @@
         "medium-editor": "^5.23.3",
         "node-reverse-wstunnel": "^1.0.0",
         "node-static": "^0.7.11",
-        "open": "0.0.5",
+        "open": "^6.3.0",
         "outlayer": "^2.1.1",
         "pbkdf2": "^3.0.17",
         "pickadate": "^3.5.6",
@@ -73,6 +73,25 @@
                 "repo": "pocketnet.gui"
             }
         ],
+        "mac": {
+            "target": "dmg",
+            "icon": "assets/icons/mac/icon.icns"
+        },
+        "linux": {
+            "target": "AppImage",
+            "artifactName": "${productName}.${ext}",
+            "category": "Network",
+            "executableName": "Pocketnet",
+            "description": "Pocketnet desktop application"
+        },
+        "appImage": {
+            "license": "LICENSE",
+            "systemIntegration": "doNotAsk"
+        },
+        "win": {
+            "target": "nsis",
+            "icon": "assets/icons/win/icon.ico"
+        },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
             "oneClick": false,
@@ -87,26 +106,6 @@
             "deleteAppDataOnUninstall": true,
             "license": "LICENSE",
             "include": "build/installer.nsh"
-        },
-        "mac": {
-            "target": "dmg",
-            "icon": "assets/icons/mac/icon.icns"
-        },
-        "linux": {
-            "target": "deb",
-            "category": "Network",
-            "icon": "assets/icons",
-            "desktop": {
-                "Name": "Pocketnet",
-                "Icon": "assets/icons",
-                "Comment": "Desktop application for Pocketnet",
-                "Categories": "Network"
-            },
-            "description": "Desktop application for Pocketnet"
-        },
-        "win": {
-            "target": "nsis",
-            "icon": "assets/icons/win/icon.ico"
         }
     }
 }
