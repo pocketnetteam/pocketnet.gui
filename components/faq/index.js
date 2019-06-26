@@ -28,8 +28,8 @@ var faq = (function(){
 
 					{
 						id : 'downloadclient',
-						q : 'Where do I download the client?',
-						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.gui/releases/latest">https://github.com/pocketnetteam/pocketnet.gui/releases/latest</a></div><div>Click on PocketnetSetup.exe</div>',
+						q : 'Where do I download the node?',
+						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.core/releases/latest">https://github.com/pocketnetteam/pocketnet.core/releases/latest</a></div><div>With any questions email core@pocketnet.app</div>',
 					}
 		
 		

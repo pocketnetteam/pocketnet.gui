@@ -695,25 +695,28 @@ var lenta = (function(){
 
 				})
 
-				self.app.nav.api.load({
-					open : true,
-					href : 'imagegallery?i=' + share.txid + '&num=' + (num || 0),
-					inWnd : true,
-					history : true,
-
-					essenseData : {
-						initialValue : initialValue,
-						idName : 'src',
-						images : images,
-
-						gid : share.txid
-					},
-
-					clbk : function(){
-						if (clbk)
-							clbk()
-					}
-				})
+				if(images.length > 1 || !isMobile()){
+					self.app.nav.api.load({
+						open : true,
+						href : 'imagegallery?i=' + share.txid + '&num=' + (num || 0),
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							initialValue : initialValue,
+							idName : 'src',
+							images : images,
+	
+							gid : share.txid
+						},
+	
+						clbk : function(){
+							if (clbk)
+								clbk()
+						}
+					})
+				}
+				
 			},
 
 			///
@@ -2314,7 +2317,7 @@ var lenta = (function(){
 
 				var tp = el.c.find('.loadprev')
 
-				var trueshold = 250
+				var trueshold = 150
 
 				var parallax = new SwipeParallax({
 
@@ -2327,7 +2330,6 @@ var lenta = (function(){
 					directions : {
 						down : {
 							cancellable : true,
-							
 							
 
 							positionclbk : function(px){
