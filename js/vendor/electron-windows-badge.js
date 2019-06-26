@@ -102,8 +102,8 @@ module.exports = class Badge {
 
   initListeners() {
     ipcMain.on(UPDATE_BADGE_EVENT, (event, badgeNumber) => {
-      this.update(badgeNumber);
-      event.returnValue = 'success';
+        this.update(badgeNumber);
+        event.returnValue = 'success';
     });
   }
 
