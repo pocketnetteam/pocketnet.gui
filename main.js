@@ -60,7 +60,7 @@ var defaultIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
 var badgeTrayIcon = require('path').join(__dirname, 'assets/icons/win/iconbadge.ico')
 
-if (is.linux) {
+if (is.linux()) {
     defaultIcon = require('path').join(__dirname, 'assets/icons/png/64x64.png')
     defaultTrayIcon = require('path').join(__dirname, 'assets/icons/png/32x32.png')
     badgeTrayIcon = require('path').join(__dirname, 'assets/icons/png/iconbadge.png')
@@ -168,7 +168,7 @@ function destroyTray() {
 }
 
 function createBadgeOS() {
-    if ((is.linux && app.isUnityRunning()) || is.macOS) {
+    if (is.linux() || is.macOS()) {
 
         // Linux or macOS
         ipcMain.on('update-badge', (event, badgeNumber) => {
@@ -182,7 +182,7 @@ function createBadgeOS() {
         });
     }
     
-    if (is.windows) {
+    if (is.windows()) {
         // Windows use plugin electron-windows-badge
         createBadge();
     }
@@ -195,14 +195,13 @@ function initApp() {
 
     createBadgeOS();
 
-    if (!is.linux) createTray();
+    createTray();
 
     var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
     
-    if (isDevelopment){
+    if (isDevelopment) {
 
-    }
-    else{
+    } else {
 
         log.info('First check updates...');
 
@@ -212,10 +211,6 @@ function initApp() {
             autoUpdater.checkForUpdates();
         }, 10*60*1000); 
     }
-
-    
-
-    
 }
 
 function closeNotification() {
@@ -304,7 +299,7 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if (!willquit && !is.linux) {
+        if (!willquit && !is.linux()) {
             e.preventDefault();
             win.hide();
             destroyBadge()
