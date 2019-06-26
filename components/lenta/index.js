@@ -76,12 +76,14 @@ var lenta = (function(){
 			},
 			clear : function(){
 
+				
 				countshares = 0;
 
 				recomended = []
 
 				shareInitedMap = {}
 				shareInitingMap = {}
+
 				loading = false
 				ended = false
 				players = {}
@@ -929,11 +931,15 @@ var lenta = (function(){
 
 				var d = {};
 
-					d.share = self.app.platform.sdk.node.shares.storage.trx[id]
+					//d.share = self.app.platform.sdk.node.shares.storage.trx[id]
+
+					d.share = _.find(sharesInview, function(sh){
+						if(sh.txid == id) return true
+					})
 
 				self.fastTemplate('metmenu', function(rendered, template){
 
-					self.app.platform.api.tooltip(_el, function(){
+					var t = self.app.platform.api.tooltip(_el, function(){
 
 						d.share = self.app.platform.sdk.node.shares.storage.trx[id]
 						d.mestate = mestate
@@ -988,7 +994,6 @@ var lenta = (function(){
 							_el.tooltipster('hide')	
 
 						})
-
 
 						el.find('.block').on('click', function(){
 
@@ -1088,6 +1093,8 @@ var lenta = (function(){
 						
 
 					})
+					
+
 
 				}, d)
 
@@ -2317,7 +2324,7 @@ var lenta = (function(){
 
 				var tp = el.c.find('.loadprev')
 
-				var trueshold = 150
+				var trueshold = 200
 
 				var parallax = new SwipeParallax({
 
@@ -2479,11 +2486,14 @@ var lenta = (function(){
 
 						if (s){
 
+
 							s.temp = false
 
 							s.scnt = "0"
 							s.score = "0"
 							s.myVal = 0
+
+							s.time = new Date()
 
 							shareInitedMap[s.txid] = false
 

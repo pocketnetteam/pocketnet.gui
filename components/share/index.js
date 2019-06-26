@@ -17,7 +17,8 @@ var share = (function(){
 		var actions = {
 
 			unfocus : function(){
-				el.c.addClass('unfocus').removeClass('focus')
+				if (el.c)
+					el.c.addClass('unfocus').removeClass('focus')
 			},
 
 			waitActions : function(){

@@ -884,6 +884,8 @@ Platform = function(app){
 			_el.tooltipster(options)	
 
 			_el.tooltipster('show')	
+
+			return _el
 		},
 		electron : {
 			storage : {},
