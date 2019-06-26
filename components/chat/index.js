@@ -1046,8 +1046,6 @@ var chat = (function(){
 
 				self.app.platform.sdk.messenger.load.messages(messages, function(){
 
-					console.log("RECIEVE MESSAGES, RENDER", messages)
-
 					renders.messages(null, messages, true)
 					//renders.safemessages(messages)
 					
@@ -1182,9 +1180,6 @@ var chat = (function(){
 
 				bottomcaption = null;
 				topcaption = null;
-
-				
-				console.log("DESTROY", chat)
 
 				if (chat){
 					chat.rtc.leave()

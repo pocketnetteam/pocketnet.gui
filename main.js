@@ -178,13 +178,25 @@ function initApp() {
 
     createTray();
 
-    /**log.info('First check updates...');
-
-    autoUpdater.checkForUpdates();
+    var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
     
-    setInterval(() => {
+    if (isDevelopment){
+
+    }
+    else{
+
+        log.info('First check updates...');
+
         autoUpdater.checkForUpdates();
-    }, 10*60*1000); */
+
+        setInterval(() => {
+            autoUpdater.checkForUpdates();
+        }, 10*60*1000); 
+    }
+
+    
+
+    
 }
 
 function closeNotification() {

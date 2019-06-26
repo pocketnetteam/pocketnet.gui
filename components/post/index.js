@@ -495,6 +495,8 @@ var post = (function(){
 
 			sharesocial : function(){
 
+				self.app.platform.m.log('sharing_opened_post', share.txid)
+
 				actions.sharesocial()
 			},
 
@@ -982,7 +984,9 @@ var post = (function(){
 
 			wnd : {
 				class : 'withoutButtons postwindow',
-
+				swipeClose : true,
+				swipeCloseDir : 'right',
+				swipeMintrueshold : 30,
 				close : function(){
 					//self.app.nav.api.history.removeParameters(['s'])
 				}

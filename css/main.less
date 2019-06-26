@@ -541,33 +541,94 @@ pie {
 }
 
 .upbutton{
-    display: none;
     position: fixed;
-    right: 2 * @rhythm;
-    bottom: 2 * @rhythm;
-    z-index: 2;
-    border : 1px solid #fff;
-    background: #fff;
-    color : @color-gray;
+    left : 0;
+    bottom : 0;
+    top : 0;
+    display: none;
     cursor: pointer;
-    text-align: center;
-    width: 44px;
-    height: 44px;
-    line-height: 42px;
-    .transition(0.3s);
-    border-radius: 50%;
-    font-size: 0.7em;
-    .shadowSmall();
+
+    .mini{
+        display: none;
+
+        border : 1px solid #fff;
+        background: #fff;
+        color : @color-gray;
+        cursor: pointer;
+        text-align: center;
+        width: 44px;
+        height: 44px;
+        line-height: 42px;
+        .transition(0.3s);
+        border-radius: 50%;
+        font-size: 0.7em;
+        .shadowSmall();
+    }
+
+    .full{
+        padding : 2 * @rhythm 0;
+        padding-left : 0;
+        color : fade(@color-gray-slight, 40);
+        height: 100%;
+        width : 100%;
+        .transition(0.3s);
+
+        .fulltable{
+            width : auto;
+            margin : 0 auto;
+
+            >div{
+                vertical-align: top;
+
+                &.label{
+                    font-size: 0.9em;
+                    white-space: nowrap;
+                }
+
+                &.icon{
+                    width : 40px;
+                    text-align: center;
+                }
+
+                &.likeicon{
+                    width : 40px;
+                }
+            }
+        }
+    }
 
     &:hover{
-        color : @color-add;
-        border-color : @color-add;
+        .full{
+            background: fade(#000, 20);
+            color : fade(@color-gray-slight, 70);
+        }
+
+        .mini{
+            color : @color-add;
+            border-color : @color-add;
+        }
     }
 
     &.active{
-        display: block;
+        display : block;
+    }
+
+    &.light{
+        .full{
+            color : fade(@color-black2, 50);
+            
+        }
+
+        &:hover{
+            .full{
+                background: fade(@color-black2, 10);
+                color : fade(@color-black2, 70);
+            }
+    
+        }
     }
 }
+
 
 .table{
     width: 100%;
@@ -3819,7 +3880,7 @@ input[type=radio].radio:checked + label {
             vertical-align: top;
 
             &.foranswer{
-                width: 100px;
+                width: 50px;
 
                 text-align: right;
                 button{
@@ -4312,12 +4373,84 @@ input[type=radio].radio:checked + label {
    These examples override the primary ('mobile first') styles.
    Modify as content requires.
    ========================================================================== */
-@media only screen and (max-width: 1620px) {
+@media only screen and (max-width: 1640px) {
 
+    .upbutton{
+        
+
+        .full{
+            padding-right : 0;
+            .fulltable{
+                >div{
+
+                    &.icon{
+                        width: 100%;
+                    }
+                    &.label{
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
   
 }
-@media only screen and (max-width: 1280px) {
 
+@media only screen and (max-width: 1366px) {
+    
+    #content{
+        .work.adj{
+            width: 85%;
+            margin-right: 50px;
+           
+        }
+    }
+
+    .upbutton{
+        
+
+        .full{
+            padding-right : 0;
+            .fulltable{
+                >div{
+                    &.icon{
+                        width: 40px;
+                    }
+                    &.label{
+                        display: table-cell;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@media only screen and (max-width: 1280px) {
+    #content{
+        .work{
+            width: 95%;
+            margin-right: auto;
+        }
+    }
+
+    .upbutton{
+        position: fixed;
+        right : 2.5%;
+        bottom : 2.5%;
+        top : auto;
+        left : auto;
+        z-index: 50;
+    
+        .mini{
+            display: block;
+        }
+
+        .full{
+            display: none;
+        }
+    }
+    
 }
 
 
@@ -4438,6 +4571,7 @@ input[type=radio].radio:checked + label {
 
     .upbutton{
         bottom: 60px;
+        
     }
 
     .sitemessage{    
@@ -4610,11 +4744,12 @@ input[type=radio].radio:checked + label {
         left: 0px;
         right: 0px;
         top: 0px;
-        max-height: 110px;
+        max-height: 210px;
         width: 100%;
         min-width: 0;
         max-width: none;
         border-radius: 0;
+        bottom : auto;
 
         .fmCnt{
             width: 100%;
@@ -4625,10 +4760,21 @@ input[type=radio].radio:checked + label {
         }
 
         .close{
-            padding : 2 * @rhythm @rhythm;
+            padding : 2 * @rhythm;
            
 
         }
+
+        .commentmessagewrapper>div, 
+        .notification .commentmessagewrapper>div{
+           vertical-align: bottom;
+        }
+
+       .subscribeWrapper>div.forsubscribe, 
+       .notification .subscribeWrapper>div.forsubscribe{
+            width : 80px;
+            vertical-align: bottom;
+       }
 
     }
 

@@ -12,7 +12,9 @@ var lenta = (function(){
 
 		var mid = p.mid;
 
-		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {};
+		var making = false;
+
+		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false;
 
 		var commentsInited = {},
 			shareInitedMap = {},
@@ -58,6 +60,20 @@ var lenta = (function(){
 		}
 
 		var actions = {
+			loadprev : function(clbk){
+				el.c.find('.shares').html('<div class="bspacer"></div>')
+				el.c.removeClass('showprev')
+
+				el.c.removeClass('loading');
+				el.c.removeClass("sharesEnded")
+				el.c.removeClass('sharesZero')
+
+				actions.clear()
+
+				initedcommentes = {}
+
+				make(clbk);
+			},
 			clear : function(){
 
 				countshares = 0;
@@ -81,6 +97,8 @@ var lenta = (function(){
 				beginmaterialloaded = false
 				ended = false;
 				loaded = false;
+
+				making = false;
 
 				newmaterials = 0;
 
@@ -866,7 +884,7 @@ var lenta = (function(){
 			},
 
 			complain : function(id){
-				console.log("CPOMS")
+			
 				self.nav.api.load({
 					open : true,
 					id : 'complain',
@@ -910,8 +928,6 @@ var lenta = (function(){
 
 					d.share = self.app.platform.sdk.node.shares.storage.trx[id]
 
-				console.log(id, d.share)
-
 				self.fastTemplate('metmenu', function(rendered, template){
 
 					self.app.platform.api.tooltip(_el, function(){
@@ -924,6 +940,9 @@ var lenta = (function(){
 					}, function(el){
 
 						el.find('.socialshare').on('click', function(){
+
+							self.app.platform.m.log('sharing_opened_menu', id)
+
 							actions.sharesocial(id)
 
 							_el.tooltipster('hide')	
@@ -1041,6 +1060,7 @@ var lenta = (function(){
 										post : function(){
 
 											var close = deep(em, 'container.close')
+											
 											if (close)
 												close()
 										}
@@ -1048,8 +1068,6 @@ var lenta = (function(){
 									
 									clbk : function(e, p){
 										em = p;
-
-										console.log(em)
 										
 									}
 			
@@ -1372,6 +1390,8 @@ var lenta = (function(){
 			sharesocial : function(){
 				var shareId = $(this).closest('.share').attr('id');
 
+					self.app.platform.m.log('sharing_opened_button', shareId)
+
 					actions.sharesocial(shareId)
 			},
 
@@ -1424,20 +1444,7 @@ var lenta = (function(){
 			},
 			loadprev : function(){
 
-				el.c.find('.shares').html('<div class="bspacer"></div>')
-				el.c.removeClass('showprev')
-
-				el.c.removeClass('loading');
-				el.c.removeClass("sharesEnded")
-				el.c.removeClass('sharesZero')
-
-				actions.clear()
-
-				initedcommentes = {}
-
-				make();
-
-
+				actions.loadprev();
 
 			}
 
@@ -1445,6 +1452,7 @@ var lenta = (function(){
 
 		var renders = {
 			comments : function(txid, init, showall, preview){
+				if(essenseData.nocomments) return
 
 				if(initedcommentes[txid]) return;
 
@@ -1744,8 +1752,6 @@ var lenta = (function(){
 					})
 				}
 
-				console.log(shares, p)
-
 				
 				self.shell({
 					name :  tpl,
@@ -1766,7 +1772,6 @@ var lenta = (function(){
 					{
 						if(p.inner != replaceWith)
 						{
-							console.log("CONCATS")
 							sharesInview = shares.concat(sharesInview)	
 						}
 					}
@@ -1785,8 +1790,6 @@ var lenta = (function(){
 
 				if(s.settings.v == "a"){
 					var pl = sel.find('[data-plyr-provider][data-plyr-embed-id]')
-
-					console.log("PLYR", pl)
 
 					var map = [];
 
@@ -1890,13 +1893,18 @@ var lenta = (function(){
 							clbk()
 					}
 
-					if(!isMobile() && s.settings.v != 'a' && image.images.length > 1){
+					if(s.settings.v != 'a' && image.images.length > 1){
+
+						var gutter = 20;
+
+						if (isMobile) gutter = 5
+
 						images.isotope({
 
 							layoutMode: 'packery',
 							itemSelector: '.imagesWrapper',
 							packery: {
-								gutter: 20
+								gutter: gutter
 							},
 							initLayout: false
 						});
@@ -2171,7 +2179,8 @@ var lenta = (function(){
 
 
 								setTimeout(function(){
-									el.c.addClass("sharesEnded")
+									if (el.c)
+										el.c.addClass("sharesEnded")
 								}, 1000)
 								
 							}
@@ -2276,7 +2285,103 @@ var lenta = (function(){
 			}
 		}
 
-		var initEvents = function(){
+		var initEvents = function(){			
+
+			if(isMobile() && canloadprev){
+
+				var cc = el.c.find('.circularprogress');
+				var maxheight = 220;
+
+				var progress = new CircularProgress({
+					radius: 30,
+					strokeStyle: '#00A3F7',
+					lineCap: 'round',
+					lineWidth: 1,
+					font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
+					fillStyle : "#00A3F7",
+					text : {						
+						value : ""
+					},
+					initial: {
+						strokeStyle: '#fff',
+						lineWidth: 1
+					}
+				});
+
+				progress.update(70);
+
+				el.c.find('.circularprogressWrapper').html(progress.el);
+
+				var tp = el.c.find('.loadprev')
+
+				var trueshold = 250
+
+				var parallax = new SwipeParallax({
+
+					el : el.c.find('.shares'),
+
+					allowPageScroll : 'vertical',
+
+					//prop : 'padding',
+	
+					directions : {
+						down : {
+							cancellable : true,
+							
+							
+
+							positionclbk : function(px){
+								var percent = Math.abs(px) / trueshold;
+
+								if (px >= 0){
+
+									progress.options.text = {
+										value: ''
+									};
+
+									progress.update(percent * 100);
+
+
+									cc.height((maxheight * percent)+ 'px')
+
+								
+
+									el.shares.css('opacity', 1 - percent) 
+									tp.css('opacity', 1 -  (4 * percent))
+
+								}
+
+							},
+
+							constraints : function(){
+								if(w.scrollTop() == 0){
+
+									return true;
+
+								}
+							},
+
+							restrict : true,
+
+							trueshold : trueshold,
+							clbk : function(){
+	
+								actions.loadprev(function(){
+
+									parallax.renew()
+									
+								})
+								
+							}
+	
+						}
+					}
+					
+	
+				}).init()
+			}
+
+			
 
 			window.addEventListener('scroll', events.sharesInview);
 			window.addEventListener('scroll', events.videosInview);
@@ -2326,7 +2431,6 @@ var lenta = (function(){
 			if(!essenseData.txids){
 				self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
 
-					console.log("TSHARE", share.txidEdit)
 
 					if (share.txidEdit){
 						
@@ -2335,11 +2439,8 @@ var lenta = (function(){
 							txid : share.txidEdit
 						}, share)
 
-						console.log(f, share, sharesInview)
 
 						if (f){
-
-							console.log(el.shares.find('#' + share.txidEdit))
 
 							renders.shares([share], function(){
 								renders.sharesInview([share], function(){
@@ -2442,8 +2543,30 @@ var lenta = (function(){
 				}
 			}
 
+			self.app.platform.clbks._focus.lenta = function(){
+
+
+				if(window.cordova && !essenseData.txids && !making){
+
+					el.c.removeClass('showprev')
+
+					el.c.removeClass('loading');
+					el.c.removeClass("sharesEnded")
+					el.c.removeClass('sharesZero')
+
+					actions.clear()
+
+					initedcommentes = {}
+
+					make();
+
+					_scrollTop(0)
+				}
+			}
+
 			self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = function(data){
 
+				if(making || beginmaterial || essenseData.author || essenseData.txids) return
 				
 				if(recommended == 'sub'){
 					
@@ -2457,12 +2580,15 @@ var lenta = (function(){
 
 			self.app.platform.ws.messages["new block"].clbks.newsharesLenta = function(data){
 
+				if(making || beginmaterial || essenseData.author || essenseData.txids) return
+
 				if(recommended == 'sub'){
 					
 					shownewmaterials(data['sharesSubscr'])
 				}
 				else
 				{
+					
 					shownewmaterials(data['shares'])
 				}
 				
@@ -2511,11 +2637,18 @@ var lenta = (function(){
 			
 		}
 
-		var make = function(){
+		var make = function(clbk, _p){
+
+			making = true;
+
+			var cache = 'clear';
+
+			if (essenseData.goback) cache = 'cache'
 
 			load.shares(function(shares, error){
 
 				if(!shares){
+					making = false;
 					//sitemessage(error)
 				}
 				else
@@ -2525,10 +2658,13 @@ var lenta = (function(){
 						el.c.addClass('showprev')
 					}
 
+					el.c.find('.shares').html('')
 
 					renders.shares(shares, function(){
 
 						renders.sharesInview(shares, function(){
+
+							making = false;
 
 							events.sharesInview()
 
@@ -2566,6 +2702,15 @@ var lenta = (function(){
 								})
 								
 							}
+
+							if (clbk){
+								clbk()
+							}
+
+							if (essenseData.goback && _p.clbk){
+								essenseData.goback = false;
+								_p.clbk(null, _p);
+							}
 						
 						})
 		
@@ -2576,7 +2721,7 @@ var lenta = (function(){
 				}
 
 
-			}, 'clear')
+			}, cache)
 
 						
 		}
@@ -2609,6 +2754,9 @@ var lenta = (function(){
 					recommended = false;
 
 				}
+
+				canloadprev = !!!essenseData.txids || false
+
 
 				if(!p.state){
 
@@ -2733,6 +2881,8 @@ var lenta = (function(){
 				delete self.app.platform.clbks.api.actions.blocking.lenta
 				delete self.app.platform.clbks.api.actions.unblocking.lenta
 
+				delete self.app.platform.clbks._focus.lenta
+
 				self.app.platform.sdk.chats.removeTemp()
 								
 
@@ -2758,9 +2908,11 @@ var lenta = (function(){
 
 				initEvents();
 
-				make();
+				make(null, p);
 
-				p.clbk(null, p);
+				if(!essenseData.goback)
+
+					p.clbk(null, p);
 
 				
 			}

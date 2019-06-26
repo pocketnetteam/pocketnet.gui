@@ -130,7 +130,7 @@ var metadisplay = function(){ %>
 			<div class="paddingWrapper">
 				<div class="sharecaption canmark">
 					<div>
-						<%=emojione.toImage(nl2br(c))%>
+						<%=emojione.toImage(nl2br(trimrn(c)))%>
 					</div>
 				</div>
 			</div>
@@ -215,7 +215,7 @@ var metadisplay = function(){ %>
 				if (share.images.length + additionall == 1) icClass = 'one';
 				if (share.images.length + additionall == 2) icClass = 'two';
 				if (share.images.length + additionall == 4) icClass = 'four';
-
+				if (share.images.length + additionall > 4) icClass = 'more';
 				
 
 

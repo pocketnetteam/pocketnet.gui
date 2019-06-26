@@ -4,30 +4,20 @@
 
 	<div class="item">
 
-		<% if(href == 'discussions' || href == 'share' || href == 'userpage' || href == 'author' || href == 'send') { %>
-
+		<% if(back) {   %>
 			<div class="item">
-				<a href="<%- lentakey %>">
+				<a href="<%- addtouri(back.href, 'back', 'true') %>" fast="fast">
 					<div class="iconWrapper">
 						<i class="fas fa-chevron-left"></i>
 					</div>
 				</a>
 			</div>
-
-
 		<% } else { %> 
 
 			<% if(href == 'chat') { %>
 
-
-				<!--<a href="discussions">
-					<div class="iconWrapper">
-						<i class="fas fa-chevron-left"></i>
-					</div>
-				</a>-->
-
 				<div class="item">
-					<a href="<%- lentakey %>">
+					<a href="<%- lentakey %>" fast="fast">
 						<div class="iconWrapper">
 							<i class="fas fa-chevron-left"></i>
 						</div>
@@ -37,14 +27,14 @@
 
 			<% } else { %> 
 
-				<a href="discussions">
+				<a href="discussions" fast="fast">
 					<div class="iconWrapper">
 						<i class="fas fa-comments"></i>
 					</div>
 				</a>
 
 			<% } %>
-
+		
 		<% } %>
 
 		
@@ -53,9 +43,9 @@
 		
 	<div class="item">
 
-		<% if(href != 'share' && href != 'author' && href != 'send') { %>
+		<% if(!back || href == 'userpage') { %>
 
-			<a href="share">
+			<a href="share" fast="fast">
 				<div class="iconWrapper shr">
 					<i class="fas fa-plus-circle"></i>
 				</div>
@@ -63,7 +53,7 @@
 
 		<% } else {%>
 
-			<a href="discussions">
+			<a href="discussions" fast="fast">
 				<div class="iconWrapper">
 					<i class="fas fa-comments"></i>
 				</div>
@@ -75,9 +65,9 @@
 
 	<div class="item">
 
-		<% if(href != 'userpage') { %>
+		<% if(href != 'userpage' || !back) { %>
 
-			<a href="userpage?id=wallet&report=wallet">
+			<a href="userpage?id=wallet&report=wallet" fast="fast">
 				<div class="iconWrapper">
 					<i class="fas fa-wallet"></i>
 				</div>
@@ -85,7 +75,7 @@
 
 		<% } else {%>
 
-			<a href="discussions">
+			<a href="discussions" fast="fast">
 				<div class="iconWrapper">
 					<i class="fas fa-comments"></i>
 				</div>

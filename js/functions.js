@@ -447,7 +447,7 @@
 
 		var render = function(tpl){
 
-			var h = '<div class="wndback" id='+id+'></div><div class="wndinner">\
+			var h = '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
 					 ';
 
 			var closedbtnclass = ''
@@ -468,7 +468,7 @@
 
 
 				h+=	 ' <div class="buttons"></div>';
-				h+=	 '<div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div>'
+				h+=	 '</div>'
 					 ;
 
 			wnd = $("<div>",{
@@ -514,6 +514,65 @@
 				wnd.find('.wndback').one('click', function(){
 					actions.close(true)
 				});
+
+			if(p.swipeClose && isMobile()){
+
+				var dir = p.swipeCloseDir || 'up';
+
+				var directions = {}
+
+					directions[dir] = {
+						trueshold : 150,
+
+						mintrueshold : p.swipeMintrueshold || 0,
+
+						positionclbk : function(px){
+							var percent = Math.abs((150 - px) / 150);
+
+							if (percent > 0){
+
+								wnd.css('opacity', percent) 
+							}
+
+						},
+
+						clbk : function(){
+
+							wnd.fadeOut(150)
+
+							setTimeout(function(){
+								actions.close(true)	
+							}, 150)
+							
+						}
+
+					};
+
+					//if(dir == 'left' || dir == 'right') directions[dir].reverse = true
+					
+
+				var parallax = new SwipeParallax({
+
+					allowPageScroll : 'vertical',
+
+					el : wnd.find('.wndinner'),
+
+					directions : directions
+
+				}).init()
+
+				/*wnd.swipe( {
+					
+					swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+
+						if(direction == 'up' && distance > 70){
+							actions.close(true)	
+						}
+					},
+
+					threshold:0
+				});*/
+			}
 		}
 
 		var actions = {
@@ -1756,6 +1815,49 @@
 		return false;
 	}
 
+	removeEqualRIObj = function(arr, el){
+		var _index = -1;
+		var _el = _.find(arr, function(__el, index){
+			if(isEqual(__el, el, false))
+			{
+				_index = index;
+				return __el;
+			}
+		})
+
+		if(_index > -1)
+		{
+			arr.splice(_index, 1);
+			return {
+
+				el : _el,
+				index : _index
+
+			};
+		}
+
+		return null;
+	}
+
+	removeEqualRI = function(arr, el){
+		var _index = -1;
+		var _el = _.find(arr, function(__el, index){
+			if(isEqual(__el, el, false))
+			{
+				_index = index;
+				return __el;
+			}
+		})
+
+		if(_index > -1)
+		{
+			arr.splice(_index, 1);
+			return _index;
+		}
+
+		return -1;
+	}
+
 	removeEqual = function(arr, el){
 		var _index = -1;
 		var _el = _.find(arr, function(__el, index){
@@ -2039,6 +2141,18 @@
 		else
 		{
 			return null
+		}
+	}
+
+	firstEl = function(array){
+		var l = deep(array, 'length');
+
+		if (l){
+			return array[0]
+		}
+		else
+		{
+			return null;
 		}
 	}
 
@@ -5073,6 +5187,20 @@
 		return uri;
 	}
 
+	addtouri = function(uri, p, v){
+
+		var s = p + "=" + v;
+
+		if (uri.indexOf('?') > -1){
+			uri += "&" + s
+		}
+		else{
+			uri += "?" + s
+		}
+
+		return uri
+	}
+
 	rand = function(min, max){
 	  min = parseInt(min);
 	  max = parseInt(max);
@@ -5097,12 +5225,12 @@
 
 	ltrimrn = function(s)
 	{
-	  return (s || "").replace(/^[\r\n\t]+/, ''); 
+	  return (s || "").replace(/^[\r\n\t ]+/, ''); 
 	}
 
 	rtrimrn = function(s)
 	{
-	  return (s || "").replace(/[\r\n\t]+$/, ''); 
+	  return (s || "").replace(/[\r\n\t ]+$/, ''); 
 	}
 
 	trimrn = function(s)
@@ -5457,8 +5585,6 @@
 
 		var ofssetObj = to.offset();
 
-		console.log(ofssetObj)
-
 		if (ofssetObj)
 		{
 			var scrollTop = ofssetObj.top + offset;
@@ -5595,6 +5721,507 @@
 		}
 
 		return _fels;
+	}
+
+	SwipeParallax = function(p){
+		if(!p) p = {};
+
+			p.directions || (p.directions = {})
+
+			p.prop || (p.prop = 'translate')
+
+			_.each(p.directions, function(d,i){
+				d.i = i
+			})
+
+			/*p.direction || (p.direction = 'up');
+			p.trueshold || (p.trueshold = 90);
+			p.iniMargin || (p.iniMargin = 0);*/
+
+		var self = this;
+
+		var animationInterval = null;
+
+		var animateduration = 400;
+		var animatedurations = (animateduration / 1000) + 's'
+
+		var directiontoprop = function(direction, value){
+
+			if (p.prop == 'translate'){
+
+				if(direction == 'up') return 'y'
+				if(direction == 'down') return 'y'
+				if(direction == 'left') return 'x'
+				if(direction == 'right') return 'x'
+			}
+
+			if (p.prop == 'margin'){
+				if(direction == 'up') return 'margin-bottom'
+				if(direction == 'down') return 'margin-top'
+				if(direction == 'left') return 'margin-left'
+				if(direction == 'right') return 'margin-right'
+			}
+
+			if (p.prop == 'padding'){
+				if(direction == 'up') return 'padding-bottom'
+				if(direction == 'down') return 'padding-top'
+				if(direction == 'left') return 'padding-left'
+				if(direction == 'right') return 'padding-right'
+			}
+
+			if (p.prop == 'position'){
+				if(direction == 'up') return direction.position || 'top'
+				if(direction == 'down') return direction.position || 'top'
+				if(direction == 'left') return direction.position || 'left'
+				if(direction == 'right') return direction.position || 'left'
+			}
+			
+		}
+
+		var medium = function(fingerData){
+			var n = {
+				end : {
+					x : 0,
+					y : 0
+				},
+				start : {
+					x : 0,
+					y : 0
+				},
+				last : {
+					x : 0,
+					y : 0
+				}
+			}
+
+			var l = _.toArray(fingerData).length
+
+			_.each(fingerData, function(f){
+				_.each(f, function(fd, i){
+					n[i].x += fd.x / l
+					n[i].y += fd.y / l
+				})
+			})
+
+			return n;
+		}
+
+		var nullbydirection = function(_d, direction){
+			var d = _.clone(_d)
+
+
+			if(direction == 'up') {
+				if(d.y > 0) d.y = 0
+				
+				if (p.prop == 'margin' || p.prop == 'padding')
+					d.y = Math.abs(d.y)
+
+				d.x = 0
+			}
+
+			if(direction == 'down') {
+				if(d.y < 0) d.y = 0
+
+				if (p.prop == 'margin' || p.prop == 'padding')
+					d.y = Math.abs(d.y)
+
+				d.x = 0
+			}
+
+			if(direction == 'left') {
+				if(d.x > 0) d.x = 0
+
+				if (p.prop == 'margin' || p.prop == 'padding')
+					d.x = Math.abs(d.x)
+
+				d.y = 0
+			}
+
+			if(direction == 'right') {
+				if(d.x < 0) d.x = 0
+
+				if (p.prop == 'margin' || p.prop == 'padding')
+					d.x = Math.abs(d.x)
+
+				d.y = 0
+			}
+
+			return d;
+			
+		}
+
+		var findDirection = function(_d){
+			return _.max(p.directions, function(direction, i){
+				var d = nullbydirection(_d, i)	
+
+				return Math.abs((d.x || d.y))
+			})
+		}
+
+		var gettransform = function(obj){
+			
+			var transformMatrix = obj.css("-webkit-transform") ||
+			  obj.css("-moz-transform")    ||
+			  obj.css("-ms-transform")     ||
+			  obj.css("-o-transform")      ||
+			  obj.css("transform");
+			var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
+			var x = matrix[12] || matrix[4];
+			var y = matrix[13] || matrix[5];
+
+			return {
+				x : x,
+				y : y
+			}
+
+		}
+
+		var animation = function(ap, options){
+
+			if(!options) options = {}
+			
+			if(p.prop == 'translate'){
+
+				var v = (ap.x || ap.y || 0);
+
+				p.el.css({transition: "transform " + animatedurations});
+
+				if(ap.y){
+					p.el.css("transform","translate(0, "+ap.y+")");
+				}
+				else{
+					p.el.css("transform","translate("+ap.x+", 0)");
+				}
+				
+
+				var td = 16;
+				var stepd = 16 / animateduration;
+				var step = 0;
+
+				self.animation = {
+
+					interval : setInterval(function(){
+
+						var z = v.replace('px', '')
+
+						console.log(ap, step, stepd, z, step * stepd * z)
+
+						if (options.step){
+							options.step(step * stepd * z)	
+						}
+
+						step++
+
+					}, td),
+
+					stop : function(){
+
+						p.el.css({transition: "none"});
+
+						if(this.interval){
+							clearInterval(this.interval)
+							this.interval = null;
+						}
+						
+					}
+				}
+
+				setTimeout(function(){
+
+					if (self.animation)
+
+						self.animation.stop();
+
+					if (options.complete)
+						options.complete()
+
+				}, animateduration)
+
+			}
+			else{
+				self.animation = p.el.animate(ap, options);	
+			}
+		}
+
+		var parseStart = function(direction){
+			if(p.prop != 'translate'){
+				v = p.el.css(directiontoprop(direction)) || '0px'
+			}
+			else
+			{
+				var tr = gettransform(p.el)
+
+				var prop = directiontoprop(direction)
+
+				v = tr[prop]
+			}
+
+			v = Number(v.replace('px', '').replace('%', ''))
+
+			return v
+		}
+
+		var set = function(direction, value){
+
+			var prop = directiontoprop(direction);
+
+			if (p.prop != 'translate'){
+				p.el.css(prop, value + 'px');	
+			}
+			else{
+
+				if(prop == 'x'){
+					p.el.css("transform","translate("+(value || 0)+"px, 0)");
+				}
+
+				if(prop == 'y'){
+					p.el.css("transform","translate(0, "+(value || 0)+"px)");
+				}
+
+				
+			}
+		}
+
+		self.goup = function(direction){
+			var css = directiontoprop(direction)
+			var upborder = (p.directions[direction].trueshold || 90) * 3
+
+			if(css == 'top' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
+			if(css == 'left' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
+
+			var ap = {}
+				ap[css] =  upborder + 'px'
+
+			animation(ap)
+		}
+
+		self.backup = function(direction){
+
+			self.lastDirection = direction;
+
+			var css = directiontoprop(direction)
+			//var upborder = Number(p.el.css(directiontoprop(direction) || '0px').replace('px', ''))
+
+			var ap = {}
+				ap[css] =  '0px'
+
+			var d = p.directions[direction]	
+
+
+			animation(ap, {
+				step : function(now, fx){
+
+					if (d && d.positionclbk){
+						d.positionclbk(now)
+					}
+				},
+				compele : function(){
+					self.lastDirection = null;
+					self.animation = null;
+				}
+			})
+		}
+
+		self.lastDirection = null;
+		self.animation = null;
+
+		self.ended = false;
+
+		self.renew = function(){
+			self.ended = false;
+		}
+
+		self.opposite = function(dir, dir2){
+			if(dir == 'up' && dir2 == 'down') return true;
+			if(dir == 'down' && dir2 == 'up') return true;
+
+			if(dir == 'left' && dir2 == 'right') return true;
+			if(dir == 'right' && dir2 == 'left') return true;
+		}
+
+		self.init = function(){
+
+			var startMargin = 0;
+			var mainDirection = null;
+
+			var mintruesholdGone = false;
+
+			p.el.swipe({
+
+				allowPageScroll : p.allowPageScroll,
+					
+				/*swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+
+					if(direction == 'up' && distance - startMargin > p.trueshold){
+						actions.close(true)	
+					}
+				},*/
+
+				swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
+
+
+					if (self.ended) return false					
+
+					if (phase == 'start'){
+
+						mintruesholdGone = false
+
+						startMargin = 0;
+
+						if (self.lastDirection){
+							startMargin = parseStart(self.lastDirection) 
+
+							self.animation.stop();
+							self.lastDirection = null;
+							self.animation = null;
+						}
+
+						
+						return true
+					}
+
+					if(phase != 'cancel' && phase != 'end'){
+
+						var m = medium(fingerData)
+
+						var _d = {
+							x : m.last.x - m.start.x + startMargin,
+							y : m.last.y - m.start.y + startMargin
+						}
+
+						if(!_d.x && !_d.y) return true
+
+						var direction = findDirection(_d)
+
+
+						if (direction){
+
+							if (direction.constraints && !direction.constraints()) {
+
+								if(mainDirection){
+									self.backup(mainDirection.i)	
+									mainDirection = null;
+								}
+
+								return false
+							}
+
+							if (mainDirection && (mainDirection.i != direction.i)){
+
+								th = false;
+
+								if (direction.mintrueshold){
+									var dcur = nullbydirection(_d, direction.i)
+									var dprev = nullbydirection(_d, mainDirection.i)
+
+									var dth = Math.abs((dcur.x || dcur.y || 0) - (dprev.x || dprev.y || 0))
+
+									if(dth < direction.mintrueshold){
+										th = true
+									}
+								}
+
+								if(!th){
+									self.backup(mainDirection.i)
+
+									if(direction.cancellable) {
+										mainDirection = null;
+										return false
+									}
+								}
+								else{
+									direction = mainDirection
+								}
+
+								
+							}
+
+							mainDirection = direction
+							var d = nullbydirection(_d, direction.i)	
+
+							
+
+							var dp = (d.x || d.y || 0);
+
+
+							if (!mintruesholdGone && Math.abs(dp + startMargin) < (direction.mintrueshold || 0)){
+								return true
+							}
+
+							mintruesholdGone = true;
+
+							if (Math.abs(dp) >= (direction.trueshold || 90)){
+
+								self.ended = true
+
+								if(!direction.restrict)
+									self.goup(mainDirection.i)
+								else{
+									self.backup(mainDirection.i)
+								}
+
+								if (direction.clbk)
+									direction.clbk()
+
+								mainDirection = null;
+
+								return false;
+							}
+
+							if (direction.positionclbk){
+								direction.positionclbk(dp)
+							}
+
+							if(direction.reverse){
+								dp = -dp
+							}
+
+							set(mainDirection.i, dp)
+
+						}
+						else{
+
+							/*console.log("YEEES", _direction, mainDirection.i, self.opposite(_direction, mainDirection.i))
+
+							if(self.opposite(_direction, mainDirection.i) && mainDirection.mintrueshold){
+
+								var d = nullbydirection(_d, mainDirection.i)
+
+								var dp = (d.x || d.y || 0);
+
+								if(Math.abs(dp) <= mainDirection.mintrueshold){
+									self.backup(mainDirection.i)	
+								}
+
+							}*/
+
+							mainDirection = null;
+						}
+
+					}
+
+					if(phase == 'cancel' || phase == 'end'){
+						
+						if (mainDirection){
+							self.backup(mainDirection.i)							
+						}
+
+						mainDirection = null
+
+					}
+
+					
+					
+				},
+
+			});
+
+			return self
+		}
+
+		self.init()
+
+		return self;
 	}
 
 	Roller = function (p) {
@@ -5844,7 +6471,7 @@
 			if(!p.removeSpacer){
 				spacer = $("<div>", {
 					class: classes.spacer + " " + id,
-					height: caption.height(),
+					height: p.spacerHeight || caption.height(),
 					width: caption.width()
 				})
 
@@ -6328,6 +6955,14 @@
 		self.api = function(p){
 			
 			p.url = app.apiproxy + "/" + (p.action || "")
+
+
+			self.run(p)
+		}
+
+		self.fb = function(p){
+			
+			p.url = app.firebase + "/" + (p.action || "").split('.').join('/')
 
 
 			self.run(p)
@@ -7935,8 +8570,18 @@
 		}
 
 		var putData = function(uri){
-			if(typeof localStorage != 'undefined' && data[uri])
-				localStorage[prefix+uri] = JSON.stringify(data[uri])
+			if(typeof localStorage != 'undefined' && data[uri]){
+
+				try{
+					localStorage[prefix+uri] = JSON.stringify(data[uri])
+				}
+
+				catch{
+					return null
+				}
+				
+				
+			}
 
 			return this;
 		}
@@ -7966,8 +8611,8 @@
 				data[uri][i] = _data;
 			});
 
-			putData(uri);
-			return this;
+			return putData(uri);
+
 		}
 
 		self.set = function(uri, item, _data){
@@ -7983,9 +8628,8 @@
 			else
 				data[uri] = _data;
 
-			putData(uri);
+			return putData(uri);
 
-			return this;
 		}
 
 		self.delete = function(uri, item){
@@ -8769,7 +9413,7 @@
 
 	                   
 
-	                    return prefix + '<a href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
+	                    return prefix + '<a cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
 	            });
 
 	    return replacedText;

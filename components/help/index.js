@@ -150,8 +150,10 @@ var help = (function(){
 							},*/
 
 							notscrollloading : true,
+							nocomments : true,
 
 							txids : [
+								'9f73a1efbfb4b0feb88c134740afa0ab293f8072a80ecbe9fe65ed85591910e6',
 								'ad9067c72a7be97c1752a00566940f372e5b526291278cf9bc203b99f81bbaf0', 
 								'df4064b9e2c8b311fd097804f36802ceb68337dca396bfdea732c0f94c977a3a',
 								'986a6acba795482894876ac87440124e176cc02cff40558a3ec3d423850e2e93'

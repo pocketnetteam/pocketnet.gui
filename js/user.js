@@ -243,30 +243,30 @@ User = function(app, p) {
 		
 	}
 
-	self.signout = function(){
+	self.signout = function(clbk){
 
-		if (tokenDialog)
-			tokenDialog.destroy();
-
+		state = 0;
+		self.data = {};
 		localStorage['mnemonic'] = ''
-		//localStorage['stay'] = ''
-
-		keys.private.set();
-		keys.public.set();
 
 		settings.clear();
 
+		keys.public.set();
+		keys.private.set();
+
 		app.platform.clear();
+
+		if (tokenDialog)
+			tokenDialog.destroy();
 
 		if (app.platform.ws)
 			app.platform.ws.destroy();
 
 		if (app.platform.rtc)
 			app.platform.rtc.destoryAll();
-		
-		self.data = {};
 
-		state = 0;
+		if (app.platform.firebase)
+			app.platform.firebase.destroy(clbk);
 	}
 
 

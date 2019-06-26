@@ -1,74 +1,82 @@
 <div id="<%-module.map.id%>">
 
-	<div class="loadprev"><button><span><%=e('lloadprev')%></span> <span class='countnew'></span></button></div>
+	<div class="mlwr">
 
-	<div class="shares">
-		<div class="bspacer"></div>		
-	</div>
+		<div class="loadprev"><button><span><%=e('lloadprev')%></span> <span class='countnew'></span></button></div>
 
-	<div class="tspacer"></div>
-
-	<div class="loadmore"><button><%=e('lloadmore')%></button></div>
-	<div class="ended"><%=e('lend')%></div>
-
-	<% if(author) {%>
-
-		<div class="zero">
-			
-			<% if(!app.platform.sdk.address.pnet() || app.platform.sdk.address.pnet().address != author) {%>
-
-				<%=e('zerop')%>
-
-			<% } else { %>
-
-				<% 
-					var h = 'index';
-
-					if(isMobile()){
-						h = 'share'
-					}
-				 %>
-
-				<a href="<%-h%>?newshare=1">
-
-
-					<div class="tou">
-
-
-
-						<i class="fas fa-share"></i> <%=e('zeroy')%> 
-
-					
-					</div>
-				</a>
-			<% } %>		
-				
+		<div class="circularprogress">	
+			<div class="circularprogressWrapper"></div>
 		</div>
 
-	<% } %>
+		<div class="shares">
+			<div class="bspacer"></div>		
+		</div>
 
-	<% if(recommended) {%>
+		<div class="tspacer"></div>
 
-		<div class="zero">
+		<div class="loadmore"><button><%=e('lloadmore')%></button></div>
+		<div class="ended"><%=e('lend')%></div>
 
-		<% if(recommended == 'recommended') {%>	
+		<% if(author) {%>
 
-			You have no recommendations
-			
-		<% } else { %> 
+			<div class="zero">
+				
+				<% if(!app.platform.sdk.address.pnet() || app.platform.sdk.address.pnet().address != author) {%>
 
-			You have no subscriptions
+					<%=e('zerop')%>
+
+				<% } else { %>
+
+					<% 
+						var h = 'index';
+
+						if(isMobile()){
+							h = 'share'
+						}
+					%>
+
+					<a href="<%-h%>?newshare=1">
+
+
+						<div class="tou">
+
+
+
+							<i class="fas fa-share"></i> <%=e('zeroy')%> 
+
+						
+						</div>
+					</a>
+				<% } %>		
+					
+			</div>
 
 		<% } %>
 
+		<% if(recommended) {%>
+
+			<div class="zero">
+
+			<% if(recommended == 'recommended') {%>	
+
+				You have no recommendations
+				
+			<% } else { %> 
+
+				You have no subscriptions
+
+			<% } %>
+
+			</div>
+
+		<% } %>
+
+		<div class="loader">
+			<div class="work">
+				<div class="preloader5"><span></span><span></span><span></span></div>
+			</div>
 		</div>
 
-	<% } %>
-
-	<div class="loader">
-		<div class="work">
-			<div class="preloader5"><span></span><span></span><span></span></div>
-		</div>
 	</div>
 
 </div>

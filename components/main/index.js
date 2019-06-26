@@ -12,6 +12,8 @@ var main = (function(){
 
 		var roller = null, lenta = null, share = null, panel, uptimer = null;
 
+		var upbutton = null;
+
 		var currentMode = 'common'
 
 		var helpers = {
@@ -19,6 +21,43 @@ var main = (function(){
 		}
 
 		var actions = {
+			addbutton : function(){
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'share',
+					inWnd : true,
+
+					eid : 'postin',
+					
+					clbk : function(e, p){
+						self.app.platform.m.log('share_openbutton', 'button')
+					},
+
+					essenseData : {
+						close : function(){
+
+							share.make()
+						},
+						post : function(){
+							share.make()
+
+							self.app.platform.m.log('share', 'button')
+						}
+					}
+
+				})
+				
+			},
+			addbuttonscroll  : function(){
+				if($(window).scrollTop() > 400){
+					el.addbutton.addClass('scrollactive')
+				}
+				else{
+					el.addbutton.removeClass('scrollactive')
+				}
+			},
 			panelTopPosition : function(){
 
 				if(!isMobile()){
@@ -72,16 +111,6 @@ var main = (function(){
 				cnt.css('left', left + "px")
 			},
 
-			showHideUp : function(){
-				if (el.w.scrollTop() > 200){
-					el.up.addClass('active')
-				}
-				else
-				{
-					el.up.removeClass('active')
-				}
-			},
-
 			currentMode : function(){
 
 				if(currentMode == 'recommended'){
@@ -124,12 +153,6 @@ var main = (function(){
 				actions.panelPosition()
 			},
 
-			showHideUp : function(){
-				uptimer = slowMade(function(){
-					actions.showHideUp()
-				}, uptimer, 30)			
-			},
-
 			up : function(){
 
 				_scrollTop(0)
@@ -138,13 +161,31 @@ var main = (function(){
 		}
 
 		var renders = {
+
+			addpanel : function(){
+
+				self.app.user.isState(function(state){
+					if(state){
+
+						if(currentMode == 'common' && state && !isMobile()){
+							el.addbutton.addClass('active')
+						}
+						else
+						{
+							el.addbutton.removeClass('active')
+						}
+
+					}
+				})
+			},
+
 			smallpanel : function(){
 				el.smallpanel.find('.item').removeClass('active')
 				el.smallpanel.find('.item[lenta="'+currentMode+'"]').addClass('active')
 			},
 			share : function(){
 
-				if(!isMobile())
+				if(!isMobile()){
 
 					self.nav.api.load({
 
@@ -156,9 +197,34 @@ var main = (function(){
 						clbk : function(e, p){
 
 							share = p
+
+							/*caption = new Caption({
+								container: el.c.find('.lentacell .cnt'),
+								caption: el.c.find('.lentacell .bgCaption'),
+								offset: [65, 0],
+								spacerHeight : '56px',
+								//iniHeight : true
+							}).init();
+							
+							caption.action()
+
+							el.share.on('click', function(){
+
+							
+								_scrollTop(0)
+							
+								
+							})*/
+
+						},
+						essenseData : {
+							post : function(){
+								self.app.platform.m.log('share', 'normal')
+							}
 						}
 
 					})
+				}
 			},
 
 			panel : function(){
@@ -184,7 +250,11 @@ var main = (function(){
 				})
 			},
 
-			lenta : function(){
+			lenta : function(clbk, p){
+
+				if(!p) p = {};
+
+				renders.addpanel();
 			
 				self.nav.api.load({
 
@@ -195,13 +265,28 @@ var main = (function(){
 
 					mid : 'main',
 
+					
+
 					essenseData : {
-						hr : 'index?'
+						hr : 'index?',
+						goback : p.goback,
 					},
 					
 					clbk : function(e, p){
 
+						if(!upbutton)
+							upbutton = self.app.platform.api.upbutton(el.up, {
+								top : function(){
+				
+									return '65px'
+								},
+								rightEl : el.c.find('.lentacell')
+							})		
+
 						lenta = p
+
+						if (clbk)
+							clbk()
 
 					}
 
@@ -220,11 +305,13 @@ var main = (function(){
 
 		var initEvents = function(){
 			
-			window.addEventListener('scroll', events.showHideUp);
-
-			el.up.on('click', events.up)
+			window.addEventListener('scroll', actions.addbuttonscroll)
 
 			el.smallpanel.find('.item').on('click', events.currentMode)
+
+				
+
+			el.addbutton.on('click', actions.addbutton)
 
 		}
 
@@ -234,7 +321,10 @@ var main = (function(){
 
 					if(!isMobile()){
 						renders.panel()
+
 					}
+
+					renders.addpanel();
 				}
 			})
 		}
@@ -245,8 +335,6 @@ var main = (function(){
 				if(state){
 
 					if(!isMobile()){
-
-						console.log('currentMode', currentMode)
 
 						if (currentMode == 'common')
 						{
@@ -269,11 +357,11 @@ var main = (function(){
 			
 		}
 
-		var make = function(clbk){
+		var make = function(clbk, p){
 
 			localStorage['lentakey'] = parameters().r || 'index'
 
-			renders.lenta()
+			renders.lenta(clbk, p)
 
 			makeShare()
 
@@ -290,16 +378,18 @@ var main = (function(){
 
 			parametersHandler : function(clbk){
 
+				var ncurrentMode = currentMode
 
 				localStorage['lentakey'] = parameters().r || 'index'
 
 				if (parameters().r){
-					currentMode = parameters().r
+					ncurrentMode = parameters().r
 				}
 				else{
-					currentMode = 'common'
+					ncurrentMode = 'common'
 				}
 				
+				if(currentMode == ncurrentMode) return
 
 				renders.lenta()
 
@@ -370,12 +460,15 @@ var main = (function(){
 
 			destroy : function(){
 
-				window.removeEventListener('scroll', events.showHideUp);
+				if (upbutton)
+					upbutton.destroy()
+
+					upbutton = null
 
 				window.removeEventListener('scroll', actions.panelTopPosition)
 				window.removeEventListener('resize', events.panelPosition)
-
-
+				window.removeEventListener('scroll', actions.addbuttonscroll)
+				
 				if (roller)
 					roller.destroy()
 
@@ -412,14 +505,17 @@ var main = (function(){
 				el.share = el.c.find('.share');
 				el.lenta = el.c.find('.lentaWrapper');
 				el.panel = el.c.find('.panel');
-				el.up = el.c.find('.upbutton')
+				el.up = el.c.find('.upbuttonwrapper')
 				el.smallpanel = el.c.find('.smallpanell')
+				el.addbutton = el.c.find('.addbutton')
 
 				el.w = $(window)
 
 				initEvents();
 
-				make()
+				make(function(){
+					p.clbk(null, p);
+				}, p)
 				
 			}
 		}

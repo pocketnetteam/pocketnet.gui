@@ -54,6 +54,8 @@ var menu = (function(){
 			},
 
 			elswidth : function(){
+
+
 				el.c.find('.autowidth.active').each(function(){
 					actions.setWidth($(this))
 				})
@@ -62,6 +64,7 @@ var menu = (function(){
 
 			setWidth : function(_el){
 
+				if(isMobile()) return
 
 				if(_el.offset()){
 					
@@ -213,10 +216,20 @@ var menu = (function(){
 
 					}
 
+					var cordovabadge = null;
+					
+					if(typeof cordova != 'undefined'){
+						cordovabadge = deep(cordova, 'plugins.notification.badge')
+					}
+					
+
 					self.app.platform.sdk.notifications.init(function(){
 						var l = unseen().length;
 
 						actions.ah(el, l)
+
+						if (cordovabadge)
+							cordovabadge.set(l)
 
 						self.app.platform.api.electron.notifications(l, 'notifications')
 
@@ -234,6 +247,9 @@ var menu = (function(){
 					self.app.platform.sdk.notifications.clbks.added.menu =
 					self.app.platform.sdk.notifications.clbks.seen.menu = function(){
 						var l = unseen().length;
+
+						if (cordovabadge)
+							cordovabadge.set(l)
 
 						actions.ah(el, l)
 
@@ -319,6 +335,9 @@ var menu = (function(){
 					}
 				},
 				click : function(){
+
+					self.app.platform.m.log('sharing_opened_menu', '0')
+
 					self.nav.api.load({
 						open : true,
 						href : 'socialshare',
@@ -338,10 +357,12 @@ var menu = (function(){
 
 					if (el.c.hasClass('searchactive')){
 
+						searchBackAction = null;
+
 						el.postssearch.find('input').focus();
 						el.postssearch.addClass('active')
 
-						if(searchBlurTimer) {
+						if (searchBlurTimer) {
 							clearTimeout(searchBlurTimer)
 							searchBlurTimer = null
 						}
@@ -362,13 +383,21 @@ var menu = (function(){
 					var close = function(cl){
 
 						var pn = self.app.nav.current.href
-
 						if (pn != 's' || cl){
 							_el.find('input').val('')
 							
 							el.c.removeClass('searchactive')
 
 							clearex()
+						}
+
+						else{
+
+							if (searchBackAction){
+								searchBackAction()
+								searchBackAction = null;
+							}
+
 						}
 
 						
@@ -895,10 +924,15 @@ var menu = (function(){
 				el.c.removeClass('searchactive')
 			},
 
-			showsearch : function(v){
+			showsearch : function(v, _searchBackAction){
+
 				el.c.addClass('searchactive')
 				
 				el.postssearch.find('input').val(v.replace('tag:', "#"));
+
+				searchBackAction = _searchBackAction || null
+
+				actions.elswidth()
 			},
 			
 			init : function(p){

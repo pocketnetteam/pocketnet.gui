@@ -8,11 +8,12 @@ if(!_Node)
 		/*ws : 'wss://bear:8088',
 		apiproxy : 'https://bear:8888',*/
 
-		/*ws : 'wss://localhost:8088',	
-		apiproxy : 'https://localhost:8888',
+		/*ws : 'wss://pocketnet.app:8089',	
+		apiproxy : 'https://pocketnet.app:8889',
+		firebase : 'https://pocketnet.app:8889',*/
 
-		ws : 'wss://localhost:8088',
-		apiproxy : 'https://localhost:8888',*/
+		/*ws : 'wss://localhost:8089',
+		apiproxy : 'https://localhost:8889',*/
 
 		/*rtcws : 'wss://localhost:9090',
 		rtchttp : 'https://localhost:9091'*/

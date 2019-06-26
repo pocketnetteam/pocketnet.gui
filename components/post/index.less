@@ -198,14 +198,18 @@
 			display: none;
 		}
 
+		img{
+			max-width: 100%;
+		}
+
 		.article{
 			.message{
 				p img{
-					width: 100%;
+					max-width: 100%;
 				}
 
 				figure img{
-					width: 100%;
+					max-width: 100%;
 				}
 			}
 		}
@@ -340,6 +344,9 @@
 
 				&.authorCell{
 					padding-right: 2 * @rhythm;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 			}
 		}
@@ -874,7 +881,7 @@
 			width: 100%;
 
 			&.iconWrapper{
-				width: 25%;
+				width: 60px;
 				padding-top: @rhythm;
 				padding-left: @rhythm;
 			}

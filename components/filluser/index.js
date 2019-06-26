@@ -82,20 +82,74 @@ var filluser = (function(){
 						_p.Action || (_p.Action = 'ADDTOMAILLIST');
 						_p.TemplateID = '1005'
 
-						$.ajax({
-							type: 'POST',
-							url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
-							data: _p,
-							dataType: 'json',
-							success : function(){
+						_p.ref = ''
 
-								topPreloader(100)
-
-								if (clbk)
-									clbk();
-
+						var getrefname = function(clbk){
+							if (self.app.ref){
+								self.sdk.users.get(self.app.ref, function(){
+			
+									var name = deep(self, 'sdk.users.storage.' + self.app.ref + '.name');
+			
+									if (clbk)
+										clbk(name)
+								})
 							}
-						});
+							else{
+								if (clbk)
+									clbk(null)	
+							}
+						}
+
+						var gettype = function(){
+							var fref = self.app.ref || '';
+			
+			
+							var type = 'Overall'
+			
+							if(fref.indexOf('author') > -1) type='Account'
+							if(fref.indexOf('&s=') > -1 || fref.indexOf('&v=') > -1) type='Post'
+			
+							return type
+						}
+			
+						getrefname(function(name){
+			
+							var body = ''
+
+							_p.ref += gettype()
+			
+							if (name) {
+								
+								_p.ref += ', ' + name
+			
+								body += '<p><a href="https://pocketnet.app/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+							}
+
+							
+			
+							var r = deep(document, 'referrer')
+			
+							if (r) {
+								body += '<p><a href="'+r+'">From: '+r+'</a></p>'
+							}
+			
+							_p.body = encodeURIComponent(body)
+			
+							$.ajax({
+								type: 'POST',
+								url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+								data: _p,
+								dataType: 'json',
+								success : function(){
+				
+									topPreloader(100)
+				
+									if (clbk)
+										clbk();
+				
+								}
+							});
+						})
 					}
 
 					var validate = function(v){

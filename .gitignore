@@ -13,6 +13,7 @@ sign.txt
 messenger2/server/cert/key.pem
 messenger2/server/address.js
 js/app.local.js
+lukos
 performance/keys.txt
 performance/main.js
 css/master.css

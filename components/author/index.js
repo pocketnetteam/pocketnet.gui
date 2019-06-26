@@ -9,6 +9,7 @@ var author = (function(){
 		var primary = deep(p, 'history');
 		var author, _state;
 		var el;
+		var upbutton;
 
 		var panel = null, uptimer = null;
 
@@ -316,12 +317,7 @@ var author = (function(){
 
 				self.fastTemplate('metmenu', function(rendered, template){
 
-					console.log("ASD", template, rendered)
-
 					self.app.platform.api.tooltip(_el, function(){
-
-						console.log("SADSDAASD")
-
 						d.author = author
 					
 						return template(d);
@@ -408,9 +404,11 @@ var author = (function(){
 
 				report.active = true;
 
-				self.app.nav.api.history.addParameters({
-					report : report.id
-				})
+				if(report.id != 'shares')
+
+					self.app.nav.api.history.addParameters({
+						report : report.id
+					})
 
 				renders[report.render](el.lenta, report)
 
@@ -443,19 +441,18 @@ var author = (function(){
 
 				}, function(p){
 
-					p.el.find('.toReport').on('click', function(){
-						var r = $(this).attr('report');
+					p.el.find('.toReport').swipe({
+						tap : function(){
+							var r = $(this).attr('report');
 
-						renders.report(reports[r])
-
+							renders.report(reports[r])
+						}
 					})
-
+					
 					_.each(reports, function(r, j){
 						if(r.events){
 
 							var el = p.el.find('[menuitem="'+j+'"]')
-
-							console.log('events', el)
 
 							_.each(r.events, function(e, i){
 								el.on(i, e)
@@ -547,6 +544,8 @@ var author = (function(){
 
 			lenta : function(_el, report){
 
+				//localStorage['lentakey'] = 'author?address=' + parameters().address
+
 				self.nav.api.load({
 
 					open : true,
@@ -569,6 +568,8 @@ var author = (function(){
 					clbk : function(e, p){
 					
 						report.module = p;
+
+						
 				
 					}
 
@@ -700,8 +701,18 @@ var author = (function(){
 					}
 				}
 				
+				
 
 			})
+			
+			upbutton = self.app.platform.api.upbutton(el.up, {
+				top : function(){
+
+					return '65px'
+				},
+				class : 'light',
+				rightEl : el.c.find('.leftpanelcell')
+			})	
 			
 
 			if(!isMobile())
@@ -710,6 +721,13 @@ var author = (function(){
 
 		return {
 			primary : primary,
+
+			parametersHandler : function(){
+				var r = parameters().report || 'shares'
+
+				renders.report(reports[r])
+				renders.menu()
+			},
 
 			getdata : function(clbk, settings){
 
@@ -766,6 +784,11 @@ var author = (function(){
 
 			destroy : function(){
 
+				if (upbutton)
+					upbutton.destroy()
+
+					upbutton = null
+
 				if (panel)
 					panel.destroy();
 
@@ -784,6 +807,8 @@ var author = (function(){
 			
 			init : function(p){
 
+				
+
 				state.load();
 
 				el = {};
@@ -794,7 +819,7 @@ var author = (function(){
 				el.caption = el.c.find('.bgCaption')
 				el.fxd = el.c.find('.fxd')
 				el.subscribe = el.c.find('.subscribebuttonstop');
-				el.up = el.c.find('.upbutton')
+				el.up = el.c.find('.upbuttonwrapper')
 				el.w = $(window)
 
 				el.info = el.c.find('.authorinfoWrapper')
@@ -802,7 +827,9 @@ var author = (function(){
 				make();
 				initEvents();
 
-				
+				if(self.user.isItMe(author.address)){
+					self.app.nav.api.backChainClear()
+				}
 
 				p.clbk(null, p);
 			}

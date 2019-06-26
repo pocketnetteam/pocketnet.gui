@@ -15,6 +15,9 @@ if(typeof _Electron != 'undefined' && _Electron){
 	var jquerytextcomplete = require('jquery-textcomplete')
 
 	animateNumber = require('./js/vendor/jquery.animate-number.js')
+	touchSwipe = require('./js/vendor/jquery.touchSwipe.js')
+	
+	console.log('touchSwipe', touchSwipe)
 
 	MessageStorage = require('./js/vendor/rtc/db.js')
 	RTCMultiConnection = require('./js/vendor/rtc/RTCMultiConnection.js')
@@ -29,7 +32,6 @@ if(typeof _Electron != 'undefined' && _Electron){
 	jQueryBridget = require('jquery-bridget');
 	jQueryBridget( 'isotope', Isotope, $ );
 	jQueryBridget( 'textcomplete', jquerytextcomplete, $ );
-	//jQueryBridget( 'mark', Mark, $ );
 
 
 	Mark = require('./js/vendor/jquery.mark.js');
@@ -86,16 +88,25 @@ Application = function(p)
 		fullName : "pocketnet",
 		localStoragePrefix : 'pocketnet',
 
-		//apiproxy : 'https://localhost:8888',
+		//////////////
+
 		apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
 		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx',
+
+		//////////////
+		
+		firebase : p.firebase || 'https://pocketnet.app:8888',
+
+		//////////////
+
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
-		//ws : p.ws || "wss://localhost:8088",
+		//////////////
 		ws : p.ws || "wss://pocketnet.app:8088",
-
 		rtc : p.rtc || 'https://pocketnet.app:9001/',
+
+		//////////////
 
 		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
 		rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
@@ -155,7 +166,71 @@ Application = function(p)
 
 	self.relations = {};
 
+	self.backmap = {
 
+		index : {
+			href : 'index',
+			childrens : ['author', 'chat', 's', 'share', 'userpage']
+		},
+
+		s : {
+			href : 's',
+			childrens : ['author', 'chat', 's']
+		},
+
+		author : {
+			href : 'author',
+			childrens : ['author', 's', 'chat']
+		}
+
+	}
+
+	/*self.backMap = [
+
+		{
+			level : 0,
+			href : 'index',
+
+			childrens : [
+
+				{
+					level : 1,
+					href : 'author',
+
+					childrens : [
+						{
+							level : 2,
+							href : 's'
+						},
+
+						{
+							level : 2,
+							href : 'userpage'
+						}
+					]
+				},
+				{
+					level : 1,
+					href : 'chat'
+				},
+
+				{
+					level : 1,
+					href : 's'
+				},
+
+				{
+					level : 1,
+					href : 'share'
+				}
+				
+			]
+		},
+	
+
+	]*/
+
+	self.options.backmap = self.backMap
 
 	var prepareMap = function(){
 
@@ -228,7 +303,7 @@ Application = function(p)
 		return module;
 	}
 
-	self.initTest = function(mnemokey, clbk){
+	self.initTest = function(mnemokey, clbk,){
 		if (typeof localStorage == 'undefined') localStorage = {};
 
 		prepareMap();
@@ -238,6 +313,32 @@ Application = function(p)
 		self.platform.nodeid = 0;
 
 		self.user.setKeysPair(self.user.keysFromMnemo(mnemokey));
+
+		self.user.isState(function(state){
+
+			self.localization.init(function(){
+
+				self.platform.prepare(function(){
+					if (clbk)
+						clbk(state)
+				})
+
+			})
+
+			
+		})
+	}
+
+	self.initTestFromPrivate = function(private, clbk,){
+		if (typeof localStorage == 'undefined') localStorage = {};
+
+		prepareMap();
+
+		newObjects();
+
+		self.platform.nodeid = 0;
+
+		self.user.setKeysPairFromPrivate(private);
 
 		self.user.isState(function(state){
 
@@ -607,8 +708,21 @@ Application = function(p)
 	self.name = self.options.name;
 
 
-	if(!_Node)
+	if(!_Node){
+
 		self.ref = localStorage['ref'] || parameters().ref;
+
+		self.options.device = localStorage['device'] || makeid();
+
+		localStorage['device'] = self.options.device
+
+		if(typeof window != 'undefined'){
+
+			self.fref = deep(window, 'location.href')
+
+		}
+
+	}
 
 
 

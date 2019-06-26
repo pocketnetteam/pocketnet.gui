@@ -541,12 +541,18 @@ Share = function(){
 						return false;
 					}
 
+					tags = _.map(tags, function(t){
+						return tags.replace("#", '')
+					})
+
 					this.v = tags;
 				}
 
 				else{
 
 					if(!tags) return;
+
+						tags = tags.replace("#", '')
 
 					if(this.v.length > 29){
 						return false;
@@ -1413,7 +1419,7 @@ pShare = function(){
 				nm = filterXSS(nm, {
 					stripIgnoreTag : true,
 					whiteList: {
-						a: ["href", "title", "target"],
+						a: ["href", "title", "target", 'cordovalink'],
 						br : ["style"],
 						b : ["style"],
 						span : ["style"],
@@ -1574,7 +1580,19 @@ pComment = function(){
 
 			var m = emojione.toImage(trimHtml(l, 90))
 
-			return nl2br(m)
+			return nl2br(trimrn(m))
+		},
+
+		previewEmojidis : function(){
+			var l = filterXSS(self.message, {
+				whiteList: [],
+				stripIgnoreTag: true
+			})
+
+
+			var m = trimHtml(l, 90)
+
+			return nl2br(trimrn(m))
 		}
 	}
 

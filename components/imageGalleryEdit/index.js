@@ -804,6 +804,10 @@ var imageGalleryEdit = (function(){
 			},
 
 			wnd : {
+				close : function(){
+					if (essenseData.close)
+						essenseData.close()
+				},
 				class : 'allscreen black withoutButtons imageGalleryEdit',
 			}
 		}

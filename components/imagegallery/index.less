@@ -43,8 +43,7 @@
 		.imagesTableWrapper{
 			position: absolute;
 			left: 0;
-			right: 0;
-			bottom: 0;
+		
 			top: 0;
 			width: 100%;
 			height: 100%;
@@ -148,14 +147,14 @@
 
 .wnd{
 
-	&.imageGallery{
+	&.imagegallery{
 		z-index: 1101;
 		.wndcontent{
 			padding : 0;
 		}
 	}
 	
-	#imageGallery{
+	#imagegallery{
 		height: 100%;
 
 		.image{
@@ -173,9 +172,11 @@
 }
 
 @media only screen and (max-width: 640px) {
-	#imageGallery{
+	#imagegallery{
 		.panel{
 			padding-right: 2 * @rhythm;
 		}
+
+		
 	}
 }

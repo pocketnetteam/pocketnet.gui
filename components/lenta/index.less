@@ -3,6 +3,10 @@
 #lenta{
 	/*background: #F9F9F9;*/
 
+	.mlwr{
+		position: relative;
+	}
+	
 	.loader{
 		background: #fff;
 		padding : 6 * @rhythm 0;
@@ -10,6 +14,26 @@
 
 	.panel{
 		overflow: hidden;
+	}
+
+	.circularprogress{
+		overflow: hidden;
+		height: 0px;
+		position: absolute;
+		left : 0;
+		right : 0;
+		top : 0;
+		
+
+		.circularprogressWrapper{
+			padding : 2 * @rhythm;
+			text-align: center;
+			canvas{
+				margin : 0 auto;
+			}
+		}
+
+		
 	}
 
 	.shares{
@@ -132,20 +156,24 @@
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
 
+			img{
+				max-width: 100%;
+			}
+
 			.article{
 				.message{
 					p img{
-						width: 100%;
+						max-width: 100%;
 					}
 
 					figure img{
-						width: 100%;
+						max-width: 100%;
 					}
 				}
 			}
 
 			.medium-insert-images{
-				display: none;
+				/*display: none;*/
 			}
 
 			.medium-insert-embeds{
@@ -1652,17 +1680,18 @@
 						}
 					}
 
+					&.more,
 					&.four{
 						.imagesWrapper{
-							width: 100%;
+							width: 48%;
 							height: auto;
 
 							&.w2{
-								width: 100%;
+								width: 48%;
 							}
 
 							&.h2{
-								width: 100%; 
+								width: 48%;
 							}
 						}
 					}

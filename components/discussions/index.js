@@ -293,8 +293,6 @@ var discussions = (function(){
 
 					var ids = _.map(d, function(d){
 
-						console.log(d)
-
 						return d.chat.id
 					})
 
@@ -686,8 +684,6 @@ var discussions = (function(){
 
 		var make = function(){
 			//renders.empty()
-
-			console.log('discussions', discussions)
 			
 			//renders.discussions()
 
@@ -718,8 +714,6 @@ var discussions = (function(){
 
 
 				var data = {};
-
-				console.log("self.app.platform.sdk.chats.get('share')", self.app.platform.sdk.chats.get('share'))
 
 
 					discussions = self.app.platform.sdk.discussions.fromChats(self.app.platform.sdk.chats.get('share'), ed.author)

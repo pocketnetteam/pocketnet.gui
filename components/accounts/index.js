@@ -26,32 +26,34 @@ var accounts = (function(){
 
 						//bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
 
-						self.app.user.signout();
+						self.app.user.signout(function(){
+							self.app.user.stay = stay;
 
-						self.app.user.stay = stay
+							self.user.signin(private, function(state){
 
-						self.user.signin(private, function(state){
+								self.app.reloadLight(function(){
 
-							self.app.reloadLight(function(){
+									var h = 'userpage?id=accounts&s=' + makeid()
+									var history = false;
 
-								var h = 'userpage?id=accounts&s=' + makeid()
-								var history = false;
+									if(!self.app.user.validate()){
+										h = 'filluser'
+										history = true
+									}
 
-								if(!self.app.user.validate()){
-									h = 'filluser'
-									history = true
-								}
+									self.app.nav.api.load({
+										open : true,
+										href : h,
+										history : history
+									})
+								});
 
-								self.app.nav.api.load({
-									open : true,
-									href : h,
-									history : history
-								})
-							});
+								
 
-							
+							})
+						});
 
-						})
+						
 
 
 						

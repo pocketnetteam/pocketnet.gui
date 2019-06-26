@@ -8,7 +8,7 @@ var socialshare = (function(){
 
 		var primary = deep(p, 'history'), st;
 
-		var el, defaultText = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here', defmedtext = 'I want to share this from a decentralized blockchain platform Pocketnet with you. Hope you find it useful and if you sign up, both of will get Pocketcoin cryptocurrency bonus!\r\n';
+		var el, defaultText = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here', defmedtext = 'I want to share this from a decentralized blockchain platform Pocketnet with you. Hope you find it useful and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!\r\n';
 		var ed = {};
 
 		var calltoActionNotInclude = false;
@@ -48,7 +48,12 @@ var socialshare = (function(){
 		}
 
 		var socials = [
-
+			{
+				n : 'Email',
+				i : '<i class="far fa-envelope"></i> Send by email',
+				t : 'email',
+				c : '#f82a53'
+			},
 			{
 				n : 'Facebook',
 				i : '<i class="fab fa-facebook-f"></i>',
@@ -119,19 +124,14 @@ var socialshare = (function(){
 				c : '#59267c'
 			},*/
 
-			{
-				n : 'Email',
-				i : '<i class="far fa-envelope"></i>',
-				t : 'email',
-				c : '#f82a53'
-			},
+			
 
-			{
+			/*{
 				n : 'Google',
 				i : '<i class="fab fa-google"></i>',
 				t : 'google',
 				c : '#DB4437'
-			},
+			},*/
 
 		]
 
@@ -170,6 +170,8 @@ var socialshare = (function(){
 							m += encodeURIComponent(t);
 
 						window.location.href = m;
+
+						self.app.platform.m.log('sharing_by', 'email')
 					})
 					
 
@@ -193,6 +195,12 @@ var socialshare = (function(){
 						class_prefix: 's_', 
 						width: 640, 
 						height: 480
+					})
+
+					_el.on('click', function(){
+						var type = $(this).data('type');
+
+						self.app.platform.m.log('sharing_by', type)
 					})
 				}
 				

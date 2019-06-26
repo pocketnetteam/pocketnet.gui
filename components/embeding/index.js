@@ -370,6 +370,10 @@ var embeding = (function(){
 
 				},
 				close : function(){
+
+					if (ed.on.close)
+						ed.on.close()
+
 				},
 				success : function(_wnd, _wndObj){
 					wndObj = _wndObj;

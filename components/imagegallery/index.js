@@ -158,7 +158,7 @@ var imagegallery = (function(){
 
 			body : function(e){
 
-				if(making) return;
+				if(making || e.pageY < 80) return;
 
 				action = 'next'
 
@@ -254,6 +254,110 @@ var imagegallery = (function(){
 
 			el.c.on('click', events.body)
 
+			var cc = el.c.find('.imagesTableWrapper')
+
+			var directions = {
+				up : {
+					trueshold : 150,
+
+					mintrueshold : 50,
+
+					cancellable : true,
+
+					positionclbk : function(px){
+						var percent = ((150 - Math.abs(px)) / 150);
+	
+						if (percent > 0){
+	
+							cc.css('opacity', percent) 
+						}
+	
+					},
+	
+					clbk : function(){
+	
+						self.closeContainer()
+						
+					}
+				}
+			}
+
+			if(essenseData.images.length){
+				directions.left = {
+					trueshold : 100,
+	
+					mintrueshold : 50,
+	
+					cancellable : true,
+	
+					restrict : true,
+	
+					positionclbk : function(px){
+						var percent = ((100 - Math.abs(px)) / 100);
+	
+						if (percent > 0){
+	
+							cc.css('opacity', percent) 
+						}
+	
+					},
+	
+					clbk : function(){
+
+						
+						console.log("SSS2")
+	
+						actions.next()	
+						
+	
+						setTimeout(parallax.renew, 200)
+						
+					}
+				}
+	
+				directions.right = {
+					trueshold : 100,
+	
+					mintrueshold : 50,
+	
+					cancellable : true,
+	
+					restrict : true,
+	
+					positionclbk : function(px){
+						var percent = ((100 - Math.abs(px)) / 100);
+	
+						if (percent > 0){
+	
+							cc.css('opacity', percent) 
+						}
+	
+					},
+	
+					clbk : function(){
+	
+						
+
+						console.log("SSS")
+	
+						actions.back()
+	
+						setTimeout(parallax.renew, 200)
+						
+					}
+				}
+			}
+
+			
+
+			var parallax = new SwipeParallax({
+
+				el : el.c.find('.imagesTableWrapper'),
+
+				directions : directions
+
+			}).init()
+
 		}
 
 		
@@ -323,6 +427,7 @@ var imagegallery = (function(){
 			},
 
 			wnd : {
+				
 				class : 'allscreen black withoutButtons imageGallery',
 			}
 		}

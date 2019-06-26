@@ -148,6 +148,12 @@
 		.transition(0.3s);
 		cursor: pointer;
 
+		&.s_email{
+			border-radius: 50px;
+			padding : 0 2 * @rhythm;
+			width : auto;
+		}
+
 		&:hover{
 			opacity : 0.8;
 		}
@@ -290,6 +296,14 @@
 			float: left;
 			&.socialWrapper{
 				padding : @rhythm;
+
+				&.email{
+					width : 100%;
+
+					.socialsharebtn{
+						width : 100%;
+					}
+				}
 			}
 
 			&:nth-child(1){

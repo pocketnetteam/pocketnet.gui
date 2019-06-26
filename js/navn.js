@@ -17,8 +17,6 @@ Nav = function(app)
 		links : true,
 	}
 
-
-
 	var protocol = null;
 
 	if (typeof window != 'undefined'){
@@ -76,7 +74,150 @@ Nav = function(app)
 		}
 	}
 
+	var backManager = {
 
+		chain : [{
+			href : 'index',
+			scroll : 0
+		}],
+
+		clearAll : function(){
+			
+			var nchain = [{
+				href : 'index',
+				scroll : 0
+			}]
+
+			backManager.chain = nchain
+
+			this.save()
+		},
+
+		clear : function(){
+			
+			var nchain = [{
+				href : 'index',
+				scroll : 0
+			}]
+
+			if (backManager.chain.length > 1){
+				nchain.unshift(firstEl(backManager.chain))
+
+				nchain[0].scroll = 0
+			}
+
+			backManager.chain = nchain
+
+			this.save()
+		},
+		load : function(){
+			this.chain = JSON.parse(localStorage['backchain'] || "[]");
+
+			if(!this.chain.length){
+				this.clearAll()
+			}
+
+		},
+		save : function(){
+			localStorage['backchain'] = JSON.stringify(this.chain || [])
+		},	
+
+		add : function(href, scroll, back){
+
+			console.log('href', href)
+
+			var khref = href.split('?')[0];
+
+			var np = parameters(href, true)
+
+				href = khref + collectParameters(np, ['back', 'ref', 'r']);
+
+			var wb = false;
+
+			if (np.back || back){
+
+				var index = findIndex(backManager.chain, function(c){
+					if(c.href == href) return true;
+				})
+
+				//if (back) index++
+
+				backManager.chain.splice(0, index);
+
+				wb = backManager.chain[0]
+
+				console.log('backManager.chain', backManager.chain, index, href)
+			}
+
+			else{	
+
+				if (khref == 'index'){
+					backManager.clearAll()
+				}
+				else{
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain));
+	
+					if (needadd){
+	
+						var riobj = removeEqualRIObj(backManager.chain, {
+							href : href
+						})
+
+						//if (riobj && riobj.index == 0) return
+	
+						if (riobj && riobj.index == 1 && backManager.chain.length > 1){
+							backManager.chain.splice(0, 1);
+	
+							wb = riobj.el;
+						}
+						else{
+							backManager.chain[0].scroll = scroll || 0
+						}
+	
+						backManager.chain.unshift({
+							href : href,
+							scroll : 0
+						})
+					
+						
+					}
+					else{
+						backManager.clearAll()
+					}
+				}	
+
+			}
+
+			this.save()
+
+			console.log("BAKC", wb)
+
+			return wb;
+		},
+
+		get : function(){
+
+			if(backManager.chain.length > 1){
+				return backManager.chain[1]
+			}
+			else{
+				return null
+			}
+		},
+
+		mapSearch : function(href, last){
+
+			var lhref = last.href.split('?')[0];
+
+			var bp = deep(app, 'backmap.' + lhref) 
+
+			if (bp){
+				if(bp.childrens.indexOf(href) > -1) return true
+			}
+		}
+
+		
+	}
 
 	var historyManager = {
 		addParametersToHref : function(href, p){
@@ -94,6 +235,8 @@ Nav = function(app)
 		},
 		addParameters : function(p, _p){
 
+			if(!_p) _p = {}
+
 			var currentParameters = parameters();
 
 			var previousParameters = parameters();
@@ -106,10 +249,12 @@ Nav = function(app)
 
 			var href = current.href + collectParameters(currentParameters);
 
+			_p.removefromback = true
+
 			this.add(href, _p);
 		},
 		removeParameters : function(ids, _p){
-
+			if(!_p) _p = {}
 			if(!_.isArray(ids)) ids = [ids];
 
 			var pathname = self.get.pathname();
@@ -121,6 +266,8 @@ Nav = function(app)
 				})
 
 			var href = current.href + collectParameters(currentParameters);
+
+			_p.removefromback = true
 
 			this.add(href, _p);
 		},
@@ -142,9 +289,15 @@ Nav = function(app)
 
 			if (options.history === true && !_Node)
 			{	
+
+				if(!p.removefromback){
+					p.goback = backManager.add(href, p.lastScroll, p.back)
+				}
+
 				if(history.state && history.state.href == href){
 					return
 				}
+
 
 				if (self.addParameters){
 					href = self.addParameters(href)
@@ -158,6 +311,8 @@ Nav = function(app)
 					lfox : true
 
 				}, null, href);
+
+				
 				
 			}
 
@@ -168,30 +323,51 @@ Nav = function(app)
 		},	
 
 		openCurrent : function(){
-			
+			console.log("__________")
+			console.log("OPENCURENT")
 
 			if (history.state && history.state.lfox) { 
 
 				core.removeWindows(history.state.href)
 
+
 				if(history.state.href.split('?')[0] != current.href){
+
+					console.log("OP1")
 
 					self.api.load({
 		        		href : history.state.href,
 		        		open : true,
 			   			//history : true,
-			   			loadDefault : true
+						loadDefault : true,
+						back : true
+						//removefromback : firsttime
 		        	}); 
 
 				}
 				else
 				{
+					console.log("OP2")
+					core.removeWindows(history.state.href)
 
-					_.each(self.wnds, function(w){
-						if (w.module.parametersHandler){
-							w.module.parametersHandler()
+
+					if(!_.isEmpty(self.wnds)){
+						_.each(self.wnds, function(w){
+							if (w.module.parametersHandler){
+								w.module.parametersHandler()
+							}
+						})
+					}
+					else{
+	
+						if (current.module && current.module.parametersHandler){
+	
+							current.module.parametersHandler(function(){	
+	
+							})
 						}
-					})
+					}
+					
 				}
 
 	    	}
@@ -250,7 +426,11 @@ Nav = function(app)
 
 						current.completeHref = p.completeHref;
 
-						_scrollTop(0, null, 50);
+						if(!p.goback){
+							console.log("SCROLLTOP3")
+							_scrollTop(0, null, 50);
+						}
+							
 
 						current.module.parametersHandler(function(){							
 
@@ -259,8 +439,6 @@ Nav = function(app)
 							core.removeWindows(p.completeHref)
 
 						})
-
-						
 
 						_.each(self.clbks.history, function(c){
 								
@@ -280,12 +458,14 @@ Nav = function(app)
 				{
 
 
-					//if(p.loadDefault || p.reload){
+					p.lastScroll = $(window).scrollTop();
+
+					
 
 					if(!p.reload)
 						historyManager.add(p.completeHref, p);
 
-					//}
+					
 
 					if (current.module && !p.inWnd){
 
@@ -316,6 +496,12 @@ Nav = function(app)
 
 						p.clbk = function(a, b, d){
 							core.removeWindows(p.completeHref)
+
+							if (p.goback){
+								console.log("SCROLLTOP2", p.goback)
+								_scrollTop(p.goback.scroll);
+							}
+							
 
 							c(a, b, d)
 						}
@@ -682,6 +868,19 @@ Nav = function(app)
 			{
 				link.attr('target', '_blank')
 			}
+
+
+			if(typeof window != 'undefined' && typeof window.cordova != 'undefined' && cordova.InAppBrowser){
+
+				link.off('click').on('click', function(){
+
+	
+					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_blank');
+
+					return false
+				})
+
+			}
 		},
 
 		thisSiteLink : function(href){
@@ -723,6 +922,8 @@ Nav = function(app)
 						link.off('click')
 							.on('click', function(){
 								var href = $(this).attr('href');	
+
+								
 
 								if (href.indexOf('http') == -1) href = 'http://' + href						
 
@@ -787,27 +988,46 @@ Nav = function(app)
 							link.attr('href', encodeSeoLinks(_href));
 					}
 
-					link.off('click')
-						.on('click', function(){
-							
-							var href = core.thisSiteLink($(this).attr('href'));
+					var eve = function(){
+						var href = core.thisSiteLink($(this).attr('href'));
 
-							var handler = $(this).attr('handler') || null
+						var handler = $(this).attr('handler') || null
 
-							core.go({
-								action : action,
-								href : href,
-								history : true,
-								open : true,
-								handler : handler
-							})
-
-							if (additionalActions){
-								additionalActions();
-							}				
-							
-							return false;
+						core.go({
+							action : action,
+							href : href,
+							history : true,
+							open : true,
+							handler : handler
 						})
+
+						if (additionalActions){
+							additionalActions();
+						}	
+
+						return false
+					}
+
+					if (link.attr('fast')){
+						link.swipe({
+							tap : eve
+						})
+
+						link.off('click')
+							.on('click', function(){
+
+								return false;
+							})
+					}
+
+					else{
+						link.off('click').on('click', eve)
+					}
+
+					
+
+				
+					
 				}
 
 			})
@@ -917,6 +1137,13 @@ Nav = function(app)
 		go : core.go,
 		ini : core.openInitialModules,
 
+		backChainGet : function(){
+			return backManager.get()
+		},
+		backChainClear : function(){
+			backManager.clear()
+		},
+
 		load : function(p){
 			var clbk = p.clbk;
 
@@ -945,6 +1172,9 @@ Nav = function(app)
 
 			if (p.href == 'blank')
 				p.href  = 'index'
+
+
+			backManager.add(p.href)
 
 			self.api.load(p);
 		},
@@ -1010,6 +1240,8 @@ Nav = function(app)
 
 		if(typeof window != 'undefined'){
 
+			backManager.load()
+
 			protocolAction('prefix');
 			protocolAction('seoRedirect');
 
@@ -1017,7 +1249,9 @@ Nav = function(app)
 			{
 				window.onpopstate = function(event)
 				{
-			   		historyManager.openCurrent();
+
+
+					historyManager.openCurrent();
 				};
 			}
 

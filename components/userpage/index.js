@@ -455,11 +455,7 @@ var userpage = (function(){
 			renders.bgcaption();
 		}
 
-
-		var make = function(clbk){
-			
-			renders.bgcaption();
-
+		var makerep = function(clbk){
 			var id = parameters().id || 'ustate';
 
 			renders.contents(function(){
@@ -472,6 +468,15 @@ var userpage = (function(){
 
 			});
 
+		}
+
+		var make = function(clbk){
+			
+			renders.bgcaption();
+
+			makerep(clbk)
+
+			
 			if(!isMobile())
 
 				roller = new Roller({
@@ -486,6 +491,10 @@ var userpage = (function(){
 
 		return {
 			primary : primary,
+
+			parametersHandler : function(){
+				makerep()
+			},
 
 			getdata : function(clbk){
 				

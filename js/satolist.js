@@ -4,8 +4,8 @@ if(typeof _Electron != 'undefined'){
 	electron = require('electron');
 
 	var storage = electron.OSBrowser;
-
 }
+
 
 Platform = function(app){
 
@@ -20,6 +20,7 @@ Platform = function(app){
 		self.currentBlock = 1;
 
 	var blockps = 180000;
+
 
 	var TXFEE = 1
 
@@ -601,24 +602,25 @@ Platform = function(app){
 		_focus : {},
 		focus : function(){
 
-			if(isTablet() || 1==1 || electron){
+			//if(isTablet() || 1==1 || electron){
 
-				app.user.isState(function(state){
+			app.user.isState(function(state){
 
-					if(state){
+				if(state){
 
-						self.update();
+					self.update();
 
-						
-					}
+					_.each(self.clbks._focus, function(f){
+						f()
+					})
+					
+				}
 
-				})
-
-			}
-
-			_.each(this._focus, function(f){
-				f()
 			})
+
+			//}
+
+			
 
 		},
 
@@ -636,6 +638,144 @@ Platform = function(app){
 	}
 
 	self.api = {
+
+		upbutton : function(el, p){
+
+			if(typeof window == 'undefined') return;
+
+			if(!p) p = {};
+
+			var self = this;
+			var w = $(window);
+			var up = null;
+
+			var currentmode = null;
+
+			var render = function(){
+				var h = '';
+
+				h += '<div class="upbutton '+ (p.class || "") +'">'
+
+					h +=	'<div class="full">'
+
+						h +=	'<div class="fulltable table">'
+							h +=	'<div class="fullcell icon">'
+							h += 		'<i class="fas fa-chevron-up"></i>'
+							h += 	'</div>'
+
+							h +=	'<div class="fullcell label">'
+								h +=	'To the top'
+							h += 	'</div>'
+
+							h +=	'<div class="fullcell label likeicon">'
+							h += 	'</div>'
+
+						h += 	'</div>'
+						
+					h += 	'</div>'
+
+					h +=	'<div class="mini">'
+					h += 		'<i class="fas fa-chevron-up"></i>'
+					h += 	'</div>'
+
+				h += '</div>'
+
+				el.html(h)
+				up = el.find('.upbutton')
+			}
+
+			var getmode = function(){
+				if(w.width() > 1280){
+					return 'full'
+				} 
+				else{
+					return 'mini'
+				}
+			}
+
+			var actions = {
+				clear : function(){
+					up.css('right', '')
+					up.css('top', '')
+					up.css('bottom', '')
+					up.css('width', '')
+				}
+			}
+
+			var events = {
+				resize : function(){
+					var mode = getmode();
+
+					if (mode != currentmode){
+						actions.clear();
+					}
+
+					currentmode = mode
+
+					if (mode == 'full'){
+						if(p.rightEl){
+							up.css('width', p.rightEl.offset().left + "px")
+						}
+
+						if (p.top){
+							up.css('top', p.top())
+						}
+					}
+					else
+					{
+
+					}
+				},
+				scroll : function(){
+					if (w.scrollTop() > (p.scrollTop || 250)){
+						up.addClass('active')
+					}
+					else{
+						up.removeClass('active')
+					}
+				},
+
+				click : function(){
+					_scrollTop(0)
+				}
+			}
+
+			var initEvents = function(){
+				window.addEventListener('scroll', events.scroll)
+				window.addEventListener('resize', events.resize)
+
+				up.swipe({
+					tap : events.click
+				})
+			}
+
+			var removeEvents = function(){
+				window.removeEventListener('scroll', events.scroll)
+				window.removeEventListener('resize', events.resize)
+			}
+
+			self.init = function(){
+				currentmode = getmode()
+
+				render();
+
+				initEvents();
+
+				events.resize();
+				events.scroll();
+			}
+
+			self.destroy = function(){
+				removeEvents()
+
+				el.html('')
+			}
+
+			self.init()
+
+			return self;
+		},
+
 		plissing : function(p){
 
 			var self = this;
@@ -1445,12 +1585,15 @@ Platform = function(app){
 				var subscribe = deep(self, 'sdk.node.transactions.temp.subscribe')
 			},
 
-			get : function(clbk){
+			meUpdate : function(clbk){
+				self.sdk.user.get(clbk, true)
+			},
 
+			get : function(clbk, update){
 
 				var storage = this.storage
 
-				if(!storage.me)
+				if(!storage.me || update)
 				{
 					storage.me = {};
 
@@ -1519,11 +1662,11 @@ Platform = function(app){
 
 					}
 
-					if (_.toArray(self.sdk.node.transactions.temp['userInfo']).length){
+					/*if (_.toArray(self.sdk.node.transactions.temp['userInfo']).length){
 						if(!wait){
 							wait = 1;
 						}
-					}
+					}*/
 
 					if (clbk)
 						clbk(wait)
@@ -2695,7 +2838,6 @@ Platform = function(app){
 
 							self.sdk.address.registration(address, function(r){
 
-								console.log(r)
 	
 								if(!r){
 									if (clbk)
@@ -4635,11 +4777,13 @@ Platform = function(app){
 
 						var storage = self.sdk.node.shares.storage
 
-							storage[key] || (storage[key] = [])
+							
 
 						var s = self.sdk.node.shares;
 
 						if (cache == 'cache' && storage[key]){
+
+							console.log('storage[key]', storage[key])
 
 							var tfinded = null;
 							var added = 0;
@@ -4660,11 +4804,13 @@ Platform = function(app){
 							})
 
 							if (clbk)
-								clbk(storage[key])
+								clbk(storage[key], null, p)
 
 						}
 						else
 						{
+
+							storage[key] || (storage[key] = [])
 
 							if(cache == 'clear') storage[key] = [];
 
@@ -6881,6 +7027,172 @@ Platform = function(app){
 	
 	}
 
+	self.Firebase = function(platform){
+
+		//https://localhost:8889/firebase/token/set?token=cNFk-8w25ZQ:APA91bE4cStVM7B56qhxxl1jgLr9dEeUQsUudtq1zEfazgfM6Y-at8-LTkbV1uyzeJH4ljvkP6GRx4trBiDaIt7wdCSgCixuUN3BuA-wT_RNhZTvfSvGiqsoBfoErvz7Gyi5EaHdMNLJ&address=PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM&device=be4b54d4-a76d-cffc-42a0-4bb89028af9d
+		
+		//https://localhost:8889/firebase/revokedevice?device=be4b54d4-a76d-cffc-42a0-4bb89028af9d
+
+		var self = this;
+
+		var using = typeof window != 'undefined' && window.cordova && typeof FCMPlugin != 'undefined';
+
+		var device = function(){
+			var id = platform.app.options.device
+
+			return id;
+		}
+
+		self.api = {
+
+			revoke : function(token, clbk){
+				platform.app.ajax.fb({
+					action : 'firebase.revoke',
+
+					data : {
+						device : device(),
+						address : platform.sdk.address.pnet().address
+					},
+
+					success : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			},
+
+			revokeDevice : function(clbk){
+				platform.app.ajax.fb({
+					action : 'firebase.revokedevice',
+
+					data : {
+						device : device()
+					},
+
+					success : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			},
+
+			setToken : function(token, clbk){
+				platform.app.ajax.fb({
+					action : 'firebase.set',
+
+					data : {
+						token : token,
+						device : device(),
+						address : platform.sdk.address.pnet().address
+					},
+
+					success : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			}
+		}
+
+		self.events = function(){
+
+			FCMPlugin.onNotification(function(data){
+				if(data.wasTapped){
+				  	//Notification was received on device tray and tapped by the user.
+					console.log( JSON.stringify(data) );
+					  
+					platform.ws.destroyMessages()
+
+				}
+				else
+				{
+				  	//Notification was received in foreground. Maybe the user needs to be notified.
+					console.log( JSON.stringify(data) );
+
+					if(typeof cordova != 'undefined'){
+						var cordovabadge = deep(cordova, 'plugins.notification.badge')
+					  
+						if (cordovabadge)
+							cordovabadge.increase(1, function (badge) {});
+					}
+
+					
+				}
+			});
+
+			FCMPlugin.onTokenRefresh(function(token) {
+
+				console.log("refreshed token", token)
+
+				/*platform.app.ajax.fb({
+					action : 'firebase.token.refresh',
+
+					data : {
+						token : token,
+						device : device(),
+						address : platform.sdk.address.pnet().address
+					},
+
+					success : function(){
+
+					}
+				})*/
+
+			}, function(error) {
+				console.error(error);
+			});
+
+			FCMPlugin.getToken(function(token) {
+
+				console.log('token', token);
+
+				/*self.api.setToken(token, function(){
+
+				})*/
+
+			
+				
+			}, function(error) {
+				console.error(error);
+			});
+
+			
+
+		}
+
+		self.init = function(clbk){
+
+
+			if(!using) {
+				if (clbk)
+					clbk()
+			}
+
+			else{
+
+				self.events()
+
+				if (clbk)
+					clbk()
+			}
+
+
+		}
+
+		self.destroy = function(clbk){
+			if(!using){
+				if (clbk)
+					clbk()
+			}
+			else{
+				self.api.revokeDevice(clbk)
+			}
+		}
+
+		return self;
+
+	}
+
 	self.WSn = function(platform){
 		
 		var self = this;
@@ -6903,10 +7215,10 @@ Platform = function(app){
 
 		self.tempates = {
 
-			_share : function(share){
+			_share : function(share, c){
 				var m = share.caption || share.message;
 
-				var nm = emojione.toImage(filterXSS(trimHtml(m, 20)));
+				var nm = emojione.toImage(filterXSS(trimHtml(m, c || 20)));
 
 				return nm
 			},
@@ -7169,6 +7481,20 @@ Platform = function(app){
 						return false;
 					}
 				},
+
+				notificationData : function(data){
+					var n = {};
+
+					if(data.user && data.share){
+						n.caption = self.tempates._user(data.user)
+						n.text = self.tempates._share(data.share, 100)
+					}
+
+					if(_.isEmpty(n)) 
+						return null;
+
+					return n
+				},
 				
 				fastMessage : function(data){	
 			
@@ -7236,7 +7562,6 @@ Platform = function(app){
 
 							}, 0)
 
-							console.log('data.amountall, tx, data', data.amountall, tx, data)
 							
 							//data.tx = data.pockettx
 
@@ -7302,6 +7627,45 @@ Platform = function(app){
 
 				refs : {
 
+				},
+
+				notificationData : function(data, user){
+					var n = {};
+
+					if (data.tx){
+
+						
+						if(data.tx.coinbase){
+
+							if(platform.sdk.usersettings.meta.win.value)
+							{	
+								n.caption = "Incoming transaction"
+								n.text = "Congratulations, you have won " + platform.mp.coin(data.tx.amount) + " Pocketcoin for your latest post!"
+								n.topic = 'pos' 
+							}
+
+						}
+
+						else{
+
+							if(data.address != user.address && data.user){
+
+								if(platform.sdk.usersettings.meta.transactions.value)
+								{
+									n.text = self.tempates._user(data.user) + " sent <b>" + platform.mp.coin(data.tx.amount) + " POC</b> to you"
+									n.caption = "Incoming transaction: " + self.tempates._user(data.user)
+									n.topic = 'transactions' 
+								}
+									
+							}
+
+						}
+					}
+
+					if(_.isEmpty(n)) 
+						return null;
+
+					return n
 				},
 				
 				fastMessage : function(data, ld){	
@@ -7440,7 +7804,7 @@ Platform = function(app){
 
 					platform.currentBlock = data.height;
 
-					//self.reconnected = platform.currentBlock;
+					lost = platform.currentBlock;
 
 					platform.sdk.notifications.wsBlock(data.height)
 					
@@ -7607,6 +7971,29 @@ Platform = function(app){
 						
 					})
 				},
+
+				notificationData : function(data){
+					var n = {};
+
+					if(data.mesType == 'post' && data.comment && data.share && data.user){
+						n.text = data.comment.renders.previewEmojidis() 
+						n.topic = 'comments' 
+
+						n.caption = "New comment: " +  self.tempates._user(data.user)
+					}
+
+					if(data.mesType == 'answer' && data.comment && data.share && data.user){
+						n.text = data.comment.renders.preview() 
+						n.topic = 'answers'
+						n.caption = "New answer: " +  self.tempates._user(data.user)
+					}
+
+					if(_.isEmpty(n)) 
+						return null;
+
+					return n
+				},
+
 				fastMessage : function(data){	
 			
 					var text = '';
@@ -7816,7 +8203,40 @@ Platform = function(app){
 
 					}
 				},
+				notificationData : function(data){
+					var n = {};
+
+					if(data.mesType == 'userInfo'){
+						n.text = "You rescued someone from the censored web. Some coins are on their way!"
+						n.topic = 'rescued'
+
+						n.caption = 'Congrats!'
+					}
+
+					if(data.mesType == 'subscribe' && data.user){
+						n.text = self.tempates._user(data.user) + ' has followed to your account'
+						n.topic = 'followers'
+						n.caption = "New Follower"
+					}
+					
+
+					if(data.mesType == 'upvoteShare' && data.share && data.user){
+
+						if(data.upvoteVal > 2){
+
+							n.text =  self.tempates._user(data.user) + " has upvoted your post, " + data.upvoteVal + ' ★'
+							n.topic = 'upvotes'
+							n.caption = "New Upvote"
+						}
+					}
+
 				
+
+					if(_.isEmpty(n)) 
+						return null;
+
+					return n
+				},
 				fastMessage : function(data){	
 			
 					var text = '';
@@ -8068,9 +8488,100 @@ Platform = function(app){
 			}	*/
 		} 
 
+		var destroyMessage = function(message, time, noarrange, destroyUser){
+			
+			if(message.timeout)
+				clearTimeout(message.timeout);
+
+			if(platform.focus)
+			{
+
+				message.timeout = setTimeout(function(){
+					
+					message.el.fadeOut(300)
+
+					setTimeout(function(){
+
+						message.el.remove();
+
+						removeEqual(self.fastMessages, {
+							id : message.id
+						})
+
+						if (message.destroyclbk && destroyUser){
+							message.destroyclbk()
+						}
+
+						if(!noarrange)
+							arrangeMessages()
+
+					}, 300)
+
+				}, time)
+			}
+
+			else
+			{
+				setTimeout(function(){
+					destroyMessage(message, time, noarrange)
+				}, 100)
+				
+			}
+
+		}
+
+		var arrangeMessages = function(){
+
+			var offset = 0;
+
+			var maxCount = 4;
+
+			var boffset = 0;
+
+			if(isMobile()){
+				maxCount = 1;
+			}
+			else
+			{
+
+				if(typeof _Electron == 'undefined'){
+					boffset = 60;
+				}
+
+				
+			}
+
+			offset = offset + boffset
+
+			var remove = self.fastMessages.length - maxCount;
+
+			_.each(self.fastMessages, function(m, i){
+
+				if(i < remove){
+					destroyMessage(m, 1, true)
+				}
+
+				else
+				{
+					if(!isMobile()){
+						offset += 10;
+					}
+					
+					if(!window.cordova && !isMobile())
+
+						m.el.css('bottom', offset + 'px');
+
+					offset += m.el.outerHeight();
+				}
+
+			})
+		}
+
 		self.getMissed = function(clbk){
 
 			if(lost > 1 && self.loadingMissed) return
+
+			if(lost < platform.currentBlock) return
 
 			self.loadingMissed = true;
 
@@ -8117,7 +8628,13 @@ Platform = function(app){
 			})
 		}
 
-		self.fastMessage = function(html, destroy){
+		self.destroyMessages = function(){
+			_.each(self.fastMessages, function(message, i){
+				destroyMessage(message, 1)
+			})
+		}
+
+		self.fastMessage = function(html, destroyclbk){
 			var id = makeid(true);
 
 			html = '<div class="fastMessage" id="'+id+'">\
@@ -8134,7 +8651,8 @@ Platform = function(app){
 			var message = {
 				id : id,
 				el : el,
-				html : html
+				html : html,
+				destroyclbk : destroyclbk
 			}
 
 			bgImages(el)
@@ -8145,100 +8663,13 @@ Platform = function(app){
 
 				t.html(jdenticon.toSvg(v, t.width()))
 			})
+			
 
 			self.fastMessages.push(message);
 
 			platform.app.nav.api.links(null, el, function(){
 				destroyMessage(message, 1)
 			});
-
-			var destroyMessage = function(message, time, noarrange, destroyUser){
-
-				if(message.timeout)
-					clearTimeout(message.timeout);
-
-				if(platform.focus)
-				{
-
-					message.timeout = setTimeout(function(){
-						
-						message.el.fadeOut(300)
-
-						setTimeout(function(){
-
-							message.el.remove();
-
-							removeEqual(self.fastMessages, {
-								id : message.id
-							})
-
-							if (destroy && destroyUser){
-								destroy()
-							}
-
-							if(!noarrange)
-								arrangeMessages()
-
-						}, 300)
-
-					}, time)
-				}
-
-				else
-				{
-					setTimeout(function(){
-						destroyMessage(message, time, noarrange)
-					}, 100)
-					
-				}
-
-			}
-
-			var arrangeMessages = function(){
-
-				var offset = 0;
-
-				var maxCount = 4;
-
-				var boffset = 0;
-
-				if(isMobile()){
-					maxCount = 1;
-				}
-				else
-				{
-
-					if(typeof _Electron == 'undefined'){
-						boffset = 60;
-					}
-
-					
-				}
-
-				offset = offset + boffset
-
-				var remove = self.fastMessages.length - maxCount;
-
-				_.each(self.fastMessages, function(m, i){
-
-					if(i < remove){
-						destroyMessage(m, 1, true)
-					}
-
-					else
-					{
-						if(!isMobile()){
-							offset += 10;
-						}
-						
-
-						m.el.css('bottom', offset + 'px');
-
-						offset += m.el.outerHeight();
-					}
-
-				})
-			}
 
 			destroyMessage(message, 5000, false, true);
 
@@ -8254,6 +8685,39 @@ Platform = function(app){
 				destroyMessage(message, 1, false, true);
 			})
 
+			if(isMobile()){
+				var parallax = new SwipeParallax({
+
+					el : message.el,
+					directions : {
+						left : {
+							trueshold : 70,
+							positionclbk : function(px){
+								var percent = Math.abs((70 + px) / 70);
+
+								if (percent > 0){
+
+									//progress.update(percent * 100);
+
+									message.el.css('opacity', percent) 
+								}
+
+							},
+
+							clbk : function(){
+
+								message.el.remove()
+
+								destroyMessage(message, 1, false, true);
+								
+							}
+
+						}
+					}
+
+				}).init()
+			}
+
 			arrangeMessages();
 
 
@@ -8262,7 +8726,6 @@ Platform = function(app){
 		}
 
 		self.messageHandler = function(data, clbk){
-
 
 			if(!data.msg) return
 
@@ -8299,7 +8762,7 @@ Platform = function(app){
         			})
 
         			if(!_Node){
-        				if (audio){
+        				if (audio && !window.cordova){
 
 	    					if(!audio.if || audio.if(data, loadedData)){
 
@@ -8385,8 +8848,11 @@ Platform = function(app){
 		/*self.messageHandler(
 
 			{
-				"msg":"sharepocketnet",
-				"txids":"737a9141c60e82bebe0d58e234ae15250d6db021b6982be7ef8b38964b93137c"
+				addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+				addrFrom: "PFRTSVNts36Zyte1gBhh8ATZpaqMWfBLq3",
+				mesType: "subscribe",
+				msg: "event",
+				txid: "25329f8e74ceb902e92eb41c2824929a27f7988e7c2db1c25c90b6958e825682"
 			}
 
 		)*/
@@ -8550,7 +9016,9 @@ Platform = function(app){
 					addr : address,
 					nonce : nonce,
 					sgn : signature.toString('hex'),
-					pub : keyPair.publicKey.toString('hex')
+					pub : keyPair.publicKey.toString('hex'),
+
+					id : platform.app.options.device
 				}
 
 				if(!wait)
@@ -8624,577 +9092,6 @@ Platform = function(app){
 				clbk()
 
 		}
-	}
-
-	self.WS = function(platform){
-
-		var self = this;
-
-		var socket;
-
-		var wait = null;
-
-			self.isopen = false;
-			self.isopening = false;
-			self.fastMessages = [];
-			self.reconnected = false;
-
-			self.connected = {};
-
-
-		var initOnlineListener = function(){
-			if(self.onlineCheck && !_Node){
-
-				retry(function(){
-
-					var online = deep(window, 'navigator.onLine') && !self.lostConnection;
-
-					if (self.online != online){
-
-						self.online = online;
-
-						return true;
-
-					}
-					else
-					{
-						self.online = online;
-					}
-					
-
-				}, function(){
-
-					if(!self.online){
-						if(!self.reconnected)
-							self.reconnected = platform.currentBlock;
-
-
-						initOnlineListener();
-					}
-
-					else
-					{
-						if (self.reconnected > 1 && !self.loadMissed){
-							self.getMissed(initOnlineListener);
-						}
-
-						self.authConnect()
-					}
-
-
-				}, 50)
-
-			}
-		}
-
-		self.getMissed = function(){
-
-			self.loadMissed = true;
-
-			platform.app.ajax.rpc({
-				method : 'getmissedinfo',
-				parameters : [platform.sdk.address.pnet().address, self.reconnected],
-				success : function(d){			
-
-					d || (d = [{block : 1, cntposts : 0, cntsubscr : 0}])
-
-					var notifications = (d || []).slice(1)	
-
-					var blockInfo = d[0]
-
-					blockInfo.msg = 'newblocks'
-
-					self.messageHandler(blockInfo, function(){
-						lazyEach({
-							array : notifications,
-							action : function(p){
-								self.messageHandler(p.item, p.success)
-							},
-
-							all : {
-								success : function(){
-									self.loadMissed = false;
-								}
-							}
-						})
-					})
-		
-				},
-				fail : function(){
-
-					
-				}
-			})
-		}
-
-		
-
-		
-
-		self.destroy = function(fromsocket){
-
-			self.isopen = false;
-
-			self.removeAddresses(self.connected)
-
-			self.connected = {};
-
-			if (socket && !fromsocket){
-				socket.close()
-			}
-
-			wait = null;
-
-			socket = null;
-		}
-
-
-		self.fastMessage = function(html, destroy){
-			var id = makeid(true);
-
-			html = '<div class="fastMessage" id="'+id+'">\
-				<div class="fmCnt">' + html + '</div>\
-				<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div>\
-			</div>';
-
-			$('body').append(html);
-
-			var el = $('#' + id);
-
-			var message = {
-				id : id,
-				el : el,
-				html : html
-			}
-
-			bgImages(el)
-
-			el.find('[data-jdenticon-value]').each(function(){
-				var t = $(this);
-				var v = t.data('jdenticon-value')
-
-				t.html(jdenticon.toSvg(v, t.width()))
-			})
-
-			self.fastMessages.push(message);
-
-			platform.app.nav.api.links(null, el, function(){
-				destroyMessage(message, 1)
-			});
-
-			var destroyMessage = function(message, time, noarrange, destroyUser){
-
-				if(message.timeout)
-					clearTimeout(message.timeout);
-
-				if(platform.focus)
-				{
-
-					message.timeout = setTimeout(function(){
-						
-						message.el.fadeOut(300)
-
-						setTimeout(function(){
-
-							message.el.remove();
-
-							removeEqual(self.fastMessages, {
-								id : message.id
-							})
-
-							if (destroy && destroyUser){
-								destroy()
-							}
-
-							if(!noarrange)
-								arrangeMessages()
-
-						}, 300)
-
-					}, time)
-				}
-
-				else
-				{
-					setTimeout(function(){
-						destroyMessage(message, time, noarrange)
-					}, 100)
-					
-				}
-
-			}
-
-			var arrangeMessages = function(){
-
-				var offset = 0;
-
-				var maxCount = 4;
-
-				if(isMobile()){
-					maxCount = 1;
-				}
-
-				var remove = self.fastMessages.length - maxCount;
-
-				_.each(self.fastMessages, function(m, i){
-
-					if(i < remove){
-						destroyMessage(m, 1, true)
-					}
-
-					else
-					{
-						if(!isMobile()){
-							offset += 10;
-						}
-						
-
-						m.el.css('bottom', offset + 'px');
-
-						offset += m.el.outerHeight();
-					}
-
-				})
-			}
-
-			destroyMessage(message, 5000, false, true);
-
-			message.el.on('mouseenter', function(){
-				clearTimeout(message.timeout);
-			})
-
-			message.el.on('mouseleave', function(){
-				destroyMessage(message, 5000, false, true);
-			})
-
-			message.el.find('.close').on('click', function(){
-				destroyMessage(message, 1, false, true);
-			})
-
-			arrangeMessages();
-
-
-
-			return message
-		}
-
-		self.connect = function(clbk){
-						
-			if(!socket)
-			{
-
-				var address = platform.app.options.ws
-				
-				if (typeof (WebSocket) !== 'undefined') {
-
-					try{
-		            	socket = new WebSocket(address);
-		            } catch (e){}
-
-		        } else {
-		        	try{
-		           		socket = new MozWebSocket(address);
-		            } catch (e){}
-		        }				
-
-		        socket.onclose = function (event) {
-
-		           	self.destroy(true);
-		           	self.reconnect();
-
-		        };
-
-		        socket.onerror = function(e){
-	
-		        	self.destroy();
-
-		        	if (clbk)
-						clbk(false)
-				}
-
-				socket.onopen = function(e){
-					
-					self.isopen = true;
-
-					self.reconnected = platform.currentBlock
-
-					self.connected = {};
-
-					self.auth(clbk);				
-				}	
-
-		        socket.onmessage = function (msg) {
-
-		        	msg = msg.data;
-
-		        	var jm = msg;
-
-		        	try{
-
-		        		if(jm.indexOf('registered') > -1){
-		        			msg = msg.replace("msg", '"msg"')
-		        			msg = msg.replace("addr", '"addr"')
-		        		}
-		        		
-
-		        		jm = JSON.parse(msg || "{}");
-
-		        	}
-		        	catch (e){
-		        
-		        	}
-
-	        		if (jm)
-
-	        			self.messageHandler(jm);
-		        		
-
-		        	
-		        };
-			}
-			
-		}
-
-		self.addBlock = function(){
-			self.blockHandler = true;
-		}
-
-		self.removeBlock = function(){
-			self.blockHandler = false;
-		}
-
-		self.messageHandler = function(data, clbk){
-
-			if(!data.msg) return
-
-
-			if (data && data.msg == 'registered'){
-
-				self.connected[data.addr] = true
-
-				return
-
-			}
-
-			if (data.msg && !self.blockHandler){
-
-				var exkey = ''
-
-				if(data.mesType) exkey = '.' + data.mesType;
-
-    			var m = deep(self.messages, data.msg + exkey) || deep(self.messages, data.msg) || {};
-
-    			if (m.checkHandler){
-    				if(!m.checkHandler(data, m)){
-    					return
-    				}
-    			}
-
-    			var clbks = function(loadedData){
-
-    				data.loadedData = true;
-
-    				var audio = deep(m, 'audio')
-
-
-    				if (audio){
-
-    					if(!audio.if || audio.if(data, loadedData)){
-
-    						if (audio.focus && platform.focus){
-    						
-	    						ion.sound.play(audio.focus);
-	    					}
-
-
-	    					if (audio.unfocus && !platform.focus){
-	    						
-	    						ion.sound.play(audio.unfocus);
-	    					}
-
-    					}
-
-    					
-    				}
-
-    				_.each(m.clbks, function(clbk){
-        				clbk(data, loadedData);
-        			})
-
-
-    				if(m.fastMessage && !m.refs.all && !m.refs[data.RefID]){
-
-    					var html = m.fastMessage(data, loadedData, true);
-
-
-    					if (html){
-
-    						var message = self.fastMessage(html, function(){
-    							platform.sdk.notifications.seen([data.txid])
-    						});
-
-    						if (m.fastMessageEvents){
-    							m.fastMessageEvents(data, message)
-    						}
-
-    						data.loaded = true
-
-    						platform.sdk.notifications.addFromWs(data)
-
-    						if (typeof _Electron != 'undefined' && !platform.focus && message.html){
-								electron.ipcRenderer.send('electron-notification', message.html);
-    						}
-							
-
-    					}
-
-
-    				}	
-
-    				if (m.header && !platform.focus && platform.titleManager){
-
-    					var t = m.header(data);
-
-    					if (t)
-
-    						platform.titleManager.add(t)
-
-    				}	  
-
-    				if (clbk)
-    					clbk()      				
-    				
-    			}
-
-
-    			
-    			if (m.loadMore)
-    			{
-    				m.loadMore(data, clbks);
-    			}
-
-    			else
-    			{
-    				clbks();
-    			}
-
-    			return
-    		}
-		}
-
-		self.auth = function(clbk){
-
-			app.user.isState(function(state){
-
-				if(state)
-				{
-
-					self.addAccount(null, clbk)
-
-				}
-				else
-				{
-					if(clbk)
-						clbk(false)
-				}
-
-				
-			})
-		}
-
-		self.authConnect = function(clbk){
-
-			app.user.isState(function(state){
-
-				if(state)
-				{
-					self.connect(clbk)
-				}
-
-				else
-				{
-					if (clbk)
-						clbk(false)
-				}
-
-			})
-		}
-
-		self.reconnect = function(clbk){
-
-			self.reconnected = platform.currentBlock
-
-			self.lostConnection = true;
-
-			retryLazy(function(clbk){
-
-				self.authConnect(function(res){
-
-					if (res){
-						self.lostConnection = false
-					}
-
-					clbk(res)
-
-				})
-
-			}, clbk, 1500)
-		}
-
-		self.send = function(message){
-
-			if (socket)
-			{
-				try{
-					socket.send(message);
-				}
-				catch(e){
-
-				}
-			}
-
-		}
-
-		self.tryInit = function(){
-
-			var clbk = function(){
-				app.user.isState(function(state){
-
-					if(!state) return;
-
-					self.onlineCheck = deep(window, 'navigator.onLine') || false;
-					self.online = self.onlineCheck;
-
-					if(!socket) 
-						self.reconnected = platform.currentTime();
-
-					initOnlineListener();
-
-				})
-			}
-
-			_break = false;
-
-			self.connected = {};
-
-			self.authConnect(function(result){
-
-				if(!socket){
-
-					self.reconnect(clbk)
-
-					return
-				}
-								
-				clbk()
-
-				
-			})
-		}
-
-		
-
-		return self;
 	}
 
 	self.RTC = function(platform){
@@ -10574,7 +10471,7 @@ Platform = function(app){
 
 	self.nodes = [
 
-		{
+		/*{
 			full : '84.52.69.110:58081',
 			host : '84.52.69.110',
 			port : 58081,
@@ -10582,7 +10479,7 @@ Platform = function(app){
 			path : '',
 
 			name : 'spb1'
-		},
+		},*/
 
 
 
@@ -10590,16 +10487,15 @@ Platform = function(app){
 			full : '216.108.237.11:38081',
 			host : '216.108.237.11',
 			port : 38081,
-			ws : 8080,
+			ws : 8087,
 			path : '',
 
-			name : 'lasvegas'
-
+			name : 'spb1'
 		},
 
 		
 
-		{
+		/*{
 			full : '84.52.69.110:37071',
 			host : '84.52.69.110',
 			port : 37071,
@@ -10607,7 +10503,7 @@ Platform = function(app){
 			path : '',
 
 			name : 'spbtest'
-		}
+		}*/
 
 	]
 
@@ -10666,6 +10562,10 @@ Platform = function(app){
 		if (self.clientrtctemp){
 			self.clientrtctemp.destroy()
 		}
+
+		if (self.focusListener){
+			self.focusListener.destroy()
+		}
 	}
 
 	self.restart = function(clbk){
@@ -10680,7 +10580,7 @@ Platform = function(app){
 
 	self.update = function(clbk){
 
-		if (self.updating) return;
+		if (self.updating || self.preparingUser || self.preparing) return;
 
 		self.updating = makeid()
 
@@ -10690,11 +10590,11 @@ Platform = function(app){
 
 		var methods = [
 			'ustate.meUpdate',
+			'user.meUpdate',
 			'node.transactions.checkTemps',
 			'node.transactions.get.allBalanceUpdate',
 			'tempmessenger.getChats'
 		]	
-
 
 		var progress = 10;
 
@@ -10733,13 +10633,20 @@ Platform = function(app){
 	
 	self.prepare = function(clbk, state){	
 
+		self.preparing = true;
+
 		self.ws = new self.WSn(self);
+
+		self.firebase = new self.Firebase(self);
 
 		if(!_Node)
 		{
 			self.state.load();
 
-			self.focusListener();
+			self.focusListener = self.FocusListener(self);
+			self.focusListener.init();
+
+
 			self.initSounds();
 
 			//self.rtc = new self.RTC(self);
@@ -10753,6 +10660,8 @@ Platform = function(app){
 		}
 
 		self.sdk.node.get.time(function(){
+
+			self.preparing = false;
 			
 			if(!state && !_Node && typeof _Electron == 'undefined' && !window.cordova && !localStorage['popupsignup'] && !_Node){
 				setTimeout(function(){
@@ -10807,6 +10716,8 @@ Platform = function(app){
 
 	self.prepareUser = function(clbk, state){
 
+		self.preparingUser = true;
+
 		var stateclbk = function(state){
 			if(state){
 				
@@ -10824,6 +10735,7 @@ Platform = function(app){
 					self.sdk.chats.load,
 					self.sdk.user.subscribeRef,
 					self.ws.init,
+					self.firebase.init,
 					self.sdk.tempmessenger.init,
 					self.sdk.exchanges.load
 
@@ -10860,6 +10772,8 @@ Platform = function(app){
 									ref : self.app.platform.sdk.address.pnet().address
 								})
 							}
+
+							self.preparingUser = false;
 							
 							
 							if (clbk)
@@ -10874,6 +10788,8 @@ Platform = function(app){
 			}
 			else
 			{
+				self.preparingUser = false;
+
 				if (clbk)
 					clbk()
 			}
@@ -10938,7 +10854,9 @@ Platform = function(app){
 			});
 	}
 
-	self.focusListener = function(){
+	self.FocusListener = function(platform){
+
+		var self = this;
 
 		var f = function(e){
 
@@ -10958,25 +10876,79 @@ Platform = function(app){
 
 		var uf = function(){
 			self.focus = false;
+
+		}
+
+		var missed = function(){
 			
+			if (platform.ws){
+				platform.ws.getMissed()
+			}
+
 		}
 
         window.focus();
 
-        self.focus = true;
+		self.focus = true;
 
-        if(electron){
+		var inited = false;
+		
 
-        	var w = electron.remote.getCurrentWindow();
+		self.init = function(){
 
-	        w.on('hide', uf)
-	        w.on('minimize', uf)
-	        w.on('restore', f)
+			if (window.cordova){
+	
+				document.addEventListener("pause", uf, false);
+				document.addEventListener("resume", f, false);
+				document.addEventListener("resume", missed, false);
+			}
+	
+	
+			if(electron){
+	
+				var w = electron.remote.getCurrentWindow();
+	
+				w.on('hide', uf)
+				w.on('minimize', uf)
+				w.on('restore', f)
+	
+			}     
+	
+			$(window).on('focus', f);
+			$(window).on('blur', uf);  
 
-        }       
+			inited = true;
+		}
 
-        $(window).bind('focus', f);
-        $(window).bind('blur', uf);        
+		self.destroy = function(){
+			if(!inited) return
+
+			if (window.cordova){
+
+				document.removeEventListener("pause", uf, false);
+				document.removeEventListener("resume", f, false);
+				document.removeEventListener("resume", missed, false);
+			}
+	
+	
+			if(electron){
+	
+				var w = electron.remote.getCurrentWindow();
+				
+				w.off('hide')
+				w.off('minimize')
+				w.off('restore')
+	
+			}       
+			
+			$(window).off('focus', f);
+			$(window).off('blur', uf);  
+
+			inited = false;
+		}
+		
+		
+		return self;
 	}
 
 	self.TitleManager = function(){

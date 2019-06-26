@@ -16,7 +16,8 @@ __map =  {
         "js/vendor/jdenticon.js",
         "js/vendor/paste.js",
         "js/vendor/jquery.md5.js",
-        "js/vendor/jquery.animate-number.js",
+		"js/vendor/jquery.animate-number.js",
+		"js/vendor/jquery.touchSwipe.js",
         "js/vendor/emojione.js",
         "js/vendor/plyr.js",
         "js/vendor/reconnectingwebsocket.js",
@@ -691,7 +692,8 @@ __map =  {
 				el : 'content'
 			},
 			relations : [
-			
+
+				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
 				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},			
 			
 			],

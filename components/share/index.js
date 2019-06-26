@@ -10,10 +10,15 @@ var share = (function(){
 
 		var primary = deep(p, 'history');
 
-
 		var el, currentShare = null, essenseData;
 
+		var focusfixed = false;
+
 		var actions = {
+
+			unfocus : function(){
+				el.c.addClass('unfocus').removeClass('focus')
+			},
 
 			waitActions : function(){
 				self.app.platform.sdk.user.waitActions(function(r){
@@ -127,6 +132,8 @@ var share = (function(){
 				}
 				else
 				{
+					focusfixed = true;
+
 					self.nav.api.load({
 						open : true,
 						id : 'embeding',
@@ -137,6 +144,12 @@ var share = (function(){
 							storage : storage,
 							value : value,
 							on : {
+								close : function(){
+									setTimeout(function(){
+										focusfixed = false;
+									}, 200)
+									
+								},
 								added : function(value){
 
 									var result = true;
@@ -214,6 +227,8 @@ var share = (function(){
 					}
 				})
 
+				focusfixed = true;
+
 				self.nav.api.load({
 					open : true,
 					id : 'imageGalleryEdit',
@@ -231,6 +246,12 @@ var share = (function(){
 							style : 'round apply',
 							autoCropArea : 0.9,
 						},*/
+
+						close : function(){
+							setTimeout(function(){
+								focusfixed = false;
+							}, 200)
+						},
 
 						success : function(images, clbk){
 							_.each(currentShare.images.v, function(img, i){
@@ -480,6 +501,11 @@ var share = (function(){
 
 								if (clbk)
 									clbk(true)
+
+
+								actions.unfocus();
+
+								_scrollTop(0);
 							}
 
 						},
@@ -547,6 +573,15 @@ var share = (function(){
 		}
 
 		var events = {
+			unfocus : function(e){
+
+				
+
+				if (el.c.hasClass('focus') && !focusfixed && el.c.has(e.target).length === 0){
+					actions.unfocus();
+				}
+		
+			},
 			selectTime : function(){
 
 				var d = new Date()
@@ -979,11 +1014,18 @@ var share = (function(){
 								});
 
 								p.el.find('.removeImage').on('click', function(){
+
+									focusfixed = true;
+
 									currentShare.settings.image = 'r'
 
 									renders.url()
 
 									state.save()
+
+									setTimeout(function(){
+										focusfixed = false;
+									}, 200)
 								})
 
 						}
@@ -1107,7 +1149,11 @@ var share = (function(){
 				}
 				else
 				{
-					self.app.settings.set(self.map.id, 'currentShare', currentShare.export(true));
+					var scs = self.app.settings.set(self.map.id, 'currentShare', currentShare.export(true));
+
+					if(!scs){
+						//self.app.settings.set(self.map.id, 'currentShare', '');
+					}
 				}
 
 				
@@ -1405,9 +1451,15 @@ var share = (function(){
 			
 			actions.autoFilled()
 
-			console.log("INIT")
-
 			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
+
+			el.c.on('click', function(){
+
+				el.c.addClass('focus').removeClass('unfocus')
+
+			})
+
+			$('html').on('click', events.unfocus);
 			
 		}
 
@@ -1418,6 +1470,12 @@ var share = (function(){
 			primary : primary,
 
 			post : actions.post,
+
+			make : function(){
+				state.load();
+				
+				make();
+			},
 
 			auto : function(){
 				var _p = parameters();
@@ -1438,8 +1496,6 @@ var share = (function(){
 					state.load()
 				}
 
-				console.log("currentShare" , currentShare)
-
 				var data = {
 					share : currentShare
 				};
@@ -1449,6 +1505,8 @@ var share = (function(){
 			},
 
 			destroy : function(){
+
+				$('html').off('click', events.unfocus);
 
 				delete self.app.platform.ws.messages.transaction.clbks.share;
 
@@ -1507,6 +1565,11 @@ var share = (function(){
 			},
 
 			wnd : {
+				close : function(){
+					if (essenseData.close){
+						essenseData.close()
+					}
+				},
 				class : "smallWnd withoutButtons wndsharepost"
 			},
 

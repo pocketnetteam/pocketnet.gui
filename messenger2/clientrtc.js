@@ -833,7 +833,7 @@ var platformRTC = function(p){
 		self.api = {
 			login : function(clbk){
 
-				console.log("RPCLOGIN", user)
+				//console.log("RPCLOGIN", user)
 
 				if (user){
 
