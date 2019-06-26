@@ -10958,9 +10958,9 @@ Platform = function(app){
 	
 				var w = electron.remote.getCurrentWindow();
 				
-				w.off('hide')
-				w.off('minimize')
-				w.off('restore')
+					w.off('hide', uf)
+					w.off('minimize', uf)
+					w.off('restore', f)
 	
 			}       
 			
