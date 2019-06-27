@@ -10380,7 +10380,7 @@ Platform = function(app){
 					console.log('download-progress', data)
                 }
                 
-                if (data.msg == 'update-available' && is.linux()) {
+                if (data.msg == 'update-available' && data.linux) {
                     console.log('--- update-available')
                     updateAvailable()
                 }

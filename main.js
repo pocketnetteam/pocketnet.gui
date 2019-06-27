@@ -38,7 +38,7 @@ autoUpdater.on('checking-for-update', (ev) => {
 
 autoUpdater.on('update-available', (ev) => {
     updatesLoading = true
-    win.webContents.send('updater-message', { msg: 'update-available', type : 'info', ev : ev })
+    win.webContents.send('updater-message', { msg: 'update-available', type : 'info', ev : ev, linux : is.linux() })
 })
 
 autoUpdater.on('update-not-available', (ev) => {
