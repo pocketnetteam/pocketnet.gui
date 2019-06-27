@@ -65,9 +65,6 @@
         "ws": "^6.1.4"
     },
     "build": {
-        "directories": {
-            "buildResources": "assets"
-        },
         "productName": "Pocketnet",
         "publish": [
             {
@@ -82,7 +79,7 @@
         },
         "linux": {
             "target": "AppImage",
-            "artifactName": "${productName}.${ext}",
+            "artifactName": "${productName}_linux.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
             "description": "Pocketnet desktop application"
