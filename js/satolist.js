@@ -152,7 +152,8 @@ Platform = function(app){
 
 			github : {
 				name : "PocketnetSetup.exe",
-				url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest'
+                url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
 			} 
 		},
 
@@ -167,7 +168,8 @@ Platform = function(app){
 
 			github : {
 				name : "Pocketnet_linux.AppImage",
-				url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest'
+                url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
 			} 
 		}
 	}
@@ -10344,6 +10346,8 @@ Platform = function(app){
         
         var updateAvailable = function() {
             if(!d) {
+                console.log('--- os()', os())
+                console.log('--- self.app.platform.applications[os()]', self.app.platform.applications[os()])
                 if (self.app.platform.applications[os()]) {
                     var _os = self.app.platform.applications[os()]
                     if (_os.github && _os.github.url) {
@@ -10353,7 +10357,7 @@ Platform = function(app){
                             btn2text : "No, later",
             
                             success : function(){
-                                require("electron").shell.openExternal(_os.github.url);
+                                require("electron").shell.openExternal(_os.github.page);
                             },
             
                             fail : function(){
@@ -10377,6 +10381,7 @@ Platform = function(app){
                 }
                 
                 if (data.msg == 'update-available' && is.linux()) {
+                    console.log('--- update-available')
                     updateAvailable()
                 }
 			}
