@@ -5722,6 +5722,23 @@
 
 		return _fels;
 	}
+	
+	var easy = {
+		in : function(goal, value){
+
+			var m = 1;
+
+			if(value < 0) m = -1
+
+			value = Math.abs(value)
+
+			var alpha = goal / Math.log(goal + 1);
+			var percentVisible = alpha * Math.log(value + 1);
+
+			return m * percentVisible
+		}
+	}
+
 
 	SwipeParallax = function(p){
 		if(!p) p = {};
@@ -5904,7 +5921,6 @@
 
 						var z = v.replace('px', '')
 
-						console.log(ap, step, stepd, z, step * stepd * z)
 
 						if (options.step){
 							options.step(step * stepd * z)	
@@ -5961,9 +5977,11 @@
 			return v
 		}
 
-		var set = function(direction, value){
+		var set = function(direction, _value){
 
 			var prop = directiontoprop(direction);
+
+			var value = easy.in(p.directions[direction].trueshold, _value)
 
 			if (p.prop != 'translate'){
 				p.el.css(prop, value + 'px');	

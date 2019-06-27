@@ -210,3 +210,29 @@
 		padding : 0;
 	}
 }
+
+
+@media only screen and (max-width: 640px) {
+	#ustate{
+		padding : 2 * @rhythm;
+	
+		.caption{
+			font-size: 1.4em;
+		}
+	
+		.mwork{
+			padding : 0;
+			padding-bottom: 4 * @rhythm;
+		}
+
+		.metrica{
+
+			>div{
+				&.label{
+					padding-left: 0;
+				}
+			}
+
+		}
+	}	
+}

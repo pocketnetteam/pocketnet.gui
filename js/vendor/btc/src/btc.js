@@ -38734,6 +38734,8 @@ TransactionBuilder.prototype.setNTime = function (time) {
 TransactionBuilder.prototype.addNTime = function (time) {
 
   this.__tx.nTime = this.__tx.nTime + time
+
+  console.log('this.__tx.nTime', this.__tx.nTime)
 }
 
 TransactionBuilder.prototype.setVersion = function (version) {

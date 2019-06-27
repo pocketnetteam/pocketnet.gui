@@ -169,15 +169,44 @@
 		background: #fff;
 
 		.caption{
-			display: none;
+	
+			span{
+				color : #010E30;
+				font-weight: 100;
+			}
 		}
 
 		.mwork{
-			padding : 0 @rhythm;
+			padding : 0 2 * @rhythm;
 
 			&.wh{
 				background: #FAFAFA;
 			}
+		}
+
+		.parameter {
+			max-width: none;
+			>div{
+				&.pName{
+					width : auto;
+				}
+				&.pInput{
+					width : 40px;
+				}
+			}
+		}
+
+		.checkbox+label:before{
+			border-radius: 50%;
+			margin-top : 4px;
+			width : 30px;
+			height : 30px;
+			line-height: 30px;
+			font-family: "Font Awesome 5 Free";
+			font-weight: 700;
+			content: '\f00c';
+			font-size: 1.2em;
+			text-align: center;
 		}
 	}
 }
