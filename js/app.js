@@ -114,7 +114,7 @@ Application = function(p)
 		/*rtcws : 'wss://localhost:9090',
 		rtchttp : 'https://localhost:9091',*/
 		
-
+		listofnodes : p.listofnodes || null,
 		fingerPrint : null,
 
 		unathorizated : function(ignoreDialog){
@@ -280,7 +280,7 @@ Application = function(p)
 		self.user = new User(self);	
 		self.ajax.set.user(self.user);
 
-		self.platform = new Platform(self);
+		self.platform = new Platform(self, self.options.listofnodes);
 
 		self.options.platform = self.platform
 
