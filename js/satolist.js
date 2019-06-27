@@ -152,7 +152,8 @@ Platform = function(app, listofnodes){
 
 			github : {
 				name : "PocketnetSetup.exe",
-				url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest'
+                url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
 			} 
 		},
 
@@ -167,7 +168,8 @@ Platform = function(app, listofnodes){
 
 			github : {
 				name : "Pocketnet_linux.AppImage",
-				url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest'
+                url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
 			} 
 		}
 	}
@@ -10361,7 +10363,7 @@ Platform = function(app, listofnodes){
 
 		var d = null;
 
-		var updateReady = function(){
+		var updateReady = function() {
 
 			if(!d){
 				d = dialog({
@@ -10371,8 +10373,8 @@ Platform = function(app, listofnodes){
 	
 					success : function(){
 	
-						electron.ipcRenderer.send('quitAndInstall');
-						//electron.remote.autoUpdater.quitAndInstall()
+                        electron.ipcRenderer.send('quitAndInstall');
+                        d = null;
 	
 					},
 	
@@ -10382,8 +10384,32 @@ Platform = function(app, listofnodes){
 					}
 				})
 			}
-			
-		}
+        }
+        
+        var updateAvailable = function() {
+            if(!d) {
+                if (self.app.platform.applications[os()]) {
+                    var _os = self.app.platform.applications[os()]
+                    if (_os.github && _os.github.url) {
+                        d = dialog({
+                            html : "Updates to Pocketnet are available. Go to the page to download the new version?",
+                            btn1text : "Yes",
+                            btn2text : "No, later",
+            
+                            success : function(){
+                                require("electron").shell.openExternal(_os.github.page);
+                                d = null;
+                            },
+            
+                            fail : function(){
+                                d = null;
+                                setTimeout(updateReady, 86400000)
+                            }
+                        })
+                    }
+                }
+			}
+        }
 
 		electron.ipcRenderer.on('updater-message', function(event, data){
 			if(data.type == 'info'){
@@ -10393,7 +10419,11 @@ Platform = function(app, listofnodes){
 
 				if(data.msg == 'download-progress'){
 					console.log('download-progress', data)
-				}
+                }
+                
+                if (data.msg == 'update-available' && data.linux) {
+                    updateAvailable()
+                }
 			}
 
 			if(data.type == 'error'){

@@ -233,7 +233,8 @@ var help = (function(){
 						electron.ipcRenderer.send('electron-checkForUpdates');
 
 						electron.ipcRenderer.on('updater-message', function(event, data){
-							el.caption.find('.checking').removeClass('active')
+                            if (data.msg == 'update-downloaded' || data.msg == 'update-not-available' || (data.linux && data.msg == 'update-available'))
+							    el.caption.find('.checking').removeClass('active')
 						})
 
 					}, 100)
