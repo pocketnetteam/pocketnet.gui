@@ -79,7 +79,7 @@
         },
         "linux": {
             "target": "AppImage",
-            "artifactName": "${productName}.${ext}",
+            "artifactName": "${productName}_linux.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
             "description": "Pocketnet desktop application"
