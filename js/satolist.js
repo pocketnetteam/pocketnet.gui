@@ -167,7 +167,7 @@ Platform = function(app){
 			icon : '<i class="fab fa-linux"></i>',
 
 			github : {
-				name : "Pocketnet_linux.AppImage",
+				name : "Pocketnet_linux_x64.AppImage",
                 url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                 page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
 			} 
