@@ -11,7 +11,7 @@
         "start": "electron . --development",
         "pack": "electron-builder --dir --x64",
         "dist": "electron-builder -w --x64 --ia32",
-        "distl": "electron-builder -l --x64 --ia32",
+        "distl": "electron-builder -l --x64",
         "publish": "build --win --x64 --ia32 -p always"
     },
     "devDependencies": {
