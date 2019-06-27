@@ -10332,7 +10332,8 @@ Platform = function(app){
 	
 					success : function(){
 	
-						electron.ipcRenderer.send('quitAndInstall');
+                        electron.ipcRenderer.send('quitAndInstall');
+                        d = null;
 	
 					},
 	
@@ -10346,8 +10347,6 @@ Platform = function(app){
         
         var updateAvailable = function() {
             if(!d) {
-                console.log('--- os()', os())
-                console.log('--- self.app.platform.applications[os()]', self.app.platform.applications[os()])
                 if (self.app.platform.applications[os()]) {
                     var _os = self.app.platform.applications[os()]
                     if (_os.github && _os.github.url) {
@@ -10358,6 +10357,7 @@ Platform = function(app){
             
                             success : function(){
                                 require("electron").shell.openExternal(_os.github.page);
+                                d = null;
                             },
             
                             fail : function(){
@@ -10381,7 +10381,6 @@ Platform = function(app){
                 }
                 
                 if (data.msg == 'update-available' && data.linux) {
-                    console.log('--- update-available')
                     updateAvailable()
                 }
 			}
