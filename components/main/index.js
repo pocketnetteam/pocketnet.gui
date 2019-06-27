@@ -380,6 +380,8 @@ var main = (function(){
 
 				var ncurrentMode = currentMode
 
+				console.log(parameters())
+
 				localStorage['lentakey'] = parameters().r || 'index'
 
 				if (parameters().r){
@@ -388,8 +390,12 @@ var main = (function(){
 				else{
 					ncurrentMode = 'common'
 				}
+
+				console.log('currentMode', currentMode, ncurrentMode )
 				
 				if(currentMode == ncurrentMode) return
+
+				currentMode = ncurrentMode
 
 				renders.lenta()
 

@@ -10706,85 +10706,90 @@ Platform = function(app, listofnodes){
 	
 	self.prepare = function(clbk, state){	
 
-		self.preparing = true;
-
-		self.ws = new self.WSn(self);
-
-		self.firebase = new self.Firebase(self);
-
-		if(!_Node)
-		{
-			self.state.load();
-
-			self.focusListener = self.FocusListener(self);
-			self.focusListener.init();
-
-
-			self.initSounds();
-
-			//self.rtc = new self.RTC(self);
-
-			self.sdk.node.update()
-
-			self.m = new self.Marketing(self);
-
-			self.titleManager = new self.TitleManager();	
-
-		}
-
-		self.sdk.node.get.time(function(){
-
-			self.preparing = false;
+		self.sdk.system.get.nodes(false, function(){
 			
-			if(!state && !_Node && typeof _Electron == 'undefined' && !window.cordova && !localStorage['popupsignup'] && !_Node){
-				setTimeout(function(){
+			self.preparing = true;
 
-					var href = self.app.nav.get.href();
+			self.ws = new self.WSn(self);
 
-					self.app.user.isState(function(state){
+			self.firebase = new self.Firebase(self);
 
-						if (!state && href != 'registration' && href != 'authorization' && href != 'video'){
+			if(!_Node)
+			{
+				self.state.load();
 
-							
-
-							var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
-
-							var d = dialog({
-								html : h,
-								class  :'popupsignup',
-
-								btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
-								btn2text : 'Watch Video',
-
-								success : function(){
-									
-
-									self.app.nav.api.load({
-										open : true,
-										href : 'registration',
-										history : true
-									})
-								},
-
-								fail : function(){
-									self.app.nav.api.load({
-										open : true,
-										href : 'video',
-										history : true
-									})
-								}
-							})
+				self.focusListener = self.FocusListener(self);
+				self.focusListener.init();
 
 
-						}
-					})
+				self.initSounds();
 
-				}, 15000)
+				//self.rtc = new self.RTC(self);
+
+				self.sdk.node.update()
+
+				self.m = new self.Marketing(self);
+
+				self.titleManager = new self.TitleManager();	
+
 			}
 
-			self.prepareUser(clbk, state);
-			
+			self.sdk.node.get.time(function(){
+
+				self.preparing = false;
+				
+				if(!state && !_Node && typeof _Electron == 'undefined' && !window.cordova && !localStorage['popupsignup'] && !_Node){
+					setTimeout(function(){
+
+						var href = self.app.nav.get.href();
+
+						self.app.user.isState(function(state){
+
+							if (!state && href != 'registration' && href != 'authorization' && href != 'video'){
+
+								
+
+								var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
+
+								var d = dialog({
+									html : h,
+									class  :'popupsignup',
+
+									btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
+									btn2text : 'Watch Video',
+
+									success : function(){
+										
+
+										self.app.nav.api.load({
+											open : true,
+											href : 'registration',
+											history : true
+										})
+									},
+
+									fail : function(){
+										self.app.nav.api.load({
+											open : true,
+											href : 'video',
+											history : true
+										})
+									}
+								})
+
+
+							}
+						})
+
+					}, 15000)
+				}
+
+				self.prepareUser(clbk, state);
+				
+			})
+
 		})
+
 	}
 
 	self.prepareUser = function(clbk, state){
@@ -10796,7 +10801,7 @@ Platform = function(app, listofnodes){
 				
 
 				lazyActions([
-
+					
 					self.sdk.node.transactions.loadTemp, 
 					self.sdk.addresses.init, 
 					self.cryptography.prepare, 

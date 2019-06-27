@@ -300,11 +300,15 @@ var lenta = (function(){
 
 						player.on('ready', function(){
 
-							pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
+							if (players[share.txid]){
+								pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
 
-							players[share.txid].inited = true
+								players[share.txid].inited = true
 
-							h = actions.applyheightEl(h, el, 'video')
+								h = actions.applyheightEl(h, el, 'video')
+							}
+
+							
 						})
 					})
 					

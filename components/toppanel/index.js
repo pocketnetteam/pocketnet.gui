@@ -111,7 +111,7 @@ var toppanel = (function(){
 
 			self.app.nav.clbks.history.toppanel = function(href){
 
-				renders.menu(self.app.nav.get.pathname())
+				renders.menu(app.nav.current.href)
 
 			}
 
