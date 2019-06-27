@@ -846,7 +846,7 @@
 		display: block;
 		font-weight: 700;
 		color : @color-black2;
-		padding : @rhythm;
+		padding : 2 * @rhythm;
 		margin-bottom : @rhythm;
 		padding-top: 2 * @rhythm;
 
@@ -883,6 +883,11 @@
 			}
 
 		}
+
+		.emojionearea-editor{
+			padding-left: 2 * @rhythm;
+			padding-right: 2 * @rhythm;
+		}
 	}
 
 	.paddingmobilewrapper{
@@ -918,8 +923,8 @@
 						box-shadow: none!important;
 
 						.sminput{
-							padding-top : 2 * @rhythm;
-							padding-bottom: 2 * @rhythm;
+							line-height: 32px;
+							padding : 2 * @rhythm;
 						}
 					}
 
@@ -1200,7 +1205,7 @@
 						height: auto;
 						padding-left: @rhythm;
 						padding-right : @rhythm;
-						padding : @rhythm;
+						padding : 2 * @rhythm;
 						.mobiledevice{
 							margin-left : @rhythm;
 							display: inline!important;

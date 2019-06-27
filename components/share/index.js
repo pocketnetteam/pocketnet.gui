@@ -1556,7 +1556,7 @@ var share = (function(){
 
 				make();
 
-				p.noscroll = self.app.actions.scrollBMenu()
+				//p.noscroll = self.app.actions.scrollBMenu()
 
 				p.clbk(null, p);
 

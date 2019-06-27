@@ -1,10 +1,10 @@
 
-
-<div class="mobiledevice selector">
+<!--
+<div class=" selector">
 	<%= selector.input() %>
-</div>
+</div>-->
 
-<div class="workstation contentmenu">
+<div class=" contentmenu">
 
 <%
 
@@ -59,6 +59,32 @@
 %>
 
 </div>
+
+<% if(isMobile) {%>
+	<div class="additional addmenu">
+
+		<div class="reportCaption">
+			<div class="label">
+				<a href="help">Help center</a>
+			</div>
+		</div>
+
+		<div class="reportCaption">
+			<div class="label">
+				<a href="donations">Donation</a>
+			</div>
+		</div>
+
+		<div class="reportCaption">
+			<div class="label">
+				<a href="https://pocketnet.app/blockexplorer/">Block Explorer</a>
+			</div>
+		</div>
+	
+	</div>
+
+<% } %>
+
 
 <div class="additional">
 

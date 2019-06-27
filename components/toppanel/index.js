@@ -65,23 +65,33 @@ var toppanel = (function(){
 				var selector = actions.selector()
 
 				self.app.user.isState(function(state){
-					self.shell({
 
-						name :  'menu',
-						el :   el.menu,
-						data : {
-							pathname : pathname,
-							state : state,
-							mobile : isTablet(),
+					if(state && isMobile() && pathname != 'index'){
+						el.c.addClass('hidden')
+					}
+					else{
 
-							selector : selector
-						},
+						el.c.removeClass('hidden')
+						self.shell({
 
-					}, function(_p){
+							name :  'menu',
+							el :   el.menu,
+							data : {
+								pathname : pathname,
+								state : state,
+								mobile : isTablet(),
+	
+								selector : selector
+							},
+	
+						}, function(_p){
+	
+							ParametersLive([selector], _p.el)
+	
+						})
+					}
 
-						ParametersLive([selector], _p.el)
-
-					})
+					
 				})
 
 				
@@ -101,7 +111,7 @@ var toppanel = (function(){
 
 			self.app.nav.clbks.history.toppanel = function(href){
 
-				renders.menu(href)
+				renders.menu(self.app.nav.get.pathname())
 
 			}
 
