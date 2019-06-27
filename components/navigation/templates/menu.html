@@ -16,16 +16,24 @@
 
 			<% if(href == 'chat') { %>
 
-			
-
-
 			<% } else { %> 
+				<% if(href == 'index') { %>
 
-				<a href="userpage?id=wallet" fast="fast">
-					<div class="iconWrapper">
-						<i class="fas fa-wallet"></i>
-					</div>
-				</a>
+					<a href="userpage?id=wallet" fast="fast">
+						<div class="iconWrapper">
+							<i class="fas fa-wallet"></i>
+						</div>
+					</a>
+
+				<% } else { %> 
+
+					<a href="<%- lentakey %>" fast="fast">
+						<div class="iconWrapper">
+							<span class="pnetsymb">¤</span>
+						</div>
+					</a>
+					
+				<%}%>
 
 			<% } %>
 		
