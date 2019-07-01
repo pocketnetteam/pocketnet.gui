@@ -1016,6 +1016,29 @@
 							&.postCellWrapper{
 								padding-left : 0;
 							}
+
+							&.iconWrapper{
+								.icon{
+									position: relative;
+									&:before{
+										color : @color-gray-light;
+										height: 38px;
+										width : 38px;
+										position: absolute;
+										left : 0;
+										right : 0;
+										line-height: 38px;
+										text-align : center;
+										font-weight: 700;
+										content : '\f00d';
+										font-family: "Font Awesome 5 Free";
+									}
+
+									.usericon{
+										display: none;
+									}
+								}
+							}
 						}
 					}
 				}

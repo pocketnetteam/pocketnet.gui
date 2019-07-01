@@ -1228,6 +1228,7 @@
 		}
 	}
 
+	.seemore,
 	.loadprev,
 	.loadmore{
 		background: #F9F9F9;
@@ -1264,10 +1265,20 @@
 		.loadmore{
 			display: none;
 		}
+
+		
+	}
+
+	.seemore{
+		display : none;
 	}
 
 	&.sharesEnded{
 		.ended{
+			display: block;
+		}
+
+		.seemore{
 			display: block;
 		}
 
@@ -1407,6 +1418,10 @@
 @media only screen and (max-width: 640px) {
 #lenta{
 
+	.loader{
+		padding : 2 * @rhythm;
+		text-align: center;
+	}
 	
 	.shares{
 		overflow: hidden; 
@@ -1581,12 +1596,14 @@
 				}
 			}
 
-			
+			&.fullScreenVideo{
+				background: @color-black;
+			}
 
 			.jsPlayerLoading{
 				
-				width: 700px;
-				height: 400px;
+				width: 100%;
+				height: 300px;
 				background: #000000;
 
 				.jsPlayerLoadingD{

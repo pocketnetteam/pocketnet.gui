@@ -372,6 +372,16 @@ var filluser = (function(){
 
 					self.app.platform.m.log('userwisard_success')
 
+					setTimeout(function(){
+
+						self.nav.api.go({
+							href : 'index?r=recommended',
+							history : true,
+							open : true
+						})
+
+					}, 1500)
+
 					el.find('.welcome').on('click', function(){
 
 
@@ -390,11 +400,13 @@ var filluser = (function(){
 						}
 						else
 						{
+
 							self.nav.api.go({
-								href : 'index',
+								href : 'index?r=recommended',
 								history : true,
 								open : true
 							})	
+
 						}
 
 

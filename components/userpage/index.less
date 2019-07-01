@@ -148,6 +148,15 @@
 			
 			padding-top: 4 * @rhythm; 
 
+			.added{
+				text-align: right;
+			}
+
+			.add{
+				margin-left: 2 * @rhythm;
+				color : @color-bright;
+			}
+
 			.additional{
 				margin-top: 4 * @rhythm;
 			}
@@ -412,6 +421,18 @@
 
 			.reportCaption {
 				padding-bottom :  @rhythm;
+
+				&[rid="followers"]{
+					margin-top : @rhythm;
+					padding-top : 2 * @rhythm;
+					border-top : 1px solid @color-gray-light;
+				}
+
+				&[rid="following"]{
+					margin-bottom : @rhythm;
+					padding-bottom : 2 * @rhythm;
+					border-bottom : 1px solid @color-gray-light;
+				}
 			}
 		
 		}

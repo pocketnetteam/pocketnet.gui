@@ -15,7 +15,22 @@
 		<div class="tspacer"></div>
 
 		<div class="loadmore"><button><%=e('lloadmore')%></button></div>
-		<div class="ended"><%=e('lend')%></div>
+
+		<% if(recommended == 'recommended') {%>	
+			<div class="seemore">
+				<a href="index">
+					<button><%=e('lloadmore')%></button>
+				</a>
+			</div>
+		<% } else { %> 
+
+			<div class="ended"><%=e('lend')%></div>
+
+		<% } %>
+
+		
+
+		
 
 		<% if(author) {%>
 

@@ -9,6 +9,18 @@
 		margin-bottom: 2 * @rhythm;
 	}
 
+	.loaderWrapper{
+		display : none;
+		padding : 2 * @rhythm;
+		text-align: center;
+	}
+
+	&.loading{
+		.loaderWrapper{
+			display: block;
+		}
+	}
+
 	.users{
 		.addressTable{
 			cursor: pointer;

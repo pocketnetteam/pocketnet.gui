@@ -204,9 +204,19 @@
 			line-height: 30px;
 			font-family: "Font Awesome 5 Free";
 			font-weight: 700;
-			content: '\f00c';
+			content: '';
 			font-size: 1.2em;
 			text-align: center;
 		}
+
+		
+		.checkbox:checked {
+			&+label{
+				&:before {             
+					content: '\f00c';
+				}
+			}
+		} 
+
 	}
 }

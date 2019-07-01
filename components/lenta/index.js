@@ -279,8 +279,8 @@ var lenta = (function(){
 
 					var s = {
 						muted : true,
-						//autoplay : true,
-						resetOnEnd : true
+						resetOnEnd : true,
+						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
 					}
 
 					if(share.settings.v == 'a'){
@@ -288,10 +288,14 @@ var lenta = (function(){
 						s.autoplay = false;
 					}
 
+					if(isMobile()){
+						s.controls = ['play', 'progress', 'current-time']
+					}	
+
 					
 					PlyrEx(pels[0], s, function(player){
-						players[share.txid] || (players[share.txid] = {})
 
+						players[share.txid] || (players[share.txid] = {})
 						players[share.txid].p = player
 						players[share.txid].initing = true
 						players[share.txid].el = vel
@@ -537,11 +541,20 @@ var lenta = (function(){
 
 			},
 
+			fullScreenVideoMobile: function(id){
+				if(!players[id]) return;
+
+				players[id].p.fullscreen.enter();
+
+					if(!players[id].p.playing)
+						players[id].p.play()
+
+					players[id].p.muted = false
+			},
+
 			fullScreenVideo : function(id, clbk){
 
 				if(!players[id]) return;
-
-				//var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				var _el = el.c.find("#" + id)
 
@@ -569,6 +582,7 @@ var lenta = (function(){
 
 				if (clbk)
 					clbk()
+				
 
 
 			},
@@ -727,10 +741,7 @@ var lenta = (function(){
 
 			///
 
-			videosInview : function(players, action, nvaction){
-
-				if (self.app.platform.sdk.usersettings.meta.videoautoplay && !
-					self.app.platform.sdk.usersettings.meta.videoautoplay.value) return
+			videosInview : function(players, action, nvaction){				
 
 				var ap = _.filter(players, function(p){
 					if(p.inited && !p.playing && !p.stopped && p.el) return true
@@ -1185,6 +1196,9 @@ var lenta = (function(){
 
 				actions.videosInview(players, function(player, el, clbk){	
 
+					if (self.app.platform.sdk.usersettings.meta.videoautoplay && !
+						self.app.platform.sdk.usersettings.meta.videoautoplay.value) return
+
 					if(!el.closest('.share').hasClass('showAdditional')){
 						player.p.play()
 					}
@@ -1386,6 +1400,13 @@ var lenta = (function(){
 
 					actions.fullScreenVideo(shareId)
 			},
+
+			fullScreenVideoMobile : function(){
+				var shareId = $(this).closest('.share').attr('id');
+
+					actions.fullScreenVideoMobile(shareId)
+			},
+
 			openPost : function(){
 
 				if (essenseData.authAction) {
@@ -2181,15 +2202,19 @@ var lenta = (function(){
 					if (!el.c)
 						return
 
+						console.log('shares.length < pr.count', shares.length , pr.count)
 
-					if(!shares || !shares.length || shares.length < pr.count){							
+					if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){							
 
 						if(!beginmaterial && !countshares){
 							el.c.addClass("sharesZero")
 						}
 						else
 						{
-							if (shares.length < pr.count && (recommended ||author || essenseData.search)){
+
+							console.log('shares.length < pr.count', shares.length , pr.count)
+
+							if ( (shares.length < pr.count || recommended == 'recommended') && (recommended ||author || essenseData.search) ){
 
 
 								setTimeout(function(){
@@ -2359,7 +2384,7 @@ var lenta = (function(){
 
 								
 
-									el.shares.css('opacity', 1 - percent) 
+									//el.shares.css('opacity', 1 - percent) 
 									tp.css('opacity', 1 -  (4 * percent))
 
 								}
@@ -2416,8 +2441,22 @@ var lenta = (function(){
 			
 			el.c.on('click', '.showMore', events.openPost)
 			
-			el.c.on('click', '.videoTips', events.fullScreenVideo)
-			el.c.on('click', '.videoOpen', events.fullScreenVideo)
+
+			/*if(isMobile()){
+
+				el.c.on('click', '.videoTips', events.fullScreenVideoMobile)
+				el.c.on('click', '.videoOpen', events.fullScreenVideoMobile)
+
+			}
+
+			if(!isMobile()){*/
+				el.c.on('click', '.videoTips', events.fullScreenVideo)
+				el.c.on('click', '.videoOpen', events.fullScreenVideo)
+
+				
+			//}
+
+			
 			
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			

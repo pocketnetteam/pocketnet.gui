@@ -7105,6 +7105,8 @@ Platform = function(app, listofnodes){
 
 		var using = typeof window != 'undefined' && window.cordova && typeof FCMPlugin != 'undefined';
 
+		var currenttoken = null;
+
 		var device = function(){
 			var id = platform.app.options.device
 
@@ -7162,6 +7164,31 @@ Platform = function(app, listofnodes){
 			}
 		}
 
+		self.get = function(clbk){
+
+			if(!using) {
+			}
+			else{
+				FCMPlugin.getToken(function(token) {
+
+					if(currenttoken == token) return
+	
+					currenttoken = token
+	
+					self.api.setToken(token, function(){
+	
+					})
+					
+				}, function(error) {
+					console.error(error);
+				});
+				
+			}
+
+			if (clbk)
+				clbk()
+		}
+
 		self.events = function(){
 
 			FCMPlugin.onNotification(function(data){
@@ -7170,6 +7197,12 @@ Platform = function(app, listofnodes){
 					console.log( JSON.stringify(data) );
 					  
 					platform.ws.destroyMessages()
+
+					self.app.nav.api.load({
+						open : true,
+						href : 'notifications',
+						history : true
+					})
 
 				}
 				else
@@ -7187,45 +7220,6 @@ Platform = function(app, listofnodes){
 					
 				}
 			});
-
-			FCMPlugin.onTokenRefresh(function(token) {
-
-				console.log("refreshed token", token)
-
-				/*platform.app.ajax.fb({
-					action : 'firebase.token.refresh',
-
-					data : {
-						token : token,
-						device : device(),
-						address : platform.sdk.address.pnet().address
-					},
-
-					success : function(){
-
-					}
-				})*/
-
-			}, function(error) {
-				console.error(error);
-			});
-
-			FCMPlugin.getToken(function(token) {
-
-				console.log('token', token);
-
-				/*self.api.setToken(token, function(){
-
-				})*/
-
-			
-				
-			}, function(error) {
-				console.error(error);
-			});
-
-			
-
 		}
 
 		self.init = function(clbk){
@@ -7240,8 +7234,8 @@ Platform = function(app, listofnodes){
 
 				self.events()
 
-				if (clbk)
-					clbk()
+				self.get(clbk)
+
 			}
 
 
@@ -8569,7 +8563,7 @@ Platform = function(app, listofnodes){
 		} 
 
 		var destroyMessage = function(message, time, noarrange, destroyUser){
-			
+
 			if(message.timeout)
 				clearTimeout(message.timeout);
 
@@ -8767,11 +8761,11 @@ Platform = function(app, listofnodes){
 
 			if(isMobile()){
 				var parallax = new SwipeParallax({
-
+					//prop : 'position',
 					el : message.el,
 					directions : {
-						left : {
-							trueshold : 70,
+						up : {
+							trueshold : 50,
 							positionclbk : function(px){
 								var percent = Math.abs((70 + px) / 70);
 

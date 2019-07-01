@@ -8,14 +8,28 @@ var navigation = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, w;
 
 		var actions = {
 
 		}
 
 		var events = {
-			
+			scroll : function(){
+				if (w.scrollTop() > 250){
+
+					el.c.addClass('scrolled')
+				}
+				else{
+					el.c.removeClass('scrolled')
+				}
+			},	
+
+			toup : function(){
+
+				console.log('asdsadsadasd')
+				_scrollTop(0)
+			}
 		}
 
 		var renders = {
@@ -46,6 +60,7 @@ var navigation = (function(){
 
 				}, function(p){
 
+					p.el.find('.toup').on('click', events.toup)
 					
 				})
 			}
@@ -70,6 +85,10 @@ var navigation = (function(){
 
 			}
 
+			
+			window.addEventListener('scroll', events.scroll)
+
+			
 		}
 
 		var make = function(){
@@ -84,11 +103,16 @@ var navigation = (function(){
 
 				var data = {};
 
+				w = $(window)
+
 				clbk(data);
 
 			},
 
 			destroy : function(){
+
+
+				window.removeEventListener('scroll', events.scroll)
 
 				delete self.app.nav.clbks.history.navigation
 

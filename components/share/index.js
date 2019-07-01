@@ -1173,6 +1173,14 @@ var share = (function(){
 
 		var initEvents = function(){
 
+			el.c.find('.cancelediting').on('click', function(){
+				self.closeContainer();
+
+				if (essenseData.close){
+					essenseData.close()
+				}
+			})
+
 			el.changeAddress.on('change', events.changeAddress)
 			el.changePostTime.on('change', events.changePostTime)
 			el.selectTime.on('click', events.selectTime)

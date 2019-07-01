@@ -10,7 +10,7 @@ var userslist = (function(){
 
 		var el;
 		var addresses = [],
-			cnt = 10,
+			cnt = 50,
 			end = false,
 			page = 0;
 
@@ -65,7 +65,11 @@ var userslist = (function(){
 
 				topPreloader(80);
 
+				el.c.addClass('loading')
+
 				self.sdk.users.get(addresses, function(){
+
+					el.c.removeClass('loading')
 
 					loading = false;
 

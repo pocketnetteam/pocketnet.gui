@@ -5893,7 +5893,7 @@
 
 		}
 
-		var animation = function(ap, options){
+		var animation = function(ap, options, direction){
 
 			if(!options) options = {}
 			
@@ -5919,11 +5919,15 @@
 
 					interval : setInterval(function(){
 
-						var z = v.replace('px', '')
+				
 
+						var z = (v || '0').replace('px', '')
 
 						if (options.step){
-							options.step(step * stepd * z)	
+
+							var s = easy.in(p.directions[direction].trueshold, step * stepd * z)
+
+							options.step(s)	
 						}
 
 						step++
@@ -5932,7 +5936,8 @@
 
 					stop : function(){
 
-						p.el.css({transition: "none"});
+						p.el.css({transform: ""});
+						p.el.css({transition: ""});
 
 						if(this.interval){
 							clearInterval(this.interval)
@@ -5972,6 +5977,8 @@
 				v = tr[prop]
 			}
 
+			if(!v) v = '0'
+
 			v = Number(v.replace('px', '').replace('%', ''))
 
 			return v
@@ -5982,6 +5989,7 @@
 			var prop = directiontoprop(direction);
 
 			var value = easy.in(p.directions[direction].trueshold, _value)
+
 
 			if (p.prop != 'translate'){
 				p.el.css(prop, value + 'px');	
@@ -6010,7 +6018,7 @@
 			var ap = {}
 				ap[css] =  upborder + 'px'
 
-			animation(ap)
+			animation(ap, null, direction)
 		}
 
 		self.backup = function(direction){
@@ -6037,7 +6045,7 @@
 					self.lastDirection = null;
 					self.animation = null;
 				}
-			})
+			}, direction)
 		}
 
 		self.lastDirection = null;
@@ -6078,7 +6086,8 @@
 				swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
 
 
-					if (self.ended) return false					
+					if (self.ended) return false	
+					
 
 					if (phase == 'start'){
 
@@ -6106,6 +6115,7 @@
 							x : m.last.x - m.start.x + startMargin,
 							y : m.last.y - m.start.y + startMargin
 						}
+
 
 						if(!_d.x && !_d.y) return true
 
@@ -8939,11 +8949,11 @@
 		if(!_.isObject(v)) v = parseVideo(v)
 
 		if (v.type == 'youtube'){
-			return 'http://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'
+			return 'https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'
 		}
 
 		if(v.type == 'vimeo'){
-			return 'http://i.vimeocdn.com/video/'+v.id+'_320.jpg'
+			return 'https://i.vimeocdn.com/video/'+v.id+'_320.jpg'
 		}
 	}
 

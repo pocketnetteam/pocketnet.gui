@@ -72,63 +72,51 @@
 
 @media only screen and (max-width: 768px) {
 	#toppanel{
-
+		height: 55px;
 		.work{
 			width: 100%;
-		    padding-left: 2 * @rhythm;
-		    padding-right:2 *  @rhythm;
+		    padding-left: 0;
+			padding-right:0;
+			
+			
 		}
 
 		.panelitems{
 			height: 100%;
 
 			.panelitem{
-				width: 50%;
+				width: 100%;
 				margin-right: 0;
+				line-height: 55px;
 
 				&.right{
 					margin-left : 0;
+					display: none;
+				}
+
+				&.blexpl{
+					padding-left: 2 * @rhythm;
 				}
 			} 
-
-			/*.panelitemCenter{
-				margin-right : 100px;
-				margin-left : 100px;
-				height: 100%;
-
-				.centerTable{
-					width: auto;
-					height: 100%;
-					margin : 0 auto;
-
-					>div{
-						vertical-align: middle;
-						padding : 0  @rhythm;
-
-						.pcenterLabel{
-							border : 1px solid transparent;
-							padding : 0 2 * @rhythm;
-							.transition(0.3s);
-							font-weight: 500;
-							
-
-							&.active{
-								color : @color-main;
-								border-bottom : 1px solid @color-main;
-							}
-
-						}
-
-					}
-				}
-
-
-			}*/
 		}
+
+		
+
+	
 
 		.vc_valuecustom{
 			width: 100%;
-			height: 45px;
+			height: 55px;
+
+			.vc_inputWrapper{
+				padding-left: 2 * @rhythm;
+			}
+	
+			.vc_iconWrapper{
+				width : 40px;
+				padding-right: 2 * @rhythm;
+			}
+
 
 			.vc_textInput {
 				.vc_inputWrapper{
@@ -139,8 +127,9 @@
 						.transition(0.3s);
 						border-top-left-radius: 0px;
 						border-bottom-left-radius: 0px;
-						height: 45px;
+						height: 55px;
 						font-weight: 700;
+						font-size: 1.2em;
 						padding-left: @rhythm;
 
 						&[disabled="disabled"]{
@@ -176,10 +165,13 @@
 			}
 
 			.vc_selectInput {
+				border : 0;
 				max-height: 400px;
 				.shadowSmall();
 				.vc_value{
-					padding :  2 * @rhythm @rhythm;
+					text-align: center;
+					font-size: 1.5em;
+					padding :  @rhythm @rhythm;
 				}
 			}
 		}

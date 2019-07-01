@@ -167,7 +167,7 @@ var main = (function(){
 				self.app.user.isState(function(state){
 					if(state){
 
-						if(currentMode == 'common' && state && !isMobile()){
+						if(state && !isMobile()){
 							el.addbutton.addClass('active')
 						}
 						else
@@ -380,8 +380,6 @@ var main = (function(){
 
 				var ncurrentMode = currentMode
 
-				console.log(parameters())
-
 				localStorage['lentakey'] = parameters().r || 'index'
 
 				if (parameters().r){
@@ -390,8 +388,6 @@ var main = (function(){
 				else{
 					ncurrentMode = 'common'
 				}
-
-				console.log('currentMode', currentMode, ncurrentMode )
 				
 				if(currentMode == ncurrentMode) return
 

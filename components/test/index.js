@@ -49,9 +49,7 @@ var test = (function(){
 			},
 			save : function(clbk){
 
-				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet().address, function(resref, err){
-
-				
+				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet().address, function(resref, err){				
 
 					if(el.c.find('.userPanel').hasClass('loading')){
 						return
@@ -80,16 +78,6 @@ var test = (function(){
 								_scrollTo(pn)
 							}	
 
-							/*else
-							{
-								if(!tempInfo.about){	
-									var pn = el.c.find('[parameter="about"] input')
-
-									pn.focus()
-
-									_scrollTo(pn)
-								}	
-							}*/
 						}
 
 							
@@ -108,11 +96,34 @@ var test = (function(){
 
 						userInfo.ref.set(deep(ref, 'address') || '');
 
+					var err  = userInfo.validation()
+
+					if (err){
+
+						if(err == 'namelength'){
+							el.c.find('.errorname').fadeIn();
+							el.c.find('.errorname span').html('The name length can be more than 20 symbols');
+
+							var pn = el.c.find('[parameter="name"] input')
+
+								pn.focus()
+
+								_scrollTo(pn)
+						}
+
+						return false;
+					}
+
 					topPreloader(40)
 
 					el.c.find('.userPanel').addClass('loading')
 
 					el.upanel.addClass('loading')
+
+					
+
+					
+					el.c.find('.errorname').fadeOut();
 
 					userInfo.uploadImage(function(){
 
@@ -336,18 +347,27 @@ var test = (function(){
 						}
 
 						if (id == 'name'){
-							self.app.platform.sdk.users.nameExist(tempInfo[parameter.id], function(exist){
+							
+							if(tempInfo[parameter.id].length > 20){
+								el.c.find('.errorname').fadeIn();
+								el.c.find('.errorname span').html('The name length can be more than 20 symbols');	
+							}
+							else
+							{
+								el.c.find('.errorname').fadeOut();
 
-								if(!exist || exist == self.app.platform.sdk.address.pnet().address){
-									el.c.find('.errorname').fadeOut();
-								}
-								else
-								{
-									el.c.find('.errorname').fadeIn();
-								}
+								self.app.platform.sdk.users.nameExist(tempInfo[parameter.id], function(exist){
 
-								
-							})	
+									if(!exist || exist == self.app.platform.sdk.address.pnet().address){
+										el.c.find('.errorname').fadeOut();
+									}
+									else
+									{
+										el.c.find('.errorname').fadeIn();
+										el.c.find('.errorname span').html('This name has busy in Pocketnet');									
+									}
+								})	
+							}
 						}
 					}
 

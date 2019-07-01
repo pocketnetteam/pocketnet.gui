@@ -6,13 +6,30 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv='expires' content='0'>
-        
+
+        <meta http-equiv="Content-Security-Policy" content="
+        default-src https: 'self'; 
+        connect-src https: wss:;
+        img-src 'self' data: https:;
+        script-src 'self' https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
+        font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
+        media-src *">
 
         <title>POCKETNET</title>
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
+
+        <meta http-equiv="Content-Security-Policy" content="
+        default-src https: 'self'; 
+        connect-src https: wss:;
+        img-src 'self' data: https:;
+        script-src 'self' https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
+        font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
+        media-src *">
 
         <?php 
         

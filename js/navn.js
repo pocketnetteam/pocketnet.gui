@@ -90,6 +90,8 @@ Nav = function(app)
 
 			backManager.chain = nchain
 
+			console.log("CLEARALL")
+
 			this.save()
 		},
 
@@ -848,15 +850,23 @@ Nav = function(app)
 			var href = link.attr('href').toLowerCase(),
 				external = link.attr('external');
 
+
+			var host = self.get.hostname()
+
+			if (host == 'localhost/' || electron || window.cordova) host = 'pocketnet.app/'
+
+				host = 'https://' + host
+
 			var e = (!href 
 
-				|| external
+				|| (external
 				|| href.indexOf("mailto") > -1
 				|| href.indexOf("skype:") > -1 
 				|| href.indexOf('/') > -1 
 				|| href.indexOf('.') > -1
-				|| href == "#")
-				|| href.indexOf(self.get.hostname()) != -1
+				|| href == "#"))
+				
+				&& href.indexOf(host) == -1
 
 			if (!e) return true;
 		},
@@ -890,10 +900,18 @@ Nav = function(app)
 
 		thisSiteLink : function(href){
 
-			var c = href.toLowerCase().split(self.get.hostname())
+			var host = self.get.hostname()
+
+			if (host == 'localhost/' || electron || window.cordova) host = 'pocketnet.app/'
+
+				host = 'https://' + host
+
+			var c = href.split(host)
 
 			if (c.length > 1){
-				return c[1]
+
+				return  c[1]
+
 			}
 			else
 			{
@@ -948,26 +966,6 @@ Nav = function(app)
 					else
 					{
 						core.externalTarget(link)
-						/*
-						if(typeof _Electron == 'undefined'){
-							
-						}
-						else{
-							console.log('links', link.attr('href'))
-							link.off('click')
-								.on('click', function(){
-
-									console.log("SDSD", this.href)
-
-									electron.shell(this.href)
-
-
-									return false;
-								})
-
-							
-						}*/
-						
 					}
 					
 				}
@@ -995,6 +993,8 @@ Nav = function(app)
 
 					var eve = function(){
 						var href = core.thisSiteLink($(this).attr('href'));
+
+						console.log("HREF", href)
 
 						var handler = $(this).attr('handler') || null
 
@@ -1169,6 +1169,7 @@ Nav = function(app)
 
 			core.load(p)
 		},
+		
 		loadDefault : function(p){
 			if(!p) p = {};
 
@@ -1178,6 +1179,11 @@ Nav = function(app)
 			if (p.href == 'blank')
 				p.href  = 'index'
 
+			console.log('p.href', p.href)
+
+			if(p.href.split("?")[0] == 'index'){
+				backManager.clearAll()	
+			}
 
 			backManager.add(p.href)
 
@@ -1254,8 +1260,6 @@ Nav = function(app)
 			{
 				window.onpopstate = function(event)
 				{
-
-
 					historyManager.openCurrent();
 				};
 			}

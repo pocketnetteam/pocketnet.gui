@@ -4,40 +4,57 @@
 
 	<div class="item">
 
-		<% if(back) {   %>
-			
-				<a href="<%- addtouri(back.href, 'back', 'true') %>" fast="fast" handler="true">
-					<div class="iconWrapper">
-						<i class="fas fa-chevron-left"></i>
-					</div>
-				</a>
-			
-		<% } else { %> 
+		<div class="linkButtonWrapper">
 
-			<% if(href == 'chat') { %>
-
-			<% } else { %> 
-				<% if(href == 'index') { %>
-
-					<a href="userpage?id=wallet" fast="fast">
+			<% if(back) {   %>
+				
+					<a href="<%- addtouri(back.href, 'back', 'true') %>" fast="fast" handler="true">
 						<div class="iconWrapper">
-							<i class="fas fa-wallet"></i>
+							<i class="fas fa-chevron-left"></i>
 						</div>
 					</a>
+				
+			<% } else { %> 
+
+				<% if(href == 'chat') { %>
 
 				<% } else { %> 
-
-					<a href="<%- lentakey %>" fast="fast">
-						<div class="iconWrapper">
-							<span class="pnetsymb">¤</span>
-						</div>
-					</a>
+					<% if(href == 'index' || !href) { %>
 					
-				<%}%>
+							<a href="userpage?id=wallet" fast="fast">
+								<div class="iconWrapper">
+									<i class="fas fa-wallet"></i>
+								</div>
+							</a>
+						
 
+						
+
+
+					<% } else { 
+						
+						
+						console.log('HREF', href)
+						%> 
+
+						<a href="<%- lentakey %>" fast="fast">
+							<div class="iconWrapper">
+								<i class="fas fa-chevron-left"></i>
+							</div>
+						</a>
+						
+					<%}%>
+
+				<% } %>
+			
 			<% } %>
-		
-		<% } %>
+		</div>
+
+		<div class="upbuttonWrapper">
+			<div class="iconWrapper toup">
+				<i class="fas fa-chevron-up"></i>
+			</div>
+		</div>
 
 		
 	</div>

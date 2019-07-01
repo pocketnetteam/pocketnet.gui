@@ -14,12 +14,19 @@ var userpage = (function(){
 		var roller = null;
 		var caption = null;
 
-		var mestate = null;
+		var mestate = null, allbalance;
 
 		var reports = []
 
 		var init = function(){
 			reports = []
+
+			reports.push({
+				name : "Notifications",
+				id : 'notifications',
+				report : 'notifications',
+				mobile : true
+			})
 
 			reports.push({
 				name :  self.app.localization.e('rstate'),
@@ -29,6 +36,14 @@ var userpage = (function(){
 
 				if : function(){
 					if(mestate) return true
+				},
+
+				add : function(){
+
+					if (isMobile() && deep(mestate, 'reputation')){
+						return mestate.reputation
+					}
+
 				}
 			})
 
@@ -39,22 +54,79 @@ var userpage = (function(){
 				mobile : true
 			})*/
 
-			reports.push({
-				name : "Notifications",
-				id : 'notifications',
-				report : 'notifications',
-				mobile : true
-			})
+			
 
 			reports.push({
 				name : self.app.localization.e('rwallet'),
 				id : 'wallet',
 				report : 'wallet',
 				mobile : true,
+
+				add : function(){
+
+					if (isMobile() && allbalance){
+						return  self.app.platform.mp.coin(allbalance)
+					}
+
+				}
 			})
 
 			reports.push({
-				name : self.app.localization.e('rprofile'),
+
+				name :  "Followers",
+				id : 'followers',
+				report : 'followers',
+				mobile : true,
+
+				if : function(){
+					return isMobile()
+				},
+
+				add : function(){
+
+					var address = deep(self, 'app.user.address.value')
+
+					if (address){
+						var s = deep(self, 'sdk.users.storage.'+address+'.subscribers.length')
+
+						if (isMobile() && s){
+							return s
+						}
+					}	
+
+					
+
+				}
+			})
+
+			reports.push({
+				
+				name :  "Following",
+				id : 'following',
+				report : 'following',
+				mobile : true,
+
+				if : function(){
+					return isMobile()
+				},
+
+				add : function(){
+
+					var address = deep(self, 'app.user.address.value')
+
+					if (address){
+						var s = deep(self, 'sdk.users.storage.'+address+'.subscribes.length')
+
+						if (isMobile() && s){
+							return s
+						}
+					}	
+
+				}
+			})
+
+			reports.push({
+				name : "Edit profile",
 				id : 'test',
 				report : 'test',
 				mobile : true
@@ -386,35 +458,109 @@ var userpage = (function(){
 				}
 				else{
 
-					self.shell({
+					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-						name :  'contents',
-						el :   el.contents,
-						data : {
-							reports : reports,
-							each : helpers.eachReport,
-	
-							selector : s
-						},
-	
-					}, function(_p){
-	
-						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
-						//_p.el.find('.groupName').on('click', events.closeGroup);
-						_p.el.find('.openReport').on('click', events.openReport);
-	
-						ParametersLive([s], _p.el)
+						allbalance = amount
 
-						_scrollTop(0)
+						self.shell({
+
+							name :  'contents',
+							el :   el.contents,
+							data : {
+								reports : reports,
+								each : helpers.eachReport,
+		
+								selector : s
+							},
+		
+						}, function(_p){
+		
+							_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
+							//_p.el.find('.groupName').on('click', events.closeGroup);
+							_p.el.find('.openReport').on('click', events.openReport);
+		
+							ParametersLive([s], _p.el)
 	
-						if (clbk)
-							clbk();
+							_scrollTop(0)
+		
+							if (clbk)
+								clbk();
+						})
+					
 					})
+
+					
 
 				}
 
 				
 		
+			},
+
+			userslist : function(_el, users, empty, caption, clbk){
+				self.nav.api.load({
+
+					open : true,
+					id : 'userslist',
+					el : _el,
+					animation : false,
+
+					essenseData : {
+						addresses : users,
+						empty : empty,
+						caption : caption
+					},
+					
+					clbk : function(e, p){
+						if (clbk)
+							clbk(e, p)
+					}
+
+				})
+			},
+
+			followers : function(_el, clbk){
+
+				var address = deep(self, 'app.user.address.value')
+
+				if(address){
+					var author = deep(self, 'sdk.users.storage.'+address)
+
+					var u = _.map(deep(author, 'subscribers') || [], function(a){
+						return a
+					})
+
+					var e = self.app.localization.e('anofollowers');
+
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynofollowers')
+					}
+
+					renders.userslist(_el, u, e, "Followers", clbk)
+				}
+
+				
+			},
+
+			following : function(_el, clbk){
+
+				var address = deep(self, 'app.user.address.value')
+
+				if (address){
+					var author = deep(self, 'sdk.users.storage.'+address)
+
+					var u = _.map(deep(author, 'subscribes') || [], function(a){
+						return a.adddress
+					})
+
+					var e = self.app.localization.e('anofollowing');
+
+					if(self.user.isItMe(author.address)){
+						e = self.app.localization.e('aynofollowing')
+					}
+
+					renders.userslist(_el, u, e, "Following", clbk)
+				}
 			},
 
 			report : function(id, clbk){
@@ -424,6 +570,18 @@ var userpage = (function(){
 
 
 				var report = helpers.findReport(id)
+
+				var _clbk = function(e, p){
+					_scrollTop(0)
+	
+					currentExternalEssense = p;
+
+					if (roller)
+						roller.apply();
+
+					if (clbk)
+						clbk();
+				}
 				
 				self.shell({
 
@@ -435,33 +593,32 @@ var userpage = (function(){
 
 				}, function(_p){
 
-					self.nav.api.load({
+					if(renders[report.report]){
+						renders[report.report](_p.el.find('.reportCnt'), _clbk)
+					}
+					else{
+						self.nav.api.load({
 
-						open : true,
-						id : report.report,
-						el : _p.el.find('.reportCnt'),
-						animation : false,
-						primary : true,
-
-						essenseData : {
-							sub : report.sub
-						},
-						
-						clbk : function(e, p){
-
-							_scrollTop(0)
-
-							currentExternalEssense = p;
-
-							if (roller)
-								roller.apply();
-
-							if (clbk)
-								clbk();
+							open : true,
+							id : report.report,
+							el : _p.el.find('.reportCnt'),
+							animation : false,
+							primary : true,
+	
+							essenseData : {
+								sub : report.sub
+							},
 							
-						}
+							clbk : function(e, p){
+	
+								_clbk(e, p)
+								
+							}
+	
+						})
+					}
 
-					})
+					
 
 					
 				})

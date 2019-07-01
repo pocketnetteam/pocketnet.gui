@@ -542,7 +542,7 @@ Share = function(){
 					}
 
 					tags = _.map(tags, function(t){
-						return tags.replace("#", '')
+						return t.replace("#", '')
 					})
 
 					this.v = tags;
@@ -1070,6 +1070,8 @@ UserInfo = function(){
 	}
 
 	self.validation = function(){
+
+		if(self.name.v.length > 20) return 'namelength'
 		
 		return false
 

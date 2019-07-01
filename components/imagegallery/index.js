@@ -17,23 +17,31 @@ var imagegallery = (function(){
 		
 		var actions = {
 			back : function(){
-				actions.prepareImages();
 
-				num--;
+				if(essenseData.images.length > 1){
+					actions.prepareImages();
 
-				if(num < 0) num = essenseData.images.length - 1;
+					num--;
 
-				make()
+					if(num < 0) num = essenseData.images.length - 1;
+
+					make()
+				}
+
+
+				
 			},
 
 			next : function(){
-				actions.prepareImages();
+				if(essenseData.images.length > 1){
+					actions.prepareImages();
 
-				num ++;
+					num ++;
 
-				if(num >= essenseData.images.length) num = 0;
+					if(num >= essenseData.images.length) num = 0;
 
-				make()
+					make()
+				}
 			},
 
 			initialValue : function(){
@@ -269,7 +277,7 @@ var imagegallery = (function(){
 	
 						if (percent > 0){
 	
-							cc.css('opacity', percent) 
+							//cc.css('opacity', percent) 
 						}
 	
 					},
@@ -282,7 +290,7 @@ var imagegallery = (function(){
 				}
 			}
 
-			if(essenseData.images.length){
+			if (essenseData.images.length > 1){
 				directions.left = {
 					trueshold : 100,
 	
@@ -297,7 +305,7 @@ var imagegallery = (function(){
 	
 						if (percent > 0){
 	
-							cc.css('opacity', percent) 
+							//cc.css('opacity', percent) 
 						}
 	
 					},
@@ -329,7 +337,7 @@ var imagegallery = (function(){
 	
 						if (percent > 0){
 	
-							cc.css('opacity', percent) 
+							//cc.css('opacity', percent) 
 						}
 	
 					},
