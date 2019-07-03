@@ -115,6 +115,8 @@ Nav = function(app)
 		load : function(){
 			this.chain = JSON.parse(localStorage['backchain'] || "[]");
 
+			console.log('this.chain', this.chain)
+
 			if(!this.chain.length){
 				this.clearAll()
 			}
@@ -191,6 +193,8 @@ Nav = function(app)
 
 			}
 
+			console.log('backManager.chain', backManager.chain)
+
 			this.save()
 
 
@@ -198,6 +202,8 @@ Nav = function(app)
 		},
 
 		get : function(){
+
+			console.log('get', backManager.chain)
 
 			if(backManager.chain.length > 1){
 				return backManager.chain[1]
@@ -888,11 +894,11 @@ Nav = function(app)
 			if(typeof window != 'undefined' && typeof window.cordova != 'undefined' && cordova.InAppBrowser){
 
 				link.off('click').on('click', function(){
-
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_blank');
 
 					return false
+					
 				})
 
 			}

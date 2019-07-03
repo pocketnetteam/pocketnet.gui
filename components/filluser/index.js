@@ -61,7 +61,7 @@ var filluser = (function(){
 						self.app.platform.m.log('registration_referal_type', type)
 
 						if (r){
-							self.app.platform.m.log('registration_referal_referrer', type)
+							self.app.platform.m.log('registration_referal_referrer', r)
 						}
 					})
 						

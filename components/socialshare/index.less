@@ -258,19 +258,28 @@
 #socialshare{
 
 	padding : 3 * @rhythm 0;
+	padding-top : 0;
 
 	.caption{
 		font-size: 2.2em;
 	}
+
+	.captionearn{
+		margin-top : 2 * @rhythm;
+	}
 	
 	.wrk{
-		padding : 0 @rhythm;
+		padding : 0;
 	}
 
 	.url,
 	.sharewrapper{
-		margin-top: 4 * @rhythm;
+		margin-top: @rhythm;
 		overflow: hidden;
+	}
+
+	.url{
+		padding : 2 * @rhythm;
 	}
 
 	.bignumber{
@@ -294,8 +303,10 @@
 			width: 25%;
 			display: block;
 			float: left;
+			padding : 0;
+
 			&.socialWrapper{
-				padding : @rhythm;
+				padding : @rhythm 0;
 
 				&.email{
 					width : 100%;
@@ -306,9 +317,14 @@
 				}
 			}
 
+			.socialsharebtn{
+				width : 100%;
+				border-radius: 0;
+			}
+
 			&:nth-child(1){
 				&.socialWrapper{
-					padding-left :  @rhythm;
+					padding-left : 0;
 				}
 			}
 		}
@@ -318,7 +334,7 @@
 	.calltoActionUserTextWrapper{
 
 		textarea{
-			padding : @rhythm 0;
+			padding : 2 * @rhythm;
 			height : 140px;
 		}
 	}

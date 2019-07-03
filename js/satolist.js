@@ -1498,7 +1498,23 @@ Platform = function(app, listofnodes){
 
                             if (m[i].value) autoLaunch.enable();
                             else autoLaunch.disable();
-                        }
+						}
+						
+
+						if(window.cordova){
+
+							if(i == 'win' || i == 'transactions' || i == 'upvotes' || i == 'comments' || i == 'answers' || i == 'followers' || i == 'rescued'){
+
+
+								if (m[i].value){
+									self.firebase.api.subscribe(i)
+								}
+								else{
+									self.firebase.api.unsubscribe(i)
+								}
+
+							}
+						}
 					}
 				})
 
@@ -7161,7 +7177,18 @@ Platform = function(app, listofnodes){
 							clbk()
 					}
 				})
-			}
+			},
+
+
+			subscribe : function(topic){
+				if (using)
+					FCMPlugin.subscribeToTopic(topic);
+			},
+
+			unsubscribe : function(topic){
+				if (using)
+					FCMPlugin.unsubscribeFromTopic(topic);
+			},
 		}
 
 		self.get = function(clbk){
@@ -8057,7 +8084,7 @@ Platform = function(app, listofnodes){
 					}
 
 					if(data.mesType == 'answer' && data.comment && data.share && data.user){
-						n.text = data.comment.renders.preview() 
+						n.text = data.comment.renders.previewEmojidis() 
 						n.topic = 'answers'
 						n.caption = "New answer: " +  self.tempates._user(data.user)
 					}

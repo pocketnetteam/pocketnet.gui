@@ -1947,6 +1947,8 @@ var wallet = (function(){
 							var samount = 100;
 							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
+							console.log('group.id, total, temp', group.id, total, temp)
+
 							if(total){
 
 								if(group.id == 'pnetwallet' || group.id == 'total'){
@@ -1959,6 +1961,9 @@ var wallet = (function(){
 								samount = 100 * spend / total
 								color = '#0F8623'
 							}
+
+							console.log('___________________', group.id, total, temp)
+
 
 							var move = {
 								positive : {
@@ -1974,7 +1979,7 @@ var wallet = (function(){
 								}
 							}
 
-							if(group.id == 'pnetwallet'){
+							if(group.id == 'pnetwallet'|| group.id == 'total'){
 								
 								amount = temp + amount;
 

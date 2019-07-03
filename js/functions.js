@@ -527,7 +527,9 @@
 						mintrueshold : p.swipeMintrueshold || 0,
 
 						positionclbk : function(px){
-							var percent = Math.abs((150 - px) / 150);
+							var percent = Math.abs((150 - Math.abs(px)) / 150);
+
+							console.log(percent, px)
 
 							if (percent > 0){
 

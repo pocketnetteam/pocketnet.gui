@@ -14,6 +14,8 @@ var socialshare = (function(){
 		var calltoActionNotInclude = false;
 		var calltoActionUserText = '';
 
+		var plugin = deep(window, 'plugins.socialsharing')
+
 		var actions = {
 			shareText : function(){
 
@@ -38,13 +40,25 @@ var socialshare = (function(){
 					name :  'sharebuttons',
 					el :   el.c.find('.sharebuttons'),
 					data : {
-						socials : socials,
+						socials : getsocials(),
 					},
 
 				}, function(_p){
 					initbuttons()
 				})
 			}
+		}
+
+		var getsocials = function(){
+			return _.filter(socials, function(s){
+				if(!s.if || s.if()) return true
+			})
+		}
+
+		var findsocial = function(t){
+			return _.find(socials, function(s){
+				return s.t == t
+			})
 		}
 
 		var socials = [
@@ -55,17 +69,58 @@ var socialshare = (function(){
 				c : '#f82a53'
 			},
 			{
+				n : 'SMS',
+				i : 'SMS',
+				t : 'sms',
+				c : '#143e50',
+				s : 'shareViaSMS',
+
+				if : function(){
+					var i = deep(window, 'plugins.socialsharing.canShareVia')
+
+					return i
+				}
+			},
+			{
 				n : 'Facebook',
 				i : '<i class="fab fa-facebook-f"></i>',
 				t : 'facebook',
-				c : '#3b5999'
+				c : '#3b5999',
+				//s : 'shareViaFacebook',
+
+				if : function(){
+					var i = deep(window, 'plugins.socialsharing.canShareVia') || !window.cordova
+
+					return i
+				}
+			},
+
+			{
+				n : 'Instagram',
+				i : '<i class="fab fa-instagram"></i>',
+				t : 'facebook',
+				c : '#fd1d1d',
+				s : 'shareViaInstagram',
+
+				if : function(){
+					var i = deep(window, 'plugins.socialsharing.canShareVia')
+
+					return i
+				}
 			},
 
 			{
 				n : 'Twitter',
 				i : '<i class="fab fa-twitter"></i>',
 				t : 'twitter',
-				c : '#55acee'
+				c : '#55acee',
+				//s : 'shareViaTwitter',
+
+				if : function(){
+					var i = deep(window, 'plugins.socialsharing.canShareVia') || !window.cordova
+
+					return i
+				}
 			},
 
 			{
@@ -82,13 +137,6 @@ var socialshare = (function(){
 				c : '#bd081c'
 			},
 
-			/*{
-				n : 'VK',
-				i : '<i class="fab fa-vk"></i>',
-				t : 'vk',
-				c : '#4c75a3'
-			},*/
-
 			{
 				n : 'LinkedIn',
 				i : '<i class="fab fa-linkedin-in"></i>',
@@ -96,25 +144,18 @@ var socialshare = (function(){
 				c : '#0077B5'
 			},
 
-			/*{
-				n : 'Skype',
-				i : '<i class="fab fa-skype"></i>',
-				t : 'skype',
-				c : '#00aff0'
-			},
-
-			{
-				n : 'Telegram',
-				i : '<i class="fab fa-telegram-plane"></i>',
-				t : 'telegram',
-				c : '#0088cc'
-			},*/
-
 			{
 				n : 'Whatsapp',
 				i : '<i class="fab fa-whatsapp"></i>',
 				t : 'whatsapp',
-				c : '#075e54'
+				c : '#075e54',
+				s : 'shareViaWhatsApp',
+
+				if : function(){
+					var i = deep(window, 'plugins.socialsharing.canShareVia') || !window.cordova
+
+					return i
+				}
 			},
 
 			/*{
@@ -172,8 +213,7 @@ var socialshare = (function(){
 						window.location.href = m;
 
 						self.app.platform.m.log('sharing_by', 'email')
-					})
-					
+					})					
 
 				}
 				else{
@@ -182,20 +222,48 @@ var socialshare = (function(){
 
 					var tit = ed.title;
 
-					/*if(_el.hasClass('s_twitter') || _el.hasClass('s_google')) */t = trim(actions.shareText() + " " + t)
+						t = trim(actions.shareText() + " " + t)
 
-					if(_el.hasClass('s_vk') && !tit) tit = t
+					var type = _el.data('type');
 
+					var b = findsocial(type)
 
-					_el.ShareLink({
-						title: tit, // title for share message
-						text: t,
-						image: ed.image, 
-						url: ed.url, //'https://pocketnet.app/index?ref=' + self.app.platform.sdk.address.pnet().address,
-						class_prefix: 's_', 
-						width: 640, 
-						height: 480
-					})
+					if (b && b.s && window.cordova && plugin){
+
+						var s = b.s
+
+						_el.on('click', function(){
+							if(s == 'shareViaFacebook' || s == 'shareViaTwitter' || s == 'shareViaWhatsApp'){
+								plugin[s](t, ed.image, ed.url)
+							}
+
+							if(s == 'shareViaInstagram'){
+								plugin[s](t, ed.image)
+							}
+
+							if(s == 'shareViaSMS'){
+								plugin[s]({
+									'message': t + " " + ed.url, 
+									'subject': tit, 
+									'image': ed.image
+								})
+							}
+						})
+						
+					}
+					else{
+						_el.ShareLink({
+							title: tit,
+							text: t,
+							image: ed.image, 
+							url: ed.url, 
+							class_prefix: 's_', 
+							width: 640, 
+							height: 480
+						})
+					}
+
+					
 
 					_el.on('click', function(){
 						var type = $(this).data('type');
@@ -291,11 +359,13 @@ var socialshare = (function(){
 				    	ed.url = 'https://pocketnet.app/' + self.app.nav.get.href()
 				    }
 
-			    }
+				}
+				
+
 
 			
 				var data = {
-					socials : socials,
+					socials : getsocials(),
 					url : ed.url,
 					rescue : ed.rescue || false,
 					caption : ed.caption,
@@ -331,6 +401,8 @@ var socialshare = (function(){
 			},
 
 			wnd : {
+				swipeClose : true,
+				swipeMintrueshold : 30,
 				header : "Social sharing",
 				class : 'sharingwindow'
 			}

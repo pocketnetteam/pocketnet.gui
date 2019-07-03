@@ -62,9 +62,15 @@
 		
 	<div class="item">
 
-		<% if(href != 'share') { %>
+		<% 
+		
+		var sharec = ''
+		
+		if(href == 'share') { 
+			sharec = 'active' %>
+		<% } %>
 			<a href="share" fast="fast">
-				<div class="iconWrapper shr">
+				<div class="iconWrapper shr <%-sharec%>">
 					<i class="fas fa-plus-circle"></i>
 				</div>
 			</a>
@@ -82,7 +88,7 @@
 
 			-->
 
-		<% } %>
+		
 		
 	</div>
 

@@ -446,6 +446,8 @@ var userpage = (function(){
 			},
 			contents : function(clbk, id){
 
+				if(!el.contents) return
+
 				var s = helpers.selector();
 
 				if(id && isMobile()){
@@ -459,8 +461,10 @@ var userpage = (function(){
 				else{
 
 					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+						var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
-						allbalance = amount
+						allbalance = amount + temp
+						
 
 						self.shell({
 
