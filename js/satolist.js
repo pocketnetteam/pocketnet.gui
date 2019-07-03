@@ -4762,9 +4762,11 @@ Platform = function(app, listofnodes){
 
 					self.app.user.isState(function(state){
 
-
-					
 							p.count || (p.count = '30')
+
+							if (state){
+								p.address = self.sdk.address.pnet().address;
+							}
 
 							var storage = self.sdk.node.shares.storage
 							var key = 'recommended'
@@ -4777,7 +4779,9 @@ Platform = function(app, listofnodes){
 							}
 							else
 							{
-								var parameters = [p.count];
+								var parameters = [p.count, '259200'];
+
+								if (p.address) parameters.push(p.address)
 
 								self.sdk.node.shares.get(parameters, function(shares, error){
 
@@ -4816,15 +4820,11 @@ Platform = function(app, listofnodes){
 
 						var temp = self.sdk.node.transactions.temp;
 
-						var storage = self.sdk.node.shares.storage
-
-							
+						var storage = self.sdk.node.shares.storage;
 
 						var s = self.sdk.node.shares;
 
 						if (cache == 'cache' && storage[key]){
-
-							console.log('storage[key]', storage[key])
 
 							var tfinded = null;
 							var added = 0;
