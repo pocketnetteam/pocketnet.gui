@@ -99,7 +99,7 @@ var post = (function(){
 						url : url,
 						caption : 'Share this ' + n,
 						image : image,
-						title : share.caption || "Pocketnet: " + deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
+						title : share.caption || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
 						text : nm
 					}
 				})

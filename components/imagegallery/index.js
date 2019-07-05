@@ -262,7 +262,7 @@ var imagegallery = (function(){
 
 			el.c.on('click', events.body)
 
-			var cc = el.c.find('.imagesTableWrapper')
+			var cc = el.c.find('.imagesTableWrapper').closest('.wnd')
 
 			var directions = {
 				up : {
@@ -277,7 +277,7 @@ var imagegallery = (function(){
 	
 						if (percent > 0){
 	
-							//cc.css('opacity', percent) 
+							cc.css('opacity', percent) 
 						}
 	
 					},

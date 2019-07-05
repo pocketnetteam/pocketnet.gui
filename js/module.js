@@ -93,20 +93,20 @@ nModule = function(){
 		if(!p) p = {};
 
 		var completeClbk = function(p){
-			
-
-			if(!fromModule){
-				self.nav.api.links();
-			}
 
 			if(p.el)
 			{
-				p.el.find('[data-jdenticon-value]').each(function(){
+
+				if(!fromModule){
+					self.nav.api.links(null, p.el);
+				}
+
+				/*p.el.find('[data-jdenticon-value]').each(function(){
 					var t = $(this);
 					var v = t.data('jdenticon-value')
 
 					t.html(jdenticon.toSvg(v, t.width()))
-				})
+				})*/
 
 				bgImages(p.el, p.bgImages)
 				

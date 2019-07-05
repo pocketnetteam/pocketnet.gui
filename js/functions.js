@@ -521,30 +521,32 @@
 
 				var directions = {}
 
+				var tr = 100;
+
 					directions[dir] = {
-						trueshold : 150,
+						trueshold : tr,
 
 						mintrueshold : p.swipeMintrueshold || 0,
 
 						positionclbk : function(px){
-							var percent = Math.abs((150 - Math.abs(px)) / 150);
+							var percent = Math.abs((tr - Math.abs(px)) / tr);
 
 							console.log(percent, px)
 
 							if (percent > 0){
 
-								wnd.css('opacity', percent) 
+								//wnd.css('opacity', percent) 
 							}
 
 						},
 
 						clbk : function(){
 
-							wnd.fadeOut(150)
+							//wnd.fadeOut(tr)
 
 							setTimeout(function(){
 								actions.close(true)	
-							}, 150)
+							}, 400)
 							
 						}
 
@@ -5554,9 +5556,18 @@
 			el = $("body,html");
 		}
 
-		if(!time) time = 200;
+		if(typeof time == 'undefined') {
+			time = 200;
+		}
 
-		el.animate({ scrollTop: scrollTop }, time);
+		if(time){
+			el.animate({ scrollTop: scrollTop }, time);
+		}
+		else{
+			el.scrollTop(scrollTop)
+		}
+
+		
 	}
 
 	_scrollTo = function(to, el, time){
@@ -5724,21 +5735,35 @@
 
 		return _fels;
 	}
+
+
 	
-	var easy = {
-		in : function(goal, value){
-
-			var m = 1;
-
-			if(value < 0) m = -1
-
-			value = Math.abs(value)
-
-			var alpha = goal / Math.log(goal + 1);
-			var percentVisible = alpha * Math.log(value + 1);
-
-			return m * percentVisible
-		}
+	var ease = {
+		linear: function (t) { return t },
+		// accelerating from zero velocity
+		inQuad: function (t) { return t*t },
+		// decelerating to zero velocity
+		outQuad: function (t) { return t*(2-t) },
+		// acceleration until halfway, then deceleration
+		inOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
+		// accelerating from zero velocity 
+		inCubic: function (t) { return t*t*t },
+		// decelerating to zero velocity 
+		outCubic: function (t) { return (--t)*t*t+1 },
+		// acceleration until halfway, then deceleration 
+		inOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
+		// accelerating from zero velocity 
+		inQuart: function (t) { return t*t*t*t },
+		// decelerating to zero velocity 
+		outQuart: function (t) { return 1-(--t)*t*t*t },
+		// acceleration until halfway, then deceleration
+		inOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
+		// accelerating from zero velocity
+		inQuint: function (t) { return t*t*t*t*t },
+		// decelerating to zero velocity
+		outQuint: function (t) { return 1+(--t)*t*t*t*t },
+		// acceleration until halfway, then deceleration 
+		inOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
 	}
 
 
@@ -5767,7 +5792,6 @@
 		var directiontoprop = function(direction, value){
 
 			if (p.prop == 'translate'){
-
 				if(direction == 'up') return 'y'
 				if(direction == 'down') return 'y'
 				if(direction == 'left') return 'x'
@@ -5885,8 +5909,10 @@
 			  obj.css("-o-transform")      ||
 			  obj.css("transform");
 			var matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
+
 			var x = matrix[12] || matrix[4];
 			var y = matrix[13] || matrix[5];
+
 
 			return {
 				x : x,
@@ -5903,13 +5929,13 @@
 
 				var v = (ap.x || ap.y || 0);
 
-				p.el.css({transition: "transform " + animatedurations});
+				p.el.css({transition: "transform " + animatedurations + " ease"});
 
-				if(ap.y){
-					p.el.css("transform","translate(0, "+ap.y+")");
+				if (ap.y){
+					p.el.css("transform","translate3d(0, "+ap.y+", 0)");
 				}
 				else{
-					p.el.css("transform","translate("+ap.x+", 0)");
+					p.el.css("transform","translate3d("+ap.x+", 0, 0)");
 				}
 				
 
@@ -5921,13 +5947,13 @@
 
 					interval : setInterval(function(){
 
-				
-
 						var z = (v || '0').replace('px', '')
 
 						if (options.step){
 
-							var s = easy.in(p.directions[direction].trueshold, step * stepd * z)
+							var s = ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
+
+							s = s * p.directions[direction].trueshold
 
 							options.step(s)	
 						}
@@ -5938,8 +5964,12 @@
 
 					stop : function(){
 
-						p.el.css({transform: ""});
-						p.el.css({transition: ""});
+						if(!options.dontstop){
+							p.el.css({transform: ""});
+							p.el.css({transition: ""});
+						}
+
+						
 
 						if(this.interval){
 							clearInterval(this.interval)
@@ -5990,7 +6020,9 @@
 
 			var prop = directiontoprop(direction);
 
-			var value = easy.in(p.directions[direction].trueshold, _value)
+			var value = ease.inOutCubic(_value / p.directions[direction].trueshold)
+
+			value = value * p.directions[direction].trueshold
 
 
 			if (p.prop != 'translate'){
@@ -5999,11 +6031,11 @@
 			else{
 
 				if(prop == 'x'){
-					p.el.css("transform","translate("+(value || 0)+"px, 0)");
+					p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
 				}
 
 				if(prop == 'y'){
-					p.el.css("transform","translate(0, "+(value || 0)+"px)");
+					p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
 				}
 
 				
@@ -6012,7 +6044,7 @@
 
 		self.goup = function(direction){
 			var css = directiontoprop(direction)
-			var upborder = (p.directions[direction].trueshold || 90) * 3
+			var upborder = (p.directions[direction].trueshold || 90) * 5
 
 			if(css == 'top' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
 			if(css == 'left' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
@@ -6020,7 +6052,19 @@
 			var ap = {}
 				ap[css] =  upborder + 'px'
 
-			animation(ap, null, direction)
+			animation(ap, {
+				dontstop : true
+			}, direction)
+		}
+
+		self.backfast = function(){
+
+			console.log('backfast')
+
+			_.each(p.directions, function(d){
+				if (d.positionclbk)
+					d.positionclbk(0)
+			})
 		}
 
 		self.backup = function(direction){
@@ -6108,6 +6152,7 @@
 						
 						return true
 					}
+
 
 					if(phase != 'cancel' && phase != 'end'){
 
@@ -6234,6 +6279,10 @@
 						
 						if (mainDirection){
 							self.backup(mainDirection.i)							
+						}
+
+						else{
+							self.backfast()
 						}
 
 						mainDirection = null
@@ -8508,7 +8557,7 @@
 
 		if(_Node) return
 
-		var el = $('.topPreloader');
+		var el = $('#_topPreloader');
 
 		var div = el.find('div');
 
@@ -8994,8 +9043,9 @@
 	    var type = null;
 		var id = null;
 		
+		
 
-	    if(test){
+	    if(test && url.indexOf('channel') == -1){
 	    	if(test[3]){
 
 

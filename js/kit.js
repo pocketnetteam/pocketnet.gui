@@ -1401,10 +1401,10 @@ pShare = function(){
 
 			if(self.settings.v != 'a'){
 
-				nm = nl2br(findAndReplaceLink(filterXSS(nm, {
+				nm = nl2br(trimrn(findAndReplaceLink(filterXSS(nm, {
 					whiteList: [],
 					stripIgnoreTag: true,
-				})));	
+				}))));	
 
 			}
 			else
@@ -1461,6 +1461,8 @@ pShare = function(){
 					}
 
 				})
+
+				nm = nm.replace(/http:\/\//g, 'https://')
 			}
 
 			return trimrn(nm)

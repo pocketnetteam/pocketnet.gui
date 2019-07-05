@@ -4029,7 +4029,7 @@ input[type=radio].radio:checked + label {
         padding-top: @rhythm;
         .shareprwrapper{
             >div{
-                vertical-align: middle;
+                vertical-align: top;
                 padding : @rhythm / 2;
 
                 &.forimage{
@@ -4072,7 +4072,7 @@ input[type=radio].radio:checked + label {
     .subscribeWrapper{
         >div{
             &.forsubscribe{
-                width: 140px;
+                width: 80px;
                 text-align: right;
                 button{
                     text-align: right;
@@ -4822,6 +4822,7 @@ input[type=radio].radio:checked + label {
             .center();
             width: 100%!important;
             height: 100%!important;
+            max-height: none;
         }
         .wndcontent{
             top: 0;
@@ -4884,11 +4885,11 @@ input[type=radio].radio:checked + label {
            vertical-align: bottom;
         }
 
-       .subscribeWrapper>div.forsubscribe, 
-       .notification .subscribeWrapper>div.forsubscribe{
+        .subscribeWrapper>div.forsubscribe, 
+        .notification .subscribeWrapper>div.forsubscribe{
             width : 80px;
             vertical-align: bottom;
-       }
+        }
 
     }
 

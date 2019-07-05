@@ -617,9 +617,7 @@ Platform = function(app, listofnodes){
 	self.clbks = {
 
 		_focus : {},
-		focus : function(){
-
-			//if(isTablet() || 1==1 || electron){
+		focus : function(time){
 
 			app.user.isState(function(state){
 
@@ -628,16 +626,12 @@ Platform = function(app, listofnodes){
 					self.update();
 
 					_.each(self.clbks._focus, function(f){
-						f()
+						f(time)
 					})
 					
 				}
 
 			})
-
-			//}
-
-			
 
 		},
 
@@ -3999,6 +3993,8 @@ Platform = function(app, listofnodes){
 
 				var verify = false
 
+				return true
+
 				try {
 					var keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(pubkey, 'hex'))
 
@@ -4687,9 +4683,6 @@ Platform = function(app, listofnodes){
 
 					var temp = self.sdk.node.transactions.temp;
 
-						storage.trx || (storage.trx = {})
-
-
 
 					self.app.user.isState(function(state){
 						self.app.ajax.rpc({
@@ -4755,7 +4748,7 @@ Platform = function(app, listofnodes){
 					})
 				},*/
 
-				recommended : function(p, clbk){
+				recommended : function(p, clbk, cache){
 
 				
 					if(!p) p = {};
@@ -4771,7 +4764,7 @@ Platform = function(app, listofnodes){
 							var storage = self.sdk.node.shares.storage
 							var key = 'recommended'
 
-							if (storage[key]){
+							if (cache == 'cache' && storage[key]){
 
 								if (clbk)
 									clbk(storage[key], null, p)
@@ -7306,8 +7299,16 @@ Platform = function(app, listofnodes){
 
 			_share : function(share, c){
 				var m = share.caption || share.message;
+				var nm = ''
 
-				var nm = emojione.toImage(filterXSS(trimHtml(m, c || 20)));
+				if(typeof emojione != 'undefined'){
+					nm = emojione.toImage(filterXSS(trimHtml(m, c || 20)));
+				}
+				else{
+					nm = filterXSS(trimHtml(m, c || 20));
+				}
+
+				
 
 				return nm
 			},
@@ -7336,7 +7337,7 @@ Platform = function(app, listofnodes){
 					}
 				});
 
-				nm = emojione.toImage(share.renders.xssmessage(nm))
+				nm = share.renders.xssmessage(nm)
 			
 
 				var image = share.images[0];
@@ -10602,11 +10603,7 @@ Platform = function(app, listofnodes){
 	self.nodes = listofnodes || []
 
 
-	self.clear = function(){
-		
-
-		self.app.nav.addParameters = null;
-
+	self.clearStorage = function(){
 		_.each(self.sdk, function(c, id){
 				
 			if (c.storage){
@@ -10621,8 +10618,35 @@ Platform = function(app, listofnodes){
 			users : {}
 		}
 
-		self.sdk.articles.storage = []
+		app.platform.sdk.node.shares.storage = {
+			trx : {}
+		}
 
+		app.platform.sdk.node.transactions.storage = {}
+	}
+
+	self.clearStorageLight = function(){
+		self.sdk.search.storage = {
+			all : {},
+			fs : {},
+			posts : {},
+			users : {}
+		}
+
+		app.platform.sdk.node.transactions.storage = {}
+
+		_.each(app.platform.sdk.node.shares.storage, function(s, id){
+			if (id != 'trx')
+				delete app.platform.sdk.node.shares.storage[id]
+		})
+
+	}
+
+	self.clear = function(){		
+
+		self.app.nav.addParameters = null;
+
+		self.sdk.articles.storage = []
 		self.sdk.notifications.clbks.seen = {};
 		self.sdk.notifications.clbks.added = {};
 		self.sdk.notifications.inited = false;
@@ -10635,14 +10659,9 @@ Platform = function(app, listofnodes){
 			}
 		}
 
-		app.platform.sdk.node.shares.storage = {
-			trx : {}
-		}
-
-		app.platform.sdk.node.transactions.storage = {}
 		app.platform.sdk.node.transactions.temp = {}
-		
-		
+
+		self.clearStorage()
 
 		if(electron){
 			electron.ipcRenderer.send('update-badge', null);
@@ -10957,11 +10976,22 @@ Platform = function(app, listofnodes){
 
 		var self = this;
 
+		var unfocustime = null;
+
 		var f = function(e){
+
+			var focustime = platform.currentTime()
+			var time = focustime - (unfocustime || focustime)
 
 			self.focus = true;
 
-           	self.clbks.focus();
+			if (time > 120 && window.cordova){
+				self.clearStorageLight()
+			}
+			
+
+
+           	self.clbks.focus(time);
 
            	if (self.titleManager){
             	self.titleManager.clear();
@@ -10976,6 +11006,7 @@ Platform = function(app, listofnodes){
 		var uf = function(){
 			self.focus = false;
 
+			unfocustime = platform.currentTime()
 		}
 
 		var missed = function(){

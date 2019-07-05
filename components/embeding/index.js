@@ -86,6 +86,7 @@ var embeding = (function(){
 
 				
 			},
+			
 			slowUploadGif : function(file, clbk){
 			
 						
@@ -105,6 +106,8 @@ var embeding = (function(){
 
 					var r = resized.split(',');
 
+					console.log(file)
+
 					if (r[1]){
 
 						
@@ -121,6 +124,7 @@ var embeding = (function(){
 						clbk()
 				})
 			},
+
 			upload : function(file, clbk){
 				resize(file.base64, 1080, 1080, function(resized){
 
@@ -275,6 +279,8 @@ var embeding = (function(){
 
 					action : function(file, clbk){
 
+						console.log("DSD")
+
 						if(file.ext == 'gif'){
 							actions.slowUploadGif(file, clbk)
 						}
@@ -291,6 +297,12 @@ var embeding = (function(){
 						actions.add.images()
 					}
 				})
+
+				/*if (window.cordova){
+
+					el.upload.find('input').click()
+					
+				}*/
 			}
 			else
 			{
@@ -381,7 +393,12 @@ var embeding = (function(){
 				},
 				offScroll : true,
 				noInnerScroll : true,
-				class : 'embeding'
+				class : 'embeding',
+
+
+				swipeClose : true,
+				swipeCloseDir : 'right',
+				swipeMintrueshold : 30,
 			}
 		}
 	};

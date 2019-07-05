@@ -56,7 +56,7 @@ Nav = function(app)
 
 			p.clbk = addToFunction(p.clbk, function(){
 
-				core.links();
+				core.links(null, p.el);
 
 			})
 
@@ -89,8 +89,6 @@ Nav = function(app)
 			}]
 
 			backManager.chain = nchain
-
-			console.log("CLEARALL")
 
 			this.save()
 		},
@@ -193,8 +191,6 @@ Nav = function(app)
 
 			}
 
-			console.log('backManager.chain', backManager.chain)
-
 			this.save()
 
 
@@ -202,8 +198,6 @@ Nav = function(app)
 		},
 
 		get : function(){
-
-			console.log('get', backManager.chain)
 
 			if(backManager.chain.length > 1){
 				return backManager.chain[1]
@@ -334,8 +328,6 @@ Nav = function(app)
 		},	
 
 		openCurrent : function(){
-			console.log("__________")
-			console.log("OPENCURENT")
 
 			if (history.state && history.state.lfox) { 
 
@@ -343,8 +335,6 @@ Nav = function(app)
 
 
 				if(history.state.href.split('?')[0] != current.href){
-
-					console.log("OP1")
 
 					self.api.load({
 		        		href : history.state.href,
@@ -358,7 +348,6 @@ Nav = function(app)
 				}
 				else
 				{
-					console.log("OP2")
 					core.removeWindows(history.state.href)
 
 
@@ -433,14 +422,11 @@ Nav = function(app)
 						
 						run = false;
 
-						console.log("HANDLER", p)
-
 						historyManager.add(p.completeHref, p);
 
 						current.completeHref = p.completeHref;
 
 						if(!p.goback){
-							console.log("SCROLLTOP3")
 							_scrollTop(0, null, 50);
 						}
 							
@@ -511,7 +497,6 @@ Nav = function(app)
 							core.removeWindows(p.completeHref)
 
 							if (p.goback){
-								console.log("SCROLLTOP2", p.goback)
 								_scrollTop(p.goback.scroll);
 							}
 							
@@ -872,7 +857,8 @@ Nav = function(app)
 				|| href.indexOf('.') > -1
 				|| href == "#"))
 				
-				&& href.indexOf(host) == -1
+				&& (href.indexOf(host) == -1)
+
 
 			if (!e) return true;
 		},
@@ -934,6 +920,8 @@ Nav = function(app)
 			if(_el) _links = _el.find('a');
 
 			else _links = $('a');		
+
+			if(!_links.length) return
 
 			_links.each(function(){
 
@@ -1043,9 +1031,9 @@ Nav = function(app)
 
 			})
 
-			var p = {};
+			/*var p = {};
 
-				p.href = $(this).attr('href');
+				p.href = $(this).attr('href');*/
 		},
 		go : function(p){
 			if(!p) p = {};

@@ -201,6 +201,8 @@
 			}
 		}
 		.usermenu{
+
+			overflow: hidden;
 			
 			.usermenuitem{
 				float: left;
@@ -291,9 +293,15 @@
 @media only screen and (max-width: 640px) {
 	#content{
 
-
-
 		#author{
+
+			.lentaWrapper{
+				.authorinfo{
+					padding: 2 * @rhythm;
+				}
+			}
+
+			
 
 			.subscribewrapperphones{
 				
@@ -374,8 +382,15 @@
 				margin-top : 0;
 				height: 110px;
 
+				.work{
+					padding-right: 0;
+				}
+
 				.telements{
 					.telement{
+
+						width: 100%;
+						margin-right: 0;
 
 						&.sbscr{
 							display: none;
@@ -400,15 +415,19 @@
 				
 
 				.usermenu{
-					
+					width: 100%;
 					.usermenuitem{
+						width: 20%;
 						margin-right : 0;
+						padding-left: 0;
+						padding-right : 0;
+						text-align: center;
 						font-size: 0.8em;
 					}
 				}
 
 				.cellforimage{
-					width: 55px;
+					width: 45px;
 
 					.usericon{
 						width: 45px;

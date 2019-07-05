@@ -81,7 +81,7 @@ Application = function(p)
 	self.options = {
 
 		nav : {
-			navPrefix : '/pocketnet/',
+			navPrefix : '/',
 		},
 
 		name : 'PCRB',
@@ -616,6 +616,8 @@ Application = function(p)
 
 	self.scrollRemoved = false;
 
+	var winScrollTop = 0;
+
 	self.actions = {
 		up : _scrollTop,
 
@@ -641,7 +643,7 @@ Application = function(p)
 			}
 			else
 			{
-				var winScrollTop = $(window).scrollTop();
+				winScrollTop = $(window).scrollTop();
 
 				$(window).bind('scroll', self.actions.wscroll);
 			}

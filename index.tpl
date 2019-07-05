@@ -79,7 +79,7 @@
         <div class="bodyshadow">
         </div>     
 
-        <div class="topPreloader">
+        <div class="topPreloader" id="_topPreloader">
         </div>
 
         <div class="chats">
@@ -96,7 +96,7 @@
             _Node = false;
             
             topPreloader = function(percent){
-                var el = $('.topPreloader');
+                var el = $('#_topPreloader');
 
 
                 var div = $("<div>");

@@ -1015,7 +1015,7 @@
 			&.fullScreenVideo{
 				padding : 0;
 				margin : 0;
-				z-index: 1500;
+				z-index: 200;
 				position : fixed;
 				left: 0;
 				right: 0;
@@ -1528,6 +1528,19 @@
 			margin-bottom: @rhythm;
 			cursor: default;
 			padding-bottom : 0;
+
+			.medium-insert-embeds{
+				position: relative;
+
+				&:after{
+					display : none;
+				}
+				
+				figure{
+					margin-left: 0;
+					margin-right: 0;
+				}
+			}
 
 			.shareWrapper,
 			.shareContent{

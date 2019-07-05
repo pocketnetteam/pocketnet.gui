@@ -12,7 +12,7 @@ var share = (function(){
 
 		var el, currentShare = null, essenseData;
 
-		var focusfixed = false;
+		var focusfixed = false, external = null;
 
 		var actions = {
 
@@ -128,6 +128,10 @@ var share = (function(){
 									
 								}
 							}
+						},
+
+						clbk : function(p){
+							external = p
 						}
 					})
 				}
@@ -145,12 +149,7 @@ var share = (function(){
 							storage : storage,
 							value : value,
 							on : {
-								close : function(){
-									setTimeout(function(){
-										focusfixed = false;
-									}, 200)
-									
-								},
+							
 								added : function(value){
 
 									var result = true;
@@ -182,6 +181,12 @@ var share = (function(){
 										renders[type]();
 								}
 							}
+						},
+
+						clbk : function(s, p){
+							external = p
+
+							console.log('external', external)
 						}
 					})
 				}
@@ -777,7 +782,7 @@ var share = (function(){
 			embeding : function(){
 				var type = $(this).attr('embeding')
 
-				if(type == 'embeding20'){
+				if (type == 'embeding20'){
 					actions.embeding20()
 				}
 				else
@@ -1497,6 +1502,8 @@ var share = (function(){
 
 			getdata : function(clbk, p){
 
+				external = null
+
 				currentShare = deep(p, 'settings.essenseData.share') || new Share();
 
 				essenseData = deep(p, 'settings.essenseData') || {};
@@ -1514,6 +1521,14 @@ var share = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DESTROY", external)
+
+				if (external){
+					external.module.closeContainer()
+				}
+
+				external = null
 
 				$('html').off('click', events.unfocus);
 

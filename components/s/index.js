@@ -314,6 +314,13 @@ var s = (function(){
 			el.ua.on('click', events.clickArrow)
 			el.showmore.on('click', actions.changeUsersView)
 
+			el.userslist.swipe( {
+				//Generic swipe handler for all directions
+				swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+				 	console.log(direction, distance)
+				}
+			  });
+
 			el.unext.on('click', events.clickNext)
 		}
 

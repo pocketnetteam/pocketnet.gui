@@ -273,7 +273,7 @@ var author = (function(){
 				class : 'tosettings',
 
 				if : function(){
-					if(self.user.isItMe(author.address)) return true
+					if(self.user.isItMe(author.address) && !isMobile()) return true
 				}
 			},
 
@@ -305,8 +305,6 @@ var author = (function(){
 					if(isMobile()) return true
 				}
 			},
-
-			
 			
 		}
 
@@ -441,9 +439,11 @@ var author = (function(){
 
 				}, function(p){
 
-					p.el.find('.toReport').swipe({
+					p.el.find('.usermenuitem').swipe({
 						tap : function(){
-							var r = $(this).attr('report');
+							var r = $(this).attr('menuitem');
+
+							console.log('r', r)
 
 							renders.report(reports[r])
 						}
@@ -455,7 +455,19 @@ var author = (function(){
 							var el = p.el.find('[menuitem="'+j+'"]')
 
 							_.each(r.events, function(e, i){
-								el.on(i, e)
+
+								if(i == 'click' && isMobile()){
+
+									el.swipe({
+										tap : e
+									})
+
+								}
+								else{
+									el.on(i, e)
+								}
+
+								
 							})
 
 						}

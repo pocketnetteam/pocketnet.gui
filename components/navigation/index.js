@@ -28,7 +28,7 @@ var navigation = (function(){
 			toup : function(){
 
 				console.log('asdsadsadasd')
-				_scrollTop(0)
+				_scrollTop(0, null, 0)
 			}
 		}
 

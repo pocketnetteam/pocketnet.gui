@@ -32,7 +32,8 @@ var lenta = (function(){
 			ascrollel = null,
 			newmaterials = 0,
 			tempTimer,
-		 	getPreviewTimer;
+			getPreviewTimer,
+			fullscreenvideoShowed = false;
 
 		var countshares = 0;
 
@@ -83,6 +84,8 @@ var lenta = (function(){
 
 				shareInitedMap = {}
 				shareInitingMap = {}
+
+				fullscreenvideoShowed = false;
 
 				loading = false
 				ended = false
@@ -289,7 +292,7 @@ var lenta = (function(){
 					}
 
 					if(isMobile()){
-						s.controls = ['play', 'progress', 'current-time']
+						s.controls = ['play', 'progress', 'current-time', 'fullscreen']
 					}	
 
 					
@@ -451,7 +454,7 @@ var lenta = (function(){
 							url : url,
 							caption : 'Share this ' + n,
 							image : image || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image'),
-							title : share.caption || "Pocketnet: " + deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
+							title : share.caption || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
 							text : nm
 						}
 					})
@@ -580,6 +583,28 @@ var lenta = (function(){
 
 				renders.comments(id, false, true)
 
+				fullscreenvideoShowed = true;
+
+				/*if (window.cordova){
+					window.screen.orientation.unlock()
+
+					window.screen.orientation.onchange = function(){
+						var t = window.screen.orientation.type
+
+						console.log(t, player.p.fullscreen.active)
+
+						if (t == 'portrait-primary'){
+							player.p.fullscreen.exit();
+							actions.videoPosition(_el)
+						}
+						else{
+							player.p.fullscreen.enter();	
+						}
+					};
+
+
+				}*/
+
 				if (clbk)
 					clbk()
 				
@@ -603,6 +628,18 @@ var lenta = (function(){
 				self.app.nav.api.history.removeParameters(['v'])
 
 				self.app.actions.onScroll()
+
+				fullscreenvideoShowed = false;
+
+				/*if (window.cordova){
+					window.screen.orientation.lock('portrait')
+
+					if (player.p.fullscreen.active){
+						player.p.fullscreen.exit();
+					}
+
+					delete window.screen.orientation.onchange
+				}*/
 
 				if (initedcommentes[id]){
 					initedcommentes[id].changein(null)	
@@ -715,7 +752,7 @@ var lenta = (function(){
 
 				})
 
-				if(images.length > 1 || !isMobile()){
+				if(images.length > 1 || (share.url && images.length && parseVideo(share.url).type) || !isMobile()){
 					self.app.nav.api.load({
 						open : true,
 						href : 'imagegallery?i=' + share.txid + '&num=' + (num || 0),
@@ -1497,66 +1534,72 @@ var lenta = (function(){
 
 				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 
-				self.fastTemplate('commentspreview', function(rendered){
+				setTimeout(function(){
 
-					self.nav.api.load({
-						open : true,
-						id : 'comments',
-						el : _el,
+					self.fastTemplate('commentspreview', function(rendered){
 
-						eid : txid + 'lenta',
-
-						essenseData : {
-							close : function(){
-
-								if (initedcommentes[txid]){
-									initedcommentes[txid].hideall(true)
-								}
-
-								//_el.html('')
-
-								_scrollToTop(_el, 0, 0, -65)
+						self.nav.api.load({
+							open : true,
+							id : 'comments',
+							el : _el,
+	
+							eid : txid + 'lenta',
+	
+							essenseData : {
+								close : function(){
+	
+									if (initedcommentes[txid]){
+										initedcommentes[txid].hideall(true)
+									}
+	
+									//_el.html('')
+	
+									_scrollToTop(_el, 0, 0, -65)
+									
+	
+									//renders.comments(txid, init, showall, preview)
+	
+								},
+								totop : el.c.find('#' + txid),
+								caption : rendered,
+								send : function(){
+									var c = el.c.find('#' + txid + " .commentsAction .count span");
+	
+									c.html(Number(c.html() || "0") + 1)
+								},
+								txid : txid,
+								init :  init,
+								showall : showall,
+	
+								preview : preview,
+	
+								lastComment : share.lastComment,
+								count : share.comments
+							},
+	
+							clbk : function(e, p){
+	
+								if(!el.c) return
+	
+								var e = el.c.find('#' + txid);
 								
-
-								//renders.comments(txid, init, showall, preview)
-
-							},
-							totop : el.c.find('#' + txid),
-							caption : rendered,
-							send : function(){
-								var c = el.c.find('#' + txid + " .commentsAction .count span");
-
-								c.html(Number(c.html() || "0") + 1)
-							},
-							txid : txid,
-							init :  init,
-							showall : showall,
-
-							preview : preview,
-
-							lastComment : share.lastComment,
-							count : share.comments
-						},
-
-						clbk : function(e, p){
-
-							if(!el.c) return
-
-							var e = el.c.find('#' + txid);
-							
-							if (e.hasClass('fullScreenVideo')){
-								p.changein(e, 0)
+								if (e.hasClass('fullScreenVideo')){
+									p.changein(e, 0)
+								}
+	
+								if (p)
+	
+									initedcommentes[txid] = p
 							}
-
-							if (p)
-
-								initedcommentes[txid] = p
-						}
+						})
+	
+					}, {
+						share : share
 					})
 
-				}, {
-					share : share
-				})
+				}, 30)
+
+				
 			},
 
 			roomsinfo : function(rooms){
@@ -1737,14 +1780,18 @@ var lenta = (function(){
 
 				})
 
+				var rs = _.sortBy(shares, function(s){
+					return -s.time
+				})
+
 				lazyEach({
-					array : shares,
+					array : rs,
 					//sync : true,
 
 					action : function(p){
 						var share = p.item;
 
-
+						console.log("RENDERSHARE!")
 
 						if(shareInitedMap[share.txid]){
 							p.success()
@@ -1757,6 +1804,8 @@ var lenta = (function(){
 
 						
 					},
+
+					sync : isMobile(),
 
 					all : {
 						success : function(){
@@ -2212,8 +2261,6 @@ var lenta = (function(){
 						else
 						{
 
-							console.log('shares.length < pr.count', shares.length , pr.count)
-
 							if ( (shares.length < pr.count || recommended == 'recommended') && (recommended ||author || essenseData.search) ){
 
 
@@ -2223,10 +2270,11 @@ var lenta = (function(){
 								}, 1000)
 								
 							}
+
 						}
 
 						////// SHIT
-						if(shares.length < pr.count && (recommended || author  || essenseData.search))
+						if (shares.length < pr.count && (recommended || author  || essenseData.search))
 
 							ended = true
 					}
@@ -2392,7 +2440,7 @@ var lenta = (function(){
 							},
 
 							constraints : function(){
-								if(w.scrollTop() == 0){
+								if(w.scrollTop() == 0 && !fullscreenvideoShowed){
 
 									return true;
 
@@ -2598,13 +2646,15 @@ var lenta = (function(){
 				}
 			}
 
-			self.app.platform.clbks._focus.lenta = function(){
+			self.app.platform.clbks._focus.lenta = function(time){
 
+				if(window.cordova && !essenseData.txids && !making && time > 120){
 
-				if(window.cordova && !essenseData.txids && !making){
+					actions.loadprev()
 
-					el.c.removeClass('showprev')
+					_scrollTop(0)
 
+					/*el.c.removeClass('showprev')
 					el.c.removeClass('loading');
 					el.c.removeClass("sharesEnded")
 					el.c.removeClass('sharesZero')
@@ -2613,9 +2663,9 @@ var lenta = (function(){
 
 					initedcommentes = {}
 
-					make();
+					make();*/
 
-					_scrollTop(0)
+					
 				}
 			}
 
@@ -2769,9 +2819,6 @@ var lenta = (function(){
 						
 						})
 		
-						/*load.recomended(function(){
-
-						}, shares)*/
 					})
 				}
 
@@ -2917,6 +2964,8 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+				self.app.actions.onScroll()
 
 				_.each(initedcommentes, function(c){
 					c.destroy()
