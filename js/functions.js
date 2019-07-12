@@ -8655,7 +8655,7 @@
 					localStorage[prefix+uri] = JSON.stringify(data[uri])
 				}
 
-				catch{
+				catch (e){
 					return null
 				}
 				

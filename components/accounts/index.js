@@ -213,6 +213,10 @@ var accounts = (function(){
 
 				el.c.find('.dumpaddress').html(address)
 
+				var keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex')) 
+
+				var privateWif = keyPair.toWIF().toString('hex')
+				
 				self.shell({
 
 					name :  'dumpkey',
@@ -220,7 +224,8 @@ var accounts = (function(){
 
 					data : {
 						private : private,
-						address : address
+						address : address,
+						privateWif : privateWif
 					},
 
 					animation : 'fadeIn',

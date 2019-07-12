@@ -96,13 +96,15 @@ var authorization = (function(){
 
 					if(!state){
 
-						dialog({
+						sitemessage("You entered not valid private key")
+
+						/*dialog({
 							class : "one",
 							header : self.app.localization.e('id98'),
 							html : self.app.localization.e('id99'),
 							btn1text : self.app.localization.e('daccept'),
 							btn2text : self.app.localization.e('dcancel'),
-						})
+						})*/
 
 						return;
 					}

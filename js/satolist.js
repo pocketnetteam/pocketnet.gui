@@ -3692,6 +3692,8 @@ Platform = function(app, listofnodes){
 
 			wallet : function(n, private){
 
+				
+
 				var d = bitcoin.bip32.fromSeed(private || self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF() 
 
 				var keyPair = bitcoin.ECPair.fromWIF(d)	  

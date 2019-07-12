@@ -43,7 +43,7 @@ ____loclib.idle = "Idle for some time"
 ____loclib.congratulations = 'Congratulations! You are in <span class="pnlabel">Pocketnet</span>'
 ____loclib.creatingpreloader = 'Creating Account'
 ____loclib.removepaste = 'We removed paste possibility for this input.'
-____loclib.filedamaged = "File is damaged"
+____loclib.filedamaged = "File doesn't contain valid private key"
 ____loclib.keysnotmatch = 'Private login key does not match'
 ____loclib.confirmkey = 'Type Your Private Login Key or Upload QR Code From Previous Step'
 ____loclib.successfullycopied = "Key was successfully copied"

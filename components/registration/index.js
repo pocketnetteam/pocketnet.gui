@@ -20,7 +20,7 @@ var registration = (function(){
 
 		var scrollel = null
 
-		var keyInput = new Parameter({
+		var kup = {
 
 			type : "STRING",
 			name : "keyInput",
@@ -30,7 +30,7 @@ var registration = (function(){
 			autoSearch : function(v, p, clbk){
 
 				if(current.mnemonicKey.indexOf(v) == 0){
-					console.log('v[v.length - 1]', v[v.length - 1])
+
 
 					if(v[v.length - 1] != ' '){
 						var vs = v.split(" ");
@@ -55,7 +55,11 @@ var registration = (function(){
 				
 			}
 	
-		})
+		}
+
+		if(isMobile()) delete kup.autoSearch
+
+		var keyInput = new Parameter(kup)
 
 		var actions = {
 			download : function(clbk){

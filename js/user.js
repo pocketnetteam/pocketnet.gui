@@ -176,6 +176,19 @@ User = function(app, p) {
 
 
 		var setKeysClbk = function(){
+
+			if (self.stay){
+
+				app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
+					localStorage['mnemonic'] = enc
+				})
+				
+			}
+			else
+			{
+				localStorage['mnemonic'] = ''
+			}
+
 			self.isState(function(state){
 
 				if(state){
@@ -194,32 +207,21 @@ User = function(app, p) {
 			})
 		}
 
-		if (self.stay){
-
-			app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
-
-
-				localStorage['mnemonic'] = enc
-			})
-			
-		}
-		else
-		{
-			localStorage['mnemonic'] = ''
-		}
-
 		if(!bitcoin.bip39.validateMnemonic(mnemonic)){
 
 			self.setKeysPairFromPrivate(mnemonic, function(result){
 
+
+				console.log("RESULT", result)
+
 				if(result){
-
-
 
 					setKeysClbk()
 				}
 				else
 				{
+					localStorage['mnemonic'] = ''
+
 					state = 0;
 
 					if (clbk){
@@ -364,7 +366,7 @@ User = function(app, p) {
 
 	self.keysFromSeed = function(seed){
 
-		var hash = bitcoin.crypto.sha256(Buffer.from(seed))
+		//var hash = bitcoin.crypto.sha256(Buffer.from(seed))
 		
 		var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF() 
 
@@ -394,12 +396,35 @@ User = function(app, p) {
 	}
 
 	self.setKeysPairFromPrivate = function(private, clbk){
-		var keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
-		
-		self.setKeysPair(keyPair, function(){
+		var keyPair = null;
+
+		try{
+
+			keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
+
+			
+		}
+		catch (e){
+			try{
+				keyPair = bitcoin.ECPair.fromWIF(private)
+			}
+			catch (e){
+				
+			}
+		}
+
+		if(keyPair){
+			self.setKeysPair(keyPair, function(){
+				if (clbk)
+					clbk(true)
+			})
+		}
+		else{
 			if (clbk)
-				clbk(true)
-		})
+				clbk(false)
+		}
+		
+		
 	
 
 		

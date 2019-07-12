@@ -12,9 +12,9 @@ if(!_Node)
 		apiproxy : 'https://pocketnet.app:8889',
 		firebase : 'https://pocketnet.app:8889',*/
 
-		/*ws : 'wss://localhost:8089',
+		ws : 'wss://localhost:8089',
 		apiproxy : 'https://localhost:8889',
-		firebase : 'https://pocketnet.app:8889',*/
+		firebase : 'https://pocketnet.app:8889',
 
 		/*rtcws : 'wss://localhost:9090',
 		rtchttp : 'https://localhost:9091'*/

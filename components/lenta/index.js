@@ -1677,6 +1677,8 @@ var lenta = (function(){
 
 				shareInitingMap[share.txid] = true;
 
+				console.log('share.txid', share.txid)
+
 				self.shell({
 					name :  'share',
 					el : _el,
@@ -1713,11 +1715,15 @@ var lenta = (function(){
 						renders.comments(share.txid, false, false, true)
 					}
 
-						
+					console.log("RENDerUrL")
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
 
+						console.log("RENDerUrLCLBK")
+
 						renders.urlContent(share, function(){
+
+							console.log("RENDerUrLCLBK2")
 
 							if(essenseData.searchValue){
 
@@ -1791,7 +1797,6 @@ var lenta = (function(){
 					action : function(p){
 						var share = p.item;
 
-						console.log("RENDERSHARE!")
 
 						if(shareInitedMap[share.txid]){
 							p.success()
@@ -2049,8 +2054,6 @@ var lenta = (function(){
 					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
 
 
-
-
 						_.each(image.images, function(i, index){
 
 
@@ -2069,17 +2072,11 @@ var lenta = (function(){
 						})
 
 						h = actions.applyheightEl(h, _el, 'url')
-
-						if (clbk)
-							clbk()
-
 					  	
 					});
 
-					
-
-					
-
+					if (clbk)
+						clbk()
 				})
 			},
 
@@ -2106,6 +2103,8 @@ var lenta = (function(){
 						else
 						{
 							self.app.platform.sdk.remote.get(url, function(og){
+
+								console.log("OG", og)
 
 								if(og){
 									renders.url(_el, url, share, clbk)
