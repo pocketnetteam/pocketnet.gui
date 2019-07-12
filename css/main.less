@@ -3088,14 +3088,50 @@ input[type=radio].radio:checked + label {
         opacity:0
     }
 }
+
 .plissingCnt{
     position: absolute;
     bottom : -@rhythm;
     right : -@rhythm;
+    opacity: 0;
+    .transition(0.5s);
+
+    &.active{
+        opacity: 1;
+    }
+
+    &.left{
+        right : 90%;
+        .plissingWrapper{
+            .plissingWrapperTable{
+                >div{
+                    .plissingTip{
+                        text-align: right;
+                    }
+                }
+            }
+        }
+    }
+
+    &.white{
+        .plissingWrapper{
+            .plissingWrapperTable{
+                >div{
+                    .plissingTip{
+                        color : #fff;
+                    }
+
+                    .pilsing div{
+                        background: fade(@color-black2, 50);
+                    }
+                }
+            }
+        }
+    }
 }
 .plissingWrapper{
     .plissingWrapperTable{
-        width : 220px;
+        width : 260px;
         height : 30px;
         >div{
             vertical-align: middle;
@@ -3107,6 +3143,7 @@ input[type=radio].radio:checked + label {
 
             &.plissingTipCell{
                 padding-left: @rhythm;
+                padding-right: @rhythm;
             }
 
             .plissingTip{

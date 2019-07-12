@@ -12,7 +12,7 @@ var main = (function(){
 
 		var roller = null, lenta = null, share = null, panel, uptimer = null;
 
-		var upbutton = null;
+		var upbutton = null, plissing = null;
 
 		var currentMode = 'common'
 
@@ -39,12 +39,21 @@ var main = (function(){
 						close : function(){
 
 							share.make()
+
 						},
 						post : function(){
 							share.make()
 
 							self.app.platform.m.log('share', 'button')
-						}
+
+							if (plissing)
+								plissing.destroy()
+							
+						},
+
+						hello : true,
+
+						absolute : true
 					}
 
 				})
@@ -220,6 +229,9 @@ var main = (function(){
 						essenseData : {
 							post : function(){
 								self.app.platform.m.log('share', 'normal')
+
+								if (plissing)
+									plissing.destroy()
 							}
 						}
 
@@ -264,8 +276,6 @@ var main = (function(){
 					animation : false,
 
 					mid : 'main',
-
-					
 
 					essenseData : {
 						hr : 'index?',
@@ -368,6 +378,41 @@ var main = (function(){
 			makePanel()
 
 			renders.smallpanel()
+
+			if(!isMobile()){
+
+				//self.app.platform.sdk.ustate.me(function(_mestate){
+
+					
+
+					self.app.platform.sdk.user.get(function(u){
+
+						if(!u.postcnt){
+							setTimeout(function(){
+
+								if (el.c)
+	
+									plissing = self.app.platform.api.plissing({
+										el : el.c.find('.addbutton'),
+										text : "Post something & earn Pocketcoin",
+										left : true,
+										white : true
+									})
+	
+							}, 7000)
+						}
+
+						
+
+					})
+
+					
+
+				//})
+
+				
+
+			}
 				
 		}
 
@@ -461,6 +506,9 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
+				if (plissing)
+					plissing.destroy()
 
 				if (upbutton)
 					upbutton.destroy()

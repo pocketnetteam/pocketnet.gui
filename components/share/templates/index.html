@@ -139,7 +139,11 @@ var postline = function(){ %>
 <div id="<%-module.map.id%>" class="unfocus">
 	<div class="mobilecaption">
 		<% if(!share.aliasid) {%>
-			<span><%=e('newShare')%></span>
+
+			<% if(postcnt === 0) {%>
+				<span><%=e('firstShare')%></span>
+			<% } %>
+			
 		<% } else { %> 
 			<span>Edit Post</span>
 		<% } %>
@@ -242,7 +246,7 @@ var postline = function(){ %>
 								</div>
 							</div>
 						</div>
-						<% if(!share.aliasid) {%>
+						<% if(!share.aliasid && !essenseData.absolute) {%>
 							<% postline() %>
 
 							<div class="paddingmobilewrapper">
@@ -269,7 +273,7 @@ var postline = function(){ %>
 			</div>
 		</div>
 	</div>
-	<% if(share.aliasid) {%>
+	<% if(share.aliasid || essenseData.absolute) {%>
 		<% postline() %>
 
 			<div class="error"></div>

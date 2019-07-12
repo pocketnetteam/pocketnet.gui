@@ -408,9 +408,13 @@ var author = (function(){
 						report : report.id
 					})
 
-				renders[report.render](el.lenta, report)
 
-				renders.menulight()
+				if (renders[report.render]){
+					renders[report.render](el.lenta, report)
+
+					renders.menulight()
+				}
+				
 			},
 
 			menulight : function(){

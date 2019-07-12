@@ -794,20 +794,45 @@ Platform = function(app, listofnodes){
 			var render = function(){
 
 				var rt = p.el.find('.plissingCnt');
+				var rtclass = []
+
+				if (p.left) {
+					rtclass.push('left')
+				}
+
+				if (p.white) {
+					rtclass.push('white')
+				}
+
+				if(rt.length) render.remove()
 
 					p.el.append('<div class="plissingCnt"></div>')
 
 					rt = p.el.find('.plissingCnt');
 
+					rt.addClass(rtclass.join(' '))
+
 				var h = ''
-					h += '<div class="plissingWrapper">'
-					h += '<div class="plissingWrapperTable table">'
+				
+
+				var ball = function(){
 					h += '			<div class="plissingWrapperCell">'
 					h += '				<div class="pilsing">'
 					h += '					<div></div>'
 					h += '					<div></div>'
 					h += '				</div>'
 					h += '			</div>'
+				}
+
+				
+					h += '<div class="plissingWrapper">'
+					h += '<div class="plissingWrapperTable table">'
+
+
+					if(!p.left){
+						ball()
+					}
+					
 
 					h += '			<div class="plissingTipCell">'
 					h += '				<div class="plissingTip all">'
@@ -821,11 +846,21 @@ Platform = function(app, listofnodes){
 					}
 
 					h += '			</div>'
+
+					if(p.left){
+						ball()
+					}
+
 					h += '	</div>'
 					h += '</div>'
 
 
 				rt.html(h);
+				
+				setTimeout(function(){
+					rt.addClass('active')
+				}, 200)
+				
 			}
 
 			self.init = function(){
@@ -833,7 +868,15 @@ Platform = function(app, listofnodes){
 			}
 
 			self.destroy = function(){
-				p.el.find('.plissingCnt').remove()
+
+				var e = p.el.find('.plissingCnt');
+
+					e.removeClass('active')
+
+				setTimeout(function(){
+					e.remove()
+				}, 300)
+
 			}
 
 			self.init()
@@ -10502,17 +10545,24 @@ Platform = function(app, listofnodes){
 			return device 
 		}
 
-		self.log = function(action, note, clbk){
+		self.log = function(action, note, clbk, abid){
+
+
+			var data = {
+				Action : 'ADDLOGS',
+				UserID : userid,
+				Act : action,
+				Note : note || '',
+				Device : device(),
+				System : 'P'
+			}
+
+			if(abid && ab[testid]){
+				data.Grp = abid + "_" + ab[testid]
+			}
 
 			platform.app.ajax.run({
-				data : {
-					Action : 'ADDLOGS',
-					UserID : userid,
-					Act : action,
-					Note : note || '',
-					Device : device(),
-					System : 'P'
-				},
+				data : data,
 
 				success : function(data){
 										
@@ -10531,7 +10581,7 @@ Platform = function(app, listofnodes){
 		}
 
 		self.ab = {
-			send : function(testid, result){
+			/*send : function(testid, result){
 
 				platform.app.ajax.run({
 					data : {
@@ -10556,7 +10606,7 @@ Platform = function(app, listofnodes){
 					}
 				})
 
-			},
+			},*/
 			init : function(){	
 
 				ab = JSON.parse(localStorage['ab'] || "{}")

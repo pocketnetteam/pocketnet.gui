@@ -1677,8 +1677,6 @@ var lenta = (function(){
 
 				shareInitingMap[share.txid] = true;
 
-				console.log('share.txid', share.txid)
-
 				self.shell({
 					name :  'share',
 					el : _el,
@@ -1714,16 +1712,10 @@ var lenta = (function(){
 					if(!share.temp){
 						renders.comments(share.txid, false, false, true)
 					}
-
-					console.log("RENDerUrL")
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
 
-						console.log("RENDerUrLCLBK")
-
 						renders.urlContent(share, function(){
-
-							console.log("RENDerUrLCLBK2")
 
 							if(essenseData.searchValue){
 
@@ -2104,8 +2096,6 @@ var lenta = (function(){
 						{
 							self.app.platform.sdk.remote.get(url, function(og){
 
-								console.log("OG", og)
-
 								if(og){
 									renders.url(_el, url, share, clbk)
 								}
@@ -2249,8 +2239,6 @@ var lenta = (function(){
 
 					if (!el.c)
 						return
-
-						console.log('shares.length < pr.count', shares.length , pr.count)
 
 					if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){							
 

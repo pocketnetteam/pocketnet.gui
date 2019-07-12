@@ -3,114 +3,116 @@
 <div class=" selector">
 	<%= selector.input() %>
 </div>-->
+<div class="contentsInner">
+	<div class=" contentmenu">
 
-<div class=" contentmenu">
+	<%
 
-<%
+		each({
 
-	each({
+			group : function(report, level, id, clbk){ %>
 
-		group : function(report, level, id, clbk){ %>
+				<div class="group" level="<%-level%>" levelid="<%-id%>">
 
-			<div class="group" level="<%-level%>" levelid="<%-id%>">
+					<div class="groupNameTable table">
 
-				<div class="groupNameTable table">
+						<div class="groupName">
+							<div class="reportCaption openReport" rid="<%-id%>">
+								<%= report.name.toUpperCase() %>
 
-					<div class="groupName">
-						<div class="reportCaption openReport" rid="<%-id%>">
-							<%= report.name.toUpperCase() %>
+								<% if(report.add && report.add()) {%>
 
-							<% if(report.add && report.add()) {%>
+									<%- report.add() %>
 
-								<%- report.add() %>
-
-							<% } %>
+								<% } %>
+							</div>
 						</div>
+
+						<div class="groupNamePanel">
+							<div class="groupNamePanelWrapper">
+								<i class="fa fa-angle-up" aria-hidden="true"></i>
+							</div>
+						</div>
+
 					</div>
 
-					<div class="groupNamePanel">
-						<div class="groupNamePanelWrapper">
-							<i class="fa fa-angle-up" aria-hidden="true"></i>
-						</div>
+					<div class="groupContent">
+
+						<% clbk(); %>
+
 					</div>
 
 				</div>
 
-				<div class="groupContent">
+			<% 
+			},
 
-					<% clbk(); %>
+			report : function(report, level, id){ 
 
+				if(report.if && !report.if()) return
+
+
+			%>
+				<div class="reportCaption openReport" rid="<%-id%>">
+
+					<div class="reportCaptionTable table">
+
+						<div class="reportCaptionCell">
+								<%= report.name.toUpperCase() %>
+						</div>	
+
+						<% if(report.add && report.add()) {%>
+							<div class="reportCaptionCell added">
+								<span class="add bright"><%- report.add() %></span>
+							</div>
+						<% } %>
+
+					</div>
 				</div>
+			<% 
 
-			</div>
+			}
 
-		<% 
-		},
+		})
 
-		report : function(report, level, id){ 
+	%>
 
-			if(report.if && !report.if()) return
-
-
-		%>
-			<div class="reportCaption openReport" rid="<%-id%>">
-
-				<div class="reportCaptionTable table">
-
-					<div class="reportCaptionCell">
-							<%= report.name.toUpperCase() %>
-					</div>	
-
-					<% if(report.add && report.add()) {%>
-						<div class="reportCaptionCell added">
-							<span class="add bright"><%- report.add() %></span>
-						</div>
-					<% } %>
-
-				</div>
-			</div>
-		<% 
-
-		}
-
-	})
-
-%>
-
-</div>
-
-<% if(isMobile()) {%>
-	<div class="additional addmenu">
-
-		<div class="reportCaption">
-			<div class="label">
-				<a href="help">Help center</a>
-			</div>
-		</div>
-
-		<!--<div class="reportCaption">
-			<div class="label">
-				<a href="https://pocketnet.app/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
-			</div>
-		</div>-->
-
-		<div class="reportCaption">
-			<div class="label">
-				<a href="donations">Donate</a>
-			</div>
-		</div>
-
-		
-	
 	</div>
 
-<% } %>
+	<% if(isMobile()) {%>
+		<div class="additional addmenu">
+
+			<div class="reportCaption">
+				<div class="label">
+					<a href="help">Help center</a>
+				</div>
+			</div>
+
+			<!--<div class="reportCaption">
+				<div class="label">
+					<a href="https://pocketnet.app/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
+				</div>
+			</div>-->
+
+			<div class="reportCaption">
+				<div class="label">
+					<a href="donations">Donate</a>
+				</div>
+			</div>
+
+			
+		
+		</div>
+
+	<% } %>
 
 
-<div class="additional">
+	<div class="additional">
 
-	<div class="reportCaption signout">
-		<div class="label" action="signout"><%=e('signout').toUpperCase()%> <i class="fas fa-sign-out" aria-hidden="true"></i></div>
+		<div class="reportCaption signout">
+			<div class="label" action="signout"><%=e('signout').toUpperCase()%> <i class="fas fa-sign-out" aria-hidden="true"></i></div>
+		</div>
+
 	</div>
 
 </div>

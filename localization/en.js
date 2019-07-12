@@ -226,7 +226,8 @@ ____loclib.lprivate = "Private";
 ____loclib.lpublic = "Public";
 
 //share
-____loclib.newShare = "New Share";
+____loclib.newShare = "New Post";
+____loclib.firstShare = "Share Your First Post in Pocketnet";
 ____loclib.scaption = "Caption";
 ____loclib.whatsnew = "What's new?";
 ____loclib.saddlink = "Add link to external site or video";

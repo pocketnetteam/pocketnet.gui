@@ -12,9 +12,39 @@ var share = (function(){
 
 		var el, currentShare = null, essenseData;
 
-		var focusfixed = false, external = null;
+		var focusfixed = false, external = null, pliss;
+
+		var intro = false;
+
+		var m = 'Hello Pocketeers!'
 
 		var actions = {
+			tooltips : function(){
+				if(!actions.tooltip){
+
+					if(pliss) pliss.destroy()
+
+				}
+			},
+
+			tooltip : function(){
+				if(!intro) return;
+
+				if(!currentShare.message.v){
+
+					return
+				}
+
+				if(!currentShare.tags.length){
+
+					pliss = self.app.platform.api.plissing({
+						el : el.tagSearch,
+						text : "Add Tags For Your Post"
+					})
+
+					return true
+				}
+			},
 
 			unfocus : function(){
 				if (el.c)
@@ -501,6 +531,12 @@ var share = (function(){
 									console.log(e)
 								}
 
+								self.app.platform.sdk.user.get(function(u){
+									u.postcnt++
+								})
+
+								intro = false
+
 								if (essenseData.post){
 									essenseData.post()
 								}
@@ -939,7 +975,7 @@ var share = (function(){
 
 				
 
-				if(currentShare.caption.v || currentShare.message.v.length > 100){
+				if(currentShare.caption.v/* || currentShare.message.v.length > 100*/){
 
 					if(!el.cpt.hasClass('active'))
 						el.cpt.addClass('active');
@@ -1155,7 +1191,11 @@ var share = (function(){
 				}
 				else
 				{
-					var scs = self.app.settings.set(self.map.id, 'currentShare', currentShare.export(true));
+					var exp = currentShare.export(true)
+
+					if (exp.message == m) exp.message = ''
+
+					var scs = self.app.settings.set(self.map.id, 'currentShare', exp);
 
 					if(!scs){
 						//self.app.settings.set(self.map.id, 'currentShare', '');
@@ -1169,6 +1209,8 @@ var share = (function(){
 
 				if (last)
 					currentShare.import(last)
+
+				return last
 			}
 		}
 
@@ -1502,27 +1544,42 @@ var share = (function(){
 
 			getdata : function(clbk, p){
 
+				intro = false;
 				external = null
 
 				currentShare = deep(p, 'settings.essenseData.share') || new Share();
 
 				essenseData = deep(p, 'settings.essenseData') || {};
 
-				if(!essenseData.share){
-					state.load()
-				}
+				self.app.platform.sdk.user.get(function(u){
 
-				var data = {
-					share : currentShare
-				};
+					if(!essenseData.share){
 
-				clbk(data);
+						state.load()
+
+						if (u.postcnt === 0 && !currentShare.message.v && essenseData.hello){
+							currentShare.message.v = m
+
+							intro = true;
+						}
+					}
+
+					
+
+					var data = {
+						essenseData : essenseData,
+						share : currentShare,
+						postcnt : u.postcnt
+					};
+					
+
+					clbk(data);
+
+				})
 
 			},
 
 			destroy : function(){
-
-				console.log("DESTROY", external)
 
 				if (external){
 					external.module.closeContainer()

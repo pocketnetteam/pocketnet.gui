@@ -717,6 +717,8 @@ var userpage = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
+					console.log('_mestate', _mestate)
+
 					mestate = _mestate
 
 					clbk(data);
