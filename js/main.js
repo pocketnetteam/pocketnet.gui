@@ -12,9 +12,9 @@ if(!_Node)
 		apiproxy : 'https://pocketnet.app:8889',
 		firebase : 'https://pocketnet.app:8889',*/
 
-		/*ws : 'wss://localhost:8089',
-		apiproxy : 'https://localhost:8889',
-		firebase : 'https://pocketnet.app:8889',*/
+		/*ws : 'wss://localhost:8088',
+		apiproxy : 'https://localhost:8888',
+		firebase : 'https://pocketnet.app:8888',*/
 
 		/*rtcws : 'wss://localhost:9090',
 		rtchttp : 'https://localhost:9091'*/
@@ -23,10 +23,10 @@ if(!_Node)
 
 	
 			{
-				full : '64.235.41.74:38081',
-				host : '64.235.41.74',
+				full : '216.108.237.11:38081',
+				host : '216.108.237.11',
 				port : 38081,
-				ws : 8080,
+				ws : 8087,
 				path : '',
 	
 				name : 'spb1'

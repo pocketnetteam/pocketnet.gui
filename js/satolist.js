@@ -2582,22 +2582,35 @@ Platform = function(app, listofnodes){
 							}
 							else
 							{
-								self.app.ajax.api({
-									action : 'freeMoney',
-									data : {
-										address : a
-									},
-									success : function(d){
-										if (clbk)
-											clbk(true)
 
-									},
-									fail : function(d){
+								console.log('requestFreeMoney', self.sdk.captcha.done)
 
-										if (clbk)
-											clbk(null, deep(d, 'data') || {})
-									}
-								})
+
+								if (!self.sdk.captcha.done){
+									if (clbk)
+										clbk(null, 'captcha')
+								}
+								else{
+									self.app.ajax.api({
+										action : 'freeMoney',
+										data : {
+											address : a,
+											captcha : self.sdk.captcha.done
+										},
+										success : function(d){
+											if (clbk)
+												clbk(true)
+	
+										},
+										fail : function(d){
+	
+											if (clbk)
+												clbk(null, deep(d, 'data') || {})
+										}
+									})
+								}
+
+								
 							}
 						})
 					}
@@ -3015,6 +3028,86 @@ Platform = function(app, listofnodes){
 
 			}
 		},
+
+		captcha : {
+			storage : {},
+			current : null,
+			done : null,
+			load : function(clbk){
+				self.sdk.captcha.done = localStorage['capcha'] || null;
+
+				console.log('self.sdk.captcha.done', self.sdk.captcha.done)
+
+				if(clbk) clbk()
+			},
+			save : function(){
+
+				if(self.sdk.captcha.done){
+					localStorage['capcha'] = self.sdk.captcha.done
+				}
+				else{
+					delete localStorage['capcha']
+				}
+
+			},
+			get : function(clbk, refresh){
+				if(refresh) this.current = null;
+
+				self.app.ajax.api({
+					action : 'captcha',
+					data : {
+						captcha : this.done || this.current || null
+					},
+					success : function(d){
+
+						self.sdk.captcha.current = d.data.id
+
+						if (d.data.id != self.sdk.captcha.done)
+
+							self.sdk.captcha.done = null
+
+						self.sdk.captcha.save()
+
+						if (clbk)
+							clbk(d.data)
+
+					},
+					fail : function(d){
+
+						if (clbk)
+							clbk(null)
+					}
+				})
+			},
+
+			make : function(text, clbk){
+				
+				self.app.ajax.api({
+					action : 'makecaptcha',
+					data : {
+						captcha : this.current || null,
+						text : text
+					},
+					success : function(d){
+
+						self.sdk.captcha.done = d.data.id
+
+						console.log('self.sdk.captcha.done', self.sdk.captcha.done)
+
+						self.sdk.captcha.save()
+
+						if (clbk)
+							clbk(null, d.data)
+
+					},
+					fail : function(d){
+
+						if (clbk)
+							clbk(d.data)
+					}
+				})
+			}
+		},	
 
 		exchanges : {
 			storage : {},
@@ -8210,7 +8303,8 @@ Platform = function(app, listofnodes){
 
 							if(data.mesType == 'userInfo' && !wa){
 								var me = platform.sdk.users.storage[platform.sdk.address.pnet().address];
-
+								
+								if (me)
 									me.rc++
 							}
 
@@ -10711,7 +10805,7 @@ Platform = function(app, listofnodes){
 			}
 		}
 
-		app.platform.sdk.node.transactions.temp = {}
+		//app.platform.sdk.node.transactions.temp = {}
 
 		self.clearStorage()
 
@@ -10824,6 +10918,9 @@ Platform = function(app, listofnodes){
 
 				self.titleManager = new self.TitleManager();	
 
+
+				self.sdk.captcha.load()
+
 			}
 
 			self.sdk.node.get.time(function(){
@@ -10924,7 +11021,7 @@ Platform = function(app, listofnodes){
 							
 								/*setTimeout(function(){
 
-									self.sdk.node.transactions.kr(48000, 200, function(){
+									self.sdk.node.transactions.kr(2000, 100, function(){
 										console.log("END")
 									})
 

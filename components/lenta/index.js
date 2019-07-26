@@ -283,7 +283,11 @@ var lenta = (function(){
 					var s = {
 						muted : true,
 						resetOnEnd : true,
-						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
+						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+						speed : {
+							selected : 1,
+							options: [1]
+						}
 					}
 
 					if(share.settings.v == 'a'){

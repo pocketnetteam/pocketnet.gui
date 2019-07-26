@@ -387,7 +387,7 @@ var main = (function(){
 
 					self.app.platform.sdk.user.get(function(u){
 
-						if(!u.postcnt){
+						if(u.postcnt < 20){
 							setTimeout(function(){
 
 								if (el.c)

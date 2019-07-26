@@ -82,7 +82,7 @@
 			overflow: hidden;
 
 			.stepsWrapperLine{
-				.transition(0.3s);
+				overflow: hidden;
 			}
 			.step{
 				min-height: 1px;
@@ -139,6 +139,73 @@
 
 					
 				}
+			}
+		}
+
+		.ucaptcha{
+			padding-top: 6 * @rhythm;
+			padding-bottom: 6 * @rhythm;
+
+			.captchaImageWrapper{
+				padding : @rhythm;
+				text-align: center;
+			}
+
+			.subcaption,
+			.subsubcaption{
+				margin : 0 auto;
+				margin-top: @rhythm;
+				color : @color-contrast;
+				font-size: 1.7em;
+				font-weight: 300;
+				text-align: center;
+				max-width: 600px;
+			}
+
+			.inputWrapper{
+				max-width: 600px;
+				margin : 3 * @rhythm auto;
+			}
+
+			input{
+				font-size: 1.4em;
+				border : 0;
+				border-bottom: 1px solid @color-gray-light;
+				.transition(0.3s);
+				width: 100%;
+				background: transparent;
+				text-align : center;
+				&:placeholder-shown{
+                	
+                }
+
+				&:focus{
+					border-color : @color-main;
+				}
+			}
+
+			.addContainer{
+				padding-top: 3 * @rhythm;
+				text-align: center;
+
+				button{
+					min-width: 300px;
+				}
+			}
+
+			.redoContainer{
+				padding-top: 3 * @rhythm;
+				text-align: center;
+			}
+
+			button{
+				min-width: 180px;
+				.transition(0.3s);
+				
+				&.next{
+					color : @color-main;
+				}
+
 			}
 		}
 

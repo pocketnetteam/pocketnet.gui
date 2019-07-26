@@ -30,6 +30,8 @@ var filluser = (function(){
 			}
 		}
 
+		var needcaptcha = false;
+
 		var gettype = function(){
 			var fref = self.app.ref || '';
 
@@ -43,6 +45,101 @@ var filluser = (function(){
 		}
 
 		var steps = {
+
+			captcha : {
+				id : 'captcha',
+				render : 'captcha',
+
+				prev : function(clbk){
+
+					needcaptcha = false
+
+					if(window.cordova){
+						actions.next()
+
+						return;
+					}
+
+					self.sdk.captcha.get(function(captcha){
+
+						if (captcha.done){
+							actions.next()
+						}
+						else{
+
+							steps.captcha.current = captcha
+
+							clbk()
+						}
+
+					}, true)
+				},
+
+				after : function(el, pel){
+
+					var input = el.find('.ucaptchainput');
+					var redo = el.find('.redo')
+					var save = el.find('.addCaptcha')
+					var text = '';
+
+						input.focus()
+
+					var validate = function(v){
+
+						if(/^[a-zA-Z0-9]{4}$/.test(v)){
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+
+					input.on('keyup', function(){
+						text = $(this).val()
+
+						if(validate(text)){
+							save.removeClass('disabled')
+						}
+						else
+						{
+							save.addClass('disabled')
+						}
+					})
+
+					save.on('click', function(){
+
+						var text = input.val()
+
+						if (validate(text)){
+							
+							self.sdk.captcha.make(text, function(error, captcha){
+
+								if(error){
+									sitemessage("Words doesn't match")
+								}
+								else{
+									if (captcha.done){
+										actions.next()
+									}
+								}
+
+
+								
+		
+							}, true)
+
+						}
+					})
+
+					redo.one('click', function(){
+
+						self.app.platform.m.log('userwisard_captcha_redo')
+
+						actions.redo()
+					})
+				}
+			},
 
 			email : {
 
@@ -65,14 +162,28 @@ var filluser = (function(){
 						}
 					})
 						
+
+					
 					self.sdk.users.requestFreeMoney(function(res, err){
 
+						if(!res){
+
+							if (err == 'captcha'){
+								needcaptcha = true;
+
+								if (current == 2){
+									actions.to(0)
+								}
+							}
+
+							return
+						}
 
 						self.app.platform.sdk.node.transactions.clbks.filluser = function(){
 
 							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-								if (amount > 0 && current == 1){
+								if (amount > 0 && current == 2){
 
 									self.app.platform.m.log('userwisard_money_success')
 
@@ -94,8 +205,8 @@ var filluser = (function(){
 					else
 					{
 
+						console.log("CLBK", current)
 						clbk()	
-
 					}
 
 						
@@ -103,12 +214,7 @@ var filluser = (function(){
 					
 				},
 
-				ret : false,
-
 				render : 'email',
-
-				
-
 				after : function(el, pel, time){
 
 					var save = function(email, clbk){
@@ -237,18 +343,20 @@ var filluser = (function(){
 				id : 'money',
 
 				prev : function(clbk){
+					console.log("MO")
 
 					self.app.platform.sdk.ustate.me(function(mestate){
 						if(!mestate){
-							actions.to(4)
+							actions.to(5)
 						}
 						else
 						{
 							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-								if (amount > 0){
+								if (amount > 0 && current == 2){
 
 									self.app.platform.m.log('userwisard_money_success')
+									
 
 									actions.next()
 
@@ -260,7 +368,7 @@ var filluser = (function(){
 
 										self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-											if (amount > 0 && current == 1){
+											if (amount > 0 && current == 2){
 
 												self.app.platform.m.log('userwisard_money_success')
 
@@ -290,7 +398,13 @@ var filluser = (function(){
 
 				after : function(el, pel, time){
 
-					console.log("AFTER")
+					console.log('needcaptcha', needcaptcha)
+
+					if (needcaptcha){
+						actions.to(0)
+
+						return
+					}
 
 
 					actions.timer(el.find('.time'), time || 59, function(){
@@ -298,13 +412,13 @@ var filluser = (function(){
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){							
 
-							if(current == 1 || current == 5){
+							if(current == 2 || current == 6){
 
 								if(amount > 1){
 
 									self.app.platform.m.log('userwisard_money_success')
 
-									actions.to(2)
+									actions.to(3)
 								}
 								else
 								{
@@ -334,7 +448,7 @@ var filluser = (function(){
 				prev : function(clbk){
 					self.app.platform.sdk.ustate.me(function(mestate){
 						if(!mestate){
-							actions.to(4)
+							actions.to(5)
 						}
 						else
 						{
@@ -445,7 +559,7 @@ var filluser = (function(){
 								self.app.platform.m.log('userwisard_network_success')
 
 								clearInterval(networkInterval)
-								actions.to(1)
+								actions.to(2)
 							}
 
 						})
@@ -467,11 +581,11 @@ var filluser = (function(){
 
 						console.log("AMOUNT< CURRENT", amount, current)
 
-						if (amount > 0 && current == 5){
+						if (amount > 0 && current == 6){
 
 							self.app.platform.m.log('userwisard_money_success')
 
-							actions.to(2)
+							actions.to(3)
 
 						}
 					})
@@ -487,13 +601,20 @@ var filluser = (function(){
 
 		var current = -1, nextBlock = false;
 
-		var arrange = ['email', 'money', 'settings', 'welcome', 'network', 'moneym']
+		var arrange = ['captcha', 'email', 'money', 'settings', 'welcome', 'network', 'moneym']
 
 		var actions = {
 			to : function(step, clbk){
 				current = step;
 				actions.makeStep(clbk)
 			},
+
+			redo : function(clbk){
+				actions.makeStep(function(){
+
+				})
+			},
+
 			next : function(clbk){
 
 				if(nextBlock) return 
@@ -502,14 +623,14 @@ var filluser = (function(){
 
 				actions.makeStep(function(){
 
-					
-
 				})
 			},
 
 			makeStep : function(clbk){
 
 				var step = steps[arrange[current]];
+
+				console.log('step', step)
 
 				if (step){			
 
@@ -524,8 +645,6 @@ var filluser = (function(){
 
 						renders.panel(step, function(pel){
 							renders.step(step, function(el){
-
-								console.log("SCROLLTOTOP")
 
 								_scrollTop(el, scrollel)
 
@@ -625,6 +744,7 @@ var filluser = (function(){
 
 				el.c.find('.step').width(w)
 
+
 				line.css('margin-left', '-' + ((current) * w) + 'px')
 
 				line.width(w * arrange.length)
@@ -648,9 +768,17 @@ var filluser = (function(){
 
 					el.c.find('.step').width(w)
 
-					line.css('margin-left', '-' + ((current) * w) + 'px')
-
+					
 					line.width(w * arrange.length)
+
+
+					var m = '-' + ((current) * w) + 'px'
+
+					line.css('margin-left', m)
+					/*line.animate({
+						'margin-left' : m
+					})*/
+					
 
 					s.closest('.step').addClass('active')
 
@@ -668,6 +796,23 @@ var filluser = (function(){
 					el :   el.panel,
 					data : {
 						step : step
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			captcha : function(el, clbk){
+				self.shell({
+
+					name :  'captcha',
+					el :   el,
+					data : {
+						captcha : steps.captcha.current
 					},
 
 				}, function(_p){
