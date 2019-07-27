@@ -100,16 +100,26 @@ var test = (function(){
 
 					if (err){
 
+						el.c.find('.errorname').fadeIn();
+
 						if(err == 'namelength'){
-							el.c.find('.errorname').fadeIn();
+							
 							el.c.find('.errorname span').html('The name length can be more than 20 symbols');
-
-							var pn = el.c.find('[parameter="name"] input')
-
-								pn.focus()
-
-								_scrollTo(pn)
+							
 						}
+
+						if(err == 'pocketnet'){
+							
+							el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');
+							
+						}
+
+
+						var pn = el.c.find('[parameter="name"] input')
+
+							pn.focus()
+
+							_scrollTo(pn)
 
 						return false;
 					}
@@ -347,8 +357,18 @@ var test = (function(){
 						}
 
 						if (id == 'name'){
+
+							var hash = tempInfo[parameter.id].toLowerCase().replace(/[^a-z]/g,'')
+
+							if (hash.indexOf('pocketnet') > -1) {
+
+								el.c.find('.errorname').fadeIn();
+								el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');	
+
+								return
+							}
 							
-							if(tempInfo[parameter.id].length > 20){
+							if (tempInfo[parameter.id].length > 20){
 								el.c.find('.errorname').fadeIn();
 								el.c.find('.errorname span').html('The name length can be more than 20 symbols');	
 							}

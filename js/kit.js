@@ -1072,6 +1072,12 @@ UserInfo = function(){
 	self.validation = function(){
 
 		if(self.name.v.length > 20) return 'namelength'
+
+		var hash = self.name.v.toLowerCase().replace(/[^a-z]/g,'')
+
+		console.log('hash, ', hash, hash.indexOf('pocketnet'))
+
+		if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
 		
 		return false
 

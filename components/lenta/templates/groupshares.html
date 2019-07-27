@@ -2,7 +2,13 @@
 var i = index || 0;
 
 shares = _.filter(shares, function(s){
-	if(s.address != 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82'){
+
+	var name = deep(app, 'platform.sdk.usersl.storage.' + s.address + '.name') || ''
+	
+	
+	name = name.toLowerCase().replace(/[^a-z]/g,'')
+
+	if(s.address != 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' && (name.indexOf('pocketnet') == -1 || s.address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd') ){
 		return true
 	}
 })
