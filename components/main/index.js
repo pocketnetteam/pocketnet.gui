@@ -381,37 +381,26 @@ var main = (function(){
 
 			if(!isMobile()){
 
-				//self.app.platform.sdk.ustate.me(function(_mestate){
+				self.app.platform.sdk.user.get(function(u){
+
+					if(u.postcnt < 10){
+						setTimeout(function(){
+
+							if (el.c)
+
+								plissing = self.app.platform.api.plissing({
+									el : el.c.find('.addbutton'),
+									text : "Post something & earn Pocketcoin",
+									left : true,
+									white : true
+								})
+
+						}, 7000)
+					}
 
 					
 
-					self.app.platform.sdk.user.get(function(u){
-
-						if(u.postcnt < 20){
-							setTimeout(function(){
-
-								if (el.c)
-	
-									plissing = self.app.platform.api.plissing({
-										el : el.c.find('.addbutton'),
-										text : "Post something & earn Pocketcoin",
-										left : true,
-										white : true
-									})
-	
-							}, 7000)
-						}
-
-						
-
-					})
-
-					
-
-				//})
-
-				
-
+				})
 			}
 				
 		}

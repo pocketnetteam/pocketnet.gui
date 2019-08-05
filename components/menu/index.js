@@ -10,6 +10,7 @@ var menu = (function(){
 			searchBlurTimer = null,
 			autoUpdate = null,
 			sitenameToNav = null,
+			plissing = null,
 			autoUpdateWallet = null;
 
 		var loc = new Parameter({
@@ -333,6 +334,32 @@ var menu = (function(){
 							
 						}
 					}
+
+
+					if(!isMobile()){
+
+						self.app.platform.sdk.user.get(function(u){
+							
+							console.log('u.postcnt', u.postcnt)
+
+							var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
+
+							if(u.postcnt > 10 && n < 100){
+
+								setTimeout(function(){
+		
+									plissing = self.app.platform.api.plissing({
+										el : el
+									})
+		
+								}, 1000)
+
+							}
+		
+						})
+					}
+
+
 				},
 				click : function(){
 

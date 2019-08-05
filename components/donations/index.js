@@ -19,7 +19,11 @@ var donations = (function(){
 			'PRV1eoYkhA5PGkASm2tyD12xwdQnigbpkp', 
 			'PRCeHituQ5WN2EXRZz4t9qTYyCBqTc4g4M', 
 			'P9V67HjuApdEhj4DZxNnibxEqSnmCPbxvB',
-			'PA57U1QmmowNzSaz6ThG2EPs34QCsLyksL'
+			'PA57U1QmmowNzSaz6ThG2EPs34QCsLyksL',
+			'PL7RNWypccYBPsDAygW3H4aKfzGBwMeWyt',
+			'PDUGAwFmRRSnSVTtcAuyVrTLAREm6HN2BC',
+			'PPvPW1sUAA1KPxcwbVKVk2EEp3uWkAKn2U',
+			'PWkUgSod6FEyVq8Ve1dWChWMC8HcXJcLro'
 		]
 
 		var thankparameters = {

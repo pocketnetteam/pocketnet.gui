@@ -836,12 +836,12 @@ Platform = function(app, listofnodes){
 
 					h += '			<div class="plissingTipCell">'
 					h += '				<div class="plissingTip all">'
-					h += p.text
+					h += (p.text || '')
 					h += '				</div>'
 
 					if(p.textHover){	
 						h += '				<div class="plissingTip hover">'
-						h += p.textHover
+						h += (p.textHover || '')
 						h += '				</div>'
 					}
 
@@ -11018,10 +11018,10 @@ Platform = function(app, listofnodes){
 									self.sdk.user.survey()
 								}, 300000)*/
 
-							
+								
 								/*setTimeout(function(){
 
-									self.sdk.node.transactions.kr(2000, 100, function(){
+									self.sdk.node.transactions.kr(500, 100, function(){
 										console.log("END")
 									})
 

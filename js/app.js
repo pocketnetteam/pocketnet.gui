@@ -81,7 +81,7 @@ Application = function(p)
 	self.options = {
 
 		nav : {
-			navPrefix : '/pocketnet/',
+			navPrefix : '/',
 		},
 
 		name : 'PCRB',
@@ -188,51 +188,6 @@ Application = function(p)
 		}
 
 	}
-
-	/*self.backMap = [
-
-		{
-			level : 0,
-			href : 'index',
-
-			childrens : [
-
-				{
-					level : 1,
-					href : 'author',
-
-					childrens : [
-						{
-							level : 2,
-							href : 's'
-						},
-
-						{
-							level : 2,
-							href : 'userpage'
-						}
-					]
-				},
-				{
-					level : 1,
-					href : 'chat'
-				},
-
-				{
-					level : 1,
-					href : 's'
-				},
-
-				{
-					level : 1,
-					href : 'share'
-				}
-				
-			]
-		},
-	
-
-	]*/
 
 	self.options.backmap = self.backMap
 

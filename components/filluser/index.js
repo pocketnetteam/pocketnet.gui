@@ -86,7 +86,7 @@ var filluser = (function(){
 
 					var validate = function(v){
 
-						if(/^[a-zA-Z0-9]{4}$/.test(v)){
+						if(/^[a-zA-Z0-9]{5}$/.test(v)){
 							return true;
 						}
 						else
@@ -115,14 +115,28 @@ var filluser = (function(){
 							
 							self.sdk.captcha.make(text, function(error, captcha){
 
-								if(error){
+								console.log('error', error)
+
+								if (error == 'captchashots'){
+
 									sitemessage("Words doesn't match")
+
+									actions.redo()
+
+									return
 								}
-								else{
-									if (captcha.done){
-										actions.next()
-									}
+
+								if (error){
+									sitemessage("Words doesn't match")
+
+									return 
 								}
+
+							
+								if (captcha.done){
+									actions.next()
+								}
+						
 
 
 								
