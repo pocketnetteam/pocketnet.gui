@@ -32,14 +32,13 @@ var faq = (function(){
 						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.core/releases/latest">https://github.com/pocketnetteam/pocketnet.core/releases/latest</a></div><div>With any questions email core@pocketnet.app</div>',
 					}
 		
-		
 				]
 		
 			},
 		
 			{
 		
-				name : 'Pocketnet Roadmap',
+				name : 'Pocketnet',
 				id : 'roadmap',
 		
 				group : [
@@ -317,6 +316,11 @@ var faq = (function(){
 						id : 'ecosystem4',
 						q : 'What if users post illegal content, pornography and SPAM?',
 						a : '<div>Pocketnet is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is policed by the users. Any illegal content is flagged and removed from the platform using the Wikipedia model. This means that users with highest reputation can police the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Also, users are explicitly encouraged to flag illegal content OR content that threatens mass adoption of Pocketnet, not simply the content they find offensive. To make sure that Pocketnet is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
+					},
+					{
+						id : 'ecosystem5',
+						q : 'Who runs the Pocketnet?',
+						a : '<div>There is no corporate entity or single individual who owns or controls the Pocketnet.</div><div>The Designer of the Pocketnet, Daniel Sachkov changed his main focus in the Summer of 2019 he is now doing research on further decentralization of blockchain technology that will benefit everyone. He handed control of the Project in accordance with the idea of a full decentralized social media architecture and design over to the community and the Nodes who run the Network.</div><div>A team of capable, changing developers and community volunteers is working on the realisation of his Vision ever since. </div>',
 					},
 					
 				]

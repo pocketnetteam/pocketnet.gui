@@ -197,8 +197,8 @@ var s = (function(){
 					mid : 'search',
 
 					essenseData : {
-						search : true,
-
+						search : true,	
+						hr : 'index',
 						searchValue : value,
 
 						loader : function(clbk){

@@ -577,7 +577,7 @@ var author = (function(){
 						author : author.address,
 						byauthor : true,
 
-						hr : 'author?address=' + author.address + '&'
+						hr : app.platform.api.name(author.address).toLowerCase() + "?"
 				
 					},
 					
@@ -749,13 +749,18 @@ var author = (function(){
 
 				author = {};
 
+				var ed = settings.settings.essenseData || {}
+
 				var p = parameters();
 
 				_state = settings.state
 
+				p.address || (p.address = ed.address)
+
+
 				self.sdk.users.addressByName(p.address, function(address){
 
-					if(address){
+					if (address){
 						author.address = address
 
 						self.sdk.users.get(author.address, function(){

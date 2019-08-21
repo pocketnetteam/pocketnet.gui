@@ -532,7 +532,7 @@ nModule = function(){
 			}
 			else
 			{
-				url = appPath + self.componentsPath + (p.turi || self.map.uri)
+				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 			}
 
 				url += '/templates/' + p.name + '.html';
@@ -555,9 +555,10 @@ nModule = function(){
 		}
 	}
 
-	self.fastTemplate = function(name, clbk, data){
+	self.fastTemplate = function(name, clbk, data, turi){
 		self.loadTemplate({
-			name : name
+			name : name,
+			turi : turi || "",
 		}, function(template){
 
 			self.renderTemplate(template, function(html){
@@ -566,6 +567,7 @@ nModule = function(){
 					clbk(html, template)
 
 			}, {
+				
 				data : (data || null)
 			})
 		})
@@ -609,7 +611,6 @@ nModule = function(){
 
 						if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
 
-							console.log("SCROLLTOP1")
 
 							_scrollTop(0, null, 50);
 						}
@@ -743,8 +744,6 @@ nModule = function(){
 
 	self.parametersHandler = function(){
 		_.each(self.essenses, function(e){
-
-
 
 			if (e.parametersHandler)
 				e.parametersHandler()

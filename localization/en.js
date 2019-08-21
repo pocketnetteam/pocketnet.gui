@@ -303,7 +303,9 @@ ____loclib.checkScoreError = "You must fill in required profile info before usin
 ____loclib.checkScoreErrorLight = "Account is not activated";
 ____loclib.timestamperror = "Time in application and in node do not match";
 
-
+// Error Page 404
+____loclib.e404 = "ERROR 404";	
+____loclib.e404e = "Page not Found. Return to Main Page";	
 ____loclib.postLimitLight = function(v){
 	return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
 }

@@ -359,23 +359,26 @@
 				&.metapanel{
 					width: 50%;
 					.metapanelitem{
-						opacity: 0;
+						opacity: 0.6;
 						margin-left: 2 * @rhythm;
 						cursor: pointer;
 						float: right;
 						font-size: 0.8em;
-						color : @color-gray-slight;
+						color : #fff;
+						width: 22px;
+						height: 22px;
+						line-height: 22px;
+						margin-right: 11px;
+						text-align: center;
+						border-radius: 50%;
+						color : @color-gray2;
 						.transition(0.3s);
 
 						&:hover{
-							color : @color-main;
+							color : #fff;
+							background: @color-gray2;
 						}
 
-						&.complain{
-							&:hover{
-								color : @color-bad;
-							}
-						}
 					}
 				}
 			}

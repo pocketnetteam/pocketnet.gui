@@ -139,6 +139,18 @@ var help = (function(){
 				
 
 			},
+			node : function(page){
+				this.page(page, function(_el){
+
+					var id = 'fe88f86430a018803921b338a7e629f9c9a52a2b4e3a36056d2adc0f0c74b5b4'
+
+					self.app.platform.papi.post(id, _el.find('.lenta'), function(e, p){					
+						external = p
+					})
+
+				
+				})
+			},
 			
 			videos : function(page){
 				this.page(page, function(_el){

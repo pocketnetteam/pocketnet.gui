@@ -261,41 +261,25 @@ var post = (function(){
 
 			complain : function(clbk){
 
-				var complainShare = share.complain();
-
 			
-				self.sdk.node.transactions.create.commonFromUnspent(
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
 
-					complainShare,
+					essenseData : {
+						item : 'post',
+						obj : share,
 
-					function(tx, error){
-
-
-						topPreloader(100)
-
-						if(!tx){
-
-							el.postWrapper.addClass('showError');
-
-							sitemessage(errors.complain[error])
+						success : function(){
 							
-							if (clbk)
-								clbk()
 						}
-						else
-						{
+					},
 
-							dialog({
-								html : "<b>TXID:</b> " + tx.txid,
-								class : "one"
-							})
-
-							if (clbk)
-								clbk(true)
-						}
-
+					clbk : function(){
+						
 					}
-				)
+				})
 			},			
 
 			unsubscribe : function(clbk){
@@ -356,6 +340,13 @@ var post = (function(){
 		}
 
 		var events = {
+			metmenu : function(){
+				var _el = $(this);
+				var id = share.txid;
+
+				self.app.platform.api.metmenu(_el, id, actions)
+
+			},
 			next : function(){
 
 				if(el.wnd.scrollTop() + el.wnd.height() > el.wnd.find('>div#post').height() - 400) {
@@ -673,7 +664,7 @@ var post = (function(){
 									el.share.find('.sharesocial').on('click', events.sharesocial)
 									el.share.find('.asubscribe').on('click', events.subscribe)
 									el.share.find('.aunsubscribe').on('click', events.unsubscribe)
-
+									el.share.find('.metmenu').on('click', events.metmenu)
 
 									if (clbk)
 										clbk()

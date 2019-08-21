@@ -72,10 +72,13 @@
 			
 			</div>
 
-			<div class="sendcoins workstation"> 
-
+			<div class="reciever">
+				<div class="labelWrapper workstation">
+					<%= d.parameters.message.name %>
+				</div>
 			</div>
 		</div>
+
 		<div class="row table">
 			<div class="amount">
 				<div class="inputWrapper">
@@ -83,16 +86,30 @@
 				</div>
 			</div>
 
+			<div class="changer">
+			
+			</div>
+
+			<div class="reciever">
+				<%= d.parameters.message.input() %>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="amount">
+			</div>
+
 			<div class="changer changerremove">
 			
 			</div>
 
 			<div class="sendcoins"> 
-
 				<button class="calculateFee"><i class="fas fa-chevron-circle-right"></i> <%=e('calcfeesandsend')%></button>
-
 			</div>
 		</div>
+
+
+		
 	</div>
 
 	<div class="actionbody fadeInByElementStep">

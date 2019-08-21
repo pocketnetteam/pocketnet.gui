@@ -233,6 +233,10 @@ var comments = (function(){
 
 				actions.links(id, v);
 				actions.message(id, v)
+
+				if (areas[id])
+					areas[id].___inited = true
+
 			},
 
 			fastreply : function(reply){
@@ -279,8 +283,6 @@ var comments = (function(){
 
 					var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
 
-
-
 					var str = '@' + (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address) + ',  '
 
 					if(address == self.app.platform.sdk.address.pnet().address) str = ''
@@ -290,6 +292,13 @@ var comments = (function(){
 					areas[id] = area
 
 					el.focus();
+
+				
+					el.on('blur', function(){
+						if(!area.___inited){
+							actions.removeForm(id)
+						}
+					})
 
 					el.closest('.answer').addClass('active')
 
@@ -724,7 +733,8 @@ var comments = (function(){
 
 								_p.el.find('.emojionearea-editor').focus()
 
-								_p.el.addClass('active')		
+								_p.el.addClass('active')	
+								
 
 								ed.init = false;
 							}
@@ -744,7 +754,8 @@ var comments = (function(){
 			    _p.el.find('.emojionearea-editor').on('focus', function(){
 			    	actions.process(p.id || '0')	
 
-			    	_p.el.addClass('active')
+					_p.el.addClass('active')
+				
 			    })
 
 			    _p.el.find('.emojionearea-editor').on('blur', function(){

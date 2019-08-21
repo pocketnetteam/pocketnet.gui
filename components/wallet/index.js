@@ -82,6 +82,17 @@ var wallet = (function(){
 					}
 				}),
 
+				message : new Parameter({
+					name : "Message",
+					id : 'message',
+					type : "STRING",
+					placeholder : "Your message",
+					
+					format : {
+						Length : 80
+					}
+				}),
+
 				fees : new Parameter({
 					name : self.app.localization.e('wsincludefees'),
 					type : "VALUES",
@@ -624,6 +635,8 @@ var wallet = (function(){
 
 				var prepareClbk = function(addresses, outputs, feesMode){
 
+					console.log('outputs', outputs)
+
 					self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
 
 						if(err){
@@ -647,6 +660,9 @@ var wallet = (function(){
 
 				var amount = send.parameters.amount.value;
 				var feesMode = send.parameters.fees.value;
+				var message = send.parameters.message.value;
+
+
 				var addresses = actions.sendAddresses();
 				var outputs = [];
 
@@ -685,6 +701,8 @@ var wallet = (function(){
 					address : reciever,
 					amount : amount
 				})
+
+				self.sdk.wallet.embed(outputs, message)
 
 				prepareClbk(addresses, outputs, feesMode)
 			}
@@ -1506,6 +1524,8 @@ var wallet = (function(){
 							_p.el.find('.sendtransaction').on('click', function(){
 
 								actions.prepareTransaction(f, function(addresses, outputs, totalFees, feesMode){
+
+									console.log('_.clone(outputs)', _.clone(outputs))
 
 									self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), totalFees, feesMode, function(err, inputs, _outputs){
 

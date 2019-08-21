@@ -1,7 +1,11 @@
-<% _.each(users, function(user){ %>
+<% _.each(users, function(user){ 
+	
+	var name = app.platform.api.clearname(decodeURIComponent(user.name))
+	
+	%>
 	<div class="user">
 
-		<a href="author?address=<%-user.address%>">
+		<a href="<%-encodeURIComponent(user.name.toLowerCase())%>">
 
 			<div class="tableview">
 
@@ -20,7 +24,7 @@
 				</div>
 				<div class="nameWrapper">
 					<div class="name">
-						<span><%-decodeURIComponent(user.name || user.address) %></span>
+						<span><%-name %></span>
 					</div>
 				</div>
 

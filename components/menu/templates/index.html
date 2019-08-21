@@ -178,7 +178,7 @@
 								<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
 								
 								<div class="icon">
-									<a href="author?address=<%-user.address.value.toString('hex')%>">
+									<a href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
 										<div class="usericon" image="<%-src || ''%>">
 
 											<% if(!src) {%>

@@ -113,7 +113,6 @@ Nav = function(app)
 		load : function(){
 			this.chain = JSON.parse(localStorage['backchain'] || "[]");
 
-			console.log('this.chain', this.chain)
 
 			if(!this.chain.length){
 				this.clearAll()
@@ -377,6 +376,16 @@ Nav = function(app)
 
 	var core = {
 
+		dynamicmap : function(p, clbk){
+			if (self.dynamic){
+				self.dynamic(p, clbk)
+			}
+			else{
+				if (clbk)
+				    clbk()
+			}
+		},	
+
 		removeWindows : function(href){
 			var p = parameters(href, true)
 
@@ -412,6 +421,7 @@ Nav = function(app)
 
 			var run = true;
 
+		
 
 			if((p.history || p.loadDefault) && options.history)
 			{
@@ -448,6 +458,8 @@ Nav = function(app)
 						return;
 					}
 				}
+
+				
 
 				if(p.completeHref == current.completeHref && !p.loadDefault)
 				{
@@ -486,7 +498,8 @@ Nav = function(app)
 						}
 					}
 
-					if(p.href && !p.inWnd){
+					if (p.href && !p.inWnd){
+
 						current.href = p.href;
 						current.completeHref = p.completeHref;
 						current.module = p.module;		
@@ -792,10 +805,33 @@ Nav = function(app)
 			if(!p.map)
 			{
 
-				p.clbk("map for module isn't exist")
+				core.dynamicmap(p, function(err, res){
 
-				p.href = 'page404'
-				p.map = module.find(p.href);
+					if(err){
+						p.clbk("map for module isn't exist")
+						p.href = 'page404'
+						p.map = module.find(p.href);
+
+						core.load(p)
+					}
+
+					else{
+
+						p.id = res.id;
+						p.essenseData = _.extend(p.essenseData || {}, res.extra || {})
+
+						//delete p.href;
+
+
+						core.load(p)
+
+					}
+
+				})
+
+				
+				
+				return
 			}
 
 			/*if(p.history){
@@ -988,7 +1024,6 @@ Nav = function(app)
 					var eve = function(){
 						var href = core.thisSiteLink($(this).attr('href'));
 
-						console.log("HREF", href)
 
 						var handler = $(this).attr('handler') || null
 
@@ -1173,7 +1208,6 @@ Nav = function(app)
 			if (p.href == 'blank')
 				p.href  = 'index'
 
-			console.log('p.href', p.href)
 
 			if(p.href.split("?")[0] == 'index'){
 				backManager.clearAll()	

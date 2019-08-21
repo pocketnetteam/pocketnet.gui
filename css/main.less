@@ -2351,19 +2351,7 @@ input[type=radio].radio:checked + label {
     }
 }
 
-.usericon{
-    background: #F9F6F6;
-    color : #647CA7;
-    .shadowSmall();
-    border-radius: 50%;
-    height : 6 * @rhythm;
-    width: 6 * @rhythm;
-    text-align: center;
-    line-height : 6 * @rhythm;
-    font-size: 1em;
-    overflow: hidden;
 
-}
 
 .chats{
     position : fixed;
@@ -3887,7 +3875,7 @@ input[type=radio].radio:checked + label {
 
 .lighttooltip{    
     
-    z-index: 30!important;
+    /*z-index: 30!important;*/
     max-height: 500px;
 
     &.validation{
@@ -3967,7 +3955,19 @@ input[type=radio].radio:checked + label {
         }
     }
 }
+.usericon{
+    background: #F9F6F6;
+    color : #647CA7;
+    .shadowSmall();
+    border-radius: 50%;
+    height : 6 * @rhythm;
+    width: 6 * @rhythm;
+    text-align: center;
+    line-height : 6 * @rhythm;
+    font-size: 1em;
+    overflow: hidden;
 
+}
 .userpic{
     width: 40px;
     height: 40px;
@@ -4016,8 +4016,6 @@ input[type=radio].radio:checked + label {
             color : @color-bad; 
         }
     }
-
-
 
     .commentmessagewrapper{
 
@@ -4161,6 +4159,15 @@ input[type=radio].radio:checked + label {
         min-width: 170px;
         font-size: 0.8em;
     }  
+
+    .opmessage{
+        margin-top : @rhythm;
+        font-size: 0.9em;
+
+        span{
+            color : @color-main;
+        }
+    }
 }
 
 

@@ -26,6 +26,7 @@ if(share.settings.v == 'a'){
 	view = 'article'
 }
 var bigmessage = false;
+var name = app.platform.api.name(share.address)
 
 var metadisplay = function(){ %>
 
@@ -36,18 +37,13 @@ var metadisplay = function(){ %>
 
 				<div class="authorTable table">
 					<div class="authorCell">
-						<%
+						<% if(!ed.authAction) {%>
 
-
-						 if(!ed.authAction) {%>
-
-							<a href="author?address=<%-share.address%>">
+							<a href="<%-app.platform.api.authorlink(share.address)%>">
 
 						<% } %>
-							<b><span><%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %></span></b>
 						
-							
-							
+							<b><span><%-name || share.address %></span></b>
 
 						<% if(!ed.authAction) {%>
 							</a>
@@ -143,7 +139,7 @@ var metadisplay = function(){ %>
 			
 			var nm = m;
 
-			if(typeof all == 'undefined'){
+			if(typeof all == 'undefined' || !all){
 
 				nm = trimHtml(m, 750);
 
@@ -284,7 +280,7 @@ var metadisplay = function(){ %>
 
 				<% if(!ed.authAction) {%>
 				
-					<a href="author?address=<%-share.address%>">
+					<a href="<%-app.platform.api.authorlink(share.address)%>">
 
 				<% } %>
 

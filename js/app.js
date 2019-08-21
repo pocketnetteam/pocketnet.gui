@@ -81,7 +81,7 @@ Application = function(p)
 	self.options = {
 
 		nav : {
-			navPrefix : '/',
+			navPrefix : '/pocketnet/',
 		},
 
 		name : 'PCRB',
@@ -246,6 +246,31 @@ Application = function(p)
 			}
 
 		})
+
+		self.nav.dynamic = function(p, clbk){
+
+
+			self.platform.sdk.users.addressByName((p.href), function(r){
+
+				if (r){
+					if (clbk)
+						clbk(null, {
+
+							id : 'author',
+							extra : {
+								address : r
+							}
+
+						})
+				}
+				else{
+					if (clbk)
+						clbk('notfound')
+				}
+
+			})
+
+		}
 
 	}
 

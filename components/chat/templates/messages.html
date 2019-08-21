@@ -11,6 +11,16 @@ _.each(messages, function(message){
 
 	var n = deep(app, 'platform.sdk.usersl.storage.'+message.f+'.name') || message.f
 
+	var name = n
+	
+		name = name.toLowerCase().replace(/[^a-z]/g,'')
+
+	if( (name.indexOf('pocketnet') > -1 && message.f != 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd') ){
+		return true
+	}
+
+
+
 	var src = deep(app, 'platform.sdk.usersl.storage.' + message.f + '.image')
 
 
@@ -42,7 +52,8 @@ _.each(messages, function(message){
 	<div class="chatmessage <%-read%> <%-mine%> <%-temp%> <%-imagePreloader%>" id="<%-message.tm + message.f%>">
 		<div class="iconWrapper">
 			<div class="icon">
-				<a href="author?address=<%-message.f%>">
+
+				<a href="<%-app.platform.api.authorlink(message.f)%>">
 					<div class="usericon" image="<%-src || ''%>">
 
 						<% if(!src) {%>
@@ -137,7 +148,7 @@ _.each(messages, function(message){
 									<b>
 	
 									<% if(!mine) {%>
-										<span class="name"><a href="author?address=<%-message.f%>"><%-n%>:</a></span>
+										<span class="name"><a href="<%-app.platform.api.authorlink(message.f)%>"><%-n%>:</a></span>
 									<% } else { %>
 										<span class="name">You:</span>
 									<% } %>

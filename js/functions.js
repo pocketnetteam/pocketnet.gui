@@ -3927,7 +3927,7 @@
 				if (self.require) limits[0] = 1;
 				if (self.format.Length) limits[1] = self.format.Length;
 
-				mask.regex = "[а-яА-Яa-zA-Z0-9_]{"+limits.join(',')+"}";
+				mask.regex = "[a-zA-Z0-9_]{"+limits.join(',')+"}";
 
 				masked = true;
 				
@@ -4564,7 +4564,7 @@
 				return input
 			}
 
-			var input = '<input ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" value="' + self.render(true) + '" type="text">';
+			var input = '<input ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';
 
 			return input; 
 		}
@@ -5572,12 +5572,11 @@
 		
 	}
 
-	_scrollTo = function(to, el, time){
+	_scrollTo = function(to, el, time, _if){
 		
 		if(!to) to = $(this);
 
 		var ofssetObj = to.offset();
-
 
 		var offset = (to.height() - $(window).height()) / 2;
 
@@ -5586,6 +5585,7 @@
 			var scrollTop = ofssetObj.top + offset;
 
 			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
+
 
 			_scrollTop(scrollTop, el, time);
 		}

@@ -1,3 +1,5 @@
+<% var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex') ) %>
+
 <div class="infoWrapper">
 	<div class="work">
 		<div class="cwrapper table">
@@ -23,7 +25,7 @@
 				<div class="infomain">
 					<div class="captionWrapperFloat">
 						<div class="caption">
-							<b class="adr"><%-deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex')%></b>
+							<b class="adr"><%-name%></b>
 						</div>
 						
 						<% if(deep(app, 'platform.sdk.user.storage.me.name')) {%>
@@ -42,8 +44,7 @@
 					
 
 					<div class="tips">
-						
-						<a href="author?address=<%-user.address.value.toString('hex')%>">
+						<a href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">
 							<button class="contrast profile"><%=e('profile')%></button>
 						</a>
 						

@@ -519,16 +519,12 @@ var platformRTC = function(p){
 
 						initOnlineListener()
 						
-						console.log("OFFLINE")
 					}
 					else
 					{
 
-						console.log("RECONNECT")
 						
 						self.psinit(function(){
-
-							console.log("RECONNECT TO CHATS", self.chats)
 
 							_.each(self.chats, function(ch){
 								ch.remote.lastmessages()
@@ -788,8 +784,6 @@ var platformRTC = function(p){
 			connection.onopen = function(){
 
 				opened = true;
-
-				console.log("OPENED")
 
 				if (clbk)
 					clbk()

@@ -340,7 +340,6 @@ var menu = (function(){
 
 						self.app.platform.sdk.user.get(function(u){
 							
-							console.log('u.postcnt', u.postcnt)
 
 							var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
 
@@ -472,7 +471,6 @@ var menu = (function(){
 
 								self.app.platform.sdk.search.get(value, 'fs', null, null, null, function(r){
 
-									console.log("RESULTS", r)
 
 									renders.results(r || {}, value, function(tpl){
 
@@ -850,7 +848,7 @@ var menu = (function(){
 
 		var renders = {
 			results : function(results, value, clbk){
-				if(!p) p = {};
+				//if(!p) p = {};
 
 				self.shell({
 					name :  'results',

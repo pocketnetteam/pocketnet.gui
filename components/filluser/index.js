@@ -86,7 +86,7 @@ var filluser = (function(){
 
 					var validate = function(v){
 
-						if(/^[a-zA-Z0-9]{5,}$/.test(v)){
+						if(/^[a-zA-Z0-9]{4,}$/.test(v)){
 							return true;
 						}
 						else

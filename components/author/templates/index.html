@@ -5,7 +5,7 @@ var me = null;
 if(user.address.value)
 	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
-
+var name = app.platform.api.name(author.address)
 
 var telements = function(){ %>
 
@@ -70,7 +70,7 @@ var telements = function(){ %>
 					<div class="ccell">
 						<div class="infomain">
 							<div class="caption">
-								<b class="adr"><%-deep(author, 'data.name') || author.address%></b>
+								<b class="adr"><%-name || author.address%></b>
 
 								
 

@@ -390,41 +390,52 @@ var lenta = (function(){
 			///
 			openPost : function(id, clbk){
 
-				self.nav.api.load({
-					open : true,
-					href : 'post?s=' + id,
-					inWnd : true,
-					history : true,
+				if(!isMobile()){
 
-					clbk : function(){					
-
-						if (clbk)
-							clbk();
-
-					},
-
-					essenseData : {
-						share : id,
-						hr : essenseData.hr,
-						like : function(share){
-							renders.stars(share)
+					self.nav.api.load({
+						open : true,
+						href : 'post?s=' + id,
+						inWnd : true,
+						history : true,
+	
+						clbk : function(){					
+	
+							if (clbk)
+								clbk();
+	
 						},
+	
+						essenseData : {
+							share : id,
+							hr : essenseData.hr,
+							like : function(share){
+								renders.stars(share)
+							},
+	
+							next : actions.next
+						}
+					})
 
-						next : actions.next
-					}
-				})
+				}
+				else
+				{
+					var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+					delete initedcommentes[id]
+
+					renders.share(share, null, true)
+				}
+				
 
 			},
 
 			sharesocial : function(id, clbk){
 
-
-
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				if (share){
 
-					var url = 'https://pocketnet.app/' + essenseData.hr + 's='+id+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
+					var url = 'https://pocketnet.app/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
 
 					if (parameters().address) url += '&address=' + (parameters().address || '')
 
@@ -981,180 +992,9 @@ var lenta = (function(){
 			},
 			metmenu : function(){
 				var _el = $(this);
-
 				var id = $(this).closest('.share').attr('id');
-				var address = $(this).closest('.shareTable').attr('address')
 
-				var d = {};
-
-					//d.share = self.app.platform.sdk.node.shares.storage.trx[id]
-
-					d.share = _.find(sharesInview, function(sh){
-						if(sh.txid == id) return true
-					})
-
-				self.fastTemplate('metmenu', function(rendered, template){
-
-					var t = self.app.platform.api.tooltip(_el, function(){
-
-						d.share = self.app.platform.sdk.node.shares.storage.trx[id]
-						d.mestate = mestate
-						
-						return template(d);
-
-					}, function(el){
-
-						el.find('.socialshare').on('click', function(){
-
-							self.app.platform.m.log('sharing_opened_menu', id)
-
-							actions.sharesocial(id)
-
-							_el.tooltipster('hide')	
-						})
-
-						el.find('.subscribe').on('click', function(){
-
-							self.app.platform.api.actions.subscribe(address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
-
-							_el.tooltipster('hide')	
-						})
-
-						el.find('.unsubscribe').on('click', function(){
-
-							self.app.platform.api.actions.unsubscribe(address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
-
-							_el.tooltipster('hide')	
-						})
-
-						el.find('.complain').on('click', function(){
-
-							actions.complain(id)
-
-							_el.tooltipster('hide')	
-
-						})
-
-						el.find('.donate').on('click', function(){
-
-							actions.donate(id)
-
-							_el.tooltipster('hide')	
-
-						})
-
-						el.find('.block').on('click', function(){
-
-							self.app.platform.api.actions.blocking(address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
-
-							_el.tooltipster('hide')	
-
-						})
-
-						el.find('.edit').on('click', function(){
-
-							
-							var em = null;
-							var editing = d.share.alias()
-
-							var hash = editing.shash()
-
-							if (editing.settings.v == 'a'){
-
-								self.nav.api.load({
-									open : true,
-									href : 'article',
-									inWnd : true,
-				
-									history : true,
-				
-									essenseData : {
-										share : editing,
-										hash : hash,
-										save : function(art){
-											
-										},
-				
-										close : function(){
-											
-										},
-										complete : function(){
-											
-										},
-										closeContainer : function(){
-											
-										}
-									}
-								})	
-
-							}
-							else{
-								self.nav.api.load({
-
-									open : true,
-									id : 'share',
-									animation : false,
-									inWnd : true,
-									_id : d.share.id,
-			
-									essenseData : {
-										share : editing,
-										notClear : true,
-										hash : hash,
-
-										cancel : function(){
-											
-											var close = deep(em, 'container.close')
-											if (close)
-												close()
-										},
-
-										post : function(){
-
-											var close = deep(em, 'container.close')
-											
-											if (close)
-												close()
-										}
-									},
-									
-									clbk : function(e, p){
-										em = p;
-										
-									}
-			
-								})
-							}
-				
-								
-
-						
-
-							_el.tooltipster('hide')	
-
-						})
-	
-						
-
-					})
-					
-
-
-				}, d)
-
-				
+				self.app.platform.api.metmenu(_el, id, actions)
 
 			},
 			resize : function(){
@@ -1672,7 +1512,7 @@ var lenta = (function(){
 
 				
 			},
-			share : function(share, clbk){
+			share : function(share, clbk, all){
 
 				var _el = el.shares.find("#" + share.txid);
 				var h = _el.height()
@@ -1687,7 +1527,9 @@ var lenta = (function(){
 					data : {
 						share : share,
 						ed : essenseData,
-						mestate : mestate
+						mestate : mestate,
+
+						all : all || false
 					}					
 
 				}, function(p){
