@@ -1,0 +1,56 @@
+<% 
+
+    var _groups = [{
+
+        key : 'art',
+        caption : "Articles"
+
+    }, {
+        key : 'post',
+        caption : "Posts"
+    }];
+
+    var groups = group(contents, function(c){
+        if(c.settings.v == 'a') return 'art'
+
+        return 'post'
+    })
+
+    var f = _.filter(_groups, function(g){
+        if(groups[g.key]) return true;
+    })
+
+    if(f.length){ %> 
+        
+
+    <div class="contents">
+
+    <% _.each(f, function(g){
+
+         %>
+
+        <div class="cgroup">
+
+            <div class="ccaption">
+                <%= g.caption %>
+            </div>
+
+            <div class="gcontents">
+                <% _.each(groups[g.key], function(cnt){ %>
+
+                    <div class="citem">
+                        <div class="cname">
+                            <span><%= cnt.caption %></span>
+                        </div>
+                    </div>
+
+                <% }) %>
+            </div>
+
+        </div>
+
+    <% }) %>
+
+    </div>
+
+    <% } %> 

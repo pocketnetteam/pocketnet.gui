@@ -142,10 +142,16 @@ Platform = function(app, listofnodes){
 		],
 	}
 
-	var sm = new nModule();
+	var sm = {};
+
+	if(typeof nModule != 'undefined'){
+		sm = new nModule();
 		sm.ajax = app.ajax;
 		sm.app = app;
 		sm.user = app.user;
+	}
+	
+	
 
 	self.applications = {
 		windows : {
@@ -325,6 +331,11 @@ Platform = function(app, listofnodes){
 			},
 		},
 
+		'privatekey': {
+			message : function(){
+				return 'Invalid Private Key'
+			}
+		},
 		'network' : {
 			message : function(){
 				return self.app.localization.e('networkerror')
@@ -681,9 +692,46 @@ Platform = function(app, listofnodes){
 	}
 
 
-	console.log("SADDASDSADDAS")
 
 	self.api = {
+
+		keypair : function(m){
+
+			var keyPair = null;
+
+			if(bitcoin.bip39.validateMnemonic(m)){
+				var seed = bitcoin.bip39.mnemonicToSeed(m)
+
+				var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF() 
+		
+				keyPair = bitcoin.ECPair.fromWIF(d)	  
+			}
+			else{
+
+				try{
+
+					keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex'))
+
+					
+					
+				}
+				catch (e){
+
+					console.error(e)
+
+					try{
+						keyPair = bitcoin.ECPair.fromWIF(m)
+					}
+					catch (e){
+						console.error(e)
+					}
+				}
+
+			}
+
+			return keyPair
+		},
+
 		clearname : function(n){
 			return n.replace(/[^a-zA-Z0-9_ ]/g, "")
 		},
@@ -2251,7 +2299,9 @@ Platform = function(app, listofnodes){
 
 				addresses = _.uniq(addresses)
 
+
 				if (addresses.length){
+
 
 					self.app.ajax.rpc({
 						method : 'getuserstate',
@@ -2259,6 +2309,7 @@ Platform = function(app, listofnodes){
 						success : function(d){
 
 							if(d && !_.isArray(d)) d = [d]
+
 
 							_.each(d || [], function(info){
 								s[info.address] = info
@@ -2271,6 +2322,7 @@ Platform = function(app, listofnodes){
 						},
 
 						fail : function(){
+
 							if (clbk)
 								clbk([])
 						}
@@ -2570,6 +2622,70 @@ Platform = function(app, listofnodes){
 			}
 		},
 
+		contents : {
+			storage : {},
+
+			get : function(address, clbk){
+
+				var st = this.storage
+
+				var timecache = deep(this, 'storage.' + address + ".time")
+
+				if (timecache && timecache.addMinutes(10) < (new Date())){
+
+					if (clbk)
+						clbk(deep(this, 'storage.' + address + ".data"))
+
+					return
+				}
+				
+				self.app.ajax.rpc({
+					method : 'getcontents',
+					parameters : [address],
+					success : function(d){
+
+						
+
+						var list = [];
+						
+						_.each(d || [], function(d){
+
+
+							try{
+								var c = {
+									caption : filterXSS(decodeURIComponent(d.content), {
+										whiteList: [],
+										stripIgnoreTag: true
+									}),
+									time : new Date(d.time),
+									txid : d.txid,
+									settings : JSON.parse(d.settings)
+								}
+
+								list.push(c)
+							}
+							catch (e){
+
+							}
+
+							
+						})
+
+						console.log('d', list)
+
+						st[address] = {
+							data : list,
+							time : new Date()
+						}
+
+						if (clbk)
+							clbk(list)
+					}
+				})
+
+			}
+		},
+
 		usersl : {
 			storage : {},
 		},
@@ -2808,12 +2924,16 @@ Platform = function(app, listofnodes){
 										clbk(null, 'captcha')
 								}
 								else{
+
+									var prms = {
+										address : a,
+										captcha : self.sdk.captcha.done
+									}
+
+
 									self.app.ajax.api({
 										action : 'freeMoney',
-										data : {
-											address : a,
-											captcha : self.sdk.captcha.done
-										},
+										data : prms,
 										success : function(d){
 											if (clbk)
 												clbk(true)
@@ -2825,6 +2945,7 @@ Platform = function(app, listofnodes){
 												clbk(null, deep(d, 'data') || {})
 										}
 									})
+
 								}
 
 								
@@ -2851,8 +2972,8 @@ Platform = function(app, listofnodes){
 						else
 						{
 							var feerate = 0.000001;
-
-							amount || (amount = 0.3);
+							
+							amount || (amount = 0.00002);
 							
 							var outputs = [{
 								address : toAddress,
@@ -2902,7 +3023,7 @@ Platform = function(app, listofnodes){
 								else
 								{
 									var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-									var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
+									var totalFees = Math.min(tx.virtualSize() * feerate, 0.000006);
 
 									
 
@@ -2937,7 +3058,7 @@ Platform = function(app, listofnodes){
 													self.app.platform.sdk.node.transactions.clearUnspents(ids)
 
 													if (clbk)
-														clbk(null, d)
+														clbk(null, d, amount * outputs.length)
 												}
 											})	
 										}
@@ -3006,7 +3127,7 @@ Platform = function(app, listofnodes){
 						{
 							var feerate = 0.000001;
 
-							amount || (amount = 3);
+							amount || (amount = 0.005);
 							
 							var outputs = [{
 								address : toAddress,
@@ -3029,7 +3150,7 @@ Platform = function(app, listofnodes){
 								else
 								{
 									var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-									var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
+									var totalFees = Math.min(tx.virtualSize() * feerate, 0.0005);
 
 									
 
@@ -3064,7 +3185,7 @@ Platform = function(app, listofnodes){
 													self.app.platform.sdk.node.transactions.clearUnspents(ids)
 
 													if (clbk)
-														clbk(null, d)
+														clbk(null, d, amount)
 												}
 											})	
 										}
@@ -3635,15 +3756,24 @@ Platform = function(app, listofnodes){
 				self.sdk.node.transactions.get.unspents(function(unspents){
 					var allunspents = [];
 
+					
+
 					_.each(unspents, function(ua, i){
 
+						
+
 						ua = _.filter(ua, self.sdk.node.transactions.canSpend)
+
+						
 
 						_.each(ua, function(unspent){
 							if (unspent.amount)
 								allunspents.push(unspent)
 						})						
 					})
+
+					
+					
 
 					var totalInWallet = _.reduce(allunspents, function(m, u){
 						return m + Number(u.amount)
@@ -3784,6 +3914,8 @@ Platform = function(app, listofnodes){
 											return i.txid
 										})
 
+										//console.log()
+
 										self.app.platform.sdk.node.transactions.clearUnspents(ids)
 
 										if (clbk)
@@ -3831,68 +3963,73 @@ Platform = function(app, listofnodes){
 
 			send : function(toAddress, mnemonic, amount, clbk, embdedtext){
 
-				mnemonic = mnemonic.replace(/\+/g, ' ');
-
 				var feerate = 0.000001;
 
 				var outputs = [{
 					address : toAddress,
 					amount : amount
 				}]
+					
+				var keyPair = self.api.keypair(mnemonic.replace(/\+/g, ' '))
 
-				var seed = bitcoin.bip39.mnemonicToSeed(mnemonic);
-				var hash = bitcoin.crypto.sha256(Buffer.from(seed));
-				var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();						
-			    var keyPair = bitcoin.ECPair.fromWIF(d);
-				var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
-				 
+				if(!keyPair){
+					if (clbk)
+						clbk('privatekey')
+				}
+				else{
+					var address = self.sdk.address.pnetsimple(keyPair.publicKey, 'p2pkh').address;				 
 
-				this.embed(outputs, embdedtext)
+					this.embed(outputs, embdedtext)
 
-			 	self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function(err, d){
+					self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function(err, d){
 
-			 		if(err){
-			 			if (clbk)
-							clbk(err)
-			 		}
+						if(err){
+							if (clbk)
+								clbk(err)
+						}
 
-			 		else
-			 		{
-			 			if (clbk)
-							clbk(null, d)
-			 		}
-			 	}, true)
+						else
+						{
+							if (clbk)
+								clbk(null, d)
+						}
+					}, true)
+				}
+				
+				
 			
 			},
 
 			sendmany : function(mnemonic, outputs, clbk, embdedtext){
 
-				mnemonic = mnemonic.replace(/\+/g, ' ');
-
 				var feerate = 0.000001;
 
-				var seed = bitcoin.bip39.mnemonicToSeed(mnemonic);
-				var hash = bitcoin.crypto.sha256(Buffer.from(seed));
-				var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();	
+				var keyPair = self.api.keypair(mnemonic.replace(/\+/g, ' '))
 
-			    var keyPair = bitcoin.ECPair.fromWIF(d);
-				var address = self.sdk.address.pnet(keyPair.publicKey, 'p2pkh').address;
-				 
-				this.embed(outputs, embdedtext)
+				if(!keyPair){
+					if (clbk)
+						clbk('privatekey')
+				}
+				else{
+				
+					var address = self.sdk.address.pnetsimple(keyPair.publicKey, 'p2pkh').address;
+					
+					this.embed(outputs, embdedtext)
 
-			 	self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function(err, d){
+					self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function(err, d){
 
-			 		if(err){
-			 			if (clbk)
-							clbk(err)
-			 		}
+						if(err){
+							if (clbk)
+								clbk(err)
+						}
 
-			 		else
-			 		{
-			 			if (clbk)
-							clbk(null, d)
-			 		}
-			 	}, true)
+						else
+						{
+							if (clbk)
+								clbk(null, d)
+						}
+					}, true)
+				}
 			
 			},
 
@@ -4546,6 +4683,8 @@ Platform = function(app, listofnodes){
 					bitcoin.crypto.hash256(comment.serialize()), 
 					Buffer.from(signature.toString('hex'), 'hex')
 				);
+
+				console.log('parameters', parameters)
 
 
 				self.app.ajax.rpc({
@@ -5506,7 +5645,6 @@ Platform = function(app, listofnodes){
 
 					}
 
-
 					if(tx.confirmations < 100 && (tx.coinbase || tx.coinstake)){
 
 						return 100 - tx.confirmations
@@ -5552,7 +5690,7 @@ Platform = function(app, listofnodes){
 
 						}
 					})
-				   },
+				},
 
 				send : function(tx, clbk){
 					var hex = tx.toHex();
@@ -5786,6 +5924,7 @@ Platform = function(app, listofnodes){
 					var amount = 0;
 					var pnet = self.sdk.address.pnet();
 
+					
 					_.each(txids, function(id){				
 
 
@@ -5806,6 +5945,7 @@ Platform = function(app, listofnodes){
 
 							if(r){ 
 								cleared = true;
+
 
 								if (pnet && address == pnet.address){
 									amount = amount + Number(r.amount)
@@ -7862,7 +8002,7 @@ Platform = function(app, listofnodes){
 				var src = deep(author, 'image')
 				
 
-				var link = '<a href="author?address='+author.address+'">'
+				var link = '<a href="'+ encodeURI(author.name.toLowerCase())+'">'
 				var clink = "</a>"
 
 			

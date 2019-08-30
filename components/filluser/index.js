@@ -31,6 +31,7 @@ var filluser = (function(){
 		}
 
 		var needcaptcha = false;
+		var gliperror = false;
 
 		var gettype = function(){
 			var fref = self.app.ref || '';
@@ -54,11 +55,11 @@ var filluser = (function(){
 
 					needcaptcha = false
 
-					if(window.cordova){
+					/*if(window.cordova){
 						actions.next()
 
 						return;
-					}
+					}*/
 
 					self.sdk.captcha.get(function(captcha){
 
@@ -180,6 +181,7 @@ var filluser = (function(){
 					
 					self.sdk.users.requestFreeMoney(function(res, err){
 
+
 						if(!res){
 
 							if (err == 'captcha'){
@@ -188,6 +190,15 @@ var filluser = (function(){
 								if (current == 2){
 									actions.to(0)
 								}
+							}
+
+							if (err == 'error'){
+								gliperror = true
+
+								if (current == 2){
+									actions.to(0)
+								}
+
 							}
 
 							return
@@ -357,7 +368,6 @@ var filluser = (function(){
 				id : 'money',
 
 				prev : function(clbk){
-					console.log("MO")
 
 					self.app.platform.sdk.ustate.me(function(mestate){
 						if(!mestate){
@@ -412,10 +422,14 @@ var filluser = (function(){
 
 				after : function(el, pel, time){
 
-					console.log('needcaptcha', needcaptcha)
-
 					if (needcaptcha){
 						actions.to(0)
+
+						return
+					}
+
+					if (gliperror){
+						actions.to(7)
 
 						return
 					}
@@ -593,8 +607,6 @@ var filluser = (function(){
 
 					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-						console.log("AMOUNT< CURRENT", amount, current)
-
 						if (amount > 0 && current == 6){
 
 							self.app.platform.m.log('userwisard_money_success')
@@ -613,9 +625,68 @@ var filluser = (function(){
 			after : steps.money.after
 		}
 
+		steps.moneyfail = {
+
+			id : 'moneyfail',
+
+			prev : function(clbk){
+
+				clbk()
+			},
+
+			render : 'moneyfail',
+
+			after : function(el){
+				var b = function(){
+					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+						el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " POC")
+					})
+				}
+				
+				b()
+
+				el.find('.check').on('click', function(){
+
+					topPreloader(20);
+
+					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+						
+						topPreloader(100);
+
+						if(amount > 0){
+
+							if (current == 7)
+								actions.to(3);
+
+							delete self.app.platform.sdk.node.transactions.clbks.moneyfail
+						}
+
+						b()
+
+					})	
+
+					self.app.platform.sdk.node.transactions.clbks.moneyfail = function(){
+
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+							if(amount > 0){
+
+								if (current == 7)
+									actions.to(3);
+
+								delete self.app.platform.sdk.node.transactions.clbks.moneyfail
+							}
+						})
+						
+					}
+				})
+			}
+
+		}
+
 		var current = -1, nextBlock = false;
 
-		var arrange = ['captcha', 'email', 'money', 'settings', 'welcome', 'network', 'moneym']
+		var arrange = ['captcha', 'email', 'money', 'settings', 'welcome', 'network', 'moneym', 'moneyfail']
 
 		var actions = {
 			to : function(step, clbk){
@@ -871,6 +942,25 @@ var filluser = (function(){
 				})
 			},
 
+			moneyfail : function(el, clbk){
+				self.shell({
+
+					name :  'moneyfail',
+					el :   el,
+					data : {
+						
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			
+
 			network : function(el, clbk){
 
 				self.shell({
@@ -975,6 +1065,9 @@ var filluser = (function(){
 			primary : primary,
 
 			getdata : function(clbk, p){
+
+				needcaptcha = false;
+				gliperror = false;
 
 				essenseData = p.settings.essenseData || {}
 

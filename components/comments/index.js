@@ -15,7 +15,8 @@ var comments = (function(){
 			share : "hasn't share",
 			messagelength : "Comments have 1000 character limit per comment",
 			money : "hasn't money",
-			network : "network error"	
+			network : "network error",
+			images : self.app.localization.e('maximages'),
 		}
 
 		var mestate;
@@ -24,12 +25,13 @@ var comments = (function(){
 
 		var areas = {};
 
+		var external = null;
+
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var clbks = {
 			post : function(err, alias, _txid, pid, aid, editid, id){
-
 
 				if(_txid != txid) return
 
@@ -65,6 +67,8 @@ var comments = (function(){
 					if (areas[id])
 
 						areas[id].setText('');
+
+					el.c.find('.post .newcommentimages').html('')
 				}
 
 				else
@@ -123,6 +127,136 @@ var comments = (function(){
 		}
 
 		var actions = {
+			editImage : function(id, r, p){
+
+				var comment = currents[id]
+
+				var m = _.map(comment.images.v, function(src, i){
+
+					return {
+						original : src,
+						index : i
+					}
+					
+				})
+
+				var f = _.filter(m, function(f){
+					if(f.original.indexOf('data:image') > -1){
+						return true;
+					}
+				})
+
+				focusfixed = true;
+
+				self.nav.api.load({
+					open : true,
+					id : 'imageGalleryEdit',
+					inWnd : true,
+
+					essenseData : {
+						edit : true,
+						initialValue : r,
+						images : f,
+
+						close : function(){
+							
+						},
+
+						success : function(images, clbk){
+
+							_.each(comment.images.v, function(img, i){
+
+								var edited = _.find(f, function(eimg){
+									if(eimg.index == i) return true;
+								})
+
+								if (edited){
+									comment.images.v[i] = edited.original
+								}
+
+							})
+
+							renders.images(id, p, clbk)
+						}
+					}
+				})
+			},
+			removeImage : function(id, r, p){
+
+				var comment = currents[id]
+
+				var image = comment.images.v.splice(r, 1)[0];
+
+				p.el.find('.imageContainer').each(function(){
+					var el = $(this)
+
+					var v = el.attr('value');
+
+					if (v > r){
+						el.attr('value', v - 1)
+					}
+
+					if(v == r){
+						el.remove();
+					}
+				})
+
+				var elimages = p.el.find('.imagesEmbWr')
+
+				elimages.isotope()
+
+
+			},
+			embedimages : function(id, p){
+				id || (id = '0')
+
+				actions.process(id)
+
+				if (areas[id])
+					areas[id].___inited = true
+
+				var storage = currents[id].export(true)
+	
+				self.nav.api.load({
+					open : true,
+					id : 'embeding',
+					inWnd : true,
+
+					essenseData : {
+						type : 'images',
+						storage : storage,
+						on : {
+						
+							added : function(value){
+
+								var result = true;
+
+								if(!_.isArray(value)) value = [value]
+
+								_.each(value, function(v, i){
+
+									result = currents[id].images.set(v)
+
+								})
+
+								if(!result && errors[type]){
+
+									sitemessage(errors[type])
+
+								}		
+								
+								
+								renders.images(id, p)
+
+							}
+						}
+					},
+
+					clbk : function(s, p){
+						external = p
+					}
+				})
+			},
 
 			removeForm : function(id){
 
@@ -139,7 +273,10 @@ var comments = (function(){
 				var current = currents[id];
 
 				if (current){
-					var e = current.validation();					
+					var e = current.validation();				
+					
+					
+
 
 					if (e){
 						el.c.find('.sending').removeClass('sending')
@@ -147,18 +284,19 @@ var comments = (function(){
 					}
 					else
 					{
-						actions.send(current, function(err, alias){
+						current.uploadImages(self.app, function(){
 
-							//clbks.post(err, alias, txid, pid, aid, editid, id)
+							actions.send(current, function(err, alias){
+								
+							}, pid, aid, editid, id)
+						})
 							
-						}, pid, aid, editid, id)
 					}
 				}
 
 				
 			},
 			send : function(comment, clbk, pid, aid, editid, id){	
-
 
 				self.app.platform.sdk.comments.send(txid, comment, pid, aid, function(err, alias){
 					if(el.c)
@@ -292,13 +430,12 @@ var comments = (function(){
 					areas[id] = area
 
 					el.focus();
-
 				
-					el.on('blur', function(){
+					/*el.on('blur', function(){
 						if(!area.___inited){
 							actions.removeForm(id)
 						}
-					})
+					})*/
 
 					el.closest('.answer').addClass('active')
 
@@ -446,7 +583,7 @@ var comments = (function(){
 
 				var _el = null;
 
-				if(pid) _el = el.c.find("#" + id + ' .answers')
+				if(pid) _el = el.c.find("#" + pid + ' .answers')
 
 					else{
 
@@ -557,10 +694,62 @@ var comments = (function(){
 				}
 
 				
+			},
+
+			openGallery : function(comment, initialValue, clbk){
+				var images = _.map(comment.images, function(i){
+					return {
+						src : i
+					}
+				})
+
+				var num = findIndex(images, function(image){
+
+					if (image.src == initialValue) return true;						
+
+				})
+
+				self.app.nav.api.load({
+					open : true,
+					href : 'imagegallery?s=' + txid + '&num=' + (num || 0) + "&com=" + comment.id,
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						initialValue : initialValue,
+						idName : 'src',
+						images : images,
+
+						gid : txid + comment.id
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+				
 			}
 		}
 
 		var events = {
+			openGallery : function(){
+
+				var _el = $(this)
+
+				var parent = _el.closest('.comment');
+
+				var id = parent.attr('id')
+				var pid = parent.attr('pid')
+
+				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
+
+				if (listpreview && ed.lastComment){
+					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+				}
+
+				actions.openGallery(comment, _el.attr('i'))
+			},
 			replyandreplies : function(){
 				var id = $(this).closest('.firstcomment').attr('id')
 
@@ -592,6 +781,12 @@ var comments = (function(){
 
 				actions.emessage(id, c)
 			},
+
+			/*embedimages : function(){
+				var id = actions.getid($(this).closest('.postbody'))
+
+				actions.embedimages(id)
+			},*/
 
 			message : function(){
 				var v = $(this).val();
@@ -693,7 +888,22 @@ var comments = (function(){
 
 			    	events : {
 			    		change : events.emessage,
-			    		click : events.emessage,
+						click : events.emessage,
+						keydown : function(editor, e){
+							if (e.ctrlKey && e.keyCode == 13) {
+
+								if (c.hasClass('sending')) return
+
+									c.addClass('sending')
+
+								actions.post(p.id || '0', p.pid, p.aid, p.editid)
+
+								e.preventDefault()
+
+								return false;
+							}
+
+						},
 			    		keyup : function(editor, e){
 			    			var char = String.fromCharCode(e.keyCode || e.which);
 							var text = this.getText();
@@ -704,23 +914,14 @@ var comments = (function(){
 							}
 
 							if (e.ctrlKey && e.keyCode == 13) {
-
-							   	if (c.hasClass('sending')) return
-
-									c.addClass('sending')
-
-								actions.post(p.id || '0', p.pid, p.aid, p.editid)
-
 								return
 							}
+							
+							actions.message(p.id || '0', text)
 
-							else
-							{
-								actions.message(p.id || '0', text)
+							renders.limits(c, text)
 
-								renders.limits(c, text)
-
-							}
+						
 
 							
 			    		},
@@ -789,6 +990,108 @@ var comments = (function(){
 		}
 
 		var renders = {
+
+			images : function(id, p, clbk){
+
+				var comment = currents[id]
+
+				self.shell({
+					name :  'images',
+					turi : 'embeding',
+					inner : html,
+					el : p.el.find('.newcommentimages'),
+					data : {
+						images : _.map(comment.images.v || [], function(i, index){
+							return {
+								src : i,
+								id : index
+							}
+						})
+					},
+
+				}, function(_p){
+
+					_p.el.find('.remove').on('click', function(){
+						var r = $(this).closest('.imageContainer').attr('value');
+
+						actions.removeImage(id, r, p)
+					})
+
+					_p.el.find('.edit').on('click', function(){
+						var r = $(this).closest('.imageContainer').attr('value');
+
+						actions.editImage(id, r, p)
+					})
+
+					_p.el.find('.image').on('click', function(){
+
+						var src = $(this).attr('i')
+
+						if(!src) return
+
+						var images = _.map(comment.images, function(i){
+
+							return {
+								src : i
+							}
+						})
+
+						self.app.nav.api.load({
+							open : true,
+							id : 'imageGallery',
+							inWnd : true,
+
+							essenseData : {
+								initialValue : src,
+								idName : 'src',
+								images : images
+							}
+						})
+					})
+
+					_p.el.find('.image').imagesLoaded({ background: true }, function(image) {
+
+						if(!isMobile()){
+							var elimages = _p.el.find('.imagesEmbWr')
+
+
+						  	elimages.isotope({
+
+								layoutMode: 'packery',
+								itemSelector: '.imageContainer',
+								packery: {
+									gutter: 10
+								},
+								initLayout: false
+							});
+
+
+							elimages.on('arrangeComplete', function(){
+
+								if (clbk)
+									clbk();
+			
+									p.el.find('.newcommentimages').addClass('active')
+
+							});
+
+							elimages.isotope()
+						}
+						else
+						{
+							if (clbk)
+								clbk();
+			
+							p.el.find('.newcommentimages').addClass('active')
+						}
+
+
+					});
+
+					
+				})
+			},
+
 			limits : function(el, message){
 
 				var l = 1000 - encodeURIComponent(message).length;
@@ -900,11 +1203,13 @@ var comments = (function(){
 
 				if(!p) p = {};
 
+				p.el || (p.el = el.post)
+
 				var _preview = preview && !p.answer && !p.editid
 
 				self.shell({
 					name :  'post',
-					el : p.el || el.post,
+					el : p.el,
 
 					data : {
 						placeholder : p.placeholder || '',
@@ -916,16 +1221,38 @@ var comments = (function(){
 
 				}, function(_p){
 
+					var ini = function(){
+
+						if(!preview) return
+
+						preview = false;
+							
+						p.init = true;
+						el.c.removeClass('preview')
+
+						console.log(p, _p)
+
+						postEvents(p, _p, clbk)
+					}
+
+					_p.el.find('.embedimages').off('click').on('click', function(){
+						var id = actions.getid(_p.el.find('.postbody'))
+
+						actions.embedimages(id, p)
+
+						if(!p.answer && !p.editid)
+							ini()
+					})
+
 					if(_preview){
 
 						_p.el.find('textarea').on('click', function(){
-							preview = false;
-							
+
 							$(this).blur();
 
-							p.init = true;
-							el.c.removeClass('preview')
-							postEvents(p, _p, clbk)
+							ini()
+
+							
 						})
 
 						return
@@ -935,6 +1262,99 @@ var comments = (function(){
 
 					
 				})
+			},
+
+			commentimages : function(s, clbk){
+				if(!el.c) return
+
+				var sel = el.c.find('#' + s.id)
+
+				var _el = sel.find(".commentimages");
+				var images = sel.find(".commentimages");
+
+				if(images.hasClass('active') || !_el.length || !images.length){
+
+					if (clbk)
+						clbk()
+
+					return
+
+				}
+
+				var h = sel.height()
+
+				_el.imagesLoaded({ background: true }, function(image) {
+
+				
+
+					_.each(image.images, function(img, n){
+
+						var _img = img.img;
+
+						var el = $(image.elements[n]).closest('.imagesWrapper');
+						var ac = '';
+
+						var _w = el.width();
+						var _h = el.height()
+
+						if(_img.width > _img.height && !isMobile()){
+							ac = 'w2'
+
+							var w = _w * (_img.width / _img.height);
+
+							if (w > images.width()){
+								w = images.width()
+
+								h = w * ( _img.height / _img.width) 
+
+								el.height(h);
+							}
+
+							el.width(w);
+						}
+
+						if(_img.height > _img.width || isMobile()){
+							ac = 'h2'
+
+							el.height(_w * (_img.height / _img.width))
+						}
+
+						if(ac){
+							el.addClass(ac)
+						}
+						
+					})
+
+
+					var gutter = 10;
+
+					images.isotope({
+
+						layoutMode: 'packery',
+						itemSelector: '.imagesWrapper',
+						packery: {
+							gutter: gutter
+						},
+						initLayout: false
+					});
+
+					images.on('arrangeComplete', function(){
+	
+						images.addClass('active')
+
+						_el.addClass('active')
+
+						if (clbk)
+							clbk()
+
+					});
+
+					images.isotope()
+					
+				
+
+				});
+				
 			},
 
 			list : function(p, clbk){
@@ -981,6 +1401,9 @@ var comments = (function(){
 					el.list.find('.panel').off('click').on('click', events.metmenu);
 					el.list.find('.tocomment').off('click').on('click', events.tocomment)
 
+
+					el.list.find('.imageCommentOpen').off('click').on('click', events.openGallery)
+				
 					setTimeout(function(){
 						if(el.list)
 							 el.list.find('.newcomments').removeClass('newcomments')
@@ -988,8 +1411,15 @@ var comments = (function(){
 					
 					bgImages(el.list)
 
-					/*p.el.find('.commentLikeAction').on('click', events.commentLike)
-					p.el.find('.usericoncmt').off('click').on('click', events.subscribe)*/
+					lazyEach({
+						array : p.comments,
+
+						action : function(_p){
+							renders.commentimages(_p.item, _p.success)
+						}
+					})
+
+				
 
 					if (clbk)
 						clbk();
@@ -1198,6 +1628,9 @@ var comments = (function(){
 
 				delete self.app.platform.sdk.comments.sendclbks[eid]
 				delete self.app.platform.ws.messages.comment.clbks[eid]
+
+				if (external) 
+					external.destroy()
 
 				if (caption)
 					caption.destroy()

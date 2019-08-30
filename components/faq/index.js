@@ -257,6 +257,28 @@ var faq = (function(){
 				]
 		
 			},
+
+			{
+		
+				name : 'Specifics of curation on Pocketnet.',
+				id : 'specificscuration',
+		
+				group : [
+		
+					{
+						id : 'trolls',
+						q : 'Is any content allowed on Pocketnet? If some content is not allowed, can the platform still be called free speech?',
+						a : '<div>Sometimes we can have a user who comes in with a specific purpose to attack Pocketnet by posting a series of vile images. To protect against that we have a following mechanism. If someone’s reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts.</div>',
+					},
+					{
+						id : 'flagging',
+						q : 'Flagging a specific post',
+						a : '<div>When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn Pocketnet into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of Pocketnet as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, Pocketnet will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials.</div>',
+					}
+		
+				]
+		
+			},
 		
 			{
 		

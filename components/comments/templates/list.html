@@ -74,7 +74,7 @@ var commentpanel = function(comment, _class){ %>
 
 							<a href="<%-app.platform.api.authorlink(comment.address)%>">
 							
-							<b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b>, </a>
+							<b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b> </a>
 							<span class="date"><%- convertDate(dateToStr(comment.time)) %></span>
 						</div>
 
@@ -127,7 +127,37 @@ var commentpanel = function(comment, _class){ %>
 
 								<% } %>
 
+								<% 								
+								
+								if(comment.images.length) {
+									var additionall = 0;
+									var icClass = '';
+					
+									if (comment.images.length + additionall == 1) icClass = 'one';
+									if (comment.images.length + additionall == 2) icClass = 'two';
+									if (comment.images.length + additionall == 2) icClass = 'three';
+									if (comment.images.length + additionall == 4) icClass = 'four';
+									if (comment.images.length + additionall > 4) icClass = 'more';
+									
+									 %>
+					 
+									<div class="commentimages">
+										<div class="imagesContainer <%-icClass%>">
+											<% _.each(comment.images, function(image){ %>
+					
+												<div class="imagesWrapper">
+													<div class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
+													</div>
+												</div>
+					
+											<% }) %>
+					
+										</div>
+									</div>
+					
+							<% } %>
 
+								
 
 								<!--<% if(comment.url) {%>
 

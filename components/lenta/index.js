@@ -1288,7 +1288,11 @@ var lenta = (function(){
 					actions.fullScreenVideoMobile(shareId)
 			},
 
-			openPost : function(){
+			openPost : function(e){
+
+				var islink = deep(e, 'target.href')
+
+				if (islink) return
 
 				if (essenseData.authAction) {
 
@@ -1884,13 +1888,18 @@ var lenta = (function(){
 
 				}, function(_p){
 
+					self.app.nav.api.links(null, _p.el, function(event){
+
+						console.log("SDSDSD")
+
+						event.stopPropagation()
+					})
 
 					h = actions.applyheightEl(h, _el, 'url')
 
 					var images = _p.el.find('img');
 
 					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
-
 
 						_.each(image.images, function(i, index){
 

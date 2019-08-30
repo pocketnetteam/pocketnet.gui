@@ -10,6 +10,18 @@
 
 <% } %>
 
+<!--
+<div class="item address">
+	<div class="itemtable table">
+		<div class="icon"><i class="far fa-id-badge"></i></div>
+		<div class="label">
+			<span class="copythis">
+				<%-deep(author, 'address')%>
+			</span>
+		</div>
+	</div>
+</div>-->
+
 
 <% 
 
@@ -49,8 +61,6 @@ if(_d && _d > -1) {
 	var a = deep(author, 'data.about');
 
 	var am = trimHtml(a, 200);
-
-
 
 %>
 

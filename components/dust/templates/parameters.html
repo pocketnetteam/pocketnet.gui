@@ -1,0 +1,116 @@
+<div class="parameters">
+
+
+	<div class="action">
+
+		<div class="row table labels">
+			<div class="source">
+				<div class="labelWrapper">
+					<%= d.parameters.pk.name %>
+				</div>
+			</div>
+
+			
+
+			<div class="reciever workstation">
+				<div class="labelWrapper workstation">
+					<%= d.parameters.reciever.name %> <span class="required hidden">*<%=e('required')%></span> <span class="notvalidaddress"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="source">
+				
+				<div class="inputWrapper">
+					<%= d.parameters.pk.input() %>
+				</div>
+			</div>
+
+
+			<div class="reciever">
+				
+				<div class="labelWrapper mobiledevice abs">
+					<%= d.parameters.reciever.name %> <span class="required hidden">*<%=e('required')%></span> <span class="notvalidaddress"></span>
+				</div>
+
+				<div class="inputWrapper">
+					<%= d.parameters.reciever.input() %>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table labels">
+			<div class="amount">
+				<div class="labelWrapper">
+					<%= d.parameters.amount.name %> <span class="required hidden">*<%=e('required')%></span>
+				</div>
+			</div>
+
+
+			<div class="reciever">
+				<div class="labelWrapper workstation">
+					<%= d.parameters.message.name %>
+				</div>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="amount">
+				<div class="inputWrapper">
+					<%= d.parameters.amount.input() %>
+				</div>
+			</div>
+
+		
+			<div class="reciever">
+				<%= d.parameters.message.input() %>
+			</div>
+        </div>
+        
+        <div class="row table labels">
+            <div class="amount">
+                <div class="labelWrapper">
+                    Input Counts
+                </div>
+            </div>
+
+
+            <div class="reciever">
+              
+            </div>
+        </div>
+
+		<div class="row table">
+                <div class="amount">
+                    <div class="inputWrapper">
+                        <%= d.parameters.outputs.input() %>
+                    </div>
+                </div>
+
+		
+			<div class="reciever"> 
+				
+			</div>
+        </div>
+        
+        <div class="row table">
+		
+			<div class="sendcoins"> 
+				<button class="sends"><i class="fas fa-chevron-circle-right"></i> Send</button>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="loader">
+
+		<div class="loaderTable table">
+			<div class="loaderCell">
+				<div class="preloader5"><span></span><span></span><span></span></div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

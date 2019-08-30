@@ -319,6 +319,61 @@ Comment = function(txid){
 		return encodeURIComponent(self.message.v) + self.images.v.join(',') + encodeURIComponent(self.url.v || '')
 	}
 
+	self.uploadImages = function(app, clbk){
+
+
+		lazyEach({
+			//sync : true,
+			array : self.images.v,
+			action : function(p, index){
+
+				var image = p.item;
+
+				if (image.indexOf('data:image') > -1){
+
+					var r = image.split(',');
+
+				if (r[1]){
+
+						app.ajax.run({
+							type : "POST",
+							imgur : true,
+							data : {
+								Action : "image",
+								image : r[1]
+							},
+
+							success : function(data){
+
+								self.images.v[index] = deep(data, 'data.link');
+								
+								p.success();
+
+							}
+						})
+
+
+					}
+				}
+				else
+				{
+					index++;
+					p.success();
+				}
+
+				
+
+			},
+
+			all : {
+				success : function(){
+					if (clbk)
+						clbk()
+				}
+			}
+		})
+	}
+
 	self.export = function(extend){
 
 		if(extend){

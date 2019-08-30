@@ -85,7 +85,7 @@ var wallet = (function(){
 				message : new Parameter({
 					name : "Message",
 					id : 'message',
-					type : "STRING",
+					type : "stringany",
 					placeholder : "Your message",
 					
 					format : {
@@ -1963,6 +1963,9 @@ var wallet = (function(){
 					self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
 						self.app.platform.sdk.node.transactions.get.canSpend(addresses, function(spend, total){
+
+							console.log("SPEND", spend, total)
+
 							var color = '#414244';
 							var samount = 100;
 							var temp = self.app.platform.sdk.node.transactions.tempBalance()

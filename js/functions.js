@@ -533,10 +533,10 @@
 
 							console.log(percent, px)
 
-							if (percent > 0){
+							//if (percent > 0){
 
-								//wnd.css('opacity', percent) 
-							}
+								wnd.css('opacity', percent) 
+							//}
 
 						},
 
@@ -3880,6 +3880,9 @@
 				mask.autoGroup = true;
 				mask.allowMinus = deep(self, 'format.AllowMinus') || false;
 
+				if(deep(self, 'format.Min')) mask.min = deep(self, 'format.Min')
+				if(deep(self, 'format.Max')) mask.max = deep(self, 'format.Max')
+
 				if (mask.digits > 0){
 					mask.placeholder = "0.00"
 				}
@@ -6044,11 +6047,14 @@
 			}
 		}
 
-		self.goup = function(direction){
+		self.goup = function(direction){			
+
 			var css = directiontoprop(direction)
 			var upborder = (p.directions[direction].trueshold || 90) * 5
 
-			if(css == 'top' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
+			console.log("goup", direction, css, p.prop)
+
+			if((css == 'top' || (direction == 'up' && css=='y')) && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
 			if(css == 'left' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
 
 			var ap = {}

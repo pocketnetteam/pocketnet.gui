@@ -309,6 +309,25 @@ var author = (function(){
 		}
 
 		var renders = {
+			contents : function(contents, clbk){
+				self.shell({
+
+					name :  'contents',
+					el :   el.contents,
+
+					data : {
+						contents : contents
+					},
+
+					animation : 'fadeIn',
+
+				}, function(p){
+
+					if (clbk)
+						clbk();
+
+				})
+			},
 			metmenu : function(_el){
 
 				var d = {};
@@ -521,6 +540,7 @@ var author = (function(){
 
 					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
 
+
 				})
 			},
 
@@ -560,7 +580,11 @@ var author = (function(){
 
 			lenta : function(_el, report){
 
-				//localStorage['lentakey'] = 'author?address=' + parameters().address
+				var hr = 'author?address=' + author.address
+
+				var n =  app.platform.api.name(author.address)
+
+				if(n) hr = n.toLowerCase() + "?"
 
 				self.nav.api.load({
 
@@ -577,7 +601,7 @@ var author = (function(){
 						author : author.address,
 						byauthor : true,
 
-						hr : app.platform.api.name(author.address).toLowerCase() + "?"
+						hr : hr
 				
 					},
 					
@@ -729,6 +753,11 @@ var author = (function(){
 				class : 'light',
 				rightEl : el.c.find('.leftpanelcell')
 			})	
+
+
+			self.app.platform.sdk.contents.get(author.address, function(contents){
+				renders.contents(contents)	
+			})
 			
 
 			if(!isMobile())
@@ -796,9 +825,6 @@ var author = (function(){
 
 					
 				})
-
-				
-
 				
 
 			},
@@ -842,6 +868,8 @@ var author = (function(){
 				el.subscribe = el.c.find('.subscribebuttonstop');
 				el.up = el.c.find('.upbuttonwrapper')
 				el.w = $(window)
+
+				el.contents = el.c.find('.contentswrapper')
 
 				el.info = el.c.find('.authorinfoWrapper')
 

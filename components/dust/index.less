@@ -1,0 +1,79 @@
+@import "../../css/__cssvar";
+
+#dust{
+    padding : 4 * @rhythm 0;
+
+    .subcaption{
+        span{
+            font-size: 2em;
+            font-weight: 100;
+            color : @color-black2;
+        }
+    }
+
+    .parameters{
+        padding : 4 * @rhythm 0;
+        position: relative;
+
+        .loader{
+            display: none;
+            position: absolute;
+            left: 0;
+            right : 0;
+            top : 0;
+            bottom : 0;
+            background: fade(#fff,90);
+
+            .loaderTable{
+                width: 100%;
+                height: 100%;
+
+                >div{
+                    vertical-align: middle;
+                    text-align: center;
+                }
+            }
+        }
+
+        button{
+            width: 200px;
+            border : 0;
+            font-weight: 100;
+        }
+
+        input{
+            width: 80%;
+            border : 0;
+            padding : 2 * @rhythm;
+            font-size: 1.3em;
+            background: fade(@color-black2, 3);
+            font-weight: 100;
+        }
+    }
+
+  
+
+    .row{
+        &.labels{
+            margin-top : 4 * @rhythm;
+        }
+
+        >div{
+            padding : @rhythm 0;
+
+            &.sendcoins{
+                padding-top : 4 * @rhythm;
+            }
+        }
+    }
+
+    .labelWrapper{
+        font-weight: 700;
+    }
+
+    .send{
+        width : 200px;
+    }
+
+    
+}

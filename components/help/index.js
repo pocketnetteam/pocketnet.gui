@@ -10,6 +10,11 @@ var help = (function(){
 
 		var el, cpage, external, c = {};
 
+
+
+
+
+
 		c.roadmap = [
 
 			{
@@ -28,18 +33,35 @@ var help = (function(){
 				r : false,
 			},
 			{
-				d : 'March 2019',
-				n : 'Buy Pocketcoin for Bitcoin, Litecoin on pocketnet.app',
+				d : 'July 2019',
+				n : 'Linux Desktop App',
+				r : false,
+			},
+			
+			{
+				d : 'July 2019',
+				n : 'Android App',
+				r : false,
+			},
+
+			{
+				d : 'August 2019',
+				n : 'Search by tags, recommended users, poll transactions',
 				r : false,
 			},
 			{
-				d : 'April 2019',
-				n : 'Linux/Mac Desktop Apps',
+				d : 'August 2019',
+				n : 'Personal link Pocketnet.app/username plus history of personal posts and ability to search users’ posts (decentralized free blog hosting on Pocketnet blockchain)',
 				r : false,
 			},
 			{
-				d : 'May 2019',
-				n : 'Android/iPhone Apps',
+				d : 'September 2019',
+				n : 'WebTorrent hosting of videos/images',
+				r : false,
+			},
+			{
+				d : 'October 2019',
+				n : 'Boost posts for Pocketcoin',
 				r : false,
 			},
 			{
@@ -54,7 +76,7 @@ var help = (function(){
 			},
 			{
 				d : 'August 2020',
-				n : 'Full synchronization between desktop and mobile device',
+				n : 'Decentralized Internet!!! Ability for any user to create sidechains that hold sites/groups by locking POS in the main chain, with nodes having ability to merge stake them with the main chain optionally',
 				r : false,
 			},
 			{

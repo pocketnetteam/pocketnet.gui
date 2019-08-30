@@ -23,8 +23,8 @@ __map =  {
         "js/vendor/reconnectingwebsocket.js",
         "js/vendor/rtc/db.js",
         "js/vendor/xss.min.js",
-        "js/vendor/jquery.mark.js",
-        
+		"js/vendor/jquery.mark.js",
+		"js/vendor/hc-sticky.js",
 	],
 
 	__sources : [
@@ -268,8 +268,6 @@ __map =  {
 				auth : 'authorization',
 				validate : 'filluser'
 			},
-			
-			
 		},
 
 		test : {
@@ -677,7 +675,7 @@ __map =  {
 						EXIF = require('./js/vendor/exif.js')
 
 				}},
-				
+				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},		
 				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 
@@ -1244,7 +1242,38 @@ __map =  {
 		}
 	},
 
-	
+	dust : {
+		uri : "dust",
+		href : "dust",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+
+		relations : [
+			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
+			{src : 'js/validation.js',			   f : 'js'},	
+		]
+	},
 
 };
 

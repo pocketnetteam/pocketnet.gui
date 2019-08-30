@@ -44,6 +44,8 @@ Nav = function(app)
 
 	self.wnds = {};
 
+	var externalexclusions = ['blockexplorer']
+
 	var module = {
 		find : function(href){
 
@@ -883,17 +885,27 @@ Nav = function(app)
 			if (host == 'localhost/' || electron || window.cordova) host = 'pocketnet.app/'
 
 				host = 'https://' + host
-
-			var e = (!href 
-
-				|| (external
+		
+			var ex = _.find(externalexclusions, function(ex){
+				return href.indexOf(ex) != -1
+			})
+			
+			
+			var e = external || (
+				
+			(!href 
+				
 				|| href.indexOf("mailto") > -1
 				|| href.indexOf("skype:") > -1 
 				|| href.indexOf('/') > -1 
 				|| href.indexOf('.') > -1
-				|| href == "#"))
+				|| href == "#")
+				
 				
 				&& (href.indexOf(host) == -1)
+			)
+
+			if (!e && ex) e = true; 
 
 
 			if (!e) return true;
@@ -1021,7 +1033,7 @@ Nav = function(app)
 							link.attr('href', encodeSeoLinks(_href));
 					}
 
-					var eve = function(){
+					var eve = function(e){
 						var href = core.thisSiteLink($(this).attr('href'));
 
 
@@ -1036,7 +1048,7 @@ Nav = function(app)
 						})
 
 						if (additionalActions){
-							additionalActions();
+							additionalActions(e);
 						}	
 
 						return false
