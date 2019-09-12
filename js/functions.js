@@ -1243,10 +1243,13 @@
 			newWidth,
 			newHeight;
 
+			imageObj.crossOrigin = "Anonymous"
 			imageObj.src  = srcData;
 
 			format || (format = 'jpeg');
-			imageObj.setAttribute('crossOrigin', 'anonymous');
+			
+
+			
 
 		imageObj.onload = function(){
 
@@ -1307,10 +1310,10 @@
 			newWidth,
 			newHeight;
 
+			imageObj.crossOrigin = "Anonymous"
 			imageObj.src  = srcData;
 
 			format || (format = 'jpeg');
-			imageObj.setAttribute('crossOrigin', 'anonymous');
 
 		imageObj.onload = function(){
 
@@ -7049,8 +7052,8 @@
 
 		self.fb = function(p){
 			
-			p.url = app.firebase + "/" + (p.action || "").split('.').join('/')
-
+			p.url = app.firebase + "/" + (p.action || "").split('.').join('/');
+			
 
 			self.run(p)
 		}
@@ -7652,6 +7655,8 @@
 
 	search = function(el, p){
 
+		var self = this;
+
 		if(!p) p = {};
 
 			p.events || (p.events = {})
@@ -7663,6 +7668,10 @@
 		var fsActive = false;
 
 		var currentFastId = '0';
+
+		self.placeholder = function(placeholder){
+			el.find('input').attr('placeholder', placeholder)
+		}
 
 		var template = function(){
 
@@ -7963,6 +7972,8 @@
 
 
 		init();
+
+		return self
 
 	}
 

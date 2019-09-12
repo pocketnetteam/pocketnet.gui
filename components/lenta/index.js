@@ -33,6 +33,7 @@ var lenta = (function(){
 			newmaterials = 0,
 			tempTimer,
 			getPreviewTimer,
+			shareheights = {},
 			fullscreenvideoShowed = false;
 
 		var countshares = 0;
@@ -84,6 +85,8 @@ var lenta = (function(){
 
 				shareInitedMap = {}
 				shareInitingMap = {}
+
+				shareheights = {}
 
 				fullscreenvideoShowed = false;
 
@@ -193,26 +196,20 @@ var lenta = (function(){
 			applyheight : function(iniH, curH, key){
 
 
-				return
+				
 
 				var wn = w.scrollTop();
 				var b = wn + Number(curH - iniH)
 
-				var wh = $('html').height();
-
-				if (wn == b) return
-
-				mscrolling = true;
-
-					w.scrollTop(b);	
-
-					prevscroll =  b
-
-				mscrolling = false;
-
-
-
 				
+
+				//var wh = $('html').height();
+
+				if (wn == b || iniH < curH) return
+
+				console.log(curH, iniH, key, wn, b)
+
+				w.scrollTop(b);	
 				
 			},
 
@@ -222,19 +219,19 @@ var lenta = (function(){
 
 				if(!iniH || !_el.length) return
 
-				var hc = _el.height()
+				var hc = _el[0].offsetHeight
 				
 				if(_el.length && w.scrollTop() > _el.offset().top) {
 
 					actions.applyheight(iniH, hc, key)
-
-					el.shares.css('height', 'auto')
+					//el.shares.css('height', 'auto')
+				
 
 					return hc;
 				}
 
-				if (el.shares)
-					el.shares.css('height', 'auto')
+				/*if (el.shares)
+					el.shares.css('height', 'auto')*/
 
 				return hc;
 			},
@@ -278,7 +275,6 @@ var lenta = (function(){
 
 				if (pels.length)
 				{		
-					var h = el.height();	
 
 					var s = {
 						muted : true,
@@ -316,7 +312,7 @@ var lenta = (function(){
 
 								players[share.txid].inited = true
 
-								h = actions.applyheightEl(h, el, 'video')
+								//shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], el, 'video')
 							}
 
 							
@@ -881,6 +877,7 @@ var lenta = (function(){
 
 				var cscroll = w.scrollTop();
 
+
 				if (shares.length && !mscrolling)
 
 					getPreviewTimer = slowMade(function(){
@@ -895,7 +892,7 @@ var lenta = (function(){
 							inel : _el,
 							offsetTop : h,
 							offsetBottom : h,
-							mode : 'line',
+							//mode : 'line',
 						})
 
 
@@ -1023,9 +1020,24 @@ var lenta = (function(){
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
 
-					return
+					var invsharesload = _.filter(invshares, function(s){
+						return !shareInitedMap[s.txid]
+					})
+					
 
-					var rooms = _.map(invshares, function(s){
+					if(essenseData.contents && invsharesload.length > 0){
+						essenseData.beginmaterial = invshares[0].txid;
+
+						load.shares(function(shares){
+							renders.sharesInview(shares, function(){
+
+							})
+						})
+					}
+
+					
+
+					/*var rooms = _.map(invshares, function(s){
 						return s.txid + '_' + s.address
 					})
 
@@ -1057,7 +1069,7 @@ var lenta = (function(){
 							}
 						})
 
-					}
+					}*/
 
 
 					
@@ -1438,6 +1450,10 @@ var lenta = (function(){
 								if (p)
 	
 									initedcommentes[txid] = p
+
+
+								if (essenseData.renderclbk)
+									essenseData.renderclbk()
 							}
 						})
 	
@@ -1492,7 +1508,6 @@ var lenta = (function(){
 
 					var _el = el.shares.find("#" + share.txid);
 
-					var h = _el.height()
 					var hw = _el.find('.work').outerHeight()
 
 					if (players[share.txid] && players[share.txid].inited){
@@ -1511,7 +1526,7 @@ var lenta = (function(){
 
 					_el.find('.shareSpacer').outerHeight(hw)					
 
-					h = actions.applyheightEl(h, _el, 'space')
+					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'space')
 				}
 
 				
@@ -1519,7 +1534,9 @@ var lenta = (function(){
 			share : function(share, clbk, all){
 
 				var _el = el.shares.find("#" + share.txid);
-				var h = _el.height()
+				
+				
+				shareheights[share.txid] = _el[0].offsetHeight
 
 				var added = _el.find('.added')
 
@@ -1547,7 +1564,7 @@ var lenta = (function(){
 */
 					shareInitedMap[share.txid] = true;	
 					
-					//h = actions.applyheightEl(h, _el, 'share')
+					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'share')
 
 					/*if(!isMobile())
 
@@ -1585,6 +1602,7 @@ var lenta = (function(){
 					})
 
 					renders.images(share, function(){
+						
 					})
 					
 				})
@@ -1683,6 +1701,11 @@ var lenta = (function(){
 					})
 				}
 
+				shares = _.filter(shares, function(s){
+					return !_.find(sharesInview, function(s1){
+						return s1.txid == s.txid
+					})
+				})
 				
 				self.shell({
 					name :  tpl,
@@ -1694,19 +1717,27 @@ var lenta = (function(){
 					},
 					animation : false,
 
-				}, function(p){
+				}, function(_p){
 
-					if (p.inner == append){
+
+					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
 					}
 					else
 					{
-						if(p.inner != replaceWith)
+						if(_p.inner != replaceWith)
 						{
 							sharesInview = shares.concat(sharesInview)	
 						}
 					}
-				
+
+
+					sharesInview = _.uniq(sharesInview, function(s){
+						return s.txid
+					})
+					
+					if (essenseData.renderclbk)
+						essenseData.renderclbk()
 
 					//events.sharesInview()				
 
@@ -1746,6 +1777,8 @@ var lenta = (function(){
 
 			images : function(s, clbk){
 
+				var share = s
+
 				if(!el.c) return
 
 				var sel = el.c.find('#' + s.txid)
@@ -1762,7 +1795,6 @@ var lenta = (function(){
 
 				}
 
-				var h = sel.height()
 
 				_el.imagesLoaded({ background: true }, function(image) {
 
@@ -1809,16 +1841,17 @@ var lenta = (function(){
 					}
 
 
-					h = actions.applyheightEl(h, sel)
+					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], sel)
 
 					var isclbk = function(){
 						images.addClass('active')
 
 						_el.addClass('active')
 
-						h = actions.applyheightEl(h, sel)
+						shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], sel)
 
-
+						if (essenseData.renderclbk)
+							essenseData.renderclbk()
 
 						if (clbk)
 							clbk()
@@ -1841,6 +1874,8 @@ var lenta = (function(){
 						});
 
 						images.on('arrangeComplete', function(){
+
+							
 		
 							isclbk()
 
@@ -1874,8 +1909,6 @@ var lenta = (function(){
 
 				var _el = el.closest('.share')
 
-				var h = _el.height()
-
 				self.shell({
 					turi : 'share',
 					name :  'url',
@@ -1890,14 +1923,15 @@ var lenta = (function(){
 
 					self.app.nav.api.links(null, _p.el, function(event){
 
-						console.log("SDSDSD")
-
 						event.stopPropagation()
 					})
 
-					h = actions.applyheightEl(h, _el, 'url')
+					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
 
 					var images = _p.el.find('img');
+
+					if (essenseData.renderclbk)
+						essenseData.renderclbk()
 
 					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
 
@@ -1918,7 +1952,10 @@ var lenta = (function(){
 							}
 						})
 
-						h = actions.applyheightEl(h, _el, 'url')
+						shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
+
+						if (essenseData.renderclbk)
+							essenseData.renderclbk()
 					  	
 					});
 
@@ -2009,6 +2046,19 @@ var lenta = (function(){
 								clbk()
 						}
 					}
+				})
+			},
+
+			spacers : function(txids, clbk){
+				var shares = _.map(txids, function(id){
+					return { 
+						txid : id,
+						author : essenseData.author
+					}
+				})
+
+				this.shares(shares, clbk, {
+					noview : true
 				})
 			}
 		}
@@ -2131,7 +2181,7 @@ var lenta = (function(){
 
 			shares : function(clbk, cache){
 
-				if (loading || ended) return
+				if (loading || (ended && (!essenseData.contents || essenseData.txids.length == _.toArray(shareInitedMap).length) )) return
 
 				el.loader.fadeIn()
 
@@ -2153,11 +2203,22 @@ var lenta = (function(){
 
 						var loader = 'common';
 
+						var _beginmaterial = beginmaterial;
+						
+
 						if (recommended){
 
 							if(recommended == 'recommended'){
 								loader = 'recommended'
 							}
+
+							else
+
+							if(recommended == 'b'){
+								loader = 'getbyidsp'
+								_beginmaterial = essenseData.beginmaterial
+							}
+
 							else
 							{
 								loader = 'common'
@@ -2165,15 +2226,16 @@ var lenta = (function(){
 							}						
 						}
 
-						if(essenseData.txids){
+						if(essenseData.txids && recommended != 'b'){
 							loader = 'txids'
 
 						}
 
+
 						self.app.platform.sdk.node.shares[loader]({
 
 							author : author,
-							begin : beginmaterial || '',
+							begin : _beginmaterial || '',
 							txids : essenseData.txids
 
 						}, function(shares, error, pr){
@@ -2191,6 +2253,10 @@ var lenta = (function(){
 							}
 
 							load.sstuff(shares, error, pr, clbk)				
+
+							if (recommended == 'b'){
+								beginmaterial = ''
+							}
 
 						}, cache)
 
@@ -2589,8 +2655,20 @@ var lenta = (function(){
 			making = true;
 
 			var cache = 'clear';
+			var clear = true;
 
 			if (essenseData.goback) cache = 'cache'
+
+			if (essenseData.contents){
+
+				el.c.find('.shares').html('')
+				renders.spacers(essenseData.txids, function(){				
+
+					actions.scrollToPost(essenseData.beginmaterial)
+				})
+
+				clear = false;
+			}
 
 			load.shares(function(shares, error){
 
@@ -2605,7 +2683,8 @@ var lenta = (function(){
 						el.c.addClass('showprev')
 					}
 
-					el.c.find('.shares').html('')
+					if (clear)
+						el.c.find('.shares').html('')
 
 					renders.shares(shares, function(){
 
@@ -2693,7 +2772,7 @@ var lenta = (function(){
 				else 		recommended = false;		
 
 
-				if (essenseData.txids){
+				if (essenseData.txids && recommended != 'b'){
 
 					recommended = false;
 

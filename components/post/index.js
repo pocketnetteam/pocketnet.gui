@@ -525,7 +525,9 @@ var post = (function(){
 							txid : share.txid,
 							showall : true,
 
-							reply : ed.reply
+							reply : ed.reply,
+
+							fromtop : true
 						},
 
 						clbk : function(e, p){
@@ -935,7 +937,9 @@ var post = (function(){
 				}
 
 
-				var data = {};
+				var data = {
+					ed : deep(p, 'settings.essenseData') || {}
+				};
 
 				clbk(data);
 

@@ -179,6 +179,7 @@ var s = (function(){
 
 					if (clbk)
 						clbk(p);
+
 				})
 
 			},
@@ -243,14 +244,11 @@ var s = (function(){
 
 		var makenext = function(type, start, count, clbk){
 
-
 			var l = result[type].data.length;
 			var L = result[type].count
 
 			if(start + count <= l){
-
 				return
-
 			}
 
 			if (start < l){
@@ -275,8 +273,6 @@ var s = (function(){
 				{
 					renders[type](data)
 				}
-
-				
 
 			}, start, count)	
 
@@ -353,6 +349,7 @@ var s = (function(){
 				if (c)
 					c(value)
 
+				self.app.platform.sdk.search.clear()
 				self.app.platform.sdk.search.get(value, 'all', 0, maxCount, null, function(r, block){
 
 					fixedBlock = block

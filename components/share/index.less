@@ -838,8 +838,105 @@
 }
 
 @media only screen and (max-width: 640px) {
+.wnd.wndsharepost{
+
+	
+	._close {
+		color : #000;
+	}
+
+	.wndinner{
+		max-height: none;
+		
+	}
+
+	.wndcontent{
+		overflow-y: auto;
+		padding-right: 2 * @rhythm;
+		top : 0;
+		background: #FAFAFA;
+
+		.result{
+			margin-top : 0;
+		}
+
+		#share{
+			position: static;
+			
+			.txtwrapper{
+				>div{
+					&.iconWrapper{
+						width : 3.5em;
+					}
+				}
+			}
+
+			.mobilecaption{
+				display: block;
+				padding : 2 * @rhythm 0;
+				position: static;
+				left : 2 * @rhythm;
+				right : 0;
+				top : 0;
+
+				span{
+					font-size: 1.5em;
+				}
+			}
+			
+			.absolutetxwrapper{
+				position: static;
+				padding-bottom : 0;
+
+				.txtwrapper{
+					height: 100%;
+
+					>div{
+						&.shareWrapper{
+							height: 100%;
+							position: relative;
+							
+							.relativeContainer{
+								width : 100%;
+								left: 0;
+								top : 0;
+								bottom : 90px;
+								position: static;
+								overflow-y: auto;
+							}
+						}
+					}
+				}
+			}
+
+			.error{
+				position: static;
+				bottom : 65px;
+				left : 0;
+				right : 0;
+				text-align: center;
+				background: fade(#FAFAFA, 70);
+			}
+
+			.postlineWrapper{
+				position: static;
+				padding : 0;
+
+			}
+			
+			.sLoader{
+				left : 2 * @rhythm;
+				top : 2 * @rhythm;
+				background: fade(#FAFAFA, 90);
+				padding-top : 2.75em;
+			}
+		}
+	}
+}
 #share{
 	background: #FAFAFA;
+
+	
 
 	.emojionearea, .emojionearea.form-control{
 		font-size: 1em;
@@ -1178,6 +1275,12 @@
 				.dopost {
 					float: none;
 					width : 100%;
+				}
+
+				.cancelpost{
+					float: none;
+					width : 100%;
+					margin-top: 2 * @rhythm;
 				}
 
 				.postWrapper{

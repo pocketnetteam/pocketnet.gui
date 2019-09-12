@@ -11,6 +11,8 @@ var menu = (function(){
 			autoUpdate = null,
 			sitenameToNav = null,
 			plissing = null,
+			authorForSearch = null,
+			menusearch = null,
 			autoUpdateWallet = null;
 
 		var loc = new Parameter({
@@ -371,12 +373,18 @@ var menu = (function(){
 							clearTimeout(searchBlurTimer)
 							searchBlurTimer = null
 						}
+
+						
 					}
 					else
 					{
 						el.postssearch.removeClass('active')
 
 						el.postssearch.find('input').val('')
+
+						if (authorForSearch){
+							authorForSearch.clear()
+						}
 					}
 
 					actions.elswidth()
@@ -388,12 +396,15 @@ var menu = (function(){
 					var close = function(cl){
 
 						var pn = self.app.nav.current.href
+
 						if (pn != 's' || cl){
+
 							_el.find('input').val('')
 							
 							el.c.removeClass('searchactive')
 
 							clearex()
+
 						}
 
 						else{
@@ -404,6 +415,7 @@ var menu = (function(){
 							}
 
 						}
+
 
 						
 					}
@@ -416,8 +428,8 @@ var menu = (function(){
 						}
 					}
 
-					search(el.postssearch, {
-						placeholder : 'SEARCH ON POCKETNET...',
+					menusearch = new search(el.postssearch, {
+						placeholder : 'SEARCH ON POCKETNET',
 
 						clbk : function(_el){
 
@@ -448,6 +460,8 @@ var menu = (function(){
 						events : {
 							fastsearch : function(value, clbk){
 
+								//authorForSearch
+
 								self.app.platform.sdk.search.get(value, 'fs', null, null, null, function(r){
 
 
@@ -463,11 +477,23 @@ var menu = (function(){
 
 												_el.find('input').val(r)
 
-												self.nav.api.go({
-													href : 's?ss=' + r.replace("#", 'tag:'),
+												var href = 's?ss=' + r.replace("#", 'tag:')
+
+												if (authorForSearch){
+													href = '?report=shares&ss=' + r.replace("#", 'tag:')
+
+													authorForSearch.clear(true)
+												}
+
+												var p = {
+													href : href,
 													history : true,
 													open : true
-												})
+												};
+
+												if(authorForSearch) p. handler = true
+
+												self.nav.api.go(p)
 
 												helpers.closeResults()
 
@@ -499,12 +525,27 @@ var menu = (function(){
 							},
 
 							search : function(value, clbk, e, helpers){
-								
-								self.nav.api.go({
-									href : 's?ss=' + value.replace("#", 'tag:'),
+
+								var href = 's?ss=' + value.replace("#", 'tag:')
+
+								if (authorForSearch){
+									href = '?report=shares&ss=' + value.replace("#", 'tag:')
+
+									authorForSearch.clear(true)
+								}
+
+								var p = {
+									href : href,
 									history : true,
 									open : true
-								})
+								}
+
+
+								if (authorForSearch) p.handler = true
+
+								console.log('authorForSearch', authorForSearch, p)
+
+								self.nav.api.go(p)
 
 								helpers.closeResults()
 
@@ -517,10 +558,13 @@ var menu = (function(){
 
 							clear : function(fs){
 
+								
+
 								if(fs) return
 
 								_el.find('input').blur();
 
+								
 								setTimeout(function(){
 									close(true)
 									clearex()
@@ -847,12 +891,12 @@ var menu = (function(){
 
 			self.app.user.isState(function(state){
 
-				if(parameters().ss){
+
+				if(parameters().ss && (isMobile() || self.app.nav.get.pathname() == 's')){
 
 					el.c.addClass('searchactive')
 
-					el.c.find('.postssearch').addClass('active')
-					
+					el.c.find('.postssearch').addClass('active')					
 
 					actions.elswidth()
 
@@ -864,7 +908,17 @@ var menu = (function(){
 
 		}
 
-		
+		var initauthorsearch = function(author){
+			menusearch.placeholder("SEARCH ON " + author.data.name.toUpperCase())
+
+			authorForSearch = author
+		} 
+
+		var destroyauthorsearch = function(){
+			menusearch.placeholder("SEARCH ON POCKETNET")
+
+			authorForSearch = null
+		}
 
 		return {
 
@@ -895,6 +949,10 @@ var menu = (function(){
 			},
 
 			destroy : function(){
+
+				destroyauthorsearch()
+
+				menusearch = null
 
 				$(window).off('resize', actions.elswidth)
 
@@ -937,6 +995,20 @@ var menu = (function(){
 				searchBackAction = _searchBackAction || null
 
 				actions.elswidth()
+			},
+
+			initauthorsearch : function(author){
+
+				if (!author.data){
+					return
+				}
+
+				initauthorsearch(author)
+				
+			},
+
+			destroyauthorsearch : function(){
+				destroyauthorsearch()
 			},
 			
 			init : function(p){
@@ -985,6 +1057,22 @@ var menu = (function(){
 
 		})
 
+	}
+
+	self.initauthorsearch = function(author){
+		_.each(essenses, function(essense){
+
+			essense.initauthorsearch(author);
+
+		})
+	}
+
+	self.destroyauthorsearch = function(){
+		_.each(essenses, function(essense){
+
+			essense.destroyauthorsearch();
+
+		})
 	}
 
 	self.closesearch = function(){

@@ -40,9 +40,21 @@ if(images.length){ %>
 								<i class="fa fa-times" aria-hidden="true"></i>
 							</div>
 
-							<div class="item edit">
-								<i class="fas fa-magic"></i>
-							</div>
+							<% 
+							
+							var s = image.src || image.base64;
+
+							if (s.indexOf('data:image') > -1 || 1==1){ %>
+
+								<div class="item edit">
+									<i class="fas fa-magic"></i>
+								</div>
+								
+							<% }
+							
+							%>
+
+							
 						</div>
 					</div>
 

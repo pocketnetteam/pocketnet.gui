@@ -2,10 +2,147 @@
 
 #author{
 	
+	.authorlentawrappermain{
+		position: relative;
+
+		.authorsearchicon{
+			position: absolute;
+			left: 100%;
+			top : 0;
+			padding-top : 2 * @rhythm;
+
+			.icon{
+				padding : 4 * @rhythm;
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : @color-main;
+				}
+
+			}
+		}
+
+		.authorsearchwrapper{
+			background: #F8F8F8;
+			padding : 4 * @rhythm 2 * @rhythm;
+			padding-right: 0;
+			display: none;
+
+			.search{
+				.searchPanel{
+					background: transparent;
+					border : 0;
+					display: none;
+				}
+				.searchInput{
+					.searchInputIcon{
+						.sminput{
+							padding : 2 * @rhythm;
+							padding-left: 3 * @rhythm;
+							background: transparent; 
+							border : 0;
+						}
+					}
+				}
+			}
+		}
+
+		&.searchactive{
+			.authorsearchwrapper{
+				display: block;
+			}
+
+			.authorsearchicon{
+			
+				.icon{
+					
+					i{
+						&:before{
+							content : '\f00d'
+						}
+					}
 	
+				}
+			}
+		}
+	}	
+
+	.postauwrapper{
+
+		
+		
+		.postauarrows{
+			background: #fff;
+			padding : 0 6 * @rhythm;
+			
+			
+			&.topwr{
+				border-bottom : 1px solid @color-gray-slight;
+				opacity: 1;
+			}
+
+			opacity: 0;
+			.transition(0.3s);
+
+			&.active{
+				opacity: 1;
+			}
+		}
+
+		.arrowstable{
+			height : 100%;
+			>div{
+				padding : 3 * @rhythm 0;
+				vertical-align: middle;
+			}
+			
+			
+		}
+
+		.arrowaucenter{
+			text-align: center;	
+		}
+		.arrowauwrapper{
+			width : 60px;
+			text-align: center;
+		}
+		.arrowauwrapperback{
+			width : 60px;
+		}
+
+		.arrowaucenter{
+			width : 120px;
+		}
+
+		.arrowau{
+			cursor : pointer;
+			height: 100%;
+
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.backtoshares{
+			cursor : pointer;
+			height: 100%;
+			color : @color-gray-slight;
+
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.arrowaucenter{
+			font-weight: 700;
+			font-size: 0.8em;
+		}
+	}
+
 	.lentacell{
 		margin-right: 150px;
-		margin-left: 200px;
+		margin-left: 240px;
 		min-height: 400px;
 
 		.zero{
@@ -15,6 +152,7 @@
 
 	.authorinfo{
 		font-size: 0.9em;
+		margin-bottom: 7 * @rhythm;
 		.itemtable{
 			>div{
 
@@ -74,7 +212,7 @@
 
 	.leftpanelcell{
 		float: left;
-		width : 200px;
+		width : 240px;
 		padding : 5 * @rhythm 0;
 		padding-left: @rhythm;
 
@@ -290,10 +428,10 @@
 
 	.contents
 	{
-		padding-top : 4 * @rhythm;
 
 		.cgroup{
 			padding-top : 2 * @rhythm;
+			padding-bottom : 2 * @rhythm;
 		}
 
 		.ccaption{
@@ -303,12 +441,100 @@
 		}
 
 		.gcontents{
+			.citemtable{
+				>div{
+					vertical-align: middle;
+
+					&.cscorecell{
+						width : 50px;
+						text-align: right;
+						padding-right: @rhythm;
+					}
+				}
+			}
+
+			.score,
 			.cname{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 				span{
 					font-size: 0.8em;
 				}
 			}
+
+			.score{
+				color : @color-gray-light;
+			}
+
+			.citem{
+				&.selected{
+					.cname{
+						span{
+							font-weight: 700;
+						}
+					}
+
+					.score{
+						font-weight: 700;
+						color : #FFAE00;
+					}
+				}		
+				
+				&:hover{
+					.score{
+						color : #FFAE00;
+					}
+				}
+			}
 		}
+
+		.chidden{
+			display: none;
+		}
+
+		.captiontable{
+			width : auto;
+
+			.captionicon{
+				width : 30px;
+				text-align: center;
+				display : none;
+			}
+		}
+
+		.cgroup{
+			&.hasmore{
+
+				.captiontable{
+					cursor: pointer;
+				}
+
+				.captionicon{
+					display : table-cell;
+				}
+
+
+				&.showedmore{
+					.captionicon{
+						i{
+							&:before{
+								content : '\f078'
+							}
+						}
+					}	
+
+					.dots{
+						display : none;
+					}
+
+					.chidden{
+						display : block;
+					}
+				}
+			}
+		}
+		
 	}
 
 }
@@ -317,6 +543,15 @@
 	#content{
 
 		#author{
+
+			.authorlentawrappermain{
+				position: relative;
+		
+				.authorsearchicon{
+					display: none;
+				}
+		
+			}
 
 			.lentaWrapper{
 				.authorinfo{

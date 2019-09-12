@@ -1213,6 +1213,7 @@ pUserInfo = function(){
 
 	self.subscribes = [];
 	self.subscribers = [];
+	self.recomendedSubscribes = [];
 	self.blocking = [];
 
 	self.address = ''
@@ -1234,7 +1235,7 @@ pUserInfo = function(){
 
 		if (v.subscribes) self.subscribes = v.subscribes;
 		if (v.subscribers) self.subscribers = v.subscribers;
-
+		if (v.recomendedSubscribes) self.recomendedSubscribes = v.recomendedSubscribes;
 
 		if (v.blocking) self.blocking = v.blocking;
 

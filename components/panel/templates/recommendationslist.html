@@ -1,0 +1,39 @@
+<% _.each(users, function(address){ 
+
+    var user = deep(app, 'platform.sdk.users.storage.' + address);
+
+    var name = app.platform.api.clearname(decodeURIComponent(user.name));
+    
+    %>
+    <div class="user">
+
+        <a href="<%-(user.name.toLowerCase())%>">
+
+            <div class="tableview">
+
+                <div class="pictureWrapper">
+                    
+                    <% var src = user.image  %>
+                    
+                    <div class="icon">
+                        <div class="usericon" image="<%-src || ''%>">
+                            <% if(!src) {%>
+                                <svg width="30" height="30" data-jdenticon-value="<%-user.address%>"></svg>
+                            <% } %>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="nameWrapper">
+                    <div class="name">
+                        <span><%-name %></span>
+                    </div>
+                </div>
+
+                <div class="aboutWrapper"><span><%- decodeURIComponent(user.a || '') %></span></div>
+
+            </div>
+
+        </a>
+    </div>
+<% }) %>

@@ -2,16 +2,167 @@
 
 #panel{
 
-	
+	padding-left: 10px;
 	
 	#chat{
 		height: 550px;
 	}
 
+	.recommendationscnt{
+		
+		.recommendations{
+			margin-bottom : 10px;
+			background: #FAFAFA;
+		}
+
+		.rcaptiontable{
+			>div{
+				vertical-align: middle;
+				&.rpanelWrapper{
+					width : 80px;
+					overflow: hidden;
+
+					.arrowWrapper{
+						height: 40px;	
+						float: right;
+						width: 40px;
+					}
+					.arrow{
+						display: none;
+						width: 100%;
+						text-align: center;
+						line-height: 40px;
+						cursor: pointer;
+						.transition(0.3s);
+
+						&:hover{
+							color : @color-main;
+						}
+
+						&.active{
+							display: block;
+						}
+					}
+				}
+			}
+		}
+
+		.rcaption{
+			padding-left : @rhythm;
+			
+
+			span{
+				font-weight: 100;
+			}
+		}
+
+		.userslist{
+			padding : 2 * @rhythm 0;
+			white-space: nowrap;
+			overflow: hidden;
+			.transition(0.3s, margin);
+		}
+		
+
+		.tableview{
+			&.tcaption{
+				display: none;
+			}
+			
+		}
+		.userslistwrapper{
+			overflow : hidden;
+			position: relative;
+			.nextpage{
+				display: none;
+			}
+			.arrow{
+				border-radius: 50%;
+				line-height: 32px;
+				width: 33px;
+				height: 33px;
+				text-align: center;
+				font-size: 0.8em;
+				color : @color-gray-light;
+				.transition(0.3s);
+				cursor: pointer;
+				border : 1px solid transparent;
+				top : 7px;
+				background: #fff;
+
+				.label{
+					display: none;
+				}
+
+				&:hover{
+					color : @color-main;
+					border-color: @color-main;
+				}
+			}
+
+			.uleft{
+				position: absolute;
+				left: -60px;
+
+				&.active{
+					left: 0;
+				}
+			}
+
+			.uright{
+				position: absolute;
+				right: -60px;
+
+				&.active{
+					right: 0;
+				}
+			}
+
+		}
+
+		.user{
+			width: 85px;
+			float: left;
+
+			.usericon{
+				margin : 0 auto;
+				opacity: 0;
+				.transition(0.3s, opacity);
+				
+				&.active{
+					opacity: 1;
+				}
+			}
+
+			.icon{
+				padding-bottom: @rhythm;
+			}
+
+			.name{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				text-align: center;
+				span{
+					font-size: 0.8em;
+				}
+			}
+
+			.postsCountWrapper,
+			.aboutWrapper{
+				display: none;
+			}
+		}
+
+
+
+	}
+
+	
+
 	#discussions{
 		.disscussionsCaption {
 			margin-bottom: 0;
-			padding-left: 10px;
 
 			.pwrapper{
 				background: #fff;
@@ -20,7 +171,6 @@
 		.discussionsWrapper{
 			
 			max-height: 250px;
-			padding-left: 10px;
 
 			.pwrapper{
 				background: #fff;
@@ -28,7 +178,6 @@
 		}
 
 		.chatWrapper{
-			padding-left: 10px;
 
 			.load{
 				left: 0;
@@ -36,7 +185,7 @@
 		}
 
 		.load{
-			left: 10px;
+			left: 0px;
 		}
 
 		.gotoDisscussion{

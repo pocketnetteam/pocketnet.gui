@@ -257,6 +257,33 @@ Nav = function(app)
 
 			this.add(href, _p);
 		},
+
+		addRemoveParameters : function(ids, p, _p){
+			if(!_p) _p = {}
+			if(!_.isArray(ids)) ids = [ids];
+
+			var pathname = self.get.pathname();
+
+			var previousParameters = parameters();
+
+			var currentParameters = parameters();
+
+				currentParameters = _.extend(currentParameters, p);
+
+				_.each(ids, function(id){
+					delete currentParameters[id]
+				})
+
+			if(_.isEqual(previousParameters, currentParameters)) return;
+
+
+			var href = current.href + collectParameters(currentParameters);
+
+			if(typeof _p.removefromback == 'undefined') _p.removefromback = true
+
+			this.add(href, _p);
+		},
+
 		removeParameters : function(ids, _p){
 			if(!_p) _p = {}
 			if(!_.isArray(ids)) ids = [ids];
@@ -785,7 +812,7 @@ Nav = function(app)
 
 			if(p.href){
 
-				p.completeHref = p.href;
+				p.completeHref || (p.completeHref = p.href)
 
 				p.href = p.href.split("?")[0];
 

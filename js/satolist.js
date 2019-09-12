@@ -681,7 +681,8 @@ Platform = function(app, listofnodes){
 						clbk : clbk,
 
 						essenseData : {
-							share : id
+							share : id,
+							removemargin : true
 						}
 					})
 
@@ -1163,12 +1164,17 @@ Platform = function(app, listofnodes){
 
 							var u = self.sdk.users.storage[address];
 
-							if (me) me.addRelation({
-								adddress : address,
-								private : false
-							})
+							if (me) {
 
-							if(u){
+								me.addRelation({
+									adddress : address,
+									private : false
+								})
+
+								me.removeRelation(address, 'recomendedSubscribes')
+							}
+
+							if (u){
 								u.addRelation(address, 'subscribers')
 							}
 
@@ -2625,6 +2631,63 @@ Platform = function(app, listofnodes){
 		contents : {
 			storage : {},
 
+			groups : [{
+				key : 'art',
+				caption : "Articles"			
+			}, {
+				key : 'post',
+				caption : "Posts"
+			}],
+
+			gets : function(contents, sort){
+
+				if(!sort) sort = 'popularity'
+							
+				var groups = group(contents, function(c){
+					if(c.settings.v == 'a') return 'art'
+			
+					return 'post'
+				})
+			
+				var f = _.filter(this.groups, function(g){
+					if(groups[g.key]) {
+						return true;
+					}
+				})
+
+				f = _.map(f, function(f){
+
+					var items = groups[f.key];
+
+					if (sort) items = _.sortBy(items, function(i){
+
+						if(sort == 'popularity') return -Number(i.scoreSum)
+
+					})
+
+					return {
+						g : f,
+						items : items
+					}
+				})
+
+				return f;
+			},
+			
+			getsorteditems : function(contents, sort){
+				var g = this.gets(contents, sort)
+				var items = []
+				
+
+				_.each(g, function(g){
+					_.each(g.items, function(item){
+						items.push(item)
+					})
+				})
+
+				return items
+			},
+
 			get : function(address, clbk){
 
 				var st = this.storage
@@ -2638,6 +2701,7 @@ Platform = function(app, listofnodes){
 
 					return
 				}
+
 				
 				self.app.ajax.rpc({
 					method : 'getcontents',
@@ -2650,8 +2714,13 @@ Platform = function(app, listofnodes){
 						
 						_.each(d || [], function(d){
 
+							if(!d.content) return
+
 
 							try{
+
+								console.log(d)
+
 								var c = {
 									caption : filterXSS(decodeURIComponent(d.content), {
 										whiteList: [],
@@ -2659,8 +2728,16 @@ Platform = function(app, listofnodes){
 									}),
 									time : new Date(d.time),
 									txid : d.txid,
-									settings : JSON.parse(d.settings)
+									settings : JSON.parse(d.settings),
+
+									scoreCnt: Number(d.scoreCnt),
+									scoreSum: Number(d.scoreSum),
+									
 								}
+
+								c.score = 0;
+
+								if(c.scoreCnt) c.score = Number(c.scoreSum) / Number(c.scoreCnt)
 
 								list.push(c)
 							}
@@ -2670,8 +2747,6 @@ Platform = function(app, listofnodes){
 
 							
 						})
-
-						console.log('d', list)
 
 						st[address] = {
 							data : list,
@@ -4354,11 +4429,22 @@ Platform = function(app, listofnodes){
 				users : {}
 			},
 
-			add : function(fixedBlock, type, result, start, count){
+			clear : function(){
+				this.storage = {
+					all : {},
+					fs : {},
+					posts : {},
+					users : {}
+				}
+			},
+
+			add : function(fixedBlock, type, result, start, count, address){
 				var s = this.storage;
 
-				if(!s[type][fixedBlock]){
-					s[type][fixedBlock] = result;
+				if(!s[type][address]) s[type][address] = {}
+
+				if(!s[type][address][fixedBlock]){
+					s[type][address][fixedBlock] = result;
 				}
 
 				else
@@ -4367,22 +4453,27 @@ Platform = function(app, listofnodes){
 
 						if (result.data[i])
 
-							s[type][fixedBlock].data[start + i] = result.data[i]
+							s[type][address][fixedBlock].data[start + i] = result.data[i]
 					}
 				}
 				
 			},
 
-			preview : function(fixedBlock, type, start, count){
+			preview : function(fixedBlock, type, start, count, address){
 				var s = this.storage;
 				
 				if (type != 'fs' && type != 'all'){
-					
+
+					if(!s[type][address]) 
+						s[type][address] = {}
+
+					if(!s[type][address][fixedBlock]) return
+
 					for(var i = 0; i < count; i++){
 
-						if(!s[type][fixedBlock].data[start + i])
+						if(!s[type][address][fixedBlock].data[start + i])
 
-							s[type][fixedBlock].data[start + i] = {
+							s[type][address][fixedBlock].data[start + i] = {
 								preview : true,
 								index : start + i
 							}
@@ -4391,7 +4482,9 @@ Platform = function(app, listofnodes){
 				}
 			},
 
-			get : function(value, type, start, count, fixedBlock, clbk, preview){
+			get : function(value, type, start, count, fixedBlock, clbk, address){
+
+				if(!address) address = 'pocketnet'
 
 				var s = self.sdk.search;
 
@@ -4400,21 +4493,25 @@ Platform = function(app, listofnodes){
 
 				type || (type = 'fs')
 				
-				s.preview(fixedBlock, type, start, count)
+				s.preview(fixedBlock, type, start, count, address)
 
 				value = trim(value.replace(/[^a-zA-Z0-9\# ]+/g, ''))
 
-				if(value.length){
+				var np = [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
+
+				if(address != 'pocketnet') np.push(address)
+
+				if (value.length){
 					self.app.ajax.rpc({
 						method : 'search',
-						parameters : [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()],
+						parameters : np,
 						success : function(d){
 
 							if (type != 'fs'){
 
 								if(type == 'all'){
 									_.each(d, function(d, k){
-										s.add(fixedBlock, k, d, start, count)
+										s.add(fixedBlock, k, d, start, count, address)
 									})
 								}
 								else
@@ -4423,10 +4520,12 @@ Platform = function(app, listofnodes){
 										data : []
 									}
 
-									s.add(fixedBlock, type, d, start, count)
+									s.add(fixedBlock, type, d, start, count, address)
 								}
 
 							}
+
+							console.log('ddd', d)
 
 							if (clbk)
 								clbk(d, fixedBlock)
@@ -4552,7 +4651,8 @@ Platform = function(app, listofnodes){
 					postid : comment.txid,
 					block : self.currentBlock,
 					msg : JSON.stringify({
-						m : comment.message
+						m : comment.message,
+						i : comment.images
 					}),
 					time : comment.time,
 					timeupd : comment.timeupd,
@@ -4653,6 +4753,21 @@ Platform = function(app, listofnodes){
 				})
 			},
 
+			getLastComments : function(){
+				self.app.ajax.rpc({
+					method : 'getlastcomments',
+					parameters : ['20'],
+					success : function(d){
+
+						console.log('ddd', d)
+						
+					},
+					fail : function(d){
+						
+					}
+				})	
+			},
+
 			send : function(txid, comment, pid, aid, clbk, editid, fid){
 
 				var s = self.sdk.comments.storage;
@@ -4683,8 +4798,6 @@ Platform = function(app, listofnodes){
 					bitcoin.crypto.hash256(comment.serialize()), 
 					Buffer.from(signature.toString('hex'), 'hex')
 				);
-
-				console.log('parameters', parameters)
 
 
 				self.app.ajax.rpc({
@@ -5054,6 +5167,76 @@ Platform = function(app, listofnodes){
 				txids : function(p, clbk, refresh){
 					this.getbyid(p.txids, clbk, refresh)
 				},
+				getbyidsp : function(p, clbk, refresh){
+					this.getbyids(p.txids, p.begin, 10, clbk, refresh)
+				},
+				getbyids : function(txids, begin, cnt, clbk, refresh){
+
+					var s = this.storage;
+					var key = bitcoin.crypto.hash256( JSON.stringify('txids') , 'utf8');
+
+					var p = {}
+
+						cnt || (cnt = 10)
+						p.count = cnt
+
+					if(!s.ids) s.ids = {};
+					if(!s.ids[key] || refresh) s.ids[key] = []; 
+
+
+					if(!txids.length){
+
+						if (clbk)
+							clbk([], null, p)
+
+						return
+					}					
+
+					if(!s.ids[key].length) {
+						begin || (begin = txids[0])
+
+					}
+
+					else {
+
+						if(!begin){
+							var l = s.ids[key][s.ids[key].length - 1]
+
+							if (l == txids[txids.length - 1]){
+								if (clbk)
+									clbk([], null, p)
+
+								return	
+							}
+
+							begin = l;
+						}
+
+						
+					}
+
+					var index = _.indexOf(txids, begin);
+
+					var _txids = _.clone(txids).splice(index, cnt);
+
+
+					this.getbyid(_txids, function(shares){
+
+						s.ids[key] = [];
+
+						_.each(txids, function(txid){
+
+							if (s.trx[txid])
+								s.ids[key].push(s.trx[txid])
+
+						})
+
+
+						if (clbk)
+							clbk(shares, null, p)
+
+					}, refresh)
+				},
 
 				getbyid : function(txids, clbk, refresh){
 
@@ -5096,6 +5279,10 @@ Platform = function(app, listofnodes){
 								success : function(d){
 
 									if(d && !_.isArray(d)) d = [d];
+
+									d = _.sortBy(d, function(share){
+										return _.indexOf(txids, share.txid)
+									})
 
 									d = _.filter(d || [], function(s){
 										if(s.address) return true

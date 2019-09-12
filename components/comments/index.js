@@ -140,12 +140,12 @@ var comments = (function(){
 					
 				})
 
-				var f = _.filter(m, function(f){
+				var f = m; /*_.filter(m, function(f){
 					if(f.original.indexOf('data:image') > -1){
 						return true;
 					}
 				})
-
+*/
 				focusfixed = true;
 
 				self.nav.api.load({
@@ -494,7 +494,7 @@ var comments = (function(){
 					}
 				}
 
-				if(show){
+				if (show){
 					load.level(id, function(comments){
 
 						c.find('.repliesloaderWrapper').addClass('hidden')
@@ -504,7 +504,6 @@ var comments = (function(){
 						c.addClass('showedreplies')
 
 						renders.list(p, function(){
-
 
 							if(!caption)
 								renders.caption()
@@ -709,6 +708,9 @@ var comments = (function(){
 
 				})
 
+				console.log(comment, initialValue)
+
+
 				self.app.nav.api.load({
 					open : true,
 					href : 'imagegallery?s=' + txid + '&num=' + (num || 0) + "&com=" + comment.id,
@@ -746,6 +748,8 @@ var comments = (function(){
 
 				if (listpreview && ed.lastComment){
 					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+
+					console.log("SADSADSADSADSAD", ed.lastComment)
 				}
 
 				actions.openGallery(comment, _el.attr('i'))
@@ -875,6 +879,8 @@ var comments = (function(){
 
 			var c = _p.el.find('.postbody');
 
+			actions.process(p.id || '0')
+
 				textarea.emojioneArea({
 			    	pickerPosition : 'top',
 			    	
@@ -940,8 +946,21 @@ var comments = (function(){
 								ed.init = false;
 							}
 
-							if(p.value) {
+							if (p.value) {
 								this.setText(p.value)
+							}
+
+							if (p.images){
+
+								if(p.editid && p.images.length){
+
+									var comment = currents[p.editid]
+
+									comment.images.v = _.clone(p.images)
+
+									renders.images(p.editid, p)									
+									
+								}
 							}
 
 							if (clbk)
@@ -966,7 +985,7 @@ var comments = (function(){
 			    	
 			    })
 
-			    actions.process(p.id || '0')	
+			    	
 
 				_p.el.find('.postaction').on('click', function(){
 
@@ -1178,6 +1197,21 @@ var comments = (function(){
 
 				el.addClass('editing')
 
+				console.log("EEEE", el)
+
+				var p = {
+					value : comment.message,
+					images : comment.images,
+					init : true,
+					edit : 'edit',
+					el : el.find('>div.edit'),
+
+					pid : comment.parentid,
+					aid : comment.answerid,
+					id : comment.id,
+					editid : comment.id
+				}
+
 				renders.post(function(area, el){
 
 					/*var lined = comment.message.split("\n");
@@ -1187,17 +1221,9 @@ var comments = (function(){
 
 					ecaretPosition(el, i - 1, j - 1)*/
 
-				}, {
-					value : comment.message,
-					init : true,
-					edit : 'edit',
-					el : el.find('>div.edit'),
+					
 
-					pid : comment.parentid,
-					aid : comment.answerid,
-					id : comment.id,
-					editid : comment.id
-				})
+				}, p)
 			},
 			post : function(clbk, p){
 
@@ -1220,6 +1246,8 @@ var comments = (function(){
 					},
 
 				}, function(_p){
+
+					
 
 					var ini = function(){
 
@@ -1269,7 +1297,7 @@ var comments = (function(){
 
 				var sel = el.c.find('#' + s.id)
 
-				var _el = sel.find(".commentimages");
+				var _el = sel.find(".commentimages .image");
 				var images = sel.find(".commentimages");
 
 				if(images.hasClass('active') || !_el.length || !images.length){
@@ -1284,8 +1312,7 @@ var comments = (function(){
 				var h = sel.height()
 
 				_el.imagesLoaded({ background: true }, function(image) {
-
-				
+		
 
 					_.each(image.images, function(img, n){
 
@@ -1369,9 +1396,18 @@ var comments = (function(){
 					}
 				})
 
-				p.comments = _.sortBy(p.comments, function(c){
-					return c.time
-				})
+				
+
+				if(ed.fromtop){
+					p.comments = _.sortBy(p.comments, function(c){
+						return -c.time
+					})
+				}
+				else{
+					p.comments = _.sortBy(p.comments, function(c){
+						return c.time
+					})
+				}
 
 				p.el || (p.el = el.list)
 
@@ -1612,6 +1648,8 @@ var comments = (function(){
 					//state.load()
 
 					var data = {};
+
+						data.ed = ed;
 
 					self.app.platform.sdk.ustate.me(function(_mestate){
 

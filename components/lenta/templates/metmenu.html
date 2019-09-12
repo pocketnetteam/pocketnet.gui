@@ -65,8 +65,10 @@ if(share){
 
 		console.log('share', share)
 
+		m.push('edit')
+
 		if (my && (!share.time || share.time > (new Date()).addHours(-24) )){
-			m.push('edit')
+			
 		}
 
 		if(!my && me){

@@ -540,12 +540,26 @@ var share = (function(){
 								if (essenseData.post){
 									essenseData.post()
 								}
+								else{
+
+									if(isMobile()){
+										self.app.nav.api.load({
+											open : true,
+											href : 'index',
+											history : true
+										})
+									}
+
+									
+
+								}
 
 								if (clbk)
 									clbk(true)
 
 
 								actions.unfocus();
+								
 
 								_scrollTop(0);
 							}

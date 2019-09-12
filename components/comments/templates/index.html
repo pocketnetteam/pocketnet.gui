@@ -1,4 +1,4 @@
-<div id="<%-module.map.id%>">
+<div id="<%-module.map.id%>" class="<% if(ed.fromtop) {%> fromtop <% } %>">
 
 
 	<div class="captionfwrapper">
@@ -18,12 +18,18 @@
 		<span>SHOW PREVIOUS COMMENTS</span> <span class="ccounts"></span>
 	</div>
 
+	<% if(ed.fromtop) {%>
+		<div class="post">
+		</div>
+	<% } %>
+
 	<div class="list">
 	</div>
 
+	<% if(!ed.fromtop) {%>
+		<div class="post">
+		</div>
+	<% } %>
 	
-
-	<div class="post">
-	</div>
 
 </div>

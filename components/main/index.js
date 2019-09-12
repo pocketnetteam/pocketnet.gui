@@ -14,7 +14,7 @@ var main = (function(){
 
 		var upbutton = null, plissing = null;
 
-		var currentMode = 'common'
+		var currentMode = 'common', hsready = false;
 
 		var helpers = {
 			
@@ -69,6 +69,8 @@ var main = (function(){
 			},
 			panelTopPosition : function(){
 
+				return
+
 				if(!isMobile()){
 					var s = $(window).scrollTop();
 
@@ -85,6 +87,9 @@ var main = (function(){
 
 			},
 			panelPosition : function(){
+
+				return
+
 				var cnt = el.panel.closest('.fxd');
 				var mwork = el.panel.closest('.mwork');
 				var width = $(window).width();
@@ -207,23 +212,8 @@ var main = (function(){
 
 							share = p
 
-							/*caption = new Caption({
-								container: el.c.find('.lentacell .cnt'),
-								caption: el.c.find('.lentacell .bgCaption'),
-								offset: [65, 0],
-								spacerHeight : '56px',
-								//iniHeight : true
-							}).init();
-							
-							caption.action()
-
-							el.share.on('click', function(){
-
-							
-								_scrollTop(0)
-							
-								
-							})*/
+							if (hsready)
+								el.panel.hcSticky('refresh');
 
 						},
 						essenseData : {
@@ -257,6 +247,14 @@ var main = (function(){
 						window.addEventListener('resize', events.panelPosition)
 						window.addEventListener('scroll', actions.panelTopPosition)
 
+
+						el.panel.hcSticky({
+							stickTo: '#main',
+							top : 77
+						});
+
+						hsready = true
+
 					}
 
 				})
@@ -280,6 +278,14 @@ var main = (function(){
 					essenseData : {
 						hr : 'index?',
 						goback : p.goback,
+
+						renderclbk : function(){
+							
+							if (hsready)
+
+								el.panel.hcSticky('refresh');
+	
+						}
 					},
 					
 					clbk : function(e, p){
@@ -379,6 +385,8 @@ var main = (function(){
 
 			renders.smallpanel()
 
+
+			/*
 			if(!isMobile()){
 
 				self.app.platform.sdk.user.get(function(u){
@@ -401,7 +409,7 @@ var main = (function(){
 					
 
 				})
-			}
+			}*/
 				
 		}
 
@@ -446,6 +454,9 @@ var main = (function(){
 			},
 
 			getdata : function(clbk, p){
+
+				hsready = false;
+
 				var _s = parameters()
 				if (_s.r){
 					currentMode = _s.r

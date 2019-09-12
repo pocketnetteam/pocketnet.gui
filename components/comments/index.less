@@ -177,7 +177,12 @@
 		}
 	}
 	
-
+	&.fromtop{
+		.list{
+			border-top : 1px solid @color-gray-slight;
+			border-bottom : 0;
+		}
+	}
 
 	.list{
 		
@@ -209,11 +214,14 @@
 				}
 			}
 
-			&.editing{
-				.cbodyWrapper{
-					display: none;
+			.commentBody{
+				&.editing{
+					.cbodyWrapper{
+						display: none;
+					}
 				}
-			}
+			}	
+			
 
 			.tocommentno,
 			.tocomment{

@@ -17,7 +17,7 @@ var me = app.platform.sdk.user.me()
 _.each(shares, function(share){
 
  %>
-	<div class="share <% if(me && me.relation(share.address, 'blocking')) {%>blocking<% } %>" id="<%-share.txid%>" style="">
+	<div class="share <% if(me && me.relation(share.address, 'blocking')) {%>blocking<% } %>" id="<%-share.txid%>">
 		<div class="shareSpacer">
 			
 		</div>
