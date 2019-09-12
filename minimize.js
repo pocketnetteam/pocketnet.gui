@@ -1,6 +1,6 @@
 var fs = require('fs');
 var _ = require('underscore');
-var lazyEach = require('lazyEach');
+require('./js/functions.js');
 var uglifyJS = require("uglify-js");
 //var ClosureCompiler = require('google-closure-compiler').compiler;
 var compressor = require('yuicompressor');
