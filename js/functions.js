@@ -9006,6 +9006,77 @@
 
 /* ______________________________ */
 
+/* NUMBERS */
+	compressedNumber = function(num, n, N) {
+
+		if(!N) N = 999
+
+		if(!n) n = 0 ;
+
+		var keys = ['k', 'm', 'b'],
+			kl = keys.length,
+			index = false;
+
+		for(var i = 0; i < kl && Math.abs(num) > N; i++)
+		{
+			num = (num /1000);
+
+			if(Number(num.toFixed(n)) == Number(num.toFixed(0))){
+				num = num.toFixed(0);
+			}
+			else
+			{
+				num = num.toFixed(n);
+			}
+
+			
+			index = i;
+		}
+
+		ret = num;
+
+	    if (index !== false) ret+=keys[index].toUpperCase();
+	    
+
+	    return ret;
+	};
+	
+	phoneecho = function(str){
+
+		if(str.length != 10){
+			return str;
+		}
+
+		var code = str.substr(0,3);
+		var sec = str.substr(3,3);
+		var l1 = str.substr(6,2);
+		var l2 = str.substr(8,2);
+
+		return "(" + code + ")" + " " + sec + "-" + l1 + "" + l2
+	}
+
+	numclass = function(n){
+
+		if(!n || !Number(n)) return 'neutral'
+
+		if(Number(n) > 0) return 'good';
+
+		return 'bad';
+
+	}
+
+	numclasscolor = function(n, c ){
+
+		if(!n || !Number(n)) return c['neutral']
+
+		if(Number(n) > 0) return c['good'];
+
+		return c['bad'];
+
+	}
+
+/* ______________________________ */
+
 /* TEXT */
 	pluralform = function(n, w){
 			

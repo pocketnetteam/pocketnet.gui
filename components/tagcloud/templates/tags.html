@@ -1,0 +1,25 @@
+<div class="ta">
+    <% _.each(tags, function(tag){ %>
+
+        <div class="tag">
+            <div class="tagtable table">
+                <div class="iconWrapper">
+                    <div class="icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                </div>
+
+                <div class="tagvalue">
+                    <%- tag.tag %>
+                </div>
+
+                <div class="tagcount">
+                    <%- compressedNumber(tag.count) %>
+                </div>
+
+                
+            </div>
+        </div>
+
+    <% }) %>
+</div>

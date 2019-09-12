@@ -4400,6 +4400,9 @@ Platform = function(app, listofnodes){
 		},
 		tags : {
 			storage : {
+
+				cloud : null,
+
 				all : ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr']
 			},
 
@@ -4417,6 +4420,54 @@ Platform = function(app, listofnodes){
 
 				if (clbk)
 					clbk(lastEls(s, 7))
+
+			},
+
+			cloud : function(clbk){
+
+				var s = this.storage;
+
+				if (s.cloud){
+					if (clbk){
+
+						clbk(s.cloud)
+
+					}
+				}
+				else
+				{
+
+					self.app.ajax.rpc({
+						method : 'gettags',
+						parameters : ['', '50'],
+						success : function(d){
+
+							s.cloud = d
+
+							if (s.cloud && s.cloud.length){
+								s.all = _.map(s.cloud, function(t){
+									return t.tag
+								})
+							}
+
+							if (clbk){
+						    	clbk(s.cloud)
+							}
+							
+						},
+						fail : function(){
+
+							if (clbk){
+						    	clbk([])
+							}
+							
+						}
+
+					})
+
+				}
+
+				
 
 			}
 		},

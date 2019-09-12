@@ -8,7 +8,7 @@ var panel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, discussions = null;
+		var el, discussions = null, tags = null;
 
 		var ed = null;
 
@@ -17,6 +17,23 @@ var panel = (function(){
 		}
 
 		var renders = {
+
+			tags : function(){
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'tagcloud',
+					el : el.tags,
+					animation : false,
+					
+					clbk : function(e, p){
+						tags = p
+					}
+
+				})
+
+			},
 
 			recommendationslist : function(users, clbk){
 
@@ -270,14 +287,16 @@ var panel = (function(){
 			/*self.app.platform.clbks.api.actions.subscribe.panelrec = function(){	
 				load.recomendation(function(users){
 					renders.recommendations(users)
-				})
+					})
 			}*/
 		}
 
 		var make = function(){
-			renders.discussions()
 
-			/*load.recomendation(function(users){
+			renders.discussions()
+			/*renders.tags()
+
+			load.recomendation(function(users){
 				renders.recommendations(users)
 			})*/
 
@@ -300,11 +319,16 @@ var panel = (function(){
 
 			destroy : function(){
 
-				//delete self.app.platform.clbks.api.actions.subscribe.panelrec
+				delete self.app.platform.clbks.api.actions.subscribe.panelrec
 
 				if (discussions){
 					discussions.destroy()
 					discussions = null;
+				}
+
+				if (tags){
+					tags.destroy()
+					tags = null;
 				}
 
 				el = {};
@@ -317,6 +341,7 @@ var panel = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.cnt = el.c.find('.panelcnt')
+				el.tags = el.c.find('.tagscnt')
 
 				el.r = el.c.find(".recommendationscnt")
 
