@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.0.41-beta",
+    "version": "0.0.42-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -53,6 +53,7 @@
         "jquery.animate-number": "0.0.14",
         "masonry-layout": "^4.2.2",
         "medium-editor": "^5.23.3",
+        "node-gyp": "^5.0.3",
         "node-reverse-wstunnel": "^1.0.0",
         "node-static": "^0.7.11",
         "open": "^6.3.0",
