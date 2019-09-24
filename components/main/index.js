@@ -250,10 +250,11 @@ var main = (function(){
 
 						el.panel.hcSticky({
 							stickTo: '#main',
-							top : 77
+							top : 77,
+							bottom : 177
 						});
 
-						hsready = true
+						//hsready = true
 
 					}
 

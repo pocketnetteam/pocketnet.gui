@@ -1,0 +1,272 @@
+@import "../../css/__cssvar";
+
+#lastcomments{
+    margin-bottom : 10px;
+    background: #FAFAFA;
+
+    .rcptwrp{
+        background: @color-black2;
+        color : #fff;
+    }
+
+    .commentgroup{
+        border-bottom : 1px solid #394951;
+
+        &:nth-last-child(1){
+            border-bottom : 0;
+        }
+    }
+
+    .sharepreview{
+        padding : 0 @rhythm;
+        background: #fff;     
+    }
+
+    .comments{
+        
+    }
+
+    .comment{
+        padding : 0 @rhythm;
+        padding-top : @rhythm;
+        border-bottom : 1px solid @color-gray-slight;
+       
+        .transition(0.9s, color);
+        position : relative;
+        cursor: pointer;
+
+
+        &:nth-last-child(1){
+            border-bottom : 0;
+        }
+
+        &.newcommentsn,
+        &.newcomments{
+            color : @color-main;
+        }
+
+        &.firstcomment{
+
+            display: none;
+
+            &:nth-last-child(1),
+            &:nth-last-child(2),
+            &:nth-last-child(3),
+            &:nth-last-child(4),
+            &:nth-last-child(5){
+                display: block;
+            }
+        }
+
+        .commentBody{
+            &.editing{
+                .cbodyWrapper{
+                    display: none;
+                }
+            }
+        }	
+        
+        .imagescellwrapper{
+            img{
+                width: 30%;
+            }
+        }
+
+        .tocommentno,
+        .tocomment{
+            cursor : pointer;
+            color : @color-main;
+        }
+
+    
+        .metatable {
+            margin-top : 0.5 * @rhythm;
+            height: auto;
+
+            >div{
+                vertical-align: middle;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                word-wrap: none;
+
+                &.datecell{
+                    width: 40%;
+                    text-align: right;
+
+                    span{
+                        font-size: 0.8em;
+                        color : @color-gray-light;
+                    }
+                }
+            }
+        }
+
+        /*&:nth-last-child(1){
+            border-bottom : 0;
+        }*/
+
+        &.showedreplies{
+            .replies{
+                .icon{
+                    i{
+                        &:before{
+                            content : '\f106';
+                        }
+                    }
+                }
+            }
+        }
+
+        &:hover{
+            .metatable{
+                >div{
+
+                    &.panelWrapper{
+
+                        .panel{
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+    .commentWrapper{
+        padding-bottom:@rhythm;
+        >div{
+            vertical-align: top;
+
+            &.iconWrapper{
+                font-size: 0.8em;
+                width: 45px;
+
+                .usericon{
+                    position: relative;
+                    /*margin : 0 auto;*/
+                }
+            }
+
+            &.commentBody{
+
+                .cbodyWrapper{
+
+                    padding-bottom:@rhythm;
+                }
+            }
+
+            .commentmessage{
+                font-size: 0.9em;
+
+                a{
+                    color : @color-main;
+                    text-decoration: underline;
+                }
+            }
+
+            .edited{
+                padding-top : @rhythm;
+
+                i,
+                span{
+                    color : @color-gray-light;
+                    font-size: 0.8em;
+                }
+            }
+
+        }
+    }
+
+    .sharepreview{
+        
+        .shareprwrapper{
+            >div{
+                vertical-align: top;
+                padding : @rhythm / 2;
+
+                &.forimage{
+                    width: 45px;
+                    padding-right: @rhythm;
+                    padding-left: 0;
+
+                    .img{
+                        margin : 0 auto;
+                    }
+                }
+
+
+                &.fortext{
+                    padding-left:  0;
+                    span{
+                        font-size: 0.8em;
+                    }
+
+                }
+
+                &.extra{
+                    div{
+                        font-size: 0.9em;
+                        float: right;
+                    }
+                }
+            }
+
+            .img{
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                position: relative;
+
+                .vstyle{
+                    position: absolute;
+                    left: 20px;
+                    top: 14px;
+                    font-size: 0.6em;
+                    color : @color-gray-slight;
+                }
+            }
+        }
+    }
+
+    .rcaptiontable{
+        >div{
+            vertical-align: middle;
+            &.rpanelWrapper{
+                width : 80px;
+                overflow: hidden;
+
+                .arrowWrapper{
+                    height: 40px;	
+                    float: right;
+                    width: 40px;
+                }
+                .arrow{
+                    display: none;
+                    width: 100%;
+                    text-align: center;
+                    line-height: 40px;
+                    cursor: pointer;
+                    .transition(0.3s);
+
+                    &:hover{
+                        color : @color-main;
+                    }
+
+                    &.active{
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+
+    .rcaption{
+        padding-left : @rhythm;
+        padding: .5em;
+
+        span{
+            font-weight: 100;
+        }
+    }
+}

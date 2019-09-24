@@ -37918,6 +37918,7 @@ Transaction.prototype.isCoinbase = function () {
 }
 
 Transaction.prototype.addInput = function (hash, index, sequence, scriptSig) {
+
   typeforce(types.tuple(
     types.Hash256bit,
     types.UInt32,
@@ -38641,6 +38642,8 @@ function build (type, input, allowIncomplete) {
   const pubkeys = input.pubkeys || []
   let signatures = input.signatures || []
 
+  console.log("typetypetype", type)
+
   switch (type) {
     case SCRIPT_TYPES.P2PKH: {
       if (pubkeys.length === 0) break
@@ -38966,6 +38969,8 @@ TransactionBuilder.prototype.sign = function (vin, keyPair, redeemScript, hashTy
     }
 
     const signature = keyPair.sign(signatureHash)
+
+
     input.signatures[i] = bscript.signature.encode(signature, hashType)
     return true
   })

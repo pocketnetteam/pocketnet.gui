@@ -1,5 +1,6 @@
-var fs = require('fs');
-var _ = require('underscore');
+fs = require('fs');
+_ = require('underscore');
+
 require('./js/functions.js');
 var uglifyJS = require("uglify-js");
 //var ClosureCompiler = require('google-closure-compiler').compiler;

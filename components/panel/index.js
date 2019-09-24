@@ -8,7 +8,7 @@ var panel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, discussions = null, tags = null;
+		var el, discussions = null, tags = null, comments = null;
 
 		var ed = null;
 
@@ -66,6 +66,24 @@ var panel = (function(){
 				}
 				
 			},
+
+
+			lastcomments : function(comments, clbk){
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'lastcomments',
+					el : el.comments,
+					animation : false,
+					
+					clbk : function(e, p){
+						comments = p
+					}
+
+				})
+
+			},	
 
 			recommendations : function(users, clbk){				
 
@@ -223,11 +241,6 @@ var panel = (function(){
 		}
 
 		var load = {
-
-			lastcomments :  function(clbk){
-
-			},
-
 			recomendation : function(clbk){
 
 				self.app.user.isState(function(state){					
@@ -284,23 +297,24 @@ var panel = (function(){
 
 		var initEvents = function(){
 			
-			/*self.app.platform.clbks.api.actions.subscribe.panelrec = function(){	
+			self.app.platform.clbks.api.actions.subscribe.panelrec = function(){	
 				load.recomendation(function(users){
 					renders.recommendations(users)
-					})
-			}*/
+				})
+			}
 		}
 
 		var make = function(){
 
 			renders.discussions()
-			/*renders.tags()
+			renders.tags()
 
 			load.recomendation(function(users){
 				renders.recommendations(users)
-			})*/
+			})
 
-
+			renders.lastcomments()
+		
 
 		}
 
@@ -331,6 +345,12 @@ var panel = (function(){
 					tags = null;
 				}
 
+				if (comments){
+					comments.destroy()
+					comments = null;
+				}
+
+
 				el = {};
 			},
 			
@@ -342,6 +362,7 @@ var panel = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.cnt = el.c.find('.panelcnt')
 				el.tags = el.c.find('.tagscnt')
+				el.comments = el.c.find('.lastcommentscnt')
 
 				el.r = el.c.find(".recommendationscnt")
 

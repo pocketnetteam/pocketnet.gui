@@ -635,8 +635,6 @@ var wallet = (function(){
 
 				var prepareClbk = function(addresses, outputs, feesMode){
 
-					console.log('outputs', outputs)
-
 					self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
 
 						if(err){
@@ -1041,8 +1039,6 @@ var wallet = (function(){
 
 				crDeal : function(addressobject, info, el){
 
-					console.log('addressobject', addressobject, info)
-
 					self.shell({
 
 						name :  'crdeal',
@@ -1104,8 +1100,6 @@ var wallet = (function(){
 						var sel = el.find('.segment[segment="'+s.id+'"]');
 
 						if (s.id == info.Status){
-
-							console.log('Number(info.MinutesLeft) / Number(s.time)', Number(info.MinutesLeft) / Number(s.time), Number(info.MinutesLeft) , Number(s.time))
 
 							var w = Math.min((Number(s.time) - Number(info.MinutesLeft)) / Number(s.time), 0.99) * 100
 
@@ -1525,8 +1519,6 @@ var wallet = (function(){
 
 								actions.prepareTransaction(f, function(addresses, outputs, totalFees, feesMode){
 
-									console.log('_.clone(outputs)', _.clone(outputs))
-
 									self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), totalFees, feesMode, function(err, inputs, _outputs){
 
 										if(err){
@@ -1540,8 +1532,6 @@ var wallet = (function(){
 										_.each(inputs, function(t){
 							 				t.cantspend = true
 							 			})
-
-							 			console.log(inputs)
 
 										self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 											if(err){
@@ -1964,14 +1954,11 @@ var wallet = (function(){
 
 						self.app.platform.sdk.node.transactions.get.canSpend(addresses, function(spend, total){
 
-							console.log("SPEND", spend, total)
-
 							var color = '#414244';
 							var samount = 100;
 							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
-							console.log('group.id, total, temp', group.id, total, temp)
-
+							
 							if(total){
 
 								if(group.id == 'pnetwallet' || group.id == 'total'){
@@ -1984,9 +1971,6 @@ var wallet = (function(){
 								samount = 100 * spend / total
 								color = '#0F8623'
 							}
-
-							console.log('___________________', group.id, total, temp)
-
 
 							var move = {
 								positive : {

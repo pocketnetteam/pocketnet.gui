@@ -2523,6 +2523,8 @@ Platform = function(app, listofnodes){
 				var n = this;
 
 
+				console.log("notificationslength", notifications.length)
+
 				notifications = _.filter(notifications, function(ns){
 					if(ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
 
@@ -2538,6 +2540,8 @@ Platform = function(app, listofnodes){
 				})
 
 				notifications = lastEls(notifications, 100)
+
+				console.log("notificationslength222", notifications.length)
 
 				lazyEach({
 					array : notifications, 
@@ -2719,7 +2723,6 @@ Platform = function(app, listofnodes){
 
 							try{
 
-								console.log(d)
 
 								var c = {
 									caption : filterXSS(decodeURIComponent(d.content), {
@@ -4406,6 +4409,8 @@ Platform = function(app, listofnodes){
 				all : ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr']
 			},
 
+			ex : {'news' : true, 'images' : true, 'videos' : true, 'politics' : true, 'funny' : true, 'art' : true, 'photo' : true},
+
 			search : function(str, clbk){
 
 				str = str.toLowerCase().replace(/[^a-z0-9_]/g, '');
@@ -4423,6 +4428,62 @@ Platform = function(app, listofnodes){
 
 			},
 
+			get : function(address, count, block, clbk){
+
+				var parameters = [address || ''];
+
+				if(count) parameters.push(count.toString())
+				if(block) parameters.push(block.toString())
+
+				self.app.ajax.rpc({
+					method : 'gettags',
+					parameters : parameters,
+					success : function(d){
+
+						if (clbk){
+							clbk(d)
+						}
+						
+					},
+					fail : function(){
+
+						if (clbk){
+							clbk([])
+						}
+						
+					}
+
+				})
+			},
+
+			filterEx : function(tags){
+
+				var ex = this.ex
+
+				return _.filter(tags, function(t){
+					
+					if(!ex[t.tag]) return true
+
+				})
+			},
+
+			getfastsearch : function(clbk){
+				var s = this.storage;
+
+				this.get('', 150, self.currentBlock - 20000, function(d){
+
+					if (d && d.length){
+						s.all = _.map(d, function(t){
+							return t.tag
+						})
+					}
+
+					if (clbk){
+						clbk()
+					}
+				})
+			},
+
 			cloud : function(clbk){
 
 				var s = this.storage;
@@ -4437,33 +4498,15 @@ Platform = function(app, listofnodes){
 				else
 				{
 
-					self.app.ajax.rpc({
-						method : 'gettags',
-						parameters : ['', '50'],
-						success : function(d){
+					this.get('', 50, (self.currentBlock - 23700), function(d){
 
-							s.cloud = d
+						s.cloud = d
 
-							if (s.cloud && s.cloud.length){
-								s.all = _.map(s.cloud, function(t){
-									return t.tag
-								})
-							}
-
-							if (clbk){
-						    	clbk(s.cloud)
-							}
-							
-						},
-						fail : function(){
-
-							if (clbk){
-						    	clbk([])
-							}
-							
+						if (clbk){
+							clbk(s.cloud)
 						}
 
-					})
+					})					
 
 				}
 
@@ -4804,17 +4847,22 @@ Platform = function(app, listofnodes){
 				})
 			},
 
-			getLastComments : function(){
+			last : function(clbk){
+
+				var ini = this.ini
+
 				self.app.ajax.rpc({
 					method : 'getlastcomments',
-					parameters : ['20'],
+					parameters : ['5'],
 					success : function(d){
 
-						console.log('ddd', d)
+						if (clbk)
+							clbk(ini(d))
 						
 					},
 					fail : function(d){
-						
+						if (clbk)
+							clbk([])	
 					}
 				})	
 			},
@@ -4980,7 +5028,7 @@ Platform = function(app, listofnodes){
 							self.currentBlock = localStorage['lastblock'] || deep(d, 'lastblock.height') || 0
 							self.timeDifference = 0;
 
-							blockps = self.currentBlock - 5000;
+							blockps = self.currentBlock - 30000;
 
 							if (t){
 
@@ -6605,7 +6653,11 @@ Platform = function(app, listofnodes){
 
 						self.sdk.node.transactions.get.unspent(function(unspent){
 
+							console.log('unspent1', unspent)
+
 							unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
+
+							console.log('unspent2', unspent)
 
 							if(!unspent.length){
 
@@ -6631,7 +6683,8 @@ Platform = function(app, listofnodes){
 
 								txId : unspent[unspent.length - 1].txid,
 								vout : unspent[unspent.length - 1].vout,
-								amount : unspent[unspent.length - 1].amount
+								amount : unspent[unspent.length - 1].amount,
+								scriptPubKey : unspent[unspent.length - 1].scriptPubKey, 
 
 							}]
 
@@ -6679,7 +6732,9 @@ Platform = function(app, listofnodes){
 							return*/
 
 							if(i.address.indexOf("P" == 0)){
-								txb.addInput(i.txid, i.vout)
+								txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex') )
+
+								console.log("ADDINPUT")
 							}
 
 							else
@@ -6707,13 +6762,20 @@ Platform = function(app, listofnodes){
 						_.each(ouputs, function(o){
 							txb.addOutput(o.address,  Number((k * o.amount).toFixed(0)));
 						})
+
+						var address = self.sdk.address.pnet(keyPair.publicKey)
+
+						console.log("addressaddressaddress", address)
 					
 						_.each(inputs, function(i, inputindex){
 
 
 							if(i.address.indexOf("P") == 0){
 
+								console.log('self.sdk.addresses.storage.addresses', self.sdk.addresses.storage.addresses, self.sdk.addresses.storage.addressesobj, i)
+
 								txb.sign(inputindex, keyPair);
+								
 							}
 
 							else
@@ -6727,7 +6789,7 @@ Platform = function(app, listofnodes){
 
 									var dumped = self.sdk.address.dumpKeys(index)
 
-									txb.sign(inputindex, dumped, p2sh.redeem.output, null, Number(i.amount * k).toFixed(0));
+									txb.sign(inputindex, dumped, p2sh.redeem.output, null, Number(Number(i.amount * k).toFixed(0)));
 
 
 								}
@@ -6741,6 +6803,8 @@ Platform = function(app, listofnodes){
 					    })					
 						
 						var tx = txb.build()
+
+						console.log(tx, txb)
 	
 						return tx;
 
@@ -6781,10 +6845,12 @@ Platform = function(app, listofnodes){
 
 							var amount = 0;
 
+							console.log('inputs', inputs)
+
 						    _.each(inputs, function(i){
 
 						    	if(self.addressType == 'p2pkh' || self.addressType == 'p2sh'){
-									txb.addInput(i.txId, i.vout)
+									txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
 								}
 
 								if(self.addressType == 'p2wpkh'){
@@ -6793,7 +6859,7 @@ Platform = function(app, listofnodes){
 						    	}
 
 						    	amount = amount + Number(i.amount);
-						    })		
+							})	
 
 						    amount = amount * 100000000;
 
@@ -8335,12 +8401,8 @@ Platform = function(app, listofnodes){
 
 							data.user.address =  data.addrFrom
 
-							var parts = data.txids.split(',')
-
-							data.txids = parts[parts.length - 1]
-
 						
-							platform.sdk.node.shares.getbyid(data.txids, function(s, fromcashe){
+							platform.sdk.node.shares.getbyid(data.txid, function(s, fromcashe){
 
 								s || (s = []);
 
@@ -8551,7 +8613,7 @@ Platform = function(app, listofnodes){
 
 							if(data.address != user.address && data.user){
 
-								if(platform.sdk.usersettings.meta.transactions.value)
+								if(platform.sdk.usersettings.meta.transactions.value && data.tx.amount >= 0.01)
 								{
 									n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " POC to you"
 
@@ -8598,7 +8660,7 @@ Platform = function(app, listofnodes){
 
 							if(data.address !=  platform.sdk.address.pnet().address){
 
-								if(platform.sdk.usersettings.meta.transactions.value)
+								if(platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name)
 								{
 
 									if(data.amountall || data.tx.amount >= 0.05){
@@ -11623,58 +11685,62 @@ Platform = function(app, listofnodes){
 
 			}
 
-			self.sdk.node.get.time(function(){
+			self.sdk.tags.getfastsearch(function(){
+		
+				self.sdk.node.get.time(function(){
 
-				self.preparing = false;
-				
-				if(!state && !_Node && typeof _Electron == 'undefined' && !window.cordova && !localStorage['popupsignup'] && !_Node){
-					setTimeout(function(){
+					self.preparing = false;
+					
+					if(!state && !_Node && typeof _Electron == 'undefined' && !window.cordova && !localStorage['popupsignup'] && !_Node){
+						setTimeout(function(){
 
-						var href = self.app.nav.get.href();
+							var href = self.app.nav.get.href();
 
-						self.app.user.isState(function(state){
+							self.app.user.isState(function(state){
 
-							if (!state && href != 'registration' && href != 'authorization' && href != 'video'){
+								if (!state && href != 'registration' && href != 'authorization' && href != 'video'){
 
-								
+									
 
-								var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
+									var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
 
-								var d = dialog({
-									html : h,
-									class  :'popupsignup',
+									var d = dialog({
+										html : h,
+										class  :'popupsignup',
 
-									btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
-									btn2text : 'Watch Video',
+										btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
+										btn2text : 'Watch Video',
 
-									success : function(){
-										
+										success : function(){
+											
 
-										self.app.nav.api.load({
-											open : true,
-											href : 'registration',
-											history : true
-										})
-									},
+											self.app.nav.api.load({
+												open : true,
+												href : 'registration',
+												history : true
+											})
+										},
 
-									fail : function(){
-										self.app.nav.api.load({
-											open : true,
-											href : 'video',
-											history : true
-										})
-									}
-								})
+										fail : function(){
+											self.app.nav.api.load({
+												open : true,
+												href : 'video',
+												history : true
+											})
+										}
+									})
 
 
-							}
-						})
+								}
+							})
 
-					}, 15000)
-				}
+						}, 15000)
+					}
 
-				self.prepareUser(clbk, state);
-				
+					self.prepareUser(clbk, state);
+					
+				})
+
 			})
 
 		})

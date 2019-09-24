@@ -1210,6 +1210,7 @@ pUserInfo = function(){
 	self.txid = '';
 	self.ref = '';
 	self.postcnt = 0;
+	self.reputation = 0;
 
 	self.subscribes = [];
 	self.subscribers = [];
@@ -1232,6 +1233,7 @@ pUserInfo = function(){
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
 		self.postcnt = v.postcnt || 0;
+		self.reputation = v.reputation || 0;
 
 		if (v.subscribes) self.subscribes = v.subscribes;
 		if (v.subscribers) self.subscribers = v.subscribers;

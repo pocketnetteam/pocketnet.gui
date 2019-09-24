@@ -276,6 +276,30 @@ var author = (function(){
 				}
 			},
 
+			
+
+			share : {
+				name : 'SHARE <i class="fas fa-share-alt"></i>',
+				mobile : '<i class="fas fa-share-alt"></i>',
+				id : 'share',
+
+				if : function(){
+					return true
+				},
+				events : {
+					click : function(){
+
+						self.nav.api.load({
+							open : true,
+							href : 'socialshare',
+							history : true,
+							inWnd : true
+						})
+						
+					}
+				}
+			},
+
 			settings : {
 				name : self.app.localization.e('settings') + ' <i class="fas fa-cog"></i>',
 				mobile : '<i class="fas fa-cog"></i>',

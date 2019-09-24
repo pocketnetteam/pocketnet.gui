@@ -92,6 +92,8 @@ var notifications = (function(){
 				if(!p) p = {};
 
 				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;
+
+				console.log("SADDSAADSDSA1111", _notifications.length)
 				
 				p.el = el.new;
 
@@ -117,6 +119,8 @@ var notifications = (function(){
 				_notifications = _.sortBy(_notifications, function(n){
 					return Number(-n.nblock)
 				})
+
+				console.log("SADDSAADSDSA", _notifications.length)
 
 				self.shell({
 					name :  'notifications',

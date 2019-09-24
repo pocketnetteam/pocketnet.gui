@@ -79,8 +79,6 @@ var navigation = (function(){
 			
 			self.app.nav.clbks.history.navigation = function(href){
 
-				console.log("DSDSD")
-
 				renders.menu(self.app.nav.get.pathname())
 
 			}

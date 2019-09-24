@@ -1,25 +1,43 @@
 <div class="ta">
-    <% _.each(tags, function(tag){ %>
+    <% _.each(tags, function(tag, i){ %>
 
-        <div class="tag">
-            <div class="tagtable table">
-                <div class="iconWrapper">
-                    <div class="icon">
-                        <i class="fas fa-hashtag"></i>
+        <div class="tg <% if(i > 13) {%> hdn <% } %>">
+
+            <a href="s?ss=tag:<%- tag.tag %>">
+                <div class="tag">
+                    <div class="tagtable table">
+                        <div class="iconWrapper">
+                            <div class="icon">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                        </div>
+
+                        <div class="tagvalue">
+                            <%- tag.tag %>
+                        </div>
+
+                        <div class="tagcount">
+                            <%- compressedNumber(tag.count) %>
+                        </div>
+
+                        
                     </div>
                 </div>
-
-                <div class="tagvalue">
-                    <%- tag.tag %>
-                </div>
-
-                <div class="tagcount">
-                    <%- compressedNumber(tag.count) %>
-                </div>
-
-                
-            </div>
+            </a>
         </div>
 
     <% }) %>
+
+    <% if(tags.length > 13) {%>
+
+        <div class="showalltags showhidealltags">
+            <span>Show more</span>
+        </div>
+
+        <div class="hidealltags showhidealltags">
+            <span>Hide</span>
+        </div>
+
+    <% } %>
+
 </div>

@@ -10,9 +10,10 @@ _.each(notifications, function(notification){
 	var text = ''
 
 	if(notification.seen) seen = 'seen'
-
 	
+	var tpl = ws.messages[notification.msg].fastMessage(notification)
 
+	if(!tpl) return
  %>
 
 	<div class="notification <%-seen%>" notification="<%-notification.txid%>">

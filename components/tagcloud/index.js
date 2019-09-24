@@ -32,6 +32,11 @@ var tagcloud = (function(){
 
 				}, function(p){
 
+					p.el.find('.showhidealltags').on('click', function(){
+						console.log('sad')
+						el.c.toggleClass('showedalltags')
+					})
+
 					if (clbk)
 						clbk()
 
@@ -51,12 +56,17 @@ var tagcloud = (function(){
 
 		var initEvents = function(){
 			
+			
 
 		}
 
 		var load = function(clbk){
 			
 			self.app.platform.sdk.tags.cloud(function(tags){
+
+				tags = self.app.platform.sdk.tags.filterEx(tags)
+
+
 				if (clbk)
 					clbk(tags)
 			})
