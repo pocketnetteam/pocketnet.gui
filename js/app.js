@@ -36,6 +36,8 @@ if(typeof _Electron != 'undefined' && _Electron){
 	Mark = require('./js/vendor/jquery.mark.js');
 
 	emojionearea = require('./js/vendor/emojionearea.js')
+
+	filterXss = require('./js/vendor/xss.min.js')
 	
 
 	const electronSpellchecker = require('electron-spellchecker');
@@ -80,7 +82,7 @@ Application = function(p)
 	self.options = {
 
 		nav : {
-			navPrefix : '/',
+			navPrefix : '/pocketnet/',
 		},
 
 		name : 'PCRB',

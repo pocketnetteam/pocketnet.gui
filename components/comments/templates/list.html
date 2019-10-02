@@ -106,6 +106,7 @@ var commentpanel = function(comment, _class){ %>
 									}), true)
 
 
+
 									if(comment.answerid){
 										l = app.platform.sdk.users.replacePattern(l, replaceName, {
 											comment : comment.answerid
@@ -122,7 +123,7 @@ var commentpanel = function(comment, _class){ %>
 								%>
 
 									<div class="commentmessage">
-										<div><%=nl2br(trimrn(m))%></div>
+										<div><%= nl2br(trimrn(m)) %></div>
 									</div>
 
 								<% } %>

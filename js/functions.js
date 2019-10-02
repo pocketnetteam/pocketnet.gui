@@ -9455,6 +9455,22 @@
 
 	}
 
+	superXssFilter = function(str, p){
+		var l = str.length;
+
+		var nstr = filterXSS(str, p)
+
+		console.log(str, nstr, nstr.length, l)
+
+		if(!nstr.length || nstr.length == l){
+			return nstr
+		}
+
+		else{
+			return superXssFilter(nstr, p)
+		}
+	}
+
 	numberToBool = function(v){
 
 		if(v) return true;
@@ -9703,11 +9719,6 @@ checkAddress = function(address){
 	return check(address)
 }
 
-if(typeof filterXSS == 'undefined'){
-	filterXSS = function(t){
-		return t
-	}
-}
 
 
 /* ______________________________ */
