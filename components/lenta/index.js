@@ -1737,11 +1737,13 @@ var lenta = (function(){
 					})
 				}
 
-				shares = _.filter(shares, function(s){
-					return !_.find(sharesInview, function(s1){
-						return s1.txid == s.txid
+				if(!p.ignoresw)
+
+					shares = _.filter(shares, function(s){
+						return !_.find(sharesInview, function(s1){
+							return s1.txid == s.txid
+						})
 					})
-				})
 				
 				self.shell({
 					name :  tpl,
@@ -2479,13 +2481,17 @@ var lenta = (function(){
 			if(!essenseData.txids){
 				self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
 
+					if (share.txidEdit){		
+												
+						delete initedcommentes[share.txidEdit]
+						delete shareInitedMap[share.txidEdit],
+						delete shareInitingMap[share.txidEdit]
 
-					if (share.txidEdit){
 						
-
 						var f = replaceEqual(sharesInview, {
 							txid : share.txidEdit
 						}, share)
+
 
 
 						if (f){
@@ -2496,7 +2502,9 @@ var lenta = (function(){
 								})
 							}, {
 								inner : replaceWith,
-								el : el.shares.find('#' + share.txidEdit)
+								el : el.shares.find('#' + share.txidEdit),
+
+								ignoresw : true,
 							})
 
 							

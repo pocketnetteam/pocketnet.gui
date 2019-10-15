@@ -120,13 +120,12 @@ var lastcomments = (function(){
 
 		var initEvents = function(){
 			
-		
-
+			self.app.platform.ws.messages['newblocks'].clbks['lastcomments'] =
 			self.app.platform.ws.messages['new block'].clbks['lastcomments'] = function(){
 
-				if(self.app.platform.focus){
+				//if(self.app.platform.focus){
 					make()
-				}
+				//}
 
 			}
 

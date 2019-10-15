@@ -549,6 +549,9 @@ var share = (function(){
 											history : true
 										})
 									}
+									else{
+										_scrollTop(0);
+									}
 
 									
 
@@ -561,7 +564,7 @@ var share = (function(){
 								actions.unfocus();
 								
 
-								_scrollTop(0);
+								
 							}
 
 						},

@@ -701,6 +701,8 @@ nModule = function(){
 
 		var id = essense.id || p.eid || 'secondary';
 
+		console.log(id, p, essense)
+
 
 		if (p.primary || p.loadDefault) essense.primary = true;
 

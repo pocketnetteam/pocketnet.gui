@@ -41,7 +41,6 @@
 				if (notification.mesType) m = ws.messages[notification.mesType]
 				if (notification.msg && !m) m = ws.messages[notification.msg]
 
-				console.log('notification', notification, m, m.fastMessage(notification))
 
 				if(!m) return
 				

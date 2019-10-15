@@ -173,14 +173,21 @@ var notifications = (function(){
 						el.c.find('.more').html('('+ watched +')')
 					}
 
+					var ws = self.app.platform.ws
 					
 
 					_.each(_notifications, function(n){
-						var e = self.app.platform.ws.messages[n.msg].fastMessageEvents
 
-						if (e){
+						var e = null;
 
-							e(n, {
+						
+
+						if (n.mesType) e = ws.messages[n.mesType]
+						if (n.msg && !e) e = ws.messages[n.msg]
+
+						if (e && e.fastMessageEvents){
+
+							e.fastMessageEvents(n, {
 								el : _p.el.find('.notification[notification="'+n.txid+'"]')
 							})
 						}

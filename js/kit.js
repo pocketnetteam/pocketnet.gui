@@ -1020,6 +1020,10 @@ Share = function(){
 		return share;
 	}
 
+	self.optstype = function(){
+		return self.type	
+	}
+
 	self.typeop = function(){
 
 		if(self.aliasid){

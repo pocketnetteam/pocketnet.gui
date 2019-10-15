@@ -1380,6 +1380,19 @@ Platform = function(app, listofnodes){
 		metmenu : function(_el, id, actions){
 
 			var share = self.sdk.node.shares.storage.trx[id]
+
+			if(!share){
+				var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
+					return s.txid == id
+				})
+
+				share = new pShare();
+				share._import(temp);
+				share.temp = true;
+				share.address = self.app.platform.sdk.address.pnet().address
+			}
+
+
 			var address = share.address
 
 			var d = {};
@@ -1495,13 +1508,14 @@ Platform = function(app, listofnodes){
 
 							}
 							else{
+
 								app.nav.api.load({
 
 									open : true,
 									id : 'share',
 									animation : false,
 									inWnd : true,
-									_id : d.share.id,
+									_id : d.share.txid,
 			
 									essenseData : {
 										share : editing,
@@ -7920,6 +7934,9 @@ Platform = function(app, listofnodes){
 
 							var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
 							var optype = obj.typeop ? obj.typeop() : obj.type
+							var optstype = optype
+
+							if(obj.optstype && obj.optstype()) optstype =obj.optstype()
 
 							var opreturnData = [Buffer.from( optype, 'utf8'), data];
 
@@ -7983,7 +8000,7 @@ Platform = function(app, listofnodes){
 								{
 									self.app.ajax.rpc({
 										method : 'sendrawtransactionwithmessage',
-										parameters : [hex, obj.export(), optype],
+										parameters : [hex, obj.export(), optstype],
 										success : function(d){
 
 											var alias = obj.export(true);									
@@ -10318,6 +10335,32 @@ Platform = function(app, listofnodes){
 
 					return html;
 					
+				},
+				
+				fastMessageEvents : function(data, message){
+
+					message.el.find('.sharepreview').on('click', function(){
+
+						platform.sdk.node.shares.getbyid(data.txid, function(s, err, p, fromcashe){
+
+							platform.app.nav.api.load({
+								open : true,
+								href : 'post?s=' + data.txid,
+								inWnd : true,
+								//history : true,
+								clbk : function(d, p){									
+									app.nav.wnds['post'] = p
+								},
+
+								essenseData : {
+									share : data.txid
+								}
+							})
+						
+						})
+
+					})
+
 				},
 				
 				clbks : {
