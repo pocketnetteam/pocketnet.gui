@@ -1724,10 +1724,19 @@ pComment = function(){
 	self._import = function(v){
 
 		if (v.msgparsed){
-			self.url = decodeURIComponent(v.msgparsed.url || "");
-			self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
-			self.images = v.msgparsed.images || [];
-		}		
+
+			try {	
+				self.url = decodeURIComponent(v.msgparsed.url || "");
+				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
+				self.images = v.msgparsed.images || [];
+			}
+
+			catch(e){
+				console.log("ERROR", e, v.msgparsed)
+			}
+
+			
+		}			
 		
 		self.txid = v.postid;
 		self.answerid = v.answerid;
