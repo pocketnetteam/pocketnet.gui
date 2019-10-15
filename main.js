@@ -238,7 +238,7 @@ function notification(nhtml) {
     }
 
     var w = Math.min(mainScreen.size.width / 3, 450)
-    var h = 145;
+    var h = 150;
 
 
     nwin = new BrowserWindow({
@@ -265,6 +265,8 @@ function notification(nhtml) {
     setTimeout(function(){
         if (nwin)
             nwin.show()
+
+           // nwin.webContents.toggleDevTools()
     }, 300)
 
     setTimeout(closeNotification, 15000)
@@ -282,7 +284,7 @@ function createWindow() {
         title: "POCKETNET v" + app.getVersion(),
         webSecurity : false,
 
-        icon: defaultIcon
+        icon: defaultIcon,
     });
 
     win.maximize();

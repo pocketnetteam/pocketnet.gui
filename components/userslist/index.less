@@ -5,7 +5,8 @@
 	background: #fff;
 
 	.caption{
-		font-weight: 700;
+		font-weight: 100;
+		font-size: 2em;
 		margin-bottom: 2 * @rhythm;
 	}
 
@@ -22,32 +23,102 @@
 	}
 
 	.users{
-		.addressTable{
-			cursor: pointer;
+		.user{
+			padding : @rhythm 0;
+			margin-top: @rhythm;
 			margin-bottom: @rhythm;
-			>div{
 
-				vertical-align: middle;
+			.addressTable{
+				cursor: pointer;
+				
+				>div{
+	
+					vertical-align: middle;
+	
+					&.iconWrapper{
+						width: 45px;
+						text-align: center;
+					}
+	
+					&.label{
+						padding-left:  2 * @rhythm;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+	
+						.cur{
+							color : @color-main;
+						}
 
-				&.iconWrapper{
-					width: 45px;
-					text-align: center;
-				}
+						.name{
+							font-weight: 100;
+							font-size : 1.2em;
+						}
 
-				&.label{
-					padding-left:  2 * @rhythm;
-
-					.cur{
-						color : @color-main;
+						.light{
+							font-size : 0.8em;
+							color : @color-gray;
+						}
+					}
+	
+					&.extra{
+						width: 200px;
+						padding-left:  2 * @rhythm;
+						text-align: right;
 					}
 				}
+	
+			}
 
-				&.extra{
-					width: 200px;
+			.blockingWrapper{
+				display : none;
+			}
+
+			.subscribebuttonstop{
+				i{
+					color : @color-good;
+				}
+
+				button{
+					font-size: 0.9em;
+					font-weight: 100;
+					padding : @rhythm 4 * @rhythm;
+				}
+
+				.unsubscribe{
+					color : @color-gray-mlight;
 				}
 			}
 
+			&.blocking{
+				background: rgb(41, 3, 24);	
+	
+				.subscribebuttonstop{
+					display: none;
+				}
+	
+				.blockingWrapper{
+					display: inline;
+				}
+			}
+	
+			.subscribebuttonstop{
+				.unsubscribe{
+					display : none;
+				}
+	
+				&.following{
+					.unsubscribe{
+						display : inline;
+					}
+					
+					.subscribe{
+						display : none;
+					}
+				}
+			}
 		}
+		
 	}
 }
 

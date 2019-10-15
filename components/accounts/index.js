@@ -88,9 +88,9 @@ var accounts = (function(){
 
 				var l = deep(pack, 'addresses.length')
 
-				if(l >= 2){
+				if (l >= 5){
 
-					sitemessage('You have reached a maximum of 2 accounts. No more can be added ')
+					sitemessage('You have reached a maximum of 5 accounts. No more can be added ')
 
 					return
 				}

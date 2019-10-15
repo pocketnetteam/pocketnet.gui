@@ -11,6 +11,7 @@
 
 	<div class="metrica  <%-metrica.vis%> <%-metrica.key%> table">
 		<div class="label">
+
 			<% if(metrica.vis == 'waitActions') { 
 
 			%>
@@ -26,12 +27,11 @@
 			<% } else {%>	
 				<span><%- metrica.name %></span>
 			<% } %>
+
 		</div>
 
 		<div class="metricaContent">
 			<% if(metrica.vis == 'scale') {
-
-
 
 				var l = Number(mestate[metrica.key + "_unspent"])
 				var s = Number(mestate[metrica.key + "_spent"])
@@ -75,7 +75,7 @@
 			%>
 
 				<div class="valueWrapper">
-					<span class="value <%-b%>"><%- vis(v, metrica.vis) %></span>
+					<span class="value <%-b%>"><%= vis(v, metrica.vis) %></span>
 				</div>
 
 			<% } %>
@@ -91,11 +91,6 @@
 
 			<% } %>
 
-			<% if(metrica.vis == 'waitActions') { %>
-
-
-
-			<% } %>
 		</div>
 	</div>
 

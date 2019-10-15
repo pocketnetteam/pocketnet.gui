@@ -17,20 +17,23 @@
 		<div class="loadmore"><button><%=e('lloadmore')%></button></div>
 
 		<% if(recommended == 'recommended') {%>	
+
 			<div class="seemore">
-				<a href="index">
+				<a href="index" handler="true">
 					<button><%=e('lloadmore')%></button>
 				</a>
 			</div>
+
 		<% } else { %> 
 
-			<div class="ended"><%=e('lend')%></div>
+			<div class="ended">
+				<%=e('lend')%>
+			</div>
 
 		<% } %>
 
-		
 
-		
+
 
 		<% if(author) {%>
 
@@ -85,6 +88,11 @@
 			</div>
 
 		<% } %>
+		
+
+		<div class="networkErrorMessage">
+				<i class="fas fa-wifi"></i>
+		</div>	
 
 		<div class="loader">
 			<div class="work">

@@ -1,0 +1,560 @@
+@import "../../css/__cssvar";
+
+#connection{
+
+	position: relative;
+	
+	.preloaderabs{
+		display: none;
+		position: absolute;
+		left: 0;
+		right : 0;
+		bottom : 0;
+		top : 0;
+		background: fade(#fff,80);
+
+		.table{
+			>div{
+				vertical-align: middle;
+				text-align: center;
+			}
+		}
+	}
+	
+	&.loading{
+		.preloaderabs{
+			display : block;
+		}
+	}
+
+    .cCaption{
+        padding : 4 * @rhythm 0 ;
+        span{
+            font-weight: 100;
+            font-size: 2em;
+        }
+
+    }
+
+    .connection{
+
+        .nodesCaptionTable{
+            margin-bottom : 4 * @rhythm;
+            >div{
+                &.foradd{
+                    width : 150px;
+                    text-align: right;
+                    color : @color-gray-mlight;
+                    cursor: pointer;
+                    &:hover{
+                        color : @color-main;
+                    }
+
+                    span{
+                        font-size: 0.9em;
+                        font-weight: 200;
+                    }
+                }
+            }
+
+            .nodesCaption{
+                font-weight: 200;
+                color : @color-main;
+                font-size: 1.5em;
+            }
+		}
+		
+		.proxypart{
+			background: @color-main;
+			color : #fff;
+			padding-top : 4 * @rhythm;
+			margin-bottom : 4 * @rhythm;
+
+			.nodesCaptionTable{
+				margin-bottom: 0;
+				.nodesCaption{
+					color : #fff;
+				}
+			}
+			
+
+			.proxyconnect{
+				padding : 4 * @rhythm 0;
+				padding-top : 0;
+
+				.proxyselectwrapper{
+					background: transparent;
+					width: 100%;
+					border : 0;
+					border-bottom : 2px solid #fff;
+					margin-top : 2 * @rhythm;
+					
+				}
+
+				.proxyselecttable{
+					cursor: pointer;
+					color : #fff;
+					.transition(0.3s);
+
+					&:hover{
+						color : fade(#fff, 80);
+					}
+
+
+					>div{
+						padding : @rhythm 0;
+
+						span{
+							font-weight: 100;
+							font-size: 2em;
+						}
+
+						&.selector{
+							text-align: right;
+							width : 80px;
+						}
+
+						&.usingwrapper{
+							width : 50px;
+							text-align: center;
+
+							.using{
+								font-size: 1.5em;
+							}
+						}
+					}
+				}
+			}
+			
+		}
+
+		&.useproxy{
+			.using{
+				i{
+					&:before{
+						content: '\f058';
+					}
+				}
+			}
+		}
+
+		&.shownodes{
+			.nodespart{
+				display: block;				
+			}
+		}
+
+        .nodespart{
+
+			display: none;
+
+			.loading{
+				display: none;
+				text-align: center;
+				padding : 6 * @rhythm;
+			}
+
+			&.loading{
+				.list,
+				.emptylist,
+				.tablecaption{
+					display: none;
+				}
+				.loading{
+					display: block;
+				}
+			}
+
+            .tablecaption{
+                background: #fafafa;
+                padding : 4 * @rhythm 0;
+            }
+
+            .nodewrapepr{
+                border-bottom: 1px solid @color-gray-slight;
+            }
+
+            .node{
+			   
+				&.active{
+					color : @color-good;
+
+					>div{
+						
+						&.use{
+							color : @color-good;
+
+							i{
+								&:before{
+									content : '\f058';
+								}
+							}
+						}
+					}
+				}
+
+                >div{
+                    vertical-align: middle;
+					padding :3 * @rhythm 2 * @rhythm;
+					
+					&.use{
+						width : 40px;
+						text-align: left;
+						color : @color-gray-slight;
+					}
+
+					&.connectnode{
+						cursor: pointer;
+
+						color : @color-good;
+					}
+
+                    &.panel{
+						width : 140px;
+						padding : 2 * @rhythm;
+						padding-left: 0;
+
+                        .item{
+							width: 40px;
+                            float: right;
+                            padding : @rhythm;
+                            color : @color-gray-mlight;
+							margin-left : 4px;
+							text-align: center;
+
+							&.edit{
+								cursor: pointer;
+								&:hover{
+									color : @color-main;
+								}
+							}
+
+							&.stable{
+								color : @color-good;
+							}
+                           
+                        }
+                    }
+
+                    &:nth-child(1){
+                        padding-left: 0;
+                    }
+
+                    &:nth-last-child(1){
+                        text-align: right;
+                        padding-right: 0;
+                    }
+                }
+            }
+
+            .emptylist{
+                display:none;
+                background: #fafafa;
+                text-align: center;
+                color : @color-gray-mlight;
+
+                .table{
+                    min-height: 150px;
+                    >div{
+                        vertical-align: middle;
+                    }
+                }
+
+            }
+
+            &.empty{
+                .tablecaption{
+                    display: none;
+                }
+
+                .list{
+                    display: none;
+                }
+
+                .emptylist{
+                    display:block;
+                }
+            }
+        }
+    }
+}
+.addproxywnd.wnd,
+.proxieslistwnd.wnd,
+.addnodewnd.wnd{
+	.wndinner{
+        width : 450px;
+        max-height: 500px;
+    }
+    .wndcontent{
+        top : 55px;
+        bottom: 66px;
+        padding : 0 2 * @rhythm;
+    }
+
+    .wndinner>div.buttons .button.delete{
+        float: left;
+    }
+
+}
+
+.proxieslist,
+.addnode,
+.addproxy{
+	.preloaderabs{
+		display: none;
+		position: absolute;
+		left: 0;
+		right : 0;
+		bottom : 0;
+		top : 0;
+		background: fade(#fff,80);
+
+		.table{
+			>div{
+				vertical-align: middle;
+				text-align: center;
+			}
+		}
+	}
+	
+	&.loading{
+		.preloaderabs{
+			display : block;
+		}
+	}
+}
+
+.proxieslist{
+	.empty{
+
+		display: none;
+		height: 120px;
+		color : @color-gray-mlight;
+		text-align: center;
+
+		.table{
+			>div{
+				
+				vertical-align: middle;
+			}
+		}
+	}
+
+	&.empty{
+		.empty{
+			display: block;
+		}
+	}
+
+	.proxy{
+		border-bottom: 1px solid @color-gray-slight;
+		cursor: pointer;
+		>div{
+			padding : 0;
+			vertical-align: middle;
+
+			&.name{
+
+				i{
+					width : 40px;
+					display: none;
+				}
+
+				.dup{
+					padding : 2 * @rhythm 0;
+					color : @color-gray-mlight;
+				}
+
+			}
+			
+			&.panel{
+				width: 44px;
+
+				.item{
+					float: right;
+					padding : 2 * @rhythm 0;
+					color : @color-gray-mlight;
+
+					&.edit{
+						cursor: pointer;
+						&:hover{
+							color : @color-main;
+						}
+					}
+
+					
+				}
+			}
+		}
+
+		&.active{
+			font-weight: 700;
+			cursor: default;
+			color : @color-good;
+			
+			>div{
+				&.name{
+					i{
+						display: inline-block;
+					}
+				}
+			}	
+		}
+
+		&:hover{
+			color : @color-good;
+			
+		}
+
+		&:nth-last-child(1){
+			border-bottom: 0px solid @color-gray-slight;
+		}	
+	}
+}
+
+.addnode{
+	&[saveto="proxy"]{
+		.parameterMaketWrapper.rpcuser,
+		.parameterMaketWrapper.rpcpwd{
+			display: none;
+		}
+	}
+}
+
+.addproxy,
+.addnode{
+
+	.parameter{
+
+		>div{
+			padding: @rhythm 0;
+			vertical-align: top;
+		}
+
+		.pName{
+			vertical-align: middle;
+			padding-right : @rhythm;
+			width: 30%;
+
+			.pNameW{
+				font-size: 0.9em;
+			}
+
+			.clear{
+				.transition(0.3s);
+				color : @color-gray-light;
+				cursor: pointer;
+				&:hover{
+					color : @color-main;
+				}
+			}
+
+		}
+
+		
+
+		.pInput{
+			position: relative;
+			vertical-align: top;
+
+			.echo{
+				padding: @rhythm;
+				color : @color-contrast;
+				font-weight: 700;
+			}
+
+			.vm_valuesmulti{
+				padding-top: @rhythm / 2;
+			}
+
+			.vc_valuecustom{
+				width: 100%;
+			}
+
+			
+		}
+
+		.panel{
+			vertical-align: top;
+			padding-top: 2 * @rhythm;
+			width: 20px;
+
+			.clear{
+				text-align: right;
+				cursor: pointer;
+				color : @color-gray-slight;
+				.transition(0.3s);
+				&:hover{
+					color : @color-main;
+				}
+			}
+			
+		}
+
+		select,
+		textarea,
+		input{
+			width: 100%;
+			padding: @rhythm;
+			border : 1px solid @color-gray-light;
+			border-radius: 2px;
+
+			&.error{
+				border : 1px solid @color-bad;
+			}
+		}
+
+		.error{
+			select,
+			textarea,
+			input{
+				border : 1px solid @color-bad;
+			}
+			
+		}
+
+		select{
+			height: 38px;
+			padding-right: 25px;
+			width: auto;
+		}
+
+		.locationInputWrapper{
+			select{
+				width: 100%;
+			}
+		}
+
+		.vmt_valuesmultitree,
+		.vm_value{
+			padding : 0;
+			.checkbox{
+				&+label {
+			        &:before {
+			        	font-size : 1.6em;
+			        	line-height: 19px;
+			        }
+			    }
+			}
+		}
+
+		.hoursrange{
+			select{
+				width: 100%;
+			}
+		}
+
+		&.valuesmultitree{
+			.pName{
+				padding-top: 1.5 * @rhythm;
+			}
+		}
+
+		&.color{
+			>div{
+				vertical-align: middle;
+			}
+		}
+
+	}
+}

@@ -47,19 +47,28 @@
 				>div{
 					vertical-align: middle;
 					padding : 0  @rhythm;
+					background: transparent;
+					color : @color-gray-mlight;
+					.transition(0.3s);
+					font-weight: 400;
+
+					/*&:nth-child(1){
+						border-right : 1px solid @color-gray-mlight;
+					}
+
+					&:nth-last-child(1){
+						border-left : 1px solid @color-gray-mlight;
+					}*/
 
 					.pcenterLabel{
-						border : 1px solid transparent;
-						padding : 0 2 * @rhythm;
-						.transition(0.3s);
-						font-weight: 500;
-						
+						padding : 0 6 * @rhythm;
+						height: 100%;
+						line-height: 45px;
+					}
 
-						&.active{
-							color : @color-main;
-							border-bottom : 1px solid @color-main;
-						}
-
+					&:hover,
+					&.active{
+						color : @color-black2;
 					}
 
 				}

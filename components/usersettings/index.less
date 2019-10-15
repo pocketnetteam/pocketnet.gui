@@ -8,19 +8,58 @@
 		padding : 0 8 * @rhythm;
 
 		&.gk{
+			border-top: 1px solid @color-gray-light;
 			border-bottom: 1px solid @color-gray-light;
 		}
-
 		&.wh{
 			background: #FAFAFA;
 		}
 	}
+	
+	.settingsGroup{
+		&:nth-child(1){
+			.mwork{
+				
+				&.gk{
+					border-top: 0;
+				}
+			}
+		}
+	}
+
+	
 
 	.caption{
 		max-width: 700px;
 		padding-top: 2 * @rhythm;
 		font-size : 2em;
 		font-weight: 100;
+	}
+
+	.pInputsTable{
+		>div{
+			vertical-align: middle;
+		}
+	}
+
+	.groupHeader{
+		.parameter{
+			>div{
+				vertical-align: middle;
+				color : @color-main;
+				padding : 2 * @rhythm 0;
+
+				&.pName{
+					vertical-align: middle;
+					vertical-align: top;
+				}
+
+				.pInput{
+					font-weight: 700;
+					font-size: 0.8em;
+				}
+			}
+		}
 	}
 
 	.parameter{
@@ -43,11 +82,16 @@
 			padding-right : @rhythm;
 			width: 190px;
 
+			.downloads {
+				padding-bottom: 2*@rhythm;
+			}
+
 			.pNameW{
 				padding-top : @rhythm  / 3;
 				font-weight: 700;
 				font-size: 0.8em;
 				line-height: 1.4em;
+
 			}
 
 			.unit{
@@ -189,6 +233,10 @@
 			>div{
 				&.pName{
 					width : auto;
+
+					.downloads {
+						padding-bottom: 2*@rhythm;
+					}
 				}
 				&.pInput{
 					width : 40px;

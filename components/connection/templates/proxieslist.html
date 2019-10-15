@@ -1,0 +1,86 @@
+<div class="proxieslist empty">
+
+    <div class="empty">
+        <div class="table">
+            <div>
+                Proxies not found
+            </div>
+        </div>
+    </div>
+
+    <div class="plist">
+
+        <% if(proxies.length) {%>
+
+            <% if(ele) {%>
+
+                <div class="proxy table <% if(self.app.platform.dontuseapiproxy){ %> active <% } %>" pid="none">
+
+                    <div class="name">
+                        <div class="dup">
+                                Don't use proxy <i class="fas fa-check"></i>
+                        </div>
+                        
+
+                       
+                    </div>
+                    <div class="panel">
+                     
+                        <div class="item ex">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>  
+                    </div>
+    
+
+                </div>
+
+            <% } %>
+
+
+            <% _.each(proxies, function(_proxy, i){
+                
+                var active = '';
+
+                if (proxy.id == _proxy.id && !self.app.platform.dontuseapiproxy) active='active'
+                
+                %>
+
+                <div class="proxy table <%- active %>" pid="<%- _proxy.id %>">
+
+                    <div class="name">
+                        https://<%- _proxy.host %>:<%- _proxy.port%>; wss:<%- _proxy.ws %> <i class="fas fa-check"></i>
+                    </div>
+
+                    <div class="panel">
+                        <% if(_proxy.user) {%>
+                            <div class="item edit">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                        <% } else { %> 
+                            <div class="item pn">
+                                <i class="fas fa-certificate"></i>
+                            </div>   
+                        <% } %>
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        <% } else { %> 
+        
+            
+            
+        <% } %>
+    </div>
+
+    <div class="preloaderabs">
+        <div class="table">
+            <div>
+                <div class="preloaderwrapper">
+                    <div class="preloader5"><span></span><span></span><span></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

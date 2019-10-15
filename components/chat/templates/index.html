@@ -3,31 +3,7 @@
 		<div class="captionfwrapper">
 			<div class="headerWrapper">
 				<div class="header table">
-					<div class="icon">
-						<% if(chat.chat.type == 'share') {
-
-							var n = deep(app, 'platform.sdk.usersl.storage.'+chat.author+'.name') || chat.author
-
-							var src = deep(app, 'platform.sdk.usersl.storage.'+chat.author+'.image')
-
-						%>
-
-							<div class="usericon" image="<%-src || ''%>">
-
-								<% if(!src) {%>
-									<svg width="25" height="25" data-jdenticon-value="<%-chat.author%>"></svg>
-								<% } %>
-								
-							</div>
-
-						<% } else { %>
-
-							<i class="fa fa-comment" aria-hidden="true"></i>
-
-						<% } %>
-
-						
-					</div>
+					
 					<div class="name">
 
 						<% if(chat.chat.type == 'share') { 				
@@ -36,7 +12,7 @@
 							 %> 
 
 
-							<span><b>Pocketnet chat</b></span>
+							<span>Pocketnet chat</span>
 
 						<% } else { %> 
 

@@ -484,13 +484,12 @@ var faq = (function(){
 
 			window.addEventListener('scroll', actions.inview);
 			
-			roller = new Roller({
-				selector: '.roller',
-				inner : '.cnt',
-				cnt : el.c,
-				offset : 65
+	
 
-			}).init().apply();	
+			el.c.find('.contens').hcSticky({
+				stickTo: '#faq',
+				top : 65
+			});
 
 		}
 
@@ -519,10 +518,6 @@ var faq = (function(){
 
 				console.log("DESTROY")
 
-				if (roller)
-				{
-					roller.destroy()
-				}
 
 				window.removeEventListener('scroll', actions.inview);
 

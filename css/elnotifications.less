@@ -15,17 +15,26 @@ html{
 }
 .cnt{
     width: 100%;
-    height: 75%;
     overflow: hidden;
+    position: absolute;
+    left : 0;
+    right: 0;
+    top : 0;
+    bottom : 33px;
+    z-index: 5;
 }
 
 .appc{
+    position: absolute;
+    left : 0;
+    right: 0;
+    bottom : 0;
     width: 100%;
-    height: 25%;
+    height: 33px;
     overflow: hidden;
 
     .aitm{
-        float: right;
+        float: left;
         font-size: 0.7em;
 
         .label{
@@ -71,11 +80,40 @@ html{
 
 .fastMessage{
 
+    .time{
+        display: none;
+    }
+
+    .messagethumbs{
+        width : 44px;
+        height : 44px;
+        line-height: 42px;
+        border-radius: 50%;
+        border : 1px solid @color-main;
+        text-align: center;
+        color : @color-main;
+        margin-left : auto;
+        font-size: 0.8em;
+        background: fade(#000, 30);
+        .shadowSmall(); 
+    }
+
     .messagestar{
         color : #FFAE00;
+        width : 44px;
+        height : 44px;
+        line-height: 42px;
+        border-radius: 50%;
+        border : 1px solid #FFAE00;
+        text-align: center;
+        margin-left : auto;
+        font-size: 0.8em;
+        background: fade(#000, 30);
+        .shadowSmall(); 
 
         &[count='3']{
             color : @color-gray-light; 
+            border : 1px solid @color-gray-light; 
         }
 
         &[count='2']{
@@ -87,46 +125,81 @@ html{
         }
     }
 
-     .commentmessagewrapper{
+    .transactionmessagewrapper{
+        >div{
+            vertical-align: top;
+
+            &.foramount{
+                font-weight: 700;
+                text-align: right;
+                color : @color-good;
+                width : 100px;
+                font-size : 0.8em;
+            }
+        }
+    }
+
+    .commentmessagewrapper{
 
         >div{
             vertical-align: top;
 
             &.foranswer{
-                width: 100px;
+                width: 50px;
 
                 text-align: right;
-                button{
-                    display: none;
-                }
+                
             }
         }
 
         .commenttext{
             cursor: pointer;
             span{
-                font-size : 0.9em;
-                color : @color-main;
+                font-size : 0.8em;
+                color : @color-gray-slight;
             }
             
         }
-    }
 
-    .subscribeWrapper{
-        >div{
-            &.forsubscribe{
+        .commentshare{
+            display : none;
+        }
 
-                button{
+        .commentimages{
+            padding-top : @rhythm;
+            .imagesContainer{
+                overflow: hidden;
+
+                >div{
+                    float: left;
+                    margin-bottom : @rhythm;
+                    margin-right : @rhythm; 
+
+                    width: 40px;
+                    height: 40px;
+                    
+                    .image{
+                        width : 100%;
+                        height: 100%;
+                    };
+
                     display: none;
+
+                    &:nth-child(1),
+                    &:nth-child(2),
+                    &:nth-child(3){
+                        display: block;
+                    }
                 }
             }
         }
     }
+    
     .sharepreview{
         padding-top: @rhythm;
         .shareprwrapper{
             >div{
-                vertical-align: middle;
+                vertical-align: top;
                 padding : @rhythm / 2;
 
                 &.forimage{
@@ -165,7 +238,54 @@ html{
                 }
             }
         }
+
+        .shareimages{
+            padding-top : @rhythm;
+            .imagesContainer{
+                overflow: hidden;
+
+                >div{
+                    float: left;
+                    margin-bottom : @rhythm;
+                    margin-right : @rhythm; 
+
+                    width: 80px;
+                    height: 80px;
+                    
+                    .image{
+                        width : 100%;
+                        height: 100%;
+                        position: relative;
+
+                        .vstyle{
+                            position: absolute;
+                            right: @rhythm;
+                            bottom: @rhythm;
+                            font-size: 0.6em;
+                            color : @color-gray-slight;
+                            .shadowSmaller();
+                        }
+                    };
+                }
+            }
+        }
     }
+
+    .foranswer{
+        display: none;
+    }
+
+    .subscribeWrapper{
+        >div{
+            &.forsubscribe{
+
+                button{
+                    display: none;
+                }
+            }
+        }
+    }
+    
     .cwrapper{
         >div{
             vertical-align: top;
@@ -173,13 +293,38 @@ html{
             &.cellforimage{
                 width: 50px;
             }
+            &.extra{
+                width: 50px;
+                vertical-align: bottom;
+
+                button{
+                    padding-top : 0;
+                    text-align: right;
+                    width: auto;
+
+                    i{
+                        display : none;
+                    }
+
+                    &.disabled{
+                        color : @color-good;
+                        background: transparent;
+                        i{
+                            display : inline;
+                        }
+
+                        &:hover{
+                            background: transparent;
+                        }
+                    }
+                }
+            }
 
             .infomain{
                 padding-left:  @rhythm;
-                padding-right: 3 * @rhythm;
+                padding-right: @rhythm;
 
                 .tips{
-                    padding-top : @rhythm;
                 }
             }
         }
@@ -197,18 +342,17 @@ html{
     height: 100%;
     width: 100%;
     color : #fff;
-   
-    padding-left : 2 * @rhythm;
+    overflow: hidden;
     font-size: 1em;
     z-index: 140;
 
     .caption{
         font-size: 0.9em;
-        margin-bottom: @rhythm;
     }
 
     .fmCnt{
         padding : 2 * @rhythm 2 * @rhythm;
+        padding-right : @rhythm;
         width: 100%;
         height: 100%;
         overflow : hidden;

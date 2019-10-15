@@ -192,13 +192,30 @@
 			.transition(0.9s, color);
 			position : relative;
 
-			&:nth-child(1){
-				padding-top : 2 * @rhythm;
+			&.mycomment,
+			&.rated{
+				.commentpanel{
+					.upvoteComment{
+						cursor: default;
+						color : @color-gray-mlight;
+
+						&.ratedScore{
+							color : @color-bright;	
+						}
+
+					}
+				}
+			}
+
+			&.deleted{
+				.commentmessage{
+					color : @color-gray-mlight;
+				}
 			}
 
 			&.newcommentsn,
 			&.newcomments{
-				color : @color-main;
+				color : @color-bright;
 			}
 
 			&.firstcomment{
@@ -283,6 +300,44 @@
 				}
 			}
 
+			.metatable{
+				>div{
+
+					&.panelWrapper{
+
+						.temppanel{
+							display: none;
+							text-align: right;
+						}
+					}
+				}
+			}
+
+			&.temptransaction{
+				/*.metatable{
+					>div{
+
+						&.panelWrapper{
+
+							.panel{
+								display: none;
+							}
+
+							.temppanel{
+								display: block;
+							}
+						}
+					}
+				}*/
+
+				&.commentnotedited{
+					.commentpanel .items>div{
+						&.reply{
+							display: none;
+						}
+					}
+				}
+			}
 
 		}
 		.commentWrapper{
@@ -338,11 +393,11 @@
 			height: auto;
 			>div{
 				vertical-align: middle;
-				padding : @rhythm 0;
+				padding : 2 * @rhythm 0;
 				padding-bottom: 0;
 
 				span{
-					font-size : 0.8em;
+					font-size : 0.9em;
 				}
 
 				&.author{
@@ -350,7 +405,12 @@
 				}
 
 				.date{	
-					color : @color-gray-light;
+					color : @color-gray-mlight;
+				}
+
+				.edited{
+					color : @color-gray-mlight;
+				
 				}
 
 				&.panelWrapper{
@@ -390,9 +450,11 @@
 			}
 		}
 
+		
+
 		.commentpanel{
 			overflow: hidden;
-			
+			margin-top : @rhythm;
 
 			.items{
 				overflow: hidden; 
@@ -400,16 +462,27 @@
 				>div{
 					float: right;
 					padding-left: 2 * @rhythm;
-					cursor: pointer;
-					color : @color-main;
-					.transition(0.3s);
-
-					&:hover{
-						color : @color-gray-light;
-					}
+					
 
 					&:nth-last-child(1){
 						padding-left : 0;
+					}
+
+					&.upvoteCommentWrapper{
+						float: left;
+						padding-left: 0;
+						padding-right: 2 * @rhythm;
+						
+					}
+
+					.cact{
+						cursor: pointer;
+						color : @color-main;
+						.transition(0.3s);
+
+						&:hover{
+							color : @color-gray-light;
+						}
 					}
 
 				}	
@@ -424,15 +497,48 @@
 						text-align: center;
 						cursor: pointer;
 					}
-
-				}
-				
+				}				
 			}
 
 			span{
 				font-weight: 700;
 				font-size : 0.8em;
 			}
+
+			.upvoteComment{
+				cursor: pointer;
+				color : @color-gray-mlight;
+				.transition(0.3s);
+
+				&.ratedScore,
+				&:hover{
+					color : @color-main;	
+				}
+			}
+
+			.upvoteCommentTable{
+				width: auto;
+
+				
+
+				>div{
+					vertical-align: middle;
+					padding : 0 @rhythm;
+
+					&:nth-child(1){
+						padding-left: 0;
+					}
+				}
+
+				.commentScore{
+					font-size: 0.8em;
+					font-weight: 200;
+				}
+			}
+
+			
+
+			
 					
 		}
 
@@ -1133,6 +1239,7 @@
 					}	
 				}
 					
+				
 			}
 
 

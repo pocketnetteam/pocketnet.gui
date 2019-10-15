@@ -40,22 +40,28 @@
 	<div class="panelitemCenter">
 		<div class="centerTable table">
 
-			<div class="pcenterCell">
-				<div class="pcenterLabel fresh <% if(!r && pathname=='index') {%> active <% } %> ">
-					<a href="index" handler="true">All Posts</a>
-				</div>
+			<div class="pcenterCell <% if(!r && pathname=='index') {%> active <% } %> fresh">
+				<a href="index" handler="true">
+					<div class="pcenterLabel ">
+						All Posts
+					</div>
+				</a>
 			</div>
 
-			<div class="pcenterCell">
-				<div class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
-					<a href="index?r=sub"  handler="true">Your Pocket</a>
-				</div>
+			<div class="pcenterCell <% if(r == 'sub' && pathname=='index') {%> active <% } %> toppost">
+				<a href="index?r=sub"  handler="true">
+					<div class="pcenterLabel">
+						Your Pocket
+					</div>
+				</a>
 			</div>
 
-			<div class="pcenterCell">
-				<div class="pcenterLabel toppost <% if(r == 'recommended' && pathname=='index') {%> active <% } %>">
-					<a href="index?r=recommended"  handler="true">Top posts</a>
-				</div>
+			<div class="pcenterCell <% if(r == 'recommended' && pathname=='index') {%> active <% } %>">
+				<a href="index?r=recommended"  handler="true">
+					<div class="pcenterLabel ">
+						Top posts
+					</div>
+				</a>
 			</div>
 			
 		</div>

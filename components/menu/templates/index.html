@@ -1,6 +1,26 @@
-<div id="<%-module.map.id%>">
+<div id="<%-module.map.id%>" >
+	<!--
+	<div class="titleBar">
+		
+		<div class="titleBarButtons">
+			<div class="closeApp"><i class="fas fa-times"></i></div>
+
+			<div class="toggleMinMax">
+				<div class="maximizeApp"><i class="far fa-window-restore"></i></div>
+				<div class="restoreApp"><i class="far fa-window-maximize"></i></div>
+			</div>
+
+			<div class="miniizeApp">
+				<i class="far fa-window-minimize"></i>
+			</div>
+		</div>
+		<div class="titleBarDrag" style="-webkit-app-region: drag; -webkit-user-select: none;"></div>
+	</div>
+	-->
 
 	<div class="menuWrapper">
+		
+		
 
 		<div class="sections">
 			<div class="section right">
@@ -144,9 +164,19 @@
 						</div>
 
 
-						
-
 						<div class="items">
+							<div class="item table right state onlyicon" events="state" title="There are some problems with the connection">
+
+								<div class="icon">
+									<div class="icn">
+										<i class="fas fa-wifi"></i>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<!--<div class="items">
 							<div class="item table right ustate onlyicon hidden" events="ustate">
 
 								<div class="waitpreloader">
@@ -160,7 +190,7 @@
 								</div>
 
 							</div>
-						</div>
+						</div>-->
 
 						<!--<div class="items">
 							<div class="item table right signout" events="signout">
@@ -316,47 +346,7 @@
 
 		</div>
 	</div>
-	<!--
-	<div class="additionalbar">
-
-		<div class="sections">
-			<div class="section">
-
-				<div class="items ">
-
-					<div class="item table">
-
-				
-
-						<div class="taglink">
-							<%=e('tnews')%>
-						</div>
-
-						<div class="taglink">
-							<%=e('timages')%>
-						</div>
-
-						<div class="taglink">
-							<%=e('tvideos')%>
-						</div>
-
-						<div class="taglink">
-							<%=e('tmarket')%>
-						</div>
-
-						<div class="taglink">
-							<%=e('tsport')%>
-						</div>
-
-					</div>
-
-				</div>
-
-			</div>
-
-		</div>
-		
-	</div>-->
+	
 
 </div>
 

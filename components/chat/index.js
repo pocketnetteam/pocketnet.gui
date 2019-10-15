@@ -408,7 +408,7 @@ var chat = (function(){
 					//self.app.platform.sdk.chats.read(chat.messages, function(messages){
 					//
 					
-					if(newmessageslength){
+					/*if(newmessageslength){
 
 						setTimeout(function(){
 							
@@ -421,7 +421,7 @@ var chat = (function(){
 
 						readinterval = slowMade(function(){
 							
-						}, readinterval, 1000)
+						}, readinterval, 1000)*/
 
 						
 
@@ -445,7 +445,9 @@ var chat = (function(){
 					if(message.UserID != myid && !message.Read) return true;
 				})*/
 
-				var unreadCount = newmessageslength;
+				el.countUnread.html("")
+
+				/*var unreadCount = newmessageslength;
 
 
 				if (unreadCount){
@@ -457,7 +459,7 @@ var chat = (function(){
 					el.countUnread.html("")
 				}
 
-				self.app.platform.api.electron.notifications(unreadCount, 'messages')
+				self.app.platform.api.electron.notifications(unreadCount, 'messages')*/
 			},
 			checkState : function(){
 				if(el.c && !el.c.hasClass('minimized')) return true

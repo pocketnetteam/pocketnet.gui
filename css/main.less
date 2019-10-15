@@ -1301,14 +1301,16 @@ pie {
 
         &:before {
             border-radius: 1px;
-            content: "";
+            font-family: "Font Awesome 5 Free";
+			font-weight: 700;
+			content: '';
             display: inline-block;
             width: 20px;
             height: 20px;
             margin-right: 10px;
             position: absolute;
             left: 0;
-            background: #fff;
+            background: @color-white;
             color: @color-black;
             border: 1px solid @color-main;
 
@@ -1333,13 +1335,26 @@ pie {
     &:checked {
         &+label{
             &:before {             
-                content: "\2713";
+                content: '\f00c';                
                 text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
                 text-align: center;
             }
         }
     
-    } 
+
+    }
+    
+    &[semi] {
+        &+label{
+            &:before {             
+                content: '\f111';
+                opacity: 0.5;
+                text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+                text-align: center;
+            }
+        }    
+
+    }
 
     &.nolabel{
         &+label {
@@ -1351,6 +1366,36 @@ pie {
             }
         }
     }
+
+    &.onlyOne{
+
+        &+label{
+            position : relative;
+            line-height: 16px;
+        }
+
+        &:checked {
+            &+label{
+                &:before {             
+                    content: "";
+                    
+                }
+
+                &:after{
+                    content: "";
+                    position : absolute;
+                    background: @color-contrast;
+                    border-radius: 50%;
+                    left: 4px;
+                    top: 2px;
+                    height: 14px;
+                    width: 14px;
+                    
+                }
+            }
+        
+        } 
+    }
 }
 .checkbox{
     &+label {
@@ -1358,11 +1403,11 @@ pie {
         padding-left: 35px!important;
         &:before {
             margin-top: 9px;
-            font-size : 2em;
+            border-radius : 50%;
             border-color: @color-gray-light;
-            color : @color-bright;
+            color : @color-main;
             text-shadow: none;
-            line-height: 15px;
+            line-height: 20px;
             .transition(0.3s)
 
 
@@ -1370,7 +1415,7 @@ pie {
 
         &:hover{
             &:before {
-                border-color: @color-bright;
+                border-color: @color-main;
             }
         }
     }
@@ -1407,6 +1452,8 @@ pie {
             }
         } 
     }
+
+
 }
 #loader{
     position: fixed;
@@ -1705,11 +1752,10 @@ input[type=radio].radio:checked + label {
 }
 
 .wnd{
-    position: fixed;
+    position: absolute;
     left: 0;
-    right: 0;
     top: 0;
-    bottom: 0;
+    width : 100%;
     display: none;
     z-index: 1005;
 
@@ -1771,6 +1817,17 @@ input[type=radio].radio:checked + label {
 
                         &:hover{
                             background: @color-gray;
+                        }
+                    }
+
+                    &.ghost{
+                        background: transparent;
+                        border-color: transparent;
+                        color : @color-gray;
+                        text-decoration: underline;
+                
+                        &:hover{
+                            color : @color-main;
                         }
                     }
                 }
@@ -2274,6 +2331,8 @@ input[type=radio].radio:checked + label {
     }
 }
 
+
+
 .bgCaption{
 
     height: 180px;
@@ -2418,6 +2477,20 @@ input[type=radio].radio:checked + label {
    display:inline-block;
    font-size:0px;
    padding:0px;
+
+   &.maincolor{
+    span{
+        background: @color-main;
+    }
+    
+   }
+
+   &.goldcolor{
+    span{
+        background: #FFAE00;
+    }
+    
+   }
 }
 .preloader5 span {
    vertical-align:middle;
@@ -2429,6 +2502,9 @@ input[type=radio].radio:checked + label {
    margin:3px 2px;
    -webkit-animation:preloader5 0.8s linear infinite alternate;
    animation:preloader5 0.8s linear infinite alternate;
+
+
+   
 }
 .preloader5 span:nth-child(1) {
    -webkit-animation-delay:-0.8;
@@ -3998,14 +4074,49 @@ input[type=radio].radio:checked + label {
     }
 
 
+
 .fastMessage,
 .notification{
 
+    .time{
+        padding-left: @rhythm;
+
+        span{
+            font-size: 0.8em;
+            color : @color-gray-mlight;
+        }
+    }
+
+    .messagethumbs{
+        width : 44px;
+        height : 44px;
+        line-height: 42px;
+        border-radius: 50%;
+        border : 1px solid @color-main;
+        text-align: center;
+        color : @color-main;
+        margin-left : auto;
+        font-size: 0.8em;
+        background: fade(#fff, 30);
+        .shadowSmall(); 
+    }
+
     .messagestar{
         color : #FFAE00;
+        width : 44px;
+        height : 44px;
+        line-height: 42px;
+        border-radius: 50%;
+        border : 1px solid #FFAE00;
+        text-align: center;
+        margin-left : auto;
+        font-size: 0.8em;
+        background: fade(#fff, 30);
+        .shadowSmall(); 
 
         &[count='3']{
             color : @color-gray-light; 
+            border : 1px solid @color-gray-light; 
         }
 
         &[count='2']{
@@ -4017,46 +4128,88 @@ input[type=radio].radio:checked + label {
         }
     }
 
+    .transactionmessagewrapper{
+        >div{
+            vertical-align: top;
+
+            &.foramount{
+                font-weight: 700;
+                text-align: right;
+                color : @color-good;
+                width : 100px;
+                font-size : 0.8em;
+            }
+        }
+    }
+
+    .foranswer{
+
+        text-align: right;
+        button{
+            padding-top : 0;
+            text-align: right;
+            width: auto;
+
+            i{
+                display : none;
+            }
+
+            &.disabled{
+                color : @color-good;
+                background: transparent;
+                i{
+                    display : inline;
+                }
+
+                &:hover{
+                    background: transparent;
+                }
+            }
+        }
+    }
+
     .commentmessagewrapper{
 
         >div{
             vertical-align: top;
 
-            &.foranswer{
+            &.forthumbs{
                 width: 50px;
-
-                text-align: right;
-                button{
-                    padding-top : 0;
-                    text-align: right;
-                    width: auto;
-
-                    i{
-                        display : none;
-                    }
-
-                    &.disabled{
-                        color : @color-good;
-                        background: transparent;
-                        i{
-                            display : inline;
-                        }
-
-                        &:hover{
-                            background: transparent;
-                        }
-                    }
-                }
+                text-align: right;   
             }
+
+            
         }
 
         .commenttext{
             cursor: pointer;
             span{
-                font-size : 0.9em;
-                color : @color-main;
+                font-size : 1;
+                color : @color-gray-slight;
+                font-weight: 400;
             }
             
+        }
+
+        .commentimages{
+            padding-top : @rhythm;
+            .imagesContainer{
+                overflow: hidden;
+
+                >div{
+                    float: left;
+                    margin-bottom : @rhythm;
+                    margin-right : @rhythm; 
+
+                    width: 80px;
+                    height: 80px;
+                    
+                    .image{
+                        width : 100%;
+                        height: 100%;
+                    };
+                }
+            }
         }
     }
     
@@ -4064,7 +4217,7 @@ input[type=radio].radio:checked + label {
         padding-top: @rhythm;
         .shareprwrapper{
             >div{
-                vertical-align: top;
+                vertical-align: middle;
                 padding : @rhythm / 2;
 
                 &.forimage{
@@ -4081,6 +4234,7 @@ input[type=radio].radio:checked + label {
                 }
 
                 &.extra{
+                    width: 50px;
                     div{
                         font-size: 0.9em;
                         float: right;
@@ -4103,7 +4257,39 @@ input[type=radio].radio:checked + label {
                 }
             }
         }
+
+        .shareimages{
+            padding-top : @rhythm;
+            .imagesContainer{
+                overflow: hidden;
+
+                >div{
+                    float: left;
+                    margin-bottom : @rhythm;
+                    margin-right : @rhythm; 
+
+                    width: 80px;
+                    height: 80px;
+                    
+                    .image{
+                        width : 100%;
+                        height: 100%;
+                        position: relative;
+
+                        .vstyle{
+                            position: absolute;
+                            right: @rhythm;
+                            bottom: @rhythm;
+                            font-size: 0.6em;
+                            color : @color-gray-slight;
+                            .shadowSmaller();
+                        }
+                    };
+                }
+            }
+        }
     }
+
     .subscribeWrapper{
         >div{
             &.forsubscribe{
@@ -4112,6 +4298,7 @@ input[type=radio].radio:checked + label {
                 button{
                     text-align: right;
                     width: auto;
+                    padding-top : 0;
 
                     i{
                         display : none;
@@ -4140,11 +4327,15 @@ input[type=radio].radio:checked + label {
                 width: 50px;
             }
 
+            &.extra{
+                width: 100px;
+            }
+
             .infomain{
                 padding-left:  @rhythm;
 
                 .caption{
-                    font-size : 0.8em;
+                    font-size : 1em;
                 }
 
                 .tips{
@@ -4170,24 +4361,85 @@ input[type=radio].radio:checked + label {
     }
 }
 
+.closecsscross{
+    position: relative;
+    width: 64px;
+    height: 64px;
+    opacity: 0.5;
+    margin : 0 auto;
 
+
+    &:before, 
+    &:after {
+        position: absolute;
+        left: 32px;
+        content: ' ';
+        height: 64px;
+        width: 1px;
+        background-color: @color-gray-mlight;
+    }
+
+    &:before {
+        transform: rotate(45deg);
+    }
+    &:after {
+        transform: rotate(-45deg);
+    }
+
+}
+    
+.notification{
+    .time{
+        
+        padding-top : @rhythm;
+    }
+    .commentmessagewrapper{
+
+        >div{
+            vertical-align: top;
+
+            &.forthumbs{
+                width: 50px;
+                text-align: right;   
+            }
+
+            
+        }
+
+        .commenttext{
+            padding-top : @rhythm;
+            cursor: pointer;
+            span{
+                font-size : 1.4em;
+                color : @color-gray;
+                font-weight: 100;
+            }
+            
+        }
+    }
+    
+}
 .fastMessage{
     position: fixed;
     left: 10px;
     bottom: 20px;
     max-height: 170px;
-    width: 390px;
-    background: fade(#020E1B, 90);
+    width: 480px;
+    background: fade(#020E1B, 95);
     color : #fff;
-    padding : 2 * @rhythm 2 * @rhythm;
+    padding : 2 * @rhythm;
     padding-left : 2 * @rhythm;
     font-size: 1em;
     z-index: 140;
-    border-radius: 10px;
+    overflow: hidden;
+
+    .messagestar{
+        background: fade(#000, 30);
+        
+    }
 
     .caption{
         font-size: 0.9em;
-        margin-bottom: @rhythm;
     }
 
     .fmCnt{
@@ -4197,12 +4449,25 @@ input[type=radio].radio:checked + label {
         text-overflow: ellipsis;
     }
 
+    .messagethumbs{
+        width : 44px;
+        height : 44px;
+        line-height: 42px;
+        border-radius: 50%;
+        border : 1px solid @color-main;
+        text-align: center;
+        color : @color-main;
+        margin : 0 auto;
+        font-size: 0.8em;
+        background: fade(#000, 30);
+        .shadowSmall(); 
+    }
+
     .subscribeWrapper{
         >div{
             &.forsubscribe{
                 button{
                     color : @color-main;
-                    
                 }
             }
         }
@@ -4217,6 +4482,29 @@ input[type=radio].radio:checked + label {
                     color : @color-main;
                 }
             }
+        }
+
+        .commentimages{
+            .imagesContainer{
+
+                >div{
+                   
+                    width: 40px;
+                    height: 40px;
+                    display: none;
+
+                    &:nth-child(1),
+                    &:nth-child(2),
+                    &:nth-child(3){
+                        display: block;
+                    }
+                    
+                }
+            }
+        }
+
+        .commentshare{
+            display : none;
         }
     }
     
@@ -4318,6 +4606,22 @@ input[type=radio].radio:checked + label {
                 background: @color-bright;
             }
         }
+    }
+
+    .cwrapper{
+        >div{
+            &.extra{
+                width: 50px;
+                vertical-align: bottom;
+            }
+
+        }
+       
+    }
+
+    .ghost{
+        color : @color-main;
+
     }
 
 }

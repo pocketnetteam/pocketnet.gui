@@ -85,85 +85,6 @@ var author = (function(){
 						r.module.destroy()
 				})
 			},
-
-			/*unsubscribe : function(clbk){
-				var unsubscribe = new Unsubscribe();
-					unsubscribe.address.set(author.address);
-
-					topPreloader(10)
-
-
-
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					unsubscribe,
-
-					function(tx, error){
-
-						if(tx){
-							var me = deep(app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
-
-							var u = self.app.platform.sdk.users.storage[author.address];
-
-							if (me) me.removeRelation({
-								adddress : author.address
-							})
-
-							if(u){
-								u.removeRelation(author.address, 'subscribers')
-
-								el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
-								el.c.find('.toReport[report="following"] .count').html(reports.following.count())
-							}
-						}
-
-						topPreloader(100)
-
-						clbk(tx, error)
-
-					}
-				)	
-			},
-
-			subscribe : function(clbk){
-				var subscribe = new Subscribe();
-					subscribe.address.set(author.address);
-
-					topPreloader(10)
-
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					subscribe,
-
-					function(tx, error){
-
-						if(tx){
-							var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
-							var u = self.app.platform.sdk.users.storage[author.address];
-
-
-							if (me) me.addRelation({
-								adddress : author.address,
-								private : false
-							})
-
-							if(u){
-								u.addRelation(author.address, 'subscribers')
-
-								el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
-								el.c.find('.toReport[report="following"] .count').html(reports.following.count())
-							}
-						}
-
-						topPreloader(100)
-
-						clbk(tx, error)
-
-					}
-				)	
-			},*/
-
-			
 		}
 
 		var events = {
@@ -176,6 +97,7 @@ var author = (function(){
 			up : function(){
 				_scrollTop(0)
 			},
+
 			unsubscribe : function(){
 
 				dialog({
@@ -238,6 +160,7 @@ var author = (function(){
 				mobile : '<i class="fas fa-align-justify"></i>',
 				id : 'shares',
 				render : 'lenta',
+				history : true,
 				count : function(){
 					return 0
 				}
@@ -259,6 +182,7 @@ var author = (function(){
 				mobile : '<i class="fas fa-users"></i>',
 				id : 'followers',
 				render : 'followers',
+				history : true,
 				count : function(){
 					
 					return deep(author, 'data.subscribers.length') || 0 
@@ -271,6 +195,7 @@ var author = (function(){
 				id : 'following',
 				mobile : '<i class="fas fa-user-plus"></i>',
 				render : 'following',
+				history : true,
 				count : function(){
 					return deep(author, 'data.subscribes.length') || 0 
 				}
@@ -304,7 +229,7 @@ var author = (function(){
 				name : self.app.localization.e('settings') + ' <i class="fas fa-cog"></i>',
 				mobile : '<i class="fas fa-cog"></i>',
 				id : 'settings',
-				href : 'userpage?id=test',
+				href : 'userpage?id=ustate',
 				class : 'tosettings',
 
 				if : function(){
@@ -336,6 +261,7 @@ var author = (function(){
 				id : 'info',
 				class : 'info',
 				render : 'info',
+				history : true,
 				if : function(){
 					if(isMobile()) return true
 				}
@@ -361,17 +287,10 @@ var author = (function(){
 
 				}
 
-				//if(!selected) pp.animation = 'fadeIn'
 
 				self.shell(pp, function(p){
 
 
-					contentsready = true
-
-					el.c.find('.contentswrapper').hcSticky({
-						stickTo: '#sticktop',
-						top : 67
-					});
 
 					p.el.find('.hasmore .captiontable').on('click', function(){
 						$(this).closest('.hasmore').toggleClass('showedmore')
@@ -474,7 +393,7 @@ var author = (function(){
 
 				actions.destroy();
 
-				if(!report.active && report.id != 'post'){
+				if(!report.active && report.history){
 
 					var rem = ['mt']
 
@@ -529,8 +448,8 @@ var author = (function(){
 						tap : function(){
 							var r = $(this).attr('menuitem');
 
-
-							renders.report(reports[r])
+							if (reports[r])
+								renders.report(reports[r])
 						}
 					})
 					
@@ -672,7 +591,13 @@ var author = (function(){
 						data : d
 	
 					}, function(p){
-	
+
+						var hr = 'author?address=' + author.address
+
+						var n =  app.platform.api.name(author.address)
+		
+						if (n) hr = n.toLowerCase() + "?"
+		
 						self.app.platform.papi.post(id, p.el.find('.postcnt'), function(e, _p){					
 							external = _p
 							
@@ -681,6 +606,8 @@ var author = (function(){
 
 							p.el.find('.postauarrows').addClass('active')
 
+						}, {
+							hr : hr
 						})
 	
 					})
@@ -733,7 +660,7 @@ var author = (function(){
 		
 						})
 
-						if(!isMobile()){
+						if(!isMobile() && author.data && author.data.name){
 							var c = p.el.find('.authorlentawrappermain');
 
 							p.el.find('.authorsearchicon .icon').on('click', function(){
@@ -1031,14 +958,6 @@ var author = (function(){
 				}
 			}
 
-			/*el.c.find('.caption').on('click', function(){
-				self.app.platform.api.actions.unblocking(author.address, function(tx, error){
-					if(!tx){
-						self.app.platform.errorHandler(error, true)	
-					}
-				})
-			})*/
-
 			self.app.platform.clbks.api.actions.blocking.author = function(address){
 
 				if(address == author.address){
@@ -1150,6 +1069,18 @@ var author = (function(){
 								else
 								{
 									reports.shares.name = self.app.localization.e('myuposts')
+
+
+									if(!self.app.user.validate()){
+
+										self.nav.api.go({
+											href : 'userpage?id=test',
+											history : true,
+											open : true
+										})
+
+										return;
+									}
 								}
 							
 

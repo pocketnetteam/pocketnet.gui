@@ -1,9 +1,25 @@
-<% if(mestate) {%>
-	<div class="caption">
-		<%=e('sreps')%>
-	</div>
-<% } %>
 
-<div class="ustatecontent">
-	
+
+
+
+<div class="caption">
+	Reputation and Rewards
 </div>
+<div class="ustatecontentrep">	
+	<div class="preloaderWrapper">
+		<div class="preloader5"><span></span><span></span><span></span></div>
+	</div>
+</div>
+
+<% 
+
+if(app.user.validate()){ %>
+
+	<div class="caption">
+		Limitations
+	</div>
+
+	<div class="ustatecontent">	
+	</div>
+
+<% } %>

@@ -1,0 +1,128 @@
+<div class="blockswrapper">
+
+    <% if(waitActions) { %>
+
+        <div class="wait">
+            <div class="waitCnt">
+                <div class="waitTable table">
+
+                    <div class="waitCell">
+
+
+                        <% if(app.errors.connection()) {%>
+
+                                <div class="label">
+                                    <i class="fas fa-wifi"></i>   
+                                </div>
+                                
+                                <div class="ltl">
+                                    <%=e('funetworkproblems')%>
+                                </div>
+
+                        <% } else {%> 
+
+                            <% if(waitActions == 'inf') { %>
+
+                                <div class="label">
+                                    <%= e('noMoneyError') %>  
+                                </div>
+    
+                                <div class="recieve">
+                                    <a href="userpage?id=wallet&action=recieve">
+                                        <button>Recieve Pocketcoins</button>
+                                    </a>
+                                </div>
+                                
+    
+                            <% } else { %> 
+    
+                                <div class="label">
+                                    <%= e('canSpendError') %>  
+                                </div>
+                                
+                                <div class="time">
+                                    Approximate waiting time is <b><%-waitActions%></b> <%- pluralform(waitActions, ['minute', 'minutes']) %> 
+                                </div>
+    
+                            <% } %>
+                            
+                        <% } %>
+
+                        
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <% } else { %> 
+
+        <% 
+
+            _.each(metrics, function(metrica){ 
+
+                if(metrica.if && !metrica.if()) return
+
+                var b = '';
+
+                if(metrica.bad(l)) b = 'bad'
+
+            
+
+
+
+        %> 
+
+        <div class="metricablockwrapper">
+
+            <div class="metricablock <%-metrica.vis%> <%-b%> <%-metrica.key%>">
+                <div class="blockWrapper">
+                    <div class="blockContentWrapper">
+                        <div class="blockContent">
+                            <div class="vidgetNameWrapper">
+                                <span><%- metrica.name %></span>
+                            </div>
+                            <div class="vidgetIconWrapper">
+                                <div class="vidgetIcon">
+
+                                    <% if(metrica.vis == 'scale') {
+
+                                        var l = Number(mestate[metrica.key + "_unspent"])
+                                        var s = Number(mestate[metrica.key + "_spent"])
+                            
+                                        var t = l + s
+                            
+                                        if (t == 0){
+                                            t = 1;
+                                            l = 0;
+                                        }   
+
+                                    %>
+                                
+                                
+                                    <div class="table">
+                                        <div>
+                                            <div class="unspentWrapper">
+                                                <span class="value <%-b%>"><%- l %></span><span>/<%- t %></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    <% } %>
+
+
+</div>

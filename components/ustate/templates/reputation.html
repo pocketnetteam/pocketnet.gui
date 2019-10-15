@@ -1,0 +1,162 @@
+<div class="reputation">
+
+   
+
+    <div class="reputationblock">
+        <div class="blockswrapper">
+
+
+                <div class="metricablockwrapper">
+
+                    <div class="metricablock">
+                        <div class="blockWrapper">
+                            <div class="blockContentWrapper">
+                                <div class="blockContent">
+                                    <div class="vidgetNameWrapper">
+                                        <span>Reputation</span>
+                                    </div>
+                                    <div class="vidgetIconWrapper">
+                                        <div class="vidgetIcon">
+
+                                            <div class="table">
+                                                <div>
+                                                    <div class="unspentWrapper repv">
+                                                        <% if(reputation) {%>
+                                                            <span class="value">
+                                                                <%- reputation.toFixed(1) %>
+                                                            </span>
+                                                        <% } else { %> 
+        
+                                                            1 / <i class="fas fa-infinity"></i>
+                                                            
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                           
+                
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                
+            </div>
+
+
+        </div>
+    </div>
+
+    
+
+    <% if(levels) {%>
+
+        <div class="levelsblock">
+            <div class="blockswrapper">
+                <% 
+
+                    var _levels = _.clone(levels).reverse()
+                
+                    _.each(_levels, function(lvl){ 
+                    
+                        if(!lvl.level) return
+                    
+                    %> 
+
+                        <div class="metricablockwrapper level" level="<%-lvl.level%>">
+
+                            <div class="metricablock">
+                                <div class="blockWrapper">
+                                    
+                                    <div class="blockContentWrapper">
+                                        <div class="blockContent">
+                                            
+                                            <div class="vidgetNameWrapper">
+
+                                                <div class="vidgetNameWrapperTable table">
+                                                    <div class="cellleft"><span>Level <%- lvl.level %></span></div>
+                                                    <div class="cellright">
+                                                        <div class="reputationCount">
+                                                            <span><b><%- lvl.reputation %></b> <i class="far fa-star"></i></span>
+                                                        </div>
+
+                                                        <div class="valued">
+                                                            <span class="value"><%- app.platform.mp.coin(lvl.bonus) %> POC</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="vidgetIconWrapper">
+                                                <div class="vidgetIcon">
+
+                                                    <div class="table">
+                                                        <div>
+
+                                                            <div class="vidgetcaption">BONUS</div>
+
+                                                            <div class="preloaderGift tooltip" title="You will recieve your coins soon">
+                                                                <div class="preloader5 goldcolor"><span></span><span></span><span></span></div>
+                                                            </div>
+                                                
+                                                            <div class="valuewrappe">
+                                                                <span class="value"><%- app.platform.mp.coin(lvl.bonus) %> POC</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="chart">
+
+
+                                                <div class="repchart">
+                                                    <div class="repchartTable table">
+                                                        <div class="pointCell">
+                                                            <div class="point start"></div>
+                                                        </div>
+        
+                                                        <div class="lineCell">
+                                                            <div class="lineBg">
+                                                                <div class="line good">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+        
+                                                        <div class="pointCell">
+                                                            <div class="point end"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+        
+                                            </div>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        
+                        </div>
+
+                <% }) %>
+            </div>
+        </div>
+
+    <% } %>
+
+    <% if(!reputation && !levels && app.errors.connection()) {%>
+
+        <div class="connectionFailed">
+            <i class="fas fa-wifi"></i>
+        </div>
+
+    <% } %>
+</div>

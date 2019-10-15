@@ -499,7 +499,7 @@ var wallet = (function(){
 
 			linkValidation : function(){
 
-				return deposit.parameters.depositamount.value > 0 && trim(deposit.parameters.message.value)
+				return deposit.parameters.depositamount.value > 0 && trim(deposit.parameters.message.value) && trim(deposit.parameters.label.value)
 			},
 
 			linkValidationQr : function(){
@@ -784,11 +784,24 @@ var wallet = (function(){
 
 				}, function(){
 
-					el.total = el.c.find('.total');
+					el.total = el.c.find('.total .tttl');
+					el.totaler = el.c.find('.total .tttlforerror');
 					el.addresses = el.c.find('.addresses');
 					el.send = el.c.find('.send');
 					el.deposit = el.c.find('.deposit');
 					el.crowdfunding = el.c.find('.crowdfunding');
+
+					self.iclbks.main = function(){
+
+						console.log("ACLK", self.app.errors.connection())
+
+						if(self.app.errors.connection()){
+							el.totaler.addClass('active')
+						}
+						else{
+							el.totaler.removeClass('active')
+						}
+					}
 
 					if (clbk)
 						clbk();
@@ -1867,19 +1880,18 @@ var wallet = (function(){
 
 				}, function(_p){
 
-					var ctx = _p.el.find('#chart' + item.id)[0].getContext('2d');
-					
+					var ctx = _p.el.find('#chart' + item.id)[0].getContext('2d');					
 
-					charts[item.id] = new Chart(ctx, {
-					    type: 'doughnut',
-						data : {
-						    datasets : renders.datasets(item)
-						},
-					    options: {
-					    	rotation : 0.5 * Math.PI,
-					    	cutoutPercentage : 85
-					    }
-					});
+						charts[item.id] = new Chart(ctx, {
+							type: 'doughnut',
+							data : {
+								datasets : renders.datasets(item)
+							},
+							options: {
+								rotation : 0.5 * Math.PI,
+								cutoutPercentage : 85
+							}
+						});
 
 					if (clbk)
 						clbk();
@@ -2065,6 +2077,8 @@ var wallet = (function(){
 				delete self.app.platform.sdk.node.transactions.clbks.circles
 				delete self.app.platform.sdk.node.transactions.clbks.walletaddresses 
 
+				delete self.iclbks.main
+
 				el = {};
 			},
 			
@@ -2097,6 +2111,13 @@ var wallet = (function(){
 								send.parameters.amount._onChange();
 
 								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
+
+
+							}
+
+							if(_p.action == 'recieve'){
+
+								actions.showDepositInStep('showDeposit', 1, self.app.localization.e('wdoptions'))
 
 
 							}

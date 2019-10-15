@@ -19,10 +19,14 @@ Platform = function(app, listofnodes){
 
 		self.currentBlock = 1;
 
+	var onlinetnterval;
+
 	var blockps = 180000;
 
 
 	var TXFEE = 1
+
+		self.online = undefined;
 
 		self.avblocktime = 45;
 
@@ -130,8 +134,6 @@ Platform = function(app, listofnodes){
 
 	self.addressType = 'p2pkh'
 
-	self.addressTypes = ['p2pkh', 'p2sh'/*, 'p2wpkh'*/]
-
 	self.values = {
 		alph : [
 			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -211,7 +213,7 @@ Platform = function(app, listofnodes){
 			var a = eobj.action
 
 			if (action && a){
-				a()
+				a(key, action, akey)
 			}
 
 			return (eobj.text || function(){ return '' })()
@@ -225,14 +227,21 @@ Platform = function(app, listofnodes){
 
 		'money' : {
 
-			action : function(akey){
+			action : function(key, action, akey){
 				
 				var adr = self.app.platform.sdk.address.pnet().address;
 
 				topPreloader(10);
 
-				self.sdk.node.transactions.get.balance(function(a){
+				self.sdk.node.transactions.get.balance(function(a, d, e){
 					topPreloader(30);
+
+					if (e) {
+
+						self.errorHandler(e, action, akey)
+
+						return
+					}
 
 					if (a > 0){
 
@@ -326,7 +335,7 @@ Platform = function(app, listofnodes){
 						}
 					}
 
-				}, adr)
+				}, adr, true)
 				
 			},
 		},
@@ -338,9 +347,106 @@ Platform = function(app, listofnodes){
 		},
 		'network' : {
 			message : function(){
-				return self.app.localization.e('networkerror')
+				return 'Undefined connection error'
 			}
 		},
+
+		'proxy' : {
+			message : function(){
+				return "Connection lost / 1"
+			}
+		},
+
+		'proxymain' : {
+			message : function(){
+				return "Connection lost / 2"
+			}
+		},
+
+		'node' : {
+			message : function(){
+				return "Unable to connect with node"
+			}
+		},
+
+		'offline' : {
+			message : function(){
+				return "Connection lost"
+			}
+		},
+
+		"41" : {
+			message : function(){
+				return 'Comment sending error/ 41'
+			}
+		},
+
+		"40" : {
+			message : function(){
+				return 'Comment sending error. Please wait and try again/ 40'
+			}
+		},
+		
+		"39" : {
+			message : function(){
+				return 'Comment sending error. Please wait and try again/ 39'
+			}
+		},
+
+		"38" : {
+			message : function(){
+				return 'You cannot rate yourself'
+			}
+		},
+
+		"37" : {
+			message : function(){
+				return 'Comment sending error. Please wait and try again/ 37'
+			}
+		},
+
+		"35" : {
+			message : function(){
+				return 'Comment sending error/ 35'
+			}
+		},
+
+		"34" : {
+			message : function(){
+				return 'Comment sending error/ 34'
+			}
+		},
+
+		"33" : {
+			message : function(){
+				return 'This comment is too long, please break it up.'
+			}
+		},
+
+		"32" : {
+			message : function(){
+				return "You have blocked by this user"
+			}
+		},
+
+		"31" : {
+			message : function(){
+				return "You have reached your limit of upvote comments in a 24 hour period"
+			}
+		},
+
+		"30" : {
+			message : function(){
+				return "You have reached your limit of editing comments in a 24 hour period"
+			}
+		},
+
+		"29" : {
+			message : function(){
+				return "You have reached your limit of sending comments in a 24 hour period"
+			}
+		},
+
 		"27" : {
 			message : function(){
 				return "You are trying to edit someone else's post"
@@ -500,7 +606,7 @@ Platform = function(app, listofnodes){
 			text : function(){
 				return self.app.localization.e('checkScoreErrorLight')
 			},
-			action : function(akey){
+			action : function(){
 
 				self.app.platform.sdk.user.waitActions(function(r){
 
@@ -634,12 +740,23 @@ Platform = function(app, listofnodes){
 	
 	self.clbks = {
 
+		online : {
+
+			_app : function(){
+				self.app.options.successHandler({
+					online : true
+				})
+			}
+
+		},
+		offline : {},
+
 		_focus : {},
 		focus : function(time){
 
 			app.user.isState(function(state){
 
-				if(state){
+				if(state /*&& !self.app.errors._autocheck*/){
 
 					self.update();
 
@@ -661,13 +778,13 @@ Platform = function(app, listofnodes){
 				blocking : {},
 				unblocking : {}
 			}
-		},
-
-		
+		},		
 	}
 
 	self.papi = {
-		post : function(id, el, clbk){
+		post : function(id, el, clbk, p){
+
+			if(!p) p = {}
 
 			self.sdk.node.shares.getbyid(id, function(shares){
 
@@ -681,6 +798,7 @@ Platform = function(app, listofnodes){
 						clbk : clbk,
 
 						essenseData : {
+							hr : p.hr,
 							share : id,
 							removemargin : true
 						}
@@ -691,8 +809,6 @@ Platform = function(app, listofnodes){
 
 		}
 	}
-
-
 
 	self.api = {
 
@@ -734,7 +850,7 @@ Platform = function(app, listofnodes){
 		},
 
 		clearname : function(n){
-			return n.replace(/[^a-zA-Z0-9_ ]/g, "")
+			return (n || "").replace(/[^a-zA-Z0-9_ ]/g, "")
 		},
 		name : function(address){
 			var n =  deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
@@ -752,8 +868,9 @@ Platform = function(app, listofnodes){
 			if (name) return encodeURIComponent(name.toLowerCase());
 
 			else return 'author?address=' + address
-		},	
-
+		},
+		
+		
 		upbutton : function(el, p){
 
 			if(typeof window == 'undefined') return;
@@ -1428,6 +1545,58 @@ Platform = function(app, listofnodes){
 
 
 	self.sdk = {
+
+		experiment  : {
+			pfa : function(){
+
+				return
+
+				var a = 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM'
+
+				var h = self.app.platform.sdk.address.pnet().hash;
+
+				var p = "m/22'/";
+
+				var a = []
+
+				h.forEach(function(d){
+					if (d){
+						a.push(d)
+					}
+				})
+
+				p = p + a.join("'/")
+				p = p + "/0"
+
+				var chaincode = new Buffer('00000000000000000000000000000000')
+
+				//console.log('experiment', p, self.app.user.private.value, self.app.user.key.value)
+
+				var k = self.app.user.keys()
+
+				console.log(k.privateKey)
+
+				var d = bitcoin.bip32.fromPrivateKey( self.app.user.private.value, chaincode ).derivePath(p).toWIF() 
+
+				var keyPair = bitcoin.ECPair.fromWIF(d)	  
+
+				console.log('experiment', keyPair)
+
+				var pubkey = keyPair.publicKey;
+
+				var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+
+				var p2sh = bitcoin.payments.p2sh({ redeem: a })
+
+
+				var d2 = bitcoin.bip32.fromPublicKey(self.app.user.key.value, chaincode).derivePath(p)
+
+				console.log(d2)
+
+				
+			}
+		},
+
 		imagesH : {
 			storage : {},
 
@@ -1707,6 +1876,13 @@ Platform = function(app, listofnodes){
 					value : true
 				},
 
+				commentScore : {
+					name : 'Comment Score',
+					id : 'commentScore',
+					type : "BOOLEAN",
+					value : true
+				},
+
 				embedvideo : {
 					name : 'Show embed videos',
 					id : 'embedvideo',
@@ -1726,6 +1902,27 @@ Platform = function(app, listofnodes){
 					id : 'autostart',
 					type : "BOOLEAN",
 					value : undefined
+				},
+				
+				vidgetchat : {
+					name : 'Chat',
+					id : 'vidgetchat',
+					type : "BOOLEAN",
+					value : true
+				},
+				
+				vidgettags : {
+					name : 'Tags',
+					id : 'vidgettags',
+					type : "BOOLEAN",
+					value : true
+				},
+				
+				vidgetlastcomments : {
+					name : 'Last Comments',
+					id : 'vidgetlastcomments',
+					type : "BOOLEAN",
+					value : true
                 },
 			},
 
@@ -1769,7 +1966,8 @@ Platform = function(app, listofnodes){
 							comments : options.comments,
 							answers : options.answers,
 							followers : options.followers,
-							rescued : options.rescued
+							rescued : options.rescued,
+							commentScore : options.commentScore
 
 						}
 					},
@@ -1782,6 +1980,19 @@ Platform = function(app, listofnodes){
 
 						}
 					},
+
+
+					vidgets : {
+						name : "Main Page Vidgets",
+						options : {
+							
+							vidgetchat : options.vidgetchat,
+							vidgettags : options.vidgettags,
+							vidgetlastcomments : options.vidgetlastcomments
+
+						}
+					},
+
 
                 }
                 
@@ -1939,6 +2150,49 @@ Platform = function(app, listofnodes){
 
 				var storage = this.storage
 
+				this._get(function(info, temp){
+
+					if(!temp){
+
+						var a = self.sdk.address.pnet().address;
+
+						if (!_.isEmpty(info)){
+							self.app.settings.set(a, 'last_user', JSON.stringify(info))
+						}
+						else{
+							info = JSON.parse(self.app.settings.get(a, 'last_user') || "{}")
+
+							if(!_.isEmpty(info)){
+
+								
+
+								var u = new pUserInfo();
+										
+									u._import(info)
+									u.address = a
+									u.regdate = new Date();
+									u.regdate.setTime(info.regdate * 1000);	
+
+								storage.me = self.sdk.users.storage[a] = self.sdk.usersl.storage[a] = info = u;
+
+							}
+						}
+
+					}
+
+					if (clbk)
+						clbk(info, temp)
+
+				}, update)
+
+				app.settings.set()
+
+			},
+
+			_get : function(clbk, update){
+
+				var storage = this.storage
+
 				if(!storage.me || update)
 				{
 					storage.me = {};
@@ -1996,6 +2250,7 @@ Platform = function(app, listofnodes){
 					_.each(utxo, function(tx){
 						var _w = self.sdk.node.transactions.waitSpend(tx)
 
+
 						if (wait == 'inf' || wait > _w){
 							wait = _w;
 						}
@@ -2003,16 +2258,10 @@ Platform = function(app, listofnodes){
 
 					if(self.sdk.node.transactions.haveTemp()){
 
-						if (wait == 'inf' || wait > 1)
-							wait = 1;
+						if (wait == 'inf' || wait > 10)
+							wait = 10;
 
 					}
-
-					// if (_.toArray(self.sdk.node.transactions.temp['userInfo']).length){
-					// 	if(!wait){
-					// 		wait = 1;
-					// 	}
-					// }
 
 					if (clbk)
 						clbk(wait)
@@ -2159,6 +2408,113 @@ Platform = function(app, listofnodes){
 			}
 		},
 
+		processes : {
+			storage : {},
+
+			level : function(reputation){
+				if(this.storage.p && typeof reputation != 'undefined'){
+					
+					var lvl = _.find(this.storage.p, function(c){
+						return c.reputation > reputation && c.prev <= reputation
+					})
+
+					if (lvl){
+						var lobj = {
+
+							perc : (reputation - lvl.prev) / (lvl.reputation - lvl.prev),
+							level : lvl.level,
+							reputation : lvl.reputation,
+							bonus : lvl.bonus
+	
+						}
+
+						return lobj
+					}
+
+					else{
+						return {
+							level : 999,
+							max : true
+						}
+					}
+				}
+
+				return null
+			},
+
+			get : function(clbk){
+
+				var s = this.storage;
+
+				if (s.p){
+					if (clbk)
+						clbk(s.p)
+				}
+
+				else
+				{
+					self.app.ajax.apim({
+						action : 'processes',
+						data : {},
+						success : function(d){
+
+							var inited = deep(d, 'data.info.inited');
+
+							if(!inited){
+								if (clbk)
+									clbk(null)
+							}
+							else{
+								var fill = deep(d, 'data.info.fill');
+
+									s.p = fill
+
+									_.each(s.p, function(c, i){
+										if(i) c.prev = s.p[i - 1].reputation
+									})
+
+								if (clbk)
+									clbk(s.p)
+							}
+
+							
+	
+						},
+						fail : function(d, e){
+	
+							if (clbk)
+								clbk(null, e)
+								
+						}
+					})
+				}
+
+			},
+
+			gifts : function(clbk){
+
+				self.app.ajax.apim({
+					action : 'checkgift',
+					data : {
+						address : self.sdk.address.pnet().address
+					},
+					success : function(d){
+
+						if (clbk)
+							clbk(deep(d, 'data.gifts') || [])
+
+					},
+					fail : function(d){
+
+						if (clbk)
+							clbk([])
+							
+					}
+				})
+
+			}
+		},
+
 		ustate : {
 			storage : {},
 
@@ -2268,6 +2624,40 @@ Platform = function(app, listofnodes){
 			},
 
 			me : function(clbk, update){
+
+				var s = self.sdk.ustate.storage;
+
+				self.sdk.ustate._me(function(info){
+
+					if (self.sdk.address.pnet()){
+						var a = self.sdk.address.pnet().address;
+
+						if (!_.isEmpty(info)){
+							self.app.settings.set(a, 'last_ustate', JSON.stringify(info))
+						}
+						else{
+							info = JSON.parse(self.app.settings.get(a, 'last_ustate') || "{}")
+
+							if(!_.isEmpty(info)){
+
+								s[a] = info;
+
+							}
+						}
+					}
+
+					
+				
+					if (clbk)
+						clbk(info)
+
+				}, update)
+
+				app.settings.set()
+
+			},
+
+			_me : function(clbk, update){
 				var s = self.sdk.ustate.storage;
 
 				self.app.user.isState(function(state){
@@ -2276,8 +2666,11 @@ Platform = function(app, listofnodes){
 						var address = self.sdk.address.pnet().address;
 
 						self.sdk.ustate.get(address, function(){
+
+
 							if (clbk)
 								clbk(s[address])
+
 						}, update)
 					}
 					else
@@ -2360,7 +2753,8 @@ Platform = function(app, listofnodes){
 
 				var e = this.export();
 
-
+				
+				
 				if (e.notifications.length && e.block > blockps && this.inited == true){
 
 					e.notifications = firstEls(e.notifications, 100)
@@ -2452,6 +2846,8 @@ Platform = function(app, listofnodes){
 
 					_.each(n, function(attr, i){
 
+						if(!attr) return;
+
 						if(attr.export){
 							l[i] = {
 								exported : attr.export(),
@@ -2475,6 +2871,10 @@ Platform = function(app, listofnodes){
 			},
 
 			init : function(clbk){
+
+				this.inited = false;
+				this.loading = true;
+
 				this.load();
 				this.storage.block || (this.storage.block = 1)
 
@@ -2490,6 +2890,7 @@ Platform = function(app, listofnodes){
 
 				})
 
+
 				this.getNotifications(clbk)
 			},
 
@@ -2503,15 +2904,19 @@ Platform = function(app, listofnodes){
 
 				data.nblock || (data.nblock = self.currentBlock);
 
-				if(data.msg == 'transaction' && data.address == self.sdk.address.pnet().address){
+				console.log(deep(data, 'tx.coinbase'))
+
+				if(data.msg == 'transaction' && data.address == self.sdk.address.pnet().address && !deep(data, 'tx.coinbase')){
 					return
 				}
+
+				console.log(":ADD")
 
 				if (this.storage.notifications){
 					this.storage.notifications.unshift(data)
 
 					_.each(this.clbks.added, function(f){
-						f([data])
+						f([data], true)
 					})
 
 					this.save()
@@ -2522,8 +2927,7 @@ Platform = function(app, listofnodes){
 			getNotificationsInfo : function(notifications, clbk){
 				var n = this;
 
-
-				console.log("notificationslength", notifications.length)
+				n.loading = true
 
 				notifications = _.filter(notifications, function(ns){
 					if(ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
@@ -2532,6 +2936,10 @@ Platform = function(app, listofnodes){
 						return n.commentid == ns.commentid
 					})) return false
 
+					if(ns.msg == "transaction" && ns.txinfo && ns.txinfo.pockettx){
+						return false
+					}
+
 					return true
 				})
 
@@ -2539,25 +2947,33 @@ Platform = function(app, listofnodes){
 					return -Number(n.nblock)
 				})
 
-				notifications = lastEls(notifications, 100)
+				
 
-				console.log("notificationslength222", notifications.length)
+				notifications = firstEls(notifications, 100)
 
+			
 				lazyEach({
 					array : notifications, 
 					action : function(p){
 
+
 						var ns = p.item;
+						var m = null;
 
 						ns.loading = true;
 
-						if (self.ws.messages[ns.msg]){
-							self.ws.messages[ns.msg].loadMore(ns, function(){
+						if (ns.mesType) m = self.ws.messages[ns.mesType]
+						if (ns.msg && !m) m = self.ws.messages[ns.msg]
+
+
+						if (m){
+							m.loadMore(ns, function(){
 								ns.loaded = true;
 
 								ns.loading = false;
 
 								p.success()
+
 							}, true)
 						}
 						else
@@ -2570,11 +2986,12 @@ Platform = function(app, listofnodes){
 					all : {
 						success : function(){
 
+							n.loading = false
+
 							var ns = _.filter(notifications, function(no){
 								if(no.msg == 'transaction' && no.address == self.sdk.address.pnet().address){
 									return
 								}
-
 								return true
 							})
 
@@ -2585,10 +3002,6 @@ Platform = function(app, listofnodes){
 							_.each(n.clbks.added, function(f){
 								f(ns)
 							})
-
-							
-
-							//n.import(n.export())
 
 							if (clbk)
 								clbk()
@@ -2601,13 +3014,18 @@ Platform = function(app, listofnodes){
 				var n = this;
 
 				self.app.ajax.rpc({
-					method : 'getmissedinfo',
-					parameters : [self.sdk.address.pnet().address, this.storage.block],
+					method : 'getmissedinfo2',
+					parameters : [self.sdk.address.pnet().address,this.storage.block],
 					success : function(d){	
+
 
 						d || (d = [{block : blockps, cntposts : 0}])
 
 						var notifications = (d || []).slice(1)		
+
+						notifications = _.sortBy(notifications, function(n){
+							return -n.nblock
+						})
 
 
 						n.getNotificationsInfo(notifications, function(){
@@ -2624,9 +3042,14 @@ Platform = function(app, listofnodes){
 						})		
 
 					},
-					fail : function(){
+					fail : function(d , e){
 
-						
+						n.inited = true;
+						n.loading = true;
+
+
+						if (clbk)
+							clbk(e)
 					}
 				})
 			}
@@ -2696,9 +3119,11 @@ Platform = function(app, listofnodes){
 
 				var st = this.storage
 
-				var timecache = deep(this, 'storage.' + address + ".time")
+				var timecache = deep(st, address + ".time")
 
-				if (timecache && timecache.addMinutes(10) < (new Date())){
+
+
+				if (timecache && timecache.addMinutes(10) > (new Date())){
 
 					if (clbk)
 						clbk(deep(this, 'storage.' + address + ".data"))
@@ -2711,8 +3136,6 @@ Platform = function(app, listofnodes){
 					method : 'getcontents',
 					parameters : [address],
 					success : function(d){
-
-						
 
 						var list = [];
 						
@@ -2878,12 +3301,12 @@ Platform = function(app, listofnodes){
 
 							},
 
-							fail : function(){
+							fail : function(d, e){
 
 								l[address] = false;
 
 								if (clbk)
-									clbk()
+									clbk(null, e)
 							}
 						})
 
@@ -2962,9 +3385,9 @@ Platform = function(app, listofnodes){
 
 							},
 
-							fail : function(){
+							fail : function(d, e){
 								if (clbk)
-									clbk()
+									clbk(null, e)
 							}
 						})
 					})
@@ -3009,7 +3432,7 @@ Platform = function(app, listofnodes){
 									}
 
 
-									self.app.ajax.api({
+									self.app.ajax.apim({
 										action : 'freeMoney',
 										data : prms,
 										success : function(d){
@@ -3288,7 +3711,7 @@ Platform = function(app, listofnodes){
 							}
 							else
 							{
-								self.app.ajax.api({
+								self.app.ajax.apim({
 									action : 'freeRef',
 									data : {
 										referal : a,
@@ -3377,25 +3800,40 @@ Platform = function(app, listofnodes){
 				else
 				{
 
-					self.app.ajax.rpc({
-						method : 'getuseraddress',
-						parameters : [name],
-						success : function(d){
-
-
-							var r = deep(d, '0.address');
-
-							if (clbk)
-								clbk(r || null)
-						},
-						fail : function(){
-
-							if (clbk){
-						    	clbk(null, 'network')
-						    }
-
-						}
+					var lf = _.find(self.sdk.usersl.storage, function(s){
+						if(s.name == name) return true
 					})
+
+					if (lf){
+						if (clbk)
+							clbk(lf.address)
+						
+					}
+					else
+					{
+						self.app.ajax.rpc({
+							method : 'getuseraddress',
+							parameters : [name],
+							success : function(d){
+	
+	
+								var r = deep(d, '0.address');
+	
+								if (clbk)
+									clbk(r || null)
+							},
+							fail : function(d, e){
+	
+								if (clbk){
+									clbk(null, e)
+								}
+	
+							}
+						})
+					}
+
+
+					
 				}
 
 			},
@@ -3467,7 +3905,7 @@ Platform = function(app, listofnodes){
 			get : function(clbk, refresh){
 				if(refresh) this.current = null;
 
-				self.app.ajax.api({
+				self.app.ajax.apim({
 					action : 'captcha',
 					data : {
 						captcha : this.done || this.current || null
@@ -3486,17 +3924,17 @@ Platform = function(app, listofnodes){
 							clbk(d.data)
 
 					},
-					fail : function(d){
+					fail : function(d, e){
 
 						if (clbk)
-							clbk(null)
+							clbk(null, e)
 					}
 				})
 			},
 
 			make : function(text, clbk){
 				
-				self.app.ajax.api({
+				self.app.ajax.apim({
 					action : 'makecaptcha',
 					data : {
 						captcha : this.current || null,
@@ -3920,6 +4358,7 @@ Platform = function(app, listofnodes){
 
 			drawSpendLine : function(el, clbk, addresses){
 				self.app.platform.sdk.node.transactions.get.canSpend(addresses || null, function(amount, total){
+
 				
 					if(total > 0 && amount < total){
 
@@ -3991,8 +4430,6 @@ Platform = function(app, listofnodes){
 										var ids = _.map(inputs, function(i){
 											return i.txid
 										})
-
-										//console.log()
 
 										self.app.platform.sdk.node.transactions.clearUnspents(ids)
 
@@ -4223,6 +4660,9 @@ Platform = function(app, listofnodes){
 				}
 			}
 		},
+
+		
+
 		address : {
 			storage : {
 
@@ -4335,10 +4775,10 @@ Platform = function(app, listofnodes){
 						if (clbk)
 							clbk(r > 0)
 					},
-					fail : function(){
+					fail : function(d, e){
 
 						if (clbk){
-					    	clbk(null, 'network')
+					    	clbk(null, e)
 					    }
 
 					}
@@ -4375,6 +4815,7 @@ Platform = function(app, listofnodes){
 
 					self.app.ajax.api({
 						action : action || 'urlPreview',
+						errorHandler : false,
 						data : {
 							url : hexEncode(url)
 						},
@@ -4445,10 +4886,10 @@ Platform = function(app, listofnodes){
 						}
 						
 					},
-					fail : function(){
+					fail : function(d, e){
 
 						if (clbk){
-							clbk([])
+							clbk([], e)
 						}
 						
 					}
@@ -4484,11 +4925,15 @@ Platform = function(app, listofnodes){
 				})
 			},
 
-			cloud : function(clbk){
+			cloudUpdate : function(clbk){
+				self.app.platform.sdk.tags.cloud(clbk, true)
+			},
+
+			cloud : function(clbk, update){
 
 				var s = this.storage;
 
-				if (s.cloud){
+				if (s.cloud && !update){
 					if (clbk){
 
 						clbk(s.cloud)
@@ -4498,12 +4943,13 @@ Platform = function(app, listofnodes){
 				else
 				{
 
-					this.get('', 50, (self.currentBlock - 23700), function(d){
+					this.get('', 50, (self.currentBlock - 23700), function(d, error){
 
-						s.cloud = d
+						if (!error)
+							s.cloud = d
 
 						if (clbk){
-							clbk(s.cloud)
+							clbk(s.cloud, error)
 						}
 
 					})					
@@ -4597,7 +5043,7 @@ Platform = function(app, listofnodes){
 
 				if (value.length){
 					self.app.ajax.rpc({
-						method : 'search',
+						method : 'search2',
 						parameters : np,
 						success : function(d){
 
@@ -4618,8 +5064,6 @@ Platform = function(app, listofnodes){
 								}
 
 							}
-
-							console.log('ddd', d)
 
 							if (clbk)
 								clbk(d, fixedBlock)
@@ -4644,6 +5088,525 @@ Platform = function(app, listofnodes){
 		},
 
 		comments : {
+			storage : {},
+
+			sendclbks : {
+			},
+
+			upvoteClbks : {
+
+			},
+
+			find : function(txid, id, pid){
+				var s = self.sdk.comments.storage;
+
+				var comments = deep(s, txid + '.' + (pid || '0')) || [];
+
+				var comment = _.find(comments, function(c){
+					return c.id == id
+				})
+
+				return comment
+			},
+
+			address : function(txid, id, pid){
+
+				var comment = self.sdk.comments.find(txid, id, pid);
+
+				if(comment) return comment.address
+
+				return '' 
+			},
+
+			users : function(comments, clbk){
+				var addresses = _.map(comments, function(r){
+					return r.address
+				})
+
+				self.sdk.users.get(addresses, function(n, e){
+					if (clbk)
+						clbk(n, e)
+				}, true)
+			},
+
+			info : function(ids, clbk){
+				var s = self.sdk.comments.storage;
+				var i = self.sdk.comments.ini;
+
+				self.app.ajax.rpc({
+					method : 'getcomments',
+					parameters : ['', '', ids],
+					success : function(d){
+
+						var m = i(d);
+
+						if (clbk)
+							clbk(null, m)
+						
+					},
+					fail : function(d, e){
+						if (clbk){
+					    	clbk(e, d)
+					    }
+					}
+				})
+			},
+
+			checkSign : function(comment, signature, pubkey){
+
+				var verify = false
+
+				return true
+
+			},
+
+			toLastComment : function(comment){
+
+				var lc = {
+					address : comment.address,
+					answerid : comment.answerid,
+					parentid : comment.parentid,
+					id : comment.id,
+					children : comment.children || 0,
+					postid : comment.txid,
+					block : self.currentBlock,
+					msg : JSON.stringify({
+						m : comment.message,
+						i : comment.images
+					}),
+					time : comment.time,
+					timeUpd : comment.timeUpd,
+					scoreDown: 0,
+					scoreUp: 0,
+					myScore : 0
+				}
+
+				return  lc;
+			},
+
+			ini : function(d){
+
+				var s = self.sdk.comments.storage;
+					s.all || (s.all = {})
+
+				var c = _.map(d || [], function(data){
+					var comment = new pComment();
+
+						comment.import(data)
+						comment.setTime(data.time, data.timeUpd)
+
+					comment.children = data.children
+					comment.address = data.address;				
+					comment.verify = true;
+
+					return comment;
+				})
+
+				_.each(self.sdk.node.transactions.temp.cScore, function(score){
+
+					var comment = _.find(c, function(comment){
+						return comment.id == score.commentid
+					})
+
+					if (comment && !comment.myScore){
+						comment.myScore = Number(score.value)
+
+						if(score.value > 0) comment.scoreUp++
+						else comment.scoreDown++
+					}
+
+				})
+
+				_.each(c, function(c){
+					s.all[c.id] = c
+				})
+				return c
+			},
+
+			getbyid : function(ids, clbk){
+
+				var s = self.sdk.comments.storage;
+				var i = self.sdk.comments.ini;
+				var address = ''
+
+				var ao = self.app.platform.sdk.address.pnet();
+
+				if (ao) address = ao.address
+
+				if(!_.isArray(ids)) ids = [ids]
+
+				s.all || (s.all = {})
+
+				ids = _.filter(ids, function(id){
+					if(id && !s.all[id]) return true
+				})
+
+
+				if(!ids.length){
+					if (clbk) 
+						clbk('tmp')
+				}
+				else{
+					self.app.ajax.rpc({
+						method : 'getcomments2',
+						parameters : ['', '', address, ids],
+						fail : function(d, e){
+
+							if (clbk)
+								clbk(d, e)
+
+						},
+						success : function(d){
+
+							var arrange = ['commentEdit', 'commentDelete'];
+							var tc = group(self.sdk.node.transactions.temp.comment, function(tempComment){
+								return tempComment.optype || 'comment'
+							})
+
+							_.each(arrange, function(i){						
+
+								_.each(tc[i], function(tempComment){			
+			
+									var i = tempComment.optype
+
+									var f = _.find(d, function(c){
+										if(c.id == (tempComment.id || tempComment.txid)) return true
+									})
+
+									if (i == 'commentEdit'){
+										if(f && f.id == tempComment.id){
+											f.msg = tempComment.msg
+											f.timeUpd = tempComment.timeUpd
+										}
+									}
+		
+									if (i == 'commentDelete'){
+										if(f && f.id == tempComment.id){		
+											f.deleted = true		
+										}
+									}
+
+								})
+							})
+							
+							var c = i(d)
+
+							self.sdk.comments.users(c, function(d, e){
+
+								if (clbk)
+									clbk(d, e)
+
+							})
+
+						}
+					})
+				}
+
+			},
+
+			temps : function(d, txid, pid){
+				var tc = group(self.sdk.node.transactions.temp.comment, function(tempComment){
+					return tempComment.optype || 'comment'
+				})
+
+				var arrange = ['comment', 'commentEdit', 'commentDelete'];
+				var del = [];
+
+				_.each(arrange, function(i){						
+
+					_.each(tc[i], function(tempComment){
+
+						var _txid = tempComment.postid
+							
+						if (_txid == txid && (pid || '') == (tempComment.parentid || '') ){
+
+							var i = tempComment.optype || 'comment'
+
+							var f = _.find(d, function(c){
+								if(c.id == (tempComment.id || tempComment.txid)) return true
+							})
+
+							if (i == 'comment'){
+								if(!f)
+									d.push(tempComment)
+							}
+																
+							if (i == 'commentEdit'){
+								if(f && f.id == tempComment.id){
+									f.msg = tempComment.msg
+									f.timeUpd = tempComment.timeUpd
+								}
+							}
+
+							if (i == 'commentDelete'){
+								if(f && f.id == tempComment.id){
+
+									f.deleted = true
+									del.push(f.id)
+								}
+							}
+							
+						}
+
+						
+					})
+				})
+			},
+
+			get : function(txid, pid, clbk, ccha){
+
+				var s = self.sdk.comments.storage;
+				var i = self.sdk.comments.ini;
+				var address = ''
+
+				var ao = self.app.platform.sdk.address.pnet();
+
+				if (ao) address = ao.address
+
+				s[txid] || (s[txid] = {})
+
+
+				self.app.ajax.rpc({
+					method : 'getcomments2',
+					parameters : [txid, pid || '', address],
+					success : function(d){
+
+						self.sdk.comments.temps(d, txid, pid)
+
+						var c = i(d)
+
+						s[txid][pid || '0'] = c
+
+						self.sdk.comments.users(c, function(i, e){
+
+							if (clbk)
+								clbk(c, e)
+
+						})
+
+						
+						
+					},
+					fail : function(d, e){
+						if (clbk){
+					    	clbk(d, e)
+					    }
+					}
+				})
+			},
+
+			last : function(clbk){
+
+				var ini = this.ini
+
+				var address = ''
+
+				var ao = self.app.platform.sdk.address.pnet();
+
+				if (ao) address = ao.address
+
+				self.app.ajax.rpc({
+					method : 'getlastcomments2',
+					parameters : ['7', address],
+					success : function(d){
+
+						d = _.filter(d, function(d){
+							return !d.deleted
+						})
+
+						if (clbk)
+							clbk(ini(d))
+						
+					},
+					fail : function(d, e){
+						if (clbk)
+							clbk([], e)	
+					}
+				})	
+			},
+
+			upvote : function(upvote, clbk){
+
+				var comment = deep(self.sdk, 'comments.storage.all.' + upvote.comment.v)
+
+				self.sdk.node.transactions.create.commonFromUnspent(
+
+					upvote,
+
+					function(_alias, error){
+
+						if(!_alias){
+							if (clbk){
+								clbk(error, null)
+							}
+	
+							_.each(self.sdk.comments.upvoteClbks, function(c){
+								c(error)
+							})	
+						}
+						else
+						{
+
+							if (comment){
+
+								comment.myScore = upvote.value.v
+
+								if(upvote.value.v > 0){
+									comment.scoreUp++
+								}
+								if(upvote.value.v < 0){
+									comment.scoreDown++
+								}
+
+							}
+							
+
+							if (clbk){
+								clbk(null, comment, upvote.value.v)
+							}
+
+							_.each(self.sdk.comments.upvoteClbks, function(c){
+								c(null, comment, upvote.value.v, self.app.platform.sdk.address.pnet().address)
+							})
+
+						}
+
+					}
+				)
+
+					
+			},	
+
+			delete : function(txid, comment, clbk){
+
+				var s = self.sdk.comments.storage;
+
+				comment.txid = txid
+
+				self.sdk.node.transactions.create.commonFromUnspent(
+
+					comment,
+
+					function(_alias, error){
+
+						
+						if(!_alias){
+
+							if (clbk){
+								clbk(error, null)
+							}
+
+						}
+
+						else
+						{
+
+							s[txid] || (s[txid] = {})
+
+							var c = _.find(s[txid][comment.parentid || '0'] || [], function(c){
+								return c.id == comment.id
+							})
+
+							if(c) c.deleted = true
+
+							if (clbk)
+								clbk(null, _alias)
+						}
+
+					}
+				)
+
+			},
+
+			send : function(txid, comment, pid, aid, clbk, editid, fid){
+
+				var s = self.sdk.comments.storage;
+
+				comment.answerid = aid;
+				comment.parentid = pid;
+
+				if (editid){
+					comment.id = editid
+				}
+
+				comment.uploadImages(self.app, function(){
+
+					self.sdk.node.transactions.create.commonFromUnspent(
+
+						comment,
+
+						function(_alias, error){
+
+							if(!_alias){
+								if (clbk){
+									clbk(error, null)
+								}
+		
+								_.each(self.sdk.comments.sendclbks, function(c){
+									c(error)
+								})	
+							}
+							else
+							{
+
+								var alias = new pComment();
+									alias.import(_alias)
+									alias.temp = true;
+									alias.address = _alias.address;
+
+								var temptime = self.currentTime()
+
+									alias.children = 0;
+									alias.setTime(temptime, temptime);
+
+								var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
+
+								if (share && (!pid || pid == '0')) 
+									share.comments++
+
+								s[txid] || (s[txid] = {})
+
+								s[txid][pid || '0'] || (s[txid][pid || '0'] = [])
+		
+								var i = findIndex(s[txid][pid || '0'], function(c){
+									if(c.id == editid) return true;
+								})
+		
+								if(!editid || i == -1){
+									s[txid][pid || '0'].push(alias)
+								}
+								else{
+		
+									alias.children = s[txid][pid || '0'][i].children
+									alias.id = editid
+
+									s[txid][pid || '0'][i] = alias
+
+									s.all || (s.all = {})
+
+									s.all[alias.id] = alias
+		
+								}
+
+
+								if (clbk)
+									clbk(null, alias)
+
+								_.each(self.sdk.comments.sendclbks, function(c){
+									c(null, alias, txid, pid, aid, editid, fid)
+								})
+
+							}
+
+						}
+					)
+				})
+
+
+			}
+		},
+
+		comments2 : {
 			storage : {},
 
 			sendclbks : {
@@ -4696,9 +5659,9 @@ Platform = function(app, listofnodes){
 							clbk(null, m)
 						
 					},
-					fail : function(d){
+					fail : function(d, e){
 						if (clbk){
-					    	clbk('network', d)
+					    	clbk(e, d)
 					    }
 					}
 				})
@@ -4749,7 +5712,7 @@ Platform = function(app, listofnodes){
 						i : comment.images
 					}),
 					time : comment.time,
-					timeupd : comment.timeupd,
+					timeUpd : comment.timeUpd,
 					pubkey : comment.pubkey,
 					signature : comment.signature
 				}
@@ -4762,7 +5725,7 @@ Platform = function(app, listofnodes){
 				var c = _.map(d || [], function(data){
 					var comment = new pComment();
 
-					comment.setTime(data.time, data.timeupd)
+					comment.setTime(data.time, data.timeUpd)
 
 					comment.txid = data.postid
 					comment.children = data.children
@@ -4839,9 +5802,9 @@ Platform = function(app, listofnodes){
 						
 						
 					},
-					fail : function(d){
+					fail : function(d, e){
 						if (clbk){
-					    	clbk('network', d)
+					    	clbk(e, d)
 					    }
 					}
 				})
@@ -4949,13 +5912,13 @@ Platform = function(app, listofnodes){
 						})
 						
 					},
-					fail : function(d){
+					fail : function(d, e){
 						if (clbk){
-					    	clbk('network', d)
+					    	clbk(e, d)
 					    }
 
 					    _.each(self.sdk.comments.sendclbks, function(c){
-							c('network')
+							c(e)
 						})
 					}
 				})
@@ -5040,11 +6003,11 @@ Platform = function(app, listofnodes){
 							}
 
 							if (clbk)
-								clbk()
+								clbk(t)
 						},
-						fail : function(){
+						fail : function(d, e){
 							if (clbk){
-						    	clbk()
+						    	clbk(null, e)
 						    }
 						}
 					})
@@ -5123,9 +6086,9 @@ Platform = function(app, listofnodes){
 							if (clbk)
 								clbk(s[email])
 						},
-						fail : function(){
+						fail : function(d, e){
 							if (clbk){
-						    	clbk(s[email])
+						    	clbk(s[email], e)
 						    }
 						}
 					})
@@ -5261,6 +6224,72 @@ Platform = function(app, listofnodes){
 						})
 
 					})
+
+					var tc = group(self.sdk.node.transactions.temp.comment, function(tempComment){
+						return tempComment.optype || 'comment'
+					})
+
+					var arrange = ['comment', 'commentEdit', 'commentDelete']
+
+					_.each(arrange, function(t){
+
+						var comments = tc[t]
+
+						_.each(comments, function(tempComment){
+
+							if (tempComment.parentid) return
+	
+							var txid = tempComment.postid;
+	
+							_.find(shares, function(share){
+
+	
+								if(share.txid == txid){
+
+									var t = tempComment.optype || 'comment'
+	
+									var last = share.lastComment
+
+
+									if (t == 'comment'){
+
+										share.comments++
+
+										if(!last || Number(last.timeUpd) < Number(tempComment.timeUpd)){
+											share.lastComment = tempComment
+											tempComment.id = tempComment.txid
+										}
+									}
+	
+									if (t == 'commentEdit'){
+										if(last && last.id == tempComment.id){
+											var t = share.lastComment.time
+
+											share.lastComment = tempComment
+											share.lastComment.time = t;
+										}
+									}
+
+									if (t == 'commentDelete'){
+										if(last && last.id == tempComment.id){
+											
+											share.lastComment.deleted = true
+											share.comments--
+										}
+									}
+	
+									return true
+								}
+	
+								
+							})
+	
+						})
+
+					})
+
+					
+				
 				},
 
 				txids : function(p, clbk, refresh){
@@ -5373,7 +6402,7 @@ Platform = function(app, listofnodes){
 
 						self.app.user.isState(function(state){
 							self.app.ajax.rpc({
-								method : 'getrawtransactionwithmessagebyid',
+								method : 'getrawtransactionwithmessagebyid2',
 								parameters : parameters || [],
 								success : function(d){
 
@@ -5418,13 +6447,14 @@ Platform = function(app, listofnodes){
 									self.sdk.node.shares.tempLikes(loaded)
 
 									if (clbk)
+
 										clbk(loaded, null, {
 											count : txids.length
 										})
 								},
-								fail : function(){
+								fail : function(d, e){
 									if (clbk){
-								    	clbk(null, 'network', {})
+								    	clbk(null, e, {})
 								    }
 								}
 							})
@@ -5434,7 +6464,7 @@ Platform = function(app, listofnodes){
 					else
 					{
 						if (clbk)
-							clbk(loaded, true)
+							clbk(loaded, null, {}, true)
 					}
 
 					
@@ -5486,7 +6516,7 @@ Platform = function(app, listofnodes){
 
 				get : function(parameters, clbk, method){
 
-					method || (method = 'getrawtransactionwithmessage')
+					method || (method = 'getrawtransactionwithmessage2')
 
 					var storage = this.storage;
 
@@ -5504,58 +6534,14 @@ Platform = function(app, listofnodes){
 								if (clbk)
 									clbk(shares)
 							},
-							fail : function(){
+							fail : function(d, e){
 								if (clbk){
-							    	clbk([], 'network')
+							    	clbk([], e)
 							    }
 							}
 						})
 					})
 				},
-
-				/*recomended : function(p, clbk){
-
-					self.app.user.isState(function(state){
-
-						if(state){
-							if(!p) p = {};
-
-								p.count || (p.count = '10')
-
-								p.address = self.sdk.address.pnet().address;
-
-							var key = (p.address || "") + "_recomended"
-
-							var storage = self.sdk.node.shares.storage;
-							var s = self.sdk.node.shares;
-
-							if (storage[key]){
-								if (clbk)
-									clbk(storage[key])
-							}
-							else
-							{
-								s.get([p.address, p.count], function(shr){
-
-									storage[key] = shr || [];
-
-									if (clbk)
-										clbk(storage[key])
-
-
-								}, 'getrecommendedposts')
-							}
-
-						}
-						else{
-							if (clbk)
-								clbk([])
-						}
-
-						
-
-					})
-				},*/
 
 				recommended : function(p, clbk, cache){
 
@@ -5592,7 +6578,7 @@ Platform = function(app, listofnodes){
 										storage[key] = shares;
 
 										if (clbk)
-											clbk(storage[key], null, p)
+											clbk(storage[key], error, p)
 									}
 
 									else{
@@ -5600,7 +6586,7 @@ Platform = function(app, listofnodes){
 											clbk(shares, error, p)
 									}
 
-								}, 'gethotposts')
+								}, 'gethotposts2')
 							}
 
 					})
@@ -5684,7 +6670,6 @@ Platform = function(app, listofnodes){
 								if(shares){
 									if(state){
 
-
 										if(!p.author || p.author == p.address){
 											_.each(temp.share, function(ps){
 
@@ -5731,7 +6716,7 @@ Platform = function(app, listofnodes){
 									self.sdk.node.transactions.saveTemp()
 
 									if (clbk)
-										clbk(shares, null, p)
+										clbk(shares, error, p)
 								}
 
 								else{
@@ -5791,15 +6776,13 @@ Platform = function(app, listofnodes){
 								})
 							}
 
-							app.platform.sdk.wallet.sendmany('acquire benefit luggage guard super curtain winter basic small end reunion fiscal', outputs, function(err, r){
+							app.platform.sdk.wallet.sendmany('', outputs, function(err, r){
 								if(err){
 									console.log("ERROR, SEND TO KRAN", err)
 								}
 
 								else
 								{
-									console.log("SUCCESS")
-
 									if (clbk)
 										clbk()
 								}
@@ -5814,6 +6797,45 @@ Platform = function(app, listofnodes){
 
 
 					}, address, true, true)
+				},
+
+				getCoibaseType : function(tx, address){
+
+					var type = null;
+					
+
+					_.each(tx.vout, function(v){
+
+						var _address = deep(v, 'scriptPubKey.addresses.0')
+						
+						if(_address == address){
+
+							try{
+								var chunks = bitcoin.script.decompile(Buffer.from(v.scriptPubKey.hex, 'hex'))
+
+								var ch = _.find(chunks, function(c){
+									return c == bitcoin.opcodes.OP_WINNER_POST || c == bitcoin.opcodes.OP_WINNER_COMMENT
+								})
+	
+								type = ch;
+
+								if (type == bitcoin.opcodes.OP_WINNER_POST){
+									type  = 'post'
+								}
+
+								if (type == bitcoin.opcodes.OP_WINNER_COMMENT){
+									type  = 'comment'
+								}
+							}
+							catch (e){
+								
+							}
+						}
+
+						
+					})
+
+					return type
 				},
 
 				getOpreturn : function(tx){
@@ -5887,8 +6909,8 @@ Platform = function(app, listofnodes){
 					var outs = [];
 
 					_.each(tx.vout, function(vout){
-						var a = _.find(v.scriptPubKey.addresses, function(a){
-							return a == address && (typeof n != 'undefined' && n == vout.n)
+						var a = _.find(vout.scriptPubKey.addresses, function(a){
+							return a == address
 						})
 
 						if (a){
@@ -5968,10 +6990,10 @@ Platform = function(app, listofnodes){
 							if (clbk)
 								clbk(d)
 						},
-						fail : function(){
+						fail : function(d , e ){
 
 							if (clbk){
-						    	clbk(null, 'network')
+						    	clbk(null, e)
 						    }
 
 						}
@@ -5990,10 +7012,10 @@ Platform = function(app, listofnodes){
 							if (clbk)
 								clbk(d)
 						},
-						fail : function(d){
+						fail : function(d, e){
 
 							if (clbk){
-						    	clbk(null, 'network')
+						    	clbk(null, e)
 						    }
 
 						}
@@ -6049,18 +7071,49 @@ Platform = function(app, listofnodes){
 					return finded
 				},
 
-				clearTemp : function(txid){
+				clearTemp : function(txid, vout){
+
+
 					var t = this.temp;
 
 					var finded = null;
 
 					_.each(t, function(ts){
 
-						if(ts[txid]){
+						var _finded = ts[txid]
 
-							finded = ts[txid]
+						if (_finded){
+							
 
-							delete ts[txid]
+							if(!_finded.outputs){
+
+								delete ts[txid]
+
+								finded = _finded
+							}
+
+							else
+							{
+								if (_finded.outputs[vout]){
+									_finded.outputs[vout].deleted = true;
+								}
+
+
+								var outs = _.filter(_finded.outputs, function(o){
+									return !o.deleted
+								})
+								
+
+								if(!outs.length){
+
+									delete ts[txid]
+
+									finded = _finded
+
+								}
+							}
+
+							//
 						}
 
 							
@@ -6072,6 +7125,9 @@ Platform = function(app, listofnodes){
 
 				checkTemps : function(clbk){
 
+					/*if (clbk)
+						clbk()
+					return*/
 
 					var c = this.checkTemp
 					var t = this.temp;
@@ -6171,9 +7227,6 @@ Platform = function(app, listofnodes){
 						})
 					})
 
-
-
-
 					return inputs
 
 				},
@@ -6261,7 +7314,7 @@ Platform = function(app, listofnodes){
 					},
 
 					balanceAr : function(clbk, addresses, update, canSpend){
-						this.unspents(function(us){
+						this.unspents(function(us, e){
 
 							var total = 0;
 
@@ -6284,7 +7337,7 @@ Platform = function(app, listofnodes){
 							})
 
 							if (clbk)
-								clbk(total, allunspents)
+								clbk(total, allunspents, e)
 
 						}, addresses, update)
 					},
@@ -6309,6 +7362,7 @@ Platform = function(app, listofnodes){
 
 							var usCanSpend = _.filter(us, self.sdk.node.transactions.canSpend);
 
+
 							var amount = _.reduce(usCanSpend, function(m, u){
 								return m + Number(u.amount)
 							}, 0)
@@ -6328,7 +7382,7 @@ Platform = function(app, listofnodes){
 
 						}
 						else{
-							this.unspent(function(unspent){
+							this.unspent(function(unspent, e){
 
 								if(canSpend){
 									unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
@@ -6339,7 +7393,7 @@ Platform = function(app, listofnodes){
 								}, 0)
 
 								if (clbk)
-									clbk(amount, unspent)
+									clbk(amount, unspent, e)
 
 							}, address, update)
 						}
@@ -6355,7 +7409,6 @@ Platform = function(app, listofnodes){
 
 						var p2pkh = self.sdk.address.pnet();
 					
-
 						self.app.ajax.rpc({
 							method : 'listUnspent',
 							parameters : [1, 9999999, [p2pkh.address]],
@@ -6434,8 +7487,12 @@ Platform = function(app, listofnodes){
 									parameters : [addresses, 1, 9999999],
 									success : function(d){
 
+										if(!s.unspent) 
+											s.unspent = {};	
+
+
 										_.each(d, function(u){
-											self.sdk.node.transactions.clearTemp(u.txid);
+											self.sdk.node.transactions.clearTemp(u.txid, u.vout - 1);
 										})
 
 										_.each(addresses, function(address){
@@ -6466,7 +7523,10 @@ Platform = function(app, listofnodes){
 										if (clbk)
 											clbk(a)
 									},
-									fail : function(){
+									fail : function(d, e){
+
+										if(!s.unspent) 
+											s.unspent = {};	
 
 										_.each(addresses, function(address){
 
@@ -6477,7 +7537,7 @@ Platform = function(app, listofnodes){
 										})
 										
 										if (clbk){
-									    	clbk(a)
+									    	clbk(a, e)
 									    }
 									}
 								})
@@ -6550,6 +7610,7 @@ Platform = function(app, listofnodes){
 
 							return
 						}
+
 					
 						if (s.unspent[address] && !update){
 							if (clbk)
@@ -6571,15 +7632,13 @@ Platform = function(app, listofnodes){
 									if (clbk)
 										clbk(s.unspent[address])
 								},
-								fail : function(){
-
-
+								fail : function(d, e){
 									s.unspent[address] = [];
 
 									s.unspentLoading[address] = false;
 									
 									if (clbk){
-								    	clbk(s.unspent[address])
+								    	clbk(s.unspent[address], e)
 								    }
 								}
 							})
@@ -6629,12 +7688,12 @@ Platform = function(app, listofnodes){
 									if (clbk)
 										clbk(d)
 								},
-								fail : function(d){
+								fail : function(d, e){
 
 									self.sdk.node.transactions.loading[id] = false;
 
 									if (clbk){
-								    	clbk(d, 'network')
+								    	clbk(d, e)
 								    }
 								}
 							})
@@ -6653,15 +7712,9 @@ Platform = function(app, listofnodes){
 
 						self.sdk.node.transactions.get.unspent(function(unspent){
 
-							console.log('unspent1', unspent)
-
 							unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
 
-							console.log('unspent2', unspent)
-
 							if(!unspent.length){
-
-
 
 								if(!p.update){
 									p.update = true;
@@ -6687,6 +7740,17 @@ Platform = function(app, listofnodes){
 								scriptPubKey : unspent[unspent.length - 1].scriptPubKey, 
 
 							}]
+
+							if(unspent.length > 60){
+								inputs.push({
+									txId : unspent[unspent.length - 2].txid,
+									vout : unspent[unspent.length - 2].vout,
+									amount : unspent[unspent.length - 2].amount,
+									scriptPubKey : unspent[unspent.length - 2].scriptPubKey, 
+								})
+
+							}
+
 
 							self.sdk.node.transactions.create[obj.type](inputs, obj, function(a, er, data){
 
@@ -6733,8 +7797,6 @@ Platform = function(app, listofnodes){
 
 							if(i.address.indexOf("P" == 0)){
 								txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex') )
-
-								console.log("ADDINPUT")
 							}
 
 							else
@@ -6764,15 +7826,11 @@ Platform = function(app, listofnodes){
 						})
 
 						var address = self.sdk.address.pnet(keyPair.publicKey)
-
-						console.log("addressaddressaddress", address)
 					
 						_.each(inputs, function(i, inputindex){
 
 
 							if(i.address.indexOf("P") == 0){
-
-								console.log('self.sdk.addresses.storage.addresses', self.sdk.addresses.storage.addresses, self.sdk.addresses.storage.addressesobj, i)
 
 								txb.sign(inputindex, keyPair);
 								
@@ -6803,8 +7861,6 @@ Platform = function(app, listofnodes){
 					    })					
 						
 						var tx = txb.build()
-
-						console.log(tx, txb)
 	
 						return tx;
 
@@ -6818,7 +7874,6 @@ Platform = function(app, listofnodes){
 						var tempOptions = self.sdk.node.transactions.tempOptions;
 
 						var error = obj.validation();
-
 
 
 						if (error){
@@ -6845,18 +7900,18 @@ Platform = function(app, listofnodes){
 
 							var amount = 0;
 
-							console.log('inputs', inputs)
+						    _.each(inputs, function(i, index){
 
-						    _.each(inputs, function(i){
-
-						    	if(self.addressType == 'p2pkh' || self.addressType == 'p2sh'){
+						    	if(self.addressType == 'p2pkh'/* || self.addressType == 'p2sh'*/){
 									txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
+
+									
 								}
 
-								if(self.addressType == 'p2wpkh'){
+								/*if(self.addressType == 'p2wpkh'){
 
 						    		txb.addInput(i.txId, i.vout, null, address.output)
-						    	}
+						    	}*/
 
 						    	amount = amount + Number(i.amount);
 							})	
@@ -6864,108 +7919,143 @@ Platform = function(app, listofnodes){
 						    amount = amount * 100000000;
 
 							var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
+							var optype = obj.typeop ? obj.typeop() : obj.type
 
-							var opreturnData = [Buffer.from( obj.typeop ? obj.typeop() : obj.type, 'utf8'), data];
+							var opreturnData = [Buffer.from( optype, 'utf8'), data];
+
+							var outputs = [];
 
 							if (obj.opreturn){
 								opreturnData.push(Buffer.from(obj.opreturn()))
 							}
 
-			     			var embed = bitcoin.payments.embed({ data: opreturnData });
+							var embed = bitcoin.payments.embed({ data: opreturnData });
+							var i = 0;
 
-			      			txb.addOutput(embed.output, 0);		    
+							txb.addOutput(embed.output, 0);		
+							  
 
-							if(self.addressType == 'p2pkh'){
+							self.sdk.node.transactions.get.unspent(function(unspents){
+
+
+								if(unspents.length < 50 && amount > 2 * 10000000){
+
+									var ds = Number((amount / 2).toFixed(0))
+
+									amount = amount - ds
+
+
+									txb.addOutput(address.address,  ds);
+
+									outputs.push({
+										address : address.address,
+										amount : ds
+									})
+
+								}
+
+
 								txb.addOutput(address.address,  Number((amount - (fees || 0)).toFixed(0)));
-								txb.sign(0, keyPair);
-							}
 
-							if(self.addressType == 'p2wpkh'){
-								txb.addOutput(address.address,  2e4);
-								txb.sign(0, keyPair, null, null);								
-							}
+								outputs.push({
+									address : address.address,
+									amount : Number((amount - (fees || 0)).toFixed(0))
+								})
 
+								_.each(inputs, function(input, index){
+									txb.sign(index, keyPair);
+								})
+								
+								
 
-							if(self.addressType == 'p2sh'){
-								txb.addOutput(address.address,   Number((amount - (fees || 0)).toFixed(0)));
-								txb.sign(0, keyPair, address.redeem.output, null, '');								
-							}	
+								var tx = txb.build()
 
+								var hex = tx.toHex();
+								
+								if(p.pseudo){
+									var alias = obj.export(true);
+										alias.txid = makeid();
 
-							var tx = txb.build()
+									if (clbk)
+										clbk(alias, null)
+								}
+								else
+								{
+									self.app.ajax.rpc({
+										method : 'sendrawtransactionwithmessage',
+										parameters : [hex, obj.export(), optype],
+										success : function(d){
 
-						   	var hex = tx.toHex();
+											var alias = obj.export(true);									
+												alias.txid = d;
+												alias.address = address.address;
+												alias.type = obj.type
+												alias.time = self.currentTime()
+												alias.timeUpd = alias.time
+												alias.optype = optype
 
-						   	if(p.pseudo){
-								var alias = obj.export(true);
-									alias.txid = makeid();
+											var count = deep(tempOptions, obj.type + ".count") || 'many'
 
-								if (clbk)
-									clbk(alias, null)
-							}
-							else
-							{
-								self.app.ajax.rpc({
-									method : 'sendrawtransactionwithmessage',
-									parameters : [hex, obj.export(), obj.type],
-									success : function(d){
-
-										var alias = obj.export(true);									
-											alias.txid = d;
-											alias.address = address.address;
-											alias.type = obj.type
-
-										var count = deep(tempOptions, obj.type + ".count") || 'many'
-
-										
-										if(!temp[obj.type] || count == 'one')
-										{
-											temp[obj.type] = {};
-										}
-
-										temp[obj.type][d] = alias;
-
-										alias.inputs = inputs
-
-										self.sdk.node.transactions.saveTemp()
-										
-										var ids = _.map(inputs, function(i){
-											return i.txId
-										})
-										
-										self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-										if (obj.ustate){
-
-											var us = self.sdk.ustate.storage;
-
-											if (us[address.address]){
-												us[address.address][obj.ustate+"_spent"]++
-												us[address.address][obj.ustate+"_unspent"]--
+											
+											if(!temp[obj.type] || count == 'one')
+											{
+												temp[obj.type] = {};
 											}
 
-											_.each(self.sdk.ustate.clbks, function(c){
-												c()
-											})
-												
+											temp[obj.type][d] = alias;
 
-										}
-									
+											alias.inputs = inputs
+											alias.outputs = outputs
 
-										if (clbk)
-											clbk(alias)
+											self.sdk.node.transactions.saveTemp()
 											
-									},
-									fail : function(data){
+											var ids = _.map(inputs, function(i){
+												return i.txId
+											})
+											
+											self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+											if (obj.ustate){
+
+												var ustate = obj.ustate;
+
+												if(typeof obj.ustate == 'function') ustate = obj.ustate();
+
+												if (ustate){
+													var us = self.sdk.ustate.storage;
+
+													if (us[address.address]){
+														us[address.address][obj.ustate+"_spent"]++
+														us[address.address][obj.ustate+"_unspent"]--
+													}
+
+													_.each(self.sdk.ustate.clbks, function(c){
+														c()
+													})
+												}
+
+												
+													
+
+											}
+										
+
+											if (clbk)
+												clbk(alias)
+												
+										},
+										fail : function(data, e){
 
 
-										if (clbk){
-										    clbk(null, (deep(data, 'data.code') || deep(data, 'data.message') || 'network').toString(), data)
+											if (clbk){
+												clbk(null, (deep(data, 'data.code') || deep(data, 'data.message') || e).toString(), data)
+											}
+
 										}
+									})
+								}
 
-									}
-								})
-							}
+							}, address.address)
 					
 						   
 						}
@@ -6973,9 +8063,7 @@ Platform = function(app, listofnodes){
 					},
 
 					share : function(inputs, share, clbk, p){
-
 						this.common(inputs, share, TXFEE, clbk, p)
-
 					},
 
 					userInfo : function(inputs, userInfo, clbk, p){
@@ -6990,8 +8078,16 @@ Platform = function(app, listofnodes){
 						this.common(inputs, complainShare, TXFEE, clbk, p)
 					},
 
+					comment : function(inputs, comment, clbk, p){
+						this.common(inputs, comment, TXFEE, clbk, p)
+					},
+
 					commentShare : function(inputs, commentShare, clbk, p){
 						this.common(inputs, commentShare, TXFEE, clbk, p)
+					},
+
+					cScore : function(inputs, cScore, clbk, p){
+						this.common(inputs, cScore, TXFEE, clbk, p)
 					},
 
 					unsubscribe : function(inputs, unsubscribe, clbk, p){
@@ -7050,6 +8146,172 @@ Platform = function(app, listofnodes){
 						}
 					})
 
+				}
+			},
+
+			sys : {
+
+				revokeproxy : function(node, clbk){
+
+					self.app.ajax.api({
+						action : 'nodes.revoke',
+	
+						data : node,
+						signature : true,
+						
+						success : function(d){
+
+							removeEqual(self.app.platform.nodes, {
+								host : node.host
+							})
+	
+							if (clbk)
+								clbk(false, d.data)
+						},
+						fail : function(d){
+	
+							if (clbk)
+								clbk(deep(d, 'error') || deep(d, 'data') || 'Undefined Error')
+						}
+					})
+	
+				},
+
+				createproxy : function(node, clbk){
+
+					self.app.ajax.api({
+						action : 'nodes.create',
+	
+						data : node,
+						signature : true,
+						
+						success : function(d){
+	
+							if (clbk)
+								clbk(false, d.data)
+						},
+						fail : function(d){
+	
+							if (clbk)
+								clbk(deep(d, 'data') || deep(d, 'error') || 'Undefined Error')
+						}
+					})
+	
+				},
+	
+				updateproxy : function(node, clbk){
+					
+					self.app.ajax.api({
+						action : 'nodes.update',	
+						data : node,
+						signature : true,
+						
+						success : function(d){
+	
+							if (clbk)
+								clbk(false, d.data)
+						},
+						fail : function(d){
+	
+							if (clbk)
+								clbk(deep(d, 'data') || deep(d, 'error') || 'Undefined Error')
+						}
+					})
+	
+				},
+
+				createlocally : function(node, clbk){
+					var f = _.find(this.userlist, function(n){
+
+						if(n.host == node.host){
+							return true;							
+						}
+
+						
+					})
+
+					if(f){
+						if	(clbk)
+							clbk("You already have node on this host")
+
+						return
+					}
+
+					node.addedby = self.sdk.address.pnet().address
+					node.date = new Date()
+
+					this.userlist.unshift(node)
+
+					this.save()
+
+					if (clbk)
+						clbk(null, node)
+					
+
+				},
+				updatelocally : function(node, clbk){
+
+					var f = _.find(this.userlist, function(n){
+
+						if(n.host == node.host){
+							return true;							
+						}
+						
+					})
+
+					if(!f){
+						if	(clbk)
+							clbk("Internal Error")
+
+						return
+					}
+					else
+					{
+						f.ws =  node.ws,
+						f.port = node.port,
+						f.name = node.name;
+
+						this.save()
+
+
+						if	(clbk)
+							clbk(null, f)
+					}
+
+				},
+				
+				revokelocally : function(node, clbk){
+
+					removeEqual(this.userlist, {
+						host : node.host
+					})
+
+					this.save()
+
+					if (clbk)
+						clbk(null)
+				},
+
+				userlist : [],
+
+				save : function(){
+					localStorage['usernodes'] = JSON.stringify({
+						list : this.userlist
+					})
+				},
+
+				load : function(){
+					var p = {};
+				
+					try{
+						p = JSON.parse(localStorage['usernodes'] || '{}');
+					} 
+					catch(e){
+	
+					}
+	
+	
+					this.userlist = p.list || []
 				}
 			}
 
@@ -7919,6 +9181,49 @@ Platform = function(app, listofnodes){
 				self.sdk.system.get.nodes(true, clbk)
 			},	
 
+			nodeexdirect : function(anonim){
+				if (self.nodeid){
+
+					var nodefull = ''
+
+					if (anonim){
+						return "http://" + self.nodeid.host + ':' + self.nodeid.port
+					}
+					else{
+						if (self.nodeid.rpcuser && self.nodeid.rpcpwd){
+							return "http://" + self.nodeid.rpcuser + ":" + self.nodeid.rpcpwd + "@" + self.nodeid.host + ':' + self.nodeid.port
+						}
+
+						else{
+							return null
+						}
+					}
+
+					
+
+				}
+				else{
+					return null
+				}
+			},
+
+			nodeex : function(data){
+
+				if (self.nodeid){
+
+					if (self.nodeid.locally){
+						data.nodelocally = JSON.stringify({
+							host : self.nodeid.host,
+							port : self.nodeid.port,
+							ws : self.nodeid.ws
+						})
+					}
+					else{
+						data.node = self.nodeid.host
+					}
+				}
+			},
+
 			get : {
 				nodes : function(refresh, clbk){
 
@@ -7931,18 +9236,39 @@ Platform = function(app, listofnodes){
 
 					else{
 						self.app.ajax.api({
-							action : 'nodes',
+							action : 'nodes.get',
 							
 							success : function(d){
 
+								self.nodes = [];
+
+								d = d.data;
+
 								if (d.nodes && d.nodes.length){
-									self.nodes = d.nodes
+									self.nodes = d.nodes;
+
+									_.each(self.nodes, function(n){
+										n.locally = false;
+									})
+								}
+
+								self.nodes = self.nodes.concat(self.app.platform.sdk.node.sys.userlist)
+
+
+								if (self.nodes && self.nodes.length){
+									self.nodeid || (self.nodeid = self.nodes[0])
 								}
 
 								if (clbk)
 									clbk(true)
 							},
 							fail : function(d){
+
+								self.nodes = _.clone(self.app.platform.sdk.node.sys.userlist)
+
+								if (self.nodes && self.nodes.length){
+									self.nodeid || (self.nodeid = self.nodes[0])
+								}
 	
 								if (clbk)
 									clbk(false)
@@ -7952,16 +9278,218 @@ Platform = function(app, listofnodes){
 
 					
 
+				},
+
+				
+			},
+
+			
+		},
+
+		proxy : {
+			userlist : [],
+
+			makeid : function(proxy){
+				var i = proxy.host + ":" + proxy.port + ":" + proxy.ws + ":"
+
+				if(proxy.user) i = i + 'user'
+
+				return i
+			},
+
+			all : function(){
+				var all = self.app.options.listofproxies.concat(this.userlist)
+
+				return all;
+			},
+
+			load : function(){
+
+				
+
+				var p = {};
+				
+				try{
+					p = JSON.parse(localStorage['proxies'] || '{}');
+				} 
+				catch(e){
+
 				}
+
+
+				this.userlist = p.list || []
+
+				self.dontuseapiproxy = p.dontuseapiproxy || false;
+
+				var all = this.all()
+
+				if (p.id){
+					self.apiproxy = _.find(all, function(_p){
+						return p.id == _p.id
+					})
+				}
+
+				if(!self.apiproxy){
+
+					if (all && all.length){
+						self.apiproxy = all[0]
+					}
+
+				}
+			},
+
+			find : function(id){
+				return _.find(this.all(), function(p){
+					return p.id == id
+				})
+			},
+
+			save : function(){
+				localStorage['proxies'] = JSON.stringify({
+
+					list : this.userlist,
+					id : deep(self.apiproxy, 'id') || '',
+					dontuseapiproxy : self.dontuseapiproxy
+
+				})
+			},
+
+			remove : function(id){
+
+				var ch = false;
+
+				removeEqual(this.userlist, {
+					id : id
+				})
+
+				if (self.apiproxy && self.apiproxy.id == id){
+					self.apiproxy = null
+
+					if(!self.app.platform.dontuseapiproxy)
+						ch = true
+				}
+
+				this.save()
+
+				return ch
+			},
+
+			create : function(proxy){
+
+				var ch = false;
+
+				this.userlist.push(proxy);
+
+				if(!self.apiproxy){
+					self.apiproxy = proxy
+
+					if(!self.app.platform.dontuseapiproxy)
+						ch = true
+				}
+
+				this.save()
+
+				return ch
+			},
+
+
+		
+			update : function(proxy, id){
+				var ch = false;
+
+				var _proxy = _.find(this.userlist, function(p){
+					return id == p.id
+				})
+
+				if (_proxy){
+					_proxy.host = proxy.host
+					_proxy.port = proxy.port
+					_proxy.ws = proxy.ws
+					_proxy.id = this.makeid(proxy)
+				}
+
+				if (self.apiproxy && self.apiproxy.id == id){
+					self.apiproxy = _proxy
+
+					if(!self.app.platform.dontuseapiproxy)
+						ch = true
+				}
+
+				this.save()
+
+				return ch
+			},
+
+			changeWithDialog : function(proxy, clbk){
+
+				var c = self.app.platform.sdk.proxy.change
+
+				if(self.dontuseapiproxy){
+					dialog({
+						html : 'Do you really want use proxy again?',
+						class : 'zindex',
+						success : function(){
+
+							self.dontuseapiproxy = false
+
+							c(proxy, clbk)
+						}
+					})
+				}
+				else{
+					c(proxy, clbk)
+				}
+			},
+
+			change : function(proxy, clbk){
+
+				self.apiproxy = proxy
+
+				self.app.platform.nodeid = null;
+				self.app.platform.nodes = null;	
+
+				self.app.platform.sdk.proxy.save()
+
+				self.app.platform.restart(function(){
+
+					app.reload(function(){
+
+					})
+
+					if (clbk)
+						clbk()
+				})
+
+				
+
+			},
+
+			info : function(clbk, m){
+
+				self.app.ajax.api({
+					action : 'info',
+
+					main : m,
+					
+					success : function(d){
+						if (clbk)
+							clbk(deep(d, 'data.info'))
+					},
+					fail : function(d, e){
+
+						if (clbk)
+							clbk(null, e)
+
+					}
+				})
 			}
 		}
 	}
 
-	self.Firebase = function(platform){
+	self.apiproxy = null;
+	self.dontuseapiproxy = false;
 
-		//https://localhost:8889/firebase/token/set?token=cNFk-8w25ZQ:APA91bE4cStVM7B56qhxxl1jgLr9dEeUQsUudtq1zEfazgfM6Y-at8-LTkbV1uyzeJH4ljvkP6GRx4trBiDaIt7wdCSgCixuUN3BuA-wT_RNhZTvfSvGiqsoBfoErvz7Gyi5EaHdMNLJ&address=PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM&device=be4b54d4-a76d-cffc-42a0-4bb89028af9d
-		
-		//https://localhost:8889/firebase/revokedevice?device=be4b54d4-a76d-cffc-42a0-4bb89028af9d
+	self.Firebase = function(platform){
 
 		var self = this;
 
@@ -8192,7 +9720,7 @@ Platform = function(app, listofnodes){
 
 					if(share.message) m = m + '' + share.message + ''
 
-					symbols = 100;
+					symbols = 180;
 				}
 
 				var nm = filterXSS(trimHtml(m, symbols), {
@@ -8202,28 +9730,38 @@ Platform = function(app, listofnodes){
 					}
 				});
 
-				nm = share.renders.xssmessage(nm)
+				//nm = share.renders.xssmessage(nm)
 			
 
-				var image = share.images[0];
-				var video = null;
-
-				var vstyle = false;
+				var images = _.map(share.images, function(i){
+					return {
+						i : i,
+						v : false
+					}
+				});
 
 				if (share.url){
-					video = videoImage(share.url)
-					vstyle = true;
+
+					var video = videoImage(share.url)
+
+					if (video){
+						images.push({
+							i : video,
+							v : true
+						})
+					}
 				}
 
-				h = '<div class="sharepreview">\
-				<div class="shareprwrapper table">'
+				h = '<div class="sharepreview"><div class="shareprwrapper table">'
 
-				if(video || image){
+				if(!extendedpreview && images.length){
+
+					var img = images[0]
 			
 					h += '<div class="tcell forimage">'
-						h += '<div class="img" image="'+(video || image)+'">'
+						h += '<div class="img" image="'+clearStringXss(img.i)+'">'
 
-						if(vstyle){
+						if(img.v){
 							h += '<div class="vstyle">'
 							h += '<i class="fas fa-play"></i>'
 							h += '</div>'
@@ -8235,7 +9773,34 @@ Platform = function(app, listofnodes){
 				}
 
 				h += '<div class="tcell fortext">'
-				h += '<span>'+nm+'</span>'
+
+					h += '<span>'+nm+'</span>'
+					if(images.length && extendedpreview) {
+										
+						
+						h += '<div class="shareimages commentprev">'
+						h += '<div class="imagesContainer">'
+								_.each(images, function(image){
+		
+									h += '<div class="imagesWrapper">'
+									h += '<div class="image" image="'+clearStringXss(image.i)+'" i="'+clearStringXss(image.i)+'">'
+
+									if(image.v){
+										h += '<div class="vstyle">'
+										h += '<i class="fas fa-play"></i>'
+										h += '</div>'
+									}
+
+									h += '</div>'
+									h += '</div>'
+		
+								})
+		
+							h += '</div>'
+						h += '</div>'
+		
+					}
+
 				h += '</div>'
 
 				if(extra){
@@ -8252,7 +9817,35 @@ Platform = function(app, listofnodes){
 				return h;
 			},
 
+			transaction : function(data, message){
+				var h = '<div class="transactionmessage">'
+
+						h += '<div class="transactionmessagewrapper table">'
+							
+							if(message){
+								h+='<div class="tcell formessage">'
+
+									h += clearStringXss(message)
+
+								h +='</div>'
+							}
+
+							h += '<div class="tcell foramount">'
+
+							h +=  "+" +  platform.mp.coin(clearStringXss(data.amountall || data.tx.amount)) + " POC"
+
+							h += '</div>'
+
+						h +='</div>'
+
+					h += '</div>'
+
+				return h;
+			},
+
 			comment : function(comment, share){
+
+				var t = comment.renders.preview();
 
 
 				var h = '<div class="commentmessage">'
@@ -8261,9 +9854,35 @@ Platform = function(app, listofnodes){
 
 							h+='<div class="tcell fortext">'
 
-								h += '<div class="commenttext"><span>'
-								h += comment.renders.preview()
-								h +='</span></div>'
+
+								if (t){
+									h += '<div class="commenttext commentprev"><span>&ldquo;'
+									h += t
+									h +='&rdquo;</span></div>'
+								}
+
+								
+								
+								if(comment.images.length) {
+									
+					
+									h += '<div class="commentimages commentprev">'
+									h += '<div class="imagesContainer">'
+											_.each(comment.images, function(image){
+					
+												h += '<div class="imagesWrapper">'
+												h += '<div class="image imageCommentOpen" image="'+image+'" i="'+image+'">'
+												h += '</div>'
+												h += '</div>'
+					
+											})
+					
+										h += '</div>'
+									h += '</div>'
+					
+								}
+
+
 
 								if(share){
 									h += '<div class="commentshare">'
@@ -8273,9 +9892,58 @@ Platform = function(app, listofnodes){
 
 							h +='</div>'
 
-							h += '<div class="tcell foranswer">'
-							h += 	'<button class="reply ghost">Reply</button>'
-							h += '</div>'
+							
+
+						h +='</div>'
+
+					h += '</div>'
+
+				return h;
+			},
+
+			commentScore : function(comment, thumbs){
+
+				var t = comment.renders.preview();
+
+				var h = '<div class="commentmessage">'
+
+						h += '<div class="commentmessagewrapper table">'
+
+							h+='<div class="tcell fortext">'
+
+								if (t){
+									h += '<div class="commenttext commentprev"><span>&ldquo;'
+									h += t
+									h +='&rdquo;</span></div>'
+								}
+								
+								if(comment.images.length) {
+									
+					
+									h += '<div class="commentimages commentprev">'
+									h += '<div class="imagesContainer">'
+											_.each(comment.images, function(image){
+					
+												h += '<div class="imagesWrapper">'
+												h += '<div class="image imageCommentOpen" image="'+clearStringXss(image)+'" i="'+clearStringXss(image)+'">'
+												h += '</div>'
+												h += '</div>'
+					
+											})
+					
+										h += '</div>'
+									h += '</div>'
+					
+								}
+
+							h +='</div>'
+
+							if(thumbs){
+								h += '<div class="tcell forthumbs">'
+								h += 	thumbs
+								h += '</div>'
+							}
+
 
 						h +='</div>'
 
@@ -8286,18 +9954,37 @@ Platform = function(app, listofnodes){
 
 			star : function(count) {
                 
-                let _star = '<i class="fas fa-star"></i>';
+                var _star = '<i class="fas fa-star"></i>';
                 if (electron) _star = '★';
-				return '<div class="messagestar" count="'+count+'">' + count + ' ' + _star + '</div>'
+				return '<div class="messagestar" count="'+count+'">' + count + '' + _star + '</div>'
+			},
+
+			thumbs : function(value) {
+                
+				var t = '';
+				
+				if (electron) {
+					t = '👍';
+
+					if(value < 0) t = '👎';
+				}
+				else
+				{
+					t = '<i class="fas fa-thumbs-up"></i>';
+
+					if(value < 0) t = '<i class="fas fa-thumbs-down fa-flip-horizontal"></i>';
+				}
+				
+				return '<div class="messagethumbs" value="'+clearStringXss(value)+'">' + t + '</div>'
 			},
 
 			_user : function(author){
 				return filterXSS(deep(author, 'name') || author.address)
 			},
 
-			user : function(author, html, gotoprofile, caption){
+			user : function(author, html, gotoprofile, caption, extra, time){
 
-				if(!author){
+				if(!author || !author.name){
 					return html
 				}
 
@@ -8306,10 +9993,9 @@ Platform = function(app, listofnodes){
 				var src = deep(author, 'image')
 				
 
-				var link = '<a href="'+ encodeURI(author.name.toLowerCase())+'">'
+				var link = '<a href="'+ encodeURI(clearStringXss(author.name.toLowerCase()))+'">'
 				var clink = "</a>"
 
-			
 
 			h+='<div class="cwrapper table">\
 					<div class="cell cellforimage">\
@@ -8317,12 +10003,9 @@ Platform = function(app, listofnodes){
 
 						if(gotoprofile) h += link
 
-							h+= '<div class="usericon" image="'+(src || '')+'">'
+							h+= '<div class="usericon" image="'+clearStringXss(src || '')+'">'
 
-							if(!src) {
-								h+='<svg width="30" height="30" data-jdenticon-value="'+author.address+'"></svg>'
-							}
-
+						
 							h+='</div>'
 
 						if(gotoprofile) h += clink
@@ -8332,28 +10015,61 @@ Platform = function(app, listofnodes){
 					<div class="ccell">\
 						<div class="infomain">\
 							<div class="caption">'
-								if(gotoprofile) h += link
 
-									if(caption){
-										h += caption + ". "
-									}
+								if(author.address != platform.sdk.address.pnet().address){
 
-									h+= '<b class="adr">'+filterXSS(deep(author, 'name') || author.address)+'</b>'
-								if(gotoprofile) h += clink
+									if(gotoprofile) h += link								
+										h+= '<b class="adr">'+filterXSS(deep(author, 'name') || author.address)+'</b>'
+									if(gotoprofile) h += clink
+
+								}
+
+								if(caption){
+									h += " " + clearStringXss(caption)
+								}
 
 							h+= '</div>\
 							<div class="tips">' + (html) + '\
 							</div>\
-						</div>\
-					</div>\
-				</div>'
+						</div>'
+
+					h += self.tempates.time(time)
+
+					h+= '</div>'
+
+				if(extra){
+					h += '<div class="ccell extra">'
+					h += extra
+					h += '</div>'
+				}
+				
+
+				h += '</div>'
 
 				
 
 				return h;
 			},
 
-			subscribe : function(author, html){
+			time : function(time){
+				
+				var t = '';
+				var h = '';
+
+				if(time) {	
+
+					t = new Date()
+					t.setTime(clearStringXss(time) * 1000);	
+
+					h+= '<div class="time">'
+					h+= '<span>' + app.reltime(t) + '</span>'
+					h+= '</div>'
+				}
+
+				return h
+			},
+
+			subscribe : function(author){
 
 				var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address)
 
@@ -8364,16 +10080,11 @@ Platform = function(app, listofnodes){
 				}
 
 				var h = '<div class="subscribeWrapper table">'
-						h += '<div class="scell forhtml">'
-						h += html
-						h += '</div>'
 					
 						h += '<div class="scell forsubscribe">'
 						h += 	'<button class="subscribe ghost + '+d+'">'
-
-
-						h += '<i class="far fa-check-circle"></i> '
-						h += 'Follow</button>'
+							h += '<i class="far fa-check-circle"></i> '
+							h += 'Follow</button>'
 						h += '</div>'
 					
 					h+= '</div>'
@@ -8388,6 +10099,144 @@ Platform = function(app, listofnodes){
 
 		self.messages = {
 
+			registered : {
+				loadMore : function(data, clbk){
+
+					self.connected[data.addr] = true
+
+					
+				}
+			},
+			connectionfailed : {
+				loadMore : function(data){
+				}
+			},
+
+			///
+
+			cScore : {
+				fastMessageEvents : function(data, message){
+
+					message.el.find('.commentprev').on('click', function(){
+
+						platform.sdk.node.shares.getbyid(data.posttxid, function(s, err, p, fromcashe){
+
+							platform.app.nav.api.load({
+								open : true,
+								href : 'post?s=' + data.posttxid,
+								inWnd : true,
+								//history : true,
+								clbk : function(d, p){									
+									app.nav.wnds['post'] = p
+								},
+
+								essenseData : {
+									share : data.posttxid,
+
+									reply : {
+										answerid : data.commentid,
+										parentid : data.parentid || "",
+										noaction : true
+									}
+								}
+							})
+						
+						})
+
+					})
+
+				},
+
+				loadMore : function(data, clbk, wa){
+
+
+					platform.sdk.users.get([data.addrFrom], function(){
+
+
+						data.user = platform.sdk.users.storage[data.addrFrom] || {}
+
+						data.user.address =  data.addrFrom;
+
+						data.i = '👍';
+
+						if(data.value < 0) data.i = '👎';
+					
+						platform.sdk.comments.getbyid(data.commentid, function(t){
+
+							data.comment = deep(platform.sdk.comments, 'storage.all.' + data.commentid)
+
+							if (t){
+								if(data.upvoteVal > 0) data.comment.scoreUp++
+								else data.comment.scoreDown++
+							}
+							
+							if (data.comment && !data.comment.deleted){
+
+							}
+
+							clbk()
+						})
+
+					})
+
+				},
+				
+				refs : {
+
+				},
+				audio : {
+					unfocus : 'water_droplet',
+					if : function(data){
+
+						if(data.user && data.comment && platform.sdk.usersettings.meta.commentScore.value){
+							return true
+						}
+
+						return false;
+					}
+				},
+
+				notificationData : function(data){
+					var n = {};
+
+					if (data.user && data.comment && !data.comment.deleted && data.upvoteVal > 0){
+						n.text =  self.tempates._user(data.user) + " has liked your comment!"
+						n.caption = "New Comment Like"
+					}
+
+					if(_.isEmpty(n)) 
+						return null;
+
+					return n
+				},
+				
+				fastMessage : function(data){	
+			
+					var text = '';
+					var html = '';
+
+					if (data.comment && !data.comment.deleted && data.upvoteVal > 0){					
+					
+						if (platform.sdk.usersettings.meta.commentScore.value){
+							text = self.tempates.commentScore(data.comment)
+						}
+
+						if(text){
+							html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', true, platform.app.localization.e('upvoteCommentMessage') + ':', self.tempates.thumbs(data.upvoteVal), data.time)
+						}
+
+					}
+
+
+
+					return html;
+					
+				},
+				
+				clbks : {
+				}
+			},
+
 			sharepocketnet : {
 				loadMore : function(data, clbk, wa){
 
@@ -8401,8 +10250,13 @@ Platform = function(app, listofnodes){
 
 							data.user.address =  data.addrFrom
 
+							console.log(data)
+
+							if(data.txids && !data.txid) data.txid = data.txids
 						
 							platform.sdk.node.shares.getbyid(data.txid, function(s, fromcashe){
+
+								console.log(s, data.txid)
 
 								s || (s = []);
 
@@ -8458,7 +10312,7 @@ Platform = function(app, listofnodes){
 					text = self.tempates.share(data.share, null, true)
 					
 					if(text){
-						html += self.tempates.user(data.user, '<a href="author?address=PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd&report=shares&s='+data.share.txid+'&mpost=true"><div class="text">'+text+'</div></a>', true)
+						html += self.tempates.user(data.user, text, true, null, null, data.time)
 					}
 
 
@@ -8474,15 +10328,40 @@ Platform = function(app, listofnodes){
 				loadMore : function(data, clbk, wa){
 
 					var _dataclbk = function(tx, err){
-						var temp = platform.sdk.node.transactions.clearTemp(data.txid);
+
+						if (err){
+
+							if(clbk) clbk()
+
+							return
+
+						}
+
+						data.btx = tx;
+
+						var address = data.addr;
+
+						platform.sdk.node.transactions.unspent || (platform.sdk.node.transactions.unspent = {})
+
+						var s = platform.sdk.node.transactions.unspent;
+							s[address] || (s[address] = []);
+
+
+						
+						
+
+						////////////
+
+						var temp = deep(platform.sdk.node.transactions.temp, 'share.' + data.txid)
+
 
 						if (temp && !wa){
 
+							
 							data.temp = temp;
 							data.temp.temp = false;
 
-							if (temp.type == 'share'){
-
+							if (data.temp.type == 'share'){
 								var share = new pShare();
 									share._import(data.temp, true);
 									share.address = platform.sdk.address.pnet().address
@@ -8497,87 +10376,68 @@ Platform = function(app, listofnodes){
 
 
 								platform.sdk.node.shares.storage.trx[data.txid] = share
-								
 
 							}
 						}
 
-						if(tx && !err){
-							data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
-							
+						var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
-							data.amountall = _.reduce(tx.vout, function(m, v){
+						_.each(outs, function(o){
+							platform.sdk.node.transactions.clearTemp(data.txid, o.vout - 1);
 
-								var vout = _.find(v.scriptPubKey.addresses, function(a){
-									return a == data.addr
+							if(!wa){
+
+								removeEqual(s[address], {
+									txid : data.txid,
+									vout : o.vout
 								})
-
-								if(!vout){
-									return m
-								}
-								else{
-									return m + v.value
-								}
-
-							}, 0)
-
-							
-							//data.tx = data.pockettx
-
-							data.btx = tx;
-
-							var a = data.addr;
-
-							platform.sdk.node.transactions.unspent || (platform.sdk.node.transactions.unspent = {})
-							
-							var s = platform.sdk.node.transactions.unspent;
-					
-							s[a] || (s[a] = []);
-
-							if (!wa){
-
-								removeEqual(s[a], {
-									txid : data.tx.txid,
-									vout : data.tx.vout
-								})
-
-								s[a].push(data.tx)
+	
+								s[address].push(o)
 								
-							}									
-
-							data.address = platform.sdk.node.transactions.addressFromScryptSig(deep(data.btx, 'vin.0.scriptSig.asm'))
-
-							data.opmessage = platform.sdk.node.transactions.getOpreturn(data.btx)
-
-							////ddd
-
-							platform.sdk.users.getone(data.address || '', function(){
-
-								if (data.address){
-									data.user = platform.sdk.usersl.storage[data.address] || {
-										address : data.address
-									}
-								}					
-								
-								_.each(platform.sdk.node.transactions.clbks, function(c){
-									c(data.amountall)
-								})
-
-								if(!self.showedIds[data.tx.txid]){
-									self.showedIds[data.tx.txid] = true
-
-									if (clbk)
-										clbk(data)
-								}
-
-
-							}, true)
+							}
 
 							
-						}
+						})
+
+
+						//////////////////////
+
+						data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
+
+						data.amountall = _.reduce(outs, function(m, v){
+							return m + v.amount
+						}, 0)
+
+						data.address = platform.sdk.node.transactions.addressFromScryptSig(deep(data.btx, 'vin.0.scriptSig.asm'))
+
+						data.opmessage = platform.sdk.node.transactions.getOpreturn(data.btx)
+
+						//data.cointype = platform.sdk.node.transactions.getCoibaseType(data.btx, platform.sdk.address.pnet().address) 
+
+						platform.sdk.users.getone(data.address || '', function(){
+
+							if (data.address){
+								data.user = platform.sdk.usersl.storage[data.address] || {
+									address : data.address
+								}
+							}					
+							
+							_.each(platform.sdk.node.transactions.clbks, function(c){
+								c(data.amountall)
+							})
+
+						
+
+							if (clbk)
+								clbk(data)
+
+
+						}, true)
+
+						
 					}
 
-					if(data.txinfo){
+					if (data.txinfo){
 						_dataclbk(data.txinfo)
 					}
 					else
@@ -8602,8 +10462,17 @@ Platform = function(app, listofnodes){
 
 							if(platform.sdk.usersettings.meta.win.value)
 							{	
+
+								var a = 'activity'
+
+								/*if (data.cointype){
+
+									a = data.cointype
+
+								}*/
+
 								n.caption = "Incoming transaction"
-								n.text = "Congratulations, you have won " + platform.mp.coin(data.tx.amount) + " Pocketcoin for your latest post!"
+								n.text = "Congratulations, you have won " + platform.mp.coin(data.tx.amount) + " Pocketcoin for your latest '"+a+"'!"
 								n.topic = 'pos' 
 							}
 
@@ -8613,7 +10482,7 @@ Platform = function(app, listofnodes){
 
 							if(data.address != user.address && data.user){
 
-								if(platform.sdk.usersettings.meta.transactions.value && data.tx.amount >= 0.01)
+								if(platform.sdk.usersettings.meta.transactions.value  >= 0.01 && data.tx.amount >= 0.01)
 								{
 									n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " POC to you"
 
@@ -8643,7 +10512,8 @@ Platform = function(app, listofnodes){
 			
 					var html = '';
 
-					if (data.tx){
+
+					if (data.tx){						
 
 						
 
@@ -8651,7 +10521,37 @@ Platform = function(app, listofnodes){
 
 							if(platform.sdk.usersettings.meta.win.value)
 							{
-								html += self.tempates.user(platform.sdk.users.storage[platform.sdk.address.pnet().address], '<div class="text">'+platform.app.localization.e('coinbaseSuccess', platform.mp.coin(data.amountall || data.tx.amount)) + '</div>')
+
+								var td = 'coinbaseSuccess'
+
+								if (data.cointype){
+									td = td + data.cointype
+								}
+
+								
+
+								html += self.tempates.user(
+
+									platform.sdk.users.storage[platform.sdk.address.pnet().address], 
+
+									self.tempates.transaction(data, 
+									
+										'<div class="text">' + 
+										platform.app.localization.e(td, platform.mp.coin(clearStringXss(data.amountall || data.tx.amount))) + 
+										'</div>'
+
+									),
+
+									false, 
+									null,
+									null, 
+
+									data.time
+
+								)
+
+								
+
 							}
 
 						}
@@ -8663,31 +10563,24 @@ Platform = function(app, listofnodes){
 								if(platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name)
 								{
 
-									if(data.amountall || data.tx.amount >= 0.05){
+									if(data.amountall >= 0.05 || data.tx.amount >= 0.05){
 
-										var txt = '<div class="text">' + platform.app.localization.e('userSent', platform.mp.coin(data.amountall || data.tx.amount)) + '</div>'
+										var txt = platform.app.localization.e('userSent', platform.mp.coin(data.amountall || data.tx.amount))
 
 										if (data.opmessage){
-											txt += '<div class="opmessage"><b>Message:</b> <span>' + data.opmessage  + '</span></div>'
+											txt += ' with message: <span>&ldquo;' + data.opmessage  + '&rdquo;</span>'
 										}
 
-										html += self.tempates.user(data.user, txt)
+										html += self.tempates.user(data.user, '', true, txt, self.tempates.transaction(data), data.time)
 
 									}
-
 									
-								
-									/*if (data.opmessage){
-										n.text = n.text + ' with message: "' + data.opmessage + '"'
-									}
-									else{
-										n.text = n.text + "!"
-									}*/
 								}
 							}
 
 						}
 					}
+
 
 					return html;
 					
@@ -8834,6 +10727,14 @@ Platform = function(app, listofnodes){
 						_.each(platform.sdk.node.transactions.clbks, function(c){
 							c()
 						})
+					},
+
+					interface : function(){
+
+						if(typeof $ != 'undefined'){
+							$('.temptransaction').removeClass('temptransaction')
+						}
+
 					}
 				}
 			},
@@ -8842,7 +10743,7 @@ Platform = function(app, listofnodes){
 
 				fastMessageEvents : function(data, message){
 
-					message.el.find('.commenttext').on('click', function(){
+					message.el.find('.commentprev').on('click', function(){
 
 						platform.sdk.node.shares.getbyid(data.posttxid, function(s, fromcashe){
 
@@ -8927,38 +10828,32 @@ Platform = function(app, listofnodes){
 						data.user = platform.sdk.users.storage[data.addrFrom] || {}
 						data.user.address =  data.addrFrom
 
+						if(!data.commentid && data.txid)
+							data.commentid = data.txid
+
 						getpost(data.posttxid, function(){
 
 							var ids = [data.commentid]
 
 							data.txid = data.commentid
 
-							/*if (data.answerid) 
+							platform.sdk.comments.getbyid(ids, function(){
 
-								ids.push(data.answerid)*/
+								
+								data.comment = deep(platform.sdk.comments, 'storage.all.' + data.commentid)
+															
+								if(data.comment){
+									 platform.sdk.comments.storage[data.comment.txid] ||
+									(platform.sdk.comments.storage[data.comment.txid] = {})
 
-							platform.sdk.comments.info(ids, function(error, c){
+									var pid = data.comment.parentid || '0';
 
-								if (error || !c.length) return
-
-								if (c.length){
-									data.comment = c[0];
+									if (platform.sdk.comments.storage[data.comment.txid][pid]){
+										platform.sdk.comments.storage[data.comment.txid][pid].push(data.comment)
+									}
 								}
-
-								platform.sdk.comments.storage[data.comment.txid] ||
-
-								(platform.sdk.comments.storage[data.comment.txid] = {})
-
-								var pid = data.comment.parentid || '0';
-
-								if (platform.sdk.comments.storage[data.comment.txid][pid]){
-									platform.sdk.comments.storage[data.comment.txid][pid].push(data.comment)
-								}
-
-								/*if (c.length == 2){
-									data.answercomment = c[1];
-								}*/
-
+								
+								
 								clbk()
 							})
 						})
@@ -8970,17 +10865,19 @@ Platform = function(app, listofnodes){
 				notificationData : function(data){
 					var n = {};
 
-					if(data.mesType == 'post' && data.comment && data.share && data.user){
+					console.log('notificationData', data)
+
+					if(data.reason == 'post' && data.comment && data.share && data.user){
 						n.text = data.comment.renders.previewEmojidis() 
 						n.topic = 'comments' 
 
-						n.caption = "New comment: " +  self.tempates._user(data.user)
+						n.caption = self.tempates._user(data.user) + " commented your post:"
 					}
 
-					if(data.mesType == 'answer' && data.comment && data.share && data.user){
+					if(data.reason == 'answer' && data.comment && data.share && data.user){
 						n.text = data.comment.renders.previewEmojidis() 
 						n.topic = 'answers'
-						n.caption = "New answer: " +  self.tempates._user(data.user)
+						n.caption = self.tempates._user(data.user) + ' answered on your comment:'
 					}
 
 					if(_.isEmpty(n)) 
@@ -8994,25 +10891,31 @@ Platform = function(app, listofnodes){
 					var text = '';
 					var html = '';
 
+					var extra = '' 
+						extra += '<div class="tcell foranswer">'
+						extra += 	'<button class="reply ghost">Reply</button>'
+						extra += '</div>'
 
 
-					if(data.mesType == 'post' && data.comment && data.share && data.user && 
+					if(data.reason == 'post' && data.comment && data.share && data.user && 
 						(!platform.sdk.usersettings.meta.comments || platform.sdk.usersettings.meta.comments.value)){
 
 						text = self.tempates.comment(data.comment, self.tempates.share(data.share))
 
 						if(text){
-							html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', false, 'New comment')
+							html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', true, ' commented your post:', extra, data.time)
 						}
 					}
 
-					if(data.mesType == 'answer' && data.comment && data.share && data.user && 
+					if(data.reason == 'answer' && data.comment && data.share && data.user && 
 						(!platform.sdk.usersettings.meta.answers || platform.sdk.usersettings.meta.answers.value)){
 
-						text = self.tempates.comment(data.comment, self.tempates.share(data.share))
+						text = self.tempates.comment(data.comment/*, self.tempates.share(data.share)*/)
+
+						
 
 						if(text){
-							html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', false, 'New answer')
+							html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', true, ' answered on your comment:', extra, data.time)
 						}
 					}		
 
@@ -9237,47 +11140,52 @@ Platform = function(app, listofnodes){
 			
 					var text = '';
 					var html = '';
+					var caption = '';
+					var extra = '';
 
 					if(data.mesType == 'userInfo'){
 
 						if((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)){
 
-							text = platform.app.localization.e('refferalUserMessage')
+							//text = platform.app.localization.e('refferalUserMessage')
 
-						}
+							/*text = ''
+							caption = platform.app.localization.e('refferalUserMessage')
+							extra = self.tempates.subscribe(data.user)*/
 
-						
+						}						
 					}
 
 
 					if(data.mesType == 'subscribe'){
-
 						if((!platform.sdk.usersettings.meta.followers || platform.sdk.usersettings.meta.followers.value)){
 
-							text = self.tempates.subscribe(data.user, platform.app.localization.e('subscribeUserMessage'))
+							text = ''
+							caption = platform.app.localization.e('subscribeUserMessage')
+							extra = self.tempates.subscribe(data.user)
 
 						}
-
 					}
 
-					if(data.mesType == 'unsubscribe'){
-						text = '';
-
-						// platform.app.localization.e('unsubscribeUserMessage')
-					}
-
+					
 					if(data.mesType == 'upvoteShare' && data.share){
 
 						if(data.upvoteVal > 2 && (!platform.sdk.usersettings.meta.upvotes || platform.sdk.usersettings.meta.upvotes.value)){
 
 							var star = self.tempates.star(data.upvoteVal)
 
-							text = platform.app.localization.e('upvoteShareMessage') + self.tempates.share(data.share, star)
+							text = '<div class="text">' + self.tempates.share(data.share) +'</div>'
+							caption = platform.app.localization.e('upvoteShareMessage')
+							extra = star
+
+							
 						}
 					}
 
-					if(text){
-						html += self.tempates.user(data.user, '<div class="text">'+text+'</div>', true)
+					
+
+					if (caption || text){
+						html += self.tempates.user(data.user, text || "", true, caption, extra, data.time)
 					}
 
 
@@ -9423,27 +11331,19 @@ Platform = function(app, listofnodes){
 
 		var initconnection = function(clbk){
 
-			//if(socket) return
+			var ws = 'wss://' + platform.apiproxy.host + ":" + platform.apiproxy.ws
 
-			socket = new ReconnectingWebSocket(platform.app.options.ws); 
+			socket = new ReconnectingWebSocket(ws); 
 
 			socket.onmessage = function(message) { 
-
-
 
 			    message = message.data;
 
 	        	var jm = message;
 
-	        	try{
+	        	try{	        		
 
-	        		if(jm.indexOf('registered') > -1){
-	        			message = message.replace("msg", '"msg"')
-	        			message = message.replace("addr", '"addr"')
-	        		}
-	        		
-
-	        		jm = JSON.parse(message || "{}");
+					jm = JSON.parse(message || "{}");
 
 	        	}
 	        	catch (e){
@@ -9456,15 +11356,6 @@ Platform = function(app, listofnodes){
 			   
 			};
 
-			/*socket.onerror = function (error) { 
-			   
-			   	console.log('error', error)
-
-			   	if (opened)
-			   		socket.close()
-			   
-			};*/
-
 			socket.onopen = function(){
 				
 				lost = platform.currentBlock || 0;
@@ -9476,12 +11367,6 @@ Platform = function(app, listofnodes){
 				if (clbk)
 					clbk()
 			}
-
-			/*socket.onclose = function(e){
-
-				reconnect()
-
-			}	*/
 		} 
 
 		var destroyMessage = function(message, time, noarrange, destroyUser){
@@ -9577,12 +11462,13 @@ Platform = function(app, listofnodes){
 
 			if(lost > 1 && self.loadingMissed) return
 
-			if(lost < platform.currentBlock) return
+			if(lost <= platform.currentBlock) return
+
+			if(self.loadingWithErrors) return
 
 			self.loadingMissed = true;
-
 			platform.app.ajax.rpc({
-				method : 'getmissedinfo',
+				method : 'getmissedinfo2',
 				parameters : [platform.sdk.address.pnet().address, lost],
 				success : function(d){			
 
@@ -9723,23 +11609,31 @@ Platform = function(app, listofnodes){
 
 		self.messageHandler = function(data, clbk){
 
-			if(!data.msg) return
+			data || (data = {})
 
-			if (data && data.msg == 'registered'){
+			/*if (data && data.msg == 'registered'){
 
-				self.connected[data.addr] = true
+								
 
-				return
+			}*/
 
-			}
+			if (data.msg || data.mesType){
 
-			if (data.msg){
+				/*var exkey = ''
 
-				var exkey = ''
+				if (data.mesType) exkey = '.' + data.mesType;*/
 
-				if (data.mesType) exkey = '.' + data.mesType;
+				var m = null;
 
-    			var m = deep(self.messages, (data.msg) + exkey) || deep(self.messages, (data.msg)) || {};
+				if (data.msg == 'transaction'){
+					data.type = data.mesType
+					delete data.mesType
+				}
+				
+				if (data.mesType) m = self.messages[data.mesType]
+				if (data.msg && !m) m = self.messages[data.msg]
+
+				if(!m) m = {}
 
     			if (m.checkHandler){
     				if(!m.checkHandler(data, m)){
@@ -9747,12 +11641,14 @@ Platform = function(app, listofnodes){
     				}
 				}
 				
-				if(data.txid) {
+				if (data.txid) {
 
 					if (txidstorage[data.txid]) return;
 
 						txidstorage[data.txid] = true
 				}
+
+				
 
     			var clbks = function(loadedData){
 
@@ -9792,21 +11688,33 @@ Platform = function(app, listofnodes){
 
 	    					if (html){
 
-	    						var message = self.fastMessage(html, function(){
-	    							platform.sdk.notifications.seen([data.txid])
-	    						});
+								if(!self.showedIds[data.txid]){
+									self.showedIds[data.txid] = true
 
-	    						if (m.fastMessageEvents){
-	    							m.fastMessageEvents(data, message)
-	    						}
 
-	    						data.loaded = true
+									var message = self.fastMessage(html, function(){
+										platform.sdk.notifications.seen([data.txid])
+									});
+	
+									if (m.fastMessageEvents){
+										m.fastMessageEvents(data, message)
+									}
+	
+									data.loaded = true
+									
+	
+									platform.sdk.notifications.addFromWs(data)
+	
+									if (typeof _Electron != 'undefined' && !platform.focus && message.html){
+										electron.ipcRenderer.send('electron-notification', message.html);
+									}
 
-	    						platform.sdk.notifications.addFromWs(data)
+								}
+								else{
+									return
+								}
 
-	    						if (typeof _Electron != 'undefined' && !platform.focus && message.html){
-									electron.ipcRenderer.send('electron-notification', message.html);
-	    						}
+	    						
 								
 
 	    					}
@@ -9831,8 +11739,6 @@ Platform = function(app, listofnodes){
     					clbk()      				
     				
     			}
-
-
     			
     			if (m.loadMore)
     			{
@@ -9842,23 +11748,26 @@ Platform = function(app, listofnodes){
     			else
     			{
     				clbks();
-    			}
-
-    			return
+				}
+				
     		}
 		}		
+		
+		setTimeout(function(){
 
-		/*self.messageHandler(
+		
 
-			{
-				addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
-				addrFrom: "PFRTSVNts36Zyte1gBhh8ATZpaqMWfBLq3",
-				mesType: "subscribe",
-				msg: "event",
-				txid: "25329f8e74ceb902e92eb41c2824929a27f7988e7c2db1c25c90b6958e825682"
-			}
+			self.messageHandler(
 
-		)*/
+				/*{
+					msg: "sharepocketnet",
+					time: "1571131408",
+					txids: "78cd0cbfe903470e3426f81af858970179304ab1e34b9e5101479926d901affa"
+				}*/
+
+			)
+
+		}, 5000)
 
 		self.send = function(message){
 
@@ -10021,9 +11930,10 @@ Platform = function(app, listofnodes){
 					sgn : signature.toString('hex'),
 					pub : keyPair.publicKey.toString('hex'),
 					id : platform.app.options.device,
-
 					block : platform.currentBlock || 0
 				}
+
+				platform.sdk.system.nodeex(message)
 
 				if(!wait)
 					wait = {};
@@ -10074,6 +11984,14 @@ Platform = function(app, listofnodes){
 
 		self.init = function(clbk){
 
+			if(!platform.apiproxy) {
+
+				if (clbk)
+					clbk()
+
+				return
+			}
+
 			closing = false;
 			self.onlineCheck = true;
 
@@ -10087,9 +12005,6 @@ Platform = function(app, listofnodes){
 			self.lostBlock = platform.currentBlock;
 
 			initOnlineListener();
-
-
-
 			initconnection();
 
 			if (clbk)
@@ -10554,6 +12469,18 @@ Platform = function(app, listofnodes){
 		}
 
 		return convertDate(dateToStr(d))
+	}
+
+	self.convertUTCSSrel = function(str){
+
+		var d = utcStrToDate(str);
+
+		if (self.timeDifference){
+
+			d.addSeconds( - self.timeDifference)
+		}
+
+		return app.reltime(d)
 	}
 
 	self.currentTimeSS = function(){
@@ -11341,7 +13268,6 @@ Platform = function(app, listofnodes){
 				}
 
 				if(data.msg == 'download-progress'){
-					console.log('download-progress', data)
                 }
                 
                 if (data.msg == 'update-available' && data.linux) {
@@ -11350,27 +13276,21 @@ Platform = function(app, listofnodes){
 			}
 
 			if(data.type == 'error'){
-				console.log('download-progress', data)
 			}
 		})
 
 	}
 
 	self.autochange = function(){
+				
+		var i = nextIndex(self.nodes, function(n){
+			return n.host == self.nodeid.host && n.locally == self.nodeid.locally
+		})
 
-		var key = 'nodes'
-
-		if(typeof _Test != 'undefined' && _Test){
-			key = 'nodes_test'
-		}
-
-
-		self.nodeid++;
-
-
-		if (self.nodeid >= self[key].length){
-			self.nodeid = 0;
-		}
+		if(i < 0) i = 0;
+		
+		self.nodeid = self.nodes[i]
+		
 	}
 
 	self.Marketing = function(platform){
@@ -11403,6 +13323,7 @@ Platform = function(app, listofnodes){
 
 		self.log = function(action, note, clbk, abid){
 
+			if(!platform.app.options.server) return
 
 			var data = {
 				Action : 'ADDLOGS',
@@ -11508,8 +13429,7 @@ Platform = function(app, listofnodes){
 		}*/
 	]
 
-	self.nodes = listofnodes || []
-
+	self.nodes = listofnodes || null
 
 	self.clearStorage = function(){
 		_.each(self.sdk, function(c, id){
@@ -11526,11 +13446,13 @@ Platform = function(app, listofnodes){
 			users : {}
 		}
 
-		app.platform.sdk.node.shares.storage = {
+		self.sdk.node.shares.storage = {
 			trx : {}
 		}
 
-		app.platform.sdk.node.transactions.storage = {}
+		self.sdk.node.transactions.storage = {}
+
+		delete self.sdk.node.transactions.unspent
 	}
 
 	self.clearStorageLight = function(){
@@ -11567,6 +13489,8 @@ Platform = function(app, listofnodes){
 			}
 		}
 
+		self.sdk.tags.c
+
 		//app.platform.sdk.node.transactions.temp = {}
 
 		self.clearStorage()
@@ -11590,6 +13514,9 @@ Platform = function(app, listofnodes){
 	}
 
 	self.restart = function(clbk){
+
+		app.errors.clear();
+
 		self.clear();
 
 		app.user.isState(function(state){
@@ -11651,8 +13578,30 @@ Platform = function(app, listofnodes){
 			}
 		})
 	}
+
+	self.appstate = function(){
+
+		if (self.loadingWithErrors && _.isEmpty(self.app.errors.state)){
+
+			self.loadingWithErrors = false;
+
+			self.restart(function(){
+				self.app.reload(function(){
+				})
+			})
+		}
+	}
 	
 	self.prepare = function(clbk, state){	
+
+		self.sdk.proxy.load()
+		self.app.platform.sdk.node.sys.load()
+
+		if (self.app.errors.clbks){
+			self.app.errors.clbks.platform = self.appstate
+		}
+
+		initOnlineListener()
 
 		self.sdk.system.get.nodes(false, function(){
 			
@@ -11754,7 +13703,6 @@ Platform = function(app, listofnodes){
 		var stateclbk = function(state){
 			if(state){
 				
-
 				lazyActions([
 					
 					self.sdk.node.transactions.loadTemp, 
@@ -11778,36 +13726,12 @@ Platform = function(app, listofnodes){
 
 						self.sdk.user.get(function(u){
 
-							//if(Number(u.postcnt) > 0)
-
-								/*setTimeout(function(){
-									self.sdk.user.survey()
-								}, 300000)*/
-
-								
-								/*setTimeout(function(){
-
-									self.sdk.node.transactions.kr(100, 100, function(){
-										console.log("END")
-									})
-
-								}, 5000)*/
-							
-
-							/*for(var i = 0; i < 1000; i++){
-								setTimeout(function(){
-									console.log('dateToStrUTCSS()', dateToStrUTCSS())
-								},2) 
-							}*/
-
-							/*self.app.nav.addParameters = function(h){
-								return self.app.nav.api.history.addParametersToHref(h, {
-									ref : self.app.platform.sdk.address.pnet().address
-								})
-							}*/
-
 							self.preparingUser = false;
-							
+
+
+							self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+							self.sdk.experiment.pfa()
 							
 							if (clbk)
 								clbk()
@@ -11844,23 +13768,6 @@ Platform = function(app, listofnodes){
 	}
 
 	self.prepareApi = function(clbk, u){
-
-		self.rpc = {};
-
-
-		_.each(self.nodes, function(n, i){
-
-
-			var config = {
-			    protocol: 'http',
-			    user: u.user,
-			    pass: u.pass,
-			    host: n.host,
-			    port: n.port,
-			};
-
-			self.rpc[i] = new RpcClient(config);
-		})
 			
 		self.sdk.node.get.time(function(){
 
@@ -11903,17 +13810,25 @@ Platform = function(app, listofnodes){
 			if (time > 120 && window.cordova){
 				self.clearStorageLight()
 			}
-			
 
+			if (time > 3600 && typeof !_Electron != 'undefined'){
+
+				self.app.platform.restart(function(){
+
+					app.reload(function(){
+
+					})
+
+				})
+
+
+				return
+			}
 
            	self.clbks.focus(time);
 
            	if (self.titleManager){
             	self.titleManager.clear();
-            }
-
-            if (self.ws){
-            	//self.ws.authConnect()
             }
 
 		}
@@ -11996,6 +13911,43 @@ Platform = function(app, listofnodes){
 		return self;
 	}
 
+	var initOnlineListener = function(){
+		if(!_Node){
+
+			onlinetnterval = retry(function(){
+
+				var online = deep(window, 'navigator.onLine');
+
+				if (self.online != online){
+
+					self.online = online;
+
+					return true;
+
+				}
+				
+
+			}, function(){
+
+				if(!self.online){					
+					_.each(self.clbks.online, function(c){
+						c(false)
+					})
+				}
+				else
+				{
+					_.each(self.clbks.online, function(c){
+						c(true)
+					})
+				}
+
+				initOnlineListener();
+
+			}, 50)
+
+		}
+	}
+
 	self.TitleManager = function(){
 		var self = this;
 
@@ -12051,17 +14003,34 @@ Platform = function(app, listofnodes){
 
 	self.state = {
 		save : function(){
-			localStorage['nodeid'] = self.nodeid || '1';
+			if (self.nodeid)
+				localStorage['nodeid2'] = JSON.stringify(self.nodeid);
 
-			if (self.addressType)
-				localStorage['addressType'] = self.addressType;
+			else 
+			delete localStorage['nodeid2']
+
 		},
 		load : function(){
-			self.nodeid =  localStorage['nodeid'] || '1';
-			self.addressType =  localStorage['addressType'] || 'p2pkh';
 
+			if (self.nodes && self.nodes.length){
+
+				try {
+					self.nodeid = JSON.parse(localStorage['nodeid2'])
+				}
+				catch(e){}
+				
+
+				if(!self.nodeid){
+					self.nodeid = self.nodes[0]
+				}
+
+			}
+
+			self.addressType = 'p2pkh';
 		}
 	}
+
+	
 
 	self.app = app;
 

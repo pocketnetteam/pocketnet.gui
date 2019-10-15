@@ -18,6 +18,10 @@ nModule = function(){
 
 	self.essenses = {};
 
+	self.iclbks = {
+
+	}
+
 	self.inserts = {
 		wnd : {
 			obj : wnd,
@@ -156,13 +160,19 @@ nModule = function(){
 
 						options.destroy = function(){
 
-							self.app.nav.api.history.removeParameters(['m' + p.id])
+							console.log('p', p)
 
-							return p.destroy()
+							if(p){
+								self.app.nav.api.history.removeParameters(['m' + p.id])
+
+								return p.destroy()
+							}
+
+							
 
 						};
 
-						self .container = insert.obj(options);
+						self .container = new insert.obj(options);
 							p.container = self.container;
 
 						self.container.essenseDestroy = options.destroy
@@ -728,7 +738,7 @@ nModule = function(){
 
 			//self.stop()
 
-				close();
+			close();
 
 			return true
 		}

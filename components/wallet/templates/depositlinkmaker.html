@@ -14,7 +14,7 @@
 		</div>
 
 		<div class="cell"> 
-			<div class="labelWrapper workstation"><%= d.parameters.label.name %></div>
+			<div class="labelWrapper workstation"><%= d.parameters.label.name %>, <span class="required">*<%=e('required')%></span></div>
 		</div>
 	</div>
 	<div class="row table">
@@ -30,7 +30,7 @@
 		</div>
 
 		<div class="cell"> 
-			<div class="labelWrapper mobiledevice abs"><%= d.parameters.label.name %></div>
+			<div class="labelWrapper mobiledevice abs"><%= d.parameters.label.name %>, <span class="required">*<%=e('required')%></span></div>
 			<div class="inputWrapper">
 				<%= d.parameters.label.input() %>
 			</div>

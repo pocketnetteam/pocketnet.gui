@@ -23,6 +23,7 @@ var lastcomments = (function(){
 
 					essenseData : {
 						share : posttxid,
+						hr : 'index?',
 
 						reply : {
 							answerid : commentid,
@@ -56,13 +57,20 @@ var lastcomments = (function(){
 
 				}, function(p){
 					p.el.find('.comment').on('click', events.show)
+
+					p.el.find('.image').imagesLoaded({ background: true }, function(image) {
+
+						
+
+					});
+
 				})
 
 			}
 		}
 
 		var load = function(clbk){
-			self.app.platform.sdk.comments.last(function(c){
+			self.app.platform.sdk.comments.last(function(c, error){
 
 				var bytx = group(c, function(c){
 					return c.txid
@@ -72,7 +80,7 @@ var lastcomments = (function(){
 					return id;
 				})
 
-				self.app.platform.sdk.node.shares.getbyid(txids, function(){
+				self.app.platform.sdk.node.shares.getbyid(txids, function(l, error2){
 
 					var au = [];
 
@@ -87,9 +95,11 @@ var lastcomments = (function(){
 
 					au = _.uniq(au)
 
-					self.sdk.users.get(au, function(){
+					self.sdk.users.get(au, function(l, error3){
+
 						if (clbk)
-							clbk(bytx)
+							clbk(bytx, error || error2 || error3)
+
 					}, true)
 
 					
@@ -110,16 +120,32 @@ var lastcomments = (function(){
 
 		var initEvents = function(){
 			
-			loadinterval = setInterval(function(){
+		
 
-				make()
+			self.app.platform.ws.messages['new block'].clbks['lastcomments'] = function(){
 
-			}, 60000)
+				if(self.app.platform.focus){
+					make()
+				}
+
+			}
 
 		}
 
 		var make = function(){
-			load(function(comments){
+			load(function(comments, error){
+
+				if (error){
+
+					self.iclbks.main = make
+
+					el.c.addClass('hidden')
+
+					return
+				}
+
+				el.c.removeClass('hidden')
+
 				renders.comments(comments)
 			})
 		}
@@ -138,10 +164,7 @@ var lastcomments = (function(){
 			destroy : function(){
 				el = {};
 
-				if(loadinterval){
-					clearInterval(loadinterval);
-					loadinterval = null;
-				}
+				delete self.app.platform.ws.messages['new block'].clbks['lastcomments']
 			},
 			
 			init : function(p){

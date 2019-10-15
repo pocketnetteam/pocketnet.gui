@@ -27,131 +27,393 @@
 		padding : 2 * @rhythm 3 * @rhythm;
 	}
 
-	.ustatecontent{
-		
+	.connectionFailed{
+		padding : 4 * @rhythm 0;
+		color : @color-gray-mlight;
 	}
-	.metrica{
 
-		max-width: 640px;
-		>div{
-			padding : @rhythm / 2;
-			vertical-align: middle;
+	.blockswrapper{
 
-			span{
-				font-size: 0.8em;
+		overflow: hidden;
+
+		.wait{
+			padding-bottom: @rhythm;
+
+			.waitCnt{
+				background: fade(@color-gray-light, 15);
+				color : @color-gray;
+				height: 250px;
+
+				.table{
+					height: 100%;
+					>div{
+						vertical-align: middle;
+						text-align: center;
+						font-size: 1.2em;
+						font-weight: 100;
+					}
+				}
+
+				.label{
+					margin-bottom: 2 * @rhythm;
+				}
+				button{
+					font-weight: 100;
+					padding : 2 * @rhythm 4 * @rhythm;
+					width: 270px;
+				}
 			}
+		}
 
-			.value{
-				&.bad{
-					color : @color-contrast;
-					font-weight: 700;
+		.metricablockwrapper{
+			width: 100%;	
+			float: left;
+			padding-bottom: @rhythm;
+			padding-right: @rhythm;
+		}
+
+		.metricablock{
+			color : @color-gray;
+			cursor : pointer;
+	
+			.blockWrapper{
+				position: relative;
+				width: 100%;
+				padding-bottom: 100%;      
+			}
+	
+			.blockContentWrapper {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				padding : 0.5em;
+				background: fade(@color-gray-light, 15);
+				.transition(0.3s);
+
+
+				&.forchart{
+					background: transparent;
+				}
+			}
+			
+	
+			.blockContent{
+				position: relative;
+				width: 100%;
+				height : 100%;
+			}
+	
+			.vidgetNameWrapper{
+				position : absolute;
+				left : 0.2em;
+				top : 0.2em;
+	
+				span{
+					font-size : 0.8em;
 				}
 			}
 
-			&.label{
-				
+			.vidgetNameWrapperTable{
+				>div{
+					vertical-align: middle;
+					&.cellright{
+						text-align: right;
+					}
+				}
+			}
+
+			.vidgetcaption{
+				font-size: 0.6em;
 				font-weight: 700;
-				width: 120px;
 			}
 
-			.unspentWrapper{
-				text-align: right;
-			}
+			.preloaderGift{
+				display: none;
 
-			.valueWrapper{
-				text-align: right;
-			}
-
-		}
-
-		&.waitActions{
-			display: block;
-
-			>div{
-				display: block;
-
-				&.label{
-					width: 100%;
-					font-weight: 300;
-				}
-				&.metricaContent{
-					display: none;
+				.preloader5 span{
+					vertical-align: bottom;
 				}
 			}
-		}
+	
+			.vidgetIconWrapper{
+				position : absolute;
+				width : 66%;
+				height : 66%;
+				top : 50%;
+				left : 50%;
+				margin-left : -33%;
+				margin-top : -33%;
+	
+				.vidgetIcon{
+					.shadowSmaller();
+					width : 100%;
+					height : 100%;
+					border-radius: 50%;
+					text-align: center;
+					color : fade(@color-gray, 95);
+					font-size: 1.5em;
+					font-weight: 100;
+					.transition(0.3s);
 
-		&.profileInfo{
-			>div{
-				&:nth-last-child(1){
-					padding-right: 0;
+					.table{
+						height: 100%;
+						>div{
+							vertical-align: middle;
+						}
+					}
 
-					button{
-						width: 100%;
+					.small{
+						font-size: 0.75em;
+					}
+
+					.repv{
+						font-size: 1.3em;
+					}
+				}
+			}
+
+			&.bad{
+				.vidgetIconWrapper{
+					.vidgetIcon{
+						color : fade(@color-bad, 95);
+					}
+				}	
+			}
+	
+			.vidgetAboutWrapper{
+				position : absolute;
+				left : 215px;
+				height : 210px;
+				top : 0;
+				color : fade(@color-gray, 95);
+				padding : 1em;
+				width : 2000px;
+				z-index: 10;
+				color : #000;
+				display: none;
+				z-index: 100;
+			}
+	
+			&:hover{
+				.vidgetIconWrapper{		
+					.vidgetIcon{
+						.shadowSmall();
 					}
 				}
 			}
 		}
 
-		&.reputation{
-			margin-top: 2 * @rhythm;
+	}
+
+	.ustatecontent{
+		.metricablockwrapper{
+			width: 25%;
+		}		
+	}
+
+	.ustatecontentrep{
+
+		.reputation{
+			overflow: hidden;
 
 			>div{
-				padding-top: 1.5 * @rhythm;
-				padding-bottom: 1.5 * @rhythm;
-				.valueWrapper{
+				float: left;
+				width : 25%;
 
-					font-weight: 700;
-					color : @color-main;
+				&.connectionFailed{
+					width : 100%;
+				}
 
-					span{
-						font-size: 1em;
+				&.reputationblock{
+					.metricablock{
+			
+						.blockContentWrapper {
+							background: @color-black2;
+							color : #fff;
+						}
+
+						.vidgetIconWrapper{
+				
+							.vidgetIcon{
+								color : #fff;
+							}
+						}
+			
+				
+						.vidgetAboutWrapper{
+							color : #fff;
+						}
+				
 					}
+				}
+
+				
+
+				&.levelsblock{
+					width: 75%;
 				}
 			}
 		}
 
-		.scalePoints{
-			>div{
-				vertical-align: middle;
+		
+		.levelsblock{
+			.metricablockwrapper{
+				float: right;
+				width: 33.33333%;	
+			}
+		}
 
-				&.unspentWrapper{
-					width: 60px;
+		.level{
+
+				.chart{
+					position: absolute;
+					left : @rhythm;
+					right : @rhythm;
+					bottom : 2 * @rhythm;
 				}
+			
 
-				&.scaleWrapper{
-					.scaleBack{
-						border-radius: 2px;
-						height: 2px;
-						background: @color-contrast;
-						position: relative;
-						overflow: hidden; 
+			.repchart{
+				.repchartTable{
+					height: auto;
+					>div{
+						vertical-align: middle;
 
-						.unspentScale{
-							position: absolute;
-							left: 0;
-							bottom: 0;
-							top: 0;
-							background: @color-main;
+						&.pointCell{
+							width : 10px;
+
+							
+						}
+
+						&.lineCell{
 
 						}
 					}
 				}
+
+				.point{
+					width: 10px;
+					height: 10px;
+					border-radius: 50%;
+					border : 1px solid @color-gray-light;
+				}
+
+				.lineBg{
+					position: relative;
+					background: @color-gray-light;
+					height: 1px;
+
+					.line{
+						background: @color-good;
+						position: absolute;
+						left : 0;
+						top : 0;
+						bottom: 0;
+						width: 0%;
+					}
+				}
+			}
+
+			&[state="next"]{
+				opacity: 0.6;
+			}
+
+			&[state="current"]{
+				.repchart{
+					.point{
+						&.start{
+							border-color : @color-good;
+						}
+					}
+				}
+			}
+
+			&[state="completed"]{
+
+				.repchart{
+					.point{
+						border-color : @color-main;
+					}
+
+					.lineBg{
+	
+						.line{
+							width: 100%;
+							background:  @color-main;
+						}
+					}
+				}
+				
+				.metricablock{
+			
+					.blockContentWrapper {
+						background: @color-black2;
+						color: @color-main;
+					}
+
+					.vidgetIconWrapper{			
+						.vidgetIcon{
+							color:@color-main;
+						}
+					}
+
+					.reputationCount{
+						color: #FFAE00;
+					}
+		
+			
+					.vidgetAboutWrapper{
+						color:@color-main;
+					}
+			
+				}
+
+			}
+
+			.valued{
+				display: none;
+			}
+
+			
+
+			&.waitgift{
+				.metricablock{
+
+					.reputationCount{
+						display: none;
+					}
+
+					.valued{
+						display: block;
+					}
+			
+					
+		
+					.preloaderGift{
+						display: block;
+					}
+
+					.valuewrappe{
+						display: none;
+					}
+			
+
+					.vidgetIconWrapper{			
+						.vidgetIcon{
+							.value{
+								opacity: 0.5;
+							}
+						}
+					}
+
+					
+			
+				}
 			}
 		}
-	}
 
-	.profile{
-
-		width: 350px;
-		padding: @rhythm;
-
-		.table{
-			
-		}
-	}
-
-	.totalerror{
-		color : @color-contrast;
 	}
 }
 
@@ -215,6 +477,35 @@
 @media only screen and (max-width: 640px) {
 	#ustate{
 		padding : 2 * @rhythm;
+
+		.ustatecontent{
+			.metricablockwrapper{
+				width: 50%;
+			}		
+		}
+	
+		.ustatecontentrep{
+	
+			.reputation{
+
+				width : 100%;
+	
+				>div{
+					width : 100%;
+
+					&.levelsblock{
+						width: 100%;
+					}
+				}
+			}
+
+			.levelsblock{
+				.metricablockwrapper{
+					float: right;
+					width: 100%;	
+				}
+			}
+		}
 	
 		.caption{
 			font-size: 1.4em;

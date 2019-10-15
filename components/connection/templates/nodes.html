@@ -1,0 +1,69 @@
+<% _.each(nodes, function(node){
+    
+    var active = '';
+
+    
+    %>
+    <div class="nodewrapepr" >
+        <div class="work">
+            <div class="node table <%- active %>" host="<%- node.host %>" locally="<%- node.locally %>">
+
+
+                <div class="use connectnode"><i class="far fa-circle"></i></div>
+                <div class="hostport connectnode"><%- node.host%>:<%- node.port %> </div>
+                <div class="ws"><%- node.ws %></div>
+                <div class="name"><%- node.nodename.replace(/\+/g, ' ') %></div>
+                <!--<div class="addedBy"><%- app.platform.api.name(node.addedby) || node.addedby %></div>-->
+                <div class="status">
+                    
+                    <% if(node.statistic && node.statistic.time && node.statistic.percent) {%>
+
+                        <%- node.statistic.time.toFixed(0) %>ms, <%- node.statistic.percent.toFixed(0) %> %
+
+                    <% } else { %> 
+                        
+                        &mdash;
+
+                    <% } %>
+                    
+                </div>
+
+                <div class="panel">
+
+                    <% if(node.stable) {%>
+
+                        <div class="item stable good">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        
+                    <% } %>
+                    
+                    <% if(node.addedby == app.user.address.value) {%>
+
+                        <div class="item edit">
+                            <i class="fas fa-cog"></i>
+                        </div>
+
+                    <% } %>
+
+                    <% if(node.locally) {%>
+
+                        <div class="item home">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        
+                    <% } %>
+
+                    <% if(node.rpcuser && node.rpcpwd) {%>
+                        
+                        <div class="item rpcauth">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        
+                    <% } %>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<% }) %>

@@ -844,6 +844,7 @@ var test = (function(){
 				renders.unspent(unspent)
 			})
 
+
 			self.app.platform.ws.messages.transaction.clbks.utemp = function(data){
 				if(data.temp){
 					if(data.temp.type == 'userInfo'){

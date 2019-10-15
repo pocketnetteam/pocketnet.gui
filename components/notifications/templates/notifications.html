@@ -1,35 +1,77 @@
-<% 
-
-var limit = 5;
-var count = 0;
-
-_.each(notifications, function(notification){
-
-
-	var seen = '';
-	var text = ''
-
-	if(notification.seen) seen = 'seen'
+<% _.each(grou, function(group, index){ 
 	
-	var tpl = ws.messages[notification.msg].fastMessage(notification)
+	
+	
+	%>
 
-	if(!tpl) return
- %>
+	<% if(!rnow) {%>
+	
+	<div class="group" index="<%- index %>">
 
-	<div class="notification <%-seen%>" notification="<%-notification.txid%>">
-		<div class="data">
+		<div class="groupCaption">	
+			<div class="_wrp">
+				<div class="caption">
+					<div class="gcpt">						
+						<%= e(index) %>
+					</div>
+				</div>
+			</div>
+		</div>
 
-			<%
+	
 
-				var tpl = ws.messages[notification.msg].fastMessage(notification)
+		<div class="groupContent">
 
+
+	<% } %>
+	
+		
+
+
+			<% _.each(group, function(notification){
+
+
+				var seen = '';
+				var text = ''
+
+				if(notification.seen) seen = 'seen'
+
+				var m = null;
+
+				if (notification.mesType) m = ws.messages[notification.mesType]
+				if (notification.msg && !m) m = ws.messages[notification.msg]
+
+				console.log('notification', notification, m, m.fastMessage(notification))
+
+				if(!m) return
+				
+				var tpl = m.fastMessage(notification)
+
+				if(!tpl) return
 			%>
 
-			<%= tpl %>
+				<div class="notification <%-seen%>" notification="<%-notification.txid%>">
+					<div class="_wrp">
+						<div class="data">
+
+							<%= tpl %>
+
+						</div>
+					</div>
+				
+				</div>
+
+				
+				
+			<% }) %>
+
+	<% if(!rnow) {%>
 
 		</div>
+
 	</div>
 
-	
-	
+	<% } %>
+
+
 <% }) %>

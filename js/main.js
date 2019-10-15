@@ -12,27 +12,51 @@ if(!_Node)
 		apiproxy : 'https://pocketnet.app:8889',
 		firebase : 'https://pocketnet.app:8889',*/
 
-		/*ws : 'wss://localhost:8088',
-		apiproxy : 'https://localhost:8888',
+		/*ws : 'wss://192.168.0.11:8088',
+		apiproxy : 'https://192.168.0.11:8888',
 		firebase : 'https://pocketnet.app:8888',*/
+
+		/*ws : 'wss://localhost:8088',
+		apimproxy : 'https://localhost:8888',
+		firebase : 'https://192.168.0.11:8888',*/
 
 		/*rtcws : 'wss://localhost:9090',
 		rtchttp : 'https://localhost:9091'*/
 
-		listofnodes : [
+		listofproxies : [
+			{
+				host : 'pocketnet.app',
+				port : 8888,
+				ws : 8088,
 
+				id : 'pocketnet.app:8888:8088:'
+			},
+
+			/*{
+				host : 'localhost',
+				port : 8888,
+				ws : 8088
+			},*/
+			
+			/*{
+				host : '192.168.0.11',
+				port : 8888,
+				ws : 8088
+			}*/
+		],
+
+		/*listofnodes : [
 	
 			{
 				full : '216.108.237.11:38081',
 				host : '216.108.237.11',
 				port : 38081,
 				ws : 8087,
-				path : '',
-	
+				path : '',	
 				name : 'spb1'
 			},
 	
-		]
+		]*/
 		
 	});
 

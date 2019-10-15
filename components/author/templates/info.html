@@ -15,8 +15,8 @@
 
 	<div class="item reputation">
 		<div class="itemtable table">
-			<div class="icon"><i class="far fa-star-half"></i></div>
-			<div class="label">Reputation: <b><%- deep(author, 'state.reputation') %></b></div>
+			<div class="icon"><i class="far fa-star"></i></div>
+			<div class="label">Reputation: <b><%- (deep(author, 'state.reputation') || 0).toFixed(1) %></b></div>
 		</div>
 	</div>
 

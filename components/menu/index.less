@@ -17,6 +17,58 @@
 		color : @color-black2;
 	}
 
+	.titleBar{
+		position: fixed;
+		right: 0;
+		left : 0;
+		width: 100%;
+		height: 20px;
+		z-index: 21;
+		overflow: hidden;
+		
+
+		.titleBarButtons{
+			overflow: hidden;
+			width: 140px;
+			float: right;
+			>div{
+				line-height: 20px;
+				width: 45px;
+				float: right;
+				cursor : pointer;
+				text-align: center;
+				font-size: 0.8em;
+				color : @color-gray-mlight;
+				.transition(0.3s);
+
+				&:hover{
+					background: fade(@color-gray-mlight, 20);
+				}
+			}
+		}
+
+		.titleBarDrag{
+			margin-right: 140px;
+			height: 20px;;
+		}
+
+		.maximizeApp{
+			display: none;
+		}
+	}
+
+	&.fullscreen{
+		.titleBar{
+			.maximizeApp{
+				display: block;
+			}
+
+			.restoreApp{
+				display: none;
+			}
+		}	
+	}
+
 	.searchFastResultWrapper{
 		border : 0;
 		padding : 0;
@@ -451,12 +503,11 @@
 								border : 1px solid transparent;
 								padding : 0 2 * @rhythm;
 								.transition(0.3s);
-								font-weight: 500;
+								font-weight: 400;
 								
 
 								&.active{
 									color : @color-main;
-									border-bottom : 1px solid @color-main;
 								}
 
 							}
@@ -542,6 +593,12 @@
 							cursor: pointer!important;
 						}
 					}
+				}
+
+				&.state{
+					color : @color-bad;
+					cursor : pointer;
+					.transition(0.3s);
 				}
 
 				&.ustate{

@@ -144,6 +144,24 @@ var lenta = (function(){
 			loadmore : function(loadclbk){
 				load.shares(function(shares, error){
 
+					if (error){
+						making = false;
+						
+						if (self.app.errors.connection()){
+							el.c.addClass('networkError')
+						}
+
+						if (self.app.errors.connectionRs()){
+							self.iclbks.lenta = actions.loadmore
+						}
+
+						
+	
+						return;
+					}
+	
+					el.c.removeClass('networkError')
+
 					if(!shares){
 						
 					}
@@ -207,7 +225,6 @@ var lenta = (function(){
 
 				if (wn == b || iniH < curH) return
 
-				console.log(curH, iniH, key, wn, b)
 
 				w.scrollTop(b);	
 				
@@ -394,7 +411,10 @@ var lenta = (function(){
 						inWnd : true,
 						history : true,
 	
-						clbk : function(){					
+						clbk : function(){		
+							
+							if (essenseData.renderclbk)
+								essenseData.renderclbk()
 	
 							if (clbk)
 								clbk();
@@ -408,7 +428,12 @@ var lenta = (function(){
 								renders.stars(share)
 							},
 	
-							next : actions.next
+							next : actions.next,
+
+							close : function(){
+								if (essenseData.renderclbk)
+									essenseData.renderclbk()
+							}
 						}
 					})
 
@@ -1005,9 +1030,11 @@ var lenta = (function(){
 				
 			},	
 			loadmorescroll : function(){
+
+
 				if (
 
-					($(window).scrollTop() + $(window).height() > $(document).height() - 400) 
+					($(window).scrollTop() + $(window).height() > el.c.height() - 400) 
 
 					&& !loading && !ended && recommended != 'recommended') {
 
@@ -1398,6 +1425,8 @@ var lenta = (function(){
 
 					self.fastTemplate('commentspreview', function(rendered){
 
+						if(!el.c) return
+
 						self.nav.api.load({
 							open : true,
 							id : 'comments',
@@ -1434,7 +1463,12 @@ var lenta = (function(){
 								preview : preview,
 	
 								lastComment : share.lastComment,
-								count : share.comments
+								count : share.comments,
+
+								renderClbk : function(){
+									if (essenseData.renderclbk)
+										essenseData.renderclbk()
+								}
 							},
 	
 							clbk : function(e, p){
@@ -1534,9 +1568,11 @@ var lenta = (function(){
 			share : function(share, clbk, all){
 
 				var _el = el.shares.find("#" + share.txid);
+
+				shareheights[share.txid] = 0;
 				
-				
-				shareheights[share.txid] = _el[0].offsetHeight
+				if (_el[0])
+					shareheights[share.txid] = _el[0].offsetHeight
 
 				var added = _el.find('.added')
 
@@ -2136,7 +2172,7 @@ var lenta = (function(){
 
 				var author = essenseData.author;
 
-				self.app.platform.sdk.node.shares.users(shares, function(){
+				self.app.platform.sdk.node.shares.users(shares, function(l, error2){
 
 					countshares = countshares + shares.length
 
@@ -2145,36 +2181,39 @@ var lenta = (function(){
 					if (!el.c)
 						return
 
-					if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){							
+					if(!error && !error2){
 
-						if(!beginmaterial && !countshares){
-							el.c.addClass("sharesZero")
-						}
-						else
-						{
+						if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){							
 
-							if ( (shares.length < pr.count || recommended == 'recommended') && (recommended ||author || essenseData.search) ){
-
-
-								setTimeout(function(){
-									if (el.c)
-										el.c.addClass("sharesEnded")
-								}, 1000)
-								
+							if(!beginmaterial && !countshares){
+								el.c.addClass("sharesZero")
 							}
-
+							else
+							{
+	
+								if ( (shares.length < pr.count || recommended == 'recommended') && (recommended ||author || essenseData.search) ){
+	
+									setTimeout(function(){
+										if (el.c)
+											el.c.addClass("sharesEnded")
+									}, 1000)
+									
+								}
+	
+							}
+	
+							////// SHIT
+							if (shares.length < pr.count && (recommended || author  || essenseData.search))
+	
+								ended = true
 						}
 
-						////// SHIT
-						if (shares.length < pr.count && (recommended || author  || essenseData.search))
-
-							ended = true
 					}
 
 					el.loader.fadeOut()
 
 					if (clbk)
-						clbk(shares, error)
+						clbk(shares, error || error2)
 
 				})	
 			},
@@ -2251,6 +2290,7 @@ var lenta = (function(){
 								shares = _.filter(shares, essenseData.filter)
 
 							}
+
 
 							load.sstuff(shares, error, pr, clbk)				
 
@@ -2477,6 +2517,7 @@ var lenta = (function(){
 
 				self.app.platform.ws.messages.transaction.clbks.temp = function(data){
 
+
 					if(data.temp){
 
 						var s = _.find(sharesInview, function(sh){
@@ -2561,17 +2602,6 @@ var lenta = (function(){
 					actions.loadprev()
 
 					_scrollTop(0)
-
-					/*el.c.removeClass('showprev')
-					el.c.removeClass('loading');
-					el.c.removeClass("sharesEnded")
-					el.c.removeClass('sharesZero')
-
-					actions.clear()
-
-					initedcommentes = {}
-
-					make();*/
 
 					
 				}
@@ -2672,9 +2702,25 @@ var lenta = (function(){
 
 			load.shares(function(shares, error){
 
+
+				if (error){
+					making = false;
+					
+					if (self.app.errors.connection()){
+						el.c.addClass('networkError')
+					}
+
+					self.iclbks.lenta = function(){
+						make(null, _p)
+					}
+
+					return;
+				}
+
+				el.c.removeClass('networkError')
+
 				if(!shares){
 					making = false;
-					//sitemessage(error)
 				}
 				else
 				{
@@ -2893,6 +2939,8 @@ var lenta = (function(){
 				})
 
 				initedcommentes = {}
+
+				delete self.iclbks.lenta
 				
 				delete self.app.platform.ws.messages.comment.clbks.lenta
 				delete self.app.platform.sdk.node.shares.clbks.added.lenta
@@ -2928,7 +2976,9 @@ var lenta = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.shares = el.c.find('.shares');
-				el.loader = el.c.find('.loader')
+				el.loader = el.c.find('.loader');
+
+				el.lentacnt = el.c.find('.lentacell .cnt')
 
 
 				initEvents();

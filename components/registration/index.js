@@ -163,6 +163,12 @@ var registration = (function(){
 									}
 									else
 									{
+
+
+										essenseData.nav || (essenseData.nav = {})
+										essenseData.nav.history = true
+										essenseData.nav.reload = false
+
 										self.app.reload({
 											href : essenseData.successHref || 'filluser',
 											nav : essenseData.nav
@@ -746,6 +752,8 @@ var registration = (function(){
 					};
 
 					clbk(data);
+
+					
 				}
 
 			},
@@ -780,6 +788,8 @@ var registration = (function(){
 
 					
 				p.clbk(null, p);
+
+				
 			},
 			wnd : {
 				class : 'withoutButtons allscreen'

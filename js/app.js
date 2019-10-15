@@ -36,9 +36,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 	Mark = require('./js/vendor/jquery.mark.js');
 
 	emojionearea = require('./js/vendor/emojionearea.js')
-
 	filterXss = require('./js/vendor/xss.min.js')
-	
 
 	const electronSpellchecker = require('electron-spellchecker');
 
@@ -80,6 +78,7 @@ Application = function(p)
 	var self = this;
 
 	self.options = {
+		
 
 		nav : {
 			navPrefix : '/pocketnet/',
@@ -91,7 +90,9 @@ Application = function(p)
 
 		//////////////
 
-		apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
+		//apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
+		apimproxy : p.apimproxy || 'https://pocketnet.app:8888',
+		
 		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx',
 
 		//////////////
@@ -104,7 +105,7 @@ Application = function(p)
 		imageStorage : 'https://api.imgur.com/3/images/',
 
 		//////////////
-		ws : p.ws || "wss://pocketnet.app:8088",
+		//ws : p.ws || "wss://pocketnet.app:8088",
 		rtc : p.rtc || 'https://pocketnet.app:9001/',
 
 		//////////////
@@ -116,6 +117,7 @@ Application = function(p)
 		rtchttp : 'https://localhost:9091',*/
 		
 		listofnodes : p.listofnodes || null,
+		listofproxies : p.listofproxies || null,
 		fingerPrint : null,
 
 		unathorizated : function(ignoreDialog){
@@ -146,9 +148,191 @@ Application = function(p)
 			})
 
 			
+		},
+
+		successHandler : function(p){
+
+			var ca = {}
+			var change = false;
+
+			if (p.rpc){
+				ca.proxy = true;
+				ca.node = true;
+				ca.offline = true;
+			}
+
+			if (p.api){
+				ca.proxy = true;
+				ca.offline = true;
+			}
+
+			if (p.apim){
+				ca.proxymain = true;
+				ca.offline = true;
+			}
+
+			if (p.online){
+				ca.offline = true
+			}
+
+			_.each(ca, function(t, i){
+
+				if (self.errors.state[i]){
+					delete self.errors.state[i]
+
+					change = true
+				}
+
+			})
+
+			if(change){
+				_.each(self.errors.clbks, function(c){
+					c(self.errors.state)
+				})
+			}
+
+		},
+
+		errorHandler : function(error, p){
+
+			if(!error) {
+
+				if (p.rpc || p.api)
+
+					error = 'proxy'
+
+				if (p.apim)
+								
+					error = 'proxymain'
+
+			}
+
+			else
+			{
+				if(error == 'fail') error = ''
+				//error = 'node'
+			}
+
+
+			if((error == 'proxy' || error == 'proxymain') && self.platform && !self.platform.online){
+
+				error = 'offline'
+
+			}
+
+			if(error && !self.errors.state[error]){
+
+				self.errors.state[error] = true;
+
+				_.each(self.errors.clbks, function(c){
+					c(self.errors.state)
+				})
+
+			}
+
+			console.log("ERROR", error)
+
+			return error;
+	
 		}
 		
 	};
+
+	self.errors = {
+		clear : function(){
+			this.state = {};
+
+			self.platform.loadingWithErrors = false
+
+			self.errors.autocheck(false)
+
+		},
+		state : {},
+		clbks : {
+
+			_modules : function(change){
+
+				if(!self.errors.connection() && !self.platform.loadingWithErrors){
+
+					_.each(self.modules, function(m){
+
+						_.each(m.module.iclbks, function(c){
+	
+							c(change)
+	
+						})
+						
+					})
+
+				}
+				
+			},
+
+			check : function(){
+				if (self.errors.connection()){
+					self.errors.autocheck(true)
+				}
+
+				else
+				{
+					self.errors.autocheck(false)
+				}
+			}
+
+		},
+
+		_autocheck : null,
+
+		autocheck : function(enable){
+			if (enable){
+
+				if(!self.platform || !this.connection()) return
+
+
+				self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
+
+					if (self.platform.focus)
+						self.errors.check()
+
+				}, 5000))
+
+			}
+			else{
+
+				if(self.errors._autocheck){
+
+					clearInterval(self.errors._autocheck)
+					self.errors._autocheck = null;
+
+				}
+
+			}
+		},
+
+		check : function(clbk){
+			if (self.errors.state.node || self.errors.state.proxy)
+
+				self.platform.sdk.node.get.time(function(t, error){
+						
+				})
+
+			if (self.errors.state.proxymain){
+
+				self.platform.sdk.proxy.info(function(t, error){
+						
+				}, true)
+
+			}
+		},
+
+		connection : function(){
+			return this.state.node || this.state.proxy || this.state.offline
+		},
+
+		connectionRs : function(){
+			return (this.state.node || this.state.proxy || this.state.offline) && !self.platform.loadingWithErrors
+		}
+	}
 
 	self.el = {
 		content : 		$('#content'),
@@ -240,13 +424,13 @@ Application = function(p)
 
 		self.options.platform = self.platform
 
-		self.platform.sdk.users.addressByName(self.ref, function(r){
+		/*self.platform.sdk.users.addressByName(self.ref, function(r){
 			if(r){
 				self.ref = r;
 				localStorage['ref'] = self.ref
 			}
 
-		})
+		})*/
 
 		self.nav.dynamic = function(p, clbk){
 
@@ -411,8 +595,6 @@ Application = function(p)
 				var values = components.map(function (component) { return component.value })
     			var murmur = Fingerprint2.x64hash128(values.join(''), 31)
 
-				//console.log(components, r)
-
 				self.options.fingerPrint = hexEncode('fakefingerprint');
 				
 				fprintClbk()
@@ -436,6 +618,8 @@ Application = function(p)
 
 			p.nav || (p.nav = {})
 
+
+		if(typeof p.nav.reload == 'undefined')
 			p.nav.reload = true;
 
 		if(p.href) p.nav.href = p.href;
@@ -447,14 +631,10 @@ Application = function(p)
 
 			p.nav.clbk = p.clbk;
 
-			//self.platform.clear()
-			//self.platform.prepareUser(function(){
+			if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
-				if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
+			self.nav.init(p.nav);
 
-				self.nav.init(p.nav);
-
-			//}, s)
 			
 		})
 	}
@@ -490,14 +670,10 @@ Application = function(p)
 
 		self.user.isState(function(state){	
 
-			/*self.platform.clear()
-			self.platform.prepareUser(function(){*/
-
-				self.reloadModules(function(){
-					if (clbk)
-						clbk();
-				})
-			//}, state)
+			self.reloadModules(function(){
+				if (clbk)
+					clbk();
+			})
 		})
 
 	}
@@ -562,23 +738,11 @@ Application = function(p)
 	           console.log(data)
 	        });
 
-			/*$.ajax({
-				type : "GET",
-				url : 'https://ip-api.com/json/',
-				success : function(data){
-					console.log('ip', data)
-				}
-			})*/
-
 		}
 
 		if (navigator.geolocation) {
 
 			navigator.geolocation.getCurrentPosition(function(position){
-
-				console.log('position', position)
-
-				//примагнититься к близкому большому городу
 
 			}, function(error){
 
@@ -655,8 +819,6 @@ Application = function(p)
 				}
 			}
 
-			
-
 		}
 	}
 
@@ -694,6 +856,21 @@ Application = function(p)
 
 	self.name = self.options.name;
 
+	self.reltime = function(time){
+		var tt = convertDateRel(time)
+
+		if (tt[0]) {
+			tt[0] = self.localization.e(tt[0], tt[2])
+			tt[2] = ''
+		}
+
+		tt = _.filter(tt, function(t){
+			return t;
+		})
+
+		return tt.join(' ')
+	}
+
 
 	if(!_Node){
 
@@ -711,7 +888,7 @@ Application = function(p)
 
 	}
 
-
+	
 
 
 	return self;

@@ -152,6 +152,31 @@
 		padding : 2 * @rhythm;
 		padding-bottom : 0;
 		overflow : hidden;
+		position: relative;
+
+		.tttlforerror{
+			position: absolute;
+			font-size: 0.8em;
+			font-weight: 100;
+			left : 0;
+			right: 0;
+			top : 0;
+			bottom : 0;
+			background: fade(#F1F1F1, 95);
+			display: none;
+
+			&.active{
+				display: block;
+			}
+
+			.table{
+				>div{
+					vertical-align: middle;
+					text-align: center;
+					color : @color-gray-mlight;
+				}
+			}
+		}
 
 		.totalItem{
 			padding :0 2 * @rhythm;

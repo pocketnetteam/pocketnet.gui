@@ -907,6 +907,7 @@ var post = (function(){
 		return {
 			primary : primary,
 
+
 			getdata : function(clbk, p ){
 
 				var id = deep(p, 'settings.essenseData.share');
@@ -947,6 +948,8 @@ var post = (function(){
 
 			destroy : function(){
 				el = {};
+
+				if (ed.close) ed.close()
 
 				if (inicomments)
 					inicomments.destroy()

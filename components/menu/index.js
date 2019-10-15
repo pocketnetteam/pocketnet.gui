@@ -226,10 +226,12 @@ var menu = (function(){
 					}
 					
 
+
 					self.app.platform.sdk.notifications.init(function(){
 						var l = unseen().length;
 
 						actions.ah(el, l)
+
 
 						if (cordovabadge)
 							cordovabadge.set(l)
@@ -587,7 +589,35 @@ var menu = (function(){
 				}
 
 			},
-			ustate : {
+
+			state : {
+				init : function(el){
+					
+					var action = function(){
+						if(!_.isEmpty(self.app.errors.state)){
+							el.removeClass('hidden')
+						}
+
+						else{
+							el.addClass('hidden')	
+						}
+					}
+
+					action()
+
+					self.app.errors.clbks.menu = function(){
+						action()
+					}
+
+					el.tooltipster({
+						theme: 'tooltipster-light',
+						maxWidth : 300,
+						zIndex : 200,
+					});
+				}
+			},
+
+			/*ustate : {
 				click : function(){
 
 					if(isMobile())
@@ -625,8 +655,7 @@ var menu = (function(){
 								}
 
 								self.app.platform.sdk.ustate.me(function(_mestate){
-									if(_mestate){
-										el.removeClass('disconected')
+									if(_mestate){										
 
 										if (self.app.user.validate() && r){
 											el.addClass('wait')
@@ -638,8 +667,7 @@ var menu = (function(){
 									}
 									else
 									{
-										el.addClass('disconected')
-
+										
 
 									}
 								})
@@ -653,9 +681,28 @@ var menu = (function(){
 					self.app.platform.sdk.ustate.clbks.menu = act;
 					self.app.platform.ws.messages.transaction.clbks.menu = act;
 
+
+					if(self.app.platform.online){
+						el.removeClass('disconected')
+					}
+					else{
+						el.addClass('disconected')
+					}
+
+					self.app.platform.clbks.online.menu = function(online){
+
+						console.log('onoi', online)
+
+						if(online){
+							el.removeClass('disconected')
+						}
+						else{
+							el.addClass('disconected')
+						}
+					}
 					
 				}
-			},
+			},*/
 			wallets : {
 				click : function(){
 
@@ -716,9 +763,7 @@ var menu = (function(){
 						
 					}
 
-					var setValue = function(){
-
-						
+					var setValue = function(){						
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
@@ -727,7 +772,6 @@ var menu = (function(){
 							amount = amount + t
 
 							var add = amount - current;
-
 
 							if (first) {
 								add = 0;
@@ -867,6 +911,47 @@ var menu = (function(){
 			ParametersLive([loc], el.c);
 
 			autoUpdate = setInterval(actions.autoUpdate, 100);
+
+
+
+			////
+
+			if(typeof _Electron != 'undefined'){
+				var electron = require('electron');
+				var remote = electron.remote; 
+
+				var full = function(){
+					var window = remote.getCurrentWindow();
+
+					if (window.isFullScreen()){
+						el.c.addClass('fullscreen')
+					}
+					else{
+						el.c.removeClass('fullscreen')
+					}
+				}
+				 
+				el.c.find('.closeApp').on('click', function(){
+					var window = remote.getCurrentWindow();
+					window.close(); 
+				})
+
+				el.c.find('.miniizeApp').on('click', function(){
+					var window = remote.getCurrentWindow();
+					window.minimize(); 
+				})
+
+				el.c.find('.toggleMinMax').on('click', function(){
+					var window = remote.getCurrentWindow();
+					window.setFullScreen(!window.isFullScreen());
+
+					full()
+				})
+
+				full()
+			}
+
+			
 		}
 
 		var renders = {
@@ -963,6 +1048,7 @@ var menu = (function(){
 				delete self.app.platform.sdk.notifications.clbks.added.menu
 
 				delete self.app.platform.sdk.messenger.clbks.menu
+				delete self.app.errors.clbks.menu
 
 				if(autoUpdate){
 					clearInterval(autoUpdate);

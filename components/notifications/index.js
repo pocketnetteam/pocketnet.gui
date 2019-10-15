@@ -85,6 +85,7 @@ var notifications = (function(){
 		}
 
 		var renders = {
+			
 			notifications : function(p, clbk){
 
 				//console.log('self.app.platform.sdk.notifications.storage.notifications', self.app.platform.sdk.notifications.storage.notifications)
@@ -92,24 +93,26 @@ var notifications = (function(){
 				if(!p) p = {};
 
 				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;
-
-				console.log("SADDSAADSDSA1111", _notifications.length)
+				var rnow = false;
 				
+
+				console.log('_notifications', _notifications)
+
 				p.el = el.new;
 
 				if(!p.el) return
 
 				var time = self.app.platform.currentTime()
-				var timedif = 86400
+				var timedif = 286400
 
 				
 
 				if(p.seenFilter){
-					_notifications = _.filter(_notifications, function(n){
+					/*_notifications = _.filter(_notifications, function(n){
 						if(!n.seen || time - n.seen < timedif){
 							return true
 						}
-					})
+					})*/
 					
 				}
 
@@ -120,7 +123,35 @@ var notifications = (function(){
 					return Number(-n.nblock)
 				})
 
-				console.log("SADDSAADSDSA", _notifications.length)
+				var currentDate = new Date();
+
+				var grou = group(_notifications, function(n){
+
+					if (p.now) return 'ntnow';
+
+					var d = new Date(n.time * 1000);
+
+					if (d.addMinutes(60) > currentDate) return 'ntlasthour';
+
+					if (dateToStrSmall(d) == dateToStrSmall(currentDate)) return 'nttoday';
+
+					if (d.getFullYear().toString() + (d.getMonth() + 1).toString() == currentDate.getFullYear().toString() + (currentDate.getMonth() + 1).toString()) return 'ntmounth';
+
+					return 'ntearlier';
+
+				})
+
+				if(p.now){
+
+					var ntnow = p.el.find('.group[index="ntnow"]')
+
+					if (ntnow.length) p.el = ntnow.find('.groupContent')
+
+					rnow = true
+
+				}
+
+				console.log('grou', grou)
 
 				self.shell({
 					name :  'notifications',
@@ -128,34 +159,21 @@ var notifications = (function(){
 					data : {
 						notifications : _notifications,
 						ws : self.app.platform.ws,
-							},
+						now : p.now,
+						grou : grou,
+						rnow : rnow
+					},
 					inner : prepend
 
 				}, function(_p){
 
-
-
-					var f = 'fadeOut'
-					var s = '.empty'
+					renders.loadingAndEmpty()
 
 					if(watched){
 						el.c.find('.more').html('('+ watched +')')
-
 					}
 
-					if(self.app.platform.sdk.notifications.storage.notifications.length){
-
-						s = '.emptyNew'
-
-						if(p.el.find('.notification').length == 0){
-							f = 'fadeIn'
-						}
-
-					}
-					else
-					{
-						f = 'fadeIn'
-					}
+					
 
 					_.each(_notifications, function(n){
 						var e = self.app.platform.ws.messages[n.msg].fastMessageEvents
@@ -168,13 +186,47 @@ var notifications = (function(){
 						}
 					})
 
-					if (el.c)
-						el.c.find(s)[f](1);
+					
+
+					self.app.nav.api.links(null, el.c, function(){
+						self.closeContainer()
+					})
 
 
 					actions.seen()
 					
 				})
+			},
+
+			loadingAndEmpty : function(){
+
+				if(self.app.errors.connection()){
+
+					el.loader.addClass('hidden')
+					el.empty.addClass('hidden')
+					
+
+					el.error.removeClass('hidden')
+
+					return
+				}
+
+				el.error.addClass('hidden')
+
+
+				if (self.app.platform.sdk.notifications.loading){
+					el.loader.removeClass('hidden')
+				}
+				else{
+					el.loader.addClass('hidden')
+
+					if(el.c.find('.notification').length){
+						el.empty.removeClass('hidden')
+					}
+					else{
+						el.loader.addClass('hidden')
+					}
+				}
 			}
 		}
 
@@ -192,21 +244,28 @@ var notifications = (function(){
 
 			inel.addEventListener('scroll', events.seen);
 
+
+			
+			el.c.find('.closecontainer').on('click', function(){
+				self.closeContainer()
+			})
+
+			self.iclbks.lenta = function(){
+				renders.loadingAndEmpty()
+			}
 		}
 
 		var make = function(){
-
-			console.log(p, "PPPP")
-
 			renders.notifications({
 				seenFilter : p.inTooltip
 			});
 		}
 
 		var addWSClbk = function(){
-			self.app.platform.sdk.notifications.clbks.added['notifications' + t] = function(notifications){
+			self.app.platform.sdk.notifications.clbks.added['notifications' + t] = function(notifications, now){
 				renders.notifications({
-					notifications : notifications
+					notifications : notifications,
+					now : now
 				})
 			}
 		}
@@ -220,14 +279,9 @@ var notifications = (function(){
 
 			getdata : function(clbk){
 
-				
-
 				var data = {};
 
 				clbk(data);
-
-			
-				
 
 			},
 
@@ -244,6 +298,8 @@ var notifications = (function(){
 				inel.removeEventListener('scroll', events.seen);
 
 				removeWSClbk();
+
+				delete self.iclbks.lenta
 			},
 			
 			init : function(p){
@@ -254,6 +310,9 @@ var notifications = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				
 				el.new = el.c.find('.newWrapper')
+				el.loader = el.c.find('.loader')
+				el.empty = el.c.find('.empty')
+				el.error = el.c.find('.error')
 
 				if(p.insert == 'tooltip'){
 					inel = el.c.find('.nabsContentWrapper')[0]
@@ -268,6 +327,7 @@ var notifications = (function(){
 
 				jinel = $(inel)
 
+				renders.loadingAndEmpty()
 
 				initEvents();
 
@@ -284,12 +344,21 @@ var notifications = (function(){
 					theme : "lighttooltip notificationTolltip",
 					position : 'left',
 					zIndex : 50,
+					distance : -47,
 					functionPosition: function(instance, helper, position){
-				        position.coord.top = 15;
-				        position.coord.left += 10;
+				        position.coord.top = 0;
+						position.coord.left = 0;
 
 				        return position;
-				    }
+					},
+					arrow : false,
+
+					trigger : 'custom',
+					triggerOpen : {
+						click: true
+					},
+					triggerClose : {
+					}
 				},
 				event : 'click'
 			}

@@ -266,7 +266,7 @@ __map =  {
 			},
 			redirect : {
 				auth : 'authorization',
-				validate : 'filluser'
+				//validate : 'filluser'
 			},
 		},
 
@@ -307,7 +307,7 @@ __map =  {
 			},
 			redirect : {
 				auth : 'authorization',
-				validate : 'filluser'
+				//validate : 'filluser'
 			},
 
 			relations : [
@@ -504,6 +504,20 @@ __map =  {
 				el : 'content'
 			},
 			anonimus : true,
+		},
+
+		connection : {
+			uri : "connection",
+			href : "connection",
+			add : {
+				el : 'content'
+			},
+			anonimus : true,
+
+			relations : [
+				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
+		
+			],
 		},
 
 		help : {
@@ -737,6 +751,8 @@ __map =  {
 
 		
 			],
+
+			anonimus : true,
 		},
 
 		lenta : {
@@ -1295,7 +1311,15 @@ __map =  {
 				}
 			}
 
-		}
+		},
+
+		relations : [
+			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
+				Chart = require('./js/vendor/Chart.js')
+			}},	
+		]
+
+		
 	},
 
 	dust : {

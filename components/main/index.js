@@ -250,7 +250,7 @@ var main = (function(){
 
 						el.panel.hcSticky({
 							stickTo: '#main',
-							top : 77,
+							top : 76,
 							bottom : 177
 						});
 
@@ -493,6 +493,17 @@ var main = (function(){
 
 					return
 					
+				}
+
+				if(p.state && primary && !self.app.user.validate()){
+
+					self.nav.api.load({
+						open : true,
+						href : 'userpage?id=test',
+						history : true
+					})
+
+					return
 				}
 				
 				var data = {};

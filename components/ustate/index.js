@@ -9,11 +9,11 @@ var ustate = (function(){
 		var primary = deep(p, 'history');
 		var id = makeid()
 
-		var el, mestate, waitActions;
+		var el, mestate, waitActions, charts = {};
 
 		var metrics = {
 
-			profileInfo : {
+			/*profileInfo : {
 				vis : 'profileInfo',
 				name : self.app.localization.e('sprofile'),
 				bad : function(){
@@ -39,7 +39,7 @@ var ustate = (function(){
 
 					if(waitActions && waitActions != 'inf') return true;
 				}
-			},
+			},*/
 
 			post : {
 				key : 'post',
@@ -47,37 +47,37 @@ var ustate = (function(){
 				name : self.app.localization.e('spc'),
 				bad : function(v){
 					if(v <= 2) return true
-				},
-
-				if : function(){
-				
-					if(!waitActions) return true;
 				}
 			},
+
 			score : {
 				key : 'score',
 				vis : 'scale',
 				name : self.app.localization.e('ssc'),
 				bad : function(v){
-					if(v <= 8) return true
-				},
-
-				if : function(){
-					
-					if(!waitActions) return true;
+					if(v <= 10) return true
 				}
 			},
 
-			/*trial : {
-				key : 'trial',
-				vis : 'yesno',
-				name : self.app.localization.e('stp'),
+			comment : {
+				key : 'comment',
+				vis : 'scale',
+				name : self.app.localization.e('ccc'),
 				bad : function(v){
-					if(v) return true
+					if(v <= 10) return true
 				}
-			},*/
+			},
 
-			reputation : {
+			comment_score : {
+				key : 'comment_score',
+				vis : 'scale',
+				name : self.app.localization.e('crc'),
+				bad : function(v){
+					if(v <= 10) return true
+				}
+			},			
+
+			/*reputation : {
 				key : 'reputation',
 				vis : 'number',
 				name : self.app.localization.e('srep'),
@@ -85,9 +85,7 @@ var ustate = (function(){
 
 					return false
 				}
-			},
-
-
+			},*/
 
 			
 		}
@@ -101,6 +99,116 @@ var ustate = (function(){
 		}
 
 		var renders = {
+
+			gifts : function(_el){
+				self.app.platform.sdk.processes.get(function(levels){
+
+					self.app.platform.sdk.processes.gifts(function(gifts){
+
+						
+
+						var level = self.app.platform.sdk.processes.level(mestate.reputation)
+
+						if(!level) return
+
+						_.each(levels, function(lvl){                 
+							if(!lvl.level) return	
+	
+							var lel = _el.find('.level[level="'+lvl.level+'"]')
+
+							if (lvl.level < level.level) {
+								
+								var gift = _.find(gifts, function(gift){
+									return gift.amount == lvl.bonus * 100000000
+								})
+
+								if(!gift){
+									lel.addClass('waitgift')
+								}
+								else{
+									lel.removeClass('waitgift')
+								}
+
+							}
+						})
+
+					})
+
+				})
+			},
+
+			currentLevel : function(_el){
+				self.app.platform.sdk.processes.get(function(levels){
+					
+					var level = self.app.platform.sdk.processes.level(mestate.reputation)
+
+					if(!level) return
+
+					_.each(levels, function(lvl){ 
+                
+						if(!lvl.level) return
+
+						var lel = _el.find('.level[level="'+lvl.level+'"]')
+						var state = 'next'
+						var chartline = lel.find('.line')
+
+						if (lvl.level < level.level) {
+							state = 'completed'
+							chartline.removeAttr('width')
+						} 
+
+						if (lvl.level == level.level) {
+							state = 'current'
+
+							chartline.width((level.perc * 100) + "%")
+
+						}
+
+						if (lvl.level > level.level) {
+							next = 'next'
+							chartline.removeAttr('width')
+						}
+						
+						lel.attr('state', state)
+					})
+
+				})
+			},
+
+			reputationsteps : function(clbk){
+				self.app.platform.sdk.processes.get(function(levels){
+					
+					var level = self.app.platform.sdk.processes.level(mestate.reputation)
+				
+					self.shell({
+
+						name :  'reputation',
+						el :   el.c.find('.ustatecontentrep'),
+						data : {
+							reputation : mestate.reputation,
+							level : level,
+							levels : levels
+						},
+	
+					}, function(_p){
+
+						renders.currentLevel(_p.el)
+						renders.gifts(_p.el)
+
+						_p.el.find('.tooltip').tooltipster({
+			                theme: 'tooltipster-light',
+			                maxWidth : 600,
+			                zIndex : 20,
+			            });
+
+						if (clbk)
+							clbk()
+
+					})
+
+				})
+			},
+
 			uscnt : function(clbk){
 
 				self.shell({
@@ -121,20 +229,14 @@ var ustate = (function(){
 
 				var _metrics = metrics;
 
-				if(metrics.profileInfo.bad()) _metrics = {
-					profileInfo : metrics.profileInfo,
-					reputation : metrics.reputation
-				}
-
 				self.shell({
 
-					name :  'ustatecontent',
+					name :  'ustatecontentnew',
 					el :   el.ustatecontent,
 					data : {
 						metrics : _metrics,
 						mestate : mestate,
 						waitActions : waitActions
-
 					},
 
 				}, function(_p){
@@ -155,10 +257,16 @@ var ustate = (function(){
 
 		var initEvents = function(){
 			
+			self.app.platform.ws.messages["new block"].clbks.ustate = function(data){
+				self.app.platform.sdk.user.waitActions(function(r){
+					waitActions = r;
 
+					renders.ustatecontent()
+				})
+			}
 		}
 
-		var make = function(){
+		var make = function(clbk){
 			
 			self.app.platform.sdk.user.waitActions(function(r){
 				self.app.platform.sdk.ustate.me(function(_mestate){
@@ -171,10 +279,13 @@ var ustate = (function(){
 						el.ustatecontent = el.c.find('.ustatecontent')
 
 						renders.ustatecontent()
+						renders.reputationsteps()
+
+						if(clbk) clbk()
 					})
 					
 
-				})
+				}, true)
 			})
 		}
 
@@ -182,6 +293,8 @@ var ustate = (function(){
 			primary : primary,
 
 			getdata : function(clbk){
+
+				charts = {}
 
 				var data = {
 				};
@@ -193,7 +306,7 @@ var ustate = (function(){
 
 			destroy : function(){
 				el = {};
-			
+				delete self.app.platform.ws.messages["new block"].clbks.ustate
 				delete self.app.platform.sdk.ustate.clbks[id]
 			},
 			
@@ -207,8 +320,12 @@ var ustate = (function(){
 				self.app.platform.sdk.ustate.clbks[id] = make;
 
 				make(function(){
+
+					initEvents()
+
 					p.clbk(null, p);
 				});
+				
 
 				
 			},

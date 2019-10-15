@@ -1,6 +1,25 @@
 @import "../../css/__cssvar";
 
 #notifications{
+
+	.closentooltipth,
+	.closentooltipsecond,
+	.closentooltip{
+		display: none;
+	}
+
+	.error,
+	.loader{
+		padding : 6 * @rhythm;
+		text-align: center;
+		
+	}
+
+	.error{
+		color : @color-gray-mlight;
+		font-size: 2em;
+		opacity: 0.5;
+	}
 	
 	.ncaption{
 		font-weight: 700;
@@ -16,6 +35,20 @@
 		font-weight: 100;
 		display: none;
 	}
+
+	.group{
+		.groupCaption{
+			padding : 4 * @rhythm 0;
+
+			.caption{
+				font-size: 1em;
+				font-weight: 700;
+			}
+		}
+
+		
+	}
+
 	.ncaptionWrapper{
 		>div{
 			padding : @rhythm;
@@ -45,6 +78,8 @@
 			cursor: pointer;
 			.transition(0.1s);
 			background: fade(@color-gray2, 5);
+
+			
 
 			&:nth-last-child(1){
 				border-bottom : 0;
@@ -113,16 +148,25 @@
 }
 
 .notificationTolltip{
-	width: 500px;
-	min-height: 300px; 
-	max-height: 600px; 
+	width: 100%;
+	max-height: none;
+	height: 100%; 
 	z-index: 100!important;
+	max-width: none!important;
+	
 
 	.tooltipster-content{
 		padding: 0;
 		position: relative;
 		width: 100%;
 		height: 100%;
+	}
+
+	.tooltipster-box{
+		background: transparent;
+		border : 0;
+		box-shadow: 0 0 5000px 3000px fade(@color-black, 70);
+		
 	}
 }
 #content{
@@ -152,13 +196,93 @@
 		height: 100%;
 		position: relative;
 
-		.wrk{
+		.group{
+			.groupCaption{
+				padding : 4 * @rhythm 2 * @rhythm;
+	
+				.caption{
+					font-size: 2em;
+					font-weight: 100;
+				}
+			}
+	
+			
+		}
+
+		.closentooltipth{
+			position: fixed;
+			z-index: 1;
+			left : 0;
+			right : 0;
+			top : 0;
+			bottom : 0;
+			background: fade(@color-black, 20);
+			display: block;
+		}
+	
+
+		.closentooltipsecond{
 			position: absolute;
+			right : 0;
+			top : 0;
+			background: fade(@color-black, 20);
+			display: block;
+			color : @color-gray-mlight;
+			height: 65px;
+			width : 65px;
+			line-height : 65px;
+			cursor: pointer;
+			text-align: center;
+			z-index: 2;
+			.transition(0.3s);
+			&:hover{
+				color : @color-gray-light;
+				background: fade(@color-black, 25);
+
+				
+			}
+		}
+
+		.closentooltip{
+			position: absolute;
+			right : 565px;
 			left: 0;
-			right: 0;
 			top: 0;
 			bottom: 0;
 			padding : 0;
+			background: fade(@color-black, 50);
+			display: block;
+			color : @color-gray-mlight;
+			cursor: pointer;
+			.transition(0.3s);
+			z-index: 2;
+
+			&:hover{
+				color : @color-gray-light;
+
+				.closecsscross{
+					opacity: 0.6;
+				}
+			}
+
+			.table{
+				>div{
+					vertical-align: middle;
+					text-align: center;
+				}
+			}
+		}
+
+		.wrk{
+			position: absolute;
+			width : 500px;
+			right: 65px;
+			top: 0;
+			bottom: 0;
+			padding : 0;
+			background: #fff;
+			box-shadow: 0 0 5000px 3000px fade(@color-black, 70);
+			z-index: 1;
 		}
 
 		.npWrapper{
@@ -192,7 +316,7 @@
 		.ncaptionAbsWrapper{
 			padding: @rhythm;
 			position: absolute;
-			height: 45px;
+			height: 60px;
 			left: 0;
 			right: 0;
 			top: 0;
@@ -200,7 +324,7 @@
 
 		.nabsContentWrapper{
 			position: absolute;
-			top: 45px;
+			top: 60px;
 			left: 0;
 			right: 0;
 			bottom: 0;
@@ -220,10 +344,43 @@
 
 @media only screen and (max-width: 640px) {
 #notifications{
+	
 	.wrk{
-		padding : 0 2 * @rhythm ;
+		padding : 0 ;
 	}
+
+	._wrp{
+		padding : 0 2 * @rhythm;
+	}
+
+	.notification{
+		
+	}
+
+	.group{
+		.groupCaption{
+			padding : 2 * @rhythm 0;
+			border-bottom : 1px solid fade(@color-black2, 8);
+			border-top : 1px solid fade(@color-black2, 8);
+			background: fade(@color-black2, 5);
+			
+
+			.caption{
+				font-size: 1.2em;
+				font-weight: 700;
+				color : @color-black2;
+			}
+		}
+
+		&:nth-child(1){
+			
+		}
+		
+	}
+
 	.subcaption{
+		padding-top : 0!important;
+		margin-bottom: @rhythm;
 	}
 	.nwrapper {
 		.notification{

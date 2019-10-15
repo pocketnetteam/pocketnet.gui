@@ -306,14 +306,21 @@ var panel = (function(){
 
 		var make = function(){
 
-			renders.discussions()
-			renders.tags()
+			if (self.app.platform.sdk.usersettings.meta.vidgetchat.value)
+				renders.discussions()
 
-			load.recomendation(function(users){
-				renders.recommendations(users)
-			})
+			if (self.app.platform.sdk.usersettings.meta.vidgettags.value)
+				renders.tags()
 
-			renders.lastcomments()
+			if (self.app.platform.sdk.usersettings.meta.vidgetlastcomments.value)
+				renders.lastcomments()
+
+			/*
+				load.recomendation(function(users){
+					renders.recommendations(users)
+				})
+			*/
+			
 		
 
 		}

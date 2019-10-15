@@ -17,7 +17,73 @@ var userslist = (function(){
 		var loading;
 
 		var actions = {
+			
+			
+			unblocking : function(address){
+				el.caption.find('.unblocking').on('click', function(){
 
+					dialog({
+						html : "Do you really want to unblock user?",
+						btn1text : "Unblock",
+						btn2text : "Cancel",
+	
+						class : 'zindex',
+	
+						success : function(){
+	
+							self.app.platform.api.actions.unblocking(address, function(tx, error){
+								if(!tx){
+									self.app.platform.errorHandler(error, true)	
+								}
+							})
+	
+						}
+					})
+	
+					
+				})
+
+			},
+			unsubscribe : function(address){
+
+				dialog({
+					html : "Do you really want to unfollow user?",
+					btn1text : "Unfollow",
+					btn2text : "Cancel",
+
+					class : 'zindex',
+
+					success : function(){
+
+						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
+
+							if(tx){
+								
+							}
+							else
+							{
+								self.app.platform.errorHandler(err, true)	
+							}
+		
+						})
+
+					}
+				})
+
+				
+			},
+			subscribe : function(address){
+				self.app.platform.api.actions.subscribe(address, function(tx, err){
+
+					if(tx){
+					}
+					else
+					{
+						self.app.platform.errorHandler(err, true)
+					}
+
+				})
+			}
 		}
 
 		var events = {
@@ -33,6 +99,22 @@ var userslist = (function(){
 
 				}
 			},
+			unblocking : function(){
+				var address = $(this).closest('.user').attr('address')
+
+				actions.unblocking(address)
+			},
+			unsubscribe : function(){
+
+				var address = $(this).closest('.user').attr('address')
+
+				actions.unsubscribe(address)
+			},
+			subscribe : function(){
+				var address = $(this).closest('.user').attr('address')
+
+				actions.subscribe(address)
+			}
 		}
 
 		var renders = {
@@ -43,9 +125,7 @@ var userslist = (function(){
 					name :  'users',
 					el :   el.users,
 					data : {
-						addresses : addresses,
-						commonkey : 'subscribes'
-
+						addresses : addresses
 					},
 
 					inner : append
@@ -117,7 +197,32 @@ var userslist = (function(){
 
 		var initEvents = function(){
 			
+			self.app.platform.clbks.api.actions.subscribe.userlist = function(address){
 
+				console.log("SUC", address)
+
+				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('following')		
+			}
+
+			self.app.platform.clbks.api.actions.unsubscribe.userlist = function(address){
+				console.log("USUC", address)
+
+				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('following')
+			}
+
+			self.app.platform.clbks.api.actions.blocking.userlist = function(address){
+				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').addClass('blocking')				
+			}
+
+			self.app.platform.clbks.api.actions.unblocking.userlist = function(address){
+
+				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('blocking')				
+
+			}
+
+			el.c.on('click', '.subscribe', events.subscribe)
+			el.c.on('click', '.unsubscribe', events.unsubscribe)
+			el.c.on('click', '.unblocking', events.unsubscribe)
 		}
 
 		var make = function(){
@@ -150,6 +255,12 @@ var userslist = (function(){
 			destroy : function(){
 
 				window.removeEventListener('scroll', events.loadmorescroll)
+
+				delete self.app.platform.clbks.api.actions.subscribe.userlist
+	
+				delete self.app.platform.clbks.api.actions.unsubscribe.userlist
+	
+				delete self.app.platform.clbks.api.actions.blocking.userlist
 
 				el = {};
 			},

@@ -21,26 +21,34 @@ var tagcloud = (function(){
 		var renders = {
 			tags : function(tags, clbk){
 
-				self.shell({
+				if(!tags.length){
+					el.c.addClass('hidden')
+				}
+				else{
 
-					name :  'tags',
-					el : el.tags,
+					el.c.removeClass('hidden')
 
-					data : {
-						tags : tags
-					},				
+					self.shell({
 
-				}, function(p){
-
-					p.el.find('.showhidealltags').on('click', function(){
-						console.log('sad')
-						el.c.toggleClass('showedalltags')
+						name :  'tags',
+						el : el.tags,
+	
+						data : {
+							tags : tags
+						},				
+	
+					}, function(p){
+	
+						p.el.find('.showhidealltags').on('click', function(){
+							console.log('sad')
+							el.c.toggleClass('showedalltags')
+						})
+	
+						if (clbk)
+							clbk()
+	
 					})
-
-					if (clbk)
-						clbk()
-
-				})
+				}
 
 			} 
 		}
@@ -62,20 +70,26 @@ var tagcloud = (function(){
 
 		var load = function(clbk){
 			
-			self.app.platform.sdk.tags.cloud(function(tags){
+			self.app.platform.sdk.tags.cloud(function(tags, error){
 
 				tags = self.app.platform.sdk.tags.filterEx(tags)
 
-
 				if (clbk)
-					clbk(tags)
+					clbk(tags, error)
+					
 			})
 
 		}
 
 		var make = function(){
 
-			load(function(tags){
+			load(function(tags, error){
+
+				if (error){
+
+					self.iclbks.main = make
+
+				}
 
 				renders.tags(tags)
 
@@ -95,6 +109,8 @@ var tagcloud = (function(){
 			},
 
 			destroy : function(){
+				delete self.iclbks.main;
+
 				el = {};
 			},
 			

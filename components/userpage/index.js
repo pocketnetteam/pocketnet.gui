@@ -13,6 +13,7 @@ var userpage = (function(){
 		var currentExternalEssense = null;
 		var roller = null;
 		var caption = null;
+		var hcready = false;
 
 		var mestate = null, allbalance;
 
@@ -20,6 +21,23 @@ var userpage = (function(){
 
 		var init = function(){
 			reports = []
+
+			if(!self.app.user.validate()){
+
+				var h = "Continue Registration";
+
+				if (self.app.errors.connection()){
+					h = "Connection Lost"
+				}
+
+				reports.push({
+					name : h,
+					id : 'test',
+					report : 'fillUser',
+					mobile : true
+				})
+	
+			}
 
 			reports.push({
 				name : "Notifications",
@@ -34,9 +52,9 @@ var userpage = (function(){
 				report : 'ustate',
 				mobile : true,
 
-				if : function(){
+				/*if : function(){
 					if(mestate) return true
-				},
+				},*/
 
 				add : function(){
 
@@ -125,12 +143,17 @@ var userpage = (function(){
 				}
 			})
 
-			reports.push({
-				name : "Edit profile",
-				id : 'test',
-				report : 'test',
-				mobile : true
-			})
+			if(self.app.user.validate()) {
+
+				reports.push({
+					name : "Edit profile",
+					id : 'test',
+					report : 'test',
+					mobile : true
+				})
+
+			}
+		
 
 			reports.push({
 				name : self.app.localization.e('rsettings'),
@@ -431,17 +454,24 @@ var userpage = (function(){
 
 				if(!el || !el.bgcaption) return
 
-				self.shell({
+				if(!self.app.user.validate()) {
+					el.bgcaption.html('<div class="bgCaptionSpacer"></div>')
+				}
+				else{
+					self.shell({
 
-					name :  'bgcaption',
-					el :   el.bgcaption.find('.bgCaptionInner'),
-					data : {
-						
-					},
+						name :  'bgcaption',
+						el :   el.bgcaption,
+						data : {
+							
+						},
+	
+					}, function(_p){
+	
+					})
+				}
 
-				}, function(_p){
-
-				})
+				
 		
 			},
 			contents : function(clbk, id){
@@ -486,6 +516,9 @@ var userpage = (function(){
 							ParametersLive([s], _p.el)
 	
 							_scrollTop(0)
+
+							if (hcready)
+								el.contents.hcSticky('refresh');
 		
 							if (clbk)
 								clbk();
@@ -567,6 +600,24 @@ var userpage = (function(){
 				}
 			},
 
+			fillUser : function(el, clbk){
+				self.shell({
+
+					name :  'fillUser',
+					el :   el,
+					data : {
+						
+					},
+
+				}, function(_p){
+
+					if (clbk){
+						clbk()
+					}
+
+				})
+			},
+
 			report : function(id, clbk){
 
 				if (currentExternalEssense)
@@ -597,8 +648,11 @@ var userpage = (function(){
 
 				}, function(_p){
 
-					if(renders[report.report]){
+					if (renders[report.report]){
 						renders[report.report](_p.el.find('.reportCnt'), _clbk)
+
+						if (hcready)
+							el.contents.hcSticky('refresh');
 					}
 					else{
 						self.nav.api.load({
@@ -616,6 +670,9 @@ var userpage = (function(){
 							clbk : function(e, p){
 	
 								_clbk(e, p)
+
+								if (hcready)
+									el.contents.hcSticky('refresh');
 								
 							}
 	
@@ -684,16 +741,34 @@ var userpage = (function(){
 
 			makerep(clbk)
 
+			if(!self.app.user.validate()){
+				el.c.addClass("validate")
+
+
+				if(self.app.errors.connectionRs()){
+
+					self.iclbks.mn = function(){
+						delete self.iclbks.mn
+						make()
+					}
+
+				}
+			}
+
+			if(!isMobile()){
+
+				el.contents.hcSticky({
+					stickTo: '#userpagestick',
+					top : 77,
+					bottom : 177
+				});
+
+				hcready = true
+
+			}
+
+
 			
-			if(!isMobile())
-
-				roller = new Roller({
-					selector: '.roller',
-					inner : '.cnt',
-					cnt : el.c.find('.maketsWrapper'),
-					offset : 65
-
-				}).init().apply();	
 			
 		}
 
@@ -715,7 +790,7 @@ var userpage = (function(){
 
 				data.p2pkh = self.app.platform.sdk.address.pnet()
 
-				self.app.platform.sdk.ustate.me(function(_mestate){
+				self.app.platform.sdk.ustate.me(function(_mestate){					
 
 					console.log('_mestate', _mestate)
 
@@ -730,6 +805,10 @@ var userpage = (function(){
 			},
 
 			destroy : function(){
+
+				delete self.iclbks.mn
+
+				hcready = false;
 
 				if (currentExternalEssense)
 					currentExternalEssense.destroy();
@@ -755,8 +834,7 @@ var userpage = (function(){
 				el.contents = el.c.find('.contents');
 				el.report = el.c.find(".report");
 			
-				el.bgcaption = el.c.find('.bgCaption')
-
+				el.bgcaption = el.c.find('.bgCaptionWrapper')
 
 				$('#menu').addClass('abs')
 
@@ -770,8 +848,6 @@ var userpage = (function(){
 				initEvents();
 
 				make(function(){
-
-					//p.noscroll = self.app.actions.scrollBMenu()
 					
 					p.clbk(null, p);
 				})

@@ -24,7 +24,7 @@ if(author){
 	if(author.address != user.address.value.toString('hex')){
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
-		if(me){
+		if (me){
 			if(me.relation(author.address, 'blocking')){
 				m.push('unblock')
 			}
@@ -33,8 +33,6 @@ if(author){
 				m.push('block')
 			}
 		}
-
-        
         
 
 	}

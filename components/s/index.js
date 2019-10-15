@@ -199,7 +199,7 @@ var s = (function(){
 
 					essenseData : {
 						search : true,	
-						hr : 'index',
+						hr : 'index?',
 						searchValue : value,
 
 						loader : function(clbk){

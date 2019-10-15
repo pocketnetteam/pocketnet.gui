@@ -3,7 +3,7 @@
 		<div class="rcaptiontable table">
 			<div class="rcaptionWrapper">
 				<div class="rcaption">
-					<span>Last comments (5)</span>
+					<span>Last comments</span>
 				</div>
 			</div>
 
@@ -28,7 +28,7 @@
 
     if(share.message) m = m + '' + share.message + ''
 
-    var nm = filterXSS(trimHtml(m, 40), {
+    var nm = filterXSS(trimHtml(m, 80), {
         stripIgnoreTag : true,
         whiteList: {
             b : ["style"]
@@ -83,7 +83,11 @@
         </div>
 
         <div class="comments">
-            <% _.each(group, function(comment){ %> 
+            <% _.each(group, function(comment){ 
+                
+                if(comment.deleted) return
+                
+                %> 
 
                 <div class="comment " id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
@@ -113,7 +117,7 @@
                                     </div>          
                                     
                                     <div class="datecell">
-                                        <span><%- convertDate(dateToStr(comment.time)) %></span>
+                                        <span><%- app.reltime(comment.time) %></span>
                                     </div>
                                     
                                 </div>
@@ -151,25 +155,37 @@
             
                                 </div>
 
-                                <% 	if(comment.images.length) {
-                                    
-                                        var image = comment.images[0]
-                                    %>
-                                    <div class="imagescellwrapper">
-                            
-                                        <div class="commentimages">
-                                            <div class="imagesContainer">
+                                <% 								
+								
+                                    if(comment.images.length && !comment.deleted) {
+                                        var additionall = 0;
+                                        var icClass = '';
                         
-                                                <div class="imagesWrapper">
-                                                    <img src="<%-image%>">
-                                                </div>
+                                        if (comment.images.length + additionall == 1) icClass = 'one';
+                                        if (comment.images.length + additionall == 2) icClass = 'two';
+                                        if (comment.images.length + additionall == 2) icClass = 'three';
+                                        if (comment.images.length + additionall == 4) icClass = 'four';
+                                        if (comment.images.length + additionall > 4) icClass = 'more';
+                                        
+                                        %>
+                        
+                                        <div class="commentimages">
+                                            <div class="imagesContainer <%-icClass%>">
+                                                <% _.each(comment.images, function(image){ %>
+                        
+                                                    <div class="imagesWrapper">
+                                                        <div class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
+                                                        </div>
+                                                    </div>
+                        
+                                                <% }) %>
                         
                                             </div>
-                                        </div>                                        
-                                    
-                                    </div>
-
+                                        </div>
+                        
                                 <% } %>
+
+                                    
             
                                 
                             </div>

@@ -31,6 +31,36 @@ var comments = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var clbks = {
+			upvote : function(err, comment, value, address){
+
+				if(!comment) return
+
+				if (comment.txid != txid) return
+
+				var _el = el.c.find('#' + comment.id);
+
+				var d_el = _el.find(">div.commentPaddingWrapper");
+
+				if (address == self.app.platform.sdk.address.pnet().address){
+
+					_el.addClass('rated')
+
+					if(value > 0){
+						d_el.find('.scoreUp').addClass('ratedScore')
+					}
+					else{
+						d_el.find('.scoreDown').addClass('ratedScore')
+					}
+
+				}
+
+				if (comment.scoreUp)
+					d_el.find('.scoreUp .commentScore').html(compressedNumber(comment.scoreUp, 1))
+
+				if (comment.scoreDown)
+					d_el.find('.scoreDown .commentScore').html(compressedNumber(comment.scoreDown, 1))
+			},
+
 			post : function(err, alias, _txid, pid, aid, editid, id){
 
 				if(_txid != txid) return
@@ -80,7 +110,7 @@ var comments = (function(){
 
 						_el.find('.edit').html('');
 
-						alias.timeupd = alias.timeupd.addMinutes(1)
+						alias.timeUpd = alias.timeUpd.addMinutes(1)
 
 						if(!alias.parentid) p.class = "firstcomment"
 
@@ -572,8 +602,32 @@ var comments = (function(){
 				var _el = el.c.find("#" + id)
 
 				_el.removeClass('editing')
+				_el.find('.commentBody').removeClass('editing')
 
 				actions.removeForm(id)
+			},
+
+			delete : function(comment, clbk){
+				var ct = comment.delete()
+
+				console.log('ccct', ct)
+
+				self.app.platform.sdk.comments.delete(txid, ct, function(err, alias){
+
+					if(!err){
+						if (clbk)
+							clbk(null, alias)
+					}
+
+					else
+					{
+						self.app.platform.errorHandler(err, true)
+
+						if (clbk)
+							clbk(err, null)
+					}
+
+				})
 			},
 
 			update : function(pid){
@@ -612,21 +666,36 @@ var comments = (function(){
 			},
 			showall : function(){
 				showedall = true;
-				el.c.addClass('showedall')
-				
+				el.c.addClass('showedall')				
 				actions.showhideLabel()
 
 				if (listpreview){
 
-					listpreview = false;
-
 					el.c.removeClass('listpreview')
 
 					el.c.find('.loaderWrapper').removeClass('hidden')
+					
 
-					renders.caption()
+					load.level(null, function(comments, e){
 
-					load.level(null, function(comments){
+						if(e){
+
+							self.app.platform.errorHandler(e, true)
+
+							el.c.addClass('listpreview')
+
+							el.c.find('.loaderWrapper').addClass('hidden')
+
+							showedall = false;
+							el.c.removeClass('showedall')				
+							actions.showhideLabel()
+
+							return
+						}
+
+						listpreview = false;
+
+						renders.caption()
 
 						rendered = {}
 
@@ -731,10 +800,45 @@ var comments = (function(){
 					}
 				})
 				
+			},
+			upvoteComment : function(value, id){
+
+
+				var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
+
+
+				if(!comment) return
+
+				var upvoteComment = comment.upvote(value)
+
+				self.app.platform.sdk.comments.upvote(upvoteComment, function(err, alias){
+
+					
+					if (err){
+						self.app.platform.errorHandler(err, true)	
+					}
+
+				})
 			}
 		}
 
 		var events = {
+
+			upvoteComment : function(){
+
+				if($(this).closest('.comment').hasClass('rated')) return
+
+				var value = 0;
+
+				if($(this).attr('score') == 'scoreUp') value = 1
+				else 	value = -1;
+
+				var id = $(this).closest('.comment').attr('id');
+				var pid = $(this).closest('.comment').attr('pid');
+				
+				actions.upvoteComment(value, id, pid)
+			},
+
 			openGallery : function(){
 
 				var _el = $(this)
@@ -830,7 +934,7 @@ var comments = (function(){
 
 				var d = {
 					address : self.app.user.address.value,
-					caddress : self.app.platform.sdk.comments.address(txid, id, pid)
+					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
 				};
 
 				if (listpreview && ed.lastComment){
@@ -846,16 +950,42 @@ var comments = (function(){
 						
 						return template(d);
 
-					}, function(el){
+					}, function(__el){
 
-						el.find('.edit').on('click', function(){
+						__el.find('.edit').on('click', function(){
 
 							renders.edit(localParent, comment)
 
 							_el.tooltipster('hide')	
 						})
 
-						el.find('.remove').on('click', function(){
+						__el.find('.remove').on('click', function(){
+
+							dialog({
+								html : "Do you really want to delete your comment?",
+								success : function(){
+
+									actions.delete(comment, function(err){
+
+										if(!err)
+										{
+
+											var c = el.c.find('#' + comment.id);
+
+											c.addClass('deleted')
+											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage div').html("<div>Comment has been removed</div>")
+
+											c.find('.panel').remove()
+											c.find('.commentimages').remove()
+											c.find('.reply').remove()
+										}
+											
+									})
+
+								},
+								btn1text : "Yes",
+								btn2text : "No, cancel"
+							})
 
 							_el.tooltipster('hide')	
 						})
@@ -890,7 +1020,47 @@ var comments = (function(){
 
 			    	attributes: {
 				        spellcheck : true,
-				    },
+					},
+					
+					
+				filters : {
+					smileys_people: {
+						icon: "yum",
+						title: "Smileys & People",
+						emoji: "grinning smiley smile grin laughing sweat_smile joy rofl relaxed blush innocent slight_smile upside_down " +
+						"wink relieved crazy_face star_struck heart_eyes kissing_heart kissing kissing_smiling_eyes kissing_closed_eyes yum " +
+						"stuck_out_tongue_winking_eye stuck_out_tongue_closed_eyes stuck_out_tongue money_mouth hugging nerd sunglasses " +
+						"cowboy smirk unamused disappointed pensive worried face_with_raised_eyebrow face_with_monocle confused slight_frown " +
+						"frowning2 persevere confounded tired_face weary triumph angry rage face_with_symbols_over_mouth " +
+						"no_mouth neutral_face expressionless hushed frowning anguished open_mouth astonished dizzy_face exploding_head flushed scream " +
+						"fearful cold_sweat cry disappointed_relieved drooling_face sob sweat sleepy sleeping rolling_eyes thinking " +
+						"shushing_face face_with_hand_over_mouth lying_face grimacing zipper_mouth face_vomiting nauseated_face sneezing_face mask thermometer_face " +
+						"head_bandage smiling_imp imp japanese_ogre japanese_goblin poop ghost skull skull_crossbones alien space_invader " +
+						"robot jack_o_lantern clown smiley_cat smile_cat joy_cat heart_eyes_cat smirk_cat kissing_cat scream_cat crying_cat_face " +
+						"pouting_cat open_hands raised_hands palms_up_together clap pray handshake thumbsup thumbsdown punch fist left_facing_fist " +
+						"right_facing_fist fingers_crossed v metal love_you_gesture ok_hand point_left point_right point_up_2 point_down point_up " +
+						"raised_hand raised_back_of_hand hand_splayed vulcan wave call_me muscle middle_finger writing_hand selfie " +
+						"nail_care ring lipstick kiss lips tongue ear nose footprints eye eyes speaking_head bust_in_silhouette " +
+						"busts_in_silhouette baby boy girl man woman blond-haired_woman blond_haired_man older_man older_woman " +
+						"man_with_chinese_cap woman_wearing_turban man_wearing_turban woman_police_officer police_officer " +
+						"woman_construction_worker construction_worker woman_guard guard woman_detective detective woman_health_worker " +
+						"man_health_worker woman_farmer man_farmer woman_cook man_cook woman_student man_student woman_singer man_singer " +
+						"woman_teacher man_teacher woman_factory_worker man_factory_worker woman_technologist man_technologist " +
+						"woman_office_worker man_office_worker woman_mechanic man_mechanic woman_scientist man_scientist woman_artist " +
+						"man_artist woman_firefighter man_firefighter woman_pilot man_pilot woman_astronaut man_astronaut woman_judge " +
+						"man_judge mrs_claus santa princess prince bride_with_veil man_in_tuxedo angel pregnant_woman breast_feeding woman_bowing " +
+						"man_bowing woman_tipping_hand man_tipping_hand woman_gesturing_no man_gesturing_no woman_gesturing_ok " +
+						"man_gesturing_ok woman_raising_hand man_raising_hand woman_facepalming man_facepalming woman_shrugging " +
+						"man_shrugging woman_pouting man_pouting woman_frowning man_frowning woman_getting_haircut man_getting_haircut " +
+						"woman_getting_face_massage man_getting_face_massage man_in_business_suit_levitating dancer man_dancing women_with_bunny_ears_partying " +
+						"men_with_bunny_ears_partying woman_walking man_walking woman_running man_running couple " +
+						"bearded_person woman_with_headscarf woman_mage man_mage woman_fairy man_fairy woman_vampire man_vampire " +
+						"mermaid merman woman_elf man_elf woman_genie man_genie woman_zombie man_zombie " +
+						"womans_clothes shirt jeans necktie dress bikini kimono high_heel sandal boot mans_shoe athletic_shoe womans_hat " +
+						"tophat mortar_board crown helmet_with_cross school_satchel pouch purse handbag briefcase eyeglasses dark_sunglasses " +
+						"closed_umbrella umbrella2 brain billed_cap scarf gloves coat socks "
+					},
+				},
 
 			    	events : {
 			    		change : events.emessage,
@@ -1036,6 +1206,7 @@ var comments = (function(){
 						actions.removeImage(id, r, p)
 					})
 
+
 					_p.el.find('.edit').on('click', function(){
 						var r = $(this).closest('.imageContainer').attr('value');
 
@@ -1145,6 +1316,9 @@ var comments = (function(){
 			},
 			caption : function(clbk){
 
+				console.log('_in', _in, top)
+
+
 				if(ed.caption){
 					self.shell({
 						name :  'caption',
@@ -1164,7 +1338,7 @@ var comments = (function(){
 							removeSpacer : true,
 							iniHeight : true,
 							_in : _in
-						}).init();	
+						}).init();
 
 						p.el.find('.close .cact').on('click', function(){
 							if (ed.close)
@@ -1172,17 +1346,16 @@ var comments = (function(){
 						})
 
 						p.el.find('.top .cact').on('click', function(){
-							if(ed.totop){
-								_scrollToTop(ed.totop, _in, 0, -65)
-							}
+
+							_scrollTo(el.c.find('.comment:nth-child(1)'), _in)
+						
 						})
 
 						p.el.find('.bottom .cact').on('click', function(){
-							var _el = el.c.find('.post .emojionearea-editor');
+							var _el = el.c.find('.comment:nth-last-child(1)');
 
-							_scrollTo(_el, _in)
+								_scrollTo(_el, _in)
 
-							_el.focus()
 						})
 
 
@@ -1196,8 +1369,6 @@ var comments = (function(){
 			edit : function(el, comment){
 
 				el.addClass('editing')
-
-				console.log("EEEE", el)
 
 				var p = {
 					value : comment.message,
@@ -1227,7 +1398,11 @@ var comments = (function(){
 			},
 			post : function(clbk, p){
 
-				if(!p) p = {};
+				self.app.user.isState(function(state){
+					if(!state) return;
+
+
+					if(!p) p = {};
 
 				p.el || (p.el = el.post)
 
@@ -1290,6 +1465,11 @@ var comments = (function(){
 
 					
 				})
+
+
+				})
+
+				
 			},
 
 			commentimages : function(s, clbk){
@@ -1388,6 +1568,7 @@ var comments = (function(){
 
 				if(!p) p = {};
 
+
 				p.comments = _.filter(p.comments || [], function(c){
 					if(!rendered[c.id]) {
 						rendered[c.id] = true
@@ -1396,12 +1577,14 @@ var comments = (function(){
 					}
 				})
 
-				
+				var _in = append
 
-				if(ed.fromtop){
+				if(ed.fromtop && !p.el){
 					p.comments = _.sortBy(p.comments, function(c){
 						return -c.time
 					})
+
+					_in = prepend
 				}
 				else{
 					p.comments = _.sortBy(p.comments, function(c){
@@ -1414,7 +1597,7 @@ var comments = (function(){
 				self.shell({
 					name :  'list',
 					el : p.el || el.list,
-					inner : p.inner || append,
+					inner : p.inner || _in,
 					data : {
 						comments : p.comments || [],
 						_class : p.class || '',
@@ -1542,10 +1725,10 @@ var comments = (function(){
 			},	
 			level : function(pid, clbk){
 
-				self.app.platform.sdk.comments.get(txid, pid || "", function(comments){
+				self.app.platform.sdk.comments.get(txid, pid || "", function(comments, e){
 
 					if (clbk)
-						clbk(comments)
+						clbk(comments, e)
 
 				})
 
@@ -1586,6 +1769,7 @@ var comments = (function(){
 			})
 
 			self.app.platform.sdk.comments.sendclbks[eid] = clbks.post
+			self.app.platform.sdk.comments.upvoteClbks[eid] = clbks.upvote
 
 			self.app.platform.ws.messages.comment.clbks[eid] = function(data){
 
@@ -1622,6 +1806,19 @@ var comments = (function(){
 				}
 			
 			}
+
+			self.app.platform.ws.messages.cScore.clbks[eid] = function(data){
+
+
+				if (data.comment.txid == txid){
+
+					clbks.upvote(null, data.comment, data.upvoteVal || data.value, data.addrFrom)
+				}
+			
+			}
+
+
+			el.c.on('click', '.upvoteComment', events.upvoteComment)
 		}
 
 		return {
@@ -1666,6 +1863,9 @@ var comments = (function(){
 
 				delete self.app.platform.sdk.comments.sendclbks[eid]
 				delete self.app.platform.ws.messages.comment.clbks[eid]
+				
+				delete self.app.platform.sdk.comments.upvoteClbks[eid]
+				delete self.app.platform.ws.messages.cScore.clbks[eid]
 
 				if (external) 
 					external.destroy()
@@ -1710,6 +1910,13 @@ var comments = (function(){
 
 				p.clbk(null, p);
 			},
+
+			freeze : function(){
+
+				if(caption) caption.destroy()
+				
+			},
+
 			hideall : function(preview){
 
 				showedall = false;

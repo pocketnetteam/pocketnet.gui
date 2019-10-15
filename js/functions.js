@@ -397,6 +397,31 @@
 		return res;
 	}
 
+	convertDateRel = function(date){
+
+		var n = new Date();
+
+		
+
+		if (n.addMinutes(-1) < date) return ['fewseconds']
+		if (n.addMinutes(-2) < date) return ['oneminute']
+
+		if (n.addMinutes(-25) < date) {
+
+
+			return ['minutes', '', ((n.getTime() - date.getTime()) / 60 / 1000).toFixed(0)]
+		}
+
+		if (n.addMinutes(-45) < date) return ['halfanhour']
+		if (n.addMinutes(-80) < date) return ['anhour']
+
+		if (dateToStrSmall(n) == dateToStrSmall(date)) return ['today', addZero(date.getHours().toString()) + ":" + addZero(date.getMinutes().toString())]
+
+
+		return ['', convertDate(dateToStr(date))]
+		
+	}
+
 
 /* ______________________________ */
 
@@ -412,6 +437,8 @@
 			id = 'w' + makeid().split('-')[0],
 			nooverflow = p.nooverflow || $('html').hasClass('nooverflow'),
 			el = p.el || $('body');
+
+		var _w = $(window);
 
 		var wnd;
 
@@ -474,7 +501,10 @@
 			wnd = $("<div>",{
 			   "class" 	: "wnd",
 			   "html"	: h
-		   	});
+			   });
+			   
+			   wnd.css('top', _w.scrollTop())
+			   wnd.css('height', _w.height())
 
 		   	if(!p.header) wnd.addClass('noheader')
 
@@ -509,6 +539,11 @@
 			wnd.css("display", "block");
 		}
 
+		var resize = function(){
+			wnd.css('top', _w.scrollTop())
+			wnd.css('height', _w.height())
+		}
+
 		var initevents = function(){
 			if(!p.noCloseBack)
 				wnd.find('.wndback').one('click', function(){
@@ -530,8 +565,6 @@
 
 						positionclbk : function(px){
 							var percent = Math.abs((tr - Math.abs(px)) / tr);
-
-							console.log(percent, px)
 
 							//if (percent > 0){
 
@@ -577,6 +610,8 @@
 					threshold:0
 				});*/
 			}
+
+			_w.on('resize', resize)
 		}
 
 		var actions = {
@@ -593,6 +628,7 @@
 					self.essenseDestroy()
 				
 				wnd.remove();
+				_w.off('resize', resize)
 
 				if(!p.noblur)
 				{
@@ -1061,8 +1097,9 @@
 
 			options.delay = 100;
 
-			if(event != 'mouseenter'){
-				options.trigger = event;
+			if (event != 'mouseenter'){
+				
+				options.trigger || (options.trigger = event);
 			}
 			else
 			{
@@ -1075,6 +1112,9 @@
 			options.position || (options.position = "bottom");
 			options.height || (options.height = 420);
 			options.maxWidth || (options.maxWidth = 600);
+
+			
+
 
 			options.content = function () {
 				return content
@@ -1736,7 +1776,7 @@
 	nextIndex = function(arr, value){
 		var index = _.indexOf(arr, value);
 
-		if(index > -1)
+		if (index > -1)
 		{
 			if(index == arr.length - 1)
 			{
@@ -2060,7 +2100,13 @@
 		lazyEach({
 			array : farray,
 			action : function(p){
-				p.item(p.success)
+
+				p.item(function(){
+
+
+					p.success()
+
+				})
 			},
 
 			all : {
@@ -3615,6 +3661,7 @@
 			self.defaultValuesTemplate = p.defaultValuesTemplate || null;
 
 			self.currency = p.currency || null;
+			self.disabled = p.disabled;
 
 			self.app = p.app;
 
@@ -4009,6 +4056,12 @@
 		},
 
 		self.input = function (inputp) {
+
+			var __disabled = ''
+
+			if(self.disabled) {
+				__disabled = 'disabled="disabled"'
+			}
 
 			if(!inputp) inputp = {};
 
@@ -4570,7 +4623,7 @@
 				return input
 			}
 
-			var input = '<input ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';
+			var input = '<input '+__disabled+' ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';
 
 			return input; 
 		}
@@ -6055,8 +6108,6 @@
 			var css = directiontoprop(direction)
 			var upborder = (p.directions[direction].trueshold || 90) * 5
 
-			console.log("goup", direction, css, p.prop)
-
 			if((css == 'top' || (direction == 'up' && css=='y')) && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
 			if(css == 'left' && (p.prop == 'position' || p.prop == 'translate')) upborder = -upborder
 
@@ -6069,8 +6120,6 @@
 		}
 
 		self.backfast = function(){
-
-			console.log('backfast')
 
 			_.each(p.directions, function(d){
 				if (d.positionclbk)
@@ -6622,11 +6671,13 @@
 
 			if ((pos=='top' && s > top && s < bottom) || (pos == 'bottom' && sh > top && sh < bottom + caption.height()))
 			{
-				toFixed();
+				if(!fixed)
+					toFixed();
 			} 
 			else
 			{
-				clear();
+				if (fixed)
+					clear();
 			}
 		}
 
@@ -6639,6 +6690,9 @@
 		}
 
 		var removeEvents = function () {
+
+			console.log("REMOVEEVENTS")
+
 			_in[0].removeEventListener('scroll', action);
 
 			window.removeEventListener('resize', resize);
@@ -6709,6 +6763,25 @@
 		/*   Init
 		/*---------------------------------------------------------------------------------------*/
 
+		var error = function(res, p, errorData){	
+
+
+			if (errorData && errorData.code) return errorData.code
+
+			if (app.errorHandler && p.errorHandler)
+			{
+				var h = app.errorHandler(res, p);
+
+				if (h)
+				{
+					return h;
+				}
+			}	
+			
+			
+			return res
+			
+		}
 
 		if(!_Node)
 			$.ajaxSetup({
@@ -6743,6 +6816,10 @@
 			if (user !== false && user.extendAjaxData &&  (!p.anon || p.anon !== true) && !p.imgur) user.extendAjaxData(data, url);		
 			/*---------------------------------------------------------------------------------------*/
 
+			/*---------------------------------------------------------------------------------------*/
+			if (user !== false && user.signature &&  p.signature) data.signature = user.signature();		
+			/*---------------------------------------------------------------------------------------*/
+
 			/*if (app.fingerPrint)
 				data.fingerPrint = app.fingerPrint;*/
 
@@ -6763,46 +6840,14 @@
 
 				var time = performance.now();
 		
-			var error = function(res){		
-
-
-				if(app.errorHandler)
-				{
-					var h = app.errorHandler(res);
-
-					if (h)
-					{
-
-						return;
-					}
-				}				
-
-				if (user !== false && (!p.anon || p.anon !== true))
-				{
-					
-					var mailMessage = "<p>url : " + url + "<br>\
-						user : user<br>\
-						data : " + JSON.stringify(data, null, 4) + "<p>\
-						<p> error : " + res + "\
-						</p>"
-
-					if(!_Node && !window.design && res)
-					{
-						//отослать письмо
-					}
-
-					//логирование ошибки
-
-						
-				}
-				
-			}
+			
 
 			var success = {
 				json : function(data){			
 
 					var storage = data;
 					var status;
+					var e = ''
 
 					if (storage.root) storage = storage.root;
 
@@ -6822,10 +6867,10 @@
 
 					if(!status) {
 						
-						error("noResult");
+						e = error("noresult", p);
 
 						if (p.fail) 
-							p.fail();
+							p.fail(null, e || 'network');
 
 					}
 
@@ -6835,7 +6880,7 @@
 
 							if(typeof p.errors == 'undefined' || p.errors == true)
 							{
-								error(status);
+								e = error(status, p);
 							}		
 
 							if(status == 'wrong token'){
@@ -6847,12 +6892,24 @@
 							}
 
 
-							if(p.fail) p.fail(storage);				
+							if (p.fail) 
+								p.fail(storage, e || 'network');				
 
 						}	
 
 						else
 						{
+
+							if(app.successHandler && p.errorHandler)
+							{
+								var h = app.successHandler(p);
+
+								if (h)
+								{
+									return;
+								}
+							}	
+
 							if (dataCashe)
 							{
 								deepInsert(cashe, deepkey, _.clone(storage));
@@ -6927,6 +6984,7 @@
 				request(_d,
 			    function (_error, response, body) {
 
+
 			    	if(_error)
 			    	{
 			    		error(_error);
@@ -6988,8 +7046,9 @@
 						
 					},
 					error: function(r, s, e) {
-
+						
 						var data = null;
+						var e = ''
 
 						if (p.preloader) preloader(false);
 
@@ -6999,19 +7058,21 @@
 
 							if(typeof p.errors == 'undefined' || p.errors == true)
 							{
-								
-								error(data.status);
+								e = error(data.status, p, data.data);
 
 							}
 										
 						} 
 						else
 						{
-							error(null);
+							e = error(null, p);
 						}
 
+						console.log("ERR", e, p)
+
+
 						if (p.fail) 
-							p.fail(data);
+							p.fail(data, e || 'network');
 
 					},
 				}
@@ -7043,17 +7104,52 @@
 		}
 
 		self.api = function(p){
-			
-			p.url = app.apiproxy + "/" + (p.action || "")
 
+			if (p.main){
+
+				self.apim(p)
+
+				return
+			}
+
+			if (typeof p.errorHandler == 'undefined')
+				p.errorHandler = true
+			
+			if (app.platform.apiproxy){
+
+				p.url = 'https://' + app.platform.apiproxy.host + ":" + app.platform.apiproxy.port + "/" + (p.action || "")
+				p.api = true
+				self.run(p)
+
+			}
+			else{
+
+				
+
+				if (p.fail)
+				 	p.fail(null, error('proxy', p) || 'network')
+			}
+
+		}
+
+		self.apim = function(p){
+
+			if (typeof p.errorHandler == 'undefined')
+				p.errorHandler = true
+						
+			p.url = app.apimproxy + "/" + (p.action || "")
+			p.apim = true
 
 			self.run(p)
+
 		}
 
 		self.fb = function(p){
 			
 			p.url = app.firebase + "/" + (p.action || "").split('.').join('/');
-			
+			p.fb = true
+
+			console.log("FIREASAE", p)
 
 			self.run(p)
 		}
@@ -7061,33 +7157,75 @@
 		self.rtchttp = function(p){
 			
 			p.url = app.rtchttp + "/" + (p.action || "").split('.').join('/')
+			p.rtchttp = true
 
 			self.run(p)
 		}
 
 		self.rpc = function(p){
 
-        	if(typeof _Electron != 'undefined' && 1 == 2){
+			p.rpc = true
+
+		
+			/*if(typeof p.nodeFix == 'undefined' && app.platform.nodeid != 'undefined'){
+
+				var fail = p.fail || function(){}
+
+				p.nodeFix = app.platform.nodeid;
+				p.fail = function(r){
+
+					if(r && r.statusCode == 500 && (!r.data || _.isEmpty(r.data))){
+						app.platform.autochange()
+
+
+						if(app.platform.nodeid == p.nodeFix){
+							fail(r)
+						}
+						else
+						{
+							self.rpc(p)
+						}
+					}
+					else
+					{
+						fail(r)
+					}
+					
+				}
+			}*/	
+
+        	if(app.platform.dontuseapiproxy){
+
         		var id = parseInt(Math.random() * 100000)
 
-        		var node = app.platform.nodes[app.platform.nodeid]
 
-        		p.url = "http://"+node.user+":"+node.pass+"@" + node.full 
-        	
-				p.data = JSON.stringify({
-		        	method: p.method,
-		        	params: p.parameters,
-		        	id: id
-		        })
+				p.url = app.platform.sdk.system.nodeexdirect();
+				p.nodedirect = true;
+				
+				if (p.url){
 
-		        var success = p.success;
+					p.data = JSON.stringify({
+						method: p.method,
+						params: p.parameters,
+						id: id
+					})
 
-		        p.success =  function(storage){
-					success(deep(storage, 'result') || storage)
-
+					
+					var success = p.success;
+	
+					p.success =  function(storage){
+						success(deep(storage, 'result') || storage)
+					}
+	
+					self.run(p)
 				}
 
-		        self.run(p)
+				else{
+
+					if (p.fail)
+				 		p.fail(null, 'nodedirect')	
+				}       	
+				
 
 		        return
 
@@ -7095,47 +7233,19 @@
         	}
         	else
         	{
-        		p.action = 'rpc'
+        		p.action = 'rpc-' + p.method
 
 				p.data = {
 					method : p.method,
-					parameters : hexEncode(JSON.stringify(p.parameters || "")),
-					node : app.platform.nodeid
+					parameters : hexEncode(JSON.stringify(p.parameters || ""))
 				}
 
-				if(typeof p.nodeFix == 'undefined'){
+				if(app.platform.nodeid){
 
-					var fail = p.fail
-
-					p.nodeFix = Number(app.platform.nodeid || '1')
-
-					p.fail = function(r){
-
-						if(r && r.statusCode == 500 && (!r.data || _.isEmpty(r.data))){
-							app.platform.autochange()
-
-
-							if(app.platform.nodeid == p.nodeFix){
-								fail(r)
-							}
-							else
-							{
-								self.rpc(p)
-							}
-						}
-						else
-						{
-							fail(r)
-						}
-						
-					}
-				}	
-
-				
+					app.platform.sdk.system.nodeex(p.data)
+				}
 
 				var success = p.success;
-
-				
 
 				p.success =  function(storage){
 
@@ -8216,7 +8326,6 @@
 		            canvas.height = height;
 				}
 				
-				console.log('exifOrientation', exifOrientation)
 		        // transform context before drawing image
 		        switch (exifOrientation) {
 		            case 1:
@@ -9009,6 +9118,8 @@
 /* NUMBERS */
 	compressedNumber = function(num, n, N) {
 
+		num = Number(num).toFixed(0)
+
 		if(!N) N = 999
 
 		if(!n) n = 0 ;
@@ -9455,22 +9566,6 @@
 
 	}
 
-	superXssFilter = function(str, p){
-		var l = str.length;
-
-		var nstr = filterXSS(str, p)
-
-		console.log(str, nstr, nstr.length, l)
-
-		if(!nstr.length || nstr.length == l){
-			return nstr
-		}
-
-		else{
-			return superXssFilter(nstr, p)
-		}
-	}
-
 	numberToBool = function(v){
 
 		if(v) return true;
@@ -9720,11 +9815,32 @@ checkAddress = function(address){
 }
 
 
-
 /* ______________________________ */
 
 /* EXTRA */
 
+superXSS = function(str, p){
+
+	var l = str.length;
+
+	var nstr = filterXSS(str, p)
+
+	if(!nstr.length || l == nstr.length){
+		return nstr
+	}
+	else{
+		return superXSS(nstr, p)
+	}
+
+}
+
+clearStringXss = function(nm){
+
+	return filterXSS(nm, {
+		whiteList: [],
+		stripIgnoreTag: true,
+	})
+}
 
 
 

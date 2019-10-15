@@ -155,7 +155,13 @@
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
-			contain: layout;
+			
+
+			>div{
+				&.work{
+					contain: layout;
+				}
+			}
 			
 			img{
 				max-width: 100%;
@@ -283,6 +289,10 @@
 						padding-top : @rhythm;
 						color : @color-main;
 						font-size: 0.8em;
+					}
+
+					.count{
+						padding-right : 2 * @rhythm;
 					}
 				}
 			}
@@ -464,7 +474,6 @@
 						width: 50%;
 						.metapanelitem{
 							opacity: 0.6;
-							margin-left: 2 * @rhythm;
 							cursor: pointer;
 							float: right;
 							font-size: 0.8em;
@@ -472,7 +481,7 @@
 							width: 22px;
 							height: 22px;
 							line-height: 22px;
-							margin-right: 11px;
+							margin-right: @rhythm;
 							text-align: center;
 							border-radius: 50%;
 							color : @color-gray2;
@@ -827,6 +836,7 @@
 			.tags{
 				margin-bottom: 2 * @rhythm;
 				overflow: hidden;
+				max-width: 650px;
 				>div{
 					float: left;
 					margin-right: @rhythm;
@@ -1025,6 +1035,7 @@
 				background: fade(@color-black2, 80);
 				overflow-y: scroll;
 				padding-top: 0;
+				
 
 				.exitFull{
 					display: block;
@@ -1056,11 +1067,22 @@
 					}
 				}
 
+				.commentsWrapperHb{
+					padding-bottom : 20%;
+				}
+
 				.work{
 					margin : 0 auto;
 					max-width: 960px;
 					background: #fff;
 					padding : 0;
+					
+
+					
+
+					.shareTable  {
+						
+					}
 
 					.iconWrapper{
 						display: none;
@@ -1069,6 +1091,7 @@
 					.shareWrapper{
 						padding : 0;
 						.meta{
+							display: none;
 							margin-top: 0;
 							margin-bottom : 0;
 							padding : 2 * @rhythm;
@@ -1128,7 +1151,7 @@
 
 		.showmorebyauthor{
 			text-align: center;
-			background: fade(@color-gray2, 100);
+			background: fade(#0180ff, 100);
 			padding : 2 * @rhythm;
 			cursor: pointer;
 			font-size: 0.8em;
@@ -1218,14 +1241,15 @@
 	.zero,
 	.ended{
 		display: none;
-		padding : 2 * @rhythm 0;
-		padding-bottom : 4 * @rhythm;
+		padding : 8 * @rhythm 0;
+		padding-bottom : 8 * @rhythm;
 		color : @color-gray-light;
 		text-align: center;
+		background: #fff;
 
 		.tou{
 			padding : 4 * @rhythm 0;
-			color : @color-contrast;
+			color : @color-main;
 		}
 	}
 
@@ -1266,8 +1290,31 @@
 		.loadmore{
 			display: none;
 		}
+	}
 
-		
+	.networkErrorMessage{
+		display: none;
+		padding : 6 * @rhythm;
+		text-align: center;
+
+		i{
+			font-size: 2em;
+			color : fade(@color-main, 15);
+		}
+	}
+
+	&.networkError{
+		.networkErrorMessage{
+			display : block;
+		}
+
+		.loadmore{
+			display: none;
+		}
+
+		.loader{
+			display: none!important;
+		}
 	}
 
 	.seemore{
@@ -1376,7 +1423,7 @@
 	.menuitem{
 		cursor: pointer;
 		>div{
-			padding : @rhythm;
+			padding : 2*  @rhythm;
 			border-bottom: 1px solid @color-gray-slight;
 			.transition(0.3s);
 
@@ -1403,6 +1450,7 @@
 			}
 		}
 
+		&.block,
 		&.complain{
 			&:hover{
 				>div{

@@ -32,7 +32,7 @@
                     
 
                     <div class="captionlabel">
-                        <%= g.g.caption %>
+                        <%= clearStringXss(g.g.caption) %>
                     </div>
 
                     <div class="captionicon">
@@ -60,7 +60,7 @@
                             <div class="cnamecell">
                                 <div class="cname">
                                     <a href="<%-app.platform.api.authorlink(author.address)%>?report=post&mt=<%- cnt.txid %>" handler="true">
-                                        <span><%= cnt.caption %></span>
+                                        <span><%= clearStringXss(cnt.caption) %></span>
                                     </a>
                                 </div>
                             </div>

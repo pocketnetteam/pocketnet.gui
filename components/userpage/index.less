@@ -2,6 +2,46 @@
 
 #userpage{
 
+	.bgCaptionSpacer{
+		padding-bottom : 4 * @rhythm;
+		padding-top : 2 * @rhythm;
+		height: 1px;
+	}
+
+	.fillUserWrapper{
+		height: 400px;
+		background: #F1F1F1;
+
+
+		.caption{
+			
+			margin : 0 auto;
+			margin-bottom: 6 * @rhythm;
+			max-width : 450px;
+
+			span{
+				font-weight: 100;
+				font-size: 1.5em;
+			}
+		}
+
+		.table{
+			height: 100%;
+
+			>div{
+				vertical-align: middle;
+				text-align: center;
+			}
+
+			button{
+				min-width: 270px;
+				font-weight: 100;
+				padding : 2 * @rhythm;
+			}
+		}
+	}
+
+
 	.bgCaption{
 		background: #F1F1F1;
 		color : @color-black2;
@@ -14,7 +54,6 @@
 		}
 
 		.tips{
-			margin-top: 2 * @rhythm;
 
 			.profile{
 				padding-left: 6 * @rhythm;
@@ -356,6 +395,7 @@
 
 				.notification {
 					padding-left: 0;
+					padding-right: 0;
 				}
 		    }
 		}
@@ -369,6 +409,36 @@
 
 	.activitiesCnt{
 		padding-top: .5 * @rhythm;
+	}
+
+	&.validate{
+		.maketsWrapper{
+	
+			.contents{
+				
+	
+				.reportCaption{
+
+					&[rid="notifications"],
+					&[rid="ustate"],
+					&[rid="wallet"],
+					&[rid="usersettings"],
+					&[rid="accounts"]{
+						opacity : 0.5;
+					}
+
+				}
+	
+	
+			}
+	
+	
+			
+			.report{
+				
+			}
+	
+		}
 	}
 }
 

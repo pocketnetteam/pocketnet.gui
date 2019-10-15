@@ -37,6 +37,31 @@ User = function(app, p) {
 		}
 	}
 
+	self.signature = function(ojb){
+
+		var keyPair = self.keys()
+
+		var nonce = Math.round(new Date().getTime() / 1000);
+
+		do{
+			nonce = nonce.toString() + '' + rand(0, 9).toString();
+		}
+		while(nonce.length < 32)
+
+		var signature = keyPair.sign(Buffer.from(nonce))		
+
+		var sobj = JSON.stringify({
+
+			nonce : nonce,
+			signature : signature.toString('hex'),
+			pubkey : keyPair.publicKey.toString('hex'),
+			address : self.address.value
+			
+		})
+
+		return sobj
+	}
+
 	self.address = {
 		set : function(l){
 			
@@ -441,8 +466,6 @@ User = function(app, p) {
 	self.private = keys.private;
 
 	self.keys = function(){
-
-		
 		return bitcoin.ECPair.fromPrivateKey(keys.private.value)
 	}
 

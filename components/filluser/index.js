@@ -51,29 +51,47 @@ var filluser = (function(){
 				id : 'captcha',
 				render : 'captcha',
 
+				nextindex : 'email',
+
 				prev : function(clbk){
 
-					needcaptcha = false
 
-					/*if(window.cordova){
-						actions.next()
+					balance.check(function(result){
 
-						return;
-					}*/
-
-					self.sdk.captcha.get(function(captcha){
-
-						if (captcha.done){
+						if (result){
 							actions.next()
 						}
-						else{
+						else
+						{
+							self.sdk.captcha.get(function(captcha, error){
 
-							steps.captcha.current = captcha
+								if (error){
 
-							clbk()
+									actions.to('network')
+
+									return
+								}
+
+								
+								if (captcha.done){
+
+									actions.next()
+
+									balance.request()
+
+								}
+								else{
+
+									steps.captcha.current = captcha
+
+									clbk()
+								}
+
+							}, true)
 						}
 
 					}, true)
+
 				},
 
 				after : function(el, pel){
@@ -116,8 +134,6 @@ var filluser = (function(){
 							
 							self.sdk.captcha.make(text, function(error, captcha){
 
-								console.log('error', error)
-
 								if (error == 'captchashots'){
 
 									sitemessage("Words doesn't match")
@@ -132,16 +148,13 @@ var filluser = (function(){
 
 									return 
 								}
-
 							
 								if (captcha.done){
 									actions.next()
+
+									balance.request()
 								}
 						
-
-
-								
-		
 							}, true)
 
 						}
@@ -155,87 +168,23 @@ var filluser = (function(){
 					})
 				}
 			},
-
 			email : {
 
 				id : 'email',
 
+				nextindex : 'money',
+
 				prev : function(clbk){
 
-					self.app.platform.sdk.node.transactions.get.allBalance();
-
-					getrefname(function(name){
-						var type = gettype()
-						var r = deep(document, 'referrer')
-
-
-						self.app.platform.m.log('registration_referal_name', name)
-						self.app.platform.m.log('registration_referal_type', type)
-
-						if (r){
-							self.app.platform.m.log('registration_referal_referrer', r)
-						}
-					})
-						
-
+					log.referral()
 					
-					self.sdk.users.requestFreeMoney(function(res, err){
-
-
-						if(!res){
-
-							if (err == 'captcha'){
-								needcaptcha = true;
-
-								if (current == 2){
-									actions.to(0)
-								}
-							}
-
-							if (err == 'error'){
-								gliperror = true
-
-								if (current == 2){
-									actions.to(0)
-								}
-
-							}
-
-							return
-						}
-
-						self.app.platform.sdk.node.transactions.clbks.filluser = function(){
-
-							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-								if (amount > 0 && current == 2){
-
-									self.app.platform.m.log('userwisard_money_success')
-
-									delete self.app.platform.sdk.node.transactions.clbks.filluser
-
-									actions.next()
-
-								}
-							})
-							
-						}
-						
-					})
-			
-
 					if (localStorage['uei']){
 						actions.next()
 					}	
 					else
 					{
-
-						console.log("CLBK", current)
 						clbk()	
 					}
-
-						
-					
 					
 				},
 
@@ -366,53 +315,33 @@ var filluser = (function(){
 			money : {
 
 				id : 'money',
+				nextindex : 'settings',
 
 				prev : function(clbk){
 
-					self.app.platform.sdk.ustate.me(function(mestate){
-						if(!mestate){
-							actions.to(5)
+					balance.check(function(result){
+
+						if (result){
+							actions.next()
 						}
 						else
 						{
-							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-								if (amount > 0 && current == 2){
+							if (needcaptcha){
+								actions.to('captcha')
+		
+								return
+							}
+		
+							if (gliperror){
+								actions.to('moneyfail')
+								return
+							}
 
-									self.app.platform.m.log('userwisard_money_success')
-									
-
-									actions.next()
-
-									return
-								}
-								else
-								{
-									self.app.platform.sdk.node.transactions.clbks.filluser = function(){
-
-										self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-											if (amount > 0 && current == 2){
-
-												self.app.platform.m.log('userwisard_money_success')
-
-												delete self.app.platform.sdk.node.transactions.clbks.filluser
-
-												actions.next()
-
-											}
-										})
-										
-									}
-
-									clbk()
-								}
-
-							})
-
+							clbk()
 						}
-					})
 
+					})
 					
 				},
 
@@ -422,43 +351,24 @@ var filluser = (function(){
 
 				after : function(el, pel, time){
 
-					if (needcaptcha){
-						actions.to(0)
-
-						return
-					}
-
-					if (gliperror){
-						actions.to(7)
-
-						return
-					}
-
-
 					actions.timer(el.find('.time'), time || 59, function(){
 
+						balance.check(function(result){
 
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){							
+							if (result && (current == 'money' || current =='captcha')){
 
-							if(current == 2 || current == 6){
+								self.app.platform.m.log('userwisard_money_success')
 
-								if(amount > 1){
+								actions.next()
 
-									self.app.platform.m.log('userwisard_money_success')
+							}
 
-									actions.to(3)
-								}
-								else
-								{
+							else{
+								self.app.platform.m.log('userwisard_modey_delay')
 
-									self.app.platform.m.log('userwisard_modey_delay')
+								el.find('.subcaption').html(self.app.localization.e('wesentmoneydelay'))
 
-									el.find('.subcaption').html(self.app.localization.e('wesentmoneydelay'))
-									steps.money.after(el, pel, 30)
-
-								}
-
-								
+								steps.money.after(el, pel, 30)
 							}
 
 						}, true)
@@ -469,23 +379,28 @@ var filluser = (function(){
 
 
 			},
-
 			settings : {
 				id : 'settings',
+				nextindex : 'welcome',
 
 				prev : function(clbk){
-					self.app.platform.sdk.ustate.me(function(mestate){
+
+					clbk()
+
+					self.app.platform.m.log('userwisard_account')
+
+					/*self.app.platform.sdk.ustate.me(function(mestate){
 						if(!mestate){
-							actions.to(5)
+							actions.to('network')
 						}
 						else
 						{
 
-							self.app.platform.m.log('userwisard_account')
+							
 
 							clbk()
 						}
-					})					
+					})	*/				
 				},
 
 				render : 'settings',
@@ -498,7 +413,6 @@ var filluser = (function(){
 				next : true
 				
 			},
-
 			welcome : {
 
 				id : 'welcome',
@@ -558,7 +472,6 @@ var filluser = (function(){
 
 
 			},
-
 			network : {
 
 				id : 'network',
@@ -574,11 +487,22 @@ var filluser = (function(){
 
 				after : function(el){
 
-					if (networkInterval)
+
+					self.app.errors.clbks.filluser = function(){
+
+						if(app.errors.state.proxy || app.errors.state.proxymain)  return
+
+						if (current == 'network' && !self.app.platform.loadingWithErrors){
+							actions.to('captcha')
+						}
+
+						delete self.app.errors.clbks.filluser
+					}
+
+					/*if (networkInterval)
 						clearInterval(networkInterval)
 
 					var networkInterval = setInterval(function(){
-
 
 						self.app.platform.sdk.ustate.me(function(mestate){
 
@@ -587,106 +511,205 @@ var filluser = (function(){
 								self.app.platform.m.log('userwisard_network_success')
 
 								clearInterval(networkInterval)
-								actions.to(2)
+								actions.to('money')
 							}
 
 						})
 
-					}, 5000)
+					}, 5000)*/
 				}
 
 
 			},
-		}
 
-		steps.moneym = {
-			id : 'moneym',
-			prev : function(clbk){
+			moneyfail : {
 
-				self.app.platform.sdk.node.transactions.clbks.filluserm = function(){
+				id : 'moneyfail',
+	
+				prev : function(clbk){
+	
+					clbk()
+				},
+	
+				render : 'moneyfail',
+	
+				after : function(el){
 
-					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-						if (amount > 0 && current == 6){
-
-							self.app.platform.m.log('userwisard_money_success')
-
-							actions.to(3)
-
-						}
-					})
-					
-				}
-
-				clbk()
-			},
-			ret : steps.money.ret,
-			render : 'moneym',
-			after : steps.money.after
-		}
-
-		steps.moneyfail = {
-
-			id : 'moneyfail',
-
-			prev : function(clbk){
-
-				clbk()
-			},
-
-			render : 'moneyfail',
-
-			after : function(el){
-				var b = function(){
-					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-						el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " POC")
-					})
-				}
-				
-				b()
-
-				el.find('.check').on('click', function(){
-
-					topPreloader(20);
-
-					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-						
-						topPreloader(100);
-
-						if(amount > 0){
-
-							if (current == 7)
-								actions.to(3);
-
-							delete self.app.platform.sdk.node.transactions.clbks.moneyfail
-						}
-
-						b()
-
-					})	
-
-					self.app.platform.sdk.node.transactions.clbks.moneyfail = function(){
-
+					var b = function(){
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
+							el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " POC")
+						})
+					}
+					
+					b()
+	
+					el.find('.check').on('click', function(){
+	
+						topPreloader(20);
+	
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+							
+							topPreloader(100);
+	
 							if(amount > 0){
-
-								if (current == 7)
-									actions.to(3);
-
+	
+								if (current == 'moneyfail')
+									actions.to('settings');
+	
 								delete self.app.platform.sdk.node.transactions.clbks.moneyfail
 							}
-						})
-						
-					}
-				})
+	
+							b()
+	
+						})	
+	
+						self.app.platform.sdk.node.transactions.clbks.moneyfail = function(){
+	
+							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+	
+								if (amount > 0){
+	
+									if (current == 'moneyfail'){
+										actions.to('settings');
+									}
+	
+									delete self.app.platform.sdk.node.transactions.clbks.moneyfail
+								}
+							})
+							
+						}
+					})
+				}
+	
 			}
 
 		}
 
-		var current = -1, nextBlock = false;
+		
 
-		var arrange = ['captcha', 'email', 'money', 'settings', 'welcome', 'network', 'moneym', 'moneyfail']
+		var current = null;
+
+		var arrange = _.map(steps, function(s, i){
+			return i;
+		})
+
+		var getindex = function(current){
+
+			return _.findIndex(arrange, function(s){
+				return s == current
+			})
+		}
+
+		var log = {
+			referral : function(){
+
+				getrefname(function(name){
+					var type = gettype()
+					var r = deep(document, 'referrer')
+
+
+					self.app.platform.m.log('registration_referal_name', name)
+					self.app.platform.m.log('registration_referal_type', type)
+
+					if (r){
+						self.app.platform.m.log('registration_referal_referrer', r)
+					}
+				})
+
+			}
+		}
+
+		var balance = {
+
+			request : function(clbk){
+				self.sdk.users.requestFreeMoney(function(res, err){
+
+					var address = self.sdk.address.pnet().address;
+
+					var requested = self.app.settings.get(address, 'request') || "";
+
+					if(!res && !requested){
+
+						if (err == 'captcha'){
+
+							needcaptcha = true;
+
+							if (current == 'money' || current == 'captcha'){
+								actions.to('captcha')
+							}
+
+						}
+
+						if (err == 'error'){
+							gliperror = true
+
+							if (current == 'money' || current == 'captcha'){
+								actions.to('captcha')
+							}
+
+						}
+
+						if (clbk)
+							clbk(false, 'err')
+						
+					}	
+					
+					else{
+
+						self.app.settings.set(address, 'request', 'true')
+
+						balance.follow()
+
+						if (clbk)
+							clbk(true)
+					}
+					
+				})	
+			},
+
+			check : function(clbk, update){
+
+				self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+
+					if (clbk)
+						clbk(amount > 0)
+					
+				}, update)
+
+			},
+
+			follow : function(){
+				self.app.platform.sdk.node.transactions.clbks.filluser || (
+				self.app.platform.sdk.node.transactions.clbks.filluser = function(){
+
+					delete self.app.platform.sdk.node.transactions.clbks.filluser
+
+					balance.check(function(result){
+
+						if (result){							
+
+							if(current == 'money'){				
+
+								self.app.platform.m.log('userwisard_money_success')							
+	
+								actions.next()
+	
+							}
+
+						}	
+						
+						else{
+
+							balance.follow()
+
+						}
+
+					})
+					
+				})
+			}
+
+		}
 
 		var actions = {
 			to : function(step, clbk){
@@ -702,9 +725,16 @@ var filluser = (function(){
 
 			next : function(clbk){
 
-				if(nextBlock) return 
+				if (current) {
+					current = steps[current].nextindex
+				}
+				else{
+					current = steps.captcha.id
+				}
 
-				current++;
+
+
+				if(!current) return
 
 				actions.makeStep(function(){
 
@@ -713,9 +743,8 @@ var filluser = (function(){
 
 			makeStep : function(clbk){
 
-				var step = steps[arrange[current]];
+				var step = steps[current];
 
-				console.log('step', step)
 
 				if (step){			
 
@@ -750,11 +779,12 @@ var filluser = (function(){
 
 					
 			},
+
 			timer : function(el, time, clbk){
 
 				var progress = new CircularProgress({
 					radius: 120,
-					strokeStyle: '#ff1975',
+					strokeStyle: '#00A3F7',
 					lineCap: 'round',
 					lineWidth: 1,
 					font: "100 56px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
@@ -811,15 +841,17 @@ var filluser = (function(){
 
 				update(timer.getDuration());	
 	
-			}
+			},
+			
 		}
 
 		var events = {
 			width : function(){
 
-				if(current < 0) return
 
-				var activestep = steps[arrange[current]]
+				if(!current) return
+
+				var activestep = steps[current]
 
 				var _el = el.c.find('.step[step="'+activestep.id+'"] .stepBody');
 				var s = _el.closest('.step');
@@ -830,9 +862,11 @@ var filluser = (function(){
 				el.c.find('.step').width(w)
 
 
-				line.css('margin-left', '-' + ((current) * w) + 'px')
 
-				line.width(w * arrange.length)
+
+				line.css('margin-left', '-' + ((getindex(current)) * w) + 'px')
+
+				line.width(w * _.toArray(steps).length)
 			
 			}
 		}
@@ -854,10 +888,10 @@ var filluser = (function(){
 					el.c.find('.step').width(w)
 
 					
-					line.width(w * arrange.length)
+					line.width(w * _.toArray(steps).length)
 
 
-					var m = '-' + ((current) * w) + 'px'
+					var m = '-' + (getindex(current) * w) + 'px'
 
 					line.css('margin-left', m)
 					/*line.animate({
@@ -959,8 +993,6 @@ var filluser = (function(){
 				})
 			},
 
-			
-
 			network : function(el, clbk){
 
 				self.shell({
@@ -995,22 +1027,9 @@ var filluser = (function(){
 
 				})
 			},
-			moneym : function(el, clbk){
-				self.shell({
 
-					name :  'moneym',
-					el :   el,
-					data : {
-						
-					},
+			
 
-				}, function(_p){
-
-					if (clbk)
-						clbk(_p.el);
-
-				})
-			},
 			settings : function(_el, clbk, pel){
 
 				self.nav.api.load({
@@ -1071,19 +1090,32 @@ var filluser = (function(){
 
 				essenseData = p.settings.essenseData || {}
 
-				current = -1;
+				current = null;
 
 				var data = {
 					steps : steps
 				};
 
+
 				if(!self.app.user.validate()){
 
-					self.fastTemplate('panel', function(rendered){
-						
-						clbk(data);
 
-					})
+					if(self.app.errors.connection()){
+						self.app.nav.api.load({
+							open : true,
+							href : 'userpage?id=test',
+							history : true
+						})
+					}
+					else{
+						self.fastTemplate('panel', function(rendered){
+						
+							clbk(data);
+	
+						})
+					}
+
+					
 				}
 				else
 				{

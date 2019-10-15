@@ -6,12 +6,25 @@
 
 	.caption{
 		font-size: 2em;
-		font-weight: 700;
+		font-weight: 100;
 		color : @color-gray;
 	}	
 
 	.subcaption{
-		font-size: 1.5em;
-		color : @color-bright;
+		font-size: 1.2em;
+		color : @color-gray-mlight;
+		font-weight: 100;
+	}
+
+	.work{
+		background: fade(@color-gray-slight, 50);
+		height: 400px;
+		text-align: center;
+
+		.table{
+			>div{
+				vertical-align: middle;
+			}
+		}
 	}
 }

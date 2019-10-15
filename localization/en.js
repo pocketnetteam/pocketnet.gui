@@ -7,6 +7,19 @@ if(typeof loclib == 'undefined' || !loclib)
 
 var ____loclib = loclib.en;
 
+//time
+
+____loclib.fewseconds = "Few seconds ago";	
+____loclib.oneminute = "One minute ago";	
+
+____loclib.minutes = function(v){
+	return v + " minutes ago"
+}
+
+____loclib.tenminutes = "Ten minutes ago";	
+____loclib.halfanhour = "An hour ago";	
+____loclib.anhour = "An hour ago";	
+____loclib.today = "Today at";	
 
 //authorization
 
@@ -181,6 +194,10 @@ ____loclib.suseractivation = "User Activation";
 ____loclib.sprofile = "Profile";
 ____loclib.spc = "Post count";
 ____loclib.ssc = "Stars count";
+____loclib.ccc = "Comments count";
+____loclib.crc = "Comment Rate count";
+
+
 ____loclib.stp = "Trial period";
 ____loclib.srep = "Reputation";
 
@@ -280,7 +297,13 @@ ____loclib.dsa = "Do not Show Anymore";
 // Messages
 
 ____loclib.coinbaseSuccess = function(v){
-	return "Congratulations, you have won " + v + " Pocketcoin for your latest post!"
+	return "Congratulations, you have won " + v + " Pocketcoin for your latest activity!"
+}
+____loclib.coinbaseSuccesspost = function(v){
+	return "Congratulations, you have won " + v + " Pocketcoin for your latest posts!"
+}
+____loclib.coinbaseSuccesscomment = function(v){
+	return "Congratulations, you have won " + v + " Pocketcoin for your latest comments!"
 }
 ____loclib.userSent = function(v){
 	return "sent <b>" + v + " POC</b> to you"
@@ -296,6 +319,7 @@ ____loclib.unsubscribeUserMessage = "has unfollowed from your account"
 ____loclib.gotoprofileMessage = "go to profile"
 ____loclib.upvoteShareMessage = "has upvoted your post"
 
+____loclib.upvoteCommentMessage = " liked your comment"
 
 // Errors
 
@@ -327,11 +351,20 @@ ____loclib.unexperror12 = "Unknown Error (12)";
 
 ____loclib.networkerror = "There are some problems with node";
 
-____loclib.canSpendError = "Your money has not been unlocked just yet. Please wait";
-____loclib.noMoneyError = "You do not have any money";
+____loclib.canSpendError = "You have to wait for your previous transaction to clear in the blockchain. Please wait";
+____loclib.noMoneyError  = "You can't doing actions with zero account balance";
 
 
 
 ____loclib.waitConf = "You have to wait for your previous transaction to clear in the blockchain";
 ____loclib.postWaitConf = "Post is waiting for a blockchain confirmation";
 
+
+
+// notifications
+
+____loclib.ntnow = "Now"
+____loclib.ntlasthour = "This hour"
+____loclib.nttoday = "Today"
+____loclib.ntmounth = "This month"
+____loclib.ntearlier = "Earlier"

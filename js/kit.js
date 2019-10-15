@@ -205,6 +205,10 @@ Comment = function(txid){
 
 	self.txid = txid;
 
+	self.id = ''
+    self.parentid = ''
+    self.answerid = ''
+
 	self.message = {
 		set : function(_v){
 
@@ -304,6 +308,10 @@ Comment = function(txid){
 
 	self.validation = function(){
 
+		if(self.delete && self.id){
+			return false
+		}
+
 		if(!self.images.v.length && !self.url.v && !self.message.v) {
 			return 'content'
 		}
@@ -316,7 +324,13 @@ Comment = function(txid){
 	}
 
 	self.serialize = function(){
-		return encodeURIComponent(self.message.v) + self.images.v.join(',') + encodeURIComponent(self.url.v || '')
+
+		return self.txid + JSON.stringify({
+			message : encodeURIComponent(self.message.v),
+			url : encodeURIComponent(self.url.v),
+			images : encodeURIComponent(self.images.v),
+		}) + (self.parentid || "") + (self.answerid || "")
+
 	}
 
 	self.uploadImages = function(app, clbk){
@@ -375,43 +389,128 @@ Comment = function(txid){
 	}
 
 	self.export = function(extend){
-
-		if(extend){
-			return {
-				message : self.message.v,
-				url : self.url.v,
-				images : self.images.v,
-			} 
+		var r = {
+			postid : self.txid,
+			answerid : self.answerid || "",
+			parentid : self.parentid || ""
 		}
 
-		return {
-			m : encodeURIComponent(self.message.v),
-			u : encodeURIComponent(self.url.v),
-			i : self.images.v,
+		if(!self.delete){
+			r.msg = JSON.stringify({
+				message : encodeURIComponent(self.message.v),
+				url : encodeURIComponent(self.url.v),
+				images : (self.images.v),
+			})
 		}
+
+		if(self.id){
+			r.id = self.id
+		}
+
+		return r
 	}
 
 	self.import = function(v){
-		self.url.set(v.u || v.url)
-		self.message.set(v.m || v.message)
-		self.images.set(v.i || v.images)
+
+		self.txid = v.postid;
+		self.answerid = v.answerid;
+		self.parentid = v.parentid;
+
+		v.msgparsed = JSON.parse(v.msg)
+
+		self.url.set(decodeURIComponent(v.msgparsed.url))
+		self.message.set(decodeURIComponent(v.msgparsed.message))
+		self.images.set((v.msgparsed.images))
+
+		if (v.txid || v.id)
+			self.id = v.txid || v.id
 	}
 
-	self.alias = function(id, time, timeupd, children, address){
+	self.alias = function(id){
 		var comment = new pComment();
-			comment._import(self.export())
+			comment.import(self.export())
 
 			comment.id = id
 			comment.txid = self.txid
-			comment.children = children
-			comment.address = address
-
-			comment.setTime(time, timeupd)
 
 		return comment;
 	}
 
+	self.typeop = function(){
+
+		if(self.id){
+			if(self.delete){
+				return 'commentDelete'
+			}
+			else{
+				return 'commentEdit'
+			}
+
+			
+		}
+
+		return self.type
+	}
+
+	self.ustate = 'comment'
+
+
+
 	self.type = 'comment'
+
+	return self;
+}
+
+СScore = function(){
+	var self = this;
+
+	self.comment = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.address = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.value = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : 0
+	};
+
+	self.ustate = 'comment_score'
+
+	self.opreturn = function(){
+
+		return self.address.v + " " + self.value.v
+	}
+
+	self.validation = function(){
+		if(!self.comment.v || !self.address.v){
+			return 'comment'
+		}
+	}
+
+	self.serialize = function(){
+
+		return self.comment.v + self.value.v
+	}
+
+	self.export = function(){
+		return {
+			commentid : self.comment.v,
+			value : self.value.v.toString()
+		}
+	}
+
+	self.type = 'cScore'
 
 	return self;
 }
@@ -572,7 +671,13 @@ Share = function(){
 		drag : true
 	};
 
-	self.ustate = 'post'
+	self.ustate = function(){
+		if(self.aliasid){
+			return ''
+		}
+
+		return 'post'
+	} 
 
 	self.tags = {
 		have : function(tag){
@@ -754,9 +859,6 @@ Share = function(){
 		image : ''
 	}
 
-	/*_.each(self.default, function(s, k){
-		self.settings[k] = _.clone(s)
-	})*/
 
 	self.uploadImages = function(app, clbk){
 
@@ -1244,7 +1346,14 @@ pUserInfo = function(){
 		if (v.txid)
 			self.txid = v.txid;
 
-		self.addresses = JSON.parse(v.b || v.addresses || "[]")
+			
+		try{
+			self.addresses = JSON.parse(v.b || v.addresses || "[]")
+		}
+		catch (e){
+			
+		}
+		
 
 		if (v.adr || v.address)
 			self.address = v.adr || v.address
@@ -1584,57 +1693,117 @@ pComment = function(){
 	self.images = [];
 
 	self.txid = '';
+	self.id = '';
 	self.time = 0;
-	self.timeupd = 0;
+	self.timeUpd = 0;
 	self.children = 0;
 
 	self.address = '';
 	self.parentid = '';
-	self.answerid = ''
+	self.answerid = '';
+
+	self.scoreDown = 0;
+	self.scoreUp = 0;
+	self.myScore = 0;
+	self.deleted = false;
+
+	self.my = function(app){
+
+		var ao = app.platform.sdk.address.pnet();
+
+		if(self.address && ao && self.address == ao.address) return true
+
+		return false
+	}
 
 
 	self._import = function(v){
-		self.url = decodeURIComponent(v.u || v.url || "");
-		self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
-		self.images = v.i || v.images || [];
+
+		if (v.msgparsed){
+			self.url = decodeURIComponent(v.msgparsed.url || "");
+			self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
+			self.images = v.msgparsed.images || [];
+		}		
+		
+		self.txid = v.postid;
+		self.answerid = v.answerid;
+		self.parentid = v.parentid;
+
+		self.scoreDown = Number(v.scoreDown || '0');
+		self.scoreUp = Number(v.scoreUp || '0');
+
+		if (v.myScore) self.myScore = v.myScore
+
+		if (v.deleted) self.deleted = true
+
+		if (v.id || v.txid)
+			self.id = v.id || v.txid;
 	}
 
 	self.import = function(v){
-		v = JSON.parse(v)
+			
+		if (v.msg)
+			v.msgparsed = JSON.parse(v.msg)
 
 		self._import(v)
 	}
 
 	self.export = function(){
 
-		var v = {}
+		var r = {
+			id : self.id,
+			postid : self.txid || "",
+			answerid : self.answerid || "",
+			parentid : self.parentid || "",
+			msgparsed : {
+				message : self.message,
+				url : self.url,
+				images : self.images,
+			},
+			scoreDown : self.scoreDown,
+			scoreUp : self.scoreUp,
+			myScore : self.myScore,
+			deleted : self.deleted
+		}
+
+		return r
+	}
+
+	self.upvote = function(value){
+
+		if(self.myVal && self.myVal != '0') return null;
+
+		var upvoteComment = new СScore();
+
+		upvoteComment.comment.set(self.id);
+		upvoteComment.address.set(self.address || '');
+		upvoteComment.value.set(value);
+
+		self.myScore = Number(value);
+
+		return upvoteComment;
+	}
+
+	self.delete = function(){
+		var c = new Comment();
+
+		c.id = self.id
+		c.parentid = self.parentid
+		c.answerid = self.answerid
+
+		c.delete = true
 		
-		v.m = encodeURIComponent(self.message)
-		v.u = encodeURIComponent(self.url)
-		v.i = _.clone(self.images)
 
-		return v
-	}
+		return c
 
-	self.serialize = function(){
-		return encodeURIComponent(self.message) + self.images.join(',') + encodeURIComponent(self.url || '')
-	}
-
-
-	self.upvote = function(){
-		var upvoteShare = new UpvoteShare();
-
-		upvoteShare.share.set(self.txid);
-
-		return upvoteShare;
 	}
 
 	self.setTime = function(t, tu){
 		self.time = new Date()
 		self.time.setTime(t * 1000);
 
-		self.timeupd = new Date()
-		self.timeupd.setTime(tu * 1000);
+		self.timeUpd = new Date()
+		self.timeUpd.setTime(tu * 1000);
 	}	
 
 	self.renders = {
@@ -1688,7 +1857,7 @@ kits = {
 	alias : {
 		userInfo : pUserInfo,
 		share : pShare,
-		comment : pComment
+		comment : pComment,
 	}
 }
 

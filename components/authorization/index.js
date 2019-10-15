@@ -122,7 +122,16 @@ var authorization = (function(){
 							}
 							else
 							{
-								return 'filluser'
+
+								if (self.app.errors.connection()){
+									return 'userpage?id=test'
+								}
+
+								else{
+									return 'filluser'
+								}
+
+								
 							}
 
 						}
