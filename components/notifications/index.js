@@ -151,8 +151,6 @@ var notifications = (function(){
 
 				}
 
-				console.log('grou', grou)
-
 				self.shell({
 					name :  'notifications',
 					el :   p.el,
@@ -260,6 +258,90 @@ var notifications = (function(){
 			self.iclbks.lenta = function(){
 				renders.loadingAndEmpty()
 			}
+
+
+			if(isMobile()){
+
+				var cc = el.c.find('.circularprogress');
+				var maxheight = 220;
+
+				var progress = new CircularProgress({
+					radius: 30,
+					strokeStyle: '#00A3F7',
+					lineCap: 'round',
+					lineWidth: 1,
+					font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
+					fillStyle : "#00A3F7",
+					text : {						
+						value : ""
+					},
+					initial: {
+						strokeStyle: '#fff',
+						lineWidth: 1
+					}
+				});
+
+				progress.update(70);
+
+				el.c.find('.circularprogressWrapper').html(progress.el);
+
+				var trueshold = 200
+
+				var w = $(window)
+
+				var parallax = new SwipeParallax({
+
+					el : el.c.find('.ntf'),
+
+					allowPageScroll : 'vertical',
+	
+					directions : {
+						down : {
+							cancellable : true,						
+
+							positionclbk : function(px){
+								var percent = Math.abs(px) / trueshold;
+
+								if (px >= 0){
+
+									progress.options.text = {
+										value: ''
+									};
+
+									progress.update(percent * 100);
+
+
+									cc.height((maxheight * percent)+ 'px')								
+
+									//tp.css('opacity', 1 -  (4 * percent))
+
+								}
+
+							},
+
+							constraints : function(){
+								if(w.scrollTop() == 0){
+									return true;
+								}
+							},
+
+							restrict : true,
+							trueshold : trueshold,
+							clbk : function(){
+
+								self.app.platform.sdk.notifications.getNotifications(function(){
+									parallax.renew()
+								})
+	
+							}
+	
+						}
+					}
+					
+	
+				}).init()
+			}
+
 		}
 
 		var make = function(){

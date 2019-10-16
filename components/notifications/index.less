@@ -1,6 +1,7 @@
 @import "../../css/__cssvar";
 
 #notifications{
+	position: relative;
 
 	.closentooltipth,
 	.closentooltipsecond,
@@ -19,6 +20,24 @@
 		color : @color-gray-mlight;
 		font-size: 2em;
 		opacity: 0.5;
+	}
+
+	.circularprogress{
+		overflow: hidden;
+		height: 0px;
+		position: absolute;
+		left : 0;
+		right : 0;
+		top : 0;
+		
+
+		.circularprogressWrapper{
+			padding : 2 * @rhythm;
+			text-align: center;
+			canvas{
+				margin : 0 auto;
+			}
+		}		
 	}
 	
 	.ncaption{

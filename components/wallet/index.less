@@ -3,6 +3,7 @@
 #wallet{
 	min-height: 600px;
 	padding-bottom: 8 * @rhythm;
+	position: relative;
 
 	.caption{
 
@@ -16,7 +17,23 @@
 		}
 	}
 
+	.circularprogress{
+		overflow: hidden;
+		height: 0px;
+		position: absolute;
+		left : 0;
+		right : 0;
+		top : 0;
+		
 
+		.circularprogressWrapper{
+			padding : 2 * @rhythm;
+			text-align: center;
+			canvas{
+				margin : 0 auto;
+			}
+		}		
+	}
 
 	.panel{
 		overflow: hidden;

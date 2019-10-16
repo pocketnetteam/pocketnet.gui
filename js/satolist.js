@@ -413,13 +413,13 @@ Platform = function(app, listofnodes){
 
 		"34" : {
 			message : function(){
-				return 'Comment sending error/ 34'
+				return 'The comment you are replying to has been deleted by the user'
 			}
 		},
 
 		"33" : {
 			message : function(){
-				return 'This comment is too long, please break it up.'
+				return 'This comment is too long, please break it up'
 			}
 		},
 
@@ -2765,9 +2765,7 @@ Platform = function(app, listofnodes){
 			},
 			save : function(){
 
-				var e = this.export();
-
-				
+				var e = this.export();				
 				
 				if (e.notifications.length && e.block > blockps && this.inited == true){
 
@@ -2918,13 +2916,9 @@ Platform = function(app, listofnodes){
 
 				data.nblock || (data.nblock = self.currentBlock);
 
-				console.log(deep(data, 'tx.coinbase'))
-
 				if(data.msg == 'transaction' && data.address == self.sdk.address.pnet().address && !deep(data, 'tx.coinbase')){
 					return
 				}
-
-				console.log(":ADD")
 
 				if (this.storage.notifications){
 					this.storage.notifications.unshift(data)
@@ -3009,12 +3003,24 @@ Platform = function(app, listofnodes){
 								return true
 							})
 
+							var added = [];
+
 							_.each(ns, function(no){
-								n.storage.notifications.push(no)
+
+								var f = _.find(n.storage.notifications, function(n){
+									if(no.txid && n.txid == no.txid) return
+								})
+
+								if(!f){
+									added.push(no)
+									n.storage.notifications.push(no)
+								}
+
+								
 							})
 
 							_.each(n.clbks.added, function(f){
-								f(ns)
+								f(added)
 							})
 
 							if (clbk)
@@ -13843,7 +13849,11 @@ Platform = function(app, listofnodes){
 
 		var unfocustime = null;
 
-		var f = function(e){
+		var fpause = function(e){
+			f(e, true)
+		}
+
+		var f = function(e, resume){
 
 			var focustime = platform.currentTime()
 			var time = focustime - (unfocustime || focustime)
@@ -13854,7 +13864,7 @@ Platform = function(app, listofnodes){
 				self.clearStorageLight()
 			}
 
-			if (time > 3600 && typeof !_Electron != 'undefined'){
+			if (time > 3600 && (typeof !_Electron != 'undefined' || resume)){
 
 				self.app.platform.restart(function(){
 
@@ -13902,8 +13912,7 @@ Platform = function(app, listofnodes){
 			if (window.cordova){
 	
 				document.addEventListener("pause", uf, false);
-				document.addEventListener("resume", f, false);
-				document.addEventListener("resume", missed, false);
+				document.addEventListener("resume", fpause, false);
 			}
 	
 	
@@ -13929,8 +13938,7 @@ Platform = function(app, listofnodes){
 			if (window.cordova){
 
 				document.removeEventListener("pause", uf, false);
-				document.removeEventListener("resume", f, false);
-				document.removeEventListener("resume", missed, false);
+				document.removeEventListener("resume", fpause, false);
 			}
 	
 	

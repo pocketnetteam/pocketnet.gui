@@ -2401,6 +2401,8 @@ var lenta = (function(){
 
 							trueshold : trueshold,
 							clbk : function(){
+
+								self.app.platform.sdk.notifications.getNotifications()
 	
 								actions.loadprev(function(){
 

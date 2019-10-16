@@ -677,7 +677,7 @@ __map =  {
 				{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
 					Chart = require('./js/vendor/Chart.js')
 				}},			
-					
+				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
 			],
 
 			relationsSunc : true,
@@ -939,7 +939,15 @@ __map =  {
 				}
 			}
 
-		}
+		},
+
+		relations : [
+			
+			{src : 'js/vendor/circular-progress.js',			   f : 'js'},		
+			
+		],
+
+		
 	},
 	/*dialogs : {
 		uri : "dialogs",

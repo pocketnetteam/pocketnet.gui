@@ -160,8 +160,6 @@ nModule = function(){
 
 						options.destroy = function(){
 
-							console.log('p', p)
-
 							if(p){
 								self.app.nav.api.history.removeParameters(['m' + p.id])
 
@@ -700,9 +698,6 @@ nModule = function(){
 		var essense = new Essense(p);
 
 		var id = essense.id || p.eid || 'secondary';
-
-		console.log(id, p, essense)
-
 
 		if (p.primary || p.loadDefault) essense.primary = true;
 
