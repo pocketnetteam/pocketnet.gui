@@ -217,6 +217,24 @@ function initApp() {
             autoUpdater.checkForUpdates();
         }, 10*60*1000); 
     }
+
+    const {powerMonitor} =  require('electron')
+
+    powerMonitor.on('suspend', () => {
+
+        console.log("suspend")
+
+        win.webContents.send('pause-message', { msg: 'pause', type : 'info'})
+
+    })
+
+    powerMonitor.on('resume', () => {
+
+        console.log("resume")
+
+        win.webContents.send('resume-message', { msg: 'resume', type : 'info'})
+
+    })
 }
 
 function closeNotification() {
@@ -413,5 +431,8 @@ if (!r) {
             createWindow()
         }
     })
+
+
+
 
 }

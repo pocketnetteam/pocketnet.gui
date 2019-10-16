@@ -711,7 +711,6 @@ Platform = function(app, listofnodes){
             
             if(meta.type == 'bitchute' && url.indexOf("player") == -1){
 
-                https://www.bitchute.com/video/1Whwjdm0RIwx/
                 var _url = url;
                 if (_url.endsWith('/')) _url = _url.substr(0, _url.length - 1)
 				var s = _url.split("/");
@@ -3249,11 +3248,12 @@ Platform = function(app, listofnodes){
 				}
 			},
 
-			getone : function(address, clbk, light){
+			getone : function(address, clbk, light, reload){
 				var s = this.storage;
 				var l = this.loading;
+				var temp = self.sdk.node.transactions.temp;
 
-				if(!address || s[address]){
+				if((!address || s[address]) && !reload){
 					if (clbk)
 						clbk()
 				}
@@ -3295,24 +3295,34 @@ Platform = function(app, listofnodes){
 
 								if(typeof pUserInfo != 'undefined'){
 
-									_.each(d || [], function(data){
-										var u = new pUserInfo();
+									var data = d[0];
+
+									var u = new pUserInfo();
+									u.regdate = new Date();
+
+									if(state && temp['userInfo'] && !_.isEmpty(temp['userInfo']) && address == self.sdk.address.pnet().address) {
+										u._import(_.toArray(temp['userInfo'])[0])
+										u.regdate.setTime(self.currentTime() * 1000);	
+									}	
+									else
+									{
+										if(!data) return;
 
 										u._import(data)
-
-										u.regdate = new Date();
 										u.regdate.setTime(data.regdate * 1000);	
+									}
 
-										u.address = data.address	
-										
-										self.sdk.users.extend(u, state)
+									
+									
 
-										s[data.address] = u;
+									u.address = address	
+									
+									self.sdk.users.extend(u, state)
 
-										self.sdk.usersl.storage[data.address] = u;
+									s[address] = u;
 
+									self.sdk.usersl.storage[address] = u;
 
-									})
 
 								}
 	
@@ -3372,29 +3382,39 @@ Platform = function(app, listofnodes){
 
 								if(typeof pUserInfo != 'undefined'){
 
-									_.each(d || [], function(data){
-										var u = new pUserInfo();
+									_.each(addresses || [], function(a){
 
-										if(state && temp['userInfo'] && !_.isEmpty(temp['userInfo']) && data.address == self.sdk.address.pnet().address) {
+										var data = _.find(d, function(d){
+											if(d.address == a) return true
+										})
+
+										var u = new pUserInfo();
+										u.regdate = new Date();
+
+
+										if(state && temp['userInfo'] && !_.isEmpty(temp['userInfo']) && a == self.sdk.address.pnet().address) {
 											u._import(_.toArray(temp['userInfo'])[0])
+											
+											u.regdate.setTime(self.currentTime() * 1000);										
+
 										}	
 										else
 										{
+											if(!data) return
+
 											u._import(data)
+
+											u.regdate.setTime(data.regdate * 1000);	
 										}
 
-										u.address = data.address
+										u.address = a
 
 										self.sdk.users.extend(u, state)
 
-										u.regdate = new Date();
-										u.regdate.setTime(data.regdate * 1000);	
-
 																
 
-										s[data.address] = u;
-
-										self.sdk.usersl.storage[data.address] = u;
+										s[a] = u;
+										self.sdk.usersl.storage[a] = u;
 
 									})
 
@@ -7092,8 +7112,6 @@ Platform = function(app, listofnodes){
 				},
 
 				clearTemp : function(txid, vout){
-
-
 					var t = this.temp;
 
 					var finded = null;
@@ -10273,13 +10291,9 @@ Platform = function(app, listofnodes){
 
 							data.user.address =  data.addrFrom
 
-							console.log(data)
-
 							if(data.txids && !data.txid) data.txid = data.txids
 						
 							platform.sdk.node.shares.getbyid(data.txid, function(s, fromcashe){
-
-								console.log(s, data.txid)
 
 								s || (s = []);
 
@@ -10396,9 +10410,6 @@ Platform = function(app, listofnodes){
 							s[address] || (s[address] = []);
 
 
-						
-						
-
 						////////////
 
 						var temp = deep(platform.sdk.node.transactions.temp, 'share.' + data.txid)
@@ -10427,6 +10438,15 @@ Platform = function(app, listofnodes){
 								platform.sdk.node.shares.storage.trx[data.txid] = share
 
 							}
+
+							delete platform.sdk.node.transactions.temp.share[data.txid]
+						}
+
+
+						var uitemp = deep(platform.sdk.node.transactions.temp, 'userInfo.0')
+
+						if (uitemp && data.type == 'userInfo'){
+							platform.sdk.node.transactions.temp.userInfo = {};
 						}
 
 						var outs = platform.sdk.node.transactions.toUTs(tx, address);
@@ -10481,7 +10501,7 @@ Platform = function(app, listofnodes){
 								clbk(data)
 
 
-						}, true)
+						}, data.type != "userInfo", data.type == "userInfo")
 
 						
 					}
@@ -10913,8 +10933,6 @@ Platform = function(app, listofnodes){
 
 				notificationData : function(data){
 					var n = {};
-
-					console.log('notificationData', data)
 
 					if(data.reason == 'post' && data.comment && data.share && data.user){
 						n.text = data.comment.renders.previewEmojidis() 
@@ -11674,7 +11692,7 @@ Platform = function(app, listofnodes){
 
 				var m = null;
 
-				if (data.msg == 'transaction'){
+				if (data.msg == 'transaction' && data.mesType){
 					data.type = data.mesType
 					delete data.mesType
 				}
@@ -11808,11 +11826,15 @@ Platform = function(app, listofnodes){
 
 			self.messageHandler(
 
-				/*{
-					msg: "sharepocketnet",
-					time: "1571131408",
-					txids: "78cd0cbfe903470e3426f81af858970179304ab1e34b9e5101479926d901affa"
-				}*/
+				{
+					addr: "PTPwefwp5pUW7g6SMZLmFUrMVEaCyoasJP",
+					amount: "1999",
+					msg: "transaction",
+					nout: "1",
+					time: 1571222680,
+					txid: "b6b40a9a3939f916d89f9ff2d688e2c3039ef1d7dd0bde174b32932555ab3311",
+					type: "userInfo"
+				}
 
 			)
 
@@ -13849,6 +13871,11 @@ Platform = function(app, listofnodes){
 
 		var unfocustime = null;
 
+		var fpauseel = function(e){
+			console.log("fpauseel")
+			fpause(e)
+		}
+
 		var fpause = function(e){
 			f(e, true)
 		}
@@ -13864,7 +13891,7 @@ Platform = function(app, listofnodes){
 				self.clearStorageLight()
 			}
 
-			if (time > 3600 && (typeof !_Electron != 'undefined' || resume)){
+			if ((time > 3600 && typeof !_Electron != 'undefined') || resume){
 
 				self.app.platform.restart(function(){
 
@@ -13884,6 +13911,12 @@ Platform = function(app, listofnodes){
             	self.titleManager.clear();
             }
 
+		}
+
+		var ufel = function(){
+			console.log("ufel")
+
+			uf()
 		}
 
 		var uf = function(){
@@ -13923,6 +13956,9 @@ Platform = function(app, listofnodes){
 				w.on('hide', uf)
 				w.on('minimize', uf)
 				w.on('restore', f)
+
+				electron.ipcRenderer.on('pause-message', ufel)
+				electron.ipcRenderer.on('resume-message', fpauseel)
 	
 			}     
 	
@@ -13937,8 +13973,8 @@ Platform = function(app, listofnodes){
 
 			if (window.cordova){
 
-				document.removeEventListener("pause", uf, false);
-				document.removeEventListener("resume", fpause, false);
+				document.removeEventListener("pause", ufel, false);
+				document.removeEventListener("resume", fpauseel, false);
 			}
 	
 	
@@ -13949,6 +13985,9 @@ Platform = function(app, listofnodes){
 					w.off('hide', uf)
 					w.off('minimize', uf)
 					w.off('restore', f)
+
+				electron.ipcRenderer.off('pause-message', ufel)
+				electron.ipcRenderer.off('resume-message', fpauseel)
 	
 			}       
 			

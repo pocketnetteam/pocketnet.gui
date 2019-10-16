@@ -157,6 +157,10 @@ var test = (function(){
 								else
 								{
 
+									delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
+									delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
+
+
 									self.app.platform.sdk.user.storage.me = tx
 									
 									tempInfo = _.clone(self.app.platform.sdk.user.storage.me)

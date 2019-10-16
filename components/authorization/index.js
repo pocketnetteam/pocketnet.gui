@@ -214,35 +214,9 @@ var authorization = (function(){
 			
 					if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){
 						
-						
+						console.log("QRSCANNER")
 
 						grayscaleImage(file.base64, function(image){
-							
-							/*var i = new Image()
-
-								i.src = image
-
-								i.onload = function(){
-									try {
-							            
-							            codeReader.decodeFromImage(i).then(function(result){
-							            	console.log('result', result)
-							            });
-
-							            
-
-							        } catch (err) {
-							            console.error(err);
-							        }
-
-
-							        
-								}
-
-
-							return	*/
-
-
 							qrscanner.q.debug = true
 
 							qrscanner.q.callback = function(data){

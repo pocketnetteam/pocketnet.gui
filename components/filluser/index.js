@@ -55,6 +55,14 @@ var filluser = (function(){
 
 				prev : function(clbk){
 
+					var requested = self.app.settings.get(address, 'request') || "";
+
+					if (requested){
+						actions.next()
+
+						return
+					}
+
 
 					balance.check(function(result){
 
