@@ -2886,6 +2886,43 @@ input[type=radio].radio:checked + label {
         }
     }
 }
+
+.menudialog{
+    .thwrapper{
+        padding : 0;
+        max-width: 450px;
+    }
+
+    .buttons{
+        display: none;
+    }
+
+    .body{
+        margin : 0;
+    }
+
+    .text{
+        .item{
+            padding : 4 * @rhythm 2 * @rhythm;
+            text-align: center;
+            border-bottom : 1px solid @color-gray-slight;
+            cursor: pointer;
+
+            &.itemmain{
+                color : @color-main;
+            }
+
+            &:nth-last-child(1){
+                border-bottom : 0;
+            }
+        }
+    }
+
+    ._close{
+        display: none;
+    }
+}
+
 .refadd{
 
     background: fade(#151722, 95);

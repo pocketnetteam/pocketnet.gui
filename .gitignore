@@ -25,3 +25,4 @@ js/join.min.js
 *.php
 web.config
 web.config
+publish.py

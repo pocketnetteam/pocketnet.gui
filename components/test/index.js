@@ -179,37 +179,35 @@ var test = (function(){
 										})
 									}
 
-									self.app.reloadModules(function(){
+									self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+										self.app.reloadModules(function(){
 
-
-										if (primary){
-
-											self.nav.api.go({
-												href : 'index',
-												history : true,
-												open : true
-											})	
-
-										}
-										else
-										{
-
-											if (ed.success){
-												ed.success()
+											if (primary){
+	
+												self.nav.api.go({
+													href : 'index',
+													history : true,
+													open : true
+												})	
+	
 											}
-											else
-											{
-												if (clbk)
-													clbk()
-											}
-
 											
-
-										}
-
-										
-
+											else
+											{	
+												if (ed.success){
+													ed.success()
+												}
+												else
+												{
+													if (clbk)
+														clbk()
+												}
+											}
+	
+										})
 									})
+
+									
 
 									
 								}

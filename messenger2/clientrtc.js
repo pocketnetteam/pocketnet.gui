@@ -747,7 +747,7 @@ var platformRTC = function(p){
 						else
 						{
 							if (data.error){
-								console.log("Error: ", data.error)
+								//console.log("Error: ", data.error)
 							}
 						}
 					}
@@ -827,7 +827,6 @@ var platformRTC = function(p){
 		self.api = {
 			login : function(clbk){
 
-				//console.log("RPCLOGIN", user)
 
 				if (user){
 

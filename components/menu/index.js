@@ -1009,7 +1009,7 @@ var menu = (function(){
 
 			getdata : function(clbk, p){
 
-
+				console.log("MENU0", p)
 
 				var data = {};
 
@@ -1020,7 +1020,13 @@ var menu = (function(){
 
 				if(p.state){
 
-					clbk(data)
+					console.log("GETONE")
+
+					self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+						console.log("GETONE2")
+						clbk(data)
+
+					})
 					
 
 				}

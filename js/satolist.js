@@ -851,6 +851,7 @@ Platform = function(app, listofnodes){
 		clearname : function(n){
 			return (n || "").replace(/[^a-zA-Z0-9_ ]/g, "")
 		},
+
 		name : function(address){
 			var n =  deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
 
@@ -3253,6 +3254,8 @@ Platform = function(app, listofnodes){
 				var l = this.loading;
 				var temp = self.sdk.node.transactions.temp;
 
+				console.log('r111')
+
 				if((!address || s[address]) && !reload){
 					if (clbk)
 						clbk()
@@ -3263,6 +3266,8 @@ Platform = function(app, listofnodes){
 
 					if (l[address]){
 						retry(function(){
+
+							console.log('r1')
 
 							return !l[address]
 
@@ -3286,10 +3291,14 @@ Platform = function(app, listofnodes){
 
 					self.app.user.isState(function(state){
 
+						console.log('getuserprofileLoad')
+
 						self.app.ajax.rpc({
 							method : 'getuserprofile',
 							parameters : params,
 							success : function(d){
+
+								console.log('getuserprofileEnd')
 
 								l[address] = false;
 
@@ -3306,14 +3315,19 @@ Platform = function(app, listofnodes){
 									}	
 									else
 									{
-										if(!data) return;
+										if(!data) {
+
+											if (clbk)
+												clbk()
+
+
+												return
+
+										}
 
 										u._import(data)
 										u.regdate.setTime(data.regdate * 1000);	
 									}
-
-									
-									
 
 									u.address = address	
 									
@@ -7271,6 +7285,7 @@ Platform = function(app, listofnodes){
 
 				tempBalance : function(){
 					var inputs = this.tempInputs()
+
 
 					return _.reduce(inputs, function(m, i){
 
@@ -11824,7 +11839,7 @@ Platform = function(app, listofnodes){
 
 		
 
-			self.messageHandler(
+			/*self.messageHandler(
 
 				{
 					addr: "PTPwefwp5pUW7g6SMZLmFUrMVEaCyoasJP",
@@ -11836,7 +11851,7 @@ Platform = function(app, listofnodes){
 					type: "userInfo"
 				}
 
-			)
+			)*/
 
 		}, 5000)
 
@@ -13887,11 +13902,14 @@ Platform = function(app, listofnodes){
 
 			self.focus = true;
 
+			console.log("FOCUS, time, resume", time, resume, e)
+
 			if (time > 120 && window.cordova){
 				self.clearStorageLight()
 			}
+		
 
-			if ((time > 3600 && typeof !_Electron != 'undefined') || resume){
+			if ( (time > 3600 && (typeof !_Electron != 'undefined' || window.cordova)) || resume ){
 
 				self.app.platform.restart(function(){
 
@@ -13914,7 +13932,6 @@ Platform = function(app, listofnodes){
 		}
 
 		var ufel = function(){
-			console.log("ufel")
 
 			uf()
 		}
@@ -13923,6 +13940,8 @@ Platform = function(app, listofnodes){
 			self.focus = false;
 
 			unfocustime = platform.currentTime()
+
+			console.log("UNFOCUS, time, resume", unfocustime)
 		}
 
 		var missed = function(){
@@ -13942,10 +13961,16 @@ Platform = function(app, listofnodes){
 
 		self.init = function(){
 
+			console.log("INIT")
+
+			inited = true;
+
 			if (window.cordova){
 	
 				document.addEventListener("pause", uf, false);
-				document.addEventListener("resume", fpause, false);
+				document.addEventListener("resume", f, false);
+
+				return
 			}
 	
 	
@@ -13958,23 +13983,29 @@ Platform = function(app, listofnodes){
 				w.on('restore', f)
 
 				electron.ipcRenderer.on('pause-message', ufel)
-				electron.ipcRenderer.on('resume-message', fpauseel)
+				electron.ipcRenderer.on('resume-message', f)
 	
 			}     
 	
 			$(window).on('focus', f);
 			$(window).on('blur', uf);  
 
-			inited = true;
+			
 		}
 
 		self.destroy = function(){
 			if(!inited) return
 
+			inited = false;
+
+			console.log("DESTROY")
+
 			if (window.cordova){
 
-				document.removeEventListener("pause", ufel, false);
-				document.removeEventListener("resume", fpauseel, false);
+				document.removeEventListener("pause", uf, false);
+				document.removeEventListener("resume", fpause, false);
+
+				return
 			}
 	
 	
@@ -13994,7 +14025,7 @@ Platform = function(app, listofnodes){
 			$(window).off('focus', f);
 			$(window).off('blur', uf);  
 
-			inited = false;
+			
 		}
 		
 		

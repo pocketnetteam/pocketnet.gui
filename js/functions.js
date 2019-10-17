@@ -706,6 +706,66 @@
 		return self;
 	}
 
+	menuDialog = function(p){
+		if(!p) p = {};
+
+		p.wrap = true;
+
+		p.class = 'menudialog';
+
+		p.items.push({
+			class : 'itemclose',
+			text : 'Close'
+		})
+		
+		var ehtml = function(){
+			var h = ''
+
+			_.each(p.items, function(item, i){
+				h += '<div class="item ' + item.class + '" item="'+i+'">'
+
+					h += item.text
+
+				h += '</div>'
+			})
+
+			return h;
+		}
+
+		p.html = ehtml()
+
+		p.clbk = function(el){
+			el.find('.item').on('click', function(){
+
+				var i = $(this).attr('item')
+
+				if(!p.items[i].action){
+					self.destroy()
+				}
+				else
+				{
+
+					p.items[i].action(function(){
+						self.destroy()
+					})
+
+				}
+
+				
+
+				return false
+
+			})
+
+			el.on('click', function(){
+				self.destroy()
+			})
+		}
+
+		var self = new dialog(p);
+
+		return self;
+	}
 	
 	inputDialogNew = function(p){
 		if(!p) p = {};
@@ -5556,6 +5616,115 @@
 		return true;
 	}
 
+	b64toBlob = function(b64Data, contentType, sliceSize) {
+		contentType = contentType || '';
+		sliceSize = sliceSize || 512;
+		var byteCharacters = atob(b64Data);
+		var byteArrays = [];
+		for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+			var slice = byteCharacters.slice(offset, offset + sliceSize);
+			var byteNumbers = new Array(slice.length);
+			for (var i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+			var byteArray = new Uint8Array(byteNumbers);
+			byteArrays.push(byteArray);
+		}
+		var blob = new Blob(byteArrays, {type: contentType});
+		return blob;
+	}
+
+	saveAsWithCordova = function(file, name, clbk){
+
+
+		var storageLocation = 'file:///storage/emulated/0/';
+	
+
+
+		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+			
+			fileSystem.getDirectory('Download', {
+				//create: true,
+				exclusive: false
+			},
+			function (directory) {
+
+
+				directory.getFile(name, { create: true, exclusive: false }, function (entry) {
+					// After you save the file, you can access it with this URL
+					var myFileUrl = entry.toURL();
+
+
+					entry.createWriter(function (writer) {
+
+
+						writer.onwriteend = function (evt) {
+							sitemessage("File " + name + " successfully downloaded");
+
+							if (window.galleryRefresh){
+
+								window.galleryRefresh.refresh(myFileUrl, function (msg) {
+
+									console.log('scanmedia success')
+									
+								}, function (err) {
+
+									console.log('scanmedia fail 2', err)
+									
+								})
+
+							}
+							else
+							{
+								console.log('scanmedia fail 1')
+							}
+
+
+							if (clbk)
+								clbk(myFileUrl)
+						};
+						// Write to the file
+						writer.seek(0);
+						writer.write(file);
+					}, function (error) {
+						
+						dialog({
+							html : "Error: Could not create file writer, " + error.code,
+							class : "one"
+						})
+
+					});
+				}, function (error) {
+
+					dialog({
+						html : "Error: Could not create file, " + error.code,
+						class : "one"
+					})
+
+				});
+
+			}, function (error) {
+
+				dialog({
+					html : "Error: access to download folder, " + error.code,
+					class : "one"
+				})
+
+			})
+
+
+			
+		}, function (evt) {
+
+			dialog({
+				html : "Error: Could not create file, " + evt.target.error.code,
+				class : "one"
+			})
+
+		});
+	
+	}
+
 /* ______________________________ */
 
 /* NAVIGATION */
@@ -7067,8 +7236,6 @@
 						{
 							e = error(null, p);
 						}
-
-						console.log("ERR", e, p)
 
 
 						if (p.fail) 

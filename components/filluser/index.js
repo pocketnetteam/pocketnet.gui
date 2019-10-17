@@ -55,6 +55,8 @@ var filluser = (function(){
 
 				prev : function(clbk){
 
+					var address = self.sdk.address.pnet().address;
+
 					var requested = self.app.settings.get(address, 'request') || "";
 
 					if (requested){

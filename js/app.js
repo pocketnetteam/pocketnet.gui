@@ -704,8 +704,10 @@ Application = function(p)
 
 	self.destroyModules = function(){
 		_.each(self.modules, function(module){
-			if (module.module.inited && module.module.destroy) 
+			if (module.module.inited && module.module.destroy) {
 				module.module.destroy();
+			}
+				
 		})
 	}
 
@@ -887,9 +889,6 @@ Application = function(p)
 		}
 
 	}
-
-	
-
 
 	return self;
 }

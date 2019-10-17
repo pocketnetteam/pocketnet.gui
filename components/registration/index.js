@@ -591,9 +591,9 @@ var registration = (function(){
 
 						var mk = keyPair.privateKey.toString('hex');
 
-						renders.qrcode(p.el.find('.qrcode'), mk)
+						var qr = renders.qrcode(p.el.find('.qrcode'), mk)
 
-
+						console.log('code', qr)
 					}
 
 
@@ -632,6 +632,41 @@ var registration = (function(){
 						})
 
 					})
+
+					if(window.cordova){
+
+						p.el.find('.qrcode').on('click', function(){
+
+							menuDialog({
+								items : [
+	
+									{
+										text : "Save key on device",
+										class : 'itemmain',
+										action : function(clbk){
+
+											//console.log(qr._oDrawing._elImage.currentSrc.split(',')[1])
+
+											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
+											
+											//console.log(image)
+
+											saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
+												clbk()
+											})
+
+											
+										}
+									}
+	
+								]
+							})
+	
+						})
+
+					}
+
+					
 
 					if (clbk)
 						clbk();	

@@ -93,7 +93,6 @@ nModule = function(){
 
 	self.shell = function(p, clbk, fromModule){
 
-
 		if(!p) p = {};
 
 		var completeClbk = function(p){
@@ -592,6 +591,9 @@ nModule = function(){
 		var settings = _.clone(_settings);
 
 		var add = self.map.add;
+		var frommodule = true;
+
+		if (p.restartModule) frommodule = false
 
 		if (typeof add == 'function')
 
@@ -633,7 +635,7 @@ nModule = function(){
 					if (settings.init)
 						settings.init(p)
 
-				}, true)
+				}, frommodule)
 
 			}, {
 				state : state,
@@ -686,6 +688,8 @@ nModule = function(){
 	self.restart = function(p){
 
 		if(!p) p = {};
+
+		p.restartModule = true
 
 		self.stop(p);
 		self.run(p);
