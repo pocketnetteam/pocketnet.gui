@@ -10175,11 +10175,13 @@ Platform = function(app, listofnodes){
 
 					message.el.find('.commentprev').on('click', function(){
 
-						platform.sdk.node.shares.getbyid(data.posttxid, function(s, err, p, fromcashe){
+						console.log(data)
+
+						platform.sdk.node.shares.getbyid(data.comment.txid, function(s, err, p, fromcashe){
 
 							platform.app.nav.api.load({
 								open : true,
-								href : 'post?s=' + data.posttxid,
+								href : 'post?s=' + data.comment.txid,
 								inWnd : true,
 								//history : true,
 								clbk : function(d, p){									
@@ -10187,11 +10189,11 @@ Platform = function(app, listofnodes){
 								},
 
 								essenseData : {
-									share : data.posttxid,
+									share : data.comment.txid,
 
 									reply : {
-										answerid : data.commentid,
-										parentid : data.parentid || "",
+										answerid : data.comment.id,
+										parentid : data.comment.parentid || "",
 										noaction : true
 									}
 								}
