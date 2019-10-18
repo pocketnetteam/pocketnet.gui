@@ -13,8 +13,26 @@
                             <div class="blockContentWrapper">
                                 <div class="blockContent">
                                     <div class="vidgetNameWrapper">
-                                        <span>Reputation</span>
+                                        
+
+                                        <div class="vidgetNameWrapperTable table">
+                                            <div class="cellleft"><span>Reputation</span></div>
+                                            <div class="cellright">
+
+                                                <% if(reputation) {%>
+
+                                                    <div class="reputationCount">
+                                                        <span><b><%- reputation.toFixed(0) %></b> <i class="far fa-star"></i></span>
+                                                    </div>
+                                                    
+                                                <% } %>
+                                            </div>
+                                        </div>
+
                                     </div>
+
+                                    
+
                                     <div class="vidgetIconWrapper">
                                         <div class="vidgetIcon">
 

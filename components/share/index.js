@@ -563,7 +563,8 @@ var share = (function(){
 
 								actions.unfocus();
 								
-
+								successCheck()
+								
 								
 							}
 

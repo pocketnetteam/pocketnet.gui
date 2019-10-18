@@ -157,6 +157,8 @@ var test = (function(){
 								else
 								{
 
+									successCheck()
+
 									delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
 									delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
 
@@ -386,7 +388,7 @@ var test = (function(){
 									else
 									{
 										el.c.find('.errorname').fadeIn();
-										el.c.find('.errorname span').html('This name has busy in Pocketnet');									
+										el.c.find('.errorname span').html('This username is taken in Pocketnet');									
 									}
 								})	
 							}

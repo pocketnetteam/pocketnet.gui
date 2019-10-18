@@ -129,6 +129,17 @@ var lastcomments = (function(){
 
 			}
 
+			self.app.platform.clbks._focus.lastcomments = function(time){
+
+				if(time > 120 && typeof _Electron != 'undefined'){
+
+					make()
+
+					
+				}
+			}
+
+
 		}
 
 		var make = function(){
@@ -163,7 +174,9 @@ var lastcomments = (function(){
 			destroy : function(){
 				el = {};
 
-				delete self.app.platform.ws.messages['new block'].clbks['lastcomments']
+				delete self.app.platform.ws.messages['newblocks'].clbks['lastcomments'];
+				delete self.app.platform.ws.messages['new block'].clbks['lastcomments'];
+				delete self.app.platform.clbks._focus.lastcomments;
 			},
 			
 			init : function(p){

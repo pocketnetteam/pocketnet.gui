@@ -686,6 +686,9 @@ var lenta = (function(){
 
 			like : function(obj, value, clbk){
 
+				console.log(obj);
+
+				if(obj.address == self.app.platform.sdk.address.pnet().address) return
 
 				var upvoteShare = obj.upvote(value);
 

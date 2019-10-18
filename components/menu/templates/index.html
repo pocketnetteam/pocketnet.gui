@@ -28,7 +28,7 @@
 				<% if(state) { 	%>
 
 
-					<div class="items navWrapper">
+					<div class="items navWrapper unselectable">
 
 						<div class="item navWrapperItem" events="navinit">
 
@@ -203,7 +203,7 @@
 
 
 						<div class="items">
-							<div class="item table right user" events="userpage">
+							<div class="item table right user" events="userpage unselectable">
 
 								<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
 								

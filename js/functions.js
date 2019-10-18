@@ -427,6 +427,56 @@
 
 /* WINDOWS, MESSAGES */
 
+
+	successCheck = function(p){
+		if(!p) p = {};
+		
+		var self = this,
+			el = p.el || $('body');
+		var _w = $(window);
+		var ch = null;
+
+
+		var render = function(){
+
+			var h = '<div class="successCheckWrapper table"><div><div class="chw">\
+				<svg viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">\
+					<path d="M 18 32.34 l -8.34 -8.34 -2.83 2.83 11.17 11.17 24 -24 -2.83 -2.83 z" stroke="#4AC6F9" fill="transparent"/>\
+				</svg>\
+			</div><div class="text">SUCCESS</div></div></div>'
+
+			ch = $("<div>",{
+				"class" 	: "successCheck",
+				"html"	: h
+			});
+
+			el.append(ch);	
+
+			ch.fadeIn(300);
+
+			ch.find('svg')[0].classList.add('animate')
+
+
+			setTimeout(function(){
+				ch.fadeOut(300);
+
+				setTimeout(function(){
+					ch.remove()
+				}, 300)
+
+			}, 900)
+				
+		}
+
+		render();
+
+		return self
+	}
+
+	/*setInterval(function(){
+		successCheck()
+	}, 3000)*/
+
 	wnd = function(p){
 		if(!p) p = {};
 
@@ -6934,6 +6984,7 @@
 
 		var error = function(res, p, errorData){	
 
+			if(!p) p = {}
 
 			if (errorData && errorData.code) return errorData.code
 

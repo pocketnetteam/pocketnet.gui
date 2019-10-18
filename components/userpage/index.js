@@ -847,8 +847,7 @@ var userpage = (function(){
 
 				initEvents();
 
-				make(function(){
-					
+				make(function(){					
 					p.clbk(null, p);
 				})
 

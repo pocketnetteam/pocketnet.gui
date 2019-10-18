@@ -2769,6 +2769,14 @@ Platform = function(app, listofnodes){
 				
 				if (e.notifications.length && e.block > blockps && this.inited == true){
 
+					e.notifications = _.uniq(e.notifications, function(n){
+
+						if(n.txid) return n.txid
+
+						return makeid()
+
+					})
+
 					e.notifications = firstEls(e.notifications, 100)
 
 					localStorage[self.sdk.address.pnet().address + 'notificationsv11'] = JSON.stringify(e)
@@ -3008,7 +3016,7 @@ Platform = function(app, listofnodes){
 							_.each(ns, function(no){
 
 								var f = _.find(n.storage.notifications, function(n){
-									if(no.txid && n.txid == no.txid) return
+									if(no.txid && n.txid == no.txid) return true
 								})
 
 								if(!f){
@@ -3035,7 +3043,7 @@ Platform = function(app, listofnodes){
 
 				self.app.ajax.rpc({
 					method : 'getmissedinfo2',
-					parameters : [self.sdk.address.pnet().address,this.storage.block],
+					parameters : [self.sdk.address.pnet().address, this.storage.block],
 					success : function(d){	
 
 
@@ -3254,8 +3262,6 @@ Platform = function(app, listofnodes){
 				var l = this.loading;
 				var temp = self.sdk.node.transactions.temp;
 
-				console.log('r111')
-
 				if((!address || s[address]) && !reload){
 					if (clbk)
 						clbk()
@@ -3266,8 +3272,6 @@ Platform = function(app, listofnodes){
 
 					if (l[address]){
 						retry(function(){
-
-							console.log('r1')
 
 							return !l[address]
 
@@ -3291,14 +3295,12 @@ Platform = function(app, listofnodes){
 
 					self.app.user.isState(function(state){
 
-						console.log('getuserprofileLoad')
 
 						self.app.ajax.rpc({
 							method : 'getuserprofile',
 							parameters : params,
 							success : function(d){
 
-								console.log('getuserprofileEnd')
 
 								l[address] = false;
 
@@ -5253,6 +5255,15 @@ Platform = function(app, listofnodes){
 					comment.address = data.address;				
 					comment.verify = true;
 
+
+					_.each(self.sdk.node.transactions.temp.comment, function(c){
+						if(c.optype == 'comment' || !c.optype){
+							if(c.parentid == comment.id){
+								comment.children++
+							}
+						}
+					})
+
 					return comment;
 				})
 
@@ -5270,6 +5281,8 @@ Platform = function(app, listofnodes){
 					}
 
 				})
+
+				
 
 				_.each(c, function(c){
 					s.all[c.id] = c
@@ -5647,7 +5660,7 @@ Platform = function(app, listofnodes){
 									clbk(null, alias)
 
 								_.each(self.sdk.comments.sendclbks, function(c){
-									c(null, alias, txid, pid, aid, editid, fid)
+									c(null, alias, txid, pid, aid, editid, fid, true)
 								})
 
 							}
@@ -9651,6 +9664,9 @@ Platform = function(app, listofnodes){
 			FCMPlugin.onNotification(
 				(data) => {
 
+
+					console.log('data', data)
+
 					if(data.wasTapped){
 
 						platform.ws.destroyMessages()
@@ -10409,7 +10425,9 @@ Platform = function(app, listofnodes){
 
 					var _dataclbk = function(tx, err){
 
-						if (err){
+						console.log(tx, err)
+
+						if (err || !tx){
 
 							if(clbk) clbk()
 
@@ -10541,34 +10559,29 @@ Platform = function(app, listofnodes){
 				notificationData : function(data, user){
 					var n = {};
 
+					console.log(data)
+
 					if (data.tx){
 
 						
-						if(data.tx.coinbase){
+						if(data.tx.coinbase){						
 
-							if(platform.sdk.usersettings.meta.win.value)
-							{	
+							var a = 'activity'
 
-								var a = 'activity'
-
-								/*if (data.cointype){
-
-									a = data.cointype
-
-								}*/
-
-								n.caption = "Incoming transaction"
-								n.text = "Congratulations, you have won " + platform.mp.coin(data.tx.amount) + " Pocketcoin for your latest '"+a+"'!"
-								n.topic = 'pos' 
-							}
+							n.caption = "Incoming transaction"
+							n.text = "Congratulations, you have won " + platform.mp.coin(data.tx.amount) + " Pocketcoin for your latest '"+a+"'!"
+							n.topic = 'pos' 
+					
 
 						}
 
 						else{
 
+							console.log(data.address, user.address, deep(data.user, 'name'), data.amountall, data.tx.amount)
+
 							if(data.address != user.address && data.user){
 
-								if(platform.sdk.usersettings.meta.transactions.value  >= 0.01 && data.tx.amount >= 0.01)
+								if(data.amountall >= 0.05 || data.tx.amount >= 0.05)
 								{
 									n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " POC to you"
 
@@ -10644,7 +10657,7 @@ Platform = function(app, listofnodes){
 
 						else{
 
-							if(data.address !=  platform.sdk.address.pnet().address){
+							if(data.address != platform.sdk.address.pnet().address){
 
 								if(platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name)
 								{
@@ -11197,7 +11210,7 @@ Platform = function(app, listofnodes){
 					}
 
 					if(data.mesType == 'subscribe' && data.user){
-						n.text = self.tempates._user(data.user) + ' has followed to your account'
+						n.text = self.tempates._user(data.user) + ' has followed your account'
 						n.topic = 'followers'
 						n.caption = "New Follower"
 					}
@@ -11355,7 +11368,7 @@ Platform = function(app, listofnodes){
 			})
 		}
 
-		var initOnlineListener = function(){
+		/*var initOnlineListener = function(){
 			if(self.onlineCheck && !_Node){
 
 				onlinetnterval = retry(function(){
@@ -11395,7 +11408,7 @@ Platform = function(app, listofnodes){
 				}, 50)
 
 			}
-		}
+		}*/
 
 		var reconnect = function(){
 			if (closing){
@@ -11441,6 +11454,12 @@ Platform = function(app, listofnodes){
 			};
 
 			socket.onopen = function(){
+				
+				self.connected = {};
+
+				console.log('loast', lost, platform.currentBlock)
+
+				self.getMissed()
 				
 				lost = platform.currentBlock || 0;
 
@@ -11544,9 +11563,9 @@ Platform = function(app, listofnodes){
 
 		self.getMissed = function(clbk){
 
-			if(lost > 1 && self.loadingMissed) return
+			if(lost <= 1) return
 
-			if(lost <= platform.currentBlock) return
+			if(self.loadingMissed) return
 
 			if(self.loadingWithErrors) return
 
@@ -11564,7 +11583,7 @@ Platform = function(app, listofnodes){
 
 					blockInfo.msg = 'newblocks'
 
-					lost = 0;
+					//lost = 0;
 
 					self.messageHandler(blockInfo, function(){
 						lazyEach({
@@ -11986,8 +12005,6 @@ Platform = function(app, listofnodes){
 
 				var	address = '';
 
-
-
 				if(!n){
 					address = platform.sdk.address.pnet(keyPair.publicKey).address
 				}
@@ -12090,9 +12107,9 @@ Platform = function(app, listofnodes){
 			self.online = self.onlineCheck;
 			self.connected = {};
 
-			self.lostBlock = platform.currentBlock;
+			//self.lostBlock = platform.currentBlock;
 
-			initOnlineListener();
+			//initOnlineListener();
 			initconnection();
 
 			if (clbk)
@@ -13889,7 +13906,6 @@ Platform = function(app, listofnodes){
 		var unfocustime = null;
 
 		var fpauseel = function(e){
-			console.log("fpauseel")
 			fpause(e)
 		}
 
@@ -13904,14 +13920,10 @@ Platform = function(app, listofnodes){
 
 			self.focus = true;
 
-			console.log("FOCUS, time, resume", time, resume, e)
-
-			if (time > 120 && window.cordova){
-				self.clearStorageLight()
-			}
+			
 		
 
-			if ( (time > 3600 && (typeof !_Electron != 'undefined' || window.cordova)) || resume ){
+			if ( (time > 3600 && (typeof _Electron != 'undefined' || window.cordova)) || resume){
 
 				self.app.platform.restart(function(){
 
@@ -13921,8 +13933,13 @@ Platform = function(app, listofnodes){
 
 				})
 
-
 				return
+			}
+
+			if (time > 120 && window.cordova){
+				self.clearStorageLight()
+
+				self.sdk.notifications.getNotifications()
 			}
 
            	self.clbks.focus(time);
@@ -13942,8 +13959,6 @@ Platform = function(app, listofnodes){
 			self.focus = false;
 
 			unfocustime = platform.currentTime()
-
-			console.log("UNFOCUS, time, resume", unfocustime)
 		}
 
 		var missed = function(){
@@ -13962,8 +13977,6 @@ Platform = function(app, listofnodes){
 		
 
 		self.init = function(){
-
-			console.log("INIT")
 
 			inited = true;
 
@@ -13999,8 +14012,6 @@ Platform = function(app, listofnodes){
 			if(!inited) return
 
 			inited = false;
-
-			console.log("DESTROY")
 
 			if (window.cordova){
 

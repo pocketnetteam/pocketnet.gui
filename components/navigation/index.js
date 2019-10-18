@@ -63,6 +63,20 @@ var navigation = (function(){
 					p.el.find('.toup').on('click', events.toup)
 					
 				})
+			},
+
+			hide : function(){
+				console.log("INIEVC1")
+
+				if (el.c)
+					el.c.closest('#navigationWrapper').addClass('hidden')
+			},
+
+			show : function(){
+				console.log("INIEVC2")
+
+				if (el.c)
+					el.c.closest('#navigationWrapper').removeClass('hidden')
 			}
 		}
 
@@ -86,7 +100,14 @@ var navigation = (function(){
 			
 			window.addEventListener('scroll', events.scroll)
 
-			
+			if(window.cordova){
+
+				console.log("INIEVC")
+				
+				window.addEventListener('keyboardWillShow', renders.hide);
+				window.addEventListener('keyboardWillHide', renders.show);
+
+			}
 		}
 
 		var make = function(){
@@ -108,9 +129,14 @@ var navigation = (function(){
 			},
 
 			destroy : function(){
-
+				
 
 				window.removeEventListener('scroll', events.scroll)
+
+				if(window.cordova){
+					window.removeEventListener('keyboardWillShow', renders.hide);
+					window.removeEventListener('keyboardWillHide', renders.show);	
+				}
 
 				delete self.app.nav.clbks.history.navigation
 

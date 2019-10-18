@@ -23,8 +23,6 @@ Nav = function(app)
 		protocol = window.location.protocol.replace(":",'');
 	}
 
-	
-
 	if (protocol == "http" || protocol == "https" || _Node)
 	{
 		protocol = "web"
