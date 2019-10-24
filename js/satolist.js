@@ -3041,44 +3041,57 @@ Platform = function(app, listofnodes){
 			getNotifications : function(clbk){
 				var n = this;
 
-				self.app.ajax.rpc({
-					method : 'getmissedinfo2',
-					parameters : [self.sdk.address.pnet().address, this.storage.block],
-					success : function(d){	
-
-
-						d || (d = [{block : blockps, cntposts : 0}])
-
-						var notifications = (d || []).slice(1)		
-
-						notifications = _.sortBy(notifications, function(n){
-							return -n.nblock
-						})
-
-
-						n.getNotificationsInfo(notifications, function(){
-
-							n.inited = true;
-
-							n.storage.block = d[0].block
-
-							n.save()
-
+				if(!n.inited && !n.loading){
+					n.init()
+				}
+				else{
+					self.app.ajax.rpc({
+						method : 'getmissedinfo2',
+						parameters : [self.sdk.address.pnet().address, n.storage.block],
+						success : function(d){	
+	
+	
+							d || (d = [{block : blockps, cntposts : 0}])
+	
+							var notifications = (d || []).slice(1)		
+	
+							notifications = _.sortBy(notifications, function(n){
+								return -n.nblock
+							})
+	
+	
+							n.getNotificationsInfo(notifications, function(){
+	
+								n.inited = true;
+	
+								n.storage.block = d[0].block
+	
+								n.save()
+	
+								if (clbk)
+									clbk()
+	
+							})		
+	
+						},
+						fail : function(d , e){
+	
+							n.inited = false;
+							n.loading = false;
+	
+	
 							if (clbk)
-								clbk()
+								clbk(e)
+						}
+					})
+				}
 
-						})		
+				
+			},
 
-					},
-					fail : function(d , e){
-
-						n.inited = true;
-						n.loading = true;
-
-
-						if (clbk)
-							clbk(e)
-					}
+			find : function(txid){
+				return _.find(this.storage.notifications, function(n){
+					return n.txid == txid
 				})
 			}
 		},
@@ -7691,9 +7704,14 @@ Platform = function(app, listofnodes){
 								parameters : [[address], 1, 9999999],
 								success : function(d){
 
+									if(!s.unspent) 
+										s.unspent = {};	
+
+									
 									s.unspent[address] = d || [];
 
-									s.unspentLoading[address] = false;
+									if (s.unspentLoading)
+										s.unspentLoading[address] = false;
 
 									if (clbk)
 										clbk(s.unspent[address])
@@ -9677,6 +9695,7 @@ Platform = function(app, listofnodes){
 							history : true
 						})
 
+						return
 					}
 					else
 					{
@@ -10274,7 +10293,7 @@ Platform = function(app, listofnodes){
 					var n = {};
 
 					if (data.user && data.comment && !data.comment.deleted && data.upvoteVal > 0){
-						n.text =  self.tempates._user(data.user) + " has liked your comment!"
+						n.text =  self.tempates._user(data.user) + " liked your comment!"
 						n.caption = "New Comment Like"
 					}
 
@@ -10739,6 +10758,8 @@ Platform = function(app, listofnodes){
 					var dif = platform.currentBlock - data.block
 
 					platform.currentBlock = data.block;
+
+					lost = data.block;
 
 					localStorage['lastblock'] = platform.currentBlock
 
@@ -11210,7 +11231,7 @@ Platform = function(app, listofnodes){
 					}
 
 					if(data.mesType == 'subscribe' && data.user){
-						n.text = self.tempates._user(data.user) + ' has followed your account'
+						n.text = self.tempates._user(data.user) + ' followed your'
 						n.topic = 'followers'
 						n.caption = "New Follower"
 					}
@@ -11220,7 +11241,7 @@ Platform = function(app, listofnodes){
 
 						if(data.upvoteVal > 2){
 
-							n.text =  self.tempates._user(data.user) + " has upvoted your post, " + data.upvoteVal + ' ★'
+							n.text =  self.tempates._user(data.user) + " upvoted your post, " + data.upvoteVal + ' ★'
 							n.topic = 'upvotes'
 							n.caption = "New Upvote"
 						}
@@ -11749,6 +11770,9 @@ Platform = function(app, listofnodes){
 					if (txidstorage[data.txid]) return;
 
 						txidstorage[data.txid] = true
+
+
+					if (platform.sdk.notifications.find(data.txid)) return
 				}
 
 				
@@ -13561,12 +13585,12 @@ Platform = function(app, listofnodes){
 	}
 
 	self.clearStorageLight = function(){
-		self.sdk.search.storage = {
+		/*self.sdk.search.storage = {
 			all : {},
 			fs : {},
 			posts : {},
 			users : {}
-		}
+		}*/
 
 		app.platform.sdk.node.transactions.storage = {}
 
@@ -13582,9 +13606,11 @@ Platform = function(app, listofnodes){
 		self.app.nav.addParameters = null;
 
 		self.sdk.articles.storage = []
+
 		self.sdk.notifications.clbks.seen = {};
 		self.sdk.notifications.clbks.added = {};
 		self.sdk.notifications.inited = false;
+		self.sdk.notifications.loading = false;
 
 		self.sdk.ustate.clbks = {};
 
@@ -13596,7 +13622,6 @@ Platform = function(app, listofnodes){
 
 		self.sdk.tags.c
 
-		//app.platform.sdk.node.transactions.temp = {}
 
 		self.clearStorage()
 
@@ -13915,15 +13940,17 @@ Platform = function(app, listofnodes){
 
 		var f = function(e, resume){
 
+			
+
 			var focustime = platform.currentTime()
 			var time = focustime - (unfocustime || focustime)
 
 			self.focus = true;
 
-			
-		
+			console.log("FOCUS", e, time, resume, electron || window.cordova)
 
-			if ( (time > 3600 && (typeof _Electron != 'undefined' || window.cordova)) || resume){
+
+			/*if ( (time > 3600 && (electron || window.cordova)) || resume){
 
 				self.app.platform.restart(function(){
 
@@ -13934,11 +13961,12 @@ Platform = function(app, listofnodes){
 				})
 
 				return
-			}
+			}*/
 
-			if (time > 120 && window.cordova){
+			if (time > 120 && (window.cordova || electron)){
 				self.clearStorageLight()
 
+				self.sdk.node.transactions.get.allBalance(null, true)
 				self.sdk.notifications.getNotifications()
 			}
 
@@ -14016,7 +14044,7 @@ Platform = function(app, listofnodes){
 			if (window.cordova){
 
 				document.removeEventListener("pause", uf, false);
-				document.removeEventListener("resume", fpause, false);
+				document.removeEventListener("resume", f, false);
 
 				return
 			}

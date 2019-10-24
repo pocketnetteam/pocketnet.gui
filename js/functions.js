@@ -400,19 +400,18 @@
 	convertDateRel = function(date){
 
 		var n = new Date();
-
 		
 
 		if (n.addMinutes(-1) < date) return ['fewseconds']
 		if (n.addMinutes(-2) < date) return ['oneminute']
 
-		if (n.addMinutes(-25) < date) {
+		if (n.addMinutes(-55) < date) {
 
 
 			return ['minutes', '', ((n.getTime() - date.getTime()) / 60 / 1000).toFixed(0)]
 		}
 
-		if (n.addMinutes(-45) < date) return ['halfanhour']
+		//if (n.addMinutes(-45) < date) return ['halfanhour']
 		if (n.addMinutes(-80) < date) return ['anhour']
 
 		if (dateToStrSmall(n) == dateToStrSmall(date)) return ['today', addZero(date.getHours().toString()) + ":" + addZero(date.getMinutes().toString())]
@@ -5882,7 +5881,26 @@
 		{
 			var scrollTop = ofssetObj.top + offset;
 
-			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
+			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top + offset
+
+			_scrollTop(scrollTop, el, time);
+		}
+
+	}
+
+	_scrollToBottom = function(to, el, time, offset){
+		
+		if(!to) to = $(this);
+
+		if(!offset) offset = 0;
+
+		var ofssetObj = to.offset();
+
+		if (ofssetObj)
+		{
+			var scrollTop = ofssetObj.top + offset + to.height();
+
+			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top  + to.height() + offset
 
 			_scrollTop(scrollTop, el, time);
 		}

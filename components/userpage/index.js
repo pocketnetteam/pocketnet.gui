@@ -59,7 +59,7 @@ var userpage = (function(){
 				add : function(){
 
 					if (isMobile() && deep(mestate, 'reputation')){
-						return mestate.reputation
+						return mestate.reputation.toFixed(1)
 					}
 
 				}

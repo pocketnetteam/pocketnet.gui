@@ -36,7 +36,7 @@ var comments = (function(){
 
 				var _el = el.c.find('#' + comment.id);
 
-				var d_el = _el.find(">div.commentPaddingWrapper");
+				var d_el = _el.find(">div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper");
 
 				if (address == self.app.platform.sdk.address.pnet().address){
 
@@ -465,9 +465,11 @@ var comments = (function(){
 
 					var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
 
-					var str = '@' + (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address) + ',  '
+					var name = (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address)
 
-					if(address == self.app.platform.sdk.address.pnet().address) str = ''
+					var str = '@' + name + ',  '
+
+					if(address == self.app.platform.sdk.address.pnet().address || !name) str = ''
 
 					area.setText(str)
 
@@ -1357,14 +1359,13 @@ var comments = (function(){
 
 						p.el.find('.top .cact').on('click', function(){
 
-							_scrollTo(el.c.find('.comment:nth-child(1)'), _in)
+							_scrollToTop(el.c.find('.list'), _in, undefined, -150)
 						
 						})
 
 						p.el.find('.bottom .cact').on('click', function(){
-							var _el = el.c.find('.comment:nth-last-child(1)');
 
-								_scrollTo(_el, _in)
+							_scrollToBottom(el.c.find('.list'), _in, undefined, -150)
 
 						})
 
@@ -1789,6 +1790,21 @@ var comments = (function(){
 		}
 
 		var initEvents = function(){
+
+			/*self.app.platform.ws.messages['newblocks'].clbks['comments'] =
+			self.app.platform.ws.messages['new block'].clbks['comments'] = function(){
+
+				load.level(null, function(comments){
+					var p = {}
+					p.comments = self.app.platform.sdk.comments.storage[txid]['0']
+					p.class = "firstcomment"
+
+					renders.list(p, function(){
+					})	
+				})
+
+			}*/
+
 				
 			el.c.find('.showall').on('click', function(){
 

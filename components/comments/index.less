@@ -26,9 +26,25 @@
 			}
 		}
 
+		
+
+	}
+
+	.loadnewcomments{
+		text-align: center;
+		color : @color-gray-mlight;
+		cursor: pointer;
+		span{
+			font-weight: 100;
+			font-size: 0.8em;
+		}
 	}
 
 	&.listpreview{
+		.loadnewcomments{
+			display: none;
+		}
+
 		.list{
 			
 			.comment{
@@ -189,8 +205,10 @@
 	}
 
 	.list{
+
+
 		
-		
+				
 		.comment{
 			border-bottom : 1px solid @color-gray-slight;
 			.transition(0.9s, color);
@@ -198,15 +216,16 @@
 
 			&.mycomment,
 			&.rated{
-				.commentpanel{
-					.upvoteComment{
-						cursor: default;
-						color : @color-gray-mlight;
-
-						&.ratedScore{
-							color : @color-bright;	
+				>div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper{
+					.commentpanel{
+						.upvoteComment{
+							cursor: default;
+							color : @color-gray-mlight;
+	
+							&.ratedScore{
+								color : @color-bright;	
+							}	
 						}
-
 					}
 				}
 			}
@@ -1209,7 +1228,10 @@
 						&.fortext{
 							padding-left: 0;
 						}
-	
+						
+						&.forimage{
+							width: 42px;
+						}
 					}
 	
 				}
@@ -1272,7 +1294,7 @@
 					>div{
 						float: left;
 						padding-left: 0;
-						padding-right: 3 * @rhythm;
+						padding-right: 4 * @rhythm;
 					}	
 				}
 					
@@ -1363,9 +1385,13 @@
 				text-align: center;
 			}
 
-			/*&.active{
+			&.active{
 
 				height: 70px;
+
+				.newcommentimages.active {
+					display: none!important;
+				}
 
 				.postbody{
 				
@@ -1374,8 +1400,10 @@
 					position : fixed;
 					left: 0;
 					right: 0;
-					top: 0;
+					bottom: 0;
 					z-index: 1000;
+
+					
 					
 
 					.posttable{
@@ -1412,7 +1440,7 @@
 						}
 					}
 				}
-			}*/
+			}
 		}
 
 		

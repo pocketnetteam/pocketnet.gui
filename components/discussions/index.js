@@ -127,7 +127,6 @@ var discussions = (function(){
 
 
 					if(ed.view == "fixedin"){
-
 					
 						p.history = false;
 

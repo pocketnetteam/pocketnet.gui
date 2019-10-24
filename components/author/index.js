@@ -389,7 +389,7 @@ var author = (function(){
 				
 			},
 
-			report : function(report, cl){
+			report : function(report, cl, npsh){
 
 				actions.destroy();
 
@@ -399,9 +399,10 @@ var author = (function(){
 
 					if (report.id != 'shares' || cl) rem.push('ss')
 
-					self.app.nav.api.history.addRemoveParameters(rem, {
-						report : report.id
-					})
+					if(!npsh)
+						self.app.nav.api.history.addRemoveParameters(rem, {
+							report : report.id
+						})
 				}
 
 				report.active = true;
@@ -977,13 +978,13 @@ var author = (function(){
 
 		}
 
-		var make = function(){
+		var make = function(ini){
 
 			var r = parameters().report || 'shares'
 
 				reports[r].active = true;
 
-			renders.report(reports[r])
+			renders.report(reports[r], null, ini)
 			renders.menu()
 
 		
@@ -1027,7 +1028,7 @@ var author = (function(){
 			parametersHandler : function(){
 				var r = parameters().report || 'shares'
 
-				renders.report(reports[r])
+				renders.report(reports[r], null, true)
 				renders.menu()
 
 				
@@ -1172,7 +1173,7 @@ var author = (function(){
 
 				el.info = el.c.find('.authorinfoWrapper')
 
-				make();
+				make(true);
 				initEvents();
 
 				if(self.user.isItMe(author.address)){

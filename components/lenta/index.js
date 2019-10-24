@@ -72,13 +72,22 @@ var lenta = (function(){
 
 				actions.clear()
 
-				initedcommentes = {}
-
 				make(clbk);
 			},
 			clear : function(){
 
+				_.each(shareInitedMap, function(s, id){
+					delete self.app.platform.sdk.node.shares.storage.trx[id]
+				})
+
+				_.each(players, function(p){
+					p.p.destroy()
+				})
 				
+				_.each(initedcommentes, function(c){
+					c.destroy()
+				})
+
 				countshares = 0;
 
 				recomended = []
@@ -87,6 +96,8 @@ var lenta = (function(){
 				shareInitingMap = {}
 
 				shareheights = {}
+
+				initedcommentes = {}
 
 				fullscreenvideoShowed = false;
 
@@ -2610,12 +2621,10 @@ var lenta = (function(){
 
 			self.app.platform.clbks._focus.lenta = function(time){
 
-				if(window.cordova && !essenseData.txids && !making && time > 120){
+				if (window.cordova && !essenseData.txids && !making && time > 120){
 
 					actions.loadprev()
-
 					_scrollTop(0)
-
 					
 				}
 			}
@@ -2944,6 +2953,14 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+				_.each(shareInitedMap, function(s, id){
+					delete self.app.platform.sdk.node.shares.storage.trx[id]
+				})
+
+				_.each(players, function(p){
+					p.p.destroy()
+				})
 
 				self.app.actions.onScroll()
 

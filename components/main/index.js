@@ -436,6 +436,8 @@ var main = (function(){
 
 				currentMode = ncurrentMode
 
+				if(lenta) lenta.destroy()
+
 				renders.lenta()
 
 				makeShare()

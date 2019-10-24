@@ -916,33 +916,43 @@ var post = (function(){
 
 					share = null;
 
+				self.app.platform.sdk.node.shares.getbyid([id], function(){
 
-				if (id){
 					share = self.app.platform.sdk.node.shares.storage.trx[id] 
 
-					if(!share){
-						var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
-							return s.txid == id
-						})
+					self.app.platform.sdk.node.shares.users([share], function(l, error2){
+						
+
+						if(!share){
+							var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
+								return s.txid == id
+							})
 
 
-						if (temp){
-							share = new pShare();
-							share._import(temp, true);
-							share.temp = true;
-							share.address = self.app.platform.sdk.address.pnet().address
+							if (temp){
+								share = new pShare();
+								share._import(temp, true);
+								share.temp = true;
+								share.address = self.app.platform.sdk.address.pnet().address
+							}
+
+							
 						}
 
-						
-					}
-				}
 
+						var data = {
+							ed : deep(p, 'settings.essenseData') || {}
+						};
 
-				var data = {
-					ed : deep(p, 'settings.essenseData') || {}
-				};
+						clbk(data);
 
-				clbk(data);
+					})
+
+					
+				
+				})
+				
+				
 
 			},
 
