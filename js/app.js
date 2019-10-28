@@ -76,6 +76,7 @@ Application = function(p)
 	if(!p) p = {}
 
 	var self = this;
+	var realtimeInterval = null;
 
 	self.options = {
 		
@@ -539,6 +540,8 @@ Application = function(p)
 
 		newObjects(p);
 
+		self.realtime();
+
 		if(!_Node)
 		{
 			checkJSErrors();
@@ -872,6 +875,43 @@ Application = function(p)
 		})
 
 		return tt.join(' ')
+	}
+
+	self.realtime = function(){
+
+		if (realtimeInterval) 
+			clearInterval(realtimeInterval)
+
+		if(typeof window != 'undefined' && typeof $ != 'undefined'){
+
+		}
+
+		realtimeInterval = setInterval(function(){
+
+			var realtimeelements = $('.realtime');
+
+
+			realtimeelements.each(function(){
+				var el = $(this);
+
+				var time = el.attr('time');
+				var utc =  el.attr('utc');
+
+
+				var ctime = null;
+
+				if (utc && utc == 'true'){
+					ctime = self.platform.convertUTCSSrel(time)
+				}
+				else{
+					ctime = self.reltime(new Date(time))
+				}
+
+				el.html(ctime)
+
+			})
+		}, 30000)
+
 	}
 
 

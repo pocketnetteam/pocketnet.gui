@@ -63,8 +63,7 @@ var post = (function(){
 
 			sharesocial : function(clbk){
 		
-				//var url = 'https://pocketnet.app/'+self.app.nav.get.pathname()+'?s='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address + '&address=' + (parameters().address || "")
-				var url = 'https://pocketnet.app/' + ed.hr + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
+				var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
 
 				if (parameters().address){
 					url += '&address=' + (parameters().address || '')
@@ -919,25 +918,23 @@ var post = (function(){
 				self.app.platform.sdk.node.shares.getbyid([id], function(){
 
 					share = self.app.platform.sdk.node.shares.storage.trx[id] 
-
-					self.app.platform.sdk.node.shares.users([share], function(l, error2){
 						
 
-						if(!share){
-							var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
-								return s.txid == id
-							})
+					if(!share){
+						var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
+							return s.txid == id
+						})
 
-
-							if (temp){
-								share = new pShare();
-								share._import(temp, true);
-								share.temp = true;
-								share.address = self.app.platform.sdk.address.pnet().address
-							}
-
-							
+						if (temp){
+							share = new pShare();
+							share._import(temp, true);
+							share.temp = true;
+							share.address = self.app.platform.sdk.address.pnet().address
 						}
+
+					}
+
+					self.app.platform.sdk.node.shares.users([share], function(l, error2){
 
 
 						var data = {

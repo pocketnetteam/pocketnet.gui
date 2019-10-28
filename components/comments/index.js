@@ -1325,6 +1325,8 @@ var comments = (function(){
 					h = ed.caption
 				}
 
+				if(!el.caption) return
+
 				el.caption.find('.captionPreview').html(h)
 
 				bgImages(el.caption.find('.captionPreview'))

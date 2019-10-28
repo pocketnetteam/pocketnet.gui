@@ -380,7 +380,7 @@ var metadisplay = function(){ %>
 						<div class="sys">
 							<% if(share.time) {%>
 
-								<span><%- app.reltime(share.time) %></span>
+								<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
 
 							<% } else { %> 
 

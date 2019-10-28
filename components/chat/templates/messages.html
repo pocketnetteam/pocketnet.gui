@@ -174,8 +174,7 @@ _.each(messages, function(message){
 
 					
 
-					<div class="time">
-							
+					<div class="time realtime" time="<%-message.tm%>" utc="true">
 						<%-app.platform.convertUTCSSrel(message.tm)%>
 					</div>
 				</div>

@@ -12,7 +12,8 @@ var wallet = (function(){
 
 		var charts = {};
 
-		var craddress = 'PFF7PevK753eYTwWBScdEAbWQrgu36AdUA'
+		var craddress = 'PFF7PevK753eYTwWBScdEAbWQrgu36AdUA';
+		var first = true;
 
 		var addressesGroup = {
 
@@ -1795,6 +1796,7 @@ var wallet = (function(){
 						})
 
 					}, a)
+
 				}, a)
 
 				
@@ -2136,7 +2138,7 @@ var wallet = (function(){
 
 			})
 
-			
+			self.app.platform.sdk.node.transactions.get.allBalance(null, true)
 
 		}
 
@@ -2149,7 +2151,6 @@ var wallet = (function(){
 
 					data.p2pkh = self.app.platform.sdk.address.pnet()
 
-		
 
 				prepareOptions()
 

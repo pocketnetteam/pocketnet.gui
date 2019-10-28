@@ -7717,9 +7717,14 @@ Platform = function(app, listofnodes){
 										clbk(s.unspent[address])
 								},
 								fail : function(d, e){
+
+									if(!s.unspent) 
+										s.unspent = {};	
+
 									s.unspent[address] = [];
 
-									s.unspentLoading[address] = false;
+									if (s.unspentLoading)
+										s.unspentLoading[address] = false;
 									
 									if (clbk){
 								    	clbk(s.unspent[address], e)
@@ -8135,7 +8140,7 @@ Platform = function(app, listofnodes){
 
 
 											if (clbk){
-												clbk(null, (deep(data, 'data.code') || deep(data, 'data.message') || e).toString(), data)
+												clbk(null, (deep(data, 'data.code') || deep(data, 'data.message') || e || 0).toString(), data)
 											}
 
 										}
@@ -10153,7 +10158,7 @@ Platform = function(app, listofnodes){
 					t.setTime(clearStringXss(time) * 1000);	
 
 					h+= '<div class="time">'
-					h+= '<span>' + app.reltime(t) + '</span>'
+					h+= '<span class="realtime" time="'+t+'">' + app.reltime(t) + '</span>'
 					h+= '</div>'
 				}
 
@@ -11085,6 +11090,7 @@ Platform = function(app, listofnodes){
 							}
 
 							if(data.mesType == 'upvoteShare'){
+
 								platform.sdk.node.shares.getbyid(data.posttxid, function(s, fromcashe){
 
 									s || (s = []);
@@ -11218,6 +11224,34 @@ Platform = function(app, listofnodes){
 							})
 						})
 
+					}
+
+
+					if (data.mesType == 'upvoteShare' && data.share){
+						message.el.find('.sharepreview').on('click', function(){
+
+							console.log('data.share', data.share, data)
+
+							platform.sdk.node.shares.getbyid(data.posttxid, function(s, err, p, fromcashe){
+
+								platform.app.nav.api.load({
+									open : true,
+									href : 'post?s=' + data.posttxid,
+									inWnd : true,
+									//history : true,
+									clbk : function(d, p){									
+										app.nav.wnds['post'] = p
+									},
+	
+									essenseData : {
+										share : data.posttxid
+									}
+								})
+							
+							})
+							
+						})
+						
 					}
 				},
 				notificationData : function(data){
