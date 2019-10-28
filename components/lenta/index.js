@@ -1441,6 +1441,10 @@ var lenta = (function(){
 
 						if(!el.c) return
 
+						var hr = 'https://pocketnet.app/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
+
+						if (parameters().address) hr += '&address=' + (parameters().address || '')
+
 						self.nav.api.load({
 							open : true,
 							id : 'comments',
@@ -1478,6 +1482,8 @@ var lenta = (function(){
 	
 								lastComment : share.lastComment,
 								count : share.comments,
+
+								hr : hr,
 
 								renderClbk : function(){
 									if (essenseData.renderclbk)

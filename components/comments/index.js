@@ -159,6 +159,41 @@ var comments = (function(){
 		}
 
 		var actions = {
+			sharesocial : function(comment){
+
+
+					var nm = '';
+
+					var l = findAndReplaceLink(filterXSS(comment.message, {
+						whiteList: [],
+						stripIgnoreTag: true
+					}), true)
+
+					var m = emojione.toImage(l)
+
+					nm = nl2br(trimrn(m))
+
+					var hr = ed.hr + "&commentid=" + comment.id;
+
+					if(comment.parentid && comment.parentid != '0') hr = hr + "&parentid=" + comment.parentid;
+					
+					
+					self.nav.api.load({
+						open : true,
+						href : 'socialshare',
+						history : true,
+						inWnd : true,
+
+						essenseData : {
+							url : hr,
+							caption : 'Share this Comment',
+							image : deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image'),
+							title : deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name'),
+							text : nm
+						}
+					})
+				
+			},
 			editImage : function(id, r, p){
 
 				var comment = currents[id]
@@ -1005,6 +1040,16 @@ var comments = (function(){
 							_el.tooltipster('hide')	
 						})
 
+						__el.find('.socialshare').on('click', function(){
+
+							console.log('sharesocial', comment)
+
+							actions.sharesocial(comment)
+
+							_el.tooltipster('hide')	
+
+						})
+
 					}, {
 						theme : 'zindex lighttooltip'
 					})
@@ -1728,7 +1773,24 @@ var comments = (function(){
 					renders.post(function(area){
 						areas["0"] = area
 
-						actions.fastreply(ed.reply)
+
+						if(ed.reply){
+							actions.fastreply(ed.reply)
+						}
+						else
+						{
+							var ps = parameters();
+							var reply = {};
+
+							if (ps.commentid){
+								reply.answerid = ps.commentid;
+								reply.parentid = ps.parentid || ""
+								reply.noaction = true
+
+								actions.fastreply(reply)
+							}
+
+						}
 					})
 				})
 

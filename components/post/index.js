@@ -506,6 +506,12 @@ var post = (function(){
 
 					var _el = el.c.find(".commentsWrapper");
 
+					var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
+
+					if (parameters().address){
+						url += '&address=' + (parameters().address || '')
+					}
+
 					self.nav.api.load({
 						open : true,
 						id : 'comments',
@@ -514,6 +520,7 @@ var post = (function(){
 						eid : share.txid + 'post',
 
 						essenseData : {
+							hr : url,
 							totop : el.c,
 							caption : rendered,
 							send : function(){
@@ -965,7 +972,7 @@ var post = (function(){
 				
 				delete self.app.platform.ws.messages.transaction.clbks.temppost
 				
-				self.app.nav.api.history.removeParameters(['s'])
+				self.app.nav.api.history.removeParameters(['s', 'commentid', 'parentid'])
 			},
 			
 			init : function(p){

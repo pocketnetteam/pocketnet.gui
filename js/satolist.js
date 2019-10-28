@@ -3933,7 +3933,6 @@ Platform = function(app, listofnodes){
 
 			replacePattern : function(str, h, p){
 
-
 				var sreg = /@([^,]+),/g
 
 				var name = str.match(sreg);

@@ -129,7 +129,7 @@ var commentpanel = function(comment, _class){  %>
 
 						
 						<div class="panelWrapper">
-							<% if(comment.address == user.address.value && !comment.deleted) {%>
+							<% if(!comment.deleted) {%>
 
 								<div class="panel">
 									<i class="fas fa-ellipsis-h"></i>
