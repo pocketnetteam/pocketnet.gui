@@ -1,6 +1,7 @@
 # Include your project-specific ignores in this file
 # Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
 node_modules
+.vscode
 dist
 signaling_server
 messenger/server/cert/key.pem
@@ -26,3 +27,4 @@ js/join.min.js
 web.config
 web.config
 publish.py
+performance/changes.txt
