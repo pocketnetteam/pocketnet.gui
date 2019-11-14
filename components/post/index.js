@@ -9,10 +9,32 @@ var post = (function(){
 		var primary = deep(p, 'history') || deep(p, 'primary');
 
 
-		var el, share, ed, inicomments;
+		var el, share, ed, inicomments, eid = '', _repost = null, level = 0;
 
 		var actions = {
+			repost : function(shareid){
 
+				var href = 'index';
+
+				if(isMobile()) href = 'share'
+
+				self.closeContainer()
+
+				self.nav.api.load({
+					open : true,
+					href : href + '?repost=' + shareid,
+					history : true,
+					handler : true,
+					essenseData : {
+						
+					},
+
+					clbk : function(p){
+						
+					}
+				})
+
+			},
 			next : function(){
 
 				el.wnd.off('scroll')
@@ -212,7 +234,9 @@ var post = (function(){
 
 			///
 			///
-			
+			likeWithR : function(value, clbk){
+				 
+			},
 			like : function(value, clbk){
 
 				var upvoteShare = share.upvote(value);
@@ -226,7 +250,6 @@ var post = (function(){
 
 					return
 				}
-
 			
 				self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -306,7 +329,71 @@ var post = (function(){
 		
 			},
 
-			
+			openGalleryRec : function(initialValue, clbk){
+
+				var allimages = [];
+
+				var getimages = function(share, clbk){
+
+					_.each(share.images, function(i){
+						allimages.push(i)
+					})
+
+					if(!share.repost){
+
+						if (clbk)
+							clbk()
+
+					}
+
+					else{
+
+						self.app.platform.sdk.node.shares.getbyid(share.repost, function(shares){
+
+							var s = shares[0]
+
+							if (s){
+								getimages(s, clbk);
+							}
+	
+							else{
+								if (clbk)
+									clbk()
+							}
+						})
+
+					}
+
+				}
+
+				getimages(share, function(){
+					var images = _.map(allimages, function(i){
+						return {
+							src : i
+						}
+					})
+	
+					var num = findIndex(images, function(image){
+	
+						if (image.src == initialValue) return true;						
+	
+					})
+	
+					self.app.nav.api.load({
+						open : true,
+	
+						href : 'imagegallery?i=' + share.txid + '&num=' + (num || 0),
+	
+						inWnd : true,
+						history : 'true',
+						essenseData : {
+							initialValue : initialValue,
+							idName : 'src',
+							images : images
+						}
+					})
+				})
+			},
 
 			openGallery : function(initialValue){
 				
@@ -339,6 +426,9 @@ var post = (function(){
 		}
 
 		var events = {
+			repost : function(){
+				actions.repost(share.txid);
+			},
 			metmenu : function(){
 				var _el = $(this);
 				var id = share.txid;
@@ -394,20 +484,13 @@ var post = (function(){
 							return
 						}
 
-						
-
-
 						p.attr('value', value)
 						p.addClass('liked')
-
 						
 						actions.like(value, function(r){
 							if(r){
-								
-
 								share.scnt || (share.scnt = 0)
 								share.score || (share.score = 0)
-
 
 								share.scnt++;
 								share.score = Number(share.score || 0) + Number(value);
@@ -480,7 +563,7 @@ var post = (function(){
 			openGallery : function(){
 				var src = $(this).attr('i')
 
-				actions.openGallery(src)
+				actions.openGalleryRec(src)
 			},
 
 			sharesocial : function(){
@@ -533,7 +616,11 @@ var post = (function(){
 
 							reply : ed.reply,
 
-							fromtop : true
+							fromtop : true,
+
+							additionalActions : function(){
+								self.closeContainer()
+							}
 						},
 
 						clbk : function(e, p){
@@ -627,10 +714,16 @@ var post = (function(){
 					turi : 'lenta',
 					name :  'share',
 					el : el.share,
+
+					additionalActions : function(){
+						self.closeContainer()
+					},
+
 					data : {
 						share : share,
 						all : true,
-						mestate : {}
+						mestate : {},
+						repost : ed.repost
 					},
 
 				}, function(_p){
@@ -639,18 +732,13 @@ var post = (function(){
 
 					actions.position();
 
-					el.wr.addClass('active')
-
-
-
-					
-
-
-
+					el.wr.addClass('active')	
 
 					renders.stars(function(){
 
 						renders.url(function(){
+
+							renders.repost();
 
 							actions.position()
 							
@@ -662,17 +750,25 @@ var post = (function(){
 
 								renders.images(function(){
 
-									actions.position()
+									if(!ed.repost){
 
-									el.share.find('.stars i').on('click', events.like)
-									el.share.find('.complain').on('click', events.complain)
-									el.share.find('.image').on('click', events.openGallery)
-									el.share.find('.txid').on('click', events.getTransaction)
-									el.share.find('.donate').on('click', events.donate)
-									el.share.find('.sharesocial').on('click', events.sharesocial)
-									el.share.find('.asubscribe').on('click', events.subscribe)
-									el.share.find('.aunsubscribe').on('click', events.unsubscribe)
-									el.share.find('.metmenu').on('click', events.metmenu)
+										actions.position()
+
+										el.share.find('.stars i').on('click', events.like)
+										el.share.find('.complain').on('click', events.complain)
+
+										el.share.on('click', '.image', events.openGallery)
+										el.share.on('click', '.forrepost', events.repost)
+
+										el.share.find('.txid').on('click', events.getTransaction)
+										el.share.find('.donate').on('click', events.donate)
+										el.share.find('.sharesocial').on('click', events.sharesocial)
+										el.share.find('.asubscribe').on('click', events.subscribe)
+										el.share.find('.aunsubscribe').on('click', events.unsubscribe)
+										el.share.find('.metmenu').on('click', events.metmenu)
+
+
+									}
 
 									if (clbk)
 										clbk()
@@ -711,6 +807,50 @@ var post = (function(){
 				})
 				
 			},
+			repost : function(clbk){
+
+				
+
+				if(share.repost){
+
+					self.shell({
+						turi : 'lenta',
+						name :  'repost',
+						el : el.c.find('.repostWrapper'),
+						data : {
+							repost : share.repost,
+							level : level,
+							share : share
+							//fromrepost : ed.repost
+						},
+	
+					}, function(_p){
+
+						actions.position()
+
+						if(_p.el && _p.el.length){
+
+							self.app.platform.papi.post(share.repost, _p.el.find('.repostShare'), function(p){
+
+								_repost = p;
+
+								actions.position()
+
+							}, {
+								repost : true,
+								eid : eid + share.txid,
+								level : level
+							})
+
+						}
+
+
+						
+
+					})
+
+				}
+			},
 			url : function(clbk){
 
 				var url = share.url
@@ -726,6 +866,10 @@ var post = (function(){
 						url : url,
 						og : og,
 						share : share
+					},
+
+					additionalActions : function(){
+						self.closeContainer()
 					},
 
 				}, function(_p){
@@ -891,7 +1035,7 @@ var post = (function(){
 				renders.share(function(){
 					renders.comments(function(){
 
-						if(el.wnd.length && ed.next && !isMobile()){
+						if (el.wnd && el.wnd.length && ed.next && !isMobile()){
 			
 							el.wnd.on('scroll', events.next)
 
@@ -914,13 +1058,21 @@ var post = (function(){
 			primary : primary,
 
 
-			getdata : function(clbk, p ){
+			getdata : function(clbk, p){
+
+				_repost = null
+
+				eid = p.settings.eid || ''
+
+				
 
 				var id = deep(p, 'settings.essenseData.share');
 
 					ed = deep(p, 'settings.essenseData') || {};
 
 					share = null;
+
+				level = (ed.level || -1) + 1 
 
 				self.app.platform.sdk.node.shares.getbyid([id], function(){
 
@@ -941,18 +1093,18 @@ var post = (function(){
 
 					}
 
-					self.app.platform.sdk.node.shares.users([share], function(l, error2){
+					if(share){
+						self.app.platform.sdk.node.shares.users([share], function(l, error2){
 
 
-						var data = {
-							ed : deep(p, 'settings.essenseData') || {}
-						};
-
-						clbk(data);
-
-					})
-
-					
+							var data = {
+								ed : deep(p, 'settings.essenseData') || {}
+							};
+	
+							clbk(data);
+	
+						})
+					}
 				
 				})
 				
@@ -960,7 +1112,7 @@ var post = (function(){
 
 			},
 
-			destroy : function(){
+			destroy : function(key){
 				el = {};
 
 				if (ed.close) ed.close()
@@ -971,9 +1123,20 @@ var post = (function(){
 				delete self.app.platform.ws.messages.event.clbks.post
 				
 				delete self.app.platform.ws.messages.transaction.clbks.temppost
+
+
+				if (_repost){
+					_repost.destroy();
+
+					_repost = null;
+				}
+
+				/*if(key != 'auto')
 				
-				self.app.nav.api.history.removeParameters(['s', 'commentid', 'parentid'])
+					self.app.nav.api.history.removeParameters(['s', 'commentid', 'parentid'])*/
 			},
+
+			clearparameters : ['s', 'commentid', 'parentid'],
 			
 			init : function(p){
 

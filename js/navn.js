@@ -225,7 +225,6 @@ Nav = function(app)
 
 			if(!href) return href
 
-
 			var _p = parameters(href, true);
 
 				_p = _.extend(_p, p);
@@ -290,15 +289,28 @@ Nav = function(app)
 
 			var currentParameters = parameters();
 
-				_.each(ids, function(id){
-					delete currentParameters[id]
-				})
+			var removed = false;
 
-			var href = current.href + collectParameters(currentParameters);
+			_.each(ids, function(id){
 
-			if(typeof _p.removefromback == 'undefined') _p.removefromback = true
+				if(currentParameters[id]){
+					removed = true
+				}
 
-			this.add(href, _p);
+				delete currentParameters[id]
+			})
+
+			if(removed){
+
+				var href = current.href + collectParameters(currentParameters);
+
+				if(typeof _p.removefromback == 'undefined') _p.removefromback = true
+
+				this.add(href, _p);
+
+			}
+
+			
 		},
 		add : function(href, p){
 
@@ -427,7 +439,9 @@ Nav = function(app)
 
 						deleted.push(id)
 
-						c()
+						console.log(';removeWindows', 'auto')
+
+						c('auto')
 					}
 
 				}
@@ -1062,8 +1076,11 @@ Nav = function(app)
 					var eve = function(e){
 						var href = core.thisSiteLink($(this).attr('href'));
 
-
 						var handler = $(this).attr('handler') || null
+
+						if (additionalActions){
+							additionalActions(e);
+						}	
 
 						core.go({
 							action : action,
@@ -1073,9 +1090,7 @@ Nav = function(app)
 							handler : handler
 						})
 
-						if (additionalActions){
-							additionalActions(e);
-						}	
+						
 
 						return false
 					}

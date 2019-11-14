@@ -432,13 +432,15 @@ var main = (function(){
 					ncurrentMode = 'common'
 				}
 				
-				if(currentMode == ncurrentMode) return
+				if (currentMode != ncurrentMode){
 
-				currentMode = ncurrentMode
+					currentMode = ncurrentMode
 
-				if(lenta) lenta.destroy()
+					if(lenta) lenta.destroy()
 
-				renders.lenta()
+					renders.lenta()
+				}
+
 
 				makeShare()
 

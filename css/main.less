@@ -4277,6 +4277,12 @@ input[type=radio].radio:checked + label {
         }
     }
 
+    .repostshare{
+        text-align: right;
+        color : @color-gray-mlight;
+        padding-right: @rhythm;
+    }
+
     .foranswer{
 
         text-align: right;
@@ -4347,9 +4353,14 @@ input[type=radio].radio:checked + label {
             }
         }
     }
+
+    .sharedivide{
+        color : fade(@color-main, 100);
+        padding : 0.5 * @rhythm 0;
+    }
     
     .sharepreview{
-        padding-top: @rhythm;
+
         .shareprwrapper{
             >div{
                 vertical-align: middle;
@@ -4422,6 +4433,14 @@ input[type=radio].radio:checked + label {
                     };
                 }
             }
+        }
+
+        &:nth-last-child(1){
+            border-bottom : 0;
+        }
+
+        &:nth-child(1){
+            padding-top: @rhythm;
         }
     }
 

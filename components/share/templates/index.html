@@ -11,7 +11,7 @@ var arranges = {
 		<div class="txt">
 			<div class="message" placeholder="<%=e('whatsnew')%>" id='emjcontainer' spellcheck="true"></div>
 		</div>
-		
+
 	<% },
 
 	i : function(){ %> 
@@ -27,108 +27,7 @@ var arranges = {
 var postline = function(){ %>
 	<div class="postlineWrapper">
 
-		<div class="postpanel table">
-			<div class="panelWrapper">
-				<div class="panel">
-					<!--<div class="item" embeding="embeding20">
-						<i class="fas fa-plus"></i>
-					</div>-->
-
-					<div class="item url tooltip" embeding="url" title="<%=e('saddlink')%>">
-						<i class="fas fa-external-link-alt"></i><span class="mobiledevice"><%=e('saddlink')%></span>
-					</div>
-					<div class="item images tooltip" embeding="images" title="<%=e('saddimages')%>">
-						<i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
-					</div>
-
-					<% if(!share.aliasid) {%>
-					
-						<div class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
-							<i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
-						</div>
-
-					<% } %>
-				</div>
-			</div>
-
-			<div class="postWrapper">
-
-				<% if(essenseData.exoprtByTime) {%>
-
-					<div class="postTimeWrapper">
-						<select class="postTime">
-							<option value="w"><%=e('snothing')%></option>
-							<option value="t" <% if(essenseData.dtype) {%> selected <% } %>><%=e('sposttime')%></option>
-							<option value="p"><%=e('spostnow')%></option>
-						</select>
-					</div>
-
-					<div class="selectedTimeWrapper">
-						<span class="selectedTime">
-							<% if(essenseData.time) { %> 
-
-								<%- convertDate(dateToStr(essenseData.time))  %>
-
-							<% } else { %> 
-
-								<%=e('stimenotselected')%>
-
-							<% } %>
-							
-
-						</span> 
-
-						<i class="fas fa-clock"></i>
-					</div>
-
-					
-					
-
-				<% } else { %> 
-
-					<div class="postWrapper">
-
-						<% if(!share.aliasid) {%>
-							<div class="dopost element">
-								<button class="post shadow"><%=e('spost')%></button>
-							</div>	
-						<% } else { %> 
-							<div class="dopost element">
-								<button class="post shadow">Save</button>
-							</div>
-
-							<div class="cancelpost element">
-									<button class="cancelediting ghost">Cancel</button>
-								</div>
-						<% } %>
-						<!--<div class="waitpost element">
-
-							<div class="itemwr table tempPreloader">
-								
-								<div class="count">
-									<div class="label">
-
-										<span><%=e('waitConf')%></span>
-
-									</div>
-								</div>
-
-								<div class="iconwr">
-									<div class="preloader5"><span></span><span></span><span></span></div>
-								</div>
-
-								
-							</div>
-
-						</div>-->
-					</div>
-					
-
-				<% } %>
-
-				
-			</div>
-		</div>
+		
 
 	</div>
 <% } 
@@ -142,14 +41,18 @@ var postline = function(){ %>
 
 			<% if(postcnt === 0) {%>
 				<span><%=e('firstShare')%></span>
-			<% } %>
+			<% } else { %> 
+			
+				<span>New Post</span>
+				
+			<% }%>
 			
 		<% } else { %> 
 			<span>Edit Post</span>
 		<% } %>
 	</div>
 	<div class="absolutetxwrapper">
-		<div class="txtwrapper table">
+		<!--<div class="txtwrapper table">-->
 
 			<div class="iconWrapper">
 
@@ -172,100 +75,95 @@ var postline = function(){ %>
 				</div>
 
 			</div>
-			<div class="shareWrapper">
+			<!--<div class="shareWrapper">-->
 
-				<div class="relativeContainer">
+				<!--<div class="relativeContainer">-->
 
 					<% if((deep(essenseData, 'pack.addresses.length') || 0) > 1) {%>
+						<div class="cntwrk">
+							<div class="changeAddressWrapper">
 
-						<div class="changeAddressWrapper">
+								<select class="changeAddress">
+									<% _.each(deep(essenseData, 'pack.addresses'), function(address){ 
 
-							<select class="changeAddress">
-								<% _.each(deep(essenseData, 'pack.addresses'), function(address){ 
-
-									var selected = '';
+										var selected = '';
 
 
 
-									if(address == (essenseData.daddress || user.address.value.toString('hex'))) selected = 'selected'
+										if(address == (essenseData.daddress || user.address.value.toString('hex'))) selected = 'selected'
 
-									var label = deep(app, 'platform.sdk.users.storage.'+address+'.name') || address
+										var label = deep(app, 'platform.sdk.users.storage.'+address+'.name') || address
 
-								%> 
+									%> 
 
-									<option value="<%-address%>" <%-selected%>><%-label%></option>
+										<option value="<%-address%>" <%-selected%>><%-label%></option>
 
-								<% }) %>
-							</select>
+									<% }) %>
+								</select>
 
+							</div>
 						</div>
 
 					<% } %>
 					
 
 					<% var a = share.settings.a || share.default.a %>
+						<div class="cntwrk">
+							<div id="sortableBody">
 
-					<div id="sortableBody">
+								<% _.each(a, function(key, i){ 
 
-						<% _.each(a, function(key, i){ 
+									if(!arranges[key]) return;
+								%> 
 
-							if(!arranges[key]) return;
-						%> 
-
-							<div class="draggablepart" part="<%-key%>">
-								<div class="draggablewrapper table">
-									<div class="draggablecontent">
-										<% arranges[key]() %>
-									</div>
-									<div class="draggablemarkerwrapper">
-										<div class="marker">
-											<i class="fas fa-ellipsis-v"></i>
+									<div class="draggablepart" part="<%-key%>">
+										<div class="draggablewrapper table">
+											<div class="draggablecontent">
+												<% arranges[key]() %>
+											</div>
+											<div class="draggablemarkerwrapper">
+												<div class="marker">
+													<i class="fas fa-ellipsis-v"></i>
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
+								<% }) %>
 							</div>
-						<% }) %>
-					</div>
+						</div>
 					
-
+					<div class="repostWrapper attachements"></div>	
 					
 
 					<!-- ----------------------- -->
-				
-					<div class="sortablepaddingspacer">
+					<div class="cntwrk">
+						<div class="sortablepaddingspacer">
 
-						<div class="tgs">
-							<div class="tagsWrapper table">
-								<div class="tagsInputWrapper">
-									<div class="inputWrapper">
-										<div class="searchWrapper"></div>
-									</div>
-								</div>
-
-								<div class="tagsCont">
-								</div>
-							</div>
-						</div>
-						<% if(!share.aliasid && !essenseData.absolute) {%>
-							<% postline() %>
-
-							<div class="paddingmobilewrapper">
-								<div class="error"></div>
+							<div class="tgsWrapperMain">
 							</div>
 
-						<% } %>
+							<% if(!share.aliasid && !essenseData.absolute) {%>
+								<% postline() %>
+
+								<div class="paddingmobilewrapper">
+									<div class="error"></div>
+								</div>
+
+							<% } %>
+							
+
 						
-
-					
+						</div>
 					</div>
 
-				</div>
+				<!--</div>-->
 				
-			</div>
+			<!--</div>-->
 
 			
-		</div>
+		<!--</div>-->
 	</div>
+
 	<div class="sLoader">
 		<div class="prwrapper">
 			<div class="prwrappermiddle">
@@ -273,6 +171,7 @@ var postline = function(){ %>
 			</div>
 		</div>
 	</div>
+
 	<% if(share.aliasid || essenseData.absolute) {%>
 		<% postline() %>
 

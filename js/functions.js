@@ -521,6 +521,12 @@
 				p.success(wnd, self, true);
 		}
 
+		var wndfixed = function(){
+
+			wnd.css('top', _w.scrollTop())
+
+		}
+
 		var render = function(tpl){
 
 			var h = '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
@@ -582,8 +588,12 @@
 
 		    if(!nooverflow){
 
-		    	nooverflow = !app.actions.offScroll(p.offScroll);
-		    }
+				nooverflow = !app.actions.offScroll(p.offScroll);
+				
+				
+			}
+			
+			console.log('nooverflow', nooverflow)
 
 			wnd.css("display", "block");
 		}
@@ -661,10 +671,12 @@
 			}
 
 			_w.on('resize', resize)
+
+			_w[0].addEventListener('scroll', wndfixed);
 		}
 
 		var actions = {
-			close : function(cl){
+			close : function(cl, key){
 
 				if(cl) if(p.closecross) p.closecross(wnd, self);
 
@@ -673,11 +685,15 @@
 				if(!nooverflow)
 					app.actions.onScroll();
 
+					console.log('cl, key', cl, key, self.essenseDestroy)
+
 				if (self.essenseDestroy)
-					self.essenseDestroy()
+					self.essenseDestroy(key)
 				
 				wnd.remove();
 				_w.off('resize', resize)
+
+				_w[0].removeEventListener('scroll', wndfixed);
 
 				if(!p.noblur)
 				{
@@ -7222,6 +7238,7 @@
 				request(_d,
 			    function (_error, response, body) {
 
+					console.log(url, _error)
 
 			    	if(_error)
 			    	{
@@ -9354,7 +9371,10 @@
 /* NUMBERS */
 	compressedNumber = function(num, n, N) {
 
+		
+		
 		num = Number(num).toFixed(0)
+
 
 		if(!N) N = 999
 
@@ -9383,7 +9403,7 @@
 		ret = num;
 
 	    if (index !== false) ret+=keys[index].toUpperCase();
-	    
+		
 
 	    return ret;
 	};
@@ -9482,7 +9502,7 @@
 		
 		
 
-	    if(test && url.indexOf('channel') == -1){
+	    if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){
 	    	if(test[3]){
 
 
@@ -9886,9 +9906,10 @@
 	        }
 
 	        return target;
-	    }
+		}
+		
 
-	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\)))?)?)/ig,
+	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%\@&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#\@%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\)))?)?)/ig,
 	            function () { // copied to notifier.js:3401
 	                var matches = Array.prototype.slice.apply(arguments),
 	                    prefix = matches[1] || '',
@@ -9906,8 +9927,12 @@
 	                }
 
 	                if (matches[0].indexOf('@') != -1) {
-	                    return matches[0];
-	                }
+
+						console.log('matches', matches, inputText, full)
+
+	                    //return matches[0];
+					}
+					
 	                try {
 	                    full = decodeURIComponent(full);
 	                } catch (e){}
@@ -9917,8 +9942,10 @@
 	                }
 	                full = clean(full).replace(/&amp;/g, '&');
 
-	                    url = replaceEntities(url).replace(/([^a-zA-Z0-9#%;_\-.\/?&=\[\]])/g, encodeURIComponent);
-	                    var tryUrl = url, hashPos = url.indexOf('#/');
+						url = replaceEntities(url).replace(/([^a-zA-Z0-9#\@%;_\-.\/?&=\[\]])/g, encodeURIComponent);
+						
+						var tryUrl = url, hashPos = url.indexOf('#/');
+						
 	                    if (hashPos >= 0) {
 	                        tryUrl = url.substr(hashPos + 1);
 	                    } else {

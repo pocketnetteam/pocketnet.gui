@@ -400,13 +400,13 @@ var imagegallery = (function(){
 
 				making = false;
 
-				self.app.nav.api.history.removeParameters(['i', 'num', 's', 'com'])
+				//self.app.nav.api.history.removeParameters(['i', 'num', 's', 'com'])
 				//self.app.nav.api.history.removeParameters(['num'])
 
 				el = {};
 
 			},
-			
+			clearparameters : ['i', 'num', 's', 'com'],
 			init : function(p){
 
 				currentImage = null;

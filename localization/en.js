@@ -314,8 +314,8 @@ ____loclib.userSent = function(v){
 
 ____loclib.refferalUserMessage = "Congrats! You rescued someone from the censored web. Some coins are on their way!"
 
-____loclib.subscribeUserMessage = "followed your"
-____loclib.unsubscribeUserMessage = "unfollowed your"
+____loclib.subscribeUserMessage = "followed you"
+____loclib.unsubscribeUserMessage = "unfollowed you"
 ____loclib.gotoprofileMessage = "go to profile"
 ____loclib.upvoteShareMessage = "upvoted your post"
 

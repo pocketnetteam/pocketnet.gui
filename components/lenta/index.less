@@ -80,7 +80,7 @@
 			
 		}
 
-		.shareTable{
+		/*.shareTable{
 			>div{
 				vertical-align: top;
 				padding : 2 * @rhythm;
@@ -92,8 +92,25 @@
 					padding-right: 0;
 				}
 			}
+		}*/
+
+		.iconWrapper{
+			width: 8 * @rhythm;
+			padding-top: @rhythm;
+			padding-left: 2 * @rhythm;
+			padding-right: 0;
+			float: left;
 		}
 
+		.cntswrk{
+			margin-left: 8 * @rhythm;
+			padding-left : 2 * @rhythm;
+			padding-right : 2 * @rhythm;
+		}
+
+		.work{
+			padding-left: 0;
+		}
 
 		.videoWrapper{
 			max-width: 700px;
@@ -153,6 +170,50 @@
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
+
+			#post{
+				.share{
+					padding : 0;
+					.work{
+						padding: 0;
+						margin: 0;
+						padding-top : @rhythm;
+						border-left : @rhythm solid @color-main;
+					}
+
+					.sharecaption{
+						font-size: 1em;
+					}
+				} 
+
+
+				#post{
+					.share{
+						.work{
+							border-left : 0;
+						}
+					}
+				}
+
+				.iconWrapper{
+					width: 7 * @rhythm;
+					padding-left: 2 * @rhythm;
+
+					.usericon{
+						width: 5 * @rhythm;
+						height: 5 * @rhythm;
+					}
+				}
+			
+				.cntswrk{
+					margin-left: 7 * @rhythm;
+				}
+
+				.meta{
+					padding-top: 2.3 * @rhythm;
+		
+				}
+			}
 			
 
 			>div{
@@ -283,6 +344,8 @@
 
 				.tempPreloader{
 					padding : 2 * @rhythm 0;
+					margin-bottom : 2 * @rhythm;
+					
 					.label{
 						padding-top : @rhythm;
 						color : @color-main;
@@ -510,7 +573,7 @@
 
 
 			.meta{
-				margin-top: 1.8 * @rhythm;
+				padding-top: 2.7 * @rhythm;
 	
 				margin-bottom: @rhythm;
 
@@ -861,6 +924,7 @@
 			}
 
 			.panel{
+				margin-bottom : 2 * @rhythm;
 				
 				.itemwr{
 					width: auto;
@@ -1009,6 +1073,22 @@
 						}
 					}
 
+					&.nact{
+						cursor: default;
+						
+						.icon{
+							cursor: default;
+						}
+						&:hover{
+							.icon{
+								border-radius : 0%;
+								box-shadow: none;
+								color : @color-bright;
+								background: transparent;
+							}
+						}
+					}
+
 				}
 			}
 
@@ -1068,17 +1148,28 @@
 				.commentsWrapperHb{
 					padding-bottom : 20%;
 				}
+				.cntswrk{
+					margin-left: 0;
+					padding : 0;
+				}
+
+				.hideOnFullVideo,
+
+				.metawrapper{
+					display: none;
+				}
+
+				.repostWrapper{
+					display: none;
+				}
 
 				.work{
 					margin : 0 auto;
 					max-width: 960px;
 					background: #fff;
 					padding : 0;
-					
 
-					
-
-					.shareTable  {
+					.shareTable{
 						
 					}
 
@@ -1487,7 +1578,7 @@
 
 
 		
-		.shareTable{
+		/*.shareTable{
 			
 			display: block;
 			cursor: default;
@@ -1517,6 +1608,27 @@
 				}
 
 			}
+		}*/
+
+		.iconWrapper{
+			width: 8 * @rhythm;
+			padding-top: @rhythm;
+			padding-left: 2.5 * @rhythm;
+		}
+
+		.cntswrk{
+			margin-left: 0;
+			padding-left : 0;
+			padding-right : 0;
+
+			&.formeta{
+				margin-left: 8 * @rhythm;
+				padding-bottom: 2 * @rhythm;
+			}
+		}
+
+		.work{
+			padding-left: 0;
 		}
 
 
@@ -1575,6 +1687,55 @@
 			margin-bottom: @rhythm;
 			cursor: default;
 			padding-bottom : 0;
+
+			#post{
+				.share{
+					.work{
+						border-left : 0.5 * @rhythm solid @color-main;
+					}
+					.sharecaption{
+						font-size: 1em;
+					}
+				} 
+
+				
+				
+
+				.iconWrapper{
+					width: 7 * @rhythm;
+					padding-left: 1.5 * @rhythm;
+
+					.usericon{
+						width: 5 * @rhythm;
+						height: 5 * @rhythm;
+					}
+				}
+			
+				.cntswrk{
+					margin-left: 0 * @rhythm;
+
+					&.formeta{
+						margin-left: 7 * @rhythm;
+						padding-left : 0.5 * @rhythm;
+					}
+				}
+
+				.meta{
+					padding-top: 2.3 * @rhythm;
+				}
+
+
+				#post{
+					.cntswrk{
+						margin-left: 0 * @rhythm;
+	
+						&.formeta{
+							margin-left: 7 * @rhythm;
+							padding-left : 0.5 * @rhythm;
+						}
+					}
+				}
+			}
 
 			.medium-insert-embeds{
 				position: relative;
@@ -1769,8 +1930,6 @@
 			}
 
 			.sharecaption{
-				padding-top : @rhythm;
-				padding-bottom : @rhythm;
 				margin-bottom: @rhythm;
 
 				div{

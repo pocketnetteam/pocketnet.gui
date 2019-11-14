@@ -1,0 +1,89 @@
+
+<% if(ws && ws.length) {%>
+
+<div class="wslogscaption">
+                                    
+    <div class="wslogscaptionTable table">
+        <div class="wslogscaption">
+            <span>Websocket</span>
+        </div>
+
+        <div class="allcount ccell">
+            <%- ws.length %>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="wslogscnt">
+
+    <div class="wslogTable table tablecaption">
+        <div class="address">
+            
+                <span>Address</span>
+        </div>
+
+        <div class="clients ccell">
+            <span> Clients</span>
+        </div>
+        
+        <div class="nodes ccell">
+            <span>Nodes</span>  
+        </div>
+
+        <div class="wsdevices ccell">
+            <span>WSD</span>
+        </div>
+
+        <div class="wsdevices ccell">
+            <span>FBD </span>
+        </div>
+    </div>
+
+    <% _.each(ws, function(ws){ %>
+
+        <div class="wslog">
+            <div class="wslogTable table">
+                <div class="address" address="<%- ws.address  %>">
+                    <div class="loadaddress" address="<%- ws.address %>">
+                        <% if(users) {%>
+                            <div class="preloader5"><span></span><span></span><span></span></div>  
+
+                        <% } else { %> 
+                            <span class="clickload"><%- ws.address %></span>      
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="clients ccell">
+                    <span><%- ws.ws_clients  %> </span>  
+                </div>
+                
+                <div class="nodes ccell">
+                    <span><%- ws.ws_nodes  %>   </span>
+                </div>
+
+                <div class="wsdevices ccell">
+                    <span><%- deep(ws, 'devices.ws')  %>  </span> 
+                </div>
+
+                <div class="wsdevices ccell">
+                    <span><%- deep(ws, 'devices.fb')  %></span>   
+                </div>
+            </div>
+        </div>
+
+    <% }) %>
+</div>
+
+<% } else { %> 
+    <div class="wslogscaption">
+                                
+        <div class="wslogscaptionTable table">
+            <div class="wslogscaption">
+                <span>No any websocket connections</span>
+            </div>
+        </div>
+    </div>  
+<% } %>

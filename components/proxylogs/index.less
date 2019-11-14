@@ -1,0 +1,268 @@
+@import "../../css/__cssvar";
+
+#proxylogs{
+   
+    .error{
+        height: 400px;
+        margin-top : 4 * @rhythm;
+        text-align: center;
+        color : @color-gray-slight;
+
+        background: fade(@color-gray-slight, 10);
+    }
+    .captionWrapper{
+        padding-top : 6 * @rhythm;
+
+        a{
+            color : @color-main;
+        }
+
+        .caption{
+            font-weight: 100;
+            font-size: 2em;
+        }
+    }
+
+    .table{
+        >div{
+            vertical-align: middle;
+
+            &.ecell,
+            &.ccell{
+                width : 90px;
+                text-align: right;
+            }
+        }
+    }
+
+    .report{
+        padding : 4 * @rhythm 0;
+
+        .scaption{
+            padding : 2 * @rhythm 0;
+            font-weight: 700;
+        }
+
+        .bcaption{
+            padding-top : 4 * @rhythm;
+            font-weight: 100;
+        }
+
+        .expandws,
+        .expandall,
+        .expand{
+            cursor: pointer;
+            color : @color-gray-mlight;
+            .transition(0.3s);
+
+            &:hover{
+                color : @color-main;
+            }
+        }
+
+        
+
+        .reportcnt{
+            display: none;
+        }
+        &.active{
+            .reportcnt{
+                display: block;
+            }
+            .expandall{
+                i{
+                    &:before{
+                        content: '\f077';
+                    }
+                }
+            }
+        }
+    }
+
+    .user{
+
+        .addressTable{
+            cursor: pointer;
+            
+            >div{
+
+                vertical-align: middle;
+
+                &.iconWrapper{
+                    width: 45px;
+                    text-align: center;
+                }
+
+                &.label{
+                    padding-left:  2 * @rhythm;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+
+                    .cur{
+                        color : @color-main;
+                    }
+
+                    .name{
+                        font-weight: 100;
+                        font-size : 1.2em;
+                    }
+
+                    .light{
+                        font-size : 0.8em;
+                        color : @color-gray;
+                    }
+                }
+
+                &.extra{
+                    width: 200px;
+                    padding-left:  2 * @rhythm;
+                    text-align: right;
+                }
+            }
+
+        }
+    }
+
+    .stats{
+        .chartWrapperbs{
+            padding : 2 * @rhythm 0;
+            background: fade(@color-gray-slight, 10);
+        }
+
+        .subcaptiongraph{
+            font-weight: 100;
+            padding : 2 * @rhythm 0;
+            color : @color-gray;
+            text-align: center;
+        }
+    }
+
+    .wslogs{
+        .wslogscaption{
+            padding : @rhythm 0;
+            padding-top : 2 * @rhythm;
+            .table{
+                >div{
+                    vertical-align: middle;
+                    padding : @rhythm 0;
+                }
+            }
+        }
+
+        .wslogTable{
+            >div{
+                padding : @rhythm 0;
+                vertical-align: middle;
+            }
+
+            &.tablecaption{
+                span{
+                    font-size: 0.8em;
+                    color : @color-gray-mlight;
+                }
+            }
+        }
+
+        .clickload{
+            cursor: pointer;
+            &:hover{
+                color : @color-main;
+            }
+        }
+    }
+
+    .logs{
+
+        
+
+        .alllogs{
+            color : @color-gray;
+            .logw{
+                padding : 2 * @rhythm 0;
+                padding-bottom: 4 * @rhythm;
+
+                &:nth-child(2n+1){
+                    background: fade(@color-gray-slight, 10);
+                }
+            }
+            
+        }
+
+        
+
+        .log{
+            .ip{
+
+                border-bottom : 1px solid @color-gray-slight;
+               
+                .ipcaption{
+                    color : @color-main;
+
+                    span{
+                        font-weight: 100;
+                    }
+                }
+    
+                .iptable{
+                    >div{
+                        padding : 2 * @rhythm 0;
+                        vertical-align: middle;
+    
+                    }
+                }
+            }
+
+            .wslogs,
+            .bystatus{
+                display: none;
+            }
+
+            &.active{
+                .wslogs,
+                .bystatus{
+                    display: block;
+                } 
+
+                .expand{
+                    i{
+                        &:before{
+                            content: '\f077';
+                        }
+                    }
+                }
+        
+            }
+           
+        }
+
+       
+        
+
+        .bystatus{
+            .status{
+                padding-top : 2 * @rhythm;
+                padding-bottom: @rhythm;
+                span{
+                    font-size: 1.5em;
+                    font-weight: 100;
+                }
+
+                color : @color-bad;
+
+                &.good{
+                    color : @color-good;
+                }
+            }
+        }
+
+        .requests{
+            .requestGroup{
+                >div{
+                    padding : @rhythm 0;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}

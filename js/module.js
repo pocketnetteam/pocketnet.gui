@@ -101,7 +101,9 @@ nModule = function(){
 			{
 
 				if(!fromModule){
-					self.nav.api.links(null, p.el);
+
+					self.nav.api.links(null, p.el, p.additionalActions || null);
+					
 				}
 
 				/*p.el.find('[data-jdenticon-value]').each(function(){
@@ -157,12 +159,17 @@ nModule = function(){
 							
 						}
 
-						options.destroy = function(){
+						options.destroy = function(key){
 
 							if(p){
-								self.app.nav.api.history.removeParameters(['m' + p.id])
+								if(!key != 'auto'){
 
-								return p.destroy()
+									self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
+
+								}
+									
+
+								return p.destroy(key)
 							}
 
 							
@@ -732,14 +739,13 @@ nModule = function(){
 	}
 
 
-	self.closeContainer = function(){
+	self.closeContainer = function(key){
 		var close = deep(self, 'container.close')
+
 
 		if (close){
 
-			//self.stop()
-
-			close();
+			close(null, key);
 
 			return true
 		}

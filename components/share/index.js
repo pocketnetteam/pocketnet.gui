@@ -70,12 +70,9 @@ var share = (function(){
 
 			autoFilled : function(){
 
-
-
 				actions.filled('i', currentShare.images.v.length != 0)
 				actions.filled('u', currentShare.url.v)
-				actions.filled('t',  currentShare.tags.v.length!= 0)
-					
+				actions.filled('t',  currentShare.tags.v.length!= 0)					
 				actions.filled('cm', currentShare.message.v || currentShare.caption.v)
 
 			},
@@ -510,11 +507,14 @@ var share = (function(){
 										alias.address = _alias.address
 
 									if(currentShare.aliasid) alias.edit = "true"	
+									if(currentShare.time) alias.time = currentShare.time
 
 									self.app.platform.sdk.node.shares.add(alias)
 
 									if(!essenseData.notClear){
 										currentShare.clear();
+
+										self.app.nav.api.history.removeParameters(['repost'])
 
 										if(!essenseData.share){
 											state.save()
@@ -580,7 +580,10 @@ var share = (function(){
 				var error = currentShare.validation();
 
 				if (error && !onlyremove){
-					el.postWrapper.addClass('showError')
+
+					if (el.postWrapper)
+						el.postWrapper.addClass('showError')
+
 					el.error.html(errors[error])
 
 					if(error == 'message'){
@@ -597,7 +600,9 @@ var share = (function(){
 				}
 				else
 				{
-					el.postWrapper.removeClass('showError')
+					if (el.postWrapper)
+						el.postWrapper.removeClass('showError')
+
 					el.error.html('')
 
 					return false
@@ -938,25 +943,219 @@ var share = (function(){
 
 		var renders = {
 
-			tags : function(clbk){
-
-				el.tags.find('.tag').remove()
+			postline : function(clbk){
 
 				self.shell({
-					name :  'tags',
-					inner : append,
-					el : el.tags,
+					name :  'postline',
+					el : el.postline,
 					data : {
-						tags : currentShare.tags.get()
+						share : currentShare,
+						essenseData : essenseData
 					},
 
 				}, function(p){
 
-					p.el.find('.remove').on('click', events.removeTag)
+					el.panel = el.c.find('.panel .item');
+					el.postWrapper = el.c.find('.postWrapper');					
+					el.changePostTime = el.c.find('.postTime')
+					el.selectTime = el.c.find('.selectedTimeWrapper')
+					el.post = el.c.find('.post')
+
+					el.changePostTime.on('change', events.changePostTime)
+					el.selectTime.on('click', events.selectTime)
+					el.panel.on('click', events.embeding)
+					el.post.on('click', events.post)
+
+
+					p.el.find('.cancelediting').on('click', function(){
+						self.closeContainer();
+		
+						if (essenseData.close){
+							essenseData.close()
+						}
+					})
 
 					if (clbk)
 						clbk();
 				})
+
+			},
+
+			tgs : function(clbk){
+
+				self.shell({
+					name :  'tgs',
+					el : el.tgsWrapperMain,
+					data : {
+						share : currentShare
+					},
+
+				}, function(p){
+
+
+						el.tags = el.c.find('.tagsCont');
+						el.tagSearch = el.c.find('.searchWrapper');
+
+						search(el.tagSearch, {
+							placeholder : self.app.localization.e('addtags'),
+			
+							clbk : function(el){
+			
+							
+							},
+			
+							time : 0,
+						
+							events : {
+								/*blur : function(value){
+									events.addTag(value)
+								},*/
+								fastsearch : function(value, clbk, e){
+			
+									console.log('fastsearch', value, e)
+			
+									if(e){
+										var char = String.fromCharCode(e.keyCode || e.which);
+			
+										if ((/[,.!?;:() ]/).test(char)) {
+			
+											events.addTag(value.replace(/#/g,'').replace(/ /g,''))
+			
+											el.tagSearch.find('input').val('').focus()
+			
+											clbk(null)
+			
+											return
+										}
+									}
+			
+			
+									self.app.platform.sdk.tags.search(value, function(data){
+										
+										renders.tagsResults(data, function(tpl){
+			
+											clbk(tpl, function(_el, helpers){
+			
+												_el.find('.result').on('click', function(){
+			
+													var tag = $(this).attr('result')
+			
+													helpers.closeResults();
+													helpers.clear();
+			
+													events.addTag(tag)
+			
+												})
+			
+												_el.find('.empty').on('click', function(){
+			
+													var tag = trim(el.tagSearch.find('input').val())
+			
+													if (tag){
+														helpers.closeResults();
+														helpers.clear();
+			
+														events.addTag(tag)
+													}
+			
+													
+			
+												})
+			
+											})
+			
+										})
+			
+									})
+								},
+			
+								search : function(value, clbk, helpers){
+			
+									value = value.replace(/#/g, ' ');
+			
+									value = value.split(" ");
+			
+									value = _.filter(value, function(v){
+										return v
+									})
+			
+									if (value.length == 1){
+										value = value[0]
+									}
+			
+									events.addTag(value)
+			
+									helpers.clear();
+			
+									if (clbk)
+										clbk()
+								}
+							},
+			
+							last : {
+								get : function(){
+									return [
+										self.app.localization.e('tnews'), 
+										self.app.localization.e('timages'), 
+										self.app.localization.e('tvideos'), 
+										self.app.localization.e('tmarket'), 
+										self.app.localization.e('tsport')
+									]
+								},
+			
+								tpl : function(data, clbk){
+									renders.tagsResults(data, function(tpl){
+			
+										clbk(tpl, function(el, helpers){
+			
+											el.find('.result').on('click', function(){
+			
+												var tag = $(this).attr('result')
+			
+												helpers.closeResults();
+												helpers.clear();
+			
+												events.addTag(tag)
+			
+											})
+			
+										})
+			
+									})
+								}
+							}
+							
+						})
+
+
+					if (clbk)
+						clbk();
+				})
+			},
+
+			tags : function(clbk){
+
+				if (el.tags){
+					el.tags.find('.tag').remove()
+
+					self.shell({
+						name :  'tags',
+						inner : append,
+						el : el.tags,
+						data : {
+							tags : currentShare.tags.get(),
+							share : currentShare
+						},
+
+					}, function(p){
+
+						if (p.el)
+							p.el.find('.remove').on('click', events.removeTag)
+
+						if (clbk)
+							clbk();
+					})
+				}
 			},
 
 			tagsResults : function(results, clbk){
@@ -978,20 +1177,22 @@ var share = (function(){
 				el.eMessage[0].emojioneArea.setText(currentShare.message.v);
 				el.cpt.find('input').val(currentShare.caption.v || "")
 
-				el.cpt.val()
+				el.cpt.val();
 
-				renders.tags();
+				renders.tgs(renders.tags);
 				
 				renders.url();
 
 				renders.caption();
 
 				renders.images();
+
+				renders.repost();
+
+				renders.postline();
 			},
 
 			caption : function(){
-
-				
 
 				if(currentShare.caption.v/* || currentShare.message.v.length > 100*/){
 
@@ -1196,6 +1397,63 @@ var share = (function(){
 
 					
 				})
+			},
+
+			repost : function(clbk){
+				var repost = currentShare.repost.v;
+
+				self.app.platform.sdk.node.shares.getbyid([repost], function(){
+
+					var share = self.app.platform.sdk.node.shares.storage.trx[repost] 
+						
+					self.shell({
+						name :  'repost',
+						inner : html,
+						el : el.repostWrapper,
+						data : {
+							repost : share,
+							share : currentShare,
+							level : 0
+						},
+	
+					}, function(_p){	
+
+						if(repost){
+							self.app.platform.papi.post(repost, _p.el.find('.repostShare'), function(){
+
+							}, {
+								repost : true,
+								eid : "share"
+							})
+
+							_p.el.find('.repostCaption').on('click', function(){
+
+								currentShare.repost.set()
+
+								state.save()
+
+								self.app.nav.api.history.removeParameters(['repost'])
+
+								
+								renders.repost(function(){
+									renders.tgs(renders.tags);
+									renders.postline();
+								});
+
+							})
+		
+							
+						}
+
+						if (clbk)
+							clbk();
+
+						
+					})
+
+					
+				
+				})
 			}
 
 		}
@@ -1237,20 +1495,11 @@ var share = (function(){
 
 		var initEvents = function(){
 
-			el.c.find('.cancelediting').on('click', function(){
-				self.closeContainer();
+			
 
-				if (essenseData.close){
-					essenseData.close()
-				}
-			})
+			
 
-			el.changeAddress.on('change', events.changeAddress)
-			el.changePostTime.on('change', events.changePostTime)
-			el.selectTime.on('click', events.selectTime)
-
-			el.panel.on('click', events.embeding)
-			el.post.on('click', events.post)
+			el.changeAddress.on('change', events.changeAddress)			
 
 
 		   	el.eMessage.emojioneArea({
@@ -1394,137 +1643,7 @@ var share = (function(){
 	                zIndex : 20,
 	            }); 
 
-			search(el.tagSearch, {
-				placeholder : self.app.localization.e('addtags'),
-
-				clbk : function(el){
-
-				
-				},
-
-				time : 0,
 			
-				events : {
-					/*blur : function(value){
-						events.addTag(value)
-					},*/
-					fastsearch : function(value, clbk, e){
-
-						console.log('fastsearch', value, e)
-
-						if(e){
-							var char = String.fromCharCode(e.keyCode || e.which);
-
-							if ((/[,.!?;:() ]/).test(char)) {
-
-								events.addTag(value.replace(/#/g,'').replace(/ /g,''))
-
-								el.tagSearch.find('input').val('').focus()
-
-								clbk(null)
-
-								return
-							}
-						}
-
-
-						self.app.platform.sdk.tags.search(value, function(data){
-							
-							renders.tagsResults(data, function(tpl){
-
-								clbk(tpl, function(_el, helpers){
-
-									_el.find('.result').on('click', function(){
-
-										var tag = $(this).attr('result')
-
-										helpers.closeResults();
-										helpers.clear();
-
-										events.addTag(tag)
-
-									})
-
-									_el.find('.empty').on('click', function(){
-
-										var tag = trim(el.tagSearch.find('input').val())
-
-										if (tag){
-											helpers.closeResults();
-											helpers.clear();
-
-											events.addTag(tag)
-										}
-
-										
-
-									})
-
-								})
-
-							})
-
-						})
-					},
-
-					search : function(value, clbk, helpers){
-
-						value = value.replace(/#/g, ' ');
-
-						value = value.split(" ");
-
-						value = _.filter(value, function(v){
-							return v
-						})
-
-						if (value.length == 1){
-							value = value[0]
-						}
-
-						events.addTag(value)
-
-						helpers.clear();
-
-						if (clbk)
-							clbk()
-					}
-				},
-
-				last : {
-					get : function(){
-						return [
-							self.app.localization.e('tnews'), 
-							self.app.localization.e('timages'), 
-							self.app.localization.e('tvideos'), 
-							self.app.localization.e('tmarket'), 
-							self.app.localization.e('tsport')
-						]
-					},
-
-					tpl : function(data, clbk){
-						renders.tagsResults(data, function(tpl){
-
-							clbk(tpl, function(el, helpers){
-
-								el.find('.result').on('click', function(){
-
-									var tag = $(this).attr('result')
-
-									helpers.closeResults();
-									helpers.clear();
-
-									events.addTag(tag)
-
-								})
-
-							})
-
-						})
-					}
-				}
-				
-			})
-
 			
 			var ps = {
 				animation: 150,
@@ -1620,13 +1739,17 @@ var share = (function(){
 						}
 					}
 
-					
+					if (parameters().repost) 
+						currentShare.repost.set(parameters().repost)
+
+					console.log('currentShare', currentShare)
 
 					var data = {
 						essenseData : essenseData,
 						share : currentShare,
 						postcnt : u.postcnt
 					};
+					
 					
 
 					clbk(data);
@@ -1664,28 +1787,25 @@ var share = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
-				el.tagSearch = el.c.find('.searchWrapper');
-
-				el.tags = el.c.find('.tagsCont');
+				
+				el.tgsWrapperMain = el.c.find('.tgsWrapperMain')
+				
 				el.message = el.c.find('.message');
 
 				el.eMessage = el.c.find('#emjcontainer');
+				el.error = el.c.find('.error');		
+				
 
-				el.panel = el.c.find('.panel .item');
-				el.error = el.c.find('.error');
-				el.postWrapper = el.c.find('.postWrapper');
-				el.post = el.c.find('.post')
-
+				
 				el.urlWrapper = el.c.find('.urlWrapper')
 				el.caption = el.c.find('.captionshare');
 				el.cpt = el.c.find('.cpt')
 				el.images = el.c.find('.imagesWrapper')
 
 				el.changeAddress = el.c.find('.changeAddress')
-				el.changePostTime = el.c.find('.postTime')
 
-				el.selectTime = el.c.find('.selectedTimeWrapper')
-				
+				el.repostWrapper = el.c.find('.repostWrapper')
+				el.postline = el.c.find('.postlineWrapper')
 
 
 				initEvents();

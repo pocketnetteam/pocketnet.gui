@@ -1,0 +1,85 @@
+<div class="logs report">
+
+    <div class="work">
+        
+            <div class="scaptionTable table">
+                <div class="scaption">
+                    Connections and Requests
+                </div>
+
+                <div class="expandall ecell">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+             
+        
+    </div>
+    <div class="alllogs reportcnt">
+        <% _.each(logs, function(log){ %> 
+            <div class="logw">
+                <div class="work">  
+                    <div class="log <% if(log.block) {%> block <% } %>" ip="<%- log.ip %>">
+                        <div class="ip">
+                            <div class="iptable table">
+                                <div class="ipcaption">
+                                    <span><%- log.ip.replace('::ffff:', '') %></span>
+                                </div>
+
+                                <div class="allcount ccell">
+                                    <%- log.count %>
+                                </div>
+
+                                <div class="expand ecell">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <% if(log.ws && log.ws.length) {%>
+
+                            <div class="wslogs">
+                                <div class="wslogswrp">
+                               
+                                    <div class="preloader5"><span></span><span></span><span></span></div>  
+
+                                </div>
+                               
+                            </div>
+
+
+                        <% } %>
+
+                        <div class="bystatus">
+                            <div class="bcaption">
+                                The Last Requests
+                            </div>
+                           
+
+                            <% _.each(log.requests, function(l, s){ %>
+
+                                <div class="status <% if(s == 200) {%> good <% } %>"><span><%- s %></span></div>
+
+                                <div class="requests">
+
+                                    <% _.each(l, function(rgroup, r){ %> 
+                                    
+                                        <div class="requestGroup table ">
+                                            <div class="request"><%- r %></div>
+                                            <div class="count ccell"><%- rgroup.length %></div>
+                                            <div class="expand ecell"></div>
+                                        </div>
+                                    
+                                    <% }) %>
+
+                                </div>
+
+                            <% }) %>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        
+        <% }) %>
+    </div>
+</div>

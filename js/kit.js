@@ -622,11 +622,34 @@ Share = function(){
 		self.tags.set()
 		self.url.set()
 		self.caption.set()
+		self.repost.set()
 
 		_.each(self.settings, function(s, k){
 			self.settings[k] = null;
 		})
 	}
+
+	self.repost = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('repost', this.v)
+			})
+			
+
+		},
+		v : '',
+
+		drag : false
+	};
 
 	self.caption = {
 		set : function(_v){
@@ -846,7 +869,7 @@ Share = function(){
 	}
 
 	self.default = {
-		a : ['cm', 'i', 'u'],
+		a : ['cm', 'r', 'i', 'u'],
 		v : 'p',
 		videos : [],
 		image : 'a'
@@ -942,14 +965,19 @@ Share = function(){
 
 	self.serialize = function(){
 		return encodeURIComponent(self.url.v) 
+		
 		+ encodeURIComponent(self.caption.v) 
 		+ encodeURIComponent(self.message.v) 
+
 		+ _.map(self.tags.v, function(t){ return encodeURIComponent(t) }).join(',')
 		+ self.images.v.join(',')
+
+		+ (self.aliasid || "")
+		+ (self.repost.v || "")		
 	}
 
 	self.shash = function(){
-		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
+		return bitcoin.crypto.sha256(self.serialize() + (self.repost.v || "") ).toString('hex')
 	}
 	
 
@@ -964,7 +992,8 @@ Share = function(){
 				images : self.images.v,
 				settings : _.clone(self.settings),
 
-				txidEdit : self.aliasid || ""
+				txidEdit : self.aliasid || "",
+				txidRepost : self.repost.v || ""
 			} 
 		}
 
@@ -975,7 +1004,8 @@ Share = function(){
 			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
 			i : self.images.v,
 			s : _.clone(self.settings),
-			txidEdit : self.aliasid || ""
+			txidEdit : self.aliasid || "",
+			txidRepost : self.repost.v || ""
 
 		}
 	}
@@ -986,6 +1016,7 @@ Share = function(){
 		self.tags.set(v.t || v.tags)
 		self.message.set(v.m || v.message)
 		self.images.set(v.i || v.images)
+		self.repost.set(v.r || v.txidRepost || v.repost)
 
 		if (v.txidEdit) self.aliasid = v.txidEdit
 
@@ -1000,7 +1031,7 @@ Share = function(){
 		}
 		else
 		{
-			if(v.settings){
+			if (v.settings){
 				self.settings = v.settings
 			}
 		}
@@ -1430,9 +1461,11 @@ pShare = function(){
 	self.images = [];
 	self.txid = '';
 	self.time = null;
+	self.repost = '';
 
 	self.comments = 0;
 	self.lastComment = null;
+	self.reposted = 0;
 
 	self.on = {}
 	self.off = function(e){
@@ -1470,7 +1503,7 @@ pShare = function(){
 			self.caption = v.c || v.caption || ""
 			self.tags = v.t || v.tags || []
 			self.url = v.u || v.url || '';
-
+			
 		}
 		else
 		{	
@@ -1478,11 +1511,13 @@ pShare = function(){
 			self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
 			self.caption = decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " "))
 			self.tags = _.map(v.t || v.tags || [], function(t){ return decodeURIComponent(t) })
+
 		}
 
 		if(v.myVal) self.myVal = Number(v.myVal)
 		
 		self.images = v.i || v.images || [];
+		self.repost = v.r || v.repost || v.txidRepost || ''
 
 		if (v.txid)
 			self.txid = v.txid;
@@ -1497,6 +1532,10 @@ pShare = function(){
 
 		if(v.comments)
 			self.comments = v.comments
+
+		if(v.reposted)
+			self.reposted = v.reposted
+
 		
 		if(v.lastComment)
 			self.lastComment = v.lastComment
@@ -1679,6 +1718,8 @@ pShare = function(){
 		share.import(self)
 
 		share.aliasid = self.txid
+
+		share.time = self.time
 
 		return share;
 	}

@@ -231,7 +231,6 @@ Application = function(p)
 
 			}
 
-			console.log("ERROR", error)
 
 			return error;
 	
@@ -780,7 +779,8 @@ Application = function(p)
 
 		offScroll : function(js){
 
-			if(self.scrollRemoved){
+
+			if (self.scrollRemoved){
 				return false
 			}
 
@@ -789,8 +789,6 @@ Application = function(p)
 			if(!js){
 
 				$('html').addClass('nooverflow')
-
-				
 			}
 			else
 			{
@@ -800,7 +798,6 @@ Application = function(p)
 			}
 
 			return true
-
 			
 		},
 
@@ -808,6 +805,7 @@ Application = function(p)
 
 			$('html').removeClass('nooverflow')
 			$(window).unbind('scroll', self.actions.wscroll);
+
 
 			self.scrollRemoved = false;
 		},

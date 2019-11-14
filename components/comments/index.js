@@ -1365,6 +1365,7 @@ var comments = (function(){
 
 				
 			},
+
 			cpreview : function(h){
 				if(!h){
 					h = ed.caption
@@ -1376,6 +1377,7 @@ var comments = (function(){
 
 				bgImages(el.caption.find('.captionPreview'))
 			},
+
 			caption : function(clbk){
 
 				if(ed.caption){
@@ -1424,6 +1426,7 @@ var comments = (function(){
 				}
 
 			},
+
 			edit : function(el, comment){
 
 				el.addClass('editing')
@@ -1456,6 +1459,7 @@ var comments = (function(){
 
 				}, p)
 			},
+
 			post : function(clbk, p){
 
 				self.app.user.isState(function(state){
@@ -1480,9 +1484,7 @@ var comments = (function(){
 						mestate : mestate
 					},
 
-				}, function(_p){
-
-					
+				}, function(_p){				
 
 					var ini = function(_clbk){
 
@@ -1689,6 +1691,10 @@ var comments = (function(){
 						},
 						mestate : mestate
 					},
+
+					additionalActions : function(){
+						ed.additionalActions()
+					}
 
 				}, function(_p){
 

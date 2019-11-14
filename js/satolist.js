@@ -425,7 +425,7 @@ Platform = function(app, listofnodes){
 
 		"32" : {
 			message : function(){
-				return "You have blocked by this user"
+				return "You have been blocked by this person, you will be unable to comment on their posts"
 			}
 		},
 
@@ -736,6 +736,832 @@ Platform = function(app, listofnodes){
 
 		return meta;
 	}
+
+	self.objects = {
+		graph : function(p){
+
+			var graph = this;
+
+				graph.el = p.el;
+
+				graph.series = [];
+
+				graph.id = makeid();
+
+				graph.options = p.chart || {};
+
+				graph.shell = p.shell;
+
+				graph.stock = p.stock;
+
+				
+			graph.unit = p.unit || 'number';
+
+			var helpers = {
+				minMax : function(series){
+
+					var max = null;
+					var min = null;
+
+					_.each(series, function(serie){
+						_.each(serie.data, function(point){
+
+							if(max === null || max < point.y) max = point.y
+
+							if(min === null || min > point.y) min = point.y
+
+
+						})
+					})
+
+					return {
+						min : min,
+						max : max
+					}
+				}
+			}
+
+			var defaulOptions = function(p){
+
+				if(!p) p = {};
+
+					p.sizeRatio || (p.sizeRatio = 1)
+
+				var options = {
+					colors : [
+						 
+					],
+					chart: {
+						style: {
+				         	fontFamily: "'Segoe UI', SegoeUI, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+				      	},
+						backgroundColor: 'transparent',
+						spacing: [8 * p.sizeRatio, 8 * p.sizeRatio, 8 * p.sizeRatio, 8 * p.sizeRatio],
+						type : 'spline'
+						//
+					},
+					
+			        rangeSelector: {
+			            inputEnabled: false, 
+			            selected: 3 // all
+			        },
+					title: {
+						text: ''
+					},
+					subtitle: {
+						text: ''
+					},
+					exporting: {
+			            enabled: false
+			        },
+					xAxis: {
+						crosshair: true,
+						labels: {
+							enabled: true,
+							distance: 15 * p.sizeRatio,
+							padding: 5 * p.sizeRatio,
+							//step : 1 * p.sizeRatio,
+							style: {
+								'fontSize': 11 * p.sizeRatio + 'px',
+								'color': "#27a9e6"
+							}
+						},
+						lineWidth: 0,
+						minorGridLineColor: 'transparent',
+						minorGridLineWidth: 0,
+						gridLineColor: "rgb(228, 221, 222)",
+						gridLineWidth: 0,
+						minorTickLength: 2 * p.sizeRatio,
+						tickWidth: 1 * p.sizeRatio,
+						tickColor: 'transparent',
+						title: {
+							enabled: false,
+							text: 'Date',
+							y: 10 * p.sizeRatio,
+							style: {
+
+								'fontSize': 10 * p.sizeRatio + 'px',
+								"color": "rgb(30, 35, 40)"
+							}
+						},
+						minPadding: 0.04,
+						maxPadding: 0.04,
+						offset: 20 * p.sizeRatio,
+						tickPixelInterval: 100 * p.sizeRatio,
+						
+					},
+					yAxis: [{
+						minPadding: 0,
+						maxPadding: 0,
+						offset: 10,
+						//floor: true,
+						title: {
+							enabled: false,
+							text: '',
+								style: {
+									'fontSize': 10 * p.sizeRatio + 'px',
+									"color": "rgb(30, 35, 40)"
+							}
+						},
+						startOfWeek : 0,
+						lineWidth: 0,
+						lineColor: 'transparent',
+						minorTickLength: 0,
+						minorGridLineWidth: 1,
+						gridLineColor: "rgb(228, 221, 222)",
+						gridLineWidth: 1,
+						//tickInterval: 5,
+						tickLength: 0,
+						tickPixelInterval: 100 * p.sizeRatio,
+						opposite: true,
+
+						labels: {
+							enabled: true,
+							style: {
+								'fontSize': 11 * p.sizeRatio + 'px',
+								'color': "#27a9e6"
+							},
+
+							padding: 5 * p.sizeRatio,
+							distance: -25 * p.sizeRatio,
+							y: 3 * p.sizeRatio,
+
+						},
+											   
+						tickColor: 'rgb(228, 221, 222)',
+					}],
+
+					tooltip: {
+						backgroundColor: "rgba(247,247,247,1)",
+						crosshairs: true,
+						formatter: function (c) {
+
+							var convertX = function(x){
+
+								if(graph.options.xtype == 'datetime')
+
+									return convertDate(dateToStr(x));
+
+								else
+									return x;
+							}
+
+							var suffix = deep(c.chart, 'xAxis.0.userOptions.title.text') || deep(this, 'points.0.series.name');
+
+							var s;
+
+							if (suffix)
+							{
+								s = convertX(this.x) + ' - <b>'+suffix+'</b><br/>';
+							}
+
+							else
+							{
+								s = '<b>' + convertX(this.x) + '</b><br/>';
+							}
+
+							var series = c.chart.series;
+
+							var x = this.x;
+
+							var points = _.clone(this.points) || [];
+
+							/*_.each(series, function(s){
+
+								if(s.name.indexOf("Navigator") > -1) return;
+
+								var p = _.find(s.data || s, function(p){
+
+									if (p)
+
+										if(convertX(p.x) === convertX(x)) return true;
+								})
+
+								if (p)
+
+									points.push(p);
+
+							})*/
+							
+							_.each(points, function (p) {
+
+								var sname = p.series.name;
+
+								var y = p.y;
+
+
+								var view = deep(p, 'point.__view') || graph.unit || 'number'
+
+								if (view == 'dollars')
+								{
+									y = Number(p.y).toFixed(0);
+
+									y = self.mp.dollars(y, {
+										precision : 0
+									})
+
+								}
+
+								if (view == 'percent')
+								{
+									y = Number(p.y).toFixed(2);
+
+									y = y + " %"
+								}
+								
+								if (view == 'number')
+								{
+									y = Number(y).toFixed(2);
+								}
+
+								var objSuffix = '';
+
+								if (graph.options.displayType == 'points'){
+
+									if(p.to_objectGl)
+										objSuffix = p.to_objectGl.name
+
+								}
+								else
+								{
+									if (p.to_object)
+										objSuffix = '('+p.to_object.Ticker+')';
+								}
+
+
+
+								s += '<span style="color:' + p.series.color + '">\u25CF</span> ' + sname + ' '+objSuffix+': <b>' + y + '</b><br/>';
+							});
+
+
+							return s;
+						},
+						shared: true,
+						useHTML: true,
+						style : {
+							"zIndex" : '500',
+						}
+					},
+					legend: {
+
+						enabled : true,
+
+						itemStyle: {
+							'fontSize': 10 * p.sizeRatio + 'px',
+							'font-weight': '500',
+							"padding": 10 * p.sizeRatio
+
+						},
+						symbolHeight: 14 * p.sizeRatio,
+						symbolWidth: 14 * p.sizeRatio,
+						padding: 8 * p.sizeRatio,
+						lineHeight: 16 * p.sizeRatio,
+						margin: 24 * p.sizeRatio,
+						symbolPadding: 2 * p.sizeRatio,
+						itemDistance: 50 * p.sizeRatio,
+						align: 'center',
+						labelFormatter : function(){
+
+							return this.name;
+
+						}
+						//enabled : false,
+					},
+					plotOptions: {
+						bar: {
+							dataLabels: {
+								enabled: true
+							},
+							pointPadding : 0.1,
+							groupPadding : 0.1,
+							animation : false,
+
+							borderColor : "rgba(52, 100, 166, 0.8)",
+							color : "rgba(52, 100, 166, 0.3)",
+						},
+						pie : {
+							size : '65%',
+							dataLabels : {
+								connectorWidth : 1 * p.sizeRatio,	
+								distance :  30 * p.sizeRatio,	
+								connectorPadding : 5 * p.sizeRatio,	
+								padding : 5 * p.sizeRatio,
+								style : {
+									fontSize : 16 * p.sizeRatio + 'px'
+								}
+							}
+						},
+						column: {
+							animation: false,
+						},
+						bubble : {
+							animation: false,
+							lineWidth : 0,
+							minSize : '4%',
+							maxSize : '10%',
+							//softThreshold : true
+						},
+						columnrange: {
+							animation: false,
+							color : 'rgba(33,33,33, 0.3)',
+							borderColor : 'transparent'
+						},
+						spline: {
+							animation: false,
+							lineWidth: 1 * p.sizeRatio,
+							marker: {
+								enabled: true,
+								lineColor: 'transparent',
+								radius: 2 * p.sizeRatio,
+								//symbol: "circle",
+								states: {
+									hover: {
+										lineWidthPlus: 0
+									}
+								}
+							},
+							states: {
+								hover: {
+									lineWidth: 1 * p.sizeRatio,
+
+									lineWidthPlus: 0,
+									marker: {
+										fillColor: "#000",
+										lineColor: "#000"
+									},
+									halo: {
+										opacity: 0
+									}
+								},
+								
+							}
+						},
+						areaspline: {
+							animation: false,
+							lineWidth: 1 * p.sizeRatio,
+
+							marker: {
+								enabled: false,
+								lineColor: 'transparent',
+								radius: 4 * p.sizeRatio,
+								symbol: "circle",
+								states: {
+									hover: {
+										lineWidthPlus: 0
+									}
+								}
+							},
+							states: {
+								hover: {
+									lineWidth: 1 * p.sizeRatio,
+
+									lineWidthPlus: 0,
+									marker: {
+										fillColor: "#000",
+										lineColor: "#000"
+									},
+									halo: {
+										opacity: 0
+									}
+								},			        			
+							}
+						},
+						areasplinerange : {
+							animation: false,
+							fillOpacity : 0.2,
+							dashStyle : 'dot'
+							
+						}
+
+					},
+					labels : {
+						style : {
+							fontSize : 8 * p.sizeRatio + 'px'
+						}
+					},
+					credits: {
+				    	enabled: false
+				   	},
+				}
+
+				if (!p.pdf)
+				{
+				/*	options.xAxis.title.style['font-weight'] = "700";
+					options.yAxis[0].title.style['font-weight'] = "700";
+					options.legend.itemStyle['font-weight'] = "700";*/
+				}
+				else
+				{
+					options.plotOptions.pie.size = '85%';
+					options.legend.enabled = true;
+					options.chart.backgroundColor = "#fff";
+				}
+
+				return options;
+			}
+
+			graph.chartOptions = function(p){
+				var options = defaulOptions(p);
+
+					options.series = graph.series;
+
+				if(typeof graph.options.xAxis != 'undefined'){
+					options.xAxis.labels.enabled = graph.options.xAxis
+				}
+
+				if (graph.options.bubbleSize)
+					options.plotOptions.bubble.maxSize = graph.options.bubbleSize;
+
+				if (graph.options.plotOptionsSeries)
+					options.plotOptions.series = graph.options.plotOptionsSeries
+
+				if (graph.options.xAxisOpposite)
+					options.xAxis.opposite = true;
+
+				if (graph.options.yAxis){
+					options.yAxis = options.yAxis.concat(graph.options.yAxis)
+				}
+
+				if (graph.options.secondYAxis){
+
+					options.yAxis.push({
+						minPadding: 0,
+						maxPadding: 0,
+						offset: 10,
+						//floor: true,
+						title: {
+							enabled: false,
+							text: '',
+								style: {
+									'fontSize': 10 * p.sizeRatio + 'px',
+									"color": "rgb(30, 35, 40)"
+							}
+						},
+						startOfWeek : 0,
+						lineWidth: 0,
+						lineColor: 'transparent',
+						minorTickLength: 0,
+						minorGridLineWidth: 1,
+						gridLineColor: "rgb(228, 221, 222)",
+						gridLineWidth: 1,
+						//tickInterval: 5,
+						tickLength: 0,
+						tickPixelInterval: 100 * p.sizeRatio,
+
+						labels: {
+							enabled: true,
+							style: {
+								'fontSize': 11 * p.sizeRatio + 'px',
+								'color': "#27a9e6"
+							},
+
+							padding: 5 * p.sizeRatio,
+							distance: -25 * p.sizeRatio,
+							y: 3 * p.sizeRatio,
+
+						},
+											   
+						tickColor: 'rgb(228, 221, 222)',
+					})
+				}
+
+				_.each(options.yAxis, function(yAxis){
+					
+
+					if(typeof graph.options.ypadding != 'undefined'){
+						yAxis.minPadding = graph.options.ypadding;
+						yAxis.maxPadding = graph.options.ypadding;
+					}
+
+					if(typeof graph.options.ytickAmount != 'undefined'){
+						yAxis.tickAmount = graph.options.ytickAmount;
+					}
+
+				})
+
+				
+				if(typeof graph.options.xtype != 'undefined'){
+					options.xAxis.type = graph.options.xtype
+				}
+			
+
+				if(typeof graph.options.categories != 'undefined'){
+					options.xAxis.categories = graph.options.categories();
+
+				}
+
+				if(typeof graph.options.reversed != 'undefined'){
+					options.xAxis.reversed = graph.options.reversed;
+				}
+
+				if(typeof graph.options.disableXLabels != 'undefined'){
+					options.xAxis.labels.enabled = false;
+				}
+
+				if(typeof graph.options.disableYLabels != 'undefined'){
+					options.yAxis[0].labels.enabled = false;
+				}
+
+				if(typeof graph.options.yGridLineWidth != 'undefined'){
+					options.yAxis[0].gridLineWidth = graph.options.yGridLineWidth;
+				}
+
+				if(typeof graph.options.disableTooltip != 'undefined'){
+					options.tooltip.enabled = false;
+				}
+
+
+				
+				if(typeof graph.options.xtitle != 'undefined'){
+
+					options.xAxis.title.enabled = true;
+					options.xAxis.title.text = graph.options.xtitle;
+				}
+
+				if(typeof graph.options.ytitle != 'undefined'){
+					options.yAxis[0].title.enabled = true;
+					options.yAxis[0].title.text = graph.options.ytitle;
+				}
+
+				
+				if(graph.options.defaultTooltip)
+				{
+					delete options.tooltip.formatter
+				}
+
+				if(graph.options.addLegend)
+				{
+					options.legend.enabled = true;
+				}
+
+				if(graph.options.removeLegend)
+				{
+					options.legend.enabled = false;
+				}
+
+				if(graph.options.tooltipFormatter)
+				{
+					
+					options.tooltip.formatter = graph.options.tooltipFormatter
+				}
+
+				options.chart.type = graph.options.type;
+				options.chart.height = graph.options.height || 400;
+
+				if (graph.options.width)
+					options.chart.width = graph.options.width;
+
+				options.yAxis[0].floor = graph.options.floor;
+				
+
+				_.each(options.yAxis, function(yAxis, index){
+
+
+
+					yAxis.labels.formatter = function(){
+
+						var view = graph.unit || 'number';
+
+						if (graph.options.views && graph.options.views[yAxis.index]){
+							view = graph.options.views[yAxis.index].v
+						}
+
+						var value = this.value;
+	
+						var label = this.axis.defaultLabelFormatter.call(this);
+	
+	
+						if (view == 'number' || view == 'dollars'){
+							value = compressedNumber(value, 2)
+							label = value
+						}
+	
+						if (view == 'number')
+						{
+							return label
+						}
+	
+						if (view == 'percent')
+						{
+							return label + " %"
+						}
+
+						if (view == 'dollars')
+						{
+							return "$ " + label
+						}
+					}
+
+				})
+
+				
+
+				if(typeof graph.options.ymax != 'undefined')
+					options.yAxis[0].max = graph.options.ymax;
+
+				if(typeof graph.options.ymin != 'undefined')
+					options.yAxis[0].min = graph.options.ymin;
+
+
+
+				return options;
+			}
+
+			graph.rarefied = function(series, count){
+				_.each(series, function(serie){
+
+					var l = serie.data.length;
+
+					if (l > count){
+
+						var difference = l - count;
+						var c = 1 / (count / l);
+						var newData = [serie.data[0]];
+
+						for(var i = 1; i < l -1; i++){
+
+							if(i % Number(c.toFixed(0))){
+
+							}
+							else
+							{
+								newData.push(serie.data[i])
+							}
+						}
+
+						newData.push(serie.data[l - 1]);
+
+						serie.data = newData;
+					}
+
+				})
+
+				return series;
+			}
+
+			graph.exportToPdf = function(p, clbk, _p){
+
+				if(!_p) _p = {};
+
+				p.el.html("<div class='chart'></div>");
+
+				p.pdf = true;
+
+				var options = graph.chartOptions(p);
+
+				if (_p.prepareOptions){
+					_p.prepareOptions(options)
+				}
+
+				if (!options)
+				{
+					if (clbk)
+						clbk(null);
+				} 
+				else
+				{
+					if(p.maxPointsCount){
+						graph.rarefied(options.series, p.maxPointsCount)
+					}
+
+
+					var height = (deep(options, "chart.height") || 400) * p.sizeRatio;
+					var width =(deep(options, "chart.width") || 700)  * p.sizeRatio;
+
+					var to = p.el.find('.chart');
+
+						to.height(height);
+						to.width(width);
+
+					options.chart.height = height;
+					options.chart.width = width;
+
+					options.chart.renderTo = to[0];
+
+					var chart = {};
+
+					chart.chart = new Highcharts.Chart(options);
+					chart.ratio = width / height;
+					chart.series = options.series;
+					chart.caption = graph.options.caption;
+
+					var canvas = document.createElement('canvas');
+						canvas.width = width;
+						canvas.height = height;
+
+					var svg = chart.chart.getSVG()
+
+					var img = new Image();
+
+					img.onload = function (){
+						canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+						try{
+							chart.img = canvas.toDataURL('image/jpeg');
+
+						}
+						catch (e){
+
+							var vgcanvas = document.createElement('canvas');
+								vgcanvas.width = width;
+								vgcanvas.height = height;
+
+
+							canvg(vgcanvas, svg, {
+								ignoreDimensions: true,
+								ignoreMouse: true,
+								ignoreAnimation: true,
+								scaleWidth: vgcanvas.width,
+								scaleHeight: vgcanvas.height
+							});		
+
+							chart.img = vgcanvas.toDataURL('image/png');	
+
+							$(vgcanvas).remove();	
+
+						}
+
+						
+
+						$(canvas).remove();
+
+						clbk(chart);
+					}
+
+					img.src = "data:image/svg+xml;base64," + window.btoa(unescape(encodeURIComponent(svg)));
+
+					
+				}
+			}
+
+			graph.render = function(p, clbk){	
+
+				if(!p) p = {};	
+
+				var _el = p.el || graph.el;		
+
+				if (_el)
+				{
+
+					var options = graph.chartOptions(p);
+
+					if (p.prepareOptions){
+						p.prepareOptions(options)
+					}
+
+					if (!options)
+					{
+						if (clbk)
+							clbk(null);
+					} 
+					else
+					{
+						if(p.maxPointsCount){
+							graph.rarefied(options.series, p.maxPointsCount)
+						}
+
+						graph.shell({
+							name: "graph",
+							el: _el,
+							animation : 'fadeIn',
+							data: {
+								me : graph,
+								id : graph.id,
+								options : graph.options
+							}
+						}, function (_p) {								
+								
+							options.chart.renderTo = _p.el.find('.chart[id="' + graph.id + '"]')[0];	
+
+							if (graph.stock)					
+				
+								graph.chart = new Highcharts.stockChart(options);	
+
+							else
+
+								graph.chart = new Highcharts.Chart(options);	
+							
+							if (clbk)
+								clbk(_p.el);
+
+						})
+					}
+
+					
+
+				}
+			}
+
+			graph.destroy = function(){
+
+				graph.chart.destroy();
+
+				graph.el.html('')
+			}
+
+			return graph;
+		}
+	}
 	
 	self.clbks = {
 
@@ -793,13 +1619,15 @@ Platform = function(app, listofnodes){
 						open : true,
 						href : 'post',
 						el : el,
-					
+						eid : id + (p.eid || ""),
 						clbk : clbk,
 
 						essenseData : {
 							hr : p.hr,
 							share : id,
-							removemargin : true
+							removemargin : true,
+							repost : p.repost,
+							level : p.level
 						}
 					})
 
@@ -3475,12 +4303,18 @@ Platform = function(app, listofnodes){
 
 				requestFreeMoney : function(clbk){
 
+					console.log('requestFreeMoney1')
+
 					var a = self.sdk.address.pnet();
 
 					if (a){
 						a = a.address;
 
+						console.log('requestFreeMoney2')
+
 						this.checkFreeMoney(a, function(r){
+							console.log('requestFreeMoney3', r)
+
 							if(!r){
 								if (clbk)
 									clbk(null)
@@ -3488,12 +4322,14 @@ Platform = function(app, listofnodes){
 							else
 							{
 
-
-								if (!self.sdk.captcha.done){
+								console.log('requestFreeMoney4')
+								if (!self.sdk.captcha.done && !_Node){
 									if (clbk)
 										clbk(null, 'captcha')
 								}
 								else{
+
+									console.log('requestFreeMoney5')
 
 									var prms = {
 										address : a,
@@ -3505,6 +4341,8 @@ Platform = function(app, listofnodes){
 										action : 'freeMoney',
 										data : prms,
 										success : function(d){
+											console.log('requestFreeMoney6')
+
 											if (clbk)
 												clbk(true)
 	
@@ -6227,6 +7065,9 @@ Platform = function(app, listofnodes){
 				storage : {
 
 				},
+				loading : {
+
+				},
 				clbks : {
 					added : {
 
@@ -6276,6 +7117,7 @@ Platform = function(app, listofnodes){
 					_.each(this.clbks.added, function(a){
 						a(share)
 					})
+
 				},
 
 				tempLikes : function(shares){
@@ -6450,9 +7292,34 @@ Platform = function(app, listofnodes){
 					var storage = this.storage;
 						storage.trx || (storage.trx = {})
 
+					var loading = this.loading;
+
 					var loaded = [];
 
+					var anotherloading = [];
+					var anotherloadinglength = 0;
+
 					if(!_.isArray(txids)) txids = [txids];
+
+					var waianother = function(clbk){
+
+						retry(function(){
+
+							anotherloading = _.filter(anotherloading, function(id){
+								if(!storage.trx[id])
+
+									return true;
+							})
+
+							if(!anotherloading.length) return true;
+
+						}, function(){
+
+							clbk()
+
+						}, 20)
+
+					}
 
 					if(!refresh){
 						txids = _.filter(txids, function(id){
@@ -6467,6 +7334,20 @@ Platform = function(app, listofnodes){
 						})
 					}
 
+					txids = _.filter(txids, function(id){
+
+						if (!loading[id]){
+
+							return true
+						}
+						else{
+							anotherloading.push(id)
+						}
+
+					})
+
+					anotherloadinglength = anotherloading.length
+
 					if(txids.length){
 
 						var parameters = [txids]
@@ -6478,6 +7359,10 @@ Platform = function(app, listofnodes){
 						if (a){
 							parameters.push(a.address)
 						}
+
+						_.each(txids, function(id){
+							loading[id] = true;
+						})
 
 						self.app.user.isState(function(state){
 							self.app.ajax.rpc({
@@ -6493,6 +7378,10 @@ Platform = function(app, listofnodes){
 
 									d = _.filter(d || [], function(s){
 										if(s.address) return true
+									})
+
+									_.each(txids, function(id){
+										delete loading[id];
 									})
 
 									var shares = _.map(d || [], function(share){
@@ -6525,11 +7414,15 @@ Platform = function(app, listofnodes){
 
 									self.sdk.node.shares.tempLikes(loaded)
 
-									if (clbk)
+									waianother(function(){
+										if (clbk)
 
-										clbk(loaded, null, {
-											count : txids.length
-										})
+											clbk(loaded, null, {
+												count : txids.length
+											})
+									})
+
+									
 								},
 								fail : function(d, e){
 									if (clbk){
@@ -6542,8 +7435,12 @@ Platform = function(app, listofnodes){
 					}
 					else
 					{
-						if (clbk)
-							clbk(loaded, null, {}, true)
+						waianother(function(){
+							if (clbk)
+								clbk(loaded, null, {
+									count : anotherloadinglength
+								}, true)
+						})
 					}
 
 					
@@ -6699,6 +7596,8 @@ Platform = function(app, listofnodes){
 							if(!p.txid) tfinded = true;
 
 							var shares = _.filter(storage[key], function(s, i){
+								storage.trx[s.txid] = s;
+
 								if(tfinded && added < p.count){
 
 									added++;
@@ -6710,6 +7609,7 @@ Platform = function(app, listofnodes){
 									tfinded = true;
 								}
 							})
+
 
 							if (clbk)
 								clbk(storage[key], null, p)
@@ -8072,6 +8972,9 @@ Platform = function(app, listofnodes){
 								}
 								else
 								{
+
+									console.log('obj.export()', obj.export())
+
 									self.app.ajax.rpc({
 										method : 'sendrawtransactionwithmessage',
 										parameters : [hex, obj.export(), optstype],
@@ -8097,6 +9000,8 @@ Platform = function(app, listofnodes){
 
 											alias.inputs = inputs
 											alias.outputs = outputs
+
+											console.log("temptemptemp", temp)
 
 											self.sdk.node.transactions.saveTemp()
 											
@@ -8291,10 +9196,15 @@ Platform = function(app, listofnodes){
 				},
 	
 				updateproxy : function(node, clbk){
+
+					var udata = _.clone(node)
+
+					delete udata.stable;
+					delete udata.statistic
 					
 					self.app.ajax.api({
 						action : 'nodes.update',	
-						data : node,
+						data : udata,
 						signature : true,
 						
 						success : function(d){
@@ -9306,7 +10216,10 @@ Platform = function(app, listofnodes){
 						data.nodelocally = JSON.stringify({
 							host : self.nodeid.host,
 							port : self.nodeid.port,
-							ws : self.nodeid.ws
+							ws : self.nodeid.ws,
+
+							rpcuser : self.nodeid.rpcuser,
+							rpcpass : self.nodeid.rpcpwd
 						})
 					}
 					else{
@@ -9371,10 +10284,48 @@ Platform = function(app, listofnodes){
 
 				},
 
+				info : function(clbk){
+					self.app.ajax.api({
+						action : 'logs',
+						signature : true,
+						
+						success : function(d){
+
+							console.log(d)
+
+
+							if (clbk)
+								clbk(null, d.data)
+						},
+						fail : function(d, err){
+
+							console.log(d)
+
+							if (clbk)
+								clbk(deep(d, 'statusCode') || err)
+						}
+					})
+				},
+
+				stats  : function(clbk){
+					self.app.ajax.api({
+						action : 'stats',
+						signature : true,
+
+						success : function(d){
+							if (clbk)
+								clbk(null, deep(d, 'data.stats'))
+						},
+						fail : function(d, err){
+
+							if (clbk)
+								clbk(deep(d, 'statusCode') || err)
+						}
+					})
+				}, 
 				
 			},
 
-			
 		},
 
 		proxy : {
@@ -10334,6 +11285,114 @@ Platform = function(app, listofnodes){
 				}
 			},
 
+			reshare : {
+				loadMore : function(data, clbk, wa){
+						
+					console.log("RESHARELOAD", data.addrFrom)
+					platform.sdk.users.get([data.addrFrom], function(){
+
+						data.user = platform.sdk.users.storage[data.addrFrom] || {}
+
+						data.user.address = data.addrFrom
+
+						console.log(data)
+					
+						platform.sdk.node.shares.getbyid([data.txid, data.txidRepost], function(s, fromcashe){
+
+							console.log('s', s)
+
+							s || (s = []);
+
+							if (s[0]){
+								data.share = s[0];
+							}
+
+							if (s[1]){
+								data.shareReposted = s[1];
+							}
+
+							clbk()
+						})
+
+					})
+
+				},
+				
+				refs : {
+
+				},
+				audio : {
+					unfocus : 'water_droplet',
+					if : function(data){
+
+						if(data.share){
+							return true
+						}
+
+						return false;
+					}
+				},
+
+				notificationData : function(data){
+					var n = {};
+
+					if(data.user && data.share){
+						n.caption = self.tempates._user(data.user) + ' reshared your post:'
+						n.text = self.tempates._share(data.shareReposted, 100)
+					}
+
+					if(_.isEmpty(n)) 
+						return null;
+
+					return n
+				},
+				
+				fastMessage : function(data){	
+			
+					var text = '';
+					var html = '';
+
+					text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
+					
+					if(text){
+						html += self.tempates.user(data.user, text, true, " reshared your post:", '<div class="repostshare"><i class="fas fa-share"></i></div>', data.time)
+					}
+
+
+					return html;
+					
+				},
+				
+				fastMessageEvents : function(data, message){
+
+					message.el.find('.sharepreview').on('click', function(){
+
+						platform.sdk.node.shares.getbyid(data.txid, function(s, err, p, fromcashe){
+
+							platform.app.nav.api.load({
+								open : true,
+								href : 'post?s=' + data.txid,
+								inWnd : true,
+								//history : true,
+								clbk : function(d, p){									
+									app.nav.wnds['post'] = p
+								},
+
+								essenseData : {
+									share : data.txid
+								}
+							})
+						
+						})
+
+					})
+
+				},
+				
+				clbks : {
+				}
+			},
+
 			sharepocketnet : {
 				loadMore : function(data, clbk, wa){
 
@@ -11264,7 +12323,7 @@ Platform = function(app, listofnodes){
 					}
 
 					if(data.mesType == 'subscribe' && data.user){
-						n.text = self.tempates._user(data.user) + ' followed your'
+						n.text = self.tempates._user(data.user) + ' followed you'
 						n.topic = 'followers'
 						n.caption = "New Follower"
 					}

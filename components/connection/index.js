@@ -577,12 +577,12 @@ var connection = (function(){
 				}
 
 
-				if(!actions.ele()){
+				/*if(!actions.ele()){
 
 					ap.rpcpwd.hidden = true
 					ap.rpcuser.hidden = true
 					
-				}
+				}*/
 
 				console.log('ap', ap)
 
@@ -616,10 +616,10 @@ var connection = (function(){
 
 							if (ap.saveto.value == 'locally'){
 
-								if(actions.ele()){
+								//if(actions.ele()){
 									_node.rpcuser = ap.rpcuser.value || ''
 									_node.rpcpwd = ap.rpcpwd.value || ''
-								}
+								//}
 
 								_node.locally = true
 

@@ -1,7 +1,30 @@
 @import "../../css/__cssvar";
 
 #author{
-	
+
+	#lenta{
+		.shares{
+			.share{					
+				#post{
+					.share{
+						.work{
+							border-left : @rhythm solid @color-main;
+						}
+					}
+
+					#post{
+						.share{
+							.work{
+								border-left : 0;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+
 	.authorlentawrappermain{
 		position: relative;
 
@@ -9,7 +32,7 @@
 			position: absolute;
 			left: 100%;
 			top : 0;
-			padding-top : 2 * @rhythm;
+			padding-top : @rhythm;
 
 			.icon{
 				padding : 4 * @rhythm;
@@ -25,7 +48,7 @@
 
 		.authorsearchwrapper{
 			background: #F8F8F8;
-			padding : 4 * @rhythm 2 * @rhythm;
+			padding : 3 * @rhythm 2 * @rhythm;
 			padding-right: 0;
 			display: none;
 
@@ -75,6 +98,7 @@
 		.postauarrows{
 			background: #fff;
 			padding : 0 6 * @rhythm;
+			padding-right: 5 * @rhythm;
 			
 			
 			&.topwr{
@@ -137,6 +161,49 @@
 		.arrowaucenter{
 			font-weight: 700;
 			font-size: 0.8em;
+		}
+
+		.postcnt{
+			#post{
+				.share{
+					.cntswrk{
+						padding-right: 7 * @rhythm;
+						margin-left: 10 * @rhythm;
+					}
+
+					.iconWrapper{
+						width: 10 * @rhythm;
+						padding-left: 4 * @rhythm;
+					}
+				}
+
+				#post{
+					.cntswrk{
+						padding-right: 5 * @rhythm;
+					}
+				}
+			}
+
+			#comments{
+
+				.answer, 
+				.post{
+					padding-right: 7 * @rhythm;
+					padding-left: 2 * @rhythm;
+				}
+
+				.list{
+					.comment{
+						.commentPaddingWrapper{
+							padding-right: 8 * @rhythm;
+							padding-left: 2 * @rhythm;
+						}
+					}
+				}
+
+			} 
+			
+
 		}
 	}
 
@@ -547,6 +614,28 @@
 
 @media only screen and (max-width: 640px) {
 	#content{
+
+		#lenta{
+			.shares{
+				.share{					
+					#post{
+						.share{
+							.work{
+								border-left : 0.5 * @rhythm solid @color-main;
+							}
+						}
+	
+						#post{
+							.share{
+								.work{
+									border-left : 0;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 
 		#author{
 

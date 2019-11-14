@@ -520,6 +520,25 @@ __map =  {
 			],
 		},
 
+		proxylogs : {
+			uri : "proxylogs",
+			href : "proxylogs",
+			add : {
+				el : 'content'
+			},
+
+			relationsSunc : true,
+			relations : [
+				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
+					Highcharts = require('./js/vendor/highcharts.js')
+				}},
+				{src : 'js/vendor/highcharts-more.js', 		f : 'js'}
+
+			],
+		},
+
+		
+
 		help : {
 			uri : "help",
 			href : "help",

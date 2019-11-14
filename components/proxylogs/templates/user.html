@@ -1,0 +1,52 @@
+<% if(typeof address != 'undefined') {%>
+
+
+<div class="user" address="<%-address%>">
+    <div class="addressTable table" address="<%-address%>">
+        <div class="iconWrapper">
+            <a href="<%-app.platform.api.authorlink(address)%>">
+                <div class="icon">
+
+                    <% 
+
+                        var src = deep(app, 'platform.sdk.users.storage.'+address+'.image')  
+                        
+                    %>
+
+                    <div class="usericon" image="<%-src || ''%>">
+
+                        <% if(!src) {%>
+
+                            <svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+
+                        <% } %>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="label">
+            <a href="<%-app.platform.api.authorlink(address)%>">
+
+                <div class="name">						
+                    <%- app.platform.api.name(address) || address %>							
+                </div>
+
+                <% var r = deep(app, 'platform.sdk.users.storage.'+address+'.reputation'); %>
+
+                <% if (r) {%>
+
+                    <div class="light">						
+                        Reputation: <%- Number(r).toFixed(0)  %>						
+                    </div>
+
+                <% } %>
+
+            </a>			
+
+        </div>
+
+    </div>
+</div>
+
+<% } %>

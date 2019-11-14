@@ -12,7 +12,7 @@ var lenta = (function(){
 
 		var mid = p.mid;
 
-		var making = false;
+		var making = false, ovf = false;
 
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false;
 
@@ -34,6 +34,7 @@ var lenta = (function(){
 			tempTimer,
 			getPreviewTimer,
 			shareheights = {},
+			_reposts = {},
 			fullscreenvideoShowed = false;
 
 		var countshares = 0;
@@ -62,6 +63,23 @@ var lenta = (function(){
 		}
 
 		var actions = {
+			repost : function(shareid){
+
+				var href = 'index';
+
+				if(isMobile()) href = 'share'
+
+				self.nav.api.load({
+					open : true,
+					href : href + '?repost=' + shareid,
+					history : true,
+					handler : true,
+					essenseData : {
+						
+					}
+				})
+
+			},
 			loadprev : function(clbk){
 				el.c.find('.shares').html('<div class="bspacer"></div>')
 				el.c.removeClass('showprev')
@@ -85,8 +103,16 @@ var lenta = (function(){
 				})
 				
 				_.each(initedcommentes, function(c){
-					c.destroy()
+					if (c)
+						c.destroy()
 				})
+
+				_.each(_reposts, function(p){
+					if(p)
+						p.destroy()
+				})
+
+				_reposts = {};
 
 				countshares = 0;
 
@@ -623,7 +649,7 @@ var lenta = (function(){
 
 				player.p.muted = false
 
-				self.app.actions.offScroll()
+				ovf = !self.app.actions.offScroll()
 
 				if (initedcommentes[id])
 					initedcommentes[id].changein(el.c.find("#" + id), 0)
@@ -638,7 +664,6 @@ var lenta = (function(){
 					window.screen.orientation.onchange = function(){
 						var t = window.screen.orientation.type
 
-						console.log(t, player.p.fullscreen.active)
 
 						if (t == 'portrait-primary'){
 							player.p.fullscreen.exit();
@@ -696,8 +721,6 @@ var lenta = (function(){
 			},
 
 			like : function(obj, value, clbk){
-
-				console.log(obj);
 
 				if(obj.address == self.app.platform.sdk.address.pnet().address) return
 
@@ -786,7 +809,81 @@ var lenta = (function(){
 			},			
 
 			
+			openGalleryRec : function(share, initialValue, clbk){
 
+				var allimages = [];
+
+				var getimages = function(share, clbk){
+
+					_.each(share.images, function(i){
+						allimages.push(i)
+					})
+
+					if(!share.repost){
+
+						if (clbk)
+							clbk()
+
+					}
+
+					else{
+
+						self.app.platform.sdk.node.shares.getbyid(share.repost, function(shares){
+
+							var s = shares[0]
+
+							if (s){
+								getimages(s, clbk);
+							}
+	
+							else{
+								if (clbk)
+									clbk()
+							}
+						})
+
+					}
+
+				}
+
+				getimages(share, function(){
+					var images = _.map(allimages, function(i){
+						return {
+							src : i
+						}
+					})
+	
+					var num = findIndex(images, function(image){
+	
+						if (image.src == initialValue) return true;						
+	
+					})
+	
+					if(images.length > 1 || (share.url && images.length && parseVideo(share.url).type) || !isMobile()){
+	
+						self.app.nav.api.load({
+							open : true,
+							href : 'imagegallery?i=' + share.txid + '&num=' + (num || 0),
+							inWnd : true,
+							history : true,
+		
+							essenseData : {
+								initialValue : initialValue,
+								idName : 'src',
+								images : images,
+		
+								gid : share.txid
+							},
+		
+							clbk : function(){
+								if (clbk)
+									clbk()
+							}
+						})
+	
+					}
+				})
+			},
 		
 			openGallery : function(share, initialValue, clbk){
 				
@@ -803,6 +900,7 @@ var lenta = (function(){
 				})
 
 				if(images.length > 1 || (share.url && images.length && parseVideo(share.url).type) || !isMobile()){
+
 					self.app.nav.api.load({
 						open : true,
 						href : 'imagegallery?i=' + share.txid + '&num=' + (num || 0),
@@ -822,6 +920,7 @@ var lenta = (function(){
 								clbk()
 						}
 					})
+
 				}
 				
 			},
@@ -1015,6 +1114,12 @@ var lenta = (function(){
 		}
 
 		var events = {
+			repost : function(){
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.repost(shareId);
+			},
+
 			showmorebyauthor : function(){
 
 				$(this).closest('.authorgroup').find('.share').removeClass('hidden')
@@ -1254,7 +1359,7 @@ var lenta = (function(){
 			},
 
 			openGallery : function(){
-				var id = $(this).closest('.share').attr('id');
+				var id = $(this).closest('.shareinlenta').attr('id');
 				var src = $(this).attr('i')
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
@@ -1271,7 +1376,8 @@ var lenta = (function(){
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
 
-				actions.openGallery(share, src)
+
+				actions.openGalleryRec(share, src)
 			},
 
 			
@@ -1355,13 +1461,13 @@ var lenta = (function(){
 
 				}				
 
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(this).closest('.shareinlenta').attr('id');
 
 					actions.openPost(shareId)
 			},
 
 			sharesocial : function(){
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(this).closest('.shareinlenta').attr('id');
 
 					self.app.platform.m.log('sharing_opened_button', shareId)
 
@@ -1424,6 +1530,7 @@ var lenta = (function(){
 		}	
 
 		var renders = {
+			
 			comments : function(txid, init, showall, preview){
 				if(essenseData.nocomments) return
 
@@ -1434,6 +1541,7 @@ var lenta = (function(){
 				var _el = el.c.find('#' + txid + " .commentsWrapper");
 
 				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+
 
 				setTimeout(function(){
 
@@ -1635,6 +1743,8 @@ var lenta = (function(){
 					if(!share.temp){
 						renders.comments(share.txid, false, false, true)
 					}
+
+					renders.repost(p.el, share.repost, share.txid)
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
 
@@ -1949,6 +2059,37 @@ var lenta = (function(){
 
 				});
 				
+			},
+
+			repost : function(el, repostid, txid, clbk){
+				if(repostid){
+					self.shell({
+						name :  'repost',
+						el : el.find('.repostWrapper'),
+						data : {
+							repost : repostid,
+							share : deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid),
+							level : 1
+						},
+	
+					}, function(_p){
+
+						if(_p.el && _p.el.length){
+							self.app.platform.papi.post(repostid, _p.el.find('.repostShare'), function(p){
+
+								_reposts[txid] = p;
+	
+							}, {
+								repost : true,
+								eid : txid,
+								level : 1
+							})
+						}	
+
+						
+
+					})
+				}
 			},
 
 			url : function(el, url, share, clbk){
@@ -2460,6 +2601,8 @@ var lenta = (function(){
 			}
 			
 			el.c.on('click', '.showMore', events.openPost)
+
+			el.c.on('click', '.forrepost', events.repost)
 			
 
 			/*if(isMobile()){
@@ -2715,7 +2858,9 @@ var lenta = (function(){
 			var cache = 'clear';
 			var clear = true;
 
-			if (essenseData.goback) cache = 'cache'
+			if (essenseData.goback) {
+				cache = 'cache'
+			}
 
 			if (essenseData.contents){
 
@@ -2786,7 +2931,7 @@ var lenta = (function(){
 										src = deep(share, 'images.' + p.num)
 									}
 
-									actions.openGallery(share, src)
+									actions.openGalleryRec(share, src)
 								}
 
 									
@@ -2829,6 +2974,9 @@ var lenta = (function(){
 			primary : primary,
 
 			getdata : function(clbk, p){
+
+				ovf = false
+
 				newmaterials = 0;
 				
 				initedcommentes = {};
@@ -2968,7 +3116,9 @@ var lenta = (function(){
 					p.p.destroy()
 				})
 
-				self.app.actions.onScroll()
+				if(ovf)
+
+					self.app.actions.onScroll()
 
 				_.each(initedcommentes, function(c){
 					c.destroy()

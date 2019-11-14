@@ -1,0 +1,29 @@
+<% if(repost) {%>
+
+    <div class="repostShareWrapper">
+
+        <% if(typeof level != 'undefined' && level > 3) {%>
+
+            <div class="cntswrk">
+                <div class="repostsecond">
+                    <div>
+                        <a href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
+                            More <i class="fas fa-share"></i>
+                        </a> 
+                    </div>
+                </div>
+            </div>
+
+        <% } else { %> 
+            
+            <div class="repostShare">
+
+            </div>
+
+        <% } %>
+    
+        
+
+    </div>
+
+<% } %>
