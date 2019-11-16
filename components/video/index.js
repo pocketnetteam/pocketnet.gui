@@ -10,17 +10,17 @@ var video = (function(){
 
 		var el;
 		var allowedVideos = [{
-			key : "311925017",
+			key : "gMrKZfHJSxA",
 			width : 560,
 			height : 315,
 
-			source : 'vimeo',
+			source : 'youtube',
 
 			loc : {
 				
 				en : {
 					title : "Pocketnet - Decentralized Social Network on the Blockchain",
-					id : "311925017",
+					id : "gMrKZfHJSxA",
 					description : "Pocketnet is a fully decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity.No corporation behind it to take fruits of your labor. All advertising revenue is split equally between node operators and those who publish highly rated content. Your subscribers always see your content, unless they decide to unsubscribe. Pocketnet is self-policed by the platform participants with good reputation. Nobody records your keystrokes, viewing habits or searches. Join The New Peer-To-Peer Internet: Go to Pocketnet.app and join for free now"
 				}
 			}
@@ -217,7 +217,7 @@ var video = (function(){
 			getdata : function(clbk, p){
 
 				var params = parameters();
-					params.v || (params.v = '311925017')
+					params.v || (params.v = 'gMrKZfHJSxA')
 
 				var allowed = _.find(allowedVideos, function(v){
 					return v.key == params.v
