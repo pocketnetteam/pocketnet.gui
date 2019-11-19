@@ -561,3 +561,156 @@
 
 	}
 }
+
+@media only screen and (max-width: 640px) {
+	#connection{
+
+		.work{
+			padding : 0 @rhythm!important;
+		}
+
+		.cCaption{
+			padding : 2 * @rhythm 0 ;
+		}
+	
+		.connection{
+	
+			.nodesCaptionTable{
+				margin-bottom : 4 * @rhythm;
+				>div{
+					&.foradd{
+						width : 150px;
+						text-align: right;
+						color : @color-gray-mlight;
+						cursor: pointer;
+						&:hover{
+							color : @color-main;
+						}
+	
+						span{
+							font-size: 0.9em;
+							font-weight: 200;
+						}
+					}
+				}
+	
+				.nodesCaption{
+					font-weight: 200;
+					color : @color-main;
+					font-size: 1.5em;
+				}
+			}
+			
+			.proxypart{
+				background: @color-main;
+				color : #fff;
+				padding-top : 3 * @rhythm;
+				margin-bottom : 3 * @rhythm;
+	
+	
+				.proxyconnect{
+					padding : 3 * @rhythm 0;
+					padding-top : 0;
+	
+					.proxyselecttable{
+						
+	
+						>div{
+							padding : @rhythm 0;
+	
+							span{
+								font-weight: 100;
+								font-size: 1.2em;
+							}
+	
+							&.selector{
+								text-align: right;
+								width : 40px;
+							}
+
+							.logs{
+								text-align: left;
+							}
+	
+							
+	
+							&.logswrapper,
+							&.usingwrapper{
+								width : 40px;
+								text-align: center;
+	
+								.using{
+									font-size: 1.2em;
+								}
+							}
+						}
+					}
+				}
+				
+			}
+	
+			
+	
+			.nodespart{
+	
+				display: none;
+	
+			
+				.tablecaption{
+					background: #fafafa;
+					padding : 2 * @rhythm 0;
+				}
+	
+				
+				.node{
+				   
+					>div{
+						vertical-align: middle;
+						padding :3 * @rhythm @rhythm;
+						
+						&.use{
+							width : 40px;
+							text-align: left;
+							color : @color-gray-slight;
+						}
+	
+						&.connectnode{
+							cursor: pointer;
+	
+							color : @color-good;
+						}
+
+						&.status{
+							display: none;
+						}
+
+						&.name{
+							display: none;
+						}
+
+						&.ws{
+							width: 90px;
+						}
+	
+						&.panel{
+							width : 90px;
+							padding : 2 * @rhythm 0;
+	
+						}
+	
+						&:nth-child(1){
+							padding-left: 0;
+						}
+	
+						&:nth-last-child(1){
+							text-align: right;
+							padding-right: 0;
+						}
+					}
+				}
+	
+				
+			}
+		}
+	}	
+}

@@ -420,7 +420,7 @@ var metadisplay = function(){ %>
 							</div>
 
 							
-
+							<% if(app.platform.repost) {%>
 								<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 									<div class="itemwr table">
@@ -437,6 +437,7 @@ var metadisplay = function(){ %>
 									</div>
 
 								</div>
+							<% } %>
 
 							
 

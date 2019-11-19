@@ -10503,8 +10503,15 @@ Platform = function(app, listofnodes){
 					main : m,
 					
 					success : function(d){
+
+						var info = deep(d, 'data.info') 
+
+						if (info && info.repost) {
+							self.repost = true
+						}
+
 						if (clbk)
-							clbk(deep(d, 'data.info'))
+							clbk(info)
 					},
 					fail : function(d, e){
 
@@ -14813,6 +14820,8 @@ Platform = function(app, listofnodes){
 		}
 
 		initOnlineListener()
+
+		self.sdk.proxy.info()
 
 		self.sdk.system.get.nodes(false, function(){
 			
