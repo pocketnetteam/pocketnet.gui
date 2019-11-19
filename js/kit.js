@@ -325,11 +325,11 @@ Comment = function(txid){
 
 	self.serialize = function(){
 
-		return self.txid + JSON.stringify({
-			message : encodeURIComponent(self.message.v),
-			url : encodeURIComponent(self.url.v),
-			images : encodeURIComponent(self.images.v),
-		}) + (self.parentid || "") + (self.answerid || "")
+		return self.txid + encodeURIComponent(JSON.stringify({
+			message : (self.message.v),
+			url : (self.url.v),
+			images : (self.images.v),
+		})) + (self.parentid || "") + (self.answerid || "")
 
 	}
 
