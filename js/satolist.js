@@ -4303,18 +4303,12 @@ Platform = function(app, listofnodes){
 
 				requestFreeMoney : function(clbk){
 
-					console.log('requestFreeMoney1')
-
 					var a = self.sdk.address.pnet();
 
 					if (a){
 						a = a.address;
 
-						console.log('requestFreeMoney2')
-
 						this.checkFreeMoney(a, function(r){
-							console.log('requestFreeMoney3', r)
-
 							if(!r){
 								if (clbk)
 									clbk(null)
@@ -4322,14 +4316,11 @@ Platform = function(app, listofnodes){
 							else
 							{
 
-								console.log('requestFreeMoney4')
-								if (!self.sdk.captcha.done && !_Node){
+								/*if (!self.sdk.captcha.done && !_Node){
 									if (clbk)
 										clbk(null, 'captcha')
 								}
-								else{
-
-									console.log('requestFreeMoney5')
+								else{*/
 
 									var prms = {
 										address : a,
@@ -4341,8 +4332,6 @@ Platform = function(app, listofnodes){
 										action : 'freeMoney',
 										data : prms,
 										success : function(d){
-											console.log('requestFreeMoney6')
-
 											if (clbk)
 												clbk(true)
 	
@@ -4354,7 +4343,7 @@ Platform = function(app, listofnodes){
 										}
 									})
 
-								}
+								//}
 
 								
 							}
@@ -8973,7 +8962,7 @@ Platform = function(app, listofnodes){
 								else
 								{
 
-									console.log('obj.export()', obj.export())
+									//console.log('obj.export()', obj.export())
 
 									self.app.ajax.rpc({
 										method : 'sendrawtransactionwithmessage',
@@ -9001,7 +8990,7 @@ Platform = function(app, listofnodes){
 											alias.inputs = inputs
 											alias.outputs = outputs
 
-											console.log("temptemptemp", temp)
+											// console.log("temptemptemp", temp)
 
 											self.sdk.node.transactions.saveTemp()
 											
