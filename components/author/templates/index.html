@@ -30,6 +30,16 @@ var telements = function(){ %>
 
 			<span class="unsubscribe funf">You are Following</span>	
 
+			<% if (me){ 
+				
+				var r = me.relation(author.address, 'subscribes') 
+
+			
+				
+			%>
+				<span class="notificationturn <% if(r && r.private == 'true') {%> turnon <% } %>">&middot;<i class="far fa-bell-slash"></i></span>
+			<% } %>
+
 			<span class="subscribe funf">Follow</span>	
 
 		</span>

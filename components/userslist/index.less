@@ -88,6 +88,23 @@
 				.unsubscribe{
 					color : @color-gray-mlight;
 				}
+
+				.notificationturn{
+					display: none;
+
+					i{
+						width : 20px;
+						text-align: center;
+					}
+
+					&.turnon{
+						i{
+							&:before{
+								content : '\f0f3';
+							}
+						}
+					}
+				}
 			}
 
 			&.blocking{
@@ -100,16 +117,23 @@
 				.blockingWrapper{
 					display: inline;
 				}
+
+				
 			}
 	
 			.subscribebuttonstop{
 				.unsubscribe{
 					display : none;
 				}
+
 	
 				&.following{
 					.unsubscribe{
 						display : inline;
+					}
+
+					.notificationturn{
+						display: inline;
 					}
 					
 					.subscribe{

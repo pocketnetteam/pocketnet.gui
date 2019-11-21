@@ -5,10 +5,7 @@ var me = null;
 if(user.address.value)
 	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
-var telements = function(address){ 
-	
-	
-	%>
+var telements = function(address){ %>
 
 	<% if(me && !user.isItMe(address)) {
 		
@@ -30,6 +27,15 @@ var telements = function(address){
 		<span class="subscribebuttonstop <%-_class%>">
 
 			<span class="unsubscribe funf">&middot; You are Following <i class="far fa-check-circle"></i></span>	
+
+			<% if (me){ 
+				
+				var r = me.relation(address, 'subscribes') 
+
+				
+			%>
+				<span class="notificationturn <% if(r && r.private == 'true') {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+			<% } %>
 
 			<span class="subscribe funf">
 				<button>Follow</button>

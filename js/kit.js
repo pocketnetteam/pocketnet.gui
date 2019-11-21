@@ -5,43 +5,31 @@ SubscribePrivate = function(){
 		set : function(_v){
 			this.v = _v
 		},
-		v : '',
+		v : ''
 	};
-
-	self.encrypted = {
-		set : function(_v){
-			this.v = _v
-		},
-		v : '',
-	};
-
-
-	self.opreturn = function(){
-		return self.encrypted.v
-	}
 
 	self.validation = function(){
-
 		if(!self.address.v){
 			return 'address';
 		}
-
-		if(!self.encrypted.v){
-			return 'encrypted';
-		}
-
 	}
 
 	self.serialize = function(){
 		return self.address.v
 	}
 
-	self.export = function(){
+	self.export = function(alias){
+
+		if(alias){
+			return {
+				vsaddress : self.address.v
+			}
+		}
+
 		return {
-			vsaddress : self.encrypted.v
+			address : self.address.v
 		}
 	}
-	
 
 	self.type = 'subscribePrivate'
 
@@ -323,20 +311,7 @@ Comment = function(txid){
 		return null;
 	}
 
-    self.serialize = function(){
-
-		return self.txid + (JSON.stringify({
-			
-			message : encodeURIComponent(self.message.v),
-			url : encodeURIComponent(self.url.v),
-
-			images : _.map(self.images.v, function(i){
-				return encodeURIComponent(i)
-			}),
-
-		})) + (self.parentid || "") + (self.answerid || "")
-
-	}
+	
 
 	self.export = function(extend){
 		var r = {
@@ -433,6 +408,62 @@ Comment = function(txid){
 				}
 			}
 		})
+	}
+
+	self.serialize = function(){
+
+		return self.txid + (JSON.stringify({
+			
+			message : encodeURIComponent(self.message.v),
+			url : encodeURIComponent(self.url.v),
+			images : _.map(self.images.v, function(i){
+				return encodeURIComponent(i)
+			}),
+
+		})) + (self.parentid || "") + (self.answerid || "")
+
+	}
+
+	self.export = function(extend){
+		var r = {
+			postid : self.txid,
+			answerid : self.answerid || "",
+			parentid : self.parentid || ""
+		}
+
+		if(!self.delete){
+			r.msg = JSON.stringify({
+				message : encodeURIComponent(self.message.v),
+				url : encodeURIComponent(self.url.v),
+				images : _.map(self.images.v, function(i){
+					return encodeURIComponent(i)
+				}),
+			})
+		}
+
+		if(self.id){
+			r.id = self.id
+		}
+
+		return r
+	}
+
+	self.import = function(v){
+
+		self.txid = v.postid;
+		self.answerid = v.answerid;
+		self.parentid = v.parentid;
+
+		v.msgparsed = JSON.parse(v.msg)
+
+		self.url.set(decodeURIComponent(v.msgparsed.url))
+		self.message.set(decodeURIComponent(v.msgparsed.message))
+		self.images.set(_.map(v.msgparsed.images, function(i){
+			return decodeURIComponent(i)
+		}))
+
+		if (v.txid || v.id)
+			self.id = v.txid || v.id
 	}
 
 	self.alias = function(id){
@@ -1450,7 +1481,6 @@ pUserInfo = function(){
 		if(!key) key = 'subscribes'
 
 		removeEqual(self[key], obj)
-	
 	}
 	
 
