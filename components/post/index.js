@@ -453,7 +453,7 @@ var post = (function(){
 
 			subscribe : function(clbk){
 
-				actions.subscribe(function(tx){
+				actions.subscribeWithDialog(function(tx){
 					if (tx)
 						el.share.find('.shareTable').addClass('subscribed');
 				})

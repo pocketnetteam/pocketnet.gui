@@ -34,22 +34,51 @@
 </div>
 
 <% if(!mobile && state) {
+
+	var address = deep(app, 'user.address.value')
+
+	if (address){
+		var author = deep(app, 'platform.sdk.users.storage.'+address)
+
+		var u = _.map(deep(author, 'subscribes') || [], function(a){
+			return a.adddress
+		})
+
+		if(!r) r = false
+
+		var _r = false;
+
+		var indexhref = 'index';
+		var shref = 'index?r=sub';
+
+		/*if(u.length >= 30){
+			_r = 'sub'
+
+			indexhref = 'index?r=sub'
+			shref = 'index'
+		}*/
+
+	
+
+		console.log(r, _r)
+
+	}
 	
 	%>
 
 	<div class="panelitemCenter">
 		<div class="centerTable table">
 
-			<div class="pcenterCell <% if(!r && pathname=='index') {%> active <% } %> fresh">
-				<a href="index" handler="true">
+			<div class="pcenterCell <% if((r == _r) && pathname=='index') {%> active <% } %> fresh">
+				<a href="<%-indexhref%>" handler="true">
 					<div class="pcenterLabel ">
 						All Posts
 					</div>
 				</a>
 			</div>
 
-			<div class="pcenterCell <% if(r == 'sub' && pathname=='index') {%> active <% } %> toppost">
-				<a href="index?r=sub"  handler="true">
+			<div class="pcenterCell <% if((r != _r && r != 'recommended') && pathname=='index') {%> active <% } %> toppost">
+				<a href="<%-shref%>"  handler="true">
 					<div class="pcenterLabel">
 						Your Pocket
 					</div>

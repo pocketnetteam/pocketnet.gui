@@ -126,8 +126,9 @@ var author = (function(){
 
 				
 			},
+
 			subscribe : function(){
-				self.app.platform.api.actions.subscribe(author.address, function(tx, err){
+				self.app.platform.api.actions.subscribeWithDialog(author.address, function(tx, err){
 
 					if(tx){
 					}
@@ -138,11 +139,22 @@ var author = (function(){
 
 				})
 			},
+
 			subscribePrivate : function(){
-				actions.subscribePrivate(function(tx, err){
+
+				var off = $(this).hasClass('turnon')
+
+				var f = 'notificationsTurnOn'
+
+				if(off){
+
+					f = 'notificationsTurnOff'
+					
+				}
+
+				self.app.platform.api.actions[f](author.address, function(tx, err){
 
 					if(tx){
-						el.subscribe.addClass('subscribed')
 					}
 					else
 					{
@@ -898,7 +910,7 @@ var author = (function(){
 
 			el.subscribe.find('.subscribe').on('click', events.subscribe)
 			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
-			el.subscribe.find('.subscribeprivate').on('click', events.subscribePrivate)
+			el.c.find('.notificationturn').on('click', events.subscribePrivate)
 
 			el.caption.find('.unblocking').on('click', function(){
 
@@ -941,6 +953,7 @@ var author = (function(){
 
 				if(address == author.address){
 					el.subscribe.addClass('following')
+					el.c.find('.notificationturn').removeClass('turnon')	
 
 					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
 					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
@@ -949,10 +962,22 @@ var author = (function(){
 				
 			}
 
+			self.app.platform.clbks.api.actions.subscribePrivate.author = function(address){
+
+				if(address == author.address){
+					el.subscribe.addClass('following')
+					el.c.find('.notificationturn').addClass('turnon')	
+
+					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
+					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
+				}
+			}
+
 			self.app.platform.clbks.api.actions.unsubscribe.author = function(address){
 
 				if(address == author.address){
 					el.subscribe.removeClass('following')
+					el.c.find('.notificationturn').removeClass('turnon')	
 
 					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
 					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
@@ -963,6 +988,7 @@ var author = (function(){
 
 				if(address == author.address){
 					el.caption.addClass('blocking');
+					el.c.find('.notificationturn').removeClass('turnon')
 				}
 
 				
@@ -1126,6 +1152,7 @@ var author = (function(){
 				delete self.app.platform.ws.messages.event.clbks.author
 				delete self.app.platform.clbks.api.actions.subscribe.author
 				delete self.app.platform.clbks.api.actions.unsubscribe.author
+				delete self.app.platform.clbks.api.actions.subscribePrivate.author
 
 				actions.destroy();
 

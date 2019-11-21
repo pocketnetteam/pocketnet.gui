@@ -384,11 +384,43 @@
 				display : none;
 			}
 
+			.notificationturn{
+				display: none;
+				cursor: pointer;
+
+				i{
+					width: 38px;
+					text-align: center;
+					font-size: 0.6em;
+					color : fade(@color-gray-slight, 30);
+					.transition(0.3s);
+				}
+
+				&.turnon{
+					i{
+						&:before{
+							content : '\f0f3';
+						}
+					}
+				}
+
+				&:hover{
+					i{
+						color : fade(@color-gray-slight, 80);
+					}
+					
+				}
+			}
+
 			&.following{
 				.unsubscribe{
 					display : inline;
 				}
-				
+
+				.notificationturn{
+					display: inline;
+				}
+
 				.subscribe{
 					display : none;
 				}

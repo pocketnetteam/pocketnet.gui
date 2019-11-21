@@ -1388,7 +1388,7 @@ var lenta = (function(){
 
 
 
-				self.app.platform.api.actions.subscribe(address, function(tx, error){
+				self.app.platform.api.actions.subscribeWithDialog(address, function(tx, error){
 					if(tx){
 						
 					}	
@@ -2992,6 +2992,8 @@ var lenta = (function(){
 				if(_s.r) 	recommended = _s.r;
 
 				else 		recommended = false;		
+
+				if (typeof essenseData.r != 'undefined' && essenseData.r != null) recommended = essenseData.r;
 
 
 				if (essenseData.txids && recommended != 'b'){

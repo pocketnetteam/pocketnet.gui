@@ -560,7 +560,7 @@ var userpage = (function(){
 
 				var address = deep(self, 'app.user.address.value')
 
-				if(address){
+				if (address){
 					var author = deep(self, 'sdk.users.storage.'+address)
 
 					var u = _.map(deep(author, 'subscribers') || [], function(a){

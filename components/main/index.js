@@ -266,46 +266,82 @@ var main = (function(){
 				if(!p) p = {};
 
 				renders.addpanel();
-			
-				self.nav.api.load({
 
-					open : true,
-					id : 'lenta',
-					el : el.lenta,
-					animation : false,
+				self.app.user.isState(function(state){
 
-					mid : 'main',
+					var r = null;
 
-					essenseData : {
-						hr : 'index?',
-						goback : p.goback,
+					/*if(state){
 
-						renderclbk : function(){
-							
-							if (hsready)
+						var address = deep(self, 'app.user.address.value')
 
-								el.panel.hcSticky('refresh');
-	
+						if (address){
+							var author = deep(self, 'sdk.users.storage.'+address)
+
+							var u = _.map(deep(author, 'subscribes') || [], function(a){
+								return a.adddress
+							})
+
+							if(u.length >= 30){
+								if (currentMode == 'common'){
+									r = 'sub'
+								}
+
+								if(currentMode == 'sub'){
+									r = false
+								}
+							}
+
 						}
-					},
+
+						
+					}*/
+
 					
-					clbk : function(e, p){
-
-						if(!upbutton)
-							upbutton = self.app.platform.api.upbutton(el.up, {
-								top : function(){
 				
-									return '65px'
-								},
-								rightEl : el.c.find('.lentacell')
-							})		
+					self.nav.api.load({
 
-						lenta = p
+						open : true,
+						id : 'lenta',
+						el : el.lenta,
+						animation : false,
 
-						if (clbk)
-							clbk()
+						mid : 'main',
 
-					}
+						essenseData : {
+							hr : 'index?',
+							goback : p.goback,
+
+							r : r,
+
+							renderclbk : function(){
+								
+								if (hsready)
+
+									el.panel.hcSticky('refresh');
+		
+							}
+						},
+						
+						clbk : function(e, p){
+
+							if(!upbutton)
+								upbutton = self.app.platform.api.upbutton(el.up, {
+									top : function(){
+					
+										return '65px'
+									},
+									rightEl : el.c.find('.lentacell')
+								})		
+
+							lenta = p
+
+							if (clbk)
+								clbk()
+
+						}
+
+					})
 
 				})
 			}
@@ -514,9 +550,6 @@ var main = (function(){
 			
 		
 				clbk(data);
-				
-
-				
 				
 
 			},
