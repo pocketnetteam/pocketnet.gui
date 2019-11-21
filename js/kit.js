@@ -370,16 +370,26 @@ Comment = function(txid){
 
 	self.serialize = function(){
 
-		return self.txid + (JSON.stringify({
+		var s = self.txid;
+
+		if(!self.delete){
+
+			s += (JSON.stringify({
+				
+				message : encodeURIComponent(self.message.v),
+				url : encodeURIComponent(self.url.v),
+				images : _.map(self.images.v, function(i){
+					return encodeURIComponent(i)
+				}),
+
+			}))
 			
-			message : encodeURIComponent(self.message.v),
-			url : encodeURIComponent(self.url.v),
-			images : _.map(self.images.v, function(i){
-				return encodeURIComponent(i)
-			}),
+		}
+		
+		s += (self.parentid || "") + (self.answerid || "")
 
-		})) + (self.parentid || "") + (self.answerid || "")
 
+		return s
 	}
 
 	self.export = function(extend){
