@@ -818,30 +818,19 @@ var post = (function(){
 
 				})
 			},
-			wholike : function(share, clbk){
+			wholike : function(clbk){
 
+				console.log("share", share)
+
+				var wholikes = share.who || [];
 
 				self.shell({
 					turi : 'lenta',
 					name :  'wholike',
 					el : el.share.find('.wholikes'),
 					data : {
-						scores : 500,// Number(share.scnt),
-						wholikes : [
-
-							{
-								address : "PL7RNWypccYBPsDAygW3H4aKfzGBwMeWyt",
-								name : "SS",
-								image : 'https://i.imgur.com/iddNpbW.jpg'
-							},
-
-							{
-								address : "PUdYeit6d4mPxxou8FEDNMfVaZBB2q5FH4",
-								name : "Dodgecoin",
-								image : 'https://i.imgur.com/sL8U525.jpg'
-							},
-
-						]
+						scores : Number(share.scnt),
+						wholikes : wholikes
 					},
 					bgImages : {}			
 

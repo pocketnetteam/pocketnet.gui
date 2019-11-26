@@ -1727,6 +1727,8 @@ var lenta = (function(){
 					return s.txid
 				})
 
+				console.log("GETLIKES", ids, shares)
+
 				self.app.platform.sdk.likes.get(ids, function(){
 
 					_.each(shares, function(share){
@@ -1832,6 +1834,8 @@ var lenta = (function(){
 
 					all : {
 						success : function(){
+
+							console.log("RENDERMYSTARS")
 
 							renders.mystars(shares)
 

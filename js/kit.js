@@ -313,47 +313,6 @@ Comment = function(txid){
 
 	
 
-	self.export = function(extend){
-		var r = {
-			postid : self.txid,
-			answerid : self.answerid || "",
-			parentid : self.parentid || ""
-		}
-
-		if(!self.delete){
-			r.msg = JSON.stringify({
-				message : encodeURIComponent(self.message.v),
-				url : encodeURIComponent(self.url.v),
-				images : _.map(self.images.v, function(i){
-					return encodeURIComponent(i)
-				}),
-			})
-		}
-
-		if(self.id){
-			r.id = self.id
-		}
-
-		return r
-	}
-
-	self.import = function(v){
-
-		self.txid = v.postid;
-		self.answerid = v.answerid;
-		self.parentid = v.parentid;
-
-		v.msgparsed = JSON.parse(v.msg)
-
-		self.url.set(decodeURIComponent(v.msgparsed.url))
-		self.message.set(decodeURIComponent(v.msgparsed.message))
-		self.images.set(_.map(v.msgparsed.images, function(i){
-			return decodeURIComponent(i)
-		}))
-
-		if (v.txid || v.id)
-			self.id = v.txid || v.id
-	}
 
 	self.uploadImages = function(app, clbk){
 
@@ -1822,7 +1781,12 @@ pComment = function(){
 			try {	
 				self.url = decodeURIComponent(v.msgparsed.url || "");
 				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
-				self.images = v.msgparsed.images || [];
+				self.images = _.map(v.msgparsed.images || [], function(i){
+
+					console.log("i", i, decodeURIComponent(i))
+
+					return decodeURIComponent(i)
+				});
 			}
 
 			catch(e){

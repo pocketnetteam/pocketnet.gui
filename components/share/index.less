@@ -923,6 +923,151 @@
 
 }
 
+
+
+.sharedate{
+	.selectDateTableWrapper{
+		width : 500px;
+		>div{
+			padding : @rhythm;
+			&.dateWrapper{
+				width : 250px;
+			}
+
+			&.dWrapper{
+				text-align: center;
+				width : 30px;
+			}
+
+			&:nth-clild(1){
+				padding-left: 0;
+			}
+
+			&:nth-last-clild(1){
+				padding-right: 0;
+			}
+
+			select{
+				width : 100%;
+			}
+
+			
+		}
+	}
+
+	.buttons>div{
+		float: right;
+	}
+}
+
+.wnd.wndsharepost{
+
+	._close {
+		color : #fff;
+	}
+
+    .wndinner{
+		max-height: 650px;
+		
+    }
+	.wndcontent{
+        overflow: hidden;
+        padding-right: 4 * @rhythm;
+		top : 0;
+		background: #FAFAFA;
+
+        .result{
+            margin-top : 0;
+        }
+
+		#share{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top : 0;
+			bottom : 0;
+			
+			.txtwrapper{
+				>div{
+					&.iconWrapper{
+						width : 3.5em;
+					}
+				}
+			}
+
+            .mobilecaption{
+                display: block;
+				padding : 2 * @rhythm 0;
+				position: absolute;
+				left : 2 * @rhythm;
+				right : 0;
+				top : 0;
+
+                span{
+                    font-size: 1.5em;
+                }
+			}
+			
+			.absolutetxwrapper{
+				position: absolute;
+				left : 0;
+				right : 0;
+				top : 65px;
+				padding-bottom : 2 * @rhythm;
+				bottom : 65px;
+				overflow-y: auto;
+
+				.txtwrapper{
+					height: 100%;
+
+					>div{
+						&.shareWrapper{
+							height: 100%;
+							position: relative;
+							
+							.relativeContainer{
+								width : 100%;
+								left: 0;
+								top : 0;
+								bottom : 90px;
+								position: absolute;
+								overflow-y: auto;
+							}
+						}
+					}
+				}
+			}
+
+			.error{
+				position : absolute;
+				bottom : 65px;
+				left : 0;
+				right : 0;
+				text-align: center;
+				background: fade(#FAFAFA, 70);
+			}
+
+            .postlineWrapper{
+                position : absolute;
+                left : 0;
+                right  :0;
+                bottom : 0;
+                margin-top : 0;
+				padding : 2 * @rhythm;
+				margin-left: 0;
+
+			}
+			
+			.sLoader{
+				left : 8 * @rhythm;
+				top : 6 * @rhythm;
+				background: fade(#FAFAFA, 90);
+				padding-top : 2.75em;
+			}
+        }
+	}
+}
+
 html.stblack{
 	#share{
 		
@@ -950,6 +1095,10 @@ html.stblack{
 		.sLoader{
 			background: fade(@color-black3, 90);
 			
+		}
+
+		.mobilecaption{
+			color : @color-bright;
 		}
 	
 		#post{
@@ -1111,79 +1260,32 @@ html.stblack{
 			.tagsWrapper{			
 	
 				>div{
-					vertical-align: top;
-	
+					
 					&.label{
-						padding-left: 0;
 						color : @color-add;
-						font-weight: 700;
 					}
 	
-					&.tagsCont{
-						padding : 0;
-						overflow: hidden;
-	
-						>div{
-							float: left;
-							margin-right : @rhythm;
-	
-							&.inputWrapper{
-								padding : 0;
-							}
-						}
-					}
-	
-					&.tagsInputWrapper{
-						width: 30%;
-						padding : 0;
-	
-						>div{
-							margin-right : @rhythm;
-	
-							&.inputWrapper{
-								padding : 0;
-								.shadowSmall();
-							}
-						}
-					}
 				}
 			}
 	
 			.tag{
-				padding-top : 0;
-				padding-bottom: 0;
-				margin-top: @rhythm / 2;
-				margin-bottom: @rhythm / 2;
-				margin-right : 2 * @rhythm;
-				border-radius : 20px;
 				background: @bg;
 	
 				.tagInner{
-					height: auto;
-					width: auto;
-	
+				
 					>div{
-						vertical-align: middle;
-						padding : @rhythm / 2 @rhythm;
-	
+						
 						&.label{
-							color : @color-add;
-							padding-left: 2 * @rhythm;
+							color : @color-bright;
 	
 						}
 	
 						&.remove{
-							cursor: pointer;
-							text-align : center;
-							color : @color-gray-light;
+							color : @color-main;
 	
 							&:hover{
-								color : @color-add;
+								color : @color-bright;
 							}
-						}
-	
-						span, i{
-							font-size: 0.8em;
 						}
 					}
 				}
@@ -1191,209 +1293,64 @@ html.stblack{
 		}
 	
 		select{
-			background: transparent;
-			border : 0px;
 			background-image: url(../../img/arrow.png);
-			background-position: right 10px center;
-			background-repeat: no-repeat;
 		}
 	
-		.changeAddressWrapper{
-			margin-bottom: @rhythm;
-			padding-top : @rhythm / 2;
-		}
 	
 		.cpt{
-			margin-bottom: @rhythm;
-			display: none;
-			&.active{
-				display: block;
-			}
 			input{
-				width: 100%;
-				border-radius: 3px;
-				border : 0;
 				background: @bg;
-				outline: none;
-				padding : 2 * @rhythm 0;
-				padding-left : @rhythm;
-				padding-right : @rhythm;
 			}
 		}
 	
 		.txt{
-			margin-bottom : @rhythm;
 			textarea{
-				width: 100%;
-				min-height: 78px;
-				border-radius: 3px;
-				border : 0;
 				background: @bg;
-				outline: none;
-				padding : 2 * @rhythm 0;
-				padding-left : @rhythm;
-				padding-right : @rhythm;
-				overflow: auto;
 			}
-			.emojionearea,
-			.emojionearea.form-control{
-				border : 0;
-				border-radius: 3px;
-				.shadowSmall();
-			}
-	
+			
 	
 			.emojionearea-editor{
-				padding : 2 * @rhythm 0;
-				padding-left : @rhythm;
-				padding-right : @rhythm;
 				background: @bg;
-				outline: none;
-				border : 0;
-				min-height: 78px;
-				border-radius: 3px;
 			}
 		}
-		.imagesWrapper{
-			>div{
-				margin-top: 2 * @rhythm;
-				margin-bottom : 2 * @rhythm;
-			}
-		}
-		.urlWrapper{
-			>div{
-				margin-top: 2 * @rhythm;
-				margin-bottom : 2 * @rhythm;
-			}
-		}
-		.sortablepaddingspacer{
-			padding-right : 30px;
-		}
+		
 		.draggablepart{
 			
-			
-			.draggablewrapper{
-				>div {
-					vertical-align: top;
-	
-					&.draggablemarkerwrapper{
-						width: 30px;
-					}
-				}
-			}
-	
+		
 			.marker{
-				width: 30px;
-				height: 30px;
-				line-height: 30px;
-				text-align: center;
-				cursor: pointer;
-				color : @color-gray-slight;
-				display: none;
+				color : @color-main;
 			}
 	
 			&.filled{
-				cursor : pointer;
-				border-radius: 3px;
-	
-				.marker{
-					display: block;
-				}
-	
 				&:hover{
-					background: fade(@color-white, 10);
+					background: fade(@color-black, 10);
 				}
 			}
-	
 			
 		}
 	
 		.imagesWrapper{
 				
 	
-			.imagesEmbWr{
-				overflow: hidden;
-				/*opacity: 0;*/
-				&.active{
-					opacity: 1;
-				}
-			}
-	
-			
-	
 			.imageContainer{
-				/*padding-right : @rhythm;
-				padding-bottom:  @rhythm;*/
-				float: left;
-				width: 200px;
-	
-				.imageContainerCnt{
-					position: relative;
-				}
-				.imageWrapper{
-					position: relative;
-	
-				}
-				img{
-					width: 100%;
-				}
 	
 				.imgpanel{
-					display: none;
-					position: absolute;
-					left: 50%;
-					bottom : 20%;
-					background: fade(@color-black, 80);
-					border-radius : 20px;
-					padding : 5px;
-					margin-left: -34px;
-					
+					background: fade(@color-black2, 80);
 					.item{
-						margin-left: 6px;
-						border-radius : 15px;
-						float: right;
-						width: 30px;
-						height: 30px;
-						line-height: 30px;
-						text-align: center;
-						color : fade(@color-gray-slight, 90);
-						cursor: pointer;
-						.transition(0.3s);
-	
+					
+						color : fade(@color-gray2, 90);
+						
 						&:hover{
-							background : fade(@color-gray, 60);
-						}
-	
-						&:nth-last-child(1){
-							margin-left: 0;
+							background : fade(@color-gray2, 60);
 						}
 	
 					}
 				}
 	
-				&:hover{
-					.imgpanel{
-						display: block;
-					}
-				}
-	
+			
 				.spinnerWrapperCnt{
-					position: absolute;
-					left: 0;
-					right: 0;
-					top: 0;
-					bottom: 0;
-					background: fade(#fff, 30);
+					background: fade(@color-black, 30);
 	
-					.spinnerWrapper{
-						width: 100%;
-						height: 100%;
-	
-						>div{
-							vertical-align: middle;
-							text-align: center;
-						}
-					}
 				}
 	
 			}
@@ -1404,99 +1361,39 @@ html.stblack{
 			.urlcnt{
 	
 				.removelink{
-					border-radius: 50%;
-					height: 30px;
-					width: 30px;
-					line-height: 30px;
-					text-align: center;
-					cursor: pointer;
-					.transition(0.3s);
 					color : @color-bad;
 	
 					&:hover{
-						background : @color-gray-slight;
+						background : @color-main;
 					}
 				}
 	
-				.linkcnt{
-					white-space: nowrap;
-					text-overflow: ellipsis;
-					overflow: hidden;
-					max-width: 400px;
-				}
-	
-				.videoWrapper{
-					margin-top: @rhythm;
-					margin-bottom : @rhythm;
-				}
-	
+		
 				span{
-					font-size: 0.8em;
 					color : @color-main;
-					text-decoration: underline;
 				}
 	
-				.urlcnttable{
-					width: auto;
-					height: auto;
-	
-					>div{
-						vertical-align: middle;
-	
-						&.removeWrapper{
-							padding-left: @rhythm;
-						}
-					}
-				}
 				
 	
 			}
 	
 			.urlhtmlcontent{
-				font-size: 0.8em;
-	
-	
+			
 	
 				.ogtable{
 					>div{
-						vertical-align: top;
-						padding : @rhythm 0;
+					
 	
 						&.image{
-							width: 100px;
-							padding-right : 2 * @rhythm;
-							position: relative;
-							cursor: default;
 	
 							.removeImage{
-								position: absolute;
-								right: 4 * @rhythm;
-								top: 2 *  @rhythm;
-								width: 40px;
-								height: 40px;
-								line-height: 40px;
-								text-align: center;
+							
 								color : fade(#000, 50);
-								border-radius: 50%;
-								cursor: pointer;
+							
 								background : fade(#000, 10);
-								display: none;
-								opacity: 0;
-								.transition(0.3s);
-	
+								
 								&:hover{
 									background : fade(#000, 20);
-								}
-							}
-	
-							img{
-								border-radius : 3px;
-								width: 100%;
-							}
-	
-							&:hover{
-								.removeImage{
-									opacity: 1;
 								}
 							}
 	
@@ -1504,107 +1401,28 @@ html.stblack{
 	
 						&.cnt{
 							.title{
-								font-weight: 700;
 								color : @color-main;
 							}
 	
-							.description{
-								margin-top : @rhythm;
-							}
 						}
 					}
 				}
 			}
 	
-			&.bigimageinlink{
-				.urlhtmlcontent{
-	
-					.ogtable{
-						max-width: 600px;
-						border-radius: 3px;
-						
-						display: block;
-	
-						>div{
-							display: block;
-	
-							&.image{
-								width: auto;
-	
-								img{
-									width: 100%;
-								}
-	
-								.removeImage{
-									display: block;
-								}
-	
-							}
-	
-							&.cnt{
-								.title{
-									max-width: none;
-								}
-	
-								.description{
-									max-width: none;
-								}
-							}
-						}
-					}
-				}
-			}
-	
-	
-			.jsPlayerLoading{
-				display: none;
-			}
-	
-			.videoTips{
-				display: none;
-			}
-	
+		
 			
 		}
 		
-		.postlineWrapper{
-			margin-top: 3 * @rhythm;
-			/*padding-left: 1em;
-			padding-right: 30px;*/
-		}   
-	
 		.postpanel{
 			
 			>div{
-				width: 40%;
-				vertical-align: middle;
-	
+				
 				&.postWrapper{
-					width: 60%;
-					padding-right : 0;
-					text-align: right;
-					overflow: hidden;
-	
-					.element{
-						float : right;
-					}
 					
-					button{
-						min-width: 160px;
-	
-						&.shadow{
-							.shadowSmall();
-						}
-					}
-	
 					.selectedTimeWrapper{
-						padding : 2 * @rhythm 0;	
-						margin-right : 2 * @rhythm;
-	
 						span,
 						i{
 							color : @color-main;
-							cursor: pointer;
 						}
 					}
 	
@@ -1616,31 +1434,13 @@ html.stblack{
 		
 	
 		.error{
-			text-align : right;
 			color : @color-bad;
-			font-weight: 400;
-			font-size: 0.8em;
-			margin-top: @rhythm;
-			min-height: 20px;
 		}
 	
 		.panel{
-			height: 35px;
 	
 			>div{
-				width : 32px;
-				height: 32px;
-				border-radius: 50%;
-				line-height: 32px;
 				color : @color-black2;
-			
-				float: left;
-				text-align: center;
-				font-size: 0.8em;
-				margin-right : 1 * @rhythm;
-				cursor: pointer;
-				.transition(0.3s);
-	
 				&:hover{
 					color : @color-contrast;
 	
@@ -1653,182 +1453,41 @@ html.stblack{
 		}
 	
 		.waitpost{
-			display: none;
 			.tempPreloader{
-				width: 100%;
 	
-				>div{
-					vertical-align: middle;
-				}
-				.iconwr{
-					text-align: center;
-					width: 60px;
-				}
 				.count{
-					padding-top : @rhythm;
 					.label{
-						font-size: 0.8em;
 						color : @color-contrast;
 					}
 				}
 			}
 		}
 	
-		/*&.waitActions{
-			.dopost{
-				display: none;
-			}
-			.waitpost{
-				display: block;
-			}
-		}*/
-	
-		
 	
 	}	
-}
 
-.sharedate{
-	.selectDateTableWrapper{
-		width : 500px;
-		>div{
-			padding : @rhythm;
-			&.dateWrapper{
-				width : 250px;
+	
+	.wnd.wndsharepost{
+	
+		._close {
+			color : @color-main;
+		}
+		.wndcontent{
+			background: @color-black;
+	
+			#share{
+	
+				.error{
+					background: fade(@color-black, 70);
+				}
+				
+				.sLoader{
+					background: fade(@color-black, 90);
+				}
 			}
-
-			&.dWrapper{
-				text-align: center;
-				width : 30px;
-			}
-
-			&:nth-clild(1){
-				padding-left: 0;
-			}
-
-			&:nth-last-clild(1){
-				padding-right: 0;
-			}
-
-			select{
-				width : 100%;
-			}
-
-			
 		}
 	}
-
-	.buttons>div{
-		float: right;
-	}
-}
-
-.wnd.wndsharepost{
-
-	._close {
-		color : #fff;
-	}
-
-    .wndinner{
-		max-height: 650px;
-		
-    }
-	.wndcontent{
-        overflow: hidden;
-        padding-right: 4 * @rhythm;
-		top : 0;
-		background: #FAFAFA;
-
-        .result{
-            margin-top : 0;
-        }
-
-		#share{
-			position: absolute;
-			left: 0;
-			right: 0;
-			top : 0;
-			bottom : 0;
-			
-			.txtwrapper{
-				>div{
-					&.iconWrapper{
-						width : 3.5em;
-					}
-				}
-			}
-
-            .mobilecaption{
-                display: block;
-				padding : 2 * @rhythm 0;
-				position: absolute;
-				left : 2 * @rhythm;
-				right : 0;
-				top : 0;
-
-                span{
-                    font-size: 1.5em;
-                }
-			}
-			
-			.absolutetxwrapper{
-				position: absolute;
-				left : 0;
-				right : 0;
-				top : 65px;
-				padding-bottom : 2 * @rhythm;
-				bottom : 65px;
-				overflow-y: auto;
-
-				.txtwrapper{
-					height: 100%;
-
-					>div{
-						&.shareWrapper{
-							height: 100%;
-							position: relative;
-							
-							.relativeContainer{
-								width : 100%;
-								left: 0;
-								top : 0;
-								bottom : 90px;
-								position: absolute;
-								overflow-y: auto;
-							}
-						}
-					}
-				}
-			}
-
-			.error{
-				position : absolute;
-				bottom : 65px;
-				left : 0;
-				right : 0;
-				text-align: center;
-				background: fade(#FAFAFA, 70);
-			}
-
-            .postlineWrapper{
-                position : absolute;
-                left : 0;
-                right  :0;
-                bottom : 0;
-                margin-top : 0;
-				padding : 2 * @rhythm;
-				margin-left: 0;
-
-			}
-			
-			.sLoader{
-				left : 8 * @rhythm;
-				top : 6 * @rhythm;
-				background: fade(#FAFAFA, 90);
-				padding-top : 2.75em;
-			}
-        }
-	}
+	
 }
 
 @media only screen and (max-width: 640px) {
@@ -2534,5 +2193,176 @@ html.stblack{
 
 }	
 
+html.stblack{
+	.wnd.wndsharepost{
+
+	
+	
+		._close {
+			color : @color-main;
+		}
+	
+	
+		.wndcontent{
+			background: @color-black;
+	
+	
+			#share{
+				
+	
+				.error{
+					background: fade(@color-black, 70);
+				}
+	
+				.postlineWrapper{
+					position: static;
+					padding : 0;
+					
+	
+				}
+				
+				.sLoader{
+					background: fade(@color-black, 90);
+				}
+			}
+		}
+	}
+	#share{
+		background: @color-black;
+	
+	
+		#post{
+			.share{
+				background: fade(@color-black, 50);
+			}
+	
+			.iconWrapper{
+				width: 7 * @rhythm;
+				padding-top: @rhythm;
+				padding-left: @rhythm;
+				padding-right: 0;
+				display: block;
+			}
+
+			.images{
+	
+				.imagesWrapper{
+					background: transparent;
+					
+	
+	
+				}
+	
+			}
+		}
+	
+		.sLoader{
+			left: 0;
+			background: fade(@color-black, 90);
+	
+			
+		}
+		
+	
+		.imagesWrapper{
+			
+	
+			.imageContainer{
+	
+				.spinnerWrapperCnt{
+					background: fade(@color-black, 30);
+	
+				}
+	
+			}
+		}
+	
+		.attachements{
+	
+			
+			.urlcnt{
+	
+				.removelink{
+					color : @color-bad;
+	
+					&:hover{
+						background : @color-main;
+					}
+				}
+	
+				
+	
+				span{
+					color : @color-main;
+				}
+				
+	
+			}
+	
+			.urlhtmlcontent{
+				.ogtable{
+					>div{
+	
+						&.cnt{
+							.title{
+								color : @color-main;
+							}
+	
+							.description{
+								margin-top : @rhythm;
+							}
+						}
+					}
+				}
+			}
+	
+			
+		}
+		.draggablepart{
+			
+	
+			.marker{
+				color : @color-main;
+			}
+	
+			
+			
+		}
+	
+		.postpanel{
+			>div{
+	
+				&.panelWrapper{
+	
+					.panel{
+						.item {
+							color : @color-main;
+							background: @color-black;
+						}
+					}
+				}
+			}
+		}
+		
+	
+		.error{
+			color : @color-bad;
+		}
+	
+		.panel{
+	
+			>div{
+				background: @color-main;
+				color : #fff;
+	
+				&:hover{
+					background : @color-contrast;
+	
+				}
+			}
+		}
+	
+	}	
+}
 
 }

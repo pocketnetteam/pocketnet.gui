@@ -7881,7 +7881,7 @@ Platform = function(app, listofnodes){
 							{
 								var parameters = [p.count, '259200'];
 
-								if (p.address) parameters.push(p.address)
+								if (p.address) parameters.push("" /*p.address*/)
 
 								self.sdk.node.shares.get(parameters, function(shares, error){
 
@@ -7898,7 +7898,7 @@ Platform = function(app, listofnodes){
 											clbk(shares, error, p)
 									}
 
-								}, 'gethotposts2')
+								}, 'gethotposts')
 							}
 
 					})
