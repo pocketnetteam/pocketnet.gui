@@ -21,7 +21,7 @@
 
                             <span class="morelikes">
                                 <% if(wholikes.length < scores) {%>
-                                    and more <b><%- scores - wholikes.length %></b> <%- pluralform(scores - wholikes.length, ['user', 'users']) %>
+                                    + <b><%- scores - wholikes.length %></b> <%- pluralform(scores - wholikes.length, ['user', 'users']) %>
                                 <% } %>
 
                                 rated
