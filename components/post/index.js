@@ -507,9 +507,11 @@ var post = (function(){
 					}
 					else
 					{
-						var p = $(this).closest('.stars');
+						var p = $(this).closest('.stars');						
 
 						if (p.attr('value')){
+
+
 							return
 						}
 
@@ -787,7 +789,7 @@ var post = (function(){
 
 										actions.position()
 
-										el.share.find('.stars i').on('click', events.like)
+										
 										el.share.find('.complain').on('click', events.complain)
 
 										el.share.on('click', '.image', events.openGallery)
@@ -877,6 +879,8 @@ var post = (function(){
 
 
 					fastars(p.el.find('.stars'))
+
+					el.share.find('.stars i').on('click', events.like)
 
 					if (clbk)
 						clbk()
