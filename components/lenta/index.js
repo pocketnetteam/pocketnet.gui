@@ -3002,6 +3002,9 @@ var lenta = (function(){
 
 				}
 
+
+				console.log('recommended', recommended)
+
 				canloadprev = !!!essenseData.txids || false
 
 

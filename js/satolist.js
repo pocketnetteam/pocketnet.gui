@@ -7830,6 +7830,8 @@ Platform = function(app, listofnodes){
 
 					var temp = self.sdk.node.transactions.temp;
 
+					console.log("GET", parameters, method)
+
 
 					self.app.user.isState(function(state){
 						self.app.ajax.rpc({
@@ -7976,7 +7978,11 @@ Platform = function(app, listofnodes){
 
 							if(!p.txid) p.txid = p.begin || ''
 
-							var parameters = ["" /*p.address*/, p.author || "", p.txid || "", p.count];
+							var adr = ''
+
+							if(p.author == '1') adr = p.address
+
+							var parameters = [adr, p.author || "", p.txid || "", p.count];
 
 							s.get(parameters, function(shares, error){
 
@@ -11767,7 +11773,7 @@ Platform = function(app, listofnodes){
 					var n = {};
 
 					if(data.user && data.share){
-						n.caption = self.tempates._user(data.user) + " made post:"
+						n.caption = self.tempates._user(data.user) + " has a brand new post:"
 						n.text = self.tempates._share(data.share, 100)
 					}
 
@@ -11797,7 +11803,7 @@ Platform = function(app, listofnodes){
 
 						
 
-						html += self.tempates.user(data.user, text, true, " made post:", null, data.time)
+						html += self.tempates.user(data.user, text, true, " has a brand new post:", null, data.time)
 					}
 
 

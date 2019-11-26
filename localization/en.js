@@ -1,9 +1,9 @@
 ﻿
 
 if(typeof loclib == 'undefined' || !loclib)
-	loclib = {};
+loclib = {};
 
-	loclib.en = {};
+loclib.en = {};
 
 var ____loclib = loclib.en;
 
@@ -13,7 +13,7 @@ ____loclib.fewseconds = "Few seconds ago";
 ____loclib.oneminute = "One minute ago";	
 
 ____loclib.minutes = function(v){
-	return v + " minutes ago"
+return v + " minutes ago"
 }
 
 ____loclib.tenminutes = "Ten minutes ago";	
@@ -38,13 +38,13 @@ ____loclib.id72 = "Already a Member? Sign In";
 
 ____loclib.rtip1 = "Take Note of Your Private Login Key!";
 ____loclib.rtip2 = function(mobile){
-	var h = 'Below is your Private Key passphrase. Write it down and make sure to save your QR code' 
+var h = 'Below is your Private Key passphrase. Write it down and make sure to save your QR code' 
 
-	if(mobile){ h += 'device' } else { h+='PC' }
+if(mobile){ h += 'device' } else { h+='PC' }
 
-	h+=' and be sure not to lose it. We do not store your personal data. Private Key cannot be recovered if lost!'
+h+=' and be sure not to lose it. We do not store your personal data. Private Key cannot be recovered if lost!'
 
-	return h 
+return h 
 }
 
 ____loclib.generatepkey = "Generate Private Key";
@@ -55,8 +55,8 @@ ____loclib.rcontinue = "Continue"
 ____loclib.idle = "Idle for some time"
 ____loclib.congratulations = 'Congratulations! You are in <span class="pnlabel">Pocketnet</span>'
 ____loclib.creatingpreloader = 'Creating Account'
-____loclib.removepaste = 'We removed paste possibility for this input.'
-____loclib.filedamaged = "File doesn't contain valid private key"
+____loclib.removepaste = 'We removed the paste option for this input.'
+____loclib.filedamaged = "File doesn't contain a valid private key"
 ____loclib.keysnotmatch = 'Private login key does not match'
 ____loclib.confirmkey = 'Type Your Private Login Key or Upload QR Code From Previous Step'
 ____loclib.successfullycopied = "Key was successfully copied"
@@ -74,7 +74,7 @@ ____loclib.wesentmoney = "We sent you a few coins for registration";
 ____loclib.wesentmoneym = "We have already sent you a few coins for registration";
 
 
-____loclib.wesentmoneydelay = "The process is taking more time than usual, please just wait a little longer";
+____loclib.wesentmoneydelay = "The process is taking more time than usual, please wait a little longer";
 
 ____loclib.funetworkproblems = "There are some problems with the connection. Please try later";
 
@@ -98,7 +98,7 @@ ____loclib.signout = 'Sign out';
 
 ____loclib.postlabel = "Donation for post";	
 ____loclib.donationlabel = "Donation";	
-____loclib.donationwel = "If you want to thank the author you can use Pocketnet transaction";
+____loclib.donationwel = "If you want to thank the author you can use a Pocketnet transaction";
 ____loclib.donationwela = "Pocketnet transaction";	
 ____loclib.donationwelan = "Or you can use another crypto payment system";	
 ____loclib.successfullycopiedaddress = "Address was successfully copied";	
@@ -206,7 +206,7 @@ ____loclib.aaddedacc = "Added Accounts";
 ____loclib.acure = "Current";
 ____loclib.aaddacc = "Add Account";
 ____loclib.ascheduler = "Scheduler";
-____loclib.aused = "This address already use in another addresses pool";
+____loclib.aused = "This address is already use in another addresses pool";
 
 
 //author
@@ -219,10 +219,10 @@ ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
 ____loclib.following = "FOLLOWING";
 ____loclib.settings = "MANAGE";
-____loclib.anofollowers = "This user has't followers yet";
-____loclib.aynofollowers = "You haven't followers yet";
-____loclib.anofollowing = "This user has't following yet";
-____loclib.aynofollowing = "You haven't following yet";
+____loclib.anofollowers = "This user has no followers";
+____loclib.aynofollowers = "You have no followers";
+____loclib.anofollowing = "This user is not following anyone";
+____loclib.aynofollowing = "You are not following anyone";
 
 //lenta
 ____loclib.lloadmore = "Load More Awesome Posts!";
@@ -297,16 +297,16 @@ ____loclib.dsa = "Do not Show Anymore";
 // Messages
 
 ____loclib.coinbaseSuccess = function(v){
-	return "Congratulations, you have won " + v + " Pocketcoin for your latest activity!"
+return "Congratulations, you have won " + v + " Pocketcoin for your latest activity!"
 }
 ____loclib.coinbaseSuccesspost = function(v){
-	return "Congratulations, you have won " + v + " Pocketcoin for your latest posts!"
+return "Congratulations, you have won " + v + " Pocketcoin for your latest posts!"
 }
 ____loclib.coinbaseSuccesscomment = function(v){
-	return "Congratulations, you have won " + v + " Pocketcoin for your latest comments!"
+return "Congratulations, you have won " + v + " Pocketcoin for your latest comments!"
 }
 ____loclib.userSent = function(v){
-	return "sent <b>" + v + " POC</b> to you"
+return "sent <b>" + v + " POC</b> to you"
 }
 
 
@@ -331,10 +331,10 @@ ____loclib.timestamperror = "Time in application and in node do not match";
 ____loclib.e404 = "ERROR 404";	
 ____loclib.e404e = "Page not Found. Return to Main Page";	
 ____loclib.postLimitLight = function(v){
-	return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
+return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
 }
 ____loclib.postLimitLight = function(v){
-	return "You have reached your limit of " + (v || 15) + " grading in a 24 hour period";
+return "You have reached your limit of " + (v || 15) + " grading in a 24 hour period";
 }
 
 ____loclib.doubleLimitLight = "You have already rated this";	
