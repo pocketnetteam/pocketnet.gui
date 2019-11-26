@@ -205,6 +205,109 @@
 	}
 }
 
+html.stblack{
+	#accounts{
+		background: @color-black3;
+	
+		.subcaptionTable{
+			>div{
+	
+				.back{
+					border: 1px solid fade(@color-main, 50);
+					
+					&:hover{
+						color : @color-main;
+						border: 1px solid @color-main;
+					}
+				}
+			}
+		}
+	
+	
+		.addressAddTable,
+		.addressTable{
+			>div{
+			
+				&.label{
+	
+					.cur{
+						color : @color-main;
+					}
+				}
+	
+				&.panel{
+	
+					>div{
+					
+						color : fade(@color-main, 50);
+	
+						&.dumpkey{
+							&:hover{
+								color : @color-main;
+							}
+						}
+	
+						&.remove{
+							&:hover{
+								color : @color-contrast;
+							}
+						}
+						
+					}
+				}
+			}
+	
+			&.ncurrent{
+				>div{
+					&.label{
+	
+						&:hover{
+							color : @color-main;
+						}
+					}
+				}
+			}
+		}
+	
+		.addNewWrapper{
+			border-top : 1px solid fade(@color-main, 50);
+	
+			.addressAddTable{
+	
+				&:hover{
+					color : @color-add;
+				}
+			}
+		}
+	
+		.toScheduler{
+			color : @color-main;
+		}
+	
+		.wrk.dmp{
+			background: @color-black;
+		}
+	
+		.dumpedinfo{
+			
+			.infotable{
+				>div{
+	
+					&.forcopy{
+						.copyvalue{
+							color : fade(@color-main, 50);
+	
+							&:hover{
+								color : @color-main;
+							}
+						}
+					}
+				}
+			}
+		}
+	}	
+}
+
 @media only screen and (max-width: 640px) {
 	#accounts{
 		background: #fff;

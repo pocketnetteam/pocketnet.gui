@@ -205,6 +205,159 @@
 			color : @color-main;
 		}
 	}
+
+	.theme{
+		.pInput{
+			overflow: hidden;
+			>div{
+				float : left;
+				margin-right: @rhythm;
+
+				.themeicon{
+					width : 38px;
+					height: 38px;
+					border-radius: 50%;
+					border: 2px solid @color-gray;
+					.shadowSmaller();
+					position: relative;
+					cursor: pointer;
+					.transition(0.3s);
+
+					&:hover{
+						border: 2px solid @color-main;
+						.shadowSmall();
+					}
+				}
+
+				.thbadge{
+					color : @color-good;
+					display: none;
+					bottom : -4px;
+					right : -2px;
+					position: absolute;
+				}
+
+				&.active{
+					.themeicon{
+						border: 2px solid @color-main;
+					}	
+
+					.thbadge{
+						display: block;
+					}
+				}
+
+				&[theme="white"]{
+					.themeicon{
+						background: #fafafa;
+					}
+				}
+
+				&[theme="black"]{
+					.themeicon{
+						background: @color-black4;
+					}
+				}
+			}
+		}
+	}
+}
+
+html.stblack{
+	#usersettings{
+		background: @color-black3;
+
+		.mwork{
+	
+			&.gk{
+				border-top: 1px solid fade(@color-main, 50);
+				border-bottom: 1px solid fade(@color-main, 50);
+			}
+			&.wh{
+				background: @color-black4;
+			}
+		}
+		
+	
+		.groupHeader{
+			.parameter{
+				>div{
+					color : @color-main;
+				}
+			}
+		}
+	
+		.parameter{
+			
+			.pName{
+				
+				.unit{
+					color : @color-bright;
+				}
+	
+				.require{
+					color : @color-bad;
+				}
+			}
+	
+			
+			.pInput{
+	
+				.echo{
+					color : @color-contrast;
+				}
+	
+	
+			}
+	
+			.panel{
+	
+				.clear{
+					color : fade(@color-main, 50);
+					&:hover{
+						color : @color-main;
+					}
+				}
+				
+			}
+	
+			select,
+			textarea,
+			input{
+				border : 1px solid fade(@color-main, 50);
+				border-radius: 2px;
+	
+				&.error{
+					border : 1px solid @color-bad;
+				}
+			}
+	
+			.error{
+				select,
+				textarea,
+				input{
+					border : 1px solid @color-bad;
+				}
+				
+			}
+	
+		
+			.vc_valuecustom,
+			.vc_valuecustom_multibig{
+				.vc_textInput{
+					background: @color-black;
+				}
+			}
+	
+		}
+	
+		.settingsGroup{
+	
+			.groupCaption{
+				color : @color-main;
+			}
+		}
+	}
 }
 
 @media only screen and (max-width: 640px) {

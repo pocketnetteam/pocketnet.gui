@@ -29,11 +29,11 @@
 		.answer,
 		.post{
 			padding-left:  7 * @rhythm;
-			padding-right: 12 * @rhythm;
+			padding-right: 11 * @rhythm;
 		}
 		.caption{
 			padding-left:  6.5 * @rhythm;
-			padding-right: 12 * @rhythm;
+			padding-right: 11 * @rhythm;
 		}
 		.answer{
 			padding : 0;
@@ -46,7 +46,7 @@
 
 				.commentPaddingWrapper{
 					padding-left:  7 * @rhythm;
-					padding-right: 13 * @rhythm;
+					padding-right: 12 * @rhythm;
 				}
 			}
 
@@ -86,6 +86,8 @@
 
 	.shareTable{
 
+		overflow: hidden;
+
 		.sbtnxs{
 			.subscribedLabel{
 				display : none;
@@ -118,22 +120,22 @@
 
 		}
 
-		/*>div{
-			vertical-align: top;
-			padding : 2 * @rhythm;
-
-			&.iconWrapper{
-				width: 6 * @rhythm;
-				padding-top: 2.3 * @rhythm;
-				padding-left: 0;
-				padding-right: 0;
+		&.emptywithrepost{
+			.cntswrk{
+				margin-left: 0;
 			}
 
-		}*/
-	}
+			.meta{
+				padding-top : 0;
 
-	.shareTable{
-		overflow: hidden;
+				.repostCaption{
+					i{
+						font-size: 0.8em;
+						color : @color-main;
+					}
+				}
+			}
+		}
 	}
 
 	.iconWrapper{
@@ -147,7 +149,7 @@
 	.cntswrk{
 		margin-left: 13 * @rhythm;
 		padding-left : 2 * @rhythm;
-		padding-right : 5 * @rhythm;
+		padding-right : 10 * @rhythm;
 	}
 
 	.repostsecond{
@@ -164,6 +166,42 @@
 		overflow: hidden;
 		background: #fff;
 
+		.wholikesTable{
+			margin-bottom : 2 * @rhythm;
+			cursor: pointer;
+			.transition(0.3s);
+
+			&:hover{
+				opacity: 0.8;
+			}
+
+			.wholikeAuthorTable{
+				display: inline-table;
+				width: auto;
+				font-size: 0.8em;
+
+				>diV{
+					vertical-align: middle;
+
+					&.unamecell{
+						padding-left: 0.5 * @rhythm;
+					}
+				}
+			}
+
+			.usericon{
+				position: relative;
+				display: inline-block;
+				width: 21px;
+				height: 21px;
+				vertical-align: baseline;
+			}
+		}
+
+		.work{
+			width: 100%;
+		}
+
 		#post{
 			.postWrapper{
 				background: transparent;
@@ -178,13 +216,19 @@
 				}
 			} 
 
-			.iconWrapper{
-				width: 12 * @rhythm;
-				padding-left: 6 * @rhythm;
+			
 
-				.usericon{
-					width: 5 * @rhythm;
-					height: 5 * @rhythm;
+			.shareTable{
+				&.truerepost{
+					.iconWrapper{
+						width: 12 * @rhythm;
+						padding-left: 6 * @rhythm;
+		
+						.usericon{
+							width: 5 * @rhythm;
+							height: 5 * @rhythm;
+						}
+					}
 				}
 			}
 		
@@ -193,8 +237,37 @@
 			.cntswrk{
 				margin-left: 12 * @rhythm;
 				padding-left : 2 * @rhythm;
-				padding-right : 4 * @rhythm;
+				padding-right : 10 * @rhythm;
 			}
+
+			#comments{
+
+					
+				.commentPaddingWrapper,
+				.post{
+					padding-left: 8 * @rhythm;
+					padding-right: 11 * @rhythm;
+				}
+
+				.commentPaddingWrapper{
+					padding-right: 11 * @rhythm;
+				}
+
+				.list .answer .postbody{
+					padding-left: 8 * @rhythm;
+					padding-right: 11 * @rhythm;
+				}
+
+				.answers{
+					.commentPaddingWrapper{
+						padding-right: 0;
+						padding-left: 0;
+					}
+				}
+
+				
+			}
+		
 
 			#post{
 
@@ -204,7 +277,8 @@
 						border-left : 0;
 					}
 				}
-			
+
+				
 			}
 
 		}
@@ -443,7 +517,6 @@
 						width: 22px;
 						height: 22px;
 						line-height: 22px;
-						margin-right: @rhythm;
 						text-align: center;
 						border-radius: 50%;
 						color : @color-gray2;
@@ -469,10 +542,16 @@
 
 				
 
-				&.author{
+
+				
+			}
+
+	
+			.authorCell{
+
+				a{
 					font-weight: 700;
 					color : @color-main;
-					text-decoration: underline;
 					cursor: pointer;
 					.transition(0.3s);
 
@@ -480,9 +559,9 @@
 						color : @color-main;
 					}
 				}
-
 				
 			}
+
 		}
 
 		.images{
@@ -697,6 +776,8 @@
 		}
 
 		.panel{
+
+			overflow: hidden;
 			
 			.itemwr{
 				width: auto;
@@ -782,6 +863,17 @@
 					float: right;
 					margin-right: 0;
 					margin-left: 2 * @rhythm;
+
+					.itemwr{
+		
+						>div{
+	
+							&.iconwr{
+								text-align: center;
+								width: 40px;
+							}
+						}
+					}
 				}
 
 				&.donate,
@@ -923,6 +1015,352 @@
 	._close{
 		color : #fff;
 		right: 4 * @rhythm;
+	}
+}
+
+html.stblack{
+	#post{
+
+		.nextpost{
+	
+			.loader,
+			.ended{
+				background: @color-gray3;
+			}
+		}
+	
+	
+		.postWrapper{
+			background: @color-black;
+			
+		}
+	
+		.shareTable{
+	
+			
+			.sbtnxs{
+				span{
+					i{
+						color : @color-good;
+					}
+	
+					&:hover{
+						color : @color-main;
+					}
+				}
+			}
+	
+	
+			&.emptywithrepost{
+	
+				.meta{
+	
+					.repostCaption{
+						i{
+							color : @color-main;
+						}
+					}
+				}
+			}
+		}
+	
+		
+	
+		.repostsecond{
+	
+			div{
+				color : @color-main;
+			}
+		}
+	
+		.share{
+			background: @color-black;
+	
+	
+			#post{
+				.postWrapper{
+					background: transparent;
+				}
+				.share{
+					background: transparent;
+					.work{
+						border-left : @rhythm solid @color-main;
+					}
+				} 
+	
+			}
+			
+	
+			.blockAuthor{
+				background: fade(@color-black, 90);
+				
+			}
+	
+			.commentsWrapper{			
+				background: @color-gray3;
+			}
+			
+	
+			.shareContent{
+	
+				.tempPreloader{
+					.label{
+						color : @color-main;
+					}
+				}
+			}	
+	
+			.subscribeWrapper{
+				background: fade(@color-black, 96);
+				
+	
+				.subscribeevent{
+	
+					>div{
+	
+						button{
+							background: @color-contrast;
+							border-color: @color-contrast;
+	
+							&:hover{
+								background : @color-main;
+								border-color: @color-main;
+								color : #fff;
+							}
+						}
+					}
+				}
+			}
+			.aitem,
+			.additional{
+				color : @color-main;
+				
+				&:hover{
+					.shadowSmall();
+					border-color: @color-bright;
+					color :  @color-bright;
+				}
+			}
+	
+		
+	
+			&.showAdditional{
+				.iconWrapper{
+					
+					.additional{
+	
+						&:hover{
+							border-color: @color-add;
+							color :  @color-add;
+						}
+					}
+				}	
+			}	
+	
+			.jsPlayerLoading{
+				background: #000000;
+	
+			}
+			
+	
+			.metatable{
+				>div{
+					
+	
+					&.metapanel{
+						.metapanelitem{
+							
+							color : @color-main;
+						
+							&:hover{
+								color : @color-black;
+								background: @color-main;
+							}
+	
+						}
+					}
+				}
+			}
+	
+			.meta{
+	
+				.authorCell{
+
+					a{
+						font-weight: 700;
+						color : @color-main;
+						cursor: pointer;
+						.transition(0.3s);
+
+						&:hover{
+							color : @color-main;
+						}
+					}
+					
+				}
+
+			}
+	
+			.images{
+			
+	
+				.imagesWrapper{
+					background: transparent;
+					
+	
+	
+				}
+	
+			}
+	
+			.sharecaption{
+				color : @color-gray-slight;
+	
+				a{
+					color : @color-bright;
+				}
+			}
+	
+			.message{
+	
+				a{
+					color : @color-bright;
+				}
+			}
+	
+	
+			.urlhtmlcontent{
+				.ogtable{
+	
+					>div{
+	
+						&.cnt{
+							.title{
+								color : @color-bright;
+							}
+	
+						}
+					}
+				}
+			}
+	
+			.url{
+	
+				span{
+					color : @color-bright;
+				}
+			
+			}
+	
+			.tags{
+				>div{
+					span{
+						color : @color-bright;
+					}
+				}
+			}
+	
+			.sys{
+				span{
+					color : @color-good;
+				}
+	
+			}
+	
+			.panel{
+	
+				
+				.itemwr{
+	
+					>div{
+						
+	
+						&.count{
+	
+							span{
+								color : @color-main;
+							}
+							
+							
+						}
+					}
+				}
+				>div{
+				
+	
+	
+					.stars{
+						color : @color-bright;
+					
+					}
+	
+					.count{
+						cursor: pointer;
+					}
+	
+					.icon{
+						color : @color-bright;
+					}
+	
+	
+					&:hover{
+						.icon{
+							color : #fff;
+							background: @color-bright;
+						}
+					}
+	
+					&.sharesocial{
+	
+						.label,
+						.icon{
+							color : #ff2f00;
+						}
+	
+						&:hover{
+							.label{
+								color : @color-main;	
+							}
+							.icon{
+								color : @color-bright;
+								border-radius : 0;
+								box-shadow: none;
+								color : @color-main;
+								background: transparent;
+							}
+						}
+					}
+	
+					&.nact{
+						&:hover{
+							.icon{
+								color : @color-bright;
+								background: transparent;
+							}
+						}
+					}
+	
+				}
+			}
+	
+		}
+	
+	}	
+
+	.wnd.postwindow{
+		
+		.wndback{
+			background: transparent;
+		}
+	
+		.wndcontent{
+			background: fade(@color-black4, 96);
+		}
+	
+	
+		._close{
+			color : @color-gray-light;
+		}
 	}
 }
 

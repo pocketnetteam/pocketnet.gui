@@ -79,6 +79,41 @@
 	}
 }
 
+html.stblack{
+	#toppanel{
+
+		background: @color-gray3;
+
+	
+		.panelitems{
+	
+			.panelitem{
+				color : @color-gray-light;
+	
+			} 
+	
+			.panelitemCenter{
+	
+				.centerTable{
+	
+					>div{
+						color : @color-gray;
+						
+	
+						&:hover,
+						&.active{
+							color : @color-main;
+						}
+	
+					}
+				}
+	
+	
+			}
+		}
+	}
+}
+
 @media only screen and (max-width: 768px) {
 	#toppanel{
 		height: 55px;
@@ -186,4 +221,22 @@
 			}
 		}
 	}	
+
+	html.stblack{
+		#toppanel{
+			
+		
+	
+			.vc_valuecustom{
+				
+	
+				.vc_textInput {
+					.vc_iconWrapper{
+						color : fade(@color-main, 60);
+					}
+				}
+	
+			}
+		}	
+	}
 }

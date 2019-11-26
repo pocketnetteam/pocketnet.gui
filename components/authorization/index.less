@@ -120,6 +120,71 @@
 		display: none!important;
 	}
 }
+
+html.stblack{
+	#authorization{	
+		
+		.maket{
+	
+			&.leftPart{
+				background: @color-black4;
+			}
+		}
+		
+	
+		.inputTable{
+	
+			>div{
+	
+				&.fileUploaderWrapper{
+	
+					>div{
+						color : @color-main;
+					}
+				}
+	
+	
+			}
+	
+		}
+		
+		.sitelogin{
+			.form{
+				.item{
+					
+					.label{
+						color: @color-main;
+					}
+	
+					input{
+					
+						background: @color-black;
+						color : @color-main;
+						border : 1px solid transparent;
+						
+	
+						&:focus{
+							border : 1px solid @color-main;
+							background: @color-black;
+							color : @color-main;
+						}
+					}
+	
+					.validationFail{
+						color: @color-bad;
+					}
+				}
+			}
+	
+			
+		}
+	
+		
+	
+	}
+	
+}
+
 @media only screen and (max-width: 640px) {
 	#authorization{	
 		padding-bottom : 6 * @rhythm;

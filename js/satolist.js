@@ -1628,7 +1628,9 @@ Platform = function(app, listofnodes){
 							share : id,
 							removemargin : true,
 							repost : p.repost,
-							level : p.level
+							level : p.level,
+							fromempty : p.fromempty,
+							eid : id + (p.eid || "")
 						}
 					})
 
@@ -2069,9 +2071,15 @@ Platform = function(app, listofnodes){
 
 							var u = self.sdk.users.storage[address];
 
-							if (me) me.removeRelation({
-								adddress : address
-							})
+							if (me) {
+								
+								me.removeRelation({
+									adddress : address
+								})
+
+								console.log('me', me, address)
+							}
+
 
 							if(u){
 								u.removeRelation(address, 'subscribers')
@@ -2755,6 +2763,68 @@ Platform = function(app, listofnodes){
 					clbk()
 			}
 		},
+
+		theme : {
+			all : {
+				white : {
+					name : "White Theme",
+					class : "stwhite"
+				},
+
+				black : {
+					name : "Dark Theme",
+					class : "stblack"
+				}
+			},
+			default : "white",
+			current : null,
+
+			save : function(){
+
+				var c = self.sdk.theme.current
+			
+				localStorage['usertheme'] = c;
+
+			},
+
+			load : function(clbk){
+
+				var t = self.sdk.theme
+
+					t.current = localStorage['usertheme'] || t.default;
+
+				t.set()
+
+				if(clbk) clbk()
+			},	
+
+			set : function(value){
+
+				console.log("SET", value)
+
+				var t = self.sdk.theme
+				var h = $('html')
+
+				if(!value){
+					value = t.current || t.default
+				}
+
+				if (value && t.all[value]){
+					_.each(t.all, function(c){
+
+						h.removeClass(c.class)
+
+					})
+
+					h.addClass(t.all[value].class)
+
+					t.current = value
+
+					t.save()
+				}
+			}
+		},
+
 		usersettings : {
 
 			meta : {
@@ -3965,7 +4035,7 @@ Platform = function(app, listofnodes){
 				}
 				else{
 					self.app.ajax.rpc({
-						method : 'getmissedinfo2',
+						method : 'getmissedinfo',
 						parameters : [self.sdk.address.pnet().address, n.storage.block],
 						success : function(d){	
 	
@@ -4205,6 +4275,36 @@ Platform = function(app, listofnodes){
 				}
 			},
 
+			prepareuser : function(data, a, state){
+
+				var temp = self.sdk.node.transactions.temp;
+
+				var u = new pUserInfo();
+					u.regdate = new Date();
+
+				if(state && temp['userInfo'] && !_.isEmpty(temp['userInfo']) && a == self.sdk.address.pnet().address) {
+					u._import(_.toArray(temp['userInfo'])[0])
+					
+					u.regdate.setTime(self.currentTime() * 1000);	
+					
+
+				}	
+				else
+				{
+					if(!data) return
+
+					u._import(data)
+
+					u.regdate.setTime(data.regdate * 1000);	
+				}
+
+					u.address = a
+
+				self.sdk.users.extend(u, state)
+
+				return u
+			},
+
 			getone : function(address, clbk, light, reload){
 				var s = this.storage;
 				var l = this.loading;
@@ -4256,32 +4356,7 @@ Platform = function(app, listofnodes){
 
 									var data = d[0];
 
-									var u = new pUserInfo();
-									u.regdate = new Date();
-
-									if(state && temp['userInfo'] && !_.isEmpty(temp['userInfo']) && address == self.sdk.address.pnet().address) {
-										u._import(_.toArray(temp['userInfo'])[0])
-										u.regdate.setTime(self.currentTime() * 1000);	
-									}	
-									else
-									{
-										if(!data) {
-
-											if (clbk)
-												clbk()
-
-
-												return
-
-										}
-
-										u._import(data)
-										u.regdate.setTime(data.regdate * 1000);	
-									}
-
-									u.address = address	
-									
-									self.sdk.users.extend(u, state)
+									var u = self.sdk.users.prepareuser(data, address, state)
 
 									s[address] = u;
 
@@ -4352,30 +4427,7 @@ Platform = function(app, listofnodes){
 											if(d.address == a) return true
 										})
 
-										var u = new pUserInfo();
-										u.regdate = new Date();
-
-
-										if(state && temp['userInfo'] && !_.isEmpty(temp['userInfo']) && a == self.sdk.address.pnet().address) {
-											u._import(_.toArray(temp['userInfo'])[0])
-											
-											u.regdate.setTime(self.currentTime() * 1000);										
-
-										}	
-										else
-										{
-											if(!data) return
-
-											u._import(data)
-
-											u.regdate.setTime(data.regdate * 1000);	
-										}
-
-										u.address = a
-
-										self.sdk.users.extend(u, state)
-
-																
+										var u = self.sdk.users.prepareuser(data,a, state)
 
 										s[a] = u;
 										self.sdk.usersl.storage[a] = u;
@@ -6089,6 +6141,148 @@ Platform = function(app, listofnodes){
 			}
 		},
 
+		postscores : {
+			storage : {},
+			get : function(id, clbk, update){
+
+				var l = self.sdk.postscores
+
+				if(!l.storage[id] || update){
+
+					self.app.ajax.rpc({
+						method : 'getpostscores',
+						parameters : [id],
+						success : function(d){
+
+							_.each(d, function(d){
+
+								l.storage[d.posttxid] || (l.storage[d.posttxid] = [])
+
+								l.storage[d.posttxid].push({
+									address : d.address,
+									value : d.value
+								})
+							})
+	
+							if (clbk)
+								clbk(null)
+							
+						},
+						fail : function(d, e){
+
+							if (clbk){
+								clbk(e, d)
+							}
+						}
+
+					})
+					
+				}
+				else
+				{
+					if (clbk)
+						clbk()
+				}
+			}	
+		},
+
+		likes : {
+			storage : {},
+			who : {},
+
+			extendshares : function(ids){
+				var s = this.storage
+
+				_.each(ids, function(txid){
+					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
+
+					if (share && typeof share.myVal == 'undefined' && s[txid]){
+						share.myVal = Number(s[txid])
+					}
+
+					if (share)
+						share.who = self.sdk.likes.who[txid]
+				})
+				
+
+			},
+
+			get : function(ids, clbk){
+
+				var l = self.sdk.likes
+
+				ids = _.filter(ids, function(id){
+					if(!l.storage[id]) return true
+				})
+
+				if(ids.length){
+
+					self.app.user.isState(function(state){
+
+						if(state){
+							var ao = self.app.platform.sdk.address.pnet();
+
+							var address = ''
+
+							if (ao) address = ao.address
+							
+
+							self.app.ajax.rpc({
+								method : 'getpagescores',
+								parameters : [ids, address],
+								success : function(d){
+
+									console.log(d)
+
+									_.each(d, function(v){
+										if (v.value)
+											l.storage[v.posttxid] = v.value
+
+										l.who[v.posttxid] = v.postlikers
+									})
+			
+									_.each(ids, function(id){
+										if(!l.storage)
+											l.storage[id] = '0'
+									})
+
+									l.extendshares(ids)
+			
+									if (clbk)
+										clbk(null)
+									
+								},
+								fail : function(d, e){
+
+									if (clbk){
+										clbk(e, d)
+									}
+								}
+							})
+						}
+						else{
+							_.each(ids, function(id){
+								l.storage[id] = '0'
+							})
+
+							l.extendshares(ids)
+
+							if (clbk)
+								clbk(null)
+						}
+
+					})
+
+					
+				}
+				else
+				{
+					if (clbk)
+						clbk()
+				}
+			}
+		},
+
 		comments : {
 			storage : {},
 
@@ -6261,7 +6455,7 @@ Platform = function(app, listofnodes){
 				}
 				else{
 					self.app.ajax.rpc({
-						method : 'getcomments2',
+						method : 'getcomments',
 						parameters : ['', '', address, ids],
 						fail : function(d, e){
 
@@ -6380,7 +6574,7 @@ Platform = function(app, listofnodes){
 
 
 				self.app.ajax.rpc({
-					method : 'getcomments2',
+					method : 'getcomments',
 					parameters : [txid, pid || '', address],
 					success : function(d){
 
@@ -6419,7 +6613,7 @@ Platform = function(app, listofnodes){
 				if (ao) address = ao.address
 
 				self.app.ajax.rpc({
-					method : 'getlastcomments2',
+					method : 'getlastcomments',
 					parameters : ['7', address],
 					success : function(d){
 
@@ -7471,9 +7665,9 @@ Platform = function(app, listofnodes){
 
 						var a = self.sdk.address.pnet()
 
-						if (a){
+						/*if (a){
 							parameters.push(a.address)
-						}
+						}*/
 
 						_.each(txids, function(id){
 							loading[id] = true;
@@ -7481,7 +7675,7 @@ Platform = function(app, listofnodes){
 
 						self.app.user.isState(function(state){
 							self.app.ajax.rpc({
-								method : 'getrawtransactionwithmessagebyid2',
+								method : 'getrawtransactionwithmessagebyid',
 								parameters : parameters || [],
 								success : function(d){
 
@@ -7519,6 +7713,8 @@ Platform = function(app, listofnodes){
 											storage.trx[s.txid] = s;
 
 											if(state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
+
+											self.sdk.node.shares.takeusers(share, state)
 
 
 										return s
@@ -7605,9 +7801,30 @@ Platform = function(app, listofnodes){
 					return shares
 				},
 
+
+				takeusers : function(d, state){
+
+					_.each(d, function(data){
+
+						var _u = data.userprofile
+
+						if (_u){
+							var u = self.sdk.users.prepareuser(_u, data.address, state)
+
+								//self.sdk.users.storage[data.address] = u;
+
+								self.sdk.usersl.storage[data.address] = u;
+
+						}
+
+					})
+
+					
+				},	
+
 				get : function(parameters, clbk, method){
 
-					method || (method = 'getrawtransactionwithmessage2')
+					method || (method = 'getrawtransactionwithmessage')
 
 					var storage = this.storage;
 
@@ -7621,6 +7838,8 @@ Platform = function(app, listofnodes){
 							success : function(d){
 
 								var shares = self.sdk.node.shares.transform(d, state)
+
+								self.sdk.node.shares.takeusers(d, state)
 
 								if (clbk)
 									clbk(shares)
@@ -7757,7 +7976,7 @@ Platform = function(app, listofnodes){
 
 							if(!p.txid) p.txid = p.begin || ''
 
-							var parameters = [p.address, p.author || "", p.txid || "", p.count];
+							var parameters = ["" /*p.address*/, p.author || "", p.txid || "", p.count];
 
 							s.get(parameters, function(shares, error){
 
@@ -10400,15 +10619,11 @@ Platform = function(app, listofnodes){
 						
 						success : function(d){
 
-							console.log(d)
-
 
 							if (clbk)
 								clbk(null, d.data)
 						},
 						fail : function(d, err){
-
-							console.log(d)
 
 							if (clbk)
 								clbk(deep(d, 'statusCode') || err)
@@ -10753,8 +10968,6 @@ Platform = function(app, listofnodes){
 			FCMPlugin.onNotification(
 				(data) => {
 
-
-					console.log('data', data)
 
 					if(data.wasTapped){
 
@@ -11281,7 +11494,6 @@ Platform = function(app, listofnodes){
 
 					message.el.find('.commentprev').on('click', function(){
 
-						console.log(data)
 
 						platform.sdk.node.shares.getbyid(data.comment.txid, function(s, err, p, fromcashe){
 
@@ -11736,7 +11948,6 @@ Platform = function(app, listofnodes){
 
 					var _dataclbk = function(tx, err){
 
-						console.log(tx, err)
 
 						if (err || !tx){
 
@@ -11870,7 +12081,6 @@ Platform = function(app, listofnodes){
 				notificationData : function(data, user){
 					var n = {};
 
-					console.log(data)
 
 					if (data.tx){
 
@@ -11888,7 +12098,6 @@ Platform = function(app, listofnodes){
 
 						else{
 
-							console.log(data.address, user.address, deep(data.user, 'name'), data.amountall, data.tx.amount)
 
 							if(data.address != user.address && data.user){
 
@@ -12517,8 +12726,6 @@ Platform = function(app, listofnodes){
 					if (data.mesType == 'upvoteShare' && data.share){
 						message.el.find('.sharepreview').on('click', function(){
 
-							console.log('data.share', data.share, data)
-
 							platform.sdk.node.shares.getbyid(data.posttxid, function(s, err, p, fromcashe){
 
 								platform.app.nav.api.load({
@@ -12799,7 +13006,6 @@ Platform = function(app, listofnodes){
 				
 				self.connected = {};
 
-				console.log('loast', lost, platform.currentBlock)
 
 				self.getMissed()
 				
@@ -12913,7 +13119,7 @@ Platform = function(app, listofnodes){
 
 			self.loadingMissed = true;
 			platform.app.ajax.rpc({
-				method : 'getmissedinfo2',
+				method : 'getmissedinfo',
 				parameters : [platform.sdk.address.pnet().address, lost],
 				success : function(d){			
 
@@ -14900,18 +15106,14 @@ Platform = function(app, listofnodes){
 			trx : {}
 		}
 
+		self.sdk.likes.who = {};
+
 		self.sdk.node.transactions.storage = {}
 
 		delete self.sdk.node.transactions.unspent
 	}
 
 	self.clearStorageLight = function(){
-		/*self.sdk.search.storage = {
-			all : {},
-			fs : {},
-			posts : {},
-			users : {}
-		}*/
 
 		app.platform.sdk.node.transactions.storage = {}
 
@@ -15045,6 +15247,7 @@ Platform = function(app, listofnodes){
 	
 	self.prepare = function(clbk, state){	
 
+		self.sdk.theme.load()
 		self.sdk.proxy.load()
 		self.app.platform.sdk.node.sys.load()
 
@@ -15269,9 +15472,6 @@ Platform = function(app, listofnodes){
 			var time = focustime - (unfocustime || focustime)
 
 			self.focus = true;
-
-			console.log("FOCUS", e, time, resume, electron || window.cordova)
-
 
 			/*if ( (time > 3600 && (electron || window.cordova)) || resume){
 

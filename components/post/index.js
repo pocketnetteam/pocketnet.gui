@@ -12,6 +12,32 @@ var post = (function(){
 		var el, share, ed, inicomments, eid = '', _repost = null, level = 0;
 
 		var actions = {
+			postscores : function(clbk){
+
+				self.app.nav.api.load({
+					open : true,
+					href : 'postscores?p=' + share.txid,
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						share : share.txid,
+
+						like : function(share){
+							renders.stars()
+
+							if(ed.like) ed.like()
+						},
+						
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+
+			},
 			repost : function(shareid){
 
 				var href = 'index';
@@ -426,6 +452,9 @@ var post = (function(){
 		}
 
 		var events = {
+			postscores : function(){
+				actions.postscores()
+			},
 			repost : function(){
 				actions.repost(share.txid);
 			},
@@ -517,20 +546,6 @@ var post = (function(){
 					}
 				})
 
-				
-
-		
-
-
-				/*actions.stateAction('_this', function(){
-					actions.like(value)
-
-					p.attr('value', value)
-					p.addClass('liked')
-
-					_scrollTo(p)
-				})*/
-
 
 			},
 
@@ -584,58 +599,71 @@ var post = (function(){
 		var renders = {
 			comments : function(clbk){
 
+				if(!ed.repost || ed.fromempty){
+					self.fastTemplate('commentspreview', function(rendered){
 
-				self.fastTemplate('commentspreview', function(rendered){
-
-					var _el = el.c.find(".commentsWrapper");
-
-					var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
-
-					if (parameters().address){
-						url += '&address=' + (parameters().address || '')
-					}
-
-					self.nav.api.load({
-						open : true,
-						id : 'comments',
-						el : _el,
-
-						eid : share.txid + 'post',
-
-						essenseData : {
-							hr : url,
-							totop : el.c,
-							caption : rendered,
-							send : function(){
-								var c = el.c.find(".commentsAction .count span");
-
-								c.html(Number(c.html() || "0") + 1)
-							},
-							txid : share.txid,
-							showall : true,
-
-							reply : ed.reply,
-
-							fromtop : true,
-
-							additionalActions : function(){
-								self.closeContainer()
-							}
-						},
-
-						clbk : function(e, p){
-							actions.position()
-							inicomments = p
-
-
-							if (clbk)
-								clbk()
+						var _el = el.c.find(".commentsWrapper");
+	
+						var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
+	
+						if (parameters().address){
+							url += '&address=' + (parameters().address || '')
 						}
+	
+						self.nav.api.load({
+							open : true,
+							id : 'comments',
+							el : _el,
+	
+							eid : (ed.eid || "") + share.txid + 'post',
+	
+							essenseData : {
+								hr : url,
+								totop : el.c,
+								
+								caption : rendered,
+								send : function(){
+									var c = el.c.find(".commentsAction .count span");
+	
+									c.html(Number(c.html() || "0") + 1)
+								},
+								txid : share.txid,
+								showall : !ed.fromempty,
+								reply : ed.reply,
+	
+								init : ed.fromempty || false,
+								preview : ed.fromempty || false,
+	
+								fromtop : !ed.fromempty,
+								fromempty : ed.fromempty,
+								lastComment : ed.fromempty ? share.lastComment : null,
+	
+								additionalActions : function(){
+									self.closeContainer()
+								}
+							},
+	
+							clbk : function(e, p){
+								actions.position()
+								inicomments = p
+	
+	
+								if (clbk)
+									clbk()
+							}
+						})
+	
+					}, {
+						share : share
 					})
+				}
 
-				}, {
-					share : share
-				})
+				else{
+					if (clbk)
+						clbk()
+				}
+
+				
 			},
 			empty : function(){
 				self.shell({
@@ -723,7 +751,8 @@ var post = (function(){
 						share : share,
 						all : true,
 						mestate : {},
-						repost : ed.repost
+						repost : ed.repost,
+						fromempty : ed.fromempty
 					},
 
 				}, function(_p){
@@ -735,6 +764,10 @@ var post = (function(){
 					el.wr.addClass('active')	
 
 					renders.stars(function(){
+
+						renders.mystars(function(){
+							
+						})
 
 						renders.url(function(){
 
@@ -784,6 +817,61 @@ var post = (function(){
 					})
 
 				})
+			},
+			wholike : function(share, clbk){
+
+
+				self.shell({
+					turi : 'lenta',
+					name :  'wholike',
+					el : el.share.find('.wholikes'),
+					data : {
+						scores : 500,// Number(share.scnt),
+						wholikes : [
+
+							{
+								address : "PL7RNWypccYBPsDAygW3H4aKfzGBwMeWyt",
+								name : "SS",
+								image : 'https://i.imgur.com/iddNpbW.jpg'
+							},
+
+							{
+								address : "PUdYeit6d4mPxxou8FEDNMfVaZBB2q5FH4",
+								name : "Dodgecoin",
+								image : 'https://i.imgur.com/sL8U525.jpg'
+							},
+
+						]
+					},
+					bgImages : {}			
+
+				}, function(p){
+
+					p.el.find('.wholikesTable').on('click', events.postscores)
+
+					if (clbk)
+						clbk()
+
+				})
+
+			},
+			mystars : function(clbk){
+
+				if(typeof share.myVal == 'undefined'){
+					var ids = [share.txid]
+
+					self.app.platform.sdk.likes.get(ids, function(){
+
+						renders.stars()
+
+						renders.wholike(clbk)
+
+					})
+				}
+				else{
+					if(clbk) clbk
+				}
+
 			},
 			stars : function(clbk){
 
@@ -839,7 +927,8 @@ var post = (function(){
 							}, {
 								repost : true,
 								eid : eid + share.txid,
-								level : level
+								level : level,
+								fromempty : share.isEmpty()
 							})
 
 						}

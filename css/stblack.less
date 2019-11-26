@@ -1,0 +1,1360 @@
+@import "__cssvar.less";
+
+html.stblack{
+
+    .emojionearea .emojionearea-button>div, 
+    .emojionearea .emojionearea-picker .emojionearea-wrapper:after{
+        background-image : url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAABuCAYAAADMB4ipAAABN2lDQ1BBZG9iZSBSR0IgKDE5OTgpAAAokZWPv0rDUBSHvxtFxaFWCOLgcCdRUGzVwYxJW4ogWKtDkq1JQ5ViEm6uf/oQjm4dXNx9AidHwUHxCXwDxamDQ4QMBYvf9J3fORzOAaNi152GUYbzWKt205Gu58vZF2aYAoBOmKV2q3UAECdxxBjf7wiA10277jTG+38yH6ZKAyNguxtlIYgK0L/SqQYxBMygn2oQD4CpTto1EE9AqZf7G1AKcv8ASsr1fBBfgNlzPR+MOcAMcl8BTB1da4Bakg7UWe9Uy6plWdLuJkEkjweZjs4zuR+HiUoT1dFRF8jvA2AxH2w3HblWtay99X/+PRHX82Vun0cIQCw9F1lBeKEuf1UYO5PrYsdwGQ7vYXpUZLs3cLcBC7dFtlqF8hY8Dn8AwMZP/fNTP8gAAAAJcEhZcwAACxMAAAsTAQCanBgAAAXRaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0NSA3OS4xNjM0OTksIDIwMTgvMDgvMTMtMTY6NDA6MjIgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChXaW5kb3dzKSIgeG1wOkNyZWF0ZURhdGU9IjIwMTktMTEtMjVUMTc6Mzg6NDYrMDM6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDE5LTExLTI1VDE3OjQwOjE4KzAzOjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDE5LTExLTI1VDE3OjQwOjE4KzAzOjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3MGQ0MzIzNS00MjhlLWVlNGItYmFkMC1mYTQ3MjdhYjQ5NTMiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo4MTVlZmU5My05M2IwLTU0NDYtOGZmYS02ZmNlNmQ5MzYxNzciIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo2N2Q3ZDIwMy05N2JjLTgzNDgtOTYxMS1mYWE4MThhY2Y4NTMiPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjcmVhdGVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjY3ZDdkMjAzLTk3YmMtODM0OC05NjExLWZhYTgxOGFjZjg1MyIgc3RFdnQ6d2hlbj0iMjAxOS0xMS0yNVQxNzozODo0NiswMzowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo3MGQ0MzIzNS00MjhlLWVlNGItYmFkMC1mYTQ3MjdhYjQ5NTMiIHN0RXZ0OndoZW49IjIwMTktMTEtMjVUMTc6NDA6MTgrMDM6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1w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)!important;
+    }
+
+    ::-moz-selection {
+        background: @color-main;
+    }
+    
+    ::selection {
+        background: @color-main;
+    }
+
+    ::-webkit-scrollbar {
+        background: @color-black;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: fade(@color-main, 20);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: fade(@color-main, 20);
+    } 
+    
+    ::-webkit-scrollbar-button {
+        background: fade(@color-main, 20);
+    } 
+    
+    ::-webkit-scrollbar-corner {
+        background: fade(@color-main, 20);
+    }
+
+    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+        color:    @color-gray;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+       color:    @color-gray;
+       opacity:  1;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+       color:    @color-gray;
+       opacity:  1;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+       color:    @color-gray;
+    }
+    :placeholder-shown { 
+      color:    @color-gray;
+    }
+
+    textarea{
+        background: @color-black;
+        color : @color-gray-mlight;
+    }
+
+
+    body{
+        color: @color-gray-mlight;
+        background:  @color-black;
+    }
+
+    button,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"]
+    {
+        background:  @color-black;
+        color: @color-gray-mlight;
+        border: 1px solid @color-add;
+        
+    }
+
+    button{
+        background: @color-bright;
+        color: #fff;
+        border: 1px solid @color-bright;
+        font-weight: 100;
+    
+        &:hover{
+            background: transparent;
+            color: @color-bright;
+        }
+    
+        &.disabled{
+            background: @color-black3;
+            border-color : @color-black3;
+            color : @color-gray;
+    
+            &:hover{
+                color : @color-gray;
+                background: @color-black3;
+            }
+        }
+    
+        &.shadowWhite{
+            background: transparent;
+            color : @color-black3;
+            border : 1px solid @color-black3;
+    
+            &:hover{
+                background : @color-main;
+                color : @color-gray-mlight;
+            }
+        }
+    
+        &.black{
+            background: @color-black;
+            border: 1px solid @color-black3;
+            color : @color-gray-mlight;
+            &:hover{
+                background: fade(@color-main, 30);
+                border: 1px solid fade(@color-main, 30);
+                color : @color-gray-mlight;
+            }
+        }
+    
+        &.good{
+            background: @color-good;
+            border: 1px solid @color-good;
+            color : #fff;
+    
+            &:hover{
+                background: @color-main;
+                border: 1px solid @color-main;
+                color : #fff;
+            }
+        }
+    
+        &.contrast{
+            background: fade(@color-contrast, 100);
+            border: 1px solid fade(@color-contrast, 100);
+            color: #fff;
+    
+            &:hover{
+                color: #fff;
+            }
+        }
+    
+        &.orange{
+            background: fade(#FF4800, 70);
+            border: 1px solid fade(#FF4800, 70);
+            color: @color-gray-mlight;
+    
+            &:hover{
+                background : fade(#FF4800, 20);
+                color: fade(#FF4800, 70);
+            }
+        }
+    
+        &.gray{
+            background: @color-black3;
+            border: 1px solid @color-black3;
+    
+            &:hover{
+                color: @color-main;
+            }
+        }
+    
+        &.ghost{
+            background: transparent;
+            border-color: transparent;
+            color : @color-gray-mlight;
+            text-decoration: underline;
+    
+            &:hover{
+                color : @color-main;
+            }
+        }
+    }
+    
+    .emojionearea{
+        background : @color-black;
+
+        &.form-control{
+            background : @color-black;
+        }
+    } 
+
+    .dialog{
+        background: fade(@color-black3, 70);
+        
+        .thwrapper{
+            background: @color-black;
+            border: 1px solid @color-black3;
+        }
+    
+    
+    
+        .text{
+            .values{
+                .value{
+                    .label{
+                        color: @color-main;
+                    }
+                }
+            }
+    
+        }
+    
+        .tips{
+            color : @color-contrast;
+        }
+    
+    
+        &.accepting{
+            background: fade(@color-black3, 90);
+            
+    
+            .header{
+                .text{
+                    color : @color-main;
+                }
+            }
+    
+            .body{
+                .text{
+                    color : @color-gray-slight;
+                }
+            }
+    
+            ._close{
+                color : @color-bright;
+            }
+    
+        }
+    
+        &.done{
+            background: fade(@color-black, 99);
+         
+    
+    
+            .body{
+                .text{
+                    color : @color-main;
+                }
+            }
+    
+        }
+    
+        &.takePasswordForMK{
+           
+    
+            .errorWrapper{
+                color : @color-main;
+            }
+    
+            .header{
+                .text{
+                    color : @color-main;
+                }
+            }
+    
+            .body{
+                .text{
+                    color : @color-gray-mlight;
+                }
+    
+            }
+    
+            
+    
+    
+        }
+    
+        
+    
+        ._close{
+            color : fade(@color-main, 50);
+    
+            &:hover{
+                color : @color-main;
+            }
+        }
+    
+    }
+    
+    .menudialog{
+    
+        .text{
+            .item{
+                border-bottom : 1px solid fade(@color-main, 30);
+    
+                &.itemmain{
+                    color : @color-main;
+                }
+    
+                &:nth-last-child(1){
+                    border-bottom : 0;
+                }
+            }
+        }
+    
+    }
+    
+    .refadd{
+    
+        background: fade(@color-black, 95);
+        color : @color-gray-mlight;
+    
+        .thwrapper{
+            background: transparent;
+        }
+    
+        ._close{
+            color : fade(@color-main, 90);
+        }
+    
+        .refaddHeader{
+            color : @color-main;
+        }    
+    }
+
+    .wnd{
+    
+        .wndback{
+            background: fade(@color-black, 75);
+           
+        }
+        .wndinner{
+           
+    
+            >div{
+                &.buttons{
+                    background: @color-black3;
+                  
+                    .button{
+                       
+                        background: @color-bright;
+                        color: @color-black;
+    
+                        &.close{
+                            background: transparent;
+                            color : @color-main;
+                            text-decoration: underline;
+    
+                            &:hover{
+                                color : @color-bright;
+                                background: transparent;
+                            }
+                        }
+    
+                        &:hover{
+                            background: @color-good;
+                        }
+    
+                        &.disabled{
+                            background: @color-black3;
+    
+                            &:hover{
+                                background: @color-black3;
+                            }
+                        }
+    
+                        &.ghost{
+                            background: transparent;
+                            border-color: transparent;
+                            color : @color-gray-mlight;
+                    
+                            &:hover{
+                                color : @color-main;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .leftbg{
+            color: @color-main;
+            background: fade(@color-black4, 95%);
+
+
+        }
+        .wndcontent{
+            background: @color-black3;
+        }
+    
+        
+        .wndheader{
+            background:  @color-black3;
+        }
+    
+        ._close{
+            color : @color-main;
+    
+        }
+    
+        &.noheader {
+            ._close{
+                color : @color-main;
+            }
+        }
+        
+        .wndok,
+        .wndclose{
+            background: fade(@color-main, 80%);
+            cursor: pointer;
+    
+            &:hover{
+                background: fade(@color-bright, 50%);
+            }
+        }
+    
+        .wndok{
+            &:hover{
+                background: fade(@color-good, 50%);
+            }
+            
+        }
+    
+    
+        &.allscreen{
+    
+            .wndback{
+                background: fade(@color-black, 80);
+            }
+    
+            .wndinner{
+               
+    
+                >div{
+                    &.buttons{
+                        background: transparent;
+    
+                        .button{
+                            background: transparent;
+    
+                            &:hover{
+                                background: transparent;
+                            }
+    
+                           
+    
+                            >div{
+                                background: @color-main;
+                                border: 1px solid @color-main;
+                                color : @color-black;
+    
+    
+                                &:hover{
+                                    background : transparent;
+                                    color: @color-main;
+                                }
+    
+                                &.close{
+                                    &:hover{
+                                        border-color : @color-black4;
+                                        color: @color-black4;
+                                    }
+                                }
+                            }
+    
+                            
+                        }
+                    }
+                }
+            }
+        
+        }
+    
+        &.black{
+            .wndback{
+                color : @color-gray-mlight;
+                background: fade(@color-black, 90);
+            }
+    
+            .wndcontent{
+                color : @color-black;
+                background: transparent;
+            }
+    
+            ._close{
+                color : @color-main;
+            }
+        }
+    
+        &.transparent{
+            .wndback{
+                background: fade(@color-gray3, 10)
+            }
+    
+            .wndinner{
+                border : 1px solid @color-gray3;
+            }
+    
+        }
+    
+    
+        &.smallwindow{
+            .wndcontent{
+                background: @color-black3;
+            }
+        }
+    
+    }
+
+    .bgCaption{
+
+        background: fade(@color-bright, 40);
+        color : @color-gray-mlight;
+   
+    
+        .tips{
+            color : @color-gray-mlight;
+        }
+    
+        .back{
+            border : 1px solid fade(@color-main, 80);
+            background: fade(@color-main, 5);
+            color : @color-gray-mlight;
+    
+            &:hover{
+                border : 1px solid @color-main;
+                background : fade(@color-main, 10);
+            }
+        }
+    
+    }
+
+    .usericon{
+        background: @color-black2;
+        color : @color-main;
+    }
+
+    .lighttooltip{    
+    
+    
+        .tooltipster-content {
+            color: @color-gray-mlight; 
+        }
+    
+        .tooltipster-box{
+            background: @color-black4;
+            color: @color-gray-mlight;
+            border: 1px solid @color-black2;
+        }
+    
+        &.tooltipster-bottom{
+            .tooltipster-arrow-border{
+                border-bottom-color: @color-black2;
+            }
+        }
+    
+        &.tooltipster-bottom{
+            .tooltipster-arrow-background{
+                border-bottom-color: @color-black4;
+            }
+        }
+    
+        &.tooltipster-right{
+            .tooltipster-arrow-border{
+                right: 1px;
+                border-right-color: @color-black2;
+            }
+        }
+    
+        &.tooltipster-right{
+            .tooltipster-arrow-background{
+                border-right-color: @color-black4;
+                right: 0;
+            }
+        }
+    
+        &.tooltipster-left{
+            .tooltipster-arrow-border{
+                left: 1px;
+                border-left-color: @color-black2;
+            }
+        }
+    
+        &.tooltipster-left{
+            .tooltipster-arrow-background{
+                border-left-color: @color-black4;
+                left: 0px;
+            }
+        }
+    }
+
+    #footerWrapper{
+        color: #fff;
+        background: @color-black4;
+    }
+
+    .pilsing div {
+        background: fade(@color-black, 30);
+        border: 1px solid @color-contrast;
+    
+    }
+
+    //// params
+
+    .vmt_valuesmultitree{
+        .vmt_group{
+            &[level='0']{
+               
+    
+                .vmt_group_params{
+                    border-right: 1px dashed fade(@color-main, 50);
+                    border-top: 1px dashed fade(@color-main, 50);
+                    border-bottom: 1px dashed fade(@color-main, 50);
+                    background: fade(@color-black4, 6);
+                }
+            }
+          
+        }
+    
+        .vmt_name{
+    
+    
+            .vmt_panel_wrapper{
+                background: fade(@color-main, 10);
+            }
+        }
+    
+        .vmt_showMore{
+            color : @color-contrast;
+    
+            &:hover{
+                color : @color-bright;
+            }
+        }
+    
+        .vmt_hideMore{
+            color : fade(@color-main, 50);
+           
+            &:hover{
+                color : @color-bright;
+            }
+        }
+    
+       
+    }
+    .vm_valuesmulti{
+       
+    
+        .vm_showMore{
+            color : @color-contrast;
+    
+            &:hover{
+                color : @color-bright;
+            }
+        }
+    
+        .vm_hideMore{
+            color : @color-main;
+    
+            &:hover{
+                color : @color-bright;
+            }
+        }
+    
+     
+    }
+    .vc_autosearchInput{
+        position: relative;
+    
+        .placeholder{   
+            
+            background: @color-black;
+            border : 1px solid transparent;
+            color : @color-gray2;
+        }
+    
+       
+    }
+    .vc_valuecustom{
+       
+        .vc_textInput{
+            
+    
+            .vc_inputWrapper{
+    
+                border : 1px solid  @color-black2;
+                border-right: 0;
+    
+                input{
+                    background: transparent;
+                    border : 0!important;
+    
+                    &[disabled]{
+                        color : @color-gray-light;
+                    }
+                }
+            }
+
+    
+            .vc_iconWrapper{
+                border : 1px solid @color-black2;
+                border-left: 0;
+                color : fade(@color-main, 40);
+    
+                &:hover{
+                    color : @color-main;
+                }
+            }
+        }
+    
+        .vc_selectInput{
+            background: @color-black2;
+            border : 1px solid @color-black2;
+            border-top: 0;
+    
+    
+            .vc_value{
+    
+                &:hover{
+                    color : #fff;
+                    background : @color-bright;
+                }
+    
+               
+            }
+        }
+    
+        &.error{
+            .vc_textInput{
+               
+                .vc_inputWrapper{
+    
+                    border : 1px solid  @color-bad;
+                    border-right: 0;
+                }
+    
+                .vc_iconWrapper{
+                    border : 1px solid  @color-bad;
+                    border-left: 0;
+                }
+            }
+        }
+    }
+    .vc_valuecustom{
+    
+        .paymentMethods,
+        .currencies{
+            .name{
+                color : @color-main;
+            }
+    
+           
+        }
+    }
+
+    //// params
+
+    .checkbox{
+    
+    
+        &+label {
+         
+    
+            &:before {
+               
+                background: @color-black;
+                color: @color-gray;
+                border: 1px solid @color-main;
+    
+            }
+        }
+    
+        &[disabled]{
+            &+label {
+                color: @color-gray-light;
+    
+                &:before {
+                    border: 1px solid @color-gray;
+                }
+            }
+            &:checked {
+                &+label{
+                    color: @color-gray;
+                }
+            }
+        }
+    
+      
+    }
+    .checkbox{
+        &+label {
+           
+            &:before {
+                border-color: @color-main;
+                color : @color-main;
+            }
+    
+            &:hover{
+                &:before {
+                    border-color: @color-contrast;
+                }
+            }
+        }
+    
+        &:checked {
+            &+label{
+                &:before {             
+                  
+                }
+                &:hover{
+                    &:before {
+                        color: @color-bright;
+                    }
+                }
+            }
+        } 
+    
+        &[disabled]{
+            &+label {
+                cursor: default;
+                &:hover{
+                    &:before {
+                        border-color: @color-gray;
+                    }
+                }
+            }
+            &:checked {
+                &+label{
+                    &:hover{
+                        &:before {
+                            color: @color-bright;
+                        }
+                    }
+                }
+            } 
+        }
+    
+    
+    }
+
+    .fastMessage,
+    .notification{
+
+        .time{
+
+            span{
+                color : fade(@color-main, 50);
+            }
+        }
+
+        .messagethumbs{
+            border : 1px solid @color-main;
+            color : @color-main;
+            background: fade(@color-black, 30);
+        }
+
+        .messagestar{
+            color : #FFAE00;
+            border : 1px solid #FFAE00;
+            background: fade(@color-black, 30);
+            .shadowSmall(); 
+
+            &[count='3']{
+                color : @color-gray; 
+                border : 1px solid @color-gray; 
+            }
+
+            &[count='2']{
+                color : #F82C06;
+            }
+
+            &[count='1']{
+                color : @color-bad; 
+            }
+        }
+
+        .transactionmessagewrapper{
+            >div{
+
+                &.foramount{
+                    color : @color-good;
+                }
+            }
+        }
+
+        .repostshare{
+            color : @color-main;
+        }
+
+        .foranswer{
+            button{
+
+                &.disabled{
+                    color : @color-good;
+                }
+            }
+        }
+
+        .commentmessagewrapper{
+
+
+            .commenttext{
+                span{
+                    color : @color-main;
+                }
+                
+            }
+
+        }
+
+        .sharedivide{
+            color : fade(@color-main, 100);
+        }
+        
+        .sharepreview{
+
+            .shareprwrapper{
+             
+                .img{
+
+                    .vstyle{
+                        color : @color-main;
+                    }
+                }
+            }
+
+            .shareimages{
+                .imagesContainer{
+
+                    >div{
+                        
+                        .image{
+                            .vstyle{
+                               
+                                color : @color-main;
+                            }
+                        };
+                    }
+                }
+            }
+
+        }
+
+        .subscribeWrapper{
+            >div{
+                &.forsubscribe{
+                    button{
+
+                        &.disabled{
+                            color : @color-good;
+                        }
+                    }
+                }
+            }
+        }
+       
+        .opmessage{
+            span{
+                color : @color-contrast;
+            }
+        }
+    }
+
+    .closecsscross{
+      
+
+        &:before, 
+        &:after {
+            background-color: @color-main;
+        }
+
+
+    }
+        
+    .notification{
+        
+        .commentmessagewrapper{
+
+            .commenttext{
+                span{
+                    color : @color-gray-mlight;
+                }
+                
+            }
+        }
+        
+    }
+    .fastMessage{
+        background: fade(@color-black4, 95);
+        color : @color-gray-mlight;
+
+        .messagestar{
+            background: fade(@color-black, 30);
+        }
+
+        .messagethumbs{
+            border : 1px solid @color-main;
+            color : @color-main;
+            background: fade(@color-black, 30);
+        }
+
+        
+
+        .close{
+
+            &:hover{
+                color : @color-main;
+            }
+
+        }
+
+        .fastMessageChat{
+        
+            .user{
+                color : @color-contrast;
+            }
+
+        }
+
+        .notification{
+            b{
+                color : @color-contrast;
+            }
+        }
+
+        
+
+        .progressWrapperTable{
+            >div{
+               
+                &.label{
+                  
+
+                    &.good{
+                        color : @color-good;
+                    }
+
+                }
+
+                .progressCnt{
+                    background: @color-bright;
+                }
+            }
+        }
+
+        .ghost{
+            color : @color-bright;
+
+        }
+
+    }
+
+
+
+    .spendLine{
+        background: @color-black4;
+        
+        &.bad{
+            background: @color-contrast;
+        }
+    
+        .line{
+            background: @color-good;
+        }
+    }
+
+
+    .emojionearea{
+        background: @color-black4;
+
+        .emojionearea-picker{
+            background: @color-black4;
+
+            .emojionearea-filters{
+                background: @color-black3;
+
+                .emojionearea-filter{
+                    &.active{
+                        background: fade(@color-main, 40);
+                    }
+                }
+            }
+        }
+
+        .emojionearea-scroll-area {
+            .emojionearea-category-title{
+                background: transparent;
+                color : @color-main;
+            }
+
+            .emojibtn{
+                &:hover{
+                    background: fade(@color-main, 40);
+                }
+            }
+        }
+
+       
+    }
+
+    .upbutton{
+      
+        .mini{
+            border : 1px solid @color-main;
+            background: @color-black;
+            color : @color-main;
+        }
+    
+        .full{
+            color : fade(@color-main, 40);
+        }
+    
+        &:hover{
+            .full{
+                background: fade(#000, 20);
+                color : fade(@color-main, 70);
+            }
+    
+            .mini{
+                color : @color-add;
+                border-color : @color-add;
+            }
+        }
+    
+        &.active{
+            display : block;
+        }
+    
+        &.light{
+            .full{
+                color : fade(@color-main, 50);
+            }
+    
+            &:hover{
+                .full{
+                    background: fade(@color-black4, 10);
+                    color : fade(@color-main, 70);
+                }
+        
+            }
+        }
+    }
+
+    .stars{
+    
+        .selected(){
+            /*font-weight: 900;*/
+            color: #FFAE00;
+        }
+    
+        .selectedUser(){
+            font-weight: 900;
+            color: #FFAE00;
+        }
+    
+        .selecting(){
+            color: #204867;
+        }
+    
+        .disabled(){
+            color : @color-gray;
+        }
+    
+        &[tempValue="5"]{
+    
+            [value="5"],
+            [value="4"],
+            [value="3"],
+            [value="2"],
+            [value="1"]{
+    
+                .selecting()
+            }
+        }
+    
+        &[tempValue="4"]{
+    
+            [value="4"],
+            [value="3"],
+            [value="2"],
+            [value="1"]{
+    
+                .selecting()
+            }
+        }
+    
+        &[tempValue="3"]{
+    
+            [value="3"],
+            [value="2"],
+            [value="1"]{
+    
+                .selecting()
+            }
+        }
+        
+    
+        &[tempValue="2"]{
+          
+            [value="2"],
+            [value="1"]{
+    
+                .selecting()
+            }
+        }
+    
+        &[tempValue="1"]{
+    
+            [value="1"]{
+    
+                .selecting()
+            }
+        }
+    
+        &[value="5"]{
+    
+            [value="5"],
+            [value="4"],
+            [value="3"],
+            [value="2"],
+            [value="1"]{
+    
+                .selectedUser()
+            }
+        }
+    
+        &[value="4"]{
+    
+            [value="5"]{
+                .disabled()
+            }
+    
+            [value="4"],
+            [value="3"],
+            [value="2"],
+            [value="1"]{
+    
+                .selectedUser()
+            }
+        }
+    
+        &[value="3"]{
+    
+            [value="5"],
+            [value="4"]{
+                .disabled()
+            }
+    
+            [value="3"],
+            [value="2"],
+            [value="1"]{
+    
+                .selectedUser()
+            }
+        }
+        
+    
+        &[value="2"]{
+    
+            [value="5"],
+            [value="4"],
+            [value="3"]{
+                .disabled()
+            }
+    
+          
+            [value="2"],
+            [value="1"]{
+    
+                .selectedUser()
+            }
+        }
+    
+        &[value="1"]{
+            [value="5"],
+            [value="4"],
+            [value="3"],
+            [value="2"]{
+                .disabled()
+            }
+    
+            [value="1"]{
+    
+                .selectedUser()
+            }
+        }
+    
+        i{
+            line-height: 1.8em;
+        }
+    
+        .tstars{
+    
+            .tstarsov{
+    
+                i{
+                    .selected();
+                }
+            }
+        }
+    
+        &.disabled{
+            cursor: default!important;
+    
+            [value]{
+                cursor: default!important;
+                .disabled()
+            }
+    
+            &:hover{
+                .tstars{
+                    display: block;
+                }
+            }
+        }
+        
+    }
+
+    .search{
+        color: @color-gray-mlight;  
+      
+    
+        .searchInput{
+    
+            .searchInputIcon{
+    
+                .sminput{
+                    background: @color-black3;
+                    border: 1px solid @color-black2;
+                    border-right: 0;
+                }
+            }
+        }   
+    
+        .searchIconLabel{
+            color : @color-gray;    
+
+    
+            &:hover{
+                .fa-search{
+                    color : @color-bright;
+                }
+                
+            }
+        }
+    
+        .searchPanel{
+            background: @color-black;
+            border: 1px solid @color-gray;
+            
+            .searchPanelWrapper{
+              
+                >div{
+                    color : @color-gray2;
+                    &:hover{
+                        color : @color-bright;
+                    }
+                }
+            }
+        }
+    
+        .searchFastResultWrapper{
+            background: @color-black4;
+        }
+    
+    }
+    
+}

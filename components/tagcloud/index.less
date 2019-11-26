@@ -96,3 +96,32 @@
     }
 
 }
+
+html.stblack{
+    #tagcloud{
+        background: @color-black;
+    
+        .tcaption{
+            border-bottom : 1px solid fade(@color-main, 40);
+    
+        }
+    
+        .tag{
+            
+            &:hover{
+                color : @color-main;
+            }
+        }
+    
+    
+    
+        .hidealltags,
+        .showalltags{
+    
+            &:hover{
+                color : @color-main;
+            }
+        }
+    
+    }    
+}

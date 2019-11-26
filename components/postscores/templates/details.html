@@ -1,0 +1,50 @@
+<% if(scores.length) {%>
+
+    <div class="detailsWrapper">
+        <div class="subcaption">
+            <span><%- scores.length  %> user ratings</span>
+        </div>
+
+        <div class="bystars">
+            <% 
+            
+            var sgroup = group(scores, function(v){
+                return v.value
+            })
+            
+            for(i = 5; i >= 1; i--) {
+                
+                var l = deep(sgroup, i.toString() + ".length") || 0
+
+                console.log(l, sgroup, scores)
+
+                var pc = l / scores.length * 100
+                
+                %>
+
+                <div class="work">
+
+                    <div class="ratingrow table">
+                        <div class="label">
+                            <%-i%> stars
+                        </div>
+
+                        <div class="lineWrapper">
+                            <div class="linebg">
+                                <div class="line" awidth="<%-pc%>"></div>
+                            </div>
+                        </div>
+
+                        <div class="pecent">
+                            <%- pc.toFixed(0)  %> %
+                        </div>
+                    </div>
+
+                </div>
+
+
+            <% } %>
+        </div>
+    </div>
+
+<% } %>

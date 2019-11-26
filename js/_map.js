@@ -48,6 +48,7 @@ __map =  {
 		"css/tooltipster.core.min.css",
 		"css/tooltipster.bundle.min.css",
 		"css/main.css",
+		"css/stblack.css",
 		"css/plyr.css",
 		"css/jquery-ui.min.css",
 		"css/medium/medium-editor.css",
@@ -1142,6 +1143,34 @@ __map =  {
 			{
 				return {
 					insert : 'wnd'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		}
+	},
+
+	postscores : {
+		uri : "postscores",
+		href : "postscores",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
 				}
 			}
 			else

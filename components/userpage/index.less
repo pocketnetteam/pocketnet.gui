@@ -445,6 +445,111 @@
 		}
 	}
 }
+html.stblack{
+	#userpage{
+
+		.fillUserWrapper{
+			background: @color-black2;
+	
+		}
+	
+	
+		.bgCaption{
+			background: fade(@color-bright, 20);
+			color : fade(@color-gray-slight, 60);
+			
+	
+			.cellforimage{
+	
+				.usericon{
+					color : @color-gray-light;
+					
+				}
+			}
+	
+		
+		}
+	
+	
+	
+		.profile{
+	
+			.infoWrapper{
+
+				.name{
+					font-family: @color-main;
+				}
+
+				.email{
+					color: @color-gray-light;
+				}
+	
+				
+			}
+		}
+	
+		.maketsWrapper{
+	
+	
+	
+			.contents{
+	
+	
+				.add{
+					color : @color-bright;
+				}
+	
+				
+	
+				.captionContents{
+					border-bottom: 1px solid @color-main;
+				}
+	
+				.reportCaption{
+					color : @color-gray-light;
+					&.openReport{
+						&.active{
+	
+							color : @color-contrast;
+						}
+					}
+				}
+	
+				.group{
+	
+	
+					&.active{
+						>div.groupNameTable{
+							.reportCaption{
+								color : @color-contrast;
+							}
+						}
+					}
+	
+	
+	
+				}
+	
+	
+	
+	
+			}
+	
+	
+			
+			.report{
+				
+	
+				#notifications{
+					background: @color-black3;
+					
+				}
+			}
+		}
+	
+	}
+}
+
 
 @media only screen and (max-width: 768px) {
 

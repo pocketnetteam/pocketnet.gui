@@ -473,6 +473,202 @@
 	}
 }
 
+html.stblack{
+	#ustate{
+	
+		.mwork{
+	
+			&.gk{
+				border-bottom: 1px solid @color-black4;
+			}
+	
+			&.wh{
+				background: @color-gray3;
+			}
+		}
+	
+	
+		.connectionFailed{
+			color : @color-gray-mlight;
+		}
+	
+		.blockswrapper{
+	
+	
+			.wait{
+	
+				.waitCnt{
+					background: fade(@color-black, 15);
+					color : @color-main;
+				}
+			}
+	
+			
+			.metricablock{
+				color : @color-gray-mlight;
+				
+		
+				.blockContentWrapper {
+					background: @color-black3;
+	
+					&.forchart{
+						background: transparent;
+					}
+				}
+				
+		
+				.vidgetIconWrapper{
+		
+					.vidgetIcon{
+						color : fade(@color-gray, 95);
+					}
+				}
+	
+				&.bad{
+					.vidgetIconWrapper{
+						.vidgetIcon{
+							color : fade(@color-bad, 95);
+						}
+					}	
+				}
+		
+				.vidgetAboutWrapper{
+					color : fade(@color-black2, 95);
+					color : @color-gray-mlight;
+				}
+		
+			}
+	
+		}
+	
+	
+		.ustatecontentrep{
+	
+	
+			.level{
+				
+	
+				.repchart{
+	
+					.point{
+						border : 3px solid @color-black3;
+					}
+	
+					.lineBg{
+						background: @color-black3;
+	
+						.line{
+							background: @color-bright;
+						}
+					}
+				}
+	
+	
+	
+				&[state="completed"]{
+	
+					.repchart{
+						.point{
+							border-color : @color-main;
+						}
+	
+						.lineBg{
+		
+							.line{
+								background:  @color-main;
+							}
+						}
+					}
+					
+					.metricablock{
+				
+						.blockContentWrapper {
+							background: fade(@color-bright, 70);
+							color: @color-gray-mlight;
+						}
+	
+						.vidgetIconWrapper{			
+							.vidgetIcon{
+								color: fade(#fff, 70);
+							}
+						}
+	
+						.reputationCount{
+							color: @color-gray-mlight;
+						}
+			
+				
+						.vidgetAboutWrapper{
+							color: @color-gray-mlight;
+						}
+				
+					}
+	
+				}
+	
+			
+			}
+	
+		}
+	}
+	
+	#content{
+		#ustate{
+			background: @color-black;
+		}
+	}
+	
+	.tooltipster-content{
+		
+		#ustate{
+	
+			.mwork{
+				padding : 2 * @rhythm;
+	
+				
+			}
+	
+			.caption{
+				font-size: 1em;
+			}
+	
+			.metrica{
+	
+				>div{
+					&.label{
+						padding-left: 0;
+					}
+				}
+	
+				&.profileInfo{
+					>div{
+						&:nth-last-child(1){
+							padding-right: 3 * @rhythm;
+	
+							button{
+								width: 100%;
+							}
+						}
+					}
+				}
+			}
+	
+			.totalerror{
+				padding : 2 * @rhythm 3 * @rhythm;
+			}
+		}
+	}
+	
+	.ustatetooltip{
+		height: auto!important;
+		max-height: none;
+	
+		.tooltipster-content{
+			padding : 0;
+		}
+	}	
+}
+
 
 @media only screen and (max-width: 640px) {
 	#ustate{

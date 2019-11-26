@@ -375,6 +375,95 @@
 	}
 }
 
+html.stblack{
+	#imageGalleryEdit{
+		
+		.panel{
+			
+			.editPanel{
+				>div{
+					background: fade(@color-main, 10);
+	
+					&.active,
+					&:hover{
+						color : @color-add;
+						background : fade(@color-black, 30);
+					}
+	
+					&.active{
+						&:hover{
+							background : fade(@color-black, 10);
+						}
+					}
+	
+					&.save{
+						background: transparent;
+	
+						&:hover{
+							color : @color-good;
+						}
+					}
+	
+				}
+			}
+			
+	
+			.sitem{
+				background: transparent;
+				color : @color-gray-slight;
+				
+	
+				&:hover{
+					color : @color-bright;
+				}
+			}
+	
+			.imageNavigation{
+				.navigationWrapper{
+	
+					>div{
+	
+						&.arrow{
+	
+							&:hover{
+								color : @color-contrast;
+							}
+						}
+	
+					}
+				}
+				
+			}
+		}
+	
+		.noImages{
+			color : @color-main;
+		}
+	
+		
+	
+	
+		.cropper-container{
+			
+			.applyCrop{
+				background: fade(#000, 60);
+	
+				&.active,
+				&:hover{
+					color : @color-bright;
+					background: fade(#000, 70);
+				}
+			}
+	
+			
+		}
+	
+	
+	}
+	
+		
+}
+
 @media only screen and (max-width: 640px) {
 	#imageGalleryEdit{
 		.panel{

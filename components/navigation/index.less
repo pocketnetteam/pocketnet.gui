@@ -82,6 +82,32 @@
 
 }
 
+html.stblack{
+	#navigation{
+		background: fade(@color-black4, 95);
+	
+	
+		.items{
+			
+	
+			.iconWrapper{
+				
+				color : fade(@color-main,70);
+				
+				&.shr{
+					color : @color-contrast;
+	
+					&.active{
+						color : @color-gray-mlight;
+					}
+				}
+	
+			}
+		}
+	
+	
+	}	
+}
 
 @media only screen and (max-width: 768px) {
 	#navigation{

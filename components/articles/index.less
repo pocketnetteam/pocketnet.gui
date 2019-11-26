@@ -247,6 +247,88 @@
 
 }
 
+html.stblack{
+	#articles{
+		background: @color-black;
+		.articles{
+			
+	
+			.art{
+				
+				.apanel{
+	
+					.item{
+						background: @color-black;
+						color : @color-gray-mlight;
+	
+						&:hover{
+							color : @color-contrast;
+						}
+					}
+				}
+	
+				.artcnt{
+					background: @color-black;
+				
+	
+					.captionBgWrapper{	
+
+						background: @color-contrast;
+						color : #fff;				
+	
+						.bgfade{
+							background: fade(@color-black, 40);
+						}
+
+					}
+	
+					.time{
+	
+						span{
+							color : @color-main;
+						}
+	
+						.mtable{
+							>div{
+	
+								&.ch{
+									color : @color-good;
+								}
+							}
+						}
+					}
+				}
+	
+				&.added{
+					.artcnt{
+						.captionBgWrapper{
+							background: @color-main;
+						}
+					}
+				}
+			}
+		}
+		
+	
+		.panel{
+			background: fade(@color-black3,90);
+			
+	
+			.iWrapper{
+				border-bottom: 2px solid @color-main;
+				color : @color-main;
+				
+				&:hover{
+					color : @color-contrast; 
+					border-color: @color-contrast;
+				}
+				
+			}
+		}
+	
+	}	
+}
+
 @media only screen and (max-width: 640px) {
 #articles{
 	.articles{

@@ -379,65 +379,6 @@ var lenta = (function(){
 			},
 			
 
-			/*sendComment : function(comment, clbk){
-				
-				var id = comment.share.v
-
-				var _el = el.c.find('#' + id);
-
-				var error = _el.find('.error');
-
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					comment,
-
-					function(tx, _error){
-
-						topPreloader(100)
-
-						if(!tx){
-							error.html(errors.comments[_error])
-
-							if (clbk)
-								clbk(false)
-						}
-						else
-						{
-							if (clbk)
-								clbk(tx)
-						}
-
-					}
-				)
-			},
-
-
-			embeding : function(id, type){
-
-				var storage = currentComments[id].export(true)
-
-				self.nav.api.load({
-					open : true,
-					id : 'embeding',
-					inWnd : true,
-
-					essenseData : {
-						type : type,
-						storage : storage,
-						on : {
-							added : function(value){
-
-								currentComments[id][type].set(value)
-
-								renders.newCommentAttachement(id, type)
-
-							}
-						}
-					}
-				})
-			},*/
-
-			///
 			openPost : function(id, clbk){
 
 				if(!isMobile()){
@@ -658,25 +599,6 @@ var lenta = (function(){
 
 				fullscreenvideoShowed = true;
 
-				/*if (window.cordova){
-					window.screen.orientation.unlock()
-
-					window.screen.orientation.onchange = function(){
-						var t = window.screen.orientation.type
-
-
-						if (t == 'portrait-primary'){
-							player.p.fullscreen.exit();
-							actions.videoPosition(_el)
-						}
-						else{
-							player.p.fullscreen.enter();	
-						}
-					};
-
-
-				}*/
-
 				if (clbk)
 					clbk()
 				
@@ -685,7 +607,6 @@ var lenta = (function(){
 			},
 
 			exitFullScreenVideo : function(id){
-				//var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				var _el = el.c.find("#" + id)
 
@@ -703,21 +624,35 @@ var lenta = (function(){
 
 				fullscreenvideoShowed = false;
 
-				/*if (window.cordova){
-					window.screen.orientation.lock('portrait')
-
-					if (player.p.fullscreen.active){
-						player.p.fullscreen.exit();
-					}
-
-					delete window.screen.orientation.onchange
-				}*/
-
 				if (initedcommentes[id]){
 					initedcommentes[id].changein(null)	
 
 					initedcommentes[id].hideall(true)
 				}
+			},
+			postscores : function(txid, clbk){
+
+				self.app.nav.api.load({
+					open : true,
+					href : 'postscores?p=' + txid,
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						share : txid,
+
+						like : function(share){
+							renders.stars(share)
+						},
+
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+
 			},
 
 			like : function(obj, value, clbk){
@@ -1284,6 +1219,12 @@ var lenta = (function(){
 				self.app.platform.sdk.node.transactions.get.tx(id)
 			},
 
+			postscores : function(){
+				var id = $(this).closest('.share').attr('id');
+
+				actions.postscores(id)
+			},
+
 			like : function(){
 
 				if (essenseData.authAction) {
@@ -1386,8 +1327,6 @@ var lenta = (function(){
 
 				var _el = $(this).closest('.share')
 
-
-
 				self.app.platform.api.actions.subscribeWithDialog(address, function(tx, error){
 					if(tx){
 						
@@ -1397,6 +1336,7 @@ var lenta = (function(){
 					}
 					
 				})
+
 			},
 
 			aunsubscribe : function(){
@@ -1582,12 +1522,11 @@ var lenta = (function(){
 	
 									c.html(Number(c.html() || "0") + 1)
 								},
+
 								txid : txid,
 								init :  init,
-								showall : showall,
-	
+								showall : showall,	
 								preview : preview,
-	
 								lastComment : share.lastComment,
 								count : share.comments,
 
@@ -1606,6 +1545,7 @@ var lenta = (function(){
 								var e = el.c.find('#' + txid);
 								
 								if (e.hasClass('fullScreenVideo')){
+
 									p.changein(e, 0)
 								}
 	
@@ -1744,7 +1684,7 @@ var lenta = (function(){
 						renders.comments(share.txid, false, false, true)
 					}
 
-					renders.repost(p.el, share.repost, share.txid)
+					renders.repost(p.el, share.repost, share.txid, share.isEmpty())
 			
 					renders.url(p.el.find('.url'), share.url, share, function(){
 
@@ -1775,6 +1715,59 @@ var lenta = (function(){
 
 			},
 
+			mystars : function(shares, clbk){
+
+				var _shares = _.filter(shares, function(s){
+					if(typeof s.myVal == 'undefined'){
+						return true;
+					}
+				})
+
+				var ids = _.map(_shares, function(s){
+					return s.txid
+				})
+
+				self.app.platform.sdk.likes.get(ids, function(){
+
+					_.each(shares, function(share){
+						renders.stars(share)
+
+						renders.wholike(share)
+					})
+
+				})
+			},
+
+			wholike : function(share, clbk){
+
+
+				if (!el.shares) return
+
+				var _el = el.shares.find("#" + share.txid);
+
+				if (_el.length){
+
+					var wholikes = share.who;
+
+					self.shell({
+						name :  'wholike',
+						el : _el.find('.wholikes'),
+						data : {
+							scores : Number(share.scnt),
+							wholikes : wholikes || []
+						},
+						bgImages : {}			
+
+					}, function(p){
+
+						if (clbk)
+							clbk()
+
+					})
+
+				}
+			},
+
 			stars : function(share, clbk){
 
 				if (!el.shares) return
@@ -1791,7 +1784,6 @@ var lenta = (function(){
 						}					
 
 					}, function(p){
-
 
 						fastars(p.el.find('.stars'))
 
@@ -1840,7 +1832,8 @@ var lenta = (function(){
 
 					all : {
 						success : function(){
-							
+
+							renders.mystars(shares)
 
 							clbk()
 						}
@@ -2061,7 +2054,7 @@ var lenta = (function(){
 				
 			},
 
-			repost : function(el, repostid, txid, clbk){
+			repost : function(el, repostid, txid, empty, clbk){
 				if(repostid){
 					self.shell({
 						name :  'repost',
@@ -2081,12 +2074,11 @@ var lenta = (function(){
 	
 							}, {
 								repost : true,
-								eid : txid,
-								level : 1
+								eid : txid + 'lenta',
+								level : 1,
+								fromempty : empty
 							})
 						}	
-
-						
 
 					})
 				}
@@ -2590,6 +2582,8 @@ var lenta = (function(){
 				window.addEventListener('scroll', events.loadmorescroll);
 			}			
 
+			el.c.on('click', '.wholikesTable', events.postscores)
+
 			el.c.on('click', '.stars i', events.like)
 			el.c.on('click', '.complain', events.complain)
 			el.c.on('click', '.imageOpen', events.openGallery)
@@ -2948,6 +2942,12 @@ var lenta = (function(){
 								
 							}
 
+							if (p.p){
+								actions.postscores(p.p, function(){
+									actions.scrollToPost(p.p)
+								})
+							}
+
 							if (clbk){
 								clbk()
 							}
@@ -2987,7 +2987,7 @@ var lenta = (function(){
 
 				var _s = parameters();
 
-				beginmaterial = _s.s || _s.i || _s.v || null;
+				beginmaterial = _s.s || _s.i || _s.v || _s.p || null;
 
 				if(_s.r) 	recommended = _s.r;
 
@@ -3016,8 +3016,6 @@ var lenta = (function(){
 						if(beginmaterial){
 
 							load.begin(function(bshares){
-
-
 
 								self.app.platform.sdk.node.shares.users(bshares, function(){
 

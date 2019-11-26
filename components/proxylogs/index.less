@@ -267,6 +267,136 @@
     }
 }
 
+html.stblack{
+    #proxylogs{
+   
+        .error{
+            color : @color-bad;
+            background: fade(@color-main, 10);
+        }
+        .captionWrapper{
+          
+    
+            a{
+                color : @color-main;
+            }
+    
+        }
+    
+    
+        .report{
+            .expandws,
+            .expandall,
+            .expand{
+                color : @color-main;
+    
+                &:hover{
+                    color : @color-bright;
+                }
+            }
+    
+        }
+    
+        .user{
+    
+            .addressTable{
+                
+                >div{
+                    &.label{
+                       
+                        .cur{
+                            color : @color-main;
+                        }
+    
+                        .light{
+                            color : fade(@color-main, 50);
+                        }
+                    }
+    
+                }
+    
+            }
+        }
+    
+        .stats{
+            .chartWrapperbs{
+                background: fade(@color-bright, 5);
+            }
+    
+            .subcaptiongraph{
+                color : fade(@color-main, 50);
+            }
+        }
+    
+        .wslogs{
+            
+    
+            .wslogTable{
+               
+    
+                &.tablecaption{
+                    span{
+                        font-size: 0.8em;
+                        color : @color-main;
+                    }
+                }
+            }
+    
+            .clickload{
+                &:hover{
+                    color : @color-main;
+                }
+            }
+        }
+    
+        .logs{
+            
+    
+            .alllogs{
+                color : @color-gray-mlight;
+                .logw{
+                   
+    
+                    &:nth-child(2n+1){
+                        background: fade(@color-main, 4);
+                    }
+                }
+                
+            }
+    
+            
+    
+            .log{
+                .ip{
+    
+                    border-bottom : 1px solid @color-main;
+                   
+                    .ipcaption{
+                        color : @color-main;
+                    }
+                }
+    
+               
+            }
+    
+           
+            
+    
+            .bystatus{
+                .status{
+    
+                    color : @color-bad;
+    
+                    &.good{
+                        color : @color-good;
+                    }
+                }
+            }
+    
+        }
+    }    
+}
+
 @media only screen and (max-width: 640px) {
     #proxylogs{
         

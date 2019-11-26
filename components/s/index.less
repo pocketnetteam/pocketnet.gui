@@ -281,7 +281,69 @@
 		}
 	}
 }
+html.stblack{
+	#s{
 
+		.fposts{
+			background: @color-black2;
+	
+			.sectionname{
+				color : @color-main;
+			}
+	
+			
+		}
+	
+	
+		.section{
+			border-bottom: 1px solid @color-gray2;
+	
+	
+			.showmore{
+				
+				span{
+					color : @color-bright;
+	
+					&:hover{
+						color : @color-contrast;
+					}
+				}
+				
+			 }
+		}
+	
+		.users{
+	
+	
+			&[view="list"]{
+				
+				.userslistwrapper{
+					.arrow{
+						color : @color-main;
+						border : 1px solid @color-main;
+						background: @color-black;
+	
+	
+						&:hover{
+							color : #fff;
+							border-color: @color-main;
+							background: @color-main;
+						}
+					}
+	
+					
+	
+				}
+	
+	
+			}
+	
+	
+			
+		}
+	
+	}	
+}
 @media only screen and (max-width: 640px) {
 
 #s{

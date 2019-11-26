@@ -1,0 +1,44 @@
+<% if(wholikes.length) {
+    
+    wholikes = firstEls(wholikes, 3);
+    
+    %>
+
+    <div class="wholikesTable">
+        <% _.each(wholikes, function(whl, i){ %> 
+            <div class="wholikeAuthorTable table">
+                <div class="uiconcell">
+                    <div class="usericon usericonsbsa another" image="<%-whl.avatar%>">
+                        <% if(!whl.avatar) {%>
+                            <svg width="30" height="30" data-jdenticon-value="<%-whl.address%>"></svg>
+                        <% } %>
+                    </div> 
+                </div>
+                <div class="unamecell">
+                    <b><%-decodeURIComponent(whl.name)%></b><% if(i < wholikes.length - 1) {%>, <%} else {%>
+
+                        
+
+                            <span class="morelikes">
+                                <% if(wholikes.length < scores) {%>
+                                    and more <b><%- scores - wholikes.length %></b> <%- pluralform(scores - wholikes.length, ['user', 'users']) %>
+                                <% } %>
+
+                                rated
+                            </span>
+                
+                       
+
+                    <% } %>
+
+
+
+                </div>
+            </div>
+            
+        <% }) %>
+
+       
+    </div>
+
+<% } %>

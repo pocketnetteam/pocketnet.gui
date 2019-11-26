@@ -959,7 +959,10 @@ var author = (function(){
 					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
 				}
 
-				
+				if(self.app.user.address.value.toString('hex') == author.address){
+					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
+					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
+				}
 			}
 
 			self.app.platform.clbks.api.actions.subscribePrivate.author = function(address){
@@ -971,17 +974,31 @@ var author = (function(){
 					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
 					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
 				}
+
+				if(self.app.user.address.value.toString('hex') == author.address){
+					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
+					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
+				}
 			}
 
 			self.app.platform.clbks.api.actions.unsubscribe.author = function(address){
 
 				if(address == author.address){
+
 					el.subscribe.removeClass('following')
 					el.c.find('.notificationturn').removeClass('turnon')	
 
 					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
 					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
+
 				}
+
+				if(self.app.user.address.value.toString('hex') == author.address){
+					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
+					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
+				}
+
+
 			}
 
 			self.app.platform.clbks.api.actions.blocking.author = function(address){

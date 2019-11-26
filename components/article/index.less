@@ -238,6 +238,93 @@
 	}
 }
 
+html.stblack{
+
+	#article{
+
+		input{
+			background: transparent;
+		}
+	
+		.top{
+			
+			.item{
+	
+				&.back{
+					color : @color-main;
+	
+					&:hover{
+						color : @color-contrast;
+					}
+				}
+			}
+	
+		}
+	
+		.ready{
+			.iWrapper{
+				color : @color-bright;
+	
+				&:hover{
+					color : @color-contrast; 
+					border-color: @color-contrast;
+				}
+				
+			}
+		}
+		.art{
+		
+	
+			[contenteditable="true"]{
+				border : 0;
+	
+			}
+	
+			.medium-editor-placeholder:after {
+				color : @color-gray;
+			}
+	
+			.part{
+	
+				[placeholder]:empty::before {
+					color: @color-gray; 
+				}
+	
+				
+			}
+		}
+	
+		.apreloader{
+			background: fade(@color-black, 95);
+	
+			.aprWrapper{
+				.apr{
+					
+	
+					>div{
+	
+						&.label{
+							color : @color-bright;
+						}
+					}
+	
+				}
+			}
+		}	
+	}
+
+	.medium-insert-buttons-addons{
+		background: @color-black;
+	}
+
+	.medium-editor-insert-plugin .medium-insert-buttons button{
+		border-color : @color-main;
+		color : @color-main;
+		background: @color-black2;
+	}
+		
+}
+
 @media only screen and (max-width: 640px) {
 #article{
 	.top{

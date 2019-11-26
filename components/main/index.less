@@ -277,6 +277,210 @@
 	}
 
 }
+
+html.stblack{
+	#main{
+		background: #071024;
+		
+		.addbutton{
+			background: #00a3f7;
+			border : 1px solid #00a3f7;
+			color : @color-gray-mlight;
+	
+			&:hover{
+				background: transparent;
+				color : #00a3f7;
+			}
+			
+		}
+	
+		
+		.caption{
+			color : @color-main;
+		}
+	
+	
+		.bgCaption{
+	
+			&.sec{
+				color : @color-gray-mlight;
+				background: @color-black;
+				
+			}
+	
+			&.cf_caption{
+				padding : 0;
+				margin-bottom : 0;
+				
+				#share{
+	
+					&.unfocus{
+	
+						.attachements{
+							display: none!important;
+						}
+	
+						.draggablepart .draggablewrapper>div.draggablemarkerwrapper{
+							display: none;
+						}
+		
+						.absolutetxwrapper{
+							height: 56px;
+		
+							.txtwrapper{
+								height: 100%;
+							}
+						}
+						.txtwrapper{
+							>div{
+								padding : 0 2 * @rhythm;
+								vertical-align: middle;
+		
+								&.iconWrapper{
+									padding : 0;
+								}
+							}
+						}
+						.txt{
+							margin-bottom : 0;
+							.emojionearea{
+								border-radius: 50px;	
+								border : 1px solid @color-gray-slight;				
+		
+								.emojionearea-button{
+									top : 8px;
+									right : 8px;
+								}
+		
+							}
+							.emojionearea-editor{
+								border-radius: 50px;
+								min-height: 38px;
+								height: 38px;
+								padding-left: 2 * @rhythm;
+								padding-top : 0;
+								padding-bottom : 0;
+								line-height: 36px;
+								
+							}
+		
+							.emojionearea, 
+							.emojionearea.form-control{
+								box-shadow: none;
+							}
+						}
+						.tgs{
+							display: none;
+						}
+		
+						.postlineWrapper{
+							display: none;
+						}
+		
+						.error{
+							display: none;
+						}
+					}
+					
+				}
+			}
+		}
+	
+		#share{
+	
+		}
+	
+		.share{
+			.work{
+				
+			}
+		}
+	
+		.fxdsmall,
+		.fxd{
+			z-index: 10;
+			position: fixed;
+		}
+	
+		.fxd{
+			position: relative;
+	
+			&.dfxd{
+				top : 75px;
+				position: fixed;
+			}
+		}
+	
+		.smallpanell{
+	
+			.iconWrapper{
+				
+				border : 1px solid @color-gray-slight;
+				background: #fff;
+				color : @color-gray;
+				cursor: pointer;
+				height: 44px;
+				width: 44px;
+				line-height: 42px;
+				text-align: center;	
+				border-radius: 50%;
+				.transition(0.3s);
+				position: absolute;
+				left: 0;
+				top: 0;
+				z-index: 2;
+			}
+	
+			.itemName{
+				display: none;
+				height: 44px;
+				line-height: 42px;
+				background: #fff;
+				border-radius: 22px;
+				padding : 0 2 * @rhythm;
+				opacity: 0;
+				.transition(0.3s);
+				font-size: 0.8em;
+			}
+	
+			.item{
+				position: relative;
+				margin : 0 auto;
+				margin-bottom: @rhythm;
+				height: 44px;
+	
+				&.active,
+				&:hover{
+					.iconWrapper{
+						color : @color-main;
+						border-color : @color-main;
+					}
+				}
+	
+				&:hover{
+					.iconWrapper{
+						.shadowSmall();
+					}
+					.itemName{
+						.shadowSmall();
+					}
+				}
+	
+			}
+			&:hover{
+				
+				.itemName{
+					border : 1px solid @color-main;
+					opacity: 1;
+					display: block;
+					padding-left: 54px; 
+				}
+			}
+		}
+	
+	}
+}
+
 @media only screen and (max-width: 1280px) {
 #main{
 	.addbutton{

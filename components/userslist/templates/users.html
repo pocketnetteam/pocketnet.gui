@@ -106,7 +106,15 @@ _.each(addresses, function(address){
 
 				<div class="extra">
 
-					<% telements(address) %>
+					<% if(typeof extra != 'undefined' && extra) {%>
+						<%= extra(address) %>
+					<% } else { %> 
+
+						<% telements(address) %>	
+
+					<% } %>
+
+					
 
 				</div>
 			</div>

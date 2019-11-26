@@ -619,7 +619,7 @@
 			}
 		}
 		.copyaddress1,
-		.copyaddress2,{
+		.copyaddress2{
 			cursor: pointer;
 		}
 		.crdeal{
@@ -936,6 +936,381 @@
 			
 		}
 	}
+}
+
+html.stblack{
+	#wallet{
+		
+		.caption{
+			span{
+				color : @color-main;
+			}
+		}
+	
+		.slide{
+	
+			color: @color-gray-mlight;
+	
+			.required{
+				color : @color-bad;
+			}
+	
+			.subcaptionWrapperTable{
+			
+	
+				.panel{
+	
+					.item{
+						color : @color-main;
+	
+						&:hover{
+							color : @color-contrast;
+						}
+					}
+				}
+			}
+	
+			.subcaption{
+				span{
+					color: @color-bright;
+				}
+			}
+	
+			
+			.closeAdditional{
+	
+				&:hover{
+					color : @color-main;
+				}
+			}
+	
+			.linksubcaption{
+	
+				&.res{
+					color : @color-contrast;
+				}
+				
+			}
+	
+		
+			._subcaptionlevel{
+				color : @color-main;
+			}
+	
+		}
+	
+	
+		.total{
+			
+			background: @color-black3;
+	
+			.tttlforerror{
+				background: fade(@color-black, 95);
+	
+				.table{
+					>div{
+						color : @color-gray-mlight;
+					}
+				}
+			}
+	
+			.balance{
+				.balanceWrapper{
+					color : @color-gray-light;
+	
+				}
+			}
+	
+			.summary{
+				.line{
+					
+					.positive{
+						background: @color-good;
+					}
+	
+					.negative{
+						background: @color-bad;
+					}
+				}
+	
+				.numbers{
+					
+					.positive{
+						color: @color-good;
+					}
+	
+					.negative{
+						color: @color-bad;
+					}
+				}
+			}
+	
+	
+		}
+	
+		.crowdfunding,
+		.deposit,
+		.send{
+	
+			border : 1px solid fade(@color-main, 50);
+	
+	
+			.info{
+	
+				b{
+					color : @color-good;
+				}
+	
+			}
+	
+			.linkForDepositReady,
+			.linkForDeposit{
+				border-top : 1px solid fade(@color-main, 50);
+			}
+	
+	
+			.labelWrapper{
+				color : @color-main;
+			}
+	
+	
+			.row{
+				>div{
+	
+					&.changer{
+						
+						.change{
+	
+							&:hover{
+								color : @color-main;
+							}
+						}
+					}
+	
+				}
+			}
+	
+			.notvalidaddress{
+				color : @color-bad;
+			}
+		}
+		.crowdfunding{
+			border : 2px solid @color-main;
+	
+		
+			
+	
+			.listcountWrapper{
+				color : @color-contrast;
+	
+				&:hover{
+					color : @color-gray-mlight;
+				}
+			}
+	
+			.listcr{
+	
+				.item{
+					>div{
+						
+						.removecr,
+						.updatecr{
+							color : @color-gray-light;
+						}
+						.updatecr{
+							&:hover{
+								color : @color-main;
+							}
+						}
+						.removecr{
+							&:hover{
+								color : @color-bad;
+							}
+						}
+					}	
+				}
+	
+			}
+	
+			.statustable{
+	
+				.todeal{
+	
+					&:hover{
+						color : @color-good;
+					}
+				}
+	
+				.segment{
+	
+					
+					&.bad{
+						.segmenttable{
+							.linebg{
+								
+								.line{
+									background: @color-bad;
+								}
+							}
+						}
+					}
+					
+				}
+	
+				.segmenttable{
+					>div{
+						
+						&.iconWrapper{
+							color : @color-gray-light;
+	
+							.finish{
+								color : @color-good;
+							}
+	
+							.finishbad{
+								color : @color-bad;
+							}
+						}
+					}
+	
+					.linebg{
+						background: fade(@color-main, 50);
+	
+						.line{
+							background: @color-main;
+						}
+					}
+				}
+			}
+	
+			.crdeal{
+				
+				.pocstatus{
+					.current{
+						color : @color-main;
+					}
+				}
+	
+				.reactivate{
+					
+					background: fade(@color-main,30);
+					color : @color-gray-mlight;
+					border : 1px solid @color-main;
+	
+					&:hover{
+						background: fade(@color-main, 50);
+						color : @color-gray-slight;
+					}
+				}
+	
+			}
+	
+			.infosteptable{
+				.infostepcaption{
+					span{
+						color : @color-main;
+					}
+				}
+	
+				
+				.label{
+					span{
+						color : @color-bright;
+					}
+				}
+	
+				
+			}
+	
+	
+			.steptext{
+				span{
+					color : @color-contrast;
+				}
+				
+			}
+		}
+		.deposit{
+			border : 0;
+			background: @color-black3;
+	
+	
+			.depositaddress{
+				.adrwrapper{
+	
+					.adr{
+						color : @color-gray-mlight;
+					}
+				}
+			}
+	
+		}
+	
+		.addresses{
+	
+			.adressesTable{
+				border-bottom: 1px solid fade(@color-main, 50);
+
+	
+				>div{
+	
+					&.name{
+	
+						.alabel{
+							color : @color-main;
+						}
+					}
+	
+				}
+			}
+	
+	
+			
+		}
+	
+		.actionstep{
+	
+			._stepback{
+			
+	
+				.back{
+					background: @color-black2;
+					color : @color-main;
+	
+					&:hover{
+						color : @color-bright;
+					}
+				}
+			}
+	
+			.deposit{
+				border : 1px solid fade(@color-main, 50);
+				background: @color-black;
+	
+			}
+	
+			.send{
+				border : 1px solid fade(@color-main, 50);
+				background: @color-black;
+	
+				.actionbody {
+					background: @color-black2;
+					border-bottom : 1px solid fade(@color-main, 50);
+	
+				}
+	
+			}
+	
+			.animation{
+	
+				.send,
+				.deposit{
+					border : 1px solid transparent;
+				}
+				
+			}
+		}
+	}	
 }
 
 @media only screen and (max-width: 640px) {

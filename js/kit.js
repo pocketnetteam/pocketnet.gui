@@ -990,7 +990,7 @@ Share = function(){
 
 	self.validation = function(){
 
-		if(!self.message.v && !self.caption.v){
+		if(!self.message.v && !self.caption.v && !self.repost.v){
 			return 'message'
 		}
 
@@ -1001,7 +1001,6 @@ Share = function(){
 			if (l < 30 && !self.images.v.length){
 				return 'url'
 			}
-
 			
 		}
 
@@ -1533,6 +1532,11 @@ pShare = function(){
 		v : '',
 		videos : [],
 		image : ''
+	}
+
+	self.isEmpty = function(){
+
+		return !self.message && !self.caption && (self.tags.length == 0) && (self.images.length == 0) && !self.url
 	}
 	
 	self.findComment = function(id){

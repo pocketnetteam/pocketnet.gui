@@ -88,8 +88,12 @@ var lastcomments = (function(){
     
 						var share = app.platform.sdk.node.shares.storage.trx[comment.txid]
 
-						au.push(share.address)
-						au.push(comment.address)
+						if(share && comment){
+							au.push(share.address)
+							au.push(comment.address)
+						}
+
+						
 
 					})
 

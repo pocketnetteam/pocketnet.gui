@@ -22,15 +22,33 @@ var usersettings = (function(){
 
 		var renders = {
 			options : function(){
+
 				self.shell({
 					name :  'options',
 					el : el.options,
 					data : {
-						composed : composed.c
+						composed : composed.c,
+						themes : self.app.platform.sdk.theme.all,
+						current : self.app.platform.sdk.theme.current,
 					}					
 
 				}, function(p){
 					ParametersLive(composed.o, p.el)
+
+					p.el.find('.themewrapper').on('click', function(){
+
+						var e = $(this)
+
+						if (e.hasClass('active')) return
+
+						var t = e.attr('theme')
+
+						p.el.find('.themewrapper').removeClass('active')
+
+						e.addClass('active')
+
+						self.app.platform.sdk.theme.set(t)
+					})
 				})	
 			}
 		}

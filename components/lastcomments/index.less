@@ -305,3 +305,115 @@
         }
     }
 }
+
+html.stblack{
+    #lastcomments{
+        background: @color-black;
+    
+        .commentgroup{
+            border-bottom : 1px solid fade(@color-main, 40);
+            
+            &:nth-last-child(1){
+                border-bottom : 0;
+            }
+        }
+    
+       
+        .comments{
+            background: fade(@color-main, 3);     
+        }
+    
+        .comment{
+           
+            border-bottom : 1px solid fade(@color-main, 20);
+
+            &:nth-last-child(1){
+                border-bottom : 0;
+            }
+           
+            .transition(0.9s, color);
+    
+            &.newcommentsn,
+            &.newcomments{
+                color : @color-bright;
+            }
+    
+         
+    
+    
+            .tocommentno,
+            .tocomment{
+                color : @color-bright;
+            }
+    
+            .metatable {
+    
+                >div{
+    
+                    
+                    &.datecell{
+    
+                        span{
+                            color : @color-bright;
+                        }
+                    }
+                }
+            }
+        }
+        .commentWrapper{
+            padding-bottom:@rhythm;
+            >div{
+    
+                .commentmessage{
+    
+                    a{
+                        color : @color-bright;
+                    }
+    
+                }
+    
+                .edited{
+    
+                    i,
+                    span{
+                        color : @color-main;
+                        font-size: 0.8em;
+                    }
+                }
+    
+            }
+        }
+    
+        .sharepreview{
+            
+            .shareprwrapper{
+    
+                .img{
+    
+                    .vstyle{
+                        color : @color-main;
+                    }
+                }
+            }
+        }
+    
+        .rcaptiontable{
+            >div{
+                &.rpanelWrapper{
+                    .arrow{
+    
+                        &:hover{
+                            color : @color-main;
+                        }
+    
+                    }
+                }
+            }
+        }
+    
+        .rcaption{
+            border-bottom : 1px solid fade(@color-main, 40);
+           
+        }
+    } 
+}

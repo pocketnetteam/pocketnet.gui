@@ -3,6 +3,10 @@
 #lenta{
 	/*background: #F9F9F9;*/
 
+	.work{
+		padding-right: 0;
+	}
+
 	.mlwr{
 		position: relative;
 	}
@@ -80,6 +84,38 @@
 			
 		}
 
+		.wholikesTable{
+			margin-bottom : 2 * @rhythm;
+			cursor: pointer;
+			.transition(0.3s);
+
+			&:hover{
+				opacity: 0.8;
+			}
+
+			.wholikeAuthorTable{
+				display: inline-table;
+				width: auto;
+				font-size: 0.8em;
+
+				>diV{
+					vertical-align: middle;
+
+					&.unamecell{
+						padding-left: 0.5 * @rhythm;
+					}
+				}
+			}
+
+			.usericon{
+				position: relative;
+				display: inline-block;
+				width: 21px;
+				height: 21px;
+				vertical-align: baseline;
+			}
+		}
+
 		/*.shareTable{
 			>div{
 				vertical-align: top;
@@ -105,7 +141,7 @@
 		.cntswrk{
 			margin-left: 8 * @rhythm;
 			padding-left : 2 * @rhythm;
-			padding-right : 2 * @rhythm;
+			padding-right : 4 * @rhythm;
 		}
 
 		.work{
@@ -171,7 +207,100 @@
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
 
+			.shareTable{
+				&.truerepost{
+					#post{
+						.iconWrapper{
+							width: 7 * @rhythm;
+							padding-left: 2 * @rhythm;
+		
+							.usericon{
+								width: 5 * @rhythm;
+								height: 5 * @rhythm;
+							}
+						}
+					}
+				}
+			}
+
+			#comments{
+				.caption{
+					padding-left: 3 * @rhythm;
+					padding-right: 6 * @rhythm;
+				}
+					
+				.commentPaddingWrapper,
+				.post{
+					padding-left: 3 * @rhythm;
+					padding-right: 4 * @rhythm;
+				}
+
+				.commentPaddingWrapper{
+					padding-right: 6 * @rhythm;
+				}
+
+				.list .answer .postbody{
+					padding-left: 3 * @rhythm;
+					padding-right: 4 * @rhythm;
+				}
+
+				.answers{
+					.commentPaddingWrapper{
+						padding-right: 0;
+						padding-left: 0;
+					}
+				}				
+
+				.answer .posttable>div.postCellWrapper .postaction, 
+				.edit .posttable>div.postCellWrapper .postaction, 
+				.post .posttable>div.postCellWrapper .postaction{
+					text-align: center;
+				}
+			}
+
 			#post{
+
+				.share{
+					margin-bottom : 0;
+				}
+
+				#comments{
+
+					.caption{
+						padding-left: 3 * @rhythm;
+						padding-right: 4 * @rhythm;
+					}
+
+					
+					.commentPaddingWrapper,
+					.post{
+						padding-left: 3 * @rhythm;
+						padding-right: 4 * @rhythm;
+					}
+	
+					.commentPaddingWrapper{
+						padding-right: 6 * @rhythm;
+					}
+	
+					.list .answer .postbody{
+						padding-left: 3 * @rhythm;
+						padding-right: 4 * @rhythm;
+					}
+	
+					.answers{
+						.commentPaddingWrapper{
+							padding-right: 0;
+							padding-left: 0;
+						}
+					}				
+	
+					.answer .posttable>div.postCellWrapper .postaction, 
+					.edit .posttable>div.postCellWrapper .postaction, 
+					.post .posttable>div.postCellWrapper .postaction{
+						text-align: center;
+					}
+				}
+
 				.share{
 					padding : 0;
 					.work{
@@ -193,17 +322,15 @@
 							border-left : 0;
 						}
 					}
-				}
 
-				.iconWrapper{
-					width: 7 * @rhythm;
-					padding-left: 2 * @rhythm;
-
-					.usericon{
-						width: 5 * @rhythm;
-						height: 5 * @rhythm;
+					.cntswrk{
+						padding-right: 4 * @rhythm;
 					}
 				}
+
+				
+
+				
 			
 				.cntswrk{
 					margin-left: 7 * @rhythm;
@@ -217,9 +344,7 @@
 			
 
 			>div{
-				&.work{
-					contain: layout;
-				}
+				
 			}
 			
 			img{
@@ -460,6 +585,23 @@
 						
 					}
 				}
+
+				&.emptywithrepost{
+					.cntswrk{
+						margin-left: 0;
+					}
+
+					.meta{
+						padding-top : 0;
+
+						.repostCaption{
+							i{
+								font-size: 0.8em;
+								color : @color-main;
+							}
+						}
+					}
+				}
 			}
 
 			&:hover{
@@ -581,11 +723,12 @@
 					margin-right: 2 * @rhythm;
 
 					
+				}
 
-					&.author{
+				.authorCell{
+
+					a{
 						font-weight: 700;
-						color : @color-main;
-						text-decoration: underline;
 						cursor: pointer;
 						.transition(0.3s);
 
@@ -593,7 +736,6 @@
 							color : @color-main;
 						}
 					}
-
 					
 				}
 			}
@@ -911,7 +1053,9 @@
 			}
 
 			.sys{
-				margin-bottom: 2 * @rhythm;
+
+				margin-bottom : 2 * @rhythm;
+				
 				span{
 					cursor: pointer;
 					font-size: 0.8em;
@@ -924,7 +1068,7 @@
 			}
 
 			.panel{
-				margin-bottom : 2 * @rhythm;
+				/*margin-bottom : 2 * @rhythm;*/
 				
 				.itemwr{
 					width: auto;
@@ -963,6 +1107,8 @@
 							
 						}
 					}
+
+					
 				}
 				>div{
 					float: left;
@@ -1009,8 +1155,18 @@
 
 					&.right{
 						float: right;
-						margin-right: 0;
 						margin-left: 0;
+
+						.itemwr{
+		
+							>div{
+		
+								&.iconwr{
+									text-align: center;
+									width: 40px;
+								}
+							}
+						}
 					}
 
 					&.donate,
@@ -1059,6 +1215,8 @@
 						.icon{
 							color : #ff2f00;
 						}
+
+						
 
 						&:hover{
 							.label{
@@ -1114,6 +1272,35 @@
 				overflow-y: scroll;
 				padding-top: 0;
 				
+				#comments{
+					.caption{
+						padding-left: 2 * @rhythm;
+						padding-right: 3 * @rhythm;
+					}
+					
+					.commentPaddingWrapper,
+					.post{
+						padding-left: 2 * @rhythm;
+						padding-right: 3 * @rhythm;
+					}
+	
+					.commentPaddingWrapper{
+						padding-right: 4 * @rhythm;
+					}
+	
+					.list .answer .postbody{
+						padding-left: 2 * @rhythm;
+						padding-right: 3 * @rhythm;
+					}
+	
+					.answers{
+						.commentPaddingWrapper{
+							padding-right: 0;
+							padding-left: 0;
+						}
+					}	
+
+				}
 
 				.exitFull{
 					display: block;
@@ -1553,6 +1740,405 @@
 	}
 }
 
+html.stblack{
+	#lenta{
+		
+		
+		.loader{
+			background: @color-black2;
+		}
+	
+	
+		.shares{
+			
+			.usericon{	
+			
+				.sbs,
+				.uloader{
+					background: fade( @color-black2, 90);
+	
+				}
+	
+				
+			}
+	
+			.videoWrapper{
+	
+				.videoTips{
+					background: rgb(0,0,0);
+					background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
+					color : @color-gray-slight;
+					
+				}
+	
+			}
+	
+			.commentsWrapper{			
+				background: @color-gray3;
+			}
+	
+	
+			.share{
+				background: @color-black;
+
+				.subscribeWrapper{
+					background: fade(@color-black2, 96);
+					
+				}
+				
+	
+				.shareContent{
+	
+					.tempPreloader{
+						
+						.label{
+							color : @color-main;
+						}
+	
+					}
+				}
+	
+				.iconWrapper{
+	
+	
+					.aitem,
+					.additional,
+					.subscribe{
+						color : @color-gray-mlight;
+						
+						&:hover{
+							.shadowSmall();
+							border-color: @color-main;
+							color :  @color-main;
+						}
+					}
+	
+					.aunsubscribe{
+						color : @color-main;
+					}
+				}
+	
+				.shareTable{
+	
+					.sbtnxs{
+	
+						span{
+							i{
+								color : @color-good;
+							}
+	
+							&:hover{
+								color : @color-main;
+							}
+						}
+					}
+	
+	
+					&.emptywithrepost{
+	
+						.meta{
+	
+							.repostCaption{
+								i{
+									color : @color-main;
+								}
+							}
+						}
+					}
+				}
+	
+				&:hover{
+					.iconWrapper{
+	
+						.aitem{
+							color : @color-gray-light;
+							border : 1px solid @color-gray-light;
+	
+							&:hover{
+								
+								border-color: @color-main;
+								color :  @color-main;
+								
+							}
+						}
+						.additional,
+						.subscribe{
+							color : @color-gray-light;
+							border : 1px solid @color-gray-light;
+	
+							&:hover{
+								
+								border-color: @color-main;
+								color :  @color-main;
+								
+								
+							}
+						}
+					}	
+				}
+				
+	
+				.jsPlayerLoading{
+					
+					background: #000000;
+	
+					
+				}
+	
+				.metatable{
+					>div{
+	
+						&.metapanel{
+							.metapanelitem{
+							
+								color : @color-gray-slight;
+	
+								&:hover{
+									color :@color-black;
+									background: @color-main;
+								}
+	
+							}
+						}
+					}
+				}
+	
+			
+	
+				.images{
+				
+					.imagesWrapper{
+						background: @color-black4;
+						
+	
+					
+	
+					}
+	
+					.videoOpen{
+						position: relative;
+	
+						.playicon{
+							background: fade(#000, 50);
+							color : @color-main;
+						}
+					}
+					
+				}
+	
+				.sharecaption{
+					color : @color-gray-slight;
+	
+					a{
+						color : @color-bright;
+					}
+				}
+	
+				.message{
+					
+	
+					a{
+						color : @color-bright;
+					}
+				}
+	
+				.showmoretable{
+					>div{
+						.line{
+							background: @color-bright;
+						}
+					}
+				}
+	
+				.showMore{
+					color : @color-bright;
+					
+				
+				}
+	
+				
+	
+				.urlhtmlcontent{
+					.ogtable{
+	
+						>div{
+						
+							&.cnt{
+								.title{
+									color : @color-bright;
+								}
+							}
+						}
+					}
+				}
+	
+				.url{
+				
+	
+					span{
+						color : @color-bright;
+					}
+					
+				
+				}
+	
+				.tags{
+					>div{
+	
+						span{
+							color : @color-add;
+						}
+					}
+				}
+	
+				.sys{
+					span{
+						color : @color-good;
+					}
+				}
+	
+				.panel{
+					margin-bottom : 2 * @rhythm;
+					
+					.itemwr{
+	
+						>div{
+							
+							&.count{
+	
+								span{
+									color : @color-gray-slight;
+								}
+								
+							}
+						}
+	
+						
+					}
+					>div{
+	
+						.icon{
+							color : @color-bright;
+						}
+	
+	
+						&.donate,
+						&.promote{
+							color : @color-bright;
+	
+							.count{
+								span{
+									color : @color-bright;
+								}
+								
+							}
+						}
+	
+	
+						&:hover{
+							.icon{
+								border-radius : 50%;
+								.shadowSmall();
+								color : @color-black;
+								background: @color-add;
+							}
+						}
+	
+						&.sharesocial{
+	
+							.label,
+							.icon{
+								color : #ff2f00;
+							}
+	
+							&:hover{
+								.label{
+									color : @color-bright;	
+								}
+								.icon{
+									color : @color-bright;
+									border-radius : 0;
+									box-shadow: none;
+									color : @color-main;
+									background: transparent;
+								}
+							}
+
+							
+						}
+	
+						&.nact{
+							&:hover{
+								.icon{
+									color : @color-black4;
+								}
+							}
+						}
+	
+					}
+				}
+	
+				&.fullScreenVideo{
+					background: fade(@color-black4, 80);
+					.work{
+						background: @color-black;
+	
+					
+					}
+				}
+			}
+	
+			.showmorebyauthor{
+				background: fade(#0180ff, 10);
+				color : @color-bright;
+	
+				&:hover{
+					color : fade(#fff, 70);
+					background: fade(@color-bright, 30)
+				}
+			}
+	
+			.share{
+	
+				.blockAuthor{
+					background: fade(@color-black, 90);
+					
+				}
+		
+	
+			}
+		}	
+
+	
+		.zero,
+		.ended{
+			color : @color-gray-mlight;
+			background: @color-gray3;
+	
+			.tou{
+				color : @color-main;
+			}
+		}
+	
+
+		.seemore,
+		.loadprev,
+		.loadmore{
+			background: @color-gray3;
+			
+		}
+	
+		
+		.networkErrorMessage{
+	
+			i{
+				color : fade(@color-main, 15);
+			}
+		}
+	
+	}
+}
+
 @media only screen and (max-width: 640px) {
 #lenta{
 
@@ -1688,7 +2274,79 @@
 			cursor: default;
 			padding-bottom : 0;
 
+			#comments{			
+				
+				.caption{
+					padding-left: 1 * @rhythm;
+					padding-right: 2 * @rhythm;
+				}
+
+				.commentPaddingWrapper,
+				.post{
+					padding-left: 1 * @rhythm;
+					padding-right:  @rhythm;
+				}
+
+				.commentPaddingWrapper{
+					padding-right:  @rhythm;
+				}
+
+				.list .answer .postbody{
+					padding-left: 1 * @rhythm;
+					padding-right: @rhythm;
+				}
+
+				.answers{
+					.commentPaddingWrapper{
+						padding-right: 0;
+						padding-left: 0;
+					}
+				}				
+
+				.answer .posttable>div.postCellWrapper .postaction, 
+				.edit .posttable>div.postCellWrapper .postaction, 
+				.post .posttable>div.postCellWrapper .postaction{
+					text-align: center;
+				}
+			}
+
 			#post{
+
+				#comments{
+					.caption{
+						padding-left: @rhythm;
+						padding-right: @rhythm;
+					}
+					
+					.commentPaddingWrapper,
+					.post{
+						padding-left: 0;
+						padding-right: @rhythm;
+					}
+	
+					.commentPaddingWrapper{
+						padding-right: @rhythm;
+					}
+	
+					.list .answer .postbody{
+						padding-left: 0;
+						padding-right: @rhythm;
+					}
+	
+					.answers{
+						.commentPaddingWrapper{
+							padding-right: 0;
+							padding-left: 0;
+						}
+					}				
+	
+					.answer .posttable>div.postCellWrapper .postaction, 
+					.edit .posttable>div.postCellWrapper .postaction, 
+					.post .posttable>div.postCellWrapper .postaction{
+						text-align: center;
+					}
+				}
+
 				.share{
 					.work{
 						border-left : 0.5 * @rhythm solid @color-main;
@@ -1733,6 +2391,8 @@
 							margin-left: 7 * @rhythm;
 							padding-left : 0.5 * @rhythm;
 						}
+
+						padding-right: 0;
 					}
 				}
 			}
@@ -1813,6 +2473,18 @@
 							display: block;
 						}
 						
+					}
+				}
+
+
+				&.emptywithrepost{
+					
+					.meta{
+
+						.repostCaption{
+							padding-left : 2 * @rhythm;
+							
+						}
 					}
 				}
 			}

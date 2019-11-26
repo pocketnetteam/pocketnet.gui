@@ -360,6 +360,109 @@
 	}
 }
 
+html.stblack{
+	#notifications{
+		
+	
+		.error{
+			color : @color-main;
+		}
+		
+		.group{
+			.groupCaption{
+	
+				.caption{
+					color : @color-main;
+				}
+			}
+	
+			
+		}
+	
+	
+		.ncaptionWrapper{
+			>div{
+	
+				&.showAll{
+					color : @color-bright;
+					&:hover{
+						color : @color-contrast;
+					}
+				}
+			}
+		}
+	
+		.nwrapper{
+	
+			.notification{
+				border-bottom: 1px solid fade(@color-main, 20);
+				color : @color-gray-mlight;
+	
+				&:hover{
+					color : @color-main;
+				}
+	
+	
+				.date{
+					color : @color-bright;
+				}
+			}
+		}
+	
+		.emptyNew,
+		.empty{
+			color : @color-black4;
+		}
+	
+	}
+	
+	.notificationTolltip{
+	
+	
+		.tooltipster-box{
+			box-shadow: 0 0 5000px 3000px fade(@color-black, 70);
+			
+		}
+	}
+	
+	.tooltipster-content{
+		#notifications{
+			
+	
+			.closentooltipth{
+				background: fade(@color-black, 30);
+			}
+		
+	
+			.closentooltipsecond{
+				background: fade(@color-black, 30);
+				color : @color-main;
+			
+				&:hover{
+					color : @color-bright;
+					background: fade(@color-black, 70);
+				}
+			}
+	
+			.closentooltip{
+				background: fade(@color-black, 20);
+				color : @color-main;
+				
+				&:hover{
+					color : @color-bright;
+				}
+	
+			}
+	
+			.wrk{
+				background: @color-black;
+				box-shadow: 0 0 5000px 3000px fade(@color-black, 90);
+			}
+	
+		}
+	}	
+}
+
 @media only screen and (max-width: 640px) {
 #notifications{
 	
@@ -386,7 +489,6 @@
 			.caption{
 				font-size: 1.2em;
 				font-weight: 700;
-				color : @color-black2;
 			}
 		}
 

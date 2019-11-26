@@ -137,6 +137,68 @@
         }
     }
 }
+
+html.stblack{
+    #video{
+        
+        background: @color-black4;
+    
+    
+        .buttonWrapper{
+    
+            button{
+                background: #FF4200;
+                border-color: #FF4200;
+    
+                &:hover{
+                    color : #fff;
+                    background: @color-good;
+                    border-color: @color-good;
+                }
+            }
+        }
+        
+        .fixedbtn{
+            
+            button{
+                background: #FF4200;
+                border-color: #FF4200;
+    
+                &:hover{
+                    color : #fff;
+                    background: @color-good;
+                    border-color: @color-good;
+                }
+            }
+        }
+    }
+    .joinbeta{
+    
+        background: fade(#151722, 95);
+        color : @color-gray-slight;
+    
+        ._close{
+            color : fade(@color-main, 90);
+        }
+    
+    
+    
+        .joinbetawrapper{
+    
+            .caption{
+                color : @color-contrast;
+            }
+    
+            .inputWrapper{
+                input{
+                    border-bottom : 2px solid @color-contrast;
+                    color : #fff;
+    
+                }
+            }
+        }
+    }    
+}
 @media only screen and (max-width: 768px) {
     #video{
         .fixedbtn{

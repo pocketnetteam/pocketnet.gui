@@ -554,7 +554,7 @@ var test = (function(){
 								vl()
 							},
 
-							class : "one addaddressDialog"
+							class : "one addaddressDialog zindex"
 						})
 
 					}, {

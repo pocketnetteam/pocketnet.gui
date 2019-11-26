@@ -179,23 +179,39 @@
 
 				#post{
 					.cntswrk{
-						padding-right: 5 * @rhythm;
+						padding-right: 7 * @rhythm;
+					}
+
+					.share{
+						.cntswrk{
+							margin-left: 9 * @rhythm;
+						}
+	
+						.iconWrapper{
+							width: 9 * @rhythm;
+							padding-left: 4 * @rhythm;
+						}
 					}
 				}
 			}
 
 			#comments{
 
+				.caption{
+					padding-right: 7 * @rhythm;
+					padding-left: 5 * @rhythm;
+				}
+
 				.answer, 
 				.post{
-					padding-right: 7 * @rhythm;
+					padding-right: 8 * @rhythm;
 					padding-left: 2 * @rhythm;
 				}
 
 				.list{
 					.comment{
 						.commentPaddingWrapper{
-							padding-right: 8 * @rhythm;
+							padding-right: 9 * @rhythm;
 							padding-left: 2 * @rhythm;
 						}
 					}
@@ -644,6 +660,237 @@
 
 }
 
+html.stblack{
+	#author{
+
+		#lenta{
+			.shares{
+				.share{					
+					#post{
+						.share{
+							.work{
+								border-left : @rhythm solid @color-main;
+							}
+						}
+	
+						#post{
+							.share{
+								.work{
+									border-left : 0;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	
+	
+		.authorlentawrappermain{
+			
+	
+			.authorsearchicon{
+			
+	
+				.icon{
+	
+					&:hover{
+						color : @color-bright;
+					}
+	
+				}
+			}
+	
+			.authorsearchwrapper{
+				background: @color-black3;
+	
+				.search{
+					.searchPanel{
+						background: transparent;
+					}
+					.searchInput{
+						.searchInputIcon{
+							.sminput{
+								background: transparent; 
+							}
+						}
+					}
+				}
+			}
+	
+			
+		}	
+	
+		.postauwrapper{
+	
+			
+			.postauarrows{
+				background: @color-black3;
+				
+				
+				&.topwr{
+					border-bottom : 1px solid @color-main;
+				}
+	
+			}
+	
+	
+			.arrowau{
+	
+				&:hover{
+					color : @color-main;
+				}
+			}
+	
+			.backtoshares{
+				color : @color-main;
+	
+				&:hover{
+					color : @color-bright;
+				}
+			}
+	
+			
+	
+		}
+	
+		
+	
+		.authorinfo{
+		
+			.itemtable{
+				>div{
+	
+					
+					&.label{
+	
+						a{
+							color : @color-bright;
+						}					
+					}
+	
+					.showmoreabout{
+						
+						color : @color-main;
+	
+						&:hover{
+							color : @color-bright;
+						}
+					}
+	
+				}
+			}
+	
+	
+			.site{
+				color : @color-bright;
+			}
+		}
+	
+		.mworkwrapper{
+			background: @color-black2;
+		}
+		.subscribewrapperphones{
+			background: #20232A;			
+		}
+		.bgCaption{
+			background: fade(@color-bright, 20);
+			color : fade(@color-gray-slight, 60);
+	
+			&.blocking{
+				background: rgb(41, 3, 24);	
+			}
+	
+			.subscribebuttonstop{
+				
+	
+				.notificationturn{
+				
+	
+					i{
+						color : fade(@color-gray-slight, 30);
+					}
+	
+	
+					&:hover{
+						i{
+							color : fade(@color-gray-slight, 80);
+						}
+						
+					}
+				}
+	
+			}
+	
+			
+	
+			.usermenu{
+				color : @color-gray-mlight;
+				overflow: hidden;
+				
+				.usermenuitem{
+					
+					&:hover{
+						border-bottom: 2px solid @color-contrast;
+					}
+	
+					&.active{
+						border-bottom: 2px solid @color-contrast;
+					}
+	
+					&:nth-child(1){
+						padding-left: 0;
+					}
+				}
+			}
+	
+			.cellforimage{
+	
+				.usericon{
+					color : @color-gray-mlight;
+					
+				}
+			}
+	
+	
+		}
+	
+	
+		.contents
+		{
+			.ccaption{
+				color : @color-contrast;
+			}
+	
+			.gcontents{
+	
+				.score{
+					color : @color-gray;
+				}
+	
+				.citem{
+					&.selected{
+	
+						.score{
+							color : #FFAE00;
+						}
+					}		
+					
+					&:hover{
+						.score{
+							color : #FFAE00;
+						}
+					}
+				}
+			}
+	
+	
+			
+		}
+	
+	}	
+}
+
 @media only screen and (max-width: 640px) {
 	#content{
 
@@ -851,6 +1098,19 @@
 				position: fixed;
 			}
 
+		}
+	}
+
+	html.stblack{
+		#content{
+
+			#author{
+	
+				.mworkwrapper{
+					background: fade(@color-bright,40);
+				}
+	
+			}
 		}
 	}
 		

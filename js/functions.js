@@ -6813,6 +6813,12 @@
 			caption: "cf_caption"
 		}
 
+		var tp = 'offset'
+
+		if (p._in){
+			tp = 'position'
+		}
+
 		var self = this;
 			self.addscroll = false;
 
@@ -6894,8 +6900,8 @@
 				return;
 
 			var s = _in.scrollTop(),
-				top = container.position().top - offset[0],
-				bottom = container.position().top + container.height() - offset[0] + offset[1];
+				top = container[tp]().top - offset[0],
+				bottom = container[tp]().top + container.height() - offset[0] + offset[1];
 
 			if (self.addscroll){
 				top = top + s 
@@ -6921,6 +6927,7 @@
 				if (p.calculations.top)
 					top = p.calculations.top(caption, offset);
 			}
+
 
 			if ((pos=='top' && s > top && s < bottom) || (pos == 'bottom' && sh > top && sh < bottom + caption.height()))
 			{

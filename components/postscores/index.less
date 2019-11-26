@@ -1,0 +1,259 @@
+@import "../../css/__cssvar";
+
+#postscores{
+
+    .work{
+        width: 100%;
+        padding : 0 2 * @rhythm;
+    }
+
+    .caption{
+        text-align: center;
+        color : @color-gray2;
+        padding : 2 * @rhythm;
+        span{
+            font-size: 2em;
+            font-weight: 100;
+        }
+        
+    }
+
+    .subcaption{
+        text-align: center;
+        color : @color-main;
+        padding : 2 * @rhythm;
+        span{
+            font-size: 0.9em;
+            font-weight: 700;
+        }
+        
+    }
+
+    .youstars{
+        background: #f1f1f1;
+        padding-bottom : 2 * @rhythm;
+        
+
+        .youstarsTable{
+            >div{
+                vertical-align: middle;
+                width : 40%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                &.forstarsWrapper{
+                    width : 60%;
+                }
+            }
+        }
+    }
+
+    .itemwr{
+        width : auto;
+        margin-left: auto;
+
+        >diV{
+            vertical-align: middle;
+
+            &.starswr{
+                width: 150px;
+            }
+        }
+
+        .stars{
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color : @color-bright;
+            cursor: pointer;
+
+            i{
+
+            }
+            
+
+            &.active,
+            &:hover{
+                
+            }
+        }
+    }
+
+    .authorTable{
+        width : auto;
+
+        >div{
+            vertical-align: middle;
+            padding-left: 2 * @rhythm;
+            
+            &.iconWrapper{
+                width : 45px;
+                padding-left : 0;
+            };
+        }
+    }
+
+    .userscore{
+        color : #FFAE00;
+    }
+
+    .details{
+        .detailsWrapper{
+            padding-bottom : @rhythm;
+            border-bottom : 1px solid @color-gray-mlight;
+        }
+        .bystars{
+            .ratingrow{
+                >div{
+                    vertical-align: middle;
+                    padding : @rhythm 0;
+
+                    &.label{
+                        width : 70px
+                    }
+
+                    &.pecent{
+                        width : 55px;
+                        text-align: right;
+                    }
+                }
+            }
+        }
+
+        .linebg{
+            width: 100%;
+            position: relative;
+            height: 3px;
+
+            .line{
+                .transition(0.3s);
+                position: absolute;
+                left : 0;
+                top : 0;
+                bottom : 0;
+                background: #FFAE00;
+            }
+        }
+    }
+
+    #userslist{
+        padding : 0;
+        padding-top : 2 * @rhythm;
+        background: #fafafa;
+
+        .caption{
+            padding : 0;
+            font-size: 0.9em;
+            font-weight: 900;
+            color : @color-main;
+        }
+
+        .wrk{
+            padding : 0 2 * @rhythm;
+        }
+
+        .empty{
+            color : @color-gray-mlight;
+            text-align: center;
+            background: #fafafa;
+            padding : 4 * @rhythm;
+            padding-bottom : 6 * @rhythm;
+        }
+    }
+}
+
+
+.postscoreswnd.wnd{
+    .wndinner{
+        max-width: 420px;
+    }
+
+    .wndcontent{
+        overflow: hidden;
+        padding : 0;
+    }
+
+    #postscores{
+        position: absolute;
+        left : 0;
+        right: 0;
+        top : 0;
+        bottom : 0;
+
+        .fordetailsusers{
+            position: absolute;
+            left : 0;
+            right : 0;
+            bottom: 0;
+            overflow-y: scroll;
+            top: 130px;
+        }
+
+        .youstars{
+            position: absolute;
+            left : 0;
+            right : 0;
+            top: 0;
+            overflow: hidden;
+            height: 130px;
+        }
+    }
+    
+}
+
+html.stblack{
+    #postscores{
+
+       
+    
+        .caption{
+            color : @color-bright;
+        }
+    
+        .subcaption{
+            color : @color-main;
+        }
+    
+        .youstars{
+            background: @color-black4;
+        }
+    
+        .itemwr{
+           
+            .stars{
+                color : @color-bright;
+            }
+        }
+    
+    
+        .details{
+            .detailsWrapper{
+                border-bottom : 1px solid @color-gray2;
+            }
+           
+            .linebg{
+               
+                .line{
+                    background: #FFAE00;
+                }
+            }
+        }
+    
+        #userslist{
+            background: @color-black4;
+    
+            .caption{
+                color : @color-main;
+            }
+    
+    
+            .empty{
+                color : @color-gray-mlight;
+                background: @color-black4;
+            }
+        }
+    }
+    
+   
+}

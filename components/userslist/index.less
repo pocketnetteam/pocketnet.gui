@@ -146,6 +146,56 @@
 	}
 }
 
+html.stblack{
+	#userslist{
+		background: @color-black3;
+	
+	
+		.users{
+			.user{
+			
+				.addressTable{
+					cursor: pointer;
+					
+					>div{
+		
+						&.label{
+		
+							.cur{
+								color : @color-main;
+							}
+	
+							.light{
+								color : @color-gray;
+							}
+						}
+		
+					}
+		
+				}
+	
+				.subscribebuttonstop{
+					i{
+						color : @color-good;
+					}
+	
+					.unsubscribe{
+						color : @color-gray-mlight;
+					}
+	
+					
+				}
+	
+				&.blocking{
+					background: rgb(41, 3, 24);	
+				}
+		
+			}
+			
+		}
+	}	
+}
+
 @media only screen and (max-width: 640px) {
 #userslist{
 	padding : 2 * @rhythm;

@@ -47,3 +47,45 @@
 	</div>
 
 <% }) %>
+
+<div class="settingsGroup">
+
+	<div class="mwork gk">
+		<div class="groupCaption">Pocketnet theme</div>
+	</div>
+	<div class="mwork wh">
+		<div class="groupOptions">
+
+
+			<div class="parameterMaketWrapper theme" parameter="theme">
+				<div class="parameter table theme">
+
+					<div class="pName">
+						<div class="pNameW">
+							Set Theme
+						</div>
+					</div>
+
+					<div class="pInput">
+						<% _.each(themes, function(th, index){ 
+							
+							
+							
+							%>
+							<div class="themewrapper <% if(index == current){ %> active <% } %>" theme="<%-index%>">
+								<div class="themeicon">
+									<div class="thbadge">
+											<i class="fas fa-check-circle"></i>
+									</div>
+								</div>
+							</div>
+						<% }) %>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>

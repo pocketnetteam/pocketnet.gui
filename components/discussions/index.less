@@ -232,3 +232,76 @@
 	}
 
 }
+
+html.stblack{
+	#discussions{
+
+		.userscount{
+			button{
+	
+				&:hover{
+					background: transparent;
+					color : @color-main;
+				}
+			}			
+		}
+
+	
+		.empty{
+	
+			span{
+				color : @color-bright;
+				
+			}
+		}
+	
+	
+		.load{
+			background: fade(@color-black, 99);
+	
+		}
+	
+	
+		.discussion{
+			border-bottom: 1px solid fade(@color-main, 50);
+			
+	
+			.discussionTable{
+				>div{
+	
+					.activity{
+						color: #FF3405;
+					}
+	
+					&.panel{
+						color: @color-gray-mlight;
+						
+	
+						.item{
+							&:hover{
+								color: @color-contrast;
+							}
+						}
+					}
+				}
+			}
+	
+	
+			.lastMessageTable{
+				>div{
+					&.lastMessageAuthor{
+						.usericon{
+							background: @color-main;
+						}
+					}
+	
+				}
+	
+				.lastTime{
+					color : @color-main;
+				}
+			}
+		}
+	
+	}	
+}

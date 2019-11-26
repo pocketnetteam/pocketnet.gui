@@ -671,6 +671,307 @@
 	}
 }
 
+html.stblack{
+	#test{
+		background: @color-black3;
+		.caption{
+			color : @color-main;
+	
+			.sub{
+				color : @color-gray-mlight;
+			}
+		}
+	
+		.errorname{
+			color : @color-main;
+		}
+	
+		.userPanel{
+			
+			.require{
+				color : @color-bad;
+			}
+	
+			.upanelloader{
+				background: fade(@color-black, 90);
+	
+			}
+	
+			
+			.uploadTable{
+	
+				>div{
+	
+					&.label{
+						color : @color-main;
+					}
+				}
+			}
+			
+			.referalMaketWrapper{
+				>div{
+	
+					&.refLabel{
+	
+						.span{
+							color : @color-main;
+						}
+					}
+	
+					.refNameTable{
+	
+						>div{
+							
+	
+							&.refRemove{
+	
+								&:hover{
+									color : @color-contrast;
+								}
+							}
+	
+	
+						}					
+					}
+				}
+			}
+	
+			.parameter{
+	
+				
+				.pName{
+	
+					.unit{
+						color : @color-bright;
+					}
+					
+				}
+	
+				
+				.pInput{
+	
+					.echo{
+						color : @color-contrast;
+					}
+				}
+	
+				.panel{
+	
+					.clear{
+						color : @color-main;
+						.transition(0.3s);
+						&:hover{
+							color : @color-bright;
+						}
+					}
+					
+				}
+	
+				select,
+				textarea,
+				input{
+					border : 1px solid @color-black2;
+	
+					&.error{
+						border : 1px solid @color-bad;
+					}
+				}
+	
+	
+				.error{
+					select,
+					textarea,
+					input{
+						border : 1px solid @color-bad;
+					}
+					
+				}
+	
+	
+				.vc_valuecustom,
+				.vc_valuecustom_multibig{
+					.vc_textInput{
+						background: @color-black;
+						color : @color-gray-mlight;
+					}
+				}
+	
+				
+			}
+			
+			.upanel{
+				>div{
+	
+					.save{
+						background: @color-black2;
+						border-color : @color-black2;
+						color: @color-gray;
+					}
+	
+					&.loadingToB{
+	
+	
+						.label{
+							color : @color-main;
+						}
+					}
+				}
+	
+	
+	
+				&.changes{
+					>div{
+	
+						.save{
+							background: @color-main;
+							border-color : @color-main;
+	
+							&:hover{
+								background : @color-add;
+							}
+						}
+					}
+					
+				}
+	
+				
+			
+			}
+	
+		}
+	
+	
+		
+		.testPanel{
+			.showhidetestpanel{
+	
+				color : @color-main;
+			}
+	
+		
+		}
+	
+		.adressesInput{
+	
+			.addaddress{
+				border : 1px solid @color-black2;
+				color : @color-gray;
+				
+	
+				&:hover{
+					color : @color-main;
+					border-color: @color-main;
+				}
+			}
+	
+			.addedAddressesWrapper{
+				.addedAddressWrapper{
+					
+					background: @color-black4;
+					
+					.addedAddress{
+	
+						
+						
+						>div{
+							
+							&.currencyWrapper{
+								color : @color-main;
+							}
+	
+							&.panelWrapper{
+	
+								.item{
+									color : @color-gray-mlight;
+									
+	
+									&:hover{
+										color : @color-bad;
+									}
+								}
+							}
+	
+						}
+					}
+				}
+			}
+		}
+	
+		.signout{
+			color : @color-contrast;
+			&:hover{
+				color : @color-main;
+			}
+		}
+	
+	
+	
+		.unspentlist{
+			.unspentData{
+	
+				.cpt{
+					color : @color-main;
+				}
+			}
+		}
+	
+	
+	}
+	
+	.addaddressDialog{
+	
+		background: fade(#151722, 95);
+		color : @color-gray-mlight;
+	
+		.thwrapper{
+			background: transparent;
+			
+		}
+	
+		._close{
+			color : fade(@color-gray-mlight, 90);
+		}
+	
+		
+	
+		.addaddress{
+			
+			.caption{
+				color : @color-contrast;
+			}
+	
+			.inputsWrapper{
+	
+				.inputsWrapperTable{
+					>div{
+						&.curWrapper{
+	
+							select{
+								border-bottom : 2px solid @color-contrast;
+								color : @color-main;
+								background-image: url(../../img/arrow_wh.png);
+							}
+						}
+	
+						&.addressWrapper{
+							input{
+								border : 0;
+								background: transparent;
+								border-bottom : 2px solid @color-contrast;
+								color : @color-gray-mlight;
+							}
+						}
+					}
+				}
+	
+	
+	
+				
+			}
+		}
+	}	
+}
+
 @media only screen and (max-width: 768px) {
 	#test{
 
@@ -792,5 +1093,30 @@
 				
 			}
 		}
+	}
+
+	html.stblack{
+		#test{
+
+			background: @color-black;
+			.userPanel{
+	
+				.upanelloader{
+					background: fade(@color-black, 90);
+				}
+	
+			}
+	
+			.adressesInput{
+	
+				.addaddress{
+					background: @color-main;
+				}
+	
+				
+			}
+		}
+	
+		
 	}
 }

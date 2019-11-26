@@ -562,6 +562,255 @@
 	}
 }
 
+html.stblack{
+	#connection{
+		
+		.preloaderabs{
+		
+			background: fade(@color-black, 80);
+	
+		}
+	
+	
+		.connection{
+	
+			.nodesCaptionTable{
+				>div{
+					&.foradd{
+						color : @color-main;
+						&:hover{
+							color : @color-bright;
+						}
+	
+					}
+				}
+	
+				.nodesCaption{
+					color : @color-bright;
+				}
+			}
+			
+			.proxypart{
+				background: fade(@color-bright, 30);
+				color : @color-gray-mlight;
+	
+				.nodesCaptionTable{
+					.nodesCaption{
+						color : @color-main;
+					}
+				}
+				
+	
+				.proxyconnect{
+	
+					.proxyselectwrapper{
+						border-bottom : 2px solid @color-main;
+						
+					}
+	
+					.proxyselecttable{
+						color : @color-gray-mlight;
+						
+	
+						&:hover{
+							color : fade(@color-gray-mlight, 80);
+						}
+	
+	
+					}
+				}
+				
+			}
+	
+	
+			.nodespart{
+	
+	
+				.tablecaption{
+					background: @color-black2;
+				}
+	
+				.nodewrapepr{
+					border-bottom: 1px solid fade(@color-main, 50);
+				}
+	
+				.node{
+				   
+					&.active{
+						color : @color-good;
+						>div{
+							&.use{
+								color : @color-good;
+							}
+						}
+					}
+	
+					>div{
+						
+						
+						&.use{
+							color : fade(@color-main, 50);
+						}
+	
+						&.connectnode{	
+							color : @color-good;
+						}
+	
+						&.panel{
+							
+	
+							.item{
+								color : fade(@color-main, 50);
+
+								&.edit{
+									&:hover{
+										color : @color-main;
+									}
+								}
+	
+								&.stable{
+									color : @color-good;
+								}
+							   
+							}
+						}
+	
+					}
+				}
+	
+				.emptylist{
+					display:none;
+					background: @color-black2;
+					color : @color-gray;
+	
+				}
+	
+			}
+		}
+	}
+	
+	.proxieslist,
+	.addnode,
+	.addproxy{
+		.preloaderabs{
+			background: fade(@color-black2,80);
+	
+		}
+	}
+	
+	.proxieslist{
+		.empty{
+			color : @color-gray-mlight;
+		
+		}
+	
+	
+		.proxy{
+			border-bottom: 1px solid fade(@color-main, 50);
+			
+			>div{
+	
+				&.name{
+	
+					.dup{
+						color : fade(@color-main, 50);
+					}
+	
+				}
+				
+				&.panel{
+	
+					.item{
+						color : @color-gray-mlight;
+	
+						&.edit{
+							&:hover{
+								color : @color-main;
+							}
+						}
+	
+						
+					}
+				}
+			}
+	
+			&.active{
+				color : @color-good;
+			}
+	
+			&:hover{
+				
+			}
+	
+			&:nth-last-child(1){
+				border-bottom: 0px solid fade(@color-main, 50);
+			}	
+		}
+	}
+	
+	
+	.addproxy,
+	.addnode{
+	
+		.parameter{
+	
+			.pName{
+				
+				.clear{
+					color : @color-gray-light;
+					&:hover{
+						color : @color-main;
+					}
+				}
+	
+			}
+	
+			
+	
+			.pInput{
+	
+				.echo{
+					color : @color-contrast;
+				}
+	
+			}
+	
+			.panel{
+				
+				.clear{
+					color : @color-gray-slight;
+					&:hover{
+						color : @color-main;
+					}
+				}
+				
+			}
+	
+			select,
+			textarea,
+			input{
+				border : 1px solid @color-black;
+	
+				&.error{
+					border : 1px solid @color-bad;
+				}
+			}
+	
+			.error{
+				select,
+				textarea,
+				input{
+					border : 1px solid @color-bad;
+				}
+				
+			}
+	
+			
+	
+		}
+	}	
+}
+
 @media only screen and (max-width: 640px) {
 	#connection{
 

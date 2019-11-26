@@ -162,7 +162,7 @@ ____loclib.wqrcodecreated = 'QR CODE CREATED';
 ____loclib.wlinkcreating = 'LINK CREATING';
 ____loclib.wqrcodecreating = 'QR CODE CREATING';
 ____loclib.wdoptions = 'OPTIONS';
-____loclib.wssuccessfully = "Transaction has sent successfully";
+____loclib.wssuccessfully = "Transaction sent successfully";
 ____loclib.wscalculatefees = 'CALCULATE FEES';
 ____loclib.wsaddressnotv = "Address is not valid";
 

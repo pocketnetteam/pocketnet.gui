@@ -28,83 +28,72 @@ if(share.settings.v == 'a'){
 var bigmessage = false;
 var name = app.platform.api.name(share.address)
 
+var emptywithrepost = share.isEmpty() && share.repost
+
+
 var metadisplay = function(){ %>
 
 <div class="meta">
 	<div class="metatable table">
 		<div class="metadata">
-			<div class="author">
 
-				<div class="authorTable table">
-					<div class="authorCell">
-						<% if(!ed.authAction) {%>
+			<% if(!emptywithrepost) {%>
 
-							<a href="<%-app.platform.api.authorlink(share.address)%>">
+				<div class="author">
 
-						<% } %>
+					<div class="authorTable table">
+						<div class="authorCell">
+							<% if(!ed.authAction) {%>
 
-						<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
+								<a href="<%-app.platform.api.authorlink(share.address)%>">
 
-						
-						
-							<b><span><%-name || share.address %></span></b><% if(reputation) {%><sup><%-compressedNumber(reputation, 1)%></sup><% } %>
+							<% } %>
 
-						<% if(!ed.authAction) {%>
-							</a>
-						<% } %>
+							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
 
-						<% if(state && !my && (typeof repost == 'undefined' || !repost)) { %> 
+							
+							
+								<b><span><%-name || share.address %></span></b><% if(reputation) {%><sup><%-compressedNumber(reputation, 1)%></sup><% } %>
 
-							<span class="sbtnxs">
-								&middot; <span class="subscribeLabel asubscribe">Follow</span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i> Following</span>
-							</span>
+							<% if(!ed.authAction) {%>
+								</a>
+							<% } %>
 
-						<% } %>
+							<% if(state && !my && (typeof repost == 'undefined' || !repost)) { %> 
 
+								<span class="sbtnxs">
+									&middot; <span class="subscribeLabel asubscribe">Follow</span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i> Following</span>
+								</span>
+
+							<% } %>
+
+							
+						</div>				
 						
 					</div>
-
-				
-
-					<!--
-					<% var c = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.rc');
-
-						if(c > 0) { %>
-
-						<div class="svcCell tooltip" title="<%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %> rescued <%- c %> people from the censored web">
-
-							<div class="icon savecrossIcon">
-								<div class="icn">
-									<i class="fas fa-plus-circle"></i>
-								</div>
-								<div class="amount">
-									<span><%- c || 0 %></span>
-								</div>
-							</div>
-
-						</div>
-
-					<% } %>-->
-
-					
 				</div>
-			</div>
+
+			<% } else { %> 
+			
+				<div class="repostCaption">
+					<i class="fas fa-share"></i> 
+				</div>
+				
+			<% } %>
 		
 		</div>
 
-		<% if(state && (typeof repost == 'undefined' || !repost)) {%>
+		<% if(state && (typeof repost == 'undefined' || !repost)) { %>			
 
-			
-
-		<div class="metapanel">
-			<div class="metapanelitem metmenu">
-				<i class="fas fa-ellipsis-h"></i>
+			<div class="metapanel">
+				<div class="metapanelitem metmenu">
+					<i class="fas fa-ellipsis-h"></i>
+				</div>
 			</div>
-		</div>
 
 		<% } %>
 
-		<% if((typeof repost != 'undefined' && repost)) {%> 
+		<% if(typeof repost != 'undefined' && repost && !fromempty) { %> 
 
 			<div class="metapanel">
 				<div class="metapanelitem">
@@ -115,22 +104,7 @@ var metadisplay = function(){ %>
 			</div>
 			
 		<% } %>
-
-		<!--
-
-		<% if(state) {
-
-			if(!my && mestate.reputation >= 20) { %>
-
-				<div class="metapanel">
-					<div class="metapanelitem complain">
-						<i class="fas fa-ban"></i> <span class="workstation">Complain</span>
-					</div>
-				</div>
-
-			<% } 
-
-		} %> -->
+		
 	</div>					
 </div>
 	
@@ -297,56 +271,35 @@ var metadisplay = function(){ %>
 
 	<div class="work">
 
-		<div class="shareTable <%-subscribed%> <%-view%>" address="<%-share.address%>">
-			<div class="iconWrapper">
+		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>">
 
+			<% if(!emptywithrepost) { %>
 
-				<% if(!ed.authAction) {%>
-				
-					<a href="<%-app.platform.api.authorlink(share.address)%>">
+				<div class="iconWrapper">
 
-				<% } %>
-
-					<% var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
-
-					<div class="icon">
-						<div class="usericon usericonsbsa another" image="<%-src || ''%>">
-							<% if(!src) {%>
-								<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
-							<% } %>
-						</div>
-					</div>
-
-
-
-				<% if(!ed.authAction) {%>
-					</a>
-				<% } %>
-
-				<!--
-				
-				<% if(!my && state && !ed.byauthor) {%>
-
-					<div class="additional">
-						<i class="fas fa-plus"></i>
-					</div>
-
-				<% } %>
-
-				<% if(!isMobile()) { %> 
-
-					<% if(!share.temp) {%>
-
-						<div class="aitem ashare sharesocial">
-							<i class="fas fa-share-alt"></i>
-						</div>
+					<% if(!ed.authAction) {%>
+					
+						<a href="<%-app.platform.api.authorlink(share.address)%>">
 
 					<% } %>
-				<% } %>-->
 
+						<% var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
 
+						<div class="icon">
+							<div class="usericon usericonsbsa another" image="<%-src || ''%>">
+								<% if(!src) {%>
+									<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+								<% } %>
+							</div>
+						</div>
 
-			</div>
+					<% if(!ed.authAction) {%>
+						</a>
+					<% } %>
+
+				</div>
+
+			<% } %>
 
 			<div class="cntswrk hideOnFullVideo formeta">
 
@@ -372,224 +325,131 @@ var metadisplay = function(){ %>
 
 			<div class="repostWrapper"></div>
 
-			<div class="cntswrk">
-				<div class="paddingWrapper">
-					
-					<% if(share.tags && share.tags.length > 0) {%>
+			<% if(!emptywithrepost) {%>
 
-						<div class="tags canmark hideOnFullVideo">
-							<% _.each(share.tags, function(tag){ %>
-
-								<div class="tag">
-									<a href="s?ss=tag:<%-tag%>">
-										<span>
-											#<%-tag%>
-										</span>
-									</a>
-								</div>
-
-							<% }) %>
-						</div>
-
-					<% } %>
-
-					
-					<% if((typeof repost == 'undefined' || !repost)) {%>
-						<div class="sys hideOnFullVideo">
-							<% if(share.time) {%>
-
-								<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-
-							<% } else { %> 
-
-								<span>New</span>
-
-							<% } %>
-
-							<% if(share.edit == 'true') {%>	
-								<span class="editedLabel"><i class="fas fa-pencil-alt"></i> Edited</span>
-							<% } %>
-						</div>
-					<% } %>
-
-					<% if(!share.temp &&  (typeof repost == 'undefined' || !repost)) {%>
-						<div class="panel">
-							<div class="item forstars">
-
-								
-							</div>
-
-							
-							<% if(app.platform.repost) {%>
-								<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
-
-									<div class="itemwr table">
-										<div class="iconwr">											
-											<div class="icon">
-												<i class="fas fa-share"></i>
-											</div>
-										</div>
-										<% if(share.reposted || my) {%> 
-											<div class="labelwr">
-												<span class="label"><%-share.reposted || 0%></span>
-											</div>
-										<% } %>
-									</div>
-
-								</div>
-							<% } %>
-
-							
-
-							<div class="item sharesocial right unselectable">
-
-								<div class="itemwr table">
-									<div class="labelwr"><span class="label">SHARE</span></div>
-									<div class="iconwr">
-										
-										<div class="icon">
-											<i class="fas fa-share-alt"></i>
-										</div>
-									</div>
-								</div>
-								
-							</div>
-
-							<% if(my){ %> 
-
-								<!--<div class="item promote ">
-
-									<div class="itemwr table">
-										<div class="iconwr">
-											<div class="icon">
-												<i class="fas fa-level-up-alt"></i>
-											</div>
-										</div>
-
-										<div class="count">
-											<span>PROMOTE</span>
-										</div>
-										
-									</div>
-									
-								</div>-->
-
-
-							<% } else { %> 
-
-								<!--<div class="item donate right">
-
-									<div class="itemwr table">
-										<div class="iconwr">
-											<div class="icon">
-												<i class="fas fa-donate"></i>
-											</div>
-										</div>
-										
-										
-									</div>
-									
-								</div>-->
-
-							<% } %>
-
-							<% if(state) {%>
-							
-								<!--<div class="item discussion">
-									<div class="itemwr table">
-
-										<div class="count">
-											
-										</div>
-
-										<div class="iconwr">
-											<div class="icon">
-												<i class="fas fa-comments"></i>
-											</div>												
-										</div>
-
-									</div>
-								</div>-->
-
-							<% } %>
-
-							
-
-							<!--<div class="clearfix"></div>-->
-
-							
-							<!--<div class="item right">
-
-								<div class="itemwr table commentsAction">
-									<div class="iconwr">
-										<div class="icon">
-											<i class="fas fa-comment"></i>
-										</div>
-									</div>
-
-									<div class="count">
-										<span><%- share.comments || "0" %></span>
-									</div>
-									
-								</div>
-								
-							</div>-->
-						</div>
-					<% } %>
-
-					<% if(share.temp) {%>
-
-						<div class="panel">
-							<div class="item right">
-
-								<div class="itemwr table tempPreloader">
-									
-									<div class="iconwr">
-										<div class="preloader5"><span></span><span></span><span></span></div>
-									</div>
-									
-									<div class="count">
-										<div class="label">
-
-											<span><%=e('postWaitConf')%></span>
-										</div>
-									</div>
-
-									
-									
-								</div>
-
-							</div>
-							<div class="clearfix"></div>
-						</div>
-
-					<% } %>
-
-				</div>
-			</div>
-
-
-			<!--
-			<div class="cntwrk">
-				<div class="subscribeWrapper">
-					<div class="name">
-						<span><b><%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %></b></span>
-					</div>
-
-					<div class="subscribeevent">
-						<div class="item">
-							<button class="asubscribe">SUBSCRIBE
-						</div>
+				<div class="cntswrk">
+					<div class="paddingWrapper">
 						
-					</div>
+						<% if(share.tags && share.tags.length > 0) {%>
 
-					<div class="unsubscribeevent">
-						<div class="item">
-							<button class="aunsubscribe">UNSUBSCRIBE</button>
-						</div>
+							<div class="tags canmark hideOnFullVideo">
+								<% _.each(share.tags, function(tag){ %>
+
+									<div class="tag">
+										<a href="s?ss=tag:<%-tag%>">
+											<span>
+												#<%-tag%>
+											</span>
+										</a>
+									</div>
+
+								<% }) %>
+							</div>
+
+						<% } %>
+
+						
+						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
+							<div class="sys hideOnFullVideo">
+								<% if(share.time) {%>
+
+									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
+
+								<% } else { %> 
+
+									<span>New</span>
+
+								<% } %>
+
+								<% if(share.edit == 'true') {%>	
+									<span class="editedLabel"><i class="fas fa-pencil-alt"></i> Edited</span>
+								<% } %>
+							</div>
+						<% } %>
+
+						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
+							<div class="panel">
+								<div class="item forstars">
+
+									
+								</div>
+
+								
+								<% if(app.platform.repost) {%>
+									<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+
+										<div class="itemwr table">
+											<div class="iconwr">											
+												<div class="icon">
+													<i class="fas fa-share"></i>
+												</div>
+											</div>
+											<% if(share.reposted || my) {%> 
+												<div class="labelwr">
+													<span class="label"><%-share.reposted || 0%></span>
+												</div>
+											<% } %>
+										</div>
+
+									</div>
+								<% } %>
+
+								
+
+								<div class="item sharesocial right unselectable">
+
+									<div class="itemwr table">
+										<div class="labelwr"><span class="label">SHARE</span></div>
+										<div class="iconwr">
+											
+											<div class="icon">
+												<i class="fas fa-share-alt"></i>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+								
+							</div>
+
+							<div class="wholikes">
+								
+							</div>
+						<% } %>
+
+						<% if(share.temp) {%>
+
+							<div class="panel">
+								<div class="item right">
+
+									<div class="itemwr table tempPreloader">
+										
+										<div class="iconwr">
+											<div class="preloader5"><span></span><span></span><span></span></div>
+										</div>
+										
+										<div class="count">
+											<div class="label">
+
+												<span><%=e('postWaitConf')%></span>
+											</div>
+										</div>
+
+										
+										
+									</div>
+
+								</div>
+								<div class="clearfix"></div>
+							</div>
+
+						<% } %>
+
 					</div>
 				</div>
-			</div>-->
+
+			<% } %>
+
 		</div>
 
 		<div class="blockAuthor">
@@ -603,14 +463,18 @@ var metadisplay = function(){ %>
 		
 	</div>
 
-	<%if(typeof repost == 'undefined' || !repost) {%>
+	<% if(!emptywithrepost) {%>
 
-		<div class="commentsWrapperHb">
-			
-			<div class="commentsWrapper">
+		<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+
+			<div class="commentsWrapperHb">
+				
+				<div class="commentsWrapper">
+				</div>
+
 			</div>
 
-		</div>
+		<% } %>
 
 	<% } %>
 

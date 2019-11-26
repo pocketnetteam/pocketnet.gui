@@ -714,9 +714,10 @@ var comments = (function(){
 				}
 			},
 			showall : function(){
+
 				showedall = true;
 				el.c.addClass('showedall')				
-				actions.showhideLabel()
+				actions.showhideLabel()				
 
 				if (listpreview){
 
@@ -764,7 +765,7 @@ var comments = (function(){
 
 				else
 				{
-					
+					renders.caption()	
 				}
 			},
 			showhideLabel : function(){
@@ -980,8 +981,6 @@ var comments = (function(){
 
 				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
 
-				console.log('id, pid, txid, comment', id, pid, txid, comment)
-
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
@@ -1041,8 +1040,6 @@ var comments = (function(){
 						})
 
 						__el.find('.socialshare').on('click', function(){
-
-							console.log('sharesocial', comment)
 
 							actions.sharesocial(comment)
 
@@ -1391,6 +1388,15 @@ var comments = (function(){
 					}, function(p){
 
 						renders.cpreview()
+
+						console.log("OBJ", {
+							container: el.c,
+							caption: el.c.find('.captionfwrapper'),
+							offset: [top, -100],
+							removeSpacer : true,
+							iniHeight : true,
+							_in : _in
+						})
 
 						caption = new Caption({
 							container: el.c,
@@ -1768,9 +1774,7 @@ var comments = (function(){
 				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
 				p.class = "firstcomment"
 
-				actions.showhideLabel()
-				
-				renders.caption()
+				actions.showhideLabel()	
 
 				renders.list(p, function(){
 
@@ -1801,6 +1805,8 @@ var comments = (function(){
 				})
 
 			})
+
+			console.log("ED", ed)
 
 			if (ed.showall){
 				actions.showall()

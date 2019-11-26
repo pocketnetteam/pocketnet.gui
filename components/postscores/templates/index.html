@@ -1,0 +1,77 @@
+<div id="<%-module.map.id%>">
+
+	<div class="youstars">
+
+		<div class="caption">
+			<span>Post Rating</span>
+		</div>
+
+		<div class="work">
+			<div class="youstarsTable table">
+
+				<% 
+				
+				var address = share.address;
+				
+				if (state) { 
+					
+					address = user.address.value
+					
+					var name = app.platform.api.name(address)
+					
+					%>
+					<div class="you">
+
+							<div class="author">
+
+								<div class="authorTable table">
+									<div class="iconWrapper">
+										<% var src = deep(app, 'platform.sdk.usersl.storage.' + address + '.image')  %>
+
+										<div class="icon">
+											<div class="usericon usericonsbsa another" image="<%-src || ''%>">
+												<% if(!src) {%>
+													<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+												<% } %>
+											</div>
+										</div>
+
+									</div>
+
+
+									<div class="authorCell">
+									
+										<b><span><%-name || address %></span></b>	
+										
+										
+									</div>				
+									
+								</div>
+							</div>
+
+
+					</div>
+				<% } %>
+
+				<div class="forstarsWrapper">
+					<div class="forstars">
+
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="fordetailsusers">
+
+		<div class="details">
+
+		</div>
+
+		<div class="users">
+
+		</div>
+
+	</div>
+</div>

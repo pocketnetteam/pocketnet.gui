@@ -171,6 +171,35 @@
 	}
 }
 
+html.stblack{
+	#imagegallery{
+		
+	
+		.panel{
+		
+			.imageNavigation{
+				>div{
+					color : fade(@color-main, 50);
+	
+	
+					&.arrow{
+	
+						&:hover{
+							color : @color-good;
+						}
+					}
+				}
+			}
+		}
+	
+		.noImages{
+			color : @color-main;
+		}
+		
+	}
+	
+}
+
 @media only screen and (max-width: 640px) {
 	#imagegallery{
 		.panel{

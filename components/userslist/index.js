@@ -12,6 +12,7 @@ var userslist = (function(){
 		var addresses = [],
 			cnt = 50,
 			end = false,
+			extra = null,
 			page = 0;
 
 		var loading;
@@ -73,7 +74,7 @@ var userslist = (function(){
 				
 			},
 			subscribe : function(address){
-				self.app.platform.api.actions.subscribe(address, function(tx, err){
+				self.app.platform.api.actions.subscribeWithDialog(address, function(tx, err){
 
 					if(tx){
 					}
@@ -134,7 +135,7 @@ var userslist = (function(){
 			subscribe : function(){
 				var address = $(this).closest('.user').attr('address')
 
-				actions.subscribeWithDialog(address)
+				actions.subscribe(address)
 			},
 
 			subscribePrivate : function(){
@@ -155,7 +156,8 @@ var userslist = (function(){
 					name :  'users',
 					el :   el.users,
 					data : {
-						addresses : addresses
+						addresses : addresses,
+						extra : extra
 					},
 
 					inner : append
@@ -285,6 +287,8 @@ var userslist = (function(){
 				data.addresses = addresses
 				data.empty = deep(p.settings, 'essenseData.empty');
 				data.caption = deep(p.settings, 'essenseData.caption');
+
+				extra = deep(p.settings, 'essenseData.extra');
 
 				clbk(data);
 

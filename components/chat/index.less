@@ -599,6 +599,223 @@
 	}
 }
 
+html.stblack{
+	#chat{
+	
+		.load{
+			background: fade(@color-black3, 80);
+		}
+	
+		
+		.chatwindow{
+			background: @color-black3;
+	
+			.other{
+				color: @color-main;
+			}
+		}
+	
+		.headerWrapper{
+			background: @color-black;
+			color : @color-main;
+	
+			.header{
+				>div{
+					&.icon{
+						color : @color-main;
+					}
+	
+					&.name{
+						color : @color-gray-mlight;
+	
+					}
+	
+					.countUnread{
+						color: @color-contrast;
+					}
+	
+					&.panel{
+						color : @color-gray-mlight;
+	
+						.minimize{
+							color : @color-bright;
+						}
+					}
+				}
+			}
+		}
+	
+		.dragHoverOnChat{
+			background: fade(@color-main, 5);
+		}
+	
+		.cantmessages{
+			
+			background: fade(@color-black3, 80);
+	
+			.table{
+				>div{
+					color : @color-main;
+				}
+			}
+		}
+	
+	
+		.formWrapper{
+			border: 1px solid @color-black;
+			background: @color-black;
+	
+			.form{
+			
+				>div{
+	
+					&.reputationFailCell{
+						color : @color-main;
+					}
+	
+				}
+			}
+		}
+	
+		.chatmessages{
+	
+			.chatmessage{
+				background: fade(@color-bright, 5);
+
+				&.read{
+					background: transparent;
+				}
+	
+				&.fail{
+					.status{
+						i{
+							color : @color-bad;
+							
+						}
+					}
+				}
+	
+	
+				>div{
+					
+	
+					&.iconWrapper{
+	
+						.icon{
+							color : @color-bright;
+	
+						}
+					}
+	
+				}
+	
+				.textWrapperTable{
+					>div{
+						vertical-align: middle;
+	
+	
+						&.tiph{
+	
+							.hvti{
+								border: 8px solid @color-black2;
+								background: transparent;
+							}
+						}
+	
+	
+						&.textWrapper{
+	
+							.blocking{
+								background: @color-black3;
+							}
+	
+							.text{
+								background:@color-black2;
+	
+								a{
+									color : @color-bright;
+								}
+	
+								.name{
+									a{
+										color : @color-gray-mlight;
+									}
+								}
+	
+								&.cantdecrypt{
+									color : @color-main;
+								}
+							}
+	
+							.time{
+								color : @color-main;
+							}
+	
+							.attachment{
+	
+								.attachmentName{
+									color : @color-bright;
+								}
+							}
+							
+						}
+					}
+				}
+	
+				&.mine{
+					
+	
+					.textWrapperTable{
+						>div{
+							
+							&.tiph{
+	
+								.hvci{
+									top: 0;
+									right: auto;
+									left: 0;
+								}
+	
+								.hvti{
+									border: 8px solid @color-gray3;
+								}
+							}
+	
+							&.textWrapper{
+								.text{
+									background: @color-gray3;
+								}
+								
+	
+							}
+						}
+					}
+				}
+			}
+		}
+	
+	
+		&.fixedin{
+	
+	
+		}
+	
+		&.minimized{
+			.headerWrapper{
+	
+				.header{
+					>div{
+						.label{
+							color : @color-contrast;
+						}
+					}
+				}
+			}
+	
+		}
+	}	
+}
+
 @media only screen and (max-width: 640px) {
 	#chat{
 		&.buildin{
