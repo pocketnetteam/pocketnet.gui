@@ -31,6 +31,16 @@ SubscribePrivate = function(){
 		}
 	}
 
+	self.import = function(p){
+
+		if (p.address)
+			self.address.v = p.address
+
+		if (p.vsaddress)
+			self.address.v =  p.vsaddress
+			
+	}
+
 	self.type = 'subscribePrivate'
 
 	return self;
@@ -67,6 +77,16 @@ Subscribe = function(){
 		return {
 			address : self.address.v
 		}
+	}
+
+	self.import = function(p){
+
+		if (p.address)
+			self.address.v = p.address
+
+		if (p.vsaddress)
+			self.address.v =  p.vsaddress
+			
 	}
 
 	self.type = 'subscribe'
@@ -107,6 +127,16 @@ Unsubscribe = function(){
 		}
 	}
 
+	self.import = function(p){
+
+		if (p.address)
+			self.address.v = p.address
+
+		if (p.vsaddress)
+			self.address.v =  p.vsaddress
+			
+	}
+
 	self.type = 'unsubscribe'
 
 	return self;
@@ -145,6 +175,16 @@ Blocking = function(){
 		}
 	}
 
+	self.import = function(p){
+
+		if (p.address)
+			self.address.v = p.address
+
+		if (p.vsaddress)
+			self.address.v =  p.vsaddress
+			
+	}
+
 	self.type = 'blocking'
 
 	return self;
@@ -181,6 +221,16 @@ Unblocking = function(){
 		return {
 			address : self.address.v
 		}
+	}
+
+	self.import = function(p){
+
+		if (p.address)
+			self.address.v = p.address
+
+		if (p.vsaddress)
+			self.address.v =  p.vsaddress
+			
 	}
 
 	self.type = 'unblocking'
@@ -512,11 +562,34 @@ Comment = function(txid){
 		return self.comment.v + self.value.v
 	}
 
-	self.export = function(){
-		return {
-			commentid : self.comment.v,
-			value : self.value.v.toString()
+	self.export = function(alias){
+		if(!alias){
+			return {
+				commentid : self.comment.v,
+				value : self.value.v.toString()
+			}
 		}
+		else{
+			return {
+				commentid : self.comment.v,
+				value : self.value.v.toString(),
+				vsaddress : self.address.v
+			}
+		}
+		
+	}
+
+	self.import = function(p){
+
+		if(p.commentid)
+			self.comment.v = p.commentid
+
+		if (p.value)
+			self.value.v = Number(p.value)
+
+		if (p.vsaddress)
+			self.address.v = p.vsaddress
+
 	}
 
 	self.type = 'cScore'
@@ -551,6 +624,7 @@ UpvoteShare = function(){
 	self.ustate = 'score'
 
 	self.opreturn = function(){
+
 		return self.address.v + " " + self.value.v
 	}
 
@@ -561,14 +635,39 @@ UpvoteShare = function(){
 	}
 
 	self.serialize = function(){
+
 		return self.share.v + self.value.v
 	}
 
-	self.export = function(){
-		return {
-			share : self.share.v,
-			value : self.value.v
+	self.export = function(alias){
+
+		if(!alias){
+			return {
+				share : self.share.v,
+				value : self.value.v
+			}
 		}
+		else{
+			return {
+				share : self.share.v,
+				value : self.value.v,
+				vsaddress : self.address.v
+			}
+		}
+
+	}
+
+	self.import = function(p){
+
+		if (p.share)
+			self.share.v =  p.share
+
+		if (p.value)
+			self.value.v = p.value
+
+		if (p.vsaddress)
+			self.address.v = p.vsaddress
+
 	}
 
 	self.type = 'upvoteShare'
@@ -614,6 +713,16 @@ ComplainShare = function(){
 			share : self.share.v,
 			reason : self.reason.v
 		}
+	}
+
+	self.import = function(p){
+
+		if (p.share)
+			self.share.v =  p.share
+
+		if (p.reason)
+			self.reason.v = p.reason
+			
 	}
 
 	self.type = 'complainShare'
@@ -1707,10 +1816,7 @@ pShare = function(){
 		upvoteShare.value.set(value);
 		upvoteShare.address.set(self.address || '')
 
-		self.myVal = Number(value);
-
-
-		
+		self.myVal = Number(value);		
 
 		return upvoteShare;
 	}
@@ -1782,8 +1888,6 @@ pComment = function(){
 				self.url = decodeURIComponent(v.msgparsed.url || "");
 				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
 				self.images = _.map(v.msgparsed.images || [], function(i){
-
-					console.log("i", i, decodeURIComponent(i))
 
 					return decodeURIComponent(i)
 				});
@@ -1922,6 +2026,20 @@ Img = function(p){
 }
 
 kits = {
+	c : {
+		userInfo : UserInfo,
+		share : Share,
+		complainShare : ComplainShare,
+		upvoteShare : UpvoteShare,
+		cScore : СScore,
+		comment : Comment,
+		unblocking : Unblocking,
+		blocking : Blocking,
+		unsubscribe : Unsubscribe,
+		subscribe : Subscribe,
+		subscribePrivate : SubscribePrivate
+	},
+
 	ini : {
 
 	},
@@ -1962,3 +2080,21 @@ var opreturnData = [Buffer.from(test.type, 'utf8'), data];
 if (test.opreturn){
 	opreturnData.push(Buffer.from(test.opreturn()))
 }*/
+/*
+var jstr = '{\"txid\":\"187cae864b1b92720b151ac4fdfaa661aed5878156090dc8d0200d412e720d70\",\"txidEdit\":\"\",\"block\":422903,\"time\":1575295716,\"address\":\"PPrFUMzLohoC7cufa58Rw1HVzvc26Zcktf\",\"type\":0,\"lang\":\"en\",\"caption\":\"\",\"message\":\"This%20message%20is%20to%20Wilhelm%20(%20who%20has%20blocked%20me%20)%20and%20his%20like%20who%20want%20to%20attack%20us%20Christians%20and%20Conservative%20Trump%20Supporters%20!%20Yes%20those%20dangerous%20conservative%20Christians%20-%20your%20a%20joke!%20Give%20it%20up%20-%20your%20not%20fooling%20anyone%20but%20your%20own%20kind%20-%20who%20have%20itchy%20ears%20and%20only%20want%20to%20hear%20what%20they%20want%20to%20hear.%0A2%20Timothy%204%3A3-4%0AFor%20the%20time%20will%20come%20when%20people%20will%20not%20put%20up%20with%20sound%20doctrine.%20Instead%2C%20to%20suit%20their%20own%20desires%2C%20they%20will%20gather%20around%20them%20a%20great%20number%20of%20teachers%20to%20say%20what%20their%20itching%20ears%20want%20to%20hear.%20They%20will%20turn%20their%20ears%20away%20from%20the%20truth%20and%20turn%20aside%20to%20myths.\",\"tags\":[],\"url\":\"\",\"images\":[\"https://i.imgur.com/yHWnW6K.jpg\"],\"settings\":\"{\\\"a\\\":null,\\\"v\\\":null,\\\"videos\\\":null,\\\"image\\\":null}\",\"txidRepost\":\"\"}'
+
+var test = new Share()
+
+jstr = JSON.parse(jstr)
+
+	_.each(jstr, function(j, i){
+		jstr[i] = decodeURIComponent(j)
+	})
+
+	test.import(jstr)
+
+	var data = bitcoin.crypto.hash256(test.serialize()).toString('hex');
+
+
+	console.log('opreturnData', data, test)
+*/

@@ -434,8 +434,7 @@ var imagegallery = (function(){
 				
 			},
 
-			wnd : {
-				
+			wnd : {			
 				class : 'allscreen black withoutButtons imageGallery',
 			}
 		}

@@ -47,9 +47,25 @@ var test = (function(){
 
 				renders.options();
 			},
+			ref : function(resref){
+
+				console.log('ref1221211212', ref, firstTime, resref)
+
+				if (ref && firstTime){
+					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
+				}
+
+				/*if(ref && resref && firstTime){
+					var refaddress = deep(ref, 'address');		
+
+					self.sdk.users.requestFreeRef(refaddress, function(res, err){
+						console.log(res, err)
+					})
+				}*/
+			},
 			save : function(clbk){
 
-				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet().address, function(resref, err){				
+				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : "", function(resref, err){				
 
 					if(el.c.find('.userPanel').hasClass('loading')){
 						return
@@ -124,104 +140,134 @@ var test = (function(){
 						return false;
 					}
 
-					topPreloader(40)
+					topPreloader(30)
 
-					el.c.find('.userPanel').addClass('loading')
+					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
-					el.upanel.addClass('loading')
+						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
 
-					
+							topPreloader(50)
 
-					
-					el.c.find('.errorname').fadeOut();
+							ed.presave(function(){
+							
+								el.c.find('.errorname').fadeOut();
 
-					userInfo.uploadImage(function(){
+								console.log("SAVE")
 
+								topPreloader(70)
 
-						self.sdk.node.transactions.create.commonFromUnspent(
+								el.c.find('.userPanel').addClass('loading')
 
-							userInfo,
+								el.upanel.addClass('loading')
+								
+								el.c.find('.errorname').fadeOut();
 
-							function(tx, error){
+								userInfo.uploadImage(function(){
 
-								el.upanel.removeClass('loading')
+									if (ed.makeuser){
 
-								el.c.find('.userPanel').removeClass('loading')
+										topPreloader(100)
 
-								topPreloader(100)
+										el.upanel.removeClass('loading')
 
-								if(!tx){
+										el.c.find('.userPanel').removeClass('loading')
 
-									self.app.platform.errorHandler(error, true)	
-								}
-								else
-								{
+										ed.makeuser(userInfo)
 
-									successCheck()
+										return
 
-									delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
-									delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-
-
-									self.app.platform.sdk.user.storage.me = tx
-									
-									tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
-									
-									actions.upanel()
-
-									if (ref && firstTime){
-										localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
 									}
 
-									if(ref && resref && firstTime){
-										var refaddress = deep(ref, 'address');		
 
-										self.sdk.users.requestFreeRef(refaddress, function(res, err){
-											console.log(res, err)
-										})
-									}
+									self.sdk.node.transactions.create.commonFromUnspent(
 
-									self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
-										self.app.reloadModules(function(){
+										userInfo,
 
-											if (primary){
-	
-												self.nav.api.go({
-													href : 'index',
-													history : true,
-													open : true
-												})	
-	
+										function(tx, error){
+
+											el.upanel.removeClass('loading')
+
+											el.c.find('.userPanel').removeClass('loading')
+
+											topPreloader(100)
+
+											if(!tx){
+
+												self.app.platform.errorHandler(error, true)	
 											}
-											
 											else
-											{	
-												if (ed.success){
-													ed.success()
-												}
-												else
-												{
-													if (clbk)
-														clbk()
-												}
+											{
+
+												successCheck()
+
+												delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
+												delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
+
+
+												self.app.platform.sdk.user.storage.me = tx
+												
+												tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
+												
+												actions.upanel()
+
+												actions.ref(resref)
+
+												self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+													self.app.reloadModules(function(){
+
+														if (primary){
+				
+															self.nav.api.go({
+																href : 'index',
+																history : true,
+																open : true
+															})	
+				
+														}
+														
+														else
+														{	
+															if (ed.success){
+																ed.success()
+															}
+															else
+															{
+																if (clbk)
+																	clbk()
+															}
+														}
+				
+													})
+												})
+
+												
+
+												
 											}
-	
-										})
-									})
 
+										},
+
+										{
+											relay : ed.relay? ed.relay() : false
+											//pseudo : true
+										}
 									
+									)
+								})
 
-									
-								}
+							})
 
-							},
+						}
+						else
+						{
+							topPreloader(100)
 
-							/*{
-								pseudo : true
-							}*/
-						
-						)
+							el.c.find('.errorname').fadeIn();
+							el.c.find('.errorname span').html('This username is taken in Pocketnet');									
+						}
 					})
+
+					
 
 				})
 				
@@ -294,7 +340,11 @@ var test = (function(){
 
 				if(!el.upanel) return
 
-				if(_.toArray((self.app.platform.sdk.node.transactions.temp.userInfo || {})).length > 0){
+				if(_.toArray((self.app.platform.sdk.node.transactions.temp.userInfo || {})).length > 0 || 
+				
+				(self.app.platform.sdk.address.pnet() && 
+				deep(self.sdk.relayTransactions.storage, self.app.platform.sdk.address.pnet().address + '.userInfo.length') > 0 )){
+
 
 					el.upanel.addClass('wait')
 
@@ -378,11 +428,11 @@ var test = (function(){
 							}
 							else
 							{
-								el.c.find('.errorname').fadeOut();
+								
 
 								self.app.platform.sdk.users.nameExist(tempInfo[parameter.id], function(exist){
 
-									if(!exist || exist == self.app.platform.sdk.address.pnet().address){
+									if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
 										el.c.find('.errorname').fadeOut();
 									}
 									else
@@ -662,7 +712,11 @@ var test = (function(){
 				actions.signout()
 			},
 			save : function(){
-				actions.save()
+
+			
+					actions.save()
+				
+				
 			},
 			cancel : function(){
 				actions.cancel()
@@ -1014,7 +1068,15 @@ var test = (function(){
 				ref = null
 				changedLoc = true;
 
-				ed = p.settings.essenseData;
+				ed = p.settings.essenseData || {};
+
+				if(!ed.presave){
+					ed.presave = function(clbk){
+						if (clbk)
+							clbk()
+					}
+				}
+				
 
 				self.app.platform.sdk.user.get(function(){
 
@@ -1040,6 +1102,7 @@ var test = (function(){
 						data.tempInfo = tempInfo;
 						data.firstTime = firstTime;
 						data.ref = ref;
+						data.caption = ed.caption
 
 					if(ref){
 						self.sdk.users.get(ref, function(){
@@ -1135,6 +1198,10 @@ var test = (function(){
 				make();
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				class : 'withoutButtons allscreen testwindow'
 			}
 		}
 	};

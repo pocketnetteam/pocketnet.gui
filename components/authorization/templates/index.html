@@ -1,97 +1,163 @@
-<div id="<%-module.map.id%>">
+<% var p1 = function(){ %> 
 	
-		<div class="maket topCaption">
-			<div class="work">
-				<div class="caption section">
-					<%=e('id0')%>
-				</div>
-			</div>
-		</div>
 
-		<div class="maket leftPart">
+	<div class="maket leftPart">
 
-			<div class="work">
+		<div class="work">
 
-		
-				<div class="sitelogin section">
-					<div class="label">
-						<%=e('id1')%>
-					</div>
+			<div class="lptable table">
 
-					<div class="form">
-				    	<div class="item">
-							
-
-							<div class="inputTable table">
-
-					    		<div>
-					    			<div class="inputWrapperKey">
-										<input type="text" class="loginValue" value="<%- (mnemonic) %>" placeholder="Your Private Login Key" autocomplete="on"/>
-									</div>
-								</div>
-								<div class="fileUploaderWrapper">
-									<div class="uploadFile">
-										<div class="icon"><i class="fas fa-file-upload"></i></div>
-										<div class="label"><%=e('loadqrcode')%></div>
-									</div>
-								</div>
-							</div>
-							
-							
+				<div>
+				
+					<div class="sitelogin section">
+						<div class="label">
+							<%=e('id1')%>
 						</div>
 
-						<div class="item">
-							
-							<div class="inputTable table stay">
+						<div class="form">
 
-					    		<div>
-					    			<%= stay.input() %>
+							<div class="formh">
+
+								<div class="item">
+									
+
+									<div class="inputTable table keytable">
+
+										<div>
+											<div class="inputWrapperKey">
+												<input type="text" class="loginValue" value="<%- (mnemonic) %>" placeholder="Your Private Login Key" autocomplete="on"/>
+											</div>
+										</div>
+										<div class="fileUploaderWrapper">
+											<div class="uploadFile">
+												<div class="icon"><i class="fas fa-file-upload"></i></div>
+												<div class="label"><%=e('loadqrcode')%></div>
+											</div>
+										</div>
+									</div>
+									
+									
 								</div>
-								<div class="staylabel">
-									<%=e('stay')%>
+
+								<div class="item">
+									
+									<div class="inputTable table stay">
+
+										<div>
+											<%= stay.input() %>
+										</div>
+										<div class="staylabel">
+											<%=e('stay')%>
+										</div>
+									</div>
+
+									
+									
+									
 								</div>
+
+								<div class="item e buttons">
+									<button class="enter"><%=e('signin')%></button>
+								</div>
+
+								<% if(fast) {%>
+									<div class="item e buttons ">
+										<button class="showformh ghost"><i class="fas fa-chevron-circle-left"></i> Create a new account</button>
+									</div>	
+								<% } %>
+
 							</div>
 
-							
-							
-							
-						</div>
+							<div class="formv">
+
+								<% if(fast) {%>
+									<div class="item e buttons ">
+										<button class="showformh">Sign in with private key</button>
+									</div>	
+								<% } %>
+
+							</div>	
 						
-				        <div class="item e buttons">
-				        	<button class="enter"><%=e('signin')%></button>
-				        </div>
 
-				    </div>
+						</div>
+					</div>
+
 				</div>
 
 			</div>
 
 		</div>
 
-		<div class="maket rightPart">
+	</div>	
+<% } %>
 
-			<div class="newCustomer section">
+<% var p2 = function(){ %> 
 
-				<div class="work">
+	<div class="maket rightPart formv">
 
-					<div class="caption">
+		<div class="newCustomer section">
+
+			<div class="work">
+
+				<div class="caption cpt2">
+					<% if(!fast) {%> 
+
 						<%=e('orcreate')%>
-					</div>
 
+					<% } else { %> 
 
-					<div class="createAccount buttons">
+						Or create a new account	
 
-						<button class="good toRegistration"><%=e('createnew')%></button>
-												
-					</div>
-
-
+					<% } %>
 				</div>
+
+
+				<div class="createAccount buttons">
+					<% if(!fast) {%> 
+						<button class="good toRegistration"><%=e('createnew')%></button>
+					<% } else { %>
+
+						<div class="filluserform">
+
+						</div>
+
+					<% } %>
+											
+				</div>
+
+
 			</div>
-
-
-			
 		</div>
+		
+	</div>
 
+
+<% } %>
+
+<div id="<%-module.map.id%>" class="<% if(fast){%> fastregistration <% } %>">
+
+	<div class="maket topCaption">
+		<div class="work">
+			<div class="caption section">
+				<% if(!fast) {%> 
+
+					<%=e('id0')%> 
+					
+				<% } else { %> 
+					
+					Please Sign in or Create a new account to proceed action
+
+				<% } %>
+			</div>
+		</div>
+	</div>
+
+	<div class="scrollmaketpart">
+	
+		<% p1() %>
+
+		<% p2() %>
+
+	</div>
 
 </div>

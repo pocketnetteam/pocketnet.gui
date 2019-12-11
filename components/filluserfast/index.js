@@ -1,4 +1,4 @@
-var filluser = (function(){
+var filluserfast = (function(){
 
 	var self = new nModule();
 
@@ -8,50 +8,36 @@ var filluser = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ext, essenseData, initialParameters, fm;
+		var el, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters;
 
-		var scrollel = null;
-
-		var networkInterval = null;
-
-		var getrefname = function(clbk){
-			if (self.app.ref){
-				self.sdk.users.get(self.app.ref, function(){
-
-					var name = deep(self, 'sdk.users.storage.' + self.app.ref + '.name');
-
-					if (clbk)
-						clbk(name)
-				})
-			}
-			else{
-				if (clbk)
-					clbk(null)	
-			}
-		}
-
-		var needcaptcha = false;
-		var gliperror = false;
-
-		var gettype = function(){
-			var fref = self.app.ref || '';
-
-
-			var type = 'Overall'
-
-			if(fref.indexOf('author') > -1) type='Account'
-			if(fref.indexOf('&s=') > -1 || fref.indexOf('&v=') > -1) type='Post'
-
-			return type
-		}
+		
+		var current = null;
 
 		var steps = {
+			settings : {
+				id : 'settings',
+				nextindex : 'captcha',
+
+				prev : function(clbk){
+
+					clbk()
+			
+				},
+
+				render : 'settings',
+
+				after : function(el, pel){
+
+					
+				},
+
+				next : true				
+			},
 
 			captcha : {
 				id : 'captcha',
 				render : 'captcha',
-
-				nextindex : 'email',
+				nextindex : 'welcome',
 
 				prev : function(clbk){
 
@@ -75,6 +61,8 @@ var filluser = (function(){
 						{
 							self.sdk.captcha.get(function(captcha, error){
 
+								console.log('captcha, error', captcha, error)
+
 								if (error){
 
 									actions.to('network')
@@ -85,9 +73,15 @@ var filluser = (function(){
 								
 								if (captcha.done){
 
-									actions.next()
+									balance.request(function(r){
 
-									balance.request()
+										if(r){
+											
+
+											actions.next()
+										}
+
+									})
 
 								}
 								else{
@@ -111,10 +105,7 @@ var filluser = (function(){
 					var save = el.find('.addCaptcha')
 					var text = '';
 
-					setTimeout(function(){
 						input.focus()
-					}, 150)
-						
 
 					var validate = function(v){
 
@@ -163,9 +154,17 @@ var filluser = (function(){
 								}
 							
 								if (captcha.done){
-									actions.next()
+									
 
-									balance.request()
+									balance.request(function(r){
+
+										if(r){
+											
+
+											actions.next()
+										}
+
+									})
 								}
 						
 							}, true)
@@ -175,262 +174,19 @@ var filluser = (function(){
 
 					redo.one('click', function(){
 
-						self.app.platform.m.log('userwisard_captcha_redo')
-
 						actions.redo()
 					})
 				}
-			},
-			email : {
+			},	
 
-				id : 'email',
-
-				nextindex : 'money',
-
-				prev : function(clbk){
-
-					log.referral()
-					
-					if (localStorage['uei']){
-						actions.next()
-					}	
-					else
-					{
-						clbk()	
-					}
-					
-				},
-
-				render : 'email',
-				after : function(el, pel, time){
-
-					var save = function(email, clbk){
-
-						topPreloader(20)						
-
-						var _p = {
-							Email : email
-						}
-
-						_p.Action || (_p.Action = 'ADDTOMAILLIST');
-						_p.TemplateID = '1005'
-
-						_p.ref = ''
-						
-			
-						getrefname(function(name){
-			
-							var body = ''
-
-							_p.ref += gettype()
-			
-							if (name) {
-								
-								_p.ref += ', ' + name
-			
-								body += '<p><a href="https://pocketnet.app/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
-							}							
-			
-							var r = deep(document, 'referrer')
-			
-							if (r) {
-								body += '<p><a href="'+r+'">From: '+r+'</a></p>'
-							}
-			
-							_p.body = encodeURIComponent(body)
-			
-							$.ajax({
-								type: 'POST',
-								url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
-								data: _p,
-								dataType: 'json',
-								success : function(){
-				
-									topPreloader(100)
-				
-									if (clbk)
-										clbk();
-				
-								}
-							});
-						})
-					}
-
-					var validate = function(v){
-
-
-						if(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(v)){
-							return true;
-						}
-						else
-						{
-							return false;
-						}
-					}
-
-					var input = el.find('.uemailinput');
-					var skip = el.find('.skip')
-					var addEmail = el.find('.addEmail')
-
-					var email = '';
-
-					input.focus()
-
-					input.on('keyup', function(){
-						email = $(this).val()
-
-						if(validate(email)){
-							addEmail.removeClass('disabled')
-							skip.addClass('hidden')
-
-							addEmail.html("Add email and continue")
-						}
-						else
-						{
-							addEmail.addClass('disabled')
-							skip.removeClass('hidden')
-
-							addEmail.html("Add email")
-						}
-					})
-
-					addEmail.on('click', function(){
-
-						var email = input.val()
-
-						if(validate(email)){
-
-							self.app.platform.m.log('userwisard_email_add')
-
-							actions.next()
-							localStorage['uei'] = true;
-
-							save(email, function(){
-								
-							})
-
-						}
-					})
-
-					skip.one('click', function(){
-
-						self.app.platform.m.log('userwisard_email_skip')
-
-						localStorage['uei'] = true
-
-						actions.next()
-					})
-					
-				}
-
-
-			},
-			money : {
-
-				id : 'money',
-				nextindex : 'settings',
-
-				prev : function(clbk){
-
-					balance.check(function(result){
-
-						if (result){
-							actions.next()
-						}
-						else
-						{
-
-							if (needcaptcha){
-								actions.to('captcha')
-		
-								return
-							}
-		
-							if (gliperror){
-								actions.to('moneyfail')
-								return
-							}
-
-							clbk()
-						}
-
-					})
-					
-				},
-
-				ret : false,
-
-				render : 'money',
-
-				after : function(el, pel, time){
-
-					actions.timer(el.find('.time'), time || 59, function(){
-
-						balance.check(function(result){
-
-							if (result && (current == 'money' || current =='captcha')){
-
-								self.app.platform.m.log('userwisard_money_success')
-
-								actions.next()
-
-							}
-
-							else{
-								self.app.platform.m.log('userwisard_modey_delay')
-
-								el.find('.subcaption').html(self.app.localization.e('wesentmoneydelay'))
-
-								steps.money.after(el, pel, 30)
-							}
-
-						}, true)
-
-						
-					})
-				}
-
-
-			},
-			settings : {
-				id : 'settings',
-				nextindex : 'welcome',
-
-				prev : function(clbk){
-
-					clbk()
-
-					self.app.platform.m.log('userwisard_account')
-
-					/*self.app.platform.sdk.ustate.me(function(mestate){
-						if(!mestate){
-							actions.to('network')
-						}
-						else
-						{
-
-							
-
-							clbk()
-						}
-					})	*/				
-				},
-
-				render : 'settings',
-
-				after : function(el, pel){
-
-					
-				},
-
-				next : true
-				
-			},
 			welcome : {
 
 				id : 'welcome',
 
 				prev : function(clbk){
+
+					if (essenseData.welcomepart)
+						essenseData.welcomepart()
 
 					clbk()
 				},
@@ -439,21 +195,7 @@ var filluser = (function(){
 
 				after : function(el){
 
-					self.app.platform.m.log('userwisard_success')
-
-					setTimeout(function(){
-
-						self.nav.api.go({
-							href : 'index?r=recommended',
-							history : true,
-							open : true
-						})
-
-					}, 1500)
-
-					el.find('.welcome').on('click', function(){
-
-
+					var clbk = function(){
 						if (deep(essenseData, 'successHref') == '_this'){
 
 
@@ -477,21 +219,29 @@ var filluser = (function(){
 							})	
 
 						}
+					}
 
+					setTimeout(function(){
 
+						clbk()
+
+					}, 1500)
+
+					el.find('.welcome').on('click', function(){
+
+						clbk()
 						
 					})
 				}
 
 
 			},
+
 			network : {
 
 				id : 'network',
 
 				prev : function(clbk){
-
-					self.app.platform.m.log('userwisard_network_fail')
 
 					clbk()
 				},
@@ -501,7 +251,7 @@ var filluser = (function(){
 				after : function(el){
 
 
-					self.app.errors.clbks.filluser = function(){
+					self.app.errors.clbks.filluserfast = function(){
 
 						if(app.errors.state.proxy || app.errors.state.proxymain)  return
 
@@ -509,31 +259,13 @@ var filluser = (function(){
 							actions.to('captcha')
 						}
 
-						delete self.app.errors.clbks.filluser
+						delete self.app.errors.clbks.filluserfast
 					}
-
-					/*if (networkInterval)
-						clearInterval(networkInterval)
-
-					var networkInterval = setInterval(function(){
-
-						self.app.platform.sdk.ustate.me(function(mestate){
-
-							if(mestate){
-
-								self.app.platform.m.log('userwisard_network_success')
-
-								clearInterval(networkInterval)
-								actions.to('money')
-							}
-
-						})
-
-					}, 5000)*/
 				}
 
 
 			},
+
 			moneyfail : {
 
 				id : 'moneyfail',
@@ -582,7 +314,7 @@ var filluser = (function(){
 								if (amount > 0){
 	
 									if (current == 'moneyfail'){
-										actions.to('settings');
+										actions.to('welcome');
 									}
 	
 									delete self.app.platform.sdk.node.transactions.clbks.moneyfail
@@ -597,10 +329,6 @@ var filluser = (function(){
 
 		}
 
-		
-
-		var current = null;
-
 		var arrange = _.map(steps, function(s, i){
 			return i;
 		})
@@ -611,28 +339,11 @@ var filluser = (function(){
 			})
 		}
 
-		var log = {
-			referral : function(){
-
-				getrefname(function(name){
-					var type = gettype()
-					var r = deep(document, 'referrer')
-
-
-					self.app.platform.m.log('registration_referal_name', name)
-					self.app.platform.m.log('registration_referal_type', type)
-
-					if (r){
-						self.app.platform.m.log('registration_referal_referrer', r)
-					}
-				})
-
-			}
-		}
-
 		var balance = {
 
 			request : function(clbk){
+
+
 				self.sdk.users.requestFreeMoney(function(res, err){
 
 					var address = self.sdk.address.pnet().address;
@@ -652,10 +363,11 @@ var filluser = (function(){
 						}
 
 						if (err == 'error'){
+
 							gliperror = true
 
 							if (current == 'money' || current == 'captcha'){
-								actions.to('captcha')
+								actions.to('moneyfail')
 							}
 
 						}
@@ -669,7 +381,9 @@ var filluser = (function(){
 
 						self.app.settings.set(address, 'request', 'true')
 
-						balance.follow()
+						self.sdk.registrations.add(address, 3)
+
+						//balance.follow()
 
 						if (clbk)
 							clbk(true)
@@ -701,7 +415,7 @@ var filluser = (function(){
 
 							if(current == 'money'){				
 
-								self.app.platform.m.log('userwisard_money_success')							
+								//self.app.platform.m.log('userwisard_money_success')							
 	
 								actions.next()
 	
@@ -723,6 +437,18 @@ var filluser = (function(){
 		}
 
 		var actions = {
+
+			signin : function(clbk){
+				self.user.signin(k.mnemonicKey, function(state){
+
+
+					if (clbk)
+						clbk()
+
+				})		
+
+			},
+
 			to : function(step, clbk){
 				current = step;
 				actions.makeStep(clbk)
@@ -740,7 +466,17 @@ var filluser = (function(){
 					current = steps[current].nextindex
 				}
 				else{
-					current = steps.captcha.id
+
+					var me = deep(app, 'platform.sdk.user.storage.me');
+
+					if (me && me.relay){
+						current = steps.captcha.id
+					}
+					else{
+						current = steps.settings.id
+					}
+
+					
 				}
 
 
@@ -791,69 +527,92 @@ var filluser = (function(){
 					
 			},
 
-			timer : function(el, time, clbk){
+			testqrcodeandkey : function(hm, clbk){
 
-				var progress = new CircularProgress({
-					radius: 120,
-					strokeStyle: '#00A3F7',
-					lineCap: 'round',
-					lineWidth: 1,
-					font: "100 56px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
-					fillStyle : "#5D5D5D",
-					text : {						
-						value : ""
-					},
-					initial: {
-						strokeStyle: '#fff',
-						lineWidth: 1
+				var keyPair =  self.app.user.keysFromMnemo(trim(hm))  
+
+				var mk = keyPair.privateKey.toString('hex');
+
+				var qrcode = renders.qrcode(el.c.find('.hiddenqrcode'), mk)
+
+				var src = qrcode._oDrawing._oContext.canvas.toDataURL("image/jpeg");
+
+				grayscaleImage(src, function(image){
+
+					qrscanner.q.callback = function(data){
+
+						if(data == 'error decoding QR Code'){
+
+							if(clbk)
+								clbk(false)
+							
+						}
+						else
+						{
+							if(clbk)
+								clbk(true)
+							
+						}
 					}
-				});
 
-				el.find('.circle').html(progress.el);
+					qrscanner.q.decode(image)
+					
+				})
 
-				var update = function(_time){
+			},
 
-					var ms = secInTime(_time / 1000).split(":");
+			generate : function(clbk){
 
-					el.find('.t .min').html(ms[0])
-					el.find('.t .sec').html(ms[1])
-
-					progress.options.text = {
-						value: ''
-					};
-
-					var p = (1 - (_time / (time * 1000))) * 100;
-
-					if (p < 0) p = 0;
-
-					progress.update(p);
-
-				}
-
-				var end = function(){
+				if(k.mnemonicKey){
 
 					if (clbk)
 						clbk()
+
 				}
+				else{
+					var key = bitcoin.bip39.generateMnemonic();
 
-				timer = new Timer({
+					actions.testqrcodeandkey(key, function(result){
 
-					ontick : function(){
-				    
-						update(timer.getDuration())
-						
-					},
+						if(!result){
+							actions.generate()
+						}
+						else
+						{
 
-					onend : end
+							k.mnemonicKey = key;
 
-				});
+							k.mnemonicMask = _.shuffle(indexArray(k.mnemonicKey.length));
 
-				timer.start(time);
+							k.mnemonicContent = k.mnemonicKey.split(' ')
 
-				update(timer.getDuration());	
-	
+							var keys = self.app.user.keysFromMnemo(k.mnemonicKey)
+
+							k.mainAddress = app.platform.sdk.address.pnetsimple(keys.publicKey).address;
+
+							k.mk = keys.privateKey.toString('hex');
+
+
+							if (clbk)
+								clbk()
+						}
+					})
+				}
+				
+				
 			},
-			
+
+			waitgeneration : function(clbk){				
+
+				retry(function(){
+
+					if(k.mnemonicKey) return true;
+
+				}, clbk, 40)
+
+				
+			}
+
 		}
 
 		var events = {
@@ -883,6 +642,17 @@ var filluser = (function(){
 		}
 
 		var renders = {
+			qrcode : function(el, m){
+
+				var qrcode = new QRCode(el[0], {
+					text: m,
+					width: 256,
+					height: 256
+				});
+
+				return qrcode
+
+			},
 
 			step : function(step, clbk){
 
@@ -905,6 +675,10 @@ var filluser = (function(){
 					var m = '-' + (getindex(current) * w) + 'px'
 
 					line.css('margin-left', m)
+					/*line.animate({
+						'margin-left' : m
+					})*/
+					
 
 					s.closest('.step').addClass('active')
 
@@ -920,6 +694,7 @@ var filluser = (function(){
 
 					name :  'panel',
 					el :   el.panel,
+					turi : 'filluser',
 					data : {
 						step : step
 					},
@@ -937,6 +712,7 @@ var filluser = (function(){
 
 					name :  'captcha',
 					el :   el,
+					turi : 'filluser',
 					data : {
 						captcha : steps.captcha.current
 					},
@@ -953,6 +729,7 @@ var filluser = (function(){
 				self.shell({
 
 					name :  'email',
+					turi : 'filluser',
 					el :   el,
 					data : {
 						
@@ -970,6 +747,7 @@ var filluser = (function(){
 				self.shell({
 
 					name :  'welcome',
+					turi : 'filluser',
 					el :   el,
 					data : {
 						
@@ -987,6 +765,7 @@ var filluser = (function(){
 				self.shell({
 
 					name :  'moneyfail',
+					turi : 'filluser',
 					el :   el,
 					data : {
 						
@@ -1006,6 +785,7 @@ var filluser = (function(){
 
 					name :  'network',
 					el :   el,
+					turi : 'filluser',
 					data : {
 						
 					},
@@ -1047,7 +827,28 @@ var filluser = (function(){
 						wizard : true,
 						panel : el.panel,
 
-						success : function(){
+						presave : function(clbk){
+
+							actions.waitgeneration(function(){
+								actions.signin(function(){
+									self.sdk.registrations.add(k.mainAddress, 1)
+									if(clbk) clbk()
+								})	
+							})
+						},
+
+						relay : function(){
+							return k.mainAddress
+						},
+
+						success : function(userInfo){
+
+							k.info = userInfo
+
+							self.sdk.registrations.add(k.mainAddress, 2)
+
+							state.save()
+
 							actions.next()
 						}
 					},
@@ -1066,9 +867,10 @@ var filluser = (function(){
 			}
 		}
 
+
 		var state = {
 			save : function(){
-
+				console.log('kkk', k)
 			},
 			load : function(){
 				
@@ -1078,11 +880,31 @@ var filluser = (function(){
 		var initEvents = function(){
 			
 			window.addEventListener('resize', events.width)
-
 		}
 
 		var make = function(){
-			actions.next();
+			self.app.user.isState(function(state){
+
+				if(!state){
+					setTimeout(function(){
+						actions.generate(function(){
+						})
+					}, 1000)	
+					
+
+				}
+				else{
+
+					k = {};
+
+					k.mainAddress = self.app.user.address.value
+				}
+
+				actions.next();
+			})
+			
+
+			
 		}
 
 		return {
@@ -1090,65 +912,42 @@ var filluser = (function(){
 
 			getdata : function(clbk, p){
 
-				needcaptcha = false;
-				gliperror = false;
+				if (p.state && self.user.validateVay() != 'fuf'){
 
-				essenseData = p.settings.essenseData || {}
-
-				current = null;
-
-				var data = {
-					steps : steps
-				};
-
-
-				if(!self.app.user.validate()){
-
-					if (self.app.errors.connection()){
-						self.app.nav.api.load({
-							open : true,
-							href : 'userpage?id=test',
-							history : true
-						})
-					}
-					else{
-						self.fastTemplate('panel', function(rendered){
-						
-							clbk(data);
-	
-						})
-					}
-
-					
-				}
-				else
-				{
 					self.app.nav.api.load({
 						open : true,
 						href : 'index',
 						history : true
 					})
+
+					return
 				}
 
-				
+				needcaptcha = false;
+				gliperror = false;
+
+				essenseData = deep(p, 'settings.essenseData') || {}
+
+
+				current = null;
+
+				var data = {
+					steps : steps,
+					inauth : deep(p, 'settings.essenseData.inauth') || false
+				};
+
+				clbk(data);
 
 			},
 
 			destroy : function(){
-
-				if(networkInterval)
-					clearInterval(networkInterval)
-
 				window.removeEventListener('resize', events.width)
 
-				if (ext)
-					ext.destroy()
-
-				ext = null
+				delete self.app.platform.sdk.node.transactions.clbks.moneyfail
+				delete self.app.errors.clbks.filluserfast
+				delete self.app.platform.sdk.node.transactions.clbks.filluser
 
 				el = {};
-
-				$("html").removeClass("fillinguser")
 			},
 			
 			init : function(p){
@@ -1159,17 +958,15 @@ var filluser = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.panel = el.c.find('.panelWrapper')
 
-				initEvents();
-
 				initialParameters = p;
-
-				make();
 
 				scrollel = el.c.closest('.wndcontent')
 
 				if(!scrollel.length) scrollel = null;
 
-				$("html").addClass("fillinguser")
+				initEvents();
+
+				make()
 
 				p.clbk(null, p);
 			}
@@ -1202,11 +999,11 @@ var filluser = (function(){
 
 if(typeof module != "undefined")
 {
-	module.exports = filluser;
+	module.exports = filluserfast;
 }
 else{
 
-	app.modules.filluser = {};
-	app.modules.filluser.module = filluser;
+	app.modules.filluserfast = {};
+	app.modules.filluserfast.module = filluserfast;
 
 }

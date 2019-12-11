@@ -1,0 +1,580 @@
+@import "../../css/__cssvar";
+
+#filluserfast{
+	.caption{
+		margin-top: @rhythm;
+		font-size: 3.1em;
+		font-weight: 100;
+		text-align: center;
+	}
+
+	.mWrapper{
+		margin-top: 4 * @rhythm;
+
+		.panelWrapper{
+			margin-top: 4 * @rhythm;
+			padding : 2 * @rhythm;
+			padding-bottom: 10 * @rhythm;
+
+			.elpanel{
+				opacity: 0;
+				.transition(0.3s);
+
+				&.active{
+					opacity: 1;
+				}
+
+				.lwrapper{
+					display: none;
+				}
+
+
+			}
+
+			&.loading{
+				.elpanel{
+					opacity: 0.5;
+					.nlberl{
+						display: none;
+					}
+					.lwrapper{
+						display: inline;
+					}
+
+				}
+			}
+
+
+			.btn{
+				margin : 0 auto;
+				text-align: center;
+				width: 200px;
+				color : #fff;
+				cursor : pointer;
+				background: #FF3B00;
+				padding : @rhythm 0;
+				border-radius: 2px;
+
+				&.save{
+					cursor: default;
+					background: @color-gray;
+					.transition(0.3s);
+				}
+
+				
+			}
+
+			&.changes{
+				
+
+				.btn{
+					&.save{
+						background: #FF3B00;
+						color : #fff;
+						cursor : pointer;
+					}
+
+				}
+			}
+		}
+
+		.stepsWrapper{
+			overflow: hidden;
+
+			.stepsWrapperLine{
+				overflow: hidden;
+			}
+			.step{
+				min-height: 1px;
+				float: left;
+				opacity: 0;
+				.transition(0.3s);
+
+				&.active{
+					opacity: 1;
+				}
+			}
+		}
+
+		#test{
+			background: #fff;
+			width: 500px;
+			margin : 0 auto;
+
+			.testPanel{
+				display: none;
+			}
+
+			.caption{
+				font-size : 1em;
+			}
+
+			.subcaption{
+				text-align: center;
+			}
+
+			.uploadTable{
+				width: auto;
+				margin : 0 auto;
+				>div{
+					&.label{
+						display : none;
+					}
+
+					&.iconWrapper{
+						width: 60px;
+						position: relative;
+
+						.plissingCnt{
+							left : 45px;
+						}
+					}
+				}
+			}
+
+			.userPanel{
+
+				.upanelloader{
+					background: fade(#FFF, 90);
+
+					
+				}
+			}
+			.parameterMaketWrapper[parameter="addresses"]{
+				display: none;
+			}
+		}
+
+		.ucaptcha{
+			padding-top: 6 * @rhythm;
+			padding-bottom: 6 * @rhythm;
+
+			.captchaImageWrapper{
+                padding : @rhythm;
+                padding-top : 4 * @rhythm;
+				text-align: center;
+			}
+
+			.subcaption,
+			.subsubcaption{
+				margin : 0 auto;
+				margin-top: @rhythm;
+				color : @color-bright;
+				font-size: 1.7em;
+				font-weight: 300;
+				text-align: center;
+				max-width: 600px;
+			}
+
+			.inputWrapper{
+				max-width: 600px;
+				margin : 3 * @rhythm auto;
+			}
+
+			input{
+				font-size: 1.4em;
+				border : 0;
+				border-bottom: 1px solid @color-gray-light;
+				.transition(0.3s);
+				width: 100%;
+				background: transparent;
+				text-align : center;
+				&:placeholder-shown{
+                	
+                }
+
+				&:focus{
+					border-color : @color-main;
+				}
+			}
+
+			.addContainer{
+				padding-top: 3 * @rhythm;
+				text-align: center;
+
+				button{
+					min-width: 300px;
+				}
+			}
+
+			.redoContainer{
+				padding-top: 3 * @rhythm;
+				text-align: center;
+			}
+
+			button{
+				min-width: 180px;
+				.transition(0.3s);
+				
+				&.next{
+					color : @color-main;
+				}
+
+			}
+		}
+
+		.uemail{
+
+
+			padding-top: 6 * @rhythm;
+			padding-bottom: 6 * @rhythm;
+
+			.subcaption,
+			.subsubcaption{
+				margin : 0 auto;
+				margin-top: @rhythm;
+				color : @color-bright;
+				font-size: 1.7em;
+				font-weight: 300;
+				text-align: center;
+				max-width: 600px;
+			}
+
+			.inputWrapper{
+				max-width: 600px;
+				margin : 3 * @rhythm auto;
+			}
+
+			input{
+				font-size: 1.4em;
+				border : 0;
+				border-bottom: 1px solid @color-gray-light;
+				.transition(0.3s);
+				width: 100%;
+				background: transparent;
+				text-align : center;
+				&:placeholder-shown{
+                	
+                }
+
+				&:focus{
+					border-color : @color-main;
+				}
+			}
+
+			.addContainer{
+				padding-top: 3 * @rhythm;
+				text-align: center;
+
+				button{
+					min-width: 300px;
+				}
+			}
+
+			.skipContainer{
+				padding-top: 3 * @rhythm;
+				text-align: center;
+			}
+
+			button{
+				min-width: 180px;
+				.transition(0.3s);
+				
+				&.next{
+					color : @color-main;
+				}
+
+			}
+		}
+
+		.money{
+			padding-top: 6 * @rhythm;
+			.subcaption,
+			.subsubcaption{
+				margin : 0 auto;
+				margin-top: @rhythm;
+				color : @color-bright;
+				font-size: 1.7em;
+				font-weight: 300;
+				text-align: center;
+				max-width: 550px;
+			}
+
+			.subsubcaption{
+				text-align: center;
+				font-size: 1em;
+				font-weight: 300;
+				color : @color-gray-light;
+			}
+
+			.time{
+				margin-top: 2 * @rhythm;				
+				position: relative;
+
+
+				.t{
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					text-align: center;
+					position: absolute;
+					z-index: 2;
+					font-size: 4em;
+					font-weight: 100;
+					color : #30313A;
+
+					.table{
+						width: auto;
+						margin : 0 auto;
+						>div{
+							vertical-align: middle;
+							
+							width: 70px;
+							text-align: center;
+
+							&.sep{
+								width: 10px;
+							}
+						}
+					}
+				}
+
+				.circle{
+					text-align: center;
+					canvas{
+						margin : 0 auto;
+					}
+				}
+
+				
+			}
+		}
+
+		.moneyfail{
+			margin : 0 auto;
+			max-width: 400px;
+			text-align: center;
+
+			.subcaption{
+				padding-top: 3em;
+				font-size : 1.5em;
+			}
+
+			.addressWrapper{
+				padding-top: 3em;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.balanceWrapper{
+				padding-top: @rhythm;
+
+				span{
+					color : @color-main;
+				}
+			}
+			
+			button{
+				width: 180px;
+			}
+
+			.subc{
+				margin-top : 4 * @rhythm;
+				text-align: center;
+			}
+		}	
+
+		.welcome{
+			cursor: pointer;
+			margin : 0 auto;
+			max-width: 400px;
+			text-align: center;
+
+			.subcaption{
+				font-weight: 100;
+				padding-top: 3em;
+				font-size : 4em;
+
+			}
+
+			.subc{
+				margin-top : 4 * @rhythm;
+				text-align: center;
+			}
+		}
+
+		.network{
+			cursor: pointer;
+			margin : 0 auto;
+			max-width: 600px;
+			text-align: center;
+
+			.subcaption{
+				font-weight: 100;
+				padding-top: 1em;
+				font-size : 2em;
+				color : @color-gray-mlight;
+
+			}
+
+			.subc{
+				color : @color-gray-mlight;
+				margin-top : 2 * @rhythm;
+				text-align: center;
+				font-size: 1.1em;
+			}
+		}
+	}
+
+	&[step="welcome"]{
+		.caption{
+			display: none;
+		}
+    }
+    
+}
+
+html.stblack{
+	#filluserfast{
+	
+		.mWrapper{
+
+	
+			.panelWrapper{
+				
+	
+				.btn{
+					color : #fff;
+					background: #FF3B00;
+	
+					&.save{
+						background: @color-gray;
+					}
+	
+					
+				}
+	
+				&.changes{
+					
+					.btn{
+						&.save{
+							background: #FF3B00;
+							color : #fff;
+						}
+	
+					}
+				}
+			}
+	
+	
+			#test{
+				background: @color-black;
+			
+	
+				.userPanel{
+	
+					.upanelloader{
+						background: fade(@color-black, 90);
+	
+						
+					}
+				}
+			}
+	
+			.ucaptcha{
+				
+				.subcaption,
+				.subsubcaption{
+					color : @color-bright;
+				}
+	
+				
+				input{
+					
+					border-bottom: 1px solid @color-main;
+					
+					&:focus{
+						border-color : @color-main;
+					}
+				}
+	
+				button{
+					
+					&.next{
+						color : @color-main;
+					}
+	
+				}
+			}
+	
+			.uemail{
+	
+				.subcaption,
+				.subsubcaption{
+					color : @color-bright;
+				}
+	
+	
+				input{
+					border-bottom: 1px solid @color-main;
+					
+	
+					&:focus{
+						border-color : @color-main;
+					}
+				}
+	
+				button{
+					
+					&.next{
+						color : @color-main;
+					}
+	
+				}
+			}
+	
+			.money{
+				.subcaption,
+				.subsubcaption{
+					color : @color-bright;
+				}
+	
+				.subsubcaption{
+					color : @color-gray-light;
+				}
+	
+				.time{
+				
+					.t{
+						color : #30313A;
+	
+					}
+	
+				
+					
+				}
+			}
+	
+			.moneyfail{
+				
+				.balanceWrapper{
+	
+					span{
+						color : @color-main;
+					}
+				}
+				
+			}	
+	
+			.welcome{
+			
+			}
+	
+			.network{
+				
+	
+				.subcaption{
+					color : @color-gray-mlight;
+	
+				}
+	
+				.subc{
+					color : @color-gray-mlight;
+				}
+			}
+		}
+	
+		
+	}
+}

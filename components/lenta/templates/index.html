@@ -77,11 +77,42 @@
 
 			<% if(recommended == 'recommended') {%>	
 
-				You have no recommendations
+				Top posts section is empty!
 				
-			<% } else { %> 
+			<% } else { %>
+				
+				<% if(state) { 
+					
+					var t = app.platform.sdk.node.transactions.temp || {}
+					var r = app.platform.sdk.relayTransactions.storage[user.address.value] || {}
 
-				You have no subscriptions
+
+					if(!_.isEmpty(t.subscribe) || !_.isEmpty(t.subscribePrivate) || !_.isEmpty(r.subscribe) || !_.isEmpty(r.subscribePrivate)){ %> 
+
+						Posts from people you follow will be shown here
+						
+					<% } else { %> 
+
+						Posts from people you follow will be shown here 
+						
+					<% } %>
+
+					
+
+				<% } else { %> 
+
+					<div class="zerocaption">
+                        <span>
+								Posts from people you follow will be shown here
+                        </span>
+                    </div>
+                    <div class="subc">
+                        <a href="filluserfast">
+                            <button>Registration</button>
+                        </a>
+					</div>
+					
+				<% } %>
 
 			<% } %>
 
@@ -91,7 +122,7 @@
 		
 
 		<div class="networkErrorMessage">
-				<i class="fas fa-wifi"></i>
+			<i class="fas fa-wifi"></i>
 		</div>	
 
 		<div class="loader">

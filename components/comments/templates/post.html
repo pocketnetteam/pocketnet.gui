@@ -7,6 +7,9 @@ if(isMobile()) dplace = 'Speak up'
 
 <div class="postbody" answer="<%- answer %>" edit="<%- edit %>">
 	<div class="posttable table">
+
+		<% if(state) {%>
+
 		<div class="iconWrapper">
 
 			<%
@@ -28,6 +31,8 @@ if(isMobile()) dplace = 'Speak up'
 
 		</div>
 
+		<% } %>
+
 		<% if(edit) {%>
 			<div class="closeWrapper">
 				<div class="closeEdit">
@@ -42,7 +47,7 @@ if(isMobile()) dplace = 'Speak up'
 
 		<% } %>
 
-		<% if(mestate.reputation >= -50) { %> 
+		<% if(!state || mestate.reputation >= -50) { %> 
  
 			<div class="lcpp">
 				<div class="txt">

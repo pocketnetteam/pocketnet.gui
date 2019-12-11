@@ -10,13 +10,25 @@ if (firstTime){
 	
 	<div class="work">
 
-		<% if(!user.validate()) {%>
+		<% if(caption) {%>
 
 			<div class="caption">
-				<%=e('utip1')%> 
+				<%=caption%> 
 			</div>
 
+		<% } else { %> 
+
+			<% if(!user.validate()) {%>
+
+				<div class="caption">
+					<%=e('utip1')%> 
+				</div>
+	
+			<% } %>
+			
 		<% } %>
+
+		
 
 		
 
@@ -75,6 +87,7 @@ if (firstTime){
 				<% } %> -->
 			</div>
 			<% if(!essenseData.wizard) {%>
+
 				<div class="pgroup">
 					<div class="upanel">
 
@@ -96,11 +109,7 @@ if (firstTime){
 
 						<div class="item loadingToB">
 							<div class="preloader5"><span></span><span></span><span></span></div> 
-						</div>
-
-					
-
-
+						</div>			
 
 					</div>
 				</div>

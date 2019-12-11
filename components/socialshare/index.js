@@ -361,9 +361,11 @@ var socialshare = (function(){
 
 				}
 				
-				ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
-					ref : self.app.platform.sdk.address.pnet().address
-				})
+				if (self.app.platform.sdk.address.pnet())
+				
+					ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
+						ref : self.app.platform.sdk.address.pnet().address
+					})
 
 
 			

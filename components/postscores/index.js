@@ -343,6 +343,9 @@ var postscores = (function(){
 			wnd : {
 				class : 'postscoreswnd',
 				nooverflow : true,
+				swipeClose : true,
+				swipeCloseDir : 'right',
+				swipeMintrueshold : 30,
 				buttons : {
 					
 				}

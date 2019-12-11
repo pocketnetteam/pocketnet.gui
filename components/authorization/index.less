@@ -1,6 +1,33 @@
 @import "../../css/__cssvar";
 
 #authorization{	
+
+	#filluserfast{
+		.caption{
+			display: none;
+		}
+
+		.work{
+			width : 100%;
+			padding-left : 0;
+			padding-right : 0;
+			padding-top : 0;
+		}
+
+		.mWrapper {
+
+			margin-top : 0;
+
+			#test{
+				width : 100%;
+
+				.userPanel{
+					padding-top : 0;
+				}
+			}
+			
+		}
+	}
 	.work{
 		padding-top: 4 * @rhythm!important;
 		padding-bottom : 4 * @rhythm!important;
@@ -111,13 +138,315 @@
 		
 	}
 
-	
+	.lptable{
+		height: auto;
+		.transition(0.3s);
 
+		>div{
+			vertical-align: middle;
+		}
+	}
+
+	&.fastregistration{
+		.formv{
+			display: block;
+		}
+		
+		.formh{
+			display: none;
+		}
+		.sitelogin{
+			.item{
+				margin-top : 0;
+				.transition(0.3s);
+			}
+			
+		}
+
+		&.signinshow{
+			.formh{
+				display: block;
+			}
+			.formv{
+				display: none;
+			}
+
+			/*.leftPart .work,
+			.leftPart{
+				position: absolute;
+				left : 0;
+				right : 0;
+				top : 0;
+				bottom : 0;
+				width: 100%;
+			}
+
+			.sitelogin {
+				position: static;
+			}
+
+			.lptable{
+				height: 100%;
+			}*/
+
+			.sitelogin{
+				.item{
+
+					animation: 0.3s ease-out forwards mpt;
+				}
+				
+			}
+	
+		}
+	}
+
+}
+
+@keyframes mpt{
+    0% {
+      margin-top: 0;
+    }
+    
+ 
+    100% {
+		margin-top : 3 * @rhythm;
+    }
 }
 
 .betasign{
 	.btn1wr{
 		display: none!important;
+	}
+}
+
+.wnd.authwindow{
+	.wndinner{
+		width : 550px;
+		height: 80%;
+		max-height: 700px;
+		background: #fff;
+
+		.wndcontent{
+			padding : 0;
+		}
+	}
+
+	.wndback{
+		background: fade(@color-black, 90);
+	}
+
+	._close{
+		color : #fff;
+	}
+
+	#authorization{	
+
+		
+
+		position: absolute;
+		left : 0;
+		right : 0;
+		top : 0;
+		bottom : 0;
+
+		#filluserfast{
+			.welcome{
+				.subcaption{
+					font-size: 2em;
+					padding-top : 18 * @rhythm;
+				}
+			}	
+
+			.mWrapper{
+
+	
+		
+				#test{
+					background: @color-black3;
+				
+		
+					.userPanel{
+		
+						.upanelloader{
+							background: fade(@color-black3, 90);
+		
+							
+						}
+					}
+				}
+
+			}
+		}
+
+		
+
+		.topCaption{
+			position: absolute;
+			left : 0;
+			right : 0;
+			top : 0;
+			height : 57px;
+			background: #F7F7F9;
+
+			.caption{
+				color : @color-black;
+			}
+		}
+
+		.scrollmaketpart{
+			position: absolute;
+			left : 0;
+			right : 0;
+			bottom : 0;
+			top : 57px;
+			overflow-y: scroll;
+
+			.filluserform{
+				min-height: 600px;
+			}
+
+			.newCustomer {
+				padding-top : @rhythm;
+			}
+		}
+
+		&.welcomepnet{
+			.topCaption{
+				display: none;
+			}
+
+			.scrollmaketpart{
+				top : 0;
+				overflow: hidden;
+			}
+
+			.leftPart {
+				display: none;
+			}	
+
+			.cpt2{
+				display: none;
+			}
+
+			#filluserfast,
+			.filluserform,
+			.createAccount ,
+			.newCustomer>div,
+			.newCustomer,
+			.rightPart{
+				position: absolute;
+				left : 0;
+				right : 0;
+				top : 0;
+				bottom : 0;
+				min-height: 0;
+			}
+		}
+
+		.work{
+			padding-top: 2 * @rhythm!important;
+			padding-bottom : 2 * @rhythm!important;
+		}
+	
+		.caption{
+			font-size: 1.3em;
+			margin-bottom : 0!important;
+			text-align: center;
+			font-weight: 100;
+			color : @color-bright;
+		}
+
+		.label{
+			text-align: center;
+		}
+	
+		button{
+			width : 100%;
+	
+			&.toRegistration{
+				min-width: 190px;
+			}
+		}
+	
+		.inputTable{
+	
+			>div{
+				vertical-align: middle;
+	
+				.upload .fileUploader, .upload .fileUploader .elContent{
+					position: relative;
+				}
+	
+				&.fileUploaderWrapper{
+					width: 190px;
+	
+					text-align: center;
+	
+					.fileUploader{
+						
+					}
+	
+					>div{
+						color : @color-main;
+						font-size: 0.8em;
+					}
+				}
+	
+	
+			}
+	
+			&.stay{
+				width: auto;
+			}
+	
+			.staylabel{
+				font-size: 0.8em;
+			}
+		}
+		
+		.sitelogin{
+			.form{
+				margin-top: 2 * @rhythm;
+				.item{
+					margin-bottom: @rhythm;
+	
+					&.e{
+						margin-top: 2 * @rhythm;
+					}
+	
+					
+					input{
+						background: transparent;
+						color : @color-main;
+						border : 1px solid transparent;
+						border-right: 1px solid @color-gray-slight;
+						&:focus{
+							border :1px solid @color-gray-slight;
+							background: transparent;
+							color : @color-black2;
+						}
+					}
+	
+					.validationFail{
+	
+						color: @color-bad;
+						margin-left: @rhythm;
+						padding: 1.5 * @rhythm @rhythm;
+					}
+				}
+			}
+
+			.keytable {
+				>div{
+					background: #fff;
+				}
+			}
+	
+			
+		}
+	
+		
+	
 	}
 }
 
@@ -183,6 +512,91 @@ html.stblack{
 	
 	}
 	
+	.wnd.authwindow{
+		.wndinner{
+			background: @color-black;
+	
+			.wndcontent{
+				padding : 0;
+			}
+		}
+	
+		.wndback{
+			background: fade(@color-black2, 90);
+		}
+	
+		._close{
+			color : @color-main;
+		}
+	
+		#authorization{	
+	
+	
+			.topCaption{
+				background: @color-main;
+	
+				.caption{
+					color :#fff;
+				}
+			}
+	
+		
+			.caption{
+				color : @color-bright;
+			}
+	
+		
+			.inputTable{
+		
+				>div{					
+		
+					&.fileUploaderWrapper{
+		
+						>div{
+							color : @color-main;
+						}
+					}
+		
+				}
+		
+			}
+			
+			.sitelogin{
+				.form{
+					.item{						
+						
+						input{
+							background: transparent;
+							color : @color-main;
+							border : 1px solid transparent;
+							border-right: 1px solid @color-black2;
+							&:focus{
+								border :1px solid @color-black2;
+								background: transparent;
+								color : @color-black2;
+							}
+						}
+		
+						.validationFail{
+		
+							color: @color-bad;
+						}
+					}
+				}
+	
+				.keytable {
+					>div{
+						background: @color-black2;
+					}
+				}
+		
+				
+			}
+		
+			
+		
+		}
+	}
 }
 
 @media only screen and (max-width: 640px) {
@@ -231,6 +645,139 @@ html.stblack{
 					}
 				}
 			}
+		}
+	}
+
+	.wnd.authwindow{
+		.wndinner{
+			width : 100%;
+			height: 100%;
+			max-height: none;
+		}
+	
+		
+		._close{
+			color : @color-black;
+		}
+	
+		#authorization{	
+	
+			.topCaption{
+				height : 84px;
+				padding-left: 2 * @rhythm;
+				padding-right: 2 * @rhythm;
+			}
+	
+			.scrollmaketpart{
+				top : 84px;
+				
+			}
+	
+			
+			.work{
+				padding-top: 2 * @rhythm!important;
+				padding-bottom : 2 * @rhythm!important;
+			}
+		
+			.caption{
+				font-size: 1.3em;
+				margin-bottom : 0!important;
+				text-align: center;
+				font-weight: 100;
+				color : @color-bright;
+			}
+	
+			.label{
+				text-align: center;
+			}
+		
+			button{
+				width : 100%;
+		
+				&.toRegistration{
+					min-width: 190px;
+				}
+			}
+		
+			.inputTable{
+		
+				>div{
+					vertical-align: middle;
+		
+					.upload .fileUploader, .upload .fileUploader .elContent{
+						position: relative;
+					}
+		
+					&.fileUploaderWrapper{
+						width: 190px;
+		
+						text-align: center;
+		
+						.fileUploader{
+							
+						}
+		
+						>div{
+							color : @color-main;
+							font-size: 0.8em;
+						}
+					}
+		
+		
+				}
+		
+				&.stay{
+					width: auto;
+				}
+		
+				.staylabel{
+					font-size: 0.8em;
+				}
+			}
+			
+			.sitelogin{
+				.form{
+					margin-top: 2 * @rhythm;
+					.item{
+						margin-bottom: @rhythm;
+		
+						&.e{
+							margin-top: 2 * @rhythm;
+						}
+		
+						
+						input{
+							background: transparent;
+							color : @color-main;
+							border : 1px solid transparent;
+							border-right: 1px solid @color-gray-slight;
+							&:focus{
+								border :1px solid @color-gray-slight;
+								background: transparent;
+								color : @color-black2;
+							}
+						}
+		
+						.validationFail{
+		
+							color: @color-bad;
+							margin-left: @rhythm;
+							padding: 1.5 * @rhythm @rhythm;
+						}
+					}
+				}
+	
+				.keytable {
+					>div{
+						background: #fff;
+					}
+				}
+		
+				
+			}
+		
+			
+		
 		}
 	}
 }

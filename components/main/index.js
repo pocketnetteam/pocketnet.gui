@@ -370,7 +370,7 @@ var main = (function(){
 
 		var makePanel = function(){
 			self.app.user.isState(function(state){
-				if(state){
+				//if(state){
 
 					if(!isMobile()){
 						renders.panel()
@@ -378,7 +378,7 @@ var main = (function(){
 					}
 
 					renders.addpanel();
-				}
+				//}
 			})
 		}
 
@@ -490,6 +490,8 @@ var main = (function(){
 				if(typeof el != 'undefined' && el.c){
 
 					el.c.find('.bgCaption').removeClass('hidden')
+
+					makeShare()
 				}
 				
 			},
@@ -510,7 +512,7 @@ var main = (function(){
 
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
-				if(!p.state && primary && (typeof _Electron != 'undefined' || window.cordova || currentMode =='common' && !beginmaterial) )
+				/*if(!p.state && primary && (typeof _Electron != 'undefined' || window.cordova || currentMode =='common' && !beginmaterial) )
 				{
 					if(typeof _Electron != 'undefined' || window.cordova){
 
@@ -533,7 +535,9 @@ var main = (function(){
 
 					return
 					
-				}
+				}*/
+
+				console.log("TEST")
 
 				if(p.state && primary && !self.app.user.validate()){
 

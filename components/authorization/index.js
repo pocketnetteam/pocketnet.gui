@@ -11,6 +11,7 @@ var authorization = (function(){
 		var primary = deep(p, 'history');
 
 		var id = 'secondary';
+		var ext = null;
 
 		if (primary) id = 'primary';
 		if (p.inWnd) id = 'window';
@@ -86,14 +87,14 @@ var authorization = (function(){
 
 				var mnemonicKey = trim(el.login.val());
 
-				//if(!validation(mnemonicKey)) return;
-
 				localStorage['stay'] = boolToNumber(stay.value).toString()
 
 				self.user.stay = stay.value
 
+
 				self.user.signin(mnemonicKey, function(state){
 
+				
 					if(!state){
 
 						sitemessage("You entered not valid private key")
@@ -109,6 +110,8 @@ var authorization = (function(){
 						return;
 					}
 				
+					self.app.platform.sdk.registrations.remove()
+
 					var _p = {};
 
 					_p.href = essenseData.successHref;
@@ -198,7 +201,11 @@ var authorization = (function(){
 
 	        	self.nav.api.loadSameThis('registration', p)
 
-	        })
+			})
+			
+			el.c.find('.showformh').on('click', function(){
+				el.c.toggleClass('signinshow')
+			})
 
 	        initUpload({
 				el : el.c.find('.uploadFile'),
@@ -279,6 +286,48 @@ var authorization = (function(){
 	       
 		}
 
+		var renders = {
+			fastfill : function(){
+				self.nav.api.load({
+
+					open : true,
+					id : 'filluserfast',
+					el : el.c.find('.filluserform'),
+
+					essenseData : {
+						inauth : true,
+						successHref : essenseData.successHref,
+
+						welcomepart : function(){
+							el.c.addClass('welcomepnet')
+						},
+
+						signInClbk : function(){
+
+							var close = deep(initialParameters, 'container.close')
+
+							if (close)
+								close();
+
+							essenseData.signInClbk()
+
+						}
+					},
+					
+					clbk : function(e, p){
+
+						/*setTimeout(function(){
+							_scrollToTop(el.c.find('.newCustomer'), el.c.find('.scrollmaketpart'))
+						}, 400)		*/				
+
+						ext = p
+
+					}
+
+				})
+			}
+		}
+
 		var make = function(){
 			var p = parameters();
 
@@ -286,6 +335,10 @@ var authorization = (function(){
 
 			if(p.restore){
 				events.forgotPassword();
+			}
+
+			if(essenseData.fast){
+				renders.fastfill()
 			}
 		}
 
@@ -318,7 +371,8 @@ var authorization = (function(){
 
 					var data = {
 						stay : stay,
-						mnemonic : mnemonic
+						mnemonic : mnemonic,
+						fast : deep(p, 'settings.essenseData.fast') || false
 					};
 
 					clbk(data);
@@ -328,6 +382,11 @@ var authorization = (function(){
 
 			destroy : function(){
 				el = {};
+
+				if(ext) {
+					ext.destroy(); 
+					ext = null;
+				}
 			},
 			
 			init : function(p){
@@ -376,7 +435,7 @@ var authorization = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons allscreen'
+				class : 'withoutButtons allscreen authwindow'
 			}
 		}
 	};

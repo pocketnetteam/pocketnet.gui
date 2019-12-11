@@ -298,6 +298,12 @@
 			&.messengerWrapper{
 				margin-right : @rhythm;
 			}
+			
+			&.keyexportWrapper{
+				margin-right : 2 * @rhythm;
+				color : #FF4200;	
+			}
+			
 			&.notificationsWrapper{
 				margin-right : 2 * @rhythm;
 			}
@@ -427,6 +433,12 @@
 					}
 				}
 
+				&.user{
+					.icon{
+						padding-right: 0;
+					}
+				}
+
 				&.amountHave{
 					.icon{
 						.amount{
@@ -447,6 +459,9 @@
                     }
                 }
 
+				&.signup{
+					color : @color-orange;
+				}
 				
 				&.onlyicon{
 
@@ -760,6 +775,7 @@
 
 	.signup{
 		margin-left: 4 * @rhythm;
+		
 	}
 
 	.post{
@@ -1034,7 +1050,7 @@ html.stblack{
                 &.signout,
 				&.signin{
 					text-align: right;
-					padding-right: @rhythm;
+					padding-right: 2 * @rhythm;
 				}
 
 
@@ -1169,6 +1185,10 @@ html.stblack{
 
 				&.user{
 					margin-right : 0;
+
+						.icon{
+							padding-right: @rhythm;
+						}
 				}
 				
 			}

@@ -593,7 +593,6 @@ var registration = (function(){
 
 						var qr = renders.qrcode(p.el.find('.qrcode'), mk)
 
-						console.log('code', qr)
 					}
 
 
@@ -762,6 +761,13 @@ var registration = (function(){
 			primary : primary,
 
 			getdata : function(clbk, p){
+
+				self.nav.api.load({
+					open : true,
+					href : 'filluserfast'
+				})
+
+				return
 
 				if(p.state && primary)
 				{

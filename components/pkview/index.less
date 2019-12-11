@@ -1,0 +1,288 @@
+@import "../../css/__cssvar";
+
+#pkview{
+    .panel{
+		margin-top: 4 * @rhythm;
+		overflow : hidden;
+
+		.item{
+			float: left;
+			margin-right : 2 * @rhythm;
+
+			&.right{
+				float: right;
+				margin-left : 2 * @rhythm;
+				margin-right : 0;
+			}
+		}
+
+		.prtable{
+			width: auto;
+			height: 100%;
+
+			>div{
+
+				padding : 0 @rhythm / 2;
+				vertical-align: middle;
+
+				&.preloaderlabel{
+					padding-top : @rhythm ;
+				}
+				span{
+					font-size: 0.8em;
+				}
+			}
+		}
+    }
+    
+    .key{
+        
+        button{
+            text-decoration: none;
+        }
+
+		.usericon{
+			background: transparent;
+		}
+
+		.number{
+			border: 1px solid @color-gray;
+		}
+
+		.subcaption{
+            font-size: 1.5em;
+            color : @color-gray;
+            text-align: center;
+            font-weight: 100;
+        }
+        
+        .pklabel{
+            text-align: center;
+            font-size: 0.8em;
+            color : @color-main;
+        }
+
+		.mnemonicKey{
+			font-size : 1em;
+            font-weight: 700;
+            text-align: center;
+		}
+
+		.mnemonicKeyTable{
+            height: auto;
+            display: block;
+			>div{
+                display: block;
+                vertical-align: top;
+                -webkit-hyphens: auto;
+                -ms-hyphens: auto;
+                hyphens: auto;
+                word-wrap: break-word;
+
+				&.iconWrapper{
+					padding: 40px; 
+                    width: 340px;
+                    margin : 0 auto;
+				}
+
+				&.mobiledevice{
+					display: none;
+				}
+			}
+		}
+
+        .qrcode{
+            margin : 0 auto;
+        }
+		
+
+		.panel{
+			.item{
+				padding-top: @rhythm;
+
+				&.preloader{
+					padding-top:  @rhythm / 2;
+				}
+			}
+		}
+    }
+    
+    .dontshowagain{
+        position: fixed;
+        bottom : -10%;
+        left : 50%;
+        width : 450px;
+        margin-left: -225px;
+        text-align: center;
+        padding : 2 * @rhythm;
+        border-radius: 50px;
+        background: @color-bright;
+        color : #fff;
+        .shadowSmall();
+        z-index: 10000;
+        opacity: 0;
+        .transition(0.3s);
+        cursor: pointer;
+
+        &.active{
+            bottom : 10%;
+            display: block;
+            opacity: 1;
+            
+
+            &:hover{
+                opacity: 0.8;
+            }
+        }
+    }
+}
+
+.wnd.pkviewwnd{
+    .wndinner{
+        width : 100%;
+        height: 100%;
+    }
+    #pkview{
+        .abswndwrapper{
+            position: absolute;
+            left : 0;
+            right : 0;
+            top : 0;
+            bottom : 0;
+
+            .tablewrapper{
+                >div{
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .key{
+            padding : 4 * @rhythm;
+            background: #FAFAFA;
+            color : #000;
+        }
+
+        .work{
+            max-width: 1024px;
+        }
+    }
+}
+
+html.stblack{
+    #pkview{
+        background: @color-black;
+        
+        .key{
+         
+            .number{
+                border: 1px solid @color-main;
+            }
+    
+            .subcaption{
+                color : @color-main;
+            }
+            
+            .pklabel{
+                color : @color-orange;
+            }
+    
+          
+        }
+        
+        .dontshowagain{
+            background: @color-bright;
+            color : #fff;
+           
+        }
+    }
+    
+    .wnd.pkviewwnd{
+        .wndinner{
+            width : 100%;
+            height: 100%;
+        }
+        #pkview{
+           
+    
+            .key{
+                background: @color-black2;
+                color : @color-gray-light;
+            }
+    
+        }
+    }   
+}
+
+@media only screen and (max-width: 640px) {
+	#pkview{
+        padding : 2 * @rhythm;
+        padding-top : 4 * @rhythm;
+
+
+        .key{			
+
+            .mnemonicKeyTable{
+                >div{
+                    
+
+                    &.mobiledevice{
+                        display: block;
+                        text-align: center;
+                        margin-top: 2 * @rhythm;
+                    }
+
+
+                }
+            }
+
+            
+
+            .panel{
+                .item{
+                    width: 100%;
+                }
+            }
+        }
+
+        .panel{
+			margin-top: 4 * @rhythm;
+			overflow : hidden;
+
+			.item{
+				padding-top : @rhythm;
+				float: none;
+				width: 100%;
+				margin-right : 0;
+
+				&.right{
+					float: none;
+					margin-left : 0;
+					margin-right : 0;
+				}
+			}
+
+			.prtable{
+				margin : 0 auto;
+
+			
+			}
+        }
+        
+        .dontshowagain{
+            
+            bottom : -10%;
+           
+            &.active{
+                bottom : 60px;
+                display: block;
+                opacity: 1;
+                
+    
+                &:hover{
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}

@@ -17,8 +17,14 @@
 
 		<% } %>
 
-		<% if(report.href) {%>
-			<a href="<%-report.href%>">
+		<% if(report.href) {
+			
+			var h = report.href;
+
+			if(typeof h == 'function') h = h()
+
+			%>
+			<a href="<%-h%>">
 		<% } %>
 
 				<span class="<%-report.class%>">

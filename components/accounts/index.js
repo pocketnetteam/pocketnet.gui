@@ -10,7 +10,7 @@ var accounts = (function(){
 
 		var el,
 			pack,
-			id
+			id, ed;
 
 		var actions = {
 
@@ -155,7 +155,7 @@ var accounts = (function(){
 				var address = $(this).closest('.addressTable').attr('address')
 
 				dialog({
-					html : "Do you really want to see private key for this address?",
+					html : "Do you really want to see your private key?",
 					btn1text : "See Private Key",
 					btn2text : "Cancel",
 
@@ -205,6 +205,9 @@ var accounts = (function(){
 					width: 256,
 					height: 256
 				});
+			},
+			dumpkeyabout : function(){
+				
 			},
 			dumpkey : function(address, private){
 
@@ -296,7 +299,18 @@ var accounts = (function(){
 				id = pa[1]
 
 				self.app.platform.sdk.pool.info(pack, function(){
-					renders.addresses()
+					renders.addresses(function(){
+
+						if (ed.dumpkey){
+
+							actions.dumpkey(address)
+							
+						}
+					})
+
+					
+
+					
 				})
 
 				
@@ -311,7 +325,9 @@ var accounts = (function(){
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			getdata : function(clbk, p){
+
+				ed = deep(p, 'settings.essenseData') || {}
 
 				pack = null;
 				id = null;

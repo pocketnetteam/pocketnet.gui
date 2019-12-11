@@ -79,7 +79,7 @@ var menu = (function(){
 
 					var d = left - right;	
 
-					_el.width(w + d)
+					_el.width(w + d- 1)
 
 				}
 
@@ -204,6 +204,36 @@ var menu = (function(){
 							})
 						}
 					})
+
+				}
+			},
+
+			keyexport : {
+				click : function(){
+
+					self.app.platform.ui.showmykey()
+
+				},
+
+				init : function(el){
+
+					self.app.platform.sdk.registrations.clbks.menu = function(){
+
+						if (self.sdk.address.pnet()){
+							var addr = self.sdk.address.pnet().address
+
+							var regs = self.app.platform.sdk.registrations.storage[addr];
+
+							if (regs && regs <= 4){
+								return
+							}
+						}
+
+						el.closest('.keyexportWrapper').remove()
+
+						delete self.app.platform.sdk.registrations.clbks.menu
+						
+					}
 
 				}
 			},
@@ -743,7 +773,7 @@ var menu = (function(){
 
 						    		actions.elswidth()
 
-						    		el.addClass(c)
+						    		//el.addClass(c)
 
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);
@@ -1020,9 +1050,16 @@ var menu = (function(){
 
 				if(p.state){
 
-					console.log("GETONE")
+					var addr = self.sdk.address.pnet().address
 
-					self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+					var regs = self.app.platform.sdk.registrations.storage[addr];
+
+					if (regs && regs <= 4){
+						
+						data.key = true
+					}
+
+					self.app.platform.sdk.users.getone(addr, function(){
 						console.log("GETONE2")
 						clbk(data)
 
@@ -1056,6 +1093,8 @@ var menu = (function(){
 				delete self.app.platform.sdk.messenger.clbks.menu
 				delete self.app.errors.clbks.menu
 
+				delete self.app.platform.sdk.registrations.clbks.menu
+
 				if(autoUpdate){
 					clearInterval(autoUpdate);
 				}
@@ -1087,6 +1126,10 @@ var menu = (function(){
 				searchBackAction = _searchBackAction || null
 
 				actions.elswidth()
+
+				setTimeout(function(){
+					actions.elswidth()
+				}, 2)
 			},
 
 			initauthorsearch : function(author){

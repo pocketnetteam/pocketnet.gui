@@ -238,6 +238,21 @@ var panel = (function(){
 
 				})
 			},
+
+			_discussions : function(){
+				self.user.isState(function(state){
+
+					if(state){
+	
+						var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
+						
+						if(!me.relay && !me.temp)
+							renders.discussions()
+	
+					}	
+					
+				})
+			}
 		}
 
 		var load = {
@@ -302,12 +317,20 @@ var panel = (function(){
 					renders.recommendations(users)
 				})
 			}
+
+			self.app.platform.ws.messages.event.clbks.panel = function(d){
+				if(d.mesType == 'userInfo'){
+					renders._discussions()
+				}
+			}
 		}
 
 		var make = function(){
 
+		
+
 			if (self.app.platform.sdk.usersettings.meta.vidgetchat.value)
-				renders.discussions()
+				renders._discussions()
 
 			if (self.app.platform.sdk.usersettings.meta.vidgettags.value)
 				renders.tags()
@@ -341,6 +364,7 @@ var panel = (function(){
 			destroy : function(){
 
 				delete self.app.platform.clbks.api.actions.subscribe.panelrec
+				delete self.app.platform.ws.messages.event.clbks.panel
 
 				if (discussions){
 					discussions.destroy()
@@ -359,6 +383,17 @@ var panel = (function(){
 
 
 				el = {};
+			},
+
+			authclbk : function(){
+
+				return
+
+				if(typeof el != 'undefined' && el.c){
+					if (self.app.platform.sdk.usersettings.meta.vidgetchat.value)
+						renders._discussions()
+				}
+				
 			},
 			
 			init : function(p){
@@ -382,7 +417,11 @@ var panel = (function(){
 		}
 	};
 
-
+	self.authclbk = function(){
+		_.each(essenses, function(e){
+			e.authclbk()
+		})
+	} 
 
 	self.run = function(p){
 

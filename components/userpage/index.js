@@ -8,7 +8,7 @@ var userpage = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, ed;
 
 		var currentExternalEssense = null;
 		var roller = null;
@@ -420,11 +420,40 @@ var userpage = (function(){
 				}
 			},
 			signout : function(){
-				self.app.user.signout();
 
-				self.app.reload({
-					href : 'authorization'
-				});
+				var so = function(){
+					self.app.user.signout();
+
+					self.app.reload({
+						href : 'authorization'
+					});
+				}
+
+
+				if (self.app.platform.sdk.address.pnet()){
+
+					var addr = self.app.platform.sdk.address.pnet().address
+
+					var regs = self.app.platform.sdk.registrations.storage[addr];
+
+					if (regs && regs <= 5){
+						
+						self.app.platform.ui.showmykey({
+							text : "Please save your private cryptographic key which replaces login plus password from centralized social networks",
+							faillabel : "Leave and lose my key forever!",
+							fail : function(){
+								so()
+							}
+						})
+
+						return
+					}
+
+				}
+
+				so()
+
+				
 			}
 		}
 
@@ -664,7 +693,9 @@ var userpage = (function(){
 							primary : true,
 	
 							essenseData : {
-								sub : report.sub
+								sub : report.sub,
+
+								dumpkey : ed.dumpkey
 							},
 							
 							clbk : function(e, p){
@@ -711,7 +742,15 @@ var userpage = (function(){
 			var id = parameters().id;
 
 			if(!isMobile()){
-				if(!id) id = 'ustate'
+				if(!id) {
+
+					if(self.app.user.validate()){
+						id = 'ustate'	
+					}
+					else{
+						id = 'test'
+					}
+				}
 			}
 			
 			renders.contents(function(){
@@ -780,7 +819,9 @@ var userpage = (function(){
 				makerep()
 			},
 
-			getdata : function(clbk){
+			getdata : function(clbk, p){
+
+				ed = deep(p, 'settings.essenseData') || {}
 				
 				init();
 

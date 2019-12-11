@@ -1,0 +1,36 @@
+<div id="<%-module.map.id%>">
+	
+	<% if(typeof inauth == 'undefined' || !inauth) {%>
+	<div class="work">
+		<div class="caption">
+			Create a new account
+		</div>
+	</div>
+
+	<% } %>
+	
+	<div class="mWrapper">
+		<div class="work">
+			<div class="stepsWrapper">
+				<div class="stepsWrapperLine">
+					<% _.each(steps, function(step){ %> 
+
+					<div class="step" step="<%-step.id%>">
+						<div class="stepBody">
+							
+						</div>
+					</div>
+
+					<% }) %>
+				</div>
+			</div>
+
+			<div class="panelWrapper">
+			
+			</div>
+
+		</div>
+	</div>
+
+	<div class="hidden hiddenqrcode"></div>
+</div>

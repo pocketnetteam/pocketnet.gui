@@ -1,7 +1,10 @@
-<div class="caption">Unspent List</div>
-<div class="unspentData table">
-	<div class="unspentNew">
-		<div class="data"><%= nl2br(JSON.stringify(unspent, null, "\t")) %></div>
-	</div>
-</div>
+<% if(unspent) {%>
 
+	<div class="caption">Unspent List</div>
+	<div class="unspentData table">
+		<div class="unspentNew">
+			<div class="data"><%= nl2br(JSON.stringify(unspent, null, "\t")) %></div>
+		</div>
+	</div>
+
+<% } %>

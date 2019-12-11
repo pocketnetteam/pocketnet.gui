@@ -12,8 +12,11 @@
 }
 #post{
 
+	background: #f6f6f6;
+
 	.nextpost{
 		padding-top : 2 * @rhythm;
+		display: none;
 
 		.loader,
 		.ended{
@@ -204,10 +207,10 @@
 
 		#post{
 			.postWrapper{
-				background: transparent;
+				background: #fff;
 			}
 			.share{
-				background: transparent;
+				background: #fff;
 				.work{
 					width: 100%;
 					padding-top : @rhythm;
@@ -1016,6 +1019,14 @@
 		color : #fff;
 		right: 4 * @rhythm;
 	}
+
+	#post{
+		background: transparent;
+
+		.nextpost{
+			display: block;
+		}
+	}
 }
 
 html.stblack{
@@ -1380,12 +1391,13 @@ html.stblack{
 
 	.cntswrk{
 		margin-left: 0;
-		padding-left : 0;
-		padding-right : 0;
+		padding-left : @rhythm;
+		padding-right : @rhythm;
 
 		&.formeta{
 			margin-left: 8 * @rhythm;
-			padding-left : 2 * @rhythm;
+			padding-left : @rhythm;
+			padding-bottom: 2 * @rhythm;
 		}
 	}
 
@@ -1435,6 +1447,8 @@ html.stblack{
 		}
 	}
 
+	
+
 	/*.shareTable{
 		display: block;
 		overflow-y: hidden;
@@ -1462,11 +1476,101 @@ html.stblack{
 	
 
 	.share{
-		
+
 		#post{
-			.cntswrk {
-				padding-right: 0;
-				padding-left: 0;
+
+			#comments{
+				.caption{
+					padding-left: @rhythm;
+					padding-right: @rhythm;
+				}
+				
+				.commentPaddingWrapper,
+				.post{
+					padding-left: 0;
+					padding-right: @rhythm;
+				}
+	
+				.commentPaddingWrapper{
+					padding-right: @rhythm;
+				}
+	
+				.list .answer .postbody{
+					padding-left: 0;
+					padding-right: @rhythm;
+				}
+	
+				.answers{
+					.commentPaddingWrapper{
+						padding-right: 0;
+						padding-left: 0;
+					}
+				}				
+	
+				.answer .posttable>div.postCellWrapper .postaction, 
+				.edit .posttable>div.postCellWrapper .postaction, 
+				.post .posttable>div.postCellWrapper .postaction{
+					text-align: center;
+				}
+			}
+	
+			.share{
+				.work{
+					border-left : 0.5 * @rhythm solid @color-main;
+				}
+				.sharecaption{
+					font-size: 1em;
+				}
+			} 
+
+			.shareTable{
+				&.truerepost{
+					.iconWrapper{
+						width: 6 * @rhythm;
+						padding-left: @rhythm;
+					}
+				}
+			}
+	
+			.iconWrapper{
+				width: 6 * @rhythm;
+				padding-left: @rhythm;
+	
+				.usericon{
+					width: 5 * @rhythm;
+					height: 5 * @rhythm;
+				}
+			}
+		
+			.cntswrk{
+				margin-left: 0 * @rhythm;
+				margin-right: 0 * @rhythm;
+				padding-right: @rhythm;
+				padding-left: @rhythm;
+				&.formeta{
+					margin-left: 6 * @rhythm;
+					padding-left : 0.5 * @rhythm;
+				}
+			}
+	
+			.meta{
+				padding-top: 2.3 * @rhythm;
+			}
+	
+	
+			#post{
+				.cntswrk{
+					margin-left: 0 * @rhythm;
+					padding-right: 0;
+					padding-left: 0;
+	
+					&.formeta{
+						margin-left: 7 * @rhythm;
+						padding-left : 0.5 * @rhythm;
+					}
+	
+					
+				}
 			}
 		}
 

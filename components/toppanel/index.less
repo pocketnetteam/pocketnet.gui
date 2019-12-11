@@ -11,7 +11,9 @@
 	    height: 100%;
 	    max-width: 1280px;
 	    margin: 0 auto;
-	    padding: 0 1em;
+		padding: 0 1em;
+		
+		padding-right: 0;
 	}
 
 	.panelitems{
@@ -64,12 +66,16 @@
 						padding : 0 6 * @rhythm;
 						height: 100%;
 						line-height: 45px;
+
+						&:hover,
+						&.active{
+							color : @color-black2;
+						}
 					}
 
-					&:hover,
-					&.active{
-						color : @color-black2;
-					}
+					
+
+					
 
 				}
 			}
@@ -100,9 +106,12 @@ html.stblack{
 						color : @color-gray;
 						
 	
-						&:hover,
-						&.active{
-							color : @color-main;
+						.pcenterLabel{
+	
+							&:hover,
+							&.active{
+								color : @color-main;
+							}
 						}
 	
 					}

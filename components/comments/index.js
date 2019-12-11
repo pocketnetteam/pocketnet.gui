@@ -10,6 +10,8 @@ var comments = (function(){
 
 		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false;
 
+		var authblock = false;
+
 		var errors = {
 			content : "Message is empty",
 			messagelength : "Comments have 1000 character limit per comment",
@@ -17,18 +19,19 @@ var comments = (function(){
 		}
 
 		var mestate;
-
-		var rendered = {}
+		var rendered = {};
 
 		var areas = {};
 
 		var external = null;
 
+		var currentstate = {};
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var clbks = {
 			upvote : function(err, comment, value, address){
+
 
 				if(!comment) return
 
@@ -45,7 +48,9 @@ var comments = (function(){
 					if(value > 0){
 						d_el.find('.scoreUp').addClass('ratedScore')
 					}
-					else{
+
+					if(value < 0)
+					{
 						d_el.find('.scoreDown').addClass('ratedScore')
 					}
 
@@ -159,6 +164,60 @@ var comments = (function(){
 		}
 
 		var actions = {
+
+			myscores : function(){
+				_.each(rendered, function(c, id){
+					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
+
+					if (comment){
+						clbks.upvote(null, comment, Number(comment.myScore), self.app.platform.sdk.address.pnet().address)
+					}
+				})	
+			},
+
+			stateAction : function(clbk){
+
+
+				self.app.user.isState(function(state){
+
+					if(state){
+						clbk()
+					}
+
+					else
+					{
+						self.nav.api.load({
+							open : true,
+							id : 'authorization',
+							inWnd : true,
+
+							essenseData : {
+
+								fast : true,
+								loginText : self.app.localization.e('llogin'),
+								successHref : '_this',
+
+								signInClbk : function(){
+
+
+									retry(function(){
+
+										return !authblock
+
+									}, function(){
+
+										if (clbk)
+											clbk()
+									})
+
+									
+								}
+							}
+						})
+					}
+
+				})
+			},
 			sharesocial : function(comment){
 
 
@@ -324,7 +383,6 @@ var comments = (function(){
 					}
 				})
 			},
-
 			removeForm : function(id){
 
 				delete areas[id]
@@ -332,7 +390,6 @@ var comments = (function(){
 				el.c.find("#" + id + ' .answer').html('')
 				el.c.find("#" + id + ' .edit').html('')
 			},
-
 			post : function(id, pid, aid, editid){
 
 				id || (id = '0')
@@ -396,7 +453,6 @@ var comments = (function(){
 
 				}, editid, id)
 			},
-
 			links : function(id, text){
 
 				id || (id = '0')
@@ -422,7 +478,6 @@ var comments = (function(){
 					}
 				
 			},
-
 			process : function(id){
 
 				id || (id = '0')
@@ -431,7 +486,6 @@ var comments = (function(){
 					currents[id] = new Comment(txid)
 		
 			},
-
 			message : function(id, v){
 
 
@@ -443,7 +497,6 @@ var comments = (function(){
 				state.save()
 
 			},
-
 			emessage : function(id, c){
 
 				var v = c.getText();
@@ -455,7 +508,6 @@ var comments = (function(){
 					areas[id].___inited = true
 
 			},
-
 			fastreply : function(reply){
 
 				if(reply){
@@ -485,55 +537,51 @@ var comments = (function(){
 
 
 			},
-
 			reply : function(id, aid){
 
-				var _el = el.c.find('#' + id);
-				var answer = _el.find('.answer');
+				actions.stateAction(function(){
 
-			
-				renders.post(function(area, el){
+					var _el = el.c.find('#' + id);
+					var answer = _el.find('.answer');
 
-					var pid = '0'
-
-					if (aid != id) pid = id
-
-					var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
-
-					var name = (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address)
-
-					var str = '@' + name + ',  '
-
-					if(address == self.app.platform.sdk.address.pnet().address || !name) str = ''
-
-					area.setText(str)
-
-					areas[id] = area
-
-					el.focus();
 				
-					/*el.on('blur', function(){
-						if(!area.___inited){
-							actions.removeForm(id)
-						}
-					})*/
+					renders.post(function(area, el){
 
-					el.closest('.answer').addClass('active')
+						var pid = '0'
 
-					if (str.length)
-						ecaretPosition(el, 0, str.length)
+						if (aid != id) pid = id
+
+						var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
+
+						var name = (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address)
+
+						var str = '@' + name + ',  '
+
+						if(address == self.app.platform.sdk.address.pnet().address || !name) str = ''
+
+						area.setText(str)
+
+						areas[id] = area
+
+						el.focus();
+
+						el.closest('.answer').addClass('active')
+
+						if (str.length)
+							ecaretPosition(el, 0, str.length)
 
 
-				}, {
-					placeholder : "Send Reply",
-					el : answer,
-					answer : 'answer',
-					pid : id,
-					aid : aid,
-					id : id
+					}, {
+						placeholder : "Send Reply",
+						el : answer,
+						answer : 'answer',
+						pid : id,
+						aid : aid,
+						id : id
+					})
+
 				})
 			},
-
 			hideallReplies : function(){
 				_.each(deep(self, 'app.platform.sdk.comments.storage.'+txid + '.0'), function(r, id){
 
@@ -545,8 +593,9 @@ var comments = (function(){
 					actions.replies(ed.lastComment.id, false)
 				
 			},
+			replies : function(id, show, clbk, _p){
 
-			replies : function(id, show, clbk){
+				if(!_p) _p = {}
 
 				if(id == '0'){
 
@@ -557,6 +606,8 @@ var comments = (function(){
 				}
 
 				var p = {};
+
+					p.in = _p.in
 
 					p.el = el.c.find("#" + id + ' .answers')
 
@@ -592,12 +643,14 @@ var comments = (function(){
 							if (clbk)
 								clbk()
 
-						})
+						}, id)
 
 					})
 				}
 				else
 				{
+
+					delete currentstate.levels[id]
 
 					_.each(self.app.platform.sdk.comments.storage[txid][id], function(c){
 						delete rendered[c.id]
@@ -612,7 +665,6 @@ var comments = (function(){
 
 			
 			},
-
 			getid : function(el){
 				if (el.attr('answer')){
 					var c = el.closest('.comment')
@@ -644,11 +696,9 @@ var comments = (function(){
 					
 				}
 			},
-
 			tocomment : function(id){
 				_scrollTo(el.c.find("#" + id), _in)
 			},
-
 			closeEdit : function(id){
 				var _el = el.c.find("#" + id)
 
@@ -657,7 +707,6 @@ var comments = (function(){
 
 				actions.removeForm(id)
 			},
-
 			delete : function(comment, clbk){
 				var ct = comment.delete()
 
@@ -678,7 +727,6 @@ var comments = (function(){
 
 				})
 			},
-
 			update : function(pid){
 
 				var p = {};
@@ -717,7 +765,9 @@ var comments = (function(){
 
 				showedall = true;
 				el.c.addClass('showedall')				
-				actions.showhideLabel()				
+				actions.showhideLabel()	
+				
+				ed.showall = true
 
 				if (listpreview){
 
@@ -769,6 +819,7 @@ var comments = (function(){
 				}
 			},
 			showhideLabel : function(){
+				
 
 				if(!el.showall) return
 
@@ -782,7 +833,7 @@ var comments = (function(){
 
 					var lastchildren = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.lastComment.children') || 0;
 
-					if(listpreview){
+					if (listpreview){
 						
 
 						if (counts - lastchildren > 1){
@@ -799,6 +850,7 @@ var comments = (function(){
 					{
 
 						if(counts > 5){
+							
 							el.showall.removeClass('hidden')
 
 							actions.hiddenCounts(counts - 5)
@@ -813,7 +865,6 @@ var comments = (function(){
 
 				
 			},
-
 			openGallery : function(comment, initialValue, clbk){
 				var images = _.map(comment.images, function(i){
 					return {
@@ -850,26 +901,31 @@ var comments = (function(){
 			},
 			upvoteComment : function(value, id){
 
+				actions.stateAction(function(){
 
-				var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
+					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
 
 
-				if(!comment) return
+					if(!comment) return
 
-				if (comment.address == self.app.platform.sdk.address.pnet().address){
-					return
-				}
-
-				var upvoteComment = comment.upvote(value)
-
-				self.app.platform.sdk.comments.upvote(upvoteComment, function(err, alias){
-
-					
-					if (err){
-						self.app.platform.errorHandler(err, true)	
+					if (comment.address == self.app.platform.sdk.address.pnet().address){
+						return
 					}
 
+					var upvoteComment = comment.upvote(value)
+
+					self.app.platform.sdk.comments.upvote(upvoteComment, function(err, alias){
+
+						
+						if (err){
+							self.app.platform.errorHandler(err, true)	
+						}
+
+					})
+
 				})
+
+				
 			}
 		}
 
@@ -889,7 +945,6 @@ var comments = (function(){
 				
 				actions.upvoteComment(value, id, pid)
 			},
-
 			openGallery : function(){
 
 				var _el = $(this)
@@ -924,11 +979,7 @@ var comments = (function(){
 				var id = $(this).closest('.firstcomment').attr('id')
 
 				actions.replies(id)
-			},
-		
-			/*emessagekeyup : function(editor, e){
-
-			},*/
+			},	
 			emessage : function(editor, e){
 
 
@@ -938,13 +989,6 @@ var comments = (function(){
 
 				actions.emessage(id, c)
 			},
-
-			/*embedimages : function(){
-				var id = actions.getid($(this).closest('.postbody'))
-
-				actions.embedimages(id)
-			},*/
-
 			message : function(){
 				var v = $(this).val();
 
@@ -963,13 +1007,11 @@ var comments = (function(){
 
 				actions.reply(id, aid)
 			},
-
 			tocomment : function(){
 				var c = $(this).attr('comment')
 
 				actions.tocomment(c)
 			},
-
 			metmenu : function(){
 				var _el = $(this);
 
@@ -1389,15 +1431,6 @@ var comments = (function(){
 
 						renders.cpreview()
 
-						console.log("OBJ", {
-							container: el.c,
-							caption: el.c.find('.captionfwrapper'),
-							offset: [top, -100],
-							removeSpacer : true,
-							iniHeight : true,
-							_in : _in
-						})
-
 						caption = new Caption({
 							container: el.c,
 							caption: el.c.find('.captionfwrapper'),
@@ -1450,8 +1483,6 @@ var comments = (function(){
 					editid : comment.id
 				}
 
-				console.log("P, p", p, comment)
-
 				renders.post(function(area, el){
 
 					/*var lined = comment.message.split("\n");
@@ -1469,7 +1500,7 @@ var comments = (function(){
 			post : function(clbk, p){
 
 				self.app.user.isState(function(state){
-					if(!state) return;
+					//if(!state) return;
 
 
 					if(!p) p = {};
@@ -1508,7 +1539,6 @@ var comments = (function(){
 							if (_clbk){
 								_clbk(a, b)
 							}
-
 							
 						}
 
@@ -1516,12 +1546,21 @@ var comments = (function(){
 					}
 
 					_p.el.find('.embedimages').off('click').on('click', function(){
+
 						var id = actions.getid(_p.el.find('.postbody'))
 
-						actions.embedimages(id, p)
+						if(state){
+							actions.embedimages(id, p)
+							if(!p.answer && !p.editid){
 
-						if(!p.answer && !p.editid)
-							ini()
+								ini()
+
+							}	
+						}
+						else{
+							actions.stateAction(function(){
+							})
+						}
 					})
 
 					if(_preview){
@@ -1530,16 +1569,39 @@ var comments = (function(){
 
 							$(this).blur();
 
-							ini()
+							self.app.user.isState(function(state){
+
+								if(state){
+									ini()
+								}
+								else{
+									actions.stateAction(function(){
+									})
+								}
+
+							})
+
+							
+
+							
+							
 
 							
 						})
 
 						_p.el.find('.embedEmojiPrivew').on('click', function(){
 
-							ini(function(t, a){
-								t.showPicker()
-							})	
+							if(state){
+								ini(function(t, a){
+									t.showPicker()
+								})	
+							}
+							else{
+								actions.stateAction(function(){
+								})
+							}
+							
+							
 							
 						})
 
@@ -1636,6 +1698,8 @@ var comments = (function(){
 
 						_el.addClass('active')
 
+						if(ed.renderClbk) ed.renderClbk()
+
 						if (clbk)
 							clbk()
 
@@ -1649,10 +1713,9 @@ var comments = (function(){
 				
 			},
 
-			list : function(p, clbk){
+			list : function(p, clbk, pid){
 
 				if(!p) p = {};
-
 
 				p.comments = _.filter(p.comments || [], function(c){
 					if(!rendered[c.id]) {
@@ -1665,6 +1728,7 @@ var comments = (function(){
 				var _in = append
 
 				if(ed.fromtop && !p.el){
+
 					p.comments = _.sortBy(p.comments, function(c){
 						return -c.time
 					})
@@ -1672,10 +1736,20 @@ var comments = (function(){
 					_in = prepend
 				}
 				else{
+
 					p.comments = _.sortBy(p.comments, function(c){
 						return c.time
 					})
+
 				}
+
+				if(pid){
+					currentstate.levels[pid] = pid
+				}
+
+				
+
+				if(p.in) _in = p.in
 
 				p.el || (p.el = el.list)
 
@@ -1727,141 +1801,12 @@ var comments = (function(){
 						}
 					})
 
-				
+					if(ed.renderClbk) ed.renderClbk()
 
 					if (clbk)
 						clbk();
 					
 				})
-			}
-		}
-
-		var makePreview = function(){
-
-			el.c.find('.loaderWrapper').addClass('hidden')
-
-			el.c.addClass('preview')
-			el.c.addClass('listpreview')
-
-			var p = {};
-
-			renders.post(function(area){
-				areas["0"] = area
-			})
-
-			load.preview(function(c){
-
-				p.comments = c
-				p.class = "firstcomment"
-
-				actions.showhideLabel()
-
-				renders.list(p, function(){
-					
-				})
-
-			})
-
-				
-		}
-
-		var make = function(){
-
-			var p = {};			
-
-			load.level(null, function(comments){
-
-				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
-				p.class = "firstcomment"
-
-				actions.showhideLabel()	
-
-				renders.list(p, function(){
-
-					el.c.find('.loaderWrapper').addClass('hidden')
-
-					renders.post(function(area){
-						areas["0"] = area
-
-
-						if(ed.reply){
-							actions.fastreply(ed.reply)
-						}
-						else
-						{
-							var ps = parameters();
-							var reply = {};
-
-							if (ps.commentid){
-								reply.answerid = ps.commentid;
-								reply.parentid = ps.parentid || ""
-								reply.noaction = true
-
-								actions.fastreply(reply)
-							}
-
-						}
-					})
-				})
-
-			})
-
-			console.log("ED", ed)
-
-			if (ed.showall){
-				actions.showall()
-			}
-			
-		}
-
-		var load = {
-			preview : function(clbk){
-				var comments = [];
-
-				if (ed.lastComment){
-					comments = self.app.platform.sdk.comments.ini([ed.lastComment])
-				}
-
-				self.sdk.comments.users(comments, function(){
-
-					if (clbk)
-						clbk(comments)
-
-				})
-			},	
-			level : function(pid, clbk){
-
-				self.app.platform.sdk.comments.get(txid, pid || "", function(comments, e){
-
-					if (clbk)
-						clbk(comments, e)
-
-				})
-
-			}
-		}
-
-		var state = {
-			save : function(){
-
-				return
-
-				if (currents['0']){
-					self.app.settings.set(self.map.id, txid, currents['0'].export());
-				}
-
-				else
-				{
-					self.app.settings.delete(self.map.id, txid, '');
-				}
-
-				
-			},
-			load : function(){
-				var last = self.app.settings.get(self.map.id, txid)
-
-				if (last)
-					currents['0'].import(last)
 			}
 		}
 
@@ -1942,6 +1887,231 @@ var comments = (function(){
 			el.c.on('click', '.upvoteComment', events.upvoteComment)
 		}
 
+		var reloadCurrents = function(clbk){
+
+			var lc = function(){
+				var lvls = _.map(currentstate.levels, function(id){
+					return id
+				})
+	
+				if(lvls.length){
+	
+					lazyEach({
+						array : lvls,
+						action : function(p){
+	
+							var id = p.item;
+	
+							load.level(id, function(comments){
+								p.success()
+							})
+						},
+	
+						all : {
+							success : function(){
+								if(clbk) clbk()
+							}
+						}
+					})
+	
+				}
+				else{
+					if(clbk) clbk()
+				}
+			}
+
+			if (preview && !showedall){
+				lc()
+			}
+			else{
+				load.level(null, function(){
+					lc()
+				})	
+			}
+
+			
+		}
+
+		var makeCurrents = function(clbk){
+
+			currents = {};
+			rendered = {};
+
+			areas = {};
+
+			var f = make
+
+			if (preview && !showedall){
+				f = makePreview
+			}	
+		
+			f(function(){
+
+				var lvls = _.map(currentstate.levels, function(id){
+					return id
+				})
+
+				if(lvls.length){
+
+					lazyEach({
+						array : lvls,
+						action : function(p){
+	
+							var id = p.item;
+	
+							actions.replies(id, true, p.success, {
+								in : html
+							})
+						},
+	
+						all : {
+							success : function(){
+								if(clbk) clbk()
+							}
+						}
+					})
+
+				}
+				else{
+					if(clbk) clbk()
+				}
+
+				
+
+
+			})
+		}
+
+		var makePreview = function(clbk){	
+
+			var p = {};
+
+			renders.post(function(area){
+				areas["0"] = area
+			})
+
+			load.preview(function(c){
+
+				p.comments = c
+				p.class = "firstcomment"
+
+				actions.showhideLabel()
+
+				el.list.html('')
+
+				renders.list(p, function(){
+					
+					if (clbk)
+						clbk()
+
+				})
+
+			})
+
+				
+		}
+
+		var make = function(clbk){
+
+			var p = {};			
+
+			load.level(null, function(comments){
+
+				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
+				p.class = "firstcomment"
+
+				actions.showhideLabel()	
+
+				el.list.html('')
+
+				renders.list(p, function(){
+
+					el.c.find('.loaderWrapper').addClass('hidden')
+
+					renders.post(function(area){
+						areas["0"] = area
+
+						if(ed.reply){
+							actions.fastreply(ed.reply)
+						}
+						else
+						{
+							var ps = parameters();
+							var reply = {};
+
+							if (ps.commentid){
+								reply.answerid = ps.commentid;
+								reply.parentid = ps.parentid || ""
+								reply.noaction = true
+
+								actions.fastreply(reply)
+							}
+
+						}
+					})
+
+					if (clbk)
+						clbk()
+				})
+
+			})
+
+			
+		}
+
+		var load = {
+			preview : function(clbk){
+				var comments = [];
+
+				if (ed.lastComment){
+					comments = self.app.platform.sdk.comments.ini([ed.lastComment])
+				}
+
+				self.sdk.comments.users(comments, function(){
+
+					if (clbk)
+						clbk(comments)
+
+				})
+			},	
+			level : function(pid, clbk){
+
+				self.app.platform.sdk.comments.get(txid, pid || "", function(comments, e){
+
+					if (clbk)
+						clbk(comments, e)
+
+				})
+
+			}
+		}
+
+		var state = {
+			save : function(){
+
+				return
+
+				if (currents['0']){
+					self.app.settings.set(self.map.id, txid, currents['0'].export());
+				}
+
+				else
+				{
+					self.app.settings.delete(self.map.id, txid, '');
+				}
+
+				
+			},
+			load : function(){
+				var last = self.app.settings.get(self.map.id, txid)
+
+				if (last)
+					currents['0'].import(last)
+			}
+		}
+
+		
+
 		return {
 			primary : primary,
 
@@ -1951,6 +2121,11 @@ var comments = (function(){
 				rendered = {}
 
 				currents = {}
+
+				currentstate = {
+					reply : null,
+					levels : {}
+				}
 
 				ed = p.settings.essenseData || {}
 
@@ -1980,6 +2155,35 @@ var comments = (function(){
 
 			},
 
+			authclbk : function(){
+				
+				if(el && el.c){
+
+					authblock = true
+
+					self.app.platform.sdk.ustate.me(function(_mestate){
+
+						mestate = _mestate
+
+						reloadCurrents(function(){
+
+							actions.myscores()
+
+							authblock = false;
+							
+
+						})
+
+						renders.post(function(area){
+							areas["0"] = area
+						})
+
+					})
+
+				
+				}
+			},
+
 			destroy : function(){
 
 				delete self.app.platform.sdk.comments.sendclbks[eid]
@@ -1987,6 +2191,8 @@ var comments = (function(){
 				
 				delete self.app.platform.sdk.comments.upvoteClbks[eid]
 				delete self.app.platform.ws.messages.cScore.clbks[eid]
+
+				authblock = false
 
 				if (external) 
 					external.destroy()
@@ -2021,10 +2227,20 @@ var comments = (function(){
 				}
 
 				if(preview){
+
+					el.c.find('.loaderWrapper').addClass('hidden')
+					el.c.addClass('preview')
+					el.c.addClass('listpreview')
+
 					makePreview()
 				}
 				else{
 					make();
+
+					
+					if (ed.showall){
+						actions.showall()
+					}
 				}
 
 				initEvents();
@@ -2112,6 +2328,12 @@ var comments = (function(){
 		self.init(essense, p);
 
 	};
+
+	self.authclbk = function(){
+		_.each(essenses, function(e){
+			e.authclbk()
+		})
+	} 
 
 	self.stop = function(){
 

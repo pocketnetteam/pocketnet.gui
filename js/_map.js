@@ -58,7 +58,34 @@ __map =  {
 	],
 
 
-              
+    pkview  : {
+		uri : "pkview",
+		href : "pkview",
+		add : function(settings, p){
+
+			if(p.inWnd)
+
+				return {
+					insert : 'wnd'
+				}
+
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+
+		relations : [
+			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
+			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
+				QRCode = require('./js/vendor/qrcode.min.js')
+			}},	
+
+		],
+	},      
 
 	about : {
 		uri : "about",
@@ -222,6 +249,47 @@ __map =  {
 			anonimus : true,
 		},
 
+		filluserfast : {
+			uri : "filluserfast",
+			href : "filluserfast",
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
+
+			anonimus : true,
+
+			relations : [
+				{src : 'js/vendor/qrscanner.js',			   f : 'js'},
+				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
+				{src : 'js/validation.js',			   f : 'js'},		
+				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
+					QRCode = require('./js/vendor/qrcode.min.js')
+				}},	
+
+			],
+			
+		},
+
 		filluser : {
 			uri : "filluser",
 			href : "filluser",
@@ -274,12 +342,33 @@ __map =  {
 		test : {
 			uri : "test",
 			href : "test",
-			add : {
-				el : 'content'
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
 			},
-			redirect : {
+			anonimus : true,
+			/*redirect : {
 				auth : 'authorization'
-			},
+			},*/
 			relationsSunc : true,
 
 			relations : [
@@ -382,6 +471,7 @@ __map =  {
 				}
 
 			},
+			anonimus : true,
 		},	
 
 		lastcomments : {
@@ -410,6 +500,7 @@ __map =  {
 				}
 
 			},
+			anonimus : true,
 		},
 
 		articles : {
@@ -536,6 +627,10 @@ __map =  {
 				{src : 'js/vendor/highcharts-more.js', 		f : 'js'}
 
 			],
+
+			redirect : {
+				auth : 'authorization'
+			}
 		},
 
 		
@@ -1015,7 +1110,8 @@ __map =  {
 				}
 			}
 
-		}
+		},
+		anonimus : true,
 	},
 
 	discussions : {
@@ -1044,10 +1140,11 @@ __map =  {
 			}
 
 		},
-		redirect : {
+		/*redirect : {
 			auth : 'authorization',
-				validate : 'filluser'
-		}
+			validate : 'filluser'
+		},*/
+		//anonimus : true,
 		/*relationsSunc : true,
 		relations : [
 
@@ -1265,6 +1362,8 @@ __map =  {
 			}
 
 		},
+
+		anonimus : true,
 
 		relations : [
 			{src : 'js/vendor/SocialShare.min.js',			   f : 'js'},

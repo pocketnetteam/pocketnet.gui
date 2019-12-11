@@ -186,7 +186,7 @@ User = function(app, p) {
 
 		self.tokenExpired();
 
-		app.platform.clear();
+		app.platform.clear(true);
 
 		app.platform.prepareUser(function(){
 			if (clbk)
@@ -197,8 +197,6 @@ User = function(app, p) {
 	}
 
 	self.signin = function(mnemonic, clbk){
-
-
 
 		var setKeysClbk = function(){
 
@@ -236,9 +234,6 @@ User = function(app, p) {
 
 			self.setKeysPairFromPrivate(mnemonic, function(result){
 
-
-				console.log("RESULT", result)
-
 				if(result){
 
 					setKeysClbk()
@@ -260,6 +255,8 @@ User = function(app, p) {
 		}
 		else
 		{
+
+			
 			self.setKeys(mnemonic, function(){
 
 				setKeysClbk()
@@ -318,11 +315,6 @@ User = function(app, p) {
 		
 
 		if (keys.private.value && keys.public.value){
-
-			/*localStorage['waslogged'] = true
-			localStorage['popupsignup'] = 'showed'*/
-
-			//$('.survicate-widget').remove()
 			
 			state = 1;
 		}
@@ -371,9 +363,49 @@ User = function(app, p) {
 		clbk(state);
 	}
 
+	self.validateVay = function(){
+
+
+		if(!self.address.value) return 'fu';
+
+		var me = deep(app, 'platform.sdk.user.storage.me');
+
+
+		if (me && me.relay){
+
+			var regs = app.platform.sdk.registrations.storage[self.address.value];
+
+			console.log("ME1", me, regs)
+
+			if (regs && (regs === true || regs < 3)){
+				return 'fuf'
+			}
+
+		}
+
+		if(!(deep(app, 'platform.sdk.user.storage.me.name'))) return 'fu' 
+	}
+
 	self.validate = function(){
 
-		return (!self.address.value || deep(app, 'platform.sdk.user.storage.me.name'))
+		if(!self.address.value) return false;
+
+		var me = deep(app, 'platform.sdk.user.storage.me');
+
+
+		if (me && me.relay){
+
+			var regs = app.platform.sdk.registrations.storage[self.address.value];
+
+			console.log("ME2", me, regs)
+
+			if (regs && (regs === true || regs < 3)){
+				return false
+			}
+
+		}
+
+		return (deep(app, 'platform.sdk.user.storage.me.name'))
 
 	}
 

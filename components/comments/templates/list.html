@@ -5,7 +5,7 @@ var commentpanel = function(comment, _class){  %>
 	<div class="commentpanel">
 
 		<div class="items">
-			<% if(mestate.reputation >= -50 && !comment.deleted) { %> 
+			<% if((!state || mestate.reputation >= -50) && !comment.deleted) { %> 
 				<div class="item reply">
 					<div class="cact">
 						<div class="label">
@@ -20,7 +20,6 @@ var commentpanel = function(comment, _class){  %>
 				var h = 'hidden';
 
 				if(comment.children > 0) h = ''
-				
 
 			%>
 
@@ -39,7 +38,10 @@ var commentpanel = function(comment, _class){  %>
 
 			<% } %> 
 
-			<% if(!comment.deleted) { %> 
+			<% if(!comment.deleted) { 
+				
+				
+				%> 
 				<div class="item upvoteCommentWrapper">
 
 					<div class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">

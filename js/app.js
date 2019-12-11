@@ -370,7 +370,7 @@ Application = function(p)
 		},
 		userpage : {
 			href : 'userpage',
-			childrens : ['userpage', 'share', 'author']
+			childrens : ['userpage', 'share', 'author', 'post']
 		}
 
 	}
@@ -425,13 +425,13 @@ Application = function(p)
 
 		self.options.platform = self.platform
 
-		/*self.platform.sdk.users.addressByName(self.ref, function(r){
+		self.platform.sdk.users.addressByName(self.ref, function(r){
 			if(r){
 				self.ref = r;
 				localStorage['ref'] = self.ref
 			}
 
-		})*/
+		})
 
 		self.nav.dynamic = function(p, clbk){
 
@@ -553,6 +553,24 @@ Application = function(p)
 				self.user.isState(function(state){
 
 					self.platform.prepare(function(){
+
+
+						if(state && self.platform.sdk.address.pnet()){
+
+							var addr = self.platform.sdk.address.pnet().address
+
+							var regs = self.platform.sdk.registrations.storage[addr];
+
+							console.log("regsregsregs", regs)
+
+							if (regs && regs >= 5){
+								
+								self.platform.ui.showmykey()
+								
+							}
+
+						}
+
 
 						self.platform.m.log('enter', state)
 						

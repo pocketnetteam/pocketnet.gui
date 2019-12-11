@@ -171,6 +171,8 @@ ____loclib.uaddaddressdona = "Add address For Donations";
 ____loclib.uaddaddressdonaplace = "Enter Address";
 ____loclib.uchangeicon = "Upload Profile Icon";
 ____loclib.utip1 = "You must create name & avatar on blockchain before using Pocketnet";
+____loclib.utip2 = "You have only one step left";
+
 ____loclib.upicset = "Set Profile Icon";
 ____loclib.upic = "Profile Icon";
 ____loclib.uuserinfo = "User Information";

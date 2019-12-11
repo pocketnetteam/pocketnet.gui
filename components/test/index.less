@@ -671,6 +671,91 @@
 	}
 }
 
+.wnd.testwindow{
+	.wndinner{
+		width : 550px;
+		height: 80%;
+		max-height: 750px;
+		background: #fff;
+		
+		.wndcontent{
+			padding : 0;
+			overflow-y: auto;
+		}
+	}
+
+	.wndback{
+		background: fade(@color-black, 90);
+	}
+
+	._close{
+		color : #fff;
+	}
+
+	#test{
+		background: #fff;
+		width: 500px;
+		margin : 0 auto;
+
+		.testPanel{
+			display: none;
+		}
+
+		.caption{
+			text-align: center;
+			font-size : 1.3em;
+			font-weight: 700;
+			color : @color-orange;
+			margin-top : @rhythm;
+		}
+
+		.subcaption{
+			text-align: center;
+		}
+
+		.uploadTable{
+			width: auto;
+			margin : 0 auto;
+			>div{
+				&.label{
+					display : none;
+				}
+
+				&.iconWrapper{
+					width: 60px;
+					position: relative;
+
+					.plissingCnt{
+						left : 45px;
+					}
+				}
+			}
+		}
+
+		.userPanel{
+
+			.upanelloader{
+				background: fade(#FFF, 90);
+
+				
+			}
+		}
+
+		.upanel{
+			button{
+				margin : 0 auto;
+			}
+
+			>div{
+				margin : 0 auto;
+				text-align: center;
+				float: none;
+			}
+		}
+	}
+	
+}
+
 html.stblack{
 	#test{
 		background: @color-black3;

@@ -593,7 +593,6 @@
 				
 			}
 			
-			console.log('nooverflow', nooverflow)
 
 			wnd.css("display", "block");
 		}
@@ -684,8 +683,6 @@
 
 				if(!nooverflow)
 					app.actions.onScroll();
-
-					console.log('cl, key', cl, key, self.essenseDestroy)
 
 				if (self.essenseDestroy)
 					self.essenseDestroy(key)
@@ -6951,8 +6948,6 @@
 
 		var removeEvents = function () {
 
-			console.log("REMOVEEVENTS")
-
 			_in[0].removeEventListener('scroll', action);
 
 			window.removeEventListener('resize', resize);
@@ -7408,8 +7403,6 @@
 			
 			p.url = app.firebase + "/" + (p.action || "").split('.').join('/');
 			p.fb = true
-
-			console.log("FIREASAE", p)
 
 			self.run(p)
 		}
@@ -9934,8 +9927,6 @@
 	                }
 
 	                if (matches[0].indexOf('@') != -1) {
-
-						console.log('matches', matches, inputText, full)
 
 	                    //return matches[0];
 					}

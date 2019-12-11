@@ -43,11 +43,9 @@ var metadisplay = function(){ %>
 
 					<div class="authorTable table">
 						<div class="authorCell">
-							<% if(!ed.authAction) {%>
 
-								<a href="<%-app.platform.api.authorlink(share.address)%>">
+							<a href="<%-app.platform.api.authorlink(share.address)%>">
 
-							<% } %>
 
 							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
 
@@ -55,11 +53,9 @@ var metadisplay = function(){ %>
 							
 								<b><span><%-name || share.address %></span></b><% if(reputation) {%><sup><%-compressedNumber(reputation, 1)%></sup><% } %>
 
-							<% if(!ed.authAction) {%>
-								</a>
-							<% } %>
+							</a>
 
-							<% if(state && !my && (typeof repost == 'undefined' || !repost)) { %> 
+							<% if((state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span class="sbtnxs">
 									&middot; <span class="subscribeLabel asubscribe">Follow</span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i> Following</span>
@@ -277,11 +273,9 @@ var metadisplay = function(){ %>
 
 				<div class="iconWrapper">
 
-					<% if(!ed.authAction) {%>
 					
-						<a href="<%-app.platform.api.authorlink(share.address)%>">
+					<a href="<%-app.platform.api.authorlink(share.address)%>">
 
-					<% } %>
 
 						<% var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
 
@@ -293,9 +287,7 @@ var metadisplay = function(){ %>
 							</div>
 						</div>
 
-					<% if(!ed.authAction) {%>
-						</a>
-					<% } %>
+					</a>
 
 				</div>
 
@@ -399,7 +391,7 @@ var metadisplay = function(){ %>
 								<div class="item sharesocial right unselectable">
 
 									<div class="itemwr table">
-										<div class="labelwr"><span class="label">SHARE</span></div>
+										<div class="labelwr workstation"><span class="label">SHARE</span></div>
 										<div class="iconwr">
 											
 											<div class="icon">

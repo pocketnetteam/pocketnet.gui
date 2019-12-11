@@ -19,6 +19,7 @@ html {
     min-height: 100%;
     position: relative;
     overflow-y: scroll;
+    background: #f6f6f6;
     /*overflow-anchor: none;*/
 
     &.nooverflow{
@@ -2348,6 +2349,7 @@ input[type=radio].radio:checked + label {
 }
 #panelWrapper{
     padding-top: 65px;
+    background: #f6f6f6;
 }
 
 
@@ -2744,7 +2746,7 @@ input[type=radio].radio:checked + label {
     }
 
     &.accepting{
-        background: fade(#00112C, 90);
+        background: rgba(20,21,21,.9);
         .thwrapper{
             position: static;
             margin: 0 auto;
@@ -2771,7 +2773,6 @@ input[type=radio].radio:checked + label {
         }
 
         ._close{
-            font-size: 1.4em;
             color : @color-white;
         }
 
@@ -2785,6 +2786,9 @@ input[type=radio].radio:checked + label {
 
                 button{
                     width: 100%;
+                    padding-left: 0!important;
+                    padding-right: 0!important;
+                    text-align: center;
                 }
 
                 &.btn2wr{
@@ -2797,6 +2801,13 @@ input[type=radio].radio:checked + label {
                         border-top : 0;
                     }
                 }
+            }
+        }
+
+        &.accepting2{
+            .buttons{
+                max-width: 500px;
+                
             }
         }
 
@@ -5011,7 +5022,7 @@ input[type=radio].radio:checked + label {
     #content{
         .work.adj{
             width: 85%;
-            margin-right: 50px;
+            margin-right: 30px;
            
         }
     }

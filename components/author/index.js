@@ -14,6 +14,38 @@ var author = (function(){
 		var panel = null, uptimer = null, contentsready = false, fixedBlock = null;
 
 		var actions = {
+			subscribeLabel : function(){
+
+				var user = self.app.user
+
+				var my = (user.address.value && author.address == user.address.value)
+				var subscribed = false;
+
+
+				if(!my && user.address.value){
+
+					var me = deep(self.app, 'platform.sdk.users.storage.' + user.address.value)
+
+					if (me && me.relation(author.address, 'subscribes')){
+						subscribed = true
+					}
+				}
+
+				if(el.c){
+
+					var _el = el.caption.find('.subscribebuttonstop')
+
+					if(subscribed){
+						_el.addClass("following")
+					}
+					else{
+						_el.removeClass("following")
+					}
+
+				}
+				
+
+			},
 			showmoreabout : function(){
 
 				var a = filterXSS(clearScripts((findAndReplaceLink(deep(author, 'data.about'), true))))
@@ -241,7 +273,17 @@ var author = (function(){
 				name : self.app.localization.e('settings') + ' <i class="fas fa-cog"></i>',
 				mobile : '<i class="fas fa-cog"></i>',
 				id : 'settings',
-				href : 'userpage?id=ustate',
+				href : function(){
+
+					if(!self.app.user.validate()){
+						return 'userpage'
+					}
+					else{
+						return 'userpage?id=ustate'
+					}
+
+					
+				}, 
 				class : 'tosettings',
 
 				if : function(){
@@ -1077,6 +1119,20 @@ var author = (function(){
 				
 			},
 
+			authclbk : function(){
+				
+
+				var active = _.find(reports, function(r){
+					return r.active
+				})
+
+				if(active && active.id != 'shares'){
+					renders.report(active, null, true)
+				}
+
+				actions.subscribeLabel()
+			},
+
 			getdata : function(clbk, settings){
 
 				author = {};
@@ -1248,6 +1304,12 @@ var author = (function(){
 		})
 
 	}
+
+	self.authclbk = function(){
+		_.each(essenses, function(e){
+			e.authclbk()
+		})
+	} 
 
 	return self;
 })();
