@@ -10,10 +10,11 @@
 				<div>
 				
 					<div class="sitelogin section">
-						<div class="label">
+						
+						<div class="label formh">
 							<%=e('id1')%>
 						</div>
-
+					
 						<div class="form">
 
 							<div class="formh">
@@ -56,9 +57,12 @@
 									
 								</div>
 
-								<div class="item e buttons">
-									<button class="enter"><%=e('signin')%></button>
-								</div>
+								
+
+									<div class="item e buttons">
+										<button class="enter"><%=e('signin')%></button>
+									</div>
+
 
 								<% if(fast) {%>
 									<div class="item e buttons ">
@@ -71,9 +75,9 @@
 							<div class="formv">
 
 								<% if(fast) {%>
-									<div class="item e buttons ">
-										<button class="showformh">Sign in with private key</button>
-									</div>	
+									<!--<div class="item e buttons ">
+										<button class="showformh">Sign in</button>
+									</div>	-->
 								<% } %>
 
 							</div>	
@@ -98,18 +102,12 @@
 		<div class="newCustomer section">
 
 			<div class="work">
-
-				<div class="caption cpt2">
-					<% if(!fast) {%> 
-
+				<% if(!fast) {%> 
+					<div class="caption cpt2">
 						<%=e('orcreate')%>
+					</div>
 
-					<% } else { %> 
-
-						Or create a new account	
-
-					<% } %>
-				</div>
+				<% } %>
 
 
 				<div class="createAccount buttons">
@@ -145,7 +143,7 @@
 					
 				<% } else { %> 
 					
-					Please Sign in or Create a new account to proceed action
+					Join Pocketnet - The Future of the Free Web
 
 				<% } %>
 			</div>

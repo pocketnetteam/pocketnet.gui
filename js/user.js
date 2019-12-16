@@ -375,8 +375,6 @@ User = function(app, p) {
 
 			var regs = app.platform.sdk.registrations.storage[self.address.value];
 
-			console.log("ME1", me, regs)
-
 			if (regs && (regs === true || regs < 3)){
 				return 'fuf'
 			}
@@ -396,8 +394,6 @@ User = function(app, p) {
 		if (me && me.relay){
 
 			var regs = app.platform.sdk.registrations.storage[self.address.value];
-
-			console.log("ME2", me, regs)
 
 			if (regs && (regs === true || regs < 3)){
 				return false

@@ -575,8 +575,6 @@ var menu = (function(){
 
 								if (authorForSearch) p.handler = true
 
-								console.log('authorForSearch', authorForSearch, p)
-
 								self.nav.api.go(p)
 
 								helpers.closeResults()
@@ -721,7 +719,6 @@ var menu = (function(){
 
 					self.app.platform.clbks.online.menu = function(online){
 
-						console.log('onoi', online)
 
 						if(online){
 							el.removeClass('disconected')
@@ -1024,13 +1021,15 @@ var menu = (function(){
 		}
 
 		var initauthorsearch = function(author){
-			menusearch.placeholder("SEARCH ON " + author.data.name.toUpperCase())
+			if (menusearch)
+				menusearch.placeholder("SEARCH ON " + author.data.name.toUpperCase())
 
 			authorForSearch = author
 		} 
 
 		var destroyauthorsearch = function(){
-			menusearch.placeholder("SEARCH ON POCKETNET")
+			if (menusearch)
+				menusearch.placeholder("SEARCH ON POCKETNET")
 
 			authorForSearch = null
 		}
@@ -1038,8 +1037,6 @@ var menu = (function(){
 		return {
 
 			getdata : function(clbk, p){
-
-				console.log("MENU0", p)
 
 				var data = {};
 
@@ -1054,13 +1051,13 @@ var menu = (function(){
 
 					var regs = self.app.platform.sdk.registrations.storage[addr];
 
-					if (regs && regs <= 4){
+					if (regs && regs <= 5){
 						
 						data.key = true
 					}
 
 					self.app.platform.sdk.users.getone(addr, function(){
-						console.log("GETONE2")
+				
 						clbk(data)
 
 					})
@@ -1114,7 +1111,8 @@ var menu = (function(){
 			},
 
 			closesearch : function(){
-				el.c.removeClass('searchactive')
+				if (el.c)
+					el.c.removeClass('searchactive')
 			},
 
 			showsearch : function(v, _searchBackAction){

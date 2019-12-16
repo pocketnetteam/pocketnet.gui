@@ -63,11 +63,13 @@ var accounts = (function(){
 			},						
 
 			dumpkey : function(address){
+
 				self.app.platform.sdk.pool.expand(pack, function(expandedPack){
 					var index = _.indexOf(expandedPack.addresses, address);
 
 					if (index > -1){
 						var private = expandedPack.private[index];
+
 
 						renders.dumpkey(address, private)
 					}
@@ -139,7 +141,7 @@ var accounts = (function(){
 			},
 
 			back : function(){
-				console.log('bakc')
+			
 				el.dumpkey.html('')
 
 				el.c.find('.dumpaddress').html('')
@@ -211,14 +213,23 @@ var accounts = (function(){
 			},
 			dumpkey : function(address, private){
 
-				
+
+				var privateWif = '';
+
 				el.c.addClass('privatedump')
 
 				el.c.find('.dumpaddress').html(address)
 
-				var keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex')) 
+				try{
+					var keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex')) 
 
-				var privateWif = keyPair.toWIF().toString('hex')
+					privateWif = keyPair.toWIF().toString('hex')
+				}
+				catch(e){
+
+				}
+
+			
 				
 				self.shell({
 
@@ -234,6 +245,7 @@ var accounts = (function(){
 					animation : 'fadeIn',
 
 				}, function(p){
+				
 					renders.qrcode(p.el.find('.code'), private)
 
 					p.el.find('.copyvalue').on('click', function(){

@@ -525,6 +525,11 @@
 						border-color: @color-gray2;
 						color :  @color-gray2;
 					}
+				}	
+
+				.notificationturn{
+					display: none;
+					color : @color-gray-light;
 				}
 
 				.aunsubscribe{
@@ -540,6 +545,8 @@
 						display : none;
 					}
 
+					
+
 					span{
 						cursor: pointer;
 						.transition(0.3s);
@@ -551,12 +558,41 @@
 							color : @color-main;
 						}
 					}
+
+					.notificationturn {
+						display : none;
+
+						i{
+							text-align: center;
+							color : fade(@color-good, 80);
+							.transition(0.3s);
+						}
+		
+						&.turnon{
+							i{
+								&:before{
+									content : '\f0f3';
+								}
+							}
+						}
+		
+						&:hover{
+							i{
+								color : fade(@color-good, 100);
+							}
+							
+						}
+					}
 				}
 
 				&.subscribed{
 
 					.sbtnxs{
 						.subscribedLabel{
+							display : inline;
+						}
+
+						.notificationturn {
 							display : inline;
 						}
 
@@ -572,6 +608,10 @@
 						}
 						.asubscribe{
 							display: none;
+						}
+
+						.notificationturn{
+							display: block;
 						}
 
 						.additional{
@@ -2503,6 +2543,7 @@ html.stblack{
 				.icon{
 					height: 45px;
 				}
+				.notificationturn,
 				.aunsubscribe,
 				.additional,
 				.subscribe{
@@ -2518,11 +2559,16 @@ html.stblack{
 				&.subscribed{
 					.iconWrapper{
 
+
 						.aunsubscribe{
 							display: block;
 						}
 						.asubscribe{
 							display: none;
+						}
+
+						.notificationturn{
+							display: block;
 						}
 
 						.additional{

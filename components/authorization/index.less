@@ -196,7 +196,23 @@
 				}
 				
 			}
-	
+		}
+
+		.leftPart{
+			.work{
+				padding-top : 0!important;;
+				padding-bottom : 0!important;;
+			}
+
+			.sitelogin .form .item.e{
+				margin-top : 0;
+			}
+		}
+
+		.showformh{
+			background: transparent;
+			border : 0;
+			color : @color-main;
 		}
 	}
 
@@ -260,22 +276,14 @@
 			.mWrapper{
 
 	
-		
-				#test{
-					background: @color-black3;
 				
-		
-					.userPanel{
-		
-						.upanelloader{
-							background: fade(@color-black3, 90);
-		
-							
-						}
-					}
-				}
+				
 
 			}
+
+			
+
+			
 		}
 
 		
@@ -290,6 +298,7 @@
 
 			.caption{
 				color : @color-black;
+				font-size: 1.5em;
 			}
 		}
 
@@ -444,6 +453,70 @@
 	
 			
 		}
+
+		&.fastregistration{
+			.rightPart {
+				.work{
+					padding-top : 0!important;
+				}
+			}
+			
+			
+			.leftPart{
+				.work{
+					padding-top : 0!important;;
+					padding-bottom : 0!important;;
+				}
+	
+				.sitelogin .form .item.e{
+					margin-top : 0;
+				}
+			}
+
+			.panelWrapper{
+				margin-top : 0!important;
+			}
+
+			#test{
+				padding-top : 2 * @rhythm;
+				min-height: 350px;
+
+				.parameterMaketWrapper{
+					&[parameter="site"],
+					&[parameter="language"]{
+						display: none;
+					}
+				}
+
+				.parameter textarea {
+					min-height: 85px;
+				}
+
+				.userPanel {
+					
+					.dropZone{
+						.subcaption{
+							display: none;
+						}
+					}
+	
+					.pgroupIconWrapper{
+						height: 90px;
+						margin-bottom : 0;
+					}
+				}
+
+				.subcaption{
+					font-size: 1.5em;
+				}
+
+				.pgroup{
+					margin-bottom : @rhythm;
+				}
+
+				
+			}
+		}
 	
 		
 	
@@ -540,6 +613,17 @@ html.stblack{
 				}
 			}
 	
+
+		
+			#test{
+				background: @color-black3;		
+				.userPanel{
+	
+					.upanelloader{
+						background: fade(@color-black3, 90);
+					}
+				}
+			}
 		
 			.caption{
 				color : @color-bright;
@@ -778,6 +862,15 @@ html.stblack{
 		
 			
 		
+		}
+	}
+
+	html.stblack{
+		.wnd.authwindow{
+			
+			._close{
+				color : #fff;
+			}
 		}
 	}
 }

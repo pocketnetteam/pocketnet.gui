@@ -191,13 +191,19 @@
 					line-height: 1.4em;
 				}
 
+				
 				.unit{
 					font-weight: 700;
 					color : @color-bright;
 				}
 
+				.note{
+					font-weight: 400;
+					color : @color-main;
+				}
 				
 			}
+			
 
 			
 			.pInput{
@@ -299,6 +305,10 @@
 				.parameter{
 					max-width: 800px;
 				}
+			}
+
+			&[parameter="email"]{
+				display: none;
 			}
 
 			&[parameter="ref"]{

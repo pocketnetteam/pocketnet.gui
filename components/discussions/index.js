@@ -139,11 +139,15 @@ var discussions = (function(){
 
 							destroyClbk : function(){
 
+								if(!openedChat) return
+
 								openingChat = false
 
 								actions.preloader(true)
 
-								el.c.removeClass("forChat");
+								if (el.c)
+
+									el.c.removeClass("forChat");
 
 								p.el.html('')
 
@@ -724,6 +728,8 @@ var discussions = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DESTROYCHAT")
 
 				if (w)
 

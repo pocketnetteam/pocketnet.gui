@@ -96,6 +96,8 @@
 				display : none;
 			}
 
+			
+
 			span{
 				cursor: pointer;
 				.transition(0.3s);
@@ -105,6 +107,31 @@
 
 				&:hover{
 					color : @color-main;
+				}
+			}
+
+			.notificationturn {
+				display : none;
+
+				i{
+					text-align: center;
+					color : fade(@color-gray-slight, 30);
+					.transition(0.3s);
+				}
+
+				&.turnon{
+					i{
+						&:before{
+							content : '\f0f3';
+						}
+					}
+				}
+
+				&:hover{
+					i{
+						color : fade(@color-gray-slight, 80);
+					}
+					
 				}
 			}
 		}
@@ -118,6 +145,10 @@
 
 				.subscribeLabel{
 					display : none;
+				}
+				
+				.notificationturn {
+					display : inline;
 				}
 			}
 

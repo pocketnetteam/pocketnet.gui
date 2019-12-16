@@ -583,6 +583,32 @@ var post = (function(){
 				})	
 			},
 
+			subscribePrivate : function(){
+
+				var _el = $(this);
+
+				var off = _el.hasClass('turnon')
+
+				var f = 'notificationsTurnOn'
+
+				if(off){
+
+					f = 'notificationsTurnOff'
+					
+				}
+
+				self.app.platform.api.actions[f](share.address, function(tx, err){
+
+					if(tx){
+					}
+					else
+					{
+						self.app.platform.errorHandler(err, true)
+					}
+
+				})
+			},
+
 			subscribe : function(clbk){
 
 				actions.stateAction(function(){
@@ -916,6 +942,8 @@ var post = (function(){
 										el.share.find('.aunsubscribe').on('click', events.unsubscribe)
 										el.share.find('.metmenu').on('click', events.metmenu)
 
+										el.share.find('.notificationturn').on('click', events.subscribePrivate)
+
 
 									}
 
@@ -1199,12 +1227,36 @@ var post = (function(){
 				
 			}
 
+			self.app.platform.clbks.api.actions.subscribePrivate.post = function(address){
+
+				if(address == share.address){
+
+					el.c.find('.shareTable[address="'+address+'"]').addClass('subscribed');
+
+					var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+
+					if (me){
+						var r = me.relation(address, 'subscribes') 
+
+						el.c.find('.shareTable[address="'+address+'"] .notificationturn').removeClass('turnon')
+
+						if (r && (r.private == 'true' || r.private === true)){
+							el.c.find('.shareTable[address="'+address+'"] .notificationturn').addClass('turnon')	
+						}
+						else{
+							el.c.find('.shareTable[address="'+address+'"] .notificationturn').removeClass('turnon')	
+						}
+					}
+				}
+
+			}
+
 			self.app.platform.clbks.api.actions.subscribe.post = function(address){
 
 				if(address == share.address){
 					
 					el.c.find('.shareTable[address="'+address+'"]').addClass('subscribed');
-
+					el.c.find('.shareTable[address="'+address+'"] .notificationturn').removeClass('turnon')
 				}
 
 				
@@ -1215,7 +1267,7 @@ var post = (function(){
 				if(address == share.address){
 
 					el.c.find('.shareTable').removeClass('subscribed');
-
+					el.c.find('.shareTable[address="'+address+'"] .notificationturn').removeClass('turnon')
 				}
 			}
 
@@ -1231,12 +1283,12 @@ var post = (function(){
 				renders.share(function(){
 					renders.comments(function(){
 
-						if (el.wnd && el.wnd.length && ed.next && !isMobile()){
+						/*if (el.wnd && el.wnd.length && ed.next && !isMobile()){
 			
-							el.wnd.on('scroll', events.next)
+							//el.wnd.on('scroll', events.next)
 
 							events.next()
-						}
+						}*/
 
 					})
 				})
@@ -1327,6 +1379,9 @@ var post = (function(){
 				delete self.app.platform.ws.messages.event.clbks.post
 				
 				delete self.app.platform.ws.messages.transaction.clbks.temppost
+				delete self.app.platform.clbks.api.actions.subscribePrivate.post
+				delete self.app.platform.clbks.api.actions.unsubscribe.post
+				delete self.app.platform.clbks.api.actions.subscribe.post
 
 				authblock = false;
 
@@ -1337,9 +1392,6 @@ var post = (function(){
 					_repost = null;
 				}
 
-				/*if(key != 'auto')
-				
-					self.app.nav.api.history.removeParameters(['s', 'commentid', 'parentid'])*/
 			},
 
 			clearparameters : ['s', 'commentid', 'parentid'],

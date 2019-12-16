@@ -1005,7 +1005,8 @@ __map =  {
 			el : 'navigation'
 		},
 		now : true,
-		renew : true
+		renew : true,
+		reload : true
 	},
 
 	footer : {

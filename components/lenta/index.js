@@ -1394,6 +1394,35 @@ var lenta = (function(){
 				actions.openGalleryRec(share, src)
 			},
 
+			subscribePrivate : function(){
+
+				var _el = $(this);
+
+				var off = _el.hasClass('turnon')
+				var address= _el.closest('.shareTable').attr('address')
+
+				var f = 'notificationsTurnOn'
+
+				if(off){
+
+					f = 'notificationsTurnOff'
+					
+				}
+
+				self.app.platform.api.actions[f](address, function(tx, err){
+
+					if(tx){
+						/*if(!off){
+							_el.addClass('turnon')
+						}*/
+					}
+					else
+					{
+						self.app.platform.errorHandler(err, true)
+					}
+
+				})
+			},
 			
 			asubscribe : function(){
 				var address = $(this).closest('.shareTable').attr('address')
@@ -2726,6 +2755,8 @@ var lenta = (function(){
 
 			el.c.on('click', '.asubscribe', events.asubscribe)
 			el.c.on('click', '.aunsubscribe', events.aunsubscribe)
+			el.c.on('click', '.notificationturn', events.subscribePrivate)
+			
 			
 
 			el.c.on('click', '.donate', events.donate)
@@ -2924,13 +2955,37 @@ var lenta = (function(){
 				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
 
 				addressEl.addClass('subscribed');
+				addressEl.find('.notificationturn').removeClass('turnon')	
 			}
+
+			self.app.platform.clbks.api.actions.subscribePrivate.lenta = function(address){
+
+				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+				var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+
+				if (me){
+					var r = me.relation(address, 'subscribes') 
+
+					if (r && (r.private == 'true' || r.private === true)){
+						addressEl.find('.notificationturn').addClass('turnon')	
+					}
+					else{
+						addressEl.find('.notificationturn').removeClass('turnon')	
+					}
+				}
+
+				addressEl.addClass('subscribed');
+			}
+			
 
 			self.app.platform.clbks.api.actions.unsubscribe.lenta = function(address){
 
 				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
 
 				addressEl.removeClass('subscribed');
+
+				addressEl.find('.notificationturn').removeClass('turnon')
 			}
 
 			self.app.platform.clbks.api.actions.blocking.lenta = function(address){
@@ -3241,6 +3296,7 @@ var lenta = (function(){
 				delete self.app.platform.ws.messages["new block"].clbks.newsharesLenta
 				delete self.app.platform.clbks.api.actions.subscribe.lenta
 				delete self.app.platform.clbks.api.actions.unsubscribe.lenta
+				delete self.app.platform.clbks.api.actions.subscribePrivate.lenta 
 
 				delete self.app.platform.clbks.api.actions.blocking.lenta
 				delete self.app.platform.clbks.api.actions.unblocking.lenta

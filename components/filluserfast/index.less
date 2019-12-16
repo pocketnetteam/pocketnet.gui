@@ -8,8 +8,37 @@
 		text-align: center;
 	}
 
+
+	.upanelloader{
+		display: none;
+		position: absolute;
+		left : 0;
+		right : 0;
+		top : 0;
+		bottom : 0;
+		z-index: 3000;
+		background: fade(#fff, 90);
+
+		.table{
+			width : 100%;
+			height: 100%;
+			>div{
+				vertical-align: middle;
+				text-align: center;
+				color : @color-main;
+			}
+		}
+	}
+
+	&.loading{
+		.upanelloader{
+			display: block;
+		}
+	}
+
 	.mWrapper{
 		margin-top: 4 * @rhythm;
+		position: relative;
 
 		.panelWrapper{
 			margin-top: 4 * @rhythm;
@@ -57,7 +86,7 @@
 
 				&.save{
 					cursor: default;
-					background: @color-gray;
+					background: #FF3B00;
 					.transition(0.3s);
 				}
 
@@ -142,6 +171,10 @@
 			}
 			.parameterMaketWrapper[parameter="addresses"]{
 				display: none;
+			}
+
+			.parameterMaketWrapper[parameter="email"]{
+				display: block;
 			}
 		}
 
@@ -427,7 +460,11 @@
 
 html.stblack{
 	#filluserfast{
-	
+		
+		.upanelloader{
+			background: fade(@color-black, 90);
+		}
+
 		.mWrapper{
 
 	
@@ -439,7 +476,7 @@ html.stblack{
 					background: #FF3B00;
 	
 					&.save{
-						background: @color-gray;
+						background: #FF3B00;
 					}
 	
 					

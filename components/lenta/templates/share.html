@@ -55,10 +55,21 @@ var metadisplay = function(){ %>
 
 							</a>
 
-							<% if((state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe">Follow</span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i> Following</span>
+									&middot; <span class="subscribeLabel asubscribe">Follow</span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i> Following</span> 
+									<% if(state && !my && user.address.value) {
+										
+										var r = me.relation(share.address, 'subscribes') 
+										
+										%>
+										
+
+										<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+									<% } %>
+
+									
 								</span>
 
 							<% } %>

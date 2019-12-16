@@ -492,6 +492,9 @@ var main = (function(){
 					el.c.find('.bgCaption').removeClass('hidden')
 
 					makeShare()
+
+					if (hsready)
+						el.panel.hcSticky('refresh');
 				}
 				
 			},

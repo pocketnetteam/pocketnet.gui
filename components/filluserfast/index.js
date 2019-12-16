@@ -185,6 +185,8 @@ var filluserfast = (function(){
 
 				prev : function(clbk){
 
+					self.app.platform.sdk.theme.set('black')
+
 					if (essenseData.welcomepart)
 						essenseData.welcomepart()
 
@@ -219,6 +221,8 @@ var filluserfast = (function(){
 							})	
 
 						}
+
+						self.app.platform.ui.showmykeyfast()
 					}
 
 					setTimeout(function(){
@@ -438,6 +442,15 @@ var filluserfast = (function(){
 
 		var actions = {
 
+			preloader : function(sh){
+				if(sh){
+					el.c.addClass('loading')
+				}
+				else{
+					el.c.removeClass('loading')
+				}
+			},
+
 			signin : function(clbk){
 				self.user.signin(k.mnemonicKey, function(state){
 
@@ -495,6 +508,8 @@ var filluserfast = (function(){
 
 				if (step){			
 
+					actions.preloader(true)
+
 					step.prev(function(){
 
 						if(!el.c){
@@ -502,10 +517,14 @@ var filluserfast = (function(){
 							return
 						}
 
+						
+
 						el.c.attr('step', step.id)
 
 						renders.panel(step, function(pel){
 							renders.step(step, function(el){
+
+								actions.preloader(false)
 
 								_scrollTop(el, scrollel)
 
@@ -831,10 +850,14 @@ var filluserfast = (function(){
 
 							actions.waitgeneration(function(){
 								actions.signin(function(){
+									
 									self.sdk.registrations.add(k.mainAddress, 1)
+
 									if(clbk) clbk()
 								})	
 							})
+
+
 						},
 
 						relay : function(){

@@ -1385,13 +1385,15 @@ var comments = (function(){
 
 				var l = 1000 - encodeURIComponent(message).length;
 
+				el.find('.limits').removeClass('bad')
+
 				if (l < 500){
 
 					if(l > 0){
 						el.find('.limits').addClass('active').html(l + ' ' + pluralform(l , ['Character', 'Characters']) + ' Available')
 					}
 					else{
-						el.find('.limits').addClass('active').html('You have reached comment length limit')
+						el.find('.limits').addClass('active').addClass('bad').html('You are '+ (-l) +' characters over')
 					}
 
 					

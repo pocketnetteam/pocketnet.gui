@@ -15,9 +15,18 @@
 					<% if(parameter.require){ %>
 
 						<span class="require">*</span>
+						
 
 					<% } %>
+
+					<% if(parameter.id == 'email') {%>
+						<span class="note">Not linked to your profile</span>
+					<% } %>
+					
 				</div>
+
+				
+
 			</div>
 
 			<div class="pInput">

@@ -1667,6 +1667,22 @@ Platform = function(app, listofnodes){
 	}
 
 	self.ui = {
+		showmykeyfast : function(){
+			app.nav.api.load({
+		
+				open : true,
+				inWnd : true,
+				href : 'pkview',
+
+				essenseData : {
+					dumpkey : true
+				},
+
+				clbk : function(p, s){
+					
+				}
+			})
+		},
 		showmykey : function(p){
 
 			if(!p) p = {};
@@ -2890,13 +2906,10 @@ Platform = function(app, listofnodes){
 
 				var k = self.app.user.keys()
 
-				console.log(k.privateKey)
 
 				var d = bitcoin.bip32.fromPrivateKey( self.app.user.private.value, chaincode ).derivePath(p).toWIF() 
 
 				var keyPair = bitcoin.ECPair.fromWIF(d)	  
-
-				console.log('experiment', keyPair)
 
 				var pubkey = keyPair.publicKey;
 
@@ -2907,7 +2920,6 @@ Platform = function(app, listofnodes){
 
 				var d2 = bitcoin.bip32.fromPublicKey(self.app.user.key.value, chaincode).derivePath(p)
 
-				console.log(d2)
 
 				
 			}
@@ -6657,29 +6669,33 @@ Platform = function(app, listofnodes){
 						
 					}
 
-					var lastcomment = share.lastComment;
+					if(share){
+						var lastcomment = share.lastComment;
 
-					if(lastcomment){
-						var cid = _.find(commentsid, function(r){
-							return r == lastcomment.id
-						})
-	
+						if (lastcomment){
+							var cid = _.find(commentsid, function(r){
+								return r == lastcomment.id
+							})
+		
 
-						if (cid && s[cid]){
-	
-	
-							if (lastcomment && !lastcomment.myscore && self.sdk.address.pnet()){
-								lastcomment.myScore = Number(s[cid])
-	
-	
-								_.each(self.sdk.comments.upvoteClbks, function(c){
-											
-									c(null, lastcomment, ulastcomment.myscore, self.sdk.address.pnet().address)
-	
-								})
-							}
-						} 
+							if (cid && s[cid]){
+		
+		
+								if (lastcomment && !lastcomment.myscore && self.sdk.address.pnet()){
+									lastcomment.myScore = Number(s[cid])
+		
+		
+									_.each(self.sdk.comments.upvoteClbks, function(c){
+												
+										c(null, lastcomment, ulastcomment.myscore, self.sdk.address.pnet().address)
+		
+									})
+								}
+							} 
+						}
 					}
+
+					
 
 					
 
@@ -9159,14 +9175,10 @@ Platform = function(app, listofnodes){
 
 						_.each(s.unspent, function(unspents, address){
 
-							console.log("BEFORE", txids, unspents)
-
 							var r = removeEqual(unspents, {
 								txid : id.txid,
 								vout : id.vout
 							}) 
-
-							console.log("CLEAR", r, unspents)
 						
 							if(r){ 
 								cleared = true;
@@ -9658,8 +9670,6 @@ Platform = function(app, listofnodes){
 
 							var inputs = [];
 
-							console.log("UNS", unspent)
-
 							if(unspent.length){
 								inputs = [{
 
@@ -9838,8 +9848,6 @@ Platform = function(app, listofnodes){
 
 							var amount = 0;
 
-							console.log('inputs', inputs)
-
 						    _.each(inputs, function(i, index){
 
 						    	if(self.addressType == 'p2pkh'){
@@ -9943,8 +9951,6 @@ Platform = function(app, listofnodes){
 								else
 								{
 
-									console.log('inputs', inputs)
-
 									var ids = _.map(inputs, function(i){
 										return i.txId
 									})
@@ -9977,8 +9983,6 @@ Platform = function(app, listofnodes){
 
 											alias.inputs = inputs
 											alias.outputs = outputs
-
-											// console.log("temptemptemp", temp)
 
 											self.sdk.node.transactions.saveTemp()
 											
@@ -10342,6 +10346,8 @@ Platform = function(app, listofnodes){
 							var mk = self.app.user.private.value.toString('hex');
 
 							self.cryptography.api.aeswc.decryption(aeskey, mk, {}, function(decrypted){
+
+
 								_key = decrypted;
 
 								var pack = {
@@ -10354,16 +10360,21 @@ Platform = function(app, listofnodes){
 									_key : _key
 								}
 
-
+								
 								lazyEach({
 									array : exportedPack.keys, 
 									action : function(p, index){
 										var privatemk = p.item;
 
-										self.cryptography.api.aeswc.decryption(privatemk, _key, {}, function(mk){
-											pack.private[index] = mk;
 
-											p.success()
+										self.cryptography.api.aeswc.decryption(privatemk, _key, {}, function(mk){
+
+											if(mk){
+												pack.private[index] = mk;
+
+												p.success()
+											}
+											
 										})
 									},
 
@@ -10371,6 +10382,7 @@ Platform = function(app, listofnodes){
 
 									all : {
 										success : function(){
+
 
 											if (clbk)
 												clbk(pack)
@@ -12551,13 +12563,14 @@ Platform = function(app, listofnodes){
 					var text = '';
 					var html = '';
 
-					text = self.tempates.share(data.share, null, true)
+					if(data.share){
+						text = self.tempates.share(data.share, null, true)
 					
-					if(text){
-						html += self.tempates.user(data.user, text, true, null, null, data.time)
+						if(text){
+							html += self.tempates.user(data.user, text, true, null, null, data.time)
+						}
 					}
-
-
+					
 					return html;
 					
 				},
@@ -12843,7 +12856,7 @@ Platform = function(app, listofnodes){
 
 						else{
 
-							if(data.address != platform.sdk.address.pnet().address){
+							if(!platform.sdk.address.pnet() || data.address != platform.sdk.address.pnet().address){
 
 								if(platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name)
 								{
@@ -15249,7 +15262,10 @@ Platform = function(app, listofnodes){
 						    if (clbk)
 								clbk(_decrypted)
 						})
+
 						.catch(function(err){
+
+							console.log("ERR", err)
 
 						    if (clbk)
 								clbk('')

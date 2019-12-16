@@ -167,9 +167,10 @@ nModule = function(){
 									self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []))
 
 								}
-									
+								
+								if (p.destroy)
 
-								return p.destroy(key)
+									return p.destroy(key)
 							}
 
 							
@@ -667,6 +668,8 @@ nModule = function(){
 
 			}
 			else{
+
+				if(p.el) p.el.html('')
 
 				if (p.clbk)
 					p.clbk('anonimus')

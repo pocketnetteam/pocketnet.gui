@@ -140,7 +140,14 @@ var navigation = (function(){
 
 				delete self.app.nav.clbks.history.navigation
 
-				el = {};
+				if (el){
+					
+					if (el.c)
+						el.c.remove();
+
+					el = {};
+				}
+					
 			},
 			
 			init : function(p){

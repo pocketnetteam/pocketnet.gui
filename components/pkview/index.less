@@ -32,9 +32,13 @@
 					font-size: 0.8em;
 				}
 			}
-		}
-    }
     
+        }
+
+    
+    
+    }
+   
     .key{
         
         button{
@@ -47,13 +51,19 @@
 
 		.number{
 			border: 1px solid @color-gray;
-		}
+        }
+        
 
 		.subcaption{
             font-size: 1.5em;
             color : @color-gray;
             text-align: center;
             font-weight: 100;
+
+            .bad{
+                font-weight: 700;
+                color : @color-orange;
+            }
         }
         
         .pklabel{
@@ -89,7 +99,11 @@
 					display: none;
 				}
 			}
-		}
+        }
+        
+        .mnemonicKeyCell{
+            margin-top : @rhythm;
+        }
 
         .qrcode{
             margin : 0 auto;

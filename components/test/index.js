@@ -20,7 +20,73 @@ var test = (function(){
 
 		var changedLoc = false;
 
+		var getrefname = function(clbk){
+			if (self.app.ref){
+				self.sdk.users.get(self.app.ref, function(){
+
+					var name = deep(self, 'sdk.users.storage.' + self.app.ref + '.name');
+
+					if (clbk)
+						clbk(name)
+				})
+			}
+			else{
+				if (clbk)
+					clbk(null)	
+			}
+		}
+
 		var actions = {		
+
+			saveemail : function(email, clbk){
+			
+
+				var _p = {
+					Email : email
+				}
+
+				_p.Action || (_p.Action = 'ADDTOMAILLIST');
+				_p.TemplateID = '1005'
+
+				_p.ref = ''
+				
+	
+				getrefname(function(name){
+	
+					var body = ''
+
+	
+					if (name) {
+						
+						_p.ref += name
+	
+						body += '<p><a href="https://pocketnet.app/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+					}							
+	
+					var r = deep(document, 'referrer')
+	
+					if (r) {
+						body += '<p><a href="'+r+'">From: '+r+'</a></p>'
+					}
+	
+					_p.body = encodeURIComponent(body)
+	
+					$.ajax({
+						type: 'POST',
+						url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+						data: _p,
+						dataType: 'json',
+						success : function(){
+		
+		
+							if (clbk)
+								clbk();
+		
+						}
+					});
+				})
+			
+			},
 
 			valid : function(v1, v2){
 				if(!actions.equal((v1), (v2))){
@@ -64,6 +130,36 @@ var test = (function(){
 				}*/
 			},
 			save : function(clbk){
+
+				var allclbk = function(){
+					el.upanel.removeClass('loading')
+
+					el.c.find('.userPanel').removeClass('loading')
+
+					topPreloader(100)
+
+					if (primary){
+
+						self.nav.api.go({
+							href : 'index',
+							history : true,
+							open : true
+						})	
+
+					}
+					
+					else
+					{	
+						if (ed.success){							
+							ed.success()
+						}
+						else
+						{
+							if (clbk)
+								clbk()
+						}
+					}
+				}
 
 				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : "", function(resref, err){				
 
@@ -112,6 +208,8 @@ var test = (function(){
 
 						userInfo.ref.set(deep(ref, 'address') || '');
 
+					
+
 					var err  = userInfo.validation()
 
 					if (err){
@@ -142,6 +240,10 @@ var test = (function(){
 
 					topPreloader(30)
 
+					el.c.find('.userPanel').addClass('loading')
+
+					el.upanel.addClass('loading')
+
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
 						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
@@ -152,15 +254,8 @@ var test = (function(){
 							
 								el.c.find('.errorname').fadeOut();
 
-								console.log("SAVE")
-
 								topPreloader(70)
-
-								el.c.find('.userPanel').addClass('loading')
-
-								el.upanel.addClass('loading')
 								
-								el.c.find('.errorname').fadeOut();
 
 								userInfo.uploadImage(function(){
 
@@ -178,6 +273,12 @@ var test = (function(){
 
 									}
 
+									var email = tempInfo.email;
+
+									if (email){
+										actions.saveemail(email);
+									}
+
 
 									self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -185,15 +286,18 @@ var test = (function(){
 
 										function(tx, error){
 
-											el.upanel.removeClass('loading')
-
-											el.c.find('.userPanel').removeClass('loading')
-
-											topPreloader(100)
+											
 
 											if(!tx){
 
 												self.app.platform.errorHandler(error, true)	
+												
+												el.upanel.removeClass('loading')
+
+												el.c.find('.userPanel').removeClass('loading')
+
+												topPreloader(100)
+
 											}
 											else
 											{
@@ -211,31 +315,22 @@ var test = (function(){
 												actions.upanel()
 
 												actions.ref(resref)
+												
 
 												self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+
+
+
 													self.app.reloadModules(function(){
 
-														if (primary){
-				
-															self.nav.api.go({
-																href : 'index',
-																history : true,
-																open : true
-															})	
-				
+														if (ed.presuccess){
+															ed.presuccess(allclbk)
 														}
+														else{
+															allclbk()
+														}
+
 														
-														else
-														{	
-															if (ed.success){
-																ed.success()
-															}
-															else
-															{
-																if (clbk)
-																	clbk()
-															}
-														}
 				
 													})
 												})
@@ -260,6 +355,10 @@ var test = (function(){
 						}
 						else
 						{
+							el.upanel.removeClass('loading')
+
+							el.c.find('.userPanel').removeClass('loading')
+
 							topPreloader(100)
 
 							el.c.find('.errorname').fadeIn();
@@ -469,6 +568,13 @@ var test = (function(){
 				type : "NICKNAME",
 				onType : true,
 				require : true
+			}),
+
+			email : new Parameter({
+				name : 'Email',
+				id : 'email',
+				type : "EMAIL",
+				onType : true,
 			}),
 
 			language : new Parameter({
@@ -807,7 +913,7 @@ var test = (function(){
 
 						plissing = self.app.platform.api.plissing({
 							el : _p.el.find('.iconWrapper'),
-							text : "Upload image"
+							text : "Upload Profile Image"
 						})
 
 					if (clbk)
@@ -1173,7 +1279,6 @@ var test = (function(){
 			
 			init : function(p){
 
-			
 				state.load();
 
 				el = {};

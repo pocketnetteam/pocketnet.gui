@@ -169,7 +169,7 @@ ____loclib.wsaddressnotv = "Address is not valid";
 //user profile
 ____loclib.uaddaddressdona = "Add address For Donations";
 ____loclib.uaddaddressdonaplace = "Enter Address";
-____loclib.uchangeicon = "Upload Profile Icon";
+____loclib.uchangeicon = "Upload Profile Image";
 ____loclib.utip1 = "You must create name & avatar on blockchain before using Pocketnet";
 ____loclib.utip2 = "You have only one step left";
 
@@ -180,7 +180,7 @@ ____loclib.usave = "Save";
 ____loclib.ucancel = "Cancel";
 ____loclib.uwaitb = "Wait for confirmation to save information ";
 ____loclib.uchanges = "There are no changes";
-____loclib.uchangesvalid = "You need to create a name & avatar";
+____loclib.uchangesvalid = "You need to upload profile image & create username";
 
 ____loclib.uname = "Name";
 ____loclib.ulanguage = "Language";

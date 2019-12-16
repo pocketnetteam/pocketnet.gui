@@ -82,7 +82,7 @@ Application = function(p)
 		
 
 		nav : {
-			navPrefix : '/pocketnet/',
+			navPrefix : '/',
 		},
 
 		name : 'PCRB',
@@ -647,6 +647,8 @@ Application = function(p)
 		if(p.current) p.nav.href = self.nav.get.href()
 
 		self.destroyModules();
+
+		//self.stopModules()
 		
 		self.user.isState(function(s){
 
@@ -655,7 +657,6 @@ Application = function(p)
 			if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
 			self.nav.init(p.nav);
-
 			
 		})
 	}
@@ -669,7 +670,6 @@ Application = function(p)
 
 				var m = self.modules[i]
 
-
 				if (m && m.module.inited && m.module.authclbk){
 					m.module.authclbk()
 				}
@@ -677,13 +677,23 @@ Application = function(p)
 				if (m && m.module.inited && m.module.restart && mobj.reload) {
 
 					m.module.restart();
+				}
+
+
+				if (m && mobj.now) {
+
+					m.module.restart();
 
 					return true;
 				}
 			})
 
-			if (clbk)
-				clbk()
+			self.nav.api.ini(function(){
+				if (clbk)
+					clbk()
+			}, mp)
+
+			
 		})
 	}
 
@@ -725,8 +735,24 @@ Application = function(p)
 
 	self.destroyModules = function(){
 		_.each(self.modules, function(module){
-			if (module.module.inited && module.module.destroy) {
-				module.module.destroy();
+			if (module.module.inited) {
+
+				if (module.module.destroy)
+
+					module.module.destroy();
+			}
+				
+		})
+	}
+
+	self.stopModules = function(){
+		_.each(self.modules, function(module){
+
+			console.log("STOPMODULE", module.module)
+
+			if (module.module.inited) {
+
+				module.module.stop();
 			}
 				
 		})
