@@ -31,7 +31,6 @@ var html = window.location.search.substr(1);
 $('html .cnt').html(decodeURIComponent(html))
 
 $('html .close').on('click', function(){
-	console.log('electron-notification-close')
 	electron.ipcRenderer.send('electron-notification-close')
 })
 

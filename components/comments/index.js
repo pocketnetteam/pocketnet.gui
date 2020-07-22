@@ -985,9 +985,16 @@ var comments = (function(){
 
 				var c = this;
 
+				var text = this.getText();
+
 				var id = actions.getid(editor.closest('.postbody'))
 
 				actions.emessage(id, c)
+
+				renders.limits(editor.closest('.postbody'), text)
+
+				console.log("SAD")
+
 			},
 			message : function(){
 				var v = $(this).val();
@@ -1162,6 +1169,7 @@ var comments = (function(){
 				},
 
 				events : {
+					'emojibtn.click' : events.emessage,
 					change : events.emessage,
 					click : events.emessage,
 					keydown : function(editor, e){
@@ -1195,9 +1203,6 @@ var comments = (function(){
 						actions.message(p.id || '0', text)
 
 						renders.limits(c, text)
-
-					
-
 						
 					},
 
@@ -1383,7 +1388,7 @@ var comments = (function(){
 
 			limits : function(el, message){
 
-				var l = 1000 - encodeURIComponent(message).length;
+				var l = 1000 - message.length;
 
 				el.find('.limits').removeClass('bad')
 

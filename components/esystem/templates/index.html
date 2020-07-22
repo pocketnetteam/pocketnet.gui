@@ -1,0 +1,84 @@
+<div id="<%-module.map.id%>">
+
+	<div class="work">
+
+		<div class="cCaption">
+			<span>Node management</span>
+		</div>	
+		
+	</div>
+
+	<% if(typeof _Electron != 'undefined') {%>
+
+		<div class="connection">
+
+			<div class="proxy">
+
+				<div class="work">
+
+					<div class="fcaption">
+						Proxy management
+					</div>
+
+					<div class="proxyoptions">
+
+					</div>
+				
+					<div class="proxymaincnt">
+						
+					</div>
+
+				</div>
+
+			</div>
+			<div class="node">
+
+				<div class="work">
+
+					<div class="fcaption">
+						Pocketnet Node
+					</div>
+				
+					<div class="nodemaincnt">
+						
+					</div>
+				
+
+					<div class="downloadApplication node">
+					</div>
+
+				</div>
+			
+
+			</div>
+			
+		</div>
+
+	<% } else { %> 
+		
+		<div class="downloadElectron">
+			<div class="work">
+				<div class="dacaption">
+					<span>Node management may be carried out with Application</span>
+				</div>
+			</div>
+
+			<div class="downloadApplication ui">
+
+			</div>
+
+			
+		</div>
+		
+	<% } %>
+
+	<div class="preloaderabs">
+		<div class="table">
+			<div>
+				<div class="preloaderwrapper">
+					<div class="preloader5"><span></span><span></span><span></span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

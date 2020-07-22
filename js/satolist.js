@@ -158,37 +158,82 @@ Platform = function(app, listofnodes){
 	
 
 	self.applications = {
-		windows : {
-			text : {
-				name : "Windows",
-				download : 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
-				label : "Download Pocketnet for Windows"
+
+		ui : {
+			windows : {
+
+				appname : "Pocketnet",
+				text : {
+					name : "Windows",
+					download : 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
+					label : "Download Pocketnet for Windows"
+				},
+	
+				icon : '<i class="fab fa-windows"></i>',
+	
+				github : {
+					name : "PocketnetSetup.exe",
+					url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+					page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+				} 
 			},
-
-			icon : '<i class="fab fa-windows"></i>',
-
-			github : {
-				name : "PocketnetSetup.exe",
-                url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-			} 
+	
+			linux : {
+				appname : "Pocketnet",
+				text : {
+					name : "Linux",
+					download : 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
+					label : "Download Pocketnet for Linux"
+				},
+	
+				icon : '<i class="fab fa-linux"></i>',
+	
+				github : {
+					name : "Pocketnet_linux_x64.AppImage",
+					url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+					page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+				} 
+			}
 		},
 
-		linux : {
-			text : {
-				name : "Linux",
-				download : 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
-				label : "Download Pocketnet for Linux"
+		node : {
+			windows : {
+				appname : "Pocketnet Node",
+				text : {
+					name : "Windows",
+					download : 'Download Node',
+					label : "Download Pocketnet Node for Windows"
+				},
+	
+				icon : '<i class="fab fa-windows"></i>',
+	
+				github : {
+					name : "pocketnetcore_0.18.13_win_x64_setup.exe",
+					url : 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+					page : 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+				} 
 			},
+	
+			linux : {
+				appname : "Pocketnet Node",
 
-			icon : '<i class="fab fa-linux"></i>',
-
-			github : {
-				name : "Pocketnet_linux_x64.AppImage",
-                url : 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                page : 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-			} 
+				text : {
+					name : "Linux",
+					download : 'Download Node',
+					label : "Download Pocketnet Node for Linux"
+				},
+	
+				icon : '<i class="fab fa-linux"></i>',
+	
+				github : {
+					name : "Pocketnet_linux_x64.AppImage",
+					url : 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+					page : 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+				} 
+			}
 		}
+
+		
 	}
 
 	self.currnetBlock = 0;
@@ -6173,8 +6218,7 @@ Platform = function(app, listofnodes){
 				}
 			}
 		},
-
-		
+	
 
 		address : {
 			storage : {
@@ -6252,6 +6296,7 @@ Platform = function(app, listofnodes){
 				var pubkey = keyPair.publicKey;
 
 				var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+
 
 				var p2sh = bitcoin.payments.p2sh({ redeem: a })
 
@@ -9736,6 +9781,9 @@ Platform = function(app, listofnodes){
 						var k = 100000000;
 
 
+						console.log("WALLET SEND")
+
+
 						_.each(inputs, function(i){
 
 							/*txb.addInput(i.txid, i.vout)
@@ -9743,8 +9791,9 @@ Platform = function(app, listofnodes){
 
 							return*/
 
-							if(i.address.indexOf("P" == 0)){
-								txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex') )
+							if(i.address.indexOf("P") == 0){
+
+								txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
 							}
 
 							else
@@ -9755,12 +9804,17 @@ Platform = function(app, listofnodes){
 								if (index > -1){
 
 									var address = self.sdk.addresses.storage.addressesobj[index];
-								
-									txb.addInput(i.txid, i.vout/*, null, address.output*/)
+									/*console.log(address)
+
+									console.log("ADDINPUT1", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('001442b207c67cd29bd4ae72e6440690b5db2264c013', 'hex'))))
+									console.log("ADDINPUT2", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('0014c05e4b43f78296df7e7a0f5d5329cb26fd4eff30', 'hex'))))*/
+
+									txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
 								}
 
 								else
 								{
+									console.log("RERER")
 									return
 								}
 								
@@ -9795,6 +9849,14 @@ Platform = function(app, listofnodes){
 
 									var dumped = self.sdk.address.dumpKeys(index)
 
+									var pubkey = dumped.publicKey;
+
+									var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+
+									var p2sh_ = bitcoin.payments.p2sh({ redeem: a })
+
+									console.log('p2sh', p2sh, p2sh_, a)
+
 									txb.sign(inputindex, dumped, p2sh.redeem.output, null, Number(Number(i.amount * k).toFixed(0)));
 
 
@@ -9806,9 +9868,12 @@ Platform = function(app, listofnodes){
 								}
 								
 							}
-					    })					
+						})				
+						
 						
 						var tx = txb.build()
+
+						//console.log(tx.toHex(), txb)
 	
 						return tx;
 
@@ -11163,6 +11228,455 @@ Platform = function(app, listofnodes){
 			}
 		},
 
+		esystem : {
+			requestes : {},
+
+			clbks : {
+			},
+
+			tickstate : {},
+			tickstatehash : null,
+			inited : false,
+
+			proxy : {
+				settings : {
+					meta : {
+
+						
+
+						dbEnable : {
+							name : 'PGSQL Database Enable',
+							id : 'dbEnable',
+							type : "BOOLEAN",
+							value : false,
+
+							dbId : 'dbEnable'
+						},
+						
+						dbHost : {
+							name : 'DB Host',
+							id : 'dbHost',
+							type : "NUMBER",
+							value : '',
+							format : {
+								Precision : 0,
+								groupSeparator : ''
+							},
+							dbId : 'db.host'
+						}, 
+
+						dbPort : {
+							name : 'DB Port',
+							id : 'dbPort',
+							type : "NUMBER",
+							value : '',
+							format : {
+								Precision : 0,
+								groupSeparator : ''
+							},
+							dbId : 'db.port'
+						}, 
+
+						dbMax : {
+							name : 'DB Max',
+							id : 'dbMax',
+							type : "NUMBER",
+							value : '',
+							format : {
+								Precision : 0,
+								groupSeparator : ''
+							},
+							dbId : 'db.max'
+						}, 
+
+						dbIdleTimeoutMillis : {
+							name : 'DB Idle Timeout, ms',
+							id : 'dbIdleTimeoutMillis',
+							type : "NUMBER",
+							value : '',
+							format : {
+								Precision : 0,
+								groupSeparator : ''
+							},
+							dbId : 'db.idleTimeoutMillis'
+						},
+
+						dbName : {
+							name : 'DB Name',
+							id : 'dbName',
+							type : "STRING",
+							value : '',
+
+							dbId : 'db.name'
+						}, 
+
+						dbUser : {
+							name : 'DB User',
+							id : 'dbUser',
+							type : "STRING",
+							value : '',
+
+							dbId : 'db.user'
+						}, 
+
+						dbPassword : {
+							name : 'DB Password',
+							id : 'dbPassword',
+							type : "password",
+							value : '',
+
+							dbId : 'db.password'
+						}, 
+
+
+						server : {
+							name : 'Proxy server on',
+							id : 'server',
+							type : "BOOLEAN",
+							value : false,
+
+							dbId : 'server'
+						},
+		
+						serverPortHttps : {
+							name : 'Proxy https server port',
+							id : 'serverPortHttps',
+							type : "NUMBER",
+							value : '',
+							format : {
+								Precision : 0,
+								groupSeparator : ''
+							},
+							dbId : 'ports.https'
+						},
+		
+						serverPortWss : {
+							name : 'Proxy wss server port',
+							id : 'serverPortWss',
+							type : "NUMBER",
+							value : '',
+							format : {
+								Precision : 0,
+								groupSeparator : ''
+							},
+							dbId : 'ports.wss'
+						},
+
+						serverSslKeyUpload : {
+							name : 'Server SSL Key, pem',
+							id : 'serverSslKeyUpload',
+							type : "file",
+							value : '',
+
+							upload : {
+
+							},
+
+							dbId : 'ssl.key'
+						},
+
+						serverSslCertUpload : {
+							name : 'Server SSL Cert, pem',
+							id : 'serverSslCertUpload',
+							type : "file",
+							value : '',
+							upload : {
+
+							},
+							dbId : 'ssl.cert'
+						},
+						
+						serverSslPassphrase : {
+							name : 'Server SSL Passphrase',
+							id : 'serverSslPassphrase',
+							type : "password",
+							value : '',
+
+							dbId : 'ssl.passphrase'
+						},
+
+						serverFirebaseAdminSDK : {
+							name : 'Firebase Adbin SDK',
+							id : 'serverFirebaseAdminSDK',
+							type : "file",
+							value : '',
+							upload : {
+
+							},
+							dbId : 'fbk'
+						},
+		
+						pocketNetAuthTransactionCrane : {
+							name : 'Your Crane Address',
+							id : 'pocketNetAuthTransactionCrane',
+							type : "STRING",
+							value : '',
+
+							dbId : 'refkey'
+						},
+		
+						captchaEnable : {
+							name : 'Captcha Enable',
+							id : 'captchaEnable',
+							type : "BOOLEAN",
+							value : true,
+
+							dbId : 'captcha'
+						},
+		
+						iplimiterEnable : {
+							name : 'Ip limiter enable',
+							id : 'iplimiterEnable',
+							type : "BOOLEAN",
+							value : true,
+
+							dbId : 'iplimiter'
+						}
+					},
+		
+					create : function(id){
+
+						var t = self.sdk.esystem.proxy.settings
+
+						var m = t.meta;
+		
+						var p = new Parameter(m[id])
+		
+						return p;
+					},
+		
+					createall : function(){
+						var t = self.sdk.esystem.proxy.settings
+
+						var create = t.create
+						var m = t.meta;
+		
+						var options = {};
+		
+						_.each(m, function(p, id){
+							options[id] = create(id)
+						})
+		
+						return options
+					},
+		
+					compose : function(values){
+
+						if(!values) values = {}
+
+						/*nedbkey: 'settings',
+						  nedbpath: { settings: './data/settings' },
+						  nodes: { defaults: [Object], stable: [Array] },
+						  server: true,
+						  ports: { https: 8888, wss: 8088 },
+						  ssl:
+						   { key: './cert/key.pem',
+							 cert: './cert/cert.pem',
+							 passphrase: 'Vjoysq47' },
+						  fbk:
+						   './private/pocketnet-firebase-adminsdk-e72t8-e21b48edf5.json',
+						  dbEnable: true,
+						  db:
+						   { host: 'localhost',
+							 port: 5432,
+							 max: 10,
+							 idleTimeoutMillis: 30000,
+							 user: 'postgres',
+							 database: 'pocketnetproxy',
+							 password: 'zx8045kzx' },
+						  refkey: '',
+						  captcha: true,
+						  iplimiter: true },*/
+
+						var s = self.sdk.esystem.proxy.settings;
+		
+						var options = s.createall()
+		
+						var m = s.meta;
+		
+						var c = {
+
+						
+							server : {
+								name : "Server",
+								options : {
+		
+									server : options.server,
+									serverPortHttps : options.serverPortHttps,
+									serverPortWss : options.serverPortWss,
+									serverSslKeyUpload : options.serverSslKeyUpload,
+									serverSslCertUpload : options.serverSslCertUpload,
+									serverSslPassphrase : options.serverSslPassphrase
+		
+								}
+							},
+
+						
+		
+							db : {
+								name : "Data Base, PG sql",
+								options : {
+									dbEnable : options.dbEnable,
+									dbHost : options.dbHost,
+									dbMax : options.dbMax,
+									dbIdleTimeoutMillis : options.dbIdleTimeoutMillis,
+									dbName : options.dbName,
+									dbUser : options.dbUser,
+									dbPassword : options.dbPassword
+
+		
+								}
+							},
+		
+							firebase : {
+								name : "Firebase",
+								options : {
+									
+									serverFirebaseAdminSDK : options.serverFirebaseAdminSDK
+		
+								}
+							},
+
+							other : {
+								name : "Other",
+								options : {
+									
+									pocketNetAuthTransactionCrane : options.pocketNetAuthTransactionCrane,
+									captchaEnable : options.captchaEnable,
+									iplimiterEnable : options.iplimiterEnable
+		
+								}
+							},
+		
+		
+						}
+
+
+						console.log('values', values)
+
+						_.each(options, function(o){
+							if( deep(values, o.dbId) ) o.value = deep(values, o.dbId)
+						})
+		
+						return {
+							c : c,
+							o : options
+						}
+		
+					},
+				}
+			},
+
+			destroy : function(){
+				if (electron){
+
+					electron.ipcRenderer.off('proxy-message', this.response)
+
+					this.inited = false
+
+				}
+			},	
+
+			request : function(action, data, clbk){
+
+				var rdata = {
+					action : action,
+					id : makeid(),
+					data : data
+				}
+
+				this.requestes[rdata.id] = {
+					id : id,
+					clbk : function(error, data){
+						if(clbk) clbk(error, data)
+					}
+				}
+
+				electron.ipcRenderer.send('proxy-message', rdata);
+
+			},
+
+			tick : function(e, message){
+
+				var t = self.sdk.esystem
+
+				var hash = bitcoin.crypto.hash256(JSON.stringify(message))
+
+				var change = (hash != t.tickstatehash)
+
+				t.tickstatehash = hash
+				t.tickstate = message.data || {}
+
+				_.each(t.clbks.tick, function(c){
+
+					if (c)
+						c(this.tickstate, change)
+				})
+			},
+
+			response : function(e, message){
+				var request = this.requestes[message.id]
+
+				if (request){
+
+					if(request.clbk) request.clbk(message.error, message.data)
+
+					delete this.requestes[message.id]
+
+				}
+
+				else
+				{
+
+					/// another messages/ system
+
+				}
+			},
+
+			init : function(){
+
+
+				if (electron){
+
+					this.clbks.tick = {}
+					this.tickstate = {}
+					this.tickstatehash = null
+
+					this.tickstate = { settings:
+						{ nedbkey: 'settings',
+						  nedbpath: { settings: './data/settings' },
+						  nodes: { defaults: [Object], stable: [Array] },
+						  server: true,
+						  ports: { https: 8888, wss: 8088 },
+						  ssl:
+						   { key: './cert/key.pem',
+							 cert: './cert/cert.pem',
+							 passphrase: 'Vjoysq47' },
+						  fbk:
+						   './private/pocketnet-firebase-adminsdk-e72t8-e21b48edf5.json',
+						  dbEnable: true,
+						  db:
+						   { host: 'localhost',
+							 port: 5432,
+							 max: 10,
+							 idleTimeoutMillis: 30000,
+							 user: 'postgres',
+							 database: 'pocketnetproxy',
+							 password: 'zx8045kzx' },
+						  refkey: '',
+						  captcha: true,
+						  iplimiter: true },
+					   state: {},
+					   node: {}, proxyReady : true }
+
+					electron.ipcRenderer.on('proxy-message', this.response)
+					electron.ipcRenderer.on('proxy-message-tick', this.tick)
+
+					this.inited = true
+				}
+			}
+		},
+
 		system : {
 
 			refreshNodes : function(clbk){
@@ -11416,8 +11930,6 @@ Platform = function(app, listofnodes){
 
 				return ch
 			},
-
-
 		
 			update : function(proxy, id){
 				var ch = false;
@@ -15988,6 +16500,8 @@ Platform = function(app, listofnodes){
 		self.sdk.theme.load()
 		self.sdk.proxy.load()
 		self.app.platform.sdk.node.sys.load()
+
+		self.sdk.esystem.init()
 
 		if (self.app.errors.clbks){
 			self.app.errors.clbks.platform = self.appstate

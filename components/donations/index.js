@@ -67,14 +67,14 @@ var donations = (function(){
 			action : function(s){
 				actions.ways.xmr(s)
 			}
-		},{
+		}/*,{
 			id : 'paypal',
 			name : "Paypal",
 
 			action : function(s){
 				actions.ways.paypal(s)
 			}
-		}];
+		}*/];
 
 		var storage = {}
 

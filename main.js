@@ -5,6 +5,7 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
+var proxyInterface = require('C:/pocketnet.proxy/mainserver.js')
 
 const electronLocalshortcut = require('electron-localshortcut');
 
@@ -386,8 +387,9 @@ function createWindow() {
     })
 
 
-   
+    var pi = new proxyInterface(ipcMain, win.webContents)
 
+        pi.init()
     // Вызывается, когда окно будет закрыто.
     return win
 }

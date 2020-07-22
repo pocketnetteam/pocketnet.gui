@@ -24,19 +24,20 @@ if(!_Node)
 		rtchttp : 'https://localhost:9091'*/
 
 		listofproxies : [
-			{
+			/*{
 				host : 'pocketnet.app',
 				port : 8888,
 				ws : 8088,
 
 				id : 'pocketnet.app:8888:8088:'
-			},
+			},*/
 
-			/*{
+			{
 				host : 'localhost',
 				port : 8888,
-				ws : 8088
-			},*/
+				ws : 8088,
+				id : 'localhost:8888:8088:'
+			},
 			
 			/*{
 				host : '192.168.0.11',
@@ -44,19 +45,6 @@ if(!_Node)
 				ws : 8088
 			}*/
 		],
-
-		/*listofnodes : [
-	
-			{
-				full : '216.108.237.11:38081',
-				host : '216.108.237.11',
-				port : 38081,
-				ws : 8087,
-				path : '',	
-				name : 'spb1'
-			},
-	
-		]*/
 		
 	});
 

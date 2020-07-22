@@ -561,13 +561,13 @@ Application = function(p)
 
 							var regs = self.platform.sdk.registrations.storage[addr];
 
-							console.log("regsregsregs", regs)
-
 							if (regs && regs >= 5){
 								
 								self.platform.ui.showmykey()
 								
 							}
+
+							
 
 						}
 

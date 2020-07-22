@@ -2732,7 +2732,7 @@
 					return
 				}
 
-				if (parameter.type == 'image'){
+				if (parameter.type == 'image' || parameter.type == 'file'){
 
 
 					var uploadElement = _el.find('.addImage'),
@@ -3983,7 +3983,10 @@
 				daterange : ['', ''],
 				email : '',
 				stringany : '',
-				nickname : ''
+				nickname : '',
+				image : '',
+				password : '',
+				file : ''
 			}
 
 			if(typeof self.defaultValue != 'undefined') return self.defaultValue;	
@@ -4032,6 +4035,8 @@
 		}
 		self.mask = function(tohtml){
 
+			var f = self.format || {}
+
 			var masked = false;
 
 			var mask = {
@@ -4045,7 +4050,7 @@
 			if(self.type == 'number' || self.type == 'cash')
 			{
 				mask.alias = 'numeric';
-				mask.groupSeparator = ',';
+				mask.groupSeparator = typeof f.groupSeparator != 'undefined' ? f.groupSeparator : ',';
 				mask.radixPoint =  '.';
 				mask.digits = deep(self, 'format.Precision');
 				mask.digitsOptional = !1;
@@ -4189,7 +4194,7 @@
 
 			var m = self.mask(true);
 
-			if (self.type == 'image') {
+			if (self.type == 'image' || self.type == 'file') {
 
 				if(self.uploadTemplate && self.upload && self.previewTemplate){
 
@@ -4684,9 +4689,7 @@
 					input += '</div>'
 
 				return input;
-			}
-
-			
+			}			
 
 			if(self.type == 'color'){
 				var input = '<input notmasked="notmasked" pid="'+self.id+'" class="simpleColor input" value="' + self.value + '">';
@@ -4743,6 +4746,13 @@
 
 
 				return input
+			}
+
+			if(self.type == 'password'){
+				var input = '<input '+__disabled+' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="password">';
+
+				return input; 
+
 			}
 
 			var input = '<input '+__disabled+' ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';
@@ -7476,7 +7486,8 @@
 				else{
 
 					if (p.fail)
-				 		p.fail(null, 'nodedirect')	
+						p.fail(null, 'nodedirect')	
+						 
 				}       	
 				
 
