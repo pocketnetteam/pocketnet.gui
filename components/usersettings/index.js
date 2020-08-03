@@ -11,7 +11,6 @@ var usersettings = (function(){
 		var el, composed;
 
 
-
 		var actions = {
 
 		}
@@ -46,8 +45,9 @@ var usersettings = (function(){
 						p.el.find('.themewrapper').removeClass('active')
 
 						e.addClass('active')
-
+						console.log(self.app.platform.sdk.theme.set, 'set')
 						self.app.platform.sdk.theme.set(t)
+						
 					})
 				})	
 			}
@@ -63,7 +63,6 @@ var usersettings = (function(){
 		}
 
 		var initEvents = function(){
-			
 
 		}
 
@@ -77,7 +76,6 @@ var usersettings = (function(){
 			getdata : function(clbk){
 
 				composed = self.app.platform.sdk.usersettings.compose()
-
 				var data = {};
 
 				clbk(data);

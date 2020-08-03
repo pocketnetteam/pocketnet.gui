@@ -252,6 +252,7 @@ ____loclib.whatsnew = "What's new?";
 ____loclib.saddlink = "Add link to external site or video";
 ____loclib.saddimages = "Add Images to Post";
 ____loclib.sarticle = "To write an article";
+____loclib.stelegram = "Send to telegram"
 
 
 ____loclib.snothing = "Nothing";

@@ -195,6 +195,7 @@ function createBadgeOS() {
 }
 
 function initApp() {
+
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
     
     createWindow();
@@ -291,7 +292,6 @@ function notification(nhtml) {
 }
 
 function createWindow() {
-
     const screen = require('electron').screen;
     const mainScreen = screen.getPrimaryDisplay();
 
