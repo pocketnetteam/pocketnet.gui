@@ -1,208 +1,211 @@
-var esystem = (function(){
+var esystem = (function () {
 
-	var self = new nModule();
+    var self = new nModule();
 
-	var essenses = {};
+    var essenses = {};
 
-	var Essense = function(p){
+    var Essense = function (p) {
 
-		var proxy = {
-			parameters : function(){
+        var proxy = {
+            parameters: function () {
 
 
 
-			}
-		}
+            }
+        }
 
-		var primary = deep(p, 'history');
+        var primary = deep(p, 'history');
 
-		var el;
+        var el;
 
-		var actions = {
+        var actions = {
 
-		}
+        }
 
 
 
-		var events = {
-			
-		}
+        var events = {
 
+        }
 
-		var renders = {
 
-			proxyOptions : function(clbk){
+        var renders = {
 
-				var composed = null;
+            node: {
+                tick: function() {
+                    console.log('node.tick fired 11')
+                }
+            },
 
-				if (self.sdk.esystem.tickstate){
-					composed = self.sdk.esystem.proxy.settings.compose(deep(self, 'sdk.esystem.tickstate.settings'))
+            nodeControl: function (clbk) {
+                var composed = null;
 
-					
-				}
-				else{
+                if (self.sdk.esystem.tickstate) {
+                    let state = deep(self, 'sdk.esystem.tickstate.settings.node')
+                    state.control = {
+                        state: 'node is running'
+                    }
+                    composed = self.sdk.esystem.node.settings.compose(state)
+                }
 
-				}
+                renders.options(composed, el.nodecontrolcnt, function (p) {
+                    console.log('+++++++++++++++++++++++++++', p)
 
-				console.log('composed', composed)
+                    //p.el.find('.nodeinit').on('click', function (e) {
+                    //    self.sdk.esystem.request('node.start', { x: 'test2' }, function (err, data) {
+                    //        console.log(data)
+                    //    })
+                    //});
+                })
+            },
 
-				renders.options(composed, el.proxyoptions, clbk)
-				
-				 
-				
-			},
+            proxyOptions: function (clbk) {
 
-			options : function(composed, _el, clbk){
+                var composed = null;
 
-				self.shell({
-					name :  'options',
-					el : _el,
-					data : {
-						composed : composed
-					}					
+                if (self.sdk.esystem.tickstate) {
+                    composed = self.sdk.esystem.proxy.settings.compose(deep(self, 'sdk.esystem.tickstate.settings'))
+                }
 
-				}, function(p){
-					ParametersLive(composed.o, p.el)
-				})	
-			},
-			download : function(){
-				if(el.downloadElectron.length){
+                renders.options(composed, el.proxyoptions, clbk)
+            },
 
-					self.nav.api.load({
-						open : true,
-						id : 'applications',
-						el : el.downloadElectron,
+            options: function (composed, _el, clbk) {
 
-						eid : 'applications_ui',
+                self.shell({
+                    name: 'options',
+                    el: _el,
+                    data: {
+                        composed: composed
+                    }
 
-						essenseData : {
-							
-						},
+                }, function (p) {
+                    ParametersLive(composed.o, p.el)
+                })
+            },
 
-						clbk : function(e, p){
+            download: function () {
+                if (el.downloadElectron.length) {
 
-							if(!el.c) return
+                    self.nav.api.load({
+                        open: true,
+                        id: 'applications',
+                        el: el.downloadElectron,
 
-						}
-					})
+                        eid: 'applications_ui',
 
-				}
+                        essenseData: {
 
-				if(el.downloadNode.length){
+                        },
 
-					self.nav.api.load({
-						open : true,
-						id : 'applications',
-						el : el.downloadNode,
+                        clbk: function (e, p) {
 
-						eid : 'applications_node',
+                            if (!el.c) return
 
-						essenseData : {
-							key : 'node'
-						},
+                        }
+                    })
 
-						clbk : function(e, p){
+                }
+            }
 
-							if(!el.c) return
+        }
 
-						}
-					})
-					
-				}
-			}
-		}
+        var state = {
+            save: function () {
 
-		var state = {
-			save : function(){
+            },
+            load: function () {
 
-			},
-			load : function(){
-				
-			}
-		}
+            }
+        }
 
-		var initEvents = function(){
-			
-			self.sdk.esystem.clbks.tick.esystem = function(settings, changed){
-				renders.proxyOptions()
-			}
+        var initEvents = function () {
 
-		}
+            self.sdk.esystem.clbks.tick.esystem = function (settings, changed) {
+                if (changed) {
+                    renders.proxyOptions()
+                    renders.nodeControl()
+                }
 
-		var make = function(){
-			renders.download()
-			renders.proxyOptions()
-		}
+                renders.node.tick()
+            }
 
-		return {
-			primary : primary,
+        }
 
-			getdata : function(clbk){
+        var make = function () {
+            renders.download()
+            renders.proxyOptions()
+            renders.nodeControl()
+        }
 
-				var data = {};
+        return {
+            primary: primary,
 
-				clbk(data);
+            getdata: function (clbk) {
 
-			},
+                var data = {};
 
-			destroy : function(){
+                clbk(data);
 
-				delete self.sdk.esystem.clbks.tick.esystem
+            },
 
-				el = {};
-			},
-			
-			init : function(p){
+            destroy: function () {
 
-				state.load();
+                delete self.sdk.esystem.clbks.tick.esystem
 
-				el = {};
-				el.c = p.el.find('#' + self.map.id);
+                el = {};
+            },
 
-				el.downloadElectron = el.c.find('.downloadApplication.ui')
-				el.downloadNode = el.c.find('.downloadApplication.node')
-				el.proxyoptions = el.c.find('.proxyoptions')
+            init: function (p) {
 
-				initEvents();
+                state.load();
 
-				make()
+                el = {};
+                el.c = p.el.find('#' + self.map.id);
 
-				p.clbk(null, p);
-			}
-		}
-	};
+                el.downloadElectron = el.c.find('.downloadApplication.ui')
+                el.proxyoptions = el.c.find('.proxyoptions')
+                el.nodecontrolcnt = el.c.find('.nodecontrolcnt')
 
+                initEvents();
 
+                make()
 
-	self.run = function(p){
+                p.clbk(null, p);
+            }
+        }
+    };
 
-		var essense = self.addEssense(essenses, Essense, p);
 
-		self.init(essense, p);
 
-	};
+    self.run = function (p) {
 
-	self.stop = function(){
+        var essense = self.addEssense(essenses, Essense, p);
 
-		_.each(essenses, function(essense){
+        self.init(essense, p);
 
-			essense.destroy();
+    };
 
-		})
+    self.stop = function () {
 
-	}
+        _.each(essenses, function (essense) {
 
-	return self;
+            essense.destroy();
+
+        })
+
+    }
+
+    return self;
 })();
 
 
-if(typeof module != "undefined")
-{
-	module.exports = esystem;
+if (typeof module != "undefined") {
+    module.exports = esystem;
 }
-else{
+else {
 
-	app.modules.esystem = {};
-	app.modules.esystem.module = esystem;
+    app.modules.esystem = {};
+    app.modules.esystem.module = esystem;
 
 }

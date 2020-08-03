@@ -1,4 +1,4 @@
-/* PDF */
+1/* PDF */
 
 	var tableAlignmentCenter = function(obj){
 
