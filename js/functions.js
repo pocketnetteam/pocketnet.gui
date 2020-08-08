@@ -3202,7 +3202,7 @@
 
 					_el.find('.vc_value').on('click', function(){
 						bkp = null;
-						console.log('this', this)
+
 						var value = $(this).attr('value');
 
 							input.val(value);

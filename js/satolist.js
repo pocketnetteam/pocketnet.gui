@@ -3324,7 +3324,7 @@ Platform = function(app, listofnodes){
 					_onChange : function(value){
 						
 						function clbk (value){
-							console.log(value)
+							console.log(value);
 						}
 
 						self.app.platform.sdk.system.get.telegram(value, clbk);
@@ -3473,10 +3473,7 @@ Platform = function(app, listofnodes){
 							const idx = m[i].possibleValues.indexOf(Number(v));
 							m[i].value = m[i].possibleValuesLabels[idx];
 							m[i].valueId = Number(v);
-							console.log(document.querySelector(`div[pid='${i}'] input`), 'value')
-							console.log('jquery', $(`div[pid=${i}] input`))
-							$(`div[pid=${i}] input`).val(m[i].possibleValuesLabels[idx]);
-							console.log($(`div[pid=${i}] input`).val(), 'input')
+							setTimeout(() => {$(`div[pid=${i}] input`).val(m[i].possibleValuesLabels[idx])}, 0)
 
 						}
 
