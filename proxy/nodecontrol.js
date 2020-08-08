@@ -41,9 +41,6 @@ var NodeControl = function (p) {
     self.kit = {
 
         init: function () {
-            console.log('++++', 'init')
-            // определить путь до бинарников ноды
-            // определить путь до конфига
 
             if (!fs.existsSync(self.ini.settings.base_dir))
                 fs.mkdirSync(self.ini.settings.base_dir);
@@ -51,22 +48,18 @@ var NodeControl = function (p) {
             if (!fs.existsSync(self.ini.settings.data_dir))
                 fs.mkdirSync(self.ini.settings.data_dir);
 
-
-            // если пути нашлись
-            // прочитать конфиг
-            // прочитать настройки из базы
-
             // определить текущий статус ноды - вызов по RPC ?
 
         },
 
         get state() {
-            console.log('pre getblockchaininfo')
+
             this.rpc('getblockchaininfo', [], function (data, err) {
                 console.log('>>>>>>>>>>> ', data, err)
             })
             /*- start / stop / worked / shutdown*/
             /* RPC вызов проверка запуска */
+            
         },
 
         running: function (clbk) {
