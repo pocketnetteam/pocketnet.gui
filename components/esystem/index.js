@@ -49,13 +49,16 @@ var esystem = (function () {
                 }
 
                 renders.options(composed, el.nodecontrolcnt, function (p) {
-                    console.log('+++++++++++++++++++++++++++', p)
 
-                    //p.el.find('.nodeinit').on('click', function (e) {
-                    //    self.sdk.esystem.request('node.start', { x: 'test2' }, function (err, data) {
-                    //        console.log(data)
-                    //    })
-                    //});
+                    p.el.find('input[pid="Enable"]').on('change', function (e) {
+                        self.sdk.esystem.request('node.enable', { v: e.target.checked }, function (err, data) {
+                            console.log(err, data)
+                            e.target.checked = data
+                        })
+                    });
+
+
+
                 })
             },
 
@@ -81,6 +84,7 @@ var esystem = (function () {
 
                 }, function (p) {
                     ParametersLive(composed.o, p.el)
+                    if (clbk) clbk(p)
                 })
             },
 
@@ -124,10 +128,8 @@ var esystem = (function () {
             self.sdk.esystem.clbks.tick.esystem = function (settings, changed) {
                 if (changed) {
                     renders.proxyOptions()
-                    renders.nodeControl()
+                    // renders.nodeControl()
                 }
-
-                renders.node.tick()
             }
 
         }

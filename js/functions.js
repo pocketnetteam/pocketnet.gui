@@ -3847,6 +3847,11 @@
 			if(self.type == 'number' || self.type == 'cash')
 			{
 				value = Number(value).toFixed(deep(self, 'format.Precision') || 0)
+            }
+            
+            if(self.type == 'label')
+			{
+				return true;
 			}
 
 			if(self.type == 'hours')
@@ -4753,6 +4758,10 @@
 
 				return input; 
 
+            }
+            
+            if(self.type == 'label'){
+				return '<div pid="'+self.id+'" class="simpleColor inpLabel">' + self.value + '</div>';
 			}
 
 			var input = '<input '+__disabled+' ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';
@@ -4932,9 +4941,9 @@
 
 			return self.value;
 
-		}
+        }
 
-		if(self.type == 'valuesmultitree'){
+            if(self.type == 'valuesmultitree'){
 
 			self.clear = function(){
 				_.each(self.treemap, function(m){

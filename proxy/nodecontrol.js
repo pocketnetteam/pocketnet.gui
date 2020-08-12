@@ -2,6 +2,8 @@
 var Path = require('path');
 const fs = require('fs');
 const child_process = require('child_process');
+const { EOL } = require('os');
+const { start } = require('repl');
 
 
 
@@ -12,28 +14,12 @@ var NodeControl = function (p) {
 
     self.ini = {
 
-        node: {
-            active: false,
-            instance: null
+        node : {
+            instance: null,
         },
 
         settings: {
-            base_join_path: function (path) {
-                return Path.join(this.base_dir, 'nodeserver', path)
-            },
-            get base_dir() {
-                return process.env.INIT_CWD
-            },
-            get bin_path() { return this.base_join_path('pocketcoind.exe') },
-            get config_path() { return Path.join(this.data_dir, 'pocketcoin.conf') },
-            get data_dir() { return this.base_join_path('data') },
-        },
-
-        config: {
-            rpchost: '127.0.0.1',
-            rpcport: 38081,
-            rpcuser: 'test',
-            rpcpass: 'test'
+            
         },
 
     }
@@ -42,14 +28,37 @@ var NodeControl = function (p) {
 
         init: function () {
 
-            if (!fs.existsSync(self.ini.settings.base_dir))
-                fs.mkdirSync(self.ini.settings.base_dir);
+            // change global settings
+            if (!p.settings.node.BinPath) p.settings.node.BinPath = Path.join(process.env.INIT_CWD, 'nodeserver', this.bin_name)
+            if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(process.env.INIT_CWD, 'nodeserver', 'data')
+            if (!p.settings.node.ConfigPath) p.settings.node.ConfigPath = Path.join(process.env.INIT_CWD, 'nodeserver', 'data', 'pocketcoin.conf')
+            // TODO (brangr): save settings
+            
+            // create catalogs if not exists
+            if (!fs.existsSync(p.settings.node.DataPath))
+                fs.mkdirSync(p.settings.node.DataPath, { recursive : true });
 
-            if (!fs.existsSync(self.ini.settings.data_dir))
-                fs.mkdirSync(self.ini.settings.data_dir);
+            if (!fs.existsSync(p.settings.node.ConfigPath)) {
+                let data = 'server=1' + EOL
+                    + 'rpcallowip=0.0.0.0/0' + EOL
+                    + 'rpcuser=' + randomString(10) + EOL
+                    + 'rpcpassword=' + randomString(16) + EOL
+                    + 'wsuse=1' + EOL
 
+                fs.writeFileSync(p.settings.node.ConfigPath, data)
+            }
+
+                
             // определить текущий статус ноды - вызов по RPC ?
 
+        },
+
+        get bin_name() {
+            const win = 'pocketcoind.exe'
+            const mac = 'pocketcoind'
+            const linux = 'pocketcoind'
+            console.log('platform', process.platform)
+            return ( process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : '') ) )
         },
 
         get state() {
@@ -63,72 +72,69 @@ var NodeControl = function (p) {
         },
 
         running: function (clbk) {
-            const win = 'pocketcoind.exe'
-            const mac = 'pocketcoind'
-            const linux = 'pocketcoind'
 
-            const cmd = process.platform == 'win32' ? 'tasklist' : (process.platform == 'darwin' ? 'ps -ax | grep ' + mac : (process.platform == 'linux' ? 'ps -A' : ''))
-            const proc = process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : ''))
+            const proc = this.bin_name
+            const cmd = process.platform == 'win32' ? 'tasklist' : (process.platform == 'darwin' ? 'ps -ax | grep ' + proc : (process.platform == 'linux' ? 'ps -A' : ''))
             if (cmd === '' || proc === '') {
                 resolve(false)
             }
 
             child_process.exec(cmd, function (err, stdout, stderr) {
-                if (clbk) clbk(stdout.toLowerCase().indexOf(proc.toLowerCase()) > -1)
+                let _running = stdout.toLowerCase().indexOf(proc.toLowerCase()) > -1
+                if (p.settings.node.Enable === true && _running === false) start()
+                if (clbk) clbk(_running)
             })
         },
 
         start: function (clbk) {
-            self.ini.node.active = true
+            console.log('node signal start..')
 
-            this.running(function (result) {
-
-                if (result) {
-                    console.log('node is running - skip start')
-                    return
+            // запустить pocketnetd как процесс start /path/pocketnetd -- args
+            console.log('exec > ', `${p.settings.node.BinPath} -conf=${p.settings.node.ConfigPath} -datadir=${p.settings.node.DataPath}`)
+            self.ini.node.instance = child_process.exec(
+                `${p.settings.node.BinPath} -conf=${p.settings.node.ConfigPath} -datadir=${p.settings.node.DataPath}`,
+                {
+                    windowsHide: false
+                },
+                function (err, stdout, stderr) {
+                    console.log('Node launch', err, (err === undefined))
+                    p.settings.node.Enable = (err === undefined)
+                    if (clbk) clbk(true)
                 }
+            );
 
-                // запустить pocketnetd как процесс start /path/pocketnetd -- args
-                console.log('exec > ', `${self.ini.settings.bin_path} -conf=${self.ini.settings.config_path} -datadir=${self.ini.settings.data_dir}`)
-                self.ini.node.instance = child_process.exec(
-                    `${self.ini.settings.bin_path} -conf=${self.ini.settings.config_path} -datadir=${self.ini.settings.data_dir}`,
-                    {
-                        windowsHide: false
-                    },
-                    function (err, stdout, stderr) {
-                        self.ini.node.active = (err === undefined)
-                    }
-                );
+            self.ini.node.instance.on('error', (err) => {
+                // p.settings.node.Enable = false
+                console.error('Failed to start subprocess.');
+            });
 
-                self.ini.node.instance.on('error', (err) => {
-                    self.ini.node.active = false
-                    console.error('Failed to start subprocess.');
-                });
+            self.ini.node.instance.stdout.on('data', function (data) {
+                //console.log('stdout: ' + data);
+            });
 
-                self.ini.node.instance.stdout.on('data', function (data) {
-                    //console.log('stdout: ' + data);
-                });
+            self.ini.node.instance.stderr.on('data', function (data) {
+                console.log('stderr: ' + data);
+            });
 
-                self.ini.node.instance.stderr.on('data', function (data) {
-                    console.log('stderr: ' + data);
-                });
+            // self.ini.node.instance.on('close', function (code) {
+            //     console.log('child process exited with code ' + code);
+            // });
 
-                self.ini.node.instance.on('close', function (code) {
-                    console.log('child process exited with code ' + code);
-                });
-
-                self.ini.node.instance.on('exit', (code) => {
-                    self.ini.node.active = false
-                    console.log(`child process exited with code ${code}`);
-                });
-
-            })
+            self.ini.node.instance.on('exit', (code) => {
+                console.log(`child process exited with code ${code}`);
+            });
         },
 
         stop: function () {
+            console.log('node signal stop..')
             // TODO (brangr): РПЦ вызов `bc stop`
             // TODO (brangr): уничтожить события
             self.ini.node.instance = null
+        },
+
+        enable: function (data, clbk) {
+            p.settings.node.Enable = data.v
+            if (clbk) clbk()
         },
 
         rpc: function (method, prms, clbk) {

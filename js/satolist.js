@@ -11444,49 +11444,27 @@ Platform = function (app, listofnodes) {
                             value: false,
                             dbId: 'Enable'
                         },
-
-                        Host: {
-                            name: 'Host',
-                            id: 'Host',
-                            type: "NUMBER",
-                            value: '',
-                            format: {
-                                Precision: 0,
-                                groupSeparator: ''
-                            },
-                            dbId: 'Host'
-                        },
-
-                        Port: {
-                            name: 'Port',
-                            id: 'Port',
-                            type: "NUMBER",
-                            value: '',
-                            format: {
-                                Precision: 0,
-                                groupSeparator: ''
-                            },
-                            dbId: 'Port'
-                        },
-
                         BinPath: {
                             name: 'Binary path',
                             id: 'binPath',
-                            type: "STRING",
+                            type: "FILE",
+                            upload: { },
                             value: '',
                             dbId: 'BinPath'
                         },
                         ConfigPath: {
                             name: 'Config path',
                             id: 'configPath',
-                            type: "STRING",
+                            type: "FILE",
+                            upload: { },
                             value: '',
                             dbId: 'ConfigPath'
                         },
                         DataPath: {
                             name: 'Data path',
                             id: 'dataPath',
-                            type: "STRING",
+                            type: "FILE",
+                            upload: { },
                             value: '',
                             dbId: 'DataPath'
                         },
@@ -11494,7 +11472,7 @@ Platform = function (app, listofnodes) {
                         state: {
                             name: 'State',
                             id: '_state',
-                            type: "STRING",
+                            type: "LABEL",
                             value: '',
                             dbId: 'control.state'
                         }
@@ -11552,8 +11530,6 @@ Platform = function (app, listofnodes) {
                                 options: {
 
                                     Enable: options.Enable,
-                                    Host: options.Host,
-                                    Port: options.Port,
                                     BinPath: options.BinPath,
                                     ConfigPath: options.ConfigPath,
                                     DataPath: options.DataPath,

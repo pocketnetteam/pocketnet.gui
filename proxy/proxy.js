@@ -451,10 +451,7 @@ var Proxy = function (settings) {
                     self.app.init(function () {
                         self.ws.init()
                         self.cache.init()
-
                         self.nodeControl.init()
-                        // TODO (brangr): tmp
-                        nodeControl.kit.start()
 
                         self.firebase.link(function () {
 

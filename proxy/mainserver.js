@@ -94,12 +94,10 @@ var defaultSettings = {
     iplimiter : true,
 
     node: {
-        Enable: true,
-        Host: '127.0.0.1',
-        Port: 38081,
+        Enable: false,
         BinPath: '',
-        ConfigPath: 'pocketcoin.conf',
-        DataPath: 'data',
+        ConfigPath: '',
+        DataPath: '',
     },
 	
 }
@@ -363,8 +361,8 @@ var helpers = {
 	},
 
 	rewriteSettings : function(clbk){
-		this.removeSettings(function(){
-			this.saveSettings(function(){
+		helpers.removeSettings(function(){
+			helpers.saveSettings(function(){
 				if(clbk) clbk()
 			})	
 		})
@@ -470,15 +468,15 @@ var ipcInterface = function(ipc, wc){
 			send(message.id, null, proxy.kit.settings())
 		},
 
-		// todobr: 
 		node : {
-			start: function (message) {
-				console.log('----', proxy.nodeControl.instance)
-				send(message.id, null, proxy.nodeControl.instance.kit.start())
-			},
-			stop: function (message) {
-				send(message.id, null, proxy.nodeControl.instance.kit.stop())
-			}
+
+            enable: function (message) {
+                proxy.nodeControl.instance.kit.enable(message.data, function(data) {
+                    helpers.rewriteSettings()
+                    send(message.id, null, data)
+                })
+            }
+
 		}
     }
 
@@ -493,14 +491,16 @@ var ipcInterface = function(ipc, wc){
 
 	}
 
-	var tick = function(){
+	var tick = function() {
+
+        proxy.nodeControl.instance.kit.running(function(running) {
+            send('state', null, {}, 'proxy-message-tick')
+        })
+
 
 		var message = {
 			settings : settings,
 			state : {},
-			node : {
-				//state: proxy ? proxy.nodeControl.instance.kit.state : {}
-            },
 			proxyReady : proxy ? true : false
 		}
 
