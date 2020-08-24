@@ -26,7 +26,7 @@ var postscores = (function(){
 
 					return
 				}
-			
+
 				self.sdk.node.transactions.create.commonFromUnspent(
 
 					upvoteShare,

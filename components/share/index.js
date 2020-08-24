@@ -135,7 +135,6 @@ var share = (function(){
 				})
 			},
 			embeding : function(type, value){
-
 				var storage = currentShare.export(true)
 
 				if(type == 'article'){
@@ -380,6 +379,7 @@ var share = (function(){
 			},
 
 			caption : function(caption){
+				console.log('caption', caption)
 				currentShare.caption.set(caption);
 			},
 
@@ -454,7 +454,6 @@ var share = (function(){
 
 			post : function(clbk, p){
 
-				
 				el.postWrapper.removeClass('showError');
 
 				if(essenseData.hash == currentShare.shash()){
@@ -610,7 +609,7 @@ var share = (function(){
 			},
 
 			eTextChange : function(c){
-
+				console.log('c text', c)
 				var text = c.getText();
 
 				actions.tagsFromText(text);

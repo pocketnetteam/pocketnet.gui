@@ -377,7 +377,7 @@ var post = (function(){
 
 					return
 				}
-			
+
 				self.sdk.node.transactions.create.commonFromUnspent(
 
 					upvoteShare,

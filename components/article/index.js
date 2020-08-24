@@ -53,7 +53,6 @@ var article = (function(){
 			trx : function(share, clbk){
 				el.c.addClass('loading')
 
-
 				if (ed.share){
 					share.aliasid = ed.share.aliasid
 				}
@@ -357,7 +356,7 @@ var article = (function(){
 			        hideOnClick : false
 			    }
 			});
-
+			
 			$(function () {
 			    $('.edt').mediumInsert({
 			        editor: editor,

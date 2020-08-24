@@ -3320,14 +3320,14 @@ Platform = function(app, listofnodes){
 					name : "Telegram bot token",
 					id : 'telegram',
 					placeholder : "Telegram bot token",
-					value : JSON.parse(localStorage.getItem('telegrambot')).token || "no bot",
+					value : (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no bot",
 					_onChange : function(value){
 						
 						function clbk (value){
 							console.log(value);
 						}
 
-						self.app.platform.sdk.system.get.telegram(value, clbk);
+						self.app.platform.sdk.system.get.telegramGetMe(value, clbk);
 
 					}
 
@@ -10158,7 +10158,7 @@ Platform = function(app, listofnodes){
 						
 					},
 
-					telegramSend: function(message){
+					telegramSend : function(message){
 
 						let caption =  message.message.v + '\n ' + message.url.v;
 						const images = message.images.v;
@@ -10214,6 +10214,8 @@ Platform = function(app, listofnodes){
 					},
 
 					share : function(inputs, share, clbk, p){
+
+						console.log('input', inputs, share, TXFEE, clbk, p)
 
 						this.common(inputs, share, TXFEE, clbk, p)
 					},
