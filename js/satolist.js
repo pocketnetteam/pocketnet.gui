@@ -3320,7 +3320,7 @@ Platform = function(app, listofnodes){
 					name : "Telegram bot token",
 					id : 'telegram',
 					placeholder : "Telegram bot token",
-					value : (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no bot",
+					value : (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
 					_onChange : function(value){
 
 						self.app.platform.sdk.system.get.telegramGetMe(value);
@@ -11486,14 +11486,15 @@ Platform = function(app, listofnodes){
 						}
 					})
 				},
+
+				telegramUpdateAbort: new AbortController(),
 				
-				telegramUpdates : function (token, offset = 0){
+				telegramUpdates : function (offset = 0, clbk){
 
-
+					const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "";
 					this.telegramUpdates = this.telegramUpdates.bind(this);
 
-
-					fetch(`https://api.telegram.org/bot${token}/getUpdates?offset=${offset}&timeout=100`)
+					fetch(`https://api.telegram.org/bot${token}/getUpdates?offset=${offset}&timeout=100`,   {signal: this.telegramUpdateAbort.signal})
 					.then(data => data.json())
 					.then(data => {
 
@@ -11504,7 +11505,6 @@ Platform = function(app, listofnodes){
 							const {result} = data;
 
 							let {meta} = self.sdk.usersettings;
-
 
 							const resultWithSortedMedia = [];
 
@@ -11664,7 +11664,34 @@ Platform = function(app, listofnodes){
 													if (data.ok && data.result){
 
 														console.log('file path', data.result.file_path);
-														resolve(data.result.file_path);
+
+														app.ajax.run({
+															type : "POST",
+															imgur : true,
+															data : {
+																Action : "image",
+																image : `https://api.telegram.org/file/bot${token}/${data.result.file_path}`
+															},
+												
+															success : function(result){
+																
+																console.log('result', result)
+
+																if (result.success){
+																
+																	console.log('image', data.link)
+																	console.log('dataImgur', data)
+
+																	const path = result.data && result.data.link;
+																	resolve(String(path));
+
+																} else {
+
+																	resolve("")
+																}
+												
+															}
+														})
 
 													} else {
 
@@ -11684,17 +11711,12 @@ Platform = function(app, listofnodes){
 
 
 											console.log("into withImages", html, pathes)
-											const getPhotoPath = (path) => {
-
-												return `https://api.telegram.org/file/bot${token}/${path}`
-
-											}
 
 											let newHtml = '';
 
 											for (path of pathes){
 
-												newHtml += `<div class="medium-insert-images"><figure><img src=${getPhotoPath(path)}></figure></div>`;
+												newHtml += `<div class="medium-insert-images"><figure><img src=${path}></figure></div>`;
 											}
 
 											newHtml += '<p>' + html + '</p>';
@@ -11723,7 +11745,7 @@ Platform = function(app, listofnodes){
 
 											const uniqueIds = [...new Set(ids)];
 
-											const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no bot"
+											const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || ""
 
 
 											for (const id of uniqueIds){
@@ -11874,7 +11896,12 @@ Platform = function(app, listofnodes){
 							self.sdk.usersettings.save();
 
 							offset = result.length ? result[result.length - 1].update_id : 0
-							this.telegramUpdates(token, offset + 1);
+							this.telegramUpdates(offset + 1);
+
+							if (clbk){
+
+								clbk();
+							}
 
 						}
 
@@ -11930,7 +11957,7 @@ Platform = function(app, listofnodes){
 								addIcon("fa-check-circle", "green")
 
 
-								this.telegramUpdates(token);
+								this.telegramUpdates();
 
 	
 							} else {

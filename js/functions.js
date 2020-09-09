@@ -5160,13 +5160,13 @@
 
 		self.collectValues = function(){
 			var value = {};
-
+			
 			_.each(self.content, function(p, index){
 				if(p.value){
 					value[index] = p.value;
 				}
 			})
-
+			console.log('InOnChange', value)
 			self.set(value)
 		}
 

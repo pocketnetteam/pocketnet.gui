@@ -50,7 +50,7 @@ var usersettings = (function(){
 						
 					})
 
-					const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no bot"
+					const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no z"
 					self.app.platform.sdk.system.get.telegramGetMe(bot);
 				})
 				
@@ -68,10 +68,25 @@ var usersettings = (function(){
 
 		var initEvents = function(){
 
+			const rerender = () => {
+
+				console.log('rerender???')
+				renders.options()
+			}
+
+			const controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
+
+			controller.signal.addEventListener('abort', () => alert("abort!"));
+
+			controller.abort(); 
+
+			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
+			setTimeout(() =>{self.app.platform.sdk.system.get.telegramUpdates(null, rerender), console.log('intimeout')}, 5000)
 		}
 
 		var make = function(){
 			renders.options()
+
 		}
 
 		return {

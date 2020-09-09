@@ -16,7 +16,6 @@
 								<div class="pNameW">
 									<%= parameter.name %><% 
 										var unit = deep(parameter, 'format.Unit');
-										console.log('parameter', parameter)
 										if(unit) { %>, <span class="unit"><%-unit%></span>
 
 									<%	} %><% if(parameter.type == 'valuesmulti'){%>: <%} %>
