@@ -49,7 +49,11 @@ var usersettings = (function(){
 						self.app.platform.sdk.theme.set(t)
 						
 					})
-				})	
+
+					const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no bot"
+					self.app.platform.sdk.system.get.telegramGetMe(bot);
+				})
+				
 			}
 		}
 
@@ -100,6 +104,7 @@ var usersettings = (function(){
 				make()
 
 				p.clbk(null, p);
+
 			}
 		}
 	};

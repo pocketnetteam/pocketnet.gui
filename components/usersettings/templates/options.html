@@ -16,7 +16,7 @@
 								<div class="pNameW">
 									<%= parameter.name %><% 
 										var unit = deep(parameter, 'format.Unit');
-
+										console.log('parameter', parameter)
 										if(unit) { %>, <span class="unit"><%-unit%></span>
 
 									<%	} %><% if(parameter.type == 'valuesmulti'){%>: <%} %>
@@ -28,13 +28,29 @@
 									<% } %>
 								</div>
 							</div>
+							
+							<% if(parameter.type == 'boolean'){ %>
 
-							<div class="pInput">
-								<%= parameter.input({
-									init : true
-									
-								}) %>
-							</div>
+								<div class="pInput pCheckbox">
+									<%= parameter.input({
+										init : true
+										
+									}) %>
+								</div>
+
+							<% } %>
+
+							<% if(parameter.type != 'boolean'){ %>
+
+								<div class="pInput">
+									<%= parameter.input({
+										init : true
+										
+									}) %>
+								</div>
+
+							<% } %>
+
 
 						</div>
 					</div>

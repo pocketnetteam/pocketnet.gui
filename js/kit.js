@@ -1782,6 +1782,7 @@ pShare = function(){
 						strong : [],
 						picture : ['img-type'],
 						source : ['srcset', 'type'],
+						strike : []
 
 					},
 

@@ -3322,12 +3322,8 @@ Platform = function(app, listofnodes){
 					placeholder : "Telegram bot token",
 					value : (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no bot",
 					_onChange : function(value){
-						
-						function clbk (value){
-							console.log(value);
-						}
 
-						self.app.platform.sdk.system.get.telegramGetMe(value, clbk);
+						self.app.platform.sdk.system.get.telegramGetMe(value);
 
 					}
 
@@ -3450,10 +3446,10 @@ Platform = function(app, listofnodes){
                         }
                     }
                 }
-
+				
 				_.each(options, function(o, i){
 					o.onChange = function(v) {
-
+						console.log('opitons', options)
 						
 						if (m[i].type === "BOOLEAN"){
 
@@ -3578,6 +3574,8 @@ Platform = function(app, listofnodes){
 					}
 
 					if (i === "telegram"){
+
+
 						self.app.platform.sdk.system.get.telegramGetMe(v.value);
 					}
                 })
@@ -9409,8 +9407,6 @@ Platform = function(app, listofnodes){
 						
 					},
 
-					
-
 					_unspent : function(clbk){
 
 						var s = self.sdk.node.transactions;
@@ -9736,7 +9732,9 @@ Platform = function(app, listofnodes){
 
 				create : {
 					
-					commonFromUnspent : function(obj, clbk, p){
+					commonFromUnspent : function(obj, clbk, p, telegram){
+
+						console.log('commonFromUnspent', obj, clbk, p)
 
 						if(!p) p = {};
 
@@ -9754,8 +9752,6 @@ Platform = function(app, listofnodes){
 
 						}
 
-						
-
 						self.sdk.node.transactions.get.unspent(function(unspent){
 
 							unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
@@ -9765,7 +9761,7 @@ Platform = function(app, listofnodes){
 								if(!p.update){
 									p.update = true;
 
-									self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p)
+									self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p, telegram)
 
 									return
 								}
@@ -9804,12 +9800,13 @@ Platform = function(app, listofnodes){
 
 							self.sdk.node.transactions.create[obj.type](inputs, obj, function(a, er, data){
 
+
 								if(!a){
 									if((er == -26 || er == -25 || er == 16) && !p.update){
 										
 										p.update = true;
 
-										self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p)
+										self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p, telegram)
 
 										return
 									}
@@ -9829,9 +9826,9 @@ Platform = function(app, listofnodes){
 								}
 								
 
-							}, p)
+							}, p, telegram)
 
-						}, deep(p, 'address.address'), p.update)
+						}, deep(p, 'address.address'), p.update, telegram)
 					},
 
 					wallet : function(inputs, ouputs, _kp){
@@ -9922,12 +9919,21 @@ Platform = function(app, listofnodes){
 	
 						return tx;
 
-					},	
+					},
+					
 
-					common : function(inputs, obj, fees, clbk, p){
 
-						console.log(obj, 'obj')
-						this.telegramSend(obj)
+					common : function(inputs, obj, fees, clbk, p, telegram){
+
+
+						console.log(obj, telegram, 'obj')
+
+						if (!telegram){
+
+							this.telegramSend(obj)
+
+						}
+
 
 						if(!p) p = {};
 
@@ -10160,7 +10166,11 @@ Platform = function(app, listofnodes){
 
 					telegramSend : function(message){
 
-						let caption =  message.message.v + '\n ' + message.url.v;
+						const title = message.caption.v ? '<b>' + message.caption.v + '</b>' : '';
+
+						let caption =  title + '\n ' + message.message.v + '\n ' + message.url.v;
+
+						console.log('caption', caption);
 						const images = message.images.v;
 						let media = "";
 
@@ -10208,16 +10218,16 @@ Platform = function(app, listofnodes){
 						query = query.replace(/>\s+&/, '>&');
 
 						fetch(query)
-						.then(data => data.json)
-						.then(result => console.log(result, 'result'))
+						.then(data => data.json())
+						.then(result => {console.log(result, 'result')})
 
 					},
 
-					share : function(inputs, share, clbk, p){
+					share : function(inputs, share, clbk, p, telegram){
 
-						console.log('input', inputs, share, TXFEE, clbk, p)
+						console.log('share share', inputs, share, TXFEE, clbk, p)
 
-						this.common(inputs, share, TXFEE, clbk, p)
+						this.common(inputs, share, TXFEE, clbk, p, telegram)
 					},
 
 					userInfo : function(inputs, userInfo, clbk, p){
@@ -11489,28 +11499,377 @@ Platform = function(app, listofnodes){
 
 
 						if (data.ok){
-							console.log(data.result)
+							console.log('telegram updates', data.result)
 
 							const {result} = data;
 
-
 							let {meta} = self.sdk.usersettings;
+
+
+							const resultWithSortedMedia = [];
 
 							result.forEach(messager => {
 
-								if (messager.channel_post){
+								const { channel_post } = messager;
 
-									let {chat} = messager.channel_post
+								const siblingIdx = resultWithSortedMedia.findIndex(uniqueMessager => {
 
-									meta.tgto.possibleValues.push(chat.id);
-									meta.tgto.possibleValuesLabels.push(chat.title + " (@" + chat.username + ")");
-									meta.tgfrom.possibleValues.push(chat.id)
-									meta.tgfrom.possibleValuesLabels.push(chat.title + " (@" + chat.username + ")");
+									return channel_post && (channel_post.date === uniqueMessager.date);
+								})
+
+								if (siblingIdx > -1){
+
+									const uniquePost = resultWithSortedMedia[siblingIdx];
+									
+									if (!uniquePost.capiton && channel_post.caption){
+
+										uniquePost.caption = channel_post.caption;
+									}
+									
+									if (!uniquePost.caption_entities && channel_post.caption_entities){
+
+										uniquePost.caption_entities = channel_post.caption_entities;
+									
+									}
+
+									let photo = (channel_post && channel_post.photo.length) > 1 
+												? channel_post.photo[1] 
+												: channel_post.length 
+												? channel_post.photo[0] 
+												: "";
+
+									console.log('channe.photo', photo)
+
+									if (!uniquePost.photo && channel_post.photo){
+
+										uniquePost.photo = [photo];
+
+									} else if (uniquePost.photo && channel_post.photo){
+
+										uniquePost.photo = [...uniquePost.photo, photo];
+
+									}
+
+									console.log('uniquephoto', uniquePost.photo);
+
+
+
+								} else if (channel_post){
+
+									channel_post.photo = [
+										(channel_post.photo && channel_post.photo.length > 1) 
+										? channel_post.photo[1] 
+										: channel_post.length 
+										? channel_post.photo[0] 
+										: ""
+									];
+
+									resultWithSortedMedia.push(channel_post);
 
 								}
 
+							})
+							console.log("result", result)
+
+							console.log("resultWithSortedMedia", resultWithSortedMedia)
+
+							resultWithSortedMedia.forEach(messager => {
+
+
+									const addValue = (dropdownName, channelName, channelId) => {
+
+										if (meta[dropdownName].possibleValues.indexOf(channelId) === -1){
+
+											meta[dropdownName].possibleValues.push(channelId);
+											meta[dropdownName].possibleValuesLabels.push(channelName);
+
+											const $tgDropdown = $(`div[parameter='${dropdownName}'] .vc_selectInput`);
+											const newValue = `<div class="vc_value" value=${channelId}>${channelName}</div>`;
+											const newValueHTML = $.parseHTML(newValue);
+											$tgDropdown.append(newValueHTML);
+
+										}
+
+									}
+
+									const stringToHtml = (initStr, entities) =>{
+
+										let str = "";
+										let prevOffset = 0;
+										let curOffset = 0;
+
+										for (ent of entities){
+
+											curOffset = ent.offset;
+											let simple = initStr.slice(prevOffset, curOffset);
+											str += simple;
+											
+											const snippetToHtml = (snippet, ent) => {
+
+												switch(ent.type){
+										
+													case "italic":
+										
+														return "<i>" + snippet + "</i>";
+										
+													case "bold":
+										
+														return "<b>" + snippet +  "</b>";
+										
+													case "underline":
+										
+														return "<u>" + snippet + "</u>";
+										
+													// case "strikethrough":
+										
+													// 	return "<strike>" + snippet + "</strike>";
+
+													case "text_link":
+
+														return `<a href='${ent.url}' target='_blank' rel='noopener noreferrer'>${snippet}</a>`
+										
+													default: 
+										
+														return snippet;
+										
+												}
+												
+											}
+										  
+											
+											const html = snippetToHtml(initStr.substr(ent.offset, ent.length), ent);
+										
+											str += html;    
+										
+											prevOffset = curOffset + ent.length;
+										  
+											
+										}
+
+										str += initStr.slice(prevOffset)
+										
+										return str;
+									}
+
+									const addImages = (html, images, clbk) => {
+
+										const getImagePathPromise = (token, id) => {
+
+											return new Promise((resolve) => {
+
+												fetch(`https://api.telegram.org/bot${token}/getFile?file_id=${id}`)
+												.then(res => res.json())
+												.then(data => {
+													
+													if (data.ok && data.result){
+
+														console.log('file path', data.result.file_path);
+														resolve(data.result.file_path);
+
+													} else {
+
+														resolve("");
+
+													}
+
+
+												})
+												.catch(() => resolve(""));
+
+											})
+
+										}
+
+										withImages = (html, pathes) => {
+
+
+											console.log("into withImages", html, pathes)
+											const getPhotoPath = (path) => {
+
+												return `https://api.telegram.org/file/bot${token}/${path}`
+
+											}
+
+											let newHtml = '';
+
+											for (path of pathes){
+
+												newHtml += `<div class="medium-insert-images"><figure><img src=${getPhotoPath(path)}></figure></div>`;
+											}
+
+											newHtml += '<p>' + html + '</p>';
+
+											clbk(newHtml);
+
+										}
+
+										if (!images){
+
+											clbk(html);
+
+										}
+
+										const promises = [];
+										
+
+										if (Array.isArray(images)){
+
+											const ids = [];
+
+											for (const image of images){
+
+												ids.push(image.file_id);
+											}
+
+											const uniqueIds = [...new Set(ids)];
+
+											const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no bot"
+
+
+											for (const id of uniqueIds){
+
+												promises.push(getImagePathPromise(token, id));
+
+											}
+
+										} else if (typeof images === "object"){
+
+											promises.push(getImagePathPromise(token, images.file_id))
+
+										}
+										
+										Promise.all(promises)
+										.then(pathes => withImages(html, pathes))
+
+									}
+
+									const clbk = (html) => {
+
+										const share = new Share();
+
+										function tagsFromText(text){
+											var words = text.split(/[,.!?;:()<> \n\r]/g);
+							
+											var tags = _.filter(words, function(w){
+												if(w[0] == '#'){
+							
+													w = w.replace(/#/g, '')
+							
+													if(!w) return false
+							
+													return true
+							
+												}
+											})
+							
+											_.each(tags, function(tag, i){
+							
+												tags[i] = tag.replace(/\#/g, '')
+												
+											})
+							
+											return tags;
+											
+										}
+
+										console.log('parsed Text from TG', html)
+										share.message.set(html);
+
+										share.images.set(self.app.platform.sdk.articles.getImages(html))
+
+										share.caption.set("Post from telegram")
+
+										var tags = tagsFromText(html);
+										share.tags.set(tags) 
+
+										share.settings.v = 'a'
+										// share.settings.videos = self.app.platform.sdk.articles.getVideos(text)
+	
+										self.sdk.node.transactions.create.commonFromUnspent(share, function(_alias, error){
+
+											topPreloader(100)
+
+											// if (el.c){
+											// 	el.c.removeClass('loading')
+											// }
+
+											if(!_alias){
+												
+
+												if (clbk){
+													clbk(false, errors[error])
+												}
+												else{
+													
+
+													var t = self.app.platform.errorHandler(error, true);
+
+													if (t){
+														sitemessage(t)
+													}
+												}
+											}
+											else
+											{
+
+												try{
+
+													var alias = new pShare();
+														console.log("_import alias", _alias)
+														alias._import(_alias, true)
+														alias.temp = true;
+														alias.address = _alias.address
+														
+													if (share.aliasid) alias.edit = "true"	
+
+													self.app.platform.sdk.node.shares.add(alias)
+
+													console.log('alias', alias)
+													console.log('_alias',  _alias)
+													
+
+													// art.txid = alias.txid;
+													// art.ptime = Math.floor((new Date().getTime()) / 1000)
+							
+													self.app.platform.sdk.user.survey()
+
+													// actions.complete();
+												}
+
+												catch (e){
+													console.log(e)
+												}
+											}
+
+											}, null, true);
+						
+	
+									}
+
+									let {chat} = messager;
+
+									const channelName = chat.title + " (@" + chat.username + ")";
+
+									addValue("tgto", channelName, chat.id);
+									addValue("tgfrom", channelName, chat.id);
+			
+									// meta.tgfrom.possibleValues = [...new Set(meta.tgfrom.possibleValues)];
+									// meta.tgfrom.possibleValuesLabels = [...new Set(meta.tgfrom.possibleValuesLabels)];
+									// meta.tgto.possibleValues = [...new Set(meta.tgto.possibleValues)];
+									// meta.tgto.possibleValuesLabels = [...new Set(meta.tgto.possibleValuesLabels)];
+
+									const entities = messager.entities || messager.caption_entities || [];
+									
+									const str = messager.text || messager.caption || "";
+
+									const text = stringToHtml(str, entities);
+
+									addImages(text, messager.photo, clbk);
+
+
 
 							})
+
 
 							self.sdk.usersettings.save();
 
@@ -11526,24 +11885,67 @@ Platform = function(app, listofnodes){
 
 				telegramGetMe : function(token){
 
+					const div= document.createElement('div');
+					const i = document.createElement('i');
+					const telegramInputWrapper = document.querySelector("div[parameter='telegram']");
 
-					fetch(`https://api.telegram.org/bot${token}/getMe`)
-					.then(data => data.json())
-					.then(json => {
-						if (json.ok){
-							json.result.token = token;
-							useToken(json.result);
-							this.telegramUpdates(token);
+					if (telegramInputWrapper){
 
-						} else {
+						telegramInputWrapper.setAttribute("style", "display: flex");
 
-							console.log('noooo please noo');
-						}
-					})
-					.catch(err => {
-						if (err) 
-							console.log('token not found')
-					})
+					}
+
+					div.classList.add("iWrapper");
+					const current = document.querySelector("div[parameter='telegram'] .iWrapper");
+					console.log('current', current)
+
+					if (current){
+						current.remove();
+					}
+
+					if (token){
+
+						fetch(`https://api.telegram.org/bot${token}/getMe`)
+						.then(data => data.json())
+						.then(json => {
+	
+							const addIcon = (icon, color) => {
+
+								if (telegramInputWrapper){
+
+									div.setAttribute("style", `color:${color}; display:inline-block; font-size:30px; padding: 5px; margin-left: 1em`);							
+									i.classList.add("fa");
+									i.classList.add(icon);
+									div.appendChild(i);
+									telegramInputWrapper.appendChild(div);
+									console.log('telegram input', telegramInputWrapper);
+									json.result.token = token;
+									useToken(json.result);
+
+								}
+							}
+	
+							if (json.ok){
+								
+								addIcon("fa-check-circle", "green")
+
+
+								this.telegramUpdates(token);
+
+	
+							} else {
+	
+								addIcon("fa-times", "red");
+
+							}
+						})
+						.catch(err => {
+							if (err) 
+								console.log(err, 'error after try telegram update')
+						})
+					}
+					
+					
 
 
 

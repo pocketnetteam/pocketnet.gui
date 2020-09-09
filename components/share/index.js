@@ -454,6 +454,7 @@ var share = (function(){
 
 			post : function(clbk, p){
 
+
 				el.postWrapper.removeClass('showError');
 
 				if(essenseData.hash == currentShare.shash()){
