@@ -281,7 +281,11 @@ var article = (function(){
 			change : function(){
 				t = slowMade(function(){
 
+
+					console.log('editor', editor);
+					console.log('serilize', editor.serialize());
 					var cnt = self.app.platform.sdk.articles.lightVideo(editor.serialize())
+					console.log('cnt', cnt)
 
 
 					actions.change(cnt);

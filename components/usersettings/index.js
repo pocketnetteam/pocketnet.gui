@@ -8,7 +8,7 @@ var usersettings = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, composed;
+		var el, composed, controlller;
 
 
 		var actions = {
@@ -50,8 +50,8 @@ var usersettings = (function(){
 						
 					})
 
-					const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no z"
-					self.app.platform.sdk.system.get.telegramGetMe(bot);
+					// const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no z"
+					// self.app.platform.sdk.system.get.telegramGetMe(bot);
 				})
 				
 			}
@@ -72,16 +72,17 @@ var usersettings = (function(){
 
 				console.log('rerender???')
 				renders.options()
+
 			}
 
-			const controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
-
-			controller.signal.addEventListener('abort', () => alert("abort!"));
+			controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
 
 			controller.abort(); 
-
 			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
-			setTimeout(() =>{self.app.platform.sdk.system.get.telegramUpdates(null, rerender), console.log('intimeout')}, 5000)
+
+			console.log('controller', self.app.platform.sdk.system.get.telegramUpdateAbort)
+			
+			setTimeout(() => self.app.platform.sdk.system.get.telegramUpdates(null, rerender), 0)
 		}
 
 		var make = function(){
@@ -103,6 +104,10 @@ var usersettings = (function(){
 
 			destroy : function(){
 				el = {};
+				console.log('destroyed?');
+				controller.abort(); 
+				controller = new AbortController();
+				self.app.platform.sdk.system.get.telegramUpdates();
 			},
 			
 			init : function(p){

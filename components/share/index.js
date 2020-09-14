@@ -379,11 +379,13 @@ var share = (function(){
 			},
 
 			caption : function(caption){
-				console.log('caption', caption)
 				currentShare.caption.set(caption);
 			},
 
 			linksFromText : function(text){
+
+				console.log(text, 'text');
+
 				if(!currentShare.url.v){
 					var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi; 
 					
@@ -406,7 +408,7 @@ var share = (function(){
 							else
 							{
 								if(currentShare.url.v) return;
-
+								console.log('preparedUrl', url);
 								currentShare.url.set(url)
 
 								renders['url']()
