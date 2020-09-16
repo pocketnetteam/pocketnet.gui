@@ -3508,7 +3508,7 @@ Platform = function(app, listofnodes){
 						if (m[i].type === "VALUES" ){
 							
 
-							const idx = m[i].possibleValues.indexOf(Number(v));
+							const idx = m[i].possibleValues.indexOf(String(v));
 							m[i].value = m[i].possibleValuesLabels[idx];
 							m[i].valueId = Number(v);
 							// setTimeout(() => {$(`div[pid=${i}] input`).val(m[i].possibleValuesLabels[idx])}, 0)
@@ -3564,7 +3564,7 @@ Platform = function(app, listofnodes){
 					if (o.type === "VALUES"){
 
 						values[i] = {};
-						values[i].possibleValues = o.possibleValues;
+						values[i].possibleValues = o.possibleValues && o.possibleValues.map(i => String(i));
 						values[i].possibleValuesLabels = o.possibleValuesLabels;
 						values[i].value = o.value;
 
@@ -3607,7 +3607,7 @@ Platform = function(app, listofnodes){
 					
 					if (typeof v === "object"){
 						m[i].value = v.value;
-						m[i].possibleValues = v.possibleValues;
+						m[i].possibleValues = v.possibleValues && v.possibleValues.map(i => String(i));
 						m[i].possibleValuesLabels = v.possibleValuesLabels;
 
 					} else {
@@ -7406,7 +7406,7 @@ Platform = function(app, listofnodes){
 			},
 
 			send : function(txid, comment, pid, aid, clbk, editid, fid){
-
+				console.log('into send', txid, comment, pid, aid, clbk, editid, fid);
 				var s = self.sdk.comments.storage;
 
 				comment.answerid = aid;
@@ -9961,17 +9961,38 @@ Platform = function(app, listofnodes){
 						return tx;
 
 					},
-					
-
 
 					common : function(inputs, obj, fees, clbk, p, fromTG){
 
-
-						console.log(obj, fromTG, 'obj')
-
+						console.log('into common', inputs, obj, fees, clbk, p, fromTG)
 						if (!fromTG){
 
-							this.telegramSend(obj)
+							const {meta} = self.sdk.usersettings;
+
+							console.log('tgtoask', meta.tgtoask)
+							if (!meta.tgtoask.value){
+
+								this.telegramSend(obj, meta)
+
+							} else {
+
+								// this.telegramSend = this.telegramSend.bind(this)
+
+								dialog({
+									html : "Do you really want send message to Telegram?",
+									btn1text : "Send",
+									btn2text : "Cancel",
+				
+									class : 'zindex',
+				
+									success : () => {
+
+										this.telegramSend(obj, meta)
+				
+									}
+								})								
+								
+							}
 
 						}
 
@@ -10205,7 +10226,7 @@ Platform = function(app, listofnodes){
 						
 					},
 
-					telegramSend : function(message){
+					telegramSend : function(message, meta){
 
 						const filterHtml = (input) => {
 
@@ -10231,13 +10252,11 @@ Platform = function(app, listofnodes){
 							console.log('sanitized', sanitizedHtml);
 							return removeEmptyHref(sanitizedHtml);
 						}
-
-						const {meta} = self.sdk.usersettings;
-
+						
 						const token = meta.telegram.value;
 						
 						const channelIdx = meta.tgto.possibleValuesLabels.indexOf(meta.tgto.value);
-						const channel = meta.tgto.possibleValues[channelIdx];
+						const channel = Number(meta.tgto.possibleValues[channelIdx]);
 
 						const parameters = {
 							method: 'POST',
@@ -10245,6 +10264,7 @@ Platform = function(app, listofnodes){
 							parse_mode: 'HTML'
 						}
 
+						console.log('message', message);
 						const title = message.caption.v ? '<b>' + message.caption.v + '</b>' : '';
 
 						let caption =  title + '\n ' + message.message.v + '\n ';
@@ -11667,6 +11687,8 @@ Platform = function(app, listofnodes){
 							const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
 
 							const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
+
+							console.log('currentChannelId', currentChannelId)
 							
 							const applyMessagesFromTG = (messages, post) => {
 
@@ -11674,9 +11696,9 @@ Platform = function(app, listofnodes){
 
 									const addValue = (dropdownName, channelName, channelId) => {
 
-										if (meta[dropdownName].possibleValues.indexOf(channelId) === -1){
+										if (meta[dropdownName].possibleValues.indexOf(String(channelId)) === -1){
 
-											meta[dropdownName].possibleValues.push(channelId);
+											meta[dropdownName].possibleValues.push(String(channelId));
 											meta[dropdownName].possibleValuesLabels.push(channelName);
 
 											const $tgDropdown = $(`div[parameter='${dropdownName}'] .vc_selectInput`);
@@ -12052,7 +12074,7 @@ Platform = function(app, listofnodes){
 									// meta.tgto.possibleValuesLabels = [...new Set(meta.tgto.possibleValuesLabels)];
 
 
-									if (post && chat.id === currentChannelId){
+									if (post && chat.id === Number(currentChannelId)){
 
 										const entities = messager.entities || messager.caption_entities || [];
 										
@@ -12085,7 +12107,8 @@ Platform = function(app, listofnodes){
 
 							console.log('telegramMessages1', telegramMessages);
 
-							const tgfromCheck = allTelegramMessages.find(message => message.chat.id === currentChannelId);
+							const tgfromCheck = resultWithSortedMedia.find(message => String(message.chat.id) === currentChannelId);
+
 							console.log("tgfromcheck", tgfromCheck)
 							if (meta.tgfromask.value && tgfromCheck){
 
@@ -12128,7 +12151,7 @@ Platform = function(app, listofnodes){
 
 								applyMessagesFromTG(resultWithSortedMedia, true);
 
-								localStorage.setItem("telegramMessages", "[]");
+								// localStorage.setItem("telegramMessages", "[]");
 
 							}
 

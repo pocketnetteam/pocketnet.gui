@@ -1,3 +1,4 @@
+
 var usersettings = (function(){
 
 	var self = new nModule();

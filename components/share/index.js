@@ -456,6 +456,8 @@ var share = (function(){
 
 			post : function(clbk, p){
 
+				console.log('into post', currentShare)
+
 
 				el.postWrapper.removeClass('showError');
 
