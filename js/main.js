@@ -24,20 +24,20 @@ if(!_Node)
 		rtchttp : 'https://localhost:9091'*/
 
 		listofproxies : [
-			/*{
+			{
 				host : 'pocketnet.app',
 				port : 8888,
 				ws : 8088,
 
 				id : 'pocketnet.app:8888:8088:'
-			},*/
+			},
 
-			{
+			/*{
 				host : 'localhost',
 				port : 8888,
 				ws : 8088,
 				id : 'localhost:8888:8088:'
-			},
+			},*/
 			
 			/*{
 				host : '192.168.0.11',
