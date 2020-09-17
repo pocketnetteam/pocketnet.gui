@@ -3199,7 +3199,6 @@
 							open()
 						})
 					}
-					console.log('parameter', parameter)
 					_el.find('.vc_value').on('click', function(){
 						bkp = null;
 
@@ -9523,12 +9522,6 @@
 
 	    	}
 	    }
-
-		console.log('urlResult', {
-	        type: type,
-	        url : url,
-	        id : id
-		})
 		
 	    return {
 	        type: type,

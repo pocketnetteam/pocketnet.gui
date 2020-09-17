@@ -46,7 +46,7 @@ var usersettings = (function(){
 						p.el.find('.themewrapper').removeClass('active')
 
 						e.addClass('active')
-						console.log(self.app.platform.sdk.theme.set, 'set')
+
 						self.app.platform.sdk.theme.set(t)
 						
 					})
@@ -71,19 +71,25 @@ var usersettings = (function(){
 
 			const rerender = () => {
 
-				console.log('rerender???')
-				renders.options()
+				console.log('rerender???');
+				renders.options();
 
 			}
 
-			controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
+			console.log(self.app.user.features, 'features')
 
-			controller.abort(); 
-			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
+			if (self.app.user.features.telegram){
 
-			console.log('controller', self.app.platform.sdk.system.get.telegramUpdateAbort)
-			
-			setTimeout(() => self.app.platform.sdk.system.get.telegramUpdates(null, rerender), 0)
+				controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
+
+				controller.abort(); 
+				self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
+
+				console.log('controller', self.app.platform.sdk.system.get.telegramUpdateAbort)
+				
+				self.app.platform.sdk.system.get.telegramUpdates(null, rerender);
+
+			}
 		}
 
 		var make = function(){
@@ -105,10 +111,15 @@ var usersettings = (function(){
 
 			destroy : function(){
 				el = {};
-				console.log('destroyed?');
-				controller.abort(); 
-				controller = new AbortController();
-				self.app.platform.sdk.system.get.telegramUpdates();
+
+				if (self.app.user.features.telegram){
+
+					console.log('destroyed?');
+					controller.abort(); 
+					controller = new AbortController();
+					self.app.platform.sdk.system.get.telegramUpdates();
+
+				}
 			},
 			
 			init : function(p){

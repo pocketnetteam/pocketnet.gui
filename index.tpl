@@ -89,6 +89,8 @@
                 
 
         <script src="js/vendor/jquery-1.11.3.min.js"></script>
+        <script src="js/vendor/sanitize-html.min.js"></script>
+
 
         <script type="text/javascript">
 
