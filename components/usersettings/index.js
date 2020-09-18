@@ -78,7 +78,7 @@ var usersettings = (function(){
 
 			console.log(self.app.user.features, 'features')
 
-			if (self.app.user.features.telegram){
+			//if (self.app.user.features.telegram){
 
 				controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
 
@@ -89,7 +89,7 @@ var usersettings = (function(){
 				
 				self.app.platform.sdk.system.get.telegramUpdates(null, rerender);
 
-			}
+			//}
 		}
 
 		var make = function(){
