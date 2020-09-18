@@ -3478,7 +3478,6 @@ Platform = function (app, listofnodes) {
 
                 if (self.app.user.features.telegram) {
 
-                    console.log('features added')
 
                     c.integrations = {
                         name: "Integration with Telegram",
@@ -4834,14 +4833,9 @@ Platform = function (app, listofnodes) {
             prepareuser: function (data, a, state) {
 
 
-                console.log("PREPAREUSER")
-
-                console.log('address', a, self.sdk.address.pnet().address)
-
-
                 if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
-                    console.log('init telegram')
-                    self.app.user.features.telegram = 1
+
+                    self.app.user.features.telegram = 1;
 
                 }
 
@@ -9723,8 +9717,6 @@ Platform = function (app, listofnodes) {
                 create: {
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
-
-                        console.log('commonFromUnspent', obj, clbk, p)
 
                         if (!p) p = {};
 
