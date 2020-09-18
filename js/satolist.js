@@ -986,22 +986,22 @@ Platform = function (app, listofnodes) {
 
                             var points = _.clone(this.points) || [];
 
-							/*_.each(series, function(s){
+                            /*_.each(series, function(s){
 
-								if(s.name.indexOf("Navigator") > -1) return;
+                                if(s.name.indexOf("Navigator") > -1) return;
 
-								var p = _.find(s.data || s, function(p){
+                                var p = _.find(s.data || s, function(p){
 
-									if (p)
+                                    if (p)
 
-										if(convertX(p.x) === convertX(x)) return true;
-								})
+                                        if(convertX(p.x) === convertX(x)) return true;
+                                })
 
-								if (p)
+                                if (p)
 
-									points.push(p);
+                                    points.push(p);
 
-							})*/
+                            })*/
 
                             _.each(points, function (p) {
 
@@ -1756,10 +1756,10 @@ Platform = function (app, listofnodes) {
 
 
 
-			/*var interactive = new Interactive({
-				app : app,
-				platfrom : self
-			})*/
+            /*var interactive = new Interactive({
+                app : app,
+                platfrom : self
+            })*/
 
         }
     }
@@ -3524,11 +3524,11 @@ Platform = function (app, listofnodes) {
 
                 if (!localStorage['survey1']) {
 
-					/*self.app.nav.api.load({
-						open : true,
-						href : 'surveyiframe',
-						inWnd : true
-					})*/
+                    /*self.app.nav.api.load({
+                        open : true,
+                        href : 'surveyiframe',
+                        inWnd : true
+                    })*/
 
                 }
 
@@ -4005,12 +4005,12 @@ Platform = function (app, listofnodes) {
                             return
                         }
 
-						/*if (info.trial){
-							if (clbk)
-								clbk('trial')
+                        /*if (info.trial){
+                            if (clbk)
+                                clbk('trial')
 
-							return
-						}*/
+                            return
+                        }*/
                     }
 
 
@@ -7465,13 +7465,13 @@ Platform = function (app, listofnodes) {
                 s[txid] || (s[txid] = {})
 
 
-				/*if(!ccha && ((!pid && s[txid]['0']) || s[txid][pid])){
+                /*if(!ccha && ((!pid && s[txid]['0']) || s[txid][pid])){
 
-					if (clbk)
-						clbk(s[txid][pid])
+                    if (clbk)
+                        clbk(s[txid][pid])
 
-					return
-				}*/
+                    return
+                }*/
 
 
                 self.app.ajax.rpc({
@@ -8148,9 +8148,9 @@ Platform = function (app, listofnodes) {
 
                         var a = self.sdk.address.pnet()
 
-						/*if (a){
-							parameters.push(a.address)
-						}*/
+                        /*if (a){
+                            parameters.push(a.address)
+                        }*/
 
                         _.each(txids, function (id) {
                             loading[id] = true;
@@ -8919,9 +8919,9 @@ Platform = function (app, listofnodes) {
 
                 checkTemps: function (clbk) {
 
-					/*if (clbk)
-						clbk()
-					return*/
+                    /*if (clbk)
+                        clbk()
+                    return*/
 
                     var c = this.checkTemp
                     var t = this.temp;
@@ -9673,10 +9673,10 @@ Platform = function (app, listofnodes) {
 
                         _.each(inputs, function (i) {
 
-							/*txb.addInput(i.txid, i.vout)
-							amount = amount + Number(i.amount);
+                            /*txb.addInput(i.txid, i.vout)
+                            amount = amount + Number(i.amount);
 
-							return*/
+                            return*/
 
                             if (i.address.indexOf("P") == 0) {
 
@@ -9690,10 +9690,10 @@ Platform = function (app, listofnodes) {
                                 if (index > -1) {
 
                                     var address = self.sdk.addresses.storage.addressesobj[index];
-									/*console.log(address)
+                                    /*console.log(address)
 
-									console.log("ADDINPUT1", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('001442b207c67cd29bd4ae72e6440690b5db2264c013', 'hex'))))
-									console.log("ADDINPUT2", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('0014c05e4b43f78296df7e7a0f5d5329cb26fd4eff30', 'hex'))))*/
+                                    console.log("ADDINPUT1", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('001442b207c67cd29bd4ae72e6440690b5db2264c013', 'hex'))))
+                                    console.log("ADDINPUT2", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('0014c05e4b43f78296df7e7a0f5d5329cb26fd4eff30', 'hex'))))*/
 
                                     txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
                                 }
@@ -11333,29 +11333,29 @@ Platform = function (app, listofnodes) {
 
                         if (!values) values = {}
 
-						/*nedbkey: 'settings',
-						  nedbpath: { settings: './data/settings' },
-						  nodes: { defaults: [Object], stable: [Array] },
-						  server: true,
-						  ports: { https: 8888, wss: 8088 },
-						  ssl:
-						   { key: './cert/key.pem',
-							 cert: './cert/cert.pem',
-							 passphrase: 'Vjoysq47' },
-						  fbk:
-						   './private/pocketnet-firebase-adminsdk-e72t8-e21b48edf5.json',
-						  dbEnable: true,
-						  db:
-						   { host: 'localhost',
-							 port: 5432,
-							 max: 10,
-							 idleTimeoutMillis: 30000,
-							 user: 'postgres',
-							 database: 'pocketnetproxy',
-							 password: 'zx8045kzx' },
-						  refkey: '',
-						  captcha: true,
-						  iplimiter: true },*/
+                        /*nedbkey: 'settings',
+                          nedbpath: { settings: './data/settings' },
+                          nodes: { defaults: [Object], stable: [Array] },
+                          server: true,
+                          ports: { https: 8888, wss: 8088 },
+                          ssl:
+                           { key: './cert/key.pem',
+                             cert: './cert/cert.pem',
+                             passphrase: 'Vjoysq47' },
+                          fbk:
+                           './private/pocketnet-firebase-adminsdk-e72t8-e21b48edf5.json',
+                          dbEnable: true,
+                          db:
+                           { host: 'localhost',
+                             port: 5432,
+                             max: 10,
+                             idleTimeoutMillis: 30000,
+                             user: 'postgres',
+                             database: 'pocketnetproxy',
+                             password: 'zx8045kzx' },
+                          refkey: '',
+                          captcha: true,
+                          iplimiter: true },*/
 
                         var s = self.sdk.esystem.proxy.settings;
 
@@ -11448,7 +11448,7 @@ Platform = function (app, listofnodes) {
                             name: 'Binary path',
                             id: 'binPath',
                             type: "FILE",
-                            upload: { },
+                            upload: {},
                             value: '',
                             dbId: 'BinPath'
                         },
@@ -11456,7 +11456,7 @@ Platform = function (app, listofnodes) {
                             name: 'Config path',
                             id: 'configPath',
                             type: "FILE",
-                            upload: { },
+                            upload: {},
                             value: '',
                             dbId: 'ConfigPath'
                         },
@@ -11464,7 +11464,7 @@ Platform = function (app, listofnodes) {
                             name: 'Data path',
                             id: 'dataPath',
                             type: "FILE",
-                            upload: { },
+                            upload: {},
                             value: '',
                             dbId: 'DataPath'
                         },
@@ -11524,7 +11524,7 @@ Platform = function (app, listofnodes) {
 
                                 }
                             },
-                            
+
                             setup: {
                                 name: "Setup",
                                 options: {
@@ -13413,13 +13413,13 @@ Platform = function (app, listofnodes) {
                     }
                 },
                 clbks: {
-					/*transactions : function(data){
+                    /*transactions : function(data){
 
-						_.each(platform.sdk.node.transactions.clbks, function(c){
-							c(data.tx.amount)
-						})
+                        _.each(platform.sdk.node.transactions.clbks, function(c){
+                            c(data.tx.amount)
+                        })
 
-					}*/
+                    }*/
                 }
             },
 
@@ -13976,9 +13976,9 @@ Platform = function (app, listofnodes) {
 
                             //text = platform.app.localization.e('refferalUserMessage')
 
-							/*text = ''
-							caption = platform.app.localization.e('refferalUserMessage')
-							extra = self.tempates.subscribe(data.user)*/
+                            /*text = ''
+                            caption = platform.app.localization.e('refferalUserMessage')
+                            extra = self.tempates.subscribe(data.user)*/
 
                         }
                     }
@@ -14096,47 +14096,47 @@ Platform = function (app, listofnodes) {
             })
         }
 
-		/*var initOnlineListener = function(){
-			if(self.onlineCheck && !_Node){
+        /*var initOnlineListener = function(){
+            if(self.onlineCheck && !_Node){
 
-				onlinetnterval = retry(function(){
+                onlinetnterval = retry(function(){
 
-					var online = deep(window, 'navigator.onLine');
+                    var online = deep(window, 'navigator.onLine');
 
-					if (self.online != online){
+                    if (self.online != online){
 
-						self.online = online;
+                        self.online = online;
 
-						return true;
+                        return true;
 
-					}
-					
+                    }
+                	
 
-				}, function(){
+                }, function(){
 
-					if(!self.online){
+                    if(!self.online){
 
-						if (lost < 2)
-							lost = platform.currentBlock;	
+                        if (lost < 2)
+                            lost = platform.currentBlock;	
 
-						self.close();
-							
-						initOnlineListener();			
-					}
-					else
-					{
-						self.getMissed(initOnlineListener);
-						
-						initconnection();	
-					}
+                        self.close();
+                        	
+                        initOnlineListener();			
+                    }
+                    else
+                    {
+                        self.getMissed(initOnlineListener);
+                    	
+                        initconnection();	
+                    }
 
-					
+                	
 
 
-				}, 50)
+                }, 50)
 
-			}
-		}*/
+            }
+        }*/
 
         var reconnect = function () {
             if (closing) {
@@ -14437,17 +14437,17 @@ Platform = function (app, listofnodes) {
 
             data || (data = {})
 
-			/*if (data && data.msg == 'registered'){
+            /*if (data && data.msg == 'registered'){
 
-								
+                            	
 
-			}*/
+            }*/
 
             if (data.msg || data.mesType) {
 
-				/*var exkey = ''
+                /*var exkey = ''
 
-				if (data.mesType) exkey = '.' + data.mesType;*/
+                if (data.mesType) exkey = '.' + data.mesType;*/
 
                 var m = null;
 
@@ -14584,19 +14584,19 @@ Platform = function (app, listofnodes) {
 
 
 
-			/*self.messageHandler(
+            /*self.messageHandler(
 
-				{
-					addr: "PTPwefwp5pUW7g6SMZLmFUrMVEaCyoasJP",
-					amount: "1999",
-					msg: "transaction",
-					nout: "1",
-					time: 1571222680,
-					txid: "b6b40a9a3939f916d89f9ff2d688e2c3039ef1d7dd0bde174b32932555ab3311",
-					type: "userInfo"
-				}
+                {
+                    addr: "PTPwefwp5pUW7g6SMZLmFUrMVEaCyoasJP",
+                    amount: "1999",
+                    msg: "transaction",
+                    nout: "1",
+                    time: 1571222680,
+                    txid: "b6b40a9a3939f916d89f9ff2d688e2c3039ef1d7dd0bde174b32932555ab3311",
+                    type: "userInfo"
+                }
 
-			)*/
+            )*/
 
         }, 5000)
 
@@ -15551,13 +15551,13 @@ Platform = function (app, listofnodes) {
                     crypto.subtle.importKey(
                         m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
                         convertStringToArrayBuffer(keyH),
-					    /*{   //this is an example jwk key, other key types are Uint8Array objects
-					        kty: "RSA",
-					        e: "AQAB",
-					        n: keyH,
-					        alg: settings.name + "-" + settings.hashL,
-					        ext: true,
-					    },*/
+                        /*{   //this is an example jwk key, other key types are Uint8Array objects
+                            kty: "RSA",
+                            e: "AQAB",
+                            n: keyH,
+                            alg: settings.name + "-" + settings.hashL,
+                            ext: true,
+                        },*/
                         {   //these are the algorithm options
                             name: settings.name,
                             hash: { name: "SHA-" + settings.hashL }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
@@ -16170,32 +16170,32 @@ Platform = function (app, listofnodes) {
         }
 
         self.ab = {
-			/*send : function(testid, result){
+            /*send : function(testid, result){
 
-				platform.app.ajax.run({
-					data : {
-						Action : 'ADDTESTRESULT',
-						UserID : userid,
-						TestID : testid,
-						Note : result || '',
-						Device : device()
-					},
+                platform.app.ajax.run({
+                    data : {
+                        Action : 'ADDTESTRESULT',
+                        UserID : userid,
+                        TestID : testid,
+                        Note : result || '',
+                        Device : device()
+                    },
 
-					success : function(data){
-											
-						if (clbk)
-							clbk()
+                    success : function(data){
+                                        	
+                        if (clbk)
+                            clbk()
 
-					},
+                    },
 
-					fail : function(){
+                    fail : function(){
 
-						if (clbk)
-							clbk()
-					}
-				})
+                        if (clbk)
+                            clbk()
+                    }
+                })
 
-			},*/
+            },*/
             init: function () {
 
                 ab = JSON.parse(localStorage['ab'] || "{}")
@@ -16229,16 +16229,16 @@ Platform = function (app, listofnodes) {
             name: 'performancetest'
         }
 
-		/*,{
-			full : '127.0.0.1:48081',
-			host : '127.0.0.1',
-			port : 48081,
-			ws : 8080,
-			path : '',
+        /*,{
+            full : '127.0.0.1:48081',
+            host : '127.0.0.1',
+            port : 48081,
+            ws : 8080,
+            path : '',
 
-			test : true,
-			name : 'performancetest'
-		}*/
+            test : true,
+            name : 'performancetest'
+        }*/
     ]
 
     self.nodes = listofnodes || null
@@ -16426,25 +16426,25 @@ Platform = function (app, listofnodes) {
     self.prepare = function (clbk, state) {
 
 
-		/*setInterval(function(){
-			
-			
-			console.log('self.sdk.relayTransactions.storage', self.sdk.relayTransactions.storage)
+        /*setInterval(function(){
+        	
+        	
+            console.log('self.sdk.relayTransactions.storage', self.sdk.relayTransactions.storage)
 
-			if (self.sdk.address.pnet()){
+            if (self.sdk.address.pnet()){
 
-				var addr = self.sdk.address.pnet().address
+                var addr = self.sdk.address.pnet().address
 
-				var regs = self.sdk.registrations.storage[addr];
+                var regs = self.sdk.registrations.storage[addr];
 
-				console.log('addrr', addr, regs)
+                console.log('addrr', addr, regs)
 
-			}
-			else[
-				console.log('state0')
-			]
+            }
+            else[
+                console.log('state0')
+            ]
 
-		}, 2000)*/
+        }, 2000)*/
 
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
@@ -16541,33 +16541,33 @@ Platform = function (app, listofnodes) {
                                         }
                                     })
 
-									/*var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
+                                    /*var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
 
-									var d = dialog({
-										html : h,
-										class  :'popupsignup',
+                                    var d = dialog({
+                                        html : h,
+                                        class  :'popupsignup',
 
-										btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
-										btn2text : 'Watch Video',
+                                        btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
+                                        btn2text : 'Watch Video',
 
-										success : function(){
-											
+                                        success : function(){
+                                        	
 
-											self.app.nav.api.load({
-												open : true,
-												href : 'registration',
-												history : true
-											})
-										},
+                                            self.app.nav.api.load({
+                                                open : true,
+                                                href : 'registration',
+                                                history : true
+                                            })
+                                        },
 
-										fail : function(){
-											self.app.nav.api.load({
-												open : true,
-												href : 'video',
-												history : true
-											})
-										}
-									})*/
+                                        fail : function(){
+                                            self.app.nav.api.load({
+                                                open : true,
+                                                href : 'video',
+                                                history : true
+                                            })
+                                        }
+                                    })*/
 
 
                                 }
@@ -16706,18 +16706,18 @@ Platform = function (app, listofnodes) {
 
             self.focus = true;
 
-			/*if ( (time > 3600 && (electron || window.cordova)) || resume){
+            /*if ( (time > 3600 && (electron || window.cordova)) || resume){
 
-				self.app.platform.restart(function(){
+                self.app.platform.restart(function(){
 
-					app.reload(function(){
+                    app.reload(function(){
 
-					})
+                    })
 
-				})
+                })
 
-				return
-			}*/
+                return
+            }*/
 
             if (time > 120 && (window.cordova || electron)) {
                 self.clearStorageLight()
