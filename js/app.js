@@ -38,6 +38,8 @@ if(typeof _Electron != 'undefined' && _Electron){
 	emojionearea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
+    // TODO (brangr): tmp remove spellchecker
+    /*
 	const electronSpellchecker = require('electron-spellchecker');
 
 	// Retrieve required properties
@@ -57,9 +59,9 @@ if(typeof _Electron != 'undefined' && _Electron){
 
 	// Add context menu listener
 	var contextMenuListener = new ContextMenuListener((info) => {
-
 		contextMenuBuilder.showPopupMenu(info);
-	});
+    });
+    */
 
 }
 
@@ -561,13 +563,13 @@ Application = function(p)
 
 							var regs = self.platform.sdk.registrations.storage[addr];
 
-							console.log("regsregsregs", regs)
-
 							if (regs && regs >= 5){
 								
 								self.platform.ui.showmykey()
 								
 							}
+
+							
 
 						}
 

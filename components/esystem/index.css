@@ -1,0 +1,170 @@
+#esystem {
+  position: relative;
+  padding-bottom: 5em;
+}
+#esystem .settingsGroup:nth-child(1) .mwork.gk {
+  border-top: 0;
+}
+#esystem .groupHeader .parameter > div {
+  vertical-align: middle;
+  color: #4AC6F9;
+  padding: 1em 0;
+}
+#esystem .groupHeader .parameter > div.pName {
+  vertical-align: middle;
+  vertical-align: top;
+}
+#esystem .groupHeader .parameter > div .pInput {
+  font-weight: 700;
+  font-size: 0.8em;
+}
+#esystem .parameter {
+  max-width: 600px;
+}
+#esystem .parameter .picker select {
+  height: auto;
+}
+#esystem .parameter > div {
+  padding: 0.5em 0;
+  vertical-align: top;
+}
+#esystem .parameter .pName {
+  vertical-align: top;
+  padding-top: 1em;
+  padding-right: 0.5em;
+  width: 190px;
+}
+#esystem .parameter .pName .downloads {
+  padding-bottom: 1em;
+}
+#esystem .parameter .pName .pNameW {
+  padding-top: 0.16666667em;
+  font-weight: 700;
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+#esystem .parameter .pName .unit {
+  font-weight: 700;
+  color: #00A3F7;
+}
+#esystem .parameter .pName .require {
+  color: #F41A4D;
+}
+#esystem .parameter .pInput {
+  position: relative;
+  vertical-align: top;
+}
+#esystem .parameter .pInput .echo {
+  padding: 0.5em;
+  color: #FF1975;
+  font-weight: 700;
+}
+#esystem .parameter .pInput .vm_valuesmulti {
+  padding-top: 0.25em;
+}
+#esystem .parameter .panel {
+  vertical-align: top;
+  padding-top: 1em;
+  width: 20px;
+}
+#esystem .parameter .panel .clear {
+  text-align: right;
+  cursor: pointer;
+  color: #e4ddde;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#esystem .parameter .panel .clear:hover {
+  color: #4AC6F9;
+}
+#esystem .parameter select,
+#esystem .parameter textarea,
+#esystem .parameter input {
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid #d0c9ca;
+  border-radius: 2px;
+}
+#esystem .parameter select.error,
+#esystem .parameter textarea.error,
+#esystem .parameter input.error {
+  border: 1px solid #F41A4D;
+}
+#esystem .parameter .inpLabel {
+  width: 100%;
+  padding: 0.5em;
+  border-bottom: 1px solid #d0c9ca;
+}
+#esystem .parameter .error select,
+#esystem .parameter .error textarea,
+#esystem .parameter .error input {
+  border: 1px solid #F41A4D;
+}
+#esystem .parameter select {
+  height: 38px;
+  padding-right: 25px;
+  width: auto;
+}
+#esystem .parameter .vc_valuecustom {
+  width: 100%;
+}
+#esystem .parameter .vc_valuecustom .vc_textInput,
+#esystem .parameter .vc_valuecustom_multibig .vc_textInput {
+  background: #fff;
+}
+#esystem .parameter .vmt_valuesmultitree,
+#esystem .parameter .vm_value {
+  padding: 0;
+}
+#esystem .parameter .vmt_valuesmultitree .checkbox + label:before,
+#esystem .parameter .vm_value .checkbox + label:before {
+  font-size: 1.6em;
+  line-height: 19px;
+}
+#esystem .settingsGroup {
+  margin-bottom: 2 0.5em;
+}
+#esystem .settingsGroup .groupCaption {
+  padding: 1.5em 0;
+  font-size: 1.2em;
+  color: #4AC6F9;
+}
+#esystem .preloaderabs {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba(255, 255, 255, 0.8);
+}
+#esystem .preloaderabs .table > div {
+  vertical-align: middle;
+  text-align: center;
+}
+#esystem.loading .preloaderabs {
+  display: block;
+}
+#esystem .fcaption {
+  padding: 1em 0;
+  font-weight: 700;
+  font-size: 1em;
+  color: #ff4800;
+}
+#esystem .cCaption {
+  padding: 2em 0;
+}
+#esystem .cCaption span {
+  font-weight: 100;
+  font-size: 2em;
+}
+#esystem .dacaption {
+  padding: 1em 0;
+  text-align: center;
+}
+#esystem .dacaption span {
+  font-weight: 700;
+  font-size: 0.9em;
+}

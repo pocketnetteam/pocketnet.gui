@@ -5,6 +5,7 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
+var proxyInterface = require('./proxy/mainserver.js')
 
 const electronLocalshortcut = require('electron-localshortcut');
 
@@ -155,12 +156,16 @@ function createTray() {
 
     win.on('show', () => {
         if (!tray) return;
-        tray.setHighlightMode('always')
+        try {
+            tray.setHighlightMode('always')
+        } catch {}
     })
 
     win.on('hide', () => {
         if (!tray) return;
-        tray.setHighlightMode('never')
+        try {
+            tray.setHighlightMode('never')
+        } catch {}
     })
 }
 
@@ -273,7 +278,11 @@ function notification(nhtml) {
         movable: false,
         backgroundColor: '#020E1B',
         alwaysOnTop: true,
-        show: false
+        show: false,
+
+        webPreferences: {
+            nodeIntegration: true
+        }
     })
 
     nwin.loadFile('notifications.html', {
@@ -303,6 +312,10 @@ function createWindow() {
         webSecurity : false,
 
         icon: defaultIcon,
+
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     win.maximize();
@@ -336,7 +349,7 @@ function createWindow() {
         }
     });
 
-    win.webContents.session.webRequest.onHeadersReceived({}, (detail, callback) => {
+    win.webContents.session.webRequest.onHeadersReceived({urls:[]}, (detail, callback) => {
         const xFrameOriginKey = Object.keys(detail.responseHeaders).find(header => String(header).match(/^x-frame-options$/i));
         
         if (xFrameOriginKey) {
@@ -386,8 +399,8 @@ function createWindow() {
     })
 
 
-   
-
+    var pi = new proxyInterface(ipcMain, win.webContents)
+    pi.init()
     // Вызывается, когда окно будет закрыто.
     return win
 }

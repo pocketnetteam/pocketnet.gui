@@ -604,6 +604,20 @@ __map =  {
 			anonimus : true,
 		},
 
+
+		esystem : {
+			uri : "esystem",
+			href : "esystem",
+			add : {
+				el : 'content'
+			},
+			anonimus : true,
+
+			relations : [
+				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
+			],
+		},
+
 		connection : {
 			uri : "connection",
 			href : "connection",

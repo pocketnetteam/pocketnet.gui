@@ -1,0 +1,60 @@
+<% if(composed) { %>
+
+    <% _.each(composed.c, function(group){ %>
+
+<div class="settingsGroup">
+
+    <div class="mwork gk">
+        <div class="groupCaption"><%-group.name%></div>
+    </div>
+    <div class="mwork wh">
+        <div class="groupOptions">
+
+            <% _.each(group.options, function(parameter){ %>
+
+            <div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
+                <div class="parameter table <%-parameter.type%>">
+
+                    <div class="pName">
+                        <div class="pNameW">
+                            <%= parameter.name %><%
+                            var unit = deep(parameter, 'format.Unit');
+
+                            if(unit) { %>, <span class="unit"><%-unit%></span>
+
+                            <%	} %><% if(parameter.type == 'valuesmulti'){%>: <%} %>
+
+                            <% if(parameter.require){ %>
+
+                            <span class="require">*</span>
+
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="pInput">
+                        <%= parameter.input({
+                        init : true
+                        }) %>
+                    </div>
+
+                </div>
+            </div>
+
+            <% }) %>
+
+        </div>
+    </div>
+
+</div>
+
+    <% }) %>
+
+<% } else { %>
+
+<div class="empty">
+    There isn't connection with Electron proxy interface
+</div>
+
+<% } %>
+
