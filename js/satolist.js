@@ -159,7 +159,11 @@ Platform = function (app, listofnodes) {
 
 
     self.applications = {
+
+        ui: {
         windows: {
+
+                appname: "Pocketnet",
             text: {
                 name: "Windows",
                 download: 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
@@ -176,6 +180,7 @@ Platform = function (app, listofnodes) {
         },
 
         linux: {
+                appname: "Pocketnet",
             text: {
                 name: "Linux",
                 download: 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
@@ -190,6 +195,46 @@ Platform = function (app, listofnodes) {
                 page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
             }
         }
+        },
+
+        node: {
+            windows: {
+                appname: "Pocketnet Node",
+                text: {
+                    name: "Windows",
+                    download: 'Download Node',
+                    label: "Download Pocketnet Node for Windows"
+                },
+
+                icon: '<i class="fab fa-windows"></i>',
+
+                github: {
+                    name: "pocketnetcore_0.18.13_win_x64_setup.exe",
+                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                    page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                }
+            },
+
+            linux: {
+                appname: "Pocketnet Node",
+
+                text: {
+                    name: "Linux",
+                    download: 'Download Node',
+                    label: "Download Pocketnet Node for Linux"
+                },
+
+                icon: '<i class="fab fa-linux"></i>',
+
+                github: {
+                    name: "Pocketnet_linux_x64.AppImage",
+                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                    page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                }
+            }
+        }
+
+
     }
 
     self.currnetBlock = 0;
@@ -200,7 +245,8 @@ Platform = function (app, listofnodes) {
 
         if (!eobj) {
             return false;
-        } else {
+        }
+        else {
             var m = eobj.message;
 
             if (m) {
@@ -217,9 +263,7 @@ Platform = function (app, listofnodes) {
                 a(key, action, akey)
             }
 
-            return (eobj.text || function () {
-                return ''
-            })()
+            return (eobj.text || function () { return '' })()
         }
 
 
@@ -259,13 +303,15 @@ Platform = function (app, listofnodes) {
 
                                     class: 'one'
                                 })
-                            } else {
+                            }
+                            else {
                                 sitemessage(self.errors["network"].message())
                             }
 
                         })
 
-                    } else {
+                    }
+                    else {
                         if (!self.app.user.validate()) {
 
                             self.app.platform.sdk.ustate.me(function (_mestate) {
@@ -280,7 +326,8 @@ Platform = function (app, listofnodes) {
 
                                         if (res) {
                                             self.errors["1"].action()
-                                        } else {
+                                        }
+                                        else {
                                             dialog({
                                                 html: self.app.localization.e('noMoneyError'),
                                                 btn1text: self.app.localization.e('daccept'),
@@ -289,7 +336,8 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
                                     })
-                                } else {
+                                }
+                                else {
                                     topPreloader(100);
                                     sitemessage(self.errors["network"].message())
                                 }
@@ -298,7 +346,8 @@ Platform = function (app, listofnodes) {
 
                             })
 
-                        } else {
+                        }
+                        else {
                             topPreloader(100);
 
 
@@ -311,7 +360,8 @@ Platform = function (app, listofnodes) {
 
                                         class: 'one'
                                     })
-                                } else {
+                                }
+                                else {
                                     dialog({
                                         html: self.app.localization.e('waitConf'),
                                         btn1text: self.app.localization.e('daccept'),
@@ -645,7 +695,8 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
-                    } else {
+                    }
+                    else {
                         dialog({
                             html: self.app.localization.e('waitConf'),
                             btn1text: self.app.localization.e('daccept'),
@@ -740,7 +791,9 @@ Platform = function (app, listofnodes) {
             }
 
             meta.url = _url;
-        } else {
+        }
+
+        else {
 
         }
 
@@ -922,7 +975,9 @@ Platform = function (app, listofnodes) {
 
                             if (suffix) {
                                 s = convertX(this.x) + ' - <b>' + suffix + '</b><br/>';
-                            } else {
+                            }
+
+                            else {
                                 s = '<b>' + convertX(this.x) + '</b><br/>';
                             }
 
@@ -932,11 +987,11 @@ Platform = function (app, listofnodes) {
 
                             var points = _.clone(this.points) || [];
 
-                            /*_.each(series, function (s){
+                            /*_.each(series, function(s){
 
                                 if(s.name.indexOf("Navigator") > -1) return;
 
-                                var p = _.find(s.data || s, function (p){
+                                var p = _.find(s.data || s, function(p){
 
                                     if (p)
 
@@ -984,7 +1039,8 @@ Platform = function (app, listofnodes) {
                                     if (p.to_objectGl)
                                         objSuffix = p.to_objectGl.name
 
-                                } else {
+                                }
+                                else {
                                     if (p.to_object)
                                         objSuffix = '(' + p.to_object.Ticker + ')';
                                 }
@@ -1149,7 +1205,8 @@ Platform = function (app, listofnodes) {
                     /*    options.xAxis.title.style['font-weight'] = "700";
                         options.yAxis[0].title.style['font-weight'] = "700";
                         options.legend.itemStyle['font-weight'] = "700";*/
-                } else {
+                }
+                else {
                     options.plotOptions.pie.size = '85%';
                     options.legend.enabled = true;
                     options.chart.backgroundColor = "#fff";
@@ -1373,7 +1430,8 @@ Platform = function (app, listofnodes) {
 
                             if (i % Number(c.toFixed(0))) {
 
-                            } else {
+                            }
+                            else {
                                 newData.push(serie.data[i])
                             }
                         }
@@ -1405,7 +1463,8 @@ Platform = function (app, listofnodes) {
                 if (!options) {
                     if (clbk)
                         clbk(null);
-                } else {
+                }
+                else {
                     if (p.maxPointsCount) {
                         graph.rarefied(options.series, p.maxPointsCount)
                     }
@@ -1445,7 +1504,8 @@ Platform = function (app, listofnodes) {
                         try {
                             chart.img = canvas.toDataURL('image/jpeg');
 
-                        } catch (e) {
+                        }
+                        catch (e) {
 
                             var vgcanvas = document.createElement('canvas');
                             vgcanvas.width = width;
@@ -1496,7 +1556,8 @@ Platform = function (app, listofnodes) {
                     if (!options) {
                         if (clbk)
                             clbk(null);
-                    } else {
+                    }
+                    else {
                         if (p.maxPointsCount) {
                             graph.rarefied(options.series, p.maxPointsCount)
                         }
@@ -1716,7 +1777,8 @@ Platform = function (app, listofnodes) {
                 var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF()
 
                 keyPair = bitcoin.ECPair.fromWIF(d)
-            } else {
+            }
+            else {
 
                 try {
 
@@ -1724,13 +1786,15 @@ Platform = function (app, listofnodes) {
 
 
 
-                } catch (e) {
+                }
+                catch (e) {
 
                     console.error(e)
 
                     try {
                         keyPair = bitcoin.ECPair.fromWIF(m)
-                    } catch (e) {
+                    }
+                    catch (e) {
                         console.error(e)
                     }
                 }
@@ -1811,7 +1875,8 @@ Platform = function (app, listofnodes) {
             var getmode = function () {
                 if (w.width() > 1280) {
                     return 'full'
-                } else {
+                }
+                else {
                     return 'mini'
                 }
             }
@@ -1843,14 +1908,16 @@ Platform = function (app, listofnodes) {
                         if (p.top) {
                             up.css('top', p.top())
                         }
-                    } else {
+                    }
+                    else {
 
                     }
                 },
                 scroll: function () {
                     if (w.scrollTop() > (p.scrollTop || 250)) {
                         up.addClass('active')
-                    } else {
+                    }
+                    else {
                         up.removeClass('active')
                     }
                 },
@@ -2063,7 +2130,8 @@ Platform = function (app, listofnodes) {
 
                         if (!info) {
 
-                        } else {
+                        }
+                        else {
 
                         }
                     }
@@ -2078,7 +2146,8 @@ Platform = function (app, listofnodes) {
 
                     try {
                         r = bitcoin.address.fromBase58Check(v);
-                    } catch (e) {
+                    }
+                    catch (e) {
 
                     }
 
@@ -2485,7 +2554,8 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                            } else {
+                            }
+                            else {
 
                                 app.nav.api.load({
 
@@ -2557,9 +2627,7 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.registrations.save()
 
-                        _.each(this.clbks, function (c) {
-                            c(address)
-                        })
+                        _.each(this.clbks, function (c) { c(address) })
                     }
 
                 }
@@ -2572,9 +2640,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.registrations.storage[address] = value || true;
                 self.sdk.registrations.save()
 
-                _.each(this.clbks, function (c) {
-                    c(address)
-                })
+                _.each(this.clbks, function (c) { c(address) })
             },
 
             load: function () {
@@ -2585,7 +2651,8 @@ Platform = function (app, listofnodes) {
                 if (local) {
                     try {
                         storage = JSON.parse(local)
-                    } catch (e) {
+                    }
+                    catch (e) {
                         console.log("ERR", e)
                     }
                 }
@@ -2632,7 +2699,8 @@ Platform = function (app, listofnodes) {
 
                                         if (!objects || !objects.length) {
                                             p.success()
-                                        } else {
+                                        }
+                                        else {
                                             if (key == 'userInfo') {
                                                 objects = [objects[objects.length - 1]]
                                             }
@@ -2706,7 +2774,8 @@ Platform = function (app, listofnodes) {
 
                                                                     delete rs[key]
 
-                                                                } else {
+                                                                }
+                                                                else {
                                                                     rs[key] = _.filter(rs[key], function (t) {
                                                                         return t.txid != object.txid
                                                                     })
@@ -2714,7 +2783,8 @@ Platform = function (app, listofnodes) {
 
                                                                 self.sdk.relayTransactions.save()
 
-                                                            } else {
+                                                            }
+                                                            else {
 
                                                             }
 
@@ -2747,7 +2817,8 @@ Platform = function (app, listofnodes) {
 
                             })
 
-                        } else {
+                        }
+                        else {
                             if (clbk) clbk()
                         }
                     }
@@ -2759,7 +2830,7 @@ Platform = function (app, listofnodes) {
 
                 var a1 = self.sdk.relayTransactions.get()[key] || []
 
-                /*a1 = _.filter(a1, function (o){
+                /*a1 = _.filter(a1, function(o){
                     return !o.sending
                 })*/
 
@@ -2804,7 +2875,8 @@ Platform = function (app, listofnodes) {
                 if (local) {
                     try {
                         storage = JSON.parse(local)
-                    } catch (e) {
+                    }
+                    catch (e) {
                         console.log("ERR", e)
                     }
                 }
@@ -2853,13 +2925,9 @@ Platform = function (app, listofnodes) {
 
                 var pubkey = keyPair.publicKey;
 
-                var a = bitcoin.payments['p2wpkh']({
-                    pubkey: pubkey
-                })
+                var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
 
-                var p2sh = bitcoin.payments.p2sh({
-                    redeem: a
-                })
+                var p2sh = bitcoin.payments.p2sh({ redeem: a })
 
 
                 var d2 = bitcoin.bip32.fromPublicKey(self.app.user.key.value, chaincode).derivePath(p)
@@ -2909,7 +2977,8 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk()
                 }
@@ -2991,7 +3060,7 @@ Platform = function (app, listofnodes) {
                 return _img
             },
 
-            getVideosFromTG: function (cnt) {
+            getVideos: function (cnt) {
                 var h = $('<div>')
 
                 h.html(cnt)
@@ -3101,7 +3170,8 @@ Platform = function (app, listofnodes) {
                 if (local) {
                     try {
                         articles = JSON.parse(local)
-                    } catch (e) {
+                    }
+                    catch (e) {
                         console.log("ERR", e)
                     }
                 }
@@ -3166,17 +3236,15 @@ Platform = function (app, listofnodes) {
                 if (value && t.all[value]) {
                     _.each(t.all, function (c) {
 
-                        h.removeClass(c.class);
+                        h.removeClass(c.class)
 
                     })
 
-                    h.addClass(t.all[value].class);
+                    h.addClass(t.all[value].class)
 
-                    t.current = value;
+                    t.current = value
 
-                    t.save();
-
-
+                    t.save()
                 }
             }
         },
@@ -3485,7 +3553,8 @@ Platform = function (app, listofnodes) {
 
                                 if (m[i].value) {
                                     self.firebase.api.subscribe(i)
-                                } else {
+                                }
+                                else {
                                     self.firebase.api.unsubscribe(i)
                                 }
 
@@ -3525,7 +3594,6 @@ Platform = function (app, listofnodes) {
             },
 
             load: function () {
-                console.log('init init init')
 
                 var values = {};
 
@@ -3534,7 +3602,8 @@ Platform = function (app, listofnodes) {
                 if (local) {
                     try {
                         values = JSON.parse(local)
-                    } catch (e) {
+                    }
+                    catch (e) {
 
                     }
                 }
@@ -3589,7 +3658,8 @@ Platform = function (app, listofnodes) {
                             clbk()
                         }
                     });
-                } else {
+                }
+                else {
                     if (clbk) {
                         clbk()
                     }
@@ -3599,7 +3669,8 @@ Platform = function (app, listofnodes) {
 
         user: {
 
-            storage: {},
+            storage: {
+            },
 
             survey: function () {
 
@@ -3637,7 +3708,8 @@ Platform = function (app, listofnodes) {
 
                         if (!_.isEmpty(info)) {
                             self.app.settings.set(a, 'last_user', JSON.stringify(info))
-                        } else {
+                        }
+                        else {
                             info = JSON.parse(self.app.settings.get(a, 'last_user') || "{}")
 
                             if (!_.isEmpty(info)) {
@@ -3713,7 +3785,8 @@ Platform = function (app, listofnodes) {
 
                                 if (clbk)
                                     clbk(storage.me, temp)
-                            } else {
+                            }
+                            else {
                                 self.sdk.users.get(a, function () {
 
                                     storage.me = self.sdk.users.storage[a] || {};
@@ -3724,7 +3797,9 @@ Platform = function (app, listofnodes) {
                                 })
                             }
 
-                        } else {
+                        }
+
+                        else {
                             if (clbk)
                                 clbk(storage.me)
                         }
@@ -3734,7 +3809,8 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk(storage.me)
                 }
@@ -3910,7 +3986,9 @@ Platform = function (app, listofnodes) {
                         }
 
                         return lobj
-                    } else {
+                    }
+
+                    else {
                         return {
                             level: 999,
                             max: true
@@ -3928,7 +4006,9 @@ Platform = function (app, listofnodes) {
                 if (s.p) {
                     if (clbk)
                         clbk(s.p)
-                } else {
+                }
+
+                else {
                     self.app.ajax.apim({
                         action: 'processes',
                         data: {},
@@ -3939,7 +4019,8 @@ Platform = function (app, listofnodes) {
                             if (!inited) {
                                 if (clbk)
                                     clbk(null)
-                            } else {
+                            }
+                            else {
                                 var fill = deep(d, 'data.info.fill');
 
                                 s.p = fill
@@ -4008,7 +4089,8 @@ Platform = function (app, listofnodes) {
                 if (!info) {
                     result = false;
                     error = 'info';
-                } else {
+                }
+                else {
 
                     if (!info.trial) {
                         if (parameter == 'postunspent' && info.post_unspent <= 0) {
@@ -4018,7 +4100,8 @@ Platform = function (app, listofnodes) {
                         if (parameter == 'scoreunspent' && info.score_unspent <= 0) {
                             result = false;
                         }
-                    } else {
+                    }
+                    else {
                         result = false;
                         error = 'trial';
                     }
@@ -4105,7 +4188,8 @@ Platform = function (app, listofnodes) {
 
                         if (!_.isEmpty(info)) {
                             self.app.settings.set(a, 'last_ustate', JSON.stringify(info))
-                        } else {
+                        }
+                        else {
                             info = JSON.parse(self.app.settings.get(a, 'last_ustate') || "{}")
 
                             if (!_.isEmpty(info)) {
@@ -4142,7 +4226,8 @@ Platform = function (app, listofnodes) {
                                 clbk(s[address])
 
                         }, update)
-                    } else {
+                    }
+                    else {
                         if (clbk)
                             clbk({})
                     }
@@ -4195,7 +4280,8 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk()
                 }
@@ -4288,7 +4374,8 @@ Platform = function (app, listofnodes) {
                             alias._import(attr.exported)
 
                             imp[i] = alias
-                        } else {
+                        }
+                        else {
                             imp[i] = attr
                         }
 
@@ -4323,7 +4410,8 @@ Platform = function (app, listofnodes) {
                                 exported: attr.export(),
                                 type: attr.type
                             }
-                        } else {
+                        }
+                        else {
                             l[i] = attr
                         }
 
@@ -4440,7 +4528,8 @@ Platform = function (app, listofnodes) {
                                 p.success()
 
                             }, true)
-                        } else {
+                        }
+                        else {
                             p.success()
                         }
 
@@ -4490,17 +4579,15 @@ Platform = function (app, listofnodes) {
 
                 if (!n.inited && !n.loading) {
                     n.init()
-                } else {
+                }
+                else {
                     self.app.ajax.rpc({
                         method: 'getmissedinfo',
                         parameters: [self.sdk.address.pnet().address, n.storage.block],
                         success: function (d) {
 
 
-                            d || (d = [{
-                                block: blockps,
-                                cntposts: 0
-                            }])
+                            d || (d = [{ block: blockps, cntposts: 0 }])
 
                             var notifications = (d || []).slice(1)
 
@@ -4656,7 +4743,8 @@ Platform = function (app, listofnodes) {
                                 if (c.scoreCnt) c.score = Number(c.scoreSum) / Number(c.scoreCnt)
 
                                 list.push(c)
-                            } catch (e) {
+                            }
+                            catch (e) {
 
                             }
 
@@ -4748,7 +4836,6 @@ Platform = function (app, listofnodes) {
 
                 console.log("PREPAREUSER")
 
-                console.log('address', a, self.sdk.address.pnet().address)
 
                 if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
                     console.log('init telegram')
@@ -4767,7 +4854,8 @@ Platform = function (app, listofnodes) {
                     u._import(_.toArray(temp['userInfo'])[0])
                     u.regdate.setTime(self.currentTime() * 1000);
 
-                } else {
+                }
+                else {
 
                     if (state && a == self.sdk.address.pnet().address && relay[a] && relay[a]['userInfo'] && relay[a]['userInfo'].length) {
 
@@ -4777,7 +4865,8 @@ Platform = function (app, listofnodes) {
                         u.regdate.setTime(self.currentTime() * 1000);
                         u.relay = true
 
-                    } else {
+                    }
+                    else {
                         if (!data) return
 
                         u._import(data)
@@ -4801,7 +4890,9 @@ Platform = function (app, listofnodes) {
                 if ((!address || s[address]) && !reload) {
                     if (clbk)
                         clbk()
-                } else {
+                }
+
+                else {
 
                     if (l[address]) {
                         retry(function () {
@@ -4820,9 +4911,7 @@ Platform = function (app, listofnodes) {
 
                     l[address] = true;
 
-                    var params = [
-                        [address]
-                    ];
+                    var params = [[address]];
 
                     if (light) {
                         params.push('1')
@@ -4933,7 +5022,8 @@ Platform = function (app, listofnodes) {
                             }
                         })
                     })
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk()
                 }
@@ -4955,7 +5045,8 @@ Platform = function (app, listofnodes) {
                         if (!r) {
                             if (clbk)
                                 clbk(null)
-                        } else {
+                        }
+                        else {
 
                             /*if (!self.sdk.captcha.done && !_Node){
                                 if (clbk)
@@ -4989,7 +5080,8 @@ Platform = function (app, listofnodes) {
 
                         }
                     })
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk(null)
                 }
@@ -5004,7 +5096,8 @@ Platform = function (app, listofnodes) {
                     if (!r) {
                         if (clbk)
                             clbk('nofree')
-                    } else {
+                    }
+                    else {
                         var feerate = 0.000001;
 
                         amount || (amount = 0.00002);
@@ -5052,7 +5145,9 @@ Platform = function (app, listofnodes) {
                             if (err) {
                                 if (clbk)
                                     clbk(err)
-                            } else {
+                            }
+
+                            else {
                                 var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
                                 var totalFees = Math.min(tx.virtualSize() * feerate, 0.000006);
 
@@ -5066,7 +5161,8 @@ Platform = function (app, listofnodes) {
 
                                         if (clbk)
                                             clbk(err)
-                                    } else {
+                                    }
+                                    else {
                                         var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
 
                                         self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
@@ -5076,7 +5172,9 @@ Platform = function (app, listofnodes) {
 
                                                 if (clbk)
                                                     clbk(err)
-                                            } else {
+                                            }
+
+                                            else {
                                                 var ids = _.map(inputs, function (i) {
                                                     return {
                                                         txid: i.txId,
@@ -5109,7 +5207,9 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk(false)
-                    } else {
+                    }
+
+                    else {
                         self.sdk.address.registration(address, function (r) {
 
                             if (!r) {
@@ -5119,14 +5219,16 @@ Platform = function (app, listofnodes) {
                                     if (a > 0) {
                                         if (clbk)
                                             clbk(false)
-                                    } else {
+                                    }
+                                    else {
                                         if (clbk)
                                             clbk(true)
                                     }
 
                                 }, address, true)
 
-                            } else {
+                            }
+                            else {
                                 if (clbk)
                                     clbk(false)
                             }
@@ -5144,7 +5246,8 @@ Platform = function (app, listofnodes) {
                     if (!r) {
                         if (clbk)
                             clbk('nofree')
-                    } else {
+                    }
+                    else {
                         var feerate = 0.000001;
 
                         amount || (amount = 0.005);
@@ -5165,7 +5268,9 @@ Platform = function (app, listofnodes) {
                             if (err) {
                                 if (clbk)
                                     clbk(err)
-                            } else {
+                            }
+
+                            else {
                                 var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
                                 var totalFees = Math.min(tx.virtualSize() * feerate, 0.0005);
 
@@ -5179,7 +5284,8 @@ Platform = function (app, listofnodes) {
 
                                         if (clbk)
                                             clbk(err)
-                                    } else {
+                                    }
+                                    else {
                                         var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
 
                                         self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
@@ -5189,7 +5295,9 @@ Platform = function (app, listofnodes) {
 
                                                 if (clbk)
                                                     clbk(err)
-                                            } else {
+                                            }
+
+                                            else {
                                                 var ids = _.map(inputs, function (i) {
                                                     return {
                                                         txid: i.txId,
@@ -5222,7 +5330,8 @@ Platform = function (app, listofnodes) {
                         if (!r) {
                             if (clbk)
                                 clbk(null)
-                        } else {
+                        }
+                        else {
                             self.app.ajax.apim({
                                 action: 'freeRef',
                                 data: {
@@ -5241,7 +5350,8 @@ Platform = function (app, listofnodes) {
                             })
                         }
                     })
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk(null)
                 }
@@ -5267,7 +5377,9 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk(false)
-                    } else {
+                    }
+
+                    else {
 
                         if (clbk)
                             clbk(true)
@@ -5287,14 +5399,17 @@ Platform = function (app, listofnodes) {
 
                 try {
                     bitcoin.address.fromBase58Check(name)
-                } catch (e) {
+                }
+
+                catch (e) {
                     valid = false;
                 }
 
                 if (valid) {
                     if (clbk)
                         clbk(name)
-                } else {
+                }
+                else {
 
                     var lf = _.find(self.sdk.usersl.storage, function (s) {
                         if (s.name == name) return true
@@ -5304,7 +5419,8 @@ Platform = function (app, listofnodes) {
                         if (clbk)
                             clbk(lf.address)
 
-                    } else {
+                    }
+                    else {
                         self.app.ajax.rpc({
                             method: 'getuseraddress',
                             parameters: [name],
@@ -5381,7 +5497,8 @@ Platform = function (app, listofnodes) {
 
                 if (!name) {
                     return str
-                } else {
+                }
+                else {
                     var cname = h(name, p)
 
                     return str.replace(sreg, cname)
@@ -5403,7 +5520,8 @@ Platform = function (app, listofnodes) {
 
                 if (self.sdk.captcha.done) {
                     localStorage['capcha'] = self.sdk.captcha.done
-                } else {
+                }
+                else {
                     delete localStorage['capcha']
                 }
 
@@ -5436,12 +5554,14 @@ Platform = function (app, listofnodes) {
                                     if (clbk)
                                         clbk(d.data)
 
-                                } else {
+                                }
+                                else {
                                     if (clbk)
                                         lbk(null, err)
                                 }
                             })
-                        } else {
+                        }
+                        else {
                             if (clbk)
                                 clbk(d.data)
                         }
@@ -5633,7 +5753,9 @@ Platform = function (app, listofnodes) {
                                     info: storage[p.currency][p.address]
 
                                 }, d.Address)
-                        } else {
+                        }
+
+                        else {
                             if (clbk)
                                 clbk('error', null)
                         }
@@ -5690,7 +5812,8 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                 clbk(null, d.Deal)
-                        } else {
+                        }
+                        else {
                             if (clbk)
                                 clbk('empty', null)
                         }
@@ -5719,7 +5842,8 @@ Platform = function (app, listofnodes) {
                         if (d.Deal) {
                             if (clbk)
                                 clbk(null, d.Deal)
-                        } else {
+                        }
+                        else {
                             if (clbk)
                                 clbk('empty', null)
                         }
@@ -5891,7 +6015,8 @@ Platform = function (app, listofnodes) {
 
                         if (amount == 0) {
                             sline.addClass('bad')
-                        } else {
+                        }
+                        else {
                             sline.removeClass('bad')
                         }
 
@@ -5900,7 +6025,8 @@ Platform = function (app, listofnodes) {
                             width: (100 * amount / total) + "%",
                         }, 140)
 
-                    } else {
+                    }
+                    else {
                         el.find('.spendLine').remove()
                     }
 
@@ -5915,7 +6041,9 @@ Platform = function (app, listofnodes) {
                     if (err) {
                         if (clbk)
                             clbk(err)
-                    } else {
+                    }
+
+                    else {
                         var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
                         var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
 
@@ -5924,7 +6052,8 @@ Platform = function (app, listofnodes) {
                             if (err) {
                                 if (clbk)
                                     clbk(err)
-                            } else {
+                            }
+                            else {
                                 var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
 
                                 self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
@@ -5932,7 +6061,9 @@ Platform = function (app, listofnodes) {
                                     if (err) {
                                         if (clbk)
                                             clbk(err)
-                                    } else {
+                                    }
+
+                                    else {
                                         var ids = _.map(inputs, function (i) {
                                             return {
                                                 txid: i.txId,
@@ -5974,9 +6105,7 @@ Platform = function (app, listofnodes) {
 
                     var opreturnData = [Buffer.from(embdedtext, 'utf8')];
 
-                    var embed = bitcoin.payments.embed({
-                        data: opreturnData
-                    });
+                    var embed = bitcoin.payments.embed({ data: opreturnData });
 
                     outputs.push({
                         address: embed.output,
@@ -6001,7 +6130,8 @@ Platform = function (app, listofnodes) {
                 if (!keyPair) {
                     if (clbk)
                         clbk('privatekey')
-                } else {
+                }
+                else {
                     var address = self.sdk.address.pnetsimple(keyPair.publicKey, 'p2pkh').address;
 
                     this.embed(outputs, embdedtext)
@@ -6011,7 +6141,9 @@ Platform = function (app, listofnodes) {
                         if (err) {
                             if (clbk)
                                 clbk(err)
-                        } else {
+                        }
+
+                        else {
                             if (clbk)
                                 clbk(null, d)
                         }
@@ -6031,7 +6163,8 @@ Platform = function (app, listofnodes) {
                 if (!keyPair) {
                     if (clbk)
                         clbk('privatekey')
-                } else {
+                }
+                else {
 
                     var address = self.sdk.address.pnetsimple(keyPair.publicKey, 'p2pkh').address;
 
@@ -6042,7 +6175,9 @@ Platform = function (app, listofnodes) {
                         if (err) {
                             if (clbk)
                                 clbk(err)
-                        } else {
+                        }
+
+                        else {
                             if (clbk)
                                 clbk(null, d)
                         }
@@ -6152,7 +6287,9 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                } else {
+                }
+
+                else {
                     var address = self.sdk.addresses.addWalletAddress()
 
                     if (clbk)
@@ -6160,7 +6297,6 @@ Platform = function (app, listofnodes) {
                 }
             }
         },
-
 
 
         address: {
@@ -6176,9 +6312,7 @@ Platform = function (app, listofnodes) {
                 var a;
 
                 if (type == 'p2pkh' || type == 'p2wpkh') {
-                    a = bitcoin.payments[type]({
-                        pubkey: pubkey
-                    })
+                    a = bitcoin.payments[type]({ pubkey: pubkey })
 
                     return a;
                 }
@@ -6211,9 +6345,7 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (type == 'p2pkh' || type == 'p2wpkh') {
-                    a = bitcoin.payments[type]({
-                        pubkey: pubkey
-                    })
+                    a = bitcoin.payments[type]({ pubkey: pubkey })
 
                     this.storage[type] = a;
 
@@ -6222,13 +6354,9 @@ Platform = function (app, listofnodes) {
 
                 if (type == 'p2sh') {
 
-                    a = bitcoin.payments['p2wpkh']({
-                        pubkey: pubkey
-                    })
+                    a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
 
-                    var p2sh = bitcoin.payments.p2sh({
-                        redeem: a
-                    })
+                    var p2sh = bitcoin.payments.p2sh({ redeem: a })
 
                     this.storage[type] = p2sh;
 
@@ -6246,13 +6374,10 @@ Platform = function (app, listofnodes) {
 
                 var pubkey = keyPair.publicKey;
 
-                var a = bitcoin.payments['p2wpkh']({
-                    pubkey: pubkey
-                })
+                var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
 
-                var p2sh = bitcoin.payments.p2sh({
-                    redeem: a
-                })
+
+                var p2sh = bitcoin.payments.p2sh({ redeem: a })
 
                 return p2sh;
 
@@ -6279,9 +6404,7 @@ Platform = function (app, listofnodes) {
 
                 self.app.ajax.rpc({
                     method: 'getaddressregistration',
-                    parameters: [
-                        [address]
-                    ],
+                    parameters: [[address]],
                     success: function (d) {
 
                         var r = deep(d, '0.date') || 0;
@@ -6320,7 +6443,9 @@ Platform = function (app, listofnodes) {
                 if (s[url]) {
                     if (clbk)
                         clbk(s[url])
-                } else {
+                }
+
+                else {
 
                     s[url] = {};
 
@@ -6361,15 +6486,7 @@ Platform = function (app, listofnodes) {
                 all: ['love', 'followback', 'instagramers', 'socialsteeze', 'tweegram', 'photooftheday', '20likes', 'amazing', 'smile', 'follow4follow', 'like4like', 'look', 'instalike', 'igers', 'picoftheday', 'food', 'instadaily', 'instafollow', 'followme', 'girl', 'instagood', 'bestoftheday', 'instacool', 'carryme', 'follow', 'colorful', 'style', 'swag', 'fun', 'instagramers', 'model', 'socialsteeze', 'food', 'smile', 'pretty', 'followme', 'nature', 'lol', 'dog', 'hair', 'sunset', 'swag', 'throwbackthursday', 'instagood', 'beach', 'friends', 'hot', 'funny', 'blue', 'life', 'art', 'photo', 'cool', 'carryme', 'bestoftheday', 'clouds', 'amazing', 'socialsteeze', 'fitness', 'followme', 'all_shots', 'textgram', 'family', 'instago', 'igaddict', 'awesome', 'girls', 'instagood', 'my', 'bored', 'baby', 'music', 'red', 'green', 'water', 'bestoftheday', 'black', 'party', 'white', 'yum', 'flower', 'carryme', 'night', 'instalove', 'photo', 'photos', 'pic', 'pics', 'socialsteeze', 'picture', 'pictures', 'snapshot', 'art', 'beautiful', 'instagood', 'picoftheday', 'photooftheday', 'color', 'all_shots', 'exposure', 'composition', 'focus', 'capture', 'moment', 'hdr', 'hdrspotters', 'hdrstyles_gf', 'hdri', 'hdroftheday', 'hdriphonegraphy', 'hdr_lovers', 'awesome_hdr']
             },
 
-            ex: {
-                'news': true,
-                'images': true,
-                'videos': true,
-                'politics': true,
-                'funny': true,
-                'art': true,
-                'photo': true
-            },
+            ex: { 'news': true, 'images': true, 'videos': true, 'politics': true, 'funny': true, 'art': true, 'photo': true },
 
             search: function (str, clbk) {
 
@@ -6458,7 +6575,8 @@ Platform = function (app, listofnodes) {
                         clbk(s.cloud)
 
                     }
-                } else {
+                }
+                else {
 
                     this.get('', 50, (self.currentBlock - 23700), function (d, error) {
 
@@ -6502,7 +6620,9 @@ Platform = function (app, listofnodes) {
 
                 if (!s[type][address][fixedBlock]) {
                     s[type][address][fixedBlock] = result;
-                } else {
+                }
+
+                else {
                     for (var i = 0; i < count; i++) {
 
                         if (result.data[i])
@@ -6567,7 +6687,8 @@ Platform = function (app, listofnodes) {
                                     _.each(d, function (d, k) {
                                         s.add(fixedBlock, k, d, start, count, address)
                                     })
-                                } else {
+                                }
+                                else {
                                     d = d[type] || {
                                         data: []
                                     }
@@ -6586,7 +6707,8 @@ Platform = function (app, listofnodes) {
                             }
                         }
                     })
-                } else {
+                }
+                else {
                     if (clbk) {
                         clbk({})
                     }
@@ -6633,7 +6755,8 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk()
                 }
@@ -6784,7 +6907,8 @@ Platform = function (app, listofnodes) {
                                     }
                                 }
                             })
-                        } else {
+                        }
+                        else {
                             _.each(ids, function (id) {
                                 l.storage[id] = '0'
                             })
@@ -6798,7 +6922,8 @@ Platform = function (app, listofnodes) {
                     })
 
 
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk()
                 }
@@ -6808,7 +6933,8 @@ Platform = function (app, listofnodes) {
         comments: {
             storage: {},
 
-            sendclbks: {},
+            sendclbks: {
+            },
 
             upvoteClbks: {
 
@@ -6975,7 +7101,8 @@ Platform = function (app, listofnodes) {
                 if (!ids.length) {
                     if (clbk)
                         clbk('tmp')
-                } else {
+                }
+                else {
                     self.app.ajax.rpc({
                         method: 'getcomments',
                         parameters: ['', '', address, ids],
@@ -7172,7 +7299,8 @@ Platform = function (app, listofnodes) {
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
                                 c(error)
                             })
-                        } else {
+                        }
+                        else {
 
                             if (comment) {
 
@@ -7223,7 +7351,9 @@ Platform = function (app, listofnodes) {
                                 clbk(error, null)
                             }
 
-                        } else {
+                        }
+
+                        else {
 
                             s[txid] || (s[txid] = {})
 
@@ -7243,7 +7373,7 @@ Platform = function (app, listofnodes) {
             },
 
             send: function (txid, comment, pid, aid, clbk, editid, fid) {
-                console.log('into send', txid, comment, pid, aid, clbk, editid, fid);
+
                 var s = self.sdk.comments.storage;
 
                 comment.answerid = aid;
@@ -7269,7 +7399,8 @@ Platform = function (app, listofnodes) {
                                 _.each(self.sdk.comments.sendclbks, function (c) {
                                     c(error)
                                 })
-                            } else {
+                            }
+                            else {
 
                                 var alias = new pComment();
                                 alias.import(_alias)
@@ -7296,7 +7427,8 @@ Platform = function (app, listofnodes) {
 
                                 if (!editid || i == -1) {
                                     s[txid][pid || '0'].push(alias)
-                                } else {
+                                }
+                                else {
 
                                     alias.children = s[txid][pid || '0'][i].children
                                     alias.id = editid
@@ -7330,7 +7462,8 @@ Platform = function (app, listofnodes) {
         comments2: {
             storage: {},
 
-            sendclbks: {},
+            sendclbks: {
+            },
 
             find: function (txid, id, pid) {
                 var s = self.sdk.comments.storage;
@@ -7406,7 +7539,9 @@ Platform = function (app, listofnodes) {
                         //console.log(comment)
                         //console.log(str, signature, pubkey)
                     }
-                } catch (e) {
+                }
+
+                catch (e) {
 
                 }
 
@@ -7461,7 +7596,8 @@ Platform = function (app, listofnodes) {
 
                         msg = JSON.parse(data.msg)
 
-                    } catch (e) {
+                    }
+                    catch (e) {
                         msg = {
                             m: msg
                         }
@@ -7607,7 +7743,8 @@ Platform = function (app, listofnodes) {
 
                         if (!editid || i == -1) {
                             s[txid][pid || '0'].push(alias)
-                        } else {
+                        }
+                        else {
 
                             alias.children = s[txid][pid || '0'][i].children
 
@@ -7664,7 +7801,8 @@ Platform = function (app, listofnodes) {
 
                             if (!a) {
                                 p.success()
-                            } else {
+                            }
+                            else {
                                 a(p.success)
                             }
 
@@ -7749,7 +7887,8 @@ Platform = function (app, listofnodes) {
                                 clbk(self.sdk.node.loading[cashe])
 
                         })
-                    } else {
+                    }
+                    else {
                         if (cashe)
                             self.sdk.node.loading[cashe] = true;
 
@@ -7821,7 +7960,6 @@ Platform = function (app, listofnodes) {
                                 clbk()
                             }
                         }
-
                     })
                 },
 
@@ -7847,7 +7985,8 @@ Platform = function (app, listofnodes) {
                             if (clbk) {
                                 clbk()
                             }
-                        } else {
+                        }
+                        else {
                             self.sdk.node.account.import(email, address, clbk)
                         }
                     })
@@ -8059,7 +8198,9 @@ Platform = function (app, listofnodes) {
                     if (!s.ids[key].length) {
                         begin || (begin = txids[0])
 
-                    } else {
+                    }
+
+                    else {
 
                         if (!begin) {
                             var l = s.ids[key][s.ids[key].length - 1]
@@ -8139,7 +8280,8 @@ Platform = function (app, listofnodes) {
 
                             if (!storage.trx[id]) {
                                 return true;
-                            } else {
+                            }
+                            else {
                                 loaded.push(storage.trx[id])
                             }
                         })
@@ -8150,7 +8292,8 @@ Platform = function (app, listofnodes) {
                         if (!loading[id]) {
 
                             return true
-                        } else {
+                        }
+                        else {
                             anotherloading.push(id)
                         }
 
@@ -8244,7 +8387,8 @@ Platform = function (app, listofnodes) {
                             })
                         })
 
-                    } else {
+                    }
+                    else {
                         waianother(function () {
                             if (clbk)
                                 clbk(loaded, null, {
@@ -8372,7 +8516,8 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(storage[key], null, p)
 
-                        } else {
+                        }
+                        else {
                             var parameters = [p.count, '259200'];
 
                             if (p.address) parameters.push("" /*p.address*/)
@@ -8385,7 +8530,9 @@ Platform = function (app, listofnodes) {
 
                                     if (clbk)
                                         clbk(storage[key], error, p)
-                                } else {
+                                }
+
+                                else {
                                     if (clbk)
                                         clbk(shares, error, p)
                                 }
@@ -8397,7 +8544,6 @@ Platform = function (app, listofnodes) {
                 },
 
                 common: function (p, clbk, cache) {
-
 
                     self.app.user.isState(function (state) {
 
@@ -8443,7 +8589,8 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(storage[key], null, p)
 
-                        } else {
+                        }
+                        else {
 
                             storage[key] || (storage[key] = [])
 
@@ -8456,7 +8603,8 @@ Platform = function (app, listofnodes) {
                                         var st = storage[key][storage[key].length - 1]
 
                                         p.txid = st.txid
-                                    } else {
+                                    }
+                                    else {
                                         var st = storage[key][0]
 
                                         p.txid = st.txid
@@ -8495,7 +8643,9 @@ Platform = function (app, listofnodes) {
                                                     replaceEqual(shares, {
                                                         txid: ps.txidEdit
                                                     }, s)
-                                                } else {
+                                                }
+
+                                                else {
                                                     shares.unshift(s)
                                                 }
 
@@ -8514,7 +8664,8 @@ Platform = function (app, listofnodes) {
 
                                         if (p.count > 0) {
                                             storage[key].push(s)
-                                        } else {
+                                        }
+                                        else {
                                             storage[key].unshift(s)
                                         }
 
@@ -8524,7 +8675,9 @@ Platform = function (app, listofnodes) {
 
                                     if (clbk)
                                         clbk(shares, error, p)
-                                } else {
+                                }
+
+                                else {
                                     if (clbk)
                                         clbk(shares, error, p)
                                 }
@@ -8584,13 +8737,17 @@ Platform = function (app, listofnodes) {
                             app.platform.sdk.wallet.sendmany('', outputs, function (err, r) {
                                 if (err) {
                                     console.log("ERROR, SEND TO KRAN", err)
-                                } else {
+                                }
+
+                                else {
                                     if (clbk)
                                         clbk()
                                 }
                             })
 
-                        } else {
+                        }
+
+                        else {
                             console.log("ERROR, DUST")
                         }
 
@@ -8625,7 +8782,8 @@ Platform = function (app, listofnodes) {
                                 if (type == bitcoin.opcodes.OP_WINNER_COMMENT) {
                                     type = 'comment'
                                 }
-                            } catch (e) {
+                            }
+                            catch (e) {
 
                             }
                         }
@@ -8652,7 +8810,8 @@ Platform = function (app, listofnodes) {
                             }
 
 
-                        } catch (e) {
+                        }
+                        catch (e) {
 
                         }
                     })
@@ -8838,7 +8997,8 @@ Platform = function (app, listofnodes) {
 
                     if (a) {
                         self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp') || "{}")
-                    } else {
+                    }
+                    else {
                         self.sdk.node.transactions.temp = {};
                     }
 
@@ -8886,7 +9046,9 @@ Platform = function (app, listofnodes) {
                                 delete ts[txid]
 
                                 finded = _finded
-                            } else {
+                            }
+
+                            else {
                                 if (_finded.outputs[vout]) {
                                     _finded.outputs[vout].deleted = true;
                                 }
@@ -8992,7 +9154,8 @@ Platform = function (app, listofnodes) {
                         })
 
 
-                    } else {
+                    }
+                    else {
                         if (clbk) {
                             clbk(null)
                         }
@@ -9214,7 +9377,8 @@ Platform = function (app, listofnodes) {
                         if (_.isArray(address)) {
                             this.balanceAr(clbk, address, update, canSpend)
 
-                        } else {
+                        }
+                        else {
                             this.unspent(function (unspent, e) {
 
                                 if (canSpend) {
@@ -9233,6 +9397,8 @@ Platform = function (app, listofnodes) {
 
 
                     },
+
+
 
                     _unspent: function (clbk) {
 
@@ -9297,7 +9463,8 @@ Platform = function (app, listofnodes) {
                                     a[address] = s.unspent[address]
 
                                     return false;
-                                } else {
+                                }
+                                else {
                                     s.unspentLoading[address] = true;
 
                                     return true;
@@ -9307,7 +9474,9 @@ Platform = function (app, listofnodes) {
                             if (!addresses.length) {
                                 if (clbk)
                                     clbk(a)
-                            } else {
+                            }
+
+                            else {
                                 self.app.ajax.rpc({
                                     method: 'txunspent',
                                     parameters: [addresses, 1, 9999999],
@@ -9401,7 +9570,8 @@ Platform = function (app, listofnodes) {
 
                             }, 10)
 
-                        } else {
+                        }
+                        else {
                             loadingAddressesClbk()
                         }
 
@@ -9451,14 +9621,13 @@ Platform = function (app, listofnodes) {
                         if (s.unspent[address] && !update) {
                             if (clbk)
                                 clbk(s.unspent[address])
-                        } else {
+                        }
+                        else {
                             s.unspentLoading[address] = true;
 
                             self.app.ajax.rpc({
                                 method: 'txunspent',
-                                parameters: [
-                                    [address], 1, 9999999
-                                ],
+                                parameters: [[address], 1, 9999999],
                                 success: function (d) {
 
                                     if (!s.unspent)
@@ -9516,7 +9685,9 @@ Platform = function (app, listofnodes) {
                         if (self.sdk.node.transactions.storage[id]) {
                             if (clbk)
                                 clbk(self.sdk.node.transactions.storage[id])
-                        } else {
+                        }
+
+                        else {
                             self.sdk.node.transactions.loading[id] = true;
 
                             self.app.ajax.rpc({
@@ -9569,6 +9740,8 @@ Platform = function (app, listofnodes) {
 
                         }
 
+
+
                         self.sdk.node.transactions.get.unspent(function (unspent) {
 
                             unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
@@ -9616,7 +9789,6 @@ Platform = function (app, listofnodes) {
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, function (a, er, data) {
 
-
                                 if (!a) {
                                     if ((er == -26 || er == -25 || er == 16) && !p.update) {
 
@@ -9659,6 +9831,9 @@ Platform = function (app, listofnodes) {
                         var k = 100000000;
 
 
+                        console.log("WALLET SEND")
+
+
                         _.each(inputs, function (i) {
 
                             /*txb.addInput(i.txid, i.vout)
@@ -9666,18 +9841,28 @@ Platform = function (app, listofnodes) {
 
                             return*/
 
-                            if (i.address.indexOf("P" == 0)) {
+                            if (i.address.indexOf("P") == 0) {
+
                                 txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
-                            } else {
+                            }
+
+                            else {
 
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 
                                 if (index > -1) {
 
                                     var address = self.sdk.addresses.storage.addressesobj[index];
+                                    /*console.log(address)
 
-                                    txb.addInput(i.txid, i.vout /*, null, address.output*/)
-                                } else {
+                                    console.log("ADDINPUT1", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('001442b207c67cd29bd4ae72e6440690b5db2264c013', 'hex'))))
+                                    console.log("ADDINPUT2", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('0014c05e4b43f78296df7e7a0f5d5329cb26fd4eff30', 'hex'))))*/
+
+                                    txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
+                                }
+
+                                else {
+                                    console.log("RERER")
                                     return
                                 }
 
@@ -9699,7 +9884,9 @@ Platform = function (app, listofnodes) {
 
                                 txb.sign(inputindex, keyPair);
 
-                            } else {
+                            }
+
+                            else {
 
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 
@@ -9709,17 +9896,30 @@ Platform = function (app, listofnodes) {
 
                                     var dumped = self.sdk.address.dumpKeys(index)
 
+                                    var pubkey = dumped.publicKey;
+
+                                    var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+
+                                    var p2sh_ = bitcoin.payments.p2sh({ redeem: a })
+
+                                    console.log('p2sh', p2sh, p2sh_, a)
+
                                     txb.sign(inputindex, dumped, p2sh.redeem.output, null, Number(Number(i.amount * k).toFixed(0)));
 
 
-                                } else {
+                                }
+
+                                else {
                                     return
                                 }
 
                             }
                         })
 
+
                         var tx = txb.build()
+
+                        //console.log(tx.toHex(), txb)
 
                         return tx;
 
@@ -9775,7 +9975,9 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(null, error);
 
-                        } else {
+                        }
+
+                        else {
                             var keyPair = p.keys || self.app.user.keys()
 
                             //var p2pkh = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey});
@@ -9816,9 +10018,7 @@ Platform = function (app, listofnodes) {
                                 opreturnData.push(Buffer.from(obj.opreturn()))
                             }
 
-                            var embed = bitcoin.payments.embed({
-                                data: opreturnData
-                            });
+                            var embed = bitcoin.payments.embed({ data: opreturnData });
                             var i = 0;
 
                             txb.addOutput(embed.output, 0);
@@ -9878,6 +10078,7 @@ Platform = function (app, listofnodes) {
                                 })
 
 
+
                                 var tx = txb.build()
 
                                 var hex = tx.toHex();
@@ -9891,7 +10092,8 @@ Platform = function (app, listofnodes) {
 
                                     if (clbk)
                                         clbk(alias, null)
-                                } else {
+                                }
+                                else {
 
                                     var ids = _.map(inputs, function (i) {
                                         return i.txId
@@ -10287,7 +10489,8 @@ Platform = function (app, listofnodes) {
                             clbk("Internal Error")
 
                         return
-                    } else {
+                    }
+                    else {
                         f.ws = node.ws,
                             f.port = node.port,
                             f.name = node.name;
@@ -10326,7 +10529,8 @@ Platform = function (app, listofnodes) {
 
                     try {
                         p = JSON.parse(localStorage['usernodes'] || '{}');
-                    } catch (e) {
+                    }
+                    catch (e) {
 
                     }
 
@@ -10354,7 +10558,8 @@ Platform = function (app, listofnodes) {
                     if (i == -1) {
                         if (clbk)
                             clbk(null)
-                    } else
+                    }
+                    else
 
                         if (clbk)
                             clbk(pa.private[i])
@@ -10371,7 +10576,8 @@ Platform = function (app, listofnodes) {
                     if (!state) {
                         if (clbk)
                             clbk(null, 'state')
-                    } else {
+                    }
+                    else {
                         var address = self.sdk.address.pnet().address;
 
                         var i = _.indexOf(exportedPack.addresses, address);
@@ -10428,7 +10634,8 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
                             })
-                        } else {
+                        }
+                        else {
                             if (clbk)
                                 clbk(null, 'address')
                         }
@@ -10527,7 +10734,8 @@ Platform = function (app, listofnodes) {
 
                 if (bitcoin.bip39.validateMnemonic(mnemonic)) {
                     keyPair = self.app.user.keysFromMnemo(mnemonic)
-                } else {
+                }
+                else {
                     keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(mnemonic, 'hex'))
                 }
 
@@ -10545,7 +10753,8 @@ Platform = function (app, listofnodes) {
                             clbk(null, 'hasinanotherpack')
 
                         return;
-                    } else {
+                    }
+                    else {
                         delete pool.map[address]
                         delete pool.packs[id]
                     }
@@ -10585,7 +10794,9 @@ Platform = function (app, listofnodes) {
 
                         ps[1] = 'state'
 
-                    } else {
+                    }
+
+                    else {
                         var key = app.user.private.value;
 
                         if (key) {
@@ -10613,7 +10824,9 @@ Platform = function (app, listofnodes) {
 
                             return
 
-                        } else {
+                        }
+
+                        else {
 
                             ps[1] = 'key'
                         }
@@ -10644,7 +10857,8 @@ Platform = function (app, listofnodes) {
                             s.new(function (exportedpack, error) {
                                 if (!exportedpack) {
                                     sitemessage(error);
-                                } else {
+                                }
+                                else {
                                     var id = makeid();
 
                                     pool.map[address] = id;
@@ -10656,12 +10870,15 @@ Platform = function (app, listofnodes) {
                                 if (clbk)
                                     clbk(exportedpack, id)
                             })
-                        } else {
+                        }
+                        else {
                             if (clbk)
                                 clbk(pool.packs[packid], packid)
 
                         }
-                    } else {
+                    }
+
+                    else {
                         if (clbk)
                             clbk()
                     }
@@ -10745,7 +10962,8 @@ Platform = function (app, listofnodes) {
 
 
                     return discussion
-                } else {
+                }
+                else {
                     return null;
                 }
             },
@@ -10826,9 +11044,9 @@ Platform = function (app, listofnodes) {
                 self.clientrtctemp.init(function () {
 
 
-                    /*self.clientrtctemp.clbks.message.messenger = function (p, rtc){
+                    /*self.clientrtctemp.clbks.message.messenger = function(p, rtc){
 
-                        _.each(self.sdk.tempmessenger.clbks || {}, function (c){
+                        _.each(self.sdk.tempmessenger.clbks || {}, function(c){
                             c('message', rtc)
                         })
                         
@@ -11094,7 +11312,8 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.chats.storage[id]
 
-                } else {
+                }
+                else {
                     var e = self.sdk.chats.empty(id, type)
 
                     self.sdk.chats.storage[e.id] = e;
@@ -11149,7 +11368,8 @@ Platform = function (app, listofnodes) {
                 if (local) {
                     try {
                         chats = JSON.parse(local)
-                    } catch (e) {
+                    }
+                    catch (e) {
                         console.log("ERR", e)
                     }
                 }
@@ -11176,6 +11396,576 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        esystem: {
+            requestes: {},
+
+            clbks: {
+                tick: {
+
+                }
+            },
+
+            tickstate: {},
+            tickstatehash: [],
+            inited: false,
+
+            proxy: {
+                settings: {
+                    meta: {
+
+                        dbEnable: {
+                            name: 'PGSQL Database Enable',
+                            id: 'dbEnable',
+                            type: "BOOLEAN",
+                            value: false,
+
+                            dbId: 'dbEnable'
+                        },
+
+                        dbHost: {
+                            name: 'DB Host',
+                            id: 'dbHost',
+                            type: "NUMBER",
+                            value: '',
+                            format: {
+                                Precision: 0,
+                                groupSeparator: ''
+                            },
+                            dbId: 'db.host'
+                        },
+
+                        dbPort: {
+                            name: 'DB Port',
+                            id: 'dbPort',
+                            type: "NUMBER",
+                            value: '',
+                            format: {
+                                Precision: 0,
+                                groupSeparator: ''
+                            },
+                            dbId: 'db.port'
+                        },
+
+                        dbMax: {
+                            name: 'DB Max',
+                            id: 'dbMax',
+                            type: "NUMBER",
+                            value: '',
+                            format: {
+                                Precision: 0,
+                                groupSeparator: ''
+                            },
+                            dbId: 'db.max'
+                        },
+
+                        dbIdleTimeoutMillis: {
+                            name: 'DB Idle Timeout, ms',
+                            id: 'dbIdleTimeoutMillis',
+                            type: "NUMBER",
+                            value: '',
+                            format: {
+                                Precision: 0,
+                                groupSeparator: ''
+                            },
+                            dbId: 'db.idleTimeoutMillis'
+                        },
+
+                        dbName: {
+                            name: 'DB Name',
+                            id: 'dbName',
+                            type: "STRING",
+                            value: '',
+
+                            dbId: 'db.name'
+                        },
+
+                        dbUser: {
+                            name: 'DB User',
+                            id: 'dbUser',
+                            type: "STRING",
+                            value: '',
+
+                            dbId: 'db.user'
+                        },
+
+                        dbPassword: {
+                            name: 'DB Password',
+                            id: 'dbPassword',
+                            type: "password",
+                            value: '',
+
+                            dbId: 'db.password'
+                        },
+
+
+                        server: {
+                            name: 'Proxy server on',
+                            id: 'server',
+                            type: "BOOLEAN",
+                            value: false,
+
+                            dbId: 'server'
+                        },
+
+                        serverPortHttps: {
+                            name: 'Proxy https server port',
+                            id: 'serverPortHttps',
+                            type: "NUMBER",
+                            value: '',
+                            format: {
+                                Precision: 0,
+                                groupSeparator: ''
+                            },
+                            dbId: 'ports.https'
+                        },
+
+                        serverPortWss: {
+                            name: 'Proxy wss server port',
+                            id: 'serverPortWss',
+                            type: "NUMBER",
+                            value: '',
+                            format: {
+                                Precision: 0,
+                                groupSeparator: ''
+                            },
+                            dbId: 'ports.wss'
+                        },
+
+                        serverSslKeyUpload: {
+                            name: 'Server SSL Key, pem',
+                            id: 'serverSslKeyUpload',
+                            type: "file",
+                            value: '',
+
+                            upload: {
+
+                            },
+
+                            dbId: 'ssl.key'
+                        },
+
+                        serverSslCertUpload: {
+                            name: 'Server SSL Cert, pem',
+                            id: 'serverSslCertUpload',
+                            type: "file",
+                            value: '',
+                            upload: {
+
+                            },
+                            dbId: 'ssl.cert'
+                        },
+
+                        serverSslPassphrase: {
+                            name: 'Server SSL Passphrase',
+                            id: 'serverSslPassphrase',
+                            type: "password",
+                            value: '',
+
+                            dbId: 'ssl.passphrase'
+                        },
+
+                        serverFirebaseAdminSDK: {
+                            name: 'Firebase Adbin SDK',
+                            id: 'serverFirebaseAdminSDK',
+                            type: "file",
+                            value: '',
+                            upload: {
+
+                            },
+                            dbId: 'fbk'
+                        },
+
+                        pocketNetAuthTransactionCrane: {
+                            name: 'Your Crane Address',
+                            id: 'pocketNetAuthTransactionCrane',
+                            type: "STRING",
+                            value: '',
+
+                            dbId: 'refkey'
+                        },
+
+                        captchaEnable: {
+                            name: 'Captcha Enable',
+                            id: 'captchaEnable',
+                            type: "BOOLEAN",
+                            value: true,
+
+                            dbId: 'captcha'
+                        },
+
+                        iplimiterEnable: {
+                            name: 'Ip limiter enable',
+                            id: 'iplimiterEnable',
+                            type: "BOOLEAN",
+                            value: true,
+
+                            dbId: 'iplimiter'
+                        }
+                    },
+
+                    create: function (id) {
+
+                        var t = self.sdk.esystem.proxy.settings
+
+                        var m = t.meta;
+
+                        var p = new Parameter(m[id])
+
+                        return p;
+                    },
+
+                    createall: function () {
+                        var t = self.sdk.esystem.proxy.settings
+
+                        var create = t.create
+                        var m = t.meta;
+
+                        var options = {};
+
+                        _.each(m, function (p, id) {
+                            options[id] = create(id)
+                        })
+
+                        return options
+                    },
+
+                    compose: function (values) {
+
+                        if (!values) values = {}
+
+                        /*nedbkey: 'settings',
+                          nedbpath: { settings: './data/settings' },
+                          nodes: { defaults: [Object], stable: [Array] },
+                          server: true,
+                          ports: { https: 8888, wss: 8088 },
+                          ssl:
+                           { key: './cert/key.pem',
+                             cert: './cert/cert.pem',
+                             passphrase: 'Vjoysq47' },
+                          fbk:
+                           './private/pocketnet-firebase-adminsdk-e72t8-e21b48edf5.json',
+                          dbEnable: true,
+                          db:
+                           { host: 'localhost',
+                             port: 5432,
+                             max: 10,
+                             idleTimeoutMillis: 30000,
+                             user: 'postgres',
+                             database: 'pocketnetproxy',
+                             password: 'zx8045kzx' },
+                          refkey: '',
+                          captcha: true,
+                          iplimiter: true },*/
+
+                        var s = self.sdk.esystem.proxy.settings;
+
+                        var options = s.createall()
+
+                        var m = s.meta;
+
+                        var c = {
+
+
+                            server: {
+                                name: "Server",
+                                options: {
+
+                                    server: options.server,
+                                    serverPortHttps: options.serverPortHttps,
+                                    serverPortWss: options.serverPortWss,
+                                    serverSslKeyUpload: options.serverSslKeyUpload,
+                                    serverSslCertUpload: options.serverSslCertUpload,
+                                    serverSslPassphrase: options.serverSslPassphrase
+
+                                }
+                            },
+
+
+
+                            db: {
+                                name: "Data Base, PG sql",
+                                options: {
+                                    dbEnable: options.dbEnable,
+                                    dbHost: options.dbHost,
+                                    dbMax: options.dbMax,
+                                    dbIdleTimeoutMillis: options.dbIdleTimeoutMillis,
+                                    dbName: options.dbName,
+                                    dbUser: options.dbUser,
+                                    dbPassword: options.dbPassword
+
+
+                                }
+                            },
+
+                            firebase: {
+                                name: "Firebase",
+                                options: {
+
+                                    serverFirebaseAdminSDK: options.serverFirebaseAdminSDK
+
+                                }
+                            },
+
+                            other: {
+                                name: "Other",
+                                options: {
+
+                                    pocketNetAuthTransactionCrane: options.pocketNetAuthTransactionCrane,
+                                    captchaEnable: options.captchaEnable,
+                                    iplimiterEnable: options.iplimiterEnable
+
+                                }
+                            },
+
+
+                        }
+
+                        _.each(options, function (o) {
+                            if (deep(values, o.dbId)) o.value = deep(values, o.dbId)
+                        })
+
+                        return {
+                            c: c,
+                            o: options
+                        }
+
+                    },
+                }
+            },
+
+            node: {
+                settings: {
+                    meta: {
+
+                        Enable: {
+                            name: 'Enable',
+                            id: 'Enable',
+                            type: "BOOLEAN",
+                            value: false,
+                            dbId: 'Enable'
+                        },
+                        BinPath: {
+                            name: 'Binary path',
+                            id: 'binPath',
+                            type: "FILE",
+                            upload: {},
+                            value: '',
+                            dbId: 'BinPath'
+                        },
+                        ConfigPath: {
+                            name: 'Config path',
+                            id: 'configPath',
+                            type: "FILE",
+                            upload: {},
+                            value: '',
+                            dbId: 'ConfigPath'
+                        },
+                        DataPath: {
+                            name: 'Data path',
+                            id: 'dataPath',
+                            type: "FILE",
+                            upload: {},
+                            value: '',
+                            dbId: 'DataPath'
+                        },
+
+                        state: {
+                            name: 'State',
+                            id: '_state',
+                            type: "LABEL",
+                            value: '',
+                            dbId: 'control.state'
+                        }
+                    },
+
+                    create: function (id) {
+
+                        var t = self.sdk.esystem.node.settings
+
+                        var m = t.meta;
+
+                        var p = new Parameter(m[id])
+
+                        return p;
+                    },
+
+                    createall: function () {
+                        var t = self.sdk.esystem.node.settings
+
+                        var create = t.create
+                        var m = t.meta;
+
+                        var options = {};
+
+                        _.each(m, function (p, id) {
+                            options[id] = create(id)
+                        })
+
+                        return options
+                    },
+
+                    compose: function (values) {
+
+                        if (!values) values = {}
+
+                        var s = self.sdk.esystem.node.settings;
+
+                        var options = s.createall()
+
+                        var m = s.meta;
+
+                        var c = {
+
+                            control: {
+                                name: "Control",
+                                options: {
+
+                                    state: options.state,
+
+                                }
+                            },
+
+                            setup: {
+                                name: "Setup",
+                                options: {
+
+                                    Enable: options.Enable,
+                                    BinPath: options.BinPath,
+                                    ConfigPath: options.ConfigPath,
+                                    DataPath: options.DataPath,
+
+                                }
+                            },
+
+                        }
+
+                        _.each(options, function (o) {
+                            if (deep(values, o.dbId)) o.value = deep(values, o.dbId)
+                        })
+
+                        return {
+                            c: c,
+                            o: options
+                        }
+
+                    },
+                }
+            },
+
+            destroy: function () {
+                if (electron) {
+
+                    electron.ipcRenderer.off('proxy-message', this.response)
+
+                    this.inited = false
+
+                }
+            },
+
+            request: function (action, data, clbk) {
+
+                var rdata = {
+                    action: action,
+                    id: makeid(),
+                    data: data
+                }
+
+                self.sdk.esystem.requestes[rdata.id] = {
+                    id: rdata.id,
+                    clbk: function (error, data) {
+                        if (clbk) clbk(error, data)
+                    }
+                }
+
+                electron.ipcRenderer.send('proxy-message', rdata);
+
+            },
+
+            tick: function (e, message) {
+
+                var t = self.sdk.esystem
+                var hash = bitcoin.crypto.hash256(JSON.stringify(message))
+
+                var change = (hash.join('') !== t.tickstatehash.join(''))
+
+                t.tickstatehash = hash
+                t.tickstate = message.data || {}
+
+                _.each(t.clbks.tick, function (c) {
+
+                    if (c)
+                        c(t.tickstate, change)
+                })
+            },
+
+            response: function (e, message) {
+                var request = self.sdk.esystem.requestes[message.id]
+
+                if (request) {
+
+                    if (request.clbk) request.clbk(message.error, message.data)
+
+                    delete self.sdk.esystem.requestes[message.id]
+
+                }
+
+                else {
+
+                    /// another messages/ system
+
+                }
+            },
+
+            init: function () {
+
+
+                if (electron) {
+
+                    this.clbks.tick = {}
+                    this.tickstate = {}
+                    this.tickstatehash = []
+                    console.log('sdk.esystem.init')
+                    this.tickstate = {
+                        settings:
+                        {
+                            nedbkey: 'settings',
+                            nedbpath: { settings: './data/settings' },
+                            nodes: { defaults: [Object], stable: [Array] },
+                            server: true,
+                            ports: { https: 8888, wss: 8088 },
+                            ssl:
+                            {
+                                key: './cert/key.pem',
+                                cert: './cert/cert.pem',
+                                passphrase: 'password'
+                            },
+                            dbEnable: true,
+                            db:
+                            {
+                                host: 'localhost',
+                                port: 5432,
+                                max: 10,
+                                idleTimeoutMillis: 30000,
+                                user: 'postgres',
+                                database: 'login',
+                                password: 'password'
+                            },
+                            refkey: '',
+                            captcha: true,
+                            iplimiter: true
+                        },
+                        state: {},
+                        proxyReady: true
+                    }
+
+                    electron.ipcRenderer.on('proxy-message', this.response)
+                    electron.ipcRenderer.on('proxy-message-tick', this.tick)
+
+                    this.inited = true
+                }
+            }
+        },
+
         system: {
 
             refreshNodes: function (clbk) {
@@ -11189,17 +11979,21 @@ Platform = function (app, listofnodes) {
 
                     if (anonim) {
                         return "http://" + self.nodeid.host + ':' + self.nodeid.port
-                    } else {
+                    }
+                    else {
                         if (self.nodeid.rpcuser && self.nodeid.rpcpwd) {
                             return "http://" + self.nodeid.rpcuser + ":" + self.nodeid.rpcpwd + "@" + self.nodeid.host + ':' + self.nodeid.port
-                        } else {
+                        }
+
+                        else {
                             return null
                         }
                     }
 
 
 
-                } else {
+                }
+                else {
                     return null
                 }
             },
@@ -11217,7 +12011,8 @@ Platform = function (app, listofnodes) {
                             rpcuser: self.nodeid.rpcuser,
                             rpcpass: self.nodeid.rpcpwd
                         })
-                    } else {
+                    }
+                    else {
                         data.node = self.nodeid.host
                     }
                 }
@@ -11231,7 +12026,9 @@ Platform = function (app, listofnodes) {
                         if (clbk)
                             clbk()
 
-                    } else {
+                    }
+
+                    else {
                         self.app.ajax.api({
                             action: 'nodes.get',
 
@@ -12016,7 +12813,8 @@ Platform = function (app, listofnodes) {
 
                 try {
                     p = JSON.parse(localStorage['proxies'] || '{}');
-                } catch (e) {
+                }
+                catch (e) {
 
                 }
 
@@ -12096,8 +12894,6 @@ Platform = function (app, listofnodes) {
                 return ch
             },
 
-
-
             update: function (proxy, id) {
                 var ch = false;
 
@@ -12139,7 +12935,8 @@ Platform = function (app, listofnodes) {
                             c(proxy, clbk)
                         }
                     })
-                } else {
+                }
+                else {
                     c(proxy, clbk)
                 }
             },
@@ -12277,7 +13074,9 @@ Platform = function (app, listofnodes) {
 
         self.get = function (clbk) {
 
-            if (!using) { } else {
+            if (!using) {
+            }
+            else {
                 FCMPlugin.getToken(function (token) {
 
                     if (currenttoken == token) return
@@ -12315,7 +13114,8 @@ Platform = function (app, listofnodes) {
                         })
 
                         return
-                    } else {
+                    }
+                    else {
 
                         if (typeof cordova != 'undefined') {
 
@@ -12347,7 +13147,9 @@ Platform = function (app, listofnodes) {
             if (!using) {
                 if (clbk)
                     clbk()
-            } else {
+            }
+
+            else {
 
                 self.events()
 
@@ -12362,7 +13164,8 @@ Platform = function (app, listofnodes) {
             if (!using) {
                 if (clbk)
                     clbk()
-            } else {
+            }
+            else {
                 self.api.revokeDevice(clbk)
             }
         }
@@ -12401,7 +13204,8 @@ Platform = function (app, listofnodes) {
 
                 if (typeof emojione != 'undefined') {
                     nm = emojione.toImage(filterXSS(trimHtml(m, c || 20)));
-                } else {
+                }
+                else {
                     nm = filterXSS(trimHtml(m, c || 20));
                 }
 
@@ -12671,7 +13475,8 @@ Platform = function (app, listofnodes) {
                     t = '👍';
 
                     if (value < 0) t = '👎';
-                } else {
+                }
+                else {
                     t = '<i class="fas fa-thumbs-up"></i>';
 
                     if (value < 0) t = '<i class="fas fa-thumbs-down fa-flip-horizontal"></i>';
@@ -12810,7 +13615,8 @@ Platform = function (app, listofnodes) {
                 }
             },
             connectionfailed: {
-                loadMore: function (data) { }
+                loadMore: function (data) {
+                }
             },
 
             ///
@@ -12935,7 +13741,8 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {}
+                clbks: {
+                }
             },
 
             reshare: {
@@ -13004,7 +13811,6 @@ Platform = function (app, listofnodes) {
                     text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
 
                     if (text) {
-
                         html += self.tempates.user(data.user, text, true, " shared your post:", '<div class="repostshare"><i class="fas fa-share"></i></div>', data.time)
                     }
 
@@ -13039,7 +13845,8 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {}
+                clbks: {
+                }
             },
 
             postfromprivate: {
@@ -13157,7 +13964,8 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {}
+                clbks: {
+                }
             },
 
             sharepocketnet: {
@@ -13266,7 +14074,8 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {}
+                clbks: {
+                }
             },
 
             "transaction": {
@@ -13408,7 +14217,8 @@ Platform = function (app, listofnodes) {
 
                     if (data.txinfo) {
                         _dataclbk(data.txinfo)
-                    } else {
+                    }
+                    else {
                         platform.sdk.node.transactions.get.tx(data.txid, _dataclbk)
                     }
 
@@ -13435,7 +14245,9 @@ Platform = function (app, listofnodes) {
                             n.topic = 'pos'
 
 
-                        } else {
+                        }
+
+                        else {
 
 
                             if (data.address != user.address && data.user) {
@@ -13445,7 +14257,8 @@ Platform = function (app, listofnodes) {
 
                                     if (data.opmessage) {
                                         n.text = n.text + ' with message: "' + data.opmessage + '"'
-                                    } else {
+                                    }
+                                    else {
                                         n.text = n.text + "!"
                                     }
 
@@ -13509,7 +14322,9 @@ Platform = function (app, listofnodes) {
 
                             }
 
-                        } else {
+                        }
+
+                        else {
 
                             if (!platform.sdk.address.pnet() || data.address != platform.sdk.address.pnet().address) {
 
@@ -13552,16 +14367,19 @@ Platform = function (app, listofnodes) {
 
                                     return false;
                                 }
-                            } else {
+                            }
+                            else {
                                 if (data.address != platform.sdk.address.pnet().address) {
                                     if (!platform.sdk.usersettings.meta.transactions.value) {
                                         return false;
                                     }
-                                } else {
+                                }
+                                else {
                                     return false;
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             return false;
                         }
 
@@ -13569,9 +14387,9 @@ Platform = function (app, listofnodes) {
                     }
                 },
                 clbks: {
-                    /*transactions : function (data){
+                    /*transactions : function(data){
 
-                        _.each(platform.sdk.node.transactions.clbks, function (c){
+                        _.each(platform.sdk.node.transactions.clbks, function(c){
                             c(data.tx.amount)
                         })
 
@@ -13862,7 +14680,7 @@ Platform = function (app, listofnodes) {
                     if (data.reason == 'answer' && data.comment && data.share && data.user &&
                         (!platform.sdk.usersettings.meta.answers || platform.sdk.usersettings.meta.answers.value)) {
 
-                        text = self.tempates.comment(data.comment /*, self.tempates.share(data.share)*/)
+                        text = self.tempates.comment(data.comment/*, self.tempates.share(data.share)*/)
 
 
 
@@ -13896,7 +14714,8 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
-                clbks: {}
+                clbks: {
+                }
             },
 
             event: {
@@ -13940,7 +14759,8 @@ Platform = function (app, listofnodes) {
 
                                     clbk()
                                 })
-                            } else {
+                            }
+                            else {
 
                                 if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe') && !wa) {
                                     var u = platform.sdk.users.storage[data.addrFrom];
@@ -14045,7 +14865,9 @@ Platform = function (app, listofnodes) {
                             be.addClass('disabled');
 
                             platform.api.actions.subscribe(data.user.address, function (tx, error) {
-                                if (tx) { } else {
+                                if (tx) {
+                                }
+                                else {
                                     self.app.platform.errorHandler(error, true)
 
                                     be.removeClass('disabled');
@@ -14172,7 +14994,8 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {}
+                clbks: {
+                }
             },
 
             message: {
@@ -14224,7 +15047,8 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                clbks: {}
+                clbks: {
+                }
             }
         }
 
@@ -14236,7 +15060,8 @@ Platform = function (app, listofnodes) {
 
                     self.addAccount(null, clbk)
 
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk(false)
                 }
@@ -14245,10 +15070,10 @@ Platform = function (app, listofnodes) {
             })
         }
 
-        /*var initOnlineListener = function (){
+        /*var initOnlineListener = function(){
             if(self.onlineCheck && !_Node){
 
-                onlinetnterval = retry(function (){
+                onlinetnterval = retry(function(){
 
                     var online = deep(window, 'navigator.onLine');
 
@@ -14261,7 +15086,7 @@ Platform = function (app, listofnodes) {
                     }
                     
 
-                }, function (){
+                }, function(){
 
                     if(!self.online){
 
@@ -14319,7 +15144,8 @@ Platform = function (app, listofnodes) {
 
                     jm = JSON.parse(message || "{}");
 
-                } catch (e) {
+                }
+                catch (e) {
 
                 }
 
@@ -14376,7 +15202,9 @@ Platform = function (app, listofnodes) {
                     }, 300)
 
                 }, time)
-            } else {
+            }
+
+            else {
                 setTimeout(function () {
                     destroyMessage(message, time, noarrange)
                 }, 100)
@@ -14395,7 +15223,8 @@ Platform = function (app, listofnodes) {
 
             if (isMobile()) {
                 maxCount = 1;
-            } else {
+            }
+            else {
 
                 if (typeof _Electron == 'undefined') {
                     boffset = 60;
@@ -14412,7 +15241,9 @@ Platform = function (app, listofnodes) {
 
                 if (i < remove) {
                     destroyMessage(m, 1, true)
-                } else {
+                }
+
+                else {
                     if (!isMobile()) {
                         offset += 10;
                     }
@@ -14441,11 +15272,7 @@ Platform = function (app, listofnodes) {
                 parameters: [platform.sdk.address.pnet().address, lost],
                 success: function (d) {
 
-                    d || (d = [{
-                        block: 1,
-                        cntposts: 0,
-                        cntsubscr: 0
-                    }])
+                    d || (d = [{ block: 1, cntposts: 0, cntsubscr: 0 }])
 
                     var notifications = (d || []).slice(1)
 
@@ -14685,7 +15512,8 @@ Platform = function (app, listofnodes) {
                                         electron.ipcRenderer.send('electron-notification', message.html);
                                     }
 
-                                } else {
+                                }
+                                else {
                                     return
                                 }
 
@@ -14717,7 +15545,9 @@ Platform = function (app, listofnodes) {
 
                 if (m.loadMore) {
                     m.loadMore(data, clbks);
-                } else {
+                }
+
+                else {
                     clbks();
                 }
 
@@ -14749,7 +15579,8 @@ Platform = function (app, listofnodes) {
             if (socket) {
                 try {
                     socket.send(message);
-                } catch (e) {
+                }
+                catch (e) {
 
                 }
             }
@@ -14873,7 +15704,8 @@ Platform = function (app, listofnodes) {
 
             if (!n) {
                 address = platform.sdk.address.pnet(keyPair.publicKey).address
-            } else {
+            }
+            else {
                 address = platform.sdk.address.wallet(n, keyPair.privateKey).address
             }
 
@@ -14915,7 +15747,8 @@ Platform = function (app, listofnodes) {
 
                     if (clbk)
                         clbk(true)
-                } else {
+                }
+                else {
                     if (clbk)
                         clbk(false)
                 }
@@ -15002,10 +15835,9 @@ Platform = function (app, listofnodes) {
 
 
             if (!self.storages[roomid]) {
-                self.storages[roomid] = new MessageStorage({
-                    id: mstorageid || roomid
-                });
-            } else {
+                self.storages[roomid] = new MessageStorage({ id: mstorageid || roomid });
+            }
+            else {
 
             }
 
@@ -15329,7 +16161,8 @@ Platform = function (app, listofnodes) {
                 if (!rooms.length) {
                     if (clbk)
                         clbk()
-                } else {
+                }
+                else {
 
                     _.each(rooms, function (id) {
                         set(id)
@@ -15431,7 +16264,7 @@ Platform = function (app, listofnodes) {
 
         if (self.timeDifference) {
 
-            d.addSeconds(-self.timeDifference)
+            d.addSeconds(- self.timeDifference)
         }
 
         return convertDate(dateToStr(d))
@@ -15443,7 +16276,7 @@ Platform = function (app, listofnodes) {
 
         if (self.timeDifference) {
 
-            d.addSeconds(-self.timeDifference)
+            d.addSeconds(- self.timeDifference)
         }
 
         return app.reltime(d)
@@ -15483,7 +16316,8 @@ Platform = function (app, listofnodes) {
 
         if (typeof window != 'undefined') {
             crypto = window.crypto || window.msCrypto;
-        } else {
+        }
+        else {
             crypto = _crypto
         }
 
@@ -15495,7 +16329,8 @@ Platform = function (app, listofnodes) {
 
                     clbk(key)
 
-                } else {
+                }
+                else {
                     var mypbkdf2 = new PBKDF2(key, 'helper', 1, l);
 
                     mypbkdf2.deriveKey(null, function (key) {
@@ -15512,7 +16347,8 @@ Platform = function (app, listofnodes) {
 
                     crypto.subtle.importKey(
                         "raw",
-                        aesjs.utils.utf8.toBytes(key), { //this is the algorithm options
+                        aesjs.utils.utf8.toBytes(key),
+                        {   //this is the algorithm options
                         name: "AES-CBC",
                     },
                         false,
@@ -15531,7 +16367,8 @@ Platform = function (app, listofnodes) {
 
                 if (key.length >= 128) {
                     _clbk(key)
-                } else {
+                }
+                else {
                     self.helpers.keyFromString(key, 16, function (key) {
 
                         _clbk(key)
@@ -15554,7 +16391,9 @@ Platform = function (app, listofnodes) {
                     if (crypto.getRandomValues) {
 
                         crypto.getRandomValues(random_num);
-                    } else {
+                    }
+
+                    else {
                         getRandomValues(random_num);
                     }
 
@@ -15581,13 +16420,12 @@ Platform = function (app, listofnodes) {
                 createKeys: function (clbk) {
                     var settings = this.settings;
 
-                    crypto.subtle.generateKey({
+                    crypto.subtle.generateKey(
+                        {
                         name: settings.name,
                         modulusLength: settings.length, //can be 1024, 2048, or 4096
                         publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-                        hash: {
-                            name: "SHA-" + settings.hashL
-                        }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+                            hash: { name: "SHA-" + settings.hashL }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
                     },
                         true, //whether the key is extractable (i.e. can be used in exportKey)
                         ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
@@ -15631,12 +16469,8 @@ Platform = function (app, listofnodes) {
 
                     var m = 'jwk'
 
-                    if (pp == 'public') {
-                        m = 'spki'
-                    }
-                    if (pp == 'private') {
-                        m = 'pkcs8'
-                    }
+                    if (pp == 'public') { m = 'spki' }
+                    if (pp == 'private') { m = 'pkcs8' }
 
                     crypto.subtle.exportKey(
                         m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
@@ -15685,14 +16519,8 @@ Platform = function (app, listofnodes) {
                     var _pp = [];
                     var m = 'jwk';
 
-                    if (pp == 'public') {
-                        _pp = ["encrypt"];
-                        m = 'spki'
-                    }
-                    if (pp == 'private') {
-                        _pp = ["decrypt"];
-                        m = 'pkcs8'
-                    }
+                    if (pp == 'public') { _pp = ["encrypt"]; m = 'spki' }
+                    if (pp == 'private') { _pp = ["decrypt"]; m = 'pkcs8' }
 
                     crypto.subtle.importKey(
                         m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
@@ -15706,9 +16534,7 @@ Platform = function (app, listofnodes) {
                         },*/
                         { //these are the algorithm options
                             name: settings.name,
-                            hash: {
-                                name: "SHA-" + settings.hashL
-                            }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+                            hash: { name: "SHA-" + settings.hashL }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
                         },
                         true,
                         _pp
@@ -15729,7 +16555,8 @@ Platform = function (app, listofnodes) {
                     //
                     var data = convertStringToArrayBuffer(text);
 
-                    crypto.subtle.encrypt({
+                    crypto.subtle.encrypt(
+                        {
                         name: "RSA-OAEP",
                     },
                         publicKey,
@@ -15747,7 +16574,8 @@ Platform = function (app, listofnodes) {
                 decrypt: function (privateKey, text, clbk) {
                     var data = convertStringToArrayBuffer(text);
 
-                    crypto.subtle.decrypt({
+                    crypto.subtle.decrypt(
+                        {
                         name: "RSA-OAEP",
 
                     },
@@ -15832,9 +16660,10 @@ Platform = function (app, listofnodes) {
                     var strBytes = aesjs.utils[p.charsetEnc].toBytes(str);
 
                     self.helpers.keyForAes(key, function (akey) {
-                        crypto.subtle.encrypt({
+                        crypto.subtle.encrypt(
+                            {
                             name: "AES-CBC",
-                            iv: new Uint8Array(iv) /*window.crypto.getRandomValues(new Uint8Array(16)),*/
+                                iv: new Uint8Array(iv)/*window.crypto.getRandomValues(new Uint8Array(16)),*/
                         },
                             akey, //from generateKey or importKey above
                             strBytes //ArrayBuffer of data you want to encrypt
@@ -15865,7 +16694,8 @@ Platform = function (app, listofnodes) {
                     self.helpers.keyForAes(key, function (akey) {
 
 
-                        crypto.subtle.decrypt({
+                        crypto.subtle.decrypt(
+                            {
                             name: "AES-CBC",
                             iv: new Uint8Array(iv), //The initialization vector you used to encrypt
                         },
@@ -15934,14 +16764,17 @@ Platform = function (app, listofnodes) {
                                         encryptedKeys = em.keys;
 
                                         p.success()
-                                    } else {
+                                    }
+
+                                    else {
                                         p.fail()
                                     }
 
 
 
                                 }, skey)
-                            } else {
+                            }
+                            else {
                                 encryptedMessages[key] = message;
 
                                 p.success()
@@ -15974,7 +16807,8 @@ Platform = function (app, listofnodes) {
 
 
                         self.messages.encryption(publicKeys, check + message, clbk, skey)
-                    } else {
+                    }
+                    else {
                         if (clbk)
                             clbk()
                     }
@@ -16011,7 +16845,8 @@ Platform = function (app, listofnodes) {
                                     p.success()
 
                                 })
-                            } else {
+                            }
+                            else {
                                 decryptedMessages[key] = message;
 
                                 p.success()
@@ -16034,7 +16869,9 @@ Platform = function (app, listofnodes) {
 
                                 message = message.substr(check.length)
 
-                            } else {
+                            }
+
+                            else {
                                 message = ''
                                 //message = "Can't decrypt message"
                             }
@@ -16042,7 +16879,8 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk(message)
                         })
-                    } else {
+                    }
+                    else {
                         if (clbk)
                             clbk('')
                     }
@@ -16064,7 +16902,8 @@ Platform = function (app, listofnodes) {
                     self.api.rsa.importKey(privateKey, 'private', function (privateKey) {
                         decryption(privateKey)
                     })
-                } else {
+                }
+                else {
                     decryption(privateKey)
                 }
 
@@ -16095,7 +16934,8 @@ Platform = function (app, listofnodes) {
                             self.api.rsa.importKey(key, 'public', function (key) {
                                 encryption(key)
                             })
-                        } else {
+                        }
+                        else {
                             encryption(key)
                         }
                     },
@@ -16134,11 +16974,15 @@ Platform = function (app, listofnodes) {
                         if (clbk)
                             clbk(false)
 
-                    } else {
+                    }
+
+                    else {
                         if (clbk)
                             clbk('key')
                     }
-                } else {
+                }
+
+                else {
                     if (clbk)
                         clbk('state')
                 }
@@ -16210,14 +17054,16 @@ Platform = function (app, listofnodes) {
                     updateReady()
                 }
 
-                if (data.msg == 'download-progress') { }
+                if (data.msg == 'download-progress') {
+                }
 
                 if (data.msg == 'update-available' && data.linux) {
                     updateAvailable()
                 }
             }
 
-            if (data.type == 'error') { }
+            if (data.type == 'error') {
+            }
         })
 
     }
@@ -16298,7 +17144,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.ab = {
-            /*send : function (testid, result){
+            /*send : function(testid, result){
 
                 platform.app.ajax.run({
                     data : {
@@ -16309,14 +17155,14 @@ Platform = function (app, listofnodes) {
                         Device : device()
                     },
 
-                    success : function (data){
+                    success : function(data){
                                             
                         if (clbk)
                             clbk()
 
                     },
 
-                    fail : function (){
+                    fail : function(){
 
                         if (clbk)
                             clbk()
@@ -16447,7 +17293,8 @@ Platform = function (app, listofnodes) {
 
         if (fast) {
             self.clearStorageFast()
-        } else {
+        }
+        else {
             self.clearStorage()
         }
 
@@ -16543,7 +17390,8 @@ Platform = function (app, listofnodes) {
             self.loadingWithErrors = false;
 
             self.restart(function () {
-                self.app.reload(function () { })
+                self.app.reload(function () {
+                })
             })
         }
     }
@@ -16551,7 +17399,7 @@ Platform = function (app, listofnodes) {
     self.prepare = function (clbk, state) {
 
 
-        /*setInterval(function (){
+        /*setInterval(function(){
             
             
             console.log('self.sdk.relayTransactions.storage', self.sdk.relayTransactions.storage)
@@ -16577,6 +17425,8 @@ Platform = function (app, listofnodes) {
         self.sdk.theme.load()
         self.sdk.proxy.load()
         self.app.platform.sdk.node.sys.load()
+
+        self.sdk.esystem.init()
 
         if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate
@@ -16673,7 +17523,7 @@ Platform = function (app, listofnodes) {
                                         btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
                                         btn2text : 'Watch Video',
 
-                                        success : function (){
+                                        success : function(){
                                             
 
                                             self.app.nav.api.load({
@@ -16683,7 +17533,7 @@ Platform = function (app, listofnodes) {
                                             })
                                         },
 
-                                        fail : function (){
+                                        fail : function(){
                                             self.app.nav.api.load({
                                                 open : true,
                                                 href : 'video',
@@ -16756,7 +17606,8 @@ Platform = function (app, listofnodes) {
                     })
 
                 })
-            } else {
+            }
+            else {
                 self.preparingUser = false;
 
                 if (clbk)
@@ -16767,7 +17618,8 @@ Platform = function (app, listofnodes) {
 
         if (typeof state != 'undefined') {
             stateclbk(state)
-        } else {
+        }
+        else {
             app.user.isState(function (state) {
 
                 localStorage['popupsignup'] = 'showed'
@@ -16793,9 +17645,11 @@ Platform = function (app, listofnodes) {
         if (typeof ion != 'undefined')
 
             ion.sound({
-                sounds: [{
+                sounds: [
+                    {
                     name: "water_droplet"
-                }],
+                    }
+                ],
                 volume: 0.5,
                 path: "js/vendor/ion.sound/sounds/",
                 preload: true
@@ -16827,9 +17681,9 @@ Platform = function (app, listofnodes) {
 
             /*if ( (time > 3600 && (electron || window.cordova)) || resume){
 
-                self.app.platform.restart(function (){
+                self.app.platform.restart(function(){
 
-                    app.reload(function (){
+                    app.reload(function(){
 
                     })
 
@@ -16970,7 +17824,8 @@ Platform = function (app, listofnodes) {
                     _.each(self.clbks.online, function (c) {
                         c(false)
                     })
-                } else {
+                }
+                else {
                     _.each(self.clbks.online, function (c) {
                         c(true)
                     })
@@ -17008,7 +17863,8 @@ Platform = function (app, listofnodes) {
 
                 if (i % 2) {
                     document.title = text;
-                } else {
+                }
+                else {
                     document.title = initial;
                 }
 
@@ -17049,7 +17905,8 @@ Platform = function (app, listofnodes) {
 
                 try {
                     self.nodeid = JSON.parse(localStorage['nodeid2'])
-                } catch (e) { }
+                }
+                catch (e) { }
 
 
                 if (!self.nodeid) {
