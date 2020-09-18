@@ -1562,7 +1562,7 @@ Platform = function (app, listofnodes) {
 
             app.user.isState(function (state) {
 
-                if (state /*&& !self.app.errors._autocheck*/ ) {
+                if (state /*&& !self.app.errors._autocheck*/) {
 
                     self.update();
 
@@ -4398,8 +4398,8 @@ Platform = function (app, listofnodes) {
                     if (ns.loading || ns.loaded || !self.ws.messages[ns.msg]) return false;
 
                     if (ns.commentid && _.find(n.storage.notifications, function (n) {
-                            return n.commentid == ns.commentid
-                        })) return false
+                        return n.commentid == ns.commentid
+                    })) return false
 
                     if (ns.msg == "transaction" && ns.txinfo && ns.txinfo.pockettx) {
                         return false
@@ -5337,9 +5337,9 @@ Platform = function (app, listofnodes) {
                 var map = self.app.map;
 
                 if (map[name] || _.find(map, function (m, i) {
-                        if (m.uri == name) return true;
-                        if (m.href == name) return true;
-                    })) {
+                    if (m.uri == name) return true;
+                    if (m.href == name) return true;
+                })) {
 
 
 
@@ -8374,7 +8374,7 @@ Platform = function (app, listofnodes) {
                         } else {
                             var parameters = [p.count, '259200'];
 
-                            if (p.address) parameters.push("" /*p.address*/ )
+                            if (p.address) parameters.push("" /*p.address*/)
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
@@ -9675,7 +9675,7 @@ Platform = function (app, listofnodes) {
 
                                     var address = self.sdk.addresses.storage.addressesobj[index];
 
-                                    txb.addInput(i.txid, i.vout /*, null, address.output*/ )
+                                    txb.addInput(i.txid, i.vout /*, null, address.output*/)
                                 } else {
                                     return
                                 }
@@ -10355,8 +10355,8 @@ Platform = function (app, listofnodes) {
                             clbk(null)
                     } else
 
-                    if (clbk)
-                        clbk(pa.private[i])
+                        if (clbk)
+                            clbk(pa.private[i])
 
 
 
@@ -11364,9 +11364,9 @@ Platform = function (app, listofnodes) {
 
                                             return "<u>" + snippet + "</u>";
 
-                                            // case "strikethrough":
+                                        // case "strikethrough":
 
-                                            //     return "<strike>" + snippet + "</strike>";
+                                        //     return "<strike>" + snippet + "</strike>";
 
                                         case "text_link":
 
@@ -11805,8 +11805,8 @@ Platform = function (app, listofnodes) {
                                         let photo = (channel_post.photo && channel_post.photo.length > 1) ?
                                             channel_post.photo[1] :
                                             (channel_post.photo && channel_post.photo.length) ?
-                                            channel_post.photo[0] :
-                                            "";
+                                                channel_post.photo[0] :
+                                                "";
 
 
                                         if (!uniquePost.photo && channel_post.photo) {
@@ -11824,10 +11824,10 @@ Platform = function (app, listofnodes) {
 
                                         channel_post.photo = [
                                             (channel_post.photo && channel_post.photo.length > 1) ?
-                                            channel_post.photo[1] :
-                                            channel_post.length ?
-                                            channel_post.photo[0] :
-                                            ""
+                                                channel_post.photo[1] :
+                                                channel_post.length ?
+                                                    channel_post.photo[0] :
+                                                    ""
                                         ];
 
                                         resultWithSortedMedia.push(channel_post);
@@ -12276,7 +12276,7 @@ Platform = function (app, listofnodes) {
 
         self.get = function (clbk) {
 
-            if (!using) {} else {
+            if (!using) { } else {
                 FCMPlugin.getToken(function (token) {
 
                     if (currenttoken == token) return
@@ -12321,7 +12321,7 @@ Platform = function (app, listofnodes) {
                             var cordovabadge = deep(cordova, 'plugins.notification.badge')
 
                             if (cordovabadge)
-                                cordovabadge.increase(1, function (badge) {});
+                                cordovabadge.increase(1, function (badge) { });
                         }
 
                     }
@@ -12809,7 +12809,7 @@ Platform = function (app, listofnodes) {
                 }
             },
             connectionfailed: {
-                loadMore: function (data) {}
+                loadMore: function (data) { }
             },
 
             ///
@@ -13861,7 +13861,7 @@ Platform = function (app, listofnodes) {
                     if (data.reason == 'answer' && data.comment && data.share && data.user &&
                         (!platform.sdk.usersettings.meta.answers || platform.sdk.usersettings.meta.answers.value)) {
 
-                        text = self.tempates.comment(data.comment /*, self.tempates.share(data.share)*/ )
+                        text = self.tempates.comment(data.comment /*, self.tempates.share(data.share)*/)
 
 
 
@@ -14044,7 +14044,7 @@ Platform = function (app, listofnodes) {
                             be.addClass('disabled');
 
                             platform.api.actions.subscribe(data.user.address, function (tx, error) {
-                                if (tx) {} else {
+                                if (tx) { } else {
                                     self.app.platform.errorHandler(error, true)
 
                                     be.removeClass('disabled');
@@ -15510,13 +15510,13 @@ Platform = function (app, listofnodes) {
                 var _clbk = function (key) {
 
                     crypto.subtle.importKey(
-                            "raw",
-                            aesjs.utils.utf8.toBytes(key), { //this is the algorithm options
-                                name: "AES-CBC",
-                            },
-                            false,
-                            ["encrypt", "decrypt"]
-                        )
+                        "raw",
+                        aesjs.utils.utf8.toBytes(key), { //this is the algorithm options
+                        name: "AES-CBC",
+                    },
+                        false,
+                        ["encrypt", "decrypt"]
+                    )
                         .then(function (key) {
 
                             if (clbk)
@@ -15581,16 +15581,16 @@ Platform = function (app, listofnodes) {
                     var settings = this.settings;
 
                     crypto.subtle.generateKey({
-                                name: settings.name,
-                                modulusLength: settings.length, //can be 1024, 2048, or 4096
-                                publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-                                hash: {
-                                    name: "SHA-" + settings.hashL
-                                }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-                            },
-                            true, //whether the key is extractable (i.e. can be used in exportKey)
-                            ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
-                        )
+                        name: settings.name,
+                        modulusLength: settings.length, //can be 1024, 2048, or 4096
+                        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                        hash: {
+                            name: "SHA-" + settings.hashL
+                        }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+                    },
+                        true, //whether the key is extractable (i.e. can be used in exportKey)
+                        ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
+                    )
                         .then(function (keys) {
 
                             if (clbk)
@@ -15638,9 +15638,9 @@ Platform = function (app, listofnodes) {
                     }
 
                     crypto.subtle.exportKey(
-                            m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
-                            key //can be a publicKey or privateKey, as long as extractable was true
-                        )
+                        m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
+                        key //can be a publicKey or privateKey, as long as extractable was true
+                    )
                         .then(function (keydata) {
                             //returns the exported key data
 
@@ -15694,24 +15694,24 @@ Platform = function (app, listofnodes) {
                     }
 
                     crypto.subtle.importKey(
-                            m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
-                            convertStringToArrayBuffer(keyH),
-                            /*{   //this is an example jwk key, other key types are Uint8Array objects
-                                kty: "RSA",
-                                e: "AQAB",
-                                n: keyH,
-                                alg: settings.name + "-" + settings.hashL,
-                                ext: true,
-                            },*/
-                            { //these are the algorithm options
-                                name: settings.name,
-                                hash: {
-                                    name: "SHA-" + settings.hashL
-                                }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-                            },
-                            true,
-                            _pp
-                        )
+                        m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
+                        convertStringToArrayBuffer(keyH),
+                        /*{   //this is an example jwk key, other key types are Uint8Array objects
+                            kty: "RSA",
+                            e: "AQAB",
+                            n: keyH,
+                            alg: settings.name + "-" + settings.hashL,
+                            ext: true,
+                        },*/
+                        { //these are the algorithm options
+                            name: settings.name,
+                            hash: {
+                                name: "SHA-" + settings.hashL
+                            }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
+                        },
+                        true,
+                        _pp
+                    )
                         .then(function (key) {
 
                             if (clbk)
@@ -15729,11 +15729,11 @@ Platform = function (app, listofnodes) {
                     var data = convertStringToArrayBuffer(text);
 
                     crypto.subtle.encrypt({
-                                name: "RSA-OAEP",
-                            },
-                            publicKey,
-                            data
-                        )
+                        name: "RSA-OAEP",
+                    },
+                        publicKey,
+                        data
+                    )
                         .then(function (encrypted) {
 
                             if (clbk)
@@ -15747,12 +15747,12 @@ Platform = function (app, listofnodes) {
                     var data = convertStringToArrayBuffer(text);
 
                     crypto.subtle.decrypt({
-                                name: "RSA-OAEP",
+                        name: "RSA-OAEP",
 
-                            },
-                            privateKey,
-                            data
-                        )
+                    },
+                        privateKey,
+                        data
+                    )
                         .then(function (decrypted) {
 
 
@@ -15832,12 +15832,12 @@ Platform = function (app, listofnodes) {
 
                     self.helpers.keyForAes(key, function (akey) {
                         crypto.subtle.encrypt({
-                                    name: "AES-CBC",
-                                    iv: new Uint8Array(iv) /*window.crypto.getRandomValues(new Uint8Array(16)),*/
-                                },
-                                akey, //from generateKey or importKey above
-                                strBytes //ArrayBuffer of data you want to encrypt
-                            )
+                            name: "AES-CBC",
+                            iv: new Uint8Array(iv) /*window.crypto.getRandomValues(new Uint8Array(16)),*/
+                        },
+                            akey, //from generateKey or importKey above
+                            strBytes //ArrayBuffer of data you want to encrypt
+                        )
                             .then(function (encrypted) {
 
                                 var _encrypted = aesjs.utils[p.charsetDec].fromBytes(new Uint8Array(encrypted));
@@ -15865,12 +15865,12 @@ Platform = function (app, listofnodes) {
 
 
                         crypto.subtle.decrypt({
-                                    name: "AES-CBC",
-                                    iv: new Uint8Array(iv), //The initialization vector you used to encrypt
-                                },
-                                akey, //from generateKey or importKey above
-                                encryptedBytes //ArrayBuffer of the data
-                            )
+                            name: "AES-CBC",
+                            iv: new Uint8Array(iv), //The initialization vector you used to encrypt
+                        },
+                            akey, //from generateKey or importKey above
+                            encryptedBytes //ArrayBuffer of the data
+                        )
                             .then(function (decrypted) {
 
 
@@ -16209,14 +16209,14 @@ Platform = function (app, listofnodes) {
                     updateReady()
                 }
 
-                if (data.msg == 'download-progress') {}
+                if (data.msg == 'download-progress') { }
 
                 if (data.msg == 'update-available' && data.linux) {
                     updateAvailable()
                 }
             }
 
-            if (data.type == 'error') {}
+            if (data.type == 'error') { }
         })
 
     }
@@ -16345,15 +16345,15 @@ Platform = function (app, listofnodes) {
     }
 
     self.nodes_test = [{
-            full: '84.52.69.110:10011',
-            host: '84.52.69.110',
-            port: 10011,
-            ws: 8080,
-            path: '',
+        full: '84.52.69.110:10011',
+        host: '84.52.69.110',
+        port: 10011,
+        ws: 8080,
+        path: '',
 
-            test: true,
-            name: 'performancetest'
-        }
+        test: true,
+        name: 'performancetest'
+    }
 
         /*,{
             full : '84.52.69.110:48081',
@@ -16542,7 +16542,7 @@ Platform = function (app, listofnodes) {
             self.loadingWithErrors = false;
 
             self.restart(function () {
-                self.app.reload(function () {})
+                self.app.reload(function () { })
             })
         }
     }
@@ -17048,7 +17048,7 @@ Platform = function (app, listofnodes) {
 
                 try {
                     self.nodeid = JSON.parse(localStorage['nodeid2'])
-                } catch (e) {}
+                } catch (e) { }
 
 
                 if (!self.nodeid) {
