@@ -4834,10 +4834,7 @@ Platform = function (app, listofnodes) {
             prepareuser: function (data, a, state) {
 
 
-                console.log("PREPAREUSER")
-
-                console.log('address', a, self.sdk.address.pnet().address)
-
+                
 
                 if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
                     console.log('init telegram')
