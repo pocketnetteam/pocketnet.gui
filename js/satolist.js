@@ -3360,8 +3360,11 @@ Platform = function (app, listofnodes) {
                     value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
                     _onChange: function (value) {
 
-                        localStorage.setItem('telegrambot', value);
-                        self.app.platform.sdk.system.get.telegramGetMe(value, true);
+                        if (value && self.app.user.features.telegram && value){
+                            
+                            self.app.platform.sdk.system.get.telegramGetMe(value, true);
+
+                        }
 
                     }
 
@@ -3630,7 +3633,28 @@ Platform = function (app, listofnodes) {
 
                     if (i === "telegram") {
 
-                        self.app.platform.sdk.system.get.telegramGetMe(v.value);
+
+                        if(self.app.platform.sdk.address.pnet()){
+                            var a = self.app.platform.sdk.address.pnet().address
+
+                            if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
+
+                                self.app.user.features.telegram = 1;
+
+                                self.app.platform.sdk.system.get.telegramGetMe(v.value);
+
+
+                            } else {
+
+
+                                self.app.user.features.telegram = 0;
+
+
+                            }
+                        }
+
+                        console.log('features.telegram', self.app.user.features.telegram, self.app.platform.sdk.address.pnet().address)
+
                     }
                 })
 
@@ -4833,11 +4857,7 @@ Platform = function (app, listofnodes) {
             prepareuser: function (data, a, state) {
 
 
-                if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
-
-                    self.app.user.features.telegram = 1;
-
-                }
+                
 
                 var temp = self.sdk.node.transactions.temp;
                 var relay = self.sdk.relayTransactions.storage;
@@ -9923,7 +9943,7 @@ Platform = function (app, listofnodes) {
 
                         const savedObj = JSON.parse(JSON.stringify(obj));
 
-                        if (!fromTG) {
+                        if (!fromTG && self.app.user.features.telegram) {
 
                             const {
                                 meta
@@ -12550,152 +12570,165 @@ Platform = function (app, listofnodes) {
                         signal: this.telegramUpdateAbort.signal
                     }
 
-                    fetch(url, settings)
-                        .then(data => data.json())
-                        .then(data => {
+                    const telegramData = data => {
 
-                            if (data.ok) {
+                        if (data.ok) {
 
-                                console.log('telegram updates', data.result)
+                            console.log('telegram updates', data.result)
+
+                            const {
+                                result
+                            } = data;
+
+                            let {
+                                meta
+                            } = self.sdk.usersettings;
+
+                            const resultWithSortedMedia = [];
+
+                            result.forEach(messager => {
 
                                 const {
-                                    result
-                                } = data;
+                                    channel_post
+                                } = messager;
 
-                                let {
-                                    meta
-                                } = self.sdk.usersettings;
+                                const siblingIdx = resultWithSortedMedia.findIndex(uniqueMessager => {
 
-                                const resultWithSortedMedia = [];
-
-                                result.forEach(messager => {
-
-                                    const {
-                                        channel_post
-                                    } = messager;
-
-                                    const siblingIdx = resultWithSortedMedia.findIndex(uniqueMessager => {
-
-                                        return channel_post && (channel_post.media_group_id === uniqueMessager.media_group_id);
-                                    })
-
-                                    if (siblingIdx > -1) {
-
-                                        const uniquePost = resultWithSortedMedia[siblingIdx];
-
-                                        if ((uniquePost && !uniquePost.capiton) && (channel_post && channel_post.caption)) {
-
-                                            uniquePost.caption = channel_post.caption;
-                                        }
-
-                                        if ((uniquePost && !uniquePost.caption_entities) && (channel_post && channel_post.caption_entities)) {
-
-                                            uniquePost.caption_entities = channel_post.caption_entities;
-
-                                        }
-
-                                        let photo = (channel_post.photo && channel_post.photo.length > 1) ?
-                                            channel_post.photo[1] :
-                                            (channel_post.photo && channel_post.photo.length) ?
-                                                channel_post.photo[0] :
-                                                "";
-
-
-                                        if (!uniquePost.photo && channel_post.photo) {
-
-                                            uniquePost.photo = [photo];
-
-                                        } else if (uniquePost.photo && channel_post.photo) {
-
-                                            uniquePost.photo = [...uniquePost.photo, photo];
-
-                                        }
-
-
-                                    } else if (channel_post) {
-
-                                        channel_post.photo = [
-                                            (channel_post.photo && channel_post.photo.length > 1) ?
-                                                channel_post.photo[1] :
-                                                channel_post.length ?
-                                                    channel_post.photo[0] :
-                                                    ""
-                                        ];
-
-                                        resultWithSortedMedia.push(channel_post);
-
-                                    }
-
+                                    return channel_post && (channel_post.media_group_id === uniqueMessager.media_group_id);
                                 })
 
-                                const {
-                                    tgfrom
-                                } = meta;
-                                const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
+                                if (siblingIdx > -1) {
 
-                                const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
+                                    const uniquePost = resultWithSortedMedia[siblingIdx];
 
-                                //two flows: first: for posting, second: for new telegramUpdate
+                                    if ((uniquePost && !uniquePost.capiton) && (channel_post && channel_post.caption)) {
 
-                                const prevTelegramMessages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
+                                        uniquePost.caption = channel_post.caption;
+                                    }
 
-                                const tgfromCheck = resultWithSortedMedia.findIndex(message => String(message.chat.id) === String(currentChannelId));
+                                    if ((uniquePost && !uniquePost.caption_entities) && (channel_post && channel_post.caption_entities)) {
 
-                                let allTelegramMessages = [];
+                                        uniquePost.caption_entities = channel_post.caption_entities;
 
-                                console.log('resultWith', resultWithSortedMedia)
-                                if (tgfromCheck > -1) {
+                                    }
 
-                                    allTelegramMessages = [...prevTelegramMessages, ...resultWithSortedMedia];
-
-                                } else {
-
-                                    allTelegramMessages = prevTelegramMessages;
-                                }
-
-                                localStorage.setItem("telegramMessages", JSON.stringify(allTelegramMessages));
-
-                                // console.log('check', tgfromCheck, Number(currentChannelId), Number(resultWithSortedMedia[0].chat.id))
+                                    let photo = (channel_post.photo && channel_post.photo.length > 1) ?
+                                        channel_post.photo[1] :
+                                        (channel_post.photo && channel_post.photo.length) ?
+                                            channel_post.photo[0] :
+                                            "";
 
 
-                                if (meta.tgfromask.value && tgfromCheck > -1 && !this.openedDialog) {
+                                    if (!uniquePost.photo && channel_post.photo) {
 
-                                    console.log('into', meta.tgfromask.value, tgfromCheck)
-                                    const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
+                                        uniquePost.photo = [photo];
 
-                                    this.dialogOfTG(currentMessages, currentChannelId)
+                                    } else if (uniquePost.photo && channel_post.photo) {
 
-                                } else {
-
-                                    this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId);
-
-                                    if (!this.openedDialog) {
-
-                                        localStorage.setItem("telegramMessages", "[]");
+                                        uniquePost.photo = [...uniquePost.photo, photo];
 
                                     }
 
 
+                                } else if (channel_post) {
+
+                                    channel_post.photo = [
+                                        (channel_post.photo && channel_post.photo.length > 1) ?
+                                            channel_post.photo[1] :
+                                            channel_post.length ?
+                                                channel_post.photo[0] :
+                                                ""
+                                    ];
+
+                                    resultWithSortedMedia.push(channel_post);
+
                                 }
 
-                                self.sdk.usersettings.save();
+                            })
 
-                                offset = result.length ? result[result.length - 1].update_id : 0
-                                this.telegramUpdates(offset + 1, clbk);
+                            const {tgfrom} = meta;
+                            const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
 
-                                if (clbk) {
+                            const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
 
-                                    clbk();
+                            //two flows: first: for posting, second: for new telegramUpdate
+
+                            const prevTelegramMessages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
+
+                            const tgfromCheck = resultWithSortedMedia.findIndex(message => String(message.chat.id) === String(currentChannelId));
+
+                            const messagesFromChannel = resultWithSortedMedia.filter(message => String(message.chat.id) === String(currentChannelId));
+
+                            let allTelegramMessages = [];
+
+                            console.log('resultWith', resultWithSortedMedia)
+                            if (messagesFromChannel.length) {
+
+                                
+                                allTelegramMessages = [...prevTelegramMessages, ...messagesFromChannel];
+
+                            } else {
+
+                                allTelegramMessages = prevTelegramMessages;
+                            }
+
+                            localStorage.setItem("telegramMessages", JSON.stringify(allTelegramMessages));
+
+                            // console.log('check', tgfromCheck, Number(currentChannelId), Number(resultWithSortedMedia[0].chat.id))
+
+
+                            if (meta.tgfromask.value && messagesFromChannel.length && !this.openedDialog) {
+
+                                console.log('into', meta.tgfromask.value, tgfromCheck)
+                                const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
+
+                                this.dialogOfTG(currentMessages, currentChannelId)
+
+                            } else if (meta.tgfromask.value && this.openedDialog){
+
+                                const messagesFromOthers = resultWithSortedMedia.filter(message => String(message.chat.id) !== String(currentChannelId));
+
+                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId);
+
+
+                            } else if (!meta.tgfromask.value){
+
+                                this.applyMessagesFromTG(messagesFromChannel, true, currentChannelId);
+
+                                
+                            }{
+
+
+                                if (!this.openedDialog) {
+
+                                    localStorage.setItem("telegramMessages", "[]");
+
                                 }
+
 
                             }
 
-                        })
+                            self.sdk.usersettings.save();
+
+                            offset = result.length ? result[result.length - 1].update_id : 0
+                            this.telegramUpdates(offset + 1, clbk);
+
+                            if (clbk) {
+
+                                clbk();
+                            }
+
+                        }
+
+                    }
+
+                    fetch(url, settings)
+                    .then(data => data.json())
+                    .then(data => telegramData(data))
 
 
                 },
 
-                openedDialog: false,
 
                 telegramGetMe: function (token, abort) {
 
@@ -12776,7 +12809,10 @@ Platform = function (app, listofnodes) {
                         localStorage.setItem("telegrambot", JSON.stringify(json));
                     }
 
-                }
+                },
+
+                openedDialog: false
+
 
             },
 
@@ -17556,6 +17592,22 @@ Platform = function (app, listofnodes) {
     self.prepareUser = function (clbk, state) {
 
         self.preparingUser = true;
+
+        if(self.app.platform.sdk.address.pnet()){
+            var a = self.app.platform.sdk.address.pnet().address
+
+            if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
+
+                self.app.user.features.telegram = 1;
+
+            } else {
+
+                self.app.user.features.telegram = 0;
+
+            }
+        }
+
+        
 
         var stateclbk = function (state) {
             if (state) {
