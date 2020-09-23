@@ -4856,9 +4856,6 @@ Platform = function (app, listofnodes) {
 
             prepareuser: function (data, a, state) {
 
-
-                
-
                 var temp = self.sdk.node.transactions.temp;
                 var relay = self.sdk.relayTransactions.storage;
 
