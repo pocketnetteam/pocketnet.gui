@@ -12123,6 +12123,7 @@ Platform = function (app, listofnodes) {
 
                 applyMessagesFromTG: function (messages, acceptPosting, currentChannelId) {
 
+                    console.log('apply', messages);
                     let {
                         meta
                     } = self.sdk.usersettings;
@@ -12479,7 +12480,7 @@ Platform = function (app, listofnodes) {
                         const channelId = chat.username ? (" (@" + chat.username + ")") : "";
 
                         const channelName = chat.title + channelId;
-
+                        console.log('channelId', channelId, channelName)
                         addValue("tgto", channelName, chat.id);
                         addValue("tgfrom", channelName, chat.id);
 
@@ -12557,18 +12558,26 @@ Platform = function (app, listofnodes) {
 
                 telegramUpdates: function (offset = 0, clbk) {
 
+                    if (!offset){
+
+                        offset = 0;
+                    }
+                    console.log('offset', offset);
+
+                    console.log('start updates');
                     const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "";
                     this.telegramUpdates = this.telegramUpdates.bind(this);
 
                     const url = `https://api.telegram.org/bot${token}/getUpdates?offset=${offset}&timeout=100`;
 
+                    console.log('this.telegramUpdateAbort.signal', this.telegramUpdateAbort.signal);
                     const settings = {
                         method: 'GET',
                         signal: this.telegramUpdateAbort.signal
                     }
 
                     const telegramData = data => {
-
+                        console.log('telegramData');
                         if (data.ok) {
 
                             console.log('telegram updates', data.result)
@@ -12672,7 +12681,7 @@ Platform = function (app, listofnodes) {
                             localStorage.setItem("telegramMessages", JSON.stringify(allTelegramMessages));
 
                             // console.log('check', tgfromCheck, Number(currentChannelId), Number(resultWithSortedMedia[0].chat.id))
-
+                            const messagesFromOthers = resultWithSortedMedia.filter(message => String(message.chat.id) !== String(currentChannelId));
 
                             if (meta.tgfromask.value && messagesFromChannel.length && !this.openedDialog) {
 
@@ -12683,16 +12692,19 @@ Platform = function (app, listofnodes) {
 
                             } else if (meta.tgfromask.value && this.openedDialog){
 
-                                const messagesFromOthers = resultWithSortedMedia.filter(message => String(message.chat.id) !== String(currentChannelId));
 
                                 this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId);
 
 
                             } else if (!meta.tgfromask.value){
 
-                                this.applyMessagesFromTG(messagesFromChannel, true, currentChannelId);
+                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId);
 
                                 
+                            } else {
+                                
+                                this.applyMessagesFromTG(messagesFromOthers);
+
                             }{
 
 
@@ -12720,7 +12732,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     fetch(url, settings)
-                    .then(data => data.json())
+                    .then(data => {console.log('data', data); return data.json()})
                     .then(data => telegramData(data))
 
 
