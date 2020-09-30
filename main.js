@@ -399,8 +399,8 @@ function createWindow() {
     })
 
 
-    var pi = new proxyInterface(ipcMain, win.webContents)
-    pi.init()
+    // var pi = new proxyInterface(ipcMain, win.webContents)
+    // pi.init()
     // Вызывается, когда окно будет закрыто.
     return win
 }

@@ -3525,7 +3525,7 @@ Platform = function (app, listofnodes) {
                         if (m[i].type === "VALUES") {
 
 
-                            const idx = m[i].possibleValues.indexOf(String(v));
+                            var idx = m[i].possibleValues.indexOf(String(v));
                             m[i].value = m[i].possibleValuesLabels[idx];
                             m[i].valueId = Number(v);
                             // setTimeout(() => {$(`div[pid=${i}] input`).val(m[i].possibleValuesLabels[idx])}, 0)
@@ -9938,40 +9938,28 @@ Platform = function (app, listofnodes) {
 
                     common: function (inputs, obj, fees, clbk, p, fromTG) {
 
-                        const savedObj = JSON.parse(JSON.stringify(obj));
+                        var _this = this;
 
+                        var savedObj = JSON.parse(JSON.stringify(obj));
+                      
                         if (!fromTG && self.app.user.features.telegram) {
-
-                            const {
-                                meta
-                            } = self.sdk.usersettings;
-
-                            if (!meta.tgtoask.value) {
-
-                                this.telegramSend(obj, meta)
-
-                            } else {
-
-                                // this.telegramSend = this.telegramSend.bind(this)
-
-                                dialog({
-                                    html: "Do you really want send message to Telegram?",
-                                    btn1text: "Send",
-                                    btn2text: "Cancel",
-
-                                    class: 'zindex',
-
-                                    success: () => {
-
-                                        this.telegramSend(savedObj, meta)
-
-                                    }
-                                })
-
-                            }
-
+                          var meta = self.sdk.usersettings.meta;
+                      
+                          if (!meta.tgtoask.value) {
+                            this.telegramSend(obj, meta);
+                          } else {
+                            // this.telegramSend = this.telegramSend.bind(this)
+                            dialog({
+                              html: "Do you really want send message to Telegram?",
+                              btn1text: "Send",
+                              btn2text: "Cancel",
+                              class: 'zindex',
+                              success: function success() {
+                                _this.telegramSend(savedObj, meta);
+                              }
+                            });
+                          }
                         }
-
 
                         if (!p) p = {};
 
@@ -10202,102 +10190,74 @@ Platform = function (app, listofnodes) {
 
                     telegramSend: function (message, meta) {
 
-                        const filterHtml = (input) => {
-
-                            const removeEmptyHref = (html) => {
-
-                                const newHtml = html.replace(/<a href>(.*)<\/a>/g, '$1').replace(/<a>(.*)<\/a>/g, '$1');
-
+                        var filterHtml = function filterHtml(input) {
+                            var removeEmptyHref = function removeEmptyHref(html) {
+                                var newHtml = html.replace(/<a href>(.*)<\/a>/g, '$1').replace(/<a>(.*)<\/a>/g, '$1');
                                 return newHtml;
-                            }
-
-                            const allowedTags = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'a', 'code', 'pre'];
-
-                            const options = {
-                                allowedTags,
-
-                                allowedAttributes: {
-                                    'a': ['href'],
-                                },
                             };
-
-                            const sanitizedHtml = sanitizeHtml(input, options);
-
+                        
+                            var allowedTags = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'a', 'code', 'pre'];
+                            var options = {
+                                allowedTags: allowedTags,
+                                allowedAttributes: {
+                                'a': ['href']
+                                }
+                            };
+                            var sanitizedHtml = sanitizeHtml(input, options);
                             return removeEmptyHref(sanitizedHtml);
-                        }
-
-                        const token = meta.telegram.value;
-
-                        const channelIdx = meta.tgto.possibleValuesLabels.indexOf(meta.tgto.value);
-                        const channel = Number(meta.tgto.possibleValues[channelIdx]);
-
-                        const parameters = {
+                            };
+                        
+                            var token = meta.telegram.value;
+                            var channelIdx = meta.tgto.possibleValuesLabels.indexOf(meta.tgto.value);
+                            var channel = Number(meta.tgto.possibleValues[channelIdx]);
+                            var parameters = {
                             method: 'POST',
                             chat_id: channel,
                             parse_mode: 'HTML'
-                        }
-
-                        const title = message.caption.v ? '<b>' + message.caption.v + '</b>' : '';
-
-                        let caption = title + '\n ' + message.message.v + '\n ';
-
-                        const images = message.images.v;
-
-                        caption = caption.replace(/<br>|<br\/>/g, '\n');
-                        caption = caption.replace(/<\/p>/g, "</p>\n");
-                        caption = filterHtml(caption);
-
-
-                        console.log(token, channelIdx, channel, 'sendTelegram');
-
-                        let action = 'sendMessage';
-                        let captionName = 'text';
-
-                        if (images.length === 1) {
-
+                            };
+                            var title = message.caption.v ? '<b>' + message.caption.v + '</b>' : '';
+                            var caption = title + '\n ' + message.message.v + '\n ';
+                            var images = message.images.v;
+                            caption = caption.replace(/<br>|<br\/>/g, '\n');
+                            caption = caption.replace(/<\/p>/g, "</p>\n");
+                            caption = filterHtml(caption);
+                            console.log(token, channelIdx, channel, 'sendTelegram');
+                            var action = 'sendMessage';
+                            var captionName = 'text';
+                        
+                            if (images.length === 1) {
                             action = 'sendPhoto';
                             captionName = 'caption';
                             parameters.photo = images[0];
-
-                        } else if (images.length > 1) {
-
+                            } else if (images.length > 1) {
                             action = 'sendMediaGroup';
                             captionName = 'caption';
-                            const imagesGroup = images.map((file, idx) => {
-
-                                const newFile = {
-                                    type: 'photo',
-                                    media: file
+                            var imagesGroup = images.map(function (file, idx) {
+                                var newFile = {
+                                type: 'photo',
+                                media: file
                                 };
-
+                        
                                 if (idx === 1) {
-
-                                    newFile.parse_mode = "HTML";
-                                    newFile.caption = caption;
-
+                                newFile.parse_mode = "HTML";
+                                newFile.caption = caption;
                                 }
-
+                        
                                 return newFile;
-
-                            })
-
+                            });
                             parameters.media = JSON.stringify(imagesGroup);
-                        }
-
-                        parameters[captionName] = caption;
-
-                        // const parameters = `?chat_id=${channel}${media}&${captionName}=${caption}&parse_mode=HTML`
-
-                        let query = `https://api.telegram.org/bot${token}/${action}`;
-                        const paramStr = $.param(parameters);
-
-                        console.log('paramStr', paramStr);
-
-                        fetch(query + '?' + paramStr)
-                            .then(data => data.json())
-                            .then(result => {
-                                console.log(result, 'result')
-                            })
+                            }
+                        
+                            parameters[captionName] = caption; // const parameters = `?chat_id=${channel}${media}&${captionName}=${caption}&parse_mode=HTML`
+                        
+                            var query = "https://api.telegram.org/bot" + token + "/" + action;
+                            var paramStr = $.param(parameters);
+                            console.log('paramStr', paramStr);
+                            fetch(query + '?' + paramStr).then(function (data) {
+                            return data.json();
+                            }).then(function (result) {
+                            console.log(result, 'result');
+                            });
 
                     },
 
@@ -12132,9 +12092,13 @@ Platform = function (app, listofnodes) {
 
                         const addValue = (dropdownName, channelName, channelId) => {
 
-                            if (meta[dropdownName].possibleValues.indexOf(String(channelId)) === -1) {
+                            var channelIdString = String(channelId);
 
-                                meta[dropdownName].possibleValues.push(String(channelId));
+                            var channelIdx = meta[dropdownName].possibleValues.indexOf(channelIdString);
+
+                            if (channelIdx === -1) {
+
+                                meta[dropdownName].possibleValues.push(channelIdString);
                                 meta[dropdownName].possibleValuesLabels.push(channelName);
 
                                 const $tgDropdown = $(`div[parameter='${dropdownName}'] .vc_selectInput`);
@@ -12142,6 +12106,9 @@ Platform = function (app, listofnodes) {
                                 const newValueHTML = $.parseHTML(newValue);
                                 $tgDropdown.append(newValueHTML);
 
+                            } else if (meta[dropdownName].possibleValuesLabels.indexOf(channelName) === -1){
+
+                                meta[dropdownName].possibleValuesLabels[channelIdx] = channelName;
                             }
 
                         }
@@ -12512,310 +12479,295 @@ Platform = function (app, listofnodes) {
                 },
 
                 dialogOfTG: function (messages, currentChannelId) {
-                    console.log('dialogOfTG', messages, currentChannelId)
+                    var _this = this;
 
+                    console.log('dialogOfTG', messages, currentChannelId);
+                  
                     if (messages.length && currentChannelId) {
-
-                        this.openedDialog = true;
-
-                        console.log('openedDialog2', this.openedDialog, currentChannelId);
-
-                        dialog({
-                            html: "Do you really want post messages from Telegram?",
-                            btn1text: "Post",
-                            btn2text: "Cancel",
-
-                            class: 'zindex',
-
-                            success: () => {
-
-                                const messages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
-
-                                this.applyMessagesFromTG(messages, true, currentChannelId);
-                                localStorage.setItem("telegramMessages", "[]");
-                                this.openedDialog = false;
-
-
-
-                            },
-
-                            fail: () => {
-
-                                console.log('fail')
-
-                                this.applyMessagesFromTG(messages, false, currentChannelId);
-                                localStorage.setItem("telegramMessages", "[]");
-                                this.openedDialog = false;
-
-                            }
-                        })
+                      this.openedDialog = true;
+                      console.log('openedDialog2', this.openedDialog, currentChannelId);
+                      dialog({
+                        html: "Do you really want post messages from Telegram?",
+                        btn1text: "Post",
+                        btn2text: "Cancel",
+                        class: 'zindex',
+                        success: function success() {
+                          var messages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
+                  
+                          _this.applyMessagesFromTG(messages, true, currentChannelId);
+                  
+                          localStorage.setItem("telegramMessages", "[]");
+                          _this.openedDialog = false;
+                        },
+                        fail: function fail() {
+                          console.log('fail');
+                  
+                          _this.applyMessagesFromTG(messages, false, currentChannelId);
+                  
+                          localStorage.setItem("telegramMessages", "[]");
+                          _this.openedDialog = false;
+                        }
+                      });
                     }
-
                 },
 
                 telegramUpdateAbort: new AbortController(),
 
 
-                telegramUpdates: function (offset = 0, clbk) {
+                telegramUpdates: function (offset, clbk) {
 
-                    if (!offset){
+                    console.log('Firefox telegram');
 
-                        offset = 0;
+                    var _this = this;
+                  
+                    if (offset === void 0) {
+                      offset = 0;
                     }
+                  
+                    if (!offset) {
+                      offset = 0;
+                    }
+                  
                     console.log('offset', offset);
 
                     console.log('start updates');
-                    const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "";
+
+                    var token = JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token || "";
+
                     this.telegramUpdates = this.telegramUpdates.bind(this);
 
-                    const url = `https://api.telegram.org/bot${token}/getUpdates?offset=${offset}&timeout=100`;
+                    var url = "https://api.telegram.org/bot" + token + "/getUpdates?offset=" + offset + "&timeout=100";
 
                     console.log('this.telegramUpdateAbort.signal', this.telegramUpdateAbort.signal);
-                    const settings = {
-                        method: 'GET',
-                        signal: this.telegramUpdateAbort.signal
-                    }
 
-                    const telegramData = data => {
-                        console.log('telegramData');
-                        if (data.ok) {
+                    var settings = {
+                      method: 'GET',
+                      signal: this.telegramUpdateAbort.signal
+                    };
+                  
+                    var telegramData = function telegramData(data) {
 
-                            console.log('telegram updates', data.result)
+                      console.log('telegramData');
+                  
+                      if (data.ok) {
 
-                            const {
-                                result
-                            } = data;
+                        console.log('telegram updates', data.result);
 
-                            let {
-                                meta
-                            } = self.sdk.usersettings;
+                        var result = data.result;
 
-                            const resultWithSortedMedia = [];
+                        var meta = self.sdk.usersettings.meta;
 
-                            result.forEach(messager => {
+                        var resultWithSortedMedia = [];
 
-                                const {
-                                    channel_post
-                                } = messager;
+                        result.forEach(function (messager) {
 
-                                const siblingIdx = resultWithSortedMedia.findIndex(uniqueMessager => {
+                          var channel_post = messager.channel_post;
 
-                                    return channel_post && (channel_post.media_group_id === uniqueMessager.media_group_id);
-                                })
+                          var siblingIdx = resultWithSortedMedia.findIndex(function (uniqueMessager) {
 
-                                if (siblingIdx > -1) {
+                            return channel_post && channel_post.media_group_id === uniqueMessager.media_group_id;
+                            
+                          });
+                  
+                          if (siblingIdx > -1) {
 
-                                    const uniquePost = resultWithSortedMedia[siblingIdx];
+                            var uniquePost = resultWithSortedMedia[siblingIdx];
+                  
+                            if (uniquePost && !uniquePost.capiton && channel_post && channel_post.caption) {
 
-                                    if ((uniquePost && !uniquePost.capiton) && (channel_post && channel_post.caption)) {
-
-                                        uniquePost.caption = channel_post.caption;
-                                    }
-
-                                    if ((uniquePost && !uniquePost.caption_entities) && (channel_post && channel_post.caption_entities)) {
-
-                                        uniquePost.caption_entities = channel_post.caption_entities;
-
-                                    }
-
-                                    let photo = (channel_post.photo && channel_post.photo.length > 1) ?
-                                        channel_post.photo[1] :
-                                        (channel_post.photo && channel_post.photo.length) ?
-                                            channel_post.photo[0] :
-                                            "";
-
-
-                                    if (!uniquePost.photo && channel_post.photo) {
-
-                                        uniquePost.photo = [photo];
-
-                                    } else if (uniquePost.photo && channel_post.photo) {
-
-                                        uniquePost.photo = [...uniquePost.photo, photo];
-
-                                    }
-
-
-                                } else if (channel_post) {
-
-                                    channel_post.photo = [
-                                        (channel_post.photo && channel_post.photo.length > 1) ?
-                                            channel_post.photo[1] :
-                                            channel_post.length ?
-                                                channel_post.photo[0] :
-                                                ""
-                                    ];
-
-                                    resultWithSortedMedia.push(channel_post);
-
-                                }
-
-                            })
-
-                            const {tgfrom} = meta;
-                            const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
-
-                            const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
-
-                            //two flows: first: for posting, second: for new telegramUpdate
-
-                            const prevTelegramMessages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
-
-                            const tgfromCheck = resultWithSortedMedia.findIndex(message => String(message.chat.id) === String(currentChannelId));
-
-                            const messagesFromChannel = resultWithSortedMedia.filter(message => String(message.chat.id) === String(currentChannelId));
-
-                            let allTelegramMessages = [];
-
-                            console.log('resultWith', resultWithSortedMedia)
-                            if (messagesFromChannel.length) {
-
-                                
-                                allTelegramMessages = [...prevTelegramMessages, ...messagesFromChannel];
-
-                            } else {
-
-                                allTelegramMessages = prevTelegramMessages;
-                            }
-
-                            localStorage.setItem("telegramMessages", JSON.stringify(allTelegramMessages));
-
-                            // console.log('check', tgfromCheck, Number(currentChannelId), Number(resultWithSortedMedia[0].chat.id))
-                            const messagesFromOthers = resultWithSortedMedia.filter(message => String(message.chat.id) !== String(currentChannelId));
-
-                            if (meta.tgfromask.value && messagesFromChannel.length && !this.openedDialog) {
-
-                                console.log('into', meta.tgfromask.value, tgfromCheck)
-                                const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
-
-                                this.dialogOfTG(currentMessages, currentChannelId)
-
-                            } else if (meta.tgfromask.value && this.openedDialog){
-
-
-                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId);
-
-
-                            } else if (!meta.tgfromask.value){
-
-                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId);
-
-                                
-                            } else {
-                                
-                                this.applyMessagesFromTG(messagesFromOthers);
-
-                            }{
-
-
-                                if (!this.openedDialog) {
-
-                                    localStorage.setItem("telegramMessages", "[]");
-
-                                }
-
+                              uniquePost.caption = channel_post.caption;
 
                             }
+                  
+                            if (uniquePost && !uniquePost.caption_entities && channel_post && channel_post.caption_entities) {
 
-                            self.sdk.usersettings.save();
+                              uniquePost.caption_entities = channel_post.caption_entities;
 
-                            offset = result.length ? result[result.length - 1].update_id : 0
-                            this.telegramUpdates(offset + 1, clbk);
-
-                            if (clbk) {
-
-                                clbk();
                             }
+                  
+                            var photo = channel_post.photo && channel_post.photo.length > 1 ? channel_post.photo[1] : channel_post.photo && channel_post.photo.length ? channel_post.photo[0] : "";
+                  
+                            if (!uniquePost.photo && channel_post.photo) {
+
+                              uniquePost.photo = [photo];
+
+                            } else if (uniquePost.photo && channel_post.photo) {
+
+                              uniquePost.photo = [].concat(uniquePost.photo, [photo]);
+
+                            }
+                          } else if (channel_post) {
+
+                            channel_post.photo = [channel_post.photo && channel_post.photo.length > 1 ? channel_post.photo[1] : channel_post.length ? channel_post.photo[0] : ""];
+                            resultWithSortedMedia.push(channel_post);
+
+                          }
+                        });
+                        var tgfrom = meta.tgfrom;
+                        var currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
+                        var currentChannelId = tgfrom.possibleValues[currentChannelIdx]; //two flows: first: for posting, second: for new telegramUpdate
+                  
+                        var prevTelegramMessages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
+
+                        var tgfromCheck = resultWithSortedMedia.findIndex(function (message) {
+
+                          return String(message.chat.id) === String(currentChannelId);
+
+                        });
+                        var messagesFromChannel = resultWithSortedMedia.filter(function (message) {
+
+                          return String(message.chat.id) === String(currentChannelId);
+
+                        });
+
+                        var allTelegramMessages = [];
+
+                        console.log('resultWith', resultWithSortedMedia);
+                  
+                        if (messagesFromChannel.length) {
+
+                          allTelegramMessages = [].concat(prevTelegramMessages, messagesFromChannel);
+
+                        } else {
+
+                          allTelegramMessages = prevTelegramMessages;
 
                         }
+                  
+                        localStorage.setItem("telegramMessages", JSON.stringify(allTelegramMessages)); // console.log('check', tgfromCheck, Number(currentChannelId), Number(resultWithSortedMedia[0].chat.id))
+                  
+                        var messagesFromOthers = resultWithSortedMedia.filter(function (message) {
 
-                    }
+                          return String(message.chat.id) !== String(currentChannelId);
 
-                    fetch(url, settings)
-                    .then(data => {console.log('data', data); return data.json()})
-                    .then(data => telegramData(data))
+                        });
+                  
+                        if (meta.tgfromask.value && messagesFromChannel.length && !_this.openedDialog) {
 
+                          console.log('into', meta.tgfromask.value, tgfromCheck);
+                          var currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
+                  
+                          _this.dialogOfTG(currentMessages, currentChannelId);
 
+                        } else if (meta.tgfromask.value && _this.openedDialog) {
+
+                          _this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId);
+
+                        } else if (!meta.tgfromask.value) {
+
+                          _this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId);
+
+                        } else {
+
+                          _this.applyMessagesFromTG(messagesFromOthers);
+
+                        }
+                  
+                        {
+                          if (!_this.openedDialog) {
+                            localStorage.setItem("telegramMessages", "[]");
+                          }
+                        }
+                        self.sdk.usersettings.save();
+                        offset = result.length ? result[result.length - 1].update_id : 0;
+                  
+                        _this.telegramUpdates(offset + 1, clbk);
+                  
+                        if (clbk) {
+                          clbk();
+                        }
+
+                      }
+
+                    };
+                    
+                    console.log('last?', url, settings)
+                
+                    fetch(url, settings).then(function (data) {
+
+                        console.log('into Fetch')
+                        console.log('data', data);
+
+                        return data.json();
+
+                    }).then(function (data) {
+
+                        console.log('fetch data', data);
+                        return telegramData(data);
+
+                    });
                 },
 
 
                 telegramGetMe: function (token, abort) {
 
+                    var _this = this;
+
                     if (abort) {
-                        this.telegramUpdateAbort.abort()
+                        this.telegramUpdateAbort.abort();
                         this.telegramUpdateAbort = new AbortController();
                     }
 
-                    const div = document.createElement('div');
-                    const i = document.createElement('i');
-                    const telegramInputWrapper = document.querySelector("div[parameter='telegram']");
+                    var div = document.createElement('div');
+                    var i = document.createElement('i');
+                    var telegramInputWrapper = document.querySelector("div[parameter='telegram']");
 
                     if (telegramInputWrapper) {
-
                         telegramInputWrapper.setAttribute("style", "display: flex");
-
                     }
 
                     div.classList.add("iWrapper");
-                    const current = document.querySelector("div[parameter='telegram'] .iWrapper");
-                    console.log('current', current)
+                    var current = document.querySelector("div[parameter='telegram'] .iWrapper");
+                    console.log('current', current);
 
                     if (current) {
                         current.remove();
                     }
 
                     if (token) {
+                        fetch("https://api.telegram.org/bot" + token + "/getMe").then(function (data) {
+                        return data.json();
+                        }).then(function (json) {
+                        var addIcon = function addIcon(icon, color) {
+                            if (telegramInputWrapper) {
+                            div.setAttribute("style", "color:" + color + "; display:inline-block; font-size:30px; padding: 5px; margin-left: 1em");
+                            i.classList.add("fa");
+                            i.classList.add(icon);
+                            div.appendChild(i);
+                            telegramInputWrapper.appendChild(div);
+                            json.result.token = token;
+                            useToken(json.result);
+                            }
+                        };
 
-                        fetch(`https://api.telegram.org/bot${token}/getMe`)
-                            .then(data => data.json())
-                            .then(json => {
+                        if (json.ok) {
 
-                                const addIcon = (icon, color) => {
+                            addIcon("fa-check-circle", "green");
 
-                                    if (telegramInputWrapper) {
+                            var tgfrom = self.sdk.usersettings.meta.tgfrom;
+                            var currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
+                            var currentChannelId = tgfrom.possibleValues[currentChannelIdx];
 
-                                        div.setAttribute("style", `color:${color}; display:inline-block; font-size:30px; padding: 5px; margin-left: 1em`);
-                                        i.classList.add("fa");
-                                        i.classList.add(icon);
-                                        div.appendChild(i);
-                                        telegramInputWrapper.appendChild(div);
-                                        json.result.token = token;
-                                        useToken(json.result);
+                            _this.dialogOfTG(JSON.parse(localStorage.getItem("telegramMessages") || "[]"), currentChannelId);
 
-                                    }
-                                }
+                            _this.telegramUpdates();
 
-                                if (json.ok) {
+                        } else {
 
-                                    addIcon("fa-check-circle", "green")
+                            addIcon("fa-times", "red");
+                        }
+                        }).catch(function (err) {
 
-                                    const {
-                                        tgfrom
-                                    } = self.sdk.usersettings.meta;
-                                    const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
-
-                                    const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
-
-                                    this.dialogOfTG(JSON.parse(localStorage.getItem("telegramMessages") || "[]"), currentChannelId);
-                                    this.telegramUpdates();
-
-
-                                } else {
-
-                                    addIcon("fa-times", "red");
-
-                                }
-                            })
-                            .catch(err => {
-                                if (err)
-                                    console.log(err, 'error after try telegram update')
-                            })
+                            if (err) console.log(err, 'error after try telegram update');
+                            
+                        });
                     }
 
                     function useToken(json) {
 
-                        console.log(json)
+                        console.log(json);
                         localStorage.setItem("telegrambot", JSON.stringify(json));
+
                     }
 
                 },
