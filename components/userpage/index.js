@@ -498,6 +498,8 @@ var userpage = (function(){
 					}, function(_p){
 	
 					})
+
+					
 				}
 
 				
@@ -526,6 +528,7 @@ var userpage = (function(){
 						
 
 						self.shell({
+							
 
 							name :  'contents',
 							el :   el.contents,
@@ -824,6 +827,7 @@ var userpage = (function(){
 				ed = deep(p, 'settings.essenseData') || {}
 				
 				init();
+
 
 				var data = {};
 

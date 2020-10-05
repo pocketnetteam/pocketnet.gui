@@ -73,6 +73,7 @@ User = function(app, p) {
 
 
 	self.data = {};
+	self.features = {};
 	
 	self.tokenExpired = function(){
 
@@ -181,8 +182,11 @@ User = function(app, p) {
 		})
 
 	}
-	
+
+
 	self.prepare = function(clbk){
+
+		
 
 		self.tokenExpired();
 
@@ -267,6 +271,7 @@ User = function(app, p) {
 		
 	}
 
+	self.features = {};
 	self.signout = function(clbk){
 
 		state = 0;

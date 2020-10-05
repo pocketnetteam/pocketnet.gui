@@ -3199,11 +3199,12 @@
 							open()
 						})
 					}
-
 					_el.find('.vc_value').on('click', function(){
 						bkp = null;
 
 						var value = $(this).attr('value');
+
+							console.log('this', this, $(this));
 
 							input.val(value);
 							input.change();
@@ -5179,13 +5180,13 @@
 
 		self.collectValues = function(){
 			var value = {};
-
+			
 			_.each(self.content, function(p, index){
 				if(p.value){
 					value[index] = p.value;
 				}
 			})
-
+			console.log('InOnChange', value)
 			self.set(value)
 		}
 
@@ -9541,7 +9542,7 @@
 
 	    	}
 	    }
-
+		
 	    return {
 	        type: type,
 	        url : url,
