@@ -289,6 +289,14 @@ var Proxy = function (settings) {
                 if (clbk) clbk(err)
             })
         },
+        stop: function(clbk) {
+            if (nodeControl) {
+                nodeControl.kit.stop(function() {
+                    nodeControl = null
+                    if (clbk) clbk()
+                })
+            }
+        },
         get instance() {
             return nodeControl
         }
@@ -473,7 +481,8 @@ var Proxy = function (settings) {
 
         },
 
-        stop: function () {
+        stop: function (clbk) {
+            self.nodeControl.stop(clbk)
             self.db.destroy()
             self.processes.destroy()
             self.ws.destroy()

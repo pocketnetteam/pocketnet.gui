@@ -94,10 +94,14 @@ var defaultSettings = {
     iplimiter : true,
 
     node: {
-        Enable: false,
+        Enable: true,
         BinPath: '',
         ConfigPath: '',
         DataPath: '',
+        control: {
+            state: '',
+            running: false,
+        },
     },
 	
 }
@@ -309,10 +313,9 @@ var kit = {
 
 	},
 
-	stop : function(){
+	stop : function(clbk){
 		if (proxy){
-			proxy.kit.stop()
-			proxy = null
+			proxy.kit.stop(clbk)
 		}
 	},
 
@@ -424,6 +427,31 @@ var ipcInterface = function(ipc, wc){
 		})
 	}
 
+	var handleMessage = function(e, message) {
+		
+		if(!message.action) return
+		if(!message.id) message.id = makeid()
+
+		//node.exist
+
+		deep(actions, message.action)(message)
+
+	}
+
+	var tick = function() {
+        if (!proxy) return
+        if (!proxy.nodeControl.instance) return
+
+        proxy.nodeControl.instance.kit.state(function() {
+            var message = {
+                settings : settings,
+                proxyReady : true
+            }
+    
+            send('state', null, message, 'proxy-message-tick')
+        })
+	}
+    
 	var actions = {
 
 		set : function(message){
@@ -480,34 +508,6 @@ var ipcInterface = function(ipc, wc){
 		}
     }
 
-	var handleMessage = function(e, message) {
-		
-		if(!message.action) return
-		if(!message.id) message.id = makeid()
-
-		//node.exist
-
-		deep(actions, message.action)(message)
-
-	}
-
-	var tick = function() {
-
-        proxy.nodeControl.instance.kit.running(function(running) {
-            send('state', null, {}, 'proxy-message-tick')
-        })
-
-
-		var message = {
-			settings : settings,
-			state : {},
-			proxyReady : proxy ? true : false
-		}
-
-		send('state', null, message, 'proxy-message-tick')
-	}
-
-
 	self.init = function(){
 		ipc.on('proxy-message', handleMessage)
 
@@ -522,7 +522,11 @@ var ipcInterface = function(ipc, wc){
 
 			tickInterval = null
 		}
-	}
+    }
+    
+    self.stop = function(clbk) {
+        kit.stop(clbk)
+    }
 
 	return self
 }

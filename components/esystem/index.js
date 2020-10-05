@@ -31,29 +31,19 @@ var esystem = (function () {
 
         var renders = {
 
-            node: {
-                tick: function() {
-                    console.log('node.tick fired 11')
-                }
-            },
-
             nodeControl: function (clbk) {
                 var composed = null;
 
                 if (self.sdk.esystem.tickstate) {
                     let state = deep(self, 'sdk.esystem.tickstate.settings.node')
-                    state.control = {
-                        state: 'node is running'
-                    }
                     composed = self.sdk.esystem.node.settings.compose(state)
                 }
 
                 renders.options(composed, el.nodecontrolcnt, function (p) {
 
                     p.el.find('input[pid="Enable"]').on('change', function (e) {
-                        self.sdk.esystem.request('node.enable', { v: e.target.checked }, function (err, data) {
-                            console.log(err, data)
-                            e.target.checked = data
+                        self.sdk.esystem.request('node.enable', { v: e.target.checked }, function (data) {
+                            //e.target.checked = data
                         })
                     });
 
@@ -128,7 +118,7 @@ var esystem = (function () {
             self.sdk.esystem.clbks.tick.esystem = function (settings, changed) {
                 if (changed) {
                     renders.proxyOptions()
-                    // renders.nodeControl()
+                    renders.nodeControl()
                 }
             }
 

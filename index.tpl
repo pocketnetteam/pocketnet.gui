@@ -31,15 +31,6 @@
         font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src *">
 
-        <?php 
-        
-            require_once('php/og.php'); 
-
-            $og = new OG($_GET);
-
-            $og->get();
-            $og->echotags();
-        ?>
 
         __CSS__
         
