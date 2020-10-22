@@ -300,7 +300,7 @@ var kit = {
 
 		if(!proxy){
 
-			proxy = new Proxy(settings)
+            proxy = new Proxy(settings)
 
 			proxy.kit.start(function(){
 
@@ -510,14 +510,12 @@ var ipcInterface = function(ipc, wc){
 
             getWallet: function (message) {
                 proxy.nodeControl.instance.kit.getWallet(message.data, function(err, data) {
-                    helpers.rewriteSettings()
                     send(message.id, err, data)
                 })
             },
 
             setWallet: function (message) {
                 proxy.nodeControl.instance.kit.setWallet(message.data, function(err, data) {
-                    helpers.rewriteSettings()
                     send(message.id, err, data)
                 })
             },
@@ -528,7 +526,7 @@ var ipcInterface = function(ipc, wc){
 	self.init = function(){
 		ipc.on('proxy-message', handleMessage)
 
-		tickInterval = setInterval(tick, 2500)
+        tickInterval = setInterval(tick, 2500)
 	}
 
 	self.destroy = function(){

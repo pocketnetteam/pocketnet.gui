@@ -36,7 +36,6 @@ var NodeControl = function(p) {
             if (!p.settings.node.BinPath) p.settings.node.BinPath = Path.join(process.env.INIT_CWD, 'nodeserver', this.bin_name)
             if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(process.env.INIT_CWD, 'nodeserver', 'data')
             if (!p.settings.node.ConfigPath) p.settings.node.ConfigPath = Path.join(process.env.INIT_CWD, 'nodeserver', 'data', 'pocketcoin.conf')
-            // TODO (brangr): save settings
 
             // create catalogs if not exists
             if (!fs.existsSync(p.settings.node.DataPath))
@@ -205,6 +204,7 @@ var NodeControl = function(p) {
         enable: function(data, clbk) {
             p.settings.node.Enable = data.v
             p.settings.node.Timestamp = new Date()
+            if (clbk) clbk()
         },
 
         rpc: function(method, prms, success, failed) {
@@ -257,8 +257,6 @@ var NodeControl = function(p) {
                     if (clbk) clbk(err, data.data.message)
                 }
             )
-
-            self.kit.getNodeAddresses()
         },
 
 
