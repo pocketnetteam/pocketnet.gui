@@ -291,6 +291,7 @@ ____loclib.upvoteShareMessage = "поставил оценку ващему по
 
 // Errors
 
+____loclib.error = "Ошибка";
 ____loclib.checkScoreError = "Необходимо заполнить профиль перед тем как пользоваться Pocketnet. Вы бы хотели сделать это сейчас?";
 ____loclib.checkScoreErrorLight = "Аккаунт не активирован";
 ____loclib.timestamperror = "Время в приложении и на ноде не совпадают";
@@ -314,3 +315,5 @@ ____loclib.noMoneyError = "У вас нет денег";
 
 ____loclib.waitConf = "Пожалуйста подождите пока предыдущие транзакции будут обработаны";
 ____loclib.postWaitConf = "Пост ожидает подтверждения";
+
+____loclib.nodeWalletAdd = 'Добавление адреса может занять некоторое время. Продолжить?'

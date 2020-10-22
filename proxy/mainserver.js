@@ -98,8 +98,11 @@ var defaultSettings = {
         BinPath: '',
         ConfigPath: '',
         DataPath: '',
+        SetPrivateKey: false,
         control: {
-            state: '',
+            state: '-',
+            addresses: '-',
+            lastBlock: '-',
             running: false,
         },
     },
@@ -437,8 +440,8 @@ var ipcInterface = function(ipc, wc){
 		deep(actions, message.action)(message)
 
 	}
-
-	var tick = function() {
+    
+    var tick = function() {
         if (!proxy) return
         if (!proxy.nodeControl.instance) return
 
@@ -503,7 +506,21 @@ var ipcInterface = function(ipc, wc){
                     helpers.rewriteSettings()
                     send(message.id, null, data)
                 })
-            }
+            },
+
+            getWallet: function (message) {
+                proxy.nodeControl.instance.kit.getWallet(message.data, function(err, data) {
+                    helpers.rewriteSettings()
+                    send(message.id, err, data)
+                })
+            },
+
+            setWallet: function (message) {
+                proxy.nodeControl.instance.kit.setWallet(message.data, function(err, data) {
+                    helpers.rewriteSettings()
+                    send(message.id, err, data)
+                })
+            },
 
 		}
     }

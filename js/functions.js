@@ -3817,7 +3817,9 @@
 
 			self.operatorSelect = p.operatorSelect || null;
 			self.operator = p.operator || null;
-			self.if = p.if || null;
+            self.if = p.if || null;
+            
+            self.text = p.text || null;
 
 		if(self.type.indexOf('range') > -1) self.dbFunc = 'fromto'
 
@@ -4763,6 +4765,10 @@
             
             if(self.type == 'label'){
 				return '<div pid="'+self.id+'" class="simpleColor inpLabel">' + self.value + '</div>';
+            }
+            
+            if(self.type == 'button'){
+				return '<button pid="'+self.id+'" class="simpleColor inpButton" value="' + self.value + '">' + self.text + '</button>';
 			}
 
 			var input = '<input '+__disabled+' ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';

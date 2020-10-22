@@ -11779,13 +11779,37 @@ Platform = function (app, listofnodes) {
                             value: '',
                             dbId: 'DataPath'
                         },
+                        SetPrivateKey: {
+                            name: 'Use Default Address',
+                            id: 'setPrivateKey',
+                            type: "BUTTON",
+                            value: '#link_to_wallets',
+                            text: 'Set your address for staking',
+                            dbId: 'SetPrivateKey'
+                        },
 
                         state: {
                             name: 'State',
-                            id: '_state',
+                            id: 'state',
                             type: "LABEL",
                             value: '',
                             dbId: 'control.state'
+                        },
+
+                        addresses: {
+                            name: 'Staking addresses',
+                            id: 'addresses',
+                            type: "LABEL",
+                            value: '',
+                            dbId: 'control.addresses'
+                        },
+
+                        lastBlock: {
+                            name: 'Last Block',
+                            id: 'lastBlock',
+                            type: "LABEL",
+                            value: '-',
+                            dbId: 'control.lastBlock'
                         }
                     },
 
@@ -11832,6 +11856,8 @@ Platform = function (app, listofnodes) {
                                 options: {
 
                                     state: options.state,
+                                    lastBlock: options.lastBlock,
+                                    addresses: options.addresses,
 
                                 }
                             },
@@ -11844,6 +11870,7 @@ Platform = function (app, listofnodes) {
                                     BinPath: options.BinPath,
                                     ConfigPath: options.ConfigPath,
                                     DataPath: options.DataPath,
+                                    SetPrivateKey: options.SetPrivateKey,
 
                                 }
                             },

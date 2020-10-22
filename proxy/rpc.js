@@ -194,7 +194,7 @@ RpcClient.callspec = {
     getWork: '',
     help: '',
     //importAddress: 'str str bool',
-    //importPrivKey: 'str str bool',
+    importPrivKey: 'str str bool',
     invalidateBlock: 'str',
     keyPoolRefill: '',
     //listAccounts: 'int',
