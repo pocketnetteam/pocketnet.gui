@@ -33,9 +33,9 @@ var NodeControl = function(p) {
         init: function() {
 
             // change global settings
-            if (!p.settings.node.BinPath) p.settings.node.BinPath = Path.join(process.env.INIT_CWD, 'nodeserver', this.bin_name)
-            if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(process.env.INIT_CWD, 'nodeserver', 'data')
-            if (!p.settings.node.ConfigPath) p.settings.node.ConfigPath = Path.join(process.env.INIT_CWD, 'nodeserver', 'data', 'pocketcoin.conf')
+            if (!p.settings.node.BinPath) p.settings.node.BinPath = Path.join(Path.dirname(process.execPath), 'nodeserver', 'pocketcoind.exe')
+            if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(Path.dirname(process.execPath), 'nodeserver', 'data')
+            if (!p.settings.node.ConfigPath) p.settings.node.ConfigPath = Path.join(Path.dirname(process.execPath), 'nodeserver', 'data', 'pocketcoin.conf')
 
             // create catalogs if not exists
             if (!fs.existsSync(p.settings.node.DataPath))
