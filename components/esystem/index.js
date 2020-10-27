@@ -47,6 +47,24 @@ var esystem = (function() {
                         })
                     });
 
+                    p.el.find('button[pid="binPath_Selector"]').on('click', function(e) {
+                        self.sdk.esystem.request('node.setBinPath', {}, function(er, msg) {
+                            p.el.find('input[pid="binPath"]').prop('value', msg)
+                        })
+                    });
+
+                    p.el.find('button[pid="dataPath_Selector"]').on('click', function(e) {
+                        self.sdk.esystem.request('node.setDataPath', {}, function(er, msg) {
+                            p.el.find('input[pid="dataPath"]').prop('value', msg)
+                        })
+                    });
+
+                    p.el.find('button[pid="confPath_Selector"]').on('click', function(e) {
+                        self.sdk.esystem.request('node.setConfPath', {}, function(er, msg) {
+                            p.el.find('input[pid="confPath"]').prop('value', msg)
+                        })
+                    });
+
                     p.el.find('button[pid="setPrivateKey"]').on('click', function(e) {
                         e.preventDefault()
 

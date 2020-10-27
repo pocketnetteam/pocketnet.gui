@@ -4764,14 +4764,21 @@
             }
             
             if(self.type == 'label'){
-				return '<div pid="'+self.id+'" class="simpleColor inpLabel">' + self.value + '</div>';
+				return `<div ${__disabled} ${m} pid="${self.id}" class="simpleColor inpLabel">${self.value}</div>`
+            }
+
+            if(self.type == 'file_select'){
+                return `
+                    <input ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
+                    <button ${__disabled} ${m} pid="${self.id}_Selector" class="simpleColor inpButton btn_select">...</button>
+                `;
             }
             
             if(self.type == 'button'){
-				return '<button pid="'+self.id+'" class="simpleColor inpButton" value="' + self.value + '">' + self.text + '</button>';
+				return `<button ${__disabled} ${m} pid="${self.id}" class="simpleColor inpButton" value="${self.value}">${self.text}</button>`
 			}
 
-			var input = '<input '+__disabled+' ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';
+			var input = `<input ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
 
 			return input; 
 		}

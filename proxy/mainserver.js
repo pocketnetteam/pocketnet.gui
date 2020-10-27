@@ -96,7 +96,7 @@ var defaultSettings = {
     node: {
         Enable: true,
         BinPath: '',
-        ConfigPath: '',
+        ConfPath: '',
         DataPath: '',
         SetPrivateKey: false,
         control: {
@@ -516,6 +516,27 @@ var ipcInterface = function(ipc, wc){
 
             setWallet: function (message) {
                 proxy.nodeControl.instance.kit.setWallet(message.data, function(err, data) {
+                    send(message.id, err, data)
+                })
+            },
+
+            setBinPath: function (message) {
+                proxy.nodeControl.instance.kit.setBinPath(message.data, function(err, data) {
+                    helpers.rewriteSettings()
+                    send(message.id, err, data)
+                })
+            },
+
+            setConfPath: function (message) {
+                proxy.nodeControl.instance.kit.setConfPath(message.data, function(err, data) {
+                    helpers.rewriteSettings()
+                    send(message.id, err, data)
+                })
+            },
+
+            setDataPath: function (message) {
+                proxy.nodeControl.instance.kit.setDataPath(message.data, function(err, data) {
+                    helpers.rewriteSettings()
                     send(message.id, err, data)
                 })
             },

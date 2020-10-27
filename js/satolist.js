@@ -11744,6 +11744,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            // node control settings
             node: {
                 settings: {
                     meta: {
@@ -11758,23 +11759,23 @@ Platform = function (app, listofnodes) {
                         BinPath: {
                             name: 'Binary path',
                             id: 'binPath',
-                            type: "FILE",
+                            type: "FILE_SELECT",
                             upload: {},
                             value: '',
                             dbId: 'BinPath'
                         },
-                        ConfigPath: {
+                        ConfPath: {
                             name: 'Config path',
-                            id: 'configPath',
-                            type: "FILE",
+                            id: 'confPath',
+                            type: "FILE_SELECT",
                             upload: {},
                             value: '',
-                            dbId: 'ConfigPath'
+                            dbId: 'ConfPath'
                         },
                         DataPath: {
                             name: 'Data path',
                             id: 'dataPath',
-                            type: "FILE",
+                            type: "FILE_SELECT",
                             upload: {},
                             value: '',
                             dbId: 'DataPath'
@@ -11867,8 +11868,6 @@ Platform = function (app, listofnodes) {
                                 options: {
 
                                     Enable: options.Enable,
-                                    BinPath: options.BinPath,
-                                    ConfigPath: options.ConfigPath,
                                     DataPath: options.DataPath,
                                     SetPrivateKey: options.SetPrivateKey,
 
