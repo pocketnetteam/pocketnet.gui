@@ -1,11 +1,12 @@
-
 var Path = require('path');
+const { dialog } = require('electron')
 const fs = require('fs');
 const child_process = require('child_process');
+const { EOL } = require('os');
+const { start } = require('repl');
 
 
-
-var NodeControl = function (p) {
+var NodeControl = function(p) {
     if (!p) p = {};
 
     var self = this;
@@ -13,161 +14,300 @@ var NodeControl = function (p) {
     self.ini = {
 
         node: {
-            active: false,
-            instance: null
-        },
-
-        settings: {
-            base_join_path: function (path) {
-                return Path.join(this.base_dir, 'nodeserver', path)
-            },
-            get base_dir() {
-                return process.env.INIT_CWD
-            },
-            get bin_path() { return this.base_join_path('pocketcoind.exe') },
-            get config_path() { return Path.join(this.data_dir, 'pocketcoin.conf') },
-            get data_dir() { return this.base_join_path('data') },
+            instance: null,
+            state: '',
+            getnodeinfo: false,
+            binPath: '',
+            confPath: '',
         },
 
         config: {
             rpchost: '127.0.0.1',
             rpcport: 38081,
-            rpcuser: 'test',
-            rpcpass: 'test'
+            rpcuser: '',
+            rpcpassword: '',
         },
 
     }
 
     self.kit = {
 
-        init: function () {
-            console.log('++++', 'init')
-            // определить путь до бинарников ноды
-            // определить путь до конфига
+        init: function() {
 
-            if (!fs.existsSync(self.ini.settings.base_dir))
-                fs.mkdirSync(self.ini.settings.base_dir);
+            // change global settings
+            self.ini.node.binPath = Path.join(Path.dirname(process.execPath), self.kit.bin_name('pocketcoind'))
+            if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(Path.dirname(process.execPath), 'pocketcoin')
 
-            if (!fs.existsSync(self.ini.settings.data_dir))
-                fs.mkdirSync(self.ini.settings.data_dir);
+            // create catalogs if not exists
+            if (!fs.existsSync(p.settings.node.DataPath))
+                fs.mkdirSync(p.settings.node.DataPath, { recursive: true });
 
+            // create pocketcoin.conf
+            self.ini.node.confPath = Path.join(p.settings.node.DataPath, self.kit.conf_name())
+            if (!fs.existsSync(self.ini.node.confPath)) {
+                let data = 'server=1' + EOL +
+                    'port=36060' + EOL +
+                    'rpcport=36061' + EOL +
+                    'wsport=36062' + EOL +
+                    'rpcallowip=0.0.0.0/0' + EOL +
+                    'rpchost=localhost' + EOL +
+                    'rpcuser=' + randomString(10) + EOL +
+                    'rpcpassword=' + randomString(16) + EOL +
+                    'wsuse=1' + EOL
 
-            // если пути нашлись
-            // прочитать конфиг
-            // прочитать настройки из базы
-
-            // определить текущий статус ноды - вызов по RPC ?
-
-        },
-
-        get state() {
-            console.log('pre getblockchaininfo')
-            this.rpc('getblockchaininfo', [], function (data, err) {
-                console.log('>>>>>>>>>>> ', data, err)
-            })
-            /*- start / stop / worked / shutdown*/
-            /* RPC вызов проверка запуска */
-        },
-
-        running: function (clbk) {
-            const win = 'pocketcoind.exe'
-            const mac = 'pocketcoind'
-            const linux = 'pocketcoind'
-
-            const cmd = process.platform == 'win32' ? 'tasklist' : (process.platform == 'darwin' ? 'ps -ax | grep ' + mac : (process.platform == 'linux' ? 'ps -A' : ''))
-            const proc = process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : ''))
-            if (cmd === '' || proc === '') {
-                resolve(false)
+                fs.writeFileSync(self.ini.node.confPath, data)
             }
 
-            child_process.exec(cmd, function (err, stdout, stderr) {
-                if (clbk) clbk(stdout.toLowerCase().indexOf(proc.toLowerCase()) > -1)
+            // read pocketcoin.conf
+            let _config = fs.readFileSync(self.ini.node.confPath, 'utf8');
+            var _config_data = _config.split('\n').filter(function(it) { return it });
+            _config_data.forEach(function(it) {
+                let _it = it.split('=')
+                if (_it.length == 2) {
+                    self.ini.config[_it[0]] = _it[1].replace('\r', '').replace('\n', '')
+                }
             })
+
+            if (!self.kit.nodeStateInterval) {
+                p.settings.node.control.state = "node state init"
+                self.kit.nodeStateInterval = setInterval(self.kit.nodeState, 5000)
+            }
         },
 
-        start: function (clbk) {
-            self.ini.node.active = true
+        bin_name: function(name) {
+            const win = `${name}.exe`
+            const mac = name
+            const linux = name
+            return (process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : '')))
+        },
 
-            this.running(function (result) {
+        conf_name: function() {
+            return 'pocketcoin.conf'
+        },
 
-                if (result) {
-                    console.log('node is running - skip start')
-                    return
+        state: function(clbk) {
+            self.kit.running(function(running) {
+                if (p.settings.node.control.running !== running) {
+                    p.settings.node.control.running = running
+                    p.settings.node.Timestamp = new Date()
                 }
 
-                // запустить pocketnetd как процесс start /path/pocketnetd -- args
-                console.log('exec > ', `${self.ini.settings.bin_path} -conf=${self.ini.settings.config_path} -datadir=${self.ini.settings.data_dir}`)
-                self.ini.node.instance = child_process.exec(
-                    `${self.ini.settings.bin_path} -conf=${self.ini.settings.config_path} -datadir=${self.ini.settings.data_dir}`,
-                    {
-                        windowsHide: false
-                    },
-                    function (err, stdout, stderr) {
-                        self.ini.node.active = (err === undefined)
-                    }
-                );
+                if (p.settings.node.Enable === true && running === false) self.kit.start()
+                if (p.settings.node.Enable === false && running === true) self.kit.stop()
 
-                self.ini.node.instance.on('error', (err) => {
-                    self.ini.node.active = false
-                    console.error('Failed to start subprocess.');
-                });
-
-                self.ini.node.instance.stdout.on('data', function (data) {
-                    //console.log('stdout: ' + data);
-                });
-
-                self.ini.node.instance.stderr.on('data', function (data) {
-                    console.log('stderr: ' + data);
-                });
-
-                self.ini.node.instance.on('close', function (code) {
-                    console.log('child process exited with code ' + code);
-                });
-
-                self.ini.node.instance.on('exit', (code) => {
-                    self.ini.node.active = false
-                    console.log(`child process exited with code ${code}`);
-                });
-
+                if (clbk) clbk()
             })
         },
 
-        stop: function () {
-            // TODO (brangr): РПЦ вызов `bc stop`
-            // TODO (brangr): уничтожить события
-            self.ini.node.instance = null
+        nodeState: function() {
+            console.log('pre getnodeinfo', self.ini.getnodeinfo)
+
+            self.kit.getNodeInfo();
+            self.kit.getNodeAddresses();
         },
 
-        rpc: function (method, prms, clbk) {
+        getNodeInfo: function() {
+            if (p.settings.node.Enable && !self.ini.getnodeinfo) {
+                self.ini.getnodeinfo = true
+                self.kit.rpc('getnodeinfo', [],
+                    function(data) {
+                        p.settings.node.control.state = 'Running'
+                        var lastBlockDate = new Date(data.result.lastblock.time * 1000);
+                        p.settings.node.control.lastBlock = `${data.result.lastblock.height} (${lastBlockDate.toLocaleString()})`
+                        self.ini.getnodeinfo = false
+                    },
+                    function(err, data) {
+                        p.settings.node.control.state = data.data.message || `Err: ${err}`
+                        self.ini.getnodeinfo = false
+                    }
+                )
+            }
+        },
+
+        getNodeAddresses: function() {
+            if (p.settings.node.Enable && !self.ini.listaddressgroupings) {
+                self.ini.listaddressgroupings = true
+                self.kit.getWallet(function(data) {
+                    if (data.length <= 0)
+                        p.settings.node.control.addresses = '-'
+                    else
+                        p.settings.node.control.addresses = data.join('<br/>')
+                    self.ini.listaddressgroupings = false
+                })
+            }
+        },
+
+        running: function(clbk) {
+            let _running = self.ini.node.instance != null
+            if (!_running) {
+                p.settings.node.control.state = 'Stopped'
+                p.settings.node.control.lastBlock = '-'
+                p.settings.node.control.addresses = '-'
+            }
+
+            console.log('running:', _running, 'enable:', p.settings.node.Enable)
+            if (clbk) clbk(_running)
+        },
+
+        start: function(clbk) {
+            if (self.ini.node.instance == null) {
+                p.settings.node.control.state = 'Starting..'
+                console.log(self.ini.node.binPath)
+
+                let binPath = self.ini.node.binPath
+                if (process.platform == 'darwin' || process.platform == 'linux') {
+                    binPath = `LD_LIBRARY_PATH=${Path.dirname(process.execPath)} ${self.ini.node.binPath}`
+                }
+
+                self.ini.node.instance = child_process.spawn(binPath, [
+                    `-conf=${self.ini.node.confPath}`,
+                    `-datadir=${p.settings.node.DataPath}`,
+                    `-silent`
+                ], { stdio: 'ignore', shell : true })
+
+                self.ini.node.instance.on('close', function(code) {
+                    self.ini.node.instance = null
+                    p.settings.node.control.state = 'Stopped'
+                    if (code !== 0) {
+                        console.log(`grep process exited with code ${code}`);
+                    }
+                });
+
+                p.settings.node.Timestamp = new Date()
+            }
+
+            if (clbk) clbk()
+        },
+
+        stop: function(clbk) {
+            console.log('node signal stop..')
+            p.settings.node.control.state = 'Stopping..'
+            p.settings.node.control.lastBlock = '-'
+            p.settings.node.control.addresses = '-'
+
+            self.kit.rpc('stop', [],
+                function(data) {
+                    setTimeout(function() {
+                        self.kit.stop(clbk)
+                    }, 500)
+                },
+                function(err, data) {
+                    console.log('stop', err)
+                    if (clbk) clbk()
+                }
+            )
+        },
+
+        enable: function(data, clbk) {
+            p.settings.node.Enable = data.v
+            p.settings.node.Timestamp = new Date()
+            if (clbk) clbk()
+        },
+
+        rpc: function(method, prms, success, failed) {
             p.handles.rpc.action({
                 parameters: {
                     method: method,
-                    parameters: prms || [],
+                    parameters: hexEncode(JSON.stringify(prms || [])),
                     nodelocally: JSON.stringify({
                         protocol: 'http',
                         host: self.ini.config.rpchost,
                         port: self.ini.config.rpcport,
                         rpcuser: self.ini.config.rpcuser,
-                        rpcpass: self.ini.config.rpcpass,
+                        rpcpass: self.ini.config.rpcpassword,
                     })
                 },
 
                 nodeManager: p.nodeManager,
 
-                responseSuccess: function (_p) {
+                responseSuccess: function(_p) {
                     var data = _p.data
-
-                    if (clbk)
-                        clbk(data)
+                    if (success) success(data)
                 },
-                responseFail: function (err, d) {
-                    if (clbk)
-                        clbk(d, err)
+
+                responseFail: function(err, data) {
+                    if (failed) failed(err, data)
+                }
+            })
+        },
+
+        getWallet: function(clbk) {
+            self.kit.rpc('listaddressgroupings', [],
+                function(data) {
+                    let addresses = data.result.flat(Infinity).filter(function(el) { return el.length == 34; });
+                    if (clbk) clbk(addresses)
+                },
+                function(err, data) {
+                    if (clbk) clbk([])
+                }
+            )
+        },
+
+        setWallet: function(prms, clbk) {
+
+            self.kit.rpc('importprivkey', [prms.private],
+                function(data) {
+                    console.log('importprivkey', data)
+                    if (clbk) clbk(null, data)
+                },
+                function(err, data) {
+                    console.log('importprivkey', err, data)
+                    if (clbk) clbk(err, data.data.message)
+                }
+            )
+        },
+
+        setBinPath: function(prms, clbk) {
+            let options = {
+                filters: [
+                    { name: 'Pocketcoin Executable', extensions: ['exe'] },
+                    { name: 'All Files', extensions: ['*'] }
+                ]
+            }
+
+            dialog.showOpenDialog(options).then(function(res) {
+                if (!res.canceled && res.filePaths.length > 0) {
+                    self.ini.node.binPath = res.filePaths[0]
+                    p.settings.node.Timestamp = new Date()
+
+                    if (clbk) clbk(null, self.ini.node.binPath)
+                }
+            })
+        },
+
+        setDataPath: function(prms, clbk) {
+            let options = {
+                properties: ['openDirectory']
+            }
+
+            dialog.showOpenDialog(options).then(function(res) {
+                if (!res.canceled && res.filePaths.length > 0) {
+                    p.settings.node.DataPath = res.filePaths[0]
+                    p.settings.node.Timestamp = new Date()
+                    self.kit.init()
+
+                    if (clbk) clbk(null, p.settings.node.DataPath)
+                }
+            })
+        },
+
+        setConfPath: function(prms, clbk) {
+            let options = {
+                filters: [
+                    { name: 'Pocketcoin Config Files', extensions: ['conf'] },
+                    { name: 'All Files', extensions: ['*'] }
+                ]
+            }
+
+            dialog.showOpenDialog(options).then(function(res) {
+                if (!res.canceled && res.filePaths.length > 0) {
+                    self.ini.node.confPath = res.filePaths[0]
+                    p.settings.node.Timestamp = new Date()
+
+                    if (clbk) clbk(null, self.ini.node.confPath)
                 }
             })
         }
-
-
 
 
     }

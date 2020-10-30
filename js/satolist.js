@@ -124,7 +124,8 @@ Platform = function (app, listofnodes) {
 
             var html = '<div class="table coinwithsmall"><div class="bignum">'
 
-                + fp +
+                +
+                fp +
 
                 '</div><div class="svlwr"><div><div div class="smallvalue">' + value + '</div><div class="suffix">' + suffix + '</div></div></div></div>'
 
@@ -160,40 +161,40 @@ Platform = function (app, listofnodes) {
     self.applications = {
 
         ui: {
-            windows: {
+        windows: {
 
                 appname: "Pocketnet",
-                text: {
-                    name: "Windows",
-                    download: 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
-                    label: "Download Pocketnet for Windows"
-                },
-
-                icon: '<i class="fab fa-windows"></i>',
-
-                github: {
-                    name: "PocketnetSetup.exe",
-                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                    page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                }
+            text: {
+                name: "Windows",
+                download: 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
+                label: "Download Pocketnet for Windows"
             },
 
-            linux: {
-                appname: "Pocketnet",
-                text: {
-                    name: "Linux",
-                    download: 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
-                    label: "Download Pocketnet for Linux"
-                },
+            icon: '<i class="fab fa-windows"></i>',
 
-                icon: '<i class="fab fa-linux"></i>',
-
-                github: {
-                    name: "Pocketnet_linux_x64.AppImage",
-                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                    page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                }
+            github: {
+                name: "PocketnetSetup.exe",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
             }
+        },
+
+        linux: {
+                appname: "Pocketnet",
+            text: {
+                name: "Linux",
+                download: 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
+                label: "Download Pocketnet for Linux"
+            },
+
+            icon: '<i class="fab fa-linux"></i>',
+
+            github: {
+                name: "Pocketnet_linux_x64.AppImage",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+            }
+        }
         },
 
         node: {
@@ -986,22 +987,22 @@ Platform = function (app, listofnodes) {
 
                             var points = _.clone(this.points) || [];
 
-							/*_.each(series, function(s){
+                            /*_.each(series, function(s){
 
-								if(s.name.indexOf("Navigator") > -1) return;
+                                if(s.name.indexOf("Navigator") > -1) return;
 
-								var p = _.find(s.data || s, function(p){
+                                var p = _.find(s.data || s, function(p){
 
-									if (p)
+                                    if (p)
 
-										if(convertX(p.x) === convertX(x)) return true;
-								})
+                                        if(convertX(p.x) === convertX(x)) return true;
+                                })
 
-								if (p)
+                                if (p)
 
-									points.push(p);
+                                    points.push(p);
 
-							})*/
+                            })*/
 
                             _.each(points, function (p) {
 
@@ -1201,7 +1202,7 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (!p.pdf) {
-                    /*	options.xAxis.title.style['font-weight'] = "700";
+                    /*    options.xAxis.title.style['font-weight'] = "700";
                         options.yAxis[0].title.style['font-weight'] = "700";
                         options.legend.itemStyle['font-weight'] = "700";*/
                 }
@@ -1756,10 +1757,10 @@ Platform = function (app, listofnodes) {
 
 
 
-			/*var interactive = new Interactive({
-				app : app,
-				platfrom : self
-			})*/
+            /*var interactive = new Interactive({
+                app : app,
+                platfrom : self
+            })*/
 
         }
     }
@@ -1991,12 +1992,12 @@ Platform = function (app, listofnodes) {
 
 
                 var ball = function () {
-                    h += '			<div class="plissingWrapperCell">'
-                    h += '				<div class="pilsing">'
-                    h += '					<div></div>'
-                    h += '					<div></div>'
-                    h += '				</div>'
-                    h += '			</div>'
+                    h += '            <div class="plissingWrapperCell">'
+                    h += '                <div class="pilsing">'
+                    h += '                    <div></div>'
+                    h += '                    <div></div>'
+                    h += '                </div>'
+                    h += '            </div>'
                 }
 
 
@@ -2009,24 +2010,24 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                h += '			<div class="plissingTipCell">'
-                h += '				<div class="plissingTip all">'
+                h += '            <div class="plissingTipCell">'
+                h += '                <div class="plissingTip all">'
                 h += (p.text || '')
-                h += '				</div>'
+                h += '                </div>'
 
                 if (p.textHover) {
-                    h += '				<div class="plissingTip hover">'
+                    h += '                <div class="plissingTip hover">'
                     h += (p.textHover || '')
-                    h += '				</div>'
+                    h += '                </div>'
                 }
 
-                h += '			</div>'
+                h += '            </div>'
 
                 if (p.left) {
                     ball()
                 }
 
-                h += '	</div>'
+                h += '    </div>'
                 h += '</div>'
 
 
@@ -3086,6 +3087,34 @@ Platform = function (app, listofnodes) {
                 return _videos
             },
 
+            getVideos: function (cnt) {
+                var h = $('<div>')
+
+                h.html(cnt)
+
+                var videos = h.find('.js-player');
+
+                var _videos = [];
+
+                $.each(videos, function () {
+
+                    var v = {
+                        type: $(this).attr('data-plyr-provider'),
+                        id: $(this).attr('data-plyr-embed-id')
+                    }
+
+                    if (v.type && v.id) {
+
+                        _videos.push(v)
+
+                    }
+
+                })
+
+                console.log('_videos', videos)
+                return _videos
+            },
+
             lightVideo: function (content) {
 
                 _.each(content, function (c, i) {
@@ -3322,6 +3351,61 @@ Platform = function (app, listofnodes) {
                     type: "BOOLEAN",
                     value: true
                 },
+
+                telegram: {
+                    type: "STRINGANY",
+                    name: "Telegram bot token",
+                    id: 'telegram',
+                    placeholder: "Telegram bot token",
+                    value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
+                    _onChange: function (value) {
+
+                        if (value && self.app.user.features.telegram && value){
+                            
+                            self.app.platform.sdk.system.get.telegramGetMe(value, true);
+
+                        }
+
+                    }
+
+
+
+                },
+
+                tgfrom: {
+                    type: "VALUES",
+                    name: "Post from Telegram channel",
+                    id: 'tgfrom',
+                    placeholder: "Add bot into chat and select",
+                    possibleValues: [],
+                    possibleValuesLabels: [],
+                    value: "",
+
+
+                },
+                tgto: {
+                    type: "VALUES",
+                    name: "Send to telegram channel",
+                    id: 'tgto',
+                    placeholder: "Add bot into chat and select",
+                    defaultValue: "",
+                    value: "",
+                    possibleValues: [],
+                    possibleValuesLabels: [],
+
+                },
+                tgfromask: {
+                    name: 'Ask before post from telegram',
+                    id: 'tgfromask',
+                    type: "BOOLEAN",
+                    value: false
+                },
+                tgtoask: {
+                    name: 'Ask before send to telegram',
+                    id: 'tgtoask',
+                    type: "BOOLEAN",
+                    value: false
+                },
             },
 
             create: function (id) {
@@ -3339,6 +3423,7 @@ Platform = function (app, listofnodes) {
                 var options = {};
 
                 _.each(m, function (p, id) {
+
                     options[id] = create(id)
                 })
 
@@ -3351,6 +3436,7 @@ Platform = function (app, listofnodes) {
                 var options = s.createall()
 
                 var m = s.meta;
+                console.log('i')
 
                 var c = {
 
@@ -3379,7 +3465,6 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-
                     vidgets: {
                         name: "Main Page Vidgets",
                         options: {
@@ -3391,6 +3476,25 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
+                }
+
+
+                if (self.app.user.features.telegram) {
+
+
+                    c.integrations = {
+                        name: "Integration with Telegram",
+                        options: {
+
+                            telegram: options.telegram,
+                            tgfrom: options.tgfrom,
+                            tgto: options.tgto,
+                            tgfromask: options.tgfromask,
+                            tgtoask: options.tgtoask
+
+
+                        }
+                    }
 
                 }
 
@@ -3405,8 +3509,31 @@ Platform = function (app, listofnodes) {
 
                 _.each(options, function (o, i) {
                     o.onChange = function (v) {
-                        m[i].value = boolnum(v);
+
+                        if (m[i].type === "BOOLEAN") {
+
+                            m[i].value = boolnum(v);
+
+                        }
+
+                        if (m[i].type === "STRINGANY") {
+
+                            m[i].value = v;
+
+                        }
+
+                        if (m[i].type === "VALUES") {
+
+
+                            const idx = m[i].possibleValues.indexOf(String(v));
+                            m[i].value = m[i].possibleValuesLabels[idx];
+                            m[i].valueId = Number(v);
+                            // setTimeout(() => {$(`div[pid=${i}] input`).val(m[i].possibleValuesLabels[idx])}, 0)
+
+                        }
+
                         s.save();
+
 
                         if (electron && i == 'autostart') {
                             const AutoLaunch = require('auto-launch');
@@ -3450,7 +3577,19 @@ Platform = function (app, listofnodes) {
                 var values = {};
 
                 _.each(self.sdk.usersettings.meta, function (o, i) {
-                    values[i] = o.value
+
+                    if (o.type === "VALUES") {
+
+                        values[i] = {};
+                        values[i].possibleValues = o.possibleValues && o.possibleValues.map(i => String(i));
+                        values[i].possibleValuesLabels = o.possibleValuesLabels;
+                        values[i].value = o.value;
+
+                    } else {
+
+                        values[i] = o;
+                    }
+
                 })
 
                 localStorage['usersettings'] = JSON.stringify(values);
@@ -3479,8 +3618,44 @@ Platform = function (app, listofnodes) {
                 var values = self.sdk.usersettings.load();
                 var m = self.sdk.usersettings.meta;
 
+
                 _.each(values, function (v, i) {
-                    m[i].value = v
+
+                    if (typeof v === "object") {
+                        m[i].value = v.value;
+                        m[i].possibleValues = v.possibleValues && v.possibleValues.map(i => String(i));
+                        m[i].possibleValuesLabels = v.possibleValuesLabels;
+
+                    } else {
+                        m[i].value = v;
+
+                    }
+
+                    if (i === "telegram") {
+
+
+                        if(self.app.platform.sdk.address.pnet()){
+                            var a = self.app.platform.sdk.address.pnet().address
+
+                            if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
+
+                                self.app.user.features.telegram = 1;
+
+                                self.app.platform.sdk.system.get.telegramGetMe(v.value);
+
+
+                            } else {
+
+
+                                self.app.user.features.telegram = 0;
+
+
+                            }
+                        }
+
+                        console.log('features.telegram', self.app.user.features.telegram, self.app.platform.sdk.address.pnet().address)
+
+                    }
                 })
 
                 if (electron) {
@@ -3524,11 +3699,11 @@ Platform = function (app, listofnodes) {
 
                 if (!localStorage['survey1']) {
 
-					/*self.app.nav.api.load({
-						open : true,
-						href : 'surveyiframe',
-						inWnd : true
-					})*/
+                    /*self.app.nav.api.load({
+                        open : true,
+                        href : 'surveyiframe',
+                        inWnd : true
+                    })*/
 
                 }
 
@@ -3610,8 +3785,7 @@ Platform = function (app, listofnodes) {
 
                         if (clbk)
                             clbk(storage.me, temp)
-                    }
-                    else {
+                    } else {
                         if (self.sdk.address.pnet()) {
 
                             var a = self.sdk.address.pnet().address;
@@ -4005,12 +4179,12 @@ Platform = function (app, listofnodes) {
                             return
                         }
 
-						/*if (info.trial){
-							if (clbk)
-								clbk('trial')
+                        /*if (info.trial){
+                            if (clbk)
+                                clbk('trial')
 
-							return
-						}*/
+                            return
+                        }*/
                     }
 
 
@@ -7465,13 +7639,13 @@ Platform = function (app, listofnodes) {
                 s[txid] || (s[txid] = {})
 
 
-				/*if(!ccha && ((!pid && s[txid]['0']) || s[txid][pid])){
+                /*if(!ccha && ((!pid && s[txid]['0']) || s[txid][pid])){
 
-					if (clbk)
-						clbk(s[txid][pid])
+                    if (clbk)
+                        clbk(s[txid][pid])
 
-					return
-				}*/
+                    return
+                }*/
 
 
                 self.app.ajax.rpc({
@@ -8148,9 +8322,9 @@ Platform = function (app, listofnodes) {
 
                         var a = self.sdk.address.pnet()
 
-						/*if (a){
-							parameters.push(a.address)
-						}*/
+                        /*if (a){
+                            parameters.push(a.address)
+                        }*/
 
                         _.each(txids, function (id) {
                             loading[id] = true;
@@ -8919,9 +9093,9 @@ Platform = function (app, listofnodes) {
 
                 checkTemps: function (clbk) {
 
-					/*if (clbk)
-						clbk()
-					return*/
+                    /*if (clbk)
+                        clbk()
+                    return*/
 
                     var c = this.checkTemp
                     var t = this.temp;
@@ -9559,7 +9733,7 @@ Platform = function (app, listofnodes) {
 
                 create: {
 
-                    commonFromUnspent: function (obj, clbk, p) {
+                    commonFromUnspent: function (obj, clbk, p, telegram) {
 
                         if (!p) p = {};
 
@@ -9588,7 +9762,7 @@ Platform = function (app, listofnodes) {
                                 if (!p.update) {
                                     p.update = true;
 
-                                    self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p)
+                                    self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p, telegram)
 
                                     return
                                 }
@@ -9631,7 +9805,7 @@ Platform = function (app, listofnodes) {
 
                                         p.update = true;
 
-                                        self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p)
+                                        self.sdk.node.transactions.create.commonFromUnspent(obj, clbk, p, telegram)
 
                                         return
                                     }
@@ -9651,9 +9825,9 @@ Platform = function (app, listofnodes) {
                                 }
 
 
-                            }, p)
+                            }, p, telegram)
 
-                        }, deep(p, 'address.address'), p.update)
+                        }, deep(p, 'address.address'), p.update, telegram)
                     },
 
                     wallet: function (inputs, ouputs, _kp) {
@@ -9673,10 +9847,10 @@ Platform = function (app, listofnodes) {
 
                         _.each(inputs, function (i) {
 
-							/*txb.addInput(i.txid, i.vout)
-							amount = amount + Number(i.amount);
+                            /*txb.addInput(i.txid, i.vout)
+                            amount = amount + Number(i.amount);
 
-							return*/
+                            return*/
 
                             if (i.address.indexOf("P") == 0) {
 
@@ -9690,10 +9864,10 @@ Platform = function (app, listofnodes) {
                                 if (index > -1) {
 
                                     var address = self.sdk.addresses.storage.addressesobj[index];
-									/*console.log(address)
+                                    /*console.log(address)
 
-									console.log("ADDINPUT1", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('001442b207c67cd29bd4ae72e6440690b5db2264c013', 'hex'))))
-									console.log("ADDINPUT2", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('0014c05e4b43f78296df7e7a0f5d5329cb26fd4eff30', 'hex'))))*/
+                                    console.log("ADDINPUT1", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('001442b207c67cd29bd4ae72e6440690b5db2264c013', 'hex'))))
+                                    console.log("ADDINPUT2", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('0014c05e4b43f78296df7e7a0f5d5329cb26fd4eff30', 'hex'))))*/
 
                                     txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
                                 }
@@ -9762,7 +9936,42 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    common: function (inputs, obj, fees, clbk, p) {
+                    common: function (inputs, obj, fees, clbk, p, fromTG) {
+
+                        const savedObj = JSON.parse(JSON.stringify(obj));
+
+                        if (!fromTG && self.app.user.features.telegram) {
+
+                            const {
+                                meta
+                            } = self.sdk.usersettings;
+
+                            if (!meta.tgtoask.value) {
+
+                                this.telegramSend(obj, meta)
+
+                            } else {
+
+                                // this.telegramSend = this.telegramSend.bind(this)
+
+                                dialog({
+                                    html: "Do you really want send message to Telegram?",
+                                    btn1text: "Send",
+                                    btn2text: "Cancel",
+
+                                    class: 'zindex',
+
+                                    success: () => {
+
+                                        this.telegramSend(savedObj, meta)
+
+                                    }
+                                })
+
+                            }
+
+                        }
+
 
                         if (!p) p = {};
 
@@ -9991,8 +10200,110 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    share: function (inputs, share, clbk, p) {
-                        this.common(inputs, share, TXFEE, clbk, p)
+                    telegramSend: function (message, meta) {
+
+                        const filterHtml = (input) => {
+
+                            const removeEmptyHref = (html) => {
+
+                                const newHtml = html.replace(/<a href>(.*)<\/a>/g, '$1').replace(/<a>(.*)<\/a>/g, '$1');
+
+                                return newHtml;
+                            }
+
+                            const allowedTags = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'a', 'code', 'pre'];
+
+                            const options = {
+                                allowedTags,
+
+                                allowedAttributes: {
+                                    'a': ['href'],
+                                },
+                            };
+
+                            const sanitizedHtml = sanitizeHtml(input, options);
+
+                            return removeEmptyHref(sanitizedHtml);
+                        }
+
+                        const token = meta.telegram.value;
+
+                        const channelIdx = meta.tgto.possibleValuesLabels.indexOf(meta.tgto.value);
+                        const channel = Number(meta.tgto.possibleValues[channelIdx]);
+
+                        const parameters = {
+                            method: 'POST',
+                            chat_id: channel,
+                            parse_mode: 'HTML'
+                        }
+
+                        const title = message.caption.v ? '<b>' + message.caption.v + '</b>' : '';
+
+                        let caption = title + '\n ' + message.message.v + '\n ';
+
+                        const images = message.images.v;
+
+                        caption = caption.replace(/<br>|<br\/>/g, '\n');
+                        caption = caption.replace(/<\/p>/g, "</p>\n");
+                        caption = filterHtml(caption);
+
+
+                        console.log(token, channelIdx, channel, 'sendTelegram');
+
+                        let action = 'sendMessage';
+                        let captionName = 'text';
+
+                        if (images.length === 1) {
+
+                            action = 'sendPhoto';
+                            captionName = 'caption';
+                            parameters.photo = images[0];
+
+                        } else if (images.length > 1) {
+
+                            action = 'sendMediaGroup';
+                            captionName = 'caption';
+                            const imagesGroup = images.map((file, idx) => {
+
+                                const newFile = {
+                                    type: 'photo',
+                                    media: file
+                                };
+
+                                if (idx === 1) {
+
+                                    newFile.parse_mode = "HTML";
+                                    newFile.caption = caption;
+
+                                }
+
+                                return newFile;
+
+                            })
+
+                            parameters.media = JSON.stringify(imagesGroup);
+                        }
+
+                        parameters[captionName] = caption;
+
+                        // const parameters = `?chat_id=${channel}${media}&${captionName}=${caption}&parse_mode=HTML`
+
+                        let query = `https://api.telegram.org/bot${token}/${action}`;
+                        const paramStr = $.param(parameters);
+
+                        console.log('paramStr', paramStr);
+
+                        fetch(query + '?' + paramStr)
+                            .then(data => data.json())
+                            .then(result => {
+                                console.log(result, 'result')
+                            })
+
+                    },
+
+                    share: function (inputs, share, clbk, p, fromTG) {
+
+                        this.common(inputs, share, TXFEE, clbk, p, fromTG)
                     },
 
                     userInfo: function (inputs, userInfo, clbk, p) {
@@ -10749,7 +11060,7 @@ Platform = function (app, listofnodes) {
                         _.each(self.sdk.tempmessenger.clbks || {}, function(c){
                             c('message', rtc)
                         })
-                    	
+                        
                     }*/
 
 
@@ -11333,29 +11644,29 @@ Platform = function (app, listofnodes) {
 
                         if (!values) values = {}
 
-						/*nedbkey: 'settings',
-						  nedbpath: { settings: './data/settings' },
-						  nodes: { defaults: [Object], stable: [Array] },
-						  server: true,
-						  ports: { https: 8888, wss: 8088 },
-						  ssl:
-						   { key: './cert/key.pem',
-							 cert: './cert/cert.pem',
-							 passphrase: 'Vjoysq47' },
-						  fbk:
-						   './private/pocketnet-firebase-adminsdk-e72t8-e21b48edf5.json',
-						  dbEnable: true,
-						  db:
-						   { host: 'localhost',
-							 port: 5432,
-							 max: 10,
-							 idleTimeoutMillis: 30000,
-							 user: 'postgres',
-							 database: 'pocketnetproxy',
-							 password: 'zx8045kzx' },
-						  refkey: '',
-						  captcha: true,
-						  iplimiter: true },*/
+                        /*nedbkey: 'settings',
+                          nedbpath: { settings: './data/settings' },
+                          nodes: { defaults: [Object], stable: [Array] },
+                          server: true,
+                          ports: { https: 8888, wss: 8088 },
+                          ssl:
+                           { key: './cert/key.pem',
+                             cert: './cert/cert.pem',
+                             passphrase: 'Vjoysq47' },
+                          fbk:
+                           './private/pocketnet-firebase-adminsdk-e72t8-e21b48edf5.json',
+                          dbEnable: true,
+                          db:
+                           { host: 'localhost',
+                             port: 5432,
+                             max: 10,
+                             idleTimeoutMillis: 30000,
+                             user: 'postgres',
+                             database: 'pocketnetproxy',
+                             password: 'zx8045kzx' },
+                          refkey: '',
+                          captcha: true,
+                          iplimiter: true },*/
 
                         var s = self.sdk.esystem.proxy.settings;
 
@@ -11433,6 +11744,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            // node control settings
             node: {
                 settings: {
                     meta: {
@@ -11444,59 +11756,61 @@ Platform = function (app, listofnodes) {
                             value: false,
                             dbId: 'Enable'
                         },
-
-                        Host: {
-                            name: 'Host',
-                            id: 'Host',
-                            type: "NUMBER",
-                            value: '',
-                            format: {
-                                Precision: 0,
-                                groupSeparator: ''
-                            },
-                            dbId: 'Host'
-                        },
-
-                        Port: {
-                            name: 'Port',
-                            id: 'Port',
-                            type: "NUMBER",
-                            value: '',
-                            format: {
-                                Precision: 0,
-                                groupSeparator: ''
-                            },
-                            dbId: 'Port'
-                        },
-
                         BinPath: {
                             name: 'Binary path',
                             id: 'binPath',
-                            type: "STRING",
+                            type: "FILE_SELECT",
+                            upload: {},
                             value: '',
                             dbId: 'BinPath'
                         },
-                        ConfigPath: {
+                        ConfPath: {
                             name: 'Config path',
-                            id: 'configPath',
-                            type: "STRING",
+                            id: 'confPath',
+                            type: "FILE_SELECT",
+                            upload: {},
                             value: '',
-                            dbId: 'ConfigPath'
+                            dbId: 'ConfPath'
                         },
                         DataPath: {
                             name: 'Data path',
                             id: 'dataPath',
-                            type: "STRING",
+                            type: "FILE_SELECT",
+                            upload: {},
                             value: '',
                             dbId: 'DataPath'
+                        },
+                        SetPrivateKey: {
+                            name: 'Staking Address',
+                            id: 'setPrivateKey',
+                            type: "BUTTON",
+                            value: '#link_to_wallets',
+                            text: 'Import the account address to the node for stacking',
+                            dbId: 'SetPrivateKey'
                         },
 
                         state: {
                             name: 'State',
-                            id: '_state',
-                            type: "STRING",
+                            id: 'state',
+                            type: "LABEL",
                             value: '',
                             dbId: 'control.state'
+                        },
+
+                        addresses: {
+                            name: 'Staking addresses',
+                            id: 'addresses',
+                            type: "LABEL",
+                            value: '',
+                            dbId: 'control.addresses'
+                        },
+
+                        lastBlock: {
+                            name: 'Last Block',
+                            id: 'lastBlock',
+                            type: "LABEL",
+                            value: '-',
+                            dbId: 'control.lastBlock'
                         }
                     },
 
@@ -11543,20 +11857,19 @@ Platform = function (app, listofnodes) {
                                 options: {
 
                                     state: options.state,
+                                    lastBlock: options.lastBlock,
+                                    addresses: options.addresses,
 
                                 }
                             },
-                            
+
                             setup: {
                                 name: "Setup",
                                 options: {
 
                                     Enable: options.Enable,
-                                    Host: options.Host,
-                                    Port: options.Port,
-                                    BinPath: options.BinPath,
-                                    ConfigPath: options.ConfigPath,
                                     DataPath: options.DataPath,
+                                    SetPrivateKey: options.SetPrivateKey,
 
                                 }
                             },
@@ -11833,6 +12146,708 @@ Platform = function (app, listofnodes) {
                         }
                     })
                 },
+
+                applyMessagesFromTG: function (messages, acceptPosting, currentChannelId) {
+
+                    console.log('apply', messages);
+                    let {
+                        meta
+                    } = self.sdk.usersettings;
+
+                    messages.forEach(messager => {
+
+                        const addValue = (dropdownName, channelName, channelId) => {
+
+                            if (meta[dropdownName].possibleValues.indexOf(String(channelId)) === -1) {
+
+                                meta[dropdownName].possibleValues.push(String(channelId));
+                                meta[dropdownName].possibleValuesLabels.push(channelName);
+
+                                const $tgDropdown = $(`div[parameter='${dropdownName}'] .vc_selectInput`);
+                                const newValue = `<div class="vc_value" value=${channelId}>${channelName}</div>`;
+                                const newValueHTML = $.parseHTML(newValue);
+                                $tgDropdown.append(newValueHTML);
+
+                            }
+
+                        }
+
+                        const stringToHtml = (initStr, entities) => {
+
+                            let str = "";
+                            let prevOffset = 0;
+                            let curOffset = 0;
+
+                            for (ent of entities) {
+
+                                curOffset = ent.offset;
+                                let simple = initStr.slice(prevOffset, curOffset);
+                                str += simple;
+
+                                const snippetToHtml = (snippet, ent) => {
+
+                                    switch (ent.type) {
+
+                                        case "italic":
+
+                                            return "<i>" + snippet + "</i>";
+
+                                        case "bold":
+
+                                            return "<b>" + snippet + "</b>";
+
+                                        case "underline":
+
+                                            return "<u>" + snippet + "</u>";
+
+                                        // case "strikethrough":
+
+                                        //     return "<strike>" + snippet + "</strike>";
+
+                                        case "text_link":
+
+                                            return `<a href='${ent.url}' target='_blank' rel='noopener noreferrer'>${snippet}</a>`
+
+                                        default:
+
+                                            return snippet;
+
+                                    }
+
+                                }
+
+
+                                const html = snippetToHtml(initStr.substr(ent.offset, ent.length), ent);
+
+                                str += html;
+
+                                prevOffset = curOffset + ent.length;
+
+
+                            }
+
+                            str += initStr.slice(prevOffset)
+
+                            return str;
+                        }
+
+                        const addImages = (html, images, clbk) => {
+
+                            const getImagePathPromise = (token, id) => {
+
+                                return new Promise((resolve) => {
+
+                                    const getImagePathResolve = data => {
+
+                                        if (data.ok && data.result) {
+
+                                            app.ajax.run({
+                                                type: "POST",
+                                                imgur: true,
+                                                data: {
+                                                    Action: "image",
+                                                    image: `https://api.telegram.org/file/bot${token}/${data.result.file_path}`
+                                                },
+
+                                                success: function (result) {
+
+                                                    if (result.success) {
+
+                                                        const path = result.data && result.data.link;
+                                                        resolve(String(path));
+
+                                                    } else {
+
+                                                        resolve("")
+                                                    }
+
+                                                }
+                                            })
+
+                                        } else {
+
+                                            resolve("");
+
+                                        }
+
+                                    }
+
+
+                                    if (token && id) {
+
+                                        fetch(`https://api.telegram.org/bot${token}/getFile?file_id=${id}`)
+                                            .then(res => res.json())
+                                            .then(getImagePathResolve)
+                                            .catch(() => resolve(""));
+
+                                    } else {
+
+                                        resolve("");
+                                    }
+
+                                })
+
+                            }
+
+                            const postMessage = (html) => {
+
+
+                                clbk(html);
+
+
+                            }
+
+                            withImages = (html, pathes) => {
+
+                                let newHtml = '<p>' + html + '</p>';
+
+                                for (path of pathes) {
+
+                                    if (path) {
+
+                                        newHtml += `<div class="medium-insert-images"><figure><img src=${path}></figure></div>`;
+
+                                    }
+                                }
+
+
+                                postMessage(newHtml)
+
+                            }
+
+                            if (!images) {
+
+                                postMessage(html)
+
+                            }
+
+                            const promises = [];
+
+
+                            if (Array.isArray(images)) {
+
+                                const ids = [];
+
+                                for (const image of images) {
+
+                                    ids.push(image.file_id);
+                                }
+
+                                const uniqueIds = [...new Set(ids)];
+
+                                const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || ""
+
+
+                                for (const id of uniqueIds) {
+
+                                    const path = getImagePathPromise(token, id);
+
+                                    if (path) {
+
+                                        promises.push(path);
+
+                                    }
+
+                                }
+
+                            } else if (typeof images === "object") {
+
+                                const path = getImagePathPromise(token, images.file_id)
+
+                                if (path) {
+
+                                    promises.push(path)
+
+                                }
+
+                            }
+
+                            Promise.all(promises)
+                                .then(pathes => withImages(html, pathes))
+
+                        }
+
+                        const clbk = (html) => {
+
+                            const share = new Share();
+
+                            function tagsFromText(text) {
+                                var words = text.split(/[,.!?;:()<> \n\r]/g);
+
+                                var tags = _.filter(words, function (w) {
+                                    if (w[0] == '#') {
+
+                                        w = w.replace(/#/g, '')
+
+                                        if (!w) return false
+
+                                        return true
+
+                                    }
+                                })
+
+                                _.each(tags, function (tag, i) {
+
+                                    tags[i] = tag.replace(/\#/g, '')
+
+                                })
+
+                                return tags;
+
+                            }
+
+                            function extractCaption(html) {
+
+                                if (html.slice(3, 6) === "<b>") {
+
+                                    const reg1 = new RegExp("</b>.*");
+                                    const reg2 = new RegExp("<b>.*<\/b>")
+
+                                    title = html.replace(reg1, "</b>");
+                                    html = html.replace(reg2, "");
+
+                                    return [html, title];
+
+                                } else {
+
+                                    return [html];
+                                }
+                            }
+
+
+                            const textAndCaption = extractCaption(html);
+
+                            if (textAndCaption[1]) {
+
+                                share.caption.set(textAndCaption[1]);
+
+                            }
+
+                            share.message.set(textAndCaption[0]);
+
+
+                            share.images.set(self.app.platform.sdk.articles.getImages(html))
+                            var tags = tagsFromText(html);
+                            share.tags.set(tags);
+                            share.settings.videos = self.app.platform.sdk.articles.getVideos(html);
+                            // if (caption){
+                            //     share.caption.set()
+                            // }
+
+
+                            share.settings.v = 'a'
+                            // share.settings.videos = self.app.platform.sdk.articles.getVideos(text)
+
+                            self.sdk.node.transactions.create.commonFromUnspent(share, function (_alias, error) {
+
+                                topPreloader(100)
+
+                                // if (el.c){
+                                //     el.c.removeClass('loading')
+                                // }
+
+                                if (!_alias) {
+
+
+                                    if (clbk) {
+                                        clbk(false, errors[error])
+                                    } else {
+
+
+                                        var t = self.app.platform.errorHandler(error, true);
+
+                                        if (t) {
+                                            sitemessage(t)
+                                        }
+                                    }
+                                } else {
+
+                                    try {
+
+                                        var alias = new pShare();
+                                        alias._import(_alias, true)
+                                        alias.temp = true;
+                                        alias.address = _alias.address
+
+                                        if (share.aliasid) alias.edit = "true"
+
+                                        self.app.platform.sdk.node.shares.add(alias)
+
+
+
+                                        // art.txid = alias.txid;
+                                        // art.ptime = Math.floor((new Date().getTime()) / 1000)
+
+                                        self.app.platform.sdk.user.survey()
+
+                                        // actions.complete();
+                                    } catch (e) {
+                                        console.log(e)
+                                    }
+                                }
+
+                            }, null, true);
+
+
+                        }
+
+                        const replaceSpaces = (html) => {
+
+                            const parse = s => s.replace(/[␤␍␊↵⏎]+/g, '\n');
+                            const nl2br = s => s.replace(/\n/g, '<br>');
+
+                            return nl2br(parse(html));
+
+                        }
+                        let {
+                            chat
+                        } = messager;
+
+                        const channelId = chat.username ? (" (@" + chat.username + ")") : "";
+
+                        const channelName = chat.title + channelId;
+                        console.log('channelId', channelId, channelName)
+                        addValue("tgto", channelName, chat.id);
+                        addValue("tgfrom", channelName, chat.id);
+
+                        // meta.tgfrom.possibleValues = [...new Set(meta.tgfrom.possibleValues)];
+                        // meta.tgfrom.possibleValuesLabels = [...new Set(meta.tgfrom.possibleValuesLabels)];
+                        // meta.tgto.possibleValues = [...new Set(meta.tgto.possibleValues)];
+                        // meta.tgto.possibleValuesLabels = [...new Set(meta.tgto.possibleValuesLabels)];
+
+
+                        if (acceptPosting && chat.id === Number(currentChannelId)) {
+
+                            const entities = messager.entities || messager.caption_entities || [];
+
+                            const str = messager.text || messager.caption || "";
+
+                            const text = stringToHtml(str, entities);
+
+                            const html = replaceSpaces(text);
+
+                            addImages(html, messager.photo, clbk);
+
+                        } else {
+
+                            console.log(chat, "post canceled")
+                        }
+
+                    })
+
+                },
+
+                dialogOfTG: function (messages, currentChannelId) {
+                    console.log('dialogOfTG', messages, currentChannelId)
+
+                    if (messages.length && currentChannelId) {
+
+                        this.openedDialog = true;
+
+                        console.log('openedDialog2', this.openedDialog, currentChannelId);
+
+                        dialog({
+                            html: "Do you really want post messages from Telegram?",
+                            btn1text: "Post",
+                            btn2text: "Cancel",
+
+                            class: 'zindex',
+
+                            success: () => {
+
+                                const messages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
+
+                                this.applyMessagesFromTG(messages, true, currentChannelId);
+                                localStorage.setItem("telegramMessages", "[]");
+                                this.openedDialog = false;
+
+
+
+                            },
+
+                            fail: () => {
+
+                                console.log('fail')
+
+                                this.applyMessagesFromTG(messages, false, currentChannelId);
+                                localStorage.setItem("telegramMessages", "[]");
+                                this.openedDialog = false;
+
+                            }
+                        })
+                    }
+
+                },
+
+                telegramUpdateAbort: new AbortController(),
+
+
+                telegramUpdates: function (offset = 0, clbk) {
+
+                    if (!offset){
+
+                        offset = 0;
+                    }
+                    console.log('offset', offset);
+
+                    console.log('start updates');
+                    const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "";
+                    this.telegramUpdates = this.telegramUpdates.bind(this);
+
+                    const url = `https://api.telegram.org/bot${token}/getUpdates?offset=${offset}&timeout=100`;
+
+                    console.log('this.telegramUpdateAbort.signal', this.telegramUpdateAbort.signal);
+                    const settings = {
+                        method: 'GET',
+                        signal: this.telegramUpdateAbort.signal
+                    }
+
+                    const telegramData = data => {
+                        console.log('telegramData');
+                        if (data.ok) {
+
+                            console.log('telegram updates', data.result)
+
+                            const {
+                                result
+                            } = data;
+
+                            let {
+                                meta
+                            } = self.sdk.usersettings;
+
+                            const resultWithSortedMedia = [];
+
+                            result.forEach(messager => {
+
+                                const {
+                                    channel_post
+                                } = messager;
+
+                                const siblingIdx = resultWithSortedMedia.findIndex(uniqueMessager => {
+
+                                    return channel_post && (channel_post.media_group_id === uniqueMessager.media_group_id);
+                                })
+
+                                if (siblingIdx > -1) {
+
+                                    const uniquePost = resultWithSortedMedia[siblingIdx];
+
+                                    if ((uniquePost && !uniquePost.capiton) && (channel_post && channel_post.caption)) {
+
+                                        uniquePost.caption = channel_post.caption;
+                                    }
+
+                                    if ((uniquePost && !uniquePost.caption_entities) && (channel_post && channel_post.caption_entities)) {
+
+                                        uniquePost.caption_entities = channel_post.caption_entities;
+
+                                    }
+
+                                    let photo = (channel_post.photo && channel_post.photo.length > 1) ?
+                                        channel_post.photo[1] :
+                                        (channel_post.photo && channel_post.photo.length) ?
+                                            channel_post.photo[0] :
+                                            "";
+
+
+                                    if (!uniquePost.photo && channel_post.photo) {
+
+                                        uniquePost.photo = [photo];
+
+                                    } else if (uniquePost.photo && channel_post.photo) {
+
+                                        uniquePost.photo = [...uniquePost.photo, photo];
+
+                                    }
+
+
+                                } else if (channel_post) {
+
+                                    channel_post.photo = [
+                                        (channel_post.photo && channel_post.photo.length > 1) ?
+                                            channel_post.photo[1] :
+                                            channel_post.length ?
+                                                channel_post.photo[0] :
+                                                ""
+                                    ];
+
+                                    resultWithSortedMedia.push(channel_post);
+
+                                }
+
+                            })
+
+                            const {tgfrom} = meta;
+                            const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
+
+                            const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
+
+                            //two flows: first: for posting, second: for new telegramUpdate
+
+                            const prevTelegramMessages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
+
+                            const tgfromCheck = resultWithSortedMedia.findIndex(message => String(message.chat.id) === String(currentChannelId));
+
+                            const messagesFromChannel = resultWithSortedMedia.filter(message => String(message.chat.id) === String(currentChannelId));
+
+                            let allTelegramMessages = [];
+
+                            console.log('resultWith', resultWithSortedMedia)
+                            if (messagesFromChannel.length) {
+
+                                
+                                allTelegramMessages = [...prevTelegramMessages, ...messagesFromChannel];
+
+                            } else {
+
+                                allTelegramMessages = prevTelegramMessages;
+                            }
+
+                            localStorage.setItem("telegramMessages", JSON.stringify(allTelegramMessages));
+
+                            // console.log('check', tgfromCheck, Number(currentChannelId), Number(resultWithSortedMedia[0].chat.id))
+                            const messagesFromOthers = resultWithSortedMedia.filter(message => String(message.chat.id) !== String(currentChannelId));
+
+                            if (meta.tgfromask.value && messagesFromChannel.length && !this.openedDialog) {
+
+                                console.log('into', meta.tgfromask.value, tgfromCheck)
+                                const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
+
+                                this.dialogOfTG(currentMessages, currentChannelId)
+
+                            } else if (meta.tgfromask.value && this.openedDialog){
+
+
+                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId);
+
+
+                            } else if (!meta.tgfromask.value){
+
+                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId);
+
+                                
+                            } else {
+                                
+                                this.applyMessagesFromTG(messagesFromOthers);
+
+                            }{
+
+
+                                if (!this.openedDialog) {
+
+                                    localStorage.setItem("telegramMessages", "[]");
+
+                                }
+
+
+                            }
+
+                            self.sdk.usersettings.save();
+
+                            offset = result.length ? result[result.length - 1].update_id : 0
+                            this.telegramUpdates(offset + 1, clbk);
+
+                            if (clbk) {
+
+                                clbk();
+                            }
+
+                        }
+
+                    }
+
+                    fetch(url, settings)
+                    .then(data => {console.log('data', data); return data.json()})
+                    .then(data => telegramData(data))
+
+
+                },
+
+
+                telegramGetMe: function (token, abort) {
+
+                    if (abort) {
+                        this.telegramUpdateAbort.abort()
+                        this.telegramUpdateAbort = new AbortController();
+                    }
+
+                    const div = document.createElement('div');
+                    const i = document.createElement('i');
+                    const telegramInputWrapper = document.querySelector("div[parameter='telegram']");
+
+                    if (telegramInputWrapper) {
+
+                        telegramInputWrapper.setAttribute("style", "display: flex");
+
+                    }
+
+                    div.classList.add("iWrapper");
+                    const current = document.querySelector("div[parameter='telegram'] .iWrapper");
+                    console.log('current', current)
+
+                    if (current) {
+                        current.remove();
+                    }
+
+                    if (token) {
+
+                        fetch(`https://api.telegram.org/bot${token}/getMe`)
+                            .then(data => data.json())
+                            .then(json => {
+
+                                const addIcon = (icon, color) => {
+
+                                    if (telegramInputWrapper) {
+
+                                        div.setAttribute("style", `color:${color}; display:inline-block; font-size:30px; padding: 5px; margin-left: 1em`);
+                                        i.classList.add("fa");
+                                        i.classList.add(icon);
+                                        div.appendChild(i);
+                                        telegramInputWrapper.appendChild(div);
+                                        json.result.token = token;
+                                        useToken(json.result);
+
+                                    }
+                                }
+
+                                if (json.ok) {
+
+                                    addIcon("fa-check-circle", "green")
+
+                                    const {
+                                        tgfrom
+                                    } = self.sdk.usersettings.meta;
+                                    const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
+
+                                    const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
+
+                                    this.dialogOfTG(JSON.parse(localStorage.getItem("telegramMessages") || "[]"), currentChannelId);
+                                    this.telegramUpdates();
+
+
+                                } else {
+
+                                    addIcon("fa-times", "red");
+
+                                }
+                            })
+                            .catch(err => {
+                                if (err)
+                                    console.log(err, 'error after try telegram update')
+                            })
+                    }
+
+                    function useToken(json) {
+
+                        console.log(json)
+                        localStorage.setItem("telegrambot", JSON.stringify(json));
+                    }
+
+                },
+
+                openedDialog: false
+
 
             },
 
@@ -12369,7 +13384,7 @@ Platform = function (app, listofnodes) {
 
 
                 h += '</div>\
-					</div>'
+                    </div>'
 
 
                 return h;
@@ -12555,8 +13570,8 @@ Platform = function (app, listofnodes) {
 
 
                 h += '<div class="cwrapper table">\
-					<div class="cell cellforimage">\
-						<div class="icon">'
+                    <div class="cell cellforimage">\
+                        <div class="icon">'
 
                 if (gotoprofile) h += link
 
@@ -12568,10 +13583,10 @@ Platform = function (app, listofnodes) {
                 if (gotoprofile) h += clink
 
                 h += '</div>\
-					</div>\
-					<div class="ccell">\
-						<div class="infomain">\
-							<div class="caption">'
+                    </div>\
+                    <div class="ccell">\
+                        <div class="infomain">\
+                            <div class="caption">'
 
                 if (author.address != platform.sdk.address.pnet().address) {
 
@@ -12586,9 +13601,9 @@ Platform = function (app, listofnodes) {
                 }
 
                 h += '</div>\
-							<div class="tips">' + (html) + '\
-							</div>\
-						</div>'
+                            <div class="tips">' + (html) + '\
+                            </div>\
+                        </div>'
 
                 h += self.tempates.time(time)
 
@@ -13437,13 +14452,13 @@ Platform = function (app, listofnodes) {
                     }
                 },
                 clbks: {
-					/*transactions : function(data){
+                    /*transactions : function(data){
 
-						_.each(platform.sdk.node.transactions.clbks, function(c){
-							c(data.tx.amount)
-						})
+                        _.each(platform.sdk.node.transactions.clbks, function(c){
+                            c(data.tx.amount)
+                        })
 
-					}*/
+                    }*/
                 }
             },
 
@@ -14000,9 +15015,9 @@ Platform = function (app, listofnodes) {
 
                             //text = platform.app.localization.e('refferalUserMessage')
 
-							/*text = ''
-							caption = platform.app.localization.e('refferalUserMessage')
-							extra = self.tempates.subscribe(data.user)*/
+                            /*text = ''
+                            caption = platform.app.localization.e('refferalUserMessage')
+                            extra = self.tempates.subscribe(data.user)*/
 
                         }
                     }
@@ -14120,47 +15135,47 @@ Platform = function (app, listofnodes) {
             })
         }
 
-		/*var initOnlineListener = function(){
-			if(self.onlineCheck && !_Node){
+        /*var initOnlineListener = function(){
+            if(self.onlineCheck && !_Node){
 
-				onlinetnterval = retry(function(){
+                onlinetnterval = retry(function(){
 
-					var online = deep(window, 'navigator.onLine');
+                    var online = deep(window, 'navigator.onLine');
 
-					if (self.online != online){
+                    if (self.online != online){
 
-						self.online = online;
+                        self.online = online;
 
-						return true;
+                        return true;
 
-					}
-					
+                    }
+                    
 
-				}, function(){
+                }, function(){
 
-					if(!self.online){
+                    if(!self.online){
 
-						if (lost < 2)
-							lost = platform.currentBlock;	
+                        if (lost < 2)
+                            lost = platform.currentBlock;    
 
-						self.close();
-							
-						initOnlineListener();			
-					}
-					else
-					{
-						self.getMissed(initOnlineListener);
-						
-						initconnection();	
-					}
+                        self.close();
+                            
+                        initOnlineListener();            
+                    }
+                    else
+                    {
+                        self.getMissed(initOnlineListener);
+                        
+                        initconnection();    
+                    }
 
-					
+                    
 
 
-				}, 50)
+                }, 50)
 
-			}
-		}*/
+            }
+        }*/
 
         var reconnect = function () {
             if (closing) {
@@ -14370,11 +15385,11 @@ Platform = function (app, listofnodes) {
             var id = makeid(true);
 
             html = '<div class="fastMessage" id="' + id + '">\
-			<div class="fmCnt">' + html + '</div>\
-			<div class="close">\
-				<i class="fa fa-times" aria-hidden="true"></i>\
-			</div>\
-			</div>';
+            <div class="fmCnt">' + html + '</div>\
+            <div class="close">\
+                <i class="fa fa-times" aria-hidden="true"></i>\
+            </div>\
+            </div>';
 
             $('body').append(html);
 
@@ -14461,17 +15476,17 @@ Platform = function (app, listofnodes) {
 
             data || (data = {})
 
-			/*if (data && data.msg == 'registered'){
+            /*if (data && data.msg == 'registered'){
 
-								
+                                
 
-			}*/
+            }*/
 
             if (data.msg || data.mesType) {
 
-				/*var exkey = ''
+                /*var exkey = ''
 
-				if (data.mesType) exkey = '.' + data.mesType;*/
+                if (data.mesType) exkey = '.' + data.mesType;*/
 
                 var m = null;
 
@@ -14608,19 +15623,19 @@ Platform = function (app, listofnodes) {
 
 
 
-			/*self.messageHandler(
+            /*self.messageHandler(
 
-				{
-					addr: "PTPwefwp5pUW7g6SMZLmFUrMVEaCyoasJP",
-					amount: "1999",
-					msg: "transaction",
-					nout: "1",
-					time: 1571222680,
-					txid: "b6b40a9a3939f916d89f9ff2d688e2c3039ef1d7dd0bde174b32932555ab3311",
-					type: "userInfo"
-				}
+                {
+                    addr: "PTPwefwp5pUW7g6SMZLmFUrMVEaCyoasJP",
+                    amount: "1999",
+                    msg: "transaction",
+                    nout: "1",
+                    time: 1571222680,
+                    txid: "b6b40a9a3939f916d89f9ff2d688e2c3039ef1d7dd0bde174b32932555ab3311",
+                    type: "userInfo"
+                }
 
-			)*/
+            )*/
 
         }, 5000)
 
@@ -14705,7 +15720,7 @@ Platform = function (app, listofnodes) {
 
                 var d = bitcoin.bip32.fromSeed(keyPair.privateKey).derivePath(app.platform.sdk.address.path(i)).toWIF() 
 
-                var kp = bitcoin.ECPair.fromWIF(d)	  
+                var kp = bitcoin.ECPair.fromWIF(d)      
 
                 keyPairs.push({
                     kp : kp,
@@ -15399,8 +16414,8 @@ Platform = function (app, listofnodes) {
                         "raw",
                         aesjs.utils.utf8.toBytes(key),
                         {   //this is the algorithm options
-                            name: "AES-CBC",
-                        },
+                        name: "AES-CBC",
+                    },
                         false,
                         ["encrypt", "decrypt"]
                     )
@@ -15472,11 +16487,11 @@ Platform = function (app, listofnodes) {
 
                     crypto.subtle.generateKey(
                         {
-                            name: settings.name,
-                            modulusLength: settings.length, //can be 1024, 2048, or 4096
-                            publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                        name: settings.name,
+                        modulusLength: settings.length, //can be 1024, 2048, or 4096
+                        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: { name: "SHA-" + settings.hashL }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-                        },
+                    },
                         true, //whether the key is extractable (i.e. can be used in exportKey)
                         ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
                     )
@@ -15575,14 +16590,14 @@ Platform = function (app, listofnodes) {
                     crypto.subtle.importKey(
                         m, //can be "jwk" (public or private), "spki" (public only), or "pkcs8" (private only)
                         convertStringToArrayBuffer(keyH),
-					    /*{   //this is an example jwk key, other key types are Uint8Array objects
-					        kty: "RSA",
-					        e: "AQAB",
-					        n: keyH,
-					        alg: settings.name + "-" + settings.hashL,
-					        ext: true,
-					    },*/
-                        {   //these are the algorithm options
+                        /*{   //this is an example jwk key, other key types are Uint8Array objects
+                            kty: "RSA",
+                            e: "AQAB",
+                            n: keyH,
+                            alg: settings.name + "-" + settings.hashL,
+                            ext: true,
+                        },*/
+                        { //these are the algorithm options
                             name: settings.name,
                             hash: { name: "SHA-" + settings.hashL }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
                         },
@@ -15607,8 +16622,8 @@ Platform = function (app, listofnodes) {
 
                     crypto.subtle.encrypt(
                         {
-                            name: "RSA-OAEP",
-                        },
+                        name: "RSA-OAEP",
+                    },
                         publicKey,
                         data
                     )
@@ -15626,9 +16641,9 @@ Platform = function (app, listofnodes) {
 
                     crypto.subtle.decrypt(
                         {
-                            name: "RSA-OAEP",
+                        name: "RSA-OAEP",
 
-                        },
+                    },
                         privateKey,
                         data
                     )
@@ -15712,9 +16727,9 @@ Platform = function (app, listofnodes) {
                     self.helpers.keyForAes(key, function (akey) {
                         crypto.subtle.encrypt(
                             {
-                                name: "AES-CBC",
+                            name: "AES-CBC",
                                 iv: new Uint8Array(iv)/*window.crypto.getRandomValues(new Uint8Array(16)),*/
-                            },
+                        },
                             akey, //from generateKey or importKey above
                             strBytes //ArrayBuffer of data you want to encrypt
                         )
@@ -15746,9 +16761,9 @@ Platform = function (app, listofnodes) {
 
                         crypto.subtle.decrypt(
                             {
-                                name: "AES-CBC",
-                                iv: new Uint8Array(iv), //The initialization vector you used to encrypt
-                            },
+                            name: "AES-CBC",
+                            iv: new Uint8Array(iv), //The initialization vector you used to encrypt
+                        },
                             akey, //from generateKey or importKey above
                             encryptedBytes //ArrayBuffer of the data
                         )
@@ -16194,32 +17209,32 @@ Platform = function (app, listofnodes) {
         }
 
         self.ab = {
-			/*send : function(testid, result){
+            /*send : function(testid, result){
 
-				platform.app.ajax.run({
-					data : {
-						Action : 'ADDTESTRESULT',
-						UserID : userid,
-						TestID : testid,
-						Note : result || '',
-						Device : device()
-					},
+                platform.app.ajax.run({
+                    data : {
+                        Action : 'ADDTESTRESULT',
+                        UserID : userid,
+                        TestID : testid,
+                        Note : result || '',
+                        Device : device()
+                    },
 
-					success : function(data){
-											
-						if (clbk)
-							clbk()
+                    success : function(data){
+                                            
+                        if (clbk)
+                            clbk()
 
-					},
+                    },
 
-					fail : function(){
+                    fail : function(){
 
-						if (clbk)
-							clbk()
-					}
-				})
+                        if (clbk)
+                            clbk()
+                    }
+                })
 
-			},*/
+            },*/
             init: function () {
 
                 ab = JSON.parse(localStorage['ab'] || "{}")
@@ -16241,28 +17256,27 @@ Platform = function (app, listofnodes) {
         return self;
     }
 
-    self.nodes_test = [
-        {
-            full: '127.0.0.1:10011',
-            host: '127.0.0.1',
-            port: 10011,
-            ws: 8080,
-            path: '',
+    self.nodes_test = [{
+        full: '84.52.69.110:10011',
+        host: '84.52.69.110',
+        port: 10011,
+        ws: 8080,
+        path: '',
 
-            test: true,
-            name: 'performancetest'
-        }
+        test: true,
+        name: 'performancetest'
+    }
 
-		/*,{
-			full : '127.0.0.1:48081',
-			host : '127.0.0.1',
-			port : 48081,
-			ws : 8080,
-			path : '',
+        /*,{
+            full : '84.52.69.110:48081',
+            host : '84.52.69.110',
+            port : 48081,
+            ws : 8080,
+            path : '',
 
-			test : true,
-			name : 'performancetest'
-		}*/
+            test : true,
+            name : 'performancetest'
+        }*/
     ]
 
     self.nodes = listofnodes || null
@@ -16450,25 +17464,25 @@ Platform = function (app, listofnodes) {
     self.prepare = function (clbk, state) {
 
 
-		/*setInterval(function(){
-			
-			
-			console.log('self.sdk.relayTransactions.storage', self.sdk.relayTransactions.storage)
+        /*setInterval(function(){
+            
+            
+            console.log('self.sdk.relayTransactions.storage', self.sdk.relayTransactions.storage)
 
-			if (self.sdk.address.pnet()){
+            if (self.sdk.address.pnet()){
 
-				var addr = self.sdk.address.pnet().address
+                var addr = self.sdk.address.pnet().address
 
-				var regs = self.sdk.registrations.storage[addr];
+                var regs = self.sdk.registrations.storage[addr];
 
-				console.log('addrr', addr, regs)
+                console.log('addrr', addr, regs)
 
-			}
-			else[
-				console.log('state0')
-			]
+            }
+            else[
+                console.log('state0')
+            ]
 
-		}, 2000)*/
+        }, 2000)*/
 
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
@@ -16565,33 +17579,33 @@ Platform = function (app, listofnodes) {
                                         }
                                     })
 
-									/*var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
+                                    /*var h = '<div class="dimage" image="img/mainbgsmall.jpg"><div class="ppheader"><div class="table"><div>Join now and get a bonus of 5 Pocketcoin cryptocurrency tokens. This offer will end soon, join Pocketnet early and become a pioneer!</div></div></div></div>';
 
-									var d = dialog({
-										html : h,
-										class  :'popupsignup',
+                                    var d = dialog({
+                                        html : h,
+                                        class  :'popupsignup',
 
-										btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
-										btn2text : 'Watch Video',
+                                        btn1text : 'Join Pocketnet & Earn Pocketcoin Now',
+                                        btn2text : 'Watch Video',
 
-										success : function(){
-											
+                                        success : function(){
+                                            
 
-											self.app.nav.api.load({
-												open : true,
-												href : 'registration',
-												history : true
-											})
-										},
+                                            self.app.nav.api.load({
+                                                open : true,
+                                                href : 'registration',
+                                                history : true
+                                            })
+                                        },
 
-										fail : function(){
-											self.app.nav.api.load({
-												open : true,
-												href : 'video',
-												history : true
-											})
-										}
-									})*/
+                                        fail : function(){
+                                            self.app.nav.api.load({
+                                                open : true,
+                                                href : 'video',
+                                                history : true
+                                            })
+                                        }
+                                    })*/
 
 
                                 }
@@ -16613,6 +17627,22 @@ Platform = function (app, listofnodes) {
     self.prepareUser = function (clbk, state) {
 
         self.preparingUser = true;
+
+        if(self.app.platform.sdk.address.pnet()){
+            var a = self.app.platform.sdk.address.pnet().address
+
+            if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
+
+                self.app.user.features.telegram = 1;
+
+            } else {
+
+                self.app.user.features.telegram = 0;
+
+            }
+        }
+
+        
 
         var stateclbk = function (state) {
             if (state) {
@@ -16698,7 +17728,7 @@ Platform = function (app, listofnodes) {
             ion.sound({
                 sounds: [
                     {
-                        name: "water_droplet"
+                    name: "water_droplet"
                     }
                 ],
                 volume: 0.5,
@@ -16730,18 +17760,18 @@ Platform = function (app, listofnodes) {
 
             self.focus = true;
 
-			/*if ( (time > 3600 && (electron || window.cordova)) || resume){
+            /*if ( (time > 3600 && (electron || window.cordova)) || resume){
 
-				self.app.platform.restart(function(){
+                self.app.platform.restart(function(){
 
-					app.reload(function(){
+                    app.reload(function(){
 
-					})
+                    })
 
-				})
+                })
 
-				return
-			}*/
+                return
+            }*/
 
             if (time > 120 && (window.cordova || electron)) {
                 self.clearStorageLight()
@@ -16785,7 +17815,6 @@ Platform = function (app, listofnodes) {
 
 
         self.init = function () {
-
             inited = true;
 
             if (window.cordova) {

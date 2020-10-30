@@ -252,6 +252,7 @@ ____loclib.whatsnew = "What's new?";
 ____loclib.saddlink = "Add link to external site or video";
 ____loclib.saddimages = "Add Images to Post";
 ____loclib.sarticle = "To write an article";
+____loclib.stelegram = "Send to telegram"
 
 
 ____loclib.snothing = "Nothing";
@@ -325,6 +326,7 @@ ____loclib.upvoteCommentMessage = " liked your comment"
 
 // Errors
 
+____loclib.error = "Error";
 ____loclib.checkScoreError = "You must fill in required profile info before using Pocketnet. Do you want to do it now?";
 ____loclib.checkScoreErrorLight = "Account is not activated";
 ____loclib.timestamperror = "Time in application and in node do not match";
@@ -370,3 +372,8 @@ ____loclib.ntlasthour = "This hour"
 ____loclib.nttoday = "Today"
 ____loclib.ntmounth = "This month"
 ____loclib.ntearlier = "Earlier"
+
+
+____loclib.nodeWalletAdd = 'Adding an address may take some time. Continue?'
+____loclib.nodeEnableNoteHeader = 'Note'
+____loclib.nodeEnableNote = 'That turning on a node may take up to 5GB of RAM. Make sure you have enough. Happy staking!'

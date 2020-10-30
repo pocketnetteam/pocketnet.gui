@@ -1,13 +1,13 @@
-var esystem = (function () {
+var esystem = (function() {
 
     var self = new nModule();
 
     var essenses = {};
 
-    var Essense = function (p) {
+    var Essense = function(p) {
 
         var proxy = {
-            parameters: function () {
+            parameters: function() {
 
 
 
@@ -31,35 +31,87 @@ var esystem = (function () {
 
         var renders = {
 
-            node: {
-                tick: function() {
-                    console.log('node.tick fired 11')
-                }
-            },
-
-            nodeControl: function (clbk) {
+            nodeControl: function(clbk) {
                 var composed = null;
 
                 if (self.sdk.esystem.tickstate) {
                     let state = deep(self, 'sdk.esystem.tickstate.settings.node')
-                    state.control = {
-                        state: 'node is running'
-                    }
                     composed = self.sdk.esystem.node.settings.compose(state)
                 }
 
-                renders.options(composed, el.nodecontrolcnt, function (p) {
-                    console.log('+++++++++++++++++++++++++++', p)
+                renders.options(composed, el.nodecontrolcnt, function(p) {
 
-                    //p.el.find('.nodeinit').on('click', function (e) {
-                    //    self.sdk.esystem.request('node.start', { x: 'test2' }, function (err, data) {
-                    //        console.log(data)
-                    //    })
-                    //});
+                    p.el.find('input[pid="Enable"]').on('change', function(e) {
+                        if (e.target.checked) {
+                            dialog({
+                                html: self.app.localization.e('nodeEnableNote'),
+                                header: self.app.localization.e('nodeEnableNoteHeader'),
+                                btn1text: self.app.localization.e('daccept'),
+                                btn2text: self.app.localization.e('dcancel'),
+                                success: function() {
+                                    self.sdk.esystem.request('node.enable', { v: e.target.checked }, function(data) {})
+                                },
+                                fail: function() {}
+                            })
+                        } else {
+                            self.sdk.esystem.request('node.enable', { v: e.target.checked }, function(data) {})
+                        }
+                    });
+
+
+                    p.el.find('button[pid="binPath_Selector"]').on('click', function(e) {
+                        self.sdk.esystem.request('node.setBinPath', {}, function(er, msg) {
+                            p.el.find('input[pid="binPath"]').prop('value', msg)
+                        })
+                    });
+
+                    p.el.find('button[pid="dataPath_Selector"]').on('click', function(e) {
+                        self.sdk.esystem.request('node.setDataPath', {}, function(er, msg) {
+                            p.el.find('input[pid="dataPath"]').prop('value', msg)
+                        })
+                    });
+
+                    p.el.find('button[pid="confPath_Selector"]').on('click', function(e) {
+                        self.sdk.esystem.request('node.setConfPath', {}, function(er, msg) {
+                            p.el.find('input[pid="confPath"]').prop('value', msg)
+                        })
+                    });
+
+                    p.el.find('button[pid="setPrivateKey"]').on('click', function(e) {
+                        e.preventDefault()
+
+                        dialog({
+                            html: self.app.localization.e('nodeWalletAdd'),
+                            btn1text: self.app.localization.e('dyes'),
+                            btn2text: self.app.localization.e('dno'),
+                            success: function() {
+
+                                let private = bitcoin.ECPair.fromPrivateKey(self.app.user.private.value).toWIF()
+                                self.sdk.esystem.request('node.setWallet', { private: private }, function(err, msg) {
+                                    if (err) {
+                                        dialog({
+                                            html: msg,
+                                            header: self.app.localization.e('error'),
+                                            btn1text: self.app.localization.e('daccept'),
+                                            class: 'one'
+                                        })
+                                    }
+                                })
+
+                            },
+                            fail: function() {
+
+
+                            }
+                        })
+
+
+                    });
+
                 })
             },
 
-            proxyOptions: function (clbk) {
+            proxyOptions: function(clbk) {
 
                 var composed = null;
 
@@ -70,7 +122,7 @@ var esystem = (function () {
                 renders.options(composed, el.proxyoptions, clbk)
             },
 
-            options: function (composed, _el, clbk) {
+            options: function(composed, _el, clbk) {
 
                 self.shell({
                     name: 'options',
@@ -79,12 +131,13 @@ var esystem = (function () {
                         composed: composed
                     }
 
-                }, function (p) {
+                }, function(p) {
                     ParametersLive(composed.o, p.el)
+                    if (clbk) clbk(p)
                 })
             },
 
-            download: function () {
+            download: function() {
                 if (el.downloadElectron.length) {
 
                     self.nav.api.load({
@@ -98,7 +151,7 @@ var esystem = (function () {
 
                         },
 
-                        clbk: function (e, p) {
+                        clbk: function(e, p) {
 
                             if (!el.c) return
 
@@ -111,28 +164,26 @@ var esystem = (function () {
         }
 
         var state = {
-            save: function () {
+            save: function() {
 
             },
-            load: function () {
+            load: function() {
 
             }
         }
 
-        var initEvents = function () {
+        var initEvents = function() {
 
-            self.sdk.esystem.clbks.tick.esystem = function (settings, changed) {
+            self.sdk.esystem.clbks.tick.esystem = function(settings, changed) {
                 if (changed) {
                     renders.proxyOptions()
                     renders.nodeControl()
                 }
-
-                renders.node.tick()
             }
 
         }
 
-        var make = function () {
+        var make = function() {
             renders.download()
             renders.proxyOptions()
             renders.nodeControl()
@@ -141,7 +192,7 @@ var esystem = (function () {
         return {
             primary: primary,
 
-            getdata: function (clbk) {
+            getdata: function(clbk) {
 
                 var data = {};
 
@@ -149,14 +200,14 @@ var esystem = (function () {
 
             },
 
-            destroy: function () {
+            destroy: function() {
 
                 delete self.sdk.esystem.clbks.tick.esystem
 
                 el = {};
             },
 
-            init: function (p) {
+            init: function(p) {
 
                 state.load();
 
@@ -178,7 +229,7 @@ var esystem = (function () {
 
 
 
-    self.run = function (p) {
+    self.run = function(p) {
 
         var essense = self.addEssense(essenses, Essense, p);
 
@@ -186,9 +237,9 @@ var esystem = (function () {
 
     };
 
-    self.stop = function () {
+    self.stop = function() {
 
-        _.each(essenses, function (essense) {
+        _.each(essenses, function(essense) {
 
             essense.destroy();
 
@@ -202,8 +253,7 @@ var esystem = (function () {
 
 if (typeof module != "undefined") {
     module.exports = esystem;
-}
-else {
+} else {
 
     app.modules.esystem = {};
     app.modules.esystem.module = esystem;

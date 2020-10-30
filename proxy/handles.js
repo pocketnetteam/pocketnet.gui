@@ -99,13 +99,12 @@ var Handles = function(p){
 	
 		rpc : {
 			action : function(connect){
-	
 				var node = '';
 				var rpc = null;
 				var time = performance.now()
 
 	
-				if(!connect.parameters.nodelocally){
+				if (!connect.parameters.nodelocally) {
 	
 					node = connect.parameters.node || 'auto';
 	

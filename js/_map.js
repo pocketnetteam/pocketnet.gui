@@ -337,6 +337,12 @@ __map =  {
 				auth : 'authorization',
 				//validate : 'filluser'
 			},
+			relations : [
+
+				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'}
+
+			],
+
 		},
 
 		test : {
