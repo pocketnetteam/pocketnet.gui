@@ -116,7 +116,7 @@
         "productName": "Pocketnet",
         "extraFiles": [
             {
-                "from": "D:/___/pocketcoind.exe",
+                "from": "./pocketcoind/*",
                 "to": "."
             }
         ],
