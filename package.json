@@ -116,7 +116,7 @@
         "productName": "Pocketnet",
         "extraFiles": [
             {
-                "from": "./pocketcoind/*",
+                "from": "./pocketcoind",
                 "to": "."
             }
         ],

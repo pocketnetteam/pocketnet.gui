@@ -1,4 +1,5 @@
 var Path = require('path');
+const electron = require('electron')
 const { dialog } = require('electron')
 const fs = require('fs');
 const child_process = require('child_process');
@@ -35,8 +36,8 @@ var NodeControl = function(p) {
         init: function() {
 
             // change global settings
-            self.ini.node.binPath = Path.join(Path.dirname(process.execPath), self.kit.bin_name('pocketcoind'))
-            if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(Path.dirname(process.execPath), 'pocketcoin')
+            self.ini.node.binPath = Path.join(Path.dirname(process.execPath), 'pocketcoind', self.kit.bin_name('pocketcoind'))
+            if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(electron.app.getPath('userData'), 'pocketcoin')
 
             // create catalogs if not exists
             if (!fs.existsSync(p.settings.node.DataPath))
