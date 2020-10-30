@@ -15,6 +15,7 @@
         "publish": "build --win --x64 --ia32 -p always"
     },
     "devDependencies": {
+        "electron": "^9.3.3",
         "electron-builder": "^22.9.1",
         "electron-reload": "^1.5.0",
         "electron-reloader": "^1.0.1",
@@ -46,14 +47,13 @@
         "deep-extend": "^0.6.0",
         "desandro-matches-selector": "^2.0.2",
         "dhttp": "^2.5.0",
-        "electron": "^9.3.3",
         "electron-is": "^3.0.0",
         "electron-localshortcut": "^3.1.0",
         "electron-log": "^3.0.1",
         "electron-spellchecker": "^2.2.0",
         "electron-updater": "^4.1.2",
         "emojione": "^4.5.0",
-        "firebase-admin": "^8.1.0",
+        "firebase-admin": "^9.3.0",
         "fizzy-ui-utils": "^2.0.7",
         "fs": "",
         "get-size": "^2.0.3",
@@ -76,7 +76,7 @@
         "medium-editor": "^5.23.3",
         "merkle-lib": "^2.0.10",
         "minimaldata": "^1.0.2",
-        "mocha": "^5.2.0",
+        "mocha": "^8.2.0",
         "nedb": "^1.8.0",
         "node-autodetect-utf8-cp1251-cp866": "",
         "node-fetch": "",
@@ -84,7 +84,7 @@
         "node-json-rpc2": "",
         "node-reverse-wstunnel": "^1.0.0",
         "node-static": "^0.7.11",
-        "nyc": "^11.8.0",
+        "nyc": "^15.1.0",
         "open": "^6.3.0",
         "outlayer": "^2.1.1",
         "pbkdf2": "^3.0.17",
@@ -116,8 +116,9 @@
         "productName": "Pocketnet",
         "extraFiles": [
             {
-                "from": "./pocketcoind",
-                "to": "."
+                "from": "pocketcoind",
+                "to": "pocketcoind",
+                "filter": ["**/*"]
             }
         ],
         "publish": [

@@ -36,7 +36,7 @@ var NodeControl = function(p) {
         init: function() {
 
             // change global settings
-            self.ini.node.binPath = Path.join(Path.dirname(process.execPath), 'pocketcoind', self.kit.bin_name('pocketcoind'))
+            self.ini.node.binPath = Path.join(self.kit.bin_path(), self.kit.bin_name('pocketcoind'))
             if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(electron.app.getPath('userData'), 'pocketcoin')
 
             // create catalogs if not exists
@@ -80,6 +80,10 @@ var NodeControl = function(p) {
             const mac = name
             const linux = name
             return (process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : '')))
+        },
+
+        bin_path: function() {
+            return Path.join(Path.dirname(process.execPath), 'pocketcoind')
         },
 
         conf_name: function() {
@@ -153,11 +157,10 @@ var NodeControl = function(p) {
         start: function(clbk) {
             if (self.ini.node.instance == null) {
                 p.settings.node.control.state = 'Starting..'
-                console.log(self.ini.node.binPath)
-
+                
                 let binPath = self.ini.node.binPath
                 if (process.platform == 'darwin' || process.platform == 'linux') {
-                    binPath = `LD_LIBRARY_PATH=${Path.dirname(process.execPath)} ${self.ini.node.binPath}`
+                    binPath = `LD_LIBRARY_PATH=${self.kit.bin_path()} ${self.ini.node.binPath}`
                 }
 
                 self.ini.node.instance = child_process.spawn(binPath, [
