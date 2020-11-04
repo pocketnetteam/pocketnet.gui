@@ -145,7 +145,9 @@ var NodeControl = function(p) {
         running: function(clbk) {
             let _running = self.ini.node.instance != null
             if (!_running) {
-                // p.settings.node.control.state = 'Stopped'
+                if (!p.settings.node.control.startError)
+                    p.settings.node.control.state = 'Stopped'
+                    
                 p.settings.node.control.lastBlock = '-'
                 p.settings.node.control.addresses = '-'
             }
@@ -179,6 +181,7 @@ var NodeControl = function(p) {
                     if (code !== 0) {
                         console.log(`grep process exited with code ${code}`);
 
+                        p.settings.node.control.startError = true
                         p.settings.node.control.state = `Error starting the node. Code ${code}`
                         p.settings.node.Enable = false
                         p.settings.node.Timestamp = new Date()
