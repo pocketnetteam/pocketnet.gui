@@ -166,7 +166,11 @@ var NodeControl = function(p) {
                 self.ini.node.instance = child_process.spawn(binPath, [
                     `-conf=${self.ini.node.confPath}`,
                     `-datadir=${p.settings.node.DataPath}`,
-                    `-silent`
+                    `-silent`,
+                    `-blocksonly=1`,
+                    `-dbcache=50`,
+                    `-maxorphantx=10`,
+                    `-maxmempool=100`
                 ], { stdio: 'ignore', shell : true })
 
                 self.ini.node.instance.on('close', function(code) {

@@ -170,7 +170,24 @@ var userpage = (function(){
 				mobile : true
 			})
 
-			
+            if (typeof _Electron != 'undefined') {
+                reports.push({
+                    name : self.app.localization.e('rsystem'),
+                    id : 'esystem',
+                    report : 'esystem',
+                    mobile : false
+                })
+
+                var address = app.user.address.value;
+                if(_.indexOf(['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'], address) > -1) {
+                    reports.push({
+                        name : self.app.localization.e('rconnection'),
+                        id : 'connection',
+                        report : 'connection',
+                        mobile : false
+                    })
+                }
+            }
 				
 		}
 

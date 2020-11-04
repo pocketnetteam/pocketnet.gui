@@ -317,10 +317,11 @@ function createWindow() {
         }
     });
 
-    win.maximize();
     let isHidden = process.argv.find(function(el) { return el == '--hidden'; })
     if (isHidden) {
         win.hide();
+    } else {
+        win.maximize();
     }
 
     Menu.setApplicationMenu(null)

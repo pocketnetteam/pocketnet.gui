@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.1.0-beta",
+    "version": "0.1.1-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -51,7 +51,7 @@
         "electron-localshortcut": "^3.1.0",
         "electron-log": "^3.0.1",
         "electron-spellchecker": "^2.2.0",
-        "electron-updater": "^4.1.2",
+        "electron-updater": "^4.3.5",
         "emojione": "^4.5.0",
         "firebase-admin": "^9.3.0",
         "fizzy-ui-utils": "^2.0.7",
@@ -118,7 +118,9 @@
             {
                 "from": "pocketcoind",
                 "to": "pocketcoind",
-                "filter": ["**/*"]
+                "filter": [
+                    "**/*"
+                ]
             }
         ],
         "publish": [

@@ -1,8 +1,10 @@
 @import "../../css/__cssvar";
 
 #esystem{
-	position: relative;
-	padding-bottom: 10 * @rhythm;
+    position: relative;
+    min-height: 600px;
+    background: #F7F7F7;
+    padding: 0em 4em;
 	
 	.settingsGroup{
 		&:nth-child(1){
@@ -36,7 +38,6 @@
 	}
 
 	.parameter{
-		max-width: 600px;
 
 		.picker{
 			select{
@@ -122,8 +123,18 @@
 
 			&.error{
 				border : 1px solid @color-bad;
-			}
+            }
+            
+            .file_select,
+            .dir_select {
+                width: calc(100% - 3em);
+            }
         }
+}
+
+#esystem .parameter .pInput.btn_select {
+    width: 2.5em;
+}
 
         .inpLabel {
             width: 100%;
