@@ -12,7 +12,9 @@ const electronLocalshortcut = require('electron-localshortcut');
 var win, nwin, badge, tray, proxyInterface;
 var willquit = false;
 
-const { app, BrowserWindow, Menu, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
+const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
+app.allowRendererProcessReuse = false
+
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
 // AutoUpdate --------------------------------------
@@ -313,9 +315,39 @@ function createWindow() {
         icon: defaultIcon,
 
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            allowRendererProcessReuse: false,
+            spellcheck: true
         }
     });
+
+    // win.webContents.session.setSpellCheckerLanguages(['en-US'])
+    // const possibleLanguages = win.webContents.session.availableSpellCheckerLanguages
+
+    // win.webContents.on('context-menu', (event, params) => {
+    //     const menu = new Menu()
+
+    //     // Add each spelling suggestion
+    //     for (const suggestion of params.dictionarySuggestions) {
+    //         menu.append(new MenuItem({
+    //             label: suggestion,
+    //             click: () => win.webContents.replaceMisspelling(suggestion)
+    //         }))
+    //     }
+
+    //     // Allow users to add the misspelled word to the dictionary
+    //     if (params.misspelledWord) {
+    //         menu.append(
+    //             new MenuItem({
+    //                 label: 'Add to dictionary',
+    //                 click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+    //             })
+    //         )
+    //     }
+
+    //     menu.popup()
+    // })
 
     let isHidden = process.argv.find(function(el) { return el == '--hidden'; })
     if (isHidden) {

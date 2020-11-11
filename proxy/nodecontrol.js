@@ -280,9 +280,9 @@ var NodeControl = function(p) {
                 ]
             }
 
-            dialog.showOpenDialog(options).then(function(res) {
-                if (!res.canceled && res.filePaths.length > 0) {
-                    self.ini.node.binPath = res.filePaths[0]
+            dialog.showOpenDialog(options, function(res) {
+                if (!res.canceled && res.length > 0) {
+                    self.ini.node.binPath = res[0]
                     p.settings.node.Timestamp = new Date()
 
                     if (clbk) clbk(null, self.ini.node.binPath)
@@ -295,9 +295,9 @@ var NodeControl = function(p) {
                 properties: ['openDirectory']
             }
 
-            dialog.showOpenDialog(options).then(function(res) {
-                if (!res.canceled && res.filePaths.length > 0) {
-                    p.settings.node.DataPath = res.filePaths[0]
+            dialog.showOpenDialog(options, function(res) {
+                if (!res.canceled && res.length > 0) {
+                    p.settings.node.DataPath = res[0]
                     p.settings.node.Timestamp = new Date()
                     self.kit.init()
 
@@ -314,9 +314,9 @@ var NodeControl = function(p) {
                 ]
             }
 
-            dialog.showOpenDialog(options).then(function(res) {
-                if (!res.canceled && res.filePaths.length > 0) {
-                    self.ini.node.confPath = res.filePaths[0]
+            dialog.showOpenDialog(options, function(res) {
+                if (!res.canceled && res.length > 0) {
+                    self.ini.node.confPath = res[0]
                     p.settings.node.Timestamp = new Date()
 
                     if (clbk) clbk(null, self.ini.node.confPath)
