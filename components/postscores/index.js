@@ -128,13 +128,9 @@ var postscores = (function(){
 
 			userlist : function(clbk){
 
-				console.log('scores', scores)
-
 				scores = _.filter(scores, function(s){
 					return s.value >= 1
 				})
-
-				console.log('scores 2', scores);
 
 				var addresses = _.map(scores, function(s){
 					return s.address
