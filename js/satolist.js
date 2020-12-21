@@ -9936,7 +9936,7 @@ Platform = function (app, listofnodes) {
                                 meta
                             } = self.sdk.usersettings;
 
-                            if (!meta.tgtoask.value) {
+                            if (!meta.tgtoask.value && obj.caption) {
 
                                 this.telegramSend(obj, meta)
 
