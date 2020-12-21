@@ -9936,29 +9936,35 @@ Platform = function (app, listofnodes) {
                                 meta
                             } = self.sdk.usersettings;
 
-                            if (!meta.tgtoask.value && obj.caption) {
+                            if (obj.caption){
 
-                                this.telegramSend(obj, meta)
 
-                            } else {
 
-                                // this.telegramSend = this.telegramSend.bind(this)
+                                if (!meta.tgtoask.value) {
 
-                                dialog({
-                                    html: "Do you really want send message to Telegram?",
-                                    btn1text: "Send",
-                                    btn2text: "Cancel",
-
-                                    class: 'zindex',
-
-                                    success: () => {
-
-                                        this.telegramSend(savedObj, meta)
-
-                                    }
-                                })
-
+                                    this.telegramSend(obj, meta)
+    
+                                } else {
+    
+                                    // this.telegramSend = this.telegramSend.bind(this)
+    
+                                    dialog({
+                                        html: "Do you really want send message to Telegram?",
+                                        btn1text: "Send",
+                                        btn2text: "Cancel",
+    
+                                        class: 'zindex',
+    
+                                        success: () => {
+    
+                                            this.telegramSend(savedObj, meta)
+    
+                                        }
+                                    })
+    
+                                }
                             }
+
 
                         }
 
