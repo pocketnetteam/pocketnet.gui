@@ -51,6 +51,20 @@ var usersettings = (function(){
 						
 					})
 
+					var input = p.el.find('.parameterMaketWrapper[parameter=telegram] input')
+
+					var value = input.val();
+					
+					input.on('blur', function(){
+
+						self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
+
+					})
+
+					self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
+
+
+
 					// const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no z"
 					// self.app.platform.sdk.system.get.telegramGetMe(bot);
 				})
@@ -80,20 +94,59 @@ var usersettings = (function(){
 
 			//if (self.app.user.features.telegram){
 
-				controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
+			controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
 
-				controller.abort(); 
-				self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
+			controller.abort(); 
+			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
 
-				console.log('controller', self.app.platform.sdk.system.get.telegramUpdateAbort)
-				
-				self.app.platform.sdk.system.get.telegramUpdates(null, rerender);
+			console.log('controller', self.app.platform.sdk.system.get.telegramUpdateAbort)
+			
+			self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
+
 
 			//}
 		}
 
 		var make = function(){
+
+			console.log('maake');
+
 			renders.options()
+
+		}
+
+		var add = function(check){
+
+			const addIcon = (icon, color) => {
+
+				const div = document.createElement('div');
+				div.classList.add("iWrapper");
+				const i = document.createElement('i');
+				const telegramInputWrapper = document.querySelector("div[parameter='telegram']");
+				div.classList.add("iWrapper");
+
+				if (telegramInputWrapper) {
+
+					telegramInputWrapper.setAttribute("style", "display: flex");
+
+					div.setAttribute("style", `color:${color}; display:inline-block; font-size:30px; padding: 5px; margin-left: 1em`);
+					i.classList.add("fa");
+					i.classList.add(icon);
+					div.appendChild(i);
+					telegramInputWrapper.appendChild(div);
+
+				}
+			}
+
+			if (check){
+				addIcon("fa-check-circle", "green")
+
+			} else {
+
+				addIcon("fa-times", "red");	
+
+			}
+
 
 		}
 
@@ -102,10 +155,12 @@ var usersettings = (function(){
 
 			getdata : function(clbk){
 
-				composed = self.app.platform.sdk.usersettings.compose()
+				composed = self.app.platform.sdk.usersettings.compose(make)
 				var data = {};
 
 				clbk(data);
+
+
 
 			},
 
@@ -133,9 +188,12 @@ var usersettings = (function(){
 
 				initEvents();
 
-				make()
+				make();
 
-				p.clbk(null, p);
+				p.clbk(null, p);	
+				
+
+
 
 			}
 		}

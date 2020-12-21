@@ -2611,7 +2611,6 @@
 	ParametersLive = function(parameters, el, p){
 
 
-
 		if(!p) p = {};
 
 		_.each(parameters, function(parameter){
@@ -3110,7 +3109,7 @@
 				}
 
 				if (parameter.type == 'valuescustom' || parameter.type == 'values' || parameter.type == 'valuesmultibig'){
-
+										
 					var bkp = null;
 
 					var input = _el.find('.vc_inputWrapper input');
@@ -3199,6 +3198,8 @@
 							open()
 						})
 					}
+
+					console.log('_el',_el);
 					_el.find('.vc_value').on('click', function(){
 						bkp = null;
 

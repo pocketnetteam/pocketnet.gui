@@ -3360,11 +3360,11 @@ Platform = function (app, listofnodes) {
                     value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
                     _onChange: function (value) {
 
-                        if (value && self.app.user.features.telegram && value){
+                        // if (value && self.app.user.features.telegram && value){
                             
-                            self.app.platform.sdk.system.get.telegramGetMe(value, true);
+                        //     self.app.platform.sdk.system.get.telegramGetMe(value, true);
 
-                        }
+                        // }
 
                     }
 
@@ -3430,7 +3430,7 @@ Platform = function (app, listofnodes) {
                 return options
             },
 
-            compose: function () {
+            compose: function (make) {
                 var s = self.sdk.usersettings;
 
                 var options = s.createall()
@@ -12158,17 +12158,26 @@ Platform = function (app, listofnodes) {
 
                         const addValue = (dropdownName, channelName, channelId) => {
 
+                            console.log('dropdown 1')
+
                             if (meta[dropdownName].possibleValues.indexOf(String(channelId)) === -1) {
 
                                 meta[dropdownName].possibleValues.push(String(channelId));
                                 meta[dropdownName].possibleValuesLabels.push(channelName);
 
                                 const $tgDropdown = $(`div[parameter='${dropdownName}'] .vc_selectInput`);
+
+                                console.log('$tgDrop 1', $tgDropdown, $tgDropdown.children());
+
                                 const newValue = `<div class="vc_value" value=${channelId}>${channelName}</div>`;
                                 const newValueHTML = $.parseHTML(newValue);
                                 $tgDropdown.append(newValueHTML);
 
+                                console.log('$tgDrop', $tgDropdown, $tgDropdown.children());
+
                             }
+
+                            console.log('dropdown 2', dropdownName, channelName, channelId, meta[dropdownName]);
 
                         }
 
@@ -12591,7 +12600,8 @@ Platform = function (app, listofnodes) {
                     console.log('offset', offset);
 
                     console.log('start updates');
-                    const token = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "";
+                    const telegrambot = localStorage.getItem('telegrambot');
+                    const token =  (telegrambot && JSON.parse(telegrambot) && JSON.parse(telegrambot).token) || "";
                     this.telegramUpdates = this.telegramUpdates.bind(this);
 
                     const url = `https://api.telegram.org/bot${token}/getUpdates?offset=${offset}&timeout=100`;
@@ -12748,6 +12758,7 @@ Platform = function (app, listofnodes) {
                             offset = result.length ? result[result.length - 1].update_id : 0
                             this.telegramUpdates(offset + 1, clbk);
 
+
                             if (clbk) {
 
                                 clbk();
@@ -12757,32 +12768,22 @@ Platform = function (app, listofnodes) {
 
                     }
 
+                    console.log('clbk', clbk);
                     fetch(url, settings)
-                    .then(data => {console.log('data', data); return data.json()})
+                    .then(data => data.json())
                     .then(data => telegramData(data))
-
 
                 },
 
 
-                telegramGetMe: function (token, abort) {
+                telegramGetMe: function (token, abort, make, add) {
 
                     if (abort) {
                         this.telegramUpdateAbort.abort()
                         this.telegramUpdateAbort = new AbortController();
                     }
 
-                    const div = document.createElement('div');
-                    const i = document.createElement('i');
-                    const telegramInputWrapper = document.querySelector("div[parameter='telegram']");
 
-                    if (telegramInputWrapper) {
-
-                        telegramInputWrapper.setAttribute("style", "display: flex");
-
-                    }
-
-                    div.classList.add("iWrapper");
                     const current = document.querySelector("div[parameter='telegram'] .iWrapper");
                     console.log('current', current)
 
@@ -12796,24 +12797,14 @@ Platform = function (app, listofnodes) {
                             .then(data => data.json())
                             .then(json => {
 
-                                const addIcon = (icon, color) => {
+                                if (add){
 
-                                    if (telegramInputWrapper) {
-
-                                        div.setAttribute("style", `color:${color}; display:inline-block; font-size:30px; padding: 5px; margin-left: 1em`);
-                                        i.classList.add("fa");
-                                        i.classList.add(icon);
-                                        div.appendChild(i);
-                                        telegramInputWrapper.appendChild(div);
-                                        json.result.token = token;
-                                        useToken(json.result);
-
-                                    }
+                                    add(json.ok)
                                 }
 
                                 if (json.ok) {
 
-                                    addIcon("fa-check-circle", "green")
+                                    localStorage.setItem("telegrambot", JSON.stringify({...json.result, token}));
 
                                     const {
                                         tgfrom
@@ -12821,16 +12812,16 @@ Platform = function (app, listofnodes) {
                                     const currentChannelIdx = tgfrom.possibleValuesLabels.indexOf(tgfrom.value);
 
                                     const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
+                                    
 
                                     this.dialogOfTG(JSON.parse(localStorage.getItem("telegramMessages") || "[]"), currentChannelId);
-                                    this.telegramUpdates();
+                                    this.telegramUpdates(null, make);
+
+  
+
+                                } 
 
 
-                                } else {
-
-                                    addIcon("fa-times", "red");
-
-                                }
                             })
                             .catch(err => {
                                 if (err)
@@ -12838,11 +12829,6 @@ Platform = function (app, listofnodes) {
                             })
                     }
 
-                    function useToken(json) {
-
-                        console.log(json)
-                        localStorage.setItem("telegrambot", JSON.stringify(json));
-                    }
 
                 },
 
