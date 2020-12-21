@@ -53,13 +53,14 @@ var usersettings = (function(){
 
 					var input = p.el.find('.parameterMaketWrapper[parameter=telegram] input')
 
-					var value = input.val();
 					
 					input.on('blur', function(){
 
-						self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
+						renders.options();
 
 					})
+
+					var value = input.val();
 
 					self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
 
@@ -101,7 +102,7 @@ var usersettings = (function(){
 
 			console.log('controller', self.app.platform.sdk.system.get.telegramUpdateAbort)
 			
-			self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
+			// self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
 
 
 			//}

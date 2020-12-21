@@ -3358,16 +3358,6 @@ Platform = function (app, listofnodes) {
                     id: 'telegram',
                     placeholder: "Telegram bot token",
                     value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
-                    _onChange: function (value) {
-
-                        // if (value && self.app.user.features.telegram && value){
-                            
-                        //     self.app.platform.sdk.system.get.telegramGetMe(value, true);
-
-                        // }
-
-                    }
-
 
 
                 },
@@ -3641,7 +3631,7 @@ Platform = function (app, listofnodes) {
 
                                 self.app.user.features.telegram = 1;
 
-                                self.app.platform.sdk.system.get.telegramGetMe(v.value);
+                                // self.app.platform.sdk.system.get.telegramGetMe(v.value);
 
 
                             } else {
@@ -12723,7 +12713,7 @@ Platform = function (app, listofnodes) {
 
                                 console.log('into', meta.tgfromask.value, tgfromCheck)
                                 const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
-
+                                console.log('other thiiis');
                                 this.dialogOfTG(currentMessages, currentChannelId)
 
                             } else if (meta.tgfromask.value && this.openedDialog){
@@ -12759,10 +12749,10 @@ Platform = function (app, listofnodes) {
                             this.telegramUpdates(offset + 1, clbk);
 
 
-                            if (clbk) {
+                            // if (clbk) {
 
-                                clbk();
-                            }
+                            //     clbk();
+                            // }
 
                         }
 
@@ -12777,6 +12767,8 @@ Platform = function (app, listofnodes) {
 
 
                 telegramGetMe: function (token, abort, make, add) {
+
+                    console.log('telegramGetMe');
 
                     if (abort) {
                         this.telegramUpdateAbort.abort()
@@ -12813,7 +12805,7 @@ Platform = function (app, listofnodes) {
 
                                     const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
                                     
-
+                                    console.log('thiis');
                                     this.dialogOfTG(JSON.parse(localStorage.getItem("telegramMessages") || "[]"), currentChannelId);
                                     this.telegramUpdates(null, make);
 
