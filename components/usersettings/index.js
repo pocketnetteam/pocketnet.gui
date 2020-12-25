@@ -157,23 +157,6 @@ var usersettings = (function(){
 
 					console.log('destroyed?');
 
-					var controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
-					controller.abort(); 
-					controller = new AbortController();
-
-					var input = p.el.find('.parameterMaketWrapper[parameter=telegram] input')
-
-					
-					input.on('blur', function(){
-
-						renders.options();
-
-					})
-
-					var value = input.val();
-
-					self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
-
 				}
 			},
 			
