@@ -12547,14 +12547,25 @@ Platform = function (app, listofnodes) {
                 dialogOfTG: function (messages, currentChannelId) {
                     console.log('dialogOfTG', messages, currentChannelId)
 
-                    if (messages.length && currentChannelId) {
+                    var count = messages.length
+
+                    if (count && currentChannelId) {
 
                         this.openedDialog = true;
 
                         console.log('openedDialog2', this.openedDialog, currentChannelId);
 
+                        console.log('messages', messages);
+
+                        var countMessages = '(1 message)'
+
+                        if (count > 1){
+
+                            countMessages = '(' + count + ' messages)';
+                        }
+
                         dialog({
-                            html: "Do you really want post messages from Telegram?",
+                            html: "Do you really want post messages from Telegram? " + countMessages,
                             btn1text: "Post",
                             btn2text: "Cancel",
 
@@ -12565,6 +12576,7 @@ Platform = function (app, listofnodes) {
                                 const messages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
 
                                 this.applyMessagesFromTG(messages, true, currentChannelId);
+
                                 localStorage.setItem("telegramMessages", "[]");
                                 this.openedDialog = false;
 
@@ -12634,7 +12646,7 @@ Platform = function (app, listofnodes) {
 
                                 const siblingIdx = resultWithSortedMedia.findIndex(uniqueMessager => {
 
-                                    return channel_post && (channel_post.media_group_id === uniqueMessager.media_group_id);
+                                    return channel_post && channel_post.media_group_id != undefined && (channel_post.media_group_id === uniqueMessager.media_group_id);
                                 })
 
                                 if (siblingIdx > -1) {
@@ -12701,7 +12713,6 @@ Platform = function (app, listofnodes) {
 
                             let allTelegramMessages = [];
 
-                            console.log('resultWith', resultWithSortedMedia)
                             if (messagesFromChannel.length) {
 
                                 
@@ -12711,6 +12722,8 @@ Platform = function (app, listofnodes) {
 
                                 allTelegramMessages = prevTelegramMessages;
                             }
+
+                            console.log('resultWith', allTelegramMessages);
 
                             localStorage.setItem("telegramMessages", JSON.stringify(allTelegramMessages));
 
