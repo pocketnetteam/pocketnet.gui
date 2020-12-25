@@ -3631,8 +3631,6 @@ Platform = function (app, listofnodes) {
 
                                 self.app.user.features.telegram = 1;
 
-                                // self.app.platform.sdk.system.get.telegramGetMe(v.value);
-
 
                             } else {
 
@@ -12143,7 +12141,7 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                applyMessagesFromTG: function (messages, acceptPosting, currentChannelId) {
+                applyMessagesFromTG: function (messages, acceptPosting, currentChannelId, make) {
 
                     console.log('apply', messages);
                     let {
@@ -12515,6 +12513,10 @@ Platform = function (app, listofnodes) {
                         addValue("tgto", channelName, chat.id);
                         addValue("tgfrom", channelName, chat.id);
 
+                        if (make){
+                            make();
+                        }
+
                         // meta.tgfrom.possibleValues = [...new Set(meta.tgfrom.possibleValues)];
                         // meta.tgfrom.possibleValuesLabels = [...new Set(meta.tgfrom.possibleValuesLabels)];
                         // meta.tgto.possibleValues = [...new Set(meta.tgto.possibleValues)];
@@ -12587,7 +12589,7 @@ Platform = function (app, listofnodes) {
                 telegramUpdateAbort: new AbortController(),
 
 
-                telegramUpdates: function (offset = 0, clbk) {
+                telegramUpdates: function (offset = 0, make) {
 
                     if (!offset){
 
@@ -12608,7 +12610,7 @@ Platform = function (app, listofnodes) {
                         signal: this.telegramUpdateAbort.signal
                     }
 
-                    const telegramData = data => {
+                    const telegramData = (data, make) => {
                         console.log('telegramData');
                         if (data.ok) {
 
@@ -12725,17 +12727,17 @@ Platform = function (app, listofnodes) {
                             } else if (meta.tgfromask.value && this.openedDialog){
 
 
-                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId);
+                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId, make);
 
 
                             } else if (!meta.tgfromask.value){
 
-                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId);
+                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId, make);
 
                                 
                             } else {
                                 
-                                this.applyMessagesFromTG(messagesFromOthers);
+                                this.applyMessagesFromTG(messagesFromOthers, null, null, make);
 
                             }{
 
@@ -12752,7 +12754,7 @@ Platform = function (app, listofnodes) {
                             self.sdk.usersettings.save();
 
                             offset = result.length ? result[result.length - 1].update_id : 0
-                            this.telegramUpdates(offset + 1, clbk);
+                            this.telegramUpdates(offset + 1, make);
 
 
                             // if (clbk) {
@@ -12764,10 +12766,9 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    console.log('clbk', clbk);
                     fetch(url, settings)
                     .then(data => data.json())
-                    .then(data => telegramData(data))
+                    .then(data => telegramData(data, make))
 
                 },
 
@@ -12777,6 +12778,7 @@ Platform = function (app, listofnodes) {
                     console.log('telegramGetMe');
 
                     if (abort) {
+
                         this.telegramUpdateAbort.abort()
                         this.telegramUpdateAbort = new AbortController();
                     }
@@ -17618,6 +17620,15 @@ Platform = function (app, listofnodes) {
             if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
 
                 self.app.user.features.telegram = 1;
+
+                var token = self.app.platform.sdk.usersettings.meta.telegram.value;
+
+                if (token){
+
+                    self.app.platform.sdk.system.get.telegramGetMe(token);
+                }
+
+                console.log('telegram true', token);
 
             } else {
 

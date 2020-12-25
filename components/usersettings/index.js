@@ -84,28 +84,14 @@ var usersettings = (function(){
 
 		var initEvents = function(){
 
-			const rerender = () => {
-
-				console.log('rerender???');
-				renders.options();
-
-			}
-
-			console.log(self.app.user.features, 'features')
-
-			//if (self.app.user.features.telegram){
-
 			controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
 
-			controller.abort(); 
+			controller.abort()
+			
+			console.log('controller', controller); 
+
 			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
 
-			console.log('controller', self.app.platform.sdk.system.get.telegramUpdateAbort)
-			
-			// self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
-
-
-			//}
 		}
 
 		var make = function(){
@@ -148,7 +134,6 @@ var usersettings = (function(){
 
 			}
 
-
 		}
 
 		return {
@@ -171,9 +156,23 @@ var usersettings = (function(){
 				if (self.app.user.features.telegram){
 
 					console.log('destroyed?');
+
+					var controller = self.app.platform.sdk.system.get.telegramUpdateAbort;
 					controller.abort(); 
 					controller = new AbortController();
-					self.app.platform.sdk.system.get.telegramUpdates();
+
+					var input = p.el.find('.parameterMaketWrapper[parameter=telegram] input')
+
+					
+					input.on('blur', function(){
+
+						renders.options();
+
+					})
+
+					var value = input.val();
+
+					self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
 
 				}
 			},
