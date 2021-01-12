@@ -32,18 +32,18 @@ if(!_Node)
 				id : 'pocketnet.app:8888:8088:'
 			},
 
-			/*{
-				host : 'localhost',
-				port : 8888,
-				ws : 8088,
-				id : 'localhost:8888:8088:'
-			},*/
+			// {
+			// 	host : 'localhost',
+			// 	port : 8888,
+			// 	ws : 8088,
+			// 	id : 'localhost:8888:8088:'
+			// },
 			
-			/*{
-				host : '192.168.0.11',
+			{
+				host : 'ironbot',
 				port : 8888,
 				ws : 8088
-			}*/
+			}
 		],
 		
 	});

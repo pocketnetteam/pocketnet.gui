@@ -38,8 +38,6 @@ if(typeof _Electron != 'undefined' && _Electron){
 	emojionearea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
-    // TODO (brangr): tmp remove spellchecker
-    /*
 	const electronSpellchecker = require('electron-spellchecker');
 
 	// Retrieve required properties
@@ -61,7 +59,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 	var contextMenuListener = new ContextMenuListener((info) => {
 		contextMenuBuilder.showPopupMenu(info);
     });
-    */
+
 
 }
 

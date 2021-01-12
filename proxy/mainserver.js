@@ -96,8 +96,15 @@ var defaultSettings = {
     node: {
         Enable: false,
         BinPath: '',
-        ConfigPath: '',
+        ConfPath: '',
         DataPath: '',
+        SetPrivateKey: false,
+        control: {
+            state: '-',
+            addresses: '-',
+            lastBlock: '-',
+            running: false,
+        },
     },
 	
 }
@@ -293,7 +300,7 @@ var kit = {
 
 		if(!proxy){
 
-			proxy = new Proxy(settings)
+            proxy = new Proxy(settings)
 
 			proxy.kit.start(function(){
 
@@ -309,10 +316,9 @@ var kit = {
 
 	},
 
-	stop : function(){
+	stop : function(clbk){
 		if (proxy){
-			proxy.kit.stop()
-			proxy = null
+			proxy.kit.stop(clbk)
 		}
 	},
 
@@ -424,6 +430,31 @@ var ipcInterface = function(ipc, wc){
 		})
 	}
 
+	var handleMessage = function(e, message) {
+		
+		if(!message.action) return
+		if(!message.id) message.id = makeid()
+
+		//node.exist
+
+		deep(actions, message.action)(message)
+
+	}
+    
+    var tick = function() {
+        if (!proxy) return
+        if (!proxy.nodeControl.instance) return
+
+        proxy.nodeControl.instance.kit.state(function() {
+            var message = {
+                settings : settings,
+                proxyReady : true
+            }
+    
+            send('state', null, message, 'proxy-message-tick')
+        })
+	}
+    
 	var actions = {
 
 		set : function(message){
@@ -475,43 +506,48 @@ var ipcInterface = function(ipc, wc){
                     helpers.rewriteSettings()
                     send(message.id, null, data)
                 })
-            }
+            },
+
+            getWallet: function (message) {
+                proxy.nodeControl.instance.kit.getWallet(message.data, function(err, data) {
+                    send(message.id, err, data)
+                })
+            },
+
+            setWallet: function (message) {
+                proxy.nodeControl.instance.kit.setWallet(message.data, function(err, data) {
+                    send(message.id, err, data)
+                })
+            },
+
+            setBinPath: function (message) {
+                proxy.nodeControl.instance.kit.setBinPath(message.data, function(err, data) {
+                    helpers.rewriteSettings()
+                    send(message.id, err, data)
+                })
+            },
+
+            setConfPath: function (message) {
+                proxy.nodeControl.instance.kit.setConfPath(message.data, function(err, data) {
+                    helpers.rewriteSettings()
+                    send(message.id, err, data)
+                })
+            },
+
+            setDataPath: function (message) {
+                proxy.nodeControl.instance.kit.setDataPath(message.data, function(err, data) {
+                    helpers.rewriteSettings()
+                    send(message.id, err, data)
+                })
+            },
 
 		}
     }
 
-	var handleMessage = function(e, message) {
-		
-		if(!message.action) return
-		if(!message.id) message.id = makeid()
-
-		//node.exist
-
-		deep(actions, message.action)(message)
-
-	}
-
-	var tick = function() {
-
-        proxy.nodeControl.instance.kit.running(function(running) {
-            send('state', null, {}, 'proxy-message-tick')
-        })
-
-
-		var message = {
-			settings : settings,
-			state : {},
-			proxyReady : proxy ? true : false
-		}
-
-		send('state', null, message, 'proxy-message-tick')
-	}
-
-
 	self.init = function(){
 		ipc.on('proxy-message', handleMessage)
 
-		tickInterval = setInterval(tick, 2500)
+        tickInterval = setInterval(tick, 2500)
 	}
 
 	self.destroy = function(){
@@ -522,7 +558,11 @@ var ipcInterface = function(ipc, wc){
 
 			tickInterval = null
 		}
-	}
+    }
+    
+    self.stop = function(clbk) {
+        kit.stop(clbk)
+    }
 
 	return self
 }

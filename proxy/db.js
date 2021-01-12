@@ -1,652 +1,630 @@
 const pg = require('pg');
 
-var db = function(p){
-	var self = this;
+var db = function(p) {
+    var self = this;
 
-		self.key = "";
+    self.key = "";
 
-	var addPhrase = function(phrases, val){
-		if(val) phrases.push(val);
-	}
+    var addPhrase = function(phrases, val) {
+        if (val) phrases.push(val);
+    }
 
-	self.query = function(query, argsArray, callback){
+    self.query = function(query, argsArray, callback) {
 
-	    self.pool.connect((err, client, done) => {
-	    	
-	        if (err) {
-	            done();
-	            callback(err);
+        self.pool.connect((err, client, done) => {
 
-	            return;
-	        }
+            if (err) {
+                done();
+                callback(err);
 
-	        client.query(query, argsArray, (err, results) => {
-	            done(); 
-	            callback(err, results); 
-	        });
-	    });
-	}
+                return;
+            }
 
-	self.crypt = function(name){
+            client.query(query, argsArray, (err, results) => {
+                done();
+                callback(err, results);
+            });
+        });
+    }
 
-		if(_.isArray(name)){
-			var crynames = []
+    self.crypt = function(name) {
 
-			_.each(name, function(_name){
+        if (_.isArray(name)) {
+            var crynames = []
 
-				crynames.push(self.crypt(_name));
-			})
+            _.each(name, function(_name) {
 
-			return crynames;
-		}
+                crynames.push(self.crypt(_name));
+            })
 
-		if(name.indexOf('.') > -1){
-			var n = name.split(".");
+            return crynames;
+        }
 
-			return self.key + n[0] + "." + self.key + n[1]
-		}
+        if (name.indexOf('.') > -1) {
+            var n = name.split(".");
 
-		return self.key + name;
-	}
+            return self.key + n[0] + "." + self.key + n[1]
+        }
 
-	self.uncrypt = function(cryname){
+        return self.key + name;
+    }
 
-		if(_.isArray(cryname)){
-			var uncrynames = []
+    self.uncrypt = function(cryname) {
 
-			_.each(cryname, function(_name){
-				uncrynames.push(self.uncrypt(_name));
-			})
+        if (_.isArray(cryname)) {
+            var uncrynames = []
 
-			return uncrynames;
-		}
+            _.each(cryname, function(_name) {
+                uncrynames.push(self.uncrypt(_name));
+            })
 
-		return cryname.substr(self.key.length);
-	}
+            return uncrynames;
+        }
 
-	self.stor = function(value, values){
+        return cryname.substr(self.key.length);
+    }
 
-		var _value = value.c || value.v || value;
+    self.stor = function(value, values) {
 
-		if(typeof value.c == 'undefined')
-		{
+        var _value = value.c || value.v || value;
 
-			if(typeof values != 'undefined' && _.isArray(values)){
-				_value = "$" + values.push(_value);				
-			}
-		}
-		else
-		{
-			_value = self.crypt(_value);
-		}
+        if (typeof value.c == 'undefined') {
 
-		return _value;
-	}
+            if (typeof values != 'undefined' && _.isArray(values)) {
+                _value = "$" + values.push(_value);
+            }
+        } else {
+            _value = self.crypt(_value);
+        }
 
-	self.wstor = function(value, values){
-		if(typeof value.c != 'undefined'){
+        return _value;
+    }
 
-			return self.stor(value, values) + " " + (value.r || '') + " " + self.stor(value.c, values)
+    self.wstor = function(value, values) {
+        if (typeof value.c != 'undefined') {
 
-		}
-		else
-		{
-			return self.stor(value, values);
-		}
-	}
+            return self.stor(value, values) + " " + (value.r || '') + " " + self.stor(value.c, values)
 
-	self.logicalCondition = function(obj, p){
+        } else {
+            return self.stor(value, values);
+        }
+    }
 
-		if(!p) p = {};
+    self.logicalCondition = function(obj, p) {
 
-		var lastkey = '';
+        if (!p) p = {};
 
-		var translate = {
-			value : function(val){
-				if(!_.isObject(val)) 
-				{
-					val = {
-						v : val
-					}
-				}
+        var lastkey = '';
 
-				return self.crypt(lastkey) + " " + (val.r || "=") + " " + self.stor(val, p.values);
-			},
-			object : function(obj){
-				var sqlpart = '';
+        var translate = {
+            value: function(val) {
+                if (!_.isObject(val)) {
+                    val = {
+                        v: val
+                    }
+                }
 
-				_.each(obj, function(val, index){
-					lastkey = index;
-
-					sqlpart += action(val, true) + " AND ";
-				})	
-
-				return sqlpart.substr(0, sqlpart.length - 4);
-			},
-			array : function(arr){
-				var sqlpart = '';
-
-				_.each(arr, function(val, index){
-					sqlpart += action(val, true) + " OR ";
-				})	
-
-				return sqlpart.substr(0, sqlpart.length - 3);
-
-			}
-		}
-
-		var action = function(obj, secondlevel){
-			
-			var sqlpart = '';
-
-			if(isVal(obj))
-			{
-				sqlpart += translate.value(obj);
-			}
-			else
-			if(_.isArray(obj))
-			{
-				var part = translate.array(obj);
-
-				if(!secondlevel && obj.length > 1) part = brackets(part);
-
-				sqlpart += " " + part;
-			}
-			else
-			{
-				var part = '',
-					_sub = false;
-
-				_.each(self.subqueries, function(sub, index){
-
-					if(obj[index]){
-						part = sub(obj[index], p);
-						_sub = true;
-
-					}
-
-				})
-
-
-				if(!_sub)
-				{
-					part = translate.object(obj);
-					if(secondlevel && _.toArray(obj).length > 1) part = brackets(part);
-				}
+                return self.crypt(lastkey) + " " + (val.r || "=") + " " + self.stor(val, p.values);
+            },
+            object: function(obj) {
+                var sqlpart = '';
 
+                _.each(obj, function(val, index) {
+                    lastkey = index;
 
-				sqlpart += " " + part;
-			}
-
-			return sqlpart;
-		}
-
-		return action(obj);
-
-	}
-
-	self.arranges = {
-		select : ['set', 'from', 'join', 'where', 'groupBy', 'having', 'orderBy', 'limit']
-	}
-
-	self.subqueries = {
-		in : function(obj, p){
-			return "\n" + self.tools.subquery(obj, p , 'IN');
-		},
-
-		notin : function(obj, p){
-			return self.tools.subquery(obj, p, true, 'NOT IN');
-		},
+                    sqlpart += action(val, true) + " AND ";
+                })
 
-		exist : function(obj, p){
-			return "\n" + self.tools.subquery(obj, p , 'EXIST');
-		},
+                return sqlpart.substr(0, sqlpart.length - 4);
+            },
+            array: function(arr) {
+                var sqlpart = '';
 
-		notexist : function(obj, p){
-			return self.tools.subquery(obj, p, true, 'NOT EXIST');
-		},
-	}
+                _.each(arr, function(val, index) {
+                    sqlpart += action(val, true) + " OR ";
+                })
 
-	self.tools = {
-		/**
-		 * 	
-		 * @param  {[object]} obj [example : {
-		 *                           		age : {
-		 *                           			v : 12,
-		 *                           			r : '<>' // if not exist -> '='	
-		 *                           		},
-		 *                           		name : [
-		 *                           			{
-		 *                           				v : 'max'
-		 *                           			},
-		 *                           			{
-		 *                           				v : 'ira'
-		 *                           			}
-		 *                           		]
-		 *                            	}]
-		 * @return {[string]}        [sql part]
-		 */
-		where : function(obj, p){	
-			if(!obj) return '';
-			if(!p) p = {};
+                return sqlpart.substr(0, sqlpart.length - 3);
 
-			var sql = '';
+            }
+        }
 
-		/*
-		
-		 */
-			//WHERE (fd = 5 AND (gt = 6 OR hy = 7)) OR (r = 5 AND gt = 5)
+        var action = function(obj, secondlevel) {
 
+            var sqlpart = '';
 
-			if (obj && !_.isEmpty(obj))
-			{
-				sql = "\nWHERE" + self.logicalCondition(obj, p);
-			}
+            if (isVal(obj)) {
+                sqlpart += translate.value(obj);
+            } else
+            if (_.isArray(obj)) {
+                var part = translate.array(obj);
 
-			return sql;
-		},
+                if (!secondlevel && obj.length > 1) part = brackets(part);
 
-		having : function(obj, p){	
-			if(!obj) return '';
-			if(!p) p = {};
+                sqlpart += " " + part;
+            } else {
+                var part = '',
+                    _sub = false;
 
-			var sql = '';
+                _.each(self.subqueries, function(sub, index) {
 
-		/*
-		
-		 */
-			//WHERE (fd = 5 AND (gt = 6 OR hy = 7)) OR (r = 5 AND gt = 5)
+                    if (obj[index]) {
+                        part = sub(obj[index], p);
+                        _sub = true;
 
+                    }
 
-			if (obj && !_.isEmpty(obj))
-			{
-				sql = "\nHAVING" + self.logicalCondition(obj, p);
-			}
+                })
 
-			return sql;
-		},
 
-		groupBy : function(obj, p){
-			if(!obj) return '';
+                if (!_sub) {
+                    part = translate.object(obj);
+                    if (secondlevel && _.toArray(obj).length > 1) part = brackets(part);
+                }
 
-			if(!_.isArray(obj)) obj = [obj];
 
-			var sql = ' GROUP BY ' + obj.join(", ");
+                sqlpart += " " + part;
+            }
 
-			return sql;
-		},
-		/**
-		 * [limit description]
-		 * @param  {[object]} obj [{
-		 *                        	count,
-		 *                        	offset // LIKE postgessql
-		 * }]
-		 * @param  {[object]} p  [settings]
-		 * @return {[type]}     [sql part]
-		 */
-		limit : function(obj, p){
-			if(!obj) return '';
+            return sqlpart;
+        }
 
-			if(!p) p = {};
+        return action(obj);
 
-			if(!_.isObject(obj)) obj = {count : obj}
+    }
 
-			var sql = ' LIMIT';
+    self.arranges = {
+        select: ['set', 'from', 'join', 'where', 'groupBy', 'having', 'orderBy', 'limit']
+    }
 
-				sql += " " + self.stor(obj.count, p.values);
+    self.subqueries = {
+        in: function(obj, p) {
+            return "\n" + self.tools.subquery(obj, p, 'IN');
+        },
 
-			if (obj.offset) 
+        notin: function(obj, p) {
+            return self.tools.subquery(obj, p, true, 'NOT IN');
+        },
 
-				sql += " " + self.stor(obj.offset, p.values);
+        exist: function(obj, p) {
+            return "\n" + self.tools.subquery(obj, p, 'EXIST');
+        },
 
-			return "\n" + sql;
-		},
-		orderBy : function(obj){
+        notexist: function(obj, p) {
+            return self.tools.subquery(obj, p, true, 'NOT EXIST');
+        },
+    }
 
-			if(!obj) return '';
+    self.tools = {
+        /**
+         * 	
+         * @param  {[object]} obj [example : {
+         *                           		age : {
+         *                           			v : 12,
+         *                           			r : '<>' // if not exist -> '='	
+         *                           		},
+         *                           		name : [
+         *                           			{
+         *                           				v : 'max'
+         *                           			},
+         *                           			{
+         *                           				v : 'ira'
+         *                           			}
+         *                           		]
+         *                            	}]
+         * @return {[string]}        [sql part]
+         */
+        where: function(obj, p) {
+            if (!obj) return '';
+            if (!p) p = {};
 
-			var sql = ' ORDER BY';
+            var sql = '';
 
-			var by = obj.by;
+            /*
+            
+             */
+            //WHERE (fd = 5 AND (gt = 6 OR hy = 7)) OR (r = 5 AND gt = 5)
 
-			if(!_.isArray(by)){
-				by = [by];
-			}
 
-			sql += " " + self.crypt(by.join(", "));
+            if (obj && !_.isEmpty(obj)) {
+                sql = "\nWHERE" + self.logicalCondition(obj, p);
+            }
 
-			if(obj.order) sql+= " " + obj.order.toUpperCase();
+            return sql;
+        },
 
-			return "\n" + sql;
-		},
+        having: function(obj, p) {
+            if (!obj) return '';
+            if (!p) p = {};
 
-		from : function(from){
+            var sql = '';
 
-			from = primitiveToArray(from);
+            /*
+            
+             */
+            //WHERE (fd = 5 AND (gt = 6 OR hy = 7)) OR (r = 5 AND gt = 5)
 
-			return " FROM " + self.crypt(from).join(", ");
-		},
 
-		subquery : function(obj, p, inphrase){
+            if (obj && !_.isEmpty(obj)) {
+                sql = "\nHAVING" + self.logicalCondition(obj, p);
+            }
 
-		
-			var sql = ' ' + obj.expression + " " + inphrase;
+            return sql;
+        },
 
-			if(obj.values){
-				sql += " " + brackets(obj.values.join(", "));
-			}
-			else
-			if(obj.select)
-			{
-				sql += " " + brackets(self.tools.select(obj.select, p));
-			}
+        groupBy: function(obj, p) {
+            if (!obj) return '';
 
-			return sql;
-		},
+            if (!_.isArray(obj)) obj = [obj];
 
-		delete : function(p){
+            var sql = ' GROUP BY ' + obj.join(", ");
 
-			if(!p) p = {};
+            return sql;
+        },
+        /**
+         * [limit description]
+         * @param  {[object]} obj [{
+         *                        	count,
+         *                        	offset // LIKE postgessql
+         * }]
+         * @param  {[object]} p  [settings]
+         * @return {[type]}     [sql part]
+         */
+        limit: function(obj, p) {
+            if (!obj) return '';
 
-			var sql = "DELETE FROM";
-				sql += " " + self.crypt(p.table);
+            if (!p) p = {};
 
-				sql += self.tools.where(p.where, p);
+            if (!_.isObject(obj)) obj = { count: obj }
 
-				console.log(sql, p)
+            var sql = ' LIMIT';
 
-			return sql;
+            sql += " " + self.stor(obj.count, p.values);
 
-		},
+            if (obj.offset)
 
-		select : function(obj, p){
-			if(!p) p = {};
+                sql += " " + self.stor(obj.offset, p.values);
 
-			var sql = "SELECT";
+            return "\n" + sql;
+        },
+        orderBy: function(obj) {
 
-			_.each(self.arranges.select, function(key){
+            if (!obj) return '';
 
-				if(self.tools[key])
-				{
-					var part = self.tools[key](obj[key], p);
-					sql += part;
-				}
-			})
+            var sql = ' ORDER BY';
 
-			return sql;
-		},
+            var by = obj.by;
 
-		update : function(obj, p){
-			if(!p) p = {};
+            if (!_.isArray(by)) {
+                by = [by];
+            }
 
-			var sql = "UPDATE";
-			
-				sql += " " + self.crypt(p.table);
+            sql += " " + self.crypt(by.join(", "));
 
-				sql += self.tools.updateSet(obj, p.values);
+            if (obj.order) sql += " " + obj.order.toUpperCase();
 
-				sql += self.tools.where(p.where, p);
+            return "\n" + sql;
+        },
 
-				sql += self.tools.returning(p.returning);
+        from: function(from) {
 
-			return sql;
+            from = primitiveToArray(from);
 
-		},
+            return " FROM " + self.crypt(from).join(", ");
+        },
 
-		updateSet : function(obj, values){
-			var sql = " ";
+        subquery: function(obj, p, inphrase) {
 
-			var parts = [];
 
-			_.each(obj, function(value, column){
+            var sql = ' ' + obj.expression + " " + inphrase;
 
-				parts.push(" " + self.crypt(column) + " = " + self.wstor(value, values));
+            if (obj.values) {
+                sql += " " + brackets(obj.values.join(", "));
+            } else
+            if (obj.select) {
+                sql += " " + brackets(self.tools.select(obj.select, p));
+            }
 
-			})
+            return sql;
+        },
 
-			return " SET" + parts.join(", ");
-		},
+        delete: function(p) {
 
-		set : function(obj){
+            if (!p) p = {};
 
-			var sql = " ";
+            var sql = "DELETE FROM";
+            sql += " " + self.crypt(p.table);
 
-			if(!obj) sql += "*";
+            sql += self.tools.where(p.where, p);
 
-			else
-			{
+            console.log(sql, p)
 
-				var parts = [];
+            return sql;
 
-				var action = function(obj){
+        },
 
-					actionsByType(obj, {
+        select: function(obj, p) {
+            if (!p) p = {};
 
-						value : function(value){
-							parts.push(self.crypt(value));
-						},
+            var sql = "SELECT";
 
-						array : function(array){
-							_.each(array, function(obj){
-								return action(obj);
-							})
-						},
+            _.each(self.arranges.select, function(key) {
 
-						object : function(obj){
-							parts.push(" " + self.crypt(obj.column) + " AS " + obj.as);
-						}
+                if (self.tools[key]) {
+                    var part = self.tools[key](obj[key], p);
+                    sql += part;
+                }
+            })
 
-					})
+            return sql;
+        },
 
-				}
+        update: function(obj, p) {
+            if (!p) p = {};
 
-				action(obj);
+            var sql = "UPDATE";
 
-				sql += parts.join(", "); 
-			}
+            sql += " " + self.crypt(p.table);
 
-			return sql;
-		},
+            sql += self.tools.updateSet(obj, p.values);
 
-		/**
-		 * [join description]
-		 * @param  {[type]} obj [example : 
-		 *                      	[{
-		 *                      		type : "LEFT",
-		 *                      		inner : true,
-		 *                      		table : "images",
-		 *                      		on : {
-		 *                      			
-		 *                      		}
-		 *                      	}]
-		 *                      ]
-		 * @return {[type]}     [description]
-		 */
-		join : function(obj){
+            sql += self.tools.where(p.where, p);
 
+            sql += self.tools.returning(p.returning);
 
-			if(!obj) return '';
+            return sql;
 
-			var sql = "\n\t",
-				joinParts = [];
+        },
 
+        updateSet: function(obj, values) {
+            var sql = " ";
 
-			var action = function(obj){
+            var parts = [];
 
-				actionsByType(obj, {
+            _.each(obj, function(value, column) {
 
-					array : function(array){
-						_.each(array, function(obj){
-							return action(obj);
-						})
-					},
+                parts.push(" " + self.crypt(column) + " = " + self.wstor(value, values));
 
-					object : function(obj){
+            })
 
-						var innerouter = '';
-						var phrases = [];						
+            return " SET" + parts.join(", ");
+        },
 
-						if(!obj.type && obj.inner) innerouter = "INNER";
-						if(obj.type  && obj.type != "CROSS" && obj.inner === false) innerouter = "OUTER";
+        set: function(obj) {
 
-						addPhrase(phrases, obj.type);
-						addPhrase(phrases, innerouter);
-						addPhrase(phrases, "JOIN");						
-						addPhrase(phrases, self.crypt(obj.table));
+            var sql = " ";
 
-						if(obj.on){
-							addPhrase(phrases, 'on');
-							addPhrase(phrases, self.logicalCondition(obj.on));
-						}
+            if (!obj) sql += "*";
 
-						addPhrase(joinParts, phrases.join(" "));
-					}
+            else {
 
-				})
-			}
+                var parts = [];
 
-			action(obj);
+                var action = function(obj) {
 
-			return sql + joinParts.join("\n\t");
+                    actionsByType(obj, {
 
-		},
-		
-		insert : function(obj, p){
-			var sql = "INSERT INTO " + self.crypt(p.tname);
+                        value: function(value) {
+                            parts.push(self.crypt(value));
+                        },
 
-				sql += self.tools.keys(p.values)
+                        array: function(array) {
+                            _.each(array, function(obj) {
+                                return action(obj);
+                            })
+                        },
 
-				sql += self.tools.values(p.values)
+                        object: function(obj) {
+                            parts.push(" " + self.crypt(obj.column) + " AS " + obj.as);
+                        }
 
-				sql += self.tools.returning(p.returning)
+                    })
 
-			return sql;
-		},
-		keys : function(values){
-			if(_.isArray(values))
-			{
-				values = values[0]
-			}
+                }
 
-			return " " + brackets(self.crypt(values.keys).join(", "));
-		},
-		values : function(values){
-			var sql = " VALUES";
+                action(obj);
 
-			if(_.isArray(values))
-			{
-				var m = _.map(values, function(v){
+                sql += parts.join(", ");
+            }
 
-					return brackets(v.indexes.join(", "));
+            return sql;
+        },
 
-				})
+        /**
+         * [join description]
+         * @param  {[type]} obj [example : 
+         *                      	[{
+         *                      		type : "LEFT",
+         *                      		inner : true,
+         *                      		table : "images",
+         *                      		on : {
+         *                      			
+         *                      		}
+         *                      	}]
+         *                      ]
+         * @return {[type]}     [description]
+         */
+        join: function(obj) {
 
-				sql += " " + m.join(", ");
-			}
-			else
-			{
-				sql += " " + brackets(values.indexes.join(", "));
-			}
 
-			return sql;
+            if (!obj) return '';
 
-			
-		},
-		returning : function(returning){
+            var sql = "\n\t",
+                joinParts = [];
 
-			if(!returning) return '';
 
-			if(!_.isArray(returning)) returning = [returning];
+            var action = function(obj) {
 
-			return " RETURNING " + returning.join(", ");
+                actionsByType(obj, {
 
-		},
-		create : function(_columns, p){
-			var sql = "CREATE TABLE IF NOT EXISTS " + self.crypt(p.tname);
+                    array: function(array) {
+                        _.each(array, function(obj) {
+                            return action(obj);
+                        })
+                    },
 
-			var columns = [];
-			var primary = {}
-			
-			_.each(_columns, function(c, index){
-				if((c.constraints || []).indexOf('PRIMARY KEY') > -1){
-					primary[index] = c
-				}
-			})
+                    object: function(obj) {
 
-			if(_.toArray(primary).length > 1){
-				_.each(primary, function(c){
-					removeEqual(c.constraints, 'PRIMARY KEY')
-				})
-			}
+                        var innerouter = '';
+                        var phrases = [];
 
-			_.each(_columns, function(column, index){
+                        if (!obj.type && obj.inner) innerouter = "INNER";
+                        if (obj.type && obj.type != "CROSS" && obj.inner === false) innerouter = "OUTER";
 
-				var columnsqul = ""
+                        addPhrase(phrases, obj.type);
+                        addPhrase(phrases, innerouter);
+                        addPhrase(phrases, "JOIN");
+                        addPhrase(phrases, self.crypt(obj.table));
 
-				columnsqul += self.crypt(index) + " " + column.type;
+                        if (obj.on) {
+                            addPhrase(phrases, 'on');
+                            addPhrase(phrases, self.logicalCondition(obj.on));
+                        }
 
-				if(column.size) columnsqul += brackets(column.size)
+                        addPhrase(joinParts, phrases.join(" "));
+                    }
 
-				if(column.constraints) {
-					columnsqul += " " + column.constraints.join(' ');
-				}
+                })
+            }
 
-				if(typeof column.default != 'undefined') 
-					columnsqul += " DEFAULT " + column.default;
+            action(obj);
 
-				columns.push(columnsqul);
-			})
+            return sql + joinParts.join("\n\t");
 
+        },
 
-			if(_.toArray(primary).length > 1){
+        insert: function(obj, p) {
+            var sql = "INSERT INTO " + self.crypt(p.tname);
 
-				var map = _.map(primary, function(c, i){
-					return i
-				})
+            sql += self.tools.keys(p.values)
 
-				columns.push('CONSTRAINT '+self.crypt(p.tname)+'_pkey PRIMARY KEY ('+map.join(', ')+')')
-			}
+            sql += self.tools.values(p.values)
 
-			sql += " " + brackets(columns.join(", "));
+            sql += self.tools.returning(p.returning)
 
+            return sql;
+        },
+        keys: function(values) {
+            if (_.isArray(values)) {
+                values = values[0]
+            }
 
-			return sql;
-		},
-		drop : function(p){
-			var sql = "DROP TABLE IF EXISTS " + self.crypt(p.tname);
+            return " " + brackets(self.crypt(values.keys).join(", "));
+        },
+        values: function(values) {
+            var sql = " VALUES";
 
-			return sql;
-		}
-	}
+            if (_.isArray(values)) {
+                var m = _.map(values, function(v) {
 
-	self.init = function(){
+                    return brackets(v.indexes.join(", "));
 
-		self.pool = new pg.Pool(p.db);
+                })
 
-	}
+                sql += " " + m.join(", ");
+            } else {
+                sql += " " + brackets(values.indexes.join(", "));
+            }
 
-	self.check = function(callback){
-		self.pool.connect((err, client, done) => {
-	    	
-	        if (err) {
-	            done();
-	            callback(err);
+            return sql;
 
-	            return;
-			}
-			
-			done();
-			callback();
-	    });
-	}
 
-	self.destroy = function(){
+        },
+        returning: function(returning) {
 
-		return pool.end()
+            if (!returning) return '';
 
-	}
+            if (!_.isArray(returning)) returning = [returning];
 
-	return self;
+            return " RETURNING " + returning.join(", ");
+
+        },
+        create: function(_columns, p) {
+            var sql = "CREATE TABLE IF NOT EXISTS " + self.crypt(p.tname);
+
+            var columns = [];
+            var primary = {}
+
+            _.each(_columns, function(c, index) {
+                if ((c.constraints || []).indexOf('PRIMARY KEY') > -1) {
+                    primary[index] = c
+                }
+            })
+
+            if (_.toArray(primary).length > 1) {
+                _.each(primary, function(c) {
+                    removeEqual(c.constraints, 'PRIMARY KEY')
+                })
+            }
+
+            _.each(_columns, function(column, index) {
+
+                var columnsqul = ""
+
+                columnsqul += self.crypt(index) + " " + column.type;
+
+                if (column.size) columnsqul += brackets(column.size)
+
+                if (column.constraints) {
+                    columnsqul += " " + column.constraints.join(' ');
+                }
+
+                if (typeof column.default != 'undefined')
+                    columnsqul += " DEFAULT " + column.default;
+
+                columns.push(columnsqul);
+            })
+
+
+            if (_.toArray(primary).length > 1) {
+
+                var map = _.map(primary, function(c, i) {
+                    return i
+                })
+
+                columns.push('CONSTRAINT ' + self.crypt(p.tname) + '_pkey PRIMARY KEY (' + map.join(', ') + ')')
+            }
+
+            sql += " " + brackets(columns.join(", "));
+
+
+            return sql;
+        },
+        drop: function(p) {
+            var sql = "DROP TABLE IF EXISTS " + self.crypt(p.tname);
+
+            return sql;
+        }
+    }
+
+    self.init = function() {
+
+        self.pool = new pg.Pool(p.db);
+
+    }
+
+    self.check = function(callback) {
+        self.pool.connect((err, client, done) => {
+
+            if (err) {
+                done();
+                callback(err);
+
+                return;
+            }
+
+            done();
+            callback();
+        });
+    }
+
+    self.destroy = function() {
+
+        return self.pool.end()
+
+    }
+
+    return self;
 }
 
 module.exports = db;

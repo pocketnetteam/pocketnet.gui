@@ -30,3 +30,6 @@ web.config
 publish.py
 performance/changes.txt
 nodeserver
+**/settings
+data/
+pocketcoind*/

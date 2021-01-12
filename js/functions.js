@@ -2611,7 +2611,6 @@
 	ParametersLive = function(parameters, el, p){
 
 
-
 		if(!p) p = {};
 
 		_.each(parameters, function(parameter){
@@ -3110,7 +3109,7 @@
 				}
 
 				if (parameter.type == 'valuescustom' || parameter.type == 'values' || parameter.type == 'valuesmultibig'){
-
+										
 					var bkp = null;
 
 					var input = _el.find('.vc_inputWrapper input');
@@ -3199,6 +3198,8 @@
 							open()
 						})
 					}
+
+					console.log('_el',_el);
 					_el.find('.vc_value').on('click', function(){
 						bkp = null;
 
@@ -3817,7 +3818,9 @@
 
 			self.operatorSelect = p.operatorSelect || null;
 			self.operator = p.operator || null;
-			self.if = p.if || null;
+            self.if = p.if || null;
+            
+            self.text = p.text || null;
 
 		if(self.type.indexOf('range') > -1) self.dbFunc = 'fromto'
 
@@ -4762,10 +4765,21 @@
             }
             
             if(self.type == 'label'){
-				return '<div pid="'+self.id+'" class="simpleColor inpLabel">' + self.value + '</div>';
+				return `<div ${__disabled} ${m} pid="${self.id}" class="simpleColor inpLabel">${self.value}</div>`
+            }
+
+            if(self.type == 'file_select'){
+                return `
+                    <input ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
+                    <button ${__disabled} ${m} pid="${self.id}_Selector" class="simpleColor inpButton btn_select">...</button>
+                `;
+            }
+            
+            if(self.type == 'button'){
+				return `<button ${__disabled} ${m} pid="${self.id}" class="simpleColor inpButton" value="${self.value}">${self.text}</button>`
 			}
 
-			var input = '<input '+__disabled+' ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';
+			var input = `<input ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
 
 			return input; 
 		}

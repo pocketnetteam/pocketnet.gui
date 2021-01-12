@@ -8,6 +8,8 @@ var share = (function(){
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
+		var displayTimes = false
+
 		var primary = deep(p, 'history');
 
 		var el, currentShare = null, essenseData;
@@ -19,6 +21,28 @@ var share = (function(){
 		var m = 'Hello Pocketeers!'
 
 		var actions = {
+
+			toggleTimesDisplay : function(){
+
+				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
+
+				if (el.times){
+
+					if (checkEntity){
+
+						el.times.removeClass('hide');
+						
+					}
+	
+					if (!checkEntity){
+	
+						el.times.addClass('hide');
+	
+					}
+				}
+
+			},
+
 			tooltips : function(){
 				if(!actions.tooltip){
 
@@ -161,6 +185,13 @@ var share = (function(){
 						}
 					})
 				}
+
+				if(type == 'times'){
+
+					currentShare.clear();
+					make();
+
+				}
 				else
 				{
 					focusfixed = true;
@@ -212,7 +243,6 @@ var share = (function(){
 						clbk : function(s, p){
 							external = p
 
-							console.log('external', external)
 						}
 					})
 				}
@@ -582,6 +612,8 @@ var share = (function(){
 			},
 			error : function(onlyremove){
 				var error = currentShare.validation();
+
+				actions.toggleTimesDisplay();
 
 				if (error && !onlyremove){
 
@@ -955,6 +987,7 @@ var share = (function(){
 					data : {
 						share : currentShare,
 						essenseData : essenseData
+						
 					},
 
 				}, function(p){
@@ -964,6 +997,7 @@ var share = (function(){
 					el.changePostTime = el.c.find('.postTime')
 					el.selectTime = el.c.find('.selectedTimeWrapper')
 					el.post = el.c.find('.post')
+					el.times = el.c.find('.panel .times')
 
 					el.changePostTime.on('change', events.changePostTime)
 					el.selectTime.on('click', events.selectTime)
@@ -978,6 +1012,9 @@ var share = (function(){
 							essenseData.close()
 						}
 					})
+
+
+					actions.toggleTimesDisplay();
 
 					if (clbk)
 						clbk();
@@ -1015,9 +1052,7 @@ var share = (function(){
 									events.addTag(value)
 								},*/
 								fastsearch : function(value, clbk, e){
-			
-									console.log('fastsearch', value, e)
-			
+						
 									if(e){
 										var char = String.fromCharCode(e.keyCode || e.which);
 			
@@ -1194,6 +1229,7 @@ var share = (function(){
 				renders.repost();
 
 				renders.postline();
+
 			},
 
 			caption : function(){
@@ -1499,9 +1535,7 @@ var share = (function(){
 
 		var initEvents = function(){
 
-			
-
-			
+					
 
 			el.changeAddress.on('change', events.changeAddress)			
 
@@ -1568,6 +1602,8 @@ var share = (function(){
 		    			}
 			
 						el.c.find('.emojionearea-editor').pastableContenteditable();
+
+						console.log('pastable');
 
 						el.c.find('.emojionearea-editor').on('pasteImage', function (ev, data){
 
@@ -1695,6 +1731,9 @@ var share = (function(){
 			})
 
 			$('html').on('click', events.unfocus);
+
+			actions.toggleTimesDisplay();
+
 			
 		}
 
@@ -1710,6 +1749,7 @@ var share = (function(){
 				state.load();
 				
 				make();
+
 			},
 
 			auto : function(){
@@ -1746,19 +1786,21 @@ var share = (function(){
 					if (parameters().repost) 
 						currentShare.repost.set(parameters().repost)
 
-					console.log('currentShare', currentShare)
 
 					var data = {
 						essenseData : essenseData,
 						share : currentShare,
-						postcnt : u.postcnt
+						postcnt : u.postcnt,
 					};
 					
 					
 
 					clbk(data);
 
+
+
 				})
+
 
 			},
 
@@ -1812,6 +1854,9 @@ var share = (function(){
 				el.postline = el.c.find('.postlineWrapper')
 
 
+				
+
+
 				initEvents();
 
 				make();
@@ -1821,7 +1866,6 @@ var share = (function(){
 				p.clbk(null, p);
 
 				actions.waitActions();
-
 
 			},
 

@@ -5,16 +5,15 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
-var proxyInterface = require('./proxy/mainserver.js')
+const ProxyInterface = require('./proxy/mainserver.js')
 
 const electronLocalshortcut = require('electron-localshortcut');
 
-let win, nwin, badge, tray;
-
+var win, nwin, badge, tray, proxyInterface;
 var willquit = false;
 
-const { app, BrowserWindow, Menu, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
-
+const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
+app.allowRendererProcessReuse = false
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
@@ -34,29 +33,29 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 
 autoUpdater.on('checking-for-update', (ev) => {
-    win.webContents.send('updater-message', { msg: 'checking-for-update', type : 'info', ev : ev })
+    win.webContents.send('updater-message', { msg: 'checking-for-update', type: 'info', ev: ev })
 })
 
 autoUpdater.on('update-available', (ev) => {
     if (!is.linux()) updatesLoading = true
-    win.webContents.send('updater-message', { msg: 'update-available', type : 'info', ev : ev, linux : is.linux() })
+    win.webContents.send('updater-message', { msg: 'update-available', type: 'info', ev: ev, linux: is.linux() })
 })
 
 autoUpdater.on('update-not-available', (ev) => {
-    win.webContents.send('updater-message', { msg: 'update-not-available', type : 'info', ev : ev })
+    win.webContents.send('updater-message', { msg: 'update-not-available', type: 'info', ev: ev })
 })
 
 autoUpdater.on('error', (err) => {
-    win.webContents.send('updater-message', { msg: `${err}`, type : 'error' })
+    win.webContents.send('updater-message', { msg: `${err}`, type: 'error' })
 })
 
 autoUpdater.on('download-progress', (ev) => {
-    win.webContents.send('updater-message', { msg: 'update-available', type : 'info', ev : ev })
+    win.webContents.send('updater-message', { msg: 'update-available', type: 'info', ev: ev })
 })
 
 autoUpdater.on('update-downloaded', (ev) => {
     updatesLoading = false
-    win.webContents.send('updater-message', { msg : 'update-downloaded', type : 'info', ev : ev })
+    win.webContents.send('updater-message', { msg: 'update-downloaded', type: 'info', ev: ev })
 });
 //---------------------------------------------------
 
@@ -131,8 +130,10 @@ function createTray() {
     }, {
         label: 'Quit',
         click: function() {
-            willquit = true
-            app.quit()
+            proxyInterface.stop(function() {
+                willquit = true
+                app.quit()
+            })
         }
     }]);
 
@@ -188,11 +189,11 @@ function createBadgeOS() {
             } else {
                 app.setBadgeCount(0);
             }
-          
+
             event.returnValue = 'success';
         });
     }
-    
+
     if (is.windows()) {
         // Windows use plugin electron-windows-badge
         createBadge();
@@ -202,7 +203,7 @@ function createBadgeOS() {
 function initApp() {
 
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
-    
+
     createWindow();
 
     createBadgeOS();
@@ -210,7 +211,7 @@ function initApp() {
     createTray();
 
     var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
-    
+
     if (isDevelopment) {
 
     } else {
@@ -221,16 +222,16 @@ function initApp() {
 
         setInterval(() => {
             autoUpdater.checkForUpdates();
-        }, 10*60*1000); 
+        }, 10 * 60 * 1000);
     }
 
-    const {powerMonitor} =  require('electron')
+    const { powerMonitor } = require('electron')
 
     powerMonitor.on('suspend', () => {
 
         console.log("suspend")
 
-        win.webContents.send('pause-message', { msg: 'pause', type : 'info'})
+        win.webContents.send('pause-message', { msg: 'pause', type: 'info' })
 
     })
 
@@ -238,7 +239,7 @@ function initApp() {
 
         console.log("resume")
 
-        win.webContents.send('resume-message', { msg: 'resume', type : 'info'})
+        win.webContents.send('resume-message', { msg: 'resume', type: 'info' })
 
     })
 }
@@ -264,7 +265,6 @@ function notification(nhtml) {
     var w = Math.min(mainScreen.size.width / 3, 450)
     var h = 150;
 
-
     nwin = new BrowserWindow({
         width: w,
         height: h,
@@ -281,7 +281,8 @@ function notification(nhtml) {
         show: false,
 
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true
         }
     })
 
@@ -290,11 +291,11 @@ function notification(nhtml) {
     })
 
 
-    setTimeout(function(){
+    setTimeout(function() {
         if (nwin)
             nwin.show()
 
-           // nwin.webContents.toggleDevTools()
+        // nwin.webContents.toggleDevTools()
     }, 300)
 
     setTimeout(closeNotification, 15000)
@@ -309,19 +310,50 @@ function createWindow() {
         height: mainScreen.size.height,
 
         title: "POCKETNET v" + app.getVersion(),
-        webSecurity : false,
+        webSecurity: false,
 
         icon: defaultIcon,
 
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            allowRendererProcessReuse: false,
+            spellcheck: true
         }
     });
 
-    win.maximize();
+    // win.webContents.session.setSpellCheckerLanguages(['en-US'])
+    // const possibleLanguages = win.webContents.session.availableSpellCheckerLanguages
+
+    // win.webContents.on('context-menu', (event, params) => {
+    //     const menu = new Menu()
+
+    //     // Add each spelling suggestion
+    //     for (const suggestion of params.dictionarySuggestions) {
+    //         menu.append(new MenuItem({
+    //             label: suggestion,
+    //             click: () => win.webContents.replaceMisspelling(suggestion)
+    //         }))
+    //     }
+
+    //     // Allow users to add the misspelled word to the dictionary
+    //     if (params.misspelledWord) {
+    //         menu.append(
+    //             new MenuItem({
+    //                 label: 'Add to dictionary',
+    //                 click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+    //             })
+    //         )
+    //     }
+
+    //     menu.popup()
+    // })
+
     let isHidden = process.argv.find(function(el) { return el == '--hidden'; })
     if (isHidden) {
         win.hide();
+    } else {
+        win.maximize();
     }
 
     Menu.setApplicationMenu(null)
@@ -329,8 +361,8 @@ function createWindow() {
     win.loadFile('index_el.html')
 
     electronLocalshortcut.register(win, 'CommandOrControl+Shift+I', () => {
-		win.webContents.toggleDevTools()
-	});
+        win.webContents.toggleDevTools()
+    });
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
@@ -349,9 +381,9 @@ function createWindow() {
         }
     });
 
-    win.webContents.session.webRequest.onHeadersReceived({urls:[]}, (detail, callback) => {
+    win.webContents.session.webRequest.onHeadersReceived({ urls: [] }, (detail, callback) => {
         const xFrameOriginKey = Object.keys(detail.responseHeaders).find(header => String(header).match(/^x-frame-options$/i));
-        
+
         if (xFrameOriginKey) {
             delete detail.responseHeaders[xFrameOriginKey];
         }
@@ -387,8 +419,8 @@ function createWindow() {
 
     ipcMain.on('quitAndInstall', function(e) {
 
-        willquit = true        
-        autoUpdater.quitAndInstall(true, true)   
+        willquit = true
+        autoUpdater.quitAndInstall(true, true)
 
     })
 
@@ -399,8 +431,9 @@ function createWindow() {
     })
 
 
-    var pi = new proxyInterface(ipcMain, win.webContents)
-    pi.init()
+    proxyInterface = new ProxyInterface(ipcMain, win.webContents)
+    proxyInterface.init()
+
     // Вызывается, когда окно будет закрыто.
     return win
 }
