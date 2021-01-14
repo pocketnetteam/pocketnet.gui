@@ -38,7 +38,18 @@ if(typeof _Electron != 'undefined' && _Electron){
 	emojionearea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
-	const electronSpellchecker = require('electron-spellchecker');
+
+	const contextMenu = require('electron-context-menu');
+
+	contextMenu({
+		showSearchWithGoogle : false,
+		showCopyImageAddress : true,
+		showSaveImageAs : true
+	})
+
+	
+
+	/*const electronSpellchecker = require('electron-spellchecker');
 
 	// Retrieve required properties
 	const SpellCheckHandler = electronSpellchecker.SpellCheckHandler;
@@ -58,7 +69,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 	// Add context menu listener
 	var contextMenuListener = new ContextMenuListener((info) => {
 		contextMenuBuilder.showPopupMenu(info);
-    });
+    });*/
 
 
 }

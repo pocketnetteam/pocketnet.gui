@@ -37,7 +37,10 @@ var NodeControl = function(p) {
 
             // change global settings
             self.ini.node.binPath = Path.join(self.kit.bin_path(), self.kit.bin_name('pocketcoind'))
-            if (!p.settings.node.DataPath) p.settings.node.DataPath = Path.join(electron.app.getPath('userData'), 'pocketcoin')
+            if(!p.settings.node.DataPath) 
+                p.settings.node.DataPath = Path.join(electron.app.getPath('userData'), 'pocketcoin')
+
+            //console.log('p.settings.node.DataPath', p.settings.node.DataPath)
 
             // create catalogs if not exists
             if (!fs.existsSync(p.settings.node.DataPath))
@@ -105,7 +108,7 @@ var NodeControl = function(p) {
         },
 
         nodeState: function() {
-            console.log('pre getnodeinfo', self.ini.getnodeinfo)
+            //console.log('pre getnodeinfo', self.ini.getnodeinfo)
 
             self.kit.getNodeInfo();
             self.kit.getNodeAddresses();
@@ -152,7 +155,7 @@ var NodeControl = function(p) {
                 p.settings.node.control.addresses = '-'
             }
 
-            console.log('running:', _running, 'enable:', p.settings.node.Enable)
+            //console.log('running:', _running, 'enable:', p.settings.node.Enable)
             if (clbk) clbk(_running)
         },
 
@@ -179,7 +182,7 @@ var NodeControl = function(p) {
                     self.ini.node.instance = null
                     p.settings.node.control.state = 'Stopped'
                     if (code !== 0) {
-                        console.log(`grep process exited with code ${code}`);
+                        //console.log(`grep process exited with code ${code}`);
 
                         p.settings.node.control.startError = true
                         p.settings.node.control.state = `Error starting the node. Code ${code}`
@@ -195,7 +198,7 @@ var NodeControl = function(p) {
         },
 
         stop: function(clbk) {
-            console.log('node signal stop..')
+            //console.log('node signal stop..')
             p.settings.node.control.state = 'Stopping..'
             p.settings.node.control.lastBlock = '-'
             p.settings.node.control.addresses = '-'
@@ -207,7 +210,7 @@ var NodeControl = function(p) {
                     }, 500)
                 },
                 function(err, data) {
-                    console.log('stop', err)
+                    //console.log('stop', err)
                     if (clbk) clbk()
                 }
             )
@@ -262,11 +265,11 @@ var NodeControl = function(p) {
 
             self.kit.rpc('importprivkey', [prms.private],
                 function(data) {
-                    console.log('importprivkey', data)
+                    //console.log('importprivkey', data)
                     if (clbk) clbk(null, data)
                 },
                 function(err, data) {
-                    console.log('importprivkey', err, data)
+                    //console.log('importprivkey', err, data)
                     if (clbk) clbk(err, data.data.message)
                 }
             )

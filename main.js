@@ -309,7 +309,7 @@ function createWindow() {
         width: mainScreen.size.width,
         height: mainScreen.size.height,
 
-        title: "POCKETNET v" + app.getVersion(),
+        title: "Pocketnet",
         webSecurity: false,
 
         icon: defaultIcon,
@@ -325,29 +325,35 @@ function createWindow() {
     // win.webContents.session.setSpellCheckerLanguages(['en-US'])
     // const possibleLanguages = win.webContents.session.availableSpellCheckerLanguages
 
-    // win.webContents.on('context-menu', (event, params) => {
-    //     const menu = new Menu()
 
-    //     // Add each spelling suggestion
-    //     for (const suggestion of params.dictionarySuggestions) {
-    //         menu.append(new MenuItem({
-    //             label: suggestion,
-    //             click: () => win.webContents.replaceMisspelling(suggestion)
-    //         }))
-    //     }
+    win.webContents.session.setSpellCheckerLanguages(['en-US', 'ru'])
 
-    //     // Allow users to add the misspelled word to the dictionary
-    //     if (params.misspelledWord) {
-    //         menu.append(
-    //             new MenuItem({
-    //                 label: 'Add to dictionary',
-    //                 click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
-    //             })
-    //         )
-    //     }
 
-    //     menu.popup()
-    // })
+    win.webContents.on('context-menu', (event, params) => {
+        const menu = new Menu()
+        console.log('context-menu', params)
+        // Add each spelling suggestion
+        for (const suggestion of params.dictionarySuggestions) {
+
+            console.log('suggestion', suggestion)
+          menu.append(new MenuItem({
+            label: suggestion,
+            click: () => win.webContents.replaceMisspelling(suggestion)
+          }))
+        }
+      
+        // Allow users to add the misspelled word to the dictionary
+        if (params.misspelledWord) {
+          menu.append(
+            new MenuItem({
+              label: 'Add to dictionary',
+              click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+            })
+          )
+        }
+      
+        //menu.popup()
+    })
 
     let isHidden = process.argv.find(function(el) { return el == '--hidden'; })
     if (isHidden) {

@@ -775,13 +775,18 @@ Platform = function (app, listofnodes) {
 
             if (meta.type == 'bitchute' && url.indexOf("player") == -1) {
 
+                console.log('meta', meta)
+
                 var _url = url;
-                if (_url.endsWith('/')) _url = _url.substr(0, _url.length - 1)
+
+                if (_url.endsWith('/')) 
+                    _url = _url.substr(0, _url.length - 1)
+
                 var s = _url.split("/");
 
                 s = s[s.length - 1];
 
-                if (s[1]) {
+                if (s[1] && url.indexOf('?') == -1) {
 
                     _url = `https://www.bitchute.com/video/${s}/`;
 
