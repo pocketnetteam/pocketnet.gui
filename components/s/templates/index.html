@@ -6,21 +6,21 @@
 			<div class="section users" view="list">
 				<div class="sectionname">
 					<div class="n">
-						<span>Users/</span>
+						<span><%=e('users')%>/</span>
 					</div>
 
 					<div class="showmore">
-						<span class="showmorelabel">Show More (<%-result.users.count%>)</span>
-						<span class="hidelabel">Hide</span>
+						<span class="showmorelabel"><%=e('e13021')%> (<%-result.users.count%>)</span>
+						<span class="hidelabel"><%=e('hide')%></span>
 					</div>
 				</div>
 				<div class="sectioncnt">
 
 					<div class="tableview tcaption">
 						<div class="pictureWrapper"></div>
-						<div class="nameWrapper"><span>User</span></div>
-						<div class="aboutWrapper"><span>About</span></div>
-						<div class="postsCountWrapper"><span>Posts count</span></div>
+						<div class="nameWrapper"><span><%=e('user')%></span></div>
+						<div class="aboutWrapper"><span><%=e('about')%></span></div>
+						<div class="postsCountWrapper"><span><%=e('postscount')%></span></div>
 					</div>
 
 					<div class="userslistwrapper">
@@ -37,7 +37,7 @@
 						</div>
 
 						<div class="nextpage">
-							<button>Next Results</button>
+							<button><%=e('e13156')%></button>
 						</div>
 
 					</div>
@@ -56,7 +56,7 @@
 					<div class="section posts">
 						<div class="sectionname">
 							<div class="n">
-								<span>Posts/</span>
+								<span><%=e('posts')%>/</span>
 							</div>
 							<div class="showmore">
 								<span class="showmorelabel"><%-result.posts.count%></span>
@@ -79,13 +79,13 @@
 
 				<% if(value) {%>
 
-					Search by "<%- value %>" hasn't any results
+					<%=e('e13157')%> "<%- value %>" <%=e('e13158')%>
 
 				<% } %>
 
 				<% if(!value) {%>
 
-					The search phrase is empty
+					<%=e('e13159')%>
 
 				<% } %>
 			</div>

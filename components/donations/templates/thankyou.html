@@ -1,11 +1,11 @@
 <div class="thankyou">
 
 	<div class="caption">
-		Thank you!
+		<%=e('thankyou')%>
 	</div>
 
 	<div class="text">
-		If you would like us to list your Pocketnet profile in the list of donors, please send us information about your donation
+		<%=e('e13089')%>
 	</div>
 
 	<div class="sendinfo table">
@@ -17,7 +17,7 @@
 			<%= parameters.amount.input() %>
 		</div>
 		<div class="sendwrapper">
-			<button class="send">Add me to donors list</button>
+			<button class="send"><%=e('e13090')%></button>
 		</div>
 		<div class="iconwrapper">
 			<div class="icon">
@@ -46,7 +46,7 @@
 
 	<div class="text textor">
 		<span>
-			Or you can send us an email to <a href="mailto:support@pocketnet.app">support@pocketnet.app</a> with your public key and amount. 
+			<%=e('e13091')%> <a href="mailto:support@pocketnet.app">support@pocketnet.app</a> <%=e('e13092')%> 
 		</span>
 	</div>
 
@@ -54,11 +54,11 @@
 		<span>
 			<% if(second) {%>
 
-				Back
+				<%=e('back')%>
 
 			<% } else { %> 
 
-				Finish
+				<%=e('finish')%>
 
 			<% } %>
 			

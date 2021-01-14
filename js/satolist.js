@@ -158,83 +158,83 @@ Platform = function (app, listofnodes) {
 
 
 
-    self.applications = {
+    self.__applications = function(){
+        return {
 
-        ui: {
-        windows: {
-
-                appname: "Pocketnet",
-            text: {
-                name: "Windows",
-                download: 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
-                label: "Download Pocketnet for Windows"
-            },
-
-            icon: '<i class="fab fa-windows"></i>',
-
-            github: {
-                name: "PocketnetSetup.exe",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-            }
-        },
-
-        linux: {
-                appname: "Pocketnet",
-            text: {
-                name: "Linux",
-                download: 'Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes.',
-                label: "Download Pocketnet for Linux"
-            },
-
-            icon: '<i class="fab fa-linux"></i>',
-
-            github: {
-                name: "Pocketnet_linux_x64.AppImage",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-            }
-        }
-        },
-
-        node: {
+            ui: {
             windows: {
-                appname: "Pocketnet Node",
+    
+                    appname: "Pocketnet",
                 text: {
                     name: "Windows",
-                    download: 'Download Node',
-                    label: "Download Pocketnet Node for Windows"
+                    download: self.app.localization.e('e13222'),
+                    label: self.app.localization.e('e13223')
                 },
-
+    
                 icon: '<i class="fab fa-windows"></i>',
-
+    
                 github: {
-                    name: "pocketnetcore_0.18.13_win_x64_setup.exe",
-                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                    page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                    name: "PocketnetSetup.exe",
+                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                    page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                 }
             },
-
+    
             linux: {
-                appname: "Pocketnet Node",
-
+                    appname: "Pocketnet",
                 text: {
                     name: "Linux",
-                    download: 'Download Node',
-                    label: "Download Pocketnet Node for Linux"
+                    download: self.app.localization.e('e13222'),
+                    label: self.app.localization.e('e13224')
                 },
-
+    
                 icon: '<i class="fab fa-linux"></i>',
-
+    
                 github: {
                     name: "Pocketnet_linux_x64.AppImage",
-                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                    page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                    page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                }
+            }
+            },
+    
+            node: {
+                windows: {
+                    appname: self.app.localization.e('e13225'),
+                    text: {
+                        name: "Windows",
+                        download: self.app.localization.e('e13226'),
+                        label: self.app.localization.e('e13227')
+                    },
+    
+                    icon: '<i class="fab fa-windows"></i>',
+    
+                    github: {
+                        name: "pocketnetcore_0.18.13_win_x64_setup.exe",
+                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                        page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                    }
+                },
+    
+                linux: {
+                    appname: self.app.localization.e('e13225'),
+    
+                    text: {
+                        name: "Linux",
+                        download: self.app.localization.e('e13226'),
+                        label: self.app.localization.e('e13228')
+                    },
+    
+                    icon: '<i class="fab fa-linux"></i>',
+    
+                    github: {
+                        name: "Pocketnet_linux_x64.AppImage",
+                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                        page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+                    }
                 }
             }
         }
-
-
     }
 
     self.currnetBlock = 0;
@@ -385,14 +385,14 @@ Platform = function (app, listofnodes) {
 
         'privatekey': {
             message: function () {
-                return 'Invalid Private Key'
+                return self.app.localization.e('e13229')
             },
 
             relay: true
         },
         'network': {
             message: function () {
-                return 'Undefined connection error'
+                return self.app.localization.e('e13230')
             },
 
             relay: true
@@ -400,7 +400,7 @@ Platform = function (app, listofnodes) {
 
         'proxy': {
             message: function () {
-                return "Connection lost / 1"
+                return self.app.localization.e('e13231') + " / 1"
             },
 
             relay: true
@@ -408,7 +408,7 @@ Platform = function (app, listofnodes) {
 
         'proxymain': {
             message: function () {
-                return "Connection lost / 2"
+                return self.app.localization.e('e13231') + " / 2"
             },
 
             relay: true
@@ -416,7 +416,7 @@ Platform = function (app, listofnodes) {
 
         'node': {
             message: function () {
-                return "Unable to connect with node"
+                return self.app.localization.e('e13232')
             },
 
             relay: true
@@ -424,7 +424,7 @@ Platform = function (app, listofnodes) {
 
         'offline': {
             message: function () {
-                return "Connection lost"
+                return self.app.localization.e('e13231')
             },
 
             relay: true
@@ -432,13 +432,13 @@ Platform = function (app, listofnodes) {
 
         "42": {
             message: function () {
-                return 'This comment was removed'
+                return self.app.localization.e('e13233')
             }
         },
 
         "41": {
             message: function () {
-                return 'Opreturn error/41'
+                return self.app.localization.e('e13234')
             },
 
             relay: true
@@ -446,150 +446,150 @@ Platform = function (app, listofnodes) {
 
         "40": {
             message: function () {
-                return 'You cannot rate comment twice'
+                return self.app.localization.e('e13235')
             }
         },
 
         "39": {
             message: function () {
-                return 'This comment was removed'
+                return self.app.localization.e('e13236')
             }
         },
 
         "38": {
             message: function () {
-                return 'You cannot rate yourself'
+                return self.app.localization.e('e13237')
             }
         },
 
         "37": {
             message: function () {
-                return 'Comment sending error. Please wait and try again/ 37'
+                return self.app.localization.e('e13238')
             }
         },
 
         "35": {
             message: function () {
-                return 'Comment sending error/ 35'
+                return self.app.localization.e('e13239')
             }
         },
 
         "34": {
             message: function () {
-                return 'The comment you are replying to has been deleted by the user'
+                return self.app.localization.e('e13240')
             }
         },
 
         "33": {
             message: function () {
-                return 'This comment is too long, please break it up'
+                return self.app.localization.e('e13241')
             }
         },
 
         "32": {
             message: function () {
-                return "You have been blocked by this person, you will be unable to comment on their posts"
+                return self.app.localization.e('e13242')
             }
         },
 
         "31": {
             message: function () {
-                return "You have reached your limit of upvote comments in a 24 hour period"
+                return self.app.localization.e('e13243')
             }
         },
 
         "30": {
             message: function () {
-                return "You have reached your limit of editing comments in a 24 hour period"
+                return  self.app.localization.e('e13244')
             }
         },
 
         "29": {
             message: function () {
-                return "You have reached your limit of sending comments in a 24 hour period"
+                return self.app.localization.e('e13245')
             }
         },
 
         "27": {
             message: function () {
-                return "You are trying to edit someone else's post"
+                return self.app.localization.e('e13246')
             }
         },
         "26": {
             message: function () {
-                return "You have reached your limit of editing 5 posts in a 24 hour period"
+                return self.app.localization.e('e13247')
             }
         },
 
         "25": {
             message: function () {
-                return 'You can only edit once per blockchain block. Please wait a minute, then try again'
+                return self.app.localization.e('e13248')
             }
         },
         "24": {
             message: function () {
-                return 'You cannot block yourself'
+                return self.app.localization.e('e13249')
             }
         },
         "23": {
             message: function () {
-                return 'You have already blocked this user'
+                return self.app.localization.e('e13250')
             }
         },
         "22": {
             message: function () {
-                return 'You have not blocked this user'
+                return self.app.localization.e('e13251')
             }
         },
         "21": {
             message: function () {
-                return 'Transaction is malformed'
+                return self.app.localization.e('e13252')
             }
         },
         "20": {
             message: function () {
-                return 'You cannot refer yourself'
+                return  self.app.localization.e('e13253')
             }
         },
         "19": {
             message: function () {
-                return 'This username is too long'
+                return self.app.localization.e('e13254')
             }
         },
 
         "18": {
             message: function () {
-                return 'This username is already in use'
+                return self.app.localization.e('e13255')
             }
         },
 
         "17": {
             message: function () {
-                return 'This post is too long, please break it up.'
+                return self.app.localization.e('e13256')
             }
         },
 
         "16": {
             message: function () {
-                return 'Your Pocketnet reputation score does not allow for registering of complaints yet'
+                return self.app.localization.e('e13257')
             }
         },
 
         "15": {
             message: function () {
-                return 'You have reached the limit of complaints in a 24 hour period'
+                return self.app.localization.e('e13258')
             }
         },
 
         "14": {
             message: function () {
-                return 'Cannot complain about your own post'
+                return self.app.localization.e('e13259')
             }
         },
 
         "13": {
             message: function () {
-                return 'You have already registered your complaint about this post'
+                return self.app.localization.e('e13260')
             }
         },
 
@@ -1704,9 +1704,9 @@ Platform = function (app, listofnodes) {
             if (!p) p = {};
 
             dialog({
-                html: p.text || "Please save your private cryptographic key which replaces login plus password from centralized social networks",
-                btn1text: "Save Key",
-                btn2text: p.faillabel || "Later",
+                html: p.text || self.app.localization.e('e13188'),
+                btn1text: self.app.localization.e('e13261'),
+                btn2text: p.faillabel || self.app.localization.e('e13262'),
 
                 class: 'zindex accepting accepting2 ',
 
@@ -2349,7 +2349,7 @@ Platform = function (app, listofnodes) {
                     items: [
 
                         {
-                            text: "Subscribe and <b>Turn On</b> notifications from this user",
+                            text: self.app.localization.e('e13263'),
                             class: 'itemmain',
                             action: function (clbk) {
 
@@ -2359,7 +2359,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         {
-                            text: "Subscribe without notifications",
+                            text:  self.app.localization.e('e13264'),
                             action: function (clbk) {
 
                                 self.api.actions.subscribe(address, clbk)
@@ -2753,7 +2753,7 @@ Platform = function (app, listofnodes) {
                                                                             inWnd: true,
 
                                                                             essenseData: {
-                                                                                caption: 'Your name is no longer available, please choose another one'
+                                                                                caption: self.app.localization.e('e13265')
                                                                             }
                                                                         })
 
@@ -3193,12 +3193,12 @@ Platform = function (app, listofnodes) {
         theme: {
             all: {
                 white: {
-                    name: "White Theme",
+                    name: self.app.localization.e('e13266'),
                     class: "stwhite"
                 },
 
                 black: {
-                    name: "Dark Theme",
+                    name: self.app.localization.e('e13267'),
                     class: "stblack"
                 }
             },
@@ -3254,7 +3254,7 @@ Platform = function (app, listofnodes) {
             meta: {
 
                 win: {
-                    name: 'Coinstake win',
+                    name: self.app.localization.e('e13268'),
                     id: 'win',
                     type: "BOOLEAN",
                     value: true
@@ -3262,91 +3262,91 @@ Platform = function (app, listofnodes) {
                 },
 
                 transactions: {
-                    name: 'Transactions receive',
+                    name: self.app.localization.e('e13269'),
                     id: 'transactions',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 upvotes: {
-                    name: 'Upvotes receive',
+                    name: self.app.localization.e('e13270'),
                     id: 'upvotes',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 comments: {
-                    name: 'Comment receive',
+                    name: self.app.localization.e('e13271'),
                     id: 'comments',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 answers: {
-                    name: 'Answer receive',
+                    name: self.app.localization.e('e13272'),
                     id: 'answers',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 followers: {
-                    name: 'New Followers',
+                    name: self.app.localization.e('e13273'),
                     id: 'followers',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 rescued: {
-                    name: 'Rescued Users',
+                    name: self.app.localization.e('e13274'),
                     id: 'rescued',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 commentScore: {
-                    name: 'Comment Score',
+                    name: self.app.localization.e('e13275'),
                     id: 'commentScore',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 embedvideo: {
-                    name: 'Show embed videos',
+                    name: self.app.localization.e('e13276'),
                     id: 'embedvideo',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 videoautoplay: {
-                    name: 'Autoplay videos',
+                    name: self.app.localization.e('e13277'),
                     id: 'videoautoplay',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 autostart: {
-                    name: 'Start Pocketnet Automatically',
+                    name: self.app.localization.e('e13278'),
                     id: 'autostart',
                     type: "BOOLEAN",
                     value: undefined
                 },
 
                 vidgetchat: {
-                    name: 'Chat',
+                    name: self.app.localization.e('e13279'),
                     id: 'vidgetchat',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 vidgettags: {
-                    name: 'Tags',
+                    name: self.app.localization.e('e13280'),
                     id: 'vidgettags',
                     type: "BOOLEAN",
                     value: true
                 },
 
                 vidgetlastcomments: {
-                    name: 'Last Comments',
+                    name: self.app.localization.e('e13281'),
                     id: 'vidgetlastcomments',
                     type: "BOOLEAN",
                     value: true
@@ -3354,9 +3354,9 @@ Platform = function (app, listofnodes) {
 
                 telegram: {
                     type: "STRINGANY",
-                    name: "Telegram bot token",
+                    name: self.app.localization.e('e13282'),
                     id: 'telegram',
-                    placeholder: "Telegram bot token",
+                    placeholder: self.app.localization.e('e13282'),
                     value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
                     _onChange: function (value) {
 
@@ -3374,9 +3374,9 @@ Platform = function (app, listofnodes) {
 
                 tgfrom: {
                     type: "VALUES",
-                    name: "Post from Telegram channel",
+                    name: self.app.localization.e('e13283'),
                     id: 'tgfrom',
-                    placeholder: "Add bot into chat and select",
+                    placeholder: self.app.localization.e('e13284'),
                     possibleValues: [],
                     possibleValuesLabels: [],
                     value: "",
@@ -3385,9 +3385,9 @@ Platform = function (app, listofnodes) {
                 },
                 tgto: {
                     type: "VALUES",
-                    name: "Send to telegram channel",
+                    name: self.app.localization.e('e13287'),
                     id: 'tgto',
-                    placeholder: "Add bot into chat and select",
+                    placeholder: self.app.localization.e('e13284'),
                     defaultValue: "",
                     value: "",
                     possibleValues: [],
@@ -3395,13 +3395,13 @@ Platform = function (app, listofnodes) {
 
                 },
                 tgfromask: {
-                    name: 'Ask before post from telegram',
+                    name: self.app.localization.e('e13285'),
                     id: 'tgfromask',
                     type: "BOOLEAN",
                     value: false
                 },
                 tgtoask: {
-                    name: 'Ask before send to telegram',
+                    name: self.app.localization.e('e13286'),
                     id: 'tgtoask',
                     type: "BOOLEAN",
                     value: false
@@ -3441,7 +3441,7 @@ Platform = function (app, listofnodes) {
                 var c = {
 
                     notifications: {
-                        name: "Notifications",
+                        name: self.app.localization.e('notifications'),
                         options: {
 
                             win: options.win,
@@ -3457,7 +3457,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     video: {
-                        name: "Video",
+                        name: self.app.localization.e('video'),
                         options: {
                             embedvideo: options.embedvideo,
                             videoautoplay: options.videoautoplay
@@ -3466,7 +3466,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     vidgets: {
-                        name: "Main Page Vidgets",
+                        name: self.app.localization.e('e13288'),
                         options: {
 
                             vidgetchat: options.vidgetchat,
@@ -3483,7 +3483,7 @@ Platform = function (app, listofnodes) {
 
 
                     c.integrations = {
-                        name: "Integration with Telegram",
+                        name: self.app.localization.e('e13289'),
                         options: {
 
                             telegram: options.telegram,
@@ -3500,7 +3500,7 @@ Platform = function (app, listofnodes) {
 
                 if (electron) {
                     c.system = {
-                        name: 'System',
+                        name: self.app.localization.e('system'),
                         options: {
                             autostart: options.autostart
                         }
@@ -3897,7 +3897,7 @@ Platform = function (app, listofnodes) {
                                         var h = '<div class="refaddWrapper">'
 
                                         h += '<div class="refaddHeader">'
-                                        h += 'Would do you like to follow ' + (r.name || adrref) + '?'
+                                        h +=  self.app.localization.e('e13290') + ' ' + (r.name || adrref) + '?'
                                         h += '</div>'
 
                                         h += '<div class="refaddTable table">'
@@ -6523,7 +6523,11 @@ Platform = function (app, listofnodes) {
                 var parameters = [address || ''];
 
                 if (count) parameters.push(count.toString())
+                else parameters.push('')
                 if (block) parameters.push(block.toString())
+                else parameters.push('')
+
+                parameters.push(self.app.localization.key) 
 
                 self.app.ajax.rpc({
                     method: 'gettags',
@@ -7276,7 +7280,7 @@ Platform = function (app, listofnodes) {
 
                 self.app.ajax.rpc({
                     method: 'getlastcomments',
-                    parameters: ['7', address],
+                    parameters: ['7', address, self.app.localization.key],
                     success: function (d) {
 
                         d = _.filter(d, function (d) {
@@ -7681,7 +7685,8 @@ Platform = function (app, listofnodes) {
 
                 self.app.ajax.rpc({
                     method: 'getlastcomments',
-                    parameters: ['5'],
+                    parameters: ['5', self.app.localization.key],
+                    
                     success: function (d) {
 
                         if (clbk)
@@ -8531,7 +8536,7 @@ Platform = function (app, listofnodes) {
 
                         }
                         else {
-                            var parameters = [p.count, '259200'];
+                            var parameters = [p.count, '259200', self.app.localization.key];
 
                             if (p.address) parameters.push("" /*p.address*/)
 
@@ -8632,7 +8637,7 @@ Platform = function (app, listofnodes) {
 
                             if (p.author == '1') adr = p.address
 
-                            var parameters = [adr, p.author || "", p.txid || "", p.count];
+                            var parameters = [adr, p.author || "", p.txid || "", p.count, p.author ? "" : self.app.localization.key];
 
                             s.get(parameters, function (shares, error) {
 
@@ -9842,8 +9847,6 @@ Platform = function (app, listofnodes) {
                         var k = 100000000;
 
 
-                        console.log("WALLET SEND")
-
 
                         _.each(inputs, function (i) {
 
@@ -9959,9 +9962,9 @@ Platform = function (app, listofnodes) {
                                     // this.telegramSend = this.telegramSend.bind(this)
     
                                     dialog({
-                                        html: "Do you really want send message to Telegram?",
-                                        btn1text: "Send",
-                                        btn2text: "Cancel",
+                                        html: self.app.localization.e('e13291'),
+                                        btn1text: self.app.localization.e('send'),
+                                        btn2text:self.app.localization.e('ucancel'),
     
                                         class: 'zindex',
     
@@ -10118,6 +10121,7 @@ Platform = function (app, listofnodes) {
 
                                     self.app.platform.sdk.node.transactions.blockUnspents(ids)
 
+                       
 
                                     self.app.ajax.rpc({
                                         method: 'sendrawtransactionwithmessage',
@@ -10474,7 +10478,7 @@ Platform = function (app, listofnodes) {
 
                     if (f) {
                         if (clbk)
-                            clbk("You already have node on this host")
+                            clbk(self.app.localization.e('e13292'))
 
                         return
                     }
@@ -10503,7 +10507,7 @@ Platform = function (app, listofnodes) {
 
                     if (!f) {
                         if (clbk)
-                            clbk("Internal Error")
+                            clbk(self.app.localization.e('e13293'))
 
                         return
                     }
@@ -11431,7 +11435,7 @@ Platform = function (app, listofnodes) {
                     meta: {
 
                         dbEnable: {
-                            name: 'PGSQL Database Enable',
+                            name: self.app.localization.e('e13294'),
                             id: 'dbEnable',
                             type: "BOOLEAN",
                             value: false,
@@ -11440,7 +11444,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         dbHost: {
-                            name: 'DB Host',
+                            name: self.app.localization.e('e13295'),
                             id: 'dbHost',
                             type: "NUMBER",
                             value: '',
@@ -11452,7 +11456,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         dbPort: {
-                            name: 'DB Port',
+                            name: self.app.localization.e('e13296'),
                             id: 'dbPort',
                             type: "NUMBER",
                             value: '',
@@ -11464,7 +11468,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         dbMax: {
-                            name: 'DB Max',
+                            name: self.app.localization.e('e13297'),
                             id: 'dbMax',
                             type: "NUMBER",
                             value: '',
@@ -11476,7 +11480,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         dbIdleTimeoutMillis: {
-                            name: 'DB Idle Timeout, ms',
+                            name: self.app.localization.e('e13298'),
                             id: 'dbIdleTimeoutMillis',
                             type: "NUMBER",
                             value: '',
@@ -11488,7 +11492,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         dbName: {
-                            name: 'DB Name',
+                            name: self.app.localization.e('e13299'),
                             id: 'dbName',
                             type: "STRING",
                             value: '',
@@ -11497,7 +11501,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         dbUser: {
-                            name: 'DB User',
+                            name: self.app.localization.e('e13300'),
                             id: 'dbUser',
                             type: "STRING",
                             value: '',
@@ -11506,7 +11510,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         dbPassword: {
-                            name: 'DB Password',
+                            name: self.app.localization.e('e13301'),
                             id: 'dbPassword',
                             type: "password",
                             value: '',
@@ -11516,7 +11520,7 @@ Platform = function (app, listofnodes) {
 
 
                         server: {
-                            name: 'Proxy server on',
+                            name: self.app.localization.e('e13302'),
                             id: 'server',
                             type: "BOOLEAN",
                             value: false,
@@ -11525,7 +11529,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         serverPortHttps: {
-                            name: 'Proxy https server port',
+                            name: self.app.localization.e('e13303'),
                             id: 'serverPortHttps',
                             type: "NUMBER",
                             value: '',
@@ -11537,7 +11541,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         serverPortWss: {
-                            name: 'Proxy wss server port',
+                            name: self.app.localization.e('e13304'),
                             id: 'serverPortWss',
                             type: "NUMBER",
                             value: '',
@@ -11549,7 +11553,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         serverSslKeyUpload: {
-                            name: 'Server SSL Key, pem',
+                            name: self.app.localization.e('e13305'),
                             id: 'serverSslKeyUpload',
                             type: "file",
                             value: '',
@@ -11562,7 +11566,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         serverSslCertUpload: {
-                            name: 'Server SSL Cert, pem',
+                            name: self.app.localization.e('e13306'),
                             id: 'serverSslCertUpload',
                             type: "file",
                             value: '',
@@ -11573,7 +11577,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         serverSslPassphrase: {
-                            name: 'Server SSL Passphrase',
+                            name: self.app.localization.e('e13307'),
                             id: 'serverSslPassphrase',
                             type: "password",
                             value: '',
@@ -11582,7 +11586,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         serverFirebaseAdminSDK: {
-                            name: 'Firebase Adbin SDK',
+                            name: self.app.localization.e('e13308'),
                             id: 'serverFirebaseAdminSDK',
                             type: "file",
                             value: '',
@@ -11593,7 +11597,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         pocketNetAuthTransactionCrane: {
-                            name: 'Your Crane Address',
+                            name: self.app.localization.e('e13309'),
                             id: 'pocketNetAuthTransactionCrane',
                             type: "STRING",
                             value: '',
@@ -11602,7 +11606,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         captchaEnable: {
-                            name: 'Captcha Enable',
+                            name: self.app.localization.e('e13310'),
                             id: 'captchaEnable',
                             type: "BOOLEAN",
                             value: true,
@@ -11611,7 +11615,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         iplimiterEnable: {
-                            name: 'Ip limiter enable',
+                            name: self.app.localization.e('e13311'),
                             id: 'iplimiterEnable',
                             type: "BOOLEAN",
                             value: true,
@@ -11684,7 +11688,7 @@ Platform = function (app, listofnodes) {
 
 
                             server: {
-                                name: "Server",
+                                name: self.app.localization.e('e13312'),
                                 options: {
 
                                     server: options.server,
@@ -11700,7 +11704,7 @@ Platform = function (app, listofnodes) {
 
 
                             db: {
-                                name: "Data Base, PG sql",
+                                name: self.app.localization.e('e13313'),
                                 options: {
                                     dbEnable: options.dbEnable,
                                     dbHost: options.dbHost,
@@ -11715,7 +11719,7 @@ Platform = function (app, listofnodes) {
                             },
 
                             firebase: {
-                                name: "Firebase",
+                                name: self.app.localization.e('e13314'),
                                 options: {
 
                                     serverFirebaseAdminSDK: options.serverFirebaseAdminSDK
@@ -11724,7 +11728,7 @@ Platform = function (app, listofnodes) {
                             },
 
                             other: {
-                                name: "Other",
+                                name: self.app.localization.e('e13315'),
                                 options: {
 
                                     pocketNetAuthTransactionCrane: options.pocketNetAuthTransactionCrane,
@@ -11756,14 +11760,14 @@ Platform = function (app, listofnodes) {
                     meta: {
 
                         Enable: {
-                            name: 'Enable',
+                            name: self.app.localization.e('e13316'),
                             id: 'Enable',
                             type: "BOOLEAN",
                             value: false,
                             dbId: 'Enable'
                         },
                         BinPath: {
-                            name: 'Binary path',
+                            name:  self.app.localization.e('e13317'),
                             id: 'binPath',
                             type: "FILE_SELECT",
                             upload: {},
@@ -11771,7 +11775,7 @@ Platform = function (app, listofnodes) {
                             dbId: 'BinPath'
                         },
                         ConfPath: {
-                            name: 'Config path',
+                            name: self.app.localization.e('e13318'),
                             id: 'confPath',
                             type: "FILE_SELECT",
                             upload: {},
@@ -11779,7 +11783,7 @@ Platform = function (app, listofnodes) {
                             dbId: 'ConfPath'
                         },
                         DataPath: {
-                            name: 'Data path',
+                            name: self.app.localization.e('e13319'),
                             id: 'dataPath',
                             type: "FILE_SELECT",
                             upload: {},
@@ -11787,16 +11791,16 @@ Platform = function (app, listofnodes) {
                             dbId: 'DataPath'
                         },
                         SetPrivateKey: {
-                            name: 'Staking Address',
+                            name: self.app.localization.e('e13320'),
                             id: 'setPrivateKey',
                             type: "BUTTON",
                             value: '#link_to_wallets',
-                            text: 'Import the account address to the node for stacking',
+                            text: self.app.localization.e('e13321'),
                             dbId: 'SetPrivateKey'
                         },
 
                         state: {
-                            name: 'State',
+                            name: self.app.localization.e('e13322'),
                             id: 'state',
                             type: "LABEL",
                             value: '',
@@ -11804,7 +11808,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         addresses: {
-                            name: 'Staking addresses',
+                            name: self.app.localization.e('e13323'),
                             id: 'addresses',
                             type: "LABEL",
                             value: '',
@@ -11812,7 +11816,7 @@ Platform = function (app, listofnodes) {
                         },
 
                         lastBlock: {
-                            name: 'Last Block',
+                            name: self.app.localization.e('e13324'),
                             id: 'lastBlock',
                             type: "LABEL",
                             value: '-',
@@ -11859,7 +11863,7 @@ Platform = function (app, listofnodes) {
                         var c = {
 
                             control: {
-                                name: "Control",
+                                name: self.app.localization.e('control'),
                                 options: {
 
                                     state: options.state,
@@ -11870,7 +11874,7 @@ Platform = function (app, listofnodes) {
                             },
 
                             setup: {
-                                name: "Setup",
+                                name: self.app.localization.e('setup'),
                                 options: {
 
                                     Enable: options.Enable,
@@ -12562,9 +12566,9 @@ Platform = function (app, listofnodes) {
                         console.log('openedDialog2', this.openedDialog, currentChannelId);
 
                         dialog({
-                            html: "Do you really want post messages from Telegram?",
-                            btn1text: "Post",
-                            btn2text: "Cancel",
+                            html: self.app.localization.e('e13325'),
+                            btn1text: self.app.localization.e('e13326'),
+                            btn2text: self.app.localization.e('ucancel'),
 
                             class: 'zindex',
 
@@ -12603,9 +12607,7 @@ Platform = function (app, listofnodes) {
 
                         offset = 0;
                     }
-                    console.log('offset', offset);
 
-                    console.log('start updates');
                     const telegrambot = localStorage.getItem('telegrambot');
                     const token =  (telegrambot && JSON.parse(telegrambot) && JSON.parse(telegrambot).token) || "";
                     this.telegramUpdates = this.telegramUpdates.bind(this);
@@ -12985,7 +12987,7 @@ Platform = function (app, listofnodes) {
 
                 if (self.dontuseapiproxy) {
                     dialog({
-                        html: 'Do you really want use proxy again?',
+                        html: self.app.localization.e('e13327'),
                         class: 'zindex',
                         success: function () {
 
@@ -13249,6 +13251,7 @@ Platform = function (app, listofnodes) {
         self.online = false;
         self.onlineCheck = false;
         self.fastMessages = [];
+        self.app = app
 
         var txidstorage = {};
 
@@ -13767,8 +13770,8 @@ Platform = function (app, listofnodes) {
                     var n = {};
 
                     if (data.user && data.comment && !data.comment.deleted && data.upvoteVal > 0) {
-                        n.text = self.tempates._user(data.user) + " liked your comment!"
-                        n.caption = "New Comment Like"
+                        n.text = self.tempates._user(data.user) + " " + self.app.localization.e('e13328')
+                        n.caption = self.app.localization.e('e13329')
                     }
 
                     if (_.isEmpty(n))
@@ -13852,7 +13855,7 @@ Platform = function (app, listofnodes) {
                     var n = {};
 
                     if (data.user && data.share) {
-                        n.caption = self.tempates._user(data.user) + ' shared your post:'
+                        n.caption = self.tempates._user(data.user) + ' ' + self.app.localization.e('e13330')
                         n.text = self.tempates._share(data.shareReposted, 100)
                     }
 
@@ -13870,7 +13873,7 @@ Platform = function (app, listofnodes) {
                     text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
 
                     if (text) {
-                        html += self.tempates.user(data.user, text, true, " shared your post:", '<div class="repostshare"><i class="fas fa-share"></i></div>', data.time)
+                        html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13331'), '<div class="repostshare"><i class="fas fa-share"></i></div>', data.time)
                     }
 
 
@@ -13959,7 +13962,7 @@ Platform = function (app, listofnodes) {
                     var n = {};
 
                     if (data.user && data.share) {
-                        n.caption = self.tempates._user(data.user) + " has a brand new post:"
+                        n.caption = self.tempates._user(data.user) + " " + self.app.localization.e('e13332')
                         n.text = self.tempates._share(data.share, 100)
                     }
 
@@ -13989,7 +13992,7 @@ Platform = function (app, listofnodes) {
 
 
 
-                        html += self.tempates.user(data.user, text, true, " has a brand new post:", null, data.time)
+                        html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13332'), null, data.time)
                     }
 
 
@@ -14299,8 +14302,8 @@ Platform = function (app, listofnodes) {
 
                             var a = 'activity'
 
-                            n.caption = "Incoming transaction"
-                            n.text = "Congratulations, you have won " + platform.mp.coin(data.tx.amount) + " Pocketcoin for your latest '" + a + "'!"
+                            n.caption = self.app.localization.e('e13333')
+                            n.text = self.app.localization.e('e13334') + " " + platform.mp.coin(data.tx.amount) + " "+self.app.localization.e('e13335')+" '" + a + "'!"
                             n.topic = 'pos'
 
 
@@ -14315,13 +14318,13 @@ Platform = function (app, listofnodes) {
                                     n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " POC to you"
 
                                     if (data.opmessage) {
-                                        n.text = n.text + ' with message: "' + data.opmessage + '"'
+                                        n.text = n.text + ' '+self.app.localization.e('e13336')+' "' + data.opmessage + '"'
                                     }
                                     else {
                                         n.text = n.text + "!"
                                     }
 
-                                    n.caption = "Incoming transaction: " + self.tempates._user(data.user)
+                                    n.caption = self.app.localization.e('e13333') + ": " + self.tempates._user(data.user)
                                     n.topic = 'transactions'
                                 }
 
@@ -14394,7 +14397,7 @@ Platform = function (app, listofnodes) {
                                         var txt = platform.app.localization.e('userSent', platform.mp.coin(data.amountall || data.tx.amount))
 
                                         if (data.opmessage) {
-                                            txt += ' with message: <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
+                                            txt += ' '+self.app.localization.e('e13336')+' <span>&ldquo;' + data.opmessage + '&rdquo;</span>'
                                         }
 
                                         html += self.tempates.user(data.user, '', true, txt, self.tempates.transaction(data), data.time)
@@ -14700,13 +14703,13 @@ Platform = function (app, listofnodes) {
                         n.text = data.comment.renders.previewEmojidis()
                         n.topic = 'comments'
 
-                        n.caption = self.tempates._user(data.user) + " commented your post:"
+                        n.caption = self.tempates._user(data.user) + " "+self.app.localization.e('e13337')+""
                     }
 
                     if (data.reason == 'answer' && data.comment && data.share && data.user) {
                         n.text = data.comment.renders.previewEmojidis()
                         n.topic = 'answers'
-                        n.caption = self.tempates._user(data.user) + ' answered on your comment:'
+                        n.caption = self.tempates._user(data.user) + ' '+self.app.localization.e('e13338')+''
                     }
 
                     if (_.isEmpty(n))
@@ -14722,7 +14725,7 @@ Platform = function (app, listofnodes) {
 
                     var extra = ''
                     extra += '<div class="tcell foranswer">'
-                    extra += '<button class="reply ghost">Reply</button>'
+                    extra += '<button class="reply ghost">'+self.app.localization.e('reply')+'</button>'
                     extra += '</div>'
 
 
@@ -14732,7 +14735,7 @@ Platform = function (app, listofnodes) {
                         text = self.tempates.comment(data.comment, self.tempates.share(data.share))
 
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' commented your post:', extra, data.time)
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + self.app.localization.e('e13337'), extra, data.time)
                         }
                     }
 
@@ -14744,7 +14747,7 @@ Platform = function (app, listofnodes) {
 
 
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' answered on your comment:', extra, data.time)
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + self.app.localization.e('e13338'), extra, data.time)
                         }
                     }
 
@@ -14966,16 +14969,16 @@ Platform = function (app, listofnodes) {
                     var n = {};
 
                     if (data.mesType == 'userInfo') {
-                        n.text = "You rescued someone from the censored web. Some coins are on their way!"
+                        n.text = self.app.localization.e('e13339')
                         n.topic = 'rescued'
 
-                        n.caption = 'Congrats!'
+                        n.caption = self.app.localization.e('e13340')
                     }
 
                     if (data.mesType == 'subscribe' && data.user) {
-                        n.text = self.tempates._user(data.user) + ' followed you'
+                        n.text = self.tempates._user(data.user) + ' ' + self.app.localization.e('e13341')
                         n.topic = 'followers'
-                        n.caption = "New Follower"
+                        n.caption = self.app.localization.e('e13342')
                     }
 
 
@@ -14983,9 +14986,9 @@ Platform = function (app, listofnodes) {
 
                         if (data.upvoteVal > 2) {
 
-                            n.text = self.tempates._user(data.user) + " upvoted your post, " + data.upvoteVal + ' ★'
+                            n.text = self.tempates._user(data.user) + " "+self.app.localization.e('e13343')+", " + data.upvoteVal + ' ★'
                             n.topic = 'upvotes'
-                            n.caption = "New Upvote"
+                            n.caption = self.app.localization.e('e13344')
                         }
                     }
 
@@ -15097,7 +15100,7 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
-                    text = self.tempates.subscribe(data.user, "sent you private message")
+                    text = self.tempates.subscribe(data.user, self.app.localization.e('e13345'))
 
                     html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true)
 
@@ -16164,7 +16167,7 @@ Platform = function (app, listofnodes) {
 
                     if (!platform.focus && platform.titleManager) {
 
-                        platform.titleManager.add("You have new messages")
+                        platform.titleManager.add(self.app.localization.e('e13346'))
 
                     }
                 }
@@ -17063,9 +17066,9 @@ Platform = function (app, listofnodes) {
 
             if (!d) {
                 d = dialog({
-                    html: "Updates to Pocketnet are available. Apply the updates now?",
-                    btn1text: "Yes",
-                    btn2text: "No, later",
+                    html: self.app.localization.e('e13347'),
+                    btn1text: self.app.localization.e('dyes'),
+                    btn2text: self.app.localization.e('e13348'),
 
                     success: function () {
 
@@ -17088,9 +17091,9 @@ Platform = function (app, listofnodes) {
                     var _os = self.app.platform.applications[os()]
                     if (_os.github && _os.github.url) {
                         d = dialog({
-                            html: "Updates to Pocketnet are available. Go to the page to download the new version?",
-                            btn1text: "Yes",
-                            btn2text: "No, later",
+                            html:  self.app.localization.e('e13349'),
+                            btn1text: self.app.localization.e('dyes'),
+                            btn2text: self.app.localization.e('e13348'),
 
                             success: function () {
                                 require("electron").shell.openExternal(_os.github.page);
@@ -17481,6 +17484,8 @@ Platform = function (app, listofnodes) {
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
 
+        self.applications = self.__applications()
+
         self.sdk.theme.load()
         self.sdk.proxy.load()
         self.app.platform.sdk.node.sys.load()
@@ -17553,7 +17558,7 @@ Platform = function (app, listofnodes) {
                                         essenseData: {
 
                                             fast: true,
-                                            loginText: 'Join Pocketnet & Earn Pocketcoin Now',
+                                            loginText: self.app.localization.e('e13350'),
                                             successHref: '_this',
                                             signInClbk: function () {
 

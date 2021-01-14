@@ -223,13 +223,13 @@ var donations = (function(){
 						}
 						else
 						{
-							sitemessage("Something went wrong. Please reload page and try again (error: 0001)")
+							sitemessage(self.app.localization.e('e13094'))
 						}
 						
 					},
 
 					fail : function(){
-						sitemessage("Something went wrong. Please reload page and try again (error: 0001)")
+						sitemessage(self.app.localization.e('e13094'))
 					}
 				})
 
@@ -285,7 +285,7 @@ var donations = (function(){
 									}, 100)
 
 									dialog({
-										html : 'Thank you for supporting our work for freedom. We will make sure every penny counts.',
+										html : self.app.localization.e('e13095'),
 										class : 'one'
 									})
 
@@ -297,7 +297,7 @@ var donations = (function(){
 						}
 						else
 						{
-							sitemessage('Please fill amount of donation')
+							sitemessage(self.app.localization.e('e13096'))
 						}
 					})
 
@@ -414,7 +414,7 @@ var donations = (function(){
 						}, function(err, _info){
 
 							if(err){
-								sitemessage("Something went wrong. Please reload page and try again (error: 0002)")
+								sitemessage(self.app.localization.e('e13097'))
 							}
 							else
 							{

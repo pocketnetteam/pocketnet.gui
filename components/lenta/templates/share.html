@@ -58,7 +58,7 @@ var metadisplay = function(){ %>
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe">Follow</span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i> Following</span> 
+									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span> 
 									<% if(state && !my && user.address.value) {
 										
 										var r = me.relation(share.address, 'subscribes') 
@@ -176,7 +176,7 @@ var metadisplay = function(){ %>
 							</div>
 							<div class="buttoncell">
 								<button>
-									Show More
+									<%=e('showmore')%>
 								</button>
 							</div>
 							<div class="linecell">
@@ -223,7 +223,7 @@ var metadisplay = function(){ %>
 				%>
 
 					<div class="imagecaption">
-						Attached images:
+						<%=e('e13129')%>:
 					</div>
 
 				<% } %>
@@ -360,12 +360,12 @@ var metadisplay = function(){ %>
 
 								<% } else { %> 
 
-									<span>New</span>
+									<span><%=e('e13019')%></span>
 
 								<% } %>
 
 								<% if(share.edit == 'true') {%>	
-									<span class="editedLabel"><i class="fas fa-pencil-alt"></i> Edited</span>
+									<span class="editedLabel"><i class="fas fa-pencil-alt"></i> <%=e('e13130')%></span>
 								<% } %>
 							</div>
 						<% } %>
@@ -402,7 +402,7 @@ var metadisplay = function(){ %>
 								<div class="item sharesocial right unselectable">
 
 									<div class="itemwr table">
-										<div class="labelwr workstation"><span class="label">SHARE</span></div>
+										<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
 										<div class="iconwr">
 											
 											<div class="icon">
@@ -458,7 +458,7 @@ var metadisplay = function(){ %>
 		<div class="blockAuthor">
 			<div class="blockTable table">
 				<div class="blockCell">
-					<div class="label">You have blocked this User</div>
+					<div class="label"><%=e('e13131')%></div>
 				</div>
 			</div>
 			

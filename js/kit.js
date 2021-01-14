@@ -730,7 +730,7 @@ ComplainShare = function(){
 	return self;
 }
 
-Share = function(){
+Share = function(lang){
 
 	var self = this;
 
@@ -741,6 +741,7 @@ Share = function(){
 		self.url.set()
 		self.caption.set()
 		self.repost.set()
+		self.language.set()
 
 		_.each(self.settings, function(s, k){
 			self.settings[k] = null;
@@ -810,6 +811,25 @@ Share = function(){
 		v : '',
 
 		drag : true
+	};
+
+	self.language = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+			
+			_.each(self.on.change || {}, function(f){
+				f('language', this.v)
+			})
+
+		},
+		v : ''
 	};
 
 	self.ustate = function(){
@@ -1062,6 +1082,10 @@ Share = function(){
 			return 'message'
 		}
 
+		if(!self.language.v){
+			return 'language'
+		}
+
 		if(self.url.v && self.url.v.length){
 
 			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v.length, '')).length
@@ -1108,7 +1132,7 @@ Share = function(){
 				tags : self.tags.v,
 				images : self.images.v,
 				settings : _.clone(self.settings),
-
+				language : self.language.v,
 				txidEdit : self.aliasid || "",
 				txidRepost : self.repost.v || ""
 			} 
@@ -1121,6 +1145,7 @@ Share = function(){
 			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
 			i : self.images.v,
 			s : _.clone(self.settings),
+			l : self.language.v,
 			txidEdit : self.aliasid || "",
 			txidRepost : self.repost.v || ""
 
@@ -1134,6 +1159,7 @@ Share = function(){
 		self.message.set(v.m || v.message)
 		self.images.set(v.i || v.images)
 		self.repost.set(v.r || v.txidRepost || v.repost)
+		self.language.set(v.l|| v.language || 'en')
 
 		if (v.txidEdit) self.aliasid = v.txidEdit
 
@@ -1180,6 +1206,8 @@ Share = function(){
 
 		return self.type
 	}
+
+	if(lang) self.language.set(lang)
 
 	self.type = 'share'
 
@@ -1578,6 +1606,7 @@ pShare = function(){
 	self.txid = '';
 	self.time = null;
 	self.repost = '';
+	self.language = ''
 
 	self.comments = 0;
 	self.lastComment = null;
@@ -1636,9 +1665,11 @@ pShare = function(){
 		}
 
 		if(v.myVal) self.myVal = Number(v.myVal)
-		
+
+		self.language = v.l || v.language || 'en'
 		self.images = v.i || v.images || [];
 		self.repost = v.r || v.repost || v.txidRepost || ''
+
 
 		if (v.txid)
 			self.txid = v.txid;
@@ -1690,6 +1721,7 @@ pShare = function(){
 		v.i = _.clone(self.images)
 		v._time = self._time;
 		v.s = _.clone(self.settings)
+		v.l = self.language
 
 		return v
 	}

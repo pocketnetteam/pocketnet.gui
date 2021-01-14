@@ -100,7 +100,7 @@ var articles = (function(){
 				var id = $(this).closest('.art').attr('art');
 
 				dialog({
-					html : "Do You really want to remove this article?",
+					html : self.app.localization.e('e13018'),
 
 					btn1text : self.app.localization.e('dyes'),
 					btn2text : self.app.localization.e('dno'),

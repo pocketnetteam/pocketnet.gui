@@ -86,12 +86,10 @@ var usersettings = (function(){
 
 			const rerender = () => {
 
-				console.log('rerender???');
 				renders.options();
 
 			}
 
-			console.log(self.app.user.features, 'features')
 
 			//if (self.app.user.features.telegram){
 
@@ -100,7 +98,6 @@ var usersettings = (function(){
 			controller.abort(); 
 			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
 
-			console.log('controller', self.app.platform.sdk.system.get.telegramUpdateAbort)
 			
 			// self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
 
@@ -109,8 +106,6 @@ var usersettings = (function(){
 		}
 
 		var make = function(){
-
-			console.log('maake');
 
 			renders.options()
 

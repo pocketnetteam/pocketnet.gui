@@ -156,8 +156,8 @@ var postscores = (function(){
 
 					essenseData : {
 						addresses : addresses,
-						empty : 'Nobody rate this post',
-						caption : "User scores",
+						empty : self.app.localization.e('e13151'),
+						caption : self.app.localization.e('e13152'),
 
 						extra : function(address){
 

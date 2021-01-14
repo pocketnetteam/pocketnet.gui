@@ -81,8 +81,6 @@ Localization = function(app){
 
 	self.set = function(key, clbk){
 
-		
-
 		if(self.available[key] && self.key != key)
 		{
 			if (app.nav)
@@ -130,30 +128,35 @@ Localization = function(app){
 
 		var prms = parameters();
 
-		self.key = 'en'// prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
+		console.log("localStorage['loc']", localStorage['loc'])
+
+		self.key = prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 		
 		self.locSave();
 
-		self.import(clbk);
+		self.import(function(){
+			self.import(clbk);
+		}, 'en')
+		
 
 	}
 
-	self.import = function(clbk){
+	self.import = function(clbk, _key){
 
-		if(self.loaded[self.key])
+		if(self.loaded[_key || self.key])
 		{
 			if (clbk)
 				clbk();
 		}
 		else
 		{
-			var src = 'localization/' + self.key + '.js'
+			var src = 'localization/' + (_key || self.key) + '.js'
 
 			importScript(src, function(){
 
-				self.loaded[self.key] == true;
+				self.loaded[_key || self.key] == true;
 
-				____loclib = loclib[self.key] || {};
+				____loclib = loclib[_key || self.key] || {};
 
 				if (clbk)
 					clbk();
@@ -163,11 +166,11 @@ Localization = function(app){
 	}
 
 	self.e = function(id, args){
-		var v = ____loclib[id] || deep(loclib, self.key + '.' + id) || "";
+		var v = ____loclib[id] || deep(loclib, self.key + '.' + id) || deep(loclib, 'en.' + id) || "";
 
 		if(typeof v == 'function') v = v(args);
 
-		return v;
+		return v || id;
 		
 		return '<span class="localizationContainer" localizationId="'+id+'">' + v + "</span>";
 	}

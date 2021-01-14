@@ -8,7 +8,7 @@ var socialshare = (function(){
 
 		var primary = deep(p, 'history'), st;
 
-		var el, defaultText = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here', defmedtext = 'I want to share this from a decentralized blockchain platform Pocketnet with you. Hope you find it useful and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!\r\n';
+		var el, defaultText = self.app.localization.e('e13171'), defmedtext = self.app.localization.e('e13172') + '\r\n';
 		var ed = {};
 
 		var calltoActionNotInclude = false;
@@ -64,7 +64,7 @@ var socialshare = (function(){
 		var socials = [
 			{
 				n : 'Email',
-				i : '<i class="far fa-envelope"></i> Send by email',
+				i : '<i class="far fa-envelope"></i> ' + self.app.localization.e('e13173'),
 				t : 'email',
 				c : '#f82a53'
 			},
@@ -98,7 +98,7 @@ var socialshare = (function(){
 			{
 				n : 'Instagram',
 				i : '<i class="fab fa-instagram"></i>',
-				t : 'facebook',
+				t : 'instagram',
 				c : '#fd1d1d',
 				s : 'shareViaInstagram',
 
@@ -339,7 +339,7 @@ var socialshare = (function(){
 				state.load()
 
 				ed.title || (ed.title = 'Pocketnet')
-			    ed.text || (ed.text = 'Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here')
+			    ed.text || (ed.text = self.app.localization.e('e13171'))
 			    ed.image || (ed.image = 'https://pocketnet.app/img/logobigpadding.png') 
 			   
 
@@ -408,7 +408,7 @@ var socialshare = (function(){
 			wnd : {
 				swipeClose : true,
 				swipeMintrueshold : 30,
-				header : "Social sharing",
+				header : self.app.localization.e('e13174'),
 				class : 'sharingwindow'
 			}
 		}

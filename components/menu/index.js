@@ -69,6 +69,8 @@ var menu = (function(){
 
 				if(isMobile()) return
 
+				
+
 				if(_el.offset()){
 					
 					var left = _el.offset().left;
@@ -79,7 +81,7 @@ var menu = (function(){
 
 					var d = left - right;	
 
-					_el.width(w + d- 1)
+					_el.width(w + d)
 
 				}
 
@@ -461,7 +463,7 @@ var menu = (function(){
 					}
 
 					menusearch = new search(el.postssearch, {
-						placeholder : 'SEARCH ON POCKETNET',
+						placeholder : self.app.localization.e('e13139'),
 
 						clbk : function(_el){
 
@@ -905,6 +907,37 @@ var menu = (function(){
 
 		var initEvents = function(){
 
+			el.c.find('.localizationicon').on('click', function(){
+
+				var items = []
+
+				_.each(self.app.localization.available, function(a){
+					items.push({
+						text : a.name,
+						action : function (clbk) {
+
+							var na = app.localization.findByName(a.name);
+
+							console.log('na', na)
+
+							if (na && na.key != self.app.localization.key)
+							{
+								self.app.localization.set(na.key);
+							}
+
+							clbk()
+
+						}
+					})
+				})
+
+				menuDialog({
+
+                    items: items
+				})
+				
+			})
+
 			el.c.find('[events]').each(function(){
 
 				var element = $(this);
@@ -1022,14 +1055,14 @@ var menu = (function(){
 
 		var initauthorsearch = function(author){
 			if (menusearch)
-				menusearch.placeholder("SEARCH ON " + author.data.name.toUpperCase())
+				menusearch.placeholder(self.app.localization.e('e13140') + " " + author.data.name.toUpperCase())
 
 			authorForSearch = author
 		} 
 
 		var destroyauthorsearch = function(){
 			if (menusearch)
-				menusearch.placeholder("SEARCH ON POCKETNET")
+				menusearch.placeholder(self.app.localization.e('e13139'))
 
 			authorForSearch = null
 		}
@@ -1044,6 +1077,7 @@ var menu = (function(){
 
 					data.loc = loc;
 					data._SEO = _SEO;
+					data.lkey = app.localization.current()
 
 				if(p.state){
 

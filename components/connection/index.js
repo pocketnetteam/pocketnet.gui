@@ -51,7 +51,7 @@ var connection = (function(){
 					if(!res){
 
 						dialog({
-							html : "Unable connect to proxy",
+							html : self.app.localization.e('e13052'),
 							class : 'one zindex'
 						})
 
@@ -70,7 +70,7 @@ var connection = (function(){
 					if(!res){
 
 						dialog({
-							html : "Unable connect to node",
+							html : self.app.localization.e('e13053'),
 							class : 'one zindex'
 						})
 
@@ -101,14 +101,14 @@ var connection = (function(){
 			addproxy : function(_proxy, clbk){
 				var editing = false;
 				var method = 'create'
-				var header = 'Add Proxy'
-				var buttontext = 'Add'
+				var header = self.app.localization.e('e13054')
+				var buttontext = self.app.localization.e('add')
 
 				if(_proxy) {
 					editing = true;
 					method = 'update'
-					header = 'Edit Proxy'
-					buttontext = 'Save'
+					header = self.app.localization.e('e13055')
+					buttontext = self.app.localization.e('save')
 
 				}
 
@@ -119,7 +119,7 @@ var connection = (function(){
 					host : new Parameter({
 
 						type : "STRING",
-						name : "Node Host",
+						name : self.app.localization.e('e13056'),
 						id : 'host',
 
 						defaultValue : _proxy.host || '',
@@ -155,7 +155,7 @@ var connection = (function(){
 				var wndbuttons = {
 					close : {
 						class : 'close',
-						html : '<i class="fas fa-times"></i> Close',
+						html : '<i class="fas fa-times"></i> ' + self.app.localization.e('close'),
 						fn : function(wnd, wndObj){
 							wndObj.close();
 						}
@@ -178,7 +178,7 @@ var connection = (function(){
 							
 							
 							if(!f){
-								sitemessage("Please fill all fields")
+								sitemessage(self.app.localization.e('e13057'))
 
 								return
 							}
@@ -193,7 +193,7 @@ var connection = (function(){
 							})
 
 							if (d){
-								sitemessage("You alredy have this proxy in list.")
+								sitemessage(self.app.localization.e('e13058'))
 
 								return
 							}
@@ -235,12 +235,12 @@ var connection = (function(){
 
 				
 						class : 'delete ghost',
-						html : '<i class="fas fa-trash"></i> Delete',
+						html : '<i class="fas fa-trash"></i> ' + self.app.localization.e('delete'),
 						fn : function(wnd, wndObj){
 
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to delete this proxy from list?",
+								html : self.app.localization.e('e13059'),
 								success : function(){
 
 									var change = self.app.platform.sdk.proxy.remove(_proxy.id)
@@ -302,7 +302,7 @@ var connection = (function(){
 				var buttons = {
 					close : {
 						class : 'close',
-						html : '<i class="fas fa-times"></i> Close',
+						html : '<i class="fas fa-times"></i> ' + self.app.localization.e('close'),
 						fn : function(wnd, wndObj){
 
 							console.log('close')
@@ -313,10 +313,8 @@ var connection = (function(){
 
 					success : {
 						class : 'success',
-						html : '<i class="fas fa-plus"></i> Add Proxy',
+						html : '<i class="fas fa-plus"></i> ' + self.app.localization.e('e13054'),
 						fn : function(wnd, wndObj){
-
-							console.log('ADDDD')
 							
 							actions.addproxy(null, function(proxy, change){
 
@@ -346,7 +344,7 @@ var connection = (function(){
 
 					wnd : {
 						
-						header : "Proxies list",
+						header : self.app.localization.e('e13060'),
 						noInnerScroll : true,
 						class : 'proxieslistwnd',
 
@@ -393,7 +391,7 @@ var connection = (function(){
 							if (pid == 'none'){
 
 								dialog({
-									html : "Do you really want to stop use Proxy. It is usafe (Http connection)",
+									html : self.app.localization.e('e13061'),
 									class : 'zindex',
 									success : function(){
 										actions.using(true)
@@ -465,14 +463,14 @@ var connection = (function(){
 
 				var editing = false;
 				var method = 'create'
-				var header = 'Add Node'
-				var buttontext = 'Add'
+				var header = self.app.localization.e('e13044')
+				var buttontext = self.app.localization.e('add')
 
 				if(_node) {
 					editing = true;
 					method = 'update';
-					header = 'Edit Node';
-					buttontext = "Save"
+					header = self.app.localization.e('e13062');
+					buttontext = self.app.localization.e('save')
 				}
 
 				_node || (_node = {})
@@ -482,12 +480,12 @@ var connection = (function(){
 					saveto : new Parameter({
 
 						type : "VALUES",
-						name : "Save",
+						name : self.app.localization.e('save'),
 						id : 'saveto',
 						defaultValue : 'proxy',
 
 						possibleValues : ['proxy', 'locally'],
-						possibleValuesLabels : ['On Proxy', 'Locally'],
+						possibleValuesLabels : [self.app.localization.e('onproxy'), self.app.localization.e('locally')],
 						
 						require : true
 					
@@ -496,7 +494,7 @@ var connection = (function(){
 					host : new Parameter({
 
 						type : "STRING",
-						name : "Node Host",
+						name : self.app.localization.e('nodehost'),
 						id : 'host',
 
 						defaultValue : _node.host || '',
@@ -508,7 +506,7 @@ var connection = (function(){
 					port : new Parameter({
 
 						type : "STRING",
-						name : "RPC Port",
+						name : self.app.localization.e('e13063'),
 						id : 'port',
 						defaultValue : _node.port || '38081',
 						placeholder : "38081",
@@ -519,7 +517,7 @@ var connection = (function(){
 					ws : new Parameter({
 
 						type : "STRING",
-						name : "WS Port",
+						name : self.app.localization.e('e13064'),
 						id : 'ws',
 						defaultValue : _node.ws || '8087',
 						placeholder : "8087",
@@ -530,10 +528,10 @@ var connection = (function(){
 					nodename : new Parameter({
 
 						type : "STRING",
-						name : "Name Of Node",
+						name : self.app.localization.e('e13065'),
 						id : 'nodename',
 						defaultValue : (_node.nodename || ((self.app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name')) || "New") + ' node')).replace(/\+/g, ' '),
-						placeholder : "Please enter Node Name",
+						placeholder : self.app.localization.e('e13066'),
 						require : true
 					
 					}),
@@ -541,9 +539,9 @@ var connection = (function(){
 					rpcuser : new Parameter({
 
 						type : "STRING",
-						name : "RPC login",
+						name : self.app.localization.e('e13067'),
 						id : 'rpcuser',
-						placeholder : "Login for PRC authorization",
+						placeholder : self.app.localization.e('e13068'),
 						defaultValue : _node.rpcuser || '',
 						require : true
 					
@@ -553,11 +551,11 @@ var connection = (function(){
 					rpcpwd : new Parameter({
 
 						type : "STRING",
-						name : "RPC password",
+						name : self.app.localization.e('e13069'),
 						id : 'rpcpwd',
 
 						defaultValue : _node.rpcpwd ||'', /*'pockettest',*/
-						placeholder : "Password for PRC authorization",
+						placeholder : self.app.localization.e('e13070'),
 						require : true
 					
 					}),
@@ -567,11 +565,11 @@ var connection = (function(){
 				if (self.app.platform.dontuseapiproxy || !self.app.platform.apiproxy){
 					ap.saveto = new Parameter({
 						type : "VALUES",
-						name : "Save",
+						name : self.app.localization.e('save'),
 						id : 'saveto',
 						defaultValue : 'locally',
 						possibleValues : ['locally'],
-						possibleValuesLabels : ['Locally'],						
+						possibleValuesLabels : [self.app.localization.e('locally')],						
 						require : true					
 					})
 				}
@@ -591,7 +589,7 @@ var connection = (function(){
 
 					close : {
 						class : 'close',
-						html : '<i class="fas fa-times"></i> Close',
+						html : '<i class="fas fa-times"></i> ' + self.app.localization.e('close'),
 						fn : function(wnd, wndObj){
 							wndObj.close();
 						}
@@ -635,7 +633,7 @@ var connection = (function(){
 							
 
 							if(!f){
-								sitemessage("Please fill all fields")
+								sitemessage( self.app.localization.e('e13071') )
 
 								return
 							}
@@ -710,12 +708,12 @@ var connection = (function(){
 
 				
 						class : 'delete ghost',
-						html : '<i class="fas fa-trash"></i> Delete',
+						html : '<i class="fas fa-trash"></i> ' + self.app.localization.e('delete'),
 						fn : function(wnd, wndObj){
 
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to delete this node from list?",
+								html : self.app.localization.e('e13072'),
 								success : function(){
 
 									var revoke = 'revoke';
@@ -887,7 +885,7 @@ var connection = (function(){
 
 				if(!self.app.platform.dontuseapiproxy){
 					dialog({
-						html : "Do you really want to stop use Proxy. It is usafe (Http connection)",
+						html : self.app.localization.e('e13073'),
 						class : 'zindex',
 						success : function(){
 							actions.using(!self.app.platform.dontuseapiproxy)
@@ -996,7 +994,7 @@ var connection = (function(){
 
 					el.cc.removeClass('useproxy')
 					el.cc.addClass('shownodes')
-					el.currentproxy.html("Don't use proxy")
+					el.currentproxy.html(self.app.localization.e('e13051'))
 					
 				}
 				else{
@@ -1007,7 +1005,7 @@ var connection = (function(){
 
 					
 						el.cc.removeClass('shownodes')		
-						el.currentproxy.html("Not selected")
+						el.currentproxy.html(self.app.localization.e('notselected'))
 	
 					}
 	

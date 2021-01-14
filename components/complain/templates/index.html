@@ -2,7 +2,7 @@
 
 	<div class="cwrapper">
 		<div class="caption">
-			Complain <% if(ess == 'post') {%> Post <% } %>
+			<%=e('complain')%> <% if(ess == 'post') {%> <%=e('post')%> <% } %>
 		</div>
 		<div class="reasons">
 			
@@ -11,11 +11,11 @@
 		<div class="cbuttons">
 
 			<div class="item">
-				<button class="next disabled">Next</button>
+				<button class="next disabled"><%=e('next')%></button>
 			</div>
 
 			<div class="item">
-				<button class="cancel ghost">Cancel</button>
+				<button class="cancel ghost"><%=e('ucancel')%></button>
 			</div>
 
 					

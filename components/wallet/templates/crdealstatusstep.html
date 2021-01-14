@@ -8,13 +8,13 @@
 		<div class="infostepcell">
 
 			<div class="infostepcaption">
-				<span>Parameters</span>
+				<span><%=e('e13205')%></span>
 			</div>
 
 			<div class="infostep table">
 				<div class="line left">
 					<div class="label">
-						<span>Pocketnet Recieve Address</span>
+						<span><%=e('e13204')%></span>
 					</div>
 					<div class="value">
 						<%- addressobject.pocaddress %>
@@ -23,7 +23,7 @@
 
 				<div class="line">
 					<div class="label">
-						<span>Recieve Pocketcoin Amount</span>
+						<span><%=e('e13206')%></span>
 					</div>
 					<div class="value">
 						<%- self.app.platform.mp.coin(addressobject.info.amount) %>
@@ -55,7 +55,7 @@
 
 				<div class="line">
 					<div class="label">
-						<span><%- addressobject.currency.toUpperCase() %> Send Amount</span>
+						<span><%- addressobject.currency.toUpperCase() %> <%=e('e13207')%></span>
 					</div>
 					<div class="value">
 						<b><%- addressobject.info.currencyAmount %></b>
@@ -76,7 +76,7 @@
 		%>
 			<div class="infostepqrcell">
 				<div class="infostepcaption">
-					<span>QR code</span>
+					<span><%=e('wqrcode')%></span>
 				</div>
 
 				<div class="qrcodewrapper">

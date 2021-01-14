@@ -53,7 +53,7 @@ var wallet = (function(){
 			parameters : {
 
 				source : new Parameter({
-					name : "Source",
+					name : self.app.localization.e('source'),
 					type : "VALUES",
 					id : 'source',
 					defaultValue : "pnetwallet",
@@ -84,10 +84,10 @@ var wallet = (function(){
 				}),
 
 				message : new Parameter({
-					name : "Message",
+					name : self.app.localization.e('message'),
 					id : 'message',
 					type : "stringany",
-					placeholder : "Your message",
+					placeholder : self.app.localization.e('yourmessage'),
 					
 					format : {
 						Length : 80
@@ -169,7 +169,7 @@ var wallet = (function(){
 				}),
 
 				amount : new Parameter({
-					name : "Pocetcoin Amount",
+					name : self.app.localization.e('e13214'),
 					id : 'amount',
 					type : "NUMBER",
 					placeholder : self.app.localization.e('wsamountof'),
@@ -180,7 +180,7 @@ var wallet = (function(){
 				}),
 
 				currency : new Parameter({
-					name : "Currency",
+					name : self.app.localization.e('currency'),
 					id : 'currency',
 					type : "VALUES",
 
@@ -188,11 +188,11 @@ var wallet = (function(){
 					possibleValuesLabels : ["BTC", "LTC"],
 					possibleValues : ['btc', 'ltc'],
 
-					placeholder : "Select currency"
+					placeholder : self.app.localization.e('e13215')
 				}),
 
 				currencyAmount : new Parameter({
-					name : "Currency Amount",
+					name : self.app.localization.e('e13216'),
 					id : 'currencyAmount',
 					type : "NUMBER",
 					placeholder : self.app.localization.e('wsamountof'),
@@ -233,13 +233,13 @@ var wallet = (function(){
 
 					label : function(status, info){
 
-						return "Time to this deal has been expired."
+						return self.app.localization.e('e13217')
 						
 					},
 
 					currentLabel : function(info){
 
-						return 'Time to this deal has been expired. <div class="reactivate">Reactivate</div>'
+						return self.app.localization.e('e13217') + ' <div class="reactivate">'+self.app.localization.e('reactivate')+'</div>'
 
 					}
 				},
@@ -249,7 +249,7 @@ var wallet = (function(){
 					time : 10,
 					currentLabel : function(info){
 
-						return 'Waiting blockchain confirmations (0/4)'
+						return self.app.localization.e('e13218') + ' (0/4)'
 
 					}
 				},
@@ -258,7 +258,7 @@ var wallet = (function(){
 					time : 10,
 					currentLabel : function(info){
 
-						return 'Waiting blockchain confirmations (1/4)'
+						return self.app.localization.e('e13218') + ' (1/4)'
 
 					}
 				},
@@ -267,7 +267,7 @@ var wallet = (function(){
 					time : 10,
 					currentLabel : function(info){
 
-						return 'Waiting blockchain confirmations (2/4)'
+						return self.app.localization.e('e13218') + ' (2/4)'
 
 					}
 				},
@@ -276,7 +276,7 @@ var wallet = (function(){
 					time : 10,
 					currentLabel : function(info){
 
-						return 'Waiting blockchain confirmations (3/4)'
+						return self.app.localization.e('e13218') + ' (3/4)'
 
 					}
 				},
@@ -286,7 +286,7 @@ var wallet = (function(){
 					time : 4,
 					currentLabel : function(info){
 
-						return 'Send Pocketcoins to You'
+						return self.app.localization.e('e13219')
 
 					}
 				},
@@ -296,7 +296,7 @@ var wallet = (function(){
 					finish : true,
 					currentLabel : function(info){
 
-						return 'Pocketcoins delivered'
+						return self.app.localization.e('e13220')
 
 					}
 				},
@@ -343,7 +343,7 @@ var wallet = (function(){
 
 				actions.pocAddress(p, function(err, address, info){
 					if(err){
-						sitemessage("Something went wrong. Please reload page and try again (error: 0003)")
+						sitemessage(self.app.localization.e('errorreload') + " (error: 0003)")
 					}
 					else
 					{
@@ -358,7 +358,7 @@ var wallet = (function(){
 				self.app.platform.sdk.exchanges.statuses(function(err, data){
 
 					if(err){
-						sitemessage("Something went wrong. Please reload page and try again (error: 0004)")
+						sitemessage(self.app.localization.e('errorreload') + " (error: 0004)")
 					}
 					else
 					{
@@ -933,7 +933,7 @@ var wallet = (function(){
 								addressobject.info.address
 							, function(err, info){
 								if(err){
-									sitemessage("Something went wrong. Please reload page and try again (error: 0006)")
+									sitemessage(self.app.localization.e('errorreload') + " (error: 0006)")
 								}
 								else
 								{
@@ -944,7 +944,7 @@ var wallet = (function(){
 									else
 									{
 										dialog({
-											html : "Do you really want to delete information about this deal? Deal can't be stop",
+											html : self.app.localization.e('e13221'),
 											success : function(){
 												remove(addressobject, iel)
 											}
@@ -969,7 +969,7 @@ var wallet = (function(){
 
 								}, function(err, info){
 									if(err){
-										sitemessage("Something went wrong. Please reload page and try again (error: 0002)")
+										sitemessage(self.app.localization.e('errorreload') + " (error: 0002)")
 									}
 									else
 									{
@@ -979,7 +979,7 @@ var wallet = (function(){
 							}
 							else
 							{
-								sitemessage("Something went wrong. Please reload page and try again (error: 0001)")
+								sitemessage(self.app.localization.e('errorreload') + " (error: 0001)")
 							}
 						})
 
@@ -1089,7 +1089,7 @@ var wallet = (function(){
 
 							}, function(err, _info){
 								if(err){
-									sitemessage("Something went wrong. Please reload page and try again (error: 0002)")
+									sitemessage(self.app.localization.e('errorreload') + " (error: 0002)")
 								}
 								else
 								{
@@ -1171,7 +1171,7 @@ var wallet = (function(){
 				},
 
 				crowdCurrencyLabel : function(el, currency){
-					el.find('.currencyAmountLabel').html(currency.toUpperCase() + ' Amount</b>')
+					el.find('.currencyAmountLabel').html(currency.toUpperCase() + ' '+self.app.localization.e('amount')+'</b>')
 				},
 
 				crowdfunding : function(clbk, _el){

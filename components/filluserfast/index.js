@@ -140,7 +140,7 @@ var filluserfast = (function(){
 
 								if (error == 'captchashots'){
 
-									sitemessage("Words doesn't match")
+									sitemessage(self.app.localization.e('e13118'))
 
 									actions.redo()
 
@@ -148,7 +148,7 @@ var filluserfast = (function(){
 								}
 
 								if (error){
-									sitemessage("Words doesn't match")
+									sitemessage(self.app.localization.e('e13118'))
 
 									return 
 								}

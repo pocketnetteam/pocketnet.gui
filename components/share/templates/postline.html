@@ -20,6 +20,9 @@
 
             <% } %>
 
+            <div class="item language tooltip" embeding="language" title="<%=e('e14001')%>">
+                <img src="img/localization/small/<%-share.language.v || ''%>.png"> <span class="mobiledevice"><%=e('e14001')%></span>
+            </div>
 
             <div class="item times tooltip" embeding="times" title="<%=e('stimes')%>">
                 <i class="fas fa-times-circle"></i> <span class="mobiledevice"><%=e('stimes')%></span>
@@ -69,11 +72,11 @@
                     </div>	
                 <% } else { %> 
                     <div class="dopost element">
-                        <button class="post shadow">Save</button>
+                        <button class="post shadow"><%=e('usave')%></button>
                     </div>
 
                     <div class="cancelpost element">
-                            <button class="cancelediting ghost">Cancel</button>
+                            <button class="cancelediting ghost"><%=e('ucancel')%></button>
                         </div>
                 <% } %>
                 <!--<div class="waitpost element">

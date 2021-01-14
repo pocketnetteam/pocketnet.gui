@@ -29,7 +29,7 @@
     
                                 <div class="recieve">
                                     <a href="userpage?id=wallet&action=recieve">
-                                        <button>Recieve Pocketcoins</button>
+                                        <button><%=e('e13197')%></button>
                                     </a>
                                 </div>
                                 
@@ -41,7 +41,7 @@
                                 </div>
                                 
                                 <div class="time">
-                                    Approximate waiting time is <b><%-waitActions%></b> <%- pluralform(waitActions, ['minute', 'minutes']) %> 
+                                    <%=e('e13198')%> <b><%-waitActions%></b> <%- pluralform(waitActions, ['minute', 'minutes']) %> 
                                 </div>
     
                             <% } %>

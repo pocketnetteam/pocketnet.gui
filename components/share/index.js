@@ -18,9 +18,41 @@ var share = (function(){
 
 		var intro = false;
 
-		var m = 'Hello Pocketeers!'
+		var m = self.app.localization.e('e13160')
 
 		var actions = {
+
+			language : function(_clbk){
+				var items = []
+
+				_.each(self.app.localization.available, function(a){
+					items.push({
+						text : a.name,
+						action : function (clbk) {
+
+							var na = app.localization.findByName(a.name);
+
+
+							if (na && na.key != currentShare.language.v)
+							{
+								currentShare.language.set(na.key)
+							}
+
+							clbk()
+
+							renders.postline();
+
+							if(_clbk) _clbk()
+
+						}
+					})
+				})
+
+				menuDialog({
+
+                    items: items
+				})
+			},
 
 			toggleTimesDisplay : function(){
 
@@ -63,7 +95,7 @@ var share = (function(){
 
 					pliss = self.app.platform.api.plissing({
 						el : el.tagSearch,
-						text : "Add Tags For Your Post"
+						text : self.app.localization.e('e13161')
 					})
 
 					return true
@@ -184,16 +216,37 @@ var share = (function(){
 							external = p
 						}
 					})
+
+					return
 				}
 
 				if(type == 'times'){
 
-					currentShare.clear();
-					make();
+					dialog({
+						html : self.app.localization.e('e14002'),
+						btn1text : self.app.localization.e('dyes'),
+						btn2text : self.app.localization.e('dno'),
+
+						success : function(){
+
+							currentShare.clear();
+							currentShare.language.set(self.app.localization.key)
+							make();
+							
+						},
+
+						fail : function(){
+						}
+					})
+
+					
+
+					return
 
 				}
-				else
-				{
+				
+				
+				if(type == 'url' || type == 'images'){
 					focusfixed = true;
 
 					self.nav.api.load({
@@ -255,7 +308,7 @@ var share = (function(){
 
 				if(!currentShare.tags.set(tag)){
 
-					el.error.html("You can enter less that 30 tags")
+					el.error.html(self.app.localization.e('e13162'))
 
 					/*dialog({
 						html : ,
@@ -494,12 +547,15 @@ var share = (function(){
 				if(essenseData.hash == currentShare.shash()){
 
 					el.postWrapper.addClass('showError');
-					el.error.html("There aren't changes in Post")
+					el.error.html(self.app.localization.e('e13163'))
 					return
 				}
 
 				el.c.addClass('loading')
 				topPreloader(50)
+
+		
+				//currentShare.language.set(self.app.localization.key)
 
 				currentShare.uploadImages(self.app, function(){
 
@@ -669,8 +725,8 @@ var share = (function(){
 			message : self.app.localization.e('emptymessage'),
 			tags : self.app.localization.e('emptytags'),
 			images : self.app.localization.e('maximages'),
-            url : "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?",
-            error_video : 'Your link to video is invalid. Please load valid video URL.'
+            url : self.app.localization.e('e13164'),
+            error_video : self.app.localization.e('e13165')
 		}
 
 		var events = {
@@ -877,6 +933,13 @@ var share = (function(){
 			embeding : function(){
 				var type = $(this).attr('embeding')
 
+				if (type == 'language'){
+
+					actions.language()
+
+					return
+				}
+
 				if (type == 'embeding20'){
 					actions.embeding20()
 				}
@@ -986,8 +1049,8 @@ var share = (function(){
 					el : el.postline,
 					data : {
 						share : currentShare,
-						essenseData : essenseData
-						
+						essenseData : essenseData,
+						lkey : self.app.localization.key
 					},
 
 				}, function(p){
@@ -1766,7 +1829,7 @@ var share = (function(){
 				intro = false;
 				external = null
 
-				currentShare = deep(p, 'settings.essenseData.share') || new Share();
+				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
 
 				essenseData = deep(p, 'settings.essenseData') || {};
 
@@ -1791,6 +1854,7 @@ var share = (function(){
 						essenseData : essenseData,
 						share : currentShare,
 						postcnt : u.postcnt,
+						
 					};
 					
 					

@@ -9,7 +9,7 @@ var commentpanel = function(comment, _class){  %>
 				<div class="item reply">
 					<div class="cact">
 						<div class="label">
-							<span>REPLY</span>
+							<span><%=e('reply').toUpperCase()%></span>
 						</div>
 					</div>
 				</div>
@@ -27,7 +27,7 @@ var commentpanel = function(comment, _class){  %>
 					<div class="cact">
 						<div class="iconlabelWrapper table">
 							<div class="label">
-								<span>REPLIES (<b class="repliescount"><%- comment.children %></b>)</span>
+								<span><%=e('e13037').toUpperCase()%> (<b class="repliescount"><%- comment.children %></b>)</span>
 							</div>
 							<div class="icon">
 								<i class="fas fa-angle-down"></i>
@@ -156,7 +156,7 @@ var commentpanel = function(comment, _class){  %>
 								<% if(comment.deleted) {%>
 
 									<div class="commentmessage">
-										<div>Comment has been removed</div>
+										<div><%=e('e13033')%></div>
 									</div>
 
 								<% } %>

@@ -16,7 +16,7 @@
                                         
 
                                         <div class="vidgetNameWrapperTable table">
-                                            <div class="cellleft"><span>Reputation</span></div>
+                                            <div class="cellleft"><span><%=e('rstate')%></span></div>
                                             <div class="cellright">
 
                                                 <% if(reputation) {%>
@@ -95,7 +95,7 @@
                                             <div class="vidgetNameWrapper">
 
                                                 <div class="vidgetNameWrapperTable table">
-                                                    <div class="cellleft"><span>Level <%- lvl.level %></span></div>
+                                                    <div class="cellleft"><span><%=e('e13192')%> <%- lvl.level %></span></div>
                                                     <div class="cellright">
                                                         <div class="reputationCount">
                                                             <span><b><%- lvl.reputation %></b> <i class="far fa-star"></i></span>
@@ -115,7 +115,7 @@
                                                     <div class="table">
                                                         <div>
 
-                                                            <div class="vidgetcaption">BONUS</div>
+                                                            <div class="vidgetcaption"><%=e('e13193')%></div>
 
                                                             <div class="preloaderGift tooltip" title="You will recieve your coins soon">
                                                                 <div class="preloader5 goldcolor"><span></span><span></span><span></span></div>

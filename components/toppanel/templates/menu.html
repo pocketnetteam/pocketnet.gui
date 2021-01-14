@@ -5,7 +5,7 @@
 <% if(!state && !(pathname == 'index' && mobile)) {%>
 
 <div class="panelitem blexpl">
-	<a href="https://pocketnet.app/blockexplorer/"><i class="fas fa-th"></i> Block Explorer</a>
+	<a href="https://pocketnet.app/blockexplorer/"><i class="fas fa-th"></i> <%=e('e13182')%></a>
 </div>
 
 <% } %>
@@ -20,7 +20,7 @@
 
  <% } else { %>
 	<div class="panelitem">
-		<a href="donations"><i class="fas fa-money-bill-wave"></i> Donate</a>
+		<a href="donations"><i class="fas fa-money-bill-wave"></i> <%=e('donate')%></a>
 		<!--<i class="fas fa-sync"></i> Exchange-->
 	</div>
  <% } %>
@@ -30,7 +30,7 @@
 
 
 <div class="panelitem right">
-	<a href="help">Help center <i class="fas fa-question-circle"></i></a>
+	<a href="help"><%=e('e13183')%> <i class="fas fa-question-circle"></i></a>
 </div>
 
 <% if(!mobile) { %>
@@ -40,19 +40,19 @@
 
 			<div class="pcenterCell">
 				<div class="pcenterLabel fresh <% if(!r && pathname=='index') {%> active <% } %> ">
-					<a href="index" handler="true">All Posts</a>
+					<a href="index" handler="true"><%=e('e13136')%></a>
 				</div>
 			</div>
 
 			<div class="pcenterCell">
 				<div class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
-					<a href="index?r=sub"  handler="true">Your Pocket</a>
+					<a href="index?r=sub"  handler="true"><%=e('e13137')%></a>
 				</div>
 			</div>
 
 			<div class="pcenterCell">
 				<div class="pcenterLabel toppost <% if(r == 'recommended' && pathname=='index') {%> active <% } %>">
-					<a href="index?r=recommended"  handler="true">Top posts</a>
+					<a href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
 				</div>
 			</div>
 			

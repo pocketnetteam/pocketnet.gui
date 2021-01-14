@@ -13,8 +13,8 @@ var comments = (function(){
 		var authblock = false;
 
 		var errors = {
-			content : "Message is empty",
-			messagelength : "Comments have 1000 character limit per comment",
+			content : self.app.localization.e('e13029'),
+			messagelength : self.app.localization.e('e13030'),
 			images : self.app.localization.e('maximages'),
 		}
 
@@ -245,7 +245,7 @@ var comments = (function(){
 
 						essenseData : {
 							url : hr,
-							caption : 'Share this Comment',
+							caption : self.app.localization.e('e13031'),
 							image : deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image'),
 							title : deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name'),
 							text : nm
@@ -1060,7 +1060,7 @@ var comments = (function(){
 						__el.find('.remove').on('click', function(){
 
 							dialog({
-								html : "Do you really want to delete your comment?",
+								html : self.app.localization.e('e13032'),
 								success : function(){
 
 									actions.delete(comment, function(err){
@@ -1071,7 +1071,7 @@ var comments = (function(){
 											var c = el.c.find('#' + comment.id);
 
 											c.addClass('deleted')
-											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage div').html("<div>Comment has been removed</div>")
+											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage div').html("<div>"+self.app.localization.e('e13033')+"</div>")
 
 											c.find('.panel').remove()
 											c.find('.commentimages').remove()
@@ -1081,8 +1081,8 @@ var comments = (function(){
 									})
 
 								},
-								btn1text : "Yes",
-								btn2text : "No, cancel"
+								btn1text : self.app.localization.e('e13034'),
+								btn2text : self.app.localization.e('e13035')
 							})
 
 							_el.tooltipster('hide')	

@@ -149,7 +149,7 @@ var filluser = (function(){
 
 								if (error == 'captchashots'){
 
-									sitemessage("Words doesn't match")
+									sitemessage(self.app.localization.e('e13118'))
 
 									actions.redo()
 
@@ -157,7 +157,7 @@ var filluser = (function(){
 								}
 
 								if (error){
-									sitemessage("Words doesn't match")
+									sitemessage(self.app.localization.e('e13118'))
 
 									return 
 								}
@@ -283,14 +283,14 @@ var filluser = (function(){
 							addEmail.removeClass('disabled')
 							skip.addClass('hidden')
 
-							addEmail.html("Add email and continue")
+							addEmail.html(self.app.localization.e('e13119'))
 						}
 						else
 						{
 							addEmail.addClass('disabled')
 							skip.removeClass('hidden')
 
-							addEmail.html("Add email")
+							addEmail.html(self.app.localization.e('e13113'))
 						}
 					})
 

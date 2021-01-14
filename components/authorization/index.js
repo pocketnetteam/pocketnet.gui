@@ -42,7 +42,7 @@ var authorization = (function(){
 			type : "BOOLEAN",
 			name : "stay",
 			id : 'stay',
-			name : "Stay Signed",
+			name : self.app.localization.e('e13027'),
 
 			_onChange : function(v){
 
@@ -97,7 +97,7 @@ var authorization = (function(){
 				
 					if(!state){
 
-						sitemessage("You entered not valid private key")
+						sitemessage(self.app.localization.e('e13028'))
 
 						/*dialog({
 							class : "one",

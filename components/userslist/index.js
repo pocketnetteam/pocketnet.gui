@@ -24,9 +24,9 @@ var userslist = (function(){
 				el.caption.find('.unblocking').on('click', function(){
 
 					dialog({
-						html : "Do you really want to unblock user?",
-						btn1text : "Unblock",
-						btn2text : "Cancel",
+						html : self.app.localization.e('e13023'),
+						btn1text : self.app.localization.e('unblock'),
+						btn2text : self.app.localization.e('ucancel'),
 	
 						class : 'zindex',
 	
@@ -48,9 +48,9 @@ var userslist = (function(){
 			unsubscribe : function(address){
 
 				dialog({
-					html : "Do you really want to unfollow user?",
-					btn1text : "Unfollow",
-					btn2text : "Cancel",
+					html : self.app.localization.e('e13022'),
+					btn1text : self.app.localization.e('unsub'),
+					btn2text :  self.app.localization.e('ucancel'),
 
 					class : 'zindex',
 

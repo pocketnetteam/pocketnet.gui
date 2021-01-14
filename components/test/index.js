@@ -15,7 +15,7 @@ var test = (function(){
 		var firstTime = false;
 
 		var tempInfo = {
-			language : /*self.app.localization.key ||*/ 'en'
+			language : self.app.localization.key || 'en'
 		}
 
 		var changedLoc = false;
@@ -563,7 +563,7 @@ var test = (function(){
 
 		var userOptions = {
 			name : new Parameter({
-				name : 'Nickname',
+				name : self.app.localization.e('unickname'),
 				id : 'name',
 				type : "NICKNAME",
 				onType : true,
@@ -581,9 +581,9 @@ var test = (function(){
 				name : self.app.localization.e('ulanguage'),
 				id : 'language',
 				type : "VALUES",
-				defaultValue : /*self.app.localization.key || */'en',
-				possibleValues : ['en'/*, 'ru'*/],
-				possibleValuesLabels : ['English'/*, 'Русский'*/],
+				defaultValue : self.app.localization.key || 'en',
+				possibleValues : ['en', 'ru'],
+				possibleValuesLabels : ['English', 'Русский'],
 			}),
 
 			about : new Parameter({
@@ -592,7 +592,7 @@ var test = (function(){
 				type : "TEXT",
 				onType : true,
 				
-				placeholder : 'Please write a few words about yourself to help people decide if they want to follow you'
+				placeholder : self.app.localization.e('e13351')
 			}),
 
 			site : new Parameter({

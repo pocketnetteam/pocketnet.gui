@@ -1,14 +1,14 @@
 <div class="address btcltc">
 	<div class="caption">
-		<%- curobj.name %> donation
+		<%- curobj.name %> <%=e('donation')%>
 	</div>
 
 	<div class="subcaption">
 		<div class="subcaptionTable table">
-			<div class="s"><span>Address:</span></div>
+			<div class="s"><span><%=e('address')%>:</span></div>
 
 			<div class="s right">
-				<span class="copyaddress"><i class="far fa-copy"></i> Copy</span>
+				<span class="copyaddress"><i class="far fa-copy"></i> <%=e('copy')%></span>
 			</div>
 		</div>
 		 
@@ -28,19 +28,19 @@
 	<div class="status">
 		<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
 
-			Awaitng Funds. Address will be valid for <b> <%- info.MinutesLeft %> minutes</b>
+			<%=e('e13074')%> <b> <%- info.MinutesLeft %> <%=e('minutes')%></b>
 
 		<% } %>
 
 		<% if(info.Status == 'EXPIREDAWAITINGFUNDS') {%>
-			Time to this deal has been expired. <div class="reactivate">Reactivate</div>
+			<%=e('e13075')%> <div class="reactivate"><%=e('reactivate')%></div>
 		<% } %>
 	</div>
 	<% if(info.Status == 'AWAITINGFUNDS' || info.Status == 'AWAITINGDONATION') {%>
 
 		<div class="qrcode">
 			<div class="subcaption">
-				<span>Scan this code to send <% curobj.name %></span>
+				<span><%=e('e13076')%> <% curobj.name %></span>
 			</div>
 
 			<div class="qr">
@@ -54,7 +54,7 @@
 		<div class="backwrapper">
 			<div class="back">
 				<span>
-					Back
+					<%=e('back')%>
 				</span>
 			</div>
 		</div>
@@ -62,7 +62,7 @@
 		<div class="nextwrapper">
 			<div class="next">
 				<span>
-					<i class="far fa-check-circle"></i> Add your profile to Donors List
+					<i class="far fa-check-circle"></i> <%=e('e13077')%>
 				</span>
 			</div>
 		</div>

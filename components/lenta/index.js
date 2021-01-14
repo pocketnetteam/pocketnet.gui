@@ -566,7 +566,7 @@ var lenta = (function(){
 
 						essenseData : {
 							url : url,
-							caption : 'Share this ' + n,
+							caption : self.app.localization.e('e13133') + ' ' + n,
 							image : image || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image'),
 							title : share.caption || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
 							text : nm
@@ -1454,9 +1454,9 @@ var lenta = (function(){
 
 
 				dialog({
-					html : "Do you really want to unfollow user?",
-					btn1text : "Unfollow",
-					btn2text : "Cancel",
+					html : self.app.localization.e('e13022'),
+					btn1text :  self.app.localization.e('unsub'),
+					btn2text : self.app.localization.e('ucancel'),
 
 					class : 'zindex',
 
@@ -2931,8 +2931,7 @@ var lenta = (function(){
 				}
 				else
 				{
-					
-					shownewmaterials(data['shares'])
+					shownewmaterials(deep(data, 'sharesLang.' + self.app.localization.key))
 				}
 				
 			}

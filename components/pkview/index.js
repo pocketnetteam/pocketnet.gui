@@ -131,7 +131,7 @@ var pkview = (function(){
 								items : [
 	
 									{
-										text : "Save key on device",
+										text : self.app.localization.e('e13145'),
 										class : 'itemmain',
 										action : function(clbk){
 

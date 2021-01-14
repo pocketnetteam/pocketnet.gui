@@ -28,7 +28,7 @@
 
 			<div class="ended">
 				<a href="index?r=recommended">
-					<button style="border-radius: 50px;">More Awesome Pocketnet Posts!</button>
+					<button style="border-radius: 50px;"><%=e('e13124')%></button>
 				</a>
 			</div>
 
@@ -79,7 +79,7 @@
 
 			<% if(recommended == 'recommended') {%>	
 
-				Top posts section is empty!
+				<%=e('e13125')%>
 				
 			<% } else { %>
 				
@@ -91,11 +91,11 @@
 
 					if(!_.isEmpty(t.subscribe) || !_.isEmpty(t.subscribePrivate) || !_.isEmpty(r.subscribe) || !_.isEmpty(r.subscribePrivate)){ %> 
 
-						Posts from people you follow will be shown here
+						<%=e('e13126')%>
 						
 					<% } else { %> 
 
-						Posts from people you follow will be shown here 
+						<%=e('e13127')%>
 						
 					<% } %>
 
@@ -105,12 +105,12 @@
 
 					<div class="zerocaption">
                         <span>
-								Posts from people you follow will be shown here
+							<%=e('e13128')%>
                         </span>
                     </div>
                     <div class="subc">
                         <a href="filluserfast">
-                            <button>Registration</button>
+                            <button><%=e('registration')%></button>
                         </a>
 					</div>
 					

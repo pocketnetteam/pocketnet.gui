@@ -30,7 +30,7 @@ var toppanel = (function(){
 					name : "Contents",
 					id : 'contents',
 					possibleValues : vs, 
-					possibleValuesLabels : ["All Posts", "Your Pocket", "Top posts"],
+					possibleValuesLabels : [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138')],
 					defaultValue : links[r]
 				
 				})

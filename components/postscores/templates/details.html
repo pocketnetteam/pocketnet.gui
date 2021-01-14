@@ -2,7 +2,7 @@
 
     <div class="detailsWrapper">
         <div class="subcaption">
-            <span><%- scores.length  %> user ratings</span>
+            <span><%- scores.length  %> <%=e('e13149')%></span>
         </div>
 
         <div class="bystars">
@@ -16,7 +16,6 @@
                 
                 var l = deep(sgroup, i.toString() + ".length") || 0
 
-                console.log(l, sgroup, scores)
 
                 var pc = l / scores.length * 100
                 

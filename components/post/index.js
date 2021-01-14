@@ -199,7 +199,7 @@ var post = (function(){
 
 					}
 					else{
-						nextel.html('<div class="ended">End of posts</div>')
+						nextel.html('<div class="ended">'+self.app.localization.e('e13146')+'</div>')
 					}
 
 					
@@ -245,7 +245,7 @@ var post = (function(){
 
 					essenseData : {
 						url : url,
-						caption : 'Share this ' + n,
+						caption : self.app.localization.e('e13147') + ' ' + n,
 						image : image,
 						title : share.caption || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
 						text : nm
@@ -685,9 +685,9 @@ var post = (function(){
 			complain : function(){				
 
 				dialog({
-					html : "Do yor really want to complain on this post?",
-					btn1text : "Yes",
-					btn2text : "No",
+					html : self.app.localization.e('e13148'),
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
 
 					success : function(){
 						el.share.addClass('complained')

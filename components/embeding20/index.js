@@ -17,8 +17,8 @@ var embeding20 = (function(){
 		}
 
 		var errors = {
-			url : "Url doesn't valid",
-			imagesLength : "Max 6 Images Allowed"
+			url : self.app.localization.e('e13103'),
+			imagesLength : self.app.localization.e('e13104')
 		}
 
 		var actions = {
@@ -213,7 +213,7 @@ var embeding20 = (function(){
 				url : new Parameter({
 					type : "URL",
 					id : 'url',
-					placeholder : 'Add link to external site',
+					placeholder : self.app.localization.e('e13102'),
 					//onType : true,
 					value : ''
 				}),
@@ -322,7 +322,7 @@ var embeding20 = (function(){
 
 					close : {
 						class : "close",
-						html : '<i class="fa fa-times"></i> Close',
+						html : '<i class="fa fa-times"></i> ' + self.app.localization.e('close'),
 						fn : function(wnd, wndObj){
 
 

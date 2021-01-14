@@ -84,8 +84,8 @@ var applications = (function(){
 					_p.el.find('.downloadOs').on('click', function(){
 						actions.download(os, function(link){
 							el.c.find('.os').addClass('rundownloading')
-							el.c.find('.skipositem').html('<div class="downloadstart">You will now continue your registration after you install Pocketnet Desktop.</div>'+
-								'<div><a href="'+link+'"><b>If Pocketnet for Windows did not start downloading, please click here to install it</b></a></div>')
+							el.c.find('.skipositem').html('<div class="downloadstart">'+self.app.localization.e('e13011')+'</div>'+
+								'<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
 					
 						})
 					})

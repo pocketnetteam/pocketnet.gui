@@ -398,7 +398,7 @@ var article = (function(){
 				            
 				            preview: true, // (boolean) Show an image before it is uploaded (only in browsers that support this feature)
 				            captions: true, // (boolean) Enable captions
-				            captionPlaceholder: 'Type caption for image (optional)', // (string) Caption placeholder
+				            captionPlaceholder: self.app.localization.e('e13013'), // (string) Caption placeholder
 				            
 				            autoGrid: 3, // (integer) Min number of images that automatically form a grid
 				            formData: {}, // DEPRECATED: Use fileUploadOptions instead
@@ -490,8 +490,8 @@ var article = (function(){
 				                }
 				            },
 				            messages: {
-				                acceptFileTypesError: 'This file is not in a supported format: ',
-				                maxFileSizeError: 'This file is too big: '
+				                acceptFileTypesError: self.app.localization.e('e13014') + ' ',
+				                maxFileSizeError: self.app.localization.e('e13015') + ' '
 				            },
 				            uploadCompleted: function ($el, data) {				      
 
@@ -501,7 +501,7 @@ var article = (function(){
 				        },
 				        embeds: { // (object) Embeds addon configuration
 				            label: '<span class="fas fa-play"></span>', // (string) A label for an embeds addon
-				            placeholder: 'Paste a YouTube, Vimeo link and press Enter', // (string) Placeholder displayed when entering URL to embed
+				            placeholder: self.app.localization.e('e13016'), // (string) Placeholder displayed when entering URL to embed
 				            //oembedProxy: 'https://medium.iframe.ly/api/oembed?iframe=1', // (string/null) URL to oEmbed proxy endpoint, such as Iframely, Embedly or your own. You are welcome to use "http://medium.iframe.ly/api/oembed?iframe=1" for your dev and testing needs, courtesy of Iframely. *Null* will make the plugin use pre-defined set of embed rules without making server calls.
 				            styles: { // (object) Available embeds styles configuration
 				                wide: { // (object) Embed style configuration. Key is used as a class name added to an embed, when the style is selected (.medium-insert-embeds-wide)

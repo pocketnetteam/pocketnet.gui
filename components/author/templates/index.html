@@ -28,7 +28,7 @@ var telements = function(){ %>
 		&middot;
 		<span class="subscribebuttonstop <%-_class%>">
 
-			<span class="unsubscribe funf">You are Following</span>	
+			<span class="unsubscribe funf"><%=e('youarefollowing')%></span>	
 
 			<% if (me){ 
 				
@@ -38,13 +38,13 @@ var telements = function(){ %>
 				<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot;<i class="far fa-bell-slash"></i></span>
 			<% } %>
 
-			<span class="subscribe funf">Follow</span>	
+			<span class="subscribe funf"><%=e('follow')%></span>	
 
 		</span>
 
 		<span class="blockingWrapper">
 
-			<span class="unblocking funf">Blocked</span>	
+			<span class="unblocking funf"><%=e('blocked')%></span>	
 
 		</span>
 					
