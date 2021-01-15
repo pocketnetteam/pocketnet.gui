@@ -192,7 +192,6 @@ var video = (function(){
 		}
 
 		var pasteVideo = function(){
-			console.log('!!!!!!!!!!!VIDEOPASTED!!!!!!!!!!!')
 
 			var code = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+info.id+'?rel=0&amp;autoplay=1" frameborder="0" allow="autoplay;" allowfullscreen></iframe>';
 			

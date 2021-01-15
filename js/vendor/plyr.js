@@ -9203,10 +9203,10 @@ var PlyrEx = function(target, options, clbk) {
 
       $.ajax({ 
         url : `https://peertube2.cpy.re/api/v1/videos/${video_id}`,
-
+        //peertube
         type : 'GET',
         success : function(response){
-
+            console.log('PEERTUBE RESP', response)
             if (response.files && response.files[0].fileUrl) {
                 _plyr(response.files[0].fileUrl, response.description || '', response.name || '');
                 if (clbk) clbk(new Plyr(target, options))
