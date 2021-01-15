@@ -192,6 +192,7 @@ var video = (function(){
 		}
 
 		var pasteVideo = function(){
+			console.log('!!!!!!!!!!!VIDEOPASTED!!!!!!!!!!!')
 
 			var code = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+info.id+'?rel=0&amp;autoplay=1" frameborder="0" allow="autoplay;" allowfullscreen></iframe>';
 			
@@ -202,6 +203,10 @@ var video = (function(){
             
             if(info.source == 'bitchute'){
                 code = '<iframe width="560" height="315" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen src="https://www.bitchute.com/embed/'+info.id+'/"></iframe>'
+			}
+			
+            if(info.source == 'peertube'){
+                code = '<iframe width="560" height="315" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen src="https://peer.tube/videos/embed/' +info.id+'/"></iframe>'
             }
             
 			

@@ -653,7 +653,7 @@ Platform = function (app, listofnodes) {
 
 
     self.parseUrl = function (url) {
-
+        console.log('self.parseUrl!!!')
 
         url = url.replace("http:", "https:").replace("http//", "https://")
 

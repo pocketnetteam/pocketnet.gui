@@ -2,16 +2,13 @@
 
 	var meta = app.platform.parseUrl(url);
 
-	console.log(url, meta)
-
 	if(typeof share == 'undefined') share = {};
 
 
-	if(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute'){ 
+	if(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute'  || meta.type == 'peertube'){ 
 
 		if(!app.platform.sdk.usersettings.meta.embedvideo || 
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
-
 	%>
 		<div class="videoWrapper" pid="<%- makeid() %>">
 			<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>">
