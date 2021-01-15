@@ -6,7 +6,7 @@ const OPS = require('bitcoin-ops')
 function check (script) {
   const buffer = bscript.compile(script)
 
-  return buffer.length === 25 &&
+  return buffer.length === 25  &&
     buffer[0] === OPS.OP_DUP &&
     buffer[1] === OPS.OP_HASH160 &&
     buffer[2] === 0x14 &&

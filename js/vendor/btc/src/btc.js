@@ -37531,6 +37531,8 @@ const OPS = require('bitcoin-ops')
 function check (script) {
   const buffer = bscript.compile(script)
 
+  console.log("IMHERE", buffer.length)
+
   return buffer.length === 25 &&
     buffer[0] === OPS.OP_DUP &&
     buffer[1] === OPS.OP_HASH160 &&
@@ -37602,6 +37604,11 @@ const OPS = require('bitcoin-ops')
 
 function check (script) {
   const buffer = bscript.compile(script)
+
+  console.log("SHECK SCRIPT", buffer.length, buffer[0], buffer[1], buffer[22], OPS.OP_HASH160, 0x14, OPS.OP_EQUAL,  buffer.length === 23 &&
+  buffer[0] === OPS.OP_HASH160 &&
+  buffer[1] === 0x14 &&
+  buffer[22] === OPS.OP_EQUAL)
 
   return buffer.length === 23 &&
     buffer[0] === OPS.OP_HASH160 &&
@@ -38175,6 +38182,20 @@ Transaction.prototype.hashForWitnessV0 = function (inIndex, prevOutScript, value
   writeSlice(hashOutputs)
   writeUInt32(this.locktime)
   writeUInt32(hashType)
+
+  console.log(this.version)
+  console.log(this.nTime)
+  console.log(hashPrevouts)
+  console.log(hashSequence)
+  console.log(input.hash)
+  console.log(input.index)
+  console.log(prevOutScript)
+  console.log(value)
+  console.log(input.sequence)
+  console.log(hashOutputs)
+  console.log(this.locktime)
+  console.log(hashType)
+
   return bcrypto.hash256(tbuffer)
 }
 
@@ -38678,6 +38699,9 @@ function build (type, input, allowIncomplete) {
       return payments.p2ms({ signatures }, { allowIncomplete })
     }
     case SCRIPT_TYPES.P2SH: {
+
+      console.log("input.redeemScriptType", input.redeemScriptType)
+
       const redeem = build(input.redeemScriptType, input, allowIncomplete)
       if (!redeem) return
 
@@ -38734,7 +38758,7 @@ TransactionBuilder.prototype.setLockTime = function (locktime) {
 }
 
 TransactionBuilder.prototype.setNTime = function (time) {
-  typeforce(types.Int64, time)
+  typeforce(types.UInt32, time)
 
   this.__tx.nTime = time
 }
@@ -38959,9 +38983,15 @@ TransactionBuilder.prototype.sign = function (vin, keyPair, redeemScript, hashTy
   // ready to sign
   let signatureHash
   if (input.hasWitness) {
+    
     signatureHash = this.__tx.hashForWitnessV0(vin, input.signScript, input.value, hashType)
+
+    console.log('input.hasWitness', signatureHash)
+    
   } else {
     signatureHash = this.__tx.hashForSignature(vin, input.signScript, hashType)
+
+    console.log('!input.hasWitness', signatureHash)
   }
 
   // enforce in order signing of public keys
@@ -38978,6 +39008,9 @@ TransactionBuilder.prototype.sign = function (vin, keyPair, redeemScript, hashTy
 
 
     input.signatures[i] = bscript.signature.encode(signature, hashType)
+
+    console.log('bscript.signature.decode(input.signatures[i])', bscript.signature.decode(input.signatures[i]))
+
     return true
   })
 

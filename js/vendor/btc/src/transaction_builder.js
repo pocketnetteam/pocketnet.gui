@@ -403,6 +403,9 @@ function build (type, input, allowIncomplete) {
       return payments.p2ms({ signatures }, { allowIncomplete })
     }
     case SCRIPT_TYPES.P2SH: {
+
+
+
       const redeem = build(input.redeemScriptType, input, allowIncomplete)
       if (!redeem) return
 
@@ -459,7 +462,7 @@ TransactionBuilder.prototype.setLockTime = function (locktime) {
 }
 
 TransactionBuilder.prototype.setNTime = function (time) {
-  typeforce(types.Int64, time)
+  typeforce(types.UInt32, time)
 
   this.__tx.nTime = time
 }
@@ -681,9 +684,15 @@ TransactionBuilder.prototype.sign = function (vin, keyPair, redeemScript, hashTy
   // ready to sign
   let signatureHash
   if (input.hasWitness) {
+    
     signatureHash = this.__tx.hashForWitnessV0(vin, input.signScript, input.value, hashType)
+
+    console.log('input.hasWitness', signatureHash)
+    
   } else {
     signatureHash = this.__tx.hashForSignature(vin, input.signScript, hashType)
+
+    console.log('!input.hasWitness', signatureHash)
   }
 
   // enforce in order signing of public keys
