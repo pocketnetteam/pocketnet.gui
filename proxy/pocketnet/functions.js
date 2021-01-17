@@ -9288,10 +9288,11 @@ getAllValuesByKey = function(obj, keys){
 	}
 
 	parseVideo = function(url) {
-
 		var _url = url;
+		console.log('222~~~~~~~')
 
-	    var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
+	    var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
+	    // var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
 	    var type = null;
 		var id = null;
 		
@@ -9311,7 +9312,11 @@ getAllValuesByKey = function(obj, keys){
                     
 			    }  else if (test[3].indexOf('bitchute') > -1) {
                     type = 'bitchute';
-			        id = test[6];
+					id = test[6];
+					
+			    }else if (test[3].indexOf('peertube') > -1) {
+                    type = 'peertube';
+			        id = test[8];
 			    }
 
 	    	}

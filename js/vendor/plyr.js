@@ -3206,6 +3206,7 @@ typeof navigator === "object" && (function (global, factory) {
    */
 
   function parseUrl(input) {
+    console.log('PLYR!!!!!!')
     var safe = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
     var url = input;
 
@@ -9180,7 +9181,7 @@ var PlyrEx = function(target, options, clbk) {
 
         video_id = video_id.replace('/embed/', '/video/');
 
-        $.ajax({
+        $.ajax({ 
             url : 'https://pocketnet.app:8888/bitchute',
             data : {
                 url : hexEncode(video_id)
@@ -9196,11 +9197,25 @@ var PlyrEx = function(target, options, clbk) {
             }
         });
 
-    } if ('pockettube' == provider) {
+    } if ('peertube' == provider) {
 
-        // GET info about magnet
-        // create container for pockettube
-        // create Plyr instance
+      video_id = video_id.replace('https://peer.tube/videos/embed/', '')
+
+      $.ajax({ 
+        url : `https://peertube2.cpy.re/api/v1/videos/${video_id}`,
+        //peertube
+        type : 'GET',
+        success : function(response){
+            console.log('PEERTUBE RESP', response)
+            if (response.files && response.files[0].fileUrl) {
+                _plyr(response.files[0].fileUrl, response.description || '', response.name || '');
+                if (clbk) clbk(new Plyr(target, options))
+
+            } else {
+                _error();
+            }
+        }
+    });
 
     } else {
 
