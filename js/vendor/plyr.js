@@ -9203,10 +9203,9 @@ var PlyrEx = function(target, options, clbk) {
             }
         });
 
-    } if ('peeаrtube' == provider) {
+    } if ('peertube' == provider) {
       console.log('PROVIDER PEERTUBE')
       video_id = video_id.replace('https://peer.tube/videos/embed/', '')
-      console.log('PROVIDER URL', video_id)
       //ссылка картинка имя
       $.ajax({ 
         url : `https://peertube2.cpy.re/api/v1/videos/${video_id}`,
@@ -9217,7 +9216,7 @@ var PlyrEx = function(target, options, clbk) {
 
             if (response.files && response.files[0].fileUrl) {
                 _plyr(response.files[0].fileUrl, preview_picture || '', response.name || '');
-                if (clbk) clbk(new Plyr(target, video_options))
+                if (clbk) clbk(new Plyr(target, options))
 
             } else {
                 _error();

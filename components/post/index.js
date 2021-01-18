@@ -1141,7 +1141,7 @@ var post = (function(){
 
 					if (url && !og){
 
-						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute'  || meta.type == 'peertube'){
+						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
 							if (clbk)
 								clbk()
 						}
