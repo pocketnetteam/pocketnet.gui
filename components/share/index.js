@@ -1334,7 +1334,7 @@ var share = (function(){
 
 					if(currentShare.url.v && !og){
 
-						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute') {
+						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
 							console.log("INITPLAYER")
                             Plyr.setup('.js-player', function(player) {
 

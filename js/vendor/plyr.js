@@ -9196,11 +9196,26 @@ var PlyrEx = function(target, options, clbk) {
             }
         });
 
-    } if ('pockettube' == provider) {
+    } if ('peertube' == provider) {
+      console.log('PROVIDER PEERTUBE')
+      video_id = video_id.replace('https://peer.tube/videos/embed/', '')
+      //ссылка картинка имя
+      $.ajax({ 
+        url : `https://peertube2.cpy.re/api/v1/videos/${video_id}`,
+        type : 'GET',
+        success : function(response){
+            console.log('PEERTUBE RESP', response)
+            var preview_picture = `https://peertube2.cpy.re${response.previewPath}`
 
-        // GET info about magnet
-        // create container for pockettube
-        // create Plyr instance
+            if (response.files && response.files[0].fileUrl) {
+                _plyr(response.files[0].fileUrl, preview_picture || '', response.name || '');
+                if (clbk) clbk(new Plyr(target, options))
+
+            } else {
+                _error();
+            }
+        }
+    });
 
     } else {
 
