@@ -737,6 +737,10 @@ Platform = function (app, listofnodes) {
 
             _url = url;
 
+            if (meta.type == 'peertube') {
+                _url = `https://peer.tube/videos/embed/${meta.id}`
+            }
+
             if (meta.type == 'youtube') {
 
                 if (url.indexOf("watch") > -1) {
