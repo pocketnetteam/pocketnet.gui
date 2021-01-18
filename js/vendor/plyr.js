@@ -9111,6 +9111,8 @@ typeof navigator === "object" && (function (global, factory) {
       key: "setup",
       value: function setup(selector, clbk) {
         var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+        console.log('OPTIONS', options)
+        console.log('SELECTOR', selector)
         var targets = null;
 
         if (is$1.string(selector)) {
@@ -9126,6 +9128,7 @@ typeof navigator === "object" && (function (global, factory) {
         }
 
         return targets.map(function (t) {
+          console.log('ADDED PLAYER 3')
             return PlyrEx(t, options, clbk)
         });
       }
@@ -9153,6 +9156,7 @@ typeof navigator === "object" && (function (global, factory) {
 var PlyrEx = function(target, options, clbk) {
     var self = this;
     if (!clbk) clbk = function() {};
+    var video_options = options
 
     var provider = target.getAttribute('data-plyr-provider');
     var video_id = target.getAttribute('data-plyr-embed-id');
@@ -9161,7 +9165,8 @@ var PlyrEx = function(target, options, clbk) {
         var new_target = document.createElement('video');
         new_target.setAttribute('src', video_url);
         new_target.setAttribute('poster', preview_url);
-        new_target.setAttribute('title', title);
+        // new_target.setAttribute('title', title);
+        video_options.title = title
             
         target.parentNode.replaceChild(new_target, target);
         target = new_target
@@ -9191,14 +9196,14 @@ var PlyrEx = function(target, options, clbk) {
               console.log('bitchute RESP', response)
                 if (response.data.video && response.data.video.as) {
                     _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
-                    if (clbk) clbk(new Plyr(target, options))
+                    if (clbk) clbk(new Plyr(target, video_options))
                 } else {
                     _error();
                 }
             }
         });
 
-    } if ('peertube' == provider) {
+    } if ('peeаrtube' == provider) {
       console.log('PROVIDER PEERTUBE')
       video_id = video_id.replace('https://peer.tube/videos/embed/', '')
       console.log('PROVIDER URL', video_id)
@@ -9208,9 +9213,11 @@ var PlyrEx = function(target, options, clbk) {
         type : 'GET',
         success : function(response){
             console.log('PEERTUBE RESP', response)
+            var preview_picture = `https://peertube2.cpy.re${response.previewPath}`
+
             if (response.files && response.files[0].fileUrl) {
-                _plyr(response.files[0].fileUrl, response.description || '', response.name || '');
-                if (clbk) clbk(new Plyr(target, options))
+                _plyr(response.files[0].fileUrl, preview_picture || '', response.name || '');
+                if (clbk) clbk(new Plyr(target, video_options))
 
             } else {
                 _error();
@@ -9220,7 +9227,7 @@ var PlyrEx = function(target, options, clbk) {
 
     } else {
 
-        clbk(new Plyr(target, options));
+        clbk(new Plyr(target, video_options));
 
     }
 
