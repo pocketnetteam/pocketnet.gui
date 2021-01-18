@@ -9188,6 +9188,7 @@ var PlyrEx = function(target, options, clbk) {
             },
             type : 'POST',
             success : function(response){
+              console.log('bitchute RESP', response)
                 if (response.data.video && response.data.video.as) {
                     _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
                     if (clbk) clbk(new Plyr(target, options))
@@ -9198,12 +9199,12 @@ var PlyrEx = function(target, options, clbk) {
         });
 
     } if ('peertube' == provider) {
-
+      console.log('PROVIDER PEERTUBE')
       video_id = video_id.replace('https://peer.tube/videos/embed/', '')
-
+      console.log('PROVIDER URL', video_id)
+      //ссылка картинка имя
       $.ajax({ 
         url : `https://peertube2.cpy.re/api/v1/videos/${video_id}`,
-        //peertube
         type : 'GET',
         success : function(response){
             console.log('PEERTUBE RESP', response)
