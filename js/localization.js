@@ -20,6 +20,21 @@ Localization = function(app){
 			key : 'en'
 		},
 
+		de : {
+			name : "German",
+			key : 'de'
+		},
+
+		fr : {
+			name : "Franch",
+			key : 'fr'
+		},
+
+		kr : {
+			name : "Korean",
+			key : 'kr'
+		},
+
 		ru : {
 			name : "Русский",
 			key : 'ru'
