@@ -21,17 +21,17 @@ Localization = function(app){
 		},
 
 		de : {
-			name : "German",
+			name : "Deutsch",
 			key : 'de'
 		},
 
 		fr : {
-			name : "Franch",
+			name : "Français",
 			key : 'fr'
 		},
 
 		kr : {
-			name : "Korean",
+			name : "한국어",
 			key : 'kr'
 		},
 
