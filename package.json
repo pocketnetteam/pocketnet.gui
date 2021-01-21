@@ -92,7 +92,7 @@
         "request": "",
         "safe-buffer": "^5.1.1",
         "sails": "^1.4.0",
-        "socket.io": "^2.2.0",
+        "socket.io": "^2.4.0",
         "sortablejs": "^1.8.3",
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
