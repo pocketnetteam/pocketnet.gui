@@ -1,4 +1,4 @@
-1/* PDF */
+/* PDF */
 
 	var tableAlignmentCenter = function(obj){
 
@@ -7450,14 +7450,14 @@
 			p.rpc = true
 
 		
-			/*if(typeof p.nodeFix == 'undefined' && app.platform.nodeid != 'undefined'){
+			if(typeof p.nodeFix == 'undefined' && app.platform.nodeid != 'undefined'){
 
 				var fail = p.fail || function(){}
 
 				p.nodeFix = app.platform.nodeid;
 				p.fail = function(r){
 
-					if(r && r.statusCode == 500 && (!r.data || _.isEmpty(r.data))){
+					if(r && (r.statusCode == 500 || r.statusCode == 521) && (!r.data || _.isEmpty(r.data))){
 						app.platform.autochange()
 
 
@@ -7475,7 +7475,7 @@
 					}
 					
 				}
-			}*/	
+			}	
 
         	if(app.platform.dontuseapiproxy){
 
@@ -7523,6 +7523,7 @@
 					method : p.method,
 					parameters : hexEncode(JSON.stringify(p.parameters || ""))
 				}
+
 
 				if(app.platform.nodeid){
 

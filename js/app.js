@@ -992,6 +992,8 @@ Application = function(p)
 
 	}
 
+	console.log("B", bitcoin)
+
 	return self;
 }
 

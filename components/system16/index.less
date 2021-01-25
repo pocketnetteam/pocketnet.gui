@@ -1,0 +1,255 @@
+@import "../../css/__cssvar";
+
+#system16{
+    position: relative;
+    min-height: 600px;
+    background: #F7F7F7;
+    padding: 0em 4em;
+	
+	.settingsGroup{
+		&:nth-child(1){
+			.mwork{
+				
+				&.gk{
+					border-top: 0;
+				}
+			}
+		}
+	}
+
+
+	.groupHeader{
+		.parameter{
+			>div{
+				vertical-align: middle;
+				color : @color-main;
+				padding : 2 * @rhythm 0;
+
+				&.pName{
+					vertical-align: middle;
+					vertical-align: top;
+				}
+
+				.pInput{
+					font-weight: 700;
+					font-size: 0.8em;
+				}
+			}
+		}
+	}
+
+	.parameter{
+
+		.picker{
+			select{
+				height: auto;
+			}
+		}
+
+		>div{
+			padding: @rhythm 0;
+			vertical-align: top;
+		}
+
+		.pName{
+			vertical-align: top;
+			padding-top: 2 * @rhythm;
+			padding-right : @rhythm;
+			width: 190px;
+
+			.downloads {
+				padding-bottom: 2*@rhythm;
+			}
+
+			.pNameW{
+				padding-top : @rhythm  / 3;
+				font-weight: 700;
+				font-size: 0.8em;
+				line-height: 1.4em;
+
+			}
+
+			.unit{
+				font-weight: 700;
+				color : @color-bright;
+			}
+
+			.require{
+				color : @color-bad;
+			}
+		}
+
+		
+		.pInput{
+			position: relative;
+			vertical-align: top;
+
+			.echo{
+				padding: @rhythm;
+				color : @color-contrast;
+				font-weight: 700;
+			}
+
+			.vm_valuesmulti{
+				padding-top: @rhythm / 2;
+			}
+
+
+		}
+
+		.panel{
+			vertical-align: top;
+			padding-top: 2 * @rhythm;
+			width: 20px;
+
+			.clear{
+				text-align: right;
+				cursor: pointer;
+				color : @color-gray-slight;
+				.transition(0.3s);
+				&:hover{
+					color : @color-main;
+				}
+			}
+			
+		}
+
+		select,
+		textarea,
+        input {
+			width: 100%;
+			padding: @rhythm;
+			border : 1px solid @color-gray-light;
+			border-radius: 2px;
+
+			&.error{
+				border : 1px solid @color-bad;
+			}
+        }
+            
+            
+            .file_select,
+            .dir_select {
+                width: calc(100% - 3em);
+            }
+      
+
+
+	.parameter .pInput.btn_select {
+		width: 2.5em;
+	}
+
+        .inpLabel {
+            width: 100%;
+			padding: @rhythm;
+			border-bottom : 1px solid @color-gray-light;
+        }
+
+		.error{
+			select,
+			textarea,
+			input{
+				border : 1px solid @color-bad;
+			}
+			
+		}
+
+		select{
+			height: 38px;
+			padding-right: 25px;
+			width: auto;
+		}	
+
+
+		.vc_valuecustom{
+			width: 100%;
+		}
+
+		.vc_valuecustom,
+		.vc_valuecustom_multibig{
+			.vc_textInput{
+				background: #fff;
+			}
+		}
+
+		.vmt_valuesmultitree,
+		.vm_value{
+			padding : 0;
+			.checkbox{
+				&+label {
+			        &:before {
+			        	font-size : 1.6em;
+			        	line-height: 19px;
+			        }
+			    }
+			}
+		}
+
+		
+	}
+
+	.settingsGroup{
+		margin-bottom : 2  @rhythm;
+
+		.groupCaption{
+			padding : 3 * @rhythm 0;
+			font-size: 1.2em;
+			color : @color-main;
+		}
+	}
+
+	.preloaderabs{
+		display: none;
+		position: absolute;
+		left: 0;
+		right : 0;
+		bottom : 0;
+		top : 0;
+		background: fade(#fff,80);
+
+		.table{
+			>div{
+				vertical-align: middle;
+				text-align: center;
+			}
+		}
+	}
+	
+	&.loading{
+		.preloaderabs{
+			display : block;
+		}
+	}
+
+	.fcaption{
+		padding : 2 * @rhythm 0 ;
+		font-weight: 700;
+		font-size: 1em;
+		color : @color-orange;
+	
+	}
+
+    .cCaption{
+        padding : 4 * @rhythm 0 ;
+        span{
+            font-weight: 100;
+            font-size: 2em;
+        }
+
+    }
+
+    .dacaption{
+        padding : 2 * @rhythm 0 ;
+        span{
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+    }
+}
+
+html.stblack{
+	#system16{
+		background: @color-black ;
+		
+	}	
+}

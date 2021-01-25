@@ -1,0 +1,152 @@
+var _ = require('lodash');
+var useragent = require('express-useragent');
+var f = require('../functions');
+
+var Middle = function(){
+
+    var self = this
+
+    var countlogs = 100000
+    var logs = []
+
+    var addLogs = function(parameters, ip, status, pathname){
+		
+		logs.push({
+			p : _.clone(parameters),
+			ip : ip,
+			s : status,
+			pn : pathname,
+			date : new Date()
+		})
+
+		var d = logs.length - countlogs
+
+		if (d > countlogs / 1000){
+			logs = logs.slice(d)
+		}
+    }
+    
+    self.info = function(){
+        
+        var requestsIp = _.toArray(f.group(logs, function(l){
+            return l.ip
+        })).length
+
+        return {
+            requestsIp : requestsIp,
+            logs : logs
+        }
+    }
+
+  
+    self.headers = function(request, result, next){
+        result.setHeader('Access-Control-Allow-Origin', '*');
+        result.setHeader("Access-Control-Allow-Methods", "GET, POST");
+        result.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+        if (next) 
+            next(null)
+    }
+
+    self.extend = function(request, result, next){
+        
+        result._success = function(data, code){
+
+            if(!code) code = 200
+
+            result.status(code).jsonp({
+                wai : {
+                    result : 'success',
+                    data : data
+                }
+            })
+
+            addLogs(request.data, request.clientIP, code, request.baseUrl + request.path)
+    
+        }
+    
+        result._fail = function(error, code){
+
+            if(!code) code = 500
+
+            result.status(code).jsonp(errorHandler.db(error))
+
+            addLogs(request.data, request.clientIP, code, request.baseUrl + request.path)
+    
+        }
+    
+        if (next)
+            next(null)
+    
+    }
+    
+    self.data = function(request, result, next){
+
+        request.data = _.merge(request.query, request.body)
+
+        _.each(request.data, function(v, key){
+    
+            if(v && v[0] && (v[0] == "{" || v[0] == "[")){
+                try{
+                    request.data[key] = JSON.parse(v)
+                }
+                catch(e){
+                    
+                }
+            }
+        })
+        if (next)
+            next(null)
+    }
+    
+    self.bearer = function(request, result, next){
+    
+        if (request.headers){
+            var s = request.headers['authorization'] || '';
+            var apikey = s.replace('Bearer ', '') || ''
+    
+            if(!request.data) request.data = {}
+    
+            if (apikey){
+                request.data.apikey = apikey  
+            }
+        }
+    
+        if (next) 
+            next(null)
+    }
+    
+    self.uainfo = function(request, result, next){
+    
+        if(!request.headers) return
+    
+        var source = request.headers['user-agent'],
+            ua = useragent.parse(source);
+    
+        var ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+    
+        request.clientIP = ip
+        request.clientUA = ua
+    
+        if (next) 
+            next(null)
+    }
+    
+    self.prepare = function(request, result, next){
+
+        self.headers(request, result)
+        self.data(request, result)
+        self.extend(request, result)
+        self.uainfo(request, result)
+        self.bearer(request, result)
+    
+        if (next) 
+            next(null)
+    }
+
+    
+
+    return self
+}
+
+module.exports = Middle

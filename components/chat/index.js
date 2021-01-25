@@ -1041,7 +1041,7 @@ var chat = (function(){
 
 			chat.rtc.clbks.receive.messages.messenger = function(messages){
 
-				
+				console.log("messages", messages)
 			
 				newmessageslength++;
 

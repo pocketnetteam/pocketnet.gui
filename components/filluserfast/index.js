@@ -548,6 +548,8 @@ var filluserfast = (function(){
 
 			testqrcodeandkey : function(hm, clbk){
 
+				console.log("HM", hm)
+
 				var keyPair =  self.app.user.keysFromMnemo(trim(hm))  
 
 				var mk = keyPair.privateKey.toString('hex');

@@ -51,15 +51,16 @@ var applications = (function(){
 
 				self.app.platform.m.log('registration_application')
 
-				if (_os && self.app.platform.applications[ed.key][_os] && (typeof _Electron == 'undefined' && ed.key != 'ui') && !window.cordova){
+				if (_os && self.app.platform.applications[ed.key][_os] && (typeof _Electron == 'undefined' ) && !window.cordova){
 
 					renders.os(self.app.platform.applications[ed.key][_os], clbk)
 
 				}
 
 				else
-				{
-					clbk(clbk);
+				{	
+					if (clbk)
+						clbk();
 				}
 			}
 

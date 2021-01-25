@@ -28,22 +28,28 @@ if(!_Node)
 				host : 'pocketnet.app',
 				port : 8888,
 				ws : 8088,
-
 				id : 'pocketnet.app:8888:8088:'
 			},
 
-			// {
-			// 	host : 'localhost',
-			// 	port : 8888,
-			// 	ws : 8088,
-			// 	id : 'localhost:8888:8088:'
-			// },
+			/*{
+				host : 'coinoptimizer.app',
+				port : 8888,
+				ws : 8088,
+				id : 'coinoptimizer.app:8888:8088:'
+			},*/
+
+			/*{
+			 	host : 'localhost',
+			 	port : 8888,
+			 	ws : 8088,
+			 	id : 'localhost:8888:8088:'
+			},*/
 			
-			{
+			/*{
 				host : 'ironbot',
 				port : 8888,
 				ws : 8088
-			}
+			}*/
 		],
 		
 	});

@@ -1,0 +1,12 @@
+{
+  "name": "pocketnetproxy",
+  "version": "1.0.0",
+  "description": "Pocketnet Proxy Server",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node cli.js"
+  },
+  "author": "Max Grishkov",
+  "license": "ISC",
+  "dependencies": {}
+}

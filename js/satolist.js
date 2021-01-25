@@ -162,40 +162,40 @@ Platform = function (app, listofnodes) {
         return {
 
             ui: {
-            windows: {
+                windows: {
     
                     appname: "Pocketnet",
-                text: {
-                    name: "Windows",
-                    download: self.app.localization.e('e13222'),
-                    label: self.app.localization.e('e13223')
+                    text: {
+                        name: "Windows",
+                        download: self.app.localization.e('e13222'),
+                        label: self.app.localization.e('e13223')
+                    },
+        
+                    icon: '<i class="fab fa-windows"></i>',
+        
+                    github: {
+                        name: "PocketnetSetup.exe",
+                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                    }
                 },
-    
-                icon: '<i class="fab fa-windows"></i>',
-    
-                github: {
-                    name: "PocketnetSetup.exe",
-                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                    page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+        
+                linux: {
+                        appname: "Pocketnet",
+                    text: {
+                        name: "Linux",
+                        download: self.app.localization.e('e13222'),
+                        label: self.app.localization.e('e13224')
+                    },
+        
+                    icon: '<i class="fab fa-linux"></i>',
+        
+                    github: {
+                        name: "Pocketnet_linux_x64.AppImage",
+                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                    }
                 }
-            },
-    
-            linux: {
-                    appname: "Pocketnet",
-                text: {
-                    name: "Linux",
-                    download: self.app.localization.e('e13222'),
-                    label: self.app.localization.e('e13224')
-                },
-    
-                icon: '<i class="fab fa-linux"></i>',
-    
-                github: {
-                    name: "Pocketnet_linux_x64.AppImage",
-                    url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
-                    page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                }
-            }
             },
     
             node: {
@@ -775,7 +775,6 @@ Platform = function (app, listofnodes) {
 
             if (meta.type == 'bitchute' && url.indexOf("player") == -1) {
 
-                console.log('meta', meta)
 
                 var _url = url;
 
@@ -1777,7 +1776,7 @@ Platform = function (app, listofnodes) {
             var keyPair = null;
 
             if (bitcoin.bip39.validateMnemonic(m)) {
-                var seed = bitcoin.bip39.mnemonicToSeed(m)
+                var seed = bitcoin.bip39.mnemonicToSeedSync(m)
 
                 var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF()
 
@@ -1787,6 +1786,7 @@ Platform = function (app, listofnodes) {
 
                 try {
 
+
                     keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(m, 'hex'))
 
 
@@ -1794,7 +1794,6 @@ Platform = function (app, listofnodes) {
                 }
                 catch (e) {
 
-                    console.error(e)
 
                     try {
                         keyPair = bitcoin.ECPair.fromWIF(m)
@@ -3116,7 +3115,6 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                console.log('_videos', videos)
                 return _videos
             },
 
@@ -3441,7 +3439,6 @@ Platform = function (app, listofnodes) {
                 var options = s.createall()
 
                 var m = s.meta;
-                console.log('i')
 
                 var c = {
 
@@ -3658,8 +3655,7 @@ Platform = function (app, listofnodes) {
                             }
                         }
 
-                        console.log('features.telegram', self.app.user.features.telegram, self.app.platform.sdk.address.pnet().address)
-
+                        
                     }
                 })
 
@@ -3700,21 +3696,7 @@ Platform = function (app, listofnodes) {
             storage: {
             },
 
-            survey: function () {
-
-                if (!localStorage['survey1']) {
-
-                    /*self.app.nav.api.load({
-                        open : true,
-                        href : 'surveyiframe',
-                        inWnd : true
-                    })*/
-
-                }
-
-
-
-            },
+           
 
             extendMe: function (me) {
                 var subscribe = deep(self, 'sdk.node.transactions.temp.subscribe')
@@ -5059,6 +5041,7 @@ Platform = function (app, listofnodes) {
                 if (a) {
                     a = a.address;
 
+
                     this.checkFreeMoney(a, function (r) {
                         if (!r) {
                             if (clbk)
@@ -5107,7 +5090,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            giveFreeMoney: function (toAddress, mnemonic, clbk, amount) {
+            giveFreeMoney: function (toAddress, mnemonic, clbk, amount, update) {
 
                 this.checkFreeMoney(toAddress, function (r) {
 
@@ -5152,7 +5135,7 @@ Platform = function (app, listofnodes) {
                             amount: amount
                         }]
 
-                        var seed = bitcoin.bip39.mnemonicToSeed(mnemonic);
+                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
                         var hash = bitcoin.crypto.sha256(Buffer.from(seed));
                         var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
                         var keyPair = bitcoin.ECPair.fromWIF(d);
@@ -5175,6 +5158,8 @@ Platform = function (app, listofnodes) {
 
                                     if (err) {
 
+                                        
+
                                         self.sdk.node.transactions.releaseCS(inputs)
 
                                         if (clbk)
@@ -5186,7 +5171,16 @@ Platform = function (app, listofnodes) {
                                         self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
 
                                             if (err) {
+
                                                 self.sdk.node.transactions.releaseCS(inputs)
+
+                                                if ((err == -26 || err == -25 || err == 16) && !update) {
+    
+                                                    self.sdk.users.giveFreeMoney(toAddress, mnemonic, clbk, amount, true)
+            
+                                                    return
+                                                }
+                                                
 
                                                 if (clbk)
                                                     clbk(err)
@@ -5209,7 +5203,7 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
                             }
-                        }, true)
+                        }, update)
                     }
 
                 })
@@ -5275,7 +5269,7 @@ Platform = function (app, listofnodes) {
                             amount: amount
                         }]
 
-                        var seed = bitcoin.bip39.mnemonicToSeed(mnemonic);
+                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
                         var hash = bitcoin.crypto.sha256(Buffer.from(seed));
                         var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
                         var keyPair = bitcoin.ECPair.fromWIF(d);
@@ -5931,26 +5925,16 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.node.transactions.get.unspents(function (unspents) {
                     var allunspents = [];
-
-
-
                     _.each(unspents, function (ua, i) {
 
-
-
                         ua = _.filter(ua, self.sdk.node.transactions.canSpend)
-
-
 
                         _.each(ua, function (unspent) {
                             if (unspent.amount)
                                 allunspents.push(unspent)
                         })
                     })
-
-
-
-
+                    
                     var totalInWallet = _.reduce(allunspents, function (m, u) {
                         return m + Number(u.amount)
                     }, 0)
@@ -6827,7 +6811,7 @@ Platform = function (app, listofnodes) {
 
                                     _.each(self.sdk.comments.upvoteClbks, function (c) {
 
-                                        c(null, lastcomment, ulastcomment.myscore, self.sdk.address.pnet().address)
+                                        c(null, lastcomment, lastcomment.myscore, self.sdk.address.pnet().address)
 
                                     })
                                 }
@@ -9881,7 +9865,7 @@ Platform = function (app, listofnodes) {
                                 }
 
                                 else {
-                                    console.log("RERER")
+                         
                                     return
                                 }
 
@@ -9921,9 +9905,7 @@ Platform = function (app, listofnodes) {
 
                                     var p2sh_ = bitcoin.payments.p2sh({ redeem: a })
 
-                                    console.log('p2sh', p2sh, p2sh_, a)
-
-                                    txb.sign(inputindex, dumped, p2sh.redeem.output, null, Number(Number(i.amount * k).toFixed(0)));
+                                    txb.sign(inputindex, dumped, p2sh.redeem.output, null, Number((k * i.amount).toFixed(0)));
 
 
                                 }
@@ -9937,8 +9919,6 @@ Platform = function (app, listofnodes) {
 
 
                         var tx = txb.build()
-
-                        //console.log(tx.toHex(), txb)
 
                         return tx;
 
@@ -10109,8 +10089,6 @@ Platform = function (app, listofnodes) {
                                 var hex = tx.toHex();
 
 
-
-
                                 if (p.pseudo) {
                                     var alias = obj.export(true);
                                     alias.txid = makeid();
@@ -10262,9 +10240,6 @@ Platform = function (app, listofnodes) {
                         caption = caption.replace(/<\/p>/g, "</p>\n");
                         caption = filterHtml(caption);
 
-
-                        console.log(token, channelIdx, channel, 'sendTelegram');
-
                         let action = 'sendMessage';
                         let captionName = 'text';
 
@@ -10306,7 +10281,6 @@ Platform = function (app, listofnodes) {
                         let query = `https://api.telegram.org/bot${token}/${action}`;
                         const paramStr = $.param(parameters);
 
-                        console.log('paramStr', paramStr);
 
                         fetch(query + '?' + paramStr)
                             .then(data => data.json())
@@ -11659,30 +11633,6 @@ Platform = function (app, listofnodes) {
 
                         if (!values) values = {}
 
-                        /*nedbkey: 'settings',
-                          nedbpath: { settings: './data/settings' },
-                          nodes: { defaults: [Object], stable: [Array] },
-                          server: true,
-                          ports: { https: 8888, wss: 8088 },
-                          ssl:
-                           { key: './cert/key.pem',
-                             cert: './cert/cert.pem',
-                             passphrase: 'Vjoysq47' },
-                          fbk:
-                           './private/pocketnet-firebase-adminsdk-e72t8-e21b48edf5.json',
-                          dbEnable: true,
-                          db:
-                           { host: 'localhost',
-                             port: 5432,
-                             max: 10,
-                             idleTimeoutMillis: 30000,
-                             user: 'postgres',
-                             database: 'pocketnetproxy',
-                             password: 'zx8045kzx' },
-                          refkey: '',
-                          captcha: true,
-                          iplimiter: true },*/
-
                         var s = self.sdk.esystem.proxy.settings;
 
                         var options = s.createall()
@@ -11976,7 +11926,7 @@ Platform = function (app, listofnodes) {
                     this.clbks.tick = {}
                     this.tickstate = {}
                     this.tickstatehash = []
-                    console.log('sdk.esystem.init')
+        
                     this.tickstate = {
                         settings:
                         {
@@ -12012,6 +11962,473 @@ Platform = function (app, listofnodes) {
 
                     electron.ipcRenderer.on('proxy-message', this.response)
                     electron.ipcRenderer.on('proxy-message-tick', this.tick)
+
+                    this.inited = true
+                }
+            }
+        },
+
+        system16: {
+            requestes: {},
+
+            clbks: {
+                tick: {
+
+                }
+            },
+
+            tickstate: {},
+            tickstatehash: [],
+            inited: false,
+
+            proxy: {
+                settings: {
+                    meta: {
+
+                        server: {
+                            name: self.app.localization.e('e13302'),
+                            id: 'server',
+                            type: "BOOLEAN",
+                            value: false,
+
+                            dbId: 'server'
+                        },
+
+                        serverPortHttps: {
+                            name: self.app.localization.e('e13303'),
+                            id: 'serverPortHttps',
+                            type: "NUMBER",
+                            value: '',
+                            format: {
+                                Precision: 0,
+                                groupSeparator: ''
+                            },
+                            dbId: 'ports.https'
+                        },
+
+                        serverPortWss: {
+                            name: self.app.localization.e('e13304'),
+                            id: 'serverPortWss',
+                            type: "NUMBER",
+                            value: '',
+                            format: {
+                                Precision: 0,
+                                groupSeparator: ''
+                            },
+                            dbId: 'ports.wss'
+                        },
+
+                        serverSslKeyUpload: {
+                            name: self.app.localization.e('e13305'),
+                            id: 'serverSslKeyUpload',
+                            type: "file",
+                            value: '',
+
+                            upload: {
+
+                            },
+
+                            dbId: 'ssl.key'
+                        },
+
+                        serverSslCertUpload: {
+                            name: self.app.localization.e('e13306'),
+                            id: 'serverSslCertUpload',
+                            type: "file",
+                            value: '',
+                            upload: {
+
+                            },
+                            dbId: 'ssl.cert'
+                        },
+
+                        serverSslPassphrase: {
+                            name: self.app.localization.e('e13307'),
+                            id: 'serverSslPassphrase',
+                            type: "password",
+                            value: '',
+
+                            dbId: 'ssl.passphrase'
+                        },
+
+                        serverFirebaseAdminSDK: {
+                            name: self.app.localization.e('e13308'),
+                            id: 'serverFirebaseAdminSDK',
+                            type: "file",
+                            value: '',
+                            upload: {
+
+                            },
+                            dbId: 'fbk'
+                        },
+
+                        pocketNetAuthTransactionCrane: {
+                            name: self.app.localization.e('e13309'),
+                            id: 'pocketNetAuthTransactionCrane',
+                            type: "STRING",
+                            value: '',
+
+                            dbId: 'refkey'
+                        },
+
+                        captchaEnable: {
+                            name: self.app.localization.e('e13310'),
+                            id: 'captchaEnable',
+                            type: "BOOLEAN",
+                            value: true,
+
+                            dbId: 'captcha'
+                        },
+
+                        iplimiterEnable: {
+                            name: self.app.localization.e('e13311'),
+                            id: 'iplimiterEnable',
+                            type: "BOOLEAN",
+                            value: true,
+
+                            dbId: 'iplimiter'
+                        }
+                    },
+
+                    create: function (id) {
+
+                        var t = self.sdk.system16.proxy.settings
+
+                        var m = t.meta;
+
+                        var p = new Parameter(m[id])
+
+                        return p;
+                    },
+
+                    createall: function () {
+                        var t = self.sdk.system16.proxy.settings
+
+                        var create = t.create
+                        var m = t.meta;
+
+                        var options = {};
+
+                        _.each(m, function (p, id) {
+                            options[id] = create(id)
+                        })
+
+                        return options
+                    },
+
+                    compose: function (values) {
+
+                        if (!values) values = {}
+
+                        var s = self.sdk.system16.proxy.settings;
+
+                        var options = s.createall()
+
+                        var m = s.meta;
+
+                        var c = {
+
+
+                            server: {
+                                name: self.app.localization.e('e13312'),
+                                options: {
+
+                                    server: options.server,
+                                    serverPortHttps: options.serverPortHttps,
+                                    serverPortWss: options.serverPortWss,
+                                    serverSslKeyUpload: options.serverSslKeyUpload,
+                                    serverSslCertUpload: options.serverSslCertUpload,
+                                    serverSslPassphrase: options.serverSslPassphrase
+
+                                }
+                            },
+
+                            firebase: {
+                                name: self.app.localization.e('e13314'),
+                                options: {
+
+                                    serverFirebaseAdminSDK: options.serverFirebaseAdminSDK
+
+                                }
+                            },
+
+                            other: {
+                                name: self.app.localization.e('e13315'),
+                                options: {
+
+                                    pocketNetAuthTransactionCrane: options.pocketNetAuthTransactionCrane,
+                                    captchaEnable: options.captchaEnable,
+                                    iplimiterEnable: options.iplimiterEnable
+
+                                }
+                            },
+
+
+                        }
+
+                        _.each(options, function (o) {
+                            if (deep(values, o.dbId)) o.value = deep(values, o.dbId)
+                        })
+
+                        return {
+                            c: c,
+                            o: options
+                        }
+
+                    },
+                }
+            },
+
+            // node control settings
+            node: {
+                settings: {
+                    meta: {
+
+                        Enable: {
+                            name: self.app.localization.e('e13316'),
+                            id: 'Enable',
+                            type: "BOOLEAN",
+                            value: false,
+                            dbId: 'Enable'
+                        },
+                        BinPath: {
+                            name:  self.app.localization.e('e13317'),
+                            id: 'binPath',
+                            type: "FILE_SELECT",
+                            upload: {},
+                            value: '',
+                            dbId: 'BinPath'
+                        },
+                        ConfPath: {
+                            name: self.app.localization.e('e13318'),
+                            id: 'confPath',
+                            type: "FILE_SELECT",
+                            upload: {},
+                            value: '',
+                            dbId: 'ConfPath'
+                        },
+                        DataPath: {
+                            name: self.app.localization.e('e13319'),
+                            id: 'dataPath',
+                            type: "FILE_SELECT",
+                            upload: {},
+                            value: '',
+                            dbId: 'DataPath'
+                        },
+                        SetPrivateKey: {
+                            name: self.app.localization.e('e13320'),
+                            id: 'setPrivateKey',
+                            type: "BUTTON",
+                            value: '#link_to_wallets',
+                            text: self.app.localization.e('e13321'),
+                            dbId: 'SetPrivateKey'
+                        },
+
+                        state: {
+                            name: self.app.localization.e('e13322'),
+                            id: 'state',
+                            type: "LABEL",
+                            value: '',
+                            dbId: 'control.state'
+                        },
+
+                        addresses: {
+                            name: self.app.localization.e('e13323'),
+                            id: 'addresses',
+                            type: "LABEL",
+                            value: '',
+                            dbId: 'control.addresses'
+                        },
+
+                        lastBlock: {
+                            name: self.app.localization.e('e13324'),
+                            id: 'lastBlock',
+                            type: "LABEL",
+                            value: '-',
+                            dbId: 'control.lastBlock'
+                        }
+                    },
+
+                    create: function (id) {
+
+                        var t = self.sdk.system16.node.settings
+
+                        var m = t.meta;
+
+                        var p = new Parameter(m[id])
+
+                        return p;
+                    },
+
+                    createall: function () {
+                        var t = self.sdk.system16.node.settings
+
+                        var create = t.create
+                        var m = t.meta;
+
+                        var options = {};
+
+                        _.each(m, function (p, id) {
+                            options[id] = create(id)
+                        })
+
+                        return options
+                    },
+
+                    compose: function (values) {
+
+                        if (!values) values = {}
+
+                        var s = self.sdk.system16.node.settings;
+
+                        var options = s.createall()
+
+                        var m = s.meta;
+
+                        var c = {
+
+                            control: {
+                                name: self.app.localization.e('control'),
+                                options: {
+
+                                    state: options.state,
+                                    lastBlock: options.lastBlock,
+                                    addresses: options.addresses,
+
+                                }
+                            },
+
+                            setup: {
+                                name: self.app.localization.e('setup'),
+                                options: {
+
+                                    Enable: options.Enable,
+                                    DataPath: options.DataPath,
+                                    SetPrivateKey: options.SetPrivateKey,
+
+                                }
+                            },
+
+                        }
+
+                        _.each(options, function (o) {
+                            if (deep(values, o.dbId)) o.value = deep(values, o.dbId)
+                        })
+
+                        return {
+                            c: c,
+                            o: options
+                        }
+
+                    },
+                }
+            },
+
+            destroy: function () {
+                if (electron) {
+                    electron.ipcRenderer.off('proxy-message', this.response)
+                    this.inited = false
+                }
+            },
+
+            request: function (action, data, clbk) {
+
+                var rdata = {
+                    action: action,
+                    id: makeid(),
+                    data: data
+                }
+
+                self.sdk.system16.requestes[rdata.id] = {
+                    id: rdata.id,
+                    clbk: function (error, data) {
+                        if (clbk) clbk(error, data)
+                    }
+                }
+
+                electron.ipcRenderer.send('proxy-message', rdata);
+
+            },
+
+            tick: function (e, message) {
+
+                var t = self.sdk.system16
+                var hash = bitcoin.crypto.hash256(JSON.stringify(message))
+
+                var change = (hash.join('') !== t.tickstatehash.join(''))
+
+                t.tickstatehash = hash
+                t.tickstate = message.data || {}
+
+                _.each(t.clbks.tick, function (c) {
+
+                    if (c)
+                        c(t.tickstate, change)
+                })
+            },
+
+            response: function (e, message) {
+                var request = self.sdk.system16.requestes[message.id]
+
+                if (request) {
+
+                    if (request.clbk) request.clbk(message.error, message.data)
+
+                    delete self.sdk.system16.requestes[message.id]
+
+                }
+
+                else {
+
+                    /// another messages/ system
+
+                }
+            },
+
+            init: function () {
+
+
+                if (electron) {
+
+                    this.clbks.tick = {}
+                    this.tickstate = {}
+                    this.tickstatehash = []
+                    /*
+                    this.tickstate = {
+                        settings:
+                        {
+                            nedbkey: 'settings',
+                            nedbpath: { settings: './data/settings' },
+                            nodes: { defaults: [Object], stable: [Array] },
+                            server: true,
+                            ports: { https: 8888, wss: 8088 },
+                            ssl:
+                            {
+                                key: './cert/key.pem',
+                                cert: './cert/cert.pem',
+                                passphrase: 'password'
+                            },
+                            dbEnable: true,
+                            db:
+                            {
+                                host: 'localhost',
+                                port: 5432,
+                                max: 10,
+                                idleTimeoutMillis: 30000,
+                                user: 'postgres',
+                                database: 'login',
+                                password: 'password'
+                            },
+                            refkey: '',
+                            captcha: true,
+                            iplimiter: true
+                        },
+                        state: {},
+                        proxyReady: true
+                    }*/
+
+                    /*electron.ipcRenderer.on('proxy-message', this.response)
+                    electron.ipcRenderer.on('proxy-message-tick', this.tick)*/
 
                     this.inited = true
                 }
@@ -12066,6 +12483,7 @@ Platform = function (app, listofnodes) {
                     }
                     else {
                         data.node = self.nodeid.host
+
                     }
                 }
             },
@@ -12101,13 +12519,21 @@ Platform = function (app, listofnodes) {
                                 self.nodes = self.nodes.concat(self.app.platform.sdk.node.sys.userlist)
 
 
+                                self.nodes = _.filter(self.nodes, function(n){
+                                    return n.nodename != 'Unknown peer'
+                                })
+
                                 if (self.nodes && self.nodes.length) {
                                     self.nodeid || (self.nodeid = self.nodes[0])
+                                    //self.nodeid || (self.nodeid = self.nodes[rand(0, self.nodes.length - 1)])
+
+
                                 }
 
                                 if (clbk)
                                     clbk(true)
                             },
+
                             fail: function (d) {
 
                                 self.nodes = _.clone(self.app.platform.sdk.node.sys.userlist)
@@ -12164,7 +12590,6 @@ Platform = function (app, listofnodes) {
 
                 applyMessagesFromTG: function (messages, acceptPosting, currentChannelId) {
 
-                    console.log('apply', messages);
                     let {
                         meta
                     } = self.sdk.usersettings;
@@ -12173,7 +12598,6 @@ Platform = function (app, listofnodes) {
 
                         const addValue = (dropdownName, channelName, channelId) => {
 
-                            console.log('dropdown 1')
 
                             if (meta[dropdownName].possibleValues.indexOf(String(channelId)) === -1) {
 
@@ -12182,17 +12606,14 @@ Platform = function (app, listofnodes) {
 
                                 const $tgDropdown = $(`div[parameter='${dropdownName}'] .vc_selectInput`);
 
-                                console.log('$tgDrop 1', $tgDropdown, $tgDropdown.children());
 
                                 const newValue = `<div class="vc_value" value=${channelId}>${channelName}</div>`;
                                 const newValueHTML = $.parseHTML(newValue);
                                 $tgDropdown.append(newValueHTML);
 
-                                console.log('$tgDrop', $tgDropdown, $tgDropdown.children());
 
                             }
 
-                            console.log('dropdown 2', dropdownName, channelName, channelId, meta[dropdownName]);
 
                         }
 
@@ -12530,7 +12951,7 @@ Platform = function (app, listofnodes) {
                         const channelId = chat.username ? (" (@" + chat.username + ")") : "";
 
                         const channelName = chat.title + channelId;
-                        console.log('channelId', channelId, channelName)
+             
                         addValue("tgto", channelName, chat.id);
                         addValue("tgfrom", channelName, chat.id);
 
@@ -12554,7 +12975,6 @@ Platform = function (app, listofnodes) {
 
                         } else {
 
-                            console.log(chat, "post canceled")
                         }
 
                     })
@@ -12562,13 +12982,10 @@ Platform = function (app, listofnodes) {
                 },
 
                 dialogOfTG: function (messages, currentChannelId) {
-                    console.log('dialogOfTG', messages, currentChannelId)
 
                     if (messages.length && currentChannelId) {
 
                         this.openedDialog = true;
-
-                        console.log('openedDialog2', this.openedDialog, currentChannelId);
 
                         dialog({
                             html: self.app.localization.e('e13325'),
@@ -12590,8 +13007,6 @@ Platform = function (app, listofnodes) {
                             },
 
                             fail: () => {
-
-                                console.log('fail')
 
                                 this.applyMessagesFromTG(messages, false, currentChannelId);
                                 localStorage.setItem("telegramMessages", "[]");
@@ -12619,17 +13034,15 @@ Platform = function (app, listofnodes) {
 
                     const url = `https://api.telegram.org/bot${token}/getUpdates?offset=${offset}&timeout=100`;
 
-                    console.log('this.telegramUpdateAbort.signal', this.telegramUpdateAbort.signal);
+
                     const settings = {
                         method: 'GET',
                         signal: this.telegramUpdateAbort.signal
                     }
 
                     const telegramData = data => {
-                        console.log('telegramData');
+  
                         if (data.ok) {
-
-                            console.log('telegram updates', data.result)
 
                             const {
                                 result
@@ -12716,7 +13129,7 @@ Platform = function (app, listofnodes) {
 
                             let allTelegramMessages = [];
 
-                            console.log('resultWith', resultWithSortedMedia)
+           
                             if (messagesFromChannel.length) {
 
                                 
@@ -12729,14 +13142,12 @@ Platform = function (app, listofnodes) {
 
                             localStorage.setItem("telegramMessages", JSON.stringify(allTelegramMessages));
 
-                            // console.log('check', tgfromCheck, Number(currentChannelId), Number(resultWithSortedMedia[0].chat.id))
                             const messagesFromOthers = resultWithSortedMedia.filter(message => String(message.chat.id) !== String(currentChannelId));
 
                             if (meta.tgfromask.value && messagesFromChannel.length && !this.openedDialog) {
 
-                                console.log('into', meta.tgfromask.value, tgfromCheck)
                                 const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
-                                console.log('other thiiis');
+                   
                                 this.dialogOfTG(currentMessages, currentChannelId)
 
                             } else if (meta.tgfromask.value && this.openedDialog){
@@ -12781,7 +13192,7 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                    console.log('clbk', clbk);
+     
                     fetch(url, settings)
                     .then(data => data.json())
                     .then(data => telegramData(data))
@@ -12791,7 +13202,6 @@ Platform = function (app, listofnodes) {
 
                 telegramGetMe: function (token, abort, make, add) {
 
-                    console.log('telegramGetMe');
 
                     if (abort) {
                         this.telegramUpdateAbort.abort()
@@ -12800,7 +13210,7 @@ Platform = function (app, listofnodes) {
 
 
                     const current = document.querySelector("div[parameter='telegram'] .iWrapper");
-                    console.log('current', current)
+          
 
                     if (current) {
                         current.remove();
@@ -12828,7 +13238,6 @@ Platform = function (app, listofnodes) {
 
                                     const currentChannelId = tgfrom.possibleValues[currentChannelIdx];
                                     
-                                    console.log('thiis');
                                     this.dialogOfTG(JSON.parse(localStorage.getItem("telegramMessages") || "[]"), currentChannelId);
                                     this.telegramUpdates(null, make);
 
@@ -15881,450 +16290,6 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.RTC = function (platform) {
-        var self = this;
-
-        self.connections = {};
-
-        self.storages = {};
-
-        self.events = {};
-
-        self.timers = {};
-
-        var me = makeid();
-
-        ////
-
-        //self.connection = null;
-
-        self.connect = function (roomid, events, clbk, mstorageid) {
-
-
-            if (!self.storages[roomid]) {
-                self.storages[roomid] = new MessageStorage({ id: mstorageid || roomid });
-            }
-            else {
-
-            }
-
-            self.connections[roomid] = new RTCMultiConnection();
-
-            self.settings(self.connections[roomid], roomid)
-
-            self.events[roomid] || (self.events[roomid] = {})
-
-            _.each(events, function (e, id) {
-
-                if (!self.events[roomid][id])
-                    self.events[roomid][id] = {}
-
-                self.events[roomid][id] = e;
-
-            })
-
-            var refresh = false;
-
-            self.connections[roomid].openOrJoin(roomid, function () {
-
-                self.syncTimer(roomid)
-
-                if (clbk)
-                    clbk()
-
-            });
-
-        }
-
-        self.reconnect = function (roomid) {
-
-            if (self.connections[roomid])
-                self.connections[roomid].openOrJoin(roomid, function () {
-
-                });
-
-            else {
-                return false;
-            }
-
-        }
-
-        self.settings = function (connection, roomid) {
-
-            var keyPair = platform.app.user.keys();
-
-            var firstPeerConnect = true;
-
-            connection.sessionid = roomid
-            connection.channel = roomid
-            connection.session = {
-                data: true
-            };
-
-            connection.enableLogs = false
-
-            connection.socketURL = platform.app.options.rtc
-
-            //connection.userid = Buffer.from(bitcoin.crypto.hash256(platform.sdk.address.pnet().address + roomid, 'utf8')).toString('hex') 
-
-            connection.userid = platform.sdk.address.pnet().address + "_" + makeid()
-
-            connection.sdpConstraints.mandatory = {
-                OfferToReceiveAudio: false,
-                OfferToReceiveVideo: false
-            };
-
-
-            connection.onopen = function (e) {
-
-                if (self.events[roomid] && self.events[roomid].onopen) {
-                    self.events[roomid].onopen(e)
-                }
-
-                if (firstPeerConnect) {
-                    hlp.sendSyncRequest(roomid);
-                    firstPeerConnect = false;
-                }
-
-            }
-
-            connection.onclose = function (e) {
-
-                if (self.events[roomid] && self.events[roomid].onclose) {
-                    self.events[roomid].onclose(e)
-                }
-
-            }
-
-            connection.onEntireSessionClosed = function (event) {
-                //console.info('Entire session is closed: ', event.sessionid, event.extra);
-            };
-
-            connection.onmessage = function (e) {
-
-                if (e.data.sync_request) {
-                    hlp.receiveSyncRequest(e, roomid);
-                    return;
-                }
-
-                if (e.data.sync_answer) {
-                    hlp.receiveSyncAnswer(e, roomid);
-                    return;
-                }
-
-                if (e.data.typing) {
-                    return;
-                }
-
-                if (e.data.stoppedTyping) {
-                    return;
-                }
-
-                hlp.receiveMessage(e.data, roomid);
-            };
-        }
-
-        self.send = function (id, message) {
-
-            if (self.connections[id]) {
-
-                var m = self.message(message);
-
-                if (checkSign(m)) {
-
-                    self.storages[id].AddMessage(m);
-
-                    self.connections[id].send(m);
-
-                    if (self.events[id].sendMessage) {
-                        self.events[id].sendMessage(m)
-                    }
-
-                }
-            }
-        }
-
-        self.message = function (message, to) {
-
-
-            var m = {
-                tm: platform.currentTimeSS(),
-                f: platform.sdk.address.pnet().address,
-
-                t: to || '',
-
-                m: message,
-                ex: {
-                    s: ''
-                }
-            }
-
-            signMessage(m)
-
-            return m
-
-        }
-
-        var checkSign = function (message) {
-
-            if (!message.ex) return false
-
-            if (!message.ex.s || !message.ex.p) return;
-
-            var keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(message.ex.p, 'hex'))
-
-            var str = message.tm + message.f + message.t + message.m;
-
-            var hash = Buffer.from(bitcoin.crypto.hash256(str), 'utf8')
-
-            var verify = keyPair.verify(hash, Buffer.from(message.ex.s, 'hex'));
-
-            return verify
-
-        }
-
-        var signMessage = function (message) {
-
-            var keyPair = platform.app.user.keys();
-
-            var str = message.tm + message.f + message.t + message.m;
-
-            var signature = keyPair.sign(Buffer.from(bitcoin.crypto.hash256(str), 'utf8'));
-
-            message.ex.s = signature.toString('hex');
-            message.ex.p = keyPair.publicKey.toString('hex')
-        }
-
-
-        var hlp = {
-            receiveSyncRequest: function (e, id) {
-
-                var _db_diff = self.storages[id].CompareDB(e.data.hv, e.data.tm_f, e.data.tm_t);
-
-                if (self.connections[id])
-                    self.connections[id].send({
-                        sync_answer: 1,
-                        msgdb: _db_diff,
-                        users: {},
-                    }, e.userid);
-
-            },
-
-            receiveSyncAnswer: function (e, id) {
-
-                hlp.receiveMessages(e.data.msgdb, id)
-
-            },
-
-            sendSyncRequest: function (id, userid) {
-
-                if (!self.connections[id]) return
-
-
-                // TODO - Mark existed syncReq as long
-                var _hv = self.storages[id].HistoryVector();
-
-                // Random select `peer`
-                var _sync_peer_send = userid;
-                if (_sync_peer_send == null) {
-                    var _peers = self.connections[id].peers.getAllParticipants(self.connections[id].userid, 'connected');
-                    var _sync_peer_current = Math.floor(Math.random() * _peers.length);
-                    _sync_peer_send = _peers[_sync_peer_current];
-                }
-
-                if (self.connections[id] && _sync_peer_send) {
-                    self.connections[id].send({
-                        sync_request: 1,
-                        hv: _hv,
-                        tm_f: '',
-                        tm_t: '',
-                    }, _sync_peer_send);
-                }
-            },
-
-            receiveMessages: function (msgs, id) {
-
-                msgs = _.filter(msgs, function (msg) {
-                    if (checkSign(msg)) return true
-                })
-
-                if (msgs.length) {
-
-                    self.storages[id].MergeDB(msgs);
-
-                    if (self.events[id].receiveMessages) {
-                        self.events[id].receiveMessages(msgs)
-                    }
-
-                }
-
-            },
-
-            receiveMessage: function (msg, id) {
-
-                if (checkSign(msg)) {
-
-                    self.storages[id].AddMessage(msg);
-
-                    if (self.events[id].receiveMessage) {
-                        self.events[id].receiveMessage(msg)
-                    }
-
-                    if (!platform.focus && platform.titleManager) {
-
-                        platform.titleManager.add(self.app.localization.e('e13346'))
-
-                    }
-                }
-
-
-
-            }
-        }
-
-        self.storage = {};
-
-        self.load = {
-            users: function (messages, clbk) {
-
-                if (!_.isArray(messages)) messages = [messages]
-
-                var users = _.map(messages, function (m) {
-                    return m.f
-                })
-
-                platform.sdk.users.get(users, clbk, true)
-
-
-            },
-
-            info: function (rooms, clbk) {
-
-                if (!self.storage.info)
-                    self.storage.info = {};
-
-                var set = function (id, data) {
-                    self.storage.info[id] = {
-                        t: platform.currentTime(),
-                        d: data
-                    }
-                }
-
-
-                rooms = _.filter(rooms, function (id) {
-                    if (!self.storage.info[id]) return true;
-
-                    else {
-                        var t = self.storage.info[id].t
-                        var c = platform.currentTime()
-
-                        if (c - t > 8) {
-                            return true
-                        }
-                    }
-                })
-
-
-                if (!rooms.length) {
-                    if (clbk)
-                        clbk()
-                }
-                else {
-
-                    _.each(rooms, function (id) {
-                        set(id)
-                    })
-
-                    $.ajax({
-                        url: platform.app.options.rtc,
-                        datatype: "application/json",
-                        contentType: "application/json",
-                        data: {
-                            action: 'room_info',
-                            room_id: rooms.join(',')
-                        },
-
-                        success: function (d) {
-
-                            _.each(d, function (data, id) {
-
-                                set(id, data)
-
-                            })
-
-                            if (clbk)
-                                clbk()
-                        },
-
-                        fail: function (d) {
-
-                            if (clbk)
-                                clbk()
-                        },
-
-                        type: "GET"
-                    })
-                }
-
-
-
-            }
-        }
-
-        self.syncTimer = function (roomid) {
-
-            self.timers[roomid] = setInterval(function () {
-                hlp.sendSyncRequest(roomid);
-            }, 10000);
-
-        }
-
-        self.destroy = function (roomid, clbk) {
-
-            if (self.timers[roomid]) {
-
-                clearInterval(self.timers[roomid]);
-
-                delete self.timers[roomid]
-            }
-
-            if (self.connections[roomid]) {
-
-                self.connections[roomid].isInitiator = false;
-
-                self.connections[roomid].getAllParticipants().forEach(function (pid) {
-                    self.connections[roomid].disconnectWith(pid);
-                });
-
-                self.connections[roomid].attachStreams.forEach(function (stream) {
-                    stream.getTracks().forEach(function (track) {
-                        track.stop();
-                    });
-                });
-
-                self.connections[roomid].closeSocket();
-
-                self.connections[roomid].close();
-
-                delete self.connections[roomid]
-
-            }
-
-            self.events[roomid] = {}
-
-            if (clbk) clbk();
-        }
-
-        self.destoryAll = function () {
-            _.each(self.connections, function (c, id) {
-                self.destroy(id)
-            })
-        }
-
-
-        return self;
-    }
-
     self.convertUTCSS = function (str) {
 
         var d = utcStrToDate(str);
@@ -16780,8 +16745,6 @@ Platform = function (app, listofnodes) {
 
                             .catch(function (err) {
 
-                                console.log("ERR", err)
-
                                 if (clbk)
                                     clbk('')
                             });
@@ -17145,6 +17108,11 @@ Platform = function (app, listofnodes) {
 
         self.nodeid = self.nodes[i]
 
+        if (self.ws){
+            self.ws.destroy()
+            self.ws.init()
+        }
+
     }
 
     self.Marketing = function (platform) {
@@ -17495,7 +17463,7 @@ Platform = function (app, listofnodes) {
         self.sdk.proxy.load()
         self.app.platform.sdk.node.sys.load()
 
-        self.sdk.esystem.init()
+        self.sdk.system16.init()
 
         if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate

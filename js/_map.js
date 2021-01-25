@@ -10,7 +10,9 @@ __map =  {
         "js/vendor/timer.js",
         "js/vendor/ion.sound/ion.sound.min.js" ,
         "js/vendor/aesjs.js",
-        "js/vendor/btc/src/btc.js",
+		"js/lib/pocketnet/btc17.js",
+		"js/lib/pocketnet/buffer.js",
+
         "js/vendor/pbkdf2.js",
         "js/vendor/sha1.js",
         "js/vendor/jdenticon.js",
@@ -38,7 +40,7 @@ __map =  {
 		"js/localization.js",
 		"js/kit.js",
 		"js/satolist.js",
-		"messenger2/clientrtc.js",
+		"js/messenger2/clientrtc.js",
 		"js/app.js",
 		"js/main.js",
 	],
@@ -618,6 +620,19 @@ __map =  {
 			],
 		},
 
+		system16: {
+			uri : "system16",
+			href : "system16",
+			add : {
+				el : 'content'
+			},
+			anonimus : true,
+
+			relations : [
+				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
+			],
+		},
+
 		connection : {
 			uri : "connection",
 			href : "connection",
@@ -782,23 +797,7 @@ __map =  {
 			}
 		},
 
-		mchat : {
-			uri : "mchat",
-			href : "mchat",
-			add : {
-				el : 'content'
-			},
-			anonimus : true,
-
-			relations : [
-				{src : 'js/vendor/emojionearea.min.js',			   f : 'js'},	
-				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
-			],
-			redirect : {
-				auth : 'authorization',
-				validate : 'filluser'
-			}
-		},
+	
 
 		wallet : {
 			uri : "wallet",

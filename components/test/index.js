@@ -566,7 +566,7 @@ var test = (function(){
 				name : self.app.localization.e('unickname'),
 				id : 'name',
 				type : "NICKNAME",
-				onType : true,
+				//onType : true,
 				require : true
 			}),
 

@@ -5,7 +5,9 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
-const ProxyInterface = require('./proxy/mainserver.js')
+//const ProxyInterface = require('./proxy/mainserver.js')
+
+const ProxyInterface = require('./proxy16/ipc.js')
 
 const electronLocalshortcut = require('electron-localshortcut');
 
@@ -62,14 +64,14 @@ autoUpdater.on('update-downloaded', (ev) => {
 let url = require('url')
 let path = require('path')
 
-var defaultIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
-var defaultTrayIcon = require('path').join(__dirname, 'assets/icons/win/icon.ico')
-var badgeTrayIcon = require('path').join(__dirname, 'assets/icons/win/iconbadge.ico')
+var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
+var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
+var badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/iconbadge.ico')
 
 if (is.linux()) {
-    defaultIcon = require('path').join(__dirname, 'assets/icons/png/64x64.png')
-    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/png/32x32.png')
-    badgeTrayIcon = require('path').join(__dirname, 'assets/icons/png/iconbadge.png')
+    defaultIcon = require('path').join(__dirname, 'res/electron/icons/png/64x64.png')
+    defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/png/32x32.png')
+    badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/png/iconbadge.png')
 }
 
 function showHideWindow(show) {
@@ -130,10 +132,21 @@ function createTray() {
     }, {
         label: 'Quit',
         click: function() {
-            proxyInterface.stop(function() {
+
+            proxyInterface.destroy().then(r => {
+
                 willquit = true
                 app.quit()
+
+            }).catch(e => {
+
+                console.log("ERROR", e) //// CATCH ERROR TODO
+
+                willquit = true
+                app.quit()
+
             })
+
         }
     }]);
 

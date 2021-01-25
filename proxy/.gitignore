@@ -1,7 +1,0 @@
-node_modules
-/data
-/private/*
-package-lock.json
-*/package-lock.json
-**/cert/*
-main.js
