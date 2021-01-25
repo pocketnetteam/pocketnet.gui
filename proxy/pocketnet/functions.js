@@ -400,18 +400,19 @@
 	convertDateRel = function(date){
 
 		var n = new Date();
+
 		
 
 		if (n.addMinutes(-1) < date) return ['fewseconds']
 		if (n.addMinutes(-2) < date) return ['oneminute']
 
-		if (n.addMinutes(-55) < date) {
+		if (n.addMinutes(-25) < date) {
 
 
 			return ['minutes', '', ((n.getTime() - date.getTime()) / 60 / 1000).toFixed(0)]
 		}
 
-		//if (n.addMinutes(-45) < date) return ['halfanhour']
+		if (n.addMinutes(-45) < date) return ['halfanhour']
 		if (n.addMinutes(-80) < date) return ['anhour']
 
 		if (dateToStrSmall(n) == dateToStrSmall(date)) return ['today', addZero(date.getHours().toString()) + ":" + addZero(date.getMinutes().toString())]
@@ -426,56 +427,6 @@
 
 /* WINDOWS, MESSAGES */
 
-
-	successCheck = function(p){
-		if(!p) p = {};
-		
-		var self = this,
-			el = p.el || $('body');
-		var _w = $(window);
-		var ch = null;
-
-
-		var render = function(){
-
-			var h = '<div class="successCheckWrapper table"><div><div class="chw">\
-				<svg viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">\
-					<path d="M 18 32.34 l -8.34 -8.34 -2.83 2.83 11.17 11.17 24 -24 -2.83 -2.83 z" stroke="#4AC6F9" fill="transparent"/>\
-				</svg>\
-			</div><div class="text">SUCCESS</div></div></div>'
-
-			ch = $("<div>",{
-				"class" 	: "successCheck",
-				"html"	: h
-			});
-
-			el.append(ch);	
-
-			ch.fadeIn(300);
-
-			ch.find('svg')[0].classList.add('animate')
-
-
-			setTimeout(function(){
-				ch.fadeOut(300);
-
-				setTimeout(function(){
-					ch.remove()
-				}, 300)
-
-			}, 900)
-				
-		}
-
-		render();
-
-		return self
-	}
-
-	/*setInterval(function(){
-		successCheck()
-	}, 3000)*/
-
 	wnd = function(p){
 		if(!p) p = {};
 
@@ -486,8 +437,6 @@
 			id = 'w' + makeid().split('-')[0],
 			nooverflow = p.nooverflow || $('html').hasClass('nooverflow'),
 			el = p.el || $('body');
-
-		var _w = $(window);
 
 		var wnd;
 
@@ -521,12 +470,6 @@
 				p.success(wnd, self, true);
 		}
 
-		var wndfixed = function(){
-
-			wnd.css('top', _w.scrollTop())
-
-		}
-
 		var render = function(tpl){
 
 			var h = '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
@@ -556,10 +499,7 @@
 			wnd = $("<div>",{
 			   "class" 	: "wnd",
 			   "html"	: h
-			   });
-			   
-			   wnd.css('top', _w.scrollTop())
-			   wnd.css('height', _w.height())
+		   	});
 
 		   	if(!p.header) wnd.addClass('noheader')
 
@@ -588,18 +528,10 @@
 
 		    if(!nooverflow){
 
-				nooverflow = !app.actions.offScroll(p.offScroll);
-				
-				
-			}
-			
+		    	nooverflow = !app.actions.offScroll(p.offScroll);
+		    }
 
 			wnd.css("display", "block");
-		}
-
-		var resize = function(){
-			wnd.css('top', _w.scrollTop())
-			wnd.css('height', _w.height())
 		}
 
 		var initevents = function(){
@@ -668,14 +600,10 @@
 					threshold:0
 				});*/
 			}
-
-			_w.on('resize', resize)
-
-			_w[0].addEventListener('scroll', wndfixed);
 		}
 
 		var actions = {
-			close : function(cl, key){
+			close : function(cl){
 
 				if(cl) if(p.closecross) p.closecross(wnd, self);
 
@@ -685,12 +613,9 @@
 					app.actions.onScroll();
 
 				if (self.essenseDestroy)
-					self.essenseDestroy(key)
+					self.essenseDestroy()
 				
 				wnd.remove();
-				_w.off('resize', resize)
-
-				_w[0].removeEventListener('scroll', wndfixed);
 
 				if(!p.noblur)
 				{
@@ -768,66 +693,6 @@
 		return self;
 	}
 
-	menuDialog = function(p){
-		if(!p) p = {};
-
-		p.wrap = true;
-
-		p.class = 'menudialog';
-
-		p.items.push({
-			class : 'itemclose',
-			text : 'Close'
-		})
-		
-		var ehtml = function(){
-			var h = ''
-
-			_.each(p.items, function(item, i){
-				h += '<div class="item ' + item.class + '" item="'+i+'">'
-
-					h += item.text
-
-				h += '</div>'
-			})
-
-			return h;
-		}
-
-		p.html = ehtml()
-
-		p.clbk = function(el){
-			el.find('.item').on('click', function(){
-
-				var i = $(this).attr('item')
-
-				if(!p.items[i].action){
-					self.destroy()
-				}
-				else
-				{
-
-					p.items[i].action(function(){
-						self.destroy()
-					})
-
-				}
-
-				
-
-				return false
-
-			})
-
-			el.on('click', function(){
-				self.destroy()
-			})
-		}
-
-		var self = new dialog(p);
-
-		return self;
-	}
 	
 	inputDialogNew = function(p){
 		if(!p) p = {};
@@ -1219,9 +1084,8 @@
 
 			options.delay = 100;
 
-			if (event != 'mouseenter'){
-				
-				options.trigger || (options.trigger = event);
+			if(event != 'mouseenter'){
+				options.trigger = event;
 			}
 			else
 			{
@@ -1234,9 +1098,6 @@
 			options.position || (options.position = "bottom");
 			options.height || (options.height = 420);
 			options.maxWidth || (options.maxWidth = 600);
-
-			
-
 
 			options.content = function () {
 				return content
@@ -1802,6 +1663,103 @@
 			},		
 		}
 	}
+/* ______________________________ */
+
+/* SQL */
+
+String.prototype.replaceAll=function(a,b){return a?this.split(a).join(b):this};
+
+brackets = function(str){
+	return "(" + str + ")";
+}	
+
+setId = function(obj){
+	_.each(obj, function(v, index){
+		v.id = index;
+	})
+}
+
+primitiveToArray = function(value){
+	var _value;
+
+	if(!_.isArray(value)) _value = [value];
+
+	else _value = value;
+
+	return _value;
+}
+
+actionsByType = function(obj, p){
+	if(isVal(obj))
+	{
+		if(p.value)
+			return p.value(obj);
+	}
+	else
+	if(_.isArray(obj))
+	{
+		if(p.array)
+			return p.array(obj);
+	}
+	else
+	{
+
+		if(p.object)
+			return p.object(obj);
+	}
+
+
+	return null;
+}
+
+isVal = function(val){
+	if(!_.isObject(val) || (typeof val.v != 'undefined' && !_.isObject(val.v))
+						|| (typeof val.c != 'undefined' && !_.isObject(val.c))
+		)
+		return true;
+
+	else 
+		return false;
+}
+
+getAllValuesByKey = function(obj, keys){
+	var values = [];
+
+		keys = primitiveToArray(keys);
+
+
+	var action = function(obj){
+
+		actionsByType(obj, {
+
+			array : function(array){
+				_.each(array, function(obj){
+					return action(obj);
+				})
+			},
+
+			object : function(obj){
+
+				_.each(obj, function(_obj, _key){
+					if(_.indexOf(keys, _key) > -1) values.push(_obj);
+
+					else
+					{
+						if(_.isObject(_obj)){
+							action(_obj);
+						}
+					}
+				})
+				
+			}
+
+		})
+	}
+
+	action(obj);
+
+	return values;
+}
 /* ______________________________ */
 
 /* ARRAYS */
@@ -2611,6 +2569,7 @@
 	ParametersLive = function(parameters, el, p){
 
 
+
 		if(!p) p = {};
 
 		_.each(parameters, function(parameter){
@@ -2731,7 +2690,7 @@
 					return
 				}
 
-				if (parameter.type == 'image' || parameter.type == 'file'){
+				if (parameter.type == 'image'){
 
 
 					var uploadElement = _el.find('.addImage'),
@@ -3109,7 +3068,7 @@
 				}
 
 				if (parameter.type == 'valuescustom' || parameter.type == 'values' || parameter.type == 'valuesmultibig'){
-										
+
 					var bkp = null;
 
 					var input = _el.find('.vc_inputWrapper input');
@@ -3198,7 +3157,6 @@
 							open()
 						})
 					}
-
 
 					_el.find('.vc_value').on('click', function(){
 						bkp = null;
@@ -3816,9 +3774,7 @@
 
 			self.operatorSelect = p.operatorSelect || null;
 			self.operator = p.operator || null;
-            self.if = p.if || null;
-            
-            self.text = p.text || null;
+			self.if = p.if || null;
 
 		if(self.type.indexOf('range') > -1) self.dbFunc = 'fromto'
 
@@ -3849,11 +3805,6 @@
 			if(self.type == 'number' || self.type == 'cash')
 			{
 				value = Number(value).toFixed(deep(self, 'format.Precision') || 0)
-            }
-            
-            if(self.type == 'label')
-			{
-				return true;
 			}
 
 			if(self.type == 'hours')
@@ -3990,10 +3941,7 @@
 				daterange : ['', ''],
 				email : '',
 				stringany : '',
-				nickname : '',
-				image : '',
-				password : '',
-				file : ''
+				nickname : ''
 			}
 
 			if(typeof self.defaultValue != 'undefined') return self.defaultValue;	
@@ -4042,8 +3990,6 @@
 		}
 		self.mask = function(tohtml){
 
-			var f = self.format || {}
-
 			var masked = false;
 
 			var mask = {
@@ -4057,7 +4003,7 @@
 			if(self.type == 'number' || self.type == 'cash')
 			{
 				mask.alias = 'numeric';
-				mask.groupSeparator = typeof f.groupSeparator != 'undefined' ? f.groupSeparator : ',';
+				mask.groupSeparator = ',';
 				mask.radixPoint =  '.';
 				mask.digits = deep(self, 'format.Precision');
 				mask.digitsOptional = !1;
@@ -4201,7 +4147,7 @@
 
 			var m = self.mask(true);
 
-			if (self.type == 'image' || self.type == 'file') {
+			if (self.type == 'image') {
 
 				if(self.uploadTemplate && self.upload && self.previewTemplate){
 
@@ -4696,7 +4642,9 @@
 					input += '</div>'
 
 				return input;
-			}			
+			}
+
+			
 
 			if(self.type == 'color'){
 				var input = '<input notmasked="notmasked" pid="'+self.id+'" class="simpleColor input" value="' + self.value + '">';
@@ -4755,29 +4703,7 @@
 				return input
 			}
 
-			if(self.type == 'password'){
-				var input = '<input '+__disabled+' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="password">';
-
-				return input; 
-
-            }
-            
-            if(self.type == 'label'){
-				return `<div ${__disabled} ${m} pid="${self.id}" class="simpleColor inpLabel">${self.value}</div>`
-            }
-
-            if(self.type == 'file_select'){
-                return `
-                    <input ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
-                    <button ${__disabled} ${m} pid="${self.id}_Selector" class="simpleColor inpButton btn_select">...</button>
-                `;
-            }
-            
-            if(self.type == 'button'){
-				return `<button ${__disabled} ${m} pid="${self.id}" class="simpleColor inpButton" value="${self.value}">${self.text}</button>`
-			}
-
-			var input = `<input ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
+			var input = '<input '+__disabled+' ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">';
 
 			return input; 
 		}
@@ -4954,9 +4880,9 @@
 
 			return self.value;
 
-        }
+		}
 
-            if(self.type == 'valuesmultitree'){
+		if(self.type == 'valuesmultitree'){
 
 			self.clear = function(){
 				_.each(self.treemap, function(m){
@@ -5192,13 +5118,13 @@
 
 		self.collectValues = function(){
 			var value = {};
-			
+
 			_.each(self.content, function(p, index){
 				if(p.value){
 					value[index] = p.value;
 				}
 			})
-			
+
 			self.set(value)
 		}
 
@@ -5710,113 +5636,6 @@
 		return true;
 	}
 
-	b64toBlob = function(b64Data, contentType, sliceSize) {
-		contentType = contentType || '';
-		sliceSize = sliceSize || 512;
-		var byteCharacters = atob(b64Data);
-		var byteArrays = [];
-		for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-			var slice = byteCharacters.slice(offset, offset + sliceSize);
-			var byteNumbers = new Array(slice.length);
-			for (var i = 0; i < slice.length; i++) {
-				byteNumbers[i] = slice.charCodeAt(i);
-			}
-			var byteArray = new Uint8Array(byteNumbers);
-			byteArrays.push(byteArray);
-		}
-		var blob = new Blob(byteArrays, {type: contentType});
-		return blob;
-	}
-
-	saveAsWithCordova = function(file, name, clbk){
-
-
-		var storageLocation = 'file:///storage/emulated/0/';
-	
-
-
-		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
-			
-			fileSystem.getDirectory('Download', {
-				//create: true,
-				exclusive: false
-			},
-			function (directory) {
-
-
-				directory.getFile(name, { create: true, exclusive: false }, function (entry) {
-					// After you save the file, you can access it with this URL
-					var myFileUrl = entry.toURL();
-
-
-					entry.createWriter(function (writer) {
-
-
-						writer.onwriteend = function (evt) {
-							sitemessage("File " + name + " successfully downloaded");
-
-							if (window.galleryRefresh){
-
-								window.galleryRefresh.refresh(myFileUrl, function (msg) {
-									
-								}, function (err) {
-
-									console.log('scanmedia fail 2', err)
-									
-								})
-
-							}
-							else
-							{
-								console.log('scanmedia fail 1')
-							}
-
-
-							if (clbk)
-								clbk(myFileUrl)
-						};
-						// Write to the file
-						writer.seek(0);
-						writer.write(file);
-					}, function (error) {
-						
-						dialog({
-							html : "Error: Could not create file writer, " + error.code,
-							class : "one"
-						})
-
-					});
-				}, function (error) {
-
-					dialog({
-						html : "Error: Could not create file, " + error.code,
-						class : "one"
-					})
-
-				});
-
-			}, function (error) {
-
-				dialog({
-					html : "Error: access to download folder, " + error.code,
-					class : "one"
-				})
-
-			})
-
-
-			
-		}, function (evt) {
-
-			dialog({
-				html : "Error: Could not create file, " + evt.target.error.code,
-				class : "one"
-			})
-
-		});
-	
-	}
-
 /* ______________________________ */
 
 /* NAVIGATION */
@@ -5924,26 +5743,7 @@
 		{
 			var scrollTop = ofssetObj.top + offset;
 
-			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top + offset
-
-			_scrollTop(scrollTop, el, time);
-		}
-
-	}
-
-	_scrollToBottom = function(to, el, time, offset){
-		
-		if(!to) to = $(this);
-
-		if(!offset) offset = 0;
-
-		var ofssetObj = to.offset();
-
-		if (ofssetObj)
-		{
-			var scrollTop = ofssetObj.top + offset + to.height();
-
-			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top  + to.height() + offset
+			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top
 
 			_scrollTop(scrollTop, el, time);
 		}
@@ -6840,12 +6640,6 @@
 			caption: "cf_caption"
 		}
 
-		var tp = 'offset'
-
-		if (p._in){
-			tp = 'position'
-		}
-
 		var self = this;
 			self.addscroll = false;
 
@@ -6927,8 +6721,8 @@
 				return;
 
 			var s = _in.scrollTop(),
-				top = container[tp]().top - offset[0],
-				bottom = container[tp]().top + container.height() - offset[0] + offset[1];
+				top = container.position().top - offset[0],
+				bottom = container.position().top + container.height() - offset[0] + offset[1];
 
 			if (self.addscroll){
 				top = top + s 
@@ -6955,16 +6749,13 @@
 					top = p.calculations.top(caption, offset);
 			}
 
-
 			if ((pos=='top' && s > top && s < bottom) || (pos == 'bottom' && sh > top && sh < bottom + caption.height()))
 			{
-				if(!fixed)
-					toFixed();
+				toFixed();
 			} 
 			else
 			{
-				if (fixed)
-					clear();
+				clear();
 			}
 		}
 
@@ -6977,7 +6768,6 @@
 		}
 
 		var removeEvents = function () {
-
 			_in[0].removeEventListener('scroll', action);
 
 			window.removeEventListener('resize', resize);
@@ -7048,13 +6838,9 @@
 		/*   Init
 		/*---------------------------------------------------------------------------------------*/
 
-		var error = function(res, p, errorData){	
+		var error = function(res, p){	
 
-			if(!p) p = {}
-
-			if (errorData && errorData.code) return errorData.code
-
-			if (app.errorHandler && p.errorHandler)
+			if(app.errorHandler && p.errorHandler)
 			{
 				var h = app.errorHandler(res, p);
 
@@ -7251,10 +7037,6 @@
 
 			if(_Node) {
 
-				//data.node = "NODE";
-
-				
-
 				var _d = {
 					method: type, 
 			    	uri: url, 
@@ -7267,13 +7049,24 @@
 
 				}
 
+				/*if(app.handles){
+
+					var handle = deep(app.handles, p.pathname.split('-')[0])
+
+					if (typeof handle === 'object' && handle.action) {
+
+					}
+
+					return;
+				}*/
+
 				request(_d,
 			    function (_error, response, body) {
-
-					// console.log(url, _error)
+		
 
 			    	if(_error)
 			    	{
+
 			    		error(_error);
 
 			    		if(_SEO){
@@ -7345,7 +7138,7 @@
 
 							if(typeof p.errors == 'undefined' || p.errors == true)
 							{
-								e = error(data.status, p, data.data);
+								e = error(data.status, p);
 
 							}
 										
@@ -7354,6 +7147,8 @@
 						{
 							e = error(null, p);
 						}
+
+						console.log("ERR", e, p)
 
 
 						if (p.fail) 
@@ -7404,12 +7199,12 @@
 
 				p.url = 'https://' + app.platform.apiproxy.host + ":" + app.platform.apiproxy.port + "/" + (p.action || "")
 				p.api = true
+
+
 				self.run(p)
 
 			}
 			else{
-
-				
 
 				if (p.fail)
 				 	p.fail(null, error('proxy', p) || 'network')
@@ -7449,33 +7244,6 @@
 
 			p.rpc = true
 
-		
-			if(typeof p.nodeFix == 'undefined' && app.platform.nodeid != 'undefined'){
-
-				var fail = p.fail || function(){}
-
-				p.nodeFix = app.platform.nodeid;
-				p.fail = function(r){
-
-					if(r && (r.statusCode == 500 || r.statusCode == 521) && (!r.data || _.isEmpty(r.data))){
-						app.platform.autochange()
-
-
-						if(app.platform.nodeid == p.nodeFix){
-							fail(r)
-						}
-						else
-						{
-							self.rpc(p)
-						}
-					}
-					else
-					{
-						fail(r)
-					}
-					
-				}
-			}	
 
         	if(app.platform.dontuseapiproxy){
 
@@ -7506,8 +7274,7 @@
 				else{
 
 					if (p.fail)
-						p.fail(null, 'nodedirect')	
-						 
+				 		p.fail(null, 'nodedirect')	
 				}       	
 				
 
@@ -7524,7 +7291,6 @@
 					parameters : hexEncode(JSON.stringify(p.parameters || ""))
 				}
 
-
 				if(app.platform.nodeid){
 
 					app.platform.sdk.system.nodeex(p.data)
@@ -7534,6 +7300,7 @@
 
 				p.success =  function(storage){
 
+
 					success(deep(storage, 'data.result') || storage)
 
 				}
@@ -7541,7 +7308,6 @@
 				
 
         	}
-
 
 			self.api(p)
 		}
@@ -9403,10 +9169,7 @@
 /* NUMBERS */
 	compressedNumber = function(num, n, N) {
 
-		
-		
 		num = Number(num).toFixed(0)
-
 
 		if(!N) N = 999
 
@@ -9435,7 +9198,7 @@
 		ret = num;
 
 	    if (index !== false) ret+=keys[index].toUpperCase();
-		
+	    
 
 	    return ret;
 	};
@@ -9526,13 +9289,16 @@
 
 	parseVideo = function(url) {
 		var _url = url;
+		console.log('222~~~~~~~')
 
 	    var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
+	    // var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
 	    var type = null;
 		var id = null;
 		
+		
 
-	    if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){
+	    if(test && url.indexOf('channel') == -1){
 	    	if(test[3]){
 
 
@@ -9548,14 +9314,14 @@
                     type = 'bitchute';
 					id = test[6];
 					
-			    }else if (test[3].indexOf('peer.tube') > -1) {
-                    type = 'peertube'
+			    }else if (test[3].indexOf('peertube') > -1) {
+                    type = 'peertube';
 			        id = test[8];
 			    }
 
 	    	}
 	    }
-		
+
 	    return {
 	        type: type,
 	        url : url,
@@ -9940,10 +9706,9 @@
 	        }
 
 	        return target;
-		}
-		
+	    }
 
-	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%\@&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#\@%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\)))?)?)/ig,
+	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%&\?+\/\$.,~=;:]*\)))?)?)/ig,
 	            function () { // copied to notifier.js:3401
 	                var matches = Array.prototype.slice.apply(arguments),
 	                    prefix = matches[1] || '',
@@ -9961,10 +9726,8 @@
 	                }
 
 	                if (matches[0].indexOf('@') != -1) {
-
-	                    //return matches[0];
-					}
-					
+	                    return matches[0];
+	                }
 	                try {
 	                    full = decodeURIComponent(full);
 	                } catch (e){}
@@ -9974,10 +9737,8 @@
 	                }
 	                full = clean(full).replace(/&amp;/g, '&');
 
-						url = replaceEntities(url).replace(/([^a-zA-Z0-9#\@%;_\-.\/?&=\[\]])/g, encodeURIComponent);
-						
-						var tryUrl = url, hashPos = url.indexOf('#/');
-						
+	                    url = replaceEntities(url).replace(/([^a-zA-Z0-9#%;_\-.\/?&=\[\]])/g, encodeURIComponent);
+	                    var tryUrl = url, hashPos = url.indexOf('#/');
 	                    if (hashPos >= 0) {
 	                        tryUrl = url.substr(hashPos + 1);
 	                    } else {
@@ -10128,15 +9889,6 @@ superXSS = function(str, p){
 	}
 
 }
-
-clearStringXss = function(nm){
-
-	return filterXSS(nm, {
-		whiteList: [],
-		stripIgnoreTag: true,
-	})
-}
-
 
 
 /* */
