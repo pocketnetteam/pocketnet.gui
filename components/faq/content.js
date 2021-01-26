@@ -3,7 +3,7 @@ var faqcontent = [
 
 	{
 
-		name : 'Technical',
+		name : self.app.localisation.e('e14003'),
 		id : 'technical',
 
 		group : [
