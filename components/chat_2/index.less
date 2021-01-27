@@ -1,0 +1,831 @@
+@import "../../css/__cssvar";
+
+#chat{
+	position: relative;
+
+	.load{
+		display: none;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: fade(#fff, 80);
+
+		.table{
+			>div{
+				vertical-align: middle;
+				text-align: center;
+			}
+		}
+	}
+
+	&.loading{
+		.load{
+			display: block;
+		}
+	}
+	
+	.chatwindow{
+		min-height: 300px;
+		overflow-y: auto;
+		background: #EBEBEB;
+
+		.other{
+			text-align: center;
+			padding : 2 * @rhythm;
+			color: @color-gray;
+			display: none;
+		}
+	}
+
+	.headerWrapper{
+		.transition(0.3s);
+		height: 65px;
+		/*background: #23222A;*/
+		background: @color-black2;
+		color : #fff;
+
+		.header{
+			>div{
+				vertical-align: middle;
+				&.icon{
+					text-align: center;
+					width: 40px;
+					color : @color-gray-light;
+					padding-left: @rhythm;
+
+					.usericon{
+						width: 35px;
+						height: 35px;
+					}
+				}
+
+				&.name{
+					padding-left: @rhythm;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					color : @color-gray-slight;
+
+					span{
+						font-weight: 100;
+						font-size: 2em;
+					}
+
+					h1{
+						font-size: 1em!important;
+						margin : 0!important;
+					}
+				}
+
+				.label{
+					display: none;
+				}
+
+				.countUnread{
+					cursor: pointer;
+					color: @color-contrast;
+					margin-left: @rhythm;
+				}
+
+				&.panel{
+					width: 40px;
+					color : @color-gray-light;
+					font-size: 0.8em;
+
+					.item{
+						float: right;
+						text-align: center;
+						width: 40px;
+						margin-right: 5px;
+						cursor: pointer;
+					}
+
+					.minimize{
+						font-size: 1.5em;
+						color : @color-bright;
+					}
+				}
+			}
+		}
+	}
+
+	.dragHoverOnChat{
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: fade(#ADADAD, 20);
+		display: none;
+	}
+
+	.cantmessages{
+		z-index: 100;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: fade(#fff, 80);
+		text-align: center;
+		display: block;
+
+		.table{
+			>div{
+				vertical-align: middle;
+				text-align: center;
+				color : @color-main;
+				font-weight: 700;
+				padding : 8 * @rhythm;
+			}
+		}
+	}
+
+	.hover{
+		.dragHoverOnChat{
+			display: block;
+		}
+	}
+
+	.formWrapper{
+		border: 1px solid @color-gray-slight;
+		height: 60px;
+		background: #fff;
+
+		.form{
+			width: 100%;
+			height: 100%;
+
+			>div{
+				height: 100%;
+				vertical-align: top;
+
+				&.reputationFailCell{
+					vertical-align: middle;
+					font-size: 0.9em;
+					color : @color-main;
+					text-align: center;
+				}
+
+				&.sendmessage{
+					input{
+						width: 100%;
+						height: 100%;
+						border: 0;
+						padding : 0 2 * @rhythm;
+					}
+
+					.inputWrapper{
+						height: 100%;
+					}
+
+					.emojionearea {
+						height: 100%;
+						border: 0;
+						outline: 0;
+						box-shadow: none;
+
+						&.emojionearea-inline{
+							>.emojionearea-editor{
+								height: 100%;
+								min-height: 0;
+								line-height: 46px;
+							}
+
+							>.emojionearea-button{
+								height: 36px;
+								top: 16px;
+							}
+						}
+
+						
+					}
+				}
+
+				&.panel{
+					width: 80px;
+
+					.item{
+						float: right;
+						text-align: center;
+						width: 75px;
+						margin-left: 5px;
+						height: 20px;
+						overflow: hidden;
+					}
+				}
+			}
+		}
+	}
+
+	.chatmessages{
+
+		.chatmessage{
+			overflow : hidden;
+			padding : 0.5 * @rhythm @rhythm;
+			background: fade(#8D9699, 10);
+			
+
+			&:nth-child(1){
+				padding-top: @rhythm;
+			}
+
+			&.read{
+				background: transparent;
+			}
+
+			.status{
+				.preloaderStep{
+					display: none;
+				}
+
+				i{
+					display: none;
+				}
+			}
+
+			&.success{
+				.status{
+					i{
+						display: inline;
+						opacity: 0.3;
+						&:before{
+							content : '\f00c';
+						}
+					}
+				}
+			}
+
+			&.fail{
+				.status{
+					i{
+						display: inline;
+						color : @color-bad;
+						
+					}
+				}
+			}
+
+			&.saveAttachment,
+			&.sending{
+				.status{
+					padding-top: 0!important;
+
+					.preloaderStep{
+						display: block;
+					}
+
+					i{
+						display: none;
+					}
+				}
+
+				&.imagePreloader{
+					.attachment{
+						cursor : default;
+					}
+					.attachmentPreview{
+						opacity: 0.5;
+					}
+				}
+			}
+
+			>div{
+				
+
+				&.iconWrapper{
+					float: left;
+					width: 35px;
+
+					.icon{
+						width: 35px;
+						height: 35px;
+						border-radius : 50%;
+						background: #51717A;
+						line-height: 25px;
+						text-align: center;
+						font-size: 0.8em;
+						color : #fff;
+
+						.usericon{
+							width: 35px;
+							height: 35px;
+						}
+					}
+				}
+
+				&.textWrapper{
+					margin-left : 35px;
+					margin-right : 45px;
+				}
+			}
+
+			.textWrapperTable{
+				>div{
+					vertical-align: middle;
+
+
+					&.tiph{
+						width: 7px;
+						overflow: hidden;
+						position: relative;
+
+						.hvci{
+							background: none;
+						    overflow: hidden;
+						    height: 8px;
+						    width: 7px;
+						    position: absolute;
+						    top: 0;
+						    bottom: auto;
+						    right: 0;
+						}
+
+						.hvti{
+							border-radius: 50%;
+						    width: 32px;
+						    height: 32px;
+						    position: absolute;
+						    top: -8px;
+						    border: 8px solid #fff;
+    						right: -8px;
+    						background: transparent;
+						}
+					}
+
+					&.status{
+						vertical-align: top;
+						width: 40px;
+						text-align: center;
+						padding-top: @rhythm;
+					}
+
+					&.textWrapper{
+
+						.blocking{
+							font-size: 0.9em;
+							padding : @rhythm;
+							background: @color-gray-slight;
+							border-radius: 5px;
+							border-top-left-radius: 0;
+							min-height: 36px;
+							overflow: hidden;
+						}
+
+						.text{
+							font-size: 0.9em;
+							padding : @rhythm;
+							background: #fff;
+							border-radius: 5px;
+							border-top-left-radius: 0;
+							min-height: 36px;
+							overflow: hidden;
+
+							a{
+								display: inline-block;
+								max-width: 100%;
+								color : @color-bright;
+								text-decoration: underline;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								overflow: hidden;
+							}
+
+							.name{
+								a{
+									color : @color-black2;
+								}
+							}
+
+							&.cantdecrypt{
+								color : @color-main;
+								text-align: center;
+								font-style: italic;
+							}
+						}
+
+						.time{
+							padding : @rhythm;
+							font-size: 0.65em;
+							color : @color-gray;
+
+							.name{
+								font-size: 1.25em;
+							}
+						}
+
+						.attachment{
+							cursor : pointer;
+							text-align: left;
+
+							.attachmentName{
+								color : @color-bright;
+								.likelink{
+									text-decoration: underline;
+								}
+							}
+
+							.attachmentPreview{
+								overflow: hidden;
+								margin-top: @rhythm;
+								img{
+								}
+							}
+						}
+						
+					}
+				}
+			}
+
+			&.mine{
+				>div{
+					&.iconWrapper{
+						float: right;
+						display: none;
+					}
+					&.textWrapper{
+						margin-left : 45px;
+						margin-right : 10px;
+					}
+				}
+
+				.textWrapperTable{
+					>div{
+						
+						&.tiph{
+
+							.hvci{
+							    top: 0;
+							    right: auto;
+							    left: 0;
+							}
+
+							.hvti{
+								border: 8px solid #c0cce2;
+								
+							    top: -8px;
+	    						left: -8px;
+	    						right: auto;
+							}
+						}
+
+						&.textWrapper{
+							.text{
+								background: #c0cce2;
+								border-radius: 5px;
+								border-top-right-radius: 0;
+							}
+							.time{
+								text-align: right;
+							}
+
+							.attachment{
+								text-align: right;
+
+								
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.dealChatClose{
+		font-size: 0.8em;
+		margin-left : @rhythm;
+		cursor: pointer;
+	}
+
+	&.buildin{
+		.expand,
+		.close{
+			display: none;
+		}
+
+		.minimize{
+			display: none;
+		}
+
+		.dealChatClose{
+			display: none;
+		}
+
+
+	}
+
+	&.fixedin{
+
+
+		.headerWrapper{
+			position: absolute;
+			left: 0;
+			height: 65px;
+			top: 0;
+			right: 0;
+
+			.header{
+				>div{
+					&.panel{
+						width: 40px;
+					}
+				}
+			}
+		}
+
+		.formWrapper{
+			position: absolute;
+			left: 0;
+			right: 0;
+			height: 60px;
+			bottom : 0;
+		}
+
+		.chatwindow{
+			min-height: 0;
+			max-height: none;
+			position: absolute;
+			top: 65px;
+			bottom: 60px;
+			left: 0;
+			right: 0;
+		}
+
+		.chatmessages{
+			position: relative;
+		}
+
+		.expand,
+		.out{
+			display: none;
+		}
+	}
+
+	&.minimized{
+		.chatwindow{
+			display: none;
+		}
+
+		.formWrapper{
+			display: none;
+		}
+
+		.headerWrapper{
+			height: 40px;
+
+			.header{
+				>div{
+					.label{
+						font-weight: 700;
+						color : @color-contrast;
+						display: inline;
+					}
+				}
+			}
+		}
+
+
+
+		
+		.minimize{
+			display: none;
+		}
+
+		.expand{
+			display: block;
+		}
+	}
+}
+
+html.stblack{
+	#chat{
+	
+		.load{
+			background: fade(@color-black3, 80);
+		}
+	
+		
+		.chatwindow{
+			background: @color-black3;
+	
+			.other{
+				color: @color-main;
+			}
+		}
+	
+		.headerWrapper{
+			background: @color-black;
+			color : @color-main;
+	
+			.header{
+				>div{
+					&.icon{
+						color : @color-main;
+					}
+	
+					&.name{
+						color : @color-gray-mlight;
+	
+					}
+	
+					.countUnread{
+						color: @color-contrast;
+					}
+	
+					&.panel{
+						color : @color-gray-mlight;
+	
+						.minimize{
+							color : @color-bright;
+						}
+					}
+				}
+			}
+		}
+	
+		.dragHoverOnChat{
+			background: fade(@color-main, 5);
+		}
+	
+		.cantmessages{
+			
+			background: fade(@color-black3, 80);
+	
+			.table{
+				>div{
+					color : @color-main;
+				}
+			}
+		}
+	
+	
+		.formWrapper{
+			border: 1px solid @color-black;
+			background: @color-black;
+	
+			.form{
+			
+				>div{
+	
+					&.reputationFailCell{
+						color : @color-main;
+					}
+	
+				}
+			}
+		}
+	
+		.chatmessages{
+	
+			.chatmessage{
+				background: fade(@color-bright, 5);
+
+				&.read{
+					background: transparent;
+				}
+	
+				&.fail{
+					.status{
+						i{
+							color : @color-bad;
+							
+						}
+					}
+				}
+	
+	
+				>div{
+					
+	
+					&.iconWrapper{
+	
+						.icon{
+							color : @color-bright;
+	
+						}
+					}
+	
+				}
+	
+				.textWrapperTable{
+					>div{
+						vertical-align: middle;
+	
+	
+						&.tiph{
+	
+							.hvti{
+								border: 8px solid @color-black2;
+								background: transparent;
+							}
+						}
+	
+	
+						&.textWrapper{
+	
+							.blocking{
+								background: @color-black3;
+							}
+	
+							.text{
+								background:@color-black2;
+	
+								a{
+									color : @color-bright;
+								}
+	
+								.name{
+									a{
+										color : @color-gray-mlight;
+									}
+								}
+	
+								&.cantdecrypt{
+									color : @color-main;
+								}
+							}
+	
+							.time{
+								color : @color-main;
+							}
+	
+							.attachment{
+	
+								.attachmentName{
+									color : @color-bright;
+								}
+							}
+							
+						}
+					}
+				}
+	
+				&.mine{
+					
+	
+					.textWrapperTable{
+						>div{
+							
+							&.tiph{
+	
+								.hvci{
+									top: 0;
+									right: auto;
+									left: 0;
+								}
+	
+								.hvti{
+									border: 8px solid @color-gray3;
+								}
+							}
+	
+							&.textWrapper{
+								.text{
+									background: @color-gray3;
+								}
+								
+	
+							}
+						}
+					}
+				}
+			}
+		}
+	
+	
+		&.fixedin{
+	
+	
+		}
+	
+		&.minimized{
+			.headerWrapper{
+	
+				.header{
+					>div{
+						.label{
+							color : @color-contrast;
+						}
+					}
+				}
+			}
+	
+		}
+	}	
+}
+
+@media only screen and (max-width: 640px) {
+	#chat{
+		&.buildin{
+			.headerWrapper{
+				z-index: 200;
+				position: fixed;
+				left: 0;
+				top: 0;
+				right: 0;
+			}
+		}
+	}
+}

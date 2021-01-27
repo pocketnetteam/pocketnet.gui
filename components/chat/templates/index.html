@@ -1,124 +1,40 @@
-<div id="<%-module.map.id%>" class="<%- essenseData.class || '' %>">
-	<div class="chatWrapper">
-		<div class="captionfwrapper">
-			<div class="headerWrapper">
-				<div class="header table">
-					
-					<div class="name">
-
-						<% if(chat.chat.type == 'share') { 				
-
-
-							 %> 
-
-
-							<span>Pocketnet chat</span>
-
-						<% } else { %> 
-
-							<%-chat.caption%>
-
-						<% } %> 
-
-						<!--<span class="label">(<%=e('chat')%>)</span>-->
-
-						<span class="countUnread"></span>
-
-						<!--<span class="dealChatClose">
-							<i class="fa fa-external-link" aria-hidden="true"></i>
-						</span>-->
-					</div>
-					<div class="panel">
-
-						<!--<div class="item close">
-							<i class="fa fa-times" aria-hidden="true"></i>
-						</div>-->
-
-						<!--<div class="item out">
-							<i class="fa fa-angle-right" aria-hidden="true"></i>
-						</div>
-
-						<div class="item minimize">
-							<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-						</div>
-						
-						<div class="item expand">
-							<i class="fa fa-angle-right"></i>
-						</div>
-						-->
-
-						
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="chatwindow">
-			<div class="spacer"></div>
-			<div class="chatmessages">
-			</div>
-
-			<div class="other">
-				<% if(canEnc) {%>
-					<%=e('id21')%>
-				<% } %>
-			</div>
-		</div>
-
-		<div class="bcaptionfwrapper">
-			<div class="formWrapper">
-				<div class="form table">
-
-					<% if(mestate.reputation >= -50) { %> 
-
-						<div class="sendmessage">
-							<div class="inputWrapper">
-
-								<!--<div class="type" placeholder="Send Message"></div>-->
-
-								<input class="type" type="text" placeholder="Send Message">
-							</div>
-						</div>
-
-					<% } else { %> 
-						<div class="reputationFailCell">
-							You do not have chat priviliges
-						</div>
-					<% } %>
-					<!--
-					<div class="panel">
-						<div class="item settings">
-							<i class="fa fa-cog" aria-hidden="true"></i>
-						</div>
-						<div class="item attachement">
-							<i class="fa fa-picture-o" aria-hidden="true"></i>
-						</div>
-						
-					</div>-->
-				</div>
-			</div>
-		</div>
-
-		<div class="dragHoverOnChat">
-			<%=e('id22')%>
-		</div>
-
-		<% if(!canEnc) {%>
-			<div class="cantmessages">
-				<div class="table">
-					<div>User haven't private key</div>
-				</div>
-				
-			</div>
-		<% } %>
-
-		<div class="load">
-			<div class="ltable table">
-				<div class="lcell">
-					<div class="preloader5"><span></span><span></span><span></span></div>
-				</div>
-			</div>
-		</div>
-		
-	</div>
+<!doctype html>
+<html class="no-js" lang="" id="roothtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>Matrix Client</title>
+<meta name="description" content="Machine Learning Analytics For Researchers">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<link rel="manifest" href="components/chat/js/site.webmanifest">
+<link rel="apple-touch-icon" href="components/chat/js/icon.png">
+<link rel="stylesheet" href="components/chat/js/css/normalize.css">
+<link rel="stylesheet" href="components/chat/js/css/main.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="" crossorigin="anonymous">
+<meta name="theme-color" content="#fafafa"><link href="components/chat/js/css/app.f93f12e6.css" rel="preload" as="style">
+<link href="components/chat/js/css/chunk-vendors.33238963.css" rel="preload" as="style">
+<link href="components/chat/js/js/app.d3225174.js" rel="preload" as="script">
+<link href="components/chat/js/js/chunk-vendors.d10a6836.js" rel="preload" as="script">
+<link href="components/chat/js/css/chunk-vendors.33238963.css" rel="stylesheet">
+<link href="components/chat/js/css/app.f93f12e6.css" rel="stylesheet">
+</head>
+<body><!--[if IE]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+  your browser</a> to improve your experience and security.</p>
+<![endif]-->
+<noscript>
+<strong>We're sorry but Project doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+</noscript>
+<div id="app">
 </div>
+
+<script src="components/chat/js/js/vendor/modernizr-3.8.0.min.js">
+</script>
+<script src="components/chat/js/js/vendor/pixi.min.js">
+</script>
+<script src="components/chat/js/js/plugins.js"></script><script src="components/chat/js/js/chunk-vendors.d10a6836.js"></script><script src="components/chat/js/js/app.d3225174.js"></script></body></html>

@@ -1,517 +1,504 @@
 User = function(app, p) {
 
-	if(!p) p = {};
+    if (!p) p = {};
 
-	var self = this;
+    var self = this;
 
-	var ajax = app.ajax || null,
-		prefix = app.options.name || "",
-		settings = app.settings || null,
-		s = "Xxsa4612caC#xa09uyqSSRd676555uYY!u765alLLom()jculloLjanbtallloYSDxuYYuY55we7",
-		tokenExpired = null,
-		tokenDialog = null,		
-		state = 0; 
+    var ajax = app.ajax || null,
+        prefix = app.options.name || "",
+        settings = app.settings || null,
+        s = "Xxsa4612caC#xa09uyqSSRd676555uYY!u765alLLom()jculloLjanbtallloYSDxuYYuY55we7",
+        tokenExpired = null,
+        tokenDialog = null,
+        state = 0;
 
-	self.imgur = {
-		clientId : '61175058f8e21f4',
-		secret : 'ea4020d8024dfb78d372d1cd21c2f3215c72ead4'
-	};	
+    self.imgur = {
+        clientId: '61175058f8e21f4',
+        secret: 'ea4020d8024dfb78d372d1cd21c2f3215c72ead4'
+    };
 
-	var keys = {
-		private : {
-			set : function(l){
-				
-				this.value = l || null;
-					
-			},
-			value : null
-		},
-		public : {
+    var keys = {
+        private: {
+            set: function(l) {
 
-			set : function(l){
-				
-				this.value = l || null;
-					
-			},
-			value : null
-		}
-	}
+                this.value = l || null;
 
-	self.signature = function(ojb){
+            },
+            value: null
+        },
+        public: {
 
-		var keyPair = self.keys()
+            set: function(l) {
 
-		var nonce = Math.round(new Date().getTime() / 1000);
+                this.value = l || null;
 
-		do{
-			nonce = nonce.toString() + '' + rand(0, 9).toString();
-		}
-		while(nonce.length < 32)
+            },
+            value: null
+        }
+    }
 
-		var signature = keyPair.sign(Buffer.from(nonce))		
+    self.signature = function(ojb) {
 
-		var sobj = JSON.stringify({
+        var keyPair = self.keys()
 
-			nonce : nonce,
-			signature : signature.toString('hex'),
-			pubkey : keyPair.publicKey.toString('hex'),
-			address : self.address.value
-			
-		})
+        var nonce = Math.round(new Date().getTime() / 1000);
 
-		return sobj
-	}
+        do {
+            nonce = nonce.toString() + '' + rand(0, 9).toString();
+        }
+        while (nonce.length < 32)
 
-	self.address = {
-		set : function(l){
-			
-			this.value = l || null;
-				
-		},
-		value : null
-	}
+        var signature = keyPair.sign(Buffer.from(nonce))
 
+        var sobj = JSON.stringify({
 
-	self.data = {};
-	self.features = {};
-	
-	self.tokenExpired = function(){
+            nonce: nonce,
+            signature: signature.toString('hex'),
+            pubkey: keyPair.publicKey.toString('hex'),
+            address: self.address.value
 
-		self.isState(function(state){
+        })
 
-			if(!state) return;
+        return sobj
+    }
 
-			var seconds = 30;
+    self.address = {
+        set: function(l) {
 
-			tokenInterval = setInterval(function(){
+            this.value = l || null;
 
-				self.isState(function(state){
+        },
+        value: null
+    }
 
-					if(!state){
-						clearInterval(tokenInterval);
-						return;
-					}
 
-					if(tokenExpired){
+    self.data = {};
+    self.features = {};
 
-						var now = new Date();
+    self.tokenExpired = function() {
 
-						if (now > tokenExpired.addSeconds(-seconds)){
+        self.isState(function(state) {
 
-							clearInterval(tokenInterval);
+            if (!state) return;
 
-							var _continue = false;
+            var seconds = 30;
 
-							var success = function(){
-								_continue = true;
+            tokenInterval = setInterval(function() {
 
-								app.platform.sdk.user.ping(function(){
-									self.tokenExpired();
-								});
-							}
+                self.isState(function(state) {
 
-							var fail = function(){
+                    if (!state) {
+                        clearInterval(tokenInterval);
+                        return;
+                    }
 
-								_continue = true;
+                    if (tokenExpired) {
 
-								app.options.unathorizated(true);
-							
-							}
+                        var now = new Date();
 
-							tokenDialog = dialog({
-								header : app.localization.e('id189'),
-								html : '<div class="tokenExpired"><div>'+app.localization.e('id190')+'</div><div class="time"></div></div>',
+                        if (now > tokenExpired.addSeconds(-seconds)) {
 
-								btn1text : app.localization.e('id191'),
-								btn2text : app.localization.e('id192'),
+                            clearInterval(tokenInterval);
 
-								class : 'accepting',
+                            var _continue = false;
 
-								clbk : function(el, d){
+                            var success = function() {
+                                _continue = true;
 
-									var update = function(time){
-										el.find('.time').html(app.localization.e('id189', addZero(time.toFixed(0))) )
-									}
+                                app.platform.sdk.user.ping(function() {
+                                    self.tokenExpired();
+                                });
+                            }
 
-									var end = function(){
+                            var fail = function() {
 
-										if(_continue) return;
+                                _continue = true;
 
-										d.destroy();
-										app.options.unathorizated();
+                                app.options.unathorizated(true);
 
-									}
+                            }
 
-									var timer = new Timer({
+                            tokenDialog = dialog({
+                                header: app.localization.e('id189'),
+                                html: '<div class="tokenExpired"><div>' + app.localization.e('id190') + '</div><div class="time"></div></div>',
 
-										ontick : function(){
+                                btn1text: app.localization.e('id191'),
+                                btn2text: app.localization.e('id192'),
 
-											if(_continue) return;
-									    
-											update(timer.getDuration() / 1000)
-											
-										},
+                                class: 'accepting',
 
-										onend : end
+                                clbk: function(el, d) {
 
-									});
+                                    var update = function(time) {
+                                        el.find('.time').html(app.localization.e('id189', addZero(time.toFixed(0))))
+                                    }
 
-									timer.start(seconds);
+                                    var end = function() {
 
-									update(seconds)
+                                        if (_continue) return;
 
-								},
+                                        d.destroy();
+                                        app.options.unathorizated();
 
-								success : success,
+                                    }
 
-								fail : fail,
+                                    var timer = new Timer({
 
-								close : fail
-							})
+                                        ontick: function() {
 
-						}
+                                            if (_continue) return;
 
-					}
+                                            update(timer.getDuration() / 1000)
 
-				})
+                                        },
 
-				
+                                        onend: end
 
-			}, 20)
+                                    });
 
-		})
+                                    timer.start(seconds);
 
-	}
+                                    update(seconds)
 
+                                },
 
-	self.prepare = function(clbk){
+                                success: success,
 
-		
+                                fail: fail,
 
-		self.tokenExpired();
+                                close: fail
+                            })
 
-		app.platform.clear(true);
+                        }
 
-		app.platform.prepareUser(function(){
-			if (clbk)
-				clbk(state)	
-		})
+                    }
 
-		
-	}
+                })
 
-	self.signin = function(mnemonic, clbk){
 
-		var setKeysClbk = function(){
 
-			if (self.stay){
+            }, 20)
 
-				app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
-					localStorage['mnemonic'] = enc
-				})
-				
-			}
-			else
-			{
-				localStorage['mnemonic'] = ''
-			}
+        })
 
-			self.isState(function(state){
+    }
 
-				if(state){
 
-					localStorage['waslogged'] = true
-					localStorage['popupsignup'] = 'showed'
+    self.prepare = function(clbk) {
 
-					self.prepare(clbk)
-				}
-				else
-				{
-					if (clbk){
-						clbk(state)
-					}
-				}
-			})
-		}
 
-		if(!bitcoin.bip39.validateMnemonic(mnemonic)){
 
-			self.setKeysPairFromPrivate(mnemonic, function(result){
+        self.tokenExpired();
 
-				if(result){
+        app.platform.clear(true);
 
-					setKeysClbk()
-				}
-				else
-				{
-					localStorage['mnemonic'] = ''
+        app.platform.prepareUser(function() {
+            if (clbk)
+                clbk(state)
+        })
 
-					state = 0;
 
-					if (clbk){
-						clbk(state)
-					}
-				}
+    }
 
-			})
+    self.signin = function(mnemonic, clbk) {
 
-			
-		}
-		else
-		{
+        var setKeysClbk = function() {
 
-			
-			self.setKeys(mnemonic, function(){
+            if (self.stay) {
 
-				setKeysClbk()
-				
-			})
-		}
+                app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc) {
+                    localStorage['mnemonic'] = enc
+                })
 
-		
-	}
+            } else {
+                localStorage['mnemonic'] = ''
+            }
 
-	self.features = {};
-	self.signout = function(clbk){
+            self.isState(function(state) {
 
-		state = 0;
-		self.data = {};
-		localStorage['mnemonic'] = ''
+                if (state) {
 
-		settings.clear();
+                    localStorage['waslogged'] = true
+                    localStorage['popupsignup'] = 'showed'
 
-		keys.public.set();
-		keys.private.set();
+                    self.prepare(clbk)
+                } else {
+                    if (clbk) {
+                        clbk(state)
+                    }
+                }
+            })
+        }
 
-		app.platform.clear();
+        if (!bitcoin.bip39.validateMnemonic(mnemonic)) {
 
-		if (tokenDialog)
-			tokenDialog.destroy();
+            self.setKeysPairFromPrivate(mnemonic, function(result) {
 
-		if (app.platform.ws)
-			app.platform.ws.destroy();
+                if (result) {
 
-		if (app.platform.rtc)
-			app.platform.rtc.destoryAll();
+                    setKeysClbk()
+                } else {
+                    localStorage['mnemonic'] = ''
 
-		if (app.platform.firebase)
-			app.platform.firebase.destroy(clbk);
-	}
+                    state = 0;
 
+                    if (clbk) {
+                        clbk(state)
+                    }
+                }
 
-	self.isState = function(clbk){
+            })
 
-		if(!p) p = {};
 
-		if(state ===  2) {
+        } else {
 
-			retry(
-				function(){
-					return state != 2;
-				},
-				function(){
-					self.isState(clbk)
-				}
-			)
-		
-			return;
-		}
 
-		
+            self.setKeys(mnemonic, function() {
 
-		if (keys.private.value && keys.public.value){
-			
-			state = 1;
-		}
-		else{
+                setKeysClbk()
 
-			if (localStorage['mnemonic'] && self.stay){
+            })
+        }
 
-				var m = localStorage['mnemonic'];
 
-				app.platform.cryptography.api.aeswc.decryption(m, app.options.fingerPrint, {}, function(m){
+    }
 
+    self.features = {};
+    self.signout = function(clbk) {
 
-					if(m){
-						if(!bitcoin.bip39.validateMnemonic(m)){
+        $('#matrix').empty();
 
-							self.setKeysPairFromPrivate(m, function(){
-								self.isState(clbk)
-							})
-						}
-						else
-						{
-							self.setKeys(m, function(){
-								self.isState(clbk)
-							})
-						}	
-					}
-					else
-					{
-						localStorage['mnemonic'] = ''
+        state = 0;
+        self.data = {};
+        localStorage['mnemonic'] = ''
 
-						state = 0;	
-						clbk(state);
-					}
+        settings.clear();
 
-						
+        keys.public.set();
+        keys.private.set();
 
-				})		
+        app.platform.clear();
 
-				return
+        if (tokenDialog)
+            tokenDialog.destroy();
 
-			}
-			
-			state = 0;	
-		}
+        if (app.platform.ws)
+            app.platform.ws.destroy();
 
-		clbk(state);
-	}
+        if (app.platform.rtc)
+            app.platform.rtc.destoryAll();
 
-	self.validateVay = function(){
+        if (app.platform.firebase)
+            app.platform.firebase.destroy(clbk);
 
 
-		if(!self.address.value) return 'fu';
+    }
 
-		var me = deep(app, 'platform.sdk.user.storage.me');
 
+    self.isState = function(clbk) {
 
-		if (me && me.relay){
+        if (!p) p = {};
 
-			var regs = app.platform.sdk.registrations.storage[self.address.value];
+        if (state === 2) {
 
-			if (regs && (regs === true || regs < 3)){
-				return 'fuf'
-			}
+            retry(
+                function() {
+                    return state != 2;
+                },
+                function() {
+                    self.isState(clbk)
+                }
+            )
 
-		}
+            return;
+        }
 
-		if(!(deep(app, 'platform.sdk.user.storage.me.name'))) return 'fu' 
-	}
 
-	self.validate = function(){
 
-		if(!self.address.value) return false;
+        if (keys.private.value && keys.public.value) {
 
-		var me = deep(app, 'platform.sdk.user.storage.me');
+            state = 1;
+        } else {
 
+            if (localStorage['mnemonic'] && self.stay) {
 
-		if (me && me.relay){
+                var m = localStorage['mnemonic'];
 
-			var regs = app.platform.sdk.registrations.storage[self.address.value];
+                app.platform.cryptography.api.aeswc.decryption(m, app.options.fingerPrint, {}, function(m) {
 
-			if (regs && (regs === true || regs < 3)){
-				return false
-			}
 
-		}
+                    if (m) {
+                        if (!bitcoin.bip39.validateMnemonic(m)) {
 
-		return (deep(app, 'platform.sdk.user.storage.me.name'))
+                            self.setKeysPairFromPrivate(m, function() {
+                                self.isState(clbk)
+                            })
+                        } else {
+                            self.setKeys(m, function() {
+                                self.isState(clbk)
+                            })
+                        }
+                    } else {
+                        localStorage['mnemonic'] = ''
 
-	}
+                        state = 0;
+                        clbk(state);
+                    }
 
-	self.isItMe = function(address){
-		return self.address.value && self.address.value.toString('hex') == address
-	}
 
-	self.keysFromMnemo = function(mnemonic){
 
-		var seed = bitcoin.bip39.mnemonicToSeed(mnemonic)
+                })
 
-		return self.keysFromSeed(seed)
+                return
 
-	}
+            }
 
-	self.keysFromSeed = function(seed){
+            state = 0;
+        }
 
-		//var hash = bitcoin.crypto.sha256(Buffer.from(seed))
-		
-		var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF() 
+        clbk(state);
+    }
 
-		
-	    var keyPair = bitcoin.ECPair.fromWIF(d)	    
+    self.validateVay = function() {
 
-	    return keyPair
 
-	}
+        if (!self.address.value) return 'fu';
 
-	self.setKeysPair = function(keyPair, clbk){
+        var me = deep(app, 'platform.sdk.user.storage.me');
 
-	    keys.private.set(keyPair.privateKey)
-	    keys.public.set(keyPair.publicKey)
 
-	  
-	    var address = app.platform.sdk.address.pnet()
+        if (me && me.relay) {
 
-	    self.address.set(address.address)
+            var regs = app.platform.sdk.registrations.storage[self.address.value];
 
-	    topPreloader(20)
+            if (regs && (regs === true || regs < 3)) {
+                return 'fuf'
+            }
 
-	    if (clbk)
-    		clbk()
-	   
-    	
-	}
+        }
 
-	self.setKeysPairFromPrivate = function(private, clbk){
-		var keyPair = null;
+        if (!(deep(app, 'platform.sdk.user.storage.me.name'))) return 'fu'
+    }
 
-		try{
+    self.validate = function() {
 
-			keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
+        if (!self.address.value) return false;
 
-			
-		}
-		catch (e){
-			try{
-				keyPair = bitcoin.ECPair.fromWIF(private)
-			}
-			catch (e){
-				
-			}
-		}
+        var me = deep(app, 'platform.sdk.user.storage.me');
 
-		if(keyPair){
-			self.setKeysPair(keyPair, function(){
-				if (clbk)
-					clbk(true)
-			})
-		}
-		else{
-			if (clbk)
-				clbk(false)
-		}
-		
-		
-	
 
-		
-	}
+        if (me && me.relay) {
 
-	self.setKeys = function(mnemonic, clbk){
-	    var keyPair =  self.keysFromMnemo(mnemonic)  
+            var regs = app.platform.sdk.registrations.storage[self.address.value];
 
-	    self.setKeysPair(keyPair, clbk)
-    	
-	}
+            if (regs && (regs === true || regs < 3)) {
+                return false
+            }
 
-	self.key = keys.public;
-	self.private = keys.private;
+        }
 
-	self.keys = function(){
-		return bitcoin.ECPair.fromPrivateKey(keys.private.value)
-	}
+        return (deep(app, 'platform.sdk.user.storage.me.name'))
 
-	self.stay = Number(localStorage['stay'] || '1')
+    }
 
-	//if(typeof localStorage['stay'] == 'undefined') self.stay = 1;
+    self.isItMe = function(address) {
+        return self.address.value && self.address.value.toString('hex') == address
+    }
 
-	return self;
+    self.keysFromMnemo = function(mnemonic) {
+
+        var seed = bitcoin.bip39.mnemonicToSeed(mnemonic)
+
+        return self.keysFromSeed(seed)
+
+    }
+
+    self.keysFromSeed = function(seed) {
+
+        //var hash = bitcoin.crypto.sha256(Buffer.from(seed))
+
+        var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF()
+
+
+        var keyPair = bitcoin.ECPair.fromWIF(d)
+
+        return keyPair
+
+    }
+
+    self.setKeysPair = function(keyPair, clbk) {
+
+        keys.private.set(keyPair.privateKey)
+        keys.public.set(keyPair.publicKey)
+
+
+        var address = app.platform.sdk.address.pnet()
+
+        self.address.set(address.address)
+
+        topPreloader(20)
+
+        if (clbk)
+            clbk()
+
+
+    }
+
+    self.setKeysPairFromPrivate = function(private, clbk) {
+        var keyPair = null;
+
+        try {
+
+            keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
+
+
+        } catch (e) {
+            try {
+                keyPair = bitcoin.ECPair.fromWIF(private)
+            } catch (e) {
+
+            }
+        }
+
+        if (keyPair) {
+            self.setKeysPair(keyPair, function() {
+                if (clbk)
+                    clbk(true)
+            })
+        } else {
+            if (clbk)
+                clbk(false)
+        }
+
+
+
+
+
+    }
+
+    self.setKeys = function(mnemonic, clbk) {
+        var keyPair = self.keysFromMnemo(mnemonic)
+
+        self.setKeysPair(keyPair, clbk)
+
+    }
+
+    self.key = keys.public;
+    self.private = keys.private;
+
+    self.keys = function() {
+        return bitcoin.ECPair.fromPrivateKey(keys.private.value)
+    }
+
+    self.stay = Number(localStorage['stay'] || '1')
+
+    //if(typeof localStorage['stay'] == 'undefined') self.stay = 1;
+
+    return self;
 }
 
 topPreloader(25);
 
-if(typeof module != "undefined")
-{
-	module.exports = User;
+if (typeof module != "undefined") {
+    module.exports = User;
 }
