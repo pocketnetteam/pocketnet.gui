@@ -12,7 +12,7 @@ __map =  {
         "js/vendor/aesjs.js",
 		"js/lib/pocketnet/btc17.js",
 		"js/lib/pocketnet/buffer.js",
-
+		"js/lib/client/api.js",
         "js/vendor/pbkdf2.js",
         "js/vendor/sha1.js",
         "js/vendor/jdenticon.js",

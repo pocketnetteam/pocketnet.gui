@@ -103,7 +103,7 @@ Platform = function (app, listofnodes) {
                 p.dprecision = 6;
 
             if (typeof p.suffix == 'undefined')
-                p.suffix = "POC";
+                p.suffix = "PKOIN";
 
             var suffix = p.suffix;
 
@@ -6372,8 +6372,6 @@ Platform = function (app, listofnodes) {
 
             wallet: function (n, private) {
 
-
-
                 var d = bitcoin.bip32.fromSeed(private || self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
 
                 var keyPair = bitcoin.ECPair.fromWIF(d)
@@ -9830,27 +9828,38 @@ Platform = function (app, listofnodes) {
 
                     wallet: function (inputs, ouputs, _kp) {
 
+                        console.log("_____________________________________________________________")
+
                         var keyPair = _kp || self.app.user.keys()
 
                         var txb = new bitcoin.TransactionBuilder();
 
                         txb.addNTime(self.timeDifference || 0)
 
-                        var amount = 0;
                         var k = 100000000;
 
+                        self.sdk.node.transactions.get.tx('0c323226b35434bc94707b923e9808f5a28462ccc3a9ab5e5b17057d2a8521e3', function(data){
+                            console.log('0c323226b35434bc94707b923e9808f5a28462ccc3a9ab5e5b17057d2a8521e3', data)
+                        })
 
+                        self.sdk.node.transactions.get.tx('c6f4060756896551a199b8bcf04bed0a74ba0fafeb34bb674f80a9b9c28338d8', function(data){
+                            console.log('c6f4060756896551a199b8bcf04bed0a74ba0fafeb34bb674f80a9b9c28338d8', data)
+                        })
+
+                        self.sdk.node.transactions.get.tx('57d021ab8ef81d12b69c5201b015c39dc3f7e73bb94ed210b9ff19c1c225034b', function(data){
+                            console.log('57d021ab8ef81d12b69c5201b015c39dc3f7e73bb94ed210b9ff19c1c225034b', data)
+                        })
+
+
+                        
 
                         _.each(inputs, function (i) {
-
-                            /*txb.addInput(i.txid, i.vout)
-                            amount = amount + Number(i.amount);
-
-                            return*/
 
                             if (i.address.indexOf("P") == 0) {
 
                                 txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
+
+                               
                             }
 
                             else {
@@ -9860,12 +9869,9 @@ Platform = function (app, listofnodes) {
                                 if (index > -1) {
 
                                     var address = self.sdk.addresses.storage.addressesobj[index];
-                                    /*console.log(address)
-
-                                    console.log("ADDINPUT1", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('001442b207c67cd29bd4ae72e6440690b5db2264c013', 'hex'))))
-                                    console.log("ADDINPUT2", bitcoin.script.toASM(bitcoin.script.decompile(Buffer.from('0014c05e4b43f78296df7e7a0f5d5329cb26fd4eff30', 'hex'))))*/
-
+                                  
                                     txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
+
                                 }
 
                                 else {
@@ -9875,14 +9881,13 @@ Platform = function (app, listofnodes) {
 
                             }
 
-                            amount = amount + Number(i.amount);
                         })
 
                         _.each(ouputs, function (o) {
                             txb.addOutput(o.address, Number((k * o.amount).toFixed(0)));
                         })
 
-                        var address = self.sdk.address.pnet(keyPair.publicKey)
+                        //var address = self.sdk.address.pnet(keyPair.publicKey)
 
                         _.each(inputs, function (i, inputindex) {
 
@@ -9899,17 +9904,42 @@ Platform = function (app, listofnodes) {
 
                                 if (index > -1) {
 
+                                    index = index
+
                                     var p2sh = self.sdk.addresses.storage.addressesobj[index];
 
                                     var dumped = self.sdk.address.dumpKeys(index)
+                                    console.log('dumped.privateKey', dumped.privateKey)
+                                    console.log('dumped.publicKey', dumped.toWIF())
 
-                                    var pubkey = dumped.publicKey;
+                                    //var pubkey = dumped.publicKey;
 
-                                    var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+                                    //inputindex, dumped, p2sh.redeem.output, null, Number((k * i.amount).toFixed(0))
 
-                                    var p2sh_ = bitcoin.payments.p2sh({ redeem: a })
+                                    /*var pubKey = dumped.publicKey
+                                    var pubKeyHash = bitcoin.crypto.hash160(pubKey)
 
-                                    txb.sign(inputindex, dumped, p2sh.redeem.output, null, Number((k * i.amount).toFixed(0)));
+                                    console.log('bitcoin.script', bitcoin, p2sh.redeem)
+
+                                    console.log('bitcoin.script',p2sh.redeem.output)
+                                    console.log('bitcoin.script',p2sh.redeem.output.toString('hex'))
+                                   */
+                                    
+                                    /*var redeemScript = Buffer.from('0014' + pubKeyHash.toString('hex'), 'hex')
+                                    console.log('redeemScript', redeemScript)*/
+                                    /*var a = bitcoin.payments['p2wpkh']({ pubkey: pubkey })
+                                    var p2sh = bitcoin.payments.p2sh({ redeem: a })*/
+                                    // console.log('p2sh.redeem.output', p2sh.redeem.output)
+                                    //  debugger
+                                    txb.sign({
+                                        prevOutScriptType: 'p2sh-p2wpkh',
+                                        redeemScript : p2sh.redeem.output,
+                                        vin: inputindex,
+                                        keyPair : dumped,
+                                        witnessValue : Number((k * i.amount).toFixed(0))
+                                    });
+
+                                    console.log('Number((k * i.amount).toFixed(0))', Number((k * i.amount).toFixed(0)))
 
 
                                 }
@@ -9920,9 +9950,25 @@ Platform = function (app, listofnodes) {
 
                             }
                         })
-
+                        
 
                         var tx = txb.build()
+
+                        console.log('txb', tx, tx.toHex())
+
+                        /*_.each(tx.ins, function(input){
+                            var asm = bitcoin.script.fromASM(input.script.toString('hex'))
+
+                            //console.log('asm', asm, bitcoin.script.toASM(bitcoin.script.decompile(input.script)))
+
+                            if(input.witness)
+                            _.each(input.witness, function(witness, i){
+                                console.log('witness',i, witness.toString('hex'))
+
+                            })
+
+                            
+                        })*/
 
                         return tx;
 
@@ -13820,7 +13866,7 @@ Platform = function (app, listofnodes) {
 
                 h += '<div class="tcell foramount">'
 
-                h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount)) + " POC"
+                h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount)) + " PKOIN"
 
                 h += '</div>'
 
@@ -14733,7 +14779,7 @@ Platform = function (app, listofnodes) {
                             if (data.address != user.address && data.user) {
 
                                 if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
-                                    n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " POC to you"
+                                    n.text = self.tempates._user(data.user) + " sent " + platform.mp.coin(data.tx.amount) + " PKOIN to you"
 
                                     if (data.opmessage) {
                                         n.text = n.text + ' '+self.app.localization.e('e13336')+' "' + data.opmessage + '"'

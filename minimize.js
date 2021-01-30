@@ -17,7 +17,7 @@ if(prodaction === 'false') prodaction = false;
 
 var mapJsPath = './js/_map.js';
 var indexPathTpl = './index.tpl';
-var indexPath = './index.php';
+var indexPath = './index.html';
 
 var mapJs2Path = './js/_mapv2.js';
 
@@ -78,6 +78,8 @@ fs.exists(mapJs2Path, function (exists) {
 			  			fs.exists(modulepath, function (exists) {
 			  				if(exists){
 
+								console.log(modulepath)
+
 			  					fs.readFile(modulepath, function read(err, data) {
 					            	if (err) {
 					                	throw err;
@@ -100,6 +102,7 @@ fs.exists(mapJs2Path, function (exists) {
 
 					            	fs.exists(csspath, function (exists) {
 				  						if(exists){
+											console.log(csspath)
 				  							fs.readFile(csspath, function read(err, data) {
 								            	if (err) {
 								                	throw err;
@@ -116,7 +119,7 @@ fs.exists(mapJs2Path, function (exists) {
 
 				  						else
 				  						{
-				  							//console.log('notexist', module.csspath, csspath)
+				  							console.log('notexist', module.csspath, csspath)
 				  							p.success();
 				  						}
 				  					})
@@ -128,7 +131,9 @@ fs.exists(mapJs2Path, function (exists) {
 			  				}
 			  				else
 			  				{
-			  					console.log("notexist (JS) " + module.uri + " in " +  innerPath)
+								  console.log("notexist (CSS) " + module.uri)
+								  
+								  p.success();
 			  				}
 			  			})
 
@@ -136,11 +141,13 @@ fs.exists(mapJs2Path, function (exists) {
 					
 					all : {
 						success : function(){
+
+							console.log(modules.path)
 					
 							fs.writeFile(modules.path, modules.data, function(err) {
 
 							    if(err) {
-							    	console.log("Access not permitted", innerPath)
+							    	console.log("Access not permitted", err)
 							    	return
 							    }
 
@@ -191,6 +198,8 @@ fs.exists(mapJs2Path, function (exists) {
 					  			
 					  				if(exists){
 
+										console.log(path)
+
 					  					fs.readFile(path, function read(err, data) {
 							            	if (err) {
 							                	throw err;
@@ -217,7 +226,7 @@ fs.exists(mapJs2Path, function (exists) {
 								success : function(){
 
 									cssmaster.data = currentcssdata + '\n' + cssmaster.data;
-
+									console.log(cssmaster.path)
 									fs.writeFile(cssmaster.path, cssmaster.data, function(err) {
 
 									    if(err) {
@@ -257,6 +266,8 @@ fs.exists(mapJs2Path, function (exists) {
 					  				//console.log(path)
 					  				if(exists){
 
+										console.log(path)
+
 					  					fs.readFile(path, function read(err, data) {
 							            	if (err) {
 							                	throw err;
@@ -288,6 +299,7 @@ fs.exists(mapJs2Path, function (exists) {
 							
 							all : {
 								success : function(){
+									console.log(join.path)
 									fs.writeFile(join.path, join.data, function(err) {
 
 									    if(err) {
@@ -321,9 +333,9 @@ fs.exists(mapJs2Path, function (exists) {
 				  				else path = filepath.replace("..", '.');				  				
 
 					  			fs.exists(path, function (exists) {
-					  				//console.log(path)
+					  				//
 					  				if(exists){
-
+										console.log(path)
 					  					fs.readFile(path, function read(err, data) {
 							            	if (err) {
 							                	throw err;
@@ -355,6 +367,7 @@ fs.exists(mapJs2Path, function (exists) {
 							
 							all : {
 								success : function(){
+									console.log(vendor.path)
 									fs.writeFile(vendor.path, vendor.data, function(err) {
 
 									    if(err) {

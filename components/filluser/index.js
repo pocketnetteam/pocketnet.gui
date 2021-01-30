@@ -549,7 +549,7 @@ var filluser = (function(){
 
 					var b = function(){
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " POC")
+							el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " PKOIN")
 						})
 					}
 					

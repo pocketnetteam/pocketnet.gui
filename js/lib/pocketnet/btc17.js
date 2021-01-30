@@ -38921,6 +38921,8 @@
       },
       a,
     );
+
+
     const _address = lazy.value(() => {
       const result = bech32.decode(a.address);
       const version = result.words.shift();
@@ -41984,6 +41986,8 @@
           if (!allowIncomplete) throw new Error('Not enough information');
           return;
         }
+
+
         tx.setInputScript(i, result.input);
         tx.setWitness(i, result.witness);
       });
@@ -42074,6 +42078,7 @@
         const { output, pubkey, signature } = payments.p2wpkh({
           witness: witnessStack,
         });
+
         return {
           prevOutScript: output,
           prevOutType: SCRIPT_TYPES.P2WPKH,
@@ -42415,6 +42420,8 @@
     };
   }
   function build(type, input, allowIncomplete) {
+
+
     const pubkeys = input.pubkeys || [];
     let signatures = input.signatures || [];
     switch (type) {
@@ -42508,6 +42515,9 @@
       `sign hashType parameter must be a number`,
     );
     const prevOutType = (inputs[signParams.vin] || []).prevOutType;
+
+
+
     const posType = signParams.prevOutScriptType;
     switch (posType) {
       case 'p2pkh':
@@ -42714,7 +42724,12 @@
         );
       }
       const signature = keyPair.sign(signatureHash, useLowR);
+
+      
       input.signatures[i] = bscript.signature.encode(signature, hashType);
+
+      console.log('input.signatures[i]', input.signatures[i], hashType)
+
       signed = true;
     }
     if (!signed) throw new Error('Key pair cannot sign for this input');

@@ -307,7 +307,7 @@ ____loclib.coinbaseSuccesscomment = function(v){
 return "Congratulations, you have won " + v + " Pocketcoin for your latest comments!"
 }
 ____loclib.userSent = function(v){
-return "sent <b>" + v + " POC</b> to you"
+return "sent <b>" + v + " PKOIN</b> to you"
 }
 
 

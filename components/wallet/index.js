@@ -1167,7 +1167,7 @@ var wallet = (function(){
 				},
 
 				crowdRate : function(el, rates, currency){
-					el.find('.rate .value').html('<b>1 POC = ' + (rates[currency]).toFixed(6) + ' '+currency.toUpperCase()+'</b>')
+					el.find('.rate .value').html('<b>1 PKOIN = ' + (rates[currency]).toFixed(6) + ' '+currency.toUpperCase()+'</b>')
 				},
 
 				crowdCurrencyLabel : function(el, currency){

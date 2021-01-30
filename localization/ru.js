@@ -294,7 +294,7 @@ ____loclib.dsa = "Не показывать больше";
 // Messages
 
 ____loclib.coinbaseSuccess = function(v){
-	return "<b>Поздравляем!</b> " + " Вы выиграли <b>" + v + " POC</b>"
+	return "<b>Поздравляем!</b> " + " Вы выиграли <b>" + v + " PKOIN</b>"
 }
 ____loclib.coinbaseSuccesspost = function(v){
 	return "Поздравляем, вы получили " + v + " Покеткоинов за ваши последние посты!"
@@ -303,7 +303,7 @@ ____loclib.coinbaseSuccesscomment = function(v){
 	return "Поздравляем, вы получили " + v + " Покеткоинов за ваши последние комментарии!"
 }
 ____loclib.userSent = function(v){
-	return "отослал вам <b>" + v + " POC</b>"
+	return "отослал вам <b>" + v + " PKOIN</b>"
 }
 
 

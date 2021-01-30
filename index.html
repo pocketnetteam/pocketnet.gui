@@ -7,14 +7,7 @@
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv='expires' content='0'>
 
-        <meta http-equiv="Content-Security-Policy" content="
-        default-src https: 'self'; 
-        connect-src https: wss:;
-        img-src 'self' data: https:;
-        script-src 'self' https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
-        style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
-        media-src *">
+      
 
         <title>POCKETNET</title>
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
@@ -31,17 +24,26 @@
         font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src *">
 
+        <?php 
+        
+            require_once('php/og.php'); 
 
-        <link rel="stylesheet" href="css/normalize.css?v=575686604376">
-        <link rel="stylesheet" href="css/tooltipster.core.min.css?v=799457345759">
-        <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=972690302316">
-        <link rel="stylesheet" href="css/main.css?v=733042544692">
-        <link rel="stylesheet" href="css/stblack.css?v=74630894556">
-        <link rel="stylesheet" href="css/plyr.css?v=908342748987">
-        <link rel="stylesheet" href="css/jquery-ui.min.css?v=51324959237">
-        <link rel="stylesheet" href="css/medium/medium-editor.css?v=928856495948">
-        <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=171894168909">
-        <link rel="stylesheet" href="css/medium/beagle.css?v=387535051905">
+            $og = new OG($_GET);
+
+            $og->get();
+            $og->echotags();
+        ?>
+
+        <link rel="stylesheet" href="css/normalize.css?v=125260544549">
+<link rel="stylesheet" href="css/tooltipster.core.min.css?v=993488737477">
+<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=778382312972">
+<link rel="stylesheet" href="css/main.css?v=595850662141">
+<link rel="stylesheet" href="css/stblack.css?v=378548055489">
+<link rel="stylesheet" href="css/plyr.css?v=724723250558">
+<link rel="stylesheet" href="css/jquery-ui.min.css?v=666692668462">
+<link rel="stylesheet" href="css/medium/medium-editor.css?v=953750241089">
+<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=483079450757">
+<link rel="stylesheet" href="css/medium/beagle.css?v=305829734443">
 
         
            
@@ -91,6 +93,8 @@
 
         <script src="js/vendor/jquery-1.11.3.min.js"></script>
         <script src="js/vendor/sanitize-html.min.js"></script>
+
+
         <script type="text/javascript">
 
             _Node = false;
@@ -140,44 +144,45 @@
         </script>
 
         <script join src="js/vendor/underscore-min.js?v=4"></script>
-        <script join src="js/vendor/fingerprint2.js?v=4"></script>
-        <script join src="js/vendor/tooltipster.core.js?v=4"></script>
-        <script join src="js/vendor/tooltipster.bundle.js?v=4"></script>
-        <script join src="js/vendor/jquery-ui.min.js?v=4"></script>
-        <script join src="js/vendor/imagesloaded.pkgd.min.js?v=4"></script>
-        <script join src="js/vendor/timer.js?v=4"></script>
-        <script join src="js/vendor/ion.sound/ion.sound.min.js?v=4"></script>
-        <script join src="js/vendor/aesjs.js?v=4"></script>
-        <script join src="js/lib/pocketnet/btc17.js?v=4"></script>
-        <script join src="js/lib/pocketnet/buffer.js?v=4"></script>
-        <script join src="js/vendor/pbkdf2.js?v=4"></script>
-        <script join src="js/vendor/sha1.js?v=4"></script>
-        <script join src="js/vendor/jdenticon.js?v=4"></script>
-        <script join src="js/vendor/paste.js?v=4"></script>
-        <script join src="js/vendor/jquery.md5.js?v=4"></script>
-        <script join src="js/vendor/jquery.animate-number.js?v=4"></script>
-        <script join src="js/vendor/jquery.touchSwipe.js?v=4"></script>
-        <script join src="js/vendor/emojione.js?v=4"></script>
-        <script join src="js/vendor/plyr.js?v=4"></script>
-        <script join src="js/vendor/reconnectingwebsocket.js?v=4"></script>
-        <script join src="js/vendor/rtc/db.js?v=4"></script>
-        <script join src="js/vendor/xss.min.js?v=4"></script>
-        <script join src="js/vendor/jquery.mark.js?v=4"></script>
-        <script join src="js/vendor/hc-sticky.js?v=4"></script>
+<script join src="js/vendor/fingerprint2.js?v=4"></script>
+<script join src="js/vendor/tooltipster.core.js?v=4"></script>
+<script join src="js/vendor/tooltipster.bundle.js?v=4"></script>
+<script join src="js/vendor/jquery-ui.min.js?v=4"></script>
+<script join src="js/vendor/imagesloaded.pkgd.min.js?v=4"></script>
+<script join src="js/vendor/timer.js?v=4"></script>
+<script join src="js/vendor/ion.sound/ion.sound.min.js?v=4"></script>
+<script join src="js/vendor/aesjs.js?v=4"></script>
+<script join src="js/lib/pocketnet/btc17.js?v=4"></script>
+<script join src="js/lib/pocketnet/buffer.js?v=4"></script>
+<script join src="js/lib/client/api.js?v=4"></script>
+<script join src="js/vendor/pbkdf2.js?v=4"></script>
+<script join src="js/vendor/sha1.js?v=4"></script>
+<script join src="js/vendor/jdenticon.js?v=4"></script>
+<script join src="js/vendor/paste.js?v=4"></script>
+<script join src="js/vendor/jquery.md5.js?v=4"></script>
+<script join src="js/vendor/jquery.animate-number.js?v=4"></script>
+<script join src="js/vendor/jquery.touchSwipe.js?v=4"></script>
+<script join src="js/vendor/emojione.js?v=4"></script>
+<script join src="js/vendor/plyr.js?v=4"></script>
+<script join src="js/vendor/reconnectingwebsocket.js?v=4"></script>
+<script join src="js/vendor/rtc/db.js?v=4"></script>
+<script join src="js/vendor/xss.min.js?v=4"></script>
+<script join src="js/vendor/jquery.mark.js?v=4"></script>
+<script join src="js/vendor/hc-sticky.js?v=4"></script>
 
         
-        <script>window.design = true;</script><script join src="js/functions.js?v=839591402106"></script>
-<script join src="js/user.js?v=776767213514"></script>
-<script join src="js/module.js?v=378781848010"></script>
-<script join src="js/navn.js?v=343827008344"></script>
-<script join src="js/validation.js?v=140351546515"></script>
-<script join src="js/_map.js?v=757019129653"></script>
-<script join src="js/localization.js?v=631931574964"></script>
-<script join src="js/kit.js?v=802338204078"></script>
-<script join src="js/satolist.js?v=847145641453"></script>
-<script join src="js/messenger2/clientrtc.js?v=799448233593"></script>
-<script join src="js/app.js?v=768163420639"></script>
-<script join src="js/main.js?v=87939038200"></script>
+        <script>window.design = true;</script><script join src="js/functions.js?v=683462393438"></script>
+<script join src="js/user.js?v=424608820713"></script>
+<script join src="js/module.js?v=74649550647"></script>
+<script join src="js/navn.js?v=280584361629"></script>
+<script join src="js/validation.js?v=147667818248"></script>
+<script join src="js/_map.js?v=979449820073"></script>
+<script join src="js/localization.js?v=153723951507"></script>
+<script join src="js/kit.js?v=84765050714"></script>
+<script join src="js/satolist.js?v=9399675068"></script>
+<script join src="js/messenger2/clientrtc.js?v=648573600607"></script>
+<script join src="js/app.js?v=965960302931"></script>
+<script join src="js/main.js?v=298595442061"></script>
 
 
 
