@@ -9548,8 +9548,8 @@
                     type = 'bitchute';
 					id = test[6];
 					
-			    }else if (test[3].indexOf('peer.tube') > -1) {
-                    type = 'peertube'
+			    }	else if (test[3].indexOf('peer.tube') > -1) {
+                    type = 'peertube';
 			        id = test[8];
 			    }
 

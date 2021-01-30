@@ -9,26 +9,26 @@
 
 					<div class="infomain">
 						<div class="caption">
-							<b>Help Center</b>						
+							<b><%=e('e14100')%></b>						
 						</div>
 						<div class="tips">
 							
-							<div class="tipitem"><a href="https://pocketnet.app/blockexplorer/" external="external">Block Explorer</a></div>
+							<div class="tipitem"><a href="https://pocketnet.app/blockexplorer/" external="external"><%=e('e14101')%></a></div>
 
-							<div class="tipitem" page="faq">F.A.Q.</div>
+							<div class="tipitem" page="faq"><%=e('e14102')%></div>
 							<!--<div class="tipitem" page="curation">Specifics of curation on Pocketnet</div>
 							<div class="tipitem" page="racism">Important Note on Racism</div>
 
 							<div class="tipitem" page="differents">How is Pocketnet different from...</div>
 							<div class="tipitem" page="ecosystem">Pocketnet ecosystem</div>-->
 
-							<div class="tipitem" page="roadmap">Roadmap</div>
-							<div class="tipitem" page="node">Node Setup</div>
-							<div class="tipitem" page="videos">Videos</div>
+							<div class="tipitem" page="roadmap"><%=e('e14103')%></div>
+							<div class="tipitem" page="node"><%=e('e14104')%></div>
+							<div class="tipitem" page="videos"><%=e('e14105')%></div>
 
 							<% if(os() && self.app.platform.applications[os()] && typeof _Electron == 'undefined' && !window.cordova) {%>
 								<div class="tipitem">
-									<a href="applications">Applications</a>
+									<a href="applications"><%=e('e14106')%></a>
 								</div>
 							<% } %>
 							
@@ -42,7 +42,7 @@
 
 					<div class="cell version">
 						<div class="infoversion">
-							<span class="checking"><i class="fas fa-spinner fa-spin"></i></span> <%- version %> <span class="checkversion">Check for updates</span> 
+							<span class="checking"><i class="fas fa-spinner fa-spin"></i></span> <%- version %> <span class="checkversion"><%=e('e14107')%></span> 
 						</div>
 					</div>				
 				
