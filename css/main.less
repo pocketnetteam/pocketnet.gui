@@ -1865,6 +1865,7 @@ input[type=radio].radio:checked + label {
         .center();
        
     }
+
     .wndinner{
         .center();
         width: 1024px;
@@ -1933,6 +1934,7 @@ input[type=radio].radio:checked + label {
             }
         }
     }
+
     .leftbg{
         position: absolute;
         left: -60px;
@@ -2265,6 +2267,30 @@ input[type=radio].radio:checked + label {
                     display: none;
                 }
             }
+        }
+    }
+}
+
+.wnd.hiddenState {
+    position: fixed;
+    width: 250px;
+    height: 50px !important;
+
+    top: auto !important;
+    right: auto;
+    bottom: 10px;
+    left: 10px;
+
+    .wndback {
+        display: none;
+    }
+
+    .wndinner {
+        margin: 0;
+
+        .wndcontent {
+            padding: 0;
+            height: 100%;
         }
     }
 }
