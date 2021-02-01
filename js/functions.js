@@ -700,7 +700,18 @@
 
 				
 				$('#habla_beta_container_do_not_rely_on_div_classes_or_names').css('display', "block");
-			}
+			},
+
+			hide : function(cl, key) {
+				// wnd.find('.wndback').css('display', 'none');
+				wnd.find('.buttons').addClass('hidden');
+				wnd.addClass('hiddenState');
+				wnd.find('.wndcontent > div').addClass('rolledUp');
+
+				if(!nooverflow) {
+					app.actions.onScroll();
+				}
+			},
 		}
 
 		self.buttonState = function(index, state){
@@ -764,6 +775,7 @@
 		self.find = find;
 		self.close = actions.close;
 		self.el = wnd;
+		self.hide = actions.hide;
 
 		return self;
 	}
