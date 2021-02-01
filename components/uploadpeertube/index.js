@@ -90,74 +90,74 @@ var uploadpeertube = (function(){
 						html : '<i class="fas fa-upload"></i> Upload',
 						fn : function(wnd, wndObj){
 							wndObj.hide();
-							// var videoInputFile = el.videoInput.prop('files');
+							var videoInputFile = el.videoInput.prop('files');
 
-							// var videoWallpaperFile = el.videoWallpaper.prop('files');
-							// // var wallpaperError = wnd.find('.wallpaper-type-error');
+							var videoWallpaperFile = el.videoWallpaper.prop('files');
+							// var wallpaperError = wnd.find('.wallpaper-type-error');
 
-							// var videoName = wnd.find('.upload-video-name').val();
-							// var nameError = wnd.find('.name-type-error');
+							var videoName = wnd.find('.upload-video-name').val();
+							var nameError = wnd.find('.name-type-error');
 
-							// nameError.text('');
+							nameError.text('');
 
-							// var filesWrittenObject = {};
+							var filesWrittenObject = {};
 
-							// // validation
-							// if (!videoInputFile[0]) {
-							// 	el.videoError.text('No video selected');
-							// 	el.videoError.addClass('error-message');
+							// validation
+							if (!videoInputFile[0]) {
+								el.videoError.text('No video selected');
+								el.videoError.addClass('error-message');
 
-							// 	return;
-							// }
-							// if (!videoInputFile[0].type.includes('video')) {
-							// 	el.videoError.text('Incorrect video format');
-							// 	el.videoError.addClass('error-message');
+								return;
+							}
+							if (!videoInputFile[0].type.includes('video')) {
+								el.videoError.text('Incorrect video format');
+								el.videoError.addClass('error-message');
 
-							// 	return;
-							// };
+								return;
+							};
 
-							// filesWrittenObject.video = videoInputFile[0];
+							filesWrittenObject.video = videoInputFile[0];
 
-							// if (videoWallpaperFile[0]) {
-							// 	console.log(videoWallpaperFile[0].type);
+							if (videoWallpaperFile[0]) {
+								console.log(videoWallpaperFile[0].type);
 								
-							// 	if (videoWallpaperFile[0].type !== 'image/jpeg' && videoWallpaperFile[0].type !== 'image/jpg') {
-							// 		el.wallpaperError.text('Incorrect wallpaper format. Supported: .jpg, .jpeg');
-							// 		el.wallpaperError.addClass('error-message');
+								if (videoWallpaperFile[0].type !== 'image/jpeg' && videoWallpaperFile[0].type !== 'image/jpg') {
+									el.wallpaperError.text('Incorrect wallpaper format. Supported: .jpg, .jpeg');
+									el.wallpaperError.addClass('error-message');
 
-							// 		return;
-							// 	};
+									return;
+								};
 
-							// 	filesWrittenObject.image = videoWallpaperFile[0];
-							// }
-							// if (!videoName) {
-							// 	nameError.text('Name is empty');
+								filesWrittenObject.image = videoWallpaperFile[0];
+							}
+							if (!videoName) {
+								nameError.text('Name is empty');
 
-							// 	return;
-							// }
+								return;
+							}
 
-							// filesWrittenObject.name = videoName;
+							filesWrittenObject.name = videoName;
 
-							// filesWrittenObject.uploadFunction = function(percentComplete){
-							// 	var formattedProgress = percentComplete.toFixed(2);
+							filesWrittenObject.uploadFunction = function(percentComplete){
+								var formattedProgress = percentComplete.toFixed(2);
 
-							// 	el.uploadProgress.find('.upload-progress-bar').css('width', formattedProgress + '%');
-							// 	el.uploadProgress.find('.upload-progress-percentage').text(formattedProgress + '%');
-							// }
+								el.uploadProgress.find('.upload-progress-bar').css('width', formattedProgress + '%');
+								el.uploadProgress.find('.upload-progress-percentage').text(formattedProgress + '%');
+							}
 
-							// filesWrittenObject.successFunction = function(response){
-							// 	if (response === 'error') {
-							// 		sitemessage('Uploading error');
+							filesWrittenObject.successFunction = function(response){
+								if (response === 'error') {
+									sitemessage('Uploading error');
 
-							// 		return;
-							// 	};
+									return;
+								};
 
-							// 	actions.added(response);
-							// 	wndObj.close();
-							// }
+								actions.added(response);
+								wndObj.close();
+							}
 
 							el.uploadProgress.removeClass('hidden');
-							// self.app.peertubeHandler.uploadVideo(filesWrittenObject);
+							self.app.peertubeHandler.uploadVideo(filesWrittenObject);
 						}
 					}
 

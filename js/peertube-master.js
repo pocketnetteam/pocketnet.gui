@@ -1,8 +1,8 @@
 PeerTubeHandler = function(app) {
 
-    const baseUrl = 'https://pocketnetpeertube.nohost.me/api/v1/';
+    const baseUrl = 'https://pocketnetpeertube1.nohost.me/api/v1/';
 
-    const watchUrl = 'https://pocketnetpeertube.nohost.me/videos/watch/';
+    const watchUrl = 'https://pocketnetpeertube1.nohost.me/videos/watch/';
 
     const apiHandler = {
 

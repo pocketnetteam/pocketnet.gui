@@ -195,6 +195,8 @@ var share = (function(){
 
 				if (type === 'addVideo') {
 
+					el.peertube.addClass('disabledShare');
+
 					self.nav.api.load({
 						open : true,
 						id : 'uploadpeertube',
@@ -225,6 +227,7 @@ var share = (function(){
 									if (renders[type])
 										renders[type]();
 									
+									el.peertube.removeClass('disabledShare');
 								}
 							}
 						},
