@@ -1,0 +1,32 @@
+<div id="<%-module.map.id%>">
+	<header class="upload-header">
+		<section class="logo-container">
+			<img src="img/Logo_de_PeerTube.svg">
+		</section>
+		<h1>Start a live stream via PeerTube:</h1>
+	</header>
+	<section class="main-upload-fields activeOnRolled">
+		<div class="upload-field-container">
+			<label for="upload-video-file" class="upload-peertube-label">Select video file:</label>
+			<input type="file" class="upload-video-file hidden" id="upload-video-file">
+			<span class="type-error-field file-type-error"></span>
+		</div>
+		<div class="upload-field-container">
+			<label for="upload-video-wallpaper" class="upload-peertube-label">Select video preview wallpaper:</label>
+			<input type="file" class="upload-video-wallpaper hidden" id="upload-video-wallpaper" accept=".jpg,.jpeg">
+			<span class="type-error-field wallpaper-type-error"></span>
+		</div>
+		<div class="upload-field-container">
+			<!-- <label for="upload-video-name">Select video file:</label> -->
+			<input type="text" class="upload-video-name" id="upload-video-name" placeholder="Enter video title: ">
+			<span class="type-error-field name-type-error"></span>
+		</div>
+		<div class="upload-progress-container hidden activeOnRolled">
+			<div class="upload-progress-caption">
+				<span class="bold-font">Uploaded:</span>
+				<span class="upload-progress-percentage"></span>
+			</div>
+			<div class="upload-progress-bar"></div>
+		</div>		
+	</section>
+</div>

@@ -243,6 +243,56 @@ var share = (function(){
 					return true;
 				} 
 
+				if (type === 'addStream') {
+
+					el.peertubeLiveStream .addClass('disabledShare');
+
+					self.nav.api.load({
+						open : true,
+						id : 'streampeertube',
+						inWnd : true,
+
+						history : true,
+
+						essenseData : {
+							storage : storage,
+							value : value,
+							actions : {
+								added : function(link){
+									var type = 'url';
+
+									console.log('Finished!', link, new Date());
+									var result = currentShare[type].set(link)
+
+									if(!essenseData.share){
+										state.save()
+									}
+
+									if(!result && errors[type]){
+
+										sitemessage(errors[type])
+
+									}								
+
+									if (renders[type])
+										renders[type]();
+									
+									el.peertubeLiveStream.removeClass('disabledShare');
+								}
+							},
+
+							closeClbk : function() {
+								el.peertubeLiveStream.removeClass('disabledShare');
+							}
+						},
+
+						clbk : function(p){
+							external = p
+						}
+					})
+					return true;
+				} 
+
 				if(type == 'article'){
 					self.nav.api.load({
 						open : true,
@@ -1123,6 +1173,7 @@ var share = (function(){
 					el.post.on('click', events.post)
 
 					el.peertube = el.c.find('.peertube');
+					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
 					el.peertube.on('click', async function() {
 						console.log('>>>>>>>>usertoken', self.app.peertubeHandler.userToken);
