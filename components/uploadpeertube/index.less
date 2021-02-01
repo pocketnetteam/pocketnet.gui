@@ -1,0 +1,87 @@
+@import "../../css/__cssvar";
+
+#uploadpeertube{
+    width: 100%;
+
+    .upload-header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .type-error-field {
+        color: #0a0c17;
+    }
+
+    .error-message {
+        color: @color-bad;
+    }
+
+    .logo-container {
+        img {
+            width: 1em;
+        }
+
+        margin-right: 0.5em;
+    }
+
+    .upload-field-container {
+       color: @color-add;
+
+       .upload-peertube-label {
+           text-decoration: underline;
+       }
+    }
+
+    .upload-field-container:not(:first-child){
+        margin-top: @rhythm * 2;
+    }
+
+    label {
+        cursor: pointer;
+    }
+
+    .bold-font {
+        font-weight: bold;
+    }
+
+    .upload-video-name {
+        border-width: 0;
+
+        border-bottom-width: 1px;
+    }
+
+    .upload-progress-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+
+        margin-top: @rhythm * 4;
+    }
+
+    .upload-progress-bar {
+        height: 1px;
+        width: 100%;
+
+        background-color: green;
+    }
+}
+
+
+.wnd.uploadpeertube {
+    .wndinner {
+        width: 50%;
+        height: 100%;
+
+        max-height: 300px;
+
+        overflow: scroll;
+
+        .wndcontent {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+        }
+    }
+}

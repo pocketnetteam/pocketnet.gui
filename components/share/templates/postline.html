@@ -11,6 +11,11 @@
             <div class="item images tooltip" embeding="images" title="<%=e('saddimages')%>">
                 <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
             </div>
+            <% if (app.user.usePeertube) {%>
+                <div class="item peertube tooltip" embeding="addVideo" title="<%=e('saddimages')%>">
+                    <i class="fas fa-video"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
+                </div>
+            <%} %>
 
             <% if(!share.aliasid && !share.repost.v) {%>
             
