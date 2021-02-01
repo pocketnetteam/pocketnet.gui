@@ -229,6 +229,10 @@ var share = (function(){
 									
 									el.peertube.removeClass('disabledShare');
 								}
+							},
+
+							closeClbk : function() {
+								el.peertube.removeClass('disabledShare');
 							}
 						},
 
