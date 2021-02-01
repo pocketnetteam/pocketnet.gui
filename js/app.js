@@ -434,6 +434,8 @@ Application = function(p)
 
 		self.platform = new Platform(self, self.options.listofnodes);
 
+		self.peertubeHandler = new PeerTubeHandler(app);
+
 		self.options.platform = self.platform
 
 		self.platform.sdk.users.addressByName(self.ref, function(r){
@@ -584,8 +586,7 @@ Application = function(p)
 									
 								}
 
-								
-
+								self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
 							}
 
 

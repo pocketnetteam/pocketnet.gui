@@ -205,7 +205,7 @@ var video = (function(){
 			}
 			
 			if(info.source == 'peertube'){
-                code = '<iframe width="560" height="315" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen src="https://peer.tube/videos/embed/'+info.id+'/"></iframe>'
+                code = '<iframe width="560" height="315" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen src="https://pocketnetpeertube1.nohost.me/videos/embed/'+info.id+'/"></iframe>'
             }
             
 			

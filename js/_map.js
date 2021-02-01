@@ -41,6 +41,7 @@ __map =  {
 		"js/kit.js",
 		"js/satolist.js",
 		"js/messenger2/clientrtc.js",
+		"js/peertube-master.js",
 		"js/app.js",
 		"js/main.js",
 	],
@@ -430,6 +431,34 @@ __map =  {
 			},
 			
 			
+		},
+
+		uploadpeertube : {
+			uri : "uploadpeertube",
+			href : "uploadpeertube",
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
 		},
 
 		/*rep : {
