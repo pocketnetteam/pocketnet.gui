@@ -929,3 +929,7 @@ ____loclib.e14105 = 'Videos'
 ____loclib.e14106 = 'Applications'
 ____loclib.e14107 = 'Check for updates'
 ____loclib.e14108 = 'Share answer'
+
+
+____loclib.peertubeAddVideo = 'Add video to post'
+____loclib.peertubeAddStream = 'Add live stream to post'
