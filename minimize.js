@@ -17,7 +17,7 @@ if(prodaction === 'false') prodaction = false;
 
 var mapJsPath = './js/_map.js';
 var indexPathTpl = './index.tpl';
-var indexPath = './index.html';
+var indexPath = './index.php';
 
 var mapJs2Path = './js/_mapv2.js';
 
@@ -78,7 +78,6 @@ fs.exists(mapJs2Path, function (exists) {
 			  			fs.exists(modulepath, function (exists) {
 			  				if(exists){
 
-								console.log(modulepath)
 
 			  					fs.readFile(modulepath, function read(err, data) {
 					            	if (err) {
