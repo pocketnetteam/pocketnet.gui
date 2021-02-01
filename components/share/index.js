@@ -474,6 +474,11 @@ var share = (function(){
 
 				var l = currentShare.url.v
 
+				if (l.includes('pocketnetpeertube')) {
+					self.app.peertubeHandler.removeVideo(l);
+				}
+
+
 				currentShare.url.set();
 
 				var text = el.eMessage[0].emojioneArea.getText();
