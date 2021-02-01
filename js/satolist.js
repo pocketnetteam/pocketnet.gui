@@ -738,11 +738,11 @@ Platform = function (app, listofnodes) {
             //domainname
             if (meta.type == 'peertube') {
                 
-                _url = `https://peer.tube/videos/embed/${meta.id}`
+                _url = `https://pocketnetpeertube1.nohost.me/videos/embed/${meta.id}`
             }
 
             if (meta.type == 'peertube') {
-                _url = `https://peer.tube/videos/embed/${meta.id}`
+                _url = `https://pocketnetpeertube1.nohost.me/videos/embed/${meta.id}`
             }
 
             if (meta.type == 'youtube') {

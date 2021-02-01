@@ -9527,7 +9527,7 @@
 	parseVideo = function(url) {
 		var _url = url;
 
-	    var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
+	    var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(pocketnetpeertube1\.nohost\.me|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
 	    var type = null;
 		var id = null;
 		
@@ -9548,7 +9548,7 @@
                     type = 'bitchute';
 					id = test[6];
 					
-			    }	else if (test[3].indexOf('peer.tube') > -1) {
+			    }	else if (test[3].indexOf('pocketnetpeertube1.nohost.me') > -1) {
                     type = 'peertube';
 			        id = test[8];
 			    }
