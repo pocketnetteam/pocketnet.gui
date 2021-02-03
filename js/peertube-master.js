@@ -218,6 +218,10 @@ PeerTubeHandler = function (app) {
 
           parameters.successFunction(`${watchUrl}${json.video.uuid}`);
         },
+
+        fail: () => {
+            return parameters.successFunction('error');
+        }
       },
     });
   };
@@ -232,6 +236,84 @@ PeerTubeHandler = function (app) {
         headers: {
           Authorization: `Bearer ${this.userToken}`,
         },
+      },
+    });
+  };
+
+  this.startLive = async (parameters) => {
+    const channelInfo = await this.getChannel();
+
+    const bodyOfQuery = {
+      privacy: 1,
+      'scheduleUpdate[updateAt]': new Date().toISOString(),
+      channelId: channelInfo.id,
+      name: parameters.name || `${this.userName}:${new Date().toISOString()}`,
+    };
+
+    if (parameters.image) {
+      bodyOfQuery.previewfile = parameters.image;
+      bodyOfQuery.thumbnailfile = parameters.image;
+    }
+
+    const formData = new FormData();
+
+    Object.keys(bodyOfQuery).map((key) =>
+      formData.append(key, bodyOfQuery[key]),
+    );
+
+    apiHandler.upload({
+      method: 'videos/live',
+      parameters: {
+        type: 'POST',
+        method: 'POST',
+        contentType: false,
+        processData: false,
+        data: formData,
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+
+        // xhr: () => {
+        //   const xhr = $.ajaxSettings.xhr(); // получаем объект XMLHttpRequest
+        //   xhr.upload.addEventListener(
+        //     'progress',
+        //     function (evt) {
+        //       // добавляем обработчик события progress (onprogress)
+        //       if (evt.lengthComputable) {
+        //         const percentComplete = (evt.loaded / evt.total) * 100;
+
+        //         this.uploadProgress = percentComplete;
+        //         parameters.uploadFunction(percentComplete);
+        //       }
+        //     },
+        //     false,
+        //   );
+        //   return xhr;
+        // },
+
+        success: (json) => {
+          if (!json.video) return parameters.successFunction('error');
+
+          return apiHandler.upload({
+            method: `videos/live/${json.video.uuid}`,
+            parameters: {
+              type: 'GET',
+              headers: {
+                Authorization: `Bearer ${this.userToken}`,
+              },
+              success: (response) => {
+                parameters.successFunction({
+                  video: `${watchUrl}${json.video.uuid}`,
+                  ...response,
+                });
+              },
+            },
+          });
+        },
+
+        fail: () => {
+            return parameters.successFunction('error');
+        }
       },
     });
   };

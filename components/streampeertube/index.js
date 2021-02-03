@@ -10,9 +10,13 @@ var streampeertube = (function () {
 
     var el;
 
-    var actions = {};
+    var actions = {
+      
+    };
 
-    var events = {};
+    var events = {
+  
+    };
 
     var renders = {};
 
@@ -21,8 +25,7 @@ var streampeertube = (function () {
       load: function () {},
     };
 
-    var initEvents = function () {
-    };
+    var initEvents = function () {};
 
     return {
       primary: primary,
@@ -31,6 +34,21 @@ var streampeertube = (function () {
         ed = p.settings.essenseData;
 
         actions = ed.actions;
+
+        actions.preloader = function(show){
+
+          if(!el.c) return
+      
+          if(show){
+            el.c.addClass('loading')
+          }
+          else
+          {
+            el.c.removeClass('loading')
+          }
+      
+          
+        };
 
         var data = {};
 
@@ -62,9 +80,69 @@ var streampeertube = (function () {
         buttons: {
           close: {
             class: 'close',
-            html: '<i class="fas fa-upload"></i> Upload',
+            html: '<i class="fas fa-broadcast-tower"></i> Go live',
             fn: function (wnd, wndObj) {
-              wndObj.close();
+
+              var videoWallpaperFile = el.videoWallpaper.prop('files');
+
+              var videoName = wnd.find('.upload-video-name').val();
+              var nameError = wnd.find('.name-type-error');
+
+              nameError.text('');
+
+              var filesWrittenObject = {};
+
+              if (videoWallpaperFile[0]) {
+                if (
+                  videoWallpaperFile[0].type !== 'image/jpeg' &&
+                  videoWallpaperFile[0].type !== 'image/jpg'
+                ) {
+                  el.wallpaperError.text(
+                    'Incorrect wallpaper format. Supported: .jpg, .jpeg',
+                  );
+                  el.wallpaperError.addClass('error-message');
+
+                  return;
+                }
+
+                filesWrittenObject.image = videoWallpaperFile[0];
+              }
+              if (!videoName) {
+                nameError.text('Name is empty');
+
+                return;
+              }
+
+              filesWrittenObject.name = videoName;
+
+              filesWrittenObject.uploadFunction = function (percentComplete) {
+                var formattedProgress = percentComplete.toFixed(2);
+
+                el.uploadProgress
+                  .find('.upload-progress-bar')
+                  .css('width', formattedProgress + '%');
+                el.uploadProgress
+                  .find('.upload-progress-percentage')
+                  .text(formattedProgress + '%');
+              };
+
+              filesWrittenObject.successFunction = function (response) {
+                if (response === 'error') {
+                  sitemessage('Uploading error');
+
+                  return;
+                }
+
+                console.log('Finished', response);
+
+                actions.added(response.video);
+                actions.preloader(false);
+                // wndObj.close();
+              };
+
+              // el.uploadProgress.removeClass('hidden');
+              self.app.peertubeHandler.startLive(filesWrittenObject);
+              actions.preloader(true);
             },
           },
         },

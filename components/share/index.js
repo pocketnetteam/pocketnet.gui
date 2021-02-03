@@ -1176,7 +1176,7 @@ var share = (function(){
 					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
 					el.peertube.on('click', async function() {
-						console.log('>>>>>>>>usertoken', self.app.peertubeHandler.userToken);
+						console.log('>>>>>>>>usertoken', self.app.peertubeHandler.userName, self.app.peertubeHandler.password);
 					});
 
 

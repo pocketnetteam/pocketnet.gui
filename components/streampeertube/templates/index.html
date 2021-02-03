@@ -1,11 +1,16 @@
 <div id="<%-module.map.id%>">
 	<header class="upload-header">
-		<section class="logo-container">
-			<img src="img/Logo_de_PeerTube.svg">
-		</section>
 		<h1>Start a live stream via PeerTube:</h1>
 	</header>
+	<section class="logo-container">
+		<img src="img/liveStream.svg">
+	</section>
 	<section class="main-upload-fields activeOnRolled">
+		<div class="upload-field-container">
+			<label for="upload-video-wallpaper" class="upload-peertube-label">Select video preview wallpaper:</label>
+			<input type="file" class="upload-video-wallpaper hidden" id="upload-video-wallpaper" accept=".jpg,.jpeg">
+			<span class="type-error-field wallpaper-type-error"></span>
+		</div>
 		<div class="upload-field-container">
 			<input type="text" class="upload-video-name" id="upload-video-name" placeholder="Enter stream title: ">
 			<span class="type-error-field name-type-error"></span>
