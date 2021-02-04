@@ -25,7 +25,16 @@ var streampeertube = (function () {
       load: function () {},
     };
 
-    var initEvents = function () {};
+    var initEvents = function () {
+      el.videoWallpaper.change(function (evt) {
+        var fileName = evt.target.files[0].name;
+
+        el.wallpaperError.text(
+          fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
+        );
+        el.wallpaperError.removeClass('error-message');
+      });
+    };
 
     return {
       primary: primary,
@@ -83,6 +92,11 @@ var streampeertube = (function () {
             html: '<i class="fas fa-broadcast-tower"></i> Go live',
             fn: function (wnd, wndObj) {
 
+              wnd.find('.button.close').addClass('disabledButton');
+
+              wnd.find('.content-section').addClass('hidden')
+              wnd.find('.preloader-section').removeClass('hidden');
+
               var videoWallpaperFile = el.videoWallpaper.prop('files');
 
               var videoName = wnd.find('.upload-video-name').val();
@@ -127,13 +141,32 @@ var streampeertube = (function () {
               };
 
               filesWrittenObject.successFunction = function (response) {
-                if (response === 'error') {
-                  sitemessage('Uploading error');
+
+                var resultElement = wnd.find('.result-section');
+
+                wnd.find('.preloader-section').addClass('hidden');
+
+                if (response.error) {
+                  var error = deep(response, 'error.responseJSON.errors') || {};
+
+                  var message = (Object.values(error)[0] || {}).msg;
+
+                  sitemessage(message || 'Uploading error');
+                  wnd.find('.content-section').removeClass('hidden')
+                  wnd.find('.button.close').removeClass('disabledButton');
 
                   return;
                 }
 
                 console.log('Finished', response);
+                resultElement.removeClass('hidden')
+
+
+                var rtmpInput = resultElement.find('.result-video-rtmp');
+                var streamKeyInput = resultElement.find('.result-video-streamKey');
+
+                rtmpInput.val(response.rtmpUrl);
+                streamKeyInput.val(response.streamKey);
 
                 actions.added(response.video);
                 actions.preloader(false);
@@ -142,7 +175,6 @@ var streampeertube = (function () {
 
               // el.uploadProgress.removeClass('hidden');
               self.app.peertubeHandler.startLive(filesWrittenObject);
-              actions.preloader(true);
             },
           },
         },

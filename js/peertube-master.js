@@ -8,7 +8,9 @@ PeerTubeHandler = function (app) {
       $.ajax({
         url: `${baseUrl}${method}`,
         ...parameters,
-      });
+      })
+        .done((res) => parameters.success(res))
+        .fail((res) => parameters.fail(res));
     },
 
     run({ method, parameters }) {
@@ -220,8 +222,8 @@ PeerTubeHandler = function (app) {
         },
 
         fail: () => {
-            return parameters.successFunction('error');
-        }
+          return parameters.successFunction('error');
+        },
       },
     });
   };
@@ -302,6 +304,8 @@ PeerTubeHandler = function (app) {
                 Authorization: `Bearer ${this.userToken}`,
               },
               success: (response) => {
+                debugger;
+
                 parameters.successFunction({
                   video: `${watchUrl}${json.video.uuid}`,
                   ...response,
@@ -311,9 +315,9 @@ PeerTubeHandler = function (app) {
           });
         },
 
-        fail: () => {
-            return parameters.successFunction('error');
-        }
+        fail: (res) => {
+          return parameters.successFunction({ error: res });
+        },
       },
     });
   };
