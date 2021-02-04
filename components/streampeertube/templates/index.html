@@ -39,33 +39,38 @@
   </section>
 
   <section class="result-section hidden">
-	<div class="upload-field-container">
-        <input
-          type="text"
-          class="result-video-rtmp"
-          id="result-video-rtmp"
-          placeholder="Enter stream title: "
-        />
-        <span class="type-error-field name-type-error"></span>
+    <header class="upload-header">
+      <h1>Copy these links to your streaming software:</h1>
+    </header>
+    <div class="upload-field-container">
+      <label for="result-video-rtmp">RTMP Url:</label>
+      <input
+        type="text"
+        class="result-video-rtmp"
+        id="result-video-rtmp"
+        readonly
+      />
+      <span class="type-error-field name-type-error"></span>
     </div>
-	<div class="upload-field-container">
-        <input
-          type="text"
-          class="result-video-streamKey"
-          id="result-video-streamKey"
-          placeholder="Enter stream title: "
-        />
-        <span class="type-error-field name-type-error"></span>
+    <div class="upload-field-container">
+      <label for="result-video-streamKey">Stream Key:</label>
+      <input
+        type="text"
+        class="result-video-streamKey"
+        id="result-video-streamKey"
+        readonly
+      />
+      <span class="type-error-field name-type-error"></span>
     </div>
   </section>
 
   <section class="preloader-section hidden">
-	<div class="sLoader">
-		<div class="prwrapper">
-		  <div class="prwrappermiddle">
-			<div class="preloader5"><span></span><span></span><span></span></div>
-		  </div>
-		</div>
-	  </div>
+    <div class="sLoader">
+      <div class="prwrapper">
+        <div class="prwrappermiddle">
+          <div class="preloader5"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
   </section>
 </div>

@@ -5,6 +5,8 @@ var streampeertube = (function () {
 
   var ed = {};
 
+  var streamCreated = false;
+
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
@@ -92,10 +94,19 @@ var streampeertube = (function () {
             html: '<i class="fas fa-broadcast-tower"></i> Go live',
             fn: function (wnd, wndObj) {
 
-              wnd.find('.button.close').addClass('disabledButton');
+              if (streamCreated) {
+                return wndObj.close();
+              }
 
-              wnd.find('.content-section').addClass('hidden')
-              wnd.find('.preloader-section').removeClass('hidden');
+              var closeButton = wnd.find('.button.close');
+              var contentSection = wnd.find('.content-section');
+              var preloaderSection = wnd.find('.preloader-section');
+
+              closeButton.addClass('disabledButton');
+              closeButton.text('Starting...');
+
+              contentSection.addClass('hidden')
+              preloaderSection.removeClass('hidden');
 
               var videoWallpaperFile = el.videoWallpaper.prop('files');
 
@@ -144,7 +155,7 @@ var streampeertube = (function () {
 
                 var resultElement = wnd.find('.result-section');
 
-                wnd.find('.preloader-section').addClass('hidden');
+                preloaderSection.addClass('hidden');
 
                 if (response.error) {
                   var error = deep(response, 'error.responseJSON.errors') || {};
@@ -152,15 +163,19 @@ var streampeertube = (function () {
                   var message = (Object.values(error)[0] || {}).msg;
 
                   sitemessage(message || 'Uploading error');
-                  wnd.find('.content-section').removeClass('hidden')
-                  wnd.find('.button.close').removeClass('disabledButton');
+                  contentSection.removeClass('hidden')
+                  closeButton.removeClass('disabledButton');
+                  closeButton.html('<i class="fas fa-broadcast-tower"></i> Go Live');
 
                   return;
                 }
 
-                console.log('Finished', response);
-                resultElement.removeClass('hidden')
+                streamCreated = true;
 
+                resultElement.removeClass('hidden')
+                closeButton.html('<i class="fas fa-check"></i> Stream Created');
+                closeButton.removeClass('disabledButton');
+                closeButton.addClass('successButton');
 
                 var rtmpInput = resultElement.find('.result-video-rtmp');
                 var streamKeyInput = resultElement.find('.result-video-streamKey');

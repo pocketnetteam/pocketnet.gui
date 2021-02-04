@@ -304,8 +304,6 @@ PeerTubeHandler = function (app) {
                 Authorization: `Bearer ${this.userToken}`,
               },
               success: (response) => {
-                debugger;
-
                 parameters.successFunction({
                   video: `${watchUrl}${json.video.uuid}`,
                   ...response,

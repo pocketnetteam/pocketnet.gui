@@ -38,6 +38,31 @@
         margin-top: @rhythm * 2;
     }
 
+    .result-section {
+        input {
+            width: 50%;
+            min-width: 200px;
+        }
+
+        .upload-field-container:not(:first-child){
+            margin-top: @rhythm * 4;
+        }
+
+        .upload-field-container {
+            position: relative;
+
+            label {
+                position: absolute;
+                font-weight: bold;
+                font-size: 0.8em;
+                background-color: white;
+                top: -10px;
+                left: 10px;
+                padding: 2px;
+            }
+        }
+    }
+
     label {
         cursor: pointer;
     }
