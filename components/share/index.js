@@ -126,10 +126,13 @@ var share = (function(){
 
 			autoFilled : function(){
 
+				console.log('current', currentShare);
+
 				actions.filled('i', currentShare.images.v.length != 0)
 				actions.filled('u', currentShare.url.v)
 				actions.filled('t',  currentShare.tags.v.length!= 0)					
 				actions.filled('cm', currentShare.message.v || currentShare.caption.v)
+				actions.filled('p', currentShare.poll.v.list)
 
 			},
 
@@ -320,6 +323,8 @@ var share = (function(){
 					return
 				}
 
+				
+
 				if(type == 'times'){
 
 					dialog({
@@ -399,6 +404,9 @@ var share = (function(){
 						}
 					})
 				}
+
+		
+
 
 				
 			},
@@ -524,6 +532,18 @@ var share = (function(){
 					state.save()
 				}
 			},
+
+			removePoll : function(){
+
+				currentShare.poll.set();
+
+				if(!essenseData.share){
+					state.save()
+				}
+				/*el.message.val(text);
+				el.message.change();*/
+			},
+
 			removelink : function(){
 
 				var l = currentShare.url.v
@@ -1038,9 +1058,51 @@ var share = (function(){
 			embeding : function(){
 				var type = $(this).attr('embeding')
 
+
 				if (type == 'language'){
 
 					actions.language()
+
+					return
+				}
+
+				if (type == 'poll'){
+
+					dialog({
+						header: "Create new poll",
+						class : "one joinbeta",
+						poll: true,
+						btn1text : 'Create',
+						success: function(){
+
+							var poll = $('.dialog .poll');
+							
+							var title = poll.find('.title .input').val();
+
+							var list = poll.find('.poll-item .input');
+
+							var values = list.map(function(idx, item){
+								return $(item).val();
+							})
+
+							.filter(function(idx, item){
+								return item;
+							})
+
+							values = Array.from(values);
+
+							var obj = {
+								title: title,
+								list: values
+							}
+
+							currentShare.poll.set(obj);
+
+							renders.poll()
+
+							console.log('create!!!', values, currentShare);
+						}
+					})
 
 					return
 				}
@@ -1140,6 +1202,12 @@ var share = (function(){
 				actions.removelink()
 
 				renders.url();
+			},
+
+			removePoll : function(){
+				actions.removePoll()
+
+				renders.poll();
 			}
 
 
@@ -1514,6 +1582,7 @@ var share = (function(){
 			},
 
 			images : function(clbk){
+
 				self.shell({
 					name :  'images',
 					turi : 'embeding',
@@ -1668,6 +1737,100 @@ var share = (function(){
 					
 				
 				})
+			},
+
+			poll : function(clbk){
+
+				var poll = currentShare.poll.get();
+
+				console.log('poll', poll, el);
+
+				var pollWrapper = p.el.find('.pollWrapper');
+
+				var content = '';
+				
+				var title = poll.title;
+
+				if (title){
+
+					content += `<div class="title"><b>${title}</b></div>`;
+
+				}
+
+
+				if (poll.list && poll.list.length){
+
+					var list= '<div class="list">';
+
+					poll.list.forEach(function(v){
+
+						list += `<div class="list-item">${v}</div>`
+					})
+
+					list += '</div>';
+
+					content += list;
+					
+				}
+
+				var removeWrapper = '<div class="removeWrapper"><div class="removelink"><i class="fas fa-times"></i></div></div>'
+
+
+				var html = '';
+
+				if (content){
+
+					html = '<div class="poll">' + content + removeWrapper + '</div>';
+				}
+
+
+				pollWrapper.html(html);
+
+				
+				p.el.find('.pollWrapper').on('click', function(){
+
+					events.removePoll();
+				})
+
+				
+				// self.shell({
+				// 	name :  'poll',
+				// 	inner : html,
+				// 	el : el.urlWrapper,
+				// 	data : {
+				// 		poll : poll,
+				// 		og : null,
+				// 		remove : true,
+
+				// 		share : currentShare
+				// 	},
+
+				// }, function(p){
+
+				// 	console.log('poll', poll, el)
+
+
+				// 	if(poll && !og){
+
+				// 		if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
+
+                //             Plyr.setup('.js-player', function(player) {
+
+				// 				player.muted = false
+				// 			});
+
+				// 		} else {
+				// 			self.app.platform.sdk.remote.get(meta.url, function(og){
+
+				// 				if(og){
+				// 					renders.url()
+				// 				}
+
+				// 			})
+				// 		}
+				// 	}
+
+				// })
 			}
 
 		}
@@ -1873,7 +2036,7 @@ var share = (function(){
 						na.push($(this).attr('part'))
 					})
 
-					currentShare.settings.a = na
+					console.log('na', na);
 
 					if(!essenseData.share){
 						state.save()
@@ -2022,6 +2185,8 @@ var share = (function(){
 				el.caption = el.c.find('.captionshare');
 				el.cpt = el.c.find('.cpt')
 				el.images = el.c.find('.imagesWrapper')
+
+				el.poll = el.c.find('.pollWrapper')
 
 				el.changeAddress = el.c.find('.changeAddress')
 

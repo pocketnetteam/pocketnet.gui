@@ -2690,6 +2690,39 @@ input[type=radio].radio:checked + label {
         .shadowSmall();
     }
 
+    .poll {
+        margin-bottom: 2em;
+
+        .description {
+
+            margin-top: 1em;
+            margin-bottom: 1em;
+            color: @color-main
+        }
+
+        .poll-item {
+
+            margin-top: 0.5em;
+
+
+        }
+
+        input{
+            width: 400px;
+        }
+
+        i {
+            margin-left: 1em;
+            color: @color-gray-light;
+            cursor: pointer;
+
+            &:hover{
+                color: @color-bad;
+            }
+        }
+
+    }
+
     .header{
         font-weight: 700;
     }

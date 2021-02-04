@@ -40,7 +40,6 @@
         "nedb": "^1.8.0",
         "yuicompressor": "^2.4.8",
         "jsdom": "=7.2.2",
-        "lambda-rate-limiter": "^2.4.29",
         "isotope-layout": "^3.0.6",
         "isotope-packery": "^2.0.1",
         "jdenticon": "^2.1.0",

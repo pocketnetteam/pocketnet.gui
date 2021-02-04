@@ -832,6 +832,42 @@ Share = function(lang){
 		v : ''
 	};
 
+	self.poll = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = {}
+			}
+			else
+			{
+				this.v = _v
+			}
+			
+			_.each(self.on.change || {}, function(f){
+				f('poll', this.v)
+			})
+
+		},
+		remove : function(poll){
+			if(!poll){
+				this.v = {}
+			}
+			else
+			{
+				removeEqual(this.v, poll)
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('poll', this.v)
+			})
+		},
+		get : function(){
+			return this.v;
+		},
+		v : {},
+		drag : true
+	};
+
 	self.ustate = function(){
 		if(self.aliasid){
 			return ''
@@ -1007,17 +1043,17 @@ Share = function(lang){
 	}
 
 	self.default = {
-		a : ['cm', 'r', 'i', 'u'],
+		a : ['cm', 'r', 'i', 'u', 'p'],
 		v : 'p',
 		videos : [],
-		image : 'a'
+		image : 'a',
 	}
 
 	self.settings = {
 		a : '',
 		v : '',
 		videos : [],
-		image : ''
+		image : '',
 	}
 
 
@@ -1621,14 +1657,14 @@ pShare = function(){
 		a : ['cm', 'i', 'u'],
 		v : 'p',
 		videos : [],
-		image : 'a'
+		image : 'a',
 	}
 
 	self.settings = {
 		a : '',
 		v : '',
 		videos : [],
-		image : ''
+		image : '',
 	}
 
 	self.isEmpty = function(){

@@ -544,6 +544,54 @@
 		
 	}
 
+	.pollWrapper{
+
+		.poll{
+			padding-top: 1em;
+			padding-bottom: 1em;
+			position: relative;
+
+			.title{
+				color: @color-main;
+			}
+	
+			.removeWrapper{
+				position: absolute;
+				left: 70px;
+				bottom: 40px;
+				
+				.removelink {
+					// position: absolute;
+					// right: 4 * @rhythm;
+					// top: 2 *  @rhythm;
+					width: 40px;
+					height: 40px;
+					line-height: 40px;
+					text-align: center;
+					color : fade(#000, 50);
+					border-radius: 50%;
+					cursor: pointer;
+					background : fade(#000, 10);
+					.transition(0.3s);
+					opacity: 0;
+	
+					&:hover{
+						background : fade(#000, 20);
+					}
+				}
+				
+			}
+	
+			&:hover{
+				.removelink{
+					opacity: 1;
+				}
+			}
+	
+		};
+	}
+
+
 	.imagesWrapper{
 			
 
