@@ -7,18 +7,16 @@ var streampeertube = (function () {
 
   var streamCreated = false;
 
+  var streamInfo = null;
+
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
     var el;
 
-    var actions = {
-      
-    };
+    var actions = {};
 
-    var events = {
-  
-    };
+    var events = {};
 
     var renders = {};
 
@@ -46,24 +44,55 @@ var streampeertube = (function () {
 
         actions = ed.actions;
 
-        actions.preloader = function(show){
+        if (ed.currentLink.includes('peertube')) {
+          var videoId = ed.currentLink.split('/').pop();
 
-          if(!el.c) return
-      
-          if(show){
-            el.c.addClass('loading')
+          if (!videoId) {
+            var data = {};
+
+            clbk(data);
+          } else {
+            
+            self.app.peertubeHandler.getLiveInfo(videoId, {
+              successFunction: (res) => {
+                console.log(clbk);
+                if (res.error) {
+                  var error = deep(res, 'error.responseJSON.errors') || {};
+  
+                  var message = (Object.values(error)[0] || {}).msg;
+  
+                  sitemessage(message || 'Server error');
+                } else {
+                  streamCreated = true;
+  
+                  streamInfo = {
+                    rtmpUrl: res.rtmpUrl,
+                    streamKey: res.streamKey,
+                  };
+                }
+  
+                var data = {};
+  
+                clbk(data);
+              },
+            });
           }
-          else
-          {
-            el.c.removeClass('loading')
-          }
-      
-          
-        };
+        } else {
 
-        var data = {};
+          var data = {};
 
-        clbk(data);
+          streamInfo = null;
+          streamCreated = false;
+
+          clbk(data);
+        }
+
+        // var data = {};
+
+        //   streamInfo = null;
+        //   streamCreated = false;
+
+        //   clbk(data);
       },
 
       destroy: function () {
@@ -80,6 +109,25 @@ var streampeertube = (function () {
         el.videoError = el.c.find('.file-type-error');
         el.wallpaperError = el.c.find('.wallpaper-type-error');
         el.uploadProgress = el.c.find('.upload-progress-container');
+        el.contentSection = el.c.find('.content-section');
+        el.resultSection = el.c.find('.result-section');
+
+        if (streamInfo) {
+          streamCreated = true;
+          el.contentSection.addClass('hidden');
+          el.resultSection.removeClass('hidden');
+
+          el.resultSection.find('.result-video-rtmp').val(streamInfo.rtmpUrl);
+          el.resultSection
+            .find('.result-video-streamKey')
+            .val(streamInfo.streamKey);
+
+          var closeButton = p.el.find(`.button.close`);
+          console.log('Close', closeButton);
+
+          closeButton.html('<i class="fas fa-check"></i> Stream Created');
+          closeButton.addClass('successButton');
+        }
 
         initEvents();
 
@@ -93,8 +141,9 @@ var streampeertube = (function () {
             class: 'close',
             html: '<i class="fas fa-broadcast-tower"></i> Go live',
             fn: function (wnd, wndObj) {
-
               if (streamCreated) {
+                streamCreated = false;
+
                 return wndObj.close();
               }
 
@@ -105,7 +154,7 @@ var streampeertube = (function () {
               closeButton.addClass('disabledButton');
               closeButton.text('Starting...');
 
-              contentSection.addClass('hidden')
+              contentSection.addClass('hidden');
               preloaderSection.removeClass('hidden');
 
               var videoWallpaperFile = el.videoWallpaper.prop('files');
@@ -152,7 +201,6 @@ var streampeertube = (function () {
               };
 
               filesWrittenObject.successFunction = function (response) {
-
                 var resultElement = wnd.find('.result-section');
 
                 preloaderSection.addClass('hidden');
@@ -163,22 +211,26 @@ var streampeertube = (function () {
                   var message = (Object.values(error)[0] || {}).msg;
 
                   sitemessage(message || 'Uploading error');
-                  contentSection.removeClass('hidden')
+                  contentSection.removeClass('hidden');
                   closeButton.removeClass('disabledButton');
-                  closeButton.html('<i class="fas fa-broadcast-tower"></i> Go Live');
+                  closeButton.html(
+                    '<i class="fas fa-broadcast-tower"></i> Go Live',
+                  );
 
                   return;
                 }
 
                 streamCreated = true;
 
-                resultElement.removeClass('hidden')
+                resultElement.removeClass('hidden');
                 closeButton.html('<i class="fas fa-check"></i> Stream Created');
                 closeButton.removeClass('disabledButton');
                 closeButton.addClass('successButton');
 
                 var rtmpInput = resultElement.find('.result-video-rtmp');
-                var streamKeyInput = resultElement.find('.result-video-streamKey');
+                var streamKeyInput = resultElement.find(
+                  '.result-video-streamKey',
+                );
 
                 rtmpInput.val(response.rtmpUrl);
                 streamKeyInput.val(response.streamKey);

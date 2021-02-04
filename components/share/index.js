@@ -252,11 +252,12 @@ var share = (function(){
 						id : 'streampeertube',
 						inWnd : true,
 
-						history : true,
+						history : false,
 
 						essenseData : {
 							storage : storage,
 							value : value,
+							currentLink : currentShare.url ? currentShare.url.v : '',
 							actions : {
 								added : function(link){
 									var type = 'url';

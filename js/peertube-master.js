@@ -9,16 +9,18 @@ PeerTubeHandler = function (app) {
         url: `${baseUrl}${method}`,
         ...parameters,
       })
-        .done((res) => parameters.success(res))
+        .done((res) => {
+          parameters.success(res);
+        })
         .fail((res) => parameters.fail(res));
     },
 
     run({ method, parameters }) {
-      return fetch(`${baseUrl}${method}`, parameters).catch((err) => {
-        console.log(err);
-
-        return err;
-      });
+      return fetch(`${baseUrl}${method}`, parameters)
+        .then((res) => res.json())
+        .catch((err) => {
+          return { error: err };
+        });
     },
   };
 
@@ -296,20 +298,8 @@ PeerTubeHandler = function (app) {
         success: (json) => {
           if (!json.video) return parameters.successFunction('error');
 
-          return apiHandler.upload({
-            method: `videos/live/${json.video.uuid}`,
-            parameters: {
-              type: 'GET',
-              headers: {
-                Authorization: `Bearer ${this.userToken}`,
-              },
-              success: (response) => {
-                parameters.successFunction({
-                  video: `${watchUrl}${json.video.uuid}`,
-                  ...response,
-                });
-              },
-            },
+          return this.getLiveInfo(json.video.uuid, {
+            successFunction: parameters.successFunction,
           });
         },
 
@@ -318,5 +308,28 @@ PeerTubeHandler = function (app) {
         },
       },
     });
+  };
+
+  this.getLiveInfo = async (id, parameters) => {
+    apiHandler
+      .run({
+        method: `videos/live/${id}`,
+        parameters: {
+          type: 'GET',
+          headers: {
+            Authorization: `Bearer ${this.userToken}`,
+          },
+        },
+      })
+      .then((res) => {
+        if (res.error) {
+          return parameters.successFunction(res);
+        }
+
+        return parameters.successFunction({
+          video: `${watchUrl}${id}`,
+          ...res,
+        });
+      });
   };
 };
