@@ -44,7 +44,7 @@ var streampeertube = (function () {
 
         actions = ed.actions;
 
-        if (ed.currentLink.includes('peertube')) {
+        if (ed.currentLink.includes(self.app.peertubeHandler.peertubeId)) {
           var videoId = ed.currentLink.split('/').pop();
 
           if (!videoId) {
@@ -52,10 +52,9 @@ var streampeertube = (function () {
 
             clbk(data);
           } else {
-            
+
             self.app.peertubeHandler.getLiveInfo(videoId, {
               successFunction: (res) => {
-                console.log(clbk);
                 if (res.error) {
                   var error = deep(res, 'error.responseJSON.errors') || {};
   
@@ -236,7 +235,6 @@ var streampeertube = (function () {
                 streamKeyInput.val(response.streamKey);
 
                 actions.added(response.video);
-                actions.preloader(false);
                 // wndObj.close();
               };
 

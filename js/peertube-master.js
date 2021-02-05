@@ -1,7 +1,9 @@
 PeerTubeHandler = function (app) {
-  const baseUrl = 'https://pocketnetpeertube1.nohost.me/api/v1/';
+  const baseUrl = 'https://pocketnetpeertube2.nohost.me/api/v1/';
 
-  const watchUrl = 'https://pocketnetpeertube1.nohost.me/videos/watch/';
+  const watchUrl = 'https://pocketnetpeertube2.nohost.me/videos/watch/';
+
+  this.peertubeId = 'peertube';
 
   const apiHandler = {
     upload({ method, parameters }) {
@@ -144,7 +146,7 @@ PeerTubeHandler = function (app) {
 
               if (clbk) clbk();
 
-              return res.json();
+              return res;
             });
 
           return retryAuth;
@@ -161,8 +163,7 @@ PeerTubeHandler = function (app) {
     return apiHandler
       .run({
         method: `video-channels/${this.userName}_channel`,
-      })
-      .then((res) => res.json());
+      });
   };
 
   this.uploadVideo = async (parameters) => {

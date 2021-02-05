@@ -196,6 +196,7 @@ var share = (function(){
 				if (type === 'addVideo') {
 
 					el.peertube.addClass('disabledShare');
+					el.peertubeLiveStream .addClass('disabledShare');
 
 					self.nav.api.load({
 						open : true,
@@ -225,14 +226,14 @@ var share = (function(){
 									}								
 
 									if (renders[type])
-										renders[type]();
-									
-									el.peertube.removeClass('disabledShare');
+										renders[type]();									
 								}
 							},
 
 							closeClbk : function() {
-								el.peertube.removeClass('disabledShare');
+								if (!currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
+									el.peertube.removeClass('disabledShare');
+								}
 							}
 						},
 
@@ -246,6 +247,7 @@ var share = (function(){
 				if (type === 'addStream') {
 
 					el.peertubeLiveStream .addClass('disabledShare');
+					el.peertube.addClass('disabledShare');
 
 					self.nav.api.load({
 						open : true,
@@ -277,8 +279,6 @@ var share = (function(){
 
 									if (renders[type])
 										renders[type]();
-									
-									el.peertubeLiveStream.removeClass('disabledShare');
 								}
 							},
 
@@ -529,8 +529,10 @@ var share = (function(){
 
 				var l = currentShare.url.v
 
-				if (l.includes('pocketnetpeertube')) {
+				if (l.includes(self.app.peertubeHandler.peertubeId)) {
 					self.app.peertubeHandler.removeVideo(l);
+					el.peertube.removeClass('disabledShare');
+					el.peertubeLiveStream.removeClass('disabledShare');
 				}
 
 
@@ -1180,6 +1182,11 @@ var share = (function(){
 						console.log('>>>>>>>>usertoken', self.app.peertubeHandler.userName, self.app.peertubeHandler.password);
 					});
 
+					if (currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
+						el.peertube.addClass('disabledShare');
+						el.peertubeLiveStream.addClass('disabledShare');
+					}
+
 
 					p.el.find('.cancelediting').on('click', function(){
 						self.closeContainer();
@@ -1709,8 +1716,6 @@ var share = (function(){
 		}
 
 		var initEvents = function(){
-
-					
 
 			el.changeAddress.on('change', events.changeAddress)			
 
