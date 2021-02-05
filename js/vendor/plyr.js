@@ -9205,10 +9205,11 @@ var PlyrEx = function(target, options, clbk) {
         });
 
     } if ('peertube' == provider) {
-      video_id = video_id.replace('https://peer.tube/videos/embed/', '')
+      console.log('PROVIDER PEERTUBE')
+      video_id = video_id.replace('https://pocketnetpeertube1.nohost.me/videos/embed/', '')
       //ссылка картинка имя
       $.ajax({ 
-        url : `https://peertube2.cpy.re/api/v1/videos/${video_id}`,
+        url : `https://pocketnetpeertube1.nohost.me/api/v1/videos/${video_id}`,
         type : 'GET',
         success : function(response){
             var preview_picture = `https://peertube2.cpy.re${response.previewPath}`

@@ -193,6 +193,106 @@ var share = (function(){
 			embeding : function(type, value){
 				var storage = currentShare.export(true)
 
+				if (type === 'addVideo') {
+
+					el.peertube.addClass('disabledShare');
+
+					self.nav.api.load({
+						open : true,
+						id : 'uploadpeertube',
+						inWnd : true,
+
+						history : true,
+
+						essenseData : {
+							storage : storage,
+							value : value,
+							actions : {
+								added : function(link){
+									var type = 'url';
+
+									console.log('Finished!', link, new Date());
+									var result = currentShare[type].set(link)
+
+									if(!essenseData.share){
+										state.save()
+									}
+
+									if(!result && errors[type]){
+
+										sitemessage(errors[type])
+
+									}								
+
+									if (renders[type])
+										renders[type]();
+									
+									el.peertube.removeClass('disabledShare');
+								}
+							},
+
+							closeClbk : function() {
+								el.peertube.removeClass('disabledShare');
+							}
+						},
+
+						clbk : function(p){
+							external = p
+						}
+					})
+					return true;
+				} 
+
+				if (type === 'addStream') {
+
+					el.peertubeLiveStream .addClass('disabledShare');
+
+					self.nav.api.load({
+						open : true,
+						id : 'streampeertube',
+						inWnd : true,
+
+						history : true,
+
+						essenseData : {
+							storage : storage,
+							value : value,
+							actions : {
+								added : function(link){
+									var type = 'url';
+
+									console.log('Finished!', link, new Date());
+									var result = currentShare[type].set(link)
+
+									if(!essenseData.share){
+										state.save()
+									}
+
+									if(!result && errors[type]){
+
+										sitemessage(errors[type])
+
+									}								
+
+									if (renders[type])
+										renders[type]();
+									
+									el.peertubeLiveStream.removeClass('disabledShare');
+								}
+							},
+
+							closeClbk : function() {
+								el.peertubeLiveStream.removeClass('disabledShare');
+							}
+						},
+
+						clbk : function(p){
+							external = p
+						}
+					})
+					return true;
+				} 
+
 				if(type == 'article'){
 					self.nav.api.load({
 						open : true,
@@ -427,6 +527,11 @@ var share = (function(){
 			removelink : function(){
 
 				var l = currentShare.url.v
+
+				if (l.includes('pocketnetpeertube')) {
+					self.app.peertubeHandler.removeVideo(l);
+				}
+
 
 				currentShare.url.set();
 
@@ -1062,6 +1167,13 @@ var share = (function(){
 					el.selectTime.on('click', events.selectTime)
 					el.panel.on('click', events.embeding)
 					el.post.on('click', events.post)
+
+					el.peertube = el.c.find('.peertube');
+					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
+
+					el.peertube.on('click', async function() {
+						console.log('>>>>>>>>usertoken', self.app.peertubeHandler.userToken);
+					});
 
 
 					p.el.find('.cancelediting').on('click', function(){

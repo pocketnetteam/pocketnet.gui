@@ -385,6 +385,8 @@ Application = function(p)
 
 		self.platform = new Platform(self, self.options.listofnodes);
 
+		self.peertubeHandler = new PeerTubeHandler(app);
+
 		self.options.platform = self.platform
 
 		self.platform.sdk.users.addressByName(self.ref, function(r){
@@ -523,6 +525,7 @@ Application = function(p)
 					if(state && self.platform.sdk.address.pnet()){
 
 						var addr = self.platform.sdk.address.pnet().address
+						self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
 
 						var regs = self.platform.sdk.registrations.storage[addr];
 
