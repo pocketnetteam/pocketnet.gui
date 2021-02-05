@@ -39,9 +39,9 @@ if(!_Node)
 			},*/
 
 			{
-			 	host : 'localhost',
-			 	port : 8888,
-			 	wss : 8088
+			 	host : 'pocketnet.app',
+			 	port : 8899,
+			 	wss : 8099
 			},
 			
 			/*{

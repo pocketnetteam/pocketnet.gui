@@ -88,13 +88,15 @@ var system16 = (function(){
 
 				var laststate = stats[stats.length - 1]
 
-				if(!laststate || (new Date(laststate.time)).addSeconds(10) < utcnow() ){
+				if(!laststate || (new Date(laststate.time)).addSeconds(1) < utcnow() ){
 					stats.push({
 						info : info,
 						time : utcnow()
 					})
 
-					stats = lastEls(stats, 1000)
+					stats = lastelements(stats, 1000)
+
+					console.log('stats', stats.length)
 				}
 
 				if (el.c){
@@ -1187,8 +1189,7 @@ var system16 = (function(){
 
 			proxy = prx//api.get.current()
 
-			proxy.clbks.tick.components = actions.tick
-			proxy.system.clbks.tick.components = actions.ticksettings
+			
 
 			info = null
 			stats = []
@@ -1196,6 +1197,9 @@ var system16 = (function(){
 			graphs = {}
 
 			if (proxy){
+
+				proxy.clbks.tick.components = actions.tick
+				proxy.system.clbks.tick.components = actions.ticksettings
 
 			
 				proxy.get.info().then(r => {

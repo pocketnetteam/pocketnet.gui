@@ -2382,6 +2382,19 @@
 
 	}
 
+	lastelements = function(arr, length, eq){
+		if(!length) length = 100
+		if(!eq) eq = 0
+	
+		var d = arr.length - length
+	
+		if (d > eq){
+			arr = arr.splice(0, d)
+		}
+	
+		return arr
+	}
+
 	firstEls = function(array, l){
 		var length = array.length
 

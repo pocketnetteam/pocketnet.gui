@@ -291,7 +291,7 @@ var Api = function(app){
     var proxies = [];
     var nodes = []
 
-    var current = 'localhost:8888:8088'
+    var current = 'pocketnet.app:8899:8099'
     var useproxy = true;
 
     var getproxyas = function(key){
