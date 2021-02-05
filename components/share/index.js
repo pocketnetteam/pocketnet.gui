@@ -664,9 +664,6 @@ var share = (function(){
 
 			post : function(clbk, p){
 
-				console.log('into post', currentShare)
-
-
 				el.postWrapper.removeClass('showError');
 
 				if(essenseData.hash == currentShare.shash()){
@@ -1049,6 +1046,7 @@ var share = (function(){
 
 			post : function(){
 				var error = actions.error();
+
 
 				if (!error){
 					actions.post()

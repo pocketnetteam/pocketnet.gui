@@ -10008,8 +10008,6 @@ Platform = function (app, listofnodes) {
 
                             if (obj.caption){
 
-
-
                                 if (!meta.tgtoask.value) {
 
                                     this.telegramSend(obj, meta)
@@ -10065,8 +10063,6 @@ Platform = function (app, listofnodes) {
                             var txb = new bitcoin.TransactionBuilder();
 
                             txb.addNTime(self.timeDifference || 0)
-
-
 
                             var amount = 0;
 

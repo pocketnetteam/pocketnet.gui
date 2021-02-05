@@ -1170,7 +1170,8 @@ Share = function(lang){
 				settings : _.clone(self.settings),
 				language : self.language.v,
 				txidEdit : self.aliasid || "",
-				txidRepost : self.repost.v || ""
+				txidRepost : self.repost.v || "",
+				poll : self.poll.v || {}
 			} 
 		}
 
@@ -1654,7 +1655,7 @@ pShare = function(){
 	}
 
 	self.default = {
-		a : ['cm', 'i', 'u'],
+		a : ['cm', 'i', 'u', 'p'],
 		v : 'p',
 		videos : [],
 		image : 'a',
@@ -1689,6 +1690,7 @@ pShare = function(){
 			self.caption = v.c || v.caption || ""
 			self.tags = v.t || v.tags || []
 			self.url = v.u || v.url || '';
+			self.poll = v.p || v.poll || {}
 			
 		}
 		else

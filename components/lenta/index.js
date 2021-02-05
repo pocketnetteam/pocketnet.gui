@@ -2204,6 +2204,8 @@ var lenta = (function(){
 
 			url : function(el, url, share, clbk){
 
+				console.log('url', el, url, share, clbk);
+
 				if(essenseData.nourlload){
 
 					if (clbk)

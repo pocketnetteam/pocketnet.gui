@@ -257,8 +257,9 @@ var metadisplay = function(){ %>
 		<% } %>
 	<% },
 
-	u : function(){ %> 
+	u : function(){ 		console.log('uuuuuu');	%> 
 		<% if(share.url) {
+
 
 			var h = ''
 			
@@ -269,6 +270,22 @@ var metadisplay = function(){ %>
 			%>
 
 			<div class="url <%-h%>">
+			</div>
+
+		<% } %>
+	<% },
+
+	p : function(){ %> 
+
+		<% if(share.poll && share.poll.list) { %>
+
+			<div class="pollWrapper">
+				<div class="title">
+					<%=share.poll.title %>
+				</div>
+				<div class="list">
+					<%= share.poll.list %>
+				</div>
 			</div>
 
 		<% } %>
