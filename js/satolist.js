@@ -17700,7 +17700,6 @@ Platform = function (app, listofnodes) {
                     self.firebase.init,
                     self.sdk.tempmessenger.init,
                     self.sdk.exchanges.load,
-					self.app.peertubeHandler.authentificateUser,
                 ], function () {
 
                     self.sdk.node.transactions.checkTemps(function () {

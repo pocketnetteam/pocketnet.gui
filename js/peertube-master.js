@@ -82,7 +82,7 @@ PeerTubeHandler = function (app) {
       });
 
     if (!client_id || !client_secret) {
-      clbk();
+      clbk({ error: 'Cannot retrieve user data from this server' });
 
       return {};
     }
@@ -117,6 +117,7 @@ PeerTubeHandler = function (app) {
           if (clbk) {
             clbk();
           }
+
           return data;
         }
 
@@ -142,9 +143,13 @@ PeerTubeHandler = function (app) {
               },
             })
             .then((res) => {
-              if (res.access_token) this.userToken = res.access_token;
-
-              if (clbk) clbk();
+              if (res.access_token) {
+                this.userToken = res.access_token;
+                if (clbk) clbk();
+              } else {
+                if (clbk)
+                  clbk({ error: 'Cannot retrieve user data from this server' });
+              }
 
               return res;
             });
@@ -155,15 +160,13 @@ PeerTubeHandler = function (app) {
         return data;
       });
 
-    if (clbk) clbk();
     return authResult;
   };
 
   this.getChannel = async () => {
-    return apiHandler
-      .run({
-        method: `video-channels/${this.userName}_channel`,
-      });
+    return apiHandler.run({
+      method: `video-channels/${this.userName}_channel`,
+    });
   };
 
   this.uploadVideo = async (parameters) => {
@@ -233,6 +236,21 @@ PeerTubeHandler = function (app) {
 
   this.removeVideo = async (video) => {
     const videoId = video.split('/').pop();
+
+    if (!this.userToken) {
+      const localAuth = () =>
+        apiHandler.run({
+          method: `videos/${videoId}`,
+          parameters: {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${this.userToken}`,
+            },
+          },
+        });
+
+      return this.authentificateUser(localAuth);
+    }
 
     apiHandler.run({
       method: `videos/${videoId}`,
