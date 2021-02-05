@@ -1,0 +1,77 @@
+<% _.each(manager.nodes, function(nodeinfo){ 
+                
+    var node = nodeinfo.node
+    
+    %>
+
+    <div class="nodeWrapper">
+        <div class="work">
+            <div class="node table <%- !node.canuse ? 'cantuse' : ''%>">
+                <div class="use"><i class="far fa-circle"></i></div>
+
+                <div class="name"><%- node.name %></div>
+
+                <div class="hostport"><%- node.host%>:<%- node.port %>/<%- node.ws %> </div>
+
+                <div class="statistic">
+                
+                    <% if(nodeinfo.statistic && nodeinfo.statistic.time && nodeinfo.statistic.percent) {%>
+
+                        <%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %
+
+                    <% } else { %> 
+                        
+                        &mdash;
+
+                    <% } %>
+                    
+                </div>
+
+                <div class="block">
+                    <% if(nodeinfo.status.difference) {%>
+
+                        <%- nodeinfo.status.difference %>
+
+                    <% } %> 
+                    
+                </div>
+
+                <div class="fork">
+                
+                    <% if(nodeinfo.status.fork) {%>
+
+                        <i class="fas fa-code-branch"></i>
+
+                    <% } %> 
+                    
+                </div>
+
+
+                <div class="panelWrapper">
+                    <% if(node.stable) {%>
+
+                        <div class="item stable good">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                   
+                    <% } else {%> 
+                    
+                        <% if(node.addedby == app.user.address.value || admin) {%>
+
+                            <div class="item edit">
+                                <i class="fas fa-cog"></i>
+                            </div>
+    
+                        <% } %>
+                        
+                    <% } %>
+
+                </div>
+
+                
+
+            </div>
+        </div>
+    </div>
+
+<% }) %>

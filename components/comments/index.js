@@ -993,7 +993,6 @@ var comments = (function(){
 
 				renders.limits(editor.closest('.postbody'), text)
 
-				console.log("SAD")
 
 			},
 			message : function(){

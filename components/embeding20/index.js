@@ -122,7 +122,6 @@ var embeding20 = (function(){
 			url : function(url, clbk){
 
 				var meta = self.app.platform.parseUrl(url);
-				console.log('METATYPE', meta)
 
 				var og = self.app.platform.sdk.remote.storage[url];
 

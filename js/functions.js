@@ -291,6 +291,15 @@
 		return d.getUTCFullYear() + "" + MM + "" + dd + "" + hh + "" + mm;
 	}
 
+	utcnow = function(date){
+		var now = date ||(new Date);
+		var UTCseconds = (now.getTime() + now.getTimezoneOffset()*60*1000);
+		var d = new Date(UTCseconds);
+			d.toString();	
+	
+		return d
+	}
+
 	randomString = function (l) {
 		if (!l)
 			l = 8;
@@ -2418,9 +2427,26 @@
 	}
 
 	deep = function(obj, key){
-		var  _key = key.split(".");
 
-		var tkey = _key[0];
+		var tkey = ''
+		var _key = []
+
+		if (key[0] == "'"){
+
+			key = key.substr(1)
+			_key = key.split("'")
+			tkey = _key[0]
+
+			if(_key[1]) _key[1] =  _key[1].substr(1)
+
+
+		}
+		else{	
+			_key = key.split(".");
+			tkey = _key[0];
+		}
+
+		
 
 		if(typeof obj == 'undefined' || !obj) return undefined;
 
@@ -5229,7 +5255,6 @@
 
 					valid = valid && pv;
 
-				if(!pv) console.log("ADDERROR", p)
 
 				if(!pv && pv.type != 'composite' && adderror && p.require){
 
@@ -6019,9 +6044,7 @@
 			var _all = offsetTop >= range.top && 
 				bottom <= range.bottom 
 
-				if(p.debug){
-					console.log('range.top, range.bottom, offsetTop, bottom', range.top, range.bottom, offsetTop, bottom)
-				}
+				
 
 			if (p.mode == 'line'){
 
@@ -9176,6 +9199,14 @@
 		}, time);
 
 		return interval;
+	}
+
+	pretry = function(_function, time, totaltime){
+		return new Promise((resolve, reject) => {
+	
+			retry(_function, resolve, time, totaltime)
+	
+		})
 	}
 
 	retryLazy = function(_function, clbk, time){

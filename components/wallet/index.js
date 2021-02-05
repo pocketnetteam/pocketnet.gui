@@ -794,7 +794,6 @@ var wallet = (function(){
 
 					self.iclbks.main = function(){
 
-						console.log("ACLK", self.app.errors.connection())
 
 						if(self.app.errors.connection()){
 							el.totaler.addClass('active')

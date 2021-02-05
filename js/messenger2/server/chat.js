@@ -116,7 +116,6 @@ var chat = function(p){
 			addresses[address] || (addresses[address] = 1)
 			addresses[address] --
 
-			console.log('addresses[address]', addresses[address], address)
 
 			if(!addresses[address]){
 				delete addresses[address]

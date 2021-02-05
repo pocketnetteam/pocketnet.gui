@@ -1,0 +1,66 @@
+
+
+<div class="webadminscontent">
+    <div class="work">
+        <% _.each(admins, function(admin){ 
+            var user = deep(app, 'platform.sdk.users.storage.'+admin) || {} %>
+
+       
+            <div class="adminWrapper">
+                <div class="admin table">
+
+                    <div class="iconWrapper">
+                        <a href="<%-app.platform.api.authorlink(admin)%>">
+
+                            <% var src = user.image  %>
+
+                            <div class="icon">
+                                <div class="usericon usericonsbsa another" image="<%-src || ''%>">
+                                    <% if(!src) {%>
+                                        <svg width="30" height="30" data-jdenticon-value="<%-admin%>"></svg>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                    
+                    <div class="nameWrapper">
+
+                        <a href="<%-app.platform.api.authorlink(admin)%>">
+                            <%- user.name || admin %>
+                        </a>
+                        
+                    </div>			
+                    
+                    <div class="panelWrapper">
+                        <% if(admin) { %>
+
+                            <div class="item">
+                                <i class="far fa-times-circle"></i>
+                            </div>
+                            
+
+                        <% } %>
+                    </div>
+                    
+                </div>
+            </div>
+
+        <% }) %>
+    </div>
+
+    <% if(admin) {%>
+
+    <div class="adminpanel">
+        <div class="work">
+            <div class="buttons">
+                <button class="button">
+                    <i class="fas fa-plus"></i> Add admin Address
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <% } %>
+</div>

@@ -39,7 +39,7 @@ var Iplimiter = function(p){
 
         if (lists.black[ip]){
 
-            if (lists.black[ip].until > new Date()){
+            if (lists.black[ip].until > f.now()){
                 return Promise.reject()
             }
             else{
@@ -52,17 +52,17 @@ var Iplimiter = function(p){
 
             temp.black[ip] || (temp.black[ip] = {
                 c : 1,
-                until : f.addSeconds(new Date(), p.interval / 1000)
+                until : f.addSeconds(f.now(), p.interval / 1000)
             });
 
-            if (temp.black[ip].until < new Date()){
+            if (temp.black[ip].until < f.now()){
                 temp.black[ip].c++
-                temp.black[ip].until = f.addSeconds(new Date(), p.interval / 1000)
+                temp.black[ip].until = f.addSeconds(f.now(), p.interval / 1000)
             }            
 
             if (temp.black[ip].c >= blacklistcount){
                 lists.black[ip] = {
-                    until : f.addSeconds(new Date(), 7 * 24 * 60 * 60)
+                    until : f.addSeconds(f.now(), 7 * 24 * 60 * 60)
                 }
 
                 delete temp.black[ip]

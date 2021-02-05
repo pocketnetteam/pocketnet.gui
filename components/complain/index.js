@@ -203,8 +203,6 @@ var complain = (function(){
 
 					function(tx, error){
 
-						console.log(tx, error)
-
 						topPreloader(100)
 
 						if(!tx){

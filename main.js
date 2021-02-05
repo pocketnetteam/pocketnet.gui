@@ -242,15 +242,11 @@ function initApp() {
 
     powerMonitor.on('suspend', () => {
 
-        console.log("suspend")
-
         win.webContents.send('pause-message', { msg: 'pause', type: 'info' })
 
     })
 
     powerMonitor.on('resume', () => {
-
-        console.log("resume")
 
         win.webContents.send('resume-message', { msg: 'resume', type: 'info' })
 
@@ -344,11 +340,11 @@ function createWindow() {
 
     win.webContents.on('context-menu', (event, params) => {
         const menu = new Menu()
-        console.log('context-menu', params)
+
         // Add each spelling suggestion
         for (const suggestion of params.dictionarySuggestions) {
 
-            console.log('suggestion', suggestion)
+
           menu.append(new MenuItem({
             label: suggestion,
             click: () => win.webContents.replaceMisspelling(suggestion)

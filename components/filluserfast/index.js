@@ -61,7 +61,6 @@ var filluserfast = (function(){
 						{
 							self.sdk.captcha.get(function(captcha, error){
 
-								console.log('captcha, error', captcha, error)
 
 								if (error){
 
@@ -419,7 +418,6 @@ var filluserfast = (function(){
 
 							if(current == 'money'){				
 
-								//self.app.platform.m.log('userwisard_money_success')							
 	
 								actions.next()
 	
@@ -548,7 +546,6 @@ var filluserfast = (function(){
 
 			testqrcodeandkey : function(hm, clbk){
 
-				console.log("HM", hm)
 
 				var keyPair =  self.app.user.keysFromMnemo(trim(hm))  
 
@@ -895,7 +892,7 @@ var filluserfast = (function(){
 
 		var state = {
 			save : function(){
-				console.log('kkk', k)
+				
 			},
 			load : function(){
 				

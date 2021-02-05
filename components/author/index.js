@@ -900,8 +900,6 @@ var author = (function(){
 				L = result.count;
 			}
 
-			console.log(start, count, deep(result, 'data.length'))
-
 			if(start + count <= l){
 				return
 			}
@@ -933,7 +931,6 @@ var author = (function(){
 			posts : function(clbk, start, count){
 				self.app.platform.sdk.search.get(parameters().ss, 'posts', start, count, fixedBlock || null, function(r, block){
 
-					console.log("RESULT", r, result)
 
 					fixedBlock = block
 

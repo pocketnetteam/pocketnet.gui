@@ -143,7 +143,6 @@ Localization = function(app){
 
 		var prms = parameters();
 
-		console.log("localStorage['loc']", localStorage['loc'])
 
 		self.key = prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 		

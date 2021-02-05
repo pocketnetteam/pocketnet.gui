@@ -31,17 +31,32 @@ var Pocketnet = function(){
                 if(!signature.nonce) return false
                 if(!signature.address) return false
 
-                var keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(signature.pubkey, 'hex'))
-                var hash = Buffer.from(signature.nonce, 'utf8')
 
-                var verify = keyPair.verify(hash, Buffer.from(signature.signature, 'hex')) && signature.address == self.kit.addressByPublicKey(signature.pubkey);
+                try{
+
+                    var pkbuffer = Buffer.from(signature.pubkey, 'hex')
+
+                    var keyPair = bitcoin.ECPair.fromPublicKey(pkbuffer)
+                    var hash = Buffer.from(signature.nonce, 'utf8')
+
+                    var verify = keyPair.verify(hash, Buffer.from(signature.signature, 'hex')) && signature.address == self.kit.addressByPublicKey(pkbuffer);
 
 
-                if(!addresses) addresses = signature.address
+                    if(!addresses) addresses = signature.address
 
-                if(!_.isArray(addresses)) addresses = [addresses]
+                    if(!_.isArray(addresses)) addresses = [addresses]
 
-                return verify && _.indexOf(addresses, signature.address) > -1
+                    return verify && _.indexOf(addresses, signature.address) > -1
+                }
+
+                catch(e) {
+
+                    console.error(e)
+
+                    return false
+                }
+
+                
 
             }
         },

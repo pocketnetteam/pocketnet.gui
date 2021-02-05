@@ -15,7 +15,6 @@ var connectedUser, myConnection, dataChannel;
  
 //handle messages from the server 
 connection.onmessage = function (message) { 
-   console.log("Got message", message.data); 
    var data = JSON.parse(message.data); 
 	
    switch(data.type) { 
@@ -51,8 +50,6 @@ function onLogin(success) {
          optional: [{RtpDataChannels: true}] 
       }); 
 		
-      console.log("RTCPeerConnection object was created"); 
-      console.log(myConnection); 
   
       //setup ice handling 
       //when the browser finds an ice candidate we send it to another peer 
@@ -72,11 +69,9 @@ function onLogin(success) {
 };
   
 connection.onopen = function () { 
-   console.log("Connected"); 
 }; 
  
 connection.onerror = function (err) { 
-   console.log("Got error", err); 
 };
   
 // Alias for sending messages in JSON format 
@@ -128,17 +123,14 @@ function openDataChannel() {
    dataChannel = myConnection.createDataChannel("myDataChannel", dataChannelOptions);
 	
    dataChannel.onerror = function (error) { 
-      console.log("Error:", error); 
    };
 	
    dataChannel.onmessage = function (event) { 
-      console.log("Got message:", event.data); 
    };  
 }
   
 //when a user clicks the send message button 
 sendMsgBtn.addEventListener("click", function (event) { 
-   console.log("send message");
    var val = msgInput.value; 
    dataChannel.send(val); 
 });
@@ -164,7 +156,6 @@ connectToOtherUsernameBtn.addEventListener("click", function () {
    if (otherUsername.length > 0) { 
       //make an offer 
       myConnection.createOffer(function (offer) { 
-         console.log(); 
 			
          send({ 
             type: "offer", 

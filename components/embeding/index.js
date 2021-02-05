@@ -106,8 +106,6 @@ var embeding = (function(){
 
 					var r = resized.split(',');
 
-					console.log(file)
-
 					if (r[1]){
 
 						
@@ -278,8 +276,6 @@ var embeding = (function(){
 					multiple : true,
 
 					action : function(file, clbk){
-
-						console.log("DSD")
 
 						if(file.ext == 'gif'){
 							actions.slowUploadGif(file, clbk)

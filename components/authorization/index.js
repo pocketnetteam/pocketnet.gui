@@ -26,8 +26,6 @@ var authorization = (function(){
 
 		var stayH = function(){
 
-			console.log('stayH')
-
 			localStorage['stay'] = '0';
 			localStorage['mnemonic'] || '';
 
@@ -221,14 +219,12 @@ var authorization = (function(){
 			
 					if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){
 						
-						console.log("QRSCANNER")
 
 						grayscaleImage(file.base64, function(image){
 							qrscanner.q.debug = true
 
 							qrscanner.q.callback = function(data){
 
-								console.log(data)
 
 								if(data == 'error decoding QR Code'){
 									sitemessage(self.app.localization.e('filedamaged'))

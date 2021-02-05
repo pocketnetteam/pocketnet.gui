@@ -115,7 +115,6 @@ var test = (function(){
 			},
 			ref : function(resref){
 
-				console.log('ref1221211212', ref, firstTime, resref)
 
 				if (ref && firstTime){
 					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
@@ -897,7 +896,6 @@ var test = (function(){
 								if (plissing)
 									plissing.destroy()
 
-								console.log("el.c.find('.nickname input')", el.c.find('.nickname input'))
 									_scrollTo(el.c.find('.nickname input').focus());
 								
 
@@ -1140,24 +1138,8 @@ var test = (function(){
 
 				_p.body = encodeURIComponent(body)
 
-				console.log(_p)
 
-				return
-
-				$.ajax({
-					type: 'POST',
-					url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
-					data: _p,
-					dataType: 'json',
-					success : function(){
-	
-						topPreloader(100)
-	
-						if (clbk)
-							clbk();
-	
-					}
-				});
+				
 			})
 
 			
