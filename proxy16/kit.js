@@ -88,8 +88,8 @@ var defaultSettings = {
 		},
 		
 		ports : {
-			https : 8888,
-			wss : 8088
+			https : 8899,
+			wss : 8099
 		},
 		
 		ssl : {
