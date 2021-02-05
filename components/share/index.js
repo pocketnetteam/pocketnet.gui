@@ -1467,6 +1467,8 @@ var share = (function(){
 
 				renders.images();
 
+				renders.poll();
+
 				renders.repost();
 
 				renders.postline();

@@ -742,6 +742,7 @@ Share = function(lang){
 		self.caption.set()
 		self.repost.set()
 		self.language.set()
+		self.poll.set();
 
 		_.each(self.settings, function(s, k){
 			self.settings[k] = null;
