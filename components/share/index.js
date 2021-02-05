@@ -196,7 +196,7 @@ var share = (function(){
 				if (type === 'addVideo') {
 
 					el.peertube.addClass('disabledShare');
-					el.peertubeLiveStream .addClass('disabledShare');
+					el.peertubeLiveStream.addClass('disabledShare');
 
 					self.nav.api.load({
 						open : true,
@@ -233,6 +233,7 @@ var share = (function(){
 							closeClbk : function() {
 								if (!currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
 									el.peertube.removeClass('disabledShare');
+									el.peertubeLiveStream.removeClass('disabledShare');
 								}
 							}
 						},
@@ -246,7 +247,7 @@ var share = (function(){
 
 				if (type === 'addStream') {
 
-					el.peertubeLiveStream .addClass('disabledShare');
+					el.peertubeLiveStream.addClass('disabledShare');
 					el.peertube.addClass('disabledShare');
 
 					self.nav.api.load({
@@ -284,6 +285,10 @@ var share = (function(){
 
 							closeClbk : function() {
 								el.peertubeLiveStream.removeClass('disabledShare');
+
+								if (!currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
+									el.peertube.removeClass('disabledShare');
+								}
 							}
 						},
 

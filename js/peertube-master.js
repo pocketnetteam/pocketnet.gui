@@ -224,8 +224,8 @@ PeerTubeHandler = function (app) {
           parameters.successFunction(`${watchUrl}${json.video.uuid}`);
         },
 
-        fail: () => {
-          return parameters.successFunction('error');
+        fail: (res) => {
+          return parameters.successFunction({ error: res });
         },
       },
     });

@@ -146,8 +146,14 @@ var uploadpeertube = (function () {
               };
 
               filesWrittenObject.successFunction = function (response) {
-                if (response === 'error') {
-                  sitemessage('Uploading error');
+                if (response.error) {
+                  var error = deep(response, 'error.responseJSON.errors') || {};
+
+                  var message = (Object.values(error)[0] || {}).msg;
+
+                  sitemessage(message || 'Uploading error');
+                  
+                  wndObj.close();
 
                   return;
                 }
