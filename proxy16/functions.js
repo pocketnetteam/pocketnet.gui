@@ -3,10 +3,9 @@ var Stream = require('stream').Transform;
 var fs = require('fs');
 var path = require('path');
 var downloadRelease = require('download-github-release');
-var electron = require('electron')
 var md5 = require('md5');
-    
-
+var _ = require("underscore");
+const random = require('random')
 var f = {}
 
 f.mix = function(array){
@@ -48,18 +47,22 @@ f.esc = function(str) {
 
 f.path = function(_path){
 
-    var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
+    var iscli = process.argv.find(function(el) { return el == '--cli'; })
 
-    if(!electron.app){
+    if (iscli){
         return path.resolve('./', _path)
     }
+    
+    
+    ////electron
+    var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
 
     if (isDevelopment){
         return path.resolve('./proxy16/', _path)
     }
-
-    return path.join(path.dirname(process.execPath), _path)
-
+    else{
+        return path.join(path.dirname(process.execPath), _path)
+    }
 
     
 }
@@ -228,8 +231,9 @@ f.deep = function(obj, key){
     }
 }
 
-f.now = function(){
-    var now = new Date;
+
+f.now = function(date){
+    var now = date ||(new Date);
     var UTCseconds = (now.getTime() + now.getTimezoneOffset()*60*1000);
     var d = new Date(UTCseconds);
         d.toString();	
@@ -241,6 +245,33 @@ f.rand = function(min, max){
     min = parseInt(min);
     max = parseInt(max);
     return Math.floor( Math.random() * (max - min + 1) ) + min;
+}
+
+f.randmap = function(ar){
+
+    if(!ar) return null
+    
+    ar = _.sortBy(ar, (r) => {return r.probability})
+
+    var total = _.reduce(ar, function(sum, r){ return sum + r.probability }, 0)
+
+
+    if(total <= 0) return ar[0]
+
+    var seed = random.float(0, total)
+
+    var counter = 0
+
+
+    return _.find(ar, function(a){
+
+        if(counter + a.probability > seed && counter <= seed){
+            return true
+        }
+
+        counter = counter + a.probability
+    })
+
 }
 
 f.makeid = function(){
@@ -357,6 +388,14 @@ f.retry = function(_function, clbk, time, totaltime){
         totalTimeCounter += time
 
     }, time);
+}
+
+f.pretry = function(_function, time, totaltime){
+    return new Promise((resolve, reject) => {
+
+        f.retry(_function, resolve, time, totaltime)
+
+    })
 }
 
 f.retryLazy = function(_function, clbk, time){

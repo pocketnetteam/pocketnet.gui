@@ -9,10 +9,7 @@ var Cache = function(p){
             time : 120,
             block : 0
         },
-        getlastcomments2 : {
-            time : 120,
-            block : 0
-        },
+       
         gettags : {
             time : 82000
         },
@@ -47,14 +44,14 @@ var Cache = function(p){
         
         if (ckeys[key]){
 
-            var k = MD5(JSON.stringify(params))
+            var k = f.hash(JSON.stringify(params))
 
             if(!storage[key])
                 storage[key] = {}
 
             storage[key][k] = {
                 data : data,
-                time : new Date()
+                time : f.now()
             }
 
             ckeys[key].block = block
@@ -65,14 +62,14 @@ var Cache = function(p){
     self.get = function(key, params){
         if (ckeys[key]){
 
-            var k = MD5(JSON.stringify(params))
+            var k = f.hash(JSON.stringify(params))
 
-            var sd = deep(storage, key + "." + k)
+            var sd = f.deep(storage, key + "." + k)
 
             if (sd){
                 var t = f.date.addseconds(sd.time, ckeys[key].time)
 
-                if (t > new Date()){
+                if (t > f.now()){
                     return sd.data
                 }
             }
@@ -80,11 +77,13 @@ var Cache = function(p){
         }
     }
 
-    self.block = function(height){
+    self.block = function(block){
+
+
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){
 
-                if (k.block < height)
+                if (k.block < block.height)
                     storage[key] = {}
             }
         })
@@ -96,16 +95,15 @@ var Cache = function(p){
 
         _.each(ckeys, function(c, key){
 
-            if(!storage[key]) 
-
-            var size = f.roughSizeOfObject(storage[key]) / 1024;
-            var length = _.toArray(storage[key]).length /// ???
+            var size = JSON.stringify(storage[key] || "").length / 1024;
+            var length = _.toArray(storage[key] || {}).length /// ???
 
             meta[key] = {
                 block : c.block,
                 length : length,
                 size : size
             }
+
         })
 
         return {

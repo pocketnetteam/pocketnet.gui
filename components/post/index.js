@@ -330,7 +330,6 @@ var post = (function(){
 
 			},
 			initVideo : function(clbk){
-				console.log('ADDED VIDEO 1')
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
 					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
 				
@@ -346,7 +345,6 @@ var post = (function(){
 					};
 
                     $.each(pels, function(key, el) {
-						console.log('ADDED VIDEO 2')
                         PlyrEx(el, options, function(player) {
                             player.on('ready', function(){
     
@@ -717,7 +715,6 @@ var post = (function(){
 
 			sharesocial : function(){
 
-				self.app.platform.m.log('sharing_opened_post', share.txid)
 
 				actions.sharesocial()
 			},
@@ -965,7 +962,6 @@ var post = (function(){
 			},
 			wholike : function(clbk){
 
-				console.log("share", share)
 
 				var wholikes = share.who || [];
 

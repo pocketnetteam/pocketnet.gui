@@ -32,7 +32,6 @@ var main = (function(){
 					eid : 'postin',
 					
 					clbk : function(e, p){
-						self.app.platform.m.log('share_openbutton', 'button')
 					},
 
 					essenseData : {
@@ -44,7 +43,6 @@ var main = (function(){
 						post : function(){
 							share.make()
 
-							self.app.platform.m.log('share', 'button')
 
 							if (plissing)
 								plissing.destroy()
@@ -218,7 +216,6 @@ var main = (function(){
 						},
 						essenseData : {
 							post : function(){
-								self.app.platform.m.log('share', 'normal')
 
 								if (plissing)
 									plissing.destroy()
@@ -540,7 +537,6 @@ var main = (function(){
 					
 				}*/
 
-				console.log("TEST")
 
 				if(p.state && primary && !self.app.user.validate()){
 

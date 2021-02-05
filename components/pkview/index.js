@@ -135,11 +135,9 @@ var pkview = (function(){
 										class : 'itemmain',
 										action : function(clbk){
 
-											//console.log(qr._oDrawing._elImage.currentSrc.split(',')[1])
 
 											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
 											
-											//console.log(image)
 
 											saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
 												clbk()

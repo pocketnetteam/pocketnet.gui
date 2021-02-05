@@ -1517,7 +1517,6 @@ var lenta = (function(){
 			sharesocial : function(){
 				var shareId = $(this).closest('.shareinlenta').attr('id');
 
-					self.app.platform.m.log('sharing_opened_button', shareId)
 
 					actions.sharesocial(shareId)
 			},

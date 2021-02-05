@@ -1,8 +1,9 @@
 const https       = require('https');
 const WebSocket   = require('ws');
 var f = require('../functions');
+var _ = require('underscore')
 
-var WSS = function(){
+var WSS = function(admins, manage){
     var self = this;
 
         self.listening = false;
@@ -13,6 +14,10 @@ var WSS = function(){
 
     var create = {
         user : function(address){
+
+            var admin = _.indexOf(admins, address) > -1
+
+
             var user = {
     
                 devices : {
@@ -24,7 +29,10 @@ var WSS = function(){
                 firebase : {},
     
                 clients: {},
-                nodes : {}
+                nodes : {},
+                ticks : {},
+
+                admin
             }
     
             return user
@@ -36,11 +44,28 @@ var WSS = function(){
             var auto = true
 
             if (p){
-                node = self.nodeManager.temp(p)
+
+                if(_.isObject(p)){
+                    node = self.nodeManager.temp(p)
+                }
+                else
+                {
+                    node = self.nodeManager.nodesmap[p]
+                }
+
+                
                 auto = false
             }
             else{
-                node = self.nodeManager.selectbest()
+                 // || self.nodeManager.select(0)
+            }
+
+            if(!node){
+
+                console.log("CANT FIND NODE")
+
+                node = self.nodeManager.selectProbability()
+                auto = true
             }
 
 
@@ -71,17 +96,46 @@ var WSS = function(){
             connectNode(user, node)
         })
 
-        ws.on('block') = (data) => {
-            if (self.server.cache){
-                self.server.cache.block(data)    
-            }
-        }
+        ws.on('changenode', (data) => {
 
-        ws.on('message') = (data) => {
+            _.each(node.ini, function(client){
+
+                if (client.type == 'firebase'){
+
+                    disconnectNode(user)
+
+                    node = create.node(data.node)
+
+                    connectNode(user, node)
+
+                }
+                else{
+
+                    sendMessage({
+
+                        type : 'changenode',
+                        data : data
+
+                    }, client.ws)
+
+                }
+
+            })
+
+        })
+
+
+        ws.on('message', (data) => {
            
             var fbdata = {}; 
 
             _.each(data, (d, k) => { fbdata[k] = d.toString() })
+
+            if(data.msg == 'new block'){
+                if (self.server.cache){
+                    self.server.cache.block(data)    
+                }
+            }   
                       
             _.each(node.ini, function(client){
 
@@ -95,17 +149,16 @@ var WSS = function(){
 
                 }
                 else{
-
                     sendMessage(data, client.ws)
                 }
 
             })
             
-        };
+        });
 
-        ws.on('error') = (e) => {
+        ws.on('error', (e) => {
             console.log(e)
-        }
+        })
 
     }
 
@@ -116,7 +169,7 @@ var WSS = function(){
 
             if (_.isEmpty(node.ini)){
 
-                node.instance.ws.disconnect(user)
+                node.instance.wss.disconnect(user)
                 clearNodes.push(key)
 
             }
@@ -133,12 +186,16 @@ var WSS = function(){
             return user.clients[ws.id]
         })
         
-        
         var clearUsers = []
 
         _.each(wsusers, function(user){
             delete user.clients[ws.id]
             delete user.devices.ws[ws.id]
+
+            if (user.ticks[ws.id]){
+                clearInterval(user.ticks[ws.id])
+                delete user.ticks[ws.id]
+            }
 
             _.each(user.nodes, function(node, key){
                 delete node.ini[ws.id]
@@ -171,17 +228,42 @@ var WSS = function(){
        
     }
 
+    var tick = function(ws) {
+
+		manage.get.settings().then(settings => {
+
+            manage.get.state(true).then(state => {
+
+                sendMessage({
+                    type : 'proxy-message-tick',
+                    data : {
+                        state : state,
+                        settings : settings
+                    }
+                }, ws)
+    
+            })
+			
+		})
+
+		
+        
+	}
+
     var messages = {
+        signout : function(message, ws){
+            disconnectClient(ws)
+        },
         registration : function(message, ws){
             
-            var address = message.addr;
-            var signature = message.sgn;
-            var device = message.id;
+            var address = message.address;
+            var signature = message.signature;
+            var device = message.device;
+            var block = message.block || 0;
 
             if(!address || !device) return
 
             var user = null
-
       
             var authorized = self.pocketnet.kit.authorization.signature(signature, address)
 
@@ -189,8 +271,8 @@ var WSS = function(){
                 return false
             }
 
-
-            if(!users[address]) users[address] = create.user(address)
+            if(!users[address]) 
+                users[address] = create.user(address)
 
             user = users[address]
 
@@ -199,13 +281,15 @@ var WSS = function(){
 
             var node = create.node(message.node)
 
+            if(!node) return
+
             sendMessage({
                 msg : node ? "registered" : 'registererror',
                 addr : user.addr,
                 node : node.instance.export()
             }, ws)
 
-            if(!node) return
+            user.nodes[node.key] || (user.nodes[node.key] = node)
 
             user.nodes[node.key].ini[ws.id] = {
                 type : 'ws',
@@ -213,9 +297,11 @@ var WSS = function(){
                 ip : ws.ip
             }
 
-            //if(!user.nodes[node.key].ws){
-                connectNode(user, node);
-            //}
+            if (user.admin){
+                user.ticks[ws.id] = setInterval(() => {tick(ws)}, 2500)
+            }
+
+            connectNode(user, user.nodes[node.key]);
         }
     }
 
@@ -227,12 +313,31 @@ var WSS = function(){
             message = JSON.parse(msg)
         } catch(e){}
 
+
         if(!message.action) {
             messages.registration(message, ws)
         }
     }
 
-    
+    self.newconnection = function(ws){
+        ws.id = f.makeid();
+
+        ws.on('message', (msg) => {
+            handleMessage(msg, ws)
+        })
+
+        ws.on('close', (code, reason) => {
+            disconnectClient(ws)
+        });
+
+        ws.on('error', (err) => {
+            disconnectClient(ws)
+        });
+    }
+
+    self.wssdummy = function(wssdummy){
+        self.newconnection(wssdummy)
+    }
 
     self.init = function(settings){
         
@@ -248,26 +353,14 @@ var WSS = function(){
                 });
 
                 wss.on('connection', (ws, req) => {
-
-                    ws.id = f.makeid();
                     ws.ip = req.connection.remoteAddress
-
-                    ws.on('message', (msg) => {
-                        handleMessage(msg, ws)
-                    })
-
-                    ws.on('close', (code, reason) => {
-                        disconnectClient(ws)
-                    });
-            
-                    ws.on('error', (err) => {
-                        disconnectClient(ws)
-                    });
+                    
+                    self.newconnection(ws)
                 })
 
                 wss.on('listening',function(){
 
-                    self.listening = true
+                    self.listening = settings.port || 8088
 
                     resolve()
                 });
@@ -374,9 +467,7 @@ var WSS = function(){
                     device : p.device
                 }
 
-                //if(!user.nodes[node.key].ws){
-                    connectNode(user, node);
-                //}
+                connectNode(user, node);
                 
 
             },
@@ -385,26 +476,34 @@ var WSS = function(){
         }
     }
 
-    self.info = function(){
-        return {
+    self.info = function(compact){
 
-            listening : self.listening,
-            users : _.map(users, function(user){
 
-                return {
-                    devices : {
-                        ws :    _.toArray(user.devices.ws).length,
-                        fb :    _.toArray(user.devices.fb).length,
-                    },
-                    address :   user.address,
-                    firebase :  _.toArray(user.firebase).length,
-                    clients :   _.toArray(user.clients).length,
-                    nodes :     _.toArray(user.nodes).length
-                    //ip : user.ip || ''
-                }
-    
-            }) 
-        } 
+        var data = {
+            listening : self.listening
+        }
+
+        if(!compact) data.users = _.map(users, function(user){
+
+            return {
+                devices : {
+                    ws :    _.toArray(user.devices.ws).length,
+                    fb :    _.toArray(user.devices.fb).length,
+                },
+                address :   user.address,
+                firebase :  _.toArray(user.firebase).length,
+                clients :   _.toArray(user.clients).length,
+                nodes :     _.toArray(user.nodes).length
+                //ip : user.ip || ''
+            }
+
+        }) 
+
+        else{
+            data.users = _.toArray(users).length
+        }
+
+        return data
     }
 
     self.users = users;

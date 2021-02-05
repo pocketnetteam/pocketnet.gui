@@ -8,6 +8,7 @@ var Wss  = require('./wss.js');
 var Node = function(options, manager){
 
     var self = this
+    var lastinfo = null
 
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
@@ -22,13 +23,16 @@ var Node = function(options, manager){
     //self.currentBlock = 0
     self.peer = options.peer || false
 
+    self.testing = false
+
     var statisticInterval = null
 
     var test = new Test(self)
 
     var wss = {
         service : null,
-        users : {}
+        users : {},
+        changing : {}
     }
 
     var chain = [];
@@ -71,14 +75,14 @@ var Node = function(options, manager){
 
     self.addblock = function(block){
 
-        if (block.blockhash && block.time && block.height){
+        if ((block.hash || block.blockhash) && block.time && block.height){
 
             var lastblock = self.lastblock()
 
             if(!lastblock || lastblock.height < block.height){
 
                 chain.push({
-                    blockhash : block.blockhash,
+                    blockhash : block.hash || block.blockhash,
                     time : block.time,
                     height : block.height
                 })
@@ -112,7 +116,7 @@ var Node = function(options, manager){
 
 
         return {
-            fork : !hascommonblock,
+            fork : !d && !hascommonblock,
             difference : d
         }
         
@@ -190,7 +194,11 @@ var Node = function(options, manager){
 
         add : function(p){
 
-            self.events.push(p)
+            var push = _.clone(p)
+
+                push.time = new Date()
+
+            self.events.push(push)
 
             var d = self.events.length - 10000
 
@@ -202,12 +210,97 @@ var Node = function(options, manager){
 
         },
 
+        events : function(){
+            return self.events
+        },
+
         rating : function(){
             var s = self.statistic.get() 
 
             var lastblock = self.lastblock() || {}
 
-            return (s.count) * (s.percent / (s.time || 5000)) * (lastblock.height || 1)
+            var status = self.chainStatus()
+
+            ///
+
+            var difference = status.difference || 0
+            if (difference > 0) difference = 0
+                difference = -difference
+
+            ///
+
+            if (status.fork && difference > 5) return 0
+            if(!s.success || !lastblock.height) return 0
+            if (self.testing) return 0
+            ///
+
+            return  (s.percent  * (lastblock.height || 1) ) / 
+                    ( ((self.statistic.rate() || 0) + 1) * (s.time || 5000) * (difference + 1) )
+        },
+
+        better : function(){
+            var nodes = []
+            var rating = this.rating()
+            var status = self.chainStatus()
+
+            var difference = status.difference || 0
+
+            if (manager){
+                nodes = _.filter(manager.nodes, function(node){
+
+                    if(node.key == self.key) return false
+
+                    var nodestatus = node.chainStatus()
+                    var nodedifference = nodestatus.difference || 0
+
+                    return node.statistic.rating() > rating && nodedifference >= difference
+                })
+            }
+
+            return nodes
+        },
+
+        probabilityNodes : function(nodes){
+            var total = 0
+
+            _.each(nodes, function(node){
+
+                total += node.statistic.rating()
+            })
+
+            if(!total) {
+
+                if(!nodes.length) return 1
+
+                return 1 / nodes.length
+            }
+
+            return (self.statistic.rating() / total)
+        },
+
+        probability : function(){
+
+            if(!manager) return 1
+
+            return this.probabilityNodes(manager.nodes)
+
+        },
+
+        rate : function(){
+            var s = f.date.addseconds(null, -10)
+            var l = self.events.length
+            var c = 0
+
+            while (l && self.events[l - 1].time > s){
+
+                
+                c++
+                l--
+            }
+
+            return c / 10
+
+
         },
 
         get : function(){
@@ -217,7 +310,8 @@ var Node = function(options, manager){
                 failed : 0,
                 time : 0,
                 count : self.events.length,
-                allcount : self.eventsCount
+                allcount : self.eventsCount,
+                rate : self.statistic.rate()
             }
 
             _.each(self.events, function(l){
@@ -243,7 +337,11 @@ var Node = function(options, manager){
 
         interval : function(){
             if(!statisticInterval){
+
+                self.info().catch(e => {})
+
                 statisticInterval = setInterval(function(){
+
                     if (self.events.length < 1000){
                         self.info().catch(e => {})
                     }
@@ -258,7 +356,68 @@ var Node = function(options, manager){
                 statisticInterval = null
             }
         }
+    }
 
+    var needToChange = function(){
+        var betterNodes = self.statistic.better()
+
+        if(!betterNodes.length) return false
+
+        betterNodes.push(self)
+
+        var np = _.map(betterNodes, function(node){
+            return {
+                node : node,
+                probability : node.statistic.probabilityNodes(betterNodes)
+            }
+        })
+
+        var current = np[np.length - 1];
+
+        var total = 0;
+
+        _.each(np, function(nn, i){
+            nn.probability = nn.probability - current.probability
+
+            if(i != np.length - 1){
+                total += nn.probability
+            }
+        })
+
+        np[np.length - 1].probability = 1 - total
+
+        return np
+    }
+
+    var changeNodeUser = function(address, np){
+        if(wss.changing[address]) return null
+
+        var r = f.randmap(np)
+
+        if(!r) return null
+
+        if(r.node.key == self.key) return null
+
+        return r.node
+    }
+
+    var changeNodeUsers = function(){
+        var np = needToChange()
+
+        if(!np) return 
+
+        _.each(self.ws.users, function(user, address){
+            var change = changeNodeUser(address, np)
+
+            if (change && wss.users[address]){
+
+                wss.users[address].emit('changenode', {
+                    node : change.exportsafe()
+                })
+            
+                wss.changing[address] = true
+            }
+        })
     }
 
     self.checkParameters = function(){
@@ -315,7 +474,14 @@ var Node = function(options, manager){
     }
 
     self.info = function(){
+
+        if (self.testing){
+            return Promise.resolve(lastinfo || {})
+        }
+
         return self.rpcs('getnodeinfo').then(info => {
+
+            lastinfo = info
 
             self.addblock(info.lastblock)
             
@@ -332,7 +498,7 @@ var Node = function(options, manager){
         var updated = {}
 
         _.each(self.updating, function(k){
-            if(options[k]){
+            if (options[k]){
                 updated[k] = self[k] = options[k];
             }
         })
@@ -355,7 +521,8 @@ var Node = function(options, manager){
             name : self.name,
             addedby : self.addedby,
             key : self.key,
-
+            testing : self.testing,
+            stable : self.stable,
             canuse : (s.success > 0 && lastblock.height) ? true : false
         }
     }
@@ -376,7 +543,20 @@ var Node = function(options, manager){
         return e
     }
 
-    
+    self.test = function(scenario){
+        self.testing = scenario
+
+        self.statistic.clear()
+
+        test.scenarios[scenario]().then(r => {
+
+            self.testing = false
+
+            //self.statistic.clear()
+
+        })
+
+    }
 
     self.init = function(){
         
@@ -407,6 +587,8 @@ var Node = function(options, manager){
             }
 
             wss.users[user.address] = (new Wss(self)).connect(user)
+            delete wss.changing[user.address]
+
 
             return wss.users[user.address]
         },

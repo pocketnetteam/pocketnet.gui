@@ -605,7 +605,6 @@ var share = (function(){
 
 			linksFromText : function(text){
 
-				console.log(text, 'text');
 
 				if(!currentShare.url.v){
 					var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi; 
@@ -629,7 +628,6 @@ var share = (function(){
 							else
 							{
 								if(currentShare.url.v) return;
-								console.log('preparedUrl', url);
 								currentShare.url.set(url)
 
 								renders['url']()
@@ -677,7 +675,6 @@ var share = (function(){
 
 			post : function(clbk, p){
 
-				console.log('into post', currentShare)
 
 
 				el.postWrapper.removeClass('showError');
@@ -840,7 +837,6 @@ var share = (function(){
 			},
 
 			eTextChange : function(c){
-				console.log('c text', c)
 				var text = c.getText();
 
 				actions.tagsFromText(text);
@@ -1813,7 +1809,6 @@ var share = (function(){
 			
 						el.c.find('.emojionearea-editor').pastableContenteditable();
 
-						console.log('pastable');
 
 						el.c.find('.emojionearea-editor').on('pasteImage', function (ev, data){
 

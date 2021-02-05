@@ -52,7 +52,6 @@ var article = (function(){
 
 			trx : function(share, clbk){
 
-				console.log('trx', share, clbk, p)
 
 				if (el.c){
 					el.c.addClass('loading')
@@ -96,7 +95,7 @@ var article = (function(){
 							try{
 
 								var alias = new pShare();
-									console.log("_import alias", _alias)
+					
 									alias._import(_alias, true)
 									alias.temp = true;
 									alias.address = _alias.address
@@ -105,9 +104,6 @@ var article = (function(){
 
 								self.app.platform.sdk.node.shares.add(alias)
 
-								console.log('alias', alias)
-								console.log('_alias',  _alias)
-								console.log("art.", art)
 
 								art.txid = alias.txid;
 								art.ptime = Math.floor((new Date().getTime()) / 1000)
@@ -145,7 +141,6 @@ var article = (function(){
 				
 				var text = self.app.platform.sdk.articles.echo(art)
 				var date = new Date().getTime()
-				console.log('art', art, 'text', text, date)
 
 				share.message.set(text)
 				share.caption.set(art.caption.value)
@@ -159,7 +154,6 @@ var article = (function(){
 				share.settings.videos = self.app.platform.sdk.articles.getVideos(text)
 
 
-				console.log('article share share share', share)
 
 				var error = share.validation()
 
@@ -212,8 +206,7 @@ var article = (function(){
 							});
 
 							share.message.set(text)
-
-							console.log('init', share, text)			
+		
 
 							actions.trx(share)
 
@@ -281,11 +274,8 @@ var article = (function(){
 			change : function(){
 				t = slowMade(function(){
 
-
-					console.log('editor', editor);
-					console.log('serilize', editor.serialize());
 					var cnt = self.app.platform.sdk.articles.lightVideo(editor.serialize())
-					console.log('cnt', cnt)
+		
 
 
 					actions.change(cnt);
@@ -590,7 +580,6 @@ var article = (function(){
 
 				if(ed.share) art = actions.fromShare(ed.share)
 
-				console.log(art)
 
 				var data = {
 					art : art,

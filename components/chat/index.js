@@ -1041,7 +1041,6 @@ var chat = (function(){
 
 			chat.rtc.clbks.receive.messages.messenger = function(messages){
 
-				console.log("messages", messages)
 			
 				newmessageslength++;
 
@@ -1158,8 +1157,6 @@ var chat = (function(){
 					clearInterval(readinterval)
 				}
 
-				console.log('exel', el)
-
 				if (el.type)
 
 					el.type.blur();
@@ -1205,8 +1202,6 @@ var chat = (function(){
 			},
 			
 			init : function(p){
-
-				console.log("INICHAT")
 
 
 				renderedMessages = {};

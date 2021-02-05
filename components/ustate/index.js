@@ -102,13 +102,11 @@ var ustate = (function(){
 
 			gifts : function(_el){
 
-				console.log('renders')
 
 				self.app.platform.sdk.processes.get(function(levels){
 
 					self.app.platform.sdk.processes.gifts(function(gifts){
 
-						console.log(levels, gifts, self.app.platform.sdk.processes.level(mestate.reputation))
 						
 
 						var level = self.app.platform.sdk.processes.level(mestate.reputation)
@@ -126,7 +124,6 @@ var ustate = (function(){
 									return gift.amount == lvl.bonus * 100000000
 								})
 
-								console.log(gift, lvl.bonus * 100000000, gifts)
 
 								if(!gift){
 									lel.addClass('waitgift')

@@ -491,7 +491,6 @@ var filluser = (function(){
 
 				prev : function(clbk){
 
-					self.app.platform.m.log('userwisard_network_fail')
 
 					clbk()
 				},

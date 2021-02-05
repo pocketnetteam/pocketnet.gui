@@ -1,0 +1,63 @@
+<% if(system.node) {%>
+
+    <div class="nodecontentmanage managepanel">
+
+        <div class="work">
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Enabled</span>
+                    </div>
+
+                    <div class="value" sys="nodeenabled">
+                        <span><%- system.node.enabled?  'Yes' : 'No' %></span>
+                    </div>
+                </div>
+            </div>
+
+            <% if(proxy.direct) {%>
+
+            <div class="setting systempath">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>binPath</span>
+                    </div>
+
+                    <div class="value">
+                        <span><%- system.node.binPath || 'Default' %></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting systempath">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>dataPath</span>
+                    </div>
+
+                    <div class="value">
+                        <span><%- system.node.dataPath || 'default' %></span>
+                    </div>
+                </div>
+            </div>
+
+            <% } %>
+
+            <div class="setting addresses">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Stacking Adresses</span>
+                    </div>
+
+                    <div class="value">
+                        <span><%= system.node.stacking.join(", ") || 'Empty' %></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+<% } %>

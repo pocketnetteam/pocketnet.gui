@@ -377,7 +377,6 @@ var menu = (function(){
 				},
 				click : function(){
 
-					self.app.platform.m.log('sharing_opened_menu', '0')
 
 					self.nav.api.load({
 						open : true,
@@ -910,7 +909,6 @@ var menu = (function(){
 			el.c.find('.localizationicon').on('click', function(){
 
 				var items = []
-				console.log('LANGUAGES!', self.app.localization.available)
 
 				_.each(self.app.localization.available, function(a){
 					items.push({
@@ -919,10 +917,8 @@ var menu = (function(){
 
 							var na = app.localization.findByName(a.name);
 
-							console.log('na', na, self.app.localization.key)
 
 							if (na && na.key != self.app.localization.key){
-								console.log('LANGUAGE SET!!!')
 
 								self.app.localization.set(na.key);
 							}

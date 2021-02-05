@@ -19,7 +19,6 @@ var socialshare = (function(){
 		var actions = {
 			shareText : function(){
 
-				console.log('calltoActionUserText', calltoActionUserText)
 
 				if (!st || calltoActionNotInclude) return '';
 
@@ -212,7 +211,6 @@ var socialshare = (function(){
 
 						window.location.href = m;
 
-						self.app.platform.m.log('sharing_by', 'email')
 					})					
 
 				}
@@ -268,7 +266,6 @@ var socialshare = (function(){
 					_el.on('click', function(){
 						var type = $(this).data('type');
 
-						self.app.platform.m.log('sharing_by', type)
 					})
 				}
 				

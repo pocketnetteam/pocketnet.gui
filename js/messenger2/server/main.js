@@ -116,7 +116,6 @@
                 data = JSON.parse(message); 
             }
             catch (e) { 
-                console.log("Invalid JSON"); 
                 data = {}; 
             } 
             
@@ -331,7 +330,7 @@
 
                         if (chat && chat.users.remove(user.id))
                         {
-                            console.log("REMOVE USER IN CHAT", user.address)
+                            ("REMOVE USER IN CHAT", user.address)
 
                             //online
                             chat.addresses.remove(user.address) 
@@ -396,7 +395,6 @@
 
                     else
                     {
-                        console.log("chat adding")
                         chats[data.chatid] || (chats[data.chatid] = new Chat({
                             addresses : data.addresses,
                             ini : user.address,
@@ -409,7 +407,6 @@
 
                         if (added)
                         {
-                            console.log("ADD USER IN CHAT", user.address)
 
                             //forever
                             addresses[user.address].chats.add(chat)
@@ -511,7 +508,6 @@
 
             if(user && user.id) { 
 
-                console.log("CLOSE", user.address)
 
                 var address = addresses[user.address]
 
@@ -555,7 +551,6 @@
 
         connection.on("error", function() {
 
-            console.log("ERROR")
         })
 
         var send = {
