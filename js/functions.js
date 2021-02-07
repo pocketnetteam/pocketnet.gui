@@ -9109,15 +9109,19 @@
 		}
 
 		var takeData = function(uri){
-			if(typeof localStorage != 'undefined' && localStorage[prefix+uri])
+			if(typeof localStorage != 'undefined' && localStorage[prefix+uri]){
 				data[uri] = JSON.parse(localStorage[prefix+uri]);
-			else 
+				console.log('takedata', uri, data[uri]);
+			} 
+			else {
 				data[uri] = {};
+			}
 
 			return this;
 		}
 
 		var putData = function(uri){
+			console.log('putdata', uri, data[uri]);
 			if(typeof localStorage != 'undefined' && data[uri]){
 
 				try{

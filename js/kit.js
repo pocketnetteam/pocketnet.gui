@@ -845,6 +845,7 @@ Share = function(lang){
 			}
 			
 			_.each(self.on.change || {}, function(f){
+				console.log('poll', f);
 				f('poll', this.v)
 			})
 
@@ -1180,6 +1181,7 @@ Share = function(lang){
 			c : encodeURIComponent(self.caption.v),
 			m : encodeURIComponent(self.message.v),
 			u : encodeURIComponent(self.url.v),
+			P : encodeURIComponent(self.poll.v),
 			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
 			i : self.images.v,
 			s : _.clone(self.settings),
@@ -1198,6 +1200,7 @@ Share = function(lang){
 		self.images.set(v.i || v.images)
 		self.repost.set(v.r || v.txidRepost || v.repost)
 		self.language.set(v.l|| v.language || 'en')
+		self.poll.set(v.p || v.poll || {})
 
 		if (v.txidEdit) self.aliasid = v.txidEdit
 

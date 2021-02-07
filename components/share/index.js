@@ -2102,7 +2102,6 @@ var share = (function(){
 
 				intro = false;
 				external = null
-
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
 
 				essenseData = deep(p, 'settings.essenseData') || {};
