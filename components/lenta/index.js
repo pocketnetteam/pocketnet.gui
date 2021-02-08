@@ -2204,8 +2204,6 @@ var lenta = (function(){
 
 			url : function(el, url, share, clbk){
 
-				console.log('url', el, url, share, clbk);
-
 				if(essenseData.nourlload){
 
 					if (clbk)
@@ -2776,6 +2774,8 @@ var lenta = (function(){
 
 			if(!essenseData.txids){
 				self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
+
+					console.log('share', share);
 
 					if (share.txidEdit){		
 												

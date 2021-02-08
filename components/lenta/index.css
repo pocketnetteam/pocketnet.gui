@@ -948,6 +948,16 @@
 #lenta .shares .share .pollWrapper .list {
   margin-top: 0.5em;
 }
+#lenta .shares .share .pollWrapper .list .item-progress {
+  display: flex;
+  align-items: center;
+}
+#lenta .shares .share .pollWrapper .list .item-progress progress {
+  width: 100%;
+  max-width: 350px;
+  margin-left: 8px;
+  color: #4AC6F9;
+}
 #lenta .shares .share .exitFull {
   display: none;
   position: fixed;

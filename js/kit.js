@@ -1181,7 +1181,7 @@ Share = function(lang){
 			c : encodeURIComponent(self.caption.v),
 			m : encodeURIComponent(self.message.v),
 			u : encodeURIComponent(self.url.v),
-			P : encodeURIComponent(self.poll.v),
+			p : _.clone(self.poll.v),
 			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
 			i : self.images.v,
 			s : _.clone(self.settings),
@@ -1647,7 +1647,8 @@ pShare = function(){
 	self.txid = '';
 	self.time = null;
 	self.repost = '';
-	self.language = ''
+	self.language = '';
+	self.poll = {};
 
 	self.comments = 0;
 	self.lastComment = null;
@@ -1703,6 +1704,7 @@ pShare = function(){
 			self.message = decodeURIComponent((v.m || v.message || "").replace(/\+/g, " "))
 			self.caption = decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " "))
 			self.tags = _.map(v.t || v.tags || [], function(t){ return decodeURIComponent(t) })
+			self.poll = v.p || v.poll || {}
 
 		}
 
@@ -1764,6 +1766,7 @@ pShare = function(){
 		v._time = self._time;
 		v.s = _.clone(self.settings)
 		v.l = self.language
+		v.p = self.poll
 
 		return v
 	}

@@ -30,7 +30,9 @@ var name = app.platform.api.name(share.address)
 
 var emptywithrepost = share.isEmpty() && share.repost
 
+var value = Number(share.score)
 
+console.log('my', value, share.scnt);
 
 var metadisplay = function(){ %>
 
@@ -296,6 +298,8 @@ var metadisplay = function(){ %>
 				list: ['first answer', 'second answer', 'third answer'],
 				title: 'My question!!!????'
 			}
+
+			console.log('shareeee', share);
 		%>
 
 		<div class="pollWrapper">
@@ -308,8 +312,12 @@ var metadisplay = function(){ %>
 
 				<% _.each(poll.list, function(key, i){ %> 
 					<div class="item">
-						<input class="checkbox nolabel" type="checkbox" id="poll-item-<%-i %>">
-						<label for="poll-item-<%-i %>"> <%= key %> </label>
+						<input class="checkbox nolabel" type="checkbox" id="<%-share.txid %>-poll-item-<%-i %>">
+						<label for="<%-share.txid %>-poll-item-<%-i %>"> <%= key %> </label>
+					</div>
+					<div class="item-progress">
+						<span>70%</span>
+						<progress id="file" max="100" value="<%-i %>0"> 70% </progress>							
 					</div>
 				<% }) %> 
 			</div>

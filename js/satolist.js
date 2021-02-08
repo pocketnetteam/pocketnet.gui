@@ -4759,7 +4759,6 @@ Platform = function (app, listofnodes) {
 
                             try {
 
-
                                 var c = {
                                     caption: filterXSS(decodeURIComponent(d.content), {
                                         whiteList: [],
@@ -8374,6 +8373,8 @@ Platform = function (app, listofnodes) {
 
                                         s._import(share);
 
+                                        console.log('ssss', s, share);
+
                                         s.txid = share.txid;
 
                                         s.time = new Date();
@@ -8432,6 +8433,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 transform: function (d, state) {
+
                     var storage = this.storage;
 
                     storage.trx || (storage.trx = {})
@@ -10172,7 +10174,7 @@ Platform = function (app, listofnodes) {
 
                                     self.app.platform.sdk.node.transactions.blockUnspents(ids)
 
-                       
+                                    console.log('obj.export', obj.export());
 
                                     self.app.ajax.rpc({
                                         method: 'sendrawtransactionwithmessage',

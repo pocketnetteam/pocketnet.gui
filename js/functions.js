@@ -9121,7 +9121,7 @@
 		}
 
 		var putData = function(uri){
-			console.log('putdata', uri, data[uri]);
+
 			if(typeof localStorage != 'undefined' && data[uri]){
 
 				try{

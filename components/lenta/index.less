@@ -1299,12 +1299,24 @@
 
 				}
 			}
-			.pollWrapper{
+			.pollWrapper {
 				margin-top: 1.5em;
 				margin-bottom: 1em;
 
 				.list{
 					margin-top: 0.5em;
+
+					.item-progress {
+						display: flex;
+						align-items: center;
+
+						progress {
+							width: 100%;
+							max-width: 350px;
+							margin-left: 8px;
+							color: @color-main;
+						}
+					}
 
 				}
 
