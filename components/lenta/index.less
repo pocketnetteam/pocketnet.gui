@@ -1307,13 +1307,33 @@
 					margin-top: 0.5em;
 
 					.item-progress {
-						display: flex;
-						align-items: center;
+						min-height: 40px;
+						margin-bottom: 10px;
+
+						.top, .bottom{
+							display: flex;
+							align-items: center;
+						}
+						
+
+						.percent{
+							width: 45px;
+							text-align: right;
+							padding-right: 15px;
+						}
+	
+
+						.check {
+							color: @color-main;
+							display: flex;
+							justify-content: flex-end;
+							width: 45px;
+							padding-right: 15px;
+						}
 
 						progress {
 							width: 100%;
 							max-width: 350px;
-							margin-left: 8px;
 							color: @color-main;
 						}
 					}

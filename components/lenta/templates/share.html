@@ -296,7 +296,8 @@ var metadisplay = function(){ %>
 		<%
 			var poll = {
 				list: ['first answer', 'second answer', 'third answer'],
-				title: 'My question!!!????'
+				title: 'My question!!!????',
+				answer: false
 			}
 
 			console.log('shareeee', share);
@@ -311,13 +312,36 @@ var metadisplay = function(){ %>
 			<div class="list">
 
 				<% _.each(poll.list, function(key, i){ %> 
-					<div class="item">
-						<input class="checkbox nolabel" type="checkbox" id="<%-share.txid %>-poll-item-<%-i %>">
-						<label for="<%-share.txid %>-poll-item-<%-i %>"> <%= key %> </label>
-					</div>
+
 					<div class="item-progress">
-						<span>70%</span>
-						<progress id="file" max="100" value="<%-i %>0"> 70% </progress>							
+						<div class="top">
+
+							<% if(!poll.answer) { %>
+
+								<input class="checkbox nolabel" type="checkbox" id="<%-share.txid %>-poll-item-<%-i %>">
+								<label for="<%-share.txid %>-poll-item-<%-i %>"> <%= key %> </label>
+
+							<% } else { %> 
+							<span 
+								class="percent"
+								
+							>
+								70%
+							</span>
+							<% } %>
+							<span class="text">
+								<%= key %>	
+							</span>
+						</div>
+
+						<% if(poll.answer) { %>
+
+						<div class="bottom">
+							<span class="check"><i class="fa fa-check-circle"></i></span>
+							<progress id="file" max="100" value="<%-i %>0"> 70% </progress>		
+						</div>
+
+						<% } %>
 					</div>
 				<% }) %> 
 			</div>
@@ -486,12 +510,8 @@ var metadisplay = function(){ %>
 
 												<span><%=e('postWaitConf')%></span>
 											</div>
-										</div>
-
-										
-										
+										</div>	
 									</div>
-
 								</div>
 								<div class="clearfix"></div>
 							</div>
