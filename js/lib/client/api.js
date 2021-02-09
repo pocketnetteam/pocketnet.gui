@@ -253,7 +253,7 @@ var Proxy16 = function(meta, app){
 
         var promise = null
 
-        if (self.direct && !self.valid()){
+        if (self.direct){
             promise = self.system.rpc(method, parameters, options)
         }
         else{
@@ -267,7 +267,7 @@ var Proxy16 = function(meta, app){
 
     self.fetch = function(path, data){
 
-        if(self.direct && !self.valid()){
+        if(self.direct){
             promise = self.system.fetch(path, data)
         }
         else{
@@ -309,6 +309,9 @@ var Proxy16 = function(meta, app){
         }
 
         self.system.clbks.tick.proxy = function(settings, proxystate){
+
+            if(!proxystate) return
+
 
             var hash = bitcoin.crypto.hash256(JSON.stringify(proxystate))
 

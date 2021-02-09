@@ -137,7 +137,11 @@ var Proxy = function (settings, manage) {
     self.server = {
 
         init: function () {
+
+            console.log("INIT", settings.server.enabled)
+
             if (settings.server.enabled) {
+
 
                 return server.init({
                     ssl : ini.ssl(),
@@ -156,6 +160,7 @@ var Proxy = function (settings, manage) {
 
         re : function(){
             return this.destroy().then(r => {
+                console.log("DESTROYED")
                 this.init()
             })
         },
@@ -999,6 +1004,8 @@ var Proxy = function (settings, manage) {
                     if(!message.U) return Promise.reject({error : 'Unauthorized', code : 401})
 
                     var kaction = f.deep(manage, message.action)
+
+                    console.log(message.action)
 
                     if(!kaction) {
                         return Promise.reject({error : 'unknownAction', code : 502})

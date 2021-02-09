@@ -315,7 +315,7 @@ var WSS = function(admins, manage){
             }
 
             if (user.admin){
-                user.ticks[ws.id] = setInterval(() => {tick(ws)}, 10000)
+                user.ticks[ws.id] = setInterval(() => {tick(ws)}, 5000)
             }
 
             connectNode(user, user.nodes[node.key]);
@@ -402,18 +402,20 @@ var WSS = function(admins, manage){
     }
 
     self.destroy = function(){
-        wss.clients.forEach((socket) => {
-            socket.close();
-        });
+        if (wss.clients)
+            wss.clients.forEach((socket) => {
+                socket.close();
+            });
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
 
-                wss.clients.forEach((socket) => {
-                    if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
-                        socket.terminate();
-                    }
-                });
+                if (wss.clients)
+                    wss.clients.forEach((socket) => {
+                        if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
+                            socket.terminate();
+                        }
+                    });
 
                 server.close(function(){
                     resolve()

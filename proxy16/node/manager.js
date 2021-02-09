@@ -241,7 +241,15 @@ var Nodemanager = function(p){
 
                     self.nodes = []
 
-                    _.each([].concat(p.stable, docs || []) , function(options){
+                    _.each([{
+
+                        host : '127.0.0.1',
+                        port : 38081,
+                        ws : 8087,
+                        name : 'Local Proxy Pocketnet Node',
+                        local : true
+
+                    }].concat(p.stable, docs || []) , function(options){
 
                         var node = new Node(options, self)
 
@@ -352,16 +360,9 @@ var Nodemanager = function(p){
 
             return node.rpcs(method, parameters)
         })
-
-       
-
-
-       
     }
     
     self.api = {
-
-
         ///
         connected : function(nodes){
             var connected = []

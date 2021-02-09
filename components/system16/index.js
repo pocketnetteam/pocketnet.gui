@@ -158,7 +158,10 @@ var system16 = (function(){
 							return proxy.system.request('set.node.enabled', {enabled : false}).then(r => {
 								clbk()
 
-								actions.refresh()
+								actions.refresh().then(r => {
+									actions.refreshsystem()
+								})
+								
 							})
 						}
 					}]
@@ -170,10 +173,27 @@ var system16 = (function(){
 				}
 				else{
 
-					return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
-						actions.refresh()
-						//renders.allsettings()
+					var items = [{
+						text : "Enable Pocketnet Node",
+						action : function (clbk) {
+
+							return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
+								actions.refresh().then(r => {
+									actions.refreshsystem()
+								})
+
+								clbk()
+							})
+
+						
+						}
+					}]
+
+					menuDialog({
+						items: items
 					})
+
+					
 
 				}
 			}
@@ -246,11 +266,25 @@ var system16 = (function(){
 				}
 			},
 
-			refresh : function(){
-				proxy.get.info().then(r => {
+			refreshsystem : function(){
+				return proxy.system.api.get.settings().then(s => {
 
+
+					system = s
+
+					if (el.c){
+						renders.allsettings()
+					}
+				})
+				
+			
+			},
+
+			refresh : function(){
+				return proxy.get.info().then(r => {
 					this.tick(r.info)
 
+					return Promise.resolve()
 				})
 			},
 
@@ -604,10 +638,8 @@ var system16 = (function(){
 			proxy : {
 				selectWatch : function(){
 
-					topPreloader(70)
 					windows.proxieslist(proxy, "Watch Proxy", function(selected){
 
-						topPreloader(100)
 						make(selected)
 					})
 				},
@@ -616,10 +648,8 @@ var system16 = (function(){
 
 					var use = api.get.current()
 
-					topPreloader(70)
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
-						topPreloader(100)
 
 						api.set.current(selected.id)
 
@@ -2244,6 +2274,18 @@ var system16 = (function(){
 				if(actions.admin()){
 
 
+					var timestamp = deep(info,'nodeControl.state.timestamp')
+					var dis = false
+
+
+					if (timestamp){
+						dis = (new Date()) < fromutc(new Date(timestamp)).addSeconds(60)
+
+
+					console.log('timestamp', fromutc(new Date(timestamp)), fromutc(new Date(timestamp)).addSeconds(60), new Date())
+
+					}
+
 					self.shell({
 						inner : html,
 						name : 'nodecontentmanage',
@@ -2253,7 +2295,8 @@ var system16 = (function(){
 							nodestate : info.nodeControl.state,
 							proxy : proxy,
 							admin : actions.admin(),
-							system : system
+							system : system,
+							dis : dis
 						},
 
 						el : elc.find('.localnodeWrapper .manage')

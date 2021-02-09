@@ -68,6 +68,13 @@
                         </div>
                    
                     <% } else {%> 
+
+                        <% if(node.local) {%>
+                            
+                            <div class="item ">
+                                <i class="fas fa-thumbtack"></i>
+                            </div>
+                        <% } else { %> 
                     
                         <% if(node.addedby == app.user.address.value || admin) {%>
 
@@ -75,6 +82,8 @@
                                 <i class="fas fa-cog"></i>
                             </div>
     
+                        <% } %>
+
                         <% } %>
                         
                     <% } %>

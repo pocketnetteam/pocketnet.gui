@@ -29,47 +29,37 @@ var nodes = [
 		port : 38081,
 		ws : 8087,
 		nodename : 'Cryptoserver',
-		stable : true,
-		rpcuser : 'pocketbot',
-		rpcpass : 'pFxcRujDHBkg7kcc',
+		stable : true
 	},
 	{
 		host : '64.235.45.119',
 		port : 38081,
 		ws : 8087,
-		nodename : 'CryptoserverSP',
-		stable : true,
-		rpcuser : 'pocketbot',
-		rpcpass : 'pFxcRujDHBkg7kcc',
+		name : 'CryptoserverSP',
+		stable : true
 	},
 
 	{
 		host : '64.235.35.173',
 		port : 38081,
 		ws : 8087,
-		nodename : 'CryptoserverSP4',
-		stable : true,
-		rpcuser : 'pocketbot',
-		rpcpass : 'pFxcRujDHBkg7kcc',
+		name : 'CryptoserverSP4',
+		stable : true
 	},
 	{
 		host : '64.235.33.85',
 		port : 38081,
 		ws : 8087,
-		nodename : 'CryptoserverSP5',
-		stable : true,
-		rpcuser : 'pocketbot',
-		rpcpass : 'pFxcRujDHBkg7kcc',
+		name : 'CryptoserverSP5',
+		stable : true
 	},
 	
 	{
 		host : '188.187.45.218',
 		port : 38081,
 		ws : 8087,
-		nodename : 'Cryptoserver',
-		stable : true,
-		rpcuser : 'pocketbot',
-		rpcpass : 'pFxcRujDHBkg7kcc',
+		name : 'Cryptoserver',
+		stable : true
 	}
 ]
 
@@ -385,6 +375,8 @@ var kit = {
 				},
 	
 				enabled : function(v){
+
+					console.log('settings.server.enabled', settings.server.enabled, v)
 	
 					if (settings.server.enabled == v) return Promise.resolve() 
 						settings.server.enabled = v

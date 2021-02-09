@@ -62,7 +62,6 @@ var System16 = function(app, proxy, direct){
     var response = function(e, message){
         var request = requestes[message.id]
 
-        console.log("RESPONSE", message)
 
         if (request) {
 
@@ -207,6 +206,14 @@ var System16 = function(app, proxy, direct){
             return proxy.fetch('manage', rdata)
         } 
             
+    }
+
+    self.api = {
+        get : {
+            settings : function(){
+                return self.request('get.settings', {})
+            }
+        }
     }
 
 

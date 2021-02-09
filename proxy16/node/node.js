@@ -23,7 +23,7 @@ var Node = function(options, manager){
     self.addedby = options.addedby || ''
     //self.currentBlock = 0
     self.peer = options.peer || false
-
+    self.local = options.local || false
     self.testing = false
 
     var statisticInterval = null
@@ -452,9 +452,11 @@ var Node = function(options, manager){
 
     self.peers = function(){
 
+
         return self.rpcs('getPeerInfo').then(result => {
 
             var nodes = _.map(result || [], function(peer){
+
 
                 var pr = peer.addr.split(":")
 
@@ -531,7 +533,8 @@ var Node = function(options, manager){
             key : self.key,
             testing : self.testing,
             stable : self.stable,
-            canuse : (s.success > 0 && lastblock.height) ? true : false
+            canuse : (s.success > 0 && lastblock.height) ? true : false,
+            local : self.local || false
         }
     }
 

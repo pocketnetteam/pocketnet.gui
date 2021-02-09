@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="value" sys="certificate">
-                        <span><%- deep(changes, 'ssl.name') || deep(system, 'server.ssl.name') || 'Missing' %></span>
+                        <span><%- deep(changes, 'ssl.name') || deep(system, 'server.ssl.name') || 'None' %></span>
                     </div>
 
                     <% if(changes.ssl) {%>
@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="value" sys="firebase">
-                        <span><%- deep(changes, 'firebase.id') || deep(system, 'server.firebase.id') || 'Missing' %></span>
+                        <span><%- deep(changes, 'firebase.id') || deep(system, 'server.firebase.id') || 'None' %></span>
                     </div>
 
                     <% if(changes.firebase) {%>
