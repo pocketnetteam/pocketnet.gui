@@ -79,9 +79,6 @@ var Server = function(settings, admins, manage){
         });
 
         app.options("/*", function(req, res, next){
-            //result.setHeader('Access-Control-Allow-Origin', '*');
-            //result.setHeader("Access-Control-Allow-Methods", "GET, POST");
-            //result.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
             res.sendStatus(200)
         });
 
@@ -109,6 +106,8 @@ var Server = function(settings, admins, manage){
 
             }
             catch(e) {
+
+                console.log("ERROR", e)
           
                 reject(e)
             }

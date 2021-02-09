@@ -71,9 +71,13 @@ var Wss = function(node, service){
 
         self.closed = true
 
-        ws.onerror = () => {};
-        ws.onclose = () => {};
-        ws.close();
+        if (ws){
+            ws.onerror = () => {};
+            ws.onclose = () => {};
+            ws.close();
+        }
+
+        
 
         emitting = {}
 

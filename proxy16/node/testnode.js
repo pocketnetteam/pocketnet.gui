@@ -12,10 +12,13 @@ var Testnode = function(node){
 
     var h = {
         getrandomaddress : function(){
-            return addresses(f.rand(0, addresses.length - 1))
+            return addresses[f.rand(0, addresses.length - 1)]
         },
         getrandomaddress1 : function(){
             return [this.getrandomaddress()]
+        },
+        getrandomaddress2 : function(){
+            return [this.getrandomaddress(), this.getrandomaddress()]
         },
         getrandomaddress10 : function(){
             return [this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress()]
@@ -28,7 +31,7 @@ var Testnode = function(node){
         getrawtransactionwithmessage : ["", "", "", 10, "en"],
         getuserstate : ['getrandomaddress'],
         getrawtransactionwithmessagebyid : [["f32822a02b0fb2614c4dcc43841fd95731e32c78ff2523e39575f7c2089134d1"]],
-        txunspent : [["getrandomaddress","ZZe7uuagkkEMPR2sxfCwRjooe6P9EvECKa"],1,9999999],
+        txunspent : ['getrandomaddress2',1,9999999],
         getuserprofile : ['getrandomaddress1'],
         getuserprofiles : ['getrandomaddress10'],
         getuseraddress : ['maxim'],
@@ -48,13 +51,15 @@ var Testnode = function(node){
 
     var request = function(method, p){
 
-        console.log("REQUEST")
+        //console.log("REQUEST")
 
         var parameters = _.map(_.clone(p || methods[method] || []), function(p, i){
             if(h[p]) return h[p]()
 
             return p
         })
+
+        //console.log('parameters', parameters)
 
         return f.delay(f.rand(3, 100)).then(() => {
             return node.rpcs(method, parameters)
@@ -132,11 +137,11 @@ var Testnode = function(node){
             if(!count) count = 1;
 
             var promises = []
-            var waittime = 3
+            var waittime = 400
             
             for(var i = 0; i < count; i++){
                 promises.push(
-                    f.processArrayWithDelay(methodkeys, waittime, function(key){
+                    f.processArrayWithDelay(methodkeys, waittime, function(m){
 
                         return request(m).then(r => {
                             return Promise.resolve()
@@ -145,16 +150,24 @@ var Testnode = function(node){
                         })
 
                     }).catch(e => {
+                        console.log("E", e)
+
                         return Promise.resolve()
                     })
                 )
             }
 
 
-            return Promise.all(promises)
+            return Promise.all(promises).catch(e => {
+                console.log("E", e)
+
+                return Promise.reject(e)
+            })
         },
 
         parallellMethodsLong : function(count, methodkeys, time){
+
+            console.log('time', time)
 
             if(!time) time = 0
 
@@ -165,17 +178,19 @@ var Testnode = function(node){
             var ctime = performance.now()
 
 
-            return self.scenariosmeta.parallellMethods(count, methodkeys).then(r => {
+            return self.scenariosmeta.parallellMethods(count, methodkeys).catch(e => {
 
-                var difference = (performance.now() - ctime) / 1000;
+                console.log("E" ,e)
+
+                return Promise.resolve()
+
+            }).then(r => {
+
+                var difference = (performance.now() - ctime);
 
                 time = time - difference
                 
-                return this.parallellMethodsLong(count, methodkeys)
-
-            }).catch(e => {
-
-                return Promise.resolve()
+                return this.parallellMethodsLong(count, methodkeys, time)
 
             })
         }
@@ -183,10 +198,13 @@ var Testnode = function(node){
 
     self.scenarios = {
         pageload : function(){
-            var count = 100,
+            var count = 200,
                 methodkeys = ['getuserprofile', 'getrawtransactionwithmessage', 'getuserstate', 'getrawtransactionwithmessagebyid', 'txunspent']
-        
-            return self.scenariosmeta.parallellMethods(count, methodkeys)
+            
+
+            console.log("TESTING", count, methodkeys)
+
+            return self.scenariosmeta.parallellMethodsLong(count, methodkeys, 60000)
         }
     }
 

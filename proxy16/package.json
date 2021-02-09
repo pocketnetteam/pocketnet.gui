@@ -8,7 +8,5 @@
   },
   "author": "Max Grishkov",
   "license": "ISC",
-  "dependencies": {
-    "random": "^2.2.0"
-  }
+  "dependencies": {}
 }

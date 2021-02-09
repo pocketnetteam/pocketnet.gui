@@ -1,0 +1,149 @@
+<% if(system.server) {%>
+
+    <div class="webserveradmin managepanel">
+
+        <div class="work">
+            <div class="ssubcaption">
+                <span>
+                    Settings:
+                </span>
+            </div>
+        </div>
+
+        <div class="work">
+            
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Enabled</span>
+                    </div>
+
+                    <div class="value" sys="serverenabled" value="<%-(typeof changes.enabled != 'undefined' ? changes.enabled : system.server.enabled)%>">
+                        <span><%- (typeof changes.enabled != 'undefined' ? changes.enabled : system.server.enabled) ? 'Yes' : 'No' %></span>
+                    </div>
+
+                    <% if(typeof changes.enabled != 'undefined') {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="enabled"></i>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Https port</span>
+                    </div>
+
+                    <div class="value" sys="https">
+                        <div class="input">
+                            <input type="number" class="httpsport" value="<%-changes.https || system.server.ports.https%>">
+                        </div>
+                    </div>
+
+                    <% if(changes.https) {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="https"></i>
+                        </div>
+                    <% } %>
+
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Websocket port</span>
+                    </div>
+
+                    <div class="value" sys="wss">
+                        <div class="input">
+                            <input type="number" class="wsssport" value="<%-changes.wss || system.server.ports.wss%>">
+                        </div>
+                    </div>
+                    <% if(changes.wss) {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="wss"></i>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Certificate</span>
+                    </div>
+
+                    <div class="value" sys="certificate">
+                        <span><%- deep(changes, 'ssl.name') || deep(system, 'server.ssl.name') || 'Missing' %></span>
+                    </div>
+
+                    <% if(changes.ssl) {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="ssl"></i>
+                        </div>
+                    <% } else { %> 
+
+                        <% if(deep(system, 'server.ssl.certpath') || deep(system, 'server.ssl.keypath')) {%>
+                            <div class="todefaultcert">
+                                <span>Set do default</span>
+                            </div>
+                        <% } %>
+
+                    <% } %>
+
+                   
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Firebase</span>
+                    </div>
+
+                    <div class="value" sys="firebase">
+                        <span><%- deep(changes, 'firebase.id') || deep(system, 'server.firebase.id') || 'Missing' %></span>
+                    </div>
+
+                    <% if(changes.firebase) {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="firebase"></i>
+                        </div>
+                    <% } %>
+
+                  
+                </div>
+            </div>
+
+            <% if(proxy.direct) {%>
+
+
+            <% } %>
+
+        </div>
+
+        <% if(!_.isEmpty(changes)) {%>
+
+            <div class="work">
+                <div class="haschanges">
+                    <div class="buttons">
+                        <button class="button save">
+                            Save Changes
+                        </button>
+
+                        <button class="button ghost discard">
+                            Discard Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        <% } %>
+
+    </div>
+
+<% } %>
