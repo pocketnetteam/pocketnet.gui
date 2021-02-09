@@ -1,17 +1,25 @@
 <div class="webservercontent">
     <div class="work">
-        <div class="info">
-            <div class="inforow">
-                Https: <% if(info.server.listening) {%> <%- info.server.listening %> <% } else { %> <i class="far fa-circle"></i> <% }%>
-            </div>
-
-            <div class="inforow">
-                Websocket: <% if(info.wss.listening) {%> <%- info.wss.listening %> <% } else { %> <i class="far fa-circle"></i> <% }%>
-            </div>
+        <div class="ssubcaption">
+            <span>
+                Listening ports:
+            </span>
         </div>
 
-        
+        <div class="webserverstatusWrapper">
+
+            
+
+        </div>
+
+       
     </div>
+
+
+    <div class="adminPanelWrapper">
+
+    </div>
+
 
     <div class="stats">
         <div class="serverchart">

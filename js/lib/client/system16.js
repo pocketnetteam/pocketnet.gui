@@ -28,6 +28,12 @@ var WssDummy = function(system16){
 	self.close = function(){
 		self.onmessage = null
 		self.onopen = null
+
+        if (self.onclose){
+			self.onclose()
+		}
+
+        self.onclose = null
 	}
 
 	self.init = function(){

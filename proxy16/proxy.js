@@ -62,7 +62,6 @@ var Proxy = function (settings, manage) {
 
         stats.push(data)
 
-        //console.log(data)
 
 		var d = stats.length - statcount
 
@@ -77,12 +76,20 @@ var Proxy = function (settings, manage) {
 
     var ini = {
         ssl: function () {
-
-            var sslsettings = settings.server.ssl || {}
+            var s =  settings.server.ssl || {}
+            var sslsettings = {}
+            
+            sslsettings.key = s.keypath || s.key
+            sslsettings.cert = s.certpath || s.cert
+            sslsettings.passphrase = s.passphrase
 
             var options = {};
 
-            if(!sslsettings.key || !sslsettings.cert || !sslsettings.passphrase) return {}
+            console.log('sslsettings', sslsettings)
+
+            if(!sslsettings.key || !sslsettings.cert || !sslsettings.passphrase) return {
+
+            }
 
             try {
                 options = {
@@ -130,7 +137,6 @@ var Proxy = function (settings, manage) {
     self.server = {
 
         init: function () {
-
             if (settings.server.enabled) {
 
                 return server.init({
@@ -159,6 +165,10 @@ var Proxy = function (settings, manage) {
                 return self.wss.re()
             }).then(r => {
                 return self.firebase.re()
+            }).catch(e => {
+                console.error(e)
+
+                return Promise.reject(e)
             })
         },
 
@@ -191,6 +201,12 @@ var Proxy = function (settings, manage) {
         destroy: function () {
             return wallet.destroy()
         },
+        removeKey : function(key){
+            return wallet.kit.removeKey(key)
+        },
+        setPrivateKey : function(key, private){
+            return wallet.kit.setPrivateKey(key, private)
+        },
 
         re : function(){
             return this.destroy().then(r => {
@@ -218,6 +234,10 @@ var Proxy = function (settings, manage) {
             return Promise.resolve()
         },
 
+        sendtoall: function (message) {
+            return wss.sendtoall(message)
+        },
+
         destroy: function () {
             return wss.destroy()
         },
@@ -227,6 +247,8 @@ var Proxy = function (settings, manage) {
                 this.init()
             })
         },
+
+
 
         info : function(compact){
             return wss.info(compact)
@@ -312,7 +334,7 @@ var Proxy = function (settings, manage) {
 
     self.firebase = {
         init: function () {
-            return firebase.init()
+            return firebase.init(settings.firebase)
         },
 
         destroy: function () {
@@ -525,7 +547,6 @@ var Proxy = function (settings, manage) {
                     if (options.node){
                         node = nodeManager.nodesmap[options.node]
 
-                        console.log("SELECTED NODE", node, options.node)
                     }
         
                     if(!node || options.auto) node = nodeManager.selectProbability() //nodeManager.selectbest()
@@ -616,6 +637,22 @@ var Proxy = function (settings, manage) {
                     return Promise.resolve({data : {
                         node : node.exportsafe()
                     }})
+
+                }
+            },
+
+            test : {
+                path : '/nodes/test',
+                authorization : 'signature',
+                action : function({node, scenario}){
+
+                    var _node = nodeManager.nodesmap[node]
+
+                    if(!_node){
+                        return Promise.reject('cantselect')
+                    }
+
+                    return _node.test(scenario)
 
                 }
             },
@@ -969,6 +1006,11 @@ var Proxy = function (settings, manage) {
 
                     return kaction(message.data).then(data => {
                         return Promise.resolve({data})
+                    }).catch(e => {
+
+                        console.error(e)
+
+                        return Promise.reject(e)
                     })
                 }
             }

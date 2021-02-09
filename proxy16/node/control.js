@@ -223,9 +223,9 @@ var Control = function(settings) {
 
             node.hasbin = self.kit.hasbin();
 
-            if (state.status == 'stopped'){
+            /*if (state.status == 'stopped'){
                 return Promise.resolve(false)
-            }
+            }*/
 
             return self.request.getNodeInfo().then(data => {
 
