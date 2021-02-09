@@ -313,7 +313,6 @@ var imagegallery = (function(){
 					clbk : function(){
 
 						
-						console.log("SSS2")
 	
 						actions.next()	
 						
@@ -343,10 +342,6 @@ var imagegallery = (function(){
 					},
 	
 					clbk : function(){
-	
-						
-
-						console.log("SSS")
 	
 						actions.back()
 	

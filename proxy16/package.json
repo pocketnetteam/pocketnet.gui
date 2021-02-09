@@ -4,9 +4,11 @@
   "description": "Pocketnet Proxy Server",
   "main": "index.js",
   "scripts": {
-    "serve": "node cli.js"
+    "serve": "node cli.js --cli"
   },
   "author": "Max Grishkov",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "random": "^2.2.0"
+  }
 }

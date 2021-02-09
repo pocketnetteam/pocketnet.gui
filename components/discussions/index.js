@@ -729,8 +729,6 @@ var discussions = (function(){
 
 			destroy : function(){
 
-				console.log("DESTROYCHAT")
-
 				if (w)
 
 					w.off('scroll', events.inViewScroll)

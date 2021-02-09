@@ -80,7 +80,6 @@ var uploadpeertube = (function () {
             class: 'close',
             html: '<i class="fas fa-upload"></i> Upload',
             fn: function (wnd, wndObj) {
-              wndObj.hide();
               var videoInputFile = el.videoInput.prop('files');
 
               var videoWallpaperFile = el.videoWallpaper.prop('files');
@@ -146,8 +145,14 @@ var uploadpeertube = (function () {
               };
 
               filesWrittenObject.successFunction = function (response) {
-                if (response === 'error') {
-                  sitemessage('Uploading error');
+                if (response.error) {
+                  var error = deep(response, 'error.responseJSON.errors') || {};
+
+                  var message = (Object.values(error)[0] || {}).msg;
+
+                  sitemessage(message || 'Uploading error');
+                  
+                  wndObj.close();
 
                   return;
                 }
@@ -156,6 +161,7 @@ var uploadpeertube = (function () {
                 wndObj.close();
               };
 
+              wndObj.hide();
               el.uploadProgress.removeClass('hidden');
               self.app.peertubeHandler.uploadVideo(filesWrittenObject);
             },

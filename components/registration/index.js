@@ -77,7 +77,6 @@ var registration = (function(){
 
 							if (l){
 
-								self.app.platform.m.log('registration_application_download', current.os.github.name)
 
 								var link = document.createElement('a');
 							        link.setAttribute('href', l.browser_download_url);
@@ -203,7 +202,6 @@ var registration = (function(){
 
 				actions.testqrcodeandkey(key, function(result){
 
-					console.log("result", result)
 
 					if(!result){
 						actions.generate()
@@ -365,7 +363,6 @@ var registration = (function(){
 			os : function(clbk){
 				var _os = os();
 
-				self.app.platform.m.log('registration_application')
 
 				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova && !self.app.ref){
 
@@ -412,7 +409,6 @@ var registration = (function(){
 
 				renders.step('success', function(p){
 
-					self.app.platform.m.log('registration_success')
 
 					if (clbk)
 						clbk()
@@ -422,7 +418,6 @@ var registration = (function(){
 
 			tips : function(clbk){
 
-				self.app.platform.m.log('registration_tips')
 
 				renders.step('tips', function(p){
 					p.el.find('.generate').on('click', events.generate)
@@ -477,14 +472,12 @@ var registration = (function(){
 
 											if(data == 'error decoding QR Code'){
 
-												self.app.platform.m.log('registration_qr_damaged')
 
 												el.c.find('.note').html(self.app.localization.e('filedamaged'))
 											}
 											else
 											{
 
-												self.app.platform.m.log('registration_qr_success')
 
 												keyInput.value = trim(data)
 
@@ -575,7 +568,6 @@ var registration = (function(){
 
 				renders.step('key', function(p){
 
-					self.app.platform.m.log('registration_key')
 
 					var m = p.el.find('.mnemonicKey')
 
@@ -644,11 +636,9 @@ var registration = (function(){
 										class : 'itemmain',
 										action : function(clbk){
 
-											//console.log(qr._oDrawing._elImage.currentSrc.split(',')[1])
 
 											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
 											
-											//console.log(image)
 
 											saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
 												clbk()
@@ -781,7 +771,6 @@ var registration = (function(){
 				}
 				else
 				{
-					self.app.platform.m.log('registration_open')
 					
 					current = {
 						last : false,

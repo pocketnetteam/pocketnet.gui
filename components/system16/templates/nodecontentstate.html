@@ -1,0 +1,58 @@
+<div class="nodecontentstate ">
+
+    <div class="staterow">
+        <div class="staterowTable table">
+            <div class="label">
+                <span>Status:</span>
+            </div>
+
+            <div class="value">
+                <span><b><%-nodestate.status%></b></span>
+            </div>
+        </div>
+    </div>
+    <% if(nodestate.error) {%>
+        <div class="staterow">
+            <div class="staterowTable table">
+                <div class="label">
+                    <span>Error:</span>
+                </div>
+
+                <div class="value">
+                    <span><b><%-nodestate.error.code || '0'%></b>: <%-deep(nodestate, 'error.message') || "Undefined Error"%></span>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+   
+
+    <% if(nodestate.info.lastblock) {%>
+
+        <div class="staterow">
+            <div class="staterowTable table">
+                <div class="label">
+                    <span>Block:</span>
+                </div>
+    
+                <div class="value">
+                    <span><b><%-nodestate.info.lastblock.height%></b> / <%= manager.chain? manager.chain.commonHeight || '&mdash;' : '&mdash;' %></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="staterow">
+            <div class="staterowTable table">
+                <div class="label">
+                    <span>Block Hash:</span>
+                </div>
+    
+                <div class="value">
+                    <span><%-nodestate.info.lastblock.hash%></span>
+                </div>
+            </div>
+        </div>
+
+    <% } %>
+
+</div>

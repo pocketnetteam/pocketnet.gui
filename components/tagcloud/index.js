@@ -40,7 +40,6 @@ var tagcloud = (function(){
 					}, function(p){
 	
 						p.el.find('.showhidealltags').on('click', function(){
-							console.log('sad')
 							el.c.toggleClass('showedalltags')
 						})
 	

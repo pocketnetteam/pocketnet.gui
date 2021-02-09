@@ -27,7 +27,6 @@ var applications = (function(){
 
 							if (l){
 
-								self.app.platform.m.log('registration_application_download', os.github.name)
 
 								var link = document.createElement('a');
 							        link.setAttribute('href', l.browser_download_url);
@@ -49,7 +48,6 @@ var applications = (function(){
 			os : function(clbk){
 				var _os = os();
 
-				self.app.platform.m.log('registration_application')
 
 				if (_os && self.app.platform.applications[ed.key][_os] && (typeof _Electron == 'undefined' ) && !window.cordova){
 
@@ -87,7 +85,7 @@ var applications = (function(){
 							el.c.find('.os').addClass('rundownloading')
 							el.c.find('.skipositem').html('<div class="downloadstart">'+self.app.localization.e('e13011')+'</div>'+
 								'<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
-					
+					sa
 						})
 					})
 				})

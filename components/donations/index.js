@@ -132,8 +132,6 @@ var donations = (function(){
 
 					if(storage[cur]){
 
-						console.log('cur, storage[cur]', cur, storage[cur])
-
 						actions.status(cur, storage[cur], function(err, info){
 							if(info.Status == "AWAITINGFUNDS" || info.Status == "AWAITINGDONATION"){
 								actions.waitfunds(cur, storage[cur], info, curobj)

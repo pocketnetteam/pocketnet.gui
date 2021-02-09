@@ -1,0 +1,49 @@
+<div class="graphWrapper" chart="<%-id%>">
+
+    <div class="work">
+        <div class="showgraphwrapper">
+            <span class="showgraph">Show Chart</span>
+            <span class="hidegraph">Hide Chart</span>
+        </div>
+    </div>
+
+    <div class="grwr">
+
+        <div class="subcaptionHeader">
+            <div class="work">
+                <div class="subcaptionTableHeader table">
+                    <div class="subcaptiongraph">
+                        <%- options.caption %> <i class="fas fa-cog"></i>
+                    </div>
+                </div>	
+            </div>
+        </div>
+
+        <div class="chartWrapper">
+
+            <div class="work">
+            
+                <div class="chart" id="<%-id%>">
+                </div>
+        
+                <% if(typeof labels != 'undefined' && ! _.isEmpty(labels)) { %>
+        
+                    <div class="labels">
+        
+                        <% _.each(labels, function(label){ %>
+        
+                            <div class="label">
+                                <%- label %>
+                            </div>
+        
+                        <% }) %>
+        
+                    </div>
+        
+                <% } %>
+            </div>
+        </div>
+
+    </div>
+
+</div>

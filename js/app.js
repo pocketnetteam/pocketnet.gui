@@ -1,3 +1,4 @@
+
 if(typeof require != 'undefined' && typeof __map == 'undefined')
 {
 	var __map = require("./_map.js");
@@ -24,21 +25,16 @@ if(typeof _Electron != 'undefined' && _Electron){
 	io = require('./js/vendor/rtc/socket.io.js')
 
 	MediumEditor = require('medium-editor').MediumEditor
-	/*pickadate = require('pickadate/lib/picker.js');
-	require('pickadate/lib/picker.date.js');*/
-
-
 	jQueryBridget = require('jquery-bridget');
 	jQueryBridget( 'isotope', Isotope, $ );
 	jQueryBridget( 'textcomplete', jquerytextcomplete, $ );
-
 
 	Mark = require('./js/vendor/jquery.mark.js');
 
 	emojionearea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
-
+	//fuck
 	const contextMenu = require('electron-context-menu');
 
 	contextMenu({
@@ -46,31 +42,6 @@ if(typeof _Electron != 'undefined' && _Electron){
 		showCopyImageAddress : true,
 		showSaveImageAs : true
 	})
-
-	
-
-	/*const electronSpellchecker = require('electron-spellchecker');
-
-	// Retrieve required properties
-	const SpellCheckHandler = electronSpellchecker.SpellCheckHandler;
-	const ContextMenuListener = electronSpellchecker.ContextMenuListener;
-	const ContextMenuBuilder = electronSpellchecker.ContextMenuBuilder;
-
-	// Configure the spellcheckhandler
-	window.spellCheckHandler = new SpellCheckHandler();
-	window.spellCheckHandler.attachToInput();
-
-	// Start off as "US English, America"
-	window.spellCheckHandler.switchLanguage('en-US');
-
-	// Create the builder with the configured spellhandler
-	var contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
-
-	// Add context menu listener
-	var contextMenuListener = new ContextMenuListener((info) => {
-		contextMenuBuilder.showPopupMenu(info);
-    });*/
-
 
 }
 
@@ -105,7 +76,7 @@ Application = function(p)
 		//apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
 		apimproxy : p.apimproxy || 'https://pocketnet.app:8888',
 		
-		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx',
+		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations
 
 		//////////////
 		
@@ -116,28 +87,20 @@ Application = function(p)
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
-		//////////////
+		////////////// Will remove with Matrix
 		//ws : p.ws || "wss://pocketnet.app:8088",
 		rtc : p.rtc || 'https://pocketnet.app:9001/',
-
-		//////////////
-
 		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
 		rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
-
-		/*rtcws : 'wss://localhost:9090',
-		rtchttp : 'https://localhost:9091',*/
 		
 		listofnodes : p.listofnodes || null,
 		listofproxies : p.listofproxies || null,
-		fingerPrint : null,
 
 		unathorizated : function(ignoreDialog){
 
 			self.user.isState(function(state){
 
-
-				if(state){
+				if (state){
 
 					self.user.signout();
 
@@ -161,6 +124,8 @@ Application = function(p)
 
 			
 		},
+
+		/////////
 
 		successHandler : function(p){
 
@@ -204,6 +169,9 @@ Application = function(p)
 			}
 
 		},
+
+
+		///////////
 
 		errorHandler : function(error, p){
 
@@ -249,7 +217,7 @@ Application = function(p)
 		
 	};
 
-
+	///////////////
 	self.errors = {
 		clear : function(){
 			this.state = {};
@@ -396,31 +364,10 @@ Application = function(p)
 
 	}
 
-	if(typeof window != 'undefined')
-
+	if (typeof window != 'undefined')
 		self.options.address = window.location.protocol + "//" + window.location.host; 
 
-	var checkJSErrors = function(){
-		if(typeof window != "undefined")
-		{
-			var errormessages = function(e){
-
-				if(!e.error || window.design) return;
-
-				/*
-				
-
-					Логирование ошибок
-				
-
-				 */
-			}
-
-			window.removeEventListener('error', errormessages);
-			window.addEventListener('error', errormessages);
-		}		
-	}
-
+	
 	var newObjects = function(p){
 
 		
@@ -431,6 +378,10 @@ Application = function(p)
 		self.ajax = new AJAX(self.options);	
 		self.user = new User(self);	
 		self.ajax.set.user(self.user);
+
+		self.api = new Api(self)
+
+		
 
 		self.platform = new Platform(self, self.options.listofnodes);
 
@@ -558,95 +509,43 @@ Application = function(p)
 
 			self.realtime();
 
-			if(!_Node)
-			{
-				checkJSErrors();
-			}
+			self.options.fingerPrint = hexEncode('fakefingerprint');
 
-			var fprintClbk = function(){
+			self.user.isState(function(state){
 
-				
+				self.platform.prepare(function(){
 
-					console.log("IMHERE")
-
-					self.user.isState(function(state){
-
-						self.platform.prepare(function(){
-
-
-							if(state && self.platform.sdk.address.pnet()){
-
-								var addr = self.platform.sdk.address.pnet().address
-
-								var regs = self.platform.sdk.registrations.storage[addr];
-
-								if (regs && regs >= 5){
-									
-									self.platform.ui.showmykey()
-									
-								}
-
-								self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
-							}
-
-
-							self.platform.m.log('enter', state)
-							
-							self.nav.init(p.nav);
-
-							if (p.clbk) 
-								p.clbk();
-
-						}, state)
-						
+					self.api.rpc('getnodeinfo').then(r => {
+						console.log("RESULT getnodeinfo", r)
+					}).catch(e => {
+						console.log("ERROR getnodeinfo", e)
 					})
 
-					
 
-		
+					if(state && self.platform.sdk.address.pnet()){
 
-			}
+						var addr = self.platform.sdk.address.pnet().address
+						self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
 
-			if(typeof Fingerprint2 != 'undefined'){
+						var regs = self.platform.sdk.registrations.storage[addr];
 
-				new Fingerprint2.get({
-
-					excludes: {
-						userAgent: true, 
-						language: true,
-						enumerateDevices : true,
-						screenResolution : true,
-						pixelRatio : true,
-						fontsFlash : true,
-						doNotTrack : true,
-						timezoneOffset : true,
-						timezone : true,
-						webdriver : true,
-						hardwareConcurrency : true,
-						hasLiedLanguages : true,
-						hasLiedResolution : true,
-						hasLiedOs : true,
-						hasLiedBrowser : true
+						if (regs && regs >= 5){
+							
+							self.platform.ui.showmykey()
+							
+						}
 					}
 
-				},function(components, r){
-
-					var values = components.map(function (component) { return component.value })
-					var murmur = Fingerprint2.x64hash128(values.join(''), 31)
-
-					self.options.fingerPrint = hexEncode('fakefingerprint');
 					
-					fprintClbk()
-				});
-			}
+					self.nav.init(p.nav);
 
-			else
-			{
-				self.options.fingerPrint = hexEncode('fingerPrint')
+					if (p.clbk) 
+						p.clbk();
 
-				fprintClbk()
-			}
-
+				}, state)
+				
+			})
+	
 		})
 
 		
@@ -667,8 +566,6 @@ Application = function(p)
 		if(p.current) p.nav.href = self.nav.get.href()
 
 		self.destroyModules();
-
-		//self.stopModules()
 		
 		self.user.isState(function(s){
 
@@ -768,7 +665,6 @@ Application = function(p)
 	self.stopModules = function(){
 		_.each(self.modules, function(module){
 
-			console.log("STOPMODULE", module.module)
 
 			if (module.module.inited) {
 
@@ -777,7 +673,6 @@ Application = function(p)
 				
 		})
 	}
-
 
 	self.destroy = function(){
 
@@ -789,49 +684,11 @@ Application = function(p)
 		self.nav = null;
 	}
 
-	self.logger = function(Function, Message){
-		/*self.ajax.run({
-			data : {
-				Action : "LOG",
-				Function : Function,
-				Message : Message
-			}
-		})*/
-	}
-
-	self.geolocation = function(){
-
-		var byIp = function(){
-
-			$.getJSON("https://ip-api.com/json/?callback=?", function(data) {
-	           console.log(data)
-	        });
-
-		}
-
-		if (navigator.geolocation) {
-
-			navigator.geolocation.getCurrentPosition(function(position){
-
-			}, function(error){
-
-			},{
-				enableHighAccuracy: true,
-			 	maximumAge: 60000
-			});
-
-		}
-
-		else
-		{
-			
-		}
-	}
+	self.renewModules = function(map){}
+	self.logger = function(Function, Message){}
 
 	self.scrollRemoved = false;
-
 	var winScrollTop = 0;
-
 	self.actions = {
 		up : _scrollTop,
 
@@ -918,10 +775,6 @@ Application = function(p)
 
 	}
 
-	self.renewModules = function(map){
-	
-	}
-
 	self.name = self.options.name;
 
 	self.reltime = function(time){
@@ -976,24 +829,13 @@ Application = function(p)
 
 	}
 
+	self.ref = localStorage['ref'] || parameters().ref;
 
-	if(!_Node){
+	self.options.device = localStorage['device'] || makeid();
 
-		self.ref = localStorage['ref'] || parameters().ref;
+	localStorage['device'] = self.options.device
 
-		self.options.device = localStorage['device'] || makeid();
-
-		localStorage['device'] = self.options.device
-
-		if(typeof window != 'undefined'){
-
-			self.fref = deep(window, 'location.href')
-
-		}
-
-	}
-
-	console.log("B", bitcoin)
+	if(typeof window != 'undefined'){ self.fref = deep(window, 'location.href') }
 
 	return self;
 }

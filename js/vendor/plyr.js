@@ -3206,7 +3206,6 @@ typeof navigator === "object" && (function (global, factory) {
    */
 
   function parseUrl(input) {
-    console.log('PLYR!!!!!!')
     var safe = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
     var url = input;
 
@@ -9111,8 +9110,6 @@ typeof navigator === "object" && (function (global, factory) {
       key: "setup",
       value: function setup(selector, clbk) {
         var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-        console.log('OPTIONS', options)
-        console.log('SELECTOR', selector)
         var targets = null;
 
         if (is$1.string(selector)) {
@@ -9128,7 +9125,6 @@ typeof navigator === "object" && (function (global, factory) {
         }
 
         return targets.map(function (t) {
-          console.log('ADDED PLAYER 3')
             return PlyrEx(t, options, clbk)
         });
       }
@@ -9182,6 +9178,8 @@ var PlyrEx = function(target, options, clbk) {
         target = new_target
     }
 
+    console.log("provider", provider)
+
     if ('bitchute' == provider) {
 
         video_id = video_id.replace('/embed/', '/video/');
@@ -9193,9 +9191,12 @@ var PlyrEx = function(target, options, clbk) {
             },
             type : 'POST',
             success : function(response){
-              console.log('bitchute RESP', response)
                 if (response.data.video && response.data.video.as) {
+
                     _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
+
+                    console.log('video_options', video_options)
+
                     if (clbk) clbk(new Plyr(target, video_options))
                 } else {
                     _error();
@@ -9211,7 +9212,6 @@ var PlyrEx = function(target, options, clbk) {
         url : `https://pocketnetpeertube1.nohost.me/api/v1/videos/${video_id}`,
         type : 'GET',
         success : function(response){
-            console.log('PEERTUBE RESP', response)
             var preview_picture = `https://peertube2.cpy.re${response.previewPath}`
 
             if (response.files && response.files[0].fileUrl) {

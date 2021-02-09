@@ -24,12 +24,12 @@ if(!_Node)
 		rtchttp : 'https://localhost:9091'*/
 
 		listofproxies : [
-			{
+			/*{
 				host : 'pocketnet.app',
 				port : 8888,
 				ws : 8088,
 				id : 'pocketnet.app:8888:8088:'
-			},
+			},*/
 
 			/*{
 				host : 'coinoptimizer.app',
@@ -38,12 +38,11 @@ if(!_Node)
 				id : 'coinoptimizer.app:8888:8088:'
 			},*/
 
-			/*{
-			 	host : 'localhost',
-			 	port : 8888,
-			 	ws : 8088,
-			 	id : 'localhost:8888:8088:'
-			},*/
+			{
+			 	host : 'pocketnet.app',
+			 	port : 8899,
+			 	wss : 8099
+			},
 			
 			/*{
 				host : 'ironbot',

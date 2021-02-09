@@ -117,8 +117,6 @@ var dust = (function(){
 
 						success : function(){
 
-							console.log(';self.app.user.private.value.toString()', self.app.user.private.value.toString())
-
 							actions.send(self.app.user.private.value.toString('hex'))
 						}
 					})
