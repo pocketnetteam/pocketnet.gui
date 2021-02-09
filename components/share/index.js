@@ -194,103 +194,134 @@ var share = (function(){
 				var storage = currentShare.export(true)
 
 				if (type === 'addVideo') {
-
 					el.peertube.addClass('disabledShare');
+					el.peertubeLiveStream.addClass('disabledShare');
 
-					self.nav.api.load({
-						open : true,
-						id : 'uploadpeertube',
-						inWnd : true,
+					self.app.peertubeHandler.authentificateUser(function(response) {
+						if (!response) response = {};
 
-						history : true,
+						if (response.error) {
+							el.peertube.removeClass('disabledShare');
+							el.peertubeLiveStream.removeClass('disabledShare');
 
-						essenseData : {
-							storage : storage,
-							value : value,
-							actions : {
-								added : function(link){
-									var type = 'url';
+							return sitemessage(response.error);
+						}
 
-									console.log('Finished!', link, new Date());
-									var result = currentShare[type].set(link)
-
-									if(!essenseData.share){
-										state.save()
+						
+	
+						self.nav.api.load({
+							open : true,
+							id : 'uploadpeertube',
+							inWnd : true,
+	
+							history : true,
+	
+							essenseData : {
+								storage : storage,
+								value : value,
+								actions : {
+									added : function(link){
+										var type = 'url';
+	
+										console.log('Finished!', link, new Date());
+										var result = currentShare[type].set(link)
+	
+										if(!essenseData.share){
+											state.save()
+										}
+	
+										if(!result && errors[type]){
+	
+											sitemessage(errors[type])
+	
+										}								
+	
+										if (renders[type])
+											renders[type]();									
 									}
-
-									if(!result && errors[type]){
-
-										sitemessage(errors[type])
-
-									}								
-
-									if (renders[type])
-										renders[type]();
-									
-									el.peertube.removeClass('disabledShare');
+								},
+	
+								closeClbk : function() {
+									if (!currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
+										el.peertube.removeClass('disabledShare');
+										el.peertubeLiveStream.removeClass('disabledShare');
+									}
 								}
 							},
-
-							closeClbk : function() {
-								el.peertube.removeClass('disabledShare');
+	
+							clbk : function(p){
+								external = p
 							}
-						},
+						})
 
-						clbk : function(p){
-							external = p
-						}
-					})
-					return true;
+						return true;
+					});
 				} 
 
 				if (type === 'addStream') {
+					el.peertubeLiveStream.addClass('disabledShare');
+					el.peertube.addClass('disabledShare');
 
-					el.peertubeLiveStream .addClass('disabledShare');
+					self.app.peertubeHandler.authentificateUser(function(response) {
 
-					self.nav.api.load({
-						open : true,
-						id : 'streampeertube',
-						inWnd : true,
+						if (!response) response = {};
+						
+						if (response.error) {
+							el.peertubeLiveStream.removeClass('disabledShare');
+							el.peertube.removeClass('disabledShare');
 
-						history : true,
-
-						essenseData : {
-							storage : storage,
-							value : value,
-							actions : {
-								added : function(link){
-									var type = 'url';
-
-									console.log('Finished!', link, new Date());
-									var result = currentShare[type].set(link)
-
-									if(!essenseData.share){
-										state.save()
+							return sitemessage(response.error);
+						}
+	
+						self.nav.api.load({
+							open : true,
+							id : 'streampeertube',
+							inWnd : true,
+	
+							history : false,
+	
+							essenseData : {
+								storage : storage,
+								value : value,
+								currentLink : currentShare.url ? currentShare.url.v : '',
+								actions : {
+									added : function(link){
+										var type = 'url';
+	
+										console.log('Finished!', link, new Date());
+										var result = currentShare[type].set(link)
+	
+										if(!essenseData.share){
+											state.save()
+										}
+	
+										if(!result && errors[type]){
+	
+											sitemessage(errors[type])
+	
+										}								
+	
+										if (renders[type])
+											renders[type]();
 									}
-
-									if(!result && errors[type]){
-
-										sitemessage(errors[type])
-
-									}								
-
-									if (renders[type])
-										renders[type]();
-									
+								},
+	
+								closeClbk : function() {
 									el.peertubeLiveStream.removeClass('disabledShare');
+	
+									if (!currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
+										el.peertube.removeClass('disabledShare');
+									}
 								}
 							},
-
-							closeClbk : function() {
-								el.peertubeLiveStream.removeClass('disabledShare');
+	
+							clbk : function(p){
+								external = p
 							}
-						},
+						});
 
-						clbk : function(p){
-							external = p
-						}
-					})
-					return true;
+						return true;
+					});
 				} 
 
 				if(type == 'article'){
@@ -528,8 +559,10 @@ var share = (function(){
 
 				var l = currentShare.url.v
 
-				if (l.includes('pocketnetpeertube')) {
+				if (l.includes(self.app.peertubeHandler.peertubeId)) {
 					self.app.peertubeHandler.removeVideo(l);
+					el.peertube.removeClass('disabledShare');
+					el.peertubeLiveStream.removeClass('disabledShare');
 				}
 
 
@@ -1172,8 +1205,13 @@ var share = (function(){
 					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
 					el.peertube.on('click', async function() {
-						console.log('>>>>>>>>usertoken', self.app.peertubeHandler.userToken);
+						console.log('>>>>>>>>usertoken', self.app.peertubeHandler.userName, self.app.peertubeHandler.password);
 					});
+
+					if (currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
+						el.peertube.addClass('disabledShare');
+						el.peertubeLiveStream.addClass('disabledShare');
+					}
 
 
 					p.el.find('.cancelediting').on('click', function(){
@@ -1704,8 +1742,6 @@ var share = (function(){
 		}
 
 		var initEvents = function(){
-
-					
 
 			el.changeAddress.on('change', events.changeAddress)			
 

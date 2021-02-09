@@ -1907,6 +1907,24 @@ input[type=radio].radio:checked + label {
                         }
                     }
 
+                    &.disabledButton {
+                        color: #c8cbcc;
+                        cursor: auto;
+                        pointer-events: none;
+                
+                        &:hover {
+                            color: #c8cbcc;
+                        }
+                    }
+
+                    &.successButton {
+                        color: @color-good;
+
+                        &:hover {
+                            color: @color-good;
+                        }
+                    }
+
                     &:hover{
                         background: @color-good;
                     }
