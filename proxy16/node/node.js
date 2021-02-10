@@ -452,8 +452,9 @@ var Node = function(options, manager){
 
     self.peers = function(){
 
-
+        console.log('getPeerInfo')
         return self.rpcs('getPeerInfo').then(result => {
+
 
             var nodes = _.map(result || [], function(peer){
 
@@ -471,6 +472,7 @@ var Node = function(options, manager){
 
             })
 
+
             nodes = _.uniq(nodes, function(n){
                 return n.key
             })
@@ -478,6 +480,9 @@ var Node = function(options, manager){
             return Promise.resolve(nodes)
 
         }).catch(e => {
+
+            console.log("getPeerInfo ERROR", e, self.ckey)
+
             return Promise.reject(e)
         })
         
@@ -534,7 +539,8 @@ var Node = function(options, manager){
             testing : self.testing,
             stable : self.stable,
             canuse : (s.success > 0 && lastblock.height) ? true : false,
-            local : self.local || false
+            local : self.local || false,
+            peer : self.peer
         }
     }
 

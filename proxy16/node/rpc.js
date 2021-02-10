@@ -82,15 +82,17 @@ var publics = {
     getlastblocks: true,
     checkstringtype: true,
     getstatistic: true,
-    getInfo : true,
-    getPeerInfo : true,
+    getinfo : true,
+    getpeerinfo : true,
     txunspent: true,
-    estimateFee: true,
-    estimateSmartFee: true,
-    getTransaction : true
+    estimatefee: true,
+    estimatesmartfee: true,
+    gettransaction : true
 }
 
 function rpc(request, callback, obj) {
+
+    var m = request.method
 
     var pbl = publics[request.method]
 
