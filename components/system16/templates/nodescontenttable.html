@@ -69,11 +69,23 @@
                    
                     <% } else {%> 
 
-                        <% if(node.local) {%>
+                        <% if(node.local || node.peer) {%>
+
+                            <% if(node.local) {%>
                             
-                            <div class="item ">
-                                <i class="fas fa-thumbtack"></i>
-                            </div>
+                                <div class="item ">
+                                    <i class="fas fa-thumbtack"></i>
+                                </div>
+    
+                            <% } %>
+
+                            <% if(node.peer) {%>
+                        
+                                <div class="item ">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+    
+                            <% } %>
                         <% } else { %> 
                     
                         <% if(node.addedby == app.user.address.value || admin) {%>
