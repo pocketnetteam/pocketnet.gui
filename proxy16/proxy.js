@@ -139,7 +139,7 @@ var Proxy = function (settings, manage) {
 
         var i = self.kit.info()
 
-        var count = Math.max(i?.wss?.users?.length || 1, server?.middle?.requestsIp || 1)
+        var count = Math.max(f.deep(i, 'wss.users.length') || 1, f.deep(i, 'server.middle.requestsIp') || 1)
 
         if (count < 1) count = 1
 
