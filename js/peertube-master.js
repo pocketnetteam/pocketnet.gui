@@ -352,7 +352,7 @@ PeerTubeHandler = function (app) {
       });
   };
 
-  this.importVideo = async (url) => {
+  this.importVideo = async (parameters) => {
     const channelInfo = await this.getChannel();
 
     const bodyOfQuery = {
@@ -360,7 +360,7 @@ PeerTubeHandler = function (app) {
       'scheduleUpdate[updateAt]': new Date().toISOString(),
       channelId: channelInfo.id,
       // name: parameters.name || `${this.userName}:${new Date().toISOString()}`,
-      targetUrl: url,
+      targetUrl: parameters.url,
     };
 
     const formData = new FormData();
