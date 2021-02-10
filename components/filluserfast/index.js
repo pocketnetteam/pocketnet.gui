@@ -61,6 +61,8 @@ var filluserfast = (function(){
 						{
 							self.sdk.captcha.get(function(captcha, error){
 
+								console.log("errorerrorerror", error)
+
 
 								if (error){
 

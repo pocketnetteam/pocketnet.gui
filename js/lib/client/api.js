@@ -498,7 +498,7 @@ var Api = function(app){
                     }).then(() => {
 
                         if(!current && proxies.length){
-                            current = proxies[0].id
+                            current = 'pocketnet.app:8899:8099' //proxies[0].id
                         }
 
                         return Promise.resolve()
@@ -625,19 +625,16 @@ var Api = function(app){
 
             localStorage['currentproxy'] = current
 
-            return proxy.fetch('use').catch(e => {}).then(r => {
+            if (reconnectws)
+                app.platform.ws.reconnect()
 
-                
+            return Promise.resolve()
 
-                if (reconnectws)
-                    app.platform.ws.reconnect()
-
-                if(r.refresh){
-                    return proxy.refreshNodes()
-                }
-                else
-                    return Promise.resolve()
-            })
+            if(r.refresh){
+                return proxy.refreshNodes()
+            }
+            else
+                return Promise.resolve()
         }
     }
 

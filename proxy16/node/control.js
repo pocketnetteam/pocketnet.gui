@@ -220,6 +220,7 @@ var Control = function(settings) {
         },
 
         check : function(){
+            return Promise.resolve({})
 
             node.hasbin = self.kit.hasbin();
 

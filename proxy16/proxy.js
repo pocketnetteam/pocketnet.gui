@@ -115,6 +115,9 @@ var Proxy = function (settings, manage) {
 
         signature : function(data){
 
+            delete data.A
+            delete data.U
+
             if (data.signature){
                 var authorized = self.pocketnet.kit.authorization.signature(data.signature)
 
@@ -218,6 +221,10 @@ var Proxy = function (settings, manage) {
 
         inited : function(){
             return wallet.init()
+        },
+
+        addqueue : function(key, address, ip){
+            return wallet.kit.addqueue(key, address, ip)
         },
         
 
@@ -913,9 +920,9 @@ var Proxy = function (settings, manage) {
                     if (captcha && captchas[captcha] && captchas[captcha].done){
                         return Promise.resolve({
                             data : {
-                                id : captchas[connect.parameters.captcha].id,
+                                id : captchas[captcha].id,
                                 done : true,
-                                result : captchas[connect.parameters.captcha].text
+                                result : captchas[captcha].text
                             }
                         })
                     }
@@ -1033,7 +1040,7 @@ var Proxy = function (settings, manage) {
 
                     }
 
-                    self.wallet.kit.addqueue(key || 'registration', address, ip).then(r => {
+                    return self.wallet.addqueue(key || 'registration', address, ip).then(r => {
                         return Promise.resolve({
                             data : r
                         })
@@ -1050,7 +1057,8 @@ var Proxy = function (settings, manage) {
                 action : function(message){
 
 
-                    if(!message.U) return Promise.reject({error : 'Unauthorized', code : 401})
+                    if(!message.A) 
+                        return Promise.reject({error : 'Unauthorized', code : 401})
 
                     var kaction = f.deep(manage, message.action)
 

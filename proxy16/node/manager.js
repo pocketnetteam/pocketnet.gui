@@ -396,7 +396,7 @@ var Nodemanager = function(p){
             return inited
         }).then(() => {
    
-            var node = self.selectbest() || self.select()
+            var node = self.selectbest()
     
             if(!node) return Promise.reject('node')
 
@@ -428,13 +428,13 @@ var Nodemanager = function(p){
 
             var last = self.askedpeers[node.key]
 
+            console.log("L", last, f.date.addseconds(last, peernodesCheckTime / 1000) < new Date())
+
             if(!last || f.date.addseconds(last, peernodesCheckTime / 1000) < new Date()){
 
-                
-                return self.api.peernodes(node).then(r => {
+                self.askedpeers[node.key] = new Date()
 
-                    self.askedpeers[node.key] = new Date()
-    
+                return self.api.peernodes(node).then(r => {
                     return Promise.resolve()
                 })
             }   
