@@ -651,9 +651,9 @@ var system16 = (function(){
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
 
-						api.set.current(selected.id)
-
-						make(api.get.current())
+						api.set.current(selected.id, true).then(r => {
+							make(api.get.current())
+						})
 
 					})
 				},
@@ -794,13 +794,13 @@ var system16 = (function(){
 
 					series : [
 						{
-							path : 'wallet.registration.queue',
+							path : 'addresses.wallet.registration.queue',
 							name : "Users Queue Size",
 							id : 'queue'
 						},
 	
 						{
-							path : 'wallet.registration.unspents',
+							path : 'addresses.wallet.registration.unspents',
 							name : "Unspents Count",
 							id : 'unspents'
 						},
@@ -812,7 +812,7 @@ var system16 = (function(){
 
 					series : [
 						{
-							path : 'wallet.registration.balance',
+							path : 'addresses.wallet.registration.balance',
 							name : "Address Balance",
 							id : 'balance'
 						}

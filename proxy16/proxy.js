@@ -134,6 +134,19 @@ var Proxy = function (settings, manage) {
         }
     }
 
+
+    self.users = function(){
+
+        var i = self.kit.info()
+
+        var count = Math.max(i?.wss?.users?.length || 1, server?.middle?.requestsIp || 1)
+
+        if (count < 1) count = 1
+
+        return count
+
+    }
+
     self.server = {
 
         init: function () {
@@ -202,6 +215,11 @@ var Proxy = function (settings, manage) {
         init: function () {
             return wallet.init()
         },
+
+        inited : function(){
+            return wallet.init()
+        },
+        
 
         destroy: function () {
             return wallet.destroy()
@@ -323,6 +341,10 @@ var Proxy = function (settings, manage) {
             return nodeManager.init()
         },
 
+        inited : function(){
+            return nodeManager.info().inited
+        },
+
         destroy : function () {
             return nodeManager.destroy()
         },
@@ -381,28 +403,47 @@ var Proxy = function (settings, manage) {
             }
         },
 
-        init: function () {
-
+        initlist : function(list){
             var catchError = function(key){
                 return (e) => {
-
-                    /*if (key == 'nodeControl'){
-                        
-                    }*/
 
                     return Promise.resolve()
                 }
             }
 
-            status = 1
-
-            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl'], (i) => {
+            var promises = _.map(list, (i) => {
                 return self[i].init().catch(catchError(i)).then(() => {
                     return Promise.resolve()
                 })
             })
 
-            return Promise.all(promises).then(r => {
+            return Promise.all(promises)
+        },
+
+        sinit : function(){
+            var wrks = []
+
+            if(!self.nodeManager.inited()) wrks.push('nodeManager')
+            if(!self.wallet.inited()) wrks.push('wallet')
+
+            if(!wrks.length){
+                return Promise.resolve({})
+            }
+            else{
+                return self.kit.initlist(wrks).then(r => {
+                    
+                    return Promise.resolve({
+                        refresh : true
+                    })
+                })
+            }
+        },
+
+        init: function () {
+
+            status = 1
+
+            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl']).then(r => {
 
                 status = 2
 
@@ -411,7 +452,6 @@ var Proxy = function (settings, manage) {
 
                 return Promise.resolve()
             })
-
 
         },
 
@@ -632,16 +672,19 @@ var Proxy = function (settings, manage) {
                 path : '/nodes/select',
                 action : function(){
 
-                    var node = nodeManager.selectProbability() || nodeManager.selectbest()
+                    return nodeManager.waitbest(3000).then(r => {
+                        var node = nodeManager.selectProbability() || nodeManager.selectbest() || nodeManager.select()
 
+                        if(!node){
+                            return Promise.reject('cantselect')
+                        }
 
-                    if(!node){
-                        return Promise.reject('cantselect')
-                    }
+                        return Promise.resolve({data : {
+                            node : node.exportsafe()
+                        }})
+                    })
 
-                    return Promise.resolve({data : {
-                        node : node.exportsafe()
-                    }})
+                    
 
                 }
             },
@@ -773,6 +816,12 @@ var Proxy = function (settings, manage) {
         },
 
         common : {
+            /*use : {
+                path : '/use',
+                action : function(){
+                    return self.kit.sinit()
+                }
+            },*/
             info : {
                 path : '/info',
                 action : function(){

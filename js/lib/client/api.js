@@ -168,7 +168,7 @@ var Proxy16 = function(meta, app){
             app.api.editinsaved(lastid, self)
 
             if (currentapi == lastid){
-                app.api.set.current(self.id)
+                app.api.set.current(self.id, reconnectws)
             }
         }
 
@@ -324,6 +324,10 @@ var Proxy16 = function(meta, app){
 
         }
 
+        return self.refreshNodes()
+    }
+
+    self.refreshNodes = function(){
         return self.api.nodes.get().then(r => {
 
             return self.api.nodes.select()
@@ -481,7 +485,7 @@ var Api = function(app){
 
                         var oldc = localStorage['currentproxy']
 
-                        if(oldc){
+                        if (oldc){
                             return self.set.current(oldc)
                         }
 
@@ -593,11 +597,11 @@ var Api = function(app){
 
     self.ready = {
         proxies : () => {
-            return _.filter(proxies, proxy => { return proxy.ping})
+            return _.filter(proxies, proxy => { return proxy.ping })
         },
 
         use : () => {
-            return useproxy ? _.filter(proxies, proxy => { return proxy.ping && proxy.get.nodes().length }) : false
+            return useproxy ? _.filter(proxies, proxy => { return proxy.ping && proxy.get.nodes().length }).length : false
         },
     }
 
@@ -611,15 +615,29 @@ var Api = function(app){
     }
 
     self.set = {
-        current : function(ncurrent){
+        current : function(ncurrent, reconnectws){
 
-            if(!self.get.byid(ncurrent)) return Promise.reject('hasnt')
+            var proxy = self.get.byid(ncurrent)
+
+            if(!proxy) return Promise.reject('hasnt')
 
             current = ncurrent
 
             localStorage['currentproxy'] = current
 
-            app.platform.ws.reconnect()
+            return proxy.fetch('use').catch(e => {}).then(r => {
+
+                
+
+                if (reconnectws)
+                    app.platform.ws.reconnect()
+
+                if(r.refresh){
+                    return proxy.refreshNodes()
+                }
+                else
+                    return Promise.resolve()
+            })
         }
     }
 

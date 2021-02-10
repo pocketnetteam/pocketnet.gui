@@ -10,6 +10,8 @@ var Wallet = function(p){
     var processInterval = null,
         unspentsInterval = null
 
+    var inited = false
+
     self.kit = {
         
     }
@@ -66,7 +68,6 @@ var Wallet = function(p){
     }
 
     var db = new Datastore(f.path(p.dbpath));
-
 
     var initProcess = function(){
 
@@ -148,6 +149,7 @@ var Wallet = function(p){
         })
 
         initProcess()
+        inited = true
 
         return new Promise((resolve, reject) => {
 
@@ -635,10 +637,13 @@ var Wallet = function(p){
 
     self.info = function(){
 
-        var info = {}
+        var info = {
+            inited : inited,
+            addresses : {}
+        }
 
         _.each(addresses, function(r){
-            info[r.key] = {
+            info.addresses[r.key] = {
                 key : r.key,
                 unspents : r.unspents ? r.unspents.length : 0,
                 balance : self.unspents.total(r.unspents),
@@ -649,6 +654,10 @@ var Wallet = function(p){
         })
 
         return info
+    }
+
+    self.inited = function(){
+        return inited
     }
 
     self.stats = function(){

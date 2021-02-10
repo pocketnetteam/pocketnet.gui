@@ -37,25 +37,25 @@ var nodes = [
 		ws : 8087,
 		name : 'CryptoserverSP',
 		stable : true
-	},*/
+	},
 
-	/*{
+	{
 		host : '64.235.35.173',
 		port : 38081,
 		ws : 8087,
 		name : 'CryptoserverSP4',
 		stable : true
-	},*/
+	},
 	{
 		host : '64.235.33.85',
 		port : 38081,
 		ws : 8087,
 		name : 'CryptoserverSP5',
 		stable : true
-	},
+	},*/
 	
 	{
-		host : '188.187.45.218',
+		host : '185.148.147.15',
 		port : 38081,
 		ws : 8087,
 		name : 'Cryptoserver',

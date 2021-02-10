@@ -29,6 +29,11 @@ var Node = function(options, manager){
     var statisticInterval = null
     var changeNodeUsersInterval = null
 
+
+    var notactualevents = 600000 //mult
+    var checkEventsLength = 100
+    var getinfointervaltime = 60000
+
     var test = new Test(self)
 
     var wss = {
@@ -198,7 +203,7 @@ var Node = function(options, manager){
 
             var push = _.clone(p)
 
-                push.time = new Date()
+                push.time = f.now()
 
             self.events.push(push)
 
@@ -289,7 +294,7 @@ var Node = function(options, manager){
         },
 
         rate : function(){
-            var s = f.date.addseconds(null, -10)
+            var s = f.date.addseconds(f.now(), -10)
             var l = self.events.length
             var c = 0
 
@@ -344,11 +349,13 @@ var Node = function(options, manager){
 
                 statisticInterval = setInterval(function(){
 
-                    if (self.events.length < 1000){
+                    self.statistic.clearOld()
+
+                    if (self.events.length < 1 + checkEventsLength){
                         self.info().catch(e => {})
                     }
 
-                }, 60000)
+                }, getinfointervaltime)
             }
         },
 
@@ -357,6 +364,19 @@ var Node = function(options, manager){
                 clearInterval(statisticInterval)
                 statisticInterval = null
             }
+        },
+
+        clearOld : function(){
+
+            var timecheck = f.date.addseconds(f.now(), -notactualevents / 1000)
+
+            self.events = _.filter(self.events, function(e){
+                if(e.time < timecheck) return false
+
+                return true
+            })
+
+            self.eventsCount = self.events.length
         }
     }
 
@@ -452,12 +472,9 @@ var Node = function(options, manager){
 
     self.peers = function(){
 
-        console.log('getPeerInfo')
         return self.rpcs('getPeerInfo').then(result => {
 
-
             var nodes = _.map(result || [], function(peer){
-
 
                 var pr = peer.addr.split(":")
 
@@ -472,7 +489,6 @@ var Node = function(options, manager){
 
             })
 
-
             nodes = _.uniq(nodes, function(n){
                 return n.key
             })
@@ -480,9 +496,6 @@ var Node = function(options, manager){
             return Promise.resolve(nodes)
 
         }).catch(e => {
-
-            console.log("getPeerInfo ERROR", e, self.ckey)
-
             return Promise.reject(e)
         })
         
