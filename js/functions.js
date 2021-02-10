@@ -300,6 +300,15 @@
 		return d
 	}
 
+	fromutc = function(date){
+		var now = date ||(new Date);
+		var UTCseconds = (now.getTime() - now.getTimezoneOffset()*60*1000);
+		var d = new Date(UTCseconds);
+			d.toString();	
+	
+		return d
+	}
+
 	randomString = function (l) {
 		if (!l)
 			l = 8;
@@ -882,8 +891,15 @@
 
 		p.html = '<div class="caption">' + p.caption + '</div>';
 		p.html += '<div class="values">';
-
+		console.log('p.values', p.values)
 		_.each(p.values, function(value, index){
+
+			if(value.time){
+				p.html += "<div class='timeselector' index='"+index+"'>"
+				p.html += "</div>"
+
+				return
+			}
 
 			var _class = '';
 			var classValue = ''
@@ -907,7 +923,7 @@
 
 			if(value.checkbox)
 			{
-				
+
 				p.html += '<input class="checkbox" type="checkbox" index="'+index+'" id="value'+index+'" ';
 
 				if(value.defValue == true)
@@ -917,8 +933,26 @@
 
 				p.html += '><label for="value'+index+'">'+value.label+'</label>';
 
-					
+
 			}
+			else
+
+			if(value.text)
+			{
+				p.html += '<textarea placeholder="'+(value.placeholder || value.label || '')+'" class="'+_class+'" index="'+index+'">' + (value.defValue || '') + '</textarea>';
+
+			}
+
+			else
+
+			if (value.upload)
+			{	
+				p.html += '<div class="upload" index="'+index+'">'
+				p.html += value.placeholder
+				p.html += '<div class="uploaded"></div>'
+				p.html += '</div>'
+			}	
+
 			else
 
 			if(value.select)
@@ -941,10 +975,10 @@
 			}
 			else
 			{
-				if (value.defValue && value.defValue.toFixed) 
+				if (value.defValue && value.defValue.toFixed)
 					value.defValue = value.defValue.toFixed(p.precision || 0)
-				
-				p.html += '<input placeholder="'+(value.placeholder || value.label || '')+'" class="'+_class+'" index="'+index+'" data-validate="'+(value.validate || 'name')+'" type="'+ (value.type || 'text') +'" value="' + (value.defValue || '') + '"></input>';
+
+				p.html += '<input placeholder="'+(value.placeholder || value.label || '')+'" class="'+_class+'" index="'+index+'" data-validate="'+(value.validate || 'name')+'" type="'+ (value.type || 'text') +'" value="' + (value.defValue || '') + '" ' + (value.allowNull ? 'allow-null="true"' : '') + '></input>';
 			}
 
 			p.html += '</div>';
@@ -968,27 +1002,34 @@
 
 			}
 
+
+
 			p.html += '</div>';
-		})	
+		})
 
 		p.html += '</div>';
+
+		if (p.additional){
+			p.html += p.additional;
+		}
+
 		p.html += '<div class="alert" style="display:none">'+p.alert+'</div>';
 
 		var success = p.success;
 		var clbk = p.clbk;
+		var uploaded = {}
 
-		
 
 		p.clbk = function(wnd){
 			validation = new Validation({
 				form : wnd,
 				success : function(){
-					
+
 				}
 			});
 
 			if(moneyparam)
-				wnd.find('.dollars').maskMoney(moneyparam);	
+				wnd.find('.dollars').maskMoney(moneyparam);
 			if(percentparam)
 				wnd.find('.percent').maskMoney(percentparam);
 
@@ -1041,6 +1082,88 @@
 
 					})
 				}
+
+				if(value.text){
+
+					var txt = wnd.find('textarea[index="'+index+'"]');
+
+					txt.on('keyup', function(){
+						console.log('this.scrollTop', this.scrollTop)
+
+						if (this.scrollTop > 0){
+						  	this.style.height = (this.scrollHeight + 10) + "px";
+						}
+
+					});
+
+					/*txt.on('change', function(){
+						console.log('this.scrollTop', this.scrollTop)
+
+						if (this.scrollTop > 0){
+						  	this.style.height = (this.scrollHeight + 10) + "px";
+						}
+
+					});
+
+					txt.focus()
+					txt.change()*/
+
+
+
+
+				}
+
+				if(value.upload){
+					var input = wnd.find('.upload[index="'+index+'"]');
+
+					initUpload({
+						el : input,
+			
+						ext : value.upload.ext || ['png', 'jpeg', 'jpg'],
+
+						dropZone : input,
+
+						multiple : false,
+
+						action : function(file, clbk){
+
+							uploaded[index] = file
+
+							input.find('.uploaded').html(file.file.name + ' <i class="fas fa-check-circle"></i>')
+
+							if (value.onchange){
+								value.onchange(file, self)
+							}
+						}
+					})
+				}
+
+				if(value.time){
+					var input = wnd.find('.timeselector[index="'+index+'"]');
+
+					input.timingfield({
+						daysText:      'Days',
+						hoursText:      'Hours',
+						minutesText:    'Minutes',
+						secondsText:    'Seconds',
+
+						defaults : value.default
+					})
+				}
+
+				if(value.checkbox){
+					var input = wnd.find('input[index="'+index+'"]');
+
+					if (value.onchange){
+
+						input.on('change', function(){
+							var v = $(this).is(":checked");
+
+							value.onchange(v, self)
+						})
+
+					}
+				}
 			})
 
 			if(clbk) clbk();
@@ -1048,34 +1171,62 @@
 
 		p.success = function(wnd){
 
-			if(!validation.validation()) return false;
+			if(!validation.validation({
+				manual : true
+			})) return false;
 
 			var _values = {},
 				arr = true;
 
+				console.log('uploaded', uploaded)
+
 			_.each(p.values, function(value, index){
-				var i = wnd.el.find(".values [index='"+index+"']");
-				
-				var v = i.val();
 
-				if(value.checkbox)
-				{
-					v = i.is(":checked");
+				if(value.time){
+					var input = wnd.el.find('.timeselector[index="'+index+'"]');
+
+					var v = input.find('.timingfield').val()
+
+					var v  = {
+						d : Number(input.find('.timingfield_days input').val() || '0'),
+						h : Number(input.find('.timingfield_hours input').val() || '0'),
+						m : Number(input.find('.timingfield_minutes input').val() || '0'),
+						s : Number(input.find('.timingfield_seconds input').val() || '0')
+					};
 				}
+				else
+				if(value.upload){
+					var v = uploaded[index]
+					var id = index
+				}
+				else{
 
-				if(value.dollars) v = i.maskMoney('unmasked', moneyparam)[0].value;
-				if(value.percent) v = i.maskMoney('unmasked', percentparam)[0].value;
+					var i = wnd.el.find(".values [index='"+index+"']");
 
-				var id = value.id || index;
+					var v = i.val();
 
-				if(value.id) arr = false;
+					if(value.checkbox)
+					{
+						v = i.is(":checked");
+					}
+
+					if(value.dollars) v = i.maskMoney('unmasked', moneyparam)[0].value;
+					if(value.percent) v = i.maskMoney('unmasked', percentparam)[0].value;
+
+					var id = value.id || index;
+
+					if(value.id) arr = false;
+				}
 
 				_values[id] = v;
 			})
 
 			if(arr) _values = _.toArray(_values);
 
-			success(_values); 
+			var r = success(_values);
+
+			if(typeof r != 'undefined') return r
+
 			return true
 		}
 
@@ -2387,9 +2538,10 @@
 		if(!eq) eq = 0
 	
 		var d = arr.length - length
+
 	
 		if (d > eq){
-			arr = arr.splice(0, d)
+			arr = arr.splice(d)
 		}
 	
 		return arr

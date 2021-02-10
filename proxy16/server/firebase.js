@@ -2,16 +2,16 @@ var Datastore = require('nedb');
 var f = require('../functions');
 
 var Fbtoken = function({
-    token, device, address
+    token, device, address, id
 }){
     var self = this;
 
     var key = function(){
-        return f.hash(token + device + address)
+        return f.hash(token + device + address + id)
     }
 
     self.check = function(){
-        return token && device && address
+        return token && device && address && id
     }
 
     self.export = function(){
@@ -19,6 +19,7 @@ var Fbtoken = function({
             token,
             device,
             address,
+            id : id,
             key : key()
         }
     }
@@ -178,7 +179,7 @@ var Firebase = function(p){
 
     self.getall = function(){
         return new Promise((resolve, reject) => {
-            db.find({}).exec(function (err, docs) {
+            db.find({id : self.id}).exec(function (err, docs) {
                 var keys = docs || []
     
                 var users = _.map(keys, function(options){
@@ -200,7 +201,7 @@ var Firebase = function(p){
 
             if(!saddress || saddress != address) return false
 
-            var fbtoken = new Fbtoken({token, device, address})
+            var fbtoken = new Fbtoken({token, device, address, id : self.id})
 
             if(!fbtoken.check()) return
 
@@ -366,7 +367,7 @@ var Firebase = function(p){
         return self.send({data, user})
     }
 
-    self.init = function(){
+    self.init = function(p){
 
         self.destroy()
         
@@ -378,6 +379,8 @@ var Firebase = function(p){
 
             }
         }
+
+        self.id = p.id
 
         if (serviceAccount){
             admin.initializeApp({

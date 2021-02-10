@@ -9205,9 +9205,8 @@ var PlyrEx = function(target, options, clbk) {
         });
 
     } if ('peertube' == provider) {
-      console.log('PROVIDER PEERTUBE')
       video_id = video_id.replace('https://pocketnetpeertube1.nohost.me/videos/embed/', '')
-      //ссылка картинка имя
+
       $.ajax({ 
         url : `https://pocketnetpeertube1.nohost.me/api/v1/videos/${video_id}`,
         type : 'GET',

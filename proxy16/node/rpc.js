@@ -50,7 +50,49 @@ function rpca(request, obj){
     })
 }
 
+var publics = {
+    getcontents: true,
+    getlastcomments: true,
+    gettags: true,
+    getrawtransactionwithmessagebyid: true,
+    getrawtransactionwithmessage: true,
+    getuserprofile:true,
+    getuserstate: true,
+    getaddressregistration: true,
+    signrawtransactionwithkey: true,
+    getrecommendedposts: true,
+    gettime: true,
+    getmissedinfo: true,
+    gethotposts: true,
+    getuseraddress: true,
+    search: true,
+    getcomments: true,
+    sendcomment: true,
+    getnodeinfo: true,
+    getaddressscores: true,
+    getpostscores:true,
+    getpagescores:true,
+
+    // BlockExplorer
+    getblocktransactions: true,
+    getaddressinfo: true,
+    getaddresstransactions: true,
+    gettransactions: true,
+    getblocks: true,
+    getlastblocks: true,
+    checkstringtype: true,
+    getstatistic: true,
+    getInfo : true,
+    getPeerInfo : true,
+    txunspent: true,
+    estimateFee: true,
+    estimateSmartFee: true,
+    getTransaction : true
+}
+
 function rpc(request, callback, obj) {
+
+    var pbl = publics[request.method]
 
     var self = obj;
     request = JSON.stringify(request);
@@ -60,7 +102,7 @@ function rpc(request, callback, obj) {
 
     var options = {
         host: self.host,
-        path: '/',
+        path: pbl ? '/public/' : '/',
         method: 'POST',
         port: self.port,
         //rejectUnauthorized: self.rejectUnauthorized,
@@ -152,9 +194,9 @@ function rpc(request, callback, obj) {
 
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');
-    
-    
-    req.setHeader('Authorization', 'Basic ' + auth);
+
+    if(!pbl)
+        req.setHeader('Authorization', 'Basic ' + auth);
 
     req.write(request);
     req.end();
@@ -238,20 +280,11 @@ RpcClient.callspec = {
     //setAccount: '',
     setGenerate: 'bool int',
     getreputations: '',
+
+
     getcontents: 'str',
     getlastcomments: 'str',
-
-    getcomments2: 'str',
-    getlastcomments2: 'str',
-    getrawtransactionwithmessage2: 'str',
-    getrawtransactionwithmessagebyid2: 'obj',
-    getmissedinfo2: 'str int',
-    getrecommendedposts2: 'str',
-    search2: 'str str str',
-    gethotposts2: 'str str str',
     gettags: 'str',
-
-
     getrawtransactionwithmessagebyid: 'obj',
     getrawtransactionwithmessage: 'str',
     getuserprofile: 'obj',
@@ -267,7 +300,6 @@ RpcClient.callspec = {
     getcomments: 'str',
     sendcomment: 'str str str str str',
     getnodeinfo: '',
-
     getaddressscores: 'str',
     getpostscores: 'str',
     getpagescores: 'obj str',

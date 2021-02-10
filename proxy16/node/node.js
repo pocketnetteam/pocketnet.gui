@@ -4,6 +4,7 @@ var f = require('../functions');
 const { performance } = require('perf_hooks');
 var Test = require('./testnode.js');
 var Wss  = require('./wss.js');
+const { map } = require('lodash');
 
 var Node = function(options, manager){
 
@@ -22,10 +23,11 @@ var Node = function(options, manager){
     self.addedby = options.addedby || ''
     //self.currentBlock = 0
     self.peer = options.peer || false
-
+    self.local = options.local || false
     self.testing = false
 
     var statisticInterval = null
+    var changeNodeUsersInterval = null
 
     var test = new Test(self)
 
@@ -361,6 +363,8 @@ var Node = function(options, manager){
     var needToChange = function(){
         var betterNodes = self.statistic.better()
 
+        //console.log('betterNodes.length', betterNodes.length, self.ckey)
+
         if(!betterNodes.length) return false
 
         betterNodes.push(self)
@@ -390,7 +394,7 @@ var Node = function(options, manager){
     }
 
     var changeNodeUser = function(address, np){
-        if(wss.changing[address]) return null
+        //if(wss.changing[address]) return null
 
         var r = f.randmap(np)
 
@@ -406,8 +410,12 @@ var Node = function(options, manager){
 
         if(!np) return 
 
-        _.each(self.ws.users, function(user, address){
+        //console.log('users', _.toArray(wss.users).length, self.ckey)
+
+        _.each(wss.users, function(user, address){
             var change = changeNodeUser(address, np)
+
+            //console.log('change', change, address)
 
             if (change && wss.users[address]){
 
@@ -444,9 +452,11 @@ var Node = function(options, manager){
 
     self.peers = function(){
 
+
         return self.rpcs('getPeerInfo').then(result => {
 
             var nodes = _.map(result || [], function(peer){
+
 
                 var pr = peer.addr.split(":")
 
@@ -523,7 +533,8 @@ var Node = function(options, manager){
             key : self.key,
             testing : self.testing,
             stable : self.stable,
-            canuse : (s.success > 0 && lastblock.height) ? true : false
+            canuse : (s.success > 0 && lastblock.height) ? true : false,
+            local : self.local || false
         }
     }
 
@@ -544,15 +555,17 @@ var Node = function(options, manager){
     }
 
     self.test = function(scenario){
+
         self.testing = scenario
 
         self.statistic.clear()
 
-        test.scenarios[scenario]().then(r => {
+
+        return test.scenarios[scenario]().then(r => {
 
             self.testing = false
 
-            //self.statistic.clear()
+            return Promise.resolve(r)
 
         })
 
@@ -564,11 +577,19 @@ var Node = function(options, manager){
 
         serviceConnection()
 
+        if(!changeNodeUsersInterval)
+            changeNodeUsersInterval = setInterval(changeNodeUsers, 10000)
+
         return self
     }
 
     self.destroy = function(){
         self.statistic.clearinterval()
+
+        if(changeNodeUsersInterval){
+            clearInterval(changeNodeUsersInterval)
+            changeNodeUsersInterval = null
+        }
 
         if (wss.service) {
             wss.service.disconnect()
@@ -586,11 +607,23 @@ var Node = function(options, manager){
                 if(old.closed) old.disconnect()
             }
 
-            wss.users[user.address] = (new Wss(self)).connect(user)
             delete wss.changing[user.address]
 
+            
 
-            return wss.users[user.address]
+            if(!wss.users[user.address]){
+                wss.users[user.address] = (new Wss(self)).connect(user)
+
+
+                return wss.users[user.address]
+            }
+
+            
+
+                
+            
+
+            
         },
 
         disconnect : function(user){

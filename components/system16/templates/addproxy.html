@@ -1,0 +1,42 @@
+<div class="addproxy">
+    <div class="parameters">			
+
+        <% _.each(parameters, function(parameter){
+            
+            if(parameter.hidden) return
+            
+            %>
+
+            <div class="parameterMaketWrapper <%-parameter.id%>" parameter="<%-parameter.id%>">
+                <div class="parameter table <%-parameter.type%>">
+
+                    <div class="pName">
+                        <div class="pNameW">
+                            <%= parameter.name %>
+                        </div>
+                    </div>
+
+                    <div class="pInput">
+                        <%= parameter.input({showall : true}) %>
+                    </div>						
+
+                </div>
+            </div>
+
+        <% }) %>
+
+        <div class="clearfix">
+        </div>
+
+    </div>
+
+    <div class="preloaderabs">
+        <div class="table">
+            <div>
+                <div class="preloaderwrapper">
+                    <div class="preloader5"><span></span><span></span><span></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,16 +1,40 @@
 <div class="proxyconnect">
-    <div class="work">
-        <div class="proxyselectwrapper">
-            <div class="proxyselecttable table">
 
-                <div class="currentwr openproxielist">
+    <div class="work">
+        <div class="subcaption">
+            <span>Proxy Servers</span>
+        </div>
+    </div>
+
+
+    <div class="work">
+
+        <div class="setting">
+            <div class="settingTable table">
+                <div class="label">
+                    <span>Use Proxy:</span>
+                </div>
+
+                <div class="value selectusing">
+
+                    <span><% if(using) {%> <%-using.get.name()%> <% } else {%> Not selected <% }%></span>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="setting">
+            <div class="settingTable table">
+                <div class="label">
+                    <span>Watch:</span>
+                </div>
+
+                <div class="value">
+
                     <span class="current">
                         <%- current ? current.get.name() : "Not Selected" %>
                     </span>
-                </div>
-                
-                <div class="selector openproxielist">
-                    <i class="fas fa-chevron-down"></i>
+
                 </div>
             </div>
         </div>
