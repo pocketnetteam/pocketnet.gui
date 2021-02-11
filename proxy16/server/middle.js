@@ -51,9 +51,31 @@ var Middle = function(){
 
         })
 
+        var signatures = {}
+
+        _.each(f.group(logs, function(l){
+            if(f.deep(l, 'p.signature')){
+                return 'exist'
+            }
+            else{
+                return 'empty'
+            }
+        }), function(lc, code){
+
+            signatures[code] = {
+                length : lc.length,
+                code : code
+            }
+
+        })
+
+        
+
+
         var data = {
             requestsIp : requestsIp,
-            responses : byCodes
+            responses : byCodes,
+            signatures : signatures
         }
 
         if(!compact) data.logs = logs

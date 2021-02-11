@@ -228,7 +228,8 @@ var Nodemanager = function(p){
                 statistic : node.statistic.get(),
                 status : node.chainStatus(),
                 rating : node.statistic.rating(),
-                probability : node.statistic.probability()
+                probability : node.statistic.probability(),
+                users : node.wss.count()
             }
             
         })
@@ -241,6 +242,7 @@ var Nodemanager = function(p){
         var stats = {
             count : self.nodes.length,
             inited : inited,
+
             countuse : _.filter(self.nodes, function(node){
                 return node.export().canuse
             }).length,

@@ -379,6 +379,8 @@ var WSS = function(admins, manage){
 
                 wss.on('connection', (ws, req) => {
                     ws.ip = req.connection.remoteAddress
+
+                    if(!self.listening) return
                     
                     self.newconnection(ws)
                 })
@@ -387,12 +389,11 @@ var WSS = function(admins, manage){
 
                     self.listening = settings.port || 8088
 
-                    console.log("WSS", self.listening)
-
                     resolve()
                 });
 
                 wss.on('error',function(e){
+
                     reject(e) 
                 });
 
@@ -401,6 +402,7 @@ var WSS = function(admins, manage){
             }
 
             catch(e) {
+
                 reject(e)
             }
 
@@ -408,7 +410,10 @@ var WSS = function(admins, manage){
     }
 
     self.destroy = function(){
-        if (wss.clients)
+
+        self.listening = false
+
+        if (wss && wss.clients)
             wss.clients.forEach((socket) => {
                 socket.close();
             });
@@ -416,7 +421,7 @@ var WSS = function(admins, manage){
         return new Promise((resolve, reject) => {
             setTimeout(() => {
 
-                if (wss.clients)
+                if (wss && wss.clients)
                     wss.clients.forEach((socket) => {
                         if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
                             socket.terminate();

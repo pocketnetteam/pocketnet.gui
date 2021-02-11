@@ -3594,6 +3594,8 @@ Platform = function (app, listofnodes) {
 
                 _.each(values, function (v, i) {
 
+                    if(!m[i]) return
+
                     if (typeof v === "object") {
                         m[i].value = v.value;
                         m[i].possibleValues = v.possibleValues && v.possibleValues.map(i => String(i));

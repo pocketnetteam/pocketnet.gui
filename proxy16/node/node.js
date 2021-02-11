@@ -618,7 +618,9 @@ var Node = function(options, manager){
     }
 
     self.wss = {
-
+        count : function(){
+            return _.toArray(wss.users).length
+        },
         add : function(user){
             var old = wss.users[user.address]
 
@@ -636,12 +638,6 @@ var Node = function(options, manager){
 
                 return wss.users[user.address]
             }
-
-            
-
-                
-            
-
             
         },
 

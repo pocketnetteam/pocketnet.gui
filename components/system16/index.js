@@ -209,6 +209,8 @@ var system16 = (function(){
 
 				var address = self.app.platform.sdk.address.pnet()
 
+				if(!address) return false
+
 				if (proxy && info){
 					return proxy.direct || _.indexOf(info.admins, address.address) > -1
 				}
@@ -736,6 +738,18 @@ var system16 = (function(){
 					]
 				},
 
+				wsc : {
+					caption : "Websocket Connections",
+
+					series : [
+						{
+							name : "Websocket",
+							path : "users",
+							id : 'wsc'
+						}
+					]
+				},
+
 				allcount : {
 					caption : "Count of requestes to nodes",
 
@@ -773,6 +787,20 @@ var system16 = (function(){
 							id : 'requests'
 						}
 					]
+				},
+
+				signatures : {
+					caption : "Users",
+					objects : 'server.middle.signatures',
+					series : [
+						{
+							path : 'length',
+							namePath : 'code',
+							name : "Signature",
+							id : 'count'
+						}
+					]
+					//method : 'fromarray'
 				},
 
 				responses : {
