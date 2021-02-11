@@ -25,6 +25,8 @@ var ProxyRequest = function(app = {}){
         if(!data) 
             data = {}
 
+        var er = false
+
         return fetch(url, {
 
             method: 'POST',
@@ -36,9 +38,21 @@ var ProxyRequest = function(app = {}){
             body: JSON.stringify(sign(data))
 
         }).then(r => {
+
+            if(!r.ok){
+                er = true
+            }
+
             return r.json()
 
         }).then(result => {
+
+            if (er){
+
+
+                return Promise.reject(result.error)
+            }
+
             return Promise.resolve(result.data || {})
         }).catch(e => {
             return Promise.reject(e)
@@ -360,6 +374,7 @@ var Api = function(app){
 
     var current = null // 'localhost:8888:8088' //null;///'pocketnet.app:8899:8099'
     var useproxy = true;
+    var inited = false
 
     var getproxyas = function(key){
 
@@ -501,6 +516,8 @@ var Api = function(app){
                             current = 'pocketnet.app:8899:8099' //proxies[0].id
                         }
 
+                        inited = true
+
                         return Promise.resolve()
 
                     })
@@ -572,13 +589,36 @@ var Api = function(app){
         if(!options) 
             options = {}
 
+
         return getproxy(options.proxy).then(proxy => {
 
             return proxy.rpc(method, parameters, options.rpc)
 
+        }).then(r => {
+
+            console.log("RRRRR", r)
+
+            app.apiHandlers.success({
+                rpc : true
+            })
+
+            return Promise.resolve(r)
+
+        }).catch(e => {
+
+            console.log("E", e, e.code)
+
+            if(e == 'TypeError: Failed to fetch' || (e.code == 408 || e.code == -28)){
+                console.log("IMHERE", app.apiHandlers)
+
+                app.apiHandlers.error({
+                    rpc : true
+                })
+            }
+
+
+            return Promise.reject(e)
         })
-
-
     }
 
     self.fetch = function(path, data, options){
@@ -588,20 +628,44 @@ var Api = function(app){
         if(!options) 
             options = {}
 
+            console.log("gofetch")
+
         return getproxy(options.proxy).then(proxy => {
 
             return proxy.fetch(path, data)
 
+        }).then(r => {
+
+            app.apiHandlers.success({
+                api : true
+            })
+
+            return Promise.resolve(r)
+
+        }).catch(e => {
+
+            console.log("E", e)
+
+            if (e == 'TypeError: Failed to fetch'){
+                console.log("FAIL")
+                app.apiHandlers.error({
+                    api : true
+                })
+            }
+
+            return Promise.reject(e)
         })
     }
 
     self.ready = {
         proxies : () => {
+            console.log('11')
             return _.filter(proxies, proxy => { return proxy.ping })
         },
 
         use : () => {
-            return useproxy ? _.filter(proxies, proxy => { return proxy.ping && proxy.get.nodes().length }).length : false
+            console.log('22')
+            return useproxy ? _.filter(proxies, proxy => { return proxy.ping && proxy.get.nodes().length }) : false
         },
     }
 
@@ -674,19 +738,24 @@ var Api = function(app){
     }
 
     self.init = function(){
-
         return internal.proxy.manage.init().then(r => {
+
             internal.proxy.api.ping(proxies);
 
             return Promise.resolve()
         })
+    }
 
-        
+    self.initIf = function(){
+
+        if(inited) return Promise.resolve()
+        else return self.init()
 
     }
 
     self.destroy = function(){
         proxies = []
+        inited = false
     }
 
     

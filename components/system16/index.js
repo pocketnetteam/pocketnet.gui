@@ -794,13 +794,13 @@ var system16 = (function(){
 
 					series : [
 						{
-							path : 'addresses.wallet.registration.queue',
+							path : 'wallet.addresses.registration.queue',
 							name : "Users Queue Size",
 							id : 'queue'
 						},
 	
 						{
-							path : 'addresses.wallet.registration.unspents',
+							path : 'wallet.addresses.registration.unspents',
 							name : "Unspents Count",
 							id : 'unspents'
 						},
@@ -812,7 +812,7 @@ var system16 = (function(){
 
 					series : [
 						{
-							path : 'addresses.wallet.registration.balance',
+							path : 'wallet.addresses.registration.balance',
 							name : "Address Balance",
 							id : 'balance'
 						}
@@ -2204,6 +2204,8 @@ var system16 = (function(){
 
 					p.el.find('.name').on('click', function(){
 
+						return
+
 						var key = $(this).closest('.node').attr('node')
 
 
@@ -2490,6 +2492,15 @@ var system16 = (function(){
 
 			destroy : function(){
 				el = {};
+
+				/*self.app.errors.clbks.system16 = function(){
+
+					if(!self.app.errors.state)
+
+					if(!_.isEmpty(self.app.errors.state)){
+
+					}
+				}*/
 			},
 			
 			init : function(p){
@@ -2506,6 +2517,15 @@ var system16 = (function(){
 				make(api.get.current());
 
 				p.clbk(null, p);
+
+				self.app.errors.clbks.system16 = function(){
+
+					if(!info && !self.app.errors.state.proxy && proxy){
+						make(proxy);
+					}
+
+				
+				}
 			}
 		}
 	};

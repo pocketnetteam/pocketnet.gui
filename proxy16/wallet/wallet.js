@@ -72,9 +72,8 @@ var Wallet = function(p){
     var initProcess = function(){
 
         var mk = function(){
-            console.log("MK")
             _.each(addresses, function(a, k){
-                self.kit.makequeueE(k)
+                self.kit.makequeueE(k).catch(e => {})
             })
         }
 
@@ -166,7 +165,7 @@ var Wallet = function(p){
             db.loadDatabase(err => {
 
 
-                db.find({executed : '-'}).exec(function (err, docs) {
+                db.find({}).exec(function (err, docs) {
                     _.each(docs || [], function(obj){
 
                         if (obj.key && addresses[obj.key]){
@@ -217,7 +216,6 @@ var Wallet = function(p){
         },
 
         release : function (unspents) {
-            console.log("RELEASE")
             _.each(unspents, function (unspent) {
                 delete unspent.cantspend
             })
@@ -303,12 +301,11 @@ var Wallet = function(p){
             var meta = null
 
             return self.unspents.getc(addresses[key]).then(unspents => {
-                return self.transactions.txfees(unspents, outputs)
+                return self.transactions.txfees(unspents, outputs, 'exclude')
             }).then(_meta => {
 
                 meta = _meta
 
-                console.log('meta', meta)
 
                 _.each(meta.inputs, function(input){
                     input.cantspend = true
@@ -340,6 +337,7 @@ var Wallet = function(p){
             if(!addresses[key]) return Promise.reject('key')
 
             var queue = addresses[key].queue
+            var all = addresses[key].all
 
             if(_.find(queue, function(object){ return object.address == to && !object.executing})) return Promise.resolve()
 
@@ -354,16 +352,34 @@ var Wallet = function(p){
                 date : f.now()
             } 
 
+
+
             return self.checking(object).then(r => {
                 return new Promise((resolve, reject) => {
 
-                    db.insert(object).exec(function (err, docs) {
-                        if(err) return reject(err)
-    
-                        queue.push(object)
+                    console.log('object', object)
+
+                    queue.push(object)
+                    all.push(object)
+
+                    db.insert(object, function (err, docs) {
+                        if(err) {
+
+                            addresses[key].queue = _.filter(addresses[key].queue, function(q){
+                                return object.id != q.id
+                            })
+
+                            addresses[key].all = _.filter(addresses[key].all, function(q){
+                                return object.id != q.id
+                            })
+
+                            return reject(err)
+                        }
     
                         resolve(object.id)
-                    })
+                    });
+
+                    
     
                 })
             })
@@ -373,9 +389,6 @@ var Wallet = function(p){
 
         makequeueE : function(key){
             return self.kit.makequeue(key).catch(e => {
-
-                console.log("E", e)
-
                 return Promise.reject(e)
             })
         },
@@ -387,7 +400,8 @@ var Wallet = function(p){
                 return !object.executing
             })
 
-            console.log('queue', queue)
+        //    console.log('queue', queue)
+
 
             if(!queue.length) return Promise.resolve()
 
@@ -405,9 +419,10 @@ var Wallet = function(p){
             })
 
 
-            console.log('key, tos', key, tos)
 
             return self.kit.send(key, tos).then(r => {
+
+                console.log("SENT")
 
                 addresses[key].queue = _.filter(addresses[key].queue, function(object){
 
@@ -424,7 +439,7 @@ var Wallet = function(p){
 
                         db.update({ id: object.id }, { $set: { executed: date } }, {}, function (err) {
                             if(err) return reject(err)
-                            resolve(node)
+                            resolve()
                         });
 
                     })
@@ -436,13 +451,14 @@ var Wallet = function(p){
                
             }).catch(e => {
 
+                console.log("ERROR", e)
+
                 var catchederror = false
 
                 _.each(addresses[key].queue, function(object){
                     if (object.executing && (object.executing == executingId)) delete object.executing
                 })
 
-                console.log("CLEARED", addresses[key].queue)
 
                 if(e == 'sync'){
                     addresses[key].unspents = null
@@ -560,6 +576,8 @@ var Wallet = function(p){
             if (feeMode == 'include') {
                 outputs[0].amount = outputs[0].amount - fee;
 
+                console.log('outputs[0].amount', outputs[0].amount)
+
                 if (outputs[0].amount <= 0) {
                     return Promise.reject('fee')
                 }
@@ -573,7 +591,7 @@ var Wallet = function(p){
         txfees : function(unspents, outputs, feeMode){
 
             var inputs = []
-            var feerate = 0.000001;
+            var feerate = 0.00002;
 
             return self.transactions.txbase(unspents, outputs, 0, feeMode).then(r => {
 
@@ -581,7 +599,8 @@ var Wallet = function(p){
 
             }).then(tx => {
 
-                var totalFees = Math.min(tx.virtualSize() * feerate, 0.000006);
+                var totalFees = Math.min(tx.virtualSize() * feerate, 0.00007);
+                console.log('totalFees', totalFees)
                 return self.transactions.txbase(unspents, outputs, totalFees, feeMode)
 
             }).then(r => {

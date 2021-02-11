@@ -85,7 +85,6 @@ var Proxy = function (settings, manage) {
 
             var options = {};
 
-            console.log('sslsettings', sslsettings)
 
             if(!sslsettings.key || !sslsettings.cert || !sslsettings.passphrase) return {
 
@@ -154,7 +153,6 @@ var Proxy = function (settings, manage) {
 
         init: function () {
 
-            console.log("INIT", settings.server.enabled)
 
             if (settings.server.enabled) {
 
@@ -176,7 +174,6 @@ var Proxy = function (settings, manage) {
 
         re : function(){
             return this.destroy().then(r => {
-                console.log("DESTROYED")
                 this.init()
             })
         },
@@ -207,11 +204,11 @@ var Proxy = function (settings, manage) {
 
         events : function(){
             wallet.clbks.error.queue.main = function(e, p){
-                console.log("ERROR QUEUE", e, p)
+                //console.log("ERROR QUEUE", e, p)
             }
 
             wallet.clbks.error.ini.main = function(e, p){
-                console.log("ERROR INI", e, p)
+                //console.log("ERROR INI", e, p)
             }
         },
 
@@ -699,7 +696,11 @@ var Proxy = function (settings, manage) {
             test : {
                 path : '/nodes/test',
                 authorization : 'signature',
-                action : function({node, scenario}){
+                action : function({node, scenario, A}){
+
+                    return Promise.reject('err')
+
+                    if(!A) return Promise.reject()
 
                     var _node = nodeManager.nodesmap[node]
 
@@ -1041,9 +1042,17 @@ var Proxy = function (settings, manage) {
                     }
 
                     return self.wallet.addqueue(key || 'registration', address, ip).then(r => {
+
+                        console.log("RESULT", r)
+
                         return Promise.resolve({
                             data : r
                         })
+
+                    }).catch(e => {
+
+                        console.log("E", e)
+                        return Promise.reject(e)
                     })
 
                 }
@@ -1062,7 +1071,6 @@ var Proxy = function (settings, manage) {
 
                     var kaction = f.deep(manage, message.action)
 
-                    console.log(message.action)
 
                     if(!kaction) {
                         return Promise.reject({error : 'unknownAction', code : 502})
@@ -1072,7 +1080,6 @@ var Proxy = function (settings, manage) {
                         return Promise.resolve({data})
                     }).catch(e => {
 
-                        console.error(e)
 
                         return Promise.reject(e)
                     })

@@ -109,7 +109,6 @@ function rpc(request, callback, obj) {
 
     //console.log("REQUEST", request, self.host, self.port)
 
-    console.log(m, pbl)
 
     var options = {
         host: self.host,
@@ -145,7 +144,6 @@ function rpc(request, callback, obj) {
             }
             called = true;
 
-            //console.log('res.statusCode', res.statusCode)
 
             if (res.statusCode === 401) {
 

@@ -305,9 +305,14 @@
                         color : @color-orange;
                     }
 
-                    &:hover{
-                        color : @color-main;
+                    &.coins,
+                    &.settings{
+                        &:hover{
+                            color : @color-main;
+                        }
                     }
+
+                    
                 }
 
                 
@@ -815,4 +820,84 @@
 		}
 
 	}
+}
+
+
+html.stblack{
+    #system16{
+      
+        .preloaderabs{
+           
+            background: fade(@color-black,80);
+    
+        }
+       
+        .subcaption{
+         
+            span{
+                color : @color-bright;
+            }
+        }
+    
+        .ssubcaption{
+    
+            span{
+                color : @color-gray-mlight;
+            }
+        }
+    
+    
+    
+        .managepanel{
+            background: fade(@color-black2, 80);
+        }
+    
+        
+    
+        .graphWrapper{
+    
+            
+            .grwr{
+                display: none;
+                background: fade(@color-black2, 80);
+            }
+    
+        }
+    
+       
+        .tablecaption{
+            background: @color-black3;
+        }
+    
+     
+    
+        .errorTable{
+    
+            >div{
+                background: fade(@color-black2, 80);
+            }
+        }
+    
+      
+    }   
+    
+    .addnode,
+    .addproxy{
+        .preloaderabs{
+            background: fade(@color-black2,80);
+    
+        }
+     
+    }
+    
+    
+    .addproxy,
+    .addnode{
+    
+        .parameter{
+    
+            
+    
+        }
+    }
 }

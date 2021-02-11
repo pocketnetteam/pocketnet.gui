@@ -175,7 +175,6 @@ var filluser = (function(){
 
 					redo.one('click', function(){
 
-						self.app.platform.m.log('userwisard_captcha_redo')
 
 						actions.redo()
 					})
@@ -300,7 +299,6 @@ var filluser = (function(){
 
 						if(validate(email)){
 
-							self.app.platform.m.log('userwisard_email_add')
 
 							actions.next()
 							localStorage['uei'] = true;
@@ -314,7 +312,6 @@ var filluser = (function(){
 
 					skip.one('click', function(){
 
-						self.app.platform.m.log('userwisard_email_skip')
 
 						localStorage['uei'] = true
 
@@ -370,14 +367,12 @@ var filluser = (function(){
 
 							if (result && (current == 'money' || current =='captcha')){
 
-								self.app.platform.m.log('userwisard_money_success')
 
 								actions.next()
 
 							}
 
 							else{
-								self.app.platform.m.log('userwisard_modey_delay')
 
 								el.find('.subcaption').html(self.app.localization.e('wesentmoneydelay'))
 
@@ -400,7 +395,6 @@ var filluser = (function(){
 
 					clbk()
 
-					self.app.platform.m.log('userwisard_account')
 
 					/*self.app.platform.sdk.ustate.me(function(mestate){
 						if(!mestate){
@@ -439,7 +433,6 @@ var filluser = (function(){
 
 				after : function(el){
 
-					self.app.platform.m.log('userwisard_success')
 
 					setTimeout(function(){
 
@@ -520,7 +513,6 @@ var filluser = (function(){
 
 							if(mestate){
 
-								self.app.platform.m.log('userwisard_network_success')
 
 								clearInterval(networkInterval)
 								actions.to('money')
@@ -553,6 +545,8 @@ var filluser = (function(){
 					}
 					
 					b()
+
+					
 	
 					el.find('.check').on('click', function(){
 	
@@ -618,12 +612,8 @@ var filluser = (function(){
 					var r = deep(document, 'referrer')
 
 
-					self.app.platform.m.log('registration_referal_name', name)
-					self.app.platform.m.log('registration_referal_type', type)
 
-					if (r){
-						self.app.platform.m.log('registration_referal_referrer', r)
-					}
+					
 				})
 
 			}
@@ -700,7 +690,6 @@ var filluser = (function(){
 
 							if(current == 'money'){				
 
-								self.app.platform.m.log('userwisard_money_success')							
 	
 								actions.next()
 	

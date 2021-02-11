@@ -22,6 +22,8 @@ var userpage = (function(){
 		var init = function(){
 			reports = []
 
+			console.log("self.app.user.validate()self.app.user.validate()self.app.user.validate()", self.app.user.validate())
+
 			if(!self.app.user.validate()){
 
 				var h = self.app.localization.e('e13184');

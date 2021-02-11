@@ -768,6 +768,7 @@ var lenta = (function(){
 					return
 				}
 
+				console.log("UPVOTER")
 			
 				self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -1497,15 +1498,7 @@ var lenta = (function(){
 
 				var islink = deep(e, 'target.href')
 
-				if (islink) return
-
-				/*if (essenseData.authAction) {
-
-					essenseData.authAction('like')
-
-					return
-
-				}	*/			
+				if (islink) return		
 
 				var shareId = $(this).closest('.shareinlenta').attr('id');
 
@@ -2720,8 +2713,8 @@ var lenta = (function(){
 			el.c.on('click', '.txid', events.getTransaction)
 
 			if(!isMobile()){
-				el.c.on('click', '.sharecaption', events.openPost)
-				el.c.on('click', '.message', events.openPost)
+				//el.c.on('click', '.sharecaption', events.openPost)
+				//el.c.on('click', '.message', events.openPost)
 			}
 			
 			el.c.on('click', '.showMore', events.openPost)

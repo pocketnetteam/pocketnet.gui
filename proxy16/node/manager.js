@@ -428,7 +428,6 @@ var Nodemanager = function(p){
 
             var last = self.askedpeers[node.key]
 
-            console.log("L", last, f.date.addseconds(last, peernodesCheckTime / 1000) < new Date())
 
             if(!last || f.date.addseconds(last, peernodesCheckTime / 1000) < new Date()){
 
