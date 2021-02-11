@@ -6,6 +6,7 @@ if (typeof _Electron != 'undefined') {
     var storage = electron.OSBrowser; //?
 }
 
+
 Platform = function (app, listofnodes) {
 
     var self = this;
