@@ -30,7 +30,6 @@
         "auto-launch": "^5.0.5",
         "body-parser": "^1.19.0",
         "clone-deep": "^4.0.1",
-        "deep-extend": "^0.6.0",
         "download-github-release": "^0.3.2",
         "electron-context-menu": "^2.4.0",
         "electron-is": "^3.0.0",
@@ -95,6 +94,16 @@
     },
     "build": {
         "productName": "Pocketnet",
+        "extraFiles": [
+            {
+                "from": "proxy16/cert",
+                "to": "cert",
+                "filter": [
+                    "**/cert.pem",
+                    "**/key.pem"
+                ]
+            }
+        ],
         "publish": [
             {
                 "provider": "github",

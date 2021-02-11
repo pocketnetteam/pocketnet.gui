@@ -517,7 +517,9 @@ var userpage = (function(){
 						},
 	
 					}, function(_p){
-	
+						_p.el.find('.copyaddress').on('click', function(){
+							copyText($(this))
+						})
 					})
 
 					

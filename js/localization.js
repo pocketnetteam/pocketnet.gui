@@ -20,7 +20,7 @@ Localization = function(app){
 			key : 'en'
 		},
 
-		/*de : {
+		de : {
 			name : "Deutsch",
 			key : 'de'
 		},
@@ -38,7 +38,7 @@ Localization = function(app){
 		ru : {
 			name : "Русский",
 			key : 'ru'
-		}*/
+		}
 
 	}
 

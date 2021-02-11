@@ -89,9 +89,18 @@ var Server = function(settings, admins, manage){
         return new Promise((resolve, reject) => {
             try{
 
+                if (_.isEmpty(settings.ssl)){
+                    reject('sslerror')
+
+                    return
+                }
+
+
                 server = https.createServer(settings.ssl, app)
 
                 server.on('listening',function(){
+
+                    console.log("LISTENING")
 
                     self.listening = settings.port || 8888
 

@@ -92,8 +92,8 @@ var Proxy = function (settings, manage) {
 
             try {
                 options = {
-                    key: fs.readFileSync(path.resolve(__dirname, sslsettings.key)),
-                    cert: fs.readFileSync(path.resolve(__dirname, sslsettings.cert)),
+                    key: fs.readFileSync(f.path(sslsettings.key)),
+                    cert: fs.readFileSync(f.path(sslsettings.cert)),
                     passphrase: sslsettings.passphrase
                 }
             }

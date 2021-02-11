@@ -365,6 +365,12 @@ var WSS = function(admins, manage){
 
             try{
             
+                if (_.isEmpty(settings.ssl)){
+                    reject('sslerror')
+
+                    return
+                }
+
                 server = new https.createServer(settings.ssl);
 
                 wss = new WebSocket.Server({
