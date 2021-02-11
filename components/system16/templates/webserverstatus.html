@@ -23,11 +23,11 @@
         </div>
 
         <div class="valueinfo">
-            <span><% if(info.server.listening) {%> <%- info.wss.listening %> <% } else {%> &mdash; <% }%></span>
+            <span><% if(info.wss.listening) {%> <%- info.wss.listening %> <% } else {%> &mdash; <% }%></span>
         </div>
 
         <div class="icon">
-            <% if(info.server.listening) {%> <i class="fas fa-check-circle good"></i> <% } %>
+            <% if(info.wss.listening) {%> <i class="fas fa-check-circle good"></i> <% } %>
         </div>
 
     </div>

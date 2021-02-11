@@ -25,7 +25,7 @@ var system16 = (function(){
 					type : 'rating'
 				},
 				server : {
-					type : 'connections'
+					type : 'responses'
 				},
 				wallets : {
 					type : 'distribution'
@@ -775,6 +775,20 @@ var system16 = (function(){
 					]
 				},
 
+				responses : {
+					caption : "Responses",
+					objects : 'server.middle.responses',
+					series : [
+						{
+							path : 'length',
+							namePath : 'code',
+							name : "Code",
+							id : 'count'
+						}
+					]
+					//method : 'fromarray'
+				},
+
 				cache : {
 					caption : "Cache Size",
 					objects : 'server.cache.meta',
@@ -850,6 +864,8 @@ var system16 = (function(){
 					if(meta.objects) ekey = meta.objects + '.' + ekey
 
 					_.each(meta.series, function(smeta){
+
+						
 						series[smeta.id + key] = {
 
 							name : smeta.name + ": " + key,
@@ -1621,6 +1637,10 @@ var system16 = (function(){
 
 				},
 				function(p){
+
+					p.el.find('.refreshpage').on('click', function(){
+						make(proxy)
+					})
 
 					if (clbk)
 						clbk()

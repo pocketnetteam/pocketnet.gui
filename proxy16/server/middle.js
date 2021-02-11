@@ -36,8 +36,24 @@ var Middle = function(){
             return l.ip
         })).length
 
+        var byCodes = {}
+        
+        _.each(f.group(logs, function(l){
+
+            return l.s
+
+        }), function(lc, code){
+
+            byCodes[code] = {
+                length : lc.length,
+                code : code
+            }
+
+        })
+
         var data = {
-            requestsIp : requestsIp
+            requestsIp : requestsIp,
+            responses : byCodes
         }
 
         if(!compact) data.logs = logs

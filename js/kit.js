@@ -390,10 +390,16 @@ Comment = function(txid){
 
 							success : function(data){
 
+
 								self.images.v[index] = deep(data, 'data.link');
 								
 								p.success();
 
+							},
+
+							fail : function(d){
+								index++;
+								p.success();
 							}
 						})
 
@@ -1387,6 +1393,10 @@ UserInfo = function(){
 						if (clbk)
 							clbk();
 
+					},
+					fail : function(d){
+						if (clbk)
+							clbk(d);
 					}
 				})
 

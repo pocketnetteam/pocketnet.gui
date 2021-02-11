@@ -65,14 +65,14 @@ var nodes = [
 
 var defaultSettings = {
 
-	admins : ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82'],
+	admins : [],
 	
 	nodes : {
 		dbpath : 'data/nodes'
 	},
 
 	server : {
-		enabled : true,
+		enabled : false,
 
 		captcha : true,
 		

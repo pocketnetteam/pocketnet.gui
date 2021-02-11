@@ -2,6 +2,8 @@
 
 <div class="webadminscontent">
     <div class="work">
+
+        <% if(admins.length) {%>
         <% _.each(admins, function(uadmin){ 
             var user = deep(app, 'platform.sdk.users.storage.'+uadmin) || {} %>
 
@@ -48,6 +50,13 @@
             </div>
 
         <% }) %>
+        <% } else {%> 
+            
+        <div class="empty">
+            <span>There are no administrators assigned to this server</span>
+        </div>    
+
+        <% } %>
     </div>
 
     <% if(admin) {%>
