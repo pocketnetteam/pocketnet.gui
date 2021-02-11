@@ -698,12 +698,7 @@ Platform = function (app, listofnodes) {
             _url = url;
 
             if (meta.type == 'peertube') {
-                
-                _url = `https://pocketnetpeertube1.nohost.me/videos/embed/${meta.id}`
-            }
-
-            if (meta.type == 'peertube') {
-                _url = `https://pocketnetpeertube1.nohost.me/videos/embed/${meta.id}`
+                _url = `https://${meta.host_name}/videos/embed/${meta.id}`
             }
 
             if (meta.type == 'youtube') {
@@ -744,7 +739,6 @@ Platform = function (app, listofnodes) {
 
             if (meta.type == 'bitchute' && url.indexOf("player") == -1) {
 
-
                 var _url = url;
 
                 if (_url.endsWith('/')) 
@@ -769,7 +763,7 @@ Platform = function (app, listofnodes) {
         else {
 
         }
-
+        // console.log('META', meta)
         return meta;
     }
 
