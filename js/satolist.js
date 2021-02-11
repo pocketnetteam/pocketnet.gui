@@ -117,7 +117,7 @@ Platform = function (app, listofnodes) {
         ],
     }
 
-    var sm = {};
+    //var sm = {};
 
 
     self.__applications = function(){

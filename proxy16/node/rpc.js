@@ -61,6 +61,7 @@ var publics = {
     gettags: true,
     getrawtransactionwithmessagebyid: true,
     getrawtransactionwithmessage: true,
+    getrawtransaction: true,
     getuserprofile:true,
     getuserstate: true,
     getaddressregistration: true,

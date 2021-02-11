@@ -1055,7 +1055,7 @@ var system16 = (function(){
 
 						_.each(cpsub[type], function(s, key){
 							items.push({
-								text : key,
+								text : s.caption,
 								action : function (clbk) {
 
 									settings.charts[type].type = key

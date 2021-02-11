@@ -216,7 +216,7 @@ ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
-____loclib.following = "FOLLOWING";
+____loclib.following = "Following";
 ____loclib.settings = "MANAGE";
 ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
@@ -933,3 +933,10 @@ ____loclib.e14108 = 'Share answer'
 
 ____loclib.peertubeAddVideo = 'Add video to post'
 ____loclib.peertubeAddStream = 'Add live stream to post'
+
+
+____loclib.system16 = {
+    charts : {
+
+    }
+}
