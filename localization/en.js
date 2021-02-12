@@ -59,6 +59,7 @@ ____loclib.keysnotmatch = 'Private login key does not match'
 ____loclib.confirmkey = 'Type Your Private Login Key or Upload QR Code From Previous Step'
 ____loclib.successfullycopied = "Key was successfully copied"
 ____loclib.urlsuccesscopied = "Link was successfully copied"
+____loclib.successcopied = "Text was successfully copied"
 
 ____loclib.confirmkeyLabel = "Please Confirm Your Private Key. Type Key in form or <b>upload QR code</b>"
 ____loclib.repeatetocreate = "Repeat to create private key again"

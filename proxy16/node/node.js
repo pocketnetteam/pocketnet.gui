@@ -30,7 +30,7 @@ var Node = function(options, manager){
     var changeNodeUsersInterval = null
 
 
-    var notactualevents = 600000 //mult
+    var notactualevents = 3600000 //mult
     var checkEventsLength = 100
     var getinfointervaltime = 60000
 

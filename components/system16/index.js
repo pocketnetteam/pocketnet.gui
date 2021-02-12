@@ -205,6 +205,89 @@ var system16 = (function(){
 					s.time = fromutc(new Date(s.time))
 				})
 			},
+			updateNode : function(){
+
+				proxy.fetch('manage', {
+					action : 'node.update',
+					data : {
+						all : all
+					}
+				}).then(r => {
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+					sitemessage(self.app.localization.e('e13293'))
+
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				})
+			},
+			installNode : function(){
+
+				proxy.fetch('manage', {
+					action : 'node.install',
+					data : {}
+				}).then(r => {
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+					sitemessage(self.app.localization.e('e13293'))
+
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				})
+			},
+			removeNode : function(all){
+
+				proxy.fetch('manage', {
+					action : 'node.delete',
+					data : {
+						all : all
+					}
+					
+				}).then(r => {
+
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+					sitemessage(self.app.localization.e('e13293'))
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				})
+			},
 			admin : function(){
 
 				var address = self.app.platform.sdk.address.pnet()
@@ -306,13 +389,13 @@ var system16 = (function(){
 
 				}
 
-				if (el.c){
+				/*if (el.c){
 					renders.nodecontentstate(el.c)
 					renders.nodescontenttable(el.c)
 					renders.webadminscontent(el.c)
 					renders.webdistributionwallets(el.c)
 					renders.webserverstatus(el.c)
-				}
+				}*/
 
 				setTimeout(function(){
 					makers.stats(true)
@@ -2330,10 +2413,6 @@ var system16 = (function(){
 
 					if (timestamp){
 						dis = (new Date()) < fromutc(new Date(timestamp)).addSeconds(60)
-
-
-					console.log('timestamp', fromutc(new Date(timestamp)), fromutc(new Date(timestamp)).addSeconds(60), new Date())
-
 					}
 
 					self.shell({
@@ -2343,6 +2422,7 @@ var system16 = (function(){
 							info : info,
 							manager : info.nodeManager,
 							nodestate : info.nodeControl.state,
+							nc : info.nodeControl,
 							proxy : proxy,
 							admin : actions.admin(),
 							system : system,
@@ -2354,7 +2434,74 @@ var system16 = (function(){
 					},
 					function(p){
 
+						var lock = function(){
+							p.el.find('.nodecontentmanage').addClass('lock')
+						}
 						actions.settings(p.el)
+
+						p.el.find('.updatenode').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to Stop Pocketnet Node and Update It?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+
+									lock()
+
+									actions.updateNode()
+									
+								}
+							})
+						})
+
+						p.el.find('.removenodeall').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to remove Pocketnet Node and All Blockchain Data?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+									lock()
+									actions.removeNode(true)
+									
+								}
+							})
+						})
+
+						p.el.find('.removenode').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to remove Pocketnet Node Daemon?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+									lock()
+									actions.removeNode()
+									
+								}
+							})
+						})
+
+						p.el.find('.install').on('click', () => {
+
+							topPreloader(20);
+
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to install Pocketnet Node?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+									lock()
+									actions.installNode()
+									
+								}
+							})
+
+							
+
+						})
 
 						if (clbk)
 							clbk()
@@ -2372,8 +2519,9 @@ var system16 = (function(){
 							info : info,
 							manager : info.nodeManager,
 							nodestate : info.nodeControl.state,
+							nc : info.nodeControl,
 							proxy : proxy,
-							admin : actions.admin()
+							admin : actions.admin(),
 						},
 
 						el : elc.find('.localnodeWrapper .state')
@@ -2413,6 +2561,7 @@ var system16 = (function(){
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
 
+					renders.nodecontentmanage(el.c)
 					renders.nodecontentstate(el.c)
 					renders.nodescontenttable(el.c)
 					renders.webadminscontent(el.c)

@@ -70,7 +70,12 @@ var Proxy = function (settings, manage) {
 		}
     }
     
-    var getStats = function(){
+    var getStats = function(n){
+
+        if(n){
+            return f.lastelements(stats, n)
+        }
+
         return stats
     }
 
@@ -336,7 +341,8 @@ var Proxy = function (settings, manage) {
 
         info : function(){
             return nodeControl.info()
-        }
+        },
+
 
     }
     ///
@@ -384,8 +390,8 @@ var Proxy = function (settings, manage) {
     }
 
     self.kit = {
-        stats : function(){
-            return getStats()
+        stats : function(n){
+            return getStats(n)
         },
         info : function(compact){
             return {
@@ -859,7 +865,7 @@ var Proxy = function (settings, manage) {
                 action : function(){
                     
                     return Promise.resolve({data : {
-                        stats : self.kit.stats()
+                        stats : self.kit.stats(500)
                     }})
 
                 }
@@ -1077,10 +1083,11 @@ var Proxy = function (settings, manage) {
                     }
 
                     return kaction(message.data).then(data => {
+
+                        console.log("KACTION", data)
+
                         return Promise.resolve({data})
                     }).catch(e => {
-
-
                         return Promise.reject(e)
                     })
                 }

@@ -15,7 +15,7 @@
                     <span>Use Proxy:</span>
                 </div>
 
-                <div class="value selectusing">
+                <div class="value selectusing" fss="fss">
 
                     <span><% if(using) {%> <%-using.get.name()%> <% } else {%> Not selected <% }%></span>
 
@@ -29,9 +29,9 @@
                     <span>Watch:</span>
                 </div>
 
-                <div class="value">
+                <div class="value current" fss="fss">
 
-                    <span class="current">
+                    <span>
                         <%- current ? current.get.name() : "Not Selected" %>
                     </span>
 

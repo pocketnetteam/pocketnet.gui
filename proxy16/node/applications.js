@@ -18,7 +18,8 @@ var Applications = function(settings) {
     var applications = {
         win32: {
             github: {
-                name: "win_x64_pocketnetcore_daemon.zip",
+                name : "win_x64_setup.exe",
+                //name: "win_x64_pocketnetcore_daemon.zip",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             }
@@ -85,40 +86,86 @@ var Applications = function(settings) {
         .then(asset => {
 
             if(asset && gitasset){
-                return asset.name != gitasset.name
+                return Promise.resolve(asset.name != gitasset.name)
             }
 
             return Promise.resolve(false)
         })
     }
 
-    self.save = function(asset){
+    self.clear = function(){
         return new Promise((resolve, reject) => {
+
+
             db.remove({}, { multi: true }, function (err, numRemoved) {
+                
+                if (err){   
+                    reject({
+                        code : 500,
+                        error : "dbsave"
+                    })
+
+                    return
+                }
+
+                resolve()
+
+            })
+
+
+        })
+    }
+
+    self.save = function(asset){
+
+        return self.clear().then(r => {
+            return new Promise((resolve, reject) => {
                 db.insert(asset, function (err, newDoc) {
-                    if(err){
-                        reject(err)
+
+                    console.log(err)
+
+                    if (err){
+                        reject({
+                            code : 500,
+                            error : "dbsave"
+                        })
                     }
                     else{
-                        resolve()
+                        resolve(asset)
                     }
                 });
-            });
+            })
         })
+
+        
     }
 
     self.install = function(dest){
         return new Promise((resolve, reject) => {
             return self.download().then(r => {
-                fs.copyFile(r.path, dest, (e) => {
+                try{
 
-                    if(!err) {
-                        return resolve(r)
-                    }
+                    fs.copyFile(r.path, dest, (e) => {
 
-                    reject(e)
-               
-                });
+                        if(!e) {
+                            return resolve(r)
+                        }
+    
+                        reject({
+                            code : 500,
+                            error : 'cantcopy'
+                        })
+                   
+                    });
+                }
+                catch(e){
+
+                    reject({
+                        code : 500,
+                        error : 'cantcopy'
+                    })
+                }
+                
             })
         }).then(r => {
             return self.save(r.asset)
@@ -127,18 +174,44 @@ var Applications = function(settings) {
 
     self.download = function(){
 
-        return self.getinfo().then(r => {
-            return f.downloadgitrelease(r.name, {
+        var r = {}
+
+        return self.getinfo().then(asset => {
+
+            r.asset = asset
+
+            return f.downloadgitrelease(r.asset.name, {
                 //dest : dest,
                 check : function(stats){
-                    if (stats.size >= r.size){
+                    if (stats.size >= r.asset.size){
 
                         return false
                     }
                     return true
                 }
+
+            }).then(p => {
+
+                r.path = p
+
+                return Promise.resolve(r)
             })
         })
+    }
+
+    self.removeAll = function(){
+
+        var dest = f.path('downloads')
+
+        if(fs.existsSync(dest)){
+            try{
+                fs.rmdirSync(dest, { recursive: true });
+            }catch(e){
+                return Promise.reject('downloadfoldererror')
+            }
+        }
+
+        return self.clear()
     }
 
     self.init = function(){

@@ -14,6 +14,9 @@ var Control = function(settings) {
     
     var nodeStateInterval = null
     var nodeAutorunInterval = null
+    var checkUpdatesInterval = null
+
+    var lock = ''
 
     var state = {
         info : {}
@@ -25,6 +28,8 @@ var Control = function(settings) {
         confPath: '',
         proxy : null
     }
+
+    var hasupdates = false
 
     var config = {}
 
@@ -61,15 +66,33 @@ var Control = function(settings) {
         }
     }
 
-    self.init = function(){
-        // change global settings
+    var removeAll = function(removedata){
+        if(!settings.dataPath) {
+            return Promise.reject('nodedatapath')
+        }
 
+        if(removedata && fs.existsSync(settings.dataPath)){
+            try{
+                fs.rmdirSync(settings.dataPath, { recursive: true });
+            }catch(e){
+                return Promise.reject('nodedatapath')
+            }
+            
+        }
 
-       // return
+        if(fs.existsSync(self.helpers.sbin_folder())){
+            try{
+                fs.rmdirSync(self.helpers.sbin_folder(), { recursive: true });
+            }catch(e){
+                return Promise.reject('binpath')
+            }
+            
+        }
 
-        node.proxy = null
+        return applications.removeAll()
+    }
 
-        node.binPath = Path.join( self.helpers.sbin_folder(), self.helpers.bin_name('pocketcoind'))
+    var folders = function(){
 
         if(!settings.dataPath) {
             return Promise.reject('nodedatapath')
@@ -85,11 +108,20 @@ var Control = function(settings) {
             
         }
 
-        node.dataPath = settings.dataPath
+        if(!fs.existsSync(self.helpers.sbin_folder())){
+            try{
+                fs.mkdirSync(self.helpers.sbin_folder(), { recursive: true });
+            }catch(e){
+                return Promise.reject('binpath')
+            }
+            
+        }
 
-        // create pocketcoin.conf
+        return Promise.resolve()
+    }
+
+    var makeconfig = function(){
         node.confPath = Path.join(settings.dataPath, self.helpers.conf_name())
-
 
         try{
             if (!fs.existsSync(node.confPath)) {
@@ -121,15 +153,68 @@ var Control = function(settings) {
         catch(e){
             return Promise.reject(e)
         }
-    
-        self.autorun.init()
+    }
 
-        return self.kit.autorun().then(r => {
+    self.checkUpdates = function(){
 
-            self.kit.nodeState()
+        if(!self.kit.hasbin()){
+            return Promise.resolve()
+        }
+
+        return applications.checkupdate().then(r => {
+            hasupdates = r
 
             return Promise.resolve()
         })
+    }
+
+    self.init = function(){
+        // change global settings
+
+        return folders().then(r => {
+            return makeconfig()
+        }).then(r => {
+            return applications.init()
+        }).then(r => {
+            return self.checkUpdates()
+        }).then(r => {
+            node.proxy = null
+
+            node.binPath = Path.join( self.helpers.sbin_folder(), self.helpers.bin_name('pocketcoind'))
+
+            node.dataPath = settings.dataPath
+
+            // create pocketcoin.conf
+            node.confPath = Path.join(settings.dataPath, self.helpers.conf_name())
+
+        
+            self.autorun.init()
+
+            return self.kit.autorun().then(r => {
+
+                self.kit.nodeState()
+
+                return Promise.resolve()
+            })
+        })
+
+        
+    }
+
+    self.updates = {
+        init : function(){
+            if(!checkUpdatesInterval){
+                checkUpdatesInterval = setInterval(function(){
+                    self.checkUpdates().catch(e => {})
+                }, 60000)
+            }
+        },
+        destroy : function(){
+            if (checkUpdatesInterval){
+                clearInterval(checkUpdatesInterval)
+                checkUpdatesInterval = null
+            }
+        }
     }
 
     self.autorun = {
@@ -153,6 +238,7 @@ var Control = function(settings) {
     self.destroy = function(){
 
         self.autorun.destroy()
+        self.updates.destroy()
 
         return Promise.resolve()
     }
@@ -161,9 +247,10 @@ var Control = function(settings) {
         return {
             enabled : enabled,
             instance : node.instance ? true : false,
-            
-            //status : state.status,
-            state : state
+            hasbin : self.kit.hasbin(),
+            state : state,
+            hasupdates : hasupdates,
+            lock : lock
         }
     }
 
@@ -192,26 +279,83 @@ var Control = function(settings) {
 
     self.kit = {
 
-        install : function(){
-            return applications.install(self.helpers.sbin_folder())
-        },
-
         checkupdate : function(){
             return applications.checkupdate()
         },
 
-        update : function(){
+        install : function(){
+
+            if(lock) return Promise.resolve(false)
 
             self.autorun.destroy()
 
+            lock = 'installing'
+
+            return self.kit.stop().then(r => {
+                return folders()
+            }).then(r => {
+                return makeconfig()
+            }).then(r => {
+                return applications.install(node.binPath)
+            }).then(r => {
+                lock = ''
+                self.autorun.init()
+                return self.kit.check()
+            }).catch(e => {
+                lock = ''
+
+                return Promise.reject(e)
+            })
+           
+        },
+
+        delete : function(all){
+
+            if(lock) return Promise.resolve(false)
+
+            self.autorun.destroy()
+
+            lock = 'deleting'
+
+            return self.kit.stop().then(r => {
+                return removeAll(all)
+            }).then(r => {
+
+                lock = ''
+                self.autorun.init()
+
+                return self.kit.check()
+            }).catch(e => {
+                lock = ''
+
+                return Promise.reject(e)
+            })
+        },
+
+       
+
+        update : function(){
+
+            if(lock) return Promise.resolve(false)
+
+            self.autorun.destroy()
+
+            lock = 'updating'
+
             return this.stop().then(r => {
-                state.status = 'updating'
 
                 return self.kit.install()
             }).then(r => {
+
+                lock = ''
+
                 self.autorun.init()
 
-                return Promise.resolve(r)
+                return self.kit.check()
+            }).catch(e => {
+                lock = ''
+
+                return Promise.reject(e)
             })
         },
 
@@ -220,9 +364,12 @@ var Control = function(settings) {
         },
 
         check : function(){
-            return Promise.resolve({})
+            //return Promise.resolve({})
+
 
             node.hasbin = self.kit.hasbin();
+
+            if(lock) return Promise.resolve(false)
 
             return self.request.getNodeInfo().then(data => {
 
@@ -269,6 +416,10 @@ var Control = function(settings) {
         },
       
         autorun: function() {
+
+            if(!self.kit.hasbin()) {
+                return Promise.resolve()
+            }
             
             return self.kit.check().then(running => {
                 
@@ -281,6 +432,7 @@ var Control = function(settings) {
         },
 
         nodeState: function() {
+
             return self.kit.check()
         },
 
@@ -290,6 +442,8 @@ var Control = function(settings) {
         },
 
         start: function() {
+
+            if(lock) return Promise.resolve(false)
 
             return self.kit.check().then(r => {
 
@@ -369,6 +523,8 @@ var Control = function(settings) {
             state.info = {}
 
             //self.nodeManager.remove(self.config)
+
+            if(lock) return Promise.resolve(false)
 
             return self.kit.rpc('stop').then(r => {
 
