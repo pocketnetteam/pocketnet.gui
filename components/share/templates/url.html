@@ -1,11 +1,8 @@
 <% if(url){ 
-
+	
 	var meta = app.platform.parseUrl(url);
 
 	if(typeof share == 'undefined') share = {};
-
-	console.log('Meta URl', meta);
-
 
 	if(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
 
@@ -80,7 +77,7 @@
 	<div class="urlcnt">
 		<div class="urlcnttable table">
 			<div class="linkcnt">
-				<span class="<%- meta.type === 'peertube' ? 'hidden' : '' %>">
+				<span class="<%- (meta.type === 'peertube' && typeof remove === 'undefined') ? 'hidden' : '' %>">
 					<a href="<%- url %>" cordovalink="_system">
 						<%- url %>
 					</a>
@@ -97,6 +94,13 @@
 
 			<% } %>
 
+			<% if (meta.type === 'peertube' && typeof remove === 'undefined') {%>
+				<div class="videoStatsWrapper">
+					<div>
+						Views: <%- views %>
+					</div>
+				</div>
+			<%}%>
 		</div>
 	</div>
 

@@ -5,7 +5,8 @@ PeerTubeHandler = function (app) {
     'pocketnetpeertube3.nohost.me',
   ];
 
-  const randomServer = hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
+  const randomServer =
+    hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
 
   const baseUrl = `https://${randomServer}/api/v1/`;
 
@@ -18,7 +19,7 @@ PeerTubeHandler = function (app) {
   const apiHandler = {
     upload({ method, parameters }) {
       $.ajax({
-        url: `${baseUrl}${method}`,
+        url,
         ...parameters,
       })
         .done((res) => {
@@ -27,8 +28,10 @@ PeerTubeHandler = function (app) {
         .fail((res) => parameters.fail(res));
     },
 
-    run({ method, parameters }) {
-      return fetch(`${baseUrl}${method}`, parameters)
+    run({ method, parameters, url }) {
+      if (!url) url = `${baseUrl}${method}`;
+
+      return fetch(url, parameters)
         .then((res) => res.json())
         .catch((err) => {
           return { error: err };
@@ -248,10 +251,13 @@ PeerTubeHandler = function (app) {
   this.removeVideo = async (video) => {
     const videoId = video.split('/').pop();
 
-    const videoHost = video.replace('peertube://', '').replace('https://', '').split('/')[0];
+    const videoHost = video
+      .replace('peertube://', '')
+      .replace('https://', '')
+      .split('/')[0];
 
     if (randomServer !== videoHost) {
-      this.baseUrl =  videoHost ? `https://${videoHost}/api/v1` : this.baseUrl;
+      this.baseUrl = videoHost ? `https://${videoHost}/api/v1` : this.baseUrl;
 
       await this.authentificateUser();
     }
@@ -431,5 +437,17 @@ PeerTubeHandler = function (app) {
         },
       },
     });
+  };
+
+  this.getVideoInfoAnon = async (meta, clbk) => {
+    apiHandler
+      .run({
+        url: `https://${meta.host_name}/api/v1/videos/${meta.id}`,
+
+        parameters: {
+          method: 'GET',
+        },
+      })
+      .then((res) => clbk(res));
   };
 };
