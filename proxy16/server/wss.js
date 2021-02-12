@@ -387,7 +387,7 @@ var WSS = function(admins, manage){
 
                 wss.on('listening',function(){
 
-                    self.listening = settings.port || 8088
+                    self.listening = settings.port || 8099
 
                     resolve()
                 });
@@ -397,7 +397,7 @@ var WSS = function(admins, manage){
                     reject(e) 
                 });
 
-                server.listen(settings.port || 8088);
+                server.listen(settings.port || 8099);
 
             }
 

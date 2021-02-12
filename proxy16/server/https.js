@@ -102,7 +102,7 @@ var Server = function(settings, admins, manage){
 
                     console.log("LISTENING")
 
-                    self.listening = settings.port || 8888
+                    self.listening = settings.port || 8899
 
                     resolve()
                 });
@@ -111,7 +111,7 @@ var Server = function(settings, admins, manage){
                     reject(e) 
                 });
 
-                server.listen(settings.port || 8888);
+                server.listen(settings.port || 8899);
 
             }
             catch(e) {

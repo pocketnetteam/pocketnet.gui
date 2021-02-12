@@ -1281,8 +1281,8 @@ var system16 = (function(){
 						type : "STRING",
 						name : "RPC Port",
 						id : 'port',
-						defaultValue : _proxy.port || '8888',
-						placeholder : "8888",
+						defaultValue : _proxy.port || '8899',
+						placeholder : "8899",
 						require : true
 					
 					}),
@@ -1292,8 +1292,8 @@ var system16 = (function(){
 						type : "STRING",
 						name : "WS Port",
 						id : 'wss',
-						defaultValue : _proxy.wss || '8088',
-						placeholder : "8088",
+						defaultValue : _proxy.wss || '8099',
+						placeholder : "8099",
 						require : true
 					
 					})
