@@ -9733,41 +9733,42 @@
 	}
 
 	parseVideo = function(url) {
+		// console.log('WWW', url.indexOf('channel'))
 		var _url = url;
 
-	    var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(pocketnetpeertube1\.nohost\.me|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
-	    var type = null;
-		var id = null;
-		
+	    var test = _url.match(/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
+	    var type = null
+		var id = null
+		var host_name = null
 
-	    if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){
-	    	if(test[3]){
+	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
+	    	if(test && test[2]){
 
-	    		if (test[3].indexOf('youtu') > -1) {
-			        type = 'youtube';
-			        id = test[6];
-
-			    } else if (test[3].indexOf('vimeo') > -1) {
-			        type = 'vimeo';
-                    id = test[2];
-                    
-			    }  else if (test[3].indexOf('bitchute') > -1) {
-                    type = 'bitchute';
-					id = test[6];
-					
-			    }	else if (test[3].indexOf('pocketnetpeertube1.nohost.me') > -1) {
-                    type = 'peertube';
-			        id = test[8];
+				if (test.indexOf('youtube.com') || test.indexOf('youtu.be') > -1) {
+					type = 'youtube'
+			        id = test[9]
 			    }
-
-	    	}
-	    }
-		
+				if (test.indexOf('vimeo.com') > -1) {
+					type = 'vimeo'
+                    id = test[9]
+			    }
+				if (test.indexOf('bitchute.com') > -1) {
+					type = 'bitchute'
+					id = test[9]	
+			    }
+				if (/pocketnetpeertube[0-9]*\.nohost\.me/i.test(test)) {
+					type = 'peertube'
+			        id = test[9]
+					host_name = test[4]
+			    }
+			}
+			
 	    return {
 	        type: type,
 	        url : url,
-	        id : id
+	        id : id,
+			host_name : host_name
 	    };
 	}
 	nl2br = function(str){	
