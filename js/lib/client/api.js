@@ -177,7 +177,6 @@ var Proxy16 = function(meta, app){
 
             var currentapi = app.api.get.currentstring()
 
-            console.log('editinsaved, ', lastid)
 
             app.api.editinsaved(lastid, self)
 
@@ -596,7 +595,6 @@ var Api = function(app){
 
         }).then(r => {
 
-            console.log("RRRRR", r)
 
             app.apiHandlers.success({
                 rpc : true
@@ -606,10 +604,8 @@ var Api = function(app){
 
         }).catch(e => {
 
-            console.log("E", e, e.code)
 
             if(e == 'TypeError: Failed to fetch' || (e.code == 408 || e.code == -28)){
-                console.log("IMHERE", app.apiHandlers)
 
                 app.apiHandlers.error({
                     rpc : true
@@ -628,7 +624,6 @@ var Api = function(app){
         if(!options) 
             options = {}
 
-            console.log("gofetch")
 
         return getproxy(options.proxy).then(proxy => {
 
@@ -644,10 +639,8 @@ var Api = function(app){
 
         }).catch(e => {
 
-            console.log("E", e)
 
             if (e == 'TypeError: Failed to fetch'){
-                console.log("FAIL")
                 app.apiHandlers.error({
                     api : true
                 })
@@ -659,12 +652,10 @@ var Api = function(app){
 
     self.ready = {
         proxies : () => {
-            console.log('11')
             return _.filter(proxies, proxy => { return proxy.ping })
         },
 
         use : () => {
-            console.log('22')
             return useproxy ? _.filter(proxies, proxy => { return proxy.ping && proxy.get.nodes().length }) : false
         },
     }

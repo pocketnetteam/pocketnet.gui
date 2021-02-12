@@ -2464,9 +2464,11 @@ var lenta = (function(){
 								}
 	
 							}
+
+							console.log("PRCOUNT", pr.count, shares.length)
 	
 							////// SHIT
-							if (shares.length < pr.count && (recommended || author  || essenseData.search))
+							if (!shares.length || shares.length < pr.count && (recommended || author || essenseData.search))
 	
 								ended = true
 						}
