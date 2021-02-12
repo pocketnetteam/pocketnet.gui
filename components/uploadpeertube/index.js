@@ -38,6 +38,22 @@ var uploadpeertube = (function () {
         );
         el.wallpaperError.removeClass('error-message');
       });
+
+      el.importUrl.change(() => {
+        if (el.importUrl.val()) {
+          el.videoLabel.addClass('disabledInput');
+          el.videoInput.prop('disabled', true);
+
+          el.wallpaperLabel.addClass('disabledInput');
+          el.videoWallpaper.prop('disabled', true);
+        } else {
+          el.videoLabel.removeClass('disabledInput');
+          el.videoInput.prop('disabled', false);
+
+          el.wallpaperLabel.removeClass('disabledInput');
+          el.videoWallpaper.prop('disabled', false);
+        }
+      });
     };
 
     return {
@@ -64,9 +80,15 @@ var uploadpeertube = (function () {
         el.c = p.el.find('#' + self.map.id);
         el.videoInput = el.c.find('.upload-video-file');
         el.videoWallpaper = el.c.find('.upload-video-wallpaper');
+
         el.videoError = el.c.find('.file-type-error');
         el.wallpaperError = el.c.find('.wallpaper-type-error');
+
+        el.videoLabel = el.c.find('.upload-video-file-label');
+        el.wallpaperLabel = el.c.find('.upload-video-wallpaper-label');
+
         el.uploadProgress = el.c.find('.upload-progress-container');
+        el.importUrl = el.c.find('.import-video-link');
 
         initEvents();
 
@@ -80,6 +102,47 @@ var uploadpeertube = (function () {
             class: 'close',
             html: '<i class="fas fa-upload"></i> Upload',
             fn: function (wnd, wndObj) {
+              var filesWrittenObject = {};
+
+              if (el.importUrl.val()) {
+                filesWrittenObject.uploadFunction = function (percentComplete) {
+                  var formattedProgress = percentComplete.toFixed(2);
+
+                  el.uploadProgress
+                    .find('.upload-progress-bar')
+                    .css('width', formattedProgress + '%');
+                  el.uploadProgress
+                    .find('.upload-progress-percentage')
+                    .text(formattedProgress + '%');
+                };
+
+                filesWrittenObject.successFunction = function (response) {
+                  if (response.error) {
+                    var error =
+                      deep(response, 'error.responseJSON.errors') || {};
+
+                    var message = (Object.values(error)[0] || {}).msg;
+
+                    sitemessage(message || 'Uploading error');
+
+                    wndObj.close();
+
+                    return;
+                  }
+
+                  actions.added(response);
+                  wndObj.close();
+                };
+
+                filesWrittenObject.url = el.importUrl.val();
+
+                wndObj.hide();
+                el.uploadProgress.removeClass('hidden');
+                self.app.peertubeHandler.importVideo(filesWrittenObject);
+
+                return;
+              }
+
               var videoInputFile = el.videoInput.prop('files');
 
               var videoWallpaperFile = el.videoWallpaper.prop('files');
@@ -89,8 +152,6 @@ var uploadpeertube = (function () {
               var nameError = wnd.find('.name-type-error');
 
               nameError.text('');
-
-              var filesWrittenObject = {};
 
               // validation
               if (!videoInputFile[0]) {
@@ -151,7 +212,7 @@ var uploadpeertube = (function () {
                   var message = (Object.values(error)[0] || {}).msg;
 
                   sitemessage(message || 'Uploading error');
-                  
+
                   wndObj.close();
 
                   return;
