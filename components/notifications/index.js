@@ -77,6 +77,8 @@ var notifications = (function(){
 					open : true
 				})
 
+				console.log('showAll', self)
+
 				self.closeContainer();
 			},
 
@@ -246,9 +248,11 @@ var notifications = (function(){
 
 			inel.addEventListener('scroll', events.seen);
 
-
+			console.log("INITEEVEV", el.c)
 			
 			el.c.find('.closecontainer').on('click', function(){
+
+				console.log('closeContainer')
 				self.closeContainer()
 			})
 
@@ -369,7 +373,6 @@ var notifications = (function(){
 
 				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;
 
-				console.log('_notifications', _notifications)
 
 				if(!_notifications){
 					self.app.platform.sdk.notifications.init(function(){
@@ -459,7 +462,7 @@ var notifications = (function(){
 					triggerClose : {
 					}
 				},
-				event : 'click'
+				//event : 'click'
 			}
 
 		}

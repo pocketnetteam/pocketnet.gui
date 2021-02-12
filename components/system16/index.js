@@ -1270,7 +1270,7 @@ var system16 = (function(){
 						name : self.app.localization.e('e13056'),
 						id : 'host',
 
-						defaultValue : _proxy.host || 'pocketnet.app',
+						defaultValue : _proxy.host || '',
 						placeholder : "0.0.0.0",
 						require : true
 					

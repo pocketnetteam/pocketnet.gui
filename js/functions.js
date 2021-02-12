@@ -1471,6 +1471,7 @@
 		}
 
 		self.close = function(){
+			console.log("CLOSE TOOLTIP", self)
 			if (self.instance)
 				self.instance.close();
 		}
