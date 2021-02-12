@@ -3460,10 +3460,10 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                // var rootAddresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf'];
-				// if (rootAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
+                var rootAddresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf'];
+				if (rootAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
 					c.video.options.enablePeertube = options.enablePeertube;
-				// }
+				}
 
                 if (electron) {
                     c.system = {
