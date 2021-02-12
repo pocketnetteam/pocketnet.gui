@@ -5,11 +5,11 @@ PeerTubeHandler = function (app) {
     'pocketnetpeertube3.nohost.me',
   ];
 
-  const randeomServerIndex = hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
+  const randomServer = hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
 
-  const baseUrl = `https://${randeomServerIndex}/api/v1/`;
+  const baseUrl = `https://${randomServer}/api/v1/`;
 
-  const watchUrl = `https://${randeomServerIndex}/videos/watch/`;
+  const watchUrl = `https://${randomServer}/videos/watch/`;
 
   console.log('Selected Server', baseUrl);
 
@@ -250,9 +250,11 @@ PeerTubeHandler = function (app) {
 
     const videoHost = video.replace('peertube://', '').replace('https://', '').split('/')[0];
 
-    this.baseUrl =  videoHost ? `https://${videoHost}/api/v1` : this.baseUrl;
+    if (randomServer !== videoHost) {
+      this.baseUrl =  videoHost ? `https://${videoHost}/api/v1` : this.baseUrl;
 
-    await this.authentificateUser();
+      await this.authentificateUser();
+    }
 
     if (!this.userToken) {
       const localAuth = () =>
