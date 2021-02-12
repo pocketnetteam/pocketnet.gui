@@ -62,7 +62,6 @@ var Proxy = function (settings, manage) {
 
         stats.push(data)
 
-        //console.log(data)
 
 		var d = stats.length - statcount
 
@@ -77,17 +76,24 @@ var Proxy = function (settings, manage) {
 
     var ini = {
         ssl: function () {
-
-            var sslsettings = settings.server.ssl || {}
+            var s =  settings.server.ssl || {}
+            var sslsettings = {}
+            
+            sslsettings.key = s.keypath || s.key
+            sslsettings.cert = s.certpath || s.cert
+            sslsettings.passphrase = s.passphrase
 
             var options = {};
 
-            if(!sslsettings.key || !sslsettings.cert || !sslsettings.passphrase) return {}
+
+            if(!sslsettings.key || !sslsettings.cert || !sslsettings.passphrase) return {
+
+            }
 
             try {
                 options = {
-                    key: fs.readFileSync(path.resolve(__dirname, sslsettings.key)),
-                    cert: fs.readFileSync(path.resolve(__dirname, sslsettings.cert)),
+                    key: fs.readFileSync(f.path(sslsettings.key)),
+                    cert: fs.readFileSync(f.path(sslsettings.cert)),
                     passphrase: sslsettings.passphrase
                 }
             }
@@ -108,6 +114,9 @@ var Proxy = function (settings, manage) {
 
         signature : function(data){
 
+            delete data.A
+            delete data.U
+
             if (data.signature){
                 var authorized = self.pocketnet.kit.authorization.signature(data.signature)
 
@@ -127,11 +136,26 @@ var Proxy = function (settings, manage) {
         }
     }
 
+
+    self.users = function(){
+
+        var i = self.kit.info()
+
+        var count = Math.max(f.deep(i, 'wss.users.length') || 1, f.deep(i, 'server.middle.requestsIp') || 1)
+
+        if (count < 1) count = 1
+
+        return count
+
+    }
+
     self.server = {
 
         init: function () {
 
+
             if (settings.server.enabled) {
+
 
                 return server.init({
                     ssl : ini.ssl(),
@@ -159,6 +183,10 @@ var Proxy = function (settings, manage) {
                 return self.wss.re()
             }).then(r => {
                 return self.firebase.re()
+            }).catch(e => {
+                console.error(e)
+
+                return Promise.reject(e)
             })
         },
 
@@ -176,11 +204,11 @@ var Proxy = function (settings, manage) {
 
         events : function(){
             wallet.clbks.error.queue.main = function(e, p){
-                console.log("ERROR QUEUE", e, p)
+                //console.log("ERROR QUEUE", e, p)
             }
 
             wallet.clbks.error.ini.main = function(e, p){
-                console.log("ERROR INI", e, p)
+                //console.log("ERROR INI", e, p)
             }
         },
 
@@ -188,8 +216,23 @@ var Proxy = function (settings, manage) {
             return wallet.init()
         },
 
+        inited : function(){
+            return wallet.init()
+        },
+
+        addqueue : function(key, address, ip){
+            return wallet.kit.addqueue(key, address, ip)
+        },
+        
+
         destroy: function () {
             return wallet.destroy()
+        },
+        removeKey : function(key){
+            return wallet.kit.removeKey(key)
+        },
+        setPrivateKey : function(key, private){
+            return wallet.kit.setPrivateKey(key, private)
         },
 
         re : function(){
@@ -218,6 +261,10 @@ var Proxy = function (settings, manage) {
             return Promise.resolve()
         },
 
+        sendtoall: function (message) {
+            return wss.sendtoall(message)
+        },
+
         destroy: function () {
             return wss.destroy()
         },
@@ -227,6 +274,8 @@ var Proxy = function (settings, manage) {
                 this.init()
             })
         },
+
+
 
         info : function(compact){
             return wss.info(compact)
@@ -296,6 +345,10 @@ var Proxy = function (settings, manage) {
             return nodeManager.init()
         },
 
+        inited : function(){
+            return nodeManager.info().inited
+        },
+
         destroy : function () {
             return nodeManager.destroy()
         },
@@ -312,7 +365,7 @@ var Proxy = function (settings, manage) {
 
     self.firebase = {
         init: function () {
-            return firebase.init()
+            return firebase.init(settings.firebase)
         },
 
         destroy: function () {
@@ -354,28 +407,47 @@ var Proxy = function (settings, manage) {
             }
         },
 
-        init: function () {
-
+        initlist : function(list){
             var catchError = function(key){
                 return (e) => {
-
-                    /*if (key == 'nodeControl'){
-                        
-                    }*/
 
                     return Promise.resolve()
                 }
             }
 
-            status = 1
-
-            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl'], (i) => {
+            var promises = _.map(list, (i) => {
                 return self[i].init().catch(catchError(i)).then(() => {
                     return Promise.resolve()
                 })
             })
 
-            return Promise.all(promises).then(r => {
+            return Promise.all(promises)
+        },
+
+        sinit : function(){
+            var wrks = []
+
+            if(!self.nodeManager.inited()) wrks.push('nodeManager')
+            if(!self.wallet.inited()) wrks.push('wallet')
+
+            if(!wrks.length){
+                return Promise.resolve({})
+            }
+            else{
+                return self.kit.initlist(wrks).then(r => {
+                    
+                    return Promise.resolve({
+                        refresh : true
+                    })
+                })
+            }
+        },
+
+        init: function () {
+
+            status = 1
+
+            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl']).then(r => {
 
                 status = 2
 
@@ -384,7 +456,6 @@ var Proxy = function (settings, manage) {
 
                 return Promise.resolve()
             })
-
 
         },
 
@@ -525,7 +596,6 @@ var Proxy = function (settings, manage) {
                     if (options.node){
                         node = nodeManager.nodesmap[options.node]
 
-                        console.log("SELECTED NODE", node, options.node)
                     }
         
                     if(!node || options.auto) node = nodeManager.selectProbability() //nodeManager.selectbest()
@@ -606,16 +676,39 @@ var Proxy = function (settings, manage) {
                 path : '/nodes/select',
                 action : function(){
 
-                    var node = nodeManager.selectProbability() || nodeManager.selectbest()
+                    return nodeManager.waitbest(3000).then(r => {
+                        var node = nodeManager.selectProbability() || nodeManager.selectbest() || nodeManager.select()
 
+                        if(!node){
+                            return Promise.reject('cantselect')
+                        }
 
-                    if(!node){
+                        return Promise.resolve({data : {
+                            node : node.exportsafe()
+                        }})
+                    })
+
+                    
+
+                }
+            },
+
+            test : {
+                path : '/nodes/test',
+                authorization : 'signature',
+                action : function({node, scenario, A}){
+
+                    return Promise.reject('err')
+
+                    if(!A) return Promise.reject()
+
+                    var _node = nodeManager.nodesmap[node]
+
+                    if(!_node){
                         return Promise.reject('cantselect')
                     }
 
-                    return Promise.resolve({data : {
-                        node : node.exportsafe()
-                    }})
+                    return _node.test(scenario)
 
                 }
             },
@@ -731,6 +824,12 @@ var Proxy = function (settings, manage) {
         },
 
         common : {
+            /*use : {
+                path : '/use',
+                action : function(){
+                    return self.kit.sinit()
+                }
+            },*/
             info : {
                 path : '/info',
                 action : function(){
@@ -822,9 +921,9 @@ var Proxy = function (settings, manage) {
                     if (captcha && captchas[captcha] && captchas[captcha].done){
                         return Promise.resolve({
                             data : {
-                                id : captchas[connect.parameters.captcha].id,
+                                id : captchas[captcha].id,
                                 done : true,
-                                result : captchas[connect.parameters.captcha].text
+                                result : captchas[captcha].text
                             }
                         })
                     }
@@ -942,10 +1041,18 @@ var Proxy = function (settings, manage) {
 
                     }
 
-                    self.wallet.kit.addqueue(key || 'registration', address, ip).then(r => {
+                    return self.wallet.addqueue(key || 'registration', address, ip).then(r => {
+
+                        console.log("RESULT", r)
+
                         return Promise.resolve({
                             data : r
                         })
+
+                    }).catch(e => {
+
+                        console.log("E", e)
+                        return Promise.reject(e)
                     })
 
                 }
@@ -959,9 +1066,11 @@ var Proxy = function (settings, manage) {
                 action : function(message){
 
 
-                    if(!message.U) return Promise.reject({error : 'Unauthorized', code : 401})
+                    if(!message.A) 
+                        return Promise.reject({error : 'Unauthorized', code : 401})
 
                     var kaction = f.deep(manage, message.action)
+
 
                     if(!kaction) {
                         return Promise.reject({error : 'unknownAction', code : 502})
@@ -969,6 +1078,10 @@ var Proxy = function (settings, manage) {
 
                     return kaction(message.data).then(data => {
                         return Promise.resolve({data})
+                    }).catch(e => {
+
+
+                        return Promise.reject(e)
                     })
                 }
             }

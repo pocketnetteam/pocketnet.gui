@@ -30,6 +30,7 @@
         "auto-launch": "^5.0.5",
         "body-parser": "^1.19.0",
         "clone-deep": "^4.0.1",
+        "deep-extend": "^0.6.0",
         "download-github-release": "^0.3.2",
         "electron-context-menu": "^2.4.0",
         "electron-is": "^3.0.0",
@@ -68,6 +69,7 @@
         "node-fetch": "",
         "node-iplocate": "^1.0.2",
         "node-rsa": "^1.0.5",
+        "nodejs-base64": "^1.0.3",
         "nodemailer": "^6.4.11",
         "object-hash": "^2.0.3",
         "open": "^6.3.0",
@@ -95,10 +97,11 @@
         "productName": "Pocketnet",
         "extraFiles": [
             {
-                "from": "pocketcoind",
-                "to": "pocketcoind",
+                "from": "proxy16/cert",
+                "to": "cert",
                 "filter": [
-                    "**/*"
+                    "**/cert.pem",
+                    "**/key.pem"
                 ]
             }
         ],

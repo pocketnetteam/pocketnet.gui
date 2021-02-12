@@ -3,39 +3,27 @@
         <div class="work">
             <div class="wallet table">
                 <div class="use"></div>
-                <div class="name">Name</div>
-                <div class="queue">Queue</div>
-                <div class="balance">Current Balance</div>
-                <div class="unspents">Unspents Count</div>
+                <div class="name"><span>Name</span></div>
+                <div class="queue"><span>Queue</div>
+                <div class="balance"><span>Current Balance</span></div>
+                <div class="unspents"><span>Unspents Count</span></div>
             </div>
         </div>
     </div>
     <div class="wallets">
+
+        <div class="webdistributionwalletsWrapper">
     
-        <% _.each(wallets, function(wallet){ %>
-
-            <div class="walletWrapper">
-                <div class="work">
-                    <div class="wallet table">
-
-                        <div class="use"><i class="far fa-circle"></i></div>
-
-                        <div class="name"><%- wallet.key %></div>
-                        <div class="queue"><%- wallet.queue %></div>
-                        <div class="balance"><%- wallet.balance %> PKOIN</div>
-                        <div class="unspents"><%- wallet.unspents %> </div>
-
-                    </div>
-                </div>
-            </div>
-
-        <% }) %>
+        
+        </div>
+        
     </div>
-
+    <% if(admin) {%>
     <div class="stats">
         <div class="walletschart">
 
         </div>
     </div>
+    <% } %>
 
 </div>

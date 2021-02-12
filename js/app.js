@@ -152,6 +152,8 @@ Application = function(p)
 				ca.offline = true
 			}
 
+			ca.offline = true;
+
 			_.each(ca, function(t, i){
 
 				if (self.errors.state[i]){
@@ -230,7 +232,14 @@ Application = function(p)
 		state : {},
 		clbks : {
 
+			/*_platform : function(change){
+				if(!self.errors.connection() && !self.platform.loadingWithErrors){
+					self.prepareUserData()
+				}
+			},*/
+
 			_modules : function(change){
+
 
 				if(!self.errors.connection() && !self.platform.loadingWithErrors){
 
@@ -268,11 +277,12 @@ Application = function(p)
 
 				if(!self.platform || !this.connection()) return
 
-
 				self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
 
-					if (self.platform.focus)
+
+					if (self.platform.focus){
 						self.errors.check()
+					}
 
 				}, 5000))
 
@@ -311,6 +321,77 @@ Application = function(p)
 
 		connectionRs : function(){
 			return (this.state.node || this.state.proxy || this.state.offline) && !self.platform.loadingWithErrors
+		}
+	}
+
+	self.apiHandlers = {
+		success : function(p){
+
+			var ca = {}
+			var change = false;
+
+			if (p.rpc){
+				ca.proxy = true;
+				ca.node = true;
+			}
+
+			if (p.api){
+				ca.proxy = true;
+			}
+
+			ca.offline = true;
+
+
+			_.each(ca, function(t, i){
+
+				if (self.errors.state[i]){
+					delete self.errors.state[i]
+
+					change = true
+				}
+
+			})
+
+			if (change){
+				_.each(self.errors.clbks, function(c){
+					c(self.errors.state)
+				})
+			}
+
+		},
+
+		///////////
+
+		error : function(p){
+			var error = null
+
+
+			if (p.rpc){
+				error = 'node'
+			}
+
+			if (p.api){
+				error = 'proxy'
+			}
+
+			if((error == 'proxy') && (self.platform && !self.platform.online)){
+				error = 'offline'
+			}
+
+
+			if(error && !self.errors.state[error]){
+
+				self.errors.state[error] = true;
+
+				_.each(self.errors.clbks, function(c){
+					c(self.errors.state)
+				})
+
+			}
+			
+
+			return error;
+	
 		}
 	}
 
@@ -515,13 +596,7 @@ Application = function(p)
 
 				self.platform.prepare(function(){
 
-					self.api.rpc('getnodeinfo').then(r => {
-						console.log("RESULT getnodeinfo", r)
-					}).catch(e => {
-						console.log("ERROR getnodeinfo", e)
-					})
-
-
+				
 					if(state && self.platform.sdk.address.pnet()){
 
 						var addr = self.platform.sdk.address.pnet().address
@@ -831,7 +906,7 @@ Application = function(p)
 
 	self.ref = localStorage['ref'] || parameters().ref;
 
-	self.options.device = localStorage['device'] || makeid();
+	self.options.device = /*localStorage['device'] ||*/ makeid();
 
 	localStorage['device'] = self.options.device
 

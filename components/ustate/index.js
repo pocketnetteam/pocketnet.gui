@@ -102,6 +102,8 @@ var ustate = (function(){
 
 			gifts : function(_el){
 
+				return
+
 
 				self.app.platform.sdk.processes.get(function(levels){
 

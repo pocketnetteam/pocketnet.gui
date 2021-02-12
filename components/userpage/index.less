@@ -49,6 +49,14 @@
 		position: relative;
 		margin-bottom : 4 * @rhythm;
 		margin-top : 2 * @rhythm;
+
+		.adr{
+			max-width: 500px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			vertical-align: bottom;
+			display: inline-block;
+		}
 		.create{
 			min-width: 250px;
 		}
@@ -78,6 +86,11 @@
 		.addressseparate{
 			margin-top : @rhythm;
 			font-size: 0.8em;
+		}
+
+		.copyaddress{
+			width : 33px;
+			cursor: pointer;
 		}
 
 		.captionWrapperFloat{
@@ -458,7 +471,7 @@ html.stblack{
 			background: fade(@color-bright, 20);
 			color : fade(@color-gray-slight, 60);
 			
-	
+			margin-top: 0;
 			.cellforimage{
 	
 				.usericon{

@@ -36,8 +36,46 @@ var Middle = function(){
             return l.ip
         })).length
 
+        var byCodes = {}
+        
+        _.each(f.group(logs, function(l){
+
+            return l.s
+
+        }), function(lc, code){
+
+            byCodes[code] = {
+                length : lc.length,
+                code : code
+            }
+
+        })
+
+        var signatures = {}
+
+        _.each(f.group(logs, function(l){
+            if(f.deep(l, 'p.signature')){
+                return 'exist'
+            }
+            else{
+                return 'empty'
+            }
+        }), function(lc, code){
+
+            signatures[code] = {
+                length : lc.length,
+                code : code
+            }
+
+        })
+
+        
+
+
         var data = {
-            requestsIp : requestsIp
+            requestsIp : requestsIp,
+            responses : byCodes,
+            signatures : signatures
         }
 
         if(!compact) data.logs = logs

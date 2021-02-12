@@ -23,7 +23,6 @@
     
     .table{
         >div{
-            overflow: hidden;
         }
     }
 	
@@ -36,6 +35,48 @@
     .chartWrapper{
         padding : 2 * @rhythm 0;
         
+    }
+
+    .proxyselecttable{
+        width : auto;
+
+        .openproxielist{
+            cursor: pointer;
+            .transition(0.3s);
+
+            &:hover{
+                color : @color-main;
+            }
+        }
+
+        i{
+            width : 44px;
+            text-align: center;
+        }
+
+        .selectedInterface{
+            padding-left: 2 * @rhythm;
+
+            .value{
+                cursor: pointer;
+                color:@color-main;
+                text-decoration: underline;
+            }
+            span{
+                font-size: 0.9em;
+            }
+            
+
+        }
+        
+        .currentwr{
+            padding-right: 2 * @rhythm;
+        }
+    }
+
+    .haschanges{
+        padding : 2 * @rhythm 0;
+        padding-top : 4 * @rhythm;
     }
 
     .staterowTable,
@@ -51,6 +92,30 @@
             width : 160px;
         }
 
+
+        .icon{
+            padding-left: @rhythm;
+            color : @color-gray-slight;
+
+            i.good{
+                color : @color-good;
+            }
+        }
+
+        .todefaultcert{
+
+            padding-left: 2 * @rhythm;
+            cursor: pointer;
+            .transition(0.3s);
+            color : @color-gray-mlight;
+            span{
+                font-size: 0.8em;
+            }
+
+            &:hover{
+                color : @color-main;
+            }
+        }
      
         
     }
@@ -159,6 +224,15 @@
         }
     }
 
+    .ssubcaption{
+        padding : @rhythm 0;
+
+        span{
+            font-weight: 700;
+            color : @color-gray;
+        }
+    }
+
     .adminpanel{
         padding : 4 * @rhythm 0;
         padding-bottom : @rhythm;
@@ -167,6 +241,14 @@
     .tablecaption{
         background: #fafafa;
         padding : 2 * @rhythm 0;
+
+        >div{
+            span{
+                font-size: 0.9em;
+                color : @color-gray-mlight;
+            }
+            
+        }
     }
 
     .webdistributioncontent{
@@ -180,12 +262,66 @@
                 vertical-align: middle;
                 padding :3 * @rhythm 2 * @rhythm;
 
+                .gray{
+                    color : @color-gray-slight;
+                    .transition(0.3s);
+
+                    
+                }
+
+                .remove{
+                    cursor: pointer;
+
+                    &:hover{
+                        color : @color-bad;
+                    }
+                }
+
+                .coins{
+                    cursor: pointer;
+
+                    &:hover{
+                        color : @color-good;
+                    }
+                }
+
+                i{
+                    color : @color-gray-mlight;
+                    .transition(0.3s);
+
+                    &.remove{
+                        color : @color-bad;
+                    }
+
+                    &.good{
+                        color : @color-good;
+                    }
+
+                    &.bad{
+                        color : @color-bad;
+                    }
+
+                    &.normal{
+                        color : @color-orange;
+                    }
+
+                    &.coins,
+                    &.settings{
+                        &:hover{
+                            color : @color-main;
+                        }
+                    }
+
+                    
+                }
+
                 
                 &.use{
                     width: 44px;
                     padding-left: 0;
                     padding-right: 0;
                     text-align: center;
+                    cursor: pointer;
                 }
 
                 &.queue,
@@ -271,9 +407,47 @@
         }
     }
 
+    .empty{
+        padding-top : 2 * @rhythm;
+        span{
+            color : @color-gray-mlight;
+        }
+    }
+
+    .error{
+        padding-top: 2 * @rhythm;
+        padding-bottom : 2 * @rhythm;
+    }
+
+    .errorRefresh{
+        padding : 2 * @rhythm;
+    }
+
+    .errorTable{
+        height: 300px;
+
+        >div{
+            vertical-align: middle;
+            text-align: center;
+            background: fade(@color-gray-slight, 12);
+            color : @color-gray-slight;
+
+            .errorIcon{
+                padding : 2 * @rhythm;
+
+                i{
+                    font-size: 1.5em;
+                }
+            }
+        }
+    }
+
     .nodescontent{
         .nodeWrapper{
             border-bottom: 1px solid @color-gray-slight;
+        }
+        .good{
+            color : @color-good;
         }
         .node{
 			   
@@ -294,7 +468,13 @@
                 }
             }
 
-            
+            .testing{
+                color : @color-bad;
+            }
+
+            .name{
+                cursor: pointer;
+            }
 
             &.cantuse{
                 color : @color-gray-slight;
@@ -356,6 +536,10 @@
                     }
                 }
 
+                span{
+                    font-size: 0.9em;
+                }
+
               
             }
         }
@@ -371,7 +555,7 @@
     }
     .wndcontent{
         top : 55px;
-        bottom: 66px;
+        bottom: 55px;
         padding : 0 2 * @rhythm;
     }
 
@@ -406,6 +590,111 @@
 		}
 	}
 }
+
+.proxieslist{
+	.empty{
+
+		display: none;
+		height: 120px;
+		color : @color-gray-mlight;
+		text-align: center;
+
+		.table{
+			>div{
+				
+				vertical-align: middle;
+			}
+		}
+	}
+
+	&.empty{
+		.empty{
+			display: block;
+		}
+	}
+
+	.proxy{
+		border-bottom: 1px solid @color-gray-slight;
+        cursor: pointer;
+        .transition(0.3s);
+		>div{
+            font-size: 0.8em;
+			padding : 0;
+			vertical-align: middle;
+
+			&.name{
+
+				i{
+					width : 40px;
+					display: none;
+				}
+
+				.dup{
+					padding : 2 * @rhythm 0;
+					color : @color-gray-mlight;
+				}
+
+			}
+			
+			&.panel{
+				width: 88px;
+
+				.item{
+					float: right;
+					padding : 2 * @rhythm;
+					color : @color-gray-mlight;
+
+					&.edit{
+						cursor: pointer;
+						&:hover{
+							color : @color-main;
+						}
+					}
+
+                    &.delete{
+                        cursor: pointer;
+						&:hover{
+							color : @color-bad;
+						}
+                    }
+
+					
+				}
+			}
+		}
+
+		&.active{
+			
+			cursor: default;
+			color : @color-main;
+			
+			>div{
+				&.name{
+					i{
+						display: inline-block;
+					}
+				}
+			}	
+        }
+        
+        
+
+		&:hover{
+			color : @color-main;
+		}
+
+		&:nth-last-child(1){
+			border-bottom: 0px solid @color-gray-slight;
+		}	
+	}
+}
+
+.addressdialog{
+    input{
+        width: 100%;
+    }
+}
+
 .addproxy,
 .addnode{
 
@@ -542,4 +831,84 @@
 		}
 
 	}
+}
+
+
+html.stblack{
+    #system16{
+      
+        .preloaderabs{
+           
+            background: fade(@color-black,80);
+    
+        }
+       
+        .subcaption{
+         
+            span{
+                color : @color-bright;
+            }
+        }
+    
+        .ssubcaption{
+    
+            span{
+                color : @color-gray-mlight;
+            }
+        }
+    
+    
+    
+        .managepanel{
+            background: fade(@color-black2, 80);
+        }
+    
+        
+    
+        .graphWrapper{
+    
+            
+            .grwr{
+                display: none;
+                background: fade(@color-black2, 80);
+            }
+    
+        }
+    
+       
+        .tablecaption{
+            background: @color-black3;
+        }
+    
+     
+    
+        .errorTable{
+    
+            >div{
+                background: fade(@color-black2, 80);
+            }
+        }
+    
+      
+    }   
+    
+    .addnode,
+    .addproxy{
+        .preloaderabs{
+            background: fade(@color-black2,80);
+    
+        }
+     
+    }
+    
+    
+    .addproxy,
+    .addnode{
+    
+        .parameter{
+    
+            
+    
+        }
+    }
 }

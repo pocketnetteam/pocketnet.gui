@@ -15,13 +15,17 @@ var system16 = (function(){
 
 		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
 
+		var changes = {
+			server : {}
+		}
+
 		var settings = {
 			charts : {
 				nodes : {
 					type : 'rating'
 				},
 				server : {
-					type : 'connections'
+					type : 'responses'
 				},
 				wallets : {
 					type : 'distribution'
@@ -29,7 +33,120 @@ var system16 = (function(){
 			}
 		}
 
+		var errors = {
+			'unableProxyConnect' : {
+				icon : '<i class="fas fa-wifi"></i>',
+				text : "Unable to Connect to Proxy"
+			},
+			'undefinedError' : {
+				icon : '<i class="fas fa-exclamation-triangle"></i>',
+				text : "Undefined Error"
+			}
+		}
+
 		var systemsettings = {
+			'firebase' : function(){
+				var v = changes.server.firebase || system.firebase;
+
+				var d = inputDialogNew({
+					caption : "Proxy Firebase Parameters",
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			label : "Upload New Firebase Admin SDK",
+						placeholder : "Upload file with .json extension",
+						upload : {
+							ext : ['json']
+						}
+	        		},{
+	        			defValue : v.id,
+	        			validate : 'empty',
+	        			label : "Application Id",
+						placeholder : "Application Id",
+	        		}],
+
+	        		success : function(v){
+
+						ch.key = deep(v, '0.base64')
+						ch.id = v[1]
+
+
+						if (ch.key || ch.id){
+
+							changes.server.firebase = ch
+
+							renders.webserveradmin(el.c)
+
+							return true
+						}
+
+						sitemessage("Please Upload All files")
+
+						return false
+	        		}
+	        	})
+			},
+			'certificate' : function(){
+				var v = changes.server.ssl || {};
+				var ch = {}
+
+				var d = inputDialogNew({
+					caption : "Proxy SSL Parameters",
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			label : "Certificate",
+						placeholder : "Upload file with .pem extension",
+						upload : {
+							ext : ['pem']
+						}
+	        		},{
+	        			defValue : '',
+	        			validate : 'empty',
+						placeholder : "Upload file with .pem extension",
+	        			label : "Certificate Key",
+						upload : {
+							ext : ['pem']
+						}
+	        		},{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			label : "Password",
+						placeholder : "Certificate Password",
+	        		}],
+
+	        		success : function(v){
+
+						ch.cert = deep(v, '0.base64')
+						ch.key = deep(v, '1.base64')
+						ch.passphrase = v[2]
+						ch.name = deep(v, '0.file.name')
+
+
+						if (ch.cert && ch.key && ch.passphrase && ch.name){
+
+							changes.server.ssl = ch
+
+							renders.webserveradmin(el.c)
+
+							return true
+						}
+
+						sitemessage("Please Upload All files")
+
+						return false
+	        		}
+	        	})
+			},
+			'serverenabled' : function(_el){
+				
+				changes.server.enabled = !JSON.parse(_el.attr('value'))
+				if(changes.server.enabled == system.server.enabled) delete changes.server.enabled
+
+				renders.webserveradmin(el.c)
+			},
 			'nodeenabled' : function(){
 
 				if (system.node.enabled){
@@ -40,6 +157,11 @@ var system16 = (function(){
 
 							return proxy.system.request('set.node.enabled', {enabled : false}).then(r => {
 								clbk()
+
+								actions.refresh().then(r => {
+									actions.refreshsystem()
+								})
+								
 							})
 						}
 					}]
@@ -51,24 +173,89 @@ var system16 = (function(){
 				}
 				else{
 
-					return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
+					var items = [{
+						text : "Enable Pocketnet Node",
+						action : function (clbk) {
 
-						//renders.allsettings()
+							return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
+								actions.refresh().then(r => {
+									actions.refreshsystem()
+								})
+
+								clbk()
+							})
+
+						
+						}
+					}]
+
+					menuDialog({
+						items: items
 					})
 
+					
+
 				}
-				console.log('sd')
 			}
 		}
 
 		var actions = {
+			convertTime : function(stats){
+				_.each(stats, function(s){
+					s.time = fromutc(new Date(s.time))
+				})
+			},
 			admin : function(){
 
 				var address = self.app.platform.sdk.address.pnet()
 
+				if(!address) return false
+
 				if (proxy && info){
 					return proxy.direct || _.indexOf(info.admins, address.address) > -1
 				}
+			},
+
+			removeAdmin : function(address){
+				topPreloader(30);
+
+				proxy.fetch('manage', {
+					action : 'set.admins.remove',
+					data : {
+						address : address
+					}
+				}).then(r => {
+
+					actions.refresh()
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+
+					sitemessage(self.app.localization.e('e13293'))
+
+					topPreloader(100);
+
+				})
+			},
+
+			dust : function(pk, address, value, clbk){
+				self.app.platform.sdk.wallet.sendmanyoutputs(pk, address, value, 2, function(err , data){
+
+					console.log("ERR", err)
+
+					if(err){
+						self.app.platform.errorHandler(err, true)	
+					}
+					else{
+
+						//sitemessage("Success!")
+					}
+
+					clbk(err)
+
+				})	
 			},
 
 			ticksettings : function(settings, s, changed){
@@ -81,34 +268,51 @@ var system16 = (function(){
 				}
 			},
 
+			refreshsystem : function(){
+				return proxy.system.api.get.settings().then(s => {
+
+
+					system = s
+
+					if (el.c){
+						renders.allsettings()
+					}
+				})
+				
+			
+			},
+
+			refresh : function(){
+				return proxy.get.info().then(r => {
+					this.tick(r.info)
+
+					return Promise.resolve()
+				})
+			},
+
 			tick : function(state){
 
 				info = state
 
-
 				var laststate = stats[stats.length - 1]
 
-				if(!laststate || (new Date(laststate.time)).addSeconds(1) < utcnow() ){
+				if(!laststate || (new Date(laststate.time)).addSeconds(10) < new Date() ){
 					stats.push({
 						info : info,
-						time : utcnow()
+						time : new Date()
 					})
 
 					stats = lastelements(stats, 1000)
 
-					console.log('stats', stats.length)
 				}
 
 				if (el.c){
 					renders.nodecontentstate(el.c)
 					renders.nodescontenttable(el.c)
+					renders.webadminscontent(el.c)
+					renders.webdistributionwallets(el.c)
+					renders.webserverstatus(el.c)
 				}
-
-				
-
-				//updateall
-
-				//makers.proxycurrent()
 
 				setTimeout(function(){
 					makers.stats(true)
@@ -394,14 +598,78 @@ var system16 = (function(){
 				el.find('[sys]').on('click', function(){
 					var sys = $(this).attr('sys')
 
-
 					if (sys){
 						var s = deep(systemsettings, sys)
 
-
-						if (s) s()
+						if (s) s($(this))
 					}
 				})
+			},
+
+			node : {
+				test : function(node){
+
+					var scenarios = [{
+						name : "Pageload",
+						key : 'pageload'
+					}]
+
+					var items = _.map(scenarios, function(scenario){
+						return {
+							text : "Pageload",
+							action : function(clbk){
+								proxy.fetch('nodes/test', {
+									scenario : scenario.key,
+									node : node.key
+								}).catch(e => {
+									sitemessage(e)
+								})
+
+								clbk()
+							}
+						}
+					})
+
+					menuDialog({
+						items: items
+					})
+
+				}
+			},
+
+			proxy : {
+				selectWatch : function(){
+
+					windows.proxieslist(proxy, "Watch Proxy", function(selected){
+
+						make(selected)
+					})
+				},
+
+				selectUsing : function(){
+
+					var use = api.get.current()
+
+
+					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
+
+						api.set.current(selected.id, true).then(r => {
+							make(api.get.current())
+						})
+
+					})
+				},
+
+				add : function(clbk){
+					windows.addproxy(null, function(selected){
+						if(clbk) clbk()
+					})
+				},
+				edit : function(proxy, clbk){
+					windows.addproxy(proxy, function(selected){
+						if(clbk) clbk()
+					})
+				}
 			}
 		}
 
@@ -470,6 +738,18 @@ var system16 = (function(){
 					]
 				},
 
+				wsc : {
+					caption : "Websocket Connections",
+
+					series : [
+						{
+							name : "Websocket",
+							path : "users",
+							id : 'wsc'
+						}
+					]
+				},
+
 				allcount : {
 					caption : "Count of requestes to nodes",
 
@@ -509,6 +789,34 @@ var system16 = (function(){
 					]
 				},
 
+				signatures : {
+					caption : "Users",
+					objects : 'server.middle.signatures',
+					series : [
+						{
+							path : 'length',
+							namePath : 'code',
+							name : "Signature",
+							id : 'count'
+						}
+					]
+					//method : 'fromarray'
+				},
+
+				responses : {
+					caption : "Responses",
+					objects : 'server.middle.responses',
+					series : [
+						{
+							path : 'length',
+							namePath : 'code',
+							name : "Code",
+							id : 'count'
+						}
+					]
+					//method : 'fromarray'
+				},
+
 				cache : {
 					caption : "Cache Size",
 					objects : 'server.cache.meta',
@@ -528,13 +836,13 @@ var system16 = (function(){
 
 					series : [
 						{
-							path : 'wallet.registration.queue',
+							path : 'wallet.addresses.registration.queue',
 							name : "Users Queue Size",
 							id : 'queue'
 						},
 	
 						{
-							path : 'wallet.registration.unspents',
+							path : 'wallet.addresses.registration.unspents',
 							name : "Unspents Count",
 							id : 'unspents'
 						},
@@ -546,7 +854,7 @@ var system16 = (function(){
 
 					series : [
 						{
-							path : 'wallet.registration.balance',
+							path : 'wallet.addresses.registration.balance',
 							name : "Address Balance",
 							id : 'balance'
 						}
@@ -584,6 +892,8 @@ var system16 = (function(){
 					if(meta.objects) ekey = meta.objects + '.' + ekey
 
 					_.each(meta.series, function(smeta){
+
+						
 						series[smeta.id + key] = {
 
 							name : smeta.name + ": " + key,
@@ -623,23 +933,26 @@ var system16 = (function(){
 				var series = {}
 				var i = 0
 
-				_.each(info.nodeManager.nodes, function(node, key){
+				if (info.nodeManager){
+					_.each(info.nodeManager.nodes, function(node, key){
 
-					_.each(meta.series, function(smeta){
-						series[smeta.id + key] = {
-
-							name : smeta.name + ": " + key,
-							path : "nodeManager.nodes.'" + key + "'." + smeta.path,
-							color : colors[ i % colors.length ],
-							type : smeta.type
+						_.each(meta.series, function(smeta){
+							series[smeta.id + key] = {
 	
-						}
+								name : smeta.name + ": " + key,
+								path : "nodeManager.nodes.'" + key + "'." + smeta.path,
+								color : colors[ i % colors.length ],
+								type : smeta.type
+		
+							}
+		
+							i++
+						})
 	
-						i++
+						
 					})
-
-					
-				})
+				}
+				
 
 				return {
 					meta : lmeta,
@@ -786,7 +1099,7 @@ var system16 = (function(){
 
 						_.each(cpsub[type], function(s, key){
 							items.push({
-								text : key,
+								text : s.caption,
 								action : function (clbk) {
 
 									settings.charts[type].type = key
@@ -799,10 +1112,7 @@ var system16 = (function(){
 							})
 						})
 
-						
-
 						menuDialog({
-
 							items: items
 						})
 
@@ -852,6 +1162,460 @@ var system16 = (function(){
 			
 		}
 
+		var windows = {
+			addproxy : function(_proxy, clbk){
+				var editing = false;
+				var method = 'create'
+				var header = self.app.localization.e('e13054')
+				var buttontext = self.app.localization.e('add')
+
+				if(_proxy) {
+					editing = _proxy.id;
+					method = 'update'
+					header = self.app.localization.e('e13055')
+					buttontext = self.app.localization.e('save')
+
+				}
+
+				_proxy || (_proxy = {})
+
+				var ap = {
+
+					host : new Parameter({
+
+						type : "STRING",
+						name : self.app.localization.e('e13056'),
+						id : 'host',
+
+						defaultValue : _proxy.host || 'pocketnet.app',
+						placeholder : "0.0.0.0",
+						require : true
+					
+					}),
+
+					port : new Parameter({
+
+						type : "STRING",
+						name : "RPC Port",
+						id : 'port',
+						defaultValue : _proxy.port || '8899',
+						placeholder : "8888",
+						require : true
+					
+					}),
+
+					ws : new Parameter({
+
+						type : "STRING",
+						name : "WS Port",
+						id : 'wss',
+						defaultValue : _proxy.wss || '8099',
+						placeholder : "8088",
+						require : true
+					
+					})
+
+				}
+
+				var wndbuttons = {
+					close : {
+						class : 'close',
+						html : '<i class="fas fa-times"></i> ' + self.app.localization.e('close'),
+						fn : function(wnd, wndObj){
+							wndObj.close();
+						}
+					},
+
+					success : {
+						class : 'success',
+						html : '<i class="fas fa-check"></i> ' + buttontext,
+						fn : function(wnd, wndObj){
+
+							var meta = {}
+
+							var f = true;
+
+							_.each(ap, function(p){
+								meta[p.id] = p.value || _proxy[p.id]
+
+								if(!p.value) f = false;
+							})
+							
+							
+							if(!f){
+								sitemessage(self.app.localization.e('e13057'))
+
+								return
+							}
+
+
+							meta.user = true;
+
+							console.log('meta', meta)
+
+							var newproxy = new Proxy16(meta, self.app)
+
+							if (self.app.api.get.byid(newproxy.id)){
+								sitemessage(self.app.localization.e('e13058'))
+
+								return
+							}
+
+							wnd.find('.addproxy').addClass('loading')
+
+							console.log('newproxy', newproxy)
+
+							newproxy.api.ping().then(r => {
+
+								var prx = null;
+								
+								if(!editing)
+									prx = self.app.api.addproxy(newproxy.export())
+								else{
+									prx = self.app.api.editproxy(editing, newproxy.export())
+								}
+
+
+								if (prx){
+
+									if (clbk){
+										clbk(prx)
+									}
+	
+									wndObj.close()
+								}
+								else{
+									sitemessage("Unable to add Proxy")
+								}
+
+								wnd.find('.addproxy').removeClass('loading')
+								
+
+							}).catch(e => {
+
+								console.log("ERROR", e)
+								wnd.find('.addproxy').removeClass('loading')
+
+								sitemessage("Unable to connect")
+
+							})
+							
+						}
+					},
+				}
+
+				if (editing){
+
+					wndbuttons.delete = {
+
+				
+						class : 'delete ghost',
+						html : '<i class="fas fa-trash"></i> ' + self.app.localization.e('delete'),
+						fn : function(wnd, wndObj){
+
+							dialog({
+								class : 'zindex',
+								html : self.app.localization.e('e13059'),
+								success : function(){
+
+
+									var change = editing.id == api.get.current().id
+
+									self.app.api.removeproxy(_proxy.id)
+
+									if (clbk){
+										clbk(null, change)
+									}
+
+									wndObj.close()
+									
+								}
+							})
+							
+						}
+				
+	
+					}
+				}
+
+				self.shell({
+					destroy : function(){
+
+					},
+					insert : 'wnd',
+					name : 'addproxy',
+					data : {
+						parameters : ap
+					},
+
+					wnd : {
+						
+						header : header,
+						buttons : wndbuttons,	
+						noInnerScroll : true,
+						class : 'addproxywnd'
+
+					},
+
+				}, function(_p){
+
+					ParametersLive(_.toArray(ap), _p.el)
+
+					_p.el.find('.host input').focus()
+
+				})
+			},
+			proxieslist : function(selected, header, clbk){
+
+				if(!selected) selected = {}
+
+				var apply = function(_wnd){
+					_wnd.close();
+
+					actions.connectproxy();
+				}
+
+				var proxies = self.app.api.get.proxies()
+
+				var buttons = {
+					close : {
+						class : 'close',
+						html : '<i class="fas fa-times"></i> ' + self.app.localization.e('close'),
+						fn : function(wnd, wndObj){
+							wndObj.close();
+						}
+					},
+
+					success : {
+						class : 'success',
+						html : '<i class="fas fa-plus"></i> ' + self.app.localization.e('e13054'),
+						fn : function(wnd, wndObj){
+							
+							actions.proxy.add(function(proxy){
+
+								wndObj.close();
+
+								windows.proxieslist(selected, header, clbk)
+
+								
+							})
+							
+						}
+					},
+				}
+
+				var p = {
+					destroy : function(){
+
+					},
+				
+					name : 'proxieslist',
+					data : {
+						proxies : proxies,
+						proxy : selected
+					},
+
+					wnd : {
+						
+						header : header,
+						noInnerScroll : true,
+						class : 'proxieslistwnd',
+
+						buttons : buttons
+
+					},
+
+				}
+				
+				p.insert = 'wnd';
+				
+
+				self.fastTemplate('proxieslist', function(d){
+
+
+					var _wnd = new wnd({
+						content : d,
+						app : self.app,
+						header : header,
+						noInnerScroll : true,
+						class : 'proxieslistwnd',
+
+						buttons : buttons,
+
+						clbk : function(_p){
+
+
+							var empty = function(){
+								if (_p.el.find('.proxy').length){
+									_p.el.find('.proxieslist').removeClass('empty')
+								}
+								else{
+									_p.el.find('.proxieslist').addClass('empty')
+								}
+							}
+		
+							empty()
+		
+							_p.el.find('.name').on('click', function(){
+		
+								var active = $(this).closest('.proxy').hasClass('active')
+		
+								var pid = $(this).closest('.proxy').attr('pid')
+		
+		
+								if (active){
+									
+								}
+								else
+								{
+		
+									var proxy = self.app.api.get.byid(pid)
+		
+									if(!proxy){
+										sitemessage("Error")
+		
+										return
+									}
+		
+									if (clbk){
+										clbk(proxy)
+		
+										_p.close();
+									}
+									
+								}
+							})
+		
+							_p.el.find('.delete').on('click', function(){
+								var pid = $(this).closest('.proxy').attr('pid')
+		
+								var proxy = self.app.api.get.byid(pid)
+		
+								var change = api.get.current().id == pid
+
+								if (proxy){
+
+									dialog({
+										class : 'zindex',
+										html : self.app.localization.e('e13059'),
+										success : function(){
+		
+											self.app.api.removeproxy(proxy.id)
+		
+											if (change)
+												make(api.get.current());
+				
+											_p.close();
+											windows.proxieslist(selected, header, clbk)
+											
+										}
+									})
+									
+									
+								}
+							})
+		
+							_p.el.find('.edit').on('click', function(){
+								var pid = $(this).closest('.proxy').attr('pid')
+		
+								var proxy = self.app.api.get.byid(pid) ///self.app.platform.sdk.proxy.find(pid)
+								var change = api.get.current().id == pid
+		
+								
+		
+								if (proxy){
+		
+									actions.proxy.edit(proxy, function(proxy){
+		
+										if (change)
+											make(api.get.current());
+		
+											_p.close();
+											windows.proxieslist(selected, header, clbk)
+										
+										
+									})
+		
+								}
+							})
+						}
+
+					})
+
+				}, p.data)
+
+				
+			},
+
+			addadmin : function(){
+				var d = inputDialogNew({
+					caption : "Add Admin to Proxy",
+					class : 'addressdialog',
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			placeholder : "Pocketnet Address",
+	        			label : "Admin address"
+	        		}],
+
+	        		success : function(v){
+
+						var address = v[0]
+
+						if (address){
+							var valid = true;
+
+							try{
+								bitcoin.address.fromBase58Check(address)
+							}
+
+							catch (e){
+								valid = false;
+							}
+
+							
+						}
+
+						if(!valid){
+							sitemessage("Address is not valid")
+
+							return false
+						}
+
+	        			topPreloader(30);
+
+						proxy.fetch('manage', {
+							action : 'set.admins.add',
+							data : {
+								address : address
+							}
+						}).then(r => {
+
+							actions.refresh()
+
+							d.destroy();
+
+	        				topPreloader(100);
+
+						}).catch(e => {
+
+							sitemessage(self.app.localization.e('e13293'))
+
+							topPreloader(100);
+
+						})
+
+	        			
+
+
+
+
+	        		}
+	        	})
+			}
+		}
+
 		var renders = {
 			allsettings : function(){
 				if (el.c)
@@ -859,6 +1623,8 @@ var system16 = (function(){
 			},
 			proxycurrent : function(clbk){
 
+				var use = api.get.current()
+				
 				self.shell({
 
 					inner : html,
@@ -866,44 +1632,89 @@ var system16 = (function(){
 					data : {
 						proxies : api.get.proxies(),
 						current : proxy,
+						using : use,
 						admin : actions.admin()
 					},
 
 					el : el.proxycurrent
 
 				},
-				function(){
+				function(p){
+
+					p.el.find('.current').on('click', actions.proxy.selectWatch)
+					p.el.find('.selectusing').on('click', actions.proxy.selectUsing)
+
+					if (clbk)
+						clbk()
+				})
+
+				
+			},
+
+			error : function(error, el, clbk){
+
+				self.shell({
+
+					inner : html,
+					name : 'error',
+					data : {
+						error : errors[error] || errors['undefinedError']
+					},
+
+					el : el
+
+				},
+				function(p){
+
+					p.el.find('.refreshpage').on('click', function(){
+						make(proxy)
+					})
 
 					if (clbk)
 						clbk()
 				})
 			},
 			proxycontent : function(clbk){
+				
 
-				self.shell({
+				if(!info){
+					renders.error('unableProxyConnect', el.proxycontent)
+				}
+				else{
 
-					inner : html,
-					name : 'proxycontent',
-					data : {
-						info : info,
-						proxy : proxy,
-						admin : actions.admin()
+					self.shell({
+
+						inner : html,
+						name : 'proxycontent',
+						data : {
+							info : info,
+							proxy : proxy,
+							admin : actions.admin()
+						},
+	
+						el : el.proxycontent
+	
 					},
+					function(p){
+	
+						renders.servercontent(p.el)
+						renders.nodescontent(p.el)
+						renders.nodecontent(p.el)
+	
+						if (clbk)
+							clbk()
+					})
+				}
 
-					el : el.proxycontent
-
-				},
-				function(p){
-
-					renders.servercontent(p.el)
-					renders.nodescontent(p.el)
-					renders.nodecontent(p.el)
-
-					if (clbk)
-						clbk()
-				})
+				
 			},
 			servercontent : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
 
 				self.shell({
 					inner : html,
@@ -926,7 +1737,38 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+			webserverstatus : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'webserverstatus',
+					data : {
+						info : info,
+						proxy : proxy,
+						admin : actions.admin()
+					},
+
+					el : elc.find('.webserverstatusWrapper')
+
+				},
+				function(p){
+					if (clbk)
+						clbk()
+				})
+			},
 			webservercontent : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
 
 				self.shell({
 					inner : html,
@@ -940,13 +1782,182 @@ var system16 = (function(){
 					el : elc.find('.webServerWrapper')
 
 				},
-				function(){
+				function(p){
+					renders.webserverstatus(p.el)
+					renders.webserveradmin(p.el)
 
 					if (clbk)
 						clbk()
 				})
 			},
+			webserveradmin : function(elc, clbk){
+
+				if(actions.admin() && system){
+
+					self.shell({
+						inner : html,
+						name : 'webserveradmin',
+						data : {
+							admin : actions.admin(),
+							system : system,
+							proxy : proxy,
+							changes : changes.server
+						},
+
+						el : elc.find('.adminPanelWrapper')
+
+					},
+					function(p){
+
+						actions.settings(p.el)
+
+						p.el.find('.todefaultcert').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to cancel Certificate changes and set Default self-signed Certificate?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+
+									proxy.fetch('manage', {
+										
+										action : 'set.server.defaultssl',
+										data : {}
+		
+									}).catch(e => {
+										
+										return Promise.resolve()
+			
+									}).then(r => {
+			
+										make(proxy || api.get.current());
+					
+										topPreloader(100);
+			
+									})
+
+								}
+							})
+						})
+
+						p.el.find('.save').on('click', function(){
+
+							if(changes.server.https || changes.server.wss){
+								changes.server.ports = {
+									https : changes.server.https,
+									wss : changes.server.wss
+								}
+							}
+
+							var _make = function(){
+								proxy.fetch('manage', {
+									action : 'set.server.settings',
+									data : {
+										settings : changes.server
+									}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+
+									changes.server = {}
+		
+									make(proxy || api.get.current());
+				
+									topPreloader(100);
+		
+								})
+							}
+
+							if(typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
+
+
+								dialog({
+									class : 'zindex',
+									html : "Do you really want to change this settings?",
+									btn1text : self.app.localization.e('dyes'),
+									btn2text : self.app.localization.e('dno'),
+									success : function(){	
+										_make()
+									}
+								})
+
+							}
+							else{
+								_make()
+							}
+							
+
+						})
+
+						p.el.find('[remove]').on('click', function(){
+							var s = $(this).attr('remove')
+
+							if(s) delete changes.server[s]
+
+							renders.webserveradmin(elc)
+						})
+
+						p.el.find('.discard').on('click', function(){
+							changes.server = {}
+
+							renders.webserveradmin(elc)
+						})
+
+						p.el.find('.httpsport').on('change', function(){
+							var port = $(this).val()
+
+							if(port < 0) port = 0
+							if(port > 9999) port = 9999
+
+							$(this).val(port)
+
+							if(port == system.server.https){
+								delete changes.server.https
+							}
+							else{
+								changes.server.https = port
+							}
+
+							
+
+							renders.webserveradmin(elc)
+						})
+
+						p.el.find('.wsssport').on('change', function(){
+							var port = $(this).val()
+
+							if (port < 0) port = 0
+							if (port > 9999) port = 9999
+
+							$(this).val(port)
+
+							if (port == system.server.wss){
+								delete changes.server.wss
+							}
+							else{
+								changes.server.wss = port
+							}
+
+							renders.webserveradmin(elc)
+						})
+
+						
+
+						if (clbk)
+							clbk()
+					})
+
+				}
+				else{
+					if (clbk)
+						clbk()
+				}
+			},
 			webadminscontent : function(elc, clbk){
+
 				
 				self.app.platform.sdk.users.get(info.admins, function(){
 
@@ -963,13 +1974,193 @@ var system16 = (function(){
 						el : elc.find('.webAdminsWrapper')
 	
 					},
-					function(){
+					function(p){
+
+						p.el.find('.addadmin').on('click', windows.addadmin)
+
+						p.el.find('.remove').on('click', function(){
+							var address = $(this).attr('address')
+
+							if (address){
+
+
+								var t = 'Do you really want to remove selected admin from Proxy server admin list?'
+
+								if(address == self.app.platform.sdk.address.pnet().address){
+									t = 'Do you really want to remove Your account from Proxy server admin list?'
+								}
+
+								dialog({
+									class : 'zindex',
+									html : t,
+									btn1text : self.app.localization.e('dyes'),
+									btn2text : self.app.localization.e('dno'),
+									success : function(){	
+										actions.removeAdmin(address)
+									}
+								})
+								
+							}
+						})
 	
 						if (clbk)
 							clbk()
 					})
 				})
 
+			},
+			webdistributionwallets : function(elc, clbk){
+
+
+				self.shell({
+					inner : html,
+					name : 'webdistributionwallets',
+					data : {
+						wallets : info.wallet,
+						info : info,
+						proxy : proxy,
+						admin : actions.admin()
+					},
+
+					el : elc.find('.webdistributionwalletsWrapper')
+
+				},
+				function(p){
+
+					p.el.find('.coins').on('click', function(){
+						var key = $(this).closest('.wallet').attr('key')
+
+						if (key){
+							var address = deep(info.wallet, key + '.address')
+
+							if (address){
+								console.log('address', address)
+
+								dialog({
+									class : 'zindex',
+									html : 'Do you really want to send 1 PKOIN to this coin distribution address?',
+									btn1text : self.app.localization.e('dyes'),
+									btn2text : self.app.localization.e('dno'),
+									success : function(){	
+										topPreloader(30);
+
+										var pk = self.app.user.private.value.toString('hex')
+
+										actions.dust(pk, address, 2, function(err){
+
+											actions.refresh()
+							
+											topPreloader(100);
+
+											if(!err){
+												dialog({
+													class : 'one',
+													html : 'Pocketcoins sent to address. They will be available in several minutes',
+												})
+											}
+
+										})
+				
+										
+									}
+								})
+
+								
+							}
+
+
+
+						}
+					})
+
+					p.el.find('.settings').on('click', function(){
+						var key = $(this).closest('.wallet').attr('key')
+
+						if (key){
+							var d = inputDialogNew({
+								caption : "Add Private Key To Coins Distribution",
+								class : 'addressdialog',
+								wrap : true,
+								values : [{
+									defValue : '',
+									validate : 'empty',
+									placeholder : "Private Key (WIF Format)",
+									label : "Private Key"
+								}],
+			
+								success : function(v){
+			
+									var pk = v[0]
+			
+									topPreloader(30);
+			
+									proxy.fetch('manage', {
+										action : 'set.wallet.setkey',
+										data : {
+											key : key,
+											privatekey : pk
+										}
+									}).then(r => {
+			
+										actions.refresh()
+			
+										d.destroy();
+			
+										topPreloader(100);
+			
+									}).catch(e => {
+			
+										sitemessage(self.app.localization.e('e13293'))
+			
+										topPreloader(100);
+			
+									})
+			
+								}
+							})
+						}
+					})
+
+					p.el.find('.remove').on('click', function(){
+						var key = $(this).closest('.wallet').attr('key')
+
+						if (key){
+						
+							dialog({
+								class : 'zindex',
+								html : 'Do you really want to remove this private key from coins distribution process?',
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+									topPreloader(30);
+			
+									proxy.fetch('manage', {
+										action : 'set.wallet.removeKey',
+										data : {
+											key : key
+										}
+									}).then(r => {
+			
+										actions.refresh()
+						
+										topPreloader(100);
+			
+									}).catch(e => {
+			
+										sitemessage(self.app.localization.e('e13293'))
+			
+										topPreloader(100);
+			
+									})
+								}
+							})
+						}
+					})
+
+					if (clbk)
+						clbk()
+				})
+				
 			},
 			webdistributioncontent : function(elc, clbk){
 
@@ -986,7 +2177,9 @@ var system16 = (function(){
 					el : elc.find('.webDistributionWrapper')
 
 				},
-				function(){
+				function(p){
+
+					renders.webdistributionwallets(p.el)
 
 					if (clbk)
 						clbk()
@@ -994,6 +2187,12 @@ var system16 = (function(){
 				
 			},
 			nodescontent : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
 
 				self.shell({
 					inner : html,
@@ -1022,6 +2221,13 @@ var system16 = (function(){
 			},
 			nodescontenttable : function(elc, clbk){
 
+				var use = api.get.current() 
+				var currentnode = null
+
+				if (use.id == proxy.id && proxy.current){
+					currentnode = proxy.current.key
+				}
+
 				self.shell({
 					inner : html,
 					name : 'nodescontenttable',
@@ -1029,13 +2235,53 @@ var system16 = (function(){
 						info : info,
 						manager : info.nodeManager,
 						proxy : proxy,
-						admin : actions.admin()
+						admin : actions.admin(),
+						currentnode : currentnode
 					},
 
 					el : elc.find('.nodesWrapper .nodes')
 
 				},
-				function(){
+				function(p){
+
+					var find = function(key){
+						return _.find(info.nodeManager.nodes, function(n){
+							return n.node.key == key
+						})
+					}
+
+					p.el.find('.name').on('click', function(){
+
+						return
+
+						var key = $(this).closest('.node').attr('node')
+
+
+						if(!key || !find(key)){
+
+							sitemessage('Unable to find node')
+
+							return
+						}
+
+						var node = find(key)
+
+						var items = [
+							{
+								text : "Test",
+								action : function(clbk){
+									actions.node.test(node.node)
+
+									clbk()
+								}
+							}
+						]
+
+						menuDialog({
+							items: items
+						})
+
+					})
 
 					if (clbk)
 						clbk()
@@ -1077,7 +2323,18 @@ var system16 = (function(){
 			nodecontentmanage : function(elc, clbk){
 				if(actions.admin()){
 
-					console.log('system', system)
+
+					var timestamp = deep(info,'nodeControl.state.timestamp')
+					var dis = false
+
+
+					if (timestamp){
+						dis = (new Date()) < fromutc(new Date(timestamp)).addSeconds(60)
+
+
+					console.log('timestamp', fromutc(new Date(timestamp)), fromutc(new Date(timestamp)).addSeconds(60), new Date())
+
+					}
 
 					self.shell({
 						inner : html,
@@ -1088,7 +2345,8 @@ var system16 = (function(){
 							nodestate : info.nodeControl.state,
 							proxy : proxy,
 							admin : actions.admin(),
-							system : system
+							system : system,
+							dis : dis
 						},
 
 						el : elc.find('.localnodeWrapper .manage')
@@ -1154,6 +2412,12 @@ var system16 = (function(){
 					chart.make('server', stats, null, update)
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
+
+					renders.nodecontentstate(el.c)
+					renders.nodescontenttable(el.c)
+					renders.webadminscontent(el.c)
+					renders.webdistributionwallets(el.c)
+					renders.webserveradmin(el.c)
 				}
 
 			},
@@ -1165,9 +2429,8 @@ var system16 = (function(){
 			},
 
 			proxycontent : function(){
-				renders.proxycontent(function(){
-						
-				})
+
+				renders.proxycontent(function(){})
 			}
 		}
 
@@ -1177,19 +2440,27 @@ var system16 = (function(){
 				settings.charts.server.showed = true
 			}
 
+			if (actions.admin()){
+				settings.charts.nodes.showed = true
+			}
+
 		
+		}
+
+		var destroy = function(){
+			if (proxy) {
+				delete proxy.clbks.changed.components
+				delete proxy.clbks.tick.components
+				delete proxy.system.clbks.tick.components
+			}
 		}
 
 		var make = function(prx){
 
-			if (proxy) {
-				delete proxy.clbks.tick.components
-				delete proxy.system.clbks.tick.components
-			}
+			destroy()
 
 			proxy = prx//api.get.current()
 
-			
 
 			info = null
 			stats = []
@@ -1198,6 +2469,7 @@ var system16 = (function(){
 
 			if (proxy){
 
+				proxy.clbks.changed.components = () => {make(api.get.current())}
 				proxy.clbks.tick.components = actions.tick
 				proxy.system.clbks.tick.components = actions.ticksettings
 
@@ -1212,7 +2484,6 @@ var system16 = (function(){
 						info : info,
 						time : utcnow()
 					}]
-					
 
 					makers.proxycurrent()
 
@@ -1221,6 +2492,11 @@ var system16 = (function(){
 				}).then(data => {
 
 					stats = data.stats
+
+					stats = lastelements(stats, 1000)
+
+					actions.convertTime(stats)
+
 					setTimeout(function(){
 						makers.stats()
 					},500)	
@@ -1237,7 +2513,7 @@ var system16 = (function(){
 					
 						
 				}).catch(e => {
-
+					makers.proxycurrent()
 				})
 			}
 
@@ -1264,6 +2540,15 @@ var system16 = (function(){
 
 			destroy : function(){
 				el = {};
+
+				/*self.app.errors.clbks.system16 = function(){
+
+					if(!self.app.errors.state)
+
+					if(!_.isEmpty(self.app.errors.state)){
+
+					}
+				}*/
 			},
 			
 			init : function(p){
@@ -1280,6 +2565,15 @@ var system16 = (function(){
 				make(api.get.current());
 
 				p.clbk(null, p);
+
+				self.app.errors.clbks.system16 = function(){
+
+					if(!info && !self.app.errors.state.proxy && proxy){
+						make(proxy);
+					}
+
+				
+				}
 			}
 		}
 	};

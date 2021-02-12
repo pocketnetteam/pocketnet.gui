@@ -6,22 +6,35 @@
 
     <div class="nodeWrapper">
         <div class="work">
-            <div class="node table <%- !node.canuse ? 'cantuse' : ''%>">
-                <div class="use"><i class="far fa-circle"></i></div>
+            <div class="node table <%- !node.canuse ? 'cantuse' : ''%>" node="<%-node.key%>">
+                <div class="use">
+                    <% if(node.key == currentnode) {%>
+                        <i class="fas fa-check-circle good"></i>
+                    <% } else { %> 
+                        <i class="far fa-circle"></i>    
+                    <% } %>
+                </div>
 
-                <div class="name"><%- node.name %></div>
+                <div class="name">
+                    <% if(node.testing) {%>
+                        <span class="testing">Testing</span>
+                    <% } else { %> 
+                        <span><%- node.name %></span>
+                    <% } %>
+                    
+                </div>
 
-                <div class="hostport"><%- node.host%>:<%- node.port %>/<%- node.ws %> </div>
+                <div class="hostport"><span><%- node.host%>:<%- node.port %>/<%- node.ws %></span></div>
 
                 <div class="statistic">
                 
                     <% if(nodeinfo.statistic && nodeinfo.statistic.time && nodeinfo.statistic.percent) {%>
 
-                        <%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %
+                        <span><%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %</span>
 
                     <% } else { %> 
                         
-                        &mdash;
+                        <span>&mdash;</span>
 
                     <% } %>
                     
@@ -30,7 +43,7 @@
                 <div class="block">
                     <% if(nodeinfo.status.difference) {%>
 
-                        <%- nodeinfo.status.difference %>
+                        <span><%- nodeinfo.status.difference %></span>
 
                     <% } %> 
                     
@@ -55,6 +68,25 @@
                         </div>
                    
                     <% } else {%> 
+
+                        <% if(node.local || node.peer) {%>
+
+                            <% if(node.local) {%>
+                            
+                                <div class="item ">
+                                    <i class="fas fa-thumbtack"></i>
+                                </div>
+    
+                            <% } %>
+
+                            <% if(node.peer) {%>
+                        
+                                <div class="item ">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+    
+                            <% } %>
+                        <% } else { %> 
                     
                         <% if(node.addedby == app.user.address.value || admin) {%>
 
@@ -62,6 +94,8 @@
                                 <i class="fas fa-cog"></i>
                             </div>
     
+                        <% } %>
+
                         <% } %>
                         
                     <% } %>

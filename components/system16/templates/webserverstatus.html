@@ -1,0 +1,34 @@
+<div class="setting togglebutton">
+    <div class="settingTable table">
+        <div class="label">
+            <span>Https</span>
+        </div>
+
+        <div class="valueinfo">
+            <span><% if(info.server.listening) {%> <%- info.server.listening %> <% } else {%> &mdash; <% }%></span>
+        </div>
+
+        <div class="icon">
+            <% if(info.server.listening) {%> <i class="fas fa-check-circle good"></i> <% } %>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="setting togglebutton">
+    <div class="settingTable table">
+        <div class="label">
+            <span>Websocket</span>
+        </div>
+
+        <div class="valueinfo">
+            <span><% if(info.wss.listening) {%> <%- info.wss.listening %> <% } else {%> &mdash; <% }%></span>
+        </div>
+
+        <div class="icon">
+            <% if(info.wss.listening) {%> <i class="fas fa-check-circle good"></i> <% } %>
+        </div>
+
+    </div>
+</div>

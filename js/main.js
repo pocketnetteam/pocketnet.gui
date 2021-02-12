@@ -43,6 +43,12 @@ if(!_Node)
 			 	port : 8899,
 			 	wss : 8099
 			},
+
+			/*{
+				host : 'localhost',
+				port : 8888,
+				wss : 8088
+		    },*/
 			
 			/*{
 				host : 'ironbot',

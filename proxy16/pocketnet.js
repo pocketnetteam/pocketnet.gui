@@ -11,7 +11,7 @@ var Pocketnet = function(){
                 keyPair = bitcoin.ECPair.fromWIF(privateKey)//(Buffer.from(privateKey, 'hex'))
             }catch(e){
 
-                console.log("ERROR", e)
+                //console.log("ERROR", e)
 
             }
 
@@ -51,13 +51,30 @@ var Pocketnet = function(){
 
                 catch(e) {
 
-                    console.error(e)
+                    //console.error(e)
 
                     return false
                 }
 
                 
 
+            }
+        },
+
+        address : {
+            validation : function(address){
+                var valid = true;
+
+                try{
+                    bitcoin.address.fromBase58Check(address)
+                }
+
+                catch (e){
+                    valid = false;
+                }
+
+                
+                return valid
             }
         },
 
