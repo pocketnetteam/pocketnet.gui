@@ -1,9 +1,19 @@
 PeerTubeHandler = function (app) {
-  const baseUrl = 'https://pocketnetpeertube1.nohost.me/api/v1/';
+  const hardCodeUrlsList = [
+    'pocketnetpeertube1.nohost.me',
+    'pocketnetpeertube2.nohost.me',
+    'pocketnetpeertube3.nohost.me',
+  ];
 
-  const watchUrl = 'https://pocketnetpeertube1.nohost.me/videos/watch/';
+  const randeomServerIndex = hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
 
-  this.peertubeId = 'peertube';
+  const baseUrl = `https://${randeomServerIndex}/api/v1/`;
+
+  const watchUrl = `https://${randeomServerIndex}/videos/watch/`;
+
+  console.log('Selected Server', baseUrl);
+
+  this.peertubeId = 'peertube://';
 
   const apiHandler = {
     upload({ method, parameters }) {
@@ -223,8 +233,9 @@ PeerTubeHandler = function (app) {
 
         success: (json) => {
           if (!json.video) return parameters.successFunction('error');
-
-          parameters.successFunction(`${watchUrl}${json.video.uuid}`);
+          parameters.successFunction(
+            `${this.peertubeId}${watchUrl}${json.video.uuid}`,
+          );
         },
 
         fail: (res) => {
@@ -236,6 +247,12 @@ PeerTubeHandler = function (app) {
 
   this.removeVideo = async (video) => {
     const videoId = video.split('/').pop();
+
+    const videoHost = video.replace('peertube://', '').replace('https://', '').split('/')[0];
+
+    this.baseUrl =  videoHost ? `https://${videoHost}/api/v1` : this.baseUrl;
+
+    await this.authentificateUser();
 
     if (!this.userToken) {
       const localAuth = () =>
@@ -346,7 +363,7 @@ PeerTubeHandler = function (app) {
         }
 
         return parameters.successFunction({
-          video: `${watchUrl}${id}`,
+          video: `${this.peertubeId}${watchUrl}${id}`,
           ...res,
         });
       });
@@ -402,7 +419,9 @@ PeerTubeHandler = function (app) {
         success: (json) => {
           if (!json.video) return parameters.successFunction('error');
 
-          parameters.successFunction(`${watchUrl}${json.video.uuid}`);
+          parameters.successFunction(
+            `${this.peertubeId}${watchUrl}${json.video.uuid}`,
+          );
         },
 
         fail: (res) => {
