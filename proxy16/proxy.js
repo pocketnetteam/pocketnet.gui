@@ -1078,7 +1078,6 @@ var Proxy = function (settings, manage) {
 
                     return self.wallet.addqueue(key || 'registration', address, ip).then(r => {
 
-                        console.log("RESULT", r)
 
                         return Promise.resolve({
                             data : r
@@ -1089,6 +1088,27 @@ var Proxy = function (settings, manage) {
                         console.log("E", e)
                         return Promise.reject(e)
                     })
+
+                }
+            },
+            freeregistration : {
+                path : '/free/registrationfake',
+                action : function({}){  
+
+                    return Promise.reject('disabled')
+
+                    var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq']
+
+                    var promises = _.map(addresses, function(a){
+                        return self.wallet.addqueue('registration', a, "::1")
+                    })
+
+                    return Promise.all(promises).then(r => {
+                        return Promise.resolve({
+                            data : r
+                        })
+                    })
+                    
 
                 }
             }

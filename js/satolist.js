@@ -9898,12 +9898,11 @@ Platform = function (app, listofnodes) {
 
                         ///txb.addNTime(self.timeDifference || 0)
 
-                        txb.setNTime(1612273513)
-
                         var k = 100000000;
 
-
                         _.each(inputs, function (i) {
+
+                            console.log("I", i)
 
                             if (i.address.indexOf("P") == 0) {
 
@@ -9982,7 +9981,7 @@ Platform = function (app, listofnodes) {
 
                         var tx = txb.build()
 
-                        
+                        console.log('tx', tx)
 
                         return tx;
 
