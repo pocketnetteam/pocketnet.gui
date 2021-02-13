@@ -13,7 +13,7 @@ Platform = function (app, listofnodes) {
     self.app = app;
 
     self.focus = true;
-    self.currentBlock = 1;
+    self.currentBlock = 1000000;
     self.online = undefined;
     self.avblocktime = 45;
 
@@ -4291,11 +4291,32 @@ Platform = function (app, listofnodes) {
                 added: {},
                 seen: {}
             },
+            clearlocalstorage : function(){
+
+                var values = {},
+                    keys = Object.keys(localStorage),
+                    i = keys.length;
+            
+                while ( i-- ) {
+
+                    if(keys[i] && keys[i].indexOf('notificationsv') > -1){
+
+                        if(keys[i].indexOf('notificationsv14') == -1){
+                            localStorage.removeItem(keys[i]);
+                        }
+
+                        
+                    }
+
+                }
+            
+            },
             load: function () {
-                this.import(JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv11'] || "{}"))
+                this.clearlocalstorage()
+                this.import(JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}"))
             },
             save: function () {
-
+                this.clearlocalstorage()
                 var e = this.export();
 
                 if (e.notifications.length && e.block > blockps && this.inited == true) {
@@ -4310,7 +4331,7 @@ Platform = function (app, listofnodes) {
 
                     e.notifications = firstEls(e.notifications, 100)
 
-                    localStorage[self.sdk.address.pnet().address + 'notificationsv11'] = JSON.stringify(e)
+                    localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
                 }
 
 
