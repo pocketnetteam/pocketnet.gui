@@ -9891,7 +9891,6 @@ Platform = function (app, listofnodes) {
 
                     wallet: function (inputs, ouputs, _kp) {
 
-
                         var keyPair = _kp || self.app.user.keys()
 
                         var txb = new bitcoin.TransactionBuilder();
