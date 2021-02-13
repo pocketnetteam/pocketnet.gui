@@ -54,7 +54,7 @@ var ProxyRequest = function(app = {}){
     var direct = function(url, data){
         var controller = (new AbortController())
 
-        return timeout(3000, directclear(url, data, controller.signal), controller)
+        return timeout(15000, directclear(url, data, controller.signal), controller)
     }
 
     var directclear = function(url, data, signal){
