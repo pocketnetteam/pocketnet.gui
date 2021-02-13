@@ -4598,7 +4598,7 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
-                    self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, n.storage.block]).then(d => {
+                    self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, 900000 /*n.storage.block*/]).then(d => {
 
                         d || (d = [{ block: blockps, cntposts: 0 }])
 
@@ -7080,8 +7080,8 @@ Platform = function (app, listofnodes) {
                     postid: comment.txid,
                     block: self.currentBlock,
                     msg: JSON.stringify({
-                        m: comment.message,
-                        i: comment.images
+                        message: comment.message,
+                        images: comment.images
                     }),
                     time: comment.time,
                     timeUpd: comment.timeUpd,
@@ -7109,6 +7109,7 @@ Platform = function (app, listofnodes) {
                     comment.children = data.children
                     comment.address = data.address;
                     comment.verify = true;
+
 
 
                     _.each(self.sdk.relayTransactions.withtemp('comment'), function (c) {
@@ -7511,6 +7512,9 @@ Platform = function (app, listofnodes) {
                                 alias.temp = true;
                                 alias.address = _alias.address;
 
+                                console.log("_alias", _alias, alias)
+                                debugger
+
                                 var temptime = self.currentTime()
 
                                 alias.children = 0;
@@ -7675,6 +7679,7 @@ Platform = function (app, listofnodes) {
 
             ini: function (d) {
 
+
                 var c = _.map(d || [], function (data) {
                     var comment = new pComment();
 
@@ -7699,13 +7704,15 @@ Platform = function (app, listofnodes) {
 
                     }
                     catch (e) {
+                        console.log("E", e)
                         msg = {
                             m: msg
                         }
                     }
 
-                    comment._import(msg)
+                    
 
+                    comment._import(msg)
 
                     comment.verify = self.sdk.comments.checkSign(comment, data.signature, data.pubkey)
 
@@ -15711,50 +15718,68 @@ Platform = function (app, listofnodes) {
 
         }
 
-        var arrangeMessages = function () {
+        var arrangeMessages = function(){
 
-            var offset = 0;
+			var offset = 0;
 
-            var maxCount = 4;
+			var maxCount = 4;
 
-            var boffset = 0;
+			var boffset = 0;
 
-            if (isMobile()) {
-                maxCount = 1;
-            }
-            else {
-
-                if (typeof _Electron == 'undefined') {
+			if(isMobile()){
+				maxCount = 1;
+			}
+			else
+			{
+				/*if (typeof _Electron == 'undefined') {
                     boffset = 60;
-                }
+                }*/
+			}
+
+			offset = offset + boffset
+
+			var remove = self.fastMessages.length - maxCount;
+
+			var s = false;
+
+			if(self.fastMessages.length >= 0){
+				_.each(self.fastMessages, function(m, i){
+
+					if(!isMobile() && !m.expanded && !m.el.hasClass('smallsize')){
+
+						m.el.addClass('smallsize');
+
+						s = true
+					}
+
+				})
+			}
+
+			setTimeout(function(){
+				_.each(self.fastMessages, function(m, i){
+
+					if(i < remove){
+						destroyMessage(m, 1, true)
+					}
+
+					else
+					{
+						if(!isMobile()){
+							offset += 10;
+						}
+
+						if(!isMobile())
+
+							m.el.css('bottom', offset + 'px');
+
+						offset += m.el.outerHeight();
+					}
+
+				})
+			}, s ? 300 : 3)
 
 
-            }
-
-            offset = offset + boffset
-
-            var remove = self.fastMessages.length - maxCount;
-
-            _.each(self.fastMessages, function (m, i) {
-
-                if (i < remove) {
-                    destroyMessage(m, 1, true)
-                }
-
-                else {
-                    if (!isMobile()) {
-                        offset += 10;
-                    }
-
-                    if (!window.cordova && !isMobile())
-
-                        m.el.css('bottom', offset + 'px');
-
-                    offset += m.el.outerHeight();
-                }
-
-            })
-        }
+		}
 
         self.getMissed = function (clbk) {
 
@@ -15834,13 +15859,6 @@ Platform = function (app, listofnodes) {
 
             bgImages(el)
 
-            el.find('[data-jdenticon-value]').each(function () {
-                var t = $(this);
-                var v = t.data('jdenticon-value')
-
-                t.html(jdenticon.toSvg(v, t.width()))
-            })
-
 
             self.fastMessages.push(message);
 
@@ -15853,6 +15871,23 @@ Platform = function (app, listofnodes) {
             message.el.on('mouseenter', function () {
                 clearTimeout(message.timeout);
             })
+
+            message.el.on('click', function(){
+
+				if(!message.expanded){
+
+					message.el.removeClass('smallsize');
+
+					message.expanded = true
+
+					arrangeMessages();
+
+					setTimeout(function(){
+						arrangeMessages();
+					}, 300)
+				}
+
+			})
 
             message.el.on('mouseleave', function () {
                 destroyMessage(message, 5000, false, true);
@@ -16267,6 +16302,14 @@ Platform = function (app, listofnodes) {
                 clbk()
 
         }
+
+        /*setTimeout(function(){
+
+			self.messageHandler(
+				{"addr":"PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82","msg":"event","txid":"87973d606381aa8d11dfd45b089ad441c0f9546ec16d58a413252c62ce603235","time":1613218605,"addrFrom":"PP582V47P8vCvXjdV3inwYNgxScZCuTWsq","mesType":"upvoteShare","posttxid":"f2c6f75ba47c6da07d375dc2d7e81f4ae57b63c9796adea027730bd9e694dd91","upvoteVal":"5","node":"185.148.147.15:38081:8087"}
+			)
+
+		}, 4000)*/
     }
 
     self.convertUTCSS = function (str) {
@@ -16998,7 +17041,7 @@ Platform = function (app, listofnodes) {
             })
         }
 
-
+        
 
         return self;
     }

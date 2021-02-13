@@ -4326,6 +4326,8 @@ input[type=radio].radio:checked + label {
 .fastMessage,
 .notification{
 
+    .transition(0.3s);
+
     .time{
         padding-left: @rhythm;
 
@@ -4473,6 +4475,8 @@ input[type=radio].radio:checked + label {
     }
     
     .sharepreview{
+
+        
 
         .shareprwrapper{
             >div{
@@ -4624,6 +4628,54 @@ input[type=radio].radio:checked + label {
 
         span{
             color : @color-main;
+        }
+    }   
+
+    .commentprev,
+    .sharepreview{
+        cursor: pointer;
+
+        &:hover{
+            color : @color-main;
+        }
+    }
+}
+
+.fastMessage{
+    &.smallsize{
+        padding : @rhythm;
+        width: 390px;
+        cursor : pointer;
+
+        &:hover{
+            background: fade(#020E1B, 80);
+        }
+
+        .cwrapper  {
+            >div{
+                &.cellforimage{
+                    display: none;
+                }
+
+                .tips{
+                    >div{
+                        display: none;
+
+                        &.notifytext{
+                            display: block;
+                            font-size : 0.8em;
+                        }
+                    }
+                }
+            }
+        }
+
+        .messagestar{
+            width : 33px;
+            height : 33px;
+            line-height: 31px;
+            font-size: 0.8em;
+            margin-bottom : 4px;
         }
     }
 }

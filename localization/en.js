@@ -935,7 +935,8 @@ ____loclib.e14108 = 'Share answer'
 ____loclib.peertubeAddVideo = 'Add video to post'
 ____loclib.peertubeAddStream = 'Add live stream to post'
 
-
+____loclib.e14111 = "There was a problem with loading images"
+____loclib.editcomment = "Edit Comment"
 ____loclib.system16 = {
     charts : {
 

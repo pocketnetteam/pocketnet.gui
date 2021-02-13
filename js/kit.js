@@ -286,7 +286,7 @@ Comment = function(txid){
 
 					if(!images) return
 
-					if(this.v.images > 9){
+					if(this.v.length > 9){
 						return false;
 					}
 
@@ -390,7 +390,6 @@ Comment = function(txid){
 
 							success : function(data){
 
-
 								self.images.v[index] = deep(data, 'data.link');
 								
 								p.success();
@@ -398,7 +397,12 @@ Comment = function(txid){
 							},
 
 							fail : function(d){
+
+								self.images.v[index] = 'https://i.imgur.com/Sa2cJVT.jpg'
+								
+
 								index++;
+
 								p.success();
 							}
 						})
@@ -466,6 +470,8 @@ Comment = function(txid){
 			})
 		}
 
+		console.log('self.images.v', self.images.v)
+
 		if(self.id){
 			r.id = self.id
 		}
@@ -487,6 +493,8 @@ Comment = function(txid){
 			return decodeURIComponent(i)
 		}))
 
+		console.log("v.msgparsed", v.msgparsed)
+
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
 	}
@@ -495,8 +503,11 @@ Comment = function(txid){
 		var comment = new pComment();
 			comment.import(self.export())
 
+
 			comment.id = id
 			comment.txid = self.txid
+
+
 
 		return comment;
 	}

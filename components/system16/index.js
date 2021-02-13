@@ -2716,16 +2716,11 @@ var system16 = (function(){
 			},
 
 			destroy : function(){
+
+				destroy()
+
 				el = {};
 
-				/*self.app.errors.clbks.system16 = function(){
-
-					if(!self.app.errors.state)
-
-					if(!_.isEmpty(self.app.errors.state)){
-
-					}
-				}*/
 			},
 			
 			init : function(p){
