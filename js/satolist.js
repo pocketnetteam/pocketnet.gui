@@ -4598,7 +4598,7 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
-                    self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, 900000 /*n.storage.block*/]).then(d => {
+                    self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, n.storage.block]).then(d => {
 
                         d || (d = [{ block: blockps, cntposts: 0 }])
 
@@ -13493,7 +13493,7 @@ Platform = function (app, listofnodes) {
 
         var self = this;
 
-        var using = typeof window != 'undefined' && window.cordova && typeof FCMPlugin != 'undefined';
+        var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
 
         var currenttoken = null;
 
@@ -13556,12 +13556,12 @@ Platform = function (app, listofnodes) {
 
             subscribe: function (topic) {
                 if (using)
-                    FCMPlugin.subscribeToTopic(topic);
+                    FirebasePlugin.subscribe("latest_news");
             },
 
             unsubscribe: function (topic) {
                 if (using)
-                    FCMPlugin.unsubscribeFromTopic(topic);
+                    FirebasePlugin.unsubscribe(topic);
             },
         }
 
@@ -13570,19 +13570,21 @@ Platform = function (app, listofnodes) {
             if (!using) {
             }
             else {
-                FCMPlugin.getToken(function (token) {
+
+                FirebasePlugin.getToken(function(token) {
 
                     if (currenttoken == token) return
 
-                    currenttoken = token
+                        currenttoken = token
 
-                    self.api.setToken(token, function () {
+                        self.api.setToken(token, function () {
 
                     })
-
-                }, function (error) {
-                    console.error(error);
+    
+                }, function(error) {
+                    console.error(error, 'fcmToken not set on server');
                 });
+
 
             }
 
@@ -13590,68 +13592,74 @@ Platform = function (app, listofnodes) {
                 clbk()
         }
 
+        self.permissions = function(clbk){
+			FirebasePlugin.hasPermission(function(hasPermission){
+
+                if(!hasPermission){
+                    FirebasePlugin.grantPermission(function(hasPermission){
+    
+                        if(hasPermission){
+                            self.get(clbk)
+                        }
+        
+                    });
+                }
+                else{
+                    self.get(clbk)
+                }
+
+            });
+		}
+
         self.events = function () {
 
-            FCMPlugin.onNotification(
-                (data) => {
+            FirebasePlugin.onMessageReceived((data) => {
 
+                if(!data) data = {}
 
-                    if (data.wasTapped) {
+                if (data.tap) {
 
-                        platform.ws.destroyMessages()
+                    platform.ws.destroyMessages()
 
-                        platform.app.nav.api.load({
-                            open: true,
-                            href: 'notifications',
-                            history: true
-                        })
+                    platform.app.nav.api.load({
+                        open: true,
+                        href: 'notifications',
+                        history: true
+                    })
 
-                        return
+                    return
+                }
+                else {
+
+                    if (typeof cordova != 'undefined') {
+
+                        var cordovabadge = deep(cordova, 'plugins.notification.badge')
+
+                        if (cordovabadge)
+                            cordovabadge.increase(1, function (badge) { });
                     }
-                    else {
-
-                        if (typeof cordova != 'undefined') {
-
-                            var cordovabadge = deep(cordova, 'plugins.notification.badge')
-
-                            if (cordovabadge)
-                                cordovabadge.increase(1, function (badge) { });
-                        }
-
-                    }
-
-                    platform.ws.messageHandler(data)
-
-                },
-
-                function (msg) {
-
-                },
-                function (err) {
 
                 }
-            );
+
+                platform.ws.messageHandler(data)
+            });
 
         }
 
-        self.init = function (clbk) {
+        self.init = function(clbk){
 
 
-            if (!using) {
-                if (clbk)
-                    clbk()
-            }
+			if(using) {
+				self.events()
 
-            else {
+				self.permissions()
+			}
 
-                self.events()
-
-                self.get(clbk)
-
-            }
+			if (clbk)
+				clbk()
 
 
-        }
+		}
 
         self.destroy = function (clbk) {
             if (!using) {

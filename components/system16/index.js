@@ -68,6 +68,8 @@ var system16 = (function(){
 
 	        		success : function(v){
 
+						var ch = {}
+
 						ch.key = deep(v, '0.base64')
 						ch.id = v[1]
 

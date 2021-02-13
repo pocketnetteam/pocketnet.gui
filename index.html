@@ -24,26 +24,17 @@
         font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src *">
 
-        <?php 
-        
-            require_once('php/og.php'); 
-
-            $og = new OG($_GET);
-
-            $og->get();
-            $og->echotags();
-        ?>
 
         <link rel="stylesheet" href="css/normalize.css?v=777604428412">
-<link rel="stylesheet" href="css/tooltipster.core.min.css?v=333812319355">
-<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=527164468807">
-<link rel="stylesheet" href="css/main.css?v=22847633041">
-<link rel="stylesheet" href="css/stblack.css?v=713491107122">
-<link rel="stylesheet" href="css/plyr.css?v=141103814999">
-<link rel="stylesheet" href="css/jquery-ui.min.css?v=79767409166">
-<link rel="stylesheet" href="css/medium/medium-editor.css?v=748883075899">
-<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=963299794719">
-<link rel="stylesheet" href="css/medium/beagle.css?v=151372723246">
+        <link rel="stylesheet" href="css/tooltipster.core.min.css?v=333812319355">
+        <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=527164468807">
+        <link rel="stylesheet" href="css/main.css?v=22847633041">
+        <link rel="stylesheet" href="css/stblack.css?v=713491107122">
+        <link rel="stylesheet" href="css/plyr.css?v=141103814999">
+        <link rel="stylesheet" href="css/jquery-ui.min.css?v=79767409166">
+        <link rel="stylesheet" href="css/medium/medium-editor.css?v=748883075899">
+        <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=963299794719">
+        <link rel="stylesheet" href="css/medium/beagle.css?v=151372723246">
 
         
            
@@ -212,22 +203,6 @@
 
         
 
-        <!--Start of Tawk.to Script-->
-        <script type="text/javascript">
-            if(!isMobile()){
-                var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-                (function(){
-                var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-                s1.async=true;
-                s1.src='https://embed.tawk.to/5c3075947a79fc1bddf36050/default';
-                s1.charset='UTF-8';
-                s1.setAttribute('crossorigin','*');
-                s0.parentNode.insertBefore(s1,s0);
-                })();
-            }
-
-        </script>
-        <!--End of Tawk.to Script-->
 
 
     </body>

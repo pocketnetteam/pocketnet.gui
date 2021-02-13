@@ -256,11 +256,14 @@ var kit = {
 							type : 'proxy-settings-changed',
 							data : notification
 						}).catch(e => {
+							console.log("E", e)
 							return Promise.resolve()
 						})
 
 					}).then(() => {
 						var promises = []
+
+						console.log("settings", settings)
 
 						if (settings.firebase && settings.firebase.id) 
 							promises.push(ctx.firebase.id(settings.firebase.id).catch(e => {
@@ -270,7 +273,7 @@ var kit = {
 							}))
 
 						if (settings.firebase && settings.firebase.key) 
-							promises.push(ctx.firebase.key(settings.firebase.id).catch(e => {
+							promises.push(ctx.firebase.key(settings.firebase.key).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('firebase.key error')

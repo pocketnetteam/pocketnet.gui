@@ -1112,11 +1112,9 @@ var Proxy = function (settings, manage) {
                     }
 
                     return kaction(message.data).then(data => {
-
-                        console.log("KACTION", data)
-
                         return Promise.resolve({data})
                     }).catch(e => {
+                        console.log("E", e)
                         return Promise.reject(e)
                     })
                 }
