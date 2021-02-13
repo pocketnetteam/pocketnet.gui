@@ -106,8 +106,16 @@
                     </div>
 
                     <div class="value" sys="firebase">
-                        <span><%- deep(changes, 'firebase.id') || deep(system, 'server.firebase.id') || 'None' %></span>
+                        <span><%- deep(changes, 'firebase.id') || deep(system, 'firebase.id') || 'None' %></span>
+
+                       
                     </div>
+
+                    <% if(deep(changes, 'firebase.key') || deep(system, 'firebase.key')){ %>
+                        <div class="icon">
+                            <i class="fas fa-certificate <% if(deep(system, 'firebase.key')) {%> good <% } %>"></i>
+                        </div>
+                    <% } %>
 
                     <% if(changes.firebase) {%>
                         <div class="icon">

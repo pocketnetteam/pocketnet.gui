@@ -470,7 +470,7 @@ var kit = {
 
 						if(!fbkjsonfile) return Promise.reject('empty')
 	
-						var path = 'private/pocketnet-firebase-adminsdk.json'
+						var path = 'data/pocketnet-firebase-adminsdk.json'
 
 						fbkjsonfile = fbkjsonfile.split(',')[1]
 			
