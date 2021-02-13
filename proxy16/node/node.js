@@ -352,7 +352,7 @@ var Node = function(options, manager){
 
                     self.statistic.clearOld()
 
-                    if (self.events.length < 1 + checkEventsLength || f.addseconds(lastinfoTime, notactualevents / 1000) < f.now()){
+                    if (self.events.length < 1 + checkEventsLength || f.date.addseconds(lastinfoTime, notactualevents / 1000) < f.now()){
                         self.info().catch(e => {})
                     }
 
