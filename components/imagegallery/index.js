@@ -236,7 +236,9 @@ var imagegallery = (function(){
 
 			making = true;
 
-			var image = essenseData.images[num];
+			var image = essenseData.images[num] || essenseData.images[0];
+
+			console.log(image, essenseData.images, num)
 
 			
 			self.app.nav.api.history.addParameters({
