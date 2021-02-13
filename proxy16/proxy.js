@@ -73,7 +73,7 @@ var Proxy = function (settings, manage) {
     var getStats = function(n){
 
         if (n){
-            return f.lastelements(stats, 5)
+            return f.lastelements(stats, 500)
         }
 
         return stats
