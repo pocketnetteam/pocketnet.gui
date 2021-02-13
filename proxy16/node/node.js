@@ -33,6 +33,7 @@ var Node = function(options, manager){
     var notactualevents = 3600000 //mult
     var checkEventsLength = 100
     var getinfointervaltime = 60000
+    var lastinfoTime = f.now()
 
     var test = new Test(self)
 
@@ -351,7 +352,7 @@ var Node = function(options, manager){
 
                     self.statistic.clearOld()
 
-                    if (self.events.length < 1 + checkEventsLength){
+                    if (self.events.length < 1 + checkEventsLength || f.addseconds(lastinfoTime, notactualevents / 1000) < f.now()){
                         self.info().catch(e => {})
                     }
 
@@ -510,6 +511,7 @@ var Node = function(options, manager){
         return self.rpcs('getnodeinfo').then(info => {
 
             lastinfo = info
+            lastinfoTime = f.now()
 
             self.addblock(info.lastblock)
             
