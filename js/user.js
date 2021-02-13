@@ -275,7 +275,6 @@ User = function(app, p) {
 	}
 
 	self.validateVay = function(){
-		console.log("MEEE!!self.address.value", self.address.value, (deep(app, 'platform.sdk.user.storage.me.name')))
 
 		if(!self.address.value) return 'fu';
 

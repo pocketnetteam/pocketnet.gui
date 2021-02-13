@@ -589,12 +589,22 @@
             }
 
 
+           
+
             >div{
                 vertical-align: middle;
                 padding :3 * @rhythm 2 * @rhythm;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+
+                &.use{
+                    cursor: pointer;
+    
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
 
                 &.fork{
                     width: 40px;

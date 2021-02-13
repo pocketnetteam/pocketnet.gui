@@ -273,7 +273,7 @@ var Nodemanager = function(p){
 
                     self.nodes = []
 
-                    var haslocal = self.nodeControl.kit.hasbin()
+                    var haslocal = false// self.nodeControl.kit.hasbin()
 
                     var c = []
 

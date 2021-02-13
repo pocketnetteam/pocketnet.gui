@@ -771,7 +771,7 @@ var system16 = (function(){
 				},
 
 				rate : {
-					caption : "Nodes Rate",
+					caption : "Rate",
 
 					series : [
 						{
@@ -810,7 +810,7 @@ var system16 = (function(){
 				},
 
 				rating : {
-					caption : "Nodes Rating",
+					caption : "Rating",
 
 					series : [
 						{
@@ -834,7 +834,7 @@ var system16 = (function(){
 				},
 
 				allcount : {
-					caption : "Count of requestes to nodes",
+					caption : "Count of requestes",
 
 					series : [
 						{
@@ -873,7 +873,7 @@ var system16 = (function(){
 				},
 
 				signatures : {
-					caption : "Users",
+					caption : "Signed requests",
 					objects : 'server.middle.signatures',
 					series : [
 						{
@@ -2333,6 +2333,26 @@ var system16 = (function(){
 						})
 					}
 
+					p.el.find('.use').on('click', function(){
+
+						var node = find($(this).closest('.node').attr('node'))
+
+						if(!node) return
+
+						dialog({
+							class : 'zindex',
+							html : "Do you really want reconnect to selected Pocketnet Node?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.changeNode(node.node)
+								renders.nodescontenttable(elc)								
+							}
+						})
+
+					})
+
 					p.el.find('.name').on('click', function(){
 
 						return
@@ -2598,6 +2618,7 @@ var system16 = (function(){
 
 		var destroy = function(){
 			if (proxy) {
+				delete proxy.clbks.changednode.components
 				delete proxy.clbks.changed.components
 				delete proxy.clbks.tick.components
 				delete proxy.system.clbks.tick.components
@@ -2618,7 +2639,14 @@ var system16 = (function(){
 
 			if (proxy){
 
-				proxy.clbks.changed.components = () => {make(api.get.current())}
+				proxy.clbks.changed.components = () => {
+					make(api.get.current())
+				}
+
+				proxy.clbks.changednode.components = () => {
+					renders.nodescontenttable(el.c)
+				}
+
 				proxy.clbks.tick.components = actions.tick
 				proxy.system.clbks.tick.components = actions.ticksettings
 

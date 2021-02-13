@@ -444,7 +444,7 @@ f.lastelements = function(arr, length, eq){
     var d = arr.length - length
 
     if (d > eq){
-        arr = arr.splice(0, d)
+        arr.splice(0, d)
     }
 
     return arr

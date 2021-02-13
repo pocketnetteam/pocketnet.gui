@@ -72,8 +72,8 @@ var Proxy = function (settings, manage) {
     
     var getStats = function(n){
 
-        if(n){
-            return f.lastelements(stats, n)
+        if (n){
+            return f.lastelements(stats, 5)
         }
 
         return stats
@@ -675,6 +675,35 @@ var Proxy = function (settings, manage) {
                         return Promise.resolve({data : r})
 
                     })
+                }
+            },
+
+            canchange: {
+                path : '/nodes/canchange',
+                action : function({node}){
+
+                    var _node = nodeManager.nodesmap[node]
+
+                    if(!_node){
+                        var nnode = nodeManager.selectProbability()
+
+                        if (nnode) return Promise.resolve({
+                            node : nnode.exportsafe()
+                        })
+
+                        else return Promise.reject('none')
+                    }
+
+                    var nnode = _node.changeNodeUser(null, _node.needToChange())
+
+                    if(!nnode){
+                        return Promise.resolve({})
+                    }
+
+                    return Promise.resolve({data : {
+                        node : nnode.exportsafe()
+                    }})
+
                 }
             },
 

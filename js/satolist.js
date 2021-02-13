@@ -15585,10 +15585,7 @@ Platform = function (app, listofnodes) {
 
                         if (jm.type == 'changenode'){
 
-                            if (wss.proxy.changeNode(jm.data.node)){
-
-                                reconnect()
-                            }
+                            //wss.proxy.changeNode(jm.data.node)
 
                             return
 
