@@ -9896,7 +9896,7 @@ Platform = function (app, listofnodes) {
 
                         var txb = new bitcoin.TransactionBuilder();
 
-                        ///txb.addNTime(self.timeDifference || 0)
+                        txb.addNTime(self.timeDifference || 0)
 
                         var k = 100000000;
 
