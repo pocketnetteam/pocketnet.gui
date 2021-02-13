@@ -14309,7 +14309,11 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
-                    text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
+                    if(data.share && data.shareReposted){
+                        text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
+                    }   
+
+                    
 
                     if (text) {
                         html += self.tempates.user(data.user, text, true, " " + self.app.localization.e('e13331'), '<div class="repostshare"><i class="fas fa-share"></i></div>', data.time)
@@ -14416,8 +14420,10 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
-                    text = self.tempates.share(data.share, null, true)
-
+                    if(data.share){
+                        text = self.tempates.share(data.share, null, true)
+                    }
+                    
                     if (text) {
 
 
