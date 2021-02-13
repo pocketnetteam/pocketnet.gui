@@ -15742,7 +15742,7 @@ Platform = function (app, listofnodes) {
 
 			var s = false;
 
-			if(self.fastMessages.length >= 0){
+			if(self.fastMessages.length >= maxCount){
 				_.each(self.fastMessages, function(m, i){
 
 					if(!isMobile() && !m.expanded && !m.el.hasClass('smallsize')){
