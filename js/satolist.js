@@ -1889,6 +1889,9 @@ Platform = function (app, listofnodes) {
             }
 
             var initEvents = function () {
+
+                window.location = 'pocketnet://';
+
                 window.addEventListener('scroll', events.scroll)
                 window.addEventListener('resize', events.resize)
 
@@ -3596,9 +3599,14 @@ Platform = function (app, listofnodes) {
                 _.each(values, function (v, i) {
 
                     if (typeof v === "object") {
-                        m[i].value = v.value;
-                        m[i].possibleValues = v.possibleValues && v.possibleValues.map(i => String(i));
-                        m[i].possibleValuesLabels = v.possibleValuesLabels;
+
+                        if (m && m[i]){
+
+                            m[i].value = v.value;
+                            m[i].possibleValues = v.possibleValues && v.possibleValues.map(i => String(i));
+                            m[i].possibleValuesLabels = v.possibleValuesLabels;
+                        }
+
 
                     } else {
                         m[i].value = v;
