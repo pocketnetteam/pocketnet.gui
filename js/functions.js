@@ -93,6 +93,10 @@
 		return result.join(":")
  	}
 
+	isios = function () {
+		return window.cordova && window.device && f.deep(window, 'device.platform') == 'iOS'
+	}
+
  
 	currentYear = function(){
 		var mdate = new Date(); 
