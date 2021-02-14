@@ -1890,8 +1890,6 @@ Platform = function (app, listofnodes) {
 
             var initEvents = function () {
 
-                window.location = 'pocketnet://';
-
                 window.addEventListener('scroll', events.scroll)
                 window.addEventListener('resize', events.resize)
 
@@ -17365,6 +17363,7 @@ Platform = function (app, listofnodes) {
             if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
 
                 self.app.user.features.telegram = 1;
+                window.location = 'pocketnet://';
 
             } else {
 
