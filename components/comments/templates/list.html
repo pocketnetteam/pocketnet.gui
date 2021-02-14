@@ -97,7 +97,7 @@ var commentpanel = function(comment, _class){  %>
 			<div class="commentWrapper table">
 
 				<div class="iconWrapper">
-					<a href="<%-app.platform.api.authorlink(comment.address)%>">
+					<% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
 						<% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
 
 						<div class="icon">
@@ -107,7 +107,7 @@ var commentpanel = function(comment, _class){  %>
 								<% } %>
 							</div>
 						</div>
-					</a>
+					<% if(!app.curation()) {%></a><% } %>
 				
 
 				</div>
@@ -117,9 +117,9 @@ var commentpanel = function(comment, _class){  %>
 					<div class="metatable table">
 						<div class="author">
 
-							<a href="<%-app.platform.api.authorlink(comment.address)%>">
+							<% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
 							
-							<b><span><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span></b> </a> &middot;
+							<b><span><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span></b> <% if(!app.curation()) {%></a><% } %> &middot;
 							<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
 
 							<% if(Number(comment.timeUpd) > Number(comment.time) && !comment.deleted) {%>

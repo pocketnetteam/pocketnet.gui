@@ -61,7 +61,7 @@
 						</div>
 
 					</div>
-					
+					<% if(!app.curation()) {%>
 						<div class="items searchWrapper">
 
 							<div class="item table right" events="searchinit">
@@ -73,6 +73,7 @@
 							</div>
 
 						</div>
+						
 					
 						<div class="items searchIcons">
 
@@ -86,7 +87,7 @@
 						</div>
 					
 
-				
+					<% } %>
 
 					<% if(state) { %>
 

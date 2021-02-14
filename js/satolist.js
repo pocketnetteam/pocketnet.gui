@@ -13759,6 +13759,8 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
+                if(app.curation()) return ''
+
                 h = '<div class="sharepreview"><div class="shareprwrapper table">'
 
                 if (!extendedpreview && images.length) {
@@ -14001,6 +14003,12 @@ Platform = function (app, listofnodes) {
 
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
+
+                if (app.curation()) {
+                    link = ''
+                    clink = ''
+                    gotoprofile = false
+                }
 
 
                 h += '<div class="cwrapper table">\

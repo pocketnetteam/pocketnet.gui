@@ -174,6 +174,10 @@ var menu = (function(){
 
 							if(!state) k = 'index'
 
+							if(self.app.curation()){
+								k = 'userpage'
+							}
+
 							self.nav.api.go({
 								href : k,
 								history : true,

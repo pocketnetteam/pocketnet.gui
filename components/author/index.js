@@ -1162,6 +1162,16 @@ var author = (function(){
 
 								if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
 									reports.shares.name = self.app.localization.e('uposts')
+
+									if(self.app.curation()){
+										self.nav.api.load({
+											open : true,
+											href : 'userpage',
+											history : true
+										})
+					
+										return
+									}
 								}
 								else
 								{

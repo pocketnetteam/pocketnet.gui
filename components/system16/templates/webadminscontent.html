@@ -9,43 +9,45 @@
 
        
             <div class="adminWrapper">
-                <div class="admin table">
+                <div class="tableovfWrapper">
+                    <div class="admin table">
 
-                    <div class="iconWrapper">
-                        <a href="<%-app.platform.api.authorlink(uadmin)%>">
+                        <div class="iconWrapper">
+                            <a href="<%-app.platform.api.authorlink(uadmin)%>">
 
-                            <% var src = user.image  %>
+                                <% var src = user.image  %>
 
-                            <div class="icon">
-                                <div class="usericon usericonsbsa another" image="<%-src || ''%>">
-                                    <% if(!src) {%>
-                                        <svg width="30" height="30" data-jdenticon-value="<%-uadmin%>"></svg>
-                                    <% } %>
+                                <div class="icon">
+                                    <div class="usericon usericonsbsa another" image="<%-src || ''%>">
+                                        <% if(!src) {%>
+                                            <svg width="30" height="30" data-jdenticon-value="<%-uadmin%>"></svg>
+                                        <% } %>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
 
-                    </div>
-                    
-                    <div class="nameWrapper">
-
-                        <a href="<%-app.platform.api.authorlink(uadmin)%>">
-                            <%- user.name || uadmin %>
-                        </a>
+                        </div>
                         
-                    </div>			
-                    
-                    <div class="panelWrapper">
-                        <% if(admin) { %>
+                        <div class="nameWrapper">
 
-                            <div class="item remove" address="<%-uadmin%>">
-                                <i class="far fa-times-circle"></i>
-                            </div>
+                            <a href="<%-app.platform.api.authorlink(uadmin)%>">
+                                <%- user.name || uadmin %>
+                            </a>
                             
+                        </div>			
+                        
+                        <div class="panelWrapper">
+                            <% if(admin) { %>
 
-                        <% } %>
+                                <div class="item remove" address="<%-uadmin%>">
+                                    <i class="far fa-times-circle"></i>
+                                </div>
+                                
+
+                            <% } %>
+                        </div>
+                        
                     </div>
-                    
                 </div>
             </div>
 

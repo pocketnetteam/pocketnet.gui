@@ -36,36 +36,40 @@
         <% if(nodestate.info.lastblock) {%>
 
             <div class="staterow">
-                <div class="staterowTable table">
-                    <div class="label">
-                        <span>Block:</span>
-                    </div>
-        
-                    <div class="value">
-                        <span><b><%-nodestate.info.lastblock.height%></b> / <%= manager.chain? manager.chain.commonHeight || '&mdash;' : '&mdash;' %></span>
-                    </div>
-                    <% if(manager.chain) {%>
+                <div class="tableovfWrapper">
+                    <div class="staterowTable table">
+                        <div class="label">
+                            <span>Block:</span>
+                        </div>
+            
+                        <div class="value">
+                            <span><b><%-nodestate.info.lastblock.height%></b> / <%= manager.chain? manager.chain.commonHeight || '&mdash;' : '&mdash;' %></span>
+                        </div>
+                        <% if(manager.chain) {%>
 
-                    <div class="icon">
-                        <% if(nodestate.info.lastblock.height < manager.chain.commonHeight) {%>
-                            <i class="fas fa-spinner fa-spin"></i>
-                        <% } else {%> 
-                            <i class="fas fa-check-circle good"></i>
+                        <div class="icon">
+                            <% if(nodestate.info.lastblock.height < manager.chain.commonHeight) {%>
+                                <i class="fas fa-spinner fa-spin"></i>
+                            <% } else {%> 
+                                <i class="fas fa-check-circle good"></i>
+                            <% } %>
+                        </div>
+
                         <% } %>
                     </div>
-
-                    <% } %>
                 </div>
             </div>
 
             <div class="staterow">
-                <div class="staterowTable table">
-                    <div class="label">
-                        <span>Block Hash:</span>
-                    </div>
-        
-                    <div class="value">
-                        <span><%-nodestate.info.lastblock.hash%></span>
+                <div class="tableovfWrapper">
+                    <div class="staterowTable table">
+                        <div class="label">
+                            <span>Block Hash:</span>
+                        </div>
+            
+                        <div class="value">
+                            <span><%-nodestate.info.lastblock.hash%></span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -410,6 +410,13 @@ Application = function(p)
 	self.map = __map;
 	self.modules = {};
 
+	self.curation = function(){
+
+
+		if(typeof isios != 'undefined' && isios()) return true
+		return false
+	}
+
 	self.relations = {};
 
 	self.backmap = {

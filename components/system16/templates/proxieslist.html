@@ -20,29 +20,30 @@
                 if (proxy.id == _proxy.id) active='active'
                 
                 %>
+                <div class="tableovfWrapper">
+                    <div class="proxy table <%- active %>" pid="<%- _proxy.id %>">
 
-                <div class="proxy table <%- active %>" pid="<%- _proxy.id %>">
+                        <div class="name">
+                            <%- _proxy.get.name() %> <i class="fas fa-check"></i>
+                        </div>
 
-                    <div class="name">
-                        <%- _proxy.get.name() %> <i class="fas fa-check"></i>
+                        <div class="panel">
+                            <% if(_proxy.user) {%>
+                                <div class="item edit">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+
+                                <div class="item delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                            <% } else { %> 
+                                <div class="item pn">
+                                    <i class="fas fa-certificate"></i>
+                                </div>   
+                            <% } %>
+                        </div>
+
                     </div>
-
-                    <div class="panel">
-                        <% if(_proxy.user) {%>
-                            <div class="item edit">
-                                <i class="fas fa-cog"></i>
-                            </div>
-
-                            <div class="item delete">
-                                <i class="fas fa-trash-alt"></i>
-                            </div>
-                        <% } else { %> 
-                            <div class="item pn">
-                                <i class="fas fa-certificate"></i>
-                            </div>   
-                        <% } %>
-                    </div>
-
                 </div>
 
             <% }) %>
