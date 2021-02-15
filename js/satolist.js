@@ -4238,9 +4238,7 @@ Platform = function (app, listofnodes) {
 
 
                 if (addresses.length) {
-                    self.app.api.rpc('getuserstate', [(addresses || []).join(',')])
-                    self.app.api.rpc('getuserstate', [(addresses || []).join(',')])
-                    self.app.api.rpc('getuserstate', [(addresses || []).join(',')])
+        
                     self.app.api.rpc('getuserstate', [(addresses || []).join(',')]).then(d => {
 
                         if (d && !_.isArray(d)) d = [d]

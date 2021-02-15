@@ -44,7 +44,12 @@ var Cache = function(p){
         
         getcontents: {
             time : 82000,
-        }
+        },
+
+        getmissedinfo: {
+            time : 160,
+            block : 0,
+        },
     }
 
 

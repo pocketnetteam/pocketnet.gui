@@ -1105,7 +1105,7 @@ var Proxy = function (settings, manage) {
 
                 }
             },
-            freeregistration : {
+            freeregistrationfake : {
                 path : '/free/registrationfake',
                 action : function({}){  
 
