@@ -185,6 +185,9 @@ var Server = function(settings, admins, manage){
                         meta.action(request.data).then(d => {
                             result._success(d.data, d.code)
                         }).catch(e => {
+
+                            console.log("E", e)
+
                             result._fail(e, e.code)
                         })
                     

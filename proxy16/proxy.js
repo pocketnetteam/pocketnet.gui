@@ -584,55 +584,70 @@ var Proxy = function (settings, manage) {
                     if(!parameters) parameters = []
         
                     var node = null;
-        
-                    var cached = server.cache.get(method, parameters)
-        
-                    if (cached){
-                        return Promise.resolve({
-                            data : cached,
-                            code : 208
-                        })
-                    }
-        
-                    /// ????
-                    if (options.locally && options.meta){
-                        node = nodeManager.temp(options.meta)
-                    }
-        
-                    if (options.node){
-                        node = nodeManager.nodesmap[options.node]
 
-                    }
-        
-                    if(!node || options.auto) node = nodeManager.selectProbability() //nodeManager.selectbest()
-          
-                    if(!node) {
-                        return Promise.reject({
-                            error : "node",
-                            code : 502
+                    return new Promise((resolve, reject) => {
+
+                        server.cache.wait(method, parameters, function(waitstatus){
+                            resolve(waitstatus)
                         })
-                    }
+
+                    }).then(waitstatus => {
+                  
+
+                        var cached = server.cache.get(method, parameters)
         
-                    return node.checkParameters().then(r => {
+                        if (cached){
+                            return Promise.resolve({
+                                data : cached,
+                                code : 208
+                            })
+                        }
+
+                        //var cachwaitng = server.cache.waitng(method, parameters)
+            
+                        /// ????
+                        if (options.locally && options.meta){
+                            node = nodeManager.temp(options.meta)
+                        }
+            
+                        if (options.node){
+                            node = nodeManager.nodesmap[options.node]
+
+                        }
+            
+                        if(!node || options.auto) 
+                            node = nodeManager.selectProbability() //nodeManager.selectbest()
+            
+
+                            
+                        if(!node) {
+                            return Promise.reject({
+                                error : "node",
+                                code : 502
+                            })
+                        }
+
+                        return node.checkParameters().then(r => {
+                            return node.rpcs(method, parameters)
+
+                        }).then(data => {
         
-                        return node.rpcs(method, parameters)
-        
-                    }).then(data => {
-        
-                        server.cache.set(method, parameters, data, node.height())
-        
-                        return Promise.resolve({
-                            data : data,
-                            code : 200,
-                            node : node.exportsafe()
+                            server.cache.set(method, parameters, data, node.height())
+            
+                            return Promise.resolve({
+                                data : data,
+                                code : 200,
+                                node : node.exportsafe()
+                            })
+            
                         })
-        
+
                     }).catch(e => {
-        
+
                         return Promise.reject({
                             error : e,
                             code : e.code,
-                            node : node.export()
+                            node : node ? node.export() : null
                         })
                     })
                 }
@@ -1085,7 +1100,6 @@ var Proxy = function (settings, manage) {
 
                     }).catch(e => {
 
-                        console.log("E", e)
                         return Promise.reject(e)
                     })
 

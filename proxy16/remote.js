@@ -242,7 +242,6 @@ var Remote = function(app){
 				}
 				
 
-				console.log("JSDOV")
 
 				self.jsdom(html, clbk)
 			}

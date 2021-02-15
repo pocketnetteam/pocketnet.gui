@@ -97,6 +97,9 @@ var IPC = function(ipc, wc){
 		promise.then(data => {
 			send(message.id, null, data)
 		}).catch(e => {
+
+			
+
 			send(message.id, e)
 		})
 

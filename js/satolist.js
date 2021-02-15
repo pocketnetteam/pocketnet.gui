@@ -4238,7 +4238,9 @@ Platform = function (app, listofnodes) {
 
 
                 if (addresses.length) {
-
+                    self.app.api.rpc('getuserstate', [(addresses || []).join(',')])
+                    self.app.api.rpc('getuserstate', [(addresses || []).join(',')])
+                    self.app.api.rpc('getuserstate', [(addresses || []).join(',')])
                     self.app.api.rpc('getuserstate', [(addresses || []).join(',')]).then(d => {
 
                         if (d && !_.isArray(d)) d = [d]
@@ -7369,7 +7371,7 @@ Platform = function (app, listofnodes) {
 
                 if (ao) address = ao.address
 
-                self.app.api.rpc('getlastcomments', ['7', address/*, self.app.localization.key*/]).then(d => {
+                self.app.api.rpc('getlastcomments', ['7'/*, address, self.app.localization.key*/]).then(d => {
 
                     d = _.filter(d, function (d) {
                         return !d.deleted

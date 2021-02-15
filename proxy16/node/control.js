@@ -266,7 +266,6 @@ var Control = function(settings) {
         getNodeAddresses: function() {
             return self.kit.rpc('listaddressgroupings').then(result => {
 
-                console.log("RESOLT", result)
 
                 var addresses = []
 

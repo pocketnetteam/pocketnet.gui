@@ -120,6 +120,8 @@ var Middle = function(){
     
         result._fail = function(error, code){
 
+            
+
             if(!code) code = 500
 
             if(code < 100) code = 500
