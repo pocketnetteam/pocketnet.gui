@@ -42,10 +42,11 @@
 
                                     </div>
                                 </div>
-
-                                <div class="fitem">
-                                   <a href="about"><%=e('aboutus')%></a>
-                                </div>
+                                <% if(!window.cordova && !isMobile()) {%>
+                                    <div class="fitem">
+                                    <a href="about"><%=e('aboutus')%></a>
+                                    </div>
+                                <% } %>
 
                                
 
