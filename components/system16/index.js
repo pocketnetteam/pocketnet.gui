@@ -2689,7 +2689,7 @@ var system16 = (function(){
 		var makers = {
 
 			stacking : function(update){
-				if(actions.admin() && (!stacking || update)){
+				if(actions.admin() && (!stacking || update) && 1 == 0){
 
 					proxy.fetch('manage', {
 
