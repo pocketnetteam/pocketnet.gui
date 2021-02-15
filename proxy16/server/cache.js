@@ -68,7 +68,10 @@ var Cache = function(p){
                 time : f.now()
             }
 
-            ckeys[key].block = block
+            if (typeof ckeys[key].block != undefined){
+                ckeys[key].block = block
+            }
+            
 
             if(!waiting[key])
                 waiting[key] = {}
@@ -159,10 +162,9 @@ var Cache = function(p){
 
     self.block = function(block){
 
-        
-
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){
+
 
                 if (k.block < block.height)
                     storage[key] = {}

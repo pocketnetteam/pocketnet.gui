@@ -8376,6 +8376,8 @@ Platform = function (app, listofnodes) {
                     if (!refresh) {
                         txids = _.filter(txids, function (id) {
 
+                            if(!id) return false
+
                             if (!storage.trx[id]) {
                                 return true;
                             }
@@ -8387,6 +8389,8 @@ Platform = function (app, listofnodes) {
 
                     txids = _.filter(txids, function (id) {
 
+                        if(!id) return false
+ 
                         if (!loading[id]) {
 
                             return true
