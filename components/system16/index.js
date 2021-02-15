@@ -15,6 +15,8 @@ var system16 = (function(){
 
 		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
 
+		var stacking = null
+
 		var changes = {
 			server : {}
 		}
@@ -2425,13 +2427,44 @@ var system16 = (function(){
 
 				
 			},
+			nodecontentmanagestacking : function(elc, clbk){
+				if (actions.admin() && stacking){
+
+					self.shell({
+						inner : html,
+						name : 'nodecontentmanagestacking',
+						data : {
+							info : info,
+							manager : info.nodeManager,
+							nodestate : info.nodeControl.state,
+							nc : info.nodeControl,
+							proxy : proxy,
+							admin : actions.admin(),
+							system : system,
+							stacking : stacking
+						},
+
+						el : elc.find('.stacking')
+
+					},
+					function(p){
+
+						p.el.find('.copyaddress').on('click', function(){
+							copyText($(this))
+
+							sitemessage(self.app.localization.e('successcopied'))
+						})
+
+						if (clbk)
+							clbk()
+					})
+				}
+			},
 			nodecontentmanage : function(elc, clbk){
 				if(actions.admin()){
 
-
 					var timestamp = deep(info,'nodeControl.state.timestamp')
 					var dis = false
-
 
 					if (timestamp){
 						dis = (new Date()) < fromutc(new Date(timestamp)).addSeconds(60)
@@ -2459,7 +2492,86 @@ var system16 = (function(){
 						var lock = function(){
 							p.el.find('.nodecontentmanage').addClass('lock')
 						}
+
+						makers.stacking()
+
 						actions.settings(p.el)
+						
+						p.el.find('.refreshstacking').on('click', function(){
+							makers.stacking(true)
+						})
+
+						p.el.find('.addstacking').on('click', function(){
+
+							var d = inputDialogNew({
+								caption : "Add Private Key To Address Stacking",
+								class : 'addressdialog',
+								wrap : true,
+								values : [{
+									defValue : '',
+									validate : 'empty',
+									placeholder : "Private Key (WIF Format)",
+									label : "Private Key"
+								}],
+			
+								success : function(v){
+			
+									var pk = v[0]
+
+									var destroyed = false
+
+									var ds = function(){
+
+										if(destroyed) return
+
+										clearTimeout(dds)
+
+										destroyed = true
+										makers.stacking(true)
+			
+										d.destroy();
+			
+										topPreloader(100);
+									}
+
+									var dds = setTimeout(function(){
+										ds()
+
+										sitemessage('Stacking address will be added soon')
+
+									}, 2000)
+			
+									topPreloader(30);
+			
+									proxy.fetch('manage', {
+
+										action : 'set.node.stacking.import',
+										data : {
+											privatekey : pk
+										}
+
+									}).then(r => {
+
+										ds()
+			
+									}).catch(e => {
+
+										if(destroyed) return
+
+										clearTimeout(dds)
+										
+										sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
+			
+										topPreloader(100);
+			
+									})
+									
+
+									return false
+								}
+							})
+
+						})
 
 						p.el.find('.updatenode').on('click', function(){
 							dialog({
@@ -2575,6 +2687,37 @@ var system16 = (function(){
 		}
 
 		var makers = {
+
+			stacking : function(update){
+				if(actions.admin() && (!stacking || update)){
+
+					proxy.fetch('manage', {
+
+						action : 'set.node.stacking.addresses',
+						data : {}
+
+					}).then(r => {
+
+						stacking = r
+
+						renders.nodecontentmanagestacking(el.c)
+
+						topPreloader(100);
+
+					}).catch(e => {
+
+						
+						sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
+
+						topPreloader(100);
+
+					})
+
+				}
+				else{
+					renders.nodecontentmanagestacking(el.c)
+				}
+			},
 
 			stats : function(update){
 

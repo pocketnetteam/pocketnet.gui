@@ -264,9 +264,24 @@ var Control = function(settings) {
         },
 
         getNodeAddresses: function() {
-            return self.kit.rpc('listaddressgroupings').then(data => {
-                
-                var addresses = data.result.flat(Infinity).filter(function(el) { return el.length == 34; });
+            return self.kit.rpc('listaddressgroupings').then(result => {
+
+                console.log("RESOLT", result)
+
+                var addresses = []
+
+                _.each(result, function(rs){
+                    _.each(rs, function(au){
+                        addresses.push(au)
+                    })
+                })
+
+                addresses = _.map(addresses, function(a){
+                    return {
+                        address : a[0],
+                        balance : a[1] || 0
+                    }
+                })
 
                 return Promise.resolve(addresses)
             })

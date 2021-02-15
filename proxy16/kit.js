@@ -117,9 +117,7 @@ var defaultSettings = {
 		dbpath : 'data/node',
         enabled: false,
         binPath: '',
-		dataPath: '',
-
-		stacking : []
+		dataPath: ''
     },
 	
 }
@@ -141,8 +139,7 @@ var state = {
 			node : {
 				enabled : settings.node.enabled,
 				binPath : settings.node.binPath,
-				dataPath: settings.node.dataPath,
-				stacking : settings.node.stacking
+				dataPath: settings.node.dataPath
 			},
 			admins : settings.admins
 		}
@@ -554,7 +551,42 @@ var kit = {
 					
 				},
 				
-	
+				stacking : {
+
+					import : function({privatekey}){
+
+						var r = null
+
+						return kit.proxy().then(proxy => {
+
+							r = proxy.nodeControl.request
+
+							return proxy.nodeControl.request.getNodeAddresses()
+
+						}).then(addresses => {
+
+							console.log('privatekey', privatekey, addresses)
+
+							return r.importPrivKey(privatekey)
+						}).catch(e => {
+							console.log(e)
+
+							return Promise.reject(e)
+						})
+
+					},
+
+					addresses : function(){
+
+						return kit.proxy().then(proxy => {
+							return proxy.nodeControl.request.getNodeAddresses()
+						}).then(addresses => {
+							return Promise.resolve(addresses)
+						})
+
+					}
+
+				}
 			},
 	
 			admins : {

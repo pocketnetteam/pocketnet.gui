@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<% if(system.node && 1==0) { %>
+<% if(system.node && 1 == 0) { %>
 
     <div class="nodecontentmanage managepanel">
         
@@ -53,7 +53,7 @@
                     </div>
                 </div>
 
-                
+                <% if(system.node.enabled) {%> 
 
                 <div class="setting addresses">
                     <div class="settingTable table">
@@ -63,24 +63,15 @@
 
                         <div class="value">
 
-                            <% if(system.node.stacking && system.node.stacking.length) {%>
+                            <div class="stacking">
 
-                                <div class="adresses">
+                            </div>
 
-                            <% _.each(system.node.stacking, function(sa){ %>
-                                    <div class="address"><span><%= sa %></span></div>
-                            <% }) %>
-
-                                </div>
-
-                            <% } else { %> 
-
-                                
-                                
-                            <% } %>
+                            
 
                             <div class="buttons">
                                 <button class="addstacking button small"><i class="fas fa-plus"></i> Add adress</button>
+                                <button class="refreshstacking button small ghost"><i class="fas fa-sync"></i> Refresh</button>
                             </div>
                             
                         </div>
@@ -88,6 +79,8 @@
                         
                     </div>
                 </div>
+
+                <% } %>
 
             <% } else { %> 
 

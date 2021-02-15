@@ -37,8 +37,14 @@ var Middle = function(){
         })).length
 
         var byCodes = {}
+
+        var rpclogs = _.filter(logs, function(l){
+            if(l.pn && l.pn.indexOf('rpc/') > -1){
+                return true
+            }
+        })
         
-        _.each(f.group(logs, function(l){
+        _.each(f.group(rpclogs, function(l){
 
             return l.s
 

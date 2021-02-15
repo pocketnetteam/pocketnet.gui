@@ -37,6 +37,60 @@
         
     }
 
+    .stacking{
+        .canstacking{
+            padding : 3 * @rhythm 0;
+
+            i{
+                width : 20px;
+                font-size: 0.9em;
+               
+            }
+
+            .good{
+                color : @color-good;
+            }
+
+            .bad{
+                color : @color-bad;
+            }
+        }
+
+        .copyaddress{
+            cursor: pointer;
+
+            &:hover{
+                color : @color-bright;
+            }
+        }
+        .adresses{
+
+            .address{
+                width: auto;
+
+                >div{
+                    &.balance{
+                        padding : 0 2 * @rhythm;
+                        padding-left: @rhythm;
+                        color : @color-main;
+                        font-weight: 700;
+                        font-size: 0.9em;
+                    }
+    
+                    &.namewrapper{
+                        width: 270px;
+                    }
+                    &.iconWrapper{
+                        width: 44px;
+                        text-align: right;
+                    }
+                }
+
+                
+            }
+        }
+    }
+
     .proxyselecttable{
         width : auto;
 
