@@ -20,6 +20,12 @@ var all = {
 		class : 'socialshare'
 	},
 
+	block : {
+		icon : '<i class="fas fa-user-slash"></i>',
+		text : e('blockuser'),
+		class : 'block'
+	}
+
 }	
 	m.push('share')
 
@@ -29,6 +35,9 @@ var all = {
 		m.push('edit')
 		m.push('remove')
 
+	}
+	else{
+		m.push('block')
 	}
 
 	

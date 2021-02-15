@@ -7512,9 +7512,6 @@ Platform = function (app, listofnodes) {
                                 alias.temp = true;
                                 alias.address = _alias.address;
 
-                                console.log("_alias", _alias, alias)
-                                debugger
-
                                 var temptime = self.currentTime()
 
                                 alias.children = 0;

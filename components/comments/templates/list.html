@@ -87,6 +87,10 @@ var commentpanel = function(comment, _class){  %>
 
 <% _.each(comments, function(comment){ 
 
+	var me = app.platform.sdk.user.me()
+
+	if(me.relation(comment.address, 'blocking')) return
+
 
 	var m = '' %> 
 

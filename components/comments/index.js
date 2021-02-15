@@ -1062,6 +1062,24 @@ var comments = (function(){
 							_el.tooltipster('hide')	
 						})
 
+						__el.find('.block').on('click', function(){
+
+							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
+								console.log(tx, error)
+                                if (!tx) {
+                                    self.app.platform.errorHandler(error, true)
+                                }
+								else
+								{
+									parent.remove()
+								}
+
+								_el.tooltipster('hide')	
+                            })
+
+							
+						})
+
 						__el.find('.remove').on('click', function(){
 
 							dialog({
