@@ -362,6 +362,33 @@ User = function(app, p) {
     	
 	}
 
+	self.keysPairFromPrivate = function(private, clbk){
+		var keyPair = null;
+
+		if (bitcoin.bip39.validateMnemonic(private)) {
+			keyPair = self.app.user.keysFromMnemo(private)
+		}
+		else{
+			try{
+				keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
+			}
+			catch (e){
+	
+	
+				try{
+					keyPair = bitcoin.ECPair.fromWIF(private)
+				}
+				catch (e){
+	
+				}
+			} 
+		}
+
+		return keyPair
+
+	
+	}
+
 	self.setKeysPairFromPrivate = function(private, clbk){
 		var keyPair = null;
 
@@ -394,11 +421,6 @@ User = function(app, p) {
 			if (clbk)
 				clbk(false)
 		}
-		
-		
-	
-
-		
 	}
 
 	self.setKeys = function(mnemonic, clbk){

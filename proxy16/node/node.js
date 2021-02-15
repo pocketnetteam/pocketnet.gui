@@ -242,8 +242,19 @@ var Node = function(options, manager){
             if (self.testing) return 0
             ///
 
+            var time = s.time;
+
+            if (time && time > 0 && time <= 200) time = 200
+            if (time && time > 200 && time <= 400) time = 300
+            if (time && time > 400 && time <= 700) time = 500
+            if (time && time > 700 && time <= 1300) time = 1000
+            if (time && time > 1300 && time <= 2300) time = 1700
+            if (time && time > 2300 && time <= 4000) time = 3100
+            if (time && time > 4000 && time <= 7000) time = 5300
+            if (time && time > 7000 && time <= 15000) time = 10000
+
             return  (s.percent  * (lastblock.height || 1) ) / 
-                    ( ((self.statistic.rate() || 0) + 1) * (s.time || 5000) * (difference + 1) )
+                    ( ((self.statistic.rate() || 0) + 1) * (time) * (difference + 1) )
         },
 
         better : function(){

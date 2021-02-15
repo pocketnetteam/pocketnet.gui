@@ -10736,6 +10736,9 @@ Platform = function (app, listofnodes) {
                 pack.addresses.push(address)
                 pack.private.push(mk)
 
+
+                console.log('address', address, mk)
+
                 self.cryptography.api.aeswc.encryption(_key, mk, {}, function (encrypted) {
 
                     pack.aes.push(encrypted)
@@ -10780,14 +10783,14 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.pool;
                 var pool = s.get();
 
+                var keyPair = self.app.user.keysPairFromPrivate(mnemonic)
 
-                var keyPair;
+                if(!keyPair){
 
-                if (bitcoin.bip39.validateMnemonic(mnemonic)) {
-                    keyPair = self.app.user.keysFromMnemo(mnemonic)
-                }
-                else {
-                    keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(mnemonic, 'hex'))
+                    if (clbk)
+                        clbk(null, 'failedkeypair')
+
+                    return
                 }
 
                 var address = self.sdk.address.pnetsimple(keyPair.publicKey).address;

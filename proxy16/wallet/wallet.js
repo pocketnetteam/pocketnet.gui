@@ -591,7 +591,9 @@ var Wallet = function(p){
         txfees : function(unspents, outputs, feeMode){
 
             var inputs = []
-            var feerate = 0.00002;
+            var feerate = 0.000000011;
+
+           
 
             return self.transactions.txbase(unspents, outputs, 0, feeMode).then(r => {
 
@@ -599,7 +601,9 @@ var Wallet = function(p){
 
             }).then(tx => {
 
-                var totalFees = Math.min(tx.virtualSize() * feerate, 0.00007);
+                console.log('feerate, tx.virtualSize()', tx.virtualSize() * feerate)
+
+                var totalFees = Math.max(tx.virtualSize() * feerate, 0.0002);
                 console.log('totalFees', totalFees)
                 return self.transactions.txbase(unspents, outputs, totalFees, feeMode)
 

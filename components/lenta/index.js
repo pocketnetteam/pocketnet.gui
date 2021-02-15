@@ -583,8 +583,10 @@ var lenta = (function(){
 						addresses : []
 					}
 
+					var t = (share.caption || share.message)
+
 					var link = 'send?address=' + share.address + '&amount=1&message='
-					+hexEncode(self.app.localization.e('postlabel') + ' &mdash; ' + (share.caption || share.message).substr(0, 20) + "...")
+					+hexEncode(self.app.localization.e('postlabel') + ' - ' + t.substr(0, 20) + ((t.length <= 20) ? "" : "..."))
 					+'&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
 
 

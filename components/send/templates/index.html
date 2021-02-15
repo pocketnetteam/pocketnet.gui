@@ -28,7 +28,11 @@
 		<% if(amount) {%>
 			<div class="amount">
 				<div class="work">
-					<div><span class="amredit" contenteditable="true"><%= app.platform.mp.coin(amount) %></span> <span>PKOIN</span></div>
+					<div>
+						<span class="amredit" contenteditable="true"><%= app.platform.mp.coin(amount) %></span> 
+						
+						<span>PKOIN</span>
+					</div>
 
 					<div class="address">
 						<%=e('wdaddress')%>: <b><%-address%></b>
