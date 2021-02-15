@@ -109,7 +109,13 @@ var defaultSettings = {
 				amount : 0.0002,
 				outs : 10,
 				check : 'uniqAddress'
-			}
+			},
+
+			/*compensation : {
+				privatekey : "",
+				check : 'uniqAddress',
+				source : 'compensation'
+			},*/
 		}
 	},
 

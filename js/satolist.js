@@ -4573,7 +4573,9 @@ Platform = function (app, listofnodes) {
 
                                 if (!f) {
                                     added.push(no)
-                                    n.storage.notifications.push(no)
+
+                                    if (n.storage.notifications)
+                                        n.storage.notifications.push(no)
                                 }
 
 
@@ -10784,7 +10786,11 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.pool;
                 var pool = s.get();
 
+                console.log("HERE")
+
                 var keyPair = self.app.user.keysPairFromPrivate(mnemonic)
+
+                console.log('keyPair', keyPair)
 
                 if(!keyPair){
 
