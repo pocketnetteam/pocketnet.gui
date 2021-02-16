@@ -250,58 +250,71 @@ var Remote = function(app){
 		},
 
 		og : function(uri, clbk){
-			ogParser(uri, function(error, data) {
+			load.url(uri, function(r){
 
-				console.log("error", error, data)
+				if(r){
+					ogParser(uri, function(error, data) {
 
-				if (error){
-					errors[uri] = error
+		
+						if (error){
+							errors[uri] = error
+						}
+		
+						if(!data) data = {}
+		
+		
+						var og = {}		
+		
+						if (data.og){
+							og.type = data.og.type
+							og.image = f.deep(data.og, 'image.url')
+							og.video = data.og.video
+							og.title = data.og.title
+							og.description = data.og.description
+						}
+		
+						
+						if (data.meta){
+							og.descriptionPage = data.meta.description
+		
+							if(!og.image){
+								og.image = f.deep(data.meta, 'thumbnail.url') || data.meta.thumbnailUrl
+							}
+		
+							if(!og.title){
+								og.title = data.meta.name
+							}
+							
+						}
+		
+						og.titlePage = data.title || ""
+		
+		
+						/*if(!og.video){
+							og.video = $('meta[property="og:video:url"]').attr('content')
+						}*/
+		
+						if (og.type || og.image || og.video || og.title || og.description || og.descriptionPage || og.titlePage){
+		
+							if(clbk) clbk(og)
+		
+							return
+						}
+		
+						if(clbk) clbk({})
+		
+					})
 				}
 
-				if(!data) data = {}
+				else{
+					errors[uri] = 'nc'
 
-
-				var og = {}		
-
-				if (data.og){
-					og.type = data.og.type
-					og.image = f.deep(data.og, 'image.url')
-					og.video = data.og.video
-					og.title = data.og.title
-					og.description = data.og.description
+					if(clbk) clbk({})
 				}
 
 				
-				if (data.meta){
-					og.descriptionPage = data.meta.description
-
-					if(!og.image){
-						og.image = f.deep(data.meta, 'thumbnail.url') || data.meta.thumbnailUrl
-					}
-
-					if(!og.title){
-						og.title = data.meta.name
-					}
-					
-				}
-
-				og.titlePage = data.title || ""
-
-
-				/*if(!og.video){
-					og.video = $('meta[property="og:video:url"]').attr('content')
-				}*/
-
-				if (og.type || og.image || og.video || og.title || og.description || og.descriptionPage || og.titlePage){
-
-					if(clbk) clbk(og)
-
-					return
-				}
-
-				if(clbk) clbk({})
-
 			})
+			
 		}
 	}
 
