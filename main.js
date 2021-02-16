@@ -466,6 +466,7 @@ if (!r) {
     app.quit()
 } else {
     app.on('second-instance', function(event, argv, cwd) {
+        console.log('second', event, argv, cwd)
         if (win) {
 
             if (win.isMinimized()) win.restore();
@@ -475,17 +476,12 @@ if (!r) {
         }
     })
 
+    console.log('process.execPath', process.execPath, [path.resolve(process.argv[1])])
     // If we are running a non-packaged version of the app && on windows
-    if( process.platform === 'win32') {
-    // Set the path of electron.exe and your app.
-    // These two additional parameters are only available on windows.
-        app.setAsDefaultProtocolClient('pocketnet', process.execPath, [path.resolve(process.argv[1])]);        
-        
-    } else {
 
-        app.setAsDefaultProtocolClient('pocketnet');
 
-    }
+    app.setAsDefaultProtocolClient('pocketnet', process.execPath, [path.resolve(process.argv[1])]);        
+
 
     // Этот метод будет вызываться, когда Electron закончит 
     // инициализацию и готов к созданию окон браузера.
@@ -500,6 +496,7 @@ if (!r) {
             app.quit()
         }
     })
+
 
     app.on('activate', () => {
         // На MacOS обычно пересоздают окно в приложении,

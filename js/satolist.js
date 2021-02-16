@@ -17363,7 +17363,15 @@ Platform = function (app, listofnodes) {
             if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
 
                 self.app.user.features.telegram = 1;
-                window.location = 'pocketnet://';
+
+                console.log('window.location', window.location.href);
+
+                var currentHref = window.location.href;
+
+                currentHref = currentHref.replace('https://localhost/pocketnet/', '');
+
+
+                window.location = 'pocketnet://' + currentHref;
 
             } else {
 
