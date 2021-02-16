@@ -34,3 +34,4 @@ nodeserver
 **/settings
 data/
 pocketcoind*/
+package-lock.json
