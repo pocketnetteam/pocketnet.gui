@@ -4,7 +4,6 @@ var f = require('../functions');
 
 var compensation = [
 
-
 ]
 
 var Wallet = function(p){
@@ -186,7 +185,7 @@ var Wallet = function(p){
 
                     })
 
-                    /*_.each(p.addresses, function(options, key){
+                   /* _.each(p.addresses, function(options, key){
 
                         
 
@@ -194,7 +193,7 @@ var Wallet = function(p){
                             console.log('addresses[obj.key].all', addresses[key].all)
 
                             _.each(compensation, function(tobj){
-                                self.kit.addqueue('compensation', tobj[1], "::1", tobj[0] / 100000000).catch(e => {
+                                self.kit.addqueue('compensation', tobj[0], "::1", tobj[2] / 100000000).catch(e => {
                                     console.log("ERRORADDCOMP", e)
                                 })
                             })
@@ -327,7 +326,6 @@ var Wallet = function(p){
 
             var outputs = self.helpers.outputs.tos(key, tos)
             var meta = null
-
 
 
             return self.unspents.getc(addresses[key]).then(unspents => {

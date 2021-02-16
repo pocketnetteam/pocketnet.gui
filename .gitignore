@@ -25,7 +25,7 @@ js/join.js
 js/vendor.js
 js/vendor.min.js
 js/join.min.js
-*.php
+index.php
 web.config
 web.config
 publish.py
