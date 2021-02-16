@@ -31,7 +31,7 @@ fs.exists(mapJsPath, function (exists) {
 
 		var modules = {
 			data : "",
-			path : './js/_modules.js'
+			path : './js/mdls.js'
 		}
 
 		var join = {
