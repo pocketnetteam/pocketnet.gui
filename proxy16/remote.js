@@ -7,7 +7,7 @@ var _ = require('underscore')
 
 var path = require("path");
 var jquery = path.resolve(__dirname, "lib/jquery-1.11.3.min.js")
-
+var ogParser = require("og-parser");
 
 //const phantom = require('phantom');
 var iconv = require('iconv-lite');
@@ -18,9 +18,13 @@ var Remote = function(app){
 
 	var self = this;
 	var cache = [];
+	
 	var phlinks = [];
 	var loading = {};
 	var errors = {};
+
+	var ogcache = [];
+	var ogloading = [];
 
 	var load = {
 		fetch : function(uri, clbk, dontdecoding, options){
@@ -183,6 +187,111 @@ var Remote = function(app){
 		cache : function(url){
 			return _.find(cache, function(c){
 				return c.url == url
+			})
+		},
+
+		ogcache : function(uri, clbk){
+			if(errors[uri]){
+
+				if (clbk)
+					clbk({})	
+
+				return
+			}
+
+			var dt = load.fromogcache(uri);
+
+			if (dt){
+				if (clbk)
+					clbk(dt.og)	
+
+				return
+			}
+
+			if(ogloading[uri]){
+
+				f.retry(function(){
+
+					return !ogloading[uri]
+
+				}, function(){
+
+					var dt = load.fromogcache(uri) || {}
+
+					if (clbk)
+						clbk(dt.og || {})	
+
+				
+				}, 100)
+			}
+			else{
+				ogloading[uri] = true
+
+				load.og(uri, function(og){
+					ogcache = _.last(ogcache, 3000)
+
+					ogloading[uri] = false
+
+					ogcache.push({
+						url : uri,
+						og : og
+					})
+
+					if (clbk)
+						clbk(og)	
+				})
+			}
+		},
+
+		fromogcache : function(uri){
+			return _.find(ogcache, function(c){
+				return c.url == uri
+			})
+		},
+
+		og : function(uri, clbk){
+			ogParser(uri, function(error, data) {
+
+				console.log("error", error)
+
+				if (error){
+					errors[uri] = error
+				}
+
+				if(!data) data = {}
+
+
+				var og = {}		
+
+				if (data.og){
+					og.type = data.og.type
+					og.image = f.deep(data.og, 'image.url')
+					og.video = data.og.video
+					og.title = data.og.title
+					og.description = data.og.description
+				}
+
+				
+				if (data.meta){
+					og.descriptionPage = data.meta.description
+				}
+
+				og.titlePage = data.title || ""
+
+
+				/*if(!og.video){
+					og.video = $('meta[property="og:video:url"]').attr('content')
+				}*/
+
+				if (og.type || og.image || og.video || og.title || og.description || og.descriptionPage || og.titlePage){
+
+					if(clbk) clbk(og)
+
+					return
+				}
+
+				if(clbk) clbk({})
+
 			})
 		}
 	}
@@ -363,6 +472,17 @@ var Remote = function(app){
 			{
 				if (clbk)
 					clbk('Remote content Fail', {})
+			}
+
+		})
+	}
+
+	self.nmake = function(url, clbk){
+		load.ogcache(url, function(og){
+
+
+			if (clbk){
+				clbk(null, og)
 			}
 
 		})

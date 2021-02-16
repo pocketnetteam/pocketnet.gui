@@ -6471,7 +6471,6 @@ Platform = function (app, listofnodes) {
 
                     self.app.api.fetch(action || 'urlPreview', {url}).then(d => {
 
-
                         var og = deep(d, 'og');
 
                         s[url] = og

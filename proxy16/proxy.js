@@ -856,11 +856,14 @@ var Proxy = function (settings, manage) {
                 path : '/urlPreview',
                 action : function({url}){
                     return new Promise((resolve, reject) => {
-                        remote.make(url, function(err, data, html){
+                        remote.nmake(url, function(err, data){
         
                             if(!err){
-                                data.html = html
-                                resolve({data})
+                                resolve({
+                                    data : {
+                                        og : data
+                                    }
+                                })
                             }
                             else
                             {
