@@ -33,7 +33,7 @@ var Remote = function(app){
 
 			var result = function(r){
 
-				if(r.length > 1000000){
+				if(r.length > 100000){
 					throw new Error('size limit');
 				}
 
@@ -123,7 +123,7 @@ var Remote = function(app){
 
 				if(loading[link]){
 
-					retry(function(){
+					f.retry(function(){
 
 						return !loading[link]
 
