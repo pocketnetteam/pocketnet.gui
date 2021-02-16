@@ -252,7 +252,7 @@ var Remote = function(app){
 		og : function(uri, clbk){
 			ogParser(uri, function(error, data) {
 
-				console.log("error", error)
+				console.log("error", error, data)
 
 				if (error){
 					errors[uri] = error
@@ -274,6 +274,15 @@ var Remote = function(app){
 				
 				if (data.meta){
 					og.descriptionPage = data.meta.description
+
+					if(!og.image){
+						og.image = f.deep(data.meta, 'thumbnail.url') || data.meta.thumbnailUrl
+					}
+
+					if(!og.title){
+						og.title = data.meta.name
+					}
+					
 				}
 
 				og.titlePage = data.title || ""
