@@ -164,7 +164,7 @@ Localization = function(app){
 		}
 		else
 		{
-			var src = 'localization/' + (_key || self.key) + '.js'
+			var src = 'localization/' + (_key || self.key) + '.js?v=1'
 
 			importScript(src, function(){
 
