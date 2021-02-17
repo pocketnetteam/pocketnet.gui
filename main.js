@@ -435,7 +435,10 @@ function createWindow() {
     ipcMain.on('quitAndInstall', function(e) {
 
         willquit = true
-        autoUpdater.quitAndInstall(true, true)
+
+        proxyInterface.destroy().then(r => {
+            autoUpdater.quitAndInstall(true, true)
+        })
 
     })
 

@@ -9170,6 +9170,19 @@
 
 /* EVENTS */
 
+	globalpreloader = function(show){
+
+		if(typeof window == 'undefined') return
+ 
+		var el = $('#globalpreloader');
+
+		if(show){
+			el.addClass('show')
+		}
+		else{
+			el.removeClass('show')
+		}
+	}	
 
 	topPreloader = function(percent){
 

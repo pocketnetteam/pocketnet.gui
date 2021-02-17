@@ -682,6 +682,17 @@ Platform = function (app, listofnodes) {
             },
 
             relay: true
+        },
+
+        "imageerror" : {
+
+            message: function () {
+
+                return 'An error occurred while loading images. Please try again'
+
+            },
+
+            
         }
     }
 
@@ -7490,6 +7501,20 @@ Platform = function (app, listofnodes) {
                 }
 
                 comment.uploadImages(self.app, function () {
+
+                    if (comment.checkloaded()){
+                        
+
+                        if (clbk) {
+                            clbk('imageerror', null)
+                        }
+
+                        _.each(self.sdk.comments.sendclbks, function (c) {
+                            c('imageerror')
+                        })
+
+                        return
+                    }
 
                     self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -17091,8 +17116,12 @@ Platform = function (app, listofnodes) {
 
                     success: function () {
 
+
+                        globalpreloader(true)
                         electron.ipcRenderer.send('quitAndInstall');
                         d = null;
+
+                        
 
                     },
 

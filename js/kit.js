@@ -362,7 +362,13 @@ Comment = function(txid){
 	}
 
 	
+	self.checkloaded = function(){
+		var notloaded = _.find(self.images.v, function(i){
+			return i.indexOf('data:image') > -1
+		})
 
+		return notloaded
+	}
 
 	self.uploadImages = function(app, clbk){
 
@@ -398,7 +404,7 @@ Comment = function(txid){
 
 							fail : function(d){
 
-								self.images.v[index] = 'https://i.imgur.com/Sa2cJVT.jpg'
+								//self.images.v[index] = 'imagenotloaded'
 								
 
 								index++;
@@ -1037,6 +1043,13 @@ Share = function(lang){
 		image : ''
 	}
 
+	self.checkloaded = function(){
+		var notloaded = _.find(self.images.v, function(i){
+			return i.indexOf('data:image') > -1
+		})
+
+		return notloaded
+	}
 
 	self.uploadImages = function(app, clbk){
 
@@ -1068,6 +1081,16 @@ Share = function(lang){
 								
 								p.success();
 
+							},
+
+							fail : function(d){
+
+								//self.images.v[index] = 'imagenotloaded'
+								
+
+								index++;
+
+								p.success();
 							}
 						})
 

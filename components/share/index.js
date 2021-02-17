@@ -694,6 +694,23 @@ var share = (function(){
 
 				currentShare.uploadImages(self.app, function(){
 
+					if (currentShare.checkloaded()){
+                        
+
+						var t = self.app.platform.errorHandler('imageerror', true);
+
+						topPreloader(100)
+
+						el.c.removeClass('loading')
+
+						if (t){
+							sitemessage(t)
+						}
+
+                        
+                        return
+                    }
+
 					self.sdk.node.transactions.create.commonFromUnspent(
 
 						currentShare,

@@ -41,7 +41,6 @@ var ProxyRequest = function(app = {}){
 
             }).catch(reason => {
 
-                
 
                 clearTimeout(timer)
 
@@ -54,7 +53,13 @@ var ProxyRequest = function(app = {}){
     var direct = function(url, data){
         var controller = (new AbortController())
 
-        return timeout(15000, directclear(url, data, controller.signal), controller)
+        var time = 15000
+
+        if (window.cordova){
+            time = 35000
+        }
+
+        return timeout(time, directclear(url, data, controller.signal), controller)
     }
 
     var directclear = function(url, data, signal){

@@ -77,6 +77,17 @@
         <div class="chats">
         </div>
 
+        <div id="globalpreloader">
+            <div class="table">
+                <div>
+                    <div class="icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+
 
        <!-- <script src="cordova.js"></script>-->
                 

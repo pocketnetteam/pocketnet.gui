@@ -576,7 +576,11 @@ var author = (function(){
 
 					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
 
+					p.el.find('.copyaddress').on('click', function(){
+						copyText($(this))
 
+						sitemessage(self.app.localization.e('successcopied'))
+					})
 				})
 			},
 

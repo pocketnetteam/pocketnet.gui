@@ -203,7 +203,7 @@ hr {
     color: #000;
     padding: 0.2em 0;
 }
-
+#globalpreloader,
 .updatingFrontend{
     position: fixed;
     left : 0;
@@ -212,6 +212,12 @@ hr {
     right : 0;
     z-index: 2000000;
     background: fade(@color-white, 90);
+    .transition(0.3s);
+    display: none;
+
+    &.show{
+        display: block;
+    }
 
     .table{
         width : 100%;

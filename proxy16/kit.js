@@ -824,6 +824,14 @@ var kit = {
 		})
 	},
 
+	destroyhard : function(){
+
+		return kit.manage.proxy.detach().then(r => {
+			return this.destroy()
+		})
+		
+	},
+
 	candestroy : function(){
 		return kit.proxy().then(proxy => {
 			return proxy.kit.candestroy()
