@@ -1,4 +1,5 @@
 var https = require('https');
+var http = require('http');
 var express = require('express');
 var swaggerUi = require('swagger-ui-express');
 var Middle = require('./middle.js');
@@ -16,6 +17,7 @@ var Server = function(settings, admins, manage){
 
     var app = null;
     var server = null;
+    var httpserver = null;
     var middle = new Middle()
     var iplimiter = new Iplimiter(settings.iplimiter)
 
@@ -84,8 +86,42 @@ var Server = function(settings, admins, manage){
 
         self.link()
 
-       
+        return self.http().then(r => {
+            return  self.https(settings)
+        })
 
+    }
+
+    self.http = function(){
+
+        return Promise.resolve()
+
+        return new Promise((resolve, reject) => {
+
+            app.use(express.static(f.path('static')))
+
+            httpserver = http.createServer(app)
+            
+            httpserver.listen(1337);
+
+            httpserver.on('listening',function(){
+
+                console.log("LISTENING")
+
+                self.listening = settings.port || 8899
+
+                resolve()
+            });
+
+            httpserver.on('error',function(e){
+                reject(e) 
+            });
+
+        })
+       
+    }       
+
+    self.https = function(settings){
         return new Promise((resolve, reject) => {
             try{
 
@@ -129,8 +165,14 @@ var Server = function(settings, admins, manage){
         if (server){
             server.close()
             server = null
-            app = null
         }
+
+        if(httpserver){
+            httpserver.close()
+            httpserver = null
+        }
+
+        app = null
 
         middle.clear()
 
