@@ -84,7 +84,7 @@ var Remote = function(app){
 				if(!error)
 				{
 
-					var size = 0.5 *  1024 * 1024
+					var size = 0.1 *  1024 * 1024
 
 					if(ishtml && (!response.headers['content-length'] || response.headers['content-length'] < size) && body.length < size)
 						clbk(body)
