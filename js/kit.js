@@ -764,7 +764,7 @@ Share = function(lang){
 		self.url.set()
 		self.caption.set()
 		self.repost.set()
-		self.language.set()
+		self.language.set(lang)
 
 		_.each(self.settings, function(s, k){
 			self.settings[k] = null;

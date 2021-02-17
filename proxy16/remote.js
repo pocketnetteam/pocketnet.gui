@@ -24,6 +24,20 @@ var Remote = function(app){
 	var ogcache = [];
 	var ogloading = [];
 
+	var gethead = function(body){
+
+		if(!body) return ''
+		
+		var match = body.toLowerCase().match(/<head>[\s\S]*?<\/head>/gi)
+
+
+		if(match && match[0]){
+			return "<!DOCTYPE html><html>" + match[0] + "<body>abs</body></html>"
+		}
+
+		return ''
+	}
+
 	var load = {
 		fetch : function(uri, clbk, dontdecoding, options){
 
@@ -80,11 +94,12 @@ var Remote = function(app){
 			}, function (error, response, body) {
 
 				var ishtml = response && response.headers && response.headers['content-type'] && response.headers['content-type'].indexOf('html') > -1;
+
+				console.log(ishtml, error)
 			  
 				if(!error)
 				{
-
-					var size = 0.1 *  1024 * 1024
+					var size = 1 *  1024 * 1024
 
 					if(ishtml && (!response.headers['content-length'] || response.headers['content-length'] < size) && body.length < size)
 						clbk(body)
@@ -248,12 +263,19 @@ var Remote = function(app){
 		},
 
 		og : function(uri, clbk){
+
+			console.log("LOAD OG", uri)
+
 			load.url(uri, function(r){
 
 				if(r){
 
 					try{
-						ogParser(uri, function(error, data) {
+
+
+						ogParser(gethead(r), function(error, data) {
+
+							console.log(error)
 
 		
 							if (error){
@@ -315,6 +337,7 @@ var Remote = function(app){
 					}
 
 					catch(e){
+						console.log("E", e)
 						errors[uri] = 'nc'
 
 						if(clbk) clbk({})

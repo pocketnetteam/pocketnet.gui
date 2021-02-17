@@ -69,7 +69,7 @@ _og.prototype._process_header = function(inoutMeta, name, value) {
       {
         var image = {}
 
-        
+
 
         if (inoutMeta.og.image) {
           image = inoutMeta.og.image
@@ -328,6 +328,14 @@ var parser = new htmlparser.Parser({
     }
   }
 });
+var parsebody = function(body, callback){
+  console.log('body', body)
+  parser.write(body);
+  parser.end();
+
+
+  callback(null, meta)
+}
 var _get_og_data = function(url, callback) {
   if (!callback) {
     return;
@@ -382,4 +390,4 @@ var _get_og_data = function(url, callback) {
   
 };
 
-module.exports = _get_og_data;
+module.exports = parsebody;

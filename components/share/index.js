@@ -674,7 +674,7 @@ var share = (function(){
 			},
 
 			post : function(clbk, p){
-
+				console.log("POST")
 
 
 				el.postWrapper.removeClass('showError');
@@ -755,6 +755,8 @@ var share = (function(){
 
 									if(!essenseData.notClear){
 										currentShare.clear();
+
+										console.log("CLEARED", currentShare)
 
 										self.app.nav.api.history.removeParameters(['repost'])
 
@@ -839,7 +841,7 @@ var share = (function(){
 					}
 
 					
-
+					console.log(error)
 					return true
 				}
 				else
@@ -1076,6 +1078,8 @@ var share = (function(){
 			post : function(){
 				var error = actions.error();
 
+				console.log('error',error)
+
 				if (!error){
 					actions.post()
 				}
@@ -1195,6 +1199,8 @@ var share = (function(){
 
 			postline : function(clbk){
 
+				console.log("RENDER")
+
 				self.shell({
 					name :  'postline',
 					el : el.postline,
@@ -1217,6 +1223,8 @@ var share = (function(){
 					el.selectTime.on('click', events.selectTime)
 					el.panel.on('click', events.embeding)
 					el.post.on('click', events.post)
+
+					console.log(el.post)
 
 					el.peertube = el.c.find('.peertube');
 					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
