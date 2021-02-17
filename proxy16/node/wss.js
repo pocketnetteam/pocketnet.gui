@@ -15,24 +15,32 @@ var Wss = function(node, service){
 
     var authorize = function(user){
 
-        if(!user){
-            user = {
-                address : 'PSmGDYWzcPrrhvqFnGVxnhPbpsTK6LCZYd',
-            }
+        var msg = {}
+
+        if(!user && service){
+
+            msg = _.clone(service)
+        }
+        else{
+            msg = {
+                addr: user.address
+            };
         }
 
-        var msg = {
-            addr: user.address,
-            nonce: '0',
-            signature: '0',
-            pubkey: '0', 
-        };
+        msg.nonce = '0'
+        msg.signature = '0'
+        msg.pubkey = '0'
+
+        if(service){
+            console.log('msg', msg)
+        }
 
         return sendMessage(msg)
     }
 
     var sendMessage = function(message){
         return new Promise((resolve, reject) => {
+           
 
             ws.send(JSON.stringify(message), (err) => {
 
@@ -130,6 +138,7 @@ var Wss = function(node, service){
                     return
                 }
 
+                if(service) console.log(data)
 
                 if (data.msg == 'new block' && service){
                 

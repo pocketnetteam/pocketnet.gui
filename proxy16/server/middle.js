@@ -6,7 +6,7 @@ var Middle = function(){
 
     var self = this
 
-    var countlogs = 100000
+    var countlogs = 10000
     var logs = []
 
     var addLogs = function(parameters, ip, status, pathname){
@@ -155,7 +155,7 @@ var Middle = function(){
         })
 
         request.data.ip = request.clientIP
-        request.data.ua = request.clientUA
+        request.data.ua = request.clientUA || {}
         delete request.data.U
         delete request.data.A
 
@@ -195,7 +195,7 @@ var Middle = function(){
         var ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress || "::1";
     
         request.clientIP = ip
-        request.clientUA = ua
+        //request.clientUA = ua
     
         if (next) 
             next(null)

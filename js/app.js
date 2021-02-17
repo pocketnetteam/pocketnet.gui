@@ -202,9 +202,13 @@ Application = function(p)
 
 			}
 
+			self.app.api.changeProxyIfNeed()
+
 			if(error && !self.errors.state[error]){
 
 				self.errors.state[error] = true;
+
+				
 
 				_.each(self.errors.clbks, function(c){
 					c(self.errors.state)
@@ -577,6 +581,8 @@ Application = function(p)
 	}
 
 	self.init = function(p){
+
+		if (navigator.webdriver) return
 
 		if (typeof localStorage == 'undefined')
 			localStorage = {};

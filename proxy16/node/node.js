@@ -46,9 +46,9 @@ var Node = function(options, manager){
     var chain = [];
 
     var serviceConnection = function(){
-        if(!wss.service){
+        if(!wss.service && manager){
      
-            wss.service = (new Wss(self, true)).connect()
+            wss.service = (new Wss(self, manager.proxy.kit.service())).connect()
 
             wss.service.on('disconnected', function(){
                 wss.service = null

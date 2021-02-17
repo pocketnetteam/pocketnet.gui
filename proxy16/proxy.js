@@ -252,6 +252,7 @@ var Proxy = function (settings, manage) {
     }
 
     self.wss = {
+        
         init: function () {
 
             if (settings.server.enabled) {
@@ -390,10 +391,34 @@ var Proxy = function (settings, manage) {
     }
 
     self.kit = {
+        service : function(){
+            var w = self.wss.info(true)
+            var s = self.server.info(true)
+
+            var service = {
+                addr : 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
+            }
+
+           /* if (s.listening && w.listening){ 
+                service.mainport = Number(s.listening)
+                service.wssport = Number(w.listening)
+                service.service = true
+                service.addr = 'rsa'
+            }*/
+
+            return service
+        },
         stats : function(n){
             return getStats(n)
         },
         info : function(compact){
+
+            var mem = process.memoryUsage()
+
+            _.each(mem, function(v, i){
+                mem[i] = v / (1024 * 1024)
+            })
+
             return {
                 status: status,
 
@@ -409,7 +434,9 @@ var Proxy = function (settings, manage) {
                 captcha : {
                     ip : _.toArray(captchaip).length,
                     all : _.toArray(captchas).length
-                }
+                },
+
+                memory : mem
             }
         },
 

@@ -17387,11 +17387,12 @@ Platform = function (app, listofnodes) {
 
 
         self.app.api.initIf().then(r => {
-            return self.app.api.wait.ready()
-        })
 
-        .then(r => {
+            return self.app.api.wait.ready('use', 3000)
 
+        }).then(r => {
+            return self.app.api.changeProxyIfNeed()
+        }).then(r => {
 
             self.ws = new self.WSn(self);
 

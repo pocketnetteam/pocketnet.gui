@@ -9377,23 +9377,25 @@
 
 /* TIMEOUT, INTERVALS */
 
-	retry = function(_function, clbk, time, notClear){
+	var retry = function(_function, clbk, time, totaltime){
 		if(!time) time = 20;
+
+		var totalTimeCounter = 0 
 
 		var interval = setInterval(function(){
 
-			if(_function()){
 
-				if(!notClear)
-					clearInterval(interval);
+			if(_function() || (totaltime && totaltime <= totalTimeCounter)){
+
+				clearInterval(interval);
 
 				if(clbk) clbk();
 
 			}
-			
-		}, time);
 
-		return interval;
+			totalTimeCounter += time
+
+		}, time);
 	}
 
 	pretry = function(_function, time, totaltime){

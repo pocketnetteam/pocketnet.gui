@@ -26,6 +26,7 @@
         "humanize": "0.0.9"
     },
     "dependencies": {
+        "aes-js": "^3.1.2",
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
         "body-parser": "^1.19.0",
@@ -68,7 +69,7 @@
         "node-cmd": "^3.0.0",
         "node-fetch": "",
         "node-iplocate": "^1.0.2",
-        "node-rsa": "^1.0.5",
+        "node-rsa": "^1.1.1",
         "nodejs-base64": "^1.0.3",
         "nodemailer": "^6.4.11",
         "object-hash": "^2.0.3",

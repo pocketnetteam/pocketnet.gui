@@ -271,8 +271,27 @@ var Proxy16 = function(meta, app){
                 self.ping = new Date()
 
                 return Promise.resolve(r)
+            }).catch(e => {
+                return Promise.reject(e)
             })
         },
+
+        actualping : function(){
+
+            var promise = null
+
+            if(!self.ping || self.ping.addSeconds(5) < new Date){
+                promise = self.api.ping()
+            }
+            else{
+                promise = Promise.resolve(true)
+            }
+
+            return promise.catch(e => {
+                return Promise.resolve(false)
+            })
+        },
+
         nodes : {
 
             canchange : function(node){
@@ -370,21 +389,6 @@ var Proxy16 = function(meta, app){
 
     self.fetch = function(path, data, waiting){
 
-        /*if (waiting){
-
-        }
-
-        if (waiting){
-
-            if(wait[path]){
-
-            }
-
-            wait[path] = true
-
-        }*/
-           
-
         if(self.direct){
             promise = self.system.fetch(path, data)
         }
@@ -447,9 +451,7 @@ var Proxy16 = function(meta, app){
 
     self.refreshNodes = function(){
         return self.api.nodes.get().then(r => {
-
             return self.api.nodes.select()
-
         }).catch(e => {
             return Promise.resolve()
         })
@@ -678,7 +680,7 @@ var Api = function(app){
             api : {
                 ping : function(proxies){
                     var promises = _.map(proxies, proxy => {
-                        return proxy.api.ping().catch(e => {})
+                        return proxy.api.ping()
                     })
         
                     return Promise.all(promises)
@@ -745,6 +747,7 @@ var Api = function(app){
 
         }).catch(e => {
 
+            console.log("ERROR", e)
 
             if (e == 'TypeError: Failed to fetch'){
                 app.apiHandlers.error({
@@ -762,7 +765,13 @@ var Api = function(app){
         },
 
         use : () => {
-            return useproxy ? _.filter(proxies, proxy => { return proxy.ping && proxy.get.nodes().length }) : false
+            console.log("READY", useproxy ? _.filter(proxies, proxy => { 
+                return proxy.ping && proxy.get.nodes().length 
+            }).length || !proxies.length : false)
+
+            return useproxy ? _.filter(proxies, proxy => { 
+                return proxy.ping && proxy.get.nodes().length 
+            }).length || !proxies.length : false
         },
     }
 
@@ -770,6 +779,8 @@ var Api = function(app){
         ready : function(key, total){
 
             if(!key) key = 'use'
+
+            console.log("WAIT", total, key)
 
             return pretry(self.ready[key], 50, total)
         }
@@ -831,13 +842,59 @@ var Api = function(app){
             return _.find(proxies, function(proxy){
                 return proxy.id == id
             })
+        },
+
+        working : function(){
+            var promises = _.map(proxies, function(proxy){
+                return proxy.api.actualping()
+            })
+
+            return Promise.all(promises).then(r => {
+                return _.filter(proxies, function(p, i){
+                    if (r[i]){
+                        return true
+                    }
+                })
+            })
         }
     }
+
+
+    self.changeProxyIfNeed = function(){
+        var pr = getproxyas()
+        var promise = null
+
+        if (pr){
+            promise = pr.api.actualping()
+        }
+        else {
+            promise = Promise.resolve(false)
+        }
+
+        return promise.then(r => {
+            if(r){
+                return Promise.resolve()
+            }
+            else{
+                return self.get.working().then(wproxies => {
+                    if (wproxies.length){ 
+                        
+                        self.set.current(wproxies[0].id)
+
+                    }
+
+                    return Promise.resolve()
+                })
+            }
+        })
+    },
 
     self.init = function(){
         return internal.proxy.manage.init().then(r => {
 
-            internal.proxy.api.ping(proxies);
+            internal.proxy.api.ping(proxies).catch(e => {
+                console.log("ERROR", e)
+            })
 
             return Promise.resolve()
         })
@@ -854,8 +911,6 @@ var Api = function(app){
         proxies = []
         inited = false
     }
-
-    
 
     return self
 }   

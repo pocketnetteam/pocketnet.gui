@@ -876,6 +876,21 @@ var system16 = (function(){
 					]
 				},
 
+				memory : {
+					caption : "Memory",
+
+
+					series : [
+
+						{
+							path : 'memory.rss',
+							name : "RSS",
+							id : 'rss'
+						}
+					]
+				},
+				
+
 				signatures : {
 					caption : "Signed requests",
 					objects : 'server.middle.signatures',
@@ -902,6 +917,18 @@ var system16 = (function(){
 						}
 					]
 					//method : 'fromarray'
+				},
+
+				rmts : {
+					caption : "RMTS",
+					series : [
+
+						{
+							path : 'remote.size',
+							name : "RMTS",
+							id : 'rmts'
+						}
+					]
 				},
 
 				cache : {

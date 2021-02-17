@@ -19,10 +19,8 @@ var Remote = function(app){
 	var self = this;
 	var cache = [];
 	
-	var phlinks = [];
 	var loading = {};
 	var errors = {};
-
 	var ogcache = [];
 	var ogloading = [];
 
@@ -86,7 +84,7 @@ var Remote = function(app){
 				if(!error)
 				{
 
-					var size = 1.5 *  1024 * 1024
+					var size = 0.5 *  1024 * 1024
 
 					if(ishtml && (!response.headers['content-length'] || response.headers['content-length'] < size) && body.length < size)
 						clbk(body)
@@ -230,7 +228,7 @@ var Remote = function(app){
 				load.og(uri, function(og){
 					ogcache = _.last(ogcache, 3000)
 
-					ogloading[uri] = false
+					delete ogloading[uri]
 
 					ogcache.push({
 						url : uri,
@@ -260,6 +258,14 @@ var Remote = function(app){
 		
 							if (error){
 								errors[uri] = error
+
+								if(_.toArray(errors[uri]).length > 3000) {
+									errors = {}
+								}
+
+								if(clbk) clbk({})
+
+								return
 							}
 			
 							if(!data) data = {}
@@ -523,7 +529,11 @@ var Remote = function(app){
 
 	self.info = function(){
 		return {
-			size : f.roughSizeOfObject(cache)
+			size : JSON.stringify(cache).length +  JSON.stringify(ogcache).length + 
+				JSON.stringify(errors).length + 
+				JSON.stringify(loading).length + 
+				JSON.stringify(ogloading).length
+				
 		}
 	}
 

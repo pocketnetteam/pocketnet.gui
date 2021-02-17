@@ -25,8 +25,8 @@ var pocketnet = new Pocketnet()
 var nodes = [
 
 	/*{
-		host : '216.108.231.40',
-		port : 38081,
+		host : '192.168.0.33',
+		port : 37071,
 		ws : 8087,
 		nodename : 'Cryptoserver',
 		stable : true
@@ -126,6 +126,11 @@ var defaultSettings = {
 		dataPath: ''
     },
 	
+
+	/*rsa : {
+		private : '',
+		public : ''
+	}*/
 }
 
 
@@ -147,7 +152,8 @@ var state = {
 				binPath : settings.node.binPath,
 				dataPath: settings.node.dataPath
 			},
-			admins : settings.admins
+			admins : settings.admins,
+			//rsa : settings.rsa
 		}
 
 		exporting = cloneDeep(exporting)
