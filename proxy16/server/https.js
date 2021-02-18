@@ -25,6 +25,7 @@ var Server = function(settings, admins, manage){
 
     self.cache = new Cache()
     self.listening = false;
+    self.httplistening = false;
 
     self.authorization = {
 
@@ -94,6 +95,9 @@ var Server = function(settings, admins, manage){
 
     self.http = function(){
 
+        var port = 80
+
+
         return Promise.resolve()
 
         return new Promise((resolve, reject) => {
@@ -102,20 +106,15 @@ var Server = function(settings, admins, manage){
 
             httpserver = http.createServer(app)
             
-            httpserver.listen(1337);
+            httpserver.listen(port);
 
             httpserver.on('listening',function(){
-
-                console.log("LISTENING")
-
-                self.listening = settings.port || 8899
-
-                resolve()
+                self.httplistening = port
             });
 
-            httpserver.on('error',function(e){
-                reject(e) 
-            });
+            httpserver.on('error',function(e){});
+
+            resolve()
 
         })
        
@@ -204,7 +203,8 @@ var Server = function(settings, admins, manage){
             iplimiter : iplimiter.info(),
             middle : middle.info(compact),
             cache : self.cache.info(),
-            listening : self.listening
+            listening : self.listening,
+            httplistening : self.httplistening
         }
     }
 

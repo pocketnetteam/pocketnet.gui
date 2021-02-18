@@ -105,13 +105,6 @@
                     "**/cert.pem",
                     "**/key.pem"
                 ]
-            },
-            {
-                "from": "proxy16/static",
-                "to": "static",
-                "filter": [
-                    "**/"
-                ]
             }
         ],
         "publish": [

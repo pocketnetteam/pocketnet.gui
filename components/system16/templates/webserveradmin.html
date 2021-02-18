@@ -34,6 +34,27 @@
             <div class="setting togglebutton">
                 <div class="settingTable table">
                     <div class="label">
+                        <span>Domain</span>
+                    </div>
+
+                    <div class="value" sys="domain">
+                        <div class="input">
+                            <input type="text" class="domain" value="<%- typeof changes.domain != 'undefined' ? changes.domain : (system.server.domain || '')%>">
+                        </div>
+                    </div>
+
+                    <% if(typeof changes.domain != 'undefined') {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="domain"></i>
+                        </div>
+                    <% } %>
+
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
                         <span>Https port</span>
                     </div>
 

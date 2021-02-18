@@ -172,7 +172,7 @@ var Remote = function(app){
 								clbk(null)	
 						}
 
-					}, 100)
+					}, 100, 10000)
 				}
 				else
 				{
@@ -249,7 +249,7 @@ var Remote = function(app){
 						clbk(dt.og || {})	
 
 				
-				}, 100)
+				}, 100, 10000)
 			}
 			else{
 				ogloading[uri] = true
@@ -522,7 +522,7 @@ var Remote = function(app){
 						clbk(null)	
 				}
 
-			}, 100)
+			}, 100, 10000)
 		}
 		else
 		{

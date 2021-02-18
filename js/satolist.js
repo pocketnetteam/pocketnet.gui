@@ -17375,7 +17375,13 @@ Platform = function (app, listofnodes) {
             return self.app.api.wait.ready('use', 3000)
 
         }).then(r => {
-            return self.app.api.changeProxyIfNeed()
+
+            return new Promise((resolve, reject) => {
+                setTimeout(function(){
+                    self.app.api.changeProxyIfNeed().then(resolve).catch(reject)
+                }, 500)
+            })
+
         }).then(r => {
 
             self.ws = new self.WSn(self);
@@ -17694,8 +17700,8 @@ Platform = function (app, listofnodes) {
             if (interval)
                 clearInterval(interval);
 
-            if (!initial) {
-                initial = document.title
+            if(!initial) {
+                initial = document.title || "Pocketnet"
             }
 
             var i = 0;
@@ -17728,7 +17734,6 @@ Platform = function (app, listofnodes) {
             initial = '';
         }
 
-        document.title
 
         return self;
     }

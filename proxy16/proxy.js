@@ -20,6 +20,7 @@ var NodeManager = require('./node/manager.js');
 var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remote.js');
+var Proxies = require('./proxies.js');
 //////////////
 
 
@@ -35,10 +36,12 @@ var Proxy = function (settings, manage) {
     var firebase = new Firebase(settings.firebase);
     var wallet = new Wallet(settings.wallet);
     var remote = new Remote();
+    var proxies = new Proxies(settings.proxies)
 
     f.mix({ 
         wss, server, pocketnet, nodeControl, 
         remote, firebase, nodeManager, wallet,
+        proxies,
 
         proxy : self
     })
@@ -360,6 +363,10 @@ var Proxy = function (settings, manage) {
             return nodeManager.destroy()
         },
 
+        reservice : function(){
+            return nodeManager.reservice()
+        },  
+
         re : function(){
             return this.destroy().then(r => {
                 this.init()
@@ -399,11 +406,13 @@ var Proxy = function (settings, manage) {
                 addr : 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
             }
 
-           /* if (s.listening && w.listening){ 
+            /*if (s.listening && w.listening && settings.server.domain){ 
                 service.mainport = Number(s.listening)
                 service.wssport = Number(w.listening)
                 service.service = true
-                service.addr = 'rsa'
+                service.addr = settings.server.domain
+
+                console.log('service', service)
             }*/
 
             return service
@@ -568,7 +577,6 @@ var Proxy = function (settings, manage) {
                 return Promise.resolve()
             })
         }
-
     }
 
     self.apibypath = function(path){

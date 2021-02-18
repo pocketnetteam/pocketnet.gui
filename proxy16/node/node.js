@@ -524,6 +524,13 @@ var Node = function(options, manager){
             lastinfo = info
             lastinfoTime = f.now()
 
+            if (info.proxies){
+
+                self.proxies.kit.addlist(info.proxies || [])
+
+                //manager.proxy.kit.addproxies(info.proxies || [])
+            }
+
             self.addblock(info.lastblock)
             
             /*self.currentBlock = info.lastblock.height
@@ -601,6 +608,15 @@ var Node = function(options, manager){
 
         })
 
+    }
+
+    self.reservice = function(){
+        if (wss.service){
+            wss.service.disconnect()
+        }
+        else{
+            serviceConnection()
+        }
     }
 
     self.init = function(){

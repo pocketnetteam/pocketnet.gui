@@ -623,6 +623,8 @@ var Api = function(app){
                             current = 'pocketnet.app:8899:8099' //proxies[0].id
                         }
 
+                        console.log('current', current)
+
                         inited = true
 
                         return Promise.resolve()
@@ -845,7 +847,13 @@ var Api = function(app){
         },
 
         working : function(){
-            var promises = _.map(proxies, function(proxy){
+
+            var _proxies = _.filter(proxies, function(proxy){
+                return !proxy.direct
+            })
+
+
+            var promises = _.map(_proxies, function(proxy){
                 return proxy.api.actualping()
             })
 

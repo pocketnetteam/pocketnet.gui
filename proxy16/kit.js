@@ -31,13 +31,13 @@ var nodes = [
 		nodename : 'Cryptoserver',
 		stable : true
 	},*/
-	{
+	/*{
 		host : '64.235.45.119',
 		port : 38081,
 		ws : 8087,
 		name : 'CryptoserverSP',
 		stable : true
-	},
+	},*/
 
 	/*{
 		host : '216.108.231.40',
@@ -84,7 +84,7 @@ var defaultSettings = {
 		enabled : false,
 
 		captcha : true,
-		
+		host : '',
 		iplimiter : {
 			interval : 30000,
 			count  : 500,
@@ -136,6 +136,11 @@ var defaultSettings = {
     },
 	
 
+	proxies : {
+		dbpath : 'data/proxies',
+		explore : true
+	}
+
 	/*rsa : {
 		private : '',
 		public : ''
@@ -162,6 +167,9 @@ var state = {
 				dataPath: settings.node.dataPath
 			},
 			admins : settings.admins,
+			proxies : {
+				explore : settings.proxies.explore
+			}
 			//rsa : settings.rsa
 		}
 
@@ -263,6 +271,7 @@ var kit = {
 					var ctx = kit.manage.set.server
 					var notification = {}
 
+					if(typeof settings.domain != 'undefined') notification.domain = settings.domain
 					if(settings.ports) notification.ports = settings.ports
 					if(typeof settings.enabled) notification.enabled = settings.enabled
 					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
@@ -310,6 +319,13 @@ var kit = {
 								return Promise.resolve('ports error')
 							}))
 
+						if (typeof settings.domain != 'undefined') 
+							promises.push(ctx.domain(settings.domain).catch(e => {
+								console.error(e)
+
+								return Promise.resolve('domain error')
+							}))
+
 						if (typeof settings.enabled != 'undefined')  
 							promises.push(ctx.enabled(settings.enabled).catch(e => {
 								console.error(e)
@@ -325,6 +341,27 @@ var kit = {
 
 					
 
+				},
+				domain : function(domain){
+					if (settings.server.domain != 'domain'){
+						settings.server.domain = domain
+
+						var prx = null
+
+						return state.saverp().then(proxy => {
+
+							prx = proxy
+
+							return proxy.server.rews()
+						}).then(r => {
+
+							prx.nodeManager.reservice().catch(e => {})
+
+							return Promise.resolve(r)
+						})
+					}
+
+					return Promise.reject('nothingchanged') 
 				},
 				ports : function(httpsws){
 	
@@ -361,8 +398,18 @@ var kit = {
 								wss  : httpsws.wss
 							}
 		
+							var prx = null
+
 							return state.saverp().then(proxy => {
+
+								prx = proxy
+
 								return proxy.server.rews()
+							}).then(r => {
+
+								prx.nodeManager.reservice().catch(e => {})
+
+								return Promise.resolve(r)
 							})
 						}
 						

@@ -379,7 +379,11 @@ var Nodemanager = function(p){
         return best
     }
 
-
+    self.reservice = function(){
+        _.each(self.nodes, function(node){
+            node.reservice()
+        })
+    }
     //// ??
     self.select = function(n){
 

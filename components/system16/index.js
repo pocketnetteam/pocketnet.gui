@@ -347,7 +347,6 @@ var system16 = (function(){
 
 			ticksettings : function(settings, s, changed){
 
-
 				if (changed){
 					system = settings
 
@@ -392,14 +391,16 @@ var system16 = (function(){
 					stats = lastelements(stats, 1000)
 
 				}
+				
 
-				/*if (el.c){
+
+				if (el.c){
 					renders.nodecontentstate(el.c)
 					renders.nodescontenttable(el.c)
 					renders.webadminscontent(el.c)
 					renders.webdistributionwallets(el.c)
 					renders.webserverstatus(el.c)
-				}*/
+				}
 
 				setTimeout(function(){
 					makers.stats(true)
@@ -2020,6 +2021,21 @@ var system16 = (function(){
 							renders.webserveradmin(elc)
 						})
 
+						p.el.find('.domain').on('change', function(){
+							var domain = $(this).val()
+
+							$(this).val(domain)
+
+							if (domain == system.server.domain){
+								delete changes.server.domain
+							}
+							else{
+								changes.server.domain = domain
+							}
+
+							renders.webserveradmin(elc)
+						})
+
 						p.el.find('.httpsport').on('change', function(){
 							var port = $(this).val()
 
@@ -2035,7 +2051,6 @@ var system16 = (function(){
 								changes.server.https = port
 							}
 
-							
 
 							renders.webserveradmin(elc)
 						})
@@ -2746,6 +2761,15 @@ var system16 = (function(){
 				}
 			},
 
+			panel : function(){
+				renders.nodecontentmanage(el.c)
+				renders.nodecontentstate(el.c)
+				renders.nodescontenttable(el.c)
+				renders.webadminscontent(el.c)
+				renders.webdistributionwallets(el.c)
+				renders.webserveradmin(el.c)
+			},
+
 			stats : function(update){
 
 				if (stats){
@@ -2753,12 +2777,7 @@ var system16 = (function(){
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
 
-					renders.nodecontentmanage(el.c)
-					renders.nodecontentstate(el.c)
-					renders.nodescontenttable(el.c)
-					renders.webadminscontent(el.c)
-					renders.webdistributionwallets(el.c)
-					renders.webserveradmin(el.c)
+					
 				}
 
 			},
@@ -2848,6 +2867,8 @@ var system16 = (function(){
 
 					setTimeout(function(){
 						makers.stats()
+
+						renders.webserveradmin(el.c)
 					},500)	
 
 					if (actions.admin()){

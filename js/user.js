@@ -323,9 +323,7 @@ User = function(app, p) {
 
 	self.keysFromMnemo = function(mnemonic){
 
-		console.log('mnemonic', mnemonic)
 		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic)
-		console.log('mnemonic2', seed)
 
 		return self.keysFromSeed(seed)
 
