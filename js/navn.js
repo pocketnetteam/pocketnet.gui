@@ -1164,8 +1164,16 @@ Nav = function(app)
 					options.navPrefix = '/android_asset/www/';
 				}
 				else
+				if (window.cordova)
 				{
-					options.navPrefix = pathname
+					var arr = pathname.split("/");
+					arr.splice(arr.length-1, 1);
+
+					options.navPrefix = arr.join("/") + "/";
+
+				}
+				else {
+					options.navPrefix = pathname;
 				}
 			},
 
