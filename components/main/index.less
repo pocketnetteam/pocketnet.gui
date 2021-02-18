@@ -6,17 +6,23 @@
 
 	.addbutton{
 		position: fixed;
-		right : 2.5%;
-		bottom : 2.5%;
-		background: #00a3f7;
-		border : 1px solid #00a3f7;
+		right : 2 * @rhythm;
+		bottom : 2 * @rhythm;
+		background: fade(#00a3f7, 90);
 		color : #fff;
-		padding : 1.5 * @rhythm 4 * @rhythm;
-		border-radius: 30px;
+		border-radius: 44px;
+		line-height: 44px;
+		width : 44px;
+		text-align: center;
 		cursor: pointer;
 		display : none;
 		opacity: 0;
+		z-index: 999;
 		.transition(0.3s);
+
+		i{
+			font-size: 0.8em;
+		}
 
 		&.active{
 		}
@@ -27,16 +33,7 @@
 		}
 
 		&:hover{
-			background: transparent;
-			color : #00a3f7;
-		}
-
-
-		i{
-			width : 20px;
-		}
-
-		span{
+			background: @color-bright;
 		}
 
 		

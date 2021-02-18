@@ -281,7 +281,6 @@ var kit = {
 					}).then(() => {
 						var promises = []
 
-						console.log("settings", settings)
 
 						if (settings.firebase && settings.firebase.id) 
 							promises.push(ctx.firebase.id(settings.firebase.id).catch(e => {
@@ -334,7 +333,6 @@ var kit = {
 						wss : false
 					}
 
-					console.log('httpsws', httpsws)
 
 					if(!httpsws.https) httpsws.https = settings.server.ports.https
 					if(!httpsws.wss) httpsws.wss = settings.server.ports.wss
@@ -397,7 +395,6 @@ var kit = {
 	
 				enabled : function(v){
 
-					console.log('settings.server.enabled', settings.server.enabled, v)
 	
 					if (settings.server.enabled == v) return Promise.resolve() 
 						settings.server.enabled = v
@@ -586,7 +583,6 @@ var kit = {
 
 						}).then(addresses => {
 
-							console.log('privatekey', privatekey, addresses)
 
 							return r.importPrivKey(privatekey)
 						}).catch(e => {
@@ -661,7 +657,6 @@ var kit = {
 					return proxy.nodeControl.kit.install()
 				}).then(r => {
 
-					console.log("DONE", r)
 
 					return Promise.resolve(r)
 				})

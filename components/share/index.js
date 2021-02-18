@@ -675,7 +675,7 @@ var share = (function(){
 
 			post : function(clbk, p){
 				console.log("POST")
-
+			
 
 				el.postWrapper.removeClass('showError');
 
@@ -755,10 +755,9 @@ var share = (function(){
 
 									if(!essenseData.notClear){
 										currentShare.clear();
-
-										console.log("CLEARED", currentShare)
-
 										self.app.nav.api.history.removeParameters(['repost'])
+
+										self.closeContainer()
 
 										if(!essenseData.share){
 											state.save()

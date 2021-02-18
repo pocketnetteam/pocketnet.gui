@@ -228,7 +228,6 @@ var Server = function(settings, admins, manage){
                             result._success(d.data, d.code)
                         }).catch(e => {
 
-                            console.log("E", e)
 
                             result._fail(e, e.code)
                         })

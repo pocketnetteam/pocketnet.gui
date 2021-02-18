@@ -369,13 +369,11 @@ var Remote = function(app){
 		},
 
 		ogf : function(uri, clbk){
-			console.log("'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri)",'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri))
 			request({
 				uri : 'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri),
 				timeout : 30000,
 				type : "POST"
 			}, function(error, response, body){
-				console.log("B", body, error)
 
 				var d = {}
 
