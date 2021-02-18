@@ -404,12 +404,31 @@ Comment = function(txid){
 
 							fail : function(d){
 
-								//self.images.v[index] = 'imagenotloaded'
-								
+								app.ajax.run({
+									type : "POST",
+									up1 : true,
+									data : {
+										file : r[1]
+									},
+		
+									success : function(data){
+		
+										self.images.v[index] = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
 
-								index++;
-
-								p.success();
+										console.log('self.images.v[index]', self.images.v[index])
+										p.success();
+		
+									},
+		
+									fail : function(d){
+		
+										self.images.v[index] = ''
+		
+										//index++;
+		
+										p.success();
+									}
+								})
 							}
 						})
 
@@ -418,7 +437,7 @@ Comment = function(txid){
 				}
 				else
 				{
-					index++;
+					//index++;
 					p.success();
 				}
 
@@ -1085,12 +1104,35 @@ Share = function(lang){
 
 							fail : function(d){
 
-								//self.images.v[index] = 'imagenotloaded'
+
+								app.ajax.run({
+									type : "POST",
+									up1 : true,
+									data : {
+										file : r[1]
+									},
+		
+									success : function(data){
+		
+										self.images.v[index] = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+
+										console.log('self.images.v[index]', self.images.v[index])
+										p.success();
+		
+									},
+		
+									fail : function(d){
+		
+										self.images.v[index] = ''
+		
+										//index++;
+		
+										p.success();
+									}
+								})
 								
 
-								index++;
-
-								p.success();
+								
 							}
 						})
 
@@ -1099,7 +1141,7 @@ Share = function(lang){
 				}
 				else
 				{
-					index++;
+					//index++;
 					p.success();
 				}
 

@@ -87,6 +87,8 @@ Application = function(p)
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
+		imageServerup1 : p.imageServerup1 || 'https://pocketnet.app:8092/up',
+
 		////////////// Will remove with Matrix
 		//ws : p.ws || "wss://pocketnet.app:8088",
 		rtc : p.rtc || 'https://pocketnet.app:9001/',

@@ -7304,7 +7304,7 @@
 			//	data.system = app.name;
 			
 			/*---------------------------------------------------------------------------------------*/
-			if (user !== false && user.extendAjaxData &&  (!p.anon || p.anon !== true) && !p.imgur) user.extendAjaxData(data, url);		
+			if (user !== false && user.extendAjaxData &&  (!p.anon || p.anon !== true) && !p.imgur && !p.up1) user.extendAjaxData(data, url);		
 			/*---------------------------------------------------------------------------------------*/
 
 			/*---------------------------------------------------------------------------------------*/
@@ -7342,7 +7342,7 @@
 
 					if (storage.root) storage = storage.root;
 
-					if(!p.imgur){
+					if(!p.imgur && !p.up1){
 						status = (storage.Result || storage.status || "").toLowerCase();
 
 						if(!status && storage.result && !storage.error){
@@ -7351,7 +7351,7 @@
 					}
 					else
 					{
-						if(storage.success){
+						if (storage.success){
 							status = 'success'
 						}
 					}
@@ -7581,6 +7581,18 @@
 					        Authorization: auth,
 					        Accept: 'application/json'
 					    }
+					}
+					
+				}
+
+				if (p.up1){
+					ap.url = app.imageServerup1;
+					delete data.Action;
+
+					if(user){
+
+						data.api_key = 'c61540b5ceecd05092799f936e277552'
+
 					}
 					
 				}
