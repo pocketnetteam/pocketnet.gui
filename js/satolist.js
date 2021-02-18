@@ -472,6 +472,12 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        "28": {
+            message: function () {
+                return "Wait a bit before taking action"
+            }
+        },
+
         "27": {
             message: function () {
                 return self.app.localization.e('e13246')
@@ -3243,6 +3249,13 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
 
+                downvotes: {
+                    name: 'Downvotes receive',
+                    id: 'downvotes',
+                    type: "BOOLEAN",
+                    value: false
+                },
+
                 comments: {
                     name: self.app.localization.e('e13271'),
                     id: 'comments',
@@ -3420,6 +3433,7 @@ Platform = function (app, listofnodes) {
                             win: options.win,
                             transactions: options.transactions,
                             upvotes: options.upvotes,
+                            downvotes: options.downvotes,
                             comments: options.comments,
                             answers: options.answers,
                             followers: options.followers,
@@ -4342,6 +4356,10 @@ Platform = function (app, listofnodes) {
                     
                     e.notifications = firstEls(e.notifications, 100)
 
+                    console.log("SAVE NOTIFICATIONS", e.notifications)
+
+                    
+
                     localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
                 }
 
@@ -4415,7 +4433,7 @@ Platform = function (app, listofnodes) {
                 if (exported.block)
                     this.storage.block = exported.block
 
-
+                console.log("imported", imported)
             },
 
             export: function () {
@@ -4611,6 +4629,8 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
+                    console.log("getmissedinfo", n.storage.block)
+
                     self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, n.storage.block]).then(d => {
 
                         d || (d = [{ block: blockps, cntposts: 0 }])
@@ -4644,20 +4664,6 @@ Platform = function (app, listofnodes) {
                             clbk(e)
                     })
 
-                    /*self.app.ajax.rpc({
-                        method: 'getmissedinfo',
-                        parameters: [self.sdk.address.pnet().address, n.storage.block],
-                        success: function (d) {
-
-
-                            
-
-                        },
-                        fail: function (d, e) {
-
-                            
-                        }
-                    })*/
                 }
 
 
@@ -15255,6 +15261,8 @@ Platform = function (app, listofnodes) {
             event: {
                 loadMore: function (data, clbk, wa) {
 
+                    console.log("LOADMORE EVENT")
+
                     if (data.addrFrom) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
@@ -15505,12 +15513,25 @@ Platform = function (app, listofnodes) {
 
                     if (data.mesType == 'upvoteShare' && data.share) {
 
-                        if (data.upvoteVal > 2 && (!platform.sdk.usersettings.meta.upvotes || platform.sdk.usersettings.meta.upvotes.value)) {
+                        var tkey = 'upvoteShareMessage'
+
+                        if (
+
+                            (data.upvoteVal <= 2 && platform.sdk.usersettings.meta.downvotes.value) ||
+                            
+                            (data.upvoteVal > 2 &&  platform.sdk.usersettings.meta.upvotes.value) 
+                            
+                        )
+                            {
+
+                                if(data.upvoteVal <= 2){
+                                    tkey = 'downvoteShareMessage'
+                                }
 
                             var star = self.tempates.star(data.upvoteVal)
 
                             text = '<div class="text">' + self.tempates.share(data.share) + '</div>'
-                            caption = platform.app.localization.e('upvoteShareMessage')
+                            caption = platform.app.localization.e(tkey)
                             extra = star
 
 

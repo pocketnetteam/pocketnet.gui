@@ -135,7 +135,10 @@ var notifications = (function(){
 					
 					var tpl = m.fastMessage(notification)
 
-					if(!tpl) return false
+					if(!tpl) {
+						console.log(notification)
+						return false
+					}
 
 					return true
 				})

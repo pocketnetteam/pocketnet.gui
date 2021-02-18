@@ -942,3 +942,6 @@ ____loclib.system16 = {
 
     }
 }
+
+
+____loclib.downvoteShareMessage = "downvoted your post"

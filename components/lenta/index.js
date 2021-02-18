@@ -573,6 +573,21 @@ var lenta = (function(){
 				}
 			},
 
+			unblock : function(id, clbk){
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if (share){
+					
+					self.app.platform.api.actions.unblocking(share.address, function (tx, error) {
+						if (!tx) {
+							self.app.platform.errorHandler(error, true)
+						}
+					})
+
+					
+				}
+			},
+
 			donate : function(id, clbk){
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
@@ -588,8 +603,6 @@ var lenta = (function(){
 					var link = 'send?address=' + share.address + '&amount=1&message='
 					+hexEncode(self.app.localization.e('postlabel') + ' - ' + t.substr(0, 20) + ((t.length <= 20) ? "" : "..."))
 					+'&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
-
-
 					
 
 					self.fastTemplate('donation', function(rendered){
@@ -1512,6 +1525,14 @@ var lenta = (function(){
 
 
 					actions.sharesocial(shareId)
+			},
+
+			unblock: function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+					actions.unblock(shareId)
+
 			},
 
 			donate : function(){
@@ -2724,8 +2745,10 @@ var lenta = (function(){
 			el.c.on('click', '.showMore', events.openPost)
 
 			el.c.on('click', '.forrepost', events.repost)
-			
 
+
+			el.c.on('click', '.unblockbutton', events.unblock)
+			
 			/*if(isMobile()){
 
 				el.c.on('click', '.videoTips', events.fullScreenVideoMobile)
