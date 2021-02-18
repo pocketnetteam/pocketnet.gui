@@ -383,6 +383,8 @@ var Nodemanager = function(p){
         _.each(self.nodes, function(node){
             node.reservice()
         })
+
+        return Promise.resolve()
     }
     //// ??
     self.select = function(n){
