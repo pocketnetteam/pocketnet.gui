@@ -74,17 +74,27 @@ Nav = function(app)
 		}
 	}
 
+	var indexpage = 'index'
+
+	if (app.curation()){
+		indexpage = 'userpage'
+	}
+
 	var backManager = {
 
+		getindex : function(){
+			return indexpage
+		},
+
 		chain : [{
-			href : 'index',
+			href : indexpage,
 			scroll : 0
 		}],
 
 		clearAll : function(){
 			
 			var nchain = [{
-				href : 'index',
+				href : indexpage,
 				scroll : 0
 			}]
 
@@ -96,7 +106,7 @@ Nav = function(app)
 		clear : function(){
 			
 			var nchain = [{
-				href : 'index',
+				href : indexpage,
 				scroll : 0
 			}]
 
@@ -148,7 +158,7 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == 'index'){
+				if (khref == indexpage){
 					backManager.clearAll()
 				}
 				else{
@@ -1222,7 +1232,9 @@ Nav = function(app)
 		links : core.links,
 		go : core.go,
 		ini : core.openInitialModules,
-
+		backChainIndex : function(){
+			return backManager.getindex()
+		},
 		backChainGet : function(){
 			return backManager.get()
 		},

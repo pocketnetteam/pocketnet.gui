@@ -4339,7 +4339,7 @@ Platform = function (app, listofnodes) {
                         return makeid()
 
                     })
-
+                    
                     e.notifications = firstEls(e.notifications, 100)
 
                     localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
@@ -9928,7 +9928,6 @@ Platform = function (app, listofnodes) {
 
                         _.each(inputs, function (i) {
 
-                            console.log("I", i)
 
                             if (i.address.indexOf("P") == 0) {
 
@@ -10007,7 +10006,6 @@ Platform = function (app, listofnodes) {
 
                         var tx = txb.build()
 
-                        console.log('tx', tx)
 
                         return tx;
 
@@ -10764,7 +10762,6 @@ Platform = function (app, listofnodes) {
                 pack.private.push(mk)
 
 
-                console.log('address', address, mk)
 
                 self.cryptography.api.aeswc.encryption(_key, mk, {}, function (encrypted) {
 
@@ -10810,11 +10807,9 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.pool;
                 var pool = s.get();
 
-                console.log("HERE")
 
                 var keyPair = self.app.user.keysPairFromPrivate(mnemonic)
 
-                console.log('keyPair', keyPair)
 
                 if(!keyPair){
 
@@ -13887,7 +13882,6 @@ Platform = function (app, listofnodes) {
             },
 
             comment: function (comment, share) {
-
                 var t = comment.renders.preview();
 
 
@@ -13904,10 +13898,7 @@ Platform = function (app, listofnodes) {
                     h += '&rdquo;</span></div>'
                 }
 
-
-
                 if (comment.images.length) {
-
 
                     h += '<div class="commentimages commentprev">'
                     h += '<div class="imagesContainer">'
@@ -13925,8 +13916,6 @@ Platform = function (app, listofnodes) {
 
                 }
 
-
-
                 if (share) {
                     h += '<div class="commentshare">'
                     h += share
@@ -13934,8 +13923,6 @@ Platform = function (app, listofnodes) {
                 }
 
                 h += '</div>'
-
-
 
                 h += '</div>'
 
@@ -16076,7 +16063,7 @@ Platform = function (app, listofnodes) {
 
                             if (html) {
 
-                                if (!self.showedIds[data.txid]) {
+                                if(!self.showedIds[data.txid]) {
                                     self.showedIds[data.txid] = true
 
 
@@ -16089,7 +16076,6 @@ Platform = function (app, listofnodes) {
                                     }
 
                                     data.loaded = true
-
 
                                     platform.sdk.notifications.addFromWs(data)
 
@@ -17303,7 +17289,6 @@ Platform = function (app, listofnodes) {
 
     self.update = function (clbk) {
 
-        console.log("@clisda")
 
         if (self.updating || self.preparingUser || self.preparing) return;
 

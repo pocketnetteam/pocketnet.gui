@@ -417,7 +417,6 @@ Application = function(p)
 	self.modules = {};
 
 	self.curation = function(){
-
 		if(typeof isios != 'undefined' && isios()) return true
 		return false
 	}
@@ -445,6 +444,10 @@ Application = function(p)
 			childrens : ['userpage', 'share', 'author', 'post']
 		}
 
+	}
+
+	if(self.curation()){
+		delete self.backmap.index
 	}
 
 	self.options.backmap = self.backMap

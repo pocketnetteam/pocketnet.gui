@@ -81,28 +81,31 @@
     <% if(isMobile()) {%>
     <div class="additional addmenu">
 
+        <% if(!app.curation()) {%>
 
+            <div class="reportCaption">
+                <div class="label">
+                    <a href="help"><%=e('e13183')%></a>
+                </div>
+            </div>
+
+        <% } %>
 
         <div class="reportCaption">
             <div class="label">
-                <a href="help"><%=e('e13183')%></a>
+                <a href="https://pocketnet.app/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
             </div>
         </div>
-
-        <!--<div class="reportCaption">
-				<div class="label">
-					<a href="https://pocketnet.app/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
-				</div>
-			</div>
            
-        <div class="reportCaption">
-            <div class="label">
-                <a href="donations"><%=e('donate')%></a>
+
+        <% if(!app.curation()) {%>
+            <div class="reportCaption">
+                <div class="label">
+                    <a href="donations"><%=e('donate')%></a>
+                </div>
             </div>
-        </div>
--->
 
-
+        <% } %>
 
     </div>
 

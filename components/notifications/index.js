@@ -124,6 +124,22 @@ var notifications = (function(){
 
 				var currentDate = new Date();
 
+				_notifications = _.filter(_notifications, function(notification){
+					var m = null;
+
+					if (notification.mesType) m = self.app.platform.ws.messages[notification.mesType]
+					if (notification.msg && !m) m = self.app.platform.ws.messages[notification.msg]
+
+
+					if(!m) return false
+					
+					var tpl = m.fastMessage(notification)
+
+					if(!tpl) return false
+
+					return true
+				})
+
 				var grou = group(_notifications, function(n){
 
 					if (p.now) return 'ntnow';
@@ -208,15 +224,12 @@ var notifications = (function(){
 
 					el.loader.addClass('hidden')
 					el.empty.addClass('hidden')
-					
-
 					el.error.removeClass('hidden')
 
 					return
 				}
 
 				el.error.addClass('hidden')
-
 
 				if (self.app.platform.sdk.notifications.loading){
 					el.loader.removeClass('hidden')
@@ -225,10 +238,12 @@ var notifications = (function(){
 					el.loader.addClass('hidden')
 
 					if(el.c.find('.notification').length){
-						el.empty.removeClass('hidden')
+						el.empty.addClass('hidden')
 					}
 					else{
+						el.empty.removeClass('hidden')
 						el.loader.addClass('hidden')
+
 					}
 				}
 			}

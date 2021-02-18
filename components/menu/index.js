@@ -249,8 +249,23 @@ var menu = (function(){
 
 					var unseen = function(){
 
-						return _.filter(self.app.platform.sdk.notifications.storage.notifications, function(n){
-							if(!n.seen) return true
+						return _.filter(self.app.platform.sdk.notifications.storage.notifications, function(notification){
+							if(notification.seen) return false
+
+							var m = null;
+
+							if (notification.mesType) m = self.app.platform.ws.messages[notification.mesType]
+							if (notification.msg && !m) m = self.app.platform.ws.messages[notification.msg]
+
+
+							if(!m) return false
+							
+							var tpl = m.fastMessage(notification)
+
+							if(!tpl) return false
+
+
+							return true
 						})
 
 					}

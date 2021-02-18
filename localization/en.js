@@ -814,7 +814,7 @@ ____loclib.e13347 = "Updates to Pocketnet are available. Apply the updates now?"
 ____loclib.e13348 = "No, later"
 ____loclib.e13349 = "Updates to Pocketnet are available. Go to the page to download the new version?"
 ____loclib.e13350 = 'Join Pocketnet & Earn Pocketcoin Now'
-____loclib.e13351 = 'Please write a few words about yourself to help people decide if they want to follow you'
+____loclib.e133512 = 'Please write a few words about yourself to help people decide if they want to follow you'
 ____loclib.e13351 = 'Pocketnet chat'
 ____loclib.e13352 = 'You do not have chat priviliges'
 
