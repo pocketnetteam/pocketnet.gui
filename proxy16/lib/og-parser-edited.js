@@ -329,7 +329,6 @@ var parser = new htmlparser.Parser({
   }
 });
 var parsebody = function(body, callback){
-  console.log('body', body)
   parser.write(body);
   parser.end();
 

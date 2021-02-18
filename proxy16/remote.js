@@ -13,7 +13,7 @@ var ogParser = require("./lib/og-parser-edited.js");
 var iconv = require('iconv-lite');
 const fetch = require('node-fetch'); 
 const autoenc = require('node-autodetect-utf8-cp1251-cp866');
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 var Remote = function(app){
 
 	var self = this;
@@ -23,6 +23,21 @@ var Remote = function(app){
 	var errors = {};
 	var ogcache = [];
 	var ogloading = [];
+
+	var hexEncode = function(text)
+	{
+	    var ch = 0;
+	    var result = "";
+	    for (var i = 0; i < text.length; i++)
+	    {
+	        ch = text.charCodeAt(i);
+	        if (ch > 0xFF) ch -= 0x350;
+	        ch = ch.toString(16);
+	        while (ch.length < 2) ch = "0" + ch;
+	        result += ch;
+	    }
+	    return result;
+	}
 
 	var gethead = function(body){
 
@@ -95,7 +110,6 @@ var Remote = function(app){
 
 				var ishtml = response && response.headers && response.headers['content-type'] && response.headers['content-type'].indexOf('html') > -1;
 
-				console.log(ishtml, error)
 			  
 				if(!error)
 				{
@@ -240,7 +254,7 @@ var Remote = function(app){
 			else{
 				ogloading[uri] = true
 
-				load.og(uri, function(og){
+				load.ogf(uri, function(og){
 					ogcache = _.last(ogcache, 3000)
 
 					delete ogloading[uri]
@@ -264,7 +278,6 @@ var Remote = function(app){
 
 		og : function(uri, clbk){
 
-			console.log("LOAD OG", uri)
 
 			load.url(uri, function(r){
 
@@ -275,7 +288,6 @@ var Remote = function(app){
 
 						ogParser(gethead(r), function(error, data) {
 
-							console.log(error)
 
 		
 							if (error){
@@ -337,7 +349,6 @@ var Remote = function(app){
 					}
 
 					catch(e){
-						console.log("E", e)
 						errors[uri] = 'nc'
 
 						if(clbk) clbk({})
@@ -355,6 +366,31 @@ var Remote = function(app){
 				
 			})
 			
+		},
+
+		ogf : function(uri, clbk){
+			console.log("'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri)",'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri))
+			request({
+				uri : 'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri),
+				timeout : 30000,
+				type : "POST"
+			}, function(error, response, body){
+				console.log("B", body, error)
+
+				var d = {}
+
+				try{
+					d = JSON.parse(body || "{}")
+					d = d.data || {}
+				}
+				catch(e){
+					console.log("E", e)
+				}
+
+				if (clbk){
+					clbk(d.og || {})
+				}
+			})
 		}
 	}
 
