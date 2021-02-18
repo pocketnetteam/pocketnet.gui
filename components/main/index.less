@@ -482,16 +482,27 @@ html.stblack{
 #main{
 	.addbutton{
 		
-		display : none;
+		display : none!important;
 		
 		&.active{
-			display: none;
+			display: none!important;
 		}
 
 	}
 }
 }
 @media only screen and (max-width: 768px) {
+	#main{
+		.addbutton{
+			
+			display : none!important;
+			
+			&.active{
+				display: none!important;
+			}
+	
+		}
+	}
 	#main{
 		min-height: 1024px;
 
