@@ -138,7 +138,6 @@ var Wss = function(node, service){
                     return
                 }
 
-                if(service) console.log(data)
 
                 if (data.msg == 'new block' && service){
                 

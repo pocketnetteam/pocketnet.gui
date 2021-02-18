@@ -21,6 +21,8 @@ var tagcloud = (function(){
 		var renders = {
 			tags : function(tags, clbk){
 
+				if(!el.c) return
+
 				if(!tags.length){
 					el.c.addClass('hidden')
 				}
