@@ -17370,7 +17370,6 @@ Platform = function (app, listofnodes) {
 
         //self.sdk.proxy.info()
 
-
         self.app.api.initIf().then(r => {
 
             return self.app.api.wait.ready('use', 3000)
