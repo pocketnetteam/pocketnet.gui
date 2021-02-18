@@ -13,7 +13,7 @@
                     <div class="admin table">
 
                         <div class="iconWrapper">
-                            <a href="<%-app.platform.api.authorlink(uadmin)%>">
+                            <% if(!app.curation()) {%> <a href="<%-app.platform.api.authorlink(uadmin)%>"> <% } %>
 
                                 <% var src = user.image  %>
 
@@ -24,15 +24,15 @@
                                         <% } %>
                                     </div>
                                 </div>
-                            </a>
+                            <% if(!app.curation()) {%>  </a> <% } %>
 
                         </div>
                         
                         <div class="nameWrapper">
 
-                            <a href="<%-app.platform.api.authorlink(uadmin)%>">
+                            <% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(uadmin)%>"><% } %>
                                 <%- user.name || uadmin %>
-                            </a>
+                            <% if(!app.curation()) {%></a><% } %>
                             
                         </div>			
                         
