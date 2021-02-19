@@ -9109,7 +9109,7 @@ Platform = function (app, listofnodes) {
                     var a = self.sdk.address.pnet();
 
                     if (a) {
-                        self.app.settings.set(self.sdk.address.pnet().address, 'temp', JSON.stringify(self.sdk.node.transactions.temp))
+                        self.app.settings.set(self.sdk.address.pnet().address, 'temp2', JSON.stringify(self.sdk.node.transactions.temp))
                     }
 
                     if (clbk)
@@ -9122,7 +9122,7 @@ Platform = function (app, listofnodes) {
                     var a = self.sdk.address.pnet();
 
                     if (a) {
-                        self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp') || "{}")
+                        self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp2') || "{}")
                     }
                     else {
                         self.sdk.node.transactions.temp = {};
