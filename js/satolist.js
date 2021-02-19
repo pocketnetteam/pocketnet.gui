@@ -22,6 +22,8 @@ Platform = function (app, listofnodes) {
     var nshowed = false;
     var TXFEE = 1;
 
+    var smulti = 100000000
+
     var sm = new nModule();
         sm.ajax = app.ajax;
         sm.app = app;
@@ -4338,11 +4340,27 @@ Platform = function (app, listofnodes) {
             },
             load: function () {
                 this.clearlocalstorage()
-                this.import(JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}"))
+
+                var old = {}
+
+                try {
+                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}")
+                }
+                catch (e){}
+
+                this.import(old)
             },
             save: function () {
                 this.clearlocalstorage()
                 var e = this.export();
+
+
+                var old = {}
+
+                try {
+                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}")
+                }
+                catch (e){}
 
                 if (e.notifications.length && e.block > blockps && this.inited == true) {
 
@@ -4356,9 +4374,15 @@ Platform = function (app, listofnodes) {
                     
                     e.notifications = firstEls(e.notifications, 100)
 
-                    console.log("SAVE NOTIFICATIONS", e.notifications)
 
-                    
+                    if(old.block && e.block){
+                        if(old.block > e.block){
+
+                            console.log("CANTSAVE")
+
+                            return
+                        }
+                    }
 
                     localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
                 }
@@ -5907,7 +5931,7 @@ Platform = function (app, listofnodes) {
                         d.Rate || (d.Rate = [])
 
                         _.each(d.Rate, function (r, i) {
-                            rates[r.Currency.toLowerCase()] = Number(r.Rate) / 100000000
+                            rates[r.Currency.toLowerCase()] = Number(r.Rate) / smulti
                         })
 
                         if (clbk)
@@ -6061,6 +6085,49 @@ Platform = function (app, listofnodes) {
                 })
             },
 
+            saveTempInfoWallet : function(txid, inputs, outputs){
+                console.log('txid, inputs, outputs', txid, inputs, outputs)
+
+                if(!txid) return
+
+                var temp = self.sdk.node.transactions.temp;
+                var tempOptions = self.sdk.node.transactions.tempOptions;
+                var obj = {
+                    type : 'wallet',
+                    txid : txid
+                }
+
+                var count = deep(tempOptions, obj.type + ".count") || 'many'
+
+                if(!temp[obj.type] || count == 'one') {
+                    temp[obj.type] = {};
+                }   
+
+                console.log('txid', txid)
+
+                temp[obj.type][txid] = obj;
+
+                obj.inputs = inputs
+                obj.outputs = outputs
+
+                self.sdk.node.transactions.saveTemp()
+            },
+
+            txBaseFeesWithCache : function(address, outputs, keyPair, feerate, clbk){
+                self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function(err, txid, inputs, outputs){
+                    if(err){
+                        if(clbk) clbk(err)
+                    }
+
+                    else{
+                        
+
+                        if (clbk)
+                            clbk(null, d)
+                    }
+                })  
+            },  
+
             txbaseFees: function (address, outputs, keyPair, feerate, clbk) {
                 self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
 
@@ -6100,7 +6167,7 @@ Platform = function (app, listofnodes) {
                                         self.app.platform.sdk.node.transactions.clearUnspents(ids)
 
                                         if (clbk)
-                                            clbk(null, d)
+                                            clbk(null, d, inputs, _outputs)
                                     }
                                 })
                             }
@@ -6109,22 +6176,6 @@ Platform = function (app, listofnodes) {
                 }, true)
             },
 
-            sendchecking: function () {
-                self.app.ajax.api({
-                    action: 'send',
-                    data: {
-                        value: 0.5,
-                        address: 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
-                        private: 'drip enhance business garage transfer planet phrase course prosper myth blade sample'
-                    },
-                    success: function (d) {
-
-                    },
-                    fail: function (d) {
-
-                    }
-                })
-            },
 
             embed: function (outputs, embdedtext) {
                 if (embdedtext) {
@@ -6162,7 +6213,9 @@ Platform = function (app, listofnodes) {
 
                     this.embed(outputs, embdedtext)
 
-                    self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function (err, d) {
+                    console.log("SEND")
+
+                    self.sdk.wallet.txBaseFeesWithCache(address, outputs, keyPair, feerate, function (err, d) {
 
                         if (err) {
                             if (clbk)
@@ -6196,7 +6249,7 @@ Platform = function (app, listofnodes) {
 
                     this.embed(outputs, embdedtext)
 
-                    self.sdk.wallet.txbaseFees(address, outputs, keyPair, feerate, function (err, d) {
+                    self.sdk.wallet.txBaseFeesWithCache(address, outputs, keyPair, feerate, function (err, d) {
 
                         if (err) {
                             if (clbk)
@@ -8839,49 +8892,6 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
-                kr: function (amount, count, clbk) {
-                    var address = app.platform.sdk.address.pnet().address
-
-                    var outputs = [];
-                    var part = 0;
-
-
-                    app.platform.sdk.node.transactions.get.balance(function (a) {
-
-                        amount = Math.min(a, amount);
-
-                        part = amount / count;
-
-                        if (part > 0.01) {
-
-                            for (var i = 0; i < count; i++) {
-                                outputs.push({
-                                    address: 'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
-                                    amount: part
-                                })
-                            }
-
-                            app.platform.sdk.wallet.sendmany('', outputs, function (err, r) {
-                                if (err) {
-                                    console.log("ERROR, SEND TO KRAN", err)
-                                }
-
-                                else {
-                                    if (clbk)
-                                        clbk()
-                                }
-                            })
-
-                        }
-
-                        else {
-                            console.log("ERROR, DUST")
-                        }
-
-
-                    }, address, true, true)
-                },
-
                 getCoibaseType: function (tx, address) {
 
                     var type = null;
@@ -9001,7 +9011,7 @@ Platform = function (app, listofnodes) {
 
                             var t = {
                                 txid: tx.txid,
-                                vout: vout.n,
+                                vout: Number(vout.n),
                                 address: address,
                                 confirmations: tx.confirmations,
                                 coinbase: coinbase || tx.coinstake,
@@ -9143,14 +9153,30 @@ Platform = function (app, listofnodes) {
                     return finded
                 },
 
-                clearTemp: function (txid, vout) {
+                clearTempHard: function(){
+
+                    self.sdk.node.transactions.temp = {};
+                    self.sdk.node.transactions.saveTemp();
+
+                    _.each(self.sdk.node.transactions.clbks, function (c) {
+                        c();
+                    })
+                },
+
+                clearTemp: function (txid, vout, dbg) {
                     var t = this.temp;
 
                     var finded = null;
 
                     /*return*/
 
-                    _.each(t, function (ts) {
+
+                    if (dbg)
+                        console.log('txid, vout', txid, vout)
+
+
+                    _.each(t, function (ts, w) {
+                        
 
                         var _finded = ts[txid]
 
@@ -9165,10 +9191,10 @@ Platform = function (app, listofnodes) {
                             }
 
                             else {
+
                                 if (_finded.outputs[vout]) {
                                     _finded.outputs[vout].deleted = true;
                                 }
-
 
                                 var outs = _.filter(_finded.outputs, function (o) {
                                     return !o.deleted
@@ -9208,7 +9234,6 @@ Platform = function (app, listofnodes) {
                     var deleted = false;
 
                     _.each(t, function (ts) {
-
                         _.each(ts, function (alias) {
                             temps.push(alias)
                         })
@@ -9223,9 +9248,7 @@ Platform = function (app, listofnodes) {
                                     _.each(t, function (ts) {
 
                                         if (ts[p.item.txid]) {
-
                                             deleted = true
-
                                             delete ts[p.item.txid]
                                         }
 
@@ -9243,11 +9266,9 @@ Platform = function (app, listofnodes) {
                             success: function () {
 
                                 if (deleted) {
-
                                     _.each(self.sdk.node.transactions.clbks, function (c) {
                                         c();
                                     })
-
                                 }
 
                                 if (clbk)
@@ -9263,9 +9284,7 @@ Platform = function (app, listofnodes) {
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
 
                             if (clbk) {
-
                                 clbk((deep(d, 'data.code') == -5) || (deep(d, 'confirmations') > 0))
-
                             }
                         })
 
@@ -9301,13 +9320,72 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                tempBalance: function () {
-                    var inputs = this.tempInputs()
+                tempOutputs: function () {
 
+                    if(!self.sdk.address.pnet()) return []
+
+                    var t = this.temp;
+
+                    var outputs = [];
+                    var myaddresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
+
+
+
+                    _.each(t, function (ts) {
+
+                        _.each(ts, function (alias) {
+
+                            if (alias.outputs) {
+
+                                _.each(alias.outputs, function (i) {
+
+
+                                    var f = _.find(myaddresses, function(a){
+                                        if(a == i.address) return true
+                                    })
+
+                                    if (f)
+                                        outputs.push(i)
+                                })
+
+                            }
+                        })
+                    })
+
+                    return outputs
+
+                },
+
+                tempBalanceOutputs: function () {
+                    var outputs = this.tempOutputs()
+                    console.log("outputs", outputs, _.reduce(outputs, function (m, i) {
+
+                        if(i.deleted) return m
+
+                        return m + i.amount
+
+                    }, 0))
+
+                    return _.reduce(outputs, function (m, i) {
+                        if(i.deleted) return m
+
+                        return m + i.amount
+
+                    }, 0)
+                },
+
+                tempBalance: function () {
+
+                    return this.tempBalanceOutputs()
+
+                    var inputs = this.tempInputs()
+                    var outputs = this.tempOutputs()
+
+                    
 
                     return _.reduce(inputs, function (m, i) {
 
-                        return m + i.amount
+                        return m + i.amount / smulti
 
                     }, 0)
                 },
@@ -9387,7 +9465,6 @@ Platform = function (app, listofnodes) {
 
                     _.each(txids, function (id) {
 
-
                         _.each(s.unspent, function (unspents, address) {
 
                             var r = removeEqual(unspents, {
@@ -9406,8 +9483,6 @@ Platform = function (app, listofnodes) {
                             }
 
                         })
-
-
 
                     })
 
@@ -9599,7 +9674,7 @@ Platform = function (app, listofnodes) {
 
 
                                     _.each(d, function (u) {
-                                        self.sdk.node.transactions.clearTemp(u.txid, u.vout - 1);
+                                        self.sdk.node.transactions.clearTemp(u.txid, u.vout);
                                     })
 
                                     _.each(addresses, function (address) {
@@ -9930,7 +10005,7 @@ Platform = function (app, listofnodes) {
 
                         txb.addNTime(self.timeDifference || 0)
 
-                        var k = 100000000;
+                        var k = smulti;
 
                         _.each(inputs, function (i) {
 
@@ -10008,10 +10083,14 @@ Platform = function (app, listofnodes) {
 
                             }
                         })
+
+
+                      
                         
 
                         var tx = txb.build()
 
+                            console.log("TX", tx)
 
                         return tx;
 
@@ -10098,7 +10177,7 @@ Platform = function (app, listofnodes) {
                                 amount = amount + Number(i.amount);
                             })
 
-                            amount = amount * 100000000;
+                            amount = amount * smulti;
 
                             var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
                             var optype = obj.typeop ? obj.typeop() : obj.type
@@ -10119,6 +10198,11 @@ Platform = function (app, listofnodes) {
 
                             txb.addOutput(embed.output, 0);
 
+                            outputs.push({
+                                amount : 0,
+                                deleted : true,
+                                address : address.address
+                            })
 
                             self.sdk.node.transactions.get.unspent(function (unspents) {
 
@@ -10215,7 +10299,13 @@ Platform = function (app, listofnodes) {
                                             temp[obj.type][d] = alias;
 
                                             alias.inputs = inputs
-                                            alias.outputs = outputs
+                                            alias.outputs = _.map(outputs, function(output){
+                                                return {
+                                                    address : output.address,
+                                                    amount : output.amount / smulti,
+                                                    deleted : output.deleted
+                                                }
+                                            })
 
                                             self.sdk.node.transactions.saveTemp()
 
@@ -14684,7 +14774,7 @@ Platform = function (app, listofnodes) {
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
                         _.each(outs, function (o) {
-                            platform.sdk.node.transactions.clearTemp(data.txid, o.vout - 1);
+                            platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
 
                             if (!wa) {
 
@@ -17142,8 +17232,8 @@ Platform = function (app, listofnodes) {
 
         var updateAvailable = function () {
             if (!d) {
-                if (self.app.platform.applications[os()]) {
-                    var _os = self.app.platform.applications[os()]
+                if (self.app.platform.applications.ui[os()]) {
+                    var _os = self.app.platform.applications.ui[os()]
                     if (_os.github && _os.github.url) {
                         d = dialog({
                             html:  self.app.localization.e('e13349'),

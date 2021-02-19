@@ -354,7 +354,7 @@ Comment = function(txid){
 			return 'content'
 		}
 
-		if(self.message.v && encodeURIComponent(self.message.v).length > 1000){
+		if(self.message.v && (self.message.v).length > 1000){
 			return 'messagelength'
 		}
 

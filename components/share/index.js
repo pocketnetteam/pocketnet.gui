@@ -357,7 +357,7 @@ var share = (function(){
 						html : self.app.localization.e('e14002'),
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
-
+						class : "zindex",
 						success : function(){
 
 							currentShare.clear();

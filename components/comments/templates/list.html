@@ -123,7 +123,7 @@ var commentpanel = function(comment, _class){  %>
 
 							<% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
 							
-							<b><span><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span></b> <% if(!app.curation()) {%></a><% } %> &middot;
+							<b><span class="adr"><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span></b> <% if(!app.curation()) {%></a><% } %> &middot;
 							<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
 
 							<% if(Number(comment.timeUpd) > Number(comment.time) && !comment.deleted) {%>

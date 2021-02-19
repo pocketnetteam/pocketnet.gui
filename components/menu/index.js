@@ -813,6 +813,8 @@ var menu = (function(){
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
+							console.log("amount", amount)
+
 							var t = self.app.platform.sdk.node.transactions.tempBalance()
 
 							amount = amount + t

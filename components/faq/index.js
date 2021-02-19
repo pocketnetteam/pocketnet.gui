@@ -23,11 +23,11 @@ var faq = (function(){
 					{
 						id : 'downloadclient',
 						q : self.app.localization.e('e14004'),
-						a : `<div><a href="https://github.com/pocketnetteam/pocketnet.gui/releases/latest">https://github.com/pocketnetteam/pocketnet.gui/releases/latest</a></div><div>${self.app.localization.e('e14006')}</div>`,
+						a : `<div><a href="applications"><button>Download Application</button></a></div><div class="dfdo"><a href="https://github.com/pocketnetteam/pocketnet.gui/releases/latest">https://github.com/pocketnetteam/pocketnet.gui/releases/latest</a></div><div>${self.app.localization.e('e14006')}</div>`,
 					},
 
 					{
-						id : 'downloadclient',
+						id : 'downloadnode',
 						q : self.app.localization.e('e14005'),
 						a : `<div><a href="https://github.com/pocketnetteam/pocketnet.core/releases/latest">https://github.com/pocketnetteam/pocketnet.core/releases/latest</a></div><div>${self.app.localization.e('e14007')}</div>`,
 					}

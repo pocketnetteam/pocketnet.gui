@@ -329,6 +329,7 @@
 					}
 
 					.sharecaption{
+						
 						font-size: 1em;
 					}
 				} 
@@ -924,6 +925,8 @@
 
 				div{
 					font-size: 1.6em;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 
 				a{
@@ -1041,11 +1044,12 @@
 				}
 				
 				.urlcnt{
-				
+					overflow: hidden;
 					.linkcnt{
 						white-space: nowrap;
 						overflow: hidden;
 						max-width: 640px;
+						text-overflow: ellipsis;
 					}
 					
 					.urlcnttable{

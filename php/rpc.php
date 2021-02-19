@@ -95,7 +95,7 @@ class RPC {
     
     public function share($txid){
         $action = 'getrawtransactionwithmessagebyid';
-        $params = array($txid);
+        $params = array(array($txid));
 
         return $this->send($action, $params);
     }

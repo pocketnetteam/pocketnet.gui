@@ -537,7 +537,38 @@ var userpage = (function(){
 
 				var s = helpers.selector();
 
-				if(id && isMobile()){
+				var r = function(){
+					self.shell({
+							
+
+						name :  'contents',
+						el :   el.contents,
+						data : {
+							reports : reports,
+							each : helpers.eachReport,
+	
+							selector : s
+						},
+	
+					}, function(_p){
+	
+						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
+						//_p.el.find('.groupName').on('click', events.closeGroup);
+						_p.el.find('.openReport').on('click', events.openReport);
+	
+						ParametersLive([s], _p.el)
+
+						_scrollTop(0)
+
+						if (hcready)
+							el.contents.hcSticky('refresh');
+	
+						if (clbk)
+							clbk();
+					})
+				}
+
+				if (id && isMobile()){
 
 					el.contents.html('')
 
@@ -547,42 +578,22 @@ var userpage = (function(){
 				}
 				else{
 
-					self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-						var temp = self.app.platform.sdk.node.transactions.tempBalance()
+					
 
-						allbalance = amount + temp
-						
+					if(isMobile()){
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
-						self.shell({
+							allbalance = amount + temp
 							
 
-							name :  'contents',
-							el :   el.contents,
-							data : {
-								reports : reports,
-								each : helpers.eachReport,
-		
-								selector : s
-							},
-		
-						}, function(_p){
-		
-							_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
-							//_p.el.find('.groupName').on('click', events.closeGroup);
-							_p.el.find('.openReport').on('click', events.openReport);
-		
-							ParametersLive([s], _p.el)
-	
-							_scrollTop(0)
-
-							if (hcready)
-								el.contents.hcSticky('refresh');
-		
-							if (clbk)
-								clbk();
+							r()
+						
 						})
-					
-					})
+					}
+					else{
+						r()
+					}
 
 					
 

@@ -1,0 +1,43 @@
+<div class="cacheContent">
+
+    <div class="mwork">
+
+        <div class="caption">
+            <span>
+                Local storage Transactions Info
+            </span>
+        </div>
+
+    </div>
+
+    <% if(temp.length) {%>
+
+        <div class="panel">
+            <div class="mwork">
+                <button class=" small <% if(checking){%> disabled <%} %> check">Update</button>
+                <button class=" small ghost clear">Clear</button>
+            </div>
+
+        </div>
+
+        <div class="pending">
+            <div class="mwork">
+                <span>Number of transactions pending block: <%- temp.length %></span> <% if(checking) {%><i class="fas fa-spinner fa-spin"></i><% } %>
+            </div>
+
+        </div>
+
+
+    
+    <% } else { %> 
+    
+        <div class="empty">
+            <div class="mwork">
+                <span>Storage is Empty</span>
+            </div>
+        </div>
+        
+    <% } %>
+
+
+</div>

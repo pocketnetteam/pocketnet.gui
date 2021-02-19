@@ -117,6 +117,7 @@ var Nodemanager = function(p){
 
         var workingNodes = _.filter(self.nodes, function(n){
             var s = n.statistic.get()
+            
 
             if (s.success > 0 && s.time < 2000){
                 return true

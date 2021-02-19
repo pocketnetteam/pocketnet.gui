@@ -13,7 +13,9 @@ var help = (function(){
 
 
 
-
+		
+		
+		
 
 		c.roadmap = [
 
@@ -30,58 +32,80 @@ var help = (function(){
 			{
 				d : 'March 2019',
 				n : 'Search users, posts',
-				r : false,
+				r : true,
 			},
 			{
 				d : 'July 2019',
 				n : 'Linux Desktop App',
-				r : false,
+				r : true,
 			},
 			
 			{
 				d : 'July 2019',
 				n : 'Android App',
-				r : false,
+				r : true,
 			},
 
 			{
 				d : 'August 2019',
 				n : 'Search by tags, recommended users, poll transactions',
-				r : false,
+				r : true,
 			},
+			
 			{
 				d : 'August 2019',
 				n : 'Personal link Pocketnet.app/username plus history of personal posts and ability to search users’ posts (decentralized free blog hosting on Pocketnet blockchain)',
-				r : false,
+				r : true,
 			},
+
 			{
-				d : 'September 2019',
-				n : 'WebTorrent hosting of videos/images',
-				r : false,
-			},
-			{
-				d : 'October 2019',
-				n : 'Boost posts for Pocketcoin',
-				r : false,
-			},
-			{
-				d : 'June 2019',
-				n : 'Chinese, French, German, Russian, Spanish versions',
-				r : false,
-			},
-			{
-				d : 'July 2020',
-				n : 'Peer-to-peer encrypted chat, including group chat',
+				d : 'June 2020',
+				n : 'Running a node from the desktop app',
 				r : false,
 			},
 			{
 				d : 'August 2020',
-				n : 'Decentralized Internet!!! Ability for any user to create sidechains that hold sites/groups by locking POS in the main chain, with nodes having ability to merge stake them with the main chain optionally',
+				n : 'Pocketcoin listed on two exchanges: BTCPOP and Mercatox',
+				r : true,
+			},
+			{
+				d : 'January 2021',
+				n : 'Full decentralization: all apps can speak directly to the nodes, desktop app can work without the website pocketnet.app',
 				r : false,
 			},
 			{
-				d : 'October 2020',
+				d : 'February 2021',
+				n : 'Livestream Pocketcoin dondations',
+				r : false,
+			},
+			{
+				d : 'March 2021',
+				n : 'Rewrite of the backend to move to sqlite from Reindexer to make the node light on RAM use',
+				r : false,
+			},
+			{
+				d : 'April 2021',
+				n : 'Boost posts for Pocketcoin',
+				r : false,
+			},
+			{
+				d : 'May 2021',
+				n : 'Peer-to-peer encrypted chat, including group chat',
+				r : false,
+			},
+			{
+				d : 'October 2021',
 				n : 'Decentralized reputation platform and crypto store',
+				r : false,
+			},
+			{
+				d : 'December 2021',
+				n : 'Decentralized alternative to adwords advertising through smart contracts',
+				r : false,
+			},
+			{
+				d : '2022',
+				n : 'Ability to fork Pocketcoin to create a diverse set of Dapps for users using Pocketnet 			platform i.e. Pocketnet as an alternative appstore',
 				r : false,
 			}
 

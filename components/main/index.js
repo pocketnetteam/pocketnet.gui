@@ -167,7 +167,7 @@ var main = (function(){
 
 			up : function(){
 
-				_scrollTop(0)
+				_scrollTop(0, null, 5)
 			}
 
 		}
