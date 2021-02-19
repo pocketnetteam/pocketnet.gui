@@ -243,6 +243,7 @@ var Node = function(options, manager){
             ///
 
             var time = s.time;
+            var rate = (self.statistic.rate() || 0) + 1
 
             if (time && time > 0 && time <= 200) time = 200
             if (time && time > 200 && time <= 400) time = 300
@@ -253,8 +254,16 @@ var Node = function(options, manager){
             if (time && time > 4000 && time <= 7000) time = 5300
             if (time && time > 7000 && time <= 15000) time = 10000
 
+            if (rate <= 2) rate = 1.5
+            if (rate > 2 && rate <= 4) rate = 3
+            if (rate > 4 && rate <= 8) rate = 6
+            if (rate > 8 && rate <= 16) rate = 12
+            if (rate > 16 && rate <= 30) rate = 23
+            if (rate > 30 && rate <= 50) rate = 40
+            if (rate > 50 && rate <= 100) rate = 75
+
             return  (s.percent  * (lastblock.height || 1) ) / 
-                    ( ((self.statistic.rate() || 0) + 1) * (time) * (difference + 1) )
+                    ( rate * (time) * (difference + 1) )
         },
 
         better : function(){
