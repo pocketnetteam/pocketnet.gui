@@ -8,6 +8,7 @@ var f = require('../functions');
 var Control = function(settings) {
     if (!settings) settings = {};
 
+    var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
 
     var self = this;
     var applications = new Applications(settings)
@@ -36,6 +37,7 @@ var Control = function(settings) {
     var enabled = settings.enabled
 
     self.helpers = {
+
         bin_name: function(name) {
             const win = `${name}.exe`
             const mac = name
@@ -43,46 +45,58 @@ var Control = function(settings) {
             return (process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : '')))
         },
 
-        bin_folder: function() {
-            return f.path('pocketcoind')
-        },
-
-        sbin_folder: function() {
-            return settings.binPath || self.helpers.bin_folder()
-        },
-
         conf_name: function() {
             return 'pocketcoin.conf'
         },
 
         complete_bin_path : function(){
-            var binPath = node.binPath
+            var binPath = Path.join( node.binPath, self.helpers.bin_name('pocketcoind'))
 
             if (process.platform == 'darwin' || process.platform == 'linux') {
-                binPath = `LD_LIBRARY_PATH=${self.helpers.bin_folder()} ${node.binPath}`
+                binPath = `LD_LIBRARY_PATH=${node.binPath} ${self.helpers.bin_name('pocketcoind')}`
             }
 
             return binPath
+        },
+
+        defaults : {
+            dataPath : function(){
+
+                if (self.proxy.userDataPath){
+
+                    if (isDevelopment){
+                        return f.path('pocketcoin')
+                    }
+
+                    return Path.join(self.proxy.userDataPath, 'pocketcoin')
+                }
+
+                return f.path('pocketcoin')
+
+            },
+            binPath : function(){
+                return f.path('pocketcoind')
+            }
         }
     }
 
     var removeAll = function(removedata){
-        if(!settings.dataPath) {
+        if(!node.dataPath) {
             return Promise.reject('nodedatapath')
         }
 
-        if(removedata && fs.existsSync(settings.dataPath)){
+        if(removedata && fs.existsSync(node.dataPath)){
             try{
-                fs.rmdirSync(settings.dataPath, { recursive: true });
+                fs.rmdirSync(node.dataPath, { recursive: true });
             }catch(e){
                 return Promise.reject('nodedatapath')
             }
             
         }
 
-        if(fs.existsSync(self.helpers.sbin_folder())){
+        if(fs.existsSync(node.binPath)){
             try{
-                fs.rmdirSync(self.helpers.sbin_folder(), { recursive: true });
+                fs.rmdirSync(node.binPath, { recursive: true });
             }catch(e){
                 return Promise.reject('binpath')
             }
@@ -94,23 +108,23 @@ var Control = function(settings) {
 
     var folders = function(){
 
-        if(!settings.dataPath) {
+        if(!node.dataPath) {
             return Promise.reject('nodedatapath')
         }
 
         // create catalogs if not exists
-        if(!fs.existsSync(settings.dataPath)){
+        if(!fs.existsSync(node.dataPath)){
             try{
-                fs.mkdirSync(settings.dataPath, { recursive: true });
+                fs.mkdirSync(node.dataPath, { recursive: true });
             }catch(e){
                 return Promise.reject('nodedatapath')
             }
             
         }
 
-        if(!fs.existsSync(self.helpers.sbin_folder())){
+        if(!fs.existsSync(node.binPath)){
             try{
-                fs.mkdirSync(self.helpers.sbin_folder(), { recursive: true });
+                fs.mkdirSync(node.binPath, { recursive: true });
             }catch(e){
                 return Promise.reject('binpath')
             }
@@ -121,7 +135,6 @@ var Control = function(settings) {
     }
 
     var makeconfig = function(){
-        node.confPath = Path.join(settings.dataPath, self.helpers.conf_name())
 
         try{
             if (!fs.existsSync(node.confPath)) {
@@ -171,6 +184,14 @@ var Control = function(settings) {
     self.init = function(){
         // change global settings
 
+        node.proxy = null
+
+        node.binPath = settings.binPath || self.helpers.defaults.binPath()
+
+        node.dataPath = settings.ndataPath || self.helpers.defaults.dataPath()
+
+        node.confPath = Path.join(node.dataPath, self.helpers.conf_name())
+
         return folders().then(r => {
             return makeconfig()
         }).then(r => {
@@ -178,15 +199,10 @@ var Control = function(settings) {
         }).then(r => {
             return self.checkUpdates()
         }).then(r => {
-            node.proxy = null
-
-            node.binPath = Path.join( self.helpers.sbin_folder(), self.helpers.bin_name('pocketcoind'))
-
-            node.dataPath = settings.dataPath
+            
 
             // create pocketcoin.conf
-            node.confPath = Path.join(settings.dataPath, self.helpers.conf_name())
-
+           
         
             self.autorun.init()
 
@@ -601,14 +617,6 @@ var Control = function(settings) {
         enabled : {}
     }
 
-
-    /*applications.download(self.helpers.sbin_folder()).then(path => {
-
-        return self.init()
-       
-    }).catch(e => {
-        console.log("E", e)
-    })*/
 
     return self;
 }

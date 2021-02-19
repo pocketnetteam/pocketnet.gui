@@ -38,6 +38,8 @@ var Proxy = function (settings, manage) {
     var remote = new Remote();
     var proxies = new Proxies(settings.proxies)
 
+    self.userDataPath = null
+
     f.mix({ 
         wss, server, pocketnet, nodeControl, 
         remote, firebase, nodeManager, wallet,

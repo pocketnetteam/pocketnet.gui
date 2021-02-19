@@ -2512,6 +2512,8 @@ var system16 = (function(){
 						dis = (new Date()) < fromutc(new Date(timestamp)).addSeconds(60)
 					}
 
+					console.log('info.nodeManager', info.nodeManager, info.nodeControl, system, elc.find('.localnodeWrapper .manage'))
+
 					self.shell({
 						inner : html,
 						name : 'nodecontentmanage',
@@ -2867,6 +2869,7 @@ var system16 = (function(){
 
 					setTimeout(function(){
 						makers.stats()
+						makers.panel()
 
 						renders.webserveradmin(el.c)
 					},500)	

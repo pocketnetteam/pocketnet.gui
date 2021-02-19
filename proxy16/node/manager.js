@@ -4,6 +4,8 @@ var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
 
+var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
+
 var Nodemanager = function(p){
     if(!p) p = {};
 
@@ -119,7 +121,7 @@ var Nodemanager = function(p){
             var s = n.statistic.get()
             
 
-            if (s.success > 0 && s.time < 2000){
+            if (s.success > 0 && s.time < 1000){
                 return true
             }
         })

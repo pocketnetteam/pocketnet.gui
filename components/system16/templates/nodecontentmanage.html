@@ -133,7 +133,7 @@
                 <div class="setting systempath">
                     <div class="settingTable table">
                         <div class="label">
-                            <span>Path</span>
+                            <span>Node Daemon Path</span>
                         </div>
     
                         <div class="value" <% if(!nc.hasbin) {%> sys="binPath" <% } %> >
@@ -153,11 +153,11 @@
                 <div class="setting systempath">
                     <div class="settingTable table">
                         <div class="label">
-                            <span>Storage</span>
+                            <span>Node Config Path</span>
                         </div>
     
-                        <div class="value" <% if(!nc.hasbin) {%> sys="dataPath" <% } %>>
-                            <span><%- system.node.dataPath || 'Default' %></span>
+                        <div class="value" <% if(!nc.hasbin) {%> sys="ndataPath" <% } %>>
+                            <span><%- system.node.ndataPath || 'Default' %></span>
                         </div>
 
                         <% if(nc.hasbin) {%>

@@ -132,7 +132,8 @@ var defaultSettings = {
 		dbpath : 'data/node',
         enabled: false,
         binPath: '',
-		dataPath: ''
+		dataPath: '', //// deleted
+		ndataPath : ''
     },
 	
 
@@ -164,7 +165,8 @@ var state = {
 			node : {
 				enabled : settings.node.enabled,
 				binPath : settings.node.binPath,
-				dataPath: settings.node.dataPath
+				ndataPath: settings.node.ndataPath,
+				dataPath: settings.node.dataPath,
 			},
 			admins : settings.admins,
 			proxies : {
@@ -607,8 +609,8 @@ var kit = {
 					
 				},
 	
-				dataPath : function(v){
-					if(settings.node.dataPath == v) return Promise.resolve()
+				ndataPath : function(v){
+					if(settings.node.ndataPath == v) return Promise.resolve()
 	
 					return state.saverp().then(proxy => {
 						return proxy.nodeControl.re()
@@ -781,10 +783,14 @@ var kit = {
 		})
 	},
 	
-	startproxy : function(){
+	startproxy : function(hck){
 
 		if(!proxy){
 			proxy = new Proxy(settings, kit.manage)
+
+			if (hck.userDataPath){
+				proxy.userDataPath = hck.userDataPath
+			}
 			
 			return proxy.kit.init()
 		}
@@ -816,16 +822,17 @@ var kit = {
 
 			var start = function(){
 
-				kit.startproxy().then(r => {
+				kit.startproxy(hck).then(r => {
 
 					return kit.proxy()
-
 					
 				}).then(proxy => {
 
 					if (hck.wssdummy){
 						proxy.wss.wssdummy(hck.wssdummy)
 					}
+
+					
 
 					resolve()
 
