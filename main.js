@@ -75,9 +75,9 @@ if (is.linux()) {
 }
 
 if (is.macOS()) {
-    defaultIcon = require('path').join(__dirname, 'assets/icons/png/16x16.png')
-    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/png/16x16.png')
-    badgeTrayIcon = require('path').join(__dirname, 'assets/icons/png/16x16.png')
+    defaultIcon = require('path').join(__dirname, 'assets/icons/mac/trayTemplate.png')
+    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/mac/trayTemplate.png')
+    badgeTrayIcon = require('path').join(__dirname, 'assets/icons/mac/traybadgeTemplate.png')
 }
 
 function showHideWindow(show) {

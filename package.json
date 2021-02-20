@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.2.3-beta",
+    "version": "0.2.2-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -124,6 +124,7 @@
         ],
         "mac": {
             "target": "dmg",
+            "artifactName": "${productName}Setup.${ext}",
             "icon": "assets/icons/mac/icon.icns"
         },
         "linux": {
