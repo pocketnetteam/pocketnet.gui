@@ -200,6 +200,46 @@ var system16 = (function(){
 					
 
 				}
+			},
+			
+			'binPath' : function(){
+
+				globalpreloader(true)
+
+				return proxy.system.request('set.node.binPath', {}).then(r => {
+
+					actions.refresh().then(r => {
+						actions.refreshsystem()
+
+						globalpreloader(false)
+					})
+					
+				}).catch(e => {
+
+					globalpreloader(false)
+
+				})
+			},
+
+			'ndataPath' : function(){
+
+				globalpreloader(true)
+
+				return proxy.system.request('set.node.ndataPath', {}).then(r => {
+
+
+					globalpreloader(false)
+
+					actions.refresh().then(r => {
+						actions.refreshsystem()
+					})
+					
+				}).catch(e => {
+
+					globalpreloader(false)
+
+					console.log("ER", e)
+				})
 			}
 		}
 
@@ -331,7 +371,6 @@ var system16 = (function(){
 				self.app.platform.sdk.wallet.sendmanyoutputs(pk, address, value, 2, function(err , data){
 
 					console.log("ERR", err)
-
 					if(err){
 						self.app.platform.errorHandler(err, true)	
 					}
@@ -349,15 +388,13 @@ var system16 = (function(){
 
 				if (changed){
 					system = settings
-
-					renders.allsettings()
 				}
+
+				renders.allsettings()
 			},
 
 			refreshsystem : function(){
 				return proxy.system.api.get.settings().then(s => {
-
-
 					system = s
 
 					if (el.c){
@@ -1241,6 +1278,8 @@ var system16 = (function(){
 
 			make : function(type, stats, clbk, update){
 
+				if(!el.c) return
+
 				if (graphs[type] && update){
 
 					var t = helpers.type(type, stats)
@@ -1366,7 +1405,6 @@ var system16 = (function(){
 
 							meta.user = true;
 
-							console.log('meta', meta)
 
 							var newproxy = new Proxy16(meta, self.app)
 
@@ -1378,7 +1416,6 @@ var system16 = (function(){
 
 							wnd.find('.addproxy').addClass('loading')
 
-							console.log('newproxy', newproxy)
 
 							newproxy.api.ping().then(r => {
 
@@ -1733,8 +1770,10 @@ var system16 = (function(){
 
 		var renders = {
 			allsettings : function(){
-				if (el.c)
+				if (el.c){
 					renders.nodecontentmanage(el.c)
+					renders.nodecontentstate(el.c)
+				}
 			},
 			proxycurrent : function(clbk){
 
@@ -2163,7 +2202,6 @@ var system16 = (function(){
 							var address = deep(info.wallet, key + '.address')
 
 							if (address){
-								console.log('address', address)
 
 								dialog({
 									class : 'zindex',
@@ -2509,10 +2547,10 @@ var system16 = (function(){
 					var dis = false
 
 					if (timestamp){
-						dis = (new Date()) < fromutc(new Date(timestamp)).addSeconds(60)
+						dis = (new Date()) < fromutc((new Date(timestamp)).addSeconds(60))
+
 					}
 
-					console.log('info.nodeManager', info.nodeManager, info.nodeControl, system, elc.find('.localnodeWrapper .manage'))
 
 					self.shell({
 						inner : html,
@@ -2679,6 +2717,40 @@ var system16 = (function(){
 
 							
 
+						})
+
+						p.el.find('.toDefaultPath').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to set Pocketnet Node Path to Default path?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+
+									globalpreloader(true)
+
+									proxy.fetch('manage', {
+
+										action : 'set.node.defaultPaths',
+										data : {}
+
+									}).then(r => {
+
+										actions.refresh().then(r => {
+											actions.refreshsystem()
+
+											globalpreloader(false)
+										})
+			
+									}).catch(e => {
+
+										globalpreloader(false)
+										
+										sitemessage(self.app.localization.e('e13293'))
+			
+									})
+								}
+							})
 						})
 
 						if (clbk)

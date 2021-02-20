@@ -329,11 +329,7 @@ var Proxy = function (settings, manage) {
 
         re : function(){
             return this.destroy().then(r => {
-                return this.stop()
-            }).then(r => {
                 return this.init()
-            }).then(r => {
-                return this.start()
             })
         },
 

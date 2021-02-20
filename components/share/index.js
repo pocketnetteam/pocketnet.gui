@@ -1734,25 +1734,28 @@ var share = (function(){
 			save : function(){
 
 				if(!currentShare){
-					self.app.settings.set(self.map.id, 'currentShare', '');
+					self.app.settings.set(self.map.id, 'currentShare_v1', '');
 				}
 				else
 				{
+
+					if(currentShare.aliasid){
+						return
+					}
+
 					var exp = currentShare.export(true)
 
 					if (exp.message == m) exp.message = ''
 
-					var scs = self.app.settings.set(self.map.id, 'currentShare', exp);
+					var scs = self.app.settings.set(self.map.id, 'currentShare_v1', exp);
 
-					if(!scs){
-						//self.app.settings.set(self.map.id, 'currentShare', '');
-					}
+
 				}
 
 				
 			},
 			load : function(){
-				var last = self.app.settings.get(self.map.id, 'currentShare')
+				var last = self.app.settings.get(self.map.id, 'currentShare_v1')
 
 				if (last)
 					currentShare.import(last)
@@ -1996,7 +1999,7 @@ var share = (function(){
 				external = null
 
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
-
+				console.log('currentShare', currentShare)
 				essenseData = deep(p, 'settings.essenseData') || {};
 
 				self.app.platform.sdk.user.get(function(u){
@@ -2012,8 +2015,8 @@ var share = (function(){
 						}
 					}
 
-					if (parameters().repost) 
-						currentShare.repost.set(parameters().repost)
+					if (essenseData.repost || parameters().repost) 
+						currentShare.repost.set(essenseData.repost || parameters().repost)
 
 
 					var data = {

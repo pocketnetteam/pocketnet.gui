@@ -323,7 +323,9 @@ User = function(app, p) {
 
 	self.keysFromMnemo = function(mnemonic){
 
-		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic)
+		if(!mnemonic) mnemonic = ''
+
+		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic.toLowerCase())
 
 		return self.keysFromSeed(seed)
 
@@ -361,21 +363,19 @@ User = function(app, p) {
 	}
 
 	self.keysPairFromPrivate = function(private, clbk){
+
+		if(!private) private = ''
+
 		var keyPair = null;
-		console.log('validateMnemonic', private)
-		if (bitcoin.bip39.validateMnemonic(private)) {
-			console.log("ASDDASDSA")
+		if (bitcoin.bip39.validateMnemonic(private.toLowerCase())) {
 			keyPair = self.keysFromMnemo(private)
 		}
 		else{
-			console.log("ASD")
 			try{
 				keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
 			}
 			catch (e){
-			console.log("E1", e)
-				
-	
+
 				try{
 					keyPair = bitcoin.ECPair.fromWIF(private)
 				}

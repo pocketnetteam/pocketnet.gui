@@ -16,6 +16,7 @@ Platform = function (app, listofnodes) {
     self.currentBlock = 1000000;
     self.online = undefined;
     self.avblocktime = 45;
+    self.repost = true
 
     var onlinetnterval;
     var blockps = 1000000;
@@ -1669,6 +1670,35 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        share : function(p){
+            if(!p) p = {}
+
+            globalpreloader(true, true)
+
+            setTimeout(function(){
+                app.nav.api.load({
+                    open : true,
+                    id : 'share',
+                    inWnd : true,
+                    eid : 'postin',
+                    
+                    clbk : function(e, p){
+                        globalpreloader(false)
+                    },
+
+                    essenseData : {
+                        close : function(){
+                        },
+                        post : function(){
+                        },	
+                        absolute : true,
+                        repost  : p.repost
+                    }
+                })
+            }, 50)
+        },
+
         showmykeyfast: function () {
             app.nav.api.load({
 
@@ -2509,16 +2539,15 @@ Platform = function (app, listofnodes) {
                                     open: true,
                                     href: 'article',
                                     inWnd: true,
-
                                     history: true,
-
+                                    
                                     essenseData: {
                                         share: editing,
                                         hash: hash,
+                                        
                                         save: function (art) {
 
                                         },
-
                                         close: function () {
 
                                         },
@@ -2541,12 +2570,12 @@ Platform = function (app, listofnodes) {
                                     animation: false,
                                     inWnd: true,
                                     _id: d.share.txid,
-
+                                    
                                     essenseData: {
                                         share: editing,
                                         notClear: true,
                                         hash: hash,
-
+                                        absolute : true,
                                         cancel: function () {
 
                                             var close = deep(em, 'container.close')
@@ -9283,8 +9312,15 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
 
+
                             if (clbk) {
-                                clbk((deep(d, 'data.code') == -5) || (deep(d, 'confirmations') > 0))
+
+                                var errorcode = deep(_error, 'code') || null
+
+                                clbk( 
+                                    (errorcode == -5) || (errorcode == -8) || 
+                                    (deep(d, 'confirmations') > 0)
+                                )
                             }
                         })
 

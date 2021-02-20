@@ -777,6 +777,7 @@ Share = function(lang){
 	var self = this;
 
 	self.clear = function(){
+		
 		self.message.set()
 		self.images.set()
 		self.tags.set()
@@ -784,6 +785,7 @@ Share = function(lang){
 		self.caption.set()
 		self.repost.set()
 		self.language.set(lang)
+		self.aliasid = ""
 
 		_.each(self.settings, function(s, k){
 			self.settings[k] = null;
@@ -1510,6 +1512,9 @@ UserInfo = function(){
 
 	}
 
+	
+
+
 	self.on = {}
 	self.off = function(e){
 		delete self.on[e]
@@ -2191,3 +2196,99 @@ kits = {
 	}
 }
 
+/*
+tx hash problems
+
+var fields = {
+	name : ['4chan','Firefox', 'Google', 'KamalaHarris', 'CNN', 'kesh', 'discord', ''],
+	language : ['en', 'fr', 'ru', ''],
+	image : ['https://i.imgur.com/QxHjPZw.jpg', 'https://i.imgur.com/z5JU9A2.jpg', ''],
+	site : ['discord.gg/4chan', 'discord.gg%2F4chan', ''],
+	about : ['new', '!', 'discord.gg/4chan', ''],
+	addresses : [[],'[]',"['[]']", '["[]"]', ''],
+	ref : ['PDqCykN2o8SCGXfvPv87gVRXcomXKjFFGj', 'PUyqmPGdR4SezQnZ1sQtF3QzTtGHnRLQut', 'PArvZCGSoRd7y6b7zKJPyUVSaycVoyVqpc', 'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN', 'PCnispEKjKxVpi6fVDqp5LweoUrD3HZbnh', '']
+}
+
+
+_.each(fields, function(f, i){
+	_.each(f, function(fi){
+		fields[i].push(encodeURIComponent(fi))
+		fields[i].push(decodeURIComponent(fi))
+
+		if (fi.toLowerCase){
+			fields[i].push(decodeURIComponent(fi.toLowerCase()))
+			fields[i].push(encodeURIComponent(fi.toLowerCase()))
+			fields[i].push((fi.toLowerCase()))
+		}
+		
+	})
+})
+
+var lasthash = ''
+var lastexp = {}
+var fi = 'ce8933f33b85979bbca853f191542101cc108fb3887b21c937a0bcb0dadd1f3d'
+var c = 0
+
+do{
+
+	var testUI = new UserInfo();
+
+	_.each(fields, function(f, i){
+
+		var r = rand(0, f.length - 1)
+
+		testUI[i].set(f[r])
+		
+	})
+
+	lasthash = Buffer.from(bitcoin.crypto.hash256(testUI.serialize()), 'utf8').toString('hex');
+	lastexp = testUI.export()
+
+	c++
+
+}
+
+while(lasthash != fi && c < 500000)
+
+console.log(lasthash, lastexp, c)
+
+*/
+/*
+
+var testUI = new UserInfo();
+
+	
+	testUI.name.set('qwe1')
+	testUI.language.set('en')
+	testUI.image.set('https://i.imgur.com/NJsudvg.jpg')
+	testUI.site.set('qwe')
+	testUI.about.set('qwe')
+
+var buf = Buffer.from(bitcoin.crypto.hash256(testUI.serialize()), 'utf8');
+console.log('bu0', buf.toString('hex'))
+*/
+/*
+var optype = testUI.typeop ? testUI.typeop() : testUI.type
+var optstype = optype
+
+if (testUI.optstype && testUI.optstype()) optstype = testUI.optstype()
+
+console.log('testUI.export(), optstype', JSON.stringify(testUI.export()), optstype)
+console.log('bu0', buf.toString('hex'))*/
+
+/*
+var testUI2 = new UserInfo();
+
+	
+	testUI2.name.set('KamalaHarris')
+	testUI2.language.set('en')
+	testUI2.image.set('https://i.imgur.com/z5JU9A2.jpg')
+	testUI2.site.set('discord.gg/4chan')
+	testUI2.about.set('new')
+	
+
+var buf = Buffer.from(bitcoin.crypto.hash256(testUI2.serialize()), 'utf8');
+
+console.log('bu1', buf.toString('hex'))
+
+*/

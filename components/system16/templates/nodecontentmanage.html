@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<% if(system.node && 1 == 0) { %>
+<% if(system && system.node && 1==0) { %>
 
     <div class="nodecontentmanage managepanel">
         
@@ -53,7 +53,7 @@
                     </div>
                 </div>
 
-                <% if(system.node.enabled) {%> 
+                <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) {%> 
 
                 <div class="setting addresses">
                     <div class="settingTable table">
@@ -128,23 +128,23 @@
                 
             <% } %>
 
-            <% if(!nc.lock) {%>
+            <% if(!nc.lock && proxy.direct) {%>
 
                 <div class="setting systempath">
                     <div class="settingTable table">
-                        <div class="label">
-                            <span>Node Daemon Path</span>
-                        </div>
+                            <div class="label">
+                                <span>Node Daemon Path</span>
+                            </div>
     
-                        <div class="value" <% if(!nc.hasbin) {%> sys="binPath" <% } %> >
-                            <span><%- system.node.binPath || 'Default' %></span> 
-                        </div>
+                            <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> >
+                                <span><%- system.node.binPath || 'Default' %></span> 
+                            </div>
 
-                        <% if(nc.hasbin) {%>
+                        <% if(nc.hasbin && system.node.enabled) {%>
 
-                        <div class="icon">
-                            <i class="fas fa-lock"></i>
-                        </div>
+                            <div class="icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
 
                         <% } %>
                     </div>
@@ -153,14 +153,14 @@
                 <div class="setting systempath">
                     <div class="settingTable table">
                         <div class="label">
-                            <span>Node Config Path</span>
+                            <span>Node Data Path</span>
                         </div>
     
-                        <div class="value" <% if(!nc.hasbin) {%> sys="ndataPath" <% } %>>
+                        <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %>>
                             <span><%- system.node.ndataPath || 'Default' %></span>
                         </div>
 
-                        <% if(nc.hasbin) {%>
+                        <% if(nc.hasbin && system.node.enabled) {%>
 
                         <div class="icon">
                             <i class="fas fa-lock"></i>
@@ -169,6 +169,25 @@
                         <% } %>
                     </div>
                 </div>
+                <% if(system.node.ndataPath || system.node.binPath) {%>
+                    <div class="setting systempathsDefaults">
+                        <div class="settingTable table">
+                            <div class="label">
+                                <span>Set Paths to Default</span>
+                            </div>
+        
+                            <div class="value toDefaultPath">
+                                <div>
+                                    <span>
+                                        To Default 
+                                    </span>
+
+                                    <i class="far fa-times-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
 
             <% } %>
 
@@ -196,26 +215,30 @@
                     </div>
                 </div>
 
-                <div class="setting deletenodeWrapper">
-                    <div class="settingTable table">
-                        <div class="label">
-                            <span>Delete Pocketnet Node</span>
-                        </div>
-    
-                        <div class="value">
-                            <button class="button small removenode">
-                                Delete Daemon
-                            </button>
-                        </div>
+                <% if(!system.node.binPath && !system.node.ndataPath) {%>
 
-                        <div class="value">
-                            <button class="button small ghost removenodeall">
-                                Delete Daemon and Data
-                            </button>
-                        </div>
+                    <div class="setting deletenodeWrapper">
+                        <div class="settingTable table">
+                            <div class="label">
+                                <span>Delete Pocketnet Node</span>
+                            </div>
+        
+                            <div class="value">
+                                <button class="button small removenode">
+                                    Delete Daemon
+                                </button>
+                            </div>
 
+                            <div class="value">
+                                <button class="button small ghost removenodeall">
+                                    Delete Daemon and Data
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+
+                <% } %>
             <% } %>
             
 

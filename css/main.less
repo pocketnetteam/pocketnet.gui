@@ -250,6 +250,21 @@ hr {
     }
 }
 
+#globalpreloader{
+    &.dark{
+        background: fade(@color-black2, 90);
+    }
+}
+
+html.stblack{
+    #globalpreloader{
+        background: fade(@color-black2, 90);
+        &.dark{
+            background: fade(@color-black2, 90);
+        }
+    }
+}
+
 .unselectable{
     -webkit-touch-callout: none;
     -webkit-user-select: none;

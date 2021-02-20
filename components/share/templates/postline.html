@@ -11,6 +11,7 @@
             <div class="item images tooltip" embeding="images" title="<%=e('saddimages')%>">
                 <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
             </div>
+
             <% if (app.platform.sdk.usersettings.meta.enablePeertube.value) {
                 console.log('PeertubeEnable', app.platform.sdk.usersettings.meta.enablePeertube)
                 %>
@@ -34,9 +35,11 @@
                 <img src="img/localization/small/<%-share.language.v || ''%>.png"> <span class="mobiledevice"><%=e('e14001')%></span>
             </div>-->
 
+            <% if(!share.aliasid) {%>
             <div class="item times tooltip" embeding="times" title="<%=e('stimes')%>">
                 <i class="fas fa-times-circle"></i> <span class="mobiledevice"><%=e('stimes')%></span>
             </div>
+            <% } %>
 
         </div>
     </div>

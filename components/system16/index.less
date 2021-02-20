@@ -31,6 +31,16 @@
 			display : block;
 		}
     }
+
+    .toDefaultPath{
+        opacity: 0.5;
+        .transition(0.3s);
+        cursor: pointer;
+
+        &:hover{
+            color : @color-bad;
+        }
+    }
     
     .chartWrapper{
         padding : 2 * @rhythm 0;

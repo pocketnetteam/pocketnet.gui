@@ -139,7 +139,11 @@ var lenta = (function(){
 
 				actions.stateAction('_this', function(){
 
-					var href = 'index';
+					self.app.platform.ui.share({
+						repost : shareid
+					})
+
+					/*var href = 'index';
 
 					if(isMobile()) href = 'share'
 
@@ -151,7 +155,7 @@ var lenta = (function(){
 						essenseData : {
 							
 						}
-					})
+					})*/
 				})
 
 			},

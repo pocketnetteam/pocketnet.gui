@@ -9182,11 +9182,18 @@
 
 /* EVENTS */
 
-	globalpreloader = function(show){
+	globalpreloader = function(show, dark){
 
 		if(typeof window == 'undefined') return
  
 		var el = $('#globalpreloader');
+
+		if (dark){
+			el.addClass('dark')
+		}
+		else{
+			el.removeClass('dark')
+		}
 
 		if(show){
 			el.addClass('show')

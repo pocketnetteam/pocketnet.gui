@@ -34,7 +34,7 @@ var Control = function(settings) {
 
     var config = {}
 
-    var enabled = settings.enabled
+    var enabled = false 
 
     self.helpers = {
 
@@ -192,6 +192,8 @@ var Control = function(settings) {
 
         node.confPath = Path.join(node.dataPath, self.helpers.conf_name())
 
+        enabled = settings.enabled
+
         return folders().then(r => {
             return makeconfig()
         }).then(r => {
@@ -199,7 +201,6 @@ var Control = function(settings) {
         }).then(r => {
             return self.checkUpdates()
         }).then(r => {
-            
 
             // create pocketcoin.conf
            
@@ -222,7 +223,7 @@ var Control = function(settings) {
             if(!checkUpdatesInterval){
                 checkUpdatesInterval = setInterval(function(){
                     self.checkUpdates().catch(e => {})
-                }, 60000)
+                }, 360000)
             }
         },
         destroy : function(){
@@ -396,7 +397,6 @@ var Control = function(settings) {
         check : function(){
             //return Promise.resolve({})
 
-
             node.hasbin = self.kit.hasbin();
 
             if(lock) return Promise.resolve(false)
@@ -437,8 +437,6 @@ var Control = function(settings) {
                     message : e.message
                 }
         
-
-
                 return Promise.resolve(true)
 
             })
@@ -593,7 +591,7 @@ var Control = function(settings) {
                 c(enabled, state)
             })
 
-            state.timestamp = new Date()
+            state.timestamp = f.now()
 
         },
 

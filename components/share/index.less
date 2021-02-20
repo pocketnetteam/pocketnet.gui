@@ -88,10 +88,19 @@
 	.repostShareWrapper{
 		position: relative;
 		overflow: hidden;
+		padding : @rhythm;
+
+		.repostShare{
+			border-radius: 3px;
+			background: #fff;
+			padding : 2 * @rhythm;
+			padding-right: 4 * @rhythm;
+			padding-left: 0;
+		}
 
 		.repostCaption{
 			position: absolute;
-			right : 2 * @rhythm;
+			right : 4 * @rhythm;
 			top : 4 * @rhythm;
 			cursor: pointer;
 
@@ -118,14 +127,14 @@
 			}
 		}
 
-		.repostShare{
+		/*.repostShare{
 			padding : 2 * @rhythm 0;
-		}
+		}*/
 	}	
 
 	#post{
 		.share{
-			background: fade(#fff, 50);
+			/*background: fade(#fff, 50);*/
 			.work{
 				padding : 0;
 				padding-right: 30px;

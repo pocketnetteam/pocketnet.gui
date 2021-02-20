@@ -118,47 +118,63 @@ var IPC = function(ipc, wc){
 
 	var helpers = {
 		dialog : function(options){
-            return new Promise((resolve, reject) => {
-                dialog.showOpenDialog(options, function(res) {
-                    if (!res.canceled && res.length > 0) {
-                        return resolve(res)
-                    }
+			return dialog.showOpenDialog(options).then(res => {
+				if (!res.canceled && (res.filePaths && res.filePaths.length > 0)) {
+					return Promise.resolve(res.filePaths)
+				}
 
-                    return reject()
-                })
-            })
+				return Promise.reject()
+			})
+
+          
         }
 	}
 
 	var middles = {
-		node : {
-			dataPath : function(message){
-				return helpers.dialog({
-					properties: ['openDirectory']
-				}).then(res => {
+		set : {
+			node : {
+				ndataPath : function(message){
+					return helpers.dialog({
+						properties: ['openDirectory']
+					}).then(res => {
 	
-					message.data = res[0]
-					return Promise.resolve()
+						message.data = {
+							ndataPath : res[0]
+						}
 
-				})
-			},
-			binPath : function(message){
-				return helpers.dialog({
-					filters: [
-						{ name: 'Pocketcoin Executable', extensions: ['exe'] },
-						{ name: 'All Files', extensions: ['*'] }
-					]
-				}).then(res => {
+						console.log('res[0]', res[0])
+		
+						return Promise.resolve()
+	
+					})
+				},
+				binPath : function(message){
+					return helpers.dialog({
+						properties: ['openDirectory'],
+						/*filters: [
+							{ name: 'Pocketcoin Executable', extensions: ['exe'] },
+							{ name: 'All Files', extensions: ['*'] }
+						]*/
+					}).then(res => {
 
-					message.data = res[0]
-					return Promise.resolve()
-
-				}) 
+						console.log('res[0]', res[0])
+	
+						message.data = {
+							binPath : res[0]
+						}
+	
+						return Promise.resolve()
+	
+					}) 
+				}
 			}
 		}
+		
 	}
 
 	var middle = function(message){
+
+
 		if(f.deep(middles, message.action)){
 			return f.deep(middles, message.action)(message)
 		}

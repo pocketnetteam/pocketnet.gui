@@ -378,7 +378,7 @@ var metadisplay = function(){ %>
 								</div>
 
 								
-								<% if(app.platform.repost) {%>
+								<% if(app.platform.repost && !my) {%>
 									<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
 
 										<div class="itemwr table">
@@ -387,11 +387,11 @@ var metadisplay = function(){ %>
 													<i class="fas fa-share"></i>
 												</div>
 											</div>
-											<% if(share.reposted || my) {%> 
+											<!--<% if(share.reposted || my) {%> 
 												<div class="labelwr">
 													<span class="label"><%-share.reposted || 0%></span>
 												</div>
-											<% } %>
+											<% } %>-->
 										</div>
 
 									</div>

@@ -31,9 +31,7 @@ var Wss = function(node, service){
         msg.signature = '0'
         msg.pubkey = '0'
 
-        if(service){
-            console.log('msg', msg)
-        }
+       
 
         return sendMessage(msg)
     }

@@ -142,7 +142,11 @@ var postline = function(){ %>
 							<div class="tgsWrapperMain">
 							</div>
 
-							<% if(!share.aliasid && !essenseData.absolute) {%>
+							<% 
+							
+							console.log('essenseData.absolute', essenseData)
+							
+							if(!essenseData.absolute) {%>
 								<% postline() %>
 
 								<div class="paddingmobilewrapper">
@@ -172,7 +176,7 @@ var postline = function(){ %>
 		</div>
 	</div>
 
-	<% if(share.aliasid || essenseData.absolute) {%>
+	<% if(essenseData.absolute) {%>
 		<% postline() %>
 
 			<div class="error"></div>

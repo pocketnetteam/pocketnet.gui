@@ -598,9 +598,21 @@ var kit = {
 					})
 					
 				},
-	
-				binPath : function(v){
-					if(settings.node.binPath == v) return Promise.resolve()
+				defaultPaths : function({}){
+					settings.node.binPath = ''
+					settings.node.ndataPath = ''
+					settings.node.enabled = false
+
+					return state.saverp().then(proxy => {
+						return proxy.nodeControl.re()
+					})
+				},
+				binPath : function({binPath}){
+
+					if(settings.node.binPath == binPath) return Promise.resolve()
+
+					settings.node.binPath = binPath
+					settings.node.enabled = false
 	
 					return state.saverp().then(proxy => {
 	
@@ -609,8 +621,11 @@ var kit = {
 					
 				},
 	
-				ndataPath : function(v){
-					if(settings.node.ndataPath == v) return Promise.resolve()
+				ndataPath : function({ndataPath}){
+					if(settings.node.ndataPath == ndataPath) return Promise.resolve()
+
+					settings.node.ndataPath = ndataPath
+					settings.node.enabled = false
 	
 					return state.saverp().then(proxy => {
 						return proxy.nodeControl.re()

@@ -110,6 +110,9 @@ function rpc(request, callback, obj) {
 
     //console.log("REQUEST", request, self.host, self.port)
 
+    if(pst){
+        console.log('request', request)
+    }
 
     var options = {
         host: self.host,

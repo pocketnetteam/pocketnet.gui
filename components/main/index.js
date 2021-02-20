@@ -23,38 +23,43 @@ var main = (function(){
 		var actions = {
 			addbutton : function(){
 
-				self.nav.api.load({
+				self.app.platform.ui.share()
 
-					open : true,
-					id : 'share',
-					inWnd : true,
+				/*globalpreloader(true, true)
 
-					eid : 'postin',
-					
-					clbk : function(e, p){
-					},
+				setTimeout(function(){
+					self.nav.api.load({
 
-					essenseData : {
-						close : function(){
-
-							share.make()
-
+						open : true,
+						id : 'share',
+						inWnd : true,
+	
+						eid : 'postin',
+						
+						clbk : function(e, p){
+							globalpreloader(false)
 						},
-						post : function(){
-							share.make()
-
-
-							if (plissing)
-								plissing.destroy()
-							
-						},
-
-						hello : true,
-
-						absolute : true
-					}
-
-				})
+	
+						essenseData : {
+							close : function(){
+	
+								share.make()
+	
+							},
+							post : function(){
+								share.make()
+	
+	
+								if (plissing)
+									plissing.destroy()
+								
+							},	
+							absolute : true
+						}
+	
+					})
+				}, 50)*/
+				
 				
 			},
 			addbuttonscroll  : function(){
