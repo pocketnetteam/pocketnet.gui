@@ -108,11 +108,6 @@ function rpc(request, callback, obj) {
     request = JSON.stringify(request);
     var auth = new Buffer(self.user + ':' + self.pass).toString('base64');
 
-    //console.log("REQUEST", request, self.host, self.port)
-
-    if(pst){
-        console.log('request', request)
-    }
 
     var options = {
         host: self.host,

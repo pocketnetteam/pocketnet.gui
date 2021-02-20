@@ -144,9 +144,27 @@ Platform = function (app, listofnodes) {
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }
                 },
+
+                macos: {
+                    hidden : true,
+                    appname: "Pocketnet",
+                    text: {
+                        name: "macOS",
+                        download: self.app.localization.e('e13222'),
+                        label: 'Download Pocketnet for macOS'
+                    },
+        
+                    icon: '<i class="fab fa-apple"></i>',
+        
+                    github: {
+                        name: "PocketnetSetup.dmg",
+                        url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
+                        page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
+                    }
+                },
         
                 linux: {
-                        appname: "Pocketnet",
+                    appname: "Pocketnet",
                     text: {
                         name: "Linux",
                         download: self.app.localization.e('e13222'),
