@@ -74,6 +74,12 @@ if (is.linux()) {
     badgeTrayIcon = require('path').join(__dirname, 'res/electron/icons/png/iconbadge.png')
 }
 
+if (is.macOS()) {
+    defaultIcon = require('path').join(__dirname, 'assets/icons/png/16x16.png')
+    defaultTrayIcon = require('path').join(__dirname, 'assets/icons/png/16x16.png')
+    badgeTrayIcon = require('path').join(__dirname, 'assets/icons/png/16x16.png')
+}
+
 function showHideWindow(show) {
 
     if (win === null) {
@@ -152,8 +158,16 @@ function createTray() {
 
     tray.setContextMenu(contextMenu);
 
+    if (is.macOS()) {
+        app.dock.setMenu(contextMenu)
+        app.on('activate', () => {
+            showHideWindow(true)
+        })
+    }
+
     tray.on('click', () => {
-        showHideWindow()
+        if (!is.macOS())
+            showHideWindow()
     })
 
     ipcMain.on('update-badge-tray', function(e, c) {
@@ -199,8 +213,12 @@ function createBadgeOS() {
         ipcMain.on('update-badge', (event, badgeNumber) => {
             if (badgeNumber) {
                 app.setBadgeCount(badgeNumber);
+                if (is.macOS())
+                    app.dock.setBadge(badgeNumber.toString())
             } else {
                 app.setBadgeCount(0);
+                if (is.macOS())
+                    app.dock.setBadge('')
             }
 
             event.returnValue = 'success';
