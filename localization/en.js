@@ -490,7 +490,7 @@ ____loclib.e13083 = "As a sign of our gratitude for donation, you will receive a
 ____loclib.e13084 = "Also, when we build group chat, you will be a member of a special group of donors that will have direct access to Pocketnet team, even as the platform grows"
 ____loclib.e13085 = "Link to your Pocketnet profile will be listed below driving more people to your posts (unless you ask us to not do that)"
 ____loclib.e13086 = "Support Decentralized Web Now"
-____loclib.e13087 = "Bitcoin, Litecoin, Monero"
+____loclib.e13087 = "Bitcoin, Litecoin"
 
 ____loclib.e13088 = "Pocketnet members who donated to support Pocketnet"
 ____loclib.thankyou = "Thank you!"

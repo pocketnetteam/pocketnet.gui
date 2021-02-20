@@ -489,7 +489,7 @@ ____loclib.e13083 = "Als Zeichen für die Wertschützung deiner Spende wirst du 
 ____loclib.e13084 = "Außerdem wirst du, sobald ein Gruppenchat besteht, Teil einer speziellen Spendergruppe sein und direkten Zugang zum Team haben, auch wenn die Plattform w�chst."
 ____loclib.e13085 = "Der Link zu deinem Pocketnet-Profil wird unten angegeben sein, sodass mehr Menschen zu deinen Beiträgen finden (außer du willst das nicht)"
 ____loclib.e13086 = "Unterstütze das dezantralisierte Web jetzt"
-____loclib.e13087 = "Bitcoin, Litecoin, Monero"
+____loclib.e13087 = "Bitcoin, Litecoin"
 
 ____loclib.e13088 = "Pocketnet Mitglieder, die gespendet haben, um Pocketnet zu unterstützen"
 ____loclib.thankyou = "Danke!"
