@@ -17318,7 +17318,7 @@ Platform = function (app, listofnodes) {
                 if (data.msg == 'download-progress') {
                 }
 
-                if (data.msg == 'update-available' && data.linux) {
+                if (data.msg == 'update-available' && (data.linux || data.macos)) {
                     updateAvailable()
                 }
             }

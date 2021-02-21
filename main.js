@@ -40,7 +40,7 @@ autoUpdater.on('checking-for-update', (ev) => {
 
 autoUpdater.on('update-available', (ev) => {
     if (!is.linux()) updatesLoading = true
-    win.webContents.send('updater-message', { msg: 'update-available', type: 'info', ev: ev, linux: is.linux() })
+    win.webContents.send('updater-message', { msg: 'update-available', type: 'info', ev: ev, linux: is.linux(), macos: is.macOS() })
 })
 
 autoUpdater.on('update-not-available', (ev) => {
@@ -244,7 +244,7 @@ function initApp() {
     var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
 
     if (isDevelopment) {
-
+        win.toggleDevTools();
     } else {
 
         log.info('First check updates...');
