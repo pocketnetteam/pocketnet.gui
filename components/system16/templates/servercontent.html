@@ -17,6 +17,8 @@
 
     <% if(info && info.server.listening && info.wss.listening) {%>
 
+        <% if(admin) {%>
+
         <div class="adminsWrapper">
             <div class="work">
                 <div class="subcaption">
@@ -28,6 +30,8 @@
 
             </div>
         </div>
+
+        <% } %>
 
         <div class="walletsWrapper">
             <div class="work">
