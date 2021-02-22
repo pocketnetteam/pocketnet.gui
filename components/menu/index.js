@@ -159,6 +159,143 @@ var menu = (function(){
 				}
 			},
 
+			testing: {
+
+				click : function(){
+
+					return
+
+					dialog({
+						header : 'test',
+						html : "Do you want to begin. (Please check testnet connection)",
+						btn1text : 'Go',
+
+						success : function(){
+							
+
+							var fields = {
+								name : ['4chan','Firefox', 'Google', 'KamalaHarris', 'CNN', 'kesh', 'discord', ''],
+								language : ['en', 'fr', 'ru', ''],
+								image : ['https://i.imgur.com/QxHjPZw.jpg', 'https://i.imgur.com/z5JU9A2.jpg', ''],
+								site : ['discord.gg/4chan', 'discord.gg%2F4chan', ''],
+								about : ['new', '!', 'discord.gg/4chan', ''],
+								addresses : [[],'[]',"['[]']", '["[]"]', ''],
+								ref : ['PDqCykN2o8SCGXfvPv87gVRXcomXKjFFGj', 'PUyqmPGdR4SezQnZ1sQtF3QzTtGHnRLQut', 'PArvZCGSoRd7y6b7zKJPyUVSaycVoyVqpc', 'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN', 'PCnispEKjKxVpi6fVDqp5LweoUrD3HZbnh', '']
+							}
+							
+							
+							_.each(fields, function(f, i){
+								_.each(f, function(fi){
+									fields[i].push(encodeURIComponent(fi))
+									fields[i].push(decodeURIComponent(fi))
+							
+									if (fi.toLowerCase){
+										fields[i].push(decodeURIComponent(fi.toLowerCase()))
+										fields[i].push(encodeURIComponent(fi.toLowerCase()))
+										fields[i].push((fi.toLowerCase()))
+									}
+									
+								})
+							})
+							
+							var lasthash = ''
+							var lastexp = {}
+							var fi = 'ce8933f33b85979bbca853f191542101cc108fb3887b21c937a0bcb0dadd1f3d'
+							var c = 0
+
+							var hashes = []
+							var infos = []
+							
+							do{
+								var testUI = new UserInfo();
+							
+								_.each(fields, function(f, i){
+							
+									var r = rand(0, f.length - 1)
+							
+									testUI[i].set(f[r])
+									
+								})
+							
+								lasthash = Buffer.from(bitcoin.crypto.hash256(testUI.serialize()), 'utf8').toString('hex');
+								lastexp = testUI.export()
+
+								hashes.push(lasthash)
+								infos.push(lastexp)
+
+								userInfo = testUI
+
+								self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
+
+									console.log("IMHERE")
+			
+									if(!exist || 
+										(self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)
+										
+									){
+			
+										userInfo.uploadImage(function(err){
+		
+											if (err){
+
+												console.log("An error occurred while loading images", err, userInfo.export())
+		
+												return 
+											}
+		
+		
+											self.sdk.node.transactions.create.commonFromUnspent(
+		
+												userInfo,
+		
+												function(tx, error){
+		
+													
+		
+													if(!tx){
+		
+														console.log("ERROR", error, userInfo.export())
+		
+													}
+													else
+													{			
+														
+														console.log("tx", tx, userInfo.export())
+														
+													}
+		
+												},
+		
+												{
+												}
+											
+											)
+
+										})
+			
+									}
+									else
+									{
+										console.log('This username is taken in Pocketnet', userInfo.export())			
+									}
+								})
+							
+								c++
+							
+							}
+							
+							while(c < 5)
+
+						}
+					})
+
+					
+				},
+
+				
+
+			},
+
 			sitename : {
 
 				click : function(){
