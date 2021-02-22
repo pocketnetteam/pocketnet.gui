@@ -119,7 +119,7 @@ var send = (function(){
 					data.address = p.address
 				}
 
-				if(p.amount){
+				if (p.amount){
 					data.amount = Number(p.amount)
 				}
 

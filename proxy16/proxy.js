@@ -21,6 +21,7 @@ var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remote.js');
 var Proxies = require('./proxies.js');
+var Exchanges = require('./exchanges.js');
 //////////////
 
 
@@ -37,13 +38,14 @@ var Proxy = function (settings, manage) {
     var wallet = new Wallet(settings.wallet);
     var remote = new Remote();
     var proxies = new Proxies(settings.proxies)
+    var exchanges = new Exchanges() 
 
-    self.userDataPath = null
+    self.userDataPath = null    
 
     f.mix({ 
         wss, server, pocketnet, nodeControl, 
         remote, firebase, nodeManager, wallet,
-        proxies,
+        proxies, exchanges,
 
         proxy : self
     })
@@ -410,7 +412,6 @@ var Proxy = function (settings, manage) {
                 service.service = true
                 service.addr = settings.server.domain
 
-                console.log('service', service)
             }*/
 
             return service

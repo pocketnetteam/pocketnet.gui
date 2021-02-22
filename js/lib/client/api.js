@@ -20,8 +20,6 @@ var ProxyRequest = function(app = {}){
         return data
     }
 
-    
-
     var timeout = function (ms, promise, controller) {
 
         var cancelled = false
@@ -345,9 +343,7 @@ var Proxy16 = function(meta, app){
 
     self.rpc = function(method, parameters, options, trying){
 
-
         if(!trying) trying = 0
-
 
         if(!options) options = {}
 
@@ -389,7 +385,9 @@ var Proxy16 = function(meta, app){
 
     self.fetch = function(path, data, waiting){
 
-        if(self.direct){
+        var promise = null
+
+        if (self.direct){
             promise = self.system.fetch(path, data)
         }
         else{

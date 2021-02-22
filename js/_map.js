@@ -544,6 +544,42 @@ __map =  {
 			anonimus : true,
 		},	
 
+		stacking : {
+			uri : "stacking",
+			href : "stacking",
+			relations : [
+				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
+				
+				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
+					Highcharts = require('./js/vendor/highcharts.js')
+				}},
+			],
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
+			anonimus : true,
+		},	
+
 		lastcomments : {
 			uri : "lastcomments",
 			href : "lastcomments",

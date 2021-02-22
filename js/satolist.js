@@ -1320,6 +1320,7 @@ Platform = function (app, listofnodes) {
 
                 if (typeof graph.options.disableYLabels != 'undefined') {
                     options.yAxis[0].labels.enabled = false;
+                    options.yAxis[0].offset =  0
                 }
 
                 if (typeof graph.options.yGridLineWidth != 'undefined') {
@@ -3381,6 +3382,13 @@ Platform = function (app, listofnodes) {
                     type: "BOOLEAN",
                     value: true
                 },
+    
+                /*vidgetstacking: {
+                    name: 'Staking Pocketcoin vidget',
+                    id: 'vidgetstacking',
+                    type: "BOOLEAN",
+                    value: true
+                },*/
 
                 telegram: {
                     type: "STRINGANY",
@@ -3507,7 +3515,8 @@ Platform = function (app, listofnodes) {
 
                             vidgetchat: options.vidgetchat,
                             vidgettags: options.vidgettags,
-                            vidgetlastcomments: options.vidgetlastcomments
+                            vidgetlastcomments: options.vidgetlastcomments,
+                           // vidgetstacking : options.vidgetstacking
 
                         }
                     },
@@ -8065,6 +8074,20 @@ Platform = function (app, listofnodes) {
             },
 
             get: {
+
+                info: function (clbk) {
+
+                    self.app.api.rpc('getnodeinfo').then(d => {
+                        if (clbk)
+                            clbk(d)
+        
+                    }).catch(e => {
+                        if (clbk) {
+                            clbk(null, e)
+                        }
+                    })
+
+                },
 
                 time: function (clbk) {
 

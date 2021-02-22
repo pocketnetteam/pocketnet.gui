@@ -8,7 +8,7 @@ var panel = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, discussions = null, tags = null, comments = null;
+		var el, discussions = null, tags = null, comments = null, stacking = null;
 
 		var ed = null;
 
@@ -29,6 +29,23 @@ var panel = (function(){
 					
 					clbk : function(e, p){
 						tags = p
+					}
+
+				})
+
+			},
+
+			stacking : function(){
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'stacking',
+					el : el.stacking,
+					animation : false,
+					
+					clbk : function(e, p){
+						stacking = p
 					}
 
 				})
@@ -338,6 +355,9 @@ var panel = (function(){
 			if (self.app.platform.sdk.usersettings.meta.vidgetlastcomments.value)
 				renders.lastcomments()
 
+			/*if (deep(self.app.platform.sdk, 'usersettings.meta.vidgetstacking.value'))
+				renders.stacking()*/
+
 			/*
 				load.recomendation(function(users){
 					renders.recommendations(users)
@@ -381,6 +401,11 @@ var panel = (function(){
 					comments = null;
 				}
 
+				if(stacking){
+					stacking.destroy()
+					stacking = null
+				}
+
 
 				el = {};
 			},
@@ -405,6 +430,7 @@ var panel = (function(){
 				el.cnt = el.c.find('.panelcnt')
 				el.tags = el.c.find('.tagscnt')
 				el.comments = el.c.find('.lastcommentscnt')
+				el.stacking = el.c.find('.stackingcnt')
 
 				el.r = el.c.find(".recommendationscnt")
 
