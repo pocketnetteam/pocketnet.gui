@@ -12,6 +12,7 @@
         "pack": "electron-builder -w --dir --x64",
         "dist": "electron-builder -w --x64 --ia32",
         "distl": "electron-builder -l --x64",
+        "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
         "rebuild": "electron-rebuild",
         "minimize": "node minimize.js",
@@ -123,6 +124,7 @@
         ],
         "mac": {
             "target": "dmg",
+            "artifactName": "${productName}Setup.${ext}",
             "icon": "assets/icons/mac/icon.icns"
         },
         "linux": {

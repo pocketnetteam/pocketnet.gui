@@ -288,11 +288,7 @@ var help = (function(){
 						electron.ipcRenderer.send('electron-checkForUpdates');
 
 						electron.ipcRenderer.on('updater-message', function(event, data){
-                            if (
-								
-								data.msg == 'update-downloaded' || data.msg == 'update-not-available' || (data.linux && data.msg == 'update-available')
-							
-							)
+                            if (data.msg == 'update-downloaded' || data.msg == 'update-not-available' || ((data.linux || data.macos) && data.msg == 'update-available'))
 							    el.caption.find('.checking').removeClass('active')
 						})
 
