@@ -19,13 +19,13 @@ lukos
 alukos
 performance/keys.txt
 performance/main.js
-master.css
-_modules.js
+css/master.css
+js/mdls.js
 js/join.js
 js/vendor.js
 js/vendor.min.js
 js/join.min.js
-*.php
+index.php
 web.config
 web.config
 publish.py

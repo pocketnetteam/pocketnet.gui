@@ -196,17 +196,11 @@ var filluserfast = (function(){
 
 					var clbk = function(){
 						if (deep(essenseData, 'successHref') == '_this'){
-
-
 							var close = deep(initialParameters, 'container.close')
-
 							if (close)
 								close();
-								
 							if (essenseData.signInClbk)
 								essenseData.signInClbk();
-					
-
 						}
 						else
 						{
@@ -219,7 +213,10 @@ var filluserfast = (function(){
 
 						}
 
+
+						
 						self.app.platform.ui.showmykeyfast()
+						
 					}
 
 					setTimeout(function(){

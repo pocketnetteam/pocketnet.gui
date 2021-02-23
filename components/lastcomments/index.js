@@ -16,7 +16,7 @@ var lastcomments = (function(){
 					open : true,
 					href : 'post?s=' + posttxid,
 					inWnd : true,
-					//history : true,
+					history : true,
 					clbk : function(d, p){									
 						app.nav.wnds['post'] = p
 					},

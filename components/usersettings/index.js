@@ -11,6 +11,8 @@ var usersettings = (function(){
 
 		var el, composed, controlller;
 
+		var checking = false
+
 
 		var actions = {
 
@@ -70,6 +72,65 @@ var usersettings = (function(){
 					// self.app.platform.sdk.system.get.telegramGetMe(bot);
 				})
 				
+			},
+
+			cache : function(){
+				var temp = self.app.platform.sdk.node.transactions.temp
+
+				var t = [];
+
+				_.each(temp, function(trx, s){
+					_.each(trx, function(tr){
+						t.push(tr)
+					})
+				})
+
+				self.shell({
+					name :  'cache',
+					el : el.cache,
+					data : {
+						temp : t,
+						checking : checking
+					}					
+
+				}, function(p){
+					p.el.find('.check').on('click', function(){
+
+						if($(this).hasClass('disabled')) return
+
+						checking = true
+
+						renders.cache()
+
+						self.app.platform.sdk.node.transactions.checkTemps(function(){
+
+							setTimeout(function(){
+								checking = false
+
+								renders.cache()
+							}, 100)
+							
+						})
+
+					})
+
+					p.el.find('.clear').on('click', function(){
+
+
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to clear temporary application information? You balance can has changed on several minutes.",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+								self.app.platform.sdk.node.transactions.clearTempHard()
+								renders.cache()
+							}
+						})
+
+						
+					})	
+				})
 			}
 		}
 
@@ -108,7 +169,10 @@ var usersettings = (function(){
 		var make = function(){
 
 			renders.options()
+			renders.cache()
 
+			self.app.platform.sdk.node.transactions.clbks.settings = renders.cache;
+			
 		}
 
 		var add = function(check){
@@ -163,6 +227,9 @@ var usersettings = (function(){
 			destroy : function(){
 				el = {};
 
+
+				delete self.app.platform.sdk.node.transactions.clbks.settings
+
 				if (self.app.user.features.telegram){
 
 					controller.abort(); 
@@ -180,6 +247,7 @@ var usersettings = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				el.options = el.c.find('.options')
+				el.cache = el.c.find('.cache')
 
 				initEvents();
 

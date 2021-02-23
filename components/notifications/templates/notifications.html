@@ -24,8 +24,6 @@
 
 
 	<% } %>
-	
-		
 
 
 			<% _.each(group, function(notification){
@@ -46,9 +44,10 @@
 				
 				var tpl = m.fastMessage(notification)
 
-				console.log(notification, tpl)
 
-				if(!tpl) return
+				if(!tpl) {
+					return
+				}
 			%>
 
 				<div class="notification <%-seen%>" notification="<%-notification.txid%>">

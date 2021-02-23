@@ -31,10 +31,74 @@
 			display : block;
 		}
     }
+
+    .toDefaultPath{
+        opacity: 0.5;
+        .transition(0.3s);
+        cursor: pointer;
+
+        &:hover{
+            color : @color-bad;
+        }
+    }
     
     .chartWrapper{
         padding : 2 * @rhythm 0;
         
+    }
+
+    .stacking{
+        .canstacking{
+            padding : 3 * @rhythm 0;
+
+            i{
+                width : 20px;
+                font-size: 0.9em;
+               
+            }
+
+            .good{
+                color : @color-good;
+            }
+
+            .bad{
+                color : @color-bad;
+            }
+        }
+
+        .copyaddress{
+            cursor: pointer;
+
+            &:hover{
+                color : @color-bright;
+            }
+        }
+        .adresses{
+
+            .address{
+                width: auto;
+
+                >div{
+                    &.balance{
+                        padding : 0 2 * @rhythm;
+                        padding-left: @rhythm;
+                        color : @color-main;
+                        font-weight: 700;
+                        font-size: 0.9em;
+                    }
+    
+                    &.namewrapper{
+                        width: 270px;
+                    }
+                    &.iconWrapper{
+                        width: 44px;
+                        text-align: right;
+                    }
+                }
+
+                
+            }
+        }
     }
 
     .proxyselecttable{
@@ -97,6 +161,10 @@
             padding-left: @rhythm;
             color : @color-gray-slight;
 
+            i{
+                font-size: 0.8em;
+            }
+
             i.good{
                 color : @color-good;
             }
@@ -127,9 +195,16 @@
             }
         }
         .value{
-            text-decoration: underline;
-            color : @color-gray;
-            cursor: pointer;
+            
+            color : @color-gray-mlight;
+
+            &[fss],
+            &[sys]{
+                text-decoration: underline;
+                color : @color-gray;
+                cursor: pointer;
+            }
+            
 
             span{
                 font-size: 0.9em;
@@ -399,10 +474,107 @@
         }
     }
 
+    .nodedummy{
+        text-align: center;
+        padding : 4 * @rhythm 0;
+        cursor: pointer;
+        color : @color-gray-mlight;
+        background: fade(@color-gray-mlight, 10);
+
+        .text{
+            padding : @rhythm 0;
+            font-size: 0.9em;
+        }
+
+        i{
+            font-size: 0.9em;
+        }
+    }
+
     .nodecontent{
         .nodecontentstate{
             span{
                 font-size: 0.8em;
+            }
+        }
+        
+        .notfound{
+            text-align: center;
+            padding : 4 * @rhythm 0;
+            cursor: pointer;
+            color : @color-gray-mlight;
+            
+            .transition(0.3s);
+
+            &:hover{
+                color : @color-bright;
+            }
+
+            .text{
+                padding : @rhythm 0;
+                font-size: 0.9em;
+            }
+
+            i{
+                font-size: 0.9em;
+                color : @color-bright;
+            }
+            
+        }
+
+        .addresses{
+            padding-top : 2 * @rhythm;
+            margin-top : 2 * @rhythm;
+            margin-bottom : 2 * @rhythm;
+            padding-bottom : 2 * @rhythm;
+            border-top : 1px solid @color-gray-slight;
+            border-bottom : 1px solid @color-gray-slight;
+        }
+
+        .deletenodeWrapper{
+            padding-top : 2 * @rhythm;
+            margin-top : 2 * @rhythm;
+            padding-bottom : 2 * @rhythm;
+            border-top : 1px solid @color-gray-slight;
+        }
+    }
+
+    .nodecontentmanage{
+
+        position: relative;
+
+        &.lock{
+            .felock{
+                display: block;
+            }
+        }
+
+        .felock{
+            position: absolute;
+            left : 0;
+            right : 0;
+            top : 0;
+            bottom : 0;
+            padding : 2 * @rhythm;
+            background: fade(@color-white, 80);
+            display: none;
+        }
+
+        .felockcnt{
+            text-align: center;
+            padding : 4 * @rhythm 0;
+            cursor: pointer;
+            color : @color-gray-mlight;
+            
+
+            .text{
+                padding : @rhythm 0;
+                font-size: 0.9em;
+            }
+
+            i{
+                font-size: 0.9em;
+                color : @color-bright;
             }
         }
     }
@@ -481,9 +653,22 @@
             }
 
 
+           
+
             >div{
                 vertical-align: middle;
                 padding :3 * @rhythm 2 * @rhythm;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                &.use{
+                    cursor: pointer;
+    
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
 
                 &.fork{
                     width: 40px;
@@ -493,7 +678,7 @@
                 }
 
                 &.block{
-                    width: 60px;
+                    width: 90px;
                 }
 
                 &.use{
@@ -911,4 +1096,36 @@ html.stblack{
     
         }
     }
+}
+
+@media only screen and (max-width: 640px) {
+    #system16{
+        .work{
+            padding: 0 2 * @rhythm!important;
+           
+        }
+
+        .tableovfWrapper{
+            overflow: hidden;
+            overflow-x: scroll;
+        }
+
+        .table{
+            width : 1024px!important;
+        }
+    }
+
+    .proxieslist{
+       
+        .proxy{
+            
+            >div{
+                font-size: 0.9em;
+                
+            }
+    
+           
+        }
+    }
+
 }

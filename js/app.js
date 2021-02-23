@@ -87,6 +87,8 @@ Application = function(p)
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
+		imageServerup1 : p.imageServerup1 || 'https://pocketnet.app:8092/up',
+
 		////////////// Will remove with Matrix
 		//ws : p.ws || "wss://pocketnet.app:8088",
 		rtc : p.rtc || 'https://pocketnet.app:9001/',
@@ -202,9 +204,13 @@ Application = function(p)
 
 			}
 
+			self.app.api.changeProxyIfNeed()
+
 			if(error && !self.errors.state[error]){
 
 				self.errors.state[error] = true;
+
+				
 
 				_.each(self.errors.clbks, function(c){
 					c(self.errors.state)
@@ -410,6 +416,11 @@ Application = function(p)
 	self.map = __map;
 	self.modules = {};
 
+	self.curation = function(){
+		if(typeof isios != 'undefined' && isios()) return true
+		return false
+	}
+
 	self.relations = {};
 
 	self.backmap = {
@@ -433,6 +444,10 @@ Application = function(p)
 			childrens : ['userpage', 'share', 'author', 'post']
 		}
 
+	}
+
+	if(self.curation()){
+		delete self.backmap.index
 	}
 
 	self.options.backmap = self.backMap
@@ -571,6 +586,8 @@ Application = function(p)
 	}
 
 	self.init = function(p){
+
+		if (navigator.webdriver) return
 
 		if (typeof localStorage == 'undefined')
 			localStorage = {};

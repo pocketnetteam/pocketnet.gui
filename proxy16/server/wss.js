@@ -387,7 +387,7 @@ var WSS = function(admins, manage){
 
                 wss.on('listening',function(){
 
-                    self.listening = settings.port || 8088
+                    self.listening = settings.port || 8099
 
                     resolve()
                 });
@@ -397,7 +397,7 @@ var WSS = function(admins, manage){
                     reject(e) 
                 });
 
-                server.listen(settings.port || 8088);
+                server.listen(settings.port || 8099);
 
             }
 
@@ -415,7 +415,8 @@ var WSS = function(admins, manage){
 
         if (wss && wss.clients)
             wss.clients.forEach((socket) => {
-                socket.close();
+                if (socket)
+                    socket.close();
             });
 
         return new Promise((resolve, reject) => {
@@ -428,11 +429,14 @@ var WSS = function(admins, manage){
                         }
                     });
 
-                server.close(function(){
+                if (server)
+                    server.close(function(){
+                        resolve()
+                    })
+
+                else{
                     resolve()
-                })
-    
-               
+                }
     
             }, 3000);
         })

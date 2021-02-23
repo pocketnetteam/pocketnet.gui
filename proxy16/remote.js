@@ -7,20 +7,51 @@ var _ = require('underscore')
 
 var path = require("path");
 var jquery = path.resolve(__dirname, "lib/jquery-1.11.3.min.js")
-
+var ogParser = require("./lib/og-parser-edited.js");
 
 //const phantom = require('phantom');
 var iconv = require('iconv-lite');
 const fetch = require('node-fetch'); 
 const autoenc = require('node-autodetect-utf8-cp1251-cp866');
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 var Remote = function(app){
 
 	var self = this;
 	var cache = [];
-	var phlinks = [];
+	
 	var loading = {};
 	var errors = {};
+	var ogcache = [];
+	var ogloading = [];
+
+	var hexEncode = function(text)
+	{
+	    var ch = 0;
+	    var result = "";
+	    for (var i = 0; i < text.length; i++)
+	    {
+	        ch = text.charCodeAt(i);
+	        if (ch > 0xFF) ch -= 0x350;
+	        ch = ch.toString(16);
+	        while (ch.length < 2) ch = "0" + ch;
+	        result += ch;
+	    }
+	    return result;
+	}
+
+	var gethead = function(body){
+
+		if(!body) return ''
+		
+		var match = body.toLowerCase().match(/<head>[\s\S]*?<\/head>/gi)
+
+
+		if(match && match[0]){
+			return "<!DOCTYPE html><html>" + match[0] + "<body>abs</body></html>"
+		}
+
+		return ''
+	}
 
 	var load = {
 		fetch : function(uri, clbk, dontdecoding, options){
@@ -33,7 +64,7 @@ var Remote = function(app){
 
 			var result = function(r){
 
-				if(r.length > 1000000){
+				if(r.length > 100000){
 					throw new Error('size limit');
 				}
 
@@ -78,11 +109,11 @@ var Remote = function(app){
 			}, function (error, response, body) {
 
 				var ishtml = response && response.headers && response.headers['content-type'] && response.headers['content-type'].indexOf('html') > -1;
+
 			  
 				if(!error)
 				{
-
-					var size = 1.5 *  1024 * 1024
+					var size = 1 *  1024 * 1024
 
 					if(ishtml && (!response.headers['content-length'] || response.headers['content-length'] < size) && body.length < size)
 						clbk(body)
@@ -123,7 +154,7 @@ var Remote = function(app){
 
 				if(loading[link]){
 
-					retry(function(){
+					f.retry(function(){
 
 						return !loading[link]
 
@@ -141,7 +172,7 @@ var Remote = function(app){
 								clbk(null)	
 						}
 
-					}, 100)
+					}, 100, 10000)
 				}
 				else
 				{
@@ -183,6 +214,180 @@ var Remote = function(app){
 		cache : function(url){
 			return _.find(cache, function(c){
 				return c.url == url
+			})
+		},
+
+		ogcache : function(uri, clbk){
+			if(errors[uri]){
+
+				if (clbk)
+					clbk({})	
+
+				return
+			}
+
+			var dt = load.fromogcache(uri);
+
+			if (dt){
+				if (clbk)
+					clbk(dt.og)	
+
+				return
+			}
+
+			if(ogloading[uri]){
+
+				f.retry(function(){
+
+					return !ogloading[uri]
+
+				}, function(){
+
+					var dt = load.fromogcache(uri) || {}
+
+					if (clbk)
+						clbk(dt.og || {})	
+
+				
+				}, 100, 10000)
+			}
+			else{
+				ogloading[uri] = true
+
+				load.ogf(uri, function(og){
+					ogcache = _.last(ogcache, 3000)
+
+					delete ogloading[uri]
+
+					ogcache.push({
+						url : uri,
+						og : og
+					})
+
+					if (clbk)
+						clbk(og)	
+				})
+			}
+		},
+
+		fromogcache : function(uri){
+			return _.find(ogcache, function(c){
+				return c.url == uri
+			})
+		},
+
+		og : function(uri, clbk){
+
+
+			load.url(uri, function(r){
+
+				if(r){
+
+					try{
+
+
+						ogParser(gethead(r), function(error, data) {
+
+
+		
+							if (error){
+								errors[uri] = error
+
+								if(_.toArray(errors[uri]).length > 3000) {
+									errors = {}
+								}
+
+								if(clbk) clbk({})
+
+								return
+							}
+			
+							if(!data) data = {}
+			
+			
+							var og = {}		
+			
+							if (data.og){
+								og.type = data.og.type
+								og.image = f.deep(data.og, 'image.url')
+								og.video = data.og.video
+								og.title = data.og.title
+								og.description = data.og.description
+							}
+			
+							
+							if (data.meta){
+								og.descriptionPage = data.meta.description
+			
+								if(!og.image){
+									og.image = f.deep(data.meta, 'thumbnail.url') || data.meta.thumbnailUrl
+								}
+			
+								if(!og.title){
+									og.title = data.meta.name
+								}
+								
+							}
+			
+							og.titlePage = data.title || ""
+			
+			
+							/*if(!og.video){
+								og.video = $('meta[property="og:video:url"]').attr('content')
+							}*/
+			
+							if (og.type || og.image || og.video || og.title || og.description || og.descriptionPage || og.titlePage){
+			
+								if(clbk) clbk(og)
+			
+								return
+							}
+			
+							if(clbk) clbk({})
+			
+						})
+					}
+
+					catch(e){
+						errors[uri] = 'nc'
+
+						if(clbk) clbk({})
+					}
+
+					
+				}
+
+				else{
+					errors[uri] = 'nc'
+
+					if(clbk) clbk({})
+				}
+
+				
+			})
+			
+		},
+
+		ogf : function(uri, clbk){
+			request({
+				uri : 'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri),
+				timeout : 30000,
+				type : "POST"
+			}, function(error, response, body){
+
+				var d = {}
+
+				try{
+					d = JSON.parse(body || "{}")
+					d = d.data || {}
+				}
+				catch(e){
+					console.log("E", e)
+				}
+
+				if (clbk){
+					clbk(d.og || {})
+				}
 			})
 		}
 	}
@@ -242,7 +447,6 @@ var Remote = function(app){
 				}
 				
 
-				console.log("JSDOV")
 
 				self.jsdom(html, clbk)
 			}
@@ -318,7 +522,7 @@ var Remote = function(app){
 						clbk(null)	
 				}
 
-			}, 100)
+			}, 100, 10000)
 		}
 		else
 		{
@@ -369,9 +573,24 @@ var Remote = function(app){
 		})
 	}
 
+	self.nmake = function(url, clbk){
+		load.ogcache(url, function(og){
+
+
+			if (clbk){
+				clbk(null, og)
+			}
+
+		})
+	}
+
 	self.info = function(){
 		return {
-			size : f.roughSizeOfObject(cache)
+			size : JSON.stringify(cache).length +  JSON.stringify(ogcache).length + 
+				JSON.stringify(errors).length + 
+				JSON.stringify(loading).length + 
+				JSON.stringify(ogloading).length
+				
 		}
 	}
 

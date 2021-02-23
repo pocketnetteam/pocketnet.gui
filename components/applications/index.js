@@ -70,6 +70,9 @@ var applications = (function(){
 
 		var renders = {
 			os : function(os){
+
+				if(os.hidden) return
+
 				self.shell({
 					turi : 'registration',
 					name :  'os',

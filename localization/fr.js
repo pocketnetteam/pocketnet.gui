@@ -489,7 +489,7 @@ ____loclib.e13083 = "En signe de gratitude pour le don, vous recevrez un cadeau 
 ____loclib.e13084 = "De plus, lorsque nous construisons une discussion de groupe, vous serez membre d'un groupe sp�cial de donateurs qui auront un acc�s direct � l'�quipe Pocketnet, m�me � mesure que la plate-forme se d�veloppe."
 ____loclib.e13085 = "Le lien vers votre profil Pocketnet sera r�pertori� ci-dessous, attirant plus de personnes vers vos publications (sauf si vous nous demandez de ne pas le faire)"
 ____loclib.e13086 = "Soutenez le Web d�centralis� maintenant"
-____loclib.e13087 = "Bitcoin, Litecoin, Monero"
+____loclib.e13087 = "Bitcoin, Litecoin"
 
 ____loclib.e13088 = "Membres Pocketnet qui ont fait un don pour soutenir Pocketnet"
 ____loclib.thankyou = "Merci!"

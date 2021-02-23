@@ -604,7 +604,7 @@ var test = (function(){
 				type : "TEXT",
 				onType : true,
 				
-				placeholder : self.app.localization.e('e13351')
+				placeholder : self.app.localization.e('e133512')
 			}),
 
 			site : new Parameter({

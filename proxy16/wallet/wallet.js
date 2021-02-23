@@ -2,6 +2,10 @@
 var Datastore = require('nedb');
 var f = require('../functions');
 
+var compensation = [
+
+]
+
 var Wallet = function(p){
     var self = this
 
@@ -59,6 +63,8 @@ var Wallet = function(p){
         if(!addressobj) return Promise.resolve()
 
         var all = addressobj.all || []
+
+        console.log("CHECKING", addressobj.check, queueobj)
 
         if (addressobj.check && self.patterns[addressobj.check]){
             return self.patterns[addressobj.check](queueobj, all)
@@ -129,14 +135,15 @@ var Wallet = function(p){
             }
           
             addresses[key] = {
-                amount : options.amount || 0.002,
+                amount : options.amount,
                 outs : options.outs || 1,
                 keys : kp,
                 address : kp ? self.pocketnet.kit.addressByPublicKey(kp.publicKey) : null,
                 unspents : null,
                 queue : [],
                 all : [],
-                key : key
+                key : key,
+                check : options.check
             }
 
             if(!kp){
@@ -147,6 +154,10 @@ var Wallet = function(p){
                 })
             }
             else{
+
+
+               
+
                 self.unspents.getc(addresses[key]).catch(e => {
                     console.log("UNSPENTERROR", e)
                 })
@@ -173,6 +184,22 @@ var Wallet = function(p){
                         }
 
                     })
+
+                   /* _.each(p.addresses, function(options, key){
+
+                        
+
+                        if(options.source == 'compensation'){
+                            console.log('addresses[obj.key].all', addresses[key].all)
+
+                            _.each(compensation, function(tobj){
+                                self.kit.addqueue('compensation', tobj[0], "::1", tobj[2] / 100000000).catch(e => {
+                                    console.log("ERRORADDCOMP", e)
+                                })
+                            })
+                        }
+
+                    })*/
                 })
 
                 db.find({executed : '-'}).exec(function (err, docs) {
@@ -266,13 +293,13 @@ var Wallet = function(p){
 
                 var outputs = []
 
-                _.each(to, function(address){
-                    outputs = outputs.concat(self.helpers.outputs.to(key, address))
+                _.each(to, function(tobj){
+                    outputs = outputs.concat(self.helpers.outputs.to(key, tobj))
                 })
 
                 return outputs
             },
-            to : function(key, to){
+            to : function(key, tobj){
                 var a = addresses[key]     
                 var outs = []
 
@@ -280,8 +307,8 @@ var Wallet = function(p){
 
                 for(var i = 0; i < a.outs; i++){
                     outs.push({
-                        amount : (a.amount / a.outs),
-                        address : to
+                        amount : ((a.amount || tobj.amount) / (a.outs || 1)),
+                        address : tobj.address
                     })
                 }
 
@@ -299,6 +326,7 @@ var Wallet = function(p){
 
             var outputs = self.helpers.outputs.tos(key, tos)
             var meta = null
+
 
             return self.unspents.getc(addresses[key]).then(unspents => {
                 return self.transactions.txfees(unspents, outputs, 'exclude')
@@ -331,7 +359,7 @@ var Wallet = function(p){
 
         },
 
-        addqueue : function(key, to, ip){
+        addqueue : function(key, to, ip, amount){
             
             if(!to) return Promise.reject('to')
             if(!addresses[key]) return Promise.reject('key')
@@ -349,7 +377,8 @@ var Wallet = function(p){
                 id : f.makeid(),
                 executed : '-',
                 ip : ip || '',
-                date : f.now()
+                date : f.now(),
+                amount : amount || undefined
             } 
 
 
@@ -396,8 +425,8 @@ var Wallet = function(p){
         makequeue : function(key){
             if(!addresses[key]) return Promise.reject('key')
 
-            var queue = _.filter(addresses[key].queue, function(object){
-                return !object.executing
+            var queue = _.filter(addresses[key].queue, function(object, l){
+                return !object.executing & l < 50
             })
 
         //    console.log('queue', queue)
@@ -415,14 +444,16 @@ var Wallet = function(p){
 
                 object.executing = executingId
 
-                return object.address
+                return {
+                    address : object.address,
+                    amount : object.amount
+                }
             })
 
 
 
             return self.kit.send(key, tos).then(r => {
 
-                console.log("SENT")
 
                 addresses[key].queue = _.filter(addresses[key].queue, function(object){
 
@@ -591,7 +622,9 @@ var Wallet = function(p){
         txfees : function(unspents, outputs, feeMode){
 
             var inputs = []
-            var feerate = 0.00002;
+            var feerate = 0.000000011;
+
+           
 
             return self.transactions.txbase(unspents, outputs, 0, feeMode).then(r => {
 
@@ -599,7 +632,9 @@ var Wallet = function(p){
 
             }).then(tx => {
 
-                var totalFees = Math.min(tx.virtualSize() * feerate, 0.00007);
+                console.log('feerate, tx.virtualSize()', tx.virtualSize() * feerate)
+
+                var totalFees = Math.max(tx.virtualSize() * feerate, 0.0002);
                 console.log('totalFees', totalFees)
                 return self.transactions.txbase(unspents, outputs, totalFees, feeMode)
 

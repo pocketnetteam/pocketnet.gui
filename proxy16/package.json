@@ -1,10 +1,12 @@
 {
   "name": "pocketnetproxy",
   "version": "1.0.0",
-  "description": "Pocketnet Proxy Server",
+  "description": "Pocketnet Proxy Server 16",
   "main": "index.js",
   "scripts": {
-    "serve": "node cli.js --cli"
+    "serve": "node cli.js --cli",
+    "install-windows-service": "winser -i",
+    "uninstall-windows-service": "winser -r"
   },
   "author": "Max Grishkov",
   "license": "ISC",

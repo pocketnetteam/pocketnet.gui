@@ -576,7 +576,11 @@ var author = (function(){
 
 					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
 
+					p.el.find('.copyaddress').on('click', function(){
+						copyText($(this))
 
+						sitemessage(self.app.localization.e('successcopied'))
+					})
 				})
 			},
 
@@ -1162,6 +1166,16 @@ var author = (function(){
 
 								if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
 									reports.shares.name = self.app.localization.e('uposts')
+
+									if(self.app.curation()){
+										self.nav.api.load({
+											open : true,
+											href : 'userpage',
+											history : true
+										})
+					
+										return
+									}
 								}
 								else
 								{

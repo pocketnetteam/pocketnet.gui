@@ -9,7 +9,7 @@ var compressor = require('yuicompressor');
 var path = ".",
 	prodaction = process.argv[2] ? false : true;
 
-var vendorversion = process.argv[3] || '4';
+var vendorversion = process.argv[3] || '5';
 
 if(prodaction === 'false') prodaction = false; 
 
@@ -17,7 +17,7 @@ if(prodaction === 'false') prodaction = false;
 
 var mapJsPath = './js/_map.js';
 var indexPathTpl = './index.tpl';
-var indexPath = './index.html';
+var indexPath = './index.php';
 
 var mapJs2Path = './js/_mapv2.js';
 
@@ -31,7 +31,7 @@ fs.exists(mapJsPath, function (exists) {
 
 		var modules = {
 			data : "",
-			path : './js/_modules.js'
+			path : './js/mdls.js'
 		}
 
 		var join = {

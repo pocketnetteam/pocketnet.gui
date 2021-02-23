@@ -24,7 +24,11 @@
 		}
 	}
 
-
+	.copyaddress{
+		cursor: pointer;
+		font-size: 0.7em;
+	}
+	
 	.authorlentawrappermain{
 		position: relative;
 
@@ -896,7 +900,17 @@ html.stblack{
 	
 	}	
 }
+@media only screen and (max-width: 1024px) {
+	#author{
+		.lentacell{
+			margin-right: 44px;
+		}
 
+		.work.mwork{
+			width: 90%;
+		}
+	}
+}
 @media only screen and (max-width: 640px) {
 	#content{
 
@@ -924,6 +938,14 @@ html.stblack{
 
 		#author{
 
+			.lentacell{
+				margin-right: 0;
+			}
+	
+			.work.mwork{
+				width: 100%;
+			}
+
 			.authorlentawrappermain{
 				position: relative;
 		
@@ -939,7 +961,10 @@ html.stblack{
 				}
 			}
 
-			
+			.copyaddress{
+				font-size: 1em;
+				font-weight: 700;
+			}
 
 			.subscribewrapperphones{
 				
@@ -975,7 +1000,7 @@ html.stblack{
 				padding : 2 * @rhythm;
 
 				.authorinfo{
-					font-size: 0.9em;
+					
 					.itemtable{
 						>div{
 							vertical-align: middle;

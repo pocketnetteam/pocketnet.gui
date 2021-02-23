@@ -2,62 +2,64 @@
 
     <div class="walletWrapper" >
         <div class="work">
-            <div class="wallet table" key="<%-key%>">
+            <div class="tableovfWrapper">
+                <div class="wallet table" key="<%-key%>">
 
-                <div class="use">
+                    <div class="use">
 
-                    <% if(admin) {%>
+                        <% if(admin) {%>
 
-                        <% 
+                            <% 
+                            
                         
-                     
-                        if(wallet.ready) {%>
+                            if(wallet.ready) {%>
 
-                            <% if(wallet.unspents > 0 && wallet.unspents >= wallet.queue) {%>
-                                <i class="fas fa-check-circle good coins"></i>
-                            <% } %>
-
-                            <% if(wallet.unspents > 0 && wallet.unspents < wallet.queue) {%>
-                                <i class="fas fa-check-circle normal coins"></i>
-                            <% } %>
-
-                            <% if(wallet.unspents == 0) {%>
-
-                                <% if(wallet.queue) {%>
-                                    <i class="fas fa-coins coins"></i>
-                                <% } else { %> 
-
-                                    <i class="fas fa-coins normal coins"></i>
-                                    
+                                <% if(wallet.unspents > 0 && wallet.unspents >= wallet.queue) {%>
+                                    <i class="fas fa-check-circle good coins"></i>
                                 <% } %>
 
+                                <% if(wallet.unspents > 0 && wallet.unspents < wallet.queue) {%>
+                                    <i class="fas fa-check-circle normal coins"></i>
+                                <% } %>
+
+                                <% if(wallet.unspents == 0) {%>
+
+                                    <% if(wallet.queue) {%>
+                                        <i class="fas fa-coins coins"></i>
+                                    <% } else { %> 
+
+                                        <i class="fas fa-coins normal coins"></i>
+                                        
+                                    <% } %>
+
+                                    
+                                <% } %>
+                            <% } else { %> 
+                                
+                                <i class="fas fa-cog settings"></i>
                                 
                             <% } %>
+
                         <% } else { %> 
                             
-                            <i class="fas fa-cog settings"></i>
+                            <i class="fas fa-check-circle good"></i>
                             
                         <% } %>
 
-                    <% } else { %> 
-                        
-                        <i class="fas fa-check-circle good"></i>
-                        
-                    <% } %>
+                    
+                    </div>
 
-                   
+                    <div class="name"><%- wallet.key.toUpperCase() %> 
+
+                        <% if(wallet.ready && admin) {%> <span class="gray coins">Send Coins</span> <% } %>
+                        <% if(wallet.ready && admin) {%> <span class="gray remove">Delete Private Key</span> <% } %>
+                    
+                    </div>
+                    <div class="queue"><%- wallet.queue %></div>
+                    <div class="balance"><%- wallet.balance %> PKOIN</div>
+                    <div class="unspents"><%- wallet.unspents %> </div>
+
                 </div>
-
-                <div class="name"><%- wallet.key.toUpperCase() %> 
-
-                    <% if(wallet.ready && admin) {%> <span class="gray coins">Send Coins</span> <% } %>
-                    <% if(wallet.ready && admin) {%> <span class="gray remove">Delete Private Key</span> <% } %>
-                
-                </div>
-                <div class="queue"><%- wallet.queue %></div>
-                <div class="balance"><%- wallet.balance %> PKOIN</div>
-                <div class="unspents"><%- wallet.unspents %> </div>
-
             </div>
         </div>
     </div>

@@ -13,7 +13,7 @@
 						</div>
 						<div class="tips">
 							
-							<div class="tipitem"><a href="https://pocketnet.app/blockexplorer/" external="external"><%=e('e14101')%></a></div>
+							<div class="tipitem"><a href="https://pocketnet.app/blockexplorer/" external="external"><%=e('e14101')%> <i class="fas fa-external-link-square-alt"></i></a></div>
 
 							<div class="tipitem" page="faq"><%=e('e14102')%></div>
 							<!--<div class="tipitem" page="curation">Specifics of curation on Pocketnet</div>
@@ -26,7 +26,7 @@
 							<div class="tipitem" page="node"><%=e('e14104')%></div>
 							<div class="tipitem" page="videos"><%=e('e14105')%></div>
 
-							<% if(os() && self.app.platform.applications[os()] && typeof _Electron == 'undefined' && !window.cordova) {%>
+							<% if(os() && self.app.platform.applications.ui[os()] && typeof _Electron == 'undefined' && !window.cordova) {%>
 								<div class="tipitem">
 									<a href="applications"><%=e('e14106')%></a>
 								</div>

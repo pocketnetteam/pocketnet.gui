@@ -879,6 +879,8 @@ var comments = (function(){
 
 				})
 
+				console.log('comment', comment, initialValue, images)
+
 				self.app.nav.api.load({
 					open : true,
 					href : 'imagegallery?s=' + txid + '&num=' + (num || 0) + "&com=" + comment.id,
@@ -959,7 +961,10 @@ var comments = (function(){
 
 				if (listpreview && ed.lastComment){
 					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+
+					console.log('ed.lastComment', ed.lastComment)
 				}
+
 
 				actions.openGallery(comment, _el.attr('i'))
 			},
@@ -1055,6 +1060,24 @@ var comments = (function(){
 							renders.edit(localParent, comment)
 
 							_el.tooltipster('hide')	
+						})
+
+						__el.find('.block').on('click', function(){
+
+							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
+								console.log(tx, error)
+                                if (!tx) {
+                                    self.app.platform.errorHandler(error, true)
+                                }
+								else
+								{
+									parent.remove()
+								}
+
+								_el.tooltipster('hide')	
+                            })
+
+							
 						})
 
 						__el.find('.remove').on('click', function(){

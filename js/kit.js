@@ -286,7 +286,7 @@ Comment = function(txid){
 
 					if(!images) return
 
-					if(this.v.images > 9){
+					if(this.v.length > 9){
 						return false;
 					}
 
@@ -354,7 +354,7 @@ Comment = function(txid){
 			return 'content'
 		}
 
-		if(self.message.v && encodeURIComponent(self.message.v).length > 1000){
+		if(self.message.v && (self.message.v).length > 1000){
 			return 'messagelength'
 		}
 
@@ -362,7 +362,13 @@ Comment = function(txid){
 	}
 
 	
+	self.checkloaded = function(){
+		var notloaded = _.find(self.images.v, function(i){
+			return i.indexOf('data:image') > -1
+		})
 
+		return notloaded
+	}
 
 	self.uploadImages = function(app, clbk){
 
@@ -390,7 +396,6 @@ Comment = function(txid){
 
 							success : function(data){
 
-
 								self.images.v[index] = deep(data, 'data.link');
 								
 								p.success();
@@ -398,8 +403,32 @@ Comment = function(txid){
 							},
 
 							fail : function(d){
-								index++;
-								p.success();
+
+								app.ajax.run({
+									type : "POST",
+									up1 : true,
+									data : {
+										file : r[1]
+									},
+		
+									success : function(data){
+		
+										self.images.v[index] = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+
+										console.log('self.images.v[index]', self.images.v[index])
+										p.success();
+		
+									},
+		
+									fail : function(d){
+		
+										//self.images.v[index] = ''
+		
+										//index++;
+		
+										p.success();
+									}
+								})
 							}
 						})
 
@@ -408,7 +437,7 @@ Comment = function(txid){
 				}
 				else
 				{
-					index++;
+					//index++;
 					p.success();
 				}
 
@@ -466,6 +495,8 @@ Comment = function(txid){
 			})
 		}
 
+		console.log('self.images.v', self.images.v)
+
 		if(self.id){
 			r.id = self.id
 		}
@@ -487,6 +518,8 @@ Comment = function(txid){
 			return decodeURIComponent(i)
 		}))
 
+		console.log("v.msgparsed", v.msgparsed)
+
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
 	}
@@ -495,8 +528,11 @@ Comment = function(txid){
 		var comment = new pComment();
 			comment.import(self.export())
 
+
 			comment.id = id
 			comment.txid = self.txid
+
+
 
 		return comment;
 	}
@@ -741,13 +777,15 @@ Share = function(lang){
 	var self = this;
 
 	self.clear = function(){
+		
 		self.message.set()
 		self.images.set()
 		self.tags.set()
 		self.url.set()
 		self.caption.set()
 		self.repost.set()
-		self.language.set()
+		self.language.set(lang)
+		self.aliasid = ""
 
 		_.each(self.settings, function(s, k){
 			self.settings[k] = null;
@@ -1026,6 +1064,13 @@ Share = function(lang){
 		image : ''
 	}
 
+	self.checkloaded = function(){
+		var notloaded = _.find(self.images.v, function(i){
+			return i.indexOf('data:image') > -1
+		})
+
+		return notloaded
+	}
 
 	self.uploadImages = function(app, clbk){
 
@@ -1057,6 +1102,38 @@ Share = function(lang){
 								
 								p.success();
 
+							},
+
+							fail : function(d){
+
+
+								app.ajax.run({
+									type : "POST",
+									up1 : true,
+									data : {
+										file : r[1]
+									},
+		
+									success : function(data){
+		
+										self.images.v[index] = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+
+										p.success();
+		
+									},
+		
+									fail : function(d){
+		
+										//self.images.v[index] = ''
+		
+										//index++;
+		
+										p.success();
+									}
+								})
+								
+
+								
 							}
 						})
 
@@ -1065,7 +1142,7 @@ Share = function(lang){
 				}
 				else
 				{
-					index++;
+					//index++;
 					p.success();
 				}
 
@@ -1395,8 +1472,32 @@ UserInfo = function(){
 
 					},
 					fail : function(d){
-						if (clbk)
-							clbk(d);
+
+
+						app.ajax.run({
+							type : "POST",
+							up1 : true,
+							data : {
+								file : r[1]
+							},
+
+							success : function(data){
+
+								self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+
+								if (clbk)
+									clbk();
+
+							},
+
+							fail : function(d){
+												
+								if (clbk)
+									clbk(d);
+							}
+						})
+
+		
 					}
 				})
 
@@ -1410,6 +1511,9 @@ UserInfo = function(){
 		}
 
 	}
+
+	
+
 
 	self.on = {}
 	self.off = function(e){
@@ -2092,3 +2196,99 @@ kits = {
 	}
 }
 
+/*
+tx hash problems
+
+var fields = {
+	name : ['4chan','Firefox', 'Google', 'KamalaHarris', 'CNN', 'kesh', 'discord', ''],
+	language : ['en', 'fr', 'ru', ''],
+	image : ['https://i.imgur.com/QxHjPZw.jpg', 'https://i.imgur.com/z5JU9A2.jpg', ''],
+	site : ['discord.gg/4chan', 'discord.gg%2F4chan', ''],
+	about : ['new', '!', 'discord.gg/4chan', ''],
+	addresses : [[],'[]',"['[]']", '["[]"]', ''],
+	ref : ['PDqCykN2o8SCGXfvPv87gVRXcomXKjFFGj', 'PUyqmPGdR4SezQnZ1sQtF3QzTtGHnRLQut', 'PArvZCGSoRd7y6b7zKJPyUVSaycVoyVqpc', 'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN', 'PCnispEKjKxVpi6fVDqp5LweoUrD3HZbnh', '']
+}
+
+
+_.each(fields, function(f, i){
+	_.each(f, function(fi){
+		fields[i].push(encodeURIComponent(fi))
+		fields[i].push(decodeURIComponent(fi))
+
+		if (fi.toLowerCase){
+			fields[i].push(decodeURIComponent(fi.toLowerCase()))
+			fields[i].push(encodeURIComponent(fi.toLowerCase()))
+			fields[i].push((fi.toLowerCase()))
+		}
+		
+	})
+})
+
+var lasthash = ''
+var lastexp = {}
+var fi = 'ce8933f33b85979bbca853f191542101cc108fb3887b21c937a0bcb0dadd1f3d'
+var c = 0
+
+do{
+
+	var testUI = new UserInfo();
+
+	_.each(fields, function(f, i){
+
+		var r = rand(0, f.length - 1)
+
+		testUI[i].set(f[r])
+		
+	})
+
+	lasthash = Buffer.from(bitcoin.crypto.hash256(testUI.serialize()), 'utf8').toString('hex');
+	lastexp = testUI.export()
+
+	c++
+
+}
+
+while(lasthash != fi && c < 500000)
+
+console.log(lasthash, lastexp, c)
+
+*/
+/*
+
+var testUI = new UserInfo();
+
+	
+	testUI.name.set('qwe1')
+	testUI.language.set('en')
+	testUI.image.set('https://i.imgur.com/NJsudvg.jpg')
+	testUI.site.set('qwe')
+	testUI.about.set('qwe')
+
+var buf = Buffer.from(bitcoin.crypto.hash256(testUI.serialize()), 'utf8');
+console.log('bu0', buf.toString('hex'))
+*/
+/*
+var optype = testUI.typeop ? testUI.typeop() : testUI.type
+var optstype = optype
+
+if (testUI.optstype && testUI.optstype()) optstype = testUI.optstype()
+
+console.log('testUI.export(), optstype', JSON.stringify(testUI.export()), optstype)
+console.log('bu0', buf.toString('hex'))*/
+
+/*
+var testUI2 = new UserInfo();
+
+	
+	testUI2.name.set('KamalaHarris')
+	testUI2.language.set('en')
+	testUI2.image.set('https://i.imgur.com/z5JU9A2.jpg')
+	testUI2.site.set('discord.gg/4chan')
+	testUI2.about.set('new')
+	
+
+var buf = Buffer.from(bitcoin.crypto.hash256(testUI2.serialize()), 'utf8');
+
+console.log('bu1', buf.toString('hex'))
+
+*/

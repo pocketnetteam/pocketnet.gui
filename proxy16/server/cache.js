@@ -4,9 +4,12 @@ var Cache = function(p){
     var self = this;
 
     var storage = {}
+    var waiting = {}
+
+
     var ckeys = {
         getlastcomments : {
-            time : 120,
+            time : 160,
             block : 0
         },
        
@@ -15,36 +18,47 @@ var Cache = function(p){
         },
 
         getnodeinfo : {
-            time : 120,
+            time : 160,
             block : 0
         },
         
         getrawtransactionwithmessage: {
-            time : 120,
+            time : 160,
             block : 0
         },
         
         getuserprofile: {
-            time : 120,
+            time : 160,
+            block : 0
+        },
+
+        getuserstate : {
+            time : 160,
             block : 0
         },
         
         getpagescores: {
-            time : 120,
+            time : 160,
             block : 0
         },
         
         getcontents: {
-            time : 120,
-            block : 0
-        }
+            time : 82000,
+        },
+
+        getmissedinfo: {
+            time : 160,
+            block : 0,
+        },
     }
+
 
     self.set = function(key, params, data, block){
         
         if (ckeys[key]){
 
             var k = f.hash(JSON.stringify(params))
+
 
             if(!storage[key])
                 storage[key] = {}
@@ -54,9 +68,26 @@ var Cache = function(p){
                 time : f.now()
             }
 
-            ckeys[key].block = block
+            if (typeof ckeys[key].block != undefined){
+                ckeys[key].block = block
+            }
+            
+
+            if(!waiting[key])
+                waiting[key] = {}
+
+            if (waiting[key][k]){
+
+
+                _.each(waiting[key][k].clbks, function(c){
+                    c('waitedmake')
+                })
+
+                delete waiting[key][k]
+            }
 
         }
+     
     }
 
     self.get = function(key, params){
@@ -77,11 +108,63 @@ var Cache = function(p){
         }
     }
 
-    self.block = function(block){
 
+    self.wait = function(key, params, clbk){
+
+        if (!ckeys[key]){
+            clbk('nocache')
+
+            return
+        }
+
+        if(self.get(key, params)){
+            clbk('hascache')
+            return
+        }
+
+        var waitid = f.makeid()
+
+        var k = f.hash(JSON.stringify(params))
+
+        if(!waiting[key])
+            waiting[key] = {}
+
+        if(!waiting[key][k])
+            waiting[key][k] = {
+                clbks : {},
+                executor : null
+            }
+
+        if(!waiting[key][k].executor){
+            waiting[key][k].executor = waitid
+
+            clbk('execute')
+
+            return 
+        }
+
+        waiting[key][k].clbks[waitid] = clbk
+
+
+        setTimeout(function(){
+
+            if(waiting[key] && waiting[key][k] && waiting[key][k].clbks[waitid]){
+
+                waiting[key][k].clbks[waitid]('waitedtimeout')
+
+                delete waiting[key][k].clbks[waitid]
+            }
+
+        }, 3500)
+
+        
+    }
+
+    self.block = function(block){
 
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){
+
 
                 if (k.block < block.height)
                     storage[key] = {}

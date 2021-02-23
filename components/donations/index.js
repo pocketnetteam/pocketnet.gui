@@ -58,7 +58,7 @@ var donations = (function(){
 			action : function(s){
 				actions.ways.ltcbtc(s)
 			}
-		},{
+		}/*,{
 			id : 'xmr',
 			name : "Monero",
 
@@ -67,7 +67,7 @@ var donations = (function(){
 			action : function(s){
 				actions.ways.xmr(s)
 			}
-		}/*,{
+		}*//*,{
 			id : 'paypal',
 			name : "Paypal",
 

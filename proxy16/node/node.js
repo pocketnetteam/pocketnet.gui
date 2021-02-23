@@ -30,9 +30,10 @@ var Node = function(options, manager){
     var changeNodeUsersInterval = null
 
 
-    var notactualevents = 600000 //mult
+    var notactualevents = 3600000 //mult
     var checkEventsLength = 100
     var getinfointervaltime = 60000
+    var lastinfoTime = f.now()
 
     var test = new Test(self)
 
@@ -45,9 +46,9 @@ var Node = function(options, manager){
     var chain = [];
 
     var serviceConnection = function(){
-        if(!wss.service){
+        if(!wss.service && manager){
      
-            wss.service = (new Wss(self, true)).connect()
+            wss.service = (new Wss(self, manager.proxy.kit.service())).connect()
 
             wss.service.on('disconnected', function(){
                 wss.service = null
@@ -241,8 +242,28 @@ var Node = function(options, manager){
             if (self.testing) return 0
             ///
 
+            var time = s.time;
+            var rate = (self.statistic.rate() || 0) + 1
+
+            if (time && time > 0 && time <= 200) time = 200
+            if (time && time > 200 && time <= 400) time = 300
+            if (time && time > 400 && time <= 700) time = 500
+            if (time && time > 700 && time <= 1300) time = 1000
+            if (time && time > 1300 && time <= 2300) time = 1700
+            if (time && time > 2300 && time <= 4000) time = 3100
+            if (time && time > 4000 && time <= 7000) time = 5300
+            if (time && time > 7000 && time <= 15000) time = 10000
+
+            if (rate <= 2) rate = 1.5
+            if (rate > 2 && rate <= 4) rate = 3
+            if (rate > 4 && rate <= 8) rate = 6
+            if (rate > 8 && rate <= 16) rate = 12
+            if (rate > 16 && rate <= 30) rate = 23
+            if (rate > 30 && rate <= 50) rate = 40
+            if (rate > 50 && rate <= 100) rate = 75
+
             return  (s.percent  * (lastblock.height || 1) ) / 
-                    ( ((self.statistic.rate() || 0) + 1) * (s.time || 5000) * (difference + 1) )
+                    ( rate * (time) * (difference + 1) )
         },
 
         better : function(){
@@ -351,7 +372,7 @@ var Node = function(options, manager){
 
                     self.statistic.clearOld()
 
-                    if (self.events.length < 1 + checkEventsLength){
+                    if (self.events.length < 1 + checkEventsLength || f.date.addseconds(lastinfoTime, notactualevents / 1000) < f.now()){
                         self.info().catch(e => {})
                     }
 
@@ -380,7 +401,7 @@ var Node = function(options, manager){
         }
     }
 
-    var needToChange = function(){
+    self.needToChange = function(){
         var betterNodes = self.statistic.better()
 
         //console.log('betterNodes.length', betterNodes.length, self.ckey)
@@ -413,8 +434,8 @@ var Node = function(options, manager){
         return np
     }
 
-    var changeNodeUser = function(address, np){
-        //if(wss.changing[address]) return null
+    self.changeNodeUser = function(address, np){
+        //if(address && wss.changing[address]) return null
 
         var r = f.randmap(np)
 
@@ -426,14 +447,14 @@ var Node = function(options, manager){
     }
 
     var changeNodeUsers = function(){
-        var np = needToChange()
+        var np = self.needToChange()
 
         if(!np) return 
 
         //console.log('users', _.toArray(wss.users).length, self.ckey)
 
         _.each(wss.users, function(user, address){
-            var change = changeNodeUser(address, np)
+            var change = self.changeNodeUser(address, np)
 
             //console.log('change', change, address)
 
@@ -510,6 +531,14 @@ var Node = function(options, manager){
         return self.rpcs('getnodeinfo').then(info => {
 
             lastinfo = info
+            lastinfoTime = f.now()
+
+            if (info.proxies){
+
+                self.proxies.kit.addlist(info.proxies || [])
+
+                //manager.proxy.kit.addproxies(info.proxies || [])
+            }
 
             self.addblock(info.lastblock)
             
@@ -588,6 +617,15 @@ var Node = function(options, manager){
 
         })
 
+    }
+
+    self.reservice = function(){
+        if (wss.service){
+            wss.service.disconnect()
+        }
+        else{
+            serviceConnection()
+        }
     }
 
     self.init = function(){

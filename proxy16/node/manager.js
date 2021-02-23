@@ -4,6 +4,8 @@ var Datastore = require('nedb');
 var _ = require('lodash');
 var f = require('../functions');
 
+var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
+
 var Nodemanager = function(p){
     if(!p) p = {};
 
@@ -117,11 +119,17 @@ var Nodemanager = function(p){
 
         var workingNodes = _.filter(self.nodes, function(n){
             var s = n.statistic.get()
+            
 
-            if (s.success > 0 && s.time < 2000){
+            if (s.success > 0 && s.time < 1000){
                 return true
             }
         })
+
+        if(!usersfornode){
+            self.add(node)
+            return
+        }
 
         if (self.proxy.users() / usersfornode >= workingNodes.length){
             self.add(node)
@@ -268,7 +276,7 @@ var Nodemanager = function(p){
 
                     self.nodes = []
 
-                    var haslocal = self.nodeControl.kit.hasbin()
+                    var haslocal = false// self.nodeControl.kit.hasbin()
 
                     var c = []
 
@@ -374,7 +382,13 @@ var Nodemanager = function(p){
         return best
     }
 
+    self.reservice = function(){
+        _.each(self.nodes, function(node){
+            node.reservice()
+        })
 
+        return Promise.resolve()
+    }
     //// ??
     self.select = function(n){
 

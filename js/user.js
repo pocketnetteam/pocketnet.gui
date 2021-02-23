@@ -81,24 +81,18 @@ User = function(app, p) {
 	self.data = {};
 	self.features = {};
 	
-	self.tokenExpired = function(){
-
-
-	}
-
+	self.tokenExpired = function(){}
 
 	self.prepare = function(clbk){
 
 		self.tokenExpired();
 
 		app.platform.clear(true);
-
-
 		app.platform.prepareUser(function(){
-
 
 			if (clbk)
 				clbk(state)	
+				
 		})
 
 		
@@ -275,7 +269,6 @@ User = function(app, p) {
 	}
 
 	self.validateVay = function(){
-		console.log("MEEE!!self.address.value", self.address.value, (deep(app, 'platform.sdk.user.storage.me.name')))
 
 		if(!self.address.value) return 'fu';
 
@@ -324,9 +317,9 @@ User = function(app, p) {
 
 	self.keysFromMnemo = function(mnemonic){
 
+		if(!mnemonic) mnemonic = ''
 
-		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic)
-
+		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic.toLowerCase())
 
 		return self.keysFromSeed(seed)
 
@@ -363,6 +356,35 @@ User = function(app, p) {
     	
 	}
 
+	self.keysPairFromPrivate = function(private, clbk){
+
+		if(!private) private = ''
+
+		var keyPair = null;
+		if (bitcoin.bip39.validateMnemonic(private.toLowerCase())) {
+			keyPair = self.keysFromMnemo(private)
+		}
+		else{
+			try{
+				keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
+			}
+			catch (e){
+
+				try{
+					keyPair = bitcoin.ECPair.fromWIF(private)
+				}
+				catch (e){
+					console.log("E2", e)
+	
+				}
+			} 
+		}
+
+		return keyPair
+
+	
+	}
+
 	self.setKeysPairFromPrivate = function(private, clbk){
 		var keyPair = null;
 
@@ -373,6 +395,7 @@ User = function(app, p) {
 			
 		}
 		catch (e){
+
 
 
 			try{
@@ -395,11 +418,6 @@ User = function(app, p) {
 			if (clbk)
 				clbk(false)
 		}
-		
-		
-	
-
-		
 	}
 
 	self.setKeys = function(mnemonic, clbk){

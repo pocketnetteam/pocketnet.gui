@@ -20,6 +20,8 @@ var NodeManager = require('./node/manager.js');
 var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remote.js');
+var Proxies = require('./proxies.js');
+var Exchanges = require('./exchanges.js');
 //////////////
 
 
@@ -35,10 +37,15 @@ var Proxy = function (settings, manage) {
     var firebase = new Firebase(settings.firebase);
     var wallet = new Wallet(settings.wallet);
     var remote = new Remote();
+    var proxies = new Proxies(settings.proxies)
+    var exchanges = new Exchanges() 
+
+    self.userDataPath = null    
 
     f.mix({ 
         wss, server, pocketnet, nodeControl, 
         remote, firebase, nodeManager, wallet,
+        proxies, exchanges,
 
         proxy : self
     })
@@ -70,7 +77,12 @@ var Proxy = function (settings, manage) {
 		}
     }
     
-    var getStats = function(){
+    var getStats = function(n){
+
+        if (n){
+            return f.lastelements(stats, 500)
+        }
+
         return stats
     }
 
@@ -180,12 +192,16 @@ var Proxy = function (settings, manage) {
 
         rews : function(){
             return self.server.re().then(r => {
+                console.log("R", r)
                 return self.wss.re()
             }).then(r => {
-                return self.firebase.re()
-            }).catch(e => {
-                console.error(e)
 
+                console.log("R2", r)
+                return self.firebase.re()
+
+            }).catch(e => {
+
+                console.error(e)
                 return Promise.reject(e)
             })
         },
@@ -247,6 +263,7 @@ var Proxy = function (settings, manage) {
     }
 
     self.wss = {
+        
         init: function () {
 
             if (settings.server.enabled) {
@@ -271,6 +288,7 @@ var Proxy = function (settings, manage) {
 
         re : function(){
             return this.destroy().then(r => {
+                console.log("R3", r)
                 this.init()
             })
         },
@@ -318,11 +336,7 @@ var Proxy = function (settings, manage) {
 
         re : function(){
             return this.destroy().then(r => {
-                return this.stop()
-            }).then(r => {
                 return this.init()
-            }).then(r => {
-                return this.start()
             })
         },
 
@@ -336,7 +350,8 @@ var Proxy = function (settings, manage) {
 
         info : function(){
             return nodeControl.info()
-        }
+        },
+
 
     }
     ///
@@ -352,6 +367,10 @@ var Proxy = function (settings, manage) {
         destroy : function () {
             return nodeManager.destroy()
         },
+
+        reservice : function(){
+            return nodeManager.reservice()
+        },  
 
         re : function(){
             return this.destroy().then(r => {
@@ -374,6 +393,7 @@ var Proxy = function (settings, manage) {
 
         re : function(){
             return this.destroy().then(r => {
+                console.log("R4", r)
                 this.init()
             })
         },
@@ -383,11 +403,56 @@ var Proxy = function (settings, manage) {
         }
     }
 
+    self.exchanges = {
+        init: function () {
+            return exchanges.init()
+        },
+
+        destroy: function () {
+            return exchanges.destroy()
+        },
+
+        re : function(){
+            return this.destroy().then(r => {
+                this.init()
+            })
+        },
+
+        get kit(){
+            return exchanges.kit
+        },
+    }
+
     self.kit = {
-        stats : function(){
-            return getStats()
+        service : function(){
+            var w = self.wss.info(true)
+            var s = self.server.info(true)
+
+            var service = {
+                addr : 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
+            }
+
+            /*if (s.listening && w.listening && settings.server.domain){ 
+                service.mainport = Number(s.listening)
+                service.wssport = Number(w.listening)
+                service.service = true
+                service.addr = settings.server.domain
+
+            }*/
+
+            return service
+        },
+        stats : function(n){
+            return getStats(n)
         },
         info : function(compact){
+
+            var mem = process.memoryUsage()
+
+            _.each(mem, function(v, i){
+                mem[i] = v / (1024 * 1024)
+            })
+
             return {
                 status: status,
 
@@ -403,7 +468,9 @@ var Proxy = function (settings, manage) {
                 captcha : {
                     ip : _.toArray(captchaip).length,
                     all : _.toArray(captchas).length
-                }
+                },
+
+                memory : mem
             }
         },
 
@@ -447,7 +514,7 @@ var Proxy = function (settings, manage) {
 
             status = 1
 
-            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl']).then(r => {
+            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges']).then(r => {
 
                 status = 2
 
@@ -490,7 +557,7 @@ var Proxy = function (settings, manage) {
                 }
             }
 
-            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl'], (i) => {
+            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges'], (i) => {
                 return self[i].destroy().catch(catchError(i)).then(() => {
                     return Promise.resolve()
                 })
@@ -535,7 +602,6 @@ var Proxy = function (settings, manage) {
                 return Promise.resolve()
             })
         }
-
     }
 
     self.apibypath = function(path){
@@ -578,55 +644,70 @@ var Proxy = function (settings, manage) {
                     if(!parameters) parameters = []
         
                     var node = null;
-        
-                    var cached = server.cache.get(method, parameters)
-        
-                    if (cached){
-                        return Promise.resolve({
-                            data : cached,
-                            code : 208
-                        })
-                    }
-        
-                    /// ????
-                    if (options.locally && options.meta){
-                        node = nodeManager.temp(options.meta)
-                    }
-        
-                    if (options.node){
-                        node = nodeManager.nodesmap[options.node]
 
-                    }
-        
-                    if(!node || options.auto) node = nodeManager.selectProbability() //nodeManager.selectbest()
-          
-                    if(!node) {
-                        return Promise.reject({
-                            error : "node",
-                            code : 502
+                    return new Promise((resolve, reject) => {
+
+                        server.cache.wait(method, parameters, function(waitstatus){
+                            resolve(waitstatus)
                         })
-                    }
+
+                    }).then(waitstatus => {
+                  
+
+                        var cached = server.cache.get(method, parameters)
         
-                    return node.checkParameters().then(r => {
+                        if (cached){
+                            return Promise.resolve({
+                                data : cached,
+                                code : 208
+                            })
+                        }
+
+                        //var cachwaitng = server.cache.waitng(method, parameters)
+            
+                        /// ????
+                        if (options.locally && options.meta){
+                            node = nodeManager.temp(options.meta)
+                        }
+            
+                        if (options.node){
+                            node = nodeManager.nodesmap[options.node]
+
+                        }
+            
+                        if(!node || options.auto) 
+                            node = nodeManager.selectProbability() //nodeManager.selectbest()
+            
+
+                            
+                        if(!node) {
+                            return Promise.reject({
+                                error : "node",
+                                code : 502
+                            })
+                        }
+
+                        return node.checkParameters().then(r => {
+                            return node.rpcs(method, parameters)
+
+                        }).then(data => {
         
-                        return node.rpcs(method, parameters)
-        
-                    }).then(data => {
-        
-                        server.cache.set(method, parameters, data, node.height())
-        
-                        return Promise.resolve({
-                            data : data,
-                            code : 200,
-                            node : node.exportsafe()
+                            server.cache.set(method, parameters, data, node.height())
+            
+                            return Promise.resolve({
+                                data : data,
+                                code : 200,
+                                node : node.exportsafe()
+                            })
+            
                         })
-        
+
                     }).catch(e => {
-        
+
                         return Promise.reject({
                             error : e,
                             code : e.code,
-                            node : node.export()
+                            node : node ? node.export() : null
                         })
                     })
                 }
@@ -669,6 +750,35 @@ var Proxy = function (settings, manage) {
                         return Promise.resolve({data : r})
 
                     })
+                }
+            },
+
+            canchange: {
+                path : '/nodes/canchange',
+                action : function({node}){
+
+                    var _node = nodeManager.nodesmap[node]
+
+                    if(!_node){
+                        var nnode = nodeManager.selectProbability()
+
+                        if (nnode) return Promise.resolve({
+                            node : nnode.exportsafe()
+                        })
+
+                        else return Promise.reject('none')
+                    }
+
+                    var nnode = _node.changeNodeUser(null, _node.needToChange())
+
+                    if(!nnode){
+                        return Promise.resolve({})
+                    }
+
+                    return Promise.resolve({data : {
+                        node : nnode.exportsafe()
+                    }})
+
                 }
             },
 
@@ -806,11 +916,14 @@ var Proxy = function (settings, manage) {
                 path : '/urlPreview',
                 action : function({url}){
                     return new Promise((resolve, reject) => {
-                        remote.make(url, function(err, data, html){
+                        remote.nmake(url, function(err, data){
         
                             if(!err){
-                                data.html = html
-                                resolve({data})
+                                resolve({
+                                    data : {
+                                        og : data
+                                    }
+                                })
                             }
                             else
                             {
@@ -859,7 +972,7 @@ var Proxy = function (settings, manage) {
                 action : function(){
                     
                     return Promise.resolve({data : {
-                        stats : self.kit.stats()
+                        stats : self.kit.stats(500)
                     }})
 
                 }
@@ -910,6 +1023,19 @@ var Proxy = function (settings, manage) {
 
                 }
             },
+        },
+
+        exchanges : {
+            history : {
+                path : '/exchanges/history',
+                action : function(){
+                    return self.exchanges.kit.get.history().then(d => {
+                        return Promise.resolve({
+                            data : d
+                        })
+                    })
+                }
+            }
         },
 
         captcha : {
@@ -1043,7 +1169,6 @@ var Proxy = function (settings, manage) {
 
                     return self.wallet.addqueue(key || 'registration', address, ip).then(r => {
 
-                        console.log("RESULT", r)
 
                         return Promise.resolve({
                             data : r
@@ -1051,9 +1176,29 @@ var Proxy = function (settings, manage) {
 
                     }).catch(e => {
 
-                        console.log("E", e)
                         return Promise.reject(e)
                     })
+
+                }
+            },
+            freeregistrationfake : {
+                path : '/free/registrationfake',
+                action : function({}){  
+
+                    return Promise.reject('disabled')
+
+                    var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq']
+
+                    var promises = _.map(addresses, function(a){
+                        return self.wallet.addqueue('registration', a, "::1")
+                    })
+
+                    return Promise.all(promises).then(r => {
+                        return Promise.resolve({
+                            data : r
+                        })
+                    })
+                    
 
                 }
             }
@@ -1079,8 +1224,7 @@ var Proxy = function (settings, manage) {
                     return kaction(message.data).then(data => {
                         return Promise.resolve({data})
                     }).catch(e => {
-
-
+                        console.log("E", e)
                         return Promise.reject(e)
                     })
                 }
