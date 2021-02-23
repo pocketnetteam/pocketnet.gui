@@ -54,9 +54,10 @@ var stacking = (function(){
 		var helpers = {
 			series : function(){
 
-				var data = _.map(blocktime, function(bt){
+				var data = _.map(blocktime, function(bt, i){
 					return {
-						y : calc.point(bt.block)
+						y : calc.point(bt.block),
+						x :i 
 					}
 				})
 
@@ -74,17 +75,13 @@ var stacking = (function(){
 					el : el,
 					shell : self.shell,
 					chart : {
-						type : 'column',
+						type : 'areaspline',
 						caption : "Coins",
 						height : 170,
 						removeLegend : true,
 						disableYLabels : true,
 						yGridLineWidth : 0,
-						categories : function(){
-							return _.map(blocktime, function(bt){
-								return bt.label
-							})
-						}
+						
 					},
 				})
 
@@ -206,7 +203,7 @@ var stacking = (function(){
 					self.iclbks.mainstacking = make
 				}
 
-				renders.calculator()
+				//renders.calculator()
 
 
 			})
