@@ -10,7 +10,9 @@ __map =  {
         "js/vendor/timer.js",
         "js/vendor/ion.sound/ion.sound.min.js" ,
 		"js/vendor/aesjs.js",
-
+		"js/vendor/linkify.min.js",
+		"js/vendor/linkify-html.min.js",
+		
 		//new
 		"js/lib/pocketnet/btc17.js",
 		"js/lib/pocketnet/buffer.js",

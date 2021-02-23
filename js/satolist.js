@@ -30,6 +30,12 @@ Platform = function (app, listofnodes) {
         sm.app = app;
         sm.user = app.user;
 
+    self.released = {
+        vidgets : {
+            staking : false
+        }
+    }
+
     self.mp = {
         dollars: function (value, p) {
             if (!p) p = {};
@@ -724,6 +730,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.parseUrl = function (url) {
+
         
         url = url.replace("http:", "https:").replace("http//", "https://")
         
@@ -3383,12 +3390,12 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
     
-               /* vidgetstacking: {
+                vidgetstaking: {
                     name: 'Staking Pocketcoin vidget',
-                    id: 'vidgetstacking',
+                    id: 'vidgetstaking',
                     type: "BOOLEAN",
                     value: true
-                },*/
+                },
 
                 telegram: {
                     type: "STRINGANY",
@@ -3516,7 +3523,7 @@ Platform = function (app, listofnodes) {
                             vidgetchat: options.vidgetchat,
                             vidgettags: options.vidgettags,
                             vidgetlastcomments: options.vidgetlastcomments,
-                           // vidgetstacking : options.vidgetstacking
+                            vidgetstaking : options.vidgetstaking
 
                         }
                     },
@@ -3524,8 +3531,11 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                if (self.app.user.features.telegram) {
+                if(!self.released.vidgets.staking){
+                    delete c.vidgets.options.vidgetstaking
+                }
 
+                if (self.app.user.features.telegram) {
 
                     c.integrations = {
                         name: self.app.localization.e('e13289'),
