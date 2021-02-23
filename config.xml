@@ -114,5 +114,8 @@
             <param name="ios-package" value="CDVWKWebViewEngine" />
         </feature>
         <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+        <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
+            <string>This app can let your camera shoot a QR code with private Key, create an avatar, or post a photo on the Pocketnet social network if you like.</string>
+        </config-file>
     </platform>
 </widget>
