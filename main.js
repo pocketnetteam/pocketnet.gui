@@ -244,7 +244,7 @@ function initApp() {
     var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
 
     if (isDevelopment) {
-        win.toggleDevTools();
+        //win.toggleDevTools();
     } else {
 
         log.info('First check updates...');
