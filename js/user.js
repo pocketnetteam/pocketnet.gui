@@ -81,24 +81,18 @@ User = function(app, p) {
 	self.data = {};
 	self.features = {};
 	
-	self.tokenExpired = function(){
-
-
-	}
-
+	self.tokenExpired = function(){}
 
 	self.prepare = function(clbk){
 
 		self.tokenExpired();
 
 		app.platform.clear(true);
-
-
 		app.platform.prepareUser(function(){
-
 
 			if (clbk)
 				clbk(state)	
+				
 		})
 
 		

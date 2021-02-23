@@ -2004,6 +2004,10 @@ var system16 = (function(){
 							}
 
 							var _make = function(){
+
+
+								globalpreloader(true)
+
 								proxy.fetch('manage', {
 									action : 'set.server.settings',
 									data : {
@@ -2011,14 +2015,17 @@ var system16 = (function(){
 									}
 	
 								}).catch(e => {
-									
+									console.log("E", e)
+									globalpreloader(false)
 									return Promise.resolve()
 		
 								}).then(r => {
-
+									console.log("r", r)
 									changes.server = {}
 		
 									make(proxy || api.get.current());
+
+									globalpreloader(false)
 				
 									topPreloader(100);
 		
