@@ -397,6 +397,26 @@ var Proxy = function (settings, manage) {
         }
     }
 
+    self.exchanges = {
+        init: function () {
+            return exchanges.init()
+        },
+
+        destroy: function () {
+            return exchanges.destroy()
+        },
+
+        re : function(){
+            return this.destroy().then(r => {
+                this.init()
+            })
+        },
+
+        get kit(){
+            return exchanges.kit
+        },
+    }
+
     self.kit = {
         service : function(){
             var w = self.wss.info(true)
@@ -488,7 +508,7 @@ var Proxy = function (settings, manage) {
 
             status = 1
 
-            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl']).then(r => {
+            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges']).then(r => {
 
                 status = 2
 
@@ -531,7 +551,7 @@ var Proxy = function (settings, manage) {
                 }
             }
 
-            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl'], (i) => {
+            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges'], (i) => {
                 return self[i].destroy().catch(catchError(i)).then(() => {
                     return Promise.resolve()
                 })
@@ -997,6 +1017,19 @@ var Proxy = function (settings, manage) {
 
                 }
             },
+        },
+
+        exchanges : {
+            history : {
+                path : '/exchanges/history',
+                action : function(){
+                    return self.exchanges.kit.get.history().then(d => {
+                        return Promise.resolve({
+                            data : d
+                        })
+                    })
+                }
+            }
         },
 
         captcha : {

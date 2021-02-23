@@ -1,7 +1,7 @@
 <div class="ta">
     <% _.each(tags, function(tag, i){ %>
 
-        <div class="tg <% if(i > 13) {%> hdn <% } %>">
+        <div class="tg <% if(i > 9) {%> hdn <% } %>">
 
             <a href="s?ss=tag:<%- tag.tag %>">
                 <div class="tag">
@@ -28,7 +28,7 @@
 
     <% }) %>
 
-    <% if(tags.length > 13) {%>
+    <% if(tags.length > 9) {%>
 
         <div class="showalltags showhidealltags">
             <span><%=e('e13021')%></span>

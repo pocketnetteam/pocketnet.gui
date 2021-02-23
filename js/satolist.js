@@ -3383,7 +3383,7 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
     
-                /*vidgetstacking: {
+               /* vidgetstacking: {
                     name: 'Staking Pocketcoin vidget',
                     id: 'vidgetstacking',
                     type: "BOOLEAN",
