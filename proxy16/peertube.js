@@ -1,13 +1,22 @@
-const Exchanges = function () {
-
+const Peertube = function () {
   this.api = {
-    mercatox: {
-      rate: function (currency) {
-      },
-    },
+    // mercatox: {
+    //   rate: function (currency) {
+    //   },
+    // },
   };
 
-  return self;
+  this.destroy = () => {
+    return;
+  };
+
+  this.init = () => {
+    return;
+  };
+
+  this.kit = {};
+
+  return this;
 };
 
-module.exports = Exchanges;
+module.exports = Peertube;
