@@ -1,10 +1,6 @@
+const axios = require('axios');
+
 const Peertube = function () {
-  this.api = {
-    // mercatox: {
-    //   rate: function (currency) {
-    //   },
-    // },
-  };
 
   this.destroy = () => {
     return;
@@ -14,7 +10,9 @@ const Peertube = function () {
     return;
   };
 
-  this.kit = {};
+  this.kit = {
+
+  };
 
   return this;
 };
