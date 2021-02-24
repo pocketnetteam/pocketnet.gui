@@ -163,8 +163,6 @@ var menu = (function(){
 
 				click : function(){
 
-					return
-
 					dialog({
 						header : 'test',
 						html : "Do you want to begin. (Please check testnet connection)",
@@ -284,7 +282,7 @@ var menu = (function(){
 							
 							}
 							
-							while(c < 5)
+							while(c < 1)
 
 						}
 					})
