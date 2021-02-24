@@ -3755,28 +3755,35 @@ Platform = function (app, listofnodes) {
                 })
 
                 if (electron) {
-                    const AutoLaunch = require('auto-launch');
-                    let autoLaunch = new AutoLaunch({
-                        name: 'Pocketnet',
-                        path: electron.remote.app.getPath('exe'),
-                        isHidden: true
-                    });
 
-                    // First launch
-                    if (m.autostart.value === undefined) {
-                        autoLaunch.enable();
-                        m.autostart.value = true;
-                        self.sdk.usersettings.save();
-                    }
+                    const is = require('electron-is')
 
-                    // Check autostart
-                    autoLaunch.isEnabled().then((isEnabled) => {
-                        m.autostart.value = isEnabled;
+                    if(!is.macOS()){
 
-                        if (clbk) {
-                            clbk()
+                        const AutoLaunch = require('auto-launch');
+                        let autoLaunch = new AutoLaunch({
+                            name: 'Pocketnet',
+                            path: electron.remote.app.getPath('exe'),
+                            isHidden: true
+                        });
+
+                        // First launch
+                        if (m.autostart.value === undefined) {
+                            autoLaunch.enable();
+                            m.autostart.value = true;
+                            self.sdk.usersettings.save();
                         }
-                    });
+
+                        // Check autostart
+                        autoLaunch.isEnabled().then((isEnabled) => {
+                            m.autostart.value = isEnabled;
+
+                            if (clbk) {
+                                clbk()
+                            }
+                        });
+
+                    }
                 }
                 else {
                     if (clbk) {
