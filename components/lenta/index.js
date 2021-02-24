@@ -168,6 +168,9 @@ var lenta = (function(){
 				el.c.removeClass('sharesZero')
 
 				actions.clear()
+				
+				if (essenseData.renderclbk)
+					essenseData.renderclbk()
 
 				make(clbk);
 			},
@@ -2976,6 +2979,9 @@ var lenta = (function(){
 						el.c.addClass('showprev')
 
 						el.c.find('.countnew').html( "(" + newmaterials + ")" )
+
+						if (essenseData.renderclbk)
+							essenseData.renderclbk()
 					}
 				}
 			}
@@ -3135,6 +3141,9 @@ var lenta = (function(){
 
 					if(beginmaterial && !recommended){
 						el.c.addClass('showprev')
+
+						if (essenseData.renderclbk)
+							essenseData.renderclbk()
 					}
 
 					if (clear)
