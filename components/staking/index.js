@@ -18,7 +18,7 @@ var staking = (function(){
 		var currencies = {
 			USDT : {
 				id : 'USDT',
-				key : 'USD',
+				key : 'USDT',
 				view : function(v){
 					return self.app.platform.mp.dollars(v, {prefix : ''})
 				}
@@ -58,7 +58,7 @@ var staking = (function(){
 				type : "VALUES",
 				id : 'source',
 				defaultValue : "USDT",
-				possibleValuesLabels : ['USD', 'BTC'],
+				possibleValuesLabels : ['USDT', 'BTC'],
 				possibleValues : ['USDT', 'BTC'],
 				format : {
 					right : true

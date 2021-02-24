@@ -184,8 +184,7 @@ var help = (function(){
 			},
 			node : function(page){
 				this.page(page, function(_el){
-
-					var id = 'fe88f86430a018803921b338a7e629f9c9a52a2b4e3a36056d2adc0f0c74b5b4'
+					var id = 'd85a0e1146e89ad6303cc8a081f1fb04da01ab21af913fa9e762de0d7972eaa6'
 
 					self.app.platform.papi.post(id, _el.find('.lenta'), function(e, p){					
 						external = p
@@ -221,8 +220,7 @@ var help = (function(){
 							txids : [
 								'9f73a1efbfb4b0feb88c134740afa0ab293f8072a80ecbe9fe65ed85591910e6',
 								'ad9067c72a7be97c1752a00566940f372e5b526291278cf9bc203b99f81bbaf0', 
-								'df4064b9e2c8b311fd097804f36802ceb68337dca396bfdea732c0f94c977a3a',
-								'986a6acba795482894876ac87440124e176cc02cff40558a3ec3d423850e2e93'
+								'df4064b9e2c8b311fd097804f36802ceb68337dca396bfdea732c0f94c977a3a'
 							]
 						},
 						
