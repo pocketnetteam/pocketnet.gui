@@ -9,7 +9,7 @@ var compressor = require('yuicompressor');
 var path = ".",
 	prodaction = process.argv[2] ? false : true;
 
-var vendorversion = process.argv[3] || '5';
+var vendorversion = process.argv[3] || '7';
 
 if(prodaction === 'false') prodaction = false; 
 
