@@ -96,7 +96,16 @@ var panel = (function(){
 					
 					clbk : function(e, p){
 						comments = p
-					}
+					},
+
+					essenseData : {
+					
+						renderclbk : function(){
+							if(ed.renderclbk) ed.renderclbk()
+						}
+					},
+
+					
 
 				})
 

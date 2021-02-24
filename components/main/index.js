@@ -239,7 +239,15 @@ var main = (function(){
 					id : 'panel',
 					el : el.panel,
 					animation : false,
+
+					essenseData : {
 					
+						renderclbk : function(){
+							if (hsready)
+								el.panel.hcSticky('refresh');
+	
+						}
+					},
 					clbk : function(e, p){
 
 						panel = p;

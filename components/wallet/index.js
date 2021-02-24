@@ -680,7 +680,7 @@ var wallet = (function(){
 
 				if(reciever == 'wallet' || reciever == self.app.localization.e('twallet')){
 
-					self.app.platform.sdk.addresses.addNewWalletAddress(function(_a){
+					self.app.platform.sdk.addresses.getFirstRandomAddress(function(_a){
 
 						outputs.push({
 							address : _a,

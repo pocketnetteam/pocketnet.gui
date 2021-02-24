@@ -89,7 +89,7 @@ var commentpanel = function(comment, _class){  %>
 
 	var me = app.platform.sdk.user.me()
 
-	if(me.relation(comment.address, 'blocking')) return
+	if(me && me.relation(comment.address, 'blocking')) return
 
 
 	var m = '' %> 

@@ -6386,6 +6386,8 @@ Platform = function (app, listofnodes) {
 
                 var anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 1;
 
+                if (anum < 10) anum = 10
+
                 for (var i = 0; i < anum; i++) {
 
                     self.sdk.addresses.addWalletAddress(i)
@@ -6415,6 +6417,28 @@ Platform = function (app, listofnodes) {
                 self.sdk.addresses.storage.addressesobj[num] = address;
 
                 return address.address;
+            },
+
+            getFirstRandomAddress : function(clbk){
+                if (self.sdk.addresses.storage.addresses.length) {
+                    
+                    var ar = _.toArray(self.sdk.addresses.storage.addresses)
+
+                    ar = _.first(ar, 10)
+
+                    var address = ar[rand(0, ar.length - 1)]
+
+                    console.log('address', address, ar)
+
+                    if (clbk)
+                        clbk(address)
+                }
+                else{
+                    var address = self.sdk.addresses.addWalletAddress()
+
+                    if (clbk)
+                        clbk(address)
+                }
             },
 
             addNewWalletAddress: function (clbk) {

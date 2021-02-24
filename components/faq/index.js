@@ -377,7 +377,14 @@ var faq = (function(){
 
 				var question = mp[id]
 
-				var url = 'https://pocketnet.app/help?page=faq&id='+id+'&ref=' + self.app.platform.sdk.address.pnet().address
+				var url = 'https://pocketnet.app/help?page=faq&id='+id
+
+				var r = ''
+
+				if (self.app.platform.sdk.address.pnet()){
+					r = '&ref=' + self.app.platform.sdk.address.pnet().address
+					url = url + r
+				}
 
 				var m = question.q;
 

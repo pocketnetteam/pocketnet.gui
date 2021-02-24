@@ -415,6 +415,15 @@ var staking = (function(){
 			}
 
 			el.c.find('.earnlabel').on('click', function(){
+
+				var url = 'https://pocketnet.app'
+
+				var r = ''
+
+				if (self.app.platform.sdk.address.pnet()){
+					r = '?&ref=' + self.app.platform.sdk.address.pnet().address
+					url = url + r
+				}
 				
 
 				self.nav.api.load({
@@ -424,7 +433,7 @@ var staking = (function(){
 					inWnd : true,
 
 					essenseData : {
-						url : "https://pocketnet.app?ref=" + self.app.platform.sdk.address.pnet().address, 
+						url : url, 
 						style : 'smallcaption',
 						caption : 'The best way to earn Pocketcoin (PKOIN) is to invite people to the platform. You will get 20% of their PKOIN earnings for the first three months. Send the link below to anyone via email, social media, messenger.'
 					}
