@@ -383,11 +383,24 @@ var staking = (function(){
 				amount = Number(v.replace(/,/g,''));
 
 				if(amount < 50) amount = 50
+				if(amount > 500000) amount = 500000
 
+				renders.updateValues()
+
+				
+			})
+
+			el.am.on('change', function(){
+				var v = $(this).val() || ''
+				
+				amount = Number(v.replace(/,/g,''));
+
+				if(amount < 50) amount = 50
+				if(amount > 500000) amount = 500000
 
 				$(this).val(amount)
+
 				renders.updateValues()
-				//renders.updateTotals()
 				
 			})
 

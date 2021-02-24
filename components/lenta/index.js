@@ -286,7 +286,8 @@ var lenta = (function(){
 						renders.shares(shares, function(){
 
 							renders.sharesInview(shares, function(){
-						
+								if (essenseData.renderclbk)
+									essenseData.renderclbk()
 							})
 
 						}, {
