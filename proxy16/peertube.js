@@ -46,12 +46,13 @@ const Peertube = function () {
       ),
 
     getBestServer: () => {
-      const timerStack = [];
+      const timerStack = {};
 
-      const statsStack = hardCodeUrlsList.map((server, serverIndex) => {
-        timerStack.push(performance.now());
+      const statsStack = hardCodeUrlsList.map((server) => {
+        timerStack[server] = performance.now();
+
         return axios.get(`https://${server}${STATS_METHOD}`).then((data) => {
-          timerStack[serverIndex] = performance.now() - timerStack[serverIndex];
+          timerStack[server] = performance.now() - timerStack[server];
 
           return data;
         });
@@ -62,16 +63,29 @@ const Peertube = function () {
           .filter((response) => response.status === SETTELED_SUCCESS_STATUS)
           .map((item) => {
             console.log('AAA', item.value.config.url, item.value.request.path);
-            return item.value.data.total;
+            const serverLink = item.value.config.url
+              .replace('https://', '')
+              .replace(item.value.request.path, '');
+
+            return {
+              server: serverLink,
+              total: item.value.data.total,
+              timeResponse: timerStack[serverLink],
+            };
           });
 
+        console.log(filteredResponse);
+
         const output = {
-          fastest:
-            hardCodeUrlsList[timerStack.indexOf(Math.min(...timerStack))],
-          leastUsed:
-            hardCodeUrlsList[
-              filteredResponse.indexOf(Math.min(...filteredResponse))
-            ],
+          fastest: filteredResponse.reduce((accumulator, current) => {
+            return accumulator.timeResponse < current.timeResponse
+              ? accumulator
+              : current;
+          }, filteredResponse[0]),
+
+          leastUsed: filteredResponse.reduce((accumulator, current) => {
+            return accumulator.total < current.total ? accumulator : current;
+          }, filteredResponse[0]),
         };
 
         return Promise.resolve(output);
