@@ -3626,7 +3626,6 @@ Platform = function (app, listofnodes) {
 
                             const is = require('electron-is')
 
-                            if(!is.macOS()){
 
                                 const AutoLaunch = require('auto-launch');
                                 let autoLaunch = new AutoLaunch({
@@ -3638,7 +3637,6 @@ Platform = function (app, listofnodes) {
     
                                 if (m[i].value) autoLaunch.enable();
                                 else autoLaunch.disable();
-                            }
 
                             
                         }
