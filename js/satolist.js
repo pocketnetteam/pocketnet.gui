@@ -3634,6 +3634,7 @@ Platform = function (app, listofnodes) {
                                     path: electron.remote.app.getPath('exe'),
                                     isHidden: true
                                 });
+                                
     
                                 if (m[i].value) autoLaunch.enable();
                                 else autoLaunch.disable();
@@ -3758,7 +3759,6 @@ Platform = function (app, listofnodes) {
 
                     const is = require('electron-is')
 
-                    if(!is.macOS()){
 
                         const AutoLaunch = require('auto-launch');
                         let autoLaunch = new AutoLaunch({
@@ -3781,15 +3781,15 @@ Platform = function (app, listofnodes) {
                             if (clbk) {
                                 clbk()
                             }
+                        }).catch(e =>{
+                            m.autostart.value = false;
+
+                            if (clbk) {
+                                clbk()
+                            }
                         });
 
-                    }
-                    else
-                    {
-                        if (clbk) {
-                            clbk()
-                        }
-                    }
+                    
                 }
                 else {
                     if (clbk) {
