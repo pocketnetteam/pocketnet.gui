@@ -10117,13 +10117,22 @@
 
 
 		if(typeof linkifyHtml != 'undefined'){
-			var l = linkifyHtml(inputText, {
-				attributes : {
-					cordovalink : '_system'
-				}
-			})
-	
-			return l
+
+			try{
+				var l = linkifyHtml(inputText, {
+					attributes : {
+						cordovalink : '_system'
+					}
+				})
+		
+				return l
+			}
+
+			catch(e){
+				
+			}
+
+			
 		}
 
 	
