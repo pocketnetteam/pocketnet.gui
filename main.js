@@ -120,6 +120,11 @@ function destroyBadge() {
     badge = null;
 }
 
+function quit(){
+    willquit = true
+    app.quit()
+}
+
 function createTray() {
 
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
@@ -141,15 +146,11 @@ function createTray() {
 
             proxyInterface.destroy().then(r => {
 
-                willquit = true
-                app.quit()
+                quit()
 
             }).catch(e => {
 
-                console.log("ERROR", e) //// CATCH ERROR TODO
-
-                willquit = true
-                app.quit()
+                quit()
 
             })
 
@@ -389,7 +390,106 @@ function createWindow() {
         win.maximize();
     }
 
-    Menu.setApplicationMenu(null)
+    if(is.macOS()){
+        const template = [
+            // { role: 'appMenu' }
+            ...(isMac ? [{
+              label: app.name,
+              submenu: [
+                {
+                    label: 'About',
+                    click: async () => {
+                        win.webContents.send('nav-message', { msg: 'about', type: 'action'})
+                    }
+                },
+                { type: 'separator' },
+                { role: 'hide' },
+                { role: 'unhide' },
+                { type: 'separator' },
+                {
+                    label: 'Quit Pocketnet',
+                    click: async () => {
+                      quit()
+                    }
+                }
+              ]
+            }] : []),
+            // { role: 'fileMenu' }
+            
+            {
+              label: 'Edit',
+              submenu: [
+                { role: 'undo' },
+                { role: 'redo' },
+                { type: 'separator' },
+                { role: 'cut' },
+                { role: 'copy' },
+                { role: 'paste' },
+                ...(isMac ? [
+                  { role: 'pasteAndMatchStyle' },
+                  { role: 'delete' },
+                  { role: 'selectAll' },
+                  { type: 'separator' },
+                  {
+                    label: 'Speech',
+                    submenu: [
+                      { role: 'startSpeaking' },
+                      { role: 'stopSpeaking' }
+                    ]
+                  }
+                ] : [
+                  { role: 'delete' },
+                  { type: 'separator' },
+                  { role: 'selectAll' }
+                ])
+              ]
+            },
+            // { role: 'viewMenu' }
+            {
+              label: 'View',
+              submenu: [
+            
+                { role: 'toggleDevTools' },
+                { type: 'separator' },
+                { role: 'togglefullscreen' }
+              ]
+            },
+            // { role: 'windowMenu' }
+            {
+              label: 'Window',
+              submenu: [
+                { role: 'minimize' },
+                { role: 'zoom' },
+                ...(isMac ? [
+                  { type: 'separator' },
+                  { role: 'front' },
+                  { type: 'separator' },
+                  { role: 'window' }
+                ] : [
+                  { role: 'close' }
+                ])
+              ]
+            },
+            {
+              role: 'help',
+              submenu: [
+                {
+                  label: 'Help center',
+                  click: async () => {
+                    win.webContents.send('nav-message', { msg: 'help', type: 'action'})
+                    }
+                }
+              ]
+            }
+          ]
+
+          const menu = Menu.buildFromTemplate(template)
+          Menu.setApplicationMenu(menu)
+    }
+    else{
+        Menu.setApplicationMenu(null)
+    }
+    
 
     win.loadFile('index_el.html')
 

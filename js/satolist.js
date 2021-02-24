@@ -18031,6 +18031,32 @@ Platform = function (app, listofnodes) {
     }
 
 
+    self.navManager = function(){
+
+        if(electron && _Electron){
+
+            electron.ipcRenderer.on('nav-message', function (event, data) {
+                if (data.type == 'action') {
+                    var route = data.msg
+
+
+                    self.app.nav.api.load({
+                        open: true,
+                        href: route,
+                        history: true
+                    })
+                }
+    
+            
+            })
+
+        }
+       
+
+    }
+
+    self.navManager()
+
     self.app = app;
 
     self.cryptography = new self.Cryptography();
