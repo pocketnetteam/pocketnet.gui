@@ -1,0 +1,359 @@
+@import "../../css/__cssvar";
+
+#staking{
+    
+
+    .pcoin{
+        position: absolute;
+        bottom : @rhythm;
+        right : 2 * @rhythm;
+        opacity: 0.6;
+        span{
+            font-size: 1.5em;
+        }
+    }
+
+
+    .numbers{
+        
+
+        .inputWrapper{
+            padding : 2 * @rhythm;
+        }
+
+        .amredits{
+            background: @color-yellow;
+            padding: 0.5 * @rhythm @rhythm;
+            border : 1px solid #ff0090;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .ihave{
+            font-weight: 700;
+        }
+    }
+
+    .totalNumbers{
+        background: fade(@color-gray-mlight, 10);
+        padding : 3 * @rhythm 0;
+        overflow: hidden;
+        .totalRow{
+            float: left;
+            width: 50%;
+            .label{
+                
+                span{
+                    font-size: 0.8em;
+                    font-weight: 700;
+                }
+            }
+
+            .value{
+                
+                span{
+                    font-size: 2.2em;
+                    font-weight: 100;
+
+                    &.cur{
+                        font-weight: 300;
+                        font-size: 0.8em;
+                    }
+                }
+            }
+        }
+    }
+
+    .total{
+		
+		padding-bottom : 0;
+		overflow : hidden;
+		position: relative;
+
+		.tttlforerror{
+			position: absolute;
+			font-size: 0.8em;
+			font-weight: 100;
+			left : 0;
+			right: 0;
+			top : 0;
+			bottom : 0;
+			background: fade(#F1F1F1, 95);
+			display: none;
+
+			&.active{
+				display: block;
+			}
+
+			.table{
+				>div{
+					vertical-align: middle;
+					text-align: center;
+					color : @color-gray-mlight;
+				}
+			}
+		}
+
+		.totalItem{
+			padding-bottom: @rhythm;
+			float: left;
+			width: 100%;
+
+
+
+			.canvasWrapper{
+				width: 100%;
+				position: relative;
+
+				canvas{
+					width: 100%;
+					height: 100%;
+				}
+
+				.infoWrapper{
+					position : absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+
+				}
+
+				.infoWrapperTable{
+					>div{
+						vertical-align: middle;
+						text-align: center;
+						padding : @rhythm;
+					}
+				}
+			}
+
+		}
+
+		.balance{
+			.balanceWrapper{
+				font-size: 1em;
+				color : #626262;
+
+				.table{
+					margin : 0 auto;
+				}
+			}
+		}
+
+		.summary{
+			margin-top: @rhythm;
+			.line{
+				width: 100%;
+				height: 2px;
+
+				>div{
+					float: left;
+					height: 100%;
+				}
+
+				.positive{
+					background: @color-good;
+				}
+
+				.negative{
+					background: @color-bad;
+				}
+			}
+
+			.numbers{
+				>div{
+					width: 50%;
+					float: left;
+					height: 100%;
+
+					span{
+						font-size: 0.8em;
+					}
+				}
+
+				.positive{
+					color: @color-good;
+				}
+
+				.negative{
+					color: @color-bad;
+					text-align: right;
+				}
+			}
+		}
+
+		.label{
+			padding : @rhythm 0;
+
+			span{
+				font-size: 0.7em;
+				font-weight: 700;
+			}
+		}
+
+
+	}
+    
+    .rcptwrp{
+        background: #fff;
+        position : relative;
+    }   
+
+    
+    .earnlabel{
+        padding : 1.5 * @rhythm 2 * @rhythm;
+        font-weight: 700;
+        color : @color-orange;
+        cursor: pointer;
+
+        span{
+            font-size: 0.8em;
+        }
+    }
+
+    .calcCaption{
+        padding : 1.5 * @rhythm 2 * @rhythm;
+        font-weight: 700;
+        color : @color-bright;
+
+        span{
+            font-size: 0.8em;
+        }
+    }
+
+    
+   
+    .buycoin{
+        padding : 0 2 * @rhythm;
+        button{
+            border-radius: 20px;
+            background: #ff0090;
+            border-color : #ff0090;
+
+            &:hover{
+                color : #fff;
+                background: #b70067;
+                border-color : #b70067;
+            }
+        }
+    }
+
+    .tcaptionwrapper{
+        display: flex;
+        align-items: center;    
+        border-bottom : 1px solid @color-gray-slight;
+
+        .vc_valuecustom{
+            width: 70px;
+            font-size: 0.8em;
+            font-weight: 500;
+            .vc_textInput .vc_iconWrapper,
+            .vc_textInput .vc_inputWrapper{
+                border : 0;
+            }
+        }
+    }
+    .tcaption{
+        flex-grow: 2;
+        font-weight: 100;
+        padding : 2 * @rhythm;
+        
+
+        span{
+            font-size : 0.8em;
+            font-weight: 700;
+        }
+    }
+
+    .commoncaption{
+        font-size: 0.8em;
+        font-weight: 700;
+        margin-bottom : @rhythm;
+    }
+
+    .lastpriceCnt{
+        text-align: center;
+        padding : @rhythm 2 * @rhythm;
+        color : @color-black2;
+        .lastprice{
+            font-size: 3.5em;
+            font-weight: 700;
+        }
+
+        .currency{
+            flex-grow: 2;
+            font-size: 0.8em;
+            text-align: left;
+        }
+
+        .lastpriceWrapper{
+            display: flex;
+            align-items: baseline;
+
+            &.cb{
+                padding-top : 2 * @rhythm;
+                text-align: left;
+
+                .change{
+                    padding-left: 0;
+                }
+            }
+
+            &.bc{
+                .lastprice{
+                    font-size: 2.5em;
+                    font-weight: 700;
+                }
+            }
+            /*justify-content : center;*/
+        }
+
+        .change{
+            flex-grow: 2;
+            padding-left: 2 * @rhythm;
+
+            span{
+                font-weight: 500;
+                background: fade(@color-nrml, 20);
+            }
+            i{
+                color : @color-nrml;
+            }
+
+            &.bad{
+                span{
+                    background: fade(@color-bad, 20);
+                }
+                i{
+                    color : @color-bad;
+                }
+            }
+
+            &.good{
+                span{
+                    background: fade(@color-good, 20);
+                }
+                i{
+                    color : @color-good;
+                }
+            }
+
+            
+        }
+    }
+
+}
+
+html.stblack{
+    #staking{
+        background: @color-black;
+    
+        .tcaption{
+            border-bottom : 1px solid fade(@color-main, 40);
+    
+        }
+    
+    
+    }    
+}

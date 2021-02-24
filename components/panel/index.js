@@ -40,7 +40,7 @@ var panel = (function(){
 				self.nav.api.load({
 
 					open : true,
-					id : 'stacking',
+					id : 'staking',
 					el : el.stacking,
 					animation : false,
 					

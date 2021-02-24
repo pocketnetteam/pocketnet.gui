@@ -31,8 +31,11 @@ var Exchanges = function(){
                     _.each(d, function(pair, i){
 
                         if(i.indexOf("PKOIN_") > -1){
-                            slice.prices[i] = {
-                                currency : i.split("_")[1],
+
+                            var currency = i.split("_")[1]
+
+                            slice.prices[currency] = {
+                                currency : currency,
                                 data : pair
                             }
                         }

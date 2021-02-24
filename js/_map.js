@@ -546,12 +546,12 @@ __map =  {
 			anonimus : true,
 		},	
 
-		stacking : {
-			uri : "stacking",
-			href : "stacking",
+		staking : {
+			uri : "staking",
+			href : "staking",
 			relations : [
 				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
-				
+		
 				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
 					Highcharts = require('./js/vendor/highcharts.js')
 				}},

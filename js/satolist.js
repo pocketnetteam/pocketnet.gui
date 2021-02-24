@@ -32,7 +32,7 @@ Platform = function (app, listofnodes) {
 
     self.released = {
         vidgets : {
-            staking : false
+            staking : true
         }
     }
 
@@ -62,6 +62,10 @@ Platform = function (app, listofnodes) {
 
                 if (value >= 1) {
                     p.precision = 2;
+                }
+
+                if (value < 0.001) {
+                    p.precision = 8;
                 }
 
                 if (value > 1000000) {
