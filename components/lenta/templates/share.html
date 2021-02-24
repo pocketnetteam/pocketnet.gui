@@ -5,6 +5,7 @@ var m = share.renders.message();
 
 if(typeof ed == 'undefined') ed = {}
 
+
 if(share.address){
 
 	var my = (user.address.value && share.address == user.address.value.toString('hex'))
@@ -29,6 +30,9 @@ var bigmessage = false;
 var name = app.platform.api.name(share.address)
 
 var emptywithrepost = share.isEmpty() && share.repost
+
+
+
 
 
 var metadisplay = function(){ %>

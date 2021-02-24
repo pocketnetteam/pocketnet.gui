@@ -433,6 +433,10 @@ var WSS = function(admins, manage){
                     server.close(function(){
                         resolve()
                     })
+
+                else{
+                    resolve()
+                }
     
             }, 3000);
         })

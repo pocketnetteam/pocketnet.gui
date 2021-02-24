@@ -1486,7 +1486,6 @@ var share = (function(){
 				var meta = self.app.platform.parseUrl(url);
 
 				var og = self.app.platform.sdk.remote.storage[url];
-
 				
 				self.shell({
 					name :  'url',

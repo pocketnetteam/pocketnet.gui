@@ -1,14 +1,25 @@
 PeerTubeHandler = function (app) {
-  const baseUrl = 'https://pocketnetpeertube1.nohost.me/api/v1/';
+  const hardCodeUrlsList = [
+    'pocketnetpeertube1.nohost.me',
+    'pocketnetpeertube2.nohost.me',
+    'pocketnetpeertube3.nohost.me',
+  ];
 
-  const watchUrl = 'https://pocketnetpeertube1.nohost.me/videos/watch/';
+  const randomServer =
+    hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
 
-  this.peertubeId = 'peertube';
+  const baseUrl = `https://${randomServer}/api/v1/`;
+
+  const watchUrl = `https://${randomServer}/videos/watch/`;
+
+  console.log('Selected Server', baseUrl);
+
+  this.peertubeId = 'peertube://';
 
   const apiHandler = {
     upload({ method, parameters }) {
       $.ajax({
-        url: `${baseUrl}${method}`,
+        url,
         ...parameters,
       })
         .done((res) => {
@@ -17,8 +28,10 @@ PeerTubeHandler = function (app) {
         .fail((res) => parameters.fail(res));
     },
 
-    run({ method, parameters }) {
-      return fetch(`${baseUrl}${method}`, parameters)
+    run({ method, parameters, url }) {
+      if (!url) url = `${baseUrl}${method}`;
+
+      return fetch(url, parameters)
         .then((res) => res.json())
         .catch((err) => {
           return { error: err };
@@ -223,8 +236,9 @@ PeerTubeHandler = function (app) {
 
         success: (json) => {
           if (!json.video) return parameters.successFunction('error');
-
-          parameters.successFunction(`${watchUrl}${json.video.uuid}`);
+          parameters.successFunction(
+            `${this.peertubeId}${watchUrl}${json.video.uuid}`,
+          );
         },
 
         fail: (res) => {
@@ -236,6 +250,17 @@ PeerTubeHandler = function (app) {
 
   this.removeVideo = async (video) => {
     const videoId = video.split('/').pop();
+
+    const videoHost = video
+      .replace('peertube://', '')
+      .replace('https://', '')
+      .split('/')[0];
+
+    if (randomServer !== videoHost) {
+      this.baseUrl = videoHost ? `https://${videoHost}/api/v1` : this.baseUrl;
+
+      await this.authentificateUser();
+    }
 
     if (!this.userToken) {
       const localAuth = () =>
@@ -346,7 +371,7 @@ PeerTubeHandler = function (app) {
         }
 
         return parameters.successFunction({
-          video: `${watchUrl}${id}`,
+          video: `${this.peertubeId}${watchUrl}${id}`,
           ...res,
         });
       });
@@ -402,7 +427,9 @@ PeerTubeHandler = function (app) {
         success: (json) => {
           if (!json.video) return parameters.successFunction('error');
 
-          parameters.successFunction(`${watchUrl}${json.video.uuid}`);
+          parameters.successFunction(
+            `${this.peertubeId}${watchUrl}${json.video.uuid}`,
+          );
         },
 
         fail: (res) => {
@@ -410,5 +437,17 @@ PeerTubeHandler = function (app) {
         },
       },
     });
+  };
+
+  this.getVideoInfoAnon = async (meta, clbk) => {
+    apiHandler
+      .run({
+        url: `https://${meta.host_name}/api/v1/videos/${meta.id}`,
+
+        parameters: {
+          method: 'GET',
+        },
+      })
+      .then((res) => clbk(res));
   };
 };

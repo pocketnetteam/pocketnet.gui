@@ -2235,59 +2235,120 @@ var lenta = (function(){
 
 				var _el = el.closest('.share')
 
-				self.shell({
-					turi : 'share',
-					name :  'url',
-					el : el,
-					data : {
-						url : url,
-						og : og,
-						share : share
-					},
+				var meta = self.app.platform.parseUrl(url);
 
-				}, function(_p){
-
-					self.app.nav.api.links(null, _p.el, function(event){
-
-						event.stopPropagation()
-					})
-
-					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
-
-					var images = _p.el.find('img');
-
-					if (essenseData.renderclbk)
-						essenseData.renderclbk()
-
-					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
-
-						_.each(image.images, function(i, index){
-
-
-							if(i.isLoaded){
-								$(images[index]).addClass('active')
-
-								if(i.img.naturalWidth > 500){
-									_p.el.addClass('bigimageinlink')
-								}
-								
-							}
-							else
-							{
-								$(images[index]).closest('.image').css('display', 'none')
-							}
+				if (meta.type === 'peertube') {
+					self.app.peertubeHandler.getVideoInfoAnon(meta, (res) => {
+						self.shell({
+							turi : 'share',
+							name :  'url',
+							el : el,
+							data : {
+								url : url,
+								og : og,
+								share : share,
+								views : res.views,
+							},
+		
+						}, function(_p){
+		
+							self.app.nav.api.links(null, _p.el, function(event){
+		
+								event.stopPropagation()
+							})
+		
+							shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
+		
+							var images = _p.el.find('img');
+		
+							if (essenseData.renderclbk)
+								essenseData.renderclbk()
+		
+							_p.el.find('img').imagesLoaded({ background: true }, function(image) {
+		
+								_.each(image.images, function(i, index){
+		
+		
+									if(i.isLoaded){
+										$(images[index]).addClass('active')
+		
+										if(i.img.naturalWidth > 500){
+											_p.el.addClass('bigimageinlink')
+										}
+										
+									}
+									else
+									{
+										$(images[index]).closest('.image').css('display', 'none')
+									}
+								})
+		
+								shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
+		
+								if (essenseData.renderclbk)
+									essenseData.renderclbk()
+								  
+							});
+		
+							if (clbk)
+								clbk()
 						})
-
+					});
+				} else {
+					self.shell({
+						turi : 'share',
+						name :  'url',
+						el : el,
+						data : {
+							url : url,
+							og : og,
+							share : share
+						},
+	
+					}, function(_p){
+	
+						self.app.nav.api.links(null, _p.el, function(event){
+	
+							event.stopPropagation()
+						})
+	
 						shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
-
+	
+						var images = _p.el.find('img');
+	
 						if (essenseData.renderclbk)
 							essenseData.renderclbk()
-					  	
-					});
-
-					if (clbk)
-						clbk()
-				})
+	
+						_p.el.find('img').imagesLoaded({ background: true }, function(image) {
+	
+							_.each(image.images, function(i, index){
+	
+	
+								if(i.isLoaded){
+									$(images[index]).addClass('active')
+	
+									if(i.img.naturalWidth > 500){
+										_p.el.addClass('bigimageinlink')
+									}
+									
+								}
+								else
+								{
+									$(images[index]).closest('.image').css('display', 'none')
+								}
+							})
+	
+							shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
+	
+							if (essenseData.renderclbk)
+								essenseData.renderclbk()
+							  
+						});
+	
+						if (clbk)
+							clbk()
+					})
+				}
 			},
 
 			urlContent : function(share, clbk){

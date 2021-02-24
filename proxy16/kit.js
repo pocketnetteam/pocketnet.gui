@@ -351,10 +351,10 @@ var kit = {
 						var prx = null
 
 						return state.saverp().then(proxy => {
-
+							
 							prx = proxy
-
 							return proxy.server.rews()
+
 						}).then(r => {
 
 							prx.nodeManager.reservice().catch(e => {})
