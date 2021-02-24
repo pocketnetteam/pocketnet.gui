@@ -1067,13 +1067,11 @@ var Proxy = function (settings, manage) {
         peertube : {
             servers : {
                 path : '/peertube/servers',
-                action : function(){
-                    return self.peertube.kit.get.history().then(d => {
-                        return Promise.resolve({
-                            data : d
-                        })
-                    })
-                }
+                action : () => self.peertube.kit.getTest().then(res => Promise.resolve({
+                    data: res,
+                })).catch(err => Promise.reject({
+                    data: err,
+                })),
             }
         },
 
