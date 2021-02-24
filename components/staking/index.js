@@ -28,7 +28,7 @@ var staking = (function(){
 				id : 'BTC',
 				key : 'BTC',
 				view : function(v){
-					return self.app.platform.mp.coin(v)
+					return self.app.platform.mp.acoin(v)
 				}
 			}
 		}

@@ -28,7 +28,7 @@ var Wallet = function(p){
                 return obj.ip == queueobj.ip
             })
 
-            if (allips.length > 5 && f.now(allips[allips.length - 1].date) > f.addSeconds(f.now(), -10 * 24 * 60 * 60)){
+            if (allips.length > 5 && f.now(allips[allips.length - 1].date) > f.date.addseconds(f.now(), -10 * 24 * 60 * 60)){
                 return Promise.reject('iplimit')
             }
 

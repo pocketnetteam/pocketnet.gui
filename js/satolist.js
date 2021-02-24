@@ -64,6 +64,29 @@ Platform = function (app, listofnodes) {
                     p.precision = 2;
                 }
 
+                if (value > 1000000) {
+                    p.precision = 0;
+                }
+            }
+
+            p.allowNegative = false;
+
+            p.value = Number(value).toFixed(p.precision);
+
+            return maskValue(p)
+        },
+
+        acoin: function (value, p) {
+            if (!p) p = {};
+
+            if (typeof p.precision == 'undefined') {
+
+                p.precision = 2;
+
+                if (value >= 1) {
+                    p.precision = 2;
+                }
+
                 if (value < 0.001) {
                     p.precision = 8;
                 }
