@@ -372,7 +372,9 @@ var filluserfast = (function(){
 
 						}
 
-						if (err == 'error'){
+						console.log('err', err)
+
+						if (err == 'error' || err == 'iplimit'){
 
 							gliperror = true
 
