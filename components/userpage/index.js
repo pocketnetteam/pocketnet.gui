@@ -145,6 +145,16 @@ var userpage = (function(){
 				}
 			})
 
+			reports.push({
+				name : 'Pocketcoin',
+				id : 'staking',
+				report : 'staking',
+				mobile : true,
+				if : function(){
+					return isMobile()
+				},
+			})
+
 			if(self.app.user.validate()) {
 
 				reports.push({
