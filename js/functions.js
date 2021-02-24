@@ -10115,17 +10115,18 @@
 	findAndReplaceLink = function (inputText) {
 
 
-		var l = linkifyHtml(inputText, {
-			attributes : {
-				cordovalink : '_system'
-			}
-		})
 
-		return l
-		//<a cordovalink="_system" href="" target="_blank"></a>
+		if(typeof linkifyHtml != 'undefined'){
+			var l = linkifyHtml(inputText, {
+				attributes : {
+					cordovalink : '_system'
+				}
+			})
+	
+			return l
+		}
 
-		/// return prefix + '<a cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
-
+	
 	    function indexOf(arr, value, from) {
 	        for (var i = from || 0, l = (arr || []).length; i < l; i++) {
 	            if (arr[i] == value) return i;
