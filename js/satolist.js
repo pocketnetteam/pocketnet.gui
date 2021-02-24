@@ -3623,15 +3623,23 @@ Platform = function (app, listofnodes) {
 
 
                         if (electron && i == 'autostart') {
-                            const AutoLaunch = require('auto-launch');
-                            let autoLaunch = new AutoLaunch({
-                                name: 'Pocketnet',
-                                path: electron.remote.app.getPath('exe'),
-                                isHidden: true
-                            });
 
-                            if (m[i].value) autoLaunch.enable();
-                            else autoLaunch.disable();
+                            const is = require('electron-is')
+
+                            if(!is.macOS()){
+
+                                const AutoLaunch = require('auto-launch');
+                                let autoLaunch = new AutoLaunch({
+                                    name: 'Pocketnet',
+                                    path: electron.remote.app.getPath('exe'),
+                                    isHidden: true
+                                });
+    
+                                if (m[i].value) autoLaunch.enable();
+                                else autoLaunch.disable();
+                            }
+
+                            
                         }
 
 
