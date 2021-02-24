@@ -391,6 +391,9 @@ function createWindow() {
     }
 
     if(is.macOS()){
+
+        var isMac = true
+
         const template = [
             // { role: 'appMenu' }
             ...(isMac ? [{

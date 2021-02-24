@@ -3784,6 +3784,12 @@ Platform = function (app, listofnodes) {
                         });
 
                     }
+                    else
+                    {
+                        if (clbk) {
+                            clbk()
+                        }
+                    }
                 }
                 else {
                     if (clbk) {
