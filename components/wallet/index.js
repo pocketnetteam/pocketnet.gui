@@ -1856,7 +1856,7 @@ var wallet = (function(){
 
 				var n = '#F1F1F1'
 
-				if($('html').hasClass('stblack')) n = 'rgb(9, 20, 34)'
+				if($('html').hasClass('stblack')) n = '#112035'
 
 				_.each(item.move, function(m){
 					_.each(m.items, function(i){
