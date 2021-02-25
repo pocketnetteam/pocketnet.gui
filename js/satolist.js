@@ -179,7 +179,6 @@ Platform = function (app, listofnodes) {
                 },
 
                 macos: {
-                    hidden : true,
                     appname: "Pocketnet",
                     text: {
                         name: "macOS",
