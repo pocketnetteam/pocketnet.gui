@@ -17727,13 +17727,8 @@ Platform = function (app, listofnodes) {
 
                 self.app.user.features.telegram = 1;
 
-                console.log('window.location', window.location.href);
-
                 var currentHref = window.location.href;
-
-                currentHref = currentHref.replace('https://localhost/pocketnet/', '');
-
-
+                
                 window.location = 'pocketnet://' + currentHref;
 
             } else {
