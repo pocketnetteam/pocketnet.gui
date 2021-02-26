@@ -317,6 +317,7 @@ function notification(nhtml) {
 }
 
 function createWindow() {
+    console.log('createWindow!!!!');
     const screen = require('electron').screen;
     const mainScreen = screen.getPrimaryDisplay();
 
@@ -387,7 +388,12 @@ function createWindow() {
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
+        console.log('new-window', event, url);
         open(url);
+    });
+
+    win.webContents.on('will-navigate', function(event, url) {
+        console.log('new-window!!!!', event, url);
     });
 
     win.on('close', function(e) {
@@ -466,7 +472,15 @@ if (!r) {
     app.quit()
 } else {
     app.on('second-instance', function(event, argv, cwd) {
-        console.log('second', event, argv, cwd)
+        const currentURL = win.webContents.getURL()
+        console.log('currentUrl', currentURL);
+        console.log('second', event, argv, cwd);
+
+        setTimeout(() => {
+            win.webContents.loadURL('file:///C:/inetpub/wwwroot/pocketnet/userpage?id=notifications')
+
+        }, 6000)
+
         if (win) {
 
             if (win.isMinimized()) win.restore();
