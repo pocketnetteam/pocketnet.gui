@@ -1,0 +1,364 @@
+@import "../../css/__cssvar";
+
+#staking{
+    
+
+    .pcoin{
+        position: absolute;
+        bottom : @rhythm;
+        right : 2 * @rhythm;
+        opacity: 0.6;
+        span{
+            font-size: 1.5em;
+        }
+    }
+
+
+    .numbers{
+        
+
+        .inputWrapper{
+            padding : 2 * @rhythm;
+        }
+
+        .amredits{
+            background: @color-yellow;
+            padding: 0.5 * @rhythm @rhythm;
+            border : 1px solid #ff0090;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .ihave{
+            font-weight: 700;
+        }
+    }
+
+    .totalNumbers{
+        background: fade(@color-gray-mlight, 10);
+        padding : 3 * @rhythm 0;
+        overflow: hidden;
+        .totalRow{
+            float: left;
+            width: 50%;
+            .label{
+                
+                span{
+                    font-size: 0.8em;
+                    font-weight: 700;
+                }
+            }
+
+            .value{
+                
+                span{
+                    font-size: 2.2em;
+                    font-weight: 100;
+
+                    &.cur{
+                        font-weight: 300;
+                        font-size: 0.8em;
+                    }
+                }
+            }
+        }
+    }
+
+    
+    .rcptwrp{
+        background: #fff;
+        position : relative;
+    }   
+
+    
+    .earnlabel{
+        padding : 1.5 * @rhythm 2 * @rhythm;
+        font-weight: 700;
+        color : @color-orange;
+        cursor: pointer;
+
+        span{
+            font-size: 0.8em;
+        }
+    }
+
+    .calcCaption{
+        padding : 1.5 * @rhythm 2 * @rhythm;
+        font-weight: 700;
+        color : @color-bright;
+
+        span{
+            font-size: 0.8em;
+        }
+    }
+
+    
+   
+    .buycoin{
+        padding : 0 2 * @rhythm;
+        button{
+            border-radius: 20px;
+            background: #ff0090;
+            border-color : #ff0090;
+
+            &:hover{
+                color : #fff;
+                background: #b70067;
+                border-color : #b70067;
+            }
+        }
+    }
+
+    .tcaptionwrapper{
+        display: flex;
+        align-items: center;    
+        border-bottom : 1px solid @color-gray-slight;
+
+        .vc_valuecustom{
+            width: 85px;
+            font-size: 0.8em;
+            font-weight: 500;
+            .vc_textInput .vc_iconWrapper,
+            .vc_textInput .vc_inputWrapper{
+                border : 0;
+            }
+        }
+    }
+    .tcaption{
+        flex-grow: 2;
+        font-weight: 100;
+        padding : 2 * @rhythm;
+        
+
+        span{
+            font-size : 0.8em;
+            font-weight: 700;
+        }
+    }
+
+    .commoncaption{
+        font-size: 0.8em;
+        font-weight: 700;
+        margin-bottom : @rhythm;
+    }
+
+    .lastpriceCnt{
+        text-align: center;
+        padding : @rhythm 2 * @rhythm;
+        color : @color-black2;
+        .lastprice{
+            font-size: 3.5em;
+            font-weight: 700;
+        }
+
+        .currency{
+            flex-grow: 2;
+            font-size: 0.8em;
+            text-align: left;
+        }
+
+        .lastpriceWrapper{
+            display: flex;
+            align-items: baseline;
+
+            &.cb{
+                padding-top : 2 * @rhythm;
+                text-align: left;
+
+                .change{
+                    padding-left: 0;
+                }
+            }
+
+            &.bc{
+                .lastprice{
+                    font-size: 2.5em;
+                    font-weight: 700;
+                }
+            }
+            /*justify-content : center;*/
+        }
+
+        .change{
+            flex-grow: 2;
+            padding-left: 2 * @rhythm;
+            word-break: keep-all;
+            white-space : nowrap;
+
+            span{
+                font-weight: 500;
+                background: fade(@color-nrml, 20);
+            }
+
+            i{
+                color : @color-nrml;
+            }
+
+            &.bad{
+                span{
+                    background: fade(@color-bad, 20);
+                }
+                i{
+                    color : @color-bad;
+                }
+            }
+
+            &.good{
+                span{
+                    background: fade(@color-good, 20);
+                }
+                i{
+                    color : @color-good;
+                }
+            }
+
+            
+        }
+    }
+
+}
+
+html.stblack{
+    #staking{
+        .lastpriceCnt{
+            color : @color-gray-slight;
+            
+            .change{
+    
+                span{
+                    background: fade(@color-nrml, 40);
+                }
+    
+    
+                &.bad{
+                    span{
+                        background: fade(@color-bad, 40);
+                    }
+                }
+    
+                &.good{
+                    span{
+                        background: fade(@color-good, 40);
+                    }
+                }
+    
+                
+            }
+        }
+        .rcptwrp{
+            background: @color-black;
+        }
+    
+        .tcaption{
+            border-bottom : 1px solid fade(@color-main, 40);
+    
+        }
+    
+    
+    }    
+}
+
+@media only screen and (max-width: 768px) {
+    #staking{
+    
+
+        .pcoin{
+            span{
+                font-size: 1.5em;
+            }
+        }
+    
+    
+        .numbers{
+        
+    
+            .ihave{
+                padding : 4 * @rhythm 2 * @rhythm;
+            }
+        }
+    
+        .totalNumbers{
+           
+            .totalRow{
+             
+                .label{
+                    
+                    span{
+                        font-size: 1em;
+                    }
+                }
+    
+                .value{
+                    
+                    span{
+                        font-size: 2.2em;
+    
+                        &.cur{
+                            font-size: 0.9em;
+                        }
+                    }
+                }
+            }
+        }
+    
+        
+      
+        
+        .earnlabel{
+            padding : 4 * @rhythm 2 * @rhythm;
+            span{
+                font-size: 0.9em;
+            }
+        }
+    
+        .calcCaption{
+            padding : 4 * @rhythm 2 * @rhythm;
+            padding-bottom: 2 * @rhythm;
+            span{
+                font-size: 0.9em;
+            }
+        }
+    
+        
+       
+        .buycoin{
+            button{
+                font-size: 0.8em!important;
+    
+            }
+        }
+    
+        .tcaptionwrapper{
+            .vc_valuecustom{
+                font-size: 0.9em;
+               
+            }
+
+            padding-right: @rhythm;
+        }
+        .tcaption{
+    
+            span{
+                font-size : 0.9em;
+            }
+        }
+    
+        .commoncaption{
+            font-size: 0.9em;
+        }
+    
+        .lastpriceCnt{
+           
+            .lastprice{
+                font-size: 3.5em;
+            }
+    
+            .currency{
+                font-size: 0.8em;
+            }
+    
+        
+        }
+    
+    }
+}

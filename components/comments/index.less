@@ -13,6 +13,15 @@
 		text-align: center;
 	}
 
+	.adr{
+		max-width: 190px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+		display: inline-block;
+		white-space: nowrap;
+	}
+
 	&.preview{
 		.post{
 			.txt{
@@ -393,6 +402,7 @@
 
 					div{
 						padding-top : @rhythm;
+						word-wrap:break-word;
 					}
 
 					a{
@@ -991,6 +1001,11 @@
 			border-radius: 20px;
 			border : 1px solid @color-gray-light;
 			box-shadow: none;
+			//overflow: hidden;
+
+			.emojionearea-editor{
+				margin-right: 0;
+			}
 		}
 
 		.emojionearea{

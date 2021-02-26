@@ -299,4 +299,78 @@ html.stblack{
             }
         }
     }
+
+    .wnd.pkviewwnd{
+        .wndinner{
+            width : 100%;
+            height: 100%;
+        }
+        .table{
+            display: block;
+            height: 100%;
+        }
+        .tablecell{
+            display: block;
+            height: 100%;
+        }
+
+        ._close {
+            background: fade(#000, 50);
+        }
+
+        .keywrapper{
+            height: 100%;
+
+            .key{
+                height: 100%;
+            }
+        }
+        
+        #pkview{
+            .abswndwrapper{
+                position: absolute;
+                left : 0;
+                right : 0;
+                top : 0;
+                bottom : 0;
+    
+                .tablewrapper{
+                    >div{
+                        vertical-align: middle;
+                    }
+                }
+            }
+
+            .dontshowagain{
+                bottom : 0;
+            }
+    
+            .key{
+                padding : @rhythm;
+            }
+    
+            .work{
+                max-width: 1024px;
+            }
+
+            .mnemonicKey{
+                height: 90px;
+            }
+
+            .mnemonicKeyTable{
+                >div{
+                  
+                    &.iconWrapper{
+                        padding: 0; 
+                        width: 100%;
+
+                        img{
+                            margin : 0 auto;
+                        }
+                    }
+    
+                }
+            }
+        }
+    }
 }

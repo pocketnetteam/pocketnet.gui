@@ -6,83 +6,106 @@
 
     <div class="nodeWrapper">
         <div class="work">
-            <div class="node table <%- !node.canuse ? 'cantuse' : ''%>" node="<%-node.key%>">
-                <div class="use">
-                    <% if(node.key == currentnode) {%>
-                        <i class="fas fa-check-circle good"></i>
-                    <% } else { %> 
-                        <i class="far fa-circle"></i>    
-                    <% } %>
-                </div>
+            <div class="tableovfWrapper">
+                <div class="node table <%- !node.canuse ? 'cantuse' : ''%>" node="<%-node.key%>">
+                    <div class="use">
+                        <% if(node.key == currentnode) {%>
+                            <i class="fas fa-check-circle good"></i>
+                        <% } else { %> 
+                            <i class="far fa-circle"></i>    
+                        <% } %>
+                    </div>
 
-                <div class="name">
-                    <% if(node.testing) {%>
-                        <span class="testing">Testing</span>
-                    <% } else { %> 
-                        <span><%- node.name %></span>
-                    <% } %>
-                    
-                </div>
-
-                <div class="hostport"><span><%- node.host%>:<%- node.port %>/<%- node.ws %></span></div>
-
-                <div class="statistic">
-                
-                    <% if(nodeinfo.statistic && nodeinfo.statistic.time && nodeinfo.statistic.percent) {%>
-
-                        <span><%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %</span>
-
-                    <% } else { %> 
-                        
-                        <span>&mdash;</span>
-
-                    <% } %>
-                    
-                </div>
-
-                <div class="block">
-                    <% if(nodeinfo.status.difference) {%>
-
-                        <span><%- nodeinfo.status.difference %></span>
-
-                    <% } %> 
-                    
-                </div>
-
-                <div class="fork">
-                
-                    <% if(nodeinfo.status.fork) {%>
-
-                        <i class="fas fa-code-branch"></i>
-
-                    <% } %> 
-                    
-                </div>
-
-
-                <div class="panelWrapper">
-                    <% if(node.stable) {%>
-
-                        <div class="item stable good">
-                            <i class="fas fa-certificate"></i>
-                        </div>
-                   
-                    <% } else {%> 
-                    
-                        <% if(node.addedby == app.user.address.value || admin) {%>
-
-                            <div class="item edit">
-                                <i class="fas fa-cog"></i>
-                            </div>
-    
+                    <div class="name">
+                        <% if(node.testing) {%>
+                            <span class="testing">Testing</span>
+                        <% } else { %> 
+                            <span><%- node.name %></span>
                         <% } %>
                         
-                    <% } %>
+                    </div>
+
+                    <div class="hostport"><span><%- node.host%>:<%- node.port %>/<%- node.ws %></span></div>
+
+                    <div class="statistic">
+                    
+                        <% if(nodeinfo.statistic && nodeinfo.statistic.time && nodeinfo.statistic.percent) {%>
+
+                            <span><%- nodeinfo.statistic.time.toFixed(0) %>ms, <%- nodeinfo.statistic.percent.toFixed(0) %> %</span>
+
+                        <% } else { %> 
+                            
+                            <span>&mdash;</span>
+
+                        <% } %>
+                        
+                    </div>
+
+                    <div class="block">
+                        <% if(nodeinfo.status.difference) {%>
+
+                            <span><%- nodeinfo.status.difference %></span>
+
+                        <% } %> 
+                        
+                    </div>
+
+                    <div class="fork">
+                    
+                        <% if(nodeinfo.status.fork) {%>
+
+                            <i class="fas fa-code-branch"></i>
+
+                        <% } %> 
+                        
+                    </div>
+
+
+                    <div class="panelWrapper">
+                        <% if(node.stable) {%>
+
+                            <div class="item stable good">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                    
+                        <% } else {%> 
+
+                            <% if(node.local || node.peer) {%>
+
+                                <% if(node.local) {%>
+                                
+                                    <div class="item ">
+                                        <i class="fas fa-thumbtack"></i>
+                                    </div>
+        
+                                <% } %>
+
+                                <% if(node.peer) {%>
+                            
+                                    <div class="item ">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+        
+                                <% } %>
+                            <% } else { %> 
+                        
+                            <% if(node.addedby == app.user.address.value || admin) {%>
+
+                                <div class="item edit">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+        
+                            <% } %>
+
+                            <% } %>
+                            
+                        <% } %>
+
+                    </div>
+
+                    
 
                 </div>
-
-                
-
             </div>
         </div>
     </div>

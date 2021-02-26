@@ -50,9 +50,21 @@
 
 			<div class="panel">
 				<% if(!cur) {%>
+
+					
+
+					
+
 					<div class="item remove">
 						<i class="fas fa-times-circle"></i>
 					</div>
+
+					<div class="item goto">
+						<a href="<%-app.platform.api.authorlink(address)%>">
+							<i class="fas fa-user"></i>
+						</a>
+					</div>
+					
 				<% } else { %>
 					<div class="item dumpkey">
 						<i class="fas fa-key"></i>

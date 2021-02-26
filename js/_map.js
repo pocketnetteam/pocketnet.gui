@@ -10,7 +10,9 @@ __map =  {
         "js/vendor/timer.js",
         "js/vendor/ion.sound/ion.sound.min.js" ,
 		"js/vendor/aesjs.js",
-
+		"js/vendor/linkify.min.js",
+		"js/vendor/linkify-html.min.js",
+		
 		//new
 		"js/lib/pocketnet/btc17.js",
 		"js/lib/pocketnet/buffer.js",
@@ -518,6 +520,42 @@ __map =  {
 		tagcloud : {
 			uri : "tagcloud",
 			href : "tagcloud",
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
+			},
+			anonimus : true,
+		},	
+
+		staking : {
+			uri : "staking",
+			href : "staking",
+			relations : [
+				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
+		
+				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
+					Highcharts = require('./js/vendor/highcharts.js')
+				}},
+			],
 			add : function(settings, p){
 
 				if(p.inWnd)

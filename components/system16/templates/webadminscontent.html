@@ -1,53 +1,64 @@
 
-
+<% if(admin) {%>
 <div class="webadminscontent">
     <div class="work">
-        <% _.each(admins, function(admin){ 
-            var user = deep(app, 'platform.sdk.users.storage.'+admin) || {} %>
+
+        <% if(admins.length) {%>
+        <% _.each(admins, function(uadmin){ 
+            var user = deep(app, 'platform.sdk.users.storage.'+uadmin) || {} %>
 
        
             <div class="adminWrapper">
-                <div class="admin table">
+                <div class="tableovfWrapper">
+                    <div class="admin table">
 
-                    <div class="iconWrapper">
-                        <a href="<%-app.platform.api.authorlink(admin)%>">
+                        <div class="iconWrapper">
+                            <% if(!app.curation()) {%> <a href="<%-app.platform.api.authorlink(uadmin)%>"> <% } %>
 
-                            <% var src = user.image  %>
+                                <% var src = user.image  %>
 
-                            <div class="icon">
-                                <div class="usericon usericonsbsa another" image="<%-src || ''%>">
-                                    <% if(!src) {%>
-                                        <svg width="30" height="30" data-jdenticon-value="<%-admin%>"></svg>
-                                    <% } %>
+                                <div class="icon">
+                                    <div class="usericon usericonsbsa another" image="<%-src || ''%>">
+                                        <% if(!src) {%>
+                                            <svg width="30" height="30" data-jdenticon-value="<%-uadmin%>"></svg>
+                                        <% } %>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            <% if(!app.curation()) {%>  </a> <% } %>
 
-                    </div>
-                    
-                    <div class="nameWrapper">
-
-                        <a href="<%-app.platform.api.authorlink(admin)%>">
-                            <%- user.name || admin %>
-                        </a>
+                        </div>
                         
-                    </div>			
-                    
-                    <div class="panelWrapper">
-                        <% if(admin) { %>
+                        <div class="nameWrapper">
 
-                            <div class="item remove" address="<%-admin%>">
-                                <i class="far fa-times-circle"></i>
-                            </div>
+                            <% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(uadmin)%>"><% } %>
+                                <%- user.name || uadmin %>
+                            <% if(!app.curation()) {%></a><% } %>
                             
+                        </div>			
+                        
+                        <div class="panelWrapper">
+                            <% if(admin) { %>
 
-                        <% } %>
+                                <div class="item remove" address="<%-uadmin%>">
+                                    <i class="far fa-times-circle"></i>
+                                </div>
+                                
+
+                            <% } %>
+                        </div>
+                        
                     </div>
-                    
                 </div>
             </div>
 
         <% }) %>
+        <% } else {%> 
+            
+        <div class="empty">
+            <span>There are no administrators assigned to this server</span>
+        </div>    
+
+        <% } %>
     </div>
 
     <% if(admin) {%>
@@ -64,3 +75,4 @@
 
     <% } %>
 </div>
+<% } %>

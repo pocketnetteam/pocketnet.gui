@@ -11,7 +11,7 @@ Localization = function(app){
 	}
 
 
-	
+	self.key = 'en'
 
 	self.available = {
 
@@ -20,7 +20,7 @@ Localization = function(app){
 			key : 'en'
 		},
 
-		de : {
+		/*de : {
 			name : "Deutsch",
 			key : 'de'
 		},
@@ -38,7 +38,7 @@ Localization = function(app){
 		ru : {
 			name : "Русский",
 			key : 'ru'
-		}
+		}*/
 
 	}
 
@@ -144,7 +144,7 @@ Localization = function(app){
 		var prms = parameters();
 
 
-		self.key = prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
+		self.key = 'en'/// prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 		
 		self.locSave();
 
@@ -164,7 +164,7 @@ Localization = function(app){
 		}
 		else
 		{
-			var src = 'localization/' + (_key || self.key) + '.js'
+			var src = 'localization/' + (_key || self.key) + '.js?v=1'
 
 			importScript(src, function(){
 

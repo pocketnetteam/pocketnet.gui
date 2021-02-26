@@ -16,6 +16,7 @@ var accounts = (function(){
 
 			signin : function(address){
 				
+				
 				self.app.platform.sdk.pool.expand(pack, function(expandedPack){
 					var index = _.indexOf(expandedPack.addresses, address);
 
@@ -30,6 +31,8 @@ var accounts = (function(){
 							self.app.user.stay = stay;
 
 							self.user.signin(private, function(state){
+
+								
 
 								self.app.reloadLight(function(){
 
@@ -57,6 +60,11 @@ var accounts = (function(){
 
 
 						
+					}
+
+					else{
+
+						console.log("INDEX", index)
 					}
 				})
 
@@ -105,10 +113,15 @@ var accounts = (function(){
 					essenseData : {
 						success : function(mnemonic){
 
+							console.log("mnemonic", mnemonic)
+
 							self.app.platform.sdk.pool.expand(pack, function(expandedPack){
+								console.log("IMHERE", mnemonic)
 								self.app.platform.sdk.pool.add(expandedPack, mnemonic, function(expandedPack, error){
 
-									if(error){
+									console.log("IMHERE", expandedPack)
+
+									if (error){
 										dialog({
 											html : self.app.localization.e('aused'),
 											class : "one"
@@ -117,6 +130,8 @@ var accounts = (function(){
 									else
 									{
 										self.app.platform.sdk.pool.export(expandedPack, function(_pack){
+
+											console.log("HERE")
 
 											self.app.platform.sdk.pool.current.packs[id] = _pack;
 											self.app.platform.sdk.pool.save()

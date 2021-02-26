@@ -9,7 +9,7 @@ var compressor = require('yuicompressor');
 var path = ".",
 	prodaction = process.argv[2] ? false : true;
 
-var vendorversion = process.argv[3] || '4';
+var vendorversion = process.argv[3] || '7';
 
 if(prodaction === 'false') prodaction = false; 
 
@@ -31,7 +31,7 @@ fs.exists(mapJsPath, function (exists) {
 
 		var modules = {
 			data : "",
-			path : './js/_modules.js'
+			path : './js/mdls.js'
 		}
 
 		var join = {

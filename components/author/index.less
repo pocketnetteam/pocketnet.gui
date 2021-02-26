@@ -24,7 +24,11 @@
 		}
 	}
 
-
+	.copyaddress{
+		cursor: pointer;
+		font-size: 0.7em;
+	}
+	
 	.authorlentawrappermain{
 		position: relative;
 
@@ -359,7 +363,13 @@
 		margin-bottom : 0;
 
 		
-		
+		.adr{
+			max-width: 500px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			vertical-align: bottom;
+			display: inline-block;
+		}
 		.create{
 			min-width: 250px;
 		}
@@ -794,8 +804,8 @@ html.stblack{
 			background: #20232A;			
 		}
 		.bgCaption{
-			background: fade(@color-bright, 20);
-			color : fade(@color-gray-slight, 60);
+			background: fade(@color-bright, 15);
+			color : fade(@color-gray-slight, 70);
 	
 			&.blocking{
 				background: rgb(41, 3, 24);	
@@ -890,7 +900,17 @@ html.stblack{
 	
 	}	
 }
+@media only screen and (max-width: 1024px) {
+	#author{
+		.lentacell{
+			margin-right: 44px;
+		}
 
+		.work.mwork{
+			width: 90%;
+		}
+	}
+}
 @media only screen and (max-width: 640px) {
 	#content{
 
@@ -918,6 +938,14 @@ html.stblack{
 
 		#author{
 
+			.lentacell{
+				margin-right: 0;
+			}
+	
+			.work.mwork{
+				width: 100%;
+			}
+
 			.authorlentawrappermain{
 				position: relative;
 		
@@ -933,7 +961,10 @@ html.stblack{
 				}
 			}
 
-			
+			.copyaddress{
+				font-size: 1em;
+				font-weight: 700;
+			}
 
 			.subscribewrapperphones{
 				
@@ -969,7 +1000,7 @@ html.stblack{
 				padding : 2 * @rhythm;
 
 				.authorinfo{
-					font-size: 0.9em;
+					
 					.itemtable{
 						>div{
 							vertical-align: middle;

@@ -1,7 +1,8 @@
 @import "../../css/__cssvar";
 
 #help{
-
+	padding-bottom : 8 * @rhythm;
+	font-size: 0.9em;
 	.tips{
 		padding-top : 2 * @rhythm;
 		overflow: hidden;
@@ -20,6 +21,7 @@
 	}
 
 	.bgCaption{
+		background : @color-bright;
 		.cell{
 			padding-top : 5 * @rhythm;
 			vertical-align: top;
@@ -98,6 +100,7 @@
 
 		.roadmap{
 			margin-top: 4 * @rhythm;
+			max-width: 640px;
 			.road{
 				>div{
 					padding : 2 * @rhythm;
@@ -143,6 +146,9 @@
 					.shares{
 					 	.share{
 					 		padding : 0;
+							padding : 3 * @rhythm;
+							border : 1px solid @color-gray-slight;
+							border-radius: @rhythm;
 					 	}
 					}
 				}
@@ -191,6 +197,8 @@
 		}
 	}
 
+	
+
 	.section{
 		padding-bottom: 2 * @rhythm;
 		margin-top: 2 * @rhythm;
@@ -208,7 +216,6 @@
 
 			}
 			&.sectioncnt{
-				
 				margin-left: 0;
 			}
 		}
@@ -216,6 +223,7 @@
 
 	}
 
+	
 	.page{
 		padding : @rhythm;
 		.caption{
@@ -235,6 +243,19 @@
 				}
 			}
 		}
+
+		.lentasection{
+			>div{
+				
+	
+				&.sectioncnt{
+					margin-left: 0;
+	
+				}
+			}
+	
+		}
+	
 	}
 }	
 }

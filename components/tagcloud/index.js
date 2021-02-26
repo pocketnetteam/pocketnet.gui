@@ -21,6 +21,8 @@ var tagcloud = (function(){
 		var renders = {
 			tags : function(tags, clbk){
 
+				if(!el.c) return
+
 				if(!tags.length){
 					el.c.addClass('hidden')
 				}
@@ -86,7 +88,7 @@ var tagcloud = (function(){
 
 				if (error){
 
-					self.iclbks.main = make
+					self.iclbks.maintag = make
 
 				}
 
@@ -108,7 +110,7 @@ var tagcloud = (function(){
 			},
 
 			destroy : function(){
-				delete self.iclbks.main;
+				delete self.iclbks.maintag;
 
 				el = {};
 			},

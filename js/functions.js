@@ -93,6 +93,10 @@
 		return result.join(":")
  	}
 
+	isios = function () {
+		return window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
+	}
+
  
 	currentYear = function(){
 		var mdate = new Date(); 
@@ -1515,6 +1519,7 @@
 		}
 
 		self.close = function(){
+			console.log("CLOSE TOOLTIP", self)
 			if (self.instance)
 				self.instance.close();
 		}
@@ -5878,7 +5883,7 @@
 	        script.onload = callback;
 	    }
 
-	    src += "?v=129"
+	    src += "?v=119"
 
 	    script.src = src;
 	    appendTo.appendChild(script);
@@ -5889,7 +5894,7 @@
 	    link.rel = 'stylesheet';
 
 
-	    src += "?v=127"
+	    src += "?v=117"
 
 	    link.setAttribute('href', src);
 	    
@@ -7343,7 +7348,7 @@
 			//	data.system = app.name;
 			
 			/*---------------------------------------------------------------------------------------*/
-			if (user !== false && user.extendAjaxData &&  (!p.anon || p.anon !== true) && !p.imgur) user.extendAjaxData(data, url);		
+			if (user !== false && user.extendAjaxData &&  (!p.anon || p.anon !== true) && !p.imgur && !p.up1) user.extendAjaxData(data, url);		
 			/*---------------------------------------------------------------------------------------*/
 
 			/*---------------------------------------------------------------------------------------*/
@@ -7381,7 +7386,7 @@
 
 					if (storage.root) storage = storage.root;
 
-					if(!p.imgur){
+					if(!p.imgur && !p.up1){
 						status = (storage.Result || storage.status || "").toLowerCase();
 
 						if(!status && storage.result && !storage.error){
@@ -7390,7 +7395,7 @@
 					}
 					else
 					{
-						if(storage.success){
+						if (storage.success){
 							status = 'success'
 						}
 					}
@@ -7620,6 +7625,18 @@
 					        Authorization: auth,
 					        Accept: 'application/json'
 					    }
+					}
+					
+				}
+
+				if (p.up1){
+					ap.url = app.imageServerup1;
+					delete data.Action;
+
+					if(user){
+
+						data.api_key = 'c61540b5ceecd05092799f936e277552'
+
 					}
 					
 				}
@@ -8108,7 +8125,7 @@
 
 	var copyText = function(el) {
 
-		var text = trim(el.text());
+		var text = trim(el.attr('text') || el.text());
 
 	    if (window.clipboardData && window.clipboardData.setData) {
 	        // IE specific code path to prevent textarea being shown while dialog is visible.
@@ -9209,6 +9226,26 @@
 
 /* EVENTS */
 
+	globalpreloader = function(show, dark){
+
+		if(typeof window == 'undefined') return
+ 
+		var el = $('#globalpreloader');
+
+		if (dark){
+			el.addClass('dark')
+		}
+		else{
+			el.removeClass('dark')
+		}
+
+		if(show){
+			el.addClass('show')
+		}
+		else{
+			el.removeClass('show')
+		}
+	}	
 
 	topPreloader = function(percent){
 
@@ -9407,23 +9444,25 @@
 
 /* TIMEOUT, INTERVALS */
 
-	retry = function(_function, clbk, time, notClear){
+	var retry = function(_function, clbk, time, totaltime){
 		if(!time) time = 20;
+
+		var totalTimeCounter = 0 
 
 		var interval = setInterval(function(){
 
-			if(_function()){
 
-				if(!notClear)
-					clearInterval(interval);
+			if(_function() || (totaltime && totaltime <= totalTimeCounter)){
+
+				clearInterval(interval);
 
 				if(clbk) clbk();
 
 			}
-			
-		}, time);
 
-		return interval;
+			totalTimeCounter += time
+
+		}, time);
 	}
 
 	pretry = function(_function, time, totaltime){
@@ -9781,41 +9820,42 @@
 	}
 
 	parseVideo = function(url) {
+		// console.log('WWW', url.indexOf('channel'))
 		var _url = url;
 
-	    var test = _url.match(/(http:\/\/|https:\/\/|)(player.|www.)?(pocketnetpeertube1\.nohost\.me|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
-	    var type = null;
-		var id = null;
-		
+	    var test = _url.match(/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
+	    var type = null
+		var id = null
+		var host_name = null
 
-	    if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){
-	    	if(test[3]){
+	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
+	    	if(test && test[2]){
 
-	    		if (test[3].indexOf('youtu') > -1) {
-			        type = 'youtube';
-			        id = test[6];
-
-			    } else if (test[3].indexOf('vimeo') > -1) {
-			        type = 'vimeo';
-                    id = test[2];
-                    
-			    }  else if (test[3].indexOf('bitchute') > -1) {
-                    type = 'bitchute';
-					id = test[6];
-					
-			    }	else if (test[3].indexOf('pocketnetpeertube1.nohost.me') > -1) {
-                    type = 'peertube';
-			        id = test[8];
+				if (test.indexOf('youtube.com') || test.indexOf('youtu.be') > -1) {
+					type = 'youtube'
+			        id = test[9]
 			    }
-
-	    	}
-	    }
-		
+				if (test.indexOf('vimeo.com') > -1) {
+					type = 'vimeo'
+                    id = test[9]
+			    }
+				if (test.indexOf('bitchute.com') > -1) {
+					type = 'bitchute'
+					id = test[9]	
+			    }
+				if (/pocketnetpeertube[0-9]*\.nohost\.me/i.test(test)) {
+					type = 'peertube'
+			        id = test[9]
+					host_name = test[4]
+			    }
+			}
+			
 	    return {
 	        type: type,
 	        url : url,
-	        id : id
+	        id : id,
+			host_name : host_name
 	    };
 	}
 	nl2br = function(str){	
@@ -10121,6 +10161,29 @@
 	}
 
 	findAndReplaceLink = function (inputText) {
+
+
+
+		if(typeof linkifyHtml != 'undefined'){
+
+			try{
+				var l = linkifyHtml(inputText, {
+					attributes : {
+						cordovalink : '_system'
+					}
+				})
+		
+				return l
+			}
+
+			catch(e){
+				
+			}
+
+			
+		}
+
+	
 	    function indexOf(arr, value, from) {
 	        for (var i = from || 0, l = (arr || []).length; i < l; i++) {
 	            if (arr[i] == value) return i;
@@ -10197,7 +10260,9 @@
 
 	        return target;
 		}
-		
+
+
+		console.log("inputText", inputText)
 
 	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%\@&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#\@%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\)))?)?)/ig,
 	            function () { // copied to notifier.js:3401

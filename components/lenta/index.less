@@ -20,6 +20,20 @@
 		overflow: hidden;
 	}
 
+	.adr{
+		max-width: 230px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+		display: inline-block;
+		white-space: nowrap;
+	}
+	.authorCell a,
+	.sbtnxs,
+	.spsp{
+		display: inline-block;
+	}
+
 	.circularprogress{
 		overflow: hidden;
 		height: 0px;
@@ -315,6 +329,7 @@
 					}
 
 					.sharecaption{
+						
 						font-size: 1em;
 					}
 				} 
@@ -724,7 +739,7 @@
 					
 
 					&.metapanel{
-						width: 50%;
+						width: 80px;
 						.metapanelitem{
 							opacity: 0.6;
 							cursor: pointer;
@@ -910,6 +925,8 @@
 
 				div{
 					font-size: 1.6em;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 
 				a{
@@ -1027,11 +1044,12 @@
 				}
 				
 				.urlcnt{
-				
+					overflow: hidden;
 					.linkcnt{
 						white-space: nowrap;
 						overflow: hidden;
 						max-width: 640px;
+						text-overflow: ellipsis;
 					}
 					
 					.urlcnttable{
@@ -1580,7 +1598,7 @@
 				right : 0;
 				top : 0;
 				bottom : 0; 
-				background: fade(#fff, 90);
+				background: fade(#fff, 98);
 				z-index : 10;
 
 				.blockTable{

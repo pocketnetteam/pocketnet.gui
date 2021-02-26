@@ -81,129 +81,18 @@ User = function(app, p) {
 	self.data = {};
 	self.features = {};
 	
-	self.tokenExpired = function(){
-
-		self.isState(function(state){
-
-			if(!state) return;
-
-			var seconds = 30;
-
-			tokenInterval = setInterval(function(){
-
-				self.isState(function(state){
-
-					if(!state){
-						clearInterval(tokenInterval);
-						return;
-					}
-
-					if(tokenExpired){
-
-						var now = new Date();
-
-						if (now > tokenExpired.addSeconds(-seconds)){
-
-							clearInterval(tokenInterval);
-
-							var _continue = false;
-
-							var success = function(){
-								_continue = true;
-
-								app.platform.sdk.user.ping(function(){
-									self.tokenExpired();
-								});
-							}
-
-							var fail = function(){
-
-								_continue = true;
-
-								app.options.unathorizated(true);
-							
-							}
-
-							tokenDialog = dialog({
-								header : app.localization.e('id189'),
-								html : '<div class="tokenExpired"><div>'+app.localization.e('id190')+'</div><div class="time"></div></div>',
-
-								btn1text : app.localization.e('id191'),
-								btn2text : app.localization.e('id192'),
-
-								class : 'accepting',
-
-								clbk : function(el, d){
-
-									var update = function(time){
-										el.find('.time').html(app.localization.e('id189', addZero(time.toFixed(0))) )
-									}
-
-									var end = function(){
-
-										if(_continue) return;
-
-										d.destroy();
-										app.options.unathorizated();
-
-									}
-
-									var timer = new Timer({
-
-										ontick : function(){
-
-											if(_continue) return;
-									    
-											update(timer.getDuration() / 1000)
-											
-										},
-
-										onend : end
-
-									});
-
-									timer.start(seconds);
-
-									update(seconds)
-
-								},
-
-								success : success,
-
-								fail : fail,
-
-								close : fail
-							})
-
-						}
-
-					}
-
-				})
-
-				
-
-			}, 20)
-
-		})
-
-	}
-
+	self.tokenExpired = function(){}
 
 	self.prepare = function(clbk){
-
-		
 
 		self.tokenExpired();
 
 		app.platform.clear(true);
-
-
 		app.platform.prepareUser(function(){
-
 
 			if (clbk)
 				clbk(state)	
+				
 		})
 
 		
@@ -381,10 +270,11 @@ User = function(app, p) {
 
 	self.validateVay = function(){
 
-
 		if(!self.address.value) return 'fu';
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
+
+		console.log("MEEE!!", me)
 
 
 		if (me && me.relay){
@@ -427,9 +317,9 @@ User = function(app, p) {
 
 	self.keysFromMnemo = function(mnemonic){
 
+		if(!mnemonic) mnemonic = ''
 
-		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic)
-
+		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic.toLowerCase())
 
 		return self.keysFromSeed(seed)
 
@@ -466,6 +356,35 @@ User = function(app, p) {
     	
 	}
 
+	self.keysPairFromPrivate = function(private, clbk){
+
+		if(!private) private = ''
+
+		var keyPair = null;
+		if (bitcoin.bip39.validateMnemonic(private.toLowerCase())) {
+			keyPair = self.keysFromMnemo(private)
+		}
+		else{
+			try{
+				keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
+			}
+			catch (e){
+
+				try{
+					keyPair = bitcoin.ECPair.fromWIF(private)
+				}
+				catch (e){
+					console.log("E2", e)
+	
+				}
+			} 
+		}
+
+		return keyPair
+
+	
+	}
+
 	self.setKeysPairFromPrivate = function(private, clbk){
 		var keyPair = null;
 
@@ -476,6 +395,7 @@ User = function(app, p) {
 			
 		}
 		catch (e){
+
 
 
 			try{
@@ -498,11 +418,6 @@ User = function(app, p) {
 			if (clbk)
 				clbk(false)
 		}
-		
-		
-	
-
-		
 	}
 
 	self.setKeys = function(mnemonic, clbk){

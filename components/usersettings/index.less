@@ -17,7 +17,37 @@
 	}
 	
 	
+	.cacheContent{
+		border-top : @rhythm solid @color-white;
+		margin-top : 2 * @rhythm;
+		.panel{
+			
+			padding : 4 * @rhythm 0;
+		}
 
+
+		.pending{
+			padding : 2 * @rhythm 0;
+
+			i{
+				width: 44px;
+				text-align: center;
+			}
+
+			i,
+
+			span{
+				font-size: 0.9em;
+			}
+		}
+		.empty{
+			padding : 4 * @rhythm 0;
+
+			span{
+				font-size: 0.9em;
+			}
+		}
+	}
 	
 
 	.caption{
@@ -268,6 +298,10 @@
 html.stblack{
 	#usersettings{
 		background: @color-black3;
+
+		.cacheContent{
+			border-top : @rhythm solid @color-black2;
+		}
 
 		.mwork{
 	

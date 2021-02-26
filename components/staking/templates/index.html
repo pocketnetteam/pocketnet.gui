@@ -1,0 +1,84 @@
+<div id="<%-module.map.id%>">
+	<div class="wrp">
+		<div class="rcptwrp">
+			<div class="tcaptionwrapper">
+				<div class="tcaption">
+					<span>Pocketcoin</span>
+				</div>
+				<div class="currency">
+					<%= parameters.currency.input()%>
+				</div>
+			</div>
+
+			<div class="calculator">
+
+				
+				<div class="lastpriceCnt">
+				
+				</div>
+
+				<div class="buycoin">
+					<a href="https://mercatox.com/exchange/PKOIN/BTC" cordovalink="_system" target="_blank">
+						<button class="button small yellow">
+							Buy on Mercatox
+						</button>
+					</a>
+					<a href="https://btcpop.co/Exchange/PKOIN" cordovalink="_system" target="_blank">
+						<button class="button small yellow">
+							Buy on BTCPOP
+						</button>
+					</a>
+				</div>
+
+				<div class="calcCaption">
+					
+					<span>Staking Calculator - calculate how much you earn by putting Pocketcoin (PKOIN) into a node.<a href="help?page=faq&id=downloadnode"><i class="fas fa-question-circle"></i></a></span>
+				</div>
+
+
+				<div class="numbers">
+					<div class="inputWrapper ihave">
+						<div>
+							<span>I have</span>
+							<span class="amredits" contenteditable="true"><%= app.platform.mp.coin(amount) %></span> 
+							<span>PKOIN</span>
+						</div>
+					</div>
+
+
+					<div class="totalNumbers inputWrapper">
+
+						<!--<div class="commoncaption">
+							The amount you will have after running a node with <span class="blv" item="now"></span> PKOIN
+						</div>-->
+
+						<div class="totalRow">
+							<div class="label"><span>6 Months</span></div>
+							<div class="value"><span class="blv" item="6m">0</span></div>
+							<div class="value"><span class="cur">PKOIN</span></div>
+						</div>
+
+						<div class="totalRow">
+							<div class="label"><span>1 Year</span></div>
+							<div class="value"><span class="blv" item="1y">0</span></div>
+							<div class="value"><span class="cur">PKOIN</span></div>
+						</div>
+					</div>
+
+
+				</div>
+
+
+				
+			</div>	
+
+			<div class="earnlabel">
+				<span>How do I earn more Pocketcoin?</span>
+			</div>
+
+			<div class="pcoin">
+				<span>¤</span>
+			</div>
+		</div>
+	</div>
+</div>

@@ -87,6 +87,8 @@ Application = function(p)
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
+		imageServerup1 : p.imageServerup1 || 'https://pocketnet.app:8092/up',
+
 		////////////// Will remove with Matrix
 		//ws : p.ws || "wss://pocketnet.app:8088",
 		rtc : p.rtc || 'https://pocketnet.app:9001/',
@@ -152,6 +154,8 @@ Application = function(p)
 				ca.offline = true
 			}
 
+			ca.offline = true;
+
 			_.each(ca, function(t, i){
 
 				if (self.errors.state[i]){
@@ -200,9 +204,13 @@ Application = function(p)
 
 			}
 
+			self.app.api.changeProxyIfNeed()
+
 			if(error && !self.errors.state[error]){
 
 				self.errors.state[error] = true;
+
+				
 
 				_.each(self.errors.clbks, function(c){
 					c(self.errors.state)
@@ -230,7 +238,14 @@ Application = function(p)
 		state : {},
 		clbks : {
 
+			/*_platform : function(change){
+				if(!self.errors.connection() && !self.platform.loadingWithErrors){
+					self.prepareUserData()
+				}
+			},*/
+
 			_modules : function(change){
+
 
 				if(!self.errors.connection() && !self.platform.loadingWithErrors){
 
@@ -268,11 +283,12 @@ Application = function(p)
 
 				if(!self.platform || !this.connection()) return
 
-
 				self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
 
-					if (self.platform.focus)
+
+					if (self.platform.focus){
 						self.errors.check()
+					}
 
 				}, 5000))
 
@@ -314,6 +330,77 @@ Application = function(p)
 		}
 	}
 
+	self.apiHandlers = {
+		success : function(p){
+
+			var ca = {}
+			var change = false;
+
+			if (p.rpc){
+				ca.proxy = true;
+				ca.node = true;
+			}
+
+			if (p.api){
+				ca.proxy = true;
+			}
+
+			ca.offline = true;
+
+
+			_.each(ca, function(t, i){
+
+				if (self.errors.state[i]){
+					delete self.errors.state[i]
+
+					change = true
+				}
+
+			})
+
+			if (change){
+				_.each(self.errors.clbks, function(c){
+					c(self.errors.state)
+				})
+			}
+
+		},
+
+		///////////
+
+		error : function(p){
+			var error = null
+
+
+			if (p.rpc){
+				error = 'node'
+			}
+
+			if (p.api){
+				error = 'proxy'
+			}
+
+			if((error == 'proxy') && (self.platform && !self.platform.online)){
+				error = 'offline'
+			}
+
+
+			if(error && !self.errors.state[error]){
+
+				self.errors.state[error] = true;
+
+				_.each(self.errors.clbks, function(c){
+					c(self.errors.state)
+				})
+
+			}
+			
+
+			return error;
+	
+		}
+	}
+
 	self.el = {
 		content : 		$('#content'),
 		app : 			$('#application'),
@@ -328,6 +415,11 @@ Application = function(p)
 	self.id = makeid();
 	self.map = __map;
 	self.modules = {};
+
+	self.curation = function(){
+		if(typeof isios != 'undefined' && isios()) return true
+		return false
+	}
 
 	self.relations = {};
 
@@ -352,6 +444,10 @@ Application = function(p)
 			childrens : ['userpage', 'share', 'author', 'post']
 		}
 
+	}
+
+	if(self.curation()){
+		delete self.backmap.index
 	}
 
 	self.options.backmap = self.backMap
@@ -490,6 +586,8 @@ Application = function(p)
 	}
 
 	self.init = function(p){
+
+		if (navigator.webdriver) return
 
 		if (typeof localStorage == 'undefined')
 			localStorage = {};

@@ -362,7 +362,7 @@ var share = (function(){
 						html : self.app.localization.e('e14002'),
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
-
+						class : "zindex",
 						success : function(){
 
 							currentShare.clear();
@@ -694,6 +694,8 @@ var share = (function(){
 			},
 
 			post : function(clbk, p){
+				console.log("POST")
+			
 
 				el.postWrapper.removeClass('showError');
 
@@ -711,6 +713,23 @@ var share = (function(){
 				//currentShare.language.set(self.app.localization.key)
 
 				currentShare.uploadImages(self.app, function(){
+
+					if (currentShare.checkloaded()){
+                        
+
+						var t = self.app.platform.errorHandler('imageerror', true);
+
+						topPreloader(100)
+
+						el.c.removeClass('loading')
+
+						if (t){
+							sitemessage(t)
+						}
+
+                        
+                        return
+                    }
 
 					self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -756,8 +775,9 @@ var share = (function(){
 
 									if(!essenseData.notClear){
 										currentShare.clear();
-
 										self.app.nav.api.history.removeParameters(['repost'])
+
+										self.closeContainer()
 
 										if(!essenseData.share){
 											state.save()
@@ -840,7 +860,7 @@ var share = (function(){
 					}
 
 					
-
+					console.log(error)
 					return true
 				}
 				else
@@ -1077,6 +1097,7 @@ var share = (function(){
 			post : function(){
 				var error = actions.error();
 
+				console.log('error',error)
 
 				if (!error){
 					actions.post()
@@ -1245,6 +1266,8 @@ var share = (function(){
 
 			postline : function(clbk){
 
+				console.log("RENDER")
+
 				self.shell({
 					name :  'postline',
 					el : el.postline,
@@ -1267,6 +1290,8 @@ var share = (function(){
 					el.selectTime.on('click', events.selectTime)
 					el.panel.on('click', events.embeding)
 					el.post.on('click', events.post)
+
+					console.log(el.post)
 
 					el.peertube = el.c.find('.peertube');
 					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
@@ -1531,7 +1556,6 @@ var share = (function(){
 				var meta = self.app.platform.parseUrl(url);
 
 				var og = self.app.platform.sdk.remote.storage[url];
-
 				
 				self.shell({
 					name :  'url',
@@ -1874,25 +1898,28 @@ var share = (function(){
 			save : function(){
 
 				if(!currentShare){
-					self.app.settings.set(self.map.id, 'currentShare', '');
+					self.app.settings.set(self.map.id, 'currentShare_v1', '');
 				}
 				else
 				{
+
+					if(currentShare.aliasid){
+						return
+					}
+
 					var exp = currentShare.export(true)
 
 					if (exp.message == m) exp.message = ''
 
-					var scs = self.app.settings.set(self.map.id, 'currentShare', exp);
+					var scs = self.app.settings.set(self.map.id, 'currentShare_v1', exp);
 
-					if(!scs){
-						//self.app.settings.set(self.map.id, 'currentShare', '');
-					}
+
 				}
 
 				
 			},
 			load : function(){
-				var last = self.app.settings.get(self.map.id, 'currentShare')
+				var last = self.app.settings.get(self.map.id, 'currentShare_v1')
 
 				if (last)
 					currentShare.import(last)
@@ -2135,7 +2162,7 @@ var share = (function(){
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
-
+				console.log('currentShare', currentShare)
 				essenseData = deep(p, 'settings.essenseData') || {};
 
 				self.app.platform.sdk.user.get(function(u){
@@ -2151,8 +2178,8 @@ var share = (function(){
 						}
 					}
 
-					if (parameters().repost) 
-						currentShare.repost.set(parameters().repost)
+					if (essenseData.repost || parameters().repost) 
+						currentShare.repost.set(essenseData.repost || parameters().repost)
 
 
 					var data = {

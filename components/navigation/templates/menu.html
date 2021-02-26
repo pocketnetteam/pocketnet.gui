@@ -2,6 +2,8 @@
 
 
 <% if(typeof lentakey == 'undefined') lentakey = 'index' %>
+<% if(typeof indexkey == 'undefined') indexkey = 'index' %>
+
 
 <div class="items table">
 
@@ -22,7 +24,8 @@
 				<% if(href == 'chat') { %>
 
 				<% } else { %> 
-					<% if(href == 'index' || !href) { %>
+
+					<% if(href == indexkey || !href) { %>
 					
 						<a href="userpage?id=wallet" fast="fast">
 							<div class="iconWrapper">

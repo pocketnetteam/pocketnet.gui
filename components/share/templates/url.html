@@ -1,30 +1,49 @@
 <% if(url){ 
-
+	
 	var meta = app.platform.parseUrl(url);
 
 	if(typeof share == 'undefined') share = {};
 
 
-	if(meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
+	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
 
 		if(!app.platform.sdk.usersettings.meta.embedvideo || 
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
 	%>
 		<div class="videoWrapper" pid="<%- makeid() %>">
-			<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>">
-				<div class="jsPlayerLoading">
-					<div class="jsPlayerLoadingD table">
-						<div>
-							<div class="preloader5"><span></span><span></span><span></span></div>
+
+			<% if(meta.type == 'youtube' && window.cordova) {%>
+
+				<div class="js-player-dummy">
+					<div class="jsPlayerLoading">
+						<div class="jsPlayerLoadingD table watchonyoutube">
+							<div>
+								<a href="<%- url %>" cordovalink="_system" target="_blank">Watch on Youtube</a>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="videoTips">
-				<div class="videoTip">
-					<span><%=e('expandvideo')%></span>
+		
+			<% } else { %> 
+				
+				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>">
+					<div class="jsPlayerLoading">
+						<div class="jsPlayerLoadingD table">
+							<div>
+								<div class="preloader5"><span></span><span></span><span></span></div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
+
+				<div class="videoTips">
+					<div class="videoTip">
+						<span><%=e('expandvideo')%></span>
+					</div>
+				</div>
+	
+			<% } %>
+			
 		</div>
 
 		<% } %>
@@ -78,7 +97,7 @@
 	<div class="urlcnt">
 		<div class="urlcnttable table">
 			<div class="linkcnt">
-				<span>
+				<span class="<%- (meta.type === 'peertube' && typeof remove === 'undefined') ? 'hidden' : '' %>">
 					<a href="<%- url %>" cordovalink="_system">
 						<%- url %>
 					</a>
@@ -95,6 +114,13 @@
 
 			<% } %>
 
+			<% if (meta.type === 'peertube' && typeof remove === 'undefined') {%>
+				<div class="videoStatsWrapper">
+					<div>
+						Views: <%- views %>
+					</div>
+				</div>
+			<%}%>
 		</div>
 	</div>
 

@@ -930,7 +930,7 @@ var post = (function(){
 										
 										el.share.find('.complain').on('click', events.complain)
 
-										el.share.on('click', '.image', events.openGallery)
+										el.share.on('click', '.imagePostOpent', events.openGallery)
 										el.share.on('click', '.forrepost', events.repost)
 
 										el.share.find('.txid').on('click', events.getTransaction)

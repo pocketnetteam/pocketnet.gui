@@ -20,13 +20,22 @@
                     <div class="footerContentTableWrapper">
                         <div class="footerContentTable table">
                             <div class="column">
-                                 
+
+                                <% if(!window.cordova && os() && app.platform.applications.ui[os()]) {%>
+                                    <div class="fitem">
+                                        <a href="applications"><%=e('e13120')%></a>
+                                    </div>
+                                <% } %>
                                
                             </div>
 
                             <div class="column">
                                
-
+                                <% if(!app.curation()) {%>
+                                    <div class="fitem">
+                                        <a href="about"><%=e('aboutus')%></a>
+                                    </div>
+                                <% } %>
                                 <div class="fitem localization">
                                     <div class="label">
 
@@ -43,17 +52,7 @@
                                     </div>
                                 </div>
 
-                                <div class="fitem">
-                                   <a href="about"><%=e('aboutus')%></a>
-                                </div>
-
-                               
-
-                                <% if(os() && self.app.platform.applications[os()]) {%>
-                                    <div class="fitem">
-                                        <a href="applications"><%=e('e13120')%></a>
-                                    </div>
-                                <% } %>
+                                
                             </div>
                         </div>
                     </div>
@@ -62,7 +61,7 @@
             </div>
 
             <div class="ye">
-                Pocketnet, 2019
+                Pocketnet, 2019&mdash;2021
             </div>
         </div>
 

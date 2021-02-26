@@ -40042,14 +40042,7 @@
       this.__TX.version = 2;
       this.__TX.nTime = Math.floor((new Date().getTime()) / 1000)
       this.__USE_LOW_R = false;
-      
-      console.warn(
-        'Deprecation Warning: TransactionBuilder will be removed in the future. ' +
-          '(v6.x.x or later) Please use the Psbt class instead. Examples of usage ' +
-          'are available in the transactions-psbt.js integration test file on our ' +
-          'Github. A high level explanation is available in the psbt.ts and psbt.js ' +
-          'files as well.',
-      );
+   
     }
     static fromTransaction(transaction, network) {
       const txb = new TransactionBuilder(network);
@@ -40981,10 +40974,7 @@
   ) {
     let vin;
     if (typeof signParams === 'number') {
-      console.warn(
-        'DEPRECATED: TransactionBuilder sign method arguments ' +
-          'will change in v6, please use the TxbSignArg interface',
-      );
+     
       vin = signParams;
     } else if (typeof signParams === 'object') {
       checkSignArgs(inputs, signParams);

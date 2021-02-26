@@ -77,6 +77,8 @@ var notifications = (function(){
 					open : true
 				})
 
+				console.log('showAll', self)
+
 				self.closeContainer();
 			},
 
@@ -95,8 +97,6 @@ var notifications = (function(){
 				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;
 				var rnow = false;
 				
-
-
 				p.el = el.new;
 
 				if(!p.el) return
@@ -123,6 +123,25 @@ var notifications = (function(){
 				})
 
 				var currentDate = new Date();
+
+				_notifications = _.filter(_notifications, function(notification){
+					var m = null;
+
+					if (notification.mesType) m = self.app.platform.ws.messages[notification.mesType]
+					if (notification.msg && !m) m = self.app.platform.ws.messages[notification.msg]
+
+
+					if(!m) return false
+					
+					var tpl = m.fastMessage(notification)
+
+					if(!tpl) {
+						console.log(notification)
+						return false
+					}
+
+					return true
+				})
 
 				var grou = group(_notifications, function(n){
 
@@ -208,15 +227,12 @@ var notifications = (function(){
 
 					el.loader.addClass('hidden')
 					el.empty.addClass('hidden')
-					
-
 					el.error.removeClass('hidden')
 
 					return
 				}
 
 				el.error.addClass('hidden')
-
 
 				if (self.app.platform.sdk.notifications.loading){
 					el.loader.removeClass('hidden')
@@ -225,10 +241,12 @@ var notifications = (function(){
 					el.loader.addClass('hidden')
 
 					if(el.c.find('.notification').length){
-						el.empty.removeClass('hidden')
+						el.empty.addClass('hidden')
 					}
 					else{
+						el.empty.removeClass('hidden')
 						el.loader.addClass('hidden')
+
 					}
 				}
 			}
@@ -248,9 +266,11 @@ var notifications = (function(){
 
 			inel.addEventListener('scroll', events.seen);
 
-
+			console.log("INITEEVEV", el.c)
 			
 			el.c.find('.closecontainer').on('click', function(){
+
+				console.log('closeContainer')
 				self.closeContainer()
 			})
 
@@ -369,7 +389,19 @@ var notifications = (function(){
 
 				var data = {};
 
-				clbk(data);
+				var _notifications = p.notifications || self.app.platform.sdk.notifications.storage.notifications;
+
+
+				if(!_notifications){
+					self.app.platform.sdk.notifications.init(function(){
+						clbk(data);
+					})
+				}
+				else{
+					clbk(data);
+				}
+
+			
 
 			},
 
@@ -448,7 +480,7 @@ var notifications = (function(){
 					triggerClose : {
 					}
 				},
-				event : 'click'
+				//event : 'click'
 			}
 
 		}

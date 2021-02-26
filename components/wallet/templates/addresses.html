@@ -50,11 +50,20 @@
 
 			<% } %>
 
-			<% _.each(ag.details, function(ad){ %> 
+			<% _.each(ag.details, function(ad, i){ 
+				
+								
+				%> 
 
 				<div class="adressesTable table">
 					<div class="name">
-						<div class="addresscode"><span><%- ad.address %></span></div>
+						<div class="addresscode">
+							<span class="copyaddress"><%- ad.address %></span> 
+							<a external='external' href="https://pocketnet.app/blockexplorer/address/<%- ad.address %>"> 	<i class="fas fa-th toblockexplorer"></i>
+							</a>
+						</div>
+
+
 						<% if(ag.label) {%>
 						<div class="alabel"><%-ag.label%></div>
 						<% } %>

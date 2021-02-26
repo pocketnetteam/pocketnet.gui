@@ -1,4 +1,5 @@
 var https = require('https');
+var http = require('http');
 var express = require('express');
 var swaggerUi = require('swagger-ui-express');
 var Middle = require('./middle.js');
@@ -16,6 +17,7 @@ var Server = function(settings, admins, manage){
 
     var app = null;
     var server = null;
+    var httpserver = null;
     var middle = new Middle()
     var iplimiter = new Iplimiter(settings.iplimiter)
 
@@ -23,6 +25,7 @@ var Server = function(settings, admins, manage){
 
     self.cache = new Cache()
     self.listening = false;
+    self.httplistening = false;
 
     self.authorization = {
 
@@ -84,16 +87,57 @@ var Server = function(settings, admins, manage){
 
         self.link()
 
-       
+        return self.http().then(r => {
+            return  self.https(settings)
+        })
+
+    }
+
+    self.http = function(){
+
+        var port = 80
+
+
+        return Promise.resolve()
 
         return new Promise((resolve, reject) => {
+
+            app.use(express.static(f.path('static')))
+
+            httpserver = http.createServer(app)
+            
+            httpserver.listen(port);
+
+            httpserver.on('listening',function(){
+                self.httplistening = port
+            });
+
+            httpserver.on('error',function(e){});
+
+            resolve()
+
+        })
+       
+    }       
+
+    self.https = function(settings){
+        return new Promise((resolve, reject) => {
             try{
+
+                if (_.isEmpty(settings.ssl)){
+                    reject('sslerror')
+
+                    return
+                }
+
 
                 server = https.createServer(settings.ssl, app)
 
                 server.on('listening',function(){
 
-                    self.listening = settings.port || 8888
+                    console.log("LISTENING")
+
+                    self.listening = settings.port || 8899
 
                     resolve()
                 });
@@ -102,7 +146,7 @@ var Server = function(settings, admins, manage){
                     reject(e) 
                 });
 
-                server.listen(settings.port || 8888);
+                server.listen(settings.port || 8899);
 
             }
             catch(e) {
@@ -120,8 +164,14 @@ var Server = function(settings, admins, manage){
         if (server){
             server.close()
             server = null
-            app = null
         }
+
+        if(httpserver){
+            httpserver.close()
+            httpserver = null
+        }
+
+        app = null
 
         middle.clear()
 
@@ -153,7 +203,8 @@ var Server = function(settings, admins, manage){
             iplimiter : iplimiter.info(),
             middle : middle.info(compact),
             cache : self.cache.info(),
-            listening : self.listening
+            listening : self.listening,
+            httplistening : self.httplistening
         }
     }
 
@@ -163,11 +214,21 @@ var Server = function(settings, admins, manage){
             _.each(self.proxy.api, function(pack){
                 _.each(pack, function(meta){
 
+                    
+
                     app.all(meta.path, self.authorization[meta.authorization || 'dummy'], function(request, result){
+
+                        if(!self.listening){
+                            result._fail('stopped', 500)
+    
+                            return
+                        }
 
                         meta.action(request.data).then(d => {
                             result._success(d.data, d.code)
                         }).catch(e => {
+
+
                             result._fail(e, e.code)
                         })
                     

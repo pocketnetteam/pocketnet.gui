@@ -1,60 +1,246 @@
-<% if(system.node) {%>
+<div class="nodedummy ">
+    <div class="text">
+        The section for managing your Pocketnet Node will reappear soon.
+    </div>
+    <div class="icon">
+        <i class="fas fa-code"></i>
+    </div>
+</div>
+
+<% if(system && system.node && 1==0) { %>
 
     <div class="nodecontentmanage managepanel">
+        
+        <div class="felock">
+            <div class="work">
+                <div class="felockcnt loading">
+                    <div class="text">
+                        Loading
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+            </div>
+        </div>    
 
         <div class="work">
 
-            <div class="setting togglebutton">
-                <div class="settingTable table">
-                    <div class="label">
-                        <span>Enabled</span>
-                    </div>
+            
 
-                    <div class="value" sys="nodeenabled">
-                        <span><%- system.node.enabled?  'Yes' : 'No' %></span>
-                    </div>
-                </div>
-            </div>
+            <% if(nc.hasbin && !nc.lock) {%>
 
-            <% if(proxy.direct) {%>
+                <div class="setting togglebutton">
+                        
+                    <div class="settingTable table">
+                        <div class="label">
+                            <span>Enabled</span>
+                        </div>
 
-            <div class="setting systempath">
-                <div class="settingTable table">
-                    <div class="label">
-                        <span>binPath</span>
-                    </div>
+                        <% if(!dis) {%>
 
-                    <div class="value">
-                        <span><%- system.node.binPath || 'Default' %></span>
-                    </div>
-                </div>
-            </div>
+                            <div class="value" sys="nodeenabled">
+                                <span><%- system.node.enabled?  'Yes' : 'No' %></span>
+                            </div>
 
-            <div class="setting systempath">
-                <div class="settingTable table">
-                    <div class="label">
-                        <span>dataPath</span>
-                    </div>
+                        <% } else { %> 
+                            
+                            <div class="value">
+                                <div class="preloader5"><span></span><span></span><span></span></div>
+                            </div>
 
-                    <div class="value">
-                        <span><%- system.node.dataPath || 'default' %></span>
+                        <% } %>
                     </div>
                 </div>
-            </div>
+
+                <% if(system.node.enabled && nodestate && !_.isEmpty(nodestate.info)) {%> 
+
+                <div class="setting addresses">
+                    <div class="settingTable table">
+                        <div class="label">
+                            <span>Stacking Adresses</span>
+                        </div>
+
+                        <div class="value">
+
+                            <div class="stacking">
+
+                            </div>
+
+                            
+
+                            <div class="buttons">
+                                <button class="addstacking button small"><i class="fas fa-plus"></i> Add adress</button>
+                                <button class="refreshstacking button small ghost"><i class="fas fa-sync"></i> Refresh</button>
+                            </div>
+                            
+                        </div>
+
+                        
+                    </div>
+                </div>
+
+                <% } %>
+
+            <% } else { %> 
+
+                <% if(nc.lock == 'installing') {%>
+
+                    <div class="notfound loading">
+                        <div class="text">
+                            Pocketnet Node Installing
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+
+                <% } %> 
+
+                <% if(nc.lock == 'removing') {%>
+
+                    <div class="notfound removing">
+                        <div class="text">
+                            Pocketnet Node Removing
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+
+                <% } %> 
+
+                <% if(!nc.lock) {%> 
+                    
+                    <div class="notfound install">
+                        <div class="text">
+                            Pocketnet Node was not found. Download and Install it
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-cloud-download-alt"></i>
+                        </div>
+                    </div>    
+
+                <% }%>
+                    
+                
+                
+                
+            <% } %>
+
+            <% if(!nc.lock && proxy.direct) {%>
+
+                <div class="setting systempath">
+                    <div class="settingTable table">
+                            <div class="label">
+                                <span>Node Daemon Path</span>
+                            </div>
+    
+                            <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="binPath" <% } %> >
+                                <span><%- system.node.binPath || 'Default' %></span> 
+                            </div>
+
+                        <% if(nc.hasbin && system.node.enabled) {%>
+
+                            <div class="icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+
+                        <% } %>
+                    </div>
+                </div>
+    
+                <div class="setting systempath">
+                    <div class="settingTable table">
+                        <div class="label">
+                            <span>Node Data Path</span>
+                        </div>
+    
+                        <div class="value" <% if(!nc.hasbin || !system.node.enabled) {%> sys="ndataPath" <% } %>>
+                            <span><%- system.node.ndataPath || 'Default' %></span>
+                        </div>
+
+                        <% if(nc.hasbin && system.node.enabled) {%>
+
+                        <div class="icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+
+                        <% } %>
+                    </div>
+                </div>
+                <% if(system.node.ndataPath || system.node.binPath) {%>
+                    <div class="setting systempathsDefaults">
+                        <div class="settingTable table">
+                            <div class="label">
+                                <span>Set Paths to Default</span>
+                            </div>
+        
+                            <div class="value toDefaultPath">
+                                <div>
+                                    <span>
+                                        To Default 
+                                    </span>
+
+                                    <i class="far fa-times-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
 
             <% } %>
 
-            <div class="setting addresses">
-                <div class="settingTable table">
-                    <div class="label">
-                        <span>Stacking Adresses</span>
-                    </div>
 
-                    <div class="value">
-                        <span><%= system.node.stacking.join(", ") || 'Empty' %></span>
+            <% if(nc.hasbin && !nc.lock) {%>
+
+                <div class="setting ">
+                    <div class="settingTable table">
+                        <div class="label">
+                            <span>Update Pocketnet Node</span>
+                        </div>
+    
+                        <div class="value">
+                            <% if(nc.hasupdates) {%>
+                                <button class="button small updatenode">
+                                    Update Node
+                                </button>
+                            <% } else { %> 
+
+                                <span>No Updates Available</span>
+                                
+                            <% }%>
+                        </div>
+
                     </div>
                 </div>
-            </div>
+
+                <% if(!system.node.binPath && !system.node.ndataPath) {%>
+
+                    <div class="setting deletenodeWrapper">
+                        <div class="settingTable table">
+                            <div class="label">
+                                <span>Delete Pocketnet Node</span>
+                            </div>
+        
+                            <div class="value">
+                                <button class="button small removenode">
+                                    Delete Daemon
+                                </button>
+                            </div>
+
+                            <div class="value">
+                                <button class="button small ghost removenodeall">
+                                    Delete Daemon and Data
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                <% } %>
+            <% } %>
+            
 
         </div>
 

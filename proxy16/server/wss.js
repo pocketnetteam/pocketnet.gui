@@ -315,7 +315,7 @@ var WSS = function(admins, manage){
             }
 
             if (user.admin){
-                user.ticks[ws.id] = setInterval(() => {tick(ws)}, 10000)
+                user.ticks[ws.id] = setInterval(() => {tick(ws)}, 5000)
             }
 
             connectNode(user, user.nodes[node.key]);
@@ -365,6 +365,12 @@ var WSS = function(admins, manage){
 
             try{
             
+                if (_.isEmpty(settings.ssl)){
+                    reject('sslerror')
+
+                    return
+                }
+
                 server = new https.createServer(settings.ssl);
 
                 wss = new WebSocket.Server({
@@ -373,28 +379,30 @@ var WSS = function(admins, manage){
 
                 wss.on('connection', (ws, req) => {
                     ws.ip = req.connection.remoteAddress
+
+                    if(!self.listening) return
                     
                     self.newconnection(ws)
                 })
 
                 wss.on('listening',function(){
 
-                    self.listening = settings.port || 8088
-
-                    console.log("WSS", self.listening)
+                    self.listening = settings.port || 8099
 
                     resolve()
                 });
 
                 wss.on('error',function(e){
+
                     reject(e) 
                 });
 
-                server.listen(settings.port || 8088);
+                server.listen(settings.port || 8099);
 
             }
 
             catch(e) {
+
                 reject(e)
             }
 
@@ -402,24 +410,33 @@ var WSS = function(admins, manage){
     }
 
     self.destroy = function(){
-        wss.clients.forEach((socket) => {
-            socket.close();
-        });
+
+        self.listening = false
+
+        if (wss && wss.clients)
+            wss.clients.forEach((socket) => {
+                if (socket)
+                    socket.close();
+            });
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
 
-                wss.clients.forEach((socket) => {
-                    if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
-                        socket.terminate();
-                    }
-                });
+                if (wss && wss.clients)
+                    wss.clients.forEach((socket) => {
+                        if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
+                            socket.terminate();
+                        }
+                    });
 
-                server.close(function(){
+                if (server)
+                    server.close(function(){
+                        resolve()
+                    })
+
+                else{
                     resolve()
-                })
-    
-               
+                }
     
             }, 3000);
         })

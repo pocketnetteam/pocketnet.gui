@@ -59,6 +59,7 @@ ____loclib.keysnotmatch = 'Private login key does not match'
 ____loclib.confirmkey = 'Type Your Private Login Key or Upload QR Code From Previous Step'
 ____loclib.successfullycopied = "Key was successfully copied"
 ____loclib.urlsuccesscopied = "Link was successfully copied"
+____loclib.successcopied = "Text was successfully copied"
 
 ____loclib.confirmkeyLabel = "Please Confirm Your Private Key. Type Key in form or <b>upload QR code</b>"
 ____loclib.repeatetocreate = "Repeat to create private key again"
@@ -216,7 +217,7 @@ ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
 ____loclib.followers = "FOLLOWERS";
-____loclib.following = "FOLLOWING";
+____loclib.following = "Following";
 ____loclib.settings = "MANAGE";
 ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
@@ -489,7 +490,7 @@ ____loclib.e13083 = "As a sign of our gratitude for donation, you will receive a
 ____loclib.e13084 = "Also, when we build group chat, you will be a member of a special group of donors that will have direct access to Pocketnet team, even as the platform grows"
 ____loclib.e13085 = "Link to your Pocketnet profile will be listed below driving more people to your posts (unless you ask us to not do that)"
 ____loclib.e13086 = "Support Decentralized Web Now"
-____loclib.e13087 = "Bitcoin, Litecoin, Monero"
+____loclib.e13087 = "Bitcoin, Litecoin"
 
 ____loclib.e13088 = "Pocketnet members who donated to support Pocketnet"
 ____loclib.thankyou = "Thank you!"
@@ -676,6 +677,7 @@ ____loclib.errorreload = "Something went wrong. Please reload page and try again
 ____loclib.e13221 = "Do you really want to delete information about this deal? Deal can't be stop"
 ____loclib.e13222 = "Download Desktop App - this is the most censorship resistant way to use Pocketnet. Even if websites are shut down, desktop application will still run directly through the nodes."
 ____loclib.e13223 = "Download Pocketnet for Windows"
+____loclib.e132232 = "Download Pocketnet for macOs"
 ____loclib.e13224 = "Download Pocketnet for Linux"
 ____loclib.e13225 = "Pocketnet Node"
 ____loclib.e13226 = 'Download Node'
@@ -814,7 +816,7 @@ ____loclib.e13347 = "Updates to Pocketnet are available. Apply the updates now?"
 ____loclib.e13348 = "No, later"
 ____loclib.e13349 = "Updates to Pocketnet are available. Go to the page to download the new version?"
 ____loclib.e13350 = 'Join Pocketnet & Earn Pocketcoin Now'
-____loclib.e13351 = 'Please write a few words about yourself to help people decide if they want to follow you'
+____loclib.e133512 = 'Please write a few words about yourself to help people decide if they want to follow you'
 ____loclib.e13351 = 'Pocketnet chat'
 ____loclib.e13352 = 'You do not have chat priviliges'
 
@@ -934,3 +936,14 @@ ____loclib.e14108 = 'Share answer'
 
 ____loclib.peertubeAddVideo = 'Add video to post'
 ____loclib.peertubeAddStream = 'Add live stream to post'
+
+____loclib.e14111 = "There was a problem with loading images"
+____loclib.editcomment = "Edit Comment"
+____loclib.system16 = {
+    charts : {
+
+    }
+}
+
+
+____loclib.downvoteShareMessage = "downvoted your post"

@@ -30,6 +30,8 @@
 
        .upload-peertube-label {
            text-decoration: underline;
+
+           transition: color 0.2s ease-in 0.2s;
        }
     }
 
@@ -65,6 +67,55 @@
         width: 100%;
 
         background-color: green;
+    }
+
+    .disabledInput {
+        color: @color-gray-mlight;
+    }
+
+    .upload-type-separator {
+        color: @color-gray-mlight;
+        font-weight: bold;
+
+        position: relative;
+
+        margin-top: @rhythm * 3;
+        margin-bottom: @rhythm * 3;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 15px;
+
+            top: -15px;
+            left: 10px;
+
+            background-color: @color-gray-mlight;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 15px;
+
+            bottom: -15px;
+            left: 10px;
+
+            background-color: @color-gray-mlight;
+        }
+    }
+
+    .import-video-link {
+        width: 250px;
+
+        border-width: 0px;
+        border-bottom-width: 1px;
+    }
+
+    .upload-field-container.video-title-container {
+        margin-top: @rhythm * 3;
     }
 }
 

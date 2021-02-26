@@ -19,42 +19,54 @@ var main = (function(){
 		var helpers = {
 			
 		}
-
+		
 		var actions = {
+			refreshSticky : function(){
+
+				console.log('refreshSticky')
+
+				if (hsready)
+					el.panel.hcSticky('refresh');
+			},
 			addbutton : function(){
 
-				self.nav.api.load({
+				self.app.platform.ui.share()
 
-					open : true,
-					id : 'share',
-					inWnd : true,
+				/*globalpreloader(true, true)
 
-					eid : 'postin',
-					
-					clbk : function(e, p){
-					},
+				setTimeout(function(){
+					self.nav.api.load({
 
-					essenseData : {
-						close : function(){
-
-							share.make()
-
+						open : true,
+						id : 'share',
+						inWnd : true,
+	
+						eid : 'postin',
+						
+						clbk : function(e, p){
+							globalpreloader(false)
 						},
-						post : function(){
-							share.make()
-
-
-							if (plissing)
-								plissing.destroy()
-							
-						},
-
-						hello : true,
-
-						absolute : true
-					}
-
-				})
+	
+						essenseData : {
+							close : function(){
+	
+								share.make()
+	
+							},
+							post : function(){
+								share.make()
+	
+	
+								if (plissing)
+									plissing.destroy()
+								
+							},	
+							absolute : true
+						}
+	
+					})
+				}, 50)*/
+				
 				
 			},
 			addbuttonscroll  : function(){
@@ -167,7 +179,7 @@ var main = (function(){
 
 			up : function(){
 
-				_scrollTop(0)
+				_scrollTop(0, null, 5)
 			}
 
 		}
@@ -210,8 +222,7 @@ var main = (function(){
 
 							share = p
 
-							if (hsready)
-								el.panel.hcSticky('refresh');
+							actions.refreshSticky()
 
 						},
 						essenseData : {
@@ -234,7 +245,14 @@ var main = (function(){
 					id : 'panel',
 					el : el.panel,
 					animation : false,
+
+					essenseData : {
 					
+						renderclbk : function(){
+							actions.refreshSticky()
+	
+						}
+					},
 					clbk : function(e, p){
 
 						panel = p;
@@ -248,10 +266,10 @@ var main = (function(){
 						el.panel.hcSticky({
 							stickTo: '#main',
 							top : 76,
-							bottom : 177
+							bottom : 122
 						});
 
-						//hsready = true
+						hsready = true
 
 					}
 
@@ -313,9 +331,7 @@ var main = (function(){
 
 							renderclbk : function(){
 								
-								if (hsready)
-
-									el.panel.hcSticky('refresh');
+								//actions.refreshSticky()
 		
 							}
 						},
@@ -490,8 +506,9 @@ var main = (function(){
 
 					makeShare()
 
-					if (hsready)
-						el.panel.hcSticky('refresh');
+					
+
+					actions.refreshSticky()
 				}
 				
 			},
@@ -537,6 +554,16 @@ var main = (function(){
 					
 				}*/
 
+				if(self.app.curation()){
+					self.nav.api.load({
+						open : true,
+						href : 'userpage',
+						history : true
+					})
+
+					return
+				}
+
 
 				if(p.state && primary && !self.app.user.validate()){
 
@@ -558,6 +585,8 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
+				hsready = false
 
 				if (plissing)
 					plissing.destroy()

@@ -24,15 +24,17 @@
         font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src *">
 
-        <?php 
-        
-            require_once('php/og.php'); 
 
-            $og = new OG($_GET);
-
-            $og->get();
-            $og->echotags();
-        ?>
+        <link rel="stylesheet" href="css/normalize.css?v=777604428412">
+        <link rel="stylesheet" href="css/tooltipster.core.min.css?v=333812319355">
+        <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=527164468807">
+        <link rel="stylesheet" href="css/main.css?v=22847633041">
+        <link rel="stylesheet" href="css/stblack.css?v=713491107122">
+        <link rel="stylesheet" href="css/plyr.css?v=141103814999">
+        <link rel="stylesheet" href="css/jquery-ui.min.css?v=79767409166">
+        <link rel="stylesheet" href="css/medium/medium-editor.css?v=748883075899">
+        <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=963299794719">
+        <link rel="stylesheet" href="css/medium/beagle.css?v=151372723246">
 
         <link rel="stylesheet" href="css/normalize.css?v=498721013459">
 <link rel="stylesheet" href="css/tooltipster.core.min.css?v=928958529236">
@@ -86,6 +88,33 @@
 
         <div class="chats">
         </div>
+
+        <div id="globalpreloader">
+            <div class="table">
+                <div>
+                    <div class="icon">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+
+        <!--<div class="updatingFrontend">
+            <div class="table">
+                <div>
+                    <div class="text">
+                        <span>Please be Patient: Major Release of Pocketnet is Being Prepared</span>
+                    </div>
+
+                    <div class="icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    
+                </div>
+               
+            </div>
+        </div>-->
 
 
        <!-- <script src="cordova.js"></script>-->
@@ -172,19 +201,19 @@
 <script join src="js/vendor/hc-sticky.js?v=4"></script>
 
         
-        <script>window.design = true;</script><script join src="js/functions.js?v=146833464973"></script>
-<script join src="js/user.js?v=689601095868"></script>
-<script join src="js/module.js?v=861406122148"></script>
-<script join src="js/navn.js?v=227269570407"></script>
-<script join src="js/validation.js?v=799974461261"></script>
-<script join src="js/_map.js?v=825661676811"></script>
-<script join src="js/localization.js?v=739850120130"></script>
-<script join src="js/kit.js?v=445214286334"></script>
-<script join src="js/satolist.js?v=225278372507"></script>
-<script join src="js/messenger2/clientrtc.js?v=973643504583"></script>
-<script join src="js/peertube-master.js?v=802688724168"></script>
-<script join src="js/app.js?v=45734911941"></script>
-<script join src="js/main.js?v=380010921276"></script>
+        <script>window.design = true;</script><script join src="js/functions.js?v=89205973261"></script>
+<script join src="js/user.js?v=52577031908"></script>
+<script join src="js/module.js?v=414463334589"></script>
+<script join src="js/navn.js?v=988307190328"></script>
+<script join src="js/validation.js?v=396883839046"></script>
+<script join src="js/_map.js?v=309941511491"></script>
+<script join src="js/localization.js?v=834205627114"></script>
+<script join src="js/kit.js?v=988463926997"></script>
+<script join src="js/satolist.js?v=78707842454"></script>
+<script join src="js/messenger2/clientrtc.js?v=15583624513"></script>
+<script join src="js/peertube-master.js?v=987676610710"></script>
+<script join src="js/app.js?v=134518726399"></script>
+<script join src="js/main.js?v=392116752843"></script>
 
 
 
@@ -196,22 +225,6 @@
 
         
 
-        <!--Start of Tawk.to Script-->
-        <script type="text/javascript">
-            if(!isMobile()){
-                var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-                (function(){
-                var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-                s1.async=true;
-                s1.src='https://embed.tawk.to/5c3075947a79fc1bddf36050/default';
-                s1.charset='UTF-8';
-                s1.setAttribute('crossorigin','*');
-                s0.parentNode.insertBefore(s1,s0);
-                })();
-            }
-
-        </script>
-        <!--End of Tawk.to Script-->
 
 
     </body>

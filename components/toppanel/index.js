@@ -79,7 +79,7 @@ var toppanel = (function(){
 							data : {
 								pathname : pathname,
 								state : state,
-								mobile : isTablet(),
+								mobile : isMobile(),
 	
 								selector : selector
 							},

@@ -15,6 +15,8 @@ var system16 = (function(){
 
 		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
 
+		var stacking = null
+
 		var changes = {
 			server : {}
 		}
@@ -25,7 +27,7 @@ var system16 = (function(){
 					type : 'rating'
 				},
 				server : {
-					type : 'connections'
+					type : 'responses'
 				},
 				wallets : {
 					type : 'distribution'
@@ -67,6 +69,8 @@ var system16 = (function(){
 	        		}],
 
 	        		success : function(v){
+
+						var ch = {}
 
 						ch.key = deep(v, '0.base64')
 						ch.id = v[1]
@@ -158,7 +162,10 @@ var system16 = (function(){
 							return proxy.system.request('set.node.enabled', {enabled : false}).then(r => {
 								clbk()
 
-								actions.refresh()
+								actions.refresh().then(r => {
+									actions.refreshsystem()
+								})
+								
 							})
 						}
 					}]
@@ -170,12 +177,69 @@ var system16 = (function(){
 				}
 				else{
 
-					return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
-						actions.refresh()
-						//renders.allsettings()
+					var items = [{
+						text : "Enable Pocketnet Node",
+						action : function (clbk) {
+
+							return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
+								actions.refresh().then(r => {
+									actions.refreshsystem()
+								})
+
+								clbk()
+							})
+
+						
+						}
+					}]
+
+					menuDialog({
+						items: items
 					})
 
+					
+
 				}
+			},
+			
+			'binPath' : function(){
+
+				globalpreloader(true)
+
+				return proxy.system.request('set.node.binPath', {}).then(r => {
+
+					actions.refresh().then(r => {
+						actions.refreshsystem()
+
+						globalpreloader(false)
+					})
+					
+				}).catch(e => {
+
+					globalpreloader(false)
+
+				})
+			},
+
+			'ndataPath' : function(){
+
+				globalpreloader(true)
+
+				return proxy.system.request('set.node.ndataPath', {}).then(r => {
+
+
+					globalpreloader(false)
+
+					actions.refresh().then(r => {
+						actions.refreshsystem()
+					})
+					
+				}).catch(e => {
+
+					globalpreloader(false)
+
+					console.log("ER", e)
+				})
 			}
 		}
 
@@ -185,9 +249,94 @@ var system16 = (function(){
 					s.time = fromutc(new Date(s.time))
 				})
 			},
+			updateNode : function(){
+
+				proxy.fetch('manage', {
+					action : 'node.update',
+					data : {
+						all : all
+					}
+				}).then(r => {
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+					sitemessage(self.app.localization.e('e13293'))
+
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				})
+			},
+			installNode : function(){
+
+				proxy.fetch('manage', {
+					action : 'node.install',
+					data : {}
+				}).then(r => {
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+					sitemessage(self.app.localization.e('e13293'))
+
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				})
+			},
+			removeNode : function(all){
+
+				proxy.fetch('manage', {
+					action : 'node.delete',
+					data : {
+						all : all
+					}
+					
+				}).then(r => {
+
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+					sitemessage(self.app.localization.e('e13293'))
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				})
+			},
 			admin : function(){
 
 				var address = self.app.platform.sdk.address.pnet()
+
+				if(!address) return false
 
 				if (proxy && info){
 					return proxy.direct || _.indexOf(info.admins, address.address) > -1
@@ -222,7 +371,6 @@ var system16 = (function(){
 				self.app.platform.sdk.wallet.sendmanyoutputs(pk, address, value, 2, function(err , data){
 
 					console.log("ERR", err)
-
 					if(err){
 						self.app.platform.errorHandler(err, true)	
 					}
@@ -238,19 +386,30 @@ var system16 = (function(){
 
 			ticksettings : function(settings, s, changed){
 
-
 				if (changed){
 					system = settings
-
-					renders.allsettings()
 				}
+
+				renders.allsettings()
+			},
+
+			refreshsystem : function(){
+				return proxy.system.api.get.settings().then(s => {
+					system = s
+
+					if (el.c){
+						renders.allsettings()
+					}
+				})
+				
+			
 			},
 
 			refresh : function(){
-				proxy.get.info().then(r => {
-
+				return proxy.get.info().then(r => {
 					this.tick(r.info)
 
+					return Promise.resolve()
 				})
 			},
 
@@ -269,6 +428,8 @@ var system16 = (function(){
 					stats = lastelements(stats, 1000)
 
 				}
+				
+
 
 				if (el.c){
 					renders.nodecontentstate(el.c)
@@ -604,10 +765,8 @@ var system16 = (function(){
 			proxy : {
 				selectWatch : function(){
 
-					topPreloader(70)
 					windows.proxieslist(proxy, "Watch Proxy", function(selected){
 
-						topPreloader(100)
 						make(selected)
 					})
 				},
@@ -616,14 +775,12 @@ var system16 = (function(){
 
 					var use = api.get.current()
 
-					topPreloader(70)
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
-						topPreloader(100)
 
-						api.set.current(selected.id)
-
-						make(api.get.current())
+						api.set.current(selected.id, true).then(r => {
+							make(api.get.current())
+						})
 
 					})
 				},
@@ -656,7 +813,7 @@ var system16 = (function(){
 				},
 
 				rate : {
-					caption : "Nodes Rate",
+					caption : "Rate",
 
 					series : [
 						{
@@ -695,7 +852,7 @@ var system16 = (function(){
 				},
 
 				rating : {
-					caption : "Nodes Rating",
+					caption : "Rating",
 
 					series : [
 						{
@@ -706,8 +863,20 @@ var system16 = (function(){
 					]
 				},
 
+				wsc : {
+					caption : "Websocket Connections",
+
+					series : [
+						{
+							name : "Websocket",
+							path : "users",
+							id : 'wsc'
+						}
+					]
+				},
+
 				allcount : {
-					caption : "Count of requestes to nodes",
+					caption : "Count of requestes",
 
 					series : [
 						{
@@ -745,6 +914,61 @@ var system16 = (function(){
 					]
 				},
 
+				memory : {
+					caption : "Memory",
+
+
+					series : [
+
+						{
+							path : 'memory.rss',
+							name : "RSS",
+							id : 'rss'
+						}
+					]
+				},
+				
+
+				signatures : {
+					caption : "Signed requests",
+					objects : 'server.middle.signatures',
+					series : [
+						{
+							path : 'length',
+							namePath : 'code',
+							name : "Signature",
+							id : 'count'
+						}
+					]
+					//method : 'fromarray'
+				},
+
+				responses : {
+					caption : "Responses",
+					objects : 'server.middle.responses',
+					series : [
+						{
+							path : 'length',
+							namePath : 'code',
+							name : "Code",
+							id : 'count'
+						}
+					]
+					//method : 'fromarray'
+				},
+
+				rmts : {
+					caption : "RMTS",
+					series : [
+
+						{
+							path : 'remote.size',
+							name : "RMTS",
+							id : 'rmts'
+						}
+					]
+				},
+
 				cache : {
 					caption : "Cache Size",
 					objects : 'server.cache.meta',
@@ -764,13 +988,13 @@ var system16 = (function(){
 
 					series : [
 						{
-							path : 'wallet.registration.queue',
+							path : 'wallet.addresses.registration.queue',
 							name : "Users Queue Size",
 							id : 'queue'
 						},
 	
 						{
-							path : 'wallet.registration.unspents',
+							path : 'wallet.addresses.registration.unspents',
 							name : "Unspents Count",
 							id : 'unspents'
 						},
@@ -782,7 +1006,7 @@ var system16 = (function(){
 
 					series : [
 						{
-							path : 'wallet.registration.balance',
+							path : 'wallet.addresses.registration.balance',
 							name : "Address Balance",
 							id : 'balance'
 						}
@@ -820,6 +1044,8 @@ var system16 = (function(){
 					if(meta.objects) ekey = meta.objects + '.' + ekey
 
 					_.each(meta.series, function(smeta){
+
+						
 						series[smeta.id + key] = {
 
 							name : smeta.name + ": " + key,
@@ -1025,7 +1251,7 @@ var system16 = (function(){
 
 						_.each(cpsub[type], function(s, key){
 							items.push({
-								text : key,
+								text : s.caption,
 								action : function (clbk) {
 
 									settings.charts[type].type = key
@@ -1051,6 +1277,8 @@ var system16 = (function(){
 			},
 
 			make : function(type, stats, clbk, update){
+
+				if(!el.c) return
 
 				if (graphs[type] && update){
 
@@ -1113,7 +1341,7 @@ var system16 = (function(){
 						name : self.app.localization.e('e13056'),
 						id : 'host',
 
-						defaultValue : _proxy.host || 'pocketnet.app',
+						defaultValue : _proxy.host || '',
 						placeholder : "0.0.0.0",
 						require : true
 					
@@ -1125,7 +1353,7 @@ var system16 = (function(){
 						name : "RPC Port",
 						id : 'port',
 						defaultValue : _proxy.port || '8899',
-						placeholder : "8888",
+						placeholder : "8899",
 						require : true
 					
 					}),
@@ -1136,7 +1364,7 @@ var system16 = (function(){
 						name : "WS Port",
 						id : 'wss',
 						defaultValue : _proxy.wss || '8099',
-						placeholder : "8088",
+						placeholder : "8099",
 						require : true
 					
 					})
@@ -1177,7 +1405,6 @@ var system16 = (function(){
 
 							meta.user = true;
 
-							console.log('meta', meta)
 
 							var newproxy = new Proxy16(meta, self.app)
 
@@ -1189,7 +1416,6 @@ var system16 = (function(){
 
 							wnd.find('.addproxy').addClass('loading')
 
-							console.log('newproxy', newproxy)
 
 							newproxy.api.ping().then(r => {
 
@@ -1544,8 +1770,10 @@ var system16 = (function(){
 
 		var renders = {
 			allsettings : function(){
-				if (el.c)
+				if (el.c){
 					renders.nodecontentmanage(el.c)
+					renders.nodecontentstate(el.c)
+				}
 			},
 			proxycurrent : function(clbk){
 
@@ -1591,6 +1819,10 @@ var system16 = (function(){
 
 				},
 				function(p){
+
+					p.el.find('.refreshpage').on('click', function(){
+						make(proxy)
+					})
 
 					if (clbk)
 						clbk()
@@ -1772,6 +2004,10 @@ var system16 = (function(){
 							}
 
 							var _make = function(){
+
+
+								globalpreloader(true)
+
 								proxy.fetch('manage', {
 									action : 'set.server.settings',
 									data : {
@@ -1779,14 +2015,17 @@ var system16 = (function(){
 									}
 	
 								}).catch(e => {
-									
+									console.log("E", e)
+									globalpreloader(false)
 									return Promise.resolve()
 		
 								}).then(r => {
-
+									console.log("r", r)
 									changes.server = {}
 		
 									make(proxy || api.get.current());
+
+									globalpreloader(false)
 				
 									topPreloader(100);
 		
@@ -1828,6 +2067,21 @@ var system16 = (function(){
 							renders.webserveradmin(elc)
 						})
 
+						p.el.find('.domain').on('change', function(){
+							var domain = $(this).val()
+
+							$(this).val(domain)
+
+							if (domain == system.server.domain){
+								delete changes.server.domain
+							}
+							else{
+								changes.server.domain = domain
+							}
+
+							renders.webserveradmin(elc)
+						})
+
 						p.el.find('.httpsport').on('change', function(){
 							var port = $(this).val()
 
@@ -1843,7 +2097,6 @@ var system16 = (function(){
 								changes.server.https = port
 							}
 
-							
 
 							renders.webserveradmin(elc)
 						})
@@ -1956,7 +2209,6 @@ var system16 = (function(){
 							var address = deep(info.wallet, key + '.address')
 
 							if (address){
-								console.log('address', address)
 
 								dialog({
 									class : 'zindex',
@@ -2172,7 +2424,29 @@ var system16 = (function(){
 						})
 					}
 
+					p.el.find('.use').on('click', function(){
+
+						var node = find($(this).closest('.node').attr('node'))
+
+						if(!node) return
+
+						dialog({
+							class : 'zindex',
+							html : "Do you really want reconnect to selected Pocketnet Node?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.changeNode(node.node)
+								renders.nodescontenttable(elc)								
+							}
+						})
+
+					})
+
 					p.el.find('.name').on('click', function(){
+
+						return
 
 						var key = $(this).closest('.node').attr('node')
 
@@ -2240,8 +2514,49 @@ var system16 = (function(){
 
 				
 			},
+			nodecontentmanagestacking : function(elc, clbk){
+				if (actions.admin() && stacking){
+
+					self.shell({
+						inner : html,
+						name : 'nodecontentmanagestacking',
+						data : {
+							info : info,
+							manager : info.nodeManager,
+							nodestate : info.nodeControl.state,
+							nc : info.nodeControl,
+							proxy : proxy,
+							admin : actions.admin(),
+							system : system,
+							stacking : stacking
+						},
+
+						el : elc.find('.stacking')
+
+					},
+					function(p){
+
+						p.el.find('.copyaddress').on('click', function(){
+							copyText($(this))
+
+							sitemessage(self.app.localization.e('successcopied'))
+						})
+
+						if (clbk)
+							clbk()
+					})
+				}
+			},
 			nodecontentmanage : function(elc, clbk){
 				if(actions.admin()){
+
+					var timestamp = deep(info,'nodeControl.state.timestamp')
+					var dis = false
+
+					if (timestamp){
+						dis = (new Date()) < fromutc((new Date(timestamp)).addSeconds(60))
+
+					}
 
 
 					self.shell({
@@ -2251,9 +2566,11 @@ var system16 = (function(){
 							info : info,
 							manager : info.nodeManager,
 							nodestate : info.nodeControl.state,
+							nc : info.nodeControl,
 							proxy : proxy,
 							admin : actions.admin(),
-							system : system
+							system : system,
+							dis : dis
 						},
 
 						el : elc.find('.localnodeWrapper .manage')
@@ -2261,7 +2578,187 @@ var system16 = (function(){
 					},
 					function(p){
 
+						var lock = function(){
+							p.el.find('.nodecontentmanage').addClass('lock')
+						}
+
+						makers.stacking()
+
 						actions.settings(p.el)
+						
+						p.el.find('.refreshstacking').on('click', function(){
+							makers.stacking(true)
+						})
+
+						p.el.find('.addstacking').on('click', function(){
+
+							var d = inputDialogNew({
+								caption : "Add Private Key To Address Stacking",
+								class : 'addressdialog',
+								wrap : true,
+								values : [{
+									defValue : '',
+									validate : 'empty',
+									placeholder : "Private Key (WIF Format)",
+									label : "Private Key"
+								}],
+			
+								success : function(v){
+			
+									var pk = v[0]
+
+									var destroyed = false
+
+									var ds = function(){
+
+										if(destroyed) return
+
+										clearTimeout(dds)
+
+										destroyed = true
+										makers.stacking(true)
+			
+										d.destroy();
+			
+										topPreloader(100);
+									}
+
+									var dds = setTimeout(function(){
+										ds()
+
+										sitemessage('Stacking address will be added soon')
+
+									}, 2000)
+			
+									topPreloader(30);
+			
+									proxy.fetch('manage', {
+
+										action : 'set.node.stacking.import',
+										data : {
+											privatekey : pk
+										}
+
+									}).then(r => {
+
+										ds()
+			
+									}).catch(e => {
+
+										if(destroyed) return
+
+										clearTimeout(dds)
+										
+										sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
+			
+										topPreloader(100);
+			
+									})
+									
+
+									return false
+								}
+							})
+
+						})
+
+						p.el.find('.updatenode').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to Stop Pocketnet Node and Update It?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+
+									lock()
+
+									actions.updateNode()
+									
+								}
+							})
+						})
+
+						p.el.find('.removenodeall').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to remove Pocketnet Node and All Blockchain Data?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+									lock()
+									actions.removeNode(true)
+									
+								}
+							})
+						})
+
+						p.el.find('.removenode').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to remove Pocketnet Node Daemon?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+									lock()
+									actions.removeNode()
+									
+								}
+							})
+						})
+
+						p.el.find('.install').on('click', () => {
+
+							topPreloader(20);
+
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to install Pocketnet Node?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+									lock()
+									actions.installNode()
+									
+								}
+							})
+
+							
+
+						})
+
+						p.el.find('.toDefaultPath').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to set Pocketnet Node Path to Default path?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){
+
+									globalpreloader(true)
+
+									proxy.fetch('manage', {
+
+										action : 'set.node.defaultPaths',
+										data : {}
+
+									}).then(r => {
+
+										actions.refresh().then(r => {
+											actions.refreshsystem()
+
+											globalpreloader(false)
+										})
+			
+									}).catch(e => {
+
+										globalpreloader(false)
+										
+										sitemessage(self.app.localization.e('e13293'))
+			
+									})
+								}
+							})
+						})
 
 						if (clbk)
 							clbk()
@@ -2279,8 +2776,9 @@ var system16 = (function(){
 							info : info,
 							manager : info.nodeManager,
 							nodestate : info.nodeControl.state,
+							nc : info.nodeControl,
 							proxy : proxy,
-							admin : actions.admin()
+							admin : actions.admin(),
 						},
 
 						el : elc.find('.localnodeWrapper .state')
@@ -2313,6 +2811,46 @@ var system16 = (function(){
 
 		var makers = {
 
+			stacking : function(update){
+				if(actions.admin() && (!stacking || update) && 1 == 0){
+
+					proxy.fetch('manage', {
+
+						action : 'set.node.stacking.addresses',
+						data : {}
+
+					}).then(r => {
+
+						stacking = r
+
+						renders.nodecontentmanagestacking(el.c)
+
+						topPreloader(100);
+
+					}).catch(e => {
+
+						
+						sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
+
+						topPreloader(100);
+
+					})
+
+				}
+				else{
+					renders.nodecontentmanagestacking(el.c)
+				}
+			},
+
+			panel : function(){
+				renders.nodecontentmanage(el.c)
+				renders.nodecontentstate(el.c)
+				renders.nodescontenttable(el.c)
+				renders.webadminscontent(el.c)
+				renders.webdistributionwallets(el.c)
+				renders.webserveradmin(el.c)
+			},
+
 			stats : function(update){
 
 				if (stats){
@@ -2320,11 +2858,7 @@ var system16 = (function(){
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
 
-					renders.nodecontentstate(el.c)
-					renders.nodescontenttable(el.c)
-					renders.webadminscontent(el.c)
-					renders.webdistributionwallets(el.c)
-					renders.webserveradmin(el.c)
+					
 				}
 
 			},
@@ -2356,6 +2890,7 @@ var system16 = (function(){
 
 		var destroy = function(){
 			if (proxy) {
+				delete proxy.clbks.changednode.components
 				delete proxy.clbks.changed.components
 				delete proxy.clbks.tick.components
 				delete proxy.system.clbks.tick.components
@@ -2376,7 +2911,14 @@ var system16 = (function(){
 
 			if (proxy){
 
-				proxy.clbks.changed.components = () => {make(api.get.current())}
+				proxy.clbks.changed.components = () => {
+					make(api.get.current())
+				}
+
+				proxy.clbks.changednode.components = () => {
+					renders.nodescontenttable(el.c)
+				}
+
 				proxy.clbks.tick.components = actions.tick
 				proxy.system.clbks.tick.components = actions.ticksettings
 
@@ -2406,6 +2948,9 @@ var system16 = (function(){
 
 					setTimeout(function(){
 						makers.stats()
+						makers.panel()
+
+						renders.webserveradmin(el.c)
 					},500)	
 
 					if (actions.admin()){
@@ -2446,7 +2991,11 @@ var system16 = (function(){
 			},
 
 			destroy : function(){
+
+				destroy()
+
 				el = {};
+
 			},
 			
 			init : function(p){
@@ -2463,6 +3012,15 @@ var system16 = (function(){
 				make(api.get.current());
 
 				p.clbk(null, p);
+
+				self.app.errors.clbks.system16 = function(){
+
+					if(!info && !self.app.errors.state.proxy && proxy){
+						make(proxy);
+					}
+
+				
+				}
 			}
 		}
 	};

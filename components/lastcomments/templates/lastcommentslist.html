@@ -1,207 +1,213 @@
-
-<div class="rcptwrp">
-		<div class="rcaptiontable table">
-			<div class="rcaptionWrapper">
-				<div class="rcaption">
-					<span><%=e('e13122')%></span>
-				</div>
-			</div>
-
-		</div>
-	</div>
-	
-
-	<div class="lastcommentslistwrapper">
-		<div class="lastcommentslist">        
-
-		
-
-<% _.each(comments, function(group, postid){ 
-    
-    var share = app.platform.sdk.node.shares.storage.trx[postid]
-    
-    var h = '';
-
-    var m = '';
-
-    if(share.caption) m = m + '' + share.caption + ' '
-
-    if(share.message) m = m + '' + share.message + ''
-
-    var nm = filterXSS(trimHtml(m, 80), {
-        stripIgnoreTag : true,
-        whiteList: {
-            b : ["style"]
-        }
-    });
-
-    //nm = share.renders.xssmessage(nm)
-
-
-    var image = share.images[0] || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
-    var video = null;
-
-    var vstyle = false;
-
-    if (share.url){
-        video = videoImage(share.url)
-        vstyle = true;
-    } %>
-
-    <div class="commentgroup" share="<%-postid%>">
-
-        <div class="sharepreview">
-            <div class="shareprwrapper table">
-
-            <% if(video || image){ %>
-
-                <div class="tcell forimage">
-                    <div class="img" image="<%-(video || image)%>">
-
-                    <% if(vstyle){ %>
-                        <div class="vstyle">
-                        <i class="fas fa-play"></i>
-                        </div>
-                    <% } %>
-
-                    </div>
+<div class="wrp">
+    <div class="rcptwrp">
+    <div class="captionwrapperd">
+        <div class="rcaptiontable table">
+            <div class="rcaptionWrapper">
+                <div class="rcaption">
+                    <span><%=e('e13122')%></span>
                 </div>
-
-            <% } %>
-
-                <div class="tcell fortext">
-                    <div class="sharecaption">
-                        <span><%= nm %></span>
-                    </div>
-
-                 
-
-                </div>
-
-
             </div>
+
         </div>
+    </div>
+        
 
-        <div class="comments">
-            <% _.each(group, function(comment){ 
-                
-                if(comment.deleted) return
-                
-                %> 
+        <div class="lastcommentslistwrapper">
+            <div class="lastcommentslist">        
 
-                <div class="comment " id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+            
 
-                    <div class="commentPaddingWrapper">
-            
-                        <div class="commentWrapper table">
-            
-                            <div class="iconWrapper">
-                                    <% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
-            
-                                    <div class="icon">
-                                        <div class="usericon" image="<%-src || ''%>">
-                                            <% if(!src) {%>
-                                                <svg width="30" height="30" data-jdenticon-value="<%-comment.address%>"></svg>
-                                            <% } %>
-                                        </div>
-                                    </div>
-            
+    <% _.each(comments, function(group, postid){ 
+        
+        var share = app.platform.sdk.node.shares.storage.trx[postid]
+        
+        if(!share) return
+
+        if(share.address == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82') return
+        
+        var h = '';
+
+        var m = '';
+
+        if(share.caption) m = m + '' + share.caption + ' '
+
+        if(share.message) m = m + '' + share.message + ''
+
+        var nm = filterXSS(trimHtml(m, 80), {
+            stripIgnoreTag : true,
+            whiteList: {
+                b : ["style"]
+            }
+        });
+
+
+
+        var image = share.images[0] || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
+        var video = null;
+
+        var vstyle = false;
+
+        if (share.url){
+            video = videoImage(share.url)
+            vstyle = true;
+        } %>
+
+        <div class="commentgroup" share="<%-postid%>">
+
+            <div class="sharepreview">
+                <div class="shareprwrapper table">
+
+                <% if(video || image){ %>
+
+                    <div class="tcell forimage">
+                        <div class="img" image="<%-(video || image)%>">
+
+                        <% if(vstyle){ %>
+                            <div class="vstyle">
+                            <i class="fas fa-play"></i>
                             </div>
-            
-                            <div class="commentBody">
-            
-                                <div class="metatable table">
+                        <% } %>
 
-                                    <div class="author">
-                                        <b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b> 
-                                    </div>          
-                                    
-                                    <div class="datecell">
-                                        <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
-                                    </div>
-                                    
-                                </div>
-            
-                                <div class="cbodyWrapper">
-            
-                                    <div class="commentcontenttable table">
-                                        <div class="commentcontent">
-            
-                                            <% if(comment.message) {
-            
-                                                var l = findAndReplaceLink(filterXSS(comment.message, {
-                                                    whiteList: [],
-                                                    stripIgnoreTag: true
-                                                }), true)
-            
-            
-                                                
-            
-                                                m = emojione.toImage(l)
+                        </div>
+                    </div>
 
-                                            %>
-            
-                                                <div class="commentmessage">
-                                                    <div><%=nl2br(trimHtml(trimrn(m), 120))%></div>
-                                                </div>
-            
-                                            <% } %>
-                                    
-            
-                                        </div>
-            
-                                        
-                                    </div>                                                
-            
-                                </div>
+                <% } %>
 
-                                <% 								
-								
-                                    if(comment.images.length && !comment.deleted) {
-                                        var additionall = 0;
-                                        var icClass = '';
-                        
-                                        if (comment.images.length + additionall == 1) icClass = 'one';
-                                        if (comment.images.length + additionall == 2) icClass = 'two';
-                                        if (comment.images.length + additionall == 2) icClass = 'three';
-                                        if (comment.images.length + additionall == 4) icClass = 'four';
-                                        if (comment.images.length + additionall > 4) icClass = 'more';
-                                        
-                                        %>
-                        
-                                        <div class="commentimages">
-                                            <div class="imagesContainer <%-icClass%>">
-                                                <% _.each(comment.images, function(image){ %>
-                        
-                                                    <div class="imagesWrapper">
-                                                        <div class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
-                                                        </div>
-                                                    </div>
-                        
-                                                <% }) %>
-                        
+                    <div class="tcell fortext">
+                        <div class="sharecaption">
+                            <span><%= nm %></span>
+                        </div>
+
+                    
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="comments">
+                <% _.each(group, function(comment){ 
+                    
+                    if(comment.deleted) return
+                    
+                    %> 
+
+                    <div class="comment " id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+
+                        <div class="commentPaddingWrapper">
+                
+                            <div class="commentWrapper table">
+                
+                                <div class="iconWrapper">
+                                        <% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
+                
+                                        <div class="icon">
+                                            <div class="usericon" image="<%-src || ''%>">
+                                                <% if(!src) {%>
+                                                    <svg width="30" height="30" data-jdenticon-value="<%-comment.address%>"></svg>
+                                                <% } %>
                                             </div>
                                         </div>
-                        
-                                <% } %>
-
-                                    
-            
-                                
-                            </div>
-            
-                        </div>
-            
-                    </div>
-            
-                </div>
                 
-            <% }) %>
+                                </div>
+                
+                                <div class="commentBody">
+                
+                                    <div class="metatable table">
+
+                                        <div class="author">
+                                            <b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b> 
+                                        </div>          
+                                        
+                                        <div class="datecell">
+                                            <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
+                                        </div>
+                                        
+                                    </div>
+                
+                                    <div class="cbodyWrapper">
+                
+                                        <div class="commentcontenttable table">
+                                            <div class="commentcontent">
+                
+                                                <% if(comment.message) {
+                
+                                                    var l = findAndReplaceLink(filterXSS(comment.message, {
+                                                        whiteList: [],
+                                                        stripIgnoreTag: true
+                                                    }), true)
+                
+                
+                                                    
+                
+                                                    m = emojione.toImage(l)
+
+                                                %>
+                
+                                                    <div class="commentmessage">
+                                                        <div><%=nl2br(trimHtml(trimrn(m), 120))%></div>
+                                                    </div>
+                
+                                                <% } %>
+                                        
+                
+                                            </div>
+                
+                                            
+                                        </div>                                                
+                
+                                    </div>
+
+                                    <% 								
+                                    
+                                        if(comment.images.length && !comment.deleted) {
+                                            var additionall = 0;
+                                            var icClass = '';
+                            
+                                            if (comment.images.length + additionall == 1) icClass = 'one';
+                                            if (comment.images.length + additionall == 2) icClass = 'two';
+                                            if (comment.images.length + additionall == 2) icClass = 'three';
+                                            if (comment.images.length + additionall == 4) icClass = 'four';
+                                            if (comment.images.length + additionall > 4) icClass = 'more';
+                                            
+                                            %>
+                            
+                                            <div class="commentimages">
+                                                <div class="imagesContainer <%-icClass%>">
+                                                    <% _.each(comment.images, function(image){ %>
+                            
+                                                        <div class="imagesWrapper">
+                                                            <div class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
+                                                            </div>
+                                                        </div>
+                            
+                                                    <% }) %>
+                            
+                                                </div>
+                                            </div>
+                            
+                                    <% } %>
+
+                                        
+                
+                                    
+                                </div>
+                
+                            </div>
+                
+                        </div>
+                
+                    </div>
+                    
+                <% }) %>
+            </div>
+
         </div>
+        
+    <% }) %>
 
+        </div>
     </div>
-    
-<% }) %>
-
-    </div>
+</div>
 </div>

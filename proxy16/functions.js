@@ -99,10 +99,17 @@ f.downloadgitrelease = function(name, p){
         if (p.check && !p.check(stats)){
             return Promise.resolve(fullname)
         }
-    } catch(e){ }
+    } 
+    catch(e){ 
+    }
 
-    if (!fs.existsSync(dest)){
-        fs.mkdirSync(dest);
+   
+    if(!fs.existsSync(dest)){
+        try{
+            fs.mkdirSync(dest, { recursive: true });
+        }catch(e){
+            return Promise.reject('downloadfoldererror')
+        }
     }
 
     var filterAsset = function(asset) {
@@ -113,13 +120,9 @@ f.downloadgitrelease = function(name, p){
         return release.prerelease === false
     }
 
-    return downloadRelease('pocketnetteam', 'pocketnet.core', dest, filterRelease, filterAsset, false)
-    .then(function() {
+    return downloadRelease('pocketnetteam', 'pocketnet.core', dest, filterRelease, filterAsset, false).then(function() {
 
-        return Promise.resolve({
-            path : path,
-            asset : asset
-        })
+        return Promise.resolve(fullname)
     })
 }
 
@@ -441,7 +444,7 @@ f.lastelements = function(arr, length, eq){
     var d = arr.length - length
 
     if (d > eq){
-        arr = arr.splice(0, d)
+        arr.splice(0, d)
     }
 
     return arr

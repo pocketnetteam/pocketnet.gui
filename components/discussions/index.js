@@ -172,9 +172,13 @@ var discussions = (function(){
 
 							openedChat = p;
 
-							el.c.addClass("forChat");
 
-							actions.preloader(false)
+							if (el.c){
+								el.c.addClass("forChat");
+
+								actions.preloader(false)
+							}
+								
 						}
 					}
 
@@ -492,6 +496,8 @@ var discussions = (function(){
 
 
 			discussion : function(discussion, clbk){
+
+				if(!el.list) return
 
 				var _el = el.list.find('[chat="'+discussion.chat.id+'"]');
 

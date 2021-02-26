@@ -371,7 +371,7 @@ var socialshare = (function(){
 					url : ed.url,
 					rescue : ed.rescue || false,
 					caption : ed.caption,
-
+					style : ed.style || "",
 					calltoActionUserText : calltoActionUserText || defmedtext,
 					calltoActionNotInclude : calltoActionNotInclude
 				};
