@@ -1783,8 +1783,6 @@ var share = (function(){
 								});
 
 							})
-		
-							
 						}
 
 						if (clbk)

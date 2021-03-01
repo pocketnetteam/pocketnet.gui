@@ -3434,9 +3434,10 @@ Platform = function (app, listofnodes) {
                     _onChange: function (value) {
 
                         if (value && self.app.user.features.telegram && value){
-                            
-                            self.app.platform.sdk.system.get.telegramGetMe(value, true);
 
+
+                            self.app.platform.sdk.system.get.telegramGetMe(value, true);
+                            
                         }
 
                     }
@@ -3744,7 +3745,14 @@ Platform = function (app, listofnodes) {
 
                                 self.app.user.features.telegram = 1;
 
-                                // self.app.platform.sdk.system.get.telegramGetMe(v.value);
+                                var href = location.href;
+
+                                if (href.indexOf('userpage?id=usersettings') === -1){
+
+                                    console.log('href', href);
+                                    self.app.platform.sdk.system.get.telegramGetMe(v.value);
+
+                                }
 
 
                             } else {
@@ -10554,6 +10562,7 @@ Platform = function (app, listofnodes) {
                                     'a': ['href'],
                                 },
                             };
+
 
                             const sanitizedHtml = sanitizeHtml(input, options);
 
