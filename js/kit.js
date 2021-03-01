@@ -1617,6 +1617,7 @@ pUserInfo = function(){
 	self.rc = 0;
 	
 
+
 	self._import = function(v){
 
 		self.name = decodeURIComponent(v.n || v.name || '');
@@ -1671,6 +1672,26 @@ pUserInfo = function(){
 		v.adr = self.address
 
 		return v
+	}
+
+	self.social = function(){
+		var s = {
+			image : self.image,
+			images : [self.image],
+			title : self.name,
+			html : {
+				body : self.about,
+				preview : self.about
+			},
+
+			text : {
+				body : self.about,
+				preview : self.about
+			}
+		
+		}
+
+		return s
 	}
 
 	self.import = function(v){
@@ -1846,6 +1867,39 @@ pShare = function(){
 		self._import(v)
 	}
 
+	self.social = function(app){
+
+		var name = app.platform.api.name(self.address)
+
+		var s = {
+			image : '',
+			images : self.images || [],
+			title : "Post by " + name,
+			html : {
+				body : self.renders.xssmessagec(),
+				preview : trimHtml(self.renders.xssmessagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+			},
+
+			text : {
+				body : self.renders.text(),
+				preview : trimHtml(self.renders.text(), 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+			}
+		
+		}
+
+		if (self.url){
+			var v = videoImage(self.url)
+			if (v){
+				s.image = v;
+				s.images.unshift(v)
+			}
+		}
+
+		if(!s.image) s.image = self.images[0]
+
+		return s
+	}
+
 	self.renders = {
 		caption : function(){
 			if(!self.caption){
@@ -1875,6 +1929,30 @@ pShare = function(){
 			//if(self.url) m = m.replace(self.url, '')
 
 			return m
+		},
+
+		messagec : function(){
+		
+			var m = self.caption || trimrn(self.message)
+
+			return m
+		},
+
+		text : function(nm){
+			if(!nm) nm = self.renders.messagec() 
+
+			nm = (trimrn(filterXSS(nm, {
+				whiteList: [],
+				stripIgnoreTag: true,
+			})));	
+
+			return nm
+		},
+
+		xssmessagec : function(){
+			var nm = self.renders.messagec()
+
+			return self.renders.xssmessage(nm)
 		},
 
 		xssmessage : function(nm){
@@ -2127,7 +2205,43 @@ pComment = function(){
 		self.timeUpd.setTime(tu * 1000);
 	}	
 
+	self.social = function(app){
+
+		var name = app.platform.api.name(self.address)
+
+		var s = {
+			image : '',
+			images : self.images || [],
+			title : "Comment by " + name,
+			html : {
+				body : self.renders.text(),
+				preview : trimHtml(self.renders.text(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+			},
+
+			text : {
+				body : self.renders.text(),
+				preview : trimHtml(self.renders.text(), 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+			}
+		
+		}
+
+		if(!s.image) s.image = self.images[0]
+		if(!s.image) s.image = deep(app, 'platform.sdk.usersl.storage.'+self.address+'.image')
+
+		return s
+
+	}
+
 	self.renders = {
+
+		text : function(){
+			var l = trimrn(filterXSS(self.message, {
+				whiteList: [],
+				stripIgnoreTag: true
+			}))
+
+			return l
+		},	
 		
 		preview : function(){
 			var l = filterXSS(self.message, {

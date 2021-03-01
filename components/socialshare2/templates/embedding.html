@@ -1,0 +1,81 @@
+<div class="embeddingWrapper">
+    <div class="wrk">
+        <div class="subcaption">
+            <span>Embedding</span>
+        </div>
+    </div>
+
+    
+    
+    <div class="wrk">
+        <div class="buttons">
+            <button class="button bright medium copycode">
+                Copy Embedding Code
+            </button>
+
+            <button class="button ghost medium showcode">
+                Show Code
+            </button>
+        </div>
+    </div>
+    <div class="embedding">
+        <div class="code" disabled="disabled"><%- embeddingcode %></div>
+    </div>
+    
+    <div class="wrk">
+        <div class="subcaption">
+            <span>Embedding Settings</span>
+        </div>
+    </div>
+
+    
+
+    <div class="wrk">
+        <div class="embeddingSettings">
+            <% _.each(embeddingSettings, function(parameter){ %>
+
+                <div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
+                    <div class="parameter table <%-parameter.type%>">
+
+                        <div class="pName">
+                            <div class="pNameW">
+                                <%= parameter.name %>
+                            </div>
+                        </div>
+
+                        <div class="pInput ">
+                            <%= parameter.input({
+                                init : true
+                            }) %>
+                        </div>
+
+            
+
+                    </div>
+                </div>
+
+            <% }) %>	
+        </div>
+
+    </div>
+    
+    
+</div>
+
+
+<div class="preview">
+    <div class="wrk">
+        <div class="subcaption">
+            <span>Preview</span>
+        </div>
+    </div>
+
+    <div class="previewWrapper">
+        
+        <%= embeddingcode %>
+    </div>
+
+    <div class="spacer">
+        
+    </div>
+</div>

@@ -1,9 +1,6 @@
+var f = require('././js/lib/client/functions.js')
 
-if(typeof _OpenApi == 'undefined'){
-	_OpenApi = false
-}
-
-var post = (function(){
+var post = function(nModule){
 
 	var self = new nModule();
 
@@ -11,8 +8,7 @@ var post = (function(){
 
 	var Essense = function(p){
 
-		var primary = deep(p, 'history') || deep(p, 'primary');
-
+		var primary = f.deep(p, 'history') || f.deep(p, 'primary');
 
 		var el, share, ed, inicomments, eid = '', _repost = null, level = 0;
 
@@ -24,7 +20,7 @@ var post = (function(){
 
 				var id = share.txid
 
-				self.app.platform.sdk.node.shares.getbyid(id, function(){
+				self.sdk.node.shares.getbyid(id, function(){
 
 					share = self.app.platform.sdk.node.shares.storage.trx[id] 
 
@@ -73,20 +69,7 @@ var post = (function(){
 				
 
 			},
-			stateAction : function(clbk, txid){
-
-				if (_OpenApi){
-
-					var phref = 'https://pocketnet.app/post?openapi=true&s=' + txid
-
-					if (self.app.ref){
-						phref += '&ref=' + self.app.ref
-					}
-
-					window.open(phref, '_blank');
-
-					return
-				}
+			stateAction : function(clbk){
 
 				self.app.user.isState(function(state){
 
@@ -155,10 +138,7 @@ var post = (function(){
 			},
 			repost : function(shareid){
 
-				
-
 				actions.stateAction(function(){
-
 					var href = 'index';
 
 					if(isMobile()) href = 'share'
@@ -178,7 +158,7 @@ var post = (function(){
 							
 						}
 					})
-				}, shareid)
+				})
 
 				
 
@@ -232,11 +212,13 @@ var post = (function(){
 			},
 
 			sharesocial : function(clbk){
-				var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true'
+		
+				var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
 
 				if (parameters().address){
 					url += '&address=' + (parameters().address || '')
 				}
+
 
 				var m = share.message;
 
@@ -258,19 +240,16 @@ var post = (function(){
 
 				self.nav.api.load({
 					open : true,
-					href : 'socialshare2',
+					href : 'socialshare',
 					history : true,
 					inWnd : true,
 
 					essenseData : {
 						url : url,
-						caption : self.app.localization.e('e13133') + ' ' + n,
-
-						sharing : share.social(self.app),
-						embedding : {
-							type : 'post',
-							id : share.txid
-						}
+						caption : self.app.localization.e('e13147') + ' ' + n,
+						image : image,
+						title : share.caption || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
+						text : nm
 					}
 				})
 			
@@ -644,7 +623,7 @@ var post = (function(){
 						
 					})
 
-				}, share.txid)
+				})
 
 		
 			},
@@ -698,7 +677,7 @@ var post = (function(){
 							p.removeClass('liked')
 						}
 					})
-				}, share.txid)
+				})
 
 
 			},
@@ -752,7 +731,7 @@ var post = (function(){
 		var renders = {
 			comments : function(clbk){
 
-				if((!ed.repost || ed.fromempty) && ed.comments != 'no'){
+				if(!ed.repost || ed.fromempty){
 					self.fastTemplate('commentspreview', function(rendered){
 
 						var _el = el.c.find(".commentsWrapper");
@@ -1472,16 +1451,6 @@ var post = (function(){
 	}
 
 	return self;
-})();
+};
 
-
-if(typeof module != "undefined")
-{
-	module.exports = post;
-}
-else{
-
-	app.modules.post = {};
-	app.modules.post.module = post;
-
-}
+module.exports = post;

@@ -8078,12 +8078,8 @@
 
 		return link
 	}
-
-	var copyText = function(el) {
-
-		var text = trim(el.attr('text') || el.text());
-
-	    if (window.clipboardData && window.clipboardData.setData) {
+	var copycleartext = function(text){
+		if (window.clipboardData && window.clipboardData.setData) {
 	        // IE specific code path to prevent textarea being shown while dialog is visible.
 	        return clipboardData.setData("Text", text); 
 
@@ -8102,6 +8098,12 @@
 	            document.body.removeChild(textarea);
 	        }
 	    }
+	} 	
+	var copyText = function(el) {
+
+		var text = trim(el.attr('text') || el.text());
+
+	    copycleartext(text)
 	}
 
 /* ______________________________ */

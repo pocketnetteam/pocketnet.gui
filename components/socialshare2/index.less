@@ -1,0 +1,425 @@
+@import "../../css/__cssvar";
+
+#socialshare2{
+	padding : 2 * @rhythm 0;
+
+	.contentShareWrapper{
+		padding: 3 * @rhythm 0;
+	}
+	.footer{
+		text-align: center;
+		padding : @rhythm 4 * @rhythm;
+
+		span{
+			font-size: 0.8em ;
+		}
+	}
+	
+	.wrk{
+		padding : 0 2 * @rhythm;
+	}
+
+	.tbl{
+		>div{
+			vertical-align: middle;
+		}
+	}
+
+	.caption{
+		font-size: 1.7em;
+		font-weight: 500;
+	}
+
+	.subcaption{
+		padding : @rhythm 0;
+
+		span{
+			font-size: 0.8em;
+			font-weight: 700;
+		}
+	}
+	.embeddingSettings{
+		padding : @rhythm 0;
+	}
+
+	.parameter{
+		width: auto;
+
+		.picker{
+			select{
+				height: auto;
+			}
+		}
+
+		>div{
+			vertical-align: middle;
+		}
+
+		.pName{
+			padding-right : @rhythm;
+			width: 120px;
+
+			.downloads {
+				padding-bottom: 2*@rhythm;
+			}
+
+			.pNameW{
+				font-size: 0.8em;
+				line-height: 1.4em;
+
+			}
+
+			.unit{
+				font-weight: 700;
+				color : @color-bright;
+			}
+
+			.require{
+				color : @color-bad;
+			}
+		}
+
+		
+		.pInput{
+			position: relative;
+			vertical-align: top;
+
+			.echo{
+				padding: @rhythm;
+				color : @color-contrast;
+				font-weight: 700;
+			}
+
+			.vm_valuesmulti{
+				padding-top: @rhythm / 2;
+			}
+
+
+		}
+
+		.panel{
+			vertical-align: top;
+			padding-top: 2 * @rhythm;
+			width: 20px;
+
+			.clear{
+				text-align: right;
+				cursor: pointer;
+				color : @color-gray-slight;
+				.transition(0.3s);
+				&:hover{
+					color : @color-main;
+				}
+			}
+			
+		}
+
+		select,
+		textarea,
+		input{
+			width: 100%;
+			padding: @rhythm;
+			border : 1px solid @color-gray-light;
+			border-radius: 2px;
+
+			&.error{
+				border : 1px solid @color-bad;
+			}
+		}
+
+		.error{
+			select,
+			textarea,
+			input{
+				border : 1px solid @color-bad;
+			}
+			
+		}
+
+		select{
+			height: 38px;
+			padding-right: 25px;
+			width: auto;
+		}
+
+		
+
+		.vc_valuecustom{
+			width: 100%;
+			font-size: 0.8em;
+		}
+
+		.vc_valuecustom,
+		.vc_valuecustom_multibig{
+			.vc_textInput{
+				background: #fff;
+			}
+		}
+
+		.vmt_valuesmultitree,
+		.vm_value{
+			padding : 0;
+			.checkbox{
+				&+label {
+			        &:before {
+			        	font-size : 1.6em;
+			        	line-height: 19px;
+			        }
+			    }
+			}
+		}
+
+		
+	}
+
+	.preview{
+		position: relative;
+		
+
+		.spacer{
+			position: absolute;
+			left : 0;
+			right : 0;
+			top : 0;
+			bottom : 0;
+		}
+	}
+
+	.previewWrapper{
+		padding : @rhythm;
+		border-radius: 10px;
+		border : 1px solid @color-gray-slight;
+	}
+
+	.embedding{
+		padding : 2 * @rhythm 0;
+		display: none;
+		.code{
+			
+			background: fade(@color-gray-slight,10);
+			width: 100%;
+			border : 0;
+			outline: o;
+			height: auto;
+			font-size: 0.8em;
+			padding : 2 * @rhythm;
+			word-break: break-all;
+		}
+		
+	}
+
+	.showedcode{
+		.embedding{
+			display: block;
+		}
+	}
+
+	&.smallcaption{
+		.caption{
+			font-size: 1.5em;
+			font-weight: 500;
+		}
+	}
+
+	.captionearn{
+		font-weight: 700;
+		color : #ff2f00;
+	}
+
+	.requestwhocaption{
+		font-size: 0.8em;
+		margin-top: @rhythm;
+	}
+
+	.calltoActionUserTextWrapper{
+		display : none;
+		background: fade(#000, 10);
+		border-radius: 0;
+		margin-top : 2 * @rhythm;
+
+		textarea{
+			width: 100%;
+			background: transparent;
+			border : 0;
+			padding : 3 * @rhythm 0;
+		}
+	}
+
+	.hidemore{
+		display: none;
+	}
+
+	&.textshowed{
+		.calltoActionUserTextWrapper{
+			display: block;
+		}
+
+		.hidemore{
+			display: inline-block;
+		}
+		.showmore{
+			display: none;
+		}
+	
+	}
+
+
+	.sharecaption{
+		font-weight: 700;
+		margin-bottom: @rhythm;
+		margin-top : 6 * @rhythm;
+	}
+
+	.socialsharebtn{
+		width: 33px;
+		height: 33px;
+		background: transparent;
+		border : 0;
+		line-height: 33px;
+		text-align: center;
+		border-radius: 50%;
+		color : #fff; 
+		padding : 0;
+		border : 0;
+		font-size: 0.7em;
+		.transition(0.3s);
+		cursor: pointer;
+		background: @color-black;
+
+
+		&:hover{
+			opacity : 0.8;
+		}
+	}
+
+	.sharebuttonsTable{
+		width: auto;
+		display: block;
+		overflow: hidden;
+		padding : @rhythm 0;
+		>div{
+			width: 20%;
+			float: left;
+			&.socialWrapper{
+				padding : @rhythm 0;
+			}
+
+		}
+
+		.buttonWrapper{
+			text-align: center;
+		}
+
+		.labelWrapper{
+			text-align: center;
+			color : @color-gray-mlight;
+			span{
+				font-size: 0.8em;
+			}
+		}
+	}
+
+	.additionalwrapper{
+		margin-top : 6 * @rhythm;
+
+		.additionaltable{
+			width : auto;
+			cursor: pointer;
+
+			>div{
+				padding: 0 2 * @rhythm;
+
+				&.checkcell{
+					padding-left : 0;
+				}
+
+				&.checkcell,
+				&.labelcell{
+					padding-left : 0;
+
+					
+				}
+
+				&.morecell{
+					color : @color-main;
+
+					&:hover{
+						color : @color-gray-light;
+					}
+				}
+			}
+		}
+
+		&.checked{
+			i{
+				&:before{
+					content: '\f058'
+				}
+			}
+		}
+	}
+}
+
+
+.wnd.sharingwindow{
+	
+	&.textshowedwnd{
+		.wndinner{
+			max-height: 600px;
+		}	
+	}
+
+	.wndinner{
+		max-height: 550px;
+		width : auto;
+		max-width: 450px;
+		.wndheader{
+			display: none;
+		}
+
+		.wndcontent{
+			top : 0;
+			bottom: 0;
+			padding : 0;
+		}
+
+		>div{
+			&.buttons{
+				display: none;
+			}
+		}
+	}
+
+	.roundclosebutton{
+		color : #FFF;
+	}
+}
+
+@media only screen and (max-width: 640px) {
+#socialshare2{
+
+	.button.medium{
+		width: 100%;
+	}
+
+	.calltoActionUserTextWrapper{
+
+		textarea{
+			padding : 2 * @rhythm;
+			height : 140px;
+		}
+	}
+
+
+}
+.wnd.sharingwindow{
+	
+	.roundclosebutton{
+		color : #000;
+	}
+	.wndinner{
+		max-height: none;
+	}
+
+}	
+}
