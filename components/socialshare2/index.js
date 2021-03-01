@@ -599,7 +599,7 @@ var socialshare2 = (function(){
 				swipeClose : true,
 				swipeMintrueshold : 30,
 				header : self.app.localization.e('e13174'),
-				class : 'sharingwindow'
+				class : 'sharingwindow2'
 			}
 		}
 	};
