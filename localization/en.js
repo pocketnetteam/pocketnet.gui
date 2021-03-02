@@ -299,20 +299,24 @@ ____loclib.dsa = "Do not Show Anymore";
 // Messages
 
 ____loclib.coinbaseSuccess = function(v){
-return "Congratulations, you have won " + v + " Pocketcoin for your latest activity!"
+return "Congratulations, you have won " + v + " PKOIN for your latest activity!"
 }
 ____loclib.coinbaseSuccesspost = function(v){
-return "Congratulations, you have won " + v + " Pocketcoin for your latest posts!"
+return "Congratulations, you have won " + v + " PKOIN for your latest posts!"
 }
 ____loclib.coinbaseSuccesscomment = function(v){
-return "Congratulations, you have won " + v + " Pocketcoin for your latest comments!"
+return "Congratulations, you have won " + v + " PKOIN for your latest comments!"
 }
 ____loclib.userSent = function(v){
 return "sent <b>" + v + " PKOIN</b> to you"
 }
 
-
-
+____loclib.coinbaseSuccesspostref = function(v){
+    return "Congrats, your referral just won " + v + " PKOIN for you!"
+    }
+____loclib.coinbaseSuccesscommentref = function(v){
+    return "Congrats, your referral just won " + v + " PKOIN for you!"
+}
 
 ____loclib.refferalUserMessage = "Congrats! You rescued someone from the censored web. Some coins are on their way!"
 
@@ -946,3 +950,8 @@ ____loclib.system16 = {
 
 
 ____loclib.downvoteShareMessage = "downvoted your post"
+
+____loclib.shareviagroupemail = "Email"
+____loclib.shareviagroupmessenger = "Messengers"
+____loclib.shareviagroupsocial = "Social networks"
+____loclib.shareviagroupblog = "Blogs"

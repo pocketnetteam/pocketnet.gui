@@ -9,12 +9,32 @@ var PNWIDGETS = function(){
         }
     }
 
-    self.make = function(seed, action, id, p){
+    self.make = function(seed, action, id, p, fast){
         var elem = document.getElementById('pocketnet_' + seed);
 
-        elem.innerHTML = self.renders.iframe(seed, action, id, p)
+        if (window.POCKETNETINSTANCE && fast){
 
-        iFrameResize({},'#pocketnet_iframe_' + seed)
+            var app = window.POCKETNETINSTANCE
+
+            var embeddingSettigns = {}
+			
+			try{
+				embeddingSettigns = JSON.parse(hexDecode(p || "7B7D"))
+			}catch(e){}
+
+            embeddingSettigns.openapi = true
+
+            $(elem).addClass('openapipnet')
+
+            app.platform.papi[action](id, $(elem), null, embeddingSettigns)
+        }
+        else{
+            elem.innerHTML = self.renders.iframe(seed, action, id, p)
+
+            iFrameResize({},'#pocketnet_iframe_' + seed)
+        }
+
+        
     }
 
     self.url = function(){

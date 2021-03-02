@@ -36,12 +36,11 @@
 
         __CSS__
         
-           
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
-
+        <script src="https://pocketnet.app/js/widgets.js?v=136"></script>
          
        
     </head>
@@ -92,7 +91,7 @@
        <!-- <script src="cordova.js"></script>-->
                 
 
-        <script src="js/vendor/jquery-1.11.3.min.js"></script>
+        <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
         <script src="js/vendor/sanitize-html.min.js"></script>
 
 

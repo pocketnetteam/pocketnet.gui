@@ -141,6 +141,8 @@ var socialshare2 = (function(){
 
 			embedding : function(){
 
+				console.log("ED", ed)
+
 				if (!ed.embedding) return
 
 				var emeta = embedding[ed.embedding.type]
@@ -262,8 +264,29 @@ var socialshare2 = (function(){
 				n : 'Email',
 				i : '<i class="far fa-envelope"></i>',
 				t : 'email',
-				c : '#f82a53'
+				c : '#f82a53',
+
+				group : 'email'
 			},
+
+			{
+				n : 'Telegram',
+				i : '<i class="fab fa-telegram-plane"></i>',
+				t : 'telegram',
+				c : '#0088cc',
+
+				group : 'messenger'
+			},
+
+			{
+				n : 'Viber',
+				i : '<i class="fab fa-viber"></i>',
+				t : 'viber',
+				c : '#59267c',
+
+				group : 'messenger'
+			},
+
 			{
 				n : 'SMS',
 				i : 'SMS',
@@ -275,20 +298,32 @@ var socialshare2 = (function(){
 					var i = deep(window, 'plugins.socialsharing.canShareVia')
 
 					return i
-				}
+				},
+
+				group : 'messenger'
 			},
+			{
+				n : 'Parler',
+				i : '<img src="img/parlerlogo.png">',
+				t : 'parler',
+				c : '#d31f3e',
+
+				group : 'social'
+			},
+
 			{
 				n : 'Facebook',
 				i : '<i class="fab fa-facebook-f"></i>',
 				t : 'facebook',
 				c : '#3b5999',
-				//s : 'shareViaFacebook',
 
 				if : function(){
 					var i = deep(window, 'plugins.socialsharing.canShareVia') || !window.cordova
 
 					return i
-				}
+				},
+
+				group : 'social'
 			},
 
 			{
@@ -301,7 +336,9 @@ var socialshare2 = (function(){
 				if : function(){
 					var i = deep(window, 'plugins.socialsharing.canShareVia')
 					return i
-				}
+				},
+
+				group : 'social'
 			},
 
 			{
@@ -315,27 +352,35 @@ var socialshare2 = (function(){
 					var i = deep(window, 'plugins.socialsharing.canShareVia') || !window.cordova
 
 					return i
-				}
+				},
+
+				group : 'social'
 			},
 
 			{
 				n : 'Reddit',
 				i : '<i class="fab fa-reddit-alien"></i>',
 				t : 'reddit',
-				c : '#ff5700'
+				c : '#ff5700',
+
+				group : 'social'
 			},
 
-			{
+			/*{
 				n : 'LinkedIn',
 				i : '<i class="fab fa-linkedin-in"></i>',
 				t : 'linkedin',
-				c : '#0077B5'
-			},
+				c : '#0077B5',
+
+				group : 'social'
+			},*/
 			{
 				n : 'Gmail',
 				i : '<i class="fab fa-google"></i>',
 				t : 'gmail',
-				c : '#fbbc05'
+				c : '#fbbc05',
+
+				group : 'email'
 			},
 			{
 				n : 'Whatsapp',
@@ -348,27 +393,35 @@ var socialshare2 = (function(){
 					var i = deep(window, 'plugins.socialsharing.canShareVia') || !window.cordova
 
 					return i
-				}
+				},
+
+				group : 'messenger'
 			},
 
 			{
 				n : 'VK',
 				i : '<i class="fab fa-vk"></i>',
 				t : 'vk',
-				c : '#45668e'
+				c : '#45668e',
+
+				group : 'social'
 			},
 
 			{
 				n : 'Tumblr',
 				i : '<i class="fab fa-tumblr"></i>',
 				t : 'tumblr',
-				c : '#35465c'
+				c : '#35465c',
+
+				group : 'blog'
 			},
 			{
 				n : 'Blogger',
 				i : '<i class="fab fa-blogger-b"></i>',
 				t : 'blogger',
-				c : '#f57d00'
+				c : '#f57d00',
+
+				group : 'blog'
 			},
 
 		]

@@ -25,13 +25,17 @@
 		}
 	}
 
+	.embeddingWrapperCnt{
+		background: fade(@color-gray-mlight, 5);
+	}
+
 	.caption{
 		font-size: 1.7em;
 		font-weight: 500;
 	}
 
 	.subcaption{
-		padding : @rhythm 0;
+		padding : 2 * @rhythm 0;
 
 		span{
 			font-size: 0.8em;
@@ -271,21 +275,25 @@
 	}
 
 	.socialsharebtn{
-		width: 33px;
-		height: 33px;
+		width: 38px;
+		height: 38px;
 		background: transparent;
 		border : 0;
-		line-height: 33px;
+		line-height: 38px;
 		text-align: center;
 		border-radius: 50%;
 		color : #fff; 
 		padding : 0;
 		border : 0;
-		font-size: 0.7em;
+		font-size: 0.8em;
 		.transition(0.3s);
 		cursor: pointer;
 		background: @color-black;
 
+
+		img{
+			width: 18px;
+		}
 
 		&:hover{
 			opacity : 0.8;
@@ -295,14 +303,25 @@
 	.sharebuttonsTable{
 		width: auto;
 		display: block;
-		overflow: hidden;
-		padding : @rhythm 0;
-		>div{
+		
+		.gcaption{
+			border-bottom: 1px solid @color-gray-mlight;
+			text-align: center;
+			span{
+				font-size: 0.8em;
+			}
+		}
+		.gcontent{
+			overflow: hidden;
+			padding : @rhythm 0;
+			padding-bottom: 0;
+		}
+
+		.socialWrapper{
 			width: 20%;
 			float: left;
-			&.socialWrapper{
-				padding : @rhythm 0;
-			}
+			padding : @rhythm 0;
+			
 
 		}
 
@@ -312,9 +331,10 @@
 
 		.labelWrapper{
 			text-align: center;
-			color : @color-gray-mlight;
+			color : @color-black3;
 			span{
 				font-size: 0.8em;
+				font-weight: 500;
 			}
 		}
 	}
@@ -370,7 +390,7 @@
 	}
 
 	.wndinner{
-		max-height: 550px;
+		max-height: 570px;
 		width : auto;
 		max-width: 450px;
 		.wndheader{

@@ -58,7 +58,6 @@ if(!_Node)
 				})
 			}
 
-			console.log('embeddingSettigns', embeddingSettigns)
 			
 			embeddingSettigns.openapi = true
 			

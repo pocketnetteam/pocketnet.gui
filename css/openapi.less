@@ -1,6 +1,6 @@
 @import "__cssvar.less";
 
-html{
+html.openapipnet{
     background: transparent!important;
 
     .calltoaction{
@@ -41,18 +41,20 @@ html{
             }
         }
     }
+
+    .calltoaction{
+        .text{
+            max-width: 640px;
+            margin : 0 auto;
+        }
+     }
 }
-.calltoaction{
-   .text{
-       max-width: 640px;
-       margin : 0 auto;
-   }
-}
-.contentWrapper{
-    /*background: @color-black2;
-    padding : 2 * @rhythm;
-    border-radius: 10px;*/
+
+
+.contentWrapper.openapipnet{
+   
     overflow: hidden;
+
     #panelc{
        
     }
@@ -70,73 +72,78 @@ html{
         }
 
 
-        #lenta{
-            .work{
-                padding-right: 0;
-                padding-left: 0;
-                width: 100%!important;
-            }
+        
+    }
+}
+
+.openapipnet{
+    #lenta{
+        .work{
+            padding-right: 0;
+            padding-left: 0;
+            width: 100%!important;
         }
+    }
 
-        #lenta .shares .share{
+    #lenta .shares .share{
 
-            .videoTips{
-                display: none!important;
-            }
-            
-            &:nth-last-child(1){
-                margin-bottom: 0;
-            }
+        .videoTips{
+            display: none!important;
         }
-
-        #comments .list .comment{
+        
+        &:nth-last-child(1){
             margin-bottom: 0;
         }
+    }
 
-        #comments{
-            .commentPaddingWrapper{
-            }
+    #comments .list .comment{
+        margin-bottom: 0;
+    }
+
+    #comments{
+        .commentPaddingWrapper{
         }
+    }
 
-        
-        #lenta .shares .share.fullScreenVideo .work .panel{
+    
+    #lenta .shares .share.fullScreenVideo .work .panel{
+        padding-top: @rhythm;
+        padding-bottom: 0;
+    }
+    
+    #lenta .shares .share.fullScreenVideo{
+        position: relative;
+        overflow: hidden;
+
+        .exitFull {
+            position: static;
+            width: 100%;
+            background: #fff;
+            border-radius: 0;
+            color: #000;
+            text-align: left;
+            padding-left: 3 * @rhythm;
+        }
+        .url{
+            margin-bottom: 0;
+        }
+    }
+
+    #lenta .shares .share.fullScreenVideo .exitFull{
+        display: none;
+    }
+
+    #lenta .shares .share.fullScreenVideo .commentsWrapperHb{
+        padding-bottom: 0;
+        min-height: 0;
+    }
+
+    #comments.fromopenapi{
+        background: #FAFAFA;
+        padding : 2 * @rhythm;
+
+        .commentBody{
             padding-top: @rhythm;
-            padding-bottom: 0;
-        }
-        #lenta .shares .share.fullScreenVideo{
-            position: relative;
-            overflow: hidden;
-
-            .exitFull {
-                position: static;
-                width: 100%;
-                background: #fff;
-                border-radius: 0;
-                color: #000;
-                text-align: left;
-                padding-left: 3 * @rhythm;
-            }
-            .url{
-                margin-bottom: 0;
-            }
-        }
-
-        #lenta .shares .share.fullScreenVideo .exitFull{
-            display: none;
-        }
-
-        #lenta .shares .share.fullScreenVideo .commentsWrapperHb{
-            padding-bottom: 0;
-            min-height: 0;
-        }
-
-        #comments.fromopenapi{
-            background: #FAFAFA;
-            padding : 2 * @rhythm;
-
-            .commentBody{
-                padding-top: @rhythm;
-            }
         }
     }
 }

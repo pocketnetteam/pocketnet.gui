@@ -24,6 +24,8 @@ if(!_Node)
 	});
 
 	app.deviceReadyInit();
+
+	window.POCKETNETINSTANCE = app
 }
 
 topPreloader(100);
