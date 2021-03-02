@@ -9070,7 +9070,7 @@ Platform = function (app, listofnodes) {
 
                 getCoibaseTypeN : function (tx, address) {
                 
-
+                    console.log(tx, address)
                     var type = null;
                     
                     if(!tx.vout || !tx.vout.length || !address) return null
@@ -9081,7 +9081,7 @@ Platform = function (app, listofnodes) {
                     if(!firstout || l <= 1) return null
 
                     try {
-
+                        console.log("HERE")
                         var chunks = bitcoin.script.decompile(Buffer.from(firstout.scriptPubKey.hex, 'hex'))
 
                         var cl = chunks.length
@@ -14969,7 +14969,7 @@ Platform = function (app, listofnodes) {
                 loadMore: function (data, clbk, wa) {
 
                     var _dataclbk = function (tx, err) {
-
+                        console.log('tx, err', tx, err)
 
                         if (err || !tx) {
 
@@ -14979,7 +14979,7 @@ Platform = function (app, listofnodes) {
 
                         }
 
-                        //data.btx = tx;
+                        data.txinfo = tx;
 
                         var address = data.addr;
 
@@ -15078,6 +15078,9 @@ Platform = function (app, listofnodes) {
                         data.opmessage = platform.sdk.node.transactions.getOpreturn(data.txinfo)
 
                         data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address) 
+
+
+                        console.log('data.cointype', data.cointype)
 
 
                         platform.sdk.users.getone(data.address || '', function () {
@@ -17828,16 +17831,12 @@ Platform = function (app, listofnodes) {
 
                     self.app.settings.set(self.sdk.address.pnet().address, 'electron_hrefs', JSON.stringify(electronHrefs));
 
-                    console.log('currentHref', currentHref)
-                
                     window.location = 'pocketnet://electron/' + currentHref;
                 }
 
 
             } else {
-
                 self.app.user.features.telegram = 0;
-
             }
         }
 
