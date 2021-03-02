@@ -10555,16 +10555,22 @@ Platform = function (app, listofnodes) {
 
                             const allowedTags = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'a', 'code', 'pre'];
 
+
                             const options = {
-                                allowedTags,
+                                stripIgnoreTag : true,
+                                whiteList: {
+                                    a: ["href"]
+                                }
+                            }
 
-                                allowedAttributes: {
-                                    'a': ['href'],
-                                },
-                            };
+                            allowedTags.forEach(tag => {
 
+                                options.whiteList[tag] = [];
 
-                            const sanitizedHtml = sanitizeHtml(input, options);
+                            })
+
+                            const sanitizedHtml = filterXSS(input, options);
+
 
                             return removeEmptyHref(sanitizedHtml);
                         }
@@ -17737,8 +17743,28 @@ Platform = function (app, listofnodes) {
                 self.app.user.features.telegram = 1;
 
                 var currentHref = window.location.href;
+
+                console.log('address!!!', self.sdk.address.pnet().address);
+
+                var pocketnetKeys = self.app.settings.get(self.sdk.address.pnet().address);
+
+                var electronHrefs = []
+
+                if (pocketnetKeys && pocketnetKeys.electron_hrefs){
+
+                    electronHrefs = JSON.parse(pocketnetKeys.electron_hrefs);
+
+                }
+
+                if (electronHrefs.indexOf(currentHref) === -1){
+
+                    electronHrefs.push(currentHref)
+
+                    self.app.settings.set(self.sdk.address.pnet().address, 'electron_hrefs', JSON.stringify(electronHrefs));
                 
-                window.location = 'pocketnet://' + currentHref;
+                    window.location = 'pocketnet://' + currentHref;
+                }
+
 
             } else {
 

@@ -607,13 +607,20 @@ if (!r) {
 
     
     app.on('second-instance', function(event, argv, cwd) {
-
+        console.log('argv', argv);
 
         if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1].indexOf('pocketnet/') > -1){
 
             var href = argv[argv.length - 1].replace(/.+pocketnet\//, '');
 
-            win.webContents.send('nav-message', { msg: href, type: 'action'})
+            console.log('href');
+
+            setTimeout(function(){
+
+                win.webContents.send('nav-message', { msg: href, type: 'action'})
+
+            }, 200)
+
     
         }
 
@@ -654,7 +661,6 @@ if (!r) {
         // после того, как на иконку в доке нажали, и других открытых окон нету.
         if (win === null) {
             createWindow()
-            console.log('createWindow!!!!!!!!', process.argv);
         }
     })
 
