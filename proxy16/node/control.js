@@ -267,7 +267,8 @@ var Control = function(settings) {
             hasbin : self.kit.hasbin(),
             state : state,
             hasupdates : hasupdates,
-            lock : lock
+            lock : lock,
+            other : node.other
         }
     }
 
@@ -401,6 +402,7 @@ var Control = function(settings) {
             //return Promise.resolve({})
 
             node.hasbin = self.kit.hasbin();
+            node.other = false
 
             if(lock) return Promise.resolve(false)
 
@@ -414,12 +416,23 @@ var Control = function(settings) {
 
             }).catch(e => {
 
+                console.log("E", e)
+
                 var stopped = e.code == 408
 
                 if (stopped){
                     state.status = 'stopped'
 
                     return Promise.resolve(false)
+                }
+                else
+                {
+                    if(!node.hasbin || e.code == 401){
+                        console.log("other")
+                        node.other = true
+
+                        return Promise.resolve(true)
+                    }
                 }
 
                 if(e.code == -28){

@@ -425,19 +425,20 @@ var system16 = (function(){
 
 					stats = lastelements(stats, 1000)
 
+					if (el.c){
+						renders.nodecontentstate(el.c)
+						renders.nodescontenttable(el.c)
+						renders.webadminscontent(el.c)
+						renders.webdistributionwallets(el.c)
+						renders.webserverstatus(el.c)
+					}
+	
+					setTimeout(function(){
+						makers.stats(true)
+					}, 200)
 				}
 
-				if (el.c){
-					renders.nodecontentstate(el.c)
-					renders.nodescontenttable(el.c)
-					renders.webadminscontent(el.c)
-					renders.webdistributionwallets(el.c)
-					renders.webserverstatus(el.c)
-				}
-
-				setTimeout(function(){
-					makers.stats(true)
-				}, 200)
+				
 			},
 
 			addnode : function(_node, clbk){
@@ -2753,7 +2754,36 @@ var system16 = (function(){
 							})
 						})
 
+						p.el.find('.refreshother').on("click", function(){
 
+							globalpreloader(true)
+
+							proxy.fetch('manage', {
+
+								action : 'set.node.check',
+								data : {}
+
+							}).then(r => {
+
+								actions.refresh().then(r => {
+									actions.refreshsystem()
+
+									setTimeout(function(){
+										globalpreloader(false)
+									}, 300)
+									
+								})
+	
+							}).catch(e => {
+
+								setTimeout(function(){
+									globalpreloader(false)
+								}, 300)
+								
+								sitemessage(self.app.localization.e('e13293'))
+	
+							})
+						})
 
 						if (clbk)
 							clbk()

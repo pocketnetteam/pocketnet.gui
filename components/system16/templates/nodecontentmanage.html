@@ -111,20 +111,41 @@
                 <% } %> 
 
                 <% if(!nc.lock) {%> 
+
+                    <% if(!nc.other) {%> 
                     
-                    <div class="notfound install">
-                        <div class="text">
-                            Pocketnet Node was not found. Download and Install it
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-cloud-download-alt"></i>
-                        </div>
-                    </div>    
+                        <div class="notfound install">
+                            <div class="text">
+                                Pocketnet Node was not found. Download and Install it
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-cloud-download-alt"></i>
+                            </div>
+                        </div>  
+                    
+                    <% } else { %>
+                        
+                        <div class="notfound refreshother">
+                            <div class="text">
+                                Your device already has Pocketnet Node.<br>
+
+                                <% if(proxy.direct) {%>
+                                    You can set system pathes or stop it and install via Pocketnet Desktop Application
+                                <% } else {%> 
+                                    You can't manage node on this device via current application
+                                <% } %>
+                            </div>
+
+                            <% if(proxy.direct) {%>
+                                <div class="icon">
+                                    <i class="fas fa-sync"></i> Refresh
+                                </div>
+                            <% }%>
+                        </div>  
+                        
+                    <% }%>
 
                 <% }%>
-                    
-                
-                
                 
             <% } %>
 

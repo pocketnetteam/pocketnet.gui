@@ -17817,15 +17817,17 @@ Platform = function (app, listofnodes) {
 
                 var currentHref = self.app.nav.get.href();
 
-                var pocketnetKeys = self.app.settings.get(self.sdk.address.pnet().address);
+                var pocketnetKeys = self.app.settings.get(self.sdk.address.pnet().address, 'electron_hrefs');
 
                 var electronHrefs = []
 
                 if (pocketnetKeys && pocketnetKeys.electron_hrefs){
-                    electronHrefs = JSON.parse(pocketnetKeys.electron_hrefs);
+                    electronHrefs = JSON.parse(pocketnetKeys.electron_hrefs || "[]");
                 }
 
-                if (electronHrefs.indexOf(currentHref) === -1 && !electron){
+                console.log("electronHrefs", electronHrefs)
+
+                if (!electronHrefs.length && !electron){
 
                     electronHrefs.push(currentHref)
 

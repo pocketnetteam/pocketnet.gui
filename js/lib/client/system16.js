@@ -76,7 +76,8 @@ var System16 = function(app, proxy, direct){
 
         var message = d.data
 
-
+        if(!message) return
+        
         var settings = message.settings || {}
 
         var hash = bitcoin.crypto.hash256(JSON.stringify(settings))
