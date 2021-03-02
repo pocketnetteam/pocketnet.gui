@@ -599,31 +599,36 @@ function createWindow() {
 }
 
 
+var openlink = function(argv, ini){
+
+    if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1].indexOf('pocketnet://') > -1){
+
+        var href = argv[argv.length - 1].replace('pocketnet://electron/', '');
+
+        if (href && href[href.length - 1] == '/') href = href.substr(0, href.length - 1)
+
+        if(!href) href = 'index'
+
+        setTimeout(function(){
+
+            win.webContents.send('nav-message', { msg: href, type: 'action'})
+
+        }, ini ? 3000 : 5)
+
+    }
+}
+
 var r = app.requestSingleInstanceLock()
 
-if (!r) {
+if(!r) {
     app.quit()
 } else {
 
+    openlink(process.argv, true)
     
     app.on('second-instance', function(event, argv, cwd) {
-        console.log('argv', argv);
 
-        if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1].indexOf('pocketnet/') > -1){
-
-            var href = argv[argv.length - 1].replace(/.+pocketnet\//, '');
-
-            console.log('href');
-
-            setTimeout(function(){
-
-                win.webContents.send('nav-message', { msg: href, type: 'action'})
-
-            }, 200)
-
-    
-        }
-
+        openlink(argv)
 
         if (win) {
 

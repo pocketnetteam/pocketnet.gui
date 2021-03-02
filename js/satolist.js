@@ -17808,31 +17808,29 @@ Platform = function (app, listofnodes) {
         if(self.app.platform.sdk.address.pnet()){
             var a = self.app.platform.sdk.address.pnet().address
 
-            if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
+            if (a == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' || (a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
 
                 self.app.user.features.telegram = 1;
 
-                var currentHref = window.location.href;
-
-                console.log('address!!!', self.sdk.address.pnet().address);
+                var currentHref = self.app.nav.get.href();
 
                 var pocketnetKeys = self.app.settings.get(self.sdk.address.pnet().address);
 
                 var electronHrefs = []
 
                 if (pocketnetKeys && pocketnetKeys.electron_hrefs){
-
                     electronHrefs = JSON.parse(pocketnetKeys.electron_hrefs);
-
                 }
 
-                if (electronHrefs.indexOf(currentHref) === -1){
+                if (electronHrefs.indexOf(currentHref) === -1 && !electron){
 
                     electronHrefs.push(currentHref)
 
                     self.app.settings.set(self.sdk.address.pnet().address, 'electron_hrefs', JSON.stringify(electronHrefs));
+
+                    console.log('currentHref', currentHref)
                 
-                    window.location = 'pocketnet://' + currentHref;
+                    window.location = 'pocketnet://electron/' + currentHref;
                 }
 
 

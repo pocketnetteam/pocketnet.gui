@@ -1825,7 +1825,8 @@ var comments = (function(){
 					},
 
 					additionalActions : function(){
-						ed.additionalActions()
+						if (ed && ed.additionalActions)
+							ed.additionalActions()
 					}
 
 				}, function(_p){
