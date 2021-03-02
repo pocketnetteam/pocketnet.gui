@@ -287,7 +287,7 @@ var metadisplay = function(){ %>
 
 	<div class="work">
 
-		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>">
+		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
 			<% if(!emptywithrepost) { %>
 
@@ -478,6 +478,10 @@ var metadisplay = function(){ %>
 		
 	</div>
 
+	<div class="exitFull roundclosebutton">
+		<i class="fa fa-times" aria-hidden="true"></i>
+	</div>
+
 	<% if(!emptywithrepost) {%>
 
 		<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
@@ -493,8 +497,6 @@ var metadisplay = function(){ %>
 
 	<% } %>
 
-	<div class="exitFull roundclosebutton">
-		<i class="fa fa-times" aria-hidden="true"></i>
-	</div>
+	
 
 <% } %>

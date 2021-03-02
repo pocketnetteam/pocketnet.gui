@@ -1690,6 +1690,28 @@ Platform = function (app, listofnodes) {
     }
 
     self.papi = {
+        lenta : function(ids, el, clbk, p){
+
+            if(!p) p = {}
+
+            app.nav.api.load({
+
+                open : true,
+                id : 'lenta',
+                el : el,
+                animation : false,
+                essenseData : {
+                    byauthor : true,
+                    notscrollloading : true,
+                    txids : ids,
+                    comments : p.comments,
+                    enterFullScreenVideo : p.fullscreenvideo,
+                    openapi : p.openapi
+                },
+                
+                clbk : clbk
+            })
+        },
         post: function (id, el, clbk, p) {
 
             if (!p) p = {}
@@ -1712,13 +1734,52 @@ Platform = function (app, listofnodes) {
                             repost: p.repost,
                             level: p.level,
                             fromempty: p.fromempty,
-                            eid: id + (p.eid || "")
+                            eid: id + (p.eid || ""),
+                            comments : p.comments
                         }
                     })
 
                 })
             })
 
+        },
+        channel : function(id, el, clbk, p){
+            self.sdk.users.get(id, function () {
+
+                app.nav.api.load({
+                    open: true,
+                    href: 'channel',
+                    el: el,
+                    eid: id + (p.eid || ""),
+                    clbk: clbk,
+
+                    essenseData: {
+                        id : id
+                    }
+                })
+
+            })
+        },
+        comment : function(id, el, clbk, p){
+
+            app.nav.api.load({
+                open : true,
+                id : 'comments',
+                el : el,
+                eid : id + 'post',
+
+                essenseData : {
+                    txid : id,
+                    showall : true,
+                    init : true,
+                    preview : false,
+                    fromtop : true,
+                    commentPs : p.commentPs,
+                    openapi : p.openapi
+                },
+
+                clbk : clbk
+            })
         }
     }
 
@@ -1866,7 +1927,7 @@ Platform = function (app, listofnodes) {
         },
 
         name: function (address) {
-            var n = deep(app, 'platform.sdk.usersl.storage.' + address + '.name');
+            var n = deep(app, 'platform.sdk.usersl.storage.' + address + '.name') || deep(app, 'platform.sdk.users.storage.' + address + '.name');
 
             if (n) {
                 n = this.clearname(n)
@@ -2494,19 +2555,23 @@ Platform = function (app, listofnodes) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
                     return s.txid == id
                 })
-
-                share = new pShare();
-                share._import(temp);
-                share.temp = true;
-                share.address = self.app.platform.sdk.address.pnet().address
+                if (temp){
+                    share = new pShare();
+                    share._import(temp);
+                    share.temp = true;
+                    share.address = self.app.platform.sdk.address.pnet().address
+                }
+                
             }
 
-
+  
             var address = share.address
 
             var d = {};
 
             d.share = share
+
+           
 
             self.app.platform.sdk.ustate.me(function (_mestate) {
 
@@ -4511,7 +4576,6 @@ Platform = function (app, listofnodes) {
                     if(old.block && e.block){
                         if(old.block > e.block){
 
-                            console.log("CANTSAVE")
 
                             return
                         }
@@ -4590,7 +4654,6 @@ Platform = function (app, listofnodes) {
                 if (exported.block)
                     this.storage.block = exported.block
 
-                console.log("imported", imported)
             },
 
             export: function () {
@@ -4786,7 +4849,6 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
-                    console.log("getmissedinfo", n.storage.block)
 
                     self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, n.storage.block]).then(d => {
 
@@ -6219,7 +6281,6 @@ Platform = function (app, listofnodes) {
             },
 
             saveTempInfoWallet : function(txid, inputs, outputs){
-                console.log('txid, inputs, outputs', txid, inputs, outputs)
 
                 if(!txid) return
 
@@ -6236,7 +6297,6 @@ Platform = function (app, listofnodes) {
                     temp[obj.type] = {};
                 }   
 
-                console.log('txid', txid)
 
                 temp[obj.type][txid] = obj;
 
@@ -6346,7 +6406,6 @@ Platform = function (app, listofnodes) {
 
                     this.embed(outputs, embdedtext)
 
-                    console.log("SEND")
 
                     self.sdk.wallet.txBaseFeesWithCache(address, outputs, keyPair, feerate, function (err, d) {
 
@@ -6468,7 +6527,6 @@ Platform = function (app, listofnodes) {
 
                     var address = ar[rand(0, ar.length - 1)]
 
-                    console.log('address', address, ar)
 
                     if (clbk)
                         clbk(address)
@@ -7380,7 +7438,7 @@ Platform = function (app, listofnodes) {
                 var i = self.sdk.comments.ini;
                 var address = ''
 
-                var ao = self.app.platform.sdk.address.pnet();
+                var ao = self.sdk.address.pnet();
 
                 if (ao) address = ao.address
 
@@ -7445,60 +7503,7 @@ Platform = function (app, listofnodes) {
                         if (clbk)
                             clbk(e)
                     })
-                    /*
-                    self.app.ajax.rpc({
-                        method: 'getcomments',
-                        parameters: ['', '', address, ids],
-                        fail: function (d, e) {
-
-                            if (clbk)
-                                clbk(d, e)
-
-                        },
-                        success: function (d) {
-
-                            var arrange = ['commentEdit', 'commentDelete'];
-                            var tc = group(self.sdk.relayTransactions.withtemp('comment'), function (tempComment) {
-                                return tempComment.optype || 'comment'
-                            })
-
-                            _.each(arrange, function (i) {
-
-                                _.each(tc[i], function (tempComment) {
-
-                                    var i = tempComment.optype
-
-                                    var f = _.find(d, function (c) {
-                                        if (c.id == (tempComment.id || tempComment.txid)) return true
-                                    })
-
-                                    if (i == 'commentEdit') {
-                                        if (f && f.id == tempComment.id) {
-                                            f.msg = tempComment.msg
-                                            f.timeUpd = tempComment.timeUpd
-                                        }
-                                    }
-
-                                    if (i == 'commentDelete') {
-                                        if (f && f.id == tempComment.id) {
-                                            f.deleted = true
-                                        }
-                                    }
-
-                                })
-                            })
-
-                            var c = i(d)
-
-                            self.sdk.comments.users(c, function (d, e) {
-
-                                if (clbk)
-                                    clbk(d, e)
-
-                            })
-
-                        }
-                    })*/
+                   
                 }
 
             },
@@ -7943,7 +7948,6 @@ Platform = function (app, listofnodes) {
 
                     }
                     catch (e) {
-                        console.log("E", e)
                         msg = {
                             m: msg
                         }
@@ -9064,6 +9068,68 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
+                getCoibaseTypeN : function (tx, address) {
+                
+
+                    var type = null;
+                    
+                    if(!tx.vout || !tx.vout.length || !address) return null
+
+                    var firstout = tx.vout[0]
+                    var l = tx.vout.length
+
+                    if(!firstout || l <= 1) return null
+
+                    try {
+
+                        var chunks = bitcoin.script.decompile(Buffer.from(firstout.scriptPubKey.hex, 'hex'))
+
+                        var cl = chunks.length
+
+                        if(!cl) return null
+
+                        var n = 0;
+
+                        for(var i = l - 1; i > 0; i--){
+
+                            n++
+
+                            var v = tx.vout[i]
+
+                            var _address = deep(v, 'scriptPubKey.addresses.0')
+
+                            if (_address == address && chunks[cl - n]) {
+                                var ch = chunks[cl - n]
+
+                                console.log("CH", ch, chunks)
+
+                                if (ch == bitcoin.opcodes.OP_WINNER_POST) {
+                                    type = 'post'
+                                }
+
+                                if (ch == bitcoin.opcodes.OP_WINNER_COMMENT) {
+                                    type = 'comment'
+                                }
+
+                                if (ch == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
+                                    type = 'postref'
+                                }
+
+                                if (ch == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
+                                    type = 'commentref'
+                                }
+                            }
+                        }
+
+                    }
+                    catch(e){
+                        console.log("E", e)
+                    }
+
+                 
+                    return type
+                },
+
                 getCoibaseType: function (tx, address) {
 
                     var type = null;
@@ -9075,14 +9141,17 @@ Platform = function (app, listofnodes) {
 
                         if (_address == address) {
 
+
                             try {
                                 var chunks = bitcoin.script.decompile(Buffer.from(v.scriptPubKey.hex, 'hex'))
 
+
                                 var ch = _.find(chunks, function (c) {
-                                    return c == bitcoin.opcodes.OP_WINNER_POST || c == bitcoin.opcodes.OP_WINNER_COMMENT
+                                    return c == bitcoin.opcodes.OP_WINNER_POST || c == bitcoin.opcodes.OP_WINNER_COMMENT|| c == bitcoin.opcodes.OP_WINNER_POST_REFERRAL|| c == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL
                                 })
 
                                 type = ch;
+
 
                                 if (type == bitcoin.opcodes.OP_WINNER_POST) {
                                     type = 'post'
@@ -9091,8 +9160,21 @@ Platform = function (app, listofnodes) {
                                 if (type == bitcoin.opcodes.OP_WINNER_COMMENT) {
                                     type = 'comment'
                                 }
+
+                                if (type == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
+                                    type = 'postref'
+                                }
+
+                                if (type == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
+                                    type = 'commentref'
+                                }
+
+               
+
                             }
                             catch (e) {
+
+                                console.log("ERR", e)
 
                             }
                         }
@@ -9537,13 +9619,7 @@ Platform = function (app, listofnodes) {
 
                 tempBalanceOutputs: function () {
                     var outputs = this.tempOutputs()
-                    console.log("outputs", outputs, _.reduce(outputs, function (m, i) {
-
-                        if(i.deleted) return m
-
-                        return m + i.amount
-
-                    }, 0))
+                   
 
                     return _.reduce(outputs, function (m, i) {
                         if(i.deleted) return m
@@ -10269,7 +10345,6 @@ Platform = function (app, listofnodes) {
 
                         var tx = txb.build()
 
-                            console.log("TX", tx)
 
                         return tx;
 
@@ -14904,7 +14979,7 @@ Platform = function (app, listofnodes) {
 
                         }
 
-                        data.btx = tx;
+                        //data.btx = tx;
 
                         var address = data.addr;
 
@@ -14998,11 +15073,12 @@ Platform = function (app, listofnodes) {
                             return m + v.amount
                         }, 0)
 
-                        data.address = platform.sdk.node.transactions.addressFromScryptSig(deep(data.btx, 'vin.0.scriptSig.asm'))
+                        data.address = platform.sdk.node.transactions.addressFromScryptSig(deep(data.txinfo, 'vin.0.scriptSig.asm'))
 
-                        data.opmessage = platform.sdk.node.transactions.getOpreturn(data.btx)
+                        data.opmessage = platform.sdk.node.transactions.getOpreturn(data.txinfo)
 
-                        //data.cointype = platform.sdk.node.transactions.getCoibaseType(data.btx, platform.sdk.address.pnet().address) 
+                        data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address) 
+
 
                         platform.sdk.users.getone(data.address || '', function () {
 
@@ -15097,7 +15173,6 @@ Platform = function (app, listofnodes) {
                     if (data.tx) {
 
 
-
                         if (data.tx.coinbase) {
 
                             if (platform.sdk.usersettings.meta.win.value) {
@@ -15107,8 +15182,6 @@ Platform = function (app, listofnodes) {
                                 if (data.cointype) {
                                     td = td + data.cointype
                                 }
-
-
 
                                 html += self.tempates.user(
 
@@ -15533,7 +15606,6 @@ Platform = function (app, listofnodes) {
             event: {
                 loadMore: function (data, clbk, wa) {
 
-                    console.log("LOADMORE EVENT")
 
                     if (data.addrFrom) {
 
@@ -17075,8 +17147,6 @@ Platform = function (app, listofnodes) {
                     p.charsetDec = (p.charsetDec || 'hex')
 
                     var encryptedBytes = new Uint8Array(aesjs.utils[p.charsetDec].toBytes(str));
-
-
 
                     self.helpers.keyForAes(key, function (akey) {
 

@@ -1,0 +1,149 @@
+@import "__cssvar.less";
+
+html.openapipnet{
+    background: transparent!important;
+
+    .calltoaction{
+        background: fade(@color-gray-slight, 10);
+        padding : 2 * @rhythm;
+        text-align: center;
+
+        .text{
+            padding : 0 2 * @rhythm;
+
+            span{
+                font-size: 0.8em;
+            }
+        }
+
+        .buttonWrapper{
+            padding : 2 * @rhythm;
+        }
+    }
+
+    .headeropenapi{
+        display: flex;
+        justify-content: center;
+        vertical-align: middle;
+        margin-bottom : @rhythm;
+        margin-top : @rhythm;
+
+        img{
+            vertical-align: bottom;
+        }
+
+        .label{
+            padding-left: @rhythm;
+
+            span{
+                font-size: 0.8em;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .calltoaction{
+        .text{
+            max-width: 640px;
+            margin : 0 auto;
+        }
+     }
+}
+
+
+.contentWrapper.openapipnet{
+   
+    overflow: hidden;
+
+    #panelc{
+       
+    }
+    
+    #content{
+       
+        width: 100%;        
+        margin : 0 auto;
+        max-width: 720px;
+       
+        &.full{
+            max-width: none;
+            width: 100%;
+            padding: 0;
+        }
+
+
+        
+    }
+}
+
+.openapipnet{
+    #lenta{
+        .work{
+            padding-right: 0;
+            padding-left: 0;
+            width: 100%!important;
+        }
+    }
+
+    #lenta .shares .share{
+
+        .videoTips{
+            display: none!important;
+        }
+        
+        &:nth-last-child(1){
+            margin-bottom: 0;
+        }
+    }
+
+    #comments .list .comment{
+        margin-bottom: 0;
+    }
+
+    #comments{
+        .commentPaddingWrapper{
+        }
+    }
+
+    
+    #lenta .shares .share.fullScreenVideo .work .panel{
+        padding-top: @rhythm;
+        padding-bottom: 0;
+    }
+    
+    #lenta .shares .share.fullScreenVideo{
+        position: relative;
+        overflow: hidden;
+
+        .exitFull {
+            position: static;
+            width: 100%;
+            background: #fff;
+            border-radius: 0;
+            color: #000;
+            text-align: left;
+            padding-left: 3 * @rhythm;
+        }
+        .url{
+            margin-bottom: 0;
+        }
+    }
+
+    #lenta .shares .share.fullScreenVideo .exitFull{
+        display: none;
+    }
+
+    #lenta .shares .share.fullScreenVideo .commentsWrapperHb{
+        padding-bottom: 0;
+        min-height: 0;
+    }
+
+    #comments.fromopenapi{
+        background: #FAFAFA;
+        padding : 2 * @rhythm;
+
+        .commentBody{
+            padding-top: @rhythm;
+        }
+    }
+}

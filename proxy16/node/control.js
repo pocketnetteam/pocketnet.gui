@@ -327,12 +327,15 @@ var Control = function(settings) {
             }).then(r => {
                 return makeconfig()
             }).then(r => {
-                return applications.install(node.binPath)
+                return applications.install(self.helpers.complete_bin_path())
             }).then(r => {
                 lock = ''
                 self.autorun.init()
                 return self.kit.check()
             }).catch(e => {
+
+                console.log("ERR", e)
+
                 lock = ''
 
                 return Promise.reject(e)

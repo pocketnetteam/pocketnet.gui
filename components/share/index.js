@@ -1840,10 +1840,8 @@ var share = (function(){
 					html = '<div class="poll">' + content + removeWrapper + '</div>';
 				}
 
-
 				pollWrapper.html(html);
-
-				
+	
 				p.el.find('.pollWrapper').on('click', function(){
 
 					events.removePoll();

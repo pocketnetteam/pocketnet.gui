@@ -19,7 +19,7 @@
         default-src https: 'self'; 
         connect-src https: wss:;
         img-src 'self' data: https:;
-        script-src 'self' https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' https://pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
         font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src *">
@@ -36,12 +36,11 @@
 
         __CSS__
         
-           
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
-
+        <script src="https://pocketnet.app/js/widgets.js?v=136"></script>
          
        
     </head>
@@ -92,7 +91,7 @@
        <!-- <script src="cordova.js"></script>-->
                 
 
-        <script src="js/vendor/jquery-1.11.3.min.js"></script>
+        <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
         <script src="js/vendor/sanitize-html.min.js"></script>
 
 

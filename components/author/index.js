@@ -251,7 +251,6 @@ var author = (function(){
 				name : self.app.localization.e('share').toUpperCase() + ' <i class="fas fa-share-alt"></i>',
 				mobile : '<i class="fas fa-share-alt"></i>',
 				id : 'share',
-
 				if : function(){
 					return true
 				},
@@ -260,9 +259,18 @@ var author = (function(){
 
 						self.nav.api.load({
 							open : true,
-							href : 'socialshare',
+							href : 'socialshare2',
 							history : true,
-							inWnd : true
+							inWnd : true,
+							uid : "authorshare",
+							essenseData : {
+								caption : "Share this author",
+								sharing : author.data.social(self.app),
+								embedding : {
+									type : 'channel',
+									id : author.address
+								}
+							}
 						})
 						
 					}
@@ -503,10 +511,11 @@ var author = (function(){
 						tap : function(){
 							var r = $(this).attr('menuitem');
 
-							if (reports[r])
+							if (reports[r] && reports[r].render)
 								renders.report(reports[r])
 						}
 					})
+
 					
 					_.each(reports, function(r, j){
 						if(r.events){

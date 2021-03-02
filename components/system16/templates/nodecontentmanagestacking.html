@@ -9,10 +9,10 @@
                     <span class="copyaddress"><%= sa.address %></span>
                 </div>
 
-                <% if(manager) {%>
+                <% if(manager && manager.chain) {%>
 
                     <div class="iconWrapper">
-                        <% if(nodestate.info.lastblock.height < manager.chain.commonHeight - 10) {%>
+                        <% if(nodestate.info.lastblock && nodestate.info.lastblock.height < manager.chain.commonHeight - 10) {%>
                             <i class="fas fa-spinner fa-spin"></i>
                         <% } else {%> 
                             <i class="fas fa-check-circle good"></i>
@@ -38,7 +38,8 @@
         <% }) %>
 
     </div>
-    <% if(nodestate.info.lastblock.height < manager.chain.commonHeight - 10) {%>
+    <% if(nodestate.info.lastblock) {%>
+    <% if(manager.chain && nodestate.info.lastblock.height > manager.chain.commonHeight - 10) {%>
         <div class="canstacking">
             <% var amount = _.reduce(stacking, function(c, sa){
                 return sa.balance + c
@@ -52,6 +53,16 @@
                 
             <% }%>
         </div>
-    <% } %>
+    <% } else {%> 
+    
+        <div class="canstacking">
+        
+            <i class="far fa-times-circle bad"></i> <span class="bad">Node can't staking. Waiting blockchain synchronization</span>
+                
+    
+        </div>
+        
+    <%}%>
+    <%}%>
 
 <% } %>

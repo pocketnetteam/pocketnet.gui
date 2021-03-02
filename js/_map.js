@@ -1497,7 +1497,39 @@ __map =  {
 		],
 	},
 
-	
+	socialshare2 : {
+		uri : "socialshare2",
+		href : "socialshare2",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+
+		anonimus : true,
+
+		relations : [
+			{src : 'js/vendor/SocialShare.min.js',			   f : 'js'},
+		],
+	},
 
 	main : {
 		uri : "main",
@@ -1512,6 +1544,16 @@ __map =  {
 	author : {
 		uri : "author",
 		href : "author",
+		add : {
+			el : 'content'
+		},
+		anonimus : true,
+		
+	},
+
+	channel : {
+		uri : "channel",
+		href : "channel",
 		add : {
 			el : 'content'
 		},

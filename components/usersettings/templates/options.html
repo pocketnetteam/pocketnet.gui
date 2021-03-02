@@ -7,7 +7,11 @@
 		<div class="mwork wh">
 			<div class="groupOptions">
 
-				<% _.each(group.options, function(parameter){ %>
+				<% _.each(group.options, function(parameter){ 
+					
+					if(parameter.id == 'downvotes' && !parameter.value) return
+					
+					%>
 
 					<div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
 						<div class="parameter table <%-parameter.type%>">
