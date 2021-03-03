@@ -388,6 +388,11 @@ var faq = (function(){
 
 				var m = question.q;
 
+				var l = filterXSS(question.a, {
+					whiteList: [],
+					stripIgnoreTag: true
+				})
+
 				self.nav.api.load({
 					open : true,
 					href : 'socialshare2',
@@ -396,8 +401,21 @@ var faq = (function(){
 
 					essenseData : {
 						url : url,
+						sharing : {
+							image : '',
+							images : [],
+							title : m,
+							html : {
+								body : question.a,
+								preview : trimHtml(question.a, 160)
+							},
+
+							text : {
+								body : l,
+								preview : trimHtml(l, 160)
+							}
+						},
 						caption : 'Share FAQ answer in social networks',
-						title : m
 					}
 				})
 			},

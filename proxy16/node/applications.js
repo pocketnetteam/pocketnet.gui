@@ -228,6 +228,10 @@ var Applications = function(settings) {
 
     }
 
+    self.hasapplication = function(){
+        return meta ? true : false
+    }
+
     return self
 }
 

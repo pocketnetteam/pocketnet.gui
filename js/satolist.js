@@ -2847,13 +2847,11 @@ Platform = function (app, listofnodes) {
 
                                                     var trobj = new c();
 
-
                                                     trobj.import(object);
 
                                                     trobj.fromrelay = true;
 
                                                     object.sending = true;
-
 
                                                     self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -2868,9 +2866,11 @@ Platform = function (app, listofnodes) {
                                                             if (error) {
                                                                 if (key == 'userInfo') {
 
-                                                                    if (error == '18' && !nshowed) {
+                                                                    var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
 
-                                                                        nshowed = true
+                                                                    if (error == '18' && _nsh != nshowed) {
+
+                                                                        nshowed = _nsh
 
                                                                         app.nav.api.load({
                                                                             open: true,
@@ -2878,7 +2878,8 @@ Platform = function (app, listofnodes) {
                                                                             inWnd: true,
 
                                                                             essenseData: {
-                                                                                caption: self.app.localization.e('e13265')
+                                                                                caption: self.app.localization.e('e13265'),
+                                                                                failedrelay : trobj
                                                                             }
                                                                         })
 
@@ -17817,23 +17818,21 @@ Platform = function (app, listofnodes) {
 
                 var currentHref = self.app.nav.get.href();
 
-                var pocketnetKeys = self.app.settings.get(self.sdk.address.pnet().address, 'electron_hrefs');
-
-                var electronHrefs = []
-
-                if (pocketnetKeys && pocketnetKeys.electron_hrefs){
-                    electronHrefs = JSON.parse(pocketnetKeys.electron_hrefs || "[]");
-                }
-
-                console.log("electronHrefs", electronHrefs)
-
-                if (!electronHrefs.length && !electron){
+                var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
+               
+                if (electronHrefs.indexOf(currentHref) == -1 && !electron){
 
                     electronHrefs.push(currentHref)
 
-                    self.app.settings.set(self.sdk.address.pnet().address, 'electron_hrefs', JSON.stringify(electronHrefs));
+                    localStorage['electron_hrefs'] = JSON.stringify(electronHrefs)
 
-                    window.location = 'pocketnet://electron/' + currentHref;
+                    try{
+                        window.location = 'pocketnet://electron/' + currentHref;
+                    }
+                    catch(e){
+                        console.log("electron not installed")
+                    }
+                   
                 }
 
 

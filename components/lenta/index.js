@@ -1215,7 +1215,7 @@ var lenta = (function(){
 
 				if (
 
-					($(window).scrollTop() + $(window).height() > el.c.height() - 400) 
+					($(window).scrollTop() + $(window).height() > el.c.height() - 2000) 
 
 					&& !loading && !ended && recommended != 'recommended') {
 

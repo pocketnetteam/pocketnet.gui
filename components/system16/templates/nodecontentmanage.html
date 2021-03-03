@@ -113,15 +113,30 @@
                 <% if(!nc.lock) {%> 
 
                     <% if(!nc.other) {%> 
+
+                        <% if(nc.hasapplication) {%>
                     
-                        <div class="notfound install">
-                            <div class="text">
-                                Pocketnet Node was not found. Download and Install it
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-cloud-download-alt"></i>
-                            </div>
-                        </div>  
+                            <div class="notfound install">
+                                <div class="text">
+                                    Pocketnet Node was not found. Download and Install it
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-cloud-download-alt"></i>
+                                </div>
+                            </div>  
+
+                        <% } else { %> 
+                            
+                            <div class="notfound">
+                                <div class="text">
+                                    Pocketnet Node control is not yet available for your operating system.
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-wrench"></i>
+                                </div>
+                            </div>  
+
+                        <% }%>
                     
                     <% } else { %>
                         

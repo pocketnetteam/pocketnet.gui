@@ -91,6 +91,9 @@ var metadisplay = function(){ %>
 			
 				<div class="repostCaption">
 					<i class="fas fa-share"></i> 
+					<a href="<%-app.platform.api.authorlink(share.address)%>">
+						<span class="adr"><%-name || share.address %></span>
+					</a>
 				</div>
 				
 			<% } %>

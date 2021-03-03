@@ -1239,7 +1239,9 @@ var system16 = (function(){
 
 						settings.charts[type].showed = _el.find('.graphWrapper').hasClass('showed')
 
-						graph.chart.reflow()
+						
+							graph.chart.reflow()
+						
 					})
 
 					_el.find('.subcaptiongraph').on('click', function(){
@@ -1277,6 +1279,8 @@ var system16 = (function(){
 
 				if(!el.c) return
 
+				console.log("update", update)
+
 				if (graphs[type] && update){
 
 					var t = helpers.type(type, stats)
@@ -1284,9 +1288,12 @@ var system16 = (function(){
 
 					series = graphs[type].rarefied(series, 50)
 
-					graphs[type].chart.update({
-						series: series
-					});
+					if(self.app.platform.focus){
+						console.log("focus")
+						graphs[type].chart.update({
+							series: series
+						});
+					}
 
 					return 
 				}

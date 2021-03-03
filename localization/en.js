@@ -956,3 +956,6 @@ ____loclib.shareviagroupemail = "Email"
 ____loclib.shareviagroupmessenger = "Messengers"
 ____loclib.shareviagroupsocial = "Social networks"
 ____loclib.shareviagroupblog = "Blogs"
+
+____loclib.anotherSiteCaption = "You follow an external link to a third-party site"
+____loclib.anotherSiteDisc = "We are not responsible for the content of the site and strongly recommend that you do not provide any of your personal data on third-party sites."

@@ -145,7 +145,7 @@ var Control = function(settings) {
                     'rpcallowip=0.0.0.0/0' + EOL +
                     'rpchost=localhost' + EOL +
                     'rpcuser=' + f.randomString(10) + EOL +
-                    'rpcpassword=' + f.randomString(16) + EOL +
+                    'rpcpassword=' + f.randomString(256) + EOL +
                     'wsuse=1' + EOL
     
                 fs.writeFileSync(node.confPath, data)
@@ -268,7 +268,8 @@ var Control = function(settings) {
             state : state,
             hasupdates : hasupdates,
             lock : lock,
-            other : node.other
+            other : node.other,
+            hasapplication : applications.hasapplication()
         }
     }
 
@@ -334,8 +335,6 @@ var Control = function(settings) {
                 self.autorun.init()
                 return self.kit.check()
             }).catch(e => {
-
-                console.log("ERR", e)
 
                 lock = ''
 
@@ -416,8 +415,6 @@ var Control = function(settings) {
 
             }).catch(e => {
 
-                console.log("E", e)
-
                 var stopped = e.code == 408
 
                 if (stopped){
@@ -428,7 +425,6 @@ var Control = function(settings) {
                 else
                 {
                     if(!node.hasbin || e.code == 401){
-                        console.log("other")
                         node.other = true
 
                         return Promise.resolve(true)
