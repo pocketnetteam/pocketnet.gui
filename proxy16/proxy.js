@@ -326,6 +326,10 @@ var Proxy = function (settings, manage) {
             return nodeControl.kit.stop()
         },
 
+        check : function(){
+            return nodeControl.kit.check()
+        },
+
         canstop : function() {
             return nodeControl.kit.canstop()
         },

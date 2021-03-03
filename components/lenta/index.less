@@ -663,6 +663,11 @@
 							i{
 								font-size: 0.8em;
 								color : @color-main;
+								width: 20px;
+							}
+
+							span{
+								font-size: 0.8em;
 							}
 						}
 					}
@@ -1317,6 +1322,48 @@
 
 				}
 			}
+			.pollWrapper {
+				margin-top: 1.5em;
+				margin-bottom: 1em;
+
+				.list{
+					margin-top: 0.5em;
+
+					.item-progress {
+						min-height: 40px;
+						margin-bottom: 10px;
+
+						.top, .bottom{
+							display: flex;
+							align-items: center;
+						}
+						
+
+						.percent{
+							width: 45px;
+							text-align: right;
+							padding-right: 15px;
+						}
+	
+
+						.check {
+							color: @color-main;
+							display: flex;
+							justify-content: flex-end;
+							width: 45px;
+							padding-right: 15px;
+						}
+
+						progress {
+							width: 100%;
+							max-width: 350px;
+							color: @color-main;
+						}
+					}
+
+				}
+
+			}
 
 			.exitFull{
 				display: none;
@@ -1413,6 +1460,7 @@
 				.metawrapper{
 					display: none;
 				}
+
 
 				.repostWrapper{
 					display: none;
@@ -2869,8 +2917,6 @@ html.stblack{
 						margin-top : 0;
 						
 					}
-
-					
 
 					
 					.sys,

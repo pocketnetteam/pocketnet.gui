@@ -1,0 +1,96 @@
+@import "../../css/__cssvar";
+
+#channel{
+    .channel{
+        background: #fff;
+        padding : 2 * @rhythm 0;
+
+        .userinfo{
+            text-align: center;
+            padding : @rhythm 0;
+
+            span{
+                font-size: 2em;
+                font-weight: 200;
+            }
+
+            .name{
+                padding : @rhythm 0;
+            }
+
+            .adr{
+                max-width: 500px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: bottom;
+                display: inline-block;
+            }
+        }
+
+        .panel{
+            margin : 0 auto;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .usermenuitem{
+                padding : @rhythm;
+                cursor: pointer;
+                white-space: nowrap;
+            }
+
+            >div{
+                span,i{
+                    font-size: 0.8em;
+                }
+                i{
+                    text-align: center;
+                    width: 30px;
+                }
+            }
+        }
+
+        .usericon{
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            margin : 0 auto;
+        }
+
+        .action{
+            padding : 2 * @rhythm;
+            text-align: center;
+        }
+    }
+}
+
+html.stblack{
+    #channel{
+        .channel{
+            color : @color-gray-slight;
+            background: @color-black3;
+        }
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    #channel{
+        .channel{
+    
+            .panel{
+                display: block;
+                max-width: 480px;
+                padding-left: 8 * @rhythm;
+    
+                >div{
+                    margin : 0 auto;
+                  
+                }
+            }
+    
+        
+    
+        }
+    }
+}

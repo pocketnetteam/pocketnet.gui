@@ -1,13 +1,13 @@
-<div class="nodedummy ">
+<!--<div class="nodedummy ">
     <div class="text">
         The section for managing your Pocketnet Node will reappear soon.
     </div>
     <div class="icon">
         <i class="fas fa-code"></i>
     </div>
-</div>
+</div>-->
 
-<% if(system && system.node && 1==0) { %>
+<% if(system && system.node) { %>
 
     <div class="nodecontentmanage managepanel">
         
@@ -111,20 +111,56 @@
                 <% } %> 
 
                 <% if(!nc.lock) {%> 
+
+                    <% if(!nc.other) {%> 
+
+                        <% if(nc.hasapplication) {%>
                     
-                    <div class="notfound install">
-                        <div class="text">
-                            Pocketnet Node was not found. Download and Install it
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-cloud-download-alt"></i>
-                        </div>
-                    </div>    
+                            <div class="notfound install">
+                                <div class="text">
+                                    Pocketnet Node was not found. Download and Install it
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-cloud-download-alt"></i>
+                                </div>
+                            </div>  
+
+                        <% } else { %> 
+                            
+                            <div class="notfound">
+                                <div class="text">
+                                    Pocketnet Node control is not yet available for your operating system.
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-wrench"></i>
+                                </div>
+                            </div>  
+
+                        <% }%>
+                    
+                    <% } else { %>
+                        
+                        <div class="notfound refreshother">
+                            <div class="text">
+                                Your device already has Pocketnet Node.<br>
+
+                                <% if(proxy.direct) {%>
+                                    You can set system pathes or stop it and install via Pocketnet Desktop Application
+                                <% } else {%> 
+                                    You can't manage node on this device via current application
+                                <% } %>
+                            </div>
+
+                            <% if(proxy.direct) {%>
+                                <div class="icon">
+                                    <i class="fas fa-sync"></i> Refresh
+                                </div>
+                            <% }%>
+                        </div>  
+                        
+                    <% }%>
 
                 <% }%>
-                    
-                
-                
                 
             <% } %>
 

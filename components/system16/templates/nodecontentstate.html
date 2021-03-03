@@ -1,4 +1,3 @@
-<% if(1 == 0) {%>
 <div class="nodecontentstate ">
 
     <% if(nc.hasbin && !nc.lock) {%>
@@ -44,17 +43,15 @@
                         <div class="value">
                             <span><b><%-nodestate.info.lastblock.height%></b> / <%= manager.chain? manager.chain.commonHeight || '&mdash;' : '&mdash;' %></span>
                         </div>
-                        <% if(manager.chain) {%>
 
                         <div class="icon">
-                            <% if(nodestate.info.lastblock.height < manager.chain.commonHeight) {%>
+                            <% if(!manager.chain || nodestate.info.lastblock.height < manager.chain.commonHeight) {%>
                                 <i class="fas fa-spinner fa-spin"></i>
                             <% } else {%> 
                                 <i class="fas fa-check-circle good"></i>
                             <% } %>
                         </div>
 
-                        <% } %>
                     </div>
                 </div>
             </div>
@@ -78,4 +75,3 @@
     <% } %>
 
 </div>
-<% } %>

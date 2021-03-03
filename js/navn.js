@@ -4,6 +4,11 @@ if(typeof _Electron != 'undefined'){
 	electron = require('electron');
 }
 
+if(typeof _OpenApi == 'undefined'){
+	_OpenApi = false
+}
+
+
 Nav = function(app)
 {	
 	var self = this;
@@ -15,6 +20,12 @@ Nav = function(app)
 		cashe: true,
 		history : true,
 		links : true,
+	}
+
+	var defaultpathname = 'index'
+
+	if (_OpenApi){
+		defaultpathname = 'openapi.html'
 	}
 
 	var protocol = null;
@@ -340,7 +351,7 @@ Nav = function(app)
 				return
 			}
 
-			if (options.history === true && !_Node)
+			if (options.history === true && !_Node && !_OpenApi)
 			{	
 
 				if(!p.removefromback){
@@ -355,7 +366,6 @@ Nav = function(app)
 				if (self.addParameters){
 					href = self.addParameters(href)
 				}
-
 
 				history.pushState({
 
@@ -784,6 +794,12 @@ Nav = function(app)
 		},
 		openInitialModules : function(clbk, _map){
 
+			if (_OpenApi){
+				clbk()
+
+				return
+			}
+
 			var map = _.filter(_map || app.map, function(map){
 				if(map.now === true) return true;
 			})	
@@ -885,10 +901,6 @@ Nav = function(app)
 				return
 			}
 
-			/*if(p.history){
-				app.el.content.addClass("navtransition")
-			}*/
-
 			core.loadSource(p.map, function(module){
 
 				if(!module)
@@ -940,7 +952,7 @@ Nav = function(app)
 			})
 			
 			
-			var e = external || (
+			var e = _OpenApi || external || (
 				
 			(!href 
 				
@@ -962,9 +974,19 @@ Nav = function(app)
 		externalTarget : function(link){
 			var href = link.attr('href');
 
-			var e = href && (href.indexOf('/') > -1 || href.indexOf('.') > -1)
+			var e = href && (href.indexOf('/') > -1 || href.indexOf('.') > -1) || _OpenApi
 
 			if (href.indexOf('http') == -1){
+
+				if(_OpenApi) {
+					href = 'pocketnet.app/' + href
+
+					if (app.ref)
+						href = self.api.history.addParametersToHref(href, {
+							ref : app.ref
+						})
+				}
+
 				link.attr('href', 'https://' + href)
 			}
 
@@ -1119,10 +1141,6 @@ Nav = function(app)
 					else{
 						link.off('click').on('click', eve)
 					}
-
-					
-
-				
 					
 				}
 
@@ -1275,13 +1293,13 @@ Nav = function(app)
 			if(!p) p = {};
 
 			if(!p.href)
-				p.href = self.get.pathnameSearch() || 'index';
+				p.href = self.get.pathnameSearch() || defaultpathname;
 
 			if (p.href == 'blank')
-				p.href  = 'index'
+				p.href  = defaultpathname
 
 
-			if(p.href.split("?")[0] == 'index'){
+			if(p.href.split("?")[0] == defaultpathname){
 				backManager.clearAll()	
 			}
 
@@ -1324,7 +1342,7 @@ Nav = function(app)
 			var pathname = protocolAction('pathname')
 
 			if (pathname == 'blank')
-				pathname = 'index'
+				pathname = defaultpathname
 
 			return decodeSeoLinks(pathname).replace("#!", "");
 		},
@@ -1333,7 +1351,7 @@ Nav = function(app)
 			var pathnameSearch = protocolAction('pathnameSearch')
 
 			if (pathnameSearch == 'blank')
-				pathnameSearch = 'index'
+				pathnameSearch = defaultpathname
 
 			return decodeSeoLinks(pathnameSearch).replace("#!", "");
 		},
@@ -1355,8 +1373,8 @@ Nav = function(app)
 
 			protocolAction('prefix');
 			protocolAction('seoRedirect');
-
-			if (options.history === true)
+		
+			if (options.history === true && !_OpenApi)
 			{
 				window.onpopstate = function(event)
 				{
@@ -1369,6 +1387,12 @@ Nav = function(app)
 				p.open = true;
 				p.history = true;
 				p.loadDefault = true;
+
+				if(_OpenApi){
+					if(p.clbk) p.clbk()
+
+					return
+				}
 
 				self.api.loadDefault(p);
 

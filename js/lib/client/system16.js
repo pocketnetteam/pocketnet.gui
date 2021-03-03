@@ -72,8 +72,12 @@ var System16 = function(app, proxy, direct){
         }
     }
 
-    var tick = function(e, message){
+    var tick = function(e, d){
 
+        var message = d.data
+
+        if(!message) return
+        
         var settings = message.settings || {}
 
         var hash = bitcoin.crypto.hash256(JSON.stringify(settings))
@@ -251,11 +255,13 @@ var System16 = function(app, proxy, direct){
     }
 
     self.listen = function(){
+
         if (electron && direct) {
             electron.ipcRenderer.on('proxy-message', response)
             electron.ipcRenderer.on('proxy-message-tick', tick)
             electron.ipcRenderer.on('wssdummy', wssdummy)
         }
+
     }
 
     self.stop = function(){

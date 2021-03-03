@@ -1,0 +1,38 @@
+<div class="sharebuttonsTable">
+    <% 
+
+    var groups = group(socials, function(s){
+        return s.group || 'other'
+    })
+    
+    _.each(groups, function(socials, i){ %>
+
+        <div class="socialGroup">
+            
+                <div class="gcaption">
+                    <div class="wrk">
+                        <span><%=e('shareviagroup' + i)%></span>
+                    </div>
+                </div>
+
+            <div class="gcontent">
+
+                <% _.each(socials, function(social){ %>
+
+                    <div class="socialWrapper <%-social.t%>">
+                        <div class="buttonWrapper">
+                            <button class="socialsharebtn s_<%-social.t%>" data-type="<%-social.t%>"  style="background:<%-social.c%>"><%=social.i%></button>
+                        </div>
+                        <div class="labelWrapper">
+                            <span class="label">
+                                <%=social.n%>
+                            </span>
+                        </div>
+                    </div>
+
+                <% }) %>
+            </div>
+
+        </div>
+    <% }) %> 
+</div>

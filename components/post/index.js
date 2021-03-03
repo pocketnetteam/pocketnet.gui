@@ -1,3 +1,8 @@
+
+if(typeof _OpenApi == 'undefined'){
+	_OpenApi = false
+}
+
 var post = (function(){
 
 	var self = new nModule();
@@ -68,7 +73,20 @@ var post = (function(){
 				
 
 			},
-			stateAction : function(clbk){
+			stateAction : function(clbk, txid){
+
+				if (_OpenApi){
+
+					var phref = 'https://pocketnet.app/post?openapi=true&s=' + txid
+
+					if (self.app.ref){
+						phref += '&ref=' + self.app.ref
+					}
+
+					window.open(phref, '_blank');
+
+					return
+				}
 
 				self.app.user.isState(function(state){
 
@@ -137,7 +155,10 @@ var post = (function(){
 			},
 			repost : function(shareid){
 
+				
+
 				actions.stateAction(function(){
+
 					var href = 'index';
 
 					if(isMobile()) href = 'share'
@@ -157,7 +178,7 @@ var post = (function(){
 							
 						}
 					})
-				})
+				}, shareid)
 
 				
 
@@ -211,13 +232,11 @@ var post = (function(){
 			},
 
 			sharesocial : function(clbk){
-		
-				var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
+				var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true'
 
 				if (parameters().address){
 					url += '&address=' + (parameters().address || '')
 				}
-
 
 				var m = share.message;
 
@@ -239,16 +258,19 @@ var post = (function(){
 
 				self.nav.api.load({
 					open : true,
-					href : 'socialshare',
+					href : 'socialshare2',
 					history : true,
 					inWnd : true,
 
 					essenseData : {
 						url : url,
-						caption : self.app.localization.e('e13147') + ' ' + n,
-						image : image,
-						title : share.caption || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name'),
-						text : nm
+						caption : self.app.localization.e('e13133') + ' ' + n,
+
+						sharing : share.social(self.app),
+						embedding : {
+							type : 'post',
+							id : share.txid
+						}
 					}
 				})
 			
@@ -622,7 +644,7 @@ var post = (function(){
 						
 					})
 
-				})
+				}, share.txid)
 
 		
 			},
@@ -676,7 +698,7 @@ var post = (function(){
 							p.removeClass('liked')
 						}
 					})
-				})
+				}, share.txid)
 
 
 			},
@@ -730,7 +752,7 @@ var post = (function(){
 		var renders = {
 			comments : function(clbk){
 
-				if(!ed.repost || ed.fromempty){
+				if((!ed.repost || ed.fromempty) && ed.comments != 'no'){
 					self.fastTemplate('commentspreview', function(rendered){
 
 						var _el = el.c.find(".commentsWrapper");

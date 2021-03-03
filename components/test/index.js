@@ -245,7 +245,7 @@ var test = (function(){
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
-						console.log("IMHERE")
+						
 
 						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
 
@@ -327,11 +327,12 @@ var test = (function(){
 												actions.upanel()
 
 												actions.ref(resref)
+
+
+												self.closeContainer()
 												
 
 												self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
-
-
 
 													self.app.reloadModules(function(){
 
@@ -453,9 +454,7 @@ var test = (function(){
 
 				if(_.toArray((self.app.platform.sdk.node.transactions.temp.userInfo || {})).length > 0 || 
 				
-				(self.app.platform.sdk.address.pnet() && 
-				deep(self.sdk.relayTransactions.storage, self.app.platform.sdk.address.pnet().address + '.userInfo.length') > 0 )){
-
+				(self.app.platform.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.app.platform.sdk.address.pnet().address + '.userInfo.length') > 0 ) && !ed.failedrelay){
 
 					el.upanel.addClass('wait')
 

@@ -2041,7 +2041,7 @@ input[type=radio].radio:checked + label {
         top: 55px;
         bottom: 55px;
         background: #fff;
-        padding: 4 * @rhythm;
+        padding: 2 * @rhythm;
         overflow-y: scroll; 
         padding-bottom: 0;
     }
@@ -2049,6 +2049,8 @@ input[type=radio].radio:checked + label {
     &.noheader {
         .wndcontent{
             top: 0;
+            border-radius: 5px;
+
         }
     }
     .wndheader{
@@ -2286,7 +2288,7 @@ input[type=radio].radio:checked + label {
         }
 
         .wndcontent{
-            bottom: 66px;
+            /*bottom: 66px;*/
         }
 
         &.allscreen{
@@ -2770,6 +2772,39 @@ input[type=radio].radio:checked + label {
         border: 1px solid @color-gray-light;
         padding: 4 * @rhythm;
         .shadowSmall();
+    }
+
+    .poll {
+        margin-bottom: 2em;
+
+        .description {
+
+            margin-top: 1em;
+            margin-bottom: 1em;
+            color: @color-main
+        }
+
+        .poll-item {
+
+            margin-top: 0.5em;
+
+
+        }
+
+        input{
+            width: 400px;
+        }
+
+        i {
+            margin-left: 1em;
+            color: @color-gray-light;
+            cursor: pointer;
+
+            &:hover{
+                color: @color-bad;
+            }
+        }
+
     }
 
     .header{
@@ -5021,6 +5056,7 @@ input[type=radio].radio:checked + label {
         left: 0;
         font-size: 10px;
         color : #FF00C6;
+        line-height: 1.14;
     }
 }
 
