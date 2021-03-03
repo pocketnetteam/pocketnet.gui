@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.2.2-beta",
+    "version": "0.2.4-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -38,6 +38,7 @@
         "electron-is": "^3.0.0",
         "electron-localshortcut": "^3.2.1",
         "electron-log": "",
+        "electron-notarize": "^1.0.0",
         "electron-updater": "^4.3.5",
         "email-validator": "^2.0.4",
         "emojione": "^4.5.0",
@@ -98,6 +99,8 @@
         "yuicompressor": "^2.4.8"
     },
     "build": {
+        "appId": "app.pocketnet.gui",
+        "afterSign": "build/notarize.js",
         "productName": "Pocketnet",
         "extraFiles": [
             {
@@ -124,9 +127,14 @@
             }
         ],
         "mac": {
+            "category": "public.app-category.social-networking",
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
-            "icon": "assets/icons/mac/icon.icns"
+            "icon": "assets/icons/mac/icon.icns",
+            "gatekeeperAssess": false,
+            "hardenedRuntime": true,
+            "entitlements": "build/entitlements.mac.plist",
+            "entitlementsInherit": "build/entitlements.mac.plist"
         },
         "linux": {
             "target": "AppImage",
@@ -134,6 +142,9 @@
             "category": "Network",
             "executableName": "Pocketnet",
             "description": "Pocketnet desktop application"
+        },
+        "dmg": {
+            "sign": false
         },
         "appImage": {},
         "win": {
