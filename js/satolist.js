@@ -17809,10 +17809,10 @@ Platform = function (app, listofnodes) {
         self.preparingUser = true;
 
         ///telegram access
-        if(self.app.platform.sdk.address.pnet()){
+        if (self.app.platform.sdk.address.pnet()){
             var a = self.app.platform.sdk.address.pnet().address
 
-            if (a == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' || (a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
+            if ((a == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82') || (a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
 
                 self.app.user.features.telegram = 1;
 
