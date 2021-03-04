@@ -734,6 +734,17 @@
 					app.actions.onScroll();
 				}
 			},
+
+			show : function(cl, key) {
+				// wnd.find('.wndback').css('display', 'none');
+				wnd.find('.buttons').removeClass('hidden');
+				wnd.removeClass('hiddenState');
+				wnd.find('.wndcontent > div').removeClass('rolledUp');
+
+				if(!nooverflow) {
+					app.actions.onScroll();
+				}
+			},
 		}
 
 		self.buttonState = function(index, state){
