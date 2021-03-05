@@ -730,6 +730,8 @@
 				wnd.addClass('hiddenState');
 				wnd.find('.wndcontent > div').addClass('rolledUp');
 
+				setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
+
 				if(!nooverflow) {
 					app.actions.onScroll();
 				}

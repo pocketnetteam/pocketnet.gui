@@ -209,13 +209,18 @@ var uploadpeertube = (function () {
 
               filesWrittenObject.successFunction = function (response) {
                 if (response.error) {
-                  var error = deep(response, 'error.responseJSON.errors') || {};
 
-                  var message = (Object.values(error)[0] || {}).msg;
+                  if (axios.isCancel(response.error)) {
+                    sitemessage('Uploading canceled');
+                  } else {
+                    var error = deep(response, 'error.responseJSON.errors') || {};
 
-                  sitemessage(message || 'Uploading error');
-
-                  wndObj.close();
+                    var message = (Object.values(error)[0] || {}).msg;
+  
+                    sitemessage(message || 'Uploading error');
+                    
+                    wndObj.close();
+                  }
 
                   return;
                 }
@@ -225,7 +230,10 @@ var uploadpeertube = (function () {
               };
 
               filesWrittenObject.cancelClbk = function(cancel) {
-                debugger;
+                const cancelButton = wnd.find('.buttons .cancel');
+
+                cancelButton.on('click', cancel);
+                cancelButton.removeClass('hidden');
               };
 
               wndObj.hide();
@@ -235,10 +243,21 @@ var uploadpeertube = (function () {
           },
 
           cancel: {
-            class: 'cancel',
+            class: 'cancel hidden',
             html: '<i class="fas fa-times"></i> Cancel',
             fn: function(wnd, wndObj) {
-              
+              const cancelButton = wnd.find('.buttons .cancel');
+
+              cancelButton.addClass('hidden');
+              el.uploadProgress.addClass('hidden');
+            },
+          },
+
+          hide: {
+            class: 'hide hidden',
+            html: '<i class="far fa-minus-square"></i> Hide',
+            fn: function(wnd, wndObj) {
+              wndObj.hide();
             },
           },
         },
