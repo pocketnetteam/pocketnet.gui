@@ -10,6 +10,8 @@ var uploadpeertube = (function () {
 
     var el;
 
+    var xhrRequest;
+
     var actions = {};
 
     var events = {};
@@ -138,7 +140,7 @@ var uploadpeertube = (function () {
 
                 wndObj.hide();
                 el.uploadProgress.removeClass('hidden');
-                self.app.peertubeHandler.importVideo(filesWrittenObject);
+                xhrRequest = self.app.peertubeHandler.importVideo(filesWrittenObject);
 
                 return;
               }
@@ -224,7 +226,7 @@ var uploadpeertube = (function () {
 
               wndObj.hide();
               el.uploadProgress.removeClass('hidden');
-              self.app.peertubeHandler.uploadVideo(filesWrittenObject);
+              xhrRequest = self.app.peertubeHandler.uploadVideo(filesWrittenObject);
             },
           },
         },
