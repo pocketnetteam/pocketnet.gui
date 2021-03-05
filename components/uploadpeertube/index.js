@@ -224,9 +224,21 @@ var uploadpeertube = (function () {
                 wndObj.close();
               };
 
+              filesWrittenObject.cancelClbk = function(cancel) {
+                debugger;
+              };
+
               wndObj.hide();
               el.uploadProgress.removeClass('hidden');
               xhrRequest = self.app.peertubeHandler.uploadVideo(filesWrittenObject);
+            },
+          },
+
+          cancel: {
+            class: 'cancel',
+            html: '<i class="fas fa-times"></i> Cancel',
+            fn: function(wnd, wndObj) {
+              
             },
           },
         },
