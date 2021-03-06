@@ -183,6 +183,7 @@
 <script join src="js/vendor/xss.min.js?v=5"></script>
 <script join src="js/vendor/jquery.mark.js?v=5"></script>
 <script join src="js/vendor/hc-sticky.js?v=5"></script>
+<script join src="js/vendor/axios.js"></script>
 
         
         <script>window.design = true;</script><script join src="js/functions.js?v=765516666905"></script>

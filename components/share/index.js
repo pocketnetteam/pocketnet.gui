@@ -197,10 +197,15 @@ var share = (function(){
 				var storage = currentShare.export(true)
 
 				if (type === 'addVideo') {
+
+					globalpreloader(true);
+
 					el.peertube.addClass('disabledShare');
 					el.peertubeLiveStream.addClass('disabledShare');
 
 					self.app.peertubeHandler.authentificateUser(function(response) {
+						globalpreloader(false);
+
 						if (!response) response = {};
 
 						if (response.error) {
@@ -265,7 +270,10 @@ var share = (function(){
 					el.peertubeLiveStream.addClass('disabledShare');
 					el.peertube.addClass('disabledShare');
 
+					globalpreloader(true);
+
 					self.app.peertubeHandler.authentificateUser(function(response) {
+						globalpreloader(false);
 
 						if (!response) response = {};
 						
