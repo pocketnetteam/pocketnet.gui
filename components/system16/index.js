@@ -1279,7 +1279,6 @@ var system16 = (function(){
 
 				if(!el.c) return
 
-				console.log("update", update)
 
 				if (graphs[type] && update){
 

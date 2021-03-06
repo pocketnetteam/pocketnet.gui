@@ -51,10 +51,10 @@ var ProxyRequest = function(app = {}){
     var direct = function(url, data){
         var controller = (new AbortController())
 
-        var time = 15000
+        var time = 35000
 
         if (window.cordova){
-            time = 35000
+            time = 55000
         }
 
         return timeout(time, directclear(url, data, controller.signal), controller)
@@ -363,6 +363,8 @@ var Proxy16 = function(meta, app){
         return promise.then(r => {
             return Promise.resolve(r)
         }).catch(e => {
+
+            console.log("E", e)
 
             if (e.code == 408 && options.node && trying < 3){
 
