@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.2.4-beta",
+    "version": "0.2.5-beta",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -19,12 +19,12 @@
         "dev": "node minimize.js true"
     },
     "devDependencies": {
-        "electron": "",
         "electron-builder": "",
         "electron-rebuild": "",
         "electron-reload": "",
         "electron-reloader": "",
-        "humanize": "0.0.9"
+        "humanize": "0.0.9",
+        "electron": "^11.2.3"
     },
     "dependencies": {
         "aes-js": "^3.1.2",
@@ -34,7 +34,6 @@
         "clone-deep": "^4.0.1",
         "deep-extend": "^0.6.0",
         "download-github-release": "^0.3.2",
-        "electron": "^11.2.3",
         "electron-context-menu": "^2.4.0",
         "electron-is": "^3.0.0",
         "electron-localshortcut": "^3.2.1",
