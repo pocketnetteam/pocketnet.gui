@@ -1,5 +1,6 @@
 var Proxy = require("./proxy");
 var Datastore = require('nedb');
+console.log("S")
 
 var deepExtend = require('deep-extend');
 var cloneDeep = require('clone-deep');
