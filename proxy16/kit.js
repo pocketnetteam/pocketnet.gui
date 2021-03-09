@@ -843,6 +843,8 @@ var kit = {
 
 		db = new Datastore(f.path(settingsPath));
 
+		console.log('f.path(settingsPath)', f.path(settingsPath))
+
 		return new Promise((resolve, reject) => {
 
 			var start = function(){
@@ -862,6 +864,7 @@ var kit = {
 					resolve()
 
 				}).catch(e => {
+					console.log("E", e)
 					reject(e)
 				})
 			}
