@@ -197,10 +197,15 @@ var share = (function(){
 				var storage = currentShare.export(true)
 
 				if (type === 'addVideo') {
+
+					globalpreloader(true);
+
 					el.peertube.addClass('disabledShare');
 					el.peertubeLiveStream.addClass('disabledShare');
 
 					self.app.peertubeHandler.authentificateUser(function(response) {
+						globalpreloader(false);
+
 						if (!response) response = {};
 
 						if (response.error) {
@@ -265,7 +270,10 @@ var share = (function(){
 					el.peertubeLiveStream.addClass('disabledShare');
 					el.peertube.addClass('disabledShare');
 
+					globalpreloader(true);
+
 					self.app.peertubeHandler.authentificateUser(function(response) {
+						globalpreloader(false);
 
 						if (!response) response = {};
 						
@@ -1800,9 +1808,7 @@ var share = (function(){
 
 				var poll = currentShare.poll.get();
 
-				console.log('poll', poll, el);
-
-				var pollWrapper = p.el.find('.pollWrapper');
+				var pollWrapper = el.c.find('.pollWrapper');
 
 				var content = '';
 				
@@ -1813,7 +1819,6 @@ var share = (function(){
 					content += `<div class="title"><b>${title}</b></div>`;
 
 				}
-
 
 				if (poll.list && poll.list.length){
 
@@ -1842,7 +1847,7 @@ var share = (function(){
 
 				pollWrapper.html(html);
 	
-				p.el.find('.pollWrapper').on('click', function(){
+				el.c.find('.pollWrapper').on('click', function(){
 
 					events.removePoll();
 				})

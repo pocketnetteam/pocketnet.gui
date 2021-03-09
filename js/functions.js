@@ -730,6 +730,19 @@
 				wnd.addClass('hiddenState');
 				wnd.find('.wndcontent > div').addClass('rolledUp');
 
+				setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
+
+				if(!nooverflow) {
+					app.actions.onScroll();
+				}
+			},
+
+			show : function(cl, key) {
+				// wnd.find('.wndback').css('display', 'none');
+				wnd.find('.buttons').removeClass('hidden');
+				wnd.removeClass('hiddenState');
+				wnd.find('.wndcontent > div').removeClass('rolledUp');
+
 				if(!nooverflow) {
 					app.actions.onScroll();
 				}
