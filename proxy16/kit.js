@@ -885,6 +885,10 @@ var kit = {
 				else{
 					state.apply(state.expand({}, settings))
 
+					console.log("ERROR", err)
+
+					state.save()
+
 					start()
 				}
 
