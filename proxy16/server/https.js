@@ -143,6 +143,9 @@ var Server = function(settings, admins, manage){
                 });
 
                 server.on('error',function(e){
+
+                    console.log("Er", e)
+
                     reject(e) 
                 });
 
