@@ -571,10 +571,10 @@
 					closedbtnclass = 'onwhite'
 				}
 
-
-				h+=	 ' <div class="buttons"></div>';
-				h+=	 '</div>'
-					 ;
+				if (!p.noButtons) {
+					h+=	 ' <div class="buttons"></div>';
+					h+=	 '</div>';
+				}
 
 			wnd = $("<div>",{
 			   "class" 	: "wnd",
@@ -734,6 +734,7 @@
 
 			hide : function(cl, key) {
 				// wnd.find('.wndback').css('display', 'none');
+
 				wnd.find('.buttons').addClass('hidden');
 				wnd.addClass('hiddenState');
 				wnd.find('.wndcontent > div').addClass('rolledUp');
@@ -786,7 +787,7 @@
 
 			if(!p.buttons)  p.buttons = {};
 
-			if(!p.buttons.close)
+			if(!p.buttons.close && !p.noCloseButton)
 
 				p.buttons.close = {
 					action : close,
@@ -805,8 +806,15 @@
 
 		    	self.el = wnd;
 
-				if (p.clbk) 
-					p.clbk(self, wnd);
+				if (p.postRender) {
+					p.postRender(wnd, self, () => {
+						if (p.clbk) 
+							p.clbk(self, wnd);
+					});
+				} else {
+					if (p.clbk) 
+						p.clbk(self, wnd);
+				} 
 			}
 
 			if(!p.noblur)

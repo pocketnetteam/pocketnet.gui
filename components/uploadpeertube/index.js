@@ -10,6 +10,9 @@ var uploadpeertube = (function () {
 
     var el;
 
+    var wnd;
+    var wndObj;
+
     var xhrRequest;
 
     var actions = {};
@@ -24,6 +27,7 @@ var uploadpeertube = (function () {
     };
 
     var initEvents = function () {
+      
       el.videoInput.change(function (evt) {
         var fileName = evt.target.files[0].name;
         el.videoError.text(
@@ -56,6 +60,142 @@ var uploadpeertube = (function () {
           el.videoWallpaper.prop('disabled', false);
         }
       });
+
+      el.uploadButton.on('click', function () {
+        
+        // var filesWrittenObject = {};
+
+        // if (el.importUrl.val()) {
+        //   filesWrittenObject.uploadFunction = function (percentComplete) {
+        //     var formattedProgress = percentComplete.toFixed(2);
+
+        //     el.uploadProgress
+        //       .find('.upload-progress-bar')
+        //       .css('width', formattedProgress + '%');
+        //     el.uploadProgress
+        //       .find('.upload-progress-percentage')
+        //       .text(formattedProgress + '%');
+        //   };
+
+        //   filesWrittenObject.successFunction = function (response) {
+        //     if (response.error) {
+        //       var error =
+        //         deep(response, 'error.responseJSON.errors') || {};
+
+        //       var message = (Object.values(error)[0] || {}).msg;
+
+        //       sitemessage(message || 'Uploading error');
+
+        //       wndObj.close();
+
+        //       return;
+        //     }
+
+        //     actions.added(response);
+        //     wndObj.close();
+        //   };
+
+        //   filesWrittenObject.url = el.importUrl.val();
+
+        //   wndObj.hide();
+        //   el.uploadProgress.removeClass('hidden');
+
+        //   return;
+        // }
+
+        // var videoInputFile = el.videoInput.prop('files');
+
+        // var videoWallpaperFile = el.videoWallpaper.prop('files');
+        // // var wallpaperError = wnd.find('.wallpaper-type-error');
+
+        // var videoName = wnd.find('.upload-video-name').val();
+        // var nameError = wnd.find('.name-type-error');
+
+        // nameError.text('');
+
+        // // validation
+        // if (!videoInputFile[0]) {
+        //   el.videoError.text('No video selected');
+        //   el.videoError.addClass('error-message');
+
+        //   return;
+        // }
+        // if (!videoInputFile[0].type.includes('video')) {
+        //   el.videoError.text('Incorrect video format');
+        //   el.videoError.addClass('error-message');
+
+        //   return;
+        // }
+
+        // filesWrittenObject.video = videoInputFile[0];
+
+        // if (videoWallpaperFile[0]) {
+        //   console.log(videoWallpaperFile[0].type);
+
+        //   if (
+        //     videoWallpaperFile[0].type !== 'image/jpeg' &&
+        //     videoWallpaperFile[0].type !== 'image/jpg'
+        //   ) {
+        //     el.wallpaperError.text(
+        //       'Incorrect wallpaper format. Supported: .jpg, .jpeg',
+        //     );
+        //     el.wallpaperError.addClass('error-message');
+
+        //     return;
+        //   }
+
+        //   filesWrittenObject.image = videoWallpaperFile[0];
+        // }
+        // if (!videoName) {
+        //   nameError.text('Name is empty');
+
+        //   return;
+        // }
+
+        // filesWrittenObject.name = videoName;
+
+        // filesWrittenObject.uploadFunction = function (percentComplete) {
+        //   var formattedProgress = percentComplete.toFixed(2);
+
+        //   el.uploadProgress
+        //     .find('.upload-progress-bar')
+        //     .css('width', formattedProgress + '%');
+        //   el.uploadProgress
+        //     .find('.upload-progress-percentage')
+        //     .text(formattedProgress + '%');
+        // };
+
+        // filesWrittenObject.successFunction = function (response) {
+        //   if (response.error) {
+
+        //     if (axios.isCancel(response.error)) {
+        //       sitemessage('Uploading canceled');
+        //     } else {
+        //       var error = deep(response, 'error.responseJSON.errors') || {};
+
+        //       var message = (Object.values(error)[0] || {}).msg;
+
+        //       sitemessage(message || 'Uploading error');
+              
+        //       wndObj.close();
+        //     }
+
+        //     return;
+        //   }
+
+        //   actions.added(response);
+        //   wndObj.close();
+        // };
+
+        // filesWrittenObject.cancelClbk = function(cancel) {
+        //   el.cancelButton.on('click', cancel);
+        //   el.cancelButton.removeClass('hidden');
+        // };
+
+        wndObj.hide();
+        el.uploadProgress.removeClass('hidden');
+
+      })
     };
 
     return {
@@ -92,6 +232,9 @@ var uploadpeertube = (function () {
         el.uploadProgress = el.c.find('.upload-progress-container');
         el.importUrl = el.c.find('.import-video-link');
 
+        el.uploadButton = el.c.find('.uploadButton');
+        el.cancelButton = el.c.find('.cancelButton');
+
         initEvents();
 
         p.clbk(null, p);
@@ -99,181 +242,179 @@ var uploadpeertube = (function () {
 
       wnd: {
         header: '',
-        buttons: {
-          close: {
-            class: 'close',
-            html: '<i class="fas fa-upload"></i> Upload',
-            fn: function (wnd, wndObj) {
-              var filesWrittenObject = {};
+        // buttons: {
+        //   // close: {
+        //   //   class: 'close',
+        //   //   html: '<i class="fas fa-upload"></i> Upload',
+        //   //   fn: function (wnd, wndObj) {
+        //   //     // var filesWrittenObject = {};
 
-              if (el.importUrl.val()) {
-                filesWrittenObject.uploadFunction = function (percentComplete) {
-                  var formattedProgress = percentComplete.toFixed(2);
+        //   //     // if (el.importUrl.val()) {
+        //   //     //   filesWrittenObject.uploadFunction = function (percentComplete) {
+        //   //     //     var formattedProgress = percentComplete.toFixed(2);
 
-                  el.uploadProgress
-                    .find('.upload-progress-bar')
-                    .css('width', formattedProgress + '%');
-                  el.uploadProgress
-                    .find('.upload-progress-percentage')
-                    .text(formattedProgress + '%');
-                };
+        //   //     //     el.uploadProgress
+        //   //     //       .find('.upload-progress-bar')
+        //   //     //       .css('width', formattedProgress + '%');
+        //   //     //     el.uploadProgress
+        //   //     //       .find('.upload-progress-percentage')
+        //   //     //       .text(formattedProgress + '%');
+        //   //     //   };
 
-                filesWrittenObject.successFunction = function (response) {
-                  if (response.error) {
-                    var error =
-                      deep(response, 'error.responseJSON.errors') || {};
+        //   //     //   filesWrittenObject.successFunction = function (response) {
+        //   //     //     if (response.error) {
+        //   //     //       var error =
+        //   //     //         deep(response, 'error.responseJSON.errors') || {};
 
-                    var message = (Object.values(error)[0] || {}).msg;
+        //   //     //       var message = (Object.values(error)[0] || {}).msg;
 
-                    sitemessage(message || 'Uploading error');
+        //   //     //       sitemessage(message || 'Uploading error');
 
-                    wndObj.close();
+        //   //     //       wndObj.close();
 
-                    return;
-                  }
+        //   //     //       return;
+        //   //     //     }
 
-                  actions.added(response);
-                  wndObj.close();
-                };
+        //   //     //     actions.added(response);
+        //   //     //     wndObj.close();
+        //   //     //   };
 
-                filesWrittenObject.url = el.importUrl.val();
+        //   //     //   filesWrittenObject.url = el.importUrl.val();
 
-                wndObj.hide();
-                el.uploadProgress.removeClass('hidden');
-                xhrRequest = self.app.peertubeHandler.importVideo(filesWrittenObject);
+        //   //     //   wndObj.hide();
+        //   //     //   el.uploadProgress.removeClass('hidden');
+        //   //     //   xhrRequest = self.app.peertubeHandler.importVideo(filesWrittenObject);
 
-                return;
-              }
+        //   //     //   return;
+        //   //     // }
 
-              var videoInputFile = el.videoInput.prop('files');
+        //   //     // var videoInputFile = el.videoInput.prop('files');
 
-              var videoWallpaperFile = el.videoWallpaper.prop('files');
-              // var wallpaperError = wnd.find('.wallpaper-type-error');
+        //   //     // var videoWallpaperFile = el.videoWallpaper.prop('files');
+        //   //     // // var wallpaperError = wnd.find('.wallpaper-type-error');
 
-              var videoName = wnd.find('.upload-video-name').val();
-              var nameError = wnd.find('.name-type-error');
+        //   //     // var videoName = wnd.find('.upload-video-name').val();
+        //   //     // var nameError = wnd.find('.name-type-error');
 
-              nameError.text('');
+        //   //     // nameError.text('');
 
-              // validation
-              if (!videoInputFile[0]) {
-                el.videoError.text('No video selected');
-                el.videoError.addClass('error-message');
+        //   //     // // validation
+        //   //     // if (!videoInputFile[0]) {
+        //   //     //   el.videoError.text('No video selected');
+        //   //     //   el.videoError.addClass('error-message');
 
-                return;
-              }
-              if (!videoInputFile[0].type.includes('video')) {
-                el.videoError.text('Incorrect video format');
-                el.videoError.addClass('error-message');
+        //   //     //   return;
+        //   //     // }
+        //   //     // if (!videoInputFile[0].type.includes('video')) {
+        //   //     //   el.videoError.text('Incorrect video format');
+        //   //     //   el.videoError.addClass('error-message');
 
-                return;
-              }
+        //   //     //   return;
+        //   //     // }
 
-              filesWrittenObject.video = videoInputFile[0];
+        //   //     // filesWrittenObject.video = videoInputFile[0];
 
-              if (videoWallpaperFile[0]) {
-                console.log(videoWallpaperFile[0].type);
+        //   //     // if (videoWallpaperFile[0]) {
+        //   //     //   console.log(videoWallpaperFile[0].type);
 
-                if (
-                  videoWallpaperFile[0].type !== 'image/jpeg' &&
-                  videoWallpaperFile[0].type !== 'image/jpg'
-                ) {
-                  el.wallpaperError.text(
-                    'Incorrect wallpaper format. Supported: .jpg, .jpeg',
-                  );
-                  el.wallpaperError.addClass('error-message');
+        //   //     //   if (
+        //   //     //     videoWallpaperFile[0].type !== 'image/jpeg' &&
+        //   //     //     videoWallpaperFile[0].type !== 'image/jpg'
+        //   //     //   ) {
+        //   //     //     el.wallpaperError.text(
+        //   //     //       'Incorrect wallpaper format. Supported: .jpg, .jpeg',
+        //   //     //     );
+        //   //     //     el.wallpaperError.addClass('error-message');
 
-                  return;
-                }
+        //   //     //     return;
+        //   //     //   }
 
-                filesWrittenObject.image = videoWallpaperFile[0];
-              }
-              if (!videoName) {
-                nameError.text('Name is empty');
+        //   //     //   filesWrittenObject.image = videoWallpaperFile[0];
+        //   //     // }
+        //   //     // if (!videoName) {
+        //   //     //   nameError.text('Name is empty');
 
-                return;
-              }
+        //   //     //   return;
+        //   //     // }
 
-              filesWrittenObject.name = videoName;
+        //   //     // filesWrittenObject.name = videoName;
 
-              filesWrittenObject.uploadFunction = function (percentComplete) {
-                var formattedProgress = percentComplete.toFixed(2);
+        //   //     // filesWrittenObject.uploadFunction = function (percentComplete) {
+        //   //     //   var formattedProgress = percentComplete.toFixed(2);
 
-                el.uploadProgress
-                  .find('.upload-progress-bar')
-                  .css('width', formattedProgress + '%');
-                el.uploadProgress
-                  .find('.upload-progress-percentage')
-                  .text(formattedProgress + '%');
-              };
+        //   //     //   el.uploadProgress
+        //   //     //     .find('.upload-progress-bar')
+        //   //     //     .css('width', formattedProgress + '%');
+        //   //     //   el.uploadProgress
+        //   //     //     .find('.upload-progress-percentage')
+        //   //     //     .text(formattedProgress + '%');
+        //   //     // };
 
-              filesWrittenObject.successFunction = function (response) {
-                if (response.error) {
+        //   //     // filesWrittenObject.successFunction = function (response) {
+        //   //     //   if (response.error) {
 
-                  if (axios.isCancel(response.error)) {
-                    sitemessage('Uploading canceled');
-                  } else {
-                    var error = deep(response, 'error.responseJSON.errors') || {};
+        //   //     //     if (axios.isCancel(response.error)) {
+        //   //     //       sitemessage('Uploading canceled');
+        //   //     //     } else {
+        //   //     //       var error = deep(response, 'error.responseJSON.errors') || {};
 
-                    var message = (Object.values(error)[0] || {}).msg;
+        //   //     //       var message = (Object.values(error)[0] || {}).msg;
   
-                    sitemessage(message || 'Uploading error');
+        //   //     //       sitemessage(message || 'Uploading error');
                     
-                    wndObj.close();
-                  }
+        //   //     //       wndObj.close();
+        //   //     //     }
 
-                  return;
-                }
+        //   //     //     return;
+        //   //     //   }
 
-                actions.added(response);
-                wndObj.close();
-              };
+        //   //     //   actions.added(response);
+        //   //     //   wndObj.close();
+        //   //     // };
 
-              filesWrittenObject.cancelClbk = function(cancel) {
-                const cancelButton = wnd.find('.buttons .cancel');
+        //   //     // filesWrittenObject.cancelClbk = function(cancel) {
+        //   //     //   const cancelButton = wnd.find('.buttons .cancel');
 
-                cancelButton.on('click', cancel);
-                cancelButton.removeClass('hidden');
-              };
+        //   //     //   cancelButton.on('click', cancel);
+        //   //     //   cancelButton.removeClass('hidden');
+        //   //     // };
 
-              wndObj.hide();
-              el.uploadProgress.removeClass('hidden');
-              xhrRequest = self.app.peertubeHandler.uploadVideo(filesWrittenObject);
-            },
-          },
+        //   //     wndObj.hide();
+        //   //     el.uploadProgress.removeClass('hidden');
+        //   //     xhrRequest = self.app.peertubeHandler.uploadVideo(filesWrittenObject);
+        //   //   },
+        //   // },
 
-          cancel: {
-            class: 'cancel hidden',
-            html: '<i class="fas fa-times"></i> Cancel',
-            fn: function(wnd, wndObj) {
-              const cancelButton = wnd.find('.buttons .cancel');
+        //   // cancel: {
+        //   //   class: 'cancel hidden',
+        //   //   html: '<i class="fas fa-times"></i> Cancel',
+        //   //   fn: function(wnd, wndObj) {
+        //   //     const cancelButton = wnd.find('.buttons .cancel');
 
-              cancelButton.addClass('hidden');
-              el.uploadProgress.addClass('hidden');
-            },
-          },
-
-          hide: {
-            class: 'hide hidden',
-            html: '<i class="far fa-minus-square"></i> Hide',
-            fn: function(wnd, wndObj) {
-              wndObj.hide();
-            },
-          },
-        },
+        //   //     cancelButton.addClass('hidden');
+        //   //     el.uploadProgress.addClass('hidden');
+        //   //   },
+        //   // },
+        // },
         close: function () {
           if (ed.closeClbk) {
             ed.closeClbk();
           }
         },
-        success: function (_wnd, _wndObj) {
+        postRender: function (_wnd, _wndObj, clbk) {
           wndObj = _wndObj;
           wnd = _wnd;
+
+          if (clbk) {
+            clbk();
+          }
         },
         offScroll: true,
         noInnerScroll: true,
         class: 'uploadpeertube',
         allowHide: true,
+        noCloseButton: true,
+        noButtons: true,
 
         swipeClose: true,
         swipeCloseDir: 'right',
