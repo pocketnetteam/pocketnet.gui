@@ -875,6 +875,8 @@ var kit = {
 						var savedSettings = !err? docs[0] || {} : {}
 			
 						state.apply(state.expand(savedSettings, settings))
+
+						state.save()
 			
 						start()
 					});
