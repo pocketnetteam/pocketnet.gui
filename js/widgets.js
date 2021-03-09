@@ -40,13 +40,22 @@ var PNWIDGETS = function(){
     }
 
     self.url = function(url){
+
         var parsed_url = new URL(url)
 
-        var action = parsed_url.searchParams.get('s') ? 'post' : 'channel'
-        var id = parsed_url.searchParams.get('s')
+        var seed = Math.floor(Math.random() * 100000)
+
+        var action = parsed_url.searchParams.get('commentid') ? 'commment' 
+                                                    : parsed_url.searchParams.get('s') ? 'post' : 'channel'
+
+        var id = action === 'channel' ? parsed_url.pathname.replace('/', '') : parsed_url.searchParams.get('s')
+
         var p = '7B22626C61636B223A66616C73652C22636F6D6D656E7473223A226C617374222C2266756C6C73637265656E766964656F223A66616C73657D'
 
-        return self.renders.iframe(seed = 'default', action, id, p)
+        var fast = true
+
+
+        return self.make(seed, action, id, p, fast)
     }
 
     return self
