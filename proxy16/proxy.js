@@ -22,6 +22,7 @@ var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remote.js');
 var Proxies = require('./proxies.js');
 var Exchanges = require('./exchanges.js');
+var Peertube = require('./peertube.js');
 //////////////
 
 
@@ -39,13 +40,14 @@ var Proxy = function (settings, manage) {
     var remote = new Remote();
     var proxies = new Proxies(settings.proxies)
     var exchanges = new Exchanges() 
+    var peertube = new Peertube() 
 
     self.userDataPath = null    
 
     f.mix({ 
         wss, server, pocketnet, nodeControl, 
         remote, firebase, nodeManager, wallet,
-        proxies, exchanges,
+        proxies, exchanges, peertube,
 
         proxy : self
     })
@@ -427,6 +429,26 @@ var Proxy = function (settings, manage) {
         },
     }
 
+    self.peertube = {
+        init: function () {
+            return peertube.init()
+        },
+
+        destroy: function () {
+            return peertube.destroy()
+        },
+
+        re : function(){
+            return this.destroy().then(r => {
+                this.init()
+            })
+        },
+
+        get kit(){
+            return peertube.kit
+        },
+    }
+
     self.kit = {
         service : function(){
             var w = self.wss.info(true)
@@ -518,7 +540,7 @@ var Proxy = function (settings, manage) {
 
             status = 1
 
-            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges']).then(r => {
+            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube']).then(r => {
 
                 status = 2
 
@@ -561,7 +583,7 @@ var Proxy = function (settings, manage) {
                 }
             }
 
-            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges'], (i) => {
+            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube'], (i) => {
                 return self[i].destroy().catch(catchError(i)).then(() => {
                     return Promise.resolve()
                 })
@@ -1039,6 +1061,17 @@ var Proxy = function (settings, manage) {
                         })
                     })
                 }
+            }
+        },
+
+        peertube : {
+            servers : {
+                path : '/peertube/servers',
+                action : () => self.peertube.kit.getBestServer().then(res => Promise.resolve({
+                    data: res,
+                })).catch(err => Promise.reject({
+                    data: err,
+                })),
             }
         },
 

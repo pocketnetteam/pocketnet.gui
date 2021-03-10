@@ -9893,12 +9893,12 @@
 	    var type = null
 		var id = null
 		var host_name = null
-
+		
 	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
 	    	if(test && test[2]){
 
-				if (test.indexOf('youtube.com') || test.indexOf('youtu.be') > -1) {
+				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
 					type = 'youtube'
 			        id = test[9]
 			    }
@@ -9910,9 +9910,12 @@
 					type = 'bitchute'
 					id = test[9]	
 			    }
-				if (/pocketnetpeertube[0-9]*\.nohost\.me/i.test(test)) {
+				if (test.indexOf('peertube://')) {
+
+					var params = _url.split('?')[1] || '';
+
 					type = 'peertube'
-			        id = test[9]
+			        id = `${test[9]}?${params}`
 					host_name = test[4]
 			    }
 			}

@@ -93,7 +93,7 @@ var uploadpeertube = (function () {
               return;
             }
 
-            actions.added(response);
+            actions.added(`${response}?imported=true`);
             wndObj.close();
           };
 

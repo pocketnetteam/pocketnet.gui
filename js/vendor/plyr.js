@@ -9154,6 +9154,8 @@ var PlyrEx = function(target, options, clbk) {
     if (!clbk) clbk = function() {};
     var video_options = options
 
+    var checkInterval;
+
     var provider = target.getAttribute('data-plyr-provider');
     var video_id = target.getAttribute('data-plyr-embed-id');
 
@@ -9168,10 +9170,14 @@ var PlyrEx = function(target, options, clbk) {
         target = new_target
     };
 
-    var _error = function() {
+    // var retryGetVideo = (video) => {
+      
+    // };
+
+    var _error = function(errorMessage) {
         var new_target = document.createElement('div');
-            new_target.setAttribute('error', 'Error loading video');
-            new_target.innerHTML = '<div class="errorcntplyrex"><div class="errorcntTableWrapper"><div class="errorcntTable"><div class="errorcntCell">Error loading video.</div></div></div>';
+            new_target.setAttribute('error', errorMessage || 'Error loading video');
+            new_target.innerHTML = `<div class="errorcntplyrex"><div class="errorcntTableWrapper"><div class="errorcntTable"><div class="errorcntCell">${errorMessage || 'Error loading video.'}</div></div></div>`;
 
 
         target.parentNode.replaceChild(new_target, target);
@@ -9205,25 +9211,38 @@ var PlyrEx = function(target, options, clbk) {
         });
 
     } if ('peertube' == provider) {
-      var host_regex = /pocketnetpeertube[0-9]*\.nohost\.me/i
-      var host_name = video_id.match(host_regex)[0]
-      video_id = video_id.replace(`https://${host_name}/videos/embed/`, '')
 
-      $.ajax({ 
-        url : `https://${host_name}/api/v1/videos/${video_id}`,
-        type : 'GET',
-        success : function(response){
-            var preview_picture = `https://${host_name}${response.previewPath}`
+      var host_name = video_id.split('?')[0].split('/')[2]
 
-            if (response.files && response.files[0].fileUrl) {
-                _plyr(response.files[0].fileUrl, preview_picture || '', response.name || '');
-                if (clbk) clbk(new Plyr(target, options))
+      var linkParameters = parameters(video_id, true);
 
-            } else {
-                _error();
-            }
-        }
-    });
+      var videoLink = video_id.split('?')[0].split('/').pop();
+
+      checkInterval = setInterval(function() {
+        $.ajax({ 
+          url : `https://${host_name}/api/v1/videos/${videoLink}`,
+          type : 'GET',
+          success : function(response){
+  
+              var preview_picture = `https://${host_name}${response.previewPath}`
+  
+              if ((response.files || []).length) {
+                  _plyr(response.files[0].fileUrl, preview_picture || '', response.name || '');
+                  clearInterval(checkInterval);
+
+                  if (clbk) clbk(new Plyr(target, options));
+  
+              } else {
+                  let loadingMessage = '';
+  
+                  if (linkParameters.imported) loadingMessage = 'Video is importing.';
+  
+                  if (response.isLive) loadingMessage = 'Live is yet to start.'
+                  _error(loadingMessage);
+              }
+          }
+      });
+      }, 1000);
 
     } else {
 
