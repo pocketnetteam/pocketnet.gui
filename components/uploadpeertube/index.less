@@ -26,17 +26,21 @@
     }
 
     .upload-field-container {
-       color: @color-add;
+       color: black;
 
        .upload-peertube-label {
            text-decoration: underline;
 
-           transition: color 0.2s ease-in 0.2s;
+           transition: color 0.1s ease-in 0.1s;
+
+           &:hover {
+               color: @color-contrast;
+           }
        }
     }
 
     .upload-field-container:not(:first-child){
-        margin-top: @rhythm * 2;
+        margin-top: @rhythm * 3;
     }
 
     label {
@@ -55,11 +59,17 @@
 
     .upload-progress-container {
         display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: flex-start;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-end;
+
 
         margin-top: @rhythm * 4;
+    }
+
+    .barWrapper {
+        min-width: 50px;
+        width: 80%;
     }
 
     .upload-progress-bar {
@@ -115,17 +125,27 @@
     }
 
     .upload-field-container.video-title-container {
-        margin-top: @rhythm * 3;
+        margin-top: @rhythm * 2;
     }
 
-    .uploadButton {
-        margin-top: @rhythm * 3;
-
+    .controlButton {
         cursor: pointer;
 
         &:hover {
             color: @color-contrast;
         }
+    }
+
+    .cancelButton {
+        margin-left: @rhythm * 2;
+    }
+
+    .uploadButton {
+        margin-top: @rhythm * 4;
+    }
+
+    .upload-input {
+        border-color: @color-contrast;
     }
 }
 
@@ -143,7 +163,15 @@
 
         .upload-progress-container.activeOnRolled {
             margin: 0;
+
+            > :not(.activeOnRolled) {
+                display: none;
+            }
         }
+    }
+
+    .upload-header {
+        font-size: 0.8em;
     }
 }
 
@@ -153,7 +181,7 @@
         width: 50%;
         height: 100%;
 
-        max-height: 400px;
+        max-height: 420px;
 
         overflow: hidden;
 
