@@ -17942,7 +17942,20 @@ Platform = function (app, listofnodes) {
 
         ///telegram access
         if (self.app.platform.sdk.address.pnet()){
+            
             var a = self.app.platform.sdk.address.pnet().address
+            var privatekey = self.app.user.private.value.toString('hex');
+
+            var matrix = `<div class="wrapper">
+                <matrix-element
+                    address="${a}"
+                    privatekey="${privatekey}"
+                    pocketnet="true"   
+                >
+                </matrix-element>
+            </div>`
+
+            $('#matrix').append(matrix);
 
             if ((a == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82') || (a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
 
