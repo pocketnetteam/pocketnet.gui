@@ -14,6 +14,9 @@ var streampeertube = (function () {
 
     var el;
 
+    var wnd;
+    var wndObj;
+
     var actions = {};
 
     var events = {};
@@ -34,6 +37,118 @@ var streampeertube = (function () {
         );
         el.wallpaperError.removeClass('error-message');
       });
+
+      el.streamButton.on('click', function () {
+        if (streamCreated) {
+          streamCreated = false;
+
+          return wndObj.close();
+        }
+
+        var contentSection = wnd.find('.content-section');
+        var preloaderSection = wnd.find('.preloader-section');
+
+        el.streamButton.addClass('disabledButton');
+        el.streamButton.text('Starting...');
+
+        contentSection.addClass('hidden');
+        preloaderSection.removeClass('hidden');
+
+        var videoWallpaperFile = el.videoWallpaper.prop('files');
+
+        var videoName = wnd.find('.upload-video-name').val();
+        var nameError = wnd.find('.name-type-error');
+
+        nameError.text('');
+
+        var filesWrittenObject = {};
+
+        if (videoWallpaperFile[0]) {
+          if (
+            videoWallpaperFile[0].type !== 'image/jpeg' &&
+            videoWallpaperFile[0].type !== 'image/jpg'
+          ) {
+            el.wallpaperError.text(
+              'Incorrect wallpaper format. Supported: .jpg, .jpeg',
+            );
+            el.wallpaperError.addClass('error-message');
+
+            return;
+          }
+
+          filesWrittenObject.image = videoWallpaperFile[0];
+        }
+        if (!videoName) {
+          nameError.text('Name is empty');
+
+          return;
+        }
+
+        filesWrittenObject.name = videoName;
+
+        filesWrittenObject.uploadFunction = function (percentComplete) {
+          var formattedProgress = percentComplete.toFixed(2);
+
+          el.uploadProgress
+            .find('.upload-progress-bar')
+            .css('width', formattedProgress + '%');
+          el.uploadProgress
+            .find('.upload-progress-percentage')
+            .text(formattedProgress + '%');
+        };
+
+        filesWrittenObject.successFunction = function (response) {
+          var resultElement = wnd.find('.result-section');
+
+          preloaderSection.addClass('hidden');
+
+          if (response.error) {
+            var error = deep(response, 'error.responseJSON.errors') || {};
+
+            var message = (Object.values(error)[0] || {}).msg;
+
+            sitemessage(message || 'Uploading error');
+            contentSection.removeClass('hidden');
+            el.streamButton.removeClass('disabledButton');
+            el.streamButton.html('<i class="fas fa-broadcast-tower"></i> Go Live');
+
+            return;
+          }
+
+          streamCreated = true;
+
+          resultElement.removeClass('hidden');
+          el.streamButton.html('<i class="fas fa-check"></i> Stream Created');
+          el.streamButton.removeClass('disabledButton');
+          el.streamButton.addClass('successButton');
+
+          var rtmpInput = resultElement.find('.result-video-rtmp');
+          var streamKeyInput = resultElement.find('.result-video-streamKey');
+
+          rtmpInput.val(response.rtmpUrl);
+          streamKeyInput.val(response.streamKey);
+
+          actions.added(response.video);
+          // wndObj.close();
+        };
+
+        self.app.peertubeHandler.startLive(filesWrittenObject);
+      });
+
+      el.copyButton.each((index, button) => {
+        var buttonElement = $(button);
+
+        var inputClass = buttonElement.attr('linkType');
+
+        buttonElement.on('click', () => {
+          var linkValue = el.c.find(`.${inputClass}`);
+
+          copyText(linkValue);
+
+          sitemessage('Link was copied to clipboard')
+        });
+
+      });
     };
 
     return {
@@ -52,32 +167,30 @@ var streampeertube = (function () {
 
             clbk(data);
           } else {
-
             self.app.peertubeHandler.getLiveInfo(videoId, {
               successFunction: (res) => {
                 if (res.error) {
                   var error = deep(res, 'error.responseJSON.errors') || {};
-  
+
                   var message = (Object.values(error)[0] || {}).msg;
-  
+
                   sitemessage(message || 'Server error');
                 } else {
                   streamCreated = true;
-  
+
                   streamInfo = {
                     rtmpUrl: res.rtmpUrl,
                     streamKey: res.streamKey,
                   };
                 }
-  
+
                 var data = {};
-  
+
                 clbk(data);
               },
             });
           }
         } else {
-
           var data = {};
 
           streamInfo = null;
@@ -111,6 +224,10 @@ var streampeertube = (function () {
         el.contentSection = el.c.find('.content-section');
         el.resultSection = el.c.find('.result-section');
 
+        el.streamButton = el.c.find('.streamButton');
+
+        el.copyButton = el.c.find('.copyStreamInfo');
+
         if (streamInfo) {
           streamCreated = true;
           el.contentSection.addClass('hidden');
@@ -121,11 +238,8 @@ var streampeertube = (function () {
             .find('.result-video-streamKey')
             .val(streamInfo.streamKey);
 
-          var closeButton = p.el.find(`.button.close`);
-          console.log('Close', closeButton);
-
-          closeButton.html('<i class="fas fa-check"></i> Stream Created');
-          closeButton.addClass('successButton');
+          el.streamButton.html('<i class="fas fa-check"></i> Stream Created');
+          el.streamButton.addClass('successButton');
         }
 
         initEvents();
@@ -135,127 +249,132 @@ var streampeertube = (function () {
 
       wnd: {
         header: '',
-        buttons: {
-          close: {
-            class: 'close',
-            html: '<i class="fas fa-broadcast-tower"></i> Go live',
-            fn: function (wnd, wndObj) {
-              if (streamCreated) {
-                streamCreated = false;
+        // buttons: {
+        //   close: {
+        //     class: 'close',
+        //     html: '<i class="fas fa-broadcast-tower"></i> Go live',
+        //     // fn: function (wnd, wndObj) {
+        //     //   if (streamCreated) {
+        //     //     streamCreated = false;
 
-                return wndObj.close();
-              }
+        //     //     return wndObj.close();
+        //     //   }
 
-              var closeButton = wnd.find('.button.close');
-              var contentSection = wnd.find('.content-section');
-              var preloaderSection = wnd.find('.preloader-section');
+        //     //   var contentSection = wnd.find('.content-section');
+        //     //   var preloaderSection = wnd.find('.preloader-section');
 
-              closeButton.addClass('disabledButton');
-              closeButton.text('Starting...');
+        //     //   closeButton.addClass('disabledButton');
+        //     //   closeButton.text('Starting...');
 
-              contentSection.addClass('hidden');
-              preloaderSection.removeClass('hidden');
+        //     //   contentSection.addClass('hidden');
+        //     //   preloaderSection.removeClass('hidden');
 
-              var videoWallpaperFile = el.videoWallpaper.prop('files');
+        //     //   var videoWallpaperFile = el.videoWallpaper.prop('files');
 
-              var videoName = wnd.find('.upload-video-name').val();
-              var nameError = wnd.find('.name-type-error');
+        //     //   var videoName = wnd.find('.upload-video-name').val();
+        //     //   var nameError = wnd.find('.name-type-error');
 
-              nameError.text('');
+        //     //   nameError.text('');
 
-              var filesWrittenObject = {};
+        //     //   var filesWrittenObject = {};
 
-              if (videoWallpaperFile[0]) {
-                if (
-                  videoWallpaperFile[0].type !== 'image/jpeg' &&
-                  videoWallpaperFile[0].type !== 'image/jpg'
-                ) {
-                  el.wallpaperError.text(
-                    'Incorrect wallpaper format. Supported: .jpg, .jpeg',
-                  );
-                  el.wallpaperError.addClass('error-message');
+        //     //   if (videoWallpaperFile[0]) {
+        //     //     if (
+        //     //       videoWallpaperFile[0].type !== 'image/jpeg' &&
+        //     //       videoWallpaperFile[0].type !== 'image/jpg'
+        //     //     ) {
+        //     //       el.wallpaperError.text(
+        //     //         'Incorrect wallpaper format. Supported: .jpg, .jpeg',
+        //     //       );
+        //     //       el.wallpaperError.addClass('error-message');
 
-                  return;
-                }
+        //     //       return;
+        //     //     }
 
-                filesWrittenObject.image = videoWallpaperFile[0];
-              }
-              if (!videoName) {
-                nameError.text('Name is empty');
+        //     //     filesWrittenObject.image = videoWallpaperFile[0];
+        //     //   }
+        //     //   if (!videoName) {
+        //     //     nameError.text('Name is empty');
 
-                return;
-              }
+        //     //     return;
+        //     //   }
 
-              filesWrittenObject.name = videoName;
+        //     //   filesWrittenObject.name = videoName;
 
-              filesWrittenObject.uploadFunction = function (percentComplete) {
-                var formattedProgress = percentComplete.toFixed(2);
+        //     //   filesWrittenObject.uploadFunction = function (percentComplete) {
+        //     //     var formattedProgress = percentComplete.toFixed(2);
 
-                el.uploadProgress
-                  .find('.upload-progress-bar')
-                  .css('width', formattedProgress + '%');
-                el.uploadProgress
-                  .find('.upload-progress-percentage')
-                  .text(formattedProgress + '%');
-              };
+        //     //     el.uploadProgress
+        //     //       .find('.upload-progress-bar')
+        //     //       .css('width', formattedProgress + '%');
+        //     //     el.uploadProgress
+        //     //       .find('.upload-progress-percentage')
+        //     //       .text(formattedProgress + '%');
+        //     //   };
 
-              filesWrittenObject.successFunction = function (response) {
-                var resultElement = wnd.find('.result-section');
+        //     //   filesWrittenObject.successFunction = function (response) {
+        //     //     var resultElement = wnd.find('.result-section');
 
-                preloaderSection.addClass('hidden');
+        //     //     preloaderSection.addClass('hidden');
 
-                if (response.error) {
-                  var error = deep(response, 'error.responseJSON.errors') || {};
+        //     //     if (response.error) {
+        //     //       var error = deep(response, 'error.responseJSON.errors') || {};
 
-                  var message = (Object.values(error)[0] || {}).msg;
+        //     //       var message = (Object.values(error)[0] || {}).msg;
 
-                  sitemessage(message || 'Uploading error');
-                  contentSection.removeClass('hidden');
-                  closeButton.removeClass('disabledButton');
-                  closeButton.html(
-                    '<i class="fas fa-broadcast-tower"></i> Go Live',
-                  );
+        //     //       sitemessage(message || 'Uploading error');
+        //     //       contentSection.removeClass('hidden');
+        //     //       closeButton.removeClass('disabledButton');
+        //     //       closeButton.html(
+        //     //         '<i class="fas fa-broadcast-tower"></i> Go Live',
+        //     //       );
 
-                  return;
-                }
+        //     //       return;
+        //     //     }
 
-                streamCreated = true;
+        //     //     streamCreated = true;
 
-                resultElement.removeClass('hidden');
-                closeButton.html('<i class="fas fa-check"></i> Stream Created');
-                closeButton.removeClass('disabledButton');
-                closeButton.addClass('successButton');
+        //     //     resultElement.removeClass('hidden');
+        //     //     closeButton.html('<i class="fas fa-check"></i> Stream Created');
+        //     //     closeButton.removeClass('disabledButton');
+        //     //     closeButton.addClass('successButton');
 
-                var rtmpInput = resultElement.find('.result-video-rtmp');
-                var streamKeyInput = resultElement.find(
-                  '.result-video-streamKey',
-                );
+        //     //     var rtmpInput = resultElement.find('.result-video-rtmp');
+        //     //     var streamKeyInput = resultElement.find(
+        //     //       '.result-video-streamKey',
+        //     //     );
 
-                rtmpInput.val(response.rtmpUrl);
-                streamKeyInput.val(response.streamKey);
+        //     //     rtmpInput.val(response.rtmpUrl);
+        //     //     streamKeyInput.val(response.streamKey);
 
-                actions.added(response.video);
-                // wndObj.close();
-              };
+        //     //     actions.added(response.video);
+        //     //     // wndObj.close();
+        //     //   };
 
-              // el.uploadProgress.removeClass('hidden');
-              self.app.peertubeHandler.startLive(filesWrittenObject);
-            },
-          },
-        },
+        //     //   // el.uploadProgress.removeClass('hidden');
+        //     //   self.app.peertubeHandler.startLive(filesWrittenObject);
+        //     // },
+        //   },
+        // },
         close: function () {
           if (ed.closeClbk) {
             ed.closeClbk();
           }
         },
-        success: function (_wnd, _wndObj) {
+        postRender: function (_wnd, _wndObj, clbk) {
           wndObj = _wndObj;
           wnd = _wnd;
+
+          if (clbk) {
+            clbk();
+          }
         },
         offScroll: true,
         noInnerScroll: true,
         class: 'streampeertube',
         allowHide: true,
+        noCloseButton: true,
+        noButtons: true,
 
         swipeClose: true,
         swipeCloseDir: 'right',

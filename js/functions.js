@@ -8180,7 +8180,7 @@
 	} 	
 	var copyText = function(el) {
 
-		var text = trim(el.attr('text') || el.text());
+		var text = trim(el.attr('text') || el.text() || el.val());
 
 	    copycleartext(text)
 	}
