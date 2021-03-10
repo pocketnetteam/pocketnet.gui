@@ -197,7 +197,6 @@ var share = (function(){
 				var storage = currentShare.export(true)
 
 				if (type === 'addVideo') {
-
 					globalpreloader(true);
 
 					el.peertube.addClass('disabledShare');
