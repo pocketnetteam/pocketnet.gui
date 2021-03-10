@@ -41,7 +41,12 @@
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
         <script src="https://pocketnet.app/js/widgets.js?v=136"></script>
-         
+
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.0.2/webcomponents-bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+
+        <script src="components/matrix-element/matrix-element.min.js"></script>
        
     </head>
     <body id="application" class="menu-hide">
@@ -74,6 +79,11 @@
         </div>
 
         <div class="chats">
+        </div>
+
+        
+        </div>
+            <div id="matrix" class="matrix">
         </div>
 
         <div id="globalpreloader">
