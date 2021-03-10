@@ -759,7 +759,7 @@
 				wnd.find('.hideButton').removeClass('hidden');
 
 				if(!nooverflow) {
-					app.actions.onScroll();
+					app.actions.offScroll();
 				}
 			},
 		}
