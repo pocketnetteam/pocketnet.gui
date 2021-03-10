@@ -17949,9 +17949,9 @@ Platform = function (app, listofnodes) {
 
             var a = pnet.address;
 
-            console.log('AAA!!', a);
+            var addresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8']
         
-            if ((a == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82') || (a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc') || (a == 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8')) {
+            if (addresses.indexOf(a) > -1) {
 
                 self.app.user.features.telegram = 1;
 
