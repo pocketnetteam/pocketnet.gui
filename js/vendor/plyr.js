@@ -9218,7 +9218,7 @@ var PlyrEx = function(target, options, clbk) {
 
       var videoLink = video_id.split('?')[0].split('/').pop();
 
-      checkInterval = setInterval(function() {
+      // checkInterval = setInterval(function() {
         $.ajax({ 
           url : `https://${host_name}/api/v1/videos/${videoLink}`,
           type : 'GET',
@@ -9228,7 +9228,7 @@ var PlyrEx = function(target, options, clbk) {
   
               if ((response.files || []).length) {
                   _plyr(response.files[0].fileUrl, preview_picture || '', response.name || '');
-                  clearInterval(checkInterval);
+                  // clearInterval(checkInterval);
 
                   if (clbk) clbk(new Plyr(target, options));
   
@@ -9242,7 +9242,7 @@ var PlyrEx = function(target, options, clbk) {
               }
           }
       });
-      }, 1000);
+      // }, 1000);
 
     } else {
 

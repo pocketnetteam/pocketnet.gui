@@ -110,7 +110,9 @@ var streampeertube = (function () {
             sitemessage(message || 'Uploading error');
             contentSection.removeClass('hidden');
             el.streamButton.removeClass('disabledButton');
-            el.streamButton.html('<i class="fas fa-broadcast-tower"></i> Go Live');
+            el.streamButton.html(
+              '<i class="fas fa-broadcast-tower"></i> Go Live',
+            );
 
             return;
           }
@@ -145,9 +147,14 @@ var streampeertube = (function () {
 
           copyText(linkValue);
 
-          sitemessage('Link was copied to clipboard')
+          sitemessage('Link was copied to clipboard');
         });
+      });
 
+      el.dateInput.DateTimePicker({
+        settingValueOfElement: function (a, b) {
+          console.log('Date', a, b);
+        },
       });
     };
 
@@ -223,6 +230,7 @@ var streampeertube = (function () {
         el.uploadProgress = el.c.find('.upload-progress-container');
         el.contentSection = el.c.find('.content-section');
         el.resultSection = el.c.find('.result-section');
+        el.dateInput = el.c.find('#dtBox');
 
         el.streamButton = el.c.find('.streamButton');
 

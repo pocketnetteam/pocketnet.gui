@@ -183,6 +183,7 @@
 <script join src="js/vendor/xss.min.js?v=5"></script>
 <script join src="js/vendor/jquery.mark.js?v=5"></script>
 <script join src="js/vendor/hc-sticky.js?v=5"></script>
+<script join src="js/vendor/DateTimePicker.min.js?v=7"></script>
 <script join src="js/vendor/axios.js"></script>
 
         
