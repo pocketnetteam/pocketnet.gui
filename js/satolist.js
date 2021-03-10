@@ -17942,6 +17942,8 @@ Platform = function (app, listofnodes) {
 
         var pnet = self.app.platform.sdk.address.pnet()
 
+        $('#matrix').empty();
+
         ///telegram access
         if (pnet){
 
@@ -17966,7 +17968,7 @@ Platform = function (app, listofnodes) {
                         >
                         </matrix-element>
                     </div>`
-        
+
                     $('#matrix').append(matrix);
 
                     var currentHref = self.app.nav.get.href();
