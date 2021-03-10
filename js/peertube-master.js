@@ -49,13 +49,16 @@ PeerTubeHandler = function (app) {
   this.uploadProgress = 0;
 
   this.getServerInfo = () => {
-    return app.api.fetch('peertube/servers').then((data) => {
-      [baseUrl, watchUrl, randomServer] = [
-        `https://${data.fastest.server}/api/v1/`,
-        `https://${data.fastest.server}/videos/watch/`,
-        data.fastest.server,
-      ];
-    });
+    return app.api
+      .fetch('peertube/servers')
+      .then((data) => {
+        [baseUrl, watchUrl, randomServer] = [
+          `https://${data.fastest.server}/api/v1/`,
+          `https://${data.fastest.server}/videos/watch/`,
+          data.fastest.server,
+        ];
+      })
+      .catch(() => {});
   };
 
   this.registerUser = (userInfo) => {
