@@ -499,6 +499,7 @@
 	}, 3000)*/
 
 	wnd = function(p){
+
 		if(!p) p = {};
 
 		var self = this,
@@ -551,7 +552,7 @@
 
 		var render = function(tpl){
 
-			var h = '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
 					 ';
 
 			var closedbtnclass = ''
@@ -559,7 +560,7 @@
 				if(p.leftbg) 
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
 
-				h+=	 '<div class="wndcontent content">'+content+'</div>';
+				h+=	 p.allowHide ? '<div class="wndcontent content"><div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div>' + content + '</div>' : '<div class="wndcontent content">'+content+'</div>';
 
 				if(p.header) 
 				{
@@ -570,10 +571,10 @@
 					closedbtnclass = 'onwhite'
 				}
 
-
-				h+=	 ' <div class="buttons"></div>';
-				h+=	 '</div>'
-					 ;
+				if (!p.noButtons) {
+					h+=	 ' <div class="buttons"></div>';
+					h+=	 '</div>';
+				}
 
 			wnd = $("<div>",{
 			   "class" 	: "wnd",
@@ -625,6 +626,7 @@
 		}
 
 		var initevents = function(){
+
 			if(!p.noCloseBack)
 				wnd.find('.wndback').one('click', function(){
 					actions.close(true)
@@ -691,6 +693,12 @@
 				});*/
 			}
 
+			if (p.allowHide) {
+				wnd.find('.hideButton').on('click', actions.hide);
+				wnd.find('.closeButton').on('click', actions.close);
+				wnd.find('.expandButton').on('click', actions.show);
+			}
+
 			_w.on('resize', resize)
 
 			_w[0].addEventListener('scroll', wndfixed);
@@ -726,11 +734,15 @@
 
 			hide : function(cl, key) {
 				// wnd.find('.wndback').css('display', 'none');
+
 				wnd.find('.buttons').addClass('hidden');
 				wnd.addClass('hiddenState');
 				wnd.find('.wndcontent > div').addClass('rolledUp');
 
-				setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
+				wnd.find('.expandButton').removeClass('hidden');
+				wnd.find('.closeButton').addClass('hidden');
+				wnd.find('.hideButton').addClass('hidden');
+				// setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -742,9 +754,12 @@
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
+				wnd.find('.expandButton').addClass('hidden');
+				wnd.find('.closeButton').removeClass('hidden');
+				wnd.find('.hideButton').removeClass('hidden');
 
 				if(!nooverflow) {
-					app.actions.onScroll();
+					app.actions.offScroll();
 				}
 			},
 		}
@@ -772,7 +787,7 @@
 
 			if(!p.buttons)  p.buttons = {};
 
-			if(!p.buttons.close)
+			if(!p.buttons.close && !p.noCloseButton)
 
 				p.buttons.close = {
 					action : close,
@@ -791,8 +806,15 @@
 
 		    	self.el = wnd;
 
-				if (p.clbk) 
-					p.clbk(self, wnd);
+				if (p.postRender) {
+					p.postRender(wnd, self, () => {
+						if (p.clbk) 
+							p.clbk(self, wnd);
+					});
+				} else {
+					if (p.clbk) 
+						p.clbk(self, wnd);
+				} 
 			}
 
 			if(!p.noblur)
@@ -8160,7 +8182,7 @@
 	} 	
 	var copyText = function(el) {
 
-		var text = trim(el.attr('text') || el.text());
+		var text = trim(el.attr('text') || el.text() || el.val());
 
 	    copycleartext(text)
 	}

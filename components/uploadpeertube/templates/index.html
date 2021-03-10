@@ -1,39 +1,58 @@
 <div id="<%-module.map.id%>">
-	<header class="upload-header">
+	<header class="upload-header activeOnRolled">
 		<section class="logo-container">
 			<img src="img/Logo_de_PeerTube.svg">
 		</section>
-		<h1>Upload New Video via PeerTube:</h1>
+		<h1>Upload New PocketVideo</h1>
 	</header>
-	<section class="main-upload-fields activeOnRolled">
-		<div class="upload-field-container">
-			<label for="upload-video-file" class="upload-peertube-label upload-video-file-label">Select video file:</label>
-			<input type="file" class="upload-video-file hidden" id="upload-video-file">
-			<span class="type-error-field file-type-error"></span>
-		</div>
-		<div class="upload-field-container">
-			<label for="upload-video-wallpaper" class="upload-peertube-label upload-video-wallpaper-label">Select video preview wallpaper:</label>
-			<input type="file" class="upload-video-wallpaper hidden" id="upload-video-wallpaper" accept=".jpg,.jpeg">
-			<span class="type-error-field wallpaper-type-error"></span>
-		</div>
-		<div class="upload-type-separator">OR</div>
-		<div class="upload-field-container">
-			<!-- <label for="upload-video-name">Select video file:</label> -->
-			<input type="text" class="import-video-link" id="import-video-link" placeholder="Import video from YouTube etc.">
-			<span class="type-error-field import-video-link-error"></span>
-		</div>
-		<div class="upload-field-container video-title-container">
-			<!-- <label for="upload-video-name">Select video file:</label> -->
-			<input type="text" class="upload-video-name" id="upload-video-name" placeholder="Enter video title: ">
-			<span class="type-error-field name-type-error"></span>
-		</div>
+	<section class="mainWrapper activeOnRolled">
+		<section class="sectionsWrapper verticalSection">
+			<section class="main-upload-fields activeOnRolled">
+				<div class="upload-field-container video-title-container">
+					<!-- <label for="upload-video-name">Select video file:</label> -->
+					<input type="text" class="upload-video-name upload-input" id="upload-video-name" placeholder="Enter video title: ">
+					<span class="type-error-field name-type-error error-message"></span>
+				</div>
+		
+				<div class="upload-field-container">
+					<label for="upload-video-file" class="upload-peertube-label upload-video-file-label">Select video file:</label>
+					<input type="file" class="upload-video-file hidden" upload-input id="upload-video-file">
+					<span class="type-error-field file-type-error"></span>
+				</div>
+				<div class="upload-field-container">
+					<label for="upload-video-wallpaper" class="upload-peertube-label upload-video-wallpaper-label">Select video preview wallpaper:</label>
+					<input type="file" class="upload-video-wallpaper hidden upload-input" id="upload-video-wallpaper" accept=".jpg,.jpeg">
+					<span class="type-error-field wallpaper-type-error"></span>
+				</div>
+				<div class="upload-type-separator">OR</div>
+				<div class="upload-field-container">
+					<!-- <label for="upload-video-name">Select video file:</label> -->
+					<input type="text" class="import-video-link upload-input" id="import-video-link" placeholder="Import video from YouTube etc.">
+					<span class="type-error-field import-video-link-error"></span>
+				</div>
+			</section>
+			<section class="upload-button-section">
+				<div class="upload-button-wrapper">
+					<button class="uploadButton orange">
+						<i class="fas fa-globe"></i> Upload
+					</button>
+				</div>
+			</section>
+		</section>
 
-		<div class="upload-progress-container hidden activeOnRolled">
-			<div class="upload-progress-caption">
-				<span class="bold-font">Uploaded:</span>
-				<span class="upload-progress-percentage"></span>
+		<section class="activeOnRolled verticalSection progressSection">
+			<div class="upload-progress-container activeOnRolled hidden">
+				<div class="barWrapper activeOnRolled">
+					<div class="upload-progress-caption">
+						<span class="bold-font">Uploaded:</span>
+						<span class="upload-progress-percentage"></span>
+					</div>
+					<div class="upload-progress-bar"></div>
+				</div>
+				<div class="cancelButton controlButton hidden">
+					<i class="fas fa-times"></i> Cancel
+				</div>
 			</div>
-			<div class="upload-progress-bar"></div>
-		</div>		
+		</section>
 	</section>
 </div>

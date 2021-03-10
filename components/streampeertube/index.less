@@ -1,12 +1,21 @@
 @import "../../css/__cssvar";
 
-#streampeertube{
+#streampeertube {
     width: 100%;
+    height: 100%;
 
     .upload-header {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+
+        .logo-container {
+            img {
+                width: 1em;
+            }
+
+            margin-right: 0.5em;
+        }
     }
 
     .type-error-field {
@@ -27,14 +36,19 @@
     }
 
     .upload-field-container {
-       color: @color-add;
+        color: black;
 
-       .upload-peertube-label {
-           text-decoration: underline;
-       }
+        &:hover,
+        &:active {
+            color: @color-orange;
+        }
+
+        .upload-peertube-label {
+            text-decoration: underline;
+        }
     }
 
-    .upload-field-container:not(:first-child){
+    .upload-field-container:not(:first-child) {
         margin-top: @rhythm * 2;
     }
 
@@ -44,7 +58,7 @@
             min-width: 200px;
         }
 
-        .upload-field-container:not(:first-child){
+        .upload-field-container:not(:first-child) {
             margin-top: @rhythm * 4;
         }
 
@@ -75,6 +89,8 @@
         border-width: 0;
 
         border-bottom-width: 1px;
+
+        border-color: @color-orange;
     }
 
     .upload-progress-container {
@@ -92,15 +108,54 @@
 
         background-color: green;
     }
+
+    .verticalFieldsWrapper {
+        display: flex;
+        width: 100%;
+
+        margin: @rhythm * 4 0;
+    }
+
+    .liveButtonWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        box-sizing: border-box;
+        border-left: 1px solid @color-gray-slight;
+    }
+
+    .streamButton {
+        padding: @rhythm * 2 @rhythm * 4;
+    }
+
+    .verticalSection {
+        width: 50%;
+    }
+
+    .result-video-info {
+        border-color: @color-orange;
+    }
+
+    .preloader-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
 }
 
 #streampeertube.rolledUp {
     margin: auto;
 
+    .upload-header {
+        font-size: 0.8em;
+    }
+
     > :not(.activeOnRolled) {
         display: none;
     }
-    
+
     .main-upload-fields {
         > :not(.activeOnRolled) {
             display: none;
@@ -108,6 +163,12 @@
 
         .upload-progress-container.activeOnRolled {
             margin: 0;
+        }
+    }
+
+    .result-section {
+        > :not(.activeOnRolled) {
+            display: none;
         }
     }
 }
@@ -119,14 +180,17 @@
         width: 50%;
         height: 100%;
 
-        max-height: 300px;
+        max-height: 250px;
 
-        overflow: scroll;
+        overflow: hidden;
 
         .wndcontent {
             display: flex;
             align-items: flex-start;
             justify-content: space-around;
+            overflow: hidden;
+
+            height: 100%;
         }
     }
 }
