@@ -27,7 +27,6 @@ var uploadpeertube = (function () {
     };
 
     var initEvents = function () {
-      
       el.videoInput.change(function (evt) {
         var fileName = evt.target.files[0].name;
         el.videoError.text(
@@ -62,7 +61,6 @@ var uploadpeertube = (function () {
       });
 
       el.uploadButton.on('click', function () {
-        
         var filesWrittenObject = {};
 
         el.header.removeClass('activeOnRolled');
@@ -80,12 +78,11 @@ var uploadpeertube = (function () {
           };
 
           filesWrittenObject.successFunction = function (response) {
-            el.uploadButton.removeClass('hidden');
+            el.uploadButton.prop('disabled', false);
             el.header.addClass('activeOnRolled');
 
             if (response.error) {
-              var error =
-                deep(response, 'error.responseJSON.errors') || {};
+              var error = deep(response, 'error.responseJSON.errors') || {};
 
               var message = (Object.values(error)[0] || {}).msg;
 
@@ -172,11 +169,10 @@ var uploadpeertube = (function () {
         };
 
         filesWrittenObject.successFunction = function (response) {
-          el.uploadButton.removeClass('hidden');
+          el.uploadButton.prop('disabled', false);
           el.header.addClass('activeOnRolled');
 
           if (response.error) {
-
             if (axios.isCancel(response.error)) {
               sitemessage('Uploading canceled');
             } else {
@@ -185,7 +181,7 @@ var uploadpeertube = (function () {
               var message = (Object.values(error)[0] || {}).msg;
 
               sitemessage(message || 'Uploading error');
-              
+
               wndObj.close();
             }
 
@@ -196,7 +192,7 @@ var uploadpeertube = (function () {
           wndObj.close();
         };
 
-        filesWrittenObject.cancelClbk = function(cancel) {
+        filesWrittenObject.cancelClbk = function (cancel) {
           el.cancelButton.on('click', () => {
             el.uploadProgress.addClass('hidden');
             el.cancelButton.addClass('hidden');
@@ -206,12 +202,12 @@ var uploadpeertube = (function () {
         };
 
         wndObj.hide();
-        el.uploadButton.addClass('hidden');
+        el.uploadButton.prop('disabled', true);
         el.uploadProgress.removeClass('hidden');
         el.header.removeClass('activeOnRolled');
 
         self.app.peertubeHandler.uploadVideo(filesWrittenObject);
-      })
+      });
     };
 
     return {

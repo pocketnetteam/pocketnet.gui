@@ -1,6 +1,6 @@
 @import "../../css/__cssvar";
 
-#uploadpeertube{
+#uploadpeertube {
     width: 100%;
 
     .upload-header {
@@ -14,7 +14,7 @@
     }
 
     .error-message {
-        color: @color-bad;
+        color: @color-orange;
     }
 
     .logo-container {
@@ -26,20 +26,20 @@
     }
 
     .upload-field-container {
-       color: black;
+        color: black;
 
-       .upload-peertube-label {
-           text-decoration: underline;
+        .upload-peertube-label {
+            text-decoration: underline;
 
-           transition: color 0.1s ease-in 0.1s;
+            transition: color 0.1s ease-in 0.1s;
 
-           &:hover {
-               color: @color-contrast;
-           }
-       }
+            &:hover {
+                color: @color-orange;
+            }
+        }
     }
 
-    .upload-field-container:not(:first-child){
+    .upload-field-container:not(:first-child) {
         margin-top: @rhythm * 3;
     }
 
@@ -132,7 +132,7 @@
         cursor: pointer;
 
         &:hover {
-            color: @color-contrast;
+            color: @color-orange;
         }
     }
 
@@ -141,11 +141,48 @@
     }
 
     .uploadButton {
-        margin-top: @rhythm * 4;
+        padding: @rhythm * 2 @rhythm * 4;
+
+        font-weight: bold;
+        
+        &:disabled {
+            background-color: @color-gray-mlight;
+            border-color: @color-gray-mlight;
+
+            color: white;
+        }
     }
 
     .upload-input {
-        border-color: @color-contrast;
+        border-color: @color-orange;
+    }
+
+    .sectionsWrapper {
+        display: flex;
+    }
+
+    .main-upload-fields {
+        width: 70%;
+    }
+
+    .upload-button-section {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        box-sizing: border-box;
+        border-left: 1px solid @color-gray-slight;
+    }
+
+    .mainWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .verticalSection {
+        width: 100%;
     }
 }
 
@@ -155,18 +192,30 @@
     > :not(.activeOnRolled) {
         display: none;
     }
-    
+
+    .mainWrapper {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
     .main-upload-fields {
         > :not(.activeOnRolled) {
             display: none;
         }
+    }
 
-        .upload-progress-container.activeOnRolled {
-            margin: 0;
+    .upload-progress-container {
+        margin: 0;
 
-            > :not(.activeOnRolled) {
-                display: none;
-            }
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .progressSection {
+        > :not(.activeOnRolled) {
+            display: none;
         }
     }
 
