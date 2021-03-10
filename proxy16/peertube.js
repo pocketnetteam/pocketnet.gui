@@ -27,7 +27,7 @@ const SETTELED_SUCCESS_STATUS = 'fulfilled';
 const Peertube = function () {
   const hardCodeUrlsList = [
     'pocketnetpeertube1.nohost.me',
-    '123pocketnetpeertube2.nohost.me',
+    'pocketnetpeertube2.nohost.me',
     'pocketnetpeertube3.nohost.me',
   ];
 
@@ -62,7 +62,6 @@ const Peertube = function () {
         const filteredResponse = res
           .filter((response) => response.status === SETTELED_SUCCESS_STATUS)
           .map((item) => {
-            console.log('AAA', item.value.config.url, item.value.request.path);
             const serverLink = item.value.config.url
               .replace('https://', '')
               .replace(item.value.request.path, '');
@@ -73,8 +72,6 @@ const Peertube = function () {
               timeResponse: timerStack[serverLink],
             };
           });
-
-        console.log(filteredResponse);
 
         const output = {
           fastest: filteredResponse.reduce((accumulator, current) => {
