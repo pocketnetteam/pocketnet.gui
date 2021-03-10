@@ -128,7 +128,7 @@ var streampeertube = (function () {
           rtmpInput.val(response.rtmpUrl);
           streamKeyInput.val(response.streamKey);
 
-          actions.added(response.video);
+          actions.added(`${response.video}?stream=true`);
           // wndObj.close();
         };
 
