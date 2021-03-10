@@ -916,6 +916,10 @@ var test = (function(){
 
 							})
 							
+						},
+
+						onError : function(er, file, text){
+							sitemessage(text)
 						}
 					})
 

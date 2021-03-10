@@ -20,6 +20,7 @@ Platform = function (app, listofnodes) {
     self.repost = true
 
     var onlinetnterval;
+    var unspentoptimizationInterval = null;
     var blockps = 1000000;
     var nshowed = false;
     var TXFEE = 1;
@@ -140,7 +141,6 @@ Platform = function (app, listofnodes) {
             return html;
         }
     }
-
 
 
 
@@ -6426,6 +6426,80 @@ Platform = function (app, listofnodes) {
 
             },
 
+            sendFromInputs: function (address, inputs, keyPair, amount, clbk) {
+
+                var feerate = 0.000001;
+
+                if(!amount){
+                    amount = _.reduce(inputs, function(sum, input){
+                        return sum + input.amount
+                    }, 0)
+                }
+
+                var outputs = [{
+                    address: address,
+                    amount: amount
+                }]
+
+                if (!keyPair) {
+                    if (clbk)
+                        clbk('privatekey')
+                }
+                else {
+
+
+                    var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, outputs, keyPair)
+                    var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
+
+                    outputs[0].amount = outputs[0].amount - totalFees
+
+                    if(outputs[0].amount < 0){
+                        if (clbk)
+                            clbk('dust')
+                    }
+
+                    else{
+                        tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, outputs, keyPair)
+
+                        _.each(inputs, function(t){
+                            t.cantspend = true
+                        })
+
+                        self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
+
+                            if (err) {
+
+                                self.sdk.node.transactions.releaseCS(inputs)
+
+                                if (clbk)
+                                    clbk(err)
+                            }
+
+                            else {
+
+                                console.log('inputs', inputs)
+
+                                var ids = _.map(inputs, function (i) {
+                                    return {
+                                        txid: i.txid,
+                                        vout: i.vout
+                                    }
+                                })
+
+                                self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, outputs)
+
+                                self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+                                if (clbk)
+                                    clbk(null, d, amount * outputs.length)
+                            }
+                        })
+                    }
+
+                }
+
+            },
+
             sendmany: function (mnemonic, outputs, clbk, embdedtext) {
 
                 var feerate = 0.000001;
@@ -9708,6 +9782,58 @@ Platform = function (app, listofnodes) {
 
 
                     })
+                },
+
+                setUnspentoptimizationInterval : function(){
+
+                    if(!unspentoptimizationInterval){
+
+                        self.sdk.node.transactions.unspentOptimization()
+                        
+                        unspentoptimizationInterval = setInterval(function(){
+                            self.sdk.node.transactions.unspentOptimization()
+                        }, 300000)
+                    }
+
+                    
+                },
+
+                clearUnspentoptimizationInterval : function(){
+
+                    if (unspentoptimizationInterval){
+                        clearInterval(unspentoptimizationInterval)
+                        unspentoptimizationInterval = null
+                    }
+                    
+                },
+
+                unspentOptimization : function(){
+
+                    var s = self.sdk.node.transactions;
+                    var pnet = self.sdk.address.pnet();
+
+                    if (pnet && s.unspent){
+                       
+                        var unspents = _.filter(s.unspent[pnet.address] || [], function(u){
+                            return self.sdk.node.transactions.canSpend(u) && u.amount
+                        })
+                        
+                        console.log("UNSPENT OPTIMIZATION LENGTH", unspents.length)
+
+                        if (unspents.length > 200){
+                            unspents = _.filter(unspents, function(u, i){
+                                return i < 180
+                            })
+
+                            var keyPair = self.app.user.keys()
+
+                            self.sdk.wallet.sendFromInputs(pnet.address, unspents, keyPair, 0, function(err, tx){
+                                console.log("UNSPENT OPTIMIZATION", err)
+                            })
+                            
+                        }
+                    }
+                   
                 },
 
                 clearUnspents: function (txids) {
@@ -15032,6 +15158,9 @@ Platform = function (app, listofnodes) {
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
                         _.each(outs, function (o) {
+
+                            console.log("clearTemp", data.txid, o.vout)
+
                             platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
 
                             if (!wa) {
@@ -17621,6 +17750,9 @@ Platform = function (app, listofnodes) {
 
         fast ? self.clearStorageFast() : self.clearStorage()
 
+
+        self.sdk.node.transactions.clearUnspentoptimizationInterval()
+
         if (electron) {
             electron.ipcRenderer.send('update-badge', null);
             electron.ipcRenderer.send('update-badge-tray', null);
@@ -17862,6 +17994,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.tempmessenger.init,
                     self.sdk.exchanges.load,
                 ], function () {
+
+                    self.sdk.node.transactions.setUnspentoptimizationInterval()
 
                     self.sdk.node.transactions.checkTemps(function () {
 

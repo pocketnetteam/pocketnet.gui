@@ -186,7 +186,7 @@ function createTray() {
         }
     })
 
-    win.on('show', () => {
+    /*win.on('show', () => {
         if (!tray) return;
         try {
             tray.setHighlightMode('always')
@@ -198,7 +198,7 @@ function createTray() {
         try {
             tray.setHighlightMode('never')
         } catch {}
-    })
+    })*/
 }
 
 function destroyTray() {

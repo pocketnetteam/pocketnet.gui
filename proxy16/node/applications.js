@@ -23,15 +23,15 @@ var Applications = function(settings) {
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             }
-        },
+        }
 
-        linux: {
+        /*linux: {
             github: {
                 name: "linux_x64.AppImage",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             }
-        }
+        }*/
     }
 
     var platform = process.platform

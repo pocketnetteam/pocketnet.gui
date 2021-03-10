@@ -1645,8 +1645,6 @@
 			format || (format = 'jpeg');
 			
 
-			
-
 		imageObj.onload = function(){
 
 			aspectRadio = imageObj.height / imageObj.width;
@@ -1683,9 +1681,11 @@
 			canvas.width  = newWidth;
 			canvas.height = newHeight;
 
+			console.log('newWidth', newHeight, newWidth)
+
 				ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-			var url = canvas.toDataURL("image/" + format, 1);
+			var url = canvas.toDataURL("image/" + format, 0.9);
 
 			$(canvas).remove();
 
@@ -1739,6 +1739,8 @@
 
 			canvas.width  = newWidth;
 			canvas.height = newHeight;
+
+			console.log('newWidth', newWidth, newHeight)
 
 				ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
@@ -8954,10 +8956,21 @@
 			}
 	
 	    }
+		var imageresize = function(file, image, clbk){
+			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif')){
+				resize(image, 2048, 2048, clbk)
+			}
+
+			else
+			{
+				if (clbk)
+					clbk(image)
+			}
+		}
 
 		var autorotation = function(file, image, clbk){
 
-			if((file.type == 'image/jpeg' || file.type == 'image/png') && !p.notexif && typeof EXIF != 'undefined'/* && !$('html').hasClass('iphone')*/){
+			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif') && !p.notexif && typeof EXIF != 'undefined'){
 				EXIF.getData(file, function() {
 
 					
@@ -9047,114 +9060,130 @@
 
 		    			var reader = new FileReader();
 
+						var fs = ((maxFileSize / 1024 ) / 1024).toFixed(0)
+
+						var et = {
+							filesize : "Your photo has size greater than "+fs+"MB. Please upload a photo under "+fs+"MB in size.",
+							fileext : "Invalid format of picture. Only png and jpeg are allowed"
+						}
+
+						if(error){
+							if (p.onError){
+								p.onError(error, file, et[error]);
+							}
+
+							_p.fail();
+
+							return
+						}
+
         				readFile(reader, error, file, files, function(fileObject){
 
-        					autorotation(file, fileObject.base64, function(base64){
+							console.log('fileObject.base64.length', fileObject.base64.length)
 
-        						fileObject.base64 = base64;
+							imageresize(file, fileObject.base64, function(base64){
 
-        						var fs = ((maxFileSize / 1024 ) / 1024).toFixed(0)
+								fileObject.base64 = base64;
 
-	        					var et = {
-	        						filesize : "Your photo has size greater than "+fs+"MB. Please upload a photo under "+fs+"MB in size.",
-	        						fileext : "Invalid format of picture. Only png and jpeg are allowed"
-	        					}
+								console.log('fileObject.base64.length', fileObject.base64.length)
 
+								autorotation(file, fileObject.base64, function(base64){
 
+									fileObject.base64 = base64;
+									
+									if(error)
+									{
+										if(p.onError)
+										{
+											p.onError(error, fileObject, file, et[error]);
+										}
 
-	        					if(error)
-	        					{
-	        						if(p.onError)
-								    {
-								    	p.onError(error, fileObject, file, et[error]);
-								    }
+										_p.fail();
+									}
+									else
+									{
+										var fd = new FormData();		    	
+											fd.append('file', file);
 
-								    _p.fail();
-	        					}
-	        					else
-	        					{
-	        						var fd = new FormData();		    	
-				        				fd.append('file', file);
+										_.each(p.data, function(data, key){
 
-			        				_.each(p.data, function(data, key){
+											if(typeof data == 'function') data = data();
 
-			        					if(typeof data == 'function') data = data();
-
-			        					if(key == 'data')
-			        					{
-			        						if (p.user)
-						        			{
-						        				p.user.extendAjaxData(data);
-						        			}
-			        					}
-
-			        					if(_.isArray(data) || _.isObject(data)) 
-					        				data = JSON.stringify(data);
-
-					        			fd.append(key, data);
-			        				})
-
-			        				if (p.beforeUpload){
-			        					p.beforeUpload(fileObject, processId)
-			        				}
-
-			        				if(p.server)
-					        		{
-					        			var xhr = new XMLHttpRequest();
-
-										xhr.onreadystatechange = function(e){
-											stateChange(e, function(response){
-
-												response = deep(response, 'root')
-
-												if(!response || response.Result != 'Success'){
-													if(p.onError)
-												    {
-												    	p.onError('serverError', fileObject, file);
-												    }
-
-												    _p.fail();
-												}
-												else
+											if(key == 'data')
+											{
+												if (p.user)
 												{
-													_p.success(response);
-
-													if (p.onUpload)
-														p.onUpload(response, processId)
+													p.user.extendAjaxData(data);
 												}
+											}
 
-											})
-										};
+											if(_.isArray(data) || _.isObject(data)) 
+												data = JSON.stringify(data);
+
+											fd.append(key, data);
+										})
+
+										if (p.beforeUpload){
+											p.beforeUpload(fileObject, processId)
+										}
+
+										if(p.server)
+										{
+											var xhr = new XMLHttpRequest();
+
+											xhr.onreadystatechange = function(e){
+												stateChange(e, function(response){
+
+													response = deep(response, 'root')
+
+													if(!response || response.Result != 'Success'){
+														if(p.onError)
+														{
+															p.onError('serverError', fileObject, file);
+														}
+
+														_p.fail();
+													}
+													else
+													{
+														_p.success(response);
+
+														if (p.onUpload)
+															p.onUpload(response, processId)
+													}
+
+												})
+											};
 
 
 
-										xhr.open('POST', p.server);
-										xhr.send(fd);
+											xhr.open('POST', p.server);
+											xhr.send(fd);
 
-										/*setTimeout(function(){
+											/*setTimeout(function(){
 
-											_p.success();
+												_p.success();
 
-										},800)*/
-										
-					        		}
+											},800)*/
+											
+										}
 
-					        		else
-					        		{
+										else
+										{
 
-					        			if (p.action){
-					        				p.action(fileObject, _p.success)
-					        			}
-					        			else
+											if (p.action){
+												p.action(fileObject, _p.success)
+											}
+											else
 
-					        				_p.success();
-					        		}
+												_p.success();
+										}
 
 
-	        					}
-        					})
+									}
+								})
 
-        					
+							})
 
         				})
 
