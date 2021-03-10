@@ -104,6 +104,7 @@ var uploadpeertube = (function () {
 
           wndObj.hide();
           el.uploadProgress.removeClass('hidden');
+          self.app.peertubeHandler.importVideo(filesWrittenObject);
 
           return;
         }
