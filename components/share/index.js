@@ -1124,8 +1124,9 @@ var share = (function(){
 						},
 
 						fail : () => {
-
 							if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
+							
+							return;
 						},
 					})
 				} else {
@@ -1339,6 +1340,8 @@ var share = (function(){
 
 					p.el.find('.cancelediting').on('click', function(){
 						self.closeContainer();
+
+						if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
 		
 						if (essenseData.close){
 							essenseData.close()
@@ -2293,6 +2296,8 @@ var share = (function(){
 
 			wnd : {
 				close : function(){
+					if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
+					
 					if (essenseData.close){
 						essenseData.close()
 					}
