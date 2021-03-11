@@ -17,6 +17,8 @@ var streampeertube = (function () {
     var wnd;
     var wndObj;
 
+    var streamDate;
+
     var actions = {};
 
     var events = {};
@@ -130,7 +132,11 @@ var streampeertube = (function () {
           rtmpInput.val(response.rtmpUrl);
           streamKeyInput.val(response.streamKey);
 
-          actions.added(`${response.video}?stream=true`);
+          actions.added(
+            `${response.video}?stream=true${
+              streamDate ? `&date=${streamDate}` : ''
+            }`,
+          );
           // wndObj.close();
         };
 
@@ -153,7 +159,7 @@ var streampeertube = (function () {
 
       el.dateInput.DateTimePicker({
         settingValueOfElement: function (a, b) {
-          console.log('Date', a, b);
+          streamDate = moment.utc(b).format();
         },
       });
     };

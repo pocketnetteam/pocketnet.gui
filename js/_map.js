@@ -36,6 +36,7 @@ __map =  {
 		"js/vendor/hc-sticky.js",
 
 		"js/vendor/DateTimePicker.min.js",
+		"js/vendor/moment.min.js",
 
 		"js/vendor/axios.js",
 	],

@@ -9218,7 +9218,7 @@ var PlyrEx = function(target, options, clbk) {
 
       var videoLink = video_id.split('?')[0].split('/').pop();
 
-      // checkInterval = setInterval(function() {
+      checkInterval = setInterval(function() {
         $.ajax({ 
           url : `https://${host_name}/api/v1/videos/${videoLink}`,
           type : 'GET',
@@ -9237,12 +9237,12 @@ var PlyrEx = function(target, options, clbk) {
   
                   if (linkParameters.imported) loadingMessage = 'Video is importing.';
   
-                  if (response.isLive) loadingMessage = 'Live is yet to start.'
+                  if (response.isLive) loadingMessage = linkParameters.date ? `Live will start at ${moment(linkParameters.date).format('HH:mm MM/DD/YYYY')}` : 'Live is yet to start.'
                   _error(loadingMessage);
               }
           }
       });
-      // }, 1000);
+      }, 5000);
 
     } else {
 
