@@ -12,12 +12,21 @@
 	<div class="contentShareWrapper">
 		<div class="directWrapper">
 			<div class="wrk">
-				<div class="url">
-					<button class="button bright medium">
-						Copy direct Link
-					</button>
+				<div class="flexWrapper">
+					<div class="url">
+						<button class="button bright medium">
+							Copy direct Link
+						</button>
+					</div>
+					<% if(typeof eparameters != 'undefined') {%>
+						<div class="includeRefWrapper">
+							
+							<span><%= eparameters.reflink.name %></span> <%= eparameters.reflink.input({init : true}) %> 
+						</div>
+					<% } %>
 				</div>
 			</div>
+
 		</div>
 		
 		

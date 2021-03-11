@@ -502,7 +502,7 @@ var Control = function(settings) {
                         `-dbcache=50`,
                         `-maxorphantx=10`,
                         `-maxmempool=100`
-                    ], { stdio: ['ignore'], detached : true, shell : true })
+                    ], { stdio: ['ignore'], detached : true})
 
                     node.instance.unref()
 

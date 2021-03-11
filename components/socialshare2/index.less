@@ -3,6 +3,21 @@
 #socialshare2{
 	padding : 2 * @rhythm 0;
 
+	.flexWrapper{
+		display: flex;	
+		align-items: center;
+
+		>div{
+			&.includeRefWrapper{
+				padding-left: 4 * @rhythm;
+				span{
+					margin-right: 2 * @rhythm;
+					font-size: 0.8em;
+				}
+			}
+		}
+	}
+
 	.contentShareWrapper{
 		padding: 3 * @rhythm 0;
 	}
