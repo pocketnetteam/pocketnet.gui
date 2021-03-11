@@ -121,9 +121,7 @@ var Server = function(settings, admins, manage){
     }       
 
     self.https = function(settings){
-        console.log("HERE")
         return new Promise((resolve, reject) => {
-            console.log("settings.ssl", settings.ssl)
             try{
 
                 if (_.isEmpty(settings.ssl)){
@@ -137,8 +135,6 @@ var Server = function(settings, admins, manage){
 
                 server.on('listening',function(){
 
-                    console.log("LISTENING")
-
                     self.listening = settings.port || 8899
 
                     resolve()
@@ -146,7 +142,6 @@ var Server = function(settings, admins, manage){
 
                 server.on('error',function(e){
 
-                    console.log("Er", e)
 
                     reject(e) 
                 });
@@ -156,7 +151,6 @@ var Server = function(settings, admins, manage){
             }
             catch(e) {
 
-                console.log("ERROR", e)
           
                 reject(e)
             }

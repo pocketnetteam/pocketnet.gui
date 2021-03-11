@@ -703,6 +703,8 @@ __map =  {
 			relationsSunc : true
 		},	
 
+		
+
 		video : {
 			uri : "video",
 			href : "video",
@@ -999,6 +1001,21 @@ __map =  {
 		
 			],
 
+			anonimus : true,
+		},
+
+		tube : {
+			uri : "tube",
+			href : "tube",
+			add : {
+				el : 'content'
+			},
+			relations : [
+
+				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
+				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},			
+			
+			],
 			anonimus : true,
 		},
 

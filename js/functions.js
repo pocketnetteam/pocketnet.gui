@@ -560,7 +560,7 @@
 				if(p.leftbg) 
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
 
-				h+=	 p.allowHide ? '<div class="wndcontent content"><div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div>' + content + '</div>' : '<div class="wndcontent content">'+content+'</div>';
+				h+=	 p.allowHide ? '<div class="wndcontent content">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent content">'+content+'</div>';
 
 				if(p.header) 
 				{

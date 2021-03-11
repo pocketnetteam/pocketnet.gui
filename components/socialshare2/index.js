@@ -13,10 +13,10 @@ var socialshare2 = (function(){
 			defmedtext = self.app.localization.e('e13172') + '\r\n';
 
 		var ed = {};
-		var showcode = false
+		var showcode = false, notincludedRef = false
 
-		var calltoActionNotInclude = false;
-		var calltoActionUserText = '';
+		var eparameters = {}
+
 
 		var plugin = deep(window, 'plugins.socialsharing')
 
@@ -428,13 +428,11 @@ var socialshare2 = (function(){
 
 		var state = {
 			save : function(){
-				/*self.app.settings.set(self.map.id, 'calltoActionNotInclude', calltoActionNotInclude);
-				self.app.settings.set(self.map.id, 'calltoActionUserText', calltoActionUserText);*/
+				self.app.settings.set(self.map.id, 'notincludedRef', notincludedRef);
 				
 			},
 			load : function(){
-				/*calltoActionUserText = self.app.settings.get(self.map.id, 'calltoActionUserText') || '';
-				calltoActionNotInclude = self.app.settings.get(self.map.id, 'calltoActionNotInclude') || false;*/
+				notincludedRef = self.app.settings.get(self.map.id, 'notincludedRef') || false;
 			}
 		}
 
@@ -556,7 +554,58 @@ var socialshare2 = (function(){
 
 		}
 
+		var changeRef = function(){
+			if(!notincludedRef){
+				includeRef()
+			}
+			else{
+				excludeRef()
+			}
+		}
 
+		var includeRef = function(){
+			if (self.app.platform.sdk.address.pnet()){
+				ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
+					ref : self.app.platform.sdk.address.pnet().address
+				})
+			}
+			else{
+				if (self.app.ref){
+					ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
+						ref : self.app.ref
+					})
+				}
+			}
+		}
+
+		var excludeRef = function(){
+			ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
+		}
+
+		var prepareParameters = function(){
+
+			eparameters.reflink = new Parameter({
+				name: "Include Referal Link",
+				id: 'reflink',
+				type: "BOOLEAN",
+				value: !notincludedRef,
+				dbId: 'reflink'
+			})
+
+
+			eparameters.reflink._onChange = function(){
+				notincludedRef = !eparameters.reflink.value
+
+				state.save()
+
+				changeRef()
+
+				renders.sharebuttons()
+
+				//renders.embedding()
+			}
+			
+		}
 
 		return {
 			primary : primary,
@@ -570,11 +619,12 @@ var socialshare2 = (function(){
 				state.load()
 
 				ed.title || (ed.title = 'Pocketnet')
-			    /*ed.text || (ed.text = self.app.localization.e('e13171'))
-			    ed.image || (ed.image = 'https://pocketnet.app/img/logobigpadding.png') */
-			   
 
 				seed = rand(10000, 99999)
+
+				prepareParameters()
+
+				console.log('eparameters.reflink', eparameters.reflink, notincludedRef)
 
 			    if(!ed.url){
 
@@ -593,30 +643,15 @@ var socialshare2 = (function(){
 				    }
 
 				}
-				
-				if (self.app.platform.sdk.address.pnet()){
-					ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
-						ref : self.app.platform.sdk.address.pnet().address
-					})
-				}
-				else{
-					if (self.app.ref){
-						ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
-							ref : self.app.ref
-						})
-					}
-				}
-				
-					
 
+				ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost', 'msocialshare2'])
+
+				changeRef()
 			
 				var data = {
-					socials : getsocials(),
-					url : ed.url,
-					rescue : ed.rescue || false,
 					caption : ed.caption,
 					style : ed.style || "",
-	
+					eparameters : eparameters
 				};
 
 				clbk(data);
@@ -642,7 +677,9 @@ var socialshare2 = (function(){
 
 				renders.sharebuttons()
 
-					renders.embedding()
+				renders.embedding()
+
+				ParametersLive(_.toArray(eparameters), el.c)
 			
 
 				p.clbk(null, p);

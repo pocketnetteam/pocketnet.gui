@@ -100,7 +100,7 @@ var Proxy = function (settings, manage) {
             var options = {};
 
 
-            if(!sslsettings.key || !sslsettings.cert || !sslsettings.passphrase) return {
+            if(!sslsettings.key || !sslsettings.cert || typeof sslsettings.passphrase == 'undefined') return {
 
             }
 
@@ -108,7 +108,7 @@ var Proxy = function (settings, manage) {
                 options = {
                     key: fs.readFileSync(f.path(sslsettings.key)),
                     cert: fs.readFileSync(f.path(sslsettings.cert)),
-                    passphrase: sslsettings.passphrase
+                    passphrase: sslsettings.passphrase || ''
                 }
             }
             catch (e) {
@@ -194,11 +194,9 @@ var Proxy = function (settings, manage) {
 
         rews : function(){
             return self.server.re().then(r => {
-                console.log("R", r)
                 return self.wss.re()
             }).then(r => {
 
-                console.log("R2", r)
                 return self.firebase.re()
 
             }).catch(e => {
@@ -290,7 +288,6 @@ var Proxy = function (settings, manage) {
 
         re : function(){
             return this.destroy().then(r => {
-                console.log("R3", r)
                 this.init()
             })
         },
@@ -399,7 +396,6 @@ var Proxy = function (settings, manage) {
 
         re : function(){
             return this.destroy().then(r => {
-                console.log("R4", r)
                 this.init()
             })
         },
@@ -1261,7 +1257,6 @@ var Proxy = function (settings, manage) {
                     return kaction(message.data).then(data => {
                         return Promise.resolve({data})
                     }).catch(e => {
-                        console.log("E", e)
                         return Promise.reject(e)
                     })
                 }
