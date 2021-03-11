@@ -52,9 +52,11 @@ PeerTubeHandler = function (app) {
     return app.api
       .fetch('peertube/servers')
       .then((data) => {
+        if (!data.fastest && !data.leastUsed) return;
+
         [baseUrl, watchUrl, randomServer] = [
-          `https://${data.fastest.server}/api/v1/`,
-          `https://${data.fastest.server}/videos/watch/`,
+          `https://${(data.fastest || data.leastUsed).server}/api/v1/`,
+          `https://${(data.fastest || data.leastUsed).server}/videos/watch/`,
           data.fastest.server,
         ];
       })
