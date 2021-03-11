@@ -16,6 +16,8 @@ var share = (function(){
 
 		var focusfixed = false, external = null, pliss;
 
+		var videoUploadData = {};
+
 		var intro = false;
 
 		var m = self.app.localization.e('e13160')
@@ -258,8 +260,9 @@ var share = (function(){
 								}
 							},
 	
-							clbk : function(p){
+							clbk : function(p, element){
 								external = p
+								videoUploadData = element.essenseData;
 							}
 						})
 
@@ -1108,10 +1111,26 @@ var share = (function(){
 			post : function(){
 				var error = actions.error();
 
-				console.log('error',error)
+				if (videoUploadData.uploadInProgress) {
+					dialog({
+						html : "Video is still uploading. Do you want to cancel it?",
+						btn1text : "Wait",
+						btn2text : "Cancel uploading",
+	
+						class : 'videoCaution',
+	
+						success : () => {
+							return;
+						},
 
-				if (!error){
-					actions.post()
+						fail : () => {
+							
+						},
+					})
+				} else {
+					if (!error){
+						actions.post()
+					}
 				}
 				
 			},

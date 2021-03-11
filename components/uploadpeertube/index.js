@@ -63,6 +63,8 @@ var uploadpeertube = (function () {
       el.uploadButton.on('click', function () {
         var filesWrittenObject = {};
 
+        ed.uploadInProgress = true;
+
         el.header.removeClass('activeOnRolled');
 
         if (el.importUrl.val()) {
