@@ -139,7 +139,7 @@ var Control = function(settings) {
         try{
             if (!fs.existsSync(node.confPath)) {
                 let data = 'server=1' + EOL +
-                    'port=38080' + EOL +
+                    'port=37070' + EOL +
                     'rpcport=38081' + EOL +
                     'wsport=8087' + EOL +
                     'rpcallowip=0.0.0.0/0' + EOL +
