@@ -1124,7 +1124,8 @@ var share = (function(){
 						},
 
 						fail : () => {
-							
+
+							if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
 						},
 					})
 				} else {
