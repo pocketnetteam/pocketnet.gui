@@ -43,6 +43,7 @@
 <link rel="stylesheet" href="css/jquery-ui.min.css?v=951794162085">
 <link rel="stylesheet" href="css/medium/medium-editor.css?v=612869629984">
 <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=801020340183">
+<link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=514508004319">
 <link rel="stylesheet" href="css/medium/beagle.css?v=98661337360">
 
         
@@ -183,6 +184,8 @@
 <script join src="js/vendor/xss.min.js?v=5"></script>
 <script join src="js/vendor/jquery.mark.js?v=5"></script>
 <script join src="js/vendor/hc-sticky.js?v=5"></script>
+<script join src="js/vendor/DateTimePicker.min.js?v=7"></script>
+<script join src="js/vendor/moment.min.js?v=7"></script>
 <script join src="js/vendor/axios.js"></script>
 
         

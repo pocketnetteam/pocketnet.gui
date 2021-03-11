@@ -1,5 +1,5 @@
 <div id="<%-module.map.id%>">
-  <section class="content-section">
+  <section class="content-section activeOnRolled">
     <header class="upload-header activeOnRolled">
       <section class="logo-container">
         <img src="img/Logo_de_PeerTube.svg" />
@@ -9,7 +9,7 @@
     <!-- <section class="logo-container">
       <img src="img/liveStream.svg" />
     </section> -->
-    <section class="activeOnRolled">
+    <section>
       <section class="verticalFieldsWrapper activeOnRolled">
         <section class="verticalSection main-upload-fields">
           <div class="upload-field-container">
@@ -27,19 +27,15 @@
           <div class="upload-field-container">
             <input
               type="text"
-              class="upload-video-name"
+              class="upload-video-name upload-video-field"
               id="upload-video-name"
               placeholder="Enter stream title: "
             />
             <span class="type-error-field name-type-error"></span>
           </div>
           <div class="upload-field-container">
-            <input
-              type="datetime"
-              class="upload-video-date"
-              id="upload-video-date"
-              placeholder="Start date: "
-            />
+            <input type="text" class="selectdate upload-video-field" placeholder="Select date" data-field="datetime" readonly>
+                <div id="dtBox"></div>
             <span class="type-error-field name-type-error"></span>
           </div>
         </section>

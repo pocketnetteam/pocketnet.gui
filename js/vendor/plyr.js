@@ -9218,31 +9218,51 @@ var PlyrEx = function(target, options, clbk) {
 
       var videoLink = video_id.split('?')[0].split('/').pop();
 
-      checkInterval = setInterval(function() {
-        $.ajax({ 
-          url : `https://${host_name}/api/v1/videos/${videoLink}`,
-          type : 'GET',
-          success : function(response){
-  
-              var preview_picture = `https://${host_name}${response.previewPath}`
-  
-              if ((response.files || []).length) {
-                  _plyr(response.files[0].fileUrl, preview_picture || '', response.name || '');
-                  clearInterval(checkInterval);
+      checkInterval = setInterval(function () {
+        $.ajax({
+          url: `https://${host_name}/api/v1/videos/${videoLink}`,
+          type: 'GET',
+        })
+          .done((response) => {
+            var preview_picture = `https://${host_name}${response.previewPath}`;
 
-                  if (clbk) clbk(new Plyr(target, options));
-  
-              } else {
-                  let loadingMessage = '';
-  
-                  if (linkParameters.imported) loadingMessage = 'Video is importing.';
-  
-                  if (response.isLive) loadingMessage = 'Live is yet to start.'
-                  _error(loadingMessage);
-              }
-          }
-      });
-      }, 1000);
+            if ((response.files || []).length) {
+              _plyr(
+                response.files[0].fileUrl,
+                preview_picture || '',
+                response.name || '',
+              );
+              clearInterval(checkInterval);
+
+              if (clbk) clbk(new Plyr(target, options));
+            } else {
+              let loadingMessage = '';
+
+              if (linkParameters.imported)
+                loadingMessage = 'Video is importing.';
+
+              if (response.isLive)
+                loadingMessage = linkParameters.date
+                  ? `Live will start at ${moment(linkParameters.date).format(
+                      'HH:mm MM/DD/YYYY',
+                    )}`
+                  : 'Live is yet to start.';
+
+              _error(loadingMessage);
+            }
+          })
+          .fail((response) => {
+            console.log('AjaxError', response);
+            var json = response.responseJSON || {};
+
+            if (json.error) loadingMessage = response.error;
+
+            if (json.error === 'Video not found')
+              clearInterval(checkInterval);
+
+            _error(loadingMessage);
+          });
+      }, 5000);
 
     } else {
 

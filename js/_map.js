@@ -34,6 +34,11 @@ __map =  {
         "js/vendor/xss.min.js",
 		"js/vendor/jquery.mark.js",
 		"js/vendor/hc-sticky.js",
+
+		"js/vendor/DateTimePicker.min.js",
+		"js/vendor/moment.min.js",
+
+		"js/vendor/axios.js",
 	],
 
 	__sources : [
@@ -63,6 +68,7 @@ __map =  {
 		"css/jquery-ui.min.css",
 		"css/medium/medium-editor.css",
         "css/medium/medium-editor-insert-plugin.css",
+		"js/vendor/DateTimePicker.min.css",
         "css/medium/beagle.css"/* ,
         "css/datetime.css?v=116"  */
 	],

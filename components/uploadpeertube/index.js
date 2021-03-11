@@ -63,6 +63,8 @@ var uploadpeertube = (function () {
       el.uploadButton.on('click', function () {
         var filesWrittenObject = {};
 
+        ed.uploadInProgress = true;
+
         el.header.removeClass('activeOnRolled');
 
         if (el.importUrl.val()) {
@@ -78,6 +80,8 @@ var uploadpeertube = (function () {
           };
 
           filesWrittenObject.successFunction = function (response) {
+            ed.uploadInProgress = false;
+
             el.uploadButton.prop('disabled', false);
             el.header.addClass('activeOnRolled');
 
@@ -172,6 +176,8 @@ var uploadpeertube = (function () {
           el.uploadButton.prop('disabled', false);
           el.header.addClass('activeOnRolled');
 
+          ed.uploadInProgress = false;
+
           if (response.error) {
             if (axios.isCancel(response.error)) {
               sitemessage('Uploading canceled');
@@ -193,9 +199,17 @@ var uploadpeertube = (function () {
         };
 
         filesWrittenObject.cancelClbk = function (cancel) {
+          const cancelCloseFunction = () => {
+            if (typeof cancel === 'function') cancel();
+            wndObj.close();
+          };
+
+          ed.cancelCloseFunction = cancelCloseFunction;
+
           el.cancelButton.on('click', () => {
             el.uploadProgress.addClass('hidden');
             el.cancelButton.addClass('hidden');
+            ed.uploadInProgress = false;
             cancel();
           });
           el.cancelButton.removeClass('hidden');
