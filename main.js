@@ -645,7 +645,7 @@ if(!r) {
     // If we are running a non-packaged version of the app && on windows
 
 
-    app.setAsDefaultProtocolClient('pocketnet', process.execPath, [path.resolve(process.argv[1])]);  
+    app.setAsDefaultProtocolClient('pocketnet', process.execPath, [path.resolve(process.argv[1] || '.') ]);  
     
 
 
