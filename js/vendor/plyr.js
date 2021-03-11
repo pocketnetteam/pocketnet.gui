@@ -9262,7 +9262,7 @@ var PlyrEx = function(target, options, clbk) {
 
             _error(loadingMessage);
           });
-      }, 500);
+      }, 5000);
 
     } else {
 
