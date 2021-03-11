@@ -479,10 +479,10 @@ var kit = {
 	
 				ssl : function(sslobj){
 	
-					if(sslobj.key && sslobj.cert && sslobj.passphrase){
+					if(sslobj.key && sslobj.cert && typeof sslobj.passphrase != 'undefined'){
 		
 						var d = {
-							passphrase : sslobj.passphrase,
+							passphrase : sslobj.passphrase || '',
 							name : sslobj.name || 'Default'
 						}
 	

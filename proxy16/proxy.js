@@ -100,7 +100,7 @@ var Proxy = function (settings, manage) {
             var options = {};
 
 
-            if(!sslsettings.key || !sslsettings.cert || !sslsettings.passphrase) return {
+            if(!sslsettings.key || !sslsettings.cert || typeof sslsettings.passphrase == 'undefined') return {
 
             }
 
@@ -108,7 +108,7 @@ var Proxy = function (settings, manage) {
                 options = {
                     key: fs.readFileSync(f.path(sslsettings.key)),
                     cert: fs.readFileSync(f.path(sslsettings.cert)),
-                    passphrase: sslsettings.passphrase
+                    passphrase: sslsettings.passphrase || ''
                 }
             }
             catch (e) {

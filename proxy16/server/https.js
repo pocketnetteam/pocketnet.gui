@@ -121,9 +121,7 @@ var Server = function(settings, admins, manage){
     }       
 
     self.https = function(settings){
-        console.log("HERE")
         return new Promise((resolve, reject) => {
-            console.log("settings.ssl", settings.ssl)
             try{
 
                 if (_.isEmpty(settings.ssl)){

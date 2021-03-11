@@ -644,7 +644,7 @@ var socialshare2 = (function(){
 
 				}
 
-				ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost'])
+				ed.url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['mpost', 'msocialshare2'])
 
 				changeRef()
 			
