@@ -64,7 +64,6 @@ var Wallet = function(p){
 
         var all = addressobj.all || []
 
-        console.log("CHECKING", addressobj.check, queueobj)
 
         if (addressobj.check && self.patterns[addressobj.check]){
             return self.patterns[addressobj.check](queueobj, all)
@@ -159,7 +158,6 @@ var Wallet = function(p){
                
 
                 self.unspents.getc(addresses[key]).catch(e => {
-                    console.log("UNSPENTERROR", e)
                 })
             }
 
@@ -190,11 +188,9 @@ var Wallet = function(p){
                         
 
                         if(options.source == 'compensation'){
-                            console.log('addresses[obj.key].all', addresses[key].all)
 
                             _.each(compensation, function(tobj){
                                 self.kit.addqueue('compensation', tobj[0], "::1", tobj[2] / 100000000).catch(e => {
-                                    console.log("ERRORADDCOMP", e)
                                 })
                             })
                         }
@@ -386,7 +382,6 @@ var Wallet = function(p){
             return self.checking(object).then(r => {
                 return new Promise((resolve, reject) => {
 
-                    console.log('object', object)
 
                     queue.push(object)
                     all.push(object)
@@ -482,7 +477,6 @@ var Wallet = function(p){
                
             }).catch(e => {
 
-                console.log("ERROR", e)
 
                 var catchederror = false
 
@@ -607,7 +601,6 @@ var Wallet = function(p){
             if (feeMode == 'include') {
                 outputs[0].amount = outputs[0].amount - fee;
 
-                console.log('outputs[0].amount', outputs[0].amount)
 
                 if (outputs[0].amount <= 0) {
                     return Promise.reject('fee')
@@ -632,10 +625,8 @@ var Wallet = function(p){
 
             }).then(tx => {
 
-                console.log('feerate, tx.virtualSize()', tx.virtualSize() * feerate)
 
                 var totalFees = Math.max(tx.virtualSize() * feerate, 0.0002);
-                console.log('totalFees', totalFees)
                 return self.transactions.txbase(unspents, outputs, totalFees, feeMode)
 
             }).then(r => {

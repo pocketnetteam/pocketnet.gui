@@ -135,8 +135,6 @@ var Server = function(settings, admins, manage){
 
                 server.on('listening',function(){
 
-                    console.log("LISTENING")
-
                     self.listening = settings.port || 8899
 
                     resolve()
@@ -144,7 +142,6 @@ var Server = function(settings, admins, manage){
 
                 server.on('error',function(e){
 
-                    console.log("Er", e)
 
                     reject(e) 
                 });
@@ -154,7 +151,6 @@ var Server = function(settings, admins, manage){
             }
             catch(e) {
 
-                console.log("ERROR", e)
           
                 reject(e)
             }

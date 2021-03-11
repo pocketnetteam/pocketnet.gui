@@ -122,7 +122,6 @@ var Applications = function(settings) {
             return new Promise((resolve, reject) => {
                 db.insert(asset, function (err, newDoc) {
 
-                    console.log(err)
 
                     if (err){
                         reject({
@@ -143,12 +142,10 @@ var Applications = function(settings) {
     self.install = function(dest){
         return new Promise((resolve, reject) => {
             return self.download().then(r => {
-                console.log('r.path, dest', r.path, dest)
                 try{
                     fs.copyFile(r.path, dest, (e) => {
 
                         if(!e) {
-                            console.log("E", e)
                             return resolve(r)
                         }
     
@@ -160,7 +157,6 @@ var Applications = function(settings) {
                     });
                 }
                 catch(e){
-                    console.log("E", e)
                     reject({
                         code : 500,
                         error : 'cantcopy'

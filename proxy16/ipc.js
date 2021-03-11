@@ -142,7 +142,6 @@ var IPC = function(ipc, wc){
 							ndataPath : res[0]
 						}
 
-						console.log('res[0]', res[0])
 		
 						return Promise.resolve()
 	
@@ -157,7 +156,6 @@ var IPC = function(ipc, wc){
 						]*/
 					}).then(res => {
 
-						console.log('res[0]', res[0])
 	
 						message.data = {
 							binPath : res[0]

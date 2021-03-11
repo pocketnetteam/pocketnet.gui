@@ -11,7 +11,6 @@ var Pocketnet = function(){
                 keyPair = bitcoin.ECPair.fromWIF(privateKey)//(Buffer.from(privateKey, 'hex'))
             }catch(e){
 
-                //console.log("ERROR", e)
 
             }
 
