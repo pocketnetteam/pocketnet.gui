@@ -106,11 +106,30 @@ class OG {
 			$this->currentOg['type'] = 'video.other';
             $this->currentOg['video:type'] = 'text/html';
 
+            $ci = 'https://'.$v['host_name'].'/lazy-static/previews/'. $v['id'] . '.jpg';
+            $cu = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
             $u = 'https://pocketnet.app/openapi.html?action=lenta&id='.$txid.'&embeddingSettigns=7b22626c61636b223a312c22636f6d6d656e7473223a226e6f222c2266756c6c73637265656e766964656f223a312c22726566223a2250523773727a5a74344566634e62337332376772676d69473861423976594e563832227d';
 
-            $this->currentOg['video:url'] = $u;
-            $this->currentOg['video:secure_url'] = $u;
+            $this->currentOg['video:url'] = $cu;
+            $this->currentOg['video:secure_url'] = $cu;
             
+            if($v['type'] == 'peertube'){
+                //$u = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
+
+
+
+                $this->currentOg['twitter:site'] = 'pocketnet.app';
+                $this->currentOg['twitter:card'] = 'player';
+                $this->currentOg['twitter:image'] = $ci;
+                $this->currentOg['twitter:title'] = $this->currentOg['title'];
+                $this->currentOg['twitter:description'] = $this->currentOg['description'];
+                $this->currentOg['twitter:player:stream'] = $cu;
+                $this->currentOg['twitter:player:stream:content_type'] = 'video/mp4';
+                $this->currentOg['twitter:player'] = $u;
+                $this->currentOg['twitter:player:width'] = '1280';
+                $this->currentOg['twitter:player:height'] = '720';
+            }
+        
 		}
 
         return false;
@@ -149,7 +168,7 @@ class OG {
             }
 
             if (strpos($url, 'peertube://') !== false) {
-                $lp = split('?', $url);
+                $lp = str_split('?', $url);
 
                 $params = $lp[1];
                 $type = 'peertube';
@@ -182,6 +201,11 @@ class OG {
 		if ($v['type'] == 'vimeo'){
 			return 'http://i.vimeocdn.com/video/'.$v['id'].'_320.jpg';
         }
+
+        if ($v['type'] == 'peertube'){
+			return 'https://'.$v['host_name'].'/lazy-static/previews/'. $v['id'] . '.jpg';
+        }
+
         
         return false;
 	}
@@ -320,10 +344,13 @@ class OG {
         foreach ($this->defaultOg as $key => $value) {
            
             $v = $value;
+            $prefix = 'og:';
+
+            if(strpos($key, 'twitter') !== false) $prefix = '';
 
             if(isset($this->currentOg[$key])) $v = $this->currentOg[$key];
 
-            echo '<meta property="og:'.$key.'" content="'.$v.'">';
+            echo '<meta property="'.$prefix.''.$key.'" content="'.$v.'">';
             
         }
 
@@ -331,8 +358,12 @@ class OG {
            
             $v = $value;
 
+            $prefix = 'og:';
+
+            if(strpos($key, 'twitter') !== false) $prefix = '';
+
             if(!isset($this->defaultOg[$key])) {
-                echo '<meta property="og:'.$key.'" content="'.$v.'">';
+                echo '<meta property="'.$prefix.''.$key.'" content="'.$v.'">';
             }
 
            
