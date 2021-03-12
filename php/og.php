@@ -46,6 +46,7 @@ class OG {
         if (isset($get['commentid'])) $this->commentid = $get['commentid'];
 
         if (isset($get['s'])) $this->txid = $get['s'];
+        if (isset($get['v'])) $this->txid = $get['v'];
 
         if ($this->author == NULL && isset($get['i'])) $this->txid = $get['i'];
 
@@ -99,6 +100,7 @@ class OG {
 
         $v = $this->parseVideo($url);
 
+
 		if ($v['type'] == 'youtube' || $v['type'] == 'vimeo' || $v['type'] == 'peertube'){
 
 			$this->currentOg['type'] = 'video.other';
@@ -117,12 +119,15 @@ class OG {
 
         $_url = $url;
         $test = NULL;
+        $host_name = '';
+        $params = '';
 
         $t = preg_match('/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/', $_url, $test);
+
         $type = NULL;
         $id = NULL;
 
-        if($test && trpos($_url, 'channel') == false && trpos($_url, 'user') == false){
+        if($test && strpos($_url, 'channel') == false && strpos($_url, 'user') == false){
             if($test[3]){
 
                 if (strpos($test[3], 'youtu') !== false) {
@@ -136,17 +141,21 @@ class OG {
                     $id = $test[2];
                 }
 
-                if (strpos($test[3], 'bitchute.com')  !== false) {
+                if (strpos($test[3], 'bitchute.com') !== false) {
 					$type = 'bitchute';
 					$id = $test[9];	
 			    }
 
-                if (strpos($test[3], 'peertube://')  !== false) {
-					$type = 'peertube';
-			        $id = $test[9];
-					$host_name = $test[4];
-			    }
+            }
 
+            if (strpos($url, 'peertube://') !== false) {
+                $lp = split('?', $url);
+
+                $params = $lp[1];
+                $type = 'peertube';
+                $id = $test[9];
+                
+                $host_name = $test[4];
             }
         }
 
@@ -154,7 +163,8 @@ class OG {
             'type' => $type,
             'url' => $url,
             'id' => $id,
-            'host_name' => $host_name
+            'host_name' => $host_name,
+            'params' => $params
         );
 
         return $r;
@@ -206,8 +216,9 @@ class OG {
 
                 $this->currentOg['type'] = 'article';
 
+
                 if (isset($r->u) && $r->u != ''){
-                    $this->ogFromVideo($url, $this->txid);
+                    $this->ogFromVideo(urldecode($r->u), $this->txid);
                 }
 
                 if (isset($r->i[$this->imageNum])) {
@@ -313,6 +324,18 @@ class OG {
             if(isset($this->currentOg[$key])) $v = $this->currentOg[$key];
 
             echo '<meta property="og:'.$key.'" content="'.$v.'">';
+            
+        }
+
+        foreach ($this->currentOg as $key => $value) {
+           
+            $v = $value;
+
+            if(!isset($this->defaultOg[$key])) {
+                echo '<meta property="og:'.$key.'" content="'.$v.'">';
+            }
+
+           
             
         }
 

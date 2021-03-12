@@ -25,7 +25,7 @@
         media-src *">
 
         <?php 
-        
+            
             require_once('php/og.php'); 
 
             $og = new OG($_GET);
