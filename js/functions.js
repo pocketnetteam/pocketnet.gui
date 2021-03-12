@@ -9844,6 +9844,7 @@
 
 		return w[1];
 	}
+	
 	videoImage = function(url){
 		var v = url;
 
