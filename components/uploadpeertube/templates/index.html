@@ -1,89 +1,108 @@
 <div id="<%-module.map.id%>">
-	<div class="upload-header-wrapper activeOnRolled">
-		<div class="upload-header activeOnRolled">
-			<div class="logo-container">
-				<img src="img/logo20.png">
-			</div>
-			<div><span>Upload New Pocketvideo</span></div>
-		</div>
-	</div>
+  <div class="upload-header-wrapper activeOnRolled">
+    <div class="upload-header activeOnRolled">
+      <div class="logo-container">
+        <img src="img/logo20.png" />
+      </div>
+      <div><span>Upload New Pocketvideo</span></div>
+    </div>
+  </div>
 
-	<div class="mainWrapper activeOnRolled">
-		<div class="sectionsWrapper  table">
-			<div class="main-upload-fields activeOnRolled">
+  <div class="mainWrapper activeOnRolled">
+    <div class="sectionsWrapper table activeOnRolled">
+      <div class="main-upload-fields">
+        <div class="uploading uplsection">
+          <div class="caption">
+            <span>Upload Video</span>
+          </div>
 
-				<div class="uploading uplsection">
+          <div class="scontent">
+            <div class="video-title-container">
+              <!-- <label for="upload-video-name">Select video file:</label> -->
+              <input
+                type="text"
+                class="upload-video-name upload-input"
+                id="upload-video-name"
+                placeholder="Enter video title"
+              />
+              <span
+                class="type-error-field name-type-error error-message"
+              ></span>
+            </div>
+            <div class="uploadRow">
+              <div class="upload-field-container">
+                <div class="inputWrapper">
+                  <div class="table">
+                    <div>
+                      <label
+                        for="upload-video-file"
+                        class="upload-peertube-label upload-video-file-label"
+                        >Select video file</label
+                      >
+                      <input
+                        type="file"
+                        class="upload-video-file hidden"
+                        upload-input
+                        id="upload-video-file"
+                      />
+                      <span class="type-error-field file-type-error"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-					<div class="caption">
-						<span>Upload Video</span>
-					</div>
+              <div class="upload-field-container">
+                <div class="inputWrapper">
+                  <div class="table">
+                    <div>
+                      <label
+                        for="upload-video-wallpaper"
+                        class="upload-peertube-label upload-video-wallpaper-label"
+                        >Select video preview wallpaper</label
+                      >
+                      <input
+                        type="file"
+                        class="upload-video-wallpaper hidden upload-input"
+                        id="upload-video-wallpaper"
+                        accept=".jpg,.jpeg"
+                      />
+                      <span
+                        class="type-error-field wallpaper-type-error"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-					<div class="scontent">
-						<div class="video-title-container">
-							<!-- <label for="upload-video-name">Select video file:</label> -->
-							<input type="text" class="upload-video-name upload-input" id="upload-video-name" placeholder="Enter video title">
-							<span class="type-error-field name-type-error error-message"></span>
-						</div>
-						<div class="uploadRow ">
+        <div class="importing uplsection">
+          <div class="caption">
+            <span>Or Import From Other Sources</span>
+          </div>
 
-							<div class="upload-field-container">
-								<div class="inputWrapper">
-									<div class="table"><div>
-										<label for="upload-video-file" class="upload-peertube-label upload-video-file-label">Select video file</label>
-										<input type="file" class="upload-video-file hidden" upload-input id="upload-video-file">
-										<span class="type-error-field file-type-error"></span>
-									</div></div>
-								</div>
-								
-							</div>
-			
-							<div class="upload-field-container">
-								<div class="inputWrapper">
-									<div class="table"><div>
-										<label for="upload-video-wallpaper" class="upload-peertube-label upload-video-wallpaper-label">Select video preview wallpaper</label>
-										<input type="file" class="upload-video-wallpaper hidden upload-input" id="upload-video-wallpaper" accept=".jpg,.jpeg">
-										<span class="type-error-field wallpaper-type-error"></span>
-									</div></div>
-								</div>
-							</div>
+          <div class="scontent">
+            <div class="upload-field-container">
+              <!-- <label for="upload-video-name">Select video file:</label> -->
+              <input
+                type="text"
+                class="import-video-link upload-input"
+                id="import-video-link"
+                placeholder="Import video from YouTube etc."
+              />
+              <span class="type-error-field import-video-link-error"></span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-						</div>
-						
-					</div>
-
-				
-	
-				</div>
-
-				<div class="importing uplsection">
-
-					<div class="caption">
-						<span>Or Import From Other Sources</span>
-					</div>
-
-					<div class="scontent">
-
-						<div class="upload-field-container">
-							<!-- <label for="upload-video-name">Select video file:</label> -->
-							<input type="text" class="import-video-link upload-input" id="import-video-link" placeholder="Import video from YouTube etc.">
-							<span class="type-error-field import-video-link-error"></span>
-						</div>
-
-					</div>
-				</div>
-
-				
-
-				
-			</div>
-			<div class="upload-button-section">
-				<div class="upload-button-wrapper">
-					<button class="uploadButton orange button medium">
-						Next <i class="fas fa-angle-right"></i>
-					</button>
-				</div>
-			</div>
-		</div>
+      <div class="upload-button-section activeOnRolled">
+        <div class="upload-button-wrapper">
+          <button class="uploadButton orange button medium">
+            Next <i class="fas fa-angle-right"></i>
+          </button>
+        </div>
 
 		<div class="activeOnRolled verticalSection progressSection">
 			<div class="upload-progress-container activeOnRolled hidden">
@@ -95,9 +114,11 @@
 					<div class="upload-progress-bar"></div>
 				</div>
 				<div class="cancelButton controlButton hidden">
-					<i class="fas fa-times"></i> Cancel
+					<i class="fas fa-times"></i>
 				</div>
 			</div>
 		</div>
-	</div>
+      </div>
+    </div>
+  </div>
 </div>

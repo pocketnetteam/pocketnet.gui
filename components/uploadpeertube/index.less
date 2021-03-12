@@ -110,21 +110,18 @@
         flex-direction: row;
         justify-content: flex-start;
         align-items: flex-end;
-
-
-        margin-top: @rhythm * 4;
     }
 
     .barWrapper {
         min-width: 50px;
-        width: 80%;
+        width: 100%;
     }
 
     .upload-progress-bar {
         height: 1px;
         width: 100%;
 
-        background-color: green;
+        background-color: @color-orange;
     }
 
     .disabledInput {
@@ -232,12 +229,25 @@
     }
 
     .upload-button-section {
-        width: 38%;
         box-sizing: border-box;
         border-left: 1px solid @color-gray-slight;
         text-align: center;
         padding : 2  * @rhythm;
         background: fade(@color-gray-slight, 20);
+
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+
+        .progressSection {
+            width: 100%;
+        }
+    }
+
+    .main-upload-fields {
+        width: 62%;
     }
 
     .mainWrapper {
@@ -247,6 +257,10 @@
         top : 0;
         bottom : 0;
         right: 0;
+    }
+
+    .verticalSection {
+        padding: @rhythm;
     }
 
 }
@@ -264,7 +278,37 @@
         }
     }
 
+    .upload-button-section {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 0;
+        width: 100%;
+        height: 100%;
+
+        .progressSection {
+            width: 80%;
+        }
+    }
+
+    .upload-header-wrapper {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
     .main-upload-fields {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .sectionsWrapper {
         > :not(.activeOnRolled) {
             display: none;
         }
