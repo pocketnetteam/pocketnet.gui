@@ -18,6 +18,8 @@ class OG {
         'type' => 'website',
         'image' => 'https://pocketnet.app/img/logosmallpadding.png',
         'description' => 'A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.',
+       
+
 
     );
 
@@ -93,13 +95,30 @@ class OG {
 
         return strtolower($c2[0]);
     }
+    public function ogFromVideo($url){
 
+        $v = $this->parseVideo($url);
+
+		if ($v['type'] == 'youtube' || $v['type'] == 'vimeo' || $v['type'] == 'peertube'){
+
+			$this->currentOg['type'] = 'video.other';
+            $this->currentOg['video:type'] = 'text/html';
+
+            if ($v['type'] == 'youtube'){
+                $this->currentOg['video:url'] = 'https://www.youtube.com/embed/'.$v['id'];
+                $this->currentOg['video:secure_url'] = 'https://www.youtube.com/embed/'.$v['id'];
+            }
+            
+		}
+
+        return false;
+    }
     public function parseVideo($url){
 
         $_url = $url;
         $test = NULL;
 
-        $t = preg_match('/(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/', $_url, $test);
+        $t = preg_match('/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/', $_url, $test);
         $type = NULL;
         $id = NULL;
 
@@ -110,10 +129,23 @@ class OG {
                     $type = 'youtube';
                     $id = $test[6];
 
-                } else if (strpos($test[3], 'vimeo')  !== false) {
+                } 
+                
+                if (strpos($test[3], 'vimeo')  !== false) {
                     $type = 'vimeo';
                     $id = $test[2];
                 }
+
+                if (strpos($test[3], 'bitchute.com')  !== false) {
+					$type = 'bitchute';
+					$id = $test[9];	
+			    }
+
+                if (strpos($test[3], 'peertube://')  !== false) {
+					$type = 'peertube';
+			        $id = $test[9];
+					$host_name = $test[4];
+			    }
 
             }
         }
@@ -121,7 +153,8 @@ class OG {
         $r = array(
             'type' => $type,
             'url' => $url,
-            'id' => $id
+            'id' => $id,
+            'host_name' => $host_name
         );
 
         return $r;
@@ -173,7 +206,11 @@ class OG {
 
                 $this->currentOg['type'] = 'article';
 
-                if(isset($r->i[$this->imageNum])) {
+                if (isset($r->u) && $r->u != ''){
+                    $this->ogFromVideo($url);
+                }
+
+                if (isset($r->i[$this->imageNum])) {
                     $this->currentOg['image'] = $r->i[$this->imageNum];
                     $image = true;
                 }

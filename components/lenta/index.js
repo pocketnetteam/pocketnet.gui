@@ -454,7 +454,6 @@ var lenta = (function(){
 						s.controls = ['play', 'progress', 'current-time', 'fullscreen']
 					}	
 
-					
 					PlyrEx(pels[0], s, function(player){
 
 						players[share.txid] || (players[share.txid] = {})
