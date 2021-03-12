@@ -36,6 +36,8 @@
     }
 
     .upload-field-container {
+        position: relative;
+
         color: @color-black;
 
         .upload-peertube-label {
@@ -99,10 +101,21 @@
         font-weight: bold;
     }
 
-    .upload-video-name {
-        border-width: 0;
+    .upload-input {
+        border-width: 1px;
+        border-radius: 15px;
 
-        border-bottom-width: 1px;
+        padding-left: 1em;
+    }
+
+    .on-border-input {
+        position: absolute;
+        top: -10px;
+        left: 15px;
+        font-size: 0.9em;
+        font-weight: bold;
+        background-color: white;
+        padding: 0 2px;
     }
 
     .upload-progress-container {
@@ -164,9 +177,6 @@
 
     .import-video-link {
         width: 250px;
-
-        border-width: 0px;
-        border-bottom-width: 1px;
     }
 
   
@@ -206,7 +216,6 @@
 
         input{
             width: 100%;
-            padding-left: 0;
         }
 
 
@@ -261,6 +270,10 @@
 
     .verticalSection {
         padding: @rhythm;
+    }
+
+    .video-title-container {
+        position: relative;
     }
 
 }
