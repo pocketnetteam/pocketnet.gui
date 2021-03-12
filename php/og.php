@@ -95,7 +95,7 @@ class OG {
 
         return strtolower($c2[0]);
     }
-    public function ogFromVideo($url){
+    public function ogFromVideo($url, $txid){
 
         $v = $this->parseVideo($url);
 
@@ -104,10 +104,10 @@ class OG {
 			$this->currentOg['type'] = 'video.other';
             $this->currentOg['video:type'] = 'text/html';
 
-            if ($v['type'] == 'youtube'){
-                $this->currentOg['video:url'] = 'https://www.youtube.com/embed/'.$v['id'];
-                $this->currentOg['video:secure_url'] = 'https://www.youtube.com/embed/'.$v['id'];
-            }
+            $u = 'https://pocketnet.app/openapi.html?action=lenta&id='.$txid.'&embeddingSettigns=7b22626c61636b223a312c22636f6d6d656e7473223a226e6f222c2266756c6c73637265656e766964656f223a312c22726566223a2250523773727a5a74344566634e62337332376772676d69473861423976594e563832227d';
+
+            $this->currentOg['video:url'] = $u;
+            $this->currentOg['video:secure_url'] = $u;
             
 		}
 
@@ -207,7 +207,7 @@ class OG {
                 $this->currentOg['type'] = 'article';
 
                 if (isset($r->u) && $r->u != ''){
-                    $this->ogFromVideo($url);
+                    $this->ogFromVideo($url, $this->txid);
                 }
 
                 if (isset($r->i[$this->imageNum])) {

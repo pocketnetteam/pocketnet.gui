@@ -73,8 +73,6 @@ var PNWIDGETS = function(){
 
         self.make(seed, ps.action, ps.id, ps.p)
 
-     
-
     }
 
     return self
