@@ -5,8 +5,12 @@
             
             var user = deep(app, 'platform.sdk.users.storage.'+bot) || {} %>
 
-            <div class="botinlist" >
-                <a href="<%-app.platform.api.authorlink(bot)%>"><%- user.name %></a> (<%-bot%>) <i bot="<%-bot%>" class="far fa-times-circle removefromlist"></i>
+            <div class="botinlist">
+                <div>
+                    <a href="<%-app.platform.api.authorlink(bot)%>"><%- user.name %></a>
+                </div> 
+                <div>(<%-bot%>)</div> 
+                <div><i bot="<%-bot%>" class="far fa-times-circle removefromlist"></i></div>
             </div>
             
         <% }) %>
