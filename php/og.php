@@ -110,8 +110,8 @@ class OG {
             $cu = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
             $u = 'https://pocketnet.app/openapi.html?action=lenta&id='.$txid.'&embeddingSettigns=7b22626c61636b223a312c22636f6d6d656e7473223a226e6f222c2266756c6c73637265656e766964656f223a312c22726566223a2250523773727a5a74344566634e62337332376772676d69473861423976594e563832227d';
 
-            $this->currentOg['video:url'] = $cu;
-            $this->currentOg['video:secure_url'] = $cu;
+            $this->currentOg['video:url'] = $u;
+            $this->currentOg['video:secure_url'] = $u;
             
             if($v['type'] == 'peertube'){
                 //$u = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
@@ -122,6 +122,7 @@ class OG {
                 $this->currentOg['twitter:card'] = 'player';
                 $this->currentOg['twitter:image'] = $ci;
                 $this->currentOg['twitter:title'] = $this->currentOg['title'];
+                $this->currentOg['twitter:text:title'] = $this->currentOg['title'];
                 $this->currentOg['twitter:description'] = $this->currentOg['description'];
                 $this->currentOg['twitter:player:stream'] = $cu;
                 $this->currentOg['twitter:player:stream:content_type'] = 'video/mp4';
@@ -217,6 +218,35 @@ class OG {
         $description = false;
         $pca = 'a';
 
+        if($this->author != NULL){
+
+            $a = $this->rpc->author($this->author);
+
+            if ($a != false){
+                $a = $a[0];
+
+                if(!$title){
+                    $this->currentOg['title'] = urldecode($a->name);
+
+                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
+                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
+                }
+
+                if(!$description){
+                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . count($a->subscribers);
+                }
+
+                if(isset($a->a) && $a->a != ''){
+                    $this->currentOg['description'] .= "\n". substr(strip_tags(urldecode($a->a)), 0, 130).'...';
+                }
+
+                if(!$image){
+                    $this->currentOg['image'] = $a->i;
+                }
+
+            }
+        }
+
         if($this->txid != NULL){
 
             $r = $this->rpc->share($this->txid);
@@ -306,34 +336,7 @@ class OG {
         }
 
         
-        if($this->author != NULL){
-
-            $a = $this->rpc->author($this->author);
-
-            if ($a != false){
-                $a = $a[0];
-
-                if(!$title){
-                    $this->currentOg['title'] = urldecode($a->name);
-
-                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
-                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
-                }
-
-                if(!$description){
-                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . count($a->subscribers);
-                }
-
-                if(isset($a->a) && $a->a != ''){
-                    $this->currentOg['description'] .= "\n". substr(strip_tags(urldecode($a->a)), 0, 130).'...';
-                }
-
-                if(!$image){
-                    $this->currentOg['image'] = $a->i;
-                }
-
-            }
-        }
+        
 
         
     

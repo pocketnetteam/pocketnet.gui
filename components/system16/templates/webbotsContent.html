@@ -1,0 +1,25 @@
+<% if(bots.length) {%>
+
+    <div class="botslist">
+        <% _.each(bots, function(bot){
+            
+            var user = deep(app, 'platform.sdk.users.storage.'+bot) || {} %>
+
+            <div class="botinlist" >
+                <a href="<%-app.platform.api.authorlink(bot)%>"><%- user.name %></a> (<%-bot%>) <i bot="<%-bot%>" class="far fa-times-circle removefromlist"></i>
+            </div>
+            
+        <% }) %>
+    </div>
+
+    
+
+<% } else { %> 
+
+    <div class="emptybots">
+        <span>
+            No bot accounts have been specified for this proxy yet
+        </span>
+    </div>
+    
+<% } %>

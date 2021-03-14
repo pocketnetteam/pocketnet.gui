@@ -70,6 +70,47 @@
         
     }
 
+    .botsWrapper{
+
+        .emptybots{
+            background: fade(@color-gray-mlight, 10);
+            margin-top : 2 * @rhythm;
+            padding : 2 * @rhythm 0;
+            text-align: center;
+
+            span{
+                color : @color-gray-mlight;
+                font-size: 0.8em;
+            }
+        }
+
+        .botslist{
+            display: flex;
+            padding : 2 * @rhythm 0;
+        }
+
+        .botinlist{
+            color : @color-gray-mlight;
+            margin-right: 2 * @rhythm;
+            font-size: 0.8em;
+
+            a{
+                font-weight: 700;
+            }
+
+            .removefromlist{
+                cursor: pointer;
+                .transition(0.3s);
+                color : fade(@color-gray-slight, 70);
+                &:hover{
+                    color : @color-good;
+                }
+            }
+            
+           
+        }
+    }
+
     .stacking{
         .canstacking{
             padding : 3 * @rhythm 0;

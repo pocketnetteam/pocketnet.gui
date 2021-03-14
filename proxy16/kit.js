@@ -136,6 +136,9 @@ var defaultSettings = {
 		ndataPath : ''
     },
 	
+	bots : {
+		dbpath : 'data/bots',
+	},
 
 	proxies : {
 		dbpath : 'data/proxies',
@@ -219,7 +222,6 @@ var state = {
                 }
             });
         })
-
 		
 	},
 
@@ -812,6 +814,28 @@ var kit = {
 				rec(kit.manage)
 
 				return Promise.resolve(list.join("\n"))
+			}
+		},
+
+		bots : {
+			get : function(){
+				return kit.proxy().then(proxy => {
+					return Promise.resolve({
+						bots : proxy.bots.get()
+					})
+				})
+			},
+
+			add: function({address}){
+				return kit.proxy().then(proxy => {
+					return proxy.bots.add(address)
+				})
+			},
+
+			remove: function({address}){
+				return kit.proxy().then(proxy => {
+					return proxy.bots.remove(address)
+				})
 			}
 		}
 	},
