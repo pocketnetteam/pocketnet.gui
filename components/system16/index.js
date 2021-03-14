@@ -1962,25 +1962,31 @@ var system16 = (function(){
 				
 			},
 			bots : function(elc, clbk){
-			
-				self.shell({
-					inner : html,
-					name : 'webbots',
-					data : {
-						admin : actions.admin()
+
+				if(actions.admin()){
+
+				
+				
+					self.shell({
+						inner : html,
+						name : 'webbots',
+						data : {
+							admin : actions.admin()
+						},
+						el : elc.find('.botsWrapper')
+
 					},
-					el : elc.find('.botsWrapper')
+					function(){
 
-				},
-				function(){
+						p.el.find('.addbot').on('click', windows.addbot)
 
-					p.el.find('.addbot').on('click', windows.addbot)
+						renders.botscontent(elc)
 
-					renders.botscontent(elc)
+						if (clbk)
+							clbk()
+					})
 
-					if (clbk)
-						clbk()
-				})
+				}
 			},
 
 			botscontent : function(elc, clbk){
