@@ -24,16 +24,6 @@
         font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src *">
 
-        <?php 
-        
-            require_once('php/og.php'); 
-
-            $og = new OG($_GET);
-
-            $og->get();
-            $og->echotags();
-        ?>
-
         <link rel="stylesheet" href="css/normalize.css?v=80425586373">
 <link rel="stylesheet" href="css/tooltipster.core.min.css?v=518780070139">
 <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=628194950770">
