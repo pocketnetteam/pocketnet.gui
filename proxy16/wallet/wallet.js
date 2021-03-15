@@ -348,7 +348,7 @@ var Wallet = function(p){
             var meta = null
 
             return self.unspents.getc(temp).then(unspents => {
-                return self.transactions.txfees(unspents, outputs, 'exclude')
+                return self.transactions.txfees(unspents, outputs, 'exclude', temp)
             }).then(_meta => {
 
                 meta = _meta
@@ -360,6 +360,7 @@ var Wallet = function(p){
                 return self.transactions.send(meta.tx)
                 
             }).catch(e => {
+
 
                 if (meta){
                     self.unspents.release(meta.inputs)
@@ -481,7 +482,6 @@ var Wallet = function(p){
                 return !object.executing & l < 50
             })
 
-        //    console.log('queue', queue)
 
 
             if(!queue.length) return Promise.resolve()
@@ -669,16 +669,15 @@ var Wallet = function(p){
                 outputs : outputs
             })
         },
-        txfees : function(unspents, outputs, feeMode){
+        txfees : function(unspents, outputs, feeMode, keyPair){
+
 
             var inputs = []
             var feerate = 0.000000011;
 
-           
-
             return self.transactions.txbase(unspents, outputs, 0, feeMode).then(r => {
 
-                return self.transactions.build(r.inputs, r.outputs)
+                return self.transactions.build(r.inputs, r.outputs, keyPair)
 
             }).then(tx => {
 
@@ -690,7 +689,7 @@ var Wallet = function(p){
 
                 inputs = r.inputs
 
-                return self.transactions.build(r.inputs, r.outputs)
+                return self.transactions.build(r.inputs, r.outputs, keyPair)
 
             }).then(tx => {
                 return Promise.resolve({
@@ -699,7 +698,8 @@ var Wallet = function(p){
                 })
             })
         },
-        build : function(inputs, outputs){
+        build : function(inputs, outputs, keyPair){
+
             //var amount = 0;
             var k = 100000000;
             var node = self.nodeManager.selectbest();
@@ -721,9 +721,10 @@ var Wallet = function(p){
 
             _.each(inputs, function (i, inputindex) {
 
-                var keyPair = _.find(addresses, function(a){
-                    return a.address == i.address
-                })
+                if(!keyPair)
+                    keyPair = _.find(addresses, function(a){
+                        return a.address == i.address
+                    })
 
                 if (keyPair){
                     txb.sign(inputindex, keyPair.keys);
