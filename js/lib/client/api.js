@@ -923,5 +923,5 @@ var Api = function(app){
     return self
 }   
 
-if(typeof module != "undefined"){ module.exports = {Api, ProxyRequest, Proxy}; } 
-else { window.Api = Api; window.ProxyRequest = ProxyRequest; window.Proxy = Proxy }
+if(typeof module != "undefined"){ module.exports = {Api, ProxyRequest, Proxy16, Node}; } 
+else { window.Api = Api; window.ProxyRequest = ProxyRequest; window.Proxy16 = Proxy16 }

@@ -832,6 +832,17 @@ var kit = {
 				})
 			},
 
+			addlist : function({addresses}){
+				return kit.proxy().then(proxy => {
+
+					var promises = _.map(addresses, function(address){
+						return proxy.bots.add(address)
+					})
+
+					return Promise.all(promises)
+				})
+			},
+
 			remove: function({address}){
 				return kit.proxy().then(proxy => {
 					return proxy.bots.remove(address)

@@ -149,6 +149,29 @@ var Proxy = function (settings, manage) {
             return false
         
 
+        },
+
+        signaturelight : function(data){
+
+            delete data.A
+            delete data.U
+
+            if (data.signature){
+                var authorized = self.pocketnet.kit.authorization.signature(data.signature)
+
+                if (authorized){
+
+                    data.U = data.signature.address
+
+                    if(_.indexOf(settings.admins, data.U) > -1) data.A = true
+
+                    return true
+                }
+            }
+
+            return true
+        
+
         }
     }
 
@@ -668,7 +691,7 @@ var Proxy = function (settings, manage) {
         node : {
             rpc : {
                 path : "/rpc/*",
-                authorization : 'signature',
+                authorization : 'signaturelight',
                 action : function({method, parameters, options, U}){
 
                     if(!method) {

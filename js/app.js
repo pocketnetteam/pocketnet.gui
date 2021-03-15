@@ -481,7 +481,8 @@ Application = function(p)
 
 		self.platform = new Platform(self, self.options.listofnodes);
 
-		self.peertubeHandler = new PeerTubeHandler(app);
+		if (typeof PeerTubeHandler != 'undefined')
+			self.peertubeHandler = new PeerTubeHandler(app);
 
 		self.options.platform = self.platform
 

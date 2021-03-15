@@ -13543,8 +13543,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                telegramUpdateAbort: new AbortController(),
-
+                telegramUpdateAbort: typeof AbortController != 'undefined' ? new AbortController() : null,
 
                 telegramUpdates: function (offset = 0, clbk) {
 

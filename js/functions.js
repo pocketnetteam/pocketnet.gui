@@ -94,7 +94,7 @@
  	}
 
 	isios = function () {
-		return window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
+		return typeof window != 'undefined' && window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
 	}
 
  

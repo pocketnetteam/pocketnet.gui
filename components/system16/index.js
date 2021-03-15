@@ -1729,7 +1729,77 @@ var system16 = (function(){
 
 				
 			},
+			addbotlist: function(){
+				console.log("addbots")
+				var d = inputDialogNew({
+					caption : "Add Address to Proxy Bot List",
+					class : 'addressdialog',
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			placeholder : "Pocketnet Addresses",
+	        			label : "Bots addresses",
+						text : true
+	        		}],
 
+	        		success : function(v){
+
+						var addresses = v[0].split(/[ \t\n\r]+/g)
+
+						addresses = _.filter(addresses, function(address){
+							var valid = true;
+
+							try{
+								bitcoin.address.fromBase58Check(address)
+							}
+
+							catch (e){
+								valid = false;
+							}
+
+							console.log('address', address, valid)
+
+							return valid
+						})
+
+
+						if(!addresses.length){
+							sitemessage("Addresses is not valid")
+
+							return false
+						}
+
+	        			topPreloader(30);
+
+						proxy.fetch('manage', {
+							action : 'bots.addlist',
+							data : {
+								addresses : addresses
+							}
+						}).then(r => {
+							_.each(addresses, function(address){
+								bots.push(address)
+							})
+
+							renders.botscontent(el.c)
+
+							d.destroy();
+
+	        				topPreloader(100);
+
+						}).catch(e => {
+							console.log("E", e)
+							sitemessage(self.app.localization.e('e13293'))
+
+							topPreloader(100);
+
+						})
+
+
+	        		}
+	        	})
+			},
 			addbot : function(){
 				console.log("addbots")
 				var d = inputDialogNew({
@@ -1976,9 +2046,10 @@ var system16 = (function(){
 						el : elc.find('.botsWrapper')
 
 					},
-					function(){
+					function(p){
 
 						p.el.find('.addbot').on('click', windows.addbot)
+						p.el.find('.addbotlist').on('click', windows.addbotlist)
 
 						renders.botscontent(elc)
 
@@ -2004,9 +2075,17 @@ var system16 = (function(){
 						el : elc.find('.webbotsContentWrapper')
 
 					},
-					function(){
+					function(p){
 
-						
+						p.el.find('.exportlist').on('click', function(){
+							
+
+							text = bots.join('\r\n')
+
+							copycleartext(text)
+
+							sitemessage(self.app.localization.e('successcopied'))
+						})
 
 						p.el.find('.removefromlist').on('click', function(){
 							var address = $(this).attr('bot')

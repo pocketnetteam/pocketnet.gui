@@ -4,6 +4,7 @@
 .vscode
 .vs
 dist
+alukos
 signaling_server
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
