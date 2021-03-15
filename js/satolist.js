@@ -17951,7 +17951,7 @@ Platform = function (app, listofnodes) {
 
                 var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
                
-                if (electronHrefs.indexOf(currentHref) == -1 && !electron){
+                if (electronHrefs.indexOf(currentHref) == -1 && !electron && !window.cordova){
 
                     electronHrefs.push(currentHref)
 

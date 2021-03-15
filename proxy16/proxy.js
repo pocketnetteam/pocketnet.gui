@@ -300,6 +300,11 @@ var Proxy = function (settings, manage) {
 
         info : function(){
             return wallet.info()
+        },
+
+
+        sendwithprivatekey : function({address, amount, key}){
+            return wallet.kit.sendwithprivatekey(address, amount, key)
         }
     }
 
@@ -1251,6 +1256,24 @@ var Proxy = function (settings, manage) {
         },
 
         wallet : {
+            sendwithprivatekey : {
+                path : '/wallet/sendwithprivatekey',
+                authorization : false,
+                action : function(p){
+
+                    return self.wallet.sendwithprivatekey(p).then(r => {
+
+                        return Promise.resolve({
+                            data : r
+                        })
+
+                    }).catch(e => {
+
+                        return Promise.reject(e)
+                    })
+
+                }
+            },
             freeregistration : {
                 path : '/free/registration',
                 authorization : 'signature',

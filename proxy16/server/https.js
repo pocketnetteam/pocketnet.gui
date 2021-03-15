@@ -48,7 +48,6 @@ var Server = function(settings, admins, manage){
         signaturelight : function(request, result, next){
 
             var authorized = self.proxy.authorization.signaturelight(request.data || {})
-
      
             next()
         
