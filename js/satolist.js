@@ -17952,7 +17952,6 @@ Platform = function (app, listofnodes) {
             var addresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7']
             if (addresses.indexOf(a) > -1) {
 
-
                 self.app.user.features.telegram = 1;
 
                 if (!isMobile()){
@@ -17974,13 +17973,13 @@ Platform = function (app, listofnodes) {
 
                 var currentHref = self.app.nav.get.href();
 
-				var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
+				var electronHrefs = JSON.parse(localStorage['electron_hrefs_2'] || "[]");
 			   
 				if (electronHrefs.indexOf(currentHref) == -1 && !electron){
 
 					electronHrefs.push(currentHref)
 
-					localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+					localStorage['electron_hrefs_2'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
 
 					try{
 						window.location = 'pocketnet://electron/' + currentHref;
