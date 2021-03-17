@@ -23,7 +23,7 @@ var PeerTubeEx = function(target, createCallback, readyCallback) {
     var videoUrl = target.getAttribute('data-plyr-embed-id');
     // Prepare a new <iframe> tag for the PeerTube player
     var playerIFrame = document.createElement('iframe');
-    playerIFrame.setAttribute('src', videoUrl + 'api=1&autoplay=1');
+    playerIFrame.setAttribute('src', videoUrl + 'api=1&autoplay=1&peertubeLink=0&title=0&warningTitle=0');
     playerIFrame.setAttribute('frameborder', '0');
     playerIFrame.setAttribute('allowfullscreen', 'allowfullscreen');
     playerIFrame.setAttribute('allow', 'autoplay');
