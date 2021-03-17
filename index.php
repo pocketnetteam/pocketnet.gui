@@ -34,16 +34,16 @@
             $og->echotags();
         ?>
 
-        <link rel="stylesheet" href="css/normalize.css?v=714786054518">
-<link rel="stylesheet" href="css/tooltipster.core.min.css?v=818541865459">
-<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=980789615021">
-<link rel="stylesheet" href="css/main.css?v=490539114481">
-<link rel="stylesheet" href="css/stblack.css?v=118207406610">
-<link rel="stylesheet" href="css/plyr.css?v=376570464912">
-<link rel="stylesheet" href="css/jquery-ui.min.css?v=976468030301">
-<link rel="stylesheet" href="css/medium/medium-editor.css?v=78236645831">
-<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=735573568236">
-<link rel="stylesheet" href="css/medium/beagle.css?v=611758137510">
+        <link rel="stylesheet" href="css/normalize.css?v=736480791129">
+<link rel="stylesheet" href="css/tooltipster.core.min.css?v=279822308547">
+<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=315715393042">
+<link rel="stylesheet" href="css/main.css?v=877389784866">
+<link rel="stylesheet" href="css/stblack.css?v=564581647876">
+<link rel="stylesheet" href="css/plyr.css?v=159652036052">
+<link rel="stylesheet" href="css/jquery-ui.min.css?v=350704417362">
+<link rel="stylesheet" href="css/medium/medium-editor.css?v=628692128654">
+<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=232375950689">
+<link rel="stylesheet" href="css/medium/beagle.css?v=863860044003">
 
         
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
@@ -108,11 +108,7 @@
                 
 
         <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
-
-        <script src="js/vendor/vue/vue.js"></script>
-        <script src="js/vendor/vue/webcomponents-bundle.js"></script>
-        <script src="js/vendor/vue/vue.min.js"></script>
-        
+        <script src="chat/matrix-element.min.js"></script>
 
         <script type="text/javascript">
 
@@ -193,19 +189,19 @@
 <script join src="js/vendor/hc-sticky.js?v=7"></script>
 
         
-        <script>window.design = true;</script><script join src="js/functions.js?v=94411702724"></script>
-<script join src="js/user.js?v=143028926183"></script>
-<script join src="js/module.js?v=515165537289"></script>
-<script join src="js/navn.js?v=872520979555"></script>
-<script join src="js/validation.js?v=619473786169"></script>
-<script join src="js/_map.js?v=573231318717"></script>
-<script join src="js/localization.js?v=801007479961"></script>
-<script join src="js/kit.js?v=655374642678"></script>
-<script join src="js/satolist.js?v=826385584322"></script>
-<script join src="js/messenger2/clientrtc.js?v=291491299329"></script>
-<script join src="js/peertube-master.js?v=388676760051"></script>
-<script join src="js/app.js?v=20166536893"></script>
-<script join src="js/main.js?v=688246826920"></script>
+        <script>window.design = true;</script><script join src="js/functions.js?v=969670642454"></script>
+<script join src="js/user.js?v=12266023616"></script>
+<script join src="js/module.js?v=330939970750"></script>
+<script join src="js/navn.js?v=768000313547"></script>
+<script join src="js/validation.js?v=415330168996"></script>
+<script join src="js/_map.js?v=111763679576"></script>
+<script join src="js/localization.js?v=616411318541"></script>
+<script join src="js/kit.js?v=315908887217"></script>
+<script join src="js/satolist.js?v=95889667803"></script>
+<script join src="js/messenger2/clientrtc.js?v=344774253696"></script>
+<script join src="js/peertube-master.js?v=311967856749"></script>
+<script join src="js/app.js?v=282548233771"></script>
+<script join src="js/main.js?v=362717551796"></script>
 
 
 
@@ -215,7 +211,7 @@
             
         </script>
 
-        <script src="chat/matrix-element.min.js"></script>
+        
 
        
 

@@ -98,11 +98,7 @@
                 
 
         <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
-
-        <script src="js/vendor/vue/vue.js"></script>
-        <script src="js/vendor/vue/webcomponents-bundle.js"></script>
-        <script src="js/vendor/vue/vue.min.js"></script>
-        
+        <script src="chat/matrix-element.min.js"></script>
 
         <script type="text/javascript">
 
@@ -163,7 +159,7 @@
             
         </script>
 
-        <script src="chat/matrix-element.min.js"></script>
+        
 
        
 
