@@ -29,6 +29,7 @@ __map =  {
 		"js/vendor/jquery.touchSwipe.js",
         "js/vendor/emojione.js",
         "js/vendor/plyr.js",
+		"js/vendor/peertube_player.js",
         "js/vendor/reconnectingwebsocket.js",
         "js/vendor/rtc/db.js",
         "js/vendor/xss.min.js",

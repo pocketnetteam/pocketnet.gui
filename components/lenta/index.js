@@ -432,58 +432,82 @@ var lenta = (function(){
 				var vel = el.find('.videoWrapper')
 
 
-				if (pels.length)
-				{		
+				if (pels.length && pels[0].getAttribute)
+				{
 
-					var s = {
-						muted : true,
-						resetOnEnd : true,
-						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-						speed : {
-							selected : 1,
-							options: [1]
-						}
+					// Get the video provider
+					var provider = pels[0].getAttribute('data-plyr-provider');
+
+					// If the provider is PeerTube, use their own video player
+					if (provider == 'peertube') {
+
+						PeerTubeEx(pels[0], function(player) {
+							// PeerTube player created
+							players[share.txid] || (players[share.txid] = {});
+							players[share.txid].p = player;
+							players[share.txid].initing = true;
+							players[share.txid].el = vel;
+							players[share.txid].id = vel.attr('pid');
+						}, function(player) {
+							// PeerTube player ready
+							players[share.txid].inited = true;
+						});
+
 					}
 
-					if(share.settings.v == 'a'){
-						s.muted = false;
-						s.autoplay = false;
-					}
+					// Else, the provider is something different than PeerTube
+					// => use the Plyr video player
+					else {
 
-					if(isMobile()){
-						s.controls = ['play', 'progress', 'current-time', 'fullscreen']
-					}	
-
-					PlyrEx(pels[0], s, function(player){
-
-						players[share.txid] || (players[share.txid] = {})
-						players[share.txid].p = player
-						players[share.txid].initing = true
-						players[share.txid].el = vel
-						players[share.txid].id = vel.attr('pid')
-
-						console.log('essenseData', essenseData)
-						if (essenseData.enterFullScreenVideo){
-							essenseData.enterFullScreenVideo = false
-
-							actions.fullScreenVideo(share.txid)
+						var s = {
+							muted : true,
+							resetOnEnd : true,
+							controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+							speed : {
+								selected : 1,
+								options: [1]
+							}
 						}
 
-						player.on('ready', function(){
+						if(share.settings.v == 'a'){
+							s.muted = false;
+							s.autoplay = false;
+						}
 
-							if (players[share.txid]){
-								pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
+						if(isMobile()){
+							s.controls = ['play', 'progress', 'current-time', 'fullscreen']
+						}	
 
-								players[share.txid].inited = true
+						PlyrEx(pels[0], s, function(player){
 
-								//shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], el, 'video')
+							players[share.txid] || (players[share.txid] = {})
+							players[share.txid].p = player
+							players[share.txid].initing = true
+							players[share.txid].el = vel
+							players[share.txid].id = vel.attr('pid')
+
+							console.log('essenseData', essenseData)
+							if (essenseData.enterFullScreenVideo){
+								essenseData.enterFullScreenVideo = false
+
+								actions.fullScreenVideo(share.txid)
 							}
 
-							
+							player.on('ready', function(){
+
+								if (players[share.txid]){
+									pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
+
+									players[share.txid].inited = true
+
+									//shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], el, 'video')
+								}
+
+								
+							})
 						})
-					})
 					
-					
+					}
 
 				}
 			},
@@ -695,7 +719,7 @@ var lenta = (function(){
 					if(!players[id].p.playing)
 						players[id].p.play()
 
-					players[id].p.muted = false
+					players[id].p.unmute();
 			},
 
 			fullScreenVideo : function(id, clbk){
@@ -720,7 +744,7 @@ var lenta = (function(){
 				if(!player.p.playing)
 					player.p.play()
 
-				player.p.muted = false
+				player.p.unmute();
 
 				ovf = !self.app.actions.offScroll()
 
@@ -749,7 +773,7 @@ var lenta = (function(){
 
 				var player = players[id]
 
-				player.p.muted = true;
+				player.p.mute();
 
 				self.app.nav.api.history.removeParameters(['v'])
 
@@ -1279,7 +1303,7 @@ var lenta = (function(){
 					
 					_.each(players, function(player){
 
-						player.p.muted = true;
+						player.p.mute();
 
 						if (player.p.playing){
 							player.p.stop()
