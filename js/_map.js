@@ -60,7 +60,7 @@ __map =  {
 		"css/main.css",
 		"css/stblack.css",
 		"css/plyr.css",
-		"css/jquery-ui.min.css",
+		/*"css/jquery-ui.min.css",*/
 		"css/medium/medium-editor.css",
         "css/medium/medium-editor-insert-plugin.css",
         "css/medium/beagle.css"/* ,

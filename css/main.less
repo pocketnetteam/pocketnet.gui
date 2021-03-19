@@ -641,7 +641,7 @@ pie {
     position: fixed;
     left : 0;
     bottom : 0;
-    top : 0;
+    top : 65px;
     display: none;
     cursor: pointer;
 
@@ -5307,22 +5307,7 @@ input[type=radio].radio:checked + label {
         }
     }
 
-    .upbutton{
-        position: fixed;
-        right : 2.5%;
-        bottom : 2.5%;
-        top : auto;
-        left : auto;
-        z-index: 50;
     
-        .mini{
-            display: block;
-        }
-
-        .full{
-            display: none;
-        }
-    }
     
 }
 
@@ -5703,26 +5688,4 @@ input[type=radio].radio:checked + label {
     }
         
 
-}
-
-.matrix{
-    position: relative;
-    top: 10px;
-    float: right;
-    bottom: auto;
-    z-index: 999;
-    width: 340px;
-    
-
-    // background: white
-
-
-    .wrapper{
-        position: fixed;
-        width: 340px;
-        right: 2 * @rhythm;
-        bottom : 2 * @rhythm;
-        border: 1px solid fade(@color-gray-slight, 40);
-        border-radius: 3px;
-    }
 }

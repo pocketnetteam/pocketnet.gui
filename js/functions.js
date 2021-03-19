@@ -5926,8 +5926,11 @@
 	    appendTo.appendChild(script);
 	}
 
-	importCss = function(src) { 
-	    var link = document.createElement('link');
+	importCss = function(src, _document) { 
+
+		if(!_document) _document = document
+
+	    var link = _document.createElement('link');
 	    link.rel = 'stylesheet';
 
 
@@ -5935,7 +5938,7 @@
 
 	    link.setAttribute('href', src);
 	    
-	    var appendTo = document.getElementsByTagName('head')[0];
+	    var appendTo = _document.getElementsByTagName('head')[0];
 
 	    appendTo.appendChild(link);
 	}
