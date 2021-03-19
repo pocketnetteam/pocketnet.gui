@@ -49,6 +49,12 @@ fs.exists(mapJsPath, function (exists) {
 			path : './css/master.css'
 		}
 
+		var exported = {
+			data : "",
+			path : '../matrix-chat-client/src/components/events/event/metaMessage/exported.less'
+			// path : './css/exported.less'
+		}
+
 		var _modules = _.filter(m, function(_m, mn){
 			if(mn != "__sources" && mn != "__css" && mn != '__vendor') return true;
 			
@@ -112,6 +118,7 @@ fs.exists(mapJsPath, function (exists) {
 										data = data.toString().replaceAll("../..", "..");
 
 										cssmaster.data = cssmaster.data + "\n" + "/*" + csspath +"*/\n" + data;
+										exported.data = exported.data + "\n" + "/*" + csspath +"*/\n" + data;
 
 										p.success();
 									})
@@ -224,13 +231,32 @@ fs.exists(mapJsPath, function (exists) {
 					
 					all : {
 						success : function(){
-
 							cssmaster.data = currentcssdata + '\n' + cssmaster.data;
-							console.log(cssmaster.path)
+
+							exported.data = currentcssdata + '\n' + exported.data;
+							exported.data = '.pocketnet_iframe{' + exported.data + '}'
+							exported.data = exported.data.split('\n')
+
+							exported.data = exported.data.map(item => {
+								return item.replace(/\(max-width:640px\)/g, '(max-width:1920px)')
+							})
+
+							exported.data = exported.data.join('\n')
+
 							fs.writeFile(cssmaster.path, cssmaster.data, function(err) {
 
 								if(err) {
 									console.log("Access not permitted (CSS) ", cssmaster.path)
+									return
+								}
+										
+								clbk();				
+							});
+
+							fs.writeFile(exported.path, exported.data, function(err) {
+
+								if(err) {
+									console.log("Access not permitted (LESS) ", exported.path)
 									return
 								}
 										
