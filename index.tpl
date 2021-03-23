@@ -40,8 +40,9 @@
 
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
-        <script src="https://pocketnet.app/js/widgets.js?v=136"></script>
-         
+
+
+       
        
     </head>
     <body id="application" class="menu-hide">
@@ -76,6 +77,11 @@
         <div class="chats">
         </div>
 
+        
+        </div>
+
+        <div id="matrix" class="matrix"></div>
+
         <div id="globalpreloader">
             <div class="table">
                 <div>
@@ -92,8 +98,7 @@
                 
 
         <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
-        <script src="js/vendor/sanitize-html.min.js"></script>
-
+        <script src="chat/matrix-element.min.js"></script>
 
         <script type="text/javascript">
 
