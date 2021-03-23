@@ -9226,7 +9226,7 @@ var PlyrEx = function(target, options, clbk) {
           .done((response) => {
             var preview_picture = `https://${host_name}${response.previewPath}`;
 
-            if ((response.files || []).length) {
+            if ((response.files || []).length || response.isLive) {
               _plyr(
                 response.files[0].fileUrl,
                 preview_picture || '',
