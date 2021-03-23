@@ -1410,6 +1410,8 @@ Nav = function(app)
 
 				self.api.loadDefault(p);
 
+				return
+
 				var currentHref = self.get.href();
 
 				var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
