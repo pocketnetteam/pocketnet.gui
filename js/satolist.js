@@ -17942,13 +17942,17 @@ Platform = function (app, listofnodes) {
 
         var pnet = self.app.platform.sdk.address.pnet()
 
+        if (window.matrixchat){
+            window.matrixchat.destroy()
+        }
+
         $('#matrix').empty();
 
         if (pnet){
 
             var a = pnet.address;
 
-            var addresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7']
+            var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7']
             if (addresses.indexOf(a) > -1) {
 
                 self.app.user.features.telegram = 1;
