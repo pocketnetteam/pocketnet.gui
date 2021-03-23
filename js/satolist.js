@@ -17951,7 +17951,7 @@ Platform = function (app, listofnodes) {
 
             var a = pnet.address;
 
-            var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7']
+            var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
             if (addresses.indexOf(a) > -1) {
 
                 self.app.user.features.telegram = 1;
