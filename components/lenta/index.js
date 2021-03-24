@@ -432,30 +432,25 @@ var lenta = (function(){
 				var vel = el.find('.videoWrapper')
 
 
-				if (pels.length)
-				{		
+				if (pels.length && pels[0].getAttribute)
+				{
 
-					var s = {
-						muted : true,
-						resetOnEnd : true,
-						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-						speed : {
-							selected : 1,
-							options: [1]
-						}
-					}
+					// Get the video provider
+					var provider = pels[0].getAttribute('data-plyr-provider');
 
-					if(share.settings.v == 'a'){
-						s.muted = false;
-						s.autoplay = false;
-					}
+					var readyCallback = (provider == 'peertube') ? (player) => {
+						// PeerTube player ready
+						players[share.txid].inited = true;
+					} : () => {};
 
-					if(isMobile()){
-						s.controls = ['play', 'progress', 'current-time', 'fullscreen']
-					}	
-
-					PlyrEx(pels[0], s, function(player){
-
+					var callback = (provider == 'peertube') ? (player) => {
+						// PeerTube player created
+						players[share.txid] || (players[share.txid] = {});
+						players[share.txid].p = player;
+						players[share.txid].initing = true;
+						players[share.txid].el = vel;
+						players[share.txid].id = vel.attr('pid');
+					} : (player) => {
 						players[share.txid] || (players[share.txid] = {})
 						players[share.txid].p = player
 						players[share.txid].initing = true
@@ -481,9 +476,30 @@ var lenta = (function(){
 
 							
 						})
-					})
-					
-					
+					};
+
+					// Else, the provider is something different than PeerTube
+					// => use the Plyr video player
+					var s = {
+						muted : true,
+						resetOnEnd : true,
+						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+						speed : {
+							selected : 1,
+							options: [1]
+						}
+					}
+
+					if(share.settings.v == 'a'){
+						s.muted = false;
+						s.autoplay = false;
+					}
+
+					if(isMobile()){
+						s.controls = ['play', 'progress', 'current-time', 'fullscreen']
+					}	
+
+					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}
 			},
