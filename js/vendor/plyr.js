@@ -9154,6 +9154,10 @@ typeof navigator === "object" && (function (global, factory) {
 var PlyrEx = function(target, options, clbk, readyCallback) {
     var self = this;
     if (!clbk) clbk = function() {};
+    var video_options = options
+
+    var provider = target.getAttribute('data-plyr-provider');
+    var video_id = target.getAttribute('data-plyr-embed-id');
 
     if (provider == 'peertube') {
       setFunctions = function (player) {
@@ -9191,7 +9195,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       const PeerTubePlayer = window['PeerTubePlayer'];
       var player = new PeerTubePlayer(playerIFrame);
       // Run created callback
-      if (createCallback) createCallback(player);
+      if (clbk) clbk(player);
       // Wait for the video player to be ready
       player.ready.then(() => {
         setFunctions(player);
@@ -9203,11 +9207,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       return self;
     }
-
-    var video_options = options
-
-    var provider = target.getAttribute('data-plyr-provider');
-    var video_id = target.getAttribute('data-plyr-embed-id');
 
     var _plyr = function(video_url, preview_url, title) {
         var new_target = document.createElement('video');
