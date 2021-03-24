@@ -1,3 +1,5 @@
+!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=0)}([function(e,t,n){"use strict";var r=this&&this.__awaiter||function(e,t,n,r){return new(n||(n=Promise))((function(o,i){function s(e){try{u(r.next(e))}catch(e){i(e)}}function a(e){try{u(r.throw(e))}catch(e){i(e)}}function u(e){var t;e.done?o(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}u((r=r.apply(e,t||[])).next())}))},o=this&&this.__generator||function(e,t){var n,r,o,i,s={label:0,sent:function(){if(1&o[0])throw o[1];return o[1]},trys:[],ops:[]};return i={next:a(0),throw:a(1),return:a(2)},"function"==typeof Symbol&&(i[Symbol.iterator]=function(){return this}),i;function a(i){return function(a){return function(i){if(n)throw new TypeError("Generator is already executing.");for(;s;)try{if(n=1,r&&(o=2&i[0]?r.return:i[0]?r.throw||((o=r.return)&&o.call(r),0):r.next)&&!(o=o.call(r,i[1])).done)return o;switch(r=0,o&&(i=[2&i[0],o.value]),i[0]){case 0:case 1:o=i;break;case 4:return s.label++,{value:i[1],done:!1};case 5:s.label++,r=i[1],i=[0];continue;case 7:i=s.ops.pop(),s.trys.pop();continue;default:if(!(o=s.trys,(o=o.length>0&&o[o.length-1])||6!==i[0]&&2!==i[0])){s=0;continue}if(3===i[0]&&(!o||i[1]>o[0]&&i[1]<o[3])){s.label=i[1];break}if(6===i[0]&&s.label<o[1]){s.label=o[1],o=i;break}if(o&&s.label<o[2]){s.label=o[2],s.ops.push(i);break}o[2]&&s.ops.pop(),s.trys.pop();continue}i=t.call(e,s)}catch(e){i=[6,e],r=0}finally{n=o=0}if(5&i[0])throw i[1];return{value:i[0]?i[1]:void 0,done:!0}}([i,a])}}};Object.defineProperty(t,"__esModule",{value:!0});var i=n(1),s=n(2),a=["pause","play","playbackStatusUpdate","playbackStatusChange","resolutionUpdate","volumeChange"],u=function(){function e(e,t){this.embedElement=e,this.scope=t,this.eventRegistrar=new s.EventRegistrar,this.eventRegistrar.registerTypes(a),this.constructChannel(),this.prepareToBeReady()}return e.prototype.destroy=function(){this.embedElement.remove()},e.prototype.addEventListener=function(e,t){return this.eventRegistrar.addListener(e,t)},e.prototype.removeEventListener=function(e,t){return this.eventRegistrar.removeListener(e,t)},Object.defineProperty(e.prototype,"ready",{get:function(){return this.readyPromise},enumerable:!0,configurable:!0}),e.prototype.play=function(){return r(this,void 0,void 0,(function(){return o(this,(function(e){switch(e.label){case 0:return[4,this.sendMessage("play")];case 1:return e.sent(),[2]}}))}))},e.prototype.pause=function(){return r(this,void 0,void 0,(function(){return o(this,(function(e){switch(e.label){case 0:return[4,this.sendMessage("pause")];case 1:return e.sent(),[2]}}))}))},e.prototype.setVolume=function(e){return r(this,void 0,void 0,(function(){return o(this,(function(t){switch(t.label){case 0:return[4,this.sendMessage("setVolume",e)];case 1:return t.sent(),[2]}}))}))},e.prototype.getVolume=function(){return r(this,void 0,void 0,(function(){return o(this,(function(e){return[2,this.sendMessage("getVolume")]}))}))},e.prototype.seek=function(e){return r(this,void 0,void 0,(function(){return o(this,(function(t){switch(t.label){case 0:return[4,this.sendMessage("seek",e)];case 1:return t.sent(),[2]}}))}))},e.prototype.setResolution=function(e){return r(this,void 0,void 0,(function(){return o(this,(function(t){switch(t.label){case 0:return[4,this.sendMessage("setResolution",e)];case 1:return t.sent(),[2]}}))}))},e.prototype.getResolutions=function(){return r(this,void 0,void 0,(function(){return o(this,(function(e){return[2,this.sendMessage("getResolutions")]}))}))},e.prototype.getPlaybackRates=function(){return r(this,void 0,void 0,(function(){return o(this,(function(e){return[2,this.sendMessage("getPlaybackRates")]}))}))},e.prototype.getPlaybackRate=function(){return r(this,void 0,void 0,(function(){return o(this,(function(e){return[2,this.sendMessage("getPlaybackRate")]}))}))},e.prototype.setPlaybackRate=function(e){return r(this,void 0,void 0,(function(){return o(this,(function(t){switch(t.label){case 0:return[4,this.sendMessage("setPlaybackRate",e)];case 1:return t.sent(),[2]}}))}))},e.prototype.constructChannel=function(){this.channel=i.build({window:this.embedElement.contentWindow,origin:"*",scope:this.scope||"peertube"}),this.eventRegistrar.bindToChannel(this.channel)},e.prototype.prepareToBeReady=function(){var e,t;this.readyPromise=new Promise((function(n,r){e=n,t=r})),this.channel.bind("ready",(function(n){return n?e():t()})),this.channel.call({method:"isReady",success:function(t){return t?e():null}})},e.prototype.sendMessage=function(e,t){var n=this;return new Promise((function(r,o){n.channel.call({method:e,params:t,success:function(e){return r(e)},error:function(e){return o(e)}})}))},e}();t.PeerTubePlayer=u,window.PeerTubePlayer=u},function(e,t,n){e.exports=function(){"use strict";return function(){var e=Math.floor(1000001*Math.random()),t={};function n(e){return Array.isArray?Array.isArray(e):-1!=e.constructor.toString().indexOf("Array")}var r={},o=function(e){try{var n=JSON.parse(e.data);if("object"!=typeof n||null===n)throw"malformed"}catch(e){return}var o,i,s,a=e.source,u=e.origin;if("string"==typeof n.method){var c=n.method.split("::");2==c.length?(o=c[0],s=c[1]):s=n.method}if(void 0!==n.id&&(i=n.id),"string"==typeof s){var l=!1;if(t[u]&&t[u][o])for(var f=0;f<t[u][o].length;f++)if(t[u][o][f].win===a){t[u][o][f].handler(u,s,n),l=!0;break}if(!l&&t["*"]&&t["*"][o])for(f=0;f<t["*"][o].length;f++)if(t["*"][o][f].win===a){t["*"][o][f].handler(u,s,n);break}}else void 0!==i&&r[i]&&r[i](u,s,n)};return window.addEventListener?window.addEventListener("message",o,!1):window.attachEvent&&window.attachEvent("onmessage",o),{build:function(o){var i=function(e){if(o.debugOutput&&window.console&&window.console.log){try{"string"!=typeof e&&(e=JSON.stringify(e))}catch(e){}window.console.log("["+u+"] "+e)}};if(!window.postMessage)throw"jschannel cannot run this browser, no postMessage";if(!window.JSON||!window.JSON.stringify||!window.JSON.parse)throw"jschannel cannot run this browser, no JSON parsing/serialization";if("object"!=typeof o)throw"Channel build invoked without a proper object argument";if(!o.window||!o.window.postMessage)throw"Channel.build() called without a valid window argument";window===o.window&&i("target window is same as present window -- use at your own risk");var s,a=!1;if("string"==typeof o.origin&&("*"===o.origin?a=!0:null!==(s=o.origin.match(/^https?:\/\/(?:[-a-zA-Z0-9_\.])+(?::\d+)?/))&&(o.origin=s[0].toLowerCase(),a=!0)),!a)throw"Channel.build() called with an invalid origin";if(void 0!==o.scope){if("string"!=typeof o.scope)throw"scope, when specified, must be a string";if(o.scope.split("::").length>1)throw"scope may not contain double colons: '::'"}else o.scope="__default";var u=function(){for(var e="",t="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",n=0;n<5;n++)e+=t.charAt(Math.floor(Math.random()*t.length));return e}(),c={},l={},f={},d=!1,h=[],p=[],g=function(e,t,s){if("function"==typeof o.gotMessageObserver)try{o.gotMessageObserver(e,s)}catch(e){i("gotMessageObserver() raised an exception: "+e.toString())}if(s.id&&t){f[s.id]={};var a=function(e,t,n){var r=!1,o=!1;return{origin:t,invoke:function(t,r){if(!f[e])throw"attempting to invoke a callback of a nonexistent transaction: "+e;for(var o=!1,i=0;i<n.length;i++)if(t===n[i]){o=!0;break}if(!o)throw"request supports no such callback '"+t+"'";m({id:e,callback:t,params:r})},error:function(t,n){if(o=!0,!f[e])throw"error called for nonexistent message: "+e;delete f[e],m({id:e,error:t,message:n})},complete:function(t){if(o=!0,!f[e])throw"complete called for nonexistent message: "+e;delete f[e],m({id:e,result:t})},delayReturn:function(e){return"boolean"==typeof e&&(r=!0===e),r},completed:function(){return o}}}(s.id,e,s.callbacks?s.callbacks:[]);if(c[t])try{if(s.callbacks&&n(s.callbacks)&&s.callbacks.length>0)for(var u=0;u<s.callbacks.length;u++){for(var d=s.callbacks[u],h=s.params,p=d.split("/"),g=0;g<p.length-1;g++){var y=p[g];"object"!=typeof h[y]&&(h[y]={}),h=h[y]}h[p[p.length-1]]=function(){var e=d;return function(t){return a.invoke(e,t)}}()}var b=c[t](a,s.params);a.delayReturn()||a.completed()||a.complete(b)}catch(e){var v="runtime_error",w=null;if("string"==typeof e?w=e:"object"==typeof e&&(e instanceof Error?(v=e.constructor.name,w=e.message):e&&n(e)&&2==e.length?(v=e[0],w=e[1]):"string"==typeof e.error&&(v=e.error,e.message?"string"==typeof e.message?w=e.message:e=e.message:w="")),null===w)try{void 0===(w=JSON.stringify(e))&&(w=e.toString())}catch(t){w=e.toString()}a.error(v,w)}else a.error("method_not_found","No method '"+t+"' was (yet) bound by the provider")}else s.id&&s.callback?l[s.id]&&l[s.id].callbacks&&l[s.id].callbacks[s.callback]?l[s.id].callbacks[s.callback](s.params):i("ignoring invalid callback, id:"+s.id+" ("+s.callback+")"):s.id?l[s.id]?(s.error?l[s.id].error&&l[s.id].error(s.error,s.message):void 0!==s.result?l[s.id].success(s.result):l[s.id].success(),delete l[s.id],delete r[s.id]):i("ignoring invalid response: "+s.id):t&&c[t]&&c[t]({origin:e},s.params)};!function(e,n,r,o){function i(t){for(var n=0;n<t.length;n++)if(t[n].win===e)return!0;return!1}var s=!1;if("*"===n){for(var a in t)if(t.hasOwnProperty(a)&&"*"!==a&&"object"==typeof t[a][r]&&(s=i(t[a][r])))break}else t["*"]&&t["*"][r]&&(s=i(t["*"][r])),!s&&t[n]&&t[n][r]&&(s=i(t[n][r]));if(s)throw"A channel is already bound to the same window which overlaps with origin '"+n+"' and has scope '"+r+"'";"object"!=typeof t[n]&&(t[n]={}),"object"!=typeof t[n][r]&&(t[n][r]=[]),t[n][r].push({win:e,handler:o})}(o.window,o.origin,o.scope,g);var y=function(e){return[o.scope,e].join("::")},m=function(e,t){if(!e)throw"postMessage called with null message";if(t||d){if("function"==typeof o.postMessageObserver)try{o.postMessageObserver(o.origin,e)}catch(e){i("postMessageObserver() raised an exception: "+e.toString())}i("post message: "+JSON.stringify(e)+" with origin "+o.origin),o.window.postMessage(JSON.stringify(e),o.origin)}else i("queue message: "+JSON.stringify(e)),h.push(e)},b=function(e,t){var n;e=[].concat(e);for(var r=0;r<e.length;r++)t[n=e[r].toString()]=function(e){return function(t,n,r){n?v.call({method:e,params:t,success:n,error:r}):v.notify({method:e,params:t})}}(n)},v={remote:{},unbind:function(e,t){if(c[e]){if(!delete c[e])throw"can't delete method: "+e;return o.publish&&!t&&(d?v.notify({method:"__unbind",params:e}):p.push({action:"unbind",method:e})),!0}return!1},bind:function(e,t,n){if(!e||"string"!=typeof e)throw"'method' argument to bind must be string";if(!t||"function"!=typeof t)throw"callback missing from bind params";if(c[e])throw"method '"+e+"' is already bound!";return c[e]=t,o.publish&&!n&&(d?v.notify({method:"__bind",params:e}):p.push({action:"bind",method:e})),this},call:function(t){if(!t)throw"missing arguments to call function";if(!t.method||"string"!=typeof t.method)throw"'method' argument to call must be string";if(!t.success||"function"!=typeof t.success)throw"'success' callback missing from call";var n={},o=[],i=[],s=function(e,t){if(i.indexOf(t)>=0)throw"params cannot be a recursive data structure";if(t&&i.push(t),"object"==typeof t)for(var r in t)if(t.hasOwnProperty(r)){var a=e+(e.length?"/":"")+r;"function"==typeof t[r]?(n[a]=t[r],o.push(a),delete t[r]):"object"==typeof t[r]&&s(a,t[r])}};s("",t.params);var a,u,c,f={id:e,method:y(t.method),params:t.params};o.length&&(f.callbacks=o),t.timeout&&(a=e,u=t.timeout,c=y(t.method),window.setTimeout((function(){if(l[a]){var e="timeout ("+u+"ms) exceeded on method '"+c+"'";l[a].error&&l[a].error("timeout_error",e),delete l[a],delete r[a]}}),u)),l[e]={callbacks:n,error:t.error,success:t.success},r[e]=g,e++,m(f)},notify:function(e){if(!e)throw"missing arguments to notify function";if(!e.method||"string"!=typeof e.method)throw"'method' argument to notify must be string";m({method:y(e.method),params:e.params})},destroy:function(){!function(e,n,r){for(var o=t[n][r],i=0;i<o.length;i++)o[i].win===e&&o.splice(i,1);0===t[n][r].length&&delete t[n][r]}(o.window,o.origin,o.scope),window.removeEventListener?window.removeEventListener("message",g,!1):window.detachEvent&&window.detachEvent("onmessage",g),d=!1,c={},f={},l={},o.origin=null,h=[],i("channel destroyed"),u=""}};return v.bind("__ready",(function(e,t){if(i("ready msg received"),d&&!o.reconnect)throw"received ready message while in ready state.";d=!0,u.length<6&&("publish-request"===t.type?u+="-R":u+="-L"),i("ready msg accepted."),"publish-request"===t.type&&v.notify({method:"__ready",params:{type:"publish-reply",publish:p}});for(var n=0;n<t.publish.length;n++)"bind"===t.publish[n].action?b([t.publish[n].method],v.remote):delete v.remote[t.publish[n].method];for(o.reconnect||v.unbind("__ready",!0);h.length;)m(h.splice(0,1)[0]);p=[],"function"==typeof o.onReady&&o.onReady(v)}),!0),v.bind("__bind",(function(e,t){b([t],v.remote)}),!0),v.bind("__unbind",(function(e,t){v.remote[t]&&delete v.remote[t]}),!0),o.remote&&b(o.remote,v.remote),setTimeout((function(){u.length>0&&m({method:y("__ready"),params:{type:"publish-request",publish:p}},!0)}),0),v}}}()}()},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=function(){function e(){this.eventRegistrations={}}return e.prototype.bindToChannel=function(e){for(var t=this,n=function(n){e.bind(n,(function(e,r){return t.fire(n,r)}))},r=0,o=Object.keys(this.eventRegistrations);r<o.length;r++){n(o[r])}},e.prototype.registerTypes=function(e){for(var t=0,n=e;t<n.length;t++){var r=n[t];this.eventRegistrations[r]={registrations:[]}}},e.prototype.fire=function(e,t){this.eventRegistrations[e].registrations.forEach((function(e){return e(t)}))},e.prototype.addListener=function(e,t){return this.eventRegistrations[e]?(this.eventRegistrations[e].registrations.push(t),!0):(console.warn("PeerTube: addEventListener(): The event '"+e+"' is not supported"),!1)},e.prototype.removeListener=function(e,t){return!!this.eventRegistrations[e]&&(this.eventRegistrations[e].registrations=this.eventRegistrations[e].registrations.filter((function(e){return e===t})),!0)},e}();t.EventRegistrar=r}]);
+
 typeof navigator === "object" && (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define('Plyr', factory) :
@@ -9149,12 +9151,60 @@ typeof navigator === "object" && (function (global, factory) {
 //
 // ================================================================
 
-var PlyrEx = function(target, options, clbk) {
+var PlyrEx = function(target, options, clbk, readyCallback) {
     var self = this;
     if (!clbk) clbk = function() {};
-    var video_options = options
 
-    var checkInterval;
+    if (provider == 'peertube') {
+      setFunctions = function (player) {
+        // Set the mandatory/missing functions
+        player.stop = player.pause;
+        player.mute = async () => {
+          player.savedVolume = await player.getVolume();
+          player.setVolume(0);
+        };
+        player.unmute = () => {
+          player.setVolume(player.savedVolume || 1);
+        };
+        // Add status event to update the playing boolean
+        player.addEventListener('playbackStatusChange', function (status) {
+          player.playing = status == 'playing';
+        });
+      };
+
+      // Get the video URL
+      var videoUrl = target.getAttribute('data-plyr-embed-id');
+      // Prepare a new <iframe> tag for the PeerTube player
+      var playerIFrame = document.createElement('iframe');
+      playerIFrame.setAttribute(
+        'src',
+        videoUrl + 'api=1&autoplay=1&peertubeLink=0&title=0&warningTitle=0',
+      );
+      playerIFrame.setAttribute('frameborder', '0');
+      playerIFrame.setAttribute('allowfullscreen', 'allowfullscreen');
+      playerIFrame.setAttribute('allow', 'autoplay');
+      playerIFrame.setAttribute('style', 'min-height: 400px; width: 100%');
+      // Replace the HTML element
+      if (target.parentNode)
+        target.parentNode.replaceChild(playerIFrame, target);
+      // Get the PeerTube instance
+      const PeerTubePlayer = window['PeerTubePlayer'];
+      var player = new PeerTubePlayer(playerIFrame);
+      // Run created callback
+      if (createCallback) createCallback(player);
+      // Wait for the video player to be ready
+      player.ready.then(() => {
+        setFunctions(player);
+        // Mute the player
+        player.mute();
+        // Run ready callback
+        if (readyCallback) readyCallback(player);
+      });
+
+      return self;
+    }
+
+    var video_options = options
 
     var provider = target.getAttribute('data-plyr-provider');
     var video_id = target.getAttribute('data-plyr-embed-id');
@@ -9170,9 +9220,14 @@ var PlyrEx = function(target, options, clbk) {
         target = new_target
     };
 
-    // var retryGetVideo = (video) => {
-      
-    // };
+    // Return a new instance of Plyr
+    var newPlyr = function(target, video_options) {
+      var newPlayer = new Plyr(target, video_options);
+      // Set the mandatory/missing functions
+      newPlayer.mute = () => newPlayer.muted = true;
+      newPlayer.unmute = () => newPlayer.muted = false;
+      return newPlayer;
+    }
 
     var _error = function(errorMessage) {
         var new_target = document.createElement('div');
@@ -9203,70 +9258,16 @@ var PlyrEx = function(target, options, clbk) {
 
                     console.log('video_options', video_options)
 
-                    if (clbk) clbk(new Plyr(target, video_options))
+                    if (clbk) clbk(newPlyr(target, video_options))
                 } else {
                     _error();
                 }
             }
         });
 
-    } if ('peertube' == provider) {
-
-      var host_name = video_id.split('?')[0].split('/')[2]
-
-      var linkParameters = parameters(video_id, true);
-
-      var videoLink = video_id.split('?')[0].split('/').pop();
-
-      checkInterval = setInterval(function () {
-        $.ajax({
-          url: `https://${host_name}/api/v1/videos/${videoLink}`,
-          type: 'GET',
-        })
-          .done((response) => {
-            var preview_picture = `https://${host_name}${response.previewPath}`;
-
-            if ((response.files || []).length || response.isLive) {
-              _plyr(
-                response.files[0].fileUrl,
-                preview_picture || '',
-                response.name || '',
-              );
-              clearInterval(checkInterval);
-
-              if (clbk) clbk(new Plyr(target, options));
-            } else {
-              let loadingMessage = '';
-
-              if (linkParameters.imported)
-                loadingMessage = 'Video is importing.';
-
-              if (response.isLive)
-                loadingMessage = linkParameters.date
-                  ? `Live will start at ${moment(linkParameters.date).format(
-                      'HH:mm MM/DD/YYYY',
-                    )}`
-                  : 'Live is yet to start.';
-
-              _error(loadingMessage);
-            }
-          })
-          .fail((response) => {
-            console.log('AjaxError', response);
-            var json = response.responseJSON || {};
-
-            if (json.error) loadingMessage = response.error;
-
-            if (json.error === 'Video not found')
-              clearInterval(checkInterval);
-
-            _error(loadingMessage);
-          });
-      }, 5000);
-
     } else {
 
-        clbk(new Plyr(target, video_options));
+      if (clbk) clbk(newPlyr(target, video_options));
 
     }
 
