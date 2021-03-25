@@ -108,12 +108,13 @@ Localization = function(app){
 			self.import(function(){
 
 				if(app)
-				{
-
+				{	
+					
 					app.reload({
 						clbk : clbk,
 						current : true
 					})
+					app.platform.clearlocal()
 				}
 
 				else

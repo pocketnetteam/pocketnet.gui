@@ -658,6 +658,10 @@ Application = function(p)
 		if(p.href) p.nav.href = p.href;
 		if(p.current) p.nav.href = self.nav.get.href()
 
+		if (typeof _Electron != 'undefined' && _Electron) {
+			p.nav.href = 'index'
+		}
+
 		self.destroyModules();
 		
 		self.user.isState(function(s){

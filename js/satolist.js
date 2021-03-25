@@ -12,6 +12,10 @@ Platform = function (app, listofnodes) {
     var self = this;
 
     self.app = app;
+    
+    
+
+    self.testaddresses = ['PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PAa5mM84tmEubCWm1WjHrSNqWd4vwK9Gmm', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
     self.focus = true;
     self.currentBlock = 1000000;
@@ -3648,9 +3652,10 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                var rootAddresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf'];
+                var rootAddresses = self.testaddresses;
 				if (rootAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
 					c.video.options.enablePeertube = options.enablePeertube;
+                    options.enablePeertube.value = true
 				}
 
                 if (electron) {
@@ -8949,7 +8954,7 @@ Platform = function (app, listofnodes) {
 
                         }
                         else {
-                            var parameters = [p.count, '259200', self.app.localization.key];
+                            var parameters = [p.count, '259200', '', self.app.localization.key];
 
                             if (p.address) parameters.push("" /*p.address*/)
 
@@ -17732,6 +17737,10 @@ Platform = function (app, listofnodes) {
 
     }
 
+    self.clearlocal = function(){
+        self.sdk.tags.storage.cloud = null
+    }
+
     self.clear = function (fast) {
         self.app.nav.addParameters = null;
 
@@ -17951,7 +17960,7 @@ Platform = function (app, listofnodes) {
 
             var a = pnet.address;
 
-            var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+            var addresses = self.testaddresses
             if (addresses.indexOf(a) > -1) {
 
                 self.app.user.features.telegram = 1;
@@ -17975,7 +17984,7 @@ Platform = function (app, listofnodes) {
                     
                 }
 
-                var currentHref = self.app.nav.get.href();
+                /*var currentHref = self.app.nav.get.href();
 
 				var electronHrefs = JSON.parse(localStorage['electron_hrefs_2'] || "[]");
 			   
@@ -17992,7 +18001,7 @@ Platform = function (app, listofnodes) {
 						console.log("electron not installed")
 					}
 				   
-				} 
+				} */
 
             } else {
                 self.app.user.features.telegram = 0;

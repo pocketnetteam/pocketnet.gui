@@ -25,7 +25,7 @@
         media-src *">
 
         <?php 
-            
+        
             require_once('php/og.php'); 
 
             $og = new OG($_GET);
@@ -34,15 +34,16 @@
             $og->echotags();
         ?>
 
-        <link rel="stylesheet" href="css/normalize.css?v=913822006827">
-<link rel="stylesheet" href="css/tooltipster.core.min.css?v=686426210110">
-<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=807909552289">
-<link rel="stylesheet" href="css/main.css?v=527067769099">
-<link rel="stylesheet" href="css/stblack.css?v=5190287446">
-<link rel="stylesheet" href="css/plyr.css?v=966830901910">
-<link rel="stylesheet" href="css/medium/medium-editor.css?v=302175370768">
-<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=78230343235">
-<link rel="stylesheet" href="css/medium/beagle.css?v=698948731507">
+        <link rel="stylesheet" href="css/normalize.css?v=79596549113">
+<link rel="stylesheet" href="css/tooltipster.core.min.css?v=814684839408">
+<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=63307146011">
+<link rel="stylesheet" href="css/main.css?v=763953568024">
+<link rel="stylesheet" href="css/stblack.css?v=171755071902">
+<link rel="stylesheet" href="css/plyr.css?v=954655779551">
+<link rel="stylesheet" href="css/medium/medium-editor.css?v=694396070379">
+<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=674173702109">
+<link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=977938163588">
+<link rel="stylesheet" href="css/medium/beagle.css?v=858343428671">
 
         
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
@@ -157,53 +158,53 @@
             
         </script>
 
-        <script join src="js/vendor/underscore-min.js?v=5"></script>
-<script join src="js/vendor/fingerprint2.js?v=5"></script>
-<script join src="js/vendor/tooltipster.core.js?v=5"></script>
-<script join src="js/vendor/tooltipster.bundle.js?v=5"></script>
-<script join src="js/vendor/jquery-ui.min.js?v=5"></script>
-<script join src="js/vendor/imagesloaded.pkgd.min.js?v=5"></script>
-<script join src="js/vendor/timer.js?v=5"></script>
-<script join src="js/vendor/ion.sound/ion.sound.min.js?v=5"></script>
-<script join src="js/vendor/aesjs.js?v=5"></script>
-<script join src="js/vendor/linkify.min.js?v=5"></script>
-<script join src="js/vendor/linkify-html.min.js?v=5"></script>
-<script join src="js/lib/pocketnet/btc17.js?v=5"></script>
-<script join src="js/lib/pocketnet/buffer.js?v=5"></script>
-<script join src="js/lib/client/system16.js?v=5"></script>
-<script join src="js/lib/client/api.js?v=5"></script>
-<script join src="js/vendor/pbkdf2.js?v=5"></script>
-<script join src="js/vendor/sha1.js?v=5"></script>
-<script join src="js/vendor/jdenticon.js?v=5"></script>
-<script join src="js/vendor/paste.js?v=5"></script>
-<script join src="js/vendor/jquery.md5.js?v=5"></script>
-<script join src="js/vendor/jquery.animate-number.js?v=5"></script>
-<script join src="js/vendor/jquery.touchSwipe.js?v=5"></script>
-<script join src="js/vendor/emojione.js?v=5"></script>
-<script join src="js/vendor/plyr.js?v=5"></script>
-<script join src="js/vendor/reconnectingwebsocket.js?v=5"></script>
-<script join src="js/vendor/rtc/db.js?v=5"></script>
-<script join src="js/vendor/xss.min.js?v=5"></script>
-<script join src="js/vendor/jquery.mark.js?v=5"></script>
-<script join src="js/vendor/hc-sticky.js?v=5"></script>
+        <script join src="js/vendor/underscore-min.js?v=7"></script>
+<script join src="js/vendor/fingerprint2.js?v=7"></script>
+<script join src="js/vendor/tooltipster.core.js?v=7"></script>
+<script join src="js/vendor/tooltipster.bundle.js?v=7"></script>
+<script join src="js/vendor/jquery-ui.min.js?v=7"></script>
+<script join src="js/vendor/imagesloaded.pkgd.min.js?v=7"></script>
+<script join src="js/vendor/timer.js?v=7"></script>
+<script join src="js/vendor/ion.sound/ion.sound.min.js?v=7"></script>
+<script join src="js/vendor/aesjs.js?v=7"></script>
+<script join src="js/vendor/linkify.min.js?v=7"></script>
+<script join src="js/vendor/linkify-html.min.js?v=7"></script>
+<script join src="js/lib/pocketnet/btc17.js?v=7"></script>
+<script join src="js/lib/pocketnet/buffer.js?v=7"></script>
+<script join src="js/lib/client/system16.js?v=7"></script>
+<script join src="js/lib/client/api.js?v=7"></script>
+<script join src="js/vendor/pbkdf2.js?v=7"></script>
+<script join src="js/vendor/sha1.js?v=7"></script>
+<script join src="js/vendor/jdenticon.js?v=7"></script>
+<script join src="js/vendor/paste.js?v=7"></script>
+<script join src="js/vendor/jquery.md5.js?v=7"></script>
+<script join src="js/vendor/jquery.animate-number.js?v=7"></script>
+<script join src="js/vendor/jquery.touchSwipe.js?v=7"></script>
+<script join src="js/vendor/emojione.js?v=7"></script>
+<script join src="js/vendor/plyr.js?v=7"></script>
+<script join src="js/vendor/reconnectingwebsocket.js?v=7"></script>
+<script join src="js/vendor/rtc/db.js?v=7"></script>
+<script join src="js/vendor/xss.min.js?v=7"></script>
+<script join src="js/vendor/jquery.mark.js?v=7"></script>
+<script join src="js/vendor/hc-sticky.js?v=7"></script>
 <script join src="js/vendor/DateTimePicker.min.js?v=7"></script>
 <script join src="js/vendor/moment.min.js?v=7"></script>
-<script join src="js/vendor/axios.js"></script>
+<script join src="js/vendor/axios.js?v=7"></script>
 
         
-        <script>window.design = true;</script><script join src="js/functions.js?v=722274497970"></script>
-<script join src="js/user.js?v=59775207057"></script>
-<script join src="js/module.js?v=669920577122"></script>
-<script join src="js/navn.js?v=130906405717"></script>
-<script join src="js/validation.js?v=688586143186"></script>
-<script join src="js/_map.js?v=964121747334"></script>
-<script join src="js/localization.js?v=297993426617"></script>
-<script join src="js/kit.js?v=381252629218"></script>
-<script join src="js/satolist.js?v=345877106003"></script>
-<script join src="js/messenger2/clientrtc.js?v=41597390411"></script>
-<script join src="js/peertube-master.js?v=681315181907"></script>
-<script join src="js/app.js?v=322828526798"></script>
-<script join src="js/main.js?v=138867243781"></script>
+        <script>window.design = true;</script><script join src="js/functions.js?v=197134505266"></script>
+<script join src="js/user.js?v=596178472709"></script>
+<script join src="js/module.js?v=718403829729"></script>
+<script join src="js/navn.js?v=49910204341"></script>
+<script join src="js/validation.js?v=534965539286"></script>
+<script join src="js/_map.js?v=202731337317"></script>
+<script join src="js/localization.js?v=453231311904"></script>
+<script join src="js/kit.js?v=116424364120"></script>
+<script join src="js/satolist.js?v=33602759856"></script>
+<script join src="js/messenger2/clientrtc.js?v=750353078010"></script>
+<script join src="js/peertube-master.js?v=566875380267"></script>
+<script join src="js/app.js?v=178712902958"></script>
+<script join src="js/main.js?v=23564544897"></script>
 
 
 
