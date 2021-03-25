@@ -88,7 +88,6 @@
         </div>
 
         
-        </div>
 
         <div id="matrix" class="matrix"></div>
 

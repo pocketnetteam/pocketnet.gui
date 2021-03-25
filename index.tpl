@@ -77,8 +77,6 @@
         <div class="chats">
         </div>
 
-        
-        </div>
 
         <div id="matrix" class="matrix"></div>
 
