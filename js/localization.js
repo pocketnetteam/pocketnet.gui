@@ -11,7 +11,7 @@ Localization = function(app){
 	}
 
 
-	self.key = 'en'
+	//self.key = 'en'
 
 	self.available = {
 
@@ -33,12 +33,12 @@ Localization = function(app){
 		kr : {
 			name : "한국어",
 			key : 'kr'
-		},
+		},*/
 
 		ru : {
 			name : "Русский",
 			key : 'ru'
-		}*/
+		}
 
 	}
 
@@ -144,7 +144,7 @@ Localization = function(app){
 		var prms = parameters();
 
 
-		self.key = 'en'/// prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
+		self.key = prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 		
 		self.locSave();
 

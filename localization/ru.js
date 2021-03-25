@@ -7,7 +7,7 @@ var ____loclib = loclib.ru;
 
 //time
 
-____loclib.fewseconds = "Несколько секунд назад";	
+____loclib.fewseconds = "Секунду назад";	
 ____loclib.oneminute = "Минуту назад";	
 
 ____loclib.minutes = function(v){

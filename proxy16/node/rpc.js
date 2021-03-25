@@ -291,7 +291,7 @@ RpcClient.callspec = {
 
 
     getcontents: 'str',
-    getlastcomments: 'str',
+    getlastcomments: 'str str str',
     gettags: 'str',
     getrawtransactionwithmessagebyid: 'obj',
     getrawtransactionwithmessage: 'str',

@@ -15,7 +15,7 @@
 	<div class="item reputation">
 		<div class="itemtable table">
 			<div class="icon"><i class="far fa-star"></i></div>
-			<div class="label">Reputation: <b><%- (deep(author, 'state.reputation') || 0).toFixed(1) %></b></div>
+			<div class="label"><%=e('rstate')%>: <b><%- (deep(author, 'state.reputation') || 0).toFixed(1) %></b></div>
 		</div>
 	</div>
 
@@ -25,7 +25,7 @@
 			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
 			<div class="label">
 				<div class="c">
-					Pocketnet Address:
+					<%=e('pnetAddress')%>:
 				</div>
 				<div>
 					<span class="copyaddress"><%-deep(author, 'address')%></span>

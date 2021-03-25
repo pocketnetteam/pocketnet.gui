@@ -6902,7 +6902,7 @@ Platform = function (app, listofnodes) {
                 if (block) parameters.push(block.toString())
                 else parameters.push('')
 
-                //parameters.push(self.app.localization.key)
+                parameters.push(self.app.localization.key)
 
                 self.app.api.rpc('gettags', parameters).then(d => {
 
@@ -7677,7 +7677,7 @@ Platform = function (app, listofnodes) {
 
                 if (ao) address = ao.address
 
-                self.app.api.rpc('getlastcomments', ['7'/*, address, self.app.localization.key*/]).then(d => {
+                self.app.api.rpc('getlastcomments', ['7', '', self.app.localization.key]).then(d => {
 
                     d = _.filter(d, function (d) {
                         return !d.deleted
@@ -8086,7 +8086,7 @@ Platform = function (app, listofnodes) {
 
                 var ini = this.ini
 
-                self.app.api.rpc('getlastcomments', ['5'/*, self.app.localization.key*/]).then(d => {
+                self.app.api.rpc('getlastcomments', ['5', '', self.app.localization.key]).then(d => {
 
                     if (clbk)
                         clbk(ini(d))
@@ -8949,7 +8949,7 @@ Platform = function (app, listofnodes) {
 
                         }
                         else {
-                            var parameters = [p.count, '259200'/*, self.app.localization.key*/];
+                            var parameters = [p.count, '259200', self.app.localization.key];
 
                             if (p.address) parameters.push("" /*p.address*/)
 
@@ -9050,7 +9050,7 @@ Platform = function (app, listofnodes) {
 
                             if (p.author == '1') adr = p.address
 
-                            var parameters = [adr, p.author || "", p.txid || "", p.count/*, p.author ? "" : self.app.localization.key*/];
+                            var parameters = [adr, p.author || "", p.txid || "", p.count, p.author ? "" : self.app.localization.key];
 
                             s.get(parameters, function (shares, error) {
 

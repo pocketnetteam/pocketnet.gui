@@ -724,7 +724,7 @@ var share = (function(){
 				topPreloader(50)
 
 		
-				//currentShare.language.set(self.app.localization.key)
+				currentShare.language.set(self.app.localization.key)
 
 				currentShare.uploadImages(self.app, function(){
 
@@ -2189,7 +2189,6 @@ var share = (function(){
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
-				console.log('currentShare', currentShare)
 				essenseData = deep(p, 'settings.essenseData') || {};
 
 				self.app.platform.sdk.user.get(function(u){

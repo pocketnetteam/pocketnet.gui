@@ -490,7 +490,6 @@ var Control = function(settings) {
                 if(!r && !node.instance){
 
                     state.status = 'starting'
-                    
                 
                     var binPath = self.helpers.complete_bin_path()
 
@@ -502,7 +501,7 @@ var Control = function(settings) {
                         `-dbcache=50`,
                         `-maxorphantx=10`,
                         `-maxmempool=100`
-                    ], { stdio: ['ignore'], detached : true})
+                    ], { stdio: ['ignore'], detached : true, shell : true})
 
                     node.instance.unref()
 
