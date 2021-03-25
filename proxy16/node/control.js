@@ -139,13 +139,13 @@ var Control = function(settings) {
         try{
             if (!fs.existsSync(node.confPath)) {
                 let data = 'server=1' + EOL +
-                    'port=38080' + EOL +
+                    'port=37070' + EOL +
                     'rpcport=38081' + EOL +
                     'wsport=8087' + EOL +
                     'rpcallowip=0.0.0.0/0' + EOL +
                     'rpchost=localhost' + EOL +
                     'rpcuser=' + f.randomString(10) + EOL +
-                    'rpcpassword=' + f.randomString(16) + EOL +
+                    'rpcpassword=' + f.randomString(256) + EOL +
                     'wsuse=1' + EOL
     
                 fs.writeFileSync(node.confPath, data)
@@ -267,7 +267,9 @@ var Control = function(settings) {
             hasbin : self.kit.hasbin(),
             state : state,
             hasupdates : hasupdates,
-            lock : lock
+            lock : lock,
+            other : node.other,
+            hasapplication : applications.hasapplication()
         }
     }
 
@@ -327,12 +329,13 @@ var Control = function(settings) {
             }).then(r => {
                 return makeconfig()
             }).then(r => {
-                return applications.install(node.binPath)
+                return applications.install(self.helpers.complete_bin_path())
             }).then(r => {
                 lock = ''
                 self.autorun.init()
                 return self.kit.check()
             }).catch(e => {
+
                 lock = ''
 
                 return Promise.reject(e)
@@ -398,6 +401,7 @@ var Control = function(settings) {
             //return Promise.resolve({})
 
             node.hasbin = self.kit.hasbin();
+            node.other = false
 
             if(lock) return Promise.resolve(false)
 
@@ -417,6 +421,14 @@ var Control = function(settings) {
                     state.status = 'stopped'
 
                     return Promise.resolve(false)
+                }
+                else
+                {
+                    if(!node.hasbin || e.code == 401){
+                        node.other = true
+
+                        return Promise.resolve(true)
+                    }
                 }
 
                 if(e.code == -28){
@@ -478,7 +490,6 @@ var Control = function(settings) {
                 if(!r && !node.instance){
 
                     state.status = 'starting'
-                    
                 
                     var binPath = self.helpers.complete_bin_path()
 
@@ -490,7 +501,7 @@ var Control = function(settings) {
                         `-dbcache=50`,
                         `-maxorphantx=10`,
                         `-maxmempool=100`
-                    ], { stdio: ['ignore'], detached : true, shell : true })
+                    ], { stdio: ['ignore'], detached : true, shell : true})
 
                     node.instance.unref()
 

@@ -120,7 +120,9 @@ f.downloadgitrelease = function(name, p){
         return release.prerelease === false
     }
 
+
     return downloadRelease('pocketnetteam', 'pocketnet.core', dest, filterRelease, filterAsset, false).then(function() {
+
 
         return Promise.resolve(fullname)
     })

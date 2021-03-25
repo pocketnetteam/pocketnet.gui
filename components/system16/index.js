@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, info = null, stats = [], system = null;
+		var el, api = null, proxy = null, info = null, stats = [], system = null, bots = [];
 
 		var graphs = {}
 
@@ -238,7 +238,6 @@ var system16 = (function(){
 
 					globalpreloader(false)
 
-					console.log("ER", e)
 				})
 			}
 		}
@@ -337,10 +336,38 @@ var system16 = (function(){
 				var address = self.app.platform.sdk.address.pnet()
 
 				if(!address) return false
-
 				if (proxy && info){
 					return proxy.direct || _.indexOf(info.admins, address.address) > -1
 				}
+			},
+
+
+			removeBot : function(address){
+				topPreloader(30);
+
+				proxy.fetch('manage', {
+					action : 'bots.remove',
+					data : {
+						address : address
+					}
+				}).then(r => {
+
+					bots = _.filter(bots, function(b){
+						return b != address
+					})
+
+					renders.botscontent(el.c)
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+
+					sitemessage(self.app.localization.e('e13293'))
+
+					topPreloader(100);
+
+				})
 			},
 
 			removeAdmin : function(address){
@@ -370,13 +397,11 @@ var system16 = (function(){
 			dust : function(pk, address, value, clbk){
 				self.app.platform.sdk.wallet.sendmanyoutputs(pk, address, value, 2, function(err , data){
 
-					console.log("ERR", err)
 					if(err){
 						self.app.platform.errorHandler(err, true)	
 					}
 					else{
 
-						//sitemessage("Success!")
 					}
 
 					clbk(err)
@@ -385,6 +410,7 @@ var system16 = (function(){
 			},
 
 			ticksettings : function(settings, s, changed){
+
 
 				if (changed){
 					system = settings
@@ -417,6 +443,7 @@ var system16 = (function(){
 
 				info = state
 
+
 				var laststate = stats[stats.length - 1]
 
 				if(!laststate || (new Date(laststate.time)).addSeconds(10) < new Date() ){
@@ -427,21 +454,20 @@ var system16 = (function(){
 
 					stats = lastelements(stats, 1000)
 
+					if (el.c){
+						renders.nodecontentstate(el.c)
+						renders.nodescontenttable(el.c)
+						renders.webadminscontent(el.c)
+						renders.webdistributionwallets(el.c)
+						renders.webserverstatus(el.c)
+					}
+	
+					setTimeout(function(){
+						makers.stats(true)
+					}, 200)
 				}
+
 				
-
-
-				if (el.c){
-					renders.nodecontentstate(el.c)
-					renders.nodescontenttable(el.c)
-					renders.webadminscontent(el.c)
-					renders.webdistributionwallets(el.c)
-					renders.webserverstatus(el.c)
-				}
-
-				setTimeout(function(){
-					makers.stats(true)
-				}, 200)
 			},
 
 			addnode : function(_node, clbk){
@@ -1242,7 +1268,9 @@ var system16 = (function(){
 
 						settings.charts[type].showed = _el.find('.graphWrapper').hasClass('showed')
 
-						graph.chart.reflow()
+						
+							graph.chart.reflow()
+						
 					})
 
 					_el.find('.subcaptiongraph').on('click', function(){
@@ -1280,6 +1308,7 @@ var system16 = (function(){
 
 				if(!el.c) return
 
+
 				if (graphs[type] && update){
 
 					var t = helpers.type(type, stats)
@@ -1287,9 +1316,12 @@ var system16 = (function(){
 
 					series = graphs[type].rarefied(series, 50)
 
-					graphs[type].chart.update({
-						series: series
-					});
+					if(self.app.platform.focus){
+						console.log("focus")
+						graphs[type].chart.update({
+							series: series
+						});
+					}
 
 					return 
 				}
@@ -1445,7 +1477,6 @@ var system16 = (function(){
 
 							}).catch(e => {
 
-								console.log("ERROR", e)
 								wnd.find('.addproxy').removeClass('loading')
 
 								sitemessage("Unable to connect")
@@ -1698,6 +1729,143 @@ var system16 = (function(){
 
 				
 			},
+			addbotlist: function(){
+				console.log("addbots")
+				var d = inputDialogNew({
+					caption : "Add Address to Proxy Bot List",
+					class : 'addressdialog',
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			placeholder : "Pocketnet Addresses",
+	        			label : "Bots addresses",
+						text : true
+	        		}],
+
+	        		success : function(v){
+
+						var addresses = v[0].split(/[ \t\n\r]+/g)
+
+						addresses = _.filter(addresses, function(address){
+							var valid = true;
+
+							try{
+								bitcoin.address.fromBase58Check(address)
+							}
+
+							catch (e){
+								valid = false;
+							}
+
+							console.log('address', address, valid)
+
+							return valid
+						})
+
+
+						if(!addresses.length){
+							sitemessage("Addresses is not valid")
+
+							return false
+						}
+
+	        			topPreloader(30);
+
+						proxy.fetch('manage', {
+							action : 'bots.addlist',
+							data : {
+								addresses : addresses
+							}
+						}).then(r => {
+							_.each(addresses, function(address){
+								bots.push(address)
+							})
+
+							renders.botscontent(el.c)
+
+							d.destroy();
+
+	        				topPreloader(100);
+
+						}).catch(e => {
+							console.log("E", e)
+							sitemessage(self.app.localization.e('e13293'))
+
+							topPreloader(100);
+
+						})
+
+
+	        		}
+	        	})
+			},
+			addbot : function(){
+				console.log("addbots")
+				var d = inputDialogNew({
+					caption : "Add Address to Proxy Bot List",
+					class : 'addressdialog',
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			placeholder : "Pocketnet Address",
+	        			label : "Bot address"
+	        		}],
+
+	        		success : function(v){
+
+						var address = v[0]
+
+						if (address){
+							var valid = true;
+
+							try{
+								bitcoin.address.fromBase58Check(address)
+							}
+
+							catch (e){
+								valid = false;
+							}
+
+							
+						}
+
+						if(!valid){
+							sitemessage("Address is not valid")
+
+							return false
+						}
+
+	        			topPreloader(30);
+
+						proxy.fetch('manage', {
+							action : 'bots.add',
+							data : {
+								address : address
+							}
+						}).then(r => {
+
+							bots.push(address)
+
+							renders.botscontent(el.c)
+
+							d.destroy();
+
+	        				topPreloader(100);
+
+						}).catch(e => {
+							console.log("E", e)
+							sitemessage(self.app.localization.e('e13293'))
+
+							topPreloader(100);
+
+						})
+
+
+	        		}
+	        	})
+			},
 
 			addadmin : function(){
 				var d = inputDialogNew({
@@ -1854,6 +2022,7 @@ var system16 = (function(){
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
 						renders.nodecontent(p.el)
+						renders.bots(p.el)
 	
 						if (clbk)
 							clbk()
@@ -1861,6 +2030,89 @@ var system16 = (function(){
 				}
 
 				
+			},
+			bots : function(elc, clbk){
+
+				if(actions.admin()){
+
+				
+				
+					self.shell({
+						inner : html,
+						name : 'webbots',
+						data : {
+							admin : actions.admin()
+						},
+						el : elc.find('.botsWrapper')
+
+					},
+					function(p){
+
+						p.el.find('.addbot').on('click', windows.addbot)
+						p.el.find('.addbotlist').on('click', windows.addbotlist)
+
+						renders.botscontent(elc)
+
+						if (clbk)
+							clbk()
+					})
+
+				}
+			},
+
+			botscontent : function(elc, clbk){
+
+				self.app.platform.sdk.users.get(bots || [], function(){
+
+					self.shell({
+						inner : html,
+						name : 'webbotsContent',
+						data : {
+							admin : actions.admin(),
+							bots : bots
+						},
+
+						el : elc.find('.webbotsContentWrapper')
+
+					},
+					function(p){
+
+						p.el.find('.exportlist').on('click', function(){
+							
+
+							text = bots.join('\r\n')
+
+							copycleartext(text)
+
+							sitemessage(self.app.localization.e('successcopied'))
+						})
+
+						p.el.find('.removefromlist').on('click', function(){
+							var address = $(this).attr('bot')
+
+							if (address){
+
+
+								var t = 'Do you really want to remove selected bot from Proxy server bot list?'
+
+								dialog({
+									class : 'zindex',
+									html : t,
+									btn1text : self.app.localization.e('dyes'),
+									btn2text : self.app.localization.e('dno'),
+									success : function(){	
+										actions.removeBot(address)
+									}
+								})
+								
+							}
+						})
+
+						if (clbk)
+							clbk()
+					})
+
+				})
 			},
 			servercontent : function(elc, clbk){
 
@@ -2015,12 +2267,10 @@ var system16 = (function(){
 									}
 	
 								}).catch(e => {
-									console.log("E", e)
 									globalpreloader(false)
 									return Promise.resolve()
 		
 								}).then(r => {
-									console.log("r", r)
 									changes.server = {}
 		
 									make(proxy || api.get.current());
@@ -2760,8 +3010,48 @@ var system16 = (function(){
 							})
 						})
 
+						p.el.find('.refreshother').on("click", function(){
+
+							globalpreloader(true)
+
+							proxy.fetch('manage', {
+
+								action : 'set.node.check',
+								data : {}
+
+							}).then(r => {
+
+								actions.refresh().then(r => {
+									actions.refreshsystem()
+
+									setTimeout(function(){
+										globalpreloader(false)
+									}, 300)
+									
+								})
+	
+							}).catch(e => {
+
+								setTimeout(function(){
+									globalpreloader(false)
+								}, 300)
+								
+								sitemessage(self.app.localization.e('e13293'))
+	
+							})
+						})
+
 						if (clbk)
 							clbk()
+
+					
+						/*if(!info.nodeManager.chain){
+
+							setTimeout(function(){
+								renders.allsettings()
+							}, 2000)
+
+						}*/
 					})
 
 				}
@@ -2812,7 +3102,7 @@ var system16 = (function(){
 		var makers = {
 
 			stacking : function(update){
-				if(actions.admin() && (!stacking || update) && 1 == 0){
+				if(actions.admin() && (!stacking || update)){
 
 					proxy.fetch('manage', {
 
@@ -2829,8 +3119,8 @@ var system16 = (function(){
 
 					}).catch(e => {
 
-						
-						sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
+						if (update)
+							sitemessage(deep(e, 'message') || self.app.localization.e('e13293'))
 
 						topPreloader(100);
 
@@ -2906,6 +3196,7 @@ var system16 = (function(){
 
 			info = null
 			stats = []
+			bots = []
 
 			graphs = {}
 
@@ -2959,6 +3250,14 @@ var system16 = (function(){
 							system = r
 
 							renders.allsettings()
+
+							return Promise.resolve()
+						}).then(r => {
+							return proxy.system.request('bots.get')
+
+						}).then(r => {
+							bots = r.bots || []
+							renders.bots(el.c)
 						})
 
 					}
@@ -3018,7 +3317,6 @@ var system16 = (function(){
 					if(!info && !self.app.errors.state.proxy && proxy){
 						make(proxy);
 					}
-
 				
 				}
 			}

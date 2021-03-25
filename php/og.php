@@ -18,6 +18,8 @@ class OG {
         'type' => 'website',
         'image' => 'https://pocketnet.app/img/logosmallpadding.png',
         'description' => 'A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.',
+       
+
 
     );
 
@@ -44,6 +46,7 @@ class OG {
         if (isset($get['commentid'])) $this->commentid = $get['commentid'];
 
         if (isset($get['s'])) $this->txid = $get['s'];
+        if (isset($get['v'])) $this->txid = $get['v'];
 
         if ($this->author == NULL && isset($get['i'])) $this->txid = $get['i'];
 
@@ -93,35 +96,95 @@ class OG {
 
         return strtolower($c2[0]);
     }
+    public function ogFromVideo($url, $txid){
 
+        $v = $this->parseVideo($url);
+
+
+		if ($v['type'] == 'youtube' || $v['type'] == 'vimeo' || $v['type'] == 'peertube'){
+
+			$this->currentOg['type'] = 'video.other';
+            $this->currentOg['video:type'] = 'text/html';
+
+            $ci = 'https://'.$v['host_name'].'/lazy-static/previews/'. $v['id'] . '.jpg';
+            $cu = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
+            $u = 'https://pocketnet.app/openapi.html?action=lenta&id='.$txid.'&embeddingSettigns=7b22626c61636b223a312c22636f6d6d656e7473223a226e6f222c2266756c6c73637265656e766964656f223a312c22726566223a2250523773727a5a74344566634e62337332376772676d69473861423976594e563832227d';
+
+            $this->currentOg['video:url'] = $u;
+            $this->currentOg['video:secure_url'] = $u;
+            
+            if($v['type'] == 'peertube'){
+                //$u = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
+
+
+
+                $this->currentOg['twitter:site'] = 'pocketnet.app';
+                $this->currentOg['twitter:card'] = 'player';
+                $this->currentOg['twitter:image'] = $ci;
+                $this->currentOg['twitter:title'] = $this->currentOg['title'];
+                $this->currentOg['twitter:text:title'] = $this->currentOg['title'];
+                $this->currentOg['twitter:description'] = $this->currentOg['description'];
+                $this->currentOg['twitter:player:stream'] = $cu;
+                $this->currentOg['twitter:player:stream:content_type'] = 'video/mp4';
+                $this->currentOg['twitter:player'] = $u;
+                $this->currentOg['twitter:player:width'] = '1280';
+                $this->currentOg['twitter:player:height'] = '720';
+            }
+        
+		}
+
+        return false;
+    }
     public function parseVideo($url){
 
         $_url = $url;
         $test = NULL;
+        $host_name = '';
+        $params = '';
 
-        $t = preg_match('/(http:\/\/|https:\/\/|)(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/', $_url, $test);
+        $t = preg_match('/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/', $_url, $test);
+
         $type = NULL;
         $id = NULL;
 
-        if($test && trpos($_url, 'channel') == false && trpos($_url, 'user') == false){
+        if($test && strpos($_url, 'channel') == false && strpos($_url, 'user') == false){
             if($test[3]){
 
                 if (strpos($test[3], 'youtu') !== false) {
                     $type = 'youtube';
                     $id = $test[6];
 
-                } else if (strpos($test[3], 'vimeo')  !== false) {
+                } 
+                
+                if (strpos($test[3], 'vimeo')  !== false) {
                     $type = 'vimeo';
                     $id = $test[2];
                 }
 
+                if (strpos($test[3], 'bitchute.com') !== false) {
+					$type = 'bitchute';
+					$id = $test[9];	
+			    }
+
+            }
+
+            if (strpos($url, 'peertube://') !== false) {
+                $lp = str_split('?', $url);
+
+                $params = $lp[1];
+                $type = 'peertube';
+                $id = $test[9];
+                
+                $host_name = $test[4];
             }
         }
 
         $r = array(
             'type' => $type,
             'url' => $url,
-            'id' => $id
+            'id' => $id,
+            'host_name' => $host_name,
+            'params' => $params
         );
 
         return $r;
@@ -139,6 +202,11 @@ class OG {
 		if ($v['type'] == 'vimeo'){
 			return 'http://i.vimeocdn.com/video/'.$v['id'].'_320.jpg';
         }
+
+        if ($v['type'] == 'peertube'){
+			return 'https://'.$v['host_name'].'/lazy-static/previews/'. $v['id'] . '.jpg';
+        }
+
         
         return false;
 	}
@@ -149,6 +217,35 @@ class OG {
         $title = false;
         $description = false;
         $pca = 'a';
+
+        if($this->author != NULL){
+
+            $a = $this->rpc->author($this->author);
+
+            if ($a != false){
+                $a = $a[0];
+
+                if(!$title){
+                    $this->currentOg['title'] = urldecode($a->name);
+
+                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
+                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
+                }
+
+                if(!$description){
+                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . count($a->subscribers);
+                }
+
+                if(isset($a->a) && $a->a != ''){
+                    $this->currentOg['description'] .= "\n". substr(strip_tags(urldecode($a->a)), 0, 130).'...';
+                }
+
+                if(!$image){
+                    $this->currentOg['image'] = $a->i;
+                }
+
+            }
+        }
 
         if($this->txid != NULL){
 
@@ -173,7 +270,12 @@ class OG {
 
                 $this->currentOg['type'] = 'article';
 
-                if(isset($r->i[$this->imageNum])) {
+
+                if (isset($r->u) && $r->u != ''){
+                    $this->ogFromVideo(urldecode($r->u), $this->txid);
+                }
+
+                if (isset($r->i[$this->imageNum])) {
                     $this->currentOg['image'] = $r->i[$this->imageNum];
                     $image = true;
                 }
@@ -234,34 +336,7 @@ class OG {
         }
 
         
-        if($this->author != NULL){
-
-            $a = $this->rpc->author($this->author);
-
-            if ($a != false){
-                $a = $a[0];
-
-                if(!$title){
-                    $this->currentOg['title'] = urldecode($a->name);
-
-                    if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
-                    if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
-                }
-
-                if(!$description){
-                    $this->currentOg['description'] = urldecode($a->name).". Shares: " . $a->postcnt . " Followers: " . count($a->subscribers);
-                }
-
-                if(isset($a->a) && $a->a != ''){
-                    $this->currentOg['description'] .= "\n". substr(strip_tags(urldecode($a->a)), 0, 130).'...';
-                }
-
-                if(!$image){
-                    $this->currentOg['image'] = $a->i;
-                }
-
-            }
-        }
+        
 
         
     
@@ -272,10 +347,29 @@ class OG {
         foreach ($this->defaultOg as $key => $value) {
            
             $v = $value;
+            $prefix = 'og:';
+
+            if(strpos($key, 'twitter') !== false) $prefix = '';
 
             if(isset($this->currentOg[$key])) $v = $this->currentOg[$key];
 
-            echo '<meta property="og:'.$key.'" content="'.$v.'">';
+            echo '<meta property="'.$prefix.''.$key.'" content="'.$v.'">';
+            
+        }
+
+        foreach ($this->currentOg as $key => $value) {
+           
+            $v = $value;
+
+            $prefix = 'og:';
+
+            if(strpos($key, 'twitter') !== false) $prefix = '';
+
+            if(!isset($this->defaultOg[$key])) {
+                echo '<meta property="'.$prefix.''.$key.'" content="'.$v.'">';
+            }
+
+           
             
         }
 

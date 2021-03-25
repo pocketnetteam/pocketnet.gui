@@ -4,6 +4,7 @@
 .vscode
 .vs
 dist
+alukos
 signaling_server
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
@@ -25,7 +26,6 @@ js/join.js
 js/vendor.js
 js/vendor.min.js
 js/join.min.js
-index.php
 web.config
 web.config
 publish.py
@@ -34,3 +34,5 @@ nodeserver
 **/settings
 data/
 pocketcoind*/
+dvma.p12
+.env

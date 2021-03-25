@@ -299,20 +299,24 @@ ____loclib.dsa = "Do not Show Anymore";
 // Messages
 
 ____loclib.coinbaseSuccess = function(v){
-return "Congratulations, you have won " + v + " Pocketcoin for your latest activity!"
+return "Congratulations, you have won " + v + " PKOIN for your latest activity!"
 }
 ____loclib.coinbaseSuccesspost = function(v){
-return "Congratulations, you have won " + v + " Pocketcoin for your latest posts!"
+return "Congratulations, you have won " + v + " PKOIN for your latest posts!"
 }
 ____loclib.coinbaseSuccesscomment = function(v){
-return "Congratulations, you have won " + v + " Pocketcoin for your latest comments!"
+return "Congratulations, you have won " + v + " PKOIN for your latest comments!"
 }
 ____loclib.userSent = function(v){
 return "sent <b>" + v + " PKOIN</b> to you"
 }
 
-
-
+____loclib.coinbaseSuccesspostref = function(v){
+    return "Congrats, your referral just won " + v + " PKOIN for you!"
+    }
+____loclib.coinbaseSuccesscommentref = function(v){
+    return "Congrats, your referral just won " + v + " PKOIN for you!"
+}
 
 ____loclib.refferalUserMessage = "Congrats! You rescued someone from the censored web. Some coins are on their way!"
 
@@ -416,7 +420,7 @@ ____loclib.e13027 = "Stay Signed"
 ____loclib.e13028 = "You entered not valid private key"
 ____loclib.e13029 = "Message is empty"
 ____loclib.e13030 = "Comments have 1000 character limit per comment"
-____loclib.e13031 = "Share this Comment"
+____loclib.e13031 = "Share Comment"
 ____loclib.e13032 = "Do you really want to delete your comment?"
 ____loclib.e13033 = "Comment has been removed"
 ____loclib.e13034 = "Yes"
@@ -518,6 +522,7 @@ ____loclib.e13108 = "There isn't connection with Electron proxy interface"
 
 ____loclib.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
 ____loclib.e13110 = "Enter words"
+____loclib.poll = "Create poll"
 ____loclib.next = "Next"
 ____loclib.refresh = "Refresh"
 ____loclib.e13111 = "Add your email to get the latest Pocketnet updates"
@@ -556,7 +561,7 @@ ____loclib.e13129 = "Attached images"
 ____loclib.e13130 = "Edited"
 ____loclib.e13131 = "You have blocked this User"
 ____loclib.e13132 = "rated"
-____loclib.e13133 = "Share this"
+____loclib.e13133 = "Share"
 ____loclib.e13134 = "There aren't any results for this search string"
 ____loclib.e13135 = "User haven't private key"
 ____loclib.e13136 = "All Posts"
@@ -574,7 +579,7 @@ ____loclib.e13143 = "Important!"
 ____loclib.e13144 = "Copy Text"
 ____loclib.e13145 = "Save key on device"
 ____loclib.e13146 = "End of posts"
-____loclib.e13147 = "Share this"
+____loclib.e13147 = "Share"
 ____loclib.e13148 = "Do yor really want to complain on this post?"
 ____loclib.e13149 = "user ratings"
 ____loclib.e13150 = "Post Rating"
@@ -609,7 +614,7 @@ ____loclib.copy = "Copy"
 ____loclib.e13170 = "Include Pocketnet sign up call-to-action "
 ____loclib.more = "More"
 ____loclib.e13171 = "Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here"
-____loclib.e13172 = "I want to share this from a decentralized blockchain platform Pocketnet with you. Hope you find it useful and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!"
+____loclib.e13172 = "I want to invite you to a new decentralized blockchain social called Pocketnet! You will find a ton of interesting stuff and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!"
 ____loclib.e13173 = "Send by email"
 ____loclib.e13174 = "Social sharing"
 ____loclib.e13175 = "Popular Tags"
@@ -946,3 +951,11 @@ ____loclib.system16 = {
 
 
 ____loclib.downvoteShareMessage = "downvoted your post"
+
+____loclib.shareviagroupemail = "Email"
+____loclib.shareviagroupmessenger = "Messengers"
+____loclib.shareviagroupsocial = "Social networks"
+____loclib.shareviagroupblog = "Blogs"
+
+____loclib.anotherSiteCaption = "You follow an external link to a third-party site"
+____loclib.anotherSiteDisc = "We are not responsible for the content of the site and strongly recommend that you do not provide any of your personal data on third-party sites."

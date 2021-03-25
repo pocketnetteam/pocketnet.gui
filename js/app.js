@@ -481,7 +481,8 @@ Application = function(p)
 
 		self.platform = new Platform(self, self.options.listofnodes);
 
-		self.peertubeHandler = new PeerTubeHandler(app);
+		if (typeof PeerTubeHandler != 'undefined')
+			self.peertubeHandler = new PeerTubeHandler(app);
 
 		self.options.platform = self.platform
 
@@ -656,6 +657,10 @@ Application = function(p)
 
 		if(p.href) p.nav.href = p.href;
 		if(p.current) p.nav.href = self.nav.get.href()
+
+		if (typeof _Electron != 'undefined' && _Electron) {
+			p.nav.href = 'index'
+		}
 
 		self.destroyModules();
 		
@@ -936,6 +941,8 @@ if(typeof module != "undefined")
 {
 	module.exports = Application;
 }
+
+
 
 
 topPreloader(85);

@@ -5,6 +5,8 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
+
+const {protocol} = require('electron');
 //const ProxyInterface = require('./proxy/mainserver.js')
 
 const ProxyInterface = require('./proxy16/ipc.js')
@@ -22,7 +24,8 @@ const Badge = require('./js/vendor/electron-windows-badge.js');
 // AutoUpdate --------------------------------------
 const { autoUpdater } = require("electron-updater");
 const log = require('electron-log');
-const is = require('electron-is')
+const is = require('electron-is');
+
 
 var updatesLoading = false;
 
@@ -183,7 +186,7 @@ function createTray() {
         }
     })
 
-    win.on('show', () => {
+    /*win.on('show', () => {
         if (!tray) return;
         try {
             tray.setHighlightMode('always')
@@ -195,7 +198,7 @@ function createTray() {
         try {
             tray.setHighlightMode('never')
         } catch {}
-    })
+    })*/
 }
 
 function destroyTray() {
@@ -270,6 +273,7 @@ function initApp() {
         win.webContents.send('resume-message', { msg: 'resume', type: 'info' })
 
     })
+
 }
 
 function closeNotification() {
@@ -400,17 +404,19 @@ function createWindow() {
               label: app.name,
               submenu: [
                 {
+                    accelerator: 'Cmd+A',
                     label: 'About',
                     click: async () => {
                         win.webContents.send('nav-message', { msg: 'about', type: 'action'})
                     }
                 },
                 { type: 'separator' },
-                { role: 'hide' },
+                { role: 'hide', accelerator: 'Cmd+W', },
                 { role: 'unhide' },
                 { type: 'separator' },
                 {
                     label: 'Quit Pocketnet',
+                    accelerator: 'Cmd+Q',
                     click: async () => {
                       quit()
                     }
@@ -478,6 +484,7 @@ function createWindow() {
               submenu: [
                 {
                   label: 'Help center',
+                  accelerator: 'Cmd+H',
                   click: async () => {
                     win.webContents.send('nav-message', { msg: 'help', type: 'action'})
                     }
@@ -502,6 +509,7 @@ function createWindow() {
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
+        console.log('new-window', event, url);
         open(url);
     });
 
@@ -537,6 +545,12 @@ function createWindow() {
         callback({ cancel: false, responseHeaders: detail.responseHeaders });
     });
 
+
+    // console.log('process.argv', process.argv);
+    
+    // var href = process.argv[process.argv.length - 1].replace(/.+pocketnet\//, '');
+
+    // win.webContents.send('nav-message', { msg: href, type: 'action'})
 
 
     //
@@ -588,12 +602,37 @@ function createWindow() {
 }
 
 
+var openlink = function(argv, ini){
+
+    if (argv && argv.length && argv[argv.length - 1] && argv[argv.length - 1].indexOf('pocketnet://') > -1){
+
+        var href = argv[argv.length - 1].replace('pocketnet://electron/', '');
+
+        if (href && href[href.length - 1] == '/') href = href.substr(0, href.length - 1)
+
+        if(!href) href = 'index'
+
+        setTimeout(function(){
+
+            win.webContents.send('nav-message', { msg: href, type: 'action'})
+
+        }, ini ? 3000 : 5)
+
+    }
+}
+
 var r = app.requestSingleInstanceLock()
 
-if (!r) {
+if(!r) {
     app.quit()
 } else {
+
+    openlink(process.argv, true)
+    
     app.on('second-instance', function(event, argv, cwd) {
+
+        openlink(argv)
+
         if (win) {
 
             if (win.isMinimized()) win.restore();
@@ -603,7 +642,12 @@ if (!r) {
         }
     })
 
-    app.setAsDefaultProtocolClient('pocketnet')
+    // If we are running a non-packaged version of the app && on windows
+
+
+    app.setAsDefaultProtocolClient('pocketnet', process.execPath, [path.resolve(process.argv[1] || '.') ]);  
+    
+
 
     // Этот метод будет вызываться, когда Electron закончит 
     // инициализацию и готов к созданию окон браузера.
@@ -618,6 +662,7 @@ if (!r) {
             app.quit()
         }
     })
+
 
     app.on('activate', () => {
         // На MacOS обычно пересоздают окно в приложении,

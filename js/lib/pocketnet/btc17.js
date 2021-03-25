@@ -25550,10 +25550,18 @@
     "OP_NOP8": 183,
     "OP_NOP9": 184,
     "OP_NOP10": 185,
+
+    "OP_WINNER_POST" : 192,
+    "OP_WINNER_POST_REFERRAL" : 193,
+    "OP_WINNER_COMMENT" : 194,
+    "OP_WINNER_COMMENT_REFERRAL" : 195,
   
     "OP_PUBKEYHASH": 253,
     "OP_PUBKEY": 254,
     "OP_INVALIDOPCODE": 255
+
+    
+
   }
   
   },{}],67:[function(require,module,exports){

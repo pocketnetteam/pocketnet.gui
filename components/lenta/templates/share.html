@@ -31,6 +31,9 @@ var name = app.platform.api.name(share.address)
 
 var emptywithrepost = share.isEmpty() && share.repost
 
+var value = Number(share.score)
+
+console.log('my', value, share.scnt);
 
 
 
@@ -88,6 +91,9 @@ var metadisplay = function(){ %>
 			
 				<div class="repostCaption">
 					<i class="fas fa-share"></i> 
+					<a href="<%-app.platform.api.authorlink(share.address)%>">
+						<span class="adr"><%-name || share.address %></span>
+					</a>
 				</div>
 				
 			<% } %>
@@ -261,8 +267,9 @@ var metadisplay = function(){ %>
 		<% } %>
 	<% },
 
-	u : function(){ %> 
+	u : function(){	%> 
 		<% if(share.url) {
+
 
 			var h = ''
 			
@@ -276,13 +283,14 @@ var metadisplay = function(){ %>
 			</div>
 
 		<% } %>
-	<% }
+	<% },
+
 
 } %>
 
 	<div class="work">
 
-		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>">
+		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
 			<% if(!emptywithrepost) { %>
 
@@ -440,12 +448,8 @@ var metadisplay = function(){ %>
 
 												<span><%=e('postWaitConf')%></span>
 											</div>
-										</div>
-
-										
-										
+										</div>	
 									</div>
-
 								</div>
 								<div class="clearfix"></div>
 							</div>
@@ -477,6 +481,10 @@ var metadisplay = function(){ %>
 		
 	</div>
 
+	<div class="exitFull roundclosebutton">
+		<i class="fa fa-times" aria-hidden="true"></i>
+	</div>
+
 	<% if(!emptywithrepost) {%>
 
 		<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
@@ -492,8 +500,6 @@ var metadisplay = function(){ %>
 
 	<% } %>
 
-	<div class="exitFull roundclosebutton">
-		<i class="fa fa-times" aria-hidden="true"></i>
-	</div>
+	
 
 <% } %>

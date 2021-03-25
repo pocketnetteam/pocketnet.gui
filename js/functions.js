@@ -94,7 +94,7 @@
  	}
 
 	isios = function () {
-		return window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
+		return typeof window != 'undefined' && window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
 	}
 
  
@@ -499,6 +499,7 @@
 	}, 3000)*/
 
 	wnd = function(p){
+
 		if(!p) p = {};
 
 		var self = this,
@@ -551,7 +552,7 @@
 
 		var render = function(tpl){
 
-			var h = '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
 					 ';
 
 			var closedbtnclass = ''
@@ -559,7 +560,7 @@
 				if(p.leftbg) 
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
 
-				h+=	 '<div class="wndcontent">'+content+'</div>';
+				h+=	 p.allowHide ? '<div class="wndcontent content">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent content">'+content+'</div>';
 
 				if(p.header) 
 				{
@@ -570,10 +571,10 @@
 					closedbtnclass = 'onwhite'
 				}
 
-
-				h+=	 ' <div class="buttons"></div>';
-				h+=	 '</div>'
-					 ;
+				if (!p.noButtons) {
+					h+=	 ' <div class="buttons"></div>';
+					h+=	 '</div>';
+				}
 
 			wnd = $("<div>",{
 			   "class" 	: "wnd",
@@ -625,6 +626,7 @@
 		}
 
 		var initevents = function(){
+
 			if(!p.noCloseBack)
 				wnd.find('.wndback').one('click', function(){
 					actions.close(true)
@@ -691,6 +693,12 @@
 				});*/
 			}
 
+			if (p.allowHide) {
+				wnd.find('.hideButton').on('click', actions.hide);
+				wnd.find('.closeButton').on('click', actions.close);
+				wnd.find('.expandButton').on('click', actions.show);
+			}
+
 			_w.on('resize', resize)
 
 			_w[0].addEventListener('scroll', wndfixed);
@@ -726,12 +734,32 @@
 
 			hide : function(cl, key) {
 				// wnd.find('.wndback').css('display', 'none');
+
 				wnd.find('.buttons').addClass('hidden');
 				wnd.addClass('hiddenState');
 				wnd.find('.wndcontent > div').addClass('rolledUp');
 
+				wnd.find('.expandButton').removeClass('hidden');
+				wnd.find('.closeButton').addClass('hidden');
+				wnd.find('.hideButton').addClass('hidden');
+				// setTimeout(() => wnd.find('.wndinner').one('click', actions.show), 500);
+
 				if(!nooverflow) {
 					app.actions.onScroll();
+				}
+			},
+
+			show : function(cl, key) {
+				// wnd.find('.wndback').css('display', 'none');
+				wnd.find('.buttons').removeClass('hidden');
+				wnd.removeClass('hiddenState');
+				wnd.find('.wndcontent > div').removeClass('rolledUp');
+				wnd.find('.expandButton').addClass('hidden');
+				wnd.find('.closeButton').removeClass('hidden');
+				wnd.find('.hideButton').removeClass('hidden');
+
+				if(!nooverflow) {
+					app.actions.offScroll();
 				}
 			},
 		}
@@ -759,7 +787,7 @@
 
 			if(!p.buttons)  p.buttons = {};
 
-			if(!p.buttons.close)
+			if(!p.buttons.close && !p.noCloseButton)
 
 				p.buttons.close = {
 					action : close,
@@ -778,8 +806,15 @@
 
 		    	self.el = wnd;
 
-				if (p.clbk) 
-					p.clbk(self, wnd);
+				if (p.postRender) {
+					p.postRender(wnd, self, () => {
+						if (p.clbk) 
+							p.clbk(self, wnd);
+					});
+				} else {
+					if (p.clbk) 
+						p.clbk(self, wnd);
+				} 
 			}
 
 			if(!p.noblur)
@@ -1284,6 +1319,26 @@
 				html+= '<div class="header"><div class="text">'+p.header+'</div></div>';
 			}
 
+			if (p.poll){
+				
+				var poll = '<div class="poll">';
+
+				poll += '<div class="question description">Question</div>'
+
+				poll += '<div class="title"><input class="input" type="text"><i class="fas fa-times-circle"></i></div>'
+
+				poll += '<div class="options description">Poll options</div>';
+
+				for (var i = 0; i < 5; i++){
+					poll += `<div class="poll-item" id="poll-item-${i + 1}"><input class="input" type="text"><i class="fas fa-times-circle"></i></div>`;
+				}
+
+				poll += "</div>";
+
+				html += poll ;
+				
+			}
+
 			if(p.html)
 			{
 				html += '<div class="body"><div class="text">'+(p.html || "")+'</div></div>';
@@ -1303,9 +1358,33 @@
 			$('body').append($el);
 			if(p.class) $el.addClass(p.class);
 
+			$el.find
+
 			$el.find('.btn1').on('click', function(){ response(p.success)});
 			$el.find('.btn2').on('click', function(){ response(p.fail, true)});
 			$el.find('._close').on('click', function(){ response(p.close, true)});
+
+			
+			var title = $el.find('.poll .title');
+				
+			title.find('i').on('click', function(){
+
+				title.find('.input').val('');
+			})
+
+			for (var i = 0; i < 5; i++){
+				
+				let item = $el.find(`#poll-item-${i + 1}`);
+
+				item.find('i').on('click', function(){
+
+					console.log('input', item.find('.input'));
+
+					item.find('.input').val('');
+				})
+
+			}
+
 
 			if(p.clbk) p.clbk($el, self);
 
@@ -1588,8 +1667,6 @@
 			format || (format = 'jpeg');
 			
 
-			
-
 		imageObj.onload = function(){
 
 			aspectRadio = imageObj.height / imageObj.width;
@@ -1626,9 +1703,11 @@
 			canvas.width  = newWidth;
 			canvas.height = newHeight;
 
+			console.log('newWidth', newHeight, newWidth)
+
 				ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-			var url = canvas.toDataURL("image/" + format, 1);
+			var url = canvas.toDataURL("image/" + format, 0.9);
 
 			$(canvas).remove();
 
@@ -1682,6 +1761,8 @@
 
 			canvas.width  = newWidth;
 			canvas.height = newHeight;
+
+			console.log('newWidth', newWidth, newHeight)
 
 				ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
@@ -2823,7 +2904,7 @@
 
 		_.each(parameters, function(parameter){
 
-			if(!parameter.type) return
+			if(!parameter || !parameter.type) return
 
 
 			var _el = el.find('[pid="'+parameter.id+'"]')
@@ -5845,8 +5926,11 @@
 	    appendTo.appendChild(script);
 	}
 
-	importCss = function(src) { 
-	    var link = document.createElement('link');
+	importCss = function(src, _document) { 
+
+		if(!_document) _document = document
+
+	    var link = _document.createElement('link');
 	    link.rel = 'stylesheet';
 
 
@@ -5854,7 +5938,7 @@
 
 	    link.setAttribute('href', src);
 	    
-	    var appendTo = document.getElementsByTagName('head')[0];
+	    var appendTo = _document.getElementsByTagName('head')[0];
 
 	    appendTo.appendChild(link);
 	}
@@ -8078,12 +8162,8 @@
 
 		return link
 	}
-
-	var copyText = function(el) {
-
-		var text = trim(el.attr('text') || el.text());
-
-	    if (window.clipboardData && window.clipboardData.setData) {
+	var copycleartext = function(text){
+		if (window.clipboardData && window.clipboardData.setData) {
 	        // IE specific code path to prevent textarea being shown while dialog is visible.
 	        return clipboardData.setData("Text", text); 
 
@@ -8102,6 +8182,12 @@
 	            document.body.removeChild(textarea);
 	        }
 	    }
+	} 	
+	var copyText = function(el) {
+
+		var text = trim(el.attr('text') || el.text() || el.val());
+
+	    copycleartext(text)
 	}
 
 /* ______________________________ */
@@ -8895,10 +8981,21 @@
 			}
 	
 	    }
+		var imageresize = function(file, image, clbk){
+			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif')){
+				resize(image, 2048, 2048, clbk)
+			}
+
+			else
+			{
+				if (clbk)
+					clbk(image)
+			}
+		}
 
 		var autorotation = function(file, image, clbk){
 
-			if((file.type == 'image/jpeg' || file.type == 'image/png') && !p.notexif && typeof EXIF != 'undefined'/* && !$('html').hasClass('iphone')*/){
+			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif') && !p.notexif && typeof EXIF != 'undefined'){
 				EXIF.getData(file, function() {
 
 					
@@ -8988,114 +9085,130 @@
 
 		    			var reader = new FileReader();
 
+						var fs = ((maxFileSize / 1024 ) / 1024).toFixed(0)
+
+						var et = {
+							filesize : "Your photo has size greater than "+fs+"MB. Please upload a photo under "+fs+"MB in size.",
+							fileext : "Invalid format of picture. Only png and jpeg are allowed"
+						}
+
+						if(error){
+							if (p.onError){
+								p.onError(error, file, et[error]);
+							}
+
+							_p.fail();
+
+							return
+						}
+
         				readFile(reader, error, file, files, function(fileObject){
 
-        					autorotation(file, fileObject.base64, function(base64){
+							console.log('fileObject.base64.length', fileObject.base64.length)
 
-        						fileObject.base64 = base64;
+							imageresize(file, fileObject.base64, function(base64){
 
-        						var fs = ((maxFileSize / 1024 ) / 1024).toFixed(0)
+								fileObject.base64 = base64;
 
-	        					var et = {
-	        						filesize : "Your photo has size greater than "+fs+"MB. Please upload a photo under "+fs+"MB in size.",
-	        						fileext : "Invalid format of picture. Only png and jpeg are allowed"
-	        					}
+								console.log('fileObject.base64.length', fileObject.base64.length)
 
+								autorotation(file, fileObject.base64, function(base64){
 
+									fileObject.base64 = base64;
+									
+									if(error)
+									{
+										if(p.onError)
+										{
+											p.onError(error, fileObject, file, et[error]);
+										}
 
-	        					if(error)
-	        					{
-	        						if(p.onError)
-								    {
-								    	p.onError(error, fileObject, file, et[error]);
-								    }
+										_p.fail();
+									}
+									else
+									{
+										var fd = new FormData();		    	
+											fd.append('file', file);
 
-								    _p.fail();
-	        					}
-	        					else
-	        					{
-	        						var fd = new FormData();		    	
-				        				fd.append('file', file);
+										_.each(p.data, function(data, key){
 
-			        				_.each(p.data, function(data, key){
+											if(typeof data == 'function') data = data();
 
-			        					if(typeof data == 'function') data = data();
-
-			        					if(key == 'data')
-			        					{
-			        						if (p.user)
-						        			{
-						        				p.user.extendAjaxData(data);
-						        			}
-			        					}
-
-			        					if(_.isArray(data) || _.isObject(data)) 
-					        				data = JSON.stringify(data);
-
-					        			fd.append(key, data);
-			        				})
-
-			        				if (p.beforeUpload){
-			        					p.beforeUpload(fileObject, processId)
-			        				}
-
-			        				if(p.server)
-					        		{
-					        			var xhr = new XMLHttpRequest();
-
-										xhr.onreadystatechange = function(e){
-											stateChange(e, function(response){
-
-												response = deep(response, 'root')
-
-												if(!response || response.Result != 'Success'){
-													if(p.onError)
-												    {
-												    	p.onError('serverError', fileObject, file);
-												    }
-
-												    _p.fail();
-												}
-												else
+											if(key == 'data')
+											{
+												if (p.user)
 												{
-													_p.success(response);
-
-													if (p.onUpload)
-														p.onUpload(response, processId)
+													p.user.extendAjaxData(data);
 												}
+											}
 
-											})
-										};
+											if(_.isArray(data) || _.isObject(data)) 
+												data = JSON.stringify(data);
+
+											fd.append(key, data);
+										})
+
+										if (p.beforeUpload){
+											p.beforeUpload(fileObject, processId)
+										}
+
+										if(p.server)
+										{
+											var xhr = new XMLHttpRequest();
+
+											xhr.onreadystatechange = function(e){
+												stateChange(e, function(response){
+
+													response = deep(response, 'root')
+
+													if(!response || response.Result != 'Success'){
+														if(p.onError)
+														{
+															p.onError('serverError', fileObject, file);
+														}
+
+														_p.fail();
+													}
+													else
+													{
+														_p.success(response);
+
+														if (p.onUpload)
+															p.onUpload(response, processId)
+													}
+
+												})
+											};
 
 
 
-										xhr.open('POST', p.server);
-										xhr.send(fd);
+											xhr.open('POST', p.server);
+											xhr.send(fd);
 
-										/*setTimeout(function(){
+											/*setTimeout(function(){
 
-											_p.success();
+												_p.success();
 
-										},800)*/
-										
-					        		}
+											},800)*/
+											
+										}
 
-					        		else
-					        		{
+										else
+										{
 
-					        			if (p.action){
-					        				p.action(fileObject, _p.success)
-					        			}
-					        			else
+											if (p.action){
+												p.action(fileObject, _p.success)
+											}
+											else
 
-					        				_p.success();
-					        		}
+												_p.success();
+										}
 
 
-	        					}
-        					})
+									}
+								})
 
-        					
+							})
 
         				})
 
@@ -9290,15 +9403,19 @@
 		}
 
 		var takeData = function(uri){
-			if(typeof localStorage != 'undefined' && localStorage[prefix+uri])
+			if(typeof localStorage != 'undefined' && localStorage[prefix+uri]){
 				data[uri] = JSON.parse(localStorage[prefix+uri]);
-			else 
+				console.log('takedata', uri, data[uri]);
+			} 
+			else {
 				data[uri] = {};
+			}
 
 			return this;
 		}
 
 		var putData = function(uri){
+
 			if(typeof localStorage != 'undefined' && data[uri]){
 
 				try{
@@ -9730,6 +9847,7 @@
 
 		return w[1];
 	}
+	
 	videoImage = function(url){
 		var v = url;
 
@@ -9741,6 +9859,10 @@
 
 		if(v.type == 'vimeo'){
 			return 'https://i.vimeocdn.com/video/'+v.id+'_320.jpg'
+		}
+
+		if(v.type == 'peertube'){
+			return `https://${v.host_name}/static/thumbnails/${v.id}.jpg`;
 		}
 	}
 
@@ -9779,12 +9901,12 @@
 	    var type = null
 		var id = null
 		var host_name = null
-
+		
 	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
 	    	if(test && test[2]){
 
-				if (test.indexOf('youtube.com') || test.indexOf('youtu.be') > -1) {
+				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
 					type = 'youtube'
 			        id = test[9]
 			    }
@@ -9796,9 +9918,11 @@
 					type = 'bitchute'
 					id = test[9]	
 			    }
-				if (/pocketnetpeertube[0-9]*\.nohost\.me/i.test(test)) {
+				if (test.indexOf('peertube://') > -1) {
+					var params = _url.split('?')[1] || '';
+
 					type = 'peertube'
-			        id = test[9]
+			        id = `${test[9]}?${params}`
 					host_name = test[4]
 			    }
 			}
@@ -10115,17 +10239,27 @@
 	findAndReplaceLink = function (inputText) {
 
 
-		var l = linkifyHtml(inputText, {
-			attributes : {
-				cordovalink : '_system'
+
+		if(typeof linkifyHtml != 'undefined'){
+
+			try{
+				var l = linkifyHtml(inputText, {
+					attributes : {
+						cordovalink : '_system'
+					}
+				})
+		
+				return l
 			}
-		})
 
-		return l
-		//<a cordovalink="_system" href="" target="_blank"></a>
+			catch(e){
+				
+			}
 
-		/// return prefix + '<a cordovalink="_system" href="'+ (protocol + url).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '" target="_blank">' + full + '</a>';
+			
+		}
 
+	
 	    function indexOf(arr, value, from) {
 	        for (var i = from || 0, l = (arr || []).length; i < l; i++) {
 	            if (arr[i] == value) return i;

@@ -35,22 +35,22 @@ var Server = function(settings, admins, manage){
 
         signature : function(request, result, next){
 
-
             var authorized = self.proxy.authorization.signature(request.data || {})
-
-
 
             if (authorized){
                 next()
             }
-
-            
-
             else{
                 result._fail('Unauthorized', 401)
             }
+        },
 
+        signaturelight : function(request, result, next){
 
+            var authorized = self.proxy.authorization.signaturelight(request.data || {})
+     
+            next()
+        
         }
     }
     
@@ -135,14 +135,14 @@ var Server = function(settings, admins, manage){
 
                 server.on('listening',function(){
 
-                    console.log("LISTENING")
-
                     self.listening = settings.port || 8899
 
                     resolve()
                 });
 
                 server.on('error',function(e){
+
+
                     reject(e) 
                 });
 
@@ -151,7 +151,6 @@ var Server = function(settings, admins, manage){
             }
             catch(e) {
 
-                console.log("ERROR", e)
           
                 reject(e)
             }
@@ -213,8 +212,6 @@ var Server = function(settings, admins, manage){
 
             _.each(self.proxy.api, function(pack){
                 _.each(pack, function(meta){
-
-                    
 
                     app.all(meta.path, self.authorization[meta.authorization || 'dummy'], function(request, result){
 

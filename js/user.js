@@ -1,3 +1,9 @@
+
+if(typeof _OpenApi == 'undefined'){
+	_OpenApi = false
+}
+
+
 User = function(app, p) {
 
 	if(!p) p = {};
@@ -248,7 +254,8 @@ User = function(app, p) {
 					}
 					else
 					{
-						localStorage['mnemonic'] = ''
+						if(!_OpenApi)
+							localStorage['mnemonic'] = ''
 
 						state = 0;	
 						clbk(state);

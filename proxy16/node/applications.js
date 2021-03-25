@@ -18,20 +18,20 @@ var Applications = function(settings) {
     var applications = {
         win32: {
             github: {
-                name : "win_x64_setup.exe",
-                //name: "win_x64_pocketnetcore_daemon.zip",
+                //name : "win_x64_setup.exe",
+                name: "pocketnetcore_0.19.2_win_x64_daemon.bin",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             }
-        },
+        }
 
-        linux: {
+        /*linux: {
             github: {
                 name: "linux_x64.AppImage",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             }
-        }
+        }*/
     }
 
     var platform = process.platform
@@ -122,7 +122,6 @@ var Applications = function(settings) {
             return new Promise((resolve, reject) => {
                 db.insert(asset, function (err, newDoc) {
 
-                    console.log(err)
 
                     if (err){
                         reject({
@@ -144,7 +143,6 @@ var Applications = function(settings) {
         return new Promise((resolve, reject) => {
             return self.download().then(r => {
                 try{
-
                     fs.copyFile(r.path, dest, (e) => {
 
                         if(!e) {
@@ -159,7 +157,6 @@ var Applications = function(settings) {
                     });
                 }
                 catch(e){
-
                     reject({
                         code : 500,
                         error : 'cantcopy'
@@ -190,12 +187,13 @@ var Applications = function(settings) {
                     return true
                 }
 
-            }).then(p => {
-
-                r.path = p
-
-                return Promise.resolve(r)
             })
+            
+        }).then(p => {
+
+            r.path = p
+
+            return Promise.resolve(r)
         })
     }
 
@@ -224,6 +222,10 @@ var Applications = function(settings) {
 
     self.kit = {
 
+    }
+
+    self.hasapplication = function(){
+        return meta ? true : false
     }
 
     return self

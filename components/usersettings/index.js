@@ -199,12 +199,10 @@ var usersettings = (function(){
 			}
 
 			if (check){
-				addIcon("fa-check-circle", "green")
+				addIcon("fa-check-circle", "green");
 
 			} else {
-
 				addIcon("fa-times", "red");	
-
 			}
 
 
@@ -219,8 +217,6 @@ var usersettings = (function(){
 				var data = {};
 
 				clbk(data);
-
-
 
 			},
 

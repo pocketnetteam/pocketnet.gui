@@ -1,12 +1,21 @@
 @import "../../css/__cssvar";
 
-#uploadpeertube{
+#uploadpeertube {
     width: 100%;
 
+    .upload-header-wrapper{
+        position: absolute;
+        left : 2 * @rhythm;
+        top : 2 * @rhythm;
+    }
     .upload-header {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+
+        span{
+            font-size: 0.8em;
+        }
     }
 
     .type-error-field {
@@ -14,30 +23,75 @@
     }
 
     .error-message {
-        color: @color-bad;
+        color: @color-orange;
     }
 
     .logo-container {
         img {
-            width: 1em;
+            width: 16px;
+            height: 16px;
         }
 
         margin-right: 0.5em;
     }
 
     .upload-field-container {
-       color: @color-add;
+        position: relative;
 
-       .upload-peertube-label {
-           text-decoration: underline;
+        color: @color-black;
 
-           transition: color 0.2s ease-in 0.2s;
-       }
+        .upload-peertube-label {
+            text-decoration: underline;
+            transition: color 0.1s ease-in 0.1s;
+
+            &:hover {
+                color: @color-orange;
+            }
+        }
     }
 
-    .upload-field-container:not(:first-child){
-        margin-top: @rhythm * 2;
+    .uploadRow{
+        display: flex;
+        align-items: center;
+
+        .upload-field-container{
+            flex-grow: 1;
+            width: 50%;
+            padding : @rhythm / 2;
+            position: relative;
+
+            &:nth-last-child(1){
+                padding-right: 0;
+            }
+
+            &:nth-child(1){
+                padding-left: 0;
+            }
+        }
+        
+        label{
+            padding : @rhythm / 2;
+            display: block;
+            font-size: 0.8em;
+        }
+        .inputWrapper{
+            height: 120px;
+            background: fade(@color-gray-slight, 20);
+            border-radius: 5px;
+            padding : 3 * @rhythm;
+            text-align: center;
+
+            .table{
+                width: 100%;
+                height: 100%;
+
+                >div{
+                    vertical-align: middle;
+                }
+            }
+        }
     }
+
 
     label {
         cursor: pointer;
@@ -47,26 +101,40 @@
         font-weight: bold;
     }
 
-    .upload-video-name {
-        border-width: 0;
+    .upload-input {
+        border-width: 1px;
+        border-radius: 15px;
 
-        border-bottom-width: 1px;
+        padding-left: 1em;
+    }
+
+    .on-border-input {
+        position: absolute;
+        top: -10px;
+        left: 15px;
+        font-size: 0.9em;
+        font-weight: bold;
+        background-color: white;
+        padding: 0 2px;
     }
 
     .upload-progress-container {
         display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: flex-start;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-end;
+    }
 
-        margin-top: @rhythm * 4;
+    .barWrapper {
+        min-width: 50px;
+        width: 100%;
     }
 
     .upload-progress-bar {
         height: 1px;
         width: 100%;
 
-        background-color: green;
+        background-color: @color-orange;
     }
 
     .disabledInput {
@@ -109,14 +177,105 @@
 
     .import-video-link {
         width: 250px;
-
-        border-width: 0px;
-        border-bottom-width: 1px;
     }
 
-    .upload-field-container.video-title-container {
-        margin-top: @rhythm * 3;
+  
+
+    .controlButton {
+        cursor: pointer;
+
+        &:hover {
+            color: @color-orange;
+        }
     }
+
+    .cancelButton {
+        margin-left: @rhythm * 2;
+    }
+
+    .uploadButton {
+        
+        &:disabled {
+            background-color: @color-gray-mlight;
+            border-color: @color-gray-mlight;
+            color: white;
+        }
+    }
+
+    .upload-input {
+        border-color: @color-orange;
+    }
+
+    .sectionsWrapper {
+        >div{
+            vertical-align: middle;
+        }
+    }
+
+    .main-upload-fields {
+
+        input{
+            width: 100%;
+        }
+
+
+        .uplsection{
+            padding : 2 * @rhythm;
+            border-radius: 5px;
+            .caption{
+
+                span{
+                    font-size: 0.8em;
+                    font-weight: 700;
+                }
+            }
+
+            &.uploading{
+                vertical-align: top;
+                border-bottom : 1px solid @color-gray-slight;
+            }
+        }
+    }
+
+    .upload-button-section {
+        box-sizing: border-box;
+        border-left: 1px solid @color-gray-slight;
+        text-align: center;
+        padding : 2  * @rhythm;
+        background: fade(@color-gray-slight, 20);
+
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+
+        .progressSection {
+            width: 100%;
+        }
+    }
+
+    .main-upload-fields {
+        width: 62%;
+    }
+
+    .mainWrapper {
+        display: block;
+        position: absolute;
+        left : 0;
+        top : 0;
+        bottom : 0;
+        right: 0;
+    }
+
+    .verticalSection {
+        padding: @rhythm;
+    }
+
+    .video-title-container {
+        position: relative;
+    }
+
 }
 
 #uploadpeertube.rolledUp {
@@ -125,33 +284,89 @@
     > :not(.activeOnRolled) {
         display: none;
     }
-    
-    .main-upload-fields {
+
+    .mainWrapper {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .upload-button-section {
         > :not(.activeOnRolled) {
             display: none;
         }
 
-        .upload-progress-container.activeOnRolled {
-            margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 0;
+        width: 100%;
+        height: 100%;
+
+        .progressSection {
+            width: 80%;
         }
+    }
+
+    .upload-header-wrapper {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .main-upload-fields {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .sectionsWrapper {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .upload-progress-container {
+        margin: 0;
+
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .progressSection {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .upload-header {
+        font-size: 0.8em;
     }
 }
 
 
 .wnd.uploadpeertube {
     .wndinner {
-        width: 50%;
+        max-width: 700px;
         height: 100%;
-
-        max-height: 350px;
-
-        overflow: scroll;
+        max-height: 360px;
+        .transition(0.3s);
+        overflow: hidden;
 
         .wndcontent {
+            padding : 0;
             display: flex;
             align-items: flex-start;
             justify-content: space-around;
+
+            overflow: hidden;
         }
+    }
+
+    .wndcontent {
+        height: 100%;
     }
 }
 

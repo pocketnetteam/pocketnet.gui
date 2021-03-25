@@ -1,0 +1,63 @@
+<% 
+var name = app.platform.api.name(author.address) 
+%>
+
+<div id="<%-module.map.id%>">
+	<div class="channel">
+		<div class="work">
+			<div class="userinfo">
+				<div class="icon">
+
+					<% var src = deep(author, 'data.image')  %>
+
+					<div class="usericon" image="<%-src || ''%>">
+
+						<% if(!src) {%>
+							<i class="far fa-user"></i>
+						<% } %>
+					</div>
+				</div>
+
+				<div class="name">
+					<span class="adr"><%-name || author.address%></span>
+				</div>
+			</div>
+
+			<div class="panel">
+				<% _.each(reports, function(report){ %> 
+				
+				
+					<div class="usermenuitem" menuitem="<%-report.id%>">
+					
+				
+						<% if(report.href) {
+							
+							var h = report.href; if(typeof h == 'function') h = h() %>
+							<a href="<%-h%>">
+						<% } %>
+				
+							<%=report.icon%> 
+							<span class="name"><%-report.name%></span>
+							<span class="count">
+								<% if(report.count && report.count() > 0) {%>
+									<%-report.count()%>
+								<% } %>
+							</span>
+				
+						<% if(report.href) {%>
+							</a>
+						<% } %>
+				
+					</div>
+					
+				<% }) %>
+			</div>
+
+			<div class="action">
+				<button class="button medium">
+					Follow <%-name || author.address%> on Pocketnet
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

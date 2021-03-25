@@ -5,21 +5,19 @@ PeerTubeHandler = function (app) {
     'pocketnetpeertube3.nohost.me',
   ];
 
-  const randomServer =
+  let randomServer =
     hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
 
-  const baseUrl = `https://${randomServer}/api/v1/`;
+  let baseUrl = `https://${randomServer}/api/v1/`;
 
-  const watchUrl = `https://${randomServer}/videos/watch/`;
-
-  console.log('Selected Server', baseUrl);
+  let watchUrl = `https://${randomServer}/videos/watch/`;
 
   this.peertubeId = 'peertube://';
 
   const apiHandler = {
     upload({ method, parameters }) {
-      $.ajax({
-        url,
+      return $.ajax({
+        url: `${baseUrl}${method}`,
         ...parameters,
       })
         .done((res) => {
@@ -49,6 +47,21 @@ PeerTubeHandler = function (app) {
   this.userName = '';
   this.password = '';
   this.uploadProgress = 0;
+
+  this.getServerInfo = () => {
+    return app.api
+      .fetch('peertube/servers')
+      .then((data) => {
+        if (!data.fastest && !data.leastUsed) return;
+
+        [baseUrl, watchUrl, randomServer] = [
+          `https://${(data.fastest || data.leastUsed).server}/api/v1/`,
+          `https://${(data.fastest || data.leastUsed).server}/videos/watch/`,
+          data.fastest.server,
+        ];
+      })
+      .catch(() => {});
+  };
 
   this.registerUser = (userInfo) => {
     return apiHandler.run({
@@ -85,6 +98,8 @@ PeerTubeHandler = function (app) {
         ),
       )
       .toString('hex');
+
+    await this.getServerInfo();
 
     const { client_id, client_secret } = await apiHandler
       .run({
@@ -204,48 +219,34 @@ PeerTubeHandler = function (app) {
       formData.append(key, bodyOfQuery[key]),
     );
 
-    apiHandler.upload({
-      method: 'videos/upload',
-      parameters: {
-        type: 'POST',
-        method: 'POST',
-        contentType: false,
-        processData: false,
-        data: formData,
+    const CancelToken = axios.CancelToken;
+
+    return axios
+      .post(`${baseUrl}videos/upload`, formData, {
         headers: {
           Authorization: `Bearer ${this.userToken}`,
         },
 
-        xhr: () => {
-          const xhr = $.ajaxSettings.xhr(); // получаем объект XMLHttpRequest
-          xhr.upload.addEventListener(
-            'progress',
-            function (evt) {
-              // добавляем обработчик события progress (onprogress)
-              if (evt.lengthComputable) {
-                const percentComplete = (evt.loaded / evt.total) * 100;
+        onUploadProgress: (evt) => {
+          const percentCompleted = Math.round((evt.loaded * 100) / evt.total);
 
-                this.uploadProgress = percentComplete;
-                parameters.uploadFunction(percentComplete);
-              }
-            },
-            false,
-          );
-          return xhr;
+          this.uploadProgress = percentCompleted;
+          parameters.uploadFunction(percentCompleted);
         },
 
-        success: (json) => {
-          if (!json.video) return parameters.successFunction('error');
-          parameters.successFunction(
-            `${this.peertubeId}${watchUrl}${json.video.uuid}`,
-          );
-        },
+        cancelToken: new CancelToken((c) => parameters.cancelClbk(c)),
+      })
+      .then((res) => {
+        const json = res.data;
 
-        fail: (res) => {
-          return parameters.successFunction({ error: res });
-        },
-      },
-    });
+        if (!json.video) return parameters.successFunction('error');
+        parameters.successFunction(
+          `${this.peertubeId}${watchUrl}${json.video.uuid}`,
+        );
+      })
+      .catch((res) => {
+        return parameters.successFunction({ error: res });
+      });
   };
 
   this.removeVideo = async (video) => {
@@ -321,23 +322,23 @@ PeerTubeHandler = function (app) {
           Authorization: `Bearer ${this.userToken}`,
         },
 
-        // xhr: () => {
-        //   const xhr = $.ajaxSettings.xhr(); // получаем объект XMLHttpRequest
-        //   xhr.upload.addEventListener(
-        //     'progress',
-        //     function (evt) {
-        //       // добавляем обработчик события progress (onprogress)
-        //       if (evt.lengthComputable) {
-        //         const percentComplete = (evt.loaded / evt.total) * 100;
+        xhr: () => {
+          const xhr = $.ajaxSettings.xhr(); // получаем объект XMLHttpRequest
+          xhr.upload.addEventListener(
+            'progress',
+            function (evt) {
+              // добавляем обработчик события progress (onprogress)
+              if (evt.lengthComputable) {
+                const percentComplete = (evt.loaded / evt.total) * 100;
 
-        //         this.uploadProgress = percentComplete;
-        //         parameters.uploadFunction(percentComplete);
-        //       }
-        //     },
-        //     false,
-        //   );
-        //   return xhr;
-        // },
+                this.uploadProgress = percentComplete;
+                parameters.uploadFunction(percentComplete);
+              }
+            },
+            false,
+          );
+          return xhr;
+        },
 
         success: (json) => {
           if (!json.video) return parameters.successFunction('error');
