@@ -1,18 +1,33 @@
 <div id="<%-module.map.id%>">
   <section class="content-section activeOnRolled">
     <header class="upload-header activeOnRolled">
-      <section class="logo-container">
-        <img src="img/Logo_de_PeerTube.svg" />
-      </section>
-      <h1>Start New Stream</h1>
+      <div class="logo-container">
+        <img src="img/logo20.png" />
+      </div>
+      <div><span>Start New Stream</span></div>
     </header>
     <!-- <section class="logo-container">
       <img src="img/liveStream.svg" />
     </section> -->
-    <section>
+    <section class="main-content-section">
       <section class="verticalFieldsWrapper activeOnRolled">
         <section class="verticalSection main-upload-fields">
           <div class="upload-field-container">
+            <label for="upload-video-name" class="on-border-label"
+              >Start New Stream</label
+            >
+            <input
+              type="text"
+              class="upload-video-name upload-video-field"
+              placeholder="Enter stream title:"
+              id="upload-video-name"
+            />
+            <span class="type-error-field name-type-error"></span>
+          </div>
+          <div class="upload-field-container upload-file-container">
+            <div class="center-upload-wrapper">
+              
+            </div>
             <label for="upload-video-wallpaper" class="upload-peertube-label"
               >Select video preview wallpaper:</label
             >
@@ -25,23 +40,23 @@
             <span class="type-error-field wallpaper-type-error"></span>
           </div>
           <div class="upload-field-container">
+            <label for="upload-video-name" class="on-border-label"
+              >Stream Start Date</label
+            >
             <input
               type="text"
-              class="upload-video-name upload-video-field"
-              id="upload-video-name"
-              placeholder="Enter stream title: "
+              class="selectdate upload-video-field"
+              data-field="datetime"
+              placeholder="Select date: "
+              readonly
             />
-            <span class="type-error-field name-type-error"></span>
-          </div>
-          <div class="upload-field-container">
-            <input type="text" class="selectdate upload-video-field" placeholder="Select date" data-field="datetime" readonly>
-                <div id="dtBox"></div>
+            <div id="dtBox"></div>
             <span class="type-error-field name-type-error"></span>
           </div>
         </section>
         <section class="verticalSection liveButtonWrapper">
           <div class="buttonWrapper">
-            <button class="streamButton orange">
+            <button class="streamButton orange medium">
               <i class="fas fa-broadcast-tower"></i> Go live
             </button>
           </div>
@@ -62,37 +77,40 @@
 
   <section class="result-section hidden activeOnRolled">
     <header class="upload-header activeOnRolled">
-      <section class="logo-container">
-        <img src="img/Logo_de_PeerTube.svg" />
-      </section>
-      <h1>Streaming software links</h1>
+      <div class="logo-container">
+        <img src="img/logo20.png" />
+      </div>
+      <div><span>Streaming software links</span></div>
     </header>
-    <div class="upload-field-container">
-      <label for="result-video-rtmp">RTMP Url:</label>
-      <input
-        type="text"
-        class="result-video-rtmp result-video-info"
-        id="result-video-rtmp"
-        readonly
-      />
-      <button class="copyStreamInfo orange" linkType="result-video-rtmp">
-        <i class="fas fa-clipboard"></i>
-      </button>
-      <span class="type-error-field name-type-error"></span>
-    </div>
-    <div class="upload-field-container">
-      <label for="result-video-streamKey">Stream Key:</label>
-      <input
-        type="text"
-        class="result-video-streamKey result-video-info"
-        id="result-video-streamKey"
-        readonly
-      />
-      <button class="copyStreamInfo orange" linkType="result-video-streamKey">
-        <i class="fas fa-clipboard"></i>
-      </button>
-      <span class="type-error-field name-type-error"></span>
-    </div>
+
+    <section class="main-content-section">
+      <div class="upload-field-container">
+        <label for="result-video-rtmp">RTMP Url:</label>
+        <input
+          type="text"
+          class="result-video-rtmp result-video-info"
+          id="result-video-rtmp"
+          readonly
+        />
+        <button class="copyStreamInfo orange" linkType="result-video-rtmp">
+          <i class="fas fa-clipboard"></i>
+        </button>
+        <span class="type-error-field name-type-error"></span>
+      </div>
+      <div class="upload-field-container">
+        <label for="result-video-streamKey">Stream Key:</label>
+        <input
+          type="text"
+          class="result-video-streamKey result-video-info"
+          id="result-video-streamKey"
+          readonly
+        />
+        <button class="copyStreamInfo orange" linkType="result-video-streamKey">
+          <i class="fas fa-clipboard"></i>
+        </button>
+        <span class="type-error-field name-type-error"></span>
+      </div>
+    </section>
   </section>
 
   <section class="preloader-section hidden">

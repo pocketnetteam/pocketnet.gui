@@ -432,8 +432,37 @@ var lenta = (function(){
 				var vel = el.find('.videoWrapper')
 
 
-				if (pels.length)
-				{		
+				if (pels.length && pels[0].getAttribute)
+				{
+
+					// Get the video provider
+					var provider = pels[0].getAttribute('data-plyr-provider');
+
+					var readyCallback = (player) => {
+
+						if (players[share.txid]){
+							pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
+
+							players[share.txid].inited = true
+
+							//shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], el, 'video')
+						}
+					};
+
+					var callback = (player) => {
+						players[share.txid] || (players[share.txid] = {})
+						players[share.txid].p = player
+						players[share.txid].initing = true
+						players[share.txid].el = vel
+						players[share.txid].id = vel.attr('pid')
+
+						console.log('essenseData', essenseData)
+						if (essenseData.enterFullScreenVideo){
+							essenseData.enterFullScreenVideo = false
+
+							actions.fullScreenVideo(share.txid)
+						}
+					};
 
 					var s = {
 						muted : true,
@@ -454,36 +483,7 @@ var lenta = (function(){
 						s.controls = ['play', 'progress', 'current-time', 'fullscreen']
 					}	
 
-					PlyrEx(pels[0], s, function(player){
-
-						players[share.txid] || (players[share.txid] = {})
-						players[share.txid].p = player
-						players[share.txid].initing = true
-						players[share.txid].el = vel
-						players[share.txid].id = vel.attr('pid')
-
-						console.log('essenseData', essenseData)
-						if (essenseData.enterFullScreenVideo){
-							essenseData.enterFullScreenVideo = false
-
-							actions.fullScreenVideo(share.txid)
-						}
-
-						player.on('ready', function(){
-
-							if (players[share.txid]){
-								pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
-
-								players[share.txid].inited = true
-
-								//shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], el, 'video')
-							}
-
-							
-						})
-					})
-					
-					
+					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}
 			},
