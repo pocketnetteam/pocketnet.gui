@@ -1547,7 +1547,6 @@ var share = (function(){
 			},
 
 			all : function(){
-
 				el.eMessage[0].emojioneArea.setText(currentShare.message.v);
 				el.cpt.find('input').val(currentShare.caption.v || "")
 
@@ -1608,9 +1607,12 @@ var share = (function(){
 					if(currentShare.url.v && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
+
                             Plyr.setup('.js-player', function(player) {
 
 								player.muted = false
+							}, {
+								denyPeertubeAutoPlay: true,
 							});
 
 						} else {
