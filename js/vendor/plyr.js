@@ -9257,7 +9257,11 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
                     console.log('video_options', video_options)
 
-                    if (clbk) clbk(newPlyr(target, video_options))
+                    var plyrPlayer = newPlyr(target, video_options);
+
+                    plyrPlayer.on('ready', readyCallback)
+
+                    if (clbk) clbk(plyrPlayer);
                 } else {
                     _error();
                 }
@@ -9266,7 +9270,11 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     } else {
 
-      if (clbk) clbk(newPlyr(target, video_options));
+      var plyrPlayer = newPlyr(target, video_options);
+
+      plyrPlayer.on('ready', readyCallback)
+
+      if (clbk) clbk(plyrPlayer);
 
     }
 

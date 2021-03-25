@@ -438,19 +438,17 @@ var lenta = (function(){
 					// Get the video provider
 					var provider = pels[0].getAttribute('data-plyr-provider');
 
-					var readyCallback = (provider == 'peertube') ? (player) => {
-						// PeerTube player ready
-						players[share.txid].inited = true;
-					} : () => {};
+					var readyCallback = (player) => {
+						if (players[share.txid]){
+							pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
 
-					var callback = (provider == 'peertube') ? (player) => {
-						// PeerTube player created
-						players[share.txid] || (players[share.txid] = {});
-						players[share.txid].p = player;
-						players[share.txid].initing = true;
-						players[share.txid].el = vel;
-						players[share.txid].id = vel.attr('pid');
-					} : (player) => {
+							players[share.txid].inited = true
+
+							//shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], el, 'video')
+						}
+					};
+
+					var callback = (player) => {
 						players[share.txid] || (players[share.txid] = {})
 						players[share.txid].p = player
 						players[share.txid].initing = true
@@ -463,23 +461,8 @@ var lenta = (function(){
 
 							actions.fullScreenVideo(share.txid)
 						}
-
-						player.on('ready', function(){
-
-							if (players[share.txid]){
-								pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
-
-								players[share.txid].inited = true
-
-								//shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], el, 'video')
-							}
-
-							
-						})
 					};
 
-					// Else, the provider is something different than PeerTube
-					// => use the Plyr video player
 					var s = {
 						muted : true,
 						resetOnEnd : true,
