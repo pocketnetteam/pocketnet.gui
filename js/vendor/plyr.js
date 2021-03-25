@@ -9154,7 +9154,7 @@ typeof navigator === "object" && (function (global, factory) {
 var PlyrEx = function(target, options, clbk, readyCallback) {
     var self = this;
     if (!clbk) clbk = function() {};
-    var video_options = options
+    var video_options = options;
 
     var provider = target.getAttribute('data-plyr-provider');
     var video_id = target.getAttribute('data-plyr-embed-id');
@@ -9170,6 +9170,23 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         player.unmute = () => {
           player.setVolume(player.savedVolume || 1);
         };
+
+        player._peertubeMuted = false;
+
+        Object.defineProperty(player, 'muted', {
+          get: function() {
+            return this._peertubeMuted;
+          },
+          set: function(mutedFlag) {
+            if (mutedFlag) {
+              this._peertubeMuted = true;
+              return this.mute();
+            } else {
+              this._peertubeMuted = false;
+              return this.unmute();
+            }
+          },
+        });
         // Add status event to update the playing boolean
         player.addEventListener('playbackStatusChange', function (status) {
           player.playing = status == 'playing';
@@ -9182,7 +9199,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       var playerIFrame = document.createElement('iframe');
       playerIFrame.setAttribute(
         'src',
-        videoUrl + 'api=1&autoplay=1&peertubeLink=0&title=0&warningTitle=0',
+        videoUrl + `api=1&autoplay=${(video_options || {}).denyPeertubeAutoPlay ? 0 : 1}&peertubeLink=0&title=0&warningTitle=0`,
       );
       playerIFrame.setAttribute('frameborder', '0');
       playerIFrame.setAttribute('allowfullscreen', 'allowfullscreen');

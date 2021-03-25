@@ -439,6 +439,7 @@ var lenta = (function(){
 					var provider = pels[0].getAttribute('data-plyr-provider');
 
 					var readyCallback = (player) => {
+
 						if (players[share.txid]){
 							pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
 
