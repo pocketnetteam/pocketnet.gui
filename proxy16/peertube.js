@@ -29,8 +29,7 @@ const UPDATE_INTERVAL = 5000;
 
 const Peertube = function () {
   const hardCodeUrlsList = [
-    'pocketnetpeertube1.nohost.me',
-    'pocketnetpeertube2.nohost.me',
+    'pocketnetpeertube4.nohost.me',
     'pocketnetpeertube3.nohost.me',
   ];
 
