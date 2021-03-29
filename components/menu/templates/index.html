@@ -209,9 +209,9 @@
 										</div>
 									</a>
 
-									<div class="localizationicon">
+									<!--<div class="localizationicon">
 										<img src="img/localization/small/<%-lkey.key || ''%>.png">
-									</div>
+									</div>-->
 								</div>
 
 							</div>
@@ -251,12 +251,13 @@
 
 				<div class="items sitenames">
 
-					<div class="item table sitename" events="sitename">
-						<div class="icon">
+					<div class="item table sitename" >
+						<div class="icon" events="sitename">
 							<img src="img/logo20.png">
 						</div>
 						<div class="label">
-							<div>POCKETNET<% if(!window.cordova && !isMobile() && !app.curation()) {%> beta<% } %></div>
+							<div events="sitename">POCKETNET</div>
+							<div class="lang localization"><%-(lkey.name || '').toLowerCase()%> <i class="fas fa-caret-down"></i></div>
 						</div>						
 
 					</div>

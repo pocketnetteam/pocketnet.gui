@@ -565,6 +565,27 @@
 					cursor: pointer;
 					.label{
 						font-weight: 700;
+						overflow: hidden;
+
+						>div{
+							float: left;
+
+							&.lang{
+								font-weight: 100;
+								padding-left: @rhythm;
+
+								i{
+									opacity: 0.4;
+									.transition(0.3s);
+								}
+
+								&.hover{
+									i{
+										opacity: 0.8;
+									}
+								}
+							}
+						}
 
 					}
 

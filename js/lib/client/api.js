@@ -23,10 +23,15 @@ var ProxyRequest = function(app = {}){
     var timeout = function (ms, promise, controller) {
 
         var cancelled = false
-        
+
 
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
+
+                if(controller.signal.dontabortable){
+                    return
+                }
+
                 if (controller){
                     controller.abort()
                 }
@@ -51,11 +56,12 @@ var ProxyRequest = function(app = {}){
     var direct = function(url, data){
         var controller = (new AbortController())
 
-        var time = 35000
+        var time = 30000
 
         if (window.cordova){
             time = 55000
         }
+
 
         return timeout(time, directclear(url, data, controller.signal), controller)
     }
@@ -82,6 +88,10 @@ var ProxyRequest = function(app = {}){
 
         }).then(r => {
 
+            signal.dontabortable = true
+
+            //console.log("FB", url)
+
             if(!r.ok){
                 er = true
             }
@@ -89,6 +99,8 @@ var ProxyRequest = function(app = {}){
             return r.json()
 
         }).then(result => {
+
+            console.log("resultjso", url)
 
             if (er){
                 return Promise.reject(result.error)

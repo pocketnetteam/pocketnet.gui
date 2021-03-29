@@ -17973,7 +17973,7 @@ Platform = function (app, listofnodes) {
                     var privatekey = self.app.user.private.value.toString('hex');
 
         
-                    var matrix = `<div class="wrapper">
+                    /*var matrix = `<div class="wrapper">
                         <matrix-element
                             address="${a}"
                             privatekey="${privatekey}"
@@ -17982,7 +17982,7 @@ Platform = function (app, listofnodes) {
                         </matrix-element>
                     </div>`
 
-                    $('#matrix').append(matrix);              
+                    $('#matrix').append(matrix);   */           
                     
                 }
 
