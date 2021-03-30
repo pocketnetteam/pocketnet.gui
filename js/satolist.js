@@ -3654,10 +3654,9 @@ Platform = function (app, listofnodes) {
 
                 var rootAddresses = self.testaddresses;
 				if (rootAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
-					c.video.options.enablePeertube = options.enablePeertube;
-                    options.enablePeertube.value = true
 
-                    self.sdk.usersettings.meta.enablePeertube.value = true
+
+                    self.enablePeertube = true
 				}
 
                 if (electron) {
