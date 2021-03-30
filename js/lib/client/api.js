@@ -90,7 +90,6 @@ var ProxyRequest = function(app = {}){
 
             signal.dontabortable = true
 
-            //console.log("FB", url)
 
             if(!r.ok){
                 er = true
@@ -100,7 +99,6 @@ var ProxyRequest = function(app = {}){
 
         }).then(result => {
 
-            console.log("resultjso", url)
 
             if (er){
                 return Promise.reject(result.error)

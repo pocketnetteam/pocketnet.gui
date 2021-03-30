@@ -23,8 +23,6 @@ var main = (function(){
 		var actions = {
 			refreshSticky : function(){
 
-				console.log('refreshSticky')
-
 				if (hsready)
 					el.panel.hcSticky('refresh');
 			},
