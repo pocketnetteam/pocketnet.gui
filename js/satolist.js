@@ -15,7 +15,7 @@ Platform = function (app, listofnodes) {
     
     
 
-    self.testaddresses = ['PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+    self.testaddresses = ['PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
     self.focus = true;
     self.currentBlock = 1000000;
@@ -8993,7 +8993,7 @@ Platform = function (app, listofnodes) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = (p.address || "") + "_" + (p.author || "") + "_" + (p.begin || "")
+                        var key = (p.address || "") + "_" + (p.author || "") + "_" + (p.begin || "") + "_" + self.app.localization.key
 
                         var temp = self.sdk.node.transactions.temp;
 
@@ -9121,6 +9121,120 @@ Platform = function (app, listofnodes) {
                                 }
 
                             })
+
+
+                        }
+                    })
+                },
+
+                hierarchical: function (p, clbk, cache) {
+
+                    /*
+
+                    p.height
+                    p.start_txid
+                    p.count 10
+                    p.lang lang 
+                    p.tags tags
+                    */
+
+                    self.app.user.isState(function (state) {
+
+                        if (!p) p = {};
+
+                        p.count || (p.count = 10)
+                        p.lang || (p.lang = self.app.localization.key)
+                        p.height || (p.height = '')
+                        p.tags || (p.tags = [])
+                        p.begin || (p.begin = '')
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + (p.height || "")  + "_" + (p.tags.join(',')) + "_" + (p.begin || "")
+
+                        var storage = self.sdk.node.shares.storage;
+                        var s = self.sdk.node.shares;
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            var tfinded = null;
+                            var added = 0;
+
+                            if (!p.txid) tfinded = true;
+
+                            _.each(storage[key], function (s, i) {
+                                storage.trx[s.txid] = s;
+                                if (tfinded && added < p.count) {
+                                    added++;
+                                    return true;
+                                }
+                                if (s.txid == p.txid) {
+                                    tfinded = true;
+                                }
+                            })
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                        }
+                        else {
+                            if (!storage[key] || cache == 'clear') storage[key] = [];
+
+                            if (!p.txid) {
+                                if (storage[key].length) {
+
+                                    if (p.count > 0) {
+                                        var st = storage[key][storage[key].length - 1]
+
+                                        p.txid = st.txid
+                                    }
+                                    else {
+                                        var st = storage[key][0]
+
+                                        p.txid = st.txid
+                                    }
+
+                                }
+                            }
+
+                            if (!p.txid) p.txid = p.begin || ''
+
+                            var parameters = [p.height, p.txid, p.count, p.lang, p.tags];
+
+                            s.get(parameters, function (shares, error) {
+
+                                if (shares) {
+                                    if (state) {
+                                        _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                            _.each(shares, function (s) {
+                                                if (s.address == block.address) s.blocking = true;
+                                            })
+                                        })
+                                    }
+
+                                    _.each(shares || [], function (s) {
+                                        if (p.count > 0) {
+                                            storage[key].push(s)
+                                        }
+                                        else {
+                                            storage[key].unshift(s)
+                                        }
+                                    })
+
+                                    self.sdk.node.transactions.saveTemp()
+
+                                    if (clbk)
+                                        clbk(shares, error, p)
+                                }
+
+                                else {
+                                    if (clbk)
+                                        clbk(shares, error, p)
+                                }
+
+                            }, 'gethierarchicalstrip')
 
 
                         }

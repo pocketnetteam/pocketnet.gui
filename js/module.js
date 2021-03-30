@@ -552,7 +552,7 @@ nModule = function(){
 				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 			}
 
-				url += '/templates/' + p.name + '.html';
+				url += '/templates/' + p.name + '.html?v=1';
 			
 			self.ajax.run({
 				url : url,

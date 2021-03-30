@@ -321,7 +321,7 @@ RpcClient.callspec = {
     getlastblocks: 'int int',
     checkstringtype: 'str',
     getstatistic: 'int int',
-
+    gethierarchicalstrip : 'str str str str obj',
     // Control
     stop: '',
 

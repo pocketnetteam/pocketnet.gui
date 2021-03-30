@@ -2619,7 +2619,9 @@ var lenta = (function(){
 
 							var _beginmaterial = beginmaterial;
 
-							
+							/*if(!author){
+								loader = 'hierarchical'
+							}*/
 							
 
 							if (recommended){
