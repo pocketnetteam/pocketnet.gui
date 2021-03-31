@@ -34,6 +34,10 @@ Localization = function(app){
 			name : "한국어",
 			key : 'kr'
 		},
+		/*es : {
+			name : "Español",
+			key : 'es'
+		},*/
 
 		ru : {
 			name : "Русский",

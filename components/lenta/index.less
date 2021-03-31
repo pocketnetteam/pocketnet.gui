@@ -55,6 +55,12 @@
 	.shares{
 		overflow: hidden; 
 
+		.authorgroup{
+			&.blocking{
+				display: none;
+			}
+		}
+
 		
 		.usericon{	
 			position: absolute;
@@ -1632,6 +1638,7 @@
 	
 
 			&.blocking{
+				
 				.commentsWrapperHb{
 					display : none;
 				}
@@ -1639,6 +1646,7 @@
 				.blockAuthor{
 					display: block;
 				}
+
 			}
 		}
 	}
