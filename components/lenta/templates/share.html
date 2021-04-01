@@ -504,7 +504,7 @@ var metadisplay = function(){ %>
 
 	<% if(app.platform.istest && app.platform.istest() && share.info && !_.isEmpty(share.info)) {%>
 		<div class='debuginfo'>
-			
+
 			<div class="icon">
 				<i class="fas fa-sort-down"></i>
 			</div>
@@ -512,7 +512,7 @@ var metadisplay = function(){ %>
 			<div class="info">
 				<% _.each(share.info, function(k, v){ %>
 					<span><%-v %></span>
-					<b><%- Number(k || 0).toExponential() %></b><br>
+					<b><%- Number(k || 0).toFixed(2) %></b><br>
 				<% }) %>
 			</div>
 			

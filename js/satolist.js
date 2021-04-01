@@ -8889,8 +8889,8 @@ Platform = function (app, listofnodes) {
                         s.edit = share.edit || false
                         s.info = null
 
-                        if (share.info){
-                            s.info = share.info
+                        if (share.ranks){
+                            s.info = share.ranks
                         }
                         else
                         {
