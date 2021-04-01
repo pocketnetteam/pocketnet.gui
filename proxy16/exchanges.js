@@ -47,7 +47,6 @@ var Exchanges = function(){
                         else if (response.data[currency + '_BTC']) price = highestPrice(response.data[currency + '_BTC']) * btc_price * pair
                         
                         if(price) highest_price = highest_price < price ? price : highest_price
-                        console.log('!!!!!', highest_price)
                     })
 
                     var d = response.data
@@ -59,7 +58,6 @@ var Exchanges = function(){
 
                     _.each(d, function(pair, i){
 
-
                         if(i.indexOf("PKOIN_") > -1){
 
                             var currency = i.split("_")[1]
@@ -70,16 +68,18 @@ var Exchanges = function(){
                             }
                         }
 
-                        if(i.indexOf('BTC_USDT') > -1) {
-
-                            slice.prices['USD'] = {
-                                currency : 'USD',
-                                data : pair
-                            }
-                        }
                     })
+                    
+                    //делаем объект для USD на основе USDT
+                    var usd = response.data['PKOIN_USDT']
+                    usd.high24hr = highest_price.toFixed(2)
 
-                    // console.log('@@@', slice)
+                    slice.prices['USD'] = {
+                        currency : 'USD',
+                        data : usd
+                    }
+
+                    console.log('@@@', slice.prices['USD'])
         
                     if(!_.isEmpty(slice.prices)) return Promise.resolve(slice)
         

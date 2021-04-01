@@ -47,6 +47,8 @@ _.each(messages, function(message){
 
 	if (message.Read && message.Read != "0") read='read';
 
+	if(me && me.relation(message.f, 'blocking')) return
+
 %>
 
 	<div class="chatmessage <%-read%> <%-mine%> <%-temp%> <%-imagePreloader%>" id="<%-message.tm + message.f%>">

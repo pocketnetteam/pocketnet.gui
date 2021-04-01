@@ -94,7 +94,8 @@ var publics = {
     txunspent: true,
     estimatefee: true,
     estimatesmartfee: true,
-    gettransaction : true
+    gettransaction : true,
+    gethierarchicalstrip : true
 }
 
 function rpc(request, callback, obj) {
@@ -311,6 +312,7 @@ RpcClient.callspec = {
     getaddressscores: 'str',
     getpostscores: 'str',
     getpagescores: 'obj str',
+    gethierarchicalstrip : 'str str str str obj',
 
     // BlockExplorer
     getblocktransactions: 'str int int',
@@ -321,7 +323,7 @@ RpcClient.callspec = {
     getlastblocks: 'int int',
     checkstringtype: 'str',
     getstatistic: 'int int',
-    gethierarchicalstrip : 'str str str str obj',
+    
     // Control
     stop: '',
 

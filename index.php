@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=977938163588">
 <link rel="stylesheet" href="css/medium/beagle.css?v=858343428671">
 
-        
+<link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
         <script src="js/vendor/device.min.js?v=136"></script>
