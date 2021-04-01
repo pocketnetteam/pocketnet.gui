@@ -876,10 +876,20 @@ var Proxy = function (settings, manage) {
 
             select : {
                 path : '/nodes/select',
-                action : function(){
+                action : function({fixed}){
+
+                    console.log('fixed', fixed)
 
                     return nodeManager.waitbest(3000).then(r => {
-                        var node = nodeManager.selectProbability() || nodeManager.selectbest() || nodeManager.select()
+
+                        var node = null
+
+                        if (fixed){
+                            node = nodeManager.select(fixed)
+                        }
+
+                        if(!node)
+                            node = nodeManager.selectProbability() || nodeManager.selectbest() || nodeManager.select()
 
                         if(!node){
                             return Promise.reject('cantselect')
@@ -888,6 +898,10 @@ var Proxy = function (settings, manage) {
                         return Promise.resolve({data : {
                             node : node.exportsafe()
                         }})
+                    }).catch(e => {
+                        console.log("ER", e)
+
+                        return Promise.reject(e)
                     })
 
                     

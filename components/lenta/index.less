@@ -61,6 +61,31 @@
 			}
 		}
 
+		.debuginfo{
+	
+			padding : @rhythm 3* @rhythm;
+			font-size: 0.7em;
+			z-index: 5;
+
+			.info{
+				display: none;
+			}
+
+			.icon{
+				cursor: pointer;
+			}
+
+			&.showed{
+				.info{
+					display: block;
+				}
+	
+				.icon{
+					display: none;
+				}
+			}
+		}
+
 		
 		.usericon{	
 			position: absolute;
@@ -1054,6 +1079,13 @@
 					font-size: 0.8em;
 					color : @color-main;
 					text-decoration: underline;
+				}
+
+				.videoviews{
+					span{
+						text-decoration: none;
+					}
+					
 				}
 				
 				.urlcnt{

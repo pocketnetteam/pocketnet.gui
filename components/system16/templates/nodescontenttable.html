@@ -8,9 +8,16 @@
         <div class="work">
             <div class="tableovfWrapper">
                 <div class="node table <%- !node.canuse ? 'cantuse' : ''%>" node="<%-node.key%>">
-                    <div class="use">
+                    <div class="use <% if(node.key == currentnode) {%> using <% } %> <% if(typeof fixednode != 'undefined' && fixednode == node.key) {%> locked <% } %>">
                         <% if(node.key == currentnode) {%>
-                            <i class="fas fa-check-circle good"></i>
+                            <% if(typeof fixednode != 'undefined' && fixednode == node.key) {%> 
+                                <i class="fas fa-lock good unh"></i>
+                                <i class="fas fa-unlock hov"></i>
+                            <% } else { %> 
+                                <i class="fas fa-check-circle good unh"></i>
+                                <i class="fas fa-lock hov"></i>
+                            <% } %>
+                            
                         <% } else { %> 
                             <i class="far fa-circle"></i>    
                         <% } %>

@@ -336,6 +336,8 @@ var metadisplay = function(){ %>
 							
 				<% }) %>
 
+				
+
 			</div>
 
 			<div class="repostWrapper"></div>
@@ -500,6 +502,21 @@ var metadisplay = function(){ %>
 
 	<% } %>
 
-	
+	<% if(app.platform.istest && app.platform.istest() && share.info && !_.isEmpty(share.info)) {%>
+		<div class='debuginfo'>
+			
+			<div class="icon">
+				<i class="fas fa-sort-down"></i>
+			</div>
+
+			<div class="info">
+				<% _.each(share.info, function(k, v){ %>
+					<span><%-v %></span>
+					<b><%- Number(k || 0).toExponential() %></b><br>
+				<% }) %>
+			</div>
+			
+		</div>
+	<% } %>
 
 <% } %>

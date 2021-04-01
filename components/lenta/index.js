@@ -2829,6 +2829,10 @@ var lenta = (function(){
 				//el.c.on('click', '.sharecaption', events.openPost)
 				//el.c.on('click', '.message', events.openPost)
 			}
+
+			el.c.on('click', '.debuginfo .icon', function(){
+				$(this).closest('.debuginfo').addClass('showed')
+			})
 			
 			el.c.on('click', '.showMore', events.openPost)
 
