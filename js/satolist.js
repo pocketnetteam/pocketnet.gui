@@ -148,7 +148,7 @@ Platform = function (app, listofnodes) {
 
     self.istest = function(){
         var addresses = self.testaddresses;
-        if (addresses.indexOf(self.sdk.address.pnet().address) > -1) {
+        if (self.sdk.address.pnet()&& addresses.indexOf(self.sdk.address.pnet().address) > -1) {
 
             return true
         }
