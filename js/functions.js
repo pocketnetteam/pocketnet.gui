@@ -4597,8 +4597,7 @@
 						}
 
 						_.each(self.possibleValues, function (value, index) {
-
-							
+							console.log('@@@', self.possibleValues)
 
 							//if(self.possibleValuesLabels[index]) label = self.possibleValuesLabels[index]
 

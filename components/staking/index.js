@@ -138,7 +138,7 @@ var staking = (function(){
 				self.app.api.fetch('exchanges/history').then(result => {
 
 					history = result.prices
-					console.log('result', result)
+					console.log('result', history)
 
 					if(clbk) clbk()
 				})
