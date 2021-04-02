@@ -17142,6 +17142,12 @@ Platform = function (app, listofnodes) {
 
                 var _clbk = function (key) {
 
+                    if(!crypto.subtle){
+                        if (clbk)
+                            clbk('')
+                        return  
+                    }
+
                     crypto.subtle.importKey(
                         "raw",
                         aesjs.utils.utf8.toBytes(key),
