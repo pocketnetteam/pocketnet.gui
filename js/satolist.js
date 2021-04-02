@@ -11350,6 +11350,11 @@ Platform = function (app, listofnodes) {
 
                             var mk = self.app.user.private.value.toString('hex');
 
+                            if(self.cryptography.disabled){
+                                if (clbk)
+                                    clbk(null, 'disabledcryptography')
+                            }
+
                             self.cryptography.api.aeswc.decryption(aeskey, mk, {}, function (decrypted) {
 
 
@@ -17494,6 +17499,13 @@ Platform = function (app, listofnodes) {
 
                     self.helpers.keyForAes(key, function (akey) {
 
+                        if(!crypto.subtle){
+                            if (clbk)
+                                clbk('')
+
+                            return 
+                        }
+
 
                         crypto.subtle.decrypt(
                             {
@@ -17760,6 +17772,8 @@ Platform = function (app, listofnodes) {
         }
 
         self.prepare = function (clbk) {
+
+            if(!crypto.subtle) self.disabled = true
 
             app.user.isState(function (state) {
                 if (state) {
