@@ -27,7 +27,7 @@ var Exchanges = function(){
 
                     //ищет наибольшую цену в паре
                     function highestPrice(obj) {
-                        return obj.high24hr > obj.last_price ? obj.high24hr : obj.last_price
+                        return  obj.last_price
                     }
 
                     //цена битка в долларах, массив разных цен PKOIN в долларах, наивысшая цена PKOIN в конкретной паре
@@ -70,7 +70,7 @@ var Exchanges = function(){
                     })
                     
                     //делаем объект для USD на основе USDT
-                    var usd = response.data['PKOIN_USDT']
+                    var usd = _.clone(response.data['PKOIN_USDT']) 
                     usd.last_price = highest_price.toFixed(2)
 
                     slice.prices['USD'] = {
