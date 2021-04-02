@@ -7,71 +7,66 @@ var ____loclib = loclib.ru;
 
 //time
 
-____loclib.fewseconds = "Hace unos segundos";
-____loclib.oneminute = "Hace un minuto";
+____loclib.fewseconds = "Hace unos segundos"	
+____loclib.oneminute = "Hace un minuto"
 
 ____loclib.minutes = function(v){
 return v + " hace un minuto"
-};
+}
 
-____loclib.tenminutes = "Hace diez minutos";
-____loclib.halfanhour = "Hace una hora antes";
-____loclib.anhour = "Hace una hora antes";
-____loclib.today = "Hoy a las";
+____loclib.tenminutes = "Hace diez minutos"
+____loclib.halfanhour = "Hace una hora antes"
+____loclib.anhour = "Hace una hora antes"
+____loclib.today = "Hoy a las"
 
 //authorization
 
 ____loclib.id0 = "Iniciar sesión en su cuenta";
-____loclib.id1 = "Si estas registrado en el sistema, inicie sesión";
-____loclib.loadqrcode = "Crear QR código";
-____loclib.stay = "Quedarse en sistema";
-____loclib.signin = "Entrar";
-____loclib.orcreate = "o crear nueva cuenta";
-____loclib.createnew = "Crear nueva cuenta";
-____loclib.staysafe = "No es seguro. ¿Quieres continuar?";
+____loclib.id1 = "Si estas registrado en el sistema, inicie sesión"
+____loclib.loadqrcode = "Crear QR código"
+____loclib.stay = "Quedarse en sistema"
+____loclib.signin = "Entrar"
+____loclib.orcreate = "o crear nueva cuenta"
+____loclib.createnew = "Crear nueva cuenta"
+____loclib.staysafe = "No es seguro. ¿Quieres continuar?"
 
 // Register a New Account
-____loclib.id71 = "Crear nueva cuenta";
+____loclib.id71 = "Crear nueva cuenta"
 ____loclib.id72 = "¿Ya tienes cuenta?, Entrar"
 
-____loclib.rtip1 = "Nesesariamente escribe su clave privada";
-____loclib.rtip2 = function(mobile){
-	var h = 'Далее будет сгенерирован ваш приватный ключ. Запишите его и сохраните QR код на ' 
-
-	if(mobile){ h += 'вашем устройстве' } else { h+='компьютере' }
-
-	h+=' и не потеряйте их. Мы не храним ваши персональные данные. Приватный ключ не может быть востановлен!'
-
+____loclib.rtip1 = "Nesesariamente escribe su clave privada"
+____loclib.rtip2 = function(){
+	var h = 'A continuación, se generará su clave privada. Grabarlo y guardar el código QR en su dispositivo. Y no los pierdas. No almacenamos sus datos personales. ¡La clave privada no se puede recuperar!' 
 	return h 
-};
+}
 
-____loclib.generatepkey = "Crear clave privada";
-____loclib.rtip3 = "Запишите этот ключ для входа и сохраните QR код. Мы не храним ваши персональные данные. Приватный ключ не может быть востановлен! ";
-____loclib.saveqrcode = "Guardar QR código";
-____loclib.copyprivkey = "Copiar la clave privada";
-____loclib.rcontinue = "Continuar";
-____loclib.idle = "Retraso por tiempo corto";
-____loclib.congratulations = 'Поздравляем! Вы в <span class="pnlabel">POCKETNET</span>';
-____loclib.creatingpreloader = 'Аккаунт в процессе создания';
-____loclib.removepaste = 'Мы убрали возможность вставки в эту форму.';
+____loclib.generatepkey = "Crear clave privada"
+____loclib.rtip3 = "Anote esta clave de Inicio de sesión y guarde el código QR. No almacenamos sus datos personales. ¡La clave privada no se puede recuperar!";
+____loclib.saveqrcode = "Guardar QR código"
+____loclib.copyprivkey = "Copiar la clave privada"
+____loclib.rcontinue = "Continuar"
+____loclib.idle = "Retraso por tiempo corto"
+____loclib.congratulations = '¡Felicidades! Usted <span class="pnlabel">POCKETNET</span>'
+____loclib.creatingpreloader = 'Cuenta en proceso de creación'
+____loclib.removepaste = 'Hemos eliminado la posibilidad de insertar en este formulario.'
 ____loclib.filedamaged = "El archivo está corrupto"
-____loclib.keysnotmatch = 'Сгенерированный ключ и введенный вами не совпадают'
-____loclib.confirmkey = 'Впечатайте ваш приватный ключ здесь';
-____loclib.successfullycopied = "La clave fue copiado en el portapapeles";
-____loclib.urlsuccesscopied = "Enlace se copió correctamente";
-____loclib.confirmkeyLabel = "Confirme su clave privada. Escriba la clave en el campo o <b> cargue el código QR </b>";
-____loclib.repeatetocreate = "Volver a crear la clave";
-____loclib.confirmcreate = "Crear cuenta";
+____loclib.keysnotmatch = 'La clave generada y la que ingresó no coinciden'
+____loclib.confirmkey = 'Imprima su clave privada aquí'
+____loclib.successfullycopied = "La clave fue copiado en el portapapeles" 
+____loclib.urlsuccesscopied = "Enlace se copió correctamente"
+____loclib.confirmkeyLabel = "Confirme su clave privada. Escriba la clave en el campo o <b> cargue el código QR </b>"
+____loclib.repeatetocreate = "Volver a crear la clave"
+____loclib.confirmcreate = "Crear cuenta"
 
 //user activation
 
-____loclib.useractivation = "Activación del usuario";
-____loclib.wesentmoney = "Le hemos enviado unas criptomonedas para continuar con registración, espere hasta que sean acreditados";
-____loclib.wesentmoneym = "Ya hemos enviado unas criptomonedas para registración";
+____loclib.useractivation = "Activación del usuario"
+____loclib.wesentmoney = "Le hemos enviado unas criptomonedas para continuar con registración, espere hasta que sean acreditados"	
+____loclib.wesentmoneym = "Ya hemos enviado unas criptomonedas para registración"
 
 
-____loclib.wesentmoneydelay = "El proceso está tardando más tiempo de lo habitual, espere más";
-____loclib.funetworkproblems = "Hay algunos problemas de conexión. Vuelva a intentarlo más tarde";
+____loclib.wesentmoneydelay = "El proceso está tardando más tiempo de lo habitual, espere más"
+____loclib.funetworkproblems = "Hay algunos problemas de conexión. Vuelva a intentarlo más tarde"
 
 
 ____loclib.pleasewait = "Por favor espere";
@@ -233,23 +228,18 @@ ____loclib.anofollowers = "Este usuario todavía no tiene suscribtores";
 ____loclib.aynofollowers = "Todavía no teneis suscribtores";
 ____loclib.anofollowing = "este usuario no esta suscrito a nadie";
 ____loclib.aynofollowing = " No estais suscrito a nadie ";
-
-
 //lenta
 ____loclib.lloadmore = "¡Cargar más publicaciones!";
 ____loclib.lloadprev = "Cargar contenido nuevo"
 ____loclib.lend = "Fin de la cinta";
 ____loclib.zerop = "Este autor aún no tiene publicaciones";
 ____loclib.zeroy = "Aún no teneis publicaciones, ¡comparteis algo!";
-
-____loclib.llogin = "Antes de continuar, debeis iniciar sesión";
+____loclib.llogin = ' Antes de continuar, debeis iniciar sesión ';
 ____loclib.lcomlaindialog = "¿Estais seguro de que deseais quejarse sobre esta publicación?";
 ____loclib.lunsubscribe = "¿Estais seguro de que deseais cancelar la suscripción de este usuario?";
 ____loclib.lprivatepublic = "¿Le gustaría hacer una suscripción pública o privada?";
 ____loclib.lprivate = "Privado";
 ____loclib.lpublic = "Público";
-
-
 //share
 ____loclib.newShare = "Nueva publicación";
 ____loclib.scaption = "Título";
@@ -308,7 +298,7 @@ _____loclib.coinbaseSuccess = function (v) {
 return "<b> ¡Felicitaciones! </b>" + "Has ganado <b>" + v + "POC </b>"
 }
 ____loclib.coinbaseSuccesspost = function (v) {
-return "Felicidades, recibisteis " + v + "¡Bolsa de criptomonedas por buestras últimas publicaciones!"
+return "Felicidades, recibisteis" + v + "¡Bolsa de criptomonedas por buestras últimas publicaciones!"
 }
 ____loclib.coinbaseSuccesscomment = function (v) {
 return "Felicitaciones, recibisteis " + v + "¡ Bolsa de criptomonedas por buestras últimas comentarios!"
@@ -319,7 +309,7 @@ return "te envió <b>" + v + "POC </b>"
 
 
 
-____loclib.refferalUserMessage = "Congrats! You rescued someone from the censored web."
+____loclib.refferalUserMessage = "Felicidades! Rescataste a alguien de la red censurada."
 
 
 ____loclib.subscribeUserMessage = "suscrito a usted"
@@ -361,10 +351,8 @@ ____loclib.ntmounth = "Este mes"
 ____loclib.ntearlier = "Hace tiempo"
 ____loclib.nodeWalletAdd = 'Agregar una dirección podéis llevar algún tiempo. ¿Seguir?'
 ____loclib.nodeEnableNoteHeader = 'Note'
-____loclib.nodeEnableNote = 'Un node Pocketnet en funcionamiento podéis ocupar hasta 5 GB de RAM. Asegúrese de tener suficiente memoria para esto. ¡Feliz steking!
-
+____loclib.nodeEnableNote = 'Un node Pocketnet en funcionamiento podéis ocupar hasta 5 GB de RAM. Asegúrese de tener suficiente memoria para esto. ¡Feliz steking!'
 /// 1301
-
 ____loclib.address = "Dirección"
 ____loclib.privatekey = "Clave privada"
 ____loclib.qrcode = "Código QR"
@@ -396,7 +384,6 @@ ____loclib.e13023 = "¿Está seguro de que desea desbloquear a este usuario?"
 ____loclib.e13024 = "Su clave privada parar entrar"
 ____loclib.e13025 = "Crear nueva cuenta"
 ____loclib.e13026 = "Únase a Pocketnet: el futuro de la Internet gratuita"
-
 ____loclib.e13027 = "Permanecer en el sistema"
 ____loclib.e13028 = "la clave privada no es correcta"
 ____loclib.e13029 = "El mensaje está vacío"
@@ -418,7 +405,6 @@ ____loclib.next = "Siguiente"
 ____loclib.post = "Publicar"
 ____loclib.e13041 = "Conectando a Pocketnet"
 ____loclib.e13042 = "Servidor proxy Pocketnet"
-
 ____loclib.e13043 = "Node Pocketnet"
 ____loclib.e13044 = "Agregar node"
 ____loclib.e13045 = "No se encontraron nodes"
@@ -441,11 +427,11 @@ ____loclib.delete = "Eliminar"
 ____loclib.e13059 = "¿Está seguro de que desea eliminar este proxy de la lista?"
 ____loclib.e13060 = "Lista de proxy"
 ____loclib.e13061 = "¿Realmente desea dejar de usar el proxy y cambiar a una conexión insegura (conexión HTTP)?"
-
 ____loclib.e13062 = "Editar node"
 ____loclib.onproxy = "En memoria proxy"
 ____loclib.locally = "En la memoria del dispositivo"
-____loclib.nodehost = "Nodes de host"
+____loclib.node
+host = "Nodes de host"
 ____loclib.e13063 = "Puerto RPC"
 ____loclib.e13064 = "Puerto WS"
 ____loclib.e13065 = "Nombre de node"
@@ -455,7 +441,6 @@ ____loclib.e13068 = "Iniciar sesión para autorización de PRC"
 ____loclib.e13069 = "Contraseña RPC"
 ____loclib.e13070 = "Contraseña para autorización PRC"
 ____loclib.e13071 = "Por favor complete todos los campos"
-
 ____loclib.e13072 = "¿Está seguro de que desea eliminar este node de la lista?"
 ____loclib.e13073 = "¿Realmente desea detener el proxy y cambiar a una conexión insegura (conexión HTTP)?"
 ____loclib.notselected = "No seleccionado"
@@ -466,18 +451,17 @@ ____loclib.e13075 = "El tiempo de esta operación se termino".
 ____loclib.reactivate = "Reactivar"
 ____loclib.e13076 = "Escanee este código para enviar"
 ____loclib.back = "Atrás"
-____loclib.e13077 = "Добавьте свой профиль в список доноров"
-____loclib.e13078 = "Why are we asking for donations?"
-____loclib.e13079 = "We have spent 14+ months in spare time from full time jobs bringing Pocketnet to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
-____loclib.e13080 = "How will the funds be used?"
-____loclib.e13081 = "Funds will be used to purchase advertising and hire some specific subject matter experts to make Pocketnet even more secure. Current development team will not get any of these donations. Wherever possible, we will post here how we used the funds. "
-____loclib.e13082 = "What you will get for your donation besides knowing you supported freedom:"
-____loclib.e13083 = "As a sign of our gratitude for donation, you will receive a gift in some amount of Pocketcoin"
-____loclib.e13084 = "Also, when we build group chat, you will be a member of a special group of donors that will have direct access to Pocketnet team, even as the platform grows"
-____loclib.e13085 = "Link to your Pocketnet profile will be listed below driving more people to your posts (unless you ask us to not do that)"
-____loclib.e13086 = "Support Decentralized Web Now"
+____loclib.e13077 = "Agregue su perfil a la lista de donantes"
+____loclib.e13078 = "¿Por qué pedimos donaciones?"
+____loclib.e13079 = "Hemos pasado más de 14 meses en tiempo libre de trabajos de tiempo completo llevando Pocketnet a la gente. Además de tiempo y esfuerzo, hemos puesto nuestro propio dinero para ayudar a lanzar la plataforma. Ahora necesitamos que la comunidad dé un paso adelante y nos ayude con el crecimiento."
+____loclib.e13080 = "¿Cómo se utilizarán los fondos?"
+____loclib.e13081 = "Los fondos se utilizarán para comprar publicidad y contratar a algunos expertos en temas específicos para hacer que Pocketnet sea aún más seguro. El equipo de desarrollo actual no recibirá ninguna de estas donaciones. Siempre que sea posible, publicaremos aquí cómo usamos los fondos."
+____loclib.e13082 = "Lo que obtendrás por tu donación además de saber que apoyaste la libertad:"
+____loclib.e13083 = "Como muestra de nuestra gratitud por la donación, recibirá un regalo en cierta cantidad de Pocketcoin"
+____loclib.e13084 = "Además, cuando construimos chat grupal, usted será miembro de un grupo especial de donantes que tendrán acceso directo al equipo de Pocketnet, incluso a medida que la plataforma crezca"
+____loclib.e13085 = "El enlace a su perfil de Pocketnet se enumerará a continuación, llevando a más personas a sus publicaciones (a menos que nos pida que no lo hagamos)"
+____loclib.e13086 = "Soporte Web Descentralizado Ahora"
 ____loclib.e13087 = "Bitcoin, Litecoin, Monero"
-
 ____loclib.e13088 = "Miembros de Pocketnet que han donado para apoyar a Pocketnet"
 ____loclib.thankyou = "¡Gracias!"
 ____loclib.e13089 = "Si desea que agreguemos su perfil de Pocketnet a la lista de donantes, envíenos la información de su donación".
@@ -487,7 +471,7 @@ ____loclib.e13092 = "con su dirección y monto"
 ____loclib.finish = "Finalizar"
 ____loclib.e13093 = "Seleccione un método de donación"
 ____loclib.e13094 = "Algo salió mal. Vuelva a cargar la página y vuelva a intentarlo de nuevo (error: 0001)"
-____loclib.e13095 = 'Gracias por apoyar nuestro trabajo por la libertad. Nos aseguraremos de que cada cento estara en cuenta.
+____loclib.e13095 = 'Gracias por apoyar nuestro trabajo por la libertad. Nos aseguraremos de que cada cento estara en cuenta.'
 ____loclib.e13096 = 'Ingrese el monto de la donación'
 ____loclib.e13097 = "Algo salió mal. Vuelva a cargar la página y vuelva a intentarlo (error: 0002)"
 ____loclib.e13098 = "Agregar un enlace a la pagina web externa o recurso"
@@ -746,31 +730,31 @@ ____loclib.e13298 = 'DB Idle Timeout, ms'
 ____loclib.e13298 = 'DB Nombre'
 ____loclib.e13300 = 'DB Usuario'
 ____loclib.e13031 = 'DB Contraseña'
-____loclib.e13302 = 'Proxy server on'
-____loclib.e13303 = 'Proxy https server port'
-____loclib.e13304 = 'Proxy wss server port'
-____loclib.e13305 = 'Server SSL Key, pem'
-____loclib.e13306 = 'Server SSL Cert, pem'
-____loclib.e13307 = 'Server SSL Passphrase'
+____loclib.e13302 = 'Servidor Proxy en'
+____loclib.e13303 = 'Puerto del servidor proxy https'
+____loclib.e13304 = 'Puerto de servidor proxy wss'
+____loclib.e13305 = 'Servidor SSL Key, pem'
+____loclib.e13306 = 'Servidor SSL Cert, pem'
+____loclib.e13307 = 'Servidor SSL Frase'
 ____loclib.e13308 = 'Firebase admin SDK'
-____loclib.e13309 = 'Your Crane Address'
-____loclib.e13310 = 'Captcha Enable'
+____loclib.e13309 = 'Su Dirección de Grúa'
+____loclib.e13310 = 'Captcha Habilitar'
 ____loclib.e13311 = 'Ip limiter enable'
-____loclib.e13312 = "Server"
+____loclib.e13312 = "Servidor"
 ____loclib.e13313 = "Data Base, PG sql"
 ____loclib.e13314 = "Firebase"
 ____loclib.e13315 = "Other"
-____loclib.e13316 = 'Enable'
-____loclib.e13317 = 'Binary path'
-____loclib.e13318 = 'Config path'
-____loclib.e13319 = 'Data path'
-____loclib.e13320 = 'Staking Address'
-____loclib.e13321 = 'Import the account address to the node for stacking'
-____loclib.e13322 = 'State'
-____loclib.e13323 = 'Staking addresses'
-____loclib.e13324 = 'Last Block'
+____loclib.e13316 = 'Permitir'
+____loclib.e13317 = 'Ruta binaria'
+____loclib.e13318 = 'Ruta de configuración'
+____loclib.e13319 = 'Ruta de datos'
+____loclib.e13320 = 'Dirección de Apuesta'
+____loclib.e13321 = 'Importar la dirección de la cuenta al nodo para el apilamiento'
+____loclib.e13322 = 'Estado'
+____loclib.e13323 = 'Direcciones de apuestas'
+____loclib.e13324 = 'Último Bloque'
 ____loclib.control = "Control"
-____loclib.setup = "Setup"
+____loclib.setup = "Configuración"
 ____loclib.e13325 = "¿Está seguro de que desea enviar mensajes desde Telegram?"
 ____loclib.e13326 = "Publicar"
 ____loclib.e13327 = '¿Está seguro de que desea usar el proxy nuevamente?'
@@ -801,4 +785,4 @@ ____loclib.e13349 = "Hay actualizaciones de Pocketnet disponibles. ¿Ir a la pá
 ____loclib.e13350 = 'Únase a Pocketnet y gane Pocketcoin ahora'
 ____loclib.e13351 = 'Escribe porfavor brevemente sobre ti para hacerles saber a los usuarios que deberían seguirte'
 ____loclib.e13351 = 'Charla de Pocketnet'
-oclib.e13352 = 'No tienes permiso para chatear'
+____loclib.e13352 = 'No tienes permiso para chatear'

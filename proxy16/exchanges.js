@@ -79,7 +79,7 @@ var Exchanges = function(){
                         data : usd
                     }
 
-                    console.log('@@@', slice)
+                    console.log('@@@', slice.prices['USD'])
         
                     if(!_.isEmpty(slice.prices)) return Promise.resolve(slice)
         
