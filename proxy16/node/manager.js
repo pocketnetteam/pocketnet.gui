@@ -396,9 +396,11 @@ var Nodemanager = function(p){
             return null
         }
 
-        var i = rand(1, self.nodes.length) - 1
+        var i = f.rand(1, self.nodes.length) - 1
 
         if(!n || n == 'auto'){
+
+            
             return self.nodes[i]
         }
 

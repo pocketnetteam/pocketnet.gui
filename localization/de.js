@@ -1,9 +1,9 @@
 if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
-loclib.en = {};
+loclib.de = {};
 
-var ____loclib = loclib.en;
+var ____loclib = loclib.de;
 
 //time
 
@@ -546,7 +546,7 @@ ____loclib.editpost = "Beitrag bearbeiten"
 ____loclib.removepost = "Beitrag entfernen"
 
 
-____loclib.reportpost = "Beitrag melden"
+____loclib.reportpost = "Beschweren"
 ____loclib.donate = "Spenden"
 ____loclib.blockuser = "Benutzer blockieren"
 ____loclib.more = "Mehr"
@@ -813,4 +813,4 @@ ____loclib.e13347 = "Es sind Updates für Pocketnet verfügbar. Updates jetzt he
 ____loclib.e13348 = "Nein, später"
 ____loclib.e13349 = "Es sind Updates für Pocketnet verfügbar. Website aufrufen, um die neue Version zu downloaden?"
 ____loclib.e13350 = 'Treten Sie Pocketnet bei und verdienen Sie Pocketmünzen'
-____loclib.e13351 = 'Bitte schreiben Sie einige Worte über Sich selbst, damit die Leute entscheiden können, ob sie Ihnen folgen möchten.'
+____loclib.e133512 = 'Bitte schreiben Sie einige Worte über Sich selbst, damit die Leute entscheiden können, ob sie Ihnen folgen möchten.'

@@ -4,6 +4,12 @@
 
 
 #menu{
+
+	.header_logo {
+		width: 20px;
+		height: 20px;
+		vertical-align: bottom;
+	}
 	
 	.menuWrapper{
 		width: 100%;
@@ -439,7 +445,7 @@
 				.icon{
 					padding: 0;
 					padding-left: @rhythm;
-					padding-right: @rhythm;
+					padding-right: .7 * @rhythm;
 					position: relative;
 					cursor: pointer;
 
@@ -565,6 +571,27 @@
 					cursor: pointer;
 					.label{
 						font-weight: 700;
+						overflow: hidden;
+
+						>div{
+							float: left;
+
+							&.lang{
+								font-weight: 100;
+								padding-left: @rhythm;
+
+								i{
+									opacity: 0.4;
+									.transition(0.3s);
+								}
+
+								&.hover{
+									i{
+										opacity: 0.8;
+									}
+								}
+							}
+						}
 
 					}
 

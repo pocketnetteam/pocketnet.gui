@@ -40,6 +40,7 @@ var lenta = (function(){
 			getPreviewTimer,
 			shareheights = {},
 			_reposts = {},
+			fixedblock = 0,
 			fullscreenvideoShowed = false;
 
 		var countshares = 0;
@@ -237,7 +238,7 @@ var lenta = (function(){
 				newmaterials = 0;
 
 				
-
+				fixedblock = 0;
 			},
 
 			next : function(txid, clbk){
@@ -2619,8 +2620,9 @@ var lenta = (function(){
 
 							var _beginmaterial = beginmaterial;
 
-							
-							
+							if(!author && deep(self.app.platform.sdk, 'usersettings.meta.hierarchicalShares.value')){
+								loader = 'hierarchical'
+							}
 
 							if (recommended){
 
@@ -2652,7 +2654,6 @@ var lenta = (function(){
 
 							if(essenseData.txids && recommended != 'b'){
 								loader = 'txids'
-
 							}
 
 
@@ -2660,9 +2661,12 @@ var lenta = (function(){
 
 								author : author,
 								begin : _beginmaterial || '',
-								txids : essenseData.txids
+								txids : essenseData.txids,
+								height : fixedblock
 
 							}, function(shares, error, pr){
+
+								if(pr.blocknumber) fixedblock = pr.blocknumber
 
 								_.each(bshares, function(bs){
 									if(bs)
@@ -2825,6 +2829,10 @@ var lenta = (function(){
 				//el.c.on('click', '.sharecaption', events.openPost)
 				//el.c.on('click', '.message', events.openPost)
 			}
+
+			el.c.on('click', '.debuginfo .icon', function(){
+				$(this).closest('.debuginfo').addClass('showed')
+			})
 			
 			el.c.on('click', '.showMore', events.openPost)
 
@@ -2921,6 +2929,8 @@ var lenta = (function(){
 				}
 
 				self.app.platform.ws.messages.transaction.clbks.temp = function(data){
+
+					if(beginmaterial || essenseData.author || essenseData.txids) return
 
 
 					if(data.temp){
@@ -3380,6 +3390,8 @@ var lenta = (function(){
 				el.shares = el.c.find('.shares');
 				el.loader = el.c.find('.loader');
 				el.lentacnt = el.c.find('.lentacell .cnt')
+
+				console.log("INIT")
 
 
 				initEvents();

@@ -926,7 +926,7 @@ var menu = (function(){
 
 		var initEvents = function(){
 
-			el.c.find('.localizationicon').on('click', function(){
+			el.c.find('.localization').on('click', function(){
 
 				var items = []
 

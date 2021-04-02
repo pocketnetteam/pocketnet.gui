@@ -22,7 +22,10 @@
 
             <% } %>
 
-            <% if (app.platform.sdk.usersettings.meta.enablePeertube.value) { %>
+            <% 
+            console.log('app.platform', app.platform)
+            
+            if (app.platform.enablePeertube) { %>
                 <div class="item peertube tooltip" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                     <i class="fas fa-video"></i> <span class="mobiledevice"><%=e('peertubeAddVideo')%></span>
                 </div>
@@ -31,9 +34,9 @@
                 </div>-->
             <%} %>
 
-            <div class="item language tooltip" embeding="language" title="<%=e('e14001')%>">
+            <!--<div class="item language tooltip" embeding="language" title="<%=e('e14001')%>">
                 <%-(share.language.v || '').toUpperCase()%>
-            </div>
+            </div>-->
 
             <% if(!share.aliasid) {%>
             <div class="item times tooltip" embeding="times" title="<%=e('stimes')%>">

@@ -10,12 +10,20 @@ var staking = (function(){
 
 		var el, info = null, amount = 1000, graph = null, history;
 
-		var currency = 'USDT',
+		var currency = 'USD',
 			exchange = 'mercatox'
 
 		var charts = {}
 
 		var currencies = {
+			USD : {
+				id : 'USD',
+				key : 'USD',
+				view : function(v){
+					return self.app.platform.mp.dollars(v, {prefix : ''})
+				}
+			},
+
 			USDT : {
 				id : 'USDT',
 				key : 'USDT',
@@ -57,9 +65,9 @@ var staking = (function(){
 				name : self.app.localization.e('source'),
 				type : "VALUES",
 				id : 'source',
-				defaultValue : "USDT",
-				possibleValuesLabels : ['USDT', 'BTC'],
-				possibleValues : ['USDT', 'BTC'],
+				defaultValue : "USD",
+				possibleValuesLabels : ['USD', 'USDT', 'BTC'],
+				possibleValues : ['USD', 'USDT', 'BTC'],
 				format : {
 					right : true
 				},
@@ -138,7 +146,7 @@ var staking = (function(){
 				self.app.api.fetch('exchanges/history').then(result => {
 
 					history = result.prices
-					console.log('result', result)
+					console.log('result', history)
 
 					if(clbk) clbk()
 				})

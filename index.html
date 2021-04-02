@@ -24,16 +24,6 @@
         font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src *">
 
-        <?php 
-        
-            require_once('php/og.php'); 
-
-            $og = new OG($_GET);
-
-            $og->get();
-            $og->echotags();
-        ?>
-
         <link rel="stylesheet" href="css/normalize.css?v=792682299546">
 <link rel="stylesheet" href="css/tooltipster.core.min.css?v=468552039092">
 <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=56153977055">
@@ -47,10 +37,10 @@
 
         
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
-
+        <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
-        <script src="https://pocketnet.app/js/widgets.js?v=136"></script>
+        <script src="js/widgets.js?v=136"></script>
          
        
     </head>
@@ -104,7 +94,7 @@
 
         <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
         <script src="chat/matrix-element.min.js"></script>
-
+        <script src="js/widgets.js?v=136"></script>
 
         <script type="text/javascript">
 
