@@ -253,7 +253,7 @@ var system16 = (function(){
 				proxy.fetch('manage', {
 					action : 'node.update',
 					data : {
-						all : all
+						all : 'all'
 					}
 				}).then(r => {
 

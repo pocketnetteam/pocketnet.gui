@@ -19,7 +19,7 @@ var Applications = function(settings) {
         win32: {
             github: {
                 //name : "win_x64_setup.exe",
-                name: "pocketnetcore_0.19.2_win_x64_daemon.bin",
+                name: "_win_x64_daemon.bin",
                 url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             }
@@ -171,11 +171,15 @@ var Applications = function(settings) {
 
     self.download = function(){
 
+        console.log('self.download', self.download)
+
         var r = {}
 
         return self.getinfo().then(asset => {
 
             r.asset = asset
+
+            console.log(' r.asset',  r.asset)
 
             return f.downloadgitrelease(r.asset.name, {
                 //dest : dest,

@@ -9222,7 +9222,7 @@ Platform = function (app, listofnodes) {
 
                         p.count || (p.count = 10)
                         p.lang || (p.lang = self.app.localization.key)
-                        p.height || (p.height = '')
+                        p.height || (p.height = self.currentBlock)
                         p.tags || (p.tags = [])
                         p.begin || (p.begin = '')
 
@@ -9279,7 +9279,7 @@ Platform = function (app, listofnodes) {
 
                             if (!p.txid) p.txid = p.begin || ''
 
-                            var parameters = [p.height, p.txid, p.count, p.lang, p.tags];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tags];
 
                             s.getex(parameters, function (data, error) {
 

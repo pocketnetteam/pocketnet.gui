@@ -27,7 +27,7 @@ var Exchanges = function(){
 
                     //ищет наибольшую цену в паре
                     function highestPrice(obj) {
-                        return  obj.last_price
+                        return obj.last_price
                     }
 
                     //цена битка в долларах, массив разных цен PKOIN в долларах, наивысшая цена PKOIN в конкретной паре
@@ -78,7 +78,6 @@ var Exchanges = function(){
                         data : usd
                     }
 
-                    console.log('@@@', slice.prices['USD'])
         
                     if(!_.isEmpty(slice.prices)) return Promise.resolve(slice)
         
