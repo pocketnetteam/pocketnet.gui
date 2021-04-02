@@ -546,7 +546,7 @@ ____loclib.editpost = "Beitrag bearbeiten"
 ____loclib.removepost = "Beitrag entfernen"
 
 
-____loclib.reportpost = "Beitrag melden"
+____loclib.reportpost = "Beschweren"
 ____loclib.donate = "Spenden"
 ____loclib.blockuser = "Benutzer blockieren"
 ____loclib.more = "Mehr"

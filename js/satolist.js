@@ -9286,6 +9286,12 @@ Platform = function (app, listofnodes) {
                                 var shares = data.contents || []
                                 var blocknumber = data.height
 
+                                _.each(shares, function(s){
+                                    if (s.info){
+                                        s.info.BLOCK = blocknumber
+                                    }
+                                })
+
                                 console.log('shares', shares, blocknumber, data)
 
                                 p.blocknumber = blocknumber

@@ -24,20 +24,20 @@ var pocketnet = new Pocketnet()
 
 var nodes = [
 
-	{
+	/*{
 		host : '192.168.0.33',
 		port : 37071,
 		ws : 8087,
 		nodename : 'Cryptoserver',
 		stable : true
-	},
-	/*{
+	},*/
+	{
 		host : '64.235.45.119',
 		port : 38081,
 		ws : 8087,
 		name : 'CryptoserverSP',
 		stable : true
-	},*/
+	},
 
 	{
 		host : '216.108.231.40',
