@@ -2930,6 +2930,8 @@ var lenta = (function(){
 
 				self.app.platform.ws.messages.transaction.clbks.temp = function(data){
 
+					if(beginmaterial || essenseData.author || essenseData.txids) return
+
 
 					if(data.temp){
 

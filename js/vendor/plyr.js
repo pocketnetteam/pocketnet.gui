@@ -9158,6 +9158,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     var provider = target.getAttribute('data-plyr-provider');
     var video_id = target.getAttribute('data-plyr-embed-id');
+    var clear_peertube_id = target.getAttribute('data-plyr-video-id');
 
     if (provider == 'peertube') {
       setFunctions = function (player) {
@@ -9194,7 +9195,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       };
 
       // Get the video URL
-      var videoUrl = target.getAttribute('data-plyr-embed-id');
+      var videoUrl = target.getAttribute('data-plyr-embed-id'); /*'https://localhost/client/en-US/index.html?' + clear_peertube_id*/ ///target.getAttribute('data-plyr-embed-id');
       // Prepare a new <iframe> tag for the PeerTube player
       var playerIFrame = document.createElement('iframe');
       playerIFrame.setAttribute(
