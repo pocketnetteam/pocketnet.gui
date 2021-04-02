@@ -23,8 +23,8 @@ ____loclib.today = "Aujourd'hui �";
 
 ____loclib.id0 = "Connectez-vous � un compte existant";	
 ____loclib.id1 = "Si vous �tes d�j� inscrit, veuillez vous connecter";	
-____loclib.loadqrcode = "T�l�charger le code QR";
-____loclib.stay = "Rester connect�";
+____loclib.loadqrcode = "Télécharger le code QR";
+____loclib.stay = "Rester connecté";
 ____loclib.signin = "Se connecter";
 ____loclib.orcreate = "Ou cr�ez un nouveau compte";
 ____loclib.createnew = "Cr�er un nouveau compte";
@@ -36,7 +36,7 @@ ____loclib.id72 = "D�j� membre? Se connecter";
 
 ____loclib.rtip1 = "Prenez note de votre cl� de connexion priv�e!";
 ____loclib.rtip2 = function(mobile){
-var h = 'Voici votre mot de passe de cl� priv�e. �crivez-le et assurez-vous d`enregistrer votre code QR' 
+var h = "Voici votre mot de passe de cl� priv�e. �crivez-le et assurez-vous d'enregistrer votre code QR" 
 
 if(mobile){ h += 'device' } else { h+='PC' }
 
@@ -53,10 +53,10 @@ ____loclib.rcontinue = "Continuer"
 ____loclib.idle = "Inactif depuis un certain temps"
 ____loclib.congratulations = 'Toutes nos f�licitations! Tu es dans <span class="pnlabel">Pocketnet</span>'
 ____loclib.creatingpreloader = 'La cr�ation du compte'
-____loclib.removepaste = 'Nous avons supprim� l`option coller pour cette entr�e.'
+____loclib.removepaste = "Nous avons supprim� l'option coller pour cette entr�e."
 ____loclib.filedamaged = "Le fichier ne contient pas de cl� priv�e valide"
 ____loclib.keysnotmatch = 'La cl� de connexion priv�e ne correspond pas'
-____loclib.confirmkey = 'Saisissez votre cl� de connexion priv�e ou t�l�chargez le code QR de l`�tape pr�c�dente'
+____loclib.confirmkey = "Saisissez votre cl� de connexion priv�e ou t�l�chargez le code QR de l'�tape pr�c�dente"
 ____loclib.successfullycopied = "La cl� a �t� copi�e avec succ�s"
 ____loclib.urlsuccesscopied = "Le lien a �t� copi� avec succ�s"
 
@@ -148,12 +148,12 @@ ____loclib.wsamount = "Montant";
 ____loclib.wsamountof = "Montant de votre transaction";	
 ____loclib.wsincludefees = "Inclure les frais dans le montant";	
 ____loclib.wsrecieverpay = '� payer par le s�questre';	
-____loclib.wssenderpay = '� payer par l`exp�diteur';	
+____loclib.wssenderpay = "� payer par l'exp�diteur";	
 ____loclib.wdselectfrom = "S�lectionnez dans le menu";	
 
 ____loclib.wdenteramount = "Mettre le montant";	
 ____loclib.wdmessageplaceholder = "A quoi sert cette transaction?";
-____loclib.wrenteraddress = 'mettre l`adresse';
+____loclib.wrenteraddress = "mettre l'adresse";
 ____loclib.wrenteraddressselect = "Mettez l'adresse ou s�lectionnez dans le menu";
 ____loclib.wreturntoeallet = "RETOUR AU PORTEFEUILLE";	
 ____loclib.linkCreated = 'LIEN CR��';
@@ -372,9 +372,9 @@ ____loclib.ntmounth = "Ce mois-ci"
 ____loclib.ntearlier = "Plus t�t"
 
 
-____loclib.nodeWalletAdd = 'L`ajout d`une adresse peut prendre un certain temps. Continuer?'
+____loclib.nodeWalletAdd = "L'ajout d'une adresse peut prendre un certain temps. Continuer?"
 ____loclib.nodeEnableNoteHeader = 'Note'
-____loclib.nodeEnableNote = 'L`activation d`un n�ud peut prendre jusqu`� 5 Go de RAM. Assurez-vous que vous en avez assez. Bon jalonnement!'
+____loclib.nodeEnableNote = "L'activation d'un n�ud peut prendre jusqu'� 5 Go de RAM. Assurez-vous que vous en avez assez. Bon jalonnement!"
 
 
 /// 1301
@@ -489,7 +489,7 @@ ____loclib.e13083 = "En signe de gratitude pour le don, vous recevrez un cadeau 
 ____loclib.e13084 = "De plus, lorsque nous construisons une discussion de groupe, vous serez membre d'un groupe sp�cial de donateurs qui auront un acc�s direct � l'�quipe Pocketnet, m�me � mesure que la plate-forme se d�veloppe."
 ____loclib.e13085 = "Le lien vers votre profil Pocketnet sera r�pertori� ci-dessous, attirant plus de personnes vers vos publications (sauf si vous nous demandez de ne pas le faire)"
 ____loclib.e13086 = "Soutenez le Web d�centralis� maintenant"
-____loclib.e13087 = "Bitcoin, Litecoin"
+____loclib.e13087 = "Bitcoin, Litecoin, Monero"
 
 ____loclib.e13088 = "Membres Pocketnet qui ont fait un don pour soutenir Pocketnet"
 ____loclib.thankyou = "Merci!"
@@ -577,7 +577,7 @@ ____loclib.e13147 = "Partagez ceci"
 ____loclib.e13148 = "Voulez-vous vraiment vous plaindre de ce post?"
 ____loclib.e13149 = "�valuations des utilisateurs"
 ____loclib.e13150 = "�valuation du message"
-____loclib.e13151 = 'Personne n`a �valu� ce message'
+____loclib.e13151 = "Personne n'a �valu� ce message"
 ____loclib.e13152 = "Scores des utilisateurs"
 ____loclib.e13153 = "Passer et acc�der au site Web"
 ____loclib.e13154 = "Vos informations de connexion"
@@ -599,7 +599,7 @@ ____loclib.e13161 = "Ajouter des �tiquettes pour votre message"
 ____loclib.e13162 = "Vous pouvez saisir moins de 30 �tiquettes"
 ____loclib.e13163 = "Il n'y a pas de changements dans la publication"
 ____loclib.e13164 = "Veuillez ajouter quelques mots pour informer Pocketpeople de votre lien. De quoi s'agit-il? Pourquoi c'est important? Quel est ton opinion?"
-____loclib.e13165 = 'Votre lien vers la vid�o n`est pas valide. Veuillez charger une URL vid�o valide.'
+____loclib.e13165 = "Votre lien vers la vid�o n'est pas valide. Veuillez charger une URL vid�o valide."
 ____loclib.e13166 = "Vous avez sauv�"
 ____loclib.e13167 = "les gens du web censur�"
 ____loclib.e13168 = "Gagnez Pocketcoin pour chaque inscription via votre lien"
@@ -690,9 +690,9 @@ ____loclib.e13234 = 'Erreur Opreturn / 41'
 ____loclib.e13235 = 'Vous ne pouvez pas �valuer le commentaire deux fois'
 ____loclib.e13236 = 'Ce commentaire a �t� supprim�'
 ____loclib.e13237 = 'Vous ne pouvez pas vous �valuer'
-____loclib.e13238 = 'Erreur d`envoi de commentaire. Veuillez patienter et r�essayer / 37'
-____loclib.e13239 = 'Erreur d`envoi de commentaire / 35'
-____loclib.e13240 = 'Le commentaire auquel vous r�pondez a �t� supprim� par l`utilisateur'
+____loclib.e13238 = "Erreur d'envoi de commentaire. Veuillez patienter et r�essayer / 37"
+____loclib.e13239 = "Erreur d'envoi de commentaire / 35"
+____loclib.e13240 = "Le commentaire auquel vous r�pondez a �t� supprim� par l'utilisateur"
 ____loclib.e13241 = 'Ce commentaire est trop long, veuillez le casser'
 ____loclib.e13242 = "Vous avez �t� bloqu� par cette personne, vous ne pourrez pas commenter ses messages"
 ____loclib.e13243 = "Vous avez atteint votre limite de commentaires positifs sur une p�riode de 24 heures"
@@ -700,16 +700,16 @@ ____loclib.e13244 = "Vous avez atteint votre limite de modification des commenta
 ____loclib.e13245 = "Vous avez atteint votre limite d'envoi de commentaires sur une p�riode de 24 heures"
 ____loclib.e13246 = "Vous essayez de modifier le message de quelqu'un d'autre"
 ____loclib.e13247 = "Vous avez atteint votre limite de modification de 5 articles par p�riode de 24 heures"
-____loclib.e13248 = 'Vous ne pouvez modifier qu`une seule fois par bloc de blockchain. Veuillez patienter une minute, puis r�essayer'
+____loclib.e13248 = "Vous ne pouvez modifier qu'une seule fois par bloc de blockchain. Veuillez patienter une minute, puis r�essayer"
 ____loclib.e13249 = 'Tu ne peux pas te bloquer'
 ____loclib.e13250 = 'Vous avez d�j� bloqu� cet utilisateur'
-____loclib.e13251 = 'Vous n`avez pas bloqu� cet utilisateur'
+____loclib.e13251 = "Vous n'avez pas bloqu� cet utilisateur"
 ____loclib.e13252 = 'La transaction est mal form�e'
 ____loclib.e13253 = 'Vous ne pouvez pas vous r�f�rer'
-____loclib.e13254 = 'Ce nom d`utilisateur est trop long'
-____loclib.e13255 = 'Ce nom d`utilisateur est d�j� utilis�'
+____loclib.e13254 = "Ce nom d'utilisateur est trop long"
+____loclib.e13255 = "Ce nom d'utilisateur est d�j� utilis�"
 ____loclib.e13256 = 'Ce message est trop long, veuillez le s�parer.'
-____loclib.e13257 = 'Votre score de r�putation Pocketnet ne permet pas encore l`enregistrement de r�clamations'
+____loclib.e13257 = "Votre score de r�putation Pocketnet ne permet pas encore l'enregistrement de r�clamations"
 ____loclib.e13258 = 'Vous avez atteint la limite des r�clamations sur une p�riode de 24 heures'
 
 ____loclib.e13259 = 'Je ne peux pas me plaindre de votre propre message'
@@ -813,4 +813,4 @@ ____loclib.e13347 = "Des mises � jour de Pocketnet sont disponibles. Appliquer
 ____loclib.e13348 = "Au plus tard"
 ____loclib.e13349 = "Des mises � jour de Pocketnet sont disponibles. Aller � la page pour t�l�charger la nouvelle version?"
 ____loclib.e13350 = 'Rejoignez Pocketnet et gagnez Pocketcoin maintenant'
-____loclib.e133512 = 'Please write a few words about yourself to help people decide if they want to follow you'
+____loclib.e13351 = 'Please write a few words about yourself to help people decide if they want to follow you'

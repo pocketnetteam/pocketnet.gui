@@ -177,6 +177,10 @@ ____loclib.upic = "Icono de usuario";
 ____loclib.uuserinfo = "Información del usuario";
 ____loclib.usave = "Guardar";
 ____loclib.ucancel = "Cancelar";
+<<<<<<< HEAD
+____loclib.
+=======
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.uwaitb = "Esperando confirmación para guardar información";
 ____loclib.uchanges = " No habeis introducido ningún cambio";
 ____loclib.uchangesvalid = "Debeis introducir el nombre de usuario y establecer el icono";
@@ -293,7 +297,11 @@ ____loclib.dsa = "No volver a mostrar";
 
 // Messages
 
+<<<<<<< HEAD
+_____loclib.coinbaseSuccess = function (v) {
+=======
 ____loclib.coinbaseSuccess = function (v) {
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 return "<b> ¡Felicitaciones! </b>" + "Has ganado <b>" + v + "POC </b>"
 }
 ____loclib.coinbaseSuccesspost = function (v) {
@@ -358,12 +366,20 @@ ____loclib.qrcode = "Código QR"
 ____loclib.addaccount = "Agregar cuenta"
 ____loclib.entermnimo = "Introduzca mnemofrase o clave privada"
 ____loclib.add = " Añadir "
+<<<<<<< HEAD
+____loclib.e13011 = "Ahora procedereis con el registro Después de instalar Pocketnet Desktop".
+=======
 ____loclib.e13011 = "Ahora procedereis con el registro Después de instalar Pocketnet Desktop"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13012 = "Si Pocketnet para Windows no comienza a cargarse, haga clic para descargarlo"
 ____loclib.e13013 = "Ingrese el título de imagen (opcional)"
 ____loclib.e13014 = "El formato de este archivo no no está soportado:"
 ____loclib.e13015 = "Este archivo es demasiado grande:"
+<<<<<<< HEAD
+____loclib.e13016 = "Insertas su referencia de YouTube, Vimeo y pulse Entrar".
+=======
 ____loclib.e13016 = "Insertas su referencia de YouTube, Vimeo y pulse Entrar"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13017 = "Cargando en blockchain"
 ____loclib.e13018 = "¿Está seguro de que desea eliminar este artículo?"
 ____loclib.e13019 = "Nuevo"
@@ -421,7 +437,11 @@ ____loclib.save = "Guardar"
 ____loclib.e13056 = "Nodes de host"
 ____loclib.close = "Cerrar"
 ____loclib.e13057 = "Por favor complete todos los campos"
+<<<<<<< HEAD
+____loclib.e13058 = "Ya tiene este proxy en la lista".
+=======
 ____loclib.e13058 = "Ya tiene este proxy en la lista"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.delete = "Eliminar"
 ____loclib.e13059 = "¿Está seguro de que desea eliminar este proxy de la lista?"
 ____loclib.e13060 = "Lista de proxy"
@@ -446,7 +466,11 @@ ____loclib.notselected = "No seleccionado"
 ____loclib.donation = "Donación"
 ____loclib.e13074 = "Fondos pendientes. La dirección será válida"
 ____loclib.sminutes = "minutos"
+<<<<<<< HEAD
+____loclib.e13075 = "El tiempo de esta operación se termino".
+=======
 ____loclib.e13075 = "El tiempo de esta operación se termino"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.reactivate = "Reactivar"
 ____loclib.e13076 = "Escanee este código para enviar"
 ____loclib.back = "Atrás"
@@ -463,7 +487,11 @@ ____loclib.e13086 = "Soporte Web Descentralizado Ahora"
 ____loclib.e13087 = "Bitcoin, Litecoin, Monero"
 ____loclib.e13088 = "Miembros de Pocketnet que han donado para apoyar a Pocketnet"
 ____loclib.thankyou = "¡Gracias!"
+<<<<<<< HEAD
+____loclib.e13089 = "Si desea que agreguemos su perfil de Pocketnet a la lista de donantes, envíenos la información de su donación".
+=======
 ____loclib.e13089 = "Si desea que agreguemos su perfil de Pocketnet a la lista de donantes, envíenos la información de su donación"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13090 = "Agregarme a la lista de donantes"
 ____loclib.e13091 = "O podéis enviarnos un correo electrónico a"
 ____loclib.e13092 = "con su dirección y monto"
@@ -495,7 +523,11 @@ ____loclib.e13113 = "Insertar dirección de correo electrónico"
 ____loclib.skip = "Saltar"
 ____loclib.e13114 = "Hubo una problema con su registro por una actividad extraña en su dirección IP."
 ____loclib.e13115 = "Envíenos un correo electrónico a"
+<<<<<<< HEAD
+____loclib.e13116 = "para recibir monedas y abrir su cuenta".
+=======
 ____loclib.e13116 = "para recibir monedas y abrir su cuenta"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13117 = "Verificar saldo"
 ____loclib.joinnow = "Únete ahora"
 ____loclib.loading = "Cargando"
@@ -508,9 +540,15 @@ ____loclib.e13122 = "últimos comentarios"
 ____loclib.e13123 = "Mostrar más publicaciones"
 ____loclib.e13124 = "¡Más publicaciones geniales de Pocketnet!"
 ____loclib.e13125 = "¡La sección de mejores publicaciones está vacía!"
+<<<<<<< HEAD
+____loclib.e13126 = "Aquí se mostrarán las publicaciones de las personas que sigues".
+____loclib.e13127 = "Aquí se mostrarán las publicaciones de las personas que sigues".
+____loclib.e13128 = "Aquí se mostrarán las publicaciones de las personas que sigues".
+=======
 ____loclib.e13126 = "Aquí se mostrarán las publicaciones de las personas que sigues"
 ____loclib.e13127 = "Aquí se mostrarán las publicaciones de las personas que sigues"
 ____loclib.e13128 = "Aquí se mostrarán las publicaciones de las personas que sigues"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.registration = "Registro"
 ____loclib.editpost = "Editar publicación"
 ____loclib.removepost = "Eliminar publicación"
@@ -551,7 +589,11 @@ ____loclib.e13151 = ' Todavía nadie ha calificado esta publicación'
 ____loclib.e13152 = "Calificaciones de usuarios"
 ____loclib.e13153 = "Saltar y ir al sitio"
 ____loclib.e13154 = "Su información de registro"
+<<<<<<< HEAD
+____loclib.e13155 = "Para utilizar Pocketnet, debe generar su propia clave criptográfica privada, que reemplaza el nombre de usuario y la contraseña de las redes sociales centralizadas".
+=======
 ____loclib.e13155 = "Para utilizar Pocketnet, debe generar su propia clave criptográfica privada, que reemplaza el nombre de usuario y la contraseña de las redes sociales centralizadas"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.users = "Usuarios"
 ____loclib.userstx = "Usuario"
 ____loclib.user = "Usuario"
@@ -569,7 +611,11 @@ ____loclib.e13161 = "Agrega etiquetas para tu publicación"
 ____loclib.e13162 = "Podéis ingresar hasta 30 etiquetas"
 ____loclib.e13163 = "No se han realizado cambios en esta publicación"
 ____loclib.e13164 = "Agrega algunas palabras para decirle a Pocketpeople sobre tu enlace. ¿De qué es eso? ¿Por qué es importante? ¿Cuál es tu opinión?"
+<<<<<<< HEAD
+____loclib.e13165 = 'Su enlace de video no es válido. Inténtelo descargar URL de video correcto. '
+=======
 ____loclib.e13165 = 'Su enlace de video no es válido. Inténtelo descargar URL de video correcto.'
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13166 = "Guardaste"
 ____loclib.e13167 = "persona de internet censurado"
 ____loclib.e13168 = "Gana Pocketcoin por cada registro de tu enlace"
@@ -577,7 +623,11 @@ ____loclib.e13169 = "Enlace directo"
 ____loclib.copy = "Copiar"
 ____loclib.e13170 = "Habilitar llamada de registro de Pocketnet"
 ____loclib.more = "Más"
+<<<<<<< HEAD
+____loclib.e13171 = "Buenas noticias. Me independicé de los monopolios de las redes sociales. Únase a mí en pocketnet.app para que podemos compartir y charlar independientemente de blockchain. Únase a mí aquí".
+=======
 ____loclib.e13171 = "Buenas noticias. Me independicé de los monopolios de las redes sociales. Únase a mí en pocketnet.app para que podemos compartir y charlar independientemente de blockchain. Únase a mí aquí"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13172 = "Quiero compartir esto con usted desde la plataforma blockchain descentralizada de Pocketnet. Espero que le resulte útil y si se registras, nos obtendremos un bono en la criptomoneda Pocketcoin!"
 ____loclib.e13173 = "Enviar por correo electrónico"
 ____loclib.e13174 = "Compartir en redes sociales"
@@ -596,7 +646,11 @@ ____loclib.e13184 = "Continuar registro"
 ____loclib.e13185 = "Conexión perdida"
 ____loclib.e13186 = "Editar perfil"
 ____loclib.e13187 = "Contenido"
+<<<<<<< HEAD
+____loclib.e13188 = "Guarde su clave criptográfica privada, que reemplaza el nombre de usuario y la contraseña de las redes sociales centralizadas".
+=======
 ____loclib.e13188 = "Guarde su clave criptográfica privada, que reemplaza el nombre de usuario y la contraseña de las redes sociales centralizadas"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13189 = "¡Cerrar sesión y perder mi clave para siempre!"
 ____loclib.e13190 = "Tema de Pocketnet"
 ____loclib.e13191 = "Seleccionar tema"
@@ -611,8 +665,13 @@ ____loclib.e13199 = "Únase a Pocketnet ahora"
 
 ____loclib.e13200 = "Regresar a Pocketnet"
 ____loclib.e13201 = "Unirse a la prueba beta"
+<<<<<<< HEAD
+____loclib.e13202 = "La beta de Pocketnet comenzará el 24 de enero".
+____loclib.e13203 = "Gracias por unirse a la lista de distribución pruebas beta de Pocketnet. Usar Pocketnet no es necesariamente, pero usaremos este correo electrónico para enviar sus encuestas para mejorar la plataforma. Gracias por ayudar en formar el futuro de Internet".
+=======
 ____loclib.e13202 = "La beta de Pocketnet comenzará el 24 de enero."
 ____loclib.e13203 = "Gracias por unirse a la lista de distribución pruebas beta de Pocketnet. Usar Pocketnet no es necesariamente, pero usaremos este correo electrónico para enviar sus encuestas para mejorar la plataforma. Gracias por ayudar en formar el futuro de Internet."
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13204 = "Dirección para recibir Poketcoins"
 ____loclib.e13205 = "Opciones"
 ____loclib.e13206 = "Monto recibido"
@@ -641,9 +700,15 @@ ____loclib.e13217 = "Se agotó el tiempo de esta transacción."
 ____loclib.e13218 = "Esperando confirmaciones de blockchain"
 ____loclib.e13219 = "Enviarle Poketcoins"
 ____loclib.e13220 = 'Poketcoins entregados'
+<<<<<<< HEAD
+____loclib.errorreload = "Se produjo un error. Vuelva a cargar la página y vuelva a intentarlo".
+____loclib.e13221 = "¿Está seguro de que desea eliminar la información sobre esta transacción? No es posible detener transacción "
+____loclib.e13222 = "Descargar Desktop App -es la forma más resistente a la censura de usar Pocketnet. Incluso si los sitios web están cerrados, la aplicación funcionará directamente a través de nodos ".
+=======
 ____loclib.errorreload = "Se produjo un error. Vuelva a cargar la página y vuelva a intentarlo"
 ____loclib.e13221 = "¿Está seguro de que desea eliminar la información sobre esta transacción? No es posible detener transacción "
 ____loclib.e13222 = "Descargar Desktop App -es la forma más resistente a la censura de usar Pocketnet. Incluso si los sitios web están cerrados, la aplicación funcionará directamente a través de nodos "
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13223 = "Descargar Pocketnet para Windows"
 ____loclib.e13224 = "Descargar Pocketnet para Linux"
 ____loclib.e13225 = "Node Pocketnet"
@@ -666,8 +731,13 @@ ____loclib.e13240 = 'El comentario al que estás intentando responder ha sido el
 ____loclib.e13241 = 'Este comentario es demasiado largo, porfavor divídalo en varios'
 ____loclib.e13242 = "Esta persona te bloqueó, no podéiss comentar sus publicaciones"
 ____loclib.e13243 = "Ha alcanzado su límite de calificación para comentarios en el período de 24 horas"
+<<<<<<< HEAD
+____loclib.e13244 = "Ha alcanzado el límite de edición los comentarios en 24 horas".
+____loclib.e13245 = "Ha alcanzado el límite de publicación los comentarios en 24 horas".
+=======
 ____loclib.e13244 = "Ha alcanzado el límite de edición los comentarios en 24 horas"
 ____loclib.e13245 = "Ha alcanzado el límite de publicación los comentarios en 24 horas"
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13246 = "Estás intentando editar la publicación de otra persona"
 ____loclib.e13247 = "Ha alcanzado su límite de edición 5 publicaciones en 24 horas"
 ____loclib.e13248 = 'Solo podéis editar publicaciones o comentarios una vez de cada bloque en el blockchain. Espera un minuto y vuelve a intentarlo '
@@ -678,7 +748,11 @@ ____loclib.e13252 = 'Transacción esta mal formada'
 ____loclib.e13253 = 'No podéis vincularse a sí mismo'
 ____loclib.e13254 = 'El nombre de usuario es demasiado largo'
 ____loclib.e13255 = 'Otro usuario ya está usando este nombre'
+<<<<<<< HEAD
+____loclib.e13256 = 'Esta publicación es demasiado larga, divídala en varias'.
+=======
 ____loclib.e13256 = 'Esta publicación es demasiado larga, divídala en varias.'
+>>>>>>> 7e9b368c29232133781c468f5d9adfb3759cdbac
 ____loclib.e13257 = 'Su reputación de Pocketnet aún no le permite registrar quejas'
 ____loclib.e13258 = 'Ha alcanzado su límite de quejas en 24 horas'
 
