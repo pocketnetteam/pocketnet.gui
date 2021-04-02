@@ -4598,6 +4598,8 @@
 
 						_.each(self.possibleValues, function (value, index) {
 
+							
+
 							//if(self.possibleValuesLabels[index]) label = self.possibleValuesLabels[index]
 
 							if(self.type == 'valuesmultibig'){

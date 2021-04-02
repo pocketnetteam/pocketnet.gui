@@ -34,6 +34,7 @@
         "clone-deep": "^4.0.1",
         "deep-extend": "^0.6.0",
         "download-github-release": "^0.3.2",
+        
         "electron-context-menu": "^2.4.0",
         "electron-is": "^3.0.0",
         "electron-localshortcut": "^3.2.1",
