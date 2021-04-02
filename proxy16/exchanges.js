@@ -32,11 +32,13 @@ var Exchanges = function(){
 
                     //цена битка в долларах, массив разных цен PKOIN в долларах, наивысшая цена PKOIN в конкретной паре
                     var btc_price = response.data['BTC_USDT'].high24hr
+                    console.log('!!! btc_price', btc_price)
                     var highest_price = 0 // наивысшая цена PKOIN в долларах из всех
 
                     //Берем пары с PKOIN, переводим цену за них из других валют в доллары
                     pkoin_pairs.forEach(item => {
                         var currency = item.split('_')[1]
+                        console.log('!!!', item, response.data[item])
                         var pair = highestPrice(response.data[item])  // наивысшая цена в паре валют
                         var price
 
