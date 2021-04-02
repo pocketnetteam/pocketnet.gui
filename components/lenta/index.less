@@ -61,6 +61,31 @@
 			}
 		}
 
+		.debuginfo{
+	
+			padding : @rhythm 3* @rhythm;
+			font-size: 0.7em;
+			z-index: 5;
+
+			.info{
+				display: none;
+			}
+
+			.icon{
+				cursor: pointer;
+			}
+
+			&.showed{
+				.info{
+					display: block;
+				}
+	
+				.icon{
+					display: none;
+				}
+			}
+		}
+
 		
 		.usericon{	
 			position: absolute;
@@ -331,7 +356,7 @@
 						padding: 0;
 						margin: 0;
 						padding-top : @rhythm;
-						border-left : @rhythm solid @color-main;
+						border-left : @rhythm solid @color-black3;
 					}
 
 					.sharecaption{
@@ -1054,6 +1079,13 @@
 					font-size: 0.8em;
 					color : @color-main;
 					text-decoration: underline;
+				}
+
+				.videoviews{
+					span{
+						text-decoration: none;
+					}
+					
 				}
 				
 				.urlcnt{
@@ -2536,7 +2568,7 @@ html.stblack{
 
 				.share{
 					.work{
-						border-left : 0.5 * @rhythm solid @color-main;
+						border-left : 0.5 * @rhythm solid @color-black3;
 					}
 					.sharecaption{
 						font-size: 1em;

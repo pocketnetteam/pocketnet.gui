@@ -1,9 +1,9 @@
 if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
-loclib.en = {};
+loclib.de = {};
 
-var ____loclib = loclib.en;
+var ____loclib = loclib.de;
 
 //time
 
@@ -546,7 +546,7 @@ ____loclib.editpost = "Beitrag bearbeiten"
 ____loclib.removepost = "Beitrag entfernen"
 
 
-____loclib.reportpost = "Beitrag melden"
+____loclib.reportpost = "Beschweren"
 ____loclib.donate = "Spenden"
 ____loclib.blockuser = "Benutzer blockieren"
 ____loclib.more = "Mehr"

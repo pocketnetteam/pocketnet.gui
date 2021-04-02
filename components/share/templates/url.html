@@ -36,6 +36,10 @@
 					</div>
 				</div>
 
+				<% if(typeof views != 'undefined' && views) {%>
+					<div class="videoviews"><span class="label">Views:</span> <span class="number"><%-views%></span></div>
+				<% } %>
+
 				<div class="videoTips">
 					<div class="videoTip">
 						<span><%=e('expandvideo')%></span>

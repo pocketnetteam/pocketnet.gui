@@ -522,7 +522,7 @@ ____loclib.editpost = "Редактировать публикацию"
 ____loclib.removepost = "Удалить публикацию"
 
 
-____loclib.reportpost = "Репост публикации"
+____loclib.reportpost = "Пожаловаться"
 ____loclib.donate = "Пожертвование"
 ____loclib.blockuser = "Заблокировать пользователя"
 ____loclib.more = "Больше"

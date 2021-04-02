@@ -413,7 +413,6 @@ var Node = function(options, manager){
     self.needToChange = function(){
         var betterNodes = self.statistic.better()
 
-        //console.log('betterNodes.length', betterNodes.length, self.ckey)
 
         if(!betterNodes.length) return false
 
@@ -460,12 +459,10 @@ var Node = function(options, manager){
 
         if(!np) return 
 
-        //console.log('users', _.toArray(wss.users).length, self.ckey)
 
         _.each(wss.users, function(user, address){
             var change = self.changeNodeUser(address, np)
 
-            //console.log('change', change, address)
 
             if (change && wss.users[address]){
 

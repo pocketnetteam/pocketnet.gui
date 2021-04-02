@@ -1,9 +1,14 @@
 <% 
-	
+
 	var my = (user.address.value && share.address == user.address.value.toString('hex'))
 	var value = Number(share.score)
 
-	if (Number(share.scnt)) value = value / Number(share.scnt)
+	if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
+		value = value / Number(share.scnt)
+	}
+	else {
+		value = 0
+	}
 
 	var liked = ''
 
@@ -67,7 +72,10 @@
 	</div>
 
 	<div class="count">
-		<span class="v"><%-value.toFixed(1)%></span> <% if(Number(share.scnt)) {%> / <span class="c"><%-Number(share.scnt)%></span> <% } %>
+		<span class="v"><%-value.toFixed(1)%></span> 
+		<% if(value) {%>
+		<% if(Number(share.scnt)) {%> / <span class="c"><%-Number(share.scnt)%></span> <% } %>
+		<% } %>
 	</div>
 
 </div>

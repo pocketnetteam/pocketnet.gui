@@ -15,7 +15,7 @@ Platform = function (app, listofnodes) {
     
     
 
-    self.testaddresses = ['PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+    self.testaddresses = ['PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
     self.focus = true;
     self.currentBlock = 1000000;
@@ -146,7 +146,13 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.istest = function(){
+        var addresses = self.testaddresses;
+        if (self.sdk.address.pnet()&& addresses.indexOf(self.sdk.address.pnet().address) > -1) {
 
+            return true
+        }
+    }
 
     self.values = {
         alph: [
@@ -8881,6 +8887,34 @@ Platform = function (app, listofnodes) {
                         s.scnt = share.scoreCnt;
 
                         s.edit = share.edit || false
+                        s.info = null
+
+                        if (share.ranks){
+                            s.info = share.ranks
+                        }
+                        else
+                        {
+
+                            if(
+                                share.BOOST || share.DPOST ||
+                                share.DREP || share.LAST5 ||
+                                share.LAST5 || share.LAST5R ||
+                                share.POSTRF || share.PREP ||
+                                share.PREPR || share.UREP
+                            )
+                                s.info = {
+                                    BOOST : share.BOOST,
+                                    DPOST : share.DPOST,
+                                    DREP : share.DREP,
+                                    LAST5 : share.LAST5,
+                                    LAST5R : share.LAST5R,
+                                    POSTRF : share.POSTRF,
+                                    PREP : share.PREP,
+                                    PREPR : share.PREPR,
+                                    UREP : share.UREP,
+                                    UREPR : share.UREPR,
+                                }
+                        }
 
                         if (state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
 
@@ -8935,6 +8969,37 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                 clbk(shares)
+        
+                        }).catch(e => {
+                            if (clbk) {
+                                clbk([], e)
+                            }
+                        })
+
+                        
+                    })
+                },
+
+                getex: function (parameters, clbk, method) {
+
+                    method || (method = 'getrawtransactionwithmessage')
+
+                    var storage = this.storage;
+
+
+
+                    self.app.user.isState(function (state) {
+
+                        self.app.api.rpc(method, parameters).then(d => {
+
+                            d.contents || (d.contents = [])
+
+                            d.contents = self.sdk.node.shares.transform(d.contents, state)
+
+                            self.sdk.node.shares.takeusers(d.contents, state)
+
+                            if (clbk)
+                                clbk(d)
         
                         }).catch(e => {
                             if (clbk) {
@@ -9216,10 +9281,18 @@ Platform = function (app, listofnodes) {
 
                             var parameters = [p.height, p.txid, p.count, p.lang, p.tags];
 
-                            s.get(parameters, function (data, error) {
+                            s.getex(parameters, function (data, error) {
 
-                                var shares = data.shares
-                                var blocknumber = data.blocknumber
+                                var shares = data.contents || []
+                                var blocknumber = data.height
+
+                                _.each(shares, function(s){
+                                    if (s.info){
+                                        s.info.BLOCK = blocknumber
+                                    }
+                                })
+
+                                console.log('shares', shares, blocknumber, data)
 
                                 p.blocknumber = blocknumber
 
@@ -11282,6 +11355,11 @@ Platform = function (app, listofnodes) {
                             var aeskey = exportedPack.aes[i];
 
                             var mk = self.app.user.private.value.toString('hex');
+
+                            if(self.cryptography.disabled){
+                                if (clbk)
+                                    clbk(null, 'disabledcryptography')
+                            }
 
                             self.cryptography.api.aeswc.decryption(aeskey, mk, {}, function (decrypted) {
 
@@ -17075,6 +17153,12 @@ Platform = function (app, listofnodes) {
 
                 var _clbk = function (key) {
 
+                    if(!crypto.subtle){
+                        if (clbk)
+                            clbk('')
+                        return  
+                    }
+
                     crypto.subtle.importKey(
                         "raw",
                         aesjs.utils.utf8.toBytes(key),
@@ -17421,6 +17505,13 @@ Platform = function (app, listofnodes) {
 
                     self.helpers.keyForAes(key, function (akey) {
 
+                        if(!crypto.subtle){
+                            if (clbk)
+                                clbk('')
+
+                            return 
+                        }
+
 
                         crypto.subtle.decrypt(
                             {
@@ -17687,6 +17778,8 @@ Platform = function (app, listofnodes) {
         }
 
         self.prepare = function (clbk) {
+
+            if(!crypto.subtle) self.disabled = true
 
             app.user.isState(function (state) {
                 if (state) {

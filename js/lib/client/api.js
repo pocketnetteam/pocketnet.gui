@@ -155,7 +155,7 @@ var Node = function(meta, app/*, proxy ??*/){
     return self
 }
 
-var Proxy16 = function(meta, app){
+var Proxy16 = function(meta, app, api){
     var self = this
     var request = new ProxyRequest(app)
 
@@ -311,7 +311,16 @@ var Proxy16 = function(meta, app){
             },
 
             select : function(){
-                return self.fetch('nodes/select').then(r => {
+
+                var fixednode = ''
+
+                if(api && api.get.fixednode()) fixednode = api.get.fixednode()
+
+                console.log('fixednode', fixednode)
+
+                return self.fetch('nodes/select', {fixed : fixednode}).then(r => {
+
+                    console.log("R", r)
 
                     self.current = r.node
 
@@ -360,6 +369,8 @@ var Proxy16 = function(meta, app){
         if (self.current){
             options.node = self.current.key
         }
+
+        
 
         var promise = null
 
@@ -491,7 +502,8 @@ var Api = function(app){
 
     var current = null // 'localhost:8888:8088' //null;///'pocketnet.app:8899:8099'
     var useproxy = true;
-    var inited = false
+    var inited = false;
+    var fixednode = null;
 
     var getproxyas = function(key){
 
@@ -673,7 +685,7 @@ var Api = function(app){
                     _.each(metas, meta => { this.add(meta) })
                 },
                 add : function(meta){
-                    var proxy = new Proxy16(meta, app)
+                    var proxy = new Proxy16(meta, app, self)
 
                     if(!this.find(proxy.id) && (proxy.valid() || proxy.direct)){
                         proxies.push(proxy)
@@ -707,7 +719,6 @@ var Api = function(app){
 
         if(!options) 
             options = {}
-
 
         return getproxy(options.proxy).then(proxy => {
 
@@ -819,10 +830,18 @@ var Api = function(app){
             }
             else
                 return Promise.resolve()
-        }
+        },
+        fixednode : function(id){
+            fixednode = id
+
+            localStorage['fixednode'] = fixednode
+        }   
     }
 
     self.get = {
+        fixednode : function(){
+            return fixednode
+        },
         currentwss : function(){
             return getproxy().then(proxy => {
 
@@ -908,6 +927,11 @@ var Api = function(app){
     },
 
     self.init = function(){
+
+        var f = localStorage['fixednode']
+
+        if(f) fixednode = f
+
         return internal.proxy.manage.init().then(r => {
 
             internal.proxy.api.ping(proxies).catch(e => {
