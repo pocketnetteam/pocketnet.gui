@@ -1,5 +1,4 @@
-![PocketnetLogo](https://pocketnet.app/img/pocketnet-logo-12.svg)
-===
+# Pocketnet Desktop Browser
 ![GitHub](https://img.shields.io/github/license/pocketnetteam/pocketnet.api)
 ![contributors](https://img.shields.io/github/contributors/pocketnetteam/pocketnet.gui)
 ![last_commit](https://img.shields.io/github/last-commit/pocketnetteam/pocketnet.gui)
