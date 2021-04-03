@@ -3,6 +3,67 @@
 #lenta{
 	/*background: #F9F9F9;*/
 
+
+	/***/
+
+	.webadminscontent{
+		padding :3 * @rhythm 2 * @rhythm;
+
+
+        .admin{
+
+            >div{
+                vertical-align: middle;
+
+				.icon{
+					display: block!important;
+				}
+
+                &.iconWrapper{
+                    width: 44px;
+                    padding-left: 0;
+                    padding-right: 0;
+					float: none;
+                }
+
+                &.panelWrapper{
+                    width : 140px;
+                    padding : 2 * @rhythm;
+                    padding-left: 0;
+
+                    .item{
+                        width: 40px;
+                        float: right;
+                        padding : @rhythm;
+                        color : @color-gray-mlight;
+                        margin-left : 4px;
+                        text-align: center;
+                        cursor: pointer;
+
+                        &:hover{
+                            color : @color-main;
+                        }
+
+                        &.edit{
+                            cursor: pointer;
+                            &:hover{
+                                color : @color-main;
+                            }
+                        }
+
+                        &.stable{
+                            color : @color-good;
+                        }
+                       
+                    }
+                }
+
+              
+            }
+        }
+    }
+	/***/
+
 	.work{
 		padding-right: 0;
 	}
