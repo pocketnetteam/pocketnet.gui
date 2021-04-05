@@ -510,13 +510,31 @@ var metadisplay = function(){ %>
 			</div>
 
 			<div class="info">
-				<% _.each(share.info, function(k, v){ %>
-					<span><%-v %></span>
-					<b><%- Number(k || 0).toFixed(2) %></b><br>
-				<% }) %>
+				<% _.each(share.info, function(k, v){
+					
+					if(v == 'LAST5RADRS'){
+						
+						var ids = _.map(k, function(a){
+							return a.address
+						}).join(',')
+						%>
 
-				<span>TXID:</span>
-				<b><%-share.txid%></b><br>
+						<div class="testusersprofiles" ids="<%-ids%>">
+
+						</div>
+
+					<%	return 
+				
+					} %>
+					<div>
+						<span><%-v %></span>
+						<b><%- Number(k || 0).toFixed(2) %></b>
+					</div>
+				<% }) %>
+				<div>
+					<span>TXID:</span>
+					<b><%-share.txid%></b><br>
+				</div>	
 
 			</div>
 			

@@ -1,0 +1,53 @@
+
+    <div class="webadminscontent">
+        <div class="work">
+    
+            <% if(ids.length) {%>
+            <% _.each(ids, function(uadmin){ 
+                var user = deep(app, 'platform.sdk.users.storage.'+uadmin) || {} %>
+    
+           
+                <div class="adminWrapper">
+                    <div class="tableovfWrapper">
+                        <div class="admin table">
+    
+                            <div class="iconWrapper">
+                                <% if(!app.curation()) {%> <a href="<%-app.platform.api.authorlink(uadmin)%>"> <% } %>
+    
+                                    <% var src = user.image  %>
+    
+                                    <div class="icon">
+                                        <div class="usericon usericonsbsa another" image="<%-src || ''%>">
+                                            <% if(!src) {%>
+                                                <svg width="30" height="30" data-jdenticon-value="<%-uadmin%>"></svg>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                <% if(!app.curation()) {%>  </a> <% } %>
+    
+                            </div>
+                            
+                            <div class="nameWrapper">
+    
+                                <% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(uadmin)%>"><% } %>
+                                    <%- user.name || uadmin %>
+                                <% if(!app.curation()) {%></a><% } %>
+                                
+                            </div>			
+                          
+                            
+                        </div>
+                    </div>
+                </div>
+    
+            <% }) %>
+            <% } else {%> 
+                
+            <div class="empty">
+                <span>There are no users rated this share</span>
+            </div>    
+    
+            <% } %>
+        </div>
+    
+    </div>
