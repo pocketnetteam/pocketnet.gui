@@ -1,8 +1,7 @@
 PeerTubeHandler = function (app) {
   const hardCodeUrlsList = [
-    'pocketnetpeertube1.nohost.me',
-    'pocketnetpeertube2.nohost.me',
     'pocketnetpeertube3.nohost.me',
+    'pocketnetpeertube4.nohost.me',
   ];
 
   let randomServer =
@@ -98,6 +97,8 @@ PeerTubeHandler = function (app) {
         ),
       )
       .toString('hex');
+
+    console.log('userName', this.userName);
 
     await this.getServerInfo();
 

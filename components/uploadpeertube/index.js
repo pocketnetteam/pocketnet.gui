@@ -178,12 +178,11 @@ var uploadpeertube = (function () {
           ed.uploadInProgress = false;
 
           if (response.error) {
+
             if (axios.isCancel(response.error)) {
               sitemessage('Uploading canceled');
             } else {
-              var error = deep(response, 'error.responseJSON.errors') || {};
-
-              var message = (Object.values(error)[0] || {}).msg;
+              var message = findResponseError(response);
 
               sitemessage(message || 'Uploading error');
 
