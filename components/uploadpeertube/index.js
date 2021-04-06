@@ -223,6 +223,10 @@ var uploadpeertube = (function () {
           return;
         }
 
+        if (!videoId) {
+          return sitemessage('Select a video file')
+        }
+
         var videoWallpaperFile = el.videoWallpaper.prop('files');
 
         var videoName = wnd.find('.upload-video-name').val();
@@ -263,7 +267,7 @@ var uploadpeertube = (function () {
 
               sitemessage(message || 'Uploading error');
             }
-            
+
             globalpreloader(false);
           });
       });
