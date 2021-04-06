@@ -102,9 +102,11 @@ var uploadpeertube = (function () {
           ed.uploadInProgress = false;
 
           if (response.error) {
+            el.videoInput.val('');
+            el.wallpaperError.text('');
 
             if (axios.isCancel(response.error)) {
-              sitemessage('Uploading canceled');
+              sitemessage('Uploading canceled');              
             } else {
               var message = findResponseError(response);
 
