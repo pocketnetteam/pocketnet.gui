@@ -1613,7 +1613,32 @@ var lenta = (function(){
 		}	
 
 		var renders = {
-			
+			debugusers : function(el){
+				var cn = el.find('.testusersprofiles')
+				console.log("CH", cn)
+				var ids = (cn.attr('ids') || "").split(',')
+
+				if(ids.length){
+					self.app.platform.sdk.users.get(ids, function(){
+
+						self.shell({
+							inner : html,
+							name : 'testusers',
+							data : {
+								ids : ids
+							},
+							el : cn
+		
+						},
+						function(p){
+		
+						})
+					})	
+				}
+				else{
+					cn.text("Likes Empty")
+				}
+			},
 			comments : function(txid, init, showall, preview){
 				if(essenseData.comments == 'no') return
 
@@ -2832,6 +2857,8 @@ var lenta = (function(){
 
 			el.c.on('click', '.debuginfo .icon', function(){
 				$(this).closest('.debuginfo').addClass('showed')
+
+				renders.debugusers($(this).closest('.debuginfo'))
 			})
 			
 			el.c.on('click', '.showMore', events.openPost)

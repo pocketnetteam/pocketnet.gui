@@ -370,9 +370,8 @@ var Control = function(settings) {
 
         update : function(){
 
-            console.log("UPDATE12", lock)
 
-            if(lock) return Promise.resolve({lock})
+            if(lock) return Promise.resolve(false)
 
             self.autorun.destroy()
 
@@ -380,7 +379,6 @@ var Control = function(settings) {
 
             return this.stop().then(r => {
 
-                console.log("STOPPED")
 
                 return self.kit.install()
             }).then(r => {

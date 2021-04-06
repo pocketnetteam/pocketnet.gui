@@ -10532,6 +10532,17 @@ clearStringXss = function(nm){
 	})
 }
 
+findResponseError = (response) => {
+	const ERRORS_PATHS = [
+		'error.response.data.errors',
+		'error.response.data.error',
+	];
+
+	const error = ERRORS_PATHS.map(path => deep(response, path)).filter(error => error)[0] || {};
+
+	return (typeof error === 'object') ? (Object.values(error)[0] || {}).msg : error;
+}
+
 
 
 /* */
