@@ -173,8 +173,54 @@ var uploadpeertube = (function () {
       });
 
       el.uploadButton.on('click', () => {
-
+        
         var filesWrittenObject = {};
+
+        if (el.importUrl.val()) {
+          filesWrittenObject.uploadFunction = function (percentComplete) {
+            var formattedProgress = percentComplete.toFixed(2);
+
+            el.uploadProgress
+              .find('.upload-progress-bar')
+              .css('width', formattedProgress + '%');
+            el.uploadProgress
+              .find('.upload-progress-percentage')
+              .text(formattedProgress + '%');
+          };
+
+          filesWrittenObject.successFunction = function (response) {
+            ed.uploadInProgress = false;
+
+            el.uploadButton.prop('disabled', false);
+            el.header.addClass('activeOnRolled');
+
+            if (response.error) {
+              var error = deep(response, 'error.responseJSON.errors') || {};
+
+              var message = (Object.values(error)[0] || {}).msg;
+
+              sitemessage(message || 'Uploading error');
+
+              wndObj.close();
+
+              return;
+            }
+
+            actions.added(`${response}?imported=true`);
+            wndObj.close();
+          };
+
+          filesWrittenObject.url = el.importUrl.val();
+
+          ed.uploadInProgress = true;
+          el.header.removeClass('activeOnRolled');
+
+          wndObj.hide();
+          el.uploadProgress.removeClass('hidden');
+          self.app.peertubeHandler.importVideo(filesWrittenObject);
+
+          return;
+        }
 
         var videoWallpaperFile = el.videoWallpaper.prop('files');
 
@@ -200,10 +246,18 @@ var uploadpeertube = (function () {
           filesWrittenObject.name = videoName;
         }
 
+        globalpreloader(true);
+
         self.app.peertubeHandler
           .updateVideo(videoId, filesWrittenObject)
-          .then(() => wndObj.close())
-          .catch((err) => sitemessage('Uploading eror'));
+          .then(() => {
+            wndObj.close();
+            globalpreloader(false);
+          })
+          .catch((err) => {
+            sitemessage('Uploading eror');
+            globalpreloader(false);
+          });
       });
     };
 
