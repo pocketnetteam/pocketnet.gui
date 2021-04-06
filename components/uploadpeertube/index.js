@@ -21,6 +21,8 @@ var uploadpeertube = (function () {
 
     var renders = {};
 
+    var videoId;
+
     var state = {
       save: function () {},
       load: function () {},
@@ -33,81 +35,8 @@ var uploadpeertube = (function () {
           fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
         );
         el.videoError.removeClass('error-message');
-      });
 
-      el.videoWallpaper.change(function (evt) {
-        var fileName = evt.target.files[0].name;
-
-        el.wallpaperError.text(
-          fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
-        );
-        el.wallpaperError.removeClass('error-message');
-      });
-
-      el.importUrl.change(() => {
-        if (el.importUrl.val()) {
-          el.videoLabel.addClass('disabledInput');
-          el.videoInput.prop('disabled', true);
-
-          el.wallpaperLabel.addClass('disabledInput');
-          el.videoWallpaper.prop('disabled', true);
-        } else {
-          el.videoLabel.removeClass('disabledInput');
-          el.videoInput.prop('disabled', false);
-
-          el.wallpaperLabel.removeClass('disabledInput');
-          el.videoWallpaper.prop('disabled', false);
-        }
-      });
-
-      el.uploadButton.on('click', function () {
         var filesWrittenObject = {};
-
-        if (el.importUrl.val()) {
-          filesWrittenObject.uploadFunction = function (percentComplete) {
-            var formattedProgress = percentComplete.toFixed(2);
-
-            el.uploadProgress
-              .find('.upload-progress-bar')
-              .css('width', formattedProgress + '%');
-            el.uploadProgress
-              .find('.upload-progress-percentage')
-              .text(formattedProgress + '%');
-          };
-
-          filesWrittenObject.successFunction = function (response) {
-            ed.uploadInProgress = false;
-
-            el.uploadButton.prop('disabled', false);
-            el.header.addClass('activeOnRolled');
-
-            if (response.error) {
-              var error = deep(response, 'error.responseJSON.errors') || {};
-
-              var message = (Object.values(error)[0] || {}).msg;
-
-              sitemessage(message || 'Uploading error');
-
-              wndObj.close();
-
-              return;
-            }
-
-            actions.added(`${response}?imported=true`);
-            wndObj.close();
-          };
-
-          filesWrittenObject.url = el.importUrl.val();
-
-          ed.uploadInProgress = true;
-          el.header.removeClass('activeOnRolled');
-
-          wndObj.hide();
-          el.uploadProgress.removeClass('hidden');
-          self.app.peertubeHandler.importVideo(filesWrittenObject);
-
-          return;
-        }
 
         var videoInputFile = el.videoInput.prop('files');
 
@@ -136,8 +65,6 @@ var uploadpeertube = (function () {
         filesWrittenObject.video = videoInputFile[0];
 
         if (videoWallpaperFile[0]) {
-          console.log(videoWallpaperFile[0].type);
-
           if (
             videoWallpaperFile[0].type !== 'image/jpeg' &&
             videoWallpaperFile[0].type !== 'image/jpg'
@@ -152,13 +79,10 @@ var uploadpeertube = (function () {
 
           filesWrittenObject.image = videoWallpaperFile[0];
         }
-        if (!videoName) {
-          nameError.text('Name is empty');
 
-          return;
+        if (videoName) {
+          filesWrittenObject.name = videoName;
         }
-
-        filesWrittenObject.name = videoName;
 
         filesWrittenObject.uploadFunction = function (percentComplete) {
           var formattedProgress = percentComplete.toFixed(2);
@@ -185,15 +109,14 @@ var uploadpeertube = (function () {
               var message = findResponseError(response);
 
               sitemessage(message || 'Uploading error');
-
-              wndObj.close();
             }
 
             return;
           }
 
+          videoId = response.split('/').pop();
+
           actions.added(response);
-          wndObj.close();
         };
 
         filesWrittenObject.cancelClbk = function (cancel) {
@@ -217,12 +140,70 @@ var uploadpeertube = (function () {
 
         el.header.removeClass('activeOnRolled');
 
-        wndObj.hide();
-
         el.uploadButton.prop('disabled', true);
         el.uploadProgress.removeClass('hidden');
 
         self.app.peertubeHandler.uploadVideo(filesWrittenObject);
+
+      });
+
+      el.videoWallpaper.change(function (evt) {
+        var fileName = evt.target.files[0].name;
+
+        el.wallpaperError.text(
+          fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
+        );
+        el.wallpaperError.removeClass('error-message');
+      });
+
+      el.importUrl.change(() => {
+        if (el.importUrl.val()) {
+          el.videoLabel.addClass('disabledInput');
+          el.videoInput.prop('disabled', true);
+
+          el.wallpaperLabel.addClass('disabledInput');
+          el.videoWallpaper.prop('disabled', true);
+        } else {
+          el.videoLabel.removeClass('disabledInput');
+          el.videoInput.prop('disabled', false);
+
+          el.wallpaperLabel.removeClass('disabledInput');
+          el.videoWallpaper.prop('disabled', false);
+        }
+      });
+
+      el.uploadButton.on('click', () => {
+
+        var filesWrittenObject = {};
+
+        var videoWallpaperFile = el.videoWallpaper.prop('files');
+
+        var videoName = wnd.find('.upload-video-name').val();
+
+        if (videoWallpaperFile[0]) {
+          if (
+            videoWallpaperFile[0].type !== 'image/jpeg' &&
+            videoWallpaperFile[0].type !== 'image/jpg'
+          ) {
+            el.wallpaperError.text(
+              'Incorrect wallpaper format. Supported: .jpg, .jpeg',
+            );
+            el.wallpaperError.addClass('error-message');
+
+            return;
+          }
+
+          filesWrittenObject.thumbnailfile = videoWallpaperFile[0];
+        }
+
+        if (videoName) {
+          filesWrittenObject.name = videoName;
+        }
+
+        self.app.peertubeHandler
+          .updateVideo(videoId, filesWrittenObject)
+          .then(() => wndObj.close())
+          .catch((err) => sitemessage('Uploading eror'));
       });
     };
 

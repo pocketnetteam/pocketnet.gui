@@ -441,6 +441,20 @@ PeerTubeHandler = function (app) {
     });
   };
 
+  this.updateVideo = async (id, options) => {
+    const formData = new FormData();
+
+    Object.keys(options).map((key) =>
+      formData.append(key, options[key]),
+    );
+
+    return axios.put(`${baseUrl}videos/${id}`, formData, {
+      headers: {
+        Authorization: `Bearer ${this.userToken}`,
+      },
+    });
+  };
+
   this.getVideoInfoAnon = async (meta, clbk) => {
     apiHandler
       .run({
