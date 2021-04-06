@@ -25,10 +25,10 @@ Localization = function(app){
 			key : 'de'
 		},
 
-		/*fr : {
+		fr : {
 			name : "Français",
 			key : 'fr'
-		},*/
+		},
 
 		kr : {
 			name : "한국어",
