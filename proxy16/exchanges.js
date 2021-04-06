@@ -49,9 +49,6 @@ var Exchanges = function(){
                         })
                     }
 
-                    console.log('!!!', highest_price)
-
-
                     var d = response.data
                     var slice = {
                         prices : {},
