@@ -100,6 +100,7 @@ var uploadpeertube = (function () {
           filesWrittenObject.url = el.importUrl.val();
 
           ed.uploadInProgress = true;
+          el.header.removeClass('activeOnRolled');
 
           wndObj.hide();
           el.uploadProgress.removeClass('hidden');
@@ -221,7 +222,6 @@ var uploadpeertube = (function () {
 
         el.uploadButton.prop('disabled', true);
         el.uploadProgress.removeClass('hidden');
-        el.header.removeClass('activeOnRolled');
 
         self.app.peertubeHandler.uploadVideo(filesWrittenObject);
       });
