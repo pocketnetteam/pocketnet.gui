@@ -214,6 +214,7 @@ var uploadpeertube = (function () {
 
           ed.uploadInProgress = true;
           el.header.removeClass('activeOnRolled');
+          el.uploadButton.prop('disabled', true);
 
           wndObj.hide();
           el.uploadProgress.removeClass('hidden');
@@ -255,7 +256,14 @@ var uploadpeertube = (function () {
             globalpreloader(false);
           })
           .catch((err) => {
-            sitemessage('Uploading eror');
+            if (axios.isCancel(err)) {
+              sitemessage('Uploading canceled');
+            } else {
+              var message = findResponseError({ error: err });
+
+              sitemessage(message || 'Uploading error');
+            }
+            
             globalpreloader(false);
           });
       });
