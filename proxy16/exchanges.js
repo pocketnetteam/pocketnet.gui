@@ -23,30 +23,31 @@ var Exchanges = function(){
 
                     //ключи всех пар валют в объекте ответа и все, где упомянут PKOIN
                     var response_keys = Object.keys(response.data)
-                    var pkoin_pairs = response_keys.filter(item => item.includes('PKOIN_'))
 
-                    //ищет наибольшую цену в паре
-                    function highestPrice(obj) {
-                        return obj.last_price
-                    }
+                    var pkoin_pairs = response_keys.filter(item => {
+                        item.includes('PKOIN_') && !item.includes('_USDT') && !item.includes('_BTC')
+                    })
 
-                    //цена битка в долларах, массив разных цен PKOIN в долларах, наивысшая цена PKOIN в конкретной паре
-                    var btc_price = response.data['BTC_USDT'].high24hr
-                    var highest_price = 0 // наивысшая цена PKOIN в долларах из всех
+                    var btc_usd_price = response.data['BTC_USDT'].last_price
+
+                    var pkoin_usd_price = response.data['PKOIN_USDT'].last_price
+                    var pkoin_btc_price = response.data['PKOIN_BTC'].last_price * btc_usd_price
+
+                    var highest_price = pkoin_usd_price > pkoin_btc_price ? pkoin_usd_price : pkoin_btc_price
 
                     //Берем пары с PKOIN, переводим цену за них из других валют в доллары
-                    pkoin_pairs.forEach(item => {
-                        var currency = item.split('_')[1]
-                        var pair = highestPrice(response.data[item])  // наивысшая цена в паре валют
-                        var price
-
-                        if(currency === 'USDT') price = highestPrice(response.data['PKOIN_USDT'])
-                        else if (currency === 'BTC') price = highestPrice(response.data['PKOIN_BTC']) * btc_price
-                        else if (response.data[currency + '_USDT']) price = highestPrice(response.data[currency + '_USDT']) * pair
-                        else if (response.data[currency + '_BTC']) price = highestPrice(response.data[currency + '_BTC']) * btc_price * pair
-                        
-                        if(price) highest_price = highest_price < price ? price : highest_price
-                    })
+                    if(pkoin_pairs) {
+                        pkoin_pairs.forEach(item => {
+                            var currency = item.split('_')[1]
+                            var pair = response.data[item].last_price  // наивысшая цена в паре валют
+                            var price
+    
+                            if (response.data[currency + '_USDT']) price = response.data[currency + '_USDT'].last_price * pair
+                            else if (response.data[currency + '_BTC']) price = response.data[currency + '_BTC'].last_price * btc_price * pair
+                            
+                            if(price) highest_price = highest_price < price ? price : highest_price
+                        })
+                    }
 
                     var d = response.data
                     var slice = {
@@ -60,6 +61,8 @@ var Exchanges = function(){
                         if(i.indexOf("PKOIN_") > -1){
 
                             var currency = i.split("_")[1]
+
+
 
                             slice.prices[currency] = {
                                 currency : currency,
