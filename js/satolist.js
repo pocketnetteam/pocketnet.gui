@@ -7097,7 +7097,7 @@ Platform = function (app, listofnodes) {
 
                 s.preview(fixedBlock, type, start, count, address)
 
-                value = trim(value.replace(/[^a-zA-Z0-9\# _]+/g, ''))
+                value = trim(value.replace(/[^а-яА-Яa-zA-Z0-9\# _]+/g, ''))
 
                 var np = [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
 
