@@ -26,11 +26,11 @@ var r = function(){ %>
 <% } %>
 
 
-<% if(currency.key == 'BTC') {%>
+
     <div class="lastpriceWrapper cb">
         <% r() %>
     </div>
-<% } %>
+
 
 <div class="lastpriceWrapper <% if(currency.key == 'BTC') {%> bc <% } %>">
     <div class="lastprice">
@@ -44,10 +44,10 @@ var r = function(){ %>
     <div class="currency">
         <%- currency.key %>
     </div>
-
+    <!--
     <% if(currency.key != 'BTC') {%>
         <% r() %>
-    <% } %>
+    <% } %>-->
 
     <div class="chwr">
         <div class="chart">

@@ -1,0 +1,344 @@
+@import "../../css/__cssvar";
+
+#categories{
+
+    color : @color-gray-mlight;
+
+    .tcaptiontable{
+        width : auto;
+
+        >div{
+
+            &.tcaption{
+                padding-right: 2 * @rhythm;
+            }
+           
+            &.ticon{
+                cursor: pointer;
+                width: 33px;
+                text-align: center;
+                .transition(0.3s);
+
+                &:hover{
+                    i{
+                        color : @color-main;
+                    }
+                    
+                }
+            }
+
+            &.mlab{
+                opacity: 0.5;
+                width: 33px;
+                cursor: pointer;
+                .transition(0.3s);
+
+                span{
+                    font-weight: 100;
+                    font-size: 0.8em;
+                }
+
+                &:hover{
+                    opacity: 1;
+                    color : @color-bad;
+                }
+            }
+
+            &.clearcategories{
+                display: none;
+
+                &.showed{
+                    display: table-cell;
+                }
+            }
+        }
+    }
+    
+    .tcaptionwrapper{
+       
+        padding : 2 * @rhythm;
+        padding-top : 2 * @rhythm;
+        padding-left: 0;
+       
+        margin-bottom: @rhythm;
+
+        span{
+            font-size : 0.8em;
+            font-weight: 700;
+        }
+
+        i{
+            font-size : 0.6em;
+        }
+    }
+
+    .cat{
+        .transition(0.3s);
+        .cattable{
+            width: auto;
+            >div{
+                vertical-align: middle;
+                padding : @rhythm 2 * @rhythm;
+                padding-left: 0;
+
+                
+
+                &.catvalue{
+                    padding-right: 0;
+                    span{
+                        font-size: 0.8em;
+                    }
+                }
+
+                &.iconWrapper{
+                    width : 2 * @rhythm;
+
+                    i{
+                        font-size: 0.6em;
+                    }
+                }
+
+                &.catcount{
+                    width : 90px;
+                    text-align: right;
+                    font-weight: 700;
+                }
+
+                &.catvalue{
+                    .transition(0.3s);
+                    cursor: pointer;
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
+
+                &.catedit,
+                &.catsearch,
+                &.catcheck{
+                    .transition(0.3s);
+                    padding : 0;
+                    text-align: center;
+                    width : 33px;
+                    cursor: pointer;
+                    opacity: 0.2;
+                    i{
+                        font-size: 0.8em;
+                    }
+
+                    
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
+
+                &.catedit,
+                &.catsearch{
+                    width : 33px;
+                    opacity: 0;
+                }
+
+                &.catedit{
+                    &:hover{
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+
+        &:hover{
+            .cattable{
+                >div{
+                    &.catedit,
+                    &.catcheck,
+                    &.catsearch{
+                        opacity: 1;
+                    }
+
+                    &.catedit{
+                        opacity: 0.5;
+
+                        &:hover{
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    .tg{
+       
+        .selected{
+            display: none;
+        }
+        &.selected{
+            color : @color-orange;
+
+            &.added{
+                color : @color-contrast;
+            }
+
+            .unselected{
+                display: none;
+            }
+
+            .selected{
+                display: inline-block;
+            }
+
+            .cat{
+                .cattable{
+                    >div{
+                        &.catcheck{
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .ta{
+        .tg{
+            display: block;
+
+            &.hdn{
+                display: none;
+            }
+        }
+    }
+
+    &.showedallcats{
+
+        .showallcats{
+            display: none;
+        }
+    
+        .hideallcats{
+            display: block;
+        }
+
+        .ta{
+            .tg{
+                display: block;
+    
+                &.hdn{
+                    display: block;
+                }
+            }
+        }
+
+    }
+
+    .hideallcats,
+    .showallcats{
+        padding : 2 * @rhythm;
+        padding-left: 0;
+        cursor: pointer;
+        opacity: 0.5;
+        .transition(0.3s);
+
+        &:hover{
+            opacity: 1;
+            color : @color-main;
+        }
+
+        span{
+            font-weight: 700;
+            font-size: 0.8em;
+        }
+    }
+
+    .showallcats{
+        display: block;
+    }
+
+    .hideallcats{
+        display: none;
+    }
+
+}
+
+.addcategorydialog{
+
+    .removeWrapper{
+        position: absolute;
+        bottom : 2 * @rhythm;
+        right: 0;
+    }
+
+    .header{
+        padding-left: @rhythm;
+    }
+
+    .btn1{
+            background: transparent;
+            border-color: transparent;
+            color : @color-gray;
+            text-decoration: underline;
+    
+            &:hover{
+                color : @color-main;
+            }
+    }
+
+    .fieldwrapper,
+    .namewrapper{
+        padding : @rhythm 0;
+
+        .label{
+            padding : 0.5 * @rhythm 0;
+            padding-left: @rhythm;
+            span{
+                font-size: 0.8em;
+            }
+        }
+
+        .inputWrapper{
+           
+        }
+    }
+
+    .namewrapper{
+        .inputWrapper{
+            input{
+                width: 100%;
+                border : 0;
+                .shadowSmall();
+            }
+        }
+    }
+}
+
+html.stblack{
+    #categories{
+        .rcptwrp{
+            background: @color-black;
+        }
+        
+    
+        .tcaption{
+            border-bottom : 1px solid fade(@color-main, 40);
+    
+        }
+    
+        .cat{
+            
+            &:hover{
+                color : @color-main;
+            }
+        }
+    
+    
+    
+        .hideallcats,
+        .showallcats{
+    
+            &:hover{
+                color : @color-main;
+            }
+        }
+    
+    }    
+}

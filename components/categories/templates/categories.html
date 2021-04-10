@@ -1,0 +1,47 @@
+<div class="ta">
+    <% _.each(cats, function(cat, i){ %>
+
+        <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(i > 9) {%> hdn <% } %>">
+
+            
+                <div class="cat">
+                    <div class="cattable table">
+
+                        <div class="catvalue catcheckgl">
+                            <span ><%- cat.name %></span>
+                        </div>
+
+                        <div class="catcheck catcheckgl">
+                            
+                            <i class="far fa-circle unselected"></i>
+                            <i class="far fa-check-circle selected"></i>
+                        </div>
+
+                        <div class="catsearch">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <% if(cat.added) {%>
+                        <div class="catedit">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <% } %>
+
+                    </div>
+                </div>
+        </div>
+
+    <% }) %>
+
+    <% if(cats.length > 9) {%>
+
+        <div class="showallcats showhideallcats">
+            <span><%=e('e13021')%></span>
+        </div>
+
+        <div class="hideallcats showhideallcats">
+            <span><%=e('hide')%></span>
+        </div>
+
+    <% } %>
+
+</div>

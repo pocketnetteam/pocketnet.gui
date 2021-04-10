@@ -8,7 +8,7 @@ var tagcloud = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, showed = false, essenseData;
 
 		var actions = {
 
@@ -19,9 +19,72 @@ var tagcloud = (function(){
 		}
 
 		var renders = {
+			showhide : function(){
+				if(showed){
+					el.c.addClass('showedalltags')
+				}
+				else{
+					el.c.removeClass('showedalltags')
+				}
+			},
 			tags : function(tags, clbk){
 
 				if(!el.c) return
+
+				var tagsmap = self.app.platform.sdk.categories.gettagsmap()
+				var addedtags = [];
+
+
+				_.each(tagsmap, function(v, i){
+
+					if(_.indexOf(tags, i) == -1){
+						addedtags.push({
+							tag : i,
+							count : 0
+						})
+					}
+
+				})
+
+				tags = tags.concat(addedtags)
+
+				_.each(tags, function(t){
+					t.count = Number(t.count || 0)
+				})
+
+				var maxcount = 0
+				_.each(tags, function(t){
+					if(t.count > maxcount) maxcount = t.count
+				})
+
+				maxcount++
+
+				
+
+				tags = _.sortBy(tags, function(tag){
+
+					var bonus = 1
+					var base = tag.count + 1
+
+					if(tagsmap[tag.tag]){
+
+						base = maxcount + (tag.count + 1)
+						bonus = 100
+
+						if(tagsmap[tag.tag].fixed){
+							bonus = 2
+						}
+					}
+					
+
+					return -base * bonus
+
+					
+				})
+
+				tags = _.uniq(tags, function(t){
+					return t.tag
+				})
 
 				if(!tags.length){
 					el.c.addClass('hidden')
@@ -36,15 +99,34 @@ var tagcloud = (function(){
 						el : el.tags,
 	
 						data : {
-							tags : tags
+							tags : tags,
+							tagsmap : tagsmap
 						},				
 	
 					}, function(p){
+
+						renders.showhide()
 	
 						p.el.find('.showhidealltags').on('click', function(){
-							el.c.toggleClass('showedalltags')
+							showed = !showed
+							renders.showhide()
+							if(essenseData.renderclbk) essenseData.renderclbk()
 						})
+
+						p.el.find('.tagcheckgl').on('click', function(){
+							var pr = $(this).closest('.tg')
+
+							if (pr.hasClass('fixed')) return
+
+							var id = pr.attr('tag')
+
+							var r = self.app.platform.sdk.categories.tag(id)
+
+						})
+
+						if(essenseData.renderclbk) essenseData.renderclbk()
 	
+					
 						if (clbk)
 							clbk()
 	
@@ -65,8 +147,24 @@ var tagcloud = (function(){
 
 		var initEvents = function(){
 			
-			
+			self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
 
+				make()
+				
+			}	
+
+			self.app.platform.sdk.categories.clbks.tags.tagsmodule = function(id, value, l){
+
+				var e = el.c.find('.tg[tag="'+id+'"]')
+
+				if(value) e.addClass('selected')
+				else e.removeClass('selected')
+			}	
+
+		}
+
+		var removeEvents = function(){
+			delete self.app.platform.sdk.categories.clkbs.selected.mainmodule
 		}
 
 		var load = function(clbk){
@@ -101,8 +199,8 @@ var tagcloud = (function(){
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
-
+			getdata : function(clbk, p){
+				essenseData = p.settings.essenseData || {};
 				var data = {};
 
 				clbk(data);

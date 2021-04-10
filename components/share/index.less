@@ -294,148 +294,7 @@
 
 
 
-	.tgs{
-		margin-bottom: @rhythm;
-
-		.search{
-
-
-			.searchFastResultWrapper{
-				left : 0;
-				background: @bg;
-
-				.result{
-					cursor: pointer;
-					font-size: 0.9em;
-					color : @color-main;
-					font-weight: 500;
-					padding : @rhythm 0;
-					.transition(0.3s);
-
-					&:hover{
-						color : @color-bright;
-					}
-				}
-
-				.empty{
-					text-align: center;
-					span{
-						font-size: 0.8em;
-						
-					}
-				}
-			}
-
-			input{
-				border-radius: 3px;
-				border : 0;
-				background: @bg;
-				border-bottom-right-radius: 0;
-				border-top-right-radius: 0;
-
-				
-			}
-
-			.searchPanel{
-				border-radius: 3px;
-				border : 0;
-				border-bottom-left-radius: 0;
-				border-top-left-radius: 0;
-				background: @bg;
-			}
-
-			.searchInput{
-				.searchInputIcon{
-					>div{
-						&.searchIconLabel{
-							display: none;
-						}
-					}
-				}
-			}
-
-		}
-		.tagsWrapper{			
-
-			>div{
-				vertical-align: top;
-
-				&.label{
-					padding-left: 0;
-					color : @color-add;
-					font-weight: 700;
-				}
-
-				&.tagsCont{
-					padding : 0;
-					overflow: hidden;
-
-					>div{
-						float: left;
-						margin-right : @rhythm;
-
-						&.inputWrapper{
-							padding : 0;
-						}
-					}
-				}
-
-				&.tagsInputWrapper{
-					width: 30%;
-					padding : 0;
-
-					>div{
-						margin-right : @rhythm;
-
-						&.inputWrapper{
-							padding : 0;
-							.shadowSmall();
-						}
-					}
-				}
-			}
-		}
-
-		.tag{
-			padding-top : 0;
-			padding-bottom: 0;
-			margin-top: @rhythm / 2;
-			margin-bottom: @rhythm / 2;
-			margin-right : 2 * @rhythm;
-			border-radius : 20px;
-			background: @bg;
-
-			.tagInner{
-				height: auto;
-				width: auto;
-
-				>div{
-					vertical-align: middle;
-					padding : @rhythm / 2 @rhythm;
-
-					&.label{
-						color : @color-add;
-						padding-left: 2 * @rhythm;
-
-					}
-
-					&.remove{
-						cursor: pointer;
-						text-align : center;
-						color : @color-gray-light;
-
-						&:hover{
-							color : @color-add;
-						}
-					}
-
-					span, i{
-						font-size: 0.8em;
-					}
-				}
-			}
-		}
-	}
+	
 
 	select{
 		background: transparent;
@@ -1062,6 +921,10 @@
 
 	._close {
 		color : #fff;
+		
+		width: 44px;
+		height: 44px;
+		line-height: 44px;
 	}
 
     .wndinner{

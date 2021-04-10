@@ -52,6 +52,11 @@ h3{
     font-size: 1em;
 }
 
+mark {
+    background: fade(@color-contrast, 90);
+    color : #fff;
+}
+
 /*
  * Remove text-shadow in selection highlight:
  * https://twitter.com/miketaylr/status/12228805301
@@ -2812,6 +2817,10 @@ input[type=radio].radio:checked + label {
         max-width: 1280px;
         margin : 0 auto;
         padding : 0 2 * @rhythm;
+
+        &.adj{
+            padding-right: 0;
+        }
        
     }
 }
@@ -2967,6 +2976,7 @@ input[type=radio].radio:checked + label {
         background: #fff;
         border: 1px solid @color-gray-light;
         padding: 4 * @rhythm;
+        border-radius: 3px;
         .shadowSmall();
     }
 
@@ -5447,9 +5457,8 @@ input[type=radio].radio:checked + label {
     
     #content{
         .work.adj{
-            width: 85%;
-            margin-right: 30px;
-           
+            padding-right: 0;
+            
         }
     }
 
@@ -5463,9 +5472,7 @@ input[type=radio].radio:checked + label {
                     &.icon{
                         width: 40px;
                     }
-                    &.label{
-                        display: table-cell;
-                    }
+                  
                 }
             }
         }

@@ -6,8 +6,8 @@
 
 			<% _.each(results, function(result, i){ %>
 
-				<div class="result" result="<%- result %>">
-					#<%- result  %>
+				<div class="result <% if(result.id) {%>bright<% } %>" tag="<%-result.tag || ''%>" category="<%- result.id || '' %>">
+					<%- result.name  %>
 				</div>
 			<% }) %>
 

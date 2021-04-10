@@ -1,4 +1,4 @@
-var chat = (function(){
+var oldchat = (function(){
 
 	var self = new nModule();
 
@@ -533,12 +533,12 @@ var chat = (function(){
 
 			resizeWindow : function(){
 				if (topcaption){
-					topcaption.setOffset([0, 0]);
+					topcaption.setOffset([65, 0]);
 					
 				}
 
 				if (bottomcaption){
-					bottomcaption.setOffset([50, 100]);
+					bottomcaption.setOffset([0, 100]);
 				}
 			},
 
@@ -894,7 +894,7 @@ var chat = (function(){
 					topcaption = new Caption({
 						container: el.c.find('.chatWrapper'),
 						caption: el.c.find('.captionfwrapper'),
-						offset: [0, 0],
+						offset: [65, 0],
 						
 					}).init();	
 
@@ -1268,11 +1268,11 @@ var chat = (function(){
 
 if(typeof module != "undefined")
 {
-	module.exports = chat;
+	module.exports = oldchat;
 }
 else{
 
-	app.modules.chat = {};
-	app.modules.chat.module = chat;
+	app.modules.oldchat = {};
+	app.modules.oldchat.module = oldchat;
 
 }

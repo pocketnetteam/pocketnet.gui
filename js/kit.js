@@ -873,6 +873,9 @@ Share = function(lang){
 			})
 
 		},
+		get : function(){
+			return this.v
+		},
 		v : ''
 	};
 
@@ -944,7 +947,7 @@ Share = function(lang){
 					}
 
 					tags = _.map(tags, function(t){
-						return t.replace("#", '')
+						return t.replace("#", '').toLowerCase()
 					})
 
 					this.v = tags;
@@ -954,7 +957,7 @@ Share = function(lang){
 
 					if(!tags) return;
 
-						tags = tags.replace("#", '')
+						tags = tags.replace("#", '').toLowerCase()
 
 					if(this.v.length > 29){
 						return false;

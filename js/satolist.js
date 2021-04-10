@@ -2397,6 +2397,9 @@ Platform = function (app, listofnodes) {
                             _.each(clbks, function (c) {
                                 c(address)
                             })
+
+
+                            self.sdk.activity.adduser('subscribe', address)
                         }
 
                         topPreloader(100)
@@ -2544,6 +2547,8 @@ Platform = function (app, listofnodes) {
                             }
 
                             var clbks = deep(self.clbks, 'api.actions.subscribePrivate') || {}
+
+                            self.sdk.activity.adduser('subscribe', address)
 
                             _.each(clbks, function (c) {
                                 c(address)
@@ -3646,7 +3651,7 @@ Platform = function (app, listofnodes) {
                         options: {
 
                             vidgetchat: options.vidgetchat,
-                            vidgettags: options.vidgettags,
+                           // vidgettags: options.vidgettags,
                             vidgetlastcomments: options.vidgetlastcomments,
                             vidgetstaking : options.vidgetstaking
 
@@ -3843,7 +3848,7 @@ Platform = function (app, listofnodes) {
 
                                 if (href.indexOf('userpage?id=usersettings') === -1){
 
-                                    console.log('href', href);
+
                                     self.app.platform.sdk.system.get.telegramGetMe(v.value);
 
                                 }
@@ -6505,7 +6510,6 @@ Platform = function (app, listofnodes) {
 
                             else {
 
-                                console.log('inputs', inputs)
 
                                 var ids = _.map(inputs, function (i) {
                                     return {
@@ -6894,6 +6898,573 @@ Platform = function (app, listofnodes) {
 
             }
         },
+        activity : {
+            latest : {},
+            clear : function(){
+                self.sdk.activity.latest = {}
+                self.sdk.activity.save()
+            },
+
+            addsearch : function(value){
+
+                var hash = bitcoin.crypto.hash256(value)
+
+                var info = {
+                    id : hash,
+                    index : value.toLowerCase(),
+                    value : value
+                }
+
+                self.sdk.activity.add('search', 'str', info)
+
+            },
+
+            adduser : function(key, address){
+                if(!address) return
+
+                self.sdk.users.get([address], function () {
+
+                    var user =  self.sdk.users.storage[address]
+
+                    if (user){
+                        var info = {
+                            id : address,
+                            index : user.name.toLowerCase(),
+                            name : user.name,
+                            image : user.image,
+                            address : address
+                        }
+
+                        var error = self.sdk.activity.add(key, 'user', info)
+
+                        console.log("ERROR", error, info)
+                    }
+
+                })
+
+            },
+
+            add : function(key, type, info){
+
+                var l = self.sdk.activity.latest
+
+                if(!info.index) return 'index'
+                if(!info.id) return 'id'
+
+                var obj = {
+                    index : info.index,
+                    id : info.id,
+                    type : type,
+                }
+
+                if(type == 'user'){
+                    if(!info.name || !info.address || !info.image){
+                        return 'validation'
+                    }
+
+                    obj.data = {
+                        name : info.name,
+                        address : info.address,
+                        image : info.image
+                    }
+                }
+
+                if(type == 'str'){
+                    if(!info.value){
+                        return 'validation'
+                    }
+
+                    obj.data = {
+                        value : info.value
+                    }
+                }
+
+                obj.date = self.currentTime()
+
+                l[key] || (l[key] = [])
+
+                l[key] = _.filter(l[key], function(objects){
+                    return objects.id != info.id && objects.index != info.index
+                })
+
+                l[key].unshift(obj)
+
+                l[key] = firstEls(l[key], 50)
+
+                self.sdk.activity.save()
+            },
+            save: function () {
+                localStorage['latestactivity'] = JSON.stringify({
+                    activity : self.sdk.activity.latest
+                })
+            },
+
+            load: function (clbk) {
+                var p = {};
+
+                try {
+                    p = JSON.parse(localStorage['latestactivity'] || '{}');
+                }
+                catch (e) {}
+
+
+                if(!p.activity) p.activity = {}
+
+                self.sdk.activity.latest = p.activity
+
+                if(clbk) clbk()
+            }
+        },
+        categories : {
+            data : {
+                all : {
+                    en : [{
+                        name : "Memes/Funny",
+                        tags : ['funny', 'memes'],
+                        id : 'c2'
+                    },
+                    {
+                        name : "Politics",
+                        tags : ['politics'],
+                        id : 'c3'
+                    },
+                    {
+                        name : "Crypto",
+                        tags : ['crypto'],
+                        id : 'c4'
+                    },
+                    {
+                        name : "Technology/Science",
+                        tags : ['technology', 'science'],
+                        id : 'c5'
+                    },
+                    {
+                        name : "Investing/Finance",
+                        tags : ['investing', 'finance'],
+                        id : 'c6'
+                    },
+                    {
+                        name : "Auto/Racing",
+                        tags : ['auto', 'racing'],
+                        id : 'c7'
+                    },
+                    {
+                        name : "Sports",
+                        tags : ['sports'],
+                        id : 'c8'
+                    },
+                    {
+                        name : "Gaming",
+                        tags : ['gaming'],
+                        id : 'c9'
+                    },
+                    {
+                        name : "Space",
+                        tags : ['space'],
+                        id : 'c10'
+                    },
+                    
+                    {
+                        name : "Art/Music",
+                        tags : ['art', 'music'],
+                        id : 'c11'
+                    },
+                    
+                    {
+                        name : "News/Commentary",
+                        tags : ['news', 'commentary'],
+                        id : 'c12'
+                    },
+                    
+                    {
+                        name : "History",
+                        tags : ['history'],
+                        id : 'c13'
+                    },
+                    {
+                        name : "Story time",
+                        tags : ['storytime'],
+                        id : 'c14'
+                    },
+                    
+                    {
+                        name : "Film/Animation",
+                        tags : ['film', 'animation'],
+                        id : 'c15'
+                    },
+                    
+                    {
+                        name : "Nature/Animals",
+                        tags : ['nature', 'animals'],
+                        id : 'c16'
+                    },
+                    
+                    {
+                        name : "Travel/Architecture",
+                        tags : ['travel', 'architecture'],
+                        id : 'c17'
+                    },
+                    
+                    {
+                        name : "DIY",
+                        tags : ['diy'],
+                        id : 'c18'
+                    }],
+                    ru : []
+                },
+            },
+
+            settings : {
+                tags : {},
+                selected : {},
+                added : {}
+            },
+
+            clbks : {
+                selected : {},
+                added : {},
+                tags  :{},
+                removed : {}
+            },
+
+            fromTags : function(tags, _k){
+                var result = { 
+                    categories : [],
+                    tags : []
+                }
+
+                var usedtags = {}
+
+                var all = self.sdk.categories.get()
+
+                _.each(all, function(ca){
+                    var addedtags = _.filter(tags, function(tag){
+                        return _.indexOf(ca.tags, tag.toLowerCase()) > -1
+                    })
+
+                    if(addedtags.length == ca.tags.length){
+                        result.categories.push(ca)
+
+                        _.each(ca.tags, function(t){
+                            usedtags[t] = true
+                        })
+                    }
+                })
+
+                _.each(tags, function(tag){
+                    if(!usedtags[tag]) result.tags.push(tag)
+                })
+
+                return result
+            },
+
+            getaddedtags : function(_k){
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var selected = self.sdk.categories.settings.selected[k] || {}
+                var addedtags = _.map(self.sdk.categories.settings.tags[k] || {}, function(v, i){
+                    return i
+                })
+
+                return addedtags
+            },
+
+            gettags : function(_k, onlycategories){
+                var tags = []
+
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var selected = self.sdk.categories.settings.selected[k] || {}
+                var addedtags = _.map(self.sdk.categories.settings.tags[k] || {}, function(v, i){
+                    return i
+                })
+
+                var all = self.sdk.categories.get(k)
+
+                _.each(all, function(c){
+                    if(selected[c.id]) tags = tags.concat(c.tags)
+                })
+
+                if(!onlycategories)
+                    tags = tags.concat(addedtags)
+
+                return tags
+            },  
+
+            gettagsmap : function(_k){
+                var ctags = self.sdk.categories.gettags(_k, true)
+                var alltags = self.sdk.categories.gettags(_k)
+
+                var mp = {}
+
+                _.each(alltags, function(tag){
+                    mp[tag] = {
+                        selected : true,
+                        fixed : _.indexOf(ctags, tag) > -1
+                    }
+
+                })
+
+                return mp
+            },
+
+            remove : function(id, _k){
+                var s = self.sdk.categories.settings
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                delete s.added[k][id]
+
+                var selected = self.sdk.categories.settings.selected[k] || {}
+
+                var changeselected = selected[id]
+
+                delete selected[id]
+
+                self.sdk.categories.save()
+
+                if(changeselected){
+                    _.each(self.sdk.categories.clbks.selected, function(f){
+                        f(id, false, k)
+                    })
+                }
+
+                _.each(self.sdk.categories.clbks.removed, function(f){
+                    f(id, k)
+                })
+            },
+
+            add : function(category, _k){
+
+                if(!category.id) return 'id'
+                if(!category.name) return 'name'
+                if(!category.tags) return 'tags'
+                if(!category.tags.length) return 'tags'
+
+                category.tags = _.map(category.tags, function(t){
+                    return t.replace("#", '').toLowerCase()
+                })
+
+                var s = self.sdk.categories.settings
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var exist = _.find(s.added[k], function(ca){
+                    if(ca.name == category.name) return true
+                })
+
+                if(exist){
+                    if(exist.id != category.id){
+                        return 'doublename'
+                    }
+                }
+
+                s.added[k] || (s.added[k] = {})
+                s.added[k][category.id] = {
+                    name : category.name,
+                    id : category.id,
+                    tags : category.tags
+                }
+
+                _.each(self.sdk.categories.clbks.added, function(f){
+                    f(id, k)
+                })
+
+                self.sdk.categories.save()
+
+                return false
+            },
+
+            tag : function(tag, _k){
+
+                if(!tag) return 'emptyid'
+
+
+                var s = self.sdk.categories.settings
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.tags[k] || (s.tags[k] = {})
+
+
+                if (s.tags[k][tag]) 
+                    delete s.tags[k][tag]
+
+                else s.tags[k][tag] = true
+
+                self.sdk.categories.save()
+
+                _.each(self.sdk.categories.clbks.tags, function(f){
+                    f(tag, s.tags[k][tag], k)
+                })
+
+                return false
+            },
+
+            geteslected : function(_k){
+                var allcats = self.sdk.categories.get()
+
+                var s = self.sdk.categories.settings
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.selected[k] || (s.selected[k] = {})
+
+                return _.filter(allcats, function(c){
+                    return s.selected[k][c.id]
+                })
+
+            },
+
+            clear : function(_k){
+                var s = self.sdk.categories.settings
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.selected[k] = {}
+                s.tags[k] = {}
+
+                self.sdk.categories.save()
+
+                _.each(self.sdk.categories.clbks.selected, function(f){
+                    f(null, false, k)
+                })
+            },
+
+            select : function(id, _k){
+
+                if(!id) return 'emptyid'
+
+                var allcats = self.sdk.categories.get(_k)
+
+                var cat = _.find(allcats, function(c){
+                    return c.id == id
+                })
+
+                if(!cat) return 'cantonfound'
+
+                var s = self.sdk.categories.settings
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                s.selected[k] || (s.selected[k] = {})
+
+
+                if (s.selected[k][id]) 
+                    delete s.selected[k][id]
+
+                else s.selected[k][id] = true
+
+                self.sdk.categories.save()
+
+                _.each(self.sdk.categories.clbks.selected, function(f){
+                    f(id, s.selected[k][id], k)
+                })
+
+                return false
+            },
+
+            get : function(_k){
+                var k = _k || self.app.localization.key
+
+                var added = _.map(self.sdk.categories.settings.added[k]|| {}, 
+                function(c){
+                    var cc = _.clone(c)
+
+                    cc.added = true
+
+                    return cc
+                })
+
+                return (self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en']).concat(added)
+            },
+
+            getbyid : function(id, _k){
+                var allcats = self.sdk.categories.get(_k)
+
+                var cat = _.find(allcats, function(c){
+                    return c.id == id
+                })
+
+                return cat || null
+
+            },
+
+            search : function(name){
+
+                return _.filter(self.sdk.categories.get(), function(c){
+
+                    if(c.name.toLowerCase().indexOf(name) > -1) return true
+
+                    return stringEqTrig(c.name, name) > 0.7
+                })
+                
+            },
+
+            getwithselected : function(_k){
+                var k = _k || self.app.localization.key
+
+                if(!self.sdk.categories.data.all[k]) k = 'en'
+
+                var selected = self.sdk.categories.settings.selected[k] || {}
+
+                var all = self.sdk.categories.get()
+
+
+                return _.map(all, function(c){
+                    var cs = _.clone(c)
+
+                    cs.selected = selected[c.id] ? true : false
+
+                    return cs
+                })
+            },
+
+            save: function () {
+                localStorage['categoriessettings'] = JSON.stringify({
+                    settings : self.sdk.categories.settings
+                })
+            },
+
+            load: function (clbk) {
+                var p = {};
+
+                self.sdk.categories.clbks.selected = {}
+                self.sdk.categories.clbks.removed = {}
+                self.sdk.categories.clbks.added = {}
+                self.sdk.categories.clbks.tags = {}
+
+                
+
+                try {
+                    p = JSON.parse(localStorage['categoriessettings'] || '{}');
+                }
+                catch (e) {}
+
+
+                if(!p.settings) p.settings = {}
+
+                self.sdk.categories.settings = p.settings
+
+                self.sdk.categories.settings.tags || (self.sdk.categories.settings.tags = {})
+                self.sdk.categories.settings.selected || (self.sdk.categories.settings.selected = {})
+                self.sdk.categories.settings.added || (self.sdk.categories.settings.added = {})
+
+                if(clbk) clbk()
+            }
+
+        },
         tags: {
             storage: {
 
@@ -7029,7 +7600,8 @@ Platform = function (app, listofnodes) {
                 all: {},
                 fs: {},
                 posts: {},
-                users: {}
+                users: {},
+                tags : {}
             },
 
             clear: function () {
@@ -7037,7 +7609,8 @@ Platform = function (app, listofnodes) {
                     all: {},
                     fs: {},
                     posts: {},
-                    users: {}
+                    users: {},
+                    tags : {}
                 }
             },
 
@@ -7066,7 +7639,7 @@ Platform = function (app, listofnodes) {
 
                 if (type != 'fs' && type != 'all') {
 
-                    if (!s[type][address])
+                    if(!s[type][address])
                         s[type][address] = {}
 
                     if (!s[type][address][fixedBlock]) return
@@ -9215,7 +9788,7 @@ Platform = function (app, listofnodes) {
                     p.start_txid
                     p.count 10
                     p.lang lang 
-                    p.tags tags
+                    p.tagsfilter tagsfilter
                     */
 
                     self.app.user.isState(function (state) {
@@ -9224,15 +9797,15 @@ Platform = function (app, listofnodes) {
 
                         p.count || (p.count = 10)
                         p.lang || (p.lang = self.app.localization.key)
-                        p.height || (p.height = self.currentBlock)
-                        p.tags || (p.tags = [])
+                        p.height || (p.height = 0)
+                        p.tagsfilter || (p.tagsfilter = [])
                         p.begin || (p.begin = '')
 
                         if (state) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + (p.height || "")  + "_" + (p.tags.join(',')) + "_" + (p.begin || "")
+                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + (p.height || "")  + "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "")
 
                         var storage = self.sdk.node.shares.storage;
                         var s = self.sdk.node.shares;
@@ -9281,7 +9854,7 @@ Platform = function (app, listofnodes) {
 
                             if (!p.txid) p.txid = p.begin || ''
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tags];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter];
 
                             s.getex(parameters, function (data, error) {
 
@@ -9294,7 +9867,8 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                                console.log('shares', shares, blocknumber, data)
+                                console.log('data.contents', data.contents)
+
 
                                 p.blocknumber = blocknumber
 
@@ -9359,7 +9933,6 @@ Platform = function (app, listofnodes) {
 
                 getCoibaseTypeN : function (tx, address) {
                 
-                    console.log(tx, address)
                     var type = null;
                     
                     if(!tx.vout || !tx.vout.length || !address) return null
@@ -9370,7 +9943,6 @@ Platform = function (app, listofnodes) {
                     if(!firstout || l <= 1) return null
 
                     try {
-                        console.log("HERE")
                         var chunks = bitcoin.script.decompile(Buffer.from(firstout.scriptPubKey.hex, 'hex'))
 
                         var cl = chunks.length
@@ -9390,7 +9962,6 @@ Platform = function (app, listofnodes) {
                             if (_address == address && chunks[cl - n]) {
                                 var ch = chunks[cl - n]
 
-                                console.log("CH", ch, chunks)
 
                                 if (ch == bitcoin.opcodes.OP_WINNER_POST) {
                                     type = 'post'
@@ -10032,7 +10603,6 @@ Platform = function (app, listofnodes) {
                             return self.sdk.node.transactions.canSpend(u) && u.amount
                         })
                         
-                        console.log("UNSPENT OPTIMIZATION LENGTH", unspents.length)
 
                         if (unspents.length > 200){
                             unspents = _.filter(unspents, function(u, i){
@@ -10042,7 +10612,6 @@ Platform = function (app, listofnodes) {
                             var keyPair = self.app.user.keys()
 
                             self.sdk.wallet.sendFromInputs(pnet.address, unspents, keyPair, 0, function(err, tx){
-                                console.log("UNSPENT OPTIMIZATION", err)
                             })
                             
                         }
@@ -11073,6 +11642,8 @@ Platform = function (app, listofnodes) {
 
                     upvoteShare: function (inputs, upvoteShare, clbk, p) {
                         this.common(inputs, upvoteShare, TXFEE, clbk, p)
+
+                        self.sdk.activity.adduser('like', upvoteShare.address.v)
                     },
 
                     complainShare: function (inputs, complainShare, clbk, p) {
@@ -11089,6 +11660,8 @@ Platform = function (app, listofnodes) {
 
                     cScore: function (inputs, cScore, clbk, p) {
                         this.common(inputs, cScore, TXFEE, clbk, p)
+                        
+                        self.sdk.activity.adduser('like', cScore.address.v)
                     },
 
                     unsubscribe: function (inputs, unsubscribe, clbk, p) {
@@ -15314,7 +15887,6 @@ Platform = function (app, listofnodes) {
                 loadMore: function (data, clbk, wa) {
 
                     var _dataclbk = function (tx, err) {
-                        console.log('tx, err', tx, err)
 
                         if (err || !tx) {
 
@@ -15377,7 +15949,6 @@ Platform = function (app, listofnodes) {
 
                         _.each(outs, function (o) {
 
-                            console.log("clearTemp", data.txid, o.vout)
 
                             platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
 
@@ -15428,7 +15999,6 @@ Platform = function (app, listofnodes) {
                         data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address) 
 
 
-                        console.log('data.cointype', data.cointype)
 
 
                         platform.sdk.users.getone(data.address || '', function () {
@@ -17941,7 +18511,8 @@ Platform = function (app, listofnodes) {
             all: {},
             fs: {},
             posts: {},
-            users: {}
+            users: {},
+            tags : {}
         }
 
         self.sdk.node.shares.storage = {
@@ -18167,7 +18738,10 @@ Platform = function (app, listofnodes) {
             self.firebase.init,
             self.sdk.tempmessenger.init,
             self.sdk.exchanges.load,
-            self.sdk.user.meUpdate
+            self.sdk.user.meUpdate,
+            self.sdk.categories.load,
+            self.sdk.activity.load
+
         ], function () {
             if(clbk) clbk()
         })
@@ -18215,7 +18789,7 @@ Platform = function (app, listofnodes) {
                         </matrix-element>
                     </div>`
 
-                    $('#matrix').append(matrix);         
+                    //$('#matrix').append(matrix);         
                     
                 }
 
@@ -18263,6 +18837,8 @@ Platform = function (app, listofnodes) {
                     self.firebase.init,
                     self.sdk.tempmessenger.init,
                     self.sdk.exchanges.load,
+                    self.sdk.categories.load,
+                    self.sdk.activity.load
                 ], function () {
 
                     self.sdk.node.transactions.setUnspentoptimizationInterval()

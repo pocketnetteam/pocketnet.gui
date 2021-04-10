@@ -10,9 +10,9 @@ var main = (function(){
 
 		var el;
 
-		var roller = null, lenta = null, share = null, panel, uptimer = null;
+		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
-		var upbutton = null, plissing = null;
+		var upbutton = null, plissing = null, searchvalue = '', result, fixedBlock;
 
 		var currentMode = 'common', hsready = false;
 
@@ -23,8 +23,12 @@ var main = (function(){
 		var actions = {
 			refreshSticky : function(){
 
-				if (hsready)
+				if (hsready){
 					el.panel.hcSticky('refresh');
+					el.leftpanel.hcSticky('refresh');
+					
+				}
+					
 			},
 			addbutton : function(){
 
@@ -156,7 +160,7 @@ var main = (function(){
 					}
 				}
 
-				renders.lenta()
+				renders.lentawithsearch()
 
 				makeShare()
 
@@ -180,6 +184,52 @@ var main = (function(){
 				_scrollTop(0, null, 5)
 			}
 
+		}
+
+		var makenext = function(type, start, count, clbk){
+
+			var l = result[type].data.length;
+			var L = result[type].count
+
+			if(start + count <= l){
+				return
+			}
+
+			if (start < l){
+				var d = l - start;
+
+				start = l;
+				count = count - d;
+			}
+			
+			if(start + count > L) count = L - start
+
+			if(count <= 0) return
+
+			load[type](function(data){
+
+				if(clbk)
+				{
+					clbk(data)
+				}
+
+				else
+				{
+					renders[type](data)
+				}
+
+			}, start, count)	
+
+		}
+
+		var load = {
+			posts : function(clbk, start, count){
+				self.app.platform.sdk.search.get(searchvalue, 'posts', start, count, fixedBlock, function(r){
+
+					clbk(r.data);
+
+				})
+			},
 		}
 
 		var renders = {
@@ -235,6 +285,30 @@ var main = (function(){
 				}
 			},
 
+			leftpanel: function(){
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'leftpanel',
+					el : el.leftpanel,
+					animation : false,
+
+					essenseData : {
+					
+						renderclbk : function(){
+							actions.refreshSticky()
+						}
+					},
+					clbk : function(e, p){
+
+						leftpanel = p;
+
+					}
+
+				})
+			},
+
 			panel : function(){
 
 				self.nav.api.load({
@@ -254,107 +328,128 @@ var main = (function(){
 					clbk : function(e, p){
 
 						panel = p;
-
-						actions.panelPosition()
-
-						window.addEventListener('resize', events.panelPosition)
-						window.addEventListener('scroll', actions.panelTopPosition)
-
-
-						el.panel.hcSticky({
-							stickTo: '#main',
-							top : 76,
-							bottom : 122
-						});
-
-						hsready = true
-
+						
 					}
 
 				})
 			},
+			lentawithsearch : function(clbk, p){
 
+				if(searchvalue){
+
+					var value = searchvalue.replace('tag:', "#");
+
+					var c = deep(self, 'app.modules.menu.module.showsearch')
+
+					if (c)
+						c(value)
+
+					self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
+
+						if (r.count){
+							self.app.platform.sdk.activity.addsearch(searchvalue)
+						}
+
+						fixedBlock = block
+
+						result = {
+							posts : r
+						};
+
+						console.log('result11', result)
+
+						renders.lenta(clbk, p)
+					})
+
+				}
+				else{
+					result = {}
+					fixedBlock = null
+
+					var c = deep(self, 'app.modules.menu.module.showsearch')
+
+					if (c)
+						c('')
+
+					renders.lenta(clbk, p)
+				}
+			},
 			lenta : function(clbk, p){
 
 				if(!p) p = {};
 
+				var loader = null
+				var fp = false
+
 				renders.addpanel();
 
-				self.app.user.isState(function(state){
+				if(searchvalue){
+					loader = function(clbk){
+						var _clbk = function(data){
+							var shares = self.app.platform.sdk.node.shares.transform(data) 
 
-					var r = null;
+							if (clbk)
+								clbk(shares, null, {
+									count : 10
+								})
+						}
 
-					/*if(state){
+						if(!fp){
 
-						var address = deep(self, 'app.user.address.value')
+							console.log('result', result)
 
-						if (address){
-							var author = deep(self, 'sdk.users.storage.'+address)
+							fp = true
 
-							var u = _.map(deep(author, 'subscribes') || [], function(a){
-								return a.adddress
-							})
-
-							if(u.length >= 30){
-								if (currentMode == 'common'){
-									r = 'sub'
-								}
-
-								if(currentMode == 'sub'){
-									r = false
-								}
-							}
+							_clbk(result.posts.data)
 
 						}
 
-						
-					}*/
-
-					
+						else
+						{
+							makenext('posts', result.posts.data.length, 10, function(data){
+								_clbk(data)
+							})
+						}
+					}
+				}
 				
-					self.nav.api.load({
+				self.nav.api.load({
+					open : true,
+					id : 'lenta',
+					el : el.lenta,
+					animation : false,
 
-						open : true,
-						id : 'lenta',
-						el : el.lenta,
-						animation : false,
+					mid : 'main',
 
-						mid : 'main',
-
-						essenseData : {
-							hr : 'index?',
-							goback : p.goback,
-
-							r : r,
-
-							renderclbk : function(){
-								
-								//actions.refreshSticky()
-		
-							}
+					essenseData : {
+						hr : 'index?',
+						goback : p.goback,
+						searchValue : searchvalue || null,
+						search : searchvalue ? true : false,
+						renderclbk : function(){
 						},
-						
-						clbk : function(e, p){
+						loader : loader
+					},
+					clbk : function(e, p){
 
-							if(!upbutton)
-								upbutton = self.app.platform.api.upbutton(el.up, {
-									top : function(){
-					
-										return '65px'
-									},
-									rightEl : el.c.find('.lentacell')
-								})		
+						if(!upbutton)
+							upbutton = self.app.platform.api.upbutton(el.up, {
+								top : function(){
+				
+									return '65px'
+								},
+								rightEl : el.c.find('.leftpanelcell')
+							})		
 
 							lenta = p
 
-							if (clbk)
-								clbk()
+						if (clbk)
+							clbk()
 
-						}
-
-					})
+					}
 
 				})
+
 			}
 		}
 
@@ -377,6 +472,20 @@ var main = (function(){
 
 			el.addbutton.on('click', actions.addbutton)
 
+			el.leftpanel.hcSticky({
+				stickTo: '#main',
+				top : 64,
+				bottom : 122
+			});
+
+			el.panel.hcSticky({
+				stickTo: '#main',
+				top : 76,
+				bottom : 122
+			});
+
+			hsready = true
+
 		}
 
 		var makePanel = function(){
@@ -385,6 +494,11 @@ var main = (function(){
 
 					if(!isMobile()){
 						renders.panel()
+
+					}
+
+					if(!isMobile()){
+						renders.leftpanel()
 
 					}
 
@@ -425,7 +539,7 @@ var main = (function(){
 
 			localStorage['lentakey'] = parameters().r || 'index'
 
-			renders.lenta(clbk, p)
+			renders.lentawithsearch(clbk, p)
 
 			makeShare()
 
@@ -485,8 +599,10 @@ var main = (function(){
 
 					if(lenta) lenta.destroy()
 
-					renders.lenta()
+					renders.lentawithsearch()
 				}
+
+				renders.leftpanel()
 
 
 				makeShare()
@@ -523,34 +639,8 @@ var main = (function(){
 					currentMode = 'common'
 				}
 
-				
-
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
-				/*if(!p.state && primary && (typeof _Electron != 'undefined' || window.cordova || currentMode =='common' && !beginmaterial) )
-				{
-					if(typeof _Electron != 'undefined' || window.cordova){
-
-						self.nav.api.load({
-							open : true,
-							href : 'authorization',
-							history : true
-						})
-						
-					}	
-					else
-					{
-						
-						self.nav.api.load({
-							open : true,
-							href : 'video',
-							history : true
-						})
-					}
-
-					return
-					
-				}*/
 
 				if(self.app.curation()){
 					self.nav.api.load({
@@ -561,7 +651,6 @@ var main = (function(){
 
 					return
 				}
-
 
 				if(p.state && primary && !self.app.user.validate()){
 
@@ -594,16 +683,13 @@ var main = (function(){
 
 					upbutton = null
 
-				window.removeEventListener('scroll', actions.panelTopPosition)
-				window.removeEventListener('resize', events.panelPosition)
-				window.removeEventListener('scroll', actions.addbuttonscroll)
+
 				
 				if (roller)
 					roller.destroy()
 
 
 				if (lenta){
-
 					lenta.destroy()
 				}
 
@@ -615,8 +701,12 @@ var main = (function(){
 					panel.destroy()
 				}
 
-				
+				if (leftpanel){
+					leftpanel.destroy()
+				}
 
+				
+				leftpanel = null
 				panel = null
 				roller = null
 				lenta = null
@@ -634,6 +724,7 @@ var main = (function(){
 				el.share = el.c.find('.share');
 				el.lenta = el.c.find('.lentaWrapper');
 				el.panel = el.c.find('.panel');
+				el.leftpanel = el.c.find('.leftpanel');
 				el.up = el.c.find('.upbuttonwrapper')
 				el.smallpanel = el.c.find('.smallpanell')
 				el.addbutton = el.c.find('.addbutton')
@@ -641,6 +732,12 @@ var main = (function(){
 				el.w = $(window)
 
 				initEvents();
+
+				if(!p.goback){
+					searchvalue = parameters().ss || ''
+					fixedBlock = null
+					result = {}
+				}
 
 				make(function(){
 					p.clbk(null, p);

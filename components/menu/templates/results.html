@@ -1,26 +1,27 @@
 <div class="fastresultswrapper">
 
-	<% if((results.users && results.users.data.length) || (results.fastsearch && results.fastsearch.length)) {%>
+	<% if(results.length) {%>
 
 		<div class="results">
-			<% if(results.users && results.users.data.length) {%>
 
-				<div class="users">
+			<% _.each(results, function(r){ %> 
 
-					<% _.each(results.users.data, function(user, index){ 
+				<div class="result">
 
-						if(index >=6) return
+					<% if(r.type == 'user') {
+						
+						var user = r.data
 
-					%>
+						%>
 
 						<div class="user" address="<%- user.address %>">
 							<div class="userTable table">
 								<div class="iconWrapper">
-									<div class="icon">
+									<div class="usicon">
 
 										<% 
 
-											var src = user.i  
+											var src = user.i  || user.image
 											
 										%>
 
@@ -40,30 +41,131 @@
 								</div>
 							</div>
 						</div>
-						
-					<% }) %>
 
-				</div>
+					<% } %>
 
-			<% } %> 
+					<% if(r.type == 'tag') {%>
 
-			<% if(results.fastsearch && results.fastsearch.length) {%>
+						<div class="searchbywrapper small">
 
-				<div class="fastsearch">
-
-					<% _.each(results.fastsearch, function(result, index){ %>
-
-						<div class="result" result="<%- value %><%- result %>">
-							<div class="name"><b><%- value %></b><%- result %></div>
+							<div class="searchby searchbytag">
+								<div class="swrp table">
+									<div class="rsicon">
+										<i class="fas fa-hashtag"></i>
+									</div>
+									<div class="label">
+										<%- r.data.value %>
+									</div>
+								</div>
+							</div>
+					
 						</div>
-						
-					<% }) %>
+
+					<% } %>
+
+					<% if(r.type == 'str') {%>
+
+						<div class="searchbywrapper small">
+							<a href="index?ss=<%- r.data.value %>">
+								<div class="searchby searchbyusers">
+									<div class="swrp table">
+										<div class="rsicon">
+											<i class="fas fa-search"></i>
+										</div>
+										<div class="label">
+											<%- r.data.value %>
+										</div>
+									</div>
+								</div>
+							</a>
+					
+						</div>
+
+					<% } %>
+					
 
 				</div>
 
-			<% } %> 
+			<% }) %>
+
 		</div>
 
-	<% } %> 
+	<% } %>
+
+
+
+
+	<% if(value) {%>
+
+		<% if(counts.user > 10 && value.indexOf(" ") == -1) {%>
+
+		<!--<div class="searchbywrapper small">
+
+			<div class="searchby searchbyusers">
+				<div class="swrp table">
+					<div class="rsicon">
+						<i class="fas fa-user"></i>
+					</div>
+					<div class="label">
+						<%=e('showmoreusers')%>
+					</div>
+				</div>
+			</div>
+	
+		</div>-->
+
+		<% } %>
+
+		<div class="searchbywrapper">
+
+			<div class="caption">
+				<span>
+					<%=e('e13157')%>
+				</span>
+			</div>
+
+			<a href="index?ss=<%-value%>">
+				<div class="searchby searchbyvalue">
+			
+					<div class="swrp table">
+						<div class="rsicon">
+							<i class="fas fa-pencil-alt"></i>
+						</div>
+						<div class="label">
+							<%-value%>
+						</div>
+					</div>
+				</div>
+			</a>
+
+			
+
+			<% 
+			
+				var wordsRegExp = /[,.!?;:() \n\r]/g
+				var words = _.uniq(_.filter(value.split(wordsRegExp), function(r){
+					return r
+				}));
+			
+			%>
+			<a href="index?ss=tag:<%-value%>">
+				<div class="searchby searchbytag">
+					<div class="swrp table">
+						<div class="rsicon">
+							<i class="fas fa-hashtag"></i>
+						</div>
+						<div class="label">
+							<%-_.map(words, function(w){return '#' + w;}).join(', ')%>
+						</div>
+					</div>
+				</div>
+			</a>	
+	
+		</div>
+
+		
+
+	<% } %>
+
 </div>
 

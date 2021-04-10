@@ -288,7 +288,6 @@ var lenta = (function(){
 					el.c.removeClass('networkError')
 
 					if(!shares){
-						console.log("IM HERE")
 					}
 					else
 					{
@@ -457,7 +456,6 @@ var lenta = (function(){
 						players[share.txid].el = vel
 						players[share.txid].id = vel.attr('pid')
 
-						console.log('essenseData', essenseData)
 						if (essenseData.enterFullScreenVideo){
 							essenseData.enterFullScreenVideo = false
 
@@ -804,8 +802,6 @@ var lenta = (function(){
 					return
 				}
 
-				console.log("UPVOTER")
-			
 				self.sdk.node.transactions.create.commonFromUnspent(
 
 					upvoteShare,
@@ -1615,7 +1611,6 @@ var lenta = (function(){
 		var renders = {
 			debugusers : function(el){
 				var cn = el.find('.testusersprofiles')
-				console.log("CH", cn)
 				var ids = (cn.attr('ids') || "").split(',')
 
 				if(ids.length){
@@ -1666,8 +1661,6 @@ var lenta = (function(){
 						var hr = 'https://pocketnet.app/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + rf
 
 						if (parameters().address) hr += '&address=' + (parameters().address || '')
-
-						console.log('essenseData.comments', essenseData.comments)
 
 						self.nav.api.load({
 							open : true,
@@ -2598,7 +2591,6 @@ var lenta = (function(){
 	
 							}
 
-							console.log("PRCOUNT", pr.count, shares.length)
 	
 							////// SHIT
 							if (!shares.length || shares.length < pr.count && (recommended || author || essenseData.search))
@@ -2681,13 +2673,16 @@ var lenta = (function(){
 								loader = 'txids'
 							}
 
+							var tagsfilter = self.app.platform.sdk.categories.gettags()
+
 
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
 								begin : _beginmaterial || '',
 								txids : essenseData.txids,
-								height : fixedblock
+								height : fixedblock,
+								tagsfilter : tagsfilter
 
 							}, function(shares, error, pr){
 
@@ -2704,7 +2699,6 @@ var lenta = (function(){
 									shares = _.filter(shares, essenseData.filter)
 
 								}
-
 
 								load.sstuff(shares, error, pr, clbk)				
 
@@ -2726,7 +2720,38 @@ var lenta = (function(){
 
 			
 		}
+		var getloader = function(){
+			var loader = 'common';
+			var author = essenseData.author;
 
+			if(!author && deep(self.app.platform.sdk, 'usersettings.meta.hierarchicalShares.value')){
+				loader = 'hierarchical'
+			}
+
+			if (recommended){
+
+				if(recommended == 'recommended'){
+					loader = 'recommended'
+				}
+
+				else
+
+				if(recommended == 'b'){
+					loader = 'getbyidsp'
+				}
+
+				else
+				{
+					loader = 'common'
+				}						
+			}
+
+			if(essenseData.txids && recommended != 'b'){
+				loader = 'txids'
+			}
+
+			return loader
+		}
 		var state = {
 			save : function(){
 
@@ -2911,7 +2936,6 @@ var lenta = (function(){
 			if(!essenseData.txids){
 				self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
 
-					console.log('share', share);
 
 					if (share.txidEdit){		
 												
@@ -3075,6 +3099,16 @@ var lenta = (function(){
 				else
 				{
 					shownewmaterials(deep(data, 'sharesLang.' + self.app.localization.key))
+				}
+				
+			}
+			self.app.platform.sdk.categories.clbks.tags.lenta =
+			self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
+
+				if(getloader() == 'hierarchical'){
+					//_scrollTop(0)
+					actions.loadprev()
+					
 				}
 				
 			}
@@ -3369,7 +3403,10 @@ var lenta = (function(){
 				initedcommentes = {}
 
 				delete self.iclbks.lenta
-				
+
+				delete self.app.platform.sdk.categories.clbks.tags.lenta
+				delete self.app.platform.sdk.categories.clbks.selected.lenta
+
 				delete self.app.platform.ws.messages.comment.clbks.lenta
 				delete self.app.platform.sdk.node.shares.clbks.added.lenta
 				delete self.app.platform.ws.messages.transaction.clbks.temp
@@ -3417,9 +3454,6 @@ var lenta = (function(){
 				el.shares = el.c.find('.shares');
 				el.loader = el.c.find('.loader');
 				el.lentacnt = el.c.find('.lentacell .cnt')
-
-				console.log("INIT")
-
 
 				initEvents();
 

@@ -1,15 +1,10 @@
 <div class="wrp">
     <div class="rcptwrp">
-    <div class="captionwrapperd">
-        <div class="rcaptiontable table">
-            <div class="rcaptionWrapper">
-                <div class="rcaption">
-                    <span><%=e('e13122')%></span>
-                </div>
-            </div>
 
-        </div>
-    </div>
+                    <div class="rcaption">
+                        <span><%=e('e13122')%></span>
+                    </div>
+
         
 
         <div class="lastcommentslistwrapper">
@@ -54,7 +49,7 @@
 
         <div class="commentgroup" share="<%-postid%>">
 
-            <div class="sharepreview">
+            <!--<div class="sharepreview">
                 <div class="shareprwrapper table">
 
                 <% if(video || image){ %>
@@ -84,7 +79,7 @@
 
 
                 </div>
-            </div>
+            </div>-->
 
             <div class="comments">
                 <% _.each(group, function(comment){ 
@@ -96,35 +91,47 @@
                     <div class="comment " id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
                         <div class="commentPaddingWrapper">
+
+                            <div class="icons">
+
+                                <div class="iconWrapper">
+                                    <% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
+            
+                                    <div class="icon">
+                                        <div class="usericon" image="<%-src || ''%>">
+                                        </div>
+                                    </div>
+            
+                                </div>
+
+                                <% if(comment.address != share.address) {%>
+
+                                <div class="iconbetweenWrapper">
+                                    <i class="fas fa-long-arrow-alt-right"></i>
+                                </div>
+
+                                <div class="iconWrapper">
+                                    <% var src2 = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
+            
+                                    <div class="icon">
+                                        <div class="usericon" image="<%-src2 || ''%>">
+                                   
+                                        </div>
+                                    </div>
+            
+                                </div>
+
+                                <% } %>
+
+                            </div>
                 
                             <div class="commentWrapper table">
                 
-                                <div class="iconWrapper">
-                                        <% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
-                
-                                        <div class="icon">
-                                            <div class="usericon" image="<%-src || ''%>">
-                                                <% if(!src) {%>
-                                                    <svg width="30" height="30" data-jdenticon-value="<%-comment.address%>"></svg>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                
-                                </div>
+                                
                 
                                 <div class="commentBody">
                 
-                                    <div class="metatable table">
-
-                                        <div class="author">
-                                            <b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b> 
-                                        </div>          
-                                        
-                                        <div class="datecell">
-                                            <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
-                                        </div>
-                                        
-                                    </div>
+                                   
                 
                                     <div class="cbodyWrapper">
                 
@@ -138,15 +145,12 @@
                                                         stripIgnoreTag: true
                                                     }), true)
                 
-                
-                                                    
-                
                                                     m = emojione.toImage(l)
 
                                                 %>
                 
                                                     <div class="commentmessage">
-                                                        <div><%=nl2br(trimHtml(trimrn(m), 120))%></div>
+                                                        <div><b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b> <% if(comment.address != share.address) {%> <i class="fas fa-long-arrow-alt-right"></i> <b><%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %></b><% } %>: <%=nl2br(trimHtml(trimrn(m), 120))%> <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span></div>
                                                     </div>
                 
                                                 <% } %>
@@ -159,38 +163,7 @@
                 
                                     </div>
 
-                                    <% 								
-                                    
-                                        if(comment.images.length && !comment.deleted) {
-                                            var additionall = 0;
-                                            var icClass = '';
-                            
-                                            if (comment.images.length + additionall == 1) icClass = 'one';
-                                            if (comment.images.length + additionall == 2) icClass = 'two';
-                                            if (comment.images.length + additionall == 2) icClass = 'three';
-                                            if (comment.images.length + additionall == 4) icClass = 'four';
-                                            if (comment.images.length + additionall > 4) icClass = 'more';
-                                            
-                                            %>
-                            
-                                            <div class="commentimages">
-                                                <div class="imagesContainer <%-icClass%>">
-                                                    <% _.each(comment.images, function(image){ %>
-                            
-                                                        <div class="imagesWrapper">
-                                                            <div class="image imageCommentOpen" image="<%-image%>" i="<%-image%>">
-                                                            </div>
-                                                        </div>
-                            
-                                                    <% }) %>
-                            
-                                                </div>
-                                            </div>
-                            
-                                    <% } %>
-
-                                        
-                
+                                
                                     
                                 </div>
                 

@@ -347,10 +347,28 @@ var metadisplay = function(){ %>
 				<div class="cntswrk">
 					<div class="paddingWrapper">
 						
-						<% if(share.tags && share.tags.length > 0) {%>
+						<% if(share.tags && share.tags.length > 0) {
+
+							console.log('share', share)
+							
+							var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
+
+							
+							%>
 
 							<div class="tags canmark hideOnFullVideo">
-								<% _.each(share.tags, function(tag){ %>
+								<% _.each(bycategories.categories, function(category){ %>
+
+									<div class="category">
+								
+										<span><b><%-category.name%></b></span> 
+										<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
+								
+									</div>
+
+								<% }) %>
+
+								<% _.each(bycategories.tags, function(tag){ %>
 
 									<div class="tag">
 										<a href="s?ss=tag:<%-tag%>">
