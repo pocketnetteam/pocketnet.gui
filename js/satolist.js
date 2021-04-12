@@ -4,6 +4,8 @@ if (typeof _Electron != 'undefined') {
     electron = require('electron');
 
     var storage = electron.OSBrowser; //?
+
+    $('html').addClass('electron')
 }
 
 
