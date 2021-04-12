@@ -269,7 +269,10 @@ var lenta = (function(){
 			},
 
 			loadmore : function(loadclbk){
+				console.log('loadmore')
 				load.shares(function(shares, error){
+
+					console.log('shares, error', shares, error)
 
 					if (error){
 						making = false;
@@ -2590,7 +2593,7 @@ var lenta = (function(){
 							else
 							{
 	
-								if ( (shares.length < pr.count || recommended == 'recommended') && (recommended ||author || essenseData.search) ){
+								if ( (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.search || essenseData.tags) ){
 	
 									setTimeout(function(){
 										if (el.c)
@@ -3361,11 +3364,13 @@ var lenta = (function(){
 
 					mestate = _mestate || {}
 
+					console.log('essenseData', essenseData)
+
 					var data = {
 						beginmaterial : beginmaterial,
 						author : essenseData.author,
 						recommended : recommended,
-
+						filters : essenseData.search || essenseData.tags
 					};
 
 					self.loadTemplate({

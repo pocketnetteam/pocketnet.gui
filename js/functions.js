@@ -8567,6 +8567,9 @@
 		}
 
 		self.clear = events.clear
+		self.blur = function(){
+			el.find('input').blur()
+		}
 
 		var initEvents = function(){
 

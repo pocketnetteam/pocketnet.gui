@@ -1,5 +1,9 @@
 <div class="ta">
-    <% _.each(cats, function(cat, i){ %>
+    <% _.each(cats, function(cat, i){ 
+        
+        var title = _.map(cat.tags, function(w){return "#" + w}).join(', ')
+        
+        %>
 
         <div category="<%-cat.id%>" class="tg <% if(cat.added) {%> added <% } %> <% if(cat.selected) {%> selected <% } %> <% if(i > 9) {%> hdn <% } %>">
 
@@ -7,7 +11,7 @@
                 <div class="cat">
                     <div class="cattable table">
 
-                        <div class="catvalue catcheckgl">
+                        <div class="catvalue catcheckgl" title="<%-title%>">
                             <span ><%- cat.name %></span>
                         </div>
 

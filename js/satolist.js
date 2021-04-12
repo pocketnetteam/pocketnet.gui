@@ -7038,99 +7038,204 @@ Platform = function (app, listofnodes) {
         categories : {
             data : {
                 all : {
-                    en : [{
-                        name : "Memes/Funny",
-                        tags : ['funny', 'memes'],
-                        id : 'c2'
-                    },
-                    {
-                        name : "Politics",
-                        tags : ['politics'],
-                        id : 'c3'
-                    },
-                    {
-                        name : "Crypto",
-                        tags : ['crypto'],
-                        id : 'c4'
-                    },
-                    {
-                        name : "Technology/Science",
-                        tags : ['technology', 'science'],
-                        id : 'c5'
-                    },
-                    {
-                        name : "Investing/Finance",
-                        tags : ['investing', 'finance'],
-                        id : 'c6'
-                    },
-                    {
-                        name : "Auto/Racing",
-                        tags : ['auto', 'racing'],
-                        id : 'c7'
-                    },
-                    {
-                        name : "Sports",
-                        tags : ['sports'],
-                        id : 'c8'
-                    },
-                    {
-                        name : "Gaming",
-                        tags : ['gaming'],
-                        id : 'c9'
-                    },
-                    {
-                        name : "Space",
-                        tags : ['space'],
-                        id : 'c10'
-                    },
-                    
-                    {
-                        name : "Art/Music",
-                        tags : ['art', 'music'],
-                        id : 'c11'
-                    },
-                    
-                    {
-                        name : "News/Commentary",
-                        tags : ['news', 'commentary'],
-                        id : 'c12'
-                    },
-                    
-                    {
-                        name : "History",
-                        tags : ['history'],
-                        id : 'c13'
-                    },
-                    {
-                        name : "Story time",
-                        tags : ['storytime'],
-                        id : 'c14'
-                    },
-                    
-                    {
-                        name : "Film/Animation",
-                        tags : ['film', 'animation'],
-                        id : 'c15'
-                    },
-                    
-                    {
-                        name : "Nature/Animals",
-                        tags : ['nature', 'animals'],
-                        id : 'c16'
-                    },
-                    
-                    {
-                        name : "Travel/Architecture",
-                        tags : ['travel', 'architecture'],
-                        id : 'c17'
-                    },
-                    
-                    {
-                        name : "DIY",
-                        tags : ['diy'],
-                        id : 'c18'
-                    }],
-                    ru : []
+                    en : [
+                        {
+                            name : "Memes/Funny",
+                            tags : ['funny', 'memes'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Politics",
+                            tags : ['politics'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Crypto",
+                            tags : ['crypto'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Technology/Science",
+                            tags : ['technology', 'science'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Faith/Religion",
+                            tags : ['faith', 'religion'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Investing/Finance",
+                            tags : ['investing', 'finance'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "Auto/Racing",
+                            tags : ['auto', 'racing'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Sports",
+                            tags : ['sports'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Gaming",
+                            tags : ['gaming'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Space",
+                            tags : ['space'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Art/Music",
+                            tags : ['art', 'music'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "News/Commentary",
+                            tags : ['news', 'commentary'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "History",
+                            tags : ['history'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Story time",
+                            tags : ['storytime'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Film/Animation",
+                            tags : ['film', 'animation'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Nature/Animals",
+                            tags : ['nature', 'animals'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Travel/Architecture",
+                            tags : ['travel', 'architecture'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "DIY",
+                            tags : ['diy'],
+                            id : 'c18'
+                        }
+                    ],
+                    ru : [
+                        {
+                            name : "Мемы/Юмор",
+                            tags : ['мемы', 'юмор'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Политика",
+                            tags : ['политика'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Криптовалюта",
+                            tags : ['Криптовалюта'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Наука/Технологии",
+                            tags : ['технологии', 'наука'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Вера/Религия",
+                            tags : ['вера', 'религия'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Финансы/Инвестиции",
+                            tags : ['финансы', 'инвестиции'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "Автомобили/Гонки",
+                            tags : ['auto', 'racing'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Спорт",
+                            tags : ['спорт'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Игры",
+                            tags : ['игры'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Космос",
+                            tags : ['космос'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Искусство/Музыка",
+                            tags : ['искусство', 'музыка'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Новости/Комментарии",
+                            tags : ['новости', 'комментарии'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "История",
+                            tags : ['история'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Время историй",
+                            tags : ['истории'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Кино/Анимация",
+                            tags : ['кино', 'анимация'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Природа/Животные",
+                            tags : ['Природа', 'животные'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Путешествия/Архитектура",
+                            tags : ['путешествия', 'архитектура'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Сделай сам",
+                            tags : ['сделайсам'],
+                            id : 'c18'
+                        }
+                    ],
                 },
             },
 
@@ -9873,6 +9978,10 @@ Platform = function (app, listofnodes) {
                             }
 
                             if (!p.txid) p.txid = p.begin || ''
+
+                            p.tagsfilter = _.map(p.tagsfilter, function(t){
+                                return encodeURIComponent(t)
+                            })
 
                             var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter];
 

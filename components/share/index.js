@@ -1376,7 +1376,6 @@ var share = (function(){
 
 				if(!currentShare.repost.value) {
 
-					console.log('el.tgsWrapperMain', el.tgsWrapperMain)
 
 					self.nav.api.load({
 						open : true,
@@ -1420,7 +1419,6 @@ var share = (function(){
 
 							taginput = p
 
-							console.log("P", p)
 
 							if(clbk) clbk()
 						}
