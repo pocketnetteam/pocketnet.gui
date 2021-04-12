@@ -12,7 +12,7 @@ var share = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, currentShare = null, essenseData;
+		var el, currentShare = null, essenseData, taginput;
 
 		var focusfixed = false, external = null, pliss;
 
@@ -86,6 +86,9 @@ var share = (function(){
 			},
 
 			tooltip : function(){
+
+				return
+
 				if(!intro) return;
 
 				if(!currentShare.message.v){
@@ -128,7 +131,6 @@ var share = (function(){
 
 			autoFilled : function(){
 
-				console.log('current', currentShare);
 
 				actions.filled('i', currentShare.images.v.length != 0)
 				actions.filled('u', currentShare.url.v)
@@ -232,7 +234,6 @@ var share = (function(){
 									added : function(link){
 										var type = 'url';
 	
-										console.log('Finished!', link, new Date());
 										var result = currentShare[type].set(link)
 	
 										if(!essenseData.share){
@@ -303,7 +304,6 @@ var share = (function(){
 									added : function(link){
 										var type = 'url';
 	
-										console.log('Finished!', link, new Date());
 										var result = currentShare[type].set(link)
 	
 										if(!essenseData.share){
@@ -455,30 +455,71 @@ var share = (function(){
 
 				
 			},
+			addTags : function(tags){
+
+				_.find(tags, function(tag){
+					if(!currentShare.tags.set(tag)){
+						el.error.html(self.app.localization.e('e13162'))
+
+						return true
+					}
+					else
+					{
+						el.error.html('')
+						if(!essenseData.share){
+							state.save()
+						}
+					}
+				})
+
+			},
 			addTag : function(tag){
 
 				//tag = tag.replace(/#/g, '')
 
 				if(!currentShare.tags.set(tag)){
-
 					el.error.html(self.app.localization.e('e13162'))
-
-					/*dialog({
-						html : ,
-						class : "one"
-					})*/
 				}
 				else
 				{
-
 					el.error.html('')
-
 					if(!essenseData.share){
 						state.save()
 					}
 				}
 
 			},
+
+			removeTags: function(tags){
+
+				var text = el.eMessage[0].emojioneArea.getText();
+
+				_.each(tags, function(tag){
+					currentShare.tags.remove(tag)
+					text = text.split('#' + tag).join(tag);
+				})
+
+				el.eMessage[0].emojioneArea.setText(text);
+
+				if(!essenseData.share){
+					state.save()
+				}
+			},
+
+			removeTag : function(tag){
+				currentShare.tags.remove(tag)
+
+				var text = el.eMessage[0].emojioneArea.getText();
+
+				text = text.split('#' + tag).join(tag);
+
+				el.eMessage[0].emojioneArea.setText(text);
+
+				if(!essenseData.share){
+					state.save()
+				}
+			},
+
 			editImage : function(r){
 				var m = _.map(currentShare.images.v, function(src, i){
 
@@ -615,19 +656,7 @@ var share = (function(){
 				/*el.message.val(text);
 				el.message.change();*/
 			},
-			removeTag : function(tag){
-				currentShare.tags.remove(tag)
-
-				var text = el.eMessage[0].emojioneArea.getText();
-
-				text = text.split('#' + tag).join(tag);
-
-				el.eMessage[0].emojioneArea.setText(text);
-
-				if(!essenseData.share){
-					state.save()
-				}
-			},
+			
 
 			applyText : function(text){
 				currentShare.message.set(text);
@@ -701,14 +730,13 @@ var share = (function(){
 						}
 					})
 
-					renders.tags()
+					renders.tgs() ///// ???? CHECK
 
 				}
 				
 			},
 
 			post : function(clbk, p){
-				console.log("POST")
 			
 
 				el.postWrapper.removeClass('showError');
@@ -858,6 +886,7 @@ var share = (function(){
 
 				actions.toggleTimesDisplay();
 
+
 				if (error && !onlyremove){
 
 					if (el.postWrapper)
@@ -870,11 +899,10 @@ var share = (function(){
 					}
 
 					if(error == 'tags'){
-						el.c.find('.tgs input').focus()
+						el.c.find('.tgs input').focus() //// ??? CHECK
 					}
 
 					
-					console.log(error)
 					return true
 				}
 				else
@@ -1181,7 +1209,6 @@ var share = (function(){
 
 							renders.poll()
 
-							console.log('create!!!', values, currentShare);
 						}
 					})
 
@@ -1198,12 +1225,7 @@ var share = (function(){
 
 				
 			},
-			addTag : function(tag){
-
-				actions.addTag(tag)
-
-			 	renders.tags()
-			},
+		
 			caption : function(){
 				var caption = $(this).val()
 
@@ -1271,13 +1293,7 @@ var share = (function(){
 
 				
 			},
-			removeTag : function(){
-				var tag = $(this).closest('.tag').attr('tag')
-
-				actions.removeTag(tag)
-
-				$(this).closest('.tag').remove()
-			},
+			
 
 			removelink : function(){
 				actions.removelink()
@@ -1298,7 +1314,6 @@ var share = (function(){
 
 			postline : function(clbk){
 
-				console.log("RENDER")
 
 				self.shell({
 					name :  'postline',
@@ -1323,7 +1338,6 @@ var share = (function(){
 					el.panel.on('click', events.embeding)
 					el.post.on('click', events.post)
 
-					console.log(el.post)
 
 					el.peertube = el.c.find('.peertube');
 					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
@@ -1357,194 +1371,68 @@ var share = (function(){
 
 			},
 
+		
 			tgs : function(clbk){
 
-				self.shell({
-					name :  'tgs',
-					el : el.tgsWrapperMain,
-					data : {
-						share : currentShare
-					},
+				if(!currentShare.repost.value) {
 
-				}, function(p){
+					console.log('el.tgsWrapperMain', el.tgsWrapperMain)
 
-
-						el.tags = el.c.find('.tagsCont');
-						el.tagSearch = el.c.find('.searchWrapper');
-
-						search(el.tagSearch, {
-							placeholder : self.app.localization.e('addtags'),
-			
-							clbk : function(el){
-			
-							
+					self.nav.api.load({
+						open : true,
+						id : 'taginput',
+						el : el.tgsWrapperMain,
+						eid : 'sharetags',
+						animation : false,
+						essenseData : {
+							tags : function(){
+								return currentShare.tags.get()
 							},
-			
-							time : 0,
-						
-							events : {
-								/*blur : function(value){
-									events.addTag(value)
-								},*/
-								fastsearch : function(value, clbk, e){
-						
-									if(e){
-										var char = String.fromCharCode(e.keyCode || e.which);
-			
-										if ((/[,.!?;:() ]/).test(char)) {
-			
-											events.addTag(value.replace(/#/g,'').replace(/ /g,''))
-			
-											el.tagSearch.find('input').val('').focus()
-			
-											clbk(null)
-			
-											return
-										}
-									}
-			
-			
-									self.app.platform.sdk.tags.search(value, function(data){
-										
-										renders.tagsResults(data, function(tpl){
-			
-											clbk(tpl, function(_el, helpers){
-			
-												_el.find('.result').on('click', function(){
-			
-													var tag = $(this).attr('result')
-			
-													helpers.closeResults();
-													helpers.clear();
-			
-													events.addTag(tag)
-			
-												})
-			
-												_el.find('.empty').on('click', function(){
-			
-													var tag = trim(el.tagSearch.find('input').val())
-			
-													if (tag){
-														helpers.closeResults();
-														helpers.clear();
-			
-														events.addTag(tag)
-													}
-			
-													
-			
-												})
-			
-											})
-			
-										})
-			
-									})
-								},
-			
-								search : function(value, clbk, helpers){
-			
-									value = value.replace(/#/g, ' ');
-			
-									value = value.split(" ");
-			
-									value = _.filter(value, function(v){
-										return v
-									})
-			
-									if (value.length == 1){
-										value = value[0]
-									}
-			
-									events.addTag(value)
-			
-									helpers.clear();
-			
-									if (clbk)
-										clbk()
-								}
+
+							removeTag : function(tag){
+								actions.removeTag(tag)
+								renders.tgs()
 							},
-			
-							last : {
-								get : function(){
-									return [
-										self.app.localization.e('tnews'), 
-										self.app.localization.e('timages'), 
-										self.app.localization.e('tvideos'), 
-										self.app.localization.e('tmarket'), 
-										self.app.localization.e('tsport')
-									]
-								},
-			
-								tpl : function(data, clbk){
-									renders.tagsResults(data, function(tpl){
-			
-										clbk(tpl, function(el, helpers){
-			
-											el.find('.result').on('click', function(){
-			
-												var tag = $(this).attr('result')
-			
-												helpers.closeResults();
-												helpers.clear();
-			
-												events.addTag(tag)
-			
-											})
-			
-										})
-			
-									})
-								}
+
+							removeTags : function(tag){
+								actions.removeTags(tag)
+								renders.tgs()
+							},
+
+							addTag : function(tag){
+								actions.addTag(tag)
+								renders.tgs()
+							},
+
+							addTags : function(tags){
+								actions.addTags(tags)
+								renders.tgs()
+							},
+
+							language : function(){
+								return currentShare.language.get()
 							}
-							
-						})
-
-
-					if (clbk)
-						clbk();
-				})
-			},
-
-			tags : function(clbk){
-
-				if (el.tags){
-					el.tags.find('.tag').remove()
-
-					self.shell({
-						name :  'tags',
-						inner : append,
-						el : el.tags,
-						data : {
-							tags : currentShare.tags.get(),
-							share : currentShare
 						},
 
-					}, function(p){
+						clbk : function(e, p){
 
-						if (p.el)
-							p.el.find('.remove').on('click', events.removeTag)
+							if(!el.c) return
 
-						if (clbk)
-							clbk();
+							taginput = p
+
+							console.log("P", p)
+
+							if(clbk) clbk()
+						}
 					})
+
+				}
+				else{
+					if(clbk) clbk()
 				}
 			},
 
-			tagsResults : function(results, clbk){
-
-				self.shell({
-					name :  'tagsResult',
-					data : {
-						results : results
-					},
-
-				}, function(_p){
-					if (clbk)
-						clbk(_p.rendered);
-				})
-			},
+			
 
 			all : function(){
 				el.eMessage[0].emojioneArea.setText(currentShare.message.v);
@@ -1552,7 +1440,7 @@ var share = (function(){
 
 				el.cpt.val();
 
-				renders.tgs(renders.tags);
+				renders.tgs();
 				
 				renders.url();
 
@@ -1813,7 +1701,7 @@ var share = (function(){
 
 								
 								renders.repost(function(){
-									renders.tgs(renders.tags);
+									renders.tgs();
 									renders.postline();
 								});
 
@@ -1894,7 +1782,6 @@ var share = (function(){
 
 				// }, function(p){
 
-				// 	console.log('poll', poll, el)
 
 
 				// 	if(poll && !og){
@@ -2123,7 +2010,6 @@ var share = (function(){
 						na.push($(this).attr('part'))
 					})
 
-					console.log('na', na);
 
 					if(!essenseData.share){
 						state.save()
@@ -2231,6 +2117,11 @@ var share = (function(){
 
 				if (external){
 					external.module.closeContainer()
+				}
+
+				if (taginput){
+					taginput.destroy()
+					taginput = null
 				}
 
 				external = null

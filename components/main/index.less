@@ -6,8 +6,8 @@
 
 	.addbutton{
 		position: fixed;
-		right : 2 * @rhythm;
-		bottom : 2 * @rhythm;
+		left :  @rhythm;
+		bottom : @rhythm;
 		background: fade(#00a3f7, 90);
 		color : #fff;
 		border-radius: 44px;
@@ -25,6 +25,7 @@
 		}
 
 		&.active{
+			
 		}
 
 		&.scrollactive{
@@ -39,13 +40,20 @@
 		
 	}
 
+	.leftpanelcell{
+		width: 242px;
+		float: left;
+		padding-right: 10px;
+	}
+
 	.mainpanelcell{
-		width: 350px;
+		width: 256px;
 		float: right;
 	}
 	
 	.lentacell{
-		margin-right : 350px;
+		margin-right : 256px;
+		margin-left : 242px;
 		padding-top : 10px;
 		min-height: 3000px;
 		padding-bottom : 1000px;

@@ -105,55 +105,7 @@
 		}	
 	}
 
-	.searchFastResultWrapper{
-		border : 0;
-		padding : 0;
-		left: 0;
-		
-
-		.results{
-			padding : 2 * @rhythm 0;
-		}
-
-		.user{
-			cursor: pointer;
-			.transition(0.3s);
-			
-			&:hover{
-				color : @color-main;
-			}
-		}
-
-		.userTable{
-			>div{
-				vertical-align: middle;
-
-				&.iconWrapper{
-					width: 70px;
-				}
-			}
-		}
-
-		.fastsearch{
-			padding-left: 80px;
-		}
-
-		.users{
-			padding-left: 20px;
-		}
-
-		.result{
-			
-
-			padding : @rhythm;
-			cursor: pointer;
-			.transition(0.3s);
-
-			&:hover{
-				color : @color-main;
-			}
-		}
-	}
+	
 
 	&.menupanelactive{
 		.sections{
@@ -299,7 +251,14 @@
 				padding-right: 0;
 			}
 
+			&.centerpart{
+				float: right;
+				padding-right: 0;
+				padding-left: 0;
+			}
+
 			&.leftpart{
+				float: left;
 				padding-left: 0;
 			}
 
@@ -353,74 +312,20 @@
 				}
 			}
 			&.searchWrapper{
-				display: none;
-				padding-right :  @rhythm;
+				max-width: 280px;
+				float: none;
+				font-size: 0.9em;
+
+				.item{
+					width: 100%;
+				}
 
 				.postssearchwrapper{
-					padding : 0;
+					padding : 15px 0;
+					width: 100%;
 				}
 
-				.postssearch{
-					height: 100%;
-					width: 650px;
-
-					.searchInputIcon,
-					.searchInput,
-					.search{
-						height: 100%;
-						width: 100%;
-					}
-
-					.search {
-						max-width: 700px;
-						margin : 0 auto;
-					}
-
-					.searchInputIcon{
-						>div{
-							vertical-align: middle;
-						}
-					}
-
-					input,
-					.searchInputWrapper,
-					.searchIconLabel{
-						height: 100%;
-					}
-
-					input{
-						color : @color-black2;
-						background: #F8F8F8;
-						height: 65px;
-						border : 0;
-
-						&:placeholder-shown{
-							text-align: center;
-						}
-					}
-
-					.searchIconLabel,
-					.searchPanel{
-						color : @color-black2;
-						background: #F8F8F8;
-						border : 0;
-					}
-
-					.searchIconLabel{
-						width: 80px;
-					}
-
-					.searchPanel{
-						width: 80px;
-						.searchPanelWrapper{
-							>div{
-								&[event=clear]{
-									display: none!important;
-								}
-							}
-						}
-					}
-				}
+				
 			}
 			&.searchIcons{
 				margin-right : 2 * @rhythm;
@@ -819,6 +724,230 @@
 		}
 	}
 
+	.searchFastResultWrapper{
+		border : 0;
+		padding : 0;
+		left: 0;
+		max-height: 540px;
+		overflow-y: auto;
+
+		.table{
+			>div{
+				padding : 0;
+			}
+		}
+		
+
+		.results{
+			padding :  @rhythm 0;
+		}
+
+		.user{
+			padding : 0 @rhythm;
+			cursor: pointer;
+			.transition(0.3s);
+			
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.stringresult{
+			padding : 2 * @rhythm @rhythm;
+		}
+
+		.searchbywrapper{
+			padding : 2 * @rhythm @rhythm;
+
+			&.small{
+				padding : 0 @rhythm;
+			}
+
+			.caption{
+				padding-bottom : @rhythm;
+				span{
+					font-weight: 700;
+					color : @color-main;
+					font-size: 0.9em;
+				}
+			}
+
+			.searchby{
+				.swrp{
+					width: 100%;
+					cursor: pointer;
+					>div{
+						color : fade(@color-black2, 70);
+						.transition(0.3s);
+
+						&.rsicon{
+							width: 33px;
+							text-align: center;
+							font-size: 0.8em;
+						}
+	
+						&.label{
+							text-align: left;
+							padding-left: @rhythm;
+						}
+					}
+
+					&:hover{
+						>div{
+							color : @color-black2;
+						}
+					}
+				}	
+				
+			}
+		}
+
+		.userTable{
+			>div{
+				padding :0;
+				vertical-align: middle;
+
+				&.iconWrapper{
+					width: 33px;
+					padding : @rhythm 0;
+				}
+
+				&.label{
+					padding-left: @rhythm;
+				}
+
+				.usericon{
+					width: 33px;
+					height: 33px;
+				}
+			}
+		}
+
+		.fastsearch{
+			padding-left: 80px;
+		}
+
+		.users{
+			padding-left: 20px;
+		}
+
+		.result{
+			cursor: pointer;
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-main;
+			}
+		}
+	}
+
+	.postssearch{
+		height: 100%;
+		width: 100%;
+
+		.searchInputIcon,
+		.searchInput,
+		.search{
+			height: 100%;
+			width: 100%;
+		}
+
+		.searchInput{
+			border-radius: 30px;
+			overflow: hidden;
+			background: #F1F1F1;
+			border : 1px solid fade(@color-black2, 2);
+		}
+
+		.search {
+			max-width: 700px;
+			margin : 0 auto;
+		}
+
+		.searchInputIcon{
+			>div{
+				vertical-align: middle;
+			}
+		}
+
+		input,
+		.searchInputWrapper,
+		.searchIconLabel{
+			height: 100%;
+		}
+
+		input{
+			color : fade(@color-black2, 40);
+			background: #fafafa;
+			height: 100%;
+			border : 0;
+
+		}
+
+		.searchIconLabel,
+		.searchPanel{
+			color : fade(@color-black2, 20);
+			background: #fafafa;
+			border : 0;
+		}
+
+		.searchPanel{
+		}
+
+		.searchIconLabel{
+			width: 38px;
+		}
+
+		.searchPanel{
+			width: @rhythm;
+			font-size: 0.8em;
+			.searchPanelWrapper{
+				>div{
+					&[event=clear]{
+						display: none!important;
+					}
+				}
+			}
+		}
+	}
+
+	&.menupanelactive{
+		&:not(.searchactive){
+			.postssearch{
+		
+				.searchPanel,
+				.searchInputWrapper{
+					display: none;
+				}
+	
+				.searchInput{
+					background: transparent;
+					border : 1px solid transparent;
+				}
+		
+		
+				input{
+					color : @color-black2;
+					background: transparent;
+				}
+		
+				.searchIconLabel,
+				.searchPanel{
+					color : @color-black2;
+					background: transparent;
+				}
+		
+				
+			}
+			.sections{
+				.items.searchWrapper{
+					max-width: 40px;
+				}
+			}
+		}
+		
+	}
+
 	.signup,
     .signout,
 	.signin{
@@ -858,6 +987,8 @@
 		}
 	}
 }
+
+
 
 html.stblack{
 	#menu{
@@ -1014,7 +1145,7 @@ html.stblack{
 		}
 	}
 
-	&.searchactive{
+	/*&.searchactive{
 		.sections{
 			
 
@@ -1048,7 +1179,7 @@ html.stblack{
 				}
 			}
 		}
-	}
+	}*/
 
 	
 	
@@ -1177,6 +1308,10 @@ html.stblack{
 		}
 	}
 
+	
+		
+
+
 }
 }
 
@@ -1193,6 +1328,39 @@ html.stblack{
 
 		.users{
 			padding-left: 0px;
+		}
+	}
+
+	&:not(.searchactive){
+		.postssearch{
+	
+			.searchPanel,
+			.searchInputWrapper{
+				display: none;
+			}
+
+			.searchInput{
+				background: transparent;
+				border : 1px solid transparent;
+			}
+	
+			input{
+				color : @color-black2;
+				background: transparent;
+			}
+	
+			.searchIconLabel,
+			.searchPanel{
+				color : @color-black2;
+				background: transparent;
+			}
+	
+			
+		}
+		.sections{
+			.items.searchWrapper{
+				max-width: 40px;
+			}
 		}
 	}
 
@@ -1221,8 +1389,23 @@ html.stblack{
 				&.leftpart{
 					display: none;
 				}
+
+				&.right{
+					display: none;
+				}
 			}
 
+
+			.items{
+				&.searchWrapper{
+					width: 100%;
+					max-width: none;
+
+					.postssearchwrapper{
+						padding : 2 * @rhythm @rhythm;
+					}
+				}
+			}
 			
 		}
 

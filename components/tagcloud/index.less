@@ -1,17 +1,16 @@
 @import "../../css/__cssvar";
 
 #tagcloud{
-    .rcptwrp{
-        background: #fff;
-    }
 
-   
+    color : @color-gray-mlight;
+    
     .tcaption{
        
         padding : 2 * @rhythm;
+        padding-top : 2 * @rhythm;
+        padding-left: 0;
        
         margin-bottom: @rhythm;
-        border-bottom : 1px solid @color-gray-slight;
 
         span{
             font-size : 0.8em;
@@ -22,12 +21,33 @@
     .tag{
         .transition(0.3s);
         .tagtable{
+            width: auto;
             >div{
                 vertical-align: middle;
                 padding : @rhythm 2 * @rhythm;
+                padding-left: 0;
+
+                &.tagvalue{
+                    padding-right: 0;
+                    span{
+                        font-size: 0.8em;
+                    }
+                }
 
                 &.iconWrapper{
-                    width : 20px;
+                    width : 2 * @rhythm;
+
+                    i{
+                        font-size: 0.6em;
+                    }
+                }
+
+                &.tagvalue{
+                    .transition(0.3s);
+                    cursor: pointer;
+                    &:hover{
+                        color : @color-main;
+                    }
                 }
 
                 &.tagcount{
@@ -35,12 +55,43 @@
                     text-align: right;
                     font-weight: 700;
                 }
+
+                &.tagsearch,
+                &.tagcheck{
+                    .transition(0.3s);
+                    padding : 0;
+                    text-align: center;
+                    width : 44px;
+                    cursor: pointer;
+                    opacity: 0.2;
+                    i{
+                        font-size: 0.8em;
+                    }
+
+                    
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
+
+                &.tagsearch{
+                    width : 33px;
+                    opacity: 0;
+                }
             }
         }
 
         &:hover{
-            color : @color-main;
+            .tagtable{
+                >div{
+                    &.tagcheck,
+                    &.tagsearch{
+                        opacity: 1;
+                    }
+                }
+            }
         }
+
     }
 
     .ta{
@@ -75,13 +126,82 @@
 
     }
 
+    .tg{
+       
+        .selected{
+            display: none;
+        }
+        &.selected{
+            color : @color-orange;
+            .unselected{
+                display: none;
+            }
+
+            .selected{
+                display: inline-block;
+            }
+
+            .tag{
+                .tagtable{
+                    >div{
+                        &.tagcheck{
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.fixed{
+            color : fade(#fff, 20);
+
+            .tag{
+                .tagtable{
+                    >div{
+                        &.tagvalue,
+                        &.tagcheck{
+                            cursor: default;
+
+                            i{
+                                font-weight: 700;
+                            }
+                        }
+
+                        
+        
+                    }
+                }
+
+                &:hover{
+                    .tagtable{
+                        >div{
+                            &.tagcheck{
+                                color : fade(#fff, 20);
+                                opacity: 1;
+                            }
+
+                            &.tagvalue{
+                                color : fade(#fff, 20);
+                                cursor: default;
+                               
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     .hidealltags,
     .showalltags{
         padding : 2 * @rhythm;
+        padding-left: 0;
         cursor: pointer;
+        opacity: 0.5;
         .transition(0.3s);
 
         &:hover{
+            opacity: 1;
             color : @color-main;
         }
 

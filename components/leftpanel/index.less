@@ -1,0 +1,64 @@
+@import "../../css/__cssvar";
+
+#leftpanel{
+
+	>div{
+
+		.wrp{
+			padding-bottom : 10px;
+		}
+	
+	}
+
+	.sections{
+		background: fade(#F0F0F0, 30);
+	
+		>div{
+			padding : @rhythm  0;
+			width: 50%;
+			vertical-align: middle;
+			cursor: pointer;
+			.transition(0.3s);
+			text-align: center;
+
+			span{
+				font-size: 0.8em;
+			}
+
+			&:hover,
+			&.active{
+				background: @color-add;
+				color : #fff;
+			}
+		}
+	}
+
+	.currentsearch{
+		color : @color-gray-mlight;
+    
+		.tcaption{
+		   
+			padding : 2 * @rhythm;
+			padding-top : 2 * @rhythm;
+			padding-left: 0;
+		   
+			margin-bottom: @rhythm;
+	
+			span{
+				font-size : 0.8em;
+				font-weight: 700;
+			}
+		}
+
+		.searchcnt{
+			span{
+				font-size : 0.8em;
+				color : @color-orange;
+			}
+		}
+
+		.goback{
+			padding : 2 * @rhythm 0;
+		}
+	}
+}

@@ -1,0 +1,195 @@
+@import "../../css/__cssvar";
+
+@bg : #fff;
+@placeholder : #838688;
+#taginput{
+    .tgs{
+		margin-bottom: @rhythm;
+
+		.search{
+
+
+			.searchFastResultWrapper{
+				left : 0;
+				background: @bg;
+				overflow: hidden;
+
+				.result{
+					cursor: pointer;
+					font-size: 0.8em;
+					padding : @rhythm 0;
+					.transition(0.3s);
+
+					&:hover{
+						color : @color-bright;
+					}
+
+					&.bright{
+						font-weight: 700;
+					}
+				}
+
+				.empty{
+					text-align: center;
+					span{
+						font-size: 0.8em;
+						
+					}
+				}
+			}
+
+			input{
+				border-radius: 3px;
+				border : 0;
+				background: @bg;
+				border-bottom-right-radius: 0;
+				border-top-right-radius: 0;
+
+				
+			}
+
+			.searchPanel{
+				border-radius: 3px;
+				border : 0;
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+				background: @bg;
+			}
+
+			.searchInput{
+				.searchInputIcon{
+					>div{
+						&.searchIconLabel{
+							display: none;
+						}
+					}
+				}
+			}
+
+		}
+		.tagsWrapper{			
+
+			>div{
+				vertical-align: top;
+
+				&.label{
+					padding-left: 0;
+					color : @color-add;
+					font-weight: 700;
+				}
+
+				&.tagsCont{
+					padding : 0;
+					overflow: hidden;
+
+					>div{
+						float: left;
+						margin-right : @rhythm;
+
+						&.inputWrapper{
+							padding : 0;
+						}
+					}
+				}
+
+				&.tagsInputWrapper{
+					width: 215px;
+					padding : 0;
+
+					>div{
+						margin-right : @rhythm;
+
+						&.inputWrapper{
+							padding : 0;
+							.shadowSmall();
+						}
+					}
+				}
+			}
+		}
+
+		.tag{
+			padding-top : 0;
+			padding-bottom: 0;
+			margin-top: @rhythm / 2;
+			margin-bottom: @rhythm / 2;
+			margin-right : 2 * @rhythm;
+			border-radius : 20px;
+			background: @bg;
+
+			.tagInner{
+				height: auto;
+				width: auto;
+
+				>div{
+					vertical-align: middle;
+					padding : @rhythm / 2 @rhythm;
+
+					&.label{
+						color : @color-add;
+						padding-left: 2 * @rhythm;
+
+					}
+
+					&.remove{
+						cursor: pointer;
+						text-align : center;
+						color : @color-gray-light;
+
+						&:hover{
+							color : @color-add;
+						}
+					}
+
+					span, i{
+						font-size: 0.8em;
+					}
+				}
+			}
+		}
+
+		.category{
+			padding-top : 0;
+			padding-bottom: 0;
+			margin-top: @rhythm / 2;
+			margin-bottom: @rhythm / 2;
+			margin-right : 2 * @rhythm;
+			border-radius : 20px;
+			background: @bg;
+
+			.categoryInner{
+				height: auto;
+				width: auto;
+
+				>div{
+					vertical-align: middle;
+					padding : @rhythm / 2 @rhythm;
+
+					&.label{
+						color : @color-add;
+						padding-left: 2 * @rhythm;
+
+					}
+
+					&.remove{
+						cursor: pointer;
+						text-align : center;
+						color : @color-gray-light;
+
+						&:hover{
+							color : @color-add;
+						}
+					}
+
+					span, i{
+						font-size: 0.8em;
+					}
+				}
+			}
+		}
+
+        .empty{
+            cursor: pointer;
+        }
+	}
+}

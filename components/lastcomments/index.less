@@ -1,17 +1,17 @@
 @import "../../css/__cssvar";
 
 #lastcomments{
+    color : @color-gray-mlight;
 
-    .wrp{
-       
+    padding-left: 2 * @rhythm;
+    opacity: 0.3;
+    .transition(0.3s);
+
+    &:hover{
+        opacity: 1;
     }
-
-    .rcptwrp{
-        background: #FFF;
-    }
-
+    
     .commentgroup{
-        border-bottom : 5px solid @color-black2;
 
         &:nth-last-child(1){
             border-bottom : 0;
@@ -36,19 +36,56 @@
         .transition(0.3s);
     }
 
-    .comments{
-        background: fade(@color-gray-slight, 10);     
-    }
+  
 
     .comment{
         padding : 0 @rhythm;
         padding-left: 0;
         padding-top : @rhythm;
-        border-bottom : 1px solid @color-gray-slight;
        
         .transition(0.9s, color);
         position : relative;
         cursor: pointer;
+
+        .commentmessage{
+            font-size: 0.8em;
+
+            .realtime{
+                opacity: 0.5;
+            }
+        }
+
+        .icons{
+            overflow: hidden;
+            padding-bottom : @rhythm;
+
+            >div{
+                float: left;
+            }
+        }
+
+        .realtime{
+            white-space: nowrap;
+        }
+
+        .iconWrapper{
+            
+            .usericon{
+                position: relative;
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        .iconbetweenWrapper{
+            padding : 0 @rhythm;
+
+            i{
+                font-size: 0.6em;
+                line-height: 14px;
+                vertical-align: super;
+            }
+        }
 
 
         &:nth-last-child(1){
@@ -308,8 +345,7 @@
     }
 
     .rcaption{
-        padding :  2 * @rhythm 2 * @rhythm;
-        border-bottom : 1px solid @color-gray-slight;
+        padding :  2 * @rhythm 0;
         span{
             font-size: 0.8em;
             font-weight: 700;

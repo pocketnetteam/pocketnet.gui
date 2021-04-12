@@ -129,13 +129,19 @@
             "icon": "assets/icons/mac/icon.icns"
         },
         "linux": {
-            "target": "AppImage",
+            "target": [
+                {
+                    "target": "AppImage"
+                },
+                {
+                    "target": "deb"
+                }
+            ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
-            "description": "Pocketnet desktop application"
+            "description": "Pocketnet Desktop Browser"
         },
-        "appImage": {},
         "win": {
             "target": "nsis",
             "icon": "assets/icons/win/icon.ico"

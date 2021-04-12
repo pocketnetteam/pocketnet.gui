@@ -930,7 +930,6 @@
 
 		p.html = '<div class="caption">' + p.caption + '</div>';
 		p.html += '<div class="values">';
-		console.log('p.values', p.values)
 		_.each(p.values, function(value, index){
 
 			if(value.time){
@@ -1127,7 +1126,6 @@
 					var txt = wnd.find('textarea[index="'+index+'"]');
 
 					txt.on('keyup', function(){
-						console.log('this.scrollTop', this.scrollTop)
 
 						if (this.scrollTop > 0){
 						  	this.style.height = (this.scrollHeight + 10) + "px";
@@ -1217,7 +1215,6 @@
 			var _values = {},
 				arr = true;
 
-				console.log('uploaded', uploaded)
 
 			_.each(p.values, function(value, index){
 
@@ -1378,7 +1375,6 @@
 
 				item.find('i').on('click', function(){
 
-					console.log('input', item.find('.input'));
 
 					item.find('.input').val('');
 				})
@@ -1554,7 +1550,6 @@
 		}
 
 		self.close = function(){
-			console.log("CLOSE TOOLTIP", self)
 			if (self.instance)
 				self.instance.close();
 		}
@@ -1703,7 +1698,6 @@
 			canvas.width  = newWidth;
 			canvas.height = newHeight;
 
-			console.log('newWidth', newHeight, newWidth)
 
 				ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
@@ -1762,7 +1756,6 @@
 			canvas.width  = newWidth;
 			canvas.height = newHeight;
 
-			console.log('newWidth', newWidth, newHeight)
 
 				ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
@@ -5586,6 +5579,8 @@
 	flb = function (str) {
 
 		if(!str) return ""
+		if(!str[0]) return str
+		if(!str.substr) return str
 
 		return str[0].toUpperCase() + str.substr(1);
 	}
@@ -6050,14 +6045,12 @@
 									
 								}, function (err) {
 
-									console.log('scanmedia fail 2', err)
 									
 								})
 
 							}
 							else
 							{
-								console.log('scanmedia fail 1')
 							}
 
 
@@ -8451,6 +8444,8 @@
 			}
 		}
 
+		
+
 		var events = {
 			clear : function(el){
 
@@ -8571,6 +8566,8 @@
 			}
 		}
 
+		self.clear = events.clear
+
 		var initEvents = function(){
 
 			var searchInput = searchEl.find('.sminput')
@@ -8610,6 +8607,8 @@
 
 			searchInput.on('focus', function(){
 
+				self.active = true
+
 				if($(this).val()){
 					events.fastsearch(searchInput)
 				}
@@ -8619,6 +8618,11 @@
 					if(p.last){
 						events.showlast(searchInput)
 					}
+
+			})
+
+			searchInput.on('blur', function(){
+				self.active = false
 
 			})
 
@@ -9102,13 +9106,11 @@
 
         				readFile(reader, error, file, files, function(fileObject){
 
-							console.log('fileObject.base64.length', fileObject.base64.length)
 
 							imageresize(file, fileObject.base64, function(base64){
 
 								fileObject.base64 = base64;
 
-								console.log('fileObject.base64.length', fileObject.base64.length)
 
 								autorotation(file, fileObject.base64, function(base64){
 
@@ -9403,7 +9405,6 @@
 		var takeData = function(uri){
 			if(typeof localStorage != 'undefined' && localStorage[prefix+uri]){
 				data[uri] = JSON.parse(localStorage[prefix+uri]);
-				console.log('takedata', uri, data[uri]);
 			} 
 			else {
 				data[uri] = {};
@@ -9892,7 +9893,6 @@
 	}
 
 	parseVideo = function(url) {
-		// console.log('WWW', url.indexOf('channel'))
 		var _url = url;
 
 	    var test = _url.match(/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
@@ -10336,7 +10336,6 @@
 		}
 
 
-		console.log("inputText", inputText)
 
 	    var replacedText = (inputText || '').replace(/(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%\@&\?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#\@%&\?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#\@%&\?+\/\$.,~=;:]*\)))?)?)/ig,
 	            function () { // copied to notifier.js:3401
@@ -10544,5 +10543,68 @@ findResponseError = (response) => {
 }
 
 
+stringEqTrig = function(s1, s2){
 
+	if(!s1) s1 = ''
+	if(!s2) s2 = ''
+
+	var bw = function(s){
+		return s.split(/[ \t\v\r\n\f,.]+/)
+	}
+
+	var hash = function(s){
+
+		var ps = bw(s).join(' ')
+
+		return ps.toLowerCase().replace(/[^a-zа-я0-9&]*/g, '');
+	}
+
+	
+
+	var makeTr = function(w){
+		var trs = {};
+
+		var takeC = function(index){
+			var c;
+
+			if(index < 0 || index >= w.length) c = "_";
+
+			else c = w[index];
+
+			return c;
+		}
+
+		for(var i = -1; i <= w.length; i++){
+
+			var tr = "";
+
+			for(var j = i - 1; j <= i + 1; j++){
+				tr = tr + takeC(j);
+			}
+
+
+			trs[tr] = 1;
+		}
+
+		return trs;
+	}
+
+
+	var t1 = makeTr(hash(s1)),
+        t2 = makeTr(hash(s2));
+        
+
+	var c = 0,
+		m = Math.max(_.toArray(t1).length, _.toArray(t2).length)
+
+	_.each(t1, function(t, index){
+
+		if(t2[index]) c++;
+
+	})
+
+	return c / m;
+
+
+}
 /* */

@@ -316,11 +316,8 @@ var Proxy16 = function(meta, app, api){
 
                 if(api && api.get.fixednode()) fixednode = api.get.fixednode()
 
-                console.log('fixednode', fixednode)
 
                 return self.fetch('nodes/select', {fixed : fixednode}).then(r => {
-
-                    console.log("R", r)
 
                     self.current = r.node
 
@@ -384,8 +381,6 @@ var Proxy16 = function(meta, app, api){
         return promise.then(r => {
             return Promise.resolve(r)
         }).catch(e => {
-
-            console.log("E", e)
 
             if (e.code == 408 && options.node && trying < 3){
 
@@ -645,8 +640,6 @@ var Api = function(app){
                             current = 'pocketnet.app:8899:8099' //proxies[0].id
                         }
 
-                        console.log('current', current)
-
                         inited = true
 
                         return Promise.resolve()
@@ -770,8 +763,6 @@ var Api = function(app){
 
         }).catch(e => {
 
-            console.log("ERROR", e)
-
             if (e == 'TypeError: Failed to fetch'){
                 app.apiHandlers.error({
                     api : true
@@ -788,9 +779,7 @@ var Api = function(app){
         },
 
         use : () => {
-            console.log("READY", useproxy ? _.filter(proxies, proxy => { 
-                return proxy.ping && proxy.get.nodes().length 
-            }).length || !proxies.length : false)
+
 
             return useproxy ? _.filter(proxies, proxy => { 
                 return proxy.ping && proxy.get.nodes().length 
@@ -803,7 +792,6 @@ var Api = function(app){
 
             if(!key) key = 'use'
 
-            console.log("WAIT", total, key)
 
             return pretry(self.ready[key], 50, total)
         }
