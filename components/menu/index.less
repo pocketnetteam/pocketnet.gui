@@ -731,6 +731,10 @@
 		max-height: 540px;
 		overflow-y: auto;
 
+		&::-webkit-scrollbar{
+            width: 0!important
+        }
+
 		.table{
 			>div{
 				padding : 0;
@@ -1006,21 +1010,7 @@ html.stblack{
 				&.searchWrapper{
 				
 	
-					.postssearch{
-						input{
-							color : @color-gray-mlight;
-							background: @color-black4;
-							
-						}
-	
-						.searchIconLabel,
-						.searchPanel{
-							color : @color-gray-mlight;
-							background: @color-black4;
-						}
-	
-						
-					}
+					
 				}
 
 				
@@ -1080,6 +1070,89 @@ html.stblack{
 				
 			}
 		}
+
+		.postssearch{
+			
+	
+			.searchInput{
+				border : 1px solid fade(@color-gray-mlight, 2);
+				background: fade(@color-gray-mlight, 25);
+			}
+	
+			.search {
+				max-width: 700px;
+				margin : 0 auto;
+			}
+	
+			.searchInputIcon{
+				>div{
+					vertical-align: middle;
+				}
+			}
+		
+	
+			input,
+			.searchInputWrapper,
+			.searchIconLabel{
+				height: 100%;
+			}
+	
+			input{
+				color : @color-gray-mlight;
+				background: @color-black4;
+				height: 100%;
+				border : 0;
+	
+			}
+	
+			.searchIconLabel,
+			.searchPanel{
+				color : @color-gray-mlight;
+				color : @color-gray-mlight;
+				background: @color-black4;
+			}
+	
+		
+			.searchIconLabel{
+				width: 38px;
+			}
+	
+			.searchPanel{
+				width: @rhythm;
+				font-size: 0.8em;
+				.searchPanelWrapper{
+					>div{
+						&[event=clear]{
+							display: none!important;
+						}
+					}
+				}
+			}
+		}
+
+		.searchFastResultWrapper{
+
+			.searchbywrapper{
+				
+	
+				.searchby{
+					.swrp{
+						>div{
+							color : fade(@color-gray-mlight, 70);
+		
+						}
+	
+						&:hover{
+							>div{
+								color : @color-gray-mlight;
+							}
+						}
+					}	
+					
+				}
+			}
+		}
+	
 	}
 }
 
