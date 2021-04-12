@@ -12,7 +12,16 @@
 			.searchFastResultWrapper{
 				left : 0;
 				background: @bg;
-				overflow: hidden;
+				overflow-y: auto;
+				max-height: 350px;
+
+				.requiredlabel{
+					padding : @rhythm 0;
+					span{
+						color : @color-orange;
+						font-size: 0.8em;
+					}
+				}
 
 				.result{
 					cursor: pointer;
