@@ -231,6 +231,8 @@ ____loclib.lloadprev = "Load New Awesome Posts";
 
 ____loclib.lend = "End of Posts";
 ____loclib.zerop = "There currently no posts by this author";
+
+
 ____loclib.zeroy = "You do not have any publications yet, share something!";
 
 
@@ -970,3 +972,4 @@ ____loclib.emptycategoryname = "Please enter name of category."
 ____loclib.doublename = "Category with this name already exist. Please choose another name."
 
 ____loclib.showmoreusers = "Show more users"
+____loclib.zeron = "Nothing found";

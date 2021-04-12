@@ -121,7 +121,7 @@ var menu = (function(){
 						el.postssearch.find('input').blur()
 
 						if (menusearch)
-							menusearch.clear()
+							menusearch.blur()
 
 						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
 

@@ -35,7 +35,15 @@
 		<% } %>
 
 
+		<% if(typeof filters != 'undefined' && filters) {%>
 
+			<div class="zero">
+				
+				<%=e('zeron')%>	
+					
+			</div>
+
+		<% } %>
 
 		<% if(author) {%>
 
@@ -72,6 +80,7 @@
 			</div>
 
 		<% } %>
+
 
 		<% if(recommended) {%>
 
