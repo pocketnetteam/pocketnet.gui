@@ -910,7 +910,8 @@ var share = (function(){
 					if (el.postWrapper)
 						el.postWrapper.removeClass('showError')
 
-					el.error.html('')
+					if(el.error)
+						el.error.html('')
 
 					return false
 				}
@@ -2033,8 +2034,8 @@ var share = (function(){
 			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
 			el.c.on('click', function(){
-
-				el.c.addClass('focus').removeClass('unfocus')
+				if (el.c)
+					el.c.addClass('focus').removeClass('unfocus')
 
 			})
 

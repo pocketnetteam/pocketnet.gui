@@ -124,7 +124,7 @@ var taginput = (function(){
 					last : {
 						get : function(){
 
-							var cats = self.app.platform.sdk.categories.geteslected(actions.language()) || []
+							var cats = self.app.platform.sdk.categories.get(actions.language()) || []
 							var tags = _.map(self.app.platform.sdk.categories.getaddedtags(actions.language()), function(t){
 								return {
 									tag : t,
@@ -149,7 +149,7 @@ var taginput = (function(){
 
 							if (essenseData.addonlytags) cats = []
 
-							var all = firstEls(cats.concat(tags, olddefault), 7)
+							var all = cats.concat(tags, olddefault)//firstEls(cats.concat(tags, olddefault), 7)
 
 							return all
 						},

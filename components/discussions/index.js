@@ -91,7 +91,6 @@ var discussions = (function(){
 			},
 
 			chatp : function(id){
-				if (discussions[id]){	
 
 					actions.preloader(true);
 
@@ -104,14 +103,12 @@ var discussions = (function(){
 						actions.chat(discussions[id])
 					})
 					
-				}
 			},
 
 			chat : function(discussion){	
 
 				openingChat = true;		
 				
-				actions.closeAll(function(){	
 
 
 					self.app.platform.sdk.chats.save()	
@@ -120,9 +117,9 @@ var discussions = (function(){
 
 					var p = {
 						open : true,
-						href : 'chat',
+						href : 'oldchat',
 						animation : false,
-						history : true
+			
 					}
 
 
@@ -184,13 +181,12 @@ var discussions = (function(){
 
 					else
 					{
-						p.href = 'chat?chatid=' + discussion.chat.id
+						p.href = 'oldchat?chatid=' + discussion.chat.id
 					}
 
 
 					self.nav.api.load(p)
 
-				})
 				
 			},
 
@@ -713,13 +709,9 @@ var discussions = (function(){
 
 				var k = self.app.platform.sdk.address.pnet().address + 'addedtochat'
 
-				//if(!localStorage[k]){
 					localStorage[k] = true
 					self.app.platform.sdk.chats.add('6768de97ad495c0110a9e09d43825ef24f1055449a5d368225ac102804397dc1_PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd', 'share')
-					//
-					
-					//self.app.platform.sdk.chats.add('9560e4555f644956ed40a420f0a327e9b18fb450508108a5a806e74ebe9b011c_PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'share')
-				//}
+				
 
 
 				var data = {};

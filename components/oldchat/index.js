@@ -754,6 +754,8 @@ var oldchat = (function(){
 
 				messages || (messages = []);
 
+				console.log("BEFORE", messages)
+
 				messages = _.filter(messages, function(m){
 					var id = m.tm + m.f
 
@@ -802,6 +804,8 @@ var oldchat = (function(){
 				}
 				
 				lastmessage = sorted[sorted.length - 1]
+
+				console.log('messages : sorted	', sorted	)
 
 				self.shell({
 					name :  'messages',
@@ -1118,7 +1122,15 @@ var oldchat = (function(){
 
 				}
 
+				if(!_chat){
+					self.app.platform.sdk.chats.add(chatid, 'share')
+
+					_chat = self.app.platform.sdk.discussions.fromChatId(chatid)
+				}
+
 				var ed = deep(p, 'settings.essenseData') || {};
+
+				console.log('_chat', _chat)
 
 				if (_chat) 
 				{
@@ -1206,6 +1218,7 @@ var oldchat = (function(){
 
 				renderedMessages = {};
 				renderedMessagesTime = {};
+				lastmessage = null
 
 				essenseData = p.essenseData || {};
 				essenseData.view || (essenseData.view = 'buildin')
