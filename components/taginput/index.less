@@ -193,3 +193,72 @@
         }
 	}
 }
+
+
+html.stblack{
+	@bg : @color-black3;
+	@placeholder : @color-add;
+
+	#taginput{
+		.tgs{
+		
+			.search{
+		
+		
+				.searchFastResultWrapper{
+					background: @bg;
+		
+					.result{
+						color : @color-main;
+		
+						&:hover{
+							color : @color-bright;
+						}
+					}
+				}
+		
+				input{
+					background: @bg;
+				}
+		
+				.searchPanel{
+					background: @bg;
+				}
+		
+			}
+			.tagsWrapper{			
+		
+				>div{
+					
+					&.label{
+						color : @color-add;
+					}
+		
+				}
+			}
+		
+			.tag{
+				background: @bg;
+		
+				.tagInner{
+				
+					>div{
+						
+						&.label{
+							color : @color-bright;
+		
+						}
+		
+						&.remove{
+							color : @color-main;
+		
+							&:hover{
+								color : @color-bright;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
