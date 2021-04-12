@@ -1219,6 +1219,10 @@ Share = function(lang){
 			
 		}
 
+		if(!self.tags.v.length){
+			return 'tags'
+		}
+
 		/*if(!self.tags.v.length && self.settings.v != 'a'){
 
 			return 'tags'

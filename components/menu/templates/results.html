@@ -82,6 +82,26 @@
 						</div>
 
 					<% } %>
+
+					<% if(r.type == 'tags') {%>
+
+						<div class="searchbywrapper small">
+							<a href="index?sst=<%- r.data.value.replace(/#/g, '') %>">
+								<div class="searchby searchbyusers">
+									<div class="swrp table">
+										<div class="rsicon">
+											<i class="fas fa-hashtag"></i>
+										</div>
+										<div class="label">
+											<%- r.data.value.replace(/#/g, '').split(' ').join(', ') %>
+										</div>
+									</div>
+								</div>
+							</a>
+					
+						</div>
+
+					<% } %>
 					
 
 				</div>
@@ -124,42 +144,53 @@
 				</span>
 			</div>
 
-			<a href="index?ss=<%-value%>">
-				<div class="searchby searchbyvalue">
-			
-					<div class="swrp table">
-						<div class="rsicon">
-							<i class="fas fa-pencil-alt"></i>
-						</div>
-						<div class="label">
-							<%-value%>
+			<% if(value.indexOf("#") == -1) {%>
+
+				<a href="index?ss=<%-value%>">
+					<div class="searchby searchbyvalue">
+				
+						<div class="swrp table">
+							<div class="rsicon">
+								<i class="fas fa-pencil-alt"></i>
+							</div>
+							<div class="label">
+								<%-value%>
+							</div>
 						</div>
 					</div>
-				</div>
-			</a>
-
+				</a>
+			<% } %>
 			
 
 			<% 
+
+				var clearedvalue = value.replace(/#/g, '');
 			
 				var wordsRegExp = /[,.!?;:() \n\r]/g
-				var words = _.uniq(_.filter(value.split(wordsRegExp), function(r){
+				var words = _.uniq(_.filter(clearedvalue.split(wordsRegExp), function(r){
 					return r
 				}));
+
+
+				if(words.length){ %>
+
+					<a href="index?sst=<%-words.join(' ')%>">
+						<div class="searchby searchbytag">
+							<div class="swrp table">
+								<div class="rsicon">
+									<i class="fas fa-hashtag"></i>
+								</div>
+								<div class="label">
+									<%-_.map(words, function(w){return w;}).join(', ')%>
+								</div>
+							</div>
+						</div>
+					</a>	
+
+				<% }
 			
 			%>
-			<a href="index?ss=tag:<%-value%>">
-				<div class="searchby searchbytag">
-					<div class="swrp table">
-						<div class="rsicon">
-							<i class="fas fa-hashtag"></i>
-						</div>
-						<div class="label">
-							<%-_.map(words, function(w){return '#' + w;}).join(', ')%>
-						</div>
-					</div>
-				</div>
-			</a>	
+			
 	
 		</div>
 

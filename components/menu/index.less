@@ -728,6 +728,8 @@
 		border : 0;
 		padding : 0;
 		left: 0;
+		max-height: 540px;
+		overflow-y: auto;
 
 		.table{
 			>div{
@@ -985,6 +987,8 @@
 		}
 	}
 }
+
+
 
 html.stblack{
 	#menu{
@@ -1304,6 +1308,10 @@ html.stblack{
 		}
 	}
 
+	
+		
+
+
 }
 }
 
@@ -1320,6 +1328,39 @@ html.stblack{
 
 		.users{
 			padding-left: 0px;
+		}
+	}
+
+	&:not(.searchactive){
+		.postssearch{
+	
+			.searchPanel,
+			.searchInputWrapper{
+				display: none;
+			}
+
+			.searchInput{
+				background: transparent;
+				border : 1px solid transparent;
+			}
+	
+			input{
+				color : @color-black2;
+				background: transparent;
+			}
+	
+			.searchIconLabel,
+			.searchPanel{
+				color : @color-black2;
+				background: transparent;
+			}
+	
+			
+		}
+		.sections{
+			.items.searchWrapper{
+				max-width: 40px;
+			}
 		}
 	}
 
@@ -1348,8 +1389,23 @@ html.stblack{
 				&.leftpart{
 					display: none;
 				}
+
+				&.right{
+					display: none;
+				}
 			}
 
+
+			.items{
+				&.searchWrapper{
+					width: 100%;
+					max-width: none;
+
+					.postssearchwrapper{
+						padding : 2 * @rhythm @rhythm;
+					}
+				}
+			}
 			
 		}
 

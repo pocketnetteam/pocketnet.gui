@@ -231,7 +231,15 @@
 						</div>
 						<div class="label">
 							<div events="sitename">POCKETNET</div>
-							<div class="lang localization"><%-(lkey.name || '').toLowerCase()%> <i class="fas fa-caret-down"></i></div>
+							<div class="lang localization">
+								<% if(isMobile()) {%>
+									<%-(lkey.key || '').toLowerCase()%> 
+								<% } else { %>
+									<%-(lkey.name || '').toLowerCase()%> 
+								<% } %>
+								
+								<i class="fas fa-caret-down"></i>
+							</div>
 						</div>						
 
 					</div>

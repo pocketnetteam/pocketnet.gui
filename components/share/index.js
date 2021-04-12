@@ -886,6 +886,7 @@ var share = (function(){
 
 				actions.toggleTimesDisplay();
 
+
 				if (error && !onlyremove){
 
 					if (el.postWrapper)

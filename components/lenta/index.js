@@ -1610,29 +1610,39 @@ var lenta = (function(){
 
 		var renders = {
 			debugusers : function(el){
-				var cn = el.find('.testusersprofiles')
-				var ids = (cn.attr('ids') || "").split(',')
+				var _cn = el.find('.testusersprofiles')
 
-				if(ids.length){
-					self.app.platform.sdk.users.get(ids, function(){
+				_cn.each(function(){
+					var cn = $(this)
 
-						self.shell({
-							inner : html,
-							name : 'testusers',
-							data : {
-								ids : ids
+					var ids = (cn.attr('ids') || "").split(',')
+					var idsadr = _.map((cn.attr('ids') || "").split(','), function(F){
+						return F.split("_")[0]
+					})
+
+					if(ids.length){
+						self.app.platform.sdk.users.get(idsadr, function(){
+
+							self.shell({
+								inner : html,
+								name : 'testusers',
+								data : {
+									ids : ids
+								},
+								el : cn
+			
 							},
-							el : cn
-		
-						},
-						function(p){
-		
-						})
-					})	
-				}
-				else{
-					cn.text("Likes Empty")
-				}
+							function(p){
+			
+							})
+						})	
+					}
+					else{
+						cn.text("Empty")
+					}
+				})
+
+				
 			},
 			comments : function(txid, init, showall, preview){
 				if(essenseData.comments == 'no') return
@@ -2674,6 +2684,8 @@ var lenta = (function(){
 							}
 
 							var tagsfilter = self.app.platform.sdk.categories.gettags()
+
+							if (essenseData.tags) tagsfilter = essenseData.tags
 
 
 							self.app.platform.sdk.node.shares[loader]({

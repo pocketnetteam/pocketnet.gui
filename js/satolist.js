@@ -6905,9 +6905,25 @@ Platform = function (app, listofnodes) {
                 self.sdk.activity.save()
             },
 
+            addtagsearch : function(value){
+
+                var hash = bitcoin.crypto.hash256(value).toString('hex')
+
+                var info = {
+                    id : hash,
+                    index : value.toLowerCase(),
+                    value : value
+                }
+
+                console.log('value', info)
+
+                self.sdk.activity.add('search', 'tags', info)
+
+            },
+
             addsearch : function(value){
 
-                var hash = bitcoin.crypto.hash256(value)
+                var hash = bitcoin.crypto.hash256(value).toString('hex')
 
                 var info = {
                     id : hash,
@@ -6969,7 +6985,9 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                if(type == 'str'){
+                console.log('key, type, info', key, type, info)
+
+                if(type == 'str' || type == 'tags'){
                     if(!info.value){
                         return 'validation'
                     }
@@ -18789,7 +18807,7 @@ Platform = function (app, listofnodes) {
                         </matrix-element>
                     </div>`
 
-                    //$('#matrix').append(matrix);         
+                    $('#matrix').append(matrix);         
                     
                 }
 

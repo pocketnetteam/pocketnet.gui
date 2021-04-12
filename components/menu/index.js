@@ -499,7 +499,7 @@ var menu = (function(){
 									clearex()
 								});
 
-								el.find('.result').on('click', function(){
+								/*el.find('.result').on('click', function(){
 
 									var r = $(this).attr('result')
 
@@ -527,7 +527,7 @@ var menu = (function(){
 
 									clearex()
 
-								})
+								})*/
 
 								el.find('.user').on('click', function(){
 
@@ -673,13 +673,27 @@ var menu = (function(){
 
 							search : function(value, clbk, e, helpers){
 
-								var href = 'index?ss=' + value.replace("#", 'tag:')
+								var href = '';
 
-								if (authorForSearch){
+								if (value.indexOf('#') > -1){
+
+									var wordsRegExp = /[,.!?;:() \n\r]/g
+
+									var words = _.uniq(_.filter(value.replace(/#/g, '').split(wordsRegExp), function(r){
+										return r
+									}));
+
+									href = 'index?sst=' + words.join(' ')
+								}
+								else{
+									href = 'index?ss=' + value
+								}
+
+								/*if (authorForSearch){
 									href = '?report=shares&ss=' + value.replace("#", 'tag:')
 
 									authorForSearch.clear(true)
-								}
+								}*/
 
 								var p = {
 									href : href,
@@ -706,12 +720,19 @@ var menu = (function(){
 								if(fs) return
 
 								_el.find('input').blur();
-
 								
 								setTimeout(function(){
 									close(true)
 									clearex()
 								}, 100)
+
+								if(parameters().sst || parameters().ss){
+									self.nav.api.go({
+										href : 'index',
+										history : true,
+										open : true
+									})
+								}
 								
 							},
 
@@ -1269,11 +1290,15 @@ var menu = (function(){
 			closesearch : function(){
 				if (el.c)
 					el.c.removeClass('searchactive')
+
+				
 			},
 
 			showsearch : function(v, _searchBackAction){
 
-				el.c.addClass('searchactive')
+				if(v){
+					el.c.addClass('searchactive')
+				}
 				
 				el.postssearch.find('input').val(v.replace('tag:', "#"));
 
@@ -1284,6 +1309,8 @@ var menu = (function(){
 				setTimeout(function(){
 					actions.elswidth()
 				}, 2)
+
+				
 			},
 
 			initauthorsearch : function(author){

@@ -87,8 +87,20 @@ var leftpanel = (function(){
 
 		var make = function(){
 
-			if (parameters().ss){
-				renders.currentsearch(parameters().ss)
+			
+
+			if (parameters().sst || parameters().ss){
+				if(parameters().ss) renders.currentsearch(parameters().ss)
+				if(parameters().sst) {
+					var wordsRegExp = /[,.!?;:() \n\r]/g
+					var tgsi = decodeURI((parameters().sst || ''))
+
+					var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
+						return r
+					}));
+
+					renders.currentsearch(_.map(words, function(w){return '#' + w}).join(' '))
+				}
 			}
 			else{	
 				renders.tags()

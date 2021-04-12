@@ -18,7 +18,9 @@
                         </div>
 
                         <div class="catsearch">
-                            <i class="fas fa-search"></i>
+                            <a href="index?sst=<%-cat.tags.join(' ')%>">
+                                <i class="fas fa-search"></i>
+                            </a>
                         </div>
                         <% if(cat.added) {%>
                         <div class="catedit">

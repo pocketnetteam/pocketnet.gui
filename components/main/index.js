@@ -12,7 +12,7 @@ var main = (function(){
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
-		var upbutton = null, plissing = null, searchvalue = '', result, fixedBlock;
+		var upbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock;
 
 		var currentMode = 'common', hsready = false;
 
@@ -368,8 +368,27 @@ var main = (function(){
 
 					var c = deep(self, 'app.modules.menu.module.showsearch')
 
-					if (c)
-						c('')
+					if (c){
+
+						if(searchtags){
+							var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
+
+							c(val)
+
+							console.log('addtagsearch', val)
+
+							self.app.platform.sdk.activity.addtagsearch(val)
+
+						}
+						else{
+							c('')
+						}
+
+						
+
+
+					}
+					
 
 					renders.lenta(clbk, p)
 				}
@@ -426,6 +445,7 @@ var main = (function(){
 						goback : p.goback,
 						searchValue : searchvalue || null,
 						search : searchvalue ? true : false,
+						tags : searchtags,
 						renderclbk : function(){
 						},
 						loader : loader
@@ -597,10 +617,12 @@ var main = (function(){
 
 					currentMode = ncurrentMode
 
-					if(lenta) lenta.destroy()
-
-					renders.lentawithsearch()
+					
 				}
+
+				if(lenta) lenta.destroy()
+
+				renders.lentawithsearch()
 
 				renders.leftpanel()
 
@@ -675,6 +697,8 @@ var main = (function(){
 
 				hsready = false
 
+				//searchvalue = '', searchtags = null
+
 				if (plissing)
 					plissing.destroy()
 
@@ -731,10 +755,23 @@ var main = (function(){
 
 				el.w = $(window)
 
+				var wordsRegExp = /[,.!?;:() \n\r]/g
+
 				initEvents();
 
 				if(!p.goback){
 					searchvalue = parameters().ss || ''
+
+					var tgsi = decodeURI(parameters().sst || '')
+
+					var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
+						return r
+					}));
+
+					searchtags = words.length? words  :null
+
+					console.log('searchtags', searchtags)
+
 					fixedBlock = null
 					result = {}
 				}

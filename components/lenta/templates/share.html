@@ -33,10 +33,6 @@ var emptywithrepost = share.isEmpty() && share.repost
 
 var value = Number(share.score)
 
-console.log('my', value, share.scnt);
-
-
-
 
 var metadisplay = function(){ %>
 
@@ -349,8 +345,6 @@ var metadisplay = function(){ %>
 						
 						<% if(share.tags && share.tags.length > 0) {
 
-							console.log('share', share)
-							
 							var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
 
 							
@@ -360,8 +354,9 @@ var metadisplay = function(){ %>
 								<% _.each(bycategories.categories, function(category){ %>
 
 									<div class="category">
-								
-										<span><b><%-category.name%></b></span> 
+										<a href="index?sst=<%-category.tags.join(' ')%>">
+											<span><b><%-category.name%></b></span> 
+										</a>
 										<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
 								
 									</div>
@@ -371,7 +366,7 @@ var metadisplay = function(){ %>
 								<% _.each(bycategories.tags, function(tag){ %>
 
 									<div class="tag">
-										<a href="s?ss=tag:<%-tag%>">
+										<a href="index?sst=<%-tag%>">
 											<span>
 												#<%-tag%>
 											</span>
@@ -528,17 +523,26 @@ var metadisplay = function(){ %>
 			</div>
 
 			<div class="info">
+				
 				<% _.each(share.info, function(k, v){
 					
-					if(v == 'LAST5RADRS'){
+					if(v == 'LAST5RADRS' || v == 'PREPRADRS'){
 						
 						var ids = _.map(k, function(a){
-							return a.address
+							return a.address + '_' + a.value
 						}).join(',')
+
+						if(!ids.length) return
 						%>
+
+						<div class="lll"><b><%-v%></b>:</div>
 
 						<div class="testusersprofiles" ids="<%-ids%>">
 
+						</div>
+
+						<div class="">
+							___________________
 						</div>
 
 					<%	return 
