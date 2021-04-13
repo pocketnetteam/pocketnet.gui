@@ -2650,7 +2650,7 @@ var lenta = (function(){
 
 							var _beginmaterial = beginmaterial;
 
-							if(!author && deep(self.app.platform.sdk, 'usersettings.meta.hierarchicalShares.value')){
+							if(!author){
 								loader = 'hierarchical'
 							}
 
@@ -2739,7 +2739,7 @@ var lenta = (function(){
 			var loader = 'common';
 			var author = essenseData.author;
 
-			if(!author && deep(self.app.platform.sdk, 'usersettings.meta.hierarchicalShares.value')){
+			if(!author){
 				loader = 'hierarchical'
 			}
 

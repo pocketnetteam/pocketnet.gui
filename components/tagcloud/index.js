@@ -29,7 +29,6 @@ var tagcloud = (function(){
 			},
 			tags : function(tags, clbk){
 
-				if(!el.c) return
 
 				var tagsmap = self.app.platform.sdk.categories.gettagsmap()
 				var addedtags = [];
@@ -85,6 +84,8 @@ var tagcloud = (function(){
 				tags = _.uniq(tags, function(t){
 					return t.tag
 				})
+
+				console.log("tags", el)
 
 				if(!tags.length){
 					el.c.addClass('hidden')
@@ -148,7 +149,7 @@ var tagcloud = (function(){
 		var initEvents = function(){
 			
 			self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
-
+				console.log("MAKE2")
 				make()
 				
 			}	
@@ -164,7 +165,8 @@ var tagcloud = (function(){
 		}
 
 		var removeEvents = function(){
-			delete self.app.platform.sdk.categories.clkbs.selected.mainmodule
+			delete self.app.platform.sdk.categories.clbks.tags.tagsmodule
+			delete self.app.platform.sdk.categories.clbks.selected.tagsmodule
 		}
 
 		var load = function(clbk){
@@ -172,6 +174,8 @@ var tagcloud = (function(){
 			self.app.platform.sdk.tags.cloud(function(tags, error){
 
 				tags = self.app.platform.sdk.tags.filterEx(tags)
+
+				console.log('tags', tags, error)
 
 				if (clbk)
 					clbk(tags, error)
@@ -181,6 +185,8 @@ var tagcloud = (function(){
 		}
 
 		var make = function(){
+
+			console.log("MAKE1")
 
 			load(function(tags, error){
 
@@ -203,6 +209,8 @@ var tagcloud = (function(){
 				essenseData = p.settings.essenseData || {};
 				var data = {};
 
+				console.log("GETDATA1")
+
 				clbk(data);
 
 			},
@@ -210,10 +218,14 @@ var tagcloud = (function(){
 			destroy : function(){
 				delete self.iclbks.maintag;
 
+				removeEvents()
+
 				el = {};
 			},
 			
 			init : function(p){
+
+				console.log("INIT1")
 
 				state.load();
 

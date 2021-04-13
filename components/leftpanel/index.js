@@ -32,6 +32,8 @@ var leftpanel = (function(){
 			},
 			tags : function(){
 
+				console.log("RENDERTAGS")
+
 				self.nav.api.load({
 
 					open : true,

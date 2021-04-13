@@ -2088,6 +2088,8 @@ var share = (function(){
 
 							intro = true;
 						}
+
+						currentShare.language.set(self.app.localization.key)
 					}
 
 					if (essenseData.repost || parameters().repost) 

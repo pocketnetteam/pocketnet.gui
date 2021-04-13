@@ -3578,6 +3578,13 @@ Platform = function (app, listofnodes) {
 					type : "BOOLEAN",
 					value : false,
 				},
+
+                historicalShares : {
+					name: 'Historical Post Feed',
+					id : 'historicalShares',
+					type : "BOOLEAN",
+					value : false,
+				},
             },
 
             create: function (id) {
@@ -3630,14 +3637,14 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                    postfeed : {
+                   /* postfeed : {
                         name: 'Post Feed',
                         options: {
 
-                            hierarchicalShares: options.hierarchicalShares
+                            historicalShares: options.historicalShares
 
                         }
-                    },
+                    },*/
 
                     video: {
                         name: self.app.localization.e('video'),

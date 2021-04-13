@@ -35,12 +35,18 @@
             }
         });
 
-
+        if(!nm) return
 
         var image = share.images[0] || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
         var video = null;
 
         var vstyle = false;
+
+        var cmts = _.filter(group, function(c){
+            return c.message
+        })
+
+        if(!cmts.length) return
 
         if (share.url){
             video = videoImage(share.url)
@@ -84,7 +90,7 @@
             <div class="comments">
                 <% _.each(group, function(comment){ 
                     
-                    if(comment.deleted) return
+                    if(comment.deleted || !comment.message) return
                     
                     %> 
 
