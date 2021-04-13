@@ -26,6 +26,11 @@ var Cache = function(p){
             time : 160,
             block : 0
         },
+
+        gethierarchicalstrip: {
+            time : 160,
+            block : 0
+        },
         
         getuserprofile: {
             time : 160,
