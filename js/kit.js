@@ -1219,7 +1219,7 @@ Share = function(lang){
 			
 		}
 
-		if(!self.tags.v.length){
+		if(!self.tags.v.length && !self.repost.v){
 			return 'tags'
 		}
 
