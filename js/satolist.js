@@ -18901,7 +18901,10 @@ Platform = function (app, listofnodes) {
 
 
             var addresses = self.testchataddresses;
-            if (addresses.indexOf(self.sdk.address.pnet().address) > -1) {
+
+            var peertubeAddresses = self.testaddresses;
+
+            if (peertubeAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
 
                 self.enablePeertube = true
             }
