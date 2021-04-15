@@ -797,7 +797,7 @@ ____loclib.e14001 = 'Язык публикации'
 ____loclib.e14002 = 'Вы действительно хотите очистить публикацию?'
 
 ____loclib.Categories = "Категории"
-____loclib.addtagsCategories = "Добавить категории/теги"
+____loclib.addtagsCategories = "Категории/теги"
 ____loclib.addcategory = "Добавить категорию"
 ____loclib.categoryname = "Название категории"
 ____loclib.entercategoryname = "Введите название категории"
