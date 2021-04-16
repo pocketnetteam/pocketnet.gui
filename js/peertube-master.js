@@ -97,8 +97,13 @@ PeerTubeHandler = function (app) {
 
     return axios
       .post(
-        `http://${randomServer}/plugins/pocketnet-auth/router/code-cb`,
-        app.user.signature(),
+        `https://${randomServer}/plugins/pocketnet-auth/router/code-cb`,
+        serialize(app.user.signature()),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
       )
       .then(async (res) => {
         const requestTokenData = {
@@ -111,7 +116,7 @@ PeerTubeHandler = function (app) {
 
         const authResult = await apiHandler
           .run({
-            url: 'users/token',
+            method: 'users/token',
             parameters: {
               method: 'POST',
               headers: {
