@@ -18,9 +18,8 @@ var Exchanges = function(){
     self.api = {
         price : {
             mercatox : function(){
-                
+                console.log('!!!!@@@@!!!!')
                 return axios.get(apis.mercatoxPrices).then(function(response) {
-
                     //ключи всех пар валют в объекте ответа и все, где упомянут PKOIN
                     var response_keys = Object.keys(response.data)
 
@@ -73,19 +72,23 @@ var Exchanges = function(){
                     })
                     
                     //делаем объект для USD на основе USDT
-                    var usd = _.clone(response.data['PKOIN_USDT']) 
-                    usd.last_price = highest_price.toFixed(2)
+                    var usd = _.clone(response.data['PKOIN_USDT'])
+
+                    if (typeof highest_price !== Number) {
+                        highest_price = parseFloat(highest_price, 10).toFixed(2)
+                    } 
+                    
+                    usd.last_price = highest_price
 
                     slice.prices['USD'] = {
                         currency : 'USD',
                         data : usd
                     }
-
         
                     if(!_.isEmpty(slice.prices)) return Promise.resolve(slice)
         
                     Promise.reject('notfound')
-                })
+                }).catch(error => console.log('Fetch error', error))
 
                 
             }
