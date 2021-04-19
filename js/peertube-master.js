@@ -165,8 +165,6 @@ PeerTubeHandler = function (app) {
   this.uploadVideo = async (parameters) => {
     const channelId = await this.getChannel();
 
-    debugger;
-
     const bodyOfQuery = {
       privacy: 1,
       'scheduleUpdate[updateAt]': new Date().toISOString(),
