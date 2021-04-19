@@ -218,6 +218,8 @@ var lenta = (function(){
 
 				fullscreenvideoShowed = false;
 
+				video = false
+
 				loading = false
 				ended = false
 				players = {}

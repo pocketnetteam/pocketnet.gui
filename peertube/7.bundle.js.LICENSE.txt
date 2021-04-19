@@ -1,0 +1,14 @@
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
+ */
+
+/*! @name videojs-contextmenu-pt @version 5.4.1 @license Apache-2.0 */
+
+/*! @name videojs-contrib-quality-levels @version 2.1.0 @license Apache-2.0 */
+
+/*! @name videojs-dock @version 2.1.4 @license Apache-2.0 */
+
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
