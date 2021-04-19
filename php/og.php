@@ -147,7 +147,7 @@ class OG {
         $type = NULL;
         $id = NULL;
 
-        if($test && strpos($_url, 'channel') == false && strpos($_url, 'user') == false){
+        if(($test && strpos($_url, 'channel') == false && strpos($_url, 'user') == false) || strpos($url, 'peertube://') !== false){
             if($test[3]){
 
                 if (strpos($test[3], 'youtu') !== false) {

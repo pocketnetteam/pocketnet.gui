@@ -1838,14 +1838,14 @@ var lenta = (function(){
 				shareInitingMap[share.txid] = true;
 
 				self.shell({
-					name :  'share',
+					name : video ? 'sharevideo' :  'share',
 					el : _el,
 					data : {
 						share : share,
 						ed : essenseData,
 						mestate : mestate,
-
-						all : all || false
+						all : all || false,
+						video : video 
 					}					
 
 				}, function(p){
@@ -2060,6 +2060,14 @@ var lenta = (function(){
 							return s1.txid == s.txid
 						})
 					})
+					
+				console.log('self.app.platform.sdk.videos', self.app.platform.sdk.videos)
+
+				self.app.platform.sdk.videos.infoshares(shares).then(r => {
+					console.log("VIDEOSLINKS", self.sdk.videos.storage)
+				}).catch(e => {
+					console.log("VIDEOSERROR", e)
+				})
 				
 				self.shell({
 					name :  tpl,
@@ -3391,18 +3399,26 @@ var lenta = (function(){
 					}, function(){
 
 						self.loadTemplate({
-							turi : 'share',
-							name : 'url'
+							name : 'sharevideo'
 						}, function(){
 
+						
+
 							self.loadTemplate({
-								name : 'stars'
+								turi : 'share',
+								name : 'url'
 							}, function(){
 
-								clbk(data);
+								self.loadTemplate({
+									name : 'stars'
+								}, function(){
+
+									clbk(data);
+
+								})
 
 							})
-
+						
 						})
 
 					})

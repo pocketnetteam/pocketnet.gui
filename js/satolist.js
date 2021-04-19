@@ -791,8 +791,6 @@ Platform = function (app, listofnodes) {
 
             _url = url;
 
-            console.log("metametametametameta", meta)
-
             if (meta.type == 'peertube') {
                 _url = `https://${meta.host_name}/videos/embed/${meta.id}`
             }
@@ -14958,6 +14956,148 @@ Platform = function (app, listofnodes) {
 
                     }
                 })
+            }
+        },
+
+        videos : {
+            storage : {},
+            infoshares : function(shares){
+
+                console.log('shares', shares)
+
+                var links = _.filter(_.map(shares, function(s){
+                    return s.url
+                }), function(l){
+                    return l ? true : false
+                })
+
+                console.log('links', links)
+
+                return self.sdk.videos.info(links)
+
+            },
+            info : function(links){
+
+                var s = self.sdk.videos.storage
+
+                
+                var lmap = _.map(links, function(l){
+
+                    var meta = parseVideo(l)
+
+                    return {
+                        meta : meta,
+                        link : l
+                    }
+                })
+
+                lmap = _.filter(lmap, function(l){
+
+                    if(!l.meta.type) return false
+
+                    if(s[l.link]) return false
+
+                    return true
+                })
+
+                if(!lmap.length) return Promise.resolve()
+
+                var groups = group(lmap, function(l){
+                    return l.meta.type
+                })
+
+
+                var promisesmap = _.map(groups, function(links, type){
+
+                    console.log('type', type, links)
+
+                    if(!self.sdk.videos.types[type]){
+                        return Promise.reject('typehandler')
+                    }
+
+                    return self.sdk.videos.types[type](links).then(r => {
+                        _.each(r, function(l){
+                            s[l.link] = l
+                        })
+
+                        return Promise.resolve()
+                    })
+
+                })
+
+                return Promise.all(promisesmap).catch(e => {
+                    console.log("E", e)
+                    return Promise.resolve()
+                })
+            },
+
+            types : {
+                youtube : function(links){
+                    var result = _.map(links, function(l){
+
+                        l.data = {
+                            image : videoImage(l.link),
+                            views : 0
+                        }
+
+                        return l
+
+                    })
+
+                    return Promise.resolve(result)
+                },
+
+                vimeo : function(links){
+                    return self.sdk.videos.types.youtube(links)
+                },
+
+                peertube : function(links){
+                    return self.sdk.videos.types.youtube(links)
+                },
+
+                bitchute : function(links){
+
+                    var promises = _.map(links, function(l){
+                        return new Promise((resolve, reject) => {
+
+                            var link = l.link.replace('/embed/', '/video/');
+
+                            $.ajax({
+                                url : 'https://pocketnet.app:8888/bitchute',
+                                data : {
+                                    url : hexEncode(link)
+                                },
+                                type : 'POST',
+                                success : function(response){
+
+                                    if (response.data.video && response.data.video.as) {
+
+                                        return resolve(response.data.video)
+
+                                        _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
+                                       
+                                        
+                                    } else {
+                                        reject()
+                                    }
+
+                                }
+                            });
+
+                        }).then(r => {
+
+                            l.data = {
+                                views : 0,
+                                image : response.data.video.preview
+                            }
+
+                            return Promise.resolve(l)
+                        })
+                    })
+
+                    return Promise.all(promises)
+
+                }
             }
         }
     }

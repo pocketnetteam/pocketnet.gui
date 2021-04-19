@@ -5,7 +5,6 @@ var m = share.renders.message();
 
 if(typeof ed == 'undefined') ed = {}
 
-
 if(share.address){
 
 	var my = (user.address.value && share.address == user.address.value.toString('hex'))
@@ -14,25 +13,15 @@ if(share.address){
 	if(!my && user.address.value){
 
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
-
-
 		if (me && me.relation(share.address, 'subscribes')){
 			subscribed = 'subscribed'
 		}
 	}
 
 var view = 'post';
-
-if(share.settings.v == 'a'){
-	view = 'article'
-}
-var bigmessage = false;
 var name = app.platform.api.name(share.address)
-
 var emptywithrepost = share.isEmpty() && share.repost
-
 var value = Number(share.score)
-
 
 var metadisplay = function(){ %>
 
@@ -45,36 +34,44 @@ var metadisplay = function(){ %>
 				<div class="author">
 
 					<div class="authorTable table">
+
+
+                        <div class="iconWrapper">
+                            
+                            <a href="<%-app.platform.api.authorlink(share.address)%>">
+        
+        
+                                <% var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
+        
+                                <div class="icon">
+                                    <div class="usericon usericonsbsa another" image="<%-src || ''%>">
+                                        <% if(!src) {%>
+                                            <svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+                                        <% } %>
+                                    </div>
+                                </div>
+        
+                            </a>
+        
+                        </div>
+            
+
 						<div class="authorCell">
 
 							<a href="<%-app.platform.api.authorlink(share.address)%>">
-
-
-							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
-								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
+								<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
-
-							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
-
-								<span class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('following')%></span> 
-									<% if(state && !my && user.address.value) {
-										
-										var r = me.relation(share.address, 'subscribes') 
-										
-										%>
-										
-
-										<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
-									<% } %>
-
-									
-								</span>
-
-							<% } %>
-
 							
-						</div>				
+						</div>			
+                        
+                        <div class="datetime">
+                            <% if(share.time) {%>
+                                <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
+                            <% } else { %> 
+                                <span><%=e('e13019')%></span>
+                            <% } %>
+                        </div>
 						
 					</div>
 				</div>
@@ -141,6 +138,8 @@ var metadisplay = function(){ %>
 
 		<% if(m) {
 
+            if(video) return
+
 			m = (m)
 			
 			var nm = m;
@@ -155,9 +154,6 @@ var metadisplay = function(){ %>
 			}
 
 			nm = share.renders.xssmessage(nm)
-
-			
-			
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
@@ -198,80 +194,17 @@ var metadisplay = function(){ %>
 
 	
 	i : function(){ %> 
-		<% if(share.images.length) {
-
-				var icClass = '';
-				var additionall = 0;
-				var imageFromVideo = ''
-
-
-				if(share.url && parseVideo(share.url).type){
-					additionall++;
-					imageFromVideo = videoImage(share.url)
-				}
-
-				if (share.images.length + additionall == 1) icClass = 'one';
-				if (share.images.length + additionall == 2) icClass = 'two';
-				if (share.images.length + additionall == 2) icClass = 'three';
-				if (share.images.length + additionall == 4) icClass = 'four';
-				if (share.images.length + additionall > 4) icClass = 'more';
-				
-
-
-				if(share.settings.v == 'a'){ 
-
-					icClass = 'articleImages'
-
-				%>
-
-					<div class="imagecaption">
-						<%=e('e13129')%>:
-					</div>
-
-				<% } %>
- 
-				<div class="images hideOnFullVideo">
-					<div class="imagesContainer <%-icClass%>">
-						<% _.each(share.images, function(image){ %>
-
-							<div class="imagesWrapper">
-								<div class="image imageOpen imagePostOpent" image="<%-image%>" i="<%-image%>">
-								</div>
-							</div>
-
-						<% }) %>
-
-						<% if(imageFromVideo) {%>
-
-							<div class="imagesWrapper forvideo">
-
-								<div class="image videoOpen" image="<%-imageFromVideo%>">
-									<div class="playicon"><i class="fas fa-play"></i></div>
-								</div>
-
-							</div>
-
-						<% } %>
-						
-					</div>
-				</div>
-
-		<% } %>
+		
 	<% },
 
 	u : function(){	%> 
 		<% if(share.url) {
 
-
 			var h = ''
-			
-			if(parseVideo(share.url).type && share.images.length){
-				h = 'hiddenurl'
-			}
 			
 			%>
 
-			<div class="url <%-h%>">
+			<div class="url">
 			</div>
 
 		<% } %>
@@ -284,43 +217,9 @@ var metadisplay = function(){ %>
 
 		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-			<% if(!emptywithrepost) { %>
-
-				<div class="iconWrapper">
-
-					
-					<a href="<%-app.platform.api.authorlink(share.address)%>">
-
-
-						<% var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
-
-						<div class="icon">
-							<div class="usericon usericonsbsa another" image="<%-src || ''%>">
-								<% if(!src) {%>
-									<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
-								<% } %>
-							</div>
-						</div>
-
-					</a>
-
-				</div>
-
-			<% } %>
-
-			<div class="cntswrk hideOnFullVideo formeta">
-
-				<div class="metawrapper"> 
-					<% metadisplay() %> 
-				</div> 
-
-			</div>
-
 			<div class="cntswrk">
 
-
-				<% var a = share.settings.a || share.default.a %>
-
+				<% var a = ["i", "u", "cm", "p"] %>
 
 				<% _.each(a, function(key, i){ %> 
 
@@ -328,7 +227,15 @@ var metadisplay = function(){ %>
 							
 				<% }) %>
 
-				
+			</div>
+
+            
+
+			<div class="cntswrk formeta">
+
+				<div class="metawrapper"> 
+					<% metadisplay() %> 
+				</div> 
 
 			</div>
 
@@ -346,7 +253,9 @@ var metadisplay = function(){ %>
 							
 							%>
 
-							<div class="tags canmark hideOnFullVideo">
+							<div class="tags canmark ">
+
+                                
 								<% _.each(bycategories.categories, function(category){ %>
 
 									<div class="category">
@@ -374,24 +283,7 @@ var metadisplay = function(){ %>
 
 						<% } %>
 
-						
-						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="sys hideOnFullVideo">
-								<% if(share.time) {%>
-
-									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-
-								<% } else { %> 
-
-									<span><%=e('e13019')%></span>
-
-								<% } %>
-
-								<% if(share.edit == 'true') {%>	
-									<span class="editedLabel"><i class="fas fa-pencil-alt"></i> <%=e('e13130')%></span>
-								<% } %>
-							</div>
-						<% } %>
+					
 
 						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="panel">
@@ -410,11 +302,6 @@ var metadisplay = function(){ %>
 													<i class="fas fa-share"></i>
 												</div>
 											</div>
-											<!--<% if(share.reposted || my) {%> 
-												<div class="labelwr">
-													<span class="label"><%-share.reposted || 0%></span>
-												</div>
-											<% } %>-->
 										</div>
 
 									</div>
@@ -468,12 +355,9 @@ var metadisplay = function(){ %>
 						<% } %>
 
 					</div>
-
-					
 				</div>
 
 			<% } %>
-
 		</div>
 
 		<div class="blockAuthor">
@@ -487,78 +371,25 @@ var metadisplay = function(){ %>
 						</button>
 					</div>
 				</div>
-				
 			</div>
-			
 		</div>
-		
 	</div>
 
 	<div class="exitFull roundclosebutton">
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
 
-	<% if(!emptywithrepost) {%>
+	<% if(!emptywithrepost && !video) {%>
 
 		<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 
 			<div class="commentsWrapperHb">
-				
 				<div class="commentsWrapper">
 				</div>
-
 			</div>
 
 		<% } %>
 
-	<% } %>
-
-	<% if(app.platform.istest && app.platform.istest() && share.info && !_.isEmpty(share.info)) {%>
-		<div class='debuginfo'>
-
-			<div class="icon">
-				<i class="fas fa-sort-down"></i>
-			</div>
-
-			<div class="info">
-				
-				<% _.each(share.info, function(k, v){
-					
-					if(v == 'LAST5RADRS' || v == 'PREPRADRS'){
-						
-						var ids = _.map(k, function(a){
-							return a.address + '_' + a.value
-						}).join(',')
-
-						if(!ids.length) return
-						%>
-
-						<div class="lll"><b><%-v%></b>:</div>
-
-						<div class="testusersprofiles" ids="<%-ids%>">
-
-						</div>
-
-						<div class="">
-							___________________
-						</div>
-
-					<%	return 
-				
-					} %>
-					<div>
-						<span><%-v %></span>
-						<b><%- Number(k || 0).toFixed(2) %></b>
-					</div>
-				<% }) %>
-				<div>
-					<span>TXID:</span>
-					<b><%-share.txid%></b><br>
-				</div>	
-
-			</div>
-			
-		</div>
 	<% } %>
 
 <% } %>

@@ -1900,10 +1900,17 @@
 
 		.shares{
 			.share{
+				background: transparent;
+				color : @color-gray-mlight;
 				padding : 0;
 				margin-bottom: 0;
 				overflow : hidden;
 				border-radius: 3px;
+
+				.meta{
+					padding-top : @rhythm;
+				}
+
 				.commentsWrapperHb{
 					display: none;
 				}
@@ -1922,12 +1929,8 @@
 
 				.iconWrapper{
 					padding : 0;
-					position: absolute;
-					left : @rhythm / 2;
-					bottom : @rhythm / 2;
 					z-index: 12;
-
-		
+					width: 24px;
 
 					.icon{
 						width: auto;
@@ -1950,6 +1953,15 @@
 				.panel{
 					display: none;
 				}
+
+				.tags{
+					>div{
+						span{
+							color : @color-gray-mlight;
+							opacity: 0.7;
+						}
+					}
+				}
 			}
 
 			.authorgroup{
@@ -1957,6 +1969,9 @@
 				width: 33.3333%;
 				padding : @rhythm / 2;
 				
+				&:nth-child(3n + 1){
+					clear: left;
+				}
 			}
 
 			.cntswrk{
@@ -1965,8 +1980,52 @@
 				padding-right: 0;
 			}
 
+			.paddingWrapper{
+				margin-left: 24px;
+				padding-left: @rhythm;
+			}
+
 			.showmorebyauthor{
 				display: none;
+			}
+
+			.shareTable{
+				.authorTable{
+					>div{
+	
+						&.authorCell{
+							padding-left: @rhythm;
+							padding-right: 0;
+						}
+
+						&.datetime{
+							padding-left: 2 * @rhythm;
+							opacity: 0.5;
+						}
+						
+						span{
+							font-size: 0.8em;
+							font-weight: 400;
+						}
+
+
+					}
+				}
+
+				.metatable{
+					>div{
+						&.metapanel{
+							width: 20px;
+							color : @color-gray-mlight;
+
+							.metapanelitem{
+								opacity: 1;
+							}
+						}
+
+						
+					}
+				}
 			}
 		}
 	}
