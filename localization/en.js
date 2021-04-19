@@ -974,3 +974,7 @@ ____loclib.doublename = "Category with this name already exist. Please choose an
 ____loclib.showmoreusers = "Show more users"
 ____loclib.zeron = "Nothing found";
 ____loclib.maxtags = "Only 5 tags maximum allowed";
+
+____loclib.videotitle = "Enter video title";
+____loclib.videodesc = "Enter video description";
+____loclib.entervideocaption = "Please, enter video title";

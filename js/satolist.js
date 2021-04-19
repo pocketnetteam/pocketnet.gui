@@ -791,6 +791,8 @@ Platform = function (app, listofnodes) {
 
             _url = url;
 
+            console.log("metametametametameta", meta)
+
             if (meta.type == 'peertube') {
                 _url = `https://${meta.host_name}/videos/embed/${meta.id}`
             }

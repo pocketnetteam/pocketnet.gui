@@ -1209,6 +1209,8 @@ Share = function(lang){
 			return 'language'
 		}
 
+		if(self.itisvideo() && !self.caption.v) return 'videocaption'
+
 		if(self.url.v && self.url.v.length){
 
 			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v.length, '')).length
@@ -1248,6 +1250,11 @@ Share = function(lang){
 		return bitcoin.crypto.sha256(self.serialize() + (self.repost.v || "") ).toString('hex')
 	}
 	
+	self.itisvideo = function(){
+		var meta = parseVideo(self.url.v)
+
+		if(meta.type == 'peertube') return true
+	}
 
 	self.export = function(extend){
 

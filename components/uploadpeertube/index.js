@@ -118,7 +118,7 @@ var uploadpeertube = (function () {
 
           videoId = response.split('/').pop();
 
-          actions.added(response);
+          actions.added(response, wnd.find('.upload-video-name').val());
         };
 
         filesWrittenObject.cancelClbk = function (cancel) {
@@ -208,7 +208,7 @@ var uploadpeertube = (function () {
               return;
             }
 
-            actions.added(`${response}?imported=true`);
+            actions.added(`${response}?imported=true`, filesWrittenObject.name);
             wndObj.close();
           };
 

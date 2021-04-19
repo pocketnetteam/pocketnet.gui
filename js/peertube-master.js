@@ -165,11 +165,13 @@ PeerTubeHandler = function (app) {
   this.uploadVideo = async (parameters) => {
     const channelId = await this.getChannel();
 
+    var videoName = parameters.name || `${this.userName}:${new Date().toISOString()}`
+
     const bodyOfQuery = {
       privacy: 1,
       'scheduleUpdate[updateAt]': new Date().toISOString(),
       channelId: channelId,
-      name: parameters.name || `${this.userName}:${new Date().toISOString()}`,
+      name: videoName,
       videofile: parameters.video,
     };
 
@@ -205,8 +207,11 @@ PeerTubeHandler = function (app) {
         const json = res.data;
 
         if (!json.video) return parameters.successFunction('error');
+        
         parameters.successFunction(
-          `${this.peertubeId}${watchUrl}${json.video.uuid}`,
+          this.composeLink(randomServer, json.video.uuid),
+          videoName
+         // `${this.peertubeId}${watchUrl}${json.video.uuid}`,
         );
       })
       .catch((res) => {
@@ -214,13 +219,30 @@ PeerTubeHandler = function (app) {
       });
   };
 
-  this.removeVideo = async (video) => {
-    const videoId = video.split('/').pop();
+  this.composeLink = function(host, videoid){
+    return this.peertubeId + host + '/' + videoid
+  }
 
-    const videoHost = video
-      .replace('peertube://', '')
+  this.parselink = function(link){
+    //peertube://pocketnetpeertube4.nohost.me/362344e6-9f36-48a1-a512-322917f00925
+
+    var ch = link.replace(this.peertubeId, '').split('/')
+
+    return {
+      host : ch[0],
+      id : ch[1]
+    }
+  }
+
+  this.removeVideo = async (video) => {
+    
+
+    const videoHost = this.parselink(video).host;
+    const videoId = this.parselink(video).id;
+
+    /*  .replace('peertube://', '')
       .replace('https://', '')
-      .split('/')[0];
+      .split('/')[0];*/
 
     if (randomServer !== videoHost) {
       this.baseUrl = videoHost ? `https://${videoHost}/api/v1` : this.baseUrl;

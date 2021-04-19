@@ -231,10 +231,18 @@ var share = (function(){
 								storage : storage,
 								value : value,
 								actions : {
-									added : function(link){
+									added : function(link, name){
 										var type = 'url';
 	
 										var result = currentShare[type].set(link)
+
+										currentShare.settings.a = ["i", "u", "cm", "p"]
+
+										if(!currentShare.caption.v)
+											currentShare.caption.set(name)
+
+										currentShare.images.set()
+										currentShare.repost.set()
 	
 										if(!essenseData.share){
 											state.save()
@@ -246,8 +254,7 @@ var share = (function(){
 	
 										}								
 	
-										if (renders[type])
-											renders[type]();									
+										make();										
 									}
 								},
 	
@@ -634,11 +641,7 @@ var share = (function(){
 
 				var l = currentShare.url.v
 
-				if (l.includes(self.app.peertubeHandler.peertubeId)) {
-					self.app.peertubeHandler.removeVideo(l);
-					el.peertube.removeClass('disabledShare');
-					el.peertubeLiveStream.removeClass('disabledShare');
-				}
+				
 
 
 				currentShare.url.set();
@@ -650,9 +653,22 @@ var share = (function(){
 
 				el.eMessage[0].emojioneArea.setText(text);
 
+				
+
+				if (l.includes(self.app.peertubeHandler.peertubeId)) {
+
+					currentShare.settings.a = currentShare.default.a
+					self.app.peertubeHandler.removeVideo(l);
+					el.peertube.removeClass('disabledShare');
+					el.peertubeLiveStream.removeClass('disabledShare');
+
+					make()
+				}
+
 				if(!essenseData.share){
 					state.save()
 				}
+
 				/*el.message.val(text);
 				el.message.change();*/
 			},
@@ -899,10 +915,13 @@ var share = (function(){
 					}
 
 					if(error == 'tags'){
-						el.c.find('.tgs input').focus() //// ??? CHECK
+						el.c.find('.tgs input').focus() 
 					}
 
-					
+					if(error == 'videocaption'){
+						el.caption.focus() 
+					}
+
 					return true
 				}
 				else
@@ -941,7 +960,8 @@ var share = (function(){
 			tags : self.app.localization.e('emptytags'),
 			images : self.app.localization.e('maximages'),
             url : self.app.localization.e('e13164'),
-            error_video : self.app.localization.e('e13165')
+            error_video : self.app.localization.e('e13165'),
+			videocaption : self.app.localization.e('entervideocaption')
 		}
 
 		var events = {
@@ -1434,30 +1454,34 @@ var share = (function(){
 			
 
 			all : function(){
-				el.eMessage[0].emojioneArea.setText(currentShare.message.v);
-				el.cpt.find('input').val(currentShare.caption.v || "")
 
-				el.cpt.val();
+				renders.body(function(){
 
-				renders.tgs();
-				
-				renders.url();
+					el.eMessage[0].emojioneArea.setText(currentShare.message.v);
+					el.cpt.find('input').val(currentShare.caption.v || "")
+					el.cpt.val();
 
-				renders.caption();
+					renders.tgs();
+					
+					renders.url();
 
-				renders.images();
+					renders.caption();
 
-				renders.poll();
+					renders.images();
 
-				renders.repost();
+					renders.poll();
 
-				renders.postline();
+					renders.repost();
+
+					renders.postline();
+
+				});
 
 			},
 
 			caption : function(){
 
-				if(currentShare.caption.v/* || currentShare.message.v.length > 100*/){
+				if(currentShare.caption.v || currentShare.itisvideo()){
 
 					if(!el.cpt.hasClass('active'))
 						el.cpt.addClass('active');
@@ -1804,6 +1828,200 @@ var share = (function(){
 				// 	}
 
 				// })
+			},
+
+			body : function(clbk){
+
+				self.shell({
+					name :  'body',
+					el : el.body,
+					data : {
+						share : currentShare,
+					},
+
+				}, function(p){
+
+
+					el.message = el.c.find('.message');
+					el.eMessage = el.c.find('#emjcontainer');
+					el.urlWrapper = el.c.find('.urlWrapper')
+					el.caption = el.c.find('.captionshare');
+					el.cpt = el.c.find('.cpt')
+					el.images = el.c.find('.imagesWrapper')
+					el.poll = el.c.find('.pollWrapper')
+
+					el.eMessage.emojioneArea({
+						pickerPosition : 'bottom',
+						
+						search : false,
+						tones : false,
+						autocomplete : false,
+		
+						attributes: {
+							spellcheck : true,
+						},
+		
+						filters : {
+							smileys_people: {
+								icon: "yum",
+								title: "Smileys & People",
+								emoji: "grinning smiley smile grin laughing sweat_smile joy rofl relaxed blush innocent slight_smile upside_down " +
+								"wink relieved crazy_face star_struck heart_eyes kissing_heart kissing kissing_smiling_eyes kissing_closed_eyes yum " +
+								"stuck_out_tongue_winking_eye stuck_out_tongue_closed_eyes stuck_out_tongue money_mouth hugging nerd sunglasses " +
+								"cowboy smirk unamused disappointed pensive worried face_with_raised_eyebrow face_with_monocle confused slight_frown " +
+								"frowning2 persevere confounded tired_face weary triumph angry rage face_with_symbols_over_mouth " +
+								"no_mouth neutral_face expressionless hushed frowning anguished open_mouth astonished dizzy_face exploding_head flushed scream " +
+								"fearful cold_sweat cry disappointed_relieved drooling_face sob sweat sleepy sleeping rolling_eyes thinking " +
+								"shushing_face face_with_hand_over_mouth lying_face grimacing zipper_mouth face_vomiting nauseated_face sneezing_face mask thermometer_face " +
+								"head_bandage smiling_imp imp japanese_ogre japanese_goblin poop ghost skull skull_crossbones alien space_invader " +
+								"robot jack_o_lantern clown smiley_cat smile_cat joy_cat heart_eyes_cat smirk_cat kissing_cat scream_cat crying_cat_face " +
+								"pouting_cat open_hands raised_hands palms_up_together clap pray handshake thumbsup thumbsdown punch fist left_facing_fist " +
+								"right_facing_fist fingers_crossed v metal love_you_gesture ok_hand point_left point_right point_up_2 point_down point_up " +
+								"raised_hand raised_back_of_hand hand_splayed vulcan wave call_me muscle middle_finger writing_hand selfie " +
+								"nail_care ring lipstick kiss lips tongue ear nose footprints eye eyes speaking_head bust_in_silhouette " +
+								"busts_in_silhouette baby boy girl man woman blond-haired_woman blond_haired_man older_man older_woman " +
+								"man_with_chinese_cap woman_wearing_turban man_wearing_turban woman_police_officer police_officer " +
+								"woman_construction_worker construction_worker woman_guard guard woman_detective detective woman_health_worker " +
+								"man_health_worker woman_farmer man_farmer woman_cook man_cook woman_student man_student woman_singer man_singer " +
+								"woman_teacher man_teacher woman_factory_worker man_factory_worker woman_technologist man_technologist " +
+								"woman_office_worker man_office_worker woman_mechanic man_mechanic woman_scientist man_scientist woman_artist " +
+								"man_artist woman_firefighter man_firefighter woman_pilot man_pilot woman_astronaut man_astronaut woman_judge " +
+								"man_judge mrs_claus santa princess prince bride_with_veil man_in_tuxedo angel pregnant_woman breast_feeding woman_bowing " +
+								"man_bowing woman_tipping_hand man_tipping_hand woman_gesturing_no man_gesturing_no woman_gesturing_ok " +
+								"man_gesturing_ok woman_raising_hand man_raising_hand woman_facepalming man_facepalming woman_shrugging " +
+								"man_shrugging woman_pouting man_pouting woman_frowning man_frowning woman_getting_haircut man_getting_haircut " +
+								"woman_getting_face_massage man_getting_face_massage man_in_business_suit_levitating dancer man_dancing women_with_bunny_ears_partying " +
+								"men_with_bunny_ears_partying woman_walking man_walking woman_running man_running couple " +
+								"bearded_person woman_with_headscarf woman_mage man_mage woman_fairy man_fairy woman_vampire man_vampire " +
+								"mermaid merman woman_elf man_elf woman_genie man_genie woman_zombie man_zombie " +
+								"womans_clothes shirt jeans necktie dress bikini kimono high_heel sandal boot mans_shoe athletic_shoe womans_hat " +
+								"tophat mortar_board crown helmet_with_cross school_satchel pouch purse handbag briefcase eyeglasses dark_sunglasses " +
+								"closed_umbrella umbrella2 brain billed_cap scarf gloves coat socks "
+							},
+						},
+		
+						events : {
+							change : events.eTextChange,
+							click : events.eTextChange,
+							keyup : events.eText,
+		
+							onLoad : function(c,d){
+		
+								if (parameters().newshare){
+									el.c.find('.emojionearea-editor').focus()
+								}
+					
+								el.c.find('.emojionearea-editor').pastableContenteditable();
+		
+		
+								el.c.find('.emojionearea-editor').on('pasteImage', function (ev, data){
+		
+									topPreloader(100)
+		
+		
+									var r  = currentShare.images.set(data.dataURL)
+		
+									if(!r){
+										sitemessage(errors.images)
+									}
+									else
+									{
+										if (renders.images)
+											renders.images();
+									}
+		
+									
+		
+		
+								}).on('pasteImageStart', function(){
+		
+									topPreloader(30)
+		
+								}).on('pasteImageError', function(ev, data){
+		
+									 topPreloader(100)
+		
+								}).on('pasteText', function (ev, data){
+		
+									actions.eTextChange(el.eMessage[0].emojioneArea)
+		
+								});
+		
+		
+								/*if(typeof _Electron != 'undefined'){
+									const electronSpellchecker = require('electron-spellchecker');
+		
+									// Retrieve required properties
+									const SpellCheckHandler = electronSpellchecker.SpellCheckHandler;
+									const ContextMenuListener = electronSpellchecker.ContextMenuListener;
+									const ContextMenuBuilder = electronSpellchecker.ContextMenuBuilder;
+							
+									// Configure the spellcheckhandler
+									window.spellCheckHandler = new SpellCheckHandler();
+									window.spellCheckHandler.attachToInput();
+							
+									// Start off as "US English, America"
+									window.spellCheckHandler.switchLanguage('en-US');
+							
+									// Create the builder with the configured spellhandler
+									var contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
+							
+									// Add context menu listener
+									var contextMenuListener = new ContextMenuListener((info) => {
+										contextMenuBuilder.showPopupMenu(info);
+									});
+								}*/
+		
+								
+		
+							}
+						}
+					});
+					
+					el.caption.on('keyup', events.caption)
+		
+					
+
+					var ps = {
+						animation: 150,
+						swapThreshold : 0.5,
+						draggable : '.draggablepart',
+						onUpdate: function (evt){
+		
+							var na = [];
+						   
+							var ps = $(list).find('.draggablepart');
+		
+							$.each(ps, function(){
+								na.push($(this).attr('part'))
+							})
+
+							currentShare.settings.a = na
+		
+							if (essenseData.changeArrange){
+								essenseData.changeArrange()
+							}
+
+							if(!essenseData.share){
+								state.save()
+							}
+						},
+						forceFallback : true
+					}
+				
+					ps.handle = '.marker'
+					
+					var list = document.getElementById("sortableBody");
+		
+					if (list && !isMobile()){
+						Sortable.create(list, ps); 
+					}
+					
+					actions.autoFilled()
+
+					if (clbk)
+						clbk();
+				})
 			}
 
 		}
@@ -1850,138 +2068,6 @@ var share = (function(){
 
 			el.changeAddress.on('change', events.changeAddress)			
 
-
-		   	el.eMessage.emojioneArea({
-		    	pickerPosition : 'bottom',
-		    	
-		    	search : false,
-		    	tones : false,
-		    	autocomplete : false,
-
-		    	attributes: {
-			        spellcheck : true,
-			    },
-
-				filters : {
-					smileys_people: {
-						icon: "yum",
-						title: "Smileys & People",
-						emoji: "grinning smiley smile grin laughing sweat_smile joy rofl relaxed blush innocent slight_smile upside_down " +
-						"wink relieved crazy_face star_struck heart_eyes kissing_heart kissing kissing_smiling_eyes kissing_closed_eyes yum " +
-						"stuck_out_tongue_winking_eye stuck_out_tongue_closed_eyes stuck_out_tongue money_mouth hugging nerd sunglasses " +
-						"cowboy smirk unamused disappointed pensive worried face_with_raised_eyebrow face_with_monocle confused slight_frown " +
-						"frowning2 persevere confounded tired_face weary triumph angry rage face_with_symbols_over_mouth " +
-						"no_mouth neutral_face expressionless hushed frowning anguished open_mouth astonished dizzy_face exploding_head flushed scream " +
-						"fearful cold_sweat cry disappointed_relieved drooling_face sob sweat sleepy sleeping rolling_eyes thinking " +
-						"shushing_face face_with_hand_over_mouth lying_face grimacing zipper_mouth face_vomiting nauseated_face sneezing_face mask thermometer_face " +
-						"head_bandage smiling_imp imp japanese_ogre japanese_goblin poop ghost skull skull_crossbones alien space_invader " +
-						"robot jack_o_lantern clown smiley_cat smile_cat joy_cat heart_eyes_cat smirk_cat kissing_cat scream_cat crying_cat_face " +
-						"pouting_cat open_hands raised_hands palms_up_together clap pray handshake thumbsup thumbsdown punch fist left_facing_fist " +
-						"right_facing_fist fingers_crossed v metal love_you_gesture ok_hand point_left point_right point_up_2 point_down point_up " +
-						"raised_hand raised_back_of_hand hand_splayed vulcan wave call_me muscle middle_finger writing_hand selfie " +
-						"nail_care ring lipstick kiss lips tongue ear nose footprints eye eyes speaking_head bust_in_silhouette " +
-						"busts_in_silhouette baby boy girl man woman blond-haired_woman blond_haired_man older_man older_woman " +
-						"man_with_chinese_cap woman_wearing_turban man_wearing_turban woman_police_officer police_officer " +
-						"woman_construction_worker construction_worker woman_guard guard woman_detective detective woman_health_worker " +
-						"man_health_worker woman_farmer man_farmer woman_cook man_cook woman_student man_student woman_singer man_singer " +
-						"woman_teacher man_teacher woman_factory_worker man_factory_worker woman_technologist man_technologist " +
-						"woman_office_worker man_office_worker woman_mechanic man_mechanic woman_scientist man_scientist woman_artist " +
-						"man_artist woman_firefighter man_firefighter woman_pilot man_pilot woman_astronaut man_astronaut woman_judge " +
-						"man_judge mrs_claus santa princess prince bride_with_veil man_in_tuxedo angel pregnant_woman breast_feeding woman_bowing " +
-						"man_bowing woman_tipping_hand man_tipping_hand woman_gesturing_no man_gesturing_no woman_gesturing_ok " +
-						"man_gesturing_ok woman_raising_hand man_raising_hand woman_facepalming man_facepalming woman_shrugging " +
-						"man_shrugging woman_pouting man_pouting woman_frowning man_frowning woman_getting_haircut man_getting_haircut " +
-						"woman_getting_face_massage man_getting_face_massage man_in_business_suit_levitating dancer man_dancing women_with_bunny_ears_partying " +
-						"men_with_bunny_ears_partying woman_walking man_walking woman_running man_running couple " +
-						"bearded_person woman_with_headscarf woman_mage man_mage woman_fairy man_fairy woman_vampire man_vampire " +
-						"mermaid merman woman_elf man_elf woman_genie man_genie woman_zombie man_zombie " +
-						"womans_clothes shirt jeans necktie dress bikini kimono high_heel sandal boot mans_shoe athletic_shoe womans_hat " +
-						"tophat mortar_board crown helmet_with_cross school_satchel pouch purse handbag briefcase eyeglasses dark_sunglasses " +
-						"closed_umbrella umbrella2 brain billed_cap scarf gloves coat socks "
-					},
-				},
-
-		    	events : {
-		    		change : events.eTextChange,
-		    		click : events.eTextChange,
-		    		keyup : events.eText,
-
-		    		onLoad : function(c,d){
-
-		    			if (parameters().newshare){
-		    				el.c.find('.emojionearea-editor').focus()
-		    			}
-			
-						el.c.find('.emojionearea-editor').pastableContenteditable();
-
-
-						el.c.find('.emojionearea-editor').on('pasteImage', function (ev, data){
-
-							topPreloader(100)
-
-
-							var r  = currentShare.images.set(data.dataURL)
-
-							if(!r){
-								sitemessage(errors.images)
-							}
-							else
-							{
-								if (renders.images)
-									renders.images();
-							}
-
-							
-
-
-						}).on('pasteImageStart', function(){
-
-							topPreloader(30)
-
-						}).on('pasteImageError', function(ev, data){
-
-						 	topPreloader(100)
-
-						}).on('pasteText', function (ev, data){
-
-							actions.eTextChange(el.eMessage[0].emojioneArea)
-
-						});
-
-
-						/*if(typeof _Electron != 'undefined'){
-							const electronSpellchecker = require('electron-spellchecker');
-
-							// Retrieve required properties
-							const SpellCheckHandler = electronSpellchecker.SpellCheckHandler;
-							const ContextMenuListener = electronSpellchecker.ContextMenuListener;
-							const ContextMenuBuilder = electronSpellchecker.ContextMenuBuilder;
-					
-							// Configure the spellcheckhandler
-							window.spellCheckHandler = new SpellCheckHandler();
-							window.spellCheckHandler.attachToInput();
-					
-							// Start off as "US English, America"
-							window.spellCheckHandler.switchLanguage('en-US');
-					
-							// Create the builder with the configured spellhandler
-							var contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
-					
-							// Add context menu listener
-							var contextMenuListener = new ContextMenuListener((info) => {
-								contextMenuBuilder.showPopupMenu(info);
-							});
-						}*/
-
-						
-
-		    		}
-		    	}
-		    });
-			
-			el.caption.on('keyup', events.caption)
-
-			currentShare.on.change.edit = events.change;
 			
 			//autosize(el.c.find('textarea'));
 
@@ -1995,41 +2081,7 @@ var share = (function(){
 
 			
 			
-			var ps = {
-				animation: 150,
-				swapThreshold : 0.5,
-				draggable : '.draggablepart',
-				onUpdate: function (evt){
-
-					var na = [];
-				   
-					var ps = $(list).find('.draggablepart');
-
-					$.each(ps, function(){
-						na.push($(this).attr('part'))
-					})
-
-
-					if(!essenseData.share){
-						state.save()
-					}
-
-					if (essenseData.changeArrange){
-						essenseData.changeArrange()
-					}
-				},
-				forceFallback : true
-			}
-		
-			ps.handle = '.marker'
-			
-			var list = document.getElementById("sortableBody");
-
-			if (list && !isMobile()){
-				Sortable.create(list, ps); 
-			}
-			
-			actions.autoFilled()
+			currentShare.on.change.edit = events.change;
 
 			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
@@ -2095,6 +2147,8 @@ var share = (function(){
 					if (essenseData.repost || parameters().repost) 
 						currentShare.repost.set(essenseData.repost || parameters().repost)
 
+					console.log('currentShare', currentShare)
+
 
 					var data = {
 						essenseData : essenseData,
@@ -2151,28 +2205,19 @@ var share = (function(){
 				
 				el.tgsWrapperMain = el.c.find('.tgsWrapperMain')
 				
-				el.message = el.c.find('.message');
+				
 
-				el.eMessage = el.c.find('#emjcontainer');
+				
 				el.error = el.c.find('.error');		
 				
 
 				
-				el.urlWrapper = el.c.find('.urlWrapper')
-				el.caption = el.c.find('.captionshare');
-				el.cpt = el.c.find('.cpt')
-				el.images = el.c.find('.imagesWrapper')
-
-				el.poll = el.c.find('.pollWrapper')
-
-				el.changeAddress = el.c.find('.changeAddress')
-
-				el.repostWrapper = el.c.find('.repostWrapper')
-				el.postline = el.c.find('.postlineWrapper')
-
-
 				
 
+				el.changeAddress = el.c.find('.changeAddress')
+				el.repostWrapper = el.c.find('.repostWrapper')
+				el.postline = el.c.find('.postlineWrapper')
+				el.body = el.c.find('.bodywrapper')
 
 				initEvents();
 

@@ -1,0 +1,58 @@
+<% 
+
+var arranges = {
+
+	cm : function(){ %> 
+
+		<div class="cpt">
+			<input type='text' value="" class="captionshare" placeholder="<%=e(share.itisvideo() ? 'videotitle' : 'scaption')%>">
+		</div>
+		<div class="txt">
+			<div class="message" placeholder="<%=e(share.itisvideo() ? 'videodesc' : 'whatsnew')%>" id='emjcontainer' spellcheck="true"></div>
+		</div>
+
+	<% },
+
+	i : function(){ %> 
+		<div class="imagesWrapper attachements"></div>
+	<% },
+
+
+
+	u : function(){ %> 
+		<div class="urlWrapper attachements"></div>
+	<% },
+
+	
+	p : function(){ %> 
+		<div class="pollWrapper attachements"></div>
+	<% },
+
+
+} %>
+
+<div id="sortableBody">
+
+	<% var a = share.settings.a || share.default.a %>
+
+    <% _.each(a, function(key, i){ 
+
+        if(!arranges[key]) return;
+    %> 
+
+        <div class="draggablepart" part="<%-key%>">
+            <div class="draggablewrapper table">
+                <div class="draggablecontent">
+                    <% arranges[key]() %>
+                </div>
+
+                
+                <div class="draggablemarkerwrapper">
+                    <div class="marker">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+</div>

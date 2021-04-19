@@ -5,20 +5,22 @@
                 <i class="fas fa-plus"></i>
             </div>-->
 
-            <div class="item url tooltip" embeding="url" title="<%=e('saddlink')%>">
-                <i class="fas fa-external-link-alt"></i><span class="mobiledevice"><%=e('saddlink')%></span>
-            </div>
-            <div class="item images tooltip" embeding="images" title="<%=e('saddimages')%>">
-                <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
-            </div>
+            <% if(!share.itisvideo()) {%>
 
-           
-
-            <% if(!share.aliasid && !share.repost.v) {%>
-            
-                <div class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
-                    <i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
+                <div class="item url tooltip" embeding="url" title="<%=e('saddlink')%>">
+                    <i class="fas fa-external-link-alt"></i><span class="mobiledevice"><%=e('saddlink')%></span>
                 </div>
+                <div class="item images tooltip" embeding="images" title="<%=e('saddimages')%>">
+                    <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
+                </div>
+                
+                <% if(!share.aliasid && !share.repost.v) {%>
+                
+                    <div class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
+                        <i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
+                    </div>
+
+                <% } %>
 
             <% } %>
 

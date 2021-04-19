@@ -9905,7 +9905,7 @@
 		
 	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
-	    	if(test && test[2]){
+	    	if(test && test[2] || (_url && _url.indexOf('peertube://') > -1)){
 
 				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
 					type = 'youtube'
@@ -9925,6 +9925,8 @@
 					type = 'peertube'
 			        id = `${test[9]}?${params}`
 					host_name = test[4]
+
+					console.log(id, host_name)
 			    }
 			}
 			
