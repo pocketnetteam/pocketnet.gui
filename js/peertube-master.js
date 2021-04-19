@@ -152,18 +152,25 @@ PeerTubeHandler = function (app) {
   };
 
   this.getChannel = async () => {
-    return apiHandler.run({
-      method: `video-channels/${this.userName}_channel`,
-    });
+    return axios
+      .get(`${baseUrl}users/me`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
+      .then((res) => res.data.videoChannels[0].id)
+      .catch(() => sitemessage('Unable to get channel info'));
   };
 
   this.uploadVideo = async (parameters) => {
-    const channelInfo = await this.getChannel();
+    const channelId = await this.getChannel();
+
+    debugger;
 
     const bodyOfQuery = {
       privacy: 1,
       'scheduleUpdate[updateAt]': new Date().toISOString(),
-      channelId: channelInfo.id,
+      channelId: channelId,
       name: parameters.name || `${this.userName}:${new Date().toISOString()}`,
       videofile: parameters.video,
     };
