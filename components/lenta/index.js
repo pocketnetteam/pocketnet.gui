@@ -2360,7 +2360,8 @@ var lenta = (function(){
 						data : {
 							url : url,
 							og : og,
-							share : share
+							share : share,
+							video : video
 						},
 	
 					}, function(_p){
