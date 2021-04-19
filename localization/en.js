@@ -604,7 +604,7 @@ ____loclib.repost = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
 ____loclib.e13161 = "Add Tags For Your Post"
-____loclib.e13162 = "You can enter less that 30 tags"
+____loclib.e13162 = "You can enter less that 5 tags"
 ____loclib.e13163 = "There aren't changes in Post"
 ____loclib.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
 ____loclib.e13165 = 'Your link to video is invalid. Please load valid video URL.'
@@ -973,3 +973,4 @@ ____loclib.doublename = "Category with this name already exist. Please choose an
 
 ____loclib.showmoreusers = "Show more users"
 ____loclib.zeron = "Nothing found";
+____loclib.maxtags = "Only 5 tags maximum allowed";

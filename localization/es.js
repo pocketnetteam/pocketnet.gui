@@ -566,7 +566,7 @@ ____loclib.repost = "Volver a publicar"
 ____loclib.e13160 = "¡Hola Pocketeers!"
 
 ____loclib.e13161 = "Agrega etiquetas para tu publicación"
-____loclib.e13162 = "Podéis ingresar hasta 30 etiquetas"
+____loclib.e13162 = "Podéis ingresar hasta 5 etiquetas"
 ____loclib.e13163 = "No se han realizado cambios en esta publicación"
 ____loclib.e13164 = "Agrega algunas palabras para decirle a Pocketpeople sobre tu enlace. ¿De qué es eso? ¿Por qué es importante? ¿Cuál es tu opinión?"
 ____loclib.e13165 = 'Su enlace de video no es válido. Inténtelo descargar URL de video correcto.'

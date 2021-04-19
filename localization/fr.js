@@ -592,7 +592,7 @@ ____loclib.repost = "Republier"
 ____loclib.e13160 = "Bonjour Pocketeers!"
 
 ____loclib.e13161 = "Ajouter des étiquettes pour votre message"
-____loclib.e13162 = "Vous pouvez saisir moins de 30 étiquettes"
+____loclib.e13162 = "Vous pouvez saisir moins de 5 étiquettes"
 ____loclib.e13163 = "Il n'y a pas de changements dans la publication"
 ____loclib.e13164 = "Veuillez ajouter quelques mots pour informer Pocketpeople de votre lien. De quoi s'agit-il? Pourquoi c'est important? Quel est ton opinion?"
 ____loclib.e13165 = "VNotre lien vers la vidéo n'est pas valide. Veuillez mettre en ligne une URL de vidéo valide."

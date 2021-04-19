@@ -245,6 +245,9 @@
 				&.icon{
 					width : 30px;
 					padding-top: @rhythm;
+					text-align: center;
+					opacity: 0.6;
+					font-size: 0.8em;
 				}
 
 				&.label{
@@ -559,7 +562,7 @@
 
 	.contents
 	{
-
+		padding-left: 2 * @rhythm;
 		.cgroup{
 			padding-top : 2 * @rhythm;
 			padding-bottom : 2 * @rhythm;
@@ -567,14 +570,23 @@
 
 		.ccaption{
 			font-weight: 700;
-			color : @color-contrast;
+			color : @color-main;
 			margin-bottom : 2 * @rhythm;
 		}
 
 		.gcontents{
+
+			
+
+			
 			.citemtable{
+
+				width: auto;
+				
 				>div{
 					vertical-align: middle;
+					max-width: 130px;
+					overflow: hidden;
 
 					&.cscorecell{
 						width : 50px;
@@ -770,7 +782,8 @@ html.stblack{
 		
 			.itemtable{
 				>div{
-	
+					
+					
 					
 					&.label{
 	

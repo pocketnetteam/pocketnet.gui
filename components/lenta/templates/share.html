@@ -50,8 +50,16 @@ var metadisplay = function(){ %>
 							<a href="<%-app.platform.api.authorlink(share.address)%>">
 
 
-							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
-								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0;
+
+
+							console.log('reputation', reputation)
+							 %>
+
+							
+							
+								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+
 							</a>
 
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
