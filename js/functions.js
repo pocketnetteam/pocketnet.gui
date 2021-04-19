@@ -10544,7 +10544,15 @@ findResponseError = (response) => {
 
 	return (typeof error === 'object') ? (Object.values(error)[0] || {}).msg : error;
 }
-
+serialize = function (obj) {
+	var str = [];
+	for (var p in obj)
+	  if (obj.hasOwnProperty(p)) {
+		str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+	  }
+	return str.join('&');
+  };
+  
 
 stringEqTrig = function(s1, s2){
 
@@ -10573,6 +10581,8 @@ stringEqTrig = function(s1, s2){
 			if(index < 0 || index >= w.length) c = "_";
 
 			else c = w[index];
+
+
 
 			return c;
 		}
