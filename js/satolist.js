@@ -77,6 +77,14 @@ Platform = function (app, listofnodes) {
                 if (value > 1000000) {
                     p.precision = 0;
                 }
+
+                if (value < 0.1) {
+                    p.precision = 4;
+                }
+
+                if (value < 0.001) {
+                    p.precision = 8;
+                }
             }
 
             p.allowNegative = false;
@@ -3163,7 +3171,9 @@ Platform = function (app, listofnodes) {
                     },
                     images: [],
                     content: null,
+                    tags : [],
                     u: ''
+                    
                 }
             },
 
@@ -6420,6 +6430,8 @@ Platform = function (app, listofnodes) {
 
                     var embed = bitcoin.payments.embed({ data: opreturnData });
 
+                    console.log('embed', embed, opreturnData)
+
                     outputs.push({
                         address: embed.output,
                         amount: 0
@@ -7770,6 +7782,8 @@ Platform = function (app, listofnodes) {
                 var s = this.storage;
 
                 if (type != 'fs' && type != 'all') {
+
+                    if(!s[type]) s[type] = {}
 
                     if(!s[type][address])
                         s[type][address] = {}
@@ -11559,6 +11573,8 @@ Platform = function (app, listofnodes) {
 
                                 var hex = tx.toHex();
 
+
+                                console.log('tx', tx)
 
                                 if (p.pseudo) {
                                     var alias = obj.export(true);

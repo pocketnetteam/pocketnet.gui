@@ -1296,8 +1296,14 @@ var menu = (function(){
 
 			showsearch : function(v, _searchBackAction){
 
+				console.log('showsearch', v)
 				if(v){
 					el.c.addClass('searchactive')
+					el.postssearch.find('.search').addClass('searchFilled')
+				}
+				else{
+
+					el.postssearch.find('.search').removeClass('searchFilled')
 				}
 				
 				el.postssearch.find('input').val(v.replace('tag:', "#"));

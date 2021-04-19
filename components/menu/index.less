@@ -885,7 +885,7 @@
 			background: #fafafa;
 			height: 100%;
 			border : 0;
-
+			padding-left: 0;
 		}
 
 		.searchIconLabel,
@@ -903,14 +903,15 @@
 		}
 
 		.searchPanel{
-			width: @rhythm;
+			width: 4 * @rhythm;
 			font-size: 0.8em;
+			text-align: center;
 			.searchPanelWrapper{
-				>div{
+				/*>div{
 					&[event=clear]{
 						display: none!important;
 					}
-				}
+				}*/
 			}
 		}
 	}
@@ -919,7 +920,7 @@
 		&:not(.searchactive){
 			.postssearch{
 		
-				.searchPanel,
+				/*.searchPanel,*/
 				.searchInputWrapper{
 					display: none;
 				}
@@ -1122,15 +1123,15 @@ html.stblack{
 			}
 	
 			.searchPanel{
-				width: @rhythm;
+				width: 2 * @rhythm;
 				font-size: 0.8em;
-				.searchPanelWrapper{
+				/*.searchPanelWrapper{
 					>div{
 						&[event=clear]{
 							display: none!important;
 						}
 					}
-				}
+				}*/
 			}
 		}
 

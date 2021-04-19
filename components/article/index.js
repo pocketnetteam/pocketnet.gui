@@ -8,12 +8,13 @@ var article = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, art, ed, editor, t;
+		var el, art, ed, editor, t, taginput;
 
 		var wordsRegExp = /[,.!?;:()<> \n\r]/g
 
 		var errors = {
-			message : self.app.localization.e('emptymessage')
+			message : self.app.localization.e('emptymessage'),
+			tags : self.app.localization.e('emptytags')
 		}
 
 		var actions = {
@@ -60,11 +61,16 @@ var article = (function(){
 					share.aliasid = ed.share.aliasid
 				}
 
+				console.log('share', share)
+				
+
 				self.sdk.node.transactions.create.commonFromUnspent(
 
 					share,
 
 					function(_alias, error){
+
+						console.log('_alias', _alias)
 
 						topPreloader(100)
 
@@ -130,6 +136,8 @@ var article = (function(){
 						value : share.message.v
 					}]
 
+					art.tags = _.clone(share.tags.v)
+
 				return art;
 			},	
 
@@ -145,8 +153,8 @@ var article = (function(){
 
 				share.images.set(self.app.platform.sdk.articles.getImages(text))
 
-				var tags = actions.tagsFromText(text)
-				share.tags.set(tags) 
+				//var tags = actions.tagsFromText(text)
+				share.tags.set(art.tags || []) 
 
 				share.settings.v = 'a'
 				share.settings.videos = self.app.platform.sdk.articles.getVideos(text)
@@ -206,7 +214,9 @@ var article = (function(){
 							});
 
 							share.message.set(text)
-		
+
+
+
 
 							actions.trx(share)
 
@@ -218,7 +228,6 @@ var article = (function(){
 				}
 				else
 				{
-					console.log('errors[error]', errors[error])
 					if(errors[error]){
 						sitemessage(errors[error])
 					}
@@ -248,7 +257,72 @@ var article = (function(){
 
 				return tags;
 				
-			}
+			},
+
+			_addtag : function(tag){
+
+				if (art.tags.length < 5){
+
+					
+					removeEqual(art.tags, tag)
+					art.tags.push(tag)
+					return true
+				}
+
+				return false
+			},
+
+			addTags : function(tags){
+
+				_.find(tags, function(tag){
+					if(!actions._addtag(tag)){
+						sitemessage(self.app.localization.e('e13162'))
+
+						return true
+					}
+				})
+
+				if (ed.save)
+					ed.save(art)
+
+			},
+			addTag : function(tag){
+
+				//tag = tag.replace(/#/g, '')
+
+				if(!actions._addtag(tag)){
+					sitemessage(self.app.localization.e('e13162'))
+				}
+				else
+				{
+					if (ed.save)
+						ed.save(art)
+				}
+
+			},
+
+			_removetag : function(tag){
+				removeEqual(art.tags, tag)
+
+				
+			},
+
+			removeTags: function(tags){
+
+				_.each(tags, function(tag){
+					actions._removetag(tag)
+				})
+
+				if (ed.save)
+					ed.save(art)
+			},
+
+			removeTag : function(tag){
+				actions._removetag(tag)
+
+				if (ed.save)
+					ed.save(art)
+			},
 		}
 
 		var events = {
@@ -318,7 +392,56 @@ var article = (function(){
 				el.caption.val(art.caption.value)
 
 				
-			}
+			},
+
+			tgs : function(clbk){
+
+
+
+					self.nav.api.load({
+						open : true,
+						id : 'taginput',
+						el : el.tgsWrapperMain,
+						eid : 'articletags',
+						animation : false,
+						essenseData : {
+							tags : function(){
+								return art.tags || []
+							},
+
+							removeTag : function(tag){
+								actions.removeTag(tag)
+								renders.tgs()
+							},
+
+							removeTags : function(tag){
+								actions.removeTags(tag)
+								renders.tgs()
+							},
+
+							addTag : function(tag){
+								actions.addTag(tag)
+								renders.tgs()
+							},
+
+							addTags : function(tags){
+								actions.addTags(tags)
+								renders.tgs()
+							}
+						},
+
+						clbk : function(e, p){
+
+							if(!el.c) return
+
+							taginput = p
+
+							if(clbk) clbk()
+						}
+					})
+
+			
+			},
 		}
 
 		var state = {
@@ -343,6 +466,8 @@ var article = (function(){
 		}
 
 		var make = function(clbk){
+
+			renders.tgs()
 
 			editor = new MediumEditor('.edt', {
 				delay: 500,
@@ -434,12 +559,38 @@ var article = (function(){
 
 											},
 
-											fail : function(){
-												l = 'https://pocketnet.app/img/imagenotuploaded.jpg'
+											fail : function(d){
 
-												if (clbk)
-													clbk(l)
+
+												app.ajax.run({
+													type : "POST",
+													up1 : true,
+													data : {
+														file : r[1]
+													},
+						
+													success : function(data){
+						
+														var l = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+				
+														if (clbk)
+															clbk(l)
+						
+													},
+						
+													fail : function(d){
+						
+														l = 'https://pocketnet.app/img/imagenotuploaded.jpg'
+
+														if (clbk)
+															clbk(l)
+													}
+												})
+												
+				
+												
 											}
+
 										})
 
 						            }
@@ -539,30 +690,7 @@ var article = (function(){
 
                 Plyr.setup('.js-player', function(player) { });
 
-				/*if(typeof _Electron != 'undefined'){
-					const electronSpellchecker = require('electron-spellchecker');
-
-					// Retrieve required properties
-					const SpellCheckHandler = electronSpellchecker.SpellCheckHandler;
-					const ContextMenuListener = electronSpellchecker.ContextMenuListener;
-					const ContextMenuBuilder = electronSpellchecker.ContextMenuBuilder;
 			
-					// Configure the spellcheckhandler
-					window.spellCheckHandler = new SpellCheckHandler();
-					window.spellCheckHandler.attachToInput();
-			
-					// Start off as "US English, America"
-					window.spellCheckHandler.switchLanguage('en-US');
-			
-					// Create the builder with the configured spellhandler
-					var contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
-			
-					// Add context menu listener
-					var contextMenuListener = new ContextMenuListener((info) => {
-						contextMenuBuilder.showPopupMenu(info);
-					});
-				}*/
-
 				if (clbk)
 					clbk()
 			});
@@ -579,8 +707,15 @@ var article = (function(){
 
 				art = ed.art || actions.newart(parameters().aid)
 
+				
+
 				if(ed.share) art = actions.fromShare(ed.share)
 
+				console.log('ed', ed)
+
+				if(!art.tags) art.tags = []
+
+				console.log('art', art)
 
 				var data = {
 					art : art,
@@ -593,6 +728,11 @@ var article = (function(){
 
 			destroy : function(){
 				self.app.nav.api.history.removeParameters(['aid'])
+
+				if(taginput) {
+					taginput.destroy()
+					taginput = null
+				}
 
 				el = {};
 			},
@@ -609,6 +749,7 @@ var article = (function(){
 				el.back = el.c.find('.back')
 				el.add = el.c.find('.add')
 				el.goto = el.c.find('.goto')
+				el.tgsWrapperMain = el.c.find('.tgsWrapperMain')
 
 				initEvents();
 
