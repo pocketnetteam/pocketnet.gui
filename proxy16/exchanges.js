@@ -18,7 +18,7 @@ var Exchanges = function(){
     self.api = {
         price : {
             mercatox : function(){
-                
+                console.log("GET PRICW")
                 return axios.get(apis.mercatoxPrices).then(function(response) {
 
                     //ключи всех пар валют в объекте ответа и все, где упомянут PKOIN
@@ -84,7 +84,12 @@ var Exchanges = function(){
         
                     if(!_.isEmpty(slice.prices)) return Promise.resolve(slice)
         
-                    Promise.reject('notfound')
+                    return Promise.reject('notfound')
+                }).catch(e => {
+
+                    console.log("ERROR", e)
+
+                    return Promise.reject('notfound')
                 })
 
                 
@@ -105,7 +110,13 @@ var Exchanges = function(){
 
                     history.prices[i] = f.lastelements(history.prices[i], 500)
 
-                }).catch(e => {})
+                    return Promise.resolve()
+
+                }).catch(e => {
+                    console.log("error", e)
+
+                    return Promise.resolve()
+                })
 
             })
 
@@ -127,7 +138,7 @@ var Exchanges = function(){
         if(!followInterval){
             followInterval = setInterval(function(){
                 self.history.prices()
-            }, 360000)
+            }, 160000)
         }
 
         return Promise.resolve()
