@@ -19,7 +19,8 @@ var lenta = (function(){
 
 		var making = false, ovf = false;
 
-		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false;
+		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
+		video = false
 
 		var commentsInited = {},
 			shareInitedMap = {},
@@ -428,6 +429,8 @@ var lenta = (function(){
 			},
 			initVideo : function(el, share){
 
+				if (video) return 
+
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
 					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
 				
@@ -442,6 +445,8 @@ var lenta = (function(){
 					var provider = pels[0].getAttribute('data-plyr-provider');
 
 					var readyCallback = (player) => {
+
+						console.log('players[share.txid]', players[share.txid])
 
 						if (players[share.txid]){
 							pels.find('iframe').attr('disable-x-frame-options', 'disable-x-frame-options')
@@ -2570,6 +2575,10 @@ var lenta = (function(){
 				}
 			},
 
+			videosinfo : function(shares, clbk){
+				
+			},	
+
 			sstuff : function(shares, error, pr, clbk){
 
 				var author = essenseData.author;
@@ -2697,7 +2706,9 @@ var lenta = (function(){
 								begin : _beginmaterial || '',
 								txids : essenseData.txids,
 								height : fixedblock,
-								tagsfilter : tagsfilter
+								tagsfilter : tagsfilter,
+								video : video,
+								count : video ? 20 : 10
 
 							}, function(shares, error, pr){
 
@@ -3355,10 +3366,9 @@ var lenta = (function(){
 
 				}
 
-
 				canloadprev = !!!essenseData.txids || false
 
-
+				video = essenseData.video || false
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -3475,6 +3485,10 @@ var lenta = (function(){
 				initEvents();
 
 				make(null, p);
+
+				if (video){
+					el.c.addClass('mainvideo')
+				}
 
 
 				if(!essenseData.goback)

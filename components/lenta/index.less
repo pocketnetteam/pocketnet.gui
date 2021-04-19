@@ -1137,14 +1137,18 @@
 				}
 
 				span{
-					font-size: 0.8em;
-					color : @color-main;
-					text-decoration: underline;
+					&.linkedstyle{
+						font-size: 0.8em;
+						color : @color-main;
+						text-decoration: underline;
+					}
+					
 				}
 
 				.videoviews{
 					span{
-						text-decoration: none;
+						font-size: 0.8em;
+						color : @color-main;
 					}
 					
 				}
@@ -1875,6 +1879,94 @@
 		}
 
 		
+	}
+
+	
+	&.mainvideo{
+
+		.zero,
+		.seemore,
+		.loadprev,
+		.loadmore,
+		.ended{
+			
+			background: transparent;
+		}
+
+		.loader{
+			background: transparent;
+		}
+
+
+		.shares{
+			.share{
+				padding : 0;
+				margin-bottom: 0;
+				overflow : hidden;
+				border-radius: 3px;
+				.commentsWrapperHb{
+					display: none;
+				}
+
+				.hideOnFullVideo{
+					display: none;
+				}
+
+				.videoviews{
+					display: none;
+				}
+
+				.showMorePW{
+					display: none;
+				}
+
+				.iconWrapper{
+					padding : 0;
+					position: absolute;
+					left : @rhythm / 2;
+					top : @rhythm / 2;
+					z-index: 12;
+
+					.icon{
+						width: auto;
+
+						.usericon{
+							width: 24px;
+							height: 24px;
+						}
+					}
+				}
+
+				.url{
+					margin-bottom: 0;
+				}
+
+				.urlcnt{
+					display: none;
+				}
+
+				.panel{
+					display: none;
+				}
+			}
+
+			.authorgroup{
+				float: left;
+				width: 33.3333%;
+				padding : @rhythm / 2;
+				
+			}
+
+			.cntswrk{
+				margin-left: 0;
+				padding-left: 0;
+				padding-right: 0;
+			}
+
+			.showmorebyauthor{
+				display: none;
+			}
+		}
 	}
 }
 

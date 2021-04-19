@@ -9161,6 +9161,34 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var clear_peertube_id = target.getAttribute('data-plyr-video-id');
 
     if (provider == 'peertube') {
+
+      PeerTubeEmbeding.main(target, 'f609ca9b-83da-4c8a-9744-a180d1175249', {
+        host : 'pocketnetpeertube3.nohost.me',
+      },{
+
+        playbackStatusChange : function(status){
+          console.log('status', status)
+        },
+        volumechange : function(volume){
+          console.log('volume', volume)
+        },
+
+      }).then(embed => {
+
+        var api = embed.api
+          api.mute()
+
+        if (clbk) clbk(api);
+        if (readyCallback) readyCallback(api);
+      })
+
+
+      return self
+    }
+
+    if (provider == 'peertube') {
+
+      return self;
       setFunctions = function (player) {
         // Set the mandatory/missing functions
         player.stop = player.pause;

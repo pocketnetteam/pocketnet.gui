@@ -19,10 +19,10 @@
         default-src https: 'self'; 
         connect-src https: wss:;
         img-src 'self' data: https:;
-        script-src 'self' https://pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' blob: https://pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
-        media-src *">
+        font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
+        media-src blob: *">
 
         <?php 
         
@@ -44,7 +44,7 @@
 <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=695870508654">
 <link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=890094608345">
 <link rel="stylesheet" href="css/medium/beagle.css?v=419253972675">
-
+<link rel="stylesheet" href="peertube/video-embed.css">
 
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
@@ -201,6 +201,7 @@
 <script join src="js/kit.js?v=54068811960"></script>
 <script join src="js/satolist.js?v=98030036681"></script>
 <script join src="js/messenger2/clientrtc.js?v=792237266023"></script>
+<script join src="peertube/video-embed.bundle.js"></script>
 <script join src="js/peertube-master.js?v=68135829048"></script>
 <script join src="js/app.js?v=47327380505"></script>
 <script join src="js/main.js?v=737705186807"></script>
