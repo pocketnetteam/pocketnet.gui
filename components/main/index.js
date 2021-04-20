@@ -259,7 +259,9 @@ var main = (function(){
 			},
 			share : function(){
 
-				if(!isMobile() && !videomain){
+				if(!isMobile() && !videomain && !searchvalue && !searchtags){
+
+					el.c.removeClass('wshar')
 
 					self.nav.api.load({
 
@@ -284,6 +286,8 @@ var main = (function(){
 						}
 
 					})
+				}else{
+					el.c.addClass('wshar')
 				}
 			},
 
