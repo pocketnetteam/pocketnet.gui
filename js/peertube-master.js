@@ -455,9 +455,22 @@ PeerTubeHandler = function (app) {
   };
 
   this.updateVideo = async (id, options) => {
+    const preparedOptions = { ...options };
     const formData = new FormData();
 
-    Object.keys(options).map((key) => formData.append(key, options[key]));
+    if (options.thumbnailfile) {
+      const imageString = await getBase64(options.thumbnailfile);
+
+      const format = options.thumbnailfile.type.replace('image/', '');
+
+      const newImg = await resizeNew(imageString, 1920, 1080, format);
+
+      preparedOptions.thumbnailfile = dataURLtoFile(newImg, options.thumbnailfile.name);
+    }
+
+    Object.keys(preparedOptions).map((key) =>
+      formData.append(key, preparedOptions[key]),
+    );
 
     return axios.put(`${baseUrl}videos/${id}`, formData, {
       headers: {
