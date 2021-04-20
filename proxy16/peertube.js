@@ -110,6 +110,25 @@ const Peertube = function () {
       );
     },
 
+    getVideoinfo: (info) => {
+      const { host, id } = info;
+
+      if (!host || !id) return Promise.reject('No host/id info received');
+
+      return axios
+        .get(`${host}/api/v1/videos/${id}`)
+        .then((res) =>
+          Promise.resolve({
+            info: res.data.id,
+            thumbnailPath: `${host}/${res.data.thumbnailPath}`,
+            previewPath: `${host}/${res.data.previewPath}`,
+            duration: res.data.duration,
+            views: res.data.views,
+          }),
+        )
+        .catch((err) => Promise.reject(err));
+    },
+
     getTest: () =>
       axios
         .get(`https://${hardCodeUrlsList[0]}${STATS_METHOD}`)
