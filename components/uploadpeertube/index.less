@@ -3,17 +3,18 @@
 #uploadpeertube {
     width: 100%;
 
-    .upload-header-wrapper{
+    .upload-header-wrapper {
         position: absolute;
-        left : 2 * @rhythm;
-        top : 2 * @rhythm;
+        left: 2 * @rhythm;
+        top: 2 * @rhythm;
     }
+
     .upload-header {
         display: flex;
         justify-content: flex-start;
         align-items: center;
 
-        span{
+        span {
             font-size: 0.8em;
         }
     }
@@ -50,42 +51,43 @@
         }
     }
 
-    .uploadRow{
+    .uploadRow {
         display: flex;
         align-items: center;
 
-        .upload-field-container{
+        .upload-field-container {
             flex-grow: 1;
             width: 50%;
-            padding : @rhythm / 2;
+            padding: @rhythm / 2;
             position: relative;
 
-            &:nth-last-child(1){
+            &:nth-last-child(1) {
                 padding-right: 0;
             }
 
-            &:nth-child(1){
+            &:nth-child(1) {
                 padding-left: 0;
             }
         }
-        
-        label{
-            padding : @rhythm / 2;
+
+        label {
+            padding: @rhythm / 2;
             display: block;
             font-size: 0.8em;
         }
-        .inputWrapper{
+
+        .inputWrapper {
             height: 120px;
             background: fade(@color-gray-slight, 20);
             border-radius: 5px;
-            padding : 3 * @rhythm;
+            padding: 3 * @rhythm;
             text-align: center;
 
-            .table{
+            .table {
                 width: 100%;
                 height: 100%;
 
-                >div{
+                >div {
                     vertical-align: middle;
                 }
             }
@@ -179,7 +181,7 @@
         width: 250px;
     }
 
-  
+
 
     .controlButton {
         cursor: pointer;
@@ -194,7 +196,7 @@
     }
 
     .uploadButton {
-        
+
         &:disabled {
             background-color: @color-gray-mlight;
             border-color: @color-gray-mlight;
@@ -207,30 +209,31 @@
     }
 
     .sectionsWrapper {
-        >div{
+        >div {
             vertical-align: middle;
         }
     }
 
     .main-upload-fields {
 
-        input{
+        input {
             width: 100%;
         }
 
 
-        .uplsection{
-            padding : 2 * @rhythm;
+        .uplsection {
+            padding: 2 * @rhythm;
             border-radius: 5px;
-            .caption{
 
-                span{
+            .caption {
+
+                span {
                     font-size: 0.8em;
                     font-weight: 700;
                 }
             }
 
-            &.uploading{
+            &.uploading {
                 vertical-align: top;
                 // border-bottom : 1px solid @color-gray-slight;
             }
@@ -241,7 +244,7 @@
         box-sizing: border-box;
         border-left: 1px solid @color-gray-slight;
         text-align: center;
-        padding : 2  * @rhythm;
+        padding: 2 * @rhythm;
         background: fade(@color-gray-slight, 20);
 
         display: flex;
@@ -262,9 +265,9 @@
     .mainWrapper {
         display: block;
         position: absolute;
-        left : 0;
-        top : 0;
-        bottom : 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
         right: 0;
     }
 
@@ -356,7 +359,7 @@
         overflow: hidden;
 
         .wndcontent {
-            padding : 0;
+            padding: 0;
             display: flex;
             align-items: flex-start;
             justify-content: space-around;
@@ -379,6 +382,26 @@
 
         .wndcontent {
             padding: 0 20px;
+        }
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    #uploadpeertube {
+        .sectionsWrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-upload-fields {
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .upload-button-section {
+            width: 100%;
         }
     }
 }
