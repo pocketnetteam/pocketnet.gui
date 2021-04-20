@@ -480,6 +480,10 @@ PeerTubeHandler = function (app) {
         newImg,
         options.thumbnailfile.name,
       );
+      preparedOptions.previewfile = dataURLtoFile(
+        newImg,
+        options.thumbnailfile.name,
+      );
     }
 
     Object.keys(preparedOptions).map((key) =>
