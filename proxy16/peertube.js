@@ -120,8 +120,8 @@ const Peertube = function () {
         .then((res) =>
           Promise.resolve({
             info: res.data.id,
-            thumbnailPath: `${host}/${res.data.thumbnailPath}`,
-            previewPath: `${host}/${res.data.previewPath}`,
+            thumbnailPath: `${host}${res.data.thumbnailPath}`,
+            previewPath: `${host}${res.data.previewPath}`,
             duration: res.data.duration,
             views: res.data.views,
           }),
