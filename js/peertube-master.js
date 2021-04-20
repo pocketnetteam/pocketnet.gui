@@ -158,14 +158,39 @@ PeerTubeHandler = function (app) {
           Authorization: `Bearer ${this.userToken}`,
         },
       })
-      .then((res) => res.data.videoChannels[0].id)
+      .then((res) => ({
+        channelId: res.data.videoChannels[0].id,
+        videoQuotaDaily: res.data.videoQuotaDaily,
+      }))
       .catch(() => sitemessage('Unable to get channel info'));
   };
 
-  this.uploadVideo = async (parameters) => {
-    const channelId = await this.getChannel();
+  this.getUserQuota = async () => {
+    return axios
+      .get(`${baseUrl}users/me/video-quota-used`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
+      .then((res) => res.data)
+      .catch(() =>
+        sitemessage(
+          'Unable to check daily videos quota, you upload may be rejected',
+        ),
+      );
+  };
 
-    var videoName = parameters.name || `${this.userName}:${new Date().toISOString()}`
+  this.uploadVideo = async (parameters) => {
+    const { channelId, videoQuotaDaily } = await this.getChannel();
+
+    const { videoQuotaUsedDaily } = await this.getUserQuota();
+
+    if (parameters.video.size + videoQuotaUsedDaily >= videoQuotaDaily) {
+      return parameters.successFunction({ error: `Video exceeds the daily upload limit` })
+    }
+
+    var videoName =
+      parameters.name || `${this.userName}:${new Date().toISOString()}`;
 
     const bodyOfQuery = {
       privacy: 1,
@@ -207,11 +232,11 @@ PeerTubeHandler = function (app) {
         const json = res.data;
 
         if (!json.video) return parameters.successFunction('error');
-        
+
         parameters.successFunction(
           this.composeLink(randomServer, json.video.uuid),
-          videoName
-         // `${this.peertubeId}${watchUrl}${json.video.uuid}`,
+          videoName,
+          // `${this.peertubeId}${watchUrl}${json.video.uuid}`,
         );
       })
       .catch((res) => {
@@ -219,24 +244,22 @@ PeerTubeHandler = function (app) {
       });
   };
 
-  this.composeLink = function(host, videoid){
-    return this.peertubeId + host + '/' + videoid
-  }
+  this.composeLink = function (host, videoid) {
+    return this.peertubeId + host + '/' + videoid;
+  };
 
-  this.parselink = function(link){
+  this.parselink = function (link) {
     //peertube://pocketnetpeertube4.nohost.me/362344e6-9f36-48a1-a512-322917f00925
 
-    var ch = link.replace(this.peertubeId, '').split('/')
+    var ch = link.replace(this.peertubeId, '').split('/');
 
     return {
-      host : ch[0],
-      id : ch[1]
-    }
-  }
+      host: ch[0],
+      id: ch[1],
+    };
+  };
 
   this.removeVideo = async (video) => {
-    
-
     const videoHost = this.parselink(video).host;
     const videoId = this.parselink(video).id;
 
