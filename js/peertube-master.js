@@ -4,6 +4,8 @@ PeerTubeHandler = function (app) {
     'pocketnetpeertube4.nohost.me',
   ];
 
+  const VIDEO_QUOTA_CORRECTION = 100 * 1024 * 1024;
+
   let randomServer =
     hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
 
@@ -185,8 +187,10 @@ PeerTubeHandler = function (app) {
 
     const { videoQuotaUsedDaily } = await this.getUserQuota();
 
-    if (parameters.video.size + videoQuotaUsedDaily >= videoQuotaDaily) {
-      return parameters.successFunction({ error: `Video exceeds the daily upload limit` })
+    if (parameters.video.size + videoQuotaUsedDaily >= videoQuotaDaily - VIDEO_QUOTA_CORRECTION) {
+      return parameters.successFunction({
+        error: `Video exceeds the daily upload limit`,
+      });
     }
 
     var videoName =
