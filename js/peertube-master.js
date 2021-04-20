@@ -187,7 +187,10 @@ PeerTubeHandler = function (app) {
 
     const { videoQuotaUsedDaily } = await this.getUserQuota();
 
-    if (parameters.video.size + videoQuotaUsedDaily >= videoQuotaDaily - VIDEO_QUOTA_CORRECTION) {
+    if (
+      parameters.video.size + videoQuotaUsedDaily >=
+      videoQuotaDaily - VIDEO_QUOTA_CORRECTION
+    ) {
       return parameters.successFunction({
         error: `Video exceeds the daily upload limit`,
       });
@@ -205,8 +208,16 @@ PeerTubeHandler = function (app) {
     };
 
     if (parameters.image) {
-      bodyOfQuery.previewfile = parameters.image;
-      bodyOfQuery.thumbnailfile = parameters.image;
+      const imageString = await getBase64(parameters.image);
+
+      const format = parameters.image.type.replace('image/', '');
+
+      const newImg = await resizeNew(imageString, 1920, 1080, format);
+
+      const fileImage = dataURLtoFile(newImg, parameters.image.name);
+
+      bodyOfQuery.previewfile = fileImage;
+      bodyOfQuery.thumbnailfile = fileImage;
     }
 
     const formData = new FormData();
@@ -465,7 +476,10 @@ PeerTubeHandler = function (app) {
 
       const newImg = await resizeNew(imageString, 1920, 1080, format);
 
-      preparedOptions.thumbnailfile = dataURLtoFile(newImg, options.thumbnailfile.name);
+      preparedOptions.thumbnailfile = dataURLtoFile(
+        newImg,
+        options.thumbnailfile.name,
+      );
     }
 
     Object.keys(preparedOptions).map((key) =>
