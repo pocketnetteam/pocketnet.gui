@@ -898,7 +898,7 @@ var post = (function(){
 
 				self.shell({
 					turi : 'lenta',
-					name :  'share',
+					name :  'sharevideo',
 					el : el.share,
 
 					additionalActions : function(){

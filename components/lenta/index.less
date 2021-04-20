@@ -800,7 +800,17 @@
 				}	
 			}
 
-			
+			.jsPlayerPreview{
+				.wpl{
+					width: 100%;
+					height: 200px;
+					cursor: pointer;
+					.transition(0.3s);
+					&:hover{
+						opacity: 0.9;
+					}
+				}
+			}
 			
 
 			.jsPlayerLoading{
@@ -1491,6 +1501,7 @@
 				background: fade(@color-black2, 80);
 				overflow-y: scroll;
 				padding-top: 0;
+
 				
 				#comments{
 					.caption{
@@ -1643,6 +1654,11 @@
 					.discussion{
 					}
 				}
+			}
+
+			&.fullScreenVideoShowing{
+				opacity: 0;
+				.transition(0s)
 			}
 
 			&.vstars{

@@ -809,7 +809,7 @@ Platform = function (app, listofnodes) {
                         var v = parameters(s[1]);
 
                         if (v.v) {
-                            _url = 'https://www.youtube.com/embed/' + v.v;
+                            _url = 'https://youtu.be/' + v.v //'https://www.youtube.com/embed/' + v.v;
 
                             meta.id = v.v
                         }
@@ -9928,6 +9928,14 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                loadvideoinfoifneed : function(shares, need, clbk){
+                    self.sdk.videos.infoshares(shares).then(r => {
+                        if(clbk) clbk()
+                    }).catch(e => {
+                        if(clbk) clbk()
+                    })
+                },
+
                 hierarchical: function (p, clbk, cache) {
 
                     /*
@@ -10030,46 +10038,50 @@ Platform = function (app, listofnodes) {
                                 })
 
                                 console.log('data.contents', data.contents)
-
-
                                 p.blocknumber = blocknumber
 
                                 if (shares) {
-                                    if (state) {
-                                        _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
-                                            _.each(shares, function (s) {
-                                                if (s.address == block.address) s.blocking = true;
+
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
+
+                                        if (state) {
+                                            _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                                _.each(shares, function (s) {
+                                                    if (s.address == block.address) s.blocking = true;
+                                                })
                                             })
-                                        })
-                                    }
+                                        }
 
-                                    if(p.video){
-                                        shares = _.filter(shares, function(share){
+                                        if(p.video){
+                                            shares = _.filter(shares, function(share){
 
-                                            if(!share.url) return
+                                                if(!share.url) return
 
-                                            var meta = app.platform.parseUrl(share.url);
+                                                var meta = app.platform.parseUrl(share.url);
 
-                                            if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
 
-                                                return true
+                                                    if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
+                                                        return true
+                                                }
+                                            })
+                                        }
+
+                                        _.each(shares || [], function (s) {
+                                            if (p.count > 0) {
+                                                storage[key].push(s)
+                                            }
+                                            else {
+                                                storage[key].unshift(s)
                                             }
                                         })
-                                    }
 
-                                    _.each(shares || [], function (s) {
-                                        if (p.count > 0) {
-                                            storage[key].push(s)
-                                        }
-                                        else {
-                                            storage[key].unshift(s)
-                                        }
+                                        self.sdk.node.transactions.saveTemp()
+
+                                        if (clbk)
+                                            clbk(shares, error, p)
+
                                     })
-
-                                    self.sdk.node.transactions.saveTemp()
-
-                                    if (clbk)
-                                        clbk(shares, error, p)
                                 }
 
                                 else {

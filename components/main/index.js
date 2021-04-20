@@ -451,6 +451,15 @@ var main = (function(){
 						search : searchvalue ? true : false,
 						tags : searchtags,
 						video : videomain,
+
+						opensvi : function(id){
+							el.c.addClass('opensvishowed')
+
+							renders.post(id)
+
+							events.up()
+						},
+
 						renderclbk : function(){
 						},
 						loader : loader
@@ -475,6 +484,10 @@ var main = (function(){
 
 				})
 
+			},
+
+			post : function(id){
+				self.app.platform.papi.post(id, el.c.find('.renderposthere'))
 			}
 		}
 

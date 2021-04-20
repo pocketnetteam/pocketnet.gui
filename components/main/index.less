@@ -71,7 +71,7 @@
 
 		.lentacell{
 			margin-right: 0;
-			margin-left : 192px;
+			margin-left : 212px;
 		}
 
 		.bgCaption{
@@ -79,9 +79,36 @@
 		}
 
 		.leftpanelcell{
-			width: 192px;
+			width: 212px;
 		}
 	}
+
+	.maincntwrapper{
+		.transition(0.3s);
+	}
+
+	&.opensvishowed{
+		.maincntwrapper{
+			position: fixed;
+			transform: translateX(-100%);
+		}
+
+		.upbuttonwrapper{
+			display: none!important;
+		}
+	}
+
+	.renderposthere{
+		#post{
+			background: transparent;
+
+			.postWrapper{
+				margin: 0;
+			}
+		}
+	}
+
+	
 
 	&.onepost{
 		.lentacell{

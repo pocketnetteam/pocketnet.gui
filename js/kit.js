@@ -1332,6 +1332,9 @@ Share = function(lang){
 	}
 
 	self.optstype = function(){
+
+		if(self.itisvideo()) return 'video'
+
 		return self.type	
 	}
 

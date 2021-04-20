@@ -327,6 +327,11 @@
 		}
 	}
 
+	.captionshare{
+		.shadowSmall();
+	}
+
+
 	.txt{
 		margin-bottom : @rhythm;
 		textarea{
@@ -354,8 +359,7 @@
 		}
 
 
-
-
+		
 		.emojionearea-editor{
 			padding : 2 * @rhythm 0;
 			padding-left : @rhythm;
@@ -383,6 +387,10 @@
 		padding-right : 30px;
 	}
 	.draggablepart{
+
+		&.itisvideopart{
+			padding-right: 4 * @rhythm;
+		}
 		
 		
 		.draggablewrapper{
@@ -725,6 +733,8 @@
 			display: none;
 		}
 
+
+		
 		
     }
     
@@ -822,6 +832,10 @@
 			margin-right : 1 * @rhythm;
 			cursor: pointer;
 			.transition(0.3s);
+
+			&.nowidth{
+				width: auto;
+			}
 
 			&:hover{
 				color : @color-contrast;

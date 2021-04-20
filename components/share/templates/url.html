@@ -4,9 +4,6 @@
 
 	if(typeof share == 'undefined') share = {};
 
-
-	console.log("META", meta, url)
-
 	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
 
 		if(!app.platform.sdk.usersettings.meta.embedvideo || 
@@ -29,24 +26,45 @@
 			<% } else { %> 
 				
 				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
-					<div class="jsPlayerLoading">
-						<div class="jsPlayerLoadingD table">
-							<div>
-								<div class="preloader5"><span></span><span></span><span></span></div>
+					
+					<% if(typeof preview != 'undefined' && preview) {
+						
+						var info = app.platform.sdk.videos.storage[url]
+						
+						
+						%>
+
+						<div class="jsPlayerPreview">
+							<div class="wpl opensvi" image="<%-info.data.image || ''%>">
 							</div>
 						</div>
-					</div>
+
+
+					<% } else { %>
+
+						<div class="jsPlayerLoading">
+							<div class="jsPlayerLoadingD table">
+								<div>
+									<div class="preloader5"><span></span><span></span><span></span></div>
+								</div>
+							</div>
+						</div>
+						
+					<% } %>
+					
+					
 				</div>
 
 				<% if(typeof views != 'undefined' && views) {%>
 					<div class="videoviews"><span class="label">Views:</span> <span class="number"><%-views%></span></div>
 				<% } %>
-
-				<div class="videoTips">
-					<div class="videoTip">
-						<span><%=e('expandvideo')%></span>
+				<% if(typeof video == 'undefined' || !video) { %> 
+					<div class="videoTips">
+						<div class="videoTip">
+							<span><%=e('expandvideo')%></span>
+						</div>
 					</div>
-				</div>
+				<% } %>
 	
 			<% } %>
 			

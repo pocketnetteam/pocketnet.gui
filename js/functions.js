@@ -9910,6 +9910,7 @@
 				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
 					type = 'youtube'
 			        id = test[9]
+					url = 'https://youtu.be/' + id
 			    }
 				if (test.indexOf('vimeo.com') > -1) {
 					type = 'vimeo'

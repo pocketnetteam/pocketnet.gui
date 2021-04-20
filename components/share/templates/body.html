@@ -40,18 +40,21 @@ var arranges = {
         if(!arranges[key]) return;
     %> 
 
-        <div class="draggablepart" part="<%-key%>">
+        <div class="draggablepart <% if(share.itisvideo()) {%> itisvideopart <% } %>" part="<%-key%>">
             <div class="draggablewrapper table">
                 <div class="draggablecontent">
                     <% arranges[key]() %>
                 </div>
 
+				<% if(!share.itisvideo()) {%>
                 
                 <div class="draggablemarkerwrapper">
                     <div class="marker">
                         <i class="fas fa-ellipsis-v"></i>
                     </div>
                 </div>
+
+				<% } %>
             </div>
         </div>
     <% }) %>

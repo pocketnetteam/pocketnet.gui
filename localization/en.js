@@ -253,7 +253,7 @@ ____loclib.saddlink = "Add link to external site or video";
 ____loclib.saddimages = "Add Images to Post";
 ____loclib.sarticle = "To write an article";
 ____loclib.stelegram = "Send to telegram"
-____loclib.stimes = "Remove post"
+____loclib.stimes = "Clear post"
 
 
 ____loclib.snothing = "Nothing";

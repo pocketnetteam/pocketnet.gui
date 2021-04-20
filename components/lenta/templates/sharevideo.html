@@ -2,6 +2,7 @@
 
 var c = share.renders.caption();
 var m = share.renders.message();
+var bigmessage = false
 
 if(typeof ed == 'undefined') ed = {}
 
@@ -138,7 +139,7 @@ var metadisplay = function(){ %>
 
 		<% if(m) {
 
-            if(video) return
+            if(typeof video != 'undefined' && video) return
 
 			m = (m)
 			
@@ -219,7 +220,7 @@ var metadisplay = function(){ %>
 
 			<div class="cntswrk">
 
-				<% var a = ["i", "u", "cm", "p"] %>
+				<% var a = ["u"] %>
 
 				<% _.each(a, function(key, i){ %> 
 
@@ -236,6 +237,18 @@ var metadisplay = function(){ %>
 				<div class="metawrapper"> 
 					<% metadisplay() %> 
 				</div> 
+
+			</div>
+
+			<div class="cntswrk">
+
+				<% var a = ["i", "cm", "p"] %>
+
+				<% _.each(a, function(key, i){ %> 
+
+					<% if(arranges[key]) arranges[key]() %>
+							
+				<% }) %>
 
 			</div>
 
@@ -379,7 +392,7 @@ var metadisplay = function(){ %>
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
 
-	<% if(!emptywithrepost && !video) {%>
+	<% if(!emptywithrepost && (typeof video == 'undefined' || !video)) {%>
 
 		<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 
