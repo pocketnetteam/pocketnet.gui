@@ -414,8 +414,6 @@ var test = (function(){
 
 						success : function(i, editclbk){
 
-							images[0].original
-
 							resize(images[0].original, 100, 100, function(resized){
 								var r = resized.split(',');
 

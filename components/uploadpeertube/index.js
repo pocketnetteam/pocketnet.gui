@@ -21,12 +21,54 @@ var uploadpeertube = (function () {
 
     var renders = {};
 
-    var videoId;
+    var videoId, loadedimage = null
 
     var state = {
       save: function () {},
       load: function () {},
     };
+
+
+    var resizeImage = function(base64){
+      var images = [{
+        original : base64,
+        index : 0
+      }]
+
+      self.nav.api.load({
+        open : true,
+        id : 'imageGalleryEdit',
+        inWnd : true,
+
+        essenseData : {
+          edit : true,
+          initialValue : 0,
+          images : images,
+          apply : true,
+          crop : {
+            aspectRatio : 16 / 9,
+            style : 'apply',
+            autoCropArea : 0.9,
+          },
+
+          success : function(i, editclbk){
+
+            resize(images[0].original, 1920, 1080, function(resized){
+              var r = resized.split(',');
+
+              if (r[1]){
+
+                if (clbk)
+                    clbk(resized)
+
+              }
+              
+            })
+
+          }
+        }
+      })
+    }
 
     var initEvents = function () {
       el.videoInput.change(function (evt) {

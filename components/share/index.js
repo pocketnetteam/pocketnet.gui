@@ -265,6 +265,8 @@ var share = (function(){
 											el.peertubeLiveStream.removeClass('disabledShare');
 										}
 									}
+
+									make();
 								}
 							},
 	
