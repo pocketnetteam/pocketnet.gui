@@ -1843,7 +1843,7 @@ var share = (function(){
 
 				}, function(p){
 
-
+					if(!el.c) return
 					el.message = el.c.find('.message');
 					el.eMessage = el.c.find('#emjcontainer');
 					el.urlWrapper = el.c.find('.urlWrapper')
