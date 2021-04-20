@@ -1211,7 +1211,7 @@ Share = function(lang){
 
 		if(self.itisvideo() && !self.caption.v) return 'videocaption'
 
-		if(self.url.v && self.url.v.length){
+		if(self.url.v && self.url.v.length && !self.itisvideo()){
 
 			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v.length, '')).length
 
@@ -1333,7 +1333,7 @@ Share = function(lang){
 
 	self.optstype = function(){
 
-		if(self.itisvideo()) return 'video'
+		//if(self.itisvideo()) return 'video'
 
 		return self.type	
 	}
