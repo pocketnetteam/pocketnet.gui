@@ -1,6 +1,6 @@
 <?PHP
 require_once('php/rpc.php');
-
+require_once('php/api.php');
 class OG {
 
     private $rpc = NULL;
@@ -18,9 +18,6 @@ class OG {
         'type' => 'website',
         'image' => 'https://pocketnet.app/img/logosmallpadding.png',
         'description' => 'A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.',
-       
-
-
     );
 
     public $currentOg = array();
@@ -30,6 +27,7 @@ class OG {
 	public function __construct ($get)
 	{
         $this->rpc = new RPC();
+        $this->api = new API();
         
         if (isset($get['address'])) $this->author = $get['address'];
 
@@ -116,11 +114,15 @@ class OG {
             if($v['type'] == 'peertube'){
                 //$u = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
 
-
+                $peertubeinfo = $this->api->peertubeinfo(array('host' => $v['host_name'], 'id' => $v['id']));
 
                 $this->currentOg['twitter:site'] = 'pocketnet.app';
                 $this->currentOg['twitter:card'] = 'player';
-                $this->currentOg['twitter:image'] = $ci;
+
+                if(isset($peertubeinfo['image'])){
+                    $this->currentOg['twitter:image'] = $peertubeinfo['image'];
+                }
+                
                 $this->currentOg['twitter:title'] = $this->currentOg['title'];
                 $this->currentOg['twitter:text:title'] = $this->currentOg['title'];
                 $this->currentOg['twitter:description'] = $this->currentOg['description'];

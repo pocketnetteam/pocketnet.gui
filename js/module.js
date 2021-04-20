@@ -112,7 +112,7 @@ nModule = function(){
 
 					t.html(jdenticon.toSvg(v, t.width()))
 				})*/
-
+				console.log('p.bgImages', p.bgImages)
 				bgImages(p.el, p.bgImages)
 				
 			}
@@ -474,8 +474,13 @@ nModule = function(){
 		else
 		{
 			p.inner(p.el, _html);
-			p.display || (p.display = "block")
-			p.el.css("display", p.display)
+
+			if(!p.notdisplay){
+				p.display || (p.display = "block")
+				p.el.css("display", p.display)
+			}
+
+			console.log("PPPP", p)
 
 			if (p.postAnimation)
 				p.postAnimation();

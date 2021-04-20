@@ -218,7 +218,7 @@ var metadisplay = function(){ %>
 
 		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-			<div class="cntswrk">
+			<div class="cntswrk forurl">
 
 				<% var a = ["u"] %>
 
@@ -230,147 +230,147 @@ var metadisplay = function(){ %>
 
 			</div>
 
-            
+			<div class="anothercntswrk">
 
-			<div class="cntswrk formeta">
+				<div class="cntswrk formeta">
 
-				<div class="metawrapper"> 
-					<% metadisplay() %> 
-				</div> 
+					<div class="metawrapper"> 
+						<% metadisplay() %> 
+					</div> 
 
-			</div>
-
-			<div class="cntswrk">
-
-				<% var a = ["i", "cm", "p"] %>
-
-				<% _.each(a, function(key, i){ %> 
-
-					<% if(arranges[key]) arranges[key]() %>
-							
-				<% }) %>
-
-			</div>
-
-			<div class="repostWrapper"></div>
-
-			<% if(!emptywithrepost) {%>
+				</div>
 
 				<div class="cntswrk">
-					<div class="paddingWrapper">
-						
-						<% if(share.tags && share.tags.length > 0) {
 
-							var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
+					<% var a = ["i", "cm", "p"] %>
 
-							
-							%>
+					<% _.each(a, function(key, i){ %> 
 
-							<div class="tags canmark ">
-
-                                
-								<% _.each(bycategories.categories, function(category){ %>
-
-									<div class="category">
-										<a href="index?sst=<%-category.tags.join(' ')%>">
-											<span><b><%-category.name%></b></span> 
-										</a>
-										<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
+						<% if(arranges[key]) arranges[key]() %>
 								
-									</div>
+					<% }) %>
 
-								<% }) %>
+				</div>
 
-								<% _.each(bycategories.tags, function(tag){ %>
+				<% if(!emptywithrepost) {%>
 
-									<div class="tag">
-										<a href="index?sst=<%-tag%>">
-											<span>
-												#<%-tag%>
-											</span>
-										</a>
-									</div>
+					<div class="cntswrk">
+						<div class="paddingWrapper">
+							
+							<% if(share.tags && share.tags.length > 0) {
 
-								<% }) %>
-							</div>
+								var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
 
-						<% } %>
+								
+								%>
 
-					
-
-						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="panel">
-								<div class="item forstars">
+								<div class="tags canmark ">
 
 									
+									<% _.each(bycategories.categories, function(category){ %>
+
+										<div class="category">
+											<a href="index?sst=<%-category.tags.join(' ')%>">
+												<span><b><%-category.name%></b></span> 
+											</a>
+											<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
+									
+										</div>
+
+									<% }) %>
+
+									<% _.each(bycategories.tags, function(tag){ %>
+
+										<div class="tag">
+											<a href="index?sst=<%-tag%>">
+												<span>
+													#<%-tag%>
+												</span>
+											</a>
+										</div>
+
+									<% }) %>
 								</div>
 
-								
-								<% if(app.platform.repost && !my) {%>
-									<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+							<% } %>
+
+						
+
+							<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
+								<div class="panel">
+									<div class="item forstars">
+
+										
+									</div>
+
+									
+									<% if(app.platform.repost && !my) {%>
+										<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
+
+											<div class="itemwr table">
+												<div class="iconwr">											
+													<div class="icon">
+														<i class="fas fa-share"></i>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									<% } %>
+
+									
+
+									<div class="item sharesocial right unselectable">
 
 										<div class="itemwr table">
-											<div class="iconwr">											
+											<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
+											<div class="iconwr">
+												
 												<div class="icon">
-													<i class="fas fa-share"></i>
+													<i class="fas fa-share-alt"></i>
 												</div>
 											</div>
 										</div>
-
-									</div>
-								<% } %>
-
-								
-
-								<div class="item sharesocial right unselectable">
-
-									<div class="itemwr table">
-										<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
-										<div class="iconwr">
-											
-											<div class="icon">
-												<i class="fas fa-share-alt"></i>
-											</div>
-										</div>
+										
 									</div>
 									
 								</div>
-								
-							</div>
 
-							<div class="wholikes">
-								
-							</div>
-						<% } %>
-
-						<% if(share.temp) {%>
-
-							<div class="panel">
-								<div class="item right">
-
-									<div class="itemwr table tempPreloader">
-										
-										<div class="iconwr">
-											<div class="preloader5"><span></span><span></span><span></span></div>
-										</div>
-										
-										<div class="count">
-											<div class="label">
-
-												<span><%=e('postWaitConf')%></span>
-											</div>
-										</div>	
-									</div>
+								<div class="wholikes">
+									
 								</div>
-								<div class="clearfix"></div>
-							</div>
+							<% } %>
 
-						<% } %>
+							<% if(share.temp) {%>
 
+								<div class="panel">
+									<div class="item right">
+
+										<div class="itemwr table tempPreloader">
+											
+											<div class="iconwr">
+												<div class="preloader5"><span></span><span></span><span></span></div>
+											</div>
+											
+											<div class="count">
+												<div class="label">
+
+													<span><%=e('postWaitConf')%></span>
+												</div>
+											</div>	
+										</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+							<% } %>
+
+						</div>
 					</div>
-				</div>
 
-			<% } %>
+				<% } %>
+
+			</div>
 		</div>
 
 		<div class="blockAuthor">

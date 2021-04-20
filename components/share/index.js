@@ -237,10 +237,7 @@ var share = (function(){
 										var result = currentShare[type].set(link)
 
 										currentShare.settings.a = ["i", "u", "cm", "p"]
-
-										if(!currentShare.caption.v)
-											currentShare.caption.set(name)
-
+										currentShare.caption.set(name)
 										currentShare.images.set()
 										currentShare.repost.set()
 	

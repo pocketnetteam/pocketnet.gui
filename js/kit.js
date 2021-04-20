@@ -1834,6 +1834,16 @@ pShare = function(){
 		})
 	}
 
+	self.itisvideo = function(){
+
+		if(!self.url) return 
+
+		var meta = parseVideo(self.url)
+
+		if (meta.type) 
+			return true
+	}
+
 	self._import = function(v, notdecode){
 
 		

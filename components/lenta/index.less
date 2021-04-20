@@ -801,9 +801,11 @@
 			}
 
 			.jsPlayerPreview{
+				height: 100%;
+				width: 100%;
 				.wpl{
 					width: 100%;
-					height: 200px;
+					height: 100%;
 					cursor: pointer;
 					.transition(0.3s);
 					&:hover{
@@ -1958,8 +1960,27 @@
 					}
 				}
 
+				.forurl{
+					height: 200px;
+					position: relative;
+				}
+
 				.url{
 					margin-bottom: 0;
+					height: 100%;
+					width: 100%;
+					position: absolute;
+					left : 0;
+					top : 0;
+					display: none;
+
+					.videoWrapper{
+						height: 100%;
+
+						.js-player{
+							height: 100%;
+						}
+					}
 				}
 
 				.urlcnt{

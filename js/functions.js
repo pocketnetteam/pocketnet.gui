@@ -1601,8 +1601,6 @@
 				_el.css('background-size', p.size || 'cover');
 				_el.css('background-position', p.position || 'center center');
 				_el.css('background-repeat', p.repeat || 'no-repeat');
-
-				
 				_el.attr('image', '')
 			}
 
@@ -1610,7 +1608,7 @@
 			{
 				_el.imagesLoaded({ background: true }, function(image) {
 
-				  	el.fadeIn(100);
+					el.fadeIn(100);
 
 				  	if(typeof p.clbk === 'function')
 				  		p.clbk(image);

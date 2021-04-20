@@ -1,8 +1,8 @@
 <?PHP
 
-class RPC {
+class API {
 
-    protected $node = 'https://pocketnet.app:8899/rpc/';
+    protected $api = 'https://pocketnet.app:8899/';
 
 	public function __construct ()
 	{
@@ -12,19 +12,18 @@ class RPC {
 	{
 
     }
-    
+
     private function prepareRequest($procedure, array $params = array())
     {
-        $payload = array(
-            'method' => $procedure,
-        );
+        $payload = array();
     
         if (!empty($params)) {
-            $payload['parameters'] = $params;
+            $payload = $params;
         }
     
         return $payload;
     }
+  
 
     private function curl($url, $fields){
 
@@ -42,6 +41,11 @@ class RPC {
         curl_close($ch);
 
         if ($result != false){
+
+            if (strpos($result, 'Cannot POST') !== false) {
+                return array();
+            }
+
             $result = JSON_decode($result);
 
             if ($result->result != null){
@@ -51,6 +55,9 @@ class RPC {
                 $result = false;
             }
         }
+        else{
+            return array();
+        }
 
         return $result;
     }
@@ -58,36 +65,14 @@ class RPC {
 	public function send($action, $params){
         $fields = $this->prepareRequest($action, $params);
         
-        $url = $this->node.$action;
+        $url = $this->api.$action;
 
         return $this->curl($url, $fields);
     }
 
-    public function comment($commentid){
-        $action = 'getcomments';
-        $params = array('', '', '', array($commentid));
-
-        return $this->send($action, $params);
-    }
-    
-    public function share($txid){
-        $action = 'getrawtransactionwithmessagebyid';
-        $params = array(array($txid));
-
-        return $this->send($action, $params);
-    }
-
-    public function authorbyname($name){
-        $action = 'getuseraddress';
-
-        $params = array($name);
-
-        return $this->send($action, $params);
-    }
-
-    public function author($author){
-        $action = 'getuserprofile';
-        $params = array(array($author));
+    public function peertubeinfo($host, $videoid){
+        $action = 'peertubeinfo';
+        $params = array($host, $videoid);
 
         return $this->send($action, $params);
     }

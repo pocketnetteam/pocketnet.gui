@@ -14,9 +14,11 @@ var main = (function(){
 
 		var videomain = false
 
-		var upbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock;
+		var upbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
 		var currentMode = 'common', hsready = false;
+
+		var lastscroll = 0
 
 		var helpers = {
 			
@@ -167,6 +169,20 @@ var main = (function(){
 				makeShare()
 
 				renders.smallpanel()
+			},
+
+			backtolenta : function(){
+				self.nav.api.history.removeParameters(['v'])
+
+				el.c.removeClass('opensvishowed')
+
+				renders.post(null)
+
+
+				console.log('lastscroll', lastscroll)
+				
+				_scrollTop(lastscroll, null, 5)
+				
 			}
 		}
 
@@ -182,7 +198,6 @@ var main = (function(){
 			},
 
 			up : function(){
-
 				_scrollTop(0, null, 5)
 			}
 
@@ -457,9 +472,16 @@ var main = (function(){
 						video : videomain,
 
 						opensvi : function(id){
+
+							lastscroll = $(window).scrollTop()
+
 							el.c.addClass('opensvishowed')
 
 							renders.post(id)
+
+							self.nav.api.history.addParameters({
+								v : id
+							})
 
 							events.up()
 						},
@@ -491,7 +513,27 @@ var main = (function(){
 			},
 
 			post : function(id){
-				self.app.platform.papi.post(id, el.c.find('.renderposthere'))
+
+				if (!id){
+
+					if(openedpost){
+						openedpost.destroy()
+						openedpost = null
+					}
+
+					el.c.find('.renderposthere').html('')
+
+				}
+
+				else{
+					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(p){
+						openedpost = p
+					}, {
+						video : true
+					})
+				}
+
+				
 			}
 		}
 
@@ -510,7 +552,7 @@ var main = (function(){
 
 			el.smallpanel.find('.item').on('click', events.currentMode)
 
-				
+			el.c.find('.backtolenta').on('click', actions.backtolenta)
 
 			el.addbutton.on('click', actions.addbutton)
 
@@ -642,6 +684,8 @@ var main = (function(){
 					
 				}
 
+				videomain = parameters().video ? true : false
+
 				if(lenta) lenta.destroy()
 
 				renders.lentawithsearch()
@@ -717,6 +761,8 @@ var main = (function(){
 
 			destroy : function(){
 
+				renders.post(null)
+
 				hsready = false
 
 				//searchvalue = '', searchtags = null
@@ -748,6 +794,8 @@ var main = (function(){
 				if (leftpanel){
 					leftpanel.destroy()
 				}
+
+				lastscroll = 0
 				
 				leftpanel = null
 				panel = null
@@ -796,7 +844,7 @@ var main = (function(){
 					result = {}
 				}
 
-				videomain = parameters().video
+				videomain = parameters().video ? true : false
 
 				if(videomain){
 					el.c.addClass('videomain')

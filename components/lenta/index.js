@@ -2407,6 +2407,10 @@ var lenta = (function(){
 							video : video,
 							preview : video ? true : false
 						},
+						notdisplay : video ? true: false,
+						bgImages : {
+							clbk : video ? true: false
+						}
 	
 					}, renderclbk)
 				}
@@ -2950,7 +2954,7 @@ var lenta = (function(){
 				el.c.on('click', '.videoTips', events.fullScreenVideo)
 				el.c.on('click', '.videoOpen', events.fullScreenVideo)
 
-				el.c.on('click', '.opensvi', events.opensvi)
+				el.c.on('click', '.opensviurl', events.opensvi)
 				
 				
 			//}

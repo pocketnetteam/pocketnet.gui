@@ -1035,6 +1035,110 @@
 			border-radius: 50%;
 		}
 	}
+
+
+	&.videomainpost{
+
+		
+		.postWrapper{
+			background: transparent;
+			max-width: none;
+
+			
+		}
+
+		.share{
+
+			.jsPlayerLoading{
+				width: 100%;
+			}
+
+			background: transparent;
+			.anothercntswrk{
+				background: #fff;
+				padding-left: 2 * @rhythm;
+				padding-right: 2 * @rhythm;
+			}
+			.work{
+				padding : 0;
+			}
+
+			.url{
+				margin-bottom : 0;
+			}
+
+			.paddingWrapper{
+				margin-left: 48px;
+				padding-left: @rhythm;
+			}
+
+			.shareTable{
+				.iconWrapper{
+					padding : 0;
+					z-index: 12;
+					width: 48px;
+	
+					.icon{
+						width: auto;
+						height: 48px;
+						.usericon{
+							width: 48px;
+							height: 48px;
+						}
+					}
+				}
+			}
+
+			
+		}
+
+		.shareTable{
+			.authorTable{
+				>div{
+
+					&.authorCell{
+						padding-left: @rhythm;
+						padding-right: 0;
+					}
+
+					&.datetime{
+						padding-left: 2 * @rhythm;
+						opacity: 0.5;
+					}
+					
+					
+
+
+				}
+			}
+
+			.metatable{
+				>div{
+					&.metapanel{
+						width: 20px;
+						color : @color-gray-mlight;
+
+						.metapanelitem{
+							opacity: 1;
+						}
+					}
+
+					
+				}
+			}
+		}
+
+		.cntswrk{
+			padding : 0;
+			margin : 0;
+		}
+
+		#comments .answer, 
+		#post #comments .post{
+			padding-left: 2 * @rhythm;
+    		padding-right: 2 * @rhythm;
+		}
+	}
 }
 
 

@@ -365,7 +365,6 @@ var post = (function(){
 						resetOnEnd : true,
 						muted : false
 					};
-
                     $.each(pels, function(key, el) {
                         PlyrEx(el, options, () => {}, () => {
 							if (clbk)
@@ -898,7 +897,7 @@ var post = (function(){
 
 				self.shell({
 					turi : 'lenta',
-					name :  'share',
+					name : ed.video ? 'sharevideo' : 'share',
 					el : el.share,
 
 					additionalActions : function(){

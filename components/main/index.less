@@ -46,17 +46,20 @@
 		
 	}
 
+
+	.leftpanelsvicell,
 	.leftpanelcell{
 		width: 242px;
 		float: left;
 		padding-right: 10px;
 	}
 
+	.mainpanelsvicell,
 	.mainpanelcell{
 		width: 256px;
 		float: right;
 	}
-	
+
 	.lentacell{
 		margin-right : 256px;
 		margin-left : 242px;
@@ -70,6 +73,13 @@
 		}
 	}
 
+	.lentacellsvi{
+		margin-right : 256px;
+		margin-left : 242px;
+		padding-top : 10px;
+		
+	}
+
 	&.videomain{
 		.mainpanelcell{
 			display: none;
@@ -80,12 +90,21 @@
 			margin-left : 212px;
 		}
 
+		.lentacellsvi{
+			margin-left : 102px;
+		}
+
 		.bgCaption{
 			display: none;
 		}
 
+		
 		.leftpanelcell{
 			width: 212px;
+		}
+
+		.leftpanelsvicell{
+			width: 102px;
 		}
 	}
 
@@ -93,7 +112,26 @@
 		.transition(0.3s);
 	}
 
+	.opensvi{
+		display: none;
+
+		.backtolenta{
+			opacity: 0;
+		}
+	}
+
 	&.opensvishowed{
+
+		min-height: 990px;
+
+		.opensvi{
+			display: block;
+
+			.backtolenta{
+				opacity: 1;
+			}
+		}
+
 		.maincntwrapper{
 			position: fixed;
 			transform: translateX(-100%);
