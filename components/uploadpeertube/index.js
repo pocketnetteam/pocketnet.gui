@@ -21,7 +21,7 @@ var uploadpeertube = (function () {
 
     var renders = {};
 
-    var videoId, loadedimage = null
+    var videoId, loadedImage = null;
 
     var state = {
       save: function () {},
@@ -29,7 +29,8 @@ var uploadpeertube = (function () {
     };
 
 
-    var resizeImage = function(base64){
+    var resizeImage = function(base64, clbk){
+
       var images = [{
         original : base64,
         index : 0
@@ -119,7 +120,7 @@ var uploadpeertube = (function () {
             return;
           }
 
-          filesWrittenObject.image = videoWallpaperFile[0];
+          filesWrittenObject.image = loadedImage.resized || videoWallpaperFile[0];
         }
 
         if (videoName) {
@@ -140,6 +141,7 @@ var uploadpeertube = (function () {
         filesWrittenObject.successFunction = function (response) {
           el.uploadButton.prop('disabled', false);
           el.header.addClass('activeOnRolled');
+          el.uploadProgress.addClass('hidden');
 
           ed.uploadInProgress = false;
 
@@ -191,8 +193,18 @@ var uploadpeertube = (function () {
 
       });
 
-      el.videoWallpaper.change(function (evt) {
+      el.videoWallpaper.change(async function (evt) {
         var fileName = evt.target.files[0].name;
+
+        loadedImage = {
+          original: evt.target.files[0],
+        }
+
+        var fileBase64 = await toDataURL(evt.target.files[0]);
+
+        resizeImage(fileBase64, (img) => {
+          loadedImage.resized = dataURLtoFile(img);
+        });
 
         el.wallpaperError.text(
           fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
@@ -237,6 +249,7 @@ var uploadpeertube = (function () {
 
             el.uploadButton.prop('disabled', false);
             el.header.addClass('activeOnRolled');
+            el.uploadProgress.addClass('hidden');
 
             if (response.error) {
               var error = deep(response, 'error.responseJSON.errors') || {};
@@ -288,7 +301,7 @@ var uploadpeertube = (function () {
             return;
           }
 
-          filesWrittenObject.thumbnailfile = videoWallpaperFile[0];
+          filesWrittenObject.thumbnailfile = loadedImage.resized || videoWallpaperFile[0];
         }
 
         if (videoName) {

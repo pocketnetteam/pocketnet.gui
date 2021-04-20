@@ -1834,6 +1834,13 @@
         return new File([u8arr], filename, {type:mime});
     }
 
+	toDataURL = file => new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => resolve(reader.result);
+		reader.onerror = error => reject(error);
+	});
+
 
     grayscaleImage = function (srcData, clbk){
 
