@@ -294,7 +294,13 @@ class OG {
                         $video = $this->videoImage(urldecode($r->u));
                         
                         if($video){
-                            $this->currentOg['image'] = $video;
+
+                            if(isset($this->currentOg['twitter:image'])){
+                                $this->currentOg['image'] = $this->currentOg['twitter:image']
+                            }
+                            else{
+                                $this->currentOg['image'] = $video;
+                            }   
 
                             $image = true;
                         }
