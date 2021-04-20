@@ -59,6 +59,8 @@ var uploadpeertube = (function () {
 
               if (r[1]){
 
+                editclbk()
+
                 if (clbk)
                     clbk(resized)
 

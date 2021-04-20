@@ -49,7 +49,7 @@ class RPC {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
 
-     
+         
         /* if ($result === FALSE) {
              printf("cUrl error (#%d): %s<br>\n", curl_errno($ch),
                     htmlspecialchars(curl_error($ch)));
@@ -62,12 +62,10 @@ class RPC {
 
         curl_close($ch);
 
-
         if ($result != false){
             $result = JSON_decode($result);
 
             if ($result->result != null){
-
                 $result = $result->data;
             }
             else{

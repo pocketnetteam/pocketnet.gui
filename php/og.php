@@ -169,9 +169,7 @@ class OG {
             }
 
             if (strpos($url, 'peertube://') !== false) {
-                $lp = str_split('?', $url);
 
-                $params = $lp[1];
                 $type = 'peertube';
                 $id = $test[9];
                 
@@ -247,17 +245,25 @@ class OG {
             }
         }
 
+        
+
         if($this->txid != NULL){
 
             $r = $this->rpc->share($this->txid);
+
+           
 
             if($r != false){
 
                 $r = $r[0];
 
+                
+
                 $pca = 'p';
 
                 $this->author = $r->address;
+
+               
 
                 if ($r->c != ''){
                     $this->currentOg['title']= urldecode($r->c);
@@ -330,15 +336,8 @@ class OG {
                    
                 }
 
-               
-
             }
         }
-
-        
-        
-
-        
     
 	}   
 

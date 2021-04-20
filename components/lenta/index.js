@@ -706,8 +706,6 @@ var lenta = (function(){
 
 				var d = (h - wh) / 2
 
-
-
 				if (d > 0){
 					work.css('margin-top', d + 'px')
 				}
@@ -2396,7 +2394,7 @@ var lenta = (function(){
 						clbk()
 				}
 
-				var rndr = function(){
+				var rndr = function(res){
 					self.shell({
 						turi : 'share',
 						name :  'url',
@@ -2405,7 +2403,7 @@ var lenta = (function(){
 							url : url,
 							og : og,
 							share : share,
-							//views : res.views,
+							views : res.views || 0,
 							video : video,
 							preview : video ? true : false
 						},
@@ -2416,11 +2414,11 @@ var lenta = (function(){
 				if (meta.type === 'peertube') {
 					
 					self.app.peertubeHandler.getVideoInfoAnon(meta, (res) => {
-						rndr()
+						rndr(res)
 					});
 
 				} else {
-					rndr()
+					rndr({})
 				}
 			},
 
