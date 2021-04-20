@@ -70,9 +70,9 @@ class API {
         return $this->curl($url, $fields);
     }
 
-    public function peertubeinfo($host, $videoid){
-        $action = 'peertubeinfo';
-        $params = array($host, $videoid);
+    public function peertubeinfo($host, $id){
+        $action = 'peertube/video';
+        $params = array('host' => 'https://' . $host, 'id' => $id);
 
         return $this->send($action, $params);
     }

@@ -114,13 +114,13 @@ class OG {
             if($v['type'] == 'peertube'){
                 //$u = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
 
-                $peertubeinfo = $this->api->peertubeinfo(array('host' => $v['host_name'], 'id' => $v['id']));
+                $peertubeinfo = $this->api->peertubeinfo($v['host_name'], $v['id']);
 
                 $this->currentOg['twitter:site'] = 'pocketnet.app';
                 $this->currentOg['twitter:card'] = 'player';
 
-                if(isset($peertubeinfo['image'])){
-                    $this->currentOg['twitter:image'] = $peertubeinfo['image'];
+                if(isset($peertubeinfo->previewPath)){
+                    $this->currentOg['twitter:image'] = $peertubeinfo->previewPath;
                 }
                 
                 $this->currentOg['twitter:title'] = $this->currentOg['title'];
