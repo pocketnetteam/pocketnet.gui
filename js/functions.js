@@ -1770,6 +1770,71 @@
 		
 	}
 
+	resizeNew = function (srcData, width, height, format) {
+		return new Promise((resolve, reject) => {
+			var imageObj = new Image(),
+			  canvas = document.createElement('canvas'),
+			  ctx = canvas.getContext('2d'),
+			  xStart = 0,
+			  yStart = 0,
+			  aspectRadio,
+			  newWidth,
+			  newHeight;
+	  
+			imageObj.crossOrigin = 'Anonymous';
+			imageObj.src = srcData;
+	  
+			format || (format = 'jpeg');
+	  
+			imageObj.onload = function () {
+			  aspectRadio = imageObj.height / imageObj.width;
+			  newHeight = imageObj.height;
+			  newWidth = imageObj.width;
+	  
+			  if (newHeight <= height && newWidth <= width) {
+			  } else {
+				if (newWidth > width) {
+				  newWidth = width;
+				  newHeight = width * aspectRadio;
+				}
+	  
+				if (newHeight > height) {
+				  newHeight = height;
+				  newWidth = newHeight / aspectRadio;
+				}
+			  }
+	  
+			  canvas.width = newWidth;
+			  canvas.height = newHeight;
+	  
+			  ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
+	  
+			  var url = canvas.toDataURL('image/' + format, 0.75);
+	  
+			  $(canvas).remove();
+	  
+			  return resolve(url);
+			};
+		  });
+	}
+
+
+	dataURLtoFile = function(dataurl, filename) {
+ 
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), 
+            n = bstr.length, 
+            u8arr = new Uint8Array(n);
+            
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        
+        return new File([u8arr], filename, {type:mime});
+    }
+
+
     grayscaleImage = function (srcData, clbk){
 
     	var image = new Image()
@@ -10536,6 +10601,15 @@ clearStringXss = function(nm){
 		stripIgnoreTag: true,
 	})
 }
+
+getBase64 = function (file) {
+	return new Promise((resolve, reject) => {
+	  const reader = new FileReader();
+	  reader.readAsDataURL(file);
+	  reader.onload = () => resolve(reader.result);
+	  reader.onerror = (error) => reject(error);
+	});
+};
 
 findResponseError = (response) => {
 	const ERRORS_PATHS = [
