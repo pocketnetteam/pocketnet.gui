@@ -9162,8 +9162,12 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     if (provider == 'peertube') {
 
-      PeerTubeEmbeding.main(target, 'f609ca9b-83da-4c8a-9744-a180d1175249', {
-        host : 'pocketnetpeertube3.nohost.me',
+
+
+      var host = target.getAttribute('data-plyr-host-name');
+
+      PeerTubeEmbeding.main(target, clear_peertube_id, {
+        host : host,
       },{
 
         playbackStatusChange : function(status){

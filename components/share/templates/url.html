@@ -5,6 +5,8 @@
 	if(typeof share == 'undefined') share = {};
 
 
+	console.log("META", meta, url)
+
 	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
 
 		if(!app.platform.sdk.usersettings.meta.embedvideo || 
@@ -26,7 +28,7 @@
 		
 			<% } else { %> 
 				
-				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>">
+				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					<div class="jsPlayerLoading">
 						<div class="jsPlayerLoadingD table">
 							<div>

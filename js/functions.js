@@ -9923,7 +9923,7 @@
 					var params = _url.split('?')[1] || '';
 
 					type = 'peertube'
-			        id = `${test[9]}?${params}`
+			        id = `${test[9]}` //?${params}
 					host_name = test[4]
 
 					console.log(id, host_name)

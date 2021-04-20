@@ -792,7 +792,9 @@ Platform = function (app, listofnodes) {
             _url = url;
 
             if (meta.type == 'peertube') {
-                _url = `https://${meta.host_name}/videos/embed/${meta.id}`
+                //_url = `https://${meta.host_name}/videos/embed/${meta.id}`
+
+                _url = `peertube://${meta.host_name}/${meta.id}`
             }
 
             if (meta.type == 'youtube') {
@@ -14963,7 +14965,6 @@ Platform = function (app, listofnodes) {
             storage : {},
             infoshares : function(shares){
 
-                console.log('shares', shares)
 
                 var links = _.filter(_.map(shares, function(s){
                     return s.url
@@ -14971,7 +14972,6 @@ Platform = function (app, listofnodes) {
                     return l ? true : false
                 })
 
-                console.log('links', links)
 
                 return self.sdk.videos.info(links)
 
@@ -15009,8 +15009,6 @@ Platform = function (app, listofnodes) {
 
                 var promisesmap = _.map(groups, function(links, type){
 
-                    console.log('type', type, links)
-
                     if(!self.sdk.videos.types[type]){
                         return Promise.reject('typehandler')
                     }
@@ -15026,7 +15024,6 @@ Platform = function (app, listofnodes) {
                 })
 
                 return Promise.all(promisesmap).catch(e => {
-                    console.log("E", e)
                     return Promise.resolve()
                 })
             },
@@ -15074,9 +15071,6 @@ Platform = function (app, listofnodes) {
 
                                         return resolve(response.data.video)
 
-                                        _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
-                                       
-                                        
                                     } else {
                                         reject()
                                     }
@@ -15088,7 +15082,7 @@ Platform = function (app, listofnodes) {
 
                             l.data = {
                                 views : 0,
-                                image : response.data.video.preview
+                                image : r.preview
                             }
 
                             return Promise.resolve(l)
