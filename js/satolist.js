@@ -19116,7 +19116,7 @@ Platform = function (app, listofnodes) {
                         </matrix-element>
                     </div>`
 
-                    //$('#matrix').append(matrix);         
+                    $('#matrix').append(matrix);         
                     
                 }
 
