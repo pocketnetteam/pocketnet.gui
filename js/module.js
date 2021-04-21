@@ -106,13 +106,7 @@ nModule = function(){
 					
 				}
 
-				/*p.el.find('[data-jdenticon-value]').each(function(){
-					var t = $(this);
-					var v = t.data('jdenticon-value')
 
-					t.html(jdenticon.toSvg(v, t.width()))
-				})*/
-				console.log('p.bgImages', p.bgImages)
 				bgImages(p.el, p.bgImages)
 				
 			}
@@ -480,7 +474,6 @@ nModule = function(){
 				p.el.css("display", p.display)
 			}
 
-			console.log("PPPP", p)
 
 			if (p.postAnimation)
 				p.postAnimation();
@@ -751,7 +744,6 @@ nModule = function(){
 
 	self.closeContainer = function(key){
 
-		console.log("CLOSECONTAINER", self)
 
 		var close = deep(self, 'container.close')
 

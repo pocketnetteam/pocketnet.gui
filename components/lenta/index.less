@@ -1162,7 +1162,6 @@
 						font-size: 0.8em;
 						color : @color-main;
 					}
-					
 				}
 				
 				.urlcnt{
@@ -1494,7 +1493,7 @@
 			&.fullScreenVideo{
 				padding : 0;
 				margin : 0;
-				z-index: 200;
+				z-index: 2000;
 				position : fixed;
 				left: 0;
 				right: 0;
@@ -1503,6 +1502,10 @@
 				background: fade(@color-black2, 80);
 				overflow-y: scroll;
 				padding-top: 0;
+
+				.videoviews{
+					padding-left: 2 * @rhythm;
+				}
 
 				
 				#comments{

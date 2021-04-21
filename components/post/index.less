@@ -724,9 +724,12 @@
 			}
 
 			span{
-				font-size: 0.8em;
-				color : @color-main;
-				text-decoration: underline;
+				&.linkedstyle{
+					font-size: 0.8em;
+					color : @color-main;
+					text-decoration: underline;
+				}
+				
 			}
 
 			.videoviews{
@@ -1072,6 +1075,10 @@
 				padding-left: @rhythm;
 			}
 
+			.urlcnt{
+				display: none;
+			}
+
 			.shareTable{
 				.iconWrapper{
 					padding : 0;
@@ -1133,10 +1140,13 @@
 			margin : 0;
 		}
 
-		#comments .answer, 
-		#post #comments .post{
-			padding-left: 2 * @rhythm;
-    		padding-right: 2 * @rhythm;
+		#comments .post{
+			padding-left: 3.5 * @rhythm;
+    		padding-right: 3.5 * @rhythm;
+		}
+
+		.share .metatable>div.metapanel{
+			padding-right:  @rhythm;
 		}
 	}
 }

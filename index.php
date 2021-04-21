@@ -25,6 +25,7 @@
         media-src blob: *">
 
         <?php 
+           
             require_once('php/og.php'); 
 
             $og = new OG($_GET);

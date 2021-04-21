@@ -14,7 +14,7 @@ var main = (function(){
 
 		var videomain = false
 
-		var upbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
+		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
 		var currentMode = 'common', hsready = false;
 
@@ -178,10 +178,16 @@ var main = (function(){
 
 				renders.post(null)
 
-
-				console.log('lastscroll', lastscroll)
-				
 				_scrollTop(lastscroll, null, 5)
+
+				setTimeout(function(){
+
+					renders.upbutton()
+					
+					actions.refreshSticky()
+
+				}, 500)
+
 				
 			}
 		}
@@ -477,6 +483,29 @@ var main = (function(){
 
 							el.c.addClass('opensvishowed')
 
+							if (upbutton) upbutton.destroy()
+							
+							if (upbackbutton) upbackbutton.destroy()
+
+								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+									top : function(){
+										return '65px'
+									},
+									rightEl : el.c.find('.lentacellsvi'),
+									scrollTop : 0,
+									click : function(a){
+										actions.backtolenta()
+									},
+
+									icon : '<i class="fas fa-chevron-left"></i>',
+									class : 'bright',
+									text : 'Back'
+								})	
+								
+							setTimeout(function(){
+								upbackbutton.apply()
+							},300)
+
 							renders.post(id)
 
 							self.nav.api.history.addParameters({
@@ -492,14 +521,7 @@ var main = (function(){
 					},
 					clbk : function(e, p){
 
-						if(!upbutton)
-							upbutton = self.app.platform.api.upbutton(el.up, {
-								top : function(){
-				
-									return '65px'
-								},
-								rightEl : el.c.find('.leftpanelcell')
-							})		
+							renders.upbutton()
 
 							lenta = p
 
@@ -510,6 +532,17 @@ var main = (function(){
 
 				})
 
+			},
+
+			upbutton : function(){
+				if(upbutton) upbutton.destroy()
+
+				upbutton = self.app.platform.api.upbutton(el.up, {
+					top : function(){
+						return '65px'
+					},
+					rightEl : el.c.find('.leftpanelcell')
+				})	
 			},
 
 			post : function(id){
@@ -529,7 +562,8 @@ var main = (function(){
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(p){
 						openedpost = p
 					}, {
-						video : true
+						video : true,
+						autoplay : true
 					})
 				}
 
@@ -686,6 +720,15 @@ var main = (function(){
 
 				videomain = parameters().video ? true : false
 
+				if(videomain){
+					el.c.addClass('videomain')
+				}
+				else{
+					el.c.removeClass('videomain')
+					actions.backtolenta()
+					makePanel()
+				}
+
 				if(lenta) lenta.destroy()
 
 				renders.lentawithsearch()
@@ -774,6 +817,11 @@ var main = (function(){
 					upbutton.destroy()
 
 					upbutton = null
+
+				if (upbackbutton)
+					upbackbutton.destroy()
+
+					upbackbutton = null
 				
 				if (roller)
 					roller.destroy()
@@ -818,6 +866,7 @@ var main = (function(){
 				el.panel = el.c.find('.panel');
 				el.leftpanel = el.c.find('.leftpanel');
 				el.up = el.c.find('.upbuttonwrapper')
+				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 				el.smallpanel = el.c.find('.smallpanell')
 				el.addbutton = el.c.find('.addbutton')
 

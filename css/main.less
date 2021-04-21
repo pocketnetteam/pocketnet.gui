@@ -736,6 +736,24 @@ pie {
     
         }
     }
+
+    &.bright{
+
+        .full{
+            color : @color-main;
+        }
+        &:hover{
+            .full{
+                background: transparent;
+                color : fade(@color-gray-mlight, 70);
+            }
+    
+            .mini{
+                color : @color-add;
+                border-color : @color-add;
+            }
+        }
+    }
 }
 
 

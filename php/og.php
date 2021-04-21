@@ -296,7 +296,7 @@ class OG {
                         if($video){
 
                             if(isset($this->currentOg['twitter:image'])){
-                                $this->currentOg['image'] = $this->currentOg['twitter:image']
+                                $this->currentOg['image'] = $this->currentOg['twitter:image'];
                             }
                             else{
                                 $this->currentOg['image'] = $video;

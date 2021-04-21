@@ -16,6 +16,8 @@ var post = (function(){
 
 		var el, share, ed, inicomments, eid = '', _repost = null, level = 0;
 
+		var player = null
+
 		var authblock = false;
 
 		var actions = {
@@ -366,7 +368,17 @@ var post = (function(){
 						muted : false
 					};
                     $.each(pels, function(key, el) {
-                        PlyrEx(el, options, () => {}, () => {
+                        PlyrEx(el, options, (_player) => {
+
+							player = _player
+
+						}, () => {
+
+							if (ed.autoplay){
+								player.play()
+							}
+
+							//// autoplay
 							if (clbk)
                                 clbk()
 						});
@@ -1398,6 +1410,13 @@ var post = (function(){
 				delete self.app.platform.clbks.api.actions.subscribe.post
 
 				authblock = false;
+
+				if(player){
+
+					if(player.destroy) player.destroy()
+
+					player = null
+				}
 
 
 				if (_repost){

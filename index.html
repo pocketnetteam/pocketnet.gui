@@ -19,10 +19,10 @@
         default-src https: 'self'; 
         connect-src https: wss:;
         img-src 'self' data: https:;
-        script-src 'self' https://pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' blob: https://pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
-        media-src *">
+        font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
+        media-src blob: *">
 
         <link rel="stylesheet" href="css/normalize.css?v=792682299546">
 <link rel="stylesheet" href="css/tooltipster.core.min.css?v=468552039092">
@@ -38,9 +38,9 @@
         
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
+        <link rel="stylesheet" href="peertube/video-embed.css">
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
-        <script src="js/widgets.js?v=136"></script>
          
        
     </head>
@@ -188,6 +188,7 @@
 <script join src="js/kit.js?v=36166888490"></script>
 <script join src="js/satolist.js?v=532885877946"></script>
 <script join src="js/messenger2/clientrtc.js?v=24610105622"></script>
+<script join src="peertube/video-embed.bundle.js?v=681588213269"></script>
 <script join src="js/peertube-master.js?v=958581981834"></script>
 <script join src="js/app.js?v=589294242649"></script>
 <script join src="js/main.js?v=210206310466"></script>

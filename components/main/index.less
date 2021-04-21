@@ -75,7 +75,6 @@
 
 	.lentacellsvi{
 		margin-right : 256px;
-		margin-left : 242px;
 		padding-top : 10px;
 		
 	}
@@ -91,7 +90,6 @@
 		}
 
 		.lentacellsvi{
-			margin-left : 102px;
 		}
 
 		.bgCaption{
@@ -118,11 +116,41 @@
 		.backtolenta{
 			opacity: 0;
 		}
+
+		.leftpanelsvicell{
+			display: none;
+		}
+	}
+
+	.upbackbuttonwrapper{
+		opacity: 0;
+		.transition(0.3s);
+		-webkit-transition-delay: 0.5s;
+		-o-transition-delay: 0.5s;
+		-moz-transition-delay: 0.5s;
+		transition-delay: 0.5s;
+	}
+
+	.leftpanelcell,
+	.upbuttonwrapper{
+		opacity: 1;
+		.transition(0.3s);
+		-webkit-transition-delay: 0.5s;
+		-o-transition-delay: 0.5s;
+		-moz-transition-delay: 0.5s;
+		transition-delay: 0.5s;
 	}
 
 	&.opensvishowed{
 
 		min-height: 990px;
+		.upbackbuttonwrapper{
+			opacity: 1;
+		}
+
+		.leftpanelcell{
+			opacity: 0;
+		}
 
 		.opensvi{
 			display: block;
@@ -138,7 +166,8 @@
 		}
 
 		.upbuttonwrapper{
-			display: none!important;
+			display: none;
+			opacity: 0;
 		}
 	}
 
@@ -149,6 +178,8 @@
 			.postWrapper{
 				margin: 0;
 			}
+
+			
 		}
 	}
 
@@ -279,16 +310,7 @@
 		}
 	}
 
-	#share{
-
-	}
-
-	.share{
-		.work{
-			
-		}
-	}
-
+	
 	.fxdsmall,
 	.fxd{
 		z-index: 10;
@@ -575,7 +597,20 @@ html.stblack{
 	
 	}
 }
-
+@media only screen and (max-width: 1440px) {
+	#main{
+		.opensvi{
+	
+			.leftpanelsvicell{
+				display: block;
+			}
+	
+			.upbackbuttonwrapper{
+				display: none;
+			}
+		}
+	}
+}
 @media only screen and (max-width: 1280px) {
 #main{
 	.addbutton{
@@ -587,8 +622,11 @@ html.stblack{
 		}
 
 	}
+
 }
 }
+
+
 @media only screen and (max-width: 768px) {
 	#main{
 		.addbutton{

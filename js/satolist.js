@@ -1760,7 +1760,8 @@ Platform = function (app, listofnodes) {
                             fromempty: p.fromempty,
                             eid: id + (p.eid || ""),
                             comments : p.comments,
-                            video : p.video
+                            video : p.video,
+                            autoplay : p.autoplay
                         }
                     })
 
@@ -1990,11 +1991,11 @@ Platform = function (app, listofnodes) {
 
                 h += '<div class="fulltable table">'
                 h += '<div class="fullcell icon">'
-                h += '<i class="fas fa-chevron-up"></i>'
+                h +=  (p.icon || '<i class="fas fa-chevron-up"></i>')
                 h += '</div>'
 
                 h += '<div class="fullcell label">'
-                h += 'To the top'
+                h +=  (p.text || 'To the top') 
                 h += '</div>'
 
                 h += '<div class="fullcell label likeicon">'
@@ -2005,7 +2006,7 @@ Platform = function (app, listofnodes) {
                 h += '</div>'
 
                 h += '<div class="mini">'
-                h += '<i class="fas fa-chevron-up"></i>'
+                h += (p.icon || '<i class="fas fa-chevron-up"></i>')
                 h += '</div>'
 
                 h += '</div>'
@@ -2056,7 +2057,10 @@ Platform = function (app, listofnodes) {
                     }
                 },
                 scroll: function () {
-                    if (w.scrollTop() > (p.scrollTop || 250)) {
+
+
+
+                    if (w.scrollTop() >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
                         up.addClass('active')
                     }
                     else {
@@ -2065,7 +2069,15 @@ Platform = function (app, listofnodes) {
                 },
 
                 click: function () {
-                    _scrollTop(0)
+
+                    if (p.click){
+                        p.click(up.hasClass('active'))
+                    }
+                    else{
+                        _scrollTop(0)
+                    }
+
+                   
                 }
             }
 
@@ -2091,6 +2103,11 @@ Platform = function (app, listofnodes) {
 
                 initEvents();
 
+                events.resize();
+                events.scroll();
+            }
+
+            self.apply = function(){
                 events.resize();
                 events.scroll();
             }
@@ -15027,6 +15044,8 @@ Platform = function (app, listofnodes) {
                     }
 
                     return self.sdk.videos.types[type](links).then(r => {
+
+                        console.log("LINKS, ", links, type, r)
                         _.each(r, function(l){
                             s[l.link] = l
                         })
@@ -15063,18 +15082,31 @@ Platform = function (app, listofnodes) {
 
                 peertube : function(links){
 
+                    console.log("links", links)
+
                     var result = _.map(links, function(l){
 
-                        l.data = {
-                            image : 'https://pocketnetpeertube3.nohost.me/lazy-static/previews/a3d17832-40b9-487e-8ac7-c83ed08ef11b.jpg',
-                            views : 0
-                        }
+                        return self.app.api.fetch('peertube/video', {
+                            host : 'https://' + l.meta.host_name,
+                            id : l.meta.id
+                        }).then(d => {
+                            
 
-                        return l
+                            l.data = {
+                                image : d.previewPath,
+                                views : d.views,
+                                duration : d.duration
+                            }
+
+                            return Promise.resolve(l)
+            
+                        }).catch(e => {
+                           return Promise.resolve(l)
+                        })
 
                     })
 
-                    return Promise.resolve(result)
+                    return Promise.all(result)
 
                 },
 

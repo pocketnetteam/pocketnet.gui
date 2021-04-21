@@ -9160,6 +9160,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var video_id = target.getAttribute('data-plyr-embed-id');
     var clear_peertube_id = target.getAttribute('data-plyr-video-id');
 
+
     if (provider == 'peertube') {
 
 

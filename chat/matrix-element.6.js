@@ -94,24 +94,6 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ "0f2c5":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("b56d8");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("3773307e", content, shadowRoot)
-};
-
-/***/ }),
-
 /***/ "0f6a":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -265,8 +247,24 @@ var es_string_replace = __webpack_require__("5319");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
 var es_regexp_exec = __webpack_require__("ac1f");
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
+var asyncToGenerator = __webpack_require__("1da1");
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
+var regenerator = __webpack_require__("a34a");
+var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.find.js
 var es_array_find = __webpack_require__("7db0");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.finally.js
+var es_promise_finally = __webpack_require__("a79d");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
+var es_promise = __webpack_require__("e6cf");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
+var es_object_to_string = __webpack_require__("d3b7");
 
 // EXTERNAL MODULE: ./src/components/chats/assets/name.vue + 4 modules
 var assets_name = __webpack_require__("aa20");
@@ -284,6 +282,13 @@ var contacts = __webpack_require__("71da");
 var functions = __webpack_require__("3139");
 
 // CONCATENATED MODULE: ./src/components/chat/topheader/index.js
+
+
+
+
+
+
+
 
 
 
@@ -351,6 +356,10 @@ var functions = __webpack_require__("3139");
         click: "LeaveFromRoom",
         title: "Leave and Delete",
         icon: "fas fa-sign-out-alt"
+      }, {
+        click: "Donate",
+        title: "Donate",
+        icon: "fas fa-money-bill-wave"
       }],
       oneToOneMuted: [{
         click: "MuteRoom",
@@ -360,13 +369,48 @@ var functions = __webpack_require__("3139");
         click: "LeaveFromRoom",
         title: "Leave and Delete",
         icon: "fas fa-sign-out-alt"
+      }, {
+        click: "Donate",
+        title: "Donate",
+        icon: "fas fa-money-bill-wave"
+      }],
+      donateMenu: [{
+        click: "Donate",
+        title: "Donate",
+        icon: "fas fa-money-bill-wave"
       }],
       loading: false,
       typing: false,
       userinfo: null,
       aboutUserShow: false,
       roomBanned: false,
-      roomMuted: false
+      roomMuted: false,
+      // --- Variables for the donation part ---
+      // Boolean when the donation modal is open
+      donateUserOpened: false,
+      // Object containing the receiver informations
+      receiver: null,
+      // How much PKOIN we want to donate
+      donationAmount: 0,
+      // Optional message for the transaction
+      donationMessage: '',
+      // Calculated fees needed for the transaction
+      calculatedFees: null,
+      // Booleans to show errors
+      showFeesError: '',
+      showTransactionError: '',
+      // Booleans to show spinners
+      calculatingFees: false,
+      sending: false,
+      // To choose by who the fee should be payed by
+      feesDirection: 'include',
+      feesDirectionPossibleValues: [{
+        value: 'include',
+        label: 'To be paid by Receiver'
+      }, {
+        value: 'exclude',
+        label: 'To be paid by Sender'
+      }]
     };
   },
   watch: {//$route: 'getdata'
@@ -409,6 +453,9 @@ var functions = __webpack_require__("3139");
       });
 
       return userTyping || false;
+    },
+    totalDonationAmount: function totalDonationAmount() {
+      return this.feesDirection == 'include' ? this.donationAmount : this.donationAmount + this.calculatedFees;
     }
   }),
   methods: {
@@ -425,6 +472,18 @@ var functions = __webpack_require__("3139");
           _this2.userinfo = info[0];
         });
       }
+    },
+    // Return the another member in the chat
+    // (it returns the last one, so make sense only for the one to one chat)
+    // If no user found, return undefined
+    findOtherUser: function findOtherUser() {
+      var my = this.m_chat.myUserId;
+      var receiver;
+      var members = this.m_chat.currentState.getMembers();
+      members.forEach(function (member) {
+        if (member && member.userId !== my) receiver = member;
+      });
+      return receiver;
     },
     addMember: function addMember() {
       this.modalInviteUser();
@@ -469,13 +528,8 @@ var functions = __webpack_require__("3139");
 
       if (item.click === 'BanRoom') {
         var banUserId = '';
-        var my = this.m_chat.myUserId;
-        var members = this.m_chat.currentState.getMembers();
-        members.forEach(function (member) {
-          if (member !== my) {
-            banUserId = member.userId;
-          }
-        });
+        var banUser = this.findOtherUser();
+        if (banUser && banUser.userId) banUserId = banUser.userId;
         var roomID = this.chat.roomId;
         this.core.mtrx.client.ban(roomID, banUserId, 'ban').then(function (r) {
           console.log(r, "BANNED");
@@ -486,16 +540,10 @@ var functions = __webpack_require__("3139");
 
       if (item.click === 'Unban') {
         var _banUserId = '';
-        var _my = this.m_chat.myUserId;
 
-        var _members = this.m_chat.currentState.getMembers();
+        var _banUser = this.findOtherUser();
 
-        _members.forEach(function (member) {
-          if (member !== _my) {
-            _banUserId = member.userId;
-          }
-        });
-
+        if (_banUser && _banUser.userId) _banUserId = _banUser.userId;
         this.core.mtrx.client.unban(this.chat.roomId, _banUserId).then(function (r) {
           _this3.core.mtrx.client.invite(_this3.chat.roomId, _banUserId);
         });
@@ -503,18 +551,176 @@ var functions = __webpack_require__("3139");
         this.roomBanned = false;
         this.$refs.dropdownMenu.hidePopup();
       }
+
+      if (item.click === "Donate") {
+        // Open modal
+        this.donateUserOpened = true; // Close dropdown menu
+
+        this.$refs.dropdownMenu.hidePopup(); // Find the user we are about to donate to
+
+        var receiverObj = this.findOtherUser();
+        this.receiver = receiverObj ? this.$f.deep(this, '$store.state.users.' + this.$f.getmatrixid(receiverObj.name)) : null;
+      }
     },
-    modalInviteUser: function modalInviteUser() {
-      this.inviteUserOpened = true;
+    closeDonateModal: function closeDonateModal() {
+      this.donateUserOpened = false;
     },
-    closeModal: function closeModal() {
-      this.inviteUserOpened = false;
+    onCalculateFeesClick: function onCalculateFeesClick() {
+      var _this4 = this;
+
+      this.calculatingFees = true;
+      this.calculateFees().finally(function () {
+        return _this4.calculatingFees = false;
+      });
     },
-    closeContactModal: function closeContactModal(value) {
-      this.inviteUserOpened = value;
+    calculateFees: function calculateFees() {
+      var _this5 = this;
+
+      var self = this;
+      this.showFeesError = '';
+      return new Promise(function (resolve, reject) {
+        console.log("Calculating fees..."); // Check parameters
+
+        if (_this5.donationAmount <= 0 || !_this5.receiver || !_this5.receiver.source || !_this5.receiver.source.address) {
+          _this5.showFeesError = 'invalid';
+          return reject('Missing amount or receiver');
+        } // Try calculating fees
+
+
+        try {
+          var sdk = window.POCKETNETINSTANCE.platform.sdk;
+          sdk.node.fee.estimate(function (fees) {
+            var outputs = [{
+              address: self.receiver.source.address,
+              amount: self.donationAmount
+            }];
+            sdk.wallet.txbase([sdk.address.pnet().address], outputs, 0, self.feesDirection, function (err, inputs, _outputs) {
+              if (err) {
+                console.error(err);
+                self.showFeesError = err;
+                return reject(err);
+              }
+
+              var tx = sdk.node.transactions.create.wallet(inputs, _outputs);
+              var totalFees = Math.min(tx.virtualSize() * fees.feerate, 0.0999); // Got the fees
+
+              self.calculatedFees = totalFees;
+              return resolve();
+            });
+          });
+        } catch (err) {
+          console.error(err);
+          self.showFeesError = err;
+          return reject(err);
+        }
+      });
     },
-    callupHandler: function callupHandler(rowObject) {},
-    callupVideoHandler: function callupVideoHandler(rowObject) {}
+    sendDonation: function sendDonation() {
+      var _this6 = this;
+
+      return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+        var self, sdk;
+        return regenerator_default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                self = _this6;
+                _this6.sending = true;
+                _this6.showTransactionError = ''; // Recalculate the fees just before sending
+
+                _context.prev = 3;
+                _context.next = 6;
+                return _this6.calculateFees();
+
+              case 6:
+                _context.next = 13;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](3);
+                _this6.showTransactionError = 'error';
+                _this6.sending = false;
+                return _context.abrupt("return");
+
+              case 13:
+                // Check if current balance is enough
+                sdk = window.POCKETNETINSTANCE.platform.sdk;
+                sdk.node.transactions.get.canSpend(sdk.address.pnet().address, function (currentBalance) {
+                  // If balance is too low
+                  if (!currentBalance || isNaN(currentBalance) || currentBalance < self.totalDonationAmount) {
+                    self.showTransactionError = 'balance too low';
+                    self.sending = false;
+                    return;
+                  } // Start the send transaction process
+
+
+                  try {
+                    var outputs = [{
+                      address: self.receiver.source.address,
+                      amount: self.donationAmount
+                    }];
+                    sdk.wallet.embed(outputs, self.donationMessage); // Create a transaction
+
+                    sdk.wallet.txbase([sdk.address.pnet().address], outputs, self.calculatedFees, self.feesDirection, function (err, inputs, _outputs) {
+                      if (err) {
+                        console.error(err);
+                        self.showTransactionError = 'error';
+                        self.sending = false;
+                        return reject(err);
+                      }
+
+                      var tx = sdk.node.transactions.create.wallet(inputs, _outputs);
+                      inputs.forEach(function (t) {
+                        t.cantspend = true;
+                      }); // Try sending the transaction
+
+                      sdk.node.transactions.send(tx, function (d, err) {
+                        if (err) {
+                          sdk.node.transactions.releaseCS(inputs);
+                          self.showTransactionError = 'error';
+                          self.sending = false;
+                          return;
+                        } // Transaction has been sent
+
+
+                        var ids = inputs.map(function (i) {
+                          return i.txid;
+                        });
+                        sdk.node.transactions.clearUnspents(ids);
+                        sdk.wallet.saveTempInfoWallet(d, inputs, _outputs); // Send an event to the chat
+
+                        self.core.mtrx.client.sendEvent(self.chat.roomId, "m.room.message", {
+                          from: self.$f.getmatrixid(self.m_chat.myUserId),
+                          to: self.receiver.id,
+                          amount: self.donationAmount,
+                          txId: d,
+                          msgtype: "m.notice"
+                        }, ""); // Close the donation modal
+
+                        self.closeDonateModal();
+                      });
+                    });
+                  } catch (err) {
+                    console.error(err);
+                    self.showTransactionError = 'error';
+                    self.sending = false;
+                  }
+                });
+
+              case 15:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[3, 8]]);
+      }))();
+    },
+    resetDonation: function resetDonation() {
+      this.calculatedFees = null;
+      this.showFeesError = '';
+      this.showTransactionError = '';
+    }
   }
 });
 // EXTERNAL MODULE: ./node_modules/underscore/modules/index-all.js + 159 modules
@@ -1572,12 +1778,12 @@ var chatinfo_component = Object(componentNormalizer["a" /* default */])(
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"a4fdebdc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=5c721a94&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"a4fdebdc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=1e2ab7c2&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatIcon"},[_c('userspic',{attrs:{"slidesPerView":_vm.slidesPerView,"users":_vm.users,"invited":_vm.invited,"unseen":this.chat.getUnreadNotificationCount()}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/chats/assets/icon.vue?vue&type=template&id=5c721a94&scoped=true&
+// CONCATENATED MODULE: ./src/components/chats/assets/icon.vue?vue&type=template&id=1e2ab7c2&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
 var es_number_constructor = __webpack_require__("a9e3");
@@ -1628,7 +1834,7 @@ var index_all = __webpack_require__("c46f");
       }), function (m) {
         var _this$core$user$useri;
 
-        return m && (index_all["a" /* default */].toArray(_this.chat.currentState.members).length > 2 || m.id != ((_this$core$user$useri = _this.core.user.userinfo) === null || _this$core$user$useri === void 0 ? void 0 : _this$core$user$useri.id));
+        return m && (index_all["a" /* default */].toArray(_this.chat.currentState.members).length > 2 || m.id !== ((_this$core$user$useri = _this.core.user.userinfo) === null || _this$core$user$useri === void 0 ? void 0 : _this$core$user$useri.id));
       });
 
       return users;
@@ -1640,7 +1846,7 @@ var index_all = __webpack_require__("c46f");
       var i = {};
 
       index_all["a" /* default */].each((_this$chat2 = this.chat) === null || _this$chat2 === void 0 ? void 0 : _this$chat2.currentState.members, function (m) {
-        if (m.membership == 'invite') i[_this2.$f.getmatrixid(m.name)] = true;
+        if (m.membership === 'invite') i[_this2.$f.getmatrixid(m.name)] = true;
       });
 
       return i;
@@ -1658,7 +1864,7 @@ var componentNormalizer = __webpack_require__("2877");
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__("fdbf5")
+  var style0 = __webpack_require__("8a0e")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -1671,7 +1877,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "5c721a94",
+  "1e2ab7c2",
   null
   ,true
 )
@@ -1786,6 +1992,20 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "69d06":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".chatIcon[data-v-1e2ab7c2]{width:100%}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "6c71":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1838,6 +2058,18 @@ exports = ___CSS_LOADER_API_IMPORT___(false);
 exports.push([module.i, ".aboutRoomFileWrapper .aboutRoomFile[data-v-36435ec0]{display:flex;justify-content:flex-start;align-items:flex-start;border-bottom:1px solid #dfdfdf;margin-bottom:.5em;padding:.5em 1em}.aboutRoomFileWrapper .aboutRoomFile[data-v-36435ec0]:last-child{border:none}.aboutRoomFileWrapper .aboutRoomFile a[data-v-36435ec0]{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;margin:.2em 0}.aboutRoomFileWrapper .aboutRoomFile i[data-v-36435ec0]{font-size:2em;margin-top:.2em;margin-right:.5em}.emptyBlock[data-v-36435ec0]{text-align:center;padding:.5em 0}.emptyBlock span[data-v-36435ec0]{font-size:.9em}", ""]);
 // Exports
 module.exports = exports;
+
+
+/***/ }),
+
+/***/ "8a0e":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1e2ab7c2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("bfdb");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1e2ab7c2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1e2ab7c2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1e2ab7c2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1e2ab7c2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -1988,20 +2220,6 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ "b56d8":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".chatIcon[data-v-5c721a94]{width:100%}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "b61c":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2027,6 +2245,24 @@ exports.push([module.i, ".typingBlock{position:relative}.typingBlock .typingBloc
 // Exports
 module.exports = exports;
 
+
+/***/ }),
+
+/***/ "bfdb":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("69d06");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("70441534", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -2118,18 +2354,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ab9fe54_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("7897");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ab9fe54_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ab9fe54_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ab9fe54_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_1ab9fe54_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "fdbf5":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_5c721a94_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("0f2c5");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_5c721a94_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_5c721a94_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_5c721a94_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_5c721a94_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ })
