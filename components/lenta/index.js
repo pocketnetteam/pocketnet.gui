@@ -358,6 +358,8 @@ var lenta = (function(){
 
 				if(!iniH || !_el.length) return
 
+				if(essenseData.openapi) return
+
 				var hc = _el[0].offsetHeight
 				
 				if(_el.length && w.scrollTop() > _el.offset().top) {
