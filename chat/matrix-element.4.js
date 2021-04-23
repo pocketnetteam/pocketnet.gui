@@ -2092,8 +2092,8 @@ var list_component = Object(componentNormalizer["a" /* default */])(
     },
     update: function update(e) {
       if (!this.scrolling) {
-        /*this.uspBottomHeight()
-        this.fixBottomScroll()*/
+        this.uspBottomHeight();
+        this.fixBottomScroll();
         this.autoPaginateAll();
       } else {//e.preventDefault()
       }
