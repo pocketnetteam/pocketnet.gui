@@ -51,7 +51,7 @@ fs.exists(mapJsPath, function (exists) {
 
 		var exported = {
 			data : "",
-			path : '../matrix-chat-client/src/components/events/event/metaMessage/exported.less'
+			path : '../matrix/src/components/events/event/metaMessage/exported.less'
 			// path : './css/exported.less'
 		}
 
