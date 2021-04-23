@@ -1251,9 +1251,16 @@ Share = function(lang){
 	}
 	
 	self.itisvideo = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url.v) return
+
 		var meta = parseVideo(self.url.v)
 
-		if(meta.type == 'peertube') return true
+		if(meta.type) return true
+
+		//if(meta.type == 'peertube') return true
 	}
 
 	self.export = function(extend){
@@ -1836,12 +1843,13 @@ pShare = function(){
 
 	self.itisvideo = function(){
 
+		if(self.settings.v == 'a') return
+
 		if(!self.url) return 
 
 		var meta = parseVideo(self.url)
 
-		if (meta.type) 
-			return true
+		if (meta.type) return true
 	}
 
 	self._import = function(v, notdecode){
@@ -1972,6 +1980,9 @@ pShare = function(){
 	}
 
 	self.renders = {
+		captionclear : function(){
+			return self.caption || ''
+		},
 		caption : function(){
 			if(!self.caption){
 

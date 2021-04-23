@@ -978,3 +978,10 @@ ____loclib.maxtags = "Only 5 tags maximum allowed";
 ____loclib.videotitle = "Enter video title";
 ____loclib.videodesc = "Enter video description";
 ____loclib.entervideocaption = "Please, enter video title";
+
+____loclib.period = "Period";
+____loclib.periodday = "One Day";
+____loclib.period3day = "Three Days";
+____loclib.period7day = "One week";
+____loclib.period31day = "One Month";
+____loclib.period182day = "Half of year";

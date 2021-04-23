@@ -127,7 +127,7 @@ var metadisplay = function(){ %>
 
 			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
 		%>
-			<div class="paddingWrapper hideOnFullVideo">
+			<div class="paddingWrapper">
 				<div class="sharecaption canmark">
 					<div>
 						<%=emojione.toImage(nl2br(trimrn(c)))%>
@@ -139,7 +139,7 @@ var metadisplay = function(){ %>
 
 		<% if(m) {
 
-            if(typeof video != 'undefined' && video) return
+            if(typeof tplvideo != 'undefined' && tplvideo) return
 
 			m = (m)
 			
@@ -392,7 +392,7 @@ var metadisplay = function(){ %>
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
 
-	<% if(!emptywithrepost && (typeof video == 'undefined' || !video)) {%>
+	<% if(!emptywithrepost) {%>
 
 		<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 

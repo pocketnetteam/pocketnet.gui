@@ -17,7 +17,7 @@
 
         <meta http-equiv="Content-Security-Policy" content="
         default-src https: 'self'; 
-        connect-src https: wss:;
+        connect-src https: wss: data:;
         img-src 'self' data: https:;
         script-src 'self' blob: https://pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';

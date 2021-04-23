@@ -18,10 +18,18 @@ var leftpanel = (function(){
 
 		var renders = {
 			currentsearch : function(value, clbk){
+
+				if(!el.c) return
+
+				var backlink = 'index'
+
+				if(parameters().video) backlink = 'index?video=1'
+
 				self.shell({
 					name :  'currentsearch',
 					data : {
-						value : value
+						value : value,
+						backlink : backlink
 					},
 					el : el.currentsearch
 
@@ -30,9 +38,10 @@ var leftpanel = (function(){
 					if(clbk) clbk()
 				})
 			},
+
 			tags : function(){
 
-				console.log("RENDERTAGS")
+				if(!el.c) return
 
 				self.nav.api.load({
 
@@ -51,6 +60,8 @@ var leftpanel = (function(){
 
 			cats : function(){
 
+				if(!el.c) return
+
 				self.nav.api.load({
 
 					open : true,
@@ -66,7 +77,57 @@ var leftpanel = (function(){
 
 			},
 
-			
+			sub : function(value, clbk){
+
+				if(!el.c) return
+
+				self.shell({
+					name :  'sub',
+					data : {
+					},
+					el : el.subtop
+
+				}, function(_p){
+					if(clbk) clbk()
+				})
+			},
+
+			top : function(value, clbk){
+
+				if(!el.c) return
+
+				var ps = self.app.platform.sdk.node.shares.parameters.get()
+
+				var page = parameters().page || 0
+
+				if (page < 0) page = 0
+
+				self.shell({
+					name :  'top',
+					data : {
+						ps : ps,
+						page : page
+					},
+					el : el.subtop
+
+				}, function(_p){
+
+					/*ParametersLive(_.toArray(ps), _p.el)
+
+					ps.period.onChange = function(){
+
+						if (page){
+							self.nav.api.history.removeParameters(['page'])
+							makers.top()
+						}
+
+						if(ed.changed) ed.changed()
+
+					}*/
+
+					if(clbk) clbk()
+				})
+			},
 		}
 
 		var load = {
@@ -87,11 +148,8 @@ var leftpanel = (function(){
 			
 		}
 
-		var make = function(){
-
-			
-
-			if (parameters().sst || parameters().ss){
+		var makers = {
+			search : function(){
 				if(parameters().ss) renders.currentsearch(parameters().ss)
 				if(parameters().sst) {
 					var wordsRegExp = /[,.!?;:() \n\r]/g
@@ -103,13 +161,42 @@ var leftpanel = (function(){
 
 					renders.currentsearch(_.map(words, function(w){return '#' + w}).join(' '))
 				}
-			}
-			else{	
+			},
+
+			main : function(){
 				renders.tags()
 				renders.cats()
+			},
+
+			sub : function(){
+				renders.sub()
+			},
+
+			top : function(){
+				renders.top()
+			}
+		}
+
+		var make = function(){
+
+			var pps = parameters()
+
+			if (pps.sst || pps.ss){
+				makers.search()
+				return
 			}
 
-			
+			if (pps.r == 'sub'){
+				makers.sub()
+				return
+			}
+
+			if(pps.r == 'recommended'){
+				makers.top()
+				return
+			}
+
+			makers.main()
 
 		}
 
@@ -138,8 +225,6 @@ var leftpanel = (function(){
 					cats = null;
 				}
 
-
-
 				el = {};
 			},
 
@@ -160,6 +245,7 @@ var leftpanel = (function(){
 				el.cats = el.c.find('.catscnt')
 
 				el.currentsearch = el.c.find('.currentsearchcnt')
+				el.subtop = el.c.find('.subtop')
 
 				initEvents();
 

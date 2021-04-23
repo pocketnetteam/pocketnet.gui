@@ -691,7 +691,6 @@ var author = (function(){
 
 				var load = function(){			
 					
-					
 					var pp = {
 
 						name :  'lenta',
@@ -701,7 +700,6 @@ var author = (function(){
 						},
 	
 					}
-	
 	
 					self.shell(pp, function(p){
 						

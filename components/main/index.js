@@ -325,6 +325,10 @@ var main = (function(){
 					
 						renderclbk : function(){
 							actions.refreshSticky()
+						},
+
+						changed : function(){
+							renders.lentawithsearch()
 						}
 					},
 					clbk : function(e, p){
@@ -549,7 +553,10 @@ var main = (function(){
 
 				if (!id){
 
-					if(openedpost){
+					console.log('openedpostdestory', openedpost)
+
+					if (openedpost){
+						
 						openedpost.destroy()
 						openedpost = null
 					}
@@ -559,7 +566,7 @@ var main = (function(){
 				}
 
 				else{
-					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(p){
+					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
 					}, {
 						video : true,
@@ -718,16 +725,27 @@ var main = (function(){
 					
 				}
 
-				videomain = parameters().video ? true : false
+				var _vm = parameters().video ? true : false
 
-				if(videomain){
-					el.c.addClass('videomain')
+
+				if(_vm != videomain){
+					videomain = _vm
+
+					if(videomain){
+						el.c.addClass('videomain')
+
+						if(!parameters().v){
+							actions.backtolenta()
+							makePanel()
+						}
+					}
+					else{
+						el.c.removeClass('videomain')
+						actions.backtolenta()
+						makePanel()
+					}
 				}
-				else{
-					el.c.removeClass('videomain')
-					actions.backtolenta()
-					makePanel()
-				}
+				
 
 				if(lenta) lenta.destroy()
 

@@ -75,7 +75,7 @@
  	};
 
 
- 	var secInTime = function(sec){
+ 	secInTime = function(sec){
 
  		var h = sec/3600 ^ 0 ;
 		var m = (sec-h*3600)/60 ^ 0 ;

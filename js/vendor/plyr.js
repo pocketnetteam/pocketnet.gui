@@ -9169,6 +9169,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       PeerTubeEmbeding.main(target, clear_peertube_id, {
         host : host,
+        wautoplay : options.wautoplay
       },{
 
         playbackStatusChange : function(status){

@@ -44,6 +44,7 @@ var video = (function(){
 				var _p = {
 					Email : email,
 					Name : name,
+					Lang : self.app.localization.key
 				}
 
 				_p.Action || (_p.Action = 'ADDTOMAILLIST');

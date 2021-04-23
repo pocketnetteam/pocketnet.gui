@@ -365,8 +365,10 @@ var post = (function(){
                     var options = {						
 						//autoplay : pels.length <= 1,
 						resetOnEnd : true,
-						muted : false
+						muted : false,
+						wautoplay : ed.autoplay ? true : false
 					};
+
                     $.each(pels, function(key, el) {
                         PlyrEx(el, options, (_player) => {
 
@@ -375,7 +377,9 @@ var post = (function(){
 						}, () => {
 
 							if (ed.autoplay){
+								
 								player.play()
+								player.setVolume(1)
 							}
 
 							//// autoplay
@@ -1411,7 +1415,9 @@ var post = (function(){
 
 				authblock = false;
 
-				if(player){
+				if (player){
+
+					console.log("playerplayerplayerplayer", player)
 
 					if(player.destroy) player.destroy()
 

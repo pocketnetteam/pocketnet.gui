@@ -31,12 +31,22 @@
 						
 						var info = app.platform.sdk.videos.storage[url]
 						
-						
 						%>
 
 						<div class="jsPlayerPreview">
 							<div class="wpl opensviurl" image="<%-info.data.image || ''%>">
 							</div>
+							<% if(info.data.duration) {%>
+								<div class="durationWrapper">
+									<span><%-secInTime(info.data.duration)%></span>
+								</div>
+							<% } %>
+
+							<% if(info.data.views) {%>
+								<div class="viewsWrapper">
+									<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
+								</div>
+							<% } %>
 						</div>
 
 
@@ -128,7 +138,7 @@
 				</span>
 			</div>
 
-			<% if(typeof remove != 'undefined') {%>
+			<% if(typeof remove != 'undefined' && (!share.aliasid || !share.itisvideo || !share.itisvideo())) {%>
 
 				<div class="removeWrapper">
 					<div class="removelink">

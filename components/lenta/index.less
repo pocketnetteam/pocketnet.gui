@@ -803,6 +803,7 @@
 			.jsPlayerPreview{
 				height: 100%;
 				width: 100%;
+				position : relative;
 				.wpl{
 					width: 100%;
 					height: 100%;
@@ -811,6 +812,28 @@
 					&:hover{
 						opacity: 0.9;
 					}
+				}
+
+				.viewsWrapper,
+
+				.durationWrapper{
+					position: absolute;
+					bottom : @rhythm;
+					right : @rhythm;
+					border-radius: 3px;
+					background: fade(@color-black, 0.5);
+					color : @color-gray-slight;
+					padding : 0.5 * @rhythm @rhythm;
+
+					i,
+					span{
+						font-size: 0.8em;
+					}
+				}
+
+				.viewsWrapper{
+					right: auto;
+					left : @rhythm;
 				}
 			}
 			
@@ -1927,6 +1950,15 @@
 				margin-bottom: 0;
 				overflow : hidden;
 				border-radius: 3px;
+
+				.sharecaption{
+					color : @color-gray-mlight;
+
+					div{
+						font-size: 0.9em;
+						font-weight: 700;
+					}
+				}
 
 				.meta{
 					padding-top : @rhythm;

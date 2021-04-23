@@ -441,10 +441,17 @@ var share = (function(){
 
 										sitemessage(errors[type])
 
-									}								
+									}		
+									
+									if(type == 'url'){
+										renders.all()
+									}
+									else{
+										if (renders[type])
+											renders[type]();
+									}
 
-									if (renders[type])
-										renders[type]();
+									
 								}
 							}
 						},
@@ -709,6 +716,8 @@ var share = (function(){
 								currentShare.url.set(url)
 
 								renders['url']()
+
+								renders.postline()
 							}
 						})
 
@@ -1318,7 +1327,7 @@ var share = (function(){
 			removelink : function(){
 				actions.removelink()
 
-				renders.url();
+				renders.all();
 			},
 
 			removePoll : function(){
@@ -1831,6 +1840,7 @@ var share = (function(){
 
 			body : function(clbk){
 
+
 				self.shell({
 					name :  'body',
 					el : el.body,
@@ -2146,21 +2156,13 @@ var share = (function(){
 					if (essenseData.repost || parameters().repost) 
 						currentShare.repost.set(essenseData.repost || parameters().repost)
 
-					console.log('currentShare', currentShare)
-
-
 					var data = {
 						essenseData : essenseData,
 						share : currentShare,
 						postcnt : u.postcnt,
-						
 					};
-					
-					
 
 					clbk(data);
-
-
 
 				})
 

@@ -190,7 +190,7 @@ var lenta = (function(){
 				_.each(players, function(p){
 					p.p.destroy()
 				})
-				
+
 				_.each(initedcommentes, function(c){
 					if (c)
 						c.destroy()
@@ -1708,6 +1708,8 @@ var lenta = (function(){
 			comments : function(txid, init, showall, preview){
 				if(essenseData.comments == 'no') return
 
+				if(video) return
+
 				if(initedcommentes[txid]) return;
 
 				if(!el.c) return
@@ -1896,7 +1898,7 @@ var lenta = (function(){
 						ed : essenseData,
 						mestate : mestate,
 						all : all || false,
-						video : video 
+						tplvideo : video 
 					}					
 
 				}, function(p){
@@ -2417,9 +2419,9 @@ var lenta = (function(){
 
 				if (meta.type === 'peertube') {
 					
-					self.app.peertubeHandler.getVideoInfoAnon(meta, (res) => {
-						rndr(res)
-					});
+					//self.app.peertubeHandler.getVideoInfoAnon(meta, (res) => {
+						rndr({})
+					//});
 
 				} else {
 					rndr({})
@@ -2723,6 +2725,7 @@ var lenta = (function(){
 
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
+							var page = parameters().page || 0
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -2732,7 +2735,8 @@ var lenta = (function(){
 								height : fixedblock,
 								tagsfilter : tagsfilter,
 								video : video,
-								count : video ? 20 : 10
+								count : video ? 20 : 10,
+								page : page
 
 							}, function(shares, error, pr){
 
@@ -3456,6 +3460,8 @@ var lenta = (function(){
 				_.each(players, function(p){
 					p.p.destroy()
 				})
+
+				players = {}
 
 				if(ovf)
 

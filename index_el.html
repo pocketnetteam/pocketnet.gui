@@ -116,12 +116,18 @@
         </div>-->
 
         <script>window.$ = window.jQuery = require('./js/vendor/jquery-1.11.3.min.js');</script>
-        <script src="chat/matrix-element.min.js"></script>
+        
 
         <script type="text/javascript">
             
             _Node = false;
             _Electron = true;
+
+            window.global = window;
+            window.process = window;
+            window.process.browser = true;
+            window.process.version = '';
+            window.process.versions = {node: false};
 
             topPreloader = function(percent){
                 var el = $('#_topPreloader');
@@ -166,7 +172,7 @@
             topPreloader(15)
             
         </script>
-        
+        <script src="chat/matrix-element.min.js"></script>
         <script src="js/vendor/underscore-min.js?v=136"></script> 
         <script src="js/vendor/tooltipster.core.js"></script>
         <script src="js/vendor/tooltipster.bundle.js"></script>

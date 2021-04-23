@@ -1723,6 +1723,7 @@ Platform = function (app, listofnodes) {
                 open : true,
                 id : 'lenta',
                 el : el,
+                eid : makeid(),
                 animation : false,
                 essenseData : {
                     byauthor : true,
@@ -3432,7 +3433,6 @@ Platform = function (app, listofnodes) {
                     id: 'win',
                     type: "BOOLEAN",
                     value: true
-
                 },
 
                 transactions: {
@@ -3569,8 +3569,6 @@ Platform = function (app, listofnodes) {
                     possibleValues: [],
                     possibleValuesLabels: [],
                     value: "",
-
-
                 },
                 tgto: {
                     type: "VALUES",
@@ -9197,6 +9195,74 @@ Platform = function (app, listofnodes) {
                 loading: {
 
                 },
+                parameters : {
+                    stor : {},
+                    defaults : {
+                        period : '4320'
+                    },
+                    get : function(){
+                        var meta = self.sdk.node.shares.parameters.meta
+                        var e = {}
+                        _.each(meta, function(p, i){
+                            e[i] = new Parameter(p())
+
+                            e[i]._onChange = function(v){
+                                self.sdk.node.shares.parameters.stor[i] = e[i].value
+                                self.sdk.node.shares.parameters.save()
+                            }
+                        })
+
+                        console.log(meta, e)
+
+                        return e
+                    },
+                    meta : {
+                        period: function(){
+
+                            var v = self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period
+
+                            return {
+                                type: "VALUES",
+                                name: self.app.localization.e('period'),
+                                id: 'period',
+                                placeholder: self.app.localization.e('period'),
+                                possibleValues: ['1440', '4320', '10080', '43200', '262080'],
+                                possibleValuesLabels: [
+                                    self.app.localization.e('periodday'), 
+                                    self.app.localization.e('period3day'), 
+                                    self.app.localization.e('period7day'), 
+                                    self.app.localization.e('period31day'), 
+                                    self.app.localization.e('period182day')
+                                ],
+                                value: v,
+                                defaultValue : v,
+
+                              
+                            }
+
+                        },
+                    },
+                    load : function(clbk){
+                        var p = {};
+        
+                        try {
+                            p = JSON.parse(localStorage['sharessettings'] || '{}');
+                        }
+                        catch (e) {
+    
+                        }
+    
+                        self.sdk.node.shares.parameters.stor = p.stor || {}
+
+                        if(clbk) clbk()
+                    },
+                    save : function(){
+
+                        localStorage['sharessettings'] = JSON.stringify({
+                            stor: self.sdk.node.shares.parameters.stor
+                        })
+                    }
+                },
                 clbks: {
                     added: {
 
@@ -9775,9 +9841,20 @@ Platform = function (app, listofnodes) {
 
                         }
                         else {
-                            var parameters = [p.count, '259200', '', self.app.localization.key];
+                            //var parameters = ['30', '259200', 600000, self.app.localization.key];
 
-                            if (p.address) parameters.push("" /*p.address*/)
+                            var period = self.sdk.node.shares.parameters.stor.period || '259200' ///self.sdk.node.shares.parameters.defaults.period 
+
+                            var page = p.page || 0
+                            
+                            var parameters = []
+                            
+                            parameters = ['30', period, (period * page) || '', self.app.localization.key]
+
+                            console.log("['30', period, (period * page) || '', self.app.localization.key]", ['30', period, (period * page) || '', self.app.localization.key])
+                            
+                            parameters = ['30', '259200', '', self.app.localization.key];
+                            //if (p.address) parameters.push("" /*p.address*/)
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
@@ -10042,7 +10119,7 @@ Platform = function (app, listofnodes) {
 
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter/*, p.video ? 'video' : ''*/];
 
                             s.getex(parameters, function (data, error) {
 
@@ -11622,8 +11699,6 @@ Platform = function (app, listofnodes) {
                                 _.each(inputs, function (input, index) {
                                     txb.sign(index, keyPair);
                                 })
-
-
 
                                 var tx = txb.build()
 
@@ -19110,7 +19185,8 @@ Platform = function (app, listofnodes) {
             self.sdk.exchanges.load,
             self.sdk.user.meUpdate,
             self.sdk.categories.load,
-            self.sdk.activity.load
+            self.sdk.activity.load,
+            self.sdk.node.shares.parameters.load
 
         ], function () {
             if(clbk) clbk()
@@ -19211,7 +19287,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.tempmessenger.init,
                     self.sdk.exchanges.load,
                     self.sdk.categories.load,
-                    self.sdk.activity.load
+                    self.sdk.activity.load,
+                    self.sdk.node.shares.parameters.load
                 ], function () {
 
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
