@@ -19229,7 +19229,7 @@ Platform = function (app, listofnodes) {
 
                     var addresses = self.testchataddresses;
 
-                    if (addresses.indexOf(a) > -1) {
+                    //if (addresses.indexOf(a) > -1) {
 
                         if (!isMobile()){
 
@@ -19250,7 +19250,7 @@ Platform = function (app, listofnodes) {
                             
                         }
         
-                    }
+                    //}
                 }
             })
         }
