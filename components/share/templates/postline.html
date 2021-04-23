@@ -1,30 +1,29 @@
 <div class="postpanel table">
     <div class="panelWrapper">
         <div class="panel">
-            <!--<div class="item" embeding="embeding20">
-                <i class="fas fa-plus"></i>
-            </div>-->
-
-            <div class="item url tooltip" embeding="url" title="<%=e('saddlink')%>">
-                <i class="fas fa-external-link-alt"></i><span class="mobiledevice"><%=e('saddlink')%></span>
-            </div>
-            <div class="item images tooltip" embeding="images" title="<%=e('saddimages')%>">
-                <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
-            </div>
-
-           
-
-            <% if(!share.aliasid && !share.repost.v) {%>
             
-                <div class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
-                    <i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
+            <% if(!share.itisvideo()) {%>
+
+                <div class="item url tooltip" embeding="url" title="<%=e('saddlink')%>">
+                    <i class="fas fa-external-link-alt"></i><span class="mobiledevice"><%=e('saddlink')%></span>
                 </div>
+                <div class="item images tooltip" embeding="images" title="<%=e('saddimages')%>">
+                    <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
+                </div>
+                
+                <% if(!share.aliasid && !share.repost.v) {%>
+                
+                    <div class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
+                        <i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
+                    </div>
+
+                <% } %>
 
             <% } %>
 
             <% 
             
-            if (app.platform.enablePeertube) { %>
+            if (app.platform.enablePeertube && !share.itisvideo()) { %>
                 <div class="item peertube tooltip" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                     <i class="fas fa-video"></i> <span class="mobiledevice"><%=e('peertubeAddVideo')%></span>
                 </div>
@@ -38,8 +37,8 @@
             </div>-->
 
             <% if(!share.aliasid) {%>
-            <div class="item times tooltip" embeding="times" title="<%=e('stimes')%>">
-                <i class="fas fa-times-circle"></i> <span class="mobiledevice"><%=e('stimes')%></span>
+            <div class="item times tooltip <% if(share.itisvideo()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
+                <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
             </div>
             <% } %>
 

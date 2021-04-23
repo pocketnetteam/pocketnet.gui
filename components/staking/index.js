@@ -125,7 +125,12 @@ var staking = (function(){
 				var p = []
 
 				if(history && history[exchange] && history[exchange].length){
-					p = _.map(history[exchange], function(pn){
+
+					p = _.filter(history[exchange], function(p){
+						return p
+					})
+
+					p = _.map(p, function(pn){
 
 						return {
 							x : fromutc(new Date(pn.date)),
@@ -133,6 +138,8 @@ var staking = (function(){
 						}
 
 					})
+
+					
 				}
 
 				return p

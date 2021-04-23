@@ -9160,7 +9160,41 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var video_id = target.getAttribute('data-plyr-embed-id');
     var clear_peertube_id = target.getAttribute('data-plyr-video-id');
 
+
     if (provider == 'peertube') {
+
+
+
+      var host = target.getAttribute('data-plyr-host-name');
+
+      PeerTubeEmbeding.main(target, clear_peertube_id, {
+        host : host,
+        wautoplay : options.wautoplay
+      },{
+
+        playbackStatusChange : function(status){
+          console.log('status', status)
+        },
+        volumechange : function(volume){
+          console.log('volume', volume)
+        },
+
+      }).then(embed => {
+
+        var api = embed.api
+          api.mute()
+
+        if (clbk) clbk(api);
+        if (readyCallback) readyCallback(api);
+      })
+
+
+      return self
+    }
+
+    if (provider == 'peertube') {
+
+      return self;
       setFunctions = function (player) {
         // Set the mandatory/missing functions
         player.stop = player.pause;

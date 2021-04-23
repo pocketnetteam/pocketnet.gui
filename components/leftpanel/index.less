@@ -61,4 +61,86 @@
 			padding : 2 * @rhythm 0;
 		}
 	}
+
+	.subtop{
+		color : @color-gray-mlight;
+    
+		.tcaption{
+		   
+			padding : 2 * @rhythm;
+			padding-top : 2 * @rhythm;
+			padding-left: 0;
+		   
+			margin-bottom: @rhythm;
+	
+			span{
+				font-size : 0.8em;
+				font-weight: 700;
+			}
+		}
+
+		.searchcnt{
+			span{
+				font-size : 0.8em;
+				color : @color-orange;
+			}
+		}
+
+		.topnavigation{
+			padding : 2 * @rhythm 0;
+
+			button{
+				width: 110px;
+			}
+		}
+	}
+
+	.vc_valuecustom{
+		font-size: 1.5em;
+		font-weight: 100;
+		cursor: pointer;
+		background: transparent;
+		width: auto;
+		height: auto;
+
+		.vc_inputWrapper{
+			border : 0;
+		}
+
+		.vc_iconWrapper{
+			display: none;
+		}
+
+		.vc_selectInput,
+		.vc_iconWrapper{
+			border: 0;
+		}
+
+		
+
+		.vc_selectInput{
+			background : #011621;
+			max-height: 500px;
+
+			.vc_value{
+				padding-left: 0;
+				.transition(0.3s);
+				font-size: 0.8em;
+
+				&:hover{
+					color : @color-main;
+					background: transparent;
+				}
+			}
+		}
+
+		input[disabled]{
+			cursor: pointer;
+			color : @color-main;
+		}
+
+		input{
+			padding-left: 0;
+		}
+	}
 }

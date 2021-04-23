@@ -532,9 +532,10 @@ var menu = (function(){
 								el.find('.user').on('click', function(){
 
 									var r = $(this).attr('address')
+									var name = $(this).attr('name')
 
 									self.nav.api.go({
-										href : 'author?address=' + r,
+										href : name ? name.toLowerCase() : 'author?address=' + r,
 										history : true,
 										open : true
 									})
@@ -1296,8 +1297,14 @@ var menu = (function(){
 
 			showsearch : function(v, _searchBackAction){
 
+				console.log('showsearch', v)
 				if(v){
 					el.c.addClass('searchactive')
+					el.postssearch.find('.search').addClass('searchFilled')
+				}
+				else{
+
+					el.postssearch.find('.search').removeClass('searchFilled')
 				}
 				
 				el.postssearch.find('input').val(v.replace('tag:', "#"));

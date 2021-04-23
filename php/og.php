@@ -1,6 +1,6 @@
 <?PHP
 require_once('php/rpc.php');
-
+require_once('php/api.php');
 class OG {
 
     private $rpc = NULL;
@@ -18,9 +18,6 @@ class OG {
         'type' => 'website',
         'image' => 'https://pocketnet.app/img/logosmallpadding.png',
         'description' => 'A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.',
-       
-
-
     );
 
     public $currentOg = array();
@@ -30,6 +27,7 @@ class OG {
 	public function __construct ($get)
 	{
         $this->rpc = new RPC();
+        $this->api = new API();
         
         if (isset($get['address'])) $this->author = $get['address'];
 
@@ -116,11 +114,15 @@ class OG {
             if($v['type'] == 'peertube'){
                 //$u = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
 
-
+                $peertubeinfo = $this->api->peertubeinfo($v['host_name'], $v['id']);
 
                 $this->currentOg['twitter:site'] = 'pocketnet.app';
                 $this->currentOg['twitter:card'] = 'player';
-                $this->currentOg['twitter:image'] = $ci;
+
+                if(isset($peertubeinfo->previewPath)){
+                    $this->currentOg['twitter:image'] = $peertubeinfo->previewPath;
+                }
+                
                 $this->currentOg['twitter:title'] = $this->currentOg['title'];
                 $this->currentOg['twitter:text:title'] = $this->currentOg['title'];
                 $this->currentOg['twitter:description'] = $this->currentOg['description'];
@@ -147,7 +149,7 @@ class OG {
         $type = NULL;
         $id = NULL;
 
-        if($test && strpos($_url, 'channel') == false && strpos($_url, 'user') == false){
+        if(($test && strpos($_url, 'channel') == false && strpos($_url, 'user') == false) || strpos($url, 'peertube://') !== false){
             if($test[3]){
 
                 if (strpos($test[3], 'youtu') !== false) {
@@ -169,9 +171,7 @@ class OG {
             }
 
             if (strpos($url, 'peertube://') !== false) {
-                $lp = str_split('?', $url);
 
-                $params = $lp[1];
                 $type = 'peertube';
                 $id = $test[9];
                 
@@ -247,17 +247,25 @@ class OG {
             }
         }
 
+        
+
         if($this->txid != NULL){
 
             $r = $this->rpc->share($this->txid);
+
+           
 
             if($r != false){
 
                 $r = $r[0];
 
+                
+
                 $pca = 'p';
 
                 $this->author = $r->address;
+
+               
 
                 if ($r->c != ''){
                     $this->currentOg['title']= urldecode($r->c);
@@ -286,7 +294,13 @@ class OG {
                         $video = $this->videoImage(urldecode($r->u));
                         
                         if($video){
-                            $this->currentOg['image'] = $video;
+
+                            if(isset($this->currentOg['twitter:image'])){
+                                $this->currentOg['image'] = $this->currentOg['twitter:image'];
+                            }
+                            else{
+                                $this->currentOg['image'] = $video;
+                            }   
 
                             $image = true;
                         }
@@ -330,15 +344,8 @@ class OG {
                    
                 }
 
-               
-
             }
         }
-
-        
-        
-
-        
     
 	}   
 

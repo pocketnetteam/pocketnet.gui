@@ -253,7 +253,7 @@ ____loclib.saddlink = "Add link to external site or video";
 ____loclib.saddimages = "Add Images to Post";
 ____loclib.sarticle = "To write an article";
 ____loclib.stelegram = "Send to telegram"
-____loclib.stimes = "Remove post"
+____loclib.stimes = "Clear post"
 
 
 ____loclib.snothing = "Nothing";
@@ -431,8 +431,8 @@ ____loclib.hide = "Hide"
 ____loclib.e13036 = "Show previous comments"
 ____loclib.e13037 = "Replies"
 ____loclib.remove = "Remove"
-____loclib.e13038 = "Comment Now & Earn Reputation"
-____loclib.e13039 = "Comment Now & Earn Reputation"
+____loclib.e13038 = "Comment Now"
+____loclib.e13039 = "Comment Now"
 ____loclib.e13040 = "You do not have commenting priviliges"
 ____loclib.complain = "Complain"
 ____loclib.next = "Next"
@@ -604,7 +604,7 @@ ____loclib.repost = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
 ____loclib.e13161 = "Add Tags For Your Post"
-____loclib.e13162 = "You can enter less that 30 tags"
+____loclib.e13162 = "You can enter less that 5 tags"
 ____loclib.e13163 = "There aren't changes in Post"
 ____loclib.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
 ____loclib.e13165 = 'Your link to video is invalid. Please load valid video URL.'
@@ -973,3 +973,15 @@ ____loclib.doublename = "Category with this name already exist. Please choose an
 
 ____loclib.showmoreusers = "Show more users"
 ____loclib.zeron = "Nothing found";
+____loclib.maxtags = "Only 5 tags maximum allowed";
+
+____loclib.videotitle = "Enter video title";
+____loclib.videodesc = "Enter video description";
+____loclib.entervideocaption = "Please, enter video title";
+
+____loclib.period = "Period";
+____loclib.periodday = "One Day";
+____loclib.period3day = "Three Days";
+____loclib.period7day = "One week";
+____loclib.period31day = "One Month";
+____loclib.period182day = "Half of year";

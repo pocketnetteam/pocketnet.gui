@@ -303,7 +303,7 @@ RpcClient.callspec = {
     getrecommendedposts: 'str',
     gettime: '',
     getmissedinfo: 'str int',
-    gethotposts: 'str str str',
+    gethotposts: 'str str str str',
     getuseraddress: 'str int',
     search: 'str str str',
     getcomments: 'str',

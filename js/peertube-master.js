@@ -4,6 +4,8 @@ PeerTubeHandler = function (app) {
     'pocketnetpeertube4.nohost.me',
   ];
 
+  const VIDEO_QUOTA_CORRECTION = 100 * 1024 * 1024;
+
   let randomServer =
     hardCodeUrlsList[Math.floor(Math.random() * hardCodeUrlsList.length)];
 
@@ -79,27 +81,6 @@ PeerTubeHandler = function (app) {
   };
 
   this.authentificateUser = async (clbk) => {
-    const privateKey = app.user.keys().privateKey;
-
-    this.userName = bitcoin.crypto
-      .sha256(
-        Buffer.from(privateKey.slice(0, (privateKey.length / 2).toFixed(0))),
-      )
-      .toString('hex')
-      .slice(0, 10);
-    this.password = bitcoin.crypto
-      .sha256(
-        Buffer.from(
-          privateKey.slice(
-            (privateKey.length / 2).toFixed(0),
-            privateKey.length,
-          ),
-        ),
-      )
-      .toString('hex');
-
-    console.log('userName', this.userName);
-
     await this.getServerInfo();
 
     const { client_id, client_secret } = await apiHandler
@@ -116,102 +97,127 @@ PeerTubeHandler = function (app) {
       return {};
     }
 
-    const requestTokenData = {
-      client_id,
-      client_secret,
-      grant_type: 'password',
-      response_type: 'code',
-      username: this.userName,
-      password: this.password,
-    };
-
-    const authResult = await apiHandler
-      .run({
-        method: 'users/token',
-        parameters: {
-          method: 'POST',
+    return axios
+      .post(
+        `https://${randomServer}/plugins/pocketnet-auth/router/code-cb`,
+        serialize(app.user.signature()),
+        {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: makeBodyFromObject(requestTokenData),
         },
-      })
-      .then((res) => {
-        return res.json ? res.json() : res;
-      })
-      .then(async (data) => {
-        if (data.access_token) this.userToken = data.access_token;
+      )
+      .then(async (res) => {
+        const requestTokenData = {
+          client_id,
+          client_secret,
+          grant_type: 'password',
+          response_type: 'code',
+          ...res.data,
+        };
 
-        if (!data.error) {
-          if (clbk) {
-            clbk();
-          }
-
-          return data;
-        }
-
-        if (data.code === 'invalid_grant') {
-          console.log('UNREGISTERED');
-          const registerData = await this.registerUser({
-            username: this.userName,
-            password: this.password,
-            email: `${this.userName}@pocketnet.app`,
-          });
-
-          console.log('>>>>>>>reply status', registerData.status);
-
-          const retryAuth = await apiHandler
-            .run({
-              method: 'users/token',
-              parameters: {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: makeBodyFromObject(requestTokenData),
+        const authResult = await apiHandler
+          .run({
+            method: 'users/token',
+            parameters: {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
               },
-            })
-            .then((res) => {
-              if (res.access_token) {
-                this.userToken = res.access_token;
-                if (clbk) clbk();
-              } else {
-                if (clbk)
-                  clbk({ error: 'Cannot retrieve user data from this server' });
+              body: makeBodyFromObject(requestTokenData),
+            },
+          })
+          .then((res) => {
+            return res.json ? res.json() : res;
+          })
+          .then(async (data) => {
+            if (data.access_token) this.userToken = data.access_token;
+
+            if (!data.error) {
+              if (clbk) {
+                clbk();
               }
 
-              return res;
-            });
+              return data;
+            }
 
-          return retryAuth;
-        }
+            return clbk({ error: data.error });
+          });
 
-        return data;
-      });
-
-    return authResult;
+        return authResult;
+      })
+      .catch((err) =>
+        clbk({
+          error: err ? err.err : 'Cannot retrieve user data from this server',
+        }),
+      );
   };
 
   this.getChannel = async () => {
-    return apiHandler.run({
-      method: `video-channels/${this.userName}_channel`,
-    });
+    return axios
+      .get(`${baseUrl}users/me`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
+      .then((res) => ({
+        channelId: res.data.videoChannels[0].id,
+        videoQuotaDaily: res.data.videoQuotaDaily,
+      }))
+      .catch(() => sitemessage('Unable to get channel info'));
+  };
+
+  this.getUserQuota = async () => {
+    return axios
+      .get(`${baseUrl}users/me/video-quota-used`, {
+        headers: {
+          Authorization: `Bearer ${this.userToken}`,
+        },
+      })
+      .then((res) => res.data)
+      .catch(() =>
+        sitemessage(
+          'Unable to check daily videos quota, you upload may be rejected',
+        ),
+      );
   };
 
   this.uploadVideo = async (parameters) => {
-    const channelInfo = await this.getChannel();
+    const { channelId, videoQuotaDaily } = await this.getChannel();
+
+    const { videoQuotaUsedDaily } = await this.getUserQuota();
+
+    if (
+      parameters.video.size + videoQuotaUsedDaily >=
+      videoQuotaDaily - VIDEO_QUOTA_CORRECTION
+    ) {
+      return parameters.successFunction({
+        error: `Video exceeds the daily upload limit`,
+      });
+    }
+
+    var videoName =
+      parameters.name || `${this.userName}:${new Date().toISOString()}`;
 
     const bodyOfQuery = {
       privacy: 1,
       'scheduleUpdate[updateAt]': new Date().toISOString(),
-      channelId: channelInfo.id,
-      name: parameters.name || `${this.userName}:${new Date().toISOString()}`,
+      channelId: channelId,
+      name: videoName,
       videofile: parameters.video,
     };
 
     if (parameters.image) {
-      bodyOfQuery.previewfile = parameters.image;
-      bodyOfQuery.thumbnailfile = parameters.image;
+      const imageString = await getBase64(parameters.image);
+
+      const format = parameters.image.type.replace('image/', '');
+
+      const newImg = await resizeNew(imageString, 1920, 1080, format);
+
+      const fileImage = dataURLtoFile(newImg, parameters.image.name);
+
+      bodyOfQuery.previewfile = fileImage;
+      bodyOfQuery.thumbnailfile = fileImage;
     }
 
     const formData = new FormData();
@@ -241,8 +247,11 @@ PeerTubeHandler = function (app) {
         const json = res.data;
 
         if (!json.video) return parameters.successFunction('error');
+
         parameters.successFunction(
-          `${this.peertubeId}${watchUrl}${json.video.uuid}`,
+          this.composeLink(randomServer, json.video.uuid),
+          videoName,
+          // `${this.peertubeId}${watchUrl}${json.video.uuid}`,
         );
       })
       .catch((res) => {
@@ -250,13 +259,28 @@ PeerTubeHandler = function (app) {
       });
   };
 
-  this.removeVideo = async (video) => {
-    const videoId = video.split('/').pop();
+  this.composeLink = function (host, videoid) {
+    return this.peertubeId + host + '/' + videoid;
+  };
 
-    const videoHost = video
-      .replace('peertube://', '')
+  this.parselink = function (link) {
+    //peertube://pocketnetpeertube4.nohost.me/362344e6-9f36-48a1-a512-322917f00925
+
+    var ch = link.replace(this.peertubeId, '').split('/');
+
+    return {
+      host: ch[0],
+      id: ch[1],
+    };
+  };
+
+  this.removeVideo = async (video) => {
+    const videoHost = this.parselink(video).host;
+    const videoId = this.parselink(video).id;
+
+    /*  .replace('peertube://', '')
       .replace('https://', '')
-      .split('/')[0];
+      .split('/')[0];*/
 
     if (randomServer !== videoHost) {
       this.baseUrl = videoHost ? `https://${videoHost}/api/v1` : this.baseUrl;
@@ -442,10 +466,28 @@ PeerTubeHandler = function (app) {
   };
 
   this.updateVideo = async (id, options) => {
+    const preparedOptions = { ...options };
     const formData = new FormData();
 
-    Object.keys(options).map((key) =>
-      formData.append(key, options[key]),
+    if (options.thumbnailfile) {
+      const imageString = await getBase64(options.thumbnailfile);
+
+      const format = options.thumbnailfile.type.replace('image/', '');
+
+      const newImg = await resizeNew(imageString, 1920, 1080, format);
+
+      preparedOptions.thumbnailfile = dataURLtoFile(
+        newImg,
+        options.thumbnailfile.name,
+      );
+      preparedOptions.previewfile = dataURLtoFile(
+        newImg,
+        options.thumbnailfile.name,
+      );
+    }
+
+    Object.keys(preparedOptions).map((key) =>
+      formData.append(key, preparedOptions[key]),
     );
 
     return axios.put(`${baseUrl}videos/${id}`, formData, {

@@ -1,4 +1,8 @@
-<% var r = parameters(app.nav.current.completeHref, true).r; %>
+<% 
+
+var r = parameters(app.nav.current.completeHref, true).r;
+var video = false /*parameters(app.nav.current.completeHref, true).video;*/
+%>
 
 <% if(!app.curation()) {%> 
 
@@ -44,7 +48,7 @@
 		<div class="centerTable table">
 
 			<div class="pcenterCell">
-				<span class="pcenterLabel fresh <% if(!r && pathname=='index') {%> active <% } %> ">
+				<span class="pcenterLabel fresh <% if(!r && !video && pathname=='index') {%> active <% } %> ">
 					<a href="index" handler="true"><%=e('e13136')%></a>
 				</span>
 			</div>
@@ -55,8 +59,14 @@
 				</span>
 			</div>
 
+			<!--<div class="pcenterCell">
+				<span class="pcenterLabel <% if(video && pathname=='index') {%> active <% } %>">
+					<a href="index?video=1"  handler="true"><%=e('video')%></a>
+				</span>
+			</div>-->
+
 			<div class="pcenterCell">
-				<span class="pcenterLabel toppost <% if(r == 'recommended' && pathname=='index') {%> active <% } %>">
+				<span class="pcenterLabel toppost <% if(!video && r == 'recommended' && pathname=='index') {%> active <% } %>">
 					<a href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
 				</span>
 			</div>

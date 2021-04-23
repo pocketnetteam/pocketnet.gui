@@ -75,7 +75,7 @@
  	};
 
 
- 	var secInTime = function(sec){
+ 	secInTime = function(sec){
 
  		var h = sec/3600 ^ 0 ;
 		var m = (sec-h*3600)/60 ^ 0 ;
@@ -1601,8 +1601,6 @@
 				_el.css('background-size', p.size || 'cover');
 				_el.css('background-position', p.position || 'center center');
 				_el.css('background-repeat', p.repeat || 'no-repeat');
-
-				
 				_el.attr('image', '')
 			}
 
@@ -1610,7 +1608,7 @@
 			{
 				_el.imagesLoaded({ background: true }, function(image) {
 
-				  	el.fadeIn(100);
+					el.fadeIn(100);
 
 				  	if(typeof p.clbk === 'function')
 				  		p.clbk(image);
@@ -1769,6 +1767,78 @@
 
 		
 	}
+
+	resizeNew = function (srcData, width, height, format) {
+		return new Promise((resolve, reject) => {
+			var imageObj = new Image(),
+			  canvas = document.createElement('canvas'),
+			  ctx = canvas.getContext('2d'),
+			  xStart = 0,
+			  yStart = 0,
+			  aspectRadio,
+			  newWidth,
+			  newHeight;
+	  
+			imageObj.crossOrigin = 'Anonymous';
+			imageObj.src = srcData;
+	  
+			format || (format = 'jpeg');
+	  
+			imageObj.onload = function () {
+			  aspectRadio = imageObj.height / imageObj.width;
+			  newHeight = imageObj.height;
+			  newWidth = imageObj.width;
+	  
+			  if (newHeight <= height && newWidth <= width) {
+			  } else {
+				if (newWidth > width) {
+				  newWidth = width;
+				  newHeight = width * aspectRadio;
+				}
+	  
+				if (newHeight > height) {
+				  newHeight = height;
+				  newWidth = newHeight / aspectRadio;
+				}
+			  }
+	  
+			  canvas.width = newWidth;
+			  canvas.height = newHeight;
+	  
+			  ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
+	  
+			  var url = canvas.toDataURL('image/' + format, 0.75);
+	  
+			  $(canvas).remove();
+	  
+			  return resolve(url);
+			};
+		  });
+	}
+
+
+	dataURLtoFile = function(dataurl, filename) {
+ 
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), 
+            n = bstr.length, 
+            u8arr = new Uint8Array(n);
+            
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        
+        return new File([u8arr], filename, {type:mime});
+    }
+
+	toDataURL = file => new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => resolve(reader.result);
+		reader.onerror = error => reject(error);
+	});
+
 
     grayscaleImage = function (srcData, clbk){
 
@@ -9905,11 +9975,12 @@
 		
 	    // if(test && url.indexOf('channel') == -1 && url.indexOf("user") == -1){}
 
-	    	if(test && test[2]){
+	    	if(test && test[2] || (_url && _url.indexOf('peertube://') > -1)){
 
 				if (test.indexOf('youtube.com') > -1 || test.indexOf('youtu.be') > -1) {
 					type = 'youtube'
 			        id = test[9]
+					url = 'https://youtu.be/' + id
 			    }
 				if (test.indexOf('vimeo.com') > -1) {
 					type = 'vimeo'
@@ -9923,8 +9994,10 @@
 					var params = _url.split('?')[1] || '';
 
 					type = 'peertube'
-			        id = `${test[9]}?${params}`
+			        id = `${test[9]}` //?${params}
 					host_name = test[4]
+
+					console.log(id, host_name)
 			    }
 			}
 			
@@ -10534,6 +10607,15 @@ clearStringXss = function(nm){
 	})
 }
 
+getBase64 = function (file) {
+	return new Promise((resolve, reject) => {
+	  const reader = new FileReader();
+	  reader.readAsDataURL(file);
+	  reader.onload = () => resolve(reader.result);
+	  reader.onerror = (error) => reject(error);
+	});
+};
+
 findResponseError = (response) => {
 	const ERRORS_PATHS = [
 		'error.response.data.errors',
@@ -10544,7 +10626,15 @@ findResponseError = (response) => {
 
 	return (typeof error === 'object') ? (Object.values(error)[0] || {}).msg : error;
 }
-
+serialize = function (obj) {
+	var str = [];
+	for (var p in obj)
+	  if (obj.hasOwnProperty(p)) {
+		str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+	  }
+	return str.join('&');
+  };
+  
 
 stringEqTrig = function(s1, s2){
 
@@ -10573,6 +10663,8 @@ stringEqTrig = function(s1, s2){
 			if(index < 0 || index >= w.length) c = "_";
 
 			else c = w[index];
+
+
 
 			return c;
 		}

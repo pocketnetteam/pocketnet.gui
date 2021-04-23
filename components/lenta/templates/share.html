@@ -51,11 +51,7 @@ var metadisplay = function(){ %>
 
 
 							<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
-
-							
-							
 								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
-
 							</a>
 
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
@@ -472,6 +468,8 @@ var metadisplay = function(){ %>
 						<% } %>
 
 					</div>
+
+					
 				</div>
 
 			<% } %>

@@ -12,9 +12,13 @@ var main = (function(){
 
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
 
-		var upbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock;
+		var videomain = false
+
+		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
 		var currentMode = 'common', hsready = false;
+
+		var lastscroll = 0
 
 		var helpers = {
 			
@@ -165,6 +169,26 @@ var main = (function(){
 				makeShare()
 
 				renders.smallpanel()
+			},
+
+			backtolenta : function(){
+				self.nav.api.history.removeParameters(['v'])
+
+				el.c.removeClass('opensvishowed')
+
+				renders.post(null)
+
+				_scrollTop(lastscroll, null, 5)
+
+				setTimeout(function(){
+
+					renders.upbutton()
+					
+					actions.refreshSticky()
+
+				}, 500)
+
+				
 			}
 		}
 
@@ -180,7 +204,6 @@ var main = (function(){
 			},
 
 			up : function(){
-
 				_scrollTop(0, null, 5)
 			}
 
@@ -257,7 +280,9 @@ var main = (function(){
 			},
 			share : function(){
 
-				if(!isMobile()){
+				if(!isMobile() && !videomain && !searchvalue && !searchtags){
+
+					el.c.removeClass('wshar')
 
 					self.nav.api.load({
 
@@ -282,6 +307,8 @@ var main = (function(){
 						}
 
 					})
+				}else{
+					el.c.addClass('wshar')
 				}
 			},
 
@@ -298,6 +325,10 @@ var main = (function(){
 					
 						renderclbk : function(){
 							actions.refreshSticky()
+						},
+
+						changed : function(){
+							renders.lentawithsearch()
 						}
 					},
 					clbk : function(e, p){
@@ -310,6 +341,8 @@ var main = (function(){
 			},
 
 			panel : function(){
+
+				if(videomain) return
 
 				self.nav.api.load({
 
@@ -446,20 +479,53 @@ var main = (function(){
 						searchValue : searchvalue || null,
 						search : searchvalue ? true : false,
 						tags : searchtags,
+						video : videomain,
+
+						opensvi : function(id){
+
+							lastscroll = $(window).scrollTop()
+
+							el.c.addClass('opensvishowed')
+
+							if (upbutton) upbutton.destroy()
+							
+							if (upbackbutton) upbackbutton.destroy()
+
+								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+									top : function(){
+										return '65px'
+									},
+									rightEl : el.c.find('.lentacellsvi'),
+									scrollTop : 0,
+									click : function(a){
+										actions.backtolenta()
+									},
+
+									icon : '<i class="fas fa-chevron-left"></i>',
+									class : 'bright',
+									text : 'Back'
+								})	
+								
+							setTimeout(function(){
+								upbackbutton.apply()
+							},300)
+
+							renders.post(id)
+
+							self.nav.api.history.addParameters({
+								v : id
+							})
+
+							events.up()
+						},
+
 						renderclbk : function(){
 						},
 						loader : loader
 					},
 					clbk : function(e, p){
 
-						if(!upbutton)
-							upbutton = self.app.platform.api.upbutton(el.up, {
-								top : function(){
-				
-									return '65px'
-								},
-								rightEl : el.c.find('.leftpanelcell')
-							})		
+							renders.upbutton()
 
 							lenta = p
 
@@ -470,6 +536,45 @@ var main = (function(){
 
 				})
 
+			},
+
+			upbutton : function(){
+				if(upbutton) upbutton.destroy()
+
+				upbutton = self.app.platform.api.upbutton(el.up, {
+					top : function(){
+						return '65px'
+					},
+					rightEl : el.c.find('.leftpanelcell')
+				})	
+			},
+
+			post : function(id){
+
+				if (!id){
+
+					console.log('openedpostdestory', openedpost)
+
+					if (openedpost){
+						
+						openedpost.destroy()
+						openedpost = null
+					}
+
+					el.c.find('.renderposthere').html('')
+
+				}
+
+				else{
+					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
+						openedpost = p
+					}, {
+						video : true,
+						autoplay : true
+					})
+				}
+
+				
 			}
 		}
 
@@ -488,7 +593,7 @@ var main = (function(){
 
 			el.smallpanel.find('.item').on('click', events.currentMode)
 
-				
+			el.c.find('.backtolenta').on('click', actions.backtolenta)
 
 			el.addbutton.on('click', actions.addbutton)
 
@@ -620,6 +725,28 @@ var main = (function(){
 					
 				}
 
+				var _vm = parameters().video ? true : false
+
+
+				if(_vm != videomain){
+					videomain = _vm
+
+					if(videomain){
+						el.c.addClass('videomain')
+
+						if(!parameters().v){
+							actions.backtolenta()
+							makePanel()
+						}
+					}
+					else{
+						el.c.removeClass('videomain')
+						actions.backtolenta()
+						makePanel()
+					}
+				}
+				
+
 				if(lenta) lenta.destroy()
 
 				renders.lentawithsearch()
@@ -695,6 +822,8 @@ var main = (function(){
 
 			destroy : function(){
 
+				renders.post(null)
+
 				hsready = false
 
 				//searchvalue = '', searchtags = null
@@ -707,7 +836,10 @@ var main = (function(){
 
 					upbutton = null
 
+				if (upbackbutton)
+					upbackbutton.destroy()
 
+					upbackbutton = null
 				
 				if (roller)
 					roller.destroy()
@@ -729,11 +861,13 @@ var main = (function(){
 					leftpanel.destroy()
 				}
 
+				lastscroll = 0
 				
 				leftpanel = null
 				panel = null
 				roller = null
 				lenta = null
+				videomain = false
 			},
 			
 			init : function(p){
@@ -750,6 +884,7 @@ var main = (function(){
 				el.panel = el.c.find('.panel');
 				el.leftpanel = el.c.find('.leftpanel');
 				el.up = el.c.find('.upbuttonwrapper')
+				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 				el.smallpanel = el.c.find('.smallpanell')
 				el.addbutton = el.c.find('.addbutton')
 
@@ -774,6 +909,12 @@ var main = (function(){
 
 					fixedBlock = null
 					result = {}
+				}
+
+				videomain = parameters().video ? true : false
+
+				if(videomain){
+					el.c.addClass('videomain')
 				}
 
 				make(function(){

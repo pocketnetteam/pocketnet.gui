@@ -53,6 +53,7 @@ __map =  {
 		"js/kit.js",
 		"js/satolist.js",
 		"js/messenger2/clientrtc.js",
+		"peertube/video-embed.bundle.js",
 		"js/peertube-master.js",
 		"js/app.js",
 		"js/main.js",

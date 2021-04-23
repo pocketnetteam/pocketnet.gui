@@ -106,12 +106,6 @@ nModule = function(){
 					
 				}
 
-				/*p.el.find('[data-jdenticon-value]').each(function(){
-					var t = $(this);
-					var v = t.data('jdenticon-value')
-
-					t.html(jdenticon.toSvg(v, t.width()))
-				})*/
 
 				bgImages(p.el, p.bgImages)
 				
@@ -474,8 +468,12 @@ nModule = function(){
 		else
 		{
 			p.inner(p.el, _html);
-			p.display || (p.display = "block")
-			p.el.css("display", p.display)
+
+			if(!p.notdisplay){
+				p.display || (p.display = "block")
+				p.el.css("display", p.display)
+			}
+
 
 			if (p.postAnimation)
 				p.postAnimation();
@@ -552,7 +550,7 @@ nModule = function(){
 				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 			}
 
-				url += '/templates/' + p.name + '.html?v=1';
+				url += '/templates/' + p.name + '.html?v=122';
 			
 			self.ajax.run({
 				url : url,
@@ -746,7 +744,6 @@ nModule = function(){
 
 	self.closeContainer = function(key){
 
-		console.log("CLOSECONTAINER", self)
 
 		var close = deep(self, 'container.close')
 

@@ -327,6 +327,11 @@
 		}
 	}
 
+	.captionshare{
+		.shadowSmall();
+	}
+
+
 	.txt{
 		margin-bottom : @rhythm;
 		textarea{
@@ -354,8 +359,7 @@
 		}
 
 
-
-
+		
 		.emojionearea-editor{
 			padding : 2 * @rhythm 0;
 			padding-left : @rhythm;
@@ -383,6 +387,10 @@
 		padding-right : 30px;
 	}
 	.draggablepart{
+
+		&.itisvideopart{
+			padding-right: 4 * @rhythm;
+		}
 		
 		
 		.draggablewrapper{
@@ -583,7 +591,8 @@
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				overflow: hidden;
-				max-width: 400px;
+				max-width: 200px;
+				word-break: break-all;
 			}
 
 			.videoWrapper{
@@ -725,6 +734,8 @@
 			display: none;
 		}
 
+
+		
 		
     }
     
@@ -822,6 +833,10 @@
 			margin-right : 1 * @rhythm;
 			cursor: pointer;
 			.transition(0.3s);
+
+			&.nowidth{
+				width: auto;
+			}
 
 			&:hover{
 				color : @color-contrast;
@@ -1747,6 +1762,9 @@ html.stblack{
 		right: 32px;
 	}
 	
+	.draggablepart.itisvideopart{
+		padding-right: 0;
+	}
 
 	.mobilecaption{
 		display: block;
@@ -1946,7 +1964,7 @@ html.stblack{
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				overflow: hidden;
-				max-width: 400px;
+				max-width: 240px;
 			}
 
 			.videoWrapper{

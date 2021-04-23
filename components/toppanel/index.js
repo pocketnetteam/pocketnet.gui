@@ -14,7 +14,9 @@ var toppanel = (function(){
 
 			sub : "index?r=sub",
 
-			recommended : 	"index?r=recommended"
+			recommended : 	"index?r=recommended",
+
+			//video : "index?video=1"
 
 		};
 
@@ -24,18 +26,19 @@ var toppanel = (function(){
 				var vs = _.toArray(links)
 
 				var r = parameters(self.app.nav.current.completeHref, true).r || 'index'
+				var video = parameters(self.app.nav.current.completeHref, true).video || false
 
 				var contents = new Parameter({
 					type : "VALUES",
 					name : "Contents",
 					id : 'contents',
 					possibleValues : vs, 
-					possibleValuesLabels : [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138')],
-					defaultValue : links[r]
+					possibleValuesLabels : [self.app.localization.e('e13136'), /*self.app.localization.e('video'), */self.app.localization.e('e13137'), self.app.localization.e('e13138')],
+					defaultValue : links[r] //links[video ? 'video' : r]
 				
 				})
 
-				contents.value = links[r]
+				contents.value = links[r]//links[video ? 'video' : r]
 
 				contents._onChange = function(v){
 

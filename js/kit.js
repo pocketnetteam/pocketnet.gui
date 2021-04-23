@@ -942,7 +942,7 @@ Share = function(lang){
 			else{
 				if(_.isArray(tags)){
 
-					if(tags.length > 30){
+					if(tags.length > 5){
 						return false;
 					}
 
@@ -959,7 +959,7 @@ Share = function(lang){
 
 						tags = tags.replace("#", '').toLowerCase()
 
-					if(this.v.length > 29){
+					if(this.v.length > 4){
 						return false;
 					}
 
@@ -1209,7 +1209,9 @@ Share = function(lang){
 			return 'language'
 		}
 
-		if(self.url.v && self.url.v.length){
+		if(self.itisvideo() && !self.caption.v) return 'videocaption'
+
+		if(self.url.v && self.url.v.length && !self.itisvideo()){
 
 			var l = trim((trim(self.message.v) + trim(self.caption.v)).replace(self.url.v.length, '')).length
 
@@ -1219,7 +1221,7 @@ Share = function(lang){
 			
 		}
 
-		if(!self.tags.v.length){
+		if(!self.tags.v.length && !self.repost.v){
 			return 'tags'
 		}
 
@@ -1248,6 +1250,18 @@ Share = function(lang){
 		return bitcoin.crypto.sha256(self.serialize() + (self.repost.v || "") ).toString('hex')
 	}
 	
+	self.itisvideo = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url.v) return
+
+		var meta = parseVideo(self.url.v)
+
+		if(meta.type) return true
+
+		//if(meta.type == 'peertube') return true
+	}
 
 	self.export = function(extend){
 
@@ -1325,6 +1339,9 @@ Share = function(lang){
 	}
 
 	self.optstype = function(){
+
+		//if(self.itisvideo()) return 'video'
+
 		return self.type	
 	}
 
@@ -1824,6 +1841,17 @@ pShare = function(){
 		})
 	}
 
+	self.itisvideo = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url) return 
+
+		var meta = parseVideo(self.url)
+
+		if (meta.type) return true
+	}
+
 	self._import = function(v, notdecode){
 
 		
@@ -1952,6 +1980,9 @@ pShare = function(){
 	}
 
 	self.renders = {
+		captionclear : function(){
+			return self.caption || ''
+		},
 		caption : function(){
 			if(!self.caption){
 

@@ -21,12 +21,57 @@ var uploadpeertube = (function () {
 
     var renders = {};
 
-    var videoId;
+    var videoId, loadedImage = null;
 
     var state = {
       save: function () {},
       load: function () {},
     };
+
+
+    var resizeImage = function(base64, clbk){
+
+      var images = [{
+        original : base64,
+        index : 0
+      }]
+
+      self.nav.api.load({
+        open : true,
+        id : 'imageGalleryEdit',
+        inWnd : true,
+
+        essenseData : {
+          edit : true,
+          initialValue : 0,
+          images : images,
+          apply : true,
+          crop : {
+            aspectRatio : 16 / 9,
+            style : 'apply',
+            autoCropArea : 0.9,
+          },
+
+          success : function(i, editclbk){
+
+            resize(images[0].original, 1920, 1080, function(resized){
+              var r = resized.split(',');
+
+              if (r[1]){
+
+                editclbk()
+
+                if (clbk)
+                    clbk(resized)
+
+              }
+              
+            })
+
+          }
+        }
+      })
+    }
 
     var initEvents = function () {
       el.videoInput.change(function (evt) {
@@ -77,7 +122,7 @@ var uploadpeertube = (function () {
             return;
           }
 
-          filesWrittenObject.image = videoWallpaperFile[0];
+          filesWrittenObject.image = loadedImage.resized || videoWallpaperFile[0];
         }
 
         if (videoName) {
@@ -98,6 +143,7 @@ var uploadpeertube = (function () {
         filesWrittenObject.successFunction = function (response) {
           el.uploadButton.prop('disabled', false);
           el.header.addClass('activeOnRolled');
+          el.uploadProgress.addClass('hidden');
 
           ed.uploadInProgress = false;
 
@@ -118,7 +164,7 @@ var uploadpeertube = (function () {
 
           videoId = response.split('/').pop();
 
-          actions.added(response);
+          actions.added(response, wnd.find('.upload-video-name').val());
         };
 
         filesWrittenObject.cancelClbk = function (cancel) {
@@ -149,8 +195,18 @@ var uploadpeertube = (function () {
 
       });
 
-      el.videoWallpaper.change(function (evt) {
+      el.videoWallpaper.change(async function (evt) {
         var fileName = evt.target.files[0].name;
+
+        loadedImage = {
+          original: evt.target.files[0],
+        }
+
+        var fileBase64 = await toDataURL(evt.target.files[0]);
+
+        resizeImage(fileBase64, (img) => {
+          loadedImage.resized = dataURLtoFile(img);
+        });
 
         el.wallpaperError.text(
           fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
@@ -195,6 +251,7 @@ var uploadpeertube = (function () {
 
             el.uploadButton.prop('disabled', false);
             el.header.addClass('activeOnRolled');
+            el.uploadProgress.addClass('hidden');
 
             if (response.error) {
               var error = deep(response, 'error.responseJSON.errors') || {};
@@ -208,7 +265,7 @@ var uploadpeertube = (function () {
               return;
             }
 
-            actions.added(`${response}?imported=true`);
+            actions.added(`${response}?imported=true`, filesWrittenObject.name);
             wndObj.close();
           };
 
@@ -246,7 +303,7 @@ var uploadpeertube = (function () {
             return;
           }
 
-          filesWrittenObject.thumbnailfile = videoWallpaperFile[0];
+          filesWrittenObject.thumbnailfile = loadedImage.resized || videoWallpaperFile[0];
         }
 
         if (videoName) {

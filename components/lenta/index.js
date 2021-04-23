@@ -19,7 +19,8 @@ var lenta = (function(){
 
 		var making = false, ovf = false;
 
-		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false;
+		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
+		video = false
 
 		var commentsInited = {},
 			shareInitedMap = {},
@@ -189,7 +190,7 @@ var lenta = (function(){
 				_.each(players, function(p){
 					p.p.destroy()
 				})
-				
+
 				_.each(initedcommentes, function(c){
 					if (c)
 						c.destroy()
@@ -217,6 +218,8 @@ var lenta = (function(){
 
 				fullscreenvideoShowed = false;
 
+				$('html').removeClass('fullvideoshowed')
+
 				loading = false
 				ended = false
 				players = {}
@@ -236,8 +239,6 @@ var lenta = (function(){
 				making = false;
 
 				newmaterials = 0;
-
-				
 				fixedblock = 0;
 			},
 
@@ -426,10 +427,33 @@ var lenta = (function(){
 
 				})
 			},
-			initVideo : function(el, share){
+			destroyVideo : function(share){
+				if (!players[share.txid]){
+					return
+				}
+				
+				players[share.txid].p.destroy()
+
+				delete players[share.txid]
+
+				renders.urlContent(share)
+			},
+			initVideo : function(el, share, clbk){
+
+				if (players[share.txid]){
+
+					if(clbk) clbk(true)
+
+					return
+				}
 
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
-					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
+					self.app.platform.sdk.usersettings.meta.embedvideo.value) {
+
+						if(clbk) clbk(false)
+
+						return
+					}
 				
 				var pels = el.find('.js-player');
 				var vel = el.find('.videoWrapper')
@@ -438,9 +462,6 @@ var lenta = (function(){
 				if (pels.length && pels[0].getAttribute)
 				{
 
-					// Get the video provider
-					var provider = pels[0].getAttribute('data-plyr-provider');
-
 					var readyCallback = (player) => {
 
 						if (players[share.txid]){
@@ -448,8 +469,9 @@ var lenta = (function(){
 
 							players[share.txid].inited = true
 
-							//shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], el, 'video')
 						}
+
+						if(clbk) clbk(true)
 					};
 
 					var callback = (player) => {
@@ -459,11 +481,18 @@ var lenta = (function(){
 						players[share.txid].el = vel
 						players[share.txid].id = vel.attr('pid')
 
+
+						if (video){
+							players[share.txid].preview = true
+						}
+
 						if (essenseData.enterFullScreenVideo){
 							essenseData.enterFullScreenVideo = false
 
 							actions.fullScreenVideo(share.txid)
 						}
+
+						
 					};
 
 					var s = {
@@ -677,8 +706,6 @@ var lenta = (function(){
 
 				var d = (h - wh) / 2
 
-
-
 				if (d > 0){
 					work.css('margin-top', d + 'px')
 				}
@@ -700,44 +727,59 @@ var lenta = (function(){
 					players[id].p.muted = false
 			},
 
+			opensvi : function(id){
+				if (essenseData.opensvi){
+					essenseData.opensvi(id)
+				}
+			},
+
 			fullScreenVideo : function(id, clbk){
 
-				if(!players[id]) return;
-
 				var _el = el.c.find("#" + id)
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				_el.addClass('fullScreenVideo')
 
-				
+				if (video) $('html').addClass('fullvideoshowed')
+
+				actions.initVideo(_el, share, function(res){
+
+					if(!res){
+						sitemessage('')
+
+						return
+					}
+					
+					if(!players[id]) return;
+
 					actions.videoPosition(_el)
-				
-				
 
-				self.app.nav.api.history.addParameters({
-					v : id
+					self.app.nav.api.history.addParameters({
+						v : id
+					})
+
+					var player = players[id]
+
+					if(!player.p.playing){
+						player.p.play()
+					}
+
+					player.p.muted = false
+
+					ovf = !self.app.actions.offScroll()
+
+					if (initedcommentes[id])
+						initedcommentes[id].changein(el.c.find("#" + id), 0)
+
+					if(!essenseData.comments)
+						renders.comments(id, false, true)
+
+					fullscreenvideoShowed = true;
+
+					if (clbk)
+						clbk()
+
 				})
-
-				var player = players[id]
-
-				if(!player.p.playing)
-					player.p.play()
-
-				player.p.muted = false
-
-				ovf = !self.app.actions.offScroll()
-
-				if (initedcommentes[id])
-					initedcommentes[id].changein(el.c.find("#" + id), 0)
-
-				if(!essenseData.comments)
-					renders.comments(id, false, true)
-
-				fullscreenvideoShowed = true;
-
-				if (clbk)
-					clbk()
-				
-
 
 			},
 
@@ -759,10 +801,18 @@ var lenta = (function(){
 
 				fullscreenvideoShowed = false;
 
+				$('html').removeClass('fullvideoshowed')
+
 				if (initedcommentes[id]){
 					initedcommentes[id].changein(null)	
 
 					initedcommentes[id].hideall(true)
+				}
+
+				if(video){
+					var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+					actions.destroyVideo(share)
 				}
 			},
 			postscores : function(txid, clbk){
@@ -999,7 +1049,7 @@ var lenta = (function(){
 			videosInview : function(players, action, nvaction){				
 
 				var ap = _.filter(players, function(p){
-					if(p.inited && !p.playing && !p.stopped && p.el) return true
+					if(p.inited && !p.playing && !p.stopped && p.el && !p.preview) return true
 				})
 
 				if(ap.length){
@@ -1519,9 +1569,17 @@ var lenta = (function(){
 					actions.exitFullScreenVideo(shareId)
 			},
 			fullScreenVideo : function(){
+
 				var shareId = $(this).closest('.share').attr('id');
 
+
 					actions.fullScreenVideo(shareId)
+			},
+
+			opensvi : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+					actions.opensvi(shareId)
 			},
 
 			fullScreenVideoMobile : function(){
@@ -1649,6 +1707,8 @@ var lenta = (function(){
 			},
 			comments : function(txid, init, showall, preview){
 				if(essenseData.comments == 'no') return
+
+				if(video) return
 
 				if(initedcommentes[txid]) return;
 
@@ -1831,14 +1891,14 @@ var lenta = (function(){
 				shareInitingMap[share.txid] = true;
 
 				self.shell({
-					name :  'share',
+					name : video ? 'sharevideo' :  'share',
 					el : _el,
 					data : {
 						share : share,
 						ed : essenseData,
 						mestate : mestate,
-
-						all : all || false
+						all : all || false,
+						tplvideo : video 
 					}					
 
 				}, function(p){
@@ -1880,7 +1940,8 @@ var lenta = (function(){
 
 							}
 
-							actions.initVideo(p.el, share)
+							if(!video)
+								actions.initVideo(p.el, share)
 
 							shareInitingMap[share.txid] = false;					
 											
@@ -2053,6 +2114,9 @@ var lenta = (function(){
 							return s1.txid == s.txid
 						})
 					})
+					
+
+				
 				
 				self.shell({
 					name :  tpl,
@@ -2288,64 +2352,51 @@ var lenta = (function(){
 
 				var meta = self.app.platform.parseUrl(url);
 
-				if (meta.type === 'peertube') {
-					self.app.peertubeHandler.getVideoInfoAnon(meta, (res) => {
-						self.shell({
-							turi : 'share',
-							name :  'url',
-							el : el,
-							data : {
-								url : url,
-								og : og,
-								share : share,
-								views : res.views,
-							},
-		
-						}, function(_p){
-		
-							self.app.nav.api.links(null, _p.el, function(event){
-		
-								event.stopPropagation()
-							})
-		
-							shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
-		
-							var images = _p.el.find('img');
-		
-							if (essenseData.renderclbk)
-								essenseData.renderclbk()
-		
-							_p.el.find('img').imagesLoaded({ background: true }, function(image) {
-		
-								_.each(image.images, function(i, index){
-		
-		
-									if(i.isLoaded){
-										$(images[index]).addClass('active')
-		
-										if(i.img.naturalWidth > 500){
-											_p.el.addClass('bigimageinlink')
-										}
-										
-									}
-									else
-									{
-										$(images[index]).closest('.image').css('display', 'none')
-									}
-								})
-		
-								shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
-		
-								if (essenseData.renderclbk)
-									essenseData.renderclbk()
-								  
-							});
-		
-							if (clbk)
-								clbk()
+
+				var renderclbk = function(_p){
+					self.app.nav.api.links(null, _p.el, function(event){
+	
+						event.stopPropagation()
+					})
+
+					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
+
+					var images = _p.el.find('img');
+
+					if (essenseData.renderclbk)
+						essenseData.renderclbk()
+
+					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
+
+						_.each(image.images, function(i, index){
+
+
+							if(i.isLoaded){
+								$(images[index]).addClass('active')
+
+								if(i.img.naturalWidth > 500){
+									_p.el.addClass('bigimageinlink')
+								}
+								
+							}
+							else
+							{
+								$(images[index]).closest('.image').css('display', 'none')
+							}
 						})
+
+						shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
+
+						if (essenseData.renderclbk)
+							essenseData.renderclbk()
+						  
 					});
-				} else {
+
+					if (clbk)
+						clbk()
+				}
+
+				var rndr = function(res){
 					self.shell({
 						turi : 'share',
 						name :  'url',
@@ -2353,52 +2404,27 @@ var lenta = (function(){
 						data : {
 							url : url,
 							og : og,
-							share : share
+							share : share,
+							views : res.views || 0,
+							video : video,
+							preview : video ? true : false
 						},
+						notdisplay : video ? true: false,
+						bgImages : {
+							clbk : video ? true: false
+						}
 	
-					}, function(_p){
-	
-						self.app.nav.api.links(null, _p.el, function(event){
-	
-							event.stopPropagation()
-						})
-	
-						shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
-	
-						var images = _p.el.find('img');
-	
-						if (essenseData.renderclbk)
-							essenseData.renderclbk()
-	
-						_p.el.find('img').imagesLoaded({ background: true }, function(image) {
-	
-							_.each(image.images, function(i, index){
-	
-	
-								if(i.isLoaded){
-									$(images[index]).addClass('active')
-	
-									if(i.img.naturalWidth > 500){
-										_p.el.addClass('bigimageinlink')
-									}
-									
-								}
-								else
-								{
-									$(images[index]).closest('.image').css('display', 'none')
-								}
-							})
-	
-							shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
-	
-							if (essenseData.renderclbk)
-								essenseData.renderclbk()
-							  
-						});
-	
-						if (clbk)
-							clbk()
-					})
+					}, renderclbk)
+				}
+
+				if (meta.type === 'peertube') {
+					
+					//self.app.peertubeHandler.getVideoInfoAnon(meta, (res) => {
+						rndr({})
+					//});
+
+				} else {
+					rndr({})
 				}
 			},
 
@@ -2419,8 +2445,10 @@ var lenta = (function(){
 					if (url && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+							
 							if (clbk)
 								clbk()
+
 						}
 						else
 						{
@@ -2570,55 +2598,62 @@ var lenta = (function(){
 				}
 			},
 
+			videosinfo : function(shares, clbk){
+				
+			},	
+
 			sstuff : function(shares, error, pr, clbk){
 
 				var author = essenseData.author;
 
-				self.app.platform.sdk.node.shares.users(shares, function(l, error2){
+				self.app.platform.sdk.node.shares.loadvideoinfoifneed(shares,video, function(){
+					self.app.platform.sdk.node.shares.users(shares, function(l, error2){
 
-					countshares = countshares + shares.length
+						countshares = countshares + shares.length
 
-					loading = false;
+						loading = false;
 
-					if (!el.c)
-						return
+						if (!el.c)
+							return
 
-					if(!error && !error2){
+						if(!error && !error2){
 
-						if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){							
+							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){							
 
-							if(!beginmaterial && !countshares){
-								el.c.addClass("sharesZero")
-							}
-							else
-							{
-	
-								if ( (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.search || essenseData.tags) ){
-	
-									setTimeout(function(){
-										if (el.c)
-											el.c.addClass("sharesEnded")
-									}, 1000)
-									
+								if(!beginmaterial && !countshares){
+									el.c.addClass("sharesZero")
 								}
-	
+								else
+								{
+		
+									if ( (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.search || essenseData.tags) ){
+		
+										setTimeout(function(){
+											if (el.c)
+												el.c.addClass("sharesEnded")
+										}, 1000)
+										
+									}
+		
+								}
+
+		
+								////// SHIT
+								if (!shares.length || shares.length < pr.count && (recommended || author || essenseData.search))
+		
+									ended = true
 							}
 
-	
-							////// SHIT
-							if (!shares.length || shares.length < pr.count && (recommended || author || essenseData.search))
-	
-								ended = true
 						}
 
-					}
+						el.loader.fadeOut()
 
-					el.loader.fadeOut()
+						if (clbk)
+							clbk(shares, error || error2)
 
-					if (clbk)
-						clbk(shares, error || error2)
+					})	
 
-				})	
+				})
 			},
 
 			shares : function(clbk, cache){
@@ -2650,7 +2685,7 @@ var lenta = (function(){
 
 							var _beginmaterial = beginmaterial;
 
-							if(!author && deep(self.app.platform.sdk, 'usersettings.meta.hierarchicalShares.value')){
+							if(!author){
 								loader = 'hierarchical'
 							}
 
@@ -2690,6 +2725,7 @@ var lenta = (function(){
 
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
+							var page = parameters().page || 0
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -2697,7 +2733,10 @@ var lenta = (function(){
 								begin : _beginmaterial || '',
 								txids : essenseData.txids,
 								height : fixedblock,
-								tagsfilter : tagsfilter
+								tagsfilter : tagsfilter,
+								video : video,
+								count : video ? 20 : 10,
+								page : page
 
 							}, function(shares, error, pr){
 
@@ -2739,7 +2778,7 @@ var lenta = (function(){
 			var loader = 'common';
 			var author = essenseData.author;
 
-			if(!author && deep(self.app.platform.sdk, 'usersettings.meta.hierarchicalShares.value')){
+			if(!author){
 				loader = 'hierarchical'
 			}
 
@@ -2919,6 +2958,8 @@ var lenta = (function(){
 				el.c.on('click', '.videoTips', events.fullScreenVideo)
 				el.c.on('click', '.videoOpen', events.fullScreenVideo)
 
+				el.c.on('click', '.opensviurl', events.opensvi)
+				
 				
 			//}
 
@@ -3288,10 +3329,14 @@ var lenta = (function(){
 
 								actions.scrollToPost(p.v)
 
-								actions.fullScreenVideo(p.v, function(){
+								if(video){
+									actions.opensvi(p.v)
+								}
+								else{	
+									actions.fullScreenVideo(p.v, function(){})
+								}
 
-									
-								})
+								
 								
 							}
 
@@ -3355,10 +3400,9 @@ var lenta = (function(){
 
 				}
 
-
 				canloadprev = !!!essenseData.txids || false
 
-
+				video = essenseData.video || false
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -3378,18 +3422,26 @@ var lenta = (function(){
 					}, function(){
 
 						self.loadTemplate({
-							turi : 'share',
-							name : 'url'
+							name : 'sharevideo'
 						}, function(){
 
+						
+
 							self.loadTemplate({
-								name : 'stars'
+								turi : 'share',
+								name : 'url'
 							}, function(){
 
-								clbk(data);
+								self.loadTemplate({
+									name : 'stars'
+								}, function(){
+
+									clbk(data);
+
+								})
 
 							})
-
+						
 						})
 
 					})
@@ -3408,6 +3460,8 @@ var lenta = (function(){
 				_.each(players, function(p){
 					p.p.destroy()
 				})
+
+				players = {}
 
 				if(ovf)
 
@@ -3440,7 +3494,7 @@ var lenta = (function(){
 				delete self.app.platform.clbks._focus.lenta
 
 				self.app.platform.sdk.chats.removeTemp()
-								
+				video = false					
 
 				window.removeEventListener('scroll', events.videosInview);
 				window.removeEventListener('scroll', events.sharesInview);
@@ -3475,6 +3529,10 @@ var lenta = (function(){
 				initEvents();
 
 				make(null, p);
+
+				if (video){
+					el.c.addClass('mainvideo')
+				}
 
 
 				if(!essenseData.goback)

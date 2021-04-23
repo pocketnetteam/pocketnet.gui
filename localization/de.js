@@ -596,7 +596,7 @@ ____loclib.repost = "Repost"
 ____loclib.e13160 = "Hallo Pocketeers!"
 
 ____loclib.e13161 = "Fügen Sie Tags zu Ihren Beiträgen hinzu"
-____loclib.e13162 = "Sie können max. 30 Tags hinzufügen"
+____loclib.e13162 = "Sie können max. 5 Tags hinzufügen"
 ____loclib.e13163 = "Es gibt keine Veränderungen im Beitrag"
 ____loclib.e13164 = "Bitte füge einige Wörter hinzu, um den Pocketleuten über deinen Link zu erzählen. Um was geht es? Warum ist es wichtig? Was ist Ihre Meinung?"
 ____loclib.e13165 = 'Ihr Link zum Video ist ungültig. Bitte laden Sie eine gültige Video-URL.'
