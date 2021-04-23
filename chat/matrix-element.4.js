@@ -1295,7 +1295,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".eventWrapper[data-v-b318dd1e]{padding:.5em 0}#events[data-v-b318dd1e]{position:absolute;left:0;right:0;top:0;bottom:0}.eventsflex[data-v-b318dd1e]{display:flex;flex-direction:column-reverse;width:100%;height:100%;overflow-y:auto;padding:.25em;padding-bottom:66px}.eventsflex>div[data-v-b318dd1e]{flex-grow:1}.eventsflex[data-v-b318dd1e]::-webkit-scrollbar{width:0!important}.galleryRow[data-v-b318dd1e]{display:flex;align-items:flex-end}.galleryRow .messageImg[data-v-b318dd1e]{max-width:50%;margin:0 10px;position:relative}.galleryRow .messageImg .img[data-v-b318dd1e]{display:block;border-radius:.5em;position:relative;max-width:100%}.galleryRow .messageImg .loadingImg[data-v-b318dd1e]{display:flex;align-items:center;justify-content:center;border-radius:.5em;position:relative;max-width:300px;height:250px}.galleryRow .messageImg .loadingImg .imgPreview[data-v-b318dd1e]{border-radius:.5em;position:relative;max-width:100%;height:100%;opacity:.6}.galleryRow .messageImg .loadingImg .clipLoader[data-v-b318dd1e]{position:absolute;z-index:9999;left:50%;right:0;top:50%;bottom:0;transform:translate(-50,50);display:flex;align-items:center;justify-content:center}.galleryRow .messageImg .imgMsg img[data-v-b318dd1e]{max-width:100%;-o-object-fit:cover;object-fit:cover;border-radius:1em;display:block}.galleryRow .messageImg .metaLink[data-v-b318dd1e]{background:#000}.galleryRow .messageImg .metaLink .metaMessageLink .metaTitle[data-v-b318dd1e]{font-weight:700;font-size:.9em}.galleryRow .messageImg .metaLink .metaMessageLink .metaDescription[data-v-b318dd1e]{margin:.5em 0;font-size:.8em}.galleryRow .messageImg .metaLink .metaMessageLink .metaImgWrapper[data-v-b318dd1e]{display:block;max-width:300px;-o-object-fit:cover;object-fit:cover}.galleryRow .messageImg .metaLink .metaMessageLink .metaImgWrapper img[data-v-b318dd1e]{display:block;width:100%;height:100%}", ""]);
+exports.push([module.i, ".eventWrapper[data-v-b318dd1e]{padding:.5em 0}#events[data-v-b318dd1e]{position:absolute;left:0;right:0;top:0;bottom:0}.eventsflex[data-v-b318dd1e]{display:flex;flex-direction:column-reverse;width:100%;height:100%;overflow-y:auto;padding:.25em;padding-bottom:66px}.eventsflex[data-v-b318dd1e]::-webkit-scrollbar{width:0!important}.galleryRow[data-v-b318dd1e]{display:flex;align-items:flex-end}.galleryRow .messageImg[data-v-b318dd1e]{max-width:50%;margin:0 10px;position:relative}.galleryRow .messageImg .img[data-v-b318dd1e]{display:block;border-radius:.5em;position:relative;max-width:100%}.galleryRow .messageImg .loadingImg[data-v-b318dd1e]{display:flex;align-items:center;justify-content:center;border-radius:.5em;position:relative;max-width:300px;height:250px}.galleryRow .messageImg .loadingImg .imgPreview[data-v-b318dd1e]{border-radius:.5em;position:relative;max-width:100%;height:100%;opacity:.6}.galleryRow .messageImg .loadingImg .clipLoader[data-v-b318dd1e]{position:absolute;z-index:9999;left:50%;right:0;top:50%;bottom:0;transform:translate(-50,50);display:flex;align-items:center;justify-content:center}.galleryRow .messageImg .imgMsg img[data-v-b318dd1e]{max-width:100%;-o-object-fit:cover;object-fit:cover;border-radius:1em;display:block}.galleryRow .messageImg .metaLink[data-v-b318dd1e]{background:#000}.galleryRow .messageImg .metaLink .metaMessageLink .metaTitle[data-v-b318dd1e]{font-weight:700;font-size:.9em}.galleryRow .messageImg .metaLink .metaMessageLink .metaDescription[data-v-b318dd1e]{margin:.5em 0;font-size:.8em}.galleryRow .messageImg .metaLink .metaMessageLink .metaImgWrapper[data-v-b318dd1e]{display:block;max-width:300px;-o-object-fit:cover;object-fit:cover}.galleryRow .messageImg .metaLink .metaMessageLink .metaImgWrapper img[data-v-b318dd1e]{display:block;width:100%;height:100%}", ""]);
 // Exports
 module.exports = exports;
 
@@ -2565,7 +2565,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       text: '',
       file: {},
       fileInfo: {},
-      ready: true,
+      ready: false,
       needencrypt: false,
       creating: false,
       userId: '',
@@ -2587,7 +2587,12 @@ var enc = 'm.megolm.v1.aes-sha2';
         title: "Send File",
         icon: "fas fa-sticky-note",
         upload: {
-          multiple: true
+          multiple: true,
+          images: {
+            resize: {
+              type: 'fit'
+            }
+          }
         }
       }],
       anyUrlMeta: String,
@@ -2661,27 +2666,30 @@ var enc = 'm.megolm.v1.aes-sha2';
   }),
   created: function created() {},
   mounted: function mounted() {
-    /*this.downloadKeys().then(r => {
-      this.ready = true
-        if (!this.chat) {
-        this.newchat()
+    var _this2 = this;
+
+    this.downloadKeys().then(function (r) {
+      _this2.ready = true;
+
+      if (!_this2.chat) {
+        _this2.newchat();
       }
-      })*/
+    });
   },
   methods: {
     wait: function wait() {
-      var _this2 = this;
+      var _this3 = this;
 
       return this.$f.pretry(function () {
-        return _this2.core.mtrx.client && _this2.core.mtrx.access && _this2.usersForKeys.length;
+        return _this3.core.mtrx.client && _this3.core.mtrx.access && _this3.usersForKeys.length;
       });
     },
     downloadKeys: function downloadKeys() {
-      var _this3 = this;
+      var _this4 = this;
 
       return this.wait().then(function (r) {
-        return _this3.core.mtrx.client.downloadKeysForUsers(_this3.usersForKeys, {
-          token: _this3.core.mtrx.access.accessToken
+        return _this4.core.mtrx.client.downloadKeysForUsers(_this4.usersForKeys, {
+          token: _this4.core.mtrx.access.accessToken
         });
       });
     },
@@ -2696,7 +2704,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       this.$emit('setMetaUrl', url);
     },
     newchat: function newchat() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.u) {
         this.$store.state.globalpreloader = true;
@@ -2705,10 +2713,10 @@ var enc = 'm.megolm.v1.aes-sha2';
         var chat = null;
         this.creating = true;
         this.core.user.usersInfo(this.uusers).then(function (info) {
-          var id = _this4.core.mtrx.kit.tetatetid(info[0], _this4.core.user.userinfo);
+          var id = _this5.core.mtrx.kit.tetatetid(info[0], _this5.core.user.userinfo);
 
-          matrixId = _this4.core.user.matrixId(info[0].id);
-          myMatrixId = _this4.core.user.matrixId(_this4.core.user.userinfo.id);
+          matrixId = _this5.core.user.matrixId(info[0].id);
+          myMatrixId = _this5.core.user.matrixId(_this5.core.user.userinfo.id);
           var initialstate = [{
             "type": "m.room.encryption",
             "state_key": "",
@@ -2716,8 +2724,8 @@ var enc = 'm.megolm.v1.aes-sha2';
               "algorithm": enc
             }
           }];
-          _this4.needencrypt = false;
-          return _this4.core.mtrx.client.createRoom({
+          _this5.needencrypt = false;
+          return _this5.core.mtrx.client.createRoom({
             room_alias_name: id,
             visibility: 'private',
             invite: [matrixId],
@@ -2737,25 +2745,25 @@ var enc = 'm.megolm.v1.aes-sha2';
           });
         }).then(function (_chat) {
           chat = _chat;
-          _this4.$store.state.globalpreloader = false;
+          _this5.$store.state.globalpreloader = false;
           /*this.$store.commit('icon', {
             icon : 'success',
             message : "Chat started"
           })*/
 
-          _this4.$emit("newchat", chat);
+          _this5.$emit("newchat", chat);
 
-          var m_chat = _this4.core.mtrx.client.getRoom(_chat.room_id);
+          var m_chat = _this5.core.mtrx.client.getRoom(_chat.room_id);
 
           var event = m_chat.currentState.getStateEvents("m.room.power_levels");
-          return _this4.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).then(function (r) {
+          return _this5.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).then(function (r) {
             return r;
           });
         }).then(function (r) {
-          _this4.creating = false; //this.core.mtrx.bkp()
+          _this5.creating = false; //this.core.mtrx.bkp()
         }).catch(function (e) {
-          _this4.creating = false;
-          _this4.$store.state.globalpreloader = false; ////catch error
+          _this5.creating = false;
+          _this5.$store.state.globalpreloader = false; ////catch error
 
           /*this.$store.commit('icon', {
             icon : 'error',
@@ -2778,26 +2786,26 @@ var enc = 'm.megolm.v1.aes-sha2';
       });
     },
     send: function send(text, chatinput) {
-      var _this5 = this;
+      var _this6 = this;
 
       var self = this;
       var t = text.replace(/\n/g, '<br/>');
 
       if (!this.chat) {
         this.downloadKeys().then(function (r) {
-          _this5.newchat();
+          _this6.newchat();
         });
       }
 
       this.$emit("sending");
       return this.$f.pretry(function () {
-        return _this5.chat && !_this5.creating;
+        return _this6.chat && !_this6.creating;
       }).then(function () {
-        return _this5.core.mtrx.client.prepareToEncrypt(_this5.chat);
+        return _this6.core.mtrx.client.prepareToEncrypt(_this6.chat);
       }).then(function () {
-        _this5.$emit('sent');
+        _this6.$emit('sent');
 
-        return _this5.core.mtrx.client.sendEvent(_this5.chat.roomId, "m.room.message", {
+        return _this6.core.mtrx.client.sendEvent(_this6.chat.roomId, "m.room.message", {
           body: t,
           msgtype: "m.text"
         }, "")
@@ -2825,7 +2833,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       return Promise.resolve();
     },
     pasteImage: function pasteImage(data) {
-      var _this6 = this;
+      var _this7 = this;
 
       fetch(data).then(function (res) {
         return res.blob();
@@ -2834,9 +2842,9 @@ var enc = 'm.megolm.v1.aes-sha2';
           type: "image/png"
         });
       }).then(function (res) {
-        _this6.image_file = res;
+        _this7.image_file = res;
 
-        _this6.sendImage({
+        _this7.sendImage({
           base64: data,
           file: res
         });
@@ -2845,49 +2853,49 @@ var enc = 'm.megolm.v1.aes-sha2';
       });
     },
     sendImage: function sendImage(data) {
-      var _this7 = this;
-
-      this.$emit("sending");
-      this.$f.pretry(function () {
-        return _this7.chat;
-      }).then(function () {
-        return _this7.core.mtrx.uploadContent(data.file);
-      }).then(function (image) {
-        _this7.core.mtrx.client.sendImageMessage(_this7.chat.roomId, image, _this7.info, 'Image');
-
-        _this7.$emit('previewImg', {});
-
-        return _this7.encryptIfNeed();
-      }).catch(function (e) {});
-    },
-    sendFile: function sendFile(data) {
       var _this8 = this;
 
-      this.file = data.file;
       this.$emit("sending");
       this.$f.pretry(function () {
         return _this8.chat;
       }).then(function () {
-        return _this8.core.mtrx.client.uploadContent(_this8.file);
-      }).then(function (src) {
-        return Promise.resolve(_this8.core.mtrx.client.mxcUrlToHttp(src));
-      }).then(function (url) {
-        _this8.fileInfo.url = url;
-        _this8.fileInfo.name = _this8.file.name;
-        _this8.fileInfo.size = _this8.file.size;
-        var body = JSON.stringify(_this8.fileInfo);
+        return _this8.core.mtrx.uploadContent(data.file);
+      }).then(function (image) {
+        _this8.core.mtrx.client.sendImageMessage(_this8.chat.roomId, image, _this8.info, 'Image');
 
-        _this8.core.mtrx.client.sendMessage(_this8.chat.roomId, {
+        _this8.$emit('previewImg', {});
+
+        return _this8.encryptIfNeed();
+      }).catch(function (e) {});
+    },
+    sendFile: function sendFile(data) {
+      var _this9 = this;
+
+      this.file = data.file;
+      this.$emit("sending");
+      this.$f.pretry(function () {
+        return _this9.chat;
+      }).then(function () {
+        return _this9.core.mtrx.client.uploadContent(_this9.file);
+      }).then(function (src) {
+        return Promise.resolve(_this9.core.mtrx.client.mxcUrlToHttp(src));
+      }).then(function (url) {
+        _this9.fileInfo.url = url;
+        _this9.fileInfo.name = _this9.file.name;
+        _this9.fileInfo.size = _this9.file.size;
+        var body = JSON.stringify(_this9.fileInfo);
+
+        _this9.core.mtrx.client.sendMessage(_this9.chat.roomId, {
           body: body,
           msgtype: 'm.file'
         });
 
-        _this8.$emit('anyFileSend', {});
+        _this9.$emit('anyFileSend', {});
 
-        _this8.$emit('sent');
+        _this9.$emit('sent');
 
-        _this8.file = {};
-        return _this8.encryptIfNeed();
+        _this9.file = {};
+        return _this9.encryptIfNeed();
       }).catch(function (e) {});
     },
     focus: function focus() {},
@@ -2924,6 +2932,7 @@ var enc = 'm.megolm.v1.aes-sha2';
     },
     uploadStart: function uploadStart(item, files) {},
     uploadError: function uploadError(item, error) {
+      console.log('error', error);
       this.$store.commit('icon', {
         icon: 'error',
         message: error.text
@@ -2938,7 +2947,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       }
     },
     uploadUploaded: function uploadUploaded(item, data) {
-      var _this9 = this;
+      var _this10 = this;
 
       var validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 
@@ -2946,14 +2955,15 @@ var enc = 'm.megolm.v1.aes-sha2';
         this.$emit('anyFileSend', data);
         this.sendFile(data);
       } else {
+        console.log("previewImg", data);
         this.$emit('previewImg', data);
         this.imageWH(data).then(function (info) {
-          _this9.sendImage(data);
+          _this10.sendImage(data);
         });
       }
     },
     imageWH: function imageWH(file) {
-      var _this10 = this;
+      var _this11 = this;
 
       var img = new Image();
       var imgInfo = {};
@@ -2969,7 +2979,7 @@ var enc = 'm.megolm.v1.aes-sha2';
         };
 
         img.src = file.base64;
-        _this10.info = imgInfo;
+        _this11.info = imgInfo;
       });
     },
     uploadUploadedAll: function uploadUploadedAll(item, result) {

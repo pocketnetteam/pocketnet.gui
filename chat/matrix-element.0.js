@@ -1635,11 +1635,13 @@ var vueimagesloaded_default = /*#__PURE__*/__webpack_require__.n(vueimagesloaded
       loading: false,
       msgActions: false,
       isActive: false,
-      menuItems: [{
+      menuItems: [
+      /*{
         click: "reply",
         title: "Reply",
         icon: "fas fa-reply"
-      }, {
+      },*/
+      {
         click: "copy",
         title: "Copy",
         icon: "far fa-copy"
