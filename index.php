@@ -34,16 +34,16 @@
             $og->echotags();
         ?>
 
-        <link rel="stylesheet" href="css/normalize.css?v=137105412216">
-<link rel="stylesheet" href="css/tooltipster.core.min.css?v=812879486244">
-<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=898383985734">
-<link rel="stylesheet" href="css/main.css?v=314588951610">
-<link rel="stylesheet" href="css/stblack.css?v=520345591128">
-<link rel="stylesheet" href="css/plyr.css?v=971766254618">
-<link rel="stylesheet" href="css/medium/medium-editor.css?v=318876525535">
-<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=428228350713">
-<link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=715957110415">
-<link rel="stylesheet" href="css/medium/beagle.css?v=395820349333">
+        <link rel="stylesheet" href="css/normalize.css?v=708004287382">
+<link rel="stylesheet" href="css/tooltipster.core.min.css?v=135866234407">
+<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=871509824379">
+<link rel="stylesheet" href="css/main.css?v=221249433906">
+<link rel="stylesheet" href="css/stblack.css?v=281800113438">
+<link rel="stylesheet" href="css/plyr.css?v=874591432225">
+<link rel="stylesheet" href="css/medium/medium-editor.css?v=95567412541">
+<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=914926788614">
+<link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=249443388348">
+<link rel="stylesheet" href="css/medium/beagle.css?v=864716653125">
 
 
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
@@ -191,20 +191,20 @@
 <script join src="js/vendor/axios.js?v=7"></script>
 
         
-        <script>window.design = true;</script><script join src="js/functions.js?v=690023920427"></script>
-<script join src="js/user.js?v=793139927784"></script>
-<script join src="js/module.js?v=782978141620"></script>
-<script join src="js/navn.js?v=341643730207"></script>
-<script join src="js/validation.js?v=582926874162"></script>
-<script join src="js/_map.js?v=111947521058"></script>
-<script join src="js/localization.js?v=574963701253"></script>
-<script join src="js/kit.js?v=237323844502"></script>
-<script join src="js/satolist.js?v=270396580355"></script>
-<script join src="js/messenger2/clientrtc.js?v=879035663299"></script>
-<script join src="peertube/video-embed.bundle.js?v=959966697702"></script>
-<script join src="js/peertube-master.js?v=64420702267"></script>
-<script join src="js/app.js?v=9046543356"></script>
-<script join src="js/main.js?v=685558645837"></script>
+        <script>window.design = true;</script><script join src="js/functions.js?v=864275992942"></script>
+<script join src="js/user.js?v=812332584220"></script>
+<script join src="js/module.js?v=444659340"></script>
+<script join src="js/navn.js?v=997298382525"></script>
+<script join src="js/validation.js?v=559512071514"></script>
+<script join src="js/_map.js?v=414725673548"></script>
+<script join src="js/localization.js?v=766399398980"></script>
+<script join src="js/kit.js?v=232201765016"></script>
+<script join src="js/satolist.js?v=403663110027"></script>
+<script join src="js/messenger2/clientrtc.js?v=957262594792"></script>
+<script join src="peertube/video-embed.bundle.js?v=572106719098"></script>
+<script join src="js/peertube-master.js?v=1326489809"></script>
+<script join src="js/app.js?v=857944045916"></script>
+<script join src="js/main.js?v=12751799410"></script>
 
 
 
