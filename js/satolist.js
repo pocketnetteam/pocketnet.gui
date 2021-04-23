@@ -16726,6 +16726,8 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.user.subscribeRef()
 
+                    self.matrixchat.init()
+
                     setTimeout(function () {
                         platform.sdk.relayTransactions.send()
                     }, 30000)
@@ -19193,22 +19195,76 @@ Platform = function (app, listofnodes) {
         })
     }
 
+    self.matrixchat = {
+        inited : false,
+        initing : false,
+        destroy : function(){
+            if (window.matrixchat){
+                window.matrixchat.destroy()
+            }
+    
+            $('#matrix').empty();
+
+            self.matrixchat.inited = false
+        },
+
+        init : function(){
+
+            if(self.matrixchat.inited) return
+            if(self.matrixchat.initing) return
+
+            self.matrixchat.initing = true
+            
+            app.user.isState(function(state){
+
+                self.matrixchat.initing = false
+
+                if (state) {
+
+                    var pnet = self.app.platform.sdk.address.pnet()
+
+                    var a = pnet.address;
+
+                    var addresses = self.testchataddresses;
+
+                    if (addresses.indexOf(a) > -1) {
+
+                        if (!isMobile()){
+
+                            self.matrixchat.inited = true
+        
+                            var privatekey = self.app.user.private.value.toString('hex');
+                
+                            var matrix = `<div class="wrapper">
+                                <matrix-element
+                                    address="${a}"
+                                    privatekey="${privatekey}"
+                                    pocketnet="true"   
+                                >
+                                </matrix-element>
+                            </div>`
+        
+                            $('#matrix').append(matrix);         
+                            
+                        }
+        
+                    }
+                }
+            })
+        }
+    }
+
     self.prepareUser = function (clbk) {
 
         self.preparingUser = true;
 
         var pnet = self.app.platform.sdk.address.pnet()
 
-        if (window.matrixchat){
-            window.matrixchat.destroy()
-        }
-
-        $('#matrix').empty();
+        self.matrixchat.destroy()
 
         if (pnet){
 
             var a = pnet.address;
-
 
             var addresses = self.testchataddresses;
 
@@ -19220,47 +19276,7 @@ Platform = function (app, listofnodes) {
             }
 
             if (addresses.indexOf(a) > -1) {
-
                 self.app.user.features.telegram = 1;
-
-                if (!isMobile()){
-
-                    var a = self.app.platform.sdk.address.pnet().address
-                    var privatekey = self.app.user.private.value.toString('hex');
-
-        
-                    var matrix = `<div class="wrapper">
-                        <matrix-element
-                            address="${a}"
-                            privatekey="${privatekey}"
-                            pocketnet="true"   
-                        >
-                        </matrix-element>
-                    </div>`
-
-                    $('#matrix').append(matrix);         
-                    
-                }
-
-                /*var currentHref = self.app.nav.get.href();
-
-				var electronHrefs = JSON.parse(localStorage['electron_hrefs_2'] || "[]");
-			   
-				if (electronHrefs.indexOf(currentHref) == -1 && !electron){
-
-					electronHrefs.push(currentHref)
-
-					localStorage['electron_hrefs_2'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
-
-					try{
-						window.location = 'pocketnet://electron/' + currentHref;
-					}
-					catch(e){
-						console.log("electron not installed")
-					}
-				   
-				} */
-
             } else {
                 self.app.user.features.telegram = 0;
             }
@@ -19299,6 +19315,7 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.user.get(function (u) {
 
+                            self.matrixchat.init()
 
                             self.preparingUser = false;
 
