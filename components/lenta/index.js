@@ -2817,7 +2817,7 @@ var lenta = (function(){
 
 		var initEvents = function(){			
 
-			if(isMobile() && canloadprev){
+			if(isMobile() && canloadprev && !essenseData.openapi){
 
 				var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
@@ -2912,15 +2912,19 @@ var lenta = (function(){
 				}).init()
 			}
 
+			if(!essenseData.openapi){
+
 			
 
-			window.addEventListener('scroll', events.sharesInview);
-			window.addEventListener('scroll', events.videosInview);
-			window.addEventListener('resize', events.resize);
+				window.addEventListener('scroll', events.sharesInview);
+				window.addEventListener('scroll', events.videosInview);
+				window.addEventListener('resize', events.resize);
 
-			if(!essenseData.notscrollloading){
-				window.addEventListener('scroll', events.loadmorescroll);
-			}			
+				if(!essenseData.notscrollloading){
+					window.addEventListener('scroll', events.loadmorescroll);
+				}	
+				
+			}
 
 			el.c.on('click', '.wholikesTable', events.postscores)
 
@@ -2989,110 +2993,6 @@ var lenta = (function(){
 
 			el.c.on('click', '.commentsAction', events.toComments)
 
-			if(!essenseData.txids){
-				self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
-
-
-					if (share.txidEdit){		
-												
-						delete initedcommentes[share.txidEdit]
-						delete shareInitedMap[share.txidEdit],
-						delete shareInitingMap[share.txidEdit]
-
-						
-						var f = replaceEqual(sharesInview, {
-							txid : share.txidEdit
-						}, share)
-
-
-
-						if (f){
-
-							renders.shares([share], function(){
-								renders.sharesInview([share], function(){
-									
-								})
-							}, {
-								inner : replaceWith,
-								el : el.shares.find('#' + share.txidEdit),
-
-								ignoresw : true,
-							})
-
-							
-						}
-					}
-					else{
-						renders.shares([share], function(){
-							renders.sharesInview([share], function(){
-								
-							})
-						}, {
-							inner : prepend
-						})
-					}
-
-					
-				}
-
-				self.app.platform.ws.messages.transaction.clbks.temp = function(data){
-
-					if(beginmaterial || essenseData.author || essenseData.txids) return
-
-
-					if(data.temp){
-
-						var s = _.find(sharesInview, function(sh){
-							if(sh.txid == data.temp.txid) return true
-						})
-
-						if (s){
-
-
-							s.temp = false
-
-							s.scnt = "0"
-							s.score = "0"
-							s.myVal = 0
-
-							s.time = new Date()
-
-							shareInitedMap[s.txid] = false
-
-							renders.sharesInview([s], function(){
-								
-							})
-
-							
-						}
-
-					}
-					
-				}
-
-				self.app.platform.ws.messages.event.clbks.lenta = function(data){
-
-					if(data.mesType == 'upvoteShare' && data.share){
-
-						var s = _.find(sharesInview, function(sh){
-							if(sh.txid == data.share.txid) return true
-						})
-
-						if (s){
-
-							renders.stars(s, function(){
-								
-							})
-
-						}
-
-					}
-					
-				}
-			}
-			
-			
-
 			var shownewmaterials = function(c){
 				if(!beginmaterial && recommended != 'recommended' && !essenseData.author && !essenseData.search){
 
@@ -3120,119 +3020,236 @@ var lenta = (function(){
 				}
 			}
 
-			self.app.platform.clbks._focus.lenta = function(time){
-
-				if (window.cordova && !essenseData.txids && !making && time > 120){
-
-					actions.loadprev()
-					_scrollTop(0)
-					
-				}
-			}
-
-			self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = function(data){
-
-				if(making || beginmaterial || essenseData.author || essenseData.txids) return
-				
-				if(recommended == 'sub'){
-					
-					shownewmaterials(data.cntsubscr)
-				}
-				else
-				{
-					shownewmaterials(data.cntposts)
-				}
-			}
-
-			self.app.platform.ws.messages["new block"].clbks.newsharesLenta = function(data){
-
-				if(making || beginmaterial || essenseData.author || essenseData.txids) return
-
-				if(recommended == 'sub'){
-					
-					shownewmaterials(data['sharesSubscr'])
-				}
-				else
-				{
-					shownewmaterials(deep(data, 'sharesLang.' + self.app.localization.key))
-				}
-				
-			}
-			self.app.platform.sdk.categories.clbks.tags.lenta =
-			self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
-
-				if(getloader() == 'hierarchical'){
-					//_scrollTop(0)
-					actions.loadprev()
-					
-				}
-				
-			}
-
-			self.app.platform.ws.messages.comment.clbks.lenta = function(data){
-
-
-				if(shareInitedMap[data.posttxid]){
-					var c = el.c.find('#' + data.posttxid + " .commentsAction .count span");
-
-						c.html(Number(c.html() || "0") + 1)
-				}
-
-				
-				
-			}
-
-			self.app.platform.clbks.api.actions.subscribe.lenta = function(address){
-
-				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
-
-				addressEl.addClass('subscribed');
-				addressEl.find('.notificationturn').removeClass('turnon')	
-			}
-
-			self.app.platform.clbks.api.actions.subscribePrivate.lenta = function(address){
-
-				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
-
-				var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
-
-				if (me){
-					var r = me.relation(address, 'subscribes') 
-
-					if (r && (r.private == 'true' || r.private === true)){
-						addressEl.find('.notificationturn').addClass('turnon')	
-					}
-					else{
-						addressEl.find('.notificationturn').removeClass('turnon')	
-					}
-				}
-
-				addressEl.addClass('subscribed');
-			}
+			
+			
 			
 
-			self.app.platform.clbks.api.actions.unsubscribe.lenta = function(address){
+			
 
-				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+			if(!essenseData.openapi){
 
-				addressEl.removeClass('subscribed');
+				if(!essenseData.txids){
+					self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
+	
+	
+						if (share.txidEdit){		
+													
+							delete initedcommentes[share.txidEdit]
+							delete shareInitedMap[share.txidEdit],
+							delete shareInitingMap[share.txidEdit]
+	
+							
+							var f = replaceEqual(sharesInview, {
+								txid : share.txidEdit
+							}, share)
+	
+	
+	
+							if (f){
+	
+								renders.shares([share], function(){
+									renders.sharesInview([share], function(){
+										
+									})
+								}, {
+									inner : replaceWith,
+									el : el.shares.find('#' + share.txidEdit),
+	
+									ignoresw : true,
+								})
+	
+								
+							}
+						}
+						else{
+							renders.shares([share], function(){
+								renders.sharesInview([share], function(){
+									
+								})
+							}, {
+								inner : prepend
+							})
+						}
+	
+						
+					}
+	
+					self.app.platform.ws.messages.transaction.clbks.temp = function(data){
+	
+						if(beginmaterial || essenseData.author || essenseData.txids) return
+	
+	
+						if(data.temp){
+	
+							var s = _.find(sharesInview, function(sh){
+								if(sh.txid == data.temp.txid) return true
+							})
+	
+							if (s){
+	
+	
+								s.temp = false
+	
+								s.scnt = "0"
+								s.score = "0"
+								s.myVal = 0
+	
+								s.time = new Date()
+	
+								shareInitedMap[s.txid] = false
+	
+								renders.sharesInview([s], function(){
+									
+								})
+	
+								
+							}
+	
+						}
+						
+					}
+	
+					self.app.platform.ws.messages.event.clbks.lenta = function(data){
+	
+						if(data.mesType == 'upvoteShare' && data.share){
+	
+							var s = _.find(sharesInview, function(sh){
+								if(sh.txid == data.share.txid) return true
+							})
+	
+							if (s){
+	
+								renders.stars(s, function(){
+									
+								})
+	
+							}
+	
+						}
+						
+					}
+				}
 
-				addressEl.find('.notificationturn').removeClass('turnon')
-			}
+				self.app.platform.clbks._focus.lenta = function(time){
 
-			self.app.platform.clbks.api.actions.blocking.lenta = function(address){
+					if (window.cordova && !essenseData.txids && !making && time > 120){
 
-				var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+						actions.loadprev()
+						_scrollTop(0)
+						
+					}
+				}
+			
 
-				addressEl.addClass('blocking');
-			}
+				if(!essenseData.txids){
 
-			self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
+					self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = function(data){
 
-				var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+						if(making || beginmaterial || essenseData.author || essenseData.txids) return
+						
+						if(recommended == 'sub'){
+							
+							shownewmaterials(data.cntsubscr)
+						}
+						else
+						{
+							shownewmaterials(data.cntposts)
+						}
+					}
 
-				addressEl.removeClass('blocking');
-			}
+					self.app.platform.ws.messages["new block"].clbks.newsharesLenta = function(data){
+
+						if(making || beginmaterial || essenseData.author || essenseData.txids) return
+
+						if(recommended == 'sub'){
+							
+							shownewmaterials(data['sharesSubscr'])
+						}
+						else
+						{
+							shownewmaterials(deep(data, 'sharesLang.' + self.app.localization.key))
+						}
+						
+					}
+					self.app.platform.sdk.categories.clbks.tags.lenta =
+					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
+
+						if(getloader() == 'hierarchical'){
+							//_scrollTop(0)
+							actions.loadprev()
+							
+						}
+						
+					}
+
+				}
+
+				self.app.platform.ws.messages.comment.clbks.lenta = function(data){
+
+
+					if(shareInitedMap[data.posttxid]){
+						var c = el.c.find('#' + data.posttxid + " .commentsAction .count span");
+
+							c.html(Number(c.html() || "0") + 1)
+					}
+
+					
+					
+				}
+
+				self.app.platform.clbks.api.actions.subscribe.lenta = function(address){
+
+					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+					addressEl.addClass('subscribed');
+					addressEl.find('.notificationturn').removeClass('turnon')	
+				}
+
+				self.app.platform.clbks.api.actions.subscribePrivate.lenta = function(address){
+
+					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+					var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+
+					if (me){
+						var r = me.relation(address, 'subscribes') 
+
+						if (r && (r.private == 'true' || r.private === true)){
+							addressEl.find('.notificationturn').addClass('turnon')	
+						}
+						else{
+							addressEl.find('.notificationturn').removeClass('turnon')	
+						}
+					}
+
+					addressEl.addClass('subscribed');
+				}
+				
+
+				self.app.platform.clbks.api.actions.unsubscribe.lenta = function(address){
+
+					var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+					addressEl.removeClass('subscribed');
+
+					addressEl.find('.notificationturn').removeClass('turnon')
+				}
+
+				self.app.platform.clbks.api.actions.blocking.lenta = function(address){
+
+					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+
+					addressEl.addClass('blocking');
+				}
+
+				self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
+
+					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+
+					addressEl.removeClass('blocking');
+				}
+
+			}	
 			
 		}
 

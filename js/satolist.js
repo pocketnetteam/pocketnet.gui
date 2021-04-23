@@ -1731,7 +1731,9 @@ Platform = function (app, listofnodes) {
                     txids : ids,
                     comments : p.comments,
                     enterFullScreenVideo : p.fullscreenvideo,
-                    openapi : p.openapi
+                    openapi : p.openapi,
+                    renderclbk : p.renderclbk,
+                    ready : p.ready
                 },
                 
                 clbk : clbk
@@ -16726,7 +16728,7 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.user.subscribeRef()
 
-                    self.matrixchat.init()
+                    platform.matrixchat.init()
 
                     setTimeout(function () {
                         platform.sdk.relayTransactions.send()

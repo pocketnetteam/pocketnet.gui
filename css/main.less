@@ -1759,269 +1759,133 @@ input[type=radio].radio:checked + label {
     background-position: 0 -25px;
     color: @color-good;
 }
-.m-message-container {
-    position: fixed;
-    z-index: 1010;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    padding: 15px;
-  
-    &.is-top-left,
-    &.is-top-center,
-    &.is-top-right {
-      width: 100%;
-      top: 0;
-      left: 0;
+.m-message-container{position:fixed;z-index:1010;pointer-events:none;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-sizing:border-box;box-sizing:border-box;padding:15px}.m-message-container.is-top-center,.m-message-container.is-top-left,.m-message-container.is-top-right{width:100%;top:0;left:0}.m-message-container.is-top-left{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.m-message-container.is-top-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.m-message-container.is-top-right{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.m-message-container.is-center{width:100%;height:100%;left:0;top:0;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.m-message-container.is-bottom-center,.m-message-container.is-bottom-left,.m-message-container.is-bottom-right{bottom:0;left:0;width:100%;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end}.m-message-container.is-bottom-left{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.m-message-container.is-bottom-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.m-message-container.is-bottom-right{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.m-message-container.has-mask{background-color:hsla(0,0%,100%,.5);width:100%;height:100%;pointer-events:all}.m-message-wrapper{display:inline-block;max-width:500px}.m-message-wrapper+.m-message-wrapper{margin-top:15px}.m-message-wrapper:after,.m-message-wrapper:before{content:"";clear:both;display:table}.m-message{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:10px 16px;font-size:14px;overflow:hidden;border-radius:4px;-webkit-box-shadow:0 1px 8px rgba(0,0,0,.15);box-shadow:0 1px 8px rgba(0,0,0,.15);color:rgba(0,0,0,.65);background:hsla(0,0%,100%,.95);pointer-events:all;position:relative}.m-message,.m-message-icons{-webkit-box-sizing:border-box;box-sizing:border-box}.m-message-icons{float:left;margin-right:10px}.m-message--title{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.m-message-content{-webkit-box-sizing:border-box;box-sizing:border-box;overflow:auto;width:100%}.m-message--description{line-height:1.6;color:#777}.m-message--title+.m-message--description{margin-top:5px}.m-message--icon{width:25px;height:25px;vertical-align:middle;display:inline-block;border-radius:50%}.m-message--control{position:relative;height:100%;-ms-flex-item-align:start;align-self:flex-start;white-space:nowrap;margin-right:-5px;margin-left:10px}.m-message--button{border:none;outline:none;background:none;cursor:pointer;font-size:15px;color:#646464;font-weight:600;padding:0;width:20px;height:20px;line-height:20px;text-align:center;vertical-align:middle}.m-message--button:hover{color:#f56c6c}.m-message--arrow-down.is-collapsed{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.m-message-fade-enter-active{-webkit-animation:m-message-fade-in-down .3s;animation:m-message-fade-in-down .3s}.m-message-fade-leave-active{-webkit-animation:m-message-fade-out .3s;animation:m-message-fade-out .3s}@-webkit-keyframes m-message-fade-in-down{0%{opacity:0;-webkit-transform:translateY(-20px);transform:translateY(-20px)}to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes m-message-fade-in-down{0%{opacity:0;-webkit-transform:translateY(-20px);transform:translateY(-20px)}to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}@-webkit-keyframes m-message-fade-out{0%{opacity:1;margin-top:0}to{opacity:0;margin-top:-45px}}@keyframes m-message-fade-out{0%{opacity:1;margin-top:0}to{opacity:0;margin-top:-45px}}
+.m-message-container.is-bottom-right{
+    padding : 0;
+    right: 56px;
+    bottom : 1.5 * @rhythm;
+    width: auto;
+}
+    
+.m-message-container{
+    .notificationWrapper {
+        display: block;
+        max-width: none;
+        /*width: 100%*/
+        font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
-  
-    &.is-top-left {
-      align-items: flex-start;
+    
+    .notificationWrapper.m-message-wrapper + .m-message-wrapper {
+        margin-top: 0.5em;
     }
-  
-    &.is-top-center {
-      align-items: center;
+    
+    .notificationWrapper .m-message {
+        padding: 0.5em 0.5em;
+        border: 1px solid rgba(51, 51, 51, 0.9);
+        border-radius: 5px;
+        box-shadow: none;
+        background: #fff;
+        font-size: 1em;
     }
-  
-    &.is-top-right {
-      align-items: flex-end;
+    
+    .notificationWrapper .m-message--title {
+        font-weight: bold;
+        color: #999;
+        font-size: 0.8em;
     }
-  
-    &.is-center {
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      align-items: center;
-      justify-content: center;
+    
+    .notificationWrapper .m-message--title:first-letter {
+        text-transform: capitalize;
     }
-  
-    &.is-bottom-left,
-    &.is-bottom-center,
-    &.is-bottom-right {
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      justify-content: flex-end;
+    
+    .notificationWrapper .m-message--description {
+        margin-top: 0;
     }
-  
-    &.is-bottom-left {
-      align-items: flex-start;
+    
+    .notificationWrapper .m-message-content {
+        flex-grow: 1;
     }
-  
-    &.is-bottom-center {
-      align-items: center;
-    }
-  
-    &.is-bottom-right {
-      align-items: flex-end;
-    }
-  
-    &.has-mask {
-      background-color: rgba(255, 255, 255, 0.5);
-      width: 100%;
-      height: 100%;
-      pointer-events: all;
-    }
-  }
-  
-  .m-message-wrapper {
-    display: inline-block;
-    max-width: 500px;
-  
-    & + & {
-      margin-top: 15px;
-    }
-  
-    &::before,
-    &::after {
-      content: "";
-      clear: both;
-      display: table;
-    }
-  }
-  
-  .m-message {
-    //display: flex;
-    //align-items: center;
-    //padding: 10px 16px;
-    //font-size: 14px;
-    //overflow: hidden;
-    //border-radius: 4px;
-    //box-sizing: border-box;
-    //box-shadow: 0 1px 8px rgba(0, 0, 0, .15);
-    //color: rgba(0, 0, 0, .65);
-    //background: rgba(255, 255, 255, 0.95);
-    //pointer-events: all;
-    //position: relative;
-  
-    &-icons {
-      float: left;
-      box-sizing: border-box;
-      margin-right: 10px;
-    }
-  
-    &--title {
-      font-size: 14px;
-      font-weight: 600;
-      overflow: hidden;
-      color: #646464;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  
-    &-content {
-      box-sizing: border-box;
-      overflow: auto;
-      width: 100%;
-  
-      .listPreview {
+    
+    .notificationWrapper .m-message-content .listPreview {
         cursor: pointer;
-        .invitedEvent {
-          width: 180px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          span {
-            display: block;
-            font-size: .8em;
-          }
-          .txt {
-            color: rgb(112, 112, 112);
-          }
-          .txtNew {
-            color: #06823a;
-          }
-        }
-        .linkPreview {
-          span {
-            &:first-letter {
-              text-transform: uppercase;
-            }
-          }
-          .senderName {
-            font-weight: bold;
-            color: rgb(0, 42, 82);
-          }
-          .linkTitle {
-            color: rgb(112, 112, 112);
-          }
-          .pocketnetLink {
-            color: rgb(0, 42, 82);
-          }
-        }
-        .previewMessageList {
-          span {
-            color: rgb(112, 112, 112);
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            text-align: left;
-          }
-        }
-        .previewMessage {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          width: 100%;
-          span {
-            display: block;
-            color: rgb(112, 112, 112);
-            font-size: 0.8em;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            text-align: left;
-            max-width: 150px;
-          }
-        }
-      }
     }
-  
-    &--description {
-      line-height: 1.6;
-      color: #777;
+    
+    .notificationWrapper .m-message-content .listPreview .invitedEvent {
+        width: 180px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-  
-    &--title + &--description {
-      margin-top: 5px;
+    
+    .notificationWrapper .m-message-content .listPreview .invitedEvent span {
+        display: block;
+        font-size: .8em;
     }
-  
-    &--icon {
-      width: 25px;
-      height: 25px;
-      vertical-align: middle;
-      display: inline-block;
-      border-radius: 50%;
+    
+    .notificationWrapper .m-message-content .listPreview .invitedEvent .txt {
+        color: #333;
     }
-  
-    &--control {
-      position: relative;
-      height: 100%;
-      align-self: flex-start;
-      white-space: nowrap;
-      margin-right: -5px;
-      margin-left: 10px;
+    
+    .notificationWrapper .m-message-content .listPreview .invitedEvent .txtNew {
+        color: #3b7700;
     }
-  
-    &--button {
-      border: none;
-      outline: none;
-      background: none;
-      cursor: pointer;
-      font-size: 15px;
-      color: #646464;
-      font-weight: 600;
-      padding: 0;
-      width: 20px;
-      height: 20px;
-      line-height: 20px;
-      text-align: center;
-      vertical-align: middle;
-  
-      &:hover {
-        color: #F56C6C;
-      }
+    
+    .notificationWrapper .m-message-content .listPreview .linkPreview span:first-letter {
+        text-transform: uppercase;
     }
-  
-    &--arrow-down {
-      &.is-collapsed {
-        transform: rotate(90deg);
-      }
+    
+    .notificationWrapper .m-message-content .listPreview .linkPreview .senderName {
+        font-weight: bold;
+        color: #999;
     }
-  }
-  
-  .m-message-fade-enter-active {
-    animation: m-message-fade-in-down 0.3s;
-  }
-  
-  .m-message-fade-leave-active {
-    animation: m-message-fade-out 0.3s;
-  }
-  
-  @keyframes m-message-fade-in-down {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
+    
+    .notificationWrapper .m-message-content .listPreview .linkPreview .linkTitle {
+        color: #333;
     }
-    100% {
-      opacity: 1;
-      transform: translateY(0px);
+    
+    .notificationWrapper .m-message-content .listPreview .linkPreview .pocketnetLink {
+        color: #999;
     }
-  }
-  
-  @keyframes m-message-fade-out {
-    0% {
-      opacity: 1;
-      margin-top: 0;
+    
+    .notificationWrapper .m-message-content .listPreview .previewMessageList span {
+        color: #333;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: left;
     }
-    100% {
-      opacity: 0;
-      margin-top: -45px;
+    
+    .notificationWrapper .m-message-content .listPreview .previewMessage {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
     }
-  }
-   
+    
+    .notificationWrapper .m-message-content .listPreview .previewMessage span {
+        display: block;
+        color: #333;
+        font-size: 0.8em;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: left;
+        max-width: 150px;
+    }
+    
+    .notificationWrapper .m-message-icons {
+        float: none;
+    }
+    
+    .notificationWrapper .m-message--icon {
+        display: block;
+        vertical-align: top;
+    }
+    
+    .notificationWrapper .m-message--button.m-message--arrow-down {
+        display: none;
+    }
+}
 
 .editable{
     display: table;
