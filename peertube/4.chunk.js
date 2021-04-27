@@ -1,112 +1,1735 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[4],{
 
-/***/ "./node_modules/inherits/inherits_browser.js":
-/*!***************************************************!*\
-  !*** ./node_modules/inherits/inherits_browser.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-if (typeof Object.create === 'function') {
-  // implementation from standard node.js 'util' module
-  module.exports = function inherits(ctor, superCtor) {
-    if (superCtor) {
-      ctor.super_ = superCtor
-      ctor.prototype = Object.create(superCtor.prototype, {
-        constructor: {
-          value: ctor,
-          enumerable: false,
-          writable: true,
-          configurable: true
-        }
-      })
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return decodeB64ToUint8Array; });
+/* harmony import */ var global_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! global/window */ "./node_modules/global/window.js");
+/* harmony import */ var global_window__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(global_window__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var atob = function atob(s) {
+  return global_window__WEBPACK_IMPORTED_MODULE_0___default.a.atob ? global_window__WEBPACK_IMPORTED_MODULE_0___default.a.atob(s) : Buffer.from(s, 'base64').toString('binary');
+};
+
+function decodeB64ToUint8Array(b64Text) {
+  var decodedString = atob(b64Text);
+  var array = new Uint8Array(decodedString.length);
+
+  for (var i = 0; i < decodedString.length; i++) {
+    array[i] = decodedString.charCodeAt(i);
+  }
+
+  return array;
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node-libs-browser/node_modules/buffer/index.js */ "./node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
+
+/***/ }),
+
+/***/ "./node_modules/@videojs/vhs-utils/es/stream.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@videojs/vhs-utils/es/stream.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Stream; });
+/**
+ * @file stream.js
+ */
+
+/**
+ * A lightweight readable stream implemention that handles event dispatching.
+ *
+ * @class Stream
+ */
+var Stream = /*#__PURE__*/function () {
+  function Stream() {
+    this.listeners = {};
+  }
+  /**
+   * Add a listener for a specified event type.
+   *
+   * @param {string} type the event name
+   * @param {Function} listener the callback to be invoked when an event of
+   * the specified type occurs
+   */
+
+
+  var _proto = Stream.prototype;
+
+  _proto.on = function on(type, listener) {
+    if (!this.listeners[type]) {
+      this.listeners[type] = [];
     }
-  };
-} else {
-  // old school shim for old browsers
-  module.exports = function inherits(ctor, superCtor) {
-    if (superCtor) {
-      ctor.super_ = superCtor
-      var TempCtor = function () {}
-      TempCtor.prototype = superCtor.prototype
-      ctor.prototype = new TempCtor()
-      ctor.prototype.constructor = ctor
+
+    this.listeners[type].push(listener);
+  }
+  /**
+   * Remove a listener for a specified event type.
+   *
+   * @param {string} type the event name
+   * @param {Function} listener  a function previously registered for this
+   * type of event through `on`
+   * @return {boolean} if we could turn it off or not
+   */
+  ;
+
+  _proto.off = function off(type, listener) {
+    if (!this.listeners[type]) {
+      return false;
+    }
+
+    var index = this.listeners[type].indexOf(listener); // TODO: which is better?
+    // In Video.js we slice listener functions
+    // on trigger so that it does not mess up the order
+    // while we loop through.
+    //
+    // Here we slice on off so that the loop in trigger
+    // can continue using it's old reference to loop without
+    // messing up the order.
+
+    this.listeners[type] = this.listeners[type].slice(0);
+    this.listeners[type].splice(index, 1);
+    return index > -1;
+  }
+  /**
+   * Trigger an event of the specified type on this stream. Any additional
+   * arguments to this function are passed as parameters to event listeners.
+   *
+   * @param {string} type the event name
+   */
+  ;
+
+  _proto.trigger = function trigger(type) {
+    var callbacks = this.listeners[type];
+
+    if (!callbacks) {
+      return;
+    } // Slicing the arguments on every invocation of this method
+    // can add a significant amount of overhead. Avoid the
+    // intermediate object creation for the common case of a
+    // single callback argument
+
+
+    if (arguments.length === 2) {
+      var length = callbacks.length;
+
+      for (var i = 0; i < length; ++i) {
+        callbacks[i].call(this, arguments[1]);
+      }
+    } else {
+      var args = Array.prototype.slice.call(arguments, 1);
+      var _length = callbacks.length;
+
+      for (var _i = 0; _i < _length; ++_i) {
+        callbacks[_i].apply(this, args);
+      }
     }
   }
+  /**
+   * Destroys the stream and cleans up.
+   */
+  ;
+
+  _proto.dispose = function dispose() {
+    this.listeners = {};
+  }
+  /**
+   * Forwards all `data` events on this stream to the destination stream. The
+   * destination stream should provide a method `push` to receive the data
+   * events as they arrive.
+   *
+   * @param {Stream} destination the stream that will receive all `data` events
+   * @see http://nodejs.org/api/stream.html#stream_readable_pipe_destination_options
+   */
+  ;
+
+  _proto.pipe = function pipe(destination) {
+    this.on('data', function (data) {
+      destination.push(data);
+    });
+  };
+
+  return Stream;
+}();
+
+
+
+/***/ }),
+
+/***/ "./node_modules/hls.js/src/loader/load-stats.ts":
+/*!******************************************************!*\
+  !*** ./node_modules/hls.js/src/loader/load-stats.ts ***!
+  \******************************************************/
+/*! exports provided: LoadStats */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoadStats", function() { return LoadStats; });
+class LoadStats {
+    constructor() {
+        this.aborted = false;
+        this.loaded = 0;
+        this.retry = 0;
+        this.total = 0;
+        this.chunkCount = 0;
+        this.bwEstimate = 0;
+        this.loading = { start: 0, first: 0, end: 0 };
+        this.parsing = { start: 0, end: 0 };
+        this.buffering = { start: 0, first: 0, end: 0 };
+    }
 }
 
 
 /***/ }),
 
-/***/ "./node_modules/safe-buffer/index.js":
-/*!*******************************************!*\
-  !*** ./node_modules/safe-buffer/index.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./node_modules/m3u8-parser/dist/m3u8-parser.es.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/m3u8-parser/dist/m3u8-parser.es.js ***!
+  \*********************************************************/
+/*! exports provided: LineStream, ParseStream, Parser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/* eslint-disable node/no-deprecated-api */
-var buffer = __webpack_require__(/*! buffer */ "./node_modules/node-libs-browser/node_modules/buffer/index.js")
-var Buffer = buffer.Buffer
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LineStream", function() { return LineStream; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParseStream", function() { return ParseStream; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Parser", function() { return Parser; });
+/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js");
+/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _videojs_vhs_utils_es_stream_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @videojs/vhs-utils/es/stream.js */ "./node_modules/@videojs/vhs-utils/es/stream.js");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _videojs_vhs_utils_es_decode_b64_to_uint8_array_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @videojs/vhs-utils/es/decode-b64-to-uint8-array.js */ "./node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js");
+/*! @name m3u8-parser @version 4.6.0 @license Apache-2.0 */
 
-// alternative to using Object.keys for old browsers
-function copyProps (src, dst) {
-  for (var key in src) {
-    dst[key] = src[key]
+
+
+
+
+
+/**
+ * A stream that buffers string input and generates a `data` event for each
+ * line.
+ *
+ * @class LineStream
+ * @extends Stream
+ */
+
+var LineStream = /*#__PURE__*/function (_Stream) {
+  _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default()(LineStream, _Stream);
+
+  function LineStream() {
+    var _this;
+
+    _this = _Stream.call(this) || this;
+    _this.buffer = '';
+    return _this;
   }
-}
-if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
-  module.exports = buffer
-} else {
-  // Copy properties from require('buffer')
-  copyProps(buffer, exports)
-  exports.Buffer = SafeBuffer
-}
+  /**
+   * Add new data to be parsed.
+   *
+   * @param {string} data the text to process
+   */
 
-function SafeBuffer (arg, encodingOrOffset, length) {
-  return Buffer(arg, encodingOrOffset, length)
-}
 
-// Copy static methods from Buffer
-copyProps(Buffer, SafeBuffer)
+  var _proto = LineStream.prototype;
 
-SafeBuffer.from = function (arg, encodingOrOffset, length) {
-  if (typeof arg === 'number') {
-    throw new TypeError('Argument must not be a number')
-  }
-  return Buffer(arg, encodingOrOffset, length)
-}
+  _proto.push = function push(data) {
+    var nextNewline;
+    this.buffer += data;
+    nextNewline = this.buffer.indexOf('\n');
 
-SafeBuffer.alloc = function (size, fill, encoding) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  var buf = Buffer(size)
-  if (fill !== undefined) {
-    if (typeof encoding === 'string') {
-      buf.fill(fill, encoding)
-    } else {
-      buf.fill(fill)
+    for (; nextNewline > -1; nextNewline = this.buffer.indexOf('\n')) {
+      this.trigger('data', this.buffer.substring(0, nextNewline));
+      this.buffer = this.buffer.substring(nextNewline + 1);
     }
-  } else {
-    buf.fill(0)
-  }
-  return buf
-}
+  };
 
-SafeBuffer.allocUnsafe = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
-  }
-  return Buffer(size)
-}
+  return LineStream;
+}(_videojs_vhs_utils_es_stream_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
-SafeBuffer.allocUnsafeSlow = function (size) {
-  if (typeof size !== 'number') {
-    throw new TypeError('Argument must be a number')
+var TAB = String.fromCharCode(0x09);
+
+var parseByterange = function parseByterange(byterangeString) {
+  // optionally match and capture 0+ digits before `@`
+  // optionally match and capture 0+ digits after `@`
+  var match = /([0-9.]*)?@?([0-9.]*)?/.exec(byterangeString || '');
+  var result = {};
+
+  if (match[1]) {
+    result.length = parseInt(match[1], 10);
   }
-  return buffer.SlowBuffer(size)
-}
+
+  if (match[2]) {
+    result.offset = parseInt(match[2], 10);
+  }
+
+  return result;
+};
+/**
+ * "forgiving" attribute list psuedo-grammar:
+ * attributes -> keyvalue (',' keyvalue)*
+ * keyvalue   -> key '=' value
+ * key        -> [^=]*
+ * value      -> '"' [^"]* '"' | [^,]*
+ */
+
+
+var attributeSeparator = function attributeSeparator() {
+  var key = '[^=]*';
+  var value = '"[^"]*"|[^,]*';
+  var keyvalue = '(?:' + key + ')=(?:' + value + ')';
+  return new RegExp('(?:^|,)(' + keyvalue + ')');
+};
+/**
+ * Parse attributes from a line given the separator
+ *
+ * @param {string} attributes the attribute line to parse
+ */
+
+
+var parseAttributes = function parseAttributes(attributes) {
+  // split the string using attributes as the separator
+  var attrs = attributes.split(attributeSeparator());
+  var result = {};
+  var i = attrs.length;
+  var attr;
+
+  while (i--) {
+    // filter out unmatched portions of the string
+    if (attrs[i] === '') {
+      continue;
+    } // split the key and value
+
+
+    attr = /([^=]*)=(.*)/.exec(attrs[i]).slice(1); // trim whitespace and remove optional quotes around the value
+
+    attr[0] = attr[0].replace(/^\s+|\s+$/g, '');
+    attr[1] = attr[1].replace(/^\s+|\s+$/g, '');
+    attr[1] = attr[1].replace(/^['"](.*)['"]$/g, '$1');
+    result[attr[0]] = attr[1];
+  }
+
+  return result;
+};
+/**
+ * A line-level M3U8 parser event stream. It expects to receive input one
+ * line at a time and performs a context-free parse of its contents. A stream
+ * interpretation of a manifest can be useful if the manifest is expected to
+ * be too large to fit comfortably into memory or the entirety of the input
+ * is not immediately available. Otherwise, it's probably much easier to work
+ * with a regular `Parser` object.
+ *
+ * Produces `data` events with an object that captures the parser's
+ * interpretation of the input. That object has a property `tag` that is one
+ * of `uri`, `comment`, or `tag`. URIs only have a single additional
+ * property, `line`, which captures the entirety of the input without
+ * interpretation. Comments similarly have a single additional property
+ * `text` which is the input without the leading `#`.
+ *
+ * Tags always have a property `tagType` which is the lower-cased version of
+ * the M3U8 directive without the `#EXT` or `#EXT-X-` prefix. For instance,
+ * `#EXT-X-MEDIA-SEQUENCE` becomes `media-sequence` when parsed. Unrecognized
+ * tags are given the tag type `unknown` and a single additional property
+ * `data` with the remainder of the input.
+ *
+ * @class ParseStream
+ * @extends Stream
+ */
+
+
+var ParseStream = /*#__PURE__*/function (_Stream) {
+  _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default()(ParseStream, _Stream);
+
+  function ParseStream() {
+    var _this;
+
+    _this = _Stream.call(this) || this;
+    _this.customParsers = [];
+    _this.tagMappers = [];
+    return _this;
+  }
+  /**
+   * Parses an additional line of input.
+   *
+   * @param {string} line a single line of an M3U8 file to parse
+   */
+
+
+  var _proto = ParseStream.prototype;
+
+  _proto.push = function push(line) {
+    var _this2 = this;
+
+    var match;
+    var event; // strip whitespace
+
+    line = line.trim();
+
+    if (line.length === 0) {
+      // ignore empty lines
+      return;
+    } // URIs
+
+
+    if (line[0] !== '#') {
+      this.trigger('data', {
+        type: 'uri',
+        uri: line
+      });
+      return;
+    } // map tags
+
+
+    var newLines = this.tagMappers.reduce(function (acc, mapper) {
+      var mappedLine = mapper(line); // skip if unchanged
+
+      if (mappedLine === line) {
+        return acc;
+      }
+
+      return acc.concat([mappedLine]);
+    }, [line]);
+    newLines.forEach(function (newLine) {
+      for (var i = 0; i < _this2.customParsers.length; i++) {
+        if (_this2.customParsers[i].call(_this2, newLine)) {
+          return;
+        }
+      } // Comments
+
+
+      if (newLine.indexOf('#EXT') !== 0) {
+        _this2.trigger('data', {
+          type: 'comment',
+          text: newLine.slice(1)
+        });
+
+        return;
+      } // strip off any carriage returns here so the regex matching
+      // doesn't have to account for them.
+
+
+      newLine = newLine.replace('\r', ''); // Tags
+
+      match = /^#EXTM3U/.exec(newLine);
+
+      if (match) {
+        _this2.trigger('data', {
+          type: 'tag',
+          tagType: 'm3u'
+        });
+
+        return;
+      }
+
+      match = /^#EXTINF:?([0-9\.]*)?,?(.*)?$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'inf'
+        };
+
+        if (match[1]) {
+          event.duration = parseFloat(match[1]);
+        }
+
+        if (match[2]) {
+          event.title = match[2];
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-TARGETDURATION:?([0-9.]*)?/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'targetduration'
+        };
+
+        if (match[1]) {
+          event.duration = parseInt(match[1], 10);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-VERSION:?([0-9.]*)?/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'version'
+        };
+
+        if (match[1]) {
+          event.version = parseInt(match[1], 10);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-MEDIA-SEQUENCE:?(\-?[0-9.]*)?/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'media-sequence'
+        };
+
+        if (match[1]) {
+          event.number = parseInt(match[1], 10);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-DISCONTINUITY-SEQUENCE:?(\-?[0-9.]*)?/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'discontinuity-sequence'
+        };
+
+        if (match[1]) {
+          event.number = parseInt(match[1], 10);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-PLAYLIST-TYPE:?(.*)?$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'playlist-type'
+        };
+
+        if (match[1]) {
+          event.playlistType = match[1];
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-BYTERANGE:?(.*)?$/.exec(newLine);
+
+      if (match) {
+        event = _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2___default()(parseByterange(match[1]), {
+          type: 'tag',
+          tagType: 'byterange'
+        });
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-ALLOW-CACHE:?(YES|NO)?/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'allow-cache'
+        };
+
+        if (match[1]) {
+          event.allowed = !/NO/.test(match[1]);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-MAP:?(.*)$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'map'
+        };
+
+        if (match[1]) {
+          var attributes = parseAttributes(match[1]);
+
+          if (attributes.URI) {
+            event.uri = attributes.URI;
+          }
+
+          if (attributes.BYTERANGE) {
+            event.byterange = parseByterange(attributes.BYTERANGE);
+          }
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-STREAM-INF:?(.*)$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'stream-inf'
+        };
+
+        if (match[1]) {
+          event.attributes = parseAttributes(match[1]);
+
+          if (event.attributes.RESOLUTION) {
+            var split = event.attributes.RESOLUTION.split('x');
+            var resolution = {};
+
+            if (split[0]) {
+              resolution.width = parseInt(split[0], 10);
+            }
+
+            if (split[1]) {
+              resolution.height = parseInt(split[1], 10);
+            }
+
+            event.attributes.RESOLUTION = resolution;
+          }
+
+          if (event.attributes.BANDWIDTH) {
+            event.attributes.BANDWIDTH = parseInt(event.attributes.BANDWIDTH, 10);
+          }
+
+          if (event.attributes['PROGRAM-ID']) {
+            event.attributes['PROGRAM-ID'] = parseInt(event.attributes['PROGRAM-ID'], 10);
+          }
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-MEDIA:?(.*)$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'media'
+        };
+
+        if (match[1]) {
+          event.attributes = parseAttributes(match[1]);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-ENDLIST/.exec(newLine);
+
+      if (match) {
+        _this2.trigger('data', {
+          type: 'tag',
+          tagType: 'endlist'
+        });
+
+        return;
+      }
+
+      match = /^#EXT-X-DISCONTINUITY/.exec(newLine);
+
+      if (match) {
+        _this2.trigger('data', {
+          type: 'tag',
+          tagType: 'discontinuity'
+        });
+
+        return;
+      }
+
+      match = /^#EXT-X-PROGRAM-DATE-TIME:?(.*)$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'program-date-time'
+        };
+
+        if (match[1]) {
+          event.dateTimeString = match[1];
+          event.dateTimeObject = new Date(match[1]);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-KEY:?(.*)$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'key'
+        };
+
+        if (match[1]) {
+          event.attributes = parseAttributes(match[1]); // parse the IV string into a Uint32Array
+
+          if (event.attributes.IV) {
+            if (event.attributes.IV.substring(0, 2).toLowerCase() === '0x') {
+              event.attributes.IV = event.attributes.IV.substring(2);
+            }
+
+            event.attributes.IV = event.attributes.IV.match(/.{8}/g);
+            event.attributes.IV[0] = parseInt(event.attributes.IV[0], 16);
+            event.attributes.IV[1] = parseInt(event.attributes.IV[1], 16);
+            event.attributes.IV[2] = parseInt(event.attributes.IV[2], 16);
+            event.attributes.IV[3] = parseInt(event.attributes.IV[3], 16);
+            event.attributes.IV = new Uint32Array(event.attributes.IV);
+          }
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-START:?(.*)$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'start'
+        };
+
+        if (match[1]) {
+          event.attributes = parseAttributes(match[1]);
+          event.attributes['TIME-OFFSET'] = parseFloat(event.attributes['TIME-OFFSET']);
+          event.attributes.PRECISE = /YES/.test(event.attributes.PRECISE);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-CUE-OUT-CONT:?(.*)?$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'cue-out-cont'
+        };
+
+        if (match[1]) {
+          event.data = match[1];
+        } else {
+          event.data = '';
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-CUE-OUT:?(.*)?$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'cue-out'
+        };
+
+        if (match[1]) {
+          event.data = match[1];
+        } else {
+          event.data = '';
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-CUE-IN:?(.*)?$/.exec(newLine);
+
+      if (match) {
+        event = {
+          type: 'tag',
+          tagType: 'cue-in'
+        };
+
+        if (match[1]) {
+          event.data = match[1];
+        } else {
+          event.data = '';
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-SKIP:(.*)$/.exec(newLine);
+
+      if (match && match[1]) {
+        event = {
+          type: 'tag',
+          tagType: 'skip'
+        };
+        event.attributes = parseAttributes(match[1]);
+
+        if (event.attributes.hasOwnProperty('SKIPPED-SEGMENTS')) {
+          event.attributes['SKIPPED-SEGMENTS'] = parseInt(event.attributes['SKIPPED-SEGMENTS'], 10);
+        }
+
+        if (event.attributes.hasOwnProperty('RECENTLY-REMOVED-DATERANGES')) {
+          event.attributes['RECENTLY-REMOVED-DATERANGES'] = event.attributes['RECENTLY-REMOVED-DATERANGES'].split(TAB);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-PART:(.*)$/.exec(newLine);
+
+      if (match && match[1]) {
+        event = {
+          type: 'tag',
+          tagType: 'part'
+        };
+        event.attributes = parseAttributes(match[1]);
+        ['DURATION'].forEach(function (key) {
+          if (event.attributes.hasOwnProperty(key)) {
+            event.attributes[key] = parseFloat(event.attributes[key]);
+          }
+        });
+        ['INDEPENDENT', 'GAP'].forEach(function (key) {
+          if (event.attributes.hasOwnProperty(key)) {
+            event.attributes[key] = /YES/.test(event.attributes[key]);
+          }
+        });
+
+        if (event.attributes.hasOwnProperty('BYTERANGE')) {
+          event.attributes.byterange = parseByterange(event.attributes.BYTERANGE);
+        }
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-SERVER-CONTROL:(.*)$/.exec(newLine);
+
+      if (match && match[1]) {
+        event = {
+          type: 'tag',
+          tagType: 'server-control'
+        };
+        event.attributes = parseAttributes(match[1]);
+        ['CAN-SKIP-UNTIL', 'PART-HOLD-BACK', 'HOLD-BACK'].forEach(function (key) {
+          if (event.attributes.hasOwnProperty(key)) {
+            event.attributes[key] = parseFloat(event.attributes[key]);
+          }
+        });
+        ['CAN-SKIP-DATERANGES', 'CAN-BLOCK-RELOAD'].forEach(function (key) {
+          if (event.attributes.hasOwnProperty(key)) {
+            event.attributes[key] = /YES/.test(event.attributes[key]);
+          }
+        });
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-PART-INF:(.*)$/.exec(newLine);
+
+      if (match && match[1]) {
+        event = {
+          type: 'tag',
+          tagType: 'part-inf'
+        };
+        event.attributes = parseAttributes(match[1]);
+        ['PART-TARGET'].forEach(function (key) {
+          if (event.attributes.hasOwnProperty(key)) {
+            event.attributes[key] = parseFloat(event.attributes[key]);
+          }
+        });
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-PRELOAD-HINT:(.*)$/.exec(newLine);
+
+      if (match && match[1]) {
+        event = {
+          type: 'tag',
+          tagType: 'preload-hint'
+        };
+        event.attributes = parseAttributes(match[1]);
+        ['BYTERANGE-START', 'BYTERANGE-LENGTH'].forEach(function (key) {
+          if (event.attributes.hasOwnProperty(key)) {
+            event.attributes[key] = parseInt(event.attributes[key], 10);
+            var subkey = key === 'BYTERANGE-LENGTH' ? 'length' : 'offset';
+            event.attributes.byterange = event.attributes.byterange || {};
+            event.attributes.byterange[subkey] = event.attributes[key]; // only keep the parsed byterange object.
+
+            delete event.attributes[key];
+          }
+        });
+
+        _this2.trigger('data', event);
+
+        return;
+      }
+
+      match = /^#EXT-X-RENDITION-REPORT:(.*)$/.exec(newLine);
+
+      if (match && match[1]) {
+        event = {
+          type: 'tag',
+          tagType: 'rendition-report'
+        };
+        event.attributes = parseAttributes(match[1]);
+        ['LAST-MSN', 'LAST-PART'].forEach(function (key) {
+          if (event.attributes.hasOwnProperty(key)) {
+            event.attributes[key] = parseInt(event.attributes[key], 10);
+          }
+        });
+
+        _this2.trigger('data', event);
+
+        return;
+      } // unknown tag type
+
+
+      _this2.trigger('data', {
+        type: 'tag',
+        data: newLine.slice(4)
+      });
+    });
+  }
+  /**
+   * Add a parser for custom headers
+   *
+   * @param {Object}   options              a map of options for the added parser
+   * @param {RegExp}   options.expression   a regular expression to match the custom header
+   * @param {string}   options.customType   the custom type to register to the output
+   * @param {Function} [options.dataParser] function to parse the line into an object
+   * @param {boolean}  [options.segment]    should tag data be attached to the segment object
+   */
+  ;
+
+  _proto.addParser = function addParser(_ref) {
+    var _this3 = this;
+
+    var expression = _ref.expression,
+        customType = _ref.customType,
+        dataParser = _ref.dataParser,
+        segment = _ref.segment;
+
+    if (typeof dataParser !== 'function') {
+      dataParser = function dataParser(line) {
+        return line;
+      };
+    }
+
+    this.customParsers.push(function (line) {
+      var match = expression.exec(line);
+
+      if (match) {
+        _this3.trigger('data', {
+          type: 'custom',
+          data: dataParser(line),
+          customType: customType,
+          segment: segment
+        });
+
+        return true;
+      }
+    });
+  }
+  /**
+   * Add a custom header mapper
+   *
+   * @param {Object}   options
+   * @param {RegExp}   options.expression   a regular expression to match the custom header
+   * @param {Function} options.map          function to translate tag into a different tag
+   */
+  ;
+
+  _proto.addTagMapper = function addTagMapper(_ref2) {
+    var expression = _ref2.expression,
+        map = _ref2.map;
+
+    var mapFn = function mapFn(line) {
+      if (expression.test(line)) {
+        return map(line);
+      }
+
+      return line;
+    };
+
+    this.tagMappers.push(mapFn);
+  };
+
+  return ParseStream;
+}(_videojs_vhs_utils_es_stream_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+var camelCase = function camelCase(str) {
+  return str.toLowerCase().replace(/-(\w)/g, function (a) {
+    return a[1].toUpperCase();
+  });
+};
+
+var camelCaseKeys = function camelCaseKeys(attributes) {
+  var result = {};
+  Object.keys(attributes).forEach(function (key) {
+    result[camelCase(key)] = attributes[key];
+  });
+  return result;
+}; // set SERVER-CONTROL hold back based upon targetDuration and partTargetDuration
+// we need this helper because defaults are based upon targetDuration and
+// partTargetDuration being set, but they may not be if SERVER-CONTROL appears before
+// target durations are set.
+
+
+var setHoldBack = function setHoldBack(manifest) {
+  var serverControl = manifest.serverControl,
+      targetDuration = manifest.targetDuration,
+      partTargetDuration = manifest.partTargetDuration;
+
+  if (!serverControl) {
+    return;
+  }
+
+  var tag = '#EXT-X-SERVER-CONTROL';
+  var hb = 'holdBack';
+  var phb = 'partHoldBack';
+  var minTargetDuration = targetDuration && targetDuration * 3;
+  var minPartDuration = partTargetDuration && partTargetDuration * 2;
+
+  if (targetDuration && !serverControl.hasOwnProperty(hb)) {
+    serverControl[hb] = minTargetDuration;
+    this.trigger('info', {
+      message: tag + " defaulting HOLD-BACK to targetDuration * 3 (" + minTargetDuration + ")."
+    });
+  }
+
+  if (minTargetDuration && serverControl[hb] < minTargetDuration) {
+    this.trigger('warn', {
+      message: tag + " clamping HOLD-BACK (" + serverControl[hb] + ") to targetDuration * 3 (" + minTargetDuration + ")"
+    });
+    serverControl[hb] = minTargetDuration;
+  } // default no part hold back to part target duration * 3
+
+
+  if (partTargetDuration && !serverControl.hasOwnProperty(phb)) {
+    serverControl[phb] = partTargetDuration * 3;
+    this.trigger('info', {
+      message: tag + " defaulting PART-HOLD-BACK to partTargetDuration * 3 (" + serverControl[phb] + ")."
+    });
+  } // if part hold back is too small default it to part target duration * 2
+
+
+  if (partTargetDuration && serverControl[phb] < minPartDuration) {
+    this.trigger('warn', {
+      message: tag + " clamping PART-HOLD-BACK (" + serverControl[phb] + ") to partTargetDuration * 2 (" + minPartDuration + ")."
+    });
+    serverControl[phb] = minPartDuration;
+  }
+};
+/**
+ * A parser for M3U8 files. The current interpretation of the input is
+ * exposed as a property `manifest` on parser objects. It's just two lines to
+ * create and parse a manifest once you have the contents available as a string:
+ *
+ * ```js
+ * var parser = new m3u8.Parser();
+ * parser.push(xhr.responseText);
+ * ```
+ *
+ * New input can later be applied to update the manifest object by calling
+ * `push` again.
+ *
+ * The parser attempts to create a usable manifest object even if the
+ * underlying input is somewhat nonsensical. It emits `info` and `warning`
+ * events during the parse if it encounters input that seems invalid or
+ * requires some property of the manifest object to be defaulted.
+ *
+ * @class Parser
+ * @extends Stream
+ */
+
+
+var Parser = /*#__PURE__*/function (_Stream) {
+  _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default()(Parser, _Stream);
+
+  function Parser() {
+    var _this;
+
+    _this = _Stream.call(this) || this;
+    _this.lineStream = new LineStream();
+    _this.parseStream = new ParseStream();
+
+    _this.lineStream.pipe(_this.parseStream);
+    /* eslint-disable consistent-this */
+
+
+    var self = _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this);
+    /* eslint-enable consistent-this */
+
+
+    var uris = [];
+    var currentUri = {}; // if specified, the active EXT-X-MAP definition
+
+    var currentMap; // if specified, the active decryption key
+
+    var _key;
+
+    var hasParts = false;
+
+    var noop = function noop() {};
+
+    var defaultMediaGroups = {
+      'AUDIO': {},
+      'VIDEO': {},
+      'CLOSED-CAPTIONS': {},
+      'SUBTITLES': {}
+    }; // This is the Widevine UUID from DASH IF IOP. The same exact string is
+    // used in MPDs with Widevine encrypted streams.
+
+    var widevineUuid = 'urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed'; // group segments into numbered timelines delineated by discontinuities
+
+    var currentTimeline = 0; // the manifest is empty until the parse stream begins delivering data
+
+    _this.manifest = {
+      allowCache: true,
+      discontinuityStarts: [],
+      segments: []
+    }; // keep track of the last seen segment's byte range end, as segments are not required
+    // to provide the offset, in which case it defaults to the next byte after the
+    // previous segment
+
+    var lastByterangeEnd = 0; // keep track of the last seen part's byte range end.
+
+    var lastPartByterangeEnd = 0;
+
+    _this.on('end', function () {
+      // only add preloadSegment if we don't yet have a uri for it.
+      // and we actually have parts/preloadHints
+      if (currentUri.uri || !currentUri.parts && !currentUri.preloadHints) {
+        return;
+      }
+
+      if (!currentUri.map && currentMap) {
+        currentUri.map = currentMap;
+      }
+
+      if (!currentUri.key && _key) {
+        currentUri.key = _key;
+      }
+
+      if (!currentUri.timeline && typeof currentTimeline === 'number') {
+        currentUri.timeline = currentTimeline;
+      }
+
+      _this.manifest.preloadSegment = currentUri;
+    }); // update the manifest with the m3u8 entry from the parse stream
+
+
+    _this.parseStream.on('data', function (entry) {
+      var mediaGroup;
+      var rendition;
+      ({
+        tag: function tag() {
+          // switch based on the tag type
+          (({
+            version: function version() {
+              if (entry.version) {
+                this.manifest.version = entry.version;
+              }
+            },
+            'allow-cache': function allowCache() {
+              this.manifest.allowCache = entry.allowed;
+
+              if (!('allowed' in entry)) {
+                this.trigger('info', {
+                  message: 'defaulting allowCache to YES'
+                });
+                this.manifest.allowCache = true;
+              }
+            },
+            byterange: function byterange() {
+              var byterange = {};
+
+              if ('length' in entry) {
+                currentUri.byterange = byterange;
+                byterange.length = entry.length;
+
+                if (!('offset' in entry)) {
+                  /*
+                   * From the latest spec (as of this writing):
+                   * https://tools.ietf.org/html/draft-pantos-http-live-streaming-23#section-4.3.2.2
+                   *
+                   * Same text since EXT-X-BYTERANGE's introduction in draft 7:
+                   * https://tools.ietf.org/html/draft-pantos-http-live-streaming-07#section-3.3.1)
+                   *
+                   * "If o [offset] is not present, the sub-range begins at the next byte
+                   * following the sub-range of the previous media segment."
+                   */
+                  entry.offset = lastByterangeEnd;
+                }
+              }
+
+              if ('offset' in entry) {
+                currentUri.byterange = byterange;
+                byterange.offset = entry.offset;
+              }
+
+              lastByterangeEnd = byterange.offset + byterange.length;
+            },
+            endlist: function endlist() {
+              this.manifest.endList = true;
+            },
+            inf: function inf() {
+              if (!('mediaSequence' in this.manifest)) {
+                this.manifest.mediaSequence = 0;
+                this.trigger('info', {
+                  message: 'defaulting media sequence to zero'
+                });
+              }
+
+              if (!('discontinuitySequence' in this.manifest)) {
+                this.manifest.discontinuitySequence = 0;
+                this.trigger('info', {
+                  message: 'defaulting discontinuity sequence to zero'
+                });
+              }
+
+              if (entry.duration > 0) {
+                currentUri.duration = entry.duration;
+              }
+
+              if (entry.duration === 0) {
+                currentUri.duration = 0.01;
+                this.trigger('info', {
+                  message: 'updating zero segment duration to a small value'
+                });
+              }
+
+              this.manifest.segments = uris;
+            },
+            key: function key() {
+              if (!entry.attributes) {
+                this.trigger('warn', {
+                  message: 'ignoring key declaration without attribute list'
+                });
+                return;
+              } // clear the active encryption key
+
+
+              if (entry.attributes.METHOD === 'NONE') {
+                _key = null;
+                return;
+              }
+
+              if (!entry.attributes.URI) {
+                this.trigger('warn', {
+                  message: 'ignoring key declaration without URI'
+                });
+                return;
+              } // check if the content is encrypted for Widevine
+              // Widevine/HLS spec: https://storage.googleapis.com/wvdocs/Widevine_DRM_HLS.pdf
+
+
+              if (entry.attributes.KEYFORMAT === widevineUuid) {
+                var VALID_METHODS = ['SAMPLE-AES', 'SAMPLE-AES-CTR', 'SAMPLE-AES-CENC'];
+
+                if (VALID_METHODS.indexOf(entry.attributes.METHOD) === -1) {
+                  this.trigger('warn', {
+                    message: 'invalid key method provided for Widevine'
+                  });
+                  return;
+                }
+
+                if (entry.attributes.METHOD === 'SAMPLE-AES-CENC') {
+                  this.trigger('warn', {
+                    message: 'SAMPLE-AES-CENC is deprecated, please use SAMPLE-AES-CTR instead'
+                  });
+                }
+
+                if (entry.attributes.URI.substring(0, 23) !== 'data:text/plain;base64,') {
+                  this.trigger('warn', {
+                    message: 'invalid key URI provided for Widevine'
+                  });
+                  return;
+                }
+
+                if (!(entry.attributes.KEYID && entry.attributes.KEYID.substring(0, 2) === '0x')) {
+                  this.trigger('warn', {
+                    message: 'invalid key ID provided for Widevine'
+                  });
+                  return;
+                } // if Widevine key attributes are valid, store them as `contentProtection`
+                // on the manifest to emulate Widevine tag structure in a DASH mpd
+
+
+                this.manifest.contentProtection = {
+                  'com.widevine.alpha': {
+                    attributes: {
+                      schemeIdUri: entry.attributes.KEYFORMAT,
+                      // remove '0x' from the key id string
+                      keyId: entry.attributes.KEYID.substring(2)
+                    },
+                    // decode the base64-encoded PSSH box
+                    pssh: Object(_videojs_vhs_utils_es_decode_b64_to_uint8_array_js__WEBPACK_IMPORTED_MODULE_4__["default"])(entry.attributes.URI.split(',')[1])
+                  }
+                };
+                return;
+              }
+
+              if (!entry.attributes.METHOD) {
+                this.trigger('warn', {
+                  message: 'defaulting key method to AES-128'
+                });
+              } // setup an encryption key for upcoming segments
+
+
+              _key = {
+                method: entry.attributes.METHOD || 'AES-128',
+                uri: entry.attributes.URI
+              };
+
+              if (typeof entry.attributes.IV !== 'undefined') {
+                _key.iv = entry.attributes.IV;
+              }
+            },
+            'media-sequence': function mediaSequence() {
+              if (!isFinite(entry.number)) {
+                this.trigger('warn', {
+                  message: 'ignoring invalid media sequence: ' + entry.number
+                });
+                return;
+              }
+
+              this.manifest.mediaSequence = entry.number;
+            },
+            'discontinuity-sequence': function discontinuitySequence() {
+              if (!isFinite(entry.number)) {
+                this.trigger('warn', {
+                  message: 'ignoring invalid discontinuity sequence: ' + entry.number
+                });
+                return;
+              }
+
+              this.manifest.discontinuitySequence = entry.number;
+              currentTimeline = entry.number;
+            },
+            'playlist-type': function playlistType() {
+              if (!/VOD|EVENT/.test(entry.playlistType)) {
+                this.trigger('warn', {
+                  message: 'ignoring unknown playlist type: ' + entry.playlist
+                });
+                return;
+              }
+
+              this.manifest.playlistType = entry.playlistType;
+            },
+            map: function map() {
+              currentMap = {};
+
+              if (entry.uri) {
+                currentMap.uri = entry.uri;
+              }
+
+              if (entry.byterange) {
+                currentMap.byterange = entry.byterange;
+              }
+            },
+            'stream-inf': function streamInf() {
+              this.manifest.playlists = uris;
+              this.manifest.mediaGroups = this.manifest.mediaGroups || defaultMediaGroups;
+
+              if (!entry.attributes) {
+                this.trigger('warn', {
+                  message: 'ignoring empty stream-inf attributes'
+                });
+                return;
+              }
+
+              if (!currentUri.attributes) {
+                currentUri.attributes = {};
+              }
+
+              _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2___default()(currentUri.attributes, entry.attributes);
+            },
+            media: function media() {
+              this.manifest.mediaGroups = this.manifest.mediaGroups || defaultMediaGroups;
+
+              if (!(entry.attributes && entry.attributes.TYPE && entry.attributes['GROUP-ID'] && entry.attributes.NAME)) {
+                this.trigger('warn', {
+                  message: 'ignoring incomplete or missing media group'
+                });
+                return;
+              } // find the media group, creating defaults as necessary
+
+
+              var mediaGroupType = this.manifest.mediaGroups[entry.attributes.TYPE];
+              mediaGroupType[entry.attributes['GROUP-ID']] = mediaGroupType[entry.attributes['GROUP-ID']] || {};
+              mediaGroup = mediaGroupType[entry.attributes['GROUP-ID']]; // collect the rendition metadata
+
+              rendition = {
+                default: /yes/i.test(entry.attributes.DEFAULT)
+              };
+
+              if (rendition.default) {
+                rendition.autoselect = true;
+              } else {
+                rendition.autoselect = /yes/i.test(entry.attributes.AUTOSELECT);
+              }
+
+              if (entry.attributes.LANGUAGE) {
+                rendition.language = entry.attributes.LANGUAGE;
+              }
+
+              if (entry.attributes.URI) {
+                rendition.uri = entry.attributes.URI;
+              }
+
+              if (entry.attributes['INSTREAM-ID']) {
+                rendition.instreamId = entry.attributes['INSTREAM-ID'];
+              }
+
+              if (entry.attributes.CHARACTERISTICS) {
+                rendition.characteristics = entry.attributes.CHARACTERISTICS;
+              }
+
+              if (entry.attributes.FORCED) {
+                rendition.forced = /yes/i.test(entry.attributes.FORCED);
+              } // insert the new rendition
+
+
+              mediaGroup[entry.attributes.NAME] = rendition;
+            },
+            discontinuity: function discontinuity() {
+              currentTimeline += 1;
+              currentUri.discontinuity = true;
+              this.manifest.discontinuityStarts.push(uris.length);
+            },
+            'program-date-time': function programDateTime() {
+              if (typeof this.manifest.dateTimeString === 'undefined') {
+                // PROGRAM-DATE-TIME is a media-segment tag, but for backwards
+                // compatibility, we add the first occurence of the PROGRAM-DATE-TIME tag
+                // to the manifest object
+                // TODO: Consider removing this in future major version
+                this.manifest.dateTimeString = entry.dateTimeString;
+                this.manifest.dateTimeObject = entry.dateTimeObject;
+              }
+
+              currentUri.dateTimeString = entry.dateTimeString;
+              currentUri.dateTimeObject = entry.dateTimeObject;
+            },
+            targetduration: function targetduration() {
+              if (!isFinite(entry.duration) || entry.duration < 0) {
+                this.trigger('warn', {
+                  message: 'ignoring invalid target duration: ' + entry.duration
+                });
+                return;
+              }
+
+              this.manifest.targetDuration = entry.duration;
+              setHoldBack.call(this, this.manifest);
+            },
+            start: function start() {
+              if (!entry.attributes || isNaN(entry.attributes['TIME-OFFSET'])) {
+                this.trigger('warn', {
+                  message: 'ignoring start declaration without appropriate attribute list'
+                });
+                return;
+              }
+
+              this.manifest.start = {
+                timeOffset: entry.attributes['TIME-OFFSET'],
+                precise: entry.attributes.PRECISE
+              };
+            },
+            'cue-out': function cueOut() {
+              currentUri.cueOut = entry.data;
+            },
+            'cue-out-cont': function cueOutCont() {
+              currentUri.cueOutCont = entry.data;
+            },
+            'cue-in': function cueIn() {
+              currentUri.cueIn = entry.data;
+            },
+            'skip': function skip() {
+              this.manifest.skip = camelCaseKeys(entry.attributes);
+              this.warnOnMissingAttributes_('#EXT-X-SKIP', entry.attributes, ['SKIPPED-SEGMENTS']);
+            },
+            'part': function part() {
+              var _this2 = this;
+
+              hasParts = true; // parts are always specifed before a segment
+
+              var segmentIndex = this.manifest.segments.length;
+              var part = camelCaseKeys(entry.attributes);
+              currentUri.parts = currentUri.parts || [];
+              currentUri.parts.push(part);
+
+              if (part.byterange) {
+                if (!part.byterange.hasOwnProperty('offset')) {
+                  part.byterange.offset = lastPartByterangeEnd;
+                }
+
+                lastPartByterangeEnd = part.byterange.offset + part.byterange.length;
+              }
+
+              var partIndex = currentUri.parts.length - 1;
+              this.warnOnMissingAttributes_("#EXT-X-PART #" + partIndex + " for segment #" + segmentIndex, entry.attributes, ['URI', 'DURATION']);
+
+              if (this.manifest.renditionReports) {
+                this.manifest.renditionReports.forEach(function (r, i) {
+                  if (!r.hasOwnProperty('lastPart')) {
+                    _this2.trigger('warn', {
+                      message: "#EXT-X-RENDITION-REPORT #" + i + " lacks required attribute(s): LAST-PART"
+                    });
+                  }
+                });
+              }
+            },
+            'server-control': function serverControl() {
+              var attrs = this.manifest.serverControl = camelCaseKeys(entry.attributes);
+
+              if (!attrs.hasOwnProperty('canBlockReload')) {
+                attrs.canBlockReload = false;
+                this.trigger('info', {
+                  message: '#EXT-X-SERVER-CONTROL defaulting CAN-BLOCK-RELOAD to false'
+                });
+              }
+
+              setHoldBack.call(this, this.manifest);
+
+              if (attrs.canSkipDateranges && !attrs.hasOwnProperty('canSkipUntil')) {
+                this.trigger('warn', {
+                  message: '#EXT-X-SERVER-CONTROL lacks required attribute CAN-SKIP-UNTIL which is required when CAN-SKIP-DATERANGES is set'
+                });
+              }
+            },
+            'preload-hint': function preloadHint() {
+              // parts are always specifed before a segment
+              var segmentIndex = this.manifest.segments.length;
+              var hint = camelCaseKeys(entry.attributes);
+              var isPart = hint.type && hint.type === 'PART';
+              currentUri.preloadHints = currentUri.preloadHints || [];
+              currentUri.preloadHints.push(hint);
+
+              if (hint.byterange) {
+                if (!hint.byterange.hasOwnProperty('offset')) {
+                  // use last part byterange end or zero if not a part.
+                  hint.byterange.offset = isPart ? lastPartByterangeEnd : 0;
+
+                  if (isPart) {
+                    lastPartByterangeEnd = hint.byterange.offset + hint.byterange.length;
+                  }
+                }
+              }
+
+              var index = currentUri.preloadHints.length - 1;
+              this.warnOnMissingAttributes_("#EXT-X-PRELOAD-HINT #" + index + " for segment #" + segmentIndex, entry.attributes, ['TYPE', 'URI']);
+
+              if (!hint.type) {
+                return;
+              } // search through all preload hints except for the current one for
+              // a duplicate type.
+
+
+              for (var i = 0; i < currentUri.preloadHints.length - 1; i++) {
+                var otherHint = currentUri.preloadHints[i];
+
+                if (!otherHint.type) {
+                  continue;
+                }
+
+                if (otherHint.type === hint.type) {
+                  this.trigger('warn', {
+                    message: "#EXT-X-PRELOAD-HINT #" + index + " for segment #" + segmentIndex + " has the same TYPE " + hint.type + " as preload hint #" + i
+                  });
+                }
+              }
+            },
+            'rendition-report': function renditionReport() {
+              var report = camelCaseKeys(entry.attributes);
+              this.manifest.renditionReports = this.manifest.renditionReports || [];
+              this.manifest.renditionReports.push(report);
+              var index = this.manifest.renditionReports.length - 1;
+              var required = ['LAST-MSN', 'URI'];
+
+              if (hasParts) {
+                required.push('LAST-PART');
+              }
+
+              this.warnOnMissingAttributes_("#EXT-X-RENDITION-REPORT #" + index, entry.attributes, required);
+            },
+            'part-inf': function partInf() {
+              this.manifest.partInf = camelCaseKeys(entry.attributes);
+              this.warnOnMissingAttributes_('#EXT-X-PART-INF', entry.attributes, ['PART-TARGET']);
+
+              if (this.manifest.partInf.partTarget) {
+                this.manifest.partTargetDuration = this.manifest.partInf.partTarget;
+              }
+
+              setHoldBack.call(this, this.manifest);
+            }
+          })[entry.tagType] || noop).call(self);
+        },
+        uri: function uri() {
+          currentUri.uri = entry.uri;
+          uris.push(currentUri); // if no explicit duration was declared, use the target duration
+
+          if (this.manifest.targetDuration && !('duration' in currentUri)) {
+            this.trigger('warn', {
+              message: 'defaulting segment duration to the target duration'
+            });
+            currentUri.duration = this.manifest.targetDuration;
+          } // annotate with encryption information, if necessary
+
+
+          if (_key) {
+            currentUri.key = _key;
+          }
+
+          currentUri.timeline = currentTimeline; // annotate with initialization segment information, if necessary
+
+          if (currentMap) {
+            currentUri.map = currentMap;
+          } // reset the last byterange end as it needs to be 0 between parts
+
+
+          lastPartByterangeEnd = 0; // prepare for the next URI
+
+          currentUri = {};
+        },
+        comment: function comment() {// comments are not important for playback
+        },
+        custom: function custom() {
+          // if this is segment-level data attach the output to the segment
+          if (entry.segment) {
+            currentUri.custom = currentUri.custom || {};
+            currentUri.custom[entry.customType] = entry.data; // if this is manifest-level data attach to the top level manifest object
+          } else {
+            this.manifest.custom = this.manifest.custom || {};
+            this.manifest.custom[entry.customType] = entry.data;
+          }
+        }
+      })[entry.type].call(self);
+    });
+
+    return _this;
+  }
+
+  var _proto = Parser.prototype;
+
+  _proto.warnOnMissingAttributes_ = function warnOnMissingAttributes_(identifier, attributes, required) {
+    var missing = [];
+    required.forEach(function (key) {
+      if (!attributes.hasOwnProperty(key)) {
+        missing.push(key);
+      }
+    });
+
+    if (missing.length) {
+      this.trigger('warn', {
+        message: identifier + " lacks required attribute(s): " + missing.join(', ')
+      });
+    }
+  }
+  /**
+   * Parse the input string and update the manifest object.
+   *
+   * @param {string} chunk a potentially incomplete portion of the manifest
+   */
+  ;
+
+  _proto.push = function push(chunk) {
+    this.lineStream.push(chunk);
+  }
+  /**
+   * Flush any remaining input. This can be handy if the last line of an M3U8
+   * manifest did not contain a trailing newline but the file has been
+   * completely received.
+   */
+  ;
+
+  _proto.end = function end() {
+    // flush any buffered input
+    this.lineStream.push('\n');
+    this.trigger('end');
+  }
+  /**
+   * Add an additional parser for non-standard tags
+   *
+   * @param {Object}   options              a map of options for the added parser
+   * @param {RegExp}   options.expression   a regular expression to match the custom header
+   * @param {string}   options.type         the type to register to the output
+   * @param {Function} [options.dataParser] function to parse the line into an object
+   * @param {boolean}  [options.segment]    should tag data be attached to the segment object
+   */
+  ;
+
+  _proto.addParser = function addParser(options) {
+    this.parseStream.addParser(options);
+  }
+  /**
+   * Add a custom header mapper
+   *
+   * @param {Object}   options
+   * @param {RegExp}   options.expression   a regular expression to match the custom header
+   * @param {Function} options.map          function to translate tag into a different tag
+   */
+  ;
+
+  _proto.addTagMapper = function addTagMapper(options) {
+    this.parseStream.addTagMapper(options);
+  };
+
+  return Parser;
+}(_videojs_vhs_utils_es_stream_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
 
 
 /***/ }),
@@ -199,137 +1822,6 @@ Hash.prototype._update = function () {
 }
 
 module.exports = Hash
-
-
-/***/ }),
-
-/***/ "./node_modules/sha.js/index.js":
-/*!**************************************!*\
-  !*** ./node_modules/sha.js/index.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var exports = module.exports = function SHA (algorithm) {
-  algorithm = algorithm.toLowerCase()
-
-  var Algorithm = exports[algorithm]
-  if (!Algorithm) throw new Error(algorithm + ' is not supported (we accept pull requests)')
-
-  return new Algorithm()
-}
-
-exports.sha = __webpack_require__(/*! ./sha */ "./node_modules/sha.js/sha.js")
-exports.sha1 = __webpack_require__(/*! ./sha1 */ "./node_modules/sha.js/sha1.js")
-exports.sha224 = __webpack_require__(/*! ./sha224 */ "./node_modules/sha.js/sha224.js")
-exports.sha256 = __webpack_require__(/*! ./sha256 */ "./node_modules/sha.js/sha256.js")
-exports.sha384 = __webpack_require__(/*! ./sha384 */ "./node_modules/sha.js/sha384.js")
-exports.sha512 = __webpack_require__(/*! ./sha512 */ "./node_modules/sha.js/sha512.js")
-
-
-/***/ }),
-
-/***/ "./node_modules/sha.js/sha.js":
-/*!************************************!*\
-  !*** ./node_modules/sha.js/sha.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
- * A JavaScript implementation of the Secure Hash Algorithm, SHA-0, as defined
- * in FIPS PUB 180-1
- * This source code is derived from sha1.js of the same repository.
- * The difference between SHA-0 and SHA-1 is just a bitwise rotate left
- * operation was added.
- */
-
-var inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits_browser.js")
-var Hash = __webpack_require__(/*! ./hash */ "./node_modules/sha.js/hash.js")
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer
-
-var K = [
-  0x5a827999, 0x6ed9eba1, 0x8f1bbcdc | 0, 0xca62c1d6 | 0
-]
-
-var W = new Array(80)
-
-function Sha () {
-  this.init()
-  this._w = W
-
-  Hash.call(this, 64, 56)
-}
-
-inherits(Sha, Hash)
-
-Sha.prototype.init = function () {
-  this._a = 0x67452301
-  this._b = 0xefcdab89
-  this._c = 0x98badcfe
-  this._d = 0x10325476
-  this._e = 0xc3d2e1f0
-
-  return this
-}
-
-function rotl5 (num) {
-  return (num << 5) | (num >>> 27)
-}
-
-function rotl30 (num) {
-  return (num << 30) | (num >>> 2)
-}
-
-function ft (s, b, c, d) {
-  if (s === 0) return (b & c) | ((~b) & d)
-  if (s === 2) return (b & c) | (b & d) | (c & d)
-  return b ^ c ^ d
-}
-
-Sha.prototype._update = function (M) {
-  var W = this._w
-
-  var a = this._a | 0
-  var b = this._b | 0
-  var c = this._c | 0
-  var d = this._d | 0
-  var e = this._e | 0
-
-  for (var i = 0; i < 16; ++i) W[i] = M.readInt32BE(i * 4)
-  for (; i < 80; ++i) W[i] = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16]
-
-  for (var j = 0; j < 80; ++j) {
-    var s = ~~(j / 20)
-    var t = (rotl5(a) + ft(s, b, c, d) + e + W[j] + K[s]) | 0
-
-    e = d
-    d = c
-    c = rotl30(b)
-    b = a
-    a = t
-  }
-
-  this._a = (a + this._a) | 0
-  this._b = (b + this._b) | 0
-  this._c = (c + this._c) | 0
-  this._d = (d + this._d) | 0
-  this._e = (e + this._e) | 0
-}
-
-Sha.prototype._hash = function () {
-  var H = Buffer.allocUnsafe(20)
-
-  H.writeInt32BE(this._a | 0, 0)
-  H.writeInt32BE(this._b | 0, 4)
-  H.writeInt32BE(this._c | 0, 8)
-  H.writeInt32BE(this._d | 0, 12)
-  H.writeInt32BE(this._e | 0, 16)
-
-  return H
-}
-
-module.exports = Sha
 
 
 /***/ }),
@@ -440,555 +1932,6 @@ Sha1.prototype._hash = function () {
 }
 
 module.exports = Sha1
-
-
-/***/ }),
-
-/***/ "./node_modules/sha.js/sha224.js":
-/*!***************************************!*\
-  !*** ./node_modules/sha.js/sha224.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
- * in FIPS 180-2
- * Version 2.2-beta Copyright Angel Marin, Paul Johnston 2000 - 2009.
- * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
- *
- */
-
-var inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits_browser.js")
-var Sha256 = __webpack_require__(/*! ./sha256 */ "./node_modules/sha.js/sha256.js")
-var Hash = __webpack_require__(/*! ./hash */ "./node_modules/sha.js/hash.js")
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer
-
-var W = new Array(64)
-
-function Sha224 () {
-  this.init()
-
-  this._w = W // new Array(64)
-
-  Hash.call(this, 64, 56)
-}
-
-inherits(Sha224, Sha256)
-
-Sha224.prototype.init = function () {
-  this._a = 0xc1059ed8
-  this._b = 0x367cd507
-  this._c = 0x3070dd17
-  this._d = 0xf70e5939
-  this._e = 0xffc00b31
-  this._f = 0x68581511
-  this._g = 0x64f98fa7
-  this._h = 0xbefa4fa4
-
-  return this
-}
-
-Sha224.prototype._hash = function () {
-  var H = Buffer.allocUnsafe(28)
-
-  H.writeInt32BE(this._a, 0)
-  H.writeInt32BE(this._b, 4)
-  H.writeInt32BE(this._c, 8)
-  H.writeInt32BE(this._d, 12)
-  H.writeInt32BE(this._e, 16)
-  H.writeInt32BE(this._f, 20)
-  H.writeInt32BE(this._g, 24)
-
-  return H
-}
-
-module.exports = Sha224
-
-
-/***/ }),
-
-/***/ "./node_modules/sha.js/sha256.js":
-/*!***************************************!*\
-  !*** ./node_modules/sha.js/sha256.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
- * in FIPS 180-2
- * Version 2.2-beta Copyright Angel Marin, Paul Johnston 2000 - 2009.
- * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
- *
- */
-
-var inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits_browser.js")
-var Hash = __webpack_require__(/*! ./hash */ "./node_modules/sha.js/hash.js")
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer
-
-var K = [
-  0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
-  0x3956C25B, 0x59F111F1, 0x923F82A4, 0xAB1C5ED5,
-  0xD807AA98, 0x12835B01, 0x243185BE, 0x550C7DC3,
-  0x72BE5D74, 0x80DEB1FE, 0x9BDC06A7, 0xC19BF174,
-  0xE49B69C1, 0xEFBE4786, 0x0FC19DC6, 0x240CA1CC,
-  0x2DE92C6F, 0x4A7484AA, 0x5CB0A9DC, 0x76F988DA,
-  0x983E5152, 0xA831C66D, 0xB00327C8, 0xBF597FC7,
-  0xC6E00BF3, 0xD5A79147, 0x06CA6351, 0x14292967,
-  0x27B70A85, 0x2E1B2138, 0x4D2C6DFC, 0x53380D13,
-  0x650A7354, 0x766A0ABB, 0x81C2C92E, 0x92722C85,
-  0xA2BFE8A1, 0xA81A664B, 0xC24B8B70, 0xC76C51A3,
-  0xD192E819, 0xD6990624, 0xF40E3585, 0x106AA070,
-  0x19A4C116, 0x1E376C08, 0x2748774C, 0x34B0BCB5,
-  0x391C0CB3, 0x4ED8AA4A, 0x5B9CCA4F, 0x682E6FF3,
-  0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
-  0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2
-]
-
-var W = new Array(64)
-
-function Sha256 () {
-  this.init()
-
-  this._w = W // new Array(64)
-
-  Hash.call(this, 64, 56)
-}
-
-inherits(Sha256, Hash)
-
-Sha256.prototype.init = function () {
-  this._a = 0x6a09e667
-  this._b = 0xbb67ae85
-  this._c = 0x3c6ef372
-  this._d = 0xa54ff53a
-  this._e = 0x510e527f
-  this._f = 0x9b05688c
-  this._g = 0x1f83d9ab
-  this._h = 0x5be0cd19
-
-  return this
-}
-
-function ch (x, y, z) {
-  return z ^ (x & (y ^ z))
-}
-
-function maj (x, y, z) {
-  return (x & y) | (z & (x | y))
-}
-
-function sigma0 (x) {
-  return (x >>> 2 | x << 30) ^ (x >>> 13 | x << 19) ^ (x >>> 22 | x << 10)
-}
-
-function sigma1 (x) {
-  return (x >>> 6 | x << 26) ^ (x >>> 11 | x << 21) ^ (x >>> 25 | x << 7)
-}
-
-function gamma0 (x) {
-  return (x >>> 7 | x << 25) ^ (x >>> 18 | x << 14) ^ (x >>> 3)
-}
-
-function gamma1 (x) {
-  return (x >>> 17 | x << 15) ^ (x >>> 19 | x << 13) ^ (x >>> 10)
-}
-
-Sha256.prototype._update = function (M) {
-  var W = this._w
-
-  var a = this._a | 0
-  var b = this._b | 0
-  var c = this._c | 0
-  var d = this._d | 0
-  var e = this._e | 0
-  var f = this._f | 0
-  var g = this._g | 0
-  var h = this._h | 0
-
-  for (var i = 0; i < 16; ++i) W[i] = M.readInt32BE(i * 4)
-  for (; i < 64; ++i) W[i] = (gamma1(W[i - 2]) + W[i - 7] + gamma0(W[i - 15]) + W[i - 16]) | 0
-
-  for (var j = 0; j < 64; ++j) {
-    var T1 = (h + sigma1(e) + ch(e, f, g) + K[j] + W[j]) | 0
-    var T2 = (sigma0(a) + maj(a, b, c)) | 0
-
-    h = g
-    g = f
-    f = e
-    e = (d + T1) | 0
-    d = c
-    c = b
-    b = a
-    a = (T1 + T2) | 0
-  }
-
-  this._a = (a + this._a) | 0
-  this._b = (b + this._b) | 0
-  this._c = (c + this._c) | 0
-  this._d = (d + this._d) | 0
-  this._e = (e + this._e) | 0
-  this._f = (f + this._f) | 0
-  this._g = (g + this._g) | 0
-  this._h = (h + this._h) | 0
-}
-
-Sha256.prototype._hash = function () {
-  var H = Buffer.allocUnsafe(32)
-
-  H.writeInt32BE(this._a, 0)
-  H.writeInt32BE(this._b, 4)
-  H.writeInt32BE(this._c, 8)
-  H.writeInt32BE(this._d, 12)
-  H.writeInt32BE(this._e, 16)
-  H.writeInt32BE(this._f, 20)
-  H.writeInt32BE(this._g, 24)
-  H.writeInt32BE(this._h, 28)
-
-  return H
-}
-
-module.exports = Sha256
-
-
-/***/ }),
-
-/***/ "./node_modules/sha.js/sha384.js":
-/*!***************************************!*\
-  !*** ./node_modules/sha.js/sha384.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits_browser.js")
-var SHA512 = __webpack_require__(/*! ./sha512 */ "./node_modules/sha.js/sha512.js")
-var Hash = __webpack_require__(/*! ./hash */ "./node_modules/sha.js/hash.js")
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer
-
-var W = new Array(160)
-
-function Sha384 () {
-  this.init()
-  this._w = W
-
-  Hash.call(this, 128, 112)
-}
-
-inherits(Sha384, SHA512)
-
-Sha384.prototype.init = function () {
-  this._ah = 0xcbbb9d5d
-  this._bh = 0x629a292a
-  this._ch = 0x9159015a
-  this._dh = 0x152fecd8
-  this._eh = 0x67332667
-  this._fh = 0x8eb44a87
-  this._gh = 0xdb0c2e0d
-  this._hh = 0x47b5481d
-
-  this._al = 0xc1059ed8
-  this._bl = 0x367cd507
-  this._cl = 0x3070dd17
-  this._dl = 0xf70e5939
-  this._el = 0xffc00b31
-  this._fl = 0x68581511
-  this._gl = 0x64f98fa7
-  this._hl = 0xbefa4fa4
-
-  return this
-}
-
-Sha384.prototype._hash = function () {
-  var H = Buffer.allocUnsafe(48)
-
-  function writeInt64BE (h, l, offset) {
-    H.writeInt32BE(h, offset)
-    H.writeInt32BE(l, offset + 4)
-  }
-
-  writeInt64BE(this._ah, this._al, 0)
-  writeInt64BE(this._bh, this._bl, 8)
-  writeInt64BE(this._ch, this._cl, 16)
-  writeInt64BE(this._dh, this._dl, 24)
-  writeInt64BE(this._eh, this._el, 32)
-  writeInt64BE(this._fh, this._fl, 40)
-
-  return H
-}
-
-module.exports = Sha384
-
-
-/***/ }),
-
-/***/ "./node_modules/sha.js/sha512.js":
-/*!***************************************!*\
-  !*** ./node_modules/sha.js/sha512.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits_browser.js")
-var Hash = __webpack_require__(/*! ./hash */ "./node_modules/sha.js/hash.js")
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer
-
-var K = [
-  0x428a2f98, 0xd728ae22, 0x71374491, 0x23ef65cd,
-  0xb5c0fbcf, 0xec4d3b2f, 0xe9b5dba5, 0x8189dbbc,
-  0x3956c25b, 0xf348b538, 0x59f111f1, 0xb605d019,
-  0x923f82a4, 0xaf194f9b, 0xab1c5ed5, 0xda6d8118,
-  0xd807aa98, 0xa3030242, 0x12835b01, 0x45706fbe,
-  0x243185be, 0x4ee4b28c, 0x550c7dc3, 0xd5ffb4e2,
-  0x72be5d74, 0xf27b896f, 0x80deb1fe, 0x3b1696b1,
-  0x9bdc06a7, 0x25c71235, 0xc19bf174, 0xcf692694,
-  0xe49b69c1, 0x9ef14ad2, 0xefbe4786, 0x384f25e3,
-  0x0fc19dc6, 0x8b8cd5b5, 0x240ca1cc, 0x77ac9c65,
-  0x2de92c6f, 0x592b0275, 0x4a7484aa, 0x6ea6e483,
-  0x5cb0a9dc, 0xbd41fbd4, 0x76f988da, 0x831153b5,
-  0x983e5152, 0xee66dfab, 0xa831c66d, 0x2db43210,
-  0xb00327c8, 0x98fb213f, 0xbf597fc7, 0xbeef0ee4,
-  0xc6e00bf3, 0x3da88fc2, 0xd5a79147, 0x930aa725,
-  0x06ca6351, 0xe003826f, 0x14292967, 0x0a0e6e70,
-  0x27b70a85, 0x46d22ffc, 0x2e1b2138, 0x5c26c926,
-  0x4d2c6dfc, 0x5ac42aed, 0x53380d13, 0x9d95b3df,
-  0x650a7354, 0x8baf63de, 0x766a0abb, 0x3c77b2a8,
-  0x81c2c92e, 0x47edaee6, 0x92722c85, 0x1482353b,
-  0xa2bfe8a1, 0x4cf10364, 0xa81a664b, 0xbc423001,
-  0xc24b8b70, 0xd0f89791, 0xc76c51a3, 0x0654be30,
-  0xd192e819, 0xd6ef5218, 0xd6990624, 0x5565a910,
-  0xf40e3585, 0x5771202a, 0x106aa070, 0x32bbd1b8,
-  0x19a4c116, 0xb8d2d0c8, 0x1e376c08, 0x5141ab53,
-  0x2748774c, 0xdf8eeb99, 0x34b0bcb5, 0xe19b48a8,
-  0x391c0cb3, 0xc5c95a63, 0x4ed8aa4a, 0xe3418acb,
-  0x5b9cca4f, 0x7763e373, 0x682e6ff3, 0xd6b2b8a3,
-  0x748f82ee, 0x5defb2fc, 0x78a5636f, 0x43172f60,
-  0x84c87814, 0xa1f0ab72, 0x8cc70208, 0x1a6439ec,
-  0x90befffa, 0x23631e28, 0xa4506ceb, 0xde82bde9,
-  0xbef9a3f7, 0xb2c67915, 0xc67178f2, 0xe372532b,
-  0xca273ece, 0xea26619c, 0xd186b8c7, 0x21c0c207,
-  0xeada7dd6, 0xcde0eb1e, 0xf57d4f7f, 0xee6ed178,
-  0x06f067aa, 0x72176fba, 0x0a637dc5, 0xa2c898a6,
-  0x113f9804, 0xbef90dae, 0x1b710b35, 0x131c471b,
-  0x28db77f5, 0x23047d84, 0x32caab7b, 0x40c72493,
-  0x3c9ebe0a, 0x15c9bebc, 0x431d67c4, 0x9c100d4c,
-  0x4cc5d4be, 0xcb3e42b6, 0x597f299c, 0xfc657e2a,
-  0x5fcb6fab, 0x3ad6faec, 0x6c44198c, 0x4a475817
-]
-
-var W = new Array(160)
-
-function Sha512 () {
-  this.init()
-  this._w = W
-
-  Hash.call(this, 128, 112)
-}
-
-inherits(Sha512, Hash)
-
-Sha512.prototype.init = function () {
-  this._ah = 0x6a09e667
-  this._bh = 0xbb67ae85
-  this._ch = 0x3c6ef372
-  this._dh = 0xa54ff53a
-  this._eh = 0x510e527f
-  this._fh = 0x9b05688c
-  this._gh = 0x1f83d9ab
-  this._hh = 0x5be0cd19
-
-  this._al = 0xf3bcc908
-  this._bl = 0x84caa73b
-  this._cl = 0xfe94f82b
-  this._dl = 0x5f1d36f1
-  this._el = 0xade682d1
-  this._fl = 0x2b3e6c1f
-  this._gl = 0xfb41bd6b
-  this._hl = 0x137e2179
-
-  return this
-}
-
-function Ch (x, y, z) {
-  return z ^ (x & (y ^ z))
-}
-
-function maj (x, y, z) {
-  return (x & y) | (z & (x | y))
-}
-
-function sigma0 (x, xl) {
-  return (x >>> 28 | xl << 4) ^ (xl >>> 2 | x << 30) ^ (xl >>> 7 | x << 25)
-}
-
-function sigma1 (x, xl) {
-  return (x >>> 14 | xl << 18) ^ (x >>> 18 | xl << 14) ^ (xl >>> 9 | x << 23)
-}
-
-function Gamma0 (x, xl) {
-  return (x >>> 1 | xl << 31) ^ (x >>> 8 | xl << 24) ^ (x >>> 7)
-}
-
-function Gamma0l (x, xl) {
-  return (x >>> 1 | xl << 31) ^ (x >>> 8 | xl << 24) ^ (x >>> 7 | xl << 25)
-}
-
-function Gamma1 (x, xl) {
-  return (x >>> 19 | xl << 13) ^ (xl >>> 29 | x << 3) ^ (x >>> 6)
-}
-
-function Gamma1l (x, xl) {
-  return (x >>> 19 | xl << 13) ^ (xl >>> 29 | x << 3) ^ (x >>> 6 | xl << 26)
-}
-
-function getCarry (a, b) {
-  return (a >>> 0) < (b >>> 0) ? 1 : 0
-}
-
-Sha512.prototype._update = function (M) {
-  var W = this._w
-
-  var ah = this._ah | 0
-  var bh = this._bh | 0
-  var ch = this._ch | 0
-  var dh = this._dh | 0
-  var eh = this._eh | 0
-  var fh = this._fh | 0
-  var gh = this._gh | 0
-  var hh = this._hh | 0
-
-  var al = this._al | 0
-  var bl = this._bl | 0
-  var cl = this._cl | 0
-  var dl = this._dl | 0
-  var el = this._el | 0
-  var fl = this._fl | 0
-  var gl = this._gl | 0
-  var hl = this._hl | 0
-
-  for (var i = 0; i < 32; i += 2) {
-    W[i] = M.readInt32BE(i * 4)
-    W[i + 1] = M.readInt32BE(i * 4 + 4)
-  }
-  for (; i < 160; i += 2) {
-    var xh = W[i - 15 * 2]
-    var xl = W[i - 15 * 2 + 1]
-    var gamma0 = Gamma0(xh, xl)
-    var gamma0l = Gamma0l(xl, xh)
-
-    xh = W[i - 2 * 2]
-    xl = W[i - 2 * 2 + 1]
-    var gamma1 = Gamma1(xh, xl)
-    var gamma1l = Gamma1l(xl, xh)
-
-    // W[i] = gamma0 + W[i - 7] + gamma1 + W[i - 16]
-    var Wi7h = W[i - 7 * 2]
-    var Wi7l = W[i - 7 * 2 + 1]
-
-    var Wi16h = W[i - 16 * 2]
-    var Wi16l = W[i - 16 * 2 + 1]
-
-    var Wil = (gamma0l + Wi7l) | 0
-    var Wih = (gamma0 + Wi7h + getCarry(Wil, gamma0l)) | 0
-    Wil = (Wil + gamma1l) | 0
-    Wih = (Wih + gamma1 + getCarry(Wil, gamma1l)) | 0
-    Wil = (Wil + Wi16l) | 0
-    Wih = (Wih + Wi16h + getCarry(Wil, Wi16l)) | 0
-
-    W[i] = Wih
-    W[i + 1] = Wil
-  }
-
-  for (var j = 0; j < 160; j += 2) {
-    Wih = W[j]
-    Wil = W[j + 1]
-
-    var majh = maj(ah, bh, ch)
-    var majl = maj(al, bl, cl)
-
-    var sigma0h = sigma0(ah, al)
-    var sigma0l = sigma0(al, ah)
-    var sigma1h = sigma1(eh, el)
-    var sigma1l = sigma1(el, eh)
-
-    // t1 = h + sigma1 + ch + K[j] + W[j]
-    var Kih = K[j]
-    var Kil = K[j + 1]
-
-    var chh = Ch(eh, fh, gh)
-    var chl = Ch(el, fl, gl)
-
-    var t1l = (hl + sigma1l) | 0
-    var t1h = (hh + sigma1h + getCarry(t1l, hl)) | 0
-    t1l = (t1l + chl) | 0
-    t1h = (t1h + chh + getCarry(t1l, chl)) | 0
-    t1l = (t1l + Kil) | 0
-    t1h = (t1h + Kih + getCarry(t1l, Kil)) | 0
-    t1l = (t1l + Wil) | 0
-    t1h = (t1h + Wih + getCarry(t1l, Wil)) | 0
-
-    // t2 = sigma0 + maj
-    var t2l = (sigma0l + majl) | 0
-    var t2h = (sigma0h + majh + getCarry(t2l, sigma0l)) | 0
-
-    hh = gh
-    hl = gl
-    gh = fh
-    gl = fl
-    fh = eh
-    fl = el
-    el = (dl + t1l) | 0
-    eh = (dh + t1h + getCarry(el, dl)) | 0
-    dh = ch
-    dl = cl
-    ch = bh
-    cl = bl
-    bh = ah
-    bl = al
-    al = (t1l + t2l) | 0
-    ah = (t1h + t2h + getCarry(al, t1l)) | 0
-  }
-
-  this._al = (this._al + al) | 0
-  this._bl = (this._bl + bl) | 0
-  this._cl = (this._cl + cl) | 0
-  this._dl = (this._dl + dl) | 0
-  this._el = (this._el + el) | 0
-  this._fl = (this._fl + fl) | 0
-  this._gl = (this._gl + gl) | 0
-  this._hl = (this._hl + hl) | 0
-
-  this._ah = (this._ah + ah + getCarry(this._al, al)) | 0
-  this._bh = (this._bh + bh + getCarry(this._bl, bl)) | 0
-  this._ch = (this._ch + ch + getCarry(this._cl, cl)) | 0
-  this._dh = (this._dh + dh + getCarry(this._dl, dl)) | 0
-  this._eh = (this._eh + eh + getCarry(this._el, el)) | 0
-  this._fh = (this._fh + fh + getCarry(this._fl, fl)) | 0
-  this._gh = (this._gh + gh + getCarry(this._gl, gl)) | 0
-  this._hh = (this._hh + hh + getCarry(this._hl, hl)) | 0
-}
-
-Sha512.prototype._hash = function () {
-  var H = Buffer.allocUnsafe(64)
-
-  function writeInt64BE (h, l, offset) {
-    H.writeInt32BE(h, offset)
-    H.writeInt32BE(l, offset + 4)
-  }
-
-  writeInt64BE(this._ah, this._al, 0)
-  writeInt64BE(this._bh, this._bl, 8)
-  writeInt64BE(this._ch, this._cl, 16)
-  writeInt64BE(this._dh, this._dl, 24)
-  writeInt64BE(this._eh, this._el, 32)
-  writeInt64BE(this._fh, this._fl, 40)
-  writeInt64BE(this._gh, this._gl, 48)
-  writeInt64BE(this._hh, this._hl, 56)
-
-  return H
-}
-
-module.exports = Sha512
 
 
 /***/ })

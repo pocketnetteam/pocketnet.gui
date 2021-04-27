@@ -1717,16 +1717,20 @@ Platform = function (app, listofnodes) {
         lenta : function(ids, el, clbk, p){
 
             if(!p) p = {}
+            var id = makeid()
+
+            if(!_.isArray(ids)) ids = [ids]
 
             app.nav.api.load({
 
                 open : true,
                 id : 'lenta',
                 el : el,
-                eid : makeid(),
+                eid : id,
+                mid : id,
                 animation : false,
                 essenseData : {
-                    byauthor : true,
+                   // byauthor : true,
                     notscrollloading : true,
                     txids : ids,
                     comments : p.comments,
@@ -19229,7 +19233,7 @@ Platform = function (app, listofnodes) {
 
                     var addresses = self.testchataddresses;
 
-                    //if (addresses.indexOf(a) > -1) {
+                    if (addresses.indexOf(a) > -1) {
 
                         if (!isMobile()){
 
@@ -19250,7 +19254,7 @@ Platform = function (app, listofnodes) {
                             
                         }
         
-                    //}
+                    }
                 }
             })
         }

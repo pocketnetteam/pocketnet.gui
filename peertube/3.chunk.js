@@ -1,3 +1,2451 @@
-/*! For license information please see 3.chunk.js.LICENSE.txt */
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{164:function(t,e,s){var i=s(161).Buffer;function n(t,e){this._block=i.alloc(t),this._finalSize=e,this._blockSize=t,this._len=0}n.prototype.update=function(t,e){"string"==typeof t&&(t=i.from(t,e=e||"utf8"));for(var s=this._block,n=this._blockSize,r=t.length,a=this._len,o=0;o<r;){for(var d=a%n,g=Math.min(r-o,n-d),h=0;h<g;h++)s[d+h]=t[o+h];o+=g,(a+=g)%n==0&&this._update(s)}return this._len+=r,this},n.prototype.digest=function(t){var e=this._len%this._blockSize;this._block[e]=128,this._block.fill(0,e+1),e>=this._finalSize&&(this._update(this._block),this._block.fill(0));var s=8*this._len;if(s<=4294967295)this._block.writeUInt32BE(s,this._blockSize-4);else{var i=(4294967295&s)>>>0;this._block.writeUInt32BE((s-i)/4294967296,this._blockSize-8),this._block.writeUInt32BE(i,this._blockSize-4)}this._update(this._block);var n=this._hash();return t?n.toString(t):n},n.prototype._update=function(){throw new Error("_update must be implemented by subclass")},t.exports=n},179:function(t,e,s){"use strict";function i(t){for(var s in t)e.hasOwnProperty(s)||(e[s]=t[s])}Object.defineProperty(e,"__esModule",{value:!0}),e.version="0.6.2",i(s(228)),i(s(329))},192:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=s(159);e.STEEmitter=class extends i.EventEmitter{on(t,e){return super.on(t,e)}emit(t,...e){return super.emit(t,...e)}}},193:function(t,e,s){var i=s(158),n=s(164),r=s(161).Buffer,a=[1518500249,1859775393,-1894007588,-899497514],o=new Array(80);function d(){this.init(),this._w=o,n.call(this,64,56)}function g(t){return t<<5|t>>>27}function h(t){return t<<30|t>>>2}function u(t,e,s,i){return 0===t?e&s|~e&i:2===t?e&s|e&i|s&i:e^s^i}i(d,n),d.prototype.init=function(){return this._a=1732584193,this._b=4023233417,this._c=2562383102,this._d=271733878,this._e=3285377520,this},d.prototype._update=function(t){for(var e,s=this._w,i=0|this._a,n=0|this._b,r=0|this._c,o=0|this._d,d=0|this._e,l=0;l<16;++l)s[l]=t.readInt32BE(4*l);for(;l<80;++l)s[l]=(e=s[l-3]^s[l-8]^s[l-14]^s[l-16])<<1|e>>>31;for(var m=0;m<80;++m){var c=~~(m/20),p=g(i)+u(c,n,r,o)+d+s[m]+a[c]|0;d=o,o=r,r=h(n),n=i,i=p}this._a=i+this._a|0,this._b=n+this._b|0,this._c=r+this._c|0,this._d=o+this._d|0,this._e=d+this._e|0},d.prototype._hash=function(){var t=r.allocUnsafe(20);return t.writeInt32BE(0|this._a,0),t.writeInt32BE(0|this._b,4),t.writeInt32BE(0|this._c,8),t.writeInt32BE(0|this._d,12),t.writeInt32BE(0|this._e,16),t},t.exports=d},228:function(t,e,s){"use strict";var i;Object.defineProperty(e,"__esModule",{value:!0}),(i=e.Events||(e.Events={})).SegmentLoaded="segment_loaded",i.SegmentError="segment_error",i.SegmentAbort="segment_abort",i.PeerConnect="peer_connect",i.PeerClose="peer_close",i.PieceBytesDownloaded="piece_bytes_downloaded",i.PieceBytesUploaded="piece_bytes_uploaded"},229:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=s(160),n=s(192),r=s(73);var a,o;!function(t){t[t.SegmentData=0]="SegmentData",t[t.SegmentAbsent=1]="SegmentAbsent",t[t.SegmentsMap=2]="SegmentsMap",t[t.SegmentRequest=3]="SegmentRequest",t[t.CancelSegmentRequest=4]="CancelSegmentRequest"}(a||(a={})),function(t){t[t.Loaded=0]="Loaded",t[t.LoadingByHttp=1]="LoadingByHttp"}(o=e.MediaPeerSegmentStatus||(e.MediaPeerSegmentStatus={}));class d{constructor(t,e){this.id=t,this.size=e,this.bytesDownloaded=0,this.pieces=[]}}e.MediaPeer=class extends n.STEEmitter{constructor(t,e){super(),this.peer=t,this.settings=e,this.remoteAddress="",this.downloadingSegmentId=null,this.downloadingSegment=null,this.segmentsMap=new Map,this.debug=i("p2pml:media-peer"),this.timer=null,this.onPeerConnect=()=>{this.debug("peer connect",this.id,this),this.remoteAddress=this.peer.remoteAddress,this.emit("connect",this)},this.onPeerClose=()=>{this.debug("peer close",this.id,this),this.terminateSegmentRequest(),this.emit("close",this)},this.onPeerError=t=>{this.debug("peer error",this.id,t,this)},this.onPeerData=t=>{const e=this.getJsonCommand(t);if(null!=e){if(this.downloadingSegment){this.debug("peer segment download is interrupted by a command",this.id,this);const t=this.downloadingSegment.id;return this.terminateSegmentRequest(),void this.emit("segment-error",this,t,"Segment download is interrupted by a command")}switch(this.debug("peer receive command",this.id,e,this),e.c){case a.SegmentsMap:this.segmentsMap=this.createSegmentsMap(e.m),this.emit("data-updated");break;case a.SegmentRequest:this.emit("segment-request",this,e.i);break;case a.SegmentData:this.downloadingSegmentId===e.i&&(this.downloadingSegment=new d(e.i,e.s),this.cancelResponseTimeoutTimer());break;case a.SegmentAbsent:this.downloadingSegmentId===e.i&&(this.terminateSegmentRequest(),this.segmentsMap.delete(e.i),this.emit("segment-absent",this,e.i))}}else this.receiveSegmentPiece(t)},this.peer.on("connect",this.onPeerConnect),this.peer.on("close",this.onPeerClose),this.peer.on("error",this.onPeerError),this.peer.on("data",this.onPeerData),this.id=t.id}receiveSegmentPiece(t){if(!this.downloadingSegment)return void this.debug("peer segment not requested",this.id,this);this.downloadingSegment.bytesDownloaded+=t.byteLength,this.downloadingSegment.pieces.push(t),this.emit("bytes-downloaded",this,t.byteLength);const e=this.downloadingSegment.id;if(this.downloadingSegment.bytesDownloaded==this.downloadingSegment.size){const t=new Uint8Array(this.downloadingSegment.size);let s=0;for(const e of this.downloadingSegment.pieces)t.set(new Uint8Array(e),s),s+=e.byteLength;this.debug("peer segment download done",this.id,e,this),this.terminateSegmentRequest(),this.emit("segment-loaded",this,e,t.buffer)}else this.downloadingSegment.bytesDownloaded>this.downloadingSegment.size&&(this.debug("peer segment download bytes mismatch",this.id,e,this),this.terminateSegmentRequest(),this.emit("segment-error",this,e,"Too many bytes received for segment"))}getJsonCommand(t){const e=new Uint8Array(t);if(123==e[0]&&34==e[1]&&125==e[t.byteLength-1])try{return JSON.parse((new TextDecoder).decode(t))}catch(t){}return null}createSegmentsMap(t){if(null==t||!(t instanceof Object))return new Map;const e=new Map;for(const s of Object.keys(t)){const i=t[s];if(!(i instanceof Array&&2===i.length&&"string"==typeof i[0]&&i[1]instanceof Array))return new Map;const n=i[0].split("|"),r=i[1];if(n.length!==r.length)return new Map;for(let t=0;t<n.length;t++){const i=r[t];if("number"!=typeof i||void 0===o[i])return new Map;e.set(`${s}+${n[t]}`,i)}}return e}sendCommand(t){this.debug("peer send command",this.id,t,this),this.peer.write(JSON.stringify(t))}destroy(){this.debug("peer destroy",this.id,this),this.terminateSegmentRequest(),this.peer.destroy()}getDownloadingSegmentId(){return this.downloadingSegmentId}getSegmentsMap(){return this.segmentsMap}sendSegmentsMap(t){this.sendCommand({c:a.SegmentsMap,m:t})}sendSegmentData(t,e){this.sendCommand({c:a.SegmentData,i:t,s:e.byteLength});let s=e.byteLength;for(;s>0;){const t=s>=this.settings.webRtcMaxMessageSize?this.settings.webRtcMaxMessageSize:s,i=r.Buffer.from(e,e.byteLength-s,t);this.peer.write(i),s-=t}this.emit("bytes-uploaded",this,e.byteLength)}sendSegmentAbsent(t){this.sendCommand({c:a.SegmentAbsent,i:t})}requestSegment(t){if(this.downloadingSegmentId)throw new Error("A segment is already downloading: "+this.downloadingSegmentId);this.sendCommand({c:a.SegmentRequest,i:t}),this.downloadingSegmentId=t,this.runResponseTimeoutTimer()}cancelSegmentRequest(){let t;if(this.downloadingSegmentId){const e=this.downloadingSegmentId;t=this.downloadingSegment?this.downloadingSegment.pieces:void 0,this.terminateSegmentRequest(),this.sendCommand({c:a.CancelSegmentRequest,i:e})}return t}runResponseTimeoutTimer(){this.timer=setTimeout((()=>{if(this.timer=null,!this.downloadingSegmentId)return;const t=this.downloadingSegmentId;this.cancelSegmentRequest(),this.emit("segment-timeout",this,t)}),this.settings.p2pSegmentDownloadTimeout)}cancelResponseTimeoutTimer(){this.timer&&(clearTimeout(this.timer),this.timer=null)}terminateSegmentRequest(){this.downloadingSegmentId=null,this.downloadingSegment=null,this.cancelResponseTimeoutTimer()}}},230:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=s(179),n=s(340),r={forwardSegmentCount:20,swarmId:void 0,assetsStorage:void 0};e.SegmentManager=class{constructor(t,e={}){this.masterPlaylist=null,this.variantPlaylists=new Map,this.segmentRequest=null,this.playQueue=[],this.onSegmentLoaded=t=>{this.segmentRequest&&this.segmentRequest.segmentUrl===t.url&&g(this.segmentRequest.segmentByterange)===t.range&&(this.segmentRequest.onSuccess(t.data.slice(0),t.downloadBandwidth),this.segmentRequest=null)},this.onSegmentError=(t,e)=>{this.segmentRequest&&this.segmentRequest.segmentUrl===t.url&&g(this.segmentRequest.segmentByterange)===t.range&&(this.segmentRequest.onError(e),this.segmentRequest=null)},this.onSegmentAbort=t=>{this.segmentRequest&&this.segmentRequest.segmentUrl===t.url&&g(this.segmentRequest.segmentByterange)===t.range&&(this.segmentRequest.onError("Loading aborted: internal abort"),this.segmentRequest=null)},this.settings=Object.assign(Object.assign({},r),e),this.loader=t,this.loader.on(i.Events.SegmentLoaded,this.onSegmentLoaded),this.loader.on(i.Events.SegmentError,this.onSegmentError),this.loader.on(i.Events.SegmentAbort,this.onSegmentAbort)}getSettings(){return this.settings}processPlaylist(t,e,s){const i=new n.Parser;i.push(e),i.end();const r=new a(t,s,i.manifest);if(r.manifest.playlists){this.masterPlaylist=r;for(const[t,e]of this.variantPlaylists){const{streamSwarmId:s,found:i,index:n}=this.getStreamSwarmId(e.requestUrl);i?(e.streamSwarmId=s,e.streamId="V"+n.toString()):this.variantPlaylists.delete(t)}}else{const{streamSwarmId:e,found:s,index:i}=this.getStreamSwarmId(t);(s||null===this.masterPlaylist)&&(r.streamSwarmId=e,r.streamId=null===this.masterPlaylist?void 0:"V"+i.toString(),this.variantPlaylists.set(t,r),this.updateSegments())}}async loadPlaylist(t){const e=this.settings.assetsStorage;let s;if(void 0!==e){let i;i=this.getMasterSwarmId(),void 0===i&&(i=t.split("?")[0]);const n=await e.getAsset(t,void 0,i);void 0!==n?s={responseURL:n.responseUri,response:n.data}:(s=await this.loadContent(t,"text"),e.storeAsset({masterManifestUri:null!==this.masterPlaylist?this.masterPlaylist.requestUrl:t,masterSwarmId:i,requestUri:t,responseUri:s.responseURL,data:s.response}))}else s=await this.loadContent(t,"text");return this.processPlaylist(t,s.response,s.responseURL),s}async loadSegment(t,e){const s=this.getSegmentLocation(t,e),i=g(e);if(!s){let e;const s=this.settings.assetsStorage;if(void 0!==s){let n,r=null!==this.masterPlaylist?this.masterPlaylist.requestUrl:void 0;if(n=this.getMasterSwarmId(),void 0===n&&1===this.variantPlaylists.size&&(n=this.variantPlaylists.values().next().value.requestUrl.split("?")[0]),void 0===r&&1===this.variantPlaylists.size&&(r=this.variantPlaylists.values().next().value.requestUrl),void 0!==n&&void 0!==r){const a=await s.getAsset(t,i,n);if(void 0!==a)e=a.data;else{const a=await this.loadContent(t,"arraybuffer",i);e=a.response,s.storeAsset({masterManifestUri:r,masterSwarmId:n,requestUri:t,requestRange:i,responseUri:a.responseURL,data:e})}}}return void 0===e&&(e=(await this.loadContent(t,"arraybuffer",i)).response),{content:e,downloadBandwidth:0}}const n=(s.playlist.manifest.mediaSequence?s.playlist.manifest.mediaSequence:0)+s.segmentIndex;this.playQueue.length>0&&this.playQueue[this.playQueue.length-1].segmentSequence!==n-1&&(this.playQueue=[]),this.segmentRequest&&this.segmentRequest.onError("Cancel segment request: simultaneous segment requests are not supported");const r=new Promise(((i,r)=>{this.segmentRequest=new o(t,e,n,s.playlist.requestUrl,((t,e)=>i({content:t,downloadBandwidth:e})),(t=>r(t)))}));return this.playQueue.push({segmentUrl:t,segmentByterange:e,segmentSequence:n}),this.loadSegments(s.playlist,s.segmentIndex,!0),r}setPlayingSegment(t,e,s,i){const n=this.playQueue.findIndex((s=>s.segmentUrl==t&&d(s.segmentByterange,e)));n>=0&&(this.playQueue=this.playQueue.slice(n),this.playQueue[0].playPosition={start:s,duration:i},this.updateSegments())}setPlayingSegmentByCurrentTime(t){if(0===this.playQueue.length||!this.playQueue[0].playPosition)return;const e=this.playQueue[0].playPosition;e.start+e.duration-t<.2&&(this.playQueue=this.playQueue.slice(1),this.updateSegments())}abortSegment(t,e){this.segmentRequest&&this.segmentRequest.segmentUrl===t&&d(this.segmentRequest.segmentByterange,e)&&(this.segmentRequest.onSuccess(void 0,0),this.segmentRequest=null)}async destroy(){this.segmentRequest&&(this.segmentRequest.onError("Loading aborted: object destroyed"),this.segmentRequest=null),this.masterPlaylist=null,this.variantPlaylists.clear(),this.playQueue=[],void 0!==this.settings.assetsStorage&&await this.settings.assetsStorage.destroy(),await this.loader.destroy()}updateSegments(){if(!this.segmentRequest)return;const t=this.getSegmentLocation(this.segmentRequest.segmentUrl,this.segmentRequest.segmentByterange);t&&this.loadSegments(t.playlist,t.segmentIndex,!1)}getSegmentLocation(t,e){for(const s of this.variantPlaylists.values()){const i=s.getSegmentIndex(t,e);if(i>=0)return{playlist:s,segmentIndex:i}}}async loadSegments(t,e,s){const i=[],n=t.manifest.segments,r=t.manifest.mediaSequence?t.manifest.mediaSequence:0;let a=null,o=Math.max(0,this.playQueue.length-1);const d=this.getMasterSwarmId();for(let h=e;h<n.length&&i.length<this.settings.forwardSegmentCount;++h){const e=t.manifest.segments[h],n=t.getSegmentAbsoluteUrl(e.uri),u=e.byterange,l=this.getSegmentId(t,r+h);i.push({id:l,url:n,masterSwarmId:void 0!==d?d:t.streamSwarmId,masterManifestUri:null!==this.masterPlaylist?this.masterPlaylist.requestUrl:t.requestUrl,streamId:t.streamId,sequence:(r+h).toString(),range:g(u),priority:o++}),s&&!a&&(a=l)}if(this.loader.load(i,t.streamSwarmId),a){const t=await this.loader.getSegment(a);t&&this.onSegmentLoaded(t)}}getSegmentId(t,e){return`${t.streamSwarmId}+${e}`}getMasterSwarmId(){const t=this.settings.swarmId&&0!==this.settings.swarmId.length?this.settings.swarmId:void 0;return void 0!==t?t:null!==this.masterPlaylist?this.masterPlaylist.requestUrl.split("?")[0]:void 0}getStreamSwarmId(t){const e=this.getMasterSwarmId();if(null!==this.masterPlaylist)for(let s=0;s<this.masterPlaylist.manifest.playlists.length;++s)if(new URL(this.masterPlaylist.manifest.playlists[s].uri,this.masterPlaylist.responseUrl).toString()===t)return{streamSwarmId:`${e}+V${s}`,found:!0,index:s};return{streamSwarmId:void 0!==e?e:t.split("?")[0],found:!1,index:-1}}async loadContent(t,e,s){return new Promise(((i,n)=>{const r=new XMLHttpRequest;r.open("GET",t,!0),r.responseType=e,s&&r.setRequestHeader("Range",s),r.addEventListener("readystatechange",(()=>{4===r.readyState&&(r.status>=200&&r.status<300?i(r):n(r.statusText))}));const a=this.loader.getSettings().xhrSetup;a&&a(r,t),r.send()}))}};class a{constructor(t,e,s){this.requestUrl=t,this.responseUrl=e,this.manifest=s,this.streamSwarmId=""}getSegmentIndex(t,e){for(let s=0;s<this.manifest.segments.length;++s){const i=this.manifest.segments[s];if(t===this.getSegmentAbsoluteUrl(i.uri)&&d(i.byterange,e))return s}return-1}getSegmentAbsoluteUrl(t){return new URL(t,this.responseUrl).toString()}}class o{constructor(t,e,s,i,n,r){this.segmentUrl=t,this.segmentByterange=e,this.segmentSequence=s,this.playlistRequestUrl=i,this.onSuccess=n,this.onError=r}}function d(t,e){return void 0===t?void 0===e:void 0!==e&&t.length===e.length&&t.offset===e.offset}function g(t){if(void 0!==t)return`bytes=${t.offset}-${t.offset+t.length-1}`}},327:function(t,e,s){"use strict";function i(t){for(var s in t)e.hasOwnProperty(s)||(e[s]=t[s])}function n(t){t&&t.config&&t.config.loader&&"function"==typeof t.config.loader.getEngine&&r(t,t.config.loader.getEngine())}function r(t,e){t.on("hlsFragChanged",((t,s)=>{const i=s.frag;e.setPlayingSegment(i.url,2!==i.byteRange.length?void 0:{offset:i.byteRange[0],length:i.byteRange[1]-i.byteRange[0]},i.start,i.duration)})),t.on("hlsDestroying",(async()=>{await e.destroy()})),t.on("hlsError",((s,i)=>{if("bufferStalledError"===i.details){const s=void 0===t.media?t.el_:t.media;if(void 0===s)return;e.setPlayingSegmentByCurrentTime(s.currentTime)}}))}Object.defineProperty(e,"__esModule",{value:!0}),e.version="0.6.2",i(s(328)),i(s(230)),e.initHlsJsPlayer=n,e.initClapprPlayer=function(t){t.on("play",(()=>{const e=t.core.getCurrentPlayback();e._hls&&!e._hls._p2pm_linitialized&&(e._hls._p2pm_linitialized=!0,n(t.core.getCurrentPlayback()._hls))}))},e.initFlowplayerHlsJsPlayer=function(t){t.on("ready",(()=>n(t.engine.hlsjs?t.engine.hlsjs:t.engine.hls)))},e.initVideoJsContribHlsJsPlayer=function(t){t.ready((()=>{const e=t.tech_.options_;e&&e.hlsjsConfig&&e.hlsjsConfig.loader&&"function"==typeof e.hlsjsConfig.loader.getEngine&&r(t.tech_,e.hlsjsConfig.loader.getEngine())}))},e.initVideoJsHlsJsPlugin=function(){null!=videojs&&null!=videojs.Html5Hlsjs&&videojs.Html5Hlsjs.addHook("beforeinitialize",((t,e)=>{e.config&&e.config.loader&&"function"==typeof e.config.loader.getEngine&&r(e,e.config.loader.getEngine())}))},e.initMediaElementJsPlayer=function(t){t.addEventListener("hlsFragChanged",(e=>{const s=t.hlsPlayer;if(s&&s.config&&s.config.loader&&"function"==typeof s.config.loader.getEngine){const t=s.config.loader.getEngine();if(e.data&&e.data.length>1){const s=e.data[1].frag;t.setPlayingSegment(s.url,2!==s.byteRange.length?void 0:{offset:s.byteRange[0],length:s.byteRange[1]-s.byteRange[0]},s.start,s.duration)}}})),t.addEventListener("hlsDestroying",(async()=>{const e=t.hlsPlayer;if(e&&e.config&&e.config.loader&&"function"==typeof e.config.loader.getEngine){const t=e.config.loader.getEngine();await t.destroy()}})),t.addEventListener("hlsError",(e=>{const s=t.hlsPlayer;s&&s.config&&s.config.loader&&"function"==typeof s.config.loader.getEngine&&void 0!==e.data&&"bufferStalledError"===e.data.details&&s.config.loader.getEngine().setPlayingSegmentByCurrentTime(s.media.currentTime)}))},e.initJwPlayer=function(t,e){const s=setInterval((()=>{t.hls&&t.hls.config&&(clearInterval(s),Object.assign(t.hls.config,e),n(t.hls))}),200)}},328:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=s(159),n=s(179),r=s(230),a=s(335),o=s(336);e.Engine=class extends i.EventEmitter{constructor(t={}){super(),this.loader=new n.HybridLoader(t.loader),this.segmentManager=new r.SegmentManager(this.loader,t.segments),Object.keys(n.Events).map((t=>n.Events[t])).forEach((t=>this.loader.on(t,((...e)=>this.emit(t,...e)))))}static isSupported(){return n.HybridLoader.isSupported()}createLoaderClass(){return o.createHlsJsLoaderClass(a.HlsJsLoader,this)}async destroy(){await this.segmentManager.destroy()}getSettings(){return{segments:this.segmentManager.getSettings(),loader:this.loader.getSettings()}}getDetails(){return{loader:this.loader.getDetails()}}setPlayingSegment(t,e,s,i){this.segmentManager.setPlayingSegment(t,e,s,i)}setPlayingSegmentByCurrentTime(t){this.segmentManager.setPlayingSegmentByCurrentTime(t)}}},329:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=s(160),n=s(228),r=s(159),a=s(330),o=s(331),d=s(229),g=s(332),h=s(333),u=s(217),l={cachedSegmentExpiration:3e5,cachedSegmentsCount:30,useP2P:!0,consumeOnly:!1,requiredSegmentsPriority:1,simultaneousHttpDownloads:2,httpDownloadProbability:.1,httpDownloadProbabilityInterval:1e3,httpDownloadProbabilitySkipIfNoPeers:!1,httpFailedSegmentTimeout:1e4,httpDownloadMaxPriority:20,httpDownloadInitialTimeout:0,httpDownloadInitialTimeoutPerSegment:4e3,httpUseRanges:!1,simultaneousP2PDownloads:3,p2pDownloadMaxPriority:20,p2pSegmentDownloadTimeout:6e4,webRtcMaxMessageSize:65535,trackerAnnounce:["wss://tracker.novage.com.ua","wss://tracker.openwebtorrent.com"],peerRequestsPerAnnounce:10,rtcConfig:s(176).config};e.HybridLoader=class extends r.EventEmitter{constructor(t={}){super(),this.debug=i("p2pml:hybrid-loader"),this.debugSegments=i("p2pml:hybrid-loader-segments"),this.segmentsQueue=[],this.bandwidthApproximator=new g.BandwidthApproximator,this.httpDownloadInitialTimeoutTimestamp=-1/0,this.processInitialSegmentTimeout=async()=>{if(void 0!==this.httpRandomDownloadInterval){if(void 0!==this.masterSwarmId){const t=await this.segmentsStorage.getSegmentsMap(this.masterSwarmId);this.processSegmentsQueue(t)&&!this.settings.consumeOnly&&this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(t))}this.httpDownloadInitialTimeoutTimestamp!==-1/0&&setTimeout(this.processInitialSegmentTimeout,this.settings.httpDownloadInitialTimeoutPerSegment)}},this.downloadRandomSegmentOverHttp=async()=>{if(void 0===this.masterSwarmId||void 0===this.httpRandomDownloadInterval||this.httpDownloadInitialTimeoutTimestamp!==-1/0||this.httpManager.getActiveDownloadsCount()>=this.settings.simultaneousHttpDownloads||this.settings.httpDownloadProbabilitySkipIfNoPeers&&0===this.p2pManager.getPeers().size||this.settings.consumeOnly)return;const t=await this.segmentsStorage.getSegmentsMap(this.masterSwarmId),e=this.p2pManager.getOvrallSegmentsMap(),s=this.segmentsQueue.filter((s=>!this.p2pManager.isDownloading(s)&&!this.httpManager.isDownloading(s)&&!e.has(s.id)&&!this.httpManager.isFailed(s)&&s.priority<=this.settings.httpDownloadMaxPriority&&!t.has(s.id)));if(0==s.length)return;if(Math.random()>this.settings.httpDownloadProbability*s.length)return;const i=s[Math.floor(Math.random()*s.length)];this.debugSegments("HTTP download (random)",i.priority,i.url),this.httpManager.download(i),this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(t))},this.onPieceBytesDownloaded=(t,e,s)=>{this.bandwidthApproximator.addBytes(e,this.now()),this.emit(n.Events.PieceBytesDownloaded,t,e,s)},this.onPieceBytesUploaded=(t,e,s)=>{this.emit(n.Events.PieceBytesUploaded,t,e,s)},this.onSegmentLoaded=async(t,e,s)=>{if(this.debugSegments("segment loaded",t.id,t.url),void 0===this.masterSwarmId)return;let i;t.data=e,t.downloadBandwidth=this.bandwidthApproximator.getBandwidth(this.now()),await this.segmentsStorage.storeSegment(t),this.emit(n.Events.SegmentLoaded,t,s),i=void 0===i?await this.segmentsStorage.getSegmentsMap(this.masterSwarmId):i,this.processSegmentsQueue(i),this.settings.consumeOnly||this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(i))},this.onSegmentError=async(t,e,s)=>{if(this.debugSegments("segment error",t.id,t.url,s,e),this.emit(n.Events.SegmentError,t,e,s),void 0!==this.masterSwarmId){const t=await this.segmentsStorage.getSegmentsMap(this.masterSwarmId);this.processSegmentsQueue(t)&&!this.settings.consumeOnly&&this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(t))}},this.onPeerConnect=async t=>{this.emit(n.Events.PeerConnect,t),this.settings.consumeOnly||void 0===this.masterSwarmId||this.p2pManager.sendSegmentsMap(t.id,this.createSegmentsMap(await this.segmentsStorage.getSegmentsMap(this.masterSwarmId)))},this.onPeerClose=t=>{this.emit(n.Events.PeerClose,t)},this.onTrackerUpdate=async t=>{if(this.httpDownloadInitialTimeoutTimestamp!==-1/0&&void 0!==t.incomplete&&t.incomplete<=1&&(this.debugSegments("cancel initial HTTP download timeout - no peers"),this.httpDownloadInitialTimeoutTimestamp=-1/0,void 0!==this.masterSwarmId)){const t=await this.segmentsStorage.getSegmentsMap(this.masterSwarmId);this.processSegmentsQueue(t)&&!this.settings.consumeOnly&&this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(t))}},this.settings=Object.assign(Object.assign({},l),t),t.bufferedSegmentsCount&&(void 0===t.p2pDownloadMaxPriority&&(this.settings.p2pDownloadMaxPriority=t.bufferedSegmentsCount),void 0===t.httpDownloadMaxPriority&&(this.settings.p2pDownloadMaxPriority=t.bufferedSegmentsCount),delete this.settings.bufferedSegmentsCount),this.segmentsStorage=void 0===this.settings.segmentsStorage?new h.SegmentsMemoryStorage(this.settings):this.settings.segmentsStorage,this.debug("loader settings",this.settings),this.httpManager=this.createHttpManager(),this.httpManager.on("segment-loaded",this.onSegmentLoaded),this.httpManager.on("segment-error",this.onSegmentError),this.httpManager.on("bytes-downloaded",(t=>this.onPieceBytesDownloaded("http",t))),this.p2pManager=this.createP2PManager(),this.p2pManager.on("segment-loaded",this.onSegmentLoaded),this.p2pManager.on("segment-error",this.onSegmentError),this.p2pManager.on("peer-data-updated",(async()=>{if(void 0===this.masterSwarmId)return;const t=await this.segmentsStorage.getSegmentsMap(this.masterSwarmId);this.processSegmentsQueue(t)&&!this.settings.consumeOnly&&this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(t))})),this.p2pManager.on("bytes-downloaded",((t,e)=>this.onPieceBytesDownloaded("p2p",t,e))),this.p2pManager.on("bytes-uploaded",((t,e)=>this.onPieceBytesUploaded("p2p",t,e))),this.p2pManager.on("peer-connected",this.onPeerConnect),this.p2pManager.on("peer-closed",this.onPeerClose),this.p2pManager.on("tracker-update",this.onTrackerUpdate)}static isSupported(){const t=u();return t&&void 0!==t.RTCPeerConnection.prototype.createDataChannel}createHttpManager(){return new a.HttpMediaManager(this.settings)}createP2PManager(){return new o.P2PMediaManager(this.segmentsStorage,this.settings)}async load(t,e){void 0===this.httpRandomDownloadInterval&&(this.httpRandomDownloadInterval=setInterval(this.downloadRandomSegmentOverHttp,this.settings.httpDownloadProbabilityInterval),this.settings.httpDownloadInitialTimeout>0&&this.settings.httpDownloadInitialTimeoutPerSegment>0&&(this.debugSegments("enable initial HTTP download timeout",this.settings.httpDownloadInitialTimeout,"per segment",this.settings.httpDownloadInitialTimeoutPerSegment),this.httpDownloadInitialTimeoutTimestamp=this.now(),setTimeout(this.processInitialSegmentTimeout,this.settings.httpDownloadInitialTimeoutPerSegment+100))),t.length>0&&(this.masterSwarmId=t[0].masterSwarmId),void 0!==this.masterSwarmId&&this.p2pManager.setStreamSwarmId(e,this.masterSwarmId),this.debug("load segments");let s=!1;for(const e of this.segmentsQueue)t.find((t=>t.url==e.url))||(this.debug("remove segment",e.url),this.httpManager.isDownloading(e)?(s=!0,this.httpManager.abort(e)):this.p2pManager.abort(e),this.emit(n.Events.SegmentAbort,e));if(this.debug.enabled)for(const e of t)this.segmentsQueue.find((t=>t.url==e.url))||this.debug("add segment",e.url);if(this.segmentsQueue=t,void 0===this.masterSwarmId)return;let i=await this.segmentsStorage.getSegmentsMap(this.masterSwarmId);s=this.processSegmentsQueue(i)||s,await this.cleanSegmentsStorage()&&(i=await this.segmentsStorage.getSegmentsMap(this.masterSwarmId),s=!0),s&&!this.settings.consumeOnly&&this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(i))}async getSegment(t){return void 0===this.masterSwarmId?void 0:this.segmentsStorage.getSegment(t,this.masterSwarmId)}getSettings(){return this.settings}getDetails(){return{peerId:this.p2pManager.getPeerId()}}async destroy(){void 0!==this.httpRandomDownloadInterval&&(clearInterval(this.httpRandomDownloadInterval),this.httpRandomDownloadInterval=void 0),this.httpDownloadInitialTimeoutTimestamp=-1/0,this.segmentsQueue=[],this.httpManager.destroy(),this.p2pManager.destroy(),this.masterSwarmId=void 0,await this.segmentsStorage.destroy()}processSegmentsQueue(t){if(this.debugSegments("process segments queue. priority",this.segmentsQueue.length>0?this.segmentsQueue[0].priority:0),void 0===this.masterSwarmId||0===this.segmentsQueue.length)return!1;let e,s=!1,i=!0;if(this.httpDownloadInitialTimeoutTimestamp!==-1/0){let e;for(const s of this.segmentsQueue)if(!t.has(s.id)){e=s.priority;break}const s=this.now()-this.httpDownloadInitialTimeoutTimestamp;i=s>=this.settings.httpDownloadInitialTimeout||void 0!==e&&s>this.settings.httpDownloadInitialTimeoutPerSegment&&e<=0,i&&(this.debugSegments("cancel initial HTTP download timeout - timed out"),this.httpDownloadInitialTimeoutTimestamp=-1/0)}for(let n=0;n<this.segmentsQueue.length;n++){const r=this.segmentsQueue[n];if(!t.has(r.id)&&!this.httpManager.isDownloading(r)){if(r.priority<=this.settings.requiredSegmentsPriority&&i&&!this.httpManager.isFailed(r)){if(this.httpManager.getActiveDownloadsCount()>=this.settings.simultaneousHttpDownloads)for(let t=this.segmentsQueue.length-1;t>n;t--){const e=this.segmentsQueue[t];if(this.httpManager.isDownloading(e)){this.debugSegments("cancel HTTP download",e.priority,e.url),this.httpManager.abort(e);break}}if(this.httpManager.getActiveDownloadsCount()<this.settings.simultaneousHttpDownloads){const t=this.p2pManager.abort(r);this.httpManager.download(r,t),this.debugSegments("HTTP download (priority)",r.priority,r.url),s=!0;continue}}if(!this.p2pManager.isDownloading(r))if(r.priority<=this.settings.requiredSegmentsPriority){if(e=e||this.p2pManager.getOvrallSegmentsMap(),e.get(r.id)!==d.MediaPeerSegmentStatus.Loaded)continue;if(this.p2pManager.getActiveDownloadsCount()>=this.settings.simultaneousP2PDownloads)for(let t=this.segmentsQueue.length-1;t>n;t--){const e=this.segmentsQueue[t];if(this.p2pManager.isDownloading(e)){this.debugSegments("cancel P2P download",e.priority,e.url),this.p2pManager.abort(e);break}}if(this.p2pManager.getActiveDownloadsCount()<this.settings.simultaneousP2PDownloads&&this.p2pManager.download(r)){this.debugSegments("P2P download (priority)",r.priority,r.url);continue}}else this.p2pManager.getActiveDownloadsCount()<this.settings.simultaneousP2PDownloads&&r.priority<=this.settings.p2pDownloadMaxPriority&&this.p2pManager.download(r)&&this.debugSegments("P2P download",r.priority,r.url)}}return s}getStreamSwarmId(t){return void 0===t.streamId?t.masterSwarmId:`${t.masterSwarmId}+${t.streamId}`}createSegmentsMap(t){const e={},s=(t,s)=>{const i=this.getStreamSwarmId(t),n=t.sequence;let r=e[i];void 0===r&&(r=["",[]],e[i]=r);const a=r[1];r[0]+=0==a.length?n:`|${n}`,a.push(s)};for(const e of t.values())s(e.segment,d.MediaPeerSegmentStatus.Loaded);for(const t of this.httpManager.getActiveDownloads().values())s(t.segment,d.MediaPeerSegmentStatus.LoadingByHttp);return e}async cleanSegmentsStorage(){return void 0!==this.masterSwarmId&&this.segmentsStorage.clean(this.masterSwarmId,(t=>void 0!==this.segmentsQueue.find((e=>e.id===t))))}now(){return performance.now()}}},330:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=s(160),n=s(192);e.HttpMediaManager=class extends n.STEEmitter{constructor(t){super(),this.settings=t,this.xhrRequests=new Map,this.failedSegments=new Map,this.debug=i("p2pml:http-media-manager"),this.now=()=>performance.now()}download(t,e){if(this.isDownloading(t))return;this.cleanTimedOutFailedSegments();const s=this.settings.segmentUrlBuilder?this.settings.segmentUrlBuilder(t):t.url;this.debug("http segment download",s),t.requestUrl=s;const i=new XMLHttpRequest;if(i.open("GET",s,!0),i.responseType="arraybuffer",t.range)i.setRequestHeader("Range",t.range),e=void 0;else if(void 0!==e&&this.settings.httpUseRanges){let t=0;for(const s of e)t+=s.byteLength;i.setRequestHeader("Range",`bytes=${t}-`),this.debug("continue download from",t)}else e=void 0;this.setupXhrEvents(i,t,e),this.settings.xhrSetup&&this.settings.xhrSetup(i,s),this.xhrRequests.set(t.id,{xhr:i,segment:t}),i.send()}abort(t){const e=this.xhrRequests.get(t.id);e&&(e.xhr.abort(),this.xhrRequests.delete(t.id),this.debug("http segment abort",t.id))}isDownloading(t){return this.xhrRequests.has(t.id)}isFailed(t){const e=this.failedSegments.get(t.id);return void 0!==e&&e>this.now()}getActiveDownloads(){return this.xhrRequests}getActiveDownloadsCount(){return this.xhrRequests.size}destroy(){this.xhrRequests.forEach((t=>t.xhr.abort())),this.xhrRequests.clear()}setupXhrEvents(t,e,s){let i=0;t.addEventListener("progress",(t=>{this.emit("bytes-downloaded",t.loaded-i),i=t.loaded})),t.addEventListener("load",(async i=>{if(i.target.status<200||i.target.status>=300)return void this.segmentFailure(e,i,t);let n=i.target.response;if(void 0!==s&&206===i.target.status){let t=0;for(const e of s)t+=e.byteLength;const e=new Uint8Array(t+n.byteLength);let i=0;for(const t of s)e.set(new Uint8Array(t),i),i+=t.byteLength;e.set(new Uint8Array(n),i),n=e.buffer}await this.segmentDownloadFinished(e,n,t)})),t.addEventListener("error",(s=>{this.segmentFailure(e,s,t)})),t.addEventListener("timeout",(s=>{this.segmentFailure(e,s,t)}))}async segmentDownloadFinished(t,e,s){if(t.responseUrl=null===s.responseURL?void 0:s.responseURL,this.settings.segmentValidator)try{await this.settings.segmentValidator(Object.assign(Object.assign({},t),{data:e}),"http")}catch(e){return this.debug("segment validator failed",e),void this.segmentFailure(t,e,s)}this.xhrRequests.delete(t.id),this.emit("segment-loaded",t,e)}segmentFailure(t,e,s){t.responseUrl=null===s.responseURL?void 0:s.responseURL,this.xhrRequests.delete(t.id),this.failedSegments.set(t.id,this.now()+this.settings.httpFailedSegmentTimeout),this.emit("segment-error",t,e)}cleanTimedOutFailedSegments(){const t=this.now(),e=[];this.failedSegments.forEach(((s,i)=>{s<t&&e.push(i)})),e.forEach((t=>this.failedSegments.delete(t)))}}},331:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=s(160),n=s(218),r=s(192),a=s(229),o=s(73),d=s(193),g=`-WW${s(179).version.replace(/\d*./g,(t=>("0"+parseInt(t,10)%100).slice(-2))).slice(0,4)}-`;class h{constructor(t,e){this.peerId=t,this.segment=e}}e.P2PMediaManager=class extends r.STEEmitter{constructor(t,e){super(),this.sementsStorage=t,this.settings=e,this.trackerClient=null,this.peers=new Map,this.peerCandidates=new Map,this.peerSegmentRequests=new Map,this.streamSwarmId=null,this.debug=i("p2pml:p2p-media-manager"),this.pendingTrackerClient=null,this.onTrackerError=t=>{this.debug("tracker error",t)},this.onTrackerWarning=t=>{this.debug("tracker warning",t)},this.onTrackerUpdate=t=>{this.debug("tracker update",t),this.emit("tracker-update",t)},this.onTrackerPeer=t=>{if(this.debug("tracker peer",t.id,t),this.peers.has(t.id))return this.debug("tracker peer already connected",t.id,t),void t.destroy();const e=new a.MediaPeer(t,this.settings);e.on("connect",this.onPeerConnect),e.on("close",this.onPeerClose),e.on("data-updated",this.onPeerDataUpdated),e.on("segment-request",this.onSegmentRequest),e.on("segment-loaded",this.onSegmentLoaded),e.on("segment-absent",this.onSegmentAbsent),e.on("segment-error",this.onSegmentError),e.on("segment-timeout",this.onSegmentTimeout),e.on("bytes-downloaded",this.onPieceBytesDownloaded),e.on("bytes-uploaded",this.onPieceBytesUploaded);let s=this.peerCandidates.get(e.id);s||(s=[],this.peerCandidates.set(e.id,s)),s.push(e)},this.onPieceBytesDownloaded=(t,e)=>{this.emit("bytes-downloaded",e,t.id)},this.onPieceBytesUploaded=(t,e)=>{this.emit("bytes-uploaded",e,t.id)},this.onPeerConnect=t=>{if(this.peers.get(t.id))return this.debug("tracker peer already connected (in peer connect)",t.id,t),void t.destroy();this.peers.set(t.id,t);const e=this.peerCandidates.get(t.id);if(e){for(const s of e)s!=t&&s.destroy();this.peerCandidates.delete(t.id)}this.emit("peer-connected",{id:t.id,remoteAddress:t.remoteAddress})},this.onPeerClose=t=>{if(this.peers.get(t.id)!=t){const e=this.peerCandidates.get(t.id);if(!e)return;const s=e.indexOf(t);return-1!=s&&e.splice(s,1),void(0==e.length&&this.peerCandidates.delete(t.id))}for(const[e,s]of this.peerSegmentRequests)s.peerId==t.id&&this.peerSegmentRequests.delete(e);this.peers.delete(t.id),this.emit("peer-data-updated"),this.emit("peer-closed",t.id)},this.onPeerDataUpdated=()=>{this.emit("peer-data-updated")},this.onSegmentRequest=async(t,e)=>{if(void 0===this.masterSwarmId)return;const s=await this.sementsStorage.getSegment(e,this.masterSwarmId);s?t.sendSegmentData(e,s.data):t.sendSegmentAbsent(e)},this.onSegmentLoaded=async(t,e,s)=>{const i=this.peerSegmentRequests.get(e);if(!i)return;const n=i.segment;if(this.settings.segmentValidator)try{await this.settings.segmentValidator(Object.assign(Object.assign({},n),{data:s}),"p2p",t.id)}catch(s){return this.debug("segment validator failed",s),this.peerSegmentRequests.delete(e),this.emit("segment-error",n,s,t.id),void this.onPeerClose(t)}this.peerSegmentRequests.delete(e),this.emit("segment-loaded",n,s,t.id)},this.onSegmentAbsent=(t,e)=>{this.peerSegmentRequests.delete(e),this.emit("peer-data-updated")},this.onSegmentError=(t,e,s)=>{const i=this.peerSegmentRequests.get(e);i&&(this.peerSegmentRequests.delete(e),this.emit("segment-error",i.segment,s,t.id))},this.onSegmentTimeout=(t,e)=>{const s=this.peerSegmentRequests.get(e);s&&(this.peerSegmentRequests.delete(e),t.destroy(),this.peers.delete(s.peerId)&&this.emit("peer-data-updated"))},this.peerId=e.useP2P?function(){const t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";let e=g;for(let s=0;s<20-g.length;s++)e+=t.charAt(Math.floor(Math.random()*t.length));return(new TextEncoder).encode(e).buffer}():new ArrayBuffer(0),this.debug.enabled&&this.debug("peer ID",this.getPeerId(),(new TextDecoder).decode(this.peerId))}getPeers(){return this.peers}getPeerId(){return o.Buffer.from(this.peerId).toString("hex")}async setStreamSwarmId(t,e){if(this.streamSwarmId===t)return;this.destroy(!0),this.streamSwarmId=t,this.masterSwarmId=e,this.debug("stream swarm ID",this.streamSwarmId),this.pendingTrackerClient={isDestroyed:!1};const s=this.pendingTrackerClient,i=(new d).update(2+this.streamSwarmId).digest();s.isDestroyed?null!=this.trackerClient&&(this.trackerClient.destroy(),this.trackerClient=null):(this.pendingTrackerClient=null,this.createClient(i))}createClient(t){if(!this.settings.useP2P)return;const e={infoHash:o.Buffer.from(t,0,20),peerId:o.Buffer.from(this.peerId,0,20),announce:this.settings.trackerAnnounce,rtcConfig:this.settings.rtcConfig,port:6881,getAnnounceOpts:()=>({numwant:this.settings.peerRequestsPerAnnounce})};let s=this.trackerClient;this.trackerClient=new n(e),this.trackerClient.on("error",this.onTrackerError),this.trackerClient.on("warning",this.onTrackerWarning),this.trackerClient.on("update",this.onTrackerUpdate),this.trackerClient.on("peer",this.onTrackerPeer),this.trackerClient.start(),null!=s&&(s.destroy(),s=null)}download(t){if(this.isDownloading(t))return!1;const e=[];for(const s of this.peers.values())null==s.getDownloadingSegmentId()&&s.getSegmentsMap().get(t.id)===a.MediaPeerSegmentStatus.Loaded&&e.push(s);if(0===e.length)return!1;const s=e[Math.floor(Math.random()*e.length)];return s.requestSegment(t.id),this.peerSegmentRequests.set(t.id,new h(s.id,t)),!0}abort(t){let e;const s=this.peerSegmentRequests.get(t.id);if(s){const i=this.peers.get(s.peerId);i&&(e=i.cancelSegmentRequest()),this.peerSegmentRequests.delete(t.id)}return e}isDownloading(t){return this.peerSegmentRequests.has(t.id)}getActiveDownloadsCount(){return this.peerSegmentRequests.size}destroy(t=!1){this.streamSwarmId=null,this.trackerClient&&(this.trackerClient.stop(),t?(this.trackerClient.removeAllListeners("error"),this.trackerClient.removeAllListeners("warning"),this.trackerClient.removeAllListeners("update"),this.trackerClient.removeAllListeners("peer")):(this.trackerClient.destroy(),this.trackerClient=null)),this.pendingTrackerClient&&(this.pendingTrackerClient.isDestroyed=!0,this.pendingTrackerClient=null),this.peers.forEach((t=>t.destroy())),this.peers.clear(),this.peerSegmentRequests.clear();for(const t of this.peerCandidates.values())for(const e of t)e.destroy();this.peerCandidates.clear()}sendSegmentsMapToAll(t){this.peers.forEach((e=>e.sendSegmentsMap(t)))}sendSegmentsMap(t,e){const s=this.peers.get(t);s&&s.sendSegmentsMap(e)}getOvrallSegmentsMap(){const t=new Map;for(const e of this.peers.values())for(const[s,i]of e.getSegmentsMap())i===a.MediaPeerSegmentStatus.Loaded?t.set(s,a.MediaPeerSegmentStatus.Loaded):t.get(s)||t.set(s,a.MediaPeerSegmentStatus.LoadingByHttp);return t}}},332:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0});const i=1e3;class n{constructor(t,e){this.value=t,this.timeStamp=e}}e.BandwidthApproximator=class{constructor(){this.lastBytes=[],this.currentBytesSum=0,this.lastBandwidth=[]}addBytes(t,e){for(this.lastBytes.push(new n(t,e)),this.currentBytesSum+=t;e-this.lastBytes[0].timeStamp>i;)this.currentBytesSum-=this.lastBytes.shift().value;this.lastBandwidth.push(new n(this.currentBytesSum/i,e))}getBandwidth(t){for(;0!=this.lastBandwidth.length&&t-this.lastBandwidth[0].timeStamp>6e4;)this.lastBandwidth.shift();let e=0;for(const t of this.lastBandwidth)t.value>e&&(e=t.value);return e}getSmoothInterval(){return i}getMeasureInterval(){return 6e4}}},333:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.SegmentsMemoryStorage=class{constructor(t){this.settings=t,this.cache=new Map}async storeSegment(t){this.cache.set(t.id,{segment:t,lastAccessed:performance.now()})}async getSegmentsMap(t){return this.cache}async getSegment(t,e){const s=this.cache.get(t);if(void 0!==s)return s.lastAccessed=performance.now(),s.segment}async hasSegment(t,e){return this.cache.has(t)}async clean(t,e){const s=[],i=[],n=performance.now();for(const t of this.cache.values())n-t.lastAccessed>this.settings.cachedSegmentExpiration?s.push(t.segment.id):i.push(t);let r=i.length-this.settings.cachedSegmentsCount;if(r>0){i.sort(((t,e)=>t.lastAccessed-e.lastAccessed));for(const t of i)if((void 0===e||!e(t.segment.id))&&(s.push(t.segment.id),r--,0==r))break}return s.forEach((t=>this.cache.delete(t))),s.length>0}async destroy(){this.cache.clear()}}},334:function(t,e,s){"use strict";(function(t){s.d(e,"a",(function(){return r}));var i=s(16),n=s.n(i);function r(e){for(var s,i=(s=e,n.a.atob?n.a.atob(s):t.from(s,"base64").toString("binary")),r=new Uint8Array(i.length),a=0;a<i.length;a++)r[a]=i.charCodeAt(a);return r}}).call(this,s(73).Buffer)},335:function(t,e,s){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.HlsJsLoader=class{constructor(t){this.stats={},this.segmentManager=t}async load(t,e,s){if(t.type)try{const e=await this.segmentManager.loadPlaylist(t.url);this.successPlaylist(e,t,s)}catch(e){this.error(e,t,s)}else if(t.frag)try{const e=await this.segmentManager.loadSegment(t.url,null==t.rangeStart||null==t.rangeEnd?void 0:{offset:t.rangeStart,length:t.rangeEnd-t.rangeStart});void 0!==e.content&&setTimeout((()=>this.successSegment(e.content,e.downloadBandwidth,t,s)),0)}catch(e){setTimeout((()=>this.error(e,t,s)),0)}else console.warn("Unknown load request",t)}abort(t){this.segmentManager.abortSegment(t.url,null==t.rangeStart||null==t.rangeEnd?void 0:{offset:t.rangeStart,length:t.rangeEnd-t.rangeStart})}successPlaylist(t,e,s){const i=performance.now();this.stats.trequest=i-300,this.stats.tfirst=i-200,this.stats.tload=i,this.stats.loaded=t.response.length,s.onSuccess({url:t.responseURL,data:t.response},this.stats,e)}successSegment(t,e,s,i){const n=performance.now(),r=t.byteLength/(void 0===e||e<=0?12500:e);this.stats.trequest=n-1-r,this.stats.tfirst=n-r,this.stats.tload=n,this.stats.loaded=t.byteLength,i.onSuccess({url:s.url,data:t},this.stats,s)}error(t,e,s){s.onError(t,e)}}},336:function(t,e){t.exports.createHlsJsLoaderClass=function(t,e){function s(){this.impl=new t(e.segmentManager),this.stats=this.impl.stats}return s.prototype.load=function(t,e,s){this.context=t,this.impl.load(t,e,s)},s.prototype.abort=function(){this.impl.abort(this.context)},s.prototype.destroy=function(){this.context&&this.impl.abort(this.context)},s.getEngine=function(){return e},s}},340:function(t,e,s){"use strict";s.r(e),s.d(e,"LineStream",(function(){return u})),s.d(e,"ParseStream",(function(){return p})),s.d(e,"Parser",(function(){return y}));var i=s(75),n=s.n(i),r=function(){function t(){this.listeners={}}var e=t.prototype;return e.on=function(t,e){this.listeners[t]||(this.listeners[t]=[]),this.listeners[t].push(e)},e.off=function(t,e){if(!this.listeners[t])return!1;var s=this.listeners[t].indexOf(e);return this.listeners[t]=this.listeners[t].slice(0),this.listeners[t].splice(s,1),s>-1},e.trigger=function(t){var e=this.listeners[t];if(e)if(2===arguments.length)for(var s=e.length,i=0;i<s;++i)e[i].call(this,arguments[1]);else for(var n=Array.prototype.slice.call(arguments,1),r=e.length,a=0;a<r;++a)e[a].apply(this,n)},e.dispose=function(){this.listeners={}},e.pipe=function(t){this.on("data",(function(e){t.push(e)}))},t}(),a=s(51),o=s.n(a),d=s(52),g=s.n(d),h=s(334),u=function(t){function e(){var e;return(e=t.call(this)||this).buffer="",e}return n()(e,t),e.prototype.push=function(t){var e;for(this.buffer+=t,e=this.buffer.indexOf("\n");e>-1;e=this.buffer.indexOf("\n"))this.trigger("data",this.buffer.substring(0,e)),this.buffer=this.buffer.substring(e+1)},e}(r),l=String.fromCharCode(9),m=function(t){var e=/([0-9.]*)?@?([0-9.]*)?/.exec(t||""),s={};return e[1]&&(s.length=parseInt(e[1],10)),e[2]&&(s.offset=parseInt(e[2],10)),s},c=function(t){for(var e,s=t.split(new RegExp('(?:^|,)((?:[^=]*)=(?:"[^"]*"|[^,]*))')),i={},n=s.length;n--;)""!==s[n]&&((e=/([^=]*)=(.*)/.exec(s[n]).slice(1))[0]=e[0].replace(/^\s+|\s+$/g,""),e[1]=e[1].replace(/^\s+|\s+$/g,""),e[1]=e[1].replace(/^['"](.*)['"]$/g,"$1"),i[e[0]]=e[1]);return i},p=function(t){function e(){var e;return(e=t.call(this)||this).customParsers=[],e.tagMappers=[],e}n()(e,t);var s=e.prototype;return s.push=function(t){var e,s,i=this;0!==(t=t.trim()).length&&("#"===t[0]?this.tagMappers.reduce((function(e,s){var i=s(t);return i===t?e:e.concat([i])}),[t]).forEach((function(t){for(var n=0;n<i.customParsers.length;n++)if(i.customParsers[n].call(i,t))return;if(0===t.indexOf("#EXT"))if(t=t.replace("\r",""),e=/^#EXTM3U/.exec(t))i.trigger("data",{type:"tag",tagType:"m3u"});else{if(e=/^#EXTINF:?([0-9\.]*)?,?(.*)?$/.exec(t))return s={type:"tag",tagType:"inf"},e[1]&&(s.duration=parseFloat(e[1])),e[2]&&(s.title=e[2]),void i.trigger("data",s);if(e=/^#EXT-X-TARGETDURATION:?([0-9.]*)?/.exec(t))return s={type:"tag",tagType:"targetduration"},e[1]&&(s.duration=parseInt(e[1],10)),void i.trigger("data",s);if(e=/^#EXT-X-VERSION:?([0-9.]*)?/.exec(t))return s={type:"tag",tagType:"version"},e[1]&&(s.version=parseInt(e[1],10)),void i.trigger("data",s);if(e=/^#EXT-X-MEDIA-SEQUENCE:?(\-?[0-9.]*)?/.exec(t))return s={type:"tag",tagType:"media-sequence"},e[1]&&(s.number=parseInt(e[1],10)),void i.trigger("data",s);if(e=/^#EXT-X-DISCONTINUITY-SEQUENCE:?(\-?[0-9.]*)?/.exec(t))return s={type:"tag",tagType:"discontinuity-sequence"},e[1]&&(s.number=parseInt(e[1],10)),void i.trigger("data",s);if(e=/^#EXT-X-PLAYLIST-TYPE:?(.*)?$/.exec(t))return s={type:"tag",tagType:"playlist-type"},e[1]&&(s.playlistType=e[1]),void i.trigger("data",s);if(e=/^#EXT-X-BYTERANGE:?(.*)?$/.exec(t))return s=o()(m(e[1]),{type:"tag",tagType:"byterange"}),void i.trigger("data",s);if(e=/^#EXT-X-ALLOW-CACHE:?(YES|NO)?/.exec(t))return s={type:"tag",tagType:"allow-cache"},e[1]&&(s.allowed=!/NO/.test(e[1])),void i.trigger("data",s);if(e=/^#EXT-X-MAP:?(.*)$/.exec(t)){if(s={type:"tag",tagType:"map"},e[1]){var r=c(e[1]);r.URI&&(s.uri=r.URI),r.BYTERANGE&&(s.byterange=m(r.BYTERANGE))}i.trigger("data",s)}else if(e=/^#EXT-X-STREAM-INF:?(.*)$/.exec(t)){if(s={type:"tag",tagType:"stream-inf"},e[1]){if(s.attributes=c(e[1]),s.attributes.RESOLUTION){var a=s.attributes.RESOLUTION.split("x"),d={};a[0]&&(d.width=parseInt(a[0],10)),a[1]&&(d.height=parseInt(a[1],10)),s.attributes.RESOLUTION=d}s.attributes.BANDWIDTH&&(s.attributes.BANDWIDTH=parseInt(s.attributes.BANDWIDTH,10)),s.attributes["PROGRAM-ID"]&&(s.attributes["PROGRAM-ID"]=parseInt(s.attributes["PROGRAM-ID"],10))}i.trigger("data",s)}else{if(e=/^#EXT-X-MEDIA:?(.*)$/.exec(t))return s={type:"tag",tagType:"media"},e[1]&&(s.attributes=c(e[1])),void i.trigger("data",s);if(e=/^#EXT-X-ENDLIST/.exec(t))i.trigger("data",{type:"tag",tagType:"endlist"});else if(e=/^#EXT-X-DISCONTINUITY/.exec(t))i.trigger("data",{type:"tag",tagType:"discontinuity"});else{if(e=/^#EXT-X-PROGRAM-DATE-TIME:?(.*)$/.exec(t))return s={type:"tag",tagType:"program-date-time"},e[1]&&(s.dateTimeString=e[1],s.dateTimeObject=new Date(e[1])),void i.trigger("data",s);if(e=/^#EXT-X-KEY:?(.*)$/.exec(t))return s={type:"tag",tagType:"key"},e[1]&&(s.attributes=c(e[1]),s.attributes.IV&&("0x"===s.attributes.IV.substring(0,2).toLowerCase()&&(s.attributes.IV=s.attributes.IV.substring(2)),s.attributes.IV=s.attributes.IV.match(/.{8}/g),s.attributes.IV[0]=parseInt(s.attributes.IV[0],16),s.attributes.IV[1]=parseInt(s.attributes.IV[1],16),s.attributes.IV[2]=parseInt(s.attributes.IV[2],16),s.attributes.IV[3]=parseInt(s.attributes.IV[3],16),s.attributes.IV=new Uint32Array(s.attributes.IV))),void i.trigger("data",s);if(e=/^#EXT-X-START:?(.*)$/.exec(t))return s={type:"tag",tagType:"start"},e[1]&&(s.attributes=c(e[1]),s.attributes["TIME-OFFSET"]=parseFloat(s.attributes["TIME-OFFSET"]),s.attributes.PRECISE=/YES/.test(s.attributes.PRECISE)),void i.trigger("data",s);if(e=/^#EXT-X-CUE-OUT-CONT:?(.*)?$/.exec(t))return(s={type:"tag",tagType:"cue-out-cont"}).data=e[1]?e[1]:"",void i.trigger("data",s);if(e=/^#EXT-X-CUE-OUT:?(.*)?$/.exec(t))return(s={type:"tag",tagType:"cue-out"}).data=e[1]?e[1]:"",void i.trigger("data",s);if(e=/^#EXT-X-CUE-IN:?(.*)?$/.exec(t))return(s={type:"tag",tagType:"cue-in"}).data=e[1]?e[1]:"",void i.trigger("data",s);if((e=/^#EXT-X-SKIP:(.*)$/.exec(t))&&e[1])return(s={type:"tag",tagType:"skip"}).attributes=c(e[1]),s.attributes.hasOwnProperty("SKIPPED-SEGMENTS")&&(s.attributes["SKIPPED-SEGMENTS"]=parseInt(s.attributes["SKIPPED-SEGMENTS"],10)),s.attributes.hasOwnProperty("RECENTLY-REMOVED-DATERANGES")&&(s.attributes["RECENTLY-REMOVED-DATERANGES"]=s.attributes["RECENTLY-REMOVED-DATERANGES"].split(l)),void i.trigger("data",s);if((e=/^#EXT-X-PART:(.*)$/.exec(t))&&e[1])return(s={type:"tag",tagType:"part"}).attributes=c(e[1]),["DURATION"].forEach((function(t){s.attributes.hasOwnProperty(t)&&(s.attributes[t]=parseFloat(s.attributes[t]))})),["INDEPENDENT","GAP"].forEach((function(t){s.attributes.hasOwnProperty(t)&&(s.attributes[t]=/YES/.test(s.attributes[t]))})),s.attributes.hasOwnProperty("BYTERANGE")&&(s.attributes.byterange=m(s.attributes.BYTERANGE)),void i.trigger("data",s);if((e=/^#EXT-X-SERVER-CONTROL:(.*)$/.exec(t))&&e[1])return(s={type:"tag",tagType:"server-control"}).attributes=c(e[1]),["CAN-SKIP-UNTIL","PART-HOLD-BACK","HOLD-BACK"].forEach((function(t){s.attributes.hasOwnProperty(t)&&(s.attributes[t]=parseFloat(s.attributes[t]))})),["CAN-SKIP-DATERANGES","CAN-BLOCK-RELOAD"].forEach((function(t){s.attributes.hasOwnProperty(t)&&(s.attributes[t]=/YES/.test(s.attributes[t]))})),void i.trigger("data",s);if((e=/^#EXT-X-PART-INF:(.*)$/.exec(t))&&e[1])return(s={type:"tag",tagType:"part-inf"}).attributes=c(e[1]),["PART-TARGET"].forEach((function(t){s.attributes.hasOwnProperty(t)&&(s.attributes[t]=parseFloat(s.attributes[t]))})),void i.trigger("data",s);if((e=/^#EXT-X-PRELOAD-HINT:(.*)$/.exec(t))&&e[1])return(s={type:"tag",tagType:"preload-hint"}).attributes=c(e[1]),["BYTERANGE-START","BYTERANGE-LENGTH"].forEach((function(t){if(s.attributes.hasOwnProperty(t)){s.attributes[t]=parseInt(s.attributes[t],10);var e="BYTERANGE-LENGTH"===t?"length":"offset";s.attributes.byterange=s.attributes.byterange||{},s.attributes.byterange[e]=s.attributes[t],delete s.attributes[t]}})),void i.trigger("data",s);if((e=/^#EXT-X-RENDITION-REPORT:(.*)$/.exec(t))&&e[1])return(s={type:"tag",tagType:"rendition-report"}).attributes=c(e[1]),["LAST-MSN","LAST-PART"].forEach((function(t){s.attributes.hasOwnProperty(t)&&(s.attributes[t]=parseInt(s.attributes[t],10))})),void i.trigger("data",s);i.trigger("data",{type:"tag",data:t.slice(4)})}}}else i.trigger("data",{type:"comment",text:t.slice(1)})})):this.trigger("data",{type:"uri",uri:t}))},s.addParser=function(t){var e=this,s=t.expression,i=t.customType,n=t.dataParser,r=t.segment;"function"!=typeof n&&(n=function(t){return t}),this.customParsers.push((function(t){if(s.exec(t))return e.trigger("data",{type:"custom",data:n(t),customType:i,segment:r}),!0}))},s.addTagMapper=function(t){var e=t.expression,s=t.map;this.tagMappers.push((function(t){return e.test(t)?s(t):t}))},e}(r),f=function(t){var e={};return Object.keys(t).forEach((function(s){var i;e[(i=s,i.toLowerCase().replace(/-(\w)/g,(function(t){return t[1].toUpperCase()})))]=t[s]})),e},S=function(t){var e=t.serverControl,s=t.targetDuration,i=t.partTargetDuration;if(e){var n="#EXT-X-SERVER-CONTROL",r="holdBack",a="partHoldBack",o=s&&3*s,d=i&&2*i;s&&!e.hasOwnProperty(r)&&(e[r]=o,this.trigger("info",{message:n+" defaulting HOLD-BACK to targetDuration * 3 ("+o+")."})),o&&e[r]<o&&(this.trigger("warn",{message:n+" clamping HOLD-BACK ("+e[r]+") to targetDuration * 3 ("+o+")"}),e[r]=o),i&&!e.hasOwnProperty(a)&&(e[a]=3*i,this.trigger("info",{message:n+" defaulting PART-HOLD-BACK to partTargetDuration * 3 ("+e[a]+")."})),i&&e[a]<d&&(this.trigger("warn",{message:n+" clamping PART-HOLD-BACK ("+e[a]+") to partTargetDuration * 2 ("+d+")."}),e[a]=d)}},y=function(t){function e(){var e;(e=t.call(this)||this).lineStream=new u,e.parseStream=new p,e.lineStream.pipe(e.parseStream);var s,i,n=g()(e),r=[],a={},d=!1,l=function(){},m={AUDIO:{},VIDEO:{},"CLOSED-CAPTIONS":{},SUBTITLES:{}},c=0;e.manifest={allowCache:!0,discontinuityStarts:[],segments:[]};var y=0,w=0;return e.on("end",(function(){a.uri||!a.parts&&!a.preloadHints||(!a.map&&s&&(a.map=s),!a.key&&i&&(a.key=i),a.timeline||"number"!=typeof c||(a.timeline=c),e.manifest.preloadSegment=a)})),e.parseStream.on("data",(function(t){var e,g;({tag:function(){({version:function(){t.version&&(this.manifest.version=t.version)},"allow-cache":function(){this.manifest.allowCache=t.allowed,"allowed"in t||(this.trigger("info",{message:"defaulting allowCache to YES"}),this.manifest.allowCache=!0)},byterange:function(){var e={};"length"in t&&(a.byterange=e,e.length=t.length,"offset"in t||(t.offset=y)),"offset"in t&&(a.byterange=e,e.offset=t.offset),y=e.offset+e.length},endlist:function(){this.manifest.endList=!0},inf:function(){"mediaSequence"in this.manifest||(this.manifest.mediaSequence=0,this.trigger("info",{message:"defaulting media sequence to zero"})),"discontinuitySequence"in this.manifest||(this.manifest.discontinuitySequence=0,this.trigger("info",{message:"defaulting discontinuity sequence to zero"})),t.duration>0&&(a.duration=t.duration),0===t.duration&&(a.duration=.01,this.trigger("info",{message:"updating zero segment duration to a small value"})),this.manifest.segments=r},key:function(){if(t.attributes)if("NONE"!==t.attributes.METHOD)if(t.attributes.URI){if("urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed"===t.attributes.KEYFORMAT)return-1===["SAMPLE-AES","SAMPLE-AES-CTR","SAMPLE-AES-CENC"].indexOf(t.attributes.METHOD)?void this.trigger("warn",{message:"invalid key method provided for Widevine"}):("SAMPLE-AES-CENC"===t.attributes.METHOD&&this.trigger("warn",{message:"SAMPLE-AES-CENC is deprecated, please use SAMPLE-AES-CTR instead"}),"data:text/plain;base64,"!==t.attributes.URI.substring(0,23)?void this.trigger("warn",{message:"invalid key URI provided for Widevine"}):t.attributes.KEYID&&"0x"===t.attributes.KEYID.substring(0,2)?void(this.manifest.contentProtection={"com.widevine.alpha":{attributes:{schemeIdUri:t.attributes.KEYFORMAT,keyId:t.attributes.KEYID.substring(2)},pssh:Object(h.a)(t.attributes.URI.split(",")[1])}}):void this.trigger("warn",{message:"invalid key ID provided for Widevine"}));t.attributes.METHOD||this.trigger("warn",{message:"defaulting key method to AES-128"}),i={method:t.attributes.METHOD||"AES-128",uri:t.attributes.URI},void 0!==t.attributes.IV&&(i.iv=t.attributes.IV)}else this.trigger("warn",{message:"ignoring key declaration without URI"});else i=null;else this.trigger("warn",{message:"ignoring key declaration without attribute list"})},"media-sequence":function(){isFinite(t.number)?this.manifest.mediaSequence=t.number:this.trigger("warn",{message:"ignoring invalid media sequence: "+t.number})},"discontinuity-sequence":function(){isFinite(t.number)?(this.manifest.discontinuitySequence=t.number,c=t.number):this.trigger("warn",{message:"ignoring invalid discontinuity sequence: "+t.number})},"playlist-type":function(){/VOD|EVENT/.test(t.playlistType)?this.manifest.playlistType=t.playlistType:this.trigger("warn",{message:"ignoring unknown playlist type: "+t.playlist})},map:function(){s={},t.uri&&(s.uri=t.uri),t.byterange&&(s.byterange=t.byterange)},"stream-inf":function(){this.manifest.playlists=r,this.manifest.mediaGroups=this.manifest.mediaGroups||m,t.attributes?(a.attributes||(a.attributes={}),o()(a.attributes,t.attributes)):this.trigger("warn",{message:"ignoring empty stream-inf attributes"})},media:function(){if(this.manifest.mediaGroups=this.manifest.mediaGroups||m,t.attributes&&t.attributes.TYPE&&t.attributes["GROUP-ID"]&&t.attributes.NAME){var s=this.manifest.mediaGroups[t.attributes.TYPE];s[t.attributes["GROUP-ID"]]=s[t.attributes["GROUP-ID"]]||{},e=s[t.attributes["GROUP-ID"]],(g={default:/yes/i.test(t.attributes.DEFAULT)}).autoselect=!!g.default||/yes/i.test(t.attributes.AUTOSELECT),t.attributes.LANGUAGE&&(g.language=t.attributes.LANGUAGE),t.attributes.URI&&(g.uri=t.attributes.URI),t.attributes["INSTREAM-ID"]&&(g.instreamId=t.attributes["INSTREAM-ID"]),t.attributes.CHARACTERISTICS&&(g.characteristics=t.attributes.CHARACTERISTICS),t.attributes.FORCED&&(g.forced=/yes/i.test(t.attributes.FORCED)),e[t.attributes.NAME]=g}else this.trigger("warn",{message:"ignoring incomplete or missing media group"})},discontinuity:function(){c+=1,a.discontinuity=!0,this.manifest.discontinuityStarts.push(r.length)},"program-date-time":function(){void 0===this.manifest.dateTimeString&&(this.manifest.dateTimeString=t.dateTimeString,this.manifest.dateTimeObject=t.dateTimeObject),a.dateTimeString=t.dateTimeString,a.dateTimeObject=t.dateTimeObject},targetduration:function(){!isFinite(t.duration)||t.duration<0?this.trigger("warn",{message:"ignoring invalid target duration: "+t.duration}):(this.manifest.targetDuration=t.duration,S.call(this,this.manifest))},start:function(){t.attributes&&!isNaN(t.attributes["TIME-OFFSET"])?this.manifest.start={timeOffset:t.attributes["TIME-OFFSET"],precise:t.attributes.PRECISE}:this.trigger("warn",{message:"ignoring start declaration without appropriate attribute list"})},"cue-out":function(){a.cueOut=t.data},"cue-out-cont":function(){a.cueOutCont=t.data},"cue-in":function(){a.cueIn=t.data},skip:function(){this.manifest.skip=f(t.attributes),this.warnOnMissingAttributes_("#EXT-X-SKIP",t.attributes,["SKIPPED-SEGMENTS"])},part:function(){var e=this;d=!0;var s=this.manifest.segments.length,i=f(t.attributes);a.parts=a.parts||[],a.parts.push(i),i.byterange&&(i.byterange.hasOwnProperty("offset")||(i.byterange.offset=w),w=i.byterange.offset+i.byterange.length),this.warnOnMissingAttributes_("#EXT-X-PART #"+(a.parts.length-1)+" for segment #"+s,t.attributes,["URI","DURATION"]),this.manifest.renditionReports&&this.manifest.renditionReports.forEach((function(t,s){t.hasOwnProperty("lastPart")||e.trigger("warn",{message:"#EXT-X-RENDITION-REPORT #"+s+" lacks required attribute(s): LAST-PART"})}))},"server-control":function(){var e=this.manifest.serverControl=f(t.attributes);e.hasOwnProperty("canBlockReload")||(e.canBlockReload=!1,this.trigger("info",{message:"#EXT-X-SERVER-CONTROL defaulting CAN-BLOCK-RELOAD to false"})),S.call(this,this.manifest),e.canSkipDateranges&&!e.hasOwnProperty("canSkipUntil")&&this.trigger("warn",{message:"#EXT-X-SERVER-CONTROL lacks required attribute CAN-SKIP-UNTIL which is required when CAN-SKIP-DATERANGES is set"})},"preload-hint":function(){var e=this.manifest.segments.length,s=f(t.attributes),i=s.type&&"PART"===s.type;a.preloadHints=a.preloadHints||[],a.preloadHints.push(s),s.byterange&&(s.byterange.hasOwnProperty("offset")||(s.byterange.offset=i?w:0,i&&(w=s.byterange.offset+s.byterange.length)));var n=a.preloadHints.length-1;if(this.warnOnMissingAttributes_("#EXT-X-PRELOAD-HINT #"+n+" for segment #"+e,t.attributes,["TYPE","URI"]),s.type)for(var r=0;r<a.preloadHints.length-1;r++){var o=a.preloadHints[r];o.type&&o.type===s.type&&this.trigger("warn",{message:"#EXT-X-PRELOAD-HINT #"+n+" for segment #"+e+" has the same TYPE "+s.type+" as preload hint #"+r})}},"rendition-report":function(){var e=f(t.attributes);this.manifest.renditionReports=this.manifest.renditionReports||[],this.manifest.renditionReports.push(e);var s=this.manifest.renditionReports.length-1,i=["LAST-MSN","URI"];d&&i.push("LAST-PART"),this.warnOnMissingAttributes_("#EXT-X-RENDITION-REPORT #"+s,t.attributes,i)},"part-inf":function(){this.manifest.partInf=f(t.attributes),this.warnOnMissingAttributes_("#EXT-X-PART-INF",t.attributes,["PART-TARGET"]),this.manifest.partInf.partTarget&&(this.manifest.partTargetDuration=this.manifest.partInf.partTarget),S.call(this,this.manifest)}}[t.tagType]||l).call(n)},uri:function(){a.uri=t.uri,r.push(a),this.manifest.targetDuration&&!("duration"in a)&&(this.trigger("warn",{message:"defaulting segment duration to the target duration"}),a.duration=this.manifest.targetDuration),i&&(a.key=i),a.timeline=c,s&&(a.map=s),w=0,a={}},comment:function(){},custom:function(){t.segment?(a.custom=a.custom||{},a.custom[t.customType]=t.data):(this.manifest.custom=this.manifest.custom||{},this.manifest.custom[t.customType]=t.data)}})[t.type].call(n)})),e}n()(e,t);var s=e.prototype;return s.warnOnMissingAttributes_=function(t,e,s){var i=[];s.forEach((function(t){e.hasOwnProperty(t)||i.push(t)})),i.length&&this.trigger("warn",{message:t+" lacks required attribute(s): "+i.join(", ")})},s.push=function(t){this.lineStream.push(t)},s.end=function(){this.lineStream.push("\n"),this.trigger("end")},s.addParser=function(t){this.parseStream.addParser(t)},s.addTagMapper=function(t){this.parseStream.addTagMapper(t)},e}(r)}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[3],{
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/bandwidth-approximator.ts":
+/*!*****************************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/bandwidth-approximator.ts ***!
+  \*****************************************************************************************************************************/
+/*! exports provided: BandwidthApproximator */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BandwidthApproximator", function() { return BandwidthApproximator; });
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+const SMOOTH_INTERVAL = 15 * 1000;
+const MEASURE_INTERVAL = 60 * 1000;
+class NumberWithTime {
+    constructor(value, timeStamp) {
+        this.value = value;
+        this.timeStamp = timeStamp;
+    }
+}
+class BandwidthApproximator {
+    constructor() {
+        this.lastBytes = [];
+        this.currentBytesSum = 0;
+        this.lastBandwidth = [];
+        this.addBytes = (bytes, timeStamp) => {
+            this.lastBytes.push(new NumberWithTime(bytes, timeStamp));
+            this.currentBytesSum += bytes;
+            while (timeStamp - this.lastBytes[0].timeStamp > SMOOTH_INTERVAL) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                this.currentBytesSum -= this.lastBytes.shift().value;
+            }
+            const interval = Math.min(SMOOTH_INTERVAL, timeStamp);
+            this.lastBandwidth.push(new NumberWithTime(this.currentBytesSum / interval, timeStamp));
+        };
+        // in bytes per millisecond
+        this.getBandwidth = (timeStamp) => {
+            while (this.lastBandwidth.length !== 0 && timeStamp - this.lastBandwidth[0].timeStamp > MEASURE_INTERVAL) {
+                this.lastBandwidth.shift();
+            }
+            let maxBandwidth = 0;
+            for (const bandwidth of this.lastBandwidth) {
+                if (bandwidth.value > maxBandwidth) {
+                    maxBandwidth = bandwidth.value;
+                }
+            }
+            return maxBandwidth;
+        };
+        this.getSmoothInterval = () => {
+            return SMOOTH_INTERVAL;
+        };
+        this.getMeasureInterval = () => {
+            return MEASURE_INTERVAL;
+        };
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/http-media-manager.ts":
+/*!*************************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/http-media-manager.ts ***!
+  \*************************************************************************************************************************/
+/*! exports provided: HttpMediaManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HttpMediaManager", function() { return HttpMediaManager; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! debug */ "./node_modules/debug/src/browser.js");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _stringly_typed_event_emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stringly-typed-event-emitter */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/stringly-typed-event-emitter.ts");
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+class HttpMediaManager extends _stringly_typed_event_emitter__WEBPACK_IMPORTED_MODULE_2__["STEEmitter"] {
+    constructor(settings) {
+        super();
+        this.settings = settings;
+        this.xhrRequests = new Map();
+        this.failedSegments = new Map();
+        this.debug = debug__WEBPACK_IMPORTED_MODULE_1___default()("p2pml:http-media-manager");
+        this.download = (segment, downloadedPieces) => {
+            if (this.isDownloading(segment)) {
+                return;
+            }
+            this.cleanTimedOutFailedSegments();
+            const segmentUrl = this.settings.segmentUrlBuilder ? this.settings.segmentUrlBuilder(segment) : segment.url;
+            this.debug("http segment download", segmentUrl);
+            segment.requestUrl = segmentUrl;
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", segmentUrl, true);
+            xhr.responseType = "arraybuffer";
+            if (segment.range) {
+                xhr.setRequestHeader("Range", segment.range);
+                downloadedPieces = undefined; // TODO: process downloadedPieces for segments with range headers too
+            }
+            else if (downloadedPieces !== undefined && this.settings.httpUseRanges) {
+                let bytesDownloaded = 0;
+                for (const piece of downloadedPieces) {
+                    bytesDownloaded += piece.byteLength;
+                }
+                xhr.setRequestHeader("Range", `bytes=${bytesDownloaded}-`);
+                this.debug("continue download from", bytesDownloaded);
+            }
+            else {
+                downloadedPieces = undefined;
+            }
+            this.setupXhrEvents(xhr, segment, downloadedPieces);
+            if (this.settings.xhrSetup) {
+                this.settings.xhrSetup(xhr, segmentUrl);
+            }
+            this.xhrRequests.set(segment.id, { xhr, segment });
+            xhr.send();
+        };
+        this.abort = (segment) => {
+            const request = this.xhrRequests.get(segment.id);
+            if (request) {
+                request.xhr.abort();
+                this.xhrRequests.delete(segment.id);
+                this.debug("http segment abort", segment.id);
+            }
+        };
+        this.isDownloading = (segment) => {
+            return this.xhrRequests.has(segment.id);
+        };
+        this.isFailed = (segment) => {
+            const time = this.failedSegments.get(segment.id);
+            return time !== undefined && time > this.now();
+        };
+        this.getActiveDownloads = () => {
+            return this.xhrRequests;
+        };
+        this.getActiveDownloadsCount = () => {
+            return this.xhrRequests.size;
+        };
+        this.destroy = () => {
+            this.xhrRequests.forEach((request) => request.xhr.abort());
+            this.xhrRequests.clear();
+        };
+        this.setupXhrEvents = (xhr, segment, downloadedPieces) => {
+            let prevBytesLoaded = 0;
+            xhr.addEventListener("progress", (event) => {
+                const bytesLoaded = event.loaded - prevBytesLoaded;
+                this.emit("bytes-downloaded", bytesLoaded);
+                prevBytesLoaded = event.loaded;
+            });
+            xhr.addEventListener("load", (event) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    this.segmentFailure(segment, event, xhr);
+                    return;
+                }
+                let data = xhr.response;
+                if (downloadedPieces !== undefined && xhr.status === 206) {
+                    let bytesDownloaded = 0;
+                    for (const piece of downloadedPieces) {
+                        bytesDownloaded += piece.byteLength;
+                    }
+                    const segmentData = new Uint8Array(bytesDownloaded + data.byteLength);
+                    let offset = 0;
+                    for (const piece of downloadedPieces) {
+                        segmentData.set(new Uint8Array(piece), offset);
+                        offset += piece.byteLength;
+                    }
+                    segmentData.set(new Uint8Array(data), offset);
+                    data = segmentData.buffer;
+                }
+                yield this.segmentDownloadFinished(segment, data, xhr);
+            }));
+            xhr.addEventListener("error", (event) => {
+                this.segmentFailure(segment, event, xhr);
+            });
+            xhr.addEventListener("timeout", (event) => {
+                this.segmentFailure(segment, event, xhr);
+            });
+        };
+        this.segmentDownloadFinished = (segment, data, xhr) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            segment.responseUrl = xhr.responseURL === null ? undefined : xhr.responseURL;
+            if (this.settings.segmentValidator) {
+                try {
+                    yield this.settings.segmentValidator(Object.assign(Object.assign({}, segment), { data: data }), "http");
+                }
+                catch (error) {
+                    this.debug("segment validator failed", error);
+                    this.segmentFailure(segment, error, xhr);
+                    return;
+                }
+            }
+            this.xhrRequests.delete(segment.id);
+            this.emit("segment-loaded", segment, data);
+        });
+        this.segmentFailure = (segment, error, xhr) => {
+            segment.responseUrl = xhr.responseURL === null ? undefined : xhr.responseURL;
+            this.xhrRequests.delete(segment.id);
+            this.failedSegments.set(segment.id, this.now() + this.settings.httpFailedSegmentTimeout);
+            this.emit("segment-error", segment, error);
+        };
+        this.cleanTimedOutFailedSegments = () => {
+            const now = this.now();
+            const candidates = [];
+            this.failedSegments.forEach((time, id) => {
+                if (time < now) {
+                    candidates.push(id);
+                }
+            });
+            candidates.forEach((id) => this.failedSegments.delete(id));
+        };
+        this.now = () => performance.now();
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/hybrid-loader.ts":
+/*!********************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/hybrid-loader.ts ***!
+  \********************************************************************************************************************/
+/*! exports provided: HybridLoader */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HybridLoader", function() { return HybridLoader; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! debug */ "./node_modules/debug/src/browser.js");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! events */ "./node_modules/events/events.js");
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var simple_peer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! simple-peer */ "./node_modules/simple-peer/index.js");
+/* harmony import */ var simple_peer__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(simple_peer__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _loader_interface__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loader-interface */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/loader-interface.ts");
+/* harmony import */ var _http_media_manager__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./http-media-manager */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/http-media-manager.ts");
+/* harmony import */ var _p2p_media_manager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./p2p-media-manager */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/p2p-media-manager.ts");
+/* harmony import */ var _media_peer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./media-peer */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/media-peer.ts");
+/* harmony import */ var _bandwidth_approximator__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./bandwidth-approximator */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/bandwidth-approximator.ts");
+/* harmony import */ var _segments_memory_storage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./segments-memory-storage */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/segments-memory-storage.ts");
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+
+
+
+
+
+
+const defaultSettings = {
+    cachedSegmentExpiration: 5 * 60 * 1000,
+    cachedSegmentsCount: 30,
+    useP2P: true,
+    consumeOnly: false,
+    requiredSegmentsPriority: 1,
+    simultaneousHttpDownloads: 2,
+    httpDownloadProbability: 0.1,
+    httpDownloadProbabilityInterval: 1000,
+    httpDownloadProbabilitySkipIfNoPeers: false,
+    httpFailedSegmentTimeout: 10000,
+    httpDownloadMaxPriority: 20,
+    httpDownloadInitialTimeout: 0,
+    httpDownloadInitialTimeoutPerSegment: 4000,
+    httpUseRanges: false,
+    simultaneousP2PDownloads: 3,
+    p2pDownloadMaxPriority: 20,
+    p2pSegmentDownloadTimeout: 60000,
+    webRtcMaxMessageSize: 64 * 1024 - 1,
+    trackerAnnounce: ["wss://tracker.novage.com.ua", "wss://tracker.openwebtorrent.com"],
+    peerRequestsPerAnnounce: 10,
+    rtcConfig: simple_peer__WEBPACK_IMPORTED_MODULE_3___default.a.config,
+};
+class HybridLoader extends events__WEBPACK_IMPORTED_MODULE_2__["EventEmitter"] {
+    constructor(settings = {}) {
+        super();
+        this.debug = debug__WEBPACK_IMPORTED_MODULE_1___default()("p2pml:hybrid-loader");
+        this.debugSegments = debug__WEBPACK_IMPORTED_MODULE_1___default()("p2pml:hybrid-loader-segments");
+        this.segmentsQueue = [];
+        this.bandwidthApproximator = new _bandwidth_approximator__WEBPACK_IMPORTED_MODULE_8__["BandwidthApproximator"]();
+        this.httpDownloadInitialTimeoutTimestamp = -Infinity;
+        this.createHttpManager = () => {
+            return new _http_media_manager__WEBPACK_IMPORTED_MODULE_5__["HttpMediaManager"](this.settings);
+        };
+        this.createP2PManager = () => {
+            return new _p2p_media_manager__WEBPACK_IMPORTED_MODULE_6__["P2PMediaManager"](this.segmentsStorage, this.settings);
+        };
+        this.load = (segments, streamSwarmId) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.httpRandomDownloadInterval === undefined) {
+                // Do once on first call
+                this.httpRandomDownloadInterval = setInterval(this.downloadRandomSegmentOverHttp, this.settings.httpDownloadProbabilityInterval);
+                if (this.settings.httpDownloadInitialTimeout > 0 &&
+                    this.settings.httpDownloadInitialTimeoutPerSegment > 0) {
+                    // Initialize initial HTTP download timeout (i.e. download initial segments over P2P)
+                    this.debugSegments("enable initial HTTP download timeout", this.settings.httpDownloadInitialTimeout, "per segment", this.settings.httpDownloadInitialTimeoutPerSegment);
+                    this.httpDownloadInitialTimeoutTimestamp = this.now();
+                    setTimeout(this.processInitialSegmentTimeout, this.settings.httpDownloadInitialTimeoutPerSegment + 100);
+                }
+            }
+            if (segments.length > 0) {
+                this.masterSwarmId = segments[0].masterSwarmId;
+            }
+            if (this.masterSwarmId !== undefined) {
+                this.p2pManager.setStreamSwarmId(streamSwarmId, this.masterSwarmId);
+            }
+            this.debug("load segments");
+            let updateSegmentsMap = false;
+            // stop all http requests and p2p downloads for segments that are not in the new load
+            for (const segment of this.segmentsQueue) {
+                if (!segments.find((f) => f.url === segment.url)) {
+                    this.debug("remove segment", segment.url);
+                    if (this.httpManager.isDownloading(segment)) {
+                        updateSegmentsMap = true;
+                        this.httpManager.abort(segment);
+                    }
+                    else {
+                        this.p2pManager.abort(segment);
+                    }
+                    this.emit(_loader_interface__WEBPACK_IMPORTED_MODULE_4__["Events"].SegmentAbort, segment);
+                }
+            }
+            if (this.debug.enabled) {
+                for (const segment of segments) {
+                    if (!this.segmentsQueue.find((f) => f.url === segment.url)) {
+                        this.debug("add segment", segment.url);
+                    }
+                }
+            }
+            this.segmentsQueue = segments;
+            if (this.masterSwarmId === undefined) {
+                return;
+            }
+            let storageSegments = yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId);
+            updateSegmentsMap = this.processSegmentsQueue(storageSegments) || updateSegmentsMap;
+            if (yield this.cleanSegmentsStorage()) {
+                storageSegments = yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId);
+                updateSegmentsMap = true;
+            }
+            if (updateSegmentsMap && !this.settings.consumeOnly) {
+                this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
+            }
+        });
+        this.getSegment = (id) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return this.masterSwarmId === undefined ? undefined : this.segmentsStorage.getSegment(id, this.masterSwarmId);
+        });
+        this.getSettings = () => {
+            return this.settings;
+        };
+        this.getDetails = () => {
+            return {
+                peerId: this.p2pManager.getPeerId(),
+            };
+        };
+        this.destroy = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.httpRandomDownloadInterval !== undefined) {
+                clearInterval(this.httpRandomDownloadInterval);
+                this.httpRandomDownloadInterval = undefined;
+            }
+            this.httpDownloadInitialTimeoutTimestamp = -Infinity;
+            this.segmentsQueue = [];
+            this.httpManager.destroy();
+            this.p2pManager.destroy();
+            this.masterSwarmId = undefined;
+            yield this.segmentsStorage.destroy();
+        });
+        this.processInitialSegmentTimeout = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.httpRandomDownloadInterval === undefined) {
+                return; // Instance destroyed
+            }
+            if (this.masterSwarmId !== undefined) {
+                const storageSegments = yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId);
+                if (this.processSegmentsQueue(storageSegments) && !this.settings.consumeOnly) {
+                    this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
+                }
+            }
+            if (this.httpDownloadInitialTimeoutTimestamp !== -Infinity) {
+                // Set one more timeout for a next segment
+                setTimeout(this.processInitialSegmentTimeout, this.settings.httpDownloadInitialTimeoutPerSegment);
+            }
+        });
+        this.processSegmentsQueue = (storageSegments) => {
+            this.debugSegments("process segments queue. priority", this.segmentsQueue.length > 0 ? this.segmentsQueue[0].priority : 0);
+            if (this.masterSwarmId === undefined || this.segmentsQueue.length === 0) {
+                return false;
+            }
+            let updateSegmentsMap = false;
+            let segmentsMap;
+            let httpAllowed = true;
+            if (this.httpDownloadInitialTimeoutTimestamp !== -Infinity) {
+                let firstNotDownloadePriority;
+                for (const segment of this.segmentsQueue) {
+                    if (!storageSegments.has(segment.id)) {
+                        firstNotDownloadePriority = segment.priority;
+                        break;
+                    }
+                }
+                const httpTimeout = this.now() - this.httpDownloadInitialTimeoutTimestamp;
+                httpAllowed =
+                    httpTimeout >= this.settings.httpDownloadInitialTimeout ||
+                        (firstNotDownloadePriority !== undefined &&
+                            httpTimeout > this.settings.httpDownloadInitialTimeoutPerSegment &&
+                            firstNotDownloadePriority <= 0);
+                if (httpAllowed) {
+                    this.debugSegments("cancel initial HTTP download timeout - timed out");
+                    this.httpDownloadInitialTimeoutTimestamp = -Infinity;
+                }
+            }
+            for (let index = 0; index < this.segmentsQueue.length; index++) {
+                const segment = this.segmentsQueue[index];
+                if (storageSegments.has(segment.id) || this.httpManager.isDownloading(segment)) {
+                    continue;
+                }
+                if (segment.priority <= this.settings.requiredSegmentsPriority &&
+                    httpAllowed &&
+                    !this.httpManager.isFailed(segment)) {
+                    // Download required segments over HTTP
+                    if (this.httpManager.getActiveDownloadsCount() >= this.settings.simultaneousHttpDownloads) {
+                        // Not enough HTTP download resources. Abort one of the HTTP downloads.
+                        for (let i = this.segmentsQueue.length - 1; i > index; i--) {
+                            const segmentToAbort = this.segmentsQueue[i];
+                            if (this.httpManager.isDownloading(segmentToAbort)) {
+                                this.debugSegments("cancel HTTP download", segmentToAbort.priority, segmentToAbort.url);
+                                this.httpManager.abort(segmentToAbort);
+                                break;
+                            }
+                        }
+                    }
+                    if (this.httpManager.getActiveDownloadsCount() < this.settings.simultaneousHttpDownloads) {
+                        // Abort P2P download of the required segment if any and force HTTP download
+                        const downloadedPieces = this.p2pManager.abort(segment);
+                        this.httpManager.download(segment, downloadedPieces);
+                        this.debugSegments("HTTP download (priority)", segment.priority, segment.url);
+                        updateSegmentsMap = true;
+                        continue;
+                    }
+                }
+                if (this.p2pManager.isDownloading(segment)) {
+                    continue;
+                }
+                if (segment.priority <= this.settings.requiredSegmentsPriority) {
+                    // Download required segments over P2P
+                    segmentsMap = segmentsMap ? segmentsMap : this.p2pManager.getOverallSegmentsMap();
+                    if (segmentsMap.get(segment.id) !== _media_peer__WEBPACK_IMPORTED_MODULE_7__["MediaPeerSegmentStatus"].Loaded) {
+                        continue;
+                    }
+                    if (this.p2pManager.getActiveDownloadsCount() >= this.settings.simultaneousP2PDownloads) {
+                        // Not enough P2P download resources. Abort one of the P2P downloads.
+                        for (let i = this.segmentsQueue.length - 1; i > index; i--) {
+                            const segmentToAbort = this.segmentsQueue[i];
+                            if (this.p2pManager.isDownloading(segmentToAbort)) {
+                                this.debugSegments("cancel P2P download", segmentToAbort.priority, segmentToAbort.url);
+                                this.p2pManager.abort(segmentToAbort);
+                                break;
+                            }
+                        }
+                    }
+                    if (this.p2pManager.getActiveDownloadsCount() < this.settings.simultaneousP2PDownloads) {
+                        if (this.p2pManager.download(segment)) {
+                            this.debugSegments("P2P download (priority)", segment.priority, segment.url);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (this.p2pManager.getActiveDownloadsCount() < this.settings.simultaneousP2PDownloads &&
+                    segment.priority <= this.settings.p2pDownloadMaxPriority) {
+                    if (this.p2pManager.download(segment)) {
+                        this.debugSegments("P2P download", segment.priority, segment.url);
+                    }
+                }
+            }
+            return updateSegmentsMap;
+        };
+        this.downloadRandomSegmentOverHttp = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.masterSwarmId === undefined ||
+                this.httpRandomDownloadInterval === undefined ||
+                this.httpDownloadInitialTimeoutTimestamp !== -Infinity ||
+                this.httpManager.getActiveDownloadsCount() >= this.settings.simultaneousHttpDownloads ||
+                (this.settings.httpDownloadProbabilitySkipIfNoPeers && this.p2pManager.getPeers().size === 0) ||
+                this.settings.consumeOnly) {
+                return;
+            }
+            const storageSegments = yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId);
+            const segmentsMap = this.p2pManager.getOverallSegmentsMap();
+            const pendingQueue = this.segmentsQueue.filter((s) => !this.p2pManager.isDownloading(s) &&
+                !this.httpManager.isDownloading(s) &&
+                !segmentsMap.has(s.id) &&
+                !this.httpManager.isFailed(s) &&
+                s.priority <= this.settings.httpDownloadMaxPriority &&
+                !storageSegments.has(s.id));
+            if (pendingQueue.length === 0) {
+                return;
+            }
+            if (Math.random() > this.settings.httpDownloadProbability * pendingQueue.length) {
+                return;
+            }
+            const segment = pendingQueue[Math.floor(Math.random() * pendingQueue.length)];
+            this.debugSegments("HTTP download (random)", segment.priority, segment.url);
+            this.httpManager.download(segment);
+            this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
+        });
+        this.onPieceBytesDownloaded = (method, bytes, peerId) => {
+            this.bandwidthApproximator.addBytes(bytes, this.now());
+            this.emit(_loader_interface__WEBPACK_IMPORTED_MODULE_4__["Events"].PieceBytesDownloaded, method, bytes, peerId);
+        };
+        this.onPieceBytesUploaded = (method, bytes, peerId) => {
+            this.emit(_loader_interface__WEBPACK_IMPORTED_MODULE_4__["Events"].PieceBytesUploaded, method, bytes, peerId);
+        };
+        this.onSegmentLoaded = (segment, data, peerId) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.debugSegments("segment loaded", segment.id, segment.url);
+            if (this.masterSwarmId === undefined) {
+                return;
+            }
+            segment.data = data;
+            segment.downloadBandwidth = this.bandwidthApproximator.getBandwidth(this.now());
+            yield this.segmentsStorage.storeSegment(segment);
+            this.emit(_loader_interface__WEBPACK_IMPORTED_MODULE_4__["Events"].SegmentLoaded, segment, peerId);
+            const storageSegments = yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId);
+            this.processSegmentsQueue(storageSegments);
+            if (!this.settings.consumeOnly) {
+                this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
+            }
+        });
+        this.onSegmentError = (segment, details, peerId) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.debugSegments("segment error", segment.id, segment.url, peerId, details);
+            this.emit(_loader_interface__WEBPACK_IMPORTED_MODULE_4__["Events"].SegmentError, segment, details, peerId);
+            if (this.masterSwarmId !== undefined) {
+                const storageSegments = yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId);
+                if (this.processSegmentsQueue(storageSegments) && !this.settings.consumeOnly) {
+                    this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
+                }
+            }
+        });
+        this.getStreamSwarmId = (segment) => {
+            return segment.streamId === undefined ? segment.masterSwarmId : `${segment.masterSwarmId}+${segment.streamId}`;
+        };
+        this.createSegmentsMap = (storageSegments) => {
+            const segmentsMap = {};
+            const addSegmentToMap = (segment, status) => {
+                const streamSwarmId = this.getStreamSwarmId(segment);
+                const segmentId = segment.sequence;
+                let segmentsIdsAndStatuses = segmentsMap[streamSwarmId];
+                if (segmentsIdsAndStatuses === undefined) {
+                    segmentsIdsAndStatuses = ["", []];
+                    segmentsMap[streamSwarmId] = segmentsIdsAndStatuses;
+                }
+                const segmentsStatuses = segmentsIdsAndStatuses[1];
+                segmentsIdsAndStatuses[0] += segmentsStatuses.length === 0 ? segmentId : `|${segmentId}`;
+                segmentsStatuses.push(status);
+            };
+            for (const storageSegment of storageSegments.values()) {
+                addSegmentToMap(storageSegment.segment, _media_peer__WEBPACK_IMPORTED_MODULE_7__["MediaPeerSegmentStatus"].Loaded);
+            }
+            for (const download of this.httpManager.getActiveDownloads().values()) {
+                addSegmentToMap(download.segment, _media_peer__WEBPACK_IMPORTED_MODULE_7__["MediaPeerSegmentStatus"].LoadingByHttp);
+            }
+            return segmentsMap;
+        };
+        this.onPeerConnect = (peer) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.emit(_loader_interface__WEBPACK_IMPORTED_MODULE_4__["Events"].PeerConnect, peer);
+            if (!this.settings.consumeOnly && this.masterSwarmId !== undefined) {
+                this.p2pManager.sendSegmentsMap(peer.id, this.createSegmentsMap(yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId)));
+            }
+        });
+        this.onPeerClose = (peerId) => {
+            this.emit(_loader_interface__WEBPACK_IMPORTED_MODULE_4__["Events"].PeerClose, peerId);
+        };
+        this.onTrackerUpdate = (data) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.httpDownloadInitialTimeoutTimestamp !== -Infinity &&
+                data.incomplete !== undefined &&
+                data.incomplete <= 1) {
+                this.debugSegments("cancel initial HTTP download timeout - no peers");
+                this.httpDownloadInitialTimeoutTimestamp = -Infinity;
+                if (this.masterSwarmId !== undefined) {
+                    const storageSegments = yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId);
+                    if (this.processSegmentsQueue(storageSegments) && !this.settings.consumeOnly) {
+                        this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
+                    }
+                }
+            }
+        });
+        this.cleanSegmentsStorage = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.masterSwarmId === undefined) {
+                return false;
+            }
+            return this.segmentsStorage.clean(this.masterSwarmId, (id) => this.segmentsQueue.find((queueSegment) => queueSegment.id === id) !== undefined);
+        });
+        this.now = () => {
+            return performance.now();
+        };
+        this.settings = Object.assign(Object.assign({}, defaultSettings), settings);
+        const { bufferedSegmentsCount } = settings;
+        if (typeof bufferedSegmentsCount === "number") {
+            if (settings.p2pDownloadMaxPriority === undefined) {
+                this.settings.p2pDownloadMaxPriority = bufferedSegmentsCount;
+            }
+            if (settings.httpDownloadMaxPriority === undefined) {
+                this.settings.p2pDownloadMaxPriority = bufferedSegmentsCount;
+            }
+        }
+        this.segmentsStorage =
+            this.settings.segmentsStorage === undefined
+                ? new _segments_memory_storage__WEBPACK_IMPORTED_MODULE_9__["SegmentsMemoryStorage"](this.settings)
+                : this.settings.segmentsStorage;
+        this.debug("loader settings", this.settings);
+        this.httpManager = this.createHttpManager();
+        this.httpManager.on("segment-loaded", this.onSegmentLoaded);
+        this.httpManager.on("segment-error", this.onSegmentError);
+        this.httpManager.on("bytes-downloaded", (bytes) => this.onPieceBytesDownloaded("http", bytes));
+        this.p2pManager = this.createP2PManager();
+        this.p2pManager.on("segment-loaded", this.onSegmentLoaded);
+        this.p2pManager.on("segment-error", this.onSegmentError);
+        this.p2pManager.on("peer-data-updated", () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.masterSwarmId === undefined) {
+                return;
+            }
+            const storageSegments = yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId);
+            if (this.processSegmentsQueue(storageSegments) && !this.settings.consumeOnly) {
+                this.p2pManager.sendSegmentsMapToAll(this.createSegmentsMap(storageSegments));
+            }
+        }));
+        this.p2pManager.on("bytes-downloaded", (bytes, peerId) => this.onPieceBytesDownloaded("p2p", bytes, peerId));
+        this.p2pManager.on("bytes-uploaded", (bytes, peerId) => this.onPieceBytesUploaded("p2p", bytes, peerId));
+        this.p2pManager.on("peer-connected", this.onPeerConnect);
+        this.p2pManager.on("peer-closed", this.onPeerClose);
+        this.p2pManager.on("tracker-update", this.onTrackerUpdate);
+    }
+}
+HybridLoader.isSupported = () => {
+    return window.RTCPeerConnection.prototype.createDataChannel !== undefined;
+};
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts":
+/*!************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts ***!
+  \************************************************************************************************************/
+/*! exports provided: version, Events, HybridLoader */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "version", function() { return version; });
+/* harmony import */ var _loader_interface__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./loader-interface */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/loader-interface.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Events", function() { return _loader_interface__WEBPACK_IMPORTED_MODULE_0__["Events"]; });
+
+/* harmony import */ var _hybrid_loader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hybrid-loader */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/hybrid-loader.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HybridLoader", function() { return _hybrid_loader__WEBPACK_IMPORTED_MODULE_1__["HybridLoader"]; });
+
+/**
+ * @license Apache-2.0
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+const version = "0.6.2";
+
+
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/loader-interface.ts":
+/*!***********************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/loader-interface.ts ***!
+  \***********************************************************************************************************************/
+/*! exports provided: Events */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Events", function() { return Events; });
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+var Events;
+(function (Events) {
+    /**
+     * Emitted when segment has been downloaded.
+     * Args: segment
+     */
+    Events["SegmentLoaded"] = "segment_loaded";
+    /**
+     * Emitted when an error occurred while loading the segment.
+     * Args: segment, error
+     */
+    Events["SegmentError"] = "segment_error";
+    /**
+     * Emitted for each segment that does not hit into a new segments queue when the load() method is called.
+     * Args: segment
+     */
+    Events["SegmentAbort"] = "segment_abort";
+    /**
+     * Emitted when a peer is connected.
+     * Args: peer
+     */
+    Events["PeerConnect"] = "peer_connect";
+    /**
+     * Emitted when a peer is disconnected.
+     * Args: peerId
+     */
+    Events["PeerClose"] = "peer_close";
+    /**
+     * Emitted when a segment piece has been downloaded.
+     * Args: method (can be "http" or "p2p" only), bytes
+     */
+    Events["PieceBytesDownloaded"] = "piece_bytes_downloaded";
+    /**
+     * Emitted when a segment piece has been uploaded.
+     * Args: method (can be "p2p" only), bytes
+     */
+    Events["PieceBytesUploaded"] = "piece_bytes_uploaded";
+})(Events || (Events = {}));
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/media-peer.ts":
+/*!*****************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/media-peer.ts ***!
+  \*****************************************************************************************************************/
+/*! exports provided: MediaPeerSegmentStatus, MediaPeer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MediaPeerSegmentStatus", function() { return MediaPeerSegmentStatus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MediaPeer", function() { return MediaPeer; });
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! debug */ "./node_modules/debug/src/browser.js");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var buffer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! buffer */ "./node_modules/node-libs-browser/node_modules/buffer/index.js");
+/* harmony import */ var buffer__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(buffer__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _stringly_typed_event_emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stringly-typed-event-emitter */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/stringly-typed-event-emitter.ts");
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+
+
+var MediaPeerCommands;
+(function (MediaPeerCommands) {
+    MediaPeerCommands[MediaPeerCommands["SegmentData"] = 0] = "SegmentData";
+    MediaPeerCommands[MediaPeerCommands["SegmentAbsent"] = 1] = "SegmentAbsent";
+    MediaPeerCommands[MediaPeerCommands["SegmentsMap"] = 2] = "SegmentsMap";
+    MediaPeerCommands[MediaPeerCommands["SegmentRequest"] = 3] = "SegmentRequest";
+    MediaPeerCommands[MediaPeerCommands["CancelSegmentRequest"] = 4] = "CancelSegmentRequest";
+})(MediaPeerCommands || (MediaPeerCommands = {}));
+var MediaPeerSegmentStatus;
+(function (MediaPeerSegmentStatus) {
+    MediaPeerSegmentStatus[MediaPeerSegmentStatus["Loaded"] = 0] = "Loaded";
+    MediaPeerSegmentStatus[MediaPeerSegmentStatus["LoadingByHttp"] = 1] = "LoadingByHttp";
+})(MediaPeerSegmentStatus || (MediaPeerSegmentStatus = {}));
+class DownloadingSegment {
+    constructor(id, size) {
+        this.id = id;
+        this.size = size;
+        this.bytesDownloaded = 0;
+        this.pieces = [];
+    }
+}
+class MediaPeer extends _stringly_typed_event_emitter__WEBPACK_IMPORTED_MODULE_2__["STEEmitter"] {
+    constructor(
+    // eslint-disable-next-line
+    peer, settings) {
+        super();
+        this.peer = peer;
+        this.settings = settings;
+        this.remoteAddress = "";
+        this.downloadingSegmentId = null;
+        this.downloadingSegment = null;
+        this.segmentsMap = new Map();
+        this.debug = debug__WEBPACK_IMPORTED_MODULE_0___default()("p2pml:media-peer");
+        this.timer = null;
+        this.onPeerConnect = () => {
+            this.debug("peer connect", this.id, this);
+            this.remoteAddress = this.peer.remoteAddress;
+            this.emit("connect", this);
+        };
+        this.onPeerClose = () => {
+            this.debug("peer close", this.id, this);
+            this.terminateSegmentRequest();
+            this.emit("close", this);
+        };
+        this.onPeerError = (error) => {
+            this.debug("peer error", this.id, error, this);
+        };
+        this.receiveSegmentPiece = (data) => {
+            if (!this.downloadingSegment) {
+                // The segment was not requested or canceled
+                this.debug("peer segment not requested", this.id, this);
+                return;
+            }
+            this.downloadingSegment.bytesDownloaded += data.byteLength;
+            this.downloadingSegment.pieces.push(data);
+            this.emit("bytes-downloaded", this, data.byteLength);
+            const segmentId = this.downloadingSegment.id;
+            if (this.downloadingSegment.bytesDownloaded === this.downloadingSegment.size) {
+                const segmentData = new Uint8Array(this.downloadingSegment.size);
+                let offset = 0;
+                for (const piece of this.downloadingSegment.pieces) {
+                    segmentData.set(new Uint8Array(piece), offset);
+                    offset += piece.byteLength;
+                }
+                this.debug("peer segment download done", this.id, segmentId, this);
+                this.terminateSegmentRequest();
+                this.emit("segment-loaded", this, segmentId, segmentData.buffer);
+            }
+            else if (this.downloadingSegment.bytesDownloaded > this.downloadingSegment.size) {
+                this.debug("peer segment download bytes mismatch", this.id, segmentId, this);
+                this.terminateSegmentRequest();
+                this.emit("segment-error", this, segmentId, "Too many bytes received for segment");
+            }
+        };
+        this.getJsonCommand = (data) => {
+            const bytes = new Uint8Array(data);
+            // Serialized JSON string check by first, second and last characters: '{" .... }'
+            if (bytes[0] === 123 && bytes[1] === 34 && bytes[data.byteLength - 1] === 125) {
+                try {
+                    return JSON.parse(new TextDecoder().decode(data));
+                }
+                catch (_a) {
+                    return null;
+                }
+            }
+            return null;
+        };
+        this.onPeerData = (data) => {
+            const command = this.getJsonCommand(data);
+            if (command === null) {
+                this.receiveSegmentPiece(data);
+                return;
+            }
+            if (this.downloadingSegment) {
+                this.debug("peer segment download is interrupted by a command", this.id, this);
+                const segmentId = this.downloadingSegment.id;
+                this.terminateSegmentRequest();
+                this.emit("segment-error", this, segmentId, "Segment download is interrupted by a command");
+                return;
+            }
+            this.debug("peer receive command", this.id, command, this);
+            switch (command.c) {
+                case MediaPeerCommands.SegmentsMap:
+                    this.segmentsMap = this.createSegmentsMap(command.m);
+                    this.emit("data-updated");
+                    break;
+                case MediaPeerCommands.SegmentRequest:
+                    this.emit("segment-request", this, command.i);
+                    break;
+                case MediaPeerCommands.SegmentData:
+                    if (this.downloadingSegmentId &&
+                        this.downloadingSegmentId === command.i &&
+                        typeof command.s === "number" &&
+                        command.s >= 0) {
+                        this.downloadingSegment = new DownloadingSegment(command.i, command.s);
+                        this.cancelResponseTimeoutTimer();
+                    }
+                    break;
+                case MediaPeerCommands.SegmentAbsent:
+                    if (this.downloadingSegmentId && this.downloadingSegmentId === command.i) {
+                        this.terminateSegmentRequest();
+                        this.segmentsMap.delete(command.i);
+                        this.emit("segment-absent", this, command.i);
+                    }
+                    break;
+                case MediaPeerCommands.CancelSegmentRequest:
+                    // TODO: peer stop sending buffer
+                    break;
+                default:
+                    break;
+            }
+        };
+        this.createSegmentsMap = (segments) => {
+            if (!(segments instanceof Object)) {
+                return new Map();
+            }
+            const segmentsMap = new Map();
+            for (const streamSwarmId of Object.keys(segments)) {
+                const swarmData = segments[streamSwarmId];
+                if (!(swarmData instanceof Array) ||
+                    swarmData.length !== 2 ||
+                    typeof swarmData[0] !== "string" ||
+                    !(swarmData[1] instanceof Array)) {
+                    return new Map();
+                }
+                const segmentsIds = swarmData[0].split("|");
+                const segmentsStatuses = swarmData[1];
+                if (segmentsIds.length !== segmentsStatuses.length) {
+                    return new Map();
+                }
+                for (let i = 0; i < segmentsIds.length; i++) {
+                    const segmentStatus = segmentsStatuses[i];
+                    if (typeof segmentStatus !== "number" || MediaPeerSegmentStatus[segmentStatus] === undefined) {
+                        return new Map();
+                    }
+                    segmentsMap.set(`${streamSwarmId}+${segmentsIds[i]}`, segmentStatus);
+                }
+            }
+            return segmentsMap;
+        };
+        this.sendCommand = (command) => {
+            this.debug("peer send command", this.id, command, this);
+            this.peer.write(JSON.stringify(command));
+        };
+        this.destroy = () => {
+            this.debug("peer destroy", this.id, this);
+            this.terminateSegmentRequest();
+            this.peer.destroy();
+        };
+        this.getDownloadingSegmentId = () => {
+            return this.downloadingSegmentId;
+        };
+        this.getSegmentsMap = () => {
+            return this.segmentsMap;
+        };
+        this.sendSegmentsMap = (segmentsMap) => {
+            this.sendCommand({ c: MediaPeerCommands.SegmentsMap, m: segmentsMap });
+        };
+        this.sendSegmentData = (segmentId, data) => {
+            this.sendCommand({
+                c: MediaPeerCommands.SegmentData,
+                i: segmentId,
+                s: data.byteLength,
+            });
+            let bytesLeft = data.byteLength;
+            while (bytesLeft > 0) {
+                const bytesToSend = bytesLeft >= this.settings.webRtcMaxMessageSize ? this.settings.webRtcMaxMessageSize : bytesLeft;
+                const buffer = buffer__WEBPACK_IMPORTED_MODULE_1__["Buffer"].from(data, data.byteLength - bytesLeft, bytesToSend);
+                this.peer.write(buffer);
+                bytesLeft -= bytesToSend;
+            }
+            this.emit("bytes-uploaded", this, data.byteLength);
+        };
+        this.sendSegmentAbsent = (segmentId) => {
+            this.sendCommand({ c: MediaPeerCommands.SegmentAbsent, i: segmentId });
+        };
+        this.requestSegment = (segmentId) => {
+            if (this.downloadingSegmentId) {
+                throw new Error("A segment is already downloading: " + this.downloadingSegmentId);
+            }
+            this.sendCommand({ c: MediaPeerCommands.SegmentRequest, i: segmentId });
+            this.downloadingSegmentId = segmentId;
+            this.runResponseTimeoutTimer();
+        };
+        this.cancelSegmentRequest = () => {
+            let downloadingSegment;
+            if (this.downloadingSegmentId) {
+                const segmentId = this.downloadingSegmentId;
+                downloadingSegment = this.downloadingSegment ? this.downloadingSegment.pieces : undefined;
+                this.terminateSegmentRequest();
+                this.sendCommand({ c: MediaPeerCommands.CancelSegmentRequest, i: segmentId });
+            }
+            return downloadingSegment;
+        };
+        this.runResponseTimeoutTimer = () => {
+            this.timer = setTimeout(() => {
+                this.timer = null;
+                if (!this.downloadingSegmentId) {
+                    return;
+                }
+                const segmentId = this.downloadingSegmentId;
+                this.cancelSegmentRequest();
+                this.emit("segment-timeout", this, segmentId); // TODO: send peer not responding event
+            }, this.settings.p2pSegmentDownloadTimeout);
+        };
+        this.cancelResponseTimeoutTimer = () => {
+            if (this.timer) {
+                clearTimeout(this.timer);
+                this.timer = null;
+            }
+        };
+        this.terminateSegmentRequest = () => {
+            this.downloadingSegmentId = null;
+            this.downloadingSegment = null;
+            this.cancelResponseTimeoutTimer();
+        };
+        this.peer.on("connect", this.onPeerConnect);
+        this.peer.on("close", this.onPeerClose);
+        this.peer.on("error", this.onPeerError);
+        this.peer.on("data", this.onPeerData);
+        this.id = peer.id;
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/p2p-media-manager.ts":
+/*!************************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/p2p-media-manager.ts ***!
+  \************************************************************************************************************************/
+/*! exports provided: P2PMediaManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P2PMediaManager", function() { return P2PMediaManager; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! debug */ "./node_modules/debug/src/browser.js");
+/* harmony import */ var debug__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(debug__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var bittorrent_tracker_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bittorrent-tracker/client */ "./node_modules/bittorrent-tracker/client.js");
+/* harmony import */ var bittorrent_tracker_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(bittorrent_tracker_client__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var buffer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! buffer */ "./node_modules/node-libs-browser/node_modules/buffer/index.js");
+/* harmony import */ var buffer__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(buffer__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var sha_js_sha1__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sha.js/sha1 */ "./node_modules/sha.js/sha1.js");
+/* harmony import */ var sha_js_sha1__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sha_js_sha1__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _stringly_typed_event_emitter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stringly-typed-event-emitter */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/stringly-typed-event-emitter.ts");
+/* harmony import */ var _media_peer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./media-peer */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/media-peer.ts");
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+
+
+
+
+
+const PEER_PROTOCOL_VERSION = 2;
+const PEER_ID_VERSION_STRING = '0.6.2'.replace(/\d*./g, (v) => `0${parseInt(v, 10) % 100}`.slice(-2)).slice(0, 4);
+const PEER_ID_VERSION_PREFIX = `-WW${PEER_ID_VERSION_STRING}-`; // Using WebTorrent client ID in order to not be banned by websocket trackers
+class PeerSegmentRequest {
+    constructor(peerId, segment) {
+        this.peerId = peerId;
+        this.segment = segment;
+    }
+}
+function generatePeerId() {
+    const PEER_ID_SYMBOLS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const PEER_ID_LENGTH = 20;
+    let peerId = PEER_ID_VERSION_PREFIX;
+    for (let i = 0; i < PEER_ID_LENGTH - PEER_ID_VERSION_PREFIX.length; i++) {
+        peerId += PEER_ID_SYMBOLS.charAt(Math.floor(Math.random() * PEER_ID_SYMBOLS.length));
+    }
+    return new TextEncoder().encode(peerId).buffer;
+}
+class P2PMediaManager extends _stringly_typed_event_emitter__WEBPACK_IMPORTED_MODULE_5__["STEEmitter"] {
+    constructor(segmentsStorage, settings) {
+        super();
+        this.segmentsStorage = segmentsStorage;
+        this.settings = settings;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.trackerClient = null;
+        this.peers = new Map();
+        this.peerCandidates = new Map();
+        this.peerSegmentRequests = new Map();
+        this.streamSwarmId = null;
+        this.debug = debug__WEBPACK_IMPORTED_MODULE_1___default()("p2pml:p2p-media-manager");
+        this.pendingTrackerClient = null;
+        this.getPeers = () => {
+            return this.peers;
+        };
+        this.getPeerId = () => {
+            return buffer__WEBPACK_IMPORTED_MODULE_3__["Buffer"].from(this.peerId).toString("hex");
+        };
+        this.setStreamSwarmId = (streamSwarmId, masterSwarmId) => {
+            if (this.streamSwarmId === streamSwarmId) {
+                return;
+            }
+            this.destroy(true);
+            this.streamSwarmId = streamSwarmId;
+            this.masterSwarmId = masterSwarmId;
+            this.debug("stream swarm ID", this.streamSwarmId);
+            this.pendingTrackerClient = {
+                isDestroyed: false,
+            };
+            const pendingTrackerClient = this.pendingTrackerClient;
+            // TODO: native browser 'crypto.subtle' implementation doesn't work in Chrome in insecure pages
+            // TODO: Edge doesn't support SHA-1. Change to SHA-256 once Edge support is required.
+            // const infoHash = await crypto.subtle.digest("SHA-1", new TextEncoder().encode(PEER_PROTOCOL_VERSION + this.streamSwarmId));
+            const infoHash = new sha_js_sha1__WEBPACK_IMPORTED_MODULE_4___default.a().update(`${PEER_PROTOCOL_VERSION}${this.streamSwarmId}`).digest();
+            // destroy may be called while waiting for the hash to be calculated
+            if (!pendingTrackerClient.isDestroyed) {
+                this.pendingTrackerClient = null;
+                this.createClient(infoHash);
+            }
+            else if (this.trackerClient !== null) {
+                this.trackerClient.destroy();
+                this.trackerClient = null;
+            }
+        };
+        this.createClient = (infoHash) => {
+            if (!this.settings.useP2P) {
+                return;
+            }
+            const clientOptions = {
+                infoHash: buffer__WEBPACK_IMPORTED_MODULE_3__["Buffer"].from(infoHash, 0, 20),
+                peerId: buffer__WEBPACK_IMPORTED_MODULE_3__["Buffer"].from(this.peerId, 0, 20),
+                announce: this.settings.trackerAnnounce,
+                rtcConfig: this.settings.rtcConfig,
+                port: 6881,
+                getAnnounceOpts: () => {
+                    return { numwant: this.settings.peerRequestsPerAnnounce };
+                },
+            };
+            let oldTrackerClient = this.trackerClient;
+            this.trackerClient = new bittorrent_tracker_client__WEBPACK_IMPORTED_MODULE_2___default.a(clientOptions);
+            this.trackerClient.on("error", this.onTrackerError);
+            this.trackerClient.on("warning", this.onTrackerWarning);
+            this.trackerClient.on("update", this.onTrackerUpdate);
+            this.trackerClient.on("peer", this.onTrackerPeer);
+            this.trackerClient.start();
+            if (oldTrackerClient !== null) {
+                oldTrackerClient.destroy();
+                oldTrackerClient = null;
+            }
+        };
+        this.onTrackerError = (error) => {
+            this.debug("tracker error", error);
+        };
+        this.onTrackerWarning = (warning) => {
+            this.debug("tracker warning", warning);
+        };
+        this.onTrackerUpdate = (data) => {
+            this.debug("tracker update", data);
+            this.emit("tracker-update", data);
+        };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.onTrackerPeer = (trackerPeer) => {
+            this.debug("tracker peer", trackerPeer.id, trackerPeer);
+            if (this.peers.has(trackerPeer.id)) {
+                this.debug("tracker peer already connected", trackerPeer.id, trackerPeer);
+                trackerPeer.destroy();
+                return;
+            }
+            const peer = new _media_peer__WEBPACK_IMPORTED_MODULE_6__["MediaPeer"](trackerPeer, this.settings);
+            peer.on("connect", this.onPeerConnect);
+            peer.on("close", this.onPeerClose);
+            peer.on("data-updated", this.onPeerDataUpdated);
+            peer.on("segment-request", this.onSegmentRequest);
+            peer.on("segment-loaded", this.onSegmentLoaded);
+            peer.on("segment-absent", this.onSegmentAbsent);
+            peer.on("segment-error", this.onSegmentError);
+            peer.on("segment-timeout", this.onSegmentTimeout);
+            peer.on("bytes-downloaded", this.onPieceBytesDownloaded);
+            peer.on("bytes-uploaded", this.onPieceBytesUploaded);
+            let peerCandidatesById = this.peerCandidates.get(peer.id);
+            if (!peerCandidatesById) {
+                peerCandidatesById = [];
+                this.peerCandidates.set(peer.id, peerCandidatesById);
+            }
+            peerCandidatesById.push(peer);
+        };
+        this.download = (segment) => {
+            if (this.isDownloading(segment)) {
+                return false;
+            }
+            const candidates = [];
+            for (const peer of this.peers.values()) {
+                if (peer.getDownloadingSegmentId() === null &&
+                    peer.getSegmentsMap().get(segment.id) === _media_peer__WEBPACK_IMPORTED_MODULE_6__["MediaPeerSegmentStatus"].Loaded) {
+                    candidates.push(peer);
+                }
+            }
+            if (candidates.length === 0) {
+                return false;
+            }
+            const peer = candidates[Math.floor(Math.random() * candidates.length)];
+            peer.requestSegment(segment.id);
+            this.peerSegmentRequests.set(segment.id, new PeerSegmentRequest(peer.id, segment));
+            return true;
+        };
+        this.abort = (segment) => {
+            let downloadingSegment;
+            const peerSegmentRequest = this.peerSegmentRequests.get(segment.id);
+            if (peerSegmentRequest) {
+                const peer = this.peers.get(peerSegmentRequest.peerId);
+                if (peer) {
+                    downloadingSegment = peer.cancelSegmentRequest();
+                }
+                this.peerSegmentRequests.delete(segment.id);
+            }
+            return downloadingSegment;
+        };
+        this.isDownloading = (segment) => {
+            return this.peerSegmentRequests.has(segment.id);
+        };
+        this.getActiveDownloadsCount = () => {
+            return this.peerSegmentRequests.size;
+        };
+        this.destroy = (swarmChange = false) => {
+            this.streamSwarmId = null;
+            if (this.trackerClient) {
+                this.trackerClient.stop();
+                if (swarmChange) {
+                    // Don't destroy trackerClient to reuse its WebSocket connection to the tracker server
+                    this.trackerClient.removeAllListeners("error");
+                    this.trackerClient.removeAllListeners("warning");
+                    this.trackerClient.removeAllListeners("update");
+                    this.trackerClient.removeAllListeners("peer");
+                }
+                else {
+                    this.trackerClient.destroy();
+                    this.trackerClient = null;
+                }
+            }
+            if (this.pendingTrackerClient) {
+                this.pendingTrackerClient.isDestroyed = true;
+                this.pendingTrackerClient = null;
+            }
+            this.peers.forEach((peer) => peer.destroy());
+            this.peers.clear();
+            this.peerSegmentRequests.clear();
+            for (const peerCandidateById of this.peerCandidates.values()) {
+                for (const peerCandidate of peerCandidateById) {
+                    peerCandidate.destroy();
+                }
+            }
+            this.peerCandidates.clear();
+        };
+        this.sendSegmentsMapToAll = (segmentsMap) => {
+            this.peers.forEach((peer) => peer.sendSegmentsMap(segmentsMap));
+        };
+        this.sendSegmentsMap = (peerId, segmentsMap) => {
+            const peer = this.peers.get(peerId);
+            if (peer) {
+                peer.sendSegmentsMap(segmentsMap);
+            }
+        };
+        this.getOverallSegmentsMap = () => {
+            const overallSegmentsMap = new Map();
+            for (const peer of this.peers.values()) {
+                for (const [segmentId, segmentStatus] of peer.getSegmentsMap()) {
+                    if (segmentStatus === _media_peer__WEBPACK_IMPORTED_MODULE_6__["MediaPeerSegmentStatus"].Loaded) {
+                        overallSegmentsMap.set(segmentId, _media_peer__WEBPACK_IMPORTED_MODULE_6__["MediaPeerSegmentStatus"].Loaded);
+                    }
+                    else if (!overallSegmentsMap.get(segmentId)) {
+                        overallSegmentsMap.set(segmentId, _media_peer__WEBPACK_IMPORTED_MODULE_6__["MediaPeerSegmentStatus"].LoadingByHttp);
+                    }
+                }
+            }
+            return overallSegmentsMap;
+        };
+        this.onPieceBytesDownloaded = (peer, bytes) => {
+            this.emit("bytes-downloaded", bytes, peer.id);
+        };
+        this.onPieceBytesUploaded = (peer, bytes) => {
+            this.emit("bytes-uploaded", bytes, peer.id);
+        };
+        this.onPeerConnect = (peer) => {
+            const connectedPeer = this.peers.get(peer.id);
+            if (connectedPeer) {
+                this.debug("tracker peer already connected (in peer connect)", peer.id, peer);
+                peer.destroy();
+                return;
+            }
+            // First peer with the ID connected
+            this.peers.set(peer.id, peer);
+            // Destroy all other peer candidates
+            const peerCandidatesById = this.peerCandidates.get(peer.id);
+            if (peerCandidatesById) {
+                for (const peerCandidate of peerCandidatesById) {
+                    if (peerCandidate !== peer) {
+                        peerCandidate.destroy();
+                    }
+                }
+                this.peerCandidates.delete(peer.id);
+            }
+            this.emit("peer-connected", { id: peer.id, remoteAddress: peer.remoteAddress });
+        };
+        this.onPeerClose = (peer) => {
+            if (this.peers.get(peer.id) !== peer) {
+                // Try to delete the peer candidate
+                const peerCandidatesById = this.peerCandidates.get(peer.id);
+                if (!peerCandidatesById) {
+                    return;
+                }
+                const index = peerCandidatesById.indexOf(peer);
+                if (index !== -1) {
+                    peerCandidatesById.splice(index, 1);
+                }
+                if (peerCandidatesById.length === 0) {
+                    this.peerCandidates.delete(peer.id);
+                }
+                return;
+            }
+            for (const [key, value] of this.peerSegmentRequests) {
+                if (value.peerId === peer.id) {
+                    this.peerSegmentRequests.delete(key);
+                }
+            }
+            this.peers.delete(peer.id);
+            this.emit("peer-data-updated");
+            this.emit("peer-closed", peer.id);
+        };
+        this.onPeerDataUpdated = () => {
+            this.emit("peer-data-updated");
+        };
+        this.onSegmentRequest = (peer, segmentId) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.masterSwarmId === undefined) {
+                return;
+            }
+            const segment = yield this.segmentsStorage.getSegment(segmentId, this.masterSwarmId);
+            if (segment && segment.data) {
+                peer.sendSegmentData(segmentId, segment.data);
+            }
+            else {
+                peer.sendSegmentAbsent(segmentId);
+            }
+        });
+        this.onSegmentLoaded = (peer, segmentId, data) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const peerSegmentRequest = this.peerSegmentRequests.get(segmentId);
+            if (!peerSegmentRequest) {
+                return;
+            }
+            const segment = peerSegmentRequest.segment;
+            if (this.settings.segmentValidator) {
+                try {
+                    yield this.settings.segmentValidator(Object.assign(Object.assign({}, segment), { data: data }), "p2p", peer.id);
+                }
+                catch (error) {
+                    this.debug("segment validator failed", error);
+                    this.peerSegmentRequests.delete(segmentId);
+                    this.emit("segment-error", segment, error, peer.id);
+                    this.onPeerClose(peer);
+                    return;
+                }
+            }
+            this.peerSegmentRequests.delete(segmentId);
+            this.emit("segment-loaded", segment, data, peer.id);
+        });
+        this.onSegmentAbsent = (peer, segmentId) => {
+            this.peerSegmentRequests.delete(segmentId);
+            this.emit("peer-data-updated");
+        };
+        this.onSegmentError = (peer, segmentId, description) => {
+            const peerSegmentRequest = this.peerSegmentRequests.get(segmentId);
+            if (peerSegmentRequest) {
+                this.peerSegmentRequests.delete(segmentId);
+                this.emit("segment-error", peerSegmentRequest.segment, description, peer.id);
+            }
+        };
+        this.onSegmentTimeout = (peer, segmentId) => {
+            const peerSegmentRequest = this.peerSegmentRequests.get(segmentId);
+            if (peerSegmentRequest) {
+                this.peerSegmentRequests.delete(segmentId);
+                peer.destroy();
+                if (this.peers.delete(peerSegmentRequest.peerId)) {
+                    this.emit("peer-data-updated");
+                }
+            }
+        };
+        this.peerId = settings.useP2P ? generatePeerId() : new ArrayBuffer(0);
+        if (this.debug.enabled) {
+            this.debug("peer ID", this.getPeerId(), new TextDecoder().decode(this.peerId));
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/segments-memory-storage.ts":
+/*!******************************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/segments-memory-storage.ts ***!
+  \******************************************************************************************************************************/
+/*! exports provided: SegmentsMemoryStorage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SegmentsMemoryStorage", function() { return SegmentsMemoryStorage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/**
+ * Copyright 2019 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+class SegmentsMemoryStorage {
+    constructor(settings) {
+        this.settings = settings;
+        this.cache = new Map();
+        this.storeSegment = (segment) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.cache.set(segment.id, { segment, lastAccessed: performance.now() });
+        });
+        this.getSegmentsMap = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return this.cache;
+        });
+        this.getSegment = (id) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const cacheItem = this.cache.get(id);
+            if (cacheItem === undefined) {
+                return undefined;
+            }
+            cacheItem.lastAccessed = performance.now();
+            return cacheItem.segment;
+        });
+        this.hasSegment = (id) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return this.cache.has(id);
+        });
+        this.clean = (masterSwarmId, lockedSegmentsFilter) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const segmentsToDelete = [];
+            const remainingSegments = [];
+            // Delete old segments
+            const now = performance.now();
+            for (const cachedSegment of this.cache.values()) {
+                if (now - cachedSegment.lastAccessed > this.settings.cachedSegmentExpiration) {
+                    segmentsToDelete.push(cachedSegment.segment.id);
+                }
+                else {
+                    remainingSegments.push(cachedSegment);
+                }
+            }
+            // Delete segments over cached count
+            let countOverhead = remainingSegments.length - this.settings.cachedSegmentsCount;
+            if (countOverhead > 0) {
+                remainingSegments.sort((a, b) => a.lastAccessed - b.lastAccessed);
+                for (const cachedSegment of remainingSegments) {
+                    if (lockedSegmentsFilter === undefined || !lockedSegmentsFilter(cachedSegment.segment.id)) {
+                        segmentsToDelete.push(cachedSegment.segment.id);
+                        countOverhead--;
+                        if (countOverhead === 0) {
+                            break;
+                        }
+                    }
+                }
+            }
+            segmentsToDelete.forEach((id) => this.cache.delete(id));
+            return segmentsToDelete.length > 0;
+        });
+        this.destroy = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.cache.clear();
+        });
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/stringly-typed-event-emitter.ts":
+/*!***********************************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/stringly-typed-event-emitter.ts ***!
+  \***********************************************************************************************************************************/
+/*! exports provided: STEEmitter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STEEmitter", function() { return STEEmitter; });
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! events */ "./node_modules/events/events.js");
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+class STEEmitter extends events__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"] {
+    constructor() {
+        super(...arguments);
+        this.on = (event, listener) => super.on(event, listener);
+        this.emit = (event, ...args) => super.emit(event, ...args);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/engine.ts":
+/*!**************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/engine.ts ***!
+  \**************************************************************************************************************/
+/*! exports provided: Engine */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! events */ "./node_modules/events/events.js");
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../p2p-media-loader-core/lib */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts");
+/* harmony import */ var _segment_manager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./segment-manager */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/segment-manager.ts");
+/* harmony import */ var _hlsjs_loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hlsjs-loader */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/hlsjs-loader.ts");
+/* harmony import */ var hls_js_src_loader_load_stats__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! hls.js/src/loader/load-stats */ "./node_modules/hls.js/src/loader/load-stats.ts");
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+
+
+
+class Engine extends events__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"] {
+    constructor(settings = {}) {
+        super();
+        this.loader = new _p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["HybridLoader"](settings.loader);
+        this.segmentManager = new _segment_manager__WEBPACK_IMPORTED_MODULE_3__["SegmentManager"](this.loader, settings.segments);
+        Object.keys(_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"])
+            .map((eventKey) => _p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"][eventKey])
+            .forEach((event) => this.loader.on(event, (...args) => this.emit(event, ...args)));
+    }
+    static isSupported() {
+        return _p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["HybridLoader"].isSupported();
+    }
+    createLoaderClass() {
+        var _a;
+        const engine = this; // eslint-disable-line @typescript-eslint/no-this-alias
+        return _a = class {
+                constructor() {
+                    this.load = (context, config, callbacks) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                        this.context = context;
+                        this.stats.bwEstimate = 12500;
+                        this.stats.loading.start = performance.now();
+                        yield this.impl.load(context, config, callbacks, this.stats);
+                        this.stats.loading.first = performance.now();
+                        this.stats.loading.end = performance.now();
+                        this.stats.chunkCount++;
+                        //? this.stats.bwEstimate = this.loader.bandwidthApproximator.getBandwidth(this.now());
+                    });
+                    this.abort = (callbacks) => {
+                        this.abortInternal(callbacks);
+                    };
+                    this.destroy = (callbacks) => {
+                        this.abortInternal(callbacks);
+                    };
+                    this.getCacheAge = function () {
+                        return 100000;
+                    };
+                    this.context = null;
+                    this.impl = new _hlsjs_loader__WEBPACK_IMPORTED_MODULE_4__["HlsJsLoader"](engine.segmentManager);
+                    this.stats = new hls_js_src_loader_load_stats__WEBPACK_IMPORTED_MODULE_5__["LoadStats"]();
+                }
+                abortInternal(callbacks) {
+                    if (this.context) {
+                        this.impl.abort(this.context);
+                    }
+                    if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onAbort) {
+                        callbacks.onAbort(this.stats, this.context, undefined);
+                    }
+                }
+            },
+            _a.getEngine = () => {
+                return engine;
+            },
+            _a;
+    }
+    destroy() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.segmentManager.destroy();
+        });
+    }
+    getSettings() {
+        return {
+            segments: this.segmentManager.getSettings(),
+            loader: this.loader.getSettings(),
+        };
+    }
+    getDetails() {
+        return {
+            loader: this.loader.getDetails(),
+        };
+    }
+    setPlayingSegment(url, byteRange, start, duration) {
+        this.segmentManager.setPlayingSegment(url, byteRange, start, duration);
+    }
+    setPlayingSegmentByCurrentTime(playheadPosition) {
+        this.segmentManager.setPlayingSegmentByCurrentTime(playheadPosition);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/hlsjs-loader.ts":
+/*!********************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/hlsjs-loader.ts ***!
+  \********************************************************************************************************************/
+/*! exports provided: HlsJsLoader */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HlsJsLoader", function() { return HlsJsLoader; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+const DEFAULT_DOWNLOAD_LATENCY = 1;
+const DEFAULT_DOWNLOAD_BANDWIDTH = 12500; // bytes per millisecond
+class HlsJsLoader {
+    constructor(segmentManager) {
+        this.segmentManager = segmentManager;
+    }
+    load(context, _config, callbacks, stats) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (context.type) {
+                try {
+                    const result = yield this.segmentManager.loadPlaylist(context.url);
+                    this.successPlaylist(result, context, callbacks, stats);
+                }
+                catch (e) {
+                    this.error(e, context, callbacks);
+                }
+            }
+            else if (context.frag) {
+                try {
+                    const result = yield this.segmentManager.loadSegment(context.url, context.rangeStart === undefined || context.rangeEnd === undefined
+                        ? undefined
+                        : { offset: context.rangeStart, length: context.rangeEnd - context.rangeStart });
+                    const { content } = result;
+                    if (content !== undefined) {
+                        setTimeout(() => this.successSegment(content, result.downloadBandwidth, context, callbacks, stats), 0);
+                    }
+                }
+                catch (e) {
+                    setTimeout(() => this.error(e, context, callbacks), 0);
+                }
+            }
+            else {
+                console.warn("Unknown load request", context);
+            }
+        });
+    }
+    abort(context) {
+        this.segmentManager.abortSegment(context.url, context.rangeStart === undefined || context.rangeEnd === undefined
+            ? undefined
+            : { offset: context.rangeStart, length: context.rangeEnd - context.rangeStart });
+    }
+    successPlaylist(xhr, context, callbacks, stats) {
+        stats.total = xhr.response.length;
+        stats.loaded += xhr.response.length;
+        /*const stats = {
+            trequest: now - 300,
+            tfirst: now - 200,
+            tload: now - 1,
+            tparsed: now,
+            loaded: xhr.response.length,
+            total: xhr.response.length,
+        };*/
+        callbacks.onSuccess({
+            url: xhr.responseURL,
+            data: xhr.response,
+        }, stats, context, undefined);
+    }
+    successSegment(content, downloadBandwidth, context, callbacks, stats) {
+        stats.loaded += content.byteLength;
+        stats.bwEstimate = downloadBandwidth || DEFAULT_DOWNLOAD_BANDWIDTH;
+        if (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onProgress)
+            callbacks.onProgress(stats, context, content, undefined);
+        callbacks.onSuccess({
+            url: context.url,
+            data: content,
+        }, stats, context, undefined);
+    }
+    error(error, context, callbacks) {
+        callbacks.onError(error, context, undefined);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts":
+/*!*************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts ***!
+  \*************************************************************************************************************/
+/*! exports provided: version, Engine, SegmentManager, initHlsJsPlayer, initClapprPlayer, initFlowplayerHlsJsPlayer, initVideoJsContribHlsJsPlayer, initVideoJsHlsJsPlugin, initMediaElementJsPlayer, initJwPlayer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "version", function() { return version; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initHlsJsPlayer", function() { return initHlsJsPlayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initClapprPlayer", function() { return initClapprPlayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initFlowplayerHlsJsPlayer", function() { return initFlowplayerHlsJsPlayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initVideoJsContribHlsJsPlayer", function() { return initVideoJsContribHlsJsPlayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initVideoJsHlsJsPlugin", function() { return initVideoJsHlsJsPlugin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initMediaElementJsPlayer", function() { return initMediaElementJsPlayer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initJwPlayer", function() { return initJwPlayer; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _engine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./engine */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/engine.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return _engine__WEBPACK_IMPORTED_MODULE_1__["Engine"]; });
+
+/* harmony import */ var _segment_manager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./segment-manager */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/segment-manager.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SegmentManager", function() { return _segment_manager__WEBPACK_IMPORTED_MODULE_2__["SegmentManager"]; });
+
+/**
+ * @license Apache-2.0
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* eslint-disable */
+const version = "0.6.2";
+
+
+function initHlsJsPlayer(player) {
+    if (player && player.config && player.config.loader && typeof player.config.loader.getEngine === "function") {
+        initHlsJsEvents(player, player.config.loader.getEngine());
+    }
+}
+function initClapprPlayer(player) {
+    player.on("play", () => {
+        const playback = player.core.getCurrentPlayback();
+        if (playback._hls && !playback._hls._p2pm_linitialized) {
+            playback._hls._p2pm_linitialized = true;
+            initHlsJsPlayer(player.core.getCurrentPlayback()._hls);
+        }
+    });
+}
+function initFlowplayerHlsJsPlayer(player) {
+    player.on("ready", () => { var _a; return initHlsJsPlayer((_a = player.engine.hlsjs) !== null && _a !== void 0 ? _a : player.engine.hls); });
+}
+function initVideoJsContribHlsJsPlayer(player) {
+    player.ready(() => {
+        const options = player.tech_.options_;
+        if (options &&
+            options.hlsjsConfig &&
+            options.hlsjsConfig.loader &&
+            typeof options.hlsjsConfig.loader.getEngine === "function") {
+            initHlsJsEvents(player.tech_, options.hlsjsConfig.loader.getEngine());
+        }
+    });
+}
+function initVideoJsHlsJsPlugin() {
+    if (videojs == undefined || videojs.Html5Hlsjs == undefined) {
+        return;
+    }
+    videojs.Html5Hlsjs.addHook("beforeinitialize", (videojsPlayer, hlsjs) => {
+        if (hlsjs.config && hlsjs.config.loader && typeof hlsjs.config.loader.getEngine === "function") {
+            initHlsJsEvents(hlsjs, hlsjs.config.loader.getEngine());
+        }
+    });
+}
+function initMediaElementJsPlayer(mediaElement) {
+    mediaElement.addEventListener("hlsFragChanged", (event) => {
+        const hls = mediaElement.hlsPlayer;
+        if (hls && hls.config && hls.config.loader && typeof hls.config.loader.getEngine === "function") {
+            const engine = hls.config.loader.getEngine();
+            if (event.data && event.data.length > 1) {
+                const frag = event.data[1].frag;
+                const byteRange = frag.byteRange.length !== 2
+                    ? undefined
+                    : { offset: frag.byteRange[0], length: frag.byteRange[1] - frag.byteRange[0] };
+                engine.setPlayingSegment(frag.url, byteRange, frag.start, frag.duration);
+            }
+        }
+    });
+    mediaElement.addEventListener("hlsDestroying", () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        const hls = mediaElement.hlsPlayer;
+        if (hls && hls.config && hls.config.loader && typeof hls.config.loader.getEngine === "function") {
+            const engine = hls.config.loader.getEngine();
+            yield engine.destroy();
+        }
+    }));
+    mediaElement.addEventListener("hlsError", (event) => {
+        const hls = mediaElement.hlsPlayer;
+        if (hls && hls.config && hls.config.loader && typeof hls.config.loader.getEngine === "function") {
+            if (event.data !== undefined && event.data.details === "bufferStalledError") {
+                const engine = hls.config.loader.getEngine();
+                engine.setPlayingSegmentByCurrentTime(hls.media.currentTime);
+            }
+        }
+    });
+}
+function initJwPlayer(player, hlsjsConfig) {
+    const iid = setInterval(() => {
+        if (player.hls && player.hls.config) {
+            clearInterval(iid);
+            Object.assign(player.hls.config, hlsjsConfig);
+            initHlsJsPlayer(player.hls);
+        }
+    }, 200);
+}
+function initHlsJsEvents(player, engine) {
+    player.on("hlsFragChanged", (_event, data) => {
+        console.log('hlsFragChanged', _event, data);
+        const frag = data.frag;
+        const byteRange = frag.byteRange.length !== 2
+            ? undefined
+            : { offset: frag.byteRange[0], length: frag.byteRange[1] - frag.byteRange[0] };
+        engine.setPlayingSegment(frag.url, byteRange, frag.start, frag.duration);
+    });
+    player.on("hlsDestroying", () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+        yield engine.destroy();
+    }));
+    player.on("hlsError", (_event, errorData) => {
+        console.log('errorData', errorData);
+        if (errorData.details === "bufferStalledError") {
+            const htmlMediaElement = (player.media === undefined
+                ? player.el_ // videojs-contrib-hlsjs
+                : player.media); // all others
+            if (htmlMediaElement) {
+                engine.setPlayingSegmentByCurrentTime(htmlMediaElement.currentTime);
+            }
+        }
+    });
+}
+
+
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/segment-manager.ts":
+/*!***********************************************************************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/segment-manager.ts ***!
+  \***********************************************************************************************************************/
+/*! exports provided: SegmentManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SegmentManager", function() { return SegmentManager; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../p2p-media-loader-core/lib */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts");
+/* harmony import */ var m3u8_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! m3u8-parser */ "./node_modules/m3u8-parser/dist/m3u8-parser.es.js");
+/**
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+const defaultSettings = {
+    forwardSegmentCount: 20,
+    swarmId: undefined,
+    assetsStorage: undefined,
+};
+class SegmentManager {
+    constructor(loader, settings = {}) {
+        this.masterPlaylist = null;
+        this.variantPlaylists = new Map();
+        this.segmentRequest = null;
+        this.playQueue = [];
+        this.onSegmentLoaded = (segment) => {
+            if (this.segmentRequest &&
+                this.segmentRequest.segmentUrl === segment.url &&
+                byteRangeToString(this.segmentRequest.segmentByteRange) === segment.range) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                this.segmentRequest.onSuccess(segment.data.slice(0), segment.downloadBandwidth);
+                this.segmentRequest = null;
+            }
+        };
+        this.onSegmentError = (segment, error) => {
+            if (this.segmentRequest &&
+                this.segmentRequest.segmentUrl === segment.url &&
+                byteRangeToString(this.segmentRequest.segmentByteRange) === segment.range) {
+                this.segmentRequest.onError(error);
+                this.segmentRequest = null;
+            }
+        };
+        this.onSegmentAbort = (segment) => {
+            if (this.segmentRequest &&
+                this.segmentRequest.segmentUrl === segment.url &&
+                byteRangeToString(this.segmentRequest.segmentByteRange) === segment.range) {
+                this.segmentRequest.onError("Loading aborted: internal abort");
+                this.segmentRequest = null;
+            }
+        };
+        this.settings = Object.assign(Object.assign({}, defaultSettings), settings);
+        this.loader = loader;
+        this.loader.on(_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_1__["Events"].SegmentLoaded, this.onSegmentLoaded);
+        this.loader.on(_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_1__["Events"].SegmentError, this.onSegmentError);
+        this.loader.on(_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_1__["Events"].SegmentAbort, this.onSegmentAbort);
+    }
+    getSettings() {
+        return this.settings;
+    }
+    processPlaylist(requestUrl, content, responseUrl) {
+        const parser = new m3u8_parser__WEBPACK_IMPORTED_MODULE_2__["Parser"]();
+        parser.push(content);
+        parser.end();
+        const playlist = new Playlist(requestUrl, responseUrl, parser.manifest);
+        if (playlist.manifest.playlists) {
+            this.masterPlaylist = playlist;
+            for (const [key, variantPlaylist] of this.variantPlaylists) {
+                const { streamSwarmId, found, index } = this.getStreamSwarmId(variantPlaylist.requestUrl);
+                if (!found) {
+                    this.variantPlaylists.delete(key);
+                }
+                else {
+                    variantPlaylist.streamSwarmId = streamSwarmId;
+                    variantPlaylist.streamId = "V" + index.toString();
+                }
+            }
+        }
+        else {
+            const { streamSwarmId, found, index } = this.getStreamSwarmId(requestUrl);
+            if (found || this.masterPlaylist === null) {
+                // do not add audio and subtitles to variants
+                playlist.streamSwarmId = streamSwarmId;
+                playlist.streamId = this.masterPlaylist === null ? undefined : "V" + index.toString();
+                this.variantPlaylists.set(requestUrl, playlist);
+                this.updateSegments();
+            }
+        }
+    }
+    loadPlaylist(url) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const assetsStorage = this.settings.assetsStorage;
+            let xhr;
+            if (assetsStorage !== undefined) {
+                let masterSwarmId;
+                masterSwarmId = this.getMasterSwarmId();
+                if (masterSwarmId === undefined) {
+                    masterSwarmId = url.split("?")[0];
+                }
+                const asset = yield assetsStorage.getAsset(url, undefined, masterSwarmId);
+                if (asset !== undefined) {
+                    xhr = {
+                        responseURL: asset.responseUri,
+                        response: asset.data,
+                        getResponseHeader: null
+                    };
+                }
+                else {
+                    xhr = yield this.loadContent(url, "text");
+                    void assetsStorage.storeAsset({
+                        masterManifestUri: this.masterPlaylist !== null ? this.masterPlaylist.requestUrl : url,
+                        masterSwarmId: masterSwarmId,
+                        requestUri: url,
+                        responseUri: xhr.responseURL,
+                        data: xhr.response,
+                    });
+                }
+            }
+            else {
+                xhr = yield this.loadContent(url, "text");
+            }
+            this.processPlaylist(url, xhr.response, xhr.responseURL);
+            return xhr;
+        });
+    }
+    loadSegment(url, byteRange) {
+        var _a;
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const segmentLocation = this.getSegmentLocation(url, byteRange);
+            const byteRangeString = byteRangeToString(byteRange);
+            if (!segmentLocation) {
+                let content;
+                // Not a segment from variants; usually can be: init, audio or subtitles segment, encription key etc.
+                const assetsStorage = this.settings.assetsStorage;
+                if (assetsStorage !== undefined) {
+                    let masterManifestUri = (_a = this.masterPlaylist) === null || _a === void 0 ? void 0 : _a.requestUrl;
+                    let masterSwarmId;
+                    masterSwarmId = this.getMasterSwarmId();
+                    if (masterSwarmId === undefined && this.variantPlaylists.size === 1) {
+                        const result = this.variantPlaylists.values().next();
+                        if (!result.done) {
+                            // always true
+                            masterSwarmId = result.value.requestUrl.split("?")[0];
+                        }
+                    }
+                    if (masterManifestUri === undefined && this.variantPlaylists.size === 1) {
+                        const result = this.variantPlaylists.values().next();
+                        if (!result.done) {
+                            // always true
+                            masterManifestUri = result.value.requestUrl;
+                        }
+                    }
+                    if (masterSwarmId !== undefined && masterManifestUri !== undefined) {
+                        const asset = yield assetsStorage.getAsset(url, byteRangeString, masterSwarmId);
+                        if (asset !== undefined) {
+                            content = asset.data;
+                        }
+                        else {
+                            const xhr = yield this.loadContent(url, "arraybuffer", byteRangeString);
+                            content = xhr.response;
+                            void assetsStorage.storeAsset({
+                                masterManifestUri: masterManifestUri,
+                                masterSwarmId: masterSwarmId,
+                                requestUri: url,
+                                requestRange: byteRangeString,
+                                responseUri: xhr.responseURL,
+                                data: content,
+                            });
+                        }
+                    }
+                }
+                if (content === undefined) {
+                    const xhr = yield this.loadContent(url, "arraybuffer", byteRangeString);
+                    content = xhr.response;
+                }
+                return { content, downloadBandwidth: 0 };
+            }
+            const segmentSequence = (segmentLocation.playlist.manifest.mediaSequence ? segmentLocation.playlist.manifest.mediaSequence : 0) +
+                segmentLocation.segmentIndex;
+            if (this.playQueue.length > 0) {
+                const previousSegment = this.playQueue[this.playQueue.length - 1];
+                if (previousSegment.segmentSequence !== segmentSequence - 1) {
+                    // Reset play queue in case of segment loading out of sequence
+                    this.playQueue = [];
+                }
+            }
+            if (this.segmentRequest) {
+                this.segmentRequest.onError("Cancel segment request: simultaneous segment requests are not supported");
+            }
+            const promise = new Promise((resolve, reject) => {
+                this.segmentRequest = new SegmentRequest(url, byteRange, segmentSequence, segmentLocation.playlist.requestUrl, (content, downloadBandwidth) => resolve({ content, downloadBandwidth }), (error) => reject(error));
+            });
+            this.playQueue.push({ segmentUrl: url, segmentByteRange: byteRange, segmentSequence: segmentSequence });
+            void this.loadSegments(segmentLocation.playlist, segmentLocation.segmentIndex, true);
+            return promise;
+        });
+    }
+    setPlayingSegment(url, byteRange, start, duration) {
+        const urlIndex = this.playQueue.findIndex((segment) => segment.segmentUrl === url && compareByteRanges(segment.segmentByteRange, byteRange));
+        if (urlIndex >= 0) {
+            this.playQueue = this.playQueue.slice(urlIndex);
+            this.playQueue[0].playPosition = { start, duration };
+            this.updateSegments();
+        }
+    }
+    setPlayingSegmentByCurrentTime(playheadPosition) {
+        if (this.playQueue.length === 0 || !this.playQueue[0].playPosition) {
+            return;
+        }
+        const currentSegmentPosition = this.playQueue[0].playPosition;
+        const segmentEndTime = currentSegmentPosition.start + currentSegmentPosition.duration;
+        if (segmentEndTime - playheadPosition < 0.2) {
+            // means that current segment is (almost) finished playing
+            // remove it from queue
+            this.playQueue = this.playQueue.slice(1);
+            this.updateSegments();
+        }
+    }
+    abortSegment(url, byteRange) {
+        if (this.segmentRequest &&
+            this.segmentRequest.segmentUrl === url &&
+            compareByteRanges(this.segmentRequest.segmentByteRange, byteRange)) {
+            this.segmentRequest.onSuccess(undefined, 0);
+            this.segmentRequest = null;
+        }
+    }
+    destroy() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.segmentRequest) {
+                this.segmentRequest.onError("Loading aborted: object destroyed");
+                this.segmentRequest = null;
+            }
+            this.masterPlaylist = null;
+            this.variantPlaylists.clear();
+            this.playQueue = [];
+            if (this.settings.assetsStorage !== undefined) {
+                yield this.settings.assetsStorage.destroy();
+            }
+            yield this.loader.destroy();
+        });
+    }
+    updateSegments() {
+        if (!this.segmentRequest) {
+            return;
+        }
+        const segmentLocation = this.getSegmentLocation(this.segmentRequest.segmentUrl, this.segmentRequest.segmentByteRange);
+        if (segmentLocation) {
+            void this.loadSegments(segmentLocation.playlist, segmentLocation.segmentIndex, false);
+        }
+    }
+    getSegmentLocation(url, byteRange) {
+        for (const playlist of this.variantPlaylists.values()) {
+            const segmentIndex = playlist.getSegmentIndex(url, byteRange);
+            if (segmentIndex >= 0) {
+                return { playlist: playlist, segmentIndex: segmentIndex };
+            }
+        }
+        return undefined;
+    }
+    loadSegments(playlist, segmentIndex, requestFirstSegment) {
+        var _a;
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const segments = [];
+            const playlistSegments = playlist.manifest.segments;
+            const initialSequence = (_a = playlist.manifest.mediaSequence) !== null && _a !== void 0 ? _a : 0;
+            let loadSegmentId = null;
+            let priority = Math.max(0, this.playQueue.length - 1);
+            const masterSwarmId = this.getMasterSwarmId();
+            console.log('loadSegments');
+            for (let i = segmentIndex; i < playlistSegments.length && segments.length < this.settings.forwardSegmentCount; ++i) {
+                const segment = playlist.manifest.segments[i];
+                const url = playlist.getSegmentAbsoluteUrl(segment.uri);
+                const byteRange = segment.byteRange;
+                const id = this.getSegmentId(playlist, initialSequence + i);
+                segments.push({
+                    id: id,
+                    url: url,
+                    masterSwarmId: masterSwarmId !== undefined ? masterSwarmId : playlist.streamSwarmId,
+                    masterManifestUri: this.masterPlaylist !== null ? this.masterPlaylist.requestUrl : playlist.requestUrl,
+                    streamId: playlist.streamId,
+                    sequence: (initialSequence + i).toString(),
+                    range: byteRangeToString(byteRange),
+                    priority: priority++,
+                });
+                if (requestFirstSegment && !loadSegmentId) {
+                    loadSegmentId = id;
+                }
+            }
+            this.loader.load(segments, playlist.streamSwarmId);
+            if (loadSegmentId) {
+                const segment = yield this.loader.getSegment(loadSegmentId);
+                if (segment) {
+                    // Segment already loaded by loader
+                    this.onSegmentLoaded(segment);
+                }
+            }
+        });
+    }
+    getSegmentId(playlist, segmentSequence) {
+        return `${playlist.streamSwarmId}+${segmentSequence}`;
+    }
+    getMasterSwarmId() {
+        const settingsSwarmId = this.settings.swarmId && this.settings.swarmId.length !== 0 ? this.settings.swarmId : undefined;
+        if (settingsSwarmId !== undefined) {
+            return settingsSwarmId;
+        }
+        return this.masterPlaylist !== null ? this.masterPlaylist.requestUrl.split("?")[0] : undefined;
+    }
+    getStreamSwarmId(playlistUrl) {
+        const masterSwarmId = this.getMasterSwarmId();
+        if (this.masterPlaylist && this.masterPlaylist.manifest.playlists && masterSwarmId) {
+            for (let i = 0; i < this.masterPlaylist.manifest.playlists.length; ++i) {
+                const url = new URL(this.masterPlaylist.manifest.playlists[i].uri, this.masterPlaylist.responseUrl).toString();
+                if (url === playlistUrl) {
+                    return { streamSwarmId: `${masterSwarmId}+V${i}`, found: true, index: i };
+                }
+            }
+        }
+        return {
+            streamSwarmId: masterSwarmId !== null && masterSwarmId !== void 0 ? masterSwarmId : playlistUrl.split("?")[0],
+            found: false,
+            index: -1,
+        };
+    }
+    loadContent(url, responseType, range) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.responseType = responseType;
+                if (range) {
+                    xhr.setRequestHeader("Range", range);
+                }
+                xhr.addEventListener("readystatechange", () => {
+                    if (xhr.readyState !== 4)
+                        return;
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(xhr);
+                    }
+                    else {
+                        reject(xhr.statusText);
+                    }
+                });
+                const xhrSetup = this.loader.getSettings().xhrSetup;
+                if (xhrSetup) {
+                    xhrSetup(xhr, url);
+                }
+                xhr.send();
+            });
+        });
+    }
+}
+class Playlist {
+    constructor(requestUrl, responseUrl, manifest) {
+        this.requestUrl = requestUrl;
+        this.responseUrl = responseUrl;
+        this.manifest = manifest;
+        this.streamSwarmId = "";
+    }
+    getSegmentIndex(url, byteRange) {
+        for (let i = 0; i < this.manifest.segments.length; ++i) {
+            const segment = this.manifest.segments[i];
+            const segmentUrl = this.getSegmentAbsoluteUrl(segment.uri);
+            if (url === segmentUrl && compareByteRanges(segment.byteRange, byteRange)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    getSegmentAbsoluteUrl(segmentUrl) {
+        return new URL(segmentUrl, this.responseUrl).toString();
+    }
+}
+class SegmentRequest {
+    constructor(segmentUrl, segmentByteRange, segmentSequence, playlistRequestUrl, onSuccess, onError) {
+        this.segmentUrl = segmentUrl;
+        this.segmentByteRange = segmentByteRange;
+        this.segmentSequence = segmentSequence;
+        this.playlistRequestUrl = playlistRequestUrl;
+        this.onSuccess = onSuccess;
+        this.onError = onError;
+    }
+}
+function compareByteRanges(b1, b2) {
+    return b1 === undefined ? b2 === undefined : b2 !== undefined && b1.length === b2.length && b1.offset === b2.offset;
+}
+function byteRangeToString(byteRange) {
+    if (byteRange === undefined) {
+        return undefined;
+    }
+    const end = byteRange.offset + byteRange.length - 1;
+    return `bytes=${byteRange.offset}-${end}`;
+}
+
+
+/***/ }),
+
+/***/ 18:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 19:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 24:
+/*!*******************************!*\
+  !*** ./common-node (ignored) ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 25:
+/*!*******************************************!*\
+  !*** ./lib/client/http-tracker (ignored) ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 26:
+/*!******************************************!*\
+  !*** ./lib/client/udp-tracker (ignored) ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 27:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 28:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 29:
+/*!********************!*\
+  !*** ws (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ })
+
+}]);
 //# sourceMappingURL=3.chunk.js.map

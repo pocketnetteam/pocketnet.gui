@@ -2090,6 +2090,14 @@ var lenta = (function(){
 				})
 			},
 
+			shareall : function(shares){
+
+				_.each(shares, function(share){
+					renders.share(share)
+				})
+				
+			},
+
 			shares : function(shares, clbk, p){
 
 				if(!p) p = {};
@@ -2916,13 +2924,12 @@ var lenta = (function(){
 
 			if(!essenseData.openapi){
 
-			
-
-				window.addEventListener('scroll', events.sharesInview);
+				
 				window.addEventListener('scroll', events.videosInview);
 				window.addEventListener('resize', events.resize);
 
 				if(!essenseData.notscrollloading){
+					window.addEventListener('scroll', events.sharesInview);
 					window.addEventListener('scroll', events.loadmorescroll);
 				}	
 				
@@ -3314,6 +3321,8 @@ var lenta = (function(){
 
 					renders.shares(shares, function(){
 
+						
+
 						renders.sharesInview(shares, function(){
 
 							making = false;
@@ -3373,8 +3382,15 @@ var lenta = (function(){
 								essenseData.goback = false;
 								_p.clbk(null, _p);
 							}
+
+							if(essenseData.notscrollloading){
+								renders.shareall(shares)
+							}
 						
 						})
+
+
+
 		
 					})
 				}

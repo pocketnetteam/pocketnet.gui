@@ -386,11 +386,13 @@ var functions = __webpack_require__("3139");
         click: "MuteRoom",
         title: "Mute",
         icon: "fas fa-bell-slash"
-      }, {
+      },
+      /*{
         click: "LeaveFromRoom",
         title: "Leave and Delete",
         icon: "fas fa-sign-out-alt"
-      }, {
+      },*/
+      {
         click: "Donate",
         title: "Donate",
         icon: "fas fa-money-bill-wave"
