@@ -1105,12 +1105,18 @@ var post = (function(){
 
 				}
 			},
-			url : function(clbk){
+			url : async function(clbk){
 
 				var url = share.url
 
 				var og = self.app.platform.sdk.remote.storage[url];
 
+				var meta = self.app.platform.parseUrl(url);
+
+				var metaInfo = await self.app.api.fetch('peertube/video',{
+					host: `https://${meta.host_name}`,
+					id: meta.id,
+				});
 
 				self.shell({
 					turi : 'share',
@@ -1119,7 +1125,9 @@ var post = (function(){
 					data : {
 						url : url,
 						og : og,
-						share : share
+						share : share,
+						views : (metaInfo || {}).views || 0,
+						aspectRatio : (metaInfo || {}).aspectRatio || 0,
 					},
 
 					additionalActions : function(){
@@ -1127,6 +1135,12 @@ var post = (function(){
 					},
 
 				}, function(_p){
+
+					var loadingPlayer = _p.el.find('.jsPlayerLoading');
+
+					var width = loadingPlayer.width();
+					loadingPlayer.height(`${width / (metaInfo || {}).aspectRatio}px`);
+					debugger;
 
 					var images = _p.el.find('img');
 
