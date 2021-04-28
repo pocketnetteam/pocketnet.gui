@@ -27,6 +27,12 @@ const SETTELED_SUCCESS_STATUS = 'fulfilled';
 const CACHE_SIZE = 100;
 const UPDATE_INTERVAL = 5000;
 
+const getAspectRatio = (width, height) => {
+  if (!width || !height) return 0;
+
+  return Number((width / height).toFixed(2));
+};
+
 const Peertube = function () {
   const hardCodeUrlsList = [
     'pocketnetpeertube3.nohost.me',
@@ -117,15 +123,35 @@ const Peertube = function () {
 
       return axios
         .get(`${host}/api/v1/videos/${id}`)
-        .then((res) =>
-          Promise.resolve({
+        .then((res) => {
+          const metadataUrl = res.data.files[0].metadataUrl;
+
+          const statsObject = {
             info: res.data.id,
             thumbnailPath: `${host}${res.data.thumbnailPath}`,
             previewPath: `${host}${res.data.previewPath}`,
             duration: res.data.duration,
             views: res.data.views,
-          }),
-        )
+          };
+
+          return axios
+            .get(metadataUrl)
+            .then((metadata) =>
+              Promise.resolve({
+                ...statsObject,
+                aspectRatio: getAspectRatio(
+                  metadata.data.streams[0].width,
+                  metadata.data.streams[0].height,
+                ),
+              }),
+            )
+            .catch(() =>
+              Promise.resolve({
+                ...statsObject,
+                aspectRatio: 0,
+              }),
+            );
+        })
         .catch((err) => Promise.reject(err));
     },
 
