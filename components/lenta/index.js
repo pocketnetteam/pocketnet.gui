@@ -2098,6 +2098,15 @@ var lenta = (function(){
 				
 			},
 
+			txidall : function(txids){
+
+				_.each(txids, function(txid){
+					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+					renders.share(share)
+				})
+				
+			},
+
 			shares : function(shares, clbk, p){
 
 				if(!p) p = {};
@@ -2737,6 +2746,9 @@ var lenta = (function(){
 
 							var page = parameters().page || 0
 
+
+							console.log('essenseData.txids', essenseData.txids)
+
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
@@ -3284,7 +3296,11 @@ var lenta = (function(){
 				clear = false;
 			}
 
+			
+
 			load.shares(function(shares, error){
+
+				console.log('load.shares', shares, error)
 
 
 				if (error){
@@ -3383,8 +3399,11 @@ var lenta = (function(){
 								_p.clbk(null, _p);
 							}
 
-							if(essenseData.notscrollloading){
-								renders.shareall(shares)
+							if(essenseData.notscrollloading && essenseData.txids){
+
+								console.log("RENDER ALL SHARES", shares)
+
+								renders.txidall(essenseData.txids)
 							}
 						
 						})

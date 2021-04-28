@@ -1872,6 +1872,9 @@ var list_component = Object(componentNormalizer["a" /* default */])(
             this.fixBottomScroll();
             this.timeline.paginate(direction, count).then(function (e) {
               _this3.events = _this3.getEvents();
+
+              _this3.readLast(_this3.events);
+
               _this3['p_' + direction] = false;
 
               _this3.correctBottomScroll();
@@ -1913,12 +1916,17 @@ var list_component = Object(componentNormalizer["a" /* default */])(
       var byme = this.core.mtrx.me(event.event.sender);
 
       if (byme) {
-        this.c_frombottomscroll = 0;
+        //this.c_frombottomscroll = 0
         return;
-      } /// todo check user and check readed
+      } //return
+      // todo check user and check readed
 
 
+      this.core.mtrx.client.sendReadReceipt(event);
+      return;
       this.core.mtrx.isReaded(event, true).then(function (readed) {
+        console.log("READED", readed);
+
         if (!readed) {
           _this4.core.mtrx.client.sendReadReceipt(event);
         }
@@ -2032,7 +2040,7 @@ var list_component = Object(componentNormalizer["a" /* default */])(
       }
     },
     eventsUpdated: function eventsUpdated(events) {
-      this.readEvents(events);
+      //this.readEvents(events)
       this.spacersHeight();
       this.update();
     },
@@ -2743,7 +2751,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       var _this4 = this;
 
       return this.wait().then(function (r) {
-        return Promise.resolve();
+        //return Promise.resolve()
         console.log("downloadKeys", _this4.usersForKeys);
         return _this4.core.mtrx.client.downloadKeysForUsers(_this4.usersForKeys, {
           token: _this4.core.mtrx.access.accessToken
