@@ -692,695 +692,650 @@ var Proxy = function (settings, manage) {
     }
 
     self.api = {
-        node : {
-            rpc : {
-                path : "/rpc/*",
-                authorization : 'signaturelight',
-                action : function({method, parameters, options, U}){
-
-                    if(!method) {
-                        return Promise.reject({
-                            error : 'method',
-                            code : 400
-                        })
-                    }
-                    
-        
-                    if(!options) options = {}
-                    if(!parameters) parameters = []
-        
-                    var node = null;
-
-                    return new Promise((resolve, reject) => {
-
-                        server.cache.wait(method, parameters, function(waitstatus){
-                            resolve(waitstatus)
-                        })
-
-                    }).then(waitstatus => {
-
-                       
-
-                        var cached = server.cache.get(method, parameters)
-        
-                        if (cached){
-                            return Promise.resolve({
-                                data : cached,
-                                code : 208
-                            })
-                        }
-
-                        //var cachwaitng = server.cache.waitng(method, parameters)
-            
-                        /// ????
-                        if (options.locally && options.meta){
-                            node = nodeManager.temp(options.meta)
-                        }
-            
-                        if (options.node){
-                            node = nodeManager.nodesmap[options.node]
-
-                        }
-            
-                        if(!node || options.auto) 
-                            node = nodeManager.selectProbability() //nodeManager.selectbest()
-            
-
-                            
-                        if(!node) {
-                            return Promise.reject({
-                                error : "node",
-                                code : 502
-                            })
-                        }
-
-
-                        if (method == 'sendrawtransactionwithmessage'){
-
-
-                            if(!bots.check(U)){
-                                return new Promise((resolve, reject) => {
-                                    setTimeout(function(){
-
-                                        resolve({
-                                            data : '319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
-                                            code : 200,
-                                            node : node.exportsafe()
-                                        })
-
-                                    }, f.rand(120, 1000))
-                                })
-                            }
-
-                        }
-                  
-
-                        return node.checkParameters().then(r => {
-
-                            
-                            return node.rpcs(method, parameters)
-
-                        }).then(data => {
-        
-                            server.cache.set(method, parameters, data, node.height())
-            
-                            return Promise.resolve({
-                                data : data,
-                                code : 200,
-                                node : node.exportsafe()
-                            })
-            
-                        })
-
-                    }).catch(e => {
-                        return Promise.reject({
-                            error : e,
-                            code : e.code,
-                            node : node ? node.export() : null
-                        })
-                    })
-                }
+      node: {
+        rpc: {
+          path: '/rpc/*',
+          authorization: 'signaturelight',
+          action: function ({ method, parameters, options, U }) {
+            if (!method) {
+              return Promise.reject({
+                error: 'method',
+                code: 400,
+              });
             }
+
+            if (!options) options = {};
+            if (!parameters) parameters = [];
+
+            var node = null;
+
+            return new Promise((resolve, reject) => {
+              server.cache.wait(method, parameters, function (waitstatus) {
+                resolve(waitstatus);
+              });
+            })
+              .then((waitstatus) => {
+                var cached = server.cache.get(method, parameters);
+
+                if (cached) {
+                  return Promise.resolve({
+                    data: cached,
+                    code: 208,
+                  });
+                }
+
+                //var cachwaitng = server.cache.waitng(method, parameters)
+
+                /// ????
+                if (options.locally && options.meta) {
+                  node = nodeManager.temp(options.meta);
+                }
+
+                if (options.node) {
+                  node = nodeManager.nodesmap[options.node];
+                }
+
+                if (!node || options.auto)
+                  node = nodeManager.selectProbability(); //nodeManager.selectbest()
+
+                if (!node) {
+                  return Promise.reject({
+                    error: 'node',
+                    code: 502,
+                  });
+                }
+
+                if (method == 'sendrawtransactionwithmessage') {
+                  if (!bots.check(U)) {
+                    return new Promise((resolve, reject) => {
+                      setTimeout(function () {
+                        resolve({
+                          data:
+                            '319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
+                          code: 200,
+                          node: node.exportsafe(),
+                        });
+                      }, f.rand(120, 1000));
+                    });
+                  }
+                }
+
+                return node
+                  .checkParameters()
+                  .then((r) => {
+                    return node.rpcs(method, parameters);
+                  })
+                  .then((data) => {
+                    server.cache.set(method, parameters, data, node.height());
+
+                    return Promise.resolve({
+                      data: data,
+                      code: 200,
+                      node: node.exportsafe(),
+                    });
+                  });
+              })
+              .catch((e) => {
+                return Promise.reject({
+                  error: e,
+                  code: e.code,
+                  node: node ? node.export() : null,
+                });
+              });
+          },
+        },
+      },
+
+      nodeManager: {
+        revoke: {
+          path: '/nodes/revoke',
+          authorization: 'signature',
+          action: function ({ node, A }) {
+            return nodeManager.revoke(node, A).then((r) => {
+              return Promise.resolve({ data: r });
+            });
+          },
+        },
+        update: {
+          path: '/nodes/update',
+          authorization: 'signature',
+          action: function ({ node, A }) {
+            return nodeManager.update(node, A).then((r) => {
+              return Promise.resolve({ data: r });
+            });
+          },
         },
 
-        nodeManager : {
-            revoke : {
-                path : '/nodes/revoke',
-                authorization : 'signature',
-                action : function({node, A}){
-                    return nodeManager.revoke(node, A).then(r => {
+        create: {
+          path: '/nodes/update',
+          authorization: 'signature',
+          action: function ({ node, A, U }) {
+            node.addedby = U;
 
-                        return Promise.resolve({data : r})
-
-                    })
-                }
-            },
-            update : {
-                path : '/nodes/update',
-                authorization : 'signature',
-                action : function({node, A}){
-                    return nodeManager.update(node, A).then(r => {
-
-                        return Promise.resolve({data : r})
-
-                    })
-                }
-            },
-
-            create : {
-                path : '/nodes/update',
-                authorization : 'signature',
-                action : function({node, A, U}){
-
-                    node.addedby = U
-
-                    return nodeManager.create(node).then(r => {
-
-                        return Promise.resolve({data : r})
-
-                    })
-                }
-            },
-
-            canchange: {
-                path : '/nodes/canchange',
-                action : function({node}){
-
-                    var _node = nodeManager.nodesmap[node]
-
-                    if(!_node){
-                        var nnode = nodeManager.selectProbability()
-
-                        if (nnode) return Promise.resolve({
-                            node : nnode.exportsafe()
-                        })
-
-                        else return Promise.reject('none')
-                    }
-
-                    var nnode = _node.changeNodeUser(null, _node.needToChange())
-
-                    if(!nnode){
-                        return Promise.resolve({})
-                    }
-
-                    return Promise.resolve({data : {
-                        node : nnode.exportsafe()
-                    }})
-
-                }
-            },
-
-            select : {
-                path : '/nodes/select',
-                action : function({fixed}){
-
-
-                    return nodeManager.waitbest(3000).then(r => {
-
-                        var node = null
-
-                        if (fixed){
-                            node = nodeManager.select(fixed)
-                        }
-
-                        if(!node)
-                            node = nodeManager.selectProbability() || nodeManager.selectbest() || nodeManager.select()
-
-                        if(!node){
-                            return Promise.reject('cantselect')
-                        }
-
-                        return Promise.resolve({data : {
-                            node : node.exportsafe()
-                        }})
-                    }).catch(e => {
-
-                        return Promise.reject(e)
-                    })
-
-                    
-
-                }
-            },
-
-            test : {
-                path : '/nodes/test',
-                authorization : 'signature',
-                action : function({node, scenario, A}){
-
-                    return Promise.reject('err')
-
-                    if(!A) return Promise.reject()
-
-                    var _node = nodeManager.nodesmap[node]
-
-                    if(!_node){
-                        return Promise.reject('cantselect')
-                    }
-
-                    return _node.test(scenario)
-
-                }
-            },
-
-            get : {
-                path : '/nodes/get',
-                action : function(){
-
-                    return Promise.resolve({data : {
-                        nodes : nodeManager.getnodes()
-                    }})
-
-                }
-            }
+            return nodeManager.create(node).then((r) => {
+              return Promise.resolve({ data: r });
+            });
+          },
         },
 
-       
-        remote : {
-            bitchute : {
-                path : '/bitchute',
-                action : function({url}){
+        canchange: {
+          path: '/nodes/canchange',
+          action: function ({ node }) {
+            var _node = nodeManager.nodesmap[node];
 
-                    return new Promise((resolve, reject) => {
-                        remote.make(url, function(err, data, html, $){
-	
-                            if(!err){
-            
-                                data.magnet = $('[title="Magnet Link"]').attr('href')
-            
-                                if(data.magnet && data.magnet.indexOf("magnet") == 0){
-            
-                                    var sp = parameters(data.magnet, true);
-                                    
-                                    data.video = sp;
-            
-                                    if(data.og){
-                                        data.video.title = data.og.titlePage
-                                        data.video.preview = data.og.image
-                                    }
-            
-                                }
-        
-                                else{
-        
-                                    var src = $('#player source').attr('src')
-        
-                                    if (src){
-                                        data.video = {
-                                            as : src
-                                        }
-        
-                                        if(data.og){
-                                            data.video.title = data.og.titlePage
-                                            data.video.preview = data.og.image
-                                        }
-                                    }
-        
-                                }
-                                
-                                resolve({data})
-                            }
-                            else
-                            {
-                                reject(err)
-                            }	
-            
-            
-                        })
-                    })
+            if (!_node) {
+              var nnode = nodeManager.selectProbability();
 
-                    
-                }
-            },
-
-            url : {
-                path : '/url',
-                action : function({url}){
-                    return new Promise((resolve, reject) => {
-                        remote.make(url, function(err, data, html){
-        
-                            if(!err){
-                                data.html = html
-                                resolve({data})
-                            }
-                            else
-                            {
-                                reject(err)
-                            }	
-        
-                        })
-                    })
-                }
-            },
-
-            urlPreview : {
-                path : '/urlPreview',
-                action : function({url}){
-                    return new Promise((resolve, reject) => {
-                        remote.nmake(url, function(err, data){
-        
-                            if(!err){
-                                resolve({
-                                    data : {
-                                        og : data
-                                    }
-                                })
-                            }
-                            else
-                            {
-                                reject(err)
-                            }	
-        
-                        })
-                    })
-                }
+              if (nnode)
+                return Promise.resolve({
+                  node: nnode.exportsafe(),
+                });
+              else return Promise.reject('none');
             }
+
+            var nnode = _node.changeNodeUser(null, _node.needToChange());
+
+            if (!nnode) {
+              return Promise.resolve({});
+            }
+
+            return Promise.resolve({
+              data: {
+                node: nnode.exportsafe(),
+              },
+            });
+          },
         },
 
-        common : {
-            /*use : {
+        select: {
+          path: '/nodes/select',
+          action: function ({ fixed }) {
+            return nodeManager
+              .waitbest(3000)
+              .then((r) => {
+                var node = null;
+
+                if (fixed) {
+                  node = nodeManager.select(fixed);
+                }
+
+                if (!node)
+                  node =
+                    nodeManager.selectProbability() ||
+                    nodeManager.selectbest() ||
+                    nodeManager.select();
+
+                if (!node) {
+                  return Promise.reject('cantselect');
+                }
+
+                return Promise.resolve({
+                  data: {
+                    node: node.exportsafe(),
+                  },
+                });
+              })
+              .catch((e) => {
+                return Promise.reject(e);
+              });
+          },
+        },
+
+        test: {
+          path: '/nodes/test',
+          authorization: 'signature',
+          action: function ({ node, scenario, A }) {
+            return Promise.reject('err');
+
+            if (!A) return Promise.reject();
+
+            var _node = nodeManager.nodesmap[node];
+
+            if (!_node) {
+              return Promise.reject('cantselect');
+            }
+
+            return _node.test(scenario);
+          },
+        },
+
+        get: {
+          path: '/nodes/get',
+          action: function () {
+            return Promise.resolve({
+              data: {
+                nodes: nodeManager.getnodes(),
+              },
+            });
+          },
+        },
+      },
+
+      remote: {
+        bitchute: {
+          path: '/bitchute',
+          action: function ({ url }) {
+            return new Promise((resolve, reject) => {
+              remote.make(url, function (err, data, html, $) {
+                if (!err) {
+                  data.magnet = $('[title="Magnet Link"]').attr('href');
+
+                  if (data.magnet && data.magnet.indexOf('magnet') == 0) {
+                    var sp = parameters(data.magnet, true);
+
+                    data.video = sp;
+
+                    if (data.og) {
+                      data.video.title = data.og.titlePage;
+                      data.video.preview = data.og.image;
+                    }
+                  } else {
+                    var src = $('#player source').attr('src');
+
+                    if (src) {
+                      data.video = {
+                        as: src,
+                      };
+
+                      if (data.og) {
+                        data.video.title = data.og.titlePage;
+                        data.video.preview = data.og.image;
+                      }
+                    }
+                  }
+
+                  resolve({ data });
+                } else {
+                  reject(err);
+                }
+              });
+            });
+          },
+        },
+
+        url: {
+          path: '/url',
+          action: function ({ url }) {
+            return new Promise((resolve, reject) => {
+              remote.make(url, function (err, data, html) {
+                if (!err) {
+                  data.html = html;
+                  resolve({ data });
+                } else {
+                  reject(err);
+                }
+              });
+            });
+          },
+        },
+
+        urlPreview: {
+          path: '/urlPreview',
+          action: function ({ url }) {
+            return new Promise((resolve, reject) => {
+              remote.nmake(url, function (err, data) {
+                if (!err) {
+                  resolve({
+                    data: {
+                      og: data,
+                    },
+                  });
+                } else {
+                  reject(err);
+                }
+              });
+            });
+          },
+        },
+      },
+
+      common: {
+        /*use : {
                 path : '/use',
                 action : function(){
                     return self.kit.sinit()
                 }
             },*/
-            info : {
-                path : '/info',
-                action : function(){
-                    
-                    return Promise.resolve({data : {
-                        info : self.kit.info(true)
-                    }})
-
-                }
-            },
-            logs : {
-                path : '/logs',
-                action : function(){
-
-                    var data = {
-                        logs : server.middle.getlogs(),
-                        /*ws : wss.info(),
+        info: {
+          path: '/info',
+          action: function () {
+            return Promise.resolve({
+              data: {
+                info: self.kit.info(true),
+              },
+            });
+          },
+        },
+        logs: {
+          path: '/logs',
+          action: function () {
+            var data = {
+              logs: server.middle.getlogs(),
+              /*ws : wss.info(),
                         iplimiter : iplimiter.info()*/
-                    }
-                    
-                    return Promise.resolve({data})
+            };
 
-                }
-            },
-            stats : {
-                path : '/stats',
-                action : function(){
-                    
-                    return Promise.resolve({data : {
-                        stats : self.kit.stats(500)
-                    }})
-
-                }
-            },
-            ping : {
-                path : '/ping',
-                action : function(){
-                    
-                    return Promise.resolve({data : {
-                        time : f.now()
-                    }})
-
-                }
-            },
-
-            nodes : {
-                path : '/nodes',
-                action : function(){
-                    
-                    return Promise.resolve({data : {
-                        stats : nodeManager.info()
-                    }})
-
-                }
-            }
+            return Promise.resolve({ data });
+          },
+        },
+        stats: {
+          path: '/stats',
+          action: function () {
+            return Promise.resolve({
+              data: {
+                stats: self.kit.stats(500),
+              },
+            });
+          },
+        },
+        ping: {
+          path: '/ping',
+          action: function () {
+            return Promise.resolve({
+              data: {
+                time: f.now(),
+              },
+            });
+          },
         },
 
-        firebase : {
-            set : {
-                authorization : 'signature',
-                path : '/firebase/set',
-                action : function(data){
-                    
-                    return self.firebase.kit.addToken(data).then(r => {
-                        return Promise.resolve({data : r})
-                    })
+        nodes: {
+          path: '/nodes',
+          action: function () {
+            return Promise.resolve({
+              data: {
+                stats: nodeManager.info(),
+              },
+            });
+          },
+        },
+      },
 
-                }
-            },
-
-            revokedevice: {
-                path : '/firebase/revokedevice',
-                action : function(data){
-                    
-                    return self.firebase.kit.removeDevice(data).then(r => {
-                        return Promise.resolve({data : r})
-                    })
-
-                }
-            },
+      firebase: {
+        set: {
+          authorization: 'signature',
+          path: '/firebase/set',
+          action: function (data) {
+            return self.firebase.kit.addToken(data).then((r) => {
+              return Promise.resolve({ data: r });
+            });
+          },
         },
 
-        exchanges : {
-            history : {
-                path : '/exchanges/history',
-                action : function(){
-                    return self.exchanges.kit.get.history().then(d => {
-                        return Promise.resolve({
-                            data : d
-                        })
-                    })
-                }
-            }
+        revokedevice: {
+          path: '/firebase/revokedevice',
+          action: function (data) {
+            return self.firebase.kit.removeDevice(data).then((r) => {
+              return Promise.resolve({ data: r });
+            });
+          },
         },
+      },
 
-        peertube : {
-            servers : {
-                path : '/peertube/servers',
-                action : () => self.peertube.kit.getBestServer().then(res => Promise.resolve({
+      exchanges: {
+        history: {
+          path: '/exchanges/history',
+          action: function () {
+            return self.exchanges.kit.get.history().then((d) => {
+              return Promise.resolve({
+                data: d,
+              });
+            });
+          },
+        },
+      },
+
+      peertube: {
+        servers: {
+          path: '/peertube/servers',
+          action: () =>
+            self.peertube.kit
+              .getBestServer()
+              .then((res) =>
+                Promise.resolve({
+                  data: res,
+                }),
+              )
+              .catch((err) =>
+                Promise.reject({
+                  data: err,
+                }),
+              ),
+        },
+        video: {
+          path: '/peertube/video',
+          action: (info) =>
+            self.peertube.kit
+              .getVideoinfo(info)
+              .then((res) =>
+                Promise.resolve({
+                  data: res,
+                }),
+              )
+              .catch((err) =>
+                Promise.reject({
+                  data: err,
+                }),
+              ),
+        },
+        listVideos: {
+          path: '/peertube/listVideos',
+          action: (info) =>
+            new Promise((resolve, reject) => {
+              server.cache.wait('listVideos', info.ids, function (waitstatus) {
+                resolve(waitstatus);
+              });
+            }).then((waitstatus) => {
+              const cached = server.cache.get('listVideos', info.ids);
+
+              if (cached)
+                return Promise.resolve({
+                  data: cached,
+                  code: 208,
+                });
+
+              return self.peertube.kit
+                .getListVideos(info)
+                .then((res) => {
+                  server.cache.set('listVideos', info.ids, res);
+                  return Promise.resolve({
                     data: res,
-                })).catch(err => Promise.reject({
-                    data: err,
-                })),
-            },
-            video : {
-                path : '/peertube/video',
-                action : (info) => self.peertube.kit.getVideoinfo(info).then(res => Promise.resolve({
-                    data: res,
-                })).catch(err => Promise.reject({
-                    data: err,
-                })),
-            },
-            listVideos: {
-                path : '/peertube/listVideos',
-                action : (info) => self.peertube.kit.getListVideos(info).then(res => Promise.resolve({
-                    data: res,
-                })).catch(err => Promise.reject({
+                  });
+                })
+                .catch((err) =>
+                  Promise.reject({
                     data: err,
                     code: 400,
-                })),
+                  }),
+                );
+            }),
+        },
+      },
+
+      captcha: {
+        get: {
+          authorization: 'signature',
+          path: '/captcha',
+
+          action: function ({ captcha, ip }) {
+            if (captcha && captchas[captcha] && captchas[captcha].done) {
+              return Promise.resolve({
+                data: {
+                  id: captchas[captcha].id,
+                  done: true,
+                  result: captchas[captcha].text,
+                },
+              });
             }
 
+            captchaip[ip] || (captchaip[ip] = 0);
+            captchaip[ip]++;
 
+            var captcha = svgCaptcha.create({
+              size: 4,
+              noise: 12,
+              color: false,
+              ignoreChars: '0o1liy',
+              width: 250,
+            });
+
+            captcha.id = f.makeid();
+
+            captchas[captcha.id] = {
+              text: captcha.text.toLocaleLowerCase(),
+              id: captcha.id,
+              done: false,
+              time: f.now(),
+            };
+
+            return Promise.resolve({
+              data: {
+                id: captcha.id,
+                img: captcha.data,
+                result: captcha.text, ///
+                done: false,
+              },
+            });
+          },
         },
 
-        captcha : {
-            get : {
-                authorization : 'signature',
-                path : '/captcha',
+        make: {
+          authorization: 'signature',
+          path: '/makecaptcha',
 
-                action : function({captcha, ip}){
-                    if (captcha && captchas[captcha] && captchas[captcha].done){
-                        return Promise.resolve({
-                            data : {
-                                id : captchas[captcha].id,
-                                done : true,
-                                result : captchas[captcha].text
-                            }
-                        })
-                    }
+          action: function ({ captcha, ip, text }) {
+            var captcha = captchas[captcha];
 
-                    captchaip[ip] || (captchaip[ip] = 0);
-                    captchaip[ip]++
-
-                    var captcha = svgCaptcha.create({
-                        size : 4,
-                        noise : 12,
-                        color : false,
-                        ignoreChars: '0o1liy',
-                        width : 250
-                    });
-                    
-                    captcha.id = f.makeid();
-    
-                    captchas[captcha.id] = {
-                        text : captcha.text.toLocaleLowerCase(),
-                        id : captcha.id,
-                        done : false,
-                        time : f.now()
-                    }
-
-                    return Promise.resolve({
-                        data : {
-                            id : captcha.id,
-                            img : captcha.data,
-                            result : captcha.text, ///
-                            done : false
-                        }
-                    })
-                }
-            },
-
-            make : {
-                authorization : 'signature',
-                path : '/makecaptcha',
-
-                action : function({captcha, ip, text}){
-                    var captcha = captchas[captcha];
-
-                    if(!captcha){
-
-                        return Promise.reject('captchanotexist')
-
-                     
-                    }
-
-                    if (captcha.done){
-
-                        return Promise.resolve({
-                            data : {
-                                id : captcha.id,
-                                done : true
-                            }
-                        })
-
-                       
-                    }
-
-                    if (captcha.text == text.toLocaleLowerCase()){
-
-                        captcha.done = true
-
-                        delete captchaip[ip]
-
-                        return Promise.resolve({
-                            data : {
-                                id : captcha.id,
-                                done : true
-                            }
-                        })
-
-                    }
-
-                    captcha.shot || (captcha.shot = 0)
-                    captcha.shot++;
-
-                    var currentTime = f.now()
-
-                    if (
-                        captcha.shot >= 5 || 
-
-                        f.date.addseconds(captcha.time, 120) < currentTime ||
-                        f.date.addseconds(captcha.time, 2) > currentTime
-                    ){
-
-                        delete captchas[request.data.captcha];
-
-
-                        return Promise.reject('captchashots')
-
-                    }
-
-                    return Promise.reject('captchanotequal')
-
-                }
+            if (!captcha) {
+              return Promise.reject('captchanotexist');
             }
+
+            if (captcha.done) {
+              return Promise.resolve({
+                data: {
+                  id: captcha.id,
+                  done: true,
+                },
+              });
+            }
+
+            if (captcha.text == text.toLocaleLowerCase()) {
+              captcha.done = true;
+
+              delete captchaip[ip];
+
+              return Promise.resolve({
+                data: {
+                  id: captcha.id,
+                  done: true,
+                },
+              });
+            }
+
+            captcha.shot || (captcha.shot = 0);
+            captcha.shot++;
+
+            var currentTime = f.now();
+
+            if (
+              captcha.shot >= 5 ||
+              f.date.addseconds(captcha.time, 120) < currentTime ||
+              f.date.addseconds(captcha.time, 2) > currentTime
+            ) {
+              delete captchas[request.data.captcha];
+
+              return Promise.reject('captchashots');
+            }
+
+            return Promise.reject('captchanotequal');
+          },
         },
+      },
 
-        wallet : {
-            sendwithprivatekey : {
-                path : '/wallet/sendwithprivatekey',
-                authorization : false,
-                action : function(p){
-
-                    return self.wallet.sendwithprivatekey(p).then(r => {
-
-                        return Promise.resolve({
-                            data : r
-                        })
-
-                    }).catch(e => {
-
-                        return Promise.reject(e)
-                    })
-
-                }
-            },
-            freeregistration : {
-                path : '/free/registration',
-                authorization : 'signature',
-                action : function({captcha, key, address, ip}){
-
-                    if (settings.server.captcha){
-
-                        if((!captcha || !captchas[captcha] || !captchas[captcha].done)){
-
-                            return Promise.reject('captcha')
-    
-                        }
-
-                    }
-
-                    return self.wallet.addqueue(key || 'registration', address, ip).then(r => {
-
-
-                        return Promise.resolve({
-                            data : r
-                        })
-
-                    }).catch(e => {
-
-                        return Promise.reject(e)
-                    })
-
-                }
-            },
-            freeregistrationfake : {
-                path : '/free/registrationfake',
-                action : function({}){  
-
-                    return Promise.reject('disabled')
-
-                    var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq']
-
-                    var promises = _.map(addresses, function(a){
-                        return self.wallet.addqueue('registration', a, "::1")
-                    })
-
-                    return Promise.all(promises).then(r => {
-                        return Promise.resolve({
-                            data : r
-                        })
-                    })
-                    
-
-                }
-            }
+      wallet: {
+        sendwithprivatekey: {
+          path: '/wallet/sendwithprivatekey',
+          authorization: false,
+          action: function (p) {
+            return self.wallet
+              .sendwithprivatekey(p)
+              .then((r) => {
+                return Promise.resolve({
+                  data: r,
+                });
+              })
+              .catch((e) => {
+                return Promise.reject(e);
+              });
+          },
         },
-
-        manage : {
-            all : {
-                path : '/manage',
-                authorization : 'signature',
-                action : function(message){
-
-
-                    if(!message.A) 
-                        return Promise.reject({error : 'Unauthorized', code : 401})
-
-                    var kaction = f.deep(manage, message.action)
-
-
-                    if(!kaction) {
-                        return Promise.reject({error : 'unknownAction', code : 502})
-                    }
-
-                    return kaction(message.data).then(data => {
-                        return Promise.resolve({data})
-                    }).catch(e => {
-                        return Promise.reject(e)
-                    })
-                }
+        freeregistration: {
+          path: '/free/registration',
+          authorization: 'signature',
+          action: function ({ captcha, key, address, ip }) {
+            if (settings.server.captcha) {
+              if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
+                return Promise.reject('captcha');
+              }
             }
-        }
-     
-    }
+
+            return self.wallet
+              .addqueue(key || 'registration', address, ip)
+              .then((r) => {
+                return Promise.resolve({
+                  data: r,
+                });
+              })
+              .catch((e) => {
+                return Promise.reject(e);
+              });
+          },
+        },
+        freeregistrationfake: {
+          path: '/free/registrationfake',
+          action: function ({}) {
+            return Promise.reject('disabled');
+
+            var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq'];
+
+            var promises = _.map(addresses, function (a) {
+              return self.wallet.addqueue('registration', a, '::1');
+            });
+
+            return Promise.all(promises).then((r) => {
+              return Promise.resolve({
+                data: r,
+              });
+            });
+          },
+        },
+      },
+
+      manage: {
+        all: {
+          path: '/manage',
+          authorization: 'signature',
+          action: function (message) {
+            if (!message.A)
+              return Promise.reject({ error: 'Unauthorized', code: 401 });
+
+            var kaction = f.deep(manage, message.action);
+
+            if (!kaction) {
+              return Promise.reject({ error: 'unknownAction', code: 502 });
+            }
+
+            return kaction(message.data)
+              .then((data) => {
+                return Promise.resolve({ data });
+              })
+              .catch((e) => {
+                return Promise.reject(e);
+              });
+          },
+        },
+      },
+    };
 
     self.wallet.events()
 
