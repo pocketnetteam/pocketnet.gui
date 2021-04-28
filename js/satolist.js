@@ -15179,8 +15179,7 @@ Platform = function (app, listofnodes) {
                         } : '';
                     });
 
-                    return Promise.all(links);
-
+                    return Promise.resolve(links);
                 },
 
                 bitchute : function(links){

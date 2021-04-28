@@ -178,6 +178,7 @@ const Peertube = function () {
 
       return Promise.allSettled(infoStack)
         .then((data) => {
+
           const outputData = data.reduce(
             (accumulator, currVideo, currIndex) => {
               accumulator[idsArray[currIndex]] =
