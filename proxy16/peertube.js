@@ -181,7 +181,9 @@ const Peertube = function () {
           const outputData = data.reduce(
             (accumulator, currVideo, currIndex) => {
               accumulator[idsArray[currIndex]] =
-                currVideo.status === GOOD_STATUS ? currVideo.value : 'No info';
+                currVideo.status === GOOD_STATUS
+                  ? currVideo.value
+                  : { info: 'No info' };
 
               return accumulator;
             },
