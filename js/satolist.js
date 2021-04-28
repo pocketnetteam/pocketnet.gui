@@ -15172,7 +15172,7 @@ Platform = function (app, listofnodes) {
                     links.forEach(link => {
                         const linkInfo = linksInfo[link.link];
 
-                        linkInfo ? link.d = {
+                        linkInfo ? link.data = {
                             image : linkInfo.previewPath,
                             views : linkInfo.views,
                             duration : linkInfo.duration
