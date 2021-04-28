@@ -1157,6 +1157,17 @@ var Proxy = function (settings, manage) {
                     data: err,
                 })),
             },
+            listVideos: {
+                path : '/peertube/listVideos',
+                action : (info) => self.peertube.kit.getListVideos(info).then(res => Promise.resolve({
+                    data: res,
+                })).catch(err => Promise.reject({
+                    data: err,
+                    code: 400,
+                })),
+            }
+
+
         },
 
         captcha : {

@@ -24,6 +24,12 @@ if (!Promise.allSettled) {
 const STATS_METHOD = '/api/v1/videos';
 const SETTELED_SUCCESS_STATUS = 'fulfilled';
 
+const GOOD_STATUS = 'fulfilled';
+
+const PEERTUBE_ID = 'peertube://';
+const HTTPS_ID = 'https://';
+const SLASH = '/';
+
 const CACHE_SIZE = 100;
 const UPDATE_INTERVAL = 5000;
 
@@ -151,6 +157,38 @@ const Peertube = function () {
                 aspectRatio: 0,
               }),
             );
+        })
+        .catch((err) => Promise.reject(err));
+    },
+
+    getListVideos(info) {
+      if (!info.ids) return Promise.reject('No video ids');
+      const idsArray = info.ids;
+
+      const videoIds = idsArray.map((id) => {
+        const formattedId = id.replace(PEERTUBE_ID, HTTPS_ID);
+
+        return {
+          host: formattedId.split(SLASH).slice(0, 3).join(SLASH),
+          id: formattedId.split(SLASH).pop(),
+        };
+      });
+
+      const infoStack = videoIds.map((info) => this.getVideoinfo(info));
+
+      return Promise.allSettled(infoStack)
+        .then((data) => {
+          const outputData = data.reduce(
+            (accumulator, currVideo, currIndex) => {
+              accumulator[idsArray[currIndex]] =
+                currVideo.status === GOOD_STATUS ? currVideo.value : 'No info';
+
+              return accumulator;
+            },
+            {},
+          );
+
+          return Promise.resolve(outputData);
         })
         .catch((err) => Promise.reject(err));
     },
