@@ -2727,6 +2727,7 @@ var enc = 'm.megolm.v1.aes-sha2';
     }
   }),
   created: function created() {},
+  ///
   mounted: function mounted() {
     var _this2 = this;
 
@@ -2758,6 +2759,14 @@ var enc = 'm.megolm.v1.aes-sha2';
         });
       });
     },
+    uploadKeys: function uploadKeys() {
+      var _this5 = this;
+
+      return this.wait().then(function (r) {
+        //return Promise.resolve()
+        return _this5.core.mtrx.client.uploadKeys();
+      });
+    },
     emitInputData: function emitInputData() {
       this.$emit('emptyInput');
       this.upload = true;
@@ -2769,7 +2778,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       this.$emit('setMetaUrl', url);
     },
     newchat: function newchat() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.u) {
         this.$store.state.globalpreloader = true;
@@ -2779,9 +2788,9 @@ var enc = 'm.megolm.v1.aes-sha2';
         var id = '';
         this.creating = true;
         this.core.user.usersInfo(this.uusers).then(function (info) {
-          id = _this5.core.mtrx.kit.tetatetid(info[0], _this5.core.user.userinfo);
-          matrixId = _this5.core.user.matrixId(info[0].id);
-          myMatrixId = _this5.core.user.matrixId(_this5.core.user.userinfo.id);
+          id = _this6.core.mtrx.kit.tetatetid(info[0], _this6.core.user.userinfo);
+          matrixId = _this6.core.user.matrixId(info[0].id);
+          myMatrixId = _this6.core.user.matrixId(_this6.core.user.userinfo.id);
           var initialstate = [{
             "type": "m.room.encryption",
             "state_key": "",
@@ -2789,8 +2798,8 @@ var enc = 'm.megolm.v1.aes-sha2';
               "algorithm": enc
             }
           }];
-          _this5.needencrypt = false;
-          return _this5.core.mtrx.client.createRoom({
+          _this6.needencrypt = false;
+          return _this6.core.mtrx.client.createRoom({
             room_alias_name: id,
             visibility: 'private',
             invite: [matrixId],
@@ -2810,22 +2819,22 @@ var enc = 'm.megolm.v1.aes-sha2';
           });
         }).then(function (_chat) {
           chat = _chat;
-          _this5.$store.state.globalpreloader = false;
+          _this6.$store.state.globalpreloader = false;
           /*this.$store.commit('icon', {
             icon : 'success',
             message : "Chat started"
           })*/
 
-          _this5.$emit("newchat", chat);
+          _this6.$emit("newchat", chat);
 
-          var m_chat = _this5.core.mtrx.client.getRoom(_chat.room_id);
+          var m_chat = _this6.core.mtrx.client.getRoom(_chat.room_id);
 
           var event = m_chat.currentState.getStateEvents("m.room.power_levels");
-          return _this5.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).then(function (r) {
+          return _this6.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).then(function (r) {
             return r;
           });
         }).then(function (r) {
-          _this5.creating = false; //this.core.mtrx.bkp()
+          _this6.creating = false; //this.core.mtrx.bkp()
         }).catch(function (e) {
           /*if(e && e.toString().indexOf('M_ROOM_IN_USE') > -1){
             return this.core.mtrx.client.joinRoom(id).then(r => {
@@ -2837,8 +2846,8 @@ var enc = 'm.megolm.v1.aes-sha2';
             
           }*/
           console.log("ERR", e);
-          _this5.creating = false;
-          _this5.$store.state.globalpreloader = false; ////catch error
+          _this6.creating = false;
+          _this6.$store.state.globalpreloader = false; ////catch error
 
           /*this.$store.commit('icon', {
             icon : 'error',
@@ -2861,7 +2870,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       });
     },
     send: function send(text, chatinput) {
-      var _this6 = this;
+      var _this7 = this;
 
       var self = this;
       var t = text.replace(/\n/g, '<br/>');
@@ -2872,13 +2881,13 @@ var enc = 'm.megolm.v1.aes-sha2';
 
       this.$emit("sending");
       return this.$f.pretry(function () {
-        return _this6.chat && !_this6.creating;
+        return _this7.chat && !_this7.creating;
       }).then(function () {
-        return _this6.core.mtrx.client.prepareToEncrypt(_this6.chat);
+        return _this7.core.mtrx.client.prepareToEncrypt(_this7.chat);
       }).then(function () {
-        _this6.$emit('sent');
+        _this7.$emit('sent');
 
-        return _this6.core.mtrx.client.sendEvent(_this6.chat.roomId, "m.room.message", {
+        return _this7.core.mtrx.client.sendEvent(_this7.chat.roomId, "m.room.message", {
           body: t,
           msgtype: "m.text"
         }, "")
@@ -2906,7 +2915,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       return Promise.resolve();
     },
     pasteImage: function pasteImage(data) {
-      var _this7 = this;
+      var _this8 = this;
 
       fetch(data).then(function (res) {
         return res.blob();
@@ -2915,9 +2924,9 @@ var enc = 'm.megolm.v1.aes-sha2';
           type: "image/png"
         });
       }).then(function (res) {
-        _this7.image_file = res;
+        _this8.image_file = res;
 
-        _this7.sendImage({
+        _this8.sendImage({
           base64: data,
           file: res
         });
@@ -2926,49 +2935,49 @@ var enc = 'm.megolm.v1.aes-sha2';
       });
     },
     sendImage: function sendImage(data) {
-      var _this8 = this;
-
-      this.$emit("sending");
-      this.$f.pretry(function () {
-        return _this8.chat;
-      }).then(function () {
-        return _this8.core.mtrx.uploadContent(data.file);
-      }).then(function (image) {
-        _this8.core.mtrx.client.sendImageMessage(_this8.chat.roomId, image, _this8.info, 'Image');
-
-        _this8.$emit('previewImg', {});
-
-        return _this8.encryptIfNeed();
-      }).catch(function (e) {});
-    },
-    sendFile: function sendFile(data) {
       var _this9 = this;
 
-      this.file = data.file;
       this.$emit("sending");
       this.$f.pretry(function () {
         return _this9.chat;
       }).then(function () {
-        return _this9.core.mtrx.client.uploadContent(_this9.file);
-      }).then(function (src) {
-        return Promise.resolve(_this9.core.mtrx.client.mxcUrlToHttp(src));
-      }).then(function (url) {
-        _this9.fileInfo.url = url;
-        _this9.fileInfo.name = _this9.file.name;
-        _this9.fileInfo.size = _this9.file.size;
-        var body = JSON.stringify(_this9.fileInfo);
+        return _this9.core.mtrx.uploadContent(data.file);
+      }).then(function (image) {
+        _this9.core.mtrx.client.sendImageMessage(_this9.chat.roomId, image, _this9.info, 'Image');
 
-        _this9.core.mtrx.client.sendMessage(_this9.chat.roomId, {
+        _this9.$emit('previewImg', {});
+
+        return _this9.encryptIfNeed();
+      }).catch(function (e) {});
+    },
+    sendFile: function sendFile(data) {
+      var _this10 = this;
+
+      this.file = data.file;
+      this.$emit("sending");
+      this.$f.pretry(function () {
+        return _this10.chat;
+      }).then(function () {
+        return _this10.core.mtrx.client.uploadContent(_this10.file);
+      }).then(function (src) {
+        return Promise.resolve(_this10.core.mtrx.client.mxcUrlToHttp(src));
+      }).then(function (url) {
+        _this10.fileInfo.url = url;
+        _this10.fileInfo.name = _this10.file.name;
+        _this10.fileInfo.size = _this10.file.size;
+        var body = JSON.stringify(_this10.fileInfo);
+
+        _this10.core.mtrx.client.sendMessage(_this10.chat.roomId, {
           body: body,
           msgtype: 'm.file'
         });
 
-        _this9.$emit('anyFileSend', {});
+        _this10.$emit('anyFileSend', {});
 
-        _this9.$emit('sent');
+        _this10.$emit('sent');
 
-        _this9.file = {};
-        return _this9.encryptIfNeed();
+        _this10.file = {};
+        return _this10.encryptIfNeed();
       }).catch(function (e) {});
     },
     focus: function focus() {},
@@ -3020,7 +3029,7 @@ var enc = 'm.megolm.v1.aes-sha2';
       }
     },
     uploadUploaded: function uploadUploaded(item, data) {
-      var _this10 = this;
+      var _this11 = this;
 
       var validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 
@@ -3031,12 +3040,12 @@ var enc = 'm.megolm.v1.aes-sha2';
         console.log("previewImg", data);
         this.$emit('previewImg', data);
         this.imageWH(data).then(function (info) {
-          _this10.sendImage(data);
+          _this11.sendImage(data);
         });
       }
     },
     imageWH: function imageWH(file) {
-      var _this11 = this;
+      var _this12 = this;
 
       var img = new Image();
       var imgInfo = {};
@@ -3052,7 +3061,7 @@ var enc = 'm.megolm.v1.aes-sha2';
         };
 
         img.src = file.base64;
-        _this11.info = imgInfo;
+        _this12.info = imgInfo;
       });
     },
     uploadUploadedAll: function uploadUploadedAll(item, result) {

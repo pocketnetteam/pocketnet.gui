@@ -1741,6 +1741,7 @@ var vueimagesloaded_default = /*#__PURE__*/__webpack_require__.n(vueimagesloaded
       return this.content.msgtype === 'm.image' || this.content.msgtype === 'm.file' || this.urlpreview;
     },
     content: function content() {
+      console.log('this.origin', this.origin, this.origin.getClearContent() || this.origin.event.content);
       return this.origin.getClearContent() || this.origin.event.content;
     },
     textWithoutLinks: function textWithoutLinks() {
