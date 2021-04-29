@@ -150,7 +150,7 @@ var lastcomments = (function(){
 					make()
 				//}
 
-				multimake()
+				//multimake()
 				
 
 			}
@@ -217,7 +217,7 @@ var lastcomments = (function(){
 				make()
 
 				
-				multimake()
+				//multimake()
 				
 
 				p.clbk(null, p);
