@@ -22,15 +22,17 @@ var settings = {};
 
 var pocketnet = new Pocketnet()
 
-var nodes = [
-
-	/*{
-		host : '192.168.0.33',
-		port : 37071,
-		ws : 8087,
-		nodename : 'Cryptoserver',
+var testnodes = [
+	{
+		host : '216.108.231.28',
+		port : 36061,
+		ws : 6067,
+		name : 'CryptoserverTest',
 		stable : true
-	},*/
+	}
+]
+
+var activenodes = [
 	{
 		host : '64.235.45.119',
 		port : 38081,
@@ -63,13 +65,7 @@ var nodes = [
 		stable : true
 	},
 
-	/*{
-		host : '188.187.45.218',
-		port : 31011,
-		ws : 8010,
-		name : 'CryptoserverTest',
-		stable : true
-	}*/
+	
 	
 	{
 		host : '185.148.147.15',
@@ -79,6 +75,8 @@ var nodes = [
 		stable : true
 	}
 ]
+
+var nodes = activenodes
 
 var defaultSettings = {
 

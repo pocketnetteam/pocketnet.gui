@@ -89,8 +89,6 @@ var Exchanges = function(){
                     return Promise.reject('notfound')
                 }).catch(e => {
 
-                    console.log("ERROR", e)
-
                     return Promise.reject('notfound')
                 })
 
@@ -115,7 +113,6 @@ var Exchanges = function(){
                     return Promise.resolve()
 
                 }).catch(e => {
-                    console.log("error", e)
 
                     return Promise.resolve()
                 })
