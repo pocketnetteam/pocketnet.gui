@@ -239,12 +239,13 @@ var Testnode = function(node){
         txunspent : ['getrandomaddress2',1,9999999],
         getuserprofile : ['getrandomaddress1'],
         getuserprofiles : ['getrandomaddress10'],
+        getrawtransaction : ['adcd8bfa4695d02d00a9260b0a773d6334edd64c421b8b76335ff2a05c073302'],
         getuseraddress : ['maxtest'],
         gettags : function(){
 
             var lang = langs[f.rand(0, langs.length - 1)]
 
-            return ["", 50, 1130718, lang]
+            return ["", "50", "1130718", lang]
         },
         gethotposts : function(){
 
@@ -272,6 +273,7 @@ var Testnode = function(node){
 
             return [0, "", 30, lang, t]
         },
+        search : ["ma", "users", 946114, "0", "10"],
         getcontents : ["PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM"],
         getcomments : ["bc592f816fe7514a6cd23bf6230cd01e8e8fd5e407c3d7301a742d3a1eab916f","","getrandomaddress"],
         getpostscores: ["27904ded808c8a183b06783a3a671d050e80e442085d22a4f1a5facd21d51741"],
@@ -435,8 +437,8 @@ var Testnode = function(node){
 
     self.scenarios = {
         pageload : function(){
-            var count = 30,
-                methodkeys = ['gethierarchicalstrip', 'getrawtransactionwithmessage', 'gethotposts']
+            var count = 140,
+                methodkeys = ['gethierarchicalstrip', 'search', 'gethotposts', 'gettags', 'getlastcomments']
             
 
 

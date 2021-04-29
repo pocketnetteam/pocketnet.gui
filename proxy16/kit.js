@@ -21,6 +21,7 @@ var settingsPath = 'data/settings'
 var settings = {};
 
 var pocketnet = new Pocketnet()
+var test = false
 
 var testnodes = [
 	{
@@ -29,7 +30,17 @@ var testnodes = [
 		ws : 6067,
 		name : 'CryptoserverTest',
 		stable : true
+	},
+
+	{
+		host : '64.235.46.85',
+		port : 36061,
+		ws : 6067,
+		name : 'CryptoserverTest2',
+		stable : true
 	}
+
+	
 ]
 
 var activenodes = [
@@ -87,6 +98,8 @@ var activenodes = [
 ]
 
 var nodes = activenodes
+
+if (test) nodes = testnodes
 
 var defaultSettings = {
 
@@ -889,7 +902,7 @@ var kit = {
 	startproxy : function(hck){
 
 		if(!proxy){
-			proxy = new Proxy(settings, kit.manage)
+			proxy = new Proxy(settings, kit.manage, test)
 
 			if (hck.userDataPath){
 				proxy.userDataPath = hck.userDataPath

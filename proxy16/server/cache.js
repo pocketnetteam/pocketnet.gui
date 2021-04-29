@@ -9,12 +9,12 @@ var Cache = function(p){
 
     var ckeys = {
         getlastcomments : {
-            time : 160,
+            time : 960,
             block : 0
         },
 
         getcomments : {
-            time : 160,
+            time : 360,
             block : 0
         },
 
@@ -36,27 +36,27 @@ var Cache = function(p){
         },
         
         getrawtransactionwithmessage: {
-            time : 160,
+            time : 460,
             block : 0
         },
 
         gethierarchicalstrip: {
-            time : 160,
+            time : 460,
             block : 0
         },
         
         getuserprofile: {
-            time : 160,
+            time : 560,
             block : 0
         },
 
         getuserstate : {
-            time : 160,
+            time : 560,
             block : 0
         },
         
         getpagescores: {
-            time : 160,
+            time : 460,
             block : 0
         },
         
