@@ -85,12 +85,12 @@ var Exchanges = function(){
 
         let first_price
         if(price_history[history_length - 1]) {
-            first_price = price_history[history_length - 1]?.prices
+            first_price = price_history[history_length - 1]? price_history[history_length - 1].prices :  null
         }
 
         let second_price
         if(price_history[history_length - 2]) {
-            second_price = price_history[history_length - 2]?.prices
+            second_price = price_history[history_length - 2] ?  price_history[history_length - 2].prices : null
         }
 
         price_keys.forEach(item => {
