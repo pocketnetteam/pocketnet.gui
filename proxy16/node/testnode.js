@@ -24,19 +24,254 @@ var Testnode = function(node){
             return [this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress(),this.getrandomaddress()]
         }
     }
+
+    var langs = ['ru', 'en']
+
+    var tags = {
+
+        en : [
+            {
+                name : "Memes/Funny",
+                tags : ['funny', 'memes'],
+                id : 'c2'
+            },
+            {
+                name : "Politics",
+                tags : ['politics'],
+                id : 'c3'
+            },
+            {
+                name : "Crypto",
+                tags : ['crypto'],
+                id : 'c4'
+            },
+            {
+                name : "Technology/Science",
+                tags : ['technology', 'science'],
+                id : 'c5'
+            },
+            {
+                name : "Faith/Religion",
+                tags : ['faith', 'religion'],
+                id : 'c55'
+            },
+            {
+                name : "Investing/Finance",
+                tags : ['investing', 'finance'],
+                id : 'c6'
+            },
+            {
+                name : "Auto/Racing",
+                tags : ['auto', 'racing'],
+                id : 'c7'
+            },
+            {
+                name : "Sports",
+                tags : ['sports'],
+                id : 'c8'
+            },
+            {
+                name : "Gaming",
+                tags : ['gaming'],
+                id : 'c9'
+            },
+            {
+                name : "Space",
+                tags : ['space'],
+                id : 'c10'
+            },
+            
+            {
+                name : "Art/Music",
+                tags : ['art', 'music'],
+                id : 'c11'
+            },
+            
+            {
+                name : "News/Commentary",
+                tags : ['news', 'commentary'],
+                id : 'c12'
+            },
+            
+            {
+                name : "History",
+                tags : ['history'],
+                id : 'c13'
+            },
+            {
+                name : "Story time",
+                tags : ['storytime'],
+                id : 'c14'
+            },
+            
+            {
+                name : "Film/Animation",
+                tags : ['film', 'animation'],
+                id : 'c15'
+            },
+            
+            {
+                name : "Nature/Animals",
+                tags : ['nature', 'animals'],
+                id : 'c16'
+            },
+            
+            {
+                name : "Travel/Architecture",
+                tags : ['travel', 'architecture'],
+                id : 'c17'
+            },
+            
+            {
+                name : "DIY",
+                tags : ['diy'],
+                id : 'c18'
+            }
+        ],
+        ru : [
+            {
+                name : "Мемы/Юмор",
+                tags : ['мемы', 'юмор'],
+                id : 'c2'
+            },
+            {
+                name : "Политика",
+                tags : ['политика'],
+                id : 'c3'
+            },
+            {
+                name : "Криптовалюта",
+                tags : ['Криптовалюта'],
+                id : 'c4'
+            },
+            {
+                name : "Наука/Технологии",
+                tags : ['технологии', 'наука'],
+                id : 'c5'
+            },
+            {
+                name : "Вера/Религия",
+                tags : ['вера', 'религия'],
+                id : 'c55'
+            },
+            {
+                name : "Финансы/Инвестиции",
+                tags : ['финансы', 'инвестиции'],
+                id : 'c6'
+            },
+            {
+                name : "Автомобили/Гонки",
+                tags : ['auto', 'racing'],
+                id : 'c7'
+            },
+            {
+                name : "Спорт",
+                tags : ['спорт'],
+                id : 'c8'
+            },
+            {
+                name : "Игры",
+                tags : ['игры'],
+                id : 'c9'
+            },
+            {
+                name : "Космос",
+                tags : ['космос'],
+                id : 'c10'
+            },
+            
+            {
+                name : "Искусство/Музыка",
+                tags : ['искусство', 'музыка'],
+                id : 'c11'
+            },
+            
+            {
+                name : "Новости/Комментарии",
+                tags : ['новости', 'комментарии'],
+                id : 'c12'
+            },
+            
+            {
+                name : "История",
+                tags : ['история'],
+                id : 'c13'
+            },
+            {
+                name : "Время историй",
+                tags : ['истории'],
+                id : 'c14'
+            },
+            
+            {
+                name : "Кино/Анимация",
+                tags : ['кино', 'анимация'],
+                id : 'c15'
+            },
+            
+            {
+                name : "Природа/Животные",
+                tags : ['Природа', 'животные'],
+                id : 'c16'
+            },
+            
+            {
+                name : "Путешествия/Архитектура",
+                tags : ['путешествия', 'архитектура'],
+                id : 'c17'
+            },
+            
+            {
+                name : "Сделай сам",
+                tags : ['сделайсам'],
+                id : 'c18'
+            }
+        ],
+
+    }
     
     var methods = {
         gettime: [],
         //getmissedinfo: ['getrandomaddress', 1020798],
-        getrawtransactionwithmessage : ["", "", "", 10, "en"],
+        getrawtransactionwithmessage : ["getrandomaddress", "1", "", 10, ""],
         getuserstate : ['getrandomaddress'],
-        getrawtransactionwithmessagebyid : [["f32822a02b0fb2614c4dcc43841fd95731e32c78ff2523e39575f7c2089134d1"]],
+        getrawtransactionwithmessagebyid : [["87b22ba285cf0c89ea23ceaf0aa6d77a481b975481511b96e1395278edf4ca75"]],
         txunspent : ['getrandomaddress2',1,9999999],
         getuserprofile : ['getrandomaddress1'],
         getuserprofiles : ['getrandomaddress10'],
-        getuseraddress : ['maxim'],
-        gettags : ["","150","-19999"],
-        getlastcomments : ["7"],
+        getuseraddress : ['maxtest'],
+        gettags : function(){
+
+            var lang = langs[f.rand(0, langs.length - 1)]
+
+            return ["", 50, 1130718, lang]
+        },
+        gethotposts : function(){
+
+            var lang = langs[f.rand(0, langs.length - 1)]
+
+            return ["30", "259200", "", lang]
+        }, 
+        getlastcomments : function(){
+
+            var lang = langs[f.rand(0, langs.length - 1)]
+
+            return [7, "", lang]
+        },
+        gethierarchicalstrip : function(){
+
+            var lang = langs[f.rand(0, langs.length - 1)]
+
+            var _tagsc = tags[lang]
+
+            var _tags = _tagsc[f.rand(0, _tagsc.length - 1)]
+
+            var t = _.map(_tags.tags, function(t){
+                return encodeURIComponent(t)
+            })
+
+            return [0, "", 30, lang, t]
+        },
         getcontents : ["PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM"],
         getcomments : ["bc592f816fe7514a6cd23bf6230cd01e8e8fd5e407c3d7301a742d3a1eab916f","","getrandomaddress"],
         getpostscores: ["27904ded808c8a183b06783a3a671d050e80e442085d22a4f1a5facd21d51741"],
@@ -51,9 +286,17 @@ var Testnode = function(node){
 
     var request = function(method, p){
 
+        var prms = p || methods[method] || []
 
-        var parameters = _.map(_.clone(p || methods[method] || []), function(p, i){
-            if(h[p]) return h[p]()
+        if (typeof prms == 'function'){
+            prms = prms()
+        }
+
+        var parameters = _.map(_.clone(prms), function(p, i){
+
+            
+            if (!_.isArray(p))
+                if(h[p]) return h[p]()
 
             return p
         })
@@ -64,6 +307,7 @@ var Testnode = function(node){
         })
 
         .catch(e => {
+            console.log("E", e, method, parameters)
             return Promise.resolve()
         })
     }
@@ -134,7 +378,7 @@ var Testnode = function(node){
             if(!count) count = 1;
 
             var promises = []
-            var waittime = 400
+            var waittime = 200
             
             for(var i = 0; i < count; i++){
                 promises.push(
@@ -191,12 +435,12 @@ var Testnode = function(node){
 
     self.scenarios = {
         pageload : function(){
-            var count = 200,
-                methodkeys = ['getuserprofile', 'getrawtransactionwithmessage', 'getuserstate', 'getrawtransactionwithmessagebyid', 'txunspent']
+            var count = 30,
+                methodkeys = ['gethierarchicalstrip', 'getrawtransactionwithmessage', 'gethotposts']
             
 
 
-            return self.scenariosmeta.parallellMethodsLong(count, methodkeys, 60000)
+            return self.scenariosmeta.parallellMethodsLong(count, methodkeys, 600000)
         }
     }
 

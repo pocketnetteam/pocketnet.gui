@@ -2090,6 +2090,23 @@ var lenta = (function(){
 				})
 			},
 
+			shareall : function(shares){
+
+				_.each(shares, function(share){
+					renders.share(share)
+				})
+				
+			},
+
+			txidall : function(txids){
+
+				_.each(txids, function(txid){
+					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+					renders.share(share)
+				})
+				
+			},
+
 			shares : function(shares, clbk, p){
 
 				if(!p) p = {};
@@ -2729,6 +2746,9 @@ var lenta = (function(){
 
 							var page = parameters().page || 0
 
+
+							console.log('essenseData.txids', essenseData.txids)
+
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
@@ -2916,13 +2936,12 @@ var lenta = (function(){
 
 			if(!essenseData.openapi){
 
-			
-
-				window.addEventListener('scroll', events.sharesInview);
+				
 				window.addEventListener('scroll', events.videosInview);
 				window.addEventListener('resize', events.resize);
 
 				if(!essenseData.notscrollloading){
+					window.addEventListener('scroll', events.sharesInview);
 					window.addEventListener('scroll', events.loadmorescroll);
 				}	
 				
@@ -3277,7 +3296,11 @@ var lenta = (function(){
 				clear = false;
 			}
 
+			
+
 			load.shares(function(shares, error){
+
+				console.log('load.shares', shares, error)
 
 
 				if (error){
@@ -3313,6 +3336,8 @@ var lenta = (function(){
 						el.c.find('.shares').html('')
 
 					renders.shares(shares, function(){
+
+						
 
 						renders.sharesInview(shares, function(){
 
@@ -3373,8 +3398,18 @@ var lenta = (function(){
 								essenseData.goback = false;
 								_p.clbk(null, _p);
 							}
+
+							if(essenseData.notscrollloading && essenseData.txids){
+
+								console.log("RENDER ALL SHARES", shares)
+
+								renders.txidall(essenseData.txids)
+							}
 						
 						})
+
+
+
 		
 					})
 				}

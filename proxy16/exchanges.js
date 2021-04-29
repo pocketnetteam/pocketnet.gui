@@ -156,7 +156,6 @@ var Exchanges = function(){
                     return Promise.resolve()
 
                 }).catch(e => {
-                    console.log("error", e)
 
                     return Promise.resolve()
                 })

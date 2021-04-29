@@ -1,2 +1,1384 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[2,9],{180:function(e,t){},181:function(e,t){},186:function(e,t){},187:function(e,t){},188:function(e,t){},189:function(e,t){},248:function(e,t){},252:function(e,t){},255:function(e,t){},256:function(e,t){},258:function(e,t){},259:function(e,t){},261:function(e,t){},263:function(e,t){},278:function(e,t){},284:function(e,t){},288:function(e,t){},289:function(e,t){},292:function(e,t){},293:function(e,t){},296:function(e,t){},299:function(e,t){},300:function(e,t){},321:function(e,t){},323:function(e,t,i){"use strict";(function(e,r){i.d(t,"a",(function(){return h}));var n=i(1),o=i(159),s=i(324);class a extends s.a{constructor(e){super(e),this.version(1).stores({chunks:"id"})}}class l extends s.a{constructor(){super("webtorrent-expiration"),this.version(1).stores({databases:"name,expiration"})}}class h extends o.EventEmitter{constructor(e,t){if(super(),this.pendingPut=[],this.memoryChunks={},this.databaseName="webtorrent-chunks-",t||(t={}),this.databaseName+=t.torrent&&t.torrent.infoHash?t.torrent.infoHash:"-default",this.setMaxListeners(100),this.chunkLength=Number(e),!this.chunkLength)throw new Error("First argument must be a chunk length");this.length=Number(t.length)||1/0,this.length!==1/0&&(this.lastChunkLength=this.length%this.chunkLength||this.chunkLength,this.lastChunkIndex=Math.ceil(this.length/this.chunkLength)-1),this.db=new a(this.databaseName),this.expirationDB=new l,this.runCleaner()}put(e,t,i){const r=e===this.lastChunkIndex;return r&&t.length!==this.lastChunkLength?this.nextTick(i,new Error("Last chunk length must be "+this.lastChunkLength)):r||t.length===this.chunkLength?(this.memoryChunks[e]=!0,this.pendingPut.push({id:e,buf:t,cb:i}),void(this.putBulkTimeout||(this.putBulkTimeout=setTimeout((()=>Object(n.a)(this,void 0,void 0,(function*(){const e=this.pendingPut;this.pendingPut=[],this.putBulkTimeout=void 0;try{yield this.db.transaction("rw",this.db.chunks,(()=>this.db.chunks.bulkPut(e.map((e=>({id:e.id,buf:e.buf}))))))}catch(t){console.log("Cannot bulk insert chunks. Store them in memory.",{err:t}),e.forEach((e=>this.memoryChunks[e.id]=e.buf))}finally{e.forEach((e=>e.cb()))}}))),h.BUFFERING_PUT_MS)))):this.nextTick(i,new Error("Chunk length must be "+this.chunkLength))}get(t,i,o){if("function"==typeof i)return this.get(t,null,i);const s=this.memoryChunks[t];if(void 0===s){const t=new Error("Chunk not found");return t.notFound=!0,e.nextTick((()=>o(t)))}if(!0!==s)return o(null,s);this.db.transaction("r",this.db.chunks,(()=>Object(n.a)(this,void 0,void 0,(function*(){const e=yield this.db.chunks.get({id:t});if(void 0===e)return o(null,r.alloc(0));const n=e.buf;if(!i)return this.nextTick(o,null,n);const s=i.offset||0;return o(null,n.slice(s,(i.length||n.length-s)+s))})))).catch((e=>(console.error(e),o(e))))}close(e){return this.destroy(e)}destroy(e){return Object(n.a)(this,void 0,void 0,(function*(){try{return this.pendingPut&&(clearTimeout(this.putBulkTimeout),this.pendingPut=null),this.cleanerInterval&&(clearInterval(this.cleanerInterval),this.cleanerInterval=null),this.db&&(this.db.close(),yield this.dropDatabase(this.databaseName)),this.expirationDB&&(this.expirationDB.close(),this.expirationDB=null),e()}catch(t){return console.error("Cannot destroy peertube chunk store.",t),e(t)}}))}runCleaner(){this.checkExpiration(),this.cleanerInterval=setInterval((()=>Object(n.a)(this,void 0,void 0,(function*(){this.checkExpiration()}))),h.CLEANER_INTERVAL_MS)}checkExpiration(){return Object(n.a)(this,void 0,void 0,(function*(){let e=[];try{yield this.expirationDB.transaction("rw",this.expirationDB.databases,(()=>Object(n.a)(this,void 0,void 0,(function*(){yield this.expirationDB.databases.put({name:this.databaseName,expiration:(new Date).getTime()+h.CLEANER_EXPIRATION_MS});const t=(new Date).getTime();e=yield this.expirationDB.databases.where("expiration").below(t).toArray()}))))}catch(e){console.error("Cannot update expiration of fetch expired databases.",e)}for(const t of e)yield this.dropDatabase(t.name)}))}dropDatabase(e){return Object(n.a)(this,void 0,void 0,(function*(){const t=new a(e);console.log("Destroying IndexDB database %s.",e);try{yield t.delete(),yield this.expirationDB.transaction("rw",this.expirationDB.databases,(()=>this.expirationDB.databases.where({name:e}).delete()))}catch(t){console.error("Cannot delete %s.",e,t)}}))}nextTick(t,i,r){e.nextTick((()=>t(i,r)),void 0)}}h.BUFFERING_PUT_MS=1e3,h.CLEANER_INTERVAL_MS=6e4,h.CLEANER_EXPIRATION_MS=3e5}).call(this,i(74),i(73).Buffer)},341:function(e,t,i){"use strict";i.r(t),i.d(t,"WebTorrentPlugin",(function(){return g}));var r=i(0),n=i.n(r),o=i(234),s=i(22);const a=i(190),l=i(224),h=[".m4a",".m4v",".mp4"];function u(e,t,i,r){return function(e){if(null==e)throw new Error("file cannot be null or undefined");if("string"!=typeof e.name)throw new Error("missing or invalid file.name property");if("function"!=typeof e.createReadStream)throw new Error("missing or invalid file.createReadStream property")}(e),function(e,t,i,r){const n=Object(s.extname)(e.name).toLowerCase();let o,u,d=0;try{u=h.indexOf(n)>=0?(c(),o.addEventListener("error",(function e(t){return o.removeEventListener("error",e),r(t)})),o.addEventListener("loadstart",p),new l(e,o)):function t(i=!1){const n=function(e,t=!1){const i=Object(s.extname)(e).toLowerCase();return".mp4"===i?'video/mp4; codecs="avc1.640029, mp4a.40.5"':".webm"===i?!0===t?'video/webm; codecs="vp9, opus"':'video/webm; codecs="vp8, vorbis"':void 0}(e.name,i);c(),o.addEventListener("error",(function e(i){return o.removeEventListener("error",e),-1!==n.indexOf("vp8")?function(e=!1){!0===e?console.log("Falling back to media source with VP9 enabled."):console.log("Falling back to media source.."),t(e)}(!0):r(i)})),o.addEventListener("loadstart",p);const l=new a(o),h=l.createWriteStream(n);return e.createReadStream().pipe(h),d&&(o.currentTime=d),l}()}catch(e){return r(e)}function c(){void 0===o&&(o=t,o.addEventListener("progress",(function(){d=t.currentTime})))}function p(){o.removeEventListener("loadstart",p),i.autoplay&&o.play(),r(null,u)}}(e,t,i,r)}var d=i(3),c=i(323),p=i(7);const y=i(325),f=n.a.getPlugin("plugin");class g extends f{constructor(e,t){super(e),this.autoplay=!1,this.startTime=0,this.CONSTANTS={INFO_SCHEDULER:1e3,AUTO_QUALITY_SCHEDULER:3e3,AUTO_QUALITY_THRESHOLD_PERCENT:30,AUTO_QUALITY_OBSERVATION_TIME:1e4,AUTO_QUALITY_HIGHER_RESOLUTION_DELAY:5e3,BANDWIDTH_AVERAGE_NUMBER_OF_VALUES:5},this.webtorrent=new o({tracker:{rtcConfig:Object(d.d)()},dht:!1}),this.destroyingFakeRenderer=!1,this.autoResolution=!0,this.autoResolutionPossible=!0,this.isAutoResolutionObservation=!1,this.playerRefusedP2P=!1,this.downloadSpeeds=[],this.startTime=Object(d.i)(t.startTime),this.autoplay=t.autoplay,this.playerRefusedP2P=!Object(p.d)(),this.videoFiles=t.videoFiles,this.videoDuration=t.videoDuration,this.savePlayerSrcFunction=this.player.src,this.playerElement=t.playerElement,this.player.ready((()=>{const e=this.player.options_,i=Object(p.f)();void 0!==i&&this.player.volume(i);const r=void 0!==e.muted?e.muted:Object(p.c)();void 0!==r&&this.player.muted(r),this.player.duration(t.videoDuration),this.initializePlayer(),this.runTorrentInfoScheduler(),this.player.one("play",(()=>{this.runAutoQualitySchedulerTimer=setTimeout((()=>this.runAutoQualityScheduler()),this.CONSTANTS.AUTO_QUALITY_SCHEDULER)}))}))}dispose(){clearTimeout(this.addTorrentDelay),clearTimeout(this.qualityObservationTimer),clearTimeout(this.runAutoQualitySchedulerTimer),clearInterval(this.torrentInfoInterval),clearInterval(this.autoQualityInterval),this.flushVideoFile(this.currentVideoFile,!1),this.destroyFakeRenderer()}getCurrentResolutionId(){return this.currentVideoFile?this.currentVideoFile.resolution.id:-1}updateVideoFile(e,t={},i=(()=>{})){if(!e){const t=Object(p.a)();e=t?this.getAppropriateFile(t):this.pickAverageVideoFile()}if(!e)throw Error("Can't update video file since videoFile is undefined.");if(void 0!==this.currentVideoFile&&this.currentVideoFile.magnetUri===e.magnetUri)return;this.disableErrorDisplay(),this.player.src=()=>!0;const r=this.player.playbackRate(),n=this.currentVideoFile;if(this.currentVideoFile=e,Object(d.e)()||this.playerRefusedP2P)return this.fallbackToHttp(t,(()=>(this.player.playbackRate(r),i())));this.addTorrent(this.currentVideoFile.magnetUri,n,t,(()=>(this.player.playbackRate(r),i()))),this.changeQuality(),this.trigger("resolutionChange",{auto:this.autoResolution,resolutionId:this.currentVideoFile.resolution.id})}updateResolution(e,t=0){const i=this.player.currentTime();this.player.paused()||this.player.bigPlayButton.hide(),0===e?(this.player.addClass("vjs-playing-audio-only-content"),this.player.posterImage.show()):(this.player.removeClass("vjs-playing-audio-only-content"),this.player.posterImage.hide());const r=this.videoFiles.find((t=>t.resolution.id===e));this.updateVideoFile(r,{forcePlay:!1,delay:t,seek:i+t/1e3})}flushVideoFile(e,t=!0){void 0!==e&&this.webtorrent.get(e.magnetUri)&&(!0===t&&this.renderer&&this.renderer.destroy&&this.renderer.destroy(),this.webtorrent.remove(e.magnetUri),console.log("Removed "+e.magnetUri))}enableAutoResolution(){this.autoResolution=!0,this.trigger("resolutionChange",{auto:this.autoResolution,resolutionId:this.getCurrentResolutionId()})}disableAutoResolution(e=!1){!0===e&&(this.autoResolutionPossible=!1),this.autoResolution=!1,this.trigger("autoResolutionChange",{possible:this.autoResolutionPossible}),this.trigger("resolutionChange",{auto:this.autoResolution,resolutionId:this.getCurrentResolutionId()})}isAutoResolutionPossible(){return this.autoResolutionPossible}getTorrent(){return this.torrent}getCurrentVideoFile(){return this.currentVideoFile}addTorrent(e,t,i,r){if(!e)return this.fallbackToHttp(i,r);console.log("Adding "+e+".");const n=this.torrent;this.torrent=this.webtorrent.add(e,{store:function(e,t){return new y(new c.a(e,t),{max:100})}},(o=>{console.log("Added "+e+"."),n&&(this.stopTorrent(n),i.delay&&this.renderFileInFakeElement(o.files[0],i.delay)),this.addTorrentDelay=setTimeout((()=>{console.log("IMHERENOW"),this.destroyFakeRenderer();const e=this.player.paused();this.flushVideoFile(t),i.seek&&this.player.currentTime(i.seek),u(o.files[0],this.playerElement,{autoplay:!1,controls:!0},((t,n)=>(this.renderer=n,t?this.fallbackToHttp(i,r):this.tryToPlay((t=>t?r(t):(i.seek&&this.seek(i.seek),!1===i.forcePlay&&!0===e&&this.player.pause(),r()))))))}),i.delay||0)})),this.torrent.on("error",(e=>console.error(e))),this.torrent.on("warning",(e=>{if(-1===e.message.indexOf("Unsupported tracker protocol"))if(-1===e.message.indexOf("Ice connection failed")){if(-1!==e.message.indexOf("incorrect info hash"))return console.error("Incorrect info hash detected, falling back to torrent file."),this.addTorrent(this.torrent.xs,t,{forcePlay:!0,seek:i.seek},r);-1!==e.message.indexOf("from xs param")&&this.handleError(e),console.warn(e)}else console.log(e)}))}tryToPlay(e){e||(e=function(){});const t=this.player.play();return void 0!==t?t.then((()=>e())).catch((t=>{if(-1===t.message.indexOf("The play() request was interrupted by a call to pause()"))return console.error(t),this.player.pause(),this.player.posterImage.show(),this.player.removeClass("vjs-has-autoplay"),this.player.removeClass("vjs-has-big-play-button-clicked"),this.player.removeClass("vjs-playing-audio-only-content"),e()})):e()}seek(e){this.player.currentTime(e),this.player.handleTechSeeked_()}getAppropriateFile(e){if(void 0===this.videoFiles)return;const t=this.videoFiles.filter((e=>0!==e.resolution.id));if(0===t.length)return;if(1===t.length)return t[0];if(this.torrent&&1===this.torrent.progress&&this.player.ended())return this.currentVideoFile;e||(e=this.getAndSaveActualDownloadSpeed());const i=this.playerElement.offsetHeight;let r=t[0].resolution.id;for(let e=t.length-1;e>=0;e--){const n=t[e].resolution.id;if(0!==n&&n>=i){r=n;break}}const n=t.filter((e=>e.resolution.id<=r)).filter((t=>{const i=t.size/this.videoDuration;let r=i;return(!this.currentVideoFile||t.resolution.id>this.currentVideoFile.resolution.id)&&(r+=i*this.CONSTANTS.AUTO_QUALITY_THRESHOLD_PERCENT/100),e>r}));return 0===n.length?Object(d.l)(t):Object(d.k)(n)}getAndSaveActualDownloadSpeed(){const e=Math.max(this.downloadSpeeds.length-this.CONSTANTS.BANDWIDTH_AVERAGE_NUMBER_OF_VALUES,0),t=this.downloadSpeeds.slice(e,this.downloadSpeeds.length);if(0===t.length)return-1;const i=t.reduce(((e,t)=>e+t)),r=Math.round(i/t.length);return Object(p.g)(r),r}initializePlayer(){if(this.buildQualities(),this.autoplay)return this.player.posterImage.hide(),this.updateVideoFile(void 0,{forcePlay:!0,seek:this.startTime});const e=this.player.play.bind(this.player);this.player.play=()=>{this.player.addClass("vjs-has-big-play-button-clicked"),this.player.play=e,this.updateVideoFile(void 0,{forcePlay:!0,seek:this.startTime})}}runAutoQualityScheduler(){this.autoQualityInterval=setInterval((()=>{if(console.log("ASD"),null==this.torrent)return;if(!1===this.autoResolution)return;if(!0===this.isAutoResolutionObservation)return;const e=this.getAppropriateFile();let t=!1,i=0;this.isPlayerWaiting()&&e.resolution.id<this.currentVideoFile.resolution.id?(console.log("Downgrading automatically the resolution to: %s",e.resolution.label),t=!0):e.resolution.id>this.currentVideoFile.resolution.id&&(console.log("Upgrading automatically the resolution to: %s",e.resolution.label),t=!0,i=this.CONSTANTS.AUTO_QUALITY_HIGHER_RESOLUTION_DELAY),!0===t&&(this.updateResolution(e.resolution.id,i),this.isAutoResolutionObservation=!0,this.qualityObservationTimer=setTimeout((()=>{this.isAutoResolutionObservation=!1}),this.CONSTANTS.AUTO_QUALITY_OBSERVATION_TIME))}),this.CONSTANTS.AUTO_QUALITY_SCHEDULER)}isPlayerWaiting(){return this.player&&this.player.hasClass("vjs-waiting")}runTorrentInfoScheduler(){this.torrentInfoInterval=setInterval((()=>{if(console.log("INININ"),void 0!==this.torrent)return null===this.torrent?this.player.trigger("p2pInfo",!1):(0!==this.webtorrent.downloadSpeed&&this.downloadSpeeds.push(this.webtorrent.downloadSpeed),this.player.trigger("p2pInfo",{source:"webtorrent",http:{downloadSpeed:0,uploadSpeed:0,downloaded:0,uploaded:0},p2p:{downloadSpeed:this.torrent.downloadSpeed,numPeers:this.torrent.numPeers,uploadSpeed:this.torrent.uploadSpeed,downloaded:this.torrent.downloaded,uploaded:this.torrent.uploaded}}))}),this.CONSTANTS.INFO_SCHEDULER)}fallbackToHttp(e,t){console.log("IMHERE");const i=this.player.paused();this.disableAutoResolution(!0),this.flushVideoFile(this.currentVideoFile,!0),this.torrent=null,this.player.one("error",(()=>this.enableErrorDisplay()));const r=this.currentVideoFile.fileUrl;return this.player.src=this.savePlayerSrcFunction,this.player.src(r),this.changeQuality(),this.player.trigger("sourcechange"),this.tryToPlay((r=>r&&t?t(r):(e.seek&&this.seek(e.seek),!1===e.forcePlay&&!0===i&&this.player.pause(),t?t():void 0)))}handleError(e){return this.player.trigger("customError",{err:e})}enableErrorDisplay(){this.player.addClass("vjs-error-display-enabled")}disableErrorDisplay(){this.player.removeClass("vjs-error-display-enabled")}pickAverageVideoFile(){return 1===this.videoFiles.length?this.videoFiles[0]:this.videoFiles[Math.floor(this.videoFiles.length/2)]}stopTorrent(e){e.pause(),e.removePeer(e.ws)}renderFileInFakeElement(e,t){this.destroyingFakeRenderer=!1;const i=document.createElement("video");u(e,i,{autoplay:!1,controls:!1},((e,r)=>{this.fakeRenderer=r,!1===this.destroyingFakeRenderer&&e&&console.error("Cannot render new torrent in fake video element.",e),i.currentTime=this.player.currentTime()+(t-2e3)}))}destroyFakeRenderer(){if(this.fakeRenderer){if(this.destroyingFakeRenderer=!0,this.fakeRenderer.destroy)try{this.fakeRenderer.destroy()}catch(e){console.log("Cannot destroy correctly fake renderer.",e)}this.fakeRenderer=void 0}}buildQualities(){const e=[];for(const t of this.videoFiles){const i={id:t.resolution.id,label:this.buildQualityLabel(t),height:t.resolution.id,_enabled:!0};this.player.qualityLevels().addQualityLevel(i),e.push({id:i.id,label:i.label,selected:!1})}const t={qualitySwitchCallback:e=>this.qualitySwitchCallback(e),qualityData:{video:e}};this.player.tech(!0).trigger("loadedqualitydata",t)}buildQualityLabel(e){let t=e.resolution.label;return e.fps&&e.fps>=50&&(t+=e.fps),t}qualitySwitchCallback(e){-1!==e?(this.disableAutoResolution(),this.updateResolution(e)):!0===this.autoResolutionPossible&&this.enableAutoResolution()}changeQuality(){const e=this.currentVideoFile.resolution.id,t=this.player.qualityLevels();if(-1!==e)for(let i=0;i<t.length;i++)t[i].height===e&&(t.selectedIndex_=i);else t.selectedIndex=-1}}n.a.registerPlugin("webtorrent",g)}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[2],{
+
+/***/ "./src/assets/player/webtorrent/peertube-chunk-store.ts":
+/*!**************************************************************!*\
+  !*** ./src/assets/player/webtorrent/peertube-chunk-store.ts ***!
+  \**************************************************************/
+/*! exports provided: PeertubeChunkStore */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(process, Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PeertubeChunkStore", function() { return PeertubeChunkStore; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! events */ "./node_modules/events/events.js");
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var dexie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dexie */ "./node_modules/dexie/dist/dexie.mjs");
+// From https://github.com/MinEduTDF/idb-chunk-store
+// We use temporary IndexDB (all data are removed on destroy) to avoid RAM issues
+// Thanks @santiagogil and @Feross
+
+
+
+class ChunkDatabase extends dexie__WEBPACK_IMPORTED_MODULE_2__["default"] {
+    constructor(dbname) {
+        super(dbname);
+        this.version(1).stores({
+            chunks: 'id'
+        });
+    }
+}
+class ExpirationDatabase extends dexie__WEBPACK_IMPORTED_MODULE_2__["default"] {
+    constructor() {
+        super('webtorrent-expiration');
+        this.version(1).stores({
+            databases: 'name,expiration'
+        });
+    }
+}
+class PeertubeChunkStore extends events__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"] {
+    constructor(chunkLength, opts) {
+        super();
+        this.pendingPut = [];
+        // If the store is full
+        this.memoryChunks = {};
+        this.databaseName = 'webtorrent-chunks-';
+        if (!opts)
+            opts = {};
+        if (opts.torrent && opts.torrent.infoHash)
+            this.databaseName += opts.torrent.infoHash;
+        else
+            this.databaseName += '-default';
+        this.setMaxListeners(100);
+        this.chunkLength = Number(chunkLength);
+        if (!this.chunkLength)
+            throw new Error('First argument must be a chunk length');
+        this.length = Number(opts.length) || Infinity;
+        if (this.length !== Infinity) {
+            this.lastChunkLength = (this.length % this.chunkLength) || this.chunkLength;
+            this.lastChunkIndex = Math.ceil(this.length / this.chunkLength) - 1;
+        }
+        this.db = new ChunkDatabase(this.databaseName);
+        // Track databases that expired
+        this.expirationDB = new ExpirationDatabase();
+        this.runCleaner();
+    }
+    put(index, buf, cb) {
+        const isLastChunk = (index === this.lastChunkIndex);
+        if (isLastChunk && buf.length !== this.lastChunkLength) {
+            return this.nextTick(cb, new Error('Last chunk length must be ' + this.lastChunkLength));
+        }
+        if (!isLastChunk && buf.length !== this.chunkLength) {
+            return this.nextTick(cb, new Error('Chunk length must be ' + this.chunkLength));
+        }
+        // Specify we have this chunk
+        this.memoryChunks[index] = true;
+        // Add it to the pending put
+        this.pendingPut.push({ id: index, buf, cb });
+        // If it's already planned, return
+        if (this.putBulkTimeout)
+            return;
+        // Plan a future bulk insert
+        this.putBulkTimeout = setTimeout(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const processing = this.pendingPut;
+            this.pendingPut = [];
+            this.putBulkTimeout = undefined;
+            try {
+                yield this.db.transaction('rw', this.db.chunks, () => {
+                    return this.db.chunks.bulkPut(processing.map(p => ({ id: p.id, buf: p.buf })));
+                });
+            }
+            catch (err) {
+                console.log('Cannot bulk insert chunks. Store them in memory.', { err });
+                processing.forEach(p => this.memoryChunks[p.id] = p.buf);
+            }
+            finally {
+                processing.forEach(p => p.cb());
+            }
+        }), PeertubeChunkStore.BUFFERING_PUT_MS);
+    }
+    get(index, opts, cb) {
+        if (typeof opts === 'function')
+            return this.get(index, null, opts);
+        // IndexDB could be slow, use our memory index first
+        const memoryChunk = this.memoryChunks[index];
+        if (memoryChunk === undefined) {
+            const err = new Error('Chunk not found');
+            err['notFound'] = true;
+            return process.nextTick(() => cb(err));
+        }
+        // Chunk in memory
+        if (memoryChunk !== true)
+            return cb(null, memoryChunk);
+        // Chunk in store
+        this.db.transaction('r', this.db.chunks, () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const result = yield this.db.chunks.get({ id: index });
+            if (result === undefined)
+                return cb(null, Buffer.alloc(0));
+            const buf = result.buf;
+            if (!opts)
+                return this.nextTick(cb, null, buf);
+            const offset = opts.offset || 0;
+            const len = opts.length || (buf.length - offset);
+            return cb(null, buf.slice(offset, len + offset));
+        }))
+            .catch(err => {
+            console.error(err);
+            return cb(err);
+        });
+    }
+    close(cb) {
+        return this.destroy(cb);
+    }
+    destroy(cb) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            try {
+                if (this.pendingPut) {
+                    clearTimeout(this.putBulkTimeout);
+                    this.pendingPut = null;
+                }
+                if (this.cleanerInterval) {
+                    clearInterval(this.cleanerInterval);
+                    this.cleanerInterval = null;
+                }
+                if (this.db) {
+                    this.db.close();
+                    yield this.dropDatabase(this.databaseName);
+                }
+                if (this.expirationDB) {
+                    this.expirationDB.close();
+                    this.expirationDB = null;
+                }
+                return cb();
+            }
+            catch (err) {
+                console.error('Cannot destroy peertube chunk store.', err);
+                return cb(err);
+            }
+        });
+    }
+    runCleaner() {
+        this.checkExpiration();
+        this.cleanerInterval = setInterval(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.checkExpiration();
+        }), PeertubeChunkStore.CLEANER_INTERVAL_MS);
+    }
+    checkExpiration() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            let databasesToDeleteInfo = [];
+            try {
+                yield this.expirationDB.transaction('rw', this.expirationDB.databases, () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                    // Update our database expiration since we are alive
+                    yield this.expirationDB.databases.put({
+                        name: this.databaseName,
+                        expiration: new Date().getTime() + PeertubeChunkStore.CLEANER_EXPIRATION_MS
+                    });
+                    const now = new Date().getTime();
+                    databasesToDeleteInfo = yield this.expirationDB.databases.where('expiration').below(now).toArray();
+                }));
+            }
+            catch (err) {
+                console.error('Cannot update expiration of fetch expired databases.', err);
+            }
+            for (const databaseToDeleteInfo of databasesToDeleteInfo) {
+                yield this.dropDatabase(databaseToDeleteInfo.name);
+            }
+        });
+    }
+    dropDatabase(databaseName) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const dbToDelete = new ChunkDatabase(databaseName);
+            console.log('Destroying IndexDB database %s.', databaseName);
+            try {
+                yield dbToDelete.delete();
+                yield this.expirationDB.transaction('rw', this.expirationDB.databases, () => {
+                    return this.expirationDB.databases.where({ name: databaseName }).delete();
+                });
+            }
+            catch (err) {
+                console.error('Cannot delete %s.', databaseName, err);
+            }
+        });
+    }
+    nextTick(cb, err, val) {
+        process.nextTick(() => cb(err, val), undefined);
+    }
+}
+PeertubeChunkStore.BUFFERING_PUT_MS = 1000;
+PeertubeChunkStore.CLEANER_INTERVAL_MS = 1000 * 60; // 1 minute
+PeertubeChunkStore.CLEANER_EXPIRATION_MS = 1000 * 60 * 5; // 5 minutes
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/process/browser.js */ "./node_modules/process/browser.js"), __webpack_require__(/*! ./../../../../node_modules/node-libs-browser/node_modules/buffer/index.js */ "./node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
+
+/***/ }),
+
+/***/ "./src/assets/player/webtorrent/video-renderer.ts":
+/*!********************************************************!*\
+  !*** ./src/assets/player/webtorrent/video-renderer.ts ***!
+  \********************************************************/
+/*! exports provided: renderVideo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderVideo", function() { return renderVideo; });
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! path */ "./node_modules/node-libs-browser/node_modules/path-browserify/index.js");
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
+// Thanks: https://github.com/feross/render-media
+// TODO: use render-media once https://github.com/feross/render-media/issues/32 is fixed
+const MediaElementWrapper = __webpack_require__(/*! mediasource */ "./node_modules/mediasource/index.js");
+
+const videostream = __webpack_require__(/*! videostream */ "./node_modules/videostream/videostream.js");
+const VIDEOSTREAM_EXTS = [
+    '.m4a',
+    '.m4v',
+    '.mp4'
+];
+function renderVideo(file, elem, opts, callback) {
+    validateFile(file);
+    return renderMedia(file, elem, opts, callback);
+}
+function renderMedia(file, elem, opts, callback) {
+    const extension = Object(path__WEBPACK_IMPORTED_MODULE_0__["extname"])(file.name).toLowerCase();
+    let preparedElem;
+    let currentTime = 0;
+    let renderer;
+    try {
+        if (VIDEOSTREAM_EXTS.indexOf(extension) >= 0) {
+            renderer = useVideostream();
+        }
+        else {
+            renderer = useMediaSource();
+        }
+    }
+    catch (err) {
+        return callback(err);
+    }
+    function useVideostream() {
+        prepareElem();
+        preparedElem.addEventListener('error', function onError(err) {
+            preparedElem.removeEventListener('error', onError);
+            return callback(err);
+        });
+        preparedElem.addEventListener('loadstart', onLoadStart);
+        return new videostream(file, preparedElem);
+    }
+    function useMediaSource(useVP9 = false) {
+        const codecs = getCodec(file.name, useVP9);
+        prepareElem();
+        preparedElem.addEventListener('error', function onError(err) {
+            preparedElem.removeEventListener('error', onError);
+            // Try with vp9 before returning an error
+            if (codecs.indexOf('vp8') !== -1)
+                return fallbackToMediaSource(true);
+            return callback(err);
+        });
+        preparedElem.addEventListener('loadstart', onLoadStart);
+        const wrapper = new MediaElementWrapper(preparedElem);
+        const writable = wrapper.createWriteStream(codecs);
+        file.createReadStream().pipe(writable);
+        if (currentTime)
+            preparedElem.currentTime = currentTime;
+        return wrapper;
+    }
+    function fallbackToMediaSource(useVP9 = false) {
+        if (useVP9 === true)
+            console.log('Falling back to media source with VP9 enabled.');
+        else
+            console.log('Falling back to media source..');
+        useMediaSource(useVP9);
+    }
+    function prepareElem() {
+        if (preparedElem === undefined) {
+            preparedElem = elem;
+            preparedElem.addEventListener('progress', function () {
+                currentTime = elem.currentTime;
+            });
+        }
+    }
+    function onLoadStart() {
+        preparedElem.removeEventListener('loadstart', onLoadStart);
+        if (opts.autoplay)
+            preparedElem.play();
+        callback(null, renderer);
+    }
+}
+function validateFile(file) {
+    if (file == null) {
+        throw new Error('file cannot be null or undefined');
+    }
+    if (typeof file.name !== 'string') {
+        throw new Error('missing or invalid file.name property');
+    }
+    if (typeof file.createReadStream !== 'function') {
+        throw new Error('missing or invalid file.createReadStream property');
+    }
+}
+function getCodec(name, useVP9 = false) {
+    const ext = Object(path__WEBPACK_IMPORTED_MODULE_0__["extname"])(name).toLowerCase();
+    if (ext === '.mp4') {
+        return 'video/mp4; codecs="avc1.640029, mp4a.40.5"';
+    }
+    if (ext === '.webm') {
+        if (useVP9 === true)
+            return 'video/webm; codecs="vp9, opus"';
+        return 'video/webm; codecs="vp8, vorbis"';
+    }
+    return undefined;
+}
+
+
+
+/***/ }),
+
+/***/ "./src/assets/player/webtorrent/webtorrent-plugin.ts":
+/*!***********************************************************!*\
+  !*** ./src/assets/player/webtorrent/webtorrent-plugin.ts ***!
+  \***********************************************************/
+/*! exports provided: WebTorrentPlugin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WebTorrentPlugin", function() { return WebTorrentPlugin; });
+/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! video.js */ "./node_modules/video.js/core.js");
+/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var webtorrent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! webtorrent */ "./node_modules/webtorrent/index.js");
+/* harmony import */ var webtorrent__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(webtorrent__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _video_renderer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./video-renderer */ "./src/assets/player/webtorrent/video-renderer.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils */ "./src/assets/player/utils.ts");
+/* harmony import */ var _peertube_chunk_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./peertube-chunk-store */ "./src/assets/player/webtorrent/peertube-chunk-store.ts");
+/* harmony import */ var _peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../peertube-player-local-storage */ "./src/assets/player/peertube-player-local-storage.ts");
+
+
+
+
+
+
+const CacheChunkStore = __webpack_require__(/*! cache-chunk-store */ "./node_modules/cache-chunk-store/index.js");
+const Plugin = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getPlugin('plugin');
+class WebTorrentPlugin extends Plugin {
+    constructor(player, options) {
+        super(player);
+        this.autoplay = false;
+        this.startTime = 0;
+        this.CONSTANTS = {
+            INFO_SCHEDULER: 1000,
+            AUTO_QUALITY_SCHEDULER: 3000,
+            AUTO_QUALITY_THRESHOLD_PERCENT: 30,
+            AUTO_QUALITY_OBSERVATION_TIME: 10000,
+            AUTO_QUALITY_HIGHER_RESOLUTION_DELAY: 5000,
+            BANDWIDTH_AVERAGE_NUMBER_OF_VALUES: 5 // Last 5 seconds to build average bandwidth
+        };
+        this.webtorrent = new webtorrent__WEBPACK_IMPORTED_MODULE_1__({
+            tracker: {
+                rtcConfig: Object(_utils__WEBPACK_IMPORTED_MODULE_3__["getRtcConfig"])()
+            },
+            dht: false
+        });
+        this.destroyingFakeRenderer = false;
+        this.autoResolution = true;
+        this.autoResolutionPossible = true;
+        this.isAutoResolutionObservation = false;
+        this.playerRefusedP2P = false;
+        this.downloadSpeeds = [];
+        this.startTime = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["timeToInt"])(options.startTime);
+        // Disable auto play on iOS
+        this.autoplay = options.autoplay;
+        this.playerRefusedP2P = !Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__["getStoredP2PEnabled"])();
+        this.videoFiles = options.videoFiles;
+        this.videoDuration = options.videoDuration;
+        this.savePlayerSrcFunction = this.player.src;
+        this.playerElement = options.playerElement;
+        this.player.ready(() => {
+            const playerOptions = this.player.options_;
+            const volume = Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__["getStoredVolume"])();
+            if (volume !== undefined)
+                this.player.volume(volume);
+            const muted = playerOptions.muted !== undefined ? playerOptions.muted : Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__["getStoredMute"])();
+            if (muted !== undefined)
+                this.player.muted(muted);
+            this.player.duration(options.videoDuration);
+            this.initializePlayer();
+            this.runTorrentInfoScheduler();
+            this.player.one('play', () => {
+                // Don't run immediately scheduler, wait some seconds the TCP connections are made
+                this.runAutoQualitySchedulerTimer = setTimeout(() => this.runAutoQualityScheduler(), this.CONSTANTS.AUTO_QUALITY_SCHEDULER);
+            });
+        });
+    }
+    dispose() {
+        clearTimeout(this.addTorrentDelay);
+        clearTimeout(this.qualityObservationTimer);
+        clearTimeout(this.runAutoQualitySchedulerTimer);
+        clearInterval(this.torrentInfoInterval);
+        clearInterval(this.autoQualityInterval);
+        // Don't need to destroy renderer, video player will be destroyed
+        this.flushVideoFile(this.currentVideoFile, false);
+        this.destroyFakeRenderer();
+    }
+    getCurrentResolutionId() {
+        return this.currentVideoFile ? this.currentVideoFile.resolution.id : -1;
+    }
+    updateVideoFile(videoFile, options = {}, done = () => { }) {
+        // Automatically choose the adapted video file
+        if (!videoFile) {
+            const savedAverageBandwidth = Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__["getAverageBandwidthInStore"])();
+            videoFile = savedAverageBandwidth
+                ? this.getAppropriateFile(savedAverageBandwidth)
+                : this.pickAverageVideoFile();
+        }
+        if (!videoFile) {
+            throw Error(`Can't update video file since videoFile is undefined.`);
+        }
+        // Don't add the same video file once again
+        if (this.currentVideoFile !== undefined && this.currentVideoFile.magnetUri === videoFile.magnetUri) {
+            return;
+        }
+        // Do not display error to user because we will have multiple fallback
+        this.disableErrorDisplay();
+        // Hack to "simulate" src link in video.js >= 6
+        // Without this, we can't play the video after pausing it
+        // https://github.com/videojs/video.js/blob/master/src/js/player.js#L1633
+        this.player.src = () => true;
+        const oldPlaybackRate = this.player.playbackRate();
+        const previousVideoFile = this.currentVideoFile;
+        this.currentVideoFile = videoFile;
+        // Don't try on iOS that does not support MediaSource
+        // Or don't use P2P if webtorrent is disabled
+        if (Object(_utils__WEBPACK_IMPORTED_MODULE_3__["isIOS"])() || this.playerRefusedP2P) {
+            return this.fallbackToHttp(options, () => {
+                this.player.playbackRate(oldPlaybackRate);
+                return done();
+            });
+        }
+        this.addTorrent(this.currentVideoFile.magnetUri, previousVideoFile, options, () => {
+            this.player.playbackRate(oldPlaybackRate);
+            return done();
+        });
+        this.changeQuality();
+        this.trigger('resolutionChange', { auto: this.autoResolution, resolutionId: this.currentVideoFile.resolution.id });
+    }
+    updateResolution(resolutionId, delay = 0) {
+        // Remember player state
+        const currentTime = this.player.currentTime();
+        const isPaused = this.player.paused();
+        // Hide bigPlayButton
+        if (!isPaused) {
+            this.player.bigPlayButton.hide();
+        }
+        // Audio-only (resolutionId === 0) gets special treatment
+        if (resolutionId === 0) {
+            // Audio-only: show poster, do not auto-hide controls
+            this.player.addClass('vjs-playing-audio-only-content');
+            this.player.posterImage.show();
+        }
+        else {
+            // Hide poster to have black background
+            this.player.removeClass('vjs-playing-audio-only-content');
+            this.player.posterImage.hide();
+        }
+        const newVideoFile = this.videoFiles.find(f => f.resolution.id === resolutionId);
+        const options = {
+            forcePlay: false,
+            delay,
+            seek: currentTime + (delay / 1000)
+        };
+        this.updateVideoFile(newVideoFile, options);
+    }
+    flushVideoFile(videoFile, destroyRenderer = true) {
+        if (videoFile !== undefined && this.webtorrent.get(videoFile.magnetUri)) {
+            if (destroyRenderer === true && this.renderer && this.renderer.destroy)
+                this.renderer.destroy();
+            this.webtorrent.remove(videoFile.magnetUri);
+            console.log('Removed ' + videoFile.magnetUri);
+        }
+    }
+    enableAutoResolution() {
+        this.autoResolution = true;
+        this.trigger('resolutionChange', { auto: this.autoResolution, resolutionId: this.getCurrentResolutionId() });
+    }
+    disableAutoResolution(forbid = false) {
+        if (forbid === true)
+            this.autoResolutionPossible = false;
+        this.autoResolution = false;
+        this.trigger('autoResolutionChange', { possible: this.autoResolutionPossible });
+        this.trigger('resolutionChange', { auto: this.autoResolution, resolutionId: this.getCurrentResolutionId() });
+    }
+    isAutoResolutionPossible() {
+        return this.autoResolutionPossible;
+    }
+    getTorrent() {
+        return this.torrent;
+    }
+    getCurrentVideoFile() {
+        return this.currentVideoFile;
+    }
+    addTorrent(magnetOrTorrentUrl, previousVideoFile, options, done) {
+        if (!magnetOrTorrentUrl)
+            return this.fallbackToHttp(options, done);
+        console.log('Adding ' + magnetOrTorrentUrl + '.');
+        const oldTorrent = this.torrent;
+        const torrentOptions = {
+            // Don't use arrow function: it breaks webtorrent (that uses `new` keyword)
+            store: function (chunkLength, storeOpts) {
+                return new CacheChunkStore(new _peertube_chunk_store__WEBPACK_IMPORTED_MODULE_4__["PeertubeChunkStore"](chunkLength, storeOpts), {
+                    max: 100
+                });
+            }
+        };
+        this.torrent = this.webtorrent.add(magnetOrTorrentUrl, torrentOptions, torrent => {
+            console.log('Added ' + magnetOrTorrentUrl + '.');
+            if (oldTorrent) {
+                // Pause the old torrent
+                this.stopTorrent(oldTorrent);
+                // We use a fake renderer so we download correct pieces of the next file
+                if (options.delay)
+                    this.renderFileInFakeElement(torrent.files[0], options.delay);
+            }
+            // Render the video in a few seconds? (on resolution change for example, we wait some seconds of the new video resolution)
+            this.addTorrentDelay = setTimeout(() => {
+                console.log("IMHERENOW");
+                // We don't need the fake renderer anymore
+                this.destroyFakeRenderer();
+                const paused = this.player.paused();
+                this.flushVideoFile(previousVideoFile);
+                // Update progress bar (just for the UI), do not wait rendering
+                if (options.seek)
+                    this.player.currentTime(options.seek);
+                const renderVideoOptions = { autoplay: false, controls: true };
+                Object(_video_renderer__WEBPACK_IMPORTED_MODULE_2__["renderVideo"])(torrent.files[0], this.playerElement, renderVideoOptions, (err, renderer) => {
+                    this.renderer = renderer;
+                    if (err)
+                        return this.fallbackToHttp(options, done);
+                    return this.tryToPlay(err => {
+                        if (err)
+                            return done(err);
+                        if (options.seek)
+                            this.seek(options.seek);
+                        if (options.forcePlay === false && paused === true)
+                            this.player.pause();
+                        return done();
+                    });
+                });
+            }, options.delay || 0);
+        });
+        this.torrent.on('error', (err) => console.error(err));
+        this.torrent.on('warning', (err) => {
+            // We don't support HTTP tracker but we don't care -> we use the web socket tracker
+            if (err.message.indexOf('Unsupported tracker protocol') !== -1)
+                return;
+            // Users don't care about issues with WebRTC, but developers do so log it in the console
+            if (err.message.indexOf('Ice connection failed') !== -1) {
+                console.log(err);
+                return;
+            }
+            // Magnet hash is not up to date with the torrent file, add directly the torrent file
+            if (err.message.indexOf('incorrect info hash') !== -1) {
+                console.error('Incorrect info hash detected, falling back to torrent file.');
+                const newOptions = { forcePlay: true, seek: options.seek };
+                return this.addTorrent(this.torrent['xs'], previousVideoFile, newOptions, done);
+            }
+            // Remote instance is down
+            if (err.message.indexOf('from xs param') !== -1) {
+                this.handleError(err);
+            }
+            console.warn(err);
+        });
+    }
+    tryToPlay(done) {
+        if (!done)
+            done = function () { };
+        const playPromise = this.player.play();
+        if (playPromise !== undefined) {
+            return playPromise.then(() => done())
+                .catch((err) => {
+                if (err.message.indexOf('The play() request was interrupted by a call to pause()') !== -1) {
+                    return;
+                }
+                console.error(err);
+                this.player.pause();
+                this.player.posterImage.show();
+                this.player.removeClass('vjs-has-autoplay');
+                this.player.removeClass('vjs-has-big-play-button-clicked');
+                this.player.removeClass('vjs-playing-audio-only-content');
+                return done();
+            });
+        }
+        return done();
+    }
+    seek(time) {
+        this.player.currentTime(time);
+        this.player.handleTechSeeked_();
+    }
+    getAppropriateFile(averageDownloadSpeed) {
+        if (this.videoFiles === undefined)
+            return undefined;
+        const files = this.videoFiles.filter(f => f.resolution.id !== 0);
+        if (files.length === 0)
+            return undefined;
+        if (files.length === 1)
+            return files[0];
+        // Don't change the torrent if the player ended
+        if (this.torrent && this.torrent.progress === 1 && this.player.ended())
+            return this.currentVideoFile;
+        if (!averageDownloadSpeed)
+            averageDownloadSpeed = this.getAndSaveActualDownloadSpeed();
+        // Limit resolution according to player height
+        const playerHeight = this.playerElement.offsetHeight;
+        // We take the first resolution just above the player height
+        // Example: player height is 530px, we want the 720p file instead of 480p
+        let maxResolution = files[0].resolution.id;
+        for (let i = files.length - 1; i >= 0; i--) {
+            const resolutionId = files[i].resolution.id;
+            if (resolutionId !== 0 && resolutionId >= playerHeight) {
+                maxResolution = resolutionId;
+                break;
+            }
+        }
+        // Filter videos we can play according to our screen resolution and bandwidth
+        const filteredFiles = files.filter(f => f.resolution.id <= maxResolution)
+            .filter(f => {
+            const fileBitrate = (f.size / this.videoDuration);
+            let threshold = fileBitrate;
+            // If this is for a higher resolution or an initial load: add a margin
+            if (!this.currentVideoFile || f.resolution.id > this.currentVideoFile.resolution.id) {
+                threshold += ((fileBitrate * this.CONSTANTS.AUTO_QUALITY_THRESHOLD_PERCENT) / 100);
+            }
+            return averageDownloadSpeed > threshold;
+        });
+        // If the download speed is too bad, return the lowest resolution we have
+        if (filteredFiles.length === 0)
+            return Object(_utils__WEBPACK_IMPORTED_MODULE_3__["videoFileMinByResolution"])(files);
+        return Object(_utils__WEBPACK_IMPORTED_MODULE_3__["videoFileMaxByResolution"])(filteredFiles);
+    }
+    getAndSaveActualDownloadSpeed() {
+        const start = Math.max(this.downloadSpeeds.length - this.CONSTANTS.BANDWIDTH_AVERAGE_NUMBER_OF_VALUES, 0);
+        const lastDownloadSpeeds = this.downloadSpeeds.slice(start, this.downloadSpeeds.length);
+        if (lastDownloadSpeeds.length === 0)
+            return -1;
+        const sum = lastDownloadSpeeds.reduce((a, b) => a + b);
+        const averageBandwidth = Math.round(sum / lastDownloadSpeeds.length);
+        // Save the average bandwidth for future use
+        Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_5__["saveAverageBandwidth"])(averageBandwidth);
+        return averageBandwidth;
+    }
+    initializePlayer() {
+        this.buildQualities();
+        if (this.autoplay) {
+            this.player.posterImage.hide();
+            return this.updateVideoFile(undefined, { forcePlay: true, seek: this.startTime });
+        }
+        // Proxy first play
+        const oldPlay = this.player.play.bind(this.player);
+        this.player.play = () => {
+            this.player.addClass('vjs-has-big-play-button-clicked');
+            this.player.play = oldPlay;
+            this.updateVideoFile(undefined, { forcePlay: true, seek: this.startTime });
+        };
+    }
+    runAutoQualityScheduler() {
+        this.autoQualityInterval = setInterval(() => {
+            console.log("ASD");
+            // Not initialized or in HTTP fallback
+            if (this.torrent === undefined || this.torrent === null)
+                return;
+            if (this.autoResolution === false)
+                return;
+            if (this.isAutoResolutionObservation === true)
+                return;
+            const file = this.getAppropriateFile();
+            let changeResolution = false;
+            let changeResolutionDelay = 0;
+            // Lower resolution
+            if (this.isPlayerWaiting() && file.resolution.id < this.currentVideoFile.resolution.id) {
+                console.log('Downgrading automatically the resolution to: %s', file.resolution.label);
+                changeResolution = true;
+            }
+            else if (file.resolution.id > this.currentVideoFile.resolution.id) { // Higher resolution
+                console.log('Upgrading automatically the resolution to: %s', file.resolution.label);
+                changeResolution = true;
+                changeResolutionDelay = this.CONSTANTS.AUTO_QUALITY_HIGHER_RESOLUTION_DELAY;
+            }
+            if (changeResolution === true) {
+                this.updateResolution(file.resolution.id, changeResolutionDelay);
+                // Wait some seconds in observation of our new resolution
+                this.isAutoResolutionObservation = true;
+                this.qualityObservationTimer = setTimeout(() => {
+                    this.isAutoResolutionObservation = false;
+                }, this.CONSTANTS.AUTO_QUALITY_OBSERVATION_TIME);
+            }
+        }, this.CONSTANTS.AUTO_QUALITY_SCHEDULER);
+    }
+    isPlayerWaiting() {
+        return this.player && this.player.hasClass('vjs-waiting');
+    }
+    runTorrentInfoScheduler() {
+        this.torrentInfoInterval = setInterval(() => {
+            console.log("INININ");
+            // Not initialized yet
+            if (this.torrent === undefined)
+                return;
+            // Http fallback
+            if (this.torrent === null)
+                return this.player.trigger('p2pInfo', false);
+            // this.webtorrent.downloadSpeed because we need to take into account the potential old torrent too
+            if (this.webtorrent.downloadSpeed !== 0)
+                this.downloadSpeeds.push(this.webtorrent.downloadSpeed);
+            return this.player.trigger('p2pInfo', {
+                source: 'webtorrent',
+                http: {
+                    downloadSpeed: 0,
+                    uploadSpeed: 0,
+                    downloaded: 0,
+                    uploaded: 0
+                },
+                p2p: {
+                    downloadSpeed: this.torrent.downloadSpeed,
+                    numPeers: this.torrent.numPeers,
+                    uploadSpeed: this.torrent.uploadSpeed,
+                    downloaded: this.torrent.downloaded,
+                    uploaded: this.torrent.uploaded
+                }
+            });
+        }, this.CONSTANTS.INFO_SCHEDULER);
+    }
+    fallbackToHttp(options, done) {
+        console.log("IMHERE");
+        const paused = this.player.paused();
+        this.disableAutoResolution(true);
+        this.flushVideoFile(this.currentVideoFile, true);
+        this.torrent = null;
+        // Enable error display now this is our last fallback
+        this.player.one('error', () => this.enableErrorDisplay());
+        const httpUrl = this.currentVideoFile.fileUrl;
+        this.player.src = this.savePlayerSrcFunction;
+        this.player.src(httpUrl);
+        this.changeQuality();
+        // We changed the source, so reinit captions
+        this.player.trigger('sourcechange');
+        return this.tryToPlay(err => {
+            if (err && done)
+                return done(err);
+            if (options.seek)
+                this.seek(options.seek);
+            if (options.forcePlay === false && paused === true)
+                this.player.pause();
+            if (done)
+                return done();
+        });
+    }
+    handleError(err) {
+        return this.player.trigger('customError', { err });
+    }
+    enableErrorDisplay() {
+        this.player.addClass('vjs-error-display-enabled');
+    }
+    disableErrorDisplay() {
+        this.player.removeClass('vjs-error-display-enabled');
+    }
+    pickAverageVideoFile() {
+        if (this.videoFiles.length === 1)
+            return this.videoFiles[0];
+        return this.videoFiles[Math.floor(this.videoFiles.length / 2)];
+    }
+    stopTorrent(torrent) {
+        torrent.pause();
+        // Pause does not remove actual peers (in particular the webseed peer)
+        torrent.removePeer(torrent['ws']);
+    }
+    renderFileInFakeElement(file, delay) {
+        this.destroyingFakeRenderer = false;
+        const fakeVideoElem = document.createElement('video');
+        Object(_video_renderer__WEBPACK_IMPORTED_MODULE_2__["renderVideo"])(file, fakeVideoElem, { autoplay: false, controls: false }, (err, renderer) => {
+            this.fakeRenderer = renderer;
+            // The renderer returns an error when we destroy it, so skip them
+            if (this.destroyingFakeRenderer === false && err) {
+                console.error('Cannot render new torrent in fake video element.', err);
+            }
+            // Load the future file at the correct time (in delay MS - 2 seconds)
+            fakeVideoElem.currentTime = this.player.currentTime() + (delay - 2000);
+        });
+    }
+    destroyFakeRenderer() {
+        if (this.fakeRenderer) {
+            this.destroyingFakeRenderer = true;
+            if (this.fakeRenderer.destroy) {
+                try {
+                    this.fakeRenderer.destroy();
+                }
+                catch (err) {
+                    console.log('Cannot destroy correctly fake renderer.', err);
+                }
+            }
+            this.fakeRenderer = undefined;
+        }
+    }
+    buildQualities() {
+        const qualityLevelsPayload = [];
+        for (const file of this.videoFiles) {
+            const representation = {
+                id: file.resolution.id,
+                label: this.buildQualityLabel(file),
+                height: file.resolution.id,
+                _enabled: true
+            };
+            this.player.qualityLevels().addQualityLevel(representation);
+            qualityLevelsPayload.push({
+                id: representation.id,
+                label: representation.label,
+                selected: false
+            });
+        }
+        const payload = {
+            qualitySwitchCallback: (d) => this.qualitySwitchCallback(d),
+            qualityData: {
+                video: qualityLevelsPayload
+            }
+        };
+        this.player.tech(true).trigger('loadedqualitydata', payload);
+    }
+    buildQualityLabel(file) {
+        let label = file.resolution.label;
+        if (file.fps && file.fps >= 50) {
+            label += file.fps;
+        }
+        return label;
+    }
+    qualitySwitchCallback(id) {
+        if (id === -1) {
+            if (this.autoResolutionPossible === true)
+                this.enableAutoResolution();
+            return;
+        }
+        this.disableAutoResolution();
+        this.updateResolution(id);
+    }
+    changeQuality() {
+        const resolutionId = this.currentVideoFile.resolution.id;
+        const qualityLevels = this.player.qualityLevels();
+        if (resolutionId === -1) {
+            qualityLevels.selectedIndex = -1;
+            return;
+        }
+        for (let i = 0; i < qualityLevels.length; i++) {
+            const q = qualityLevels[i];
+            if (q.height === resolutionId)
+                qualityLevels.selectedIndex_ = i;
+        }
+    }
+}
+video_js__WEBPACK_IMPORTED_MODULE_0___default.a.registerPlugin('webtorrent', WebTorrentPlugin);
+
+
+
+/***/ }),
+
+/***/ 10:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 11:
+/*!*****************************!*\
+  !*** ./get-files (ignored) ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 12:
+/*!***************************************!*\
+  !*** bittorrent-dht/client (ignored) ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 13:
+/*!*****************************!*\
+  !*** load-ip-set (ignored) ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 14:
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 15:
+/*!*************************************!*\
+  !*** decompress-response (ignored) ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 16:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 17:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 18:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 19:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 2:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 20:
+/*!*********************************!*\
+  !*** ./lib/conn-pool (ignored) ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 21:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 22:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 23:
+/*!***************************************!*\
+  !*** bittorrent-dht/client (ignored) ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 24:
+/*!*******************************!*\
+  !*** ./common-node (ignored) ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 25:
+/*!*******************************************!*\
+  !*** ./lib/client/http-tracker (ignored) ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 26:
+/*!******************************************!*\
+  !*** ./lib/client/udp-tracker (ignored) ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 27:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 28:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 29:
+/*!********************!*\
+  !*** ws (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 3:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 30:
+/*!********************************!*\
+  !*** bittorrent-lsd (ignored) ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 31:
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 32:
+/*!*********************!*\
+  !*** net (ignored) ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 33:
+/*!********************!*\
+  !*** os (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 34:
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 35:
+/*!****************************!*\
+  !*** utp-native (ignored) ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 36:
+/*!************************!*\
+  !*** ut_pex (ignored) ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 37:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 38:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 39:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 4:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 40:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 41:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 42:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 43:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 44:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 45:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 46:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 47:
+/*!**************************!*\
+  !*** ./server (ignored) ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 5:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 6:
+/*!*************************!*\
+  !*** is-file (ignored) ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 7:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 8:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 9:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ })
+
+}]);
 //# sourceMappingURL=2.chunk.js.map

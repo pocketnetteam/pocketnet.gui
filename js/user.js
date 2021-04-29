@@ -189,6 +189,8 @@ User = function(app, p) {
 
 		app.platform.clear();
 
+		app.platform.matrixchat.destroy();
+
 		if (tokenDialog)
 			tokenDialog.destroy();
 

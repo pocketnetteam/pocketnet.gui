@@ -12,6 +12,10 @@ var Cache = function(p){
             time : 160,
             block : 0
         },
+
+        getuseraddress : {
+            time : 82000
+        },
        
         gettags : {
             time : 82000
@@ -54,6 +58,10 @@ var Cache = function(p){
         getmissedinfo: {
             time : 160,
             block : 0,
+        },
+
+        listVideos: {
+            time : 120,
         },
     }
 
