@@ -13,8 +13,17 @@ var Cache = function(p){
             block : 0
         },
 
+        getcomments : {
+            time : 160,
+            block : 0
+        },
+
         getuseraddress : {
             time : 82000
+        },
+
+        search: {
+            time : 6000
         },
        
         gettags : {
@@ -62,6 +71,10 @@ var Cache = function(p){
 
         listVideos: {
             time : 120,
+        },
+
+        estimatesmartfee: {
+            time : 1600
         },
     }
 
