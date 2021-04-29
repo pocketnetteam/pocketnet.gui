@@ -440,6 +440,7 @@ f.slow = function(_function, timer, time){
 }
 
 f.lastelements = function(arr, length, eq){
+
     if(!length) length = 100
     if(!eq) eq = 0
 
@@ -448,7 +449,6 @@ f.lastelements = function(arr, length, eq){
     if (d > eq){
         arr.splice(0, d)
     }
-
     return arr
 }
 
@@ -471,6 +471,81 @@ f.date = {
 
         return d
     }
+}
+
+f.getPkoinPrice = function(array, arrkey) {
+    var response_keys = Object.keys(array)
+
+    var pkoin_pairs = response_keys.filter(item => {
+        return item.includes('PKOIN_') && !item.includes('_USDT') && !item.includes('_BTC')
+    })
+
+    var btc_usd_price = array['BTC_USDT'] ? array['BTC_USDT'][arrkey] : 0
+
+    var pkoin_usd_price = array['PKOIN_USDT'] ? array['PKOIN_USDT'][arrkey] : 0
+    var pkoin_btc_price = array['PKOIN_BTC'] ? array['PKOIN_BTC'][arrkey] * btc_usd_price : 0
+
+    var highest_price = pkoin_usd_price > pkoin_btc_price ? pkoin_usd_price : pkoin_btc_price
+
+    //Берем пары с PKOIN, переводим цену за них из других валют в доллары
+    if(pkoin_pairs) {
+        pkoin_pairs.forEach(item => {
+            var currency = item.split('_')[1]
+            var pair = array[item][arrkey]  // наивысшая цена в паре валют
+            var price
+
+            if (array[currency + '_USDT']) {
+                price = array[currency + '_USDT'][arrkey] * pair
+
+            } else if(array[currency + '_BTC']) {
+                price = array[currency + '_BTC'] * btc_price * pair
+
+            } else {
+                price = 0
+            }
+             
+            if(price) highest_price = highest_price < price ? price : highest_price
+        })
+    }
+
+    var d = array
+    var slice = {
+        prices : {},
+        date : f.now()
+    }
+
+
+    _.each(d, function(pair, i){
+
+        if(i.indexOf("PKOIN_") > -1){
+
+            var currency = i.split("_")[1]
+
+            slice.prices[currency] = {
+                currency : currency,
+                data : pair
+            }
+        }
+
+    })
+    
+    //делаем объект для USD на основе USDT
+    var usd = _.clone(array['PKOIN_USDT'])
+
+    if (typeof highest_price !== Number) {
+        highest_price = parseFloat(highest_price, 10).toFixed(2)
+    } 
+    // console.log('highest_price', highest_price)
+    usd[arrkey] = highest_price
+
+    slice.prices['USD'] = {
+        currency : 'USD',
+        data : usd
+    }
+
+    if(!_.isEmpty(slice.prices)) return Promise.resolve(slice)
+
+    return Promise.reject('notfound')
 }
 
 module.exports = f

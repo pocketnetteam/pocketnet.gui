@@ -1,5 +1,6 @@
 
 const axios = require('axios');
+const { zip } = require('underscore');
 var f = require('./functions');
 
 var Exchanges = function(){
@@ -9,104 +10,146 @@ var Exchanges = function(){
         prices : {}
     }
 
+    // {
+    //     'mercatox': [
+    //         {
+    //             prices: { BTC: {}, USDT: {}, USD: {}},
+    //             date: ''
+    //         },
+    //         {
+    //             prices: { BTC: {}, USDT: {}, USD: {}},
+    //             date: ''
+    //         }
+    //     ],
+    //
+    //     'bilaxy': [
+    //         {
+    //             prices: { USDT: {}, USD: {} },
+    //             date: ''
+    //         },
+    //         {
+    //             prices: { USDT: {}, USD: {} },
+    //             date: ''
+    //         },
+    //     ]
+    // }
+
+    var keys = {
+        'mercatox' : 'last_price',
+        'bilaxy' : 'close'
+    }
+
     var apis = {
-        'mercatoxPrices' : 'https://mercatox.com/api/public/v1/ticker'
+        'mercatoxPrices' : 'https://mercatox.com/api/public/v1/ticker',
+        'bilaxy' : 'https://newapi.bilaxy.com/v1/ticker/24hr'
     }
 
     var followInterval = null
 
     self.api = {
         price : {
-            mercatox : function(){
-                return axios.get(apis.mercatoxPrices).then(function(response) {
-                    //ключи всех пар валют в объекте ответа и все, где упомянут PKOIN
-                    var response_keys = Object.keys(response.data)
+            bilaxy : function(){
+                return axios.get(apis.bilaxy).then(function(response) {
 
-                    var pkoin_pairs = response_keys.filter(item => {
-                        item.includes('PKOIN_') && !item.includes('_USDT') && !item.includes('_BTC')
-                    })
+                    return f.getPkoinPrice(response.data, 'close')
 
-                    var btc_usd_price = response.data['BTC_USDT'].last_price
-
-                    var pkoin_usd_price = response.data['PKOIN_USDT'].last_price
-                    var pkoin_btc_price = response.data['PKOIN_BTC'].last_price * btc_usd_price
-
-                    var highest_price = pkoin_usd_price > pkoin_btc_price ? pkoin_usd_price : pkoin_btc_price
-
-                    //Берем пары с PKOIN, переводим цену за них из других валют в доллары
-                    if(pkoin_pairs) {
-                        pkoin_pairs.forEach(item => {
-                            var currency = item.split('_')[1]
-                            var pair = response.data[item].last_price  // наивысшая цена в паре валют
-                            var price
-    
-                            if (response.data[currency + '_USDT']) price = response.data[currency + '_USDT'].last_price * pair
-                            else if (response.data[currency + '_BTC']) price = response.data[currency + '_BTC'].last_price * btc_price * pair
-                            
-                            if(price) highest_price = highest_price < price ? price : highest_price
-                        })
-                    }
-
-                    var d = response.data
-                    var slice = {
-                        prices : {},
-                        date : f.now()
-                    }
-             
-
-                    _.each(d, function(pair, i){
-
-                        if(i.indexOf("PKOIN_") > -1){
-
-                            var currency = i.split("_")[1]
-
-
-
-                            slice.prices[currency] = {
-                                currency : currency,
-                                data : pair
-                            }
-                        }
-
-                    })
-                    
-                    //делаем объект для USD на основе USDT
-                    var usd = _.clone(response.data['PKOIN_USDT'])
-
-                    if (typeof highest_price !== Number) {
-                        highest_price = parseFloat(highest_price, 10).toFixed(2)
-                    } 
-                    
-                    usd.last_price = highest_price
-
-                    slice.prices['USD'] = {
-                        currency : 'USD',
-                        data : usd
-                    }
-        
-                    if(!_.isEmpty(slice.prices)) return Promise.resolve(slice)
-        
-                    return Promise.reject('notfound')
                 }).catch(e => {
+
+                    console.log("ERROR", e)
 
                     return Promise.reject('notfound')
                 })
+            },
 
+            mercatox : function(){
+                return axios.get(apis.mercatoxPrices).then(function(response) {
+
+                    return f.getPkoinPrice(response.data, 'last_price')
                 
+                }).catch(e => {
+
+                    console.log("ERROR", e)
+
+                    return Promise.reject('notfound')
+                })
             }
         }
        
     }
 
+    self.getAveragePrice = function(market, prices, key) {
+        if(history.prices[market].length === 0) return
+
+        const price_keys = Object.keys(prices.prices)
+
+        const price_history = history.prices[market]
+        const history_length = history.prices[market].length
+
+        let first_price
+        if(price_history[history_length - 1]) {
+            first_price = price_history[history_length - 1]?.prices
+        }
+
+        let second_price
+        if(price_history[history_length - 2]) {
+            second_price = price_history[history_length - 2]?.prices
+        }
+
+        price_keys.forEach(item => {
+            let current_price_value = parseFloat(prices.prices[item].data[key])
+            let first_price_value = parseFloat(first_price[item].data[key])
+
+            let second_price_value
+            if(second_price) {
+                second_price_value = parseFloat(second_price[item].data[key])
+            }
+
+            first_price_value = first_price_value ? first_price_value : current_price_value
+            second_price_value = second_price_value ? second_price_value : current_price_value
+            
+            prices.prices[item].data[key] = ((current_price_value + first_price_value + second_price_value) / 3)
+
+        })
+
+        return prices
+    }
+
+    self.getHighestPrice = function() {
+        const markets = Object.keys(keys)
+        let currencies
+        let currencies_length
+        let prices = {}
+
+        markets.forEach(item => {
+            currencies_length = history.prices[item].length
+            currencies = Object.keys(history.prices[item][currencies_length - 1])
+            prices[item] =  history.prices[item][currencies_length - 1].data
+        })
+
+        
+    },
+
     self.history = {
         prices : function(){
             var promises = _.map(self.api.price, function(r, i){
-
                 return r().then(slice => {
+                    if(!slice) return Promise.resolve()
+
+                    console.log('!!!', r)
 
                     if(!history.prices[i]) history.prices[i] = []
 
+                    // let new_slice = self.getAveragePrice(i, slice, keys[i])
+
+                    // if(!new_slice) {
+                    //     history.prices[i].push(slice)
+                    // } else {
+                    //     history.prices[i].push(new_slice)
+                    // }
+
                     history.prices[i].push(slice)
+                    
+                    console.log('HISTORY', slice.prices)
 
                     history.prices[i] = f.lastelements(history.prices[i], 500)
 
@@ -137,7 +180,7 @@ var Exchanges = function(){
         if(!followInterval){
             followInterval = setInterval(function(){
                 self.history.prices()
-            }, 160000)
+            }, 60000)
         }
 
         return Promise.resolve()
