@@ -1248,10 +1248,10 @@ var comments = (function(){
 
 							_p.el.find('.emojionearea-editor').focus()
 
-							// _p.el.addClass('active')
+							 _p.el.addClass('active')
 
 							// If we are on mobile, scroll to the comment section
-							if (isMobile()) {
+							/*if (isMobile()) {
 								var offsetTop = _p.el.offset().top - 65
 								offsetTop = (offsetTop < 0) ? 0 : offsetTop
 								window.scrollTo({
@@ -1259,7 +1259,7 @@ var comments = (function(){
 									top: offsetTop,
 									behavior: 'smooth'
 								})
-							}
+							}*/
 
 							ed.init = false;
 						}
