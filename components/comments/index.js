@@ -1248,8 +1248,18 @@ var comments = (function(){
 
 							_p.el.find('.emojionearea-editor').focus()
 
-							_p.el.addClass('active')	
-							
+							// _p.el.addClass('active')
+
+							// If we are on mobile, scroll to the comment section
+							if (isMobile()) {
+								var offsetTop = _p.el.offset().top - 65
+								offsetTop = (offsetTop < 0) ? 0 : offsetTop
+								window.scrollTo({
+									left: 0,
+									top: offsetTop,
+									behavior: 'smooth'
+								})
+							}
 
 							ed.init = false;
 						}
@@ -1282,7 +1292,18 @@ var comments = (function(){
 			_p.el.find('.emojionearea-editor').on('focus', function(){
 				actions.process(p.id || '0')	
 
-				_p.el.addClass('active')
+				// _p.el.addClass('active')
+				
+				// If we are on mobile, scroll to the comment section
+				if (isMobile()) {
+					var offsetTop = _p.el.offset().top - 65
+					offsetTop = (offsetTop < 0) ? 0 : offsetTop
+					window.scrollTo({
+						left: 0,
+						top: offsetTop,
+						behavior: 'smooth'
+					})
+				}
 			
 			})
 
