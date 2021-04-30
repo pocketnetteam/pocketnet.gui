@@ -39,11 +39,24 @@
 											</div>
 										</div>
 
+
+										<% if(!app.platform.videoenabled) {%>
+
 										<div class="pcenterCell">
 											<div class="pcenterLabel " r="sub">
 												<a href="index?r=sub"  handler="true"><%=e('e13137')%></a>
 											</div>
 										</div>
+
+										<% } %>
+										
+										<% if(app.platform.videoenabled) {%>
+											<div class="pcenterCell">
+												<div class="pcenterLabel " r="video">
+													<a href="index?video=1"  handler="true"><%=e('video')%></a>
+												</div>
+											</div>
+										<% } %>
 
 										<div class="pcenterCell">
 											<div class="pcenterLabel toppost " r="recommended">

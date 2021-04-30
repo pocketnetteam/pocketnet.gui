@@ -2143,7 +2143,8 @@ var lenta = (function(){
 					el : p.el || el.shares,
 					data : {
 						shares : shares || [],
-						index : p.index || 0
+						index : p.index || 0,
+						video : video
 					},
 					animation : false,
 

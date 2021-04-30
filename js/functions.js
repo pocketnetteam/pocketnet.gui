@@ -1636,7 +1636,6 @@
 	  };
 
 	  xhr.onerror = function(){
-	  	console.log("ERROR")
 	  }
 
 	  xhr.open('GET', url);
@@ -6946,20 +6945,6 @@
 						}
 						else{
 
-							/*console.log("YEEES", _direction, mainDirection.i, self.opposite(_direction, mainDirection.i))
-
-							if(self.opposite(_direction, mainDirection.i) && mainDirection.mintrueshold){
-
-								var d = nullbydirection(_d, mainDirection.i)
-
-								var dp = (d.x || d.y || 0);
-
-								if(Math.abs(dp) <= mainDirection.mintrueshold){
-									self.backup(mainDirection.i)	
-								}
-
-							}*/
-
 							mainDirection = null;
 						}
 
@@ -7620,7 +7605,6 @@
 				request(_d,
 			    function (_error, response, body) {
 
-					// console.log(url, _error)
 
 			    	if(_error)
 			    	{
@@ -8237,7 +8221,6 @@
 	        try {
 	            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
 	        } catch (ex) {
-	            console.warn("Copy to clipboard failed.", ex);
 	            return false;
 	        } finally {
 	            document.body.removeChild(textarea);
@@ -9997,7 +9980,6 @@
 			        id = `${test[9]}` //?${params}
 					host_name = test[4]
 
-					console.log(id, host_name)
 			    }
 			}
 			

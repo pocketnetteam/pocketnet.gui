@@ -437,8 +437,8 @@ var Testnode = function(node){
 
     self.scenarios = {
         pageload : function(){
-            var count = 140,
-                methodkeys = ['gethierarchicalstrip', 'search', 'gethotposts', 'gettags', 'getlastcomments']
+            var count = 200,
+                methodkeys = ['getlastcomments']
             
 
 

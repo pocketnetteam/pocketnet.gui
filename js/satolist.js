@@ -25,7 +25,8 @@ Platform = function (app, listofnodes) {
     self.currentBlock = 1000000;
     self.online = undefined;
     self.avblocktime = 45;
-    self.repost = true
+    self.repost = true;
+    self.videoenabled = false;
 
     var onlinetnterval;
     var unspentoptimizationInterval = null;
@@ -859,7 +860,6 @@ Platform = function (app, listofnodes) {
         else {
 
         }
-        // console.log('META', meta)
         return meta;
     }
 
@@ -2832,7 +2832,6 @@ Platform = function (app, listofnodes) {
                         storage = JSON.parse(local)
                     }
                     catch (e) {
-                        console.log("ERR", e)
                     }
                 }
 
@@ -3057,7 +3056,6 @@ Platform = function (app, listofnodes) {
                         storage = JSON.parse(local)
                     }
                     catch (e) {
-                        console.log("ERR", e)
                     }
                 }
 
@@ -3094,7 +3092,6 @@ Platform = function (app, listofnodes) {
 
                 var chaincode = new Buffer('00000000000000000000000000000000')
 
-                //console.log('experiment', p, self.app.user.private.value, self.app.user.key.value)
 
                 var k = self.app.user.keys()
 
@@ -3353,7 +3350,6 @@ Platform = function (app, listofnodes) {
                         articles = JSON.parse(local)
                     }
                     catch (e) {
-                        console.log("ERR", e)
                     }
                 }
 
@@ -6454,7 +6450,6 @@ Platform = function (app, listofnodes) {
 
                     var embed = bitcoin.payments.embed({ data: opreturnData });
 
-                    console.log('embed', embed, opreturnData)
 
                     outputs.push({
                         address: embed.output,
@@ -6960,7 +6955,6 @@ Platform = function (app, listofnodes) {
                     value : value
                 }
 
-                console.log('value', info)
 
                 self.sdk.activity.add('search', 'tags', info)
 
@@ -6998,7 +6992,6 @@ Platform = function (app, listofnodes) {
 
                         var error = self.sdk.activity.add(key, 'user', info)
 
-                        console.log("ERROR", error, info)
                     }
 
                 })
@@ -7030,7 +7023,6 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                console.log('key, type, info', key, type, info)
 
                 if(type == 'str' || type == 'tags'){
                     if(!info.value){
@@ -8448,7 +8440,9 @@ Platform = function (app, listofnodes) {
 
                 if (ao) address = ao.address
 
-                self.app.api.rpc('getlastcomments', ['7', '', self.app.localization.key]).then(d => {
+                self.app.api.rpc('getlastcomments', ['7', '', self.app.localization.key], {
+                    proxy : 'pocketnet.app:8899:8099'
+                }).then(d => {
 
                     d = _.filter(d, function (d) {
                         return !d.deleted
@@ -8657,320 +8651,6 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        comments2: {
-            storage: {},
-
-            sendclbks: {
-            },
-
-            find: function (txid, id, pid) {
-                var s = self.sdk.comments.storage;
-
-                var comments = deep(s, txid + '.' + (pid || '0')) || [];
-
-                var comment = _.find(comments, function (c) {
-                    return c.id == id
-                })
-
-                return comment
-            },
-
-            address: function (txid, id, pid) {
-
-                var comment = self.sdk.comments.find(txid, id, pid);
-
-                if (comment) return comment.address
-
-                return ''
-            },
-
-            users: function (comments, clbk) {
-                var addresses = _.map(comments, function (r) {
-                    return r.address
-                })
-
-                self.sdk.users.get(addresses, function () {
-                    if (clbk)
-                        clbk()
-                }, true)
-            },
-
-            info: function (ids, clbk) {
-                var s = self.sdk.comments.storage;
-                var i = self.sdk.comments.ini;
-
-                self.app.api.rpc('getcomments', ['', '', ids]).then(d => {
-
-                    var m = i(d);
-
-                    if (clbk)
-                        clbk(null, m)
-        
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(e)
-                    }
-                })
-
-                
-            },
-
-            checkSign: function (comment, signature, pubkey) {
-
-                var verify = false
-
-                return true
-
-                try {
-                    var keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(pubkey, 'hex'))
-
-                    var str = comment.serialize();
-
-                    var hash = Buffer.from(bitcoin.crypto.hash256(str), 'utf8')
-
-                    verify = keyPair.verify(hash, Buffer.from(signature, 'hex'));
-
-                    if (!verify) {
-                        //console.log(comment)
-                        //console.log(str, signature, pubkey)
-                    }
-                }
-
-                catch (e) {
-
-                }
-
-                return verify
-
-            },
-
-            toLastComment: function (comment) {
-
-                var lc = {
-                    address: comment.address,
-                    answerid: comment.answerid,
-                    parentid: comment.parentid,
-                    id: comment.id,
-                    children: comment.children || 0,
-                    postid: comment.txid,
-                    block: self.currentBlock,
-                    msg: JSON.stringify({
-                        m: comment.message,
-                        i: comment.images
-                    }),
-                    time: comment.time,
-                    timeUpd: comment.timeUpd,
-                    pubkey: comment.pubkey,
-                    signature: comment.signature
-                }
-
-                return lc;
-            },
-
-            ini: function (d) {
-
-
-                var c = _.map(d || [], function (data) {
-                    var comment = new pComment();
-
-                    comment.setTime(data.time, data.timeUpd)
-
-                    comment.txid = data.postid
-                    comment.children = data.children
-                    comment.address = data.address;
-                    comment.id = data.id
-
-                    comment.parentid = data.parentid
-                    comment.answerid = data.answerid
-
-                    comment.signature = data.signature
-                    comment.pubkey = data.pubkey
-
-                    var msg = {};
-
-                    try {
-
-                        msg = JSON.parse(data.msg)
-
-                    }
-                    catch (e) {
-                        msg = {
-                            m: msg
-                        }
-                    }
-
-                    
-
-                    comment._import(msg)
-
-                    comment.verify = self.sdk.comments.checkSign(comment, data.signature, data.pubkey)
-
-                    return comment
-                })
-
-                c = _.filter(c, function (comment) {
-                    if (comment.verify) return true
-                })
-
-                return c
-            },
-
-            get: function (txid, pid, clbk, ccha) {
-
-                var s = self.sdk.comments.storage;
-                var i = self.sdk.comments.ini;
-
-                s[txid] || (s[txid] = {})
-
-
-                /*if(!ccha && ((!pid && s[txid]['0']) || s[txid][pid])){
-
-                    if (clbk)
-                        clbk(s[txid][pid])
-
-                    return
-                }*/
-
-                self.app.api.rpc('getcomments', [txid, pid || '']).then(d => {
-
-                    var c = i(d)
-
-                    s[txid][pid || '0'] = c
-
-                    self.sdk.comments.users(c, function () {
-
-                        if (clbk)
-                            clbk(c)
-
-                    })
-        
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(e)
-                    }
-                })
-
-               
-            },
-
-            last: function (clbk) {
-
-                var ini = this.ini
-
-                self.app.api.rpc('getlastcomments', ['5', '', self.app.localization.key]).then(d => {
-
-                    if (clbk)
-                        clbk(ini(d))
-        
-                }).catch(e => {
-                    if (clbk)
-                        clbk([])
-                })
-
-               
-            },
-
-            send: function (txid, comment, pid, aid, clbk, editid, fid) {
-
-                var s = self.sdk.comments.storage;
-
-                var keyPair = self.app.user.keys();
-
-                //comment.message.v = 'tst'
-                //
-
-
-
-                var signature = keyPair.sign(Buffer.from(bitcoin.crypto.hash256(comment.serialize()), 'utf8'));
-
-                var id = editid || makeid();
-
-                var parameters = [
-                    id,
-                    txid,
-                    self.app.platform.sdk.address.pnet().address,
-                    keyPair.publicKey.toString('hex'),
-                    signature.toString('hex'),
-                    JSON.stringify(comment.export()),
-                    pid || '',
-                    aid || ''
-                ];
-
-                var verify = keyPair.verify(
-                    bitcoin.crypto.hash256(comment.serialize()),
-                    Buffer.from(signature.toString('hex'), 'hex')
-                );
-
-                self.app.api.rpc('sendcomment', parameters).then(d => {
-
-                    var temptime = self.currentTime()
-
-                    var alias = comment.alias(id, temptime, temptime, 0, self.app.platform.sdk.address.pnet().address);
-
-                    var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
-
-                    if (share && (!pid || pid == '0')) share.comments++
-
-                    alias.parentid = pid || ''
-                    alias.answerid = aid || ''
-
-                    alias.pubkey = parameters[3]
-                    alias.signature = parameters[4]
-
-                    s[txid] || (s[txid] = {})
-
-                    s[txid][pid || '0'] || (s[txid][pid || '0'] = [])
-
-                    var i = findIndex(s[txid][pid || '0'], function (c) {
-                        if (c.id == editid) return true;
-                    })
-
-                    if (!editid || i == -1) {
-                        s[txid][pid || '0'].push(alias)
-                    }
-                    else {
-
-                        alias.children = s[txid][pid || '0'][i].children
-
-                        s[txid][pid || '0'][i] = alias
-
-                    }
-
-
-
-                    alias.verify = true
-
-                    if (clbk)
-                        clbk(null, alias)
-
-                    _.each(self.sdk.comments.sendclbks, function (c) {
-                        c(null, alias, txid, pid, aid, editid, fid)
-                    })
-        
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(e)
-                    }
-
-                    _.each(self.sdk.comments.sendclbks, function (c) {
-                        c(e)
-                    })
-                })
-
-                /*self.app.ajax.rpc({
-                    method: 'sendcomment',
-                    parameters: parameters,
-                    success: function (d) {
-
-                        
-
-                    },
-                    fail: function (d, e) {
-                        
-                    }
-                })*/
-            }
-        },
 
         node: {
             storage: {
@@ -9218,7 +8898,6 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
-                        console.log(meta, e)
 
                         return e
                     },
@@ -9856,11 +9535,8 @@ Platform = function (app, listofnodes) {
                             var parameters = []
                             
                             parameters = ['30', period, (period * page) || '', self.app.localization.key]
-
-                            console.log("['30', period, (period * page) || '', self.app.localization.key]", ['30', period, (period * page) || '', self.app.localization.key])
                             
                             parameters = ['30', '259200', '', self.app.localization.key];
-                            //if (p.address) parameters.push("" /*p.address*/)
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
@@ -10119,13 +9795,13 @@ Platform = function (app, listofnodes) {
 
                             /////temp
 
-                            if (p.video){
+                            if (p.video && !self.videoenabled){
                                 p.tagsfilter = ['video']
                             }
 
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter/*, p.video ? 'video' : ''*/];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
 
                             s.getex(parameters, function (data, error) {
 
@@ -10138,7 +9814,6 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                                console.log('data.contents', data.contents)
                                 p.blocknumber = blocknumber
 
                                 if (shares) {
@@ -11632,7 +11307,7 @@ Platform = function (app, listofnodes) {
                             var optype = obj.typeop ? obj.typeop() : obj.type
                             var optstype = optype
 
-                            if (obj.optstype && obj.optstype()) optstype = obj.optstype()
+                            if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
 
                             var opreturnData = [Buffer.from(optype, 'utf8'), data];
 
@@ -11711,7 +11386,6 @@ Platform = function (app, listofnodes) {
                                 var hex = tx.toHex();
 
 
-                                console.log('tx', tx)
 
                                 if (p.pseudo) {
                                     var alias = obj.export(true);
@@ -15126,7 +14800,6 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.videos.types[type](links).then(r => {
 
-                        console.log("LINKS, ", links, type, r)
                         _.each(r, function(l){
                             s[l.link] = l
                         })
@@ -15163,7 +14836,6 @@ Platform = function (app, listofnodes) {
 
                 peertube : async function(links){
 
-                    console.log("links", links);
 
                     const linksInfo = await self.app.api.fetch('peertube/listVideos', {
                         ids: links.map(link => link.link),
@@ -16652,6 +16324,8 @@ Platform = function (app, listofnodes) {
 
                     var dif = platform.currentBlock - data.block
 
+                    console.log("dif", dif)
+
                     platform.currentBlock = data.block;
 
                     lost = data.block;
@@ -16672,7 +16346,7 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.user.subscribeRef()
 
-                    clbk()
+                    clbk(dif)
                 },
 
                 refs: {

@@ -5,6 +5,7 @@ var Cache = function(p){
 
     var storage = {}
     var waiting = {}
+    var smart = {}
 
 
     var ckeys = {
@@ -35,6 +36,11 @@ var Cache = function(p){
             block : 0
         },
         
+        /*txunspent: {
+            time : 60,
+            block : 0
+        },*/
+        
         getrawtransactionwithmessage: {
             time : 460,
             block : 0
@@ -47,7 +53,13 @@ var Cache = function(p){
         
         getuserprofile: {
             time : 560,
-            block : 0
+            block : 0,
+
+            /*smart : {
+                idin : '0',
+                idout : 'address',
+                type : 'collect'
+            }*/
         },
 
         getuserstate : {
@@ -119,6 +131,11 @@ var Cache = function(p){
     self.get = function(key, params){
         if (ckeys[key]){
 
+
+            if (ckeys[key].smart){
+                return self.getsmart(key, params)
+            }
+
             var k = f.hash(JSON.stringify(params))
 
             var sd = f.deep(storage, key + "." + k)
@@ -134,6 +151,16 @@ var Cache = function(p){
         }
     }
 
+    self.getsmart = function(key, params){
+
+        var c = ckeys[key]
+
+        var ids = _.map(f.deep(params, c.idin), (r)=>{return r})
+
+        if(!smart[key]) smart[key] = {}
+
+        _.each()
+    }
 
     self.wait = function(key, params, clbk){
 
@@ -190,7 +217,6 @@ var Cache = function(p){
 
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){
-
 
                 if (k.block < block.height)
                     storage[key] = {}

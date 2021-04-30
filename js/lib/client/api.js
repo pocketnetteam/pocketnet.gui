@@ -517,7 +517,7 @@ var Api = function(app){
 
     var getproxy = function(key){
 
-        var proxy = getproxyas()
+        var proxy = getproxyas(key)
 
         return proxy ? Promise.resolve(proxy) : Promise.reject('proxy')
     }
@@ -713,7 +713,11 @@ var Api = function(app){
         if(!options) 
             options = {}
 
+            console.log('options.proxy', options.proxy)
+
         return getproxy(options.proxy).then(proxy => {
+
+            console.log('proxy', proxy, method, proxies)
 
             return proxy.rpc(method, parameters, options.rpc)
 
@@ -748,6 +752,8 @@ var Api = function(app){
         if(!options) 
             options = {}
 
+
+            
 
         return getproxy(options.proxy).then(proxy => {
 

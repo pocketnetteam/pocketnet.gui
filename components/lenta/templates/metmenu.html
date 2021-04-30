@@ -64,6 +64,8 @@ if(share){
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
 
+		console.log('share.time', share.time, (new Date()).addHours(-24), share.time > (new Date()).addHours(-24))
+
 		if (my && (!share.time || share.time > (new Date()).addHours(-24) )){
 			m.push('edit')
 		}

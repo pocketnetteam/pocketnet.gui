@@ -30,6 +30,9 @@
 					<% if(typeof preview != 'undefined' && preview) {
 						
 						var info = app.platform.sdk.videos.storage[url]
+
+
+						console.log('share', share)
 						
 						%>
 
@@ -42,11 +45,24 @@
 								</div>
 							<% } %>
 
-							<% if(info.data.views) {%>
-								<div class="viewsWrapper">
-									<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
-								</div>
-							<% } %>
+							<div class="statswrapper">
+								<% if(info.data.views) {%>
+									<div class="viewsWrapper">
+										<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
+									</div>
+								<% } %>
+	
+								<% if(share) {%>
+									<div class="starsRatingWrapper">
+										<i class="far fa-star"></i> <span><%-Number(share.score || '0').toFixed(1)%></span>
+									</div>
+									<div class="commentsCountWrapper">
+										<i class="far fa-comment"></i> <span><%-compressedNumber(share.comments || 0)%></span>
+									</div>
+								<% } %>
+							</div>
+
+							
 						</div>
 
 

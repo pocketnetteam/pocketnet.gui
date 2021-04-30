@@ -814,7 +814,7 @@
 					}
 				}
 
-				.viewsWrapper,
+				.statswrapper,
 
 				.durationWrapper{
 					position: absolute;
@@ -824,16 +824,21 @@
 					background: fade(@color-black, 0.5);
 					color : @color-gray-slight;
 					padding : 0.5 * @rhythm @rhythm;
-
+					text-shadow: 1px 1px 3px rgba(50, 50, 50, 1);
 					i,
 					span{
 						font-size: 0.8em;
 					}
 				}
 
-				.viewsWrapper{
+				.statswrapper{
 					right: auto;
 					left : @rhythm;
+
+					>div{
+						float: left;
+						margin-right: @rhythm;
+					}
 				}
 			}
 			
@@ -1954,6 +1959,10 @@
 				margin-bottom: 0;
 				overflow : hidden;
 				border-radius: 3px;
+
+				&.hidden{
+					display: block!important;
+				}
 
 				.sharecaption{
 					color : @color-gray-mlight;

@@ -717,7 +717,7 @@ var Proxy = function (settings, manage, test) {
 
               parameters[1] = ''
 
-              //log = true
+              log = true
             }
 
             return new Promise((resolve, reject) => {
@@ -790,10 +790,6 @@ var Proxy = function (settings, manage, test) {
                   })
                   .then((data) => {
                     server.cache.set(method, parameters, data, node.height());
-
-                    if(log){
-                      console.log('cache.set', method, parameters)
-                    }
 
                     return Promise.resolve({
                       data: data,

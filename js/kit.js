@@ -1338,9 +1338,9 @@ Share = function(lang){
 		return share;
 	}
 
-	self.optstype = function(){
+	self.optstype = function(platform){
 
-		//if(self.itisvideo()) return 'video'
+		if(self.itisvideo() && platform && platform.videoenabled) return 'video'
 
 		return self.type	
 	}

@@ -4,6 +4,24 @@
 
     color : @color-gray-mlight;
 
+    .pocketcaption{
+        .transition(0.3s);
+        span{
+            margin-right: 0;
+            .transition(0.3s);
+        }
+
+        &:hover{
+
+            color : @color-bright;
+            
+            span{
+                
+                margin-right: 20px;
+            }
+        }
+    }
+
     .tcaptiontable{
         width : auto;
 
