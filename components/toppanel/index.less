@@ -18,6 +18,9 @@
 
 	.panelitems{
 		height: 100%;
+		display: flex !important;
+		justify-content: space-between;
+		align-items: center;
 
 		.panelitem{
 			width: 120px;
@@ -25,14 +28,18 @@
 			
 			line-height: 45px;
 			float: left;
-			margin-right : 2 * @rhythm;
+			// margin-right : 2 * @rhythm;
 			color : #6A6A6A;
 
 			&.right{
 				margin-right : 0;
-				margin-left : 2 * @rhythm;
+				// margin-left : 2 * @rhythm;
 				float: right;
 				text-align: right;
+			}
+
+			.vc_textInput.table {
+				line-height: 36px;
 			}
 		} 
 
