@@ -35,13 +35,13 @@ var Cache = function(p){
             time : 160,
             block : 0
         },
-        
-        /*txunspent: {
-            time : 60,
-            block : 0
-        },*/
-        
+       
         getrawtransactionwithmessage: {
+            time : 460,
+            block : 0
+        },
+
+        getrawtransaction: {
             time : 460,
             block : 0
         },

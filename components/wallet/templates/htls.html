@@ -1,0 +1,124 @@
+<div class="slideWrapper">
+
+	<div class="subcaptionWrapperTableCnt">
+		<div class="subcaptionWrapperTable table">
+
+			<div class="_stepback"></div>
+
+			<div class="subcaption">
+				<span><%=e('wsend').toUpperCase()%></span>
+			</div>
+
+			<div class="_subcaptionlevel">
+				<span></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="action">
+
+		<div class="row table">
+			<div class="source">
+				<div class="labelWrapper">
+					<%= d.parameters.source.name %>
+				</div>
+			</div>
+
+			<div class="changer">
+				
+			</div>
+
+			<div class="reciever workstation">
+				<div class="labelWrapper workstation">
+					HLTS CAPTION
+				</div>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="source">
+				
+				<div class="inputWrapper">
+					<%= d.parameters.source.input() %>
+				</div>
+			</div>
+
+			<div class="changer">
+				<div class="change">
+					<i class="fas fa-exchange-alt"></i>
+				</div>
+			</div>
+
+			<div class="reciever">
+				
+				<div class="labelWrapper mobiledevice abs">
+					HLTS CAPTION
+				</div>
+
+				<div class="inputWrapper">
+
+					<div class="htlsWrapper">
+							
+                    </div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="amount">
+				<div class="labelWrapper">
+					<%= d.parameters.amount.name %> <span class="required hidden">*<%=e('required')%></span>
+				</div>
+			</div>
+
+			<div class="changer">
+			
+			</div>
+
+			<div class="reciever">
+				<div class="labelWrapper workstation">
+				</div>
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="amount">
+				<div class="inputWrapper">
+					<%= d.parameters.amount.input() %>
+				</div>
+			</div>
+
+			<div class="changer">
+			
+			</div>
+
+			<div class="reciever">
+				
+			</div>
+		</div>
+
+		<div class="row table">
+			<div class="amount">
+			</div>
+
+			<div class="changer changerremove">
+			
+			</div>
+
+			<div class="sendcoins"> 
+				<button class="calculateFee"><i class="fas fa-chevron-circle-right"></i> <%=e('calcfeesandsend')%></button>
+			</div>
+		</div>
+
+
+		
+	</div>
+
+	<div class="actionbody fadeInByElementStep">
+			
+	</div>
+
+	<div class="_stepclose fadeInByElementStep"></div>
+
+</div>

@@ -50,11 +50,18 @@ var all = {
 		icon : '<i class="fas fa-user-slash"></i>',
 		text : e('blockuser'),
 		class : 'block'
+	},
+
+	htls : {
+		icon : '<i class="fas fa-user-slash"></i>',
+		text : 'htls',
+		class : 'htls'
 	}
 
 }
 
 m.push('share')
+
 
 if(share){
 	if(share.address && user.address.value){
@@ -64,8 +71,6 @@ if(share){
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
 
-		console.log('share.time', share.time, (new Date()).addHours(-24), share.time > (new Date()).addHours(-24))
-
 		if (my && (!share.time || share.time > (new Date()).addHours(-24) )){
 			m.push('edit')
 		}
@@ -73,6 +78,7 @@ if(share){
 		if(!my && me){
 
 			m.push('donation')
+			m.push('htls')
 
 			if(isMobile()){
 				if (!me.relation(share.address, 'subscribes')){

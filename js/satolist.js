@@ -1743,6 +1743,7 @@ Platform = function (app, listofnodes) {
                 clbk : clbk
             })
         },
+
         post: function (id, el, clbk, p) {
 
             if (!p) p = {}
@@ -1776,6 +1777,7 @@ Platform = function (app, listofnodes) {
             })
 
         },
+
         channel : function(id, el, clbk, p){
             self.sdk.users.get(id, function () {
 
@@ -1793,6 +1795,7 @@ Platform = function (app, listofnodes) {
 
             })
         },
+
         comment : function(id, el, clbk, p){
 
             app.nav.api.load({
@@ -1813,7 +1816,9 @@ Platform = function (app, listofnodes) {
 
                 clbk : clbk
             })
-        }
+        },
+
+        
     }
 
     self.ui = {
@@ -1925,6 +1930,39 @@ Platform = function (app, listofnodes) {
                 platfrom : self
             })*/
 
+        },
+
+        wallet : {
+            send : function(p, clbk, el){
+
+                if(!p) p = {}
+
+                var id = 'papiwalletsend'
+
+                globalpreloader(true, true)
+
+                p.action = 'send'
+                p.class = 'api'
+                p.api = true
+
+                app.nav.api.load({
+                    open : true,
+                    id : 'wallet',
+                    inWnd : el ? false : true,
+                    el : el ? el : null,
+                    eid : id,
+                    mid : id,
+                    animation : false,
+                    essenseData : p,
+                    clbk : function(e, p){
+
+                        globalpreloader(false)
+
+                        if(clbk) clbk(e, p)
+                    }
+                })
+                
+            }
         }
     }
 
@@ -2599,6 +2637,13 @@ Platform = function (app, listofnodes) {
                     }
                 )
             },
+
+            htls : function(id){
+                console.log(' self.app.platform.ui.wallet.sen')
+                self.app.platform.ui.wallet.send({id : id}, function(){
+					
+				})
+            }
         },
 
         metmenu: function (_el, id, actions) {
@@ -2639,6 +2684,13 @@ Platform = function (app, listofnodes) {
                         return template(d);
 
                     }, function (el) {
+
+                        el.find('.htls').on('click', function () {
+
+                            actions.htls(id)
+
+                            _el.tooltipster('hide')
+                        })
 
                         el.find('.socialshare').on('click', function () {
 
@@ -6217,6 +6269,56 @@ Platform = function (app, listofnodes) {
         },
 
         wallet: {
+
+            txbaseFeesMeta: function (address, outputs, keyPair, feerate, create, clbk) {
+                self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
+
+                    if (err) {
+                        if (clbk)
+                            clbk(err)
+                    }
+
+                    else {
+                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
+                        var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
+
+                        create([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
+
+
+                            if (err) {
+                                if (clbk)
+                                    clbk(err)
+                            }
+                            else {
+                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
+
+                                self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
+
+                                    if (err) {
+                                        if (clbk)
+                                            clbk(err)
+                                    }
+
+                                    else {
+                                        var ids = _.map(inputs, function (i) {
+                                            return {
+                                                txid: i.txId,
+                                                vout: i.vout
+                                            }
+                                        })
+
+                                        self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+                                        if (clbk)
+                                            clbk(null, d, inputs, _outputs)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                }, true)
+            },
+
             txbase: function (adresses, outputs, fee, feeMode, clbk, update) {
 
 
@@ -6395,7 +6497,13 @@ Platform = function (app, listofnodes) {
             },  
 
             txbaseFees: function (address, outputs, keyPair, feerate, clbk) {
-                self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
+
+                self.sdk.wallet.txbaseFeesMeta(
+                    address, outputs, keyPair, feerate, 
+                    self.app.platform.sdk.node.transactions.create.wallet, 
+                clbk)
+
+               /* self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
 
                     if (err) {
                         if (clbk)
@@ -6439,7 +6547,7 @@ Platform = function (app, listofnodes) {
                             }
                         })
                     }
-                }, true)
+                }, true)*/
             },
 
 
@@ -9536,7 +9644,7 @@ Platform = function (app, listofnodes) {
                             
                             parameters = ['30', period, (period * page) || '', self.app.localization.key]
                             
-                            parameters = ['30', '259200', '', self.app.localization.key];
+                            //parameters = ['30', '259200', '', self.app.localization.key];
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
@@ -11027,6 +11135,56 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
+                hlts : {
+                    plcreate : function(id, clbk, inputs){
+
+                        var amount = 0
+                        var lock = 0
+                        
+                        self.sdk.node.shares.getbyid(id, function() {
+                            var item = self.app.platform.sdk.node.shares.storage.trx[id];
+
+                            if(!item) return clbk('item')
+
+                            amount = 10 //temp
+                            lock = 10
+
+                            var time = platform.currentBlock + lock
+
+                            var address = item.address
+
+                            var txb = self.sdk.node.transactions.hlts.create(inputs, id, address, amount, time)
+
+                            self.sdk.wallet.txbaseFeesMeta(
+                                address, outputs, keyPair, feerate, 
+                                function(){
+
+                                }, 
+                            clbk)
+
+                        })
+                    },
+                    create : function(inputs, id, address, amount, time){
+
+                        var keyPair = self.app.user.keys()
+                        var sender = self.sdk.address.pnetsimple(keyPair.publicKey).address;
+                        var privatekey = keyPair.privateKey
+
+
+                        var payment = self.htls.createPayment(privatekey.toString('hex'), id, time, reciever, sender)
+
+                        var outputs = [{ address : payment.address, amount }]
+
+                        var txb = self.sdk.node.transactions.create.wallet(inputs, outputs, null, true)
+
+                        _.each(txb.outputs, function(out){
+                            out.script = payment.redeem.output
+                        })
+
+                        return txb
+                    }
+                },
+
                 create: {
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
@@ -11126,7 +11284,9 @@ Platform = function (app, listofnodes) {
                         }, deep(p, 'address.address'), p.update, telegram)
                     },
 
-                    wallet: function (inputs, ouputs, _kp) {
+                    
+
+                    wallet: function (inputs, ouputs, _kp, unfinalize) {
 
                         var keyPair = _kp || self.app.user.keys()
 
@@ -11140,10 +11300,7 @@ Platform = function (app, listofnodes) {
 
 
                             if (i.address.indexOf("P") == 0) {
-
                                 txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
-
-                               
                             }
 
                             else {
@@ -11171,19 +11328,13 @@ Platform = function (app, listofnodes) {
                             txb.addOutput(o.address, Number((k * o.amount).toFixed(0)));
                         })
 
-                        //var address = self.sdk.address.pnet(keyPair.publicKey)
-
                         _.each(inputs, function (i, inputindex) {
 
-
                             if (i.address.indexOf("P") == 0) {
-
                                 txb.sign(inputindex, keyPair);
-
                             }
 
                             else {
-
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 
                                 if (index > -1) {
@@ -11202,8 +11353,6 @@ Platform = function (app, listofnodes) {
                                         witnessValue : Number((k * i.amount).toFixed(0))
                                     });
 
-
-
                                 }
 
                                 else {
@@ -11213,9 +11362,7 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
-
-                      
-                        
+                        if(unfinalize) return txb
 
                         var tx = txb.build()
 
@@ -18955,6 +19102,8 @@ Platform = function (app, listofnodes) {
                     var addresses = self.testchataddresses;
 
                     if (addresses.indexOf(a) > -1) {
+
+                        return
 
                         if (!isMobile()){
 

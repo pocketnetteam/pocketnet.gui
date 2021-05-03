@@ -2218,7 +2218,13 @@ input[type=radio].radio:checked + label {
         padding: 2 * @rhythm;
         overflow-y: scroll; 
         padding-bottom: 0;
+
+        &::-webkit-scrollbar{
+            width: 0!important
+        }
     }
+
+   
 
     &.noheader {
         .wndcontent{

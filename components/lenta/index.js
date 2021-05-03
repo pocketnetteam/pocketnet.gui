@@ -635,6 +635,12 @@ var lenta = (function(){
 				}
 			},
 
+			htls : function(id){
+				self.app.platform.ui.wallet.send({htls : id}, function(){
+					
+				})
+			},
+
 			donate : function(id, clbk){
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
@@ -1617,17 +1623,17 @@ var lenta = (function(){
 			},
 
 			donate : function(){
-				/*if (essenseData.authAction) {
-
-					essenseData.authAction('donate')
-
-					return
-
-				}*/
 
 				var shareId = $(this).closest('.share').attr('id');
 
 					actions.donate(shareId)
+			},
+
+			htls : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+					actions.htls(shareId)
 			},
 
 			discussion : function(){
@@ -3000,7 +3006,7 @@ var lenta = (function(){
 			el.c.on('click', '.aunsubscribe', events.aunsubscribe)
 			el.c.on('click', '.notificationturn', events.subscribePrivate)
 			
-			
+
 
 			el.c.on('click', '.donate', events.donate)
 			el.c.on('click', '.sharesocial', events.sharesocial)
