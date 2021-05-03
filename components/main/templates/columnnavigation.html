@@ -1,0 +1,31 @@
+<% 
+
+var currentindex = _.findIndex(mobilemodes, function(m){
+    console.log('m.mode == mobilemode', m.mode == mobilemode, m.mode, mobilemode)
+    return m.mode == mobilemode
+})
+
+console.log('currentindex', currentindex, mobilemode, mobilemodes)
+
+%> 
+
+<% _.each(mobilemodes, function(mobilemode, i){ %>
+
+        <%
+
+        if(i == currentindex - 1 || i == currentindex + 1){
+
+            var position = ''
+
+            if(i == currentindex - 1) position = 'left'
+            if(i == currentindex + 1) position = 'right'
+
+        %> 
+
+            <div class="columnnavigation columnnavigation<%-position%> mobiledevice" mode="<%-mobilemode.mode%>">
+                <i class="<%-mobilemode.icon%>"></i>
+            </div>
+
+        <% } %>
+    
+<% }) %>

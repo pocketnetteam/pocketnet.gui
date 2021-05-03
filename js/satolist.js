@@ -15636,6 +15636,15 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
+                    if(data.user && data.user.address){
+
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
+
                     if (data.comment && !data.comment.deleted && data.upvoteVal > 0) {
 
                         if (platform.sdk.usersettings.meta.commentScore.value) {
@@ -15720,6 +15729,16 @@ Platform = function (app, listofnodes) {
 
                     var text = '';
                     var html = '';
+
+
+                    if (data.user && data.user.address){
+
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
 
                     if(data.share && data.shareReposted){
                         text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
@@ -16248,6 +16267,16 @@ Platform = function (app, listofnodes) {
 
                             if (!platform.sdk.address.pnet() || data.address != platform.sdk.address.pnet().address) {
 
+
+                                if (data.address){
+
+                                    var me = platform.sdk.user.me()
+                                    if (me && me.relation(data.address, 'blocking')) {
+                                        return html
+                                    }
+                                    
+                                }
+
                                 if (platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
 
                                     if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
@@ -16590,6 +16619,14 @@ Platform = function (app, listofnodes) {
                     extra += '<button class="reply ghost">'+self.app.localization.e('reply')+'</button>'
                     extra += '</div>'
 
+                    if (data.user && data.user.address){
+
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
 
                     if (data.reason == 'post' && data.comment && data.share && data.user &&
                         (!platform.sdk.usersettings.meta.comments || platform.sdk.usersettings.meta.comments.value)) {
@@ -16831,6 +16868,8 @@ Platform = function (app, listofnodes) {
                 notificationData: function (data) {
                     var n = {};
 
+                    
+
                     if (data.mesType == 'userInfo') {
                         n.text = self.app.localization.e('e13339')
                         n.topic = 'rescued'
@@ -16868,6 +16907,15 @@ Platform = function (app, listofnodes) {
                     var html = '';
                     var caption = '';
                     var extra = '';
+
+                    if (data.user && data.user.address){
+
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
 
                     if (data.mesType == 'userInfo') {
 
@@ -16975,6 +17023,14 @@ Platform = function (app, listofnodes) {
 
                     var text = '';
                     var html = '';
+
+                    if (data.user && data.user.address){
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
 
                     text = self.tempates.subscribe(data.user, self.app.localization.e('e13345'))
 

@@ -50,6 +50,11 @@ var Cache = function(p){
             time : 460,
             block : 0
         },
+
+        gethotposts: {
+            time : 460,
+            block : 0
+        },
         
         getuserprofile: {
             time : 560,

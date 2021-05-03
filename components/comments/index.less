@@ -1798,7 +1798,6 @@ html.stblack{
 
 			&.active{
 
-				height: 70px;
 
 				.newcommentimages.active {
 					display: none!important;
@@ -1806,13 +1805,13 @@ html.stblack{
 
 				.postbody{
 				
-					padding-left : @rhythm;
-					background: #fff;
-					position : fixed;
+					//padding-left : @rhythm;
+					//background: #fff;
+					/*position : absolute;
 					left: 0;
 					right: 0;
 					bottom: 0;
-					z-index: 1000;
+					z-index: 1000;*/
 
 					.posttable{
 						>div{
@@ -1825,7 +1824,7 @@ html.stblack{
 
 							&.iconWrapper{
 								.icon{
-									position: relative;
+									/*position: relative;
 									&:before{
 										color : @color-gray-light;
 										height: 38px;
@@ -1842,7 +1841,48 @@ html.stblack{
 
 									.usericon{
 										display: none;
-									}
+									}*/
+								}
+							}
+						}
+					}
+				}
+
+				
+			}
+		}
+
+		.answer{
+
+
+			
+
+			.postbody{
+
+				.closeAnswer{
+					position: absolute;
+					left : 0;
+					right: auto;
+					top : 0;
+					display: block!important;
+					padding : 2 * @rhythm @rhythm;
+					width: auto;
+					text-align: center;
+	
+					i{
+						line-height: 38px;
+						width: 38px;
+						height: 38px;
+					}
+				}
+
+				.posttable{
+					>div{
+
+						&.iconWrapper{
+							.icon{
+								.usericon{
+									display: none;
 								}
 							}
 						}
