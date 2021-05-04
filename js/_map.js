@@ -39,6 +39,8 @@ __map =  {
 		"js/vendor/moment.min.js",
 
 		"js/vendor/axios.js",
+
+		"js/vendor/swiper-bundle.min.js",
 	],
 
 	__sources : [
@@ -70,8 +72,9 @@ __map =  {
 		"css/medium/medium-editor.css",
         "css/medium/medium-editor-insert-plugin.css",
 		"js/vendor/DateTimePicker.min.css",
-        "css/medium/beagle.css"/* ,
+        "css/medium/beagle.css",/*
         "css/datetime.css?v=116"  */
+		"css/swiper-bundle.min.css"
 	],
 
 

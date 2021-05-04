@@ -31,6 +31,8 @@ var main = (function(){
 			icon : 'fas fa-arrow-right'
 		}]
 
+		var swiper;
+
 		var mobilemode = 'mainshow'
 
 		var helpers = {
@@ -921,6 +923,9 @@ var main = (function(){
 				roller = null
 				lenta = null
 				videomain = false
+
+				if (swiper && swiper.destroy)
+					swiper.destroy();
 			},
 			
 			init : function(p){
@@ -947,6 +952,47 @@ var main = (function(){
 				var wordsRegExp = /[,.!?;:() \n\r]/g
 
 				initEvents();
+
+				swiper = new Swiper('.swiper-container', {
+					slidesPerView: 1,
+					initialSlide: 1,
+					spaceBetween: 1,
+					resistance : true,
+					resistanceRatio: 0,
+					// Responsive breakpoints
+					breakpoints: {
+						// when window width is >= 769px
+						769: {
+							slidesPerView: 'auto'
+						},
+						// when window width is >= 1281px
+						1281: {
+							slidesPerView: 3
+						}
+					},
+					pagination: {
+						el: ".swiper-pagination",
+						clickable: true,
+						renderBullet: function (index, className) {
+							switch (index) {
+								case 0:
+									if (window.innerWidth > 1280)
+										return '';
+									else
+										return '<span class="' + className + '">' + self.app.localization.e('Categories') + "</span>";
+								case 1:
+									if (window.innerWidth > 768)
+										return '<span class="' + className + '">' + self.app.localization.e('e13122') + "</span>";
+									else
+										return '<span class="' + className + '">' + self.app.localization.e('posts') + "</span>";
+								case 2:
+									return '<span class="' + className + '">' + self.app.localization.e('e13122') + "</span>";
+								default:
+									return '';
+							}
+						},
+					},
+				});
 
 				if(!p.goback){
 					searchvalue = parameters().ss || ''
