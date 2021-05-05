@@ -14994,7 +14994,8 @@ Platform = function (app, listofnodes) {
                         linkInfo ? link.data = {
                             image : linkInfo.previewPath,
                             views : linkInfo.views,
-                            duration : linkInfo.duration
+                            duration : linkInfo.duration,
+                            aspectRatio : linkInfo.aspectRatio,
                         } : '';
                     });
 
