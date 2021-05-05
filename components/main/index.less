@@ -1,5 +1,13 @@
 @import "../../css/__cssvar";
 
+html {
+	overflow-y: inherit !important;
+	body {
+		// Mandatory to allow Swiper getting ALL the horizontal swipes
+		overflow-x: hidden !important;
+	}
+}
+
 #main{
 	background: #011621;
 	min-height: 1200px;
@@ -437,7 +445,25 @@
 		}
 	}
 
-	.swiper-container {
+	#mainSwiper {
+
+		overflow: inherit;
+
+		#leftPanelSlide,
+		#rightPanelSlide {
+			height: calc(100vh - 140px);
+			overflow: auto;
+			position: sticky;
+			position: -webkit-sticky;
+			top: 85px;
+			overscroll-behavior: none;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
 
 		.swiper-slide {
 			
@@ -446,7 +472,7 @@
 			}
 
 			&.lenta-swiper-slide {
-				width: calc(100% - 500px) !important;
+				width: calc(100% - 480px) !important;
 			}
 
 			&>div {
@@ -748,12 +774,12 @@ html {
 
 	}
 
-	.swiper-container {
+	#mainSwiper {
 
 		.swiper-slide {
 
 			&.lenta-swiper-slide {
-				width: calc(100% - 250px) !important;
+				width: calc(100% - 230px) !important;
 			}
 		}
 	}
@@ -773,17 +799,27 @@ html {
 
 }
 }
-/*
+
 @media only screen and (max-width: 1024px) {
 	#main{
 
-		.lentacell{
-			margin-right : 64px;
-			margin-left : 60px;
+		// .lentacell{
+		// 	margin-right : 64px;
+		// 	margin-left : 60px;
+		// }
+
+		#mainSwiper {
+
+			.swiper-slide {
+	
+				&.lenta-swiper-slide {
+					width: calc(100% - 236px) !important;
+				}
+			}
 		}
 	
 	}
-}*/
+}
 
 
 @media only screen and (max-width: 768px) {
@@ -812,7 +848,7 @@ html {
 		}
 
 		.maincntwrapperOvf{
-			overflow: hidden;
+			overflow: inherit;
 		}
 
 		.maincntwrapper{
@@ -863,6 +899,9 @@ html {
 		}
 
 		.work{
+
+			padding : 0!important;
+			
 			&.mwork{
 				padding : 0!important;
 			}
@@ -920,7 +959,7 @@ html {
 			}
 		}
 
-		.swiper-container {
+		#mainSwiper {
 
 			.swiper-slide {
 
@@ -941,6 +980,14 @@ html {
 					width: 33%;
 				}
 			}
+		}
+	}
+}
+
+@media only screen and (min-width: 1280px) {
+	#main {
+		.custom-swiper-pagination {
+			display: none;
 		}
 	}
 }
