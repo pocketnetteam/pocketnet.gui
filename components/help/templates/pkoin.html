@@ -1,0 +1,104 @@
+<div class="pkoinWrapper">
+
+    <% if(c.pkoin.loading){%>
+    
+    <div class="loader">
+        <div class="work">
+            <div class="preloader5"><span></span><span></span><span></span></div>
+        </div>
+    </div>
+
+    <% } else {%>
+
+    <div class="content">
+        <div class="caption">
+            Number of Pocketcoins
+        </div>
+        <div class="field">
+            <div class="name">
+                Current Number of Pocketcoins issued 
+            </div>
+            <div class="value">
+                <%-c.pkoin.emission.result%>
+            </div>
+        </div>
+        <div class="field">
+            <div class="name">
+                Total Number of Pocketcoins that will ever be in existence 
+            </div>
+            <div class="value">
+                24 375 000
+            </div>
+        </div>
+        <div class="caption">
+            Hash of block number 12,000
+        </div>
+        <div class="field">
+            <div class="name">
+                Height 
+            </div>
+            <div class="value">
+                <%-c.pkoin.blockhash.result.height %>
+            </div>
+        </div>
+        <div class="field">
+            <div class="name">
+                Blockhash 
+            </div>
+            <div class="value">
+                <%-c.pkoin.blockhash.result.blockhash %>
+            </div>
+        </div>
+        <div class="caption">
+            Pocketcoin emission as of block number 1,000,000
+        </div>
+        <div class="field">
+            <div class="name">
+                Height 
+            </div>
+            <div class="value">
+                <%-c.pkoin.emission2.result.height%>
+            </div>
+        </div>
+        <div class="field">
+            <div class="name">
+                Emission 
+            </div>
+            <div class="value">
+                <%-c.pkoin.emission2.result.height%>
+            </div>
+        </div>
+        <div class="caption">
+            Top 10 addresses with most Pocketcoin
+        </div>
+        <table>
+            <thead>
+                <tr class="addressesGroup">
+                    <th>
+                        Address
+                    </th>
+                    <th class="th-balance">
+                        Balance
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <% _.each(c.pkoin.topaddresses.result, function(item){ %> 
+                    <tr class="addressesGroup">
+                        <td class="name addresscode">
+                            <span class="copyaddress">
+                                <span class="adr"><%=item.address %></span>
+                            </span>
+                            <a external='external' href="https://pocketnet.app/blockexplorer/address/<%- item.address %>"> 	<i class="fas fa-th toblockexplorer"></i>
+                        </td>
+                        <td class="balance">
+                            <%=app.platform.mp.coin(item.balance)%> PKOIN
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <% } %>
+</div>
