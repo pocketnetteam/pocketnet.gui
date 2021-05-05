@@ -1227,7 +1227,19 @@ var lenta = (function(){
 						
 					}
 				})
-			}
+			},
+
+			videoShare : function(share) {
+				if (!share.url || !share.itisvideo()) return sitemessage('Unable to parse a video in the post');
+
+				const metaInfo = self.app.platform.parseUrl(share.url);
+
+				const peertubeLink = `https://pocketnet.app/peertube/embed.html?host=${metaInfo.host_name}&id=${metaInfo.id}`;
+
+				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
+
+				return sitemessage('Video link successfully copied to clipboard');
+			},
 		}
 
 		var events = {

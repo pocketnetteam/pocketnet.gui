@@ -2829,6 +2829,11 @@ Platform = function (app, listofnodes) {
 
                         })
 
+                        el.find('.videoshare').on('click', function () {
+                            actions.videoShare(share)
+
+                            _el.tooltipster('hide')
+                        })
                     })
 
                 }, d, 'components/lenta')
