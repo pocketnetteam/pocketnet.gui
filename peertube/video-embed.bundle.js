@@ -46391,6 +46391,8 @@ class PeerTubeEmbed {
         this.bigPlayBackgroundColor = this.getParamString(params, 'bigPlayBackgroundColor');
         this.foregroundColor = this.getParamString(params, 'foregroundColor');
         this.modeParam = this.getParamString(params, 'mode');
+        this.isVideoEmbed = this.getParamString(params, 'videoEmbedded', '');
+        this.txid = this.getParamString(params, 'txid', '');
         console.log('this.wautoplay', this.wautoplay);
     }
     getVideoUrl(id) {
@@ -46789,9 +46791,10 @@ class PeerTubeEmbed {
                 console.log("ASDASDDAS");
             });
             this.player.on('customError', (event, data) => this.handleError(data.err /*, serverTranslations*/));
+            const overlayString = this.isVideoEmbed ? `<a class="icon icon-only-logo-transparent" href="https://pocketnet.app/index?s=${this.txid}"></a>` : '<span class="icon icon-full-logo-transparent"></span>';
             this.player.overlay({
                 overlays: [{
-                        content: '<span class="icon icon-full-logo-transparent"></span>',
+                        content: overlayString,
                         align: 'top-left',
                         start: 0,
                         showBackground: false,
