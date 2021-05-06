@@ -26,7 +26,7 @@ Platform = function (app, listofnodes) {
     self.online = undefined;
     self.avblocktime = 45;
     self.repost = true;
-    self.videoenabled = false;
+    self.videoenabled = true;
 
     var onlinetnterval;
     var unspentoptimizationInterval = null;
@@ -11466,7 +11466,7 @@ Platform = function (app, listofnodes) {
                             amount = amount * smulti;
 
                             var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
-                            var optype = obj.typeop ? obj.typeop() : obj.type
+                            var optype = obj.typeop ? obj.typeop(self) : obj.type
                             var optstype = optype
 
                             if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)

@@ -11,8 +11,6 @@ var help = (function(){
 		var el, cpage, external, c = {};
 
 
-
-
 		
 		
 		
