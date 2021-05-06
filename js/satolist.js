@@ -1941,7 +1941,7 @@ Platform = function (app, listofnodes) {
 
                 globalpreloader(true, true)
 
-                p.action = 'send'
+                p.action = p.htls ? 'htls' : 'send'
                 p.class = 'api'
                 p.api = true
 
@@ -6364,7 +6364,6 @@ Platform = function (app, listofnodes) {
                         return
                     }
 
-
                     if (totalInWallet < total) {
                         if (clbk)
                             clbk('money')
@@ -10278,6 +10277,8 @@ Platform = function (app, listofnodes) {
                 send: function (tx, clbk) {
                     var hex = tx.toHex();
 
+                    ///02000000c461916001a051befc35b2b9e291351daf25d9cfe0a69804d04609f929b24715ffe8aaac72010000006a47304402201eaea2d4c04c416f7dbdd3745b29fc1d49eeb7c826cfddf249065193897e22a402205372a4be6a6c0b4a4f74ba86b2fe62c7895d83ab7c17049cc6d764f03d5cf4e0012102e854216811757649179139c8136c8d2e0bfadf92e71f8840752ba6e526e568e1ffffffff0280969800000000005e76a914aa66691afeeb4399803dcfb1ef47ed1024e1f9928763ad75a8207ca94ddc1031a8ce4fac4e3b8d61fd232b491a19d08e4b51f51d89f70a9eccf7886776a914b55078daf7f7b3311237309ddb1ba6af6d4ad4a888ad0311ba11b168bb750600000000001976a914b55078daf7f7b3311237309ddb1ba6af6d4ad4a888ac00000000
+
                     self.app.api.rpc('sendrawtransaction', [hex]).then(d => {
 
                         if (clbk)
@@ -11135,53 +11136,69 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
-                hlts : {
-                    plcreate : function(id, clbk, inputs){
+                htls : {
+                    plcreate : function(id, amount, inputs, dummyoutputs, clbk){
 
-                        var amount = 0
                         var lock = 0
                         
                         self.sdk.node.shares.getbyid(id, function() {
-                            var item = self.app.platform.sdk.node.shares.storage.trx[id];
+                            var item = self.sdk.node.shares.storage.trx[id];
 
                             if(!item) return clbk('item')
 
-                            amount = 10 //temp
-                            lock = 10
+                            //lock = 10
 
-                            var time = platform.currentBlock + lock
+                            var time = 1161545 + 200 //item.time  self.currentBlock + lock
 
                             var address = item.address
 
-                            var txb = self.sdk.node.transactions.hlts.create(inputs, id, address, amount, time)
+                            var {txb, payment, hash} = self.sdk.node.transactions.htls.create(inputs, dummyoutputs, id, address, amount, time)
 
-                            self.sdk.wallet.txbaseFeesMeta(
-                                address, outputs, keyPair, feerate, 
-                                function(){
-
-                                }, 
-                            clbk)
+                            if (clbk) clbk(txb, {
+                                address,
+                                time,
+                                lock,
+                                payment,
+                                hash,
+                                tdif : time - self.currentBlock
+                            })
 
                         })
                     },
-                    create : function(inputs, id, address, amount, time){
+                    create : function(inputs, dummyoutputs, id, reciever, amount, time){
 
                         var keyPair = self.app.user.keys()
-                        var sender = self.sdk.address.pnetsimple(keyPair.publicKey).address;
                         var privatekey = keyPair.privateKey
+                        var secret = self.htls.hash(privatekey.toString('hex'), id)
 
+                        var payment = bitcoin.payments.htlc({
+                            htlc : {
+                                secret,
+                                lock : time,
+                                reciever,
+                                sender : self.sdk.address.pnetsimple(keyPair.publicKey).address
+                            }
+                        });
 
-                        var payment = self.htls.createPayment(privatekey.toString('hex'), id, time, reciever, sender)
+                        /*var payment = self.htls.createPayment(privatekey.toString('hex'), id, time, reciever, sender)
+                        var hash = self.htls.hash(privatekey.toString('hex'), id)*/
+                        
+                        console.log('payment', payment)
 
-                        var outputs = [{ address : payment.address, amount }]
+                        var outputs = [{ 
+                            scriptPubKey : payment.output, 
+                            amount 
+                        }]
+
+                        var indexes = {}
+
+                        _.each(dummyoutputs, function(dop){
+                            if(dop.address) indexes[outputs.push(dop) - 1] = true
+                        })
 
                         var txb = self.sdk.node.transactions.create.wallet(inputs, outputs, null, true)
 
-                        _.each(txb.outputs, function(out){
-                            out.script = payment.redeem.output
-                        })
-
-                        return txb
+                        return {txb, payment, secret}
                     }
                 },
 
@@ -11284,8 +11301,6 @@ Platform = function (app, listofnodes) {
                         }, deep(p, 'address.address'), p.update, telegram)
                     },
 
-                    
-
                     wallet: function (inputs, ouputs, _kp, unfinalize) {
 
                         var keyPair = _kp || self.app.user.keys()
@@ -11325,7 +11340,7 @@ Platform = function (app, listofnodes) {
                         })
 
                         _.each(ouputs, function (o) {
-                            txb.addOutput(o.address, Number((k * o.amount).toFixed(0)));
+                            txb.addOutput(o.scriptPubKey || o.address, Number((k * o.amount).toFixed(0)));
                         })
 
                         _.each(inputs, function (i, inputindex) {
@@ -11365,7 +11380,7 @@ Platform = function (app, listofnodes) {
                         if(unfinalize) return txb
 
                         var tx = txb.build()
-
+                        console.log("WALLET TX", tx)
 
                         return tx;
 
@@ -19103,7 +19118,7 @@ Platform = function (app, listofnodes) {
 
                     if (addresses.indexOf(a) > -1) {
 
-
+                        
                         if (!isMobile()){
 
                             self.matrixchat.inited = true
@@ -19321,6 +19336,28 @@ Platform = function (app, listofnodes) {
             $(window).on('blur', uf);
 
 
+            /*self.app.api.rpc('sendrawtransaction', ['020000000582926001342892dab701f0bf8726ea50f06e72eb6ab5a0de0564d2e89e6a1e035e4e11d8030000006b48304502210096036e29e7edee334e5dc2f58c644fe6711df3be84ef6b4d5f835c4c34fb12d50220597633255a9f83e7f2dd57f0d29121e360743aa601ad2034f1eea7604ca8feec012102e854216811757649179139c8136c8d2e0bfadf92e71f8840752ba6e526e568e1ffffffff0180969800000000005c63a820fcd892df2cf89cf655fb814c2db0f963d4a9e3c3110a8c885139db1e3b208e138876a914aa66691afeeb4399803dcfb1ef47ed1024e1f992670311ba11b17576a914b55078daf7f7b3311237309ddb1ba6af6d4ad4a86888ac00000000']).then(d => {
+
+                if (clbk)
+                        clbk(d)
+
+            }).catch(e => {
+                if (clbk) {
+                    clbk(null, e)
+                }
+            })*/
+
+            /*self.sdk.node.transactions.get.tx('8944f28457bfed13c8b2bb151b49c90ea58a29fa7a3b9826b6fda7638cfd08d4', function(tx){
+
+                console.log("LOADEDE", tx)
+                
+
+                var sa = bitcoin.script.fromASM("OP_DUP OP_HASH160 aa66691afeeb4399803dcfb1ef47ed1024e1f992 OP_EQUALVERIFY OP_CHECKSIG")
+
+                console.log("S", sa)
+            })*/
+
+
         }
 
         self.destroy = function () {
@@ -19502,9 +19539,14 @@ Platform = function (app, listofnodes) {
 
     self.app = app;
 
+    if (typeof HTLS != 'undefined')
+        self.htls = new HTLS()
+
     self.cryptography = new self.Cryptography();
 
     self.autoUpdater()
+
+   
 
     return self;
 

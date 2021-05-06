@@ -713,16 +713,11 @@ var Api = function(app){
         if(!options) 
             options = {}
 
-            console.log('options.proxy', options.proxy)
-
         return getproxy(options.proxy).then(proxy => {
-
-            console.log('proxy', proxy, method, proxies)
 
             return proxy.rpc(method, parameters, options.rpc)
 
         }).then(r => {
-
 
             app.apiHandlers.success({
                 rpc : true
@@ -732,14 +727,12 @@ var Api = function(app){
 
         }).catch(e => {
 
-
             if(e == 'TypeError: Failed to fetch' || (e.code == 408 || e.code == -28)){
 
                 app.apiHandlers.error({
                     rpc : true
                 })
             }
-
 
             return Promise.reject(e)
         })
