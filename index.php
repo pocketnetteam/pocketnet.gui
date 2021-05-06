@@ -168,7 +168,7 @@
 <script join src="js/vendor/aesjs.js?v=7"></script>
 <script join src="js/vendor/linkify.min.js?v=7"></script>
 <script join src="js/vendor/linkify-html.min.js?v=7"></script>
-<script join src="js/lib/pocketnet/btc17.js?v=7"></script>
+<script join src="js/lib/pocketnet/btc17.js?v=74"></script>
 <script join src="js/lib/pocketnet/buffer.js?v=7"></script>
 <script join src="js/lib/client/system16.js?v=7"></script>
 <script join src="js/lib/client/api.js?v=7"></script>
