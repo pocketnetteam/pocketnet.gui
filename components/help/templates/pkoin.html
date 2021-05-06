@@ -19,7 +19,9 @@
                 Current Number of Pocketcoins issued 
             </div>
             <div class="value">
-                <%-c.pkoin.emission.result%>
+
+                <%=app.platform.mp.coin(c.pkoin.emission.result)%> PKOIN 
+
             </div>
         </div>
         <div class="field">
@@ -27,7 +29,7 @@
                 Total Number of Pocketcoins that will ever be in existence 
             </div>
             <div class="value">
-                24 375 000
+                <%=app.platform.mp.coin(24375000)%> PKOIN 
             </div>
         </div>
         <div class="caption">
@@ -65,7 +67,7 @@
                 Emission 
             </div>
             <div class="value">
-                <%-c.pkoin.emission2.result.height%>
+                <%=app.platform.mp.coin(c.pkoin.emission2.result.emission)%> PKOIN 
             </div>
         </div>
         <div class="caption">
@@ -73,27 +75,37 @@
         </div>
         <table>
             <thead>
-                <tr class="addressesGroup">
-                    <th>
-                        Address
-                    </th>
+                <tr class="addressesGroup hdr">
+
                     <th class="th-balance">
                         Balance
                     </th>
+
+                    <th>
+                        Address
+                    </th>
+                    
                 </tr>
             </thead>
             <tbody>
-                <% _.each(c.pkoin.topaddresses.result, function(item){ %> 
-                    <tr class="addressesGroup">
+                <% _.each(c.pkoin.topaddresses.result, function(item){ 
+                    
+                    console.log('item', item)
+                    
+                    %> 
+                    <tr class="addressesGroup dt">
+                        
+                        <td class="balance">
+                            <span><%=app.platform.mp.coin(Number(item.balance/ 100000000))%></span> <b>PKOIN</b>
+                        </td>
+
                         <td class="name addresscode">
                             <span class="copyaddress">
                                 <span class="adr"><%=item.address %></span>
                             </span>
                             <a external='external' href="https://pocketnet.app/blockexplorer/address/<%- item.address %>"> 	<i class="fas fa-th toblockexplorer"></i>
                         </td>
-                        <td class="balance">
-                            <%=app.platform.mp.coin(item.balance)%> PKOIN
-                        </td>
+
                     </tr>
                 <% }) %>
             </tbody>
