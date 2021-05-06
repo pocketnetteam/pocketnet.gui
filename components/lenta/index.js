@@ -1238,7 +1238,7 @@ var lenta = (function(){
 
 				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
 
-				return sitemessage('Video link successfully copied to clipboard');
+				return sitemessage(self.app.localization.e('videoCopied'));
 			},
 		}
 

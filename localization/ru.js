@@ -814,3 +814,4 @@ ____loclib.videodesc = "Введите описание к видео";
 ____loclib.entervideocaption = "Пожалуйста, введите заголовок видео";
 
 ____loclib.shareBareLink = "Поделиться Видео";
+____loclib.videoCopied = "Ссылка на видео успешно скопирована";
