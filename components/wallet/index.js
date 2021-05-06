@@ -80,12 +80,12 @@ var wallet = (function(){
 							return d
 						}
 					},
-					defaultValueTemplate : function(d){
+					defaultValueTemplate : function(d, f, g, firstdef){
 						if(_.isObject(d)){
 
 							var h = ''
 
-								h+='<div class="table walletuservalue">'
+								h+='<div class="table walletuservalue" firstdef="'+firstdef+'">'
 
 								h+='<div class="iconcell">'
 								h+='<img src="'+d.image+'">'
@@ -99,11 +99,18 @@ var wallet = (function(){
 
 							return h
 
-
-							return d.name + '2'
 						}
 						else{
-							return d
+
+							return '<div class="walletdfvalue"><span>' + d + '</span></div>'
+
+							if(!d){
+								return '<div class="walletempvalue"><span>' + self.app.localization.e('wsreciever') + '</span></div>'
+							}
+							else{
+								return '<div class="walletdfvalue"><span>' + d + '</span></div>'
+							}
+							
 						}
 					}
 				}),
@@ -549,25 +556,32 @@ var wallet = (function(){
 				}
 				else{
 
-					var c = 0
+					
+				}
 
-					_.each(self.sdk.activity.latest, function(c, k){
+				var c = 0
 
-						_.each(c, function(v){
+				_.each(self.sdk.activity.latest, function(c, k){
 
-							if(c > 7) return
+					_.each(c, function(v){
 
-							if(v.type == 'user'){
+						if(c > 7) return
+
+						if(v.type == 'user'){
+
+							if(v.id != self.app.platform.sdk.address.pnet().address){
 								c++
 
 								send.parameters.reciever.possibleValues.push(v.id)
 								send.parameters.reciever.possibleValuesLabels.push(v.data)
 							}
 
-						})
-						
+							
+						}
+
 					})
-				}
+					
+				})
 
 				if (send.parameters.reciever.value == v || send.parameters.reciever.value == recv[v]){
 					send.parameters.reciever.value = send.parameters.reciever.possibleValuesLabels[0];

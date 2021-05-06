@@ -4689,6 +4689,7 @@
 							if (self.defaultValueTemplate)
 							{
 								input += self.defaultValueTemplate(label, value, self)
+
 							}
 							else{
 								input += label;
