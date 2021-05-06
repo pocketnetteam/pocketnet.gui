@@ -1349,11 +1349,11 @@ Share = function(lang){
 
 	self.typeop = function(platform){
 
-		if(self.aliasid){
-			return 'shareedit'
-		}
+		if (self.itisvideo() && platform && platform.videoenabled) return 'video'
 
-		if(self.itisvideo() && platform && platform.videoenabled) return 'video'
+		if (self.aliasid){
+			return 'share'
+		}
 
 		return self.type
 	}

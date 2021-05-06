@@ -11167,9 +11167,33 @@ Platform = function (app, listofnodes) {
                     },
                     create : function(inputs, dummyoutputs, id, reciever, amount, time){
 
+                        var multisha = function(str, count){
+
+                            if(!count) count = 100
+                    
+                            var h = Buffer.from(str)
+                    
+                            for (var i = 0; i < count; i++){
+                                h = bitcoin.crypto.sha256(h)
+                            }
+                    
+                            return h.toString('hex')
+                        }
+                    
+                        var createhash = function(key, seed){
+                    
+                            var str = multisha(multisha(key) + '_' + seed, 10)
+                    
+                            return str
+                        }
+                    
+                        var crrc = function(key, txid){
+                            return createhash(key, txid)
+                        }
+
                         var keyPair = self.app.user.keys()
                         var privatekey = keyPair.privateKey
-                        var secret = self.htls.hash(privatekey.toString('hex'), id)
+                        var secret = crrc(privatekey.toString('hex'), id)
 
                         var payment = bitcoin.payments.htlc({
                             htlc : {
@@ -11193,7 +11217,13 @@ Platform = function (app, listofnodes) {
                         var indexes = {}
 
                         _.each(dummyoutputs, function(dop){
-                            if(dop.address) indexes[outputs.push(dop) - 1] = true
+                            if(dop.address) {
+                                indexes[outputs.push(dop) - 1] = true
+
+                                console.log('dop.amount ', dop.amount )
+
+                                dop.amount = dop.amount - 0.02
+                            }
                         })
 
                         var txb = self.sdk.node.transactions.create.wallet(inputs, outputs, null, true)
@@ -18054,7 +18084,6 @@ Platform = function (app, listofnodes) {
                         clbk(key)
                     });
                 }
-
 
             },
 

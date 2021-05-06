@@ -1824,7 +1824,7 @@ var wallet = (function(){
 
 									   renders.mainWithClear()
 
-									   self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, _outputs)
+									   self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, outputs)
 									   sendpreloader(false)
 									   sitemessage(self.app.localization.e('wssuccessfully'))
 									   

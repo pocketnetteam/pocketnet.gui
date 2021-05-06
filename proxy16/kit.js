@@ -32,13 +32,13 @@ var testnodes = [
 		stable : true
 	},*/
 
-	{
+	/*{
 		host : '216.108.231.28',
 		port : 36061,
 		ws : 6067,
 		name : 'CryptoserverTest',
 		stable : true
-	},
+	},*/
 
 	{
 		host : '64.235.46.85',
