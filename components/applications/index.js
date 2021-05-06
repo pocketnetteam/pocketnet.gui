@@ -83,26 +83,28 @@ var applications = (function(){
 		var renders = {
 			os : function(os, clbk, extra){
 
-				console.log('os', os);
 
 				if(os.hidden) return
+
+				var attr = extra ? os.id : '.currentos';
 
 				self.shell({
 					turi : 'registration',
 					name :  'os',
-					el : el.c.find(extra ? os.id : '.currentos'),
+					el : el.c.find(attr),
 					data : {
 						os : os,
 						last : false
 					},
 
 				}, function(_p){
+					console.log('_p', el.c.find(attr), attr + ' .os');
 					_p.el.find('.downloadOs').on('click', function(){
 						actions.download(os, function(link){
-							el.c.find('.os').addClass('rundownloading')
-							el.c.find('.skipositem').html('<div class="downloadstart">'+self.app.localization.e('e13011')+'</div>'+
+							el.c.find(attr + ' .os').addClass('rundownloading')
+							el.c.find(attr + ' .skipositem').html('<div class="downloadstart">'+self.app.localization.e('e13011')+'</div>'+
 								'<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
-					sa
+					
 						})
 					})
 				})
