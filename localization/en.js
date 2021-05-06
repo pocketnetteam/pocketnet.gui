@@ -986,4 +986,4 @@ ____loclib.period7day = "One week";
 ____loclib.period31day = "One Month";
 ____loclib.period182day = "Half of year";
 
-____loclib.shareBareLink = "Share video link";
+____loclib.shareBareLink = "Share Video Link";

@@ -813,4 +813,4 @@ ____loclib.videotitle = "Введите заголовок видео";
 ____loclib.videodesc = "Введите описание к видео";
 ____loclib.entervideocaption = "Пожалуйста, введите заголовок видео";
 
-____loclib.shareBareLink = "Поделиться видео";
+____loclib.shareBareLink = "Поделиться Видео";
