@@ -27,6 +27,12 @@ var faq = (function(){
 					},
 
 					{
+						id : 'downloadandroid',
+						q : self.app.localization.e('e14109'),
+						a : `<div><a href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
+					},
+
+					{
 						id : 'downloadnode',
 						q : self.app.localization.e('e14005'),
 						a : `<div><a href="https://github.com/pocketnetteam/pocketnet.core/releases/latest">https://github.com/pocketnetteam/pocketnet.core/releases/latest</a></div><div>${self.app.localization.e('e14007')}</div>`,
