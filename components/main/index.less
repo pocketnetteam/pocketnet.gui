@@ -448,6 +448,7 @@ html {
 	#mainSwiper {
 
 		overflow: inherit;
+		z-index: inherit !important;
 
 		#leftPanelSlide,
 		#rightPanelSlide {
@@ -478,6 +479,15 @@ html {
 			&>div {
 				margin-left: 0;
 				margin-right: 0;
+			}
+		}
+
+		&.fullScreenVideo .swiper-wrapper {
+			transform: inherit !important;
+			z-index: inherit !important;
+
+			#lenta .shares .share.fullScreenVideo {
+				overscroll-behavior-y: contain;
 			}
 		}
 	}
