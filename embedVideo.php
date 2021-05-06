@@ -6,6 +6,16 @@
     <meta name="robots" content="noindex" />
     <meta property="og:platform" content="PeerTube" />
     <link href="/pocketnet/peertube/video-embed.css" rel="stylesheet" />
+
+    <?php 
+        
+            require_once('php/og.php'); 
+
+            $og = new OG($_GET);
+
+            $og->get();
+            $og->echotags();
+        ?>
   </head>
   <body id="custom-css" class="standalone-video-embed">
     <div id="error-block">

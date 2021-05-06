@@ -554,7 +554,7 @@ var post = function(nModule){
 
 				const metaInfo = self.app.platform.parseUrl(share.url);
 
-				const peertubeLink = `https://pocketnet.app/embedVideo.html?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&txid=${share.txid}`;
+				const peertubeLink = `https://pocketnet.app/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
 
 				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
 
