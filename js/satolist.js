@@ -2647,7 +2647,6 @@ Platform = function (app, listofnodes) {
         },
 
         metmenu: function (_el, id, actions) {
-
             var share = self.sdk.node.shares.storage.trx[id]
 
             if (!share) {
