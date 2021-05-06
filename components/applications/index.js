@@ -98,7 +98,6 @@ var applications = (function(){
 					},
 
 				}, function(_p){
-					console.log('_p', el.c.find(attr), attr + ' .os');
 					_p.el.find('.downloadOs').on('click', function(){
 						actions.download(os, function(link){
 							el.c.find(attr + ' .os').addClass('rundownloading')
