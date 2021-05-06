@@ -1234,7 +1234,7 @@ var lenta = (function(){
 
 				const metaInfo = self.app.platform.parseUrl(share.url);
 
-				const peertubeLink = `https://pocketnet.app/peertube/embed.html?host=${metaInfo.host_name}&id=${metaInfo.id}`;
+				const peertubeLink = `https://pocketnet.app/peertube/embed.html?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true`;
 
 				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
 
