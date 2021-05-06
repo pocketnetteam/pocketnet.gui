@@ -2309,6 +2309,9 @@ var AudioStreamController = /*#__PURE__*/function (_BaseStreamController) {
     var fragState = this.fragmentTracker.getState(frag);
     this.fragCurrent = frag; // we force a frag loading in audio switch as fragment tracker might not have evicted previous frags in case of quick audio switch
 
+
+    console.log(';loadFragment')
+
     if (this.audioSwitch || fragState === _fragment_tracker__WEBPACK_IMPORTED_MODULE_4__["FragmentState"].NOT_LOADED || fragState === _fragment_tracker__WEBPACK_IMPORTED_MODULE_4__["FragmentState"].PARTIAL) {
       if (frag.sn === 'initSegment') {
         this._loadInitSegment(frag);
@@ -8906,6 +8909,10 @@ var StreamController = /*#__PURE__*/function (_BaseStreamController) {
       }
     }
 
+
+    console.log('reduceMaxBufferLengthredu', fragState)
+
+
     if (fragState === _fragment_tracker__WEBPACK_IMPORTED_MODULE_5__["FragmentState"].NOT_LOADED || fragState === _fragment_tracker__WEBPACK_IMPORTED_MODULE_5__["FragmentState"].PARTIAL) {
       if (frag.sn === 'initSegment') {
         this._loadInitSegment(frag);
@@ -8921,6 +8928,8 @@ var StreamController = /*#__PURE__*/function (_BaseStreamController) {
       }
     } else if (fragState === _fragment_tracker__WEBPACK_IMPORTED_MODULE_5__["FragmentState"].APPENDING) {
       // Lower the buffer size and try again
+
+      console.log('reduceMaxBufferLengthreduceMaxBufferLengthreduceMaxBufferLengthreduceMaxBufferLength')
       if (this.reduceMaxBufferLength(frag.duration)) {
         this.fragmentTracker.removeFragment(frag);
       }
