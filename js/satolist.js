@@ -2647,7 +2647,6 @@ Platform = function (app, listofnodes) {
         },
 
         metmenu: function (_el, id, actions) {
-
             var share = self.sdk.node.shares.storage.trx[id]
 
             if (!share) {
@@ -2829,6 +2828,11 @@ Platform = function (app, listofnodes) {
 
                         })
 
+                        el.find('.videoshare').on('click', function () {
+                            actions.videoShare(share)
+
+                            _el.tooltipster('hide')
+                        })
                     })
 
                 }, d, 'components/lenta')
