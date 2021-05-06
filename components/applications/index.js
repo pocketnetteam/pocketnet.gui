@@ -48,10 +48,22 @@ var applications = (function(){
 			os : function(clbk){
 				var _os = os();
 
+				var oses = self.app.platform.applications[ed.key];
 
-				if (_os && self.app.platform.applications[ed.key][_os] && (typeof _Electron == 'undefined' ) && !window.cordova){
+				var keys = Object.keys(oses);
 
-					renders.os(self.app.platform.applications[ed.key][_os], clbk)
+				var current = oses[_os];
+				var extraKeys = keys.filter(function(key){
+					return key !== _os;
+				})
+
+				if (_os && current && (typeof _Electron == 'undefined' ) && !window.cordova){
+
+					renders.os(current, clbk)
+
+					extraKeys.forEach(function(key){
+						renders.os(oses[key], clbk, true);
+					})
 
 				}
 
@@ -69,14 +81,16 @@ var applications = (function(){
 		}
 
 		var renders = {
-			os : function(os){
+			os : function(os, clbk, extra){
+
+				console.log('os', os);
 
 				if(os.hidden) return
 
 				self.shell({
 					turi : 'registration',
 					name :  'os',
-					el : el.c.find('.currentos'),
+					el : el.c.find(extra ? os.id : '.currentos'),
 					data : {
 						os : os,
 						last : false
