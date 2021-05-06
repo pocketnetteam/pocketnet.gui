@@ -3182,8 +3182,9 @@ video {
 .js-player .pocketnet-logo-video-player .icon.icon-only-logo-transparent,
 .video-js-wrapper .pocketnet-logo-video-player .icon.icon-only-logo-transparent {
   background: url(./soloIcon.svg) no-repeat;
+  background-size: 30px;
   width: 100px;
-  height: 15px;
+  height: 30px;
   display: block;
   opacity: 0.5;
   position: relative;
@@ -3202,9 +3203,10 @@ video {
   position: absolute;
   color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
-  top: 3px;
-  left: 20px;
-  width: 100px;
+  top: 7px;
+  left: 35px;
+  font-size: 15px;
+  width: 200px;
 }
 .js-player .pocketnet-logo-video-player,
 .video-js-wrapper .pocketnet-logo-video-player {
