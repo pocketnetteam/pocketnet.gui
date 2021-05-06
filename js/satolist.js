@@ -210,7 +210,7 @@ Platform = function (app, listofnodes) {
                     text: {
                         name: "macOS",
                         download: self.app.localization.e('e13222'),
-                        label: 'Download Pocketnet for macOS'
+                        label: self.app.localization.e('e132232')
                     },
         
                     icon: '<i class="fab fa-apple"></i>',
@@ -234,7 +234,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: "Pocketnet_linux_x64.AppImage",
+                        name: "PocketnetSetup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }

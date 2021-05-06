@@ -19,7 +19,7 @@
         "dev": "node minimize.js true"
     },
     "devDependencies": {
-        "electron": "^11.2.3",
+        "electron": "^11.4.5",
         "electron-builder": "",
         "electron-rebuild": "",
         "electron-reload": "",

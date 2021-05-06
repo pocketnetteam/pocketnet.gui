@@ -675,6 +675,7 @@ ____loclib.errorreload = "Etwas ist schief gelaufen. Bitte laden Sie die Seite n
 ____loclib.e13221 = "Wollen Sie wirklich die Informationen zu diesem Deal löschen? Es kann nicht gestoppt werden"
 ____loclib.e13222 = "Downloade Desktop App — das ist der zensurbest�ndigste Weg, Pocketnet zu benutzen. Auch bei einer Schließung der Websites wird die Desktop App durch die direkte Verbindung zum Netzwerkknoten weiterhin funktionieren."
 ____loclib.e13223 = "Download Pocketnet für Windows"
+____loclib.e132232 = "Download Pocketnet für macOs"
 ____loclib.e13224 = "Download Pocketnet für Linux"
 ____loclib.e13225 = "Pocketnet Netzwerkknoten"
 ____loclib.e13226 = 'Download Netzwerkknoten'

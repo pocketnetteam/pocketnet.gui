@@ -675,6 +675,7 @@ ____loclib.errorreload = "문제가 발생했습니다. 페이지를 새로 고�
 ____loclib.e13221 = "정말로 이 거래에 대한 정보를 삭제 하시겠습니까? 거래를 중단할 수 없습니다."
 ____loclib.e13222 = "데스크탑 앱 다운로드-이것은 Pocketnet을 사용하는 가장 검열에 강한 방법입니다. 웹 사이트가 종료 되더라도 데스크탑 응용 프로그램은 여전히 ​​노드를 통해 직접 실행됩니다."
 ____loclib.e13223 = "Windows 용 Pocketnet 다운로드"
+____loclib.e132232 = "macOS 용 Pocketnet 다운로드"
 ____loclib.e13224 = "Linux 용 Pocketnet 다운로드"
 ____loclib.e13225 = "Pocketnet 노드"
 ____loclib.e13226 = '노드 다운로드'

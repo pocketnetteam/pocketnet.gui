@@ -645,6 +645,7 @@ ____loclib.errorreload = "Se produjo un error. Vuelva a cargar la página y vuel
 ____loclib.e13221 = "¿Está seguro de que desea eliminar la información sobre esta transacción? No es posible detener transacción "
 ____loclib.e13222 = "Descargar Desktop App -es la forma más resistente a la censura de usar Pocketnet. Incluso si los sitios web están cerrados, la aplicación funcionará directamente a través de nodos "
 ____loclib.e13223 = "Descargar Pocketnet para Windows"
+____loclib.e132232 = "Descargar Pocketnet para macOS"
 ____loclib.e13224 = "Descargar Pocketnet para Linux"
 ____loclib.e13225 = "Node Pocketnet"
 ____loclib.e13226 = 'Descargar node'
