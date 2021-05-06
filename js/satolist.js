@@ -19119,7 +19119,7 @@ Platform = function (app, listofnodes) {
 
                     if (addresses.indexOf(a) > -1) {
 
-                        
+                        return
                         if (!isMobile()){
 
                             self.matrixchat.inited = true
