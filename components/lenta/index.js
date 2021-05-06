@@ -2423,6 +2423,7 @@ var lenta = (function(){
 				}
 
 				var rndr = function(res){
+
 					self.shell({
 						turi : 'share',
 						name :  'url',
@@ -2444,10 +2445,12 @@ var lenta = (function(){
 				}
 
 				if (meta.type === 'peertube') {
-					
-					//self.app.peertubeHandler.getVideoInfoAnon(meta, (res) => {
-						rndr({})
-					//});
+					self.app.api.fetch('peertube/video',{
+						host: `https://${meta.host_name}`,
+						id: meta.id,
+					}).then(res => {
+						rndr({ views: res.views, aspectRatio: res.aspectRatio });
+					});
 
 				} else {
 					rndr({})
