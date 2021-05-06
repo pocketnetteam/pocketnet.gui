@@ -342,14 +342,6 @@ var help = (function(){
 				})
 
 			},
-
-			pkoin : function(page){
-
-				this.page(page, function(_el){
-
-				})
-					
-			},
 		}
 
 		var state = {
