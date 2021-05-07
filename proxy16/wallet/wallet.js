@@ -15,6 +15,8 @@ var Wallet = function(p){
         unspentsInterval = null
 
     var inited = false
+    var TXFEE = 1
+    var smulti = 100000000
 
     self.kit = {
         
@@ -124,7 +126,9 @@ var Wallet = function(p){
      
         _.each(p.addresses, function(options, key){
 
-            var kp = null
+            addresses[key] = self.kit.addressobj(options, key)
+
+            /*var kp = null
             
             try{
                 kp = self.pocketnet.kit.keyPair(options.privatekey)
@@ -143,9 +147,9 @@ var Wallet = function(p){
                 all : [],
                 key : key,
                 check : options.check
-            }
+            }*/
 
-            if(!kp){
+            if(!addresses[key].kp){
                 _.each(self.clbks.error.ini, function(c){
                     c('privatekey', {
                         key : key
@@ -153,16 +157,9 @@ var Wallet = function(p){
                 })
             }
             else{
-
-
-               
-
                 self.unspents.getc(addresses[key]).catch(e => {
                 })
             }
-
-                
-                
 
         })
 
@@ -183,19 +180,6 @@ var Wallet = function(p){
 
                     })
 
-                   /* _.each(p.addresses, function(options, key){
-
-                        
-
-                        if(options.source == 'compensation'){
-
-                            _.each(compensation, function(tobj){
-                                self.kit.addqueue('compensation', tobj[0], "::1", tobj[2] / 100000000).catch(e => {
-                                })
-                            })
-                        }
-
-                    })*/
                 })
 
                 db.find({executed : '-'}).exec(function (err, docs) {
@@ -316,6 +300,30 @@ var Wallet = function(p){
     }
 
     self.kit = {
+
+        addressobj : function(options, key){
+            var kp = null
+            
+            try{
+                kp = self.pocketnet.kit.keyPair(options.privatekey)
+            }
+            catch(e){
+                
+            }
+          
+            return {
+                amount : options.amount,
+                outs : options.outs || 1,
+                keys : kp,
+                address : kp ? self.pocketnet.kit.addressByPublicKey(kp.publicKey) : null,
+                unspents : null,
+                queue : [],
+                all : [],
+                key : key,
+                check : options.check
+            }
+        },
+
         sendwithprivatekey : function(address, amount, key){
 
             if(!address) return Promise.reject('address')
@@ -400,7 +408,6 @@ var Wallet = function(p){
                 if (meta){
                     self.unspents.release(meta.inputs)
                 }
-                   
 
                 if((e == -26 || e == -25 || e == 16)){
                     return Promise.reject('sync')
@@ -701,7 +708,7 @@ var Wallet = function(p){
         build : function(inputs, outputs, keyPair){
 
             //var amount = 0;
-            var k = 100000000;
+            var k = smulti;
             var node = self.nodeManager.selectbest();
 
             if(!node) return Promise.reject('timeDifference')
@@ -745,6 +752,243 @@ var Wallet = function(p){
         },
         send : function(tx){
             return self.nodeManager.request('sendrawtransaction', [tx.toHex()])
+        },
+
+        common : function (address, obj, p) {
+
+            if (!address.pk) return Promise.reject('address.pk')
+
+            if (!p) p = {};
+
+            unspents = self.unspents.available(address.unspents)
+
+            if(!unspent.length) return Promise.reject('unspent.length')
+
+            var inputs = [{
+                txId: unspent[unspent.length - 1].txid,
+                vout: unspent[unspent.length - 1].vout,
+                amount: unspent[unspent.length - 1].amount,
+                scriptPubKey: unspent[unspent.length - 1].scriptPubKey,
+            }]
+
+            return this.types[obj.type](address, inputs, obj, p).then(alias, error, data => {
+
+                if (!alias && ((error == -26 || error == -25 || error == 16) && !p.update) ) {
+                    p.update = true;
+                    return self.transactions.common(address, obj, p)
+                }
+
+                if(!alias){
+                    return Promise.reject(error)
+                }
+
+                return Promise.resolve({alias, data})
+            })
+
+        },
+
+        types : {
+
+            common: function (address, inputs, obj, fees) {
+
+                if (!p) p = {};
+
+                var node = self.nodeManager.selectbest();
+
+                if(!node) return Promise.reject('timeDifference')
+
+                var error = obj.validation();
+
+                if (error) return Promise.reject(error)
+               
+
+                else {
+                    var keyPair = address.kp
+                    var address = address.address
+
+                    var txb = new self.pocketnet.lib.TransactionBuilder();
+                        txb.addNTime(node.timeDifference || 0)
+
+                    var amount = 0;
+
+                    _.each(inputs, function (i, index) {
+
+                        txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
+
+                        amount = amount + Number(i.amount);
+                    })
+
+                    amount = amount * smulti;
+
+                    var data = Buffer.from(self.pocketnet.lib.crypto.hash256(obj.serialize()), 'utf8');
+
+                    var optype = obj.typeop ? obj.typeop(self) : obj.type
+                    var optstype = optype
+
+                    if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
+
+                    var opreturnData = [Buffer.from(optype, 'utf8'), data];
+
+                    var outputs = [];
+
+                    if (obj.opreturn) {
+                        opreturnData.push(Buffer.from(obj.opreturn()))
+                    }
+
+                    var embed = self.pocketnet.lib.payments.embed({ data: opreturnData });
+                    var i = 0;
+
+                    txb.addOutput(embed.output, 0);
+
+                    outputs.push({
+                        amount : 0,
+                        deleted : true,
+                        address : address.address
+                    })
+
+                    txb.addOutput(address.address, Number((amount - (fees || 0)).toFixed(0)));
+
+                    outputs.push({
+                        address: address.address,
+                        amount: Number((amount - (fees || 0)).toFixed(0))
+                    })
+
+                    _.each(inputs, function (input, index) {
+                        txb.sign(index, keyPair);
+                    })
+
+                    var tx = txb.build()
+
+                    var hex = tx.toHex();
+
+                    _.each(inputs, function (i) {
+                        var u = _.find(address.unspents, function(u){
+                            return u.vout == i.vout && u.txid == i.txId
+                        })
+                        
+                        if(u) u.cantspend = false
+                    })
+
+                    self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
+
+                        var alias = obj.export(true);
+                            alias.txid = d;
+                            alias.address = address.address;
+                            alias.type = obj.type
+                            alias.time = self.currentTime()
+                            alias.timeUpd = alias.time
+                            alias.optype = optype
+
+                            var count = deep(tempOptions, obj.type + ".count") || 'many'
+
+
+                            if (!temp[obj.type] || count == 'one') {
+                                temp[obj.type] = {};
+                            }
+
+                            temp[obj.type][d] = alias;
+
+                            alias.inputs = inputs
+                            alias.outputs = _.map(outputs, function(output){
+                                return {
+                                    address : output.address,
+                                    amount : output.amount / smulti,
+                                    deleted : output.deleted
+                                }
+                            })
+
+                            self.sdk.node.transactions.saveTemp()
+
+                            var ids = _.map(inputs, function (i) {
+
+                                return {
+                                    txid: i.txId,
+                                    vout: i.vout
+                                }
+
+                            })
+
+                            self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+                            if (obj.ustate) {
+
+                                var ustate = obj.ustate;
+
+                                if (typeof obj.ustate == 'function') ustate = obj.ustate();
+
+                                if (ustate) {
+                                    var us = self.sdk.ustate.storage;
+
+                                    if (us[address.address]) {
+                                        us[address.address][obj.ustate + "_spent"]++
+                                        us[address.address][obj.ustate + "_unspent"]--
+                                    }
+
+                                    _.each(self.sdk.ustate.clbks, function (c) {
+                                        c()
+                                    })
+                                }
+
+
+
+
+                            }
+
+
+                            if (clbk)
+                                clbk(alias)
+
+                    }).catch(e => {
+                        self.app.platform.sdk.node.transactions.unblockUnspents(ids)
+
+
+                        if (clbk) {
+                            clbk(null, e.code, data)
+                        }
+                    })
+
+
+
+                }
+
+            },
+
+            share: function (address, inputs, share) {
+                this.common(address, inputs, share, TXFEE)
+            },
+            userInfo: function (address, inputs, userInfo) {
+                this.common(address, inputs, userInfo, TXFEE)
+            },
+            upvoteShare: function (address, inputs, upvoteShare) {
+                this.common(address, inputs, upvoteShare, TXFEE)
+            },
+            complainShare: function (address, inputs, complainShare) {
+                this.common(address, inputs, complainShare, TXFEE)
+            },
+            comment: function (address, inputs, comment) {
+                this.common(address, inputs, comment, TXFEE)
+            },
+            commentShare: function (address, inputs, commentShare) {
+                this.common(address, inputs, commentShare, TXFEE)
+            },
+            cScore: function (address, inputs, cScore) {
+                this.common(address, inputs, cScore, TXFEE)
+            },
+            unsubscribe: function (address, inputs, unsubscribe) {
+                this.common(address, inputs, unsubscribe, TXFEE)
+            },
+            subscribe: function (address, inputs, subscribe) {
+                this.common(address, inputs, subscribe, TXFEE)
+            },
+            blocking: function (address, inputs, blocking) {
+                this.common(address, inputs, blocking, TXFEE)
+            },
+            unblocking: function (address, inputs, unblocking) {
+                this.common(address, inputs, unblocking, TXFEE)
+            },
+            subscribePrivate: function (address, inputs, subscribe) {
+                this.common(address, inputs, subscribe, TXFEE)
+            }
         }
     }
 

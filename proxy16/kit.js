@@ -112,6 +112,8 @@ if (test) nodes = testnodes
 var defaultSettings = {
 
 	admins : [],
+
+	testkeys : [],
 	
 	nodes : {
 		dbpath : 'data/nodes'
@@ -191,6 +193,27 @@ var defaultSettings = {
 
 var state = {
 
+	exportkeys : function(){
+		return _.filter(_.map(settings.testkeys, function(key){
+
+			var kp = null
+
+			pocketnet.kit.keyPair(key)
+
+			try{
+                kp = self.pocketnet.kit.keyPair(options.privatekey)
+
+				return pocketnet.kit.addressByPublicKey(kp.publicKey)
+            }
+            catch(e){
+                return null
+            }
+
+		}), function(address){
+			return address
+		})
+	},
+
 	export : function(view){
 
 		var exporting = {
@@ -211,13 +234,17 @@ var state = {
 			admins : settings.admins,
 			proxies : {
 				explore : settings.proxies.explore
-			}
+			},
+			testkeys : state.exportkeys()
 			//rsa : settings.rsa
 		}
 
 		exporting = cloneDeep(exporting)
 
 		if(view) {
+
+			exporting.testkeys = []
+
 			if (exporting.server.ssl.passphrase)
 				exporting.server.ssl.passphrase = "*"
 
@@ -231,7 +258,6 @@ var state = {
 		return exporting
 	},
 
-	
 
 	apply : function(cds){
 		settings = cds
@@ -719,6 +745,38 @@ var kit = {
 
 				}
 			},
+
+			testkeys : {
+				add : function({
+					key
+				}){
+
+					if(!key) return Promise.reject("key")
+
+					var kp = pocketnet.kit.keyPair(key)
+
+					if(!kp) return Promise.reject("notvalidkey")
+
+					if(_.indexOf(settings.testkeys, key) > -1){
+						return Promise.resolve()
+					}
+	
+					settings.testkeys.push(key)
+	
+					return state.save()
+				},
+	
+				remove : function({
+					index
+				}){
+	
+					if (index < 0 || index > settings.testkeys.length - 1) return Promise.resolve()
+	
+					settings.testkeys.splice(index, 1)
+	
+					return state.save()
+				}
+			},
 	
 			admins : {
 				add : function({
@@ -758,10 +816,15 @@ var kit = {
 			settings : function(){
 				return Promise.resolve(state.export(true))
 			},
+			
 			state : function(compact){
 				return kit.proxy().then(proxy => {
 					return proxy.kit.info(compact)
 				})
+			},
+
+			testkey : function(index){
+				return settings.testkeys[index]
 			}
 		},
 

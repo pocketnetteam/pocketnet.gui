@@ -36,7 +36,7 @@ var Node = function(options, manager){
     var lastinfoTime = f.now()
     var maxevents = 10000
 
-    var test = new Test(self)
+    var test = new Test(self, manager)
 
     var wss = {
         service : null,

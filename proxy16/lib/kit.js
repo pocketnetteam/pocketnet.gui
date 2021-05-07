@@ -1,4 +1,4 @@
-SubscribePrivate = function(){
+var SubscribePrivate = function(){
 	var self = this;
 
 	self.address = {
@@ -46,7 +46,7 @@ SubscribePrivate = function(){
 	return self;
 }
 
-Subscribe = function(){
+var Subscribe = function(){
 	var self = this;
 
 	self.address = {
@@ -94,7 +94,7 @@ Subscribe = function(){
 	return self;
 }
 
-Unsubscribe = function(){
+var Unsubscribe = function(){
 	var self = this;
 
 	self.address = {
@@ -142,7 +142,7 @@ Unsubscribe = function(){
 	return self;
 }
 
-Blocking = function(){
+var Blocking = function(){
 	var self = this;
 
 	self.address = {
@@ -190,7 +190,7 @@ Blocking = function(){
 	return self;
 }
 
-Unblocking = function(){
+var Unblocking = function(){
 	var self = this;
 
 	self.address = {
@@ -238,7 +238,7 @@ Unblocking = function(){
 	return self;
 }
 
-Comment = function(txid){
+var Comment = function(txid){
 	var self = this;
 
 	self.txid = txid;
@@ -562,7 +562,7 @@ Comment = function(txid){
 	return self;
 }
 
-СScore = function(){
+var СScore = function(){
 	var self = this;
 
 	self.comment = {
@@ -639,7 +639,7 @@ Comment = function(txid){
 	return self;
 }
 
-UpvoteShare = function(){
+var UpvoteShare = function(){
 	var self = this;
 
 	self.share = {
@@ -717,7 +717,7 @@ UpvoteShare = function(){
 	return self;
 }
 
-ComplainShare = function(){
+var ComplainShare = function(){
 	var self = this;
 
 	self.share = {
@@ -772,7 +772,7 @@ ComplainShare = function(){
 	return self;
 }
 
-Share = function(lang){
+var Share = function(lang){
 
 	var self = this;
 
@@ -1365,7 +1365,7 @@ Share = function(lang){
 	return self;
 }
 
-UserInfo = function(){
+var UserInfo = function(){
 
 	var self = this;
 
@@ -1661,7 +1661,7 @@ UserInfo = function(){
 	return self;
 }
 
-pUserInfo = function(){
+var pUserInfo = function(){
 
 	var self = this;
 
@@ -1796,7 +1796,7 @@ pUserInfo = function(){
 	return self;
 }
 
-pShare = function(){
+var pShare = function(){
 
 	var self = this;
 
@@ -2157,7 +2157,7 @@ pShare = function(){
 	return self;
 }
 
-pComment = function(){
+var pComment = function(){
 
 	var self = this;
 
@@ -2358,7 +2358,7 @@ pComment = function(){
 	return self;
 }
 
-Img = function(p){
+var Img = function(p){
 	if(!p) p = {};
  
 	var self = this;
@@ -2371,7 +2371,7 @@ Img = function(p){
 	return self;	
 }
 
-kits = {
+var kits = {
 	c : {
 		userInfo : UserInfo,
 		share : Share,
@@ -2395,3 +2395,6 @@ kits = {
 		comment : pComment,
 	}
 }
+
+
+module.exports = kits
