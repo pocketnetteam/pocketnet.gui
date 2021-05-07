@@ -29,7 +29,7 @@ jobs:
           node-version: '14'
 
       - name: Prepare
-        run: npm i --only-production
+        run: npm ci --only-production
 
       - name: Copy to dest dir
         run: |
