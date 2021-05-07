@@ -46825,7 +46825,6 @@ class PeerTubeEmbed {
                     },
                 });
             }
-            debugger;
             this.player = yield _assets_player_peertube_player_manager__WEBPACK_IMPORTED_MODULE_11__["PeertubePlayerManager"].initialize(this.mode, options, (player) => {
                 this.player = player;
             });

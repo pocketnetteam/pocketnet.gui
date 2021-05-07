@@ -13,7 +13,7 @@
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
 
 	%>
-		<div class="videoWrapper <%- aspectRatio < 1 ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
+		<div class="videoWrapper <%- (aspectRatio < 1) && (aspectRatio > 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
 			<% if(meta.type == 'youtube' && window.cordova) {%>
 
