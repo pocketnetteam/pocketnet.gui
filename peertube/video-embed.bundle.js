@@ -46716,8 +46716,11 @@ class PeerTubeEmbed {
                 this.playerElement = document.createElement('video');
                 this.playerElement.className = 'video-js';
                 this.playerElement.setAttribute('playsinline', 'true');
-                const paddingSize = 100 / (2 * videoSizeValue);
-                this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
+                const isVideoEmbedded = document.querySelector('.standalone-video-embed');
+                if (!isVideoEmbedded) {
+                    const paddingSize = 100 / (2 * videoSizeValue);
+                    this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
+                }
                 this.wrapperElement.innerHTML = '';
                 this.wrapperElement.appendChild(this.playerElement);
                 if (!alreadyHadPlayer)

@@ -2974,6 +2974,9 @@ body {
 
 video {
   width: 100%;
+}
+
+video[src] {
   padding: 0 !important;
 }
 
