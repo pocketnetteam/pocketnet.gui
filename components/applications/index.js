@@ -100,9 +100,9 @@ var applications = (function(){
 				}, function(_p){
 					_p.el.find('.downloadOs').on('click', function(){
 						actions.download(os, function(link){
-							el.c.find(attr + ' .os').addClass('rundownloading')
-							el.c.find(attr + ' .skipositem').html('<div class="downloadstart">'+self.app.localization.e('e13011')+'</div>'+
-								'<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
+							el.c.find(attr + ' .os').addClass('rundownloading');
+
+							el.c.find(attr + ' .skipositem').html('<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
 					
 						})
 					})
