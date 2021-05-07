@@ -194,16 +194,19 @@ function rpc(request, callback, obj) {
     });
 
     req.on('error', function(e) {
-        var err = new Error(errorMessage + 'Request Error: ' + e.message);
+        //var err = new Error(errorMessage + 'Request Error: ' + e.message);
 
         //console.log("errorMessage + 'Request Error: ' + e.message", errorMessage + 'Request Error: ' + e.message)
 
         if (!called) {
 
-            err.code = /*e.code ||*/ 408
+            //err.code = /*e.code ||*/ 408
 
             called = true;
-            callback(err);
+
+            callback({
+                code : 408
+            });
         }
     });
 
