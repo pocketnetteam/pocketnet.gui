@@ -89,7 +89,15 @@ var Pocketnet = function(){
         }
     }
 
-    
+    self.pobjects = {
+        comment : function(txid, message){
+            var comment = new pkit.c.comment(txid)
+
+                comment.message.set(message)
+
+            return comment
+        }
+    }
     
     self.lib = bitcoin
     self.pkit = pkit
