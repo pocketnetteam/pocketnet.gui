@@ -32,4 +32,7 @@ jobs:
         run: npm i --only-production
 
       - name: Copy to dest dir
-        run: cp ./* /var/www/gui/
+        run: |
+          ls -la ./
+          ls -la /var/www/gui/
+          cp -R ./* /var/www/gui/
