@@ -6,7 +6,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ gui_test_ci ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -32,8 +32,4 @@ jobs:
         run: npm ci --only-production
 
       - name: Copy to dest dir
-        run: |
-          whoami
-          ls -l /
-          ls -l /docker/
-          rsync -ah ./ /docker/gui/ --exclude .git
+        run: rsync -ah ./ /docker/gui/ --exclude .git
