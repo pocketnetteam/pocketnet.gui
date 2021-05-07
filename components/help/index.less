@@ -20,6 +20,7 @@
 		}
 	}
 
+
 	.bgCaption{
 		background : @color-bright;
 		.cell{
@@ -166,8 +167,117 @@
 	
 }
 
+.pkoinWrapper{
+
+	.loader{
+		margin-top: 2em;
+	}
+
+	.caption{
+		margin-bottom: 1em
+	}
+
+	.field{
+		display: flex;
+		flex-wrap: wrap;
+
+		.name{
+			max-width: 500px;
+			width: 100%;
+			padding-top: .5em;
+			padding-bottom: .5em;
+		}
+
+		.value{
+			padding: @rhythm;
+			color: @color-main;
+			font-weight: 700;
+			word-break: break-all;
+		}
+	}
+	table{
+
+		margin-top: 1.5em;
+	
+
+		tbody{
+			margin-top: 1em;
+		}
+		
+		th{
+			text-align: start;
+		}
+
+		th, .name{
+			width: 500px;
+			padding: 1.5em .5em;
+		}
+
+		.copyaddress{
+			cursor: pointer;
+		}
+
+		.balance{
+			font-weight: 100;
+		}
+
+		.toblockexplorer{
+			font-size: 0.8em;
+			color : @color-gray-slight;
+			.transition(0.3s);
+			cursor: pointer;
+			width: 30px;
+			text-align: center;
+	
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.addressesGroup{
+			border-bottom: 1px solid #D9D9D9;
+
+			&.hdr{
+				border-bottom: 1px solid @color-main;
+				
+				th{
+					padding-top : 4 * @rhythm;
+					padding-bottom : 4 * @rhythm;
+				}
+			}
+
+			&.dt{
+				&:nth-last-child(1){
+					border-bottom : 0;
+				}
+			}
+
+			.th-balance,
+			.balance{
+				padding: @rhythm;
+				padding-left: 0;
+				span{
+					font-size: 2.5em;
+				}
+			}
+
+			td{
+				vertical-align: middle;
+			}
+		}
+	}
+
+
+}
+
 @media only screen and (max-width: 768px) {
 #help{
+
+	.pkoinWrapper{
+		.balance, .th-balance{
+			display: none;
+		}
+	}
 
 	.bgCaption{
 		height: auto;

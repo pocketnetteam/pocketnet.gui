@@ -15,6 +15,7 @@ __map =  {
 		
 		//new
 		"js/lib/pocketnet/btc17.js",
+		"js/lib/pocketnet/htls.js",
 		"js/lib/pocketnet/buffer.js",
 		"js/lib/client/system16.js",
 		"js/lib/client/api.js",

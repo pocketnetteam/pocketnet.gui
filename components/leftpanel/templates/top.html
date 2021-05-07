@@ -2,7 +2,7 @@
     <div class="wrp">
         <div class="rcptwrp">
             <div class="tcaption">
-                <span><%=e('e13138')%></span>
+                <span><%=e("Top Posts Over")%></span>
             </div>
 
             <div class="topparameters">
@@ -21,17 +21,29 @@
 
                 <a href="?page=<%-Number(page) + 1%>" handler="true">
                     <button class="button small">
-                        <i class="fas fa-caret-left"></i> Previous
+                        <i class="fas fa-caret-left"></i> <%=e("topprevious")%>
                     </button>
                 </a>
 
                 <% if(page > 0) {%>
                     <a href="?page=<%-Number(page) - 1%>" handler="true"> 
                         <button class="button small">
-                            Next <i class="fas fa-caret-right"></i>
+                            <%=e("topnext")%> <i class="fas fa-caret-right"></i>
                         </button>
                     </a>
                 <% } %>
+            </div>
+
+            <div class="toplabel">
+
+                    <!--<div class="label">test</div>-->
+                    <div class="topactualback">
+                    <% if(page > 0) {%>
+                        <a href="?page=0" handler="true"> 
+                        <%=e("topactual")%>
+                        </a>
+                    <% } %>
+                </div>
             </div>
 
             <!--<div class="goback">
