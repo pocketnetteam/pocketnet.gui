@@ -46706,19 +46706,20 @@ class PeerTubeEmbed {
                 this.player.dispose();
                 alreadyHadPlayer = true;
             }
-            this.playerElement = document.createElement('video');
-            this.playerElement.className = 'video-js';
-            this.playerElement.setAttribute('playsinline', 'true');
-            this.wrapperElement.innerHTML = '';
-            this.wrapperElement.appendChild(this.playerElement);
             const videoInfoPromise = videoResponse.json()
                 .then((videoInfo) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
                 const metaUrl = videoInfo.files[0].metadataUrl;
-                const videoMeta = yield fetch(metaUrl).then((res) => res.json()).then((json) => {
+                const videoSizeValue = yield fetch(metaUrl).then((res) => res.json()).then((json) => {
                     const info = json.streams[0];
                     return (info.width / info.height);
                 });
-                debugger;
+                this.playerElement = document.createElement('video');
+                this.playerElement.className = 'video-js';
+                this.playerElement.setAttribute('playsinline', 'true');
+                const paddingSize = 100 / (2 * videoSizeValue);
+                this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
+                this.wrapperElement.innerHTML = '';
+                this.wrapperElement.appendChild(this.playerElement);
                 if (!alreadyHadPlayer)
                     this.loadPlaceholder(videoInfo);
                 return videoInfo;
@@ -46780,6 +46781,7 @@ class PeerTubeEmbed {
                     videoFiles: videoInfo.files
                 }
             };
+            debugger;
             if (this.mode === 'p2p-media-loader') {
                 const hlsPlaylist = videoInfo.streamingPlaylists.find(p => p.type === 1 /* HLS */);
                 Object.assign(options, {
@@ -46794,7 +46796,6 @@ class PeerTubeEmbed {
             }
             this.player = yield _assets_player_peertube_player_manager__WEBPACK_IMPORTED_MODULE_11__["PeertubePlayerManager"].initialize(this.mode, options, (player) => {
                 this.player = player;
-                console.log("ASDASDDAS");
             });
             this.player.on('customError', (event, data) => this.handleError(data.err /*, serverTranslations*/));
             const overlayString = this.isVideoEmbed ? `<a class="icon icon-only-logo-transparent" href="https://pocketnet.app/index?s=${this.txid}"></a>` : '<span class="icon icon-full-logo-transparent"></span>';
