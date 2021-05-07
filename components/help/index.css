@@ -95,6 +95,14 @@
 #help .page .roadmap .road > div:nth-child(1) {
   padding-left: 0;
 }
+#help .page .readmore {
+  margin-top: 5em;
+  font-size: 1em;
+}
+#help .page .readmore a {
+  color: #4AC6F9;
+  text-decoration: underline;
+}
 #help .page .lentasection > div.sectionname {
   width: 160px;
   padding-top: 1em;

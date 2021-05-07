@@ -94,11 +94,6 @@ var help = (function(){
 				r : false,
 			},
 			{
-				d : 'June 2021',
-				n : 'Peer-to-peer encrypted chat, including group chat',
-				r : false,
-			},
-			{
 				d : 'July 2021',
 				n : 'Livestream Pocketcoin dondations',
 				r : false,
