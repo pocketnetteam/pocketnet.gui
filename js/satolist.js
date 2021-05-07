@@ -10621,10 +10621,12 @@ Platform = function (app, listofnodes) {
                         _.each(s.unspent, function (unspents) {
 
                             var r = _.find(unspents, function (u) {
-                                return u.txid == id
+                                return u.txid == id.txid && u.vout == id.vout
                             })
 
                             if (r) {
+
+                                console.log("BLOCK", r)
 
                                 r.block = true
 
@@ -10646,10 +10648,12 @@ Platform = function (app, listofnodes) {
                         _.each(s.unspent, function (unspents) {
 
                             var r = _.find(unspents, function (u) {
-                                return u.txid == id
+                                return u.txid == id.txid && u.vout == id.vout
                             })
 
                             if (r) {
+
+                                console.log("UNBLOCK", r)
 
                                 delete r.block
 
@@ -11577,11 +11581,14 @@ Platform = function (app, listofnodes) {
                                 }
                                 else {
 
-                                    var ids = _.map(inputs, function (i) {
-                                        return i.txId
+                                    var bids = _.map(inputs, function (i) {
+                                        return {
+                                            txid : i.txId,
+                                            vout : i.vout
+                                        }
                                     })
 
-                                    self.app.platform.sdk.node.transactions.blockUnspents(ids)
+                                    self.app.platform.sdk.node.transactions.blockUnspents(bids)
 
                                     self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
 
@@ -11653,7 +11660,7 @@ Platform = function (app, listofnodes) {
                                                 clbk(alias)
         
                                     }).catch(e => {
-                                        self.app.platform.sdk.node.transactions.unblockUnspents(ids)
+                                        self.app.platform.sdk.node.transactions.unblockUnspents(bids)
 
 
                                         if (clbk) {
