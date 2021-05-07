@@ -46391,6 +46391,8 @@ class PeerTubeEmbed {
         this.bigPlayBackgroundColor = this.getParamString(params, 'bigPlayBackgroundColor');
         this.foregroundColor = this.getParamString(params, 'foregroundColor');
         this.modeParam = this.getParamString(params, 'mode');
+        this.isVideoEmbed = this.getParamString(params, 'videoEmbedded', '');
+        this.txid = this.getParamString(params, 'txid', '');
         console.log('this.wautoplay', this.wautoplay);
     }
     getVideoUrl(id) {
@@ -46710,11 +46712,17 @@ class PeerTubeEmbed {
             this.wrapperElement.innerHTML = '';
             this.wrapperElement.appendChild(this.playerElement);
             const videoInfoPromise = videoResponse.json()
-                .then((videoInfo) => {
+                .then((videoInfo) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                const metaUrl = videoInfo.files[0].metadataUrl;
+                const videoMeta = yield fetch(metaUrl).then((res) => res.json()).then((json) => {
+                    const info = json.streams[0];
+                    return (info.width / info.height);
+                });
+                debugger;
                 if (!alreadyHadPlayer)
                     this.loadPlaceholder(videoInfo);
                 return videoInfo;
-            });
+            }));
             const [videoInfoTmp,] = yield Promise.all([
                 videoInfoPromise,
             ]);
@@ -46789,9 +46797,10 @@ class PeerTubeEmbed {
                 console.log("ASDASDDAS");
             });
             this.player.on('customError', (event, data) => this.handleError(data.err /*, serverTranslations*/));
+            const overlayString = this.isVideoEmbed ? `<a class="icon icon-only-logo-transparent" href="https://pocketnet.app/index?s=${this.txid}"></a>` : '<span class="icon icon-full-logo-transparent"></span>';
             this.player.overlay({
                 overlays: [{
-                        content: '<span class="icon icon-full-logo-transparent"></span>',
+                        content: overlayString,
                         align: 'top-left',
                         start: 0,
                         showBackground: false,

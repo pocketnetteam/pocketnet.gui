@@ -818,9 +818,14 @@ ____loclib.videotitle = "Введите заголовок видео";
 ____loclib.videodesc = "Введите описание к видео";
 ____loclib.entervideocaption = "Пожалуйста, введите заголовок видео";
 
+
+____loclib.shareBareLink = "Поделиться Видео";
+____loclib.videoCopied = "Ссылка на видео успешно скопирована";
+
 ____loclib.period = "Период";
 ____loclib.periodday = "Один день";
 ____loclib.period3day = "Три дня";
 ____loclib.period7day = "Семь дней";
 ____loclib.period31day = "Один месяц";
 ____loclib.period182day = "Пол года";
+

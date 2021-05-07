@@ -4545,7 +4545,22 @@ input[type=radio].radio:checked + label {
     text-align: center;
     line-height : 6 * @rhythm;
     font-size: 1em;
-    overflow: hidden;
+    position: relative;
+
+    .realperson{
+        position : absolute;
+        bottom : -4%;
+        right : -4%;
+        .shadowText();
+        color : @color-bright;
+        line-height: 0.25em;
+        font-size: 0.25em;
+
+        .fa-check{
+            color : #fff;
+            box-shadow: none;
+        }
+    }
 
 }
 .userpic{
