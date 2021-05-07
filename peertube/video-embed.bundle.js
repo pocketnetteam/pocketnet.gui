@@ -46718,7 +46718,6 @@ class PeerTubeEmbed {
                     const info = json.streams[0];
                     return (info.width / info.height);
                 });
-                debugger;
                 if (!alreadyHadPlayer)
                     this.loadPlaceholder(videoInfo);
                 return videoInfo;
