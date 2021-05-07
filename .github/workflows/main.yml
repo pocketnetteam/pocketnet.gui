@@ -33,6 +33,6 @@ jobs:
 
       - name: Copy to dest dir
         run: |
-          ls -la ./
-          ls -la /var/www/gui/
+          ls -la /var/
+          ls -la /var/www/
           cp -R ./* /var/www/gui/
