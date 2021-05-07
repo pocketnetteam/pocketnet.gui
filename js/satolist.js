@@ -19,7 +19,9 @@ Platform = function (app, listofnodes) {
     self.real = {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
-        'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true
+        'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true,
+
+        //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
     
 
