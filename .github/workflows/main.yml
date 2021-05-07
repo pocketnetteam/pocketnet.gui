@@ -33,5 +33,5 @@ jobs:
 
       - name: Copy to dest dir
         run: |
-          ls -la /tmp/runner/
-          cp -R ./* /var/www/gui/
+          pwd
+          rsync -av ./ /docker/gui/ --exclude .git
