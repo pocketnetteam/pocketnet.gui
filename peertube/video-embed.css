@@ -2959,7 +2959,7 @@ body {
   margin-top: 3px;
 }
 
-body {
+.standalone-video-embed {
   margin: 0 !important;
   background-color: black;
 }
