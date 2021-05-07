@@ -351,6 +351,8 @@ var categories = (function(){
 				essenseData = p.settings.essenseData || {};
 				var data = {};
 
+				data.video = parameters().video ? true  :false
+
 				clbk(data);
 
 			},

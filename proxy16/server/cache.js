@@ -5,16 +5,26 @@ var Cache = function(p){
 
     var storage = {}
     var waiting = {}
+    var smart = {}
 
 
     var ckeys = {
         getlastcomments : {
-            time : 160,
+            time : 960,
+            block : 0
+        },
+
+        getcomments : {
+            time : 360,
             block : 0
         },
 
         getuseraddress : {
             time : 82000
+        },
+
+        search: {
+            time : 6000
         },
        
         gettags : {
@@ -25,29 +35,45 @@ var Cache = function(p){
             time : 160,
             block : 0
         },
-        
+       
         getrawtransactionwithmessage: {
-            time : 160,
+            time : 460,
+            block : 0
+        },
+
+        getrawtransaction: {
+            time : 460,
             block : 0
         },
 
         gethierarchicalstrip: {
-            time : 160,
+            time : 460,
+            block : 0
+        },
+
+        gethotposts: {
+            time : 460,
             block : 0
         },
         
         getuserprofile: {
-            time : 160,
-            block : 0
+            time : 560,
+            block : 0,
+
+            /*smart : {
+                idin : '0',
+                idout : 'address',
+                type : 'collect'
+            }*/
         },
 
         getuserstate : {
-            time : 160,
+            time : 560,
             block : 0
         },
         
         getpagescores: {
-            time : 160,
+            time : 460,
             block : 0
         },
         
@@ -63,6 +89,10 @@ var Cache = function(p){
         listVideos: {
             time : 120,
         },
+
+        estimatesmartfee: {
+            time : 1600
+        },
     }
 
 
@@ -71,6 +101,9 @@ var Cache = function(p){
         if (ckeys[key]){
 
             var k = f.hash(JSON.stringify(params))
+
+            if(key == 'gethotposts')
+                console.log(key, params, k)
 
 
             if(!storage[key])
@@ -106,6 +139,11 @@ var Cache = function(p){
     self.get = function(key, params){
         if (ckeys[key]){
 
+
+            if (ckeys[key].smart){
+                return self.getsmart(key, params)
+            }
+
             var k = f.hash(JSON.stringify(params))
 
             var sd = f.deep(storage, key + "." + k)
@@ -121,6 +159,16 @@ var Cache = function(p){
         }
     }
 
+    self.getsmart = function(key, params){
+
+        var c = ckeys[key]
+
+        var ids = _.map(f.deep(params, c.idin), (r)=>{return r})
+
+        if(!smart[key]) smart[key] = {}
+
+        _.each()
+    }
 
     self.wait = function(key, params, clbk){
 
@@ -138,6 +186,9 @@ var Cache = function(p){
         var waitid = f.makeid()
 
         var k = f.hash(JSON.stringify(params))
+
+        if(key == 'gethotposts')
+            console.log(key, params, k)
 
         if(!waiting[key])
             waiting[key] = {}
@@ -168,7 +219,7 @@ var Cache = function(p){
                 delete waiting[key][k].clbks[waitid]
             }
 
-        }, 3500)
+        }, 6500)
 
         
     }
@@ -177,7 +228,6 @@ var Cache = function(p){
 
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){
-
 
                 if (k.block < block.height)
                     storage[key] = {}

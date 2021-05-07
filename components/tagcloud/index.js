@@ -85,7 +85,6 @@ var tagcloud = (function(){
 					return t.tag
 				})
 
-				console.log("tags", el)
 
 				if(!tags.length){
 					el.c.addClass('hidden')
@@ -149,7 +148,6 @@ var tagcloud = (function(){
 		var initEvents = function(){
 			
 			self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
-				console.log("MAKE2")
 				make()
 				
 			}	
@@ -175,7 +173,6 @@ var tagcloud = (function(){
 
 				tags = self.app.platform.sdk.tags.filterEx(tags)
 
-				console.log('tags', tags, error)
 
 				if (clbk)
 					clbk(tags, error)
@@ -186,7 +183,6 @@ var tagcloud = (function(){
 
 		var make = function(){
 
-			console.log("MAKE1")
 
 			load(function(tags, error){
 
@@ -209,7 +205,6 @@ var tagcloud = (function(){
 				essenseData = p.settings.essenseData || {};
 				var data = {};
 
-				console.log("GETDATA1")
 
 				clbk(data);
 
@@ -225,7 +220,6 @@ var tagcloud = (function(){
 			
 			init : function(p){
 
-				console.log("INIT1")
 
 				state.load();
 

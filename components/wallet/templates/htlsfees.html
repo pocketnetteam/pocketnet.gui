@@ -1,0 +1,59 @@
+<div class="linkForDeposit">
+
+	<div class="linksubcaption ">HTLS</div>
+
+
+	<div class="row table">
+		
+		
+		<div class="amountFees">
+			<div class="labelWrapper workstation">
+				<%-d.parameters.fees.name%>
+			</div>
+		</div>
+		<div class="changer">
+		</div>
+		<div class="amountFees">
+			<div class="labelWrapper">
+				<%=e('wsfees')%>
+			</div>
+		</div>
+	</div>
+
+	<div class="row table">
+		
+		<div class="amountFees">
+			<div class="inputWrapper">
+				<%=d.parameters.fees.input()%>
+			</div>
+		</div>
+		
+		<div class="changer">
+		</div>
+		
+		<div class="amountFees">
+			<div class="inputWrapper">
+				<b><%-app.platform.mp.coin(fees)%> PKOIN</b>
+			</div>
+		</div>
+	</div>
+
+	<div class="row table">
+		
+		<div class="cell">
+			<button class="sendtransaction withloading">
+
+				<span class="nlpart">
+					<i class="fas fa-arrow-alt-circle-right"></i> <%=e('wsend')%>
+				</span>
+
+				<span class="lpart">
+					<i class="fas fa-spinner fa-spin"></i> Sending
+				</span>
+				
+			</button>
+		</div>
+
+		
+	</div>
+</div>

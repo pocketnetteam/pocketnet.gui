@@ -27,7 +27,9 @@ var Bots = require('./bots.js');
 //////////////
 
 
-var Proxy = function (settings, manage) {
+var Proxy = function (settings, manage, test) {
+
+    console.log("TESTMODE", test)
 
     var self = this;
 
@@ -709,13 +711,28 @@ var Proxy = function (settings, manage) {
 
             var node = null;
 
+            var log = false
+
+            if(method == 'gethotposts') {
+              log = true
+
+              console.log('parameters', parameters)
+            }
+
             return new Promise((resolve, reject) => {
-              server.cache.wait(method, parameters, function (waitstatus) {
+              server.cache.wait(method, _.clone(parameters), function (waitstatus) {
+                if(log){
+                  console.log('waitstatus', waitstatus)
+                }
                 resolve(waitstatus);
               });
             })
               .then((waitstatus) => {
-                var cached = server.cache.get(method, parameters);
+                var cached = server.cache.get(method, _.clone(parameters));
+
+                if(log){
+                  console.log('cached', cached ? true : false)
+                }
 
                 if (cached) {
                   return Promise.resolve({
@@ -760,13 +777,18 @@ var Proxy = function (settings, manage) {
                   }
                 }
 
+
+                if(log){
+                  console.log('load', method, parameters)
+                }
+
                 return node
                   .checkParameters()
                   .then((r) => {
-                    return node.rpcs(method, parameters);
+                    return node.rpcs(method, _.clone(parameters));
                   })
                   .then((data) => {
-                    server.cache.set(method, parameters, data, node.height());
+                    server.cache.set(method, _.clone(parameters), data, node.height());
 
                     return Promise.resolve({
                       data: data,
@@ -885,7 +907,10 @@ var Proxy = function (settings, manage) {
           path: '/nodes/test',
           authorization: 'signature',
           action: function ({ node, scenario, A }) {
-            return Promise.reject('err');
+
+            if(!test)
+
+              return Promise.reject('err');
 
             if (!A) return Promise.reject();
 

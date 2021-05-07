@@ -584,6 +584,18 @@ var post = (function(){
 					}
 				})
 			},
+
+			videoShare : function(share) {
+				if (!share.url || !share.itisvideo()) return sitemessage('Unable to parse a video in the post');
+
+				const metaInfo = self.app.platform.parseUrl(share.url);
+
+				const peertubeLink = `https://pocketnet.app/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
+
+				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
+
+				return sitemessage(self.app.localization.e('videoCopied'));
+			},
 		}
 
 		var events = {
@@ -761,452 +773,439 @@ var post = (function(){
 		}
 
 		var renders = {
-			comments : function(clbk){
+      comments: function (clbk) {
+        if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
+          self.fastTemplate(
+            'commentspreview',
+            function (rendered) {
+              var _el = el.c.find('.commentsWrapper');
 
-				if((!ed.repost || ed.fromempty) && ed.comments != 'no'){
-					self.fastTemplate('commentspreview', function(rendered){
+              var rf = '';
 
-						var _el = el.c.find(".commentsWrapper");
+              if (self.app.platform.sdk.address.pnet()) {
+                rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
+              }
 
-						var rf = ''
+              var url =
+                'https://pocketnet.app/' +
+                (ed.hr || 'index?') +
+                's=' +
+                share.txid +
+                '&mpost=true' +
+                rf;
 
-						if (self.app.platform.sdk.address.pnet()){
-							rf = '&ref=' + self.app.platform.sdk.address.pnet().address
-						}
+              if (parameters().address) {
+                url += '&address=' + (parameters().address || '');
+              }
 
-	
-						var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + rf
-	
-						if (parameters().address){
-							url += '&address=' + (parameters().address || '')
-						}
-	
-						self.nav.api.load({
-							open : true,
-							id : 'comments',
-							el : _el,
-	
-							eid : (ed.eid || "") + share.txid + 'post',
-	
-							essenseData : {
-								hr : url,
-								totop : el.c,
-								
-								caption : rendered,
-								send : function(){
-									var c = el.c.find(".commentsAction .count span");
-	
-									c.html(Number(c.html() || "0") + 1)
-								},
-								txid : share.txid,
-								
-								reply : ed.reply,
-								
-								showall : !ed.fromempty,
-								init : ed.fromempty || false,
-								preview : ed.fromempty || false,
-								
-	
-								fromtop : !ed.fromempty,
-								fromempty : ed.fromempty,
-								lastComment : ed.fromempty ? share.lastComment : null,
-	
-								additionalActions : function(){
-									self.closeContainer()
-								}
-							},
-	
-							clbk : function(e, p){
-								actions.position()
-								inicomments = p
-	
-	
-								if (clbk)
-									clbk()
-							}
-						})
-	
-					}, {
-						share : share
-					})
-				}
+              self.nav.api.load({
+                open: true,
+                id: 'comments',
+                el: _el,
 
-				else{
-					if (clbk)
-						clbk()
+                eid: (ed.eid || '') + share.txid + 'post',
+
+                essenseData: {
+                  hr: url,
+                  totop: el.c,
+
+                  caption: rendered,
+                  send: function () {
+                    var c = el.c.find('.commentsAction .count span');
+
+                    c.html(Number(c.html() || '0') + 1);
+                  },
+                  txid: share.txid,
+
+                  reply: ed.reply,
+
+                  showall: !ed.fromempty,
+                  init: ed.fromempty || false,
+                  preview: ed.fromempty || false,
+
+                  fromtop: !ed.fromempty,
+                  fromempty: ed.fromempty,
+                  lastComment: ed.fromempty ? share.lastComment : null,
+
+                  additionalActions: function () {
+                    self.closeContainer();
+                  },
+                },
+
+                clbk: function (e, p) {
+                  actions.position();
+                  inicomments = p;
+
+                  if (clbk) clbk();
+                },
+              });
+            },
+            {
+              share: share,
+            },
+          );
+        } else {
+          if (clbk) clbk();
+        }
+      },
+      empty: function () {
+        self.shell(
+          {
+            name: 'empty',
+            el: el.share,
+          },
+          function (_p) {
+            actions.position();
+          },
+        );
+      },
+      images: function (clbk) {
+        var _el = el.c.find('.image');
+        var images = el.c.find('.images');
+
+        if (images.hasClass('active') || !_el.length || !images.length) {
+          if (clbk) clbk();
+        } else {
+          _el.imagesLoaded({ background: true }, function (image) {
+            if (share.settings.v != 'a') {
+              _.each(image.images, function (img, n) {
+                var _img = img.img;
+
+                var el = $(image.elements[n]).closest('.imagesWrapper');
+                var ac = '';
+
+                var _w = el.width();
+                var _h = el.height();
+
+                var w = _w * (_img.width / _img.height);
+
+                if (_img.width < el.width()) {
+                  el.find('.image').width(_img.width);
+                  el.find('.image').height(_img.height);
+                } else {
+                  el.height(_w * (_img.height / _img.width));
+                }
+              });
+            }
+
+            images.addClass('active');
+
+            _el.addClass('active');
+
+            if (clbk) clbk();
+          });
+        }
+      },
+      share: function (clbk) {
+        self.shell(
+          {
+            turi: 'lenta',
+            name: ed.video ? 'sharevideo' : 'share',
+            el: el.share,
+
+            additionalActions: function () {
+              self.closeContainer();
+            },
+
+            data: {
+              share: share,
+              all: true,
+              mestate: {},
+              repost: ed.repost,
+              fromempty: ed.fromempty,
+            },
+          },
+          function (_p) {
+            el.stars = el.share.find('.forstars');
+
+            actions.position();
+
+            el.wr.addClass('active');
+
+            renders.stars(function () {
+              renders.mystars(function () {});
+
+              renders.url(function () {
+                renders.repost();
+
+                actions.position();
+
+                renders.urlContent(function () {
+                  actions.position();
+
+                  actions.initVideo();
+
+                  renders.images(function () {
+                    if (!ed.repost) {
+                      actions.position();
+
+                      el.share.find('.complain').on('click', events.complain);
+
+                      el.share.on(
+                        'click',
+                        '.imagePostOpent',
+                        events.openGallery,
+                      );
+                      el.share.on('click', '.forrepost', events.repost);
+
+                      el.share.find('.txid').on('click', events.getTransaction);
+                      el.share.find('.donate').on('click', events.donate);
+                      el.share
+                        .find('.sharesocial')
+                        .on('click', events.sharesocial);
+                      el.share
+                        .find('.asubscribe')
+                        .on('click', events.subscribe);
+                      el.share
+                        .find('.aunsubscribe')
+                        .on('click', events.unsubscribe);
+                      el.share.find('.metmenu').on('click', events.metmenu);
+
+                      el.share
+                        .find('.notificationturn')
+                        .on('click', events.subscribePrivate);
+                    }
+
+                    if (clbk) clbk();
+                  });
+                });
+              });
+            });
+          },
+        );
+      },
+      wholike: function (clbk) {
+        var wholikes = share.who || [];
+
+        self.shell(
+          {
+            turi: 'lenta',
+            name: 'wholike',
+            el: el.share.find('.wholikes'),
+            data: {
+              scores: Number(share.scnt),
+              wholikes: wholikes,
+            },
+            bgImages: {},
+          },
+          function (p) {
+            p.el.find('.wholikesTable').on('click', events.postscores);
+
+            if (clbk) clbk();
+          },
+        );
+      },
+      mystars: function (clbk) {
+        if (typeof share.myVal == 'undefined') {
+          var ids = [share.txid];
+
+          self.app.platform.sdk.likes.get(ids, function () {
+            renders.stars();
+
+            renders.wholike(clbk);
+          });
+        } else {
+          if (clbk) clbk();
+        }
+      },
+      stars: function (clbk) {
+        self.shell(
+          {
+            turi: 'lenta',
+            name: 'stars',
+            el: el.stars,
+            data: {
+              share: share,
+            },
+          },
+          function (p) {
+            fastars(p.el.find('.stars'));
+
+            el.share.find('.stars i').on('click', events.like);
+
+            if (clbk) clbk();
+          },
+        );
+      },
+      repost: function (clbk) {
+        if (share.repost) {
+          self.shell(
+            {
+              turi: 'lenta',
+              name: 'repost',
+              el: el.c.find('.repostWrapper'),
+              data: {
+                repost: share.repost,
+                level: level,
+                share: share,
+                //fromrepost : ed.repost
+              },
+            },
+            function (_p) {
+              actions.position();
+
+              if (_p.el && _p.el.length) {
+                self.app.platform.papi.post(
+                  share.repost,
+                  _p.el.find('.repostShare'),
+                  function (p) {
+                    _repost = p;
+
+                    actions.position();
+                  },
+                  {
+                    repost: true,
+                    eid: eid + share.txid,
+                    level: level,
+                    fromempty: share.isEmpty(),
+                  },
+                );
+              }
+            },
+          );
+        }
+      },
+      url: function (clbk) {
+        var url = share.url;
+
+        var og = self.app.platform.sdk.remote.storage[url];
+
+        self.app.platform.sdk.videos
+          .info([url])
+          .then(() => {
+            self.shell(
+              {
+                turi: 'share',
+                name: 'url',
+                el: el.c.find('.url'),
+                data: {
+                  url: url,
+                  og: og,
+                  share: share,
+                },
+
+                additionalActions: function () {
+                  self.closeContainer();
+                },
+              },
+              function (_p) {
+
+				if(app.platform.sdk.videos.storage[url]){
+					var info = app.platform.sdk.videos.storage[url].data;
+
+					var loadingPlayer = _p.el.find('.jsPlayerLoading');
+
+					var width = loadingPlayer.width();
+					loadingPlayer.css(
+					'padding-top', `${width / (2 * info.aspectRatio)}px`
+					);
+					loadingPlayer.css(
+						'padding-bottom', `${width / (2 * info.aspectRatio)}px`
+					);
 				}
 
 				
-			},
-			empty : function(){
-				self.shell({
-					name :  'empty',
-					el : el.share,
 
-				}, function(_p){
-
-					actions.position()
-
-
-				})
-			},
-			images : function(clbk){
-
-				var _el = el.c.find(".image");
-				var images = el.c.find(".images");
-
-				if(images.hasClass('active') || !_el.length || !images.length){
-
-					if (clbk)
-						clbk()
-
-				}
-				else
-				{
-					_el.imagesLoaded({ background: true }, function(image) {
-
-						if(share.settings.v != 'a'){
-
-							_.each(image.images, function(img, n){
-
-								var _img = img.img;
-
-								var el = $(image.elements[n]).closest('.imagesWrapper');
-								var ac = '';
-
-								var _w = el.width();
-								var _h = el.height()
-
-								var w = _w * (_img.width / _img.height);
-
-								
-
-
-								if(_img.width < el.width()){
-									el.find('.image').width(_img.width)
-									el.find('.image').height(_img.height)
-								}
-								else{
-									el.height(_w * (_img.height / _img.width))
-								}
-								
-							})
-
-						}
-
-						
-
-						images.addClass('active')
-
-						_el.addClass('active')
-
-						if (clbk)
-							clbk()
-
-					});
-				}
-
-				
-				
-			},
-			share : function(clbk){
-
-				self.shell({
-					turi : 'lenta',
-					name : ed.video ? 'sharevideo' : 'share',
-					el : el.share,
-
-					additionalActions : function(){
-						self.closeContainer()
-					},
-
-					data : {
-						share : share,
-						all : true,
-						mestate : {},
-						repost : ed.repost,
-						fromempty : ed.fromempty
-					},
-
-				}, function(_p){
-
-					el.stars = el.share.find('.forstars')
-
-					actions.position();
-
-					el.wr.addClass('active')	
-
-					renders.stars(function(){
-
-						renders.mystars(function(){
-							
-						})
-
-						renders.url(function(){
-
-							renders.repost();
-
-							actions.position()
-							
-							renders.urlContent(function(){
-
-								actions.position()
-
-								actions.initVideo()
-
-								renders.images(function(){
-
-									if(!ed.repost){
-
-										actions.position()
-
-										
-										el.share.find('.complain').on('click', events.complain)
-
-										el.share.on('click', '.imagePostOpent', events.openGallery)
-										el.share.on('click', '.forrepost', events.repost)
-
-										el.share.find('.txid').on('click', events.getTransaction)
-										el.share.find('.donate').on('click', events.donate)
-										el.share.find('.sharesocial').on('click', events.sharesocial)
-										el.share.find('.asubscribe').on('click', events.subscribe)
-										el.share.find('.aunsubscribe').on('click', events.unsubscribe)
-										el.share.find('.metmenu').on('click', events.metmenu)
-
-										el.share.find('.notificationturn').on('click', events.subscribePrivate)
-
-
-									}
-
-									if (clbk)
-										clbk()
-									
-								})
-
-
-							});
-					
-
-						})
-
-					})
-
-				})
-			},
-			wholike : function(clbk){
-
-
-				var wholikes = share.who || [];
-
-				self.shell({
-					turi : 'lenta',
-					name :  'wholike',
-					el : el.share.find('.wholikes'),
-					data : {
-						scores : Number(share.scnt),
-						wholikes : wholikes
-					},
-					bgImages : {}			
-
-				}, function(p){
-
-					p.el.find('.wholikesTable').on('click', events.postscores)
-
-					if (clbk)
-						clbk()
-
-				})
-
-			},
-			mystars : function(clbk){
-
-				if(typeof share.myVal == 'undefined'){
-					var ids = [share.txid]
-
-					self.app.platform.sdk.likes.get(ids, function(){
-
-						renders.stars()
-
-						renders.wholike(clbk)
-
-					})
-				}
-				else{
-					if(clbk) clbk()
-				}
-
-			},
-			stars : function(clbk){
-
-
-				self.shell({
-					turi : 'lenta',
-					name :  'stars',
-					el : el.stars,
-					data : {
-						share : share
-					}					
-
-				}, function(p){
-
-
-					fastars(p.el.find('.stars'))
-
-					el.share.find('.stars i').on('click', events.like)
-
-					if (clbk)
-						clbk()
-
-				})
-				
-			},
-			repost : function(clbk){
-
-				
-
-				if(share.repost){
-
-					self.shell({
-						turi : 'lenta',
-						name :  'repost',
-						el : el.c.find('.repostWrapper'),
-						data : {
-							repost : share.repost,
-							level : level,
-							share : share
-							//fromrepost : ed.repost
-						},
-	
-					}, function(_p){
-
-						actions.position()
-
-						if(_p.el && _p.el.length){
-
-							self.app.platform.papi.post(share.repost, _p.el.find('.repostShare'), function(p){
-
-								_repost = p;
-
-								actions.position()
-
-							}, {
-								repost : true,
-								eid : eid + share.txid,
-								level : level,
-								fromempty : share.isEmpty()
-							})
-
-						}
-
-
-						
-
-					})
-
-				}
-			},
-			url : function(clbk){
-
-				var url = share.url
-
-				var og = self.app.platform.sdk.remote.storage[url];
-
-
-				self.shell({
-					turi : 'share',
-					name :  'url',
-					el : el.c.find('.url'),
-					data : {
-						url : url,
-						og : og,
-						share : share
-					},
-
-					additionalActions : function(){
-						self.closeContainer()
-					},
-
-				}, function(_p){
-
-					var images = _p.el.find('img');
-
-					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
-
-						_.each(image.images, function(i, index){
-							if(i.isLoaded){
-								$(images[index]).addClass('active')
-
-								if(i.img.naturalWidth > 500){
-									_p.el.addClass('bigimageinlink')
-								}
-							}
-							else
-							{
-								$(images[index]).closest('.image').css('display', 'none')
-							}
-						})
-
-						if (clbk)
-							clbk()
-
-					});
-
-					
-
-					
-
-				})
-			},
-
-			urlContent : function(clbk){
-				
-
-				var url = share.url;
-
-				if (url){
-
-					var meta = self.app.platform.parseUrl(url);
-					var og = self.app.platform.sdk.remote.storage[url];
-
-					if (url && !og){
-
-						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
-							if (clbk)
-								clbk()
-						}
-						else
-						{
-							self.app.platform.sdk.remote.get(url, function(og){
-
-								if(og){
-									renders.url(clbk)
-								}
-								else
-								{
-									if (clbk)
-										clbk()
-								}
-
-							})
-						}
-					}
-
-					else
-					{
-						if(clbk)
-							clbk()
-					}
-
-				}	
-
-				else
-				{
-					if(clbk)
-						clbk()
-				}			
-
-			},
-		}
+                var images = _p.el.find('img');
+
+                _p.el
+                  .find('img')
+                  .imagesLoaded({ background: true }, function (image) {
+                    _.each(image.images, function (i, index) {
+                      if (i.isLoaded) {
+                        $(images[index]).addClass('active');
+
+                        if (i.img.naturalWidth > 500) {
+                          _p.el.addClass('bigimageinlink');
+                        }
+                      } else {
+                        $(images[index])
+                          .closest('.image')
+                          .css('display', 'none');
+                      }
+                    });
+
+                    if (clbk) clbk();
+                  });
+              },
+            );
+          })
+          .catch(() => {
+            self.shell(
+              {
+                turi: 'share',
+                name: 'url',
+                el: el.c.find('.url'),
+                data: {
+                  url: url,
+                  og: og,
+                  share: share,
+                },
+
+                additionalActions: function () {
+                  self.closeContainer();
+                },
+              },
+              function (_p) {
+
+                var images = _p.el.find('img');
+
+                _p.el
+                  .find('img')
+                  .imagesLoaded({ background: true }, function (image) {
+                    _.each(image.images, function (i, index) {
+                      if (i.isLoaded) {
+                        $(images[index]).addClass('active');
+
+                        if (i.img.naturalWidth > 500) {
+                          _p.el.addClass('bigimageinlink');
+                        }
+                      } else {
+                        $(images[index])
+                          .closest('.image')
+                          .css('display', 'none');
+                      }
+                    });
+
+                    if (clbk) clbk();
+                  });
+              },
+            );
+          });
+      },
+
+      urlContent: function (clbk) {
+        var url = share.url;
+
+        if (url) {
+          var meta = self.app.platform.parseUrl(url);
+          var og = self.app.platform.sdk.remote.storage[url];
+
+          if (url && !og) {
+            if (
+              meta.type == 'youtube' ||
+              meta.type == 'vimeo' ||
+              meta.type == 'bitchute' ||
+              meta.type == 'peertube'
+            ) {
+              if (clbk) clbk();
+            } else {
+              self.app.platform.sdk.remote.get(url, function (og) {
+                if (og) {
+                  renders.url(clbk);
+                } else {
+                  if (clbk) clbk();
+                }
+              });
+            }
+          } else {
+            if (clbk) clbk();
+          }
+        } else {
+          if (clbk) clbk();
+        }
+      },
+    };
 
 		var state = {
 			save : function(){

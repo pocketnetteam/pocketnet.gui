@@ -125,8 +125,14 @@ var menu = (function(){
 
 						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
 
-						if (pn == 'index')
+						var video = parameters(self.app.nav.current.completeHref, true).video;
+
+						if (video) r = 'video'
+
+						if (pn == 'index'){
 							el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
+						}
+							
 					}
 					else
 					{

@@ -105,7 +105,7 @@ function rpc(request, callback, obj) {
     var pbl = publics[request.method]
     var pst = posts[request.method]
 
-    console.log("REQUEST", m , request)
+    //console.log("REQUEST", m , request)
 
     var self = obj;
     request = JSON.stringify(request);
@@ -196,7 +196,7 @@ function rpc(request, callback, obj) {
     req.on('error', function(e) {
         var err = new Error(errorMessage + 'Request Error: ' + e.message);
 
-        console.log("errorMessage + 'Request Error: ' + e.message", errorMessage + 'Request Error: ' + e.message)
+        //console.log("errorMessage + 'Request Error: ' + e.message", errorMessage + 'Request Error: ' + e.message)
 
         if (!called) {
 

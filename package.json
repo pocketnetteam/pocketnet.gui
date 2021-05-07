@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.2.15",
+    "version": "0.2.16",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -19,7 +19,7 @@
         "dev": "node minimize.js true"
     },
     "devDependencies": {
-        "electron": "^11.2.3",
+        "electron": "^11.4.5",
         "electron-builder": "",
         "electron-rebuild": "",
         "electron-reload": "",

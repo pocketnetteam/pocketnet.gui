@@ -46352,11 +46352,11 @@ class PeerTubeEmbed {
         this.api = null;
         this.enableApi = false;
         this.startTime = 0;
-        this.scope = 'peertube';
+        this.scope = "peertube";
         this.headers = new Headers();
         this.LOCAL_STORAGE_OAUTH_CLIENT_KEYS = {
-            CLIENT_ID: 'client_id',
-            CLIENT_SECRET: 'client_secret'
+            CLIENT_ID: "client_id",
+            CLIENT_SECRET: "client_secret",
         };
         this.peertubeHooks = {};
         this.loadedScripts = new Set();
@@ -46365,7 +46365,7 @@ class PeerTubeEmbed {
     static main(element, videoId, parameters, clbk) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const embed = new PeerTubeEmbed(element);
-            console.log('parameters', parameters);
+            console.log("parameters", parameters);
             embed.getInitialSettings(parameters);
             yield embed.init(videoId, parameters, clbk);
             return embed;
@@ -46373,56 +46373,59 @@ class PeerTubeEmbed {
     }
     getInitialSettings(params) {
         //const params = new URL(window.location.toString()).searchParams
-        this.host = 'https://' + this.getParamString(params, 'host', '');
-        this.language = this.getParamString(params, 'language', navigator.language);
-        this.autoplay = this.getParamToggle(params, 'autoplay', false);
-        this.wautoplay = this.getParamToggle(params, 'wautoplay', false);
-        this.controls = this.getParamToggle(params, 'controls', true);
-        this.muted = this.getParamToggle(params, 'muted', undefined);
-        this.loop = this.getParamToggle(params, 'loop', false);
-        this.title = this.getParamToggle(params, 'title', false);
-        this.enableApi = this.getParamToggle(params, 'api', this.enableApi);
-        this.warningTitle = this.getParamToggle(params, 'warningTitle', false);
-        this.peertubeLink = this.getParamToggle(params, 'peertubeLink', false);
-        this.scope = this.getParamString(params, 'scope', this.scope);
-        this.subtitle = this.getParamString(params, 'subtitle');
-        this.startTime = this.getParamString(params, 'start');
-        this.stopTime = this.getParamString(params, 'stop');
-        this.bigPlayBackgroundColor = this.getParamString(params, 'bigPlayBackgroundColor');
-        this.foregroundColor = this.getParamString(params, 'foregroundColor');
-        this.modeParam = this.getParamString(params, 'mode');
-        console.log('this.wautoplay', this.wautoplay);
+        this.host = "https://" + this.getParamString(params, "host", "");
+        this.language = this.getParamString(params, "language", navigator.language);
+        this.autoplay = this.getParamToggle(params, "autoplay", false);
+        this.wautoplay = this.getParamToggle(params, "wautoplay", false);
+        this.controls = this.getParamToggle(params, "controls", true);
+        this.muted = this.getParamToggle(params, "muted", undefined);
+        this.loop = this.getParamToggle(params, "loop", false);
+        this.title = this.getParamToggle(params, "title", false);
+        this.enableApi = this.getParamToggle(params, "api", this.enableApi);
+        this.warningTitle = this.getParamToggle(params, "warningTitle", false);
+        this.peertubeLink = this.getParamToggle(params, "peertubeLink", false);
+        this.scope = this.getParamString(params, "scope", this.scope);
+        this.subtitle = this.getParamString(params, "subtitle");
+        this.startTime = this.getParamString(params, "start");
+        this.stopTime = this.getParamString(params, "stop");
+        this.bigPlayBackgroundColor = this.getParamString(params, "bigPlayBackgroundColor");
+        this.foregroundColor = this.getParamString(params, "foregroundColor");
+        this.modeParam = this.getParamString(params, "mode");
+        this.isVideoEmbed = this.getParamString(params, "videoEmbedded", "");
+        this.txid = this.getParamString(params, "txid", "");
+        console.log("this.wautoplay", this.wautoplay);
     }
     getVideoUrl(id) {
-        return '/api/v1/videos/' + id;
+        return "/api/v1/videos/" + id;
     }
     refreshFetch(url, options) {
-        return fetch(this.host + url, options)
-            .then((res) => {
+        return fetch(this.host + url, options).then((res) => {
             if (res.status !== _shared_core_utils_miscs_http_error_codes__WEBPACK_IMPORTED_MODULE_5__["HttpStatusCode"].UNAUTHORIZED_401)
                 return res;
             const refreshingTokenPromise = new Promise((resolve, reject) => {
                 const clientId = _root_helpers_peertube_web_storage__WEBPACK_IMPORTED_MODULE_8__["peertubeLocalStorage"].getItem(this.LOCAL_STORAGE_OAUTH_CLIENT_KEYS.CLIENT_ID);
                 const clientSecret = _root_helpers_peertube_web_storage__WEBPACK_IMPORTED_MODULE_8__["peertubeLocalStorage"].getItem(this.LOCAL_STORAGE_OAUTH_CLIENT_KEYS.CLIENT_SECRET);
                 const headers = new Headers();
-                headers.set('Content-Type', 'application/x-www-form-urlencoded');
+                headers.set("Content-Type", "application/x-www-form-urlencoded");
                 const data = {
                     refresh_token: this.userTokens.refreshToken,
                     client_id: clientId,
                     client_secret: clientSecret,
-                    response_type: 'code',
-                    grant_type: 'refresh_token'
+                    response_type: "code",
+                    grant_type: "refresh_token",
                 };
-                fetch(this.host + '/api/v1/users/token', {
+                fetch(this.host + "/api/v1/users/token", {
                     headers,
-                    method: 'POST',
-                    body: Object(_root_helpers_utils__WEBPACK_IMPORTED_MODULE_9__["objectToUrlEncoded"])(data)
-                }).then(res => {
+                    method: "POST",
+                    body: Object(_root_helpers_utils__WEBPACK_IMPORTED_MODULE_9__["objectToUrlEncoded"])(data),
+                })
+                    .then((res) => {
                     if (res.status === _shared_core_utils_miscs_http_error_codes__WEBPACK_IMPORTED_MODULE_5__["HttpStatusCode"].UNAUTHORIZED_401)
                         return undefined;
                     return res.json();
-                }).then((obj) => {
-                    if (!obj || obj.code === 'invalid_grant') {
+                })
+                    .then((obj) => {
+                    if (!obj || obj.code === "invalid_grant") {
                         _root_helpers_users__WEBPACK_IMPORTED_MODULE_7__["Tokens"].flush();
                         this.removeTokensFromHeaders();
                         return resolve();
@@ -46432,7 +46435,8 @@ class PeerTubeEmbed {
                     this.userTokens.save();
                     this.setHeadersFromTokens();
                     resolve();
-                }).catch((refreshTokenError) => {
+                })
+                    .catch((refreshTokenError) => {
                     reject(refreshTokenError);
                 });
             });
@@ -46440,29 +46444,38 @@ class PeerTubeEmbed {
                 .catch(() => {
                 _root_helpers_users__WEBPACK_IMPORTED_MODULE_7__["Tokens"].flush();
                 this.removeTokensFromHeaders();
-            }).then(() => fetch(url, Object.assign(Object.assign({}, options), { headers: this.headers })));
+            })
+                .then(() => fetch(url, Object.assign(Object.assign({}, options), { headers: this.headers })));
         });
     }
     getPlaylistUrl(id) {
-        return '/api/v1/video-playlists/' + id;
+        return "/api/v1/video-playlists/" + id;
     }
     loadVideoInfo(videoId) {
-        return this.refreshFetch(this.getVideoUrl(videoId), { headers: this.headers });
+        return this.refreshFetch(this.getVideoUrl(videoId), {
+            headers: this.headers,
+        });
     }
     loadVideoCaptions(videoId) {
-        return this.refreshFetch(this.getVideoUrl(videoId) + '/captions', { headers: this.headers });
+        return this.refreshFetch(this.getVideoUrl(videoId) + "/captions", {
+            headers: this.headers,
+        });
     }
     loadPlaylistInfo(playlistId) {
-        return this.refreshFetch(this.getPlaylistUrl(playlistId), { headers: this.headers });
+        return this.refreshFetch(this.getPlaylistUrl(playlistId), {
+            headers: this.headers,
+        });
     }
     loadPlaylistElements(playlistId, start = 0) {
-        const url = new URL(this.getPlaylistUrl(playlistId) + '/videos');
-        url.search = new URLSearchParams({ start: '' + start, count: '100' }).toString();
+        const url = new URL(this.getPlaylistUrl(playlistId) + "/videos");
+        url.search = new URLSearchParams({
+            start: "" + start,
+            count: "100",
+        }).toString();
         return this.refreshFetch(url.toString(), { headers: this.headers });
     }
     loadConfig() {
-        return this.refreshFetch('/api/v1/config')
-            .then(res => res.json());
+        return this.refreshFetch("/api/v1/config").then((res) => res.json());
     }
     removeElement(element) {
         element.parentElement.removeChild(element);
@@ -46474,30 +46487,30 @@ class PeerTubeEmbed {
             this.playerElement = undefined;
         }
         const translatedText = Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])(text, translations);
-        const translatedSorry = Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])('Sorry', translations);
+        const translatedSorry = Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])("Sorry", translations);
         ///document.title = translatedSorry + ' - ' + translatedText
-        const errorBlock = document.getElementById('error-block');
-        errorBlock.style.display = 'flex';
-        const errorTitle = document.getElementById('error-title');
-        errorTitle.innerHTML = Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])('Sorry', translations);
-        const errorText = document.getElementById('error-content');
+        const errorBlock = document.getElementById("error-block");
+        errorBlock.style.display = "flex";
+        const errorTitle = document.getElementById("error-title");
+        errorTitle.innerHTML = Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])("Sorry", translations);
+        const errorText = document.getElementById("error-content");
         errorText.innerHTML = translatedText;
-        this.wrapperElement.style.display = 'none';
+        this.wrapperElement.style.display = "none";
     }
     videoNotFound(translations) {
-        const text = 'This video does not exist.';
+        const text = "This video does not exist.";
         this.displayError(text, translations);
     }
     videoFetchError(translations) {
-        const text = 'We cannot fetch the video. Please try again later.';
+        const text = "We cannot fetch the video. Please try again later.";
         this.displayError(text, translations);
     }
     playlistNotFound(translations) {
-        const text = 'This playlist does not exist.';
+        const text = "This playlist does not exist.";
         this.displayError(text, translations);
     }
     playlistFetchError(translations) {
-        const text = 'We cannot fetch the playlist. Please try again later.';
+        const text = "We cannot fetch the playlist. Please try again later.";
         this.displayError(text, translations);
     }
     getParamToggle(params, name, defaultValue) {
@@ -46513,7 +46526,7 @@ class PeerTubeEmbed {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const next = this.getNextPlaylistElement();
             if (!next) {
-                console.log('Next element not found in playlist.');
+                console.log("Next element not found in playlist.");
                 return;
             }
             this.currentPlaylistElement = next;
@@ -46524,7 +46537,7 @@ class PeerTubeEmbed {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const previous = this.getPreviousPlaylistElement();
             if (!previous) {
-                console.log('Previous element not found in playlist.');
+                console.log("Previous element not found in playlist.");
                 return;
             }
             this.currentPlaylistElement = previous;
@@ -46558,20 +46571,21 @@ class PeerTubeEmbed {
         try {
             console.log("this", this);
             if (this.modeParam) {
-                if (this.modeParam === 'p2p-media-loader')
-                    this.mode = 'p2p-media-loader';
+                if (this.modeParam === "p2p-media-loader")
+                    this.mode = "p2p-media-loader";
                 else
-                    this.mode = 'webtorrent';
+                    this.mode = "webtorrent";
             }
             else {
-                if (Array.isArray(video.streamingPlaylists) && video.streamingPlaylists.length !== 0)
-                    this.mode = 'p2p-media-loader';
+                if (Array.isArray(video.streamingPlaylists) &&
+                    video.streamingPlaylists.length !== 0)
+                    this.mode = "p2p-media-loader";
                 else
-                    this.mode = 'webtorrent';
+                    this.mode = "webtorrent";
             }
         }
         catch (err) {
-            console.error('Cannot get params from URL.', err);
+            console.error("Cannot get params from URL.", err);
         }
     }
     loadAllPlaylistVideos(playlistId, baseResult) {
@@ -46581,13 +46595,13 @@ class PeerTubeEmbed {
             let i = 0;
             while (total > elements.length && i < 10) {
                 const result = yield this.loadPlaylistElements(playlistId, elements.length);
-                const json = yield result.json();
+                const json = (yield result.json());
                 total = json.total;
                 elements = elements.concat(json.data);
                 i++;
             }
             if (i === 10) {
-                console.error('Cannot fetch all playlists elements, there are too many!');
+                console.error("Cannot fetch all playlists elements, there are too many!");
             }
             return elements;
         });
@@ -46649,13 +46663,13 @@ class PeerTubeEmbed {
             //const translations = await this.translationsPromise
             this.player.upnext({
                 timeout: 10000,
-                headText: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])('Up Next', null),
-                cancelText: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])('Cancel', null),
-                suspendedText: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])('Autoplay is suspended', null),
+                headText: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])("Up Next", null),
+                cancelText: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])("Cancel", null),
+                suspendedText: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])("Autoplay is suspended", null),
                 getTitle: () => this.nextVideoTitle(),
                 next: () => this.playNextVideo(),
                 condition: () => !!this.getNextPlaylistElement(),
-                suspended: () => false
+                suspended: () => false,
             });
         });
     }
@@ -46670,7 +46684,7 @@ class PeerTubeEmbed {
     nextVideoTitle() {
         const next = this.getNextPlaylistElement();
         if (!next)
-            return '';
+            return "";
         return next.video.name;
     }
     getNextPlaylistElement(position) {
@@ -46679,7 +46693,7 @@ class PeerTubeEmbed {
         if (position > this.playlist.videosLength) {
             return undefined;
         }
-        const next = this.playlistElements.find(e => e.position === position);
+        const next = this.playlistElements.find((e) => e.position === position);
         if (!next || !next.video) {
             return this.getNextPlaylistElement(position + 1);
         }
@@ -46691,7 +46705,7 @@ class PeerTubeEmbed {
         if (position < 1) {
             return undefined;
         }
-        const prev = this.playlistElements.find(e => e.position === position);
+        const prev = this.playlistElements.find((e) => e.position === position);
         if (!prev || !prev.video) {
             return this.getNextPlaylistElement(position - 1);
         }
@@ -46704,18 +46718,36 @@ class PeerTubeEmbed {
                 this.player.dispose();
                 alreadyHadPlayer = true;
             }
-            this.playerElement = document.createElement('video');
-            this.playerElement.className = 'video-js';
-            this.playerElement.setAttribute('playsinline', 'true');
-            this.wrapperElement.innerHTML = '';
-            this.wrapperElement.appendChild(this.playerElement);
-            const videoInfoPromise = videoResponse.json()
-                .then((videoInfo) => {
+            const videoInfoPromise = videoResponse
+                .json()
+                .then((videoInfo) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                const metaUrl = videoInfo.files[0].metadataUrl;
+                const videoSizeValue = yield fetch(metaUrl)
+                    .then((res) => res.json())
+                    .then((json) => {
+                    const info = json.streams[0];
+                    return Number((info.width / info.height).toFixed(2));
+                });
+                this.playerElement = document.createElement("video");
+                this.playerElement.className = "video-js";
+                this.playerElement.setAttribute("playsinline", "true");
+                const isVideoEmbedded = document.querySelector(".standalone-video-embed");
+                const paddingSize = 100 / (2 * videoSizeValue);
+                if (paddingSize > 50) {
+                    this.playerElement.classList.add("verticalVideo");
+                    if (isVideoEmbedded)
+                        document.querySelector('.video-js-wrapper').classList.add('vertcalVideoContainer');
+                }
+                if (!isVideoEmbedded) {
+                    this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
+                }
+                this.wrapperElement.innerHTML = "";
+                this.wrapperElement.appendChild(this.playerElement);
                 if (!alreadyHadPlayer)
                     this.loadPlaceholder(videoInfo);
                 return videoInfo;
-            });
-            const [videoInfoTmp,] = yield Promise.all([
+            }));
+            const [videoInfoTmp /*serverTranslations, captionsResponse, config, PeertubePlayerManager*/,] = yield Promise.all([
                 videoInfoPromise,
             ]);
             //await this.ensurePluginsAreLoaded(config, serverTranslations)
@@ -46730,9 +46762,8 @@ class PeerTubeEmbed {
                     getCurrentPosition: () => this.currentPlaylistElement.position,
                     onItemClicked: (videoPlaylistElement) => {
                         this.currentPlaylistElement = videoPlaylistElement;
-                        this.loadVideoAndBuildPlayer(this.currentPlaylistElement.video.uuid)
-                            .catch(err => console.error(err));
-                    }
+                        this.loadVideoAndBuildPlayer(this.currentPlaylistElement.video.uuid).catch((err) => console.error(err));
+                    },
                 }
                 : undefined;
             const options = {
@@ -46744,63 +46775,81 @@ class PeerTubeEmbed {
                     loop: this.loop,
                     captions: false,
                     subtitle: this.subtitle,
-                    startTime: this.playlist ? this.currentPlaylistElement.startTimestamp : this.startTime,
-                    stopTime: this.playlist ? this.currentPlaylistElement.stopTimestamp : this.stopTime,
+                    startTime: this.playlist
+                        ? this.currentPlaylistElement.startTimestamp
+                        : this.startTime,
+                    stopTime: this.playlist
+                        ? this.currentPlaylistElement.stopTimestamp
+                        : this.stopTime,
                     nextVideo: this.playlist ? () => this.playNextVideo() : undefined,
-                    hasNextVideo: this.playlist ? () => !!this.getNextPlaylistElement() : undefined,
-                    previousVideo: this.playlist ? () => this.playPreviousVideo() : undefined,
-                    hasPreviousVideo: this.playlist ? () => !!this.getPreviousPlaylistElement() : undefined,
+                    hasNextVideo: this.playlist
+                        ? () => !!this.getNextPlaylistElement()
+                        : undefined,
+                    previousVideo: this.playlist
+                        ? () => this.playPreviousVideo()
+                        : undefined,
+                    hasPreviousVideo: this.playlist
+                        ? () => !!this.getPreviousPlaylistElement()
+                        : undefined,
                     playlist: playlistPlugin,
                     videoCaptions: [],
                     inactivityTimeout: 2500,
-                    videoViewUrl: this.host + this.getVideoUrl(videoInfo.uuid) + '/views',
+                    videoViewUrl: this.host + this.getVideoUrl(videoInfo.uuid) + "/views",
                     videoUUID: videoInfo.uuid,
                     isLive: videoInfo.isLive,
                     playerElement: this.playerElement,
-                    onPlayerElementChange: (element) => this.playerElement = element,
+                    onPlayerElementChange: (element) => (this.playerElement = element),
                     videoDuration: videoInfo.duration,
                     enableHotkeys: true,
                     peertubeLink: this.peertubeLink,
-                    poster: this.wautoplay ? null : (this.host + videoInfo.previewPath),
+                    poster: this.wautoplay ? null : this.host + videoInfo.previewPath,
                     theaterButton: false,
                     serverUrl: this.host,
                     language: this.language,
                     embedUrl: this.host + videoInfo.embedPath,
-                    embedTitle: videoInfo.name
+                    embedTitle: videoInfo.name,
                 },
                 webtorrent: {
-                    videoFiles: videoInfo.files
-                }
+                    videoFiles: videoInfo.files,
+                },
             };
-            if (this.mode === 'p2p-media-loader') {
-                const hlsPlaylist = videoInfo.streamingPlaylists.find(p => p.type === 1 /* HLS */);
+            if (this.mode === "p2p-media-loader") {
+                const hlsPlaylist = videoInfo.streamingPlaylists.find((p) => p.type === 1 /* HLS */);
                 Object.assign(options, {
                     p2pMediaLoader: {
                         playlistUrl: hlsPlaylist.playlistUrl,
                         segmentsSha256Url: hlsPlaylist.segmentsSha256Url,
-                        redundancyBaseUrls: hlsPlaylist.redundancies.map(r => r.baseUrl),
+                        redundancyBaseUrls: hlsPlaylist.redundancies.map((r) => r.baseUrl),
                         trackerAnnounce: videoInfo.trackerUrls,
-                        videoFiles: hlsPlaylist.files
-                    }
+                        videoFiles: hlsPlaylist.files,
+                    },
                 });
             }
             this.player = yield _assets_player_peertube_player_manager__WEBPACK_IMPORTED_MODULE_11__["PeertubePlayerManager"].initialize(this.mode, options, (player) => {
                 this.player = player;
-                console.log("ASDASDDAS");
             });
-            this.player.on('customError', (event, data) => this.handleError(data.err /*, serverTranslations*/));
+            this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
+            const overlayString = this.isVideoEmbed
+                ? `<a class="icon icon-only-logo-transparent" href="https://pocketnet.app/index?s=${this.txid}"></a>`
+                : '<span class="icon icon-full-logo-transparent"></span>';
             this.player.overlay({
-                overlays: [{
-                        content: '<span class="icon icon-full-logo-transparent"></span>',
-                        align: 'top-left',
+                overlays: [
+                    {
+                        content: overlayString,
+                        align: "top-left",
                         start: 0,
                         showBackground: false,
-                        class: 'pocketnet-logo-video-player'
-                    }]
+                        class: "pocketnet-logo-video-player",
+                    },
+                ],
             });
             this.initializeApi();
             this.removePlaceholder();
-            this.runHook('action:embed.player.loaded', undefined, { player: this.player, videojs: (video_js__WEBPACK_IMPORTED_MODULE_2___default()), video: videoInfo });
+            this.runHook("action:embed.player.loaded", undefined, {
+                player: this.player,
+                videojs: (video_js__WEBPACK_IMPORTED_MODULE_2___default()),
+                video: videoInfo,
+            });
         });
     }
     initCore(videoId, parameters) {
@@ -46849,10 +46898,10 @@ class PeerTubeEmbed {
         });
     }
     handleError(err, translations) {
-        if (err.message.indexOf('from xs param') !== -1) {
+        if (err.message.indexOf("from xs param") !== -1) {
             this.player.dispose();
             this.playerElement = null;
-            this.displayError('This video is not available because the remote instance is not responding.', translations);
+            this.displayError("This video is not available because the remote instance is not responding.", translations);
             return;
         }
     }
@@ -46865,33 +46914,35 @@ class PeerTubeEmbed {
                 return;
             const title = this.title ? videoInfo.name : undefined;
             const description = config.tracker.enabled && this.warningTitle
-                ? '<span class="text">' + Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])('Watching this video may reveal your IP address to others.') + '</span>'
+                ? '<span class="text">' +
+                    Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])("Watching this video may reveal your IP address to others.") +
+                    "</span>"
                 : undefined;
             if (title || description) {
                 this.player.dock({
                     title,
-                    description
+                    description,
                 });
             }
         });
     }
     buildCSS() {
-        const body = document.getElementById('custom-css');
+        const body = document.getElementById("custom-css");
         if (this.bigPlayBackgroundColor) {
-            body.style.setProperty('--embedBigPlayBackgroundColor', this.bigPlayBackgroundColor);
+            body.style.setProperty("--embedBigPlayBackgroundColor", this.bigPlayBackgroundColor);
         }
         if (this.foregroundColor) {
-            body.style.setProperty('--embedForegroundColor', this.foregroundColor);
+            body.style.setProperty("--embedForegroundColor", this.foregroundColor);
         }
     }
     buildCaptions(serverTranslations, captionsResponse) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (captionsResponse.ok) {
-                const { data } = (yield captionsResponse.json());
-                return data.map(c => ({
+                const { data, } = (yield captionsResponse.json());
+                return data.map((c) => ({
                     label: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])(c.language.label, serverTranslations),
                     language: c.language.id,
-                    src: this.host + c.captionPath
+                    src: this.host + c.captionPath,
                 }));
             }
             return [];
@@ -46902,28 +46953,28 @@ class PeerTubeEmbed {
         if (placeholder) {
             const url = this.host + video.previewPath;
             placeholder.style.backgroundImage = `url("${url}")`;
-            console.log('this.wautoplaythis.wautoplaythis.wautoplay', this.wautoplay);
+            console.log("this.wautoplaythis.wautoplaythis.wautoplay", this.wautoplay);
             if (!this.wautoplay)
-                placeholder.style.display = 'block';
+                placeholder.style.display = "block";
             else {
-                placeholder.style.display = 'none';
-                console.log('placeholder.style.display', placeholder.style.display);
+                placeholder.style.display = "none";
+                console.log("placeholder.style.display", placeholder.style.display);
             }
         }
     }
     removePlaceholder() {
         const placeholder = this.getPlaceholderElement();
         if (placeholder)
-            placeholder.style.display = 'none';
+            placeholder.style.display = "none";
     }
     getPlaceholderElement() {
-        return document.getElementById('placeholder-preview');
+        return document.getElementById("placeholder-preview");
     }
     setHeadersFromTokens() {
-        this.headers.set('Authorization', `${this.userTokens.tokenType} ${this.userTokens.accessToken}`);
+        this.headers.set("Authorization", `${this.userTokens.tokenType} ${this.userTokens.accessToken}`);
     }
     removeTokensFromHeaders() {
-        this.headers.delete('Authorization');
+        this.headers.delete("Authorization");
     }
     /*private getResourceId () {
       const params = new URL(window.location.toString()).searchParams
@@ -46931,7 +46982,7 @@ class PeerTubeEmbed {
       return this.getParamString(params, 'id', null)
     }*/
     isPlaylistEmbed() {
-        return window.location.pathname.split('/')[1] === 'video-playlists';
+        return window.location.pathname.split("/")[1] === "video-playlists";
     }
     ensurePluginsAreLoaded(config, translations) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -46940,7 +46991,7 @@ class PeerTubeEmbed {
             for (const plugin of config.plugin.registered) {
                 for (const key of Object.keys(plugin.clientScripts)) {
                     const clientScript = plugin.clientScripts[key];
-                    if (clientScript.scopes.includes('embed') === false)
+                    if (clientScript.scopes.includes("embed") === false)
                         continue;
                     const script = `/plugins/${plugin.name}/${plugin.version}/client-scripts/${clientScript.script}`;
                     if (this.loadedScripts.has(script))
@@ -46949,16 +47000,16 @@ class PeerTubeEmbed {
                         plugin,
                         clientScript: {
                             script,
-                            scopes: clientScript.scopes
+                            scopes: clientScript.scopes,
                         },
                         pluginType: _shared_models__WEBPACK_IMPORTED_MODULE_4__["PluginType"].PLUGIN,
-                        isTheme: false
+                        isTheme: false,
                     };
                     yield Object(_root_helpers_plugins__WEBPACK_IMPORTED_MODULE_6__["loadPlugin"])({
                         hooks: this.peertubeHooks,
                         pluginInfo,
                         onSettingsScripts: () => undefined,
-                        peertubeHelpersFactory: _ => this.buildPeerTubeHelpers(translations)
+                        peertubeHelpersFactory: (_) => this.buildPeerTubeHelpers(translations),
                     });
                 }
             }
@@ -46966,7 +47017,7 @@ class PeerTubeEmbed {
     }
     buildPeerTubeHelpers(translations) {
         function unimplemented() {
-            throw new Error('This helper is not implemented in embed.');
+            throw new Error("This helper is not implemented in embed.");
         }
         return {
             getBaseStaticRoute: unimplemented,
@@ -46975,17 +47026,17 @@ class PeerTubeEmbed {
             notifier: {
                 info: unimplemented,
                 error: unimplemented,
-                success: unimplemented
+                success: unimplemented,
             },
             showModal: unimplemented,
             getServerConfig: unimplemented,
             markdownRenderer: {
                 textMarkdownToHTML: unimplemented,
-                enhancedMarkdownToHTML: unimplemented
+                enhancedMarkdownToHTML: unimplemented,
             },
             translate: (value) => {
                 return Promise.resolve(Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])(value, translations));
-            }
+            },
         };
     }
     runHook(hookName, result, params) {

@@ -1,4 +1,23 @@
 <div id="<%-module.map.id%>">
+
+
+	<% if(app.platform.videoenabled && (typeof video == 'undefined' || !video)) {%>
+		<div class="wrp">
+			<div class="rcptwrp">
+				<div class="tcaptionwrapper">
+					<div class="tcaptiontable table">
+						<div class="tcaption pocketcaption">
+							<a href="index?r=sub" handler="true">
+								<span>Your Pocket</span> <i class="fas fa-chevron-right"></i>
+							</a>
+						</div>	
+					</div>
+				</div>
+					
+			</div>
+		</div>
+	<% } %>
+
 	<div class="wrp">
 		<div class="rcptwrp">
 			<div class="tcaptionwrapper">

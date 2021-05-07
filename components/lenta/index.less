@@ -293,6 +293,10 @@
 			}
 		}
 
+		.verticalVideo {
+			max-width: 400px;
+		}
+
 		.commentsWrapper{			
 			background: #FAFAFA;
 		}
@@ -814,7 +818,7 @@
 					}
 				}
 
-				.viewsWrapper,
+				.statswrapper,
 
 				.durationWrapper{
 					position: absolute;
@@ -824,16 +828,21 @@
 					background: fade(@color-black, 0.5);
 					color : @color-gray-slight;
 					padding : 0.5 * @rhythm @rhythm;
-
+					text-shadow: 1px 1px 3px rgba(50, 50, 50, 1);
 					i,
 					span{
 						font-size: 0.8em;
 					}
 				}
 
-				.viewsWrapper{
+				.statswrapper{
 					right: auto;
 					left : @rhythm;
+
+					>div{
+						float: left;
+						margin-right: @rhythm;
+					}
 				}
 			}
 			
@@ -843,12 +852,19 @@
 				width: auto;
 				height: auto;
 				background: #000000;
+
+				position: relative;
 				
 
 				.jsPlayerLoadingD{
 					width: 100%;
 					height: 100%;
-					min-height: 200px;
+
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+
 					>div{
 						vertical-align: middle;
 						text-align: center;
@@ -1526,6 +1542,10 @@
 				overflow-y: scroll;
 				padding-top: 0;
 
+				.verticalVideo {
+					margin: 0 auto;
+				}
+
 				&::-webkit-scrollbar{
 					width: 0!important
 				}
@@ -1663,6 +1683,10 @@
 
 					.videoWrapper{
 						max-width: none;
+
+						&.verticalVideo {
+							max-width: 400px;
+						}
 
 						.videoTips{
 							display: none;
@@ -1855,6 +1879,7 @@
 		button{
 			border-radius: 30px;
 			width: 350px;
+			max-width: 90%;
 		}
 	}
 
@@ -1954,6 +1979,10 @@
 				margin-bottom: 0;
 				overflow : hidden;
 				border-radius: 3px;
+
+				&.hidden{
+					display: block!important;
+				}
 
 				.sharecaption{
 					color : @color-gray-mlight;
@@ -2765,6 +2794,10 @@ html.stblack{
 					opacity: 1;
 				}
 			}
+		}
+
+		.verticalVideo {
+			max-width: 200px;
 		}
 
 		

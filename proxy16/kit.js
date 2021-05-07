@@ -21,15 +21,34 @@ var settingsPath = 'data/settings'
 var settings = {};
 
 var pocketnet = new Pocketnet()
+var test = false
 
 var testnodes = [
+	/*{
+		host : '192.168.0.33',
+		port : 37071,
+		ws : 6067,
+		name : 'CryptoserverTest',
+		stable : true
+	},*/
+
 	{
 		host : '216.108.231.28',
 		port : 36061,
 		ws : 6067,
 		name : 'CryptoserverTest',
 		stable : true
+	},
+
+	{
+		host : '64.235.46.85',
+		port : 36061,
+		ws : 6067,
+		name : 'CryptoserverTest2',
+		stable : true
 	}
+
+	
 ]
 
 var activenodes = [
@@ -58,25 +77,26 @@ var activenodes = [
 	},
 
 	{
-		host : '64.235.35.173',
-		port : 38081,
-		ws : 8087,
-		name : 'CryptoserverSP4',
-		stable : true
-	},
-
-	
-	
-	{
 		host : '185.148.147.15',
 		port : 38081,
 		ws : 8087,
 		name : 'Cryptoserver',
 		stable : true
+	},
+
+	{
+		host : '135.181.196.243',
+		port : 38081,
+		ws : 8087,
+		name : 'Cryptoserver243',
+		stable : true
 	}
+	
 ]
 
 var nodes = activenodes
+
+if (test) nodes = testnodes
 
 var defaultSettings = {
 
@@ -285,7 +305,8 @@ var kit = {
 					if(settings.ports) notification.ports = settings.ports
 					if(typeof settings.enabled) notification.enabled = settings.enabled
 					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
-					if(settings.ssl) notification.ssl = true
+                    if(settings.ssl) notification.ssl = true
+                
 
 					return kit.proxy().then(proxy => {
 
@@ -879,7 +900,14 @@ var kit = {
 	startproxy : function(hck){
 
 		if(!proxy){
-			proxy = new Proxy(settings, kit.manage)
+            
+            if (settings.server.test) {
+                test = true
+                nodes = testnodes
+                settings.nodes.stable = nodes
+            }
+
+			proxy = new Proxy(settings, kit.manage, test)
 
 			if (hck.userDataPath){
 				proxy.userDataPath = hck.userDataPath
@@ -908,10 +936,8 @@ var kit = {
 		if(!hck) hck = {}
 
 		settings = state.expand(environmentDefaultSettings, settings)
-
-		db = new Datastore(f.path(settingsPath));
-
-
+        db = new Datastore(f.path(settingsPath));
+        
 		return new Promise((resolve, reject) => {
 
 			var start = function(){

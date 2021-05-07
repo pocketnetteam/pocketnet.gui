@@ -635,6 +635,12 @@ var lenta = (function(){
 				}
 			},
 
+			htls : function(id){
+				self.app.platform.ui.wallet.send({htls : id}, function(){
+					
+				})
+			},
+
 			donate : function(id, clbk){
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
@@ -1221,7 +1227,19 @@ var lenta = (function(){
 						
 					}
 				})
-			}
+			},
+
+			videoShare : function(share) {
+				if (!share.url || !share.itisvideo()) return sitemessage('Unable to parse a video in the post');
+
+				const metaInfo = self.app.platform.parseUrl(share.url);
+
+				const peertubeLink = `https://pocketnet.app/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
+
+				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
+
+				return sitemessage(self.app.localization.e('videoCopied'));
+			},
 		}
 
 		var events = {
@@ -1617,17 +1635,17 @@ var lenta = (function(){
 			},
 
 			donate : function(){
-				/*if (essenseData.authAction) {
-
-					essenseData.authAction('donate')
-
-					return
-
-				}*/
 
 				var shareId = $(this).closest('.share').attr('id');
 
 					actions.donate(shareId)
+			},
+
+			htls : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+					actions.htls(shareId)
 			},
 
 			discussion : function(){
@@ -2143,7 +2161,8 @@ var lenta = (function(){
 					el : p.el || el.shares,
 					data : {
 						shares : shares || [],
-						index : p.index || 0
+						index : p.index || 0,
+						video : video
 					},
 					animation : false,
 
@@ -2371,8 +2390,19 @@ var lenta = (function(){
 
 				var meta = self.app.platform.parseUrl(url);
 
+				var aspectRatio;
+
 
 				var renderclbk = function(_p){
+					if (aspectRatio) {
+						var playerContainer = _p.el.find('.jsPlayerLoading');
+
+						var paddingvalue = 100 / (2 * aspectRatio);
+
+						playerContainer.css('padding-top', `${paddingvalue}%`);
+						playerContainer.css('padding-bottom', `${paddingvalue}%`);
+					}
+
 					self.app.nav.api.links(null, _p.el, function(event){
 	
 						event.stopPropagation()
@@ -2425,6 +2455,7 @@ var lenta = (function(){
 							og : og,
 							share : share,
 							views : res.views || 0,
+							aspectRatio: res.aspectRatio || 0,
 							video : video,
 							preview : video ? true : false
 						},
@@ -2437,10 +2468,13 @@ var lenta = (function(){
 				}
 
 				if (meta.type === 'peertube') {
-					
-					//self.app.peertubeHandler.getVideoInfoAnon(meta, (res) => {
-						rndr({})
-					//});
+					self.app.api.fetch('peertube/video',{
+						host: `https://${meta.host_name}`,
+						id: meta.id,
+					}).then(res => {
+						aspectRatio = res.aspectRatio;
+						rndr({ views: res.views, aspectRatio: res.aspectRatio });
+					});
 
 				} else {
 					rndr({})
@@ -2464,7 +2498,7 @@ var lenta = (function(){
 					if (url && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
-							
+
 							if (clbk)
 								clbk()
 
@@ -2999,7 +3033,7 @@ var lenta = (function(){
 			el.c.on('click', '.aunsubscribe', events.aunsubscribe)
 			el.c.on('click', '.notificationturn', events.subscribePrivate)
 			
-			
+
 
 			el.c.on('click', '.donate', events.donate)
 			el.c.on('click', '.sharesocial', events.sharesocial)

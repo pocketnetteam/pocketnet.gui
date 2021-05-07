@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta property="og:platform" content="PeerTube" />
+    <link href="/pocketnet/peertube/video-embed.css" rel="stylesheet" />
+  </head>
+  <body id="custom-css" class="standalone-video-embed">
+    <div id="error-block">
+      <h1 id="error-title"></h1>
+      <div id="error-content"></div>
+    </div>
+    <div class="video-js-wrapper"><div id="video-wrapper"></div></div>
+    <div id="placeholder-preview"></div>
+    <script src="/pocketnet/peertube/video-embed.bundle.js"></script>
+    <script>
+      const addVideoToPage = () => {
+        const elem = document.getElementById('video-wrapper');
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const isVideEmbed = urlParams.get('embed');
+
+        const [host, id, s] = [urlParams.get('host'), urlParams.get('id'), urlParams.get('s')];
+
+        if (!isVideEmbed || !host || !id || !s) return;
+
+        PeerTubeEmbeding.main(elem, id, {
+          host,
+          videoEmbedded: true,
+          txid: s,
+        });
+      };
+
+      addVideoToPage();
+    </script>
+    <script src="./peertube/video-embed.bundle.js"></script>
+  </body>
+</html>
