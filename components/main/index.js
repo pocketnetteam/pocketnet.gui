@@ -985,6 +985,7 @@ var main = (function(){
 					slidesPerGroup: 1,
 					initialSlide: 1,
 					spaceBetween: 1,
+					threshold: 10,
 					resistance : true,
 					resistanceRatio: 0,
 					// Responsive breakpoints
