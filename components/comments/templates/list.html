@@ -109,6 +109,16 @@ var commentpanel = function(comment, _class){  %>
 								<% if(!src) {%>
 									<svg width="30" height="30" data-jdenticon-value="<%-comment.address%>"></svg>
 								<% } %>
+
+								<% if(deep(app, 'platform.real.'+comment.address)) {%>
+									<div class="realperson">
+
+										<span class="fa-stack fa-2x">
+											<i class="fas fa-certificate fa-stack-2x"></i>
+											<i class="fas fa-check fa-stack-1x"></i>
+										  </span>
+									</div>
+								<% } %>
 							</div>
 						</div>
 					<% if(!app.curation()) {%></a><% } %>
