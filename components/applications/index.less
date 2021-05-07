@@ -3,8 +3,14 @@
 #applications{
 
     .caption{
-        font-size: 2em;
-        font-weight: 100;
+        font-size: 1.5em;
+        font-weight: 00;
+        width: 95%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1em;
+        margin-top: 2em;
+        
     }
 
     .subcaption{
@@ -74,6 +80,15 @@
     }
     
     .currentos{
+        display: none;
+        padding : 4 * @rhythm 0;
+        &.active{
+            display: block;
+            
+        }
+    }
+
+    .extraos{
         display: none;
         padding : 4 * @rhythm 0;
         &.active{

@@ -26,6 +26,7 @@ var faq = (function(){
 						a : `<div><a href="applications"><button>Download Application</button></a></div><div class="dfdo"><a href="https://github.com/pocketnetteam/pocketnet.gui/releases/latest">https://github.com/pocketnetteam/pocketnet.gui/releases/latest</a></div><div>${self.app.localization.e('e14006')}</div>`,
 					},
 
+
 					{
 						id : 'downloadnode',
 						q : self.app.localization.e('e14005'),
@@ -353,12 +354,14 @@ var faq = (function(){
 		]
 
 
+		if (!window.cordova){
 
-
-
-
-
-
+			faqcontent[0].group.splice(1, 0, {
+				id : 'downloadandroid',
+				q : self.app.localization.e('e14109'),
+				a : `<div><a href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
+			})
+		}
 
 		var mp = {};
 
