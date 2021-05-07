@@ -33,5 +33,7 @@ jobs:
 
       - name: Copy to dest dir
         run: |
-          pwd
-          rsync -av ./ /docker/gui/ --exclude .git
+          whoami
+          ls -l /
+          ls -l /docker/
+          rsync -ah ./ /docker/gui/ --exclude .git
