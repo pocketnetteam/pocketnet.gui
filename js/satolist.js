@@ -20,6 +20,7 @@ Platform = function (app, listofnodes) {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
         'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true,
+        'PCVt7H4vgjBDxifLz3uokbc1tD3MZwWwQh' : true
 
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
