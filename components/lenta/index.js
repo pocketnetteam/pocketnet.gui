@@ -2435,7 +2435,6 @@ var lenta = (function(){
 				}
 
 				var rndr = function(res){
-
 					self.shell({
 						turi : 'share',
 						name :  'url',
@@ -2445,6 +2444,7 @@ var lenta = (function(){
 							og : og,
 							share : share,
 							views : res.views || 0,
+							aspectRatio: res.aspectRatio || 0,
 							video : video,
 							preview : video ? true : false
 						},

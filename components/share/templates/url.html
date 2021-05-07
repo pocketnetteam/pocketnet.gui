@@ -2,13 +2,18 @@
 	
 	var meta = app.platform.parseUrl(url);
 
+	if (typeof aspectRatio === 'undefined') {
+		var aspectRatio = 0;
+	}
+
 	if(typeof share == 'undefined') share = {};
 
 	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
 		if(!app.platform.sdk.usersettings.meta.embedvideo || 
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
+
 	%>
-		<div class="videoWrapper" pid="<%- makeid() %>">
+		<div class="videoWrapper <%- aspectRatio > 0.5 ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
 			<% if(meta.type == 'youtube' && window.cordova) {%>
 

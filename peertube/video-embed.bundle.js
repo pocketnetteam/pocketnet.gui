@@ -46784,7 +46784,6 @@ class PeerTubeEmbed {
                     videoFiles: videoInfo.files
                 }
             };
-            debugger;
             if (this.mode === 'p2p-media-loader') {
                 const hlsPlaylist = videoInfo.streamingPlaylists.find(p => p.type === 1 /* HLS */);
                 Object.assign(options, {
