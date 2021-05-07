@@ -1,10 +1,11 @@
 FROM node:current-alpine
 
 EXPOSE 8899 8099
-WORKDIR /usr/src/app
 
+WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install
+RUN npm ci --only=production
 COPY . .
 
-CMD ["node", "proxy16/cli.js", "--cli"]
+WORKDIR /usr/src/app/proxy16
+CMD ["node", "cli.js", "--cli"]
