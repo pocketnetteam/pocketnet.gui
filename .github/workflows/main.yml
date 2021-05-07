@@ -32,4 +32,4 @@ jobs:
         run: npm i --only-production
 
       - name: Copy to dest dir
-        run: rsync -av ./* /var/www/gui --exclude .git
+        run: cp ./* /var/www/gui/
