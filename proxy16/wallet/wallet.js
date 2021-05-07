@@ -207,6 +207,7 @@ var Wallet = function(p){
 
     self.unspents = {
         waitSpend: function (unspent) {
+
             if (unspent.confirmations <= 11 && unspent.pockettx) {
                 return 11 - unspent.confirmations
             }
@@ -229,7 +230,7 @@ var Wallet = function(p){
         },
 
         canSpend: function (unspent) {
-            return !unspent.cantspend && !self.unspents.waitSpend(unspent) && unspent.amount
+            return !unspent.block && !unspent.cantspend && !self.unspents.waitSpend(unspent) && unspent.amount
         },
 
         total : function(unspents){
@@ -771,7 +772,7 @@ var Wallet = function(p){
                 scriptPubKey: unspent[unspent.length - 1].scriptPubKey,
             }]
 
-            return this.types[obj.type](address, inputs, obj, p).then(alias, error, data => {
+            return this.types[obj.type](address, inputs, obj, p).then(({alias, error, data}) => {
 
                 if (!alias && ((error == -26 || error == -25 || error == 16) && !p.update) ) {
                     p.update = true;
@@ -801,66 +802,97 @@ var Wallet = function(p){
 
                 if (error) return Promise.reject(error)
                
+                var keyPair = address.kp
+                var address = address.address
 
-                else {
-                    var keyPair = address.kp
-                    var address = address.address
+                var txb = new self.pocketnet.lib.TransactionBuilder();
+                    txb.addNTime(node.timeDifference || 0)
 
-                    var txb = new self.pocketnet.lib.TransactionBuilder();
-                        txb.addNTime(node.timeDifference || 0)
+                var amount = 0;
 
-                    var amount = 0;
+                _.each(inputs, function (i, index) {
 
-                    _.each(inputs, function (i, index) {
+                    txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
 
-                        txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
+                    amount = amount + Number(i.amount);
+                })
 
-                        amount = amount + Number(i.amount);
+                amount = amount * smulti;
+
+                var data = Buffer.from(self.pocketnet.lib.crypto.hash256(obj.serialize()), 'utf8');
+
+                var optype = obj.typeop ? obj.typeop(self) : obj.type
+                var optstype = optype
+
+                if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
+
+                var opreturnData = [Buffer.from(optype, 'utf8'), data];
+
+                var outputs = [];
+
+                if (obj.opreturn) {
+                    opreturnData.push(Buffer.from(obj.opreturn()))
+                }
+
+                var embed = self.pocketnet.lib.payments.embed({ data: opreturnData });
+                var i = 0;
+
+                txb.addOutput(embed.output, 0);
+
+                outputs.push({
+                    amount : 0,
+                    deleted : true,
+                    address : address.address
+                })
+
+                txb.addOutput(address.address, Number((amount - (fees || 0)).toFixed(0)));
+
+                outputs.push({
+                    address: address.address,
+                    amount: Number((amount - (fees || 0)).toFixed(0))
+                })
+
+                _.each(inputs, function (input, index) {
+                    txb.sign(index, keyPair);
+                })
+
+                var tx = txb.build()
+
+                var hex = tx.toHex();
+
+                _.each(inputs, function (i) {
+                    var u = _.find(address.unspents, function(u){
+                        return u.vout == i.vout && u.txid == i.txId
+                    })
+                    
+                    if(u) u.cantspend = true
+                })
+
+                return self.nodeManager.request('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(data => {
+
+                    var alias = obj.export(true);
+                        alias.txid = data;
+                        alias.address = address.address;
+                        alias.type = obj.type
+                        alias.time = self.currentTime()
+                        alias.timeUpd = alias.time
+                        alias.optype = optype
+                        alias.inputs = inputs
+                        alias.outputs = _.map(outputs, function(output){
+                            return {
+                                address : output.address,
+                                amount : output.amount / smulti,
+                                deleted : output.deleted
+                            }
+                        })
+
+                    return Promise.resolve({
+                        alias,
+                        data
                     })
 
-                    amount = amount * smulti;
-
-                    var data = Buffer.from(self.pocketnet.lib.crypto.hash256(obj.serialize()), 'utf8');
-
-                    var optype = obj.typeop ? obj.typeop(self) : obj.type
-                    var optstype = optype
-
-                    if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
-
-                    var opreturnData = [Buffer.from(optype, 'utf8'), data];
-
-                    var outputs = [];
-
-                    if (obj.opreturn) {
-                        opreturnData.push(Buffer.from(obj.opreturn()))
-                    }
-
-                    var embed = self.pocketnet.lib.payments.embed({ data: opreturnData });
-                    var i = 0;
-
-                    txb.addOutput(embed.output, 0);
-
-                    outputs.push({
-                        amount : 0,
-                        deleted : true,
-                        address : address.address
-                    })
-
-                    txb.addOutput(address.address, Number((amount - (fees || 0)).toFixed(0)));
-
-                    outputs.push({
-                        address: address.address,
-                        amount: Number((amount - (fees || 0)).toFixed(0))
-                    })
-
-                    _.each(inputs, function (input, index) {
-                        txb.sign(index, keyPair);
-                    })
-
-                    var tx = txb.build()
-
-                    var hex = tx.toHex();
-
+                }).catch(e => {
+                    
                     _.each(inputs, function (i) {
                         var u = _.find(address.unspents, function(u){
                             return u.vout == i.vout && u.txid == i.txId
@@ -869,87 +901,14 @@ var Wallet = function(p){
                         if(u) u.cantspend = false
                     })
 
-                    self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
-
-                        var alias = obj.export(true);
-                            alias.txid = d;
-                            alias.address = address.address;
-                            alias.type = obj.type
-                            alias.time = self.currentTime()
-                            alias.timeUpd = alias.time
-                            alias.optype = optype
-
-                            var count = deep(tempOptions, obj.type + ".count") || 'many'
-
-
-                            if (!temp[obj.type] || count == 'one') {
-                                temp[obj.type] = {};
-                            }
-
-                            temp[obj.type][d] = alias;
-
-                            alias.inputs = inputs
-                            alias.outputs = _.map(outputs, function(output){
-                                return {
-                                    address : output.address,
-                                    amount : output.amount / smulti,
-                                    deleted : output.deleted
-                                }
-                            })
-
-                            self.sdk.node.transactions.saveTemp()
-
-                            var ids = _.map(inputs, function (i) {
-
-                                return {
-                                    txid: i.txId,
-                                    vout: i.vout
-                                }
-
-                            })
-
-                            self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                            if (obj.ustate) {
-
-                                var ustate = obj.ustate;
-
-                                if (typeof obj.ustate == 'function') ustate = obj.ustate();
-
-                                if (ustate) {
-                                    var us = self.sdk.ustate.storage;
-
-                                    if (us[address.address]) {
-                                        us[address.address][obj.ustate + "_spent"]++
-                                        us[address.address][obj.ustate + "_unspent"]--
-                                    }
-
-                                    _.each(self.sdk.ustate.clbks, function (c) {
-                                        c()
-                                    })
-                                }
-
-
-
-
-                            }
-
-
-                            if (clbk)
-                                clbk(alias)
-
-                    }).catch(e => {
-                        self.app.platform.sdk.node.transactions.unblockUnspents(ids)
-
-
-                        if (clbk) {
-                            clbk(null, e.code, data)
-                        }
+                    return Promise.reject({
+                        error : e.code
                     })
 
+                })
 
 
-                }
+
 
             },
 
