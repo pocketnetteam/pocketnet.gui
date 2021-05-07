@@ -2390,8 +2390,19 @@ var lenta = (function(){
 
 				var meta = self.app.platform.parseUrl(url);
 
+				var aspectRatio;
+
 
 				var renderclbk = function(_p){
+					if (aspectRatio) {
+						var playerContainer = _p.el.find('.jsPlayerLoading');
+
+						var paddingvalue = 100 / (2 * aspectRatio);
+
+						playerContainer.css('padding-top', `${paddingvalue}%`);
+						playerContainer.css('padding-bottom', `${paddingvalue}%`);
+					}
+
 					self.app.nav.api.links(null, _p.el, function(event){
 	
 						event.stopPropagation()
@@ -2461,6 +2472,7 @@ var lenta = (function(){
 						host: `https://${meta.host_name}`,
 						id: meta.id,
 					}).then(res => {
+						aspectRatio = res.aspectRatio;
 						rndr({ views: res.views, aspectRatio: res.aspectRatio });
 					});
 
@@ -2486,7 +2498,7 @@ var lenta = (function(){
 					if (url && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
-							
+
 							if (clbk)
 								clbk()
 

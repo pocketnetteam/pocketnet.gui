@@ -46711,7 +46711,7 @@ class PeerTubeEmbed {
                 const metaUrl = videoInfo.files[0].metadataUrl;
                 const videoSizeValue = yield fetch(metaUrl).then((res) => res.json()).then((json) => {
                     const info = json.streams[0];
-                    return (info.width / info.height);
+                    return Number((info.width / info.height).toFixed(2));
                 });
                 this.playerElement = document.createElement('video');
                 this.playerElement.className = 'video-js';
@@ -46721,6 +46721,8 @@ class PeerTubeEmbed {
                 const paddingSize = 100 / (2 * videoSizeValue);
                 this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
                 // }
+                if (paddingSize > 50)
+                    this.playerElement.classList.add('verticalVideo');
                 this.wrapperElement.innerHTML = '';
                 this.wrapperElement.appendChild(this.playerElement);
                 if (!alreadyHadPlayer)
