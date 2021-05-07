@@ -46717,10 +46717,10 @@ class PeerTubeEmbed {
                 this.playerElement.className = 'video-js';
                 this.playerElement.setAttribute('playsinline', 'true');
                 const isVideoEmbedded = document.querySelector('.standalone-video-embed');
-                if (!isVideoEmbedded) {
-                    const paddingSize = 100 / (2 * videoSizeValue);
-                    this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
-                }
+                // if (!isVideoEmbedded) {
+                const paddingSize = 100 / (2 * videoSizeValue);
+                this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
+                // }
                 this.wrapperElement.innerHTML = '';
                 this.wrapperElement.appendChild(this.playerElement);
                 if (!alreadyHadPlayer)
