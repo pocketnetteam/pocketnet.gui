@@ -46712,11 +46712,17 @@ class PeerTubeEmbed {
             this.wrapperElement.innerHTML = '';
             this.wrapperElement.appendChild(this.playerElement);
             const videoInfoPromise = videoResponse.json()
-                .then((videoInfo) => {
+                .then((videoInfo) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+                const metaUrl = videoInfo.files[0].metadataUrl;
+                const videoMeta = yield fetch(metaUrl).then((res) => res.json()).then((json) => {
+                    const info = json.streams[0];
+                    return (info.width / info.height);
+                });
+                debugger;
                 if (!alreadyHadPlayer)
                     this.loadPlaceholder(videoInfo);
                 return videoInfo;
-            });
+            }));
             const [videoInfoTmp,] = yield Promise.all([
                 videoInfoPromise,
             ]);
