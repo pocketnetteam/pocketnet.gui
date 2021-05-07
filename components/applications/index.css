@@ -1,1 +1,83 @@
-#applications .caption{font-size:2em;font-weight:100}#applications .subcaption{font-weight:700}#applications .os{background:rgba(228,221,222,.5);padding:2em 0}#applications .os .tip{max-width:650px}#applications .os .downloadOs{min-width:310px}#applications .os .downloadstart{padding:.5em;padding-left:0;width:100%}#applications .os .panel{margin-top:2em}#applications .os .panel .skipositem{display:none}#applications .os.rundownloading .panel .skipositem{display:block;width:100%;margin-top:2em;color:#4ac6f9}#applications .stepTable>div{vertical-align:top;padding:0}#applications .stepTable>div.numberWr{width:80px}#applications .number{border-radius:50%;width:50px;height:50px;border:1px solid #3c4146;line-height:48px;text-align:center}#applications .currentos{display:none;padding:2em 0}#applications .currentos.active{display:block}html.stblack #applications{color:#e4ddde}html.stblack #applications .subcaption{font-weight:700}html.stblack #applications .os{background:rgba(74,198,249,.4)}html.stblack #applications .os.rundownloading .panel .skipositem{color:#4ac6f9}html.stblack #applications .number{border:1px solid #4ac6f9}
+#applications .caption {
+  font-size: 1.5em;
+  font-weight: 00;
+  width: 95%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1em;
+  margin-top: 2em;
+}
+#applications .subcaption {
+  font-weight: 700;
+}
+#applications .os {
+  background: rgba(228, 221, 222, 0.5);
+  padding: 2em 0;
+}
+#applications .os .tip {
+  max-width: 650px;
+}
+#applications .os .downloadOs {
+  min-width: 310px;
+}
+#applications .os .downloadstart {
+  padding: 0.5em;
+  padding-left: 0;
+  width: 100%;
+}
+#applications .os .panel {
+  margin-top: 2em;
+}
+#applications .os .panel .skipositem {
+  display: none;
+}
+#applications .os.rundownloading .panel .skipositem {
+  display: block;
+  width: 100%;
+  margin-top: 2em;
+  color: #4AC6F9;
+}
+#applications .stepTable > div {
+  vertical-align: top;
+  padding: 0;
+}
+#applications .stepTable > div.numberWr {
+  width: 80px;
+}
+#applications .number {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #3c4146;
+  line-height: 48px;
+  text-align: center;
+}
+#applications .currentos {
+  display: none;
+  padding: 2em 0;
+}
+#applications .currentos.active {
+  display: block;
+}
+#applications .extraos {
+  display: none;
+  padding: 2em 0;
+}
+#applications .extraos.active {
+  display: block;
+}
+html.stblack #applications {
+  color: #e4ddde;
+}
+html.stblack #applications .subcaption {
+  font-weight: 700;
+}
+html.stblack #applications .os {
+  background: rgba(74, 198, 249, 0.4);
+}
+html.stblack #applications .os.rundownloading .panel .skipositem {
+  color: #4AC6F9;
+}
+html.stblack #applications .number {
+  border: 1px solid #4AC6F9;
+}

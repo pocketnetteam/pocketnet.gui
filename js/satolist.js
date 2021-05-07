@@ -193,6 +193,7 @@ Platform = function (app, listofnodes) {
                 windows: {
     
                     appname: "Pocketnet",
+                    id: "#windows",
                     text: {
                         name: "Windows",
                         download: self.app.localization.e('e13222'),
@@ -205,15 +206,17 @@ Platform = function (app, listofnodes) {
                         name: "PocketnetSetup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                    }
+                    },
+                    
                 },
 
                 macos: {
                     appname: "Pocketnet",
+                    id: '#macos',
                     text: {
                         name: "macOS",
                         download: self.app.localization.e('e13222'),
-                        label: 'Download Pocketnet for macOS'
+                        label: self.app.localization.e('e132232')
                     },
         
                     icon: '<i class="fab fa-apple"></i>',
@@ -222,11 +225,12 @@ Platform = function (app, listofnodes) {
                         name: "PocketnetSetup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                    }
+                    },
                 },
         
-                linux: {
+                currentos: {
                     appname: "Pocketnet",
+                    id: "#linux",
                     text: {
                         name: "Linux",
                         download: self.app.localization.e('e13222'),
@@ -236,7 +240,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: "Pocketnet_linux_x64.AppImage",
+                        name: "PocketnetSetup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }

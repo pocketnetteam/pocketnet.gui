@@ -365,7 +365,7 @@ var registration = (function(){
 				var _os = os();
 
 
-				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova && !self.app.ref){
+				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova){
 
 					current.os = self.app.platform.applications[_os]
 

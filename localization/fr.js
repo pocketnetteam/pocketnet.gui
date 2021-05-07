@@ -671,6 +671,7 @@ ____loclib.errorreload = "Un problème est survenu. Veuillez actualiser la page 
 ____loclib.e13221 = "Voulez-vous vraiment supprimer les informations relatives à cette offre? L'accord ne peut pas être arrêté"
 ____loclib.e13222 = "Téléchargez l'application de bureau - c'est le moyen le plus résistant à la censure d'utiliser Pocketnet. Même si les sites Web sont fermés, l'application de bureau fonctionnera toujours directement via les nœuds."
 ____loclib.e13223 = "Tèlèchargez Pocketnet pour Windows"
+____loclib.e132232 = "Tèlèchargez Pocketnet pour macOS"
 ____loclib.e13224 = "Tèlèchargez Pocketnet pour Linux"
 ____loclib.e13225 = "Nœud Pocketnet"
 ____loclib.e13226 = 'Tèlèchargez le nœud'
