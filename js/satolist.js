@@ -11349,7 +11349,7 @@ Platform = function (app, listofnodes) {
 
                         var keyPair = _kp || self.app.user.keys()
 
-                        var txb = new bitcoin.TransactionBuilder(self.network());
+                        var txb = new bitcoin.TransactionBuilder();
 
                         txb.addNTime(self.timeDifference || 0)
 

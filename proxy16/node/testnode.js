@@ -8,10 +8,6 @@ var Testnode = function(node, manager){
 
     var self = this;
 
-    var wallet = node.wallet /// link to proxy wallet kit
-
-    var address = "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
-
     var h = {
         getrandomaddress : function(){
             return addresses[f.rand(0, addresses.length - 1)]
@@ -494,13 +490,15 @@ var Testnode = function(node, manager){
 
             if(!privatekey) return Promise.reject('privatekey')
 
-            var ao = wallet.kit.addressobj({
+            var ao = manager.wallet.kit.addressobj({
                 privatekey
             })
 
-            if(!ao.pk) return Promise.reject('privatekeyao')
 
-            return wallet.unspents.getc(ao).then(r => {
+            if(!ao.keys) return Promise.reject('privatekeyao')
+
+            return manager.wallet.unspents.getc(ao, true).then(r => {
+                console.log("R", ao)
                 return Promise.resolve(ao)
             })
         },
@@ -513,9 +511,9 @@ var Testnode = function(node, manager){
 
             if(!message) message = this.randomtext()
 
-            var comment = wallet.pocketnet.pobjects.comment(txid, message)
+            var comment = manager.wallet.pocketnet.pobjects.comment(txid, message)
 
-            return wallet.transactions.common(address, comment, {}).then({alias, data}).catch(e => {
+            return manager.wallet.transactions.common(address, comment, {}).then({alias, data}).catch(e => {
 
                 console.log("error", e)
 
