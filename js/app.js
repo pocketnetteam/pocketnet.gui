@@ -66,7 +66,7 @@ Application = function(p)
 		
 
 		nav : {
-			navPrefix : '/pocketnet/',
+			navPrefix : '/',
 		},
 
 		name : 'PCRB',
