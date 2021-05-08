@@ -1412,11 +1412,13 @@ var lenta = (function(){
 				var id = $(this).closest('.share').attr('id');
 				var value = $(this).attr('value')
 
-				
+				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 
 				actions.stateAction('_this', function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
+
+						console.log("ID", id, self.app.platform.sdk.node.shares.storage.trx[id])
 
 						var s = self.app.platform.sdk.node.shares.storage.trx[id]
 
