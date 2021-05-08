@@ -404,7 +404,6 @@ function createWindow() {
               label: app.name,
               submenu: [
                 {
-                    accelerator: 'Cmd+A',
                     label: 'About',
                     click: async () => {
                         win.webContents.send('nav-message', { msg: 'about', type: 'action'})

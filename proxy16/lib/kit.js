@@ -1345,8 +1345,6 @@ var Share = function(lang){
 		return self.type	
 	}
 
-
-
 	self.typeop = function(platform){
 
 		if (self.itisvideo() && platform && platform.videoenabled) return 'video'
@@ -1357,6 +1355,8 @@ var Share = function(lang){
 
 		return self.type
 	}
+
+	console.log("SAD")
 
 	if(lang) self.language.set(lang)
 

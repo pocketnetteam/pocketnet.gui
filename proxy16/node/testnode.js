@@ -249,13 +249,13 @@ var Testnode = function(node, manager){
 
             var lang = langs[f.rand(0, langs.length - 1)]
 
-            return ["30", "259200", "", lang]
+            return ["200", "2592000", "", "en"]
         }, 
         getlastcomments : function(){
 
             var lang = langs[f.rand(0, langs.length - 1)]
 
-            return [7, "", lang]
+            return ["50", "", lang]
         },
         gethierarchicalstrip : function(){
 
@@ -510,6 +510,10 @@ var Testnode = function(node, manager){
             })
         },
 
+        getlastcomments : function(){
+            return request('getlastcomments')
+        },
+
         getposts : function(){
             return request('gethotposts')
         },
@@ -529,7 +533,71 @@ var Testnode = function(node, manager){
                 return Promise.resolve()
             }).catch(e => {
 
-                console.log('makecommentfailed', message, txid)
+                console.log('makecommentfailed', message, txid, e)
+
+                return Promise.reject(e)
+            })
+        },
+
+        makeupvoteShare : function(address, txid, txaddress){
+
+            var upvote = manager.wallet.pocketnet.pobjects.upvoteShare(txid, txaddress, f.rand(1, 5) + '')
+
+            return manager.wallet.transactions.common(address, upvote, {}).then(() => {
+
+                return Promise.resolve()
+            }).catch(e => {
+
+                return Promise.reject(e)
+            })
+        },
+
+        makeUserAction : function(address, action, uaddress){
+
+            if(!manager.wallet.pocketnet.pobjects[action]){
+                return Promise.reject('action')
+            }
+
+            var action = manager.wallet.pocketnet.pobjects[action](uaddress)
+
+            console.log('actionBegin', action)
+
+            return manager.wallet.transactions.common(address, action, {}).then(() => {
+                console.log('actionSuccess', action)
+                return Promise.resolve()
+            }).catch(e => {
+                console.log('actionFailed', action)
+                return Promise.reject(e)
+            })
+        },
+
+        makeupvoteComment : function(address, commentid, txaddress){
+
+            console.log('commentid, txaddress', commentid, txaddress)
+
+            var upvote = manager.wallet.pocketnet.pobjects.upvoteComment(commentid, txaddress, f.rand(1, 5) + '')
+            console.log('makeupvoteComment')
+            return manager.wallet.transactions.common(address, upvote, {}).then(() => {
+                console.log('makeupvoteCommentSuccess')
+                return Promise.resolve()
+            }).catch(e => {
+                console.log('makeupvoteCommentFailed')
+                return Promise.reject(e)
+            })
+        },
+
+        makeshare : function(address, message){
+
+            if(!message) message = this.randomtext()
+
+            var share = manager.wallet.pocketnet.pobjects.share("en")
+            share.message.set(message)
+            share.tags.set(['test'])
+
+            return manager.wallet.transactions.common(address, share, {}).then(() => {
+
+                return Promise.resolve()
+            }).catch(e => {
 
                 return Promise.reject(e)
             })
@@ -539,6 +607,7 @@ var Testnode = function(node, manager){
             return 'time: ' + f.now() + ", text: "  + f.randomString(l || f.rand(10, 100))
         }
     }
+
 
     self.scenarios = {
         pageload : function(){
@@ -573,8 +642,10 @@ var Testnode = function(node, manager){
             if(!pkindex) pkindex = 0
 
             var address = null
-            var count = 3
-            var time = 20000
+            var posts = []
+            var comments = []
+            var count = 2
+            var time = 60000
 
             return self.kit.preparekey(pkindex).then(a => {
 
@@ -582,18 +653,75 @@ var Testnode = function(node, manager){
 
                 return self.kit.getposts()
 
-            }).then(posts => {
+            }).then(_posts => {
+
+                posts = _posts
+                
+                return self.kit.getlastcomments()
+
+            }).then(_comments => {
+
+                comments = _comments
 
                 var actions = [
+
+                    /*function(){
+                        return new Promise((resolve, reject) => {
+                            var post = posts[f.rand(0, posts.length - 1)]
+
+                            self.kit.makecomment(address, post.txid).then(r => {
+                                resolve()
+                            }).catch(e => {
+                                reject(e)
+                            })
+
+                        })
+                    },*/
+
+                    /*function(){
+                        return new Promise((resolve, reject) => {
+
+                            self.kit.makeshare(address).then(r => {
+                                resolve()
+                            }).catch(e => {
+                                console.log("E", e)
+                                reject(e)
+                            })
+
+                        })
+                    },*/
 
                     function(){
                         return new Promise((resolve, reject) => {
 
-                        var post = posts[f.rand(0, posts.length - 1)]
+                            console.log('comments', comments.length)
 
-                        return self.kit.makecomment(address, post.txid)
+                            var comment = comments[f.rand(0, comments.length - 1)]
 
-                    })}
+                            self.kit.makeupvoteComment(address, comment.id, comment.address).then(r => {
+                                resolve()
+                            }).catch(e => {
+                                console.log("E", e)
+                                reject(e)
+                            })
+
+                        })
+                    },
+
+                    /*function(){
+                        return new Promise((resolve, reject) => {
+
+                            var post = posts[f.rand(0, posts.length - 1)]
+
+                            self.kit.makeupvoteShare(address, post.txid, post.address).then(r => {
+                                resolve()
+                            }).catch(e => {
+                                console.log("E", e)
+                                reject(e)
+                            })
+
+                        })
+                    }*/
                 ]
 
                 return self.scenariosmeta.actionsLong(count, actions, time)
