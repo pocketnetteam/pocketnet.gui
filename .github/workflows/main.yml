@@ -28,7 +28,7 @@ jobs:
 
       - name: Prepare
         run: |
-          npm ci --only-production
+          npm i
           npm run minimize
 
       - name: Copy to dest dir
