@@ -763,11 +763,14 @@ var system16 = (function(){
 					var scenarios = [{
 						name : "Pageload",
 						key : 'pageload'
+					}, {
+						name : "Limits",
+						key : 'limits'
 					}]
 
 					var items = _.map(scenarios, function(scenario){
 						return {
-							text : "Pageload",
+							text : scenario.name,
 							action : function(clbk){
 								proxy.fetch('nodes/test', {
 									scenario : scenario.key,
@@ -2731,7 +2734,7 @@ var system16 = (function(){
 
 					p.el.find('.name').on('click', function(){
 
-						return
+						
 
 						var key = $(this).closest('.node').attr('node')
 

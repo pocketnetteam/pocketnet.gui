@@ -490,7 +490,7 @@ var Testnode = function(node, manager){
 
     self.kit = {
         preparekey : function(index){
-            var privatekey = manager.proxy.wallet.testkey(pkindex)
+            var privatekey = manager.proxy.wallet.testkey(index)
 
             if(!privatekey) return Promise.reject('privatekey')
 
@@ -558,17 +558,25 @@ var Testnode = function(node, manager){
 
         limits : function(pkindex){
 
+            if(!pkindex) pkindex = 0
+
             var address = null
-            var count = 200
-            var time = 600000
+            var count = 1
+            var time = 10
+
+            console.log('pkindex', pkindex)
 
             return self.kit.preparekey(pkindex).then(a => {
 
                 address = a
 
+                console.log('pkindex', a)
+
                 return self.kit.getposts()
 
             }).then(posts => {
+
+                console.log('posts', posts)
 
                 var actions = [new Promise((resolve, reject) => {
 

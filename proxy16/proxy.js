@@ -915,17 +915,21 @@ var Proxy = function (settings, manage, test) {
           authorization: 'signature',
           action: function ({ node, scenario, A }) {
 
-            if(!test)
+            console.log("A")
 
-              return Promise.reject('err');
+            if(!test) return Promise.reject('err');
 
-            if (!A) return Promise.reject();
+            console.log("Aa")
+
+            if(!A) return Promise.reject('admin');
 
             var _node = nodeManager.nodesmap[node];
 
             if (!_node) {
               return Promise.reject('cantselect');
             }
+
+            console.log('_node.test(scenario)', scenario)
 
             return _node.test(scenario);
           },

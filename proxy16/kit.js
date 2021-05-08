@@ -21,7 +21,8 @@ var settingsPath = 'data/settings'
 var settings = {};
 
 var pocketnet = new Pocketnet()
-var test = true
+var test = _.indexOf(process.argv, '--test') > -1
+
 
 var testnodes = [
 	/*{
@@ -32,13 +33,13 @@ var testnodes = [
 		stable : true
 	},*/
 
-	/*{
+	{
 		host : '216.108.231.28',
 		port : 36061,
 		ws : 6067,
 		name : 'CryptoserverTest',
 		stable : true
-	},*/
+	},
 
 	{
 		host : '64.235.46.85',
@@ -108,6 +109,8 @@ var activenodes = [
 var nodes = activenodes
 
 if (test) nodes = testnodes
+
+console.log('nodes', nodes)
 
 var defaultSettings = {
 
@@ -194,23 +197,19 @@ var defaultSettings = {
 var state = {
 
 	exportkeys : function(){
-		return _.filter(_.map(settings.testkeys, function(key){
+		return _.filter(settings.testkeys, function(key){
 
 			var kp = null
 
-			pocketnet.kit.keyPair(key)
-
 			try{
-                kp = self.pocketnet.kit.keyPair(options.privatekey)
+                kp = pocketnet.kit.keyPair(key)
 
-				return pocketnet.kit.addressByPublicKey(kp.publicKey)
+				return true
             }
             catch(e){
-                return null
+                return false
             }
 
-		}), function(address){
-			return address
 		})
 	},
 

@@ -28,6 +28,11 @@ Platform = function (app, listofnodes) {
     self.repost = true;
     self.videoenabled = true;
 
+
+    //////////////
+    self.test = false;
+    //////////////
+
     var onlinetnterval;
     var unspentoptimizationInterval = null;
     var blockps = 1000000;
@@ -46,6 +51,15 @@ Platform = function (app, listofnodes) {
             staking : true
         }
     }
+
+    /*self.network = function(){
+        if(self.test){
+            return bitcoin.networks.testnet
+        }
+        else{
+            return bitcoin.networks.bitcoin
+        }
+    }*/
 
     self.mp = {
         dollars: function (value, p) {
@@ -11335,7 +11349,7 @@ Platform = function (app, listofnodes) {
 
                         var keyPair = _kp || self.app.user.keys()
 
-                        var txb = new bitcoin.TransactionBuilder();
+                        var txb = new bitcoin.TransactionBuilder(self.network());
 
                         txb.addNTime(self.timeDifference || 0)
 

@@ -180,7 +180,7 @@ function rpc(request, callback, obj) {
                 parsedBuf = JSON.parse(buf);
             } catch (e) {
 
-                var exceededError = new Error(errorMessage + 'Error Parsing JSON: ' + e.message);
+                var exceededError = (new Error(errorMessage + 'Error Parsing JSON: ' + e.message)) || {};
                     exceededError.code = res.statusCode
 
                 callback(exceededError);
