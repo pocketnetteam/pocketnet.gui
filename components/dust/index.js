@@ -133,6 +133,8 @@ var dust = (function(){
 
 				self.app.platform.sdk.wallet.sendmanyoutputs(pk, parameters.reciever.value, parameters.amount.value, parameters.outputs.value, function(err , data){
 
+					console.log("ERR", err)
+
 					el.c.find('.loader').fadeOut()
 
 					if(err){

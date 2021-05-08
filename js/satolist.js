@@ -6366,6 +6366,9 @@ Platform = function (app, listofnodes) {
                                 allunspents.push(unspent)
                         })
                     })
+
+
+                    console.log('unspents', unspents, allunspents)
                     
                     var totalInWallet = _.reduce(allunspents, function (m, u) {
                         return m + Number(u.amount)
@@ -6501,68 +6504,22 @@ Platform = function (app, listofnodes) {
                     }
 
                     else{
-                        
-
                         if (clbk)
-                            clbk(null, d)
+                            clbk(null, txid)
                     }
                 })  
             },  
 
             txbaseFees: function (address, outputs, keyPair, feerate, clbk) {
 
+                console.log("DUST", address, outputs, keyPair, feerate)
+
                 self.sdk.wallet.txbaseFeesMeta(
                     address, outputs, keyPair, feerate, 
-                    self.app.platform.sdk.node.transactions.create.wallet, 
+                    self.sdk.wallet.txbase, 
                 clbk)
-
-               /* self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
-
-                    if (err) {
-                        if (clbk)
-                            clbk(err)
-                    }
-
-                    else {
-                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-                        var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
-
-                        self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
-
-                            if (err) {
-                                if (clbk)
-                                    clbk(err)
-                            }
-                            else {
-                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
-
-                                    if (err) {
-                                        if (clbk)
-                                            clbk(err)
-                                    }
-
-                                    else {
-                                        var ids = _.map(inputs, function (i) {
-                                            return {
-                                                txid: i.txId,
-                                                vout: i.vout
-                                            }
-                                        })
-
-                                        self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                        if (clbk)
-                                            clbk(null, d, inputs, _outputs)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                }, true)*/
+               
             },
-
 
             embed: function (outputs, embdedtext) {
                 if (embdedtext) {
@@ -6576,7 +6533,6 @@ Platform = function (app, listofnodes) {
                         address: embed.output,
                         amount: 0
                     })
-
 
                 }
             },
@@ -10958,6 +10914,9 @@ Platform = function (app, listofnodes) {
                                         clbk(a)
         
                                 }).catch(e => {
+
+                                    console.log("E", e)
+
                                     if (!s.unspent)
                                         s.unspent = {};
 
@@ -11355,8 +11314,9 @@ Platform = function (app, listofnodes) {
 
                         var k = smulti;
 
-                        _.each(inputs, function (i) {
+                        console.log("inputs", inputs, ouputs)
 
+                        _.each(inputs, function (i) {
 
                             if (i.address.indexOf("P") == 0) {
                                 txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))

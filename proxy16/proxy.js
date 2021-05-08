@@ -931,7 +931,18 @@ var Proxy = function (settings, manage, test) {
 
             console.log('_node.test(scenario)', scenario)
 
-            return _node.test(scenario);
+            return _node.test(scenario).then(r => {
+              return Promise.resolve({
+                data: {
+                  success: true,
+                },
+              });
+            }).catch(e => {
+              console.log("E", e)
+
+              return Promise.reject('err')
+            })
+
           },
         },
 

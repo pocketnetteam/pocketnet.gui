@@ -309,7 +309,6 @@ var Testnode = function(node, manager){
         })
 
         .catch(e => {
-            console.log("E", e, method, parameters)
             return Promise.resolve()
         })
     }
@@ -342,11 +341,9 @@ var Testnode = function(node, manager){
 
             return f.processArrayWithDelay(methods, waittime, function(m){
 
-
                 return requestes(m, count).then(r => {
 
                     log()
-
 
                     return f.delay(waittime)
 
@@ -389,8 +386,6 @@ var Testnode = function(node, manager){
                     f.processArrayWithDelay(methodkeys, waittime, function(m){
 
                         return request(m).then(r => {
-                            return Promise.resolve()
-                        }).catch(e => {
                             return Promise.resolve()
                         })
 
@@ -447,9 +442,9 @@ var Testnode = function(node, manager){
                 promises.push(
                     f.processArrayWithDelay(actions, waittime, function(m){
 
+                        console.log("PROCESSPART", m)
+
                         return m().then(r => {
-                            return Promise.resolve()
-                        }).catch(e => {
                             return Promise.resolve()
                         })
 
@@ -472,13 +467,26 @@ var Testnode = function(node, manager){
             if (time <= 0) {
                 return Promise.resolve()
             }
+
             var ctime = performance.now()
+
             return self.scenariosmeta.actions(count, actions).catch(e => {
+
                 return Promise.resolve()
+
             }).then(r => {
+
                 var difference = (performance.now() - ctime);
+
                 time = time - difference
-                return this.actionsLong(count, methodkeys, time)
+
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        return this.actionsLong(count, actions, time)
+                    }, 200)
+                })
+
+                
 
             })
         }
@@ -498,7 +506,6 @@ var Testnode = function(node, manager){
             if(!ao.keys) return Promise.reject('privatekeyao')
 
             return manager.wallet.unspents.getc(ao, true).then(r => {
-                console.log("R", ao)
                 return Promise.resolve(ao)
             })
         },
@@ -513,16 +520,23 @@ var Testnode = function(node, manager){
 
             var comment = manager.wallet.pocketnet.pobjects.comment(txid, message)
 
-            return manager.wallet.transactions.common(address, comment, {}).then({alias, data}).catch(e => {
+            console.log('makecomment', message, txid)
 
-                console.log("error", e)
+            return manager.wallet.transactions.common(address, comment, {}).then(() => {
+
+                console.log('makecommentsuccess', message, txid)
+
+                return Promise.resolve()
+            }).catch(e => {
+
+                console.log('makecommentfailed', message, txid)
 
                 return Promise.reject(e)
             })
         },
 
         randomtext : function(l){
-            return 'time: ' + f.now + ", text: "  + f.randomString(l || f.rand(10, 100))
+            return 'time: ' + f.now() + ", text: "  + f.randomString(l || f.rand(10, 100))
         }
     }
 
@@ -559,30 +573,28 @@ var Testnode = function(node, manager){
             if(!pkindex) pkindex = 0
 
             var address = null
-            var count = 1
-            var time = 10
-
-            console.log('pkindex', pkindex)
+            var count = 3
+            var time = 20000
 
             return self.kit.preparekey(pkindex).then(a => {
 
                 address = a
 
-                console.log('pkindex', a)
-
                 return self.kit.getposts()
 
             }).then(posts => {
 
-                console.log('posts', posts)
+                var actions = [
 
-                var actions = [new Promise((resolve, reject) => {
+                    function(){
+                        return new Promise((resolve, reject) => {
 
-                    var post = posts[f.rand(0, posts.length - 1)]
+                        var post = posts[f.rand(0, posts.length - 1)]
 
-                    return self.kit.makecomment(address, post.txid)
+                        return self.kit.makecomment(address, post.txid)
 
-                })]
+                    })}
+                ]
 
                 return self.scenariosmeta.actionsLong(count, actions, time)
             })

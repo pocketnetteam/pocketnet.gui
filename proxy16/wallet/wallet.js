@@ -490,8 +490,6 @@ var Wallet = function(p){
                 return !object.executing & l < 50
             })
 
-
-
             if(!queue.length) return Promise.resolve()
 
             if(!addresses[key].keys){
@@ -757,19 +755,19 @@ var Wallet = function(p){
 
         common : function (address, obj, p) {
 
-            if (!address.pk) return Promise.reject('address.pk')
+            if (!address.keys) return Promise.reject('address.keys')
 
             if (!p) p = {};
 
-            unspents = self.unspents.available(address.unspents)
+            var unspents = self.unspents.available(address.unspents)
 
-            if(!unspent.length) return Promise.reject('unspent.length')
+            if(!unspents.length) return Promise.reject('unspent.length')
 
             var inputs = [{
-                txId: unspent[unspent.length - 1].txid,
-                vout: unspent[unspent.length - 1].vout,
-                amount: unspent[unspent.length - 1].amount,
-                scriptPubKey: unspent[unspent.length - 1].scriptPubKey,
+                txId: unspents[unspents.length - 1].txid,
+                vout: unspents[unspents.length - 1].vout,
+                amount: unspents[unspents.length - 1].amount,
+                scriptPubKey: unspents[unspents.length - 1].scriptPubKey,
             }]
 
             return this.types[obj.type](address, inputs, obj, p).then(({alias, error, data}) => {
@@ -802,8 +800,7 @@ var Wallet = function(p){
 
                 if (error) return Promise.reject(error)
                
-                var keyPair = address.kp
-                var address = address.address
+                var keyPair = address.keys
 
                 var txb = new self.pocketnet.lib.TransactionBuilder();
                     txb.addNTime(node.timeDifference || 0)
@@ -845,11 +842,13 @@ var Wallet = function(p){
                     address : address.address
                 })
 
-                txb.addOutput(address.address, Number((amount - (fees || 0)).toFixed(0)));
+                var uamount = Number((amount - (fees || 0)).toFixed(0))
+
+                txb.addOutput(address.address, uamount);
 
                 outputs.push({
                     address: address.address,
-                    amount: Number((amount - (fees || 0)).toFixed(0))
+                    amount: uamount
                 })
 
                 _.each(inputs, function (input, index) {
@@ -874,7 +873,7 @@ var Wallet = function(p){
                         alias.txid = data;
                         alias.address = address.address;
                         alias.type = obj.type
-                        alias.time = self.currentTime()
+                        alias.time = f.now()
                         alias.timeUpd = alias.time
                         alias.optype = optype
                         alias.inputs = inputs
@@ -892,7 +891,7 @@ var Wallet = function(p){
                     })
 
                 }).catch(e => {
-                    
+
                     _.each(inputs, function (i) {
                         var u = _.find(address.unspents, function(u){
                             return u.vout == i.vout && u.txid == i.txId
@@ -913,40 +912,40 @@ var Wallet = function(p){
             },
 
             share: function (address, inputs, share) {
-                this.common(address, inputs, share, TXFEE)
+                return this.common(address, inputs, share, TXFEE)
             },
             userInfo: function (address, inputs, userInfo) {
-                this.common(address, inputs, userInfo, TXFEE)
+                return this.common(address, inputs, userInfo, TXFEE)
             },
             upvoteShare: function (address, inputs, upvoteShare) {
-                this.common(address, inputs, upvoteShare, TXFEE)
+                return this.common(address, inputs, upvoteShare, TXFEE)
             },
             complainShare: function (address, inputs, complainShare) {
-                this.common(address, inputs, complainShare, TXFEE)
+                return this.common(address, inputs, complainShare, TXFEE)
             },
             comment: function (address, inputs, comment) {
-                this.common(address, inputs, comment, TXFEE)
+                return this.common(address, inputs, comment, TXFEE)
             },
             commentShare: function (address, inputs, commentShare) {
-                this.common(address, inputs, commentShare, TXFEE)
+                return this.common(address, inputs, commentShare, TXFEE)
             },
             cScore: function (address, inputs, cScore) {
-                this.common(address, inputs, cScore, TXFEE)
+                return this.common(address, inputs, cScore, TXFEE)
             },
             unsubscribe: function (address, inputs, unsubscribe) {
-                this.common(address, inputs, unsubscribe, TXFEE)
+                return this.common(address, inputs, unsubscribe, TXFEE)
             },
             subscribe: function (address, inputs, subscribe) {
-                this.common(address, inputs, subscribe, TXFEE)
+                return this.common(address, inputs, subscribe, TXFEE)
             },
             blocking: function (address, inputs, blocking) {
-                this.common(address, inputs, blocking, TXFEE)
+                return this.common(address, inputs, blocking, TXFEE)
             },
             unblocking: function (address, inputs, unblocking) {
-                this.common(address, inputs, unblocking, TXFEE)
+                return this.common(address, inputs, unblocking, TXFEE)
             },
             subscribePrivate: function (address, inputs, subscribe) {
-                this.common(address, inputs, subscribe, TXFEE)
+                return this.common(address, inputs, subscribe, TXFEE)
             }
         }
     }
