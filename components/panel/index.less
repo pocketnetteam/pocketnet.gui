@@ -2,7 +2,50 @@
 
 #panel{
 
-	padding-left: 10px;
+	.rightbottomnav {
+		padding: 2 * @rhythm;
+		color: fade(@color-white, 30);
+
+
+		a,
+		span{
+			font-size: 0.8em;
+		}
+
+		a{
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-main;
+			}
+		}
+
+		.rightbottomlinks {
+			padding-top: @rhythm;
+		}
+
+		.copyright {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			margin-top: 4 * @rhythm;
+
+			.copy_logo {
+				width: 14px;
+				height: 14px;
+			}
+
+			img{
+				opacity: 0.5;
+			}
+
+			.copyright_text {
+				margin-left: @rhythm;
+			}
+		}
+	}
+
+	padding-left: @rhythm;
 	
 	#chat{
 		height: 550px;
@@ -215,6 +258,7 @@
 		}
 		
 	}
+
 
 	.sections{
 		background: #F0F0F0;

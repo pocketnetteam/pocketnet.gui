@@ -584,6 +584,18 @@ var post = (function(){
 					}
 				})
 			},
+
+			videoShare : function(share) {
+				if (!share.url || !share.itisvideo()) return sitemessage('Unable to parse a video in the post');
+
+				const metaInfo = self.app.platform.parseUrl(share.url);
+
+				const peertubeLink = `https://pocketnet.app/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
+
+				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
+
+				return sitemessage(self.app.localization.e('videoCopied'));
+			},
 		}
 
 		var events = {
@@ -1077,17 +1089,22 @@ var post = (function(){
                 },
               },
               function (_p) {
-				var info = app.platform.sdk.videos.storage[url].data;
 
-                var loadingPlayer = _p.el.find('.jsPlayerLoading');
+				if(app.platform.sdk.videos.storage[url]){
+					var info = app.platform.sdk.videos.storage[url].data;
 
-                var width = loadingPlayer.width();
-                loadingPlayer.css(
-                  'padding-top', `${width / (2 * info.aspectRatio)}px`
-                );
-				loadingPlayer.css(
-					'padding-bottom', `${width / (2 * info.aspectRatio)}px`
-				  );
+					var loadingPlayer = _p.el.find('.jsPlayerLoading');
+
+					var width = loadingPlayer.width();
+					loadingPlayer.css(
+					'padding-top', `${width / (2 * info.aspectRatio)}px`
+					);
+					loadingPlayer.css(
+						'padding-bottom', `${width / (2 * info.aspectRatio)}px`
+					);
+				}
+
+				
 
                 var images = _p.el.find('img');
 

@@ -59,7 +59,7 @@ var help = (function(){
 			{
 				d : 'June 2020',
 				n : 'Running a node from the desktop app',
-				r : false,
+				r : true,
 			},
 			{
 				d : 'August 2020',
@@ -69,26 +69,36 @@ var help = (function(){
 			{
 				d : 'January 2021',
 				n : 'Full decentralization: all apps can speak directly to the nodes, desktop app can work without the website pocketnet.app',
+				r : true,
+			},
+			{
+				d : 'May 2021',	
+				n : 'Integration of PeerTube into Pocketnet, upload of videos and live streams',
 				r : false,
 			},
 			{
-				d : 'February 2021',
-				n : 'Livestream Pocketcoin dondations',
-				r : false,
-			},
-			{
-				d : 'March 2021',
+				d : 'June 2021',
 				n : 'Rewrite of the backend to move to sqlite from Reindexer to make the node light on RAM use',
 				r : false,
 			},
 			{
-				d : 'April 2021',
+				d : 'June 2021',
 				n : 'Boost posts for Pocketcoin',
 				r : false,
 			},
 			{
-				d : 'May 2021',
+				d : 'June 2021',
 				n : 'Peer-to-peer encrypted chat, including group chat',
+				r : false,
+			},
+			{
+				d : 'July 2021',
+				n : 'Livestream Pocketcoin dondations',
+				r : false,
+			},
+			{
+				d : 'July 2021',
+				n : 'Pocketnet NFT 3.0',
 				r : false,
 			},
 			{
@@ -103,7 +113,7 @@ var help = (function(){
 			},
 			{
 				d : '2022',
-				n : 'Ability to fork Pocketcoin to create a diverse set of Dapps for users using Pocketnet 			platform i.e. Pocketnet as an alternative appstore',
+				n : 'Ability to fork Pocketcoin to create a diverse set of Dapps for users using Pocketnet platform i.e. Pocketnet as an alternative Appstore',
 				r : false,
 			}
 
@@ -173,11 +183,22 @@ var help = (function(){
 		}
 
 		var renders = {
-			application : function(page){
+			applications : function(page){
 
 				this.page(page, function(_el){
 
 
+					self.nav.api.load({
+
+						open : true,
+						id : 'applications',
+						el : _el.find('.applicationsWrapper'),
+
+						
+						clbk : function(e, p){
+							external = p
+						}
+					})
 					
 				})
 
@@ -326,11 +347,7 @@ var help = (function(){
 						})
 					})
 					
-					
-
 				})
-
-				
 
 			},
 		}

@@ -86,23 +86,12 @@ var activenodes = [
 	},
 
 	{
-		host : '64.235.41.74',
-		port : 38081,
-		ws : 8087,
-		name : 'Cryptoserver4',
-		stable : true
-	},
-
-	{
 		host : '135.181.196.243',
 		port : 38081,
 		ws : 8087,
 		name : 'Cryptoserver243',
 		stable : true
 	}
-
-	
-
 	
 ]
 
@@ -341,7 +330,8 @@ var kit = {
 					if(settings.ports) notification.ports = settings.ports
 					if(typeof settings.enabled) notification.enabled = settings.enabled
 					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
-					if(settings.ssl) notification.ssl = true
+                    if(settings.ssl) notification.ssl = true
+                
 
 					return kit.proxy().then(proxy => {
 
@@ -972,6 +962,13 @@ var kit = {
 	startproxy : function(hck){
 
 		if(!proxy){
+            
+            if (settings.server.test) {
+                test = true
+                nodes = testnodes
+                settings.nodes.stable = nodes
+            }
+
 			proxy = new Proxy(settings, kit.manage, test)
 
 			if (hck.userDataPath){
@@ -1001,10 +998,8 @@ var kit = {
 		if(!hck) hck = {}
 
 		settings = state.expand(environmentDefaultSettings, settings)
-
-		db = new Datastore(f.path(settingsPath));
-
-
+        db = new Datastore(f.path(settingsPath));
+        
 		return new Promise((resolve, reject) => {
 
 			var start = function(){
