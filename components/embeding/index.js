@@ -156,7 +156,7 @@ var embeding = (function(){
 
 									file.loading = false;
 
-									file.src = deep(data, 'data.link') || 'https://pocketnet.app/img/imagenotuploaded.jpg';
+									file.src = deep(data, 'data.link') || 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg';
 									
 									renders.images()
 									
@@ -166,7 +166,7 @@ var embeding = (function(){
 								},
 
 								fail : function(){
-									file.src = 'https://pocketnet.app/img/imagenotuploaded.jpg';
+									file.src = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg';
 
 									renders.images()
 									

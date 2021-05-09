@@ -161,7 +161,7 @@ var faq = (function(){
 					{
 						id : 'Missing PKCOIN',
 						q : 'Help! I am missing my PKOIN!',
-						a : '<div>If for some reason it seems like your PKOIN has gone missing, please first check the blockexplorer via<a href="https://pocketnet.app/blockexplorer/">BlockExplorer.</a> to that your coins are still there. Just search your wallet address in the search bar and it will show you the balance of your account. </div>',
+						a : '<div>If for some reason it seems like your PKOIN has gone missing, please first check the blockexplorer via<a href="https://'+self.app.options.url+'/blockexplorer/">BlockExplorer.</a> to that your coins are still there. Just search your wallet address in the search bar and it will show you the balance of your account. </div>',
 					},
 			
 				]
@@ -393,7 +393,7 @@ var faq = (function(){
 
 				var question = mp[id]
 
-				var url = 'https://pocketnet.app/help?page=faq&id='+id
+				var url = 'https://'+self.app.options.url+'/help?page=faq&id='+id
 
 				var r = ''
 

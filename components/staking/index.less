@@ -64,8 +64,23 @@
         }
     }
 
+    .calculatordummy,
     .calculator{
         position: relative;
+    }
+
+    .calculatordummy{
+        min-height: 80px;
+
+        .calculatordummytext{
+            padding : 2 * @rhythm;
+
+            span{
+                font-size: 0.8em;
+                font-weight: 700;
+                color : @color-contrast;
+            }
+        }
     }
     .chwr{
         position: absolute;

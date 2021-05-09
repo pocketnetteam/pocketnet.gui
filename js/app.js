@@ -62,11 +62,20 @@ Application = function(p)
 	var self = this;
 	var realtimeInterval = null;
 
+	var url = 'pocketnet.app'
+
+	if (window.testpocketnet){
+		url = 'test.pocketnet.app'
+
+		self.test = true
+	}
+
 	self.options = {
 		
+		url : url,
 
 		nav : {
-			navPrefix : '/',
+			navPrefix : '/pocketnet/',
 		},
 
 		name : 'PCRB',
@@ -76,26 +85,26 @@ Application = function(p)
 		//////////////
 
 		//apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
-		apimproxy : p.apimproxy || 'https://pocketnet.app:8888',
+		//apimproxy : p.apimproxy || 'https://pocketnet.app:8888',
 		
-		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations
+		server : p.server || 'https://'+url+'/Shop/AJAXMain.aspx', //donations will be removed
 
 		//////////////
 		
-		firebase : p.firebase || 'https://pocketnet.app:8888',
+		firebase : p.firebase || 'https://'+url+':8888', /// will be removed
 
 		//////////////
 
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
-		imageServerup1 : p.imageServerup1 || 'https://pocketnet.app:8092/up',
+		imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
 
 		////////////// Will remove with Matrix
 		//ws : p.ws || "wss://pocketnet.app:8088",
-		rtc : p.rtc || 'https://pocketnet.app:9001/',
-		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
-		rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
+		rtc : p.rtc || 'https://'+url+':9001/',
+		rtcws : p.rtcws || 'wss://'+url+':9090',
+		rtchttp : p.rtchttp || 'https://'+url+':9091',
 		
 		listofnodes : p.listofnodes || null,
 		listofproxies : p.listofproxies || null,
@@ -417,6 +426,10 @@ Application = function(p)
 	self.id = makeid();
 	self.map = __map;
 	self.modules = {};
+
+	if (self.test){
+		$('html').addClass('testpocketnet')
+	}
 
 	self.curation = function(){
 		if(typeof isios != 'undefined' && isios()) return true

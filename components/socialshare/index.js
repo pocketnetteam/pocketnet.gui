@@ -337,7 +337,7 @@ var socialshare = (function(){
 
 				ed.title || (ed.title = 'Pocketnet')
 			    ed.text || (ed.text = self.app.localization.e('e13171'))
-			    ed.image || (ed.image = 'https://pocketnet.app/img/logobigpadding.png') 
+			    ed.image || (ed.image = 'https://'+self.app.options.url+'/img/logobigpadding.png') 
 			   
 
 			    if(!ed.url){
@@ -348,12 +348,12 @@ var socialshare = (function(){
 
 			    		var pn = p[p.length - 1]
 
-						ed.url = 'https://pocketnet.app/' +  pn + window.location.search
+						ed.url = 'https://'+self.app.options.url+'/' +  pn + window.location.search
 						
 				    }
 				    else
 				    {
-				    	ed.url = 'https://pocketnet.app/' + self.app.nav.get.href()
+				    	ed.url = 'https://'+self.app.options.url+'/' + self.app.nav.get.href()
 				    }
 
 				}

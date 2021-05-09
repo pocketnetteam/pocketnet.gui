@@ -213,7 +213,7 @@ var post = function(nModule){
 
 			sharesocial : function(clbk){
 		
-				var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
+				var url = 'https://'+self.app.options.url+'/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
 
 				if (parameters().address){
 					url += '&address=' + (parameters().address || '')
@@ -554,7 +554,7 @@ var post = function(nModule){
 
 				const metaInfo = self.app.platform.parseUrl(share.url);
 
-				const peertubeLink = `https://pocketnet.app/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
+				const peertubeLink = `https://`+self.app.options.url+`/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
 
 				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
 
@@ -751,7 +751,7 @@ var post = function(nModule){
 						}
 
 	
-						var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + rf
+						var url = 'https://'+self.app.options.url+'/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + rf
 	
 						if (parameters().address){
 							url += '&address=' + (parameters().address || '')

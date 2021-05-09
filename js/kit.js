@@ -413,7 +413,7 @@ Comment = function(txid){
 		
 									success : function(data){
 		
-										self.images.v[index] = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
 										console.log('self.images.v[index]', self.images.v[index])
 										p.success();
@@ -1156,7 +1156,7 @@ Share = function(lang){
 		
 									success : function(data){
 		
-										self.images.v[index] = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
 										p.success();
 		
@@ -1513,7 +1513,7 @@ UserInfo = function(){
 		v : ''
 	};
 
-	self.uploadImage = function(clbk){
+	self.uploadImage = function(app, clbk){
 
 		var image = self.image.v;
 
@@ -1551,7 +1551,7 @@ UserInfo = function(){
 
 							success : function(data){
 
-								self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+								self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
 								if (clbk)
 									clbk();

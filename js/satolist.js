@@ -8538,9 +8538,7 @@ Platform = function (app, listofnodes) {
 
                 if (ao) address = ao.address
 
-                self.app.api.rpc('getlastcomments', ['7', '', self.app.localization.key], {
-                    proxy : 'pocketnet.app:8899:8099'
-                }).then(d => {
+                self.app.api.rpc('getlastcomments', ['7', '', self.app.localization.key]).then(d => {
 
                     d = _.filter(d, function (d) {
                         return !d.deleted

@@ -378,7 +378,7 @@ var lenta = (function(){
 
 				if (_OpenApi){
 
-					var phref = 'https://pocketnet.app/post?openapi=true&s=' + txid
+					var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
 
 					if (self.app.ref){
 						phref += '&ref=' + self.app.ref
@@ -592,7 +592,7 @@ var lenta = (function(){
 
 				if (share){
 
-					var url = 'https://pocketnet.app/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true'
+					var url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true'
 					if (parameters().address) url += '&address=' + (parameters().address || '')
 
 					
@@ -1234,7 +1234,7 @@ var lenta = (function(){
 
 				const metaInfo = self.app.platform.parseUrl(share.url);
 
-				const peertubeLink = `https://pocketnet.app/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
+				const peertubeLink = `https://`+self.app.options.url+`/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
 
 				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
 
@@ -1753,7 +1753,7 @@ var lenta = (function(){
 							rf = '&ref=' + self.app.platform.sdk.address.pnet().address
 						}
 
-						var hr = 'https://pocketnet.app/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + rf
+						var hr = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + rf
 
 						if (parameters().address) hr += '&address=' + (parameters().address || '')
 

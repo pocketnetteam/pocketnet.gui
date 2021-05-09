@@ -60,7 +60,7 @@ var test = (function(){
 						
 						_p.ref += name
 	
-						body += '<p><a href="https://pocketnet.app/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+						body += '<p><a href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
 					}							
 	
 					var r = deep(document, 'referrer')
@@ -73,7 +73,7 @@ var test = (function(){
 	
 					$.ajax({
 						type: 'POST',
-						url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+						url: 'https://'+self.app.options.url+'/Shop/AJAXMain.aspx',
 						data: _p,
 						dataType: 'json',
 						success : function(){
@@ -258,7 +258,7 @@ var test = (function(){
 								topPreloader(70)
 								
 
-								userInfo.uploadImage(function(err){
+								userInfo.uploadImage(self.app, function(err){
 
 									if (err){
 										topPreloader(100)
@@ -1141,7 +1141,7 @@ var test = (function(){
 					
 					_p.ref += ', ' + name
 
-					body += '<p><a href="https://pocketnet.app/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+					body += '<p><a href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
 				}
 
 				var r = deep(document, 'referrer')

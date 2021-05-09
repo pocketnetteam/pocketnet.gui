@@ -495,7 +495,7 @@ var Api = function(app){
     var proxies = [];
     var nodes = []
 
-    var current = null // 'localhost:8888:8088' //null;///'pocketnet.app:8899:8099'
+    var current = null
     var useproxy = true;
     var inited = false;
     var fixednode = null;
@@ -637,7 +637,7 @@ var Api = function(app){
                     }).then(() => {
 
                         if(!current && proxies.length){
-                            current = 'pocketnet.app:8899:8099' //proxies[0].id
+                            current = 'pocketnet.app:8899:8099' //proxies[0].id ??
                         }
 
                         inited = true

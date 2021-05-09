@@ -19,7 +19,7 @@
         default-src https: 'self'; 
         connect-src https: wss: data:;
         img-src 'self' data: https:;
-        script-src 'self' blob: https://pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' blob: https://test.pocketnet.app https://pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
         font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src blob: *">
@@ -34,16 +34,16 @@
             $og->echotags();
         ?>
 
-        <link rel="stylesheet" href="css/normalize.css?v=708004287382">
-<link rel="stylesheet" href="css/tooltipster.core.min.css?v=135866234407">
-<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=871509824379">
-<link rel="stylesheet" href="css/main.css?v=221249433906">
-<link rel="stylesheet" href="css/stblack.css?v=281800113438">
-<link rel="stylesheet" href="css/plyr.css?v=874591432225">
-<link rel="stylesheet" href="css/medium/medium-editor.css?v=95567412541">
-<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=914926788614">
-<link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=249443388348">
-<link rel="stylesheet" href="css/medium/beagle.css?v=864716653125">
+        <link rel="stylesheet" href="css/normalize.css?v=370177672092">
+<link rel="stylesheet" href="css/tooltipster.core.min.css?v=863649793014">
+<link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=579779039937">
+<link rel="stylesheet" href="css/main.css?v=396276494499">
+<link rel="stylesheet" href="css/stblack.css?v=294456091941">
+<link rel="stylesheet" href="css/plyr.css?v=476084630914">
+<link rel="stylesheet" href="css/medium/medium-editor.css?v=674352481094">
+<link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=133528228581">
+<link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=79825115805">
+<link rel="stylesheet" href="css/medium/beagle.css?v=550234643098">
 
 
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
@@ -107,7 +107,7 @@
                 
 
         <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
-        <!--<script src="chat/matrix-element.min.js"></script>-->
+        <script src="chat/matrix-element.min.js"></script>
         <script src="js/widgets.js?v=136"></script>
         <script type="text/javascript">
 
@@ -168,7 +168,8 @@
 <script join src="js/vendor/aesjs.js?v=7"></script>
 <script join src="js/vendor/linkify.min.js?v=7"></script>
 <script join src="js/vendor/linkify-html.min.js?v=7"></script>
-<script join src="js/lib/pocketnet/btc17.js?v=74"></script>
+<script join src="js/lib/pocketnet/btc17.js?v=7"></script>
+<script join src="js/lib/pocketnet/htls.js?v=7"></script>
 <script join src="js/lib/pocketnet/buffer.js?v=7"></script>
 <script join src="js/lib/client/system16.js?v=7"></script>
 <script join src="js/lib/client/api.js?v=7"></script>
@@ -191,20 +192,20 @@
 <script join src="js/vendor/axios.js?v=7"></script>
 
         
-        <script>window.design = true;</script><script join src="js/functions.js?v=864275992942"></script>
-<script join src="js/user.js?v=812332584220"></script>
-<script join src="js/module.js?v=444659340"></script>
-<script join src="js/navn.js?v=997298382525"></script>
-<script join src="js/validation.js?v=559512071514"></script>
-<script join src="js/_map.js?v=414725673548"></script>
-<script join src="js/localization.js?v=766399398980"></script>
-<script join src="js/kit.js?v=232201765016"></script>
-<script join src="js/satolist.js?v=403663110027"></script>
-<script join src="js/messenger2/clientrtc.js?v=957262594792"></script>
-<script join src="peertube/video-embed.bundle.js?v=572106719098"></script>
-<script join src="js/peertube-master.js?v=1326489809"></script>
-<script join src="js/app.js?v=857944045916"></script>
-<script join src="js/main.js?v=12751799410"></script>
+        <script>window.testpocketnet = true;</script><script>window.design = true;</script><script join src="js/functions.js?v=557341178096"></script>
+<script join src="js/user.js?v=853738732726"></script>
+<script join src="js/module.js?v=302669060113"></script>
+<script join src="js/navn.js?v=691391605437"></script>
+<script join src="js/validation.js?v=147022944016"></script>
+<script join src="js/_map.js?v=436929104163"></script>
+<script join src="js/localization.js?v=165731951632"></script>
+<script join src="js/kit.js?v=213478499590"></script>
+<script join src="js/satolist.js?v=811701396015"></script>
+<script join src="js/messenger2/clientrtc.js?v=357490973041"></script>
+<script join src="peertube/video-embed.bundle.js?v=426271316333"></script>
+<script join src="js/peertube-master.js?v=24502776973"></script>
+<script join src="js/app.js?v=174486312926"></script>
+<script join src="js/main.js?v=77196863098"></script>
 
 
 

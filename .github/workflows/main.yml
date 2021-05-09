@@ -28,8 +28,8 @@ jobs:
 
       - name: Prepare
         run: |
-          npm ci --only-production
-          npm run minimize
+          npm i
+          npm run minimize:test
 
       - name: Copy to dest dir
         run: rsync -ah ./ /docker/gui/ --exclude .git

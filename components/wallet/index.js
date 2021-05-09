@@ -1738,7 +1738,7 @@ var wallet = (function(){
 
 				var seed = rand(10000, 99999)
 
-				return '<div id="pocketnet_'+seed+'"></div><script src="https://pocketnet.app/js/widgets.js"></script><script type="text/javascript">(new window.PNWIDGETS()).make('+seed+', "lenta", "'+id+'", "'+p+'")</script>'
+				return '<div id="pocketnet_'+seed+'"></div><script src="https://'+self.app.options.url+'/js/widgets.js"></script><script type="text/javascript">(new window.PNWIDGETS()).make('+seed+', "lenta", "'+id+'", "'+p+'")</script>'
 			
 
 				

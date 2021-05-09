@@ -227,7 +227,7 @@ var filluser = (function(){
 								
 								_p.ref += ', ' + name
 			
-								body += '<p><a href="https://pocketnet.app/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+								body += '<p><a href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
 							}							
 			
 							var r = deep(document, 'referrer')
@@ -240,7 +240,7 @@ var filluser = (function(){
 			
 							$.ajax({
 								type: 'POST',
-								url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+								url: 'https://'+self.app.options.url+'/Shop/AJAXMain.aspx',
 								data: _p,
 								dataType: 'json',
 								success : function(){

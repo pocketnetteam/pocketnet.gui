@@ -7,13 +7,14 @@ var uglifyJS = require("uglify-js");
 var compressor = require('yuicompressor');
  
 var path = ".",
-	prodaction = process.argv[2] ? false : true;
+	testversion = (process.argv[4] && process.argv[4] == 'test') ? true : false;
+	prodaction = (process.argv[2] && process.argv[2] == 'true') ? false : true;
 
 var vendorversion = process.argv[3] || '7';
 
-if(prodaction === 'false') prodaction = false; 
+//if(prodaction === 'false') prodaction = false; 
 
-
+console.log(prodaction, vendorversion, testversion, process.argv)
 
 var mapJsPath = './js/_map.js';
 var indexPathTpl = './index.tpl';
@@ -425,9 +426,16 @@ fs.exists(mapJsPath, function (exists) {
 						var CSS = "";
 						var VE = ""
 
+						if(testversion){
+							JS += '<script>window.testpocketnet = true;</script>';
+						}
+
 						if(prodaction)
 						{
-							JS = '<script join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
+
+							
+
+							JS += '<script join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
 
 							VE = '<script join src="js/vendor.min.js?v='+vendorversion+'"></script>';
 

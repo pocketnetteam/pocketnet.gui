@@ -957,7 +957,7 @@ Nav = function(app)
 
 			var host = self.get.hostname()
 
-			if (host == 'localhost/' || electron || window.cordova) host = 'pocketnet.app/'
+			if (host == 'localhost/' || electron || window.cordova) host = app.options.url + '/'
 
 				host = 'https://' + host
 		
@@ -993,7 +993,7 @@ Nav = function(app)
 			if (href.indexOf('http') == -1){
 
 				if(_OpenApi) {
-					href = 'pocketnet.app/' + href
+					href = app.options.url + '/' + href
 
 					if (app.ref)
 						href = self.api.history.addParametersToHref(href, {
@@ -1027,7 +1027,7 @@ Nav = function(app)
 
 			var host = self.get.hostname()
 
-			if (host == 'localhost/' || electron || window.cordova) host = 'pocketnet.app/'
+			if (host == 'localhost/' || electron || window.cordova) host = app.options.url + '/'
 
 				host = 'https://' + host
 

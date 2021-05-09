@@ -458,7 +458,7 @@ var staking = (function(){
 
 			el.c.find('.earnlabel').on('click', function(){
 
-				var url = 'https://pocketnet.app'
+				var url = 'https://'+self.app.options.url+''
 
 				var r = ''
 

@@ -15,8 +15,10 @@
         "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
         "rebuild": "electron-rebuild",
-        "minimize": "node minimize.js",
-        "dev": "node minimize.js true"
+        "minimize": "node minimize.js false 7",
+        "minimize:test": "node minimize.js false 7 test",
+        "dev": "node minimize.js true",
+        "dev:test": "node minimize.js true 7 test"
     },
     "devDependencies": {
         "electron": "^11.4.5",
