@@ -22,12 +22,14 @@ var share = (function(){
 
 		var m = self.app.localization.e('e13160');
 
-		var resizeImage = function(base64, clbk){
+		var resizeImage = function(base64, settings = {}, clbk){
 
 			var images = [{
 			  original : base64,
 			  index : 0
-			}]
+			}];
+
+			debugger;
 	  
 			self.nav.api.load({
 			  open : true,
@@ -40,7 +42,7 @@ var share = (function(){
 				images : images,
 				apply : true,
 				crop : {
-				  aspectRatio : 16 / 9,
+				  aspectRatio : settings.aspectRatio || 16 / 9,
 				  style : 'apply',
 				  autoCropArea : 0.9,
 				},
@@ -2087,13 +2089,23 @@ var share = (function(){
 
 							el.wallpaperStatusIcon.attr('class', 'fas fa-spinner fa-spin');
 
-							toDataURL(evt.target.files[0]).then(fileBase64 => resizeImage(fileBase64, (img) => {
-								options.thumbnailfile = dataURLtoFile(img);
+							self.app.api.fetch('peertube/video',{
+								host: `https://${metaInfo.host_name}`,
+								id: metaInfo.id,
+							}).then((res = {}) => {
 
-								self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
-								  .then(() => el.wallpaperStatusIcon.attr('class', 'fas fa-check'))
-								  .catch(() => el.wallpaperStatusIcon.attr('class', 'fas fa-times'));
-							}));
+								const settingsObject = {
+									aspectRatio: res.aspectRatio,
+								};
+
+								return toDataURL(evt.target.files[0]).then(fileBase64 => resizeImage(fileBase64, settingsObject, (img) => {
+									options.thumbnailfile = dataURLtoFile(img);
+	
+									self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
+									  .then(() => el.wallpaperStatusIcon.attr('class', 'fas fa-check'))
+									  .catch(() => el.wallpaperStatusIcon.attr('class', 'fas fa-times'));
+								}));
+							});
 						})
 					}
 					
