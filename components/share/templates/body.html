@@ -12,7 +12,7 @@ var arranges = {
 		</div>
 		<% if (share.itisvideo()) {%>
 		<div class="wallpaperUpload">
-			<label for="wallpaperShareInput" class="wallpaperShareLabel">Edit Wallpaper <i class="far fa-file-image"></i></label>
+			<label for="wallpaperShareInput" class="wallpaperShareLabel"><%- e('editWallpaper') %> <i class="far fa-file-image wallpaperStatusIcon"></i></label>
 			<input type="file" class="wallpaperShareInput" id="wallpaperShareInput" accept=".jpg,.jpeg">
 		</div>
 		<%}%>

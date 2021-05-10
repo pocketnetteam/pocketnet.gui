@@ -835,3 +835,6 @@ ____loclib.period7day = "Семь дней";
 ____loclib.period31day = "Один месяц";
 ____loclib.period182day = "Пол года";
 
+____loclib.editWallpaper = "Изменить Заставку";
+
+

@@ -1900,6 +1900,7 @@ var share = (function(){
 					el.images = el.c.find('.imagesWrapper')
 					el.poll = el.c.find('.pollWrapper')
 					el.updateWallpaperInput = el.c.find('.wallpaperShareInput');
+					el.wallpaperStatusIcon = el.c.find('.wallpaperStatusIcon');
 
 					el.eMessage.emojioneArea({
 						pickerPosition : 'bottom',
@@ -2084,10 +2085,14 @@ var share = (function(){
 								server: metaInfo.host_name,
 							}
 
+							el.wallpaperStatusIcon.attr('class', 'fas fa-spinner fa-spin');
+
 							toDataURL(evt.target.files[0]).then(fileBase64 => resizeImage(fileBase64, (img) => {
 								options.thumbnailfile = dataURLtoFile(img);
 
-								self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters);
+								self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
+								  .then(() => el.wallpaperStatusIcon.attr('class', 'fas fa-check'))
+								  .catch(() => el.wallpaperStatusIcon.attr('class', 'fas fa-times'));
 							}));
 						})
 					}
