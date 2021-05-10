@@ -20,7 +20,51 @@ var share = (function(){
 
 		var intro = false;
 
-		var m = self.app.localization.e('e13160')
+		var m = self.app.localization.e('e13160');
+
+		var resizeImage = function(base64, clbk){
+
+			var images = [{
+			  original : base64,
+			  index : 0
+			}]
+	  
+			self.nav.api.load({
+			  open : true,
+			  id : 'imageGalleryEdit',
+			  inWnd : true,
+	  
+			  essenseData : {
+				edit : true,
+				initialValue : 0,
+				images : images,
+				apply : true,
+				crop : {
+				  aspectRatio : 16 / 9,
+				  style : 'apply',
+				  autoCropArea : 0.9,
+				},
+	  
+				success : function(i, editclbk){
+	  
+				  resize(images[0].original, 1920, 1080, function(resized){
+					var r = resized.split(',');
+	  
+					if (r[1]){
+	  
+					  editclbk()
+	  
+					  if (clbk)
+						  clbk(resized)
+	  
+					}
+					
+				  })
+	  
+				}
+			  }
+			})
+		  };
 
 		var actions = {
 
@@ -1837,9 +1881,7 @@ var share = (function(){
 				// })
 			},
 
-			body : function(clbk){
-
-
+			body : function(clbk){				
 				self.shell({
 					name :  'body',
 					el : el.body,
@@ -1857,6 +1899,7 @@ var share = (function(){
 					el.cpt = el.c.find('.cpt')
 					el.images = el.c.find('.imagesWrapper')
 					el.poll = el.c.find('.pollWrapper')
+					el.updateWallpaperInput = el.c.find('.wallpaperShareInput');
 
 					el.eMessage.emojioneArea({
 						pickerPosition : 'bottom',
@@ -2023,6 +2066,30 @@ var share = (function(){
 		
 					if (list && !isMobile()){
 						Sortable.create(list, ps); 
+					}
+
+					if (currentShare.itisvideo()) {
+						const metaInfo = self.app.platform.parseUrl((currentShare.url || {}).v || '');
+
+						if (!el.updateWallpaperInput) return;
+
+						el.updateWallpaperInput.change(function(evt) {
+							const originalImage = evt.target.files[0];
+
+							const options = {
+								thumbnailfile: originalImage,
+							};
+
+							const parameters = {
+								server: metaInfo.host_name,
+							}
+
+							toDataURL(evt.target.files[0]).then(fileBase64 => resizeImage(fileBase64, (img) => {
+								options.thumbnailfile = dataURLtoFile(img);
+
+								self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters);
+							}));
+						})
 					}
 					
 					actions.autoFilled()
