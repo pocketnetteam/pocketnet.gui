@@ -31,6 +31,8 @@ var main = (function(){
 			icon : 'fas fa-arrow-right'
 		}]
 
+		var swiper;
+
 		var mobilemode = 'mainshow'
 
 		var helpers = {
@@ -40,11 +42,11 @@ var main = (function(){
 		var actions = {
 			refreshSticky : function(){
 
-				if (hsready){
-					el.panel.hcSticky('refresh');
-					el.leftpanel.hcSticky('refresh');
+				// if (hsready){
+				// 	el.panel.hcSticky('refresh');
+				// 	el.leftpanel.hcSticky('refresh');
 					
-				}
+				// }
 					
 			},
 			addbutton : function(){
@@ -89,12 +91,36 @@ var main = (function(){
 				
 			},
 			addbuttonscroll  : function(){
-				if($(window).scrollTop() > 400){
+				let scroll = $(window).scrollTop(), wWidth = window.innerWidth;
+				if(scroll > 400){
 					el.addbutton.addClass('scrollactive')
 				}
 				else{
 					el.addbutton.removeClass('scrollactive')
 				}
+
+				actions.updateSidePanelHeight(el.leftPanelSlide, scroll, wWidth);
+				actions.updateSidePanelHeight(el.rightPanelSlide, scroll, wWidth);
+			},
+			updateSidePanelHeight : function(panel, scroll, wWidth) {
+				// Calculate the top position for the right & left panels
+				// Start with the top bar height
+				let totalTop = 65;
+				// Add the swiper pagination if needed
+				// if (wWidth <= 1280)
+				// 	totalTop += 20;
+				// Add the toppanel if needed
+				if (scroll <= 45)
+					totalTop += (45 - scroll);
+				
+				// Calculate the height to remove from the 100vh
+				let totalHeight = totalTop;
+				// Remove the bottom bar height if needed
+				if (wWidth <= 768)
+					totalHeight += 60;
+
+				panel.css('height', 'calc(100vh - ' + totalHeight + 'px)');
+				panel.css('top', totalTop);
 			},
 			panelTopPosition : function(){
 
@@ -647,6 +673,7 @@ var main = (function(){
 		var initEvents = function(){
 			
 			window.addEventListener('scroll', actions.addbuttonscroll)
+			window.addEventListener('resize', actions.addbuttonscroll)
 
 			el.smallpanel.find('.item').on('click', events.currentMode)
 
@@ -654,21 +681,21 @@ var main = (function(){
 
 			el.addbutton.on('click', actions.addbutton)
 
-			if(!isMobile()){
+			// if(!isMobile()){
 
-				el.leftpanel.hcSticky({
-					stickTo: '#main',
-					top : 64,
-					bottom : 122
-				});
+			// 	el.leftpanel.hcSticky({
+			// 		stickTo: '#main',
+			// 		top : 64,
+			// 		bottom : 122
+			// 	});
 
-				el.panel.hcSticky({
-					stickTo: '#main',
-					top : 76,
-					bottom : 122
-				});
+			// 	el.panel.hcSticky({
+			// 		stickTo: '#main',
+			// 		top : 76,
+			// 		bottom : 122
+			// 	});
 
-			}
+			// }
 
 			hsready = true
 
@@ -921,6 +948,9 @@ var main = (function(){
 				roller = null
 				lenta = null
 				videomain = false
+
+				if (swiper && swiper.destroy)
+					swiper.destroy();
 			},
 			
 			init : function(p){
@@ -936,6 +966,8 @@ var main = (function(){
 				el.lenta = el.c.find('.lentaWrapper');
 				el.panel = el.c.find('.panel'); //00
 				el.leftpanel = el.c.find('.leftpanel');
+				el.leftPanelSlide = el.c.find('#leftPanelSlide');
+				el.rightPanelSlide = el.c.find('#rightPanelSlide');
 				el.up = el.c.find('.upbuttonwrapper')
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 				el.smallpanel = el.c.find('.smallpanell')
@@ -947,6 +979,63 @@ var main = (function(){
 				var wordsRegExp = /[,.!?;:() \n\r]/g
 
 				initEvents();
+
+				swiper = new Swiper('#mainSwiper', {
+					slidesPerView: 1,
+					slidesPerGroup: 1,
+					initialSlide: 1,
+					spaceBetween: 1,
+					threshold: 10,
+					resistance : true,
+					resistanceRatio: 0,
+					// Responsive breakpoints
+					breakpoints: {
+						// when window width is >= 769px
+						769: {
+							slidesPerView: 'auto',
+							slidesPerGroup: 2,
+							// pagination: {
+							// 	renderBullet: function (index, className) {
+							// 		switch (index) {
+							// 			case 0:
+							// 				return '<span class="' + className + '">' + self.app.localization.e('Categories') + "</span>";
+							// 			case 1:
+							// 				return '<span class="' + className + '">' + self.app.localization.e('e13122') + "</span>";
+							// 			default:
+							// 				return '';
+							// 		}
+							// 	}
+							// }
+						},
+						// when window width is >= 1281px
+						1281: {
+							slidesPerView: 3,
+							slidesPerGroup: 3,
+							// pagination: false
+						}
+					},
+					// Pagination for when window width <= 768px
+					// pagination: {
+					// 	el: "#mainSwiperPagination",
+					// 	clickable: true,
+					// 	renderBullet: function (index, className) {
+					// 		switch (index) {
+					// 			case 0:
+					// 				return '<span class="' + className + '">' + self.app.localization.e('Categories') + "</span>";
+					// 			case 1:
+					// 				return '<span class="' + className + '">' + self.app.localization.e('posts') + "</span>";
+					// 			case 2:
+					// 				return '<span class="' + className + '">' + self.app.localization.e('e13122') + "</span>";
+					// 			default:
+					// 				return '';
+					// 		}
+					// 	},
+					// },
+					pagination: false
+				});
+
+				// Update the panels height
+				actions.addbuttonscroll();
 
 				if(!p.goback){
 					searchvalue = parameters().ss || ''
