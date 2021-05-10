@@ -1,21 +1,42 @@
 {
-  "name": "pocketnetproxy",
-  "version": "1.0.0",
-  "description": "Pocketnet Proxy Server 16",
-  "main": "index.js",
-  "scripts": {
-    "serve": "node cli.js --cli",
-    "serve:test": "node cli.js --cli --test",
-    "serveTest": "nodemon cli.js --cli",
-    "install-windows-service": "winser -i",
-    "uninstall-windows-service": "winser -r"
-  },
-  "author": "Max Grishkov",
-  "license": "ISC",
-  "dependencies": {
-    "nodejs-base64": "^1.0.3",
-    "nodemon": "^2.0.7",
-    "string": "^3.3.3",
-    "underscore": "^1.12.1"
-  }
+    "name": "pocketnetproxy",
+    "version": "1.0.0",
+    "description": "Pocketnet Proxy Server 16",
+    "main": "index.js",
+    "scripts": {
+        "serve": "node cli.js --cli",
+        "serve:test": "node cli.js --cli --test",
+        "serveTest": "nodemon cli.js --cli",
+        "install-windows-service": "winser -i",
+        "uninstall-windows-service": "winser -r"
+    },
+    "author": "Max Grishkov",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "download-github-release": "^0.3.2",
+        "express": "^4.17.1",
+        "express-useragent": "^1.0.15",
+        "express-ws": "^4.0.0",
+        "htmlparser2": "^6.1.0",
+        "jsdom": "^7.2.2",
+        "lodash": "^4.17.15",
+        "md5": "^2.3.0",
+        "nedb": "^1.8.0",
+        "nodejs-base64": "^1.0.3",
+        "nodemon": "^2.0.7",
+        "random": "^2.2.0",
+        "request": "^2.88.2",
+        "node-fetch": "",
+        "node-autodetect-utf8-cp1251-cp866": "",
+        "clone-deep": "^4.0.1",
+        "tcp-port-used": "^1.0.1",
+        "lambda-rate-limiter": "",
+        "firebase-admin": "^9.3.0",
+        "request-promise-native": "^1.0.7",
+        "string": "^3.3.3",
+        "svg-captcha": "^1.4.0",
+        "swagger-ui-express": "^4.1.4",
+        "underscore": "^1.12.1"
+    }
 }

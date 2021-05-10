@@ -4,8 +4,8 @@ EXPOSE 8899 8099
 
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm i --only=production
+RUN npm ci --only=production
 COPY . .
 
-WORKDIR /usr/src/app/proxy16
-CMD ["node", "cli.js", "--cli"]
+WORKDIR /usr/src/app
+CMD ["/usr/local/bin/npm", "run", "serve"]
