@@ -963,12 +963,6 @@ var kit = {
 
 		if(!proxy){
             
-            if (settings.server.test) {
-                test = true
-                nodes = testnodes
-                settings.nodes.stable = nodes
-            }
-
 			proxy = new Proxy(settings, kit.manage, test)
 
 			if (hck.userDataPath){
@@ -1019,6 +1013,7 @@ var kit = {
 					resolve()
 
 				}).catch(e => {
+                    console.log(e)
 					reject(e)
 				})
 			}
