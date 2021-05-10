@@ -1,21 +1,22 @@
 {
-  "name": "pocketnetproxy",
-  "version": "1.0.0",
-  "description": "Pocketnet Proxy Server 16",
-  "main": "index.js",
-  "scripts": {
-    "serve": "node cli.js --cli",
-    "serve:test": "node cli.js --cli --test",
-    "serveTest": "nodemon cli.js --cli",
-    "install-windows-service": "winser -i",
-    "uninstall-windows-service": "winser -r"
-  },
-  "author": "Max Grishkov",
-  "license": "ISC",
-  "dependencies": {
-    "nodejs-base64": "^1.0.3",
-    "nodemon": "^2.0.7",
-    "string": "^3.3.3",
-    "underscore": "^1.12.1"
-  }
+    "name": "pocketnetproxy",
+    "version": "1.0.0",
+    "description": "Pocketnet Proxy Server 16",
+    "main": "index.js",
+    "scripts": {
+        "serve": "node cli.js --cli",
+        "serve:test": "node cli.js --cli --test",
+        "serveTest": "nodemon cli.js --cli",
+        "install-windows-service": "winser -i",
+        "uninstall-windows-service": "winser -r"
+    },
+    "author": "Max Grishkov",
+    "license": "ISC",
+    "dependencies": {
+        "download-github-release": "^0.3.2",
+        "nodejs-base64": "^1.0.3",
+        "nodemon": "^2.0.7",
+        "string": "^3.3.3",
+        "underscore": "^1.12.1"
+    }
 }
