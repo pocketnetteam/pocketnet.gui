@@ -98,29 +98,6 @@ var main = (function(){
 				else{
 					el.addbutton.removeClass('scrollactive')
 				}
-
-				actions.updateSidePanelHeight(el.leftPanelSlide, scroll, wWidth);
-				actions.updateSidePanelHeight(el.rightPanelSlide, scroll, wWidth);
-			},
-			updateSidePanelHeight : function(panel, scroll, wWidth) {
-				// Calculate the top position for the right & left panels
-				// Start with the top bar height
-				let totalTop = 65;
-				// Add the swiper pagination if needed
-				// if (wWidth <= 1280)
-				// 	totalTop += 20;
-				// Add the toppanel if needed
-				if (scroll <= 45)
-					totalTop += (45 - scroll);
-				
-				// Calculate the height to remove from the 100vh
-				let totalHeight = totalTop;
-				// Remove the bottom bar height if needed
-				if (wWidth <= 768)
-					totalHeight += 60;
-
-				panel.css('height', 'calc(100vh - ' + totalHeight + 'px)');
-				panel.css('top', totalTop);
 			},
 			panelTopPosition : function(){
 

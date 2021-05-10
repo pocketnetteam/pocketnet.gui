@@ -450,13 +450,14 @@ html {
 		overflow: inherit;
 		z-index: inherit !important;
 
+		// On wide screens, both panels are common to the main page
 		#leftPanelSlide,
 		#rightPanelSlide {
-			height: calc(100vh - 140px);
-			overflow: auto;
-			position: sticky;
-			position: -webkit-sticky;
-			top: 85px;
+
+			height: 100%;
+			position: static;
+			top: 0px;
+			
 			overscroll-behavior: none;
 
 			&::-webkit-scrollbar {
@@ -792,6 +793,15 @@ html {
 				width: calc(100% - 228px) !important;
 			}
 		}
+
+		// On medium wide screens, only right panel is sticky to the top
+		#rightPanelSlide {
+			height: calc(100vh - 65px);
+			overflow: auto;
+			position: sticky;
+			position: -webkit-sticky;
+			top: 65px;
+		}
 	}
 
 	/*.custom-swiper-pagination {
@@ -982,6 +992,17 @@ html {
 					width: 100% !important;
 				}
 			}
+
+			// On small screens, both panels have their own scroll
+			#leftPanelSlide,
+			#rightPanelSlide {
+				height: calc(100vh - 180px);
+				overflow: auto;
+				position: sticky;
+				position: -webkit-sticky;
+				top: 65px;
+			}
+
 		}
 
 		/*.custom-swiper-pagination {
