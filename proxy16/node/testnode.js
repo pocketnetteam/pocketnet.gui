@@ -524,16 +524,16 @@ var Testnode = function(node, manager){
 
             var comment = manager.wallet.pocketnet.pobjects.comment(txid, message)
 
-            console.log('makecomment', message, txid)
+            console.log('makecomment')
 
             return manager.wallet.transactions.common(address, comment, {}).then(() => {
 
-                console.log('makecommentsuccess', message, txid)
+                console.log('makecommentsuccess')
 
                 return Promise.resolve()
             }).catch(e => {
 
-                console.log('makecommentfailed', message, txid, e)
+                console.log('makecommentfailed', e)
 
                 return Promise.reject(e)
             })
@@ -543,11 +543,13 @@ var Testnode = function(node, manager){
 
             var upvote = manager.wallet.pocketnet.pobjects.upvoteShare(txid, txaddress, f.rand(1, 5) + '')
 
-            return manager.wallet.transactions.common(address, upvote, {}).then(() => {
+            console.log('makeupvoteShare')
 
+            return manager.wallet.transactions.common(address, upvote, {}).then(() => {
+                console.log('makeupvoteShareSuccess')
                 return Promise.resolve()
             }).catch(e => {
-
+                console.log('makeupvoteShareFailed', e)
                 return Promise.reject(e)
             })
         },
@@ -581,7 +583,7 @@ var Testnode = function(node, manager){
                 console.log('makeupvoteCommentSuccess')
                 return Promise.resolve()
             }).catch(e => {
-                console.log('makeupvoteCommentFailed')
+                console.log('makeupvoteCommentFailed', e)
                 return Promise.reject(e)
             })
         },
@@ -594,11 +596,15 @@ var Testnode = function(node, manager){
             share.message.set(message)
             share.tags.set(['test'])
 
+            console.log('makeshare')
+
             return manager.wallet.transactions.common(address, share, {}).then(() => {
+
+                console.log('makeshareSuccess')
 
                 return Promise.resolve()
             }).catch(e => {
-
+                console.log('makeshareSuccess', e)
                 return Promise.reject(e)
             })
         },
@@ -637,7 +643,34 @@ var Testnode = function(node, manager){
             return self.scenariosmeta.parallellMethodsLong(count, methodkeys, 600000)
         },
 
-        limits : function(pkindex){
+        limits : function(){
+
+            return self.scenarios.limit(0, 'upvoteComment')
+
+            return self.scenarios.limitsChank('share').then(r => {
+                self.scenarios.limitsChank('comment')
+            }).then(r => {
+                self.scenarios.limitsChank('upvoteComment')
+            }).then(r => {
+                self.scenarios.limitsChank('upvoteShare')
+            }).then(r => {
+                self.scenarios.limitsChank('userAction')
+            })
+
+        },
+
+        limitsChank : function(action){
+
+            var promises = []
+
+            for(var i = 0; i < 3; i++){
+                promises.push(self.scenarios.limit(i, action))
+            }
+
+            return Promise.all(promises)
+        },
+
+        limit : function(pkindex, action){
 
             if(!pkindex) pkindex = 0
 
@@ -646,6 +679,87 @@ var Testnode = function(node, manager){
             var comments = []
             var count = 2
             var time = 60000
+
+            if(!action) action = 'comment'
+
+            var acts = {
+                comment : function(){
+                    return new Promise((resolve, reject) => {
+                        var post = posts[f.rand(0, posts.length - 1)]
+
+                        self.kit.makecomment(address, post.txid).then(r => {
+                            resolve()
+                        }).catch(e => {
+                            reject(e)
+                        })
+
+                    })
+                },
+
+                share : function(){
+                    return new Promise((resolve, reject) => {
+
+                        self.kit.makeshare(address).then(r => {
+                            resolve()
+                        }).catch(e => {
+                            console.log("E", e)
+                            reject(e)
+                        })
+
+                    })
+                },
+
+                upvoteComment : function(){
+                    return new Promise((resolve, reject) => {
+
+                        console.log('comments.length', comments.length)
+
+                        var comment = comments[f.rand(0, comments.length - 1)]
+
+                        self.kit.makeupvoteComment(address, comment.id, comment.address).then(r => {
+                            resolve()
+                        }).catch(e => {
+                            console.log("E", e)
+                            reject(e)
+                        })
+
+                    })
+                },
+
+                upvoteShare : function(){
+                    return new Promise((resolve, reject) => {
+
+                        var post = posts[f.rand(0, posts.length - 1)]
+
+                        self.kit.makeupvoteShare(address, post.txid, post.address).then(r => {
+                            resolve()
+                        }).catch(e => {
+                            console.log("E", e)
+                            reject(e)
+                        })
+
+                    })
+                },
+
+                userAction : function(){
+                    return new Promise((resolve, reject) => {
+
+                        var post = posts[f.rand(0, posts.length - 1)]
+
+                        var actions = ['unsubscribe', 'subscribe', 'subscribePrivate', 'blocking']
+
+                        var action = actions[f.rand(0, actions.length - 1)]
+
+                        self.kit.makeUserAction(address, action, post.address).then(r => {
+                            resolve()
+                        }).catch(e => {
+                            console.log("E", e)
+                            reject(e)
+                        })
+
+                    })
+                }
+            }
 
             return self.kit.preparekey(pkindex).then(a => {
 
@@ -664,64 +778,7 @@ var Testnode = function(node, manager){
                 comments = _comments
 
                 var actions = [
-
-                    /*function(){
-                        return new Promise((resolve, reject) => {
-                            var post = posts[f.rand(0, posts.length - 1)]
-
-                            self.kit.makecomment(address, post.txid).then(r => {
-                                resolve()
-                            }).catch(e => {
-                                reject(e)
-                            })
-
-                        })
-                    },*/
-
-                    /*function(){
-                        return new Promise((resolve, reject) => {
-
-                            self.kit.makeshare(address).then(r => {
-                                resolve()
-                            }).catch(e => {
-                                console.log("E", e)
-                                reject(e)
-                            })
-
-                        })
-                    },*/
-
-                    function(){
-                        return new Promise((resolve, reject) => {
-
-                            console.log('comments', comments.length)
-
-                            var comment = comments[f.rand(0, comments.length - 1)]
-
-                            self.kit.makeupvoteComment(address, comment.id, comment.address).then(r => {
-                                resolve()
-                            }).catch(e => {
-                                console.log("E", e)
-                                reject(e)
-                            })
-
-                        })
-                    },
-
-                    /*function(){
-                        return new Promise((resolve, reject) => {
-
-                            var post = posts[f.rand(0, posts.length - 1)]
-
-                            self.kit.makeupvoteShare(address, post.txid, post.address).then(r => {
-                                resolve()
-                            }).catch(e => {
-                                console.log("E", e)
-                                reject(e)
-                            })
-
-                        })
-                    }*/
+                    acts[action]
                 ]
 
                 return self.scenariosmeta.actionsLong(count, actions, time)

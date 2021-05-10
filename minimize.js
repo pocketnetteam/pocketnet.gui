@@ -3,44 +3,62 @@ _ = require('underscore');
 
 require('./js/functions.js');
 var uglifyJS = require("uglify-js");
-//var ClosureCompiler = require('google-closure-compiler').compiler;
-var compressor = require('yuicompressor');
  
-var path = ".",
-	testversion = (process.argv[4] && process.argv[4] == 'test') ? true : false;
-	prodaction = (process.argv[2] && process.argv[2] == 'true') ? false : true;
 
-var vendorversion = process.argv[3] || '7';
 
-//if(prodaction === 'false') prodaction = false; 
+var args = {
+	test : false,
+	prodaction : true,
+	vendor : 89,
+	path : '/'
+}
 
-console.log(prodaction, vendorversion, testversion, process.argv)
+
+var argcli = _.filter(process.argv, function(a){
+	return a.indexOf('-') == 0
+})
+
+_.each(argcli, function(a){
+	var prs = a.replace('-', '').split('=')
+
+	if(!prs[0]) return
+
+	if(!prs[1]) return
+
+	try{
+		args[prs[0]] = JSON.parse(prs[1])
+	}
+	catch(e){
+		args[prs[0]] = prs[1]
+	}
+	
+})
 
 var mapJsPath = './js/_map.js';
-/*
-var indexPathTpl = './index.tpl';
-var indexPath = './index.php';
-*/
-console.log("run")
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'openapi.html']
+console.log("run")
+console.log(args)
+
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'openapi.html', '.htaccess']
 	
 
 var vars = {
 	test : {
 		proxypath : '"https://pocketnet.app:8899/"',
 		domain : 'test.pocketnet.app',
-		test : ''
+		test : '',
+		path : args.path
 	},
 	prod : {
 		proxypath : '"https://test.pocketnet.app:8899/"',
 		domain : 'pocketnet.app',
-		test : '<script>window.testpocketnet = true;</script>'
+		test : '<script>window.testpocketnet = true;</script>',
+		path : args.path
 	}
 }
 
 
-var VARS = testversion ? vars.test : vars.prod
+var VARS = args.test ? vars.test : vars.prod
 
 fs.exists(mapJsPath, function (exists) { 
 	if(exists) {
@@ -462,16 +480,20 @@ fs.exists(mapJsPath, function (exists) {
 							var CSS = "";
 							var VE = ""
 	
-							if(testversion){
+							if(args.test){
 								JS += '<script>window.testpocketnet = true;</script>';
 							}
+
+							if(args.path){
+								JS += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>';
+							}
 	
-							if(prodaction)
+							if(args.prod)
 							{
 	
 								JS += '<script join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
 	
-								VE = '<script join src="js/vendor.min.js?v='+vendorversion+'"></script>';
+								VE = '<script join src="js/vendor.min.js?v='+args.vendor+'"></script>';
 	
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
 	
@@ -491,7 +513,7 @@ fs.exists(mapJsPath, function (exists) {
 								})	
 	
 								_.each(m.__vendor, function(source){
-									VE += '<script join src="'+source+'?v='+vendorversion+'"></script>\n';
+									VE += '<script join src="'+source+'?v='+args.vendor+'"></script>\n';
 								})			            		
 							}
 	
