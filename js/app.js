@@ -34,7 +34,6 @@ if(typeof _Electron != 'undefined' && _Electron){
 	emojionearea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
-	//fuck
 	const contextMenu = require('electron-context-menu');
 
 	contextMenu({
@@ -75,7 +74,7 @@ Application = function(p)
 		url : url,
 
 		nav : {
-			navPrefix : '/',
+			navPrefix : window.pocketnetpublicpath || '/',
 		},
 
 		name : 'PCRB',

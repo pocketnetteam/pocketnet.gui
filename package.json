@@ -15,10 +15,13 @@
         "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
         "rebuild": "electron-rebuild",
-        "minimize": "node minimize.js false 7",
-        "minimize:test": "node minimize.js false 7 test",
-        "dev": "node minimize.js true",
-        "dev:test": "node minimize.js true 7 test"
+
+        "minimize": "node minimize.js -prodaction=true -vendor=8 -path=/",
+        "minimize:test": "node minimize.js -prodaction=true -vendor=8 -test=true -path=/",
+
+        "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
+        "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/"
+        
     },
     "devDependencies": {
         "electron": "^11.4.5",
