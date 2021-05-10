@@ -8591,6 +8591,12 @@ Platform = function (app, listofnodes) {
 
                 var comment = deep(self.sdk, 'comments.storage.all.' + upvote.comment.v)
 
+                var ma = self.app.platform.sdk.address.pnet().address
+
+                _.each(self.sdk.comments.upvoteClbks, function (c) {
+                    c(null, comment, upvote.value.v, ma, true)
+                })
+
                 self.sdk.node.transactions.create.commonFromUnspent(
 
                     upvote,
@@ -8603,7 +8609,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(error)
+                                c(error, comment, null, ma)
                             })
                         }
                         else {
@@ -8627,7 +8633,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(null, comment, upvote.value.v, self.app.platform.sdk.address.pnet().address)
+                                c(null, comment, upvote.value.v, ma)
                             })
 
                         }
