@@ -19,18 +19,18 @@
         default-src https: 'self'; 
         connect-src https: wss: data:;
         img-src 'self' data: https:;
-        script-src 'self' blob: https://test.pocketnet.app https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
         font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src blob: *">
 
-        <link rel="stylesheet" href="css/master.css?v=341039158698">
+        __CSS__
 
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
         <link rel="stylesheet" href="peertube/video-embed.css">
-        <script src="js/vendor/device.min.js?v=212116925561"></script>
-        <script src="js/vendor/modernizr-2.8.3.min.js?v=212116925561"></script>
+        <script src="js/vendor/device.min.js?v=136"></script>
+        <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
 
 
        
@@ -86,9 +86,9 @@
        <!-- <script src="cordova.js"></script>-->
                 
 
-        <script src="js/vendor/jquery-1.11.3.min.js?v=212116925561"></script>
+        <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
         <script src="chat/matrix-element.min.js"></script>
-        <script src="js/widgets.js?v=212116925561"></script>
+        <script src="js/widgets.js?v=136"></script>
         <script type="text/javascript">
 
             _Node = false;
@@ -137,9 +137,9 @@
             
         </script>
 
-        <script join src="js/vendor.min.js?v=7"></script>
+        __VE__
         
-        <script>window.testpocketnet = true;</script><script join src="js/join.min.js?v=859766730133"></script>
+        __JS__
 
 
         <script type="text/javascript">

@@ -24,10 +24,10 @@ class OG {
 
     
 
-	public function __construct ($get)
+	public function __construct ($get, $proxypath)
 	{
-        $this->rpc = new RPC();
-        $this->api = new API();
+        $this->rpc = new RPC($proxypath);
+        $this->api = new API($proxypath);
         
         if (isset($get['address'])) $this->author = $get['address'];
 

@@ -434,7 +434,7 @@ __map =  {
 
 		},
 
-		messenger : {
+		/*messenger : {
 			uri : "messenger",
 			href : "messenger",
 			add : {
@@ -446,7 +446,7 @@ __map =  {
 			},
 			
 			
-		},
+		},*/
 
 		uploadpeertube : {
 			uri : "uploadpeertube",

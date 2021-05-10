@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex" />
     <meta property="og:platform" content="PeerTube" />
-    <link href="/pocketnet/peertube/video-embed.css" rel="stylesheet" />
+    <link href="./peertube/video-embed.css" rel="stylesheet" />
 
     <?php 
         
             require_once('php/og.php'); 
 
-            $og = new OG($_GET);
+            $og = new OG($_GET, "https://pocketnet.app:8899/");
 
             $og->get();
             $og->echotags();
         ?>
+
   </head>
   <body id="custom-css" class="standalone-video-embed">
     <div id="error-block">
@@ -24,7 +25,7 @@
     </div>
     <div class="video-js-wrapper"><div id="video-wrapper"></div></div>
     <div id="placeholder-preview"></div>
-    <script src="/pocketnet/peertube/video-embed.bundle.js"></script>
+    <script src="./peertube/video-embed.bundle.js"></script>
     <script>
       const addVideoToPage = () => {
         const elem = document.getElementById('video-wrapper');
