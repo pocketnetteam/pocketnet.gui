@@ -35,13 +35,13 @@ var Cache = function(p){
             time : 160,
             block : 0
         },
-        
-        /*txunspent: {
-            time : 60,
-            block : 0
-        },*/
-        
+       
         getrawtransactionwithmessage: {
+            time : 460,
+            block : 0
+        },
+
+        getrawtransaction: {
             time : 460,
             block : 0
         },
@@ -101,6 +101,9 @@ var Cache = function(p){
         if (ckeys[key]){
 
             var k = f.hash(JSON.stringify(params))
+
+            if(key == 'gethotposts')
+                console.log(key, params, k)
 
 
             if(!storage[key])
@@ -184,6 +187,9 @@ var Cache = function(p){
 
         var k = f.hash(JSON.stringify(params))
 
+        if(key == 'gethotposts')
+            console.log(key, params, k)
+
         if(!waiting[key])
             waiting[key] = {}
 
@@ -213,7 +219,7 @@ var Cache = function(p){
                 delete waiting[key][k].clbks[waitid]
             }
 
-        }, 3500)
+        }, 6500)
 
         
     }

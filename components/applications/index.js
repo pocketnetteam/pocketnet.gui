@@ -48,10 +48,22 @@ var applications = (function(){
 			os : function(clbk){
 				var _os = os();
 
+				var oses = self.app.platform.applications[ed.key];
 
-				if (_os && self.app.platform.applications[ed.key][_os] && (typeof _Electron == 'undefined' ) && !window.cordova){
+				var keys = Object.keys(oses);
 
-					renders.os(self.app.platform.applications[ed.key][_os], clbk)
+				var current = oses[_os];
+				var extraKeys = keys.filter(function(key){
+					return key !== _os;
+				})
+
+				if (_os && current && (typeof _Electron == 'undefined' ) && !window.cordova){
+
+					renders.os(current, clbk)
+
+					extraKeys.forEach(function(key){
+						renders.os(oses[key], clbk, true);
+					})
 
 				}
 
@@ -69,14 +81,17 @@ var applications = (function(){
 		}
 
 		var renders = {
-			os : function(os){
+			os : function(os, clbk, extra){
+
 
 				if(os.hidden) return
+
+				var attr = extra ? os.id : '.currentos';
 
 				self.shell({
 					turi : 'registration',
 					name :  'os',
-					el : el.c.find('.currentos'),
+					el : el.c.find(attr),
 					data : {
 						os : os,
 						last : false
@@ -85,10 +100,10 @@ var applications = (function(){
 				}, function(_p){
 					_p.el.find('.downloadOs').on('click', function(){
 						actions.download(os, function(link){
-							el.c.find('.os').addClass('rundownloading')
-							el.c.find('.skipositem').html('<div class="downloadstart">'+self.app.localization.e('e13011')+'</div>'+
-								'<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
-					sa
+							el.c.find(attr + ' .os').addClass('rundownloading');
+
+							el.c.find(attr + ' .skipositem').html('<div><a href="'+link+'"><b>'+self.app.localization.e('e13012')+'</b></a></div>')
+					
 						})
 					})
 				})

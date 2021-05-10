@@ -713,15 +713,14 @@ var Proxy = function (settings, manage, test) {
 
             var log = false
 
-            if(method == 'getlastcomments') {
-
-              parameters[1] = ''
-
+            if(method == 'gethotposts') {
               log = true
+
+              console.log('parameters', parameters)
             }
 
             return new Promise((resolve, reject) => {
-              server.cache.wait(method, parameters, function (waitstatus) {
+              server.cache.wait(method, _.clone(parameters), function (waitstatus) {
                 if(log){
                   console.log('waitstatus', waitstatus)
                 }
@@ -729,7 +728,7 @@ var Proxy = function (settings, manage, test) {
               });
             })
               .then((waitstatus) => {
-                var cached = server.cache.get(method, parameters);
+                var cached = server.cache.get(method, _.clone(parameters));
 
                 if(log){
                   console.log('cached', cached ? true : false)
@@ -786,10 +785,10 @@ var Proxy = function (settings, manage, test) {
                 return node
                   .checkParameters()
                   .then((r) => {
-                    return node.rpcs(method, parameters);
+                    return node.rpcs(method, _.clone(parameters));
                   })
                   .then((data) => {
-                    server.cache.set(method, parameters, data, node.height());
+                    server.cache.set(method, _.clone(parameters), data, node.height());
 
                     return Promise.resolve({
                       data: data,

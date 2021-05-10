@@ -45,6 +45,10 @@ PeerTubeHandler = function (app) {
   };
 
   this.userToken = '';
+  this.refreshToken = '';
+
+  this.clientAuthInfo = {};
+
   this.userName = '';
   this.password = '';
   this.uploadProgress = 0;
@@ -97,6 +101,8 @@ PeerTubeHandler = function (app) {
       return {};
     }
 
+    this.clientAuthInfo = { client_id, client_secret };
+
     return axios
       .post(
         `https://${randomServer}/plugins/pocketnet-auth/router/code-cb`,
@@ -132,6 +138,7 @@ PeerTubeHandler = function (app) {
           })
           .then(async (data) => {
             if (data.access_token) this.userToken = data.access_token;
+            if (data.refresh_token) this.refreshToken = data.refresh_token;
 
             if (!data.error) {
               if (clbk) {
@@ -153,6 +160,30 @@ PeerTubeHandler = function (app) {
       );
   };
 
+  this.refreshUserToken = async () => {
+    const refreshBody = {
+      ...this.clientAuthInfo,
+      refresh_token: this.refreshToken,
+      response_type: 'code',
+      grant_type: 'refresh_token',
+    };
+
+    return axios
+      .post(`${baseUrl}users/token`, makeBodyFromObject(refreshBody), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((res) => (res.json ? res.json() : res.data))
+      .then((json) => {
+        if (json.access_token) this.userToken = json.access_token;
+        if (json.refresh_token) this.refreshToken = json.refresh_token;
+
+        return { status: 'success' };
+      })
+      .catch((err) => ({ err }));
+  };
+
   this.getChannel = async () => {
     return axios
       .get(`${baseUrl}users/me`, {
@@ -164,7 +195,24 @@ PeerTubeHandler = function (app) {
         channelId: res.data.videoChannels[0].id,
         videoQuotaDaily: res.data.videoQuotaDaily,
       }))
-      .catch(() => sitemessage('Unable to get channel info'));
+      .catch(async (err) => {
+        const refreshResult = await this.refreshUserToken();
+
+        if (refreshResult.err)
+          return sitemessage('Unable to refresh user token');
+
+        return axios
+          .get(`${baseUrl}users/me`, {
+            headers: {
+              Authorization: `Bearer ${this.userToken}`,
+            },
+          })
+          .then((res) => ({
+            channelId: res.data.videoChannels[0].id,
+            videoQuotaDaily: res.data.videoQuotaDaily,
+          }))
+          .catch(() => sitemessage('Unable to get channel info'));
+      });
   };
 
   this.getUserQuota = async () => {
