@@ -488,7 +488,7 @@ fs.exists(mapJsPath, function (exists) {
 								JS += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>';
 							}
 	
-							if(args.prod)
+							if(args.prodaction)
 							{
 	
 								JS += '<script join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
