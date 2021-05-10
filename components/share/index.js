@@ -429,15 +429,15 @@ var share = (function(){
 						class : "zindex",
 						success : function(){
 
-							currentShare.clear();
-							currentShare.language.set(self.app.localization.key)
-
 							var link = currentShare.url.v;
 
 							if (link.includes(self.app.peertubeHandler.peertubeId)) {
 								self.app.peertubeHandler.removeVideo(link);
 								videoModifiedMeta = {};
 							}
+
+							currentShare.clear();
+							currentShare.language.set(self.app.localization.key)
 
 							make();
 							
