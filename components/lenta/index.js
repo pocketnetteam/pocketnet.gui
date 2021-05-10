@@ -744,9 +744,12 @@ var lenta = (function(){
 			fullScreenVideo : function(id, clbk){
 
 				var _el = el.c.find("#" + id)
+				var swiper = $('html').find('#mainSwiper')
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				_el.addClass('fullScreenVideo')
+				if (swiper && swiper.addClass && window.innerWidth > 768)
+					swiper.addClass('fullScreenVideo')
 
 				if (video) $('html').addClass('fullvideoshowed')
 
@@ -794,8 +797,11 @@ var lenta = (function(){
 			exitFullScreenVideo : function(id){
 
 				var _el = el.c.find("#" + id)
+				var swiper = $('html').find('#mainSwiper')
 
 				_el.removeClass('fullScreenVideo')
+				if (swiper && swiper.removeClass)
+					swiper.removeClass('fullScreenVideo')
 
 				actions.videoPosition(_el)
 

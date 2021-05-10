@@ -1,61 +1,82 @@
 <div id="<%-module.map.id%>" class="testpocketnetbg">
 
+	<!-- <div class="custom-swiper-pagination">
+		<div id="mainSwiperPagination" class="swiper-pagination"></div>
+	</div> -->
+
 	<div class="upbuttonwrapper">
 	</div>
 	<div class="maincntwrapperOvf">
 		<div class="maincntwrapper">
 			<div class="work adj">
 
-				<div class="leftpanelcell">
-					<div class="cnt fxd">
-						<div class="leftpanel">
-								
-						</div>
-					</div>
-				</div>
+				<div id="mainSwiper" class="swiper-container">
 
-				<div class="mainpanelcell">
-					<div class="cnt fxd">
-						<div class="panel">
-						</div>
-					</div>
-				</div>
+					<div class="swiper-wrapper">
 
-				<div class="lentacell">
+					  	<div id="leftPanelSlide" class="swiper-slide autoW">
 
-					<div class="cnt">
-
-						<% 
-
-							var h = 'hidden'
-
-							if(state && !parameters().r) {
-
-								h = ''
-								
-							} 
-
-
-
-						%>
-
-							<div class="bgCaption sec <%-h%>">
-								
+							<div class="leftpanelcell">
+								<div class="cnt fxd">
+									<div class="leftpanel">
 											
-												
-											<div class="share">
-												
-											</div>
-												
-											
-										
+									</div>
+								</div>
 							</div>
 
-						<div class="lentaWrapper">
 						</div>
+						<div class="swiper-slide lenta-swiper-slide">
 
+							<div class="lentacell">
+
+								<div class="cnt">
+
+									<% 
+
+										var h = 'hidden'
+
+										if(state && !parameters().r) {
+
+											h = ''
+											
+										} 
+
+
+
+									%>
+
+										<div class="bgCaption sec <%-h%>">
+											
+														
+															
+														<div class="share">
+															
+														</div>
+															
+														
+													
+										</div>
+
+									<div class="lentaWrapper">
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+						<div id="rightPanelSlide" class="swiper-slide autoW">
+
+							<div class="mainpanelcell">
+								<div class="cnt fxd">
+									<div class="panel">
+									</div>
+								</div>
+							</div>
+
+						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
