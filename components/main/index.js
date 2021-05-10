@@ -107,8 +107,8 @@ var main = (function(){
 				// Start with the top bar height
 				let totalTop = 65;
 				// Add the swiper pagination if needed
-				if (wWidth <= 1280)
-					totalTop += 20;
+				// if (wWidth <= 1280)
+				// 	totalTop += 20;
 				// Add the toppanel if needed
 				if (scroll <= 45)
 					totalTop += (45 - scroll);
@@ -994,43 +994,44 @@ var main = (function(){
 						769: {
 							slidesPerView: 'auto',
 							slidesPerGroup: 2,
-							pagination: {
-								renderBullet: function (index, className) {
-									switch (index) {
-										case 0:
-											return '<span class="' + className + '">' + self.app.localization.e('Categories') + "</span>";
-										case 1:
-											return '<span class="' + className + '">' + self.app.localization.e('e13122') + "</span>";
-										default:
-											return '';
-									}
-								}
-							}
+							// pagination: {
+							// 	renderBullet: function (index, className) {
+							// 		switch (index) {
+							// 			case 0:
+							// 				return '<span class="' + className + '">' + self.app.localization.e('Categories') + "</span>";
+							// 			case 1:
+							// 				return '<span class="' + className + '">' + self.app.localization.e('e13122') + "</span>";
+							// 			default:
+							// 				return '';
+							// 		}
+							// 	}
+							// }
 						},
 						// when window width is >= 1281px
 						1281: {
 							slidesPerView: 3,
 							slidesPerGroup: 3,
-							pagination: false
+							// pagination: false
 						}
 					},
 					// Pagination for when window width <= 768px
-					pagination: {
-						el: "#mainSwiperPagination",
-						clickable: true,
-						renderBullet: function (index, className) {
-							switch (index) {
-								case 0:
-									return '<span class="' + className + '">' + self.app.localization.e('Categories') + "</span>";
-								case 1:
-									return '<span class="' + className + '">' + self.app.localization.e('posts') + "</span>";
-								case 2:
-									return '<span class="' + className + '">' + self.app.localization.e('e13122') + "</span>";
-								default:
-									return '';
-							}
-						},
-					},
+					// pagination: {
+					// 	el: "#mainSwiperPagination",
+					// 	clickable: true,
+					// 	renderBullet: function (index, className) {
+					// 		switch (index) {
+					// 			case 0:
+					// 				return '<span class="' + className + '">' + self.app.localization.e('Categories') + "</span>";
+					// 			case 1:
+					// 				return '<span class="' + className + '">' + self.app.localization.e('posts') + "</span>";
+					// 			case 2:
+					// 				return '<span class="' + className + '">' + self.app.localization.e('e13122') + "</span>";
+					// 			default:
+					// 				return '';
+					// 		}
+					// 	},
+					// },
+					pagination: false
 				});
 
 				// Update the panels height
