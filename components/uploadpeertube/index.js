@@ -122,7 +122,6 @@ var uploadpeertube = (function () {
         };
 
         filesWrittenObject.successFunction = function (response) {
-          debugger;
 
           el.uploadButton.prop('disabled', false);
           el.header.addClass('activeOnRolled');

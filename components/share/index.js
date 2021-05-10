@@ -18,6 +18,8 @@ var share = (function(){
 
 		var videoUploadData = {};
 
+		var videoModifiedMeta = {};
+
 		var intro = false;
 
 		var m = self.app.localization.e('e13160');
@@ -46,7 +48,6 @@ var share = (function(){
 				},
 	  
 				success : function(i, editclbk){
-	  
 				  resize(images[0].original, 1920, 1080, function(resized){
 					var r = resized.split(',');
 	  
@@ -61,7 +62,7 @@ var share = (function(){
 					
 				  })
 	  
-				}
+				},
 			  }
 			})
 		  };
@@ -430,6 +431,14 @@ var share = (function(){
 
 							currentShare.clear();
 							currentShare.language.set(self.app.localization.key)
+
+							var link = currentShare.url.v;
+
+							if (link.includes(self.app.peertubeHandler.peertubeId)) {
+								self.app.peertubeHandler.removeVideo(link);
+								videoModifiedMeta = {};
+							}
+
 							make();
 							
 						},
@@ -705,9 +714,9 @@ var share = (function(){
 				
 
 				if (l.includes(self.app.peertubeHandler.peertubeId)) {
-
 					currentShare.settings.a = currentShare.default.a
 					self.app.peertubeHandler.removeVideo(l);
+					videoModifiedMeta = {};
 					el.peertube.removeClass('disabledShare');
 					el.peertubeLiveStream.removeClass('disabledShare');
 
@@ -804,7 +813,7 @@ var share = (function(){
 			},
 
 			post : function(clbk, p){
-			
+				
 
 				el.postWrapper.removeClass('showError');
 
@@ -2085,8 +2094,6 @@ var share = (function(){
 								server: metaInfo.host_name,
 							}
 
-							el.wallpaperStatusIcon.attr('class', 'fas fa-spinner fa-spin');
-
 							self.app.api.fetch('peertube/video',{
 								host: `https://${metaInfo.host_name}`,
 								id: metaInfo.id,
@@ -2098,6 +2105,8 @@ var share = (function(){
 
 								return toDataURL(evt.target.files[0]).then(fileBase64 => resizeImage(fileBase64, settingsObject, (img) => {
 									options.thumbnailfile = dataURLtoFile(img);
+
+									el.wallpaperStatusIcon.attr('class', 'fas fa-spinner fa-spin');
 	
 									self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
 									  .then(() => el.wallpaperStatusIcon.attr('class', 'fas fa-check'))
