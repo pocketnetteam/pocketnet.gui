@@ -8,4 +8,4 @@ RUN npm i --only=production
 COPY . .
 
 WORKDIR /usr/src/app/proxy16
-CMD ["node", "cli.js", "--cli"]
+CMD ["/usr/local/bin/npm", "run", "serve"]
