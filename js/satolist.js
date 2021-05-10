@@ -2681,6 +2681,7 @@ Platform = function (app, listofnodes) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
                     return s.txid == id
                 })
+                
                 if (temp){
                     share = new pShare();
                     share._import(temp);

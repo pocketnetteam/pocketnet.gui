@@ -1051,6 +1051,7 @@ var comments = (function(){
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
+					txid : id
 				};
 
 				if (listpreview && ed.lastComment && !pid){

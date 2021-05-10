@@ -24,20 +24,35 @@ var all = {
 		icon : '<i class="fas fa-user-slash"></i>',
 		text : e('blockuser'),
 		class : 'block'
+	},
+
+	waiting : {
+		icon : '<i class="fas fa-spinner fa-spin"></i>',
+		text : e('actionWaitConf'),
+		class : 'waiting'
 	}
 
 }	
-	m.push('share')
+	
 
 
 	if(address == caddress){
 
-		m.push('edit')
-		m.push('remove')
+		console.log('txid', txid, app.platform.sdk.node.transactions.findTemp(txid), app.platform.sdk.node.transactions.temp)
+
+		if(!app.platform.sdk.node.transactions.findTemp(txid)){
+			m.push('edit')
+			m.push('remove')
+			m.push('share')
+		}
+		else{
+			m.push('waiting')
+		}
 
 	}
 	else{
 		m.push('block')
+		m.push('share')
 	}
 
 	
