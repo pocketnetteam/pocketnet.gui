@@ -28,8 +28,6 @@ var share = (function(){
 			  original : base64,
 			  index : 0
 			}];
-
-			debugger;
 	  
 			self.nav.api.load({
 			  open : true,
@@ -2103,7 +2101,10 @@ var share = (function(){
 	
 									self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
 									  .then(() => el.wallpaperStatusIcon.attr('class', 'fas fa-check'))
-									  .catch(() => el.wallpaperStatusIcon.attr('class', 'fas fa-times'));
+									  .catch(() => {
+										el.wallpaperStatusIcon.attr('class', 'fas fa-times');
+										return sitemessage('Unable to change wallpaper');
+									  });
 								}));
 							});
 						})
