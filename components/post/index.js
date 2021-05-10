@@ -1073,6 +1073,8 @@ var post = (function(){
         self.app.platform.sdk.videos
           .info([url])
           .then(() => {
+            var info = app.platform.sdk.videos.storage[url].data;
+
             self.shell(
               {
                 turi: 'share',
@@ -1082,6 +1084,8 @@ var post = (function(){
                   url: url,
                   og: og,
                   share: share,
+                  views: info.views || 0,
+                  aspectRatio: info.aspectRatio || 0,
                 },
 
                 additionalActions: function () {
@@ -1089,17 +1093,19 @@ var post = (function(){
                 },
               },
               function (_p) {
-				var info = app.platform.sdk.videos.storage[url].data;
+                var info = app.platform.sdk.videos.storage[url].data;
 
                 var loadingPlayer = _p.el.find('.jsPlayerLoading');
 
                 var width = loadingPlayer.width();
                 loadingPlayer.css(
-                  'padding-top', `${width / (2 * info.aspectRatio)}px`
+                  'padding-top',
+                  `${width / (2 * info.aspectRatio)}px`,
                 );
-				loadingPlayer.css(
-					'padding-bottom', `${width / (2 * info.aspectRatio)}px`
-				  );
+                loadingPlayer.css(
+                  'padding-bottom',
+                  `${width / (2 * info.aspectRatio)}px`,
+                );
 
                 var images = _p.el.find('img');
 
@@ -1142,7 +1148,6 @@ var post = (function(){
                 },
               },
               function (_p) {
-
                 var images = _p.el.find('img');
 
                 _p.el
