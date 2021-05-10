@@ -280,7 +280,7 @@ fs.exists(mapJsPath, function (exists) {
 
 								if (err) {
 
-									throw "Access not permitted (LESS) " +  exported.path
+									console.log("Access not permitted (LESS) " +  exported.path) 
 								}
 										
 							});
