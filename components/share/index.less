@@ -371,6 +371,32 @@
 			border-radius: 3px;
 		}
 	}
+
+	.wallpaperUpload {
+		margin-bottom: @rhythm;
+
+		padding : 2 * @rhythm 0;
+		padding-left : @rhythm;
+		padding-right : @rhythm;
+
+		.wallpaperShareInput {
+			display: none;
+		}
+	
+		.wallpaperShareLabel {
+			cursor: pointer;
+
+			color: @placeholder;
+
+			transition: color 0.2s linear;
+
+			&:hover {
+				color: @color-add;
+				text-decoration: underline;
+			}
+		}
+	}
+
 	.imagesWrapper{
 		>div{
 			margin-top: 2 * @rhythm;

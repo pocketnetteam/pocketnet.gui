@@ -59,13 +59,17 @@ PeerTubeHandler = function (app) {
       .then((data) => {
         if (!data.fastest && !data.leastUsed) return;
 
-        [baseUrl, watchUrl, randomServer] = [
-          `https://${(data.fastest || data.leastUsed).server}/api/v1/`,
-          `https://${(data.fastest || data.leastUsed).server}/videos/watch/`,
-          data.fastest.server,
-        ];
+        this.setActiveServer((data.fastest || data.leastUsed).server);
       })
       .catch(() => {});
+  };
+
+  this.setActiveServer = (server) => {
+    [baseUrl, watchUrl, randomServer] = [
+      `https://${server}/api/v1/`,
+      `https://${server}/videos/watch/`,
+      server,
+    ];
   };
 
   this.registerUser = (userInfo) => {
@@ -362,7 +366,7 @@ PeerTubeHandler = function (app) {
     });
   };
 
-  this.startLive = async (parameters) => {
+  this.startLive = async (parameters = {}) => {
     const channelInfo = await this.getChannel();
 
     const bodyOfQuery = {
@@ -428,7 +432,7 @@ PeerTubeHandler = function (app) {
     });
   };
 
-  this.getLiveInfo = async (id, parameters) => {
+  this.getLiveInfo = async (id = '', parameters = {}) => {
     apiHandler
       .run({
         method: `videos/live/${id}`,
@@ -451,7 +455,7 @@ PeerTubeHandler = function (app) {
       });
   };
 
-  this.importVideo = async (parameters) => {
+  this.importVideo = async (parameters = {}) => {
     const channelInfo = await this.getChannel();
 
     const bodyOfQuery = {
@@ -513,7 +517,13 @@ PeerTubeHandler = function (app) {
     });
   };
 
-  this.updateVideo = async (id, options) => {
+  this.updateVideo = async (id = '', options = {}, parameters = {}) => {
+    if (!this.userToken) {
+      await parameters.server ? this.setActiveServer(parameters.server) : this.getServerInfo();
+
+      await this.authentificateUser();
+    }
+
     const preparedOptions = { ...options };
     const formData = new FormData();
 
