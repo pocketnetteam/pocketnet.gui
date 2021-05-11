@@ -24,50 +24,116 @@ var share = (function(){
 
 		var m = self.app.localization.e('e13160');
 
-		var resizeImage = function(base64, settings = {}, clbk){
-
-			var images = [{
-			  original : base64,
-			  index : 0
-			}];
-	  
-			self.nav.api.load({
-			  open : true,
-			  id : 'imageGalleryEdit',
-			  inWnd : true,
-	  
-			  essenseData : {
-				edit : true,
-				initialValue : 0,
-				images : images,
-				apply : true,
-				crop : {
-				  aspectRatio : settings.aspectRatio || 16 / 9,
-				  style : 'apply',
-				  autoCropArea : 0.9,
-				},
-	  
-				success : function(i, editclbk){
-				  resize(images[0].original, 1920, 1080, function(resized){
-					var r = resized.split(',');
-	  
-					if (r[1]){
-	  
-					  editclbk()
-	  
-					  if (clbk)
-						  clbk(resized)
-	  
-					}
-					
-				  })
-	  
-				},
-			  }
-			})
-		  };
-
 		var actions = {
+
+			resizeImage : function(base64, settings = {}){
+
+				var images = [{
+				  original : base64,
+				  index : 0
+				}];
+
+				return new Promise((resolve, reject) => {
+
+					self.nav.api.load({
+						open : true,
+						id : 'imageGalleryEdit',
+						inWnd : true,
+				
+						essenseData : {
+							edit : true,
+							initialValue : 0,
+							images : images,
+							apply : true,
+							crop : {
+								aspectRatio : settings.aspectRatio || 16 / 9,
+								style : 'apply',
+								autoCropArea : 0.95,
+							},
+					
+							success : function(i, editclbk){
+
+								resize(images[0].original, 1920, 1080, function(resized){
+									var r = resized.split(',');
+					
+									if (r[1]){
+					
+										editclbk()
+
+										resolve(resized)
+					
+									}
+									else{
+										reject("error")
+									}
+								
+								})
+
+				
+						  	},
+						}
+					})
+
+				})
+		  
+				
+			},
+
+			uploadVideoWallpaper : function(image){
+				var metaInfo = self.app.platform.parseUrl((currentShare.url || {}).v || '');
+
+				if (!metaInfo){
+					return Promise.reject('image')
+				}
+
+				var options = {
+					thumbnailfile: image,
+				};
+
+				var settingsObject = {}
+
+				var parameters = {
+					server: metaInfo.host_name,
+				}
+
+				return self.app.api.fetch('peertube/video', {
+
+					host: `https://${metaInfo.host_name}`,
+					id: metaInfo.id,
+					
+				}).then((res = {}) => {
+
+					settingsObject.aspectRatio = res.aspectRatio;
+
+					return toDataURL(image)
+					
+					/*actions.resizeImage(fileBase64, settingsObject, (img) => {
+						options.thumbnailfile = dataURLtoFile(img);
+
+						//el.wallpaperStatusIcon.attr('class', 'fas fa-spinner fa-spin');
+
+						return self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
+							.then(() => el.wallpaperStatusIcon.attr('class', 'fas fa-check'))
+							.catch(() => {
+								el.wallpaperStatusIcon.attr('class', 'fas fa-times');
+							return sitemessage('Unable to change wallpaper');
+							});
+					}));*/
+
+				}).then((fileBase64) => {
+
+					return actions.resizeImage(fileBase64, settingsObject)
+
+				}).then(img => {
+
+					options.thumbnailfile = dataURLtoFile(img);
+
+					return self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
+
+				}).catch(e => {
+					return Promise.reject(e)
+				})
+			},
 
 			language : function(_clbk){
 				var items = []
@@ -612,14 +678,6 @@ var share = (function(){
 						edit : true,
 						initialValue : r,
 						images : f,
-
-						/*apply : true,
-
-						crop : {
-							aspectRatio : 1 / 1,
-							style : 'round apply',
-							autoCropArea : 0.9,
-						},*/
 
 						close : function(){
 							setTimeout(function(){
@@ -1734,7 +1792,65 @@ var share = (function(){
 								denyPeertubeAutoPlay: true,
 							});
 
-						} else {
+							p.el.find('.removepeertube').on('click', function(){
+
+								dialog({
+									html : self.app.localization.e('removeVideoDialog'),
+									btn1text : self.app.localization.e('dyes'),
+									btn2text : self.app.localization.e('dno'),
+									class : "zindex",
+									success : function(){
+			
+										events.removelink()
+										
+									},
+			
+									fail : function(){
+									}
+								})
+
+								
+							})
+
+							initUpload({
+								el : el.urlWrapper.find('.uploadpeertubewp'),
+					
+								ext : ['png', 'jpeg', 'jpg'],
+		
+								dropZone : el.urlWrapper,
+		
+								multiple : false,
+		
+								action : function(file, clbk){
+	
+									console.log('file', file)
+
+									actions.uploadVideoWallpaper(file.file).then(r => {
+										renders.url();
+									})
+		
+									/*actions.upload(file, function(){		
+										if (plissing)
+											plissing.destroy()
+		
+											_scrollTo(el.c.find('.nickname input').focus());
+										
+		
+										if (clbk)
+											clbk();
+		
+									})*/
+									
+								},
+		
+								onError : function(er, file, text){
+									sitemessage(text)
+								}
+							})
+
+						} 
+						
+						else {
 							self.app.platform.sdk.remote.get(meta.url, function(og){
 
 								if(og){
@@ -2049,6 +2165,7 @@ var share = (function(){
 				}, function(p){
 
 					if(!el.c) return
+					
 					el.message = el.c.find('.message');
 					el.eMessage = el.c.find('#emjcontainer');
 					el.urlWrapper = el.c.find('.urlWrapper')
@@ -2156,40 +2273,11 @@ var share = (function(){
 		
 								});
 		
-		
-								/*if(typeof _Electron != 'undefined'){
-									const electronSpellchecker = require('electron-spellchecker');
-		
-									// Retrieve required properties
-									const SpellCheckHandler = electronSpellchecker.SpellCheckHandler;
-									const ContextMenuListener = electronSpellchecker.ContextMenuListener;
-									const ContextMenuBuilder = electronSpellchecker.ContextMenuBuilder;
-							
-									// Configure the spellcheckhandler
-									window.spellCheckHandler = new SpellCheckHandler();
-									window.spellCheckHandler.attachToInput();
-							
-									// Start off as "US English, America"
-									window.spellCheckHandler.switchLanguage('en-US');
-							
-									// Create the builder with the configured spellhandler
-									var contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
-							
-									// Add context menu listener
-									var contextMenuListener = new ContextMenuListener((info) => {
-										contextMenuBuilder.showPopupMenu(info);
-									});
-								}*/
-		
-								
-		
 							}
 						}
 					});
 					
 					el.caption.on('keyup', events.caption)
-		
-					
 
 					var ps = {
 						animation: 150,
@@ -2224,47 +2312,6 @@ var share = (function(){
 		
 					if (list && !isMobile()){
 						Sortable.create(list, ps); 
-					}
-
-					if (currentShare.itisvideo()) {
-						const metaInfo = self.app.platform.parseUrl((currentShare.url || {}).v || '');
-
-						if (!el.updateWallpaperInput) return;
-
-						el.updateWallpaperInput.change(function(evt) {
-							const originalImage = evt.target.files[0];
-
-							const options = {
-								thumbnailfile: originalImage,
-							};
-
-							const parameters = {
-								server: metaInfo.host_name,
-							}
-
-							self.app.api.fetch('peertube/video',{
-								host: `https://${metaInfo.host_name}`,
-								id: metaInfo.id,
-							}).then((res = {}) => {
-
-								const settingsObject = {
-									aspectRatio: res.aspectRatio,
-								};
-
-								return toDataURL(evt.target.files[0]).then(fileBase64 => resizeImage(fileBase64, settingsObject, (img) => {
-									options.thumbnailfile = dataURLtoFile(img);
-
-									el.wallpaperStatusIcon.attr('class', 'fas fa-spinner fa-spin');
-	
-									self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
-									  .then(() => el.wallpaperStatusIcon.attr('class', 'fas fa-check'))
-									  .catch(() => {
-										el.wallpaperStatusIcon.attr('class', 'fas fa-times');
-										return sitemessage('Unable to change wallpaper');
-									  });
-								}));
-							});
-						})
 					}
 					
 					actions.autoFilled()
@@ -2312,6 +2359,8 @@ var share = (function(){
 
 		var make = function(){
 			renders.all()
+
+			console.log('currentShare', currentShare)
 		}
 
 		var initEvents = function(){

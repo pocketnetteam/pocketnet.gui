@@ -836,5 +836,5 @@ ____loclib.period31day = "Один месяц";
 ____loclib.period182day = "Пол года";
 
 ____loclib.editWallpaper = "Изменить Заставку";
-
+____loclib.removeVideo = "Удалить Видео";
 

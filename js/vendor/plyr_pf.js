@@ -14937,7 +14937,6 @@ typeof navigator === "object" && (function (global, factory) {
         }
 
         return targets.map(function (t) {
-          console.log('ADDED PLAYER 4')
             return PlyrEx(t, options, clbk)
         });
       }

@@ -33,12 +33,7 @@
 					
 					<% if(typeof preview != 'undefined' && preview) {
 						
-						var info = app.platform.sdk.videos.storage[url]
-
-
-						console.log('share', share)
-						
-						%>
+						var info = app.platform.sdk.videos.storage[url] %>
 
 						<div class="jsPlayerPreview">
 							<div class="wpl opensviurl" image="<%-info.data.image || ''%>">
@@ -81,13 +76,14 @@
 						</div>
 						
 					<% } %>
-					
-					
+
+				
 				</div>
 
 				<% if(typeof views != 'undefined' && views) {%>
 					<div class="videoviews"><span class="label">Views:</span> <span class="number"><%-views%></span></div>
 				<% } %>
+
 				<% if(typeof video == 'undefined' || !video) { %> 
 					<div class="videoTips">
 						<div class="videoTip">
@@ -95,8 +91,26 @@
 						</div>
 					</div>
 				<% } %>
+
+				<% if(typeof remove != 'undefined' && share && share.itisvideo()) {%>
+
+					<div class="peertubepanel">
+
+						<div class="item uploadpeertubewp">
+							<i class="fas fa-camera"></i> <span><%- e('editWallpaper') %></span>
+						</div>
+
+						<div class="item removepeertube">
+							<i class="far fa-times-circle"></i> <span><%- e('removeVideo') %></span>
+						</div>
+
+					</div>
+
+				<% } %>
 	
 			<% } %>
+
+
 			
 		</div>
 
@@ -146,7 +160,7 @@
 		
 	<% } %> 
 
-	<% if(typeof remove != 'undefined' || (!og || _.isEmpty(og))) {%>
+	<% if((typeof remove != 'undefined' || (!og || _.isEmpty(og))) && !share.itisvideo()) {%>
 
 	<div class="urlcnt">
 		<div class="urlcnttable table">

@@ -9147,6 +9147,7 @@
     			dropZone.removeClass('focus');
 
     			input.val('');
+				input[0].value = ''
 		    }
 
 		    _.each(files, function(file){

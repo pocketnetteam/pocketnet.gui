@@ -508,7 +508,6 @@ function createWindow() {
 
     win.webContents.on('new-window', function(event, url) {
         event.preventDefault();
-        console.log('new-window', event, url);
         open(url);
     });
 

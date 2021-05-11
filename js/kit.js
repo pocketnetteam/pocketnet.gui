@@ -1258,9 +1258,9 @@ Share = function(lang){
 
 		var meta = parseVideo(self.url.v)
 
-		if(meta.type) return true
+		//if(meta.type) return true
 
-		//if(meta.type == 'peertube') return true
+		if(meta.type == 'peertube') return true
 	}
 
 	self.export = function(extend){

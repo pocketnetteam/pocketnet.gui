@@ -624,6 +624,7 @@
 			.videoWrapper{
 				margin-top: @rhythm;
 				margin-bottom : @rhythm;
+				
 			}
 
 			.verticalVideo {
@@ -766,7 +767,83 @@
 			display: none;
 		}
 
+		.vjs-paused{
+			.vjs-poster{
+				display: block!important;
+			}
 
+			video{
+				opacity: 0!important;
+			}
+
+			.vjs-overlay,
+			.vjs-control-bar{
+				display: none!important;
+			}
+		}
+
+		.vjs-big-play-button{
+			left : 2 * @rhythm;
+			bottom : 2 *  @rhythm;
+			top : auto;
+			font-size: 2em;
+			margin-top : 0!important;
+			margin-left : 0!important;
+			width: 1em;
+			.shadowText();
+		}
+
+		.videoWrapper{
+			position: relative;
+		}
+
+		.peertubepanel{
+			position: absolute;
+			left : @rhythm / 2;
+			top : @rhythm;
+
+			.item{
+				padding :  @rhythm 1.5 * @rhythm;
+				padding-right: 2 * @rhythm;
+				margin-right: @rhythm / 2;
+				background: fade(#000, 80);
+				.shadowSmaller();
+				color : #fff;
+				border-radius: 30px;
+				position: relative;
+				float: left;
+				.transition(0.3s);
+				&:hover{
+					background: fade(#000, 50);
+
+					&.removepeertube{
+						background: fade(@color-bad, 50);
+					}
+				}
+
+				input{
+					cursor: pointer!important;
+					&:hover{
+						cursor: pointer!important;
+					}
+				}
+
+				.fileUploader,
+				.elContent{
+					position: relative;
+				}
+
+				span
+				{
+					font-size: 0.8em;
+				}
+				i{
+					font-size: 0.8em;
+					width: 24px;
+					text-align: center;
+				}
+			}
+		}
 		
 		
     }

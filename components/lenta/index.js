@@ -270,10 +270,8 @@ var lenta = (function(){
 			},
 
 			loadmore : function(loadclbk){
-				console.log('loadmore')
 				load.shares(function(shares, error){
 
-					console.log('shares, error', shares, error)
 
 					if (error){
 						making = false;
@@ -1418,7 +1416,6 @@ var lenta = (function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
 
-						console.log("ID", id, self.app.platform.sdk.node.shares.storage.trx[id])
 
 						var s = self.app.platform.sdk.node.shares.storage.trx[id]
 
@@ -2803,9 +2800,6 @@ var lenta = (function(){
 
 							var page = parameters().page || 0
 
-
-							console.log('essenseData.txids', essenseData.txids)
-
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
@@ -3357,9 +3351,6 @@ var lenta = (function(){
 
 			load.shares(function(shares, error){
 
-				console.log('load.shares', shares, error)
-
-
 				if (error){
 					making = false;
 					
@@ -3458,8 +3449,6 @@ var lenta = (function(){
 
 							if(essenseData.notscrollloading && essenseData.txids){
 
-								console.log("RENDER ALL SHARES", shares)
-
 								renders.txidall(essenseData.txids)
 							}
 						
@@ -3519,7 +3508,6 @@ var lenta = (function(){
 
 					mestate = _mestate || {}
 
-					console.log('essenseData', essenseData)
 
 					var data = {
 						beginmaterial : beginmaterial,

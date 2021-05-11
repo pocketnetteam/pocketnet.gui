@@ -43257,7 +43257,6 @@ class PeertubePlayerManager {
             const self = this;
             video_js__WEBPACK_IMPORTED_MODULE_22___default()(newVideoElement, videojsOptions, function () {
                 const player = this;
-                console.log('maybeFallbackToWebTorrent2');
                 self.addContextMenu(mode, player, options.common.embedUrl, options.common.embedTitle);
                 PeertubePlayerManager.onPlayerChange(player);
             });
@@ -43296,7 +43295,6 @@ class PeertubePlayerManager {
             Object.assign(html5, hlsjs.html5);
         }
         if (mode === 'webtorrent') {
-            console.log('addWebTorrentOptions');
             PeertubePlayerManager.addWebTorrentOptions(plugins, options);
             // WebTorrent plugin handles autoplay, because we do some hackish stuff in there
             autoplay = false;
@@ -43393,6 +43391,7 @@ class PeertubePlayerManager {
     static addWebTorrentOptions(plugins, options) {
         const commonOptions = options.common;
         const webtorrentOptions = options.webtorrent;
+        console.log('commonOptions', commonOptions);
         const autoplay = this.getAutoPlayValue(commonOptions.autoplay) === 'play'
             ? true
             : false;

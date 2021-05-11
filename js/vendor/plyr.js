@@ -9173,10 +9173,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       },{
 
         playbackStatusChange : function(status){
-          console.log('status', status)
         },
         volumechange : function(volume){
-          console.log('volume', volume)
         },
 
       }).then(embed => {
@@ -9290,7 +9288,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         target = new_target
     }
 
-    console.log("provider", provider)
 
     if ('bitchute' == provider) {
 
@@ -9307,7 +9304,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
                     _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
 
-                    console.log('video_options', video_options)
 
                     var plyrPlayer = newPlyr(target, video_options);
 

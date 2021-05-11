@@ -58,7 +58,6 @@ https://github.com/layerssss/paste.js
         continue;
       }
 
-      console.log("pastable")
 
       Paste.mountContenteditable(el);
       el._pastable = true;

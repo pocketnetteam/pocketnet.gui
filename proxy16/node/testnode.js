@@ -645,7 +645,7 @@ var Testnode = function(node, manager){
 
         limits : function(){
 
-            return self.scenarios.limitsChank('share').then(r => {
+            return self.scenarios.limitsChank('comment').then(r => {
                 self.scenarios.limitsChank('comment')
             }).then(r => {
                 self.scenarios.limitsChank('upvoteComment')
