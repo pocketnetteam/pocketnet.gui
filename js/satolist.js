@@ -15007,6 +15007,30 @@ Platform = function (app, listofnodes) {
                 })
             },
 
+            paddingplaceholder : function(url, middle, clbk, elf){
+                return self.sdk.videos.info([url]).catch((e)=>{
+                    return Promise.resolve()
+                }).then(() => {
+
+                    middle(function(p){
+
+                        if(self.sdk.videos.storage[url]){
+                            var info = self.sdk.videos.storage[url].data;
+        
+                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading');
+        
+                            var width = loadingPlayer.width();
+                            
+                            loadingPlayer.css('padding-top', `${width / (2 * info.aspectRatio)}px`);
+                            loadingPlayer.css('padding-bottom', `${width / (2 * info.aspectRatio)}px`);
+                        }
+
+                        if(clbk) clbk(p)
+                    })
+
+                })
+            },
+
             types : {
                 youtube : function(links){
                     var result = _.map(links, function(l){

@@ -199,6 +199,8 @@ var main = (function(){
 					
 					actions.refreshSticky()
 
+					if(lenta && lenta.update) lenta.update()
+
 				}, 500)
 
 				

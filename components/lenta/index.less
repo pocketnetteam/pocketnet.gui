@@ -1989,13 +1989,14 @@
 				}
 
 				.sharecaption{
-					color : @color-gray-mlight;
+					color : @color-gray;
 
 					div{
 						font-size: 0.9em;
 						font-weight: 700;
 					}
 				}
+
 
 				.meta{
 					padding-top : @rhythm;
@@ -2083,6 +2084,7 @@
 				.share{
 					padding : 15px;
 				}
+				
 
 				.anothercntswrk{
 					height: 100px;
@@ -2116,6 +2118,7 @@
 						&.authorCell{
 							padding-left: @rhythm;
 							padding-right: 0;
+							color : @color-gray;
 						}
 
 						&.datetime{
@@ -2689,6 +2692,21 @@ html.stblack{
 			}
 		}
 	
+	}
+}
+
+@media only screen and (max-width: 1024px) {
+	#lenta{
+		&.mainvideo{
+
+			
+			.shares{
+				
+				.authorgroup{
+					width: 50%;
+				}
+			}
+		}
 	}
 }
 
@@ -3319,6 +3337,18 @@ html.stblack{
 	.loadprev{
 		button{
 			width: 90%;
+		}
+	}
+
+	&.mainvideo{
+
+			
+		.shares{
+			
+			.authorgroup{
+				width: 100%;
+				padding : 0;
+			}
 		}
 	}
 }	

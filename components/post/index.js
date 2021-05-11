@@ -897,6 +897,24 @@ var post = (function(){
         }
       },
       share: function (clbk) {
+
+
+		var verticalVideo = false
+
+		var info = {}
+		var aspectRatio = 0
+
+		if(typeof share != 'undefined'){
+			info = self.app.platform.sdk.videos.storage[share.url || "undefined"] || {}
+			aspectRatio = deep(info, 'data.aspectRatio') || 0
+		}
+
+		console.log('aspectRatio', aspectRatio)
+
+		if(aspectRatio < 1 && aspectRatio != 0){
+			verticalVideo = true
+		}
+
         self.shell(
           {
             turi: 'lenta',
@@ -913,6 +931,7 @@ var post = (function(){
               mestate: {},
               repost: ed.repost,
               fromempty: ed.fromempty,
+			  verticalVideo : verticalVideo
             },
           },
           function (_p) {
@@ -1070,108 +1089,46 @@ var post = (function(){
 
         var og = self.app.platform.sdk.remote.storage[url];
 
-        self.app.platform.sdk.videos
-          .info([url])
-          .then(() => {
-            self.shell(
-              {
-                turi: 'share',
-                name: 'url',
-                el: el.c.find('.url'),
-                data: {
-                  url: url,
-                  og: og,
-                  share: share,
-                },
+		self.app.platform.sdk.videos.paddingplaceholder(url, function(next){
 
-                additionalActions: function () {
-                  self.closeContainer();
-                },
-              },
-              function (_p) {
-
-				if(app.platform.sdk.videos.storage[url]){
-					var info = app.platform.sdk.videos.storage[url].data;
-
-					var loadingPlayer = _p.el.find('.jsPlayerLoading');
-
-					var width = loadingPlayer.width();
-					loadingPlayer.css(
-					'padding-top', `${width / (2 * info.aspectRatio)}px`
-					);
-					loadingPlayer.css(
-						'padding-bottom', `${width / (2 * info.aspectRatio)}px`
-					);
+			self.shell({
+				turi: 'share',
+				name: 'url',
+				el: el.c.find('.url'),
+				data: {
+					url: url,
+					og: og,
+					share: share,
+				},
+  
+				additionalActions: function () {
+					self.closeContainer();
 				}
+			}, next)
 
-				
 
-                var images = _p.el.find('img');
+		}, function (_p) {
+  
+			var images = _p.el.find('img');
 
-                _p.el
-                  .find('img')
-                  .imagesLoaded({ background: true }, function (image) {
-                    _.each(image.images, function (i, index) {
-                      if (i.isLoaded) {
-                        $(images[index]).addClass('active');
+			_p.el.find('img').imagesLoaded({ background: true }, function (image) {
+				_.each(image.images, function (i, index) {
+					if (i.isLoaded) { 
+						$(images[index]).addClass('active');
 
-                        if (i.img.naturalWidth > 500) {
-                          _p.el.addClass('bigimageinlink');
-                        }
-                      } else {
-                        $(images[index])
-                          .closest('.image')
-                          .css('display', 'none');
-                      }
-                    });
+						if (i.img.naturalWidth > 500) {
+							_p.el.addClass('bigimageinlink');
+						}
+					} else {
+						$(images[index]).closest('.image').css('display', 'none');
+					}
+				});
 
-                    if (clbk) clbk();
-                  });
-              },
-            );
-          })
-          .catch(() => {
-            self.shell(
-              {
-                turi: 'share',
-                name: 'url',
-                el: el.c.find('.url'),
-                data: {
-                  url: url,
-                  og: og,
-                  share: share,
-                },
+				if (clbk) clbk();
+			});
+		})
 
-                additionalActions: function () {
-                  self.closeContainer();
-                },
-              },
-              function (_p) {
-
-                var images = _p.el.find('img');
-
-                _p.el
-                  .find('img')
-                  .imagesLoaded({ background: true }, function (image) {
-                    _.each(image.images, function (i, index) {
-                      if (i.isLoaded) {
-                        $(images[index]).addClass('active');
-
-                        if (i.img.naturalWidth > 500) {
-                          _p.el.addClass('bigimageinlink');
-                        }
-                      } else {
-                        $(images[index])
-                          .closest('.image')
-                          .css('display', 'none');
-                      }
-                    });
-
-                    if (clbk) clbk();
-                  });
-              },
-            );
-          });
+        
       },
 
       urlContent: function (clbk) {
@@ -1375,10 +1332,15 @@ var post = (function(){
 
 
 							var data = {
-								ed : deep(p, 'settings.essenseData') || {}
+								ed : deep(p, 'settings.essenseData') || {},
+								share : share
 							};
+
+							self.app.platform.sdk.videos.info([share.url]).then(r => {
+								clbk(data);
+							})
 	
-							clbk(data);
+							
 	
 						})
 					}

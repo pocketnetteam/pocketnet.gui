@@ -1962,7 +1962,7 @@ var lenta = (function(){
 							if(!video)
 								actions.initVideo(p.el, share)
 
-							if(video) el.shares.isotope()
+							if(video && !isMobile()) el.shares.isotope()
 
 							shareInitingMap[share.txid] = false;					
 											
@@ -2192,7 +2192,7 @@ var lenta = (function(){
 					//events.sharesInview()		
 					
 
-					if(video){
+					if(video && !isMobile()){
 
 						el.shares.isotope({
 
@@ -3612,6 +3612,10 @@ var lenta = (function(){
 				}
 				
 			},
+
+			update : function(){
+				if(video && !isMobile()) el.shares.isotope()
+			},
 			
 			init : function(p){
 
@@ -3642,6 +3646,12 @@ var lenta = (function(){
 			}
 		}
 	};
+
+	self.update = function(){
+		_.each(essenses, function(e){
+			e.update()
+		})
+	}
 
 	self.authclbk = function(){
 		_.each(essenses, function(e){

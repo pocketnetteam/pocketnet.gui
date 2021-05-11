@@ -5,6 +5,12 @@
 #main.wshar .bgCaption {
   display: none;
 }
+#main.videomain {
+  background: #fcfcfc;
+}
+#main.videomain #categories {
+  color: #3c4146;
+}
 #main .columnnavigation {
   position: fixed;
   bottom: 20%;
@@ -90,7 +96,7 @@
   margin-bottom: 10px;
 }
 #main .lentacellsvi {
-  margin-right: 256px;
+  margin-right: 0;
   padding-top: 10px;
 }
 #main.videomain .mainpanelcell {

@@ -1,4 +1,18 @@
-<div id="<%-module.map.id%>" class="<% if(ed.video) {%> videomainpost <% } %>">
+<%
+
+var info = {}
+var aspectRatio = 0
+
+if(typeof share != 'undefined'){
+	info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
+	aspectRatio = deep(info, 'data.aspectRatio') || 0
+}
+
+
+
+%>
+
+<div id="<%-module.map.id%>" class="<% if(ed.video) {%> videomainpost <%- (aspectRatio < 1) && (aspectRatio > 0) ? 'verticalVideo' : ''%> <% } %> ">
 	<div class="postWrapper">
 		<div class="share">
 		</div>
