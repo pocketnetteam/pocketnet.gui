@@ -53,6 +53,7 @@
 
     .uploadRow {
         display: flex;
+        flex-direction: column;
         align-items: center;
 
         .upload-field-container {
@@ -279,6 +280,10 @@
         position: relative;
     }
 
+    .progressSection {
+        width: 80%;
+    }
+
 }
 
 #uploadpeertube.rolledUp {
@@ -294,6 +299,16 @@
         }
     }
 
+    .uploadRow {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .uplsection {
+        padding: 0;
+    }
+
     .upload-button-section {
         > :not(.activeOnRolled) {
             display: none;
@@ -306,10 +321,6 @@
         padding: 0;
         width: 100%;
         height: 100%;
-
-        .progressSection {
-            width: 80%;
-        }
     }
 
     .upload-header-wrapper {

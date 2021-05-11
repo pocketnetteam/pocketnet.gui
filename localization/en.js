@@ -994,3 +994,7 @@ ____loclib.period182day = "Half of year";
 
 ____loclib.shareBareLink = "Share Video Link";
 ____loclib.videoCopied = "Video link successfully copied to clipboard";
+
+____loclib.editWallpaper = "Edit Wallpaper";
+
+
