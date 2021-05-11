@@ -842,8 +842,6 @@ var share = (function(){
             		  .updateVideo(metaInfo.id, options, parameters)
             		  .then(() => {
 
-						debugger;
-						
 						currentShare.language.set(self.app.localization.key)
 
 						currentShare.uploadImages(self.app, function(){
