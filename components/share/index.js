@@ -1028,8 +1028,17 @@ var share = (function(){
 		
 						})
 					  })
-            		  .catch(() => {
-              			return sitemessage('Unable to change wallpaper');
+            		  .catch((er, data) => {
+
+						console.log("ER", er, data)
+
+						el.c.removeClass('loading')
+						topPreloader(100)
+
+						/////TODO
+
+              			return sitemessage('Unable to update video Information');
+
             		  });
 				} else {
 					currentShare.language.set(self.app.localization.key)

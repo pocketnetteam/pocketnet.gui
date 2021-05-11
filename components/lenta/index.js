@@ -1962,6 +1962,8 @@ var lenta = (function(){
 							if(!video)
 								actions.initVideo(p.el, share)
 
+							if(video) el.shares.isotope()
+
 							shareInitingMap[share.txid] = false;					
 											
 							if (clbk)
@@ -2192,11 +2194,7 @@ var lenta = (function(){
 
 					if(video){
 
-						var sharesvideo = el.shares
-
-						var gutter = 20;
-
-						sharesvideo.isotope({
+						el.shares.isotope({
 
 							layoutMode: 'packery',
 							itemSelector: '.authorgroup',
@@ -2206,10 +2204,10 @@ var lenta = (function(){
 							initLayout: false
 						});
 	
-						sharesvideo.on('arrangeComplete', function(){
+						el.shares.on('arrangeComplete', function(){
 						});
 	
-						sharesvideo.isotope()
+						
 					}
 					
 					
@@ -2466,6 +2464,8 @@ var lenta = (function(){
 				}
 
 				var rndr = function(res){
+
+					console.log('res', res)
 					self.shell({
 						turi : 'share',
 						name :  'url',

@@ -216,9 +216,18 @@ var metadisplay = function(){ %>
 
 	<div class="work">
 
-		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<% 
 
-			<div class="cntswrk forurl">
+			var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
+			var aspectRatio = deep(info, 'data.aspectRatio') || 0
+
+			console.log('info', info, aspectRatio)
+		 
+		%>
+
+		<div class="shareTable  <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+
+			<div class="cntswrk forurl <%- (aspectRatio < 1) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
 
 				<% var a = ["u"] %>
 

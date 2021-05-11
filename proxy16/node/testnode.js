@@ -482,11 +482,13 @@ var Testnode = function(node, manager){
 
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
-                        return this.actionsLong(count, actions, time)
+                        this.actionsLong(count, actions, time).then((r) => {
+                            resolve(r)
+                        }).catch(e => {
+                            reject(e)
+                        })
                     }, 200)
                 })
-
-                
 
             })
         }
@@ -645,7 +647,7 @@ var Testnode = function(node, manager){
 
         limits : function(){
 
-            return self.scenarios.limitsChank('comment').then(r => {
+            return self.scenarios.limitsChank('share').then(r => {
                 self.scenarios.limitsChank('comment')
             }).then(r => {
                 self.scenarios.limitsChank('upvoteComment')
@@ -701,7 +703,7 @@ var Testnode = function(node, manager){
                             resolve()
                         }).catch(e => {
                             console.log("E", e)
-                            reject(e)
+                            resolve()
                         })
 
                     })
@@ -718,7 +720,7 @@ var Testnode = function(node, manager){
                             resolve()
                         }).catch(e => {
                             console.log("E", e)
-                            reject(e)
+                            resolve()
                         })
 
                     })
@@ -733,7 +735,7 @@ var Testnode = function(node, manager){
                             resolve()
                         }).catch(e => {
                             console.log("E", e)
-                            reject(e)
+                            resolve()
                         })
 
                     })
@@ -752,7 +754,7 @@ var Testnode = function(node, manager){
                             resolve()
                         }).catch(e => {
                             console.log("E", e)
-                            reject(e)
+                            resolve()
                         })
 
                     })
