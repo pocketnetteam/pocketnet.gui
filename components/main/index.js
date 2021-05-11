@@ -18,7 +18,7 @@ var main = (function(){
 
 		var currentMode = 'common', hsready = false;
 
-		var lastscroll = 0
+		var lastscroll = 0, savedScroll = 0
 
 		var mobilemodes = [{
 			mode : 'leftshow',
@@ -98,6 +98,61 @@ var main = (function(){
 				else{
 					el.addbutton.removeClass('scrollactive')
 				}
+				// If desktop screen size, update both panels
+				if (wWidth > 1280) {
+					actions.updatePanelPosition(el.leftPanelSlide);
+					actions.updatePanelPosition(el.rightPanelSlide);
+				}
+				// If medium screen size, update only the left panel, set the other one to default CSS
+				else if (wWidth > 768) {
+					actions.updatePanelPosition(el.leftPanelSlide);
+					actions.updatePanelPosition(el.rightPanelSlide, true);
+				}
+				// Else, mobile screen size, set both panels to default CSS
+				else {
+					actions.updatePanelPosition(el.leftPanelSlide, true);
+					actions.updatePanelPosition(el.rightPanelSlide, true);
+				}
+			},
+			updatePanelPosition : function(panel, removeLocalCss) {
+				// Check panel
+				if (!(panel && panel.length > 0 && panel[0].offsetTop != undefined && panel.height))
+					return;
+				// If we simply need the local CSS rules
+				if (removeLocalCss === true) {
+					panel[0].style.removeProperty('position');
+					panel[0].style.removeProperty('top');
+					return;
+				}
+				// Current top position of the panel
+				let savedOffsetTop = panel[0].offsetTop, topNavbarHeight = 65,
+					wHeight = window.innerHeight, scroll = $(window).scrollTop(),
+					panelHeight = panel.height(), wWidth = window.innerWidth;
+				let topPanelHeight = (wWidth <= 768) ? 55 : 45;
+				// Determine if we are scrolling up or down
+				if ((savedScroll - scroll) < 0) {
+					// We are scrolling down
+					// If we need to make the panel sticky to keep it in the view
+					if (scroll > (savedOffsetTop + (panelHeight - wHeight + topNavbarHeight + topPanelHeight - 1))) {
+						panel.css('position', 'sticky');
+						panel.css('top', -(panelHeight - wHeight));
+					} else {
+						panel.css('position', 'relative');
+						panel.css('top', savedOffsetTop);
+					}
+				} else {
+					// We are scrolling up
+					// If we need to make the panel sticky to keep it in the view
+					if (scroll < savedOffsetTop) {
+						panel.css('position', 'sticky');
+						panel.css('top', topNavbarHeight + topPanelHeight + 1);
+					} else {
+						panel.css('position', 'relative');
+						panel.css('top', savedOffsetTop);
+					}
+				}
+				// Update our variable for the next call
+				savedScroll = scroll
 			},
 			panelTopPosition : function(){
 
