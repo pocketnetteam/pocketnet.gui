@@ -29,7 +29,7 @@ class OG {
         $this->rpc = new RPC($proxypath);
         $this->api = new API($proxypath);
         
-        if (isset($get['address'])) $this->author = $get['address'];
+        if (isset($get['address'])) $this->author = mysql_real_escape_string($get['address']);
 
         if ($this->author == NULL) {
 
@@ -41,16 +41,16 @@ class OG {
 
         }
 
-        if (isset($get['commentid'])) $this->commentid = $get['commentid'];
+        if (isset($get['commentid'])) $this->commentid = mysql_real_escape_string($get['commentid']);
 
-        if (isset($get['s'])) $this->txid = $get['s'];
-        if (isset($get['v'])) $this->txid = $get['v'];
+        if (isset($get['s'])) $this->txid = mysql_real_escape_string($get['s']);
+        if (isset($get['v'])) $this->txid = mysql_real_escape_string($get['v']);
 
-        if ($this->author == NULL && isset($get['i'])) $this->txid = $get['i'];
+        if ($this->author == NULL && isset($get['i'])) $this->txid = mysql_real_escape_string($get['i']);
 
-        if ($this->author == NULL && isset($get['v'])) $this->txid = $get['v'];
+        if ($this->author == NULL && isset($get['v'])) $this->txid = mysql_real_escape_string($get['v']);
 
-        if (isset($get['num'])) $this->imageNum = $get['num'];
+        if (isset($get['num'])) $this->imageNum = mysql_real_escape_string($get['num']);
 
 	}
 	public function __destruct ()
