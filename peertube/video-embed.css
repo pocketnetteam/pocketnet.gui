@@ -3029,6 +3029,11 @@ video[src], .vjs-fullscreen {
 }
 .video-js .vjs-poster {
   background-size: 100% auto;
+  left: -1px;
+  top: -1px;
+  bottom: -1px;
+  right: -1px;
+  height: auto;
 }
 @media screen and (max-width: 350px) {
   .video-js .vjs-play-control {

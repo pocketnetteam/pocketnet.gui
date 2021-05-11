@@ -152,7 +152,7 @@
 
 __VAR__.test
 
-        <script>window.design = true;</script><script join src="js/functions.js?v=765516666905"></script>
+        <script join src="js/functions.js?v=765516666905"></script>
         <script join src="js/user.js?v=765548257891"></script>
         <script join src="js/module.js?v=724804010968"></script>
         <script join src="js/navn.js?v=237029943084"></script>

@@ -147,6 +147,8 @@
             
         </script>
 
+        __JSENV__
+
         __VE__
         
         __JS__
