@@ -113,6 +113,8 @@ var main = (function(){
 					actions.updatePanelPosition(el.leftPanelSlide, true);
 					actions.updatePanelPosition(el.rightPanelSlide, true);
 				}
+				// Update our variable for the next call
+				savedScroll = scroll
 			},
 			updatePanelPosition : function(panel, removeLocalCss) {
 				// Check panel
@@ -127,13 +129,12 @@ var main = (function(){
 				// Current top position of the panel
 				let savedOffsetTop = panel[0].offsetTop, topNavbarHeight = 65,
 					wHeight = window.innerHeight, scroll = $(window).scrollTop(),
-					panelHeight = panel.height(), wWidth = window.innerWidth;
-				let topPanelHeight = (wWidth <= 768) ? 55 : 45;
+					panelHeight = panel.height();
 				// Determine if we are scrolling up or down
 				if ((savedScroll - scroll) < 0) {
 					// We are scrolling down
 					// If we need to make the panel sticky to keep it in the view
-					if (scroll > (savedOffsetTop + (panelHeight - wHeight + topNavbarHeight + topPanelHeight - 1))) {
+					if ((scroll) > (savedOffsetTop + (panelHeight - wHeight + topNavbarHeight))) {
 						panel.css('position', 'sticky');
 						panel.css('top', -(panelHeight - wHeight));
 					} else {
@@ -143,16 +144,14 @@ var main = (function(){
 				} else {
 					// We are scrolling up
 					// If we need to make the panel sticky to keep it in the view
-					if (scroll < savedOffsetTop) {
+					if ((scroll) < savedOffsetTop + topNavbarHeight) {
 						panel.css('position', 'sticky');
-						panel.css('top', topNavbarHeight + topPanelHeight + 1);
+						panel.css('top', topNavbarHeight);
 					} else {
 						panel.css('position', 'relative');
 						panel.css('top', savedOffsetTop);
 					}
 				}
-				// Update our variable for the next call
-				savedScroll = scroll
 			},
 			panelTopPosition : function(){
 
