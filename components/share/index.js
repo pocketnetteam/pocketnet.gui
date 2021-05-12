@@ -1773,7 +1773,7 @@ var share = (function(){
 
 				var og = self.app.platform.sdk.remote.storage[url];
 
-				self.shell({
+				var rndr = () => self.shell({
 					name :  'url',
 					inner : html,
 					el : el.urlWrapper,
@@ -1913,6 +1913,14 @@ var share = (function(){
 					if (clbk)
 						clbk();
 				})
+
+				if (meta.type == 'peertube') {
+					self.app.platform.sdk.videos.info([url])
+						.then(() => rndr())
+						.catch(() => rndr())
+				} else {
+					rndr();
+				}
 				
 			},
 
