@@ -99,7 +99,7 @@ var share = (function(){
 				returnself.app.platform.sdk.videos.info([shareUrl])
 				  .then(() => self.app.platform.sdk.videos[shareUrl])
 				  .then((res = {}) => {
-					debugger;
+
 					settingsObject.aspectRatio = res.aspectRatio;
 
 					return toDataURL(image)
