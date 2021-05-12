@@ -21,7 +21,8 @@ Platform = function (app, listofnodes) {
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
         'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true,
         'PCVt7H4vgjBDxifLz3uokbc1tD3MZwWwQh' : true,
-        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true
+        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
+        'PLH8biT5rMdvE1zXFhsvNkzphVRK6cNM7p' : true
 
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
@@ -8591,6 +8592,12 @@ Platform = function (app, listofnodes) {
 
                 var comment = deep(self.sdk, 'comments.storage.all.' + upvote.comment.v)
 
+                var ma = self.app.platform.sdk.address.pnet().address
+
+                _.each(self.sdk.comments.upvoteClbks, function (c) {
+                    c(null, comment, upvote.value.v, ma, true)
+                })
+
                 self.sdk.node.transactions.create.commonFromUnspent(
 
                     upvote,
@@ -8603,7 +8610,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(error)
+                                c(error, comment, null, ma)
                             })
                         }
                         else {
@@ -8627,7 +8634,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(null, comment, upvote.value.v, self.app.platform.sdk.address.pnet().address)
+                                c(null, comment, upvote.value.v, ma)
                             })
 
                         }
