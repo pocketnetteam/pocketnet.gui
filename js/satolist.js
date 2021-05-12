@@ -14978,6 +14978,8 @@ Platform = function (app, listofnodes) {
                     return true
                 })
 
+                console.log('lmap', lmap)
+
                 if(!lmap.length) return Promise.resolve()
 
                 var groups = group(lmap, function(l){
@@ -14992,6 +14994,8 @@ Platform = function (app, listofnodes) {
                     }
 
                     return self.sdk.videos.types[type](links).then(r => {
+
+                        console.log('videosresult', r)
 
                         _.each(r, function(l){
                             s[l.link] = l

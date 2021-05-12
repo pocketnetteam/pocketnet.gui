@@ -648,13 +648,13 @@ var Testnode = function(node, manager){
         limits : function(){
 
             return self.scenarios.limitsChank('share').then(r => {
-                self.scenarios.limitsChank('comment')
+                return self.scenarios.limitsChank('comment')
             }).then(r => {
-                self.scenarios.limitsChank('upvoteComment')
+                return self.scenarios.limitsChank('upvoteComment')
             }).then(r => {
-                self.scenarios.limitsChank('upvoteShare')
+                return self.scenarios.limitsChank('upvoteShare')
             }).then(r => {
-                self.scenarios.limitsChank('userAction')
+                return self.scenarios.limitsChank('userAction')
             })
 
         },
@@ -685,6 +685,9 @@ var Testnode = function(node, manager){
             var acts = {
                 comment : function(){
                     return new Promise((resolve, reject) => {
+
+                        if(!posts.length) return resolve()
+
                         var post = posts[f.rand(0, posts.length - 1)]
 
                         self.kit.makecomment(address, post.txid).then(r => {
@@ -712,14 +715,15 @@ var Testnode = function(node, manager){
                 upvoteComment : function(){
                     return new Promise((resolve, reject) => {
 
-                        console.log('comments.length', comments.length)
+                        if(!posts.length) return resolve()
+
+                        if(!comments.length) return resolve()
 
                         var comment = comments[f.rand(0, comments.length - 1)]
 
                         self.kit.makeupvoteComment(address, comment.id, comment.address).then(r => {
                             resolve()
                         }).catch(e => {
-                            console.log("E", e)
                             resolve()
                         })
 

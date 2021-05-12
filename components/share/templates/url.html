@@ -2,9 +2,6 @@
 	
 	var meta = app.platform.parseUrl(url);
 
-	if (typeof aspectRatio === 'undefined') {
-		var aspectRatio = 0;
-	}
 
 	if(typeof share == 'undefined') share = {};
 
@@ -12,8 +9,10 @@
 		if(!app.platform.sdk.usersettings.meta.embedvideo || 
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
 
+			var info = app.platform.sdk.videos.storage[url] || {}
+
 	%>
-		<div class="videoWrapper <%- (aspectRatio < 1.25) && (aspectRatio > 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
+		<div class="videoWrapper <%- (info.aspectRatio < 1.25) && (info.aspectRatio) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
 			<% if(meta.type == 'youtube' && window.cordova) {%>
 
@@ -31,9 +30,7 @@
 				
 				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					
-					<% if(typeof preview != 'undefined' && preview) {
-						
-						var info = app.platform.sdk.videos.storage[url] %>
+					<% if(typeof preview != 'undefined' && preview) {  %>
 
 						<div class="jsPlayerPreview">
 							<div class="wpl opensviurl" image="<%-info.data.image || ''%>">

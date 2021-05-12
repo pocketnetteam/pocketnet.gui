@@ -2465,7 +2465,6 @@ var lenta = (function(){
 
 				var rndr = function(res){
 
-					console.log('res', res)
 					self.shell({
 						turi : 'share',
 						name :  'url',
@@ -2474,8 +2473,7 @@ var lenta = (function(){
 							url : url,
 							og : og,
 							share : share,
-							views : res.views || 0,
-							aspectRatio: res.aspectRatio || 0,
+							//views : res.views || 0,
 							video : video,
 							preview : video ? true : false
 						},
@@ -2488,13 +2486,12 @@ var lenta = (function(){
 				}
 
 				if (meta.type === 'peertube') {
-					self.app.api.fetch('peertube/video',{
-						host: `https://${meta.host_name}`,
-						id: meta.id,
-					}).then(res => {
-						aspectRatio = res.aspectRatio;
-						rndr({ views: res.views, aspectRatio: res.aspectRatio });
-					});
+
+					self.app.platform.sdk.videos.info([url]).then(r => {
+
+						rndr();
+
+					})
 
 				} else {
 					rndr({})
