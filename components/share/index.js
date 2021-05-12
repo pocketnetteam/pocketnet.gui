@@ -80,7 +80,8 @@ var share = (function(){
 			},
 
 			uploadVideoWallpaper : function(image){
-				var metaInfo = self.app.platform.parseUrl((currentShare.url || {}).v || '');
+				var shareUrl = (currentShare.url || {}).v || '';
+				var metaInfo = self.app.platform.parseUrl(shareUrl);
 
 				if (!metaInfo){
 					return Promise.reject('image')
@@ -95,14 +96,9 @@ var share = (function(){
 				var parameters = {
 					server: metaInfo.host_name,
 				}
-
-				return self.app.api.fetch('peertube/video', {
-
-					host: `https://${metaInfo.host_name}`,
-					id: metaInfo.id,
-					
-				}).then((res = {}) => {
-
+				return self.app.platform.sdk.videos.info([shareUrl])
+				  .then(() => (self.app.platform.sdk.videos.storage[shareUrl] || {}).data)
+				  .then((res = {}) => {
 					settingsObject.aspectRatio = res.aspectRatio;
 
 					return toDataURL(image)
@@ -885,10 +881,9 @@ var share = (function(){
 				topPreloader(50)
 
 				if (currentShare.itisvideo()) {
-					const options = {
-						description: currentShare.message.v,
-						name: currentShare.caption.v,
-					};
+					const options = {};
+					if (currentShare.message.v) options.description = currentShare.message.v;
+					if (currentShare.caption.v) options.name = currentShare.caption.v;
 
 					const metaInfo = self.app.platform.parseUrl((currentShare.url || {}).v || '');
 
@@ -1028,16 +1023,15 @@ var share = (function(){
 		
 						})
 					  })
-            		  .catch((er, data) => {
-
-						console.log("ER", er, data)
-
+            		  .catch((err = {}, data = {}) => {
+						const errorMessage = Object.values(deep(err, 'response.data.errors') || {})
+						  .map(error => error.msg);
 						el.c.removeClass('loading')
 						topPreloader(100)
 
 						/////TODO
 
-              			return sitemessage('Unable to update video Information');
+              			return sitemessage(errorMessage.length ? errorMessage.join('; ') : 'Unable to update video Information');
 
             		  });
 				} else {
@@ -1776,7 +1770,7 @@ var share = (function(){
 
 				var og = self.app.platform.sdk.remote.storage[url];
 
-				self.shell({
+				var rndr = () => self.shell({
 					name :  'url',
 					inner : html,
 					el : el.urlWrapper,
@@ -1916,6 +1910,14 @@ var share = (function(){
 					if (clbk)
 						clbk();
 				})
+
+				if (meta.type == 'peertube') {
+					self.app.platform.sdk.videos.info([url])
+						.then(() => rndr())
+						.catch(() => rndr())
+				} else {
+					rndr();
+				}
 				
 			},
 
