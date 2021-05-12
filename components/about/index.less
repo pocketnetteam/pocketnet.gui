@@ -49,7 +49,8 @@
 
 	.slide{
 
-		padding : 12 * @rhythm 10 * @rhythm;
+		padding-top: 6 * @rhythm;
+		padding : 8 * @rhythm 10 * @rhythm;
 
 		.slideSubCaption{
 			font-size: 1.6em;
@@ -66,14 +67,12 @@
 		}
 
 		&.surveyWr{
-			background: #FFE400;
 
 			.slideSubCaption{
 				text-align: center;
 				font-size : 0.8em;
 				font-weight: 700;
 				margin-bottom : 2 * @rhythm;
-				color : @color-gray2;
 			}
 
 			.slideCaption{
@@ -157,6 +156,8 @@
 					font-size: 1.2em;
 					background: fade(#FFF, 30);
 					border-radius: 100px;
+					background: @color-bright;
+					color: @color-white;
 
 					&:hover{
 						color : @color-pink;
@@ -173,7 +174,9 @@
 		}
 
 		&.social{
-			background: @color-pink;
+
+
+			
 			color : #fff;
 			padding-top : 2 * @rhythm;
 			padding-bottom : 2 * @rhythm;
@@ -196,7 +199,6 @@
 		}
 
 		&.join{
-			background: #1B1C1E;
 			color : #000;
 
 			.wrapper{
@@ -251,7 +253,7 @@
 		}
 
 		&.faq{
-			background: #FBFBFB;
+			// background: #FBFBFB;
 
 			.wrapper{
 				padding : 0 10 * @rhythm;
@@ -260,7 +262,6 @@
 			.slideSubCaption{
 				font-size: 4em;
 				font-weight: 700;
-				color : fade(#000, 90);
 			}
 
 			.part{
@@ -302,9 +303,9 @@
 		}
 
 		&.withLenta{
-			background: #1B2327;
 			padding: 20 * @rhythm;
 			padding-top: 10 * @rhythm;
+			padding-bottom: 4 * @rhythm;
 
 			.slideCaption{
 				color : #fff;
