@@ -97,9 +97,8 @@ var share = (function(){
 					server: metaInfo.host_name,
 				}
 				return self.app.platform.sdk.videos.info([shareUrl])
-				  .then(() => (self.app.platform.sdk.videos[shareUrl] || {}).data)
+				  .then(() => (self.app.platform.sdk.videos.storage[shareUrl] || {}).data)
 				  .then((res = {}) => {
-
 					settingsObject.aspectRatio = res.aspectRatio;
 
 					return toDataURL(image)
