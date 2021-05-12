@@ -16,7 +16,7 @@
 		}
 	}
 
-	.errorname{
+	.errorname, .erroremail, .confirmemail{
 		color : @color-main;
 		padding: 2 * @rhythm;
 		text-align: center;
@@ -251,6 +251,10 @@
 				&.error{
 					border : 1px solid @color-bad;
 				}
+
+				&.success{
+					border : 1px solid @color-good;
+				}
 			}
 
 			textarea{
@@ -263,6 +267,15 @@
 				textarea,
 				input{
 					border : 1px solid @color-bad;
+				}
+				
+			}
+
+			.success{
+				select,
+				textarea,
+				input{
+					border : 1px solid @color-good;
 				}
 				
 			}
@@ -308,7 +321,7 @@
 				}
 			}
 
-			&[parameter="email"]{
+			&[parameter="code"]{
 				display: none;
 			}
 
@@ -316,6 +329,35 @@
 				display: none;
 			}
 
+			&[parameter="send"]{
+				
+				button{
+					float: right
+				}
+			}
+
+			.changeemail {
+				display: none;
+
+				.changeWrapper {
+					display: flex;
+
+					.empty{
+						width: 190px;
+					}
+
+					.change{
+						font-size: .9em;
+						color: @color-main;
+						cursor: pointer;
+					}
+				}
+
+			}
+
+			.confirmemail{
+				display: none
+			}
 		}
 		.subcaption{
 			margin-bottom : 2 * @rhythm;
@@ -779,7 +821,7 @@ html.stblack{
 			}
 		}
 	
-		.errorname{
+		.errorname, .erroremail{
 			color : @color-main;
 		}
 	
@@ -872,6 +914,10 @@ html.stblack{
 					&.error{
 						border : 1px solid @color-bad;
 					}
+
+					&.success{
+						border : 1px solid @color-good;
+					}
 				}
 	
 	
@@ -882,6 +928,14 @@ html.stblack{
 						border : 1px solid @color-bad;
 					}
 					
+				}
+
+				.success{
+					select,
+					textarea,
+					input{
+						border : 1px solid @color-good;
+					}
 				}
 	
 	
