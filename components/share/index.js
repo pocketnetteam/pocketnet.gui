@@ -96,7 +96,7 @@ var share = (function(){
 				var parameters = {
 					server: metaInfo.host_name,
 				}
-				returnself.app.platform.sdk.videos.info([shareUrl])
+				return self.app.platform.sdk.videos.info([shareUrl])
 				  .then(() => self.app.platform.sdk.videos[shareUrl])
 				  .then((res = {}) => {
 
