@@ -80,7 +80,8 @@ var share = (function(){
 			},
 
 			uploadVideoWallpaper : function(image){
-				var metaInfo = self.app.platform.parseUrl((currentShare.url || {}).v || '');
+				var shareUrl = (currentShare.url || {}).v || '';
+				var metaInfo = self.app.platform.parseUrl(shareUrl);
 
 				if (!metaInfo){
 					return Promise.reject('image')
@@ -95,14 +96,10 @@ var share = (function(){
 				var parameters = {
 					server: metaInfo.host_name,
 				}
-
-				return self.app.api.fetch('peertube/video', {
-
-					host: `https://${metaInfo.host_name}`,
-					id: metaInfo.id,
-					
-				}).then((res = {}) => {
-
+				returnself.app.platform.sdk.videos.info([shareUrl])
+				  .then(() => self.app.platform.sdk.videos[shareUrl])
+				  .then((res = {}) => {
+					debugger;
 					settingsObject.aspectRatio = res.aspectRatio;
 
 					return toDataURL(image)
