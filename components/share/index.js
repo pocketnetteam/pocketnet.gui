@@ -881,10 +881,9 @@ var share = (function(){
 				topPreloader(50)
 
 				if (currentShare.itisvideo()) {
-					const options = {
-						description: currentShare.message.v,
-						name: currentShare.caption.v,
-					};
+					const options = {};
+					if (currentShare.message.v) options.description = currentShare.message.v;
+					if (currentShare.caption.v) options.name = currentShare.caption.v;
 
 					const metaInfo = self.app.platform.parseUrl((currentShare.url || {}).v || '');
 
@@ -1024,16 +1023,15 @@ var share = (function(){
 		
 						})
 					  })
-            		  .catch((er, data) => {
-
-						console.log("ER", er, data)
-
+            		  .catch((err = {}, data = {}) => {
+						const errorMessage = Object.values(deep(err, 'response.data.errors') || {})
+						  .map(error => error.msg);
 						el.c.removeClass('loading')
 						topPreloader(100)
 
 						/////TODO
 
-              			return sitemessage('Unable to update video Information');
+              			return sitemessage(errorMessage.length ? errorMessage.join('; ') : 'Unable to update video Information');
 
             		  });
 				} else {
