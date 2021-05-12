@@ -1,50 +1,81 @@
 <% _.each(userOptions, function(parameter){ %>
 
 	<div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
-		<div class="parameter table <%-parameter.type%>">
+		<% if(parameter.id != 'send') {%>
+			<div class="parameter table <%-parameter.type%>">
 
-			<div class="pName">
-				<div class="pNameW">
-					<%= parameter.name %><% 
-						var unit = deep(parameter, 'format.Unit');
+				<div class="pName">
+					<div class="pNameW">
+						<%= parameter.name %><% 
+							var unit = deep(parameter, 'format.Unit');
 
-						if(unit) { %>, <span class="unit"><%-unit%></span>
+							if(unit) { %>, <span class="unit"><%-unit%></span>
 
-					<%	} %><% if(parameter.type == 'valuesmulti'){%>: <%} %>
-					
-					<% if(parameter.require){ %>
-
-						<span class="require">*</span>
+						<%	} %><% if(parameter.type == 'valuesmulti'){%>: <%} %>
 						
+						<% if(parameter.require){ %>
 
-					<% } %>
+							<span class="require">*</span>
+							
 
-					<% if(parameter.id == 'email') {%>
-						<span class="note"><%=e('e13178')%></span>
-					<% } %>
+						<% } %>
+
+						<% if(parameter.id == 'email') {%>
+							<span class="note"><%=e('e13178')%></span>
+						<% } %>
+						
+					</div>
+
 					
+
 				</div>
+
+				<div class="pInput">
+					<%= parameter.input({
+						init : true
+					}) %>
+				</div>
+
+
 
 				
 
 			</div>
 
-			<div class="pInput">
-				<%= parameter.input({
-					init : true
-				}) %>
+		<% } else { %> 
+			<div class="parameter table button <%-parameter.type%>">
+				<button>
+					<%=parameter.name%> 
+				</button>
 			</div>
+		<% } %>
 
-
-
-			
-
-		</div>
-
-
-		<% if(parameter.id == 'name') { %>
+		<% if(parameter.id == 'name' ) { %>
 			<div class="errorname">
 				<span></span>
+			</div>
+		<% } %>
+
+		<% if(parameter.id == 'email' ) { %>
+			<div class="changeemail">
+				<div class="changeWrapper">
+					<div class="empty">
+
+					</div>
+					<div class="change">
+						<%=e('e133514')%> 
+					</div>
+				</div>
+			</div>
+			<div class="erroremail">
+				<span></span>
+			</div>
+			<div class="confirmemail">
+				<span class="parameter table button send">
+					<button>
+						<%=e('e133513')%> 
+					</button>
+				</span>
 			</div>
 		<% } %>
 		

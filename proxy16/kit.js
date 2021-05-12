@@ -140,6 +140,22 @@ var defaultSettings = {
 		}
 	},
 
+	emails : {
+		dbpath : 'data/emails',
+		from : '',
+		transporters: {       
+			host: "pocketnet.app",
+			port: 25,
+			secure: false,
+            from: 'admin@pocketnet.app', // true for 465, false for other ports
+			auth: {
+				user: ['admin@pocketnet.app'], // generated ethereal user
+				pass: 'Yu28j3fTr', // generated ethereal password
+			},
+		}
+    
+	},
+
     node: {
 		dbpath : 'data/node',
         enabled: false,
@@ -200,6 +216,10 @@ var state = {
 			wallet : {
 				addresses : settings.wallet.addresses
 			},
+			emails : {
+				from : settings.emails.from,
+				transporters : settings.emails.transporters
+			},
 			node : {
 				enabled : settings.node.enabled,
 				binPath : settings.node.binPath,
@@ -235,6 +255,9 @@ var state = {
 
 			if (exporting.wallet.addresses.registration.privatekey)
 				exporting.wallet.addresses.registration.privatekey = "*"
+
+			// if (exporting.emails.transporters.auth.user)
+			// 	exporting.emails.transporters.auth.user = "*"
 		}
 
 		return exporting
@@ -640,6 +663,24 @@ var kit = {
 				}
 
 			},
+
+			emails : {
+
+				settransporter : function({transporters}){
+
+					console.log('setTrans');
+
+					settings.emails.transporters = transporters
+
+					return state.saverp().then(proxy => {
+
+						console.log('proxy', proxy)
+						return proxy.emails.setTransporter(transporters)
+					})
+
+				}
+
+			},
 	
 			node : {
 
@@ -943,6 +984,17 @@ var kit = {
 					return proxy.bots.remove(address)
 				})
 			}
+		},
+
+		emails : {
+			init : function(){
+				return kit.proxy().then(proxy => {
+					return Promise.resolve({
+						emails : proxy.emails.init()
+					})
+				})
+			},
+
 		}
 	},
 
