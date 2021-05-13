@@ -1686,11 +1686,20 @@
 					
 
 						&.verticalVideo {
-							max-width: none;
 							background: #000;
-							>div{
-								max-width: 400px;
-								margin: 0 auto;
+							position: relative;
+							overflow: hidden;
+
+							.js-player{
+								margin : 0 auto;
+								max-width: 350px;
+								position : static;
+							}
+
+
+							.video-js{
+								position : static;
+		
 							}
 						}
 
@@ -1698,6 +1707,7 @@
 							display: none;
 						}
 					}
+
 
 					.urlcnt{
 						display: none;
