@@ -9840,7 +9840,7 @@ Platform = function (app, listofnodes) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + (p.height || "")  + "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.video ? "video" : '')
+                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.video ? "video" : '')
 
                         var storage = self.sdk.node.shares.storage;
                         var s = self.sdk.node.shares;
@@ -9869,6 +9869,8 @@ Platform = function (app, listofnodes) {
                         }
                         else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
+
+          
 
                             if (!p.txid) {
                                 if (storage[key].length) {
@@ -9899,6 +9901,8 @@ Platform = function (app, listofnodes) {
                                 p.tagsfilter = ['video']
                             }
 
+
+                            console.log('cache', cache, p)
                             ////
 
                             var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
