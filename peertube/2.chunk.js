@@ -517,6 +517,7 @@ class WebTorrentPlugin extends Plugin {
     addTorrent(magnetOrTorrentUrl, previousVideoFile, options, done) {
         if (!magnetOrTorrentUrl)
             return this.fallbackToHttp(options, done);
+        //return this.fallbackToHttp(options, done)
         console.log('Adding ' + magnetOrTorrentUrl + '.');
         const oldTorrent = this.torrent;
         const torrentOptions = {
@@ -565,6 +566,11 @@ class WebTorrentPlugin extends Plugin {
         });
         this.torrent.on('error', (err) => console.error(err));
         this.torrent.on('warning', (err) => {
+            console.log("WARNING", err);
+            if (err.message.indexOf('Error connecting to wss') !== -1) {
+                this.fallbackToHttp(options, done);
+                return;
+            }
             // We don't support HTTP tracker but we don't care -> we use the web socket tracker
             if (err.message.indexOf('Unsupported tracker protocol') !== -1)
                 return;
@@ -577,6 +583,7 @@ class WebTorrentPlugin extends Plugin {
             if (err.message.indexOf('incorrect info hash') !== -1) {
                 console.error('Incorrect info hash detected, falling back to torrent file.');
                 const newOptions = { forcePlay: true, seek: options.seek };
+                console.log("IM HERE");
                 return this.addTorrent(this.torrent['xs'], previousVideoFile, newOptions, done);
             }
             // Remote instance is down
@@ -716,6 +723,7 @@ class WebTorrentPlugin extends Plugin {
     runTorrentInfoScheduler() {
         this.torrentInfoInterval = setInterval(() => {
             console.log("INININ");
+            return;
             // Not initialized yet
             if (this.torrent === undefined)
                 return;
