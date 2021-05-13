@@ -478,7 +478,27 @@ var metadisplay = function(){ %>
 						<% } %>
 
 
-						<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
+						<% 
+						
+						
+						
+						
+						if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
+
+							<% if(!emptywithrepost) {%>
+
+								<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+						
+									<div class="commentsWrapperHb">
+										
+										<div class="commentsWrapper">
+										</div>
+						
+									</div>
+						
+								<% } %>
+						
+							<% } %>
 
 						<% } %>
 
@@ -512,22 +532,27 @@ var metadisplay = function(){ %>
 	<div class="exitFull roundclosebutton">
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
+
+	<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
+
+		<% if(!emptywithrepost) {%>
+
+			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 	
-
-	<% if(!emptywithrepost) {%>
-
-		<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
-
-			<div class="commentsWrapperHb">
-				
-				<div class="commentsWrapper">
+				<div class="commentsWrapperHb">
+					
+					<div class="commentsWrapper">
+					</div>
+	
 				</div>
-
-			</div>
-
+	
+			<% } %>
+	
 		<% } %>
 
 	<% } %>
+
+	
 
 	<% if(app.platform.istest && app.platform.istest() && share.info && !_.isEmpty(share.info)) {%>
 		<div class='debuginfo'>

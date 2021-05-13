@@ -16,6 +16,14 @@
 		#categories{
 			color : @color-gray;
 		}
+
+		.addbutton{
+			display: none!important;
+		}
+
+		.columnnavigation{
+			display: none;
+		}
 	}
 
 	.columnnavigation{
@@ -771,6 +779,40 @@ html {
 			.maincntwrapper{
 				transform: translateX(-66.66666%);
 			}
+		}
+
+		&.videomain{
+
+		
+			.columnnavigation{
+				display: none!important;
+			}
+
+			.lentacell{
+				margin-left: 33.333%;
+				margin-right: 33.333%;
+				padding-top : 0;
+				width : 33.333%;
+				padding-bottom: 0;
+			}
+			
+			.leftpanelcell{
+				margin-left: 0;
+				margin-right: 0;
+				width : 33.333%;
+			}
+	
+			.leftpanelsvicell{
+				display: none;
+			}
+
+			.lentacellsvi{
+				padding-top : 0;
+			}
+
+			/*.shares .authorgroup .share{
+				padding : 2 * @rhythm 0 ;
+			}*/
 		}
 
 		.fxd{

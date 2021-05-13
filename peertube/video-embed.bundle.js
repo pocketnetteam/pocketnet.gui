@@ -46725,7 +46725,7 @@ class PeerTubeEmbed {
                     .then((res) => res.json())
                     .then((json) => {
                     const info = json.streams[0];
-                    return Number((info.width / info.height).toFixed(2));
+                    return Number((info.width / info.height));
                 });
                 this.playerElement = document.createElement("video");
                 this.playerElement.className = "video-js";

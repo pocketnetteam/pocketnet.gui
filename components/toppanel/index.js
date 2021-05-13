@@ -24,7 +24,7 @@ var toppanel = (function(){
 		
 				}
 
-				if (self.app.platform.videoenabled){
+				if (self.app.platform.videoenabled && !isMobile()){
 					links.video = "index?video=1"
 				}
 
@@ -36,7 +36,7 @@ var toppanel = (function(){
 
 				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138')]
 
-				if (self.app.platform.videoenabled){
+				if (self.app.platform.videoenabled && !isMobile()){
 					value = links[video ? 'video' : r]
 					labels.push(self.app.localization.e('video'))
 				}

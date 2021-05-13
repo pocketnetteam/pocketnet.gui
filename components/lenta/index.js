@@ -20,7 +20,7 @@ var lenta = (function(){
 		var making = false, ovf = false;
 
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false
+		video = false, isotopeinited = false
 
 		var commentsInited = {},
 			shareInitedMap = {},
@@ -174,8 +174,14 @@ var lenta = (function(){
 				el.c.removeClass("sharesEnded")
 				el.c.removeClass('sharesZero')
 
-				if (el.shares)
+				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')
+
+					
+
+				}
+
+				isotopeinited = false
 
 				actions.clear()
 				
@@ -1965,7 +1971,8 @@ var lenta = (function(){
 							if(!video)
 								actions.initVideo(p.el, share)
 
-							if(video && !isMobile()) el.shares.isotope()
+
+							if(isotopeinited) el.shares.isotope()
 
 							shareInitingMap[share.txid] = false;					
 											
@@ -2210,6 +2217,8 @@ var lenta = (function(){
 	
 						el.shares.on('arrangeComplete', function(){
 						});
+
+						isotopeinited = true
 	
 						
 					}
@@ -2353,6 +2362,8 @@ var lenta = (function(){
 						});
 
 						images.isotope()
+
+						
 					}
 					else
 					{
@@ -2416,6 +2427,19 @@ var lenta = (function(){
 
 
 				var renderclbk = function(_p){
+
+					var aspectRatio = deep(self, 'app.platform.sdk.videos.storage.' + url + '.data.aspectRatio') || 0
+
+
+					var info = self.app.platform.sdk.videos.storage[url]
+
+					if (info && info.data){
+						aspectRatio = info.data.aspectRatio || 0
+					}
+
+					
+					
+
 					if (aspectRatio) {
 						var playerContainer = _p.el.find('.jsPlayerLoading');
 
@@ -3555,8 +3579,12 @@ var lenta = (function(){
 
 				console.log("DESTROY")
 
-				if (el.shares)
+				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')
+					
+				}
+
+				isotopeinited = false
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]

@@ -42,7 +42,7 @@ const getAspectRatio = (width, height) => {
 const Peertube = function () {
   const hardCodeUrlsList = [
     'pocketnetpeertube3.nohost.me',
-    'pocketnetpeertube4.nohost.me',
+    'pocketnetpeertube5.nohost.me',
   ];
 
   this.serversCache = [];

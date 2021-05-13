@@ -1795,6 +1795,7 @@ Platform = function (app, listofnodes) {
                             repost: p.repost,
                             level: p.level,
                             fromempty: p.fromempty,
+                            nocommentcaption : p.nocommentcaption,
                             eid: id + (p.eid || ""),
                             comments : p.comments,
                             video : p.video,

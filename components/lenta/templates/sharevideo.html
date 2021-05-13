@@ -214,6 +214,7 @@ var metadisplay = function(){ %>
 
 } %>
 
+
 	<div class="work">
 
 		<% 
@@ -382,23 +383,6 @@ var metadisplay = function(){ %>
 				<% } %>
 
 
-				<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
-
-					<% if(!emptywithrepost) {%>
-
-						<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
-
-							<div class="cntswrk">
-								<div class="commentsWrapperHb">
-									<div class="commentsWrapper">
-									</div>
-								</div>
-							</div>
-						<% } %>
-				
-					<% } %>
-
-				<% } %>
 
 			</div>
 		</div>
@@ -422,7 +406,6 @@ var metadisplay = function(){ %>
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
 
-	<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
 
 		<% if(!emptywithrepost) {%>
 
@@ -439,6 +422,5 @@ var metadisplay = function(){ %>
 	
 		<% } %>
 
-	<% } %>
 
 <% } %>

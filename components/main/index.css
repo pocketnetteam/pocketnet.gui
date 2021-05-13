@@ -11,6 +11,12 @@
 #main.videomain #categories {
   color: #3c4146;
 }
+#main.videomain .addbutton {
+  display: none!important;
+}
+#main.videomain .columnnavigation {
+  display: none;
+}
 #main .columnnavigation {
   position: fixed;
   bottom: 20%;
@@ -574,6 +580,32 @@ html.testpocketnet #main.testpocketnetbg {
   }
   #main[mobilemode='rightshow'] .maincntwrapper {
     transform: translateX(-66.66666%);
+  }
+  #main.videomain {
+    /*.shares .authorgroup .share{
+				padding : 2 * @rhythm 0 ;
+			}*/
+  }
+  #main.videomain .columnnavigation {
+    display: none!important;
+  }
+  #main.videomain .lentacell {
+    margin-left: 33.333%;
+    margin-right: 33.333%;
+    padding-top: 0;
+    width: 33.333%;
+    padding-bottom: 0;
+  }
+  #main.videomain .leftpanelcell {
+    margin-left: 0;
+    margin-right: 0;
+    width: 33.333%;
+  }
+  #main.videomain .leftpanelsvicell {
+    display: none;
+  }
+  #main.videomain .lentacellsvi {
+    padding-top: 0;
   }
   #main .fxd {
     padding-top: 0;

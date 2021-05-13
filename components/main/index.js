@@ -199,11 +199,11 @@ var main = (function(){
 					
 					actions.refreshSticky()
 
-					if(lenta && lenta.update) lenta.update()
+					
 
 				}, 500)
 
-				
+				if(lenta && lenta.update) lenta.update()
 			}
 		}
 
@@ -591,7 +591,8 @@ var main = (function(){
 						openedpost = p
 					}, {
 						video : true,
-						autoplay : true
+						autoplay : true,
+						nocommentcaption : true
 					})
 				}
 

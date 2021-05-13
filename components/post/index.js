@@ -809,7 +809,7 @@ var post = (function(){
                   hr: url,
                   totop: el.c,
 
-                  caption: rendered,
+                  caption: ed.nocommentcaption ? null : rendered,
                   send: function () {
                     var c = el.c.find('.commentsAction .count span');
 
