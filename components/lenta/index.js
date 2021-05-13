@@ -2140,7 +2140,30 @@ var lenta = (function(){
 
 				if(!p) p = {};
 
-				if(!p.inner) p.inner = append
+				console.log("P", p)
+
+				if(!p.inner) {
+					p.inner = function(el, html){
+
+						console.log("INNER")
+
+						if(isotopeinited){
+
+							var content = $(html)
+
+							console.log("ADDCONTENT")
+
+							el.append( content ).isotope( 'appended', content )
+
+						}
+						else
+
+						return append(el, html)
+					}
+
+
+
+				}
 
 				var tpl = 'groupshares';
 
@@ -2176,9 +2199,11 @@ var lenta = (function(){
 						video : video
 					},
 					animation : false,
+					delayRender : isotopeinited
 
 				}, function(_p){
 
+					
 
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -2204,21 +2229,26 @@ var lenta = (function(){
 
 					if(video && !isMobile()){
 
+						if(!isotopeinited){
+							el.shares.isotope({
 
-						el.shares.isotope({
-
-							layoutMode: 'packery',
-							itemSelector: '.authorgroup',
-							packery: {
-								gutter: 0
-							},
-							initLayout: false
-						});
+								layoutMode: 'packery',
+								itemSelector: '.authorgroup',
+								packery: {
+									gutter: 0
+								},
+								initLayout: false
+							});
+		
+							el.shares.on('arrangeComplete', function(){
+							});
 	
-						el.shares.on('arrangeComplete', function(){
-						});
+							isotopeinited = true
+						}
+						else{
 
-						isotopeinited = true
+							
+						}
 	
 						
 					}
@@ -3648,7 +3678,7 @@ var lenta = (function(){
 			},
 
 			update : function(){
-				if(video && !isMobile()) el.shares.isotope()
+				if(el.shares && isotopeinited) el.shares.isotope('layout')
 			},
 			
 			init : function(p){

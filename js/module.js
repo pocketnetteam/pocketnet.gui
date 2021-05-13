@@ -467,7 +467,9 @@ nModule = function(){
 		}
 		else
 		{
+
 			p.inner(p.el, _html);
+
 
 			if(!p.notdisplay){
 				p.display || (p.display = "block")
