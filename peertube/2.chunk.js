@@ -567,7 +567,7 @@ class WebTorrentPlugin extends Plugin {
         this.torrent.on('error', (err) => console.error(err));
         this.torrent.on('warning', (err) => {
             console.log("WARNING", err);
-            if (err.message.indexOf('Error connecting to wss') !== -1) {
+            if (err.message.indexOf('Error connecting to wss') !== -1 || err.message.indexOf('Unsupported tracker protocol') !== -1) {
                 this.fallbackToHttp(options, done);
                 return;
             }
