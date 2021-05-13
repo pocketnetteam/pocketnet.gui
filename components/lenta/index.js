@@ -174,6 +174,9 @@ var lenta = (function(){
 				el.c.removeClass("sharesEnded")
 				el.c.removeClass('sharesZero')
 
+				if (el.shares)
+					el.shares.isotope('destroy')
+
 				actions.clear()
 				
 				if (essenseData.renderclbk)
@@ -2194,6 +2197,7 @@ var lenta = (function(){
 
 					if(video && !isMobile()){
 
+
 						el.shares.isotope({
 
 							layoutMode: 'packery',
@@ -3548,6 +3552,11 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+				console.log("DESTROY")
+
+				if (el.shares)
+					el.shares.isotope('destroy')
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]

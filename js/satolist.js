@@ -2668,7 +2668,6 @@ Platform = function (app, listofnodes) {
             },
 
             htls : function(id){
-                console.log(' self.app.platform.ui.wallet.sen')
                 self.app.platform.ui.wallet.send({id : id}, function(){
 					
 				})
@@ -6391,8 +6390,6 @@ Platform = function (app, listofnodes) {
                     })
 
 
-                    console.log('unspents', unspents, allunspents)
-                    
                     var totalInWallet = _.reduce(allunspents, function (m, u) {
                         return m + Number(u.amount)
                     }, 0)
@@ -6534,8 +6531,6 @@ Platform = function (app, listofnodes) {
             },  
 
             txbaseFees: function (address, outputs, keyPair, feerate, clbk) {
-
-                console.log("DUST", address, outputs, keyPair, feerate)
 
                 self.sdk.wallet.txbaseFeesMeta(
                     address, outputs, keyPair, feerate, 
@@ -9922,6 +9917,7 @@ Platform = function (app, listofnodes) {
 
                                 if (shares) {
 
+
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
 
                                         if (state) {
@@ -10354,11 +10350,6 @@ Platform = function (app, listofnodes) {
 
                     /*return*/
 
-
-                    if (dbg)
-                        console.log('txid, vout', txid, vout)
-
-
                     _.each(t, function (ts, w) {
                         
 
@@ -10604,8 +10595,6 @@ Platform = function (app, listofnodes) {
 
                             if (r) {
 
-                                console.log("BLOCK", r)
-
                                 r.block = true
 
                             }
@@ -10630,8 +10619,6 @@ Platform = function (app, listofnodes) {
                             })
 
                             if (r) {
-
-                                console.log("UNBLOCK", r)
 
                                 delete r.block
 
@@ -10946,8 +10933,6 @@ Platform = function (app, listofnodes) {
         
                                 }).catch(e => {
 
-                                    console.log("E", e)
-
                                     if (!s.unspent)
                                         s.unspent = {};
 
@@ -11211,8 +11196,6 @@ Platform = function (app, listofnodes) {
                         /*var payment = self.htls.createPayment(privatekey.toString('hex'), id, time, reciever, sender)
                         var hash = self.htls.hash(privatekey.toString('hex'), id)*/
                         
-                        console.log('payment', payment)
-
                         var outputs = [{ 
                             scriptPubKey : payment.output, 
                             amount 
@@ -11223,8 +11206,6 @@ Platform = function (app, listofnodes) {
                         _.each(dummyoutputs, function(dop){
                             if(dop.address) {
                                 indexes[outputs.push(dop) - 1] = true
-
-                                console.log('dop.amount ', dop.amount )
 
                                 dop.amount = dop.amount - 0.02
                             }
@@ -11345,8 +11326,6 @@ Platform = function (app, listofnodes) {
 
                         var k = smulti;
 
-                        console.log("inputs", inputs, ouputs)
-
                         _.each(inputs, function (i) {
 
                             if (i.address.indexOf("P") == 0) {
@@ -11415,7 +11394,6 @@ Platform = function (app, listofnodes) {
                         if(unfinalize) return txb
 
                         var tx = txb.build()
-                        console.log("WALLET TX", tx)
 
                         return tx;
 
@@ -14985,8 +14963,6 @@ Platform = function (app, listofnodes) {
                     return true
                 })
 
-                console.log('lmap', lmap)
-
                 if(!lmap.length) return Promise.resolve()
 
                 var groups = group(lmap, function(l){
@@ -15001,8 +14977,6 @@ Platform = function (app, listofnodes) {
                     }
 
                     return self.sdk.videos.types[type](links).then(r => {
-
-                        console.log('videosresult', r)
 
                         _.each(r, function(l){
                             s[l.link] = l
@@ -16592,8 +16566,6 @@ Platform = function (app, listofnodes) {
                     var s = platform.sdk.node.transactions;
 
                     var dif = platform.currentBlock - data.block
-
-                    console.log("dif", dif)
 
                     platform.currentBlock = data.block;
 
