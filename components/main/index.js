@@ -792,20 +792,20 @@ var main = (function(){
 
 				if(_vm != videomain){
 					videomain = _vm
+				}
 
-					if(videomain){
-						el.c.addClass('videomain')
+				if(videomain){
+					el.c.addClass('videomain')
 
-						if(!parameters().v){
-							actions.backtolenta()
-							makePanel()
-						}
-					}
-					else{
-						el.c.removeClass('videomain')
+					if(!parameters().v){
 						actions.backtolenta()
 						makePanel()
 					}
+				}
+				else{
+					el.c.removeClass('videomain')
+					actions.backtolenta()
+					makePanel()
 				}
 				
 

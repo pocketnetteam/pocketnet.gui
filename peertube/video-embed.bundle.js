@@ -43210,16 +43210,13 @@ class PeertubePlayerManager {
             return new Promise(res => {
                 video_js__WEBPACK_IMPORTED_MODULE_22___default()(options.common.playerElement, videojsOptions, function () {
                     const player = this;
-                    console.log("GOGG");
                     let alreadyFallback = false;
                     player.tech(true).one('error', () => {
-                        console.log('error2');
                         if (!alreadyFallback)
                             self.maybeFallbackToWebTorrent(mode, player, options);
                         alreadyFallback = true;
                     });
                     player.one('error', () => {
-                        console.log('error1');
                         if (!alreadyFallback)
                             self.maybeFallbackToWebTorrent(mode, player, options);
                         alreadyFallback = true;
@@ -43227,7 +43224,6 @@ class PeertubePlayerManager {
                     player.one('play', () => {
                         PeertubePlayerManager.alreadyPlayed = true;
                     });
-                    console.log('play');
                     self.addContextMenu(mode, player, options.common.embedUrl, options.common.embedTitle);
                     player.bezels();
                     return res(player);
@@ -43645,16 +43641,13 @@ class PeerTubePlugin extends Plugin {
             const playerOptions = this.player.options_;
             if (options.mode === 'webtorrent') {
                 this.player.webtorrent().on('resolutionChange', (_, d) => {
-                    console.log("resolutionChange2");
                     return this.handleResolutionChange(d);
                 });
                 this.player.webtorrent().on('autoResolutionChange', (_, d) => {
-                    console.log("resolutionChange3");
                     return this.trigger('autoResolutionChange', d);
                 });
             }
             if (options.mode === 'p2p-media-loader') {
-                console.log("resolutionChange");
                 this.player.p2pMediaLoader().on('resolutionChange', (_, d) => this.handleResolutionChange(d));
             }
             this.player.tech(true).on('loadedqualitydata', () => {
@@ -46363,10 +46356,12 @@ class PeerTubeEmbed {
     }
     static main(element, videoId, parameters, clbk) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            console.log("PeerTubeEmbed00-1");
             const embed = new PeerTubeEmbed(element);
             console.log("parameters", parameters);
             embed.getInitialSettings(parameters);
             yield embed.init(videoId, parameters, clbk);
+            console.log("PeerTubeEmbed00");
             return embed;
         });
     }
@@ -46717,6 +46712,7 @@ class PeerTubeEmbed {
                 this.player.dispose();
                 alreadyHadPlayer = true;
             }
+            console.log('buildVideoPlayer1');
             const videoInfoPromise = videoResponse
                 .json()
                 .then((videoInfo) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -46744,11 +46740,13 @@ class PeerTubeEmbed {
                 this.wrapperElement.appendChild(this.playerElement);
                 if (!alreadyHadPlayer)
                     this.loadPlaceholder(videoInfo);
+                console.log('buildVideoPlayer2');
                 return videoInfo;
             }));
             const [videoInfoTmp /*serverTranslations, captionsResponse, config, PeertubePlayerManager*/,] = yield Promise.all([
                 videoInfoPromise,
             ]);
+            console.log('buildVideoPlayer3');
             //await this.ensurePluginsAreLoaded(config, serverTranslations)
             const videoInfo = videoInfoTmp;
             //const PeertubePlayerManager = PeertubePlayerManagerModule.PeertubePlayerManager

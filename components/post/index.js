@@ -377,6 +377,8 @@ var post = (function(){
 						}, () => {
 
 							if (ed.autoplay){
+
+								console.log("PLAYER PLAY")
 								
 								player.play()
 								player.setVolume(1)
