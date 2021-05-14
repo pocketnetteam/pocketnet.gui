@@ -427,7 +427,7 @@ Application = function(p)
 	self.modules = {};
 
 	if (self.test){
-		//$('html').addClass('testpocketnet')
+		$('html').addClass('testpocketnet')
 	}
 
 	self.curation = function(){
