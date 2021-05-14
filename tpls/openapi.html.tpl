@@ -19,8 +19,8 @@
         img-src 'self' data: https:;
         script-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
-        media-src *">
+        font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
+        media-src blob: *">
 
         <link rel="stylesheet" href="css/normalize.css?v=351441541498">
         <link rel="stylesheet" href="css/tooltipster.core.min.css?v=900150716765">
@@ -152,6 +152,8 @@
 
 __VAR__.test
 
+
+    <script>window.design = true;</script>
         <script join src="js/functions.js?v=765516666905"></script>
         <script join src="js/user.js?v=765548257891"></script>
         <script join src="js/module.js?v=724804010968"></script>
