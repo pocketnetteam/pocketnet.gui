@@ -46356,12 +46356,9 @@ class PeerTubeEmbed {
     }
     static main(element, videoId, parameters, clbk) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            console.log("PeerTubeEmbed00-1");
             const embed = new PeerTubeEmbed(element);
-            console.log("parameters", parameters);
             embed.getInitialSettings(parameters);
             yield embed.init(videoId, parameters, clbk);
-            console.log("PeerTubeEmbed00");
             return embed;
         });
     }
@@ -46387,7 +46384,6 @@ class PeerTubeEmbed {
         this.modeParam = this.getParamString(params, "mode");
         this.isVideoEmbed = this.getParamString(params, "videoEmbedded", "");
         this.txid = this.getParamString(params, "txid", "");
-        console.log("this.wautoplay", this.wautoplay);
     }
     getVideoUrl(id) {
         return "/api/v1/videos/" + id;
@@ -46520,7 +46516,6 @@ class PeerTubeEmbed {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const next = this.getNextPlaylistElement();
             if (!next) {
-                console.log("Next element not found in playlist.");
                 return;
             }
             this.currentPlaylistElement = next;
@@ -46531,7 +46526,6 @@ class PeerTubeEmbed {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const previous = this.getPreviousPlaylistElement();
             if (!previous) {
-                console.log("Previous element not found in playlist.");
                 return;
             }
             this.currentPlaylistElement = previous;
@@ -46563,7 +46557,6 @@ class PeerTubeEmbed {
     }
     loadParams(video) {
         try {
-            console.log("this", this);
             if (this.modeParam) {
                 if (this.modeParam === "p2p-media-loader")
                     this.mode = "p2p-media-loader";
@@ -46712,7 +46705,6 @@ class PeerTubeEmbed {
                 this.player.dispose();
                 alreadyHadPlayer = true;
             }
-            console.log('buildVideoPlayer1');
             const videoInfoPromise = videoResponse
                 .json()
                 .then((videoInfo) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -46740,13 +46732,11 @@ class PeerTubeEmbed {
                 this.wrapperElement.appendChild(this.playerElement);
                 if (!alreadyHadPlayer)
                     this.loadPlaceholder(videoInfo);
-                console.log('buildVideoPlayer2');
                 return videoInfo;
             }));
             const [videoInfoTmp /*serverTranslations, captionsResponse, config, PeertubePlayerManager*/,] = yield Promise.all([
                 videoInfoPromise,
             ]);
-            console.log('buildVideoPlayer3');
             //await this.ensurePluginsAreLoaded(config, serverTranslations)
             const videoInfo = videoInfoTmp;
             //const PeertubePlayerManager = PeertubePlayerManagerModule.PeertubePlayerManager
@@ -46950,12 +46940,10 @@ class PeerTubeEmbed {
         if (placeholder) {
             const url = this.host + video.previewPath;
             placeholder.style.backgroundImage = `url("${url}")`;
-            console.log("this.wautoplaythis.wautoplaythis.wautoplay", this.wautoplay);
             if (!this.wautoplay)
                 placeholder.style.display = "block";
             else {
                 placeholder.style.display = "none";
-                console.log("placeholder.style.display", placeholder.style.display);
             }
         }
     }

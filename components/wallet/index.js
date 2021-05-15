@@ -890,7 +890,8 @@ var wallet = (function(){
 				
 			},
 
-			prepareTransactionHlts : function(feerate, clbk){
+			prepareTransactionHlts : function(feerate, fee, clbk){
+
 
 				var amount = htls.parameters.amount.value;
 				var feesMode = htls.parameters.fees.value;
@@ -901,10 +902,11 @@ var wallet = (function(){
 				var reciever = self.app.platform.sdk.address.pnet().address //// dummy
 
 				outputs.push({
-					amount : amount
+					amount : amount,
+					key : 'htlc'
 				})
 
-				self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
+				self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), fee, feesMode, function(err, inputs, _outputs){
 
 					if (err){
 						sitemessage(err)
@@ -913,12 +915,10 @@ var wallet = (function(){
 
 
 					self.sdk.node.transactions.htls.plcreate(essenseData.htls, amount, inputs, _outputs, function(txb, meta){
-						console.log('txb', txb, meta)
-
+						
 						var tx = txb.build()
 
 						var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
-
 					
 						if (clbk)
 							clbk(addresses, outputs, inputs, totalFees, feesMode, meta, tx)
@@ -1756,7 +1756,7 @@ var wallet = (function(){
 
 				console.log('htlsFees', f)
 
-				actions.prepareTransactionHlts(f, function(addresses, outputs, inputs, totalFees, feesMode, meta){
+				actions.prepareTransactionHlts(f, 0, function(addresses, outputs, inputs, totalFees, feesMode, meta){
 
 					console.log('prepareTransactionHlts', totalFees)
 
@@ -1794,7 +1794,7 @@ var wallet = (function(){
 
 							sendpreloader(true)
 
-							actions.prepareTransactionHlts(f, function(addresses, outputs, inputs, totalFees, feesMode, meta, tx){
+							actions.prepareTransactionHlts(f, totalFees, function(addresses, outputs, inputs, totalFees, feesMode, meta, tx){
 
 								console.log("TX", tx)
 
@@ -1907,7 +1907,7 @@ var wallet = (function(){
 					})
 					
 					if (essenseData.htls){
-						_p.el.find('.htlsWrapper').html(renders.embeddingcode(essenseData.htls))
+						//_p.el.find('.htlsWrapper').html(renders.embeddingcode(essenseData.htls))
 					}
 
 					if (clbk)

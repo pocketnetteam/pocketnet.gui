@@ -1880,11 +1880,13 @@ function initVideoJsHlsJsPlugin() {
 }
 function initMediaElementJsPlayer(mediaElement) {
     mediaElement.addEventListener("hlsFragChanged", (event) => {
+        console.log('mediaElementhlsFragChanged', event);
         const hls = mediaElement.hlsPlayer;
         if (hls && hls.config && hls.config.loader && typeof hls.config.loader.getEngine === "function") {
             const engine = hls.config.loader.getEngine();
             if (event.data && event.data.length > 1) {
                 const frag = event.data[1].frag;
+                console.log("FRAG", frag);
                 const byteRange = frag.byteRange.length !== 2
                     ? undefined
                     : { offset: frag.byteRange[0], length: frag.byteRange[1] - frag.byteRange[0] };

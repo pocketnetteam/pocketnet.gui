@@ -38304,16 +38304,19 @@ const bcrypto = require('../crypto');
 const networks_1 = require('../networks');
 const bscript = require('../script');
 const address = require('../address');
+const ecc = require('tiny-secp256k1');
 const lazy = require('./lazy');
 const typef = require('typeforce');
 const OPS = bscript.OPS;
 const bs58check = require('bs58check');
-function stacksEqual(a, b) {
+/*
+function stacksEqual(a: Buffer[], b: Buffer[]): boolean {
   if (a.length !== b.length) return false;
+
   return a.every((x, i) => {
     return x.equals(b[i]);
   });
-}
+}*/
 function clearscript(asm) {
   return asm
     .replace(/\n\t/g, '')
@@ -38325,24 +38328,34 @@ function clearscript(asm) {
 // witness: <?>
 // output: OP_HASH160 {hash160(redeemScript)} OP_EQUAL
 function htlc(a, opts) {
-  if (!a.address && !a.htlc && !a.hash && !a.output && !a.redeem && !a.input)
+  if (
+    !a.address &&
+    !a.htlc &&
+    !a.hash &&
+    !a.output &&
+    /*!a.redeem && */ !a.input &&
+    !a.pubkey &&
+    !a.signature
+  )
     throw new TypeError('Not enough data');
   opts = Object.assign({ validate: true }, opts || {});
   typef(
     {
       network: typef.maybe(typef.Object),
+      pubkey: typef.maybe(ecc.isPoint),
       address: typef.maybe(typef.String),
       hash: typef.maybe(typef.BufferN(20)),
       output: typef.maybe(typef.BufferN(23)),
       htlc: typef.maybe(typef.Object),
-      redeem: typef.maybe({
-        network: typef.maybe(typef.Object),
-        output: typef.maybe(typef.Buffer),
-        input: typef.maybe(typef.Buffer),
-        witness: typef.maybe(typef.arrayOf(typef.Buffer)),
-      }),
+      /*redeem: typef.maybe({
+          network: typef.maybe(typef.Object),
+          output: typef.maybe(typef.Buffer),
+          input: typef.maybe(typef.Buffer),
+          witness: typef.maybe(typef.arrayOf(typef.Buffer)),
+        }),*/
       input: typef.maybe(typef.Buffer),
-      witness: typef.maybe(typef.arrayOf(typef.Buffer)),
+      //witness: typef.maybe(typef.arrayOf(typef.Buffer)),
+      signature: typef.maybe(bscript.isCanonicalScriptSignature),
     },
     a,
   );
@@ -38360,15 +38373,17 @@ function htlc(a, opts) {
   const _chunks = lazy.value(() => {
     return bscript.decompile(a.input);
   });
-  const _redeem = lazy.value(() => {
-    const chunks = _chunks();
-    return {
-      network,
-      output: chunks[chunks.length - 1],
-      input: bscript.compile(chunks.slice(0, -1)),
-      witness: a.witness || [],
-    };
-  });
+  /*const _redeem = lazy.value(
+      (): Payment => {
+        const chunks = _chunks();
+        return {
+          network,
+          output: chunks[chunks.length - 1] as Buffer,
+          input: bscript.compile(chunks.slice(0, -1)),
+          witness: a.witness || [],
+        };
+      },
+    ) as PaymentFunction;*/
   // output dependents
   lazy.prop(o, 'address', () => {
     if (!o.hash) return;
@@ -38382,9 +38397,34 @@ function htlc(a, opts) {
   });
   lazy.prop(o, 'hash', () => {
     // in order of least effort
-    if (a.output) return a.output.slice(2, 22);
+    if (a.output) return a.output.slice(3, 23);
     if (a.address) return _address().hash;
     if (o.redeem && o.redeem.output) return bcrypto.hash160(o.redeem.output);
+  });
+  lazy.prop(o, 'pubkey', () => {
+    if (!a.input) return;
+    return _chunks()[1];
+  });
+  lazy.prop(o, 'signature', () => {
+    if (!a.input) return;
+    return _chunks()[0];
+  });
+  lazy.prop(o, 'input', () => {
+    if (!a.pubkey) return;
+    if (!a.signature) return;
+    var secret = '';
+    if (a.htlc && a.htlc.secret) secret = a.htlc.secret;
+    console.log(
+      'input',
+      a.signature.toString('hex'),
+      bcrypto.hash160(a.pubkey).toString('hex'),
+      bcrypto.sha256(Buffer.from(secret)).toString('hex'),
+    );
+    return bscript.compile([a.signature, a.pubkey, Buffer.from(secret)]);
+  });
+  lazy.prop(o, 'witness', () => {
+    if (!o.input) return;
+    return [];
   });
   lazy.prop(o, 'output', () => {
     if (!o.htlc) return;
@@ -38395,6 +38435,7 @@ function htlc(a, opts) {
       ? bcrypto.sha256(Buffer.from(o.htlc.secret)).toString('hex')
       : o.htlc.secrethash;
     var asm2 = clearscript(`
+        OP_DUP
         OP_IF
             OP_SHA256 ${hash} OP_EQUALVERIFY
             OP_DUP 
@@ -38411,20 +38452,23 @@ function htlc(a, opts) {
     return bscript.fromASM(asm2);
   });
   // input dependents
-  lazy.prop(o, 'redeem', () => {
-    if (!a.input) return;
-    return _redeem();
-  });
-  lazy.prop(o, 'input', () => {
-    if (!a.redeem || !a.redeem.input || !a.redeem.output) return;
-    return bscript.compile(
-      [].concat(bscript.decompile(a.redeem.input), a.redeem.output),
-    );
-  });
-  lazy.prop(o, 'witness', () => {
-    if (o.redeem && o.redeem.witness) return o.redeem.witness;
-    if (o.input) return [];
-  });
+  /*lazy.prop(o, 'redeem', () => {
+      if (!a.input) return;
+      return _redeem();
+    });*/
+  /*lazy.prop(o, 'input', () => {
+      if (!a.redeem || !a.redeem.input || !a.redeem.output) return;
+      return bscript.compile(
+        ([] as Stack).concat(
+          bscript.decompile(a.redeem.input) as Stack,
+          a.redeem.output,
+        ),
+      );
+    });*/
+  /*lazy.prop(o, 'witness', () => {
+      if (o.redeem && o.redeem.witness) return o.redeem.witness;
+      if (o.input) return [];
+    });*/
   lazy.prop(o, 'name', () => {
     const nameParts = ['htlc'];
     if (o.redeem !== undefined && o.redeem.name !== undefined)
@@ -38446,90 +38490,95 @@ function htlc(a, opts) {
     }
     if (a.output) {
       var valid =
-        a.output.length === 92 &&
-        a.output[0] === OPS.OP_IF &&
-        a.output[1] === OPS.OP_SHA256 &&
-        a.output[2] === 0x20 &&
-        a.output[35] === OPS.OP_EQUALVERIFY &&
-        a.output[36] === OPS.OP_DUP &&
-        a.output[37] === OPS.OP_HASH160 &&
-        a.output[38] === 0x14 &&
-        a.output[59] === OPS.OP_ELSE &&
-        a.output[60] === 0x3 &&
-        a.output[64] === OPS.OP_CHECKLOCKTIMEVERIFY &&
-        a.output[65] === OPS.OP_DROP &&
-        a.output[66] === OPS.OP_DUP &&
-        a.output[67] === OPS.OP_HASH160 &&
-        a.output[68] === 0x14 &&
-        a.output[89] === OPS.OP_ENDIF &&
-        a.output[90] === OPS.OP_EQUALVERIFY &&
-        a.output[91] === OPS.OP_CHECKSIG;
+        a.output.length === 93 &&
+        a.output[0] === OPS.OP_DUP &&
+        a.output[1] === OPS.OP_IF &&
+        a.output[2] === OPS.OP_SHA256 &&
+        a.output[3] === 0x20 &&
+        a.output[36] === OPS.OP_EQUALVERIFY &&
+        a.output[37] === OPS.OP_DUP &&
+        a.output[38] === OPS.OP_HASH160 &&
+        a.output[39] === 0x14 &&
+        a.output[60] === OPS.OP_ELSE &&
+        a.output[61] === 0x3 &&
+        a.output[65] === OPS.OP_CHECKLOCKTIMEVERIFY &&
+        a.output[66] === OPS.OP_DROP &&
+        a.output[67] === OPS.OP_DUP &&
+        a.output[68] === OPS.OP_HASH160 &&
+        a.output[69] === 0x14 &&
+        a.output[90] === OPS.OP_ENDIF &&
+        a.output[91] === OPS.OP_EQUALVERIFY &&
+        a.output[92] === OPS.OP_CHECKSIG;
       if (!valid) throw new TypeError('Output is invalid');
-      const hash2 = a.output.slice(0, 92);
+      const hash2 = a.output.slice(0, 93);
       if (hash.length > 0 && !hash.equals(hash2))
         throw new TypeError('Hash mismatch');
       else hash = hash2;
     }
-    // inlined to prevent 'no-inner-declarations' failing
-    const checkRedeem = redeem => {
-      // is the redeem output empty/invalid?
-      if (redeem.output) {
-        const decompile = bscript.decompile(redeem.output);
-        if (!decompile || decompile.length < 1)
-          throw new TypeError('Redeem.output too short');
-        // match hash against other sources
-        const hash2 = bcrypto.hash160(redeem.output);
-        if (hash.length > 0 && !hash.equals(hash2))
-          throw new TypeError('Hash mismatch');
-        else hash = hash2;
-      }
-      if (redeem.input) {
-        const hasInput = redeem.input.length > 0;
-        const hasWitness = redeem.witness && redeem.witness.length > 0;
-        if (!hasInput && !hasWitness) throw new TypeError('Empty input');
-        if (hasInput && hasWitness)
-          throw new TypeError('Input and witness provided');
-        if (hasInput) {
-          const richunks = bscript.decompile(redeem.input);
-          if (!bscript.isPushOnly(richunks))
-            throw new TypeError('Non push-only scriptSig');
-        }
-      }
-    };
-    if (a.input) {
-      const chunks = _chunks();
-      if (!chunks || chunks.length < 1) throw new TypeError('Input too short');
-      if (!Buffer.isBuffer(_redeem().output))
-        throw new TypeError('Input is invalid');
-      checkRedeem(_redeem());
-    }
-    if (a.redeem) {
-      if (a.redeem.network && a.redeem.network !== network)
-        throw new TypeError('Network mismatch');
-      if (a.input) {
-        const redeem = _redeem();
-        if (a.redeem.output && !a.redeem.output.equals(redeem.output))
-          throw new TypeError('Redeem.output mismatch');
-        if (a.redeem.input && !a.redeem.input.equals(redeem.input))
-          throw new TypeError('Redeem.input mismatch');
-      }
-      checkRedeem(a.redeem);
-    }
-    if (a.witness) {
-      if (
-        a.redeem &&
-        a.redeem.witness &&
-        !stacksEqual(a.redeem.witness, a.witness)
-      )
-        throw new TypeError('Witness and redeem.witness mismatch');
-    }
+    /*// inlined to prevent 'no-inner-declarations' failing
+        const checkRedeem = (redeem: Payment): void => {
+          // is the redeem output empty/invalid?
+          if (redeem.output) {
+            const decompile = bscript.decompile(redeem.output);
+            if (!decompile || decompile.length < 1)
+              throw new TypeError('Redeem.output too short');
+    
+            // match hash against other sources
+            const hash2 = bcrypto.hash160(redeem.output);
+            if (hash.length > 0 && !hash.equals(hash2))
+              throw new TypeError('Hash mismatch');
+            else hash = hash2;
+          }
+    
+          if (redeem.input) {
+            const hasInput = redeem.input.length > 0;
+            const hasWitness = redeem.witness && redeem.witness.length > 0;
+            if (!hasInput && !hasWitness) throw new TypeError('Empty input');
+            if (hasInput && hasWitness)
+              throw new TypeError('Input and witness provided');
+            if (hasInput) {
+              const richunks = bscript.decompile(redeem.input) as Stack;
+              if (!bscript.isPushOnly(richunks))
+                throw new TypeError('Non push-only scriptSig');
+            }
+          }
+        };*/
+    /*if (a.input) {
+          const chunks = _chunks();
+          if (!chunks || chunks.length < 1) throw new TypeError('Input too short');
+          if (!Buffer.isBuffer(_redeem().output))
+            throw new TypeError('Input is invalid');
+    
+          //checkRedeem(_redeem());
+        }*/
+    /*if (a.redeem) {
+          if (a.redeem.network && a.redeem.network !== network)
+            throw new TypeError('Network mismatch');
+          if (a.input) {
+            const redeem = _redeem();
+            if (a.redeem.output && !a.redeem.output.equals(redeem.output!))
+              throw new TypeError('Redeem.output mismatch');
+            if (a.redeem.input && !a.redeem.input.equals(redeem.input!))
+              throw new TypeError('Redeem.input mismatch');
+          }
+    
+          checkRedeem(a.redeem);
+        }*/
+    /*if (a.witness) {
+          if (
+            a.redeem &&
+            a.redeem.witness &&
+            !stacksEqual(a.redeem.witness, a.witness)
+          )
+            throw new TypeError('Witness and redeem.witness mismatch');
+        }*/
   }
   return Object.assign(o, a);
 }
 exports.htlc = htlc;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../address":139,"../crypto":143,"../networks":146,"../script":158,"./lazy":150,"bs58check":74,"buffer":3,"typeforce":135}],149:[function(require,module,exports){
+},{"../address":139,"../crypto":143,"../networks":146,"../script":158,"./lazy":150,"bs58check":74,"buffer":3,"tiny-secp256k1":131,"typeforce":135}],149:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 const embed_1 = require('./embed');
@@ -41250,24 +41299,24 @@ const script_1 = require('../../script');
 function check(script) {
   const buffer = bscript.compile(script);
   return (
-    buffer.length === 92 &&
-    buffer[0] === script_1.OPS.OP_IF &&
-    buffer[1] === script_1.OPS.OP_SHA256 &&
-    buffer[2] === 0x20 &&
-    buffer[35] === script_1.OPS.OP_EQUALVERIFY &&
-    buffer[36] === script_1.OPS.OP_DUP &&
-    buffer[37] === script_1.OPS.OP_HASH160 &&
-    buffer[38] === 0x14 &&
-    buffer[59] === script_1.OPS.OP_ELSE &&
-    buffer[60] === 0x3 &&
-    buffer[64] === script_1.OPS.OP_CHECKLOCKTIMEVERIFY &&
-    buffer[65] === script_1.OPS.OP_DROP &&
-    buffer[66] === script_1.OPS.OP_DUP &&
-    buffer[67] === script_1.OPS.OP_HASH160 &&
-    buffer[68] === 0x14 &&
-    buffer[89] === script_1.OPS.OP_ENDIF &&
-    buffer[90] === script_1.OPS.OP_EQUALVERIFY &&
-    buffer[91] === script_1.OPS.OP_CHECKSIG
+    buffer.length === 93 &&
+    buffer[1] === script_1.OPS.OP_IF &&
+    buffer[2] === script_1.OPS.OP_SHA256 &&
+    buffer[3] === 0x20 &&
+    buffer[36] === script_1.OPS.OP_EQUALVERIFY &&
+    buffer[37] === script_1.OPS.OP_DUP &&
+    buffer[38] === script_1.OPS.OP_HASH160 &&
+    buffer[39] === 0x14 &&
+    buffer[60] === script_1.OPS.OP_ELSE &&
+    buffer[61] === 0x3 &&
+    buffer[65] === script_1.OPS.OP_CHECKLOCKTIMEVERIFY &&
+    buffer[66] === script_1.OPS.OP_DROP &&
+    buffer[67] === script_1.OPS.OP_DUP &&
+    buffer[68] === script_1.OPS.OP_HASH160 &&
+    buffer[69] === 0x14 &&
+    buffer[90] === script_1.OPS.OP_ENDIF &&
+    buffer[91] === script_1.OPS.OP_EQUALVERIFY &&
+    buffer[92] === script_1.OPS.OP_CHECKSIG
   );
 }
 exports.check = check;
@@ -42183,7 +42232,7 @@ class TransactionBuilder {
     typeforce(types.UInt32, version);
     this.__TX.version = version;
   }
-  addInput(txHash, vout, sequence, prevOutScript) {
+  addInput(txHash, vout, sequence, prevOutScript, htlc) {
     if (!this.__canModifyInputs()) {
       throw new Error('No, this would invalidate signatures');
     }
@@ -42203,6 +42252,7 @@ class TransactionBuilder {
       sequence,
       prevOutScript,
       value,
+      htlc,
     });
   }
   addOutput(scriptPubKey, value) {
@@ -42253,13 +42303,16 @@ class TransactionBuilder {
     if (this.__PREV_TX_SET[prevTxOut] !== undefined)
       throw new Error('Duplicate TxOut: ' + prevTxOut);
     let input = {};
-    // derive what we can from the scriptSig
+    // derive what we can from the scriptSig ???
     if (options.script !== undefined) {
       input = expandInput(options.script, options.witness || []);
     }
     // if an input value was given, retain it
     if (options.value !== undefined) {
       input.value = options.value;
+    }
+    if (options.htlc !== undefined) {
+      input.htlc = options.htlc;
     }
     // derive what we can from the previous transactions output script
     if (!input.prevOutScript && options.prevOutScript) {
@@ -42410,6 +42463,19 @@ function expandInput(scriptSig, witnessStack, type, scriptPubKey) {
         signatures: [signature],
       };
     }
+    /*case SCRIPT_TYPES.HTLC: {
+          const { output, pubkey, signature } = payments.htlc({
+            input: scriptSig,
+          });
+    
+          return {
+            prevOutScript: output,
+            prevOutType: SCRIPT_TYPES.HTLC,
+            pubkeys: [pubkey],
+            signatures: [signature],
+            htlc : htlc
+          };
+        }*/
     case SCRIPT_TYPES.P2PK: {
       const { signature } = payments.p2pk({ input: scriptSig });
       return {
@@ -42529,6 +42595,7 @@ function expandOutput(script, ourPubKey) {
       return {
         type,
         pubkeys: [ourPubKey],
+        signatures: [undefined],
       };
     }
     case SCRIPT_TYPES.P2PKH: {
@@ -42625,9 +42692,6 @@ function prepareInput(input, ourPubKey, redeemScript, witnessScript) {
     if (expanded.type == SCRIPT_TYPES.P2SH) {
       paymentconst = payments.p2sh;
     }
-    if (expanded.type == SCRIPT_TYPES.HTLC) {
-      paymentconst = payments.htlc;
-    }
     if (!paymentconst) paymentconst = payments.p2sh;
     payment = paymentconst({ redeem: { output: redeemScript } });
     if (paymentconst) {
@@ -42658,10 +42722,7 @@ function prepareInput(input, ourPubKey, redeemScript, witnessScript) {
     return {
       redeemScript,
       redeemScriptType: expanded.type,
-      prevOutType:
-        expanded.type == SCRIPT_TYPES.HTLC
-          ? SCRIPT_TYPES.HTLC
-          : SCRIPT_TYPES.P2SH,
+      prevOutType: SCRIPT_TYPES.P2SH,
       prevOutScript: payment.output,
       hasWitness: expanded.type === SCRIPT_TYPES.P2WPKH,
       signScript,
@@ -42707,10 +42768,10 @@ function prepareInput(input, ourPubKey, redeemScript, witnessScript) {
   }
   if (input.prevOutType && input.prevOutScript) {
     // embedded scripts are not possible without extra information
-    if (input.prevOutType === SCRIPT_TYPES.HTLC)
-      throw new Error(
-        'PrevOutScript is ' + input.prevOutType + ', requires redeemScript',
-      );
+    /*if (input.prevOutType === SCRIPT_TYPES.HTLC)
+        throw new Error(
+          'PrevOutScript is ' + input.prevOutType + ', requires redeemScript',
+        );*/
     if (input.prevOutType === SCRIPT_TYPES.P2SH)
       throw new Error(
         'PrevOutScript is ' + input.prevOutType + ', requires redeemScript',
@@ -42792,14 +42853,13 @@ function build(type, input, allowIncomplete) {
       );
     }
     case SCRIPT_TYPES.HTLC: {
-      const redeem = build(input.redeemScriptType, input, allowIncomplete);
-      if (!redeem) return;
+      if (pubkeys.length === 0) break;
+      if (signatures.length === 0) break;
+      let htlc = input.htlc;
       return payments.htlc({
-        redeem: {
-          output: redeem.output || input.redeemScript,
-          input: redeem.input,
-          witness: redeem.witness,
-        },
+        pubkey: pubkeys[0],
+        signature: signatures[0],
+        htlc: htlc,
       });
     }
     case SCRIPT_TYPES.P2SH: {
@@ -42985,11 +43045,12 @@ function checkSignArgs(inputs, signParams) {
               signParams.secret,
               `${posType} requires redeemScript`,
             );*/
-      tfMessage(
-        typeforce.Buffer,
-        signParams.redeemScript,
-        `${posType} requires redeemScript`,
-      );
+      /* tfMessage(
+               typeforce.Buffer,
+               signParams.redeemScript,
+               `${posType} requires redeemScript`,
+             );*/
+      break;
     case 'p2sh-p2ms':
     case 'p2sh-p2pk':
     case 'p2sh-p2pkh':
@@ -43064,16 +43125,13 @@ function checkSignArgs(inputs, signParams) {
       break;
   }
 }
-function trySign({
-  input,
-  ourPubKey,
-  keyPair,
-  signatureHash,
-  hashType,
-  useLowR,
-}) {
+function trySign(
+  { input, ourPubKey, keyPair, signatureHash, hashType, useLowR },
+  htlc,
+) {
   // enforce in order signing of public keys
   let signed = false;
+  htlc = htlc;
   for (const [i, pubKey] of input.pubkeys.entries()) {
     if (!ourPubKey.equals(pubKey)) continue;
     if (input.signatures[i]) throw new Error('Signature already exists');

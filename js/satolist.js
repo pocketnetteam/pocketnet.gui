@@ -29,7 +29,7 @@ Platform = function (app, listofnodes) {
     }
     
 
-    self.testaddresses = ['PEwL86dE6MuKKaGPxooGyFCKocUP8B6jw8', 'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2', 'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y', 'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux', 'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH', 'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW', 'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s', 'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+    self.testaddresses = ['PHr8g7b4gJdSkiJFmQeoND2X8tRUKvB2An', 'PEwL86dE6MuKKaGPxooGyFCKocUP8B6jw8', 'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2', 'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y', 'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux', 'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH', 'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW', 'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s', 'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
@@ -11143,23 +11143,25 @@ Platform = function (app, listofnodes) {
 
                             //lock = 10
 
-                            var time = 1161545 + 200 //item.time  self.currentBlock + lock
+                            var time = 965504 + 200 //item.time  self.currentBlock + lock
 
                             var address = item.address
 
-                            var {txb, payment, hash} = self.sdk.node.transactions.htls.create(inputs, dummyoutputs, id, address, amount, time)
+                            var {txb, payment} = self.sdk.node.transactions.htls.create(inputs, dummyoutputs, id, address, amount, time)
 
                             if (clbk) clbk(txb, {
                                 address,
                                 time,
-                                lock,
+                                //lock,
                                 payment,
-                                hash,
+                                htlc : payment.htlc,
+                                //hash,
                                 tdif : time - self.currentBlock
                             })
 
                         })
                     },
+
                     create : function(inputs, dummyoutputs, id, reciever, amount, time){
 
                         var multisha = function(str, count){
@@ -11199,12 +11201,17 @@ Platform = function (app, listofnodes) {
                             }
                         });
 
-                        /*var payment = self.htls.createPayment(privatekey.toString('hex'), id, time, reciever, sender)
-                        var hash = self.htls.hash(privatekey.toString('hex'), id)*/
+                        var htlcout = _.find(dummyoutputs, function(dout){
+                            return dout.key == 'htlc'
+                        })
+
+                        if(!htlcout){
+                            return Promise.reject('htlcout')
+                        }
                         
                         var outputs = [{ 
                             scriptPubKey : payment.output, 
-                            amount 
+                            amount : htlcout.amount
                         }]
 
                         var indexes = {}
@@ -11213,13 +11220,63 @@ Platform = function (app, listofnodes) {
                             if(dop.address) {
                                 indexes[outputs.push(dop) - 1] = true
 
-                                dop.amount = dop.amount - 0.02
+                                //dop.amount = dop.amount - 0.02
                             }
                         })
+
+                        console.log("htlc",{
+                            secret,
+                            lock : time,
+                            reciever,
+                            sender : self.sdk.address.pnetsimple(keyPair.publicKey).address
+                        })
+                        
 
                         var txb = self.sdk.node.transactions.create.wallet(inputs, outputs, null, true)
 
                         return {txb, payment, secret}
+                    },
+
+                    withdrawal : function(prevoutputs, destination, fees, htlc){
+                        if(!htlc) htlc = {}
+
+                        var total = 0
+
+                        if(!fees) fees = 0
+
+                        var inputs = _.map(prevoutputs, function(output){
+
+                            total += output.value
+
+                            return {
+                                vout : output.n,
+                                scriptPubKey : output.scriptPubKey.hex,
+                                amount : output.value,
+                                type : output.scriptPubKey.type,
+                                txid : output.txid
+                            }
+                        })
+
+                        var outputs = [{
+                            address : destination,
+                            amount : total - fees
+                        }]
+
+                        var tx = self.sdk.node.transactions.create.wallet(inputs, outputs, null, false, htlc)
+
+                        console.log('tx', tx)
+
+                        self.sdk.node.transactions.send(tx, function(d, err){
+
+                            console.log("err", err)
+
+                            if(err){
+                                sitemessage(err)
+                            }
+
+                        })
+
+
                     }
                 },
 
@@ -11322,64 +11379,61 @@ Platform = function (app, listofnodes) {
                         }, deep(p, 'address.address'), p.update, telegram)
                     },
 
-                    wallet: function (inputs, ouputs, _kp, unfinalize) {
+                    wallet: function (inputs, outputs, _kp, unfinalize, htlc) {
+
+                        if(!htlc) htlc = {}
 
                         var keyPair = _kp || self.app.user.keys()
-
                         var txb = new bitcoin.TransactionBuilder();
-
-                        txb.addNTime(self.timeDifference || 0)
-
+                            txb.addNTime(self.timeDifference || 0)
                         var k = smulti;
+
+                        console.log('inputs', inputs)
 
                         _.each(inputs, function (i) {
 
-                            if (i.address.indexOf("P") == 0) {
+                            if (i.type == 'htlc'){
+                                txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'), htlc)
+                            }
+                            else{
                                 txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
                             }
 
-                            else {
-
-                                var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
-
-                                if (index > -1) {
-
-                                    var address = self.sdk.addresses.storage.addressesobj[index];
-                                  
-                                    txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
-
-                                }
-
-                                else {
-                         
-                                    return
-                                }
-
-                            }
-
+                            
                         })
 
-                        _.each(ouputs, function (o) {
+                        _.each(outputs, function (o) {
                             txb.addOutput(o.scriptPubKey || o.address, Number((k * o.amount).toFixed(0)));
                         })
 
                         _.each(inputs, function (i, inputindex) {
 
-                            if (i.address.indexOf("P") == 0) {
-                                txb.sign(inputindex, keyPair);
+                            if (i.type == 'htlc'){
+
+
+                                txb.sign({
+                                    prevOutScript: Buffer.from(i.scriptPubKey, 'hex'),
+                                    prevOutScriptType: 'htlc',
+                                    vin: inputindex,
+                                    keyPair
+                                });
+
+
+                                return
                             }
 
-                            else {
+                            if (i.address.indexOf("P") == 0) {
+                                txb.sign(inputindex, keyPair);
+                                return
+                            }
+
+                            if (i.address.indexOf("Z") == 0) {
+                                
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 
                                 if (index > -1) {
-
-                                    index = index
-
                                     var p2sh = self.sdk.addresses.storage.addressesobj[index];
-
                                     var dumped = self.sdk.address.dumpKeys(index)
-                                    
                                     txb.sign({
                                         prevOutScriptType: 'p2sh-p2wpkh',
                                         redeemScript : p2sh.redeem.output,
@@ -11387,15 +11441,15 @@ Platform = function (app, listofnodes) {
                                         keyPair : dumped,
                                         witnessValue : Number((k * i.amount).toFixed(0))
                                     });
-
                                 }
-
-                                else {
-                                    return
-                                }
-
+                                return
                             }
+
+                                
+
                         })
+
+                        console.log('txb', txb)
 
                         if(unfinalize) return txb
 
@@ -19043,7 +19097,35 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.tst = function(){
+
+        return
+
+        console.log('6bfc49fae021294b3f899d7fb59cc16afb25dc2b7101a44076da30a1e3bdc23f')
+
+        self.app.api.rpc('getrawtransaction', ['823617ba029ae0f963df6b8b3e4d3bf6409b29f38ceaac896fd8e05f23c31a13', 1]).then(d => {
+
+
+            console.log("D", d)
+
+            /*var prev = _.clone(d.vout[0])
+
+            prev.txid = d.txid*/
+
+            /*self.sdk.node.transactions.htls.withdrawal([prev], 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 0.01, {
+                secret : '9adebcaac15d6158981434361e7a1a41f703af1d3689ebaa4491b9c75a5ded54'
+            })*/
+
+            
+
+
+        })
+
+    }
+
     self.prepare = function (clbk, state) {
+
+        
 
         self.preparing = true;
 
@@ -19103,6 +19185,8 @@ Platform = function (app, listofnodes) {
 
             self.sdk.node.get.time(function () {
 
+
+                self.tst()
 
                 self.preparing = false;
 
