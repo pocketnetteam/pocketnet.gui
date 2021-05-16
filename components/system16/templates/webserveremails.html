@@ -1,0 +1,142 @@
+<% if(system.server) {%>
+
+    <div class="webserveremails managepanel">
+
+        <div class="work">
+            <div class="ssubcaption">
+                <span>
+                    Email connection:
+                </span>
+            </div>
+        </div>
+
+        <div class="work">
+            
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Host</span>
+                    </div>
+
+                    <div class="value" sys="emailshost">
+                        <div class="input">
+                            <input type="text" class="emailshost" value="<%- emails.emailshost %>">
+                        </div>
+                    </div>
+
+                    <% if(typeof emails.emailshost != 'undefined') {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="emailshost"></i>
+                        </div>
+                    <% } %>
+
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Port</span>
+                    </div>
+
+                    <div class="value" sys="port">
+                        <div class="input">
+                            <input type="number" class="port" value="<%-emails.port%>">
+                        </div>
+                    </div>
+
+                    <% if(emails.port) {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="port"></i>
+                        </div>
+                    <% } %>
+
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Secure</span>
+                    </div>
+
+                    <div class="value" sys="emailssecure" value="<%-emails.secure ? 'Yes' : 'No'%>">
+                        <span><%- emails.secure ? 'Yes' : 'No'  %></span>
+                    </div>
+
+                    <% if(typeof emails.secure != 'undefined') {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="enabled"></i>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Login</span>
+                    </div>
+
+                    <div class="value" sys="login">
+                        <div class="input">
+                            <input type="text" class="login" value="<%- emails.login %>">
+                        </div>
+                    </div>
+                    <% if(emails.login) {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="login"></i>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Password</span>
+                    </div>
+
+                    <div class="value" sys="password">
+                        <div class="input">
+                            <input type="password" class="password" value="<%- emails.password %>">
+                        </div>
+                    </div>
+                    <% if(emails.password) {%>
+                        <div class="icon">
+                            <i class="far fa-times-circle" remove="password"></i>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+
+            <% if(proxy.direct) {%>
+
+
+            <% } %>
+
+        </div>
+
+        <% if(!_.isEmpty(emails)) {%>
+
+            <div class="work">
+                <div class="haschanges">
+                    <div class="buttons">
+                        <button class="button save">
+                            Save Changes
+                        </button>
+
+                        <button class="button ghost discard">
+                            Discard Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        <% } %>
+
+    </div>
+
+<% } %>

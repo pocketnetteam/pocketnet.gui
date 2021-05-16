@@ -21,6 +21,12 @@ var system16 = (function(){
 			server : {}
 		}
 
+		var emails = {
+			transporter : {
+
+			}
+		}
+
 		var settings = {
 			charts : {
 				nodes : {
@@ -85,6 +91,7 @@ var system16 = (function(){
 							changes.server.firebase = ch
 
 							renders.webserveradmin(el.c)
+							renders.webserveremails(el.c)
 
 							return true
 						}
@@ -138,6 +145,7 @@ var system16 = (function(){
 							changes.server.ssl = ch
 
 							renders.webserveradmin(el.c)
+							renders.webserveremails(el.c)
 
 							return true
 						}
@@ -154,6 +162,23 @@ var system16 = (function(){
 				if(changes.server.enabled == system.server.enabled) delete changes.server.enabled
 
 				renders.webserveradmin(el.c)
+			},
+			'emailssecure' : function(_el){
+
+				console.log('_el.attr', _el, _el.attr('value'));
+
+				var secure = true;
+
+				if (_el.attr('value') === 'Yes'){
+
+					secure = false;
+
+				}
+
+				emails.transporter.secure = secure;
+
+				console.log('emails', emails);
+				renders.webserveremails(el.c)
 			},
 			'nodeenabled' : function(){
 
@@ -345,6 +370,52 @@ var system16 = (function(){
 				}
 			},
 
+			emails : function(){
+
+				console.log('emails self', self);
+
+				proxy.fetch('manage', {
+					action : 'set.emails.settransporter',
+					data : {       
+						host: "pocketnet.app",
+						port: 25,
+						secure: false,
+						from: 'admin@pocketnet.app', // true for 465, false for other ports
+						auth: {
+							user: ['admin@pocketnet.app'], // generated ethereal user
+							pass: 'Yu28j3fTr', // generated ethereal password
+						},
+					}
+				}).then(r => {
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+					sitemessage(self.app.localization.e('e13293'))
+
+
+					actions.refresh().then(r => {
+						renders.allsettings()
+					})
+
+					topPreloader(100);
+
+				})
+
+				
+				var address = self.app.platform.sdk.address.pnet()
+
+				if(!address) return false
+				if (proxy && info){
+					return proxy.direct || _.indexOf(info.admins, address.address) > -1
+				}
+
+			},
 
 			removeBot : function(address){
 				topPreloader(30);
@@ -2291,6 +2362,8 @@ var system16 = (function(){
 				function(p){
 					renders.webserverstatus(p.el)
 					renders.webserveradmin(p.el)
+					renders.webserveremails(p.el)
+
 
 					if (clbk)
 						clbk()
@@ -2471,6 +2544,200 @@ var system16 = (function(){
 
 						
 
+						if (clbk)
+							clbk()
+					})
+
+				}
+				else{
+					if (clbk)
+						clbk()
+				}
+			},
+			webserveremails : function(elc, clbk){
+
+				if(actions.emails() && system){
+
+					self.shell({
+						inner : html,
+						name : 'webserveremails',
+						data : {
+							admin : actions.emails(),
+							system : system,
+							proxy : proxy,
+							emails : emails.transporter
+						},
+
+						el : elc.find('.adminPanelWrapper2')
+
+					},
+					function(p){
+
+						actions.settings(p.el)
+
+						p.el.find('.todefaultcert').on('click', function(){
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to cancel Certificate changes and set Default self-signed Certificate?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+
+									proxy.fetch('manage', {
+										
+										action : 'set.server.defaultssl',
+										data : {}
+		
+									}).catch(e => {
+										
+										return Promise.resolve()
+			
+									}).then(r => {
+			
+										make(proxy || api.get.current());
+					
+										topPreloader(100);
+			
+									})
+
+								}
+							})
+						})
+
+						p.el.find('.save').on('click', function(){
+
+							if(changes.server.https || changes.server.wss){
+								changes.server.ports = {
+									https : changes.server.https,
+									wss : changes.server.wss
+								}
+							}
+
+							var _make = function(){
+
+
+								globalpreloader(true)
+
+								proxy.fetch('manage', {
+									action : 'set.server.settings',
+									data : {
+										settings : changes.server
+									}
+	
+								}).catch(e => {
+									globalpreloader(false)
+									return Promise.resolve()
+		
+								}).then(r => {
+
+									console.log('r', r);
+									changes.server = {}
+		
+									make(proxy || api.get.current());
+
+									globalpreloader(false)
+				
+									topPreloader(100);
+		
+								})
+							}
+
+							if(typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
+
+
+								dialog({
+									class : 'zindex',
+									html : "Do you really want to change this settings?",
+									btn1text : self.app.localization.e('dyes'),
+									btn2text : self.app.localization.e('dno'),
+									success : function(){	
+										_make()
+									}
+								})
+
+							}
+							else{
+								_make()
+							}
+							
+
+						})
+
+						p.el.find('[remove]').on('click', function(){
+							var s = $(this).attr('remove')
+
+							if(s) delete emails.transporter[s]
+
+							renders.webserveremails(elc)
+						})
+
+						p.el.find('.port').on('change', function(){
+							var port = $(this).val()
+
+							console.log('port', port);
+
+							$(this).val(port)
+
+							if (port == emails.transporter.port){
+								delete emails.transporter.port
+							}
+							else{
+								emails.transporter.port = port
+							}
+
+							renders.webserveremails(elc)
+						})
+
+						p.el.find('.login').on('change', function(){
+
+							var login = $(this).val()
+
+							$(this).val(login)
+
+							if (login == emails.transporter.login){
+								delete emails.transporter.login
+							}
+							else{
+								emails.transporter.login = login
+							}
+
+							renders.webserveremails(elc)
+						})
+
+						p.el.find('.password').on('change', function(){
+
+							var password = $(this).val()
+
+							$(this).val(password)
+
+							if (password == emails.transporter.password){
+								delete emails.transporter.password
+							}
+							else{
+								emails.transporter.password = password
+							}
+
+							renders.webserveremails(elc)
+						})
+
+
+						
+						p.el.find('.emailshost').on('change', function(){
+
+							var emailshost = $(this).val()
+
+							$(this).val(emailshost)
+
+							if (emailshost == emails.transporter.emailshost){
+								delete emails.transporter.emailshost
+							}
+							else{
+								emails.transporter.emailshost = emailshost
+							}
+
+							renders.webserveremails(elc)
+						})
+																
 						if (clbk)
 							clbk()
 					})
@@ -3342,6 +3609,8 @@ var system16 = (function(){
 				renders.webadminscontent(el.c)
 				renders.webdistributionwallets(el.c)
 				renders.webserveradmin(el.c)
+				renders.webserveremails(el.c)
+				
 			},
 
 			stats : function(update){
