@@ -61,8 +61,19 @@ html.stblack{
     }
 
     textarea{
-        background: @color-black;
+        background: transparent;
+        border: 1px solid @color-bright !important;
         color : @color-gray-mlight;
+    }
+
+    #test{
+        .userPanel{
+            .parameter{
+                textarea {
+                    border: 1px solid @color-bright !important;
+                }
+            }
+        }
     }
 
 
