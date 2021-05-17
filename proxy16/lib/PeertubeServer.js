@@ -29,7 +29,7 @@ class PeertubeServer {
           timeResponse: performance.now() - responseTime,
         });
       })
-      .catch((err) => console.log('err', err));
+      .catch((err) => console.log('Unable to get Server info', err));
   }
 
   async start() {

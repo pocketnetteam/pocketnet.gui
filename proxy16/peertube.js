@@ -108,7 +108,6 @@ const Peertube = function () {
       const { host, id } = info;
 
       if (!host || !id) return Promise.reject('No host/id info received');
-      console.log(`${host}/api/v1/videos/${id}`);
 
       return axios
         .get(`${host}/api/v1/videos/${id}`)
@@ -124,22 +123,22 @@ const Peertube = function () {
           };
 
           return axios
-            .get(metadataUrl)
-            .then((metadata) =>
-              Promise.resolve({
+            .get(metadataUrl, { timeout: 1500 })
+            .then((metadata) => {
+              return Promise.resolve({
                 ...statsObject,
                 aspectRatio: getAspectRatio(
                   metadata.data.streams[0].width,
                   metadata.data.streams[0].height,
                 ),
-              }),
-            )
-            .catch(() =>
-              Promise.resolve({
+              });
+            })
+            .catch(() => {
+              return Promise.resolve({
                 ...statsObject,
                 aspectRatio: 0,
-              }),
-            );
+              });
+            });
         })
         .catch((err) => {
           return Promise.reject(err);
@@ -153,8 +152,6 @@ const Peertube = function () {
       const serverInfo = await this.getBestServer();
 
       const bestHost = serverInfo ? serverInfo.fastest.server : null;
-
-      console.log('Best Host', bestHost);
 
       const videoIds = idsArray.map((id) => {
         const formattedId = id.replace(PEERTUBE_ID, HTTPS_ID);
