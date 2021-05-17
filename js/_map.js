@@ -58,6 +58,7 @@ __map =  {
 		"js/peertube-master.js",
 		"js/app.js",
 		"js/main.js",
+		"components/splashscreen/index.js",
 	],
 
 	__css : [
