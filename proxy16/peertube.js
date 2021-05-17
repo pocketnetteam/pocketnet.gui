@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { performance } = require('perf_hooks');
+const PeertubeServer = require('./lib/PeertubeServer');
 
 //polyfill
 if (!Promise.allSettled) {
@@ -45,66 +46,48 @@ const Peertube = function () {
     'pocketnetpeertube5.nohost.me',
   ];
 
+  const serversList = [];
+
   this.serversCache = [];
 
   this.statsInterval = null;
 
   const getServerStats = () => {
-    console.log('Cache size', this.serversCache.length);
-    const timerStack = {};
+    const filteredResponse = serversList
+      .map((server) => server.getFreshStat())
+      .filter((stat) => stat);
 
-    const statsStack = hardCodeUrlsList
-      .map((server) => {
-        timerStack[server] = performance.now();
+    console.log('Stats', filteredResponse);
 
-        return axios.get(`https://${server}${STATS_METHOD}`).then((data) => {
-          timerStack[server] = performance.now() - timerStack[server];
+    const output = {
+      all: filteredResponse,
+      best: {
+        fastest: filteredResponse.reduce((accumulator, current) => {
+          return accumulator.timeResponse < current.timeResponse
+            ? accumulator
+            : current;
+        }, filteredResponse[0]),
 
-          return data;
-        });
-      });
+        leastUsed: filteredResponse.reduce((accumulator, current) => {
+          return accumulator.total < current.total ? accumulator : current;
+        }, filteredResponse[0]),
+      },
+    };
 
-    return Promise.allSettled(statsStack).then((res) => {
-      const filteredResponse = res
-        .filter((response) => response.status === SETTELED_SUCCESS_STATUS)
-        .map((item) => {
-          const serverLink = item.value.config.url
-            .replace('https://', '')
-            .replace(item.value.request.path, '');
+    if (this.serversCache.length > CACHE_SIZE) this.serversCache.shift();
 
-          return {
-            server: serverLink,
-            total: item.value.data.total,
-            timeResponse: timerStack[serverLink],
-          };
-        });
-
-      const output = {
-        all: filteredResponse,
-        best: {
-          fastest: filteredResponse.reduce((accumulator, current) => {
-            return accumulator.timeResponse < current.timeResponse
-              ? accumulator
-              : current;
-          }, filteredResponse[0]),
-
-          leastUsed: filteredResponse.reduce((accumulator, current) => {
-            return accumulator.total < current.total ? accumulator : current;
-          }, filteredResponse[0]),
-        },
-      };
-
-      if (this.serversCache.length > CACHE_SIZE) this.serversCache.shift();
-
-      this.serversCache.push(output);
-    });
+    this.serversCache.push(output);
   };
-
   this.destroy = () => {
     return Promise.resolve();
   };
 
   this.init = () => {
+    hardCodeUrlsList.map((url) => {
+      const newServer = new PeertubeServer(url);
+      serversList.push(newServer);
+    });
+
     this.statsInterval = setInterval(getServerStats, UPDATE_INTERVAL);
 
     return Promise.resolve();
