@@ -23,7 +23,6 @@ if (!Promise.allSettled) {
 }
 
 const STATS_METHOD = '/api/v1/videos';
-const SETTELED_SUCCESS_STATUS = 'fulfilled';
 
 const GOOD_STATUS = 'fulfilled';
 
@@ -56,8 +55,6 @@ const Peertube = function () {
     const filteredResponse = serversList
       .map((server) => server.getFreshStat())
       .filter((stat) => stat);
-
-    console.log('Stats', filteredResponse);
 
     const output = {
       all: filteredResponse,
