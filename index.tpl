@@ -10,6 +10,7 @@
       
 
         <title>POCKETNET</title>
+        <link rel="manifest" href="manifest.json">
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
