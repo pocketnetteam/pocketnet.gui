@@ -9190,6 +9190,32 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       return self
     }
 
+    if (provider == 'youtube') {
+
+      console.log('video_id', video_id)
+
+      PeerTubeEmbeding.main(target, video_id, {
+        contributor : 'youtube',
+        wautoplay : options.wautoplay
+      },{
+
+        playbackStatusChange : function(status){
+        },
+        volumechange : function(volume){
+        },
+
+      }).then(embed => {
+
+        var api = embed.api
+          api.mute()
+
+        if (clbk) clbk(api);
+        if (readyCallback) readyCallback(api);
+      })
+
+      return
+    }
+
 
     var _plyr = function(video_url, preview_url, title) {
         var new_target = document.createElement('video');
@@ -9261,3 +9287,5 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     return self;
 }
+
+

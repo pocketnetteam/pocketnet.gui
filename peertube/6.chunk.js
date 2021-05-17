@@ -490,6 +490,7 @@ class Html5Hlsjs {
         this.videoElement.addEventListener('playing', this.handlers.playing);
         this.hlsjsConfig.debug = true;
         this.hlsjsConfig.maxBufferHole = 0.5;
+        this.hlsjsConfig.maxFragLookUpTolerance = 0;
         this.hlsjsConfig.highBufferWatchdogPeriod = 1;
         this.hlsjsConfig.lowLatencyMode = true;
         //this.hlsjsConfig.backBufferLength = 90
