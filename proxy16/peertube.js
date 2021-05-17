@@ -50,17 +50,19 @@ const Peertube = function () {
   this.statsInterval = null;
 
   const getServerStats = () => {
+    console.log('Cache size', this.serversCache.length);
     const timerStack = {};
 
-    const statsStack = hardCodeUrlsList.map((server) => {
-      timerStack[server] = performance.now();
+    const statsStack = hardCodeUrlsList
+      .map((server) => {
+        timerStack[server] = performance.now();
 
-      return axios.get(`https://${server}${STATS_METHOD}`).then((data) => {
-        timerStack[server] = performance.now() - timerStack[server];
+        return axios.get(`https://${server}${STATS_METHOD}`).then((data) => {
+          timerStack[server] = performance.now() - timerStack[server];
 
-        return data;
+          return data;
+        });
       });
-    });
 
     return Promise.allSettled(statsStack).then((res) => {
       const filteredResponse = res
@@ -126,6 +128,7 @@ const Peertube = function () {
       const { host, id } = info;
 
       if (!host || !id) return Promise.reject('No host/id info received');
+      console.log(`${host}/api/v1/videos/${id}`);
 
       return axios
         .get(`${host}/api/v1/videos/${id}`)
@@ -158,18 +161,27 @@ const Peertube = function () {
               }),
             );
         })
-        .catch((err) => Promise.reject(err));
+        .catch((err) => {
+          return Promise.reject(err);
+        });
     },
 
-    getListVideos(info) {
+    async getListVideos(info) {
       if (!info.ids) return Promise.reject('No video ids');
       const idsArray = info.ids;
 
+      const serverInfo = await this.getBestServer();
+
+      const bestHost = serverInfo ? serverInfo.fastest.server : null;
+
+      console.log('Best Host', bestHost);
+
       const videoIds = idsArray.map((id) => {
         const formattedId = id.replace(PEERTUBE_ID, HTTPS_ID);
-
         return {
-          host: formattedId.split(SLASH).slice(0, 3).join(SLASH),
+          host: bestHost
+            ? `https://${bestHost}`
+            : formattedId.split(SLASH).slice(0, 3).join(SLASH),
           id: formattedId.split(SLASH).pop(),
         };
       });
@@ -178,7 +190,6 @@ const Peertube = function () {
 
       return Promise.allSettled(infoStack)
         .then((data) => {
-
           const outputData = data.reduce(
             (accumulator, currVideo, currIndex) => {
               accumulator[idsArray[currIndex]] =

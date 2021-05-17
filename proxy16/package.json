@@ -6,7 +6,7 @@
     "scripts": {
         "serve": "node cli.js --cli",
         "serve:test": "node cli.js --cli --test",
-        "serveTest": "nodemon cli.js --cli",
+        "serveTest": "nodemon cli.js --cli --test",
         "install-windows-service": "winser -i",
         "uninstall-windows-service": "winser -r"
     },
