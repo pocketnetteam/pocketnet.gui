@@ -3294,6 +3294,10 @@ video[src], .vjs-fullscreen {
   }
 }
 @media screen and (max-width: 640px) {
+  .video-js.video-js-contributor .vjs-fullscreen-control {
+    display: none;
+  }
+
   .video-js .vjs-control-bar {
     font-size: 1.4em;
     /*.vjs-mute-control{
