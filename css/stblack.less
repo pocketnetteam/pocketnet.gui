@@ -77,9 +77,9 @@ html.stblack{
     input[type="password"],
     input[type="number"]
     {
-        background:  @color-black;
+        background:  @color-black5;
         color: #fff;
-        border: none;
+        border: 1px solid @color-bright;
         
     }
 
@@ -690,12 +690,11 @@ html.stblack{
     
             .vc_inputWrapper{
     
-                border : 1px solid  @color-black2;
+                border : 1px solid @color-bright;
                 border-right: 0;
     
                 input{
                     background: transparent;
-                    border : 0!important;
     
                     &[disabled]{
                         color : @color-gray-light;
@@ -705,7 +704,7 @@ html.stblack{
 
     
             .vc_iconWrapper{
-                border : 1px solid @color-black2;
+                border : 1px solid @color-bright;
                 border-left: 0;
                 color : fade(@color-main, 40);
     
@@ -736,8 +735,7 @@ html.stblack{
             .vc_textInput{
                
                 .vc_inputWrapper{
-    
-                    border : 1px solid  @color-bad;
+
                     border-right: 0;
                 }
     
