@@ -8,5 +8,4 @@ RUN npm ci --only=production
 COPY . .
 
 WORKDIR /usr/src/app
-ENTRYPOINT [ "/usr/local/bin/npm", "run" ]
-CMD [ "serve" ]
+ENTRYPOINT [ "/usr/local/bin/node", "cli.js", "--cli" ]
