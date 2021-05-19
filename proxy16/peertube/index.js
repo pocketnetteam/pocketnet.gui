@@ -95,6 +95,11 @@ var Peertube = function(settings){
       
             return self.request('video', {id : parsed.id}, parsed.host).then((res) => {
 
+                /*if (res.data.from)
+                    f.loop(res.data, function(obj, key){
+                        if (obj[key] && obj[key][0] == '/') obj[key] = 'https://' + res.data.from + obj[key]
+                    })*/
+
                 /*if(!res.data.aspectRatio)
                     res.data.aspectRatio = 1.5*/
 
@@ -106,6 +111,8 @@ var Peertube = function(settings){
                 return Promise.resolve(res)
                 
             }).catch((err) => {
+
+                console.log("err", err)
 
                 return Promise.reject(err);
 

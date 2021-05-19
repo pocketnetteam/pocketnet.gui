@@ -248,7 +248,7 @@ PeerTubePocketnet = function(app){
 
         if(!meta) return Promise.reject(error('meta'))
 
-        return self.api.proxy.bestIfNeed(options.host ? false : true).then(host => {
+        return self.api.proxy.bestIfNeed(options.host && !options.best ? false : true).then(host => {
 
             if (host){
                 options.host = host
@@ -391,6 +391,17 @@ PeerTubePocketnet = function(app){
                     if(!data.host) return Promise.reject(error('host'))
     
                     return Promise.resolve(data.host)
+                })
+               
+            },
+
+            bestChange : function(){
+    
+                return self.api.proxy.best().then(host => {
+                    setactive(host)
+                    return Promise.resolve()
+                }).catch(e => {
+                    return Promise.resolve()
                 })
                
             },
@@ -637,13 +648,7 @@ PeerTubePocketnet = function(app){
 
     self.init = function(){
 
-        return self.api.proxy.best().then(host => {
-            setactive(host)
-
-            return Promise.resolve()
-        }).catch(e => {
-            console.log("ER", e)
-        })
+        return self.api.proxy.bestChange()
     }
 
     return self

@@ -304,8 +304,11 @@ var share = (function(){
 				if (type === 'addVideo') {
 					globalpreloader(true);
 
+					self.app.peertubeHandler.api.proxy.bestChange().then(r => {
+						return self.app.peertubeHandler.api.user.auth(self.app.peertubeHandler.active(), true)
+					}).then(r => {
 
-					self.app.peertubeHandler.api.user.auth(self.app.peertubeHandler.active(), true).then(r => {
+						
 
 						globalpreloader(false);
 

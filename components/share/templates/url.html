@@ -9,7 +9,7 @@
 		if(!app.platform.sdk.usersettings.meta.embedvideo || 
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
 
-			var info = app.platform.sdk.videos.storage[url] || {}
+			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
 	%>
 		<div class="videoWrapper <%- ((info.data || {}).aspectRatio < 1.25) && ((info.data || {}).aspectRatio) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
@@ -89,8 +89,6 @@
 				<% } %>
 
 				<% if(typeof remove != 'undefined' && share && share.itisvideo()) {
-					
-					console.log("infoinfoinfoinfoinfoinfo", info)
 					
 					
 					%>

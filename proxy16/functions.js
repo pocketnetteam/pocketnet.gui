@@ -329,6 +329,24 @@ f.delay = function(time){
     })
 }
 
+
+f.loop = function(obj, action){
+    const isObject = val =>
+        typeof val === 'object' && !Array.isArray(val);
+
+    const paths = (obj = {}) => {
+
+        _.each(obj, function(value, key)  {
+
+            isObject(value) ? f.loop(value, action) : action(obj, key)
+
+        });
+
+    }
+
+    return paths(obj);     
+}
+
 f.processArrayWithDelay = function(array, t, fn) {
     var results = [];
     return array.reduce(function(p, item) {

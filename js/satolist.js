@@ -15054,7 +15054,7 @@ Platform = function (app, listofnodes) {
                     return self.sdk.videos.types[type](links).then(r => {
 
                         _.each(r, function(l){
-                            s[l.link] = l
+                            s[l.link] = s[l.meta.id] = l
                         })
 
                         return Promise.resolve()
@@ -15130,7 +15130,7 @@ Platform = function (app, listofnodes) {
                                 image : 'https://' + linkInfo.from + linkInfo.previewPath,
                                 views : linkInfo.views,
                                 duration : linkInfo.duration,
-                                aspectRatio : linkInfo.aspectRatio,
+                                aspectRatio : linkInfo.aspectRatio || 1,
                             } : '';
 
                             window.peertubeglobalcache[link.meta.id] = linkInfo

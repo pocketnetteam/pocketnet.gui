@@ -173,6 +173,10 @@ var uploadpeertube = (function () {
 					el.videoInput.val('');
 					el.wallpaperError.text('');
 
+					el.uploadButton.prop('disabled', false);
+					el.header.addClass('activeOnRolled');
+					el.uploadProgress.addClass('hidden');
+
 					if (e.cancel) {
 						sitemessage('Uploading canceled');
 					} 

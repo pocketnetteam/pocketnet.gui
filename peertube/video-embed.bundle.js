@@ -47213,7 +47213,7 @@ class PeerTubeEmbed {
         return "/api/v1/videos/" + id;
     }
     refreshFetch(url, options) {
-        return fetch(this.host + url, options).then((res) => {
+        return fetch(this.composePath(url), options).then((res) => {
             if (res.status !== _shared_core_utils_miscs_http_error_codes__WEBPACK_IMPORTED_MODULE_5__["HttpStatusCode"].UNAUTHORIZED_401)
                 return res;
             const refreshingTokenPromise = new Promise((resolve, reject) => {
@@ -47228,7 +47228,7 @@ class PeerTubeEmbed {
                     response_type: "code",
                     grant_type: "refresh_token",
                 };
-                fetch(this.host + "/api/v1/users/token", {
+                fetch(this.composePath("/api/v1/users/token"), {
                     headers,
                     method: "POST",
                     body: Object(_root_helpers_utils__WEBPACK_IMPORTED_MODULE_9__["objectToUrlEncoded"])(data),
@@ -47522,6 +47522,12 @@ class PeerTubeEmbed {
     loadVideoAndBuildPlayer(uuid) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const videoResponseJson = yield this.loadVideoInfoCache(uuid);
+            if (videoResponseJson.from) {
+                this.host = 'https://' + videoResponseJson.from;
+            }
+            if (!videoResponseJson.aspectRatio) {
+                videoResponseJson.aspectRatio = 1;
+            }
             return this.buildVideoPlayer(videoResponseJson);
         });
     }
@@ -47603,6 +47609,9 @@ class PeerTubeEmbed {
             });
         });
     }
+    composePath(path = '') {
+        return this.host + path;
+    }
     buildVideoPlayer(videoInfo /*, captionsPromise: Promise<Response>*/) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             let alreadyHadPlayer = false;
@@ -47669,7 +47678,7 @@ class PeerTubeEmbed {
                     playlist: playlistPlugin,
                     videoCaptions: [],
                     inactivityTimeout: 2500,
-                    videoViewUrl: this.host + this.getVideoUrl(videoInfo.uuid) + "/views",
+                    videoViewUrl: this.composePath(this.getVideoUrl(videoInfo.uuid) + "/views"),
                     videoUUID: videoInfo.uuid,
                     isLive: videoInfo.isLive,
                     playerElement: this.playerElement,
@@ -47677,11 +47686,11 @@ class PeerTubeEmbed {
                     videoDuration: videoInfo.duration,
                     enableHotkeys: true,
                     peertubeLink: this.peertubeLink,
-                    poster: this.wautoplay ? null : this.host + videoInfo.previewPath,
+                    poster: this.wautoplay ? null : this.composePath(videoInfo.previewPath),
                     theaterButton: false,
                     serverUrl: this.host,
                     language: this.language,
-                    embedUrl: this.host + videoInfo.embedPath,
+                    embedUrl: this.composePath(videoInfo.embedPath),
                     embedTitle: videoInfo.name,
                 },
                 webtorrent: {
@@ -47786,7 +47795,7 @@ class PeerTubeEmbed {
                 return data.map((c) => ({
                     label: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])(c.language.label, serverTranslations),
                     language: c.language.id,
-                    src: this.host + c.captionPath,
+                    src: this.composePath(c.captionPath),
                 }));
             }
             return [];
@@ -47795,7 +47804,7 @@ class PeerTubeEmbed {
     loadPlaceholder(video) {
         const placeholder = this.getPlaceholderElement();
         if (placeholder) {
-            const url = this.host + video.previewPath;
+            const url = this.composePath(video.previewPath);
             placeholder.style.backgroundImage = `url("${url}")`;
             if (!this.wautoplay)
                 placeholder.style.display = "block";

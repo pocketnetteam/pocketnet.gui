@@ -509,8 +509,8 @@ var Proxy = function (settings, manage, test) {
 			return peertube.init({
 				urls : [
 					'pocketnetpeertube3.nohost.me',
-					'pocketnetpeertube4.nohost.me',
-    				'pocketnetpeertube5.nohost.me',
+					//'pocketnetpeertube4.nohost.me',
+    				'pocketnetpeertube5.nohost.me'
 				]
 			})
 		},
