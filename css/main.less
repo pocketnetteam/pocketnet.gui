@@ -18,7 +18,7 @@ html {
     min-height: 100%;
     position: relative;
     overflow-y: scroll;
-    background: #f6f6f6;
+    // background: #f6f6f6;
     /*overflow-anchor: none;*/
 
     &.nooverflow{
@@ -411,6 +411,11 @@ button{
         }
     }
 
+    &.contrast{
+        background: @color-contrast;
+        border: 1px solid @color-contrast;
+    }
+
     &.shadowWhite{
         background: transparent;
         color : #fff;
@@ -444,8 +449,8 @@ button{
     }
 
     &.contrast{
-        background: @color-contrast;
-        border: 1px solid @color-contrast;
+        background: @color-raspberry;
+        border: 1px solid @color-raspberry;
         color: #fff;
 
         &:hover{
