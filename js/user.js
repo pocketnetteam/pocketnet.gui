@@ -65,14 +65,9 @@ User = function(app, p) {
 			
 		}
 
-		//var __keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(sobj.pubkey, 'hex'))
-		//var __hash = Buffer.from(sobj.nonce, 'utf8')
-
-		//var verify = __keyPair.verify(__hash, Buffer.from(sobj.signature, 'hex'));
-
-
 		return sobj
 	}
+
 
 	self.address = {
 		set : function(l){

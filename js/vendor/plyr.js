@@ -9192,9 +9192,9 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     if (provider == 'youtube') {
 
-      console.log('video_id', video_id)
+      
 
-      PeerTubeEmbeding.main(target, video_id, {
+      PeerTubeEmbeding.main(target, clear_peertube_id, {
         contributor : 'youtube',
         wautoplay : options.wautoplay
       },{
@@ -9215,6 +9215,32 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       return
     }
+
+    /*if (provider == 'vimeo') {
+
+      console.log('video_id', video_id)
+
+      PeerTubeEmbeding.main(target, clear_peertube_id, {
+        contributor : 'vimeo',
+        wautoplay : options.wautoplay
+      },{
+
+        playbackStatusChange : function(status){
+        },
+        volumechange : function(volume){
+        },
+
+      }).then(embed => {
+
+        var api = embed.api
+          api.mute()
+
+        if (clbk) clbk(api);
+        if (readyCallback) readyCallback(api);
+      })
+
+      return
+    }*/
 
 
     var _plyr = function(video_url, preview_url, title) {

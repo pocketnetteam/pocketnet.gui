@@ -18,7 +18,6 @@ var share = (function(){
 
 		var videoUploadData = {};
 
-		var videoModifiedMeta = {};
 
 		var intro = false;
 
@@ -81,40 +80,30 @@ var share = (function(){
 
 			uploadVideoWallpaper : function(image){
 				var shareUrl = (currentShare.url || {}).v || '';
-				var metaInfo = self.app.platform.parseUrl(shareUrl);
+				/*var metaInfo = self.app.platform.parseUrl(shareUrl);
 
 				if (!metaInfo){
 					return Promise.reject('image')
-				}
+				}*/
 
-				var options = {
+				var parameters = {
 					thumbnailfile: image,
 				};
 
 				var settingsObject = {}
 
-				var parameters = {
+				/*var parameters = {
 					server: metaInfo.host_name,
-				}
+				}*/
+
 				return self.app.platform.sdk.videos.info([shareUrl])
+
 				  .then(() => (self.app.platform.sdk.videos.storage[shareUrl] || {}).data)
 				  .then((res = {}) => {
+
 					settingsObject.aspectRatio = res.aspectRatio;
 
-					return toDataURL(image)
-					
-					/*actions.resizeImage(fileBase64, settingsObject, (img) => {
-						options.thumbnailfile = dataURLtoFile(img);
-
-						//el.wallpaperStatusIcon.attr('class', 'fas fa-spinner fa-spin');
-
-						return self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
-							.then(() => el.wallpaperStatusIcon.attr('class', 'fas fa-check'))
-							.catch(() => {
-								el.wallpaperStatusIcon.attr('class', 'fas fa-times');
-							return sitemessage('Unable to change wallpaper');
-							});
-					}));*/
+					return toDataURL(image)					
 
 				}).then((fileBase64) => {
 
@@ -122,12 +111,18 @@ var share = (function(){
 
 				}).then(img => {
 
-					options.thumbnailfile = dataURLtoFile(img);
+					parameters.image = {
+						data : img
+					}
 
-					return self.app.peertubeHandler.updateVideo(metaInfo.id, options, parameters)
+					return self.app.peertubeHandler.api.videos.update(shareUrl, parameters, {})
 
 				}).catch(e => {
-					return Promise.reject(e)
+
+					var message = e.text || findResponseError(e) || 'Updating error';
+
+					sitemessage(message);
+
 				})
 			},
 
@@ -309,23 +304,11 @@ var share = (function(){
 				if (type === 'addVideo') {
 					globalpreloader(true);
 
-					el.peertube.addClass('disabledShare');
-					el.peertubeLiveStream.addClass('disabledShare');
 
-					self.app.peertubeHandler.authentificateUser(function(response) {
+					self.app.peertubeHandler.api.user.auth(self.app.peertubeHandler.active(), true).then(r => {
+
 						globalpreloader(false);
 
-						if (!response) response = {};
-
-						if (response.error) {
-							el.peertube.removeClass('disabledShare');
-							el.peertubeLiveStream.removeClass('disabledShare');
-
-							return sitemessage(response.error);
-						}
-
-						
-	
 						self.nav.api.load({
 							open : true,
 							id : 'uploadpeertube',
@@ -362,10 +345,9 @@ var share = (function(){
 								},
 	
 								closeClbk : function() {
-									if (!currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
+
+									if(!self.app.peertubeHandler.checklink(currentShare.url.v)){
 										if (el.peertube && el.peertubeLiveStream) {
-											el.peertube.removeClass('disabledShare');
-											el.peertubeLiveStream.removeClass('disabledShare');
 										}
 									}
 
@@ -379,15 +361,23 @@ var share = (function(){
 							}
 						})
 
-						return true;
-					});
+					}).catch(e => {
+
+						console.log("E", e)
+
+						globalpreloader(false);
+
+						return sitemessage(e.text || "Undefined Error");
+					})
+
+				
 				} 
 
 				if (type === 'addStream') {
-					el.peertubeLiveStream.addClass('disabledShare');
-					el.peertube.addClass('disabledShare');
 
 					globalpreloader(true);
+
+					
 
 					self.app.peertubeHandler.authentificateUser(function(response) {
 						globalpreloader(false);
@@ -395,8 +385,6 @@ var share = (function(){
 						if (!response) response = {};
 						
 						if (response.error) {
-							el.peertubeLiveStream.removeClass('disabledShare');
-							el.peertube.removeClass('disabledShare');
 
 							return sitemessage(response.error);
 						}
@@ -435,8 +423,10 @@ var share = (function(){
 	
 								closeClbk : function() {
 									el.peertubeLiveStream.removeClass('disabledShare');
-	
-									if (!currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
+									
+									
+
+									if (!self.app.peertubeHandler.checklink(currentShare.url.v)) {
 										if (el.peertube) {
 											el.peertube.removeClass('disabledShare');
 										}
@@ -493,9 +483,8 @@ var share = (function(){
 
 							var link = currentShare.url.v;
 
-							if (link.includes(self.app.peertubeHandler.peertubeId)) {
-								self.app.peertubeHandler.removeVideo(link);
-								videoModifiedMeta = {};
+							if (self.app.peertubeHandler.checklink(link)) {
+								actions.removevideo(link)
 							}
 
 							currentShare.clear();
@@ -749,13 +738,20 @@ var share = (function(){
 				el.message.change();*/
 			},
 
+			removevideo : function(l){
+
+					currentShare.settings.a = currentShare.default.a
+
+					self.app.peertubeHandler.api.videos.remove(l).then(r => {
+						self.app.platform.sdk.videos.clearstorage(l)
+					})
+
+			},
+
 			removelink : function(){
 
 				var l = currentShare.url.v
-
 				
-
-
 				currentShare.url.set();
 
 				var text = el.eMessage[0].emojioneArea.getText();
@@ -764,16 +760,10 @@ var share = (function(){
 
 
 				el.eMessage[0].emojioneArea.setText(text);
-
 				
 
-				if (l.includes(self.app.peertubeHandler.peertubeId)) {
-					currentShare.settings.a = currentShare.default.a
-					self.app.peertubeHandler.removeVideo(l);
-					videoModifiedMeta = {};
-					el.peertube.removeClass('disabledShare');
-					el.peertubeLiveStream.removeClass('disabledShare');
-
+				if (self.app.peertubeHandler.checklink(l)) {
+					actions.removevideo(l)
 					make()
 				}
 
@@ -880,162 +870,11 @@ var share = (function(){
 				el.c.addClass('loading')
 				topPreloader(50)
 
-				if (currentShare.itisvideo()) {
-					const options = {};
-					if (currentShare.message.v) options.description = currentShare.message.v;
-					if (currentShare.caption.v) options.name = currentShare.caption.v;
+				var SAVE = function(){
 
-					const metaInfo = self.app.platform.parseUrl((currentShare.url || {}).v || '');
-
-					const parameters = {
-						server: metaInfo.host_name,
-					}
-
-					return self.app.peertubeHandler
-            		  .updateVideo(metaInfo.id, options, parameters)
-            		  .then(() => {
-
-						currentShare.language.set(self.app.localization.key)
-
-						currentShare.uploadImages(self.app, function(){
-		
-							if (currentShare.checkloaded()){
-								
-		
-								var t = self.app.platform.errorHandler('imageerror', true);
-		
-								topPreloader(100)
-		
-								el.c.removeClass('loading')
-		
-								if (t){
-									sitemessage(t)
-								}
-		
-								
-								return
-							}
-		
-							self.sdk.node.transactions.create.commonFromUnspent(
-		
-								currentShare,
-		
-								function(_alias, error){
-		
-									topPreloader(100)
-		
-									el.c.removeClass('loading')
-		
-									if(!_alias){
-										
-		
-										if (clbk){
-											clbk(false, errors[error])
-										}
-										else{
-											el.postWrapper.addClass('showError');
-		
-											var t = self.app.platform.errorHandler(error, true);
-		
-											if (t)
-		
-												el.error.html(t)
-										}
-									}
-									else
-									{
-										//sitemessage("Success")
-		
-										try{
-		
-											var alias = new pShare();
-												alias._import(_alias, true)
-												alias.temp = true;
-												alias.address = _alias.address
-		
-											if(currentShare.aliasid) alias.edit = "true"	
-											if(currentShare.time) alias.time = currentShare.time
-		
-											self.app.platform.sdk.node.shares.add(alias)
-		
-											if(!essenseData.notClear){
-												currentShare.clear();
-												self.app.nav.api.history.removeParameters(['repost'])
-		
-												self.closeContainer()
-		
-												if(!essenseData.share){
-													state.save()
-												}
-		
-												make();	
-											}
-		
-																			
-		
-										}
-		
-										catch (e){
-											console.log(e)
-										}
-		
-										self.app.platform.sdk.user.get(function(u){
-											u.postcnt++
-										})
-		
-										intro = false
-		
-										if (essenseData.post){
-											essenseData.post()
-										}
-										else{
-		
-											if(isMobile()){
-												self.app.nav.api.load({
-													open : true,
-													href : 'index',
-													history : true
-												})
-											}
-											else{
-												_scrollTop(0);
-											}
-		
-											
-		
-										}
-		
-										if (clbk)
-											clbk(true)
-		
-		
-										actions.unfocus();
-										
-										successCheck()
-										
-										
-									}
-		
-								},
-		
-								p
-							)
-		
-						})
-					  })
-            		  .catch((err = {}, data = {}) => {
-						const errorMessage = Object.values(deep(err, 'response.data.errors') || {})
-						  .map(error => error.msg);
-						el.c.removeClass('loading')
-						topPreloader(100)
-
-						/////TODO
-
-              			return sitemessage(errorMessage.length ? errorMessage.join('; ') : 'Unable to update video Information');
-
-            		  });
-				} else {
 					currentShare.language.set(self.app.localization.key)
+
+
 
 					currentShare.uploadImages(self.app, function(){
 	
@@ -1162,6 +1001,35 @@ var share = (function(){
 						)
 	
 					})
+				}
+
+
+				if (currentShare.itisvideo()) {
+
+					const options = {};
+
+					if (currentShare.message.v) options.description = currentShare.message.v;
+					if (currentShare.caption.v) options.name = currentShare.caption.v;
+
+					console.log('options', options)
+
+					return self.app.peertubeHandler.api.videos.update(currentShare.url.v, options).then(SAVE).catch((e) => {
+
+						var message = e.text || findResponseError(e) || 'Updating error';
+
+						sitemessage(message);
+
+						el.c.removeClass('loading')
+
+						topPreloader(100)
+
+
+            		});
+
+				} else {
+
+					SAVE()
+
 				}
 
 			},
@@ -1632,14 +1500,6 @@ var share = (function(){
 					el.peertube = el.c.find('.peertube');
 					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
-					el.peertube.on('click', async function() {
-						console.log('>>>>>>>>usertoken', self.app.peertubeHandler.userName, self.app.peertubeHandler.password);
-					});
-
-					if (currentShare.url.v.includes(self.app.peertubeHandler.peertubeId)) {
-						el.peertube.addClass('disabledShare');
-						el.peertubeLiveStream.addClass('disabledShare');
-					}
 
 
 					p.el.find('.cancelediting').on('click', function(){
@@ -1829,20 +1689,11 @@ var share = (function(){
 									console.log('file', file)
 
 									actions.uploadVideoWallpaper(file.file).then(r => {
+
+										self.app.platform.sdk.videos.clearstorage(currentShare.url.v)
+
 										renders.url();
 									})
-		
-									/*actions.upload(file, function(){		
-										if (plissing)
-											plissing.destroy()
-		
-											_scrollTo(el.c.find('.nickname input').focus());
-										
-		
-										if (clbk)
-											clbk();
-		
-									})*/
 									
 								},
 		

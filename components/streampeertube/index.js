@@ -172,14 +172,19 @@ var streampeertube = (function () {
 
         actions = ed.actions;
 
-        if (ed.currentLink.includes(self.app.peertubeHandler.peertubeId)) {
-          var videoId = ed.currentLink.split('/').pop();
+        if (self.app.peertubeHandler.checklink(ed.currentLink)) {
+
+
+
+          var videoId = self.app.peertubeHandler.parselink(ed.currentLink).id
 
           if (!videoId) {
             var data = {};
 
             clbk(data);
           } else {
+
+            
             self.app.peertubeHandler.getLiveInfo(videoId, {
               successFunction: (res) => {
                 if (res.error) {

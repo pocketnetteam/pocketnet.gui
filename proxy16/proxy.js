@@ -22,1371 +22,1346 @@ var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remote.js');
 var Proxies = require('./proxies.js');
 var Exchanges = require('./exchanges.js');
-var Peertube = require('./peertube.js');
+var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
+var SystemNotify = require('./systemnotify.js');
 //////////////
 
 
 var Proxy = function (settings, manage, test) {
 
-    console.log("TESTMODE", test)
+	var self = this;
 
-    var self = this;
+	var server = new Server(settings.server, settings.admins, manage);
+	var wss = new WSS(settings.admins, manage);
+	var pocketnet = new Pocketnet();
+	var nodeControl = new NodeControl(settings.node);
+	var nodeManager = new NodeManager(settings.nodes);
+	var firebase = new Firebase(settings.firebase);
+	var wallet = new Wallet(settings.wallet);
+	var remote = new Remote();
+	var proxies = new Proxies(settings.proxies)
+	var exchanges = new Exchanges()
+	var peertube = new Peertube()
+	var bots = new Bots(settings.bots)
+	var systemnotify = new SystemNotify(settings.systemnotify)
 
-    var server = new Server(settings.server, settings.admins, manage);
-    var wss = new WSS(settings.admins, manage);
-    var pocketnet = new Pocketnet();
-    var nodeControl = new NodeControl(settings.node);
-    var nodeManager = new NodeManager(settings.nodes);
-    var firebase = new Firebase(settings.firebase);
-    var wallet = new Wallet(settings.wallet);
-    var remote = new Remote();
-    var proxies = new Proxies(settings.proxies)
-    var exchanges = new Exchanges() 
-    var peertube = new Peertube() 
-    var bots = new Bots(settings.bots)
+	self.userDataPath = null
 
-    self.userDataPath = null    
+	f.mix({
+		wss, server, pocketnet, nodeControl,
+		remote, firebase, nodeManager, wallet,
+		proxies, exchanges, peertube, bots,
+		systemnotify,
 
-    
-
-    f.mix({ 
-        wss, server, pocketnet, nodeControl, 
-        remote, firebase, nodeManager, wallet,
-        proxies, exchanges, peertube, bots,
-
-        proxy : self
-    })
+		proxy: self
+	})
 
 
-    var stats = [];
-    var statcount = 5000;
-    var statInterval = null;
+	var stats = [];
+	var statcount = 5000;
+	var statInterval = null;
 
-    var captchas = {};
-    var captchaip = {};
+	var captchas = {};
+	var captchaip = {};
 
-    var addStats = function(){
+	var addStats = function () {
 
 		var ws = {};
 
 		var data = {
-            time : f.now(),
-            info : self.kit.info(true)
+			time: f.now(),
+			info: self.kit.info(true)
 		}
 
-        stats.push(data)
+		stats.push(data)
 
 
 		var d = stats.length - statcount
 
-		if (d > 100){
+		if (d > 100) {
 			stats = stats.slice(d)
 		}
-    }
-    
-    var getStats = function(n){
+	}
 
-        if (n){
-            return f.lastelements(stats, 500)
-        }
+	var getStats = function (n) {
 
-        return stats
-    }
+		if (n) {
+			return f.lastelements(stats, 500)
+		}
 
-    var ini = {
-        ssl: function () {
-            var s =  settings.server.ssl || {}
-            var sslsettings = {}
-            
-            sslsettings.key = s.keypath || s.key
-            sslsettings.cert = s.certpath || s.cert
-            sslsettings.passphrase = s.passphrase
+		return stats
+	}
 
-            var options = {};
+	var ini = {
+		ssl: function () {
+			var s = settings.server.ssl || {}
+			var sslsettings = {}
 
+			sslsettings.key = s.keypath || s.key
+			sslsettings.cert = s.certpath || s.cert
+			sslsettings.passphrase = s.passphrase
 
-            if(!sslsettings.key || !sslsettings.cert || typeof sslsettings.passphrase == 'undefined') return {
+			var options = {};
 
-            }
 
-            try {
-                options = {
-                    key: fs.readFileSync(f.path(sslsettings.key)),
-                    cert: fs.readFileSync(f.path(sslsettings.cert)),
-                    passphrase: sslsettings.passphrase || ''
-                }
-            }
-            catch (e) {
-                options = {}
-            }
+			if (!sslsettings.key || !sslsettings.cert || typeof sslsettings.passphrase == 'undefined') return {
 
-            return options;
+			}
 
-        }
-    }
+			try {
+				options = {
+					key: fs.readFileSync(f.path(sslsettings.key)),
+					cert: fs.readFileSync(f.path(sslsettings.cert)),
+					passphrase: sslsettings.passphrase || ''
+				}
+			}
+			catch (e) {
+				options = {}
+			}
 
-    self.authorization = {
-        
-        dummy : function(){
-            return true
-        },
+			return options;
 
-        signature : function(data){
+		}
+	}
 
-            delete data.A
-            delete data.U
+	self.authorization = {
 
-            if (data.signature){
-                var authorized = self.pocketnet.kit.authorization.signature(data.signature)
+		dummy: function () {
+			return true
+		},
 
-                if (authorized){
+		signature: function (data) {
 
-                    data.U = data.signature.address
+			delete data.A
+			delete data.U
 
-                    if(_.indexOf(settings.admins, data.U) > -1) data.A = true
+			if (data.signature) {
+				var authorized = self.pocketnet.kit.authorization.signature(data.signature)
 
-                    return true
-                }
-            }
+				if (authorized) {
 
-            return false
-        
+					data.U = data.signature.address
 
-        },
+					if (_.indexOf(settings.admins, data.U) > -1) data.A = true
 
-        signaturelight : function(data){
+					return true
+				}
+			}
 
-            delete data.A
-            delete data.U
+			return false
 
-            if (data.signature){
-                var authorized = self.pocketnet.kit.authorization.signature(data.signature)
 
-                if (authorized){
+		},
 
-                    data.U = data.signature.address
+		signaturelight: function (data) {
 
-                    if(_.indexOf(settings.admins, data.U) > -1) data.A = true
+			delete data.A
+			delete data.U
 
-                    return true
-                }
-            }
+			if (data.signature) {
+				var authorized = self.pocketnet.kit.authorization.signature(data.signature)
 
-            return true
-        
+				if (authorized) {
 
-        }
-    }
+					data.U = data.signature.address
 
+					if (_.indexOf(settings.admins, data.U) > -1) data.A = true
 
-    self.users = function(){
+					return true
+				}
+			}
 
-        var i = self.kit.info()
+			return true
 
-        var count = Math.max(f.deep(i, 'wss.users.length') || 1, f.deep(i, 'server.middle.requestsIp') || 1)
 
-        if (count < 1) count = 1
+		}
+	}
 
-        return count
 
-    }
+	self.users = function () {
 
-    self.server = {
+		var i = self.kit.info()
 
-        init: function () {
+		var count = Math.max(f.deep(i, 'wss.users.length') || 1, f.deep(i, 'server.middle.requestsIp') || 1)
 
+		if (count < 1) count = 1
 
-            if (settings.server.enabled) {
+		return count
 
+	}
 
-                return server.init({
-                    ssl : ini.ssl(),
-                    port : f.deep(settings, 'server.ports.https')
-                });
+	self.server = {
 
-            }
+		init: function () {
 
-            return Promise.resolve()
 
-        },
+			if (settings.server.enabled) {
 
-        destroy: function () {
-            return server.destroy()
-        },
 
-        re : function(){
-            return this.destroy().then(r => {
-                this.init()
-            })
-        },
+				return server.init({
+					ssl: ini.ssl(),
+					port: f.deep(settings, 'server.ports.https')
+				});
 
-        rews : function(){
-            return self.server.re().then(r => {
-                return self.wss.re()
-            }).then(r => {
+			}
 
-                return self.firebase.re()
+			return Promise.resolve()
 
-            }).catch(e => {
+		},
 
-                return Promise.reject(e)
-            })
-        },
+		destroy: function () {
+			return server.destroy()
+		},
 
-        info : function(compact){
-            return server.info(compact)
-        },
+		re: function () {
+			return this.destroy().then(r => {
+				this.init()
+			})
+		},
 
-        get export(){
-            return server.export()
-        },
+		rews: function () {
+			return self.server.re().then(r => {
+				return self.wss.re()
+			}).then(r => {
 
-    }
+				return self.firebase.re()
 
-    self.bots = {
-        add : function(address){
-            return bots.add(address)
-        },
-        remove : function(address){
-            return bots.remove(address)
-        },
-        get : function(){
-            return bots.get()
-        },
-        init : function(){
-            return bots.init()
-        }
-    }
+			}).catch(e => {
 
+				return Promise.reject(e)
+			})
+		},
 
-    self.wallet = {
+		info: function (compact) {
+			return server.info(compact)
+		},
 
-        testkey : function(i){
-          return manage.get.testkey(i)
-        },
+		get export() {
+			return server.export()
+		},
 
-        events : function(){
-            wallet.clbks.error.queue.main = function(e, p){
-                //console.log("ERROR QUEUE", e, p)
-            }
+	}
 
-            wallet.clbks.error.ini.main = function(e, p){
-                //console.log("ERROR INI", e, p)
-            }
-        },
+	self.bots = {
+		add: function (address) {
+			return bots.add(address)
+		},
+		remove: function (address) {
+			return bots.remove(address)
+		},
+		get: function () {
+			return bots.get()
+		},
+		init: function () {
+			return bots.init()
+		}
+	}
 
-        init: function () {
-            return wallet.init()
-        },
 
-        inited : function(){
-            return wallet.init()
-        },
+	self.wallet = {
 
-        addqueue : function(key, address, ip){
-            return wallet.kit.addqueue(key, address, ip)
-        },
-        
+		testkey: function (i) {
+			return manage.get.testkey(i)
+		},
 
-        destroy: function () {
-            return wallet.destroy()
-        },
-        removeKey : function(key){
-            return wallet.kit.removeKey(key)
-        },
-        setPrivateKey : function(key, private){
-            return wallet.kit.setPrivateKey(key, private)
-        },
+		events: function () {
+			wallet.clbks.error.queue.main = function (e, p) {
+				//console.log("ERROR QUEUE", e, p)
+			}
 
-        re : function(){
-            return this.destroy().then(r => {
-                this.init()
-            })
-        },
+			wallet.clbks.error.ini.main = function (e, p) {
+				//console.log("ERROR INI", e, p)
+			}
+		},
 
-        info : function(){
-            return wallet.info()
-        },
+		init: function () {
+			return wallet.init()
+		},
 
+		inited: function () {
+			return wallet.init()
+		},
 
-        sendwithprivatekey : function({address, amount, key}){
-            return wallet.kit.sendwithprivatekey(address, amount, key)
-        }
-    }
+		addqueue: function (key, address, ip) {
+			return wallet.kit.addqueue(key, address, ip)
+		},
 
-    self.wss = {
-        
-        init: function () {
 
-            if (settings.server.enabled) {
+		destroy: function () {
+			return wallet.destroy()
+		},
+		removeKey: function (key) {
+			return wallet.kit.removeKey(key)
+		},
+		setPrivateKey: function (key, private) {
+			return wallet.kit.setPrivateKey(key, private)
+		},
 
-                return wss.init({
-                    ssl : ini.ssl(),
-                    port : f.deep(settings, 'server.ports.wss')
-                })
+		re: function () {
+			return this.destroy().then(r => {
+				this.init()
+			})
+		},
 
-            }
+		info: function () {
+			return wallet.info()
+		},
 
-            return Promise.resolve()
-        },
 
-        sendtoall: function (message) {
-            return wss.sendtoall(message)
-        },
+		sendwithprivatekey: function ({ address, amount, key }) {
+			return wallet.kit.sendwithprivatekey(address, amount, key)
+		}
+	}
 
-        destroy: function () {
-            return wss.destroy()
-        },
+	
 
-        re : function(){
-            return this.destroy().then(r => {
-                this.init()
-            })
-        },
+	self.systemnotify = {
 
+		init: function () {
 
+			if (!settings.systemnotify) return Promise.reject('settings.systemnotify')
 
-        info : function(compact){
-            return wss.info(compact)
-        },
+			return systemnotify.init(settings.systemnotify.bot).then(r => {
+				return systemnotify.setparameters(settings.systemnotify.parameters)
+			})
 
-        wssdummy : function(wssdummy){
-            wss.wssdummy(wssdummy)
-        }
-    }
+		},
 
-    self.nodeControl = {
+		destroy: function () {
+			return systemnotify.destroy()
+		},
 
-        enable : function(v){
-            return nodeControl.kit.enable(v)
-        },
+		re: function () {
+			return this.destroy().then(r => {
+				this.init()
+			})
+		},
 
-        init: function () {
-            return nodeControl.init()
-        },
+		info: function (compact) {
+			return systemnotify.info(compact)
+		}
+	}
 
-        destroy: function () {
-            return nodeControl.destroy()
-        },
+	self.wss = {
 
-        start: function() {
-            return nodeControl.kit.start()
-        },
+		init: function () {
 
-        stop: function() {
-            return nodeControl.kit.stop()
-        },
+			if (settings.server.enabled) {
 
-        check : function(){
-            return nodeControl.kit.check()
-        },
+				return wss.init({
+					ssl: ini.ssl(),
+					port: f.deep(settings, 'server.ports.wss')
+				})
 
-        canstop : function() {
-            return nodeControl.kit.canstop()
-        },
-        
-        detach : function() {
-            return nodeControl.kit.detach()
-        },
+			}
 
-        re : function(){
-            return this.destroy().then(r => {
-                return this.init()
-            })
-        },
+			return Promise.resolve()
+		},
 
-        get request(){
-            return nodeControl.request
-        },
+		sendtoall: function (message) {
+			return wss.sendtoall(message)
+		},
 
-        get kit(){
-            return nodeControl.kit
-        },
-
-        info : function(){
-            return nodeControl.info()
-        },
-
-
-    }
-    ///
-    self.nodeManager = {
-        init : function () {
-            return nodeManager.init()
-        },
-
-        inited : function(){
-            return nodeManager.info().inited
-        },
-
-        destroy : function () {
-            return nodeManager.destroy()
-        },
-
-        reservice : function(){
-            return nodeManager.reservice()
-        },  
-
-        re : function(){
-            return this.destroy().then(r => {
-                this.init()
-            })
-        },
-        info : function(compact){
-            return nodeManager.info(compact)
-        }
-    }
-
-    self.firebase = {
-        init: function () {
-            return firebase.init(settings.firebase)
-        },
-
-        destroy: function () {
-            return firebase.destroy()
-        },
-
-        re : function(){
-            return this.destroy().then(r => {
-                this.init()
-            })
-        },
-
-        info : function(compact){
-            return firebase.info(compact)
-        }
-    }
-
-    self.exchanges = {
-        init: function () {
-            return exchanges.init()
-        },
-
-        destroy: function () {
-            return exchanges.destroy()
-        },
-
-        re : function(){
-            return this.destroy().then(r => {
-                this.init()
-            })
-        },
-
-        get kit(){
-            return exchanges.kit
-        },
-    }
-
-    self.peertube = {
-        init: function () {
-            return peertube.init()
-        },
-
-        destroy: function () {
-            return peertube.destroy()
-        },
-
-        re : function(){
-            return this.destroy().then(r => {
-                this.init()
-            })
-        },
-
-        get kit(){
-            return peertube.kit
-        },
-    }
-
-    self.kit = {
-        
-        service : function(){
-            var w = self.wss.info(true)
-            var s = self.server.info(true)
-
-            var service = {
-                addr : 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
-            }
+		destroy: function () {
+			return wss.destroy()
+		},
 
-            /*if (s.listening && w.listening && settings.server.domain){ 
-                service.mainport = Number(s.listening)
-                service.wssport = Number(w.listening)
-                service.service = true
-                service.addr = settings.server.domain
+		re: function () {
+			return this.destroy().then(r => {
+				this.init()
+			})
+		},
 
-            }*/
+		info: function (compact) {
+			return wss.info(compact)
+		},
 
-            return service
-        },
-        stats : function(n){
-            return getStats(n)
-        },
-        info : function(compact){
+		wssdummy: function (wssdummy) {
+			wss.wssdummy(wssdummy)
+		}
+	}
 
-            var mem = process.memoryUsage()
+	self.nodeControl = {
 
-            _.each(mem, function(v, i){
-                mem[i] = v / (1024 * 1024)
-            })
+		enable: function (v) {
+			return nodeControl.kit.enable(v)
+		},
 
-            return {
-                status: status,
+		init: function () {
+			return nodeControl.init()
+		},
 
-                nodeManager: self.nodeManager.info(compact),
-                nodeControl: self.nodeControl.info(compact),
-                firebase : self.firebase.info(compact),
-                server: self.server.info(compact),
-                wss : self.wss.info(compact),
-                wallet : self.wallet.info(compact),
-                remote : remote.info(compact),
-                admins : settings.admins,
-
-                captcha : {
-                    ip : _.toArray(captchaip).length,
-                    all : _.toArray(captchas).length
-                },
-
-                memory : mem
-            }
-        },
-
-        initlist : function(list){
-            var catchError = function(key){
-                return (e) => {
-
-                    return Promise.resolve()
-                }
-            }
-
-            var promises = _.map(list, (i) => {
-                return self[i].init().catch(catchError(i)).then(() => {
-                    return Promise.resolve()
-                })
-            })
-
-            return Promise.all(promises)
-        },
-
-        sinit : function(){
-            var wrks = []
-
-            if(!self.nodeManager.inited()) wrks.push('nodeManager')
-            if(!self.wallet.inited()) wrks.push('wallet')
-
-            if(!wrks.length){
-                return Promise.resolve({})
-            }
-            else{
-                return self.kit.initlist(wrks).then(r => {
-                    
-                    return Promise.resolve({
-                        refresh : true
-                    })
-                })
-            }
-        },
-
-        init: function () {
-
-            status = 1
-
-            return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube', 'bots']).then(r => {
-
-                status = 2
-
-                if(!statInterval)
-                    statInterval = setInterval(addStats, 10000)
-
-                return Promise.resolve()
-            })
-
-        },
-
-        candestroy : function(){
-
-            var cantstopped = []
-
-            var promises = _.map(['nodeControl'], (i) => {
-                return self[i].canstop().catch(e => {
-
-                    cantstopped.push(i)
-
-                    return Promise.resolve()
-                })
-            })
-
-            return Promise.all(promises).catch(e => { return Promise.resolve(); }).then(r => {
-                return Promise.resolve(cantstopped)
-            })
-        },
-
-        destroy: function () {
-
-            if (statInterval){
-                clearInterval(statInterval)
-                statInterval = null
-            }
-
-            var catchError = function(key){
-                return (e) => {
-                    return Promise.resolve()
-                }
-            }
-
-            var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube', 'bots'], (i) => {
-                return self[i].destroy().catch(catchError(i)).then(() => {
-                    return Promise.resolve()
-                })
-            })
-
-            return Promise.all(promises).then(r => {
-                status = 0
-                return Promise.resolve()
-            }).catch(e => {
-                return Promise.resolve()
-            })
-         
-        },
-
-        safedestroy : function(){
-            return self.kit.candestroy().then(rs => {
-
-                if (rs.length){
-        
-                    console.clear()
-                    console.log("Do you want to detach: "+rs.join(', ')+"?")
-        
-                    return Promise.reject('detach')
-                }
-        
-                return Promise.resolve()
-        
-            })
-        },
-
-        detach : function(modules){
-
-            if(!modules) modules = ['nodeControl']
-
-            var promises = _.map(modules, (i) => {
-                return self[i].detach().catch(e => {
-                    return Promise.resolve()
-                })
-            })
-
-            return Promise.all(promises).catch(e => { return Promise.resolve(); }).then(r => {
-                return Promise.resolve()
-            })
-        }
-    }
-
-    self.apibypath = function(path){
-        var result = null
-
-
-        _.find(self.api, function(pack){
-            return _.find(pack, function(object){
-
-                if(object.path == path) {
-
-                    result = object
-
-                    return true
-                }
-
-            })
-        })
-
-        return result
-    }
-
-    self.api = {
-      node: {
-        rpc: {
-          path: '/rpc/*',
-          authorization: 'signaturelight',
-          action: function ({ method, parameters, options, U }) {
-            if (!method) {
-              return Promise.reject({
-                error: 'method',
-                code: 400,
-              });
-            }
-
-            if (!options) options = {};
-            if (!parameters) parameters = [];
-
-            var node = null;
-
-            var log = false
-
-            if(method == 'gethotposts') {
-              log = true
-
-              console.log('parameters', parameters)
-            }
-
-            return new Promise((resolve, reject) => {
-              server.cache.wait(method, _.clone(parameters), function (waitstatus) {
-                if(log){
-                  console.log('waitstatus', waitstatus)
-                }
-                resolve(waitstatus);
-              });
-            })
-              .then((waitstatus) => {
-                var cached = server.cache.get(method, _.clone(parameters));
-
-                if(log){
-                  console.log('cached', cached ? true : false)
-                }
-
-                if (cached) {
-                  return Promise.resolve({
-                    data: cached,
-                    code: 208,
-                  });
-                }
-
-                //var cachwaitng = server.cache.waitng(method, parameters)
-
-                /// ????
-                if (options.locally && options.meta) {
-                  node = nodeManager.temp(options.meta);
-                }
-
-                if (options.node) {
-                  node = nodeManager.nodesmap[options.node];
-                }
-
-                if (!node || options.auto)
-                  node = nodeManager.selectProbability(); //nodeManager.selectbest()
-
-                if (!node) {
-                  return Promise.reject({
-                    error: 'node',
-                    code: 502,
-                  });
-                }
-
-                if (method == 'sendrawtransactionwithmessage') {
-                  if (!bots.check(U)) {
-                    return new Promise((resolve, reject) => {
-                      setTimeout(function () {
-                        resolve({
-                          data:
-                            '319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
-                          code: 200,
-                          node: node.exportsafe(),
-                        });
-                      }, f.rand(120, 1000));
-                    });
-                  }
-                }
-
-
-                if(log){
-                  console.log('load', method, parameters)
-                }
-
-                return node
-                  .checkParameters()
-                  .then((r) => {
-                    return node.rpcs(method, _.clone(parameters));
-                  })
-                  .then((data) => {
-                    server.cache.set(method, _.clone(parameters), data, node.height());
-
-                    return Promise.resolve({
-                      data: data,
-                      code: 200,
-                      node: node.exportsafe(),
-                    });
-                  });
-              })
-              .catch((e) => {
-                return Promise.reject({
-                  error: e,
-                  code: e.code,
-                  node: node ? node.export() : null,
-                });
-              });
-          },
-        },
-      },
-
-      nodeManager: {
-        revoke: {
-          path: '/nodes/revoke',
-          authorization: 'signature',
-          action: function ({ node, A }) {
-            return nodeManager.revoke(node, A).then((r) => {
-              return Promise.resolve({ data: r });
-            });
-          },
-        },
-        update: {
-          path: '/nodes/update',
-          authorization: 'signature',
-          action: function ({ node, A }) {
-            return nodeManager.update(node, A).then((r) => {
-              return Promise.resolve({ data: r });
-            });
-          },
-        },
-
-        create: {
-          path: '/nodes/update',
-          authorization: 'signature',
-          action: function ({ node, A, U }) {
-            node.addedby = U;
-
-            return nodeManager.create(node).then((r) => {
-              return Promise.resolve({ data: r });
-            });
-          },
-        },
-
-        canchange: {
-          path: '/nodes/canchange',
-          action: function ({ node }) {
-            var _node = nodeManager.nodesmap[node];
-
-            if (!_node) {
-              var nnode = nodeManager.selectProbability();
-
-              if (nnode)
-                return Promise.resolve({
-                  node: nnode.exportsafe(),
-                });
-              else return Promise.reject('none');
-            }
-
-            var nnode = _node.changeNodeUser(null, _node.needToChange());
-
-            if (!nnode) {
-              return Promise.resolve({});
-            }
-
-            return Promise.resolve({
-              data: {
-                node: nnode.exportsafe(),
-              },
-            });
-          },
-        },
-
-        select: {
-          path: '/nodes/select',
-          action: function ({ fixed }) {
-            return nodeManager
-              .waitbest(3000)
-              .then((r) => {
-                var node = null;
-
-                if (fixed) {
-                  node = nodeManager.select(fixed);
-                }
-
-                if (!node)
-                  node =
-                    nodeManager.selectProbability() ||
-                    nodeManager.selectbest() ||
-                    nodeManager.select();
-
-                if (!node) {
-                  return Promise.reject('cantselect');
-                }
-
-                return Promise.resolve({
-                  data: {
-                    node: node.exportsafe(),
-                  },
-                });
-              })
-              .catch((e) => {
-                return Promise.reject(e);
-              });
-          },
-        },
-
-        test: {
-          path: '/nodes/test',
-          authorization: 'signature',
-          action: function ({ node, scenario, A }) {
-
-            console.log("A")
-
-            if(!test) return Promise.reject('err');
-
-            console.log("Aa")
-
-            if(!A) return Promise.reject('admin');
-
-            var _node = nodeManager.nodesmap[node];
-
-            if (!_node) {
-              return Promise.reject('cantselect');
-            }
-
-            console.log('_node.test(scenario)', scenario)
-
-            return _node.test(scenario).then(r => {
-              return Promise.resolve({
-                data: {
-                  success: true,
-                },
-              });
-            }).catch(e => {
-              console.log("E", e)
-
-              return Promise.reject('err')
-            })
-
-          },
-        },
-
-        get: {
-          path: '/nodes/get',
-          action: function () {
-            return Promise.resolve({
-              data: {
-                nodes: nodeManager.getnodes(),
-              },
-            });
-          },
-        },
-      },
-
-      remote: {
-        bitchute: {
-          path: '/bitchute',
-          action: function ({ url }) {
-            return new Promise((resolve, reject) => {
-              remote.make(url, function (err, data, html, $) {
-                if (!err) {
-                  data.magnet = $('[title="Magnet Link"]').attr('href');
-
-                  if (data.magnet && data.magnet.indexOf('magnet') == 0) {
-                    var sp = parameters(data.magnet, true);
-
-                    data.video = sp;
-
-                    if (data.og) {
-                      data.video.title = data.og.titlePage;
-                      data.video.preview = data.og.image;
-                    }
-                  } else {
-                    var src = $('#player source').attr('src');
-
-                    if (src) {
-                      data.video = {
-                        as: src,
-                      };
-
-                      if (data.og) {
-                        data.video.title = data.og.titlePage;
-                        data.video.preview = data.og.image;
-                      }
-                    }
-                  }
-
-                  resolve({ data });
-                } else {
-                  reject(err);
-                }
-              });
-            });
-          },
-        },
-
-        url: {
-          path: '/url',
-          action: function ({ url }) {
-            return new Promise((resolve, reject) => {
-              remote.make(url, function (err, data, html) {
-                if (!err) {
-                  data.html = html;
-                  resolve({ data });
-                } else {
-                  reject(err);
-                }
-              });
-            });
-          },
-        },
-
-        urlPreview: {
-          path: '/urlPreview',
-          action: function ({ url }) {
-            return new Promise((resolve, reject) => {
-              remote.nmake(url, function (err, data) {
-                if (!err) {
-                  resolve({
-                    data: {
-                      og: data,
-                    },
-                  });
-                } else {
-                  reject(err);
-                }
-              });
-            });
-          },
-        },
-      },
-
-      common: {
-        /*use : {
-                path : '/use',
-                action : function(){
-                    return self.kit.sinit()
-                }
-            },*/
-        info: {
-          path: '/info',
-          action: function () {
-            return Promise.resolve({
-              data: {
-                info: self.kit.info(true),
-              },
-            });
-          },
-        },
-        logs: {
-          path: '/logs',
-          action: function () {
-            var data = {
-              logs: server.middle.getlogs(),
-              /*ws : wss.info(),
-                        iplimiter : iplimiter.info()*/
-            };
-
-            return Promise.resolve({ data });
-          },
-        },
-        stats: {
-          path: '/stats',
-          action: function () {
-            return Promise.resolve({
-              data: {
-                stats: self.kit.stats(500),
-              },
-            });
-          },
-        },
-        ping: {
-          path: '/ping',
-          action: function () {
-            return Promise.resolve({
-              data: {
-                time: f.now(),
-              },
-            });
-          },
-        },
-
-        nodes: {
-          path: '/nodes',
-          action: function () {
-            return Promise.resolve({
-              data: {
-                stats: nodeManager.info(),
-              },
-            });
-          },
-        },
-      },
-
-      firebase: {
-        set: {
-          authorization: 'signature',
-          path: '/firebase/set',
-          action: function (data) {
-            return self.firebase.kit.addToken(data).then((r) => {
-              return Promise.resolve({ data: r });
-            });
-          },
-        },
-
-        revokedevice: {
-          path: '/firebase/revokedevice',
-          action: function (data) {
-            return self.firebase.kit.removeDevice(data).then((r) => {
-              return Promise.resolve({ data: r });
-            });
-          },
-        },
-      },
-
-      exchanges: {
-        history: {
-          path: '/exchanges/history',
-          action: function () {
-            return self.exchanges.kit.get.history().then((d) => {
-              return Promise.resolve({
-                data: d,
-              });
-            });
-          },
-        },
-      },
-
-      peertube: {
-        servers: {
-          path: '/peertube/servers',
-          action: () =>
-            self.peertube.kit
-              .getBestServer()
-              .then((res) =>
-                Promise.resolve({
-                  data: res,
-                }),
-              )
-              .catch((err) =>
-                Promise.reject({
-                  data: err,
-                }),
-              ),
-        },
-        video: {
-          path: '/peertube/video',
-          action: (info) =>
-            self.peertube.kit
-              .getVideoinfo(info)
-              .then((res) =>
-                Promise.resolve({
-                  data: res,
-                }),
-              )
-              .catch((err) =>
-                Promise.reject({
-                  data: err,
-                }),
-              ),
-        },
-        listVideos: {
-          path: '/peertube/listVideos',
-          action: (info) =>
-            new Promise((resolve, reject) => {
-              server.cache.wait('listVideos', info.ids, function (waitstatus) {
-                resolve(waitstatus);
-              });
-            }).then((waitstatus) => {
-              const cached = server.cache.get('listVideos', info.ids);
-
-              if (cached)
-                return Promise.resolve({
-                  data: cached,
-                  code: 208,
-                });
-
-              return self.peertube.kit
-                .getListVideos(info)
-                .then((res) => {
-                  server.cache.set('listVideos', info.ids, res);
-                  return Promise.resolve({
-                    data: res,
-                  });
-                })
-                .catch((err) =>
-                  Promise.reject({
-                    data: err,
-                    code: 400,
-                  }),
-                );
-            }),
-        },
-      },
-
-      captcha: {
-        get: {
-          authorization: 'signature',
-          path: '/captcha',
-
-          action: function ({ captcha, ip }) {
-            if (captcha && captchas[captcha] && captchas[captcha].done) {
-              return Promise.resolve({
-                data: {
-                  id: captchas[captcha].id,
-                  done: true,
-                  result: captchas[captcha].text,
-                },
-              });
-            }
-
-            captchaip[ip] || (captchaip[ip] = 0);
-            captchaip[ip]++;
-
-            var captcha = svgCaptcha.create({
-              size: 4,
-              noise: 12,
-              color: false,
-              ignoreChars: '0o1liy',
-              width: 250,
-            });
-
-            captcha.id = f.makeid();
-
-            captchas[captcha.id] = {
-              text: captcha.text.toLocaleLowerCase(),
-              id: captcha.id,
-              done: false,
-              time: f.now(),
-            };
-
-            return Promise.resolve({
-              data: {
-                id: captcha.id,
-                img: captcha.data,
-                result: captcha.text, ///
-                done: false,
-              },
-            });
-          },
-        },
-
-        make: {
-          authorization: 'signature',
-          path: '/makecaptcha',
-
-          action: function ({ captcha, ip, text }) {
-            var captcha = captchas[captcha];
-
-            if (!captcha) {
-              return Promise.reject('captchanotexist');
-            }
-
-            if (captcha.done) {
-              return Promise.resolve({
-                data: {
-                  id: captcha.id,
-                  done: true,
-                },
-              });
-            }
-
-            if (captcha.text == text.toLocaleLowerCase()) {
-              captcha.done = true;
-
-              delete captchaip[ip];
-
-              return Promise.resolve({
-                data: {
-                  id: captcha.id,
-                  done: true,
-                },
-              });
-            }
-
-            captcha.shot || (captcha.shot = 0);
-            captcha.shot++;
-
-            var currentTime = f.now();
-
-            if (
-              captcha.shot >= 5 ||
-              f.date.addseconds(captcha.time, 120) < currentTime ||
-              f.date.addseconds(captcha.time, 2) > currentTime
-            ) {
-              delete captchas[request.data.captcha];
-
-              return Promise.reject('captchashots');
-            }
-
-            return Promise.reject('captchanotequal');
-          },
-        },
-      },
-
-      wallet: {
-        sendwithprivatekey: {
-          path: '/wallet/sendwithprivatekey',
-          authorization: false,
-          action: function (p) {
-            return self.wallet
-              .sendwithprivatekey(p)
-              .then((r) => {
-                return Promise.resolve({
-                  data: r,
-                });
-              })
-              .catch((e) => {
-                return Promise.reject(e);
-              });
-          },
-        },
-        freeregistration: {
-          path: '/free/registration',
-          authorization: 'signature',
-          action: function ({ captcha, key, address, ip }) {
-            if (settings.server.captcha) {
-              if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
-                return Promise.reject('captcha');
-              }
-            }
-
-            return self.wallet
-              .addqueue(key || 'registration', address, ip)
-              .then((r) => {
-                return Promise.resolve({
-                  data: r,
-                });
-              })
-              .catch((e) => {
-                return Promise.reject(e);
-              });
-          },
-        },
-        freeregistrationfake: {
-          path: '/free/registrationfake',
-          action: function ({}) {
-            return Promise.reject('disabled');
-
-            var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq'];
-
-            var promises = _.map(addresses, function (a) {
-              return self.wallet.addqueue('registration', a, '::1');
-            });
-
-            return Promise.all(promises).then((r) => {
-              return Promise.resolve({
-                data: r,
-              });
-            });
-          },
-        },
-      },
-
-      manage: {
-        all: {
-          path: '/manage',
-          authorization: 'signature',
-          action: function (message) {
-            if (!message.A)
-              return Promise.reject({ error: 'Unauthorized', code: 401 });
-
-            var kaction = f.deep(manage, message.action);
-
-            if (!kaction) {
-              return Promise.reject({ error: 'unknownAction', code: 502 });
-            }
-
-            return kaction(message.data)
-              .then((data) => {
-                return Promise.resolve({ data });
-              })
-              .catch((e) => {
-                return Promise.reject(e);
-              });
-          },
-        },
-      },
-    };
-
-    self.wallet.events()
-
-    return self
+		destroy: function () {
+			return nodeControl.destroy()
+		},
+
+		start: function () {
+			return nodeControl.kit.start()
+		},
+
+		stop: function () {
+			return nodeControl.kit.stop()
+		},
+
+		check: function () {
+			return nodeControl.kit.check()
+		},
+
+		canstop: function () {
+			return nodeControl.kit.canstop()
+		},
+
+		detach: function () {
+			return nodeControl.kit.detach()
+		},
+
+		re: function () {
+			return this.destroy().then(r => {
+				return this.init()
+			})
+		},
+
+		get request() {
+			return nodeControl.request
+		},
+
+		get kit() {
+			return nodeControl.kit
+		},
+
+		info: function () {
+			return nodeControl.info()
+		},
+
+
+	}
+	///
+	self.nodeManager = {
+		init: function () {
+			return nodeManager.init()
+		},
+
+		inited: function () {
+			return nodeManager.info().inited
+		},
+
+		destroy: function () {
+			return nodeManager.destroy()
+		},
+
+		reservice: function () {
+			return nodeManager.reservice()
+		},
+
+		re: function () {
+			return this.destroy().then(r => {
+				this.init()
+			})
+		},
+		info: function (compact) {
+			return nodeManager.info(compact)
+		}
+	}
+
+	self.firebase = {
+		init: function () {
+			return firebase.init(settings.firebase)
+		},
+
+		destroy: function () {
+			return firebase.destroy()
+		},
+
+		re: function () {
+			return this.destroy().then(r => {
+				this.init()
+			})
+		},
+
+		info: function (compact) {
+			return firebase.info(compact)
+		}
+	}
+
+	self.exchanges = {
+		init: function () {
+			return exchanges.init()
+		},
+
+		destroy: function () {
+			return exchanges.destroy()
+		},
+
+		re: function () {
+			return this.destroy().then(r => {
+				this.init()
+			})
+		},
+
+		get kit() {
+			return exchanges.kit
+		},
+	}
+
+	self.peertube = {
+		init: function () {
+			return peertube.init({
+				urls : [
+					'pocketnetpeertube3.nohost.me',
+					'pocketnetpeertube4.nohost.me',
+    				'pocketnetpeertube5.nohost.me',
+				]
+			})
+		},
+
+		destroy: function () {
+			return peertube.destroy()
+		},
+
+		re: function () {
+			return this.destroy().then(r => {
+				this.init()
+			})
+		},
+
+		info: function (compact) {
+			return peertube.info(compact)
+		},
+
+		get kit() {
+			return peertube.kit
+		},
+	}
+
+	self.kit = {
+
+		service: function () {
+			var w = self.wss.info(true)
+			var s = self.server.info(true)
+
+			var service = {
+				addr: 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
+			}
+
+			/*if (s.listening && w.listening && settings.server.domain){ 
+				service.mainport = Number(s.listening)
+				service.wssport = Number(w.listening)
+				service.service = true
+				service.addr = settings.server.domain
+	  
+			}*/
+
+			return service
+		},
+		stats: function (n) {
+			return getStats(n)
+		},
+		info: function (compact) {
+
+			var mem = process.memoryUsage()
+
+			_.each(mem, function (v, i) {
+				mem[i] = v / (1024 * 1024)
+			})
+
+			return {
+				status: status,
+
+				nodeManager: self.nodeManager.info(compact),
+				nodeControl: self.nodeControl.info(compact),
+				firebase: self.firebase.info(compact),
+				server: self.server.info(compact),
+				wss: self.wss.info(compact),
+				wallet: self.wallet.info(compact),
+				remote: remote.info(compact),
+				admins: settings.admins,
+				peertube : self.peertube.info(compact),
+				captcha: {
+					ip: _.toArray(captchaip).length,
+					all: _.toArray(captchas).length
+				},
+
+				memory: mem
+			}
+		},
+
+		initlist: function (list) {
+			var catchError = function (key) {
+				return (e) => {
+
+					return Promise.resolve()
+				}
+			}
+
+			var promises = _.map(list, (i) => {
+				return self[i].init().catch(catchError(i)).then(() => {
+					return Promise.resolve()
+				})
+			})
+
+			return Promise.all(promises)
+		},
+
+		sinit: function () {
+			var wrks = []
+
+			if (!self.nodeManager.inited()) wrks.push('nodeManager')
+			if (!self.wallet.inited()) wrks.push('wallet')
+
+			if (!wrks.length) {
+				return Promise.resolve({})
+			}
+			else {
+				return self.kit.initlist(wrks).then(r => {
+
+					return Promise.resolve({
+						refresh: true
+					})
+				})
+			}
+		},
+
+		init: function () {
+
+			status = 1
+
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube', 'bots']).then(r => {
+
+				status = 2
+
+				if (!statInterval)
+					statInterval = setInterval(addStats, 10000)
+
+				return Promise.resolve()
+			})
+
+		},
+
+		candestroy: function () {
+
+			var cantstopped = []
+
+			var promises = _.map(['nodeControl'], (i) => {
+				return self[i].canstop().catch(e => {
+
+					cantstopped.push(i)
+
+					return Promise.resolve()
+				})
+			})
+
+			return Promise.all(promises).catch(e => { return Promise.resolve(); }).then(r => {
+				return Promise.resolve(cantstopped)
+			})
+		},
+
+		destroy: function () {
+
+			if (statInterval) {
+				clearInterval(statInterval)
+				statInterval = null
+			}
+
+			var catchError = function (key) {
+				return (e) => {
+					return Promise.resolve()
+				}
+			}
+
+			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube', 'bots'], (i) => {
+				return self[i].destroy().catch(catchError(i)).then(() => {
+					return Promise.resolve()
+				})
+			})
+
+			return Promise.all(promises).then(r => {
+				status = 0
+				return Promise.resolve()
+			}).catch(e => {
+				return Promise.resolve()
+			})
+
+		},
+
+		safedestroy: function () {
+			return self.kit.candestroy().then(rs => {
+
+				if (rs.length) {
+
+					console.clear()
+					console.log("Do you want to detach: " + rs.join(', ') + "?")
+
+					return Promise.reject('detach')
+				}
+
+				return Promise.resolve()
+
+			})
+		},
+
+		detach: function (modules) {
+
+			if (!modules) modules = ['nodeControl']
+
+			var promises = _.map(modules, (i) => {
+				return self[i].detach().catch(e => {
+					return Promise.resolve()
+				})
+			})
+
+			return Promise.all(promises).catch(e => { return Promise.resolve(); }).then(r => {
+				return Promise.resolve()
+			})
+		}
+	}
+
+	self.apibypath = function (path) {
+		var result = null
+
+
+		_.find(self.api, function (pack) {
+			return _.find(pack, function (object) {
+
+				if (object.path == path) {
+
+					result = object
+
+					return true
+				}
+
+			})
+		})
+
+		return result
+	}
+
+	self.api = {
+		node: {
+			rpc: {
+				path: '/rpc/*',
+				authorization: 'signaturelight',
+				action: function ({ method, parameters, options, U }) {
+					if (!method) {
+						return Promise.reject({
+							error: 'method',
+							code: 400,
+						});
+					}
+
+					if (!options) options = {};
+					if (!parameters) parameters = [];
+
+					var node = null;
+
+					var log = false
+
+					if (method == 'gethotposts') {
+						log = true
+
+						console.log('parameters', parameters)
+					}
+
+					return new Promise((resolve, reject) => {
+						server.cache.wait(method, _.clone(parameters), function (waitstatus) {
+							if (log) {
+								console.log('waitstatus', waitstatus)
+							}
+							resolve(waitstatus);
+						});
+					})
+						.then((waitstatus) => {
+							var cached = server.cache.get(method, _.clone(parameters));
+
+							if (log) {
+								console.log('cached', cached ? true : false)
+							}
+
+							if (cached) {
+								return Promise.resolve({
+									data: cached,
+									code: 208,
+								});
+							}
+
+							//var cachwaitng = server.cache.waitng(method, parameters)
+
+							/// ????
+							if (options.locally && options.meta) {
+								node = nodeManager.temp(options.meta);
+							}
+
+							if (options.node) {
+								node = nodeManager.nodesmap[options.node];
+							}
+
+							if (!node || options.auto)
+								node = nodeManager.selectProbability(); //nodeManager.selectbest()
+
+							if (!node) {
+								return Promise.reject({
+									error: 'node',
+									code: 502,
+								});
+							}
+
+							if (method == 'sendrawtransactionwithmessage') {
+								if (!bots.check(U)) {
+									return new Promise((resolve, reject) => {
+										setTimeout(function () {
+											resolve({
+												data:
+													'319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
+												code: 200,
+												node: node.exportsafe(),
+											});
+										}, f.rand(120, 1000));
+									});
+								}
+							}
+
+
+							if (log) {
+								console.log('load', method, parameters)
+							}
+
+							return node
+								.checkParameters()
+								.then((r) => {
+									return node.rpcs(method, _.clone(parameters));
+								})
+								.then((data) => {
+									server.cache.set(method, _.clone(parameters), data, node.height());
+
+									return Promise.resolve({
+										data: data,
+										code: 200,
+										node: node.exportsafe(),
+									});
+								});
+						})
+						.catch((e) => {
+							return Promise.reject({
+								error: e,
+								code: e.code,
+								node: node ? node.export() : null,
+							});
+						});
+				},
+			},
+		},
+
+		nodeManager: {
+			revoke: {
+				path: '/nodes/revoke',
+				authorization: 'signature',
+				action: function ({ node, A }) {
+					return nodeManager.revoke(node, A).then((r) => {
+						return Promise.resolve({ data: r });
+					});
+				},
+			},
+			update: {
+				path: '/nodes/update',
+				authorization: 'signature',
+				action: function ({ node, A }) {
+					return nodeManager.update(node, A).then((r) => {
+						return Promise.resolve({ data: r });
+					});
+				},
+			},
+
+			create: {
+				path: '/nodes/update',
+				authorization: 'signature',
+				action: function ({ node, A, U }) {
+					node.addedby = U;
+
+					return nodeManager.create(node).then((r) => {
+						return Promise.resolve({ data: r });
+					});
+				},
+			},
+
+			canchange: {
+				path: '/nodes/canchange',
+				action: function ({ node }) {
+					var _node = nodeManager.nodesmap[node];
+
+					if (!_node) {
+						var nnode = nodeManager.selectProbability();
+
+						if (nnode)
+							return Promise.resolve({
+								node: nnode.exportsafe(),
+							});
+						else return Promise.reject('none');
+					}
+
+					var nnode = _node.changeNodeUser(null, _node.needToChange());
+
+					if (!nnode) {
+						return Promise.resolve({});
+					}
+
+					return Promise.resolve({
+						data: {
+							node: nnode.exportsafe(),
+						},
+					});
+				},
+			},
+
+			select: {
+				path: '/nodes/select',
+				action: function ({ fixed }) {
+					return nodeManager
+						.waitbest(3000)
+						.then((r) => {
+							var node = null;
+
+							if (fixed) {
+								node = nodeManager.select(fixed);
+							}
+
+							if (!node)
+								node =
+									nodeManager.selectProbability() ||
+									nodeManager.selectbest() ||
+									nodeManager.select();
+
+							if (!node) {
+								return Promise.reject('cantselect');
+							}
+
+							return Promise.resolve({
+								data: {
+									node: node.exportsafe(),
+								},
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			test: {
+				path: '/nodes/test',
+				authorization: 'signature',
+				action: function ({ node, scenario, A }) {
+
+					console.log("A")
+
+					if (!test) return Promise.reject('err');
+
+					console.log("Aa")
+
+					if (!A) return Promise.reject('admin');
+
+					var _node = nodeManager.nodesmap[node];
+
+					if (!_node) {
+						return Promise.reject('cantselect');
+					}
+
+					console.log('_node.test(scenario)', scenario)
+
+					return _node.test(scenario).then(r => {
+						return Promise.resolve({
+							data: {
+								success: true,
+							},
+						});
+					}).catch(e => {
+						console.log("E", e)
+
+						return Promise.reject('err')
+					})
+
+				},
+			},
+
+			get: {
+				path: '/nodes/get',
+				action: function () {
+					return Promise.resolve({
+						data: {
+							nodes: nodeManager.getnodes(),
+						},
+					});
+				},
+			},
+		},
+
+		remote: {
+			bitchute: {
+				path: '/bitchute',
+				action: function ({ url }) {
+					return new Promise((resolve, reject) => {
+						remote.make(url, function (err, data, html, $) {
+							if (!err) {
+								data.magnet = $('[title="Magnet Link"]').attr('href');
+
+								if (data.magnet && data.magnet.indexOf('magnet') == 0) {
+									var sp = parameters(data.magnet, true);
+
+									data.video = sp;
+
+									if (data.og) {
+										data.video.title = data.og.titlePage;
+										data.video.preview = data.og.image;
+									}
+								} else {
+									var src = $('#player source').attr('src');
+
+									if (src) {
+										data.video = {
+											as: src,
+										};
+
+										if (data.og) {
+											data.video.title = data.og.titlePage;
+											data.video.preview = data.og.image;
+										}
+									}
+								}
+
+								resolve({ data });
+							} else {
+								reject(err);
+							}
+						});
+					});
+				},
+			},
+
+			url: {
+				path: '/url',
+				action: function ({ url }) {
+					return new Promise((resolve, reject) => {
+						remote.make(url, function (err, data, html) {
+							if (!err) {
+								data.html = html;
+								resolve({ data });
+							} else {
+								reject(err);
+							}
+						});
+					});
+				},
+			},
+
+			urlPreview: {
+				path: '/urlPreview',
+				action: function ({ url }) {
+					return new Promise((resolve, reject) => {
+						remote.nmake(url, function (err, data) {
+							if (!err) {
+								resolve({
+									data: {
+										og: data,
+									},
+								});
+							} else {
+								reject(err);
+							}
+						});
+					});
+				},
+			},
+		},
+
+		common: {
+			/*use : {
+					path : '/use',
+					action : function(){
+						return self.kit.sinit()
+					}
+				},*/
+			info: {
+				path: '/info',
+				action: function () {
+					return Promise.resolve({
+						data: {
+							info: self.kit.info(true),
+						},
+					});
+				},
+			},
+			logs: {
+				path: '/logs',
+				action: function () {
+					var data = {
+						logs: server.middle.getlogs(),
+						/*ws : wss.info(),
+								  iplimiter : iplimiter.info()*/
+					};
+
+					return Promise.resolve({ data });
+				},
+			},
+			stats: {
+				path: '/stats',
+				action: function () {
+					return Promise.resolve({
+						data: {
+							stats: self.kit.stats(500),
+						},
+					});
+				},
+			},
+			ping: {
+				path: '/ping',
+				action: function () {
+					return Promise.resolve({
+						data: {
+							time: f.now(),
+						},
+					});
+				},
+			},
+
+			nodes: {
+				path: '/nodes',
+				action: function () {
+					return Promise.resolve({
+						data: {
+							stats: nodeManager.info(),
+						},
+					});
+				},
+			},
+		},
+
+		firebase: {
+			set: {
+				authorization: 'signature',
+				path: '/firebase/set',
+				action: function (data) {
+					return self.firebase.kit.addToken(data).then((r) => {
+						return Promise.resolve({ data: r });
+					});
+				},
+			},
+
+			revokedevice: {
+				path: '/firebase/revokedevice',
+				action: function (data) {
+					return self.firebase.kit.removeDevice(data).then((r) => {
+						return Promise.resolve({ data: r });
+					});
+				},
+			},
+		},
+
+		exchanges: {
+			history: {
+				path: '/exchanges/history',
+				action: function () {
+					return self.exchanges.kit.get.history().then((d) => {
+						return Promise.resolve({
+							data: d,
+						});
+					});
+				},
+			},
+		},
+
+		peertube: {
+			
+		},
+
+		captcha: {
+			get: {
+				authorization: 'signature',
+				path: '/captcha',
+
+				action: function ({ captcha, ip }) {
+					if (captcha && captchas[captcha] && captchas[captcha].done) {
+						return Promise.resolve({
+							data: {
+								id: captchas[captcha].id,
+								done: true,
+								result: captchas[captcha].text,
+							},
+						});
+					}
+
+					captchaip[ip] || (captchaip[ip] = 0);
+					captchaip[ip]++;
+
+					var captcha = svgCaptcha.create({
+						size: 4,
+						noise: 12,
+						color: false,
+						ignoreChars: '0o1liy',
+						width: 250,
+					});
+
+					captcha.id = f.makeid();
+
+					captchas[captcha.id] = {
+						text: captcha.text.toLocaleLowerCase(),
+						id: captcha.id,
+						done: false,
+						time: f.now(),
+					};
+
+					return Promise.resolve({
+						data: {
+							id: captcha.id,
+							img: captcha.data,
+							result: captcha.text, ///
+							done: false,
+						},
+					});
+				},
+			},
+
+			make: {
+				authorization: 'signature',
+				path: '/makecaptcha',
+
+				action: function ({ captcha, ip, text }) {
+					var captcha = captchas[captcha];
+
+					if (!captcha) {
+						return Promise.reject('captchanotexist');
+					}
+
+					if (captcha.done) {
+						return Promise.resolve({
+							data: {
+								id: captcha.id,
+								done: true,
+							},
+						});
+					}
+
+					if (captcha.text == text.toLocaleLowerCase()) {
+						captcha.done = true;
+
+						delete captchaip[ip];
+
+						return Promise.resolve({
+							data: {
+								id: captcha.id,
+								done: true,
+							},
+						});
+					}
+
+					captcha.shot || (captcha.shot = 0);
+					captcha.shot++;
+
+					var currentTime = f.now();
+
+					if (
+						captcha.shot >= 5 ||
+						f.date.addseconds(captcha.time, 120) < currentTime ||
+						f.date.addseconds(captcha.time, 2) > currentTime
+					) {
+						delete captchas[request.data.captcha];
+
+						return Promise.reject('captchashots');
+					}
+
+					return Promise.reject('captchanotequal');
+				},
+			},
+		},
+
+		wallet: {
+			sendwithprivatekey: {
+				path: '/wallet/sendwithprivatekey',
+				authorization: false,
+				action: function (p) {
+					return self.wallet
+						.sendwithprivatekey(p)
+						.then((r) => {
+							return Promise.resolve({
+								data: r,
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+			freeregistration: {
+				path: '/free/registration',
+				authorization: 'signature',
+				action: function ({ captcha, key, address, ip }) {
+					if (settings.server.captcha) {
+						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
+							return Promise.reject('captcha');
+						}
+					}
+
+					return self.wallet
+						.addqueue(key || 'registration', address, ip)
+						.then((r) => {
+							return Promise.resolve({
+								data: r,
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+			freeregistrationfake: {
+				path: '/free/registrationfake',
+				action: function ({ }) {
+					return Promise.reject('disabled');
+
+					var addresses = ['PP582V47P8vCvXjdV3inwYNgxScZCuTWsq'];
+
+					var promises = _.map(addresses, function (a) {
+						return self.wallet.addqueue('registration', a, '::1');
+					});
+
+					return Promise.all(promises).then((r) => {
+						return Promise.resolve({
+							data: r,
+						});
+					});
+				},
+			},
+		},
+
+		manage: {
+			all: {
+				path: '/manage',
+				authorization: 'signature',
+				action: function (message) {
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+
+					var kaction = f.deep(manage, message.action);
+
+					if (!kaction) {
+						return Promise.reject({ error: 'unknownAction', code: 502 });
+					}
+
+					return kaction(message.data)
+						.then((data) => {
+							return Promise.resolve({ data });
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+		},
+	};
+
+	peertube.extendApi(self.api.peertube, server.cache)
+
+	self.wallet.events()
+
+	return self
 
 }
 

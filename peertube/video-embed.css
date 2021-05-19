@@ -3111,6 +3111,18 @@ video[src], .vjs-fullscreen {
 .js-player {
   position: relative;
 }
+.js-player .error-block {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  background: #000;
+  color: #bebebe;
+}
+.js-player .error-block > div {
+  margin: 0 auto;
+  text-align: center;
+  padding: 50px;
+}
 
 .js-player,
 .video-js-wrapper {

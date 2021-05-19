@@ -174,6 +174,11 @@ var defaultSettings = {
 	proxies : {
 		dbpath : 'data/proxies',
 		explore : true
+	},
+
+	systemnotify : {
+		bot : {},
+		parameters : {}
 	}
 
 	/*rsa : {

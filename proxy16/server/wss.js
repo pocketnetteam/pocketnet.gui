@@ -160,7 +160,7 @@ var WSS = function(admins, manage){
         });
 
         ws.on('error', (e) => {
-            console.log(e)
+            //console.log(e)
         })
 
     }

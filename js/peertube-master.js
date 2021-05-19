@@ -55,7 +55,7 @@ PeerTubeHandler = function (app) {
 
   this.getServerInfo = () => {
     return app.api
-      .fetch('peertube/servers')
+      .fetch('peertube/best')
       .then((data) => {
         if (!data.fastest && !data.leastUsed) return;
 
@@ -316,7 +316,6 @@ PeerTubeHandler = function (app) {
   };
 
   this.parselink = function (link) {
-    //peertube://pocketnetpeertube4.nohost.me/362344e6-9f36-48a1-a512-322917f00925
 
     var ch = link.replace(this.peertubeId, '').split('/');
 

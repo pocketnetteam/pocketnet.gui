@@ -449,6 +449,10 @@ var lenta = (function(){
 			},
 			initVideo : function(el, share, clbk){
 
+				console.log('share', share)
+
+				if(!share) return
+
 				if (players[share.txid]){
 
 					if(clbk) clbk(true)
@@ -752,6 +756,18 @@ var lenta = (function(){
 
 				var _el = el.c.find("#" + id)
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if(!share){
+					var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
+						return s.txid == id
+					})
+
+
+					share = new pShare();
+					share._import(temp);
+					share.temp = true;
+					share.address = self.app.platform.sdk.address.pnet().address
+				}
 
 				_el.addClass('fullScreenVideo')
 

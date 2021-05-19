@@ -488,7 +488,7 @@ class Html5Hlsjs {
         // _notifyVideoQualities sometimes runs before the quality picker event handler is registered -> no video switcher
         this.handlers.playing = this._notifyVideoQualities.bind(this);
         this.videoElement.addEventListener('playing', this.handlers.playing);
-        this.hlsjsConfig.debug = true;
+        //this.hlsjsConfig.debug = true
         this.hlsjsConfig.maxBufferHole = 0.5;
         this.hlsjsConfig.maxFragLookUpTolerance = 0;
         this.hlsjsConfig.highBufferWatchdogPeriod = 1;

@@ -88,13 +88,20 @@
 					</div>
 				<% } %>
 
-				<% if(typeof remove != 'undefined' && share && share.itisvideo()) {%>
+				<% if(typeof remove != 'undefined' && share && share.itisvideo()) {
+					
+					console.log("infoinfoinfoinfoinfoinfo", info)
+					
+					
+					%>
 
 					<div class="peertubepanel">
 
-						<div class="item uploadpeertubewp">
-							<i class="fas fa-camera"></i> <span><%- e('editWallpaper') %></span>
-						</div>
+						<% if(info.data) {%>
+							<div class="item uploadpeertubewp">
+								<i class="fas fa-camera"></i> <span><%- e('editWallpaper') %></span>
+							</div>
+						<% } %>
 
 						<div class="item removepeertube">
 							<i class="far fa-times-circle"></i> <span><%- e('removeVideo') %></span>

@@ -23,7 +23,8 @@ Platform = function (app, listofnodes) {
         'PCVt7H4vgjBDxifLz3uokbc1tD3MZwWwQh' : true,
         'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
         'PLH8biT5rMdvE1zXFhsvNkzphVRK6cNM7p' : true,
-        'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux' : true
+        'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux' : true,
+        'PXUYsENSv6QkQZEdiJTsfJmu3XxZvVmVfQ' : true
 
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
@@ -14999,6 +15000,20 @@ Platform = function (app, listofnodes) {
                 return self.sdk.videos.info(links)
 
             },
+            clearstorage : function(link){
+
+                if(!link) return
+
+                delete this.storage[link]
+
+                var meta = parseVideo(link)
+
+                if (meta.type == 'peertube'){
+                    delete window.peertubeglobalcache[meta.id]
+                }
+
+                
+            },
             info : function(links){
 
                 var s = self.sdk.videos.storage
@@ -15098,23 +15113,34 @@ Platform = function (app, listofnodes) {
 
                 peertube : async function(links){
 
+                    console.log('links', links)
 
-                    const linksInfo = await self.app.api.fetch('peertube/listVideos', {
-                        ids: links.map(link => link.link),
-                    });
+                    return self.app.api.fetch('peertube/videos', {
+                        urls: links.map(link => link.link),
+                    }).then(linksInfo => {
 
-                    links.forEach(link => {
-                        const linkInfo = linksInfo[link.link];
+                        if(!window.peertubeglobalcache)
+                            window.peertubeglobalcache = {}
 
-                        linkInfo ? link.data = {
-                            image : linkInfo.previewPath,
-                            views : linkInfo.views,
-                            duration : linkInfo.duration,
-                            aspectRatio : linkInfo.aspectRatio,
-                        } : '';
-                    });
+                        links.forEach(link => {
+                            
+                            const linkInfo = linksInfo[link.link];
+    
+                            linkInfo ? link.data = {
+                                image : 'https://' + linkInfo.from + linkInfo.previewPath,
+                                views : linkInfo.views,
+                                duration : linkInfo.duration,
+                                aspectRatio : linkInfo.aspectRatio,
+                            } : '';
 
-                    return Promise.resolve(links);
+                            window.peertubeglobalcache[link.meta.id] = linkInfo
+                        });
+
+                        return Promise.resolve(links);
+                    })
+
+
+                  
                 },
 
                 bitchute : function(links){
@@ -19003,6 +19029,7 @@ Platform = function (app, listofnodes) {
 
         fast ? self.clearStorageFast() : self.clearStorage()
 
+        if(app.peertubeHandler) app.peertubeHandler.clear()
 
         self.sdk.node.transactions.clearUnspentoptimizationInterval()
 
@@ -19310,6 +19337,12 @@ Platform = function (app, listofnodes) {
                 self.app.user.features.telegram = 0;
             }
         }
+
+        if (typeof PeerTubePocketnet != 'undefined'){
+
+			self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+			self.app.peertubeHandler.init()
+		}
 
         app.user.isState(function(state){
 

@@ -698,6 +698,7 @@
         }
     }
 
+    
     .nodescontent{
         .nodeWrapper{
             border-bottom: 1px solid @color-gray-slight;
@@ -790,6 +791,109 @@
                     cursor: pointer;
 
                     color : @color-good;
+                }
+
+                &.panelWrapper{
+                    width : 140px;
+                    padding : 2 * @rhythm;
+                    padding-left: 0;
+
+                    .item{
+                        width: 40px;
+                        float: right;
+                        padding : @rhythm;
+                        color : @color-gray-mlight;
+                        margin-left : 4px;
+                        text-align: center;
+
+                        &.edit{
+                            cursor: pointer;
+                            &:hover{
+                                color : @color-main;
+                            }
+                        }
+
+                        &.stable{
+                            color : @color-good;
+                        }
+                       
+                    }
+                }
+
+                span{
+                    font-size: 0.9em;
+                }
+
+              
+            }
+        }
+    }
+
+    .peertubecontent{
+        .peertubeWrapper{
+            border-bottom: 1px solid @color-gray-slight;
+        }
+        .good{
+            color : @color-good;
+        }
+        .instance{
+			   
+            &.active{
+                color : @color-good;
+
+                >div{
+                    
+                    &.use{
+                        color : @color-good;
+
+                        i{
+                            &:before{
+                                content : '\f058';
+                            }
+                        }
+                    }
+                }
+            }
+
+          
+            &.cantuse{
+                color : @color-gray-slight;
+            }
+
+            >div{
+                vertical-align: middle;
+                padding :3 * @rhythm 2 * @rhythm;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                &.use{
+                    cursor: pointer;
+    
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
+
+                &.use{
+                    width : 40px;
+                    text-align: center;
+                    color : @color-gray-slight;
+                    padding-right: 0;
+
+                    .hov{
+                        display: none;
+                    }
+
+                    &:hover{
+                        .hov{
+                            display: inline-block;
+                        }
+
+                        .unh{
+                            display: none;
+                        }
+                    }
                 }
 
                 &.panelWrapper{

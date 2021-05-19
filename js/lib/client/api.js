@@ -53,7 +53,7 @@ var ProxyRequest = function(app = {}){
         })
     }
 
-    var direct = function(url, data){
+    var direct = function(url, data, p){
         var controller = (new AbortController())
 
         var time = 30000
@@ -63,33 +63,39 @@ var ProxyRequest = function(app = {}){
         }
 
 
-        return timeout(time, directclear(url, data, controller.signal), controller)
+        return timeout(time, directclear(url, data, controller.signal, p), controller)
     }
 
-    var directclear = function(url, data, signal){
+    var directclear = function(url, data, signal, p){
+
+        if(!p) p = {}
 
         if(!data) 
             data = {}
 
-        var er = false
+        var headers = _.extend({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=utf-8'
+        }, p.headers || {})
 
-        
+        /*if (data.bearer){
+            headers.Authorization = `Bearer ${data.bearer}`
+            delete data.bearer
+        }*/
+
+        var er = false
 
         return fetch(url, {
 
-            method: 'POST',
+            method: p.method || 'POST',
             mode: 'cors', 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=utf-8'
-            },
+            headers: headers,
             signal : signal,
             body: JSON.stringify(sign(data))
 
         }).then(r => {
 
             signal.dontabortable = true
-
 
             if(!r.ok){
                 er = true
@@ -99,14 +105,13 @@ var ProxyRequest = function(app = {}){
 
         }).then(result => {
 
-
             if (er){
                 return Promise.reject(result.error)
             }
 
             return Promise.resolve(result.data || {})
-        }).catch(e => {
 
+        }).catch(e => {
 
             if (e.code == 20){
                 return Promise.reject({
@@ -136,8 +141,8 @@ var ProxyRequest = function(app = {}){
 
     }
 
-    self.fetch = function(url, path, data){
-        return direct(url + '/' + path, data)
+    self.fetch = function(url, path, data, p){
+        return direct(url + '/' + path, data, p)
     }
 
     return self

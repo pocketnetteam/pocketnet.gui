@@ -1,0 +1,46 @@
+<% _.each(info.peertube, function(instance){ 
+                
+    
+    %>
+
+    <div class="instanceWrapper">
+        <div class="work">
+            <div class="tableovfWrapper">
+                <div class="instance table <%- !instance.canuse ? 'cantuse' : ''%>" instance="<%-instance.host%>">
+                    <div class="use <% if(instance.host == currentinstance) {%> using <% } %> <% if(typeof fixedinstance != 'undefined' && fixedinstance == instance.key) {%> locked <% } %>">
+                        <i class="far fa-circle"></i>   
+                    </div>
+
+                    <div class="host">
+                        <span><%- instance.host %></span>
+                    </div>
+
+                    <div class="statistic">
+                        <% if(instance.stats && instance.stats.averageTime && instance.stats.p) {%>
+
+                            <span><%- instance.stats.averageTime.toFixed(0) %>ms, <%- instance.stats.p.toFixed(0) %> %</span>
+
+                        <% } else { %> 
+                            
+                            <span>&mdash;</span>
+
+                        <% } %>
+                    </div>
+
+                    <div class="panelWrapper">
+                       
+
+                        <div class="item stable good">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                
+                    
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<% }) %>
