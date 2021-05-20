@@ -1380,8 +1380,6 @@ var post = (function(){
 
 				if (player){
 
-					console.log("playerplayerplayerplayer", player)
-
 					if(player.destroy) player.destroy()
 
 					player = null

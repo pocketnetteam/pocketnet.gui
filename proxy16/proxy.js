@@ -47,7 +47,7 @@ var Proxy = function (settings, manage, test) {
 	var systemnotify = new SystemNotify(settings.systemnotify)
 
 	self.userDataPath = null
-	self.session = f.makeid()
+	self.session = 'pocketnetproxy' //f.makeid()
 
 	f.mix({
 		wss, server, pocketnet, nodeControl,
@@ -549,8 +549,8 @@ var Proxy = function (settings, manage, test) {
 			return peertube.init({
 				urls : [
 					//'pocketnetpeertube3.nohost.me',
-					'pocketnetpeertube4.nohost.me',
-    				//'pocketnetpeertube5.nohost.me'
+					//'pocketnetpeertube4.nohost.me',
+    				'pocketnetpeertube5.nohost.me'
 				]
 			})
 		},

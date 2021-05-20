@@ -44,7 +44,7 @@ User = function(app, p) {
 	}
 
 	self.signature = function(str, exp, old){
-		if(!str) str = 'default'
+		if(!str) str = 'pocketnetproxy'
 		if(!exp) exp = 360
 
 		var keyPair = self.keys()

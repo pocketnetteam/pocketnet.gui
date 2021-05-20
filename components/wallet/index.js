@@ -1907,7 +1907,7 @@ var wallet = (function(){
 					})
 					
 					if (essenseData.htls){
-						//_p.el.find('.htlsWrapper').html(renders.embeddingcode(essenseData.htls))
+						_p.el.find('.htlsWrapper').html(renders.embeddingcode(essenseData.htls))
 					}
 
 					if (clbk)
