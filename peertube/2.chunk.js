@@ -558,18 +558,18 @@ class WebTorrentPlugin extends Plugin {
                     if (err)
                         return this.fallbackToHttp(options, done);
                     //this.playerElement.play()
-                    //setTimeout(() => { working, 
-                    return this.tryToPlay(err => {
-                        console.log("TRYTOPLAYDONE TORRENT", err, options);
-                        if (err)
-                            return done(err);
-                        if (options.seek)
-                            this.seek(options.seek);
-                        if (options.forcePlay === false && paused === true)
-                            this.player.pause();
-                        return done();
-                    });
-                    //}, 10)
+                    setTimeout(() => {
+                        return this.tryToPlay(err => {
+                            console.log("TRYTOPLAYDONE TORRENT", err, options);
+                            if (err)
+                                return done(err);
+                            if (options.seek)
+                                this.seek(options.seek);
+                            if (options.forcePlay === false && paused === true)
+                                this.player.pause();
+                            return done();
+                        });
+                    }, 10);
                 });
             }, options.delay || 0);
         });

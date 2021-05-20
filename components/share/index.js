@@ -1027,8 +1027,7 @@ var share = (function(){
 					if (currentShare.message.v) options.description = currentShare.message.v;
 					if (currentShare.caption.v) options.name = currentShare.caption.v;
 
-					console.log('options', options)
-
+		
 					return self.app.peertubeHandler.api.videos.update(currentShare.url.v, options).then(SAVE).catch((e) => {
 
 						var message = e.text || findResponseError(e) || 'Updating error';
@@ -2374,15 +2373,8 @@ var share = (function(){
 				
 				el.tgsWrapperMain = el.c.find('.tgsWrapperMain')
 				
-				
-
-				
 				el.error = el.c.find('.error');		
 				
-
-				
-				
-
 				el.changeAddress = el.c.find('.changeAddress')
 				el.repostWrapper = el.c.find('.repostWrapper')
 				el.postline = el.c.find('.postlineWrapper')

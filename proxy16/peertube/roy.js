@@ -36,8 +36,6 @@ var Roy = function(parent){
 
         _.each(urls, function(host){
 
-            console.log("ADDHOST", host)
-
             self.addInstance(host)
            
         })
@@ -106,13 +104,17 @@ var Roy = function(parent){
 
         return instance.request(method, data, p).catch(e => {
 
-            if(e == 'failed')  return Promise.reject(e)
+            if (e == 'failed')  
+                return self.request(method, data, p, list, index + 1)
 
-            return self.request(method, data, p, list, index + 1)
+            return Promise.reject(e)
 
         }).then(r => {
-
             if(r.data) r.data.from = instance.host
+
+            console.log('instance.host', instance.host)
+
+            console.log('rdata', r.data)
 
 
             return Promise.resolve(r)

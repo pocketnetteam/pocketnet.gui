@@ -46939,6 +46939,10 @@ class PeerTubeEmbedApi {
     }
     destroy() {
         this.embed.destroy();
+        if (this.updateinterval) {
+            clearInterval(this.updateinterval);
+            this.updateinterval = null;
+        }
         return true;
     }
     play() {
@@ -47019,7 +47023,7 @@ class PeerTubeEmbedApi {
     }
     setupStateTracking() {
         let currentState = 'unstarted';
-        setInterval(() => {
+        this.updateinterval = setInterval(() => {
             const position = this.element.currentTime;
             const volume = this.element.volume;
             this.state = currentState;
@@ -47048,8 +47052,12 @@ class PeerTubeEmbedApi {
         // PeerTube specific capabilities
         if (this.embed.contributor == 'peertube') {
             if (this.isWebtorrent()) {
-                /*this.embed.player.webtorrent().on('autoResolutionUpdate', () => this.loadWebTorrentResolutions())
-                this.embed.player.webtorrent().on('videoFileUpdate', () => this.loadWebTorrentResolutions())*/
+                try {
+                    this.embed.player.webtorrent().on('autoResolutionUpdate', () => this.loadWebTorrentResolutions());
+                    this.embed.player.webtorrent().on('videoFileUpdate', () => this.loadWebTorrentResolutions());
+                }
+                catch (e) {
+                }
             }
             else {
                 this.embed.player.p2pMediaLoader().on('resolutionChange', () => this.loadP2PMediaLoaderResolutions());
@@ -47291,7 +47299,7 @@ class PeerTubeEmbed {
     }
     waitTranscoded(videoId) {
         console.log('this.details.state.id', this.details.state.id);
-        if (this.details && this.details.state.id == 2) {
+        if (this.details && this.details.state.id == 2 && this.playerElement) {
             return this.loadVideoTotal(videoId).then(details => {
                 if (details.state.id == 2) {
                     return new Promise((resolve, reject) => {
@@ -47409,6 +47417,7 @@ class PeerTubeEmbed {
     }
     destroy() {
         this.player.dispose();
+        this.playerElement = null;
     }
     playNextVideo() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {

@@ -35,8 +35,6 @@ var instance = function(host, Roy){
 
             data = data.data || {}
 
-            console.log('data.total', data)
-
             var difference = 0
 
             if (videosinfo.total){
@@ -98,6 +96,7 @@ var instance = function(host, Roy){
             })
     
         }).catch(error => {
+
 
             logs.push({
                 url,

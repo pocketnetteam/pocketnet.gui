@@ -548,9 +548,9 @@ var Proxy = function (settings, manage, test) {
 		init: function () {
 			return peertube.init({
 				urls : [
-					'pocketnetpeertube3.nohost.me',
+					//'pocketnetpeertube3.nohost.me',
 					'pocketnetpeertube4.nohost.me',
-    				'pocketnetpeertube5.nohost.me'
+    				//'pocketnetpeertube5.nohost.me'
 				]
 			})
 		},
@@ -1218,7 +1218,7 @@ var Proxy = function (settings, manage, test) {
 
 		captcha: {
 			get: {
-				authorization: 'signature',
+				authorization: 'signaturelight',
 				path: '/captcha',
 
 				action: function ({ captcha, ip }) {
@@ -1264,7 +1264,7 @@ var Proxy = function (settings, manage, test) {
 			},
 
 			make: {
-				authorization: 'signature',
+				authorization: 'signaturelight',
 				path: '/makecaptcha',
 
 				action: function ({ captcha, ip, text }) {

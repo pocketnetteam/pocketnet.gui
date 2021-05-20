@@ -3186,7 +3186,7 @@ var lenta = (function(){
 								txid : share.txidEdit
 							}, share)
 	
-	
+							actions.destroyVideo(share)
 	
 							if (f){
 	
@@ -3205,6 +3205,9 @@ var lenta = (function(){
 							}
 						}
 						else{
+
+							actions.destroyVideo(share)
+
 							renders.shares([share], function(){
 								renders.sharesInview([share], function(){
 									
