@@ -966,7 +966,7 @@ var system16 = (function(){
 
 					series : [
 						{
-							name : "Videos",
+							name : "Videos count",
 							path : "stats.total",
 							type : 'spline',
 							id : 'sc'
