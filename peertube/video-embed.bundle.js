@@ -47530,7 +47530,7 @@ class PeerTubeEmbed {
             if (!videoResponseJson.aspectRatio) {
                 videoResponseJson.aspectRatio = 1;
             }
-            if (new Date(videoResponseJson.createdAt) < new Date(2021, 4, 19)) {
+            if ((new Date(videoResponseJson.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()) {
                 videoResponseJson.aspectRatio = 1.78;
             }
             this.details = videoResponseJson;
@@ -47632,7 +47632,7 @@ class PeerTubeEmbed {
             this.playerElement.setAttribute("playsinline", "true");
             const isVideoEmbedded = document.querySelector(".standalone-video-embed");
             const paddingSize = 100 / (2 * videoSizeValue);
-            if (paddingSize > 50) {
+            if (videoInfo.aspectRatio > 50) {
                 this.playerElement.classList.add("verticalVideo");
                 if (isVideoEmbedded)
                     document.querySelector('.video-js-wrapper').classList.add('vertcalVideoContainer');

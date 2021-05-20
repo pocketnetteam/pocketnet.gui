@@ -913,7 +913,7 @@ var post = (function(){
 
 		console.log('aspectRatio', aspectRatio)
 
-		if(aspectRatio < 1 && aspectRatio != 0){
+		if(aspectRatio <= 1 && aspectRatio != 0){
 			verticalVideo = true
 		}
 

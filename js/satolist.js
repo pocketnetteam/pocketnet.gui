@@ -15125,6 +15125,10 @@ Platform = function (app, listofnodes) {
                         links.forEach(link => {
                             
                             const linkInfo = linksInfo[link.link];
+
+                            if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
+                                linkInfo.aspectRatio = 1.78
+                            }
     
                             linkInfo ? link.data = {
                                 image : 'https://' + linkInfo.from + linkInfo.previewPath,
@@ -15132,6 +15136,9 @@ Platform = function (app, listofnodes) {
                                 duration : linkInfo.duration,
                                 aspectRatio : linkInfo.aspectRatio || 1,
                             } : '';
+
+
+                           
 
                             window.peertubeglobalcache[link.meta.id] = linkInfo
                         });

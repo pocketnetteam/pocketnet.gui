@@ -554,13 +554,11 @@ class WebTorrentPlugin extends Plugin {
                 const renderVideoOptions = { autoplay: false, controls: true };
                 Object(_video_renderer__WEBPACK_IMPORTED_MODULE_2__["renderVideo"])(torrent.files[0], this.playerElement, renderVideoOptions, (err, renderer) => {
                     this.renderer = renderer;
-                    console.log("RENDER ERROR", err);
                     if (err)
                         return this.fallbackToHttp(options, done);
                     //this.playerElement.play()
                     setTimeout(() => {
                         return this.tryToPlay(err => {
-                            console.log("TRYTOPLAYDONE TORRENT", err, options);
                             if (err)
                                 return done(err);
                             if (options.seek)
