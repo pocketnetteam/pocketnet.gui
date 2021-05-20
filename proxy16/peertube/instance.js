@@ -10,6 +10,9 @@ var instance = function(host, Roy){
     var inited = false;
     var logs = []
     var lastStat = null
+    var k = 1000
+
+    var videosinfo = {}
 
     var methods = {
         stats : '/api/v1/videos',
@@ -28,10 +31,29 @@ var instance = function(host, Roy){
             return Promise.resolve()
         }
 
-        return self.request('stats').catch(e => {
+        return self.request('stats').then((data) => {
+
+            data = data.data || {}
+
+            console.log('data.total', data)
+
+            var difference = 0
+
+            if (videosinfo.total){
+                difference = data.total - videosinfo.total
+            }
+
+            videosinfo = data
+            videosinfo.difference = difference
+
+            return Promise.resolve()
+
+        }).catch(e => {
+
             return Promise.resolve()
 
         }).then(() => {
+
             return f.delay(Roy.parent.statsInterval())
         }).then(() => {
             return statsRequest()
@@ -117,14 +139,16 @@ var instance = function(host, Roy){
             averageTime : c ? alltime / c : 0,
 
             k : 0,
-            p : 0
+            p : 0,
+
+            total : videosinfo.total || 0
 
         }
 
         lastStat = info
 
         if (logs.length){
-            info.k = info.averageTime / (c / logs.length) 
+            info.k = k * info.averageTime / ( (c / logs.length) * (info.total + 1) )
             info.p = 100 * c / logs.length
         }
             

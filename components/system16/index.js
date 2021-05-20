@@ -959,7 +959,20 @@ var system16 = (function(){
 							id : 'ss'
 						}
 					]
-				}
+				},
+
+				total : {
+					caption : "Total count of videos",
+
+					series : [
+						{
+							name : "Videos",
+							path : "stats.total",
+							type : 'spline',
+							id : 'sc'
+						}
+					]
+				},
 			},
 
 			server : {
