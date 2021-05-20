@@ -366,7 +366,7 @@ PeerTubePocketnet = function(app){
                     app.user.isState(function(state){
 
                         if(state){
-                            return resolve(app.user.signature())
+                            return resolve(app.user.signature('peertube', null, true))
                         }
 
                         return reject()

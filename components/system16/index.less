@@ -4,6 +4,40 @@
     position: relative;
     padding-bottom: 8 * @rhythm;
 
+    .collapsepart{
+        .collapsingpart{
+            display: none;
+        }
+
+        .subcaption{
+            cursor: pointer;
+            i{
+                width: 40px;
+                text-align: center;
+                .transition(0.3s)
+            }
+
+            &:hover{
+                i{
+                    transform: rotate(180deg);
+                }
+                
+            }
+        }
+
+        &.expanded{
+            .subcaption{
+                i{
+                    transform: rotate(180deg);
+                }
+            }
+            
+            .collapsingpart{
+                display: block;
+            }
+        }
+    }
+
     .systemreq{
 
         padding : @rhythm;

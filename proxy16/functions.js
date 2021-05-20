@@ -236,6 +236,14 @@ f.deep = function(obj, key){
     }
 }
 
+f.nowrev = function(date){
+    var now = date ||(new Date);
+    var UTCseconds = (now.getTime() - now.getTimezoneOffset()*60*1000);
+    var d = new Date(UTCseconds);
+        d.toString();	
+
+    return d
+}
 
 f.now = function(date){
     var now = date ||(new Date);
@@ -490,6 +498,32 @@ f.date = {
         return d
     }
 }
+
+f.hexEncode= function(text){
+    var ch = 0;
+    var result = "";
+    for (var i = 0; i < text.length; i++)
+    {
+        ch = text.charCodeAt(i);
+        if (ch > 0xFF) ch -= 0x350;
+        ch = ch.toString(16);
+        while (ch.length < 2) ch = "0" + ch;
+        result += ch;
+    }
+    return result;
+}
+f.hexDecode= function(hex){
+    var ch = 0;
+    var result = "";
+    for (var i = 2; i <= hex.length; i += 2)
+    {
+        ch = parseInt(hex.substring(i - 2, i), 16);
+        if (ch >= 128) ch += 0x350;
+        ch = String.fromCharCode("0x" + ch.toString(16));
+        result += ch;
+    }
+    return result;
+} 
 
 f.getPkoinPrice = function(array, arrkey) {
     var response_keys = Object.keys(array)

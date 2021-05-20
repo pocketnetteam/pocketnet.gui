@@ -301,7 +301,16 @@ var share = (function(){
 			embeding : function(type, value){
 				var storage = currentShare.export(true)
 
+				
+
 				if (type === 'addVideo') {
+
+					if (external && external.id == 'uploadpeertube'){
+						external.container.show()
+
+						return
+					}
+
 					globalpreloader(true);
 
 					self.app.peertubeHandler.api.proxy.bestChange().then(r => {
@@ -354,13 +363,17 @@ var share = (function(){
 										}
 									}
 
+									external = null
+
 									make();
 								}
 							},
 	
 							clbk : function(p, element){
-								external = p
+								external = element
 								videoUploadData = element.essenseData;
+
+								console.log('external', element)
 							}
 						})
 

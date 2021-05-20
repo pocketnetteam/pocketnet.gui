@@ -2992,6 +2992,7 @@ video[src], .vjs-fullscreen {
 
 .video-js {
   background: transparent;
+  font-family: "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 .video-js .vjs-tech {
@@ -3111,6 +3112,7 @@ video[src], .vjs-fullscreen {
 .js-player {
   position: relative;
 }
+.js-player .warning-block,
 .js-player .error-block {
   height: 300px;
   display: flex;
@@ -3118,10 +3120,26 @@ video[src], .vjs-fullscreen {
   background: #000;
   color: #bebebe;
 }
+.js-player .warning-block > div,
 .js-player .error-block > div {
   margin: 0 auto;
   text-align: center;
   padding: 50px;
+}
+.js-player .warning-block {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.45);
+  height: auto;
+}
+.js-player .warning-overlay {
+  position: absolute;
+  padding-left: 2em;
+  z-index: 1000;
 }
 
 .js-player,

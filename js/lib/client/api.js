@@ -5,14 +5,20 @@ if (typeof _Electron != 'undefined') {
     electron = require('electron');
 }
 
-var ProxyRequest = function(app = {}){
+var ProxyRequest = function(app = {}, proxy){
     var self = this
 
     var sign = function(data){
         var signature = null
 
+        var session = ''
+
+        if (proxy && proxy.session) session = proxy.session
+
+        console.log('proxy.session', proxy.session)
+
         if (app.user && app.user.getstate() == 1){
-            try{ signature = app.user.signature() } catch(e){}
+            try{ signature = app.user.signature(session) } catch(e){}
         }
 
         if (signature){ data.signature = signature }
@@ -162,7 +168,7 @@ var Node = function(meta, app/*, proxy ??*/){
 
 var Proxy16 = function(meta, app, api){
     var self = this
-    var request = new ProxyRequest(app)
+    var request = new ProxyRequest(app, self)
 
     self.system = new System16(app, self, meta.direct)
 
@@ -282,6 +288,8 @@ var Proxy16 = function(meta, app, api){
             return self.fetch('ping').then(r => {
 
                 self.ping = new Date()
+                self.session = r.session
+
 
                 return Promise.resolve(r)
             }).catch(e => {

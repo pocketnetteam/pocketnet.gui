@@ -47,6 +47,7 @@ var Proxy = function (settings, manage, test) {
 	var systemnotify = new SystemNotify(settings.systemnotify)
 
 	self.userDataPath = null
+	self.session = f.makeid()
 
 	f.mix({
 		wss, server, pocketnet, nodeControl,
@@ -131,19 +132,55 @@ var Proxy = function (settings, manage, test) {
 			return true
 		},
 
+		parsesignature : function(nonce){
+			var ch = nonce.split(',')
+			var obj = {}
+
+			_.each(ch, function(p){
+				var ch2 = p.split(':')
+
+				if(!ch2[1] || !ch2[0]) return
+
+				obj[ch2[0]] = ch2[1]
+			})
+
+			return obj
+		},
+
+		signatureid : function(signature){
+			if (signature.v){
+				var sn = this.parsesignature(signature.nonce)
+
+				if(!sn.date || !sn.exp || !sn.s) return false
+
+				if(f.now().getTime() > f.date.addseconds(new Date(Number(sn.date)), sn.exp).getTime()){
+					return false
+				}
+				
+				var s = f.hexDecode(sn.s)
+
+				if (s != self.session) return false
+			}
+
+			return true
+		},
+
 		signature: function (data) {
 
 			delete data.A
 			delete data.U
 
 			if (data.signature) {
+
+				if(!self.authorization.signatureid(data.signature)) return false
+
 				var authorized = self.pocketnet.kit.authorization.signature(data.signature)
 
 				if (authorized) {
 
 					data.U = data.signature.address
 
-					if (_.indexOf(settings.admins, data.U) > -1) data.A = true
+					if (_.indexOf(settings.admins, data.U) > -1 && data.signature.v) data.A = true
 
 					return true
 				}
@@ -160,6 +197,9 @@ var Proxy = function (settings, manage, test) {
 			delete data.U
 
 			if (data.signature) {
+
+				if(!self.authorization.signatureid(data.signature)) return false
+
 				var authorized = self.pocketnet.kit.authorization.signature(data.signature)
 
 				if (authorized) {
@@ -1081,7 +1121,7 @@ var Proxy = function (settings, manage, test) {
 				},*/
 			info: {
 				path: '/info',
-				action: function () {
+				action: function (message) {
 					return Promise.resolve({
 						data: {
 							info: self.kit.info(true),
@@ -1091,11 +1131,14 @@ var Proxy = function (settings, manage, test) {
 			},
 			logs: {
 				path: '/logs',
-				action: function () {
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+
 					var data = {
-						logs: server.middle.getlogs(),
-						/*ws : wss.info(),
-								  iplimiter : iplimiter.info()*/
+						logs: server.middle.getlogs()
 					};
 
 					return Promise.resolve({ data });
@@ -1117,6 +1160,7 @@ var Proxy = function (settings, manage, test) {
 					return Promise.resolve({
 						data: {
 							time: f.now(),
+							session : self.session
 						},
 					});
 				},

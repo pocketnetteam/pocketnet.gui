@@ -22,6 +22,19 @@ var Pocketnet = function(){
         },
 
         authorization : {
+            verifyhash : function(keyPair, signature, hash){
+                try{
+                    var v = keyPair.verify(hash, Buffer.from(signature, 'hex'))
+
+                    return v
+                }
+                catch(e){
+
+                    
+                    return false
+                }
+                
+            },
             signature : function(signature, addresses){
 
                 if(!signature) signature = {}
@@ -37,8 +50,27 @@ var Pocketnet = function(){
 
                     var keyPair = bitcoin.ECPair.fromPublicKey(pkbuffer)
                     var hash = Buffer.from(signature.nonce, 'utf8')
+                    var hashtrue = bitcoin.crypto.sha256(Buffer.from(signature.nonce, 'utf8'))
+                    var verify = false
 
-                    var verify = keyPair.verify(hash, Buffer.from(signature.signature, 'hex')) && signature.address == self.kit.addressByPublicKey(pkbuffer);
+                    if(!signature.v){
+                        var verify = (
+
+                            self.kit.authorization.verifyhash(keyPair, signature.signature, hash)
+                            
+                        ) && signature.address == self.kit.addressByPublicKey(pkbuffer);
+                    }
+
+                    else{
+                        
+                        var verify = (
+
+                            self.kit.authorization.verifyhash(keyPair, signature.signature, hashtrue) 
+                            
+                        ) && signature.address == self.kit.addressByPublicKey(pkbuffer);
+                    }   
+
+                   
 
 
                     if(!addresses) addresses = signature.address
@@ -50,7 +82,7 @@ var Pocketnet = function(){
 
                 catch(e) {
 
-                    //console.error(e)
+                    console.error(e)
 
                     return false
                 }

@@ -833,6 +833,7 @@
 		self.close = actions.close;
 		self.el = wnd;
 		self.hide = actions.hide;
+		self.show = actions.show;
 
 		return self;
 	}
@@ -9959,7 +9960,7 @@
 		}
 
 		if(v.type == 'peertube'){
-			return `https://${v.host_name}/static/thumbnails/${v.id}.jpg`;
+			return null
 		}
 	}
 

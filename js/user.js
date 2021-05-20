@@ -43,25 +43,38 @@ User = function(app, p) {
 		}
 	}
 
-	self.signature = function(ojb){
+	self.signature = function(str, exp, old){
+		if(!str) str = 'default'
+		if(!exp) exp = 360
 
 		var keyPair = self.keys()
 
-		var nonce = Math.round(new Date().getTime() / 1000);
+		var nonce = 'date:' + utcnow().getTime() + ",exp:" + exp + ',s:' + hexEncode(str);
 
-		do{
-			nonce = nonce.toString() + '' + rand(0, 9).toString();
+		var signature = null; 	
+
+		if (old){
+
+			nonce = utcnow().getTime()
+
+			do{
+				nonce = nonce + '' + rand(0, 9).toString();
+			} while(nonce.length < 32)
+			
+			signature = keyPair.sign(Buffer.from(nonce))	
 		}
-		while(nonce.length < 32)
-
-		var signature = keyPair.sign(Buffer.from(nonce))		
+		else
+		{
+			signature = keyPair.sign(bitcoin.crypto.sha256(Buffer.from(nonce)))	
+		}
 
 		var sobj = {
 
 			nonce : nonce,
 			signature : signature.toString('hex'),
 			pubkey : keyPair.publicKey.toString('hex'),
-			address : self.address.value
+			address : self.address.value,
+			v : 1
 			
 		}
 

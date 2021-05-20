@@ -57,7 +57,6 @@ var testnodes = [
 		name : 'CryptoserverTest2',
 		stable : true
 	}
-
 	
 ]
 

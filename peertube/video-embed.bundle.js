@@ -47274,14 +47274,39 @@ class PeerTubeEmbed {
         if (!window.peertubeglobalcache)
             window.peertubeglobalcache = {};
         if (window.peertubeglobalcache[videoId]) {
-            return Promise.resolve(window.peertubeglobalcache[videoId]);
+            if (window.peertubeglobalcache[videoId].state.id != 2) {
+                return Promise.resolve(window.peertubeglobalcache[videoId]);
+            }
         }
+        return this.loadVideoTotal(videoId);
+    }
+    loadVideoTotal(videoId) {
         return this.loadVideo(videoId).then(({ videoResponse }) => {
             return videoResponse.json();
         }).then((json) => {
+            this.details = json;
             window.peertubeglobalcache[videoId] = json;
             return json;
         });
+    }
+    waitTranscoded(videoId) {
+        console.log('this.details.state.id', this.details.state.id);
+        if (this.details && this.details.state.id == 2) {
+            return this.loadVideoTotal(videoId).then(details => {
+                if (details.state.id == 2) {
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            return this.waitTranscoded(videoId);
+                        }, 3000);
+                    });
+                }
+                else {
+                    return this.loadVideoAndBuildPlayer(this.details.uuid).catch((err) => console.error(err));
+                }
+            }).catch(e => {
+            });
+        }
+        return Promise.resolve();
     }
     /*loadVideoCaptions(videoId: string): Promise<Response> {
       return this.refreshFetch(this.getVideoUrl(videoId) + "/captions", {
@@ -47332,6 +47357,33 @@ class PeerTubeEmbed {
         errorBlockWrapper.appendChild(errorText);
         this.wrapperElement.innerHTML = "";
         this.wrapperElement.appendChild(errorBlock);
+    }
+    displayWarning(text, translations) {
+        /*const errorBlock = document.createElement("div");
+        errorBlock.className = "warning-block";
+    
+        const errorBlockWrapper = document.createElement("div");
+        errorBlockWrapper.className = "warning-block-wrapper";
+    
+    
+        const errorText = document.createElement("div");
+        errorText.className = "warning-text";
+        errorText.innerHTML = text;
+    
+        errorBlock.appendChild(errorBlockWrapper);
+        errorBlockWrapper.appendChild(errorText);
+        this.playerElement.appendChild(errorBlock);*/
+        this.player.overlay({
+            overlays: [
+                {
+                    content: text,
+                    align: "center",
+                    start: 0,
+                    showBackground: true,
+                    class: "warning-overlay",
+                },
+            ],
+        });
     }
     videoNotFound(translations) {
         const text = "This video does not exist.";
@@ -47421,63 +47473,6 @@ class PeerTubeEmbed {
             console.error("Cannot get params from URL.", err);
         }
     }
-    /*private async loadAllPlaylistVideos(
-      playlistId: string,
-      baseResult: ResultList<VideoPlaylistElement>
-    ) {
-      let elements = baseResult.data;
-      let total = baseResult.total;
-      let i = 0;
-  
-      while (total > elements.length && i < 10) {
-        const result = await this.loadPlaylistElements(
-          playlistId,
-          elements.length
-        );
-  
-        const json = (await result.json()) as ResultList<VideoPlaylistElement>;
-        total = json.total;
-  
-        elements = elements.concat(json.data);
-        i++;
-      }
-  
-      if (i === 10) {
-        console.error("Cannot fetch all playlists elements, there are too many!");
-      }
-  
-      return elements;
-    }
-  
-    private async loadPlaylist(playlistId: string) {
-      const playlistPromise = this.loadPlaylistInfo(playlistId);
-      const playlistElementsPromise = this.loadPlaylistElements(playlistId);
-  
-      let playlistResponse: Response;
-      let isResponseOk: boolean;
-  
-      try {
-        playlistResponse = await playlistPromise;
-        isResponseOk = playlistResponse.status === HttpStatusCode.OK_200;
-      } catch (err) {
-        console.error(err);
-        isResponseOk = false;
-      }
-  
-      if (!isResponseOk) {
-        const serverTranslations = {}; //await this.translationsPromise
-  
-        if (playlistResponse?.status === HttpStatusCode.NOT_FOUND_404) {
-          this.playlistNotFound(serverTranslations);
-          return undefined;
-        }
-  
-        this.playlistFetchError(serverTranslations);
-        return undefined;
-      }
-  
-      return { playlistResponse, videosResponse: await playlistElementsPromise };
-    }*/
     loadVideo(videoId) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const videoPromise = this.loadVideoInfo(videoId);
@@ -47492,7 +47487,7 @@ class PeerTubeEmbed {
                 isResponseOk = false;
             }
             if (!isResponseOk) {
-                const serverTranslations = {}; //await this.translationsPromise
+                const serverTranslations = {};
                 if ((videoResponse === null || videoResponse === void 0 ? void 0 : videoResponse.status) === _shared_core_utils_miscs_http_error_codes__WEBPACK_IMPORTED_MODULE_5__["HttpStatusCode"].NOT_FOUND_404) {
                     this.videoNotFound(serverTranslations);
                     return undefined;
@@ -47500,13 +47495,11 @@ class PeerTubeEmbed {
                 this.videoFetchError(serverTranslations);
                 return undefined;
             }
-            //const captionsPromise = this.loadVideoCaptions(videoId)
-            return { /*captionsPromise,*/ videoResponse };
+            return { videoResponse };
         });
     }
     buildPlaylistManager() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            //const translations = await this.translationsPromise
             this.player.upnext({
                 timeout: 10000,
                 headText: Object(_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_3__["peertubeTranslate"])("Up Next", null),
@@ -47528,6 +47521,11 @@ class PeerTubeEmbed {
             if (!videoResponseJson.aspectRatio) {
                 videoResponseJson.aspectRatio = 1;
             }
+            if (new Date(videoResponseJson.createdAt) < new Date(2021, 4, 19)) {
+                videoResponseJson.aspectRatio = 1.78;
+            }
+            this.details = videoResponseJson;
+            this.waitTranscoded(uuid);
             return this.buildVideoPlayer(videoResponseJson);
         });
     }
@@ -47612,14 +47610,13 @@ class PeerTubeEmbed {
     composePath(path = '') {
         return this.host + path;
     }
-    buildVideoPlayer(videoInfo /*, captionsPromise: Promise<Response>*/) {
+    buildVideoPlayer(videoInfo) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             let alreadyHadPlayer = false;
             if (this.player) {
                 this.player.dispose();
                 alreadyHadPlayer = true;
             }
-            console.log('videoInfo', videoInfo);
             const videoSizeValue = videoInfo.aspectRatio;
             this.playerElement = document.createElement("video");
             this.playerElement.className = "video-js";
@@ -47734,6 +47731,9 @@ class PeerTubeEmbed {
                 videojs: (video_js__WEBPACK_IMPORTED_MODULE_2___default()),
                 video: videoInfo,
             });
+            if (this.details.state.id == 2) {
+                this.displayWarning('Video is being processed');
+            }
         });
     }
     initCore(videoId, parameters) {
@@ -47752,6 +47752,10 @@ class PeerTubeEmbed {
             this.displayError("This video is not available because the remote instance is not responding.", translations);
             return;
         }
+        if (this.details.state.id == 2) {
+            this.loadVideoAndBuildPlayer(this.details.uuid);
+        }
+        console.log("ERR", err);
     }
     handleErrorCritical(err) {
         this.player.dispose();

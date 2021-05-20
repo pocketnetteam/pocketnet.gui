@@ -81,9 +81,6 @@ var Peertube = function(settings){
 
             if(!best) return Promise.reject('best')
 
-
-            console.log("BEST", best, best.export())
-
             return Promise.resolve(best.export())
         },
 
@@ -112,7 +109,6 @@ var Peertube = function(settings){
                 
             }).catch((err) => {
 
-                console.log("err", err)
 
                 return Promise.reject(err);
 

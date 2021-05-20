@@ -3278,6 +3278,9 @@ var system16 = (function(){
 
 		var initEvents = function(){
 			
+			el.c.on('click', '.collapsepart .subcaption', function(){
+				$(this).closest('.collapsepart').toggleClass('expanded')
+			})
 
 		}
 
