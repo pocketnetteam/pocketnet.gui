@@ -322,7 +322,7 @@ var lenta = (function(){
 			removeAdditionalByScroll : function(){
 
 				if(ascrollel){
-					var s = $(window).scrollTop();
+					var s = el.w.scrollTop();
 
 					if(Math.abs(s - ascroll) > 150){
 						actions.additional(ascrollel, false)
@@ -335,15 +335,15 @@ var lenta = (function(){
 					el.addClass('showAdditional')
 					el.find('.subscribeWrapper').fadeIn();
 
-					ascroll = $(window).scrollTop();
+					ascroll = el.w.scrollTop();
 					ascrollel = el;
-					window.addEventListener('scroll', actions.removeAdditionalByScroll);
+					el.w.on('scroll', actions.removeAdditionalByScroll);
 				}
 				else
 				{
 					el.removeClass('showAdditional')
 					el.find('.subscribeWrapper').fadeOut();
-					window.removeEventListener('scroll', actions.removeAdditionalByScroll);
+					el.w.on('scroll', actions.removeAdditionalByScroll);
 				}
 				
 			},
@@ -719,7 +719,7 @@ var lenta = (function(){
 					return
 				}
 
-				var h = $(window).height();
+				var h = el.w.height();
 
 				var wh = el.find('.videoWrapper').height() + 100;
 
@@ -1096,7 +1096,7 @@ var lenta = (function(){
 						
 						var inv = inView(el.c.find('.videoWrapper'), {
 						
-							offset : $(window).height() / 10,
+							offset : el.w.height() / 10,
 							mode : 'all'
 						})
 
@@ -1172,9 +1172,9 @@ var lenta = (function(){
 						
 						var els = el.c.find('.share');
 
-						var _el = w; 
+						var _el = el.w; 
 
-						var h = $(window).height() / 4
+						var h = el.w.height() / 4
 						
 						var inv = inView(els, {
 							inel : _el,
@@ -1304,10 +1304,9 @@ var lenta = (function(){
 			},	
 			loadmorescroll : function(){
 
-
 				if (
 
-					($(window).scrollTop() + $(window).height() > el.c.height() - 2000) 
+					(el.w.scrollTop() + el.w.height() > el.c.height() - 2000) 
 
 					&& !loading && !ended && recommended != 'recommended') {
 
@@ -2989,7 +2988,7 @@ var lenta = (function(){
 				var tp = el.c.find('.loadprev')
 
 				var trueshold = 200
-
+				/*
 				var parallax = new SwipeParallax({
 
 					el : el.c.find('.shares'),
@@ -3053,18 +3052,18 @@ var lenta = (function(){
 					}
 					
 	
-				}).init()
+				}).init()*/
 			}
 
 			if(!essenseData.openapi){
 
 				
-				window.addEventListener('scroll', events.videosInview);
-				window.addEventListener('resize', events.resize);
+				el.w.on('scroll', events.videosInview);
+				el.w.on('resize', events.resize);
 
 				if(!essenseData.notscrollloading){
-					window.addEventListener('scroll', events.sharesInview);
-					window.addEventListener('scroll', events.loadmorescroll);
+					el.w.on('scroll', events.sharesInview);
+					el.w.on('scroll', events.loadmorescroll);
 				}	
 				
 			}
@@ -3574,6 +3573,8 @@ var lenta = (function(){
 
 				}
 
+				
+
 				canloadprev = !!!essenseData.txids || false
 
 				video = essenseData.video || false
@@ -3678,10 +3679,10 @@ var lenta = (function(){
 				self.app.platform.sdk.chats.removeTemp()
 				video = false					
 
-				window.removeEventListener('scroll', events.videosInview);
-				window.removeEventListener('scroll', events.sharesInview);
-				window.removeEventListener('scroll', events.loadmorescroll);
-				window.removeEventListener('resize', events.resize);
+				el.w.off('scroll', events.videosInview);
+				el.w.off('scroll', events.sharesInview);
+				el.w.off('scroll', events.loadmorescroll);
+				el.w.off('resize', events.resize);
 
 				el = {};
 			},
@@ -3701,7 +3702,7 @@ var lenta = (function(){
 			},
 			
 			init : function(p){
-
+				
 				w = $(window)
 
 				state.load();
@@ -3711,6 +3712,7 @@ var lenta = (function(){
 				el.shares = el.c.find('.shares');
 				el.loader = el.c.find('.loader');
 				el.lentacnt = el.c.find('.lentacell .cnt')
+				el.w = essenseData.window || $(window)
 
 				initEvents();
 

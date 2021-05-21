@@ -132,12 +132,14 @@ var Proxy = function (settings, manage, test) {
 			return true
 		},
 
+	
+
 		parsesignature : function(nonce){
 			var ch = nonce.split(',')
 			var obj = {}
 
 			_.each(ch, function(p){
-				var ch2 = p.split(':')
+				var ch2 = p.split('=')
 
 				if(!ch2[1] || !ch2[0]) return
 

@@ -52,7 +52,7 @@ var main = (function(){
 				self.app.platform.ui.share()
 			},
 			addbuttonscroll  : function(){
-				if($(window).scrollTop() > 400){
+				if(el.w.scrollTop() > 400){
 					el.addbutton.addClass('scrollactive')
 				}
 				else{
@@ -408,9 +408,10 @@ var main = (function(){
 						tags : searchtags,
 						video : videomain && !isMobile(),
 						videomobile : videomain && isMobile(),
+						window : el.w, //isMobile() ? el.c.find('.lentacell') : el.w,
 						opensvi : function(id){
 
-							lastscroll = $(window).scrollTop()
+							lastscroll = el.w.scrollTop()
 
 							el.c.addClass('opensvishowed')
 
@@ -510,7 +511,7 @@ var main = (function(){
 				if (mode){
 
 					if (mobilemode == 'mainshow'){
-						lastscroll = $(window).scrollTop()
+						lastscroll = el.w.scrollTop()
 						_scrollTop(0, null, 0)
 					}
 
@@ -561,7 +562,7 @@ var main = (function(){
 
 		var initEvents = function(){
 			
-			window.addEventListener('scroll', actions.addbuttonscroll)
+			el.w.on('scroll', actions.addbuttonscroll)
 
 			el.smallpanel.find('.item').on('click', events.currentMode)
 
@@ -836,6 +837,8 @@ var main = (function(){
 				roller = null
 				lenta = null
 				videomain = false
+
+				self.app.el.footer.removeClass('workstation')
 			},
 			
 			init : function(p){
@@ -858,6 +861,8 @@ var main = (function(){
 				el.columnnavigationWrapper = el.c.find('.columnnavigationWrapper')
 
 				el.w = $(window)
+
+				self.app.el.footer.addClass('workstation')
 
 				var wordsRegExp = /[,.!?;:() \n\r]/g
 
@@ -891,6 +896,9 @@ var main = (function(){
 				make(function(){
 					p.clbk(null, p);
 				}, p)
+				
+
+				//var swiper = new Swiper('#maincntwrapper', {})
 				
 			}
 		}

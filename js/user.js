@@ -51,7 +51,7 @@ User = function(app, p) {
 
 		const currentMomentInUTC = new Date().toISOString();
 
-		var nonce = 'date:' + currentMomentInUTC + ",exp:" + exp + ',s:' + hexEncode(str);
+		var nonce = 'date=' + currentMomentInUTC + ",exp=" + exp + ',s=' + hexEncode(str);
 
 		var signature = null; 	
 
