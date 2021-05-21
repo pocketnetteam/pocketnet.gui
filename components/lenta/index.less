@@ -1441,7 +1441,7 @@
 
 						.label,
 						.icon{
-							color : #ff2f00;
+							color : @color-pink;
 						}
 
 						
@@ -2312,7 +2312,7 @@ html.stblack{
 			}
 	
 			.commentsWrapper{			
-				background: @color-gray3;
+				background: transparent;
 			}
 	
 	
@@ -2586,7 +2586,7 @@ html.stblack{
 	
 							.label,
 							.icon{
-								color : #ff2f00;
+								color : @color-pink;
 							}
 	
 							&:hover{
@@ -2674,6 +2674,25 @@ html.stblack{
 			}
 		}
 	
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	#lenta{
+		.shares{
+			.share{
+				&.fullScreenVideo{
+					
+					.exitFull.roundclosebutton {
+						position: absolute;
+					}
+
+					.work {
+						margin-top: 63px;
+					}
+				}
+			}
+		}
 	}
 }
 

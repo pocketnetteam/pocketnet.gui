@@ -42,7 +42,8 @@ var lenta = (function(){
 			shareheights = {},
 			_reposts = {},
 			fixedblock = 0,
-			fullscreenvideoShowed = false;
+			fullscreenvideoShowed = false,
+			savedScroll = 0;
 
 		var countshares = 0;
 
@@ -697,30 +698,30 @@ var lenta = (function(){
 
 			videoPosition : function(el){
 
-				if (essenseData.openapi){return}
+				// if (essenseData.openapi){return}
 
-				var work = el.find('.work');
+				// var work = el.find('.work');
 
-				if(!el.hasClass('fullScreenVideo')){
+				// if(!el.hasClass('fullScreenVideo')){
 
-					work.css('margin-top', '0px')
+				// 	work.css('margin-top', '0px')
 
-					return
-				}
+				// 	return
+				// }
 
-				var h = $(window).height();
+				// var h = $(window).height();
 
-				var wh = el.find('.videoWrapper').height() + 100;
+				// var wh = el.find('.videoWrapper').height() + 100;
 
-				var d = (h - wh) / 2
-
-				if (d > 0){
-					work.css('margin-top', d + 'px')
-				}
-				else
-				{
-					work.css('margin-top', 0 + 'px')
-				}
+				// var d = (h - wh) / 2
+				
+				// if (d > 0){
+				// 	work.css('margin-top', d + 'px')
+				// }
+				// else
+				// {
+				// 	work.css('margin-top', 0 + 'px')
+				// }
 
 			},
 
@@ -750,6 +751,10 @@ var lenta = (function(){
 				_el.addClass('fullScreenVideo')
 				if (swiper && swiper.addClass && window.innerWidth > 768)
 					swiper.addClass('fullScreenVideo')
+				else {
+					savedScroll = $(window).scrollTop();
+					$(window).scrollTop(0);
+				}
 
 				if (video) $('html').addClass('fullvideoshowed')
 
@@ -802,6 +807,9 @@ var lenta = (function(){
 				_el.removeClass('fullScreenVideo')
 				if (swiper && swiper.removeClass)
 					swiper.removeClass('fullScreenVideo')
+
+				if (savedScroll)
+					$(window).scrollTop(savedScroll);
 
 				actions.videoPosition(_el)
 

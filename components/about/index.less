@@ -49,7 +49,8 @@
 
 	.slide{
 
-		padding : 12 * @rhythm 10 * @rhythm;
+		padding-top: 6 * @rhythm;
+		padding : 8 * @rhythm 10 * @rhythm;
 
 		.slideSubCaption{
 			font-size: 1.6em;
@@ -62,18 +63,16 @@
 
 		.slideCaption{
 			text-align: center;
-			color : @color-contrast;
+			color : @color-pink;
 		}
 
 		&.surveyWr{
-			background: #FFE400;
 
 			.slideSubCaption{
 				text-align: center;
 				font-size : 0.8em;
 				font-weight: 700;
 				margin-bottom : 2 * @rhythm;
-				color : @color-gray2;
 			}
 
 			.slideCaption{
@@ -140,7 +139,7 @@
 					border-radius: 5px;
 
 					.resultpercent{
-						background: fade(@color-contrast, 80);
+						background: fade(@color-pink, 80);
 						position: absolute;
 						left: 0;
 						top : 0;
@@ -157,9 +156,11 @@
 					font-size: 1.2em;
 					background: fade(#FFF, 30);
 					border-radius: 100px;
+					background: @color-bright;
+					color: @color-white;
 
 					&:hover{
-						color : @color-contrast;
+						color : @color-pink;
 					}
 				}
 				.answer{
@@ -173,7 +174,9 @@
 		}
 
 		&.social{
-			background: @color-contrast;
+
+
+			
 			color : #fff;
 			padding-top : 2 * @rhythm;
 			padding-bottom : 2 * @rhythm;
@@ -196,7 +199,6 @@
 		}
 
 		&.join{
-			background: #1B1C1E;
 			color : #000;
 
 			.wrapper{
@@ -232,7 +234,7 @@
 								color : #fff;
 
 								&:hover{
-									color : @color-contrast;
+									color : @color-pink;
 								}
 							}
 						}
@@ -251,7 +253,7 @@
 		}
 
 		&.faq{
-			background: #FBFBFB;
+			// background: #FBFBFB;
 
 			.wrapper{
 				padding : 0 10 * @rhythm;
@@ -260,7 +262,6 @@
 			.slideSubCaption{
 				font-size: 4em;
 				font-weight: 700;
-				color : fade(#000, 90);
 			}
 
 			.part{
@@ -302,9 +303,9 @@
 		}
 
 		&.withLenta{
-			background: #1B2327;
 			padding: 20 * @rhythm;
 			padding-top: 10 * @rhythm;
+			padding-bottom: 4 * @rhythm;
 
 			.slideCaption{
 				color : #fff;
@@ -335,9 +336,9 @@
 			background: #1da1f2;
 
 			.slideSubCaption{
-				color : fade(@color-contrast, 80);
+				color : fade(@color-pink, 80);
 				span{
-					border-bottom-color: fade(@color-contrast, 80);
+					border-bottom-color: fade(@color-pink, 80);
 				}
 				
 			}
@@ -359,7 +360,7 @@
 					}
 
 					.black{
-						color : fade(@color-contrast, 90);
+						color : fade(@color-pink, 90);
 					}
 
 					.exe{
@@ -388,12 +389,12 @@
 
 							&.shadowWhite{
 								color : #fff;
-								background: @color-contrast;
-								border-color: @color-contrast;
+								background: @color-pink;
+								border-color: @color-pink;
 
 								&:hover{
 									background : transparent;
-									color : @color-contrast;
+									color : @color-pink;
 								}
 							}
 
@@ -470,7 +471,7 @@
 		}
 
 		.caption{
-			color : @color-contrast;
+			color : @color-pink;
 		}
 
 		.inputWrapper{
@@ -478,7 +479,7 @@
 				width : 100%;
 				border : 0;
 				background: transparent;
-				border-bottom : 2px solid @color-contrast;
+				border-bottom : 2px solid @color-pink;
 				color : #fff;
 
 				&:placeholder-shown{
