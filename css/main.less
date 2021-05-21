@@ -18,7 +18,7 @@ html {
     min-height: 100%;
     position: relative;
     overflow-y: scroll;
-    background: #f6f6f6;
+    // background: #f6f6f6;
     /*overflow-anchor: none;*/
 
     &.nooverflow{
@@ -321,14 +321,15 @@ input[type="email"],
 input[type="password"],
 input[type="number"]
 {
-    border: 0;
+    // border: 0;
     background: #fff;
     color: @color-black;
     border-radius: 1px;
     padding: @rhythm;
-    border: 1px solid @color-add;
-    
+    border: 1px solid @color-gray-border;
+    // border-right: 0;
 }
+
 input[type="text"],
 input[type="email"],
 input[type="password"]{
@@ -410,6 +411,11 @@ button{
         }
     }
 
+    &.contrast{
+        background: @color-contrast;
+        border: 1px solid @color-contrast;
+    }
+
     &.shadowWhite{
         background: transparent;
         color : #fff;
@@ -443,8 +449,8 @@ button{
     }
 
     &.contrast{
-        background: @color-contrast;
-        border: 1px solid @color-contrast;
+        background: @color-raspberry;
+        border: 1px solid @color-raspberry;
         color: #fff;
 
         &:hover{
@@ -488,6 +494,7 @@ button{
 
 textarea{
     color: @color-black2;
+    border: 1px solid @color-gray-border;
 }
 
 .psselect,
@@ -4168,7 +4175,7 @@ input[type=radio].radio:checked + label {
 
         .vc_inputWrapper{
 
-            border : 1px solid  @color-gray-light;
+            border : 1px solid  @color-gray-border;
             border-right: 0;
             border-radius: 2px;
             border-top-right-radius: 0;
@@ -4176,7 +4183,7 @@ input[type=radio].radio:checked + label {
 
             input{
                 background: transparent;
-                border : 0!important;
+                border : 0;
                 width: 100%;
                 height: 100%;
 
