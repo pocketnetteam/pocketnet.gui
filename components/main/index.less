@@ -707,18 +707,6 @@ html {
 
 }
 }
-/*
-@media only screen and (max-width: 1024px) {
-	#main{
-
-		.lentacell{
-			margin-right : 64px;
-			margin-left : 60px;
-		}
-	
-	}
-}*/
-
 
 @media only screen and (max-width: 768px) {
 	#main{
@@ -732,8 +720,8 @@ html {
 	
 		}
 	}
+
 	#main{
-		min-height: 1024px;
 
 		.bgCaption{
 			display: none;
@@ -753,6 +741,26 @@ html {
 			width : 300%;
 			transform: translateX(-33.3333333%);
 			.transition(0.3s);
+			
+			/*position: absolute;
+			left : 0;
+			top : 120px;
+			bottom : 0;
+
+			.work{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left : 0;
+				top : 0;
+			}
+
+			.lentacell,
+			.mainpanelcell,
+			.leftpanelcell{
+				height: 100%;
+				overflow: auto;
+			}*/
 		}
 
 		.lentacell{
@@ -760,7 +768,7 @@ html {
 			margin-right: 33.333%;
 			padding-top : 0;
 			width : 33.333%;
-			min-height: 1000px;
+			min-height: 0;
 			padding-bottom: 0;
 		}
 

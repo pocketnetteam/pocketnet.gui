@@ -49,7 +49,9 @@ User = function(app, p) {
 
 		var keyPair = self.keys()
 
-		var nonce = 'date:' + utcnow().getTime() + ",exp:" + exp + ',s:' + hexEncode(str);
+		const currentMomentInUTC = new Date().toISOString();
+
+		var nonce = 'date:' + currentMomentInUTC + ",exp:" + exp + ',s:' + hexEncode(str);
 
 		var signature = null; 	
 
