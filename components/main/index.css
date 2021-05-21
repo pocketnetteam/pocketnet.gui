@@ -383,7 +383,6 @@ html body {
 }
 #main #mainSwiper #leftPanelSlide,
 #main #mainSwiper #rightPanelSlide {
-  height: 100%;
   position: static;
   top: 0px;
   overscroll-behavior: none;
