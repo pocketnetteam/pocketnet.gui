@@ -130,6 +130,12 @@ var main = (function(){
 				let savedOffsetTop = panel[0].offsetTop, topNavbarHeight = 65,
 					wHeight = window.innerHeight, scroll = $(window).scrollTop(),
 					panelHeight = panel.height();
+				// If panel height is smaller than window height
+				if (panelHeight + topNavbarHeight <= wHeight) {
+					panel.css('position', 'sticky');
+					panel.css('top', topNavbarHeight);
+					return;
+				}
 				// Determine if we are scrolling up or down
 				if ((savedScroll - scroll) < 0) {
 					// We are scrolling down
