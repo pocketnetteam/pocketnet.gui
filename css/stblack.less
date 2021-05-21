@@ -3,7 +3,7 @@
 html.stblack{
     
 
-    background: @color-black;
+    background: transparent;
 
     body{
         background: @color-black;
@@ -79,7 +79,7 @@ html.stblack{
     {
         background:  @color-black;
         color: #fff;
-        border: 1px solid @color-add;
+        border: none;
         
     }
 
@@ -106,7 +106,6 @@ html.stblack{
         }
     
         &.shadowWhite{
-            background: transparent;
             color : @color-black3;
             border : 1px solid @color-black3;
     
@@ -150,13 +149,13 @@ html.stblack{
         }
     
         &.orange{
-            background: fade(#FF4800, 70);
-            border: 1px solid fade(#FF4800, 70);
+            background: fade(@color-main, 70);
+            border: 1px solid fade(@color-main, 70);
             color: #FFF;
     
             &:hover{
-                background : fade(#FF4800, 20);
-                color: fade(#FF4800, 70);
+                background : fade(@color-dark-blue, 20);
+                color: fade(@color-dark-blue, 70);
             }
         }
     
