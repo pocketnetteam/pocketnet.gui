@@ -2,6 +2,8 @@ var socialshare2 = (function(){
 
 	var self = new nModule();
 
+	console.log('@@@@@@', localStorage.getItem('usertheme') === 'black' ? true : false)
+
 	var essenses = {};
 
 	var Essense = function(p){
@@ -35,8 +37,9 @@ var socialshare2 = (function(){
 				name: "Black Theme",
 				id: 'black',
 				type: "BOOLEAN",
-				value: false
+				value: localStorage.getItem('usertheme') === 'black' ? true : false
 			}),
+
 
 			autoplayvideo : new Parameter({
 				name: "Autoplay Video",
