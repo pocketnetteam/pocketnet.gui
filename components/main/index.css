@@ -360,6 +360,9 @@ html.stblack #main .addbutton:hover {
   background: transparent;
   color: #00a3f7;
 }
+html.stblack #main.videomain #categories {
+  color: #d0c9ca;
+}
 html.stblack #main .caption {
   color: #00a4ff;
 }

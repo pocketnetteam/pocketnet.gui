@@ -1487,51 +1487,55 @@ var share = (function(){
 
 			postline : function(clbk){
 
+				self.app.platform.sdk.user.get(function(u){
+				
+					self.shell({
+						name :  'postline',
+						el : el.postline,
+						data : {
+							share : currentShare,
+							essenseData : essenseData,
+							lkey : self.app.localization.key,
+							u : u
+						},
 
-				self.shell({
-					name :  'postline',
-					el : el.postline,
-					data : {
-						share : currentShare,
-						essenseData : essenseData,
-						lkey : self.app.localization.key
-					},
+					}, function(p){
 
-				}, function(p){
+						el.panel = el.c.find('.panel .item');
+						el.postWrapper = el.c.find('.postWrapper');					
+						el.changePostTime = el.c.find('.postTime')
+						el.selectTime = el.c.find('.selectedTimeWrapper')
+						el.post = el.c.find('.post')
+						el.times = el.c.find('.panel .times')
 
-					el.panel = el.c.find('.panel .item');
-					el.postWrapper = el.c.find('.postWrapper');					
-					el.changePostTime = el.c.find('.postTime')
-					el.selectTime = el.c.find('.selectedTimeWrapper')
-					el.post = el.c.find('.post')
-					el.times = el.c.find('.panel .times')
-
-					el.changePostTime.on('change', events.changePostTime)
-					el.selectTime.on('click', events.selectTime)
-					el.panel.on('click', events.embeding)
-					el.post.on('click', events.post)
-
-
-					el.peertube = el.c.find('.peertube');
-					el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
+						el.changePostTime.on('change', events.changePostTime)
+						el.selectTime.on('click', events.selectTime)
+						el.panel.on('click', events.embeding)
+						el.post.on('click', events.post)
 
 
+						el.peertube = el.c.find('.peertube');
+						el.peertubeLiveStream = el.c.find('.peertubeLiveStream');
 
-					p.el.find('.cancelediting').on('click', function(){
-						self.closeContainer();
 
-						if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
-		
-						if (essenseData.close){
-							essenseData.close()
-						}
+
+						p.el.find('.cancelediting').on('click', function(){
+							self.closeContainer();
+
+							if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
+			
+							if (essenseData.close){
+								essenseData.close()
+							}
+						})
+
+
+						actions.toggleTimesDisplay();
+
+						if (clbk)
+							clbk();
 					})
 
-
-					actions.toggleTimesDisplay();
-
-					if (clbk)
-						clbk();
 				})
 
 			},

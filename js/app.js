@@ -426,9 +426,9 @@ Application = function(p)
 	self.map = __map;
 	self.modules = {};
 
-	if (self.test){
+	/*if (self.test){
 		$('html').addClass('testpocketnet')
-	}
+	}*/
 
 	self.curation = function(){
 		if(typeof isios != 'undefined' && isios()) return true
@@ -818,6 +818,10 @@ Application = function(p)
 
 			self.scrollRemoved = true
 
+			$('html').addClass('nooverflow')
+
+			/*
+
 			if(!js){
 
 				$('html').addClass('nooverflow')
@@ -827,7 +831,7 @@ Application = function(p)
 				winScrollTop = $(window).scrollTop();
 
 				$(window).bind('scroll', self.actions.wscroll);
-			}
+			}*/
 
 			return true
 			
@@ -836,7 +840,7 @@ Application = function(p)
 		onScroll : function(){
 
 			$('html').removeClass('nooverflow')
-			$(window).unbind('scroll', self.actions.wscroll);
+			//$(window).unbind('scroll', self.actions.wscroll);
 
 
 			self.scrollRemoved = false;

@@ -2878,7 +2878,7 @@ var lenta = (function(){
 								txids : essenseData.txids,
 								height : fixedblock,
 								tagsfilter : tagsfilter,
-								video : video,
+								video : video || essenseData.videomobile,
 								count : video ? 20 : 10,
 								page : page
 

@@ -78,6 +78,8 @@ User = function(app, p) {
 			
 		}
 
+		if(old) delete sobj.v
+
 		return sobj
 	}
 

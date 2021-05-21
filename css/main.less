@@ -4568,17 +4568,34 @@ input[type=radio].radio:checked + label {
         bottom : -4%;
         right : -4%;
         .shadowText();
-        color : @color-bright;
+       
         line-height: 0.25em;
         font-size: 0.25em;
+        
+        opacity: 1;
+
+        .fa-certificate{
+            color : fade(@color-main, 100);
+            animation: realperson-color-change-bg 3s infinite;
+        }
 
         .fa-check{
             color : #fff;
             box-shadow: none;
         }
+
+       
     }
 
 }
+
+
+@keyframes realperson-color-change-bg {
+    0% { color: fade(@color-bright, 80);  }
+    50% { color: fade(@color-main, 100); }
+    100% { color: fade(@color-bright, 80);}
+}
+
 .userpic{
     width: 40px;
     height: 40px;

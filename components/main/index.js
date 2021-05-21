@@ -50,43 +50,6 @@ var main = (function(){
 			addbutton : function(){
 
 				self.app.platform.ui.share()
-
-				/*globalpreloader(true, true)
-
-				setTimeout(function(){
-					self.nav.api.load({
-
-						open : true,
-						id : 'share',
-						inWnd : true,
-	
-						eid : 'postin',
-						
-						clbk : function(e, p){
-							globalpreloader(false)
-						},
-	
-						essenseData : {
-							close : function(){
-	
-								share.make()
-	
-							},
-							post : function(){
-								share.make()
-	
-	
-								if (plissing)
-									plissing.destroy()
-								
-							},	
-							absolute : true
-						}
-	
-					})
-				}, 50)*/
-				
-				
 			},
 			addbuttonscroll  : function(){
 				if($(window).scrollTop() > 400){
@@ -95,63 +58,6 @@ var main = (function(){
 				else{
 					el.addbutton.removeClass('scrollactive')
 				}
-			},
-			panelTopPosition : function(){
-
-				return
-
-				if(!isMobile()){
-					var s = $(window).scrollTop();
-
-					if (s > 45){
-						el.panel.closest('.fxd').addClass('dfxd')
-					}
-					else
-					{
-						el.panel.closest('.fxd').removeClass('dfxd')
-					}
-
-					actions.panelPosition()
-				}
-
-			},
-			panelPosition : function(){
-
-				return
-
-				var cnt = el.panel.closest('.fxd');
-				var mwork = el.panel.closest('.mwork');
-				var width = $(window).width();
-
-				if(!cnt.hasClass('dfxd')){
-
-					cnt.removeAttr('style')
-
-
-					/*cnt.css('right', "0px")
-					cnt.css('left', "0px")*/
-
-					return
-				}
-
-
-
-				var maxWidth = 1280;
-
-				var paddingR = 0;
-				var paddingL = 0;
-
-				var over = (width - maxWidth) / 2;
-
-				if (over < 0) over = 0;
-
-				var right = width - (mwork.offset().left + mwork.width()) + paddingR;
-
-				var left = width - right - 350 + paddingL + paddingR
-
-
-				cnt.css('right', right + "px")
-				cnt.css('left', left + "px")
 			},
 
 			currentMode : function(){
@@ -357,7 +263,7 @@ var main = (function(){
 
 			panel : function(){
 
-				if(videomain) return
+				if(videomain && !isMobile()) return
 
 				self.nav.api.load({
 
@@ -500,8 +406,8 @@ var main = (function(){
 						searchValue : searchvalue || null,
 						search : searchvalue ? true : false,
 						tags : searchtags,
-						video : videomain,
-
+						video : videomain && !isMobile(),
+						videomobile : videomain && isMobile(),
 						opensvi : function(id){
 
 							lastscroll = $(window).scrollTop()
@@ -976,7 +882,7 @@ var main = (function(){
 
 				videomain = parameters().video ? true : false
 
-				if(videomain){
+				if(videomain && !isMobile()){
 					el.c.addClass('videomain')
 				}
 

@@ -2994,6 +2994,9 @@ video[src], .vjs-fullscreen {
   background: transparent;
   font-family: "Segoe UI", SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
+.video-js .vjs-control-bar {
+  background: rgba(1, 18, 37, 0.75);
+}
 
 .video-js .vjs-tech {
   position: absolute;

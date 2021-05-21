@@ -23,7 +23,7 @@
 
             <% 
             
-            if (app.platform.enablePeertube && !share.itisvideo() && !share.aliasid) { %>
+            if (typeof u != 'undefined' && u && !u.trial && !share.itisvideo() && !share.aliasid) { %>
                 <div class="item peertube tooltip" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                     <i class="fas fa-video"></i> <span class="mobiledevice"><%=e('peertubeAddVideo')%></span>
                 </div>
