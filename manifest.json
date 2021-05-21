@@ -13,6 +13,5 @@
      }
     ],
     "display": "fullscreen",
-    "start_url": "/pocketnet",
-    "scope": "/"
+    "start_url": "https://localhost/pocketnet/"
 }
