@@ -38,6 +38,83 @@ var main = (function(){
 		}
 		
 		var actions = {
+			swipe : function(phase, direction, distance){
+
+				if(direction != 'left' && direction != 'right') return
+
+				console.log('direction, distance', phase, direction, distance)
+
+				var currentindex = _.findIndex(mobilemodes, function(m){
+					return m.mode == mobilemode
+				})
+
+				var tomode = null
+				var prs = 0
+				var c = 1
+
+				if (phase == 'move'){
+
+					if(direction == 'left' || direction == 'right'){
+						prs = 100 * (distance / el.w.width())
+
+						if(prs > 10) prs = 10
+
+						if(direction == 'left') c = - 1
+
+						el.slwork.css({'margin-left' : (c * prs) + "%"})
+
+						return
+					}
+					
+				}
+
+				el.slwork.css({'margin-left' : '0'})
+
+				if(phase == 'end'){
+
+					if(direction == 'right'){
+
+						if (currentindex > 0){
+
+							tomode = mobilemodes[currentindex - 1].mode
+						}
+						else{
+							phase = 'cancel'
+						}
+
+					}
+
+					if(direction == 'left'){
+
+						if (currentindex < mobilemodes.length - 1){
+
+							tomode = mobilemodes[currentindex + 1].mode
+						}
+						else{
+							phase = 'cancel'
+						}
+
+					}
+
+					if(!tomode){
+						phase = 'cancel'
+					}
+					else{
+						renders.mobilemode(tomode)
+						return
+					}
+				}
+
+				if(phase == 'cancel'){
+					if(direction == 'left' || direction == 'right'){
+
+					}
+				}
+
+				
+
+				
+			},
 			refreshSticky : function(){
 
 				if (hsready){
@@ -529,6 +606,8 @@ var main = (function(){
 
 			columnnavigation : function(){
 
+				return
+
 
 				self.shell({
 					name :  'columnnavigation',
@@ -859,6 +938,7 @@ var main = (function(){
 				el.smallpanel = el.c.find('.smallpanell')
 				el.addbutton = el.c.find('.addbutton')
 				el.columnnavigationWrapper = el.c.find('.columnnavigationWrapper')
+				el.slwork = el.c.find('.maincntwrapper >div.work')
 
 				el.w = $(window)
 
@@ -896,16 +976,28 @@ var main = (function(){
 				make(function(){
 					p.clbk(null, p);
 				}, p)
+
+				if(isMobile()){
+
+					el.c.find('.maincntwrapper').swipe({
+						allowPageScroll: "vertical", 
+						swipeStatus : function(e, phase, direction, distance){
+
+							actions.swipe(phase, direction, distance)
+
+							return true
+						},
+						/*pinchStatus : function(e, p, direction, distance){
+
+							actions.swipe(direction, distance)
+
+							return true
+						},*/
+					})
+	
+				}
 				
-				/*el.c.find('.maincntwrapper').swipe({
-					allowPageScroll : true,
-					swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
-						console.log('_direction', _direction)
-
-						return true
-					}
-				})*/
-
+				
 				
 				
 			}

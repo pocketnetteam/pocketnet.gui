@@ -748,17 +748,21 @@ html {
 			top : 120px;
 			bottom : 0;
 			
-
-			.work{
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				left : 0;
-				bottom: 0;
-				right : 0;
-				top : 0;
-				
+			>div{
+				&.work{
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					left : 0;
+					bottom: 0;
+					right : 0;
+					top : 0;
+	
+					.transition(0.3s);
+					
+				}
 			}
+			
 
 			.lentacell,
 			.mainpanelcell,
