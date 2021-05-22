@@ -719,7 +719,7 @@ var lenta = (function(){
 					return
 				}
 
-				var h = el.w.height();
+				var h = $(window).height();
 
 				var wh = el.find('.videoWrapper').height() + 100;
 
@@ -3679,10 +3679,13 @@ var lenta = (function(){
 				self.app.platform.sdk.chats.removeTemp()
 				video = false					
 
-				el.w.off('scroll', events.videosInview);
-				el.w.off('scroll', events.sharesInview);
-				el.w.off('scroll', events.loadmorescroll);
-				el.w.off('resize', events.resize);
+				if (el.w){
+					el.w.off('scroll', events.videosInview);
+					el.w.off('scroll', events.sharesInview);
+					el.w.off('scroll', events.loadmorescroll);
+					el.w.off('resize', events.resize);
+				}
+				
 
 				el = {};
 			},
