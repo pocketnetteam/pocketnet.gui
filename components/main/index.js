@@ -59,16 +59,18 @@ var main = (function(){
 
 						if(prs > 10) prs = 10
 
-						if(direction == 'left') c = - 1
+						if(direction == 'left') c = -1
 
-						el.slwork.css({'margin-left' : (c * prs) + "%"})
+
+						console.log('translateX(' + (c * prs) + "%)")
+						el.slwork.css({'transform' : 'translateX(' + (c * prs) + "%)"})
 
 						return
 					}
 					
 				}
 
-				el.slwork.css({'margin-left' : '0'})
+				el.slwork.css({'transform' : 'none'})
 
 				if(phase == 'end'){
 
