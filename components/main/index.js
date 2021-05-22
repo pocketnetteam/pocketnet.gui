@@ -408,7 +408,7 @@ var main = (function(){
 						tags : searchtags,
 						video : videomain && !isMobile(),
 						videomobile : videomain && isMobile(),
-						window : el.w, //isMobile() ? el.c.find('.lentacell') : el.w,
+						window : isMobile() ? el.c.find('.lentacell') : el.w,
 						opensvi : function(id){
 
 							lastscroll = el.w.scrollTop()
@@ -897,8 +897,16 @@ var main = (function(){
 					p.clbk(null, p);
 				}, p)
 				
+				/*el.c.find('.maincntwrapper').swipe({
+					allowPageScroll : true,
+					swipeStatus:function(event, phase, _direction, distance, duration, fingers, fingerData, currentDirection){
+						console.log('_direction', _direction)
 
-				//var swiper = new Swiper('#maincntwrapper', {})
+						return true
+					}
+				})*/
+
+				
 				
 			}
 		}

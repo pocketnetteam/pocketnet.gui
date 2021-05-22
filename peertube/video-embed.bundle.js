@@ -47363,6 +47363,15 @@ class PeerTubeEmbed {
         errorBlock.appendChild(errorBlockWrapper);
         errorBlockWrapper.appendChild(errorTitle);
         errorBlockWrapper.appendChild(errorText);
+        if (this.details && this.details.uuid) {
+            const errorReload = document.createElement("button");
+            errorReload.className = "error-reload";
+            errorReload.innerHTML = '<i class="fas fa-redo"></i> Reload';
+            errorReload.onclick = () => {
+                this.loadVideoAndBuildPlayer(this.details.uuid);
+            };
+            errorBlockWrapper.appendChild(errorReload);
+        }
         this.wrapperElement.innerHTML = "";
         this.wrapperElement.appendChild(errorBlock);
     }

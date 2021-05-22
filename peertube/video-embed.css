@@ -3129,6 +3129,22 @@ video[src], .vjs-fullscreen {
   text-align: center;
   padding: 50px;
 }
+.js-player .error-reload {
+  margin-top: 2em;
+  cursor: pointer;
+  background: #1a65f1;
+  color: #fff;
+  border: 1px solid #1a65f1;
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: 400;
+  border-radius: 2px;
+  padding: 0.5em 3em;
+}
+.js-player .error-reload:hover {
+  background: transparent;
+  color: #1a65f1;
+}
 .js-player .warning-block {
   position: absolute;
   z-index: 20;
