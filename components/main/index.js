@@ -70,7 +70,7 @@ var main = (function(){
 					
 				}
 
-				el.slwork.css({'transform' : 'none'})
+				el.slwork.css({'transform' : 'translateX(0%)'})
 
 				if(phase == 'end'){
 
@@ -989,9 +989,9 @@ var main = (function(){
 
 							return true
 						},
-						/*pinchStatus : function(e, p, direction, distance){
+						/*pinchStatus : function(e, phase, direction, distance){
 
-							actions.swipe(direction, distance)
+							actions.swipe(phase, direction, distance)
 
 							return true
 						},*/
