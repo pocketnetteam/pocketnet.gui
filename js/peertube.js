@@ -391,6 +391,12 @@ PeerTubePocketnet = function(app){
                     if(!data.host) return Promise.reject(error('host'))
     
                     return Promise.resolve(data.host)
+                }).catch(e => {
+                    if (e.data == 'best'){
+                        e.text = 'Unable to connect to video server'
+                    }
+
+                    return Promise.reject(e)
                 })
                
             },

@@ -546,14 +546,18 @@ var Proxy = function (settings, manage, test) {
 		},
 	}
 
+
 	self.peertube = {
 		init: function () {
+
+			var ins = ['pocketnetpeertube5.nohost.me']
+
+			if (test){
+				ins = ['pocketnetpeertube5.nohost.me']
+			}
+
 			return peertube.init({
-				urls : [
-					//'pocketnetpeertube3.nohost.me',
-					//'pocketnetpeertube4.nohost.me',
-    				'pocketnetpeertube5.nohost.me'
-				]
+				urls : ins
 			})
 		},
 

@@ -47285,7 +47285,7 @@ class PeerTubeEmbed {
         if (!window.peertubeglobalcache)
             window.peertubeglobalcache = {};
         if (window.peertubeglobalcache[videoId]) {
-            if (window.peertubeglobalcache[videoId].state.id != 2) {
+            if (window.peertubeglobalcache[videoId].state && window.peertubeglobalcache[videoId].state.id != 2) {
                 return Promise.resolve(window.peertubeglobalcache[videoId]);
             }
         }
