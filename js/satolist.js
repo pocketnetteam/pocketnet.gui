@@ -6929,6 +6929,8 @@ Platform = function (app, listofnodes) {
             },
 
             dumpPrivKey: function (n) {
+
+
                 var d = bitcoin.bip32.fromSeed(self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
 
                 var keyPair = bitcoin.ECPair.fromWIF(d)
@@ -19375,6 +19377,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load
                 ], function () {
+
+                   
 
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 

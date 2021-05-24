@@ -540,6 +540,7 @@ html.testpocketnet #main.testpocketnetbg {
   }
   #main .maincntwrapperOvf {
     overflow: hidden;
+    width: 100%;
   }
   #main .maincntwrapper {
     width: 300%;
