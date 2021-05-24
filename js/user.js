@@ -340,7 +340,7 @@ User = function(app, p) {
 
 		if(!mnemonic) mnemonic = ''
 
-		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic.toLowerCase())
+		var seed = bitcoin.bip39.mnemonicToSeed(mnemonic.toLowerCase())
 
 		return self.keysFromSeed(seed)
 
