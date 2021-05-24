@@ -4569,6 +4569,7 @@ input[type=radio].radio:checked + label {
         position : absolute;
         bottom : -4%;
         right : -4%;
+        .transition(0.3s);
         .shadowText();
        
         line-height: 0.25em;
@@ -4587,6 +4588,12 @@ input[type=radio].radio:checked + label {
         }
 
        
+    }
+
+    &:hover{
+        .realperson{
+            opacity: 0.1;
+        }
     }
 
 }

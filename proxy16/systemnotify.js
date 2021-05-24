@@ -1,5 +1,5 @@
 
-const TelegramBot = require('node-telegram-bot-api');
+//const TelegramBot = require('node-telegram-bot-api');
 var _ = require('underscore')
 var f = require('./functions');
 

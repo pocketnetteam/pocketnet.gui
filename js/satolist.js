@@ -39,7 +39,7 @@ Platform = function (app, listofnodes) {
     self.online = undefined;
     self.avblocktime = 45;
     self.repost = true;
-    self.videoenabled = true;
+    self.videoenabled = false;
 
 
     //////////////

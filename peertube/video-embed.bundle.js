@@ -47293,6 +47293,9 @@ class PeerTubeEmbed {
     }
     loadVideoTotal(videoId) {
         return this.loadVideo(videoId).then(({ videoResponse }) => {
+            if (!videoResponse) {
+                return Promise.resolve(null);
+            }
             return videoResponse.json();
         }).then((json) => {
             this.details = json;
@@ -47301,9 +47304,10 @@ class PeerTubeEmbed {
         });
     }
     waitTranscoded(videoId) {
-        console.log('this.details.state.id', this.details.state.id);
-        if (this.details && this.details.state.id == 2 && this.playerElement) {
+        if (this.details && this.details.state && this.details.state.id == 2 && this.playerElement) {
             return this.loadVideoTotal(videoId).then(details => {
+                if (!details)
+                    return Promise.resolve(null);
                 if (details.state.id == 2) {
                     return new Promise((resolve, reject) => {
                         setTimeout(() => {
@@ -47511,10 +47515,10 @@ class PeerTubeEmbed {
                 const serverTranslations = {};
                 if ((videoResponse === null || videoResponse === void 0 ? void 0 : videoResponse.status) === _shared_core_utils_miscs_http_error_codes__WEBPACK_IMPORTED_MODULE_5__["HttpStatusCode"].NOT_FOUND_404) {
                     this.videoNotFound(serverTranslations);
-                    return undefined;
+                    return {};
                 }
                 this.videoFetchError(serverTranslations);
-                return undefined;
+                return {};
             }
             return { videoResponse };
         });
@@ -47536,6 +47540,9 @@ class PeerTubeEmbed {
     loadVideoAndBuildPlayer(uuid) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const videoResponseJson = yield this.loadVideoInfoCache(uuid);
+            if (!videoResponseJson) {
+                return Promise.reject("failfetch");
+            }
             if (videoResponseJson.from) {
                 this.host = 'https://' + videoResponseJson.from;
             }

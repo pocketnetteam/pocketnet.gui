@@ -28,7 +28,6 @@
         "nedb": "^1.8.0",
         "node-autodetect-utf8-cp1251-cp866": "",
         "node-fetch": "",
-        "node-telegram-bot-api": "^0.53.0",
         "nodejs-base64": "^1.0.3",
         "nodemon": "^2.0.7",
         "random": "^2.2.0",
