@@ -1674,6 +1674,7 @@ pUserInfo = function(){
 	self.ref = '';
 	self.postcnt = 0;
 	self.reputation = 0;
+	self.trial = true;
 
 	self.subscribes = [];
 	self.subscribers = [];
@@ -1687,6 +1688,8 @@ pUserInfo = function(){
 
 
 	self._import = function(v){
+
+		console.log("V", v)
 
 		self.name = decodeURIComponent(v.n || v.name || '');
 		self.image = v.i || v.image;
@@ -1715,6 +1718,8 @@ pUserInfo = function(){
 		catch (e){
 			
 		}
+
+		if(typeof v.trial != 'undefined') self.trial = v.trial
 		
 
 		if (v.adr || v.address)

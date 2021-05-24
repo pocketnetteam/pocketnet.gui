@@ -1488,6 +1488,8 @@ var share = (function(){
 			postline : function(clbk){
 
 				self.app.platform.sdk.user.get(function(u){
+
+					console.log("U", u)
 				
 					self.shell({
 						name :  'postline',

@@ -4152,6 +4152,8 @@ Platform = function (app, listofnodes) {
 
                                 var u = new pUserInfo();
 
+                                console.log("IMPORTING", u)
+
                                 u._import(ui)
 
                                 storage.me = u
@@ -9906,7 +9908,6 @@ Platform = function (app, listofnodes) {
                             }
 
 
-                            console.log('cache', cache, p)
                             ////
 
                             var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
@@ -11267,11 +11268,9 @@ Platform = function (app, listofnodes) {
 
                         var tx = self.sdk.node.transactions.create.wallet(inputs, outputs, null, false, htlc)
 
-                        console.log('tx', tx)
 
                         self.sdk.node.transactions.send(tx, function(d, err){
 
-                            console.log("err", err)
 
                             if(err){
                                 sitemessage(err)
@@ -11391,7 +11390,6 @@ Platform = function (app, listofnodes) {
                             txb.addNTime(self.timeDifference || 0)
                         var k = smulti;
 
-                        console.log('inputs', inputs)
 
                         _.each(inputs, function (i) {
 
@@ -11452,7 +11450,6 @@ Platform = function (app, listofnodes) {
 
                         })
 
-                        console.log('txb', txb)
 
                         if(unfinalize) return txb
 
