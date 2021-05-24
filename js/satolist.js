@@ -4152,7 +4152,6 @@ Platform = function (app, listofnodes) {
 
                                 var u = new pUserInfo();
 
-                                console.log("IMPORTING", u)
 
                                 u._import(ui)
 
@@ -15112,7 +15111,6 @@ Platform = function (app, listofnodes) {
 
                 peertube : async function(links){
 
-                    console.log('links', links)
 
                     return self.app.api.fetch('peertube/videos', {
                         urls: links.map(link => link.link),

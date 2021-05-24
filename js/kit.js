@@ -1689,7 +1689,6 @@ pUserInfo = function(){
 
 	self._import = function(v){
 
-		console.log("V", v)
 
 		self.name = decodeURIComponent(v.n || v.name || '');
 		self.image = v.i || v.image;

@@ -1487,10 +1487,10 @@ var share = (function(){
 
 			postline : function(clbk){
 
-				self.app.platform.sdk.user.get(function(u){
+				self.app.platform.sdk.ustate.me(function(_mestate){
 
-					console.log("U", u)
-				
+					console.log("_mestate", _mestate)
+
 					self.shell({
 						name :  'postline',
 						el : el.postline,
@@ -1498,7 +1498,7 @@ var share = (function(){
 							share : currentShare,
 							essenseData : essenseData,
 							lkey : self.app.localization.key,
-							u : u
+							u : _mestate
 						},
 
 					}, function(p){
