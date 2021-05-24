@@ -40,9 +40,13 @@ var main = (function(){
 		var actions = {
 			swipe : function(phase, direction, distance){
 
-				if(direction != 'left' && direction != 'right') return
-
-				console.log('direction, distance', phase, direction, distance)
+				if(direction != 'left' && direction != 'right') {
+					if (phase != 'move'){
+						el.slwork.css({'transform' : 'translateX(0%)'})
+					}
+					
+					return
+				}
 
 				var currentindex = _.findIndex(mobilemodes, function(m){
 					return m.mode == mobilemode

@@ -157,13 +157,7 @@ var defaultSettings = {
 				amount : 0.0002,
 				outs : 10,
 				check : 'uniqAddress'
-			},
-
-			/*compensation : {
-				privatekey : "",
-				check : 'uniqAddress',
-				source : 'compensation'
-			},*/
+			}
 		}
 	},
 
@@ -185,7 +179,8 @@ var defaultSettings = {
 	},
 
 	systemnotify : {
-		bot : {},
+		token : '',
+		chatid : '',
 		parameters : {}
 	}
 
@@ -236,7 +231,8 @@ var state = {
 			proxies : {
 				explore : settings.proxies.explore
 			},
-			testkeys : state.exportkeys()
+			testkeys : state.exportkeys(),
+			systemnotify : settings.systemnotify
 			//rsa : settings.rsa
 		}
 
@@ -245,6 +241,12 @@ var state = {
 		if(view) {
 
 			exporting.testkeys = []
+
+			if (exporting.systemnotify.token)
+				exporting.systemnotify.token = "*"
+
+			if (exporting.systemnotify.chatid)
+				exporting.systemnotify.chatid = "*"
 
 			if (exporting.server.ssl.passphrase)
 				exporting.server.ssl.passphrase = "*"

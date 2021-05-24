@@ -30,14 +30,14 @@ var SystemNotify = function(){
     }   
 
     self.init = function({
-        chatId,
+        chatid,
         token
     }){
 
-        if(!chatId || !token) return Promise.reject('chatId, token')
+        if(!chatid || !token) return Promise.reject('chatId, token')
 
         bot = new TelegramBot(token, { polling: false });
-        chat = chatId
+        chat = chatid
     }
 
     var send = function(message){
