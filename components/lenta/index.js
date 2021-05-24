@@ -1364,6 +1364,9 @@ var lenta = (function(){
 						self.app.platform.sdk.usersettings.meta.videoautoplay.value) return
 
 					if(!el.closest('.share').hasClass('showAdditional')){
+
+						if(player.p.getState && player.p.getState() == 'ended') return
+
 						player.p.play()
 					}
 

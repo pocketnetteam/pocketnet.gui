@@ -46973,6 +46973,9 @@ class PeerTubeEmbedApi {
     getResolutions() {
         return this.resolutions;
     }
+    getState() {
+        return this.state;
+    }
     setPlaybackRate(playbackRate) {
         return this.embed.player.playbackRate(playbackRate);
     }
@@ -47022,7 +47025,7 @@ class PeerTubeEmbedApi {
             this.clbk[obj.method](obj.params);
     }
     setupStateTracking() {
-        let currentState = 'unstarted';
+        let currentState; /* = 'unstarted'*/
         this.updateinterval = setInterval(() => {
             const position = this.element.currentTime;
             const volume = this.element.volume;

@@ -1340,7 +1340,7 @@ Share = function(lang){
 
 	self.optstype = function(platform){
 
-		if(self.itisvideo() && platform && platform.videoenabled) return 'video'
+		if(self.itisvideo()) return 'video'
 
 		return self.type	
 	}
@@ -1349,7 +1349,7 @@ Share = function(lang){
 
 	self.typeop = function(platform){
 
-		if (self.itisvideo() && platform && platform.videoenabled) return 'video'
+		if (self.itisvideo()) return 'video'
 
 		if (self.aliasid){
 			return 'share'
