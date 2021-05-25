@@ -162,7 +162,5 @@
 
         
 
-        <script src="chat/matrix-element.min.js"></script>
-
     </body>
 </html>

@@ -87,7 +87,6 @@
                 
 
         <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
-        <script src="chat/matrix-element.min.js"></script>
         <script src="js/widgets.js?v=136"></script>
         <script type="text/javascript">
 

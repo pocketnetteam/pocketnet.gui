@@ -172,7 +172,6 @@
             topPreloader(15)
             
         </script>
-        <script src="chat/matrix-element.min.js"></script>
         <script src="js/vendor/underscore-min.js?v=136"></script> 
         <script src="js/vendor/tooltipster.core.js"></script>
         <script src="js/vendor/tooltipster.bundle.js"></script>
