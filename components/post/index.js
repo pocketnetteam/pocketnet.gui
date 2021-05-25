@@ -902,6 +902,7 @@ var post = (function(){
 
 
 		var verticalVideo = false
+		var squareVideo = false
 
 		var info = {}
 		var aspectRatio = 0
@@ -913,8 +914,12 @@ var post = (function(){
 
 		console.log('aspectRatio', aspectRatio)
 
-		if(aspectRatio <= 1 && aspectRatio != 0){
+		if(aspectRatio < 0.9 && aspectRatio != 0){
 			verticalVideo = true
+		}
+
+		if(aspectRatio > 0.9 && aspectRatio < 1.25){
+			squareVideo = true
 		}
 
         self.shell(
@@ -933,7 +938,8 @@ var post = (function(){
               mestate: {},
               repost: ed.repost,
               fromempty: ed.fromempty,
-			  verticalVideo : verticalVideo
+			  verticalVideo : verticalVideo,
+			  squareVideo : squareVideo
             },
           },
           function (_p) {
@@ -1364,6 +1370,9 @@ var post = (function(){
 			destroy : function(key){
 				el = {};
 
+
+				self.app.el.menu.find('#menu').removeClass('static')
+
 				if (ed.close) ed.close()
 
 				if (inicomments)
@@ -1409,6 +1418,9 @@ var post = (function(){
 				make()
 
 				p.clbk(null, p);
+
+				if(ed.video)
+					self.app.el.menu.find('#menu').addClass('static')
 
 				initEvents();
 			},

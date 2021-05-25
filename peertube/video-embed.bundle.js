@@ -47651,10 +47651,15 @@ class PeerTubeEmbed {
             this.playerElement.setAttribute("playsinline", "true");
             const isVideoEmbedded = document.querySelector(".standalone-video-embed");
             const paddingSize = 100 / (2 * videoSizeValue);
-            if (videoInfo.aspectRatio > 50) {
+            if (videoInfo.aspectRatio < 0.9) {
                 this.playerElement.classList.add("verticalVideo");
                 if (isVideoEmbedded)
                     document.querySelector('.video-js-wrapper').classList.add('vertcalVideoContainer');
+            }
+            if (videoInfo.aspectRatio >= 0.9 && videoInfo.aspectRatio < 1.25) {
+                this.playerElement.classList.add("squareVideo");
+                if (isVideoEmbedded)
+                    document.querySelector('.video-js-wrapper').classList.add('squareVideoContainer');
             }
             if (!isVideoEmbedded) {
                 this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;

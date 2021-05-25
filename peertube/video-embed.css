@@ -2977,6 +2977,11 @@ body {
   width: auto;
 }
 
+.squareVideoContainer {
+  height: 100%;
+  width: auto;
+}
+
 video {
   width: 100%;
 }
@@ -3010,11 +3015,17 @@ video[src], .vjs-fullscreen {
   position: relative;
   height: auto;
 }
+.standalone-video-embed .squareVideo,
 .standalone-video-embed .verticalVideo {
   height: 100%;
 }
+.standalone-video-embed .squareVideo .vjs-tech,
 .standalone-video-embed .verticalVideo .vjs-tech {
   height: 100%;
+}
+
+.video-js:not(.squareVideo) {
+  height: auto !important;
 }
 
 .video-js:not(.verticalVideo) {

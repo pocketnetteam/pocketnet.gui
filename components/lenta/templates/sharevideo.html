@@ -226,7 +226,7 @@ var metadisplay = function(){ %>
 
 		<div class="shareTable  <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-			<div class="cntswrk forurl <%- (aspectRatio < 1) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
+			<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
 
 				<% var a = ["u"] %>
 

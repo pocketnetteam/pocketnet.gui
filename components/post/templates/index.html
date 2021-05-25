@@ -12,7 +12,7 @@ console.log('aspectRatio app.platform.sdk.videos.storage', aspectRatio, share.ur
 
 %>
 
-<div id="<%-module.map.id%>" class="<% if(ed.video) {%> videomainpost <%- (aspectRatio <= 1) && (aspectRatio > 0) ? 'verticalVideo' : ''%> <% } %> ">
+<div id="<%-module.map.id%>" class="<% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %>">
 	<div class="postWrapper">
 		<div class="share">
 		</div>

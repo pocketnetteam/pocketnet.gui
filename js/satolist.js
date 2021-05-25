@@ -2005,7 +2005,7 @@ Platform = function (app, listofnodes) {
             var keyPair = null;
 
             if (bitcoin.bip39.validateMnemonic(m)) {
-                var seed = bitcoin.bip39.mnemonicToSeed(m)
+                var seed = bitcoin.bip39.mnemonicToSeedSync(m)
 
                 var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF()
 
@@ -5550,7 +5550,7 @@ Platform = function (app, listofnodes) {
                             amount: amount
                         }]
 
-                        var seed = bitcoin.bip39.mnemonicToSeed(mnemonic);
+                        var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic);
                         var hash = bitcoin.crypto.sha256(Buffer.from(seed));
                         var d = bitcoin.bip32.fromSeed(seed).derivePath(app.platform.sdk.address.path(0)).toWIF();
                         var keyPair = bitcoin.ECPair.fromWIF(d);

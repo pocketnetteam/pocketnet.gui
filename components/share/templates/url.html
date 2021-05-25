@@ -10,8 +10,9 @@
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
 
 			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
+			var aspectRatio = (info.data || {}).aspectRatio || 0
 	%>
-		<div class="videoWrapper <%- ((info.data || {}).aspectRatio < 1.25) && ((info.data || {}).aspectRatio) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
+		<div class="videoWrapper <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
 			<% if(meta.type == 'youtube' && window.cordova) {%>
 

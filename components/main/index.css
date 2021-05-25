@@ -109,7 +109,19 @@
   display: none;
 }
 #main.videomain .loadprev {
-  display: none!important;
+  width: 100%;
+  padding-left: 1em;
+}
+#main.videomain .loadprev button {
+  background: #e4ddde;
+  border-color: #e4ddde;
+  color: #0e1c2b;
+  width: 450px;
+}
+#main.videomain .loadprev button:hover {
+  background: #e4ddde;
+  border-color: #e4ddde;
+  color: #00a4ff;
 }
 #main.videomain .lentacell {
   margin-right: 0;

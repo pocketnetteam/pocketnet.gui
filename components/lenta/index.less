@@ -294,7 +294,11 @@
 		}
 
 		.verticalVideo {
-			max-width: 400px;
+			max-width: 350px;
+		}
+
+		.squareVideo {
+			max-width: 450px;
 		}
 
 		.commentsWrapper{			
@@ -1684,7 +1688,7 @@
 						max-width: none;
 						background: #000;
 					
-
+						&.squareVideo,
 						&.verticalVideo {
 							background: #000;
 							position: relative;
@@ -1692,7 +1696,7 @@
 
 							.js-player{
 								margin : 0 auto;
-								max-width: 350px;
+								max-width: 450px;
 								position : static;
 							}
 
@@ -1700,6 +1704,12 @@
 							.video-js{
 								position : static;
 		
+							}
+						}
+
+						&.squareVideo{
+							.js-player{
+								max-width: 500px;
 							}
 						}
 
@@ -2056,6 +2066,8 @@
 					&.verticalVideo{
 						height: 530px;
 					}
+
+				
 				}
 
 				.url{
@@ -2873,9 +2885,9 @@ html.stblack{
 			}
 		}
 
+		.squareVideo,
 		.verticalVideo {
 			max-width: none;
-			
 		}
 
 		.videoTips{
