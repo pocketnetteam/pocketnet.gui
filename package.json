@@ -16,8 +16,8 @@
         "publish": "build --win --x64 --ia32 -p always",
         "rebuild": "electron-rebuild",
 
-        "minimize": "node minimize.js -prodaction=true -vendor=8 -path=/",
-        "minimize:test": "node minimize.js -prodaction=true -vendor=8 -test=true -path=/",
+        "minimize": "node minimize.js -prodaction=true -vendor=899 -path=/",
+        "minimize:test": "node minimize.js -prodaction=true -vendor=899 -test=true -path=/",
 
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/"
