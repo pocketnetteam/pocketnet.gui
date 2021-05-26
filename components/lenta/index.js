@@ -606,6 +606,12 @@ var lenta = (function(){
 					var url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true'
 					if (parameters().address) url += '&address=' + (parameters().address || '')
 
+
+					if(video){
+						url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 'v='+id+'&mpost=true&video=1'
+					
+					}
+
 					
 					var n = 'Post';
 					if(share.settings.v == 'a') n = 'Article'
