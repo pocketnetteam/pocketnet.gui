@@ -607,7 +607,7 @@ var lenta = (function(){
 					if (parameters().address) url += '&address=' + (parameters().address || '')
 
 
-					if(video){
+					if(video || essenseData.videomobile){
 						url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 'v='+id+'&mpost=true&video=1'
 					
 					}
