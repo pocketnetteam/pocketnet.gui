@@ -618,7 +618,6 @@ var socialshare2 = (function(){
 				st = p.state
 
 				ed = p.settings.essenseData || {}
-				console.log('ed.sharing', ed.sharing)
 				state.load()
 
 				ed.title || (ed.title = 'Pocketnet')
@@ -627,7 +626,6 @@ var socialshare2 = (function(){
 
 				prepareParameters()
 
-				console.log('eparameters.reflink', eparameters.reflink, notincludedRef)
 
 			    if(!ed.url){
 

@@ -18,7 +18,7 @@
 							Copy direct Link
 						</button>
 					</div>
-					<% if(typeof eparameters != 'undefined') {%>
+					<% if(typeof eparameters != 'undefined' && state) {%>
 						<div class="includeRefWrapper">
 							
 							<span><%= eparameters.reflink.name %></span> <%= eparameters.reflink.input({init : true}) %> 

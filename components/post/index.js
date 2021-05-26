@@ -240,6 +240,8 @@ var post = (function(){
 					url += '&address=' + (parameters().address || '')
 				}
 
+				if(ed.video) url = 'https://'+self.app.options.url+'/' + (ed.hr || 'index?') + 'v='+share.txid+'&mpost=true&video=1'
+
 				var m = share.message;
 
 				var nm = trimHtml(m, 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...');

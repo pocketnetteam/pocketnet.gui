@@ -44493,6 +44493,7 @@ class PeerTubePlugin extends Plugin {
                 const self = this;
                 this.player.on('timeupdate', function onTimeUpdate() {
                     if (self.player.currentTime() > stopTime) {
+                        console.log("PAUSE");
                         self.player.pause();
                         self.player.trigger('stopped');
                         self.player.off('timeupdate', onTimeUpdate);
@@ -47215,6 +47216,7 @@ class PeerTubeEmbed {
         this.startTime = this.getParamString(params, "start");
         this.stopTime = this.getParamString(params, "stop");
         this.bigPlayBackgroundColor = this.getParamString(params, "bigPlayBackgroundColor");
+        console.log(' this.stopTime', this.stopTime);
         this.foregroundColor = this.getParamString(params, "foregroundColor");
         this.modeParam = this.getParamString(params, "mode");
         this.isVideoEmbed = this.getParamString(params, "videoEmbedded", "");
