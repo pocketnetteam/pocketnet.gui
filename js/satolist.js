@@ -39,7 +39,7 @@ Platform = function (app, listofnodes) {
     self.online = undefined;
     self.avblocktime = 45;
     self.repost = true;
-    self.videoenabled = false;
+    self.videoenabled = true;
 
 
     //////////////
@@ -9924,6 +9924,7 @@ Platform = function (app, listofnodes) {
 
                                 p.blocknumber = blocknumber
 
+
                                 if (shares) {
 
 
@@ -9937,12 +9938,15 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
+
+
                                         if(p.video){
                                             shares = _.filter(shares, function(share){
 
                                                 if(!share.url) return
 
                                                 var meta = app.platform.parseUrl(share.url);
+
 
                                                 if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
 
@@ -9951,6 +9955,8 @@ Platform = function (app, listofnodes) {
                                                 }
                                             })
                                         }
+
+
 
                                         _.each(shares || [], function (s) {
                                             if (p.count > 0) {
@@ -15051,10 +15057,15 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.videos.types[type](links).then(r => {
 
+                        console.log("RESULT", r)
+
                         _.each(r, function(l){
                             s[l.link] = s[l.meta.id] = l
                         })
 
+                        return Promise.resolve()
+                    }).catch(e => {
+                        console.error(e)
                         return Promise.resolve()
                     })
 
@@ -15119,25 +15130,31 @@ Platform = function (app, listofnodes) {
                         if(!window.peertubeglobalcache)
                             window.peertubeglobalcache = {}
 
+                        console.log('links', links, linksInfo)
+
                         links.forEach(link => {
                             
                             const linkInfo = linksInfo[link.link];
 
-                            if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
-                                linkInfo.aspectRatio = 1.78
-                            }
+                            if (linkInfo){
+                                if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
+                                    linkInfo.aspectRatio = 1.78
+                                }
+        
+                                linkInfo ? link.data = {
+                                    image : 'https://' + linkInfo.from + linkInfo.previewPath,
+                                    views : linkInfo.views,
+                                    duration : linkInfo.duration,
+                                    aspectRatio : linkInfo.aspectRatio || 1,
+                                } : '';
     
-                            linkInfo ? link.data = {
-                                image : 'https://' + linkInfo.from + linkInfo.previewPath,
-                                views : linkInfo.views,
-                                duration : linkInfo.duration,
-                                aspectRatio : linkInfo.aspectRatio || 1,
-                            } : '';
+    
+                               
+    
+                                window.peertubeglobalcache[link.meta.id] = linkInfo
+                            }
 
-
-                           
-
-                            window.peertubeglobalcache[link.meta.id] = linkInfo
+                            
                         });
 
                         return Promise.resolve(links);

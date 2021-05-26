@@ -185,7 +185,9 @@ class Html5Hlsjs {
         }
     }
     _handleNetworkError(error) {
-        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR] <= 5) {
+        setTimeout(() => this.hls.startLoad(), 1000);
+        return;
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR] <= 1) {
             console.info('trying to recover network error');
             // Wait 1 second and retry
             setTimeout(() => this.hls.startLoad(), 1000);

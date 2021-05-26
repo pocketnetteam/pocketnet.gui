@@ -2158,7 +2158,7 @@ var lenta = (function(){
 
 				if(!p) p = {};
 
-				console.log("P", p)
+				console.log("P", p, shares)
 
 				if(!p.inner) {
 					p.inner = function(el, html){
@@ -2899,6 +2899,8 @@ var lenta = (function(){
 									shares = _.filter(shares, essenseData.filter)
 
 								}
+
+								console.log('loaded', shares)
 
 								load.sstuff(shares, error, pr, clbk)				
 

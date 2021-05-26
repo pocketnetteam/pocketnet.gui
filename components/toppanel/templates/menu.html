@@ -44,13 +44,11 @@ var video = parameters(app.nav.current.completeHref, true).video;
 					<a href="index" handler="true"><%=e('e13136')%></a>
 				</span>
 			</div>
-			<% if(!app.platform.videoenabled) {%>
 			<div class="pcenterCell">
 				<span class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
 					<a href="index?r=sub"  handler="true"><%=e('e13137')%></a>
 				</span>
 			</div>
-			<% } %>
 			<% if(app.platform.videoenabled) {%>
 			<div class="pcenterCell">
 				<span class="pcenterLabel <% if(video && pathname=='index') {%> active <% } %>">

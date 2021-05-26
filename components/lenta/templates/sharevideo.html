@@ -49,6 +49,16 @@ var metadisplay = function(){ %>
                                         <% if(!src) {%>
                                             <svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
                                         <% } %>
+
+										<% if(deep(app, 'platform.real.'+share.address)) {%>
+											<div class="realperson">
+		
+												<span class="fa-stack fa-2x">
+													<i class="fas fa-certificate fa-stack-2x"></i>
+													<i class="fas fa-check fa-stack-1x"></i>
+												  </span>
+											</div>
+										<% } %>
                                     </div>
                                 </div>
         
