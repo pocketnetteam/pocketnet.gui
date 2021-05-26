@@ -382,6 +382,7 @@ var post = (function(){
 								
 								player.play()
 								player.setVolume(1)
+								player.muted = false
 							}
 
 							//// autoplay
