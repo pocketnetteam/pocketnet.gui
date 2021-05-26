@@ -164,6 +164,7 @@ var Peertube = function(settings){
 
                     delete cacheparameters.ip
                     delete cacheparameters.ua
+                    delete cacheparameters.signature
 
                     return new Promise((resolve, reject) => {
                         cache.wait(cachekey, cacheparameters, function (waitstatus) {
