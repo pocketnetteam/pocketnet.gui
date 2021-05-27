@@ -612,11 +612,14 @@ var lenta = (function(){
 					if (parameters().address) url += '&address=' + (parameters().address || '')
 
 
-					if(video || essenseData.videomobile){
-						url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 'v='+id+'&mpost=true&video=1'
+					console.log('share.itisvideo()', share.itisvideo())
+
+					if(video || essenseData.videomobile || share.itisvideo()){
+						url = 'https://'+self.app.options.url+'/' + ('index?') + 'v='+id+'&mpost=true&video=1'
 					
 					}
 
+					
 					
 					var n = 'Post';
 					if(share.settings.v == 'a') n = 'Article'

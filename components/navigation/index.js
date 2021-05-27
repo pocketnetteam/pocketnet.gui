@@ -41,7 +41,15 @@ var navigation = (function(){
 
 				if (k == indexkey) k = indexkey + '?b=true'
 
-				if (k.indexOf('?') == -1) k = indexkey + '?r=' + k
+				if (k.indexOf('?') == -1) {
+					if(k == 'video'){
+						k = indexkey + '?video=1'
+					}
+					else{
+						k = indexkey + '?r=' + k
+					}
+					
+				}
 
 
 				var back = self.app.nav.api.backChainGet()

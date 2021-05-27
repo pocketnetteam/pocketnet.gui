@@ -717,6 +717,10 @@ var main = (function(){
 		var make = function(clbk, p){
 
 			localStorage['lentakey'] = parameters().r || 'index'
+			
+			if (parameters().video){
+				localStorage['lentakey'] = 'video'
+			}
 
 			renders.lentawithsearch(clbk, p)
 
@@ -765,6 +769,10 @@ var main = (function(){
 
 				localStorage['lentakey'] = parameters().r || 'index'
 
+				if (parameters().video){
+					localStorage['lentakey'] = 'video'
+				}
+
 				if (parameters().r){
 					ncurrentMode = parameters().r
 				}
@@ -786,7 +794,8 @@ var main = (function(){
 					videomain = _vm
 				}
 
-				if(videomain){
+				if (videomain){
+
 					el.c.addClass('videomain')
 
 					if(!parameters().v){

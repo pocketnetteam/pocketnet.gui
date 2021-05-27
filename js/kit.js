@@ -1857,7 +1857,7 @@ pShare = function(){
 
 		var meta = parseVideo(self.url)
 
-		if (meta.type) return true
+		if(meta.type == 'peertube') return true
 	}
 
 	self._import = function(v, notdecode){
