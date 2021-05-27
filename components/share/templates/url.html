@@ -48,9 +48,20 @@
 									</div>
 								<% } %>
 	
-								<% if(share) {%>
+								<% if(share) {
+									
+									var value = Number(share.score)
+
+									if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
+										value = value / Number(share.scnt)
+									}
+									else {
+										value = 0
+									}
+									
+									%>
 									<div class="starsRatingWrapper">
-										<i class="far fa-star"></i> <span><%-Number(share.score || '0').toFixed(1)%></span>
+										<i class="far fa-star"></i> <span><%-Number(value).toFixed(1)%></span>
 									</div>
 									<div class="commentsCountWrapper">
 										<i class="far fa-comment"></i> <span><%-compressedNumber(share.comments || 0)%></span>
