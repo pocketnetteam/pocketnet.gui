@@ -44480,9 +44480,8 @@ class PeerTubePlugin extends Plugin {
             const volume = Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_3__["getStoredVolume"])();
             if (volume !== undefined)
                 this.player.volume(volume);
-            const muted = playerOptions.muted !== undefined ? playerOptions.muted : Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_3__["getStoredMute"])();
-            if (muted !== undefined)
-                this.player.muted(muted);
+            /*const muted = playerOptions.muted !== undefined ? playerOptions.muted : getStoredMute()
+            if (muted !== undefined) this.player.muted(muted)*/
             this.defaultSubtitle = options.subtitle || Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_3__["getStoredLastSubtitle"])();
             this.player.on('volumechange', () => {
                 Object(_peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_3__["saveVolumeInStore"])(this.player.volume());
@@ -46916,13 +46915,14 @@ class PeerTubeEmbedApi {
         this.embed = embed;
         this.clbk = clbk;
         this.resolutions = [];
+        this.ignoreChange = false;
     }
     initialize() {
         this.setupStateTracking();
         this.answer({ method: 'ready', params: 'ready' });
     }
     get muted() {
-        return this.getVolume() ? false : true;
+        return this.embed.player.muted();
     }
     set muted(v) {
         if (v) {
@@ -46959,7 +46959,15 @@ class PeerTubeEmbedApi {
         return this.embed.player.currentTime(time);
     }
     setVolume(value) {
-        return this.embed.player.volume(value);
+        this.ignoreChange = true;
+        if (value) {
+            this.embed.player.muted(false);
+            return this.embed.player.volume(value);
+        }
+        else {
+            this.embed.player.muted(true);
+            return 0;
+        }
     }
     getVolume() {
         return this.embed.player.volume();
@@ -47068,9 +47076,14 @@ class PeerTubeEmbedApi {
             }
         }
         this.embed.player.on('volumechange', () => {
+            if (this.ignoreChange) {
+                this.ignoreChange = false;
+                return;
+            }
+            console.log(this.embed.player.muted(), this.embed.player.volume(), this.embed.player.muted() ? 0 : this.embed.player.volume());
             this.answer({
                 method: 'volumeChange',
-                params: this.embed.player.volume()
+                params: this.embed.player.muted() ? 0 : this.embed.player.volume()
             });
         });
     }

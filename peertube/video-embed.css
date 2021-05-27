@@ -3050,6 +3050,9 @@ video[src], .vjs-fullscreen {
   overflow: hidden;
   height: auto !important;
 }
+.video-js video {
+  background: #000;
+}
 .video-js .vjs-poster {
   background-size: 100% auto;
   left: -1px;

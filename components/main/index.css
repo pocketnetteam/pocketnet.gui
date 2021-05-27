@@ -109,6 +109,7 @@
   display: none;
 }
 #main.videomain .loadprev {
+  display: none!important;
   width: 100%;
   padding-left: 1em;
 }

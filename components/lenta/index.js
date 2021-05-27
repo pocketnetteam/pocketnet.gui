@@ -20,7 +20,7 @@ var lenta = (function(){
 		var making = false, ovf = false;
 
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false
+		video = false, isotopeinited = false, videosVolume = 0;
 
 		var commentsInited = {},
 			shareInitedMap = {},
@@ -515,6 +515,11 @@ var lenta = (function(){
 						speed : {
 							selected : 1,
 							options: [1]
+						},
+
+						volumeChange : function(v){
+							console.log("set", v)
+							videosVolume = v
 						}
 					}
 
@@ -1373,7 +1378,24 @@ var lenta = (function(){
 
 						if(player.p.getState && player.p.getState() == 'ended') return
 
-						player.p.play()
+						if(!player.p.playing){
+							player.p.play()
+
+							if (isMobile()){
+
+								console.log('videosVolume', videosVolume)
+
+								if (videosVolume){
+									player.p.muted = false;
+								}
+								else{
+									player.p.muted = true;
+								}
+
+							}
+						}
+
+						
 					}
 
 				}, function(players){
@@ -2220,7 +2242,7 @@ var lenta = (function(){
 					data : {
 						shares : shares || [],
 						index : p.index || 0,
-						video : video
+						video : video || essenseData.videomobile
 					},
 					animation : false,
 					delayRender : isotopeinited

@@ -9174,8 +9174,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
         playbackStatusChange : function(status){
         },
-        volumechange : function(volume){
-        },
+        volumeChange : options.volumeChange
 
       }).then(embed => {
 
