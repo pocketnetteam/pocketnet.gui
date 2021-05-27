@@ -643,6 +643,7 @@ Application = function(p)
 						}
 					}
 
+					hideSplashScreen();
 					
 					self.nav.init(p.nav);
 
