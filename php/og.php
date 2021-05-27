@@ -1,6 +1,9 @@
 <?PHP
 require_once('php/rpc.php');
 require_once('php/api.php');
+
+
+
 class OG {
 
     private $rpc = NULL;
@@ -22,6 +25,8 @@ class OG {
 
     public $currentOg = array();
 
+
+   
     
 
 	public function __construct ($get, $proxypath)
@@ -29,7 +34,7 @@ class OG {
         $this->rpc = new RPC($proxypath);
         $this->api = new API($proxypath);
         
-        if (isset($get['address'])) $this->author = mysql_real_escape_string($get['address']);
+        if (isset($get['address'])) $this->author = $this->clean($get['address']);
 
         if ($this->author == NULL) {
 
@@ -41,21 +46,31 @@ class OG {
 
         }
 
-        if (isset($get['commentid'])) $this->commentid = mysql_real_escape_string($get['commentid']);
+        if (isset($get['commentid'])) $this->commentid = $this->clean($get['commentid']);
 
-        if (isset($get['s'])) $this->txid = mysql_real_escape_string($get['s']);
-        if (isset($get['v'])) $this->txid = mysql_real_escape_string($get['v']);
+        if (isset($get['s'])) $this->txid = $this->clean($get['s']);
+        if (isset($get['v'])) $this->txid = $this->clean($get['v']);
 
-        if ($this->author == NULL && isset($get['i'])) $this->txid = mysql_real_escape_string($get['i']);
+        if ($this->author == NULL && isset($get['i'])) $this->txid = $this->clean($get['i']);
 
-        if ($this->author == NULL && isset($get['v'])) $this->txid = mysql_real_escape_string($get['v']);
+        if ($this->author == NULL && isset($get['v'])) $this->txid = $this->clean($get['v']);
 
-        if (isset($get['num'])) $this->imageNum = mysql_real_escape_string($get['num']);
+        if (isset($get['num'])) $this->imageNum = $this->clean($get['num']);
 
 	}
 	public function __destruct ()
 	{
 
+    }
+
+    public function clean($value) {
+        $value = trim($value);
+        $value = stripslashes($value);
+        $value = strip_tags($value);
+        $value = htmlspecialchars($value);
+
+        
+        return $value;
     }
 
     public function addressfromhref(){
@@ -120,7 +135,7 @@ class OG {
                 $this->currentOg['twitter:card'] = 'player';
 
                 if(isset($peertubeinfo->previewPath)){
-                    $this->currentOg['twitter:image'] = $peertubeinfo->previewPath;
+                    $this->currentOg['twitter:image'] = 'https://' . $peertubeinfo->from . $peertubeinfo->previewPath;
                 }
                 
                 $this->currentOg['twitter:title'] = $this->currentOg['title'];
@@ -247,19 +262,14 @@ class OG {
             }
         }
 
-        
-
         if($this->txid != NULL){
 
             $r = $this->rpc->share($this->txid);
 
-           
 
             if($r != false){
 
                 $r = $r[0];
-
-                
 
                 $pca = 'p';
 

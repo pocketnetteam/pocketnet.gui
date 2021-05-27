@@ -15058,15 +15058,12 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.videos.types[type](links).then(r => {
 
-                        console.log("RESULT", r)
-
                         _.each(r, function(l){
                             s[l.link] = s[l.meta.id] = l
                         })
 
                         return Promise.resolve()
                     }).catch(e => {
-                        console.error(e)
                         return Promise.resolve()
                     })
 
@@ -15131,7 +15128,6 @@ Platform = function (app, listofnodes) {
                         if(!window.peertubeglobalcache)
                             window.peertubeglobalcache = {}
 
-                        console.log('links', links, linksInfo)
 
                         links.forEach(link => {
                             

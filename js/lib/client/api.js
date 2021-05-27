@@ -15,7 +15,6 @@ var ProxyRequest = function(app = {}, proxy){
 
         if (proxy && proxy.session) session = proxy.session
 
-        console.log('proxy.session', proxy.session)
 
         if (app.user && app.user.getstate() == 1){
             try{ signature = app.user.signature(session) } catch(e){}

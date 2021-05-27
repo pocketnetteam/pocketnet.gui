@@ -74,10 +74,18 @@ class API {
     }
 
     public function peertubeinfo($host, $id){
-        $action = 'peertube/video';
-        $params = array('host' => 'https://' . $host, 'id' => $id);
 
-        return $this->send($action, $params);
+
+        $action = 'peertube/video';
+        $params = array('url' => 'peertube://' . $host . '/' . $id);
+
+        $data = $this->send($action, $params);
+
+        if(isset($data->data)){
+            return $data->data;
+        }
+
+        return array();
     }
 	
 }

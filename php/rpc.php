@@ -41,6 +41,7 @@ class RPC {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
 
+
         curl_close($ch);
 
         if ($result != false){
@@ -60,7 +61,7 @@ class RPC {
 	public function send($action, $params){
         $fields = $this->prepareRequest($action, $params);
         
-        $url = $this->node.$action;
+        $url = $this->node."rpc/".$action;
 
         return $this->curl($url, $fields);
     }

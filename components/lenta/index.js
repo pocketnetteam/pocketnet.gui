@@ -449,8 +449,6 @@ var lenta = (function(){
 			},
 			initVideo : function(el, share, clbk){
 
-				console.log('share', share)
-
 				if(!share) return
 
 				if (players[share.txid]){
@@ -518,7 +516,6 @@ var lenta = (function(){
 						},
 
 						volumeChange : function(v){
-							console.log("set", v)
 							videosVolume = v
 						}
 					}
@@ -611,8 +608,6 @@ var lenta = (function(){
 					var url = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+id+'&mpost=true'
 					if (parameters().address) url += '&address=' + (parameters().address || '')
 
-
-					console.log('share.itisvideo()', share.itisvideo())
 
 					if(video || essenseData.videomobile || share.itisvideo()){
 						url = 'https://'+self.app.options.url+'/' + ('index?') + 'v='+id+'&mpost=true&video=1'
@@ -761,6 +756,8 @@ var lenta = (function(){
 			},
 
 			opensvi : function(id){
+
+				console.log("ID", id)
 				if (essenseData.opensvi){
 					essenseData.opensvi(id)
 				}
@@ -1386,7 +1383,6 @@ var lenta = (function(){
 
 							if (isMobile()){
 
-								console.log('videosVolume', videosVolume)
 
 								if (videosVolume){
 									player.p.muted = false;
@@ -2189,18 +2185,15 @@ var lenta = (function(){
 
 				if(!p) p = {};
 
-				console.log("P", p, shares)
 
 				if(!p.inner) {
 					p.inner = function(el, html){
 
-						console.log("INNER")
 
 						if(isotopeinited){
 
 							var content = $(html)
 
-							console.log("ADDCONTENT")
 
 							el.append( content ).isotope( 'appended', content )
 
@@ -2931,8 +2924,6 @@ var lenta = (function(){
 
 								}
 
-								console.log('loaded', shares)
-
 								load.sstuff(shares, error, pr, clbk)				
 
 								if (recommended == 'b'){
@@ -3456,7 +3447,11 @@ var lenta = (function(){
 				clear = false;
 			}
 
-			
+			var p = parameters()
+
+			if(video && p.v){
+				actions.opensvi(p.v)
+			}
 
 			load.shares(function(shares, error){
 
@@ -3531,13 +3526,10 @@ var lenta = (function(){
 								actions.scrollToPost(p.v)
 
 								if(video){
-									actions.opensvi(p.v)
 								}
 								else{	
 									actions.fullScreenVideo(p.v, function(){})
 								}
-
-								
 								
 							}
 
@@ -3662,8 +3654,6 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
-
-				console.log("DESTROY")
 
 				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')

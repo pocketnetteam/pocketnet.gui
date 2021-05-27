@@ -44,15 +44,15 @@ var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'opena
 
 var vars = {
 	test : {
-		proxypath : '"https://pocketnet.app:8899/"',
+		proxypath : '"https://test.pocketnet.app:8899/"',
 		domain : 'test.pocketnet.app',
-		test : '',
+		test : '<script>window.testpocketnet = true;</script>',
 		path : args.path
 	},
 	prod : {
-		proxypath : '"https://test.pocketnet.app:8899/"',
+		proxypath : '"https://pocketnet.app:8899/"',
 		domain : 'pocketnet.app',
-		test : '<script>window.testpocketnet = true;</script>',
+		test : '',
 		path : args.path
 	}
 }
