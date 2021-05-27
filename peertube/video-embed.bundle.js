@@ -46959,7 +46959,9 @@ class PeerTubeEmbedApi {
         return this.embed.player.currentTime(time);
     }
     setVolume(value) {
-        this.ignoreChange = true;
+        if (this.getVolume() != value) {
+            this.ignoreChange = true;
+        }
         if (value) {
             this.embed.player.muted(false);
             return this.embed.player.volume(value);
@@ -46970,7 +46972,7 @@ class PeerTubeEmbedApi {
         }
     }
     getVolume() {
-        return this.embed.player.volume();
+        return this.embed.player.muted() ? 0 : this.embed.player.volume();
     }
     mute() {
         this.savedVolume = this.getVolume();
@@ -46995,7 +46997,6 @@ class PeerTubeEmbedApi {
         return this.embed.getCurrentPosition;
     }
     setResolution(resolutionId) {
-        console.log('set resolution %d', resolutionId);
         if (this.isWebtorrent()) {
             if (resolutionId === -1 && this.embed.player.webtorrent().isAutoResolutionPossible() === false)
                 return;
@@ -47080,10 +47081,9 @@ class PeerTubeEmbedApi {
                 this.ignoreChange = false;
                 return;
             }
-            console.log(this.embed.player.muted(), this.embed.player.volume(), this.embed.player.muted() ? 0 : this.embed.player.volume());
             this.answer({
                 method: 'volumeChange',
-                params: this.embed.player.muted() ? 0 : this.embed.player.volume()
+                params: this.getVolume()
             });
         });
     }
@@ -47447,7 +47447,11 @@ class PeerTubeEmbed {
         return params[name] ? params[name] : defaultValue;
     }
     destroy() {
-        this.player.dispose();
+        try {
+            this.player.dispose();
+        }
+        catch (e) {
+        }
         this.playerElement = null;
     }
     playNextVideo() {

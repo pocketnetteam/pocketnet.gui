@@ -2962,6 +2962,7 @@ body {
 .standalone-video-embed {
   margin: 0 !important;
   background-color: black;
+  overflow: hidden;
 }
 
 .video-js-wrapper {
