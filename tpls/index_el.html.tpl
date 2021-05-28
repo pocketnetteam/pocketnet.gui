@@ -222,7 +222,7 @@
         <script join src="js/satolist.js?v=439731354592"></script>
         <script join src="js/messenger2/clientrtc.js?v=413927449417"></script>
         <script join src="peertube/video-embed.bundle.js"></script>
-        <script join src="js/peertube-master.js"></script>
+        <script join src="js/peertube.js"></script>
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
        
