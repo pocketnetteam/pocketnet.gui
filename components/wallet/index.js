@@ -1809,7 +1809,7 @@ var wallet = (function(){
 								   if(err){
 									   self.app.platform.sdk.node.transactions.releaseCS(inputs)
 									   sendpreloader(false)
-									   sitemessage(err)
+									   self.app.platform.errorHandler(err, true)
 								   }
 
 								   else
@@ -1967,7 +1967,7 @@ var wallet = (function(){
 
 										if(err){
 											sendpreloader(false)
-											sitemessage(err)
+											sitemessage(err.text || err)
 
 											return
 										}
@@ -1986,7 +1986,7 @@ var wallet = (function(){
 
 												self.app.platform.sdk.node.transactions.releaseCS(inputs)
 												sendpreloader(false)
-												sitemessage(err)
+												sitemessage(err.text || err)
 											}
 
 											else

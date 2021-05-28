@@ -58,7 +58,7 @@
 
         .upload-field-container {
             flex-grow: 1;
-            width: 50%;
+            width: 80%;
             padding: @rhythm / 2;
             position: relative;
 
@@ -183,7 +183,90 @@
         width: 250px;
     }
 
+    .challengeoffer{
 
+        color : #fff;
+        overflow-y: auto;
+        .pbg{
+            padding: 2 * @rhythm 4 * @rhythm;
+            
+        }
+        
+        .caption{
+            padding: 2 * @rhythm 0;
+            padding-top : 0;
+            background: linear-gradient(94.23deg,#770059 12.41%,#3700ff 52.55%,#1c1335 89.95%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            
+
+            span{
+                font-weight: 700;
+                font-size: 2em;
+                line-height: 1em;
+            }
+            
+        }
+
+        .offerpart{
+            padding: 2 * @rhythm 0;
+            background: fade(#000, 60);
+            overflow: hidden;
+            border-radius: 5px;
+            margin-bottom : 3 * @rhythm;
+
+            div{
+                font-size: 1.1em;
+            }
+
+            .table{
+                >div{
+                    vertical-align: middle;
+
+                    &.forlabel{
+                        span{
+                            font-size: 0.8em;
+                        }
+                    }
+
+                    &.forvalue{
+                        width: 55%;
+                        span{
+                            font-size: 0.8em;
+                            font-weight: 700;
+                        }
+                    }
+                }
+            }
+        }
+
+        .infopart{
+            padding: 2 * @rhythm 0;
+            padding-bottom : 0;
+            div{
+                font-size: 0.8em;
+                position: relative;
+
+            }
+        }
+
+        .textpart{
+            color : #fff;
+
+            ol{
+                margin: 0;
+                padding-top : @rhythm;
+                padding-bottom : @rhythm;
+                padding-left: 0;
+
+                li{
+                    font-size: 0.9em;
+                    padding: @rhythm / 2 0;
+                }
+            }
+        }
+    }
 
     .controlButton {
         cursor: pointer;
@@ -226,7 +309,9 @@
         >div {
             vertical-align: middle;
         }
+        
     }
+
 
     .main-upload-fields {
 
@@ -273,7 +358,7 @@
     }
 
     .main-upload-fields {
-        width: 62%;
+        width: 38%;
     }
 
     .mainWrapper {
@@ -373,9 +458,9 @@
 
 .wnd.uploadpeertube {
     .wndinner {
-        max-width: 700px;
+        max-width: 800px;
         height: 100%;
-        max-height: 360px;
+        max-height: 460px;
         .transition(0.3s);
         overflow: hidden;
 
@@ -387,6 +472,10 @@
 
             overflow: hidden;
         }
+    }
+
+    .changeButton{
+        color : @color-main!important;
     }
 
     .wndcontent {

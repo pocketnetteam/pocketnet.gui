@@ -118,7 +118,7 @@ var uploadpeertube = (function () {
 				var options = {}
 
 				options.progress = function(percentComplete){
-					var formattedProgress = percentComplete.toFixed(2);
+					var formattedProgress = (percentComplete * 0.9).toFixed(2);
 
 					el.uploadProgress
 						.find('.upload-progress-bar')

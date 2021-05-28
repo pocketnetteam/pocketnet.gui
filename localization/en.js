@@ -946,7 +946,7 @@ ____loclib.e14109 = 'Where do I download the Android App?'
 ____loclib.e14110 = 'Google Play Market'
 
 
-____loclib.peertubeAddVideo = 'Add video to post'
+____loclib.peertubeAddVideo = 'Upload Video'
 ____loclib.peertubeAddStream = 'Add live stream to post'
 
 ____loclib.e14111 = "There was a problem with loading images"
