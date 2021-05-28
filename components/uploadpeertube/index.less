@@ -126,7 +126,7 @@
         flex-direction: row;
         justify-content: flex-start;
         align-items: flex-end;
-        padding : 2 * @rhythm 0;
+        padding: 2 * @rhythm 0;
     }
 
     .barWrapper {
@@ -195,17 +195,18 @@
 
     .cancelButton {
         margin-left: @rhythm * 2;
-        color : @color-bad;
+        color: @color-bad;
         .transition(0.3s);
-        span{
-            font-size: 0.8em;
-            
 
-            
+        span {
+            font-size: 0.8em;
+
+
+
         }
 
-        &:hover{
-            color : @color-main;
+        &:hover {
+            color: @color-main;
         }
     }
 
@@ -285,7 +286,7 @@
         right: 0;
     }
 
- 
+
     .video-title-container {
         position: relative;
     }
@@ -294,6 +295,19 @@
         width: 80%;
     }
 
+
+    .iconwr {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        transform: translate(-50%, -50%);
+    }
 }
 
 #uploadpeertube.rolledUp {
