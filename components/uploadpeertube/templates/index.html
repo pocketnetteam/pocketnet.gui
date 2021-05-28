@@ -4,7 +4,7 @@
       <div class="logo-container">
         <img src="img/logo201.png" />
       </div>
-      <div><span>Upload New Pocketvideo</span></div>
+      <div><span><%- e('uploadNewVideo') %></span></div>
     </div>
   </div>
 
@@ -35,7 +35,7 @@
                       <label
                         for="upload-video-file"
                         class="upload-peertube-label upload-video-file-label"
-                        >Select video file</label
+                        ><%- e('selectVideoFile') %></label
                       >
                       <input
                         type="file"
@@ -52,13 +52,13 @@
                 <div class="upload-progress-container activeOnRolled hidden">
                   <div class="barWrapper activeOnRolled">
                     <div class="upload-progress-caption">
-                      <span class="bold-font">Progress:</span>
+                      <span class="bold-font"><%- e('uploadVideoProgress') %></span>
                       <span class="upload-progress-percentage"></span>
                     </div>
                     <div class="upload-progress-bar"></div>
                   </div>
                   <div class="cancelButton controlButton hidden">
-                    <span>Cancel</span>
+                    <span><%- e('ucancel') %></span>
                   </div>
                 </div>
               </div>
@@ -117,6 +117,7 @@
       </div> -->
     </div>
     <div class="iconwr hidden activeOnRolled">
+      <div class="preloader-caption"><%- e('videoUploadingFinish') %></div>
       <div class="preloader5"><span></span><span></span><span></span></div>
     </div>
   </div>
