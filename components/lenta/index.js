@@ -3500,9 +3500,11 @@ var lenta = (function(){
 							var p = parameters()
 
 							if (p.s){
-								actions.openPost(p.s, function(){
-									actions.scrollToPost(p.p)
-								})
+								if(!isMobile())
+
+									actions.openPost(p.s, function(){
+										actions.scrollToPost(p.p)
+									})
 							}
 
 							if (p.i){
