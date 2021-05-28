@@ -86,7 +86,7 @@ var Cache = function(p){
             block : 0,
         },
 
-        peertubevideos: {
+        peertubevideo: {
             time : 2020,
         },
 

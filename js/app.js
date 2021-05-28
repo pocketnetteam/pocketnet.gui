@@ -642,8 +642,12 @@ Application = function(p)
 							
 						}
 					}
-
-					hideSplashScreen();
+					if (typeof hideSplashScreen != 'undefined'){
+						hideSplashScreen();
+					}	
+					else{
+						$('#splashScreen').remove()
+					}
 					
 					self.nav.init(p.nav);
 

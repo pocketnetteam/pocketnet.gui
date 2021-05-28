@@ -495,6 +495,8 @@ class Html5Hlsjs {
         this.hlsjsConfig.maxFragLookUpTolerance = 0;
         this.hlsjsConfig.highBufferWatchdogPeriod = 1;
         this.hlsjsConfig.lowLatencyMode = true;
+        this.hlsjsConfig.maxBufferLength = 30;
+        this.hlsjsConfig.maxMaxBufferLength = 55;
         //this.hlsjsConfig.backBufferLength = 90
         this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');

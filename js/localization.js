@@ -169,7 +169,7 @@ Localization = function(app){
 		}
 		else
 		{
-			var src = 'localization/' + (_key || self.key) + '.js?v=1'
+			var src = 'localization/' + (_key || self.key) + '.js?v=2'
 
 			importScript(src, function(){
 

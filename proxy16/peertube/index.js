@@ -68,6 +68,23 @@ var Peertube = function(settings){
 
     }
 
+    self.inner = {
+        video : function(parsed){
+
+            if (!parsed.id) return Promise.reject('No id info received');
+      
+            return self.request('video', {id : parsed.id}, parsed.host).then((res) => {
+                
+                return Promise.resolve(res)
+                
+            }).catch((err) => {
+
+                return Promise.reject(err);
+
+            });
+        }
+    }
+
     self.api = {
 
         best : function({roy}){
@@ -84,33 +101,60 @@ var Peertube = function(settings){
             return Promise.resolve(best.export())
         },
 
-        video : function({url}){
+        video : function({url}, cache){
 
             var parsed = parselink(url)
 
             if (!parsed.id) return Promise.reject('No id info received');
-      
-            return self.request('video', {id : parsed.id}, parsed.host).then((res) => {
 
-              
+            var cachekey = 'peertubevideo'
+            var cacheparameters = _.clone(parsed)
+
+            console.log('cacheparameters', cacheparameters)
+
+            return new Promise((resolve, reject) => {
+                cache.wait(cachekey, cacheparameters, function (waitstatus) {
+                    resolve(waitstatus);
+                });
+            })
+            
+            .then((waitstatus) => {
+
+                var cached = cache.get(cachekey, cacheparameters);
+
+                if (cached){
+                    console.log("HAS CACHE")
+                    return Promise.resolve(cached);
+                }
+
+                console.log('loading')
+
+                return self.inner.video(parsed).then(r => {
+
+                    console.log('loaded')
+
+                    cache.set(cachekey, cacheparameters, r);
+
+                    return Promise.resolve(r)
+                })
+
+            }).catch(e => {
+
+                cache.set(cachekey, cacheparameters, {
+                    error : true
+                });
                 
-                return Promise.resolve(res)
-                
-            }).catch((err) => {
-
-
-                return Promise.reject(err);
-
-            });
+                return Promise.reject(e)
+            })
         },
 
-        videos : function({urls}){  
+        videos : function({urls}, cache){  
 
             var result = {}
 
             return Promise.all(_.map(urls, function(url){
 
-                return self.api.video({url}).then(r => {
+                return self.api.video({url}, cache).then(r => {
                     result[url] = r.data
 
                     return Promise.resolve()
@@ -159,49 +203,13 @@ var Peertube = function(settings){
 
                 action : function(data){
 
-                    var cachekey = 'peertube' + i
-                    var cacheparameters = _.clone(data)
-
-                    delete cacheparameters.ip
-                    delete cacheparameters.ua
-                    delete cacheparameters.signature
-
-                    console.log('cacheparameters', cacheparameters)
-
-                    return new Promise((resolve, reject) => {
-                        cache.wait(cachekey, cacheparameters, function (waitstatus) {
-							resolve(waitstatus);
-						});
-                    })
-                    
-					.then((waitstatus) => {
-
-						var cached = cache.get(cachekey, cacheparameters);
-
-						if (cached)
-							return Promise.resolve({
-								data: cached,
-								code: 208,
-							});
-
-                        return f(data).then(r => {
-                            cache.set(cachekey, cacheparameters, r);
-
-                            return Promise.resolve({
-                                data : r,
-                                code: 200
-                            })
-                        })
-
-					}).catch(e => {
-
-                        console.log("E", e)
-
-                        return Promise.reject({
-                            data: e,
-                            code: 400,
+                    return f(data, cache).then(r => {
+                        return Promise.resolve({
+                            data : r,
+                            code: 200
                         })
                     })
+
                 }
             }
         })

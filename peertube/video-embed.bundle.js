@@ -43996,7 +43996,6 @@ class PeertubePlayerManager {
     static initialize(mode, options, onPlayerChange) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             let p2pMediaLoader;
-            console.log("IM HERE");
             this.onPlayerChange = onPlayerChange;
             this.playerElementClassName = options.common.playerElement.className;
             if (mode === 'webtorrent')
@@ -44055,7 +44054,6 @@ class PeertubePlayerManager {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (currentMode === 'webtorrent')
                 return;
-            console.log('Fallback to webtorrent.');
             const newVideoElement = document.createElement('video');
             newVideoElement.className = this.playerElementClassName;
             // VideoJS wraps our video element inside a div
@@ -44105,7 +44103,6 @@ class PeertubePlayerManager {
         if (commonOptions.enableHotkeys === true) {
             PeertubePlayerManager.addHotkeysOptions(plugins);
         }
-        console.log('addP2PMediaLoaderOptions');
         if (isHLS) {
             const { hlsjs } = PeertubePlayerManager.addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule);
             Object.assign(html5, hlsjs.html5);
@@ -44115,7 +44112,6 @@ class PeertubePlayerManager {
             // WebTorrent plugin handles autoplay, because we do some hackish stuff in there
             autoplay = false;
         }
-        console.log('autoplay', autoplay);
         const videojsOptions = {
             html5,
             // We don't use text track settings for now
@@ -44196,6 +44192,8 @@ class PeertubePlayerManager {
                     capLevelToPlayerSize: true,
                     autoStartLoad: false,
                     liveSyncDurationCount: 5,
+                    maxBufferLength: 30,
+                    maxMaxBufferLength: 55,
                     loader: new p2pMediaLoaderModule.Engine(p2pMediaLoaderConfig).createLoaderClass()
                 }
             }
@@ -44207,7 +44205,6 @@ class PeertubePlayerManager {
     static addWebTorrentOptions(plugins, options) {
         const commonOptions = options.common;
         const webtorrentOptions = options.webtorrent;
-        console.log('commonOptions', commonOptions);
         const autoplay = this.getAutoPlayValue(commonOptions.autoplay) === 'play'
             ? true
             : false;
@@ -44603,7 +44600,6 @@ class PeerTubePlugin extends Plugin {
                 break;
             }
         }
-        console.log("RESOLUTION");
         this.trigger('resolutionChange', data);
     }
     listenControlBarMouse() {

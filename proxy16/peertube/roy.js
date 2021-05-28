@@ -112,11 +112,6 @@ var Roy = function(parent){
         }).then(r => {
             if(r.data) r.data.from = instance.host
 
-            console.log('instance.host', instance.host)
-
-            console.log('rdata', r.data)
-
-
             return Promise.resolve(r)
         })
     }

@@ -1021,4 +1021,14 @@ ____loclib.selectVideoFile = 'Select video file'
 ____loclib.uploadVideoProgress = 'Progress:'
 
 
-
+____loclib.pbp_1 = 'Pocketnet Bonus Program'
+____loclib.pbp_2 = 'Criteria for Receiving Bonus:'
+____loclib.pbp_3 = 'Every 10K views + 500 ratings'
+____loclib.pbp_4 = 'PKOIN Equivalent:'
+____loclib.pbp_5 = '1,000 USDT'
+____loclib.pbp_6 = 'How You Can Increase Your Views?'
+____loclib.pbp_7 = 'Embed your Pocketnet video to external websites (click Share and choose Embed)'
+____loclib.pbp_8 = 'Share your video to social networks and via email'
+____loclib.pbp_9 = 'Share the link to your personal page (go to your profile and click Share)'
+____loclib.pbp_10 = 'If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings.'
+____loclib.pbp_11 = 'For any questions, email'
