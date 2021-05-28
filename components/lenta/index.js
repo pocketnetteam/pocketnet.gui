@@ -3528,7 +3528,9 @@ var lenta = (function(){
 								if(video){
 								}
 								else{	
-									actions.fullScreenVideo(p.v, function(){})
+
+									if(!isMobile())
+										actions.fullScreenVideo(p.v, function(){})
 								}
 								
 							}
