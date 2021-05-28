@@ -46936,11 +46936,14 @@ class PeerTubeEmbedApi {
     }
     destroy() {
         this.embed.destroy();
+        this.clear();
+        return true;
+    }
+    clear() {
         if (this.updateinterval) {
             clearInterval(this.updateinterval);
             this.updateinterval = null;
         }
-        return true;
     }
     play() {
         return this.embed.player.play();
@@ -47033,6 +47036,8 @@ class PeerTubeEmbedApi {
     setupStateTracking() {
         let currentState; /* = 'unstarted'*/
         this.updateinterval = setInterval(() => {
+            if (!this.element)
+                return;
             const position = this.element.currentTime;
             const volume = this.element.volume;
             this.state = currentState;
@@ -47448,6 +47453,9 @@ class PeerTubeEmbed {
         }
         catch (e) {
         }
+        if (this.api) {
+            this.api.clear();
+        }
         this.playerElement = null;
     }
     playNextVideo() {
@@ -47606,7 +47614,11 @@ class PeerTubeEmbed {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             let alreadyHadPlayer = false;
             if (this.player) {
-                this.player.dispose();
+                try {
+                    this.player.dispose();
+                }
+                catch (e) {
+                }
                 alreadyHadPlayer = true;
             }
             this.playerElement = document.createElement("video");
@@ -47657,7 +47669,11 @@ class PeerTubeEmbed {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             let alreadyHadPlayer = false;
             if (this.player) {
-                this.player.dispose();
+                try {
+                    this.player.dispose();
+                }
+                catch (e) {
+                }
                 alreadyHadPlayer = true;
             }
             const videoSizeValue = videoInfo.aspectRatio;
