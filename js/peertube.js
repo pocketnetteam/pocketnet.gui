@@ -56,7 +56,7 @@ var PeertubeRequest = function(app = {}){
 
         var headers = _.extend({
             'Accept': 'application/json',
-            'Content-Type': 'application/json;charset=utf-8'
+            //'Content-Type': 'application/json;charset=utf-8'
         }, p.headers || {}) 
 
         console.log("RESPHEADERS", headers)

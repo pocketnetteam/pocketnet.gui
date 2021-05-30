@@ -123,7 +123,11 @@ var Peertube = function(settings){
                 var cached = cache.get(cachekey, cacheparameters);
 
                 if (cached){
-                    console.log("HAS CACHE")
+
+                    if(cached.error){
+                        return Promise.reject({error : true})
+                    }
+
                     return Promise.resolve(cached);
                 }
 

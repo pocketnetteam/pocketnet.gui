@@ -936,6 +936,7 @@ var main = (function(){
 			},
 			
 			init : function(p){
+				
 
 				roller = null
 				lenta = null
@@ -972,9 +973,7 @@ var main = (function(){
 						return r
 					}));
 
-					searchtags = words.length? words  :null
-
-					console.log('searchtags', searchtags)
+					searchtags = words.length ? words : null
 
 					fixedBlock = null
 					result = {}
