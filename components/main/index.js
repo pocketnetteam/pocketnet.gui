@@ -934,7 +934,7 @@ var main = (function(){
 
 				self.app.el.footer.removeClass('workstation')
 
-				el.html.removeClass('hideOverflow');
+				$('html').removeClass('hideOverflow');
 			},
 			
 			init : function(p){
@@ -946,7 +946,6 @@ var main = (function(){
 				state.load();
 
 				el = {};
-				el.html = $('html');
 				el.c = p.el.find('#' + self.map.id);
 				el.share = el.c.find('.share');
 				el.lenta = el.c.find('.lentaWrapper');
@@ -966,7 +965,7 @@ var main = (function(){
 				// Add a specific class to hide overflow on mobile
 				// (for iOS mobile devices)
 				if (isMobile())
-					el.html.addClass('hideOverflow');
+					$('html').addClass('hideOverflow');
 
 				var wordsRegExp = /[,.!?;:() \n\r]/g
 
