@@ -42,6 +42,8 @@ var main = (function(){
 
 				console.log('phase, direction, distance', phase, direction, distance)
 
+				
+
 				if(direction != 'left' && direction != 'right') {
 					//if (phase != 'move'){
 						el.slwork.css({'transform' : 'translateX(0%)'})

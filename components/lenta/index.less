@@ -2192,6 +2192,46 @@
 	}
 }
 
+#lenta{
+	&.horizontal{
+		display: flex;
+		flex-grow: 1;
+		.mlwr{
+			display: flex;
+			flex-grow: 1;
+			align-items: center;
+
+			.ended{
+				padding : @rhythm;
+			}
+		}
+		.shares{
+			display: flex!important;
+			flex-wrap: nowrap;
+			flex-grow: 1;
+			flex-direction: row;
+			.share{
+				flex-grow: 1;
+				width : 350px;
+				margin : 0;
+				margin-right: @rhythm;
+				
+				&:nth-last-child(1){
+					margin-right: 0;
+				}
+			}
+		}
+
+		
+
+		&.mainvideo{
+			.shares .share .forurl.verticalVideo{
+				height: 200px;
+			}
+		}
+	}
+}
+
 .dialog{
 	&.donation{
 		z-index: 1300;

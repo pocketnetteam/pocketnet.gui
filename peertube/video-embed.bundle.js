@@ -44293,7 +44293,11 @@ class PeertubePlayerManager {
             });
         }
         Object.assign(children, {
-            'fullscreenToggle': {}
+            'fullscreenToggle': {
+                handler: function (e) {
+                    console.log('handler', e, this);
+                }
+            }
         });
         return children;
     }

@@ -27,7 +27,7 @@ var test = _.indexOf(process.argv, '--test') > -1
 var testnodes = [
 
 	/*{
-		host : '157.90.235.121',
+		host : '188.187.45.218',
 		port : 36061,
 		ws : 6067,
 		name : 'CryptoserverTest',
