@@ -40,9 +40,13 @@ var main = (function(){
 		var actions = {
 			swipe : function(phase, direction, distance){
 
-				console.log('phase, direction, distance', phase, direction, distance)
+				console.log('phase, direction, distance', phase, direction, distance, fixeddirection)
 
 				if(!direction) return
+
+				if (phase != 'move'){
+					fixeddirection = null
+				}
 
 				if (direction != 'left' && direction != 'right') {
 					//if (phase != 'move'){
@@ -51,11 +55,7 @@ var main = (function(){
 
 					fixeddirection = direction
 
-					if (phase != 'move'){
-						fixeddirection = null
-					}
-
-					if(phase == 'end'){
+					if(phase == 'end' && window.cordova){
 						if(direction == 'down'){
 							$('html').removeClass('scrollmodedown')
 						}
