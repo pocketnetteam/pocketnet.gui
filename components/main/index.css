@@ -569,7 +569,7 @@ html.testpocketnet #main.testpocketnetbg {
     position: absolute;
     left: 0;
     top: 120px;
-    bottom: 0;
+    bottom: -120px;
   }
   #main .maincntwrapper > div.work {
     width: 100%;
@@ -683,7 +683,7 @@ html.testpocketnet #main.testpocketnetbg {
   #main .smallpanell:hover .itemName {
     display: none;
   }
-  html.scrollmodedown #main .maincntwrapper {
-    top: 0;
+  html.scrollmodedown #main .maincntwrapper > div.work {
+    transform: translateY(-120px);
   }
 }

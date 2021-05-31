@@ -44,7 +44,7 @@ var main = (function(){
 
 				if(direction != 'left' && direction != 'right') {
 					//if (phase != 'move'){
-						el.slwork.css({'transform' : 'translateX(0%)'})
+						//el.slwork.css({'transform' : 'translateX(0%)'})
 					//}
 
 					fixeddirection = direction
@@ -77,14 +77,14 @@ var main = (function(){
 
 
 						console.log('translateX(' + (c * prs) + "%)")
-						el.slwork.css({'transform' : 'translateX(' + (c * prs) + "%)"})
+						//el.slwork.css({'transform' : 'translateX(' + (c * prs) + "%)"})
 
 						return
 					}
 					
 				}
 
-				el.slwork.css({'transform' : 'translateX(0%)'})
+				//el.slwork.css({'transform' : 'translateX(0%)'})
 
 				if(phase == 'end'){
 
