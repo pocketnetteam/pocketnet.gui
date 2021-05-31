@@ -50,5 +50,5 @@
     ],
     "background_color": "#011621",
     "display": "fullscreen",
-    "start_url": "/pocketnet"
+    "start_url": "/index"
 }
