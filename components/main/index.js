@@ -42,18 +42,23 @@ var main = (function(){
 
 				console.log('phase, direction, distance', phase, direction, distance, fixeddirection)
 
-				if(!direction) return
+				if(!direction || !distance) return
 
 				if (phase != 'move'){
 					fixeddirection = null
 				}
 
 				if (direction != 'left' && direction != 'right') {
-					//if (phase != 'move'){
+					//
 						el.slwork.css({'transform' : 'translateX(0%)'})
 					//}
 
-					fixeddirection = direction
+					if (phase == 'move'){
+						if (distance > 20){
+							fixeddirection = direction
+						}
+					}
+					
 
 					if(phase == 'end' && window.cordova){
 						if(direction == 'down'){
