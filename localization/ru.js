@@ -316,7 +316,7 @@ ____loclib.refferalUserMessage = "Congrats! You rescued someone from the censore
 ____loclib.subscribeUserMessage = "подписался на вас"
 ____loclib.unsubscribeUserMessage = "отписался от вас"
 ____loclib.gotoprofileMessage = "перейти в профиль"
-____loclib.upvoteShareMessage = "поставил оценку ващему посту"
+____loclib.upvoteShareMessage = "поставил оценку вашему посту"
 
 // Errors
 

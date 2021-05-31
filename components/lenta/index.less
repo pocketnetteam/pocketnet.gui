@@ -830,11 +830,14 @@
 					position: absolute;
 					bottom : @rhythm;
 					right : @rhythm;
-					border-radius: 3px;
+					border-radius: 8px;
 					background: fade(@color-black, 0.5);
 					color : @color-gray-slight;
 					padding : 0.5 * @rhythm @rhythm;
+					padding-top : 0;
 					text-shadow: 1px 1px 3px rgba(50, 50, 50, 1);
+					background: fade(#000, 30);
+
 					i,
 					span{
 						font-size: 0.8em;
@@ -848,6 +851,10 @@
 					>div{
 						float: left;
 						margin-right: @rhythm;
+
+						&:nth-last-child(1){
+							margin-right: 0;
+						}
 					}
 				}
 			}

@@ -683,4 +683,7 @@ html.testpocketnet #main.testpocketnetbg {
   #main .smallpanell:hover .itemName {
     display: none;
   }
+  html.scrollmodedown #main .maincntwrapper {
+    top: 0;
+  }
 }

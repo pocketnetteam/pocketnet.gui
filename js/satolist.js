@@ -15082,7 +15082,7 @@ Platform = function (app, listofnodes) {
 
                     middle(function(p){
 
-                        if(self.sdk.videos.storage[url]){
+                        if(self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data){
                             var info = self.sdk.videos.storage[url].data;
         
                             var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading');

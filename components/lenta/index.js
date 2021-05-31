@@ -33,6 +33,7 @@ var lenta = (function(){
 			mscrolling = false,
 			rendering = false,
 			prevscroll = 0,
+			lastscroll = 0,
 			playVideoTimer,
 			ascroll = 0,
 			ascrollel = null,
@@ -72,6 +73,14 @@ var lenta = (function(){
 		}
 
 		var actions = {
+			scrollmode : function(m){
+				if(m){
+					$('html').addClass('scrollmodedown')
+				}
+				else{
+					$('html').removeClass('scrollmodedown')
+				}
+			},
 			authclbk : function(){
 
 				authblock = true;
@@ -1281,6 +1290,19 @@ var lenta = (function(){
 				var shareId = $(this).closest('.share').attr('id');
 
 				actions.repost(shareId);
+			},
+
+			scrolldirection : function(){
+				var st = $(this).scrollTop();
+				if (st > lastscroll){
+
+					actions.scrollmode(true)
+					// downscroll code
+				} else {
+					actions.scrollmode(false)
+					// upscroll code
+				}
+				lastscroll = st;
 			},
 
 			showmorebyauthor : function(){
@@ -3085,6 +3107,7 @@ var lenta = (function(){
 			if(!essenseData.openapi){
 
 				
+				el.w.on('scroll', events.scrolldirection);
 				el.w.on('scroll', events.videosInview);
 				el.w.on('resize', events.resize);
 
@@ -3664,6 +3687,8 @@ var lenta = (function(){
 					
 				}
 
+				actions.scrollmode(false)
+
 				isotopeinited = false
 
 				_.each(shareInitedMap, function(s, id){
@@ -3713,6 +3738,7 @@ var lenta = (function(){
 					el.w.off('scroll', events.videosInview);
 					el.w.off('scroll', events.sharesInview);
 					el.w.off('scroll', events.loadmorescroll);
+					el.w.off('scroll', events.scrolldirection);
 					el.w.off('resize', events.resize);
 				}
 				

@@ -47,6 +47,9 @@ html {
             background-repeat: repeat-x repeat-y;
         }
     }
+
+
+    
 }
 
 .emojione{
@@ -5439,10 +5442,33 @@ input[type=radio].radio:checked + label {
     }
 }
 
+@media only screen and (max-width: 768px) {
+
+    html{
+        &.scrollmodedown{
+
+            #menu .menuWrapper{
+                top : -65px;
+            }
+    
+            #panelWrapper{
+                padding-top: 0;
+                display: none;
+            }
+    
+            #navigation{
+                bottom : -60px;
+            }
+        }
+    }
+
+}
 @media only screen and (max-width: 640px) {
     #splashScreen{
         display: flex;
     }
+
+    
 }
 
 @-webkit-keyframes zoom-out {

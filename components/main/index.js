@@ -16,7 +16,7 @@ var main = (function(){
 
 		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
-		var currentMode = 'common', hsready = false;
+		var currentMode = 'common', hsready = false, fixeddirection = null;
 
 		var lastscroll = 0
 
@@ -40,13 +40,23 @@ var main = (function(){
 		var actions = {
 			swipe : function(phase, direction, distance){
 
+				console.log('phase, direction, distance', phase, direction, distance)
+
 				if(direction != 'left' && direction != 'right') {
-					if (phase != 'move'){
+					//if (phase != 'move'){
 						el.slwork.css({'transform' : 'translateX(0%)'})
+					//}
+
+					fixeddirection = direction
+
+					if (phase != 'move'){
+						fixeddirection = null
 					}
 					
 					return
 				}
+
+				if(fixeddirection) return
 
 				var currentindex = _.findIndex(mobilemodes, function(m){
 					return m.mode == mobilemode
@@ -605,6 +615,11 @@ var main = (function(){
 
 				renders.columnnavigation()
 
+				setTimeout(function(){
+					$('html').removeClass('scrollmodedown')
+				}, 300)
+				
+
 				if (mobilemode == 'mainshow' && lastscroll){
 					_scrollTop(lastscroll, null, 0)
 				}
@@ -931,7 +946,7 @@ var main = (function(){
 				roller = null
 				lenta = null
 				videomain = false
-
+				fixeddirection = null
 				self.app.el.footer.removeClass('workstation')
 
 				$('html').removeClass('hideOverflow');
@@ -942,6 +957,7 @@ var main = (function(){
 
 				roller = null
 				lenta = null
+				fixeddirection = null
 
 				state.load();
 
