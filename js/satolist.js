@@ -26,7 +26,8 @@ Platform = function (app, listofnodes) {
         'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux' : true,
         'PXUYsENSv6QkQZEdiJTsfJmu3XxZvVmVfQ' : true,
         'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw' : true,
-        'PLoFgXDPL5dCYkFCGLwH4n29TehLnfQ4w6' : true
+        'PLoFgXDPL5dCYkFCGLwH4n29TehLnfQ4w6' : true,
+        'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true
 
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
@@ -1807,7 +1808,9 @@ Platform = function (app, listofnodes) {
                     horizontal : p.horizontal,
                     second : true,
                     loaderkey : p.loaderkey,
-                    hasshares : p.hasshares
+                    hasshares : p.hasshares,
+                    opensvi : p.opensvi,
+                    from : p.from
 
                 },
                 

@@ -1015,7 +1015,21 @@ var post = (function () {
 					caption : "More Videos By This Author",
 					author: share.address,
 					video: true,
-					loaderkey : 'getusercontents'
+					loaderkey : 'getusercontents',
+					hasshares : function(){
+						showmoreby.addClass('hasshares')
+					},
+
+					opensvi : function(id){
+						self.nav.api.load({
+							open : true,
+							href : 'index?video=1&v=' + id,
+							history : true,
+							handler : true
+						})
+					},
+
+					from : share.txid
 				})
 			},
 
