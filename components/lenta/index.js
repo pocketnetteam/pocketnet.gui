@@ -1294,14 +1294,19 @@ var lenta = (function(){
 
 			scrolldirection : function(){
 				var st = $(this).scrollTop();
-				if (st > lastscroll){
 
-					actions.scrollmode(true)
-					// downscroll code
-				} else {
-					actions.scrollmode(false)
-					// upscroll code
+				if (st > 150){
+					if (st > lastscroll){
+
+						actions.scrollmode(true)
+						// downscroll code
+					} else {
+						actions.scrollmode(false)
+						// upscroll code
+					}
 				}
+
+				
 				lastscroll = st;
 			},
 
