@@ -42,7 +42,9 @@ var main = (function(){
 
 				console.log('phase, direction, distance', phase, direction, distance)
 
-				if(direction != 'left' && direction != 'right') {
+				if(!direction) return
+
+				if (direction != 'left' && direction != 'right') {
 					//if (phase != 'move'){
 						el.slwork.css({'transform' : 'translateX(0%)'})
 					//}
@@ -51,6 +53,15 @@ var main = (function(){
 
 					if (phase != 'move'){
 						fixeddirection = null
+					}
+
+					if(phase == 'end'){
+						if(direction == 'down'){
+							$('html').removeClass('scrollmodedown')
+						}
+						else{
+							$('html').addClass('scrollmodedown')
+						}
 					}
 					
 					return
