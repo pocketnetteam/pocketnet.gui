@@ -1295,8 +1295,7 @@ var lenta = (function(){
 			scrolldirection : function(){
 				var st = $(this).scrollTop();
 
-				if (st > 150){
-					if (st > lastscroll){
+					if (st > lastscroll && st > 150){
 
 						actions.scrollmode(true)
 						// downscroll code
@@ -1304,7 +1303,6 @@ var lenta = (function(){
 						actions.scrollmode(false)
 						// upscroll code
 					}
-				}
 
 				
 				lastscroll = st;
