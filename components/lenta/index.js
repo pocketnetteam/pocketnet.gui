@@ -1297,7 +1297,8 @@ var lenta = (function(){
 
 					if (st > lastscroll && st > 150){
 
-						actions.scrollmode(true)
+						if (window.cordova)
+							actions.scrollmode(true)	
 						// downscroll code
 					} else {
 						actions.scrollmode(false)

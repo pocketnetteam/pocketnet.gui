@@ -767,7 +767,7 @@ html {
 			position: absolute;
 			left : 0;
 			top : 120px;
-			bottom : -120px;
+			bottom : 0;
 			
 			>div{
 				&.work{
@@ -933,11 +933,7 @@ html {
 		&.scrollmodedown{
 			#main{
 				.maincntwrapper{
-					>div{
-						&.work{
-							transform: translateY(-120px);
-						}
-					}
+					top : 0;
 				}
 			}
 		}
