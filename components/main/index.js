@@ -40,19 +40,33 @@ var main = (function(){
 		var actions = {
 			swipe : function(phase, direction, distance){
 
-				console.log('phase, direction, distance', phase, direction, distance)
+				console.log('phase, direction, distance', phase, direction, distance, fixeddirection)
 
-				
+				if(!direction || !distance) return
 
-				if(direction != 'left' && direction != 'right') {
-					//if (phase != 'move'){
+				if (phase != 'move'){
+					fixeddirection = null
+				}
+
+				if (direction != 'left' && direction != 'right') {
+					//
 						el.slwork.css({'transform' : 'translateX(0%)'})
 					//}
 
-					fixeddirection = direction
+					if (phase == 'move'){
+						if (distance > 20){
+							fixeddirection = direction
+						}
+					}
+					
 
-					if (phase != 'move'){
-						fixeddirection = null
+					if(phase != 'move' && window.cordova){
+						if(direction == 'down'){
+							$('html').removeClass('scrollmodedown')
+						}
+						else{
+							$('html').addClass('scrollmodedown')
+						}
 					}
 					
 					return

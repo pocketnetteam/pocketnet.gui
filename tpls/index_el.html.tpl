@@ -23,7 +23,8 @@
         font-src 'self' file: data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src blob: *">
 
-      
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="https://pocketnet.app/img/logo_color/blue_pad_250.png" sizes="250x250">
 
         <link rel="stylesheet" href="css/normalize.css?v=136">
         <!-- Place favicon.ico in the root directory -->        

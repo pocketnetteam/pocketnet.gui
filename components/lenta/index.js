@@ -1293,6 +1293,9 @@ var lenta = (function(){
 			},
 
 			scrolldirection : function(){
+
+				return
+
 				var st = $(this).scrollTop();
 
 					if (st > lastscroll && st > 150){
