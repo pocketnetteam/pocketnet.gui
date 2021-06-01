@@ -228,8 +228,6 @@
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
        
-       <!-- Service worker used to enable the PWA features -->
-       <script src="js/pwa-service-worker.js"></script>
 
     </body>
 </html>
