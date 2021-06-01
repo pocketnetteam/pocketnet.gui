@@ -345,6 +345,7 @@ var Proxy16 = function(meta, app, api){
                 })
             },
             get : () => {
+                console.log('get!!!');
                 return self.fetch('nodes/get').then(r => {
                     internal.node.manage.addlist(r.nodes)
 

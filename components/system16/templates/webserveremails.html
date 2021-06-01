@@ -21,7 +21,7 @@
 
                     <div class="value" sys="emailshost">
                         <div class="input">
-                            <input type="text" class="emailshost" value="<%- emails.emailshost %>">
+                            <input type="text" class="emailshost" value="<%- emails.emailshost  || system.emails.emailshost %>">
                         </div>
                     </div>
 
@@ -42,7 +42,7 @@
 
                     <div class="value" sys="port">
                         <div class="input">
-                            <input type="number" class="port" value="<%-emails.port%>">
+                            <input type="number" class="port" value="<%- emails.port || system.emails.port %>">
                         </div>
                     </div>
 
@@ -61,8 +61,8 @@
                         <span>Secure</span>
                     </div>
 
-                    <div class="value" sys="emailssecure" value="<%-emails.secure ? 'Yes' : 'No'%>">
-                        <span><%- emails.secure ? 'Yes' : 'No'  %></span>
+                    <div class="value" sys="emailssecure" value="<%-(typeof emails.secure != 'undefined' ? emails.secure : system.emails.secure) ? 'Yes' : 'No' %>">
+                        <span><%- (typeof emails.secure != 'undefined' ? emails.secure : system.emails.secure) ? 'Yes' : 'No' %></span>
                     </div>
 
                     <% if(typeof emails.secure != 'undefined') {%>
@@ -81,7 +81,7 @@
 
                     <div class="value" sys="login">
                         <div class="input">
-                            <input type="text" class="login" value="<%- emails.login %>">
+                            <input type="text" class="login" value="<%- emails.login || system.emails.login %>">
                         </div>
                     </div>
                     <% if(emails.login) {%>
@@ -100,7 +100,7 @@
 
                     <div class="value" sys="password">
                         <div class="input">
-                            <input type="password" class="password" value="<%- emails.password %>">
+                            <input type="password" class="password" value="<%- emails.password || system.emails.password %>">
                         </div>
                     </div>
                     <% if(emails.password) {%>
@@ -119,23 +119,6 @@
 
         </div>
 
-        <% if(!_.isEmpty(emails)) {%>
-
-            <div class="work">
-                <div class="haschanges">
-                    <div class="buttons">
-                        <button class="button save">
-                            Save Changes
-                        </button>
-
-                        <button class="button ghost discard">
-                            Discard Changes
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        <% } %>
 
     </div>
 

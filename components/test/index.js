@@ -1147,6 +1147,7 @@ var test = (function(){
 					codeWrapper.show();
 	
 					var email = emailWrapper.find('input').val();
+					console.log('input', email);
 	
 					self.app.api.fetch('emails/verify', {email})
 					.then(function(result){
