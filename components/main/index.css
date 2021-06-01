@@ -23,6 +23,9 @@
   font-weight: 700;
   font-size: 0.8em;
 }
+#main .topvideosWrapper #lenta.mainvideo .shares .authorgroup .share {
+  padding: 0;
+}
 #main.videomain {
   background: #fcfcfc;
 }

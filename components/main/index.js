@@ -655,6 +655,7 @@ var main = (function(){
 						video : true,
 						autoplay : true,
 						nocommentcaption : true,
+						r : 'recommended',
 						opensvi : function(id){
 
 							console.log("ID")

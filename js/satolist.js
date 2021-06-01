@@ -1811,7 +1811,8 @@ Platform = function (app, listofnodes) {
                     hasshares : p.hasshares,
                     opensvi : p.opensvi,
                     from : p.from,
-                    compact : p.compact
+                    compact : p.compact,
+                    r : p.r
 
                 },
                 

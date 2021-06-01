@@ -2250,7 +2250,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author || recommended || essenseData.txids || essenseData.search){
+				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.search){
 					tpl = 'shares'
 				}
 
