@@ -228,20 +228,8 @@
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
        
-        <!-- Service worker used to enable the PWA features -->
-        <script>
-            if ('serviceWorker' in navigator) {
-                // Register a service worker hosted at the root of the
-                // site using the default scope.
-                navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
-                    console.log('Service worker registration succeeded:', registration);
-                }, /*catch*/ function(error) {
-                    console.log('Service worker registration failed:', error);
-                });
-            } else {
-                console.log('Service workers are not supported.');
-            }
-        </script>
+       <!-- Service worker used to enable the PWA features -->
+       <script src="js/pwa-service-worker.js"></script>
 
     </body>
 </html>
