@@ -344,7 +344,6 @@ class HybridLoader extends events__WEBPACK_IMPORTED_MODULE_2__["EventEmitter"] {
             if (segments.length > 0) {
                 this.masterSwarmId = segments[0].masterSwarmId;
             }
-            console.log('this.masterSwarmId', this.masterSwarmId);
             if (this.masterSwarmId !== undefined) {
                 this.p2pManager.setStreamSwarmId(streamSwarmId, this.masterSwarmId);
             }
@@ -602,7 +601,6 @@ class HybridLoader extends events__WEBPACK_IMPORTED_MODULE_2__["EventEmitter"] {
             return segmentsMap;
         };
         this.onPeerConnect = (peer) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            console.log('onPeerConnect');
             this.emit(_loader_interface__WEBPACK_IMPORTED_MODULE_4__["Events"].PeerConnect, peer);
             if (!this.settings.consumeOnly && this.masterSwarmId !== undefined) {
                 this.p2pManager.sendSegmentsMap(peer.id, this.createSegmentsMap(yield this.segmentsStorage.getSegmentsMap(this.masterSwarmId)));
@@ -672,8 +670,6 @@ class HybridLoader extends events__WEBPACK_IMPORTED_MODULE_2__["EventEmitter"] {
         this.p2pManager.on("peer-connected", this.onPeerConnect);
         this.p2pManager.on("peer-closed", this.onPeerClose);
         this.p2pManager.on("tracker-update", this.onTrackerUpdate);
-        console.log('constructor', this.settings);
-        console.log(this.p2pManager);
     }
 }
 HybridLoader.isSupported = () => {
@@ -1636,7 +1632,6 @@ class Engine extends events__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"] {
         return _a = class {
                 constructor() {
                     this.load = (context, config, callbacks) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-                        console.log("LOAD SOMETHING");
                         if (this.stats.loading.start) {
                             throw new Error('Loader can only be used once.');
                         }
@@ -2099,7 +2094,6 @@ class SegmentManager {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const segmentLocation = this.getSegmentLocation(url, byteRange);
             const byteRangeString = byteRangeToString(byteRange);
-            console.log('segmentLocation', segmentLocation, url, byteRange);
             if (!segmentLocation) {
                 let content;
                 // Not a segment from variants; usually can be: init, audio or subtitles segment, encription key etc.
@@ -2142,7 +2136,6 @@ class SegmentManager {
                     }
                 }
                 if (content === undefined) {
-                    console.log("LOAD XHR");
                     const xhr = yield this.loadContent(url, "arraybuffer", byteRangeString);
                     content = xhr.response;
                 }
@@ -2239,7 +2232,6 @@ class SegmentManager {
             let loadSegmentId = null;
             let priority = Math.max(0, this.playQueue.length - 1);
             const masterSwarmId = this.getMasterSwarmId();
-            console.log('masterSwarmId', masterSwarmId);
             for (let i = segmentIndex; i < playlistSegments.length && segments.length < this.settings.forwardSegmentCount; ++i) {
                 const segment = playlist.manifest.segments[i];
                 const url = playlist.getSegmentAbsoluteUrl(segment.uri);

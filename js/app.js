@@ -949,7 +949,12 @@ Application = function(p)
 
 	}
 
-	self.ref = localStorage['ref'] || parameters().ref;
+	self.ref = null;
+	
+	try{
+		self.ref = localStorage['ref'] || parameters().ref;
+	}catch(e){}
+	
 
 	self.options.device = /*localStorage['device'] ||*/ makeid();
 

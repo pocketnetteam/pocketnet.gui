@@ -74,7 +74,8 @@
 	    ].join(d || '');
  	};
 
-
+	isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+	
  	secInTime = function(sec){
 
  		var h = sec/3600 ^ 0 ;

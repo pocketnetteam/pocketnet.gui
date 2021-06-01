@@ -63,7 +63,7 @@ var ProxyRequest = function(app = {}, proxy){
 
         var time = 30000
 
-        if (window.cordova){
+        if (window.cordova || isInStandaloneMode()){
             time = 55000
         }
 
