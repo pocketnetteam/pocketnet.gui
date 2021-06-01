@@ -17,7 +17,7 @@ var EmailCreator = function(){
         if(!file){
             try{
 
-                file = fs.readFileSync(path.resolve('emails/emailtemplates' , name + '.xml'), 'utf8');
+                file = fs.readFileSync(path.resolve('proxy16/emails/emailtemplates' , name + '.xml'), 'utf8');
                 // file = fs.readFileSync('./emailtemplates/' + name + '.xml', "utf8");
                 files[name] = file
             }

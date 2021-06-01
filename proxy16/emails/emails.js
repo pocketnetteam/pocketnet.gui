@@ -34,7 +34,7 @@ var Emails = function(p){
     }
 
     self.init = function(){
-        var emails = p.transporters;    
+        var emails = p;    
 
         if(!emails || !emails.host)
             return Promise.reject('params')
@@ -42,6 +42,8 @@ var Emails = function(p){
         inited = true;
 
         transporter = nodemailer.createTransport(emails);
+
+        console.log('transporter', emails, transporter);
 
         return new Promise((resolve, reject) => {
 
@@ -174,6 +176,7 @@ var Emails = function(p){
 
         }
 
+
     }
 
     self.kit = {
@@ -192,6 +195,8 @@ var Emails = function(p){
 
         verify : function(email){
 
+            console.log('email!!!', email);
+
             if (!EmailValidator.validate(email)) return Promise.reject();
 
             var code = self.kit.makecode()
@@ -204,6 +209,8 @@ var Emails = function(p){
 
             var template = 'sendgiftcode';
             return self.email.send(template, exdata, email).then(function(result){
+
+                console.log('emails result', result);
 
                 self.dbapi.insert(email, code);
 
@@ -234,9 +241,13 @@ var Emails = function(p){
 
             var exdata = _.clone(data)
 
+            console.log('exdata', exdata);
+
             var created = emailCreator.create(template, exdata).then(t => {
-                t.from = p.from
+                t.from = p && p.from 
                 t.to = [to]
+
+                console.log('then', p, p.from, t);
 
                 return Promise.resolve(transporter.sendMail(t));
             }).catch(e => {

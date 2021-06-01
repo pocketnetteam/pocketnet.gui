@@ -142,18 +142,7 @@ var defaultSettings = {
 
 	emails : {
 		dbpath : 'data/emails',
-		from : '',
-		transporters: {       
-			host: "pocketnet.app",
-			port: 25,
-			secure: false,
-            from: 'admin@pocketnet.app', // true for 465, false for other ports
-			auth: {
-				user: ['admin@pocketnet.app'], // generated ethereal user
-				pass: 'Yu28j3fTr', // generated ethereal password
-			},
-		}
-    
+		from : ''
 	},
 
     node: {
@@ -216,10 +205,7 @@ var state = {
 			wallet : {
 				addresses : settings.wallet.addresses
 			},
-			emails : {
-				from : settings.emails.from,
-				transporters : settings.emails.transporters
-			},
+			emails : settings.emails,
 			node : {
 				enabled : settings.node.enabled,
 				binPath : settings.node.binPath,
@@ -256,8 +242,8 @@ var state = {
 			if (exporting.wallet.addresses.registration.privatekey)
 				exporting.wallet.addresses.registration.privatekey = "*"
 
-			// if (exporting.emails.transporters.auth.user)
-			// 	exporting.emails.transporters.auth.user = "*"
+			// if (exporting.emails.transporter.auth.user)
+			// 	exporting.emails.transporter.auth.user = "*"
 		}
 
 		return exporting
@@ -305,6 +291,8 @@ var state = {
 			var saving = state.export()
 				saving.nedbkey = nedbkey
 
+			console.log('insert', saving);
+
             db.insert(saving, function (err, newDoc) {
                 if(err){
                     reject(err)
@@ -337,7 +325,8 @@ var kit = {
 			server : {
 				
 				settings : function({
-					settings = {}
+					settings = {},
+					emails
 				}){
 
 					var ctx = kit.manage.set.server
@@ -348,7 +337,10 @@ var kit = {
 					if(typeof settings.enabled) notification.enabled = settings.enabled
 					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
                     if(settings.ssl) notification.ssl = true
-                
+					if (Object.keys(emails).length) notification.emails = emails; settings.emails = emails;
+
+
+					console.log('emails!!!!', emails);
 
 					return kit.proxy().then(proxy => {
 
@@ -404,6 +396,7 @@ var kit = {
 
 								return Promise.resolve('enabled error')
 							}))
+							
 
 						if(!promises.length) 
 							return Promise.reject('nothingchanged')
@@ -664,21 +657,13 @@ var kit = {
 
 			},
 
-			emails : {
+			emails :  function(transporter){
 
-				settransporter : function({transporters}){
+				console.log('setTrans', transporter);
 
-					console.log('setTrans');
+				settings.emails = transporter
 
-					settings.emails.transporters = transporters
-
-					return state.saverp().then(proxy => {
-
-						console.log('proxy', proxy)
-						return proxy.emails.setTransporter(transporters)
-					})
-
-				}
+				return state.saverp();
 
 			},
 	
