@@ -169,6 +169,8 @@
             
         </script>
 
+        <!-- Service worker used to enable the PWA features -->
+        <script src="js/pwa-service-worker.js"></script>
 
     </body>
 </html>
