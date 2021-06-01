@@ -4334,7 +4334,7 @@ input[type=radio].radio:checked + label {
 
     .controlhor{
         position: absolute;
-        top : 35%;
+        top : 50%;
         border-radius: 50%;
         background: #fff;
         .shadowSmaller();
@@ -4389,6 +4389,23 @@ input[type=radio].radio:checked + label {
     }
 }
 
+@media only screen and (max-width: 768px) {
+    .horizontalLentaWrapper{
+
+        .controlhor{
+            display: none;
+        }
+    
+        .showmorebywrapper{
+           
+            &::-webkit-scrollbar{
+                display: none!important;
+            }
+           
+        }
+    }
+    
+}
 
 .thinput{
 

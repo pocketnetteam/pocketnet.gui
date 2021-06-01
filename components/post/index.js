@@ -14,7 +14,7 @@ var post = (function () {
 		var primary = deep(p, 'history') || deep(p, 'primary');
 
 
-		var el, share, ed, inicomments, eid = '', _repost = null, level = 0;
+		var el, share, ed, inicomments, eid = '', _repost = null, level = 0, external = null;
 
 		var player = null
 
@@ -946,7 +946,7 @@ var post = (function () {
 
 						el.wr.addClass('active');
 
-						renders.showmoreby()
+						
 
 
 						renders.stars(function () {
@@ -996,7 +996,8 @@ var post = (function () {
 										if (clbk) clbk();
 									});
 
-									renders.showmoreby()
+									if (ed.video)
+										renders.showmoreby()
 								});
 							});
 						});
@@ -1008,25 +1009,38 @@ var post = (function () {
 
 				var showmoreby = el.c.find('.showmorelenta')
 
-				self.app.platform.papi.horizontalLenta(showmoreby, function () {
+				self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
 
+					external = p
 
 				}, {
 					caption : "More Videos By This Author",
 					author: share.address,
 					video: true,
 					loaderkey : 'getusercontents',
-					hasshares : function(){
-						showmoreby.addClass('hasshares')
+					hasshares : function(shares){
+						if (shares.length > 2){
+							showmoreby.addClass('hasshares')
+						}
+						
 					},
 
 					opensvi : function(id){
-						self.nav.api.load({
-							open : true,
-							href : 'index?video=1&v=' + id,
-							history : true,
-							handler : true
-						})
+
+						if (ed.opensvi){
+							ed.opensvi(id)
+						}
+						else{
+							self.nav.api.load({
+								open : true,
+								href : 'index?video=1&v=' + id,
+								history : true
+							})
+						}
+
+						
+
+						
 					},
 
 					from : share.txid
@@ -1401,6 +1415,12 @@ var post = (function () {
 			destroy: function (key) {
 				el = {};
 
+				if (external){
+
+					external.destroy()
+					external = null
+
+				}
 
 				self.app.el.menu.find('#menu').removeClass('static')
 

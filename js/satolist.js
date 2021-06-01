@@ -1810,7 +1810,8 @@ Platform = function (app, listofnodes) {
                     loaderkey : p.loaderkey,
                     hasshares : p.hasshares,
                     opensvi : p.opensvi,
-                    from : p.from
+                    from : p.from,
+                    compact : p.compact
 
                 },
                 
@@ -1873,7 +1874,8 @@ Platform = function (app, listofnodes) {
                             eid: id + (p.eid || ""),
                             comments : p.comments,
                             video : p.video,
-                            autoplay : p.autoplay
+                            autoplay : p.autoplay,
+                            opensvi : p.opensvi
                         }
                     })
 
@@ -9715,14 +9717,50 @@ Platform = function (app, listofnodes) {
                             
                             //parameters = ['30', '259200', '', self.app.localization.key];
 
+                            if(p.video){
+                                parameters.push('video')
+                                parameters.push('video')
+                            }
+
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
                                 if (shares) {
 
-                                    storage[key] = shares;
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
 
-                                    if (clbk)
-                                        clbk(storage[key], error, p)
+                                        if (state) {
+                                            _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                                _.each(shares, function (s) {
+                                                    if (s.address == block.address) s.blocking = true;
+                                                })
+                                            })
+                                        }
+
+
+
+                                        if(p.video){
+                                            shares = _.filter(shares, function(share){
+
+                                                if(!share.url) return
+
+                                                var meta = app.platform.parseUrl(share.url);
+
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
+
+                                                    if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
+                                                        return true
+                                                }
+                                            })
+                                        }
+
+                                        storage[key] = shares;
+
+                                        if (clbk)
+                                            clbk(storage[key], error, p)
+
+                                    })
+
+                                    
                                 }
 
                                 else {
@@ -9996,20 +10034,6 @@ Platform = function (app, listofnodes) {
 
                             if(p.author) parameters.unshift(p.author)
 
-                            /*
-
-
-                            params[0] - (обязательный, строка) - адрес
-                            params[1] - (необязательный, число) - блок (дефолт=0=последний)
-                            params[2] - (необязательный, строка) - txid для пагинации (дефолт=пусто)
-                            params[3] - (необязательный, число) - количество возврата (дефолт=10)
-                            params[4] - (необязательный, строка) - язык (дефолт=все)
-                            params[5] - (необязательный, строка или массив строк) - тэги (дефолт=все)
-                            params[6] - (необязательный, число или строка или массив чисел или массив строк) - тип контента (дефолт=все)
-
-                            */
-
-                            
 
                             s.getex(parameters, function (data, error) {
 
@@ -10046,7 +10070,6 @@ Platform = function (app, listofnodes) {
                                                 if(!share.url) return
 
                                                 var meta = app.platform.parseUrl(share.url);
-
 
                                                 if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
 

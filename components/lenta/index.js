@@ -768,7 +768,7 @@ var lenta = (function(){
 
 				console.log("ID", id)
 				if (essenseData.opensvi){
-					essenseData.opensvi(id)
+					essenseData.opensvi(id, deep(self, 'app.platform.sdk.node.shares.storage.trx.' + id))
 				}
 			},
 
@@ -3823,6 +3823,10 @@ var lenta = (function(){
 					el.c.addClass('horizontal')
 				}
 
+				if (essenseData.compact){
+					el.c.addClass('compact')
+				}
+
 				initEvents();
 
 				make(null, p);
@@ -3830,7 +3834,6 @@ var lenta = (function(){
 				if (video){
 					el.c.addClass('mainvideo')
 				}
-
 
 				if(!essenseData.goback)
 

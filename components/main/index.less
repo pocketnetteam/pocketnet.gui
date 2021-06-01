@@ -10,6 +10,29 @@
 		}
 	}
 
+	.topvideosWrapper{
+		display: none;
+		background: #fff;
+		margin-bottom : @rhythm;
+
+		&.hasshares{
+			display: block;
+		}
+
+		.horizontalLentaWrapper{
+			padding : 2*  @rhythm;
+		}
+
+		.horizontalLentacaption{
+			padding : 2 * @rhythm 0;
+
+			span{
+				font-weight: 700;
+				font-size: 0.8em;
+			}
+		}
+	}
+
 	&.videomain{
 		background: #fcfcfc;
 
@@ -738,6 +761,27 @@ html {
 				display: none!important;
 			}
 	
+		}
+
+		.topvideosWrapper{
+			margin-bottom : @rhythm;
+	
+			&.hasshares{
+				display: block;
+			}
+	
+			.horizontalLentaWrapper{
+				padding : @rhythm 0;
+				padding-bottom: 0;
+			}
+	
+			.horizontalLentacaption{
+				padding : 2 * @rhythm;
+	
+				span{
+					font-size: 1em;
+				}
+			}
 		}
 	}
 

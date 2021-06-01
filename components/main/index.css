@@ -5,6 +5,24 @@
 #main.wshar .bgCaption {
   display: none;
 }
+#main .topvideosWrapper {
+  display: none;
+  background: #fff;
+  margin-bottom: 0.5em;
+}
+#main .topvideosWrapper.hasshares {
+  display: block;
+}
+#main .topvideosWrapper .horizontalLentaWrapper {
+  padding: 1em;
+}
+#main .topvideosWrapper .horizontalLentacaption {
+  padding: 1em 0;
+}
+#main .topvideosWrapper .horizontalLentacaption span {
+  font-weight: 700;
+  font-size: 0.8em;
+}
 #main.videomain {
   background: #fcfcfc;
 }
@@ -542,6 +560,22 @@ html.testpocketnet #main.testpocketnetbg {
   }
   #main .addbutton.active {
     display: none!important;
+  }
+  #main .topvideosWrapper {
+    margin-bottom: 0.5em;
+  }
+  #main .topvideosWrapper.hasshares {
+    display: block;
+  }
+  #main .topvideosWrapper .horizontalLentaWrapper {
+    padding: 0.5em 0;
+    padding-bottom: 0;
+  }
+  #main .topvideosWrapper .horizontalLentacaption {
+    padding: 1em;
+  }
+  #main .topvideosWrapper .horizontalLentacaption span {
+    font-size: 1em;
   }
   #main {
     min-height: 0;
