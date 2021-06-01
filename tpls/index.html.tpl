@@ -11,7 +11,7 @@
 
         <title>POCKETNET</title>
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
@@ -26,6 +26,7 @@
 
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="https://pocketnet.app/img/logo_color/blue_pad_250.png" sizes="250x250">
+        <meta name="theme-color" content="#011621" />
 
         __CSS__
 
@@ -157,9 +158,20 @@
             
         </script>
 
-        
-
-       
+        <!-- Service worker used to enable the PWA features -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                // Register a service worker hosted at the root of the
+                // site using the default scope.
+                navigator.serviceWorker.register('./service-worker.js').then(function(registration) {
+                    console.log('Service worker registration succeeded:', registration);
+                }, /*catch*/ function(error) {
+                    console.log('Service worker registration failed:', error);
+                });
+            } else {
+                console.log('Service workers are not supported.');
+            }
+        </script>
 
     </body>
 </html>
