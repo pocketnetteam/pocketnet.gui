@@ -57,7 +57,7 @@ var applications = (function(){
 					return key !== _os;
 				})
 
-				if (_os && current && (typeof _Electron == 'undefined' ) && !window.cordova){
+				if (_os && current && (typeof _Electron == 'undefined' ) && !window.cordova && !isInStandaloneMode()){
 
 					renders.os(current, clbk)
 

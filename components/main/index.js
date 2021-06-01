@@ -40,7 +40,6 @@ var main = (function(){
 		var actions = {
 			swipe : function(phase, direction, distance){
 
-				console.log('phase, direction, distance', phase, direction, distance, fixeddirection)
 
 				if(!direction || !distance) return
 
@@ -91,8 +90,6 @@ var main = (function(){
 
 						if(direction == 'left') c = -1
 
-
-						console.log('translateX(' + (c * prs) + "%)")
 						el.slwork.css({'transform' : 'translateX(' + (c * prs) + "%)"})
 
 						return
@@ -419,8 +416,6 @@ var main = (function(){
 							posts : r
 						};
 
-						console.log('result11', result)
-
 						renders.lenta(clbk, p)
 					})
 
@@ -438,7 +433,6 @@ var main = (function(){
 
 							c(val)
 
-							console.log('addtagsearch', val)
 
 							self.app.platform.sdk.activity.addtagsearch(val)
 
@@ -463,8 +457,6 @@ var main = (function(){
 				var loader = null
 				var fp = false
 
-				console.log("RENDERS LENTA")
-
 				if(lenta) {
 					lenta.destroy()
 				}
@@ -483,8 +475,6 @@ var main = (function(){
 						}
 
 						if(!fp){
-
-							console.log('result', result)
 
 							fp = true
 
@@ -589,8 +579,6 @@ var main = (function(){
 			post : function(id){
 
 				if (!id){
-
-					console.log('openedpostdestory', openedpost)
 
 					if (openedpost){
 						

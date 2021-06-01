@@ -19465,7 +19465,7 @@ Platform = function (app, listofnodes) {
 
             self.focus = true;
 
-            if (time > 120 && (window.cordova || electron)) {
+            if (time > 120 && (window.cordova || electron || isInStandaloneMode())) {
                 self.clearStorageLight()
 
                 self.sdk.node.transactions.get.allBalance(null, true)
