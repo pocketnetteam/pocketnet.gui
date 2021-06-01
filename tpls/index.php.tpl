@@ -25,7 +25,7 @@
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">
-        <link rel="apple-touch-icon" href="https://pocketnet.app/img/res/blue_pad_250.png" sizes="250x250">
+        <link rel="apple-touch-icon" href="https://pocketnet.app/img/res/blue_250.png" sizes="250x250">
         <meta name="theme-color" content="#011621" />
 
         <?php 
