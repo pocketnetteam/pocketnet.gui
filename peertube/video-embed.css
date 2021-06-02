@@ -2964,6 +2964,9 @@ body {
   background-color: black;
   overflow: hidden;
 }
+.standalone-video-embed .video-js-wrapper {
+  width: 100%;
+}
 
 .video-js-wrapper {
   position: absolute;
