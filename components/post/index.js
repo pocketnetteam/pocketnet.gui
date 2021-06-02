@@ -1017,6 +1017,7 @@ var post = (function () {
 					caption : "More Videos By This Author",
 					author: share.address,
 					video: true,
+					shuffle : true,
 					loaderkey : 'getusercontents',
 					hasshares : function(shares){
 						if (shares.length > 2){
@@ -1041,9 +1042,7 @@ var post = (function () {
 						
 
 						
-					},
-
-					from : share.txid
+					}
 				})
 			},
 

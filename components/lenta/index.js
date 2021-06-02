@@ -2982,6 +2982,9 @@ var lenta = (function(){
 
 								}
 								
+								if (essenseData.shuffle) {
+									shares = _.shuffle(shares)
+								}
 
 								load.sstuff(shares, error, pr, clbk)				
 

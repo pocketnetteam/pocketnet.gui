@@ -1812,7 +1812,8 @@ Platform = function (app, listofnodes) {
                     opensvi : p.opensvi,
                     from : p.from,
                     compact : p.compact,
-                    r : p.r
+                    r : p.r,
+                    shuffle : p.shuffle
 
                 },
                 
