@@ -43931,7 +43931,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _peertube_plugin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./peertube-plugin */ "./src/assets/player/peertube-plugin.ts");
 /* harmony import */ var _videojs_components_next_previous_video_button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./videojs-components/next-previous-video-button */ "./src/assets/player/videojs-components/next-previous-video-button.ts");
 /* harmony import */ var _videojs_components_p2p_info_button__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./videojs-components/p2p-info-button */ "./src/assets/player/videojs-components/p2p-info-button.ts");
-/* harmony import */ var _videojs_components_peertube_link_button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./videojs-components/peertube-link-button */ "./src/assets/player/videojs-components/peertube-link-button.ts");
+/* harmony import */ var _videojs_components_pocketnet_link_button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./videojs-components/pocketnet-link-button */ "./src/assets/player/videojs-components/pocketnet-link-button.ts");
 /* harmony import */ var _videojs_components_peertube_load_progress_bar__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./videojs-components/peertube-load-progress-bar */ "./src/assets/player/videojs-components/peertube-load-progress-bar.ts");
 /* harmony import */ var _videojs_components_resolution_menu_button__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./videojs-components/resolution-menu-button */ "./src/assets/player/videojs-components/resolution-menu-button.ts");
 /* harmony import */ var _videojs_components_resolution_menu_item__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./videojs-components/resolution-menu-item */ "./src/assets/player/videojs-components/resolution-menu-item.ts");
@@ -44129,7 +44129,7 @@ class PeertubePlayerManager {
             controlBar: {
                 children: this.getControlBarChildren(mode, {
                     captions: commonOptions.captions,
-                    peertubeLink: commonOptions.peertubeLink,
+                    pocketnetLink: commonOptions.pocketnetLink,
                     theaterButton: commonOptions.theaterButton,
                     nextVideo: commonOptions.nextVideo,
                     hasNextVideo: commonOptions.hasNextVideo,
@@ -44282,9 +44282,12 @@ class PeertubePlayerManager {
                 entries: settingEntries
             }
         });
-        if (options.peertubeLink === true) {
+        console.log("options", options);
+        if (options.pocketnetLink) {
             Object.assign(children, {
-                'peerTubeLinkButton': {}
+                'pocketnetLinkButton': {
+                    href: options.pocketnetLink
+                }
             });
         }
         if (options.theaterButton === true) {
@@ -44541,9 +44544,9 @@ class PeerTubePlugin extends Plugin {
     runViewAdd() {
         this.clearVideoViewInterval();
         // After 30 seconds (or 3/4 of the video), add a view to the video
-        let minSecondsToView = 30;
+        let minSecondsToView = 1;
         if (!this.isLive && this.videoDuration < minSecondsToView) {
-            minSecondsToView = (this.videoDuration * 3) / 4;
+            minSecondsToView = (this.videoDuration * 1) / 4;
         }
         let secondsViewed = 0;
         this.videoViewInterval = setInterval(() => {
@@ -45533,51 +45536,6 @@ video_js__WEBPACK_IMPORTED_MODULE_0___default.a.registerComponent('P2PInfoButton
 
 /***/ }),
 
-/***/ "./src/assets/player/videojs-components/peertube-link-button.ts":
-/*!**********************************************************************!*\
-  !*** ./src/assets/player/videojs-components/peertube-link-button.ts ***!
-  \**********************************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./src/assets/player/utils.ts");
-/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! video.js */ "./node_modules/video.js/core.js");
-/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_1__);
-
-
-const Button = video_js__WEBPACK_IMPORTED_MODULE_1___default.a.getComponent('Button');
-class PeerTubeLinkButton extends Button {
-    constructor(player, options) {
-        super(player, options);
-    }
-    createEl() {
-        return this.buildElement();
-    }
-    updateHref() {
-        this.el().setAttribute('href', Object(_utils__WEBPACK_IMPORTED_MODULE_0__["buildVideoLink"])({ startTime: this.player().currentTime() }));
-    }
-    handleClick() {
-        this.player().pause();
-    }
-    buildElement() {
-        const el = video_js__WEBPACK_IMPORTED_MODULE_1___default.a.dom.createEl('a', {
-            href: Object(_utils__WEBPACK_IMPORTED_MODULE_0__["buildVideoLink"])(),
-            innerHTML: 'PeerTube',
-            title: this.player().localize('Video page (new window)'),
-            className: 'vjs-peertube-link',
-            target: '_blank'
-        });
-        el.addEventListener('mouseenter', () => this.updateHref());
-        return el;
-    }
-}
-video_js__WEBPACK_IMPORTED_MODULE_1___default.a.registerComponent('PeerTubeLinkButton', PeerTubeLinkButton);
-
-
-/***/ }),
-
 /***/ "./src/assets/player/videojs-components/peertube-load-progress-bar.ts":
 /*!****************************************************************************!*\
   !*** ./src/assets/player/videojs-components/peertube-load-progress-bar.ts ***!
@@ -45614,6 +45572,59 @@ class PeerTubeLoadProgressBar extends Component {
     }
 }
 Component.registerComponent('PeerTubeLoadProgressBar', PeerTubeLoadProgressBar);
+
+
+/***/ }),
+
+/***/ "./src/assets/player/videojs-components/pocketnet-link-button.ts":
+/*!***********************************************************************!*\
+  !*** ./src/assets/player/videojs-components/pocketnet-link-button.ts ***!
+  \***********************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! video.js */ "./node_modules/video.js/core.js");
+/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_0__);
+
+const Button = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getComponent('Button');
+const MenuButton = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getComponent('MenuButton');
+class PocketnetLinkButton extends MenuButton {
+    constructor(player, options) {
+        console.log("options2", options);
+        super(player, options);
+        console.log(this);
+        this.voptions = options || {};
+        this.updateHref();
+    }
+    createEl() {
+        return this.buildElement();
+    }
+    updateHref() {
+        this.link.setAttribute('href', this.buildVideoLink());
+    }
+    handleClick() {
+        this.player().pause();
+    }
+    buildVideoLink() {
+        return this.voptions.href || 'https://pocketnet.app';
+    }
+    buildElement() {
+        const el = super.createEl();
+        el.classList.add("pocketnet-link-button");
+        this.link = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.dom.createEl('a', {
+            href: '',
+            innerHTML: 'Watch On Pocketnet',
+            title: this.player().localize('Video page (new window)'),
+            className: 'vjs-pocketnet-link',
+            target: '_blank'
+        });
+        el.appendChild(this.link);
+        return el;
+    }
+}
+video_js__WEBPACK_IMPORTED_MODULE_0___default.a.registerComponent('pocketnetLinkButton', PocketnetLinkButton);
 
 
 /***/ }),
@@ -47228,7 +47239,6 @@ class PeerTubeEmbed {
         this.title = this.getParamToggle(params, "title", false);
         this.enableApi = this.getParamToggle(params, "api", this.enableApi);
         this.warningTitle = this.getParamToggle(params, "warningTitle", false);
-        this.peertubeLink = this.getParamToggle(params, "peertubeLink", false);
         this.scope = this.getParamString(params, "scope", this.scope);
         this.subtitle = this.getParamString(params, "subtitle");
         this.startTime = this.getParamString(params, "start");
@@ -47239,6 +47249,7 @@ class PeerTubeEmbed {
         this.modeParam = this.getParamString(params, "mode");
         this.isVideoEmbed = this.getParamString(params, "videoEmbedded", "");
         this.txid = this.getParamString(params, "txid", "");
+        this.pocketnetLink = this.txid && this.isVideoEmbed ? `https://pocketnet.app/index?video=1&v=${this.txid}` : '';
     }
     getVideoUrl(id) {
         return "/api/v1/videos/" + id;
@@ -47750,7 +47761,7 @@ class PeerTubeEmbed {
                     onPlayerElementChange: (element) => (this.playerElement = element),
                     videoDuration: videoInfo.duration,
                     enableHotkeys: true,
-                    peertubeLink: this.peertubeLink,
+                    pocketnetLink: this.pocketnetLink,
                     poster: this.wautoplay ? null : this.composePath(videoInfo.previewPath),
                     theaterButton: false,
                     serverUrl: this.host,
@@ -47779,7 +47790,7 @@ class PeerTubeEmbed {
             });
             this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
             const overlayString = this.isVideoEmbed
-                ? `<a class="icon icon-only-logo-transparent" href="https://pocketnet.app/index?s=${this.txid}"></a>`
+                ? `<span class="icon icon-full-logo-transparent"></span>`
                 : '<span class="icon icon-full-logo-transparent"></span>';
             this.player.overlay({
                 overlays: [
