@@ -3213,7 +3213,7 @@ video[src], .vjs-fullscreen {
 .js-player .video-js .pocketnet-link-button a,
 .video-js-wrapper .video-js .pocketnet-link-button a {
   font-size: 1.2em;
-  color: #fff;
+  color: #ff5100;
 }
 .js-player .video-js .vjs-controls-disabled .vjs-big-play-button,
 .video-js-wrapper .video-js .vjs-controls-disabled .vjs-big-play-button {
