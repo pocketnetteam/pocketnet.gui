@@ -9721,7 +9721,6 @@ Platform = function (app, listofnodes) {
 
                             if(p.video){
                                 parameters.push('video')
-                                parameters.push('video')
                             }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
