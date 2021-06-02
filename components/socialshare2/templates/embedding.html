@@ -21,47 +21,51 @@
     <div class="embedding">
         <div class="code" disabled="disabled"><%- embeddingcode %></div>
     </div>
+
+    <% if(!embeddingSettings.onlyvideo) {%>
     
-    <div class="wrk">
-        <div class="subcaption">
-            <span>Embedding Settings</span>
+        <div class="wrk">
+            <div class="subcaption">
+                <span>Embedding Settings</span>
+            </div>
         </div>
-    </div>
 
-    
+        
 
-    <div class="wrk">
-        <div class="embeddingSettings">
-            <% _.each(embeddingSettings, function(parameter){ 
-                
-                if(parameter.hidden) return
-                %>
+        <div class="wrk">
+            <div class="embeddingSettings">
+                <% 
+                _.each(embeddingSettings, function(parameter){ 
+                    
+                    if(parameter.hidden) return
+                    %>
 
-                <div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
-                    <div class="parameter table <%-parameter.type%>">
+                    <div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
+                        <div class="parameter table <%-parameter.type%>">
 
-                        <div class="pName">
-                            <div class="pNameW">
-                                <%= parameter.name %>
+                            <div class="pName">
+                                <div class="pNameW">
+                                    <%= parameter.name %>
+                                </div>
                             </div>
+
+                            <div class="pInput ">
+                                <%= parameter.input({
+                                    init : true
+                                }) %>
+                            </div>
+
+                
+
                         </div>
-
-                        <div class="pInput ">
-                            <%= parameter.input({
-                                init : true
-                            }) %>
-                        </div>
-
-            
-
                     </div>
-                </div>
 
-            <% }) %>	
+                <% }) %>	
+            </div>
+
         </div>
-
-    </div>
     
+    <% } %>
     
 </div>
 
@@ -76,8 +80,10 @@
     <div class="previewWrapper">
         <%= embeddingcode %>
     </div>
+    <% if(!embeddingSettings.onlyvideo) {%>
+        <div class="spacer">
+            
+        </div>
 
-    <div class="spacer">
-        
-    </div>
+    <% } %>
 </div>

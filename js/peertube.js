@@ -39,7 +39,7 @@ var PeertubeRequest = function(app = {}){
 
         var time = 10000
 
-        if (window.cordova){
+        if (window.cordova || isInStandaloneMode()){
             time = 25000
         }
 

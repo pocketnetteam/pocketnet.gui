@@ -98,7 +98,7 @@ var socialshare2 = (function(){
 						}
 
 						if(share.itisvideo()){
-							s.unshift('onlyvideo')
+							s = ['onlyvideo']
 						}
 					}
 
@@ -171,7 +171,9 @@ var socialshare2 = (function(){
 						settings[i] = embeddingSettings[i]
 					})
 
-					if(settings.onlyvideo && settings.onlyvideo.value){
+					console.log('settings', settings)
+
+					/*if(settings.onlyvideo && settings.onlyvideo.value){
 						_.each(settings, function(s){
 							if (s.id != 'onlyvideo')
 								s.hidden = true
@@ -181,7 +183,7 @@ var socialshare2 = (function(){
 						_.each(settings, function(s){
 							s.hidden = false
 						})
-					}
+					}*/
 
 					return Promise.resolve()
 				}).then(() => {
@@ -225,7 +227,7 @@ var socialshare2 = (function(){
 						})
 
 						_p.el.find('.copycode').on('click', function(){
-							copycleartext(renders.embeddingcode(action, ed.embedding.id, settings))
+							copycleartext(renders.embeddingcode(action, ed.embedding.id, settings, embeddingSettings))
 							sitemessage(self.app.localization.e('successcopied'))
 						})
 					})
@@ -237,7 +239,8 @@ var socialshare2 = (function(){
 			},
 
 			embeddingcode : function(action, actionid, settings){
-				console.log('action', action)
+
+		
 				var p = {};
 
 				_.each(settings, function(s, i){
@@ -260,12 +263,9 @@ var socialshare2 = (function(){
 				}
 				
 
-				if(p.onlyvideo){
-
-					
+				if(settings.onlyvideo){
 
 					var share = self.app.platform.sdk.node.shares.storage.trx[actionid];
-
 
 					if (share && share.url && action && actionid){
 
@@ -280,8 +280,6 @@ var socialshare2 = (function(){
 
 						return '<iframe width="'+width+'" height="'+height+'" src="https://pocketnet.app/embedVideo.php?embed=true&s='+actionid+'&host='+hid.host+'&id='+hid.id+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
 					}	
-					
-					
 					
 					return ''
 

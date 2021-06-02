@@ -3361,7 +3361,7 @@ var lenta = (function(){
 
 				self.app.platform.clbks._focus.lenta = function(time){
 
-					if (window.cordova && !essenseData.txids && !making && time > 120 && !essenseData.second){
+					if ((window.cordova || isInStandaloneMode()) && !essenseData.txids && !making && time > 120 && !essenseData.second){
 
 						actions.loadprev()
 						_scrollTop(0)
