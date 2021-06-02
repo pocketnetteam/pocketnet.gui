@@ -27,7 +27,8 @@ Platform = function (app, listofnodes) {
         'PXUYsENSv6QkQZEdiJTsfJmu3XxZvVmVfQ' : true,
         'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw' : true,
         'PLoFgXDPL5dCYkFCGLwH4n29TehLnfQ4w6' : true,
-        'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true
+        'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true,
+        'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt'  :true
 
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
@@ -6013,6 +6014,64 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        newmaterials : {
+            storage : {},
+
+            clbks : {
+                update : {}
+            },
+
+            update : function(data){
+
+                var counts = {
+                    sub : data['sharesSubscr'] || 0,
+                    video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
+                    common : (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0)
+                }
+
+                console.log('data', data)
+
+
+                /*_.each(counts, function(c, i){
+
+                    c = rand(0, 5)
+
+                    self.sdk.newmaterials.storage[i] = (self.sdk.newmaterials.storage[i] || 0) + c
+                })*/
+
+                console.log('counts', counts)
+
+                _.each(self.sdk.newmaterials.clbks.update, function(u){
+                    console.log("U", u)
+                    u(self.sdk.newmaterials.storage)
+                })
+
+
+            },
+
+            clear : function(){
+
+                console.log("CLEAR???")
+
+                self.sdk.newmaterials.storage = {}
+
+                _.each(self.sdk.newmaterials.clbks.update, function(u){
+                    u(self.sdk.newmaterials.storage)
+                })
+            },
+
+            see : function(key){
+
+                console.log("SEE???", key, self.sdk.newmaterials.storage)
+
+                self.sdk.newmaterials.storage[key] = 0
+
+                _.each(self.sdk.newmaterials.clbks.update, function(u){
+                    u(self.sdk.newmaterials.storage)
+                })
+            }
+        },
+
         captcha: {
             storage: {},
             current: null,
@@ -6921,6 +6980,9 @@ Platform = function (app, listofnodes) {
             },
             path: function (n) {
                 return "m/44'/0'/0'/" + n + "'"
+            },
+            path33: function (n) {
+                return "m/33'/0'/0'/" + n + "'"
             },
             pnetsimple: function (pubkey) {
 
@@ -16800,6 +16862,11 @@ Platform = function (app, listofnodes) {
 
                     localStorage['lastblock'] = platform.currentBlock
 
+                    console.log("IM HERE")
+
+                    if (dif)
+                        platform.sdk.newmaterials.update(data)
+
                     //self.reconnected = platform.currentBlock;
 
                     platform.sdk.notifications.wsBlock(data.height)
@@ -16841,6 +16908,8 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk) {
 
+                    console.log("IM HERE", data, platform.currentBlock)
+
                     if (data.height <= platform.currentBlock) return
 
                     var s = platform.sdk.node.transactions;
@@ -16862,6 +16931,8 @@ Platform = function (app, listofnodes) {
 
                         })
                     })
+
+                    platform.sdk.newmaterials.update(data)
 
                     platform.sdk.user.subscribeRef()
 
@@ -19151,6 +19222,8 @@ Platform = function (app, listofnodes) {
 
     self.clearlocal = function(){
         self.sdk.tags.storage.cloud = null
+
+        self.sdk.newmaterials.clear()
     }
 
     self.clear = function (fast) {
@@ -19351,6 +19424,9 @@ Platform = function (app, listofnodes) {
             self.sdk.tags.getfastsearch()
 
 
+           
+
+
             self.sdk.node.get.time(function () {
 
 
@@ -19510,7 +19586,9 @@ Platform = function (app, listofnodes) {
                     self.sdk.node.shares.parameters.load
                 ], function () {
 
-                   
+                    /*console.log('sdsd', _.map(self.app.user.cryptoKeys(), function(k){
+                        return k.public
+                    }))*/
 
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 

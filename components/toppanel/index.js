@@ -101,6 +101,8 @@ var toppanel = (function(){
 							},
 	
 						}, function(_p){
+
+							updateNew()
 	
 							ParametersLive([selector], _p.el)
 	
@@ -123,13 +125,36 @@ var toppanel = (function(){
 			}
 		}
 
+		var updateNew = function(){
+
+			var s = self.app.platform.sdk.newmaterials.storage
+
+			if(!el.c) return
+
+			_.each(s, function(v, k){
+
+				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
+
+				console.log(k, v, _el)
+
+				if(v > 99) v = '99'
+
+				_el.html(v)
+
+				if(v) _el.addClass('hasunseen')
+				else _el.removeClass('hasunseen')
+
+			})
+		}
+
 		var initEvents = function(){
 
 			self.app.nav.clbks.history.toppanel = function(href){
-
 				renders.menu(app.nav.current.href)
-
 			}
+
+			if (self.app.platform.sdk.newmaterials.clbks)
+				self.app.platform.sdk.newmaterials.clbks.update.toppanel = updateNew
 
 		}
 
@@ -145,6 +170,8 @@ var toppanel = (function(){
 			},
 
 			destroy : function(){
+
+				delete self.app.platform.sdk.newmaterials.clbks.update.toppanel
 				delete self.app.nav.clbks.history.toppanel
 				
 				el = {};

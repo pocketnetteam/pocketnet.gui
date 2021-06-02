@@ -73,6 +73,32 @@ var lenta = (function(){
 		}
 
 		var actions = {
+			newmaterials : function(data){
+				if(making || beginmaterial || essenseData.author || essenseData.txids) return
+
+				if(!data) data = {}
+
+				if(recommended == 'sub'){
+					
+					shownewmaterials(data['sharesSubscr'])
+				}
+				else
+				{
+
+					if (data.sharesLang){
+						return shownewmaterials(deep(data, 'sharesLang.' + self.app.localization.key))
+					}
+
+					if (video){
+						return shownewmaterials(deep(data, 'contentsLang.video.' + self.app.localization.key))
+					}
+
+					return shownewmaterials(
+						(deep(data, 'contentsLang.video.' + self.app.localization.key) || 0) + 
+						(deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) 
+					)
+				}
+			},
 			scrollmode : function(m){
 				if(m){
 					$('html').addClass('scrollmodedown')
@@ -3049,6 +3075,33 @@ var lenta = (function(){
 			}
 		}
 
+		var shownewmaterials = function(c){
+			if(!beginmaterial && recommended != 'recommended' && !essenseData.author && !essenseData.search){
+
+				var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
+
+				var a = 0;
+				
+				if (ts.length && !recommended){
+
+					a = a - ts.length;
+				}
+
+
+				if(((c || 0) + a > 0)){
+
+					newmaterials = newmaterials + (c || 0) + a;
+
+					el.c.addClass('showprev')
+
+					el.c.find('.countnew').html( "(" + newmaterials + ")" )
+
+					if (essenseData.renderclbk)
+						essenseData.renderclbk()
+				}
+			}
+		}
+
 		var initEvents = function(){			
 
 			if(isMobile() && canloadprev && !essenseData.openapi){
@@ -3227,32 +3280,7 @@ var lenta = (function(){
 
 			el.c.on('click', '.commentsAction', events.toComments)
 
-			var shownewmaterials = function(c){
-				if(!beginmaterial && recommended != 'recommended' && !essenseData.author && !essenseData.search){
-
-					var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
-
-					var a = 0;
-					
-					if (ts.length && !recommended){
-
-						a = a - ts.length;
-					}
-
-
-					if(((c || 0) + a > 0)){
-
-						newmaterials = newmaterials + (c || 0) + a;
-
-						el.c.addClass('showprev')
-
-						el.c.find('.countnew').html( "(" + newmaterials + ")" )
-
-						if (essenseData.renderclbk)
-							essenseData.renderclbk()
-					}
-				}
-			}
+			
 
 
 			if(!essenseData.openapi && !essenseData.second){
@@ -3375,34 +3403,9 @@ var lenta = (function(){
 
 				if(!essenseData.txids){
 
-					self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = function(data){
+					self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
+					self.app.platform.ws.messages["new block"].clbks.newsharesLenta = actions.newmaterials
 
-						if(making || beginmaterial || essenseData.author || essenseData.txids) return
-						
-						if(recommended == 'sub'){
-							
-							shownewmaterials(data.cntsubscr)
-						}
-						else
-						{
-							shownewmaterials(data.cntposts)
-						}
-					}
-
-					self.app.platform.ws.messages["new block"].clbks.newsharesLenta = function(data){
-
-						if(making || beginmaterial || essenseData.author || essenseData.txids) return
-
-						if(recommended == 'sub'){
-							
-							shownewmaterials(data['sharesSubscr'])
-						}
-						else
-						{
-							shownewmaterials(deep(data, 'sharesLang.' + self.app.localization.key))
-						}
-						
-					}
 					self.app.platform.sdk.categories.clbks.tags.lenta =
 					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
 
@@ -3496,6 +3499,8 @@ var lenta = (function(){
 				cache = 'cache'
 			}
 
+			
+
 			if (essenseData.contents){
 
 				el.c.find('.shares').html('')
@@ -3516,6 +3521,8 @@ var lenta = (function(){
 					actions.opensvi(p.v)
 				}
 			}
+
+			
 
 
 			load.shares(function(shares, error){
@@ -3637,7 +3644,28 @@ var lenta = (function(){
 
 			}, cache)
 
-						
+			clearnewmaterials()			
+		}
+
+		var clearnewmaterials = function(){
+
+			if (!essenseData.goback && !essenseData.second && !essenseData.author && !beginmaterial) {
+				var key = 'common'
+
+				if (video){
+					key = 'video'
+				}
+
+				if(recommended == 'sub'){
+					key = 'sub'
+				}
+
+				if(recommended == 'recommended') return
+
+
+				self.app.platform.sdk.newmaterials.see(key)
+			}
+
 		}
 
 		return {

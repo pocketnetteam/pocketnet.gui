@@ -459,6 +459,24 @@ User = function(app, p) {
 		return bitcoin.ECPair.fromPrivateKey(keys.private.value)
 	}
 
+	self.cryptoKeys = function(){
+		var ckeys = [];
+		if(keys.private.value){
+			for(var i = 1; i < 13; i++){
+				var d = bitcoin.bip32.fromSeed(keys.private.value).derivePath(app.platform.sdk.address.path33(i)).toWIF()
+	
+				var keyPair = bitcoin.ECPair.fromWIF(d)
+	
+				ckeys.push({
+					pair : keyPair,
+					public : keyPair.publicKey.toString('hex')
+				})
+			}
+		}
+
+		return ckeys;
+	}
+
 	self.stay = Number(localStorage['stay'] || '1')
 
 	//if(typeof localStorage['stay'] == 'undefined') self.stay = 1;
