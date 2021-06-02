@@ -3347,25 +3347,25 @@ video[src], .vjs-fullscreen {
     display: none;
   }
 
-  .video-js .vjs-control-bar {
+  .js-player .video-js .vjs-control-bar {
     font-size: 1.4em;
     /*.vjs-mute-control{
       display: none;
     }*/
   }
-  .video-js .vjs-control-bar .vjs-time-divider,
-.video-js .vjs-control-bar .vjs-time-control {
+  .js-player .video-js .vjs-control-bar .vjs-time-divider,
+.js-player .video-js .vjs-control-bar .vjs-time-control {
     padding-left: 0.1em;
     padding-right: 0.1em;
     min-width: 0;
   }
-  .video-js .vjs-control-bar .vjs-volume-control {
+  .js-player .video-js .vjs-control-bar .vjs-volume-control {
     display: none;
   }
-  .video-js .vjs-control-bar .vjs-icon-settings {
+  .js-player .video-js .vjs-control-bar .vjs-icon-settings {
     display: none;
   }
-  .video-js .pocketnet-logo-video-player {
+  .js-player .video-js .pocketnet-logo-video-player {
     display: none;
   }
 }
