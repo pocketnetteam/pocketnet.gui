@@ -791,7 +791,6 @@ var lenta = (function(){
 
 			opensvi : function(id){
 
-				console.log("ID", id)
 				if (essenseData.opensvi){
 					essenseData.opensvi(id, deep(self, 'app.platform.sdk.node.shares.storage.trx.' + id))
 				}
@@ -1374,7 +1373,7 @@ var lenta = (function(){
 
 						(el.w.scrollTop() + el.w.height() > el.c.height() - 2000) 
 	
-						&& !loading && !ended && recommended != 'recommended') {
+						&& !loading && !ended && recommended != 'recommended'&& recommended != 'hot') {
 	
 						actions.loadmore()
 	
@@ -1386,7 +1385,8 @@ var lenta = (function(){
 
 						(el.w.scrollLeft() + el.w.width() > el.c.width() - 400) 
 	
-						&& !loading && !ended && recommended != 'recommended') {
+						&& !loading && !ended && recommended != 'recommended' && recommended != 'hot') {
+
 	
 						actions.loadmore()
 	
@@ -2887,8 +2887,6 @@ var lenta = (function(){
 
 							if (shares.length){
 
-								console.log('essenseData.hasshares', essenseData.hasshares)
-
 								if (essenseData.hasshares){
 									essenseData.hasshares(shares)
 								}
@@ -2980,8 +2978,6 @@ var lenta = (function(){
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
 							var page = essenseData.page || parameters().page || 0
-
-							console.log('essenseData', essenseData)
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -3601,7 +3597,7 @@ var lenta = (function(){
 	
 								if(p.v){
 	
-									actions.scrollToPost(p.v)
+									//actions.scrollToPost(p.v)
 	
 									if(video){
 									}

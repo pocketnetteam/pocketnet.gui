@@ -12,6 +12,7 @@
 }
 #main .topvideosWrapper.hasshares {
   display: block;
+  min-height: 160px;
 }
 #main .topvideosWrapper .horizontalLentaWrapper {
   padding: 1em;
@@ -384,6 +385,9 @@
 }
 html.stblack #main {
   background: #041726;
+}
+html.stblack #main .topvideosWrapper {
+  background: #112035;
 }
 html.stblack #main .addbutton {
   background: #00a3f7;

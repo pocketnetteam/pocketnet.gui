@@ -1007,7 +1007,7 @@ var post = (function () {
 
 			showmoreby: function () {
 
-				return
+				
 
 				var showmoreby = el.c.find('.showmorelenta')
 
@@ -1016,11 +1016,14 @@ var post = (function () {
 					external = p
 
 				}, {
-					caption : "More Videos By This Author",
+					caption : self.app.localization.e("More videos by this author"),
 					author: share.address,
 					video: true,
 					shuffle : true,
 					loaderkey : 'getusercontents',
+					filter : function(_share){
+						if(share.txid != _share.txid) return true
+					},
 					hasshares : function(shares){
 						if (shares.length > 2){
 							showmoreby.addClass('hasshares')
