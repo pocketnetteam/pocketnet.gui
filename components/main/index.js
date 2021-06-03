@@ -197,21 +197,13 @@ var main = (function(){
 			},
 
 			backtolenta : function(){
-				actions.backtolentaClear()
-				_scrollTop(lastscroll, null, 5)
-				
-
-			},
-
-			backtolentaClear : function(){
-
-				console.log("backtolentaClear")
-				
 				self.nav.api.history.removeParameters(['v'])
 
 				el.c.removeClass('opensvishowed')
 
 				renders.post(null)
+
+				_scrollTop(lastscroll, null, 5)
 
 				setTimeout(function(){
 
@@ -219,10 +211,12 @@ var main = (function(){
 					
 					actions.refreshSticky()
 
-				}, 350)
+					
+
+				}, 500)
 
 				if(lenta && lenta.update) lenta.update()
-			}	
+			}
 		}
 
 		var events = {
@@ -347,11 +341,9 @@ var main = (function(){
 
 			topvideos: function (show) {
 
-				
+				return
 
 				var showmoreby = el.topvideos
-
-				showmoreby.removeClass('hasshares')
 
 				if (show){
 					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
@@ -359,9 +351,9 @@ var main = (function(){
 						external = p
 	
 					}, {
-						caption : self.app.localization.e("Top videos") ,
+						caption : "Top videos",
 						video: true,
-						r : 'hot',
+						r : true,
 						loaderkey : 'recommended',
 						shuffle : true,
 						period : '259200',
@@ -589,14 +581,10 @@ var main = (function(){
 
 							el.c.addClass('opensvishowed')
 
-							
-
 							if (upbutton) upbutton.destroy()
 							
 							if (upbackbutton) upbackbutton.destroy()
 
-
-							setTimeout(function(){
 								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
 									top : function(){
 										return '65px'
@@ -611,10 +599,6 @@ var main = (function(){
 									class : 'bright',
 									text : 'Back'
 								})	
-							}, 50)
-
-								
-
 								
 							setTimeout(function(){
 								upbackbutton.apply()
@@ -685,6 +669,7 @@ var main = (function(){
 						
 						opensvi : function(id){
 
+							console.log("ID")
 
 							if (openedpost){
 						
@@ -905,7 +890,11 @@ var main = (function(){
 				if (currentMode != ncurrentMode){
 
 					currentMode = ncurrentMode
+
+					
 				}
+
+				
 
 				var _vm = parameters().video ? true : false
 
@@ -927,7 +916,7 @@ var main = (function(){
 				}
 				else{
 					el.c.removeClass('videomain')
-					actions.backtolentaClear()
+					actions.backtolenta()
 					makePanel()
 				}
 				
