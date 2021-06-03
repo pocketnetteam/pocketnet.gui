@@ -321,7 +321,7 @@ RpcClient.callspec = {
     getaddressscores: 'str',
     getpostscores: 'str',
     getpagescores: 'obj str',
-    gethierarchicalstrip : 'int str int obj str',
+    gethierarchicalstrip : 'int str int str obj str',
     getusercontents : 'str int str int obj str',
 
     // BlockExplorer
