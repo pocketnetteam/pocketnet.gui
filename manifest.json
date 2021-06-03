@@ -48,6 +48,6 @@
     "theme_color": "#011621",
     "display": "fullscreen",
     "start_url": "/index",
-    "scope": "https://pocketnet.app/",
+    "scope": "https://test.pocketnet.app/",
     "orientation": "portrait"
 }
