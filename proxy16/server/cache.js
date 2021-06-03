@@ -46,8 +46,7 @@ var Cache = function(p){
             block : 0
         },
         getusercontents: {
-            time : 460,
-            block : 0
+            time : 760,
         },
         gethierarchicalstrip: {
             time : 460,
