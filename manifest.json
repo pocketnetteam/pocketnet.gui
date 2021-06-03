@@ -38,17 +38,16 @@
             "density": "4.0"
         },
         {
-            "src": "img/logo_color/blue_512.png",
+            "src": "img/res/blue_512.png",
             "sizes": "512x512",
-            "type": "image\/png"
-        },
-        {
-            "src": "img/logo_color/blue_192.png",
-            "sizes": "192x192",
-            "type": "image\/png"
+            "type": "image\/png",
+            "purpose": "any maskable"
         }
     ],
     "background_color": "#011621",
+    "theme_color": "#011621",
     "display": "fullscreen",
-    "start_url": "/index"
+    "start_url": "/index",
+    "scope": "https://test.pocketnet.app/",
+    "orientation": "portrait"
 }

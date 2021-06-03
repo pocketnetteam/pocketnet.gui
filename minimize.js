@@ -1,5 +1,6 @@
 fs = require('fs');
 _ = require('underscore');
+var package = require('./package.json');
 
 require('./js/functions.js');
 var uglifyJS = require("uglify-js");
@@ -39,7 +40,7 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'openapi.html', '.htaccess']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'openapi.html', '.htaccess', 'service-worker.js']
 	
 
 var vars = {
@@ -478,7 +479,8 @@ fs.exists(mapJsPath, function (exists) {
 							var JSENV = "";
 							var JS = "";
 							var CSS = "";
-							var VE = ""
+							var VE = "";
+							var CACHED_FILES = "";
 	
 							if(args.test){
 								JSENV += '<script>window.testpocketnet = true;</script>';
@@ -506,20 +508,25 @@ fs.exists(mapJsPath, function (exists) {
 								
 								_.each(m.__sources, function(source){
 									JS += '<script join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									CACHED_FILES += `'${source}',\n`;
 								})
 	
 								_.each(m.__css, function(source){
 									CSS += '<link rel="stylesheet" href="'+source+'?v='+rand(1, 999999999999)+'">\n';
+									CACHED_FILES += `'${source}',\n`;
 								})	
 	
 								_.each(m.__vendor, function(source){
 									VE += '<script join src="'+source+'?v='+args.vendor+'"></script>\n';
+									CACHED_FILES += `'${source}',\n`;
 								})			            		
 							}
 							index = index.replace("__JSENV__" , JSENV);
 							index = index.replace("__VE__" , VE);
 							index = index.replace("__JS__" , JS);
 							index = index.replace("__CSS__" , CSS);
+							index = index.replace("__CACHED-FILES__", CACHED_FILES);
+							index = index.replace("__PACKAGE-VERSION__", package.version);
 
 							_.each(VARS, function(v, i){
 								index = index.replaceAll("__VAR__." + i, v);

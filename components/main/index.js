@@ -1050,7 +1050,7 @@ var main = (function(){
 				fixeddirection = null
 				self.app.el.footer.removeClass('workstation')
 
-				$('html').removeClass('hideOverflow');
+				$('html').removeClass('nooverflow');
 			},
 			
 			init : function(p){
@@ -1082,7 +1082,7 @@ var main = (function(){
 				// Add a specific class to hide overflow on mobile
 				// (for iOS mobile devices)
 				if (isMobile())
-					$('html').addClass('hideOverflow');
+					$('html').addClass('nooverflow');
 
 				var wordsRegExp = /[,.!?;:() \n\r]/g
 
