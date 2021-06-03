@@ -1007,7 +1007,7 @@ var post = (function () {
 
 			showmoreby: function () {
 
-				return
+				
 
 				var showmoreby = el.c.find('.showmorelenta')
 
