@@ -1007,6 +1007,8 @@ var post = (function () {
 
 			showmoreby: function () {
 
+				return
+
 				var showmoreby = el.c.find('.showmorelenta')
 
 				self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {

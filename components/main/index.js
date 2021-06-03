@@ -341,6 +341,8 @@ var main = (function(){
 
 			topvideos: function (show) {
 
+				return
+
 				var showmoreby = el.topvideos
 
 				if (show){
