@@ -2192,6 +2192,129 @@
 	}
 }
 
+#lenta{
+	&.horizontal{
+		display: flex;
+		flex-grow: 1;
+		.mlwr{
+			display: flex;
+			flex-grow: 1;
+			align-items: center;
+
+			.ended{
+				padding : @rhythm;
+			}
+		}
+		.shares{
+			display: flex!important;
+			flex-wrap: nowrap;
+			flex-grow: 1;
+			flex-direction: row;
+			.share{
+				flex-grow: 1;
+				width : 350px;
+				margin : 0;
+				margin-right: @rhythm;
+				margin-bottom : @rhythm;
+				
+				&:nth-last-child(1){
+					margin-right: 0;
+				}
+			}
+		}
+
+		.loader,
+		.ended{
+			display: none!important;
+		}
+		
+
+		&.mainvideo{
+			.shares .share .forurl.verticalVideo{
+				height: 200px;
+			}
+		}
+
+		&.compact{
+			.shares{
+				.share{
+					width : 250px;
+
+					.tags{
+						display: none;
+					}
+				}
+
+				.shareTable{
+					position: relative;
+					.authorTable{
+						>div.datetime{
+							display: none;
+						}
+
+						>div.authorCell{
+							display: none;
+						}
+					}
+
+					.metatable>div.metapanel .metapanelitem{
+						display: none;
+					}
+
+					.anothercntswrk{
+						position: absolute;
+						left: @rhythm;
+						top : 0;
+						display: flex;
+						flex-wrap: nowrap;
+						overflow: hidden;
+						flex-direction: row;
+
+					
+						>div{
+							&:not(.formeta){
+								display: none;
+							}
+							
+						}
+					}
+				}
+
+			}
+
+			&.mainvideo{
+				.shares .share .forurl{
+					height: 160px;
+
+					&.verticalVideo{
+						height: 160px;
+					}
+				}
+			}
+
+			
+		}
+	}
+
+	
+}
+
+@media only screen and (max-width: 768px) {
+	#lenta{
+		&.horizontal{
+			&.compact{
+				&.mainvideo{
+					.shares .cntswrk.formeta{
+						padding-top : 0;
+						margin-left: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+
 .dialog{
 	&.donation{
 		z-index: 1300;

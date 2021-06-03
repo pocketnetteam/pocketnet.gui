@@ -95,7 +95,8 @@ var publics = {
     estimatefee: true,
     estimatesmartfee: true,
     gettransaction : true,
-    gethierarchicalstrip : true
+    gethierarchicalstrip : true,
+    getusercontents : true
 }
 
 function rpc(request, callback, obj) {
@@ -104,8 +105,6 @@ function rpc(request, callback, obj) {
 
     var pbl = publics[request.method]
     var pst = posts[request.method]
-
-    //console.log("REQUEST", m , request)
 
     var self = obj;
     request = JSON.stringify(request);
@@ -148,6 +147,7 @@ function rpc(request, callback, obj) {
 
 
             if (res.statusCode === 401) {
+
 
                 var exceededError = new Error(errorMessage + 'Connection Rejected: 401 Unnauthorized');
                     exceededError.code = 401;
@@ -321,7 +321,8 @@ RpcClient.callspec = {
     getaddressscores: 'str',
     getpostscores: 'str',
     getpagescores: 'obj str',
-    gethierarchicalstrip : 'int str int str obj',
+    gethierarchicalstrip : 'int str int obj str',
+    getusercontents : 'str int str int obj str',
 
     // BlockExplorer
     getblocktransactions: 'str int int',

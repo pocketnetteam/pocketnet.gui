@@ -1405,6 +1405,33 @@ UserInfo = function(){
 		v : []
 	}
 
+	self.keys = {
+		set : function(_v){
+
+			var mv = this.v;
+
+			if(!_v) this.v = [];
+
+			else
+			{
+				if(_.isArray(_v)){
+					_.each(_v, function(__V){
+						mv.push(__V)
+					})
+				}
+				else
+				{
+					this.v.push(_v)
+				}
+				
+			}
+
+			if (self.on.change)
+				self.on.change('keys', this.v)
+		},
+		v : []
+	}
+
 	self.image = {
 		set : function(_v){
 
@@ -1580,9 +1607,6 @@ UserInfo = function(){
 
 	}
 
-	
-
-
 	self.on = {}
 	self.off = function(e){
 		delete self.on[e]
@@ -1606,7 +1630,9 @@ UserInfo = function(){
 		 + encodeURIComponent(self.site.v)
 		 + self.language.v
 		 + encodeURIComponent(self.about.v)
-		 + self.image.v + JSON.stringify(self.addresses.v) + self.ref.v
+		 + self.image.v + JSON.stringify(self.addresses.v) 
+		 + self.ref.v
+		 + self.keys.v.join(',')
 	}
 
 	self.alias = function(txid){
@@ -1629,7 +1655,8 @@ UserInfo = function(){
 				language : self.language.v,				
 				image : self.image.v,
 				addresses : JSON.stringify(self.addresses.v || []),
-				ref : self.ref.v
+				ref : self.ref.v,
+				keys : self.keys.v.join(',')
 			} 
 		}
 
@@ -1640,7 +1667,8 @@ UserInfo = function(){
 			s : encodeURIComponent(self.site.v),
 			i : self.image.v,
 			b : JSON.stringify(self.addresses.v || []),
-			r : self.ref.v
+			r : self.ref.v,
+			k : self.keys.v.join(',')
 		}
 	}
 
@@ -1652,6 +1680,7 @@ UserInfo = function(){
 		self.image.set(v.i || v.image)
 		self.addresses.set( JSON.parse(v.b || v.addresses || "[]"))
 		self.ref.set(v.r || v.ref)
+		self.keys.set((v.k || v.keys || '').split(','))
 	}
 
 	
@@ -1675,6 +1704,7 @@ pUserInfo = function(){
 	self.postcnt = 0;
 	self.reputation = 0;
 	self.trial = true;
+	self.keys = []
 
 	self.subscribes = [];
 	self.subscribers = [];
@@ -1706,6 +1736,8 @@ pUserInfo = function(){
 		if (v.recomendedSubscribes) self.recomendedSubscribes = v.recomendedSubscribes;
 
 		if (v.blocking) self.blocking = v.blocking;
+
+		self.keys = (v.k || v.keys || '').split(',')
 
 		if (v.txid)
 			self.txid = v.txid;
@@ -1742,6 +1774,7 @@ pUserInfo = function(){
 		v.b = JSON.stringify(self.addresses || [])
 
 		v.adr = self.address
+		v.k = self.keys.join(',')
 
 		return v
 	}

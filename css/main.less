@@ -4328,6 +4328,85 @@ input[type=radio].radio:checked + label {
         }
     }
 }
+.horizontalLentaWrapper{
+
+    position: relative;
+
+    .controlhor{
+        position: absolute;
+        top : 50%;
+        border-radius: 50%;
+        background: #fff;
+        .shadowSmaller();
+        cursor: pointer;
+        height: 44px;
+        width: 44px;
+        text-align: center;
+        line-height: 44px;
+        color : @color-gray-light;
+        font-size: 0.8em;
+        .transition(0.3s);
+
+        &.controlleft{
+            left: @rhythm;
+        }
+
+        &.controlright{
+            right: @rhythm;
+        }
+
+        &:hover{
+            color : @color-main;
+        }
+    }
+
+    .showmorebywrapper{
+        overflow: hidden;
+        overflow-x: scroll;
+    
+        background: #FFF;
+       
+    
+        
+    
+        &::-webkit-scrollbar{
+            height: 4px;
+            width: 4px;
+            background: gray;
+        }
+        &::-webkit-scrollbar-thumb:horizontal{
+            background: #000;
+            border-radius: 10px;
+        }
+        .anothercntswrk{
+            padding-left: 0!important;
+            padding-right: 0!important;
+        }
+    
+        .showmorebywrapper{
+            display: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .horizontalLentaWrapper{
+
+        .controlhor{
+            display: none;
+        }
+    
+        .showmorebywrapper{
+           
+            &::-webkit-scrollbar{
+                display: none!important;
+            }
+           
+        }
+    }
+    
+}
+
 .thinput{
 
     &[value='1']{

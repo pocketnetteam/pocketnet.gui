@@ -2964,23 +2964,17 @@ body {
   background-color: black;
   overflow: hidden;
 }
+.standalone-video-embed .video-js-wrapper {
+  width: 100%;
+}
 
 .video-js-wrapper {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  height: 100%;
   width: 95%;
-}
-
-.vertcalVideoContainer {
-  height: 100%;
-  width: auto;
-}
-
-.squareVideoContainer {
-  height: 100%;
-  width: auto;
 }
 
 video {
@@ -3013,16 +3007,16 @@ video[src], .vjs-fullscreen {
 }
 
 .video-js:not(.squareVideo) {
-  height: auto !important;
+  height: 100% !important;
 }
 
 .video-js:not(.verticalVideo) {
-  height: auto !important;
+  height: 100% !important;
 }
 
 .standalone-video-embed .video-js .vjs-tech {
   position: relative;
-  height: auto;
+  height: 100%;
 }
 .standalone-video-embed .squareVideo,
 .standalone-video-embed .verticalVideo {
@@ -3210,6 +3204,17 @@ video[src], .vjs-fullscreen {
 .video-js-wrapper .video-js button {
   outline: none;
 }
+.js-player .video-js .pocketnet-link-button,
+.video-js-wrapper .video-js .pocketnet-link-button {
+  width: 12em;
+  text-align: center;
+  line-height: 3em;
+}
+.js-player .video-js .pocketnet-link-button a,
+.video-js-wrapper .video-js .pocketnet-link-button a {
+  font-size: 1.2em;
+  color: #ff5100;
+}
 .js-player .video-js .vjs-controls-disabled .vjs-big-play-button,
 .video-js-wrapper .video-js .vjs-controls-disabled .vjs-big-play-button {
   display: none !important;
@@ -3306,16 +3311,6 @@ video[src], .vjs-fullscreen {
   display: block;
   opacity: 0.5;
 }
-.js-player .pocketnet-logo-video-player .icon.icon-only-logo-transparent,
-.video-js-wrapper .pocketnet-logo-video-player .icon.icon-only-logo-transparent {
-  background: url(./soloIcon.svg) no-repeat;
-  background-size: 30px;
-  width: 100px;
-  height: 30px;
-  display: block;
-  opacity: 0.5;
-  position: relative;
-}
 .js-player .pocketnet-logo-video-player .icon.icon-only-logo-transparent:hover,
 .video-js-wrapper .pocketnet-logo-video-player .icon.icon-only-logo-transparent:hover {
   opacity: 1;
@@ -3323,17 +3318,6 @@ video[src], .vjs-fullscreen {
 .js-player .pocketnet-logo-video-player .icon.icon-only-logo-transparent:hover::before,
 .video-js-wrapper .pocketnet-logo-video-player .icon.icon-only-logo-transparent:hover::before {
   color: white;
-}
-.js-player .pocketnet-logo-video-player .icon.icon-only-logo-transparent::before,
-.video-js-wrapper .pocketnet-logo-video-player .icon.icon-only-logo-transparent::before {
-  content: "Watch in Pocketnet";
-  position: absolute;
-  text-decoration: none;
-  color: #0091ff;
-  top: 7px;
-  left: 35px;
-  font-size: 15px;
-  width: 200px;
 }
 .js-player .pocketnet-logo-video-player,
 .video-js-wrapper .pocketnet-logo-video-player {
@@ -3363,25 +3347,25 @@ video[src], .vjs-fullscreen {
     display: none;
   }
 
-  .video-js .vjs-control-bar {
+  .js-player .video-js .vjs-control-bar {
     font-size: 1.4em;
     /*.vjs-mute-control{
       display: none;
     }*/
   }
-  .video-js .vjs-control-bar .vjs-time-divider,
-.video-js .vjs-control-bar .vjs-time-control {
+  .js-player .video-js .vjs-control-bar .vjs-time-divider,
+.js-player .video-js .vjs-control-bar .vjs-time-control {
     padding-left: 0.1em;
     padding-right: 0.1em;
     min-width: 0;
   }
-  .video-js .vjs-control-bar .vjs-volume-control {
+  .js-player .video-js .vjs-control-bar .vjs-volume-control {
     display: none;
   }
-  .video-js .vjs-control-bar .vjs-icon-settings {
+  .js-player .video-js .vjs-control-bar .vjs-icon-settings {
     display: none;
   }
-  .video-js .pocketnet-logo-video-player {
+  .js-player .video-js .pocketnet-logo-video-player {
     display: none;
   }
 }

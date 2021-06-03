@@ -37,6 +37,26 @@ var menu = (function(){
 
 		})
 
+		var updateNew = function(){
+
+			var s = self.app.platform.sdk.newmaterials.storage
+
+			if(!el.c) return
+
+			_.each(s, function(v, k){
+
+				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
+
+				if(v > 99) v = '99'
+
+				_el.html(v)
+
+				if(v) _el.addClass('hasunseen')
+				else _el.removeClass('hasunseen')
+
+			})
+		}
+
 		var balanceHash;
 
 		var actions = {
@@ -1092,6 +1112,9 @@ var menu = (function(){
 				
 			})
 
+			if (self.app.platform.sdk.newmaterials.clbks)
+				self.app.platform.sdk.newmaterials.clbks.update.menu = updateNew
+
 			el.c.find('[events]').each(function(){
 
 				var element = $(this);
@@ -1272,6 +1295,8 @@ var menu = (function(){
 				menusearch = null
 
 				$(window).off('resize', actions.elswidth)
+
+				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
 				delete self.app.platform.sdk.node.transactions.clbks.menu
 				delete self.app.platform.ws.messages.event.clbks.menusave

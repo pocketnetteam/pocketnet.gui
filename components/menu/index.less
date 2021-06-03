@@ -472,9 +472,47 @@
 								.transition(0.3s);
 								font-weight: 400;
 								
-
+								&:hover,
 								&.active{
 									color : @color-main;
+
+									a{
+										span{
+											background: fade(@color-main, 70);
+										}
+									}
+								}
+
+								a{
+									position: relative;
+			
+									span{
+										position: absolute;
+										display: block;
+										opacity: 0;
+										width: 18px;
+										height: 18px;
+										border-radius: 50%;
+										line-height: 18px;
+										text-align: center;
+										background: fade(@color-gray-mlight, 60);
+										color : #fff;
+										left : 100%;
+										font-size: 0.7em;
+										top : 0;
+										margin-left : @rhythm / 2;
+										.transition(0.3s);
+			
+										&.hasunseen{
+											opacity: 1;
+										}
+									}
+			
+									&:hover{
+										span{
+											background: fade(@color-main, 70);
+										}
+									}
 								}
 
 							}
