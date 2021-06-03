@@ -90,7 +90,7 @@ var Cache = function(p){
         },
 
         peertubevideo: {
-            time : 2020,
+            time : 300,
         },
 
         estimatesmartfee: {

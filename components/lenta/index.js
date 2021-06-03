@@ -211,12 +211,11 @@ var lenta = (function(){
 
 				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')
-
-					
-
 				}
 
 				isotopeinited = false
+
+				clearnewmaterials()	
 
 				actions.clear()
 				
@@ -1382,6 +1381,7 @@ var lenta = (function(){
 					}
 				}
 				else{
+
 					if (
 
 						(el.w.scrollLeft() + el.w.width() > el.c.width() - 400) 
@@ -2979,7 +2979,9 @@ var lenta = (function(){
 
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
-							var page = parameters().page || 0
+							var page = essenseData.page || parameters().page || 0
+
+							console.log('essenseData', essenseData)
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -2990,7 +2992,8 @@ var lenta = (function(){
 								tagsfilter : tagsfilter,
 								video : video || essenseData.videomobile,
 								count : video ? 20 : 10,
-								page : page
+								page : page,
+								period : essenseData.period
 
 							}, function(shares, error, pr){
 
@@ -3644,7 +3647,7 @@ var lenta = (function(){
 
 			}, cache)
 
-			clearnewmaterials()			
+					
 		}
 
 		var clearnewmaterials = function(){
@@ -3862,6 +3865,8 @@ var lenta = (function(){
 				}
 
 				initEvents();
+
+				clearnewmaterials()	
 
 				make(null, p);
 

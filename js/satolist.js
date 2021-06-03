@@ -28,7 +28,9 @@ Platform = function (app, listofnodes) {
         'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw' : true,
         'PLoFgXDPL5dCYkFCGLwH4n29TehLnfQ4w6' : true,
         'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true,
-        'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt'  :true
+        'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt' : true,
+        'PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk' : true,
+        'PS4pYW4tpu6fwviz63CHLMxPA37fJ3GLvn' : true
 
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
@@ -1788,6 +1790,8 @@ Platform = function (app, listofnodes) {
 
             var id = p.id || makeid()
 
+            console.log("PAPI", p)
+
             app.nav.api.load({
 
                 open : true,
@@ -1814,7 +1818,9 @@ Platform = function (app, listofnodes) {
                     from : p.from,
                     compact : p.compact,
                     r : p.r,
-                    shuffle : p.shuffle
+                    shuffle : p.shuffle,
+                    page : p.page,
+                    period : p.period
 
                 },
                 
@@ -6026,23 +6032,15 @@ Platform = function (app, listofnodes) {
                 var counts = {
                     sub : data['sharesSubscr'] || 0,
                     video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
-                    common : (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0)
+                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0))
                 }
 
-                console.log('data', data)
-
-
-                /*_.each(counts, function(c, i){
-
-                    c = rand(0, 5)
-
+                _.each(counts, function(c, i){
+                    // c = rand(1,3)
                     self.sdk.newmaterials.storage[i] = (self.sdk.newmaterials.storage[i] || 0) + c
-                })*/
-
-                console.log('counts', counts)
+                })
 
                 _.each(self.sdk.newmaterials.clbks.update, function(u){
-                    console.log("U", u)
                     u(self.sdk.newmaterials.storage)
                 })
 
@@ -6050,8 +6048,6 @@ Platform = function (app, listofnodes) {
             },
 
             clear : function(){
-
-                console.log("CLEAR???")
 
                 self.sdk.newmaterials.storage = {}
 
@@ -6061,8 +6057,6 @@ Platform = function (app, listofnodes) {
             },
 
             see : function(key){
-
-                console.log("SEE???", key, self.sdk.newmaterials.storage)
 
                 self.sdk.newmaterials.storage[key] = 0
 
@@ -9749,6 +9743,8 @@ Platform = function (app, listofnodes) {
                 recommended: function (p, clbk, cache) {
 
 
+                    console.log("P", p)
+
                     if (!p) p = {};
 
                     self.app.user.isState(function (state) {
@@ -9771,7 +9767,7 @@ Platform = function (app, listofnodes) {
                         else {
                             //var parameters = ['30', '259200', 600000, self.app.localization.key];
 
-                            var period = self.sdk.node.shares.parameters.stor.period || '259200' ///self.sdk.node.shares.parameters.defaults.period 
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '259200' ///self.sdk.node.shares.parameters.defaults.period 
 
                             var page = p.page || 0
                             

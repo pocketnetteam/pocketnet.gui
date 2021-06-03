@@ -135,8 +135,6 @@ var toppanel = (function(){
 
 				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
 
-				console.log(k, v, _el)
-
 				if(v > 99) v = '99'
 
 				_el.html(v)

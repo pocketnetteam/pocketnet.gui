@@ -353,6 +353,9 @@ var main = (function(){
 						video: true,
 						r : true,
 						loaderkey : 'recommended',
+						shuffle : true,
+						period : '259200',
+						page : 0,
 						hasshares : function(shares){
 	
 							if (shares.length > 2){
@@ -653,6 +656,7 @@ var main = (function(){
 				}
 
 				else{
+					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
 					}, {
@@ -660,6 +664,7 @@ var main = (function(){
 						autoplay : true,
 						nocommentcaption : true,
 						r : 'recommended',
+						
 						opensvi : function(id){
 
 							console.log("ID")
