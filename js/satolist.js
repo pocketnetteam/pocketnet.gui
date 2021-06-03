@@ -1820,7 +1820,8 @@ Platform = function (app, listofnodes) {
                     r : p.r,
                     shuffle : p.shuffle,
                     page : p.page,
-                    period : p.period
+                    period : p.period,
+                    filter : p.filter
 
                 },
                 
@@ -9743,8 +9744,6 @@ Platform = function (app, listofnodes) {
                 recommended: function (p, clbk, cache) {
 
 
-                    console.log("P", p)
-
                     if (!p) p = {};
 
                     self.app.user.isState(function (state) {
@@ -12014,7 +12013,6 @@ Platform = function (app, listofnodes) {
                         fetch(query + '?' + paramStr)
                             .then(data => data.json())
                             .then(result => {
-                                console.log(result, 'result')
                             })
 
                     },
@@ -16858,7 +16856,6 @@ Platform = function (app, listofnodes) {
 
                     localStorage['lastblock'] = platform.currentBlock
 
-                    console.log("IM HERE")
 
                     if (dif)
                         platform.sdk.newmaterials.update(data)
@@ -16903,8 +16900,6 @@ Platform = function (app, listofnodes) {
             "new block": {
 
                 loadMore: function (data, clbk) {
-
-                    console.log("IM HERE", data, platform.currentBlock)
 
                     if (data.height <= platform.currentBlock) return
 

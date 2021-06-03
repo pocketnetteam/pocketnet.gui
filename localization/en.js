@@ -1032,3 +1032,7 @@ ____loclib.pbp_8 = 'Share your video to social networks and via email'
 ____loclib.pbp_9 = 'Share the link to your personal page (go to your profile and click Share)'
 ____loclib.pbp_10 = 'If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings.'
 ____loclib.pbp_11 = 'For any questions, email'
+
+
+____loclib["Top Videos"] = 'Top Videos'
+____loclib["More videos by this author"] = 'More videos by this author'

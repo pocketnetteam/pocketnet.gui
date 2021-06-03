@@ -1,7 +1,7 @@
-importScripts('/pocketnet/js/vendor/workbox-v6.1.5/workbox-sw.js');
+importScripts('/js/vendor/workbox-v6.1.5/workbox-sw.js');
 
 workbox.setConfig({
-  modulePathPrefix: '/pocketnet/js/vendor/workbox-v6.1.5/',
+  modulePathPrefix: '/js/vendor/workbox-v6.1.5/',
   debug: false
 });
 
