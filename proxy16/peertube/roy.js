@@ -10,6 +10,8 @@ var Roy = function(parent){
     var instances = [];
     var inited = false;
 
+    self.useall = false
+
     self.addInstance = function(url){
         var instance = new Instance(url, self)
 
@@ -55,8 +57,10 @@ var Roy = function(parent){
     self.bestlist = function(){
 
         var _instances = _.filter(instances, function(instance){
-            return instance.canuse()
+            return instance.canuse() || self.useall
         })
+
+        console.log(_instances.length)
 
 
         return _.sortBy(_instances, function(instance){

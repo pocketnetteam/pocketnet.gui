@@ -8,7 +8,8 @@ var Peertube = function(settings){
     const PEERTUBE_ID = 'peertube://';
     const SLASH = '/';
 
-    var roys = {}
+    var roys = {
+    }
 
     var cache = {}
 
@@ -35,9 +36,18 @@ var Peertube = function(settings){
         }
 
         if(!roy){
-            var aroy = _.toArray(roys)
-            if (aroy.length) roy = aroy[0]
+            roy = self.addroy([host], host)
+            roy.useall = true
         }
+
+
+        console.log("HOST", host, roy.info())
+
+        /*if(!roy){
+            var aroy = _.toArray(roys)
+
+            if (aroy.length) roy = aroy[0]
+        }*/
 
         return roy
     }
@@ -78,6 +88,9 @@ var Peertube = function(settings){
                 return Promise.resolve(res)
                 
             }).catch((err) => {
+
+
+                console.log("err", err)
 
                 return Promise.reject(err);
 
@@ -131,11 +144,7 @@ var Peertube = function(settings){
                     return Promise.resolve(cached);
                 }
 
-                console.log('loading')
-
                 return self.inner.video(parsed).then(r => {
-
-                    console.log('loaded')
 
                     cache.set(cachekey, cacheparameters, r);
 
@@ -143,6 +152,7 @@ var Peertube = function(settings){
                 })
 
             }).catch(e => {
+
 
                 cache.set(cachekey, cacheparameters, {
                     error : true
@@ -181,6 +191,8 @@ var Peertube = function(settings){
         roy.init(urls)
 
         roys[key] = roy
+
+        return roy
     }
 
     self.info = function(compact){
@@ -193,8 +205,17 @@ var Peertube = function(settings){
         return info
     }
 
-    self.init = function({urls}){
-        self.addroy(urls, 'default')
+    self.init = function({urls, roys}){
+        if(roys){
+            _.each(roys, function(urls, i){
+                self.addroy(urls, 'default')
+            })
+        }
+        
+
+        if (urls)
+            self.addroy(urls, 'default')
+
 
         return Promise.resolve()
     }

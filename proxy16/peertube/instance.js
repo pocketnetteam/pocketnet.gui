@@ -31,7 +31,12 @@ var instance = function(host, Roy){
             return Promise.resolve()
         }
 
+
+        console.log("REQUEST STATS")
+
         return self.request('stats').then((data) => {
+
+            console.log("STATSLOADED", logs)
 
             data = data.data || {}
 
@@ -48,9 +53,13 @@ var instance = function(host, Roy){
 
         }).catch(e => {
 
+            console.log("E", e)
+
             return Promise.resolve()
 
         }).then(() => {
+
+            lastStat = null
 
             return f.delay(Roy.parent.statsInterval())
         }).then(() => {
@@ -73,6 +82,9 @@ var instance = function(host, Roy){
         if(!url) return Promise.reject('url')
 
         if(typeof url == 'function') url = url(data)
+
+
+        console.log("REQUEST", 'https://' + host + url)
 
         return axios[p.type || 'get']('https://' + host + url, { 
 
@@ -97,6 +109,7 @@ var instance = function(host, Roy){
     
         }).catch(error => {
 
+            console.log("ER", error)
 
             logs.push({
                 url,
