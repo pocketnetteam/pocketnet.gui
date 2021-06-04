@@ -30,8 +30,9 @@ Platform = function (app, listofnodes) {
         'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true,
         'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt' : true,
         'PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk' : true,
-        'PS4pYW4tpu6fwviz63CHLMxPA37fJ3GLvn' : true
-
+        'PS4pYW4tpu6fwviz63CHLMxPA37fJ3GLvn' : true,
+        'PHmvLy9b5m2b7fvU7MSTw4mAkdshhdY4Nt' : true,
+        'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
     
@@ -1821,7 +1822,9 @@ Platform = function (app, listofnodes) {
                     shuffle : p.shuffle,
                     page : p.page,
                     period : p.period,
-                    filter : p.filter
+                    filter : p.filter,
+                    ended : p.ended,
+                    afterload : p.afterload
 
                 },
                 

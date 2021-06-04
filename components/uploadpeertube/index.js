@@ -74,7 +74,7 @@ var uploadpeertube = (function () {
 		}
 
 		var initEvents = function () {
-			el.videoInput.change(function (evt) {
+			el.videoInput.change(async function (evt) {
 				var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
@@ -107,7 +107,11 @@ var uploadpeertube = (function () {
 				el.uploadButton.prop('disabled', true);
 				el.uploadProgress.removeClass('hidden');
 
+				//var transcoded = await self.app.peertubeHandler.transcode(videoInputFile[0])
+
+
 				var data = {
+					//transcoded : transcoded,
 					video : videoInputFile[0]
 				}
 
@@ -261,6 +265,9 @@ var uploadpeertube = (function () {
 				el.preloaderElement = el.c.find('.iconwr');
 
 				initEvents();
+
+				const { createFFmpeg } = FFmpeg;
+				console.log('createFFmpeg', createFFmpeg)
 
 				p.clbk(null, p);
 			},

@@ -364,8 +364,20 @@ var main = (function(){
 						r : 'hot',
 						loaderkey : 'recommended',
 						shuffle : true,
-						period : '259200',
+						period : '4320',
 						page : 0,
+						afterload : function(ed, s, e){
+
+							if(e || !s.length) return
+
+							ed.page++
+						},
+						ended : function(s){
+
+							if(!s.length) return true
+							return false
+
+						},
 						hasshares : function(shares){
 	
 							if (shares.length > 2){
@@ -396,7 +408,7 @@ var main = (function(){
 							
 						},
 
-						compact : true
+						compact : isMobile() ? true : false
 	
 					})
 				}

@@ -479,6 +479,12 @@ __map =  {
 				}
 
 			},
+
+			/*relations : [
+				{src : 'js/vendor/ffmpeg.min.js',			   f : 'js'},	
+			],*/
+
+			
 		},
 
 		streampeertube : {
