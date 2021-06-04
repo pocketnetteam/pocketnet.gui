@@ -140,7 +140,7 @@ PeerTubePocketnet = function(app){
 
     var transcode = async function(file){
 
-        if (typeof FFmpeg == undefined){
+        if (typeof FFmpeg == 'undefined'){
             return null
         }
 
