@@ -42,6 +42,7 @@ __map =  {
 		"js/vendor/axios.js",
 
 		"js/vendor/swiper-bundle.min.js",
+		
 	],
 
 	__sources : [
@@ -478,6 +479,12 @@ __map =  {
 				}
 
 			},
+
+			/*relations : [
+				{src : 'js/vendor/ffmpeg.min.js',			   f : 'js'},	
+			],*/
+
+			
 		},
 
 		streampeertube : {
