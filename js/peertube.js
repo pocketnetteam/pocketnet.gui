@@ -115,13 +115,59 @@ PeerTubePocketnet = function(app){
 
     var VIDEO_QUOTA_CORRECTION = 100 * 1024 * 1024;
     var PEERTUBE_ID = 'peertube://';
-    var SLASH = "/"
+    var SLASH = "/";
 
-    var activehost = ''
-    var proxyRequest = new PeertubeRequest(app)
+    var activehost = '';
+    var proxyRequest = new PeertubeRequest(app);
+    var ffmpeg = null;
 
     self.checklink = function(link){
         return link.includes(PEERTUBE_ID)
+    }
+
+    self.transcode = async function(file){
+        var data = null;
+
+        try {
+            data = await transcode(file)
+        }
+        catch(e){
+            console.log("ER", e)
+        }
+
+        return data
+    }
+
+    var transcode = async function(file){
+
+        if (typeof FFmpeg == undefined){
+            return null
+        }
+
+        var name = makeid()
+
+        var { createFFmpeg, fetchFile } = FFmpeg;
+
+        if (ffmpeg === null) {
+            ffmpeg = createFFmpeg({ log: true });
+        }
+
+        if (!ffmpeg.isLoaded()) {
+            await ffmpeg.load();
+        }
+
+        ffmpeg.FS('writeFile', name, await fetchFile(file));
+
+        ///test
+        await ffmpeg.run('-i', name, '-acodec', 'copy', '-vcodec', 'h264', '-s', '720x1280', name + 'output.mp4');
+
+        const data = await ffmpeg.FS('readFile', name + 'output.mp4');
+
+        //ffmpeg.exit();
+        //ffmpeg = null;
+
+        return data
+
     }
 
     self.parselink = function (link) {
