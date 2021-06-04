@@ -14660,8 +14660,6 @@ Platform = function (app, listofnodes) {
                         addValue("tgto", channelName, chat.id);
                         addValue("tgfrom", channelName, chat.id);
 
-                        console.log('renderClbk', renderClbk)
-
                         if (renderClbk){
 
                             renderClbk();
@@ -14733,8 +14731,6 @@ Platform = function (app, listofnodes) {
                 telegramUpdateAbort: typeof AbortController != 'undefined' ? new AbortController() : null,
 
                 telegramUpdates: function (offset = 0, clbk) {
-
-                    console.log('telegramUpdates', clbk)
 
                     if (!offset){
 
