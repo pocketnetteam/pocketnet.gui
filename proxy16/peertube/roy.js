@@ -60,9 +60,6 @@ var Roy = function(parent){
             return instance.canuse() || self.useall
         })
 
-        console.log(_instances.length)
-
-
         return _.sortBy(_instances, function(instance){
             return -instance.stats().k
         })
