@@ -131,14 +131,14 @@ var Nodemanager = function(p){
         }
 
 
-        self.add(node)
+        //self.add(node)
 
-        /*if (self.proxy.users() / usersfornode >= workingNodes.length){
+        if (self.proxy.users() / usersfornode >= workingNodes.length){
             self.add(node)
         }
         else{
             self.tempnodes[node.key] = node
-        }*/
+        }
         
     }
 
@@ -149,8 +149,14 @@ var Nodemanager = function(p){
             self.remap()
 
             node.init()
+
+            if(self.tempnodes[node.key]){
+                delete self.tempnodes[node.key]
+            }
         }
     }
+
+    ///self.add
     
     self.create = function(p){
 
@@ -228,11 +234,11 @@ var Nodemanager = function(p){
 
     }
 
-    self.getnodes = function(){
+    self.getnodes = function(nds){
 
         var nodes = {}
 
-        _.each(self.nodes, function(node){
+        _.each(nds || self.nodes, function(node){
             nodes[node.key] = {
                 node : node.exportsafe(),
                 statistic : node.statistic.get(),
@@ -259,7 +265,9 @@ var Nodemanager = function(p){
 
             nodes : self.getnodes(),
 
-            chain : self.currentChainCommon()
+            chain : self.currentChainCommon(),
+            peers : self.askedpeers,
+            tmp : self.getnodes(self.tempnodes)
         }
 
         return stats
@@ -473,12 +481,12 @@ var Nodemanager = function(p){
        
         peernodes : function(node){
 
-            return Promise.resolve()
+            //return Promise.resolve()
   
             return node.peers().then(nodes => {
 
                 nodes = _.filter(nodes, function(n){
-                    //console.log("PEERS", n.host)
+                    console.log("PEERS", n.host)
                     return !self.nodesmap[n.key]
                 })
 

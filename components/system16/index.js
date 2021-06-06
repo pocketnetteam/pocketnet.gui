@@ -2841,6 +2841,10 @@ var system16 = (function(){
 						var key = $(this).closest('.node').attr('node')
 						var node = find($(this).closest('.node').attr('node'))
 
+						var pkey = $(this).closest('.nodeWrapper').attr('key')
+
+						if(pkey == 'tmp') return
+
 						if(!node) return
 
 						if (key == currentnode) {
@@ -2890,7 +2894,7 @@ var system16 = (function(){
 
 					p.el.find('.name').on('click', function(){
 
-						
+						return
 
 						var key = $(this).closest('.node').attr('node')
 
