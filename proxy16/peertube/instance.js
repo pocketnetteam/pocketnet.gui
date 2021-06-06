@@ -31,6 +31,7 @@ var instance = function(host, Roy){
             return Promise.resolve()
         }
 
+
         return self.request('stats').then((data) => {
 
             data = data.data || {}
@@ -51,6 +52,8 @@ var instance = function(host, Roy){
             return Promise.resolve()
 
         }).then(() => {
+
+            lastStat = null
 
             return f.delay(Roy.parent.statsInterval())
         }).then(() => {
@@ -96,7 +99,6 @@ var instance = function(host, Roy){
             })
     
         }).catch(error => {
-
 
             logs.push({
                 url,

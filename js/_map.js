@@ -42,7 +42,7 @@ __map =  {
 		"js/vendor/axios.js",
 
 		"js/vendor/swiper-bundle.min.js",
-		
+		"js/vendor/workbox-v6.1.5/workbox-sw.js",
 	],
 
 	__sources : [

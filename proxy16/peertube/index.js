@@ -8,7 +8,8 @@ var Peertube = function(settings){
     const PEERTUBE_ID = 'peertube://';
     const SLASH = '/';
 
-    var roys = {}
+    var roys = {
+    }
 
     var cache = {}
 
@@ -34,10 +35,18 @@ var Peertube = function(settings){
             })
         }
 
-        if(!roy){
-            var aroy = _.toArray(roys)
-            if (aroy.length) roy = aroy[0]
+        if(!roy && host){
+            roy = self.addroy([host], host)
+            roy.useall = true
+            roy.auto = true
         }
+
+
+        /*if(!roy){
+            var aroy = _.toArray(roys)
+
+            if (aroy.length) roy = aroy[0]
+        }*/
 
         return roy
     }
@@ -79,6 +88,7 @@ var Peertube = function(settings){
                 
             }).catch((err) => {
 
+
                 return Promise.reject(err);
 
             });
@@ -87,8 +97,25 @@ var Peertube = function(settings){
 
     self.api = {
 
+        randroykey : function(){
+
+            var _roys = {}
+            
+            _.each(roys, function(r, c){
+                if(!r.auto) _roys[c] = r
+            })
+
+            var keys = _.map(_roys, function(i, c){return c})
+
+            console.log('keys', keys)
+
+            return keys[f.rand(0, keys.length - 1)]
+        },
+
         best : function({roy}){
-            if(!roy) roy = 'default'
+            if(!roy) roy = self.api.randroykey()
+
+            console.log("roy", roy)
 
             roy = getroy(roy)
 
@@ -110,7 +137,6 @@ var Peertube = function(settings){
             var cachekey = 'peertubevideo'
             var cacheparameters = _.clone(parsed)
 
-            console.log('cacheparameters', cacheparameters)
 
             return new Promise((resolve, reject) => {
                 cache.wait(cachekey, cacheparameters, function (waitstatus) {
@@ -131,11 +157,7 @@ var Peertube = function(settings){
                     return Promise.resolve(cached);
                 }
 
-                console.log('loading')
-
                 return self.inner.video(parsed).then(r => {
-
-                    console.log('loaded')
 
                     cache.set(cachekey, cacheparameters, r);
 
@@ -143,6 +165,7 @@ var Peertube = function(settings){
                 })
 
             }).catch(e => {
+
 
                 cache.set(cachekey, cacheparameters, {
                     error : true
@@ -181,6 +204,8 @@ var Peertube = function(settings){
         roy.init(urls)
 
         roys[key] = roy
+
+        return roy
     }
 
     self.info = function(compact){
@@ -193,8 +218,18 @@ var Peertube = function(settings){
         return info
     }
 
-    self.init = function({urls}){
-        self.addroy(urls, 'default')
+    self.init = function({urls, roys}){
+        if(roys){
+            _.each(roys, function(urls, i){
+                
+                self.addroy(urls, i)
+            })
+        }
+        
+
+        if (urls)
+            self.addroy(urls, 'default')
+
 
         return Promise.resolve()
     }
