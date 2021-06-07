@@ -72,7 +72,6 @@ __map =  {
 		"css/plyr.css",
 		"js/vendor/DateTimePicker.min.css",
 		"css/swiper-bundle.min.css",
-		"css/fontawesome/css/all.css",
 		"peertube/video-embed.css",
 		"js/vendor/emojionearea.min.css"
 	],

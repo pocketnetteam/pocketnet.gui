@@ -168,10 +168,8 @@ __VAR__.test
         <script join src="js/app.js?v=207344366825"></script>
         <script join src="js/openapi.js?v=247873088062"></script>
         
-        
-        <script type="text/javascript">
-            topPreloader(100);
-        </script>
+        <link rel="stylesheet" href="css/fontawesome/css/all.css">
+      
 
     </body>
 </html>

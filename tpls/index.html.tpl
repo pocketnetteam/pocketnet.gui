@@ -119,11 +119,7 @@
         __JS__
 
 
-        <script type="text/javascript">
-
-            topPreloader(100);
-            
-        </script>
+        <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
         <script src="js/pwa-service-worker.js"></script>
 
