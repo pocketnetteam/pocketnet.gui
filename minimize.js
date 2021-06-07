@@ -81,6 +81,10 @@ fs.exists(mapJsPath, function (exists) {
 			path : './js/vendor.min.js'
 		}
 
+		var tempates = {
+			data : ""
+		}
+
 		var cssmaster = {
 			data : "",
 			path : './css/master.css'
@@ -93,7 +97,7 @@ fs.exists(mapJsPath, function (exists) {
 		}
 
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor') return true;
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates') return true;
 			
 		})
 
@@ -330,7 +334,7 @@ fs.exists(mapJsPath, function (exists) {
 						else path = filepath.replace("..", '.');				  				
 
 						fs.exists(path, function (exists) {
-							//console.log(path)
+							
 							if(exists){
 
 								console.log(path)
@@ -369,21 +373,94 @@ fs.exists(mapJsPath, function (exists) {
 						success : function(){
 							console.log(join.path)
 
-							fs.writeFile(join.path, join.data, function(err) {
+							joinTemplates(function(d){
 
-								if(err) {
+								console.log("joinTemplates DONE")
 
-									throw "Access not permitted (JS) " +  join.path
-								}
-										
-								clbk();				
-							});
+								join.data = join.data + "\n /*_____*/ \n" + d;
+
+								fs.writeFile(join.path, join.data, function(err) {
+
+									if(err) {
+	
+										throw "Access not permitted (JS) " +  join.path
+									}
+											
+									clbk();				
+								});
+
+							})
+
+							
 						}
 					}
 				})
 
 			else
 				throw "Access not permitted (JS) " +  join.path
+		}
+
+		var joinTemplates = function(clbk){
+			if(m.__templates){
+
+				tempates.data = ''
+
+				var scripted = {}
+
+				lazyEach({
+					sync : true,
+					array : m.__templates,
+					action : function(p){
+
+						var i = p.item
+
+						var filepath = 'components/' + i.c + '/templates/' + i.n + '.html';
+
+						var path;
+
+						if(filepath.indexOf("..") == -1) path = './'+ filepath;
+						else path = filepath.replace("..", '.');		
+						
+						
+						console.log('path', path, i)
+
+						fs.exists(path, function (exists) {
+							//
+							if(exists){
+
+								console.log(path)
+
+								fs.readFile(path, function read(err, data) {
+									if (err) {
+										throw err;
+									}
+
+									if(!scripted[i.c]) scripted[i.c] = {}
+
+									scripted[i.c][i.n] = data.toString()
+
+									p.success();
+								});
+
+							}
+							else
+							{
+								throw "File doesn't exist " +  path
+							}
+						})
+
+					},
+					
+					all : {
+						success : function(){
+
+							tempates.data = 'window.pocketnetTemplates = ' + JSON.stringify(scripted)
+
+							clbk(tempates.data);	
+						}
+					}
+				})
+			}
 		}
 
 		var joinVendor = function(ar, clbk){

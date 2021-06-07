@@ -81,6 +81,42 @@ __map =  {
 	],
 
 
+	__templates : [
+		{ c : 'navigation', n : 'menu' },
+		{ c : 'menu', n : 'index' },
+
+		{ c : 'toppanel', n : 'index' },
+		{ c : 'navigation', n : 'index' },
+		{ c : 'footer', n : 'index' },
+		{ c : 'toppanel', n : 'menu' },
+		{ c : 'main', n : 'index' },
+		{ c : 'panel', n : 'index' },
+		{ c : 'leftpanel', n : 'index' },
+		{ c : 'panel', n : 'discussiondummy' },
+		{ c : 'lastcomments', n : 'index' },
+		{ c : 'tagcloud', n : 'index' },
+		{ c : 'categories', n : 'index' },
+		{ c : 'lenta', n : 'share' },
+		{ c : 'lenta', n : 'index' },
+		{ c : 'lenta', n : 'sharevideo' },
+		{ c : 'share', n : 'url' },
+		{ c : 'lenta', n : 'stars' },
+		{ c : 'lenta', n : 'groupshares' },
+		{ c : 'lenta', n : 'commentspreview' },
+		{ c : 'comments', n : 'index' }
+		/*,
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },*/
+		
+	],
+
     pkview  : {
 		uri : "pkview",
 		href : "pkview",

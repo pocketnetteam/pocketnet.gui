@@ -19468,16 +19468,14 @@ Platform = function (app, listofnodes) {
 
             self.sdk.captcha.load()
             self.sdk.tags.getfastsearch()
+            self.sdk.node.get.time() /// /?
 
-            self.sdk.node.get.time(function () {
+            self.tst()
 
-                self.tst()
+            self.preparing = false;
 
-                self.preparing = false;
+            self.prepareUser(clbk, state);
 
-                self.prepareUser(clbk, state);
-
-            })
 
 
         }).catch(e => {
@@ -19626,7 +19624,9 @@ Platform = function (app, listofnodes) {
                     self.sdk.exchanges.load,
                     self.sdk.categories.load,
                     self.sdk.activity.load,
-                    self.sdk.node.shares.parameters.load
+                    self.sdk.node.shares.parameters.load,
+                    self.sdk.node.transactions.checkTemps,
+                    self.sdk.user.get
                 ], function () {
 
                     /*console.log('sdsd', _.map(self.app.user.cryptoKeys(), function(k){
@@ -19635,11 +19635,11 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 
-                    self.sdk.node.transactions.checkTemps(function () {
+                    //self.sdk.node.transactions.checkTemps(function () {
 
                         self.sdk.relayTransactions.send()
 
-                        self.sdk.user.get(function (u) {
+                    //    self.sdk.user.get(function (u) {
 
                             self.matrixchat.init()
 
@@ -19650,10 +19650,10 @@ Platform = function (app, listofnodes) {
                             if (clbk)
                                 clbk()
 
-                        })
+                     //   })
 
 
-                    })
+                    //})
 
                 })
             }
