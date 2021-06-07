@@ -166,7 +166,7 @@ Localization = function(app){
 
 		var __k = _key || self.key
 
-		console.log(self.loaded[__k], __k)
+		console.log(self.loaded[__k], self.loading[__k], __k)
 
 		if(self.loaded[__k])
 		{
@@ -194,9 +194,8 @@ Localization = function(app){
 
 			importScript(src, function(){
 
-				self.loaded[__k] == true;
-
-				self.loading[__k] = false
+				self.loaded[__k] = true;
+				self.loading[__k] = false;
 
 				____loclib = loclib[__k] || {};
 
