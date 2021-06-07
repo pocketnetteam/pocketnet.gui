@@ -35,11 +35,9 @@ if(!_Node)
 		return window.pocketnetVendorLoaded
 	}, function(){
 
-		
+		console.log('deviceReadyInit')
 
 		app.deviceReadyInit();
-
-
 		
 	})
 	

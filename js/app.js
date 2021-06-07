@@ -410,24 +410,27 @@ Application = function(p)
 		}
 	}
 
-	self.el = {
-		content : 		$('#content'),
-		app : 			$('#application'),
-		header : 		$('#headerWrapper'),
-		menu : 			$('#menuWrapper'),
-		toppanel : 		$('#panelWrapper'),
-		navigation : 	$('#navigationWrapper'),
-		footer : 		$('#footerWrapper'),
-		chats : 		$('.chats')
-	};
+	self.el = {}
+
+	retry(function(){
+		return window.JQuery
+	}, function(){
+
+		
+
+		
+
+
+		
+	})
+
+	
 
 	self.id = makeid();
 	self.map = __map;
 	self.modules = {};
 
-	if (self.test){
-		$('html').addClass('testpocketnet')
-	}
+	
 
 	self.curation = function(){
 		if(typeof isios != 'undefined' && isios()) return true
@@ -743,6 +746,21 @@ Application = function(p)
 
 	self.deviceReadyInit = function(p){
 
+		self.el = {
+			content : 		$('#content'),
+			app : 			$('#application'),
+			header : 		$('#headerWrapper'),
+			menu : 			$('#menuWrapper'),
+			toppanel : 		$('#panelWrapper'),
+			navigation : 	$('#navigationWrapper'),
+			footer : 		$('#footerWrapper'),
+			chats : 		$('.chats')
+		};
+	
+		if (self.test){
+			$('html').addClass('testpocketnet')
+		}
+
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
@@ -964,12 +982,11 @@ Application = function(p)
 	return self;
 }
 
+topPreloader(85);
+
 if(typeof module != "undefined")
 {
 	module.exports = Application;
 }
 
 
-
-
-topPreloader(85);

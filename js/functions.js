@@ -9418,6 +9418,8 @@
 
 	topPreloader = function(percent){
 
+		if(!window.jQuery) return
+
 		if(_Node) return
 
 		var el = $('#_topPreloader');
@@ -9825,7 +9827,7 @@
 			return window.jQuery
 
 		}, function(){
-			
+
 			;(function($){
 
 				var $event = $.event, 
