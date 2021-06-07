@@ -2,7 +2,6 @@ __map =  {
 
 	__vendor : [
 		"js/vendor/underscore-min.js", 
-		"js/vendor/fingerprint2.js",
         "js/vendor/tooltipster.core.js",
         "js/vendor/tooltipster.bundle.js",
         "js/vendor/jquery-ui.min.js",
@@ -23,7 +22,6 @@ __map =  {
 
         "js/vendor/pbkdf2.js",
         "js/vendor/sha1.js",
-        "js/vendor/jdenticon.js",
         "js/vendor/paste.js",
         "js/vendor/jquery.md5.js",
 		"js/vendor/jquery.animate-number.js",
@@ -71,13 +69,8 @@ __map =  {
 		"css/main.css",
 		"css/stblack.css",
 		"css/plyr.css",
-		/*"css/jquery-ui.min.css",*/
-		"css/medium/medium-editor.css",
-        "css/medium/medium-editor-insert-plugin.css",
 		"js/vendor/DateTimePicker.min.css",
 		"css/swiper-bundle.min.css",
-        "css/medium/beagle.css"/* ,
-        "css/datetime.css?v=116"  */
 	],
 
 
@@ -805,8 +798,10 @@ __map =  {
 
 				}},	
 
+				{src : 'css/medium/medium-editor.css',			   f : 'css'},	
+				{src : 'css/medium/medium-editor-insert-plugin.css',			   f : 'css'},	
+				{src : 'css/medium/beagle.cs',			   f : 'css'},	
 
-				
 				
 			],
 			relationsSunc : true

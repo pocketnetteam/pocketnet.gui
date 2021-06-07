@@ -106,9 +106,7 @@ var commentpanel = function(comment, _class){  %>
 
 						<div class="icon">
 							<div class="usericon" image="<%-src || ''%>">
-								<% if(!src) {%>
-									<svg width="30" height="30" data-jdenticon-value="<%-comment.address%>"></svg>
-								<% } %>
+							
 
 								<% if(deep(app, 'platform.real.'+comment.address)) {%>
 									<div class="realperson">

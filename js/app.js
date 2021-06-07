@@ -8,7 +8,6 @@ if(typeof _Electron != 'undefined' && _Electron){
 
 	imagesLoaded = require('imagesloaded');
 
-	jdenticon = require('jdenticon')
 	emojione = require('emojione')
 
 	var Isotope = require('isotope-layout'); require('isotope-packery')
@@ -468,14 +467,8 @@ Application = function(p)
 
 	var prepareMap = function(){
 
-		console.log('self.map', self.map, self)
-
 		_.each(self.map, function(m, id){
-
-			console.log(m, id)
-
-			if (id[0] != '_')
-				m.id = id;
+			m.id = id;
 		})
 
 	}

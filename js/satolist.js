@@ -19408,7 +19408,10 @@ Platform = function (app, listofnodes) {
         self.sdk.proxy.load()
         self.app.platform.sdk.node.sys.load()
 
-        self.initSounds();
+        setTimeout(function(){
+            self.initSounds();
+        }, 3000)
+        
 
         self.sdk.system16.init()
 
