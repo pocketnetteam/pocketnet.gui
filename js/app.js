@@ -602,6 +602,27 @@ Application = function(p)
 		})
 	}
 
+	self.showuikeysfirstloading = function(){
+
+		self.user.isState(function(state){
+
+			if(state && self.platform.sdk.address.pnet()){
+
+				var addr = self.platform.sdk.address.pnet().address
+				self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
+
+				var regs = self.platform.sdk.registrations.storage[addr];
+
+				if (regs && regs >= 5){
+					
+					self.platform.ui.showmykey()
+					
+				}
+			}
+
+		})
+	}
+
 	self.init = function(p){
 
 		if (navigator.webdriver) return
@@ -618,52 +639,36 @@ Application = function(p)
 
 		self.localization = new Localization(self);
 
-		self.localization.init(function(){
+		self.options.fingerPrint = hexEncode('fakefingerprint');
 
+		self.localization.init(function(){
 			newObjects(p);
 
-			self.realtime();
+			lazyActions([
+				self.platform.prepare
+			], function(){
 
-			self.options.fingerPrint = hexEncode('fakefingerprint');
+				self.realtime();
 
-			self.user.isState(function(state){
-
-				self.platform.prepare(function(){
-
+				if (typeof hideSplashScreen != 'undefined'){
+					hideSplashScreen();
+				}	
+				else{
+					$('#splashScreen').remove()
+				}
 				
-					if(state && self.platform.sdk.address.pnet()){
+				self.nav.init(p.nav);
 
-						var addr = self.platform.sdk.address.pnet().address
-						self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
+				if (p.clbk) 
+					p.clbk();
 
-						var regs = self.platform.sdk.registrations.storage[addr];
+				self.showuikeysfirstloading()
 
-						if (regs && regs >= 5){
-							
-							self.platform.ui.showmykey()
-							
-						}
-					}
-					if (typeof hideSplashScreen != 'undefined'){
-						hideSplashScreen();
-					}	
-					else{
-						$('#splashScreen').remove()
-					}
-					
-					self.nav.init(p.nav);
-
-					if (p.clbk) 
-						p.clbk();
-
-				}, state)
-				
 			})
-	
 		})
 
 		
-		
+
 	}
 
 

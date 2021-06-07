@@ -3546,7 +3546,7 @@ Platform = function (app, listofnodes) {
         theme: {
             all: {
                 white: {
-                    name: self.app.localization.e('e13266'),
+                    name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite"
                 },
 

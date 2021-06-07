@@ -38,7 +38,9 @@
             $og->echotags();
         ?>
 
-        __CSS__
+        <style type="text/css">
+            #splashScreen{position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:#011621;z-index:5000;display:flex;justify-content:center;align-items:center;flex-direction:column}#splashScreen h1{color:#fff;margin-top:1em;margin-bottom:0;font-size:1em}#splashScreen h1.fade-in{-webkit-animation:fade-in .3s ease-out both;animation:fade-in .3s ease-out both}#splashScreen h1.fade-out{-webkit-animation:fade-out .2s ease-in both;animation:fade-out .2s ease-in both}#splashScreen img{max-height:6vh;max-width:10vw}#splashScreen img.zoom-in{-webkit-animation:zoom-in .5s ease-out both;animation:zoom-in .5s ease-out both}#splashScreen img.zoom-out{-webkit-animation:zoom-out .5s ease-in both;animation:zoom-out .5s ease-in both}#splashScreen img.rotate,#splashScreen.cssanimation img{-webkit-animation:rotate 1s ease-in-out infinite both;animation:rotate 1s ease-in-out infinite both}@media only screen and (max-width:768px){html.scrollmodedown #menu .menuWrapper{top:-65px}html.scrollmodedown #panelWrapper{padding-top:0;display:none}html.scrollmodedown #navigation{bottom:-60px}}@media only screen and (max-width:640px){#splashScreen{display:flex}}@-webkit-keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}100%{-webkit-transform:scale3d(5,5,5);transform:scale3d(5,5,5);opacity:0}}@keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}100%{-webkit-transform:scale3d(5,5,5);transform:scale3d(5,5,5);opacity:0}}@-webkit-keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@-webkit-keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes fade-out{0%{opacity:1}100%{opacity:0}}@keyframes fade-out{0%{opacity:1}100%{opacity:0}}@-webkit-keyframes fade-in{0%{opacity:0}100%{opacity:1}}@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+        </style>
 
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
         
@@ -88,7 +90,6 @@
 
         <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" class="zoom-in">
-            <h1 class="fade-in">POCKETNET</h1>
         </div>
 
         <div class="chats">
@@ -122,7 +123,8 @@
         __VE__
 
         __JS__
-    
+
+        __CSS__
 
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
