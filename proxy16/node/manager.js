@@ -486,7 +486,6 @@ var Nodemanager = function(p){
             return node.peers().then(nodes => {
 
                 nodes = _.filter(nodes, function(n){
-                    console.log("PEERS", n.host)
                     return !self.nodesmap[n.key]
                 })
 
@@ -494,7 +493,6 @@ var Nodemanager = function(p){
                 
             }).then(connected => {
                 _.each(connected, function(node){
-                    //console.log("ADDEDFROM PEERS", node.host)
                     self.addIfNeed(node)
                 })
 

@@ -1737,7 +1737,11 @@ pUserInfo = function(){
 
 		if (v.blocking) self.blocking = v.blocking;
 
-		self.keys = (v.k || v.keys || '').split(',')
+		console.log("v.k || v.keys || ''", v.k || v.keys || '')
+
+		self.keys = (v.k || v.keys || '')
+
+		if(!_.isArray(self.keys)) self.keys = self.keys.split(',')
 
 		if (v.txid)
 			self.txid = v.txid;

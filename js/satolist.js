@@ -19358,6 +19358,40 @@ Platform = function (app, listofnodes) {
 
     }
 
+    self.directdialog = function(proxy){
+
+        return new Promise((resolve, reject) => {
+
+            var d = dialog({
+                html:  self.app.localization.e('pdirectdialog'),
+                btn1text: self.app.localization.e('dyes'),
+                btn2text: self.app.localization.e('dno'),
+    
+                success: function () {
+                    console.log("SELECT")
+                    self.app.api.set.current(proxy.id).then(r => {
+
+                        console.log("R", r)
+                        resolve()
+                    }).catch(resolve)
+                },
+    
+                fail: function () {
+                    resolve()
+                }
+            })
+
+            self.app.api.wait.ready('useexternal').then(r => {
+                d.destroy()
+
+                resolve()
+            })
+
+        })
+
+       
+    }
+
     self.prepare = function (clbk, state) {
 
         
@@ -19391,9 +19425,26 @@ Platform = function (app, listofnodes) {
 
         }).then(r => {
 
+            console.log("REA", r)
+
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
-                    self.app.api.changeProxyIfNeed().then(resolve).catch(reject)
+                    self.app.api.changeProxyIfNeed().then(l => {
+
+                        if(!l){
+                            var d = self.app.api.get.direct() 
+
+                            if(d){
+
+                                self.directdialog(d).then(resolve)
+
+                                return
+                            }
+                        }
+
+                        resolve()
+
+                    }).catch(reject)
                 }, 500)
             })
 
@@ -19417,12 +19468,7 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
             self.sdk.tags.getfastsearch()
 
-
-           
-
-
             self.sdk.node.get.time(function () {
-
 
                 self.tst()
 
@@ -19431,6 +19477,8 @@ Platform = function (app, listofnodes) {
                 self.prepareUser(clbk, state);
 
             })
+
+
         }).catch(e => {
             console.log("ERROR", e)
         })

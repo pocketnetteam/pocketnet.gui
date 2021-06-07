@@ -1,4 +1,3 @@
-
 var electron = null
 
 if (typeof _Electron != 'undefined') {
@@ -791,10 +790,18 @@ var Api = function(app){
 
         use : () => {
 
-
             return useproxy ? _.filter(proxies, proxy => { 
                 return proxy.ping && proxy.get.nodes().length 
             }).length || !proxies.length : false
+
+        },
+
+        useexternal : () => {
+
+            return useproxy ? _.filter(proxies, proxy => { 
+                return proxy.ping && proxy.get.nodes().length && !proxy.direct
+            }).length || !proxies.length : false
+            
         },
     }
 
@@ -802,7 +809,6 @@ var Api = function(app){
         ready : function(key, total){
 
             if(!key) key = 'use'
-
 
             return pretry(self.ready[key], 50, total)
         }
@@ -836,6 +842,7 @@ var Api = function(app){
             localStorage['fixednode'] = fixednode
         }   
     }
+
 
     self.get = {
         fixednode : function(){
@@ -880,7 +887,6 @@ var Api = function(app){
                 return !proxy.direct
             })
 
-
             var promises = _.map(_proxies, function(proxy){
                 return proxy.api.actualping()
             })
@@ -892,6 +898,16 @@ var Api = function(app){
                     }
                 })
             })
+        },
+
+        direct : function(){
+            var _proxies = _.filter(proxies, function(proxy){
+                return proxy.direct
+            })
+
+            if(_proxies.length){
+                return _proxies[0]
+            }
         }
     }
 
@@ -909,7 +925,7 @@ var Api = function(app){
 
         return promise.then(r => {
             if(r){
-                return Promise.resolve()
+                return Promise.resolve(1)
             }
             else{
                 return self.get.working().then(wproxies => {
@@ -919,7 +935,7 @@ var Api = function(app){
 
                     }
 
-                    return Promise.resolve()
+                    return Promise.resolve(wproxies.length)
                 })
             }
         })
