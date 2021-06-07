@@ -97,6 +97,8 @@ __map =  {
 		{ c : 'tagcloud', n : 'index' },
 		{ c : 'categories', n : 'index' },
 		{ c : 'lenta', n : 'share' },
+		{ c : 'lenta', n : 'shares' },
+		{ c : 'lenta', n : 'wholike' },
 		{ c : 'lenta', n : 'index' },
 		{ c : 'lenta', n : 'sharevideo' },
 		{ c : 'share', n : 'url' },

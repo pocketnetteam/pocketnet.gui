@@ -539,8 +539,6 @@ nModule = function(){
 			if (self.map && self.map.id){
 				var pretemplate = deep(window, 'pocketnetTemplates.' + (p.turi || self.map.uri) + '.' + p.name)
 
-				console.log('pretemplate', pretemplate)
-
 				if(pretemplate){
 					self.storage.templates[p.name] = _.template(pretemplate);
 	
