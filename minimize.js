@@ -590,9 +590,9 @@ fs.exists(mapJsPath, function (exists) {
 							if(args.prodaction)
 							{
 	
-								JS += '<script join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
+								JS += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
 	
-								VE = '<script join src="js/vendor.min.js?v='+args.vendor+'"></script>';
+								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
 	
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
 	
@@ -604,7 +604,7 @@ fs.exists(mapJsPath, function (exists) {
 								JSENV += '<script>window.design = true;</script>';
 								
 								_.each(m.__sources, function(source){
-									JS += '<script async join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})
 	
@@ -614,7 +614,7 @@ fs.exists(mapJsPath, function (exists) {
 								})	
 	
 								_.each(m.__vendor, function(source){
-									VE += '<script async join src="'+source+'?v='+args.vendor+'"></script>\n';
+									VE += '<script  join src="'+source+'?v='+args.vendor+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})			            		
 							}

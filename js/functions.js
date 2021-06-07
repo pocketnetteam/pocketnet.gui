@@ -9820,45 +9820,54 @@
 	if(typeof window != 'undefined')
 	{
 
-		;(function($){
+		retry(function(){
 
-		var $event = $.event, 
-		$special = $event.special,
+			return window.jQuery
 
-		dragout = $special.dragout = {
+		}, function(){
 			
-			current_elem: false,
-			
-			setup: function( data, namespaces, eventHandle ) {
-				$('body').on('dragover.dragout',dragout.update_elem)
-			},
-			
-			teardown: function( namespaces ) {
-				$('body').off('dragover.dragout')
-			},
-			
-			update_elem: function(event){
-				if( event.target == dragout.current_elem ) return
-				if( dragout.current_elem ) {
-					$(dragout.current_elem).parents().andSelf().each(function(){
-						if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
-					})
+			;(function($){
+
+				var $event = $.event, 
+				$special = $event.special,
+		
+				dragout = $special.dragout = {
+					
+					current_elem: false,
+					
+					setup: function( data, namespaces, eventHandle ) {
+						$('body').on('dragover.dragout',dragout.update_elem)
+					},
+					
+					teardown: function( namespaces ) {
+						$('body').off('dragover.dragout')
+					},
+					
+					update_elem: function(event){
+						if( event.target == dragout.current_elem ) return
+						if( dragout.current_elem ) {
+							$(dragout.current_elem).parents().andSelf().each(function(){
+								if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
+							})
+						}
+						dragout.current_elem = event.target
+						event.stopPropagation()
+					}
+					
 				}
-				dragout.current_elem = event.target
-				event.stopPropagation()
-			}
-			
-		}
+		
+				if (!$.browser) {
+					$.browser = {};
+					$.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
+					$.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+					$.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+					$.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+				}
+		
+				})(window.jQuery);
+		})
 
-		if (!$.browser) {
-	        $.browser = {};
-	        $.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
-	        $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
-	        $.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
-	        $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
-	    }
-
-		})(window.jQuery);
+		
 	}
 
 /* ______________________________ */
