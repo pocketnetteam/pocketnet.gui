@@ -36,9 +36,10 @@ __map =  {
 
 		"js/vendor/DateTimePicker.min.js",
 		"js/vendor/moment.min.js",
-
+		"js/vendor/jquery.inputmask.bundle.min.js",
 		"js/vendor/axios.js",
-
+		"js/vendor/isotope.pkgd.js",
+		"js/vendor/circular-progress.js",
 		"js/vendor/swiper-bundle.min.js",
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
 	],
@@ -252,7 +253,6 @@ __map =  {
 
 		relations : [
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
-			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
 			{src : 'js/validation.js',			   f : 'js'},		
 			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 				QRCode = require('./js/vendor/qrcode.min.js')
@@ -337,7 +337,6 @@ __map =  {
 
 			relations : [
 				{src : 'js/vendor/qrscanner.js',			   f : 'js'},
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
 				{src : 'js/validation.js',			   f : 'js'},		
 				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 					QRCode = require('./js/vendor/qrcode.min.js')
@@ -376,11 +375,7 @@ __map =  {
 			redirect : {
 				auth : 'authorization'
 			},
-			relationsSunc : true,
-
-			relations : [
-				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
-			],
+			
 			
 		},
 
@@ -394,12 +389,7 @@ __map =  {
 				auth : 'authorization',
 				//validate : 'filluser'
 			},
-			relations : [
-
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'}
-
-			],
-
+		
 		},
 
 		test : {
@@ -446,7 +436,6 @@ __map =  {
 
 				{src : 'js/vendor/picker.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/picker.date.js', 		f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 			],
 
 			
@@ -661,7 +650,6 @@ __map =  {
 			uri : "staking",
 			href : "staking",
 			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 		
 				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
 					Highcharts = require('./js/vendor/highcharts.js')
@@ -828,11 +816,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			anonimus : true,
-
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
-			],
+			anonimus : true
 		},
 
 		system16: {
@@ -844,7 +828,6 @@ __map =  {
 			anonimus : true,
 
 			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
 					Highcharts = require('./js/vendor/highcharts.js')
 				}},
@@ -861,12 +844,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			anonimus : true,
-
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
-		
-			],
+			anonimus : true
 		},
 
 		proxylogs : {
@@ -906,12 +884,7 @@ __map =  {
 			href : "donations",
 			add : {
 				el : 'content'
-			},
-
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
-		
-			],
+			}
 		},
 
 		faq : {
@@ -948,11 +921,7 @@ __map =  {
 					}
 				}
 
-			},
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
-		
-			],
+			}
 
 			
 		},	
@@ -981,13 +950,7 @@ __map =  {
 					}
 				}
 
-			},
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
-		
-			],
-
-			
+			}
 		},
 
 		userpage : {
@@ -1045,11 +1008,9 @@ __map =  {
 			},
 
 			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 				{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
 					Chart = require('./js/vendor/Chart.js')
-				}},			
-				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
+				}}
 			],
 
 			relationsSunc : true,
@@ -1093,8 +1054,7 @@ __map =  {
 						Sortable = require('sortablejs')
 
 				}},
-				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},			
-				
+			
 				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 
@@ -1117,7 +1077,7 @@ __map =  {
 						EXIF = require('./js/vendor/exif.js')
 
 				}},
-				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},		
+		
 				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 
@@ -1133,13 +1093,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			relations : [
-
-				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
-				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},			
-			
-			],
-			anonimus : true,
+		
 		},
 
 		lenta : {
@@ -1148,12 +1102,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			relations : [
-
-				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
-				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},			
-			
-			],
+		
 			anonimus : true,
 		},	
 
@@ -1176,14 +1125,7 @@ __map =  {
 				el : 'content'
 			},
 
-			relations : [
-			
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
-				
-			],
-			
-			
-
+		
 			anonimus : true,
 		},
 
@@ -1328,12 +1270,6 @@ __map =  {
 			}
 
 		},
-
-		relations : [
-			
-			{src : 'js/vendor/circular-progress.js',			   f : 'js'},		
-			
-		],
 
 		
 	},
@@ -1489,7 +1425,6 @@ __map =  {
 		relations : [
 
 			
-			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 			{src : 'js/validation.js',			   f : 'js'},
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},				
 			
@@ -1525,8 +1460,7 @@ __map =  {
 		},
 		relations : [
 
-	
-			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
+		
 			{src : 'js/validation.js',			   f : 'js'},				
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},	
 			
@@ -1849,7 +1783,6 @@ __map =  {
 		},
 
 		relations : [
-			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
 			{src : 'js/validation.js',			   f : 'js'},	
 		]
 	},

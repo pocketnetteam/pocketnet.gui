@@ -113,6 +113,8 @@
         </script>
 
         __JSENV__
+        
+        <script async join src="js/vendor/underscore-min.js"></script>
 
         __VE__
         

@@ -144,11 +144,9 @@ Localization = function(app){
 
 	self.init = function(clbk){
 
-		if(typeof loclib == 'undefined' || !loclib)
-			loclib = {};
+		if(typeof loclib == 'undefined' || !loclib) loclib = {};
 
 		var prms = parameters();
-
 
 		self.key = prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 		
@@ -167,6 +165,8 @@ Localization = function(app){
 	self.import = function(clbk, _key){
 
 		var __k = _key || self.key
+
+		console.log(self.loaded[__k], __k)
 
 		if(self.loaded[__k])
 		{
