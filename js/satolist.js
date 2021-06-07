@@ -19599,11 +19599,7 @@ Platform = function (app, listofnodes) {
             }
         }
 
-        if (typeof PeerTubePocketnet != 'undefined'){
-
-			self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-			self.app.peertubeHandler.init()
-		}
+        
 
         app.user.isState(function(state){
 
@@ -19613,18 +19609,15 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
-                    self.cryptography.prepare,
-                    self.sdk.pool.init,
+                    
                     self.sdk.ustate.me,
                     self.sdk.usersettings.init,
-                    self.sdk.articles.init,
                     self.sdk.imagesH.load,
-                    self.sdk.chats.load,
                     self.sdk.user.subscribeRef,
                     self.ws.init,
                     self.firebase.init,
-                    self.sdk.tempmessenger.init,
-                    self.sdk.exchanges.load,
+                    
+                    //self.sdk.exchanges.load,
                     self.sdk.categories.load,
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
@@ -19632,31 +19625,32 @@ Platform = function (app, listofnodes) {
                     self.sdk.user.get
                 ], function () {
 
-                    /*console.log('sdsd', _.map(self.app.user.cryptoKeys(), function(k){
-                        return k.public
-                    }))*/
-
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 
-                    //self.sdk.node.transactions.checkTemps(function () {
+                    self.sdk.relayTransactions.send()
 
-                        self.sdk.relayTransactions.send()
+                    self.matrixchat.init()
 
-                    //    self.sdk.user.get(function (u) {
+                    self.preparingUser = false;
 
-                            self.matrixchat.init()
+                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                            self.preparingUser = false;
+                    if (clbk)
+                        clbk()
 
-                            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-                            if (clbk)
-                                clbk()
-
-                     //   })
-
-
-                    //})
+                    setTimeout(function(){
+                        lazyActions([
+                            self.cryptography.prepare,
+                            self.sdk.pool.init,
+                            self.sdk.articles.init,
+                            self.sdk.tempmessenger.init,
+                            self.sdk.chats.load
+                        ], function(){
+            
+                        })
+                        
+                    }, 2000)
+                    
 
                 })
             }
@@ -19669,6 +19663,13 @@ Platform = function (app, listofnodes) {
             }
 
         })
+
+        if (typeof PeerTubePocketnet != 'undefined'){
+			self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+			self.app.peertubeHandler.init()
+		}
+
+        
     }
 
 
