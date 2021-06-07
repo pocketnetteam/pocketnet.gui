@@ -111,54 +111,9 @@
 
        <!-- <script src="cordova.js"></script>-->
                 
-
-        <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
-        
         <script type="text/javascript">
 
             _Node = false;
-            
-            topPreloader = function(percent){
-                var el = $('#_topPreloader');
-
-
-                var div = $("<div>");
-                    el.removeClass('complete');
-                    el.append(div);
-
-                    var inip = el.attr('percent') || 0;
-
-                    el.attr('percent', percent); 
-
-                    div.width((percent - inip) + "%")
-
-                if(percent <= 0 || percent >= 100){
-
-
-                    el.addClass('complete');
-                    el.attr('percent', 0); 
-
-                    setTimeout(function(){
-
-                        el.fadeOut(300);
-
-                        setTimeout(function(){
-
-
-                            el.html('');
-
-                        },300)
-
-                    },500)
-                    
-                }
-                else{
-                    el.fadeIn(1);
-                }
-                
-            }
-
-            topPreloader(15)
             
         </script>
 
@@ -166,21 +121,9 @@
 
         __VE__
 
-        <script type="text/javascript">
-            topPreloader(35)
-        </script>
-        
         __JS__
+    
 
-
-        <script type="text/javascript">
-            topPreloader(75)
-        </script>
-
-        <link rel="stylesheet" href="css/fontawesome/css/all.css">
-        <link rel="stylesheet" href="peertube/video-embed.css">
-
-        <link rel="preload" href="js/vendor/emojionearea.min.css">
 
         <script type="text/javascript">
 

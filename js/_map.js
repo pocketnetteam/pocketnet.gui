@@ -1,6 +1,7 @@
 __map =  { 
 
 	__vendor : [
+		"js/vendor/jquery-1.11.3.min.js",
 		"js/vendor/underscore-min.js", 
         "js/vendor/tooltipster.core.js",
         "js/vendor/tooltipster.bundle.js",
@@ -25,7 +26,7 @@ __map =  {
         "js/vendor/paste.js",
         "js/vendor/jquery.md5.js",
 		"js/vendor/jquery.animate-number.js",
-		"js/vendor/jquery.touchSwipe.js",
+		"js/vendor/jquery.touchSwipe.min.js",
         "js/vendor/emojione.js",
         "js/vendor/plyr.js",
         "js/vendor/reconnectingwebsocket.js",
@@ -71,6 +72,9 @@ __map =  {
 		"css/plyr.css",
 		"js/vendor/DateTimePicker.min.css",
 		"css/swiper-bundle.min.css",
+		"css/fontawesome/css/all.css",
+		"peertube/video-embed.css",
+		"js/vendor/emojionearea.min.css"
 	],
 
 
