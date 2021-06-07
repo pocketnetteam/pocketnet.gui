@@ -10,6 +10,7 @@ Localization = function(app){
 		self.key = (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 	}
 
+	self.loading = {}
 
 	//self.key = 'en'
 
@@ -153,29 +154,51 @@ Localization = function(app){
 		
 		self.locSave();
 
-		self.import(function(){
-			self.import(clbk);
-		}, 'en')
-		
+		lazyActions([
+			self.import,
+			function(c){
+				self.import(c, 'en')
+			}
+		], clbk)
+
 
 	}
 
 	self.import = function(clbk, _key){
 
-		if(self.loaded[_key || self.key])
+		var __k = _key || self.key
+
+		if(self.loaded[__k])
 		{
 			if (clbk)
 				clbk();
 		}
 		else
 		{
-			var src = 'localization/' + (_key || self.key) + '.js?v=2'
+
+			if(self.loading[__k]){
+				retry(function(){
+					return !self.loading[__k]
+				}, function(){
+					
+					self.import(clbk, __k)
+					
+				})
+
+				return
+			}
+
+			var src = 'localization/' + (__k) + '.js'
+
+			self.loading[__k] = true
 
 			importScript(src, function(){
 
-				self.loaded[_key || self.key] == true;
+				self.loaded[__k] == true;
 
-				____loclib = loclib[_key || self.key] || {};
+				self.loading[__k] = false
+
+				____loclib = loclib[__k] || {};
 
 				if (clbk)
 					clbk();

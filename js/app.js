@@ -412,17 +412,7 @@ Application = function(p)
 
 	self.el = {}
 
-	retry(function(){
-		return window.JQuery
-	}, function(){
-
-		
-
-		
-
-
-		
-	})
+	
 
 	
 
@@ -479,10 +469,29 @@ Application = function(p)
 	if (typeof window != 'undefined')
 		self.options.address = window.location.protocol + "//" + window.location.host; 
 
+
+	self.preapi = function(){
+
+		if(self.preapied) return
+
+		retry(function(){
+			return window._
+		}, function(){
+			
+			self.api = new Api(self)
+			self.api.initIf()
+
+			self.localization = new Localization(self);
+			self.localization.init()
+
+
+			self.preapied = true
+			
+		})
+		
+	}
 	
 	var newObjects = function(p){
-
-		
 		
 		self.settings = new settingsLocalstorage(self);
 		self.nav = new Nav(self);	
@@ -491,14 +500,7 @@ Application = function(p)
 		self.user = new User(self);	
 		self.ajax.set.user(self.user);
 
-		self.api = new Api(self)
-
-		
-
 		self.platform = new Platform(self, self.options.listofnodes);
-
-		
-			
 
 		self.options.platform = self.platform
 
@@ -637,7 +639,7 @@ Application = function(p)
 
 		prepareMap();
 
-		self.localization = new Localization(self);
+		self.preapi()
 
 		self.options.fingerPrint = hexEncode('fakefingerprint');
 

@@ -31,8 +31,10 @@ if(!_Node)
 		listofproxies : _listofproxies,
 	});
 
+	app.preapi()
+
 	retry(function(){
-		return window.pocketnetVendorLoaded
+		return window.pocketnetVendorLoaded || window.design
 	}, function(){
 
 		console.log('deviceReadyInit')

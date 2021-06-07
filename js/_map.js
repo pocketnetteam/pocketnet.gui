@@ -2,7 +2,7 @@ __map =  {
 
 	__vendor : [
 		"js/vendor/jquery-1.11.3.min.js",
-		"js/vendor/underscore-min.js", 
+	
         "js/vendor/tooltipster.core.js",
         "js/vendor/tooltipster.bundle.js",
         "js/vendor/jquery-ui.min.js",
@@ -17,8 +17,7 @@ __map =  {
 		"js/lib/pocketnet/btc17.js",
 		"js/lib/pocketnet/htls.js",
 		"js/lib/pocketnet/buffer.js",
-		"js/lib/client/system16.js",
-		"js/lib/client/api.js",
+		
 		//
 
         "js/vendor/pbkdf2.js",
@@ -45,7 +44,8 @@ __map =  {
 	],
 
 	__sources : [
-
+		"js/lib/client/system16.js",
+		"js/lib/client/api.js",
 		"js/functions.js",     	
 		"js/user.js",
 		"js/module.js",
