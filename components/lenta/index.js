@@ -3126,7 +3126,7 @@ var lenta = (function(){
 
 			if(isMobile() && canloadprev && !essenseData.openapi){
 
-				var cc = el.c.find('.circularprogress');
+				/*var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
 
 				var progress = new CircularProgress({
@@ -3151,7 +3151,7 @@ var lenta = (function(){
 
 				var tp = el.c.find('.loadprev')
 
-				var trueshold = 200
+				var trueshold = 200*/
 				/*
 				var parallax = new SwipeParallax({
 
