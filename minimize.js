@@ -536,6 +536,8 @@ fs.exists(mapJsPath, function (exists) {
 
 							console.log(vendor.path)
 
+							vendor.data = vendor.data + "\n /*_____*/ \n ; window.pocketnetVendorLoaded = true;"
+
 							fs.writeFile(vendor.path, vendor.data, function(err) {
 
 								if(err) {
@@ -602,7 +604,7 @@ fs.exists(mapJsPath, function (exists) {
 								JSENV += '<script>window.design = true;</script>';
 								
 								_.each(m.__sources, function(source){
-									JS += '<script join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									JS += '<script async join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})
 	
@@ -612,7 +614,7 @@ fs.exists(mapJsPath, function (exists) {
 								})	
 	
 								_.each(m.__vendor, function(source){
-									VE += '<script join src="'+source+'?v='+args.vendor+'"></script>\n';
+									VE += '<script async join src="'+source+'?v='+args.vendor+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})			            		
 							}

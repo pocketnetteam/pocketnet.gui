@@ -28,14 +28,21 @@ if(!_Node)
 	}
 
 	app = new Application({
-
-
 		listofproxies : _listofproxies,
-		
 	});
 
-	app.deviceReadyInit();
+	retry(function(){
+		return window.pocketnetVendorLoaded
+	}, function(){
 
+		
+
+		app.deviceReadyInit();
+
+
+		
+	})
+	
 	window.POCKETNETINSTANCE = app
 }
 

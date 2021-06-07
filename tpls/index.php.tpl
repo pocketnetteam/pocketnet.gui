@@ -126,7 +126,7 @@
 
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
-        <script src="js/pwa-service-worker.js"></script>
+        <script async src="js/pwa-service-worker.js"></script>
 
     </body>
 </html>
