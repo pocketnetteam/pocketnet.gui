@@ -180,6 +180,8 @@
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
         <link rel="stylesheet" href="peertube/video-embed.css">
 
+        <link rel="preload" href="js/vendor/emojionearea.min.css">
+
         <script type="text/javascript">
 
             topPreloader(100);
