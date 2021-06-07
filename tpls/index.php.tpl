@@ -79,7 +79,7 @@
         <div class="topPreloader" id="_topPreloader">
         </div>
 
-        <div id="splashScreen">
+        <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" class="zoom-in">
             <h1 class="fade-in">POCKETNET</h1>
         </div>
@@ -107,7 +107,6 @@
 
         <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
         
-        <script src="js/widgets.js?v=136"></script>
         <script type="text/javascript">
 
             _Node = false;

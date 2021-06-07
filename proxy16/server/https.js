@@ -5,7 +5,7 @@ var swaggerUi = require('swagger-ui-express');
 var Middle = require('./middle.js');
 var Cache = require('./cache.js');
 var Iplimiter = require('./iplimiter.js');
-
+var compression = require('compression')
 
 
 
@@ -26,6 +26,15 @@ var Server = function(settings, admins, manage){
     self.cache = new Cache()
     self.listening = false;
     self.httplistening = false;
+
+    var shouldCompress = function (req, res) {
+
+        if (req.headers['x-no-compression']) {
+          return false
+        }
+      
+        return compression.filter(req, res)
+    }
 
     self.authorization = {
 
@@ -59,6 +68,7 @@ var Server = function(settings, admins, manage){
         app = express();
         app.use(express.json({limit: '5mb'})) 
         app.use(express.urlencoded({ extended: true, limit: '5mb' }))
+        app.use(compression({ filter: shouldCompress }))
 
         app.use(async (request, result, next) => {
 

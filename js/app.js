@@ -468,8 +468,14 @@ Application = function(p)
 
 	var prepareMap = function(){
 
+		console.log('self.map', self.map, self)
+
 		_.each(self.map, function(m, id){
-			m.id = id;
+
+			console.log(m, id)
+
+			if (id[0] != '_')
+				m.id = id;
 		})
 
 	}

@@ -4,7 +4,7 @@ if(typeof _SEO == 'undefined') 	_SEO = false;
 if(!_Node)
 {
 
-	var listofproxies =  [
+	var _listofproxies =  [
 			
 		{
 			host : 'pocketnet.app',
@@ -20,7 +20,7 @@ if(!_Node)
 	]
 
 	if (window.testpocketnet){
-		listofproxies = [{
+		_listofproxies = [{
 			host : 'test.pocketnet.app',
 			port : 8899,
 			wss : 8099
@@ -30,7 +30,7 @@ if(!_Node)
 	app = new Application({
 
 
-		listofproxies : listofproxies,
+		listofproxies : _listofproxies,
 		
 	});
 

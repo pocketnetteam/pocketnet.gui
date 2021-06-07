@@ -4,7 +4,7 @@ var package = require('./package.json');
 
 require('./js/functions.js');
 var uglifyJS = require("uglify-js");
- 
+var uglifycss = require('uglifycss');
 
 
 var args = {
@@ -132,7 +132,14 @@ fs.exists(mapJsPath, function (exists) {
 								throw err;
 							}
 
-							var minified = uglifyJS.minify(data.toString())
+							var minified = uglifyJS.minify(data.toString(), {
+								compress: {
+									passes: 2
+								},
+								output: {
+									beautify: false
+								}
+							})
 							
 
 							if(!minified.error){
@@ -290,7 +297,11 @@ fs.exists(mapJsPath, function (exists) {
 
 							exported.data = exported.data.join('\n')
 
-							fs.writeFile(cssmaster.path, cssmaster.data, function(err) {
+							var pre = uglifycss.processString(cssmaster.data, {
+								cuteComments : true
+							})
+
+							fs.writeFile(cssmaster.path, pre, function(err) {
 
 								if(err) {
 									throw "Access not permitted (CSS) " +  cssmaster.path
@@ -344,7 +355,14 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									var minified = uglifyJS.minify(data.toString())
+									var minified = uglifyJS.minify(data.toString(), {
+										compress: {
+											passes: 2
+										},
+										output: {
+											beautify: false
+										}
+									})
 
 									if(!minified.error){
 										data = minified.code
@@ -624,7 +642,7 @@ fs.exists(mapJsPath, function (exists) {
 					}
 					else
 					{
-						return reject("not index tpl")
+						return reject("not index tpl: " + pth)
 					}
 				})
 
