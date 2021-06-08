@@ -14,6 +14,8 @@ var args = {
 	path : '/'
 }
 
+var uglify = true
+
 
 var argcli = _.filter(process.argv, function(a){
 	return a.indexOf('-') == 0
@@ -73,7 +75,13 @@ fs.exists(mapJsPath, function (exists) {
 
 		var join = {
 			data : "",
-			path : './js/join.min.js'
+			path : './js/join.min.js',
+			append : "\n /*_____*/ \n ; window.pocketnetJoinLoaded = true;"
+		}
+
+		var joinfirst = {
+			data : "",
+			path : './js/joinfirst.min.js'
 		}
 
 		var vendor = {
@@ -97,7 +105,7 @@ fs.exists(mapJsPath, function (exists) {
 		}
 
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates') return true;
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst') return true;
 			
 		})
 
@@ -142,7 +150,7 @@ fs.exists(mapJsPath, function (exists) {
 							})
 							
 
-							if(!minified.error){
+							if(!minified.error && uglify){
 								data = minified.code
 							}
 							else
@@ -207,6 +215,8 @@ fs.exists(mapJsPath, function (exists) {
 
 						//console.log("Access permitted", item)
 
+						var arf = _.clone(m.__sourcesfirst || []);
+
 						var ar = _.clone(m.__sources || []);
 
 						ar.push(modules.path.replace('./', ''));
@@ -217,18 +227,30 @@ fs.exists(mapJsPath, function (exists) {
 
 							console.log("joinVendor DONE")
 
-							joinScripts(ar, function(){
+							joinScripts(arf, joinfirst, function(){
 
-								console.log("joinScripts DONE")
+								console.log("joinScriptsFirst DONE")
 
-								joinCss(function(){
+								joinTemplates(function(d){
 
-									console.log("joinCss DONE")
+									join.data = join.data + "\n /*_____*/ \n" + d;
 
-									createTemplates()
+									joinScripts(ar, join, function(){
+
+										console.log("joinScripts DONE")
+
+										joinCss(function(){
+
+											console.log("joinCss DONE")
+
+											createTemplates()
+										})
+										
+									});
+
 								})
-								
-							});
+
+							})
 							
 						});
 
@@ -329,8 +351,8 @@ fs.exists(mapJsPath, function (exists) {
 			}
 		}
 
-		var joinScripts = function(ar, clbk){
-			if(m.__sources)
+		var joinScripts = function(ar, join, clbk){
+			if(ar && ar.length)
 
 				lazyEach({
 					sync : true,
@@ -364,7 +386,7 @@ fs.exists(mapJsPath, function (exists) {
 										}
 									})
 
-									if(!minified.error){
+									if(!minified.error && uglify){
 										data = minified.code
 									}
 									else
@@ -391,24 +413,21 @@ fs.exists(mapJsPath, function (exists) {
 						success : function(){
 							console.log(join.path)
 
-							joinTemplates(function(d){
 
-								console.log("joinTemplates DONE")
+							if (join.append){
+								join.data = join.data + join.append
+							}
 
-								join.data = join.data + "\n /*_____*/ \n" + d;
+							fs.writeFile(join.path, join.data, function(err) {
+								if(err) {
 
-								fs.writeFile(join.path, join.data, function(err) {
+									throw "Access not permitted (JS) " +  join.path
+								}
+										
+								clbk();				
+							});
 
-									if(err) {
-	
-										throw "Access not permitted (JS) " +  join.path
-									}
-											
-									clbk();				
-								});
-
-							})
-
+						
 							
 						}
 					}
@@ -509,7 +528,7 @@ fs.exists(mapJsPath, function (exists) {
 
 									var minified = uglifyJS.minify(data.toString())
 
-									if(!minified.error){
+									if(!minified.error && uglify){
 										data = minified.code
 									}
 									else
@@ -589,7 +608,10 @@ fs.exists(mapJsPath, function (exists) {
 	
 							if(args.prodaction)
 							{
-	
+
+								JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
+
+								JS += '<script async join src="js/joinfirst.min.js?v='+rand(1, 999999999999)+'"></script>';
 								JS += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
 	
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
@@ -602,6 +624,11 @@ fs.exists(mapJsPath, function (exists) {
 							{
 	
 								JSENV += '<script>window.design = true;</script>';
+
+								_.each(m.__sourcesfirst, function(source){
+									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									CACHED_FILES += `'${source}',\n`;
+								})
 								
 								_.each(m.__sources, function(source){
 									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';

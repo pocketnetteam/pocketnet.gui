@@ -34,7 +34,7 @@ if(!_Node)
 	app.preapi()
 
 	retry(function(){
-		return window.pocketnetVendorLoaded || window.design
+		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || window.design
 	}, function(){
 
 		console.log('deviceReadyInit')

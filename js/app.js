@@ -472,22 +472,17 @@ Application = function(p)
 
 	self.preapi = function(){
 
+		console.log('self.preapi')
+
 		if(self.preapied) return
-
-		retry(function(){
-			return window._
-		}, function(){
 			
-			self.api = new Api(self)
-			self.api.initIf()
+		self.api = new Api(self)
+		self.api.initIf()
 
-			self.localization = new Localization(self);
-			self.localization.init()
+		self.localization = new Localization(self);
+		self.localization.init()
 
-
-			self.preapied = true
-			
-		})
+		self.preapied = true
 		
 	}
 	
@@ -638,8 +633,6 @@ Application = function(p)
 		p.nav.clbk || 	(p.nav.clbk = self.initClbk || null)
 
 		prepareMap();
-
-		self.preapi()
 
 		self.options.fingerPrint = hexEncode('fakefingerprint');
 
@@ -830,8 +823,9 @@ Application = function(p)
 	self.scrollRemoved = false;
 	var winScrollTop = 0;
 	self.actions = {
-		up : _scrollTop,
-
+		up : function(scrollTop, el, time){
+			_scrollTop(scrollTop, el, time)
+		},
 		wscroll : function(){
 
 			$(window).scrollTop(winScrollTop);

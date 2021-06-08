@@ -9127,6 +9127,7 @@ typeof navigator === "object" && (function (global, factory) {
         }
 
         return targets.map(function (t) {
+          console.log("IM HERE")
             return PlyrEx(t, options, clbk)
         });
       }

@@ -19423,13 +19423,7 @@ Platform = function (app, listofnodes) {
 
         //self.sdk.proxy.info()
 
-        self.app.api.initIf().then(r => {
-
-            return self.app.api.wait.ready('use', 3000)
-
-        }).then(r => {
-
-            console.log("REA", r)
+        self.app.api.wait.ready('use', 3000).then(r => {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){

@@ -1,6 +1,9 @@
 __map =  { 
 
 	__vendor : [
+		"js/vendor/device.min.js",
+		"js/vendor/modernizr-2.8.3.min.js",
+
 		"js/vendor/jquery-1.11.3.min.js",
 	
         "js/vendor/tooltipster.core.js",
@@ -8,7 +11,7 @@ __map =  {
         "js/vendor/jquery-ui.min.js",
         "js/vendor/imagesloaded.pkgd.min.js",
         "js/vendor/timer.js",
-        "js/vendor/ion.sound/ion.sound.min.js" ,
+        
 		"js/vendor/aesjs.js",
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
@@ -42,25 +45,33 @@ __map =  {
 		"js/vendor/circular-progress.js",
 		"js/vendor/swiper-bundle.min.js",
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
+		"js/vendor/ion.sound/ion.sound.min.js" ,
+	],
+
+	__sourcesfirst : [
+		"js/vendor/underscore-min.js",  
+		"js/functionsfirst.js",  
+		"js/localization.js",
+		"js/lib/client/system16.js",
+		"js/lib/client/api.js",
+		"js/_map.js",
+		"js/app.js",
+		"js/main.js"
 	],
 
 	__sources : [
-		"js/lib/client/system16.js",
-		"js/lib/client/api.js",
+	
 		"js/functions.js",     	
 		"js/user.js",
 		"js/module.js",
 		"js/navn.js",
 		"js/validation.js",
-		"js/_map.js",
-		"js/localization.js",
+		
 		"js/kit.js",
 		"js/satolist.js",
 		"js/messenger2/clientrtc.js",
 		"peertube/video-embed.bundle.js",
 		"js/peertube.js",
-		"js/app.js",
-		"js/main.js",
 		"js/widgets.js"
 	],
 
