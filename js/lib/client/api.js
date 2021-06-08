@@ -299,7 +299,7 @@ var Proxy16 = function(meta, app, api){
 
             var promise = null
 
-            if(!self.ping || self.ping.addSeconds(5) < new Date){
+            if(!self.ping || self.ping.addSeconds(50) < new Date){
                 promise = self.api.ping()
             }
             else{

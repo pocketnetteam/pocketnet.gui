@@ -19210,7 +19210,7 @@ Platform = function (app, listofnodes) {
                         resolve()
 
                     }).catch(reject)
-                }, 500)
+                }, 50)
             })
 
         }).then(r => {
