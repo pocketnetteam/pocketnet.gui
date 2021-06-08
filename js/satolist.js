@@ -3884,9 +3884,9 @@ Platform = function (app, listofnodes) {
                         options: {
 
                             telegram: options.telegram,
-                            tgfrom: options.tgfrom,
+                            // tgfrom: options.tgfrom,
                             tgto: options.tgto,
-                            tgfromask: options.tgfromask,
+                            // tgfromask: options.tgfromask,
                             tgtoask: options.tgtoask
 
 
@@ -4052,7 +4052,7 @@ Platform = function (app, listofnodes) {
                         if(self.app.platform.sdk.address.pnet()){
                             var a = self.app.platform.sdk.address.pnet().address
 
-                            if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
+                            if (self.istest() || (a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc') || (a == 'PJJbtb1AEcRopQuuBiRbQbiec7WHNtAEsF') || (a == 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs')) {
 
                                 self.app.user.features.telegram = 1;
 
@@ -14315,7 +14315,7 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                applyMessagesFromTG: function (messages, acceptPosting, currentChannelId) {
+                applyMessagesFromTG: function (messages, acceptPosting, currentChannelId, renderClbk) {
 
                     let {
                         meta
@@ -14332,7 +14332,6 @@ Platform = function (app, listofnodes) {
                                 meta[dropdownName].possibleValuesLabels.push(channelName);
 
                                 const $tgDropdown = $(`div[parameter='${dropdownName}'] .vc_selectInput`);
-
 
                                 const newValue = `<div class="vc_value" value=${channelId}>${channelName}</div>`;
                                 const newValueHTML = $.parseHTML(newValue);
@@ -14682,6 +14681,13 @@ Platform = function (app, listofnodes) {
                         addValue("tgto", channelName, chat.id);
                         addValue("tgfrom", channelName, chat.id);
 
+                        if (renderClbk){
+
+                            renderClbk();
+                        }
+
+
+
                         // meta.tgfrom.possibleValues = [...new Set(meta.tgfrom.possibleValues)];
                         // meta.tgfrom.possibleValuesLabels = [...new Set(meta.tgfrom.possibleValuesLabels)];
                         // meta.tgto.possibleValues = [...new Set(meta.tgto.possibleValues)];
@@ -14700,15 +14706,13 @@ Platform = function (app, listofnodes) {
 
                             addImages(html, messager.photo, clbk);
 
-                        } else {
-
-                        }
+                        } 
 
                     })
 
                 },
 
-                dialogOfTG: function (messages, currentChannelId) {
+                dialogOfTG: function (messages, currentChannelId, clbk) {
 
                     if (messages.length && currentChannelId) {
 
@@ -14725,7 +14729,7 @@ Platform = function (app, listofnodes) {
 
                                 const messages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
 
-                                this.applyMessagesFromTG(messages, true, currentChannelId);
+                                this.applyMessagesFromTG(messages, true, currentChannelId, clbk);
                                 localStorage.setItem("telegramMessages", "[]");
                                 this.openedDialog = false;
 
@@ -14735,7 +14739,7 @@ Platform = function (app, listofnodes) {
 
                             fail: () => {
 
-                                this.applyMessagesFromTG(messages, false, currentChannelId);
+                                this.applyMessagesFromTG(messages, false, currentChannelId, clbk);
                                 localStorage.setItem("telegramMessages", "[]");
                                 this.openedDialog = false;
 
@@ -14874,22 +14878,22 @@ Platform = function (app, listofnodes) {
 
                                 const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
                    
-                                this.dialogOfTG(currentMessages, currentChannelId)
+                                this.dialogOfTG(currentMessages, currentChannelId, clbk)
 
                             } else if (meta.tgfromask.value && this.openedDialog){
 
 
-                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId);
+                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId, clbk);
 
 
                             } else if (!meta.tgfromask.value){
 
-                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId);
+                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId, clbk);
 
                                 
                             } else {
                                 
-                                this.applyMessagesFromTG(messagesFromOthers);
+                                this.applyMessagesFromTG(messagesFromOthers, null, null, clbk);
 
                             }{
 
