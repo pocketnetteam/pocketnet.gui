@@ -325,8 +325,7 @@ var kit = {
 			server : {
 				
 				settings : function({
-					settings = {},
-					emails
+					settings = {}
 				}){
 
 					var ctx = kit.manage.set.server
@@ -337,12 +336,6 @@ var kit = {
 					if(typeof settings.enabled) notification.enabled = settings.enabled
 					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
                     if(settings.ssl) notification.ssl = true
-					if (Object.keys(emails).length) notification.emails = emails; settings.emails = emails;
-
-
-					console.log('emails!!!!', emails);
-
-					// kit.manage.set.emails(emails);
 
 					return kit.proxy().then(proxy => {
 
@@ -355,7 +348,6 @@ var kit = {
 
 					}).then(() => {
 						var promises = []
-
 
 						if (settings.firebase && settings.firebase.id) 
 							promises.push(ctx.firebase.id(settings.firebase.id).catch(e => {
@@ -661,11 +653,17 @@ var kit = {
 
 			emails :  function(transporter){
 
-				console.log('setTrans', transporter);
+				if (transporter.emails){
 
-				settings.emails = transporter
+					settings.emails = transporter.emails
 
-				return state.saverp();
+					return state.saverp().then(proxy => {
+
+						return Promise.resolve()
+
+					})
+				}
+
 
 			},
 	

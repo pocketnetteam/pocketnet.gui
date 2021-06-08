@@ -367,35 +367,6 @@ var system16 = (function(){
 				}
 			},
 
-			emails : function(){
-
-				proxy.fetch('manage', {
-					action : 'set.emails.settransporter',
-					data : changes.emails
-				}).then(r => {
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				}).catch(e => {
-
-					sitemessage(self.app.localization.e('e13293'))
-
-
-					actions.refresh().then(r => {
-						renders.allsettings()
-					})
-
-					topPreloader(100);
-
-				})
-
-
-			},
-
 			removeBot : function(address){
 				topPreloader(30);
 
@@ -2399,45 +2370,51 @@ var system16 = (function(){
 
 						p.el.find('.save').on('click', function(){
 
-							if(changes.server.https || changes.server.wss){
-								changes.server.ports = {
-									https : changes.server.https,
-									wss : changes.server.wss
-								}
-							}
-
 							var _make = function(){
 
 								globalpreloader(true)
 
+											
+								for (var ekey in system.emails){
+
+									if (changes.emails[ekey] == undefined){
+
+										changes.emails[ekey] = system.emails[ekey];
+									}
+								}
+
 								proxy.fetch('manage', {
-									action : 'set.server.settings',
+									action : 'set.emails',
 									data : {
-										settings : changes.server,
 										emails: changes.emails
 									}
 	
 								}).catch(e => {
+
 									globalpreloader(false)
 									return Promise.resolve()
 		
 								}).then(r => {
 
-									console.log('r', r);
+									console.log('r!!!', r);
 
-									actions.emails();
-									changes.server = {}
-		
+									// actions.emails();		
+									// make(proxy || api.get.current());
+
+									system.emails = emails;
+									changes.emails = {}
+
 									make(proxy || api.get.current());
 
 									globalpreloader(false)
+
 				
 									topPreloader(100);
 		
 								})
 							}
 
-							if(typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
+							if(typeof changes.emails.enabled != 'undefined' || changes.emails.https || changes.emails.wss || changes.emails.ssl){
 
 
 								dialog({
@@ -2458,33 +2435,13 @@ var system16 = (function(){
 
 						})
 
-						p.el.find('.clearfirebase').on('click', function(){
-							
-							dialog({
-								class : 'zindex',
-								html : "Do you really want to clear all firebase settings?",
-								btn1text : self.app.localization.e('dyes'),
-								btn2text : self.app.localization.e('dno'),
-								success : function(){	
+						
+						p.el.find('.discard').on('click', function(){
 
-									proxy.fetchauth('manage', {
-										action : 'set.server.firebase.clear',
-										data : {
-										}
-									}).then(r => {
-			
-										make(proxy || api.get.current());
-			
-									}).catch(e => {
-			
-										sitemessage(self.app.localization.e('e13293'))
-			
-									})
+							changes.emails = {}
 
-								}
-							})
-							
-							
+							renders.webserveremails(elc)
+
 						})
 
 						p.el.find('[remove]').on('click', function(){
@@ -2644,7 +2601,6 @@ var system16 = (function(){
 									action : 'set.server.settings',
 									data : {
 										settings : changes.server,
-										emails: changes.emails
 									}
 	
 								}).catch(e => {
@@ -2665,6 +2621,7 @@ var system16 = (function(){
 
 							if(typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
 
+								console.log('inside')
 
 								dialog({
 									class : 'zindex',
@@ -2678,6 +2635,8 @@ var system16 = (function(){
 
 							}
 							else{
+
+								console.log('outside')
 								_make()
 							}
 							

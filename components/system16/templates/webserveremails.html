@@ -21,11 +21,11 @@
 
                     <div class="value" sys="emailshost">
                         <div class="input">
-                            <input type="text" class="emailshost" value="<%- emails.emailshost  || system.emails.emailshost %>">
+                            <input type="text" class="emailshost" value="<%- typeof emails.emailshost != 'undefined' ? emails.emailshost : system.emails.emailshost %>">
                         </div>
                     </div>
 
-                    <% if(typeof emails.emailshost != 'undefined') {%>
+                    <% if(emails.emailshost) {%>
                         <div class="icon">
                             <i class="far fa-times-circle" remove="emailshost"></i>
                         </div>
@@ -42,7 +42,7 @@
 
                     <div class="value" sys="port">
                         <div class="input">
-                            <input type="number" class="port" value="<%- emails.port || system.emails.port %>">
+                            <input type="number" class="port" value="<%- typeof emails.port != 'undefined' ? emails.port : system.emails.port %>">
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@
 
                     <div class="value" sys="login">
                         <div class="input">
-                            <input type="text" class="login" value="<%- emails.login || system.emails.login %>">
+                            <input type="text" class="login" value="<%- typeof emails.login != 'undefined' ? emails.login : system.emails.login %>">
                         </div>
                     </div>
                     <% if(emails.login) {%>
@@ -100,7 +100,7 @@
 
                     <div class="value" sys="password">
                         <div class="input">
-                            <input type="password" class="password" value="<%- emails.password || system.emails.password %>">
+                            <input type="password" class="password" value="<%- typeof emails.password != 'undefined' ? emails.password : system.emails.password %>">
                         </div>
                     </div>
                     <% if(emails.password) {%>
