@@ -342,6 +342,8 @@ var kit = {
 
 					console.log('emails!!!!', emails);
 
+					// kit.manage.set.emails(emails);
+
 					return kit.proxy().then(proxy => {
 
 						return proxy.wss.sendtoall({

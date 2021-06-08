@@ -162,19 +162,17 @@ var system16 = (function(){
 			},
 			'emailssecure' : function(_el){
 
-				var secure = 'Yes';
-
-				console.log('el!!', _el.attr('value'));
+				var secure = true;
 
 				var secureValue = _el.attr('value');
 
 				if (secureValue === 'Yes'){
 
-					secure = 'No';
+					secure = false;
 
 				}
 
-				changes.emails.secure = secureValue;
+				changes.emails.secure = secure;
 				if(changes.emails.secure === system.emails.secure) delete changes.emails.secure;
 
 				renders.webserveremails(el.c)
@@ -363,8 +361,6 @@ var system16 = (function(){
 
 				var address = self.app.platform.sdk.address.pnet()
 
-				console.log('admin', address, proxy);
-
 				if(!address) return false
 				if (proxy && info){
 					return proxy.direct || _.indexOf(info.admins, address.address) > -1
@@ -469,7 +465,6 @@ var system16 = (function(){
 
 			ticksettings : function(settings, s, changed){
 
-				console.log('then1', settings);
 				if (changed){
 					system = settings
 				}
@@ -479,7 +474,6 @@ var system16 = (function(){
 
 			refreshsystem : function(){
 				return proxy.system.api.get.settings().then(s => {
-					console.log('then2', s);
 					system = s
 
 					if (el.c){
@@ -2416,8 +2410,6 @@ var system16 = (function(){
 
 								globalpreloader(true)
 
-								console.log('changes!!!', changes);
-
 								proxy.fetch('manage', {
 									action : 'set.server.settings',
 									data : {
@@ -3806,7 +3798,6 @@ var system16 = (function(){
 
 						return proxy.system.request('get.settings').then(r => {
 
-							console.log('then3', r)
 							system = r
 
 							renders.allsettings()
