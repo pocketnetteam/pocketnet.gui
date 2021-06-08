@@ -1,6 +1,6 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[3],{
 
-/***/ 221:
+/***/ 220:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -70,14 +70,14 @@ var Events;
 var tslib_es6 = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./node_modules/debug/src/browser.js
-var browser = __webpack_require__(162);
+var browser = __webpack_require__(161);
 var browser_default = /*#__PURE__*/__webpack_require__.n(browser);
 
 // EXTERNAL MODULE: ./node_modules/events/events.js
-var events = __webpack_require__(160);
+var events = __webpack_require__(159);
 
 // EXTERNAL MODULE: ./node_modules/simple-peer/index.js
-var simple_peer = __webpack_require__(199);
+var simple_peer = __webpack_require__(198);
 var simple_peer_default = /*#__PURE__*/__webpack_require__.n(simple_peer);
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/stringly-typed-event-emitter.ts
@@ -262,14 +262,14 @@ class http_media_manager_HttpMediaManager extends stringly_typed_event_emitter_S
 }
 
 // EXTERNAL MODULE: ./node_modules/bittorrent-tracker/client.js
-var client = __webpack_require__(277);
+var client = __webpack_require__(276);
 var client_default = /*#__PURE__*/__webpack_require__.n(client);
 
 // EXTERNAL MODULE: ./node_modules/node-libs-browser/node_modules/buffer/index.js
 var node_modules_buffer = __webpack_require__(73);
 
 // EXTERNAL MODULE: ./node_modules/sha.js/sha1.js
-var sha1 = __webpack_require__(220);
+var sha1 = __webpack_require__(219);
 var sha1_default = /*#__PURE__*/__webpack_require__.n(sha1);
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/media-peer.ts
@@ -1464,6 +1464,13 @@ const version = "0.6.2";
 
 /***/ }),
 
+/***/ 264:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
 /***/ 265:
 /***/ (function(module, exports) {
 
@@ -1471,7 +1478,7 @@ const version = "0.6.2";
 
 /***/ }),
 
-/***/ 266:
+/***/ 278:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -1492,7 +1499,7 @@ const version = "0.6.2";
 
 /***/ }),
 
-/***/ 281:
+/***/ 283:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -1506,21 +1513,14 @@ const version = "0.6.2";
 
 /***/ }),
 
-/***/ 285:
+/***/ 289:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 290:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 517:
+/***/ 516:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1543,13 +1543,13 @@ __webpack_require__.d(__webpack_exports__, "initJwPlayer", function() { return /
 var tslib_es6 = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./node_modules/events/events.js
-var events = __webpack_require__(160);
+var events = __webpack_require__(159);
 
 // EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts + 8 modules
-var lib = __webpack_require__(221);
+var lib = __webpack_require__(220);
 
 // EXTERNAL MODULE: ./node_modules/m3u8-parser/dist/m3u8-parser.es.js + 1 modules
-var m3u8_parser_es = __webpack_require__(518);
+var m3u8_parser_es = __webpack_require__(517);
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/segment-manager.ts
 /**
@@ -2037,7 +2037,7 @@ class hlsjs_loader_HlsJsLoader {
 }
 
 // EXTERNAL MODULE: ./node_modules/hls.js/src/loader/load-stats.ts
-var load_stats = __webpack_require__(513);
+var load_stats = __webpack_require__(512);
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/engine.ts
 /**

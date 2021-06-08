@@ -5999,6 +5999,8 @@ typeof navigator === "object" && (function (global, factory) {
         youtube.ready.call(this);
       } else {
         // Load the API
+
+        console.log("LOADING YOUTUBE")
         loadScript(this.config.urls.youtube.sdk).catch(function (error) {
           _this.debug.warn('YouTube API failed to load', error);
         }); // Setup callback for the API

@@ -1,5 +1,12 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[2],{
 
+/***/ 264:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
 /***/ 265:
 /***/ (function(module, exports) {
 
@@ -7,7 +14,7 @@
 
 /***/ }),
 
-/***/ 266:
+/***/ 278:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -28,7 +35,7 @@
 
 /***/ }),
 
-/***/ 281:
+/***/ 283:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -42,84 +49,84 @@
 
 /***/ }),
 
-/***/ 285:
+/***/ 289:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 290:
+/***/ 338:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 339:
+/***/ 340:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 341:
+/***/ 348:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 349:
+/***/ 350:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 351:
+/***/ 357:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 358:
+/***/ 360:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 361:
+/***/ 362:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 363:
+/***/ 370:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 371:
+/***/ 372:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 373:
+/***/ 377:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 378:
+/***/ 380:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -133,7 +140,7 @@
 
 /***/ }),
 
-/***/ 382:
+/***/ 383:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -147,49 +154,49 @@
 
 /***/ }),
 
-/***/ 385:
+/***/ 386:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 387:
+/***/ 388:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 389:
+/***/ 410:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 411:
+/***/ 415:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 416:
+/***/ 417:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 418:
+/***/ 424:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 425:
+/***/ 434:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -203,7 +210,7 @@
 
 /***/ }),
 
-/***/ 436:
+/***/ 438:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -217,14 +224,14 @@
 
 /***/ }),
 
-/***/ 440:
+/***/ 442:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 443:
+/***/ 445:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -238,99 +245,92 @@
 
 /***/ }),
 
-/***/ 447:
+/***/ 448:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 449:
+/***/ 450:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 451:
+/***/ 459:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 460:
+/***/ 461:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 462:
+/***/ 470:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 471:
+/***/ 472:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 473:
+/***/ 486:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 487:
+/***/ 488:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 489:
+/***/ 497:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 498:
+/***/ 499:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 500:
+/***/ 505:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 506:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 508:
+/***/ 507:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process, Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PeertubeChunkStore; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(160);
+/* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(159);
 /* harmony import */ var events__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(events__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var dexie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(509);
+/* harmony import */ var dexie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(508);
 // From https://github.com/MinEduTDF/idb-chunk-store
 // We use temporary IndexDB (all data are removed on destroy) to avoid RAM issues
 // Thanks @santiagogil and @Feross
@@ -544,7 +544,7 @@ var core = __webpack_require__(0);
 var core_default = /*#__PURE__*/__webpack_require__.n(core);
 
 // EXTERNAL MODULE: ./node_modules/webtorrent/index.js
-var webtorrent = __webpack_require__(334);
+var webtorrent = __webpack_require__(333);
 
 // EXTERNAL MODULE: ./node_modules/node-libs-browser/node_modules/path-browserify/index.js
 var path_browserify = __webpack_require__(22);
@@ -552,9 +552,9 @@ var path_browserify = __webpack_require__(22);
 // CONCATENATED MODULE: ./src/assets/player/webtorrent/video-renderer.ts
 // Thanks: https://github.com/feross/render-media
 // TODO: use render-media once https://github.com/feross/render-media/issues/32 is fixed
-const MediaElementWrapper = __webpack_require__(214);
+const MediaElementWrapper = __webpack_require__(213);
 
-const videostream = __webpack_require__(308);
+const videostream = __webpack_require__(307);
 const VIDEOSTREAM_EXTS = [
     '.m4a',
     '.m4v',
@@ -661,7 +661,7 @@ function getCodec(name, useVP9 = false) {
 var utils = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./src/assets/player/webtorrent/peertube-chunk-store.ts
-var peertube_chunk_store = __webpack_require__(508);
+var peertube_chunk_store = __webpack_require__(507);
 
 // EXTERNAL MODULE: ./src/assets/player/peertube-player-local-storage.ts
 var peertube_player_local_storage = __webpack_require__(10);
@@ -673,7 +673,7 @@ var peertube_player_local_storage = __webpack_require__(10);
 
 
 
-const CacheChunkStore = __webpack_require__(510);
+const CacheChunkStore = __webpack_require__(509);
 const Plugin = core_default.a.getPlugin('plugin');
 class webtorrent_plugin_WebTorrentPlugin extends Plugin {
     constructor(player, options) {

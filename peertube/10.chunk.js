@@ -15,16 +15,16 @@ var core = __webpack_require__(0);
 var core_default = /*#__PURE__*/__webpack_require__.n(core);
 
 // EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts + 3 modules
-var lib = __webpack_require__(517);
+var lib = __webpack_require__(516);
 
 // EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts + 8 modules
-var p2p_media_loader_core_lib = __webpack_require__(221);
+var p2p_media_loader_core_lib = __webpack_require__(220);
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
 var utils = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/hls.js/dist/hls.js
-var hls = __webpack_require__(331);
+var hls = __webpack_require__(330);
 var hls_default = /*#__PURE__*/__webpack_require__.n(hls);
 
 // CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/hls-plugin.ts
