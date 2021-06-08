@@ -148,9 +148,6 @@ fs.exists(mapJsPath, function (exists) {
 							var minified = uglifyJS.minify(data.toString(), {
 								compress: {
 									passes: 2
-								},
-								output: {
-									beautify: false
 								}
 							})
 							
@@ -395,9 +392,6 @@ fs.exists(mapJsPath, function (exists) {
 									var minified = uglifyJS.minify(data.toString(), {
 										compress: {
 											passes: 2
-										},
-										output: {
-											beautify: false
 										}
 									})
 
