@@ -80,79 +80,53 @@ var streampeertube = (function () {
 
           filesWrittenObject.image = videoWallpaperFile[0];
         }
-        if (!videoName) {
-          nameError.text('Name is empty');
-
-          return;
-        }
 
         filesWrittenObject.name = videoName;
-
-        filesWrittenObject.uploadFunction = function (percentComplete) {
-          var formattedProgress = percentComplete.toFixed(2);
-
-          el.uploadProgress
-            .find('.upload-progress-bar')
-            .css('width', formattedProgress + '%');
-          el.uploadProgress
-            .find('.upload-progress-percentage')
-            .text(formattedProgress + '%');
-        };
-
-        filesWrittenObject.successFunction = function (response) {
-          var resultElement = wnd.find('.result-section');
-
-          preloaderSection.addClass('hidden');
-
-          if (response.error) {
-            var error = deep(response, 'error.responseJSON.errors') || {};
-
-            var message = (Object.values(error)[0] || {}).msg;
-
-            sitemessage(message || 'Uploading error');
-            contentSection.removeClass('hidden');
-            el.streamButton.removeClass('disabledButton');
-            el.streamButton.html(
-              '<i class="fas fa-broadcast-tower"></i> Go Live',
-            );
-
-            return;
-          }
-
-          streamCreated = true;
-
-          resultElement.removeClass('hidden');
-          el.streamButton.html('<i class="fas fa-check"></i> Stream Created');
-          el.streamButton.removeClass('disabledButton');
-          el.streamButton.addClass('successButton');
-
-          var rtmpInput = resultElement.find('.result-video-rtmp');
-          var streamKeyInput = resultElement.find('.result-video-streamKey');
-
-          rtmpInput.val(response.rtmpUrl);
-          streamKeyInput.val(response.streamKey);
-
-          actions.added(
-            `${response.video}?stream=true${
-              streamDate ? `&date=${streamDate}` : ''
-            }`,
-          );
-          // wndObj.close();
-        };
 
         self.app.peertubeHandler.api.videos
           .live(filesWrittenObject)
           .then((response) => {
-            ed.uploadInProgress = false;
+            var resultElement = wnd.find('.result-section');
 
-            if (response.error) {
-              return;
-            }
+            self.app.peertubeHandler.api.videos
+              .getLiveInfo({ id: response.uuid }, { host: response.host })
+              .then((res) => {
+                preloaderSection.addClass('hidden');
 
-            videoId = response.split('/').pop();
+                if (response.error) {
+                  var error = deep(response, 'error.responseJSON.errors') || {};
 
-            actions.added(response, wnd.find('.upload-video-name').val());
-            wndObj.close();
+                  var message = (Object.values(error)[0] || {}).msg;
+
+                  sitemessage(message || 'Uploading error');
+                  contentSection.removeClass('hidden');
+                  el.streamButton.removeClass('disabledButton');
+                  el.streamButton.html(
+                    '<i class="fas fa-broadcast-tower"></i> Go Live',
+                  );
+
+                  return;
+                }
+
+                streamCreated = true;
+
+                resultElement.removeClass('hidden');
+                el.streamButton.html(
+                  '<i class="fas fa-check"></i> Stream Created',
+                );
+                el.streamButton.removeClass('disabledButton');
+                el.streamButton.addClass('successButton');
+
+                var rtmpInput = resultElement.find('.result-video-rtmp');
+                var streamKeyInput = resultElement.find(
+                  '.result-video-streamKey',
+                );
+
+                rtmpInput.val(res.rtmpUrl);
+                streamKeyInput.val(res.streamKey);
+
+                actions.added(response.formattedLink);
+              });
           });
       });
 
@@ -200,31 +174,8 @@ var streampeertube = (function () {
                 {
                   host: parsedLink.host,
                 },
-                //    {
-                //   successFunction: (res) => {
-                //     if (res.error) {
-                //       var error = deep(res, 'error.responseJSON.errors') || {};
-
-                //       var message = (Object.values(error)[0] || {}).msg;
-
-                //       sitemessage(message || 'Server error');
-                //     } else {
-                //       streamCreated = true;
-
-                //       streamInfo = {
-                //         rtmpUrl: res.rtmpUrl,
-                //         streamKey: res.streamKey,
-                //       };
-                //     }
-
-                //     var data = {};
-
-                //     clbk(data);
-                //   },
-                // }
               )
               .then((res) => {
-
                 if (res.error) {
                   var error = deep(res, 'error.responseJSON.errors') || {};
 
