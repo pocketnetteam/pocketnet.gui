@@ -283,6 +283,8 @@ var share = (function(){
 						return
 					}
 
+					if (external) external.container.close();
+
 					globalpreloader(true);
 
 					self.app.peertubeHandler.api.proxy.bestChange().then(r => {
@@ -361,20 +363,22 @@ var share = (function(){
 
 				if (type === 'addStream') {
 
+					if (external && external.id == 'streampeertube'){
+						external.container.show()
+
+						return;
+					}
+
+					if (external) external.container.close();
+
 					globalpreloader(true);
 
-					
+					self.app.peertubeHandler.api.proxy.bestChange().then(r => {
+						return self.app.peertubeHandler.api.user.auth(self.app.peertubeHandler.active(), true)
+					}).then(r => {
 
-					self.app.peertubeHandler.authentificateUser(function(response) {
 						globalpreloader(false);
 
-						if (!response) response = {};
-						
-						if (response.error) {
-
-							return sitemessage(response.error);
-						}
-	
 						self.nav.api.load({
 							open : true,
 							id : 'streampeertube',
@@ -420,13 +424,24 @@ var share = (function(){
 								}
 							},
 	
-							clbk : function(p){
-								external = p
+							clbk : function(p, element){
+								external = element;
+
+								videoUploadData = element.essenseData;
+
+								console.log('external', element)
 							}
 						});
 
-						return true;
-					});
+
+					}).catch(e => {
+
+						console.log("E", e)
+
+						globalpreloader(false);
+
+						return sitemessage(e.text || "Undefined Error");
+					})
 				} 
 
 				if(type == 'article'){
