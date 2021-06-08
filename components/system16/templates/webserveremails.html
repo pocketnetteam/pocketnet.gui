@@ -46,7 +46,7 @@
                         </div>
                     </div>
 
-                    <% if(emails.port) {%>
+                    <% if (emails.port) { %>
                         <div class="icon">
                             <i class="far fa-times-circle" remove="port"></i>
                         </div>
@@ -67,7 +67,7 @@
 
                     <% if(typeof emails.secure != 'undefined') {%>
                         <div class="icon">
-                            <i class="far fa-times-circle" remove="enabled"></i>
+                            <i class="far fa-times-circle" remove="secure"></i>
                         </div>
                     <% } %>
                 </div>
@@ -118,6 +118,24 @@
             <% } %>
 
         </div>
+
+        <% if(!_.isEmpty(emails)) {%>
+
+            <div class="work">
+                <div class="haschanges">
+                    <div class="buttons">
+                        <button class="button save">
+                            Save Changes
+                        </button>
+
+                        <button class="button ghost discard">
+                            Discard Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        <% } %>
 
 
     </div>
