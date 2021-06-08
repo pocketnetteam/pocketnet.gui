@@ -541,16 +541,20 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									var minified = uglifyJS.minify(data.toString())
+									if(path.indexOf('min.') == -1){
+										var minified = uglifyJS.minify(data.toString())
 
-									if(!minified.error && uglify){
-										data = minified.code
+										if(!minified.error){
+											data = minified.code
+										}
+										else
+										{
+											console.log('UglifyJS Fail: ' + minified.error, path)
+										}
 									}
-									else
-									{
-										console.log('UglifyJS Fail: ' + minified.error, path)
+									else{
+										console.log("SKIP MINIFY", path)
 									}
-									
 
 									vendor.data = vendor.data + "\n /*_____*/ \n" + data;
 									p.success();

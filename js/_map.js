@@ -29,7 +29,7 @@ __map =  {
         "js/vendor/jquery.md5.js",
 		"js/vendor/jquery.animate-number.js",
 		"js/vendor/jquery.touchSwipe.min.js",
-        "js/vendor/emojione.js",
+        "js/vendor/emojione.min.js",
         "js/vendor/plyr.js",
         "js/vendor/reconnectingwebsocket.js",
         "js/vendor/rtc/db.js",
@@ -45,7 +45,7 @@ __map =  {
 		"js/vendor/circular-progress.js",
 		"js/vendor/swiper-bundle.min.js",
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
-		"js/vendor/ion.sound/ion.sound.min.js" ,
+		"js/vendor/ion.sound/ion.sound.min.js" 
 	],
 
 	__sourcesfirst : [
@@ -115,7 +115,8 @@ __map =  {
 		{ c : 'lenta', n : 'stars' },
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
-		{ c : 'comments', n : 'index' }
+		{ c : 'comments', n : 'index' },
+		{ c : 'lastcomments', n : 'lastcommentslist'}
 		/*,
 		{ c : '', n : '' },
 		{ c : '', n : '' },

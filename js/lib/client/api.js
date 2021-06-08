@@ -141,7 +141,11 @@ var ProxyRequest = function(app = {}, proxy){
             if (options)
                 data.options = options
 
-        return direct(url + '/rpc/' + method, data)
+        var route = 'rpc'
+
+        if (options.ex) route = 'rpc-ex'
+
+        return direct(url + '/'+route+'/' + method, data)
 
     }
 
@@ -377,8 +381,6 @@ var Proxy16 = function(meta, app, api){
         if (self.current){
             options.node = self.current.key
         }
-
-        
 
         var promise = null
 

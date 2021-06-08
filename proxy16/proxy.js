@@ -784,8 +784,88 @@ var Proxy = function (settings, manage, test) {
 		return result
 	}
 
+	self.rpcscenarios = {
+		'gethierarchicalstrip' : function({ method, parameters, options, U }){
+			var rpc = self.api.node.rpc.action
+			var videosapi = self.api.peertube.videos.action
+
+			var users = []
+			var videos = []
+
+			var result = null
+
+			return rpc({ method, parameters, options, U }).then(r => {
+
+				var posts = r.data.contents || []
+
+					result = r
+
+				
+
+				var withvideos = _.filter(posts, p => {
+					return p.type == 'video' && p.u
+				})
+
+				videos = _.map(withvideos, function(p){
+					return decodeURIComponent(p.u)
+				})
+
+				users = _.map(posts, function(p){
+					return f.deep(p, 'lastComment.address') 
+				})
+
+				users = _.filter(users, u => {return u && !_.find(posts, function(p){
+					return p.address == u
+				})})
+
+				console.log('users', users, videos)
+
+				return rpc({
+					method : 'getuserprofile',
+					parameters : [users, '1'],
+					options, U
+				})
+
+			}).then(users => {
+				result.data.users = users.data
+
+				return videosapi({
+					urls : videos
+				})
+				
+			}).then(videos => {
+				result.data.videos = videos.data
+
+				return Promise.resolve(result)
+			}).catch(e => {
+
+				console.log("E", e)
+				return Promise.reject(e)
+			})
+		}
+	}
+
 	self.api = {
 		node: {
+			rpcex : {
+				path: '/rpc-ex/*',
+				authorization: 'signaturelight',
+				action: function ({ method, parameters, options, U }) {
+					if (!method) {
+						return Promise.reject({
+							error: 'method',
+							code: 400,
+						});
+					}
+
+					if(!self.rpcscenarios[method]){
+						return self.api.node.rpc.action({ method, parameters, options, U })
+					}
+
+					return self.rpcscenarios[method]({ method, parameters, options, U })
+					
+				},
+			},
 			rpc: {
 				path: '/rpc/*',
 				authorization: 'signaturelight',
@@ -804,12 +884,6 @@ var Proxy = function (settings, manage, test) {
 
 					var log = false
 
-					if (method == 'gethotposts') {
-						log = true
-
-						console.log('parameters', parameters)
-					}
-
 					return new Promise((resolve, reject) => {
 						server.cache.wait(method, _.clone(parameters), function (waitstatus) {
 							if (log) {
@@ -818,83 +892,83 @@ var Proxy = function (settings, manage, test) {
 							resolve(waitstatus);
 						});
 					})
-						.then((waitstatus) => {
-							var cached = server.cache.get(method, _.clone(parameters));
+					.then((waitstatus) => {
+						var cached = server.cache.get(method, _.clone(parameters));
 
-							if (log) {
-								console.log('cached', cached ? true : false)
-							}
+						if (log) {
+							console.log('cached', cached ? true : false)
+						}
 
-							if (cached) {
-								return Promise.resolve({
-									data: cached,
-									code: 208,
-								});
-							}
-
-							//var cachwaitng = server.cache.waitng(method, parameters)
-
-							/// ????
-							if (options.locally && options.meta) {
-								node = nodeManager.temp(options.meta);
-							}
-
-							if (options.node) {
-								node = nodeManager.nodesmap[options.node];
-							}
-
-							if (!node || options.auto)
-								node = nodeManager.selectProbability(); //nodeManager.selectbest()
-
-							if (!node) {
-								return Promise.reject({
-									error: 'node',
-									code: 502,
-								});
-							}
-
-							if (method == 'sendrawtransactionwithmessage') {
-								if (!bots.check(U)) {
-									return new Promise((resolve, reject) => {
-										setTimeout(function () {
-											resolve({
-												data:
-													'319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
-												code: 200,
-												node: node.exportsafe(),
-											});
-										}, f.rand(120, 1000));
-									});
-								}
-							}
-
-
-							if (log) {
-								console.log('load', method, parameters)
-							}
-
-							return node
-								.checkParameters()
-								.then((r) => {
-									return node.rpcs(method, _.clone(parameters));
-								})
-								.then((data) => {
-									server.cache.set(method, _.clone(parameters), data, node.height());
-
-									return Promise.resolve({
-										data: data,
-										code: 200,
-										node: node.exportsafe(),
-									});
-								});
-						})
-						.catch((e) => {
-							return Promise.reject({
-								error: e,
-								code: e.code,
-								node: node ? node.export() : null,
+						if (cached) {
+							return Promise.resolve({
+								data: cached,
+								code: 208,
 							});
+						}
+
+						//var cachwaitng = server.cache.waitng(method, parameters)
+
+						/// ????
+						if (options.locally && options.meta) {
+							node = nodeManager.temp(options.meta);
+						}
+
+						if (options.node) {
+							node = nodeManager.nodesmap[options.node];
+						}
+
+						if (!node || options.auto)
+							node = nodeManager.selectProbability(); //nodeManager.selectbest()
+
+						if (!node) {
+							return Promise.reject({
+								error: 'node',
+								code: 502,
+							});
+						}
+
+						if (method == 'sendrawtransactionwithmessage') {
+							if (!bots.check(U)) {
+								return new Promise((resolve, reject) => {
+									setTimeout(function () {
+										resolve({
+											data:
+												'319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
+											code: 200,
+											node: node.exportsafe(),
+										});
+									}, f.rand(120, 1000));
+								});
+							}
+						}
+
+
+						if (log) {
+							console.log('load', method, parameters)
+						}
+
+						return node
+							.checkParameters()
+							.then((r) => {
+								return node.rpcs(method, _.clone(parameters));
+							})
+							.then((data) => {
+								server.cache.set(method, _.clone(parameters), data, node.height());
+
+								return Promise.resolve({
+									data: data,
+									code: 200,
+									node: node.exportsafe(),
+								});
+							});
+					})
+					.catch((e) => {
+						return Promise.reject({
+							error: e,
+							code: e.code,
+							node: node ? node.export() : null,
 						});
+					});
 				},
 			},
 		},

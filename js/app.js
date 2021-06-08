@@ -636,12 +636,18 @@ Application = function(p)
 
 		self.options.fingerPrint = hexEncode('fakefingerprint');
 
+		console.log("LOCINIT", Math.floor(Date.now()))
+
 		self.localization.init(function(){
 			newObjects(p);
+
+			console.log("LOCINIT2", Math.floor(Date.now()))
 
 			lazyActions([
 				self.platform.prepare
 			], function(){
+
+				console.log("PRePARED", Math.floor(Date.now()))
 
 				self.realtime();
 

@@ -13,6 +13,7 @@ messenger2/server/address.js
 css/master.css
 js/mdls.js
 js/join.js
+js/joinlast.min.js
 js/joinfirst.min.js
 js/vendor.js
 js/vendor.min.js

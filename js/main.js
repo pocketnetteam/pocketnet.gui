@@ -33,11 +33,13 @@ if(!_Node)
 
 	app.preapi()
 
+	console.log("PREPARED", Math.floor(Date.now()))
+
 	retry(function(){
 		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || window.design
 	}, function(){
 
-		console.log('deviceReadyInit')
+		console.log('deviceReadyInit', Math.floor(Date.now()))
 
 		app.deviceReadyInit();
 		

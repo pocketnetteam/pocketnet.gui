@@ -641,14 +641,11 @@ var menu = (function(){
 									return r
 								}
 
-								console.log('getresults', getresults())
-
 								return getresults();
 
 							},
 
 							tpl : function(result, clbk){
-								console.log('result', result)
 								render(result, '', clbk)
 							}
 						},
@@ -686,8 +683,6 @@ var menu = (function(){
 									_.each(mp, function(k){
 										r = r.concat(result[k] || [])
 									})
-
-									console.log('e', r)
 
 									return r
 								}
@@ -969,8 +964,6 @@ var menu = (function(){
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-							console.log("amount", amount)
-
 							var t = self.app.platform.sdk.node.transactions.tempBalance()
 
 							amount = amount + t
@@ -1195,7 +1188,6 @@ var menu = (function(){
 			results : function(results, value, clbk, p){
 
 				if(!p) p = {}
-				console.log("p", p)
 
 				self.shell({
 					name :  'results',
@@ -1336,7 +1328,6 @@ var menu = (function(){
 
 			showsearch : function(v, _searchBackAction){
 
-				console.log('showsearch', v)
 				if(v){
 					el.c.addClass('searchactive')
 					el.postssearch.find('.search').addClass('searchFilled')
