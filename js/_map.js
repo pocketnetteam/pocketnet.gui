@@ -1,49 +1,47 @@
 __map =  { 
 
 	__vendor : [
-		"js/vendor/device.min.js",
-		"js/vendor/modernizr-2.8.3.min.js",
-
-		"js/vendor/jquery-1.11.3.min.js",
-	
-        "js/vendor/tooltipster.core.js",
-        "js/vendor/tooltipster.bundle.js",
-        "js/vendor/jquery-ui.min.js",
-        "js/vendor/imagesloaded.pkgd.min.js",
-        "js/vendor/timer.js",
+		"js/vendor/device.min.js", //
+		"js/vendor/modernizr-2.8.3.min.js",//
+		"js/vendor/jquery-1.11.3.min.js",//
+        "js/vendor/tooltipster.core.js",//
+        "js/vendor/tooltipster.bundle.js",//
+        /*"js/vendor/jquery-ui.min.js",*/
+        "js/vendor/imagesloaded.pkgd.min.js",///
+        "js/vendor/timer.js",//
         
-		"js/vendor/aesjs.js",
+		"js/vendor/aesjs.js",//
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
 		
 		//new
-		"js/lib/pocketnet/btc17.js",
-		"js/lib/pocketnet/htls.js",
-		"js/lib/pocketnet/buffer.js",
+		"js/lib/pocketnet/btc17.js", //
+		"js/lib/pocketnet/htls.js", //
+		"js/lib/pocketnet/buffer.js", //
 		
 		//
 
-        "js/vendor/pbkdf2.js",
-        "js/vendor/sha1.js",
-        "js/vendor/paste.js",
+        "js/vendor/pbkdf2.js", //
+        "js/vendor/sha1.js", //
+        "js/vendor/paste.js", //
         "js/vendor/jquery.md5.js",
-		"js/vendor/jquery.animate-number.js",
-		"js/vendor/jquery.touchSwipe.min.js",
-        "js/vendor/joypixels.min.js",
-        "js/vendor/plyr.js",
-        "js/vendor/reconnectingwebsocket.js",
-        "js/vendor/rtc/db.js",
-        "js/vendor/xss.min.js",
-		"js/vendor/jquery.mark.js",
-		"js/vendor/hc-sticky.js",
+		"js/vendor/jquery.animate-number.js", //
+		"js/vendor/jquery.touchSwipe.min.js", //
+        "js/vendor/joypixels.min.js", //
+        "js/vendor/plyr.js", // later
+        "js/vendor/reconnectingwebsocket.js", //
+        "js/vendor/rtc/db.js", // later
+        "js/vendor/xss.min.js", //
+		"js/vendor/jquery.mark.js", //?
+		"js/vendor/hc-sticky.js", //
 
-		"js/vendor/DateTimePicker.min.js",
-		"js/vendor/moment.min.js",
-		"js/vendor/jquery.inputmask.bundle.min.js",
-		"js/vendor/axios.js",
-		"js/vendor/isotope.pkgd.js",
-		"js/vendor/circular-progress.js",
-		"js/vendor/swiper-bundle.min.js",
+		/*"js/vendor/DateTimePicker.min.js",*/
+		"js/vendor/moment.min.js", //?
+		"js/vendor/jquery.inputmask.bundle.js",
+		"js/vendor/axios.js", //
+		"js/vendor/isotope.pkgd.js", //
+		"js/vendor/circular-progress.js", //
+		/*"js/vendor/swiper-bundle.min.js",*/ // very hard
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
 		"js/vendor/ion.sound/ion.sound.js" 
 	],
