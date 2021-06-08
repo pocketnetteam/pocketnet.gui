@@ -589,9 +589,11 @@ PeerTubePocketnet = function (app) {
           .then((result) => {
             if (!result.video) return Promise.reject(error('uploaderror'));
 
-            return Promise.resolve(
-              self.composeLink(options.host, result.video.uuid),
-            );
+            return Promise.resolve({
+              ...result.video,
+              formattedLink: self.composeLink(options.host, result.video.uuid),
+              host: options.host,
+            });
           })
           .catch((e) => {
             e.cancel = axios.isCancel(e);
