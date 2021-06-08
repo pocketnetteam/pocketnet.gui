@@ -103,6 +103,7 @@ function showHideWindow(show) {
     }
 }
 
+
 function createBadge() {
 
     if (badge) return
