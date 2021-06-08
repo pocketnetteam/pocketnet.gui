@@ -66,7 +66,6 @@ __map =  {
 		"js/module.js",
 		"js/navn.js",
 		"js/validation.js",
-		
 		"js/kit.js",
 		"js/satolist.js",
 		"js/messenger2/clientrtc.js",

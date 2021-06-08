@@ -683,8 +683,7 @@ var main = (function(){
 						openedpost = null
 					}
 
-					if (el && el.c)
-						el.c.find('.renderposthere').html('')
+					el.c.find('.renderposthere').html('')
 
 				}
 

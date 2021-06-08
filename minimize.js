@@ -610,8 +610,6 @@ fs.exists(mapJsPath, function (exists) {
 							{
 
 								JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
-
-								JS += '<script async join src="js/joinfirst.min.js?v='+rand(1, 999999999999)+'"></script>';
 								JS += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
 	
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';

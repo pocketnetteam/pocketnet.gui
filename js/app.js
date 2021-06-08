@@ -1,8 +1,8 @@
-
+/*
 if(typeof require != 'undefined' && typeof __map == 'undefined')
 {
 	var __map = require("./_map.js");
-}
+}*/
 
 if(typeof _Electron != 'undefined' && _Electron){
 
