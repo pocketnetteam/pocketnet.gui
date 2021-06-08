@@ -477,6 +477,11 @@ var Proxy16 = function(meta, app, api){
     }
 
     self.refreshNodes = function(){
+
+        return self.api.nodes.select().catch(e => {
+            return Promise.resolve()
+        })
+
         return self.api.nodes.get().then(r => {
             return self.api.nodes.select()
         }).catch(e => {

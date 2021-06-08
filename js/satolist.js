@@ -7913,21 +7913,6 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-                /*self.app.ajax.rpc({
-                    method: 'gettags',
-                    parameters: parameters,
-                    success: function (d) {
-
-                        
-
-                    },
-                    fail: function (d, e) {
-
-                        
-
-                    }
-
-                })*/
             },
 
             filterEx: function (tags) {
@@ -8892,7 +8877,6 @@ Platform = function (app, listofnodes) {
 
             }
         },
-
 
         node: {
             storage: {
@@ -14969,209 +14953,6 @@ Platform = function (app, listofnodes) {
 
         },
 
-        proxy: {
-            userlist: [],
-
-            makeid: function (proxy) {
-                var i = proxy.host + ":" + proxy.port + ":" + proxy.ws + ":"
-
-                if (proxy.user) i = i + 'user'
-
-                return i
-            },
-
-            all: function () {
-                var all = self.app.options.listofproxies.concat(this.userlist)
-
-                return all;
-            },
-
-            load: function () {
-
-
-
-                var p = {};
-
-                try {
-                    p = JSON.parse(localStorage['proxies'] || '{}');
-                }
-                catch (e) {
-
-                }
-
-
-                this.userlist = p.list || []
-
-                self.dontuseapiproxy = p.dontuseapiproxy || false;
-
-                var all = this.all()
-
-                if (p.id) {
-                    self.apiproxy = _.find(all, function (_p) {
-                        return p.id == _p.id
-                    })
-                }
-
-                if (!self.apiproxy) {
-
-                    if (all && all.length) {
-                        self.apiproxy = all[0]
-                    }
-
-                }
-            },
-
-            find: function (id) {
-                return _.find(this.all(), function (p) {
-                    return p.id == id
-                })
-            },
-
-            save: function () {
-                localStorage['proxies'] = JSON.stringify({
-
-                    list: this.userlist,
-                    id: deep(self.apiproxy, 'id') || '',
-                    dontuseapiproxy: self.dontuseapiproxy
-
-                })
-            },
-
-            remove: function (id) {
-
-                var ch = false;
-
-                removeEqual(this.userlist, {
-                    id: id
-                })
-
-                if (self.apiproxy && self.apiproxy.id == id) {
-                    self.apiproxy = null
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            create: function (proxy) {
-
-                var ch = false;
-
-                this.userlist.push(proxy);
-
-                if (!self.apiproxy) {
-                    self.apiproxy = proxy
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            update: function (proxy, id) {
-                var ch = false;
-
-                var _proxy = _.find(this.userlist, function (p) {
-                    return id == p.id
-                })
-
-                if (_proxy) {
-                    _proxy.host = proxy.host
-                    _proxy.port = proxy.port
-                    _proxy.ws = proxy.ws
-                    _proxy.id = this.makeid(proxy)
-                }
-
-                if (self.apiproxy && self.apiproxy.id == id) {
-                    self.apiproxy = _proxy
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            changeWithDialog: function (proxy, clbk) {
-
-                var c = self.app.platform.sdk.proxy.change
-
-                if (self.dontuseapiproxy) {
-                    dialog({
-                        html: self.app.localization.e('e13327'),
-                        class: 'zindex',
-                        success: function () {
-
-                            self.dontuseapiproxy = false
-
-                            c(proxy, clbk)
-                        }
-                    })
-                }
-                else {
-                    c(proxy, clbk)
-                }
-            },
-
-            change: function (proxy, clbk) {
-
-                self.apiproxy = proxy
-
-                self.app.platform.nodeid = null;
-                self.app.platform.nodes = null;
-
-                self.app.platform.sdk.proxy.save()
-
-                self.app.platform.restart(function () {
-
-                    app.reload(function () {
-
-                    })
-
-                    if (clbk)
-                        clbk()
-                })
-
-
-
-            },
-
-            info: function (clbk, m) {
-
-                self.app.ajax.api({
-                    action: 'info',
-
-                    main: m,
-
-                    success: function (d) {
-
-                        var info = deep(d, 'data.info')
-
-                        if (info && info.repost) {
-                            self.repost = true
-                        }
-
-                        if (clbk)
-                            clbk(info)
-                    },
-                    fail: function (d, e) {
-
-                        if (clbk)
-                            clbk(null, e)
-
-                    }
-                })
-            }
-        },
 
         videos : {
             storage : {},
@@ -15388,8 +15169,6 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.apiproxy = null;
-    self.dontuseapiproxy = false;
 
     self.Firebase = function (platform) {
 
@@ -17679,7 +17458,6 @@ Platform = function (app, listofnodes) {
 
             })
 
-            //var ws = 'wss://' + platform.apiproxy.host + ":" + platform.apiproxy.ws
 
             
         }
@@ -18281,14 +18059,6 @@ Platform = function (app, listofnodes) {
         /////////
 
         self.init = function (clbk) {
-
-            if (!platform.apiproxy) {
-
-                if (clbk)
-                    clbk()
-
-                return
-            }
 
             closing = false;
             self.onlineCheck = true;
@@ -19405,7 +19175,6 @@ Platform = function (app, listofnodes) {
         self.applications = self.__applications()
 
         self.sdk.theme.load()
-        self.sdk.proxy.load()
         self.app.platform.sdk.node.sys.load()
 
         setTimeout(function(){
@@ -19420,8 +19189,6 @@ Platform = function (app, listofnodes) {
         }
 
         initOnlineListener()
-
-        //self.sdk.proxy.info()
 
         self.app.api.wait.ready('use', 3000).then(r => {
 

@@ -472,19 +472,6 @@ __map =  {
 
 		},
 
-		/*messenger : {
-			uri : "messenger",
-			href : "messenger",
-			add : {
-				el : 'content'
-			},
-			redirect : {
-				auth : 'authorization',
-				validate : 'filluser'
-			},
-			
-			
-		},*/
 
 		uploadpeertube : {
 			uri : "uploadpeertube",
@@ -548,27 +535,7 @@ __map =  {
 			},
 		},
 
-		/*rep : {
-			uri : "rep",
-			href : "rep",
-			add : {
-				el : 'content'
-			},
-			redirect : {
-				auth : 'index'
-			}
-		},
-		addrep : {
-			uri : "addrep",
-			href : "addrep",
-			add : {
-				el : 'content'
-			},
-			redirect : {
-				auth : 'index'
-			}
-		},*/
-
+		
 		tagcloud : {
 			uri : "tagcloud",
 			href : "tagcloud",
@@ -820,14 +787,6 @@ __map =  {
 		},
 
 
-		esystem : {
-			uri : "esystem",
-			href : "esystem",
-			add : {
-				el : 'content'
-			},
-			anonimus : true
-		},
 
 		system16: {
 			uri : "system16",
@@ -878,8 +837,6 @@ __map =  {
 			}
 		},
 
-		
-
 		help : {
 			uri : "help",
 			href : "help",
@@ -906,35 +863,7 @@ __map =  {
 			anonimus : true,
 		},
 		
-		embeding20 : {
-			uri : "embeding20",
-			href : "embeding20",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			}
-
-			
-		},	
+	
 		embeding : {
 			uri : "embeding",
 			href : "embeding",

@@ -1737,8 +1737,6 @@ pUserInfo = function(){
 
 		if (v.blocking) self.blocking = v.blocking;
 
-		console.log("v.k || v.keys || ''", v.k || v.keys || '')
-
 		self.keys = (v.k || v.keys || '')
 
 		if(!_.isArray(self.keys)) self.keys = self.keys.split(',')
