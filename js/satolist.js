@@ -19478,7 +19478,9 @@ Platform = function (app, listofnodes) {
 
     self.initSounds = function () {
 
-        if (typeof ion != 'undefined')
+        if (typeof ion != 'undefined'){
+
+           
 
             ion.sound({
                 sounds: [
@@ -19490,6 +19492,10 @@ Platform = function (app, listofnodes) {
                 path: "js/vendor/ion.sound/sounds/",
                 preload: true
             });
+
+        }
+
+           
     }
 
     self.FocusListener = function (platform) {
