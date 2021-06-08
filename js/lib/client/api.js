@@ -796,7 +796,7 @@ var Api = function(app){
         use : () => {
 
             return useproxy ? _.filter(proxies, proxy => { 
-                return proxy.ping && proxy.get.nodes().length 
+                return proxy.ping
             }).length || !proxies.length : false
 
         },
@@ -804,7 +804,7 @@ var Api = function(app){
         useexternal : () => {
 
             return useproxy ? _.filter(proxies, proxy => { 
-                return proxy.ping && proxy.get.nodes().length && !proxy.direct
+                return proxy.ping && !proxy.direct
             }).length || !proxies.length : false
             
         },
@@ -815,7 +815,7 @@ var Api = function(app){
 
             if(!key) key = 'use'
 
-            return pretry(self.ready[key], 50, total)
+            return pretry(self.ready[key], 20, total)
         }
     }
 
