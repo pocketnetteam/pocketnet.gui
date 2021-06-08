@@ -266,8 +266,6 @@ var uploadpeertube = (function () {
 
 				initEvents();
 
-				const { createFFmpeg } = FFmpeg;
-				console.log('createFFmpeg', createFFmpeg)
 
 				p.clbk(null, p);
 			},

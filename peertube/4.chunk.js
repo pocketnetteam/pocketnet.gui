@@ -1,16 +1,205 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[4],{
 
-/***/ "./node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js ***!
-  \*************************************************************************/
-/*! exports provided: default */
+/***/ 166:
+/***/ (function(module, exports, __webpack_require__) {
+
+var Buffer = __webpack_require__(163).Buffer
+
+// prototype class for hash functions
+function Hash (blockSize, finalSize) {
+  this._block = Buffer.alloc(blockSize)
+  this._finalSize = finalSize
+  this._blockSize = blockSize
+  this._len = 0
+}
+
+Hash.prototype.update = function (data, enc) {
+  if (typeof data === 'string') {
+    enc = enc || 'utf8'
+    data = Buffer.from(data, enc)
+  }
+
+  var block = this._block
+  var blockSize = this._blockSize
+  var length = data.length
+  var accum = this._len
+
+  for (var offset = 0; offset < length;) {
+    var assigned = accum % blockSize
+    var remainder = Math.min(length - offset, blockSize - assigned)
+
+    for (var i = 0; i < remainder; i++) {
+      block[assigned + i] = data[offset + i]
+    }
+
+    accum += remainder
+    offset += remainder
+
+    if ((accum % blockSize) === 0) {
+      this._update(block)
+    }
+  }
+
+  this._len += length
+  return this
+}
+
+Hash.prototype.digest = function (enc) {
+  var rem = this._len % this._blockSize
+
+  this._block[rem] = 0x80
+
+  // zero (rem + 1) trailing bits, where (rem + 1) is the smallest
+  // non-negative solution to the equation (length + 1 + (rem + 1)) === finalSize mod blockSize
+  this._block.fill(0, rem + 1)
+
+  if (rem >= this._finalSize) {
+    this._update(this._block)
+    this._block.fill(0)
+  }
+
+  var bits = this._len * 8
+
+  // uint32
+  if (bits <= 0xffffffff) {
+    this._block.writeUInt32BE(bits, this._blockSize - 4)
+
+  // uint64
+  } else {
+    var lowBits = (bits & 0xffffffff) >>> 0
+    var highBits = (bits - lowBits) / 0x100000000
+
+    this._block.writeUInt32BE(highBits, this._blockSize - 8)
+    this._block.writeUInt32BE(lowBits, this._blockSize - 4)
+  }
+
+  this._update(this._block)
+  var hash = this._hash()
+
+  return enc ? hash.toString(enc) : hash
+}
+
+Hash.prototype._update = function () {
+  throw new Error('_update must be implemented by subclass')
+}
+
+module.exports = Hash
+
+
+/***/ }),
+
+/***/ 220:
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
+ * in FIPS PUB 180-1
+ * Version 2.1a Copyright Paul Johnston 2000 - 2002.
+ * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+ * Distributed under the BSD License
+ * See http://pajhome.org.uk/crypt/md5 for details.
+ */
+
+var inherits = __webpack_require__(159)
+var Hash = __webpack_require__(166)
+var Buffer = __webpack_require__(163).Buffer
+
+var K = [
+  0x5a827999, 0x6ed9eba1, 0x8f1bbcdc | 0, 0xca62c1d6 | 0
+]
+
+var W = new Array(80)
+
+function Sha1 () {
+  this.init()
+  this._w = W
+
+  Hash.call(this, 64, 56)
+}
+
+inherits(Sha1, Hash)
+
+Sha1.prototype.init = function () {
+  this._a = 0x67452301
+  this._b = 0xefcdab89
+  this._c = 0x98badcfe
+  this._d = 0x10325476
+  this._e = 0xc3d2e1f0
+
+  return this
+}
+
+function rotl1 (num) {
+  return (num << 1) | (num >>> 31)
+}
+
+function rotl5 (num) {
+  return (num << 5) | (num >>> 27)
+}
+
+function rotl30 (num) {
+  return (num << 30) | (num >>> 2)
+}
+
+function ft (s, b, c, d) {
+  if (s === 0) return (b & c) | ((~b) & d)
+  if (s === 2) return (b & c) | (b & d) | (c & d)
+  return b ^ c ^ d
+}
+
+Sha1.prototype._update = function (M) {
+  var W = this._w
+
+  var a = this._a | 0
+  var b = this._b | 0
+  var c = this._c | 0
+  var d = this._d | 0
+  var e = this._e | 0
+
+  for (var i = 0; i < 16; ++i) W[i] = M.readInt32BE(i * 4)
+  for (; i < 80; ++i) W[i] = rotl1(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16])
+
+  for (var j = 0; j < 80; ++j) {
+    var s = ~~(j / 20)
+    var t = (rotl5(a) + ft(s, b, c, d) + e + W[j] + K[s]) | 0
+
+    e = d
+    d = c
+    c = rotl30(b)
+    b = a
+    a = t
+  }
+
+  this._a = (a + this._a) | 0
+  this._b = (b + this._b) | 0
+  this._c = (c + this._c) | 0
+  this._d = (d + this._d) | 0
+  this._e = (e + this._e) | 0
+}
+
+Sha1.prototype._hash = function () {
+  var H = Buffer.allocUnsafe(20)
+
+  H.writeInt32BE(this._a | 0, 0)
+  H.writeInt32BE(this._b | 0, 4)
+  H.writeInt32BE(this._c | 0, 8)
+  H.writeInt32BE(this._d | 0, 12)
+  H.writeInt32BE(this._e | 0, 16)
+
+  return H
+}
+
+module.exports = Sha1
+
+
+/***/ }),
+
+/***/ 512:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return decodeB64ToUint8Array; });
-/* harmony import */ var global_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! global/window */ "./node_modules/global/window.js");
+/* WEBPACK VAR INJECTION */(function(Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return decodeB64ToUint8Array; });
+/* harmony import */ var global_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
 /* harmony import */ var global_window__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(global_window__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -28,20 +217,47 @@ function decodeB64ToUint8Array(b64Text) {
 
   return array;
 }
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node-libs-browser/node_modules/buffer/index.js */ "./node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(73).Buffer))
 
 /***/ }),
 
-/***/ "./node_modules/@videojs/vhs-utils/es/stream.js":
-/*!******************************************************!*\
-  !*** ./node_modules/@videojs/vhs-utils/es/stream.js ***!
-  \******************************************************/
-/*! exports provided: default */
+/***/ 513:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Stream; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoadStats; });
+class LoadStats {
+    constructor() {
+        this.aborted = false;
+        this.loaded = 0;
+        this.retry = 0;
+        this.total = 0;
+        this.chunkCount = 0;
+        this.bwEstimate = 0;
+        this.loading = { start: 0, first: 0, end: 0 };
+        this.parsing = { start: 0, end: 0 };
+        this.buffering = { start: 0, first: 0, end: 0 };
+    }
+}
+
+
+/***/ }),
+
+/***/ 518:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ m3u8_parser_es_Parser; });
+
+// UNUSED EXPORTS: LineStream, ParseStream
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inheritsLoose.js
+var inheritsLoose = __webpack_require__(75);
+var inheritsLoose_default = /*#__PURE__*/__webpack_require__.n(inheritsLoose);
+
+// CONCATENATED MODULE: ./node_modules/@videojs/vhs-utils/es/stream.js
 /**
  * @file stream.js
  */
@@ -163,56 +379,18 @@ var Stream = /*#__PURE__*/function () {
 }();
 
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/extends.js
+var helpers_extends = __webpack_require__(52);
+var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
 
-/***/ }),
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
+var assertThisInitialized = __webpack_require__(53);
+var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
-/***/ "./node_modules/hls.js/src/loader/load-stats.ts":
-/*!******************************************************!*\
-  !*** ./node_modules/hls.js/src/loader/load-stats.ts ***!
-  \******************************************************/
-/*! exports provided: LoadStats */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+// EXTERNAL MODULE: ./node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js
+var decode_b64_to_uint8_array = __webpack_require__(512);
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoadStats", function() { return LoadStats; });
-class LoadStats {
-    constructor() {
-        this.aborted = false;
-        this.loaded = 0;
-        this.retry = 0;
-        this.total = 0;
-        this.chunkCount = 0;
-        this.bwEstimate = 0;
-        this.loading = { start: 0, first: 0, end: 0 };
-        this.parsing = { start: 0, end: 0 };
-        this.buffering = { start: 0, first: 0, end: 0 };
-    }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/m3u8-parser/dist/m3u8-parser.es.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/m3u8-parser/dist/m3u8-parser.es.js ***!
-  \*********************************************************/
-/*! exports provided: LineStream, ParseStream, Parser */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LineStream", function() { return LineStream; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParseStream", function() { return ParseStream; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Parser", function() { return Parser; });
-/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js");
-/* harmony import */ var _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _videojs_vhs_utils_es_stream_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @videojs/vhs-utils/es/stream.js */ "./node_modules/@videojs/vhs-utils/es/stream.js");
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _videojs_vhs_utils_es_decode_b64_to_uint8_array_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @videojs/vhs-utils/es/decode-b64-to-uint8-array.js */ "./node_modules/@videojs/vhs-utils/es/decode-b64-to-uint8-array.js");
+// CONCATENATED MODULE: ./node_modules/m3u8-parser/dist/m3u8-parser.es.js
 /*! @name m3u8-parser @version 4.6.0 @license Apache-2.0 */
 
 
@@ -228,8 +406,8 @@ __webpack_require__.r(__webpack_exports__);
  * @extends Stream
  */
 
-var LineStream = /*#__PURE__*/function (_Stream) {
-  _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default()(LineStream, _Stream);
+var m3u8_parser_es_LineStream = /*#__PURE__*/function (_Stream) {
+  inheritsLoose_default()(LineStream, _Stream);
 
   function LineStream() {
     var _this;
@@ -259,7 +437,7 @@ var LineStream = /*#__PURE__*/function (_Stream) {
   };
 
   return LineStream;
-}(_videojs_vhs_utils_es_stream_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+}(Stream);
 
 var TAB = String.fromCharCode(0x09);
 
@@ -351,8 +529,8 @@ var parseAttributes = function parseAttributes(attributes) {
  */
 
 
-var ParseStream = /*#__PURE__*/function (_Stream) {
-  _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default()(ParseStream, _Stream);
+var m3u8_parser_es_ParseStream = /*#__PURE__*/function (_Stream) {
+  inheritsLoose_default()(ParseStream, _Stream);
 
   function ParseStream() {
     var _this;
@@ -544,7 +722,7 @@ var ParseStream = /*#__PURE__*/function (_Stream) {
       match = /^#EXT-X-BYTERANGE:?(.*)?$/.exec(newLine);
 
       if (match) {
-        event = _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2___default()(parseByterange(match[1]), {
+        event = extends_default()(parseByterange(match[1]), {
           type: 'tag',
           tagType: 'byterange'
         });
@@ -1007,7 +1185,7 @@ var ParseStream = /*#__PURE__*/function (_Stream) {
   };
 
   return ParseStream;
-}(_videojs_vhs_utils_es_stream_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+}(Stream);
 
 var camelCase = function camelCase(str) {
   return str.toLowerCase().replace(/-(\w)/g, function (a) {
@@ -1095,21 +1273,21 @@ var setHoldBack = function setHoldBack(manifest) {
  */
 
 
-var Parser = /*#__PURE__*/function (_Stream) {
-  _babel_runtime_helpers_inheritsLoose__WEBPACK_IMPORTED_MODULE_0___default()(Parser, _Stream);
+var m3u8_parser_es_Parser = /*#__PURE__*/function (_Stream) {
+  inheritsLoose_default()(Parser, _Stream);
 
   function Parser() {
     var _this;
 
     _this = _Stream.call(this) || this;
-    _this.lineStream = new LineStream();
-    _this.parseStream = new ParseStream();
+    _this.lineStream = new m3u8_parser_es_LineStream();
+    _this.parseStream = new m3u8_parser_es_ParseStream();
 
     _this.lineStream.pipe(_this.parseStream);
     /* eslint-disable consistent-this */
 
 
-    var self = _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this);
+    var self = assertThisInitialized_default()(_this);
     /* eslint-enable consistent-this */
 
 
@@ -1316,7 +1494,7 @@ var Parser = /*#__PURE__*/function (_Stream) {
                       keyId: entry.attributes.KEYID.substring(2)
                     },
                     // decode the base64-encoded PSSH box
-                    pssh: Object(_videojs_vhs_utils_es_decode_b64_to_uint8_array_js__WEBPACK_IMPORTED_MODULE_4__["default"])(entry.attributes.URI.split(',')[1])
+                    pssh: Object(decode_b64_to_uint8_array["a" /* default */])(entry.attributes.URI.split(',')[1])
                   }
                 };
                 return;
@@ -1395,7 +1573,7 @@ var Parser = /*#__PURE__*/function (_Stream) {
                 currentUri.attributes = {};
               }
 
-              _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_2___default()(currentUri.attributes, entry.attributes);
+              extends_default()(currentUri.attributes, entry.attributes);
             },
             media: function media() {
               this.manifest.mediaGroups = this.manifest.mediaGroups || defaultMediaGroups;
@@ -1727,211 +1905,9 @@ var Parser = /*#__PURE__*/function (_Stream) {
   };
 
   return Parser;
-}(_videojs_vhs_utils_es_stream_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+}(Stream);
 
 
-
-
-/***/ }),
-
-/***/ "./node_modules/sha.js/hash.js":
-/*!*************************************!*\
-  !*** ./node_modules/sha.js/hash.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer
-
-// prototype class for hash functions
-function Hash (blockSize, finalSize) {
-  this._block = Buffer.alloc(blockSize)
-  this._finalSize = finalSize
-  this._blockSize = blockSize
-  this._len = 0
-}
-
-Hash.prototype.update = function (data, enc) {
-  if (typeof data === 'string') {
-    enc = enc || 'utf8'
-    data = Buffer.from(data, enc)
-  }
-
-  var block = this._block
-  var blockSize = this._blockSize
-  var length = data.length
-  var accum = this._len
-
-  for (var offset = 0; offset < length;) {
-    var assigned = accum % blockSize
-    var remainder = Math.min(length - offset, blockSize - assigned)
-
-    for (var i = 0; i < remainder; i++) {
-      block[assigned + i] = data[offset + i]
-    }
-
-    accum += remainder
-    offset += remainder
-
-    if ((accum % blockSize) === 0) {
-      this._update(block)
-    }
-  }
-
-  this._len += length
-  return this
-}
-
-Hash.prototype.digest = function (enc) {
-  var rem = this._len % this._blockSize
-
-  this._block[rem] = 0x80
-
-  // zero (rem + 1) trailing bits, where (rem + 1) is the smallest
-  // non-negative solution to the equation (length + 1 + (rem + 1)) === finalSize mod blockSize
-  this._block.fill(0, rem + 1)
-
-  if (rem >= this._finalSize) {
-    this._update(this._block)
-    this._block.fill(0)
-  }
-
-  var bits = this._len * 8
-
-  // uint32
-  if (bits <= 0xffffffff) {
-    this._block.writeUInt32BE(bits, this._blockSize - 4)
-
-  // uint64
-  } else {
-    var lowBits = (bits & 0xffffffff) >>> 0
-    var highBits = (bits - lowBits) / 0x100000000
-
-    this._block.writeUInt32BE(highBits, this._blockSize - 8)
-    this._block.writeUInt32BE(lowBits, this._blockSize - 4)
-  }
-
-  this._update(this._block)
-  var hash = this._hash()
-
-  return enc ? hash.toString(enc) : hash
-}
-
-Hash.prototype._update = function () {
-  throw new Error('_update must be implemented by subclass')
-}
-
-module.exports = Hash
-
-
-/***/ }),
-
-/***/ "./node_modules/sha.js/sha1.js":
-/*!*************************************!*\
-  !*** ./node_modules/sha.js/sha1.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
- * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
- * in FIPS PUB 180-1
- * Version 2.1a Copyright Paul Johnston 2000 - 2002.
- * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
- * Distributed under the BSD License
- * See http://pajhome.org.uk/crypt/md5 for details.
- */
-
-var inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inherits_browser.js")
-var Hash = __webpack_require__(/*! ./hash */ "./node_modules/sha.js/hash.js")
-var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer
-
-var K = [
-  0x5a827999, 0x6ed9eba1, 0x8f1bbcdc | 0, 0xca62c1d6 | 0
-]
-
-var W = new Array(80)
-
-function Sha1 () {
-  this.init()
-  this._w = W
-
-  Hash.call(this, 64, 56)
-}
-
-inherits(Sha1, Hash)
-
-Sha1.prototype.init = function () {
-  this._a = 0x67452301
-  this._b = 0xefcdab89
-  this._c = 0x98badcfe
-  this._d = 0x10325476
-  this._e = 0xc3d2e1f0
-
-  return this
-}
-
-function rotl1 (num) {
-  return (num << 1) | (num >>> 31)
-}
-
-function rotl5 (num) {
-  return (num << 5) | (num >>> 27)
-}
-
-function rotl30 (num) {
-  return (num << 30) | (num >>> 2)
-}
-
-function ft (s, b, c, d) {
-  if (s === 0) return (b & c) | ((~b) & d)
-  if (s === 2) return (b & c) | (b & d) | (c & d)
-  return b ^ c ^ d
-}
-
-Sha1.prototype._update = function (M) {
-  var W = this._w
-
-  var a = this._a | 0
-  var b = this._b | 0
-  var c = this._c | 0
-  var d = this._d | 0
-  var e = this._e | 0
-
-  for (var i = 0; i < 16; ++i) W[i] = M.readInt32BE(i * 4)
-  for (; i < 80; ++i) W[i] = rotl1(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16])
-
-  for (var j = 0; j < 80; ++j) {
-    var s = ~~(j / 20)
-    var t = (rotl5(a) + ft(s, b, c, d) + e + W[j] + K[s]) | 0
-
-    e = d
-    d = c
-    c = rotl30(b)
-    b = a
-    a = t
-  }
-
-  this._a = (a + this._a) | 0
-  this._b = (b + this._b) | 0
-  this._c = (c + this._c) | 0
-  this._d = (d + this._d) | 0
-  this._e = (e + this._e) | 0
-}
-
-Sha1.prototype._hash = function () {
-  var H = Buffer.allocUnsafe(20)
-
-  H.writeInt32BE(this._a | 0, 0)
-  H.writeInt32BE(this._b | 0, 4)
-  H.writeInt32BE(this._c | 0, 8)
-  H.writeInt32BE(this._d | 0, 12)
-  H.writeInt32BE(this._e | 0, 16)
-
-  return H
-}
-
-module.exports = Sha1
 
 
 /***/ })

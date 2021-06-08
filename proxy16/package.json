@@ -15,6 +15,7 @@
     "dependencies": {
         "axios": "^0.21.1",
         "clone-deep": "^4.0.1",
+        "compression": "^1.7.4",
         "download-github-release": "^0.3.2",
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",

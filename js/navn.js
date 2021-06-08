@@ -1309,11 +1309,14 @@ Nav = function(app)
 			if(!p.href)
 				p.href = self.get.pathnameSearch() || defaultpathname;
 
-			if (p.href == 'blank')
+
+			var fpt = p.href.split("?")[0]
+
+			if (p.href == 'blank' || !fpt)
 				p.href  = defaultpathname
 
 
-			if(p.href.split("?")[0] == defaultpathname){
+			if (fpt == defaultpathname){
 				backManager.clearAll()	
 			}
 

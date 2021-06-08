@@ -19,15 +19,17 @@
         default-src https: 'self'; 
         connect-src https: wss: data: blob:;
         img-src 'self' data: https:;
-        script-src 'self' blob: https://__VAR__.domain https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js?v=119 https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' blob: https://__VAR__.domain https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
+        font-src 'self' data: https://fonts.gstatic.com https://use.fontawesome.com;
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="https://__VAR__.domain/img/res/blue_pad_250.png" sizes="250x250">
         <meta name="theme-color" content="#011621" />
 
+        <link rel="dns-prefetch" href="https://__VAR__.domain:8899" />
+        <link rel="dns-prefetch" href="https://__VAR__.domain" />
         <?php 
         
             require_once('php/og.php'); 
@@ -38,16 +40,11 @@
             $og->echotags();
         ?>
 
-        __CSS__
+        <style type="text/css">
+            #splashScreen{position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:#011621;z-index:5000;display:flex;justify-content:center;align-items:center;flex-direction:column}#splashScreen h1{color:#fff;margin-top:1em;margin-bottom:0;font-size:1em}#splashScreen h1.fade-in{-webkit-animation:fade-in .3s ease-out both;animation:fade-in .3s ease-out both}#splashScreen h1.fade-out{-webkit-animation:fade-out .2s ease-in both;animation:fade-out .2s ease-in both}#splashScreen img{max-height:6vh;max-width:10vw}#splashScreen img.zoom-in{-webkit-animation:zoom-in .5s ease-out both;animation:zoom-in .5s ease-out both}#splashScreen img.zoom-out{-webkit-animation:zoom-out .5s ease-in both;animation:zoom-out .5s ease-in both}#splashScreen img.rotate,#splashScreen.cssanimation img{-webkit-animation:rotate 1s ease-in-out infinite both;animation:rotate 1s ease-in-out infinite both}@media only screen and (max-width:768px){html.scrollmodedown #menu .menuWrapper{top:-65px}html.scrollmodedown #panelWrapper{padding-top:0;display:none}html.scrollmodedown #navigation{bottom:-60px}}@media only screen and (max-width:640px){#splashScreen{display:flex}}@-webkit-keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}100%{-webkit-transform:scale3d(5,5,5);transform:scale3d(5,5,5);opacity:0}}@keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}100%{-webkit-transform:scale3d(5,5,5);transform:scale3d(5,5,5);opacity:0}}@-webkit-keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@-webkit-keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes fade-out{0%{opacity:1}100%{opacity:0}}@keyframes fade-out{0%{opacity:1}100%{opacity:0}}@-webkit-keyframes fade-in{0%{opacity:0}100%{opacity:1}}@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+        </style>
 
         <link rel="icon" href="./favicon.svg" sizes="any" type="image/svg+xml">
-        <link rel="stylesheet" href="css/fontawesome/css/all.css">
-        <link rel="stylesheet" href="peertube/video-embed.css">
-        <script src="js/vendor/device.min.js?v=136"></script>
-        <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
-
-
-       
        
     </head>
     <body id="application" class="menu-hide">
@@ -79,9 +76,8 @@
         <div class="topPreloader" id="_topPreloader">
         </div>
 
-        <div id="splashScreen">
+        <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" class="zoom-in">
-            <h1 class="fade-in">POCKETNET</h1>
         </div>
 
         <div class="chats">
@@ -104,73 +100,25 @@
 
        <!-- <script src="cordova.js"></script>-->
                 
-
-        <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
-        
-        <script src="js/widgets.js?v=136"></script>
         <script type="text/javascript">
 
             _Node = false;
             
-            topPreloader = function(percent){
-                var el = $('#_topPreloader');
-
-
-                var div = $("<div>");
-                    el.removeClass('complete');
-                    el.append(div);
-
-                    var inip = el.attr('percent') || 0;
-
-                    el.attr('percent', percent); 
-
-                    div.width((percent - inip) + "%")
-
-                if(percent <= 0 || percent >= 100){
-
-
-                    el.addClass('complete');
-                    el.attr('percent', 0); 
-
-                    setTimeout(function(){
-
-                        el.fadeOut(300);
-
-                        setTimeout(function(){
-
-
-                            el.html('');
-
-                        },300)
-
-                    },500)
-                    
-                }
-                else{
-                    el.fadeIn(1);
-                }
-                
-            }
-
-            topPreloader(15)
-            
         </script>
+
+        
 
         __JSENV__
 
         __VE__
-        
+
         __JS__
 
+        __CSS__
 
-        <script type="text/javascript">
+        <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
-            topPreloader(100);
-            
-        </script>
-
-        <!-- Service worker used to enable the PWA features -->
-        <script src="js/pwa-service-worker.js"></script>
+        <script async src="js/pwa-service-worker.js"></script>
 
     </body>
 </html>

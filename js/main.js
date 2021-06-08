@@ -4,23 +4,23 @@ if(typeof _SEO == 'undefined') 	_SEO = false;
 if(!_Node)
 {
 
-	var listofproxies =  [
+	var _listofproxies =  [
 			
 		{
 			host : 'pocketnet.app',
 			port : 8899,
 			wss : 8099
-	    },
+	    }/*,
 	    {
 			host : '1.pocketnet.app',
 			port : 8899,
 			wss : 8099
-		},
+		},*/
 
 	]
 
 	if (window.testpocketnet){
-		listofproxies = [{
+		_listofproxies = [{
 			host : 'test.pocketnet.app',
 			port : 8899,
 			wss : 8099
@@ -28,14 +28,23 @@ if(!_Node)
 	}
 
 	app = new Application({
-
-
-		listofproxies : listofproxies,
-		
+		listofproxies : _listofproxies,
 	});
 
-	app.deviceReadyInit();
+	app.preapi()
 
+	console.log("PREPARED", Math.floor(Date.now()))
+
+	retry(function(){
+		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || window.design
+	}, function(){
+
+		console.log('deviceReadyInit', Math.floor(Date.now()))
+
+		app.deviceReadyInit();
+		
+	})
+	
 	window.POCKETNETINSTANCE = app
 }
 

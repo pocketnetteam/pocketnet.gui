@@ -4,7 +4,7 @@ var package = require('./package.json');
 
 require('./js/functions.js');
 var uglifyJS = require("uglify-js");
- 
+var uglifycss = require('uglifycss');
 
 
 var args = {
@@ -13,6 +13,8 @@ var args = {
 	vendor : 89,
 	path : '/'
 }
+
+var uglify = true
 
 
 var argcli = _.filter(process.argv, function(a){
@@ -73,12 +75,27 @@ fs.exists(mapJsPath, function (exists) {
 
 		var join = {
 			data : "",
-			path : './js/join.min.js'
+			path : './js/join.min.js',
+			append : "\n /*_____*/ \n ; window.pocketnetJoinLoaded = true;"
+		}
+
+		var joinfirst = {
+			data : "",
+			path : './js/joinfirst.min.js'
+		}
+
+		var joinlast = {
+			data : "",
+			path : './js/joinlast.min.js'
 		}
 
 		var vendor = {
 			data : "",
 			path : './js/vendor.min.js'
+		}
+
+		var tempates = {
+			data : ""
 		}
 
 		var cssmaster = {
@@ -93,7 +110,7 @@ fs.exists(mapJsPath, function (exists) {
 		}
 
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor') return true;
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast') return true;
 			
 		})
 
@@ -128,10 +145,14 @@ fs.exists(mapJsPath, function (exists) {
 								throw err;
 							}
 
-							var minified = uglifyJS.minify(data.toString())
+							var minified = uglifyJS.minify(data.toString(), {
+								compress: {
+									passes: 2
+								}
+							})
 							
 
-							if(!minified.error){
+							if(!minified.error && uglify){
 								data = minified.code
 							}
 							else
@@ -196,6 +217,10 @@ fs.exists(mapJsPath, function (exists) {
 
 						//console.log("Access permitted", item)
 
+						var arf = _.clone(m.__sourcesfirst || []);
+
+						var arl = _.clone(m.__sourceslast || []);
+
 						var ar = _.clone(m.__sources || []);
 
 						ar.push(modules.path.replace('./', ''));
@@ -206,18 +231,38 @@ fs.exists(mapJsPath, function (exists) {
 
 							console.log("joinVendor DONE")
 
-							joinScripts(ar, function(){
+							joinScripts(arf, joinfirst, function(){
 
-								console.log("joinScripts DONE")
+								console.log("joinScriptsFirst DONE")
 
-								joinCss(function(){
-
-									console.log("joinCss DONE")
-
-									createTemplates()
-								})
 								
-							});
+
+								joinTemplates(function(d){
+
+									join.data = join.data + "\n /*_____*/ \n" + d;
+
+									joinScripts(ar, join, function(){
+
+										console.log("joinScripts DONE")
+
+										joinScripts(arl, joinlast, function(){
+
+											console.log("joinScriptsLast DONE")
+
+											joinCss(function(){
+
+												console.log("joinCss DONE")
+
+												createTemplates()
+											})
+
+										})
+										
+									});
+
+								})
+
+							})
 							
 						});
 
@@ -286,7 +331,11 @@ fs.exists(mapJsPath, function (exists) {
 
 							exported.data = exported.data.join('\n')
 
-							fs.writeFile(cssmaster.path, cssmaster.data, function(err) {
+							var pre = uglifycss.processString(cssmaster.data, {
+								cuteComments : true
+							})
+
+							fs.writeFile(cssmaster.path, pre, function(err) {
 
 								if(err) {
 									throw "Access not permitted (CSS) " +  cssmaster.path
@@ -314,8 +363,8 @@ fs.exists(mapJsPath, function (exists) {
 			}
 		}
 
-		var joinScripts = function(ar, clbk){
-			if(m.__sources)
+		var joinScripts = function(ar, join, clbk){
+			if(ar && ar.length)
 
 				lazyEach({
 					sync : true,
@@ -330,7 +379,7 @@ fs.exists(mapJsPath, function (exists) {
 						else path = filepath.replace("..", '.');				  				
 
 						fs.exists(path, function (exists) {
-							//console.log(path)
+							
 							if(exists){
 
 								console.log(path)
@@ -340,9 +389,13 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									var minified = uglifyJS.minify(data.toString())
+									var minified = uglifyJS.minify(data.toString(), {
+										compress: {
+											passes: 2
+										}
+									})
 
-									if(!minified.error){
+									if(!minified.error && uglify){
 										data = minified.code
 									}
 									else
@@ -369,8 +422,12 @@ fs.exists(mapJsPath, function (exists) {
 						success : function(){
 							console.log(join.path)
 
-							fs.writeFile(join.path, join.data, function(err) {
 
+							if (join.append){
+								join.data = join.data + join.append
+							}
+
+							fs.writeFile(join.path, join.data, function(err) {
 								if(err) {
 
 									throw "Access not permitted (JS) " +  join.path
@@ -378,12 +435,78 @@ fs.exists(mapJsPath, function (exists) {
 										
 								clbk();				
 							});
+
+						
+							
 						}
 					}
 				})
 
 			else
 				throw "Access not permitted (JS) " +  join.path
+		}
+
+		var joinTemplates = function(clbk){
+			if(m.__templates){
+
+				tempates.data = ''
+
+				var scripted = {}
+
+				lazyEach({
+					sync : true,
+					array : m.__templates,
+					action : function(p){
+
+						var i = p.item
+
+						var filepath = 'components/' + i.c + '/templates/' + i.n + '.html';
+
+						var path;
+
+						if(filepath.indexOf("..") == -1) path = './'+ filepath;
+						else path = filepath.replace("..", '.');		
+						
+						
+						console.log('path', path, i)
+
+						fs.exists(path, function (exists) {
+							//
+							if(exists){
+
+								console.log(path)
+
+								fs.readFile(path, function read(err, data) {
+									if (err) {
+										throw err;
+									}
+
+									if(!scripted[i.c]) scripted[i.c] = {}
+
+									scripted[i.c][i.n] = data.toString()
+
+									p.success();
+								});
+
+							}
+							else
+							{
+								throw "File doesn't exist " +  path
+							}
+						})
+
+					},
+					
+					all : {
+						success : function(){
+
+							tempates.data = 'window.pocketnetTemplates = ' + JSON.stringify(scripted)
+
+							clbk(tempates.data);	
+						}
+					}
+				})
+			}
 		}
 
 		var joinVendor = function(ar, clbk){
@@ -412,16 +535,20 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									var minified = uglifyJS.minify(data.toString())
+									if(path.indexOf('min.') == -1){
+										var minified = uglifyJS.minify(data.toString())
 
-									if(!minified.error){
-										data = minified.code
+										if(!minified.error){
+											data = minified.code
+										}
+										else
+										{
+											console.log('UglifyJS Fail: ' + minified.error, path)
+										}
 									}
-									else
-									{
-										console.log('UglifyJS Fail: ' + minified.error, path)
+									else{
+										console.log("SKIP MINIFY", path)
 									}
-									
 
 									vendor.data = vendor.data + "\n /*_____*/ \n" + data;
 									p.success();
@@ -440,6 +567,8 @@ fs.exists(mapJsPath, function (exists) {
 						success : function(){
 
 							console.log(vendor.path)
+
+							vendor.data = vendor.data + "\n /*_____*/ \n ; window.pocketnetVendorLoaded = true;"
 
 							fs.writeFile(vendor.path, vendor.data, function(err) {
 
@@ -492,10 +621,12 @@ fs.exists(mapJsPath, function (exists) {
 	
 							if(args.prodaction)
 							{
+
+								JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
+								JS += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
+								JS += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
 	
-								JS += '<script join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
-	
-								VE = '<script join src="js/vendor.min.js?v='+args.vendor+'"></script>';
+								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
 	
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
 	
@@ -505,9 +636,19 @@ fs.exists(mapJsPath, function (exists) {
 							{
 	
 								JSENV += '<script>window.design = true;</script>';
+
+								_.each(m.__sourcesfirst, function(source){
+									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									CACHED_FILES += `'${source}',\n`;
+								})
 								
 								_.each(m.__sources, function(source){
-									JS += '<script join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									CACHED_FILES += `'${source}',\n`;
+								})
+
+								_.each(m.__sourceslast, function(source){
+									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})
 	
@@ -517,7 +658,7 @@ fs.exists(mapJsPath, function (exists) {
 								})	
 	
 								_.each(m.__vendor, function(source){
-									VE += '<script join src="'+source+'?v='+args.vendor+'"></script>\n';
+									VE += '<script  join src="'+source+'?v='+args.vendor+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})			            		
 							}
@@ -547,7 +688,7 @@ fs.exists(mapJsPath, function (exists) {
 					}
 					else
 					{
-						return reject("not index tpl")
+						return reject("not index tpl: " + pth)
 					}
 				})
 

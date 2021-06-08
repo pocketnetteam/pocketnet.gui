@@ -33,43 +33,44 @@
 					<% if(typeof preview != 'undefined' && preview) {  %>
 
 						<div class="jsPlayerPreview">
-							<div class="wpl opensviurl" image="<%-info.data.image || ''%>">
-							</div>
-							<% if(info.data.duration) {%>
-								<div class="durationWrapper">
-									<span><%-secInTime(info.data.duration)%></span>
+							<% if(info.data) {%>
+								<div class="wpl opensviurl" image="<%-info.data.image || ''%>">
 								</div>
+								<% if(info.data.duration) {%>
+									<div class="durationWrapper">
+										<span><%-secInTime(info.data.duration)%></span>
+									</div>
+								<% } %>
+
+								<div class="statswrapper">
+									<% if(info.data.views) {%>
+										<div class="viewsWrapper">
+											<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
+										</div>
+									<% } %>
+		
+									<% if(share) {
+										
+										var value = Number(share.score)
+
+										if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
+											value = value / Number(share.scnt)
+										}
+										else {
+											value = 0
+										}
+										
+										%>
+										<div class="starsRatingWrapper">
+											<i class="far fa-star"></i> <span><%-Number(value).toFixed(1)%></span>
+										</div>
+										<div class="commentsCountWrapper">
+											<i class="far fa-comment"></i> <span><%-compressedNumber(share.comments || 0)%></span>
+										</div>
+									<% } %>
+								</div>
+
 							<% } %>
-
-							<div class="statswrapper">
-								<% if(info.data.views) {%>
-									<div class="viewsWrapper">
-										<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
-									</div>
-								<% } %>
-	
-								<% if(share) {
-									
-									var value = Number(share.score)
-
-									if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
-										value = value / Number(share.scnt)
-									}
-									else {
-										value = 0
-									}
-									
-									%>
-									<div class="starsRatingWrapper">
-										<i class="far fa-star"></i> <span><%-Number(value).toFixed(1)%></span>
-									</div>
-									<div class="commentsCountWrapper">
-										<i class="far fa-comment"></i> <span><%-compressedNumber(share.comments || 0)%></span>
-									</div>
-								<% } %>
-							</div>
-
-							
 						</div>
 
 

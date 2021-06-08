@@ -3126,7 +3126,7 @@ var lenta = (function(){
 
 			if(isMobile() && canloadprev && !essenseData.openapi){
 
-				var cc = el.c.find('.circularprogress');
+				/*var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
 
 				var progress = new CircularProgress({
@@ -3151,7 +3151,7 @@ var lenta = (function(){
 
 				var tp = el.c.find('.loadprev')
 
-				var trueshold = 200
+				var trueshold = 200*/
 				/*
 				var parallax = new SwipeParallax({
 
@@ -3429,10 +3429,10 @@ var lenta = (function(){
 					self.app.platform.sdk.categories.clbks.tags.lenta =
 					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
 
-						if(getloader() == 'hierarchical'&& !essenseData.second){
-							//_scrollTop(0)
+						console.log('getloader()', getloader(), essenseData, essenseData.second)
+
+						if(getloader() == 'hierarchical' && !essenseData.second){
 							actions.loadprev()
-							
 						}
 						
 					}
@@ -3812,23 +3812,26 @@ var lenta = (function(){
 
 				delete self.iclbks.lenta
 
-				delete self.app.platform.sdk.categories.clbks.tags.lenta
-				delete self.app.platform.sdk.categories.clbks.selected.lenta
+				if(!essenseData.openapi && !essenseData.second && !essenseData.txids){
 
-				delete self.app.platform.ws.messages.comment.clbks.lenta
-				delete self.app.platform.sdk.node.shares.clbks.added.lenta
-				delete self.app.platform.ws.messages.transaction.clbks.temp
-				delete self.app.platform.ws.messages.event.clbks.lenta
+					delete self.app.platform.sdk.categories.clbks.tags.lenta
+					delete self.app.platform.sdk.categories.clbks.selected.lenta
 
-				delete self.app.platform.ws.messages["new block"].clbks.newsharesLenta
-				delete self.app.platform.clbks.api.actions.subscribe.lenta
-				delete self.app.platform.clbks.api.actions.unsubscribe.lenta
-				delete self.app.platform.clbks.api.actions.subscribePrivate.lenta 
+					delete self.app.platform.ws.messages.comment.clbks.lenta
+					delete self.app.platform.sdk.node.shares.clbks.added.lenta
+					delete self.app.platform.ws.messages.transaction.clbks.temp
+					delete self.app.platform.ws.messages.event.clbks.lenta
 
-				delete self.app.platform.clbks.api.actions.blocking.lenta
-				delete self.app.platform.clbks.api.actions.unblocking.lenta
+					delete self.app.platform.ws.messages["new block"].clbks.newsharesLenta
+					delete self.app.platform.clbks.api.actions.subscribe.lenta
+					delete self.app.platform.clbks.api.actions.unsubscribe.lenta
+					delete self.app.platform.clbks.api.actions.subscribePrivate.lenta 
 
-				delete self.app.platform.clbks._focus.lenta
+					delete self.app.platform.clbks.api.actions.blocking.lenta
+					delete self.app.platform.clbks.api.actions.unblocking.lenta
+
+					delete self.app.platform.clbks._focus.lenta
+				}
 
 				self.app.platform.sdk.chats.removeTemp()
 				video = false					

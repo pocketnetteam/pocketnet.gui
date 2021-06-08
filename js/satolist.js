@@ -26,13 +26,13 @@ Platform = function (app, listofnodes) {
         'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux' : true,
         'PXUYsENSv6QkQZEdiJTsfJmu3XxZvVmVfQ' : true,
         'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw' : true,
-        'PLoFgXDPL5dCYkFCGLwH4n29TehLnfQ4w6' : true,
         'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true,
         'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt' : true,
         'PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk' : true,
         'PS4pYW4tpu6fwviz63CHLMxPA37fJ3GLvn' : true,
         'PHmvLy9b5m2b7fvU7MSTw4mAkdshhdY4Nt' : true,
-        'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL' : true
+        'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL' : true,
+        'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
     
@@ -1791,8 +1791,6 @@ Platform = function (app, listofnodes) {
 
             var id = p.id || makeid()
 
-            console.log("PAPI", p)
-
             app.nav.api.load({
 
                 open : true,
@@ -3545,7 +3543,7 @@ Platform = function (app, listofnodes) {
         theme: {
             all: {
                 white: {
-                    name: self.app.localization.e('e13266'),
+                    name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite"
                 },
 
@@ -5497,7 +5495,6 @@ Platform = function (app, listofnodes) {
 
                         self.app.api.rpc('getuserprofile', params).then(d => {
 
-
                             _.each(addresses || [], function (a) {
 
                                 var data = _.find(d, function (d) {
@@ -5926,6 +5923,12 @@ Platform = function (app, listofnodes) {
                     var lf = _.find(self.sdk.usersl.storage, function (s) {
                         if (s.name == name) return true
                     })
+
+                    if(!lf){
+                        lf = _.find(self.sdk.users.storage, function (s) {
+                            if (s.name == name) return true
+                        })
+                    }
 
                     if (lf) {
                         if (clbk)
@@ -7912,21 +7915,6 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-                /*self.app.ajax.rpc({
-                    method: 'gettags',
-                    parameters: parameters,
-                    success: function (d) {
-
-                        
-
-                    },
-                    fail: function (d, e) {
-
-                        
-
-                    }
-
-                })*/
             },
 
             filterEx: function (tags) {
@@ -8892,7 +8880,6 @@ Platform = function (app, listofnodes) {
             }
         },
 
-
         node: {
             storage: {
                 balance: {
@@ -9671,11 +9658,11 @@ Platform = function (app, listofnodes) {
                         var _u = data.userprofile
 
                         if (_u) {
-                            var u = self.sdk.users.prepareuser(_u, data.address, state)
+                            var u = self.sdk.users.prepareuser(_u, _u.address, state)
 
                             //self.sdk.users.storage[data.address] = u;
 
-                            self.sdk.usersl.storage[data.address] = u;
+                            self.sdk.usersl.storage[_u.address] = u;
 
                         }
 
@@ -9698,6 +9685,7 @@ Platform = function (app, listofnodes) {
 
                             var shares = self.sdk.node.shares.transform(d, state)
 
+                            
                             self.sdk.node.shares.takeusers(d, state)
 
                             if (clbk)
@@ -9719,17 +9707,50 @@ Platform = function (app, listofnodes) {
 
                     var storage = this.storage;
 
-
-
                     self.app.user.isState(function (state) {
 
-                        self.app.api.rpc(method, parameters).then(d => {
+                        self.app.api.rpc(method, parameters, {
+                            rpc : {
+                                ex : true
+                            }
+                        }).then(d => {
 
                             d.contents || (d.contents = [])
 
+                            var clear = d.contents
+
                             d.contents = self.sdk.node.shares.transform(d.contents, state)
 
-                            self.sdk.node.shares.takeusers(d.contents, state)
+                            self.sdk.node.shares.takeusers(clear, state)
+
+                            if (d.users)
+                                self.sdk.node.shares.takeusers(_.map(d.users, function(u){
+                                    return {
+                                        userprofile : u
+                                    }
+                                }), state)
+
+                            if(d.videos){
+
+                                var s = self.sdk.videos.storage
+                
+                                var lmap = _.map(d.videos, function(i, l){
+
+                                    var meta = parseVideo(l)
+
+                                    return {
+                                        meta : meta,
+                                        link : l
+                                    }
+                                })
+
+                                self.sdk.videos.catchPeertubeLinks(d.videos, lmap)
+
+                                _.each(lmap, function(l){
+                                    s[l.link] = s[l.meta.id] = l
+                                })
+
+                            }
 
                             if (clbk)
                                 clbk(d)
@@ -14972,209 +14993,6 @@ Platform = function (app, listofnodes) {
 
         },
 
-        proxy: {
-            userlist: [],
-
-            makeid: function (proxy) {
-                var i = proxy.host + ":" + proxy.port + ":" + proxy.ws + ":"
-
-                if (proxy.user) i = i + 'user'
-
-                return i
-            },
-
-            all: function () {
-                var all = self.app.options.listofproxies.concat(this.userlist)
-
-                return all;
-            },
-
-            load: function () {
-
-
-
-                var p = {};
-
-                try {
-                    p = JSON.parse(localStorage['proxies'] || '{}');
-                }
-                catch (e) {
-
-                }
-
-
-                this.userlist = p.list || []
-
-                self.dontuseapiproxy = p.dontuseapiproxy || false;
-
-                var all = this.all()
-
-                if (p.id) {
-                    self.apiproxy = _.find(all, function (_p) {
-                        return p.id == _p.id
-                    })
-                }
-
-                if (!self.apiproxy) {
-
-                    if (all && all.length) {
-                        self.apiproxy = all[0]
-                    }
-
-                }
-            },
-
-            find: function (id) {
-                return _.find(this.all(), function (p) {
-                    return p.id == id
-                })
-            },
-
-            save: function () {
-                localStorage['proxies'] = JSON.stringify({
-
-                    list: this.userlist,
-                    id: deep(self.apiproxy, 'id') || '',
-                    dontuseapiproxy: self.dontuseapiproxy
-
-                })
-            },
-
-            remove: function (id) {
-
-                var ch = false;
-
-                removeEqual(this.userlist, {
-                    id: id
-                })
-
-                if (self.apiproxy && self.apiproxy.id == id) {
-                    self.apiproxy = null
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            create: function (proxy) {
-
-                var ch = false;
-
-                this.userlist.push(proxy);
-
-                if (!self.apiproxy) {
-                    self.apiproxy = proxy
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            update: function (proxy, id) {
-                var ch = false;
-
-                var _proxy = _.find(this.userlist, function (p) {
-                    return id == p.id
-                })
-
-                if (_proxy) {
-                    _proxy.host = proxy.host
-                    _proxy.port = proxy.port
-                    _proxy.ws = proxy.ws
-                    _proxy.id = this.makeid(proxy)
-                }
-
-                if (self.apiproxy && self.apiproxy.id == id) {
-                    self.apiproxy = _proxy
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            changeWithDialog: function (proxy, clbk) {
-
-                var c = self.app.platform.sdk.proxy.change
-
-                if (self.dontuseapiproxy) {
-                    dialog({
-                        html: self.app.localization.e('e13327'),
-                        class: 'zindex',
-                        success: function () {
-
-                            self.dontuseapiproxy = false
-
-                            c(proxy, clbk)
-                        }
-                    })
-                }
-                else {
-                    c(proxy, clbk)
-                }
-            },
-
-            change: function (proxy, clbk) {
-
-                self.apiproxy = proxy
-
-                self.app.platform.nodeid = null;
-                self.app.platform.nodes = null;
-
-                self.app.platform.sdk.proxy.save()
-
-                self.app.platform.restart(function () {
-
-                    app.reload(function () {
-
-                    })
-
-                    if (clbk)
-                        clbk()
-                })
-
-
-
-            },
-
-            info: function (clbk, m) {
-
-                self.app.ajax.api({
-                    action: 'info',
-
-                    main: m,
-
-                    success: function (d) {
-
-                        var info = deep(d, 'data.info')
-
-                        if (info && info.repost) {
-                            self.repost = true
-                        }
-
-                        if (clbk)
-                            clbk(info)
-                    },
-                    fail: function (d, e) {
-
-                        if (clbk)
-                            clbk(null, e)
-
-                    }
-                })
-            }
-        },
 
         videos : {
             storage : {},
@@ -15284,6 +15102,34 @@ Platform = function (app, listofnodes) {
                 })
             },
 
+            catchPeertubeLinks : function(linksInfo, links){
+                if(!window.peertubeglobalcache)
+                    window.peertubeglobalcache = {}
+
+                links.forEach(link => {
+                    
+                    const linkInfo = linksInfo[link.link];
+
+                    if (linkInfo){
+
+                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
+                            linkInfo.aspectRatio = 1.78
+                        }
+
+                        linkInfo ? link.data = {
+                            image : 'https://' + linkInfo.from + linkInfo.previewPath,
+                            views : linkInfo.views,
+                            duration : linkInfo.duration,
+                            aspectRatio : linkInfo.aspectRatio || 1,
+                        } : '';
+
+                        window.peertubeglobalcache[link.meta.id] = linkInfo
+                    }
+
+                    
+                });
+            },
+
             types : {
                 youtube : function(links){
                     var result = _.map(links, function(l){
@@ -15304,6 +15150,8 @@ Platform = function (app, listofnodes) {
                     return self.sdk.videos.types.youtube(links)
                 },
 
+                
+
                 peertube : async function(links){
 
 
@@ -15311,34 +15159,7 @@ Platform = function (app, listofnodes) {
                         urls: links.map(link => link.link),
                     }).then(linksInfo => {
 
-                        if(!window.peertubeglobalcache)
-                            window.peertubeglobalcache = {}
-
-
-                        links.forEach(link => {
-                            
-                            const linkInfo = linksInfo[link.link];
-
-                            if (linkInfo){
-                                if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
-                                    linkInfo.aspectRatio = 1.78
-                                }
-        
-                                linkInfo ? link.data = {
-                                    image : 'https://' + linkInfo.from + linkInfo.previewPath,
-                                    views : linkInfo.views,
-                                    duration : linkInfo.duration,
-                                    aspectRatio : linkInfo.aspectRatio || 1,
-                                } : '';
-    
-    
-                               
-    
-                                window.peertubeglobalcache[link.meta.id] = linkInfo
-                            }
-
-                            
-                        });
+                        self.sdk.videos.catchPeertubeLinks(linksInfo, links)
 
                         return Promise.resolve(links);
                     })
@@ -15391,8 +15212,6 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.apiproxy = null;
-    self.dontuseapiproxy = false;
 
     self.Firebase = function (platform) {
 
@@ -15608,8 +15427,8 @@ Platform = function (app, listofnodes) {
                 var m = share.caption || share.message;
                 var nm = ''
 
-                if (typeof emojione != 'undefined') {
-                    nm = emojione.toImage(filterXSS(trimHtml(m, c || 20)));
+                if (typeof joypixels != 'undefined') {
+                    nm = joypixels.toImage(filterXSS(trimHtml(m, c || 20)));
                 }
                 else {
                     nm = filterXSS(trimHtml(m, c || 20));
@@ -17650,7 +17469,6 @@ Platform = function (app, listofnodes) {
 
                     self.connected = {};
 
-
                     self.getMissed()
 
                     lost = platform.currentBlock || 0;
@@ -17682,7 +17500,6 @@ Platform = function (app, listofnodes) {
 
             })
 
-            //var ws = 'wss://' + platform.apiproxy.host + ":" + platform.apiproxy.ws
 
             
         }
@@ -18132,9 +17949,6 @@ Platform = function (app, listofnodes) {
             self.close()
             self.loadingMissed = false;
 
-            
-
-
         }
 
 
@@ -18284,14 +18098,6 @@ Platform = function (app, listofnodes) {
         /////////
 
         self.init = function (clbk) {
-
-            if (!platform.apiproxy) {
-
-                if (clbk)
-                    clbk()
-
-                return
-            }
 
             closing = false;
             self.onlineCheck = true;
@@ -19362,9 +19168,39 @@ Platform = function (app, listofnodes) {
 
     }
 
-    self.prepare = function (clbk, state) {
+    self.directdialog = function(proxy){
 
-        
+        return new Promise((resolve, reject) => {
+
+            var d = dialog({
+                html:  self.app.localization.e('pdirectdialog'),
+                btn1text: self.app.localization.e('dyes'),
+                btn2text: self.app.localization.e('dno'),
+    
+                success: function () {
+                    self.app.api.set.current(proxy.id).then(r => {
+
+                        resolve()
+                    }).catch(resolve)
+                },
+    
+                fail: function () {
+                    resolve()
+                }
+            })
+
+            self.app.api.wait.ready('useexternal').then(r => {
+                d.destroy()
+
+                resolve()
+            })
+
+        })
+
+       
+    }
+
+    self.prepare = function (clbk, state) {
 
         self.preparing = true;
 
@@ -19374,10 +19210,12 @@ Platform = function (app, listofnodes) {
         self.applications = self.__applications()
 
         self.sdk.theme.load()
-        self.sdk.proxy.load()
         self.app.platform.sdk.node.sys.load()
 
-        self.initSounds();
+        setTimeout(function(){
+            self.initSounds();
+        }, 3000)
+        
 
         self.sdk.system16.init()
 
@@ -19387,21 +19225,37 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener()
 
-        //self.sdk.proxy.info()
 
-        self.app.api.initIf().then(r => {
+        console.log("WAITING", Math.floor(Date.now()))
 
-            return self.app.api.wait.ready('use', 3000)
+        self.app.api.wait.ready('use', 3000).then(r => {
 
-        }).then(r => {
+            console.log("CANUSE", Math.floor(Date.now()))
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
-                    self.app.api.changeProxyIfNeed().then(resolve).catch(reject)
-                }, 500)
+                    self.app.api.changeProxyIfNeed().then(l => {
+
+                        if(!l){
+                            var d = self.app.api.get.direct() 
+
+                            if(d){
+
+                                self.directdialog(d).then(resolve)
+
+                                return
+                            }
+                        }
+
+                        resolve()
+
+                    }).catch(reject)
+                }, 50)
             })
 
         }).then(r => {
+
+            console.log("USING", Math.floor(Date.now()))
 
             self.ws = new self.WSn(self);
 
@@ -19420,21 +19274,16 @@ Platform = function (app, listofnodes) {
 
             self.sdk.captcha.load()
             self.sdk.tags.getfastsearch()
+            self.sdk.node.get.time() /// /?
+
+            self.tst()
+
+            self.preparing = false;
+
+            self.prepareUser(clbk, state);
 
 
-           
 
-
-            self.sdk.node.get.time(function () {
-
-
-                self.tst()
-
-                self.preparing = false;
-
-                self.prepareUser(clbk, state);
-
-            })
         }).catch(e => {
             console.log("ERROR", e)
         })
@@ -19553,11 +19402,7 @@ Platform = function (app, listofnodes) {
             }
         }
 
-        if (typeof PeerTubePocketnet != 'undefined'){
-
-			self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-			self.app.peertubeHandler.init()
-		}
+        
 
         app.user.isState(function(state){
 
@@ -19567,48 +19412,48 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
-                    self.cryptography.prepare,
-                    self.sdk.pool.init,
+                    
                     self.sdk.ustate.me,
                     self.sdk.usersettings.init,
-                    self.sdk.articles.init,
                     self.sdk.imagesH.load,
-                    self.sdk.chats.load,
                     self.sdk.user.subscribeRef,
                     self.ws.init,
                     self.firebase.init,
-                    self.sdk.tempmessenger.init,
-                    self.sdk.exchanges.load,
+                    
+                    //self.sdk.exchanges.load,
                     self.sdk.categories.load,
                     self.sdk.activity.load,
-                    self.sdk.node.shares.parameters.load
+                    self.sdk.node.shares.parameters.load,
+                    self.sdk.node.transactions.checkTemps,
+                    self.sdk.user.get
                 ], function () {
-
-                    /*console.log('sdsd', _.map(self.app.user.cryptoKeys(), function(k){
-                        return k.public
-                    }))*/
 
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 
-                    self.sdk.node.transactions.checkTemps(function () {
+                    self.sdk.relayTransactions.send()
 
-                        self.sdk.relayTransactions.send()
+                    self.matrixchat.init()
 
-                        self.sdk.user.get(function (u) {
+                    self.preparingUser = false;
 
-                            self.matrixchat.init()
+                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                            self.preparingUser = false;
+                    if (clbk)
+                        clbk()
 
-                            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-                            if (clbk)
-                                clbk()
-
+                    setTimeout(function(){
+                        lazyActions([
+                            self.cryptography.prepare,
+                            self.sdk.pool.init,
+                            self.sdk.articles.init,
+                            self.sdk.tempmessenger.init,
+                            self.sdk.chats.load
+                        ], function(){
+            
                         })
-
-
-                    })
+                        
+                    }, 2000)
+                    
 
                 })
             }
@@ -19621,6 +19466,13 @@ Platform = function (app, listofnodes) {
             }
 
         })
+
+        if (typeof PeerTubePocketnet != 'undefined'){
+			self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+			self.app.peertubeHandler.init()
+		}
+
+        
     }
 
 
@@ -19725,29 +19577,6 @@ Platform = function (app, listofnodes) {
 
             $(window).on('focus', f);
             $(window).on('blur', uf);
-
-
-            /*self.app.api.rpc('sendrawtransaction', ['020000000582926001342892dab701f0bf8726ea50f06e72eb6ab5a0de0564d2e89e6a1e035e4e11d8030000006b48304502210096036e29e7edee334e5dc2f58c644fe6711df3be84ef6b4d5f835c4c34fb12d50220597633255a9f83e7f2dd57f0d29121e360743aa601ad2034f1eea7604ca8feec012102e854216811757649179139c8136c8d2e0bfadf92e71f8840752ba6e526e568e1ffffffff0180969800000000005c63a820fcd892df2cf89cf655fb814c2db0f963d4a9e3c3110a8c885139db1e3b208e138876a914aa66691afeeb4399803dcfb1ef47ed1024e1f992670311ba11b17576a914b55078daf7f7b3311237309ddb1ba6af6d4ad4a86888ac00000000']).then(d => {
-
-                if (clbk)
-                        clbk(d)
-
-            }).catch(e => {
-                if (clbk) {
-                    clbk(null, e)
-                }
-            })*/
-
-            /*self.sdk.node.transactions.get.tx('8944f28457bfed13c8b2bb151b49c90ea58a29fa7a3b9826b6fda7638cfd08d4', function(tx){
-
-                console.log("LOADEDE", tx)
-                
-
-                var sa = bitcoin.script.fromASM("OP_DUP OP_HASH160 aa66691afeeb4399803dcfb1ef47ed1024e1f992 OP_EQUALVERIFY OP_CHECKSIG")
-
-                console.log("S", sa)
-            })*/
-
 
         }
 

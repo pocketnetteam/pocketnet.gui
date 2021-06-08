@@ -526,6 +526,8 @@ nModule = function(){
 			return
 		}
 
+		
+		
 		if(self.storage.templates[p.name] || p.clear)
 		{			
 			if (clbk)
@@ -533,13 +535,29 @@ nModule = function(){
 		}
 		else
 		{
+
+			if (self.map && self.map.id){
+				var pretemplate = deep(window, 'pocketnetTemplates.' + (p.turi || self.map.uri) + '.' + p.name)
+
+				if(pretemplate){
+					self.storage.templates[p.name] = _.template(pretemplate);
+	
+					if (clbk)
+						clbk(self.storage.templates[p.name]);
+		
+					return
+				}
+
+				
+			}
+
 			loading.templates[p.name] = true;
 
 			var url;
 			var appPath = (self.map.pathtpl || self.map.path || "");	
 
 			if (_Node){
-				appPath = 'https://getbitcoins.io/'
+				appPath = 'https://pocketnet.app/'
 			}		
 
 			if(p.common){

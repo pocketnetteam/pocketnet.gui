@@ -18,7 +18,7 @@
         default-src https: 'self' file:; 
         connect-src https: wss: file: data: blob:;
         img-src 'self' data: https: file:;
-        script-src 'self' file: blob: https://__VAR__.domain https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js?v=119 https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' file: blob: https://__VAR__.domain https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self' file: https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
         font-src 'self' file: data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src blob: *">
@@ -83,7 +83,7 @@
         <div class="topPreloader" id="_topPreloader">
         </div>
 
-        <div id="splashScreen">
+        <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" class="zoom-in">
             <h1 class="fade-in">POCKETNET</h1>
         </div>
@@ -199,8 +199,6 @@
         <script join src="js/lib/client/api.js?v=4"></script>       
         <script src="js/vendor/pbkdf2.js"></script>
         <script src="js/vendor/sha1.js"></script>   
-        <!-- <script src="js/vendor/jdenticon.js"></script>
-        <script src="js/vendor/isotope.pkgd.js"></script>-->
 
         <script src="js/vendor/paste.js"></script> 
         <script src="js/vendor/jquery.md5.js?v=136"></script>
@@ -228,8 +226,6 @@
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
        
-       <!-- Service worker used to enable the PWA features -->
-       <script src="js/pwa-service-worker.js"></script>
-
+   
     </body>
 </html>
