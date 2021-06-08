@@ -26,7 +26,6 @@ Platform = function (app, listofnodes) {
         'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux' : true,
         'PXUYsENSv6QkQZEdiJTsfJmu3XxZvVmVfQ' : true,
         'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw' : true,
-        'PLoFgXDPL5dCYkFCGLwH4n29TehLnfQ4w6' : true,
         'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true,
         'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt' : true,
         'PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk' : true,
@@ -15424,8 +15423,8 @@ Platform = function (app, listofnodes) {
                 var m = share.caption || share.message;
                 var nm = ''
 
-                if (typeof emojione != 'undefined') {
-                    nm = emojione.toImage(filterXSS(trimHtml(m, c || 20)));
+                if (typeof joypixels != 'undefined') {
+                    nm = joypixels.toImage(filterXSS(trimHtml(m, c || 20)));
                 }
                 else {
                     nm = filterXSS(trimHtml(m, c || 20));

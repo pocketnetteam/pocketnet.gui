@@ -408,6 +408,10 @@
             if (!ns.emojioneList.hasOwnProperty(emoji) || (emoji === '')) continue;
             map.push(ns.convert(ns.emojioneList[emoji].uc_output));
         }
+
+
+        console.log("map.join('|')", map.join('|'))
+
         return map.join('|');
     };
 

@@ -29,7 +29,7 @@ __map =  {
         "js/vendor/jquery.md5.js",
 		"js/vendor/jquery.animate-number.js",
 		"js/vendor/jquery.touchSwipe.min.js",
-        "js/vendor/emojione.min.js",
+        "js/vendor/joypixels.min.js",
         "js/vendor/plyr.js",
         "js/vendor/reconnectingwebsocket.js",
         "js/vendor/rtc/db.js",

@@ -2374,7 +2374,7 @@ pComment = function(){
 				stripIgnoreTag: true
 			})
 
-			var m = emojione.toImage(trimHtml(l, 90))
+			var m = joypixels.toImage(trimHtml(l, 90))
 
 			return nl2br(trimrn(m))
 		},
