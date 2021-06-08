@@ -84,6 +84,11 @@ fs.exists(mapJsPath, function (exists) {
 			path : './js/joinfirst.min.js'
 		}
 
+		var joinlast = {
+			data : "",
+			path : './js/joinlast.min.js'
+		}
+
 		var vendor = {
 			data : "",
 			path : './js/vendor.min.js'
@@ -105,7 +110,7 @@ fs.exists(mapJsPath, function (exists) {
 		}
 
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst') return true;
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast') return true;
 			
 		})
 
@@ -217,6 +222,8 @@ fs.exists(mapJsPath, function (exists) {
 
 						var arf = _.clone(m.__sourcesfirst || []);
 
+						var arl = _.clone(m.__sourceslast || []);
+
 						var ar = _.clone(m.__sources || []);
 
 						ar.push(modules.path.replace('./', ''));
@@ -231,6 +238,8 @@ fs.exists(mapJsPath, function (exists) {
 
 								console.log("joinScriptsFirst DONE")
 
+								
+
 								joinTemplates(function(d){
 
 									join.data = join.data + "\n /*_____*/ \n" + d;
@@ -239,11 +248,17 @@ fs.exists(mapJsPath, function (exists) {
 
 										console.log("joinScripts DONE")
 
-										joinCss(function(){
+										joinScripts(arl, joinlast, function(){
 
-											console.log("joinCss DONE")
+											console.log("joinScriptsLast DONE")
 
-											createTemplates()
+											joinCss(function(){
+
+												console.log("joinCss DONE")
+
+												createTemplates()
+											})
+
 										})
 										
 									});
@@ -611,6 +626,7 @@ fs.exists(mapJsPath, function (exists) {
 
 								JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
 								JS += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
+								JS += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
 	
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
 	
@@ -629,6 +645,11 @@ fs.exists(mapJsPath, function (exists) {
 								})
 								
 								_.each(m.__sources, function(source){
+									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									CACHED_FILES += `'${source}',\n`;
+								})
+
+								_.each(m.__sourceslast, function(source){
 									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})

@@ -59,6 +59,10 @@ __map =  {
 		"js/main.js"
 	],
 
+	__sourceslast : [
+		"peertube/video-embed.bundle.js",
+	],
+
 	__sources : [
 	
 		"js/functions.js",     	
@@ -69,7 +73,6 @@ __map =  {
 		"js/kit.js",
 		"js/satolist.js",
 		"js/messenger2/clientrtc.js",
-		"peertube/video-embed.bundle.js",
 		"js/peertube.js",
 		"js/widgets.js"
 	],
