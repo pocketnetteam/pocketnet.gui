@@ -34,12 +34,25 @@ var Emails = function(p){
     }
 
     self.init = function(){
-        var emails = p;    
+        console.log('emails!!', p);
 
-        if(!emails || !emails.host)
+        if(!p || !p.emailshost)
             return Promise.reject('params')
-     
+
+
+        var emails = {	
+            host: p.emailshost,
+            port: p.post,
+            secure: p.secure,
+            from: p.login, // true for 465, false for other ports
+            auth: {
+                user: [p.login], // generated ethereal user
+                pass: p.password // generated ethereal password
+            },
+        }
+
         inited = true;
+
 
         transporter = nodemailer.createTransport(emails);
 
@@ -49,9 +62,7 @@ var Emails = function(p){
 
             db.loadDatabase(err => {
 
-
                 resolve()
-
 
             })
 
@@ -203,7 +214,7 @@ var Emails = function(p){
 
             var exdata = {
                 code: code,
-                from: {name: 'Tim'},
+                from: {name: 'Pocketnet'},
                 to: {name: 'Cook'}
             };
 
@@ -241,10 +252,10 @@ var Emails = function(p){
 
             var exdata = _.clone(data)
 
-            console.log('exdata', exdata);
+            console.log('exdata', exdata, p);
 
             var created = emailCreator.create(template, exdata).then(t => {
-                t.from = p && p.from 
+                t.from = p && p.login 
                 t.to = [to]
 
                 console.log('then', p, p.from, t);
