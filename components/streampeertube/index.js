@@ -140,7 +140,20 @@ var streampeertube = (function () {
           // wndObj.close();
         };
 
-        self.app.peertubeHandler.startLive(filesWrittenObject);
+        self.app.peertubeHandler.api.videos
+          .live(filesWrittenObject)
+          .then((response) => {
+            ed.uploadInProgress = false;
+
+            if (response.error) {
+              return;
+            }
+
+            videoId = response.split('/').pop();
+
+            actions.added(response, wnd.find('.upload-video-name').val());
+            wndObj.close();
+          });
       });
 
       el.copyButton.each((index, button) => {
@@ -173,20 +186,45 @@ var streampeertube = (function () {
         actions = ed.actions;
 
         if (self.app.peertubeHandler.checklink(ed.currentLink)) {
-
-
-
-          var videoId = self.app.peertubeHandler.parselink(ed.currentLink).id
+          var parsedLink = self.app.peertubeHandler.parselink(ed.currentLink);
+          var videoId = parsedLink.id;
 
           if (!videoId) {
             var data = {};
 
             clbk(data);
           } else {
+            self.app.peertubeHandler.api.videos
+              .getLiveInfo(
+                { id: videoId },
+                {
+                  host: parsedLink.host,
+                },
+                //    {
+                //   successFunction: (res) => {
+                //     if (res.error) {
+                //       var error = deep(res, 'error.responseJSON.errors') || {};
 
-            
-            self.app.peertubeHandler.getLiveInfo(videoId, {
-              successFunction: (res) => {
+                //       var message = (Object.values(error)[0] || {}).msg;
+
+                //       sitemessage(message || 'Server error');
+                //     } else {
+                //       streamCreated = true;
+
+                //       streamInfo = {
+                //         rtmpUrl: res.rtmpUrl,
+                //         streamKey: res.streamKey,
+                //       };
+                //     }
+
+                //     var data = {};
+
+                //     clbk(data);
+                //   },
+                // }
+              )
+              .then((res) => {
+
                 if (res.error) {
                   var error = deep(res, 'error.responseJSON.errors') || {};
 
@@ -205,8 +243,7 @@ var streampeertube = (function () {
                 var data = {};
 
                 clbk(data);
-              },
-            });
+              });
           }
         } else {
           var data = {};
