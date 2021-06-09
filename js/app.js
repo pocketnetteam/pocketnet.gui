@@ -472,8 +472,6 @@ Application = function(p)
 
 	self.preapi = function(){
 
-		console.log('self.preapi')
-
 		if(self.preapied) return
 			
 		self.api = new Api(self)
@@ -636,18 +634,15 @@ Application = function(p)
 
 		self.options.fingerPrint = hexEncode('fakefingerprint');
 
-		console.log("LOCINIT", Math.floor(Date.now()))
 
 		self.localization.init(function(){
 			newObjects(p);
 
-			console.log("LOCINIT2", Math.floor(Date.now()))
 
 			lazyActions([
 				self.platform.prepare
 			], function(){
 
-				console.log("PRePARED", Math.floor(Date.now()))
 
 				self.realtime();
 

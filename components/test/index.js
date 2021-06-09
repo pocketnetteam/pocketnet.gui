@@ -42,7 +42,8 @@ var test = (function(){
 			
 
 				var _p = {
-					Email : email
+					Email : email,
+					Lang : self.app.localization.key || 'en'
 				}
 
 				_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -1101,7 +1102,8 @@ var test = (function(){
 
 		var testletter = function(clbk){
 			var _p = {
-				Email : 'maxgrishkov@gmail.com'
+				Email : 'maxgrishkov@gmail.com',
+				Lang : self.app.localization.key || 'en',
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');

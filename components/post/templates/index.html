@@ -8,8 +8,6 @@ if(typeof share != 'undefined'){
 	aspectRatio = deep(info, 'data.aspectRatio') || 0
 }
 
-console.log('aspectRatio app.platform.sdk.videos.storage', aspectRatio, share.url,  app.platform.sdk.videos.storage)
-
 %>
 
 <div id="<%-module.map.id%>" class="<% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %>">

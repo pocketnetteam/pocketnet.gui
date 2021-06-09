@@ -75,7 +75,7 @@ var lenta = (function(){
 
 		var actions = {
 			newmaterials : function(data){
-				if(making || beginmaterial || essenseData.author || essenseData.txids) return
+				if(making || essenseData.author || essenseData.txids) return
 
 				if(!data) data = {}
 
@@ -2857,14 +2857,20 @@ var lenta = (function(){
 				
 			},	
 
-			sstuff : function(shares, error, pr, clbk){
+			sstuff : function(shares, error, pr, clbk, bshares){
+
+				console.log("bshares", bshares, shares)
+
+				if(!bshares) bshares = []
+
+				var allshares = [].concat(shares, bshares)
 
 				var author = essenseData.author;
 
-				self.app.platform.sdk.node.shares.loadvideoinfoifneed(shares,video, function(){
-					self.app.platform.sdk.node.shares.users(shares, function(l, error2){
+				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
+					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 
-						countshares = countshares + shares.length
+						countshares = countshares + allshares.length
 
 						loading = false;
 
@@ -2908,9 +2914,35 @@ var lenta = (function(){
 									
 							}
 
+							shares = _.filter(shares, function(share){
+								return !_.find(bshares, function(bshare){
+									return bshare.txid == share.txid
+								})
+							})
+
+							shares.concat(bshares)
+
+							shares = [].concat(bshares, shares)
+
 							if (essenseData.filter) {
 								shares = _.filter(shares, essenseData.filter)
 							}
+
+							if(!essenseData.author && self.user.address && self.user.address.value){
+
+								var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+
+								shares = _.filter(shares, function(share){
+
+									var r = me.relation(share.address, 'blocking') 
+
+									if (r) return false
+
+
+									return true
+								})
+							}
+							
 
 							if (shares.length){
 
@@ -2964,7 +2996,7 @@ var lenta = (function(){
 
 							var loader = 'common';
 
-							var _beginmaterial = beginmaterial;
+							var _beginmaterial = ''//beginmaterial;
 
 							if(!author){
 								loader = 'hierarchical'
@@ -3028,19 +3060,12 @@ var lenta = (function(){
 
 								if(pr.blocknumber) fixedblock = pr.blocknumber
 
-								_.each(bshares, function(bs){
-									if(bs)
-
-										shares.unshift(bs)
-								})
-
-								
 								
 								if (essenseData.shuffle) {
 									shares = _.shuffle(shares)
 								}
 
-								load.sstuff(shares, error, pr, clbk)				
+								load.sstuff(shares, error, pr, clbk, bshares)				
 
 								if (recommended == 'b'){
 									beginmaterial = ''
@@ -3104,7 +3129,10 @@ var lenta = (function(){
 		}
 
 		var shownewmaterials = function(c){
-			if(!beginmaterial && recommended != 'recommended' && !essenseData.author && !essenseData.search){
+
+			console.log("shownewmaterials", c)
+
+			if(/*!beginmaterial && */recommended != 'recommended' && !essenseData.author && !essenseData.search){
 
 				var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
 
@@ -3364,7 +3392,7 @@ var lenta = (function(){
 	
 					self.app.platform.ws.messages.transaction.clbks.temp = function(data){
 	
-						if(beginmaterial || essenseData.author || essenseData.txids) return
+						if(/*beginmaterial || */essenseData.author || essenseData.txids) return
 	
 	
 						if(data.temp){
@@ -3575,19 +3603,17 @@ var lenta = (function(){
 				else
 				{
 
-					if(beginmaterial && !recommended){
+					/*if(beginmaterial && !recommended){
 						el.c.addClass('showprev')
 
 						if (essenseData.renderclbk)
 							essenseData.renderclbk()
-					}
+					}*/
 
 					if (clear)
 						el.c.find('.shares').html('')
 
 					renders.shares(shares, function(){
-
-						
 
 						renders.sharesInview(shares, function(){
 

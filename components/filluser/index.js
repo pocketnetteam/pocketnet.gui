@@ -208,7 +208,8 @@ var filluser = (function(){
 						topPreloader(20)						
 
 						var _p = {
-							Email : email
+							Email : email,
+							Lang : self.app.localization.key || 'en',
 						}
 
 						_p.Action || (_p.Action = 'ADDTOMAILLIST');

@@ -345,13 +345,11 @@ var share = (function(){
 								external = element
 								videoUploadData = element.essenseData;
 
-								console.log('external', element)
 							}
 						})
 
 					}).catch(e => {
 
-						console.log("E", e)
 
 						globalpreloader(false);
 
@@ -1455,8 +1453,6 @@ var share = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
-					console.log("_mestate", _mestate)
-
 					self.shell({
 						name :  'postline',
 						el : el.postline,
@@ -1673,8 +1669,6 @@ var share = (function(){
 		
 								action : function(file, clbk){
 	
-									console.log('file', file)
-
 									actions.uploadVideoWallpaper(file.file).then(r => {
 
 										self.app.platform.sdk.videos.clearstorage(currentShare.url.v)
@@ -2208,8 +2202,6 @@ var share = (function(){
 
 		var make = function(){
 			renders.all()
-
-			console.log('currentShare', currentShare)
 		}
 
 		var initEvents = function(){

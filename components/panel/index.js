@@ -243,8 +243,6 @@ var panel = (function(){
 
 			discussions : function(clbk){
 
-				console.log('discussiondummydiscussiondummydiscussiondummydiscussiondummy')
-
 				self.shell({
 					name :  'discussiondummy',
 					el : el.cnt,

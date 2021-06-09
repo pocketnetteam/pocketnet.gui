@@ -34,7 +34,6 @@ if(!_Node)
 
 	app.preapi()
 
-	console.log("PREPARED", Math.floor(Date.now()))
 
 	retry(function(){
 		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || window.design

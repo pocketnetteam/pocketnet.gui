@@ -32,7 +32,8 @@ Platform = function (app, listofnodes) {
         'PS4pYW4tpu6fwviz63CHLMxPA37fJ3GLvn' : true,
         'PHmvLy9b5m2b7fvU7MSTw4mAkdshhdY4Nt' : true,
         'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL' : true,
-        'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh' : true
+        'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh' : true,
+        'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
     
@@ -19228,17 +19229,14 @@ Platform = function (app, listofnodes) {
         initOnlineListener()
 
 
-        console.log("WAITING", Math.floor(Date.now()))
 
         self.app.api.wait.ready('use', 3000).then(r => {
 
-            console.log("CANUSE", Math.floor(Date.now()))
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
                     self.app.api.changeProxyIfNeed().then(l => {
 
-                        console.log("L", l)
 
                         if(!l){
                             var d = self.app.api.get.direct() 
@@ -19259,7 +19257,6 @@ Platform = function (app, listofnodes) {
 
         }).then(r => {
 
-            console.log("USING", Math.floor(Date.now()))
 
             self.ws = new self.WSn(self);
 
@@ -19440,7 +19437,6 @@ Platform = function (app, listofnodes) {
 
                     self.preparingUser = false;
 
-                    console.log('self.app.errors.state', self.app.errors.state, self.loadingWithErrors)
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 

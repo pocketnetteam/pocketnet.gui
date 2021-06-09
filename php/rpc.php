@@ -29,7 +29,7 @@ class RPC {
     }
 
     private function curl($url, $fields){
-        $url = 'https://localhost:8887/rpc/getrawtransactionwithmessagebyid';
+
 
         $ch = curl_init();
 
@@ -42,8 +42,10 @@ class RPC {
         
         $result = curl_exec($ch);
 
-        //echo curl_error($ch);
+        echo curl_error($ch);
         curl_close($ch);
+
+        
 
         if ($result != false){
             $result = JSON_decode($result);
