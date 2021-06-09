@@ -24,7 +24,7 @@ if(!_Node)
 			host : 'test.pocketnet.app',
 			port : 8899,
 			wss : 8099
-	    },]
+	    }]
 	}
 
 	app = new Application({
