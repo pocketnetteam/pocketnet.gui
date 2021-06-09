@@ -418,21 +418,6 @@ var lenta = (function(){
 
 			stateAction : function(link, clbk, txid){
 
-
-				if (_OpenApi){
-
-					var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
-
-					if (self.app.ref){
-						phref += '&ref=' + self.app.ref
-					}
-
-					window.open(phref, '_blank');
-
-					return
-				}
-
-
 				self.app.user.isState(function(state){
 
 					if(state){
@@ -441,6 +426,22 @@ var lenta = (function(){
 
 					else
 					{
+
+
+						if (_OpenApi){
+
+							var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
+		
+							if (self.app.ref){
+								phref += '&ref=' + self.app.ref
+							}
+		
+							window.open(phref, '_blank');
+		
+							return
+						}
+
+
 						self.nav.api.load({
 							open : true,
 							id : 'authorization',
