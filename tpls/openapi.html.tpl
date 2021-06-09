@@ -96,13 +96,8 @@
         __CSS__
 
 
-
-
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
-        <script join src="js/openapi.js?v=247873088062"></script>
         
-        <link rel="stylesheet" href="css/fontawesome/css/all.css">
-      
 
     </body>
 </html>
