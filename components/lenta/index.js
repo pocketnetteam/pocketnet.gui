@@ -531,6 +531,8 @@ var lenta = (function(){
 							players[share.txid].el = vel
 							players[share.txid].id = vel.attr('pid')
 
+							actions.setVolume(players[share.txid])
+
 							if (video){
 								players[share.txid].preview = true
 							}
@@ -563,6 +565,7 @@ var lenta = (function(){
 						},
 
 						volumeChange : function(v){
+							console.log('videosVolume', v)
 							videosVolume = v
 						}
 					}
@@ -799,7 +802,9 @@ var lenta = (function(){
 					if(!players[id].p.playing)
 						players[id].p.play()
 
-					players[id].p.muted = false
+					//players[id].p.muted = false
+
+					actions.setVolume(players[id], videosVolume || 0.5)
 			},
 
 			opensvi : function(id){
@@ -852,8 +857,11 @@ var lenta = (function(){
 						player.p.play()
 					}
 
-					player.p.muted = false
+					//player.p.muted = false
 
+					actions.setVolume(players[id], videosVolume || 0.5)
+
+					
 					ovf = !self.app.actions.offScroll()
 
 					if (initedcommentes[id])
@@ -881,7 +889,11 @@ var lenta = (function(){
 
 				var player = players[id]
 
-				player.p.muted = true;
+				//player.p.muted = true;
+
+				console.log('videosVolume', videosVolume)
+
+				actions.setVolume(players[id], videosVolume)
 
 				self.app.nav.api.history.removeParameters(['v'])
 
@@ -1320,6 +1332,19 @@ var lenta = (function(){
 
 				return sitemessage(self.app.localization.e('videoCopied'));
 			},
+
+			setVolume : function(player, v){
+
+				if(typeof v == 'undefined') v = videosVolume
+
+				if (v){
+					//player.p.muted = false;
+					player.p.setVolume(v)
+				}
+				else{
+					player.p.muted = true;
+				}
+			},
 		}
 
 		var events = {
@@ -1450,6 +1475,8 @@ var lenta = (function(){
 				
 			},
 
+			
+
 			videosInview : function(e){
 
 				actions.videosInview(players, function(player, el, clbk){	
@@ -1464,17 +1491,14 @@ var lenta = (function(){
 						if(!player.p.playing){
 							player.p.play()
 
-							if (isMobile()){
+							console.log("setVolume", videosVolume)
+
+							actions.setVolume(player)
+
+							//if (isMobile()){
 
 
-								if (videosVolume){
-									player.p.muted = false;
-								}
-								else{
-									player.p.muted = true;
-								}
-
-							}
+							//}
 						}
 
 						

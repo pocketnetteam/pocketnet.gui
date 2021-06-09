@@ -9180,10 +9180,13 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         },{
   
           playbackStatusChange : function(status){
+            
           },
           volumeChange : options.volumeChange
   
         }).then(embed => {
+
+          console.log('embed', embed)
 
           if(!embed || !embed.api){
             if (clbk) clbk(null);
