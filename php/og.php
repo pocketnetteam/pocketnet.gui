@@ -64,13 +64,17 @@ class OG {
     }
 
     public function is_bot() {
-        return (
 
-          isset($_SERVER['HTTP_USER_AGENT'])
+        if (isset($_SERVER['HTTP_USER_AGENT'])){
+            if(preg_match('/mozila|gekko|safari|chrome|khtml|webkit/i', $_SERVER['HTTP_USER_AGENT'])){
+                return false
+            }
 
-          && preg_match('/bot|crawl|vision|slurp|spider|mediapartners|facebookexternalhit/i', $_SERVER['HTTP_USER_AGENT'])
+            return true
+        }
+        
+        return false
 
-        );
     }
 
     public function clean($value) {
@@ -247,7 +251,6 @@ class OG {
 
         $this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
 
-        if($this->is_bot()){
 
             if($this->author != NULL){
 
@@ -375,7 +378,6 @@ class OG {
 
                 }
             }
-        }
     
 	}   
 
