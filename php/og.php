@@ -68,7 +68,7 @@ class OG {
 
           isset($_SERVER['HTTP_USER_AGENT'])
 
-          && preg_match('/bot|crawl|slurp|spider|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])
+          && preg_match('/bot|crawl|slurp|spider|mediapartners|facebookexternalhit/i', $_SERVER['HTTP_USER_AGENT'])
 
         );
     }

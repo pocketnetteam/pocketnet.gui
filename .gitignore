@@ -20,6 +20,7 @@ js/vendor.min.js
 js/join.min.js
 web.config
 publish.py
+manifest.json
 **/settings
 data/
 pocketcoind*/
