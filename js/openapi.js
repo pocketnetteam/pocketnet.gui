@@ -24,49 +24,55 @@ if(!_Node)
 		
 	});
 
-	app.deviceReadyInit({
-        clbk : function(){
+	app.preapi()
 
-			var p = parameters()
+	retry(function(){
+		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || window.design
+	}, function(){
 
-			var el = $('#content')
+		app.deviceReadyInit({
+			clbk : function(){
 
-			var action = p.action || ''
-			var id = p.id || ''
-			var ids = p.ids || ''
+				var p = parameters()
 
-			var embeddingSettigns = {}
-			
-			try{
-				embeddingSettigns = JSON.parse(hexDecode(p.embeddingSettigns || "7B7D"))
-			}catch(e){}
+				var el = $('#content')
+
+				var action = p.action || ''
+				var id = p.id || ''
+				var ids = p.ids || ''
+
+				var embeddingSettigns = {}
+				
+				try{
+					embeddingSettigns = JSON.parse(hexDecode(p.embeddingSettigns || "7B7D"))
+				}catch(e){}
 
 
-			if(embeddingSettigns.black){
-				$('html').addClass('stblack')
+				if(embeddingSettigns.black){
+					$('html').addClass('stblack')
+				}
+
+				if (embeddingSettigns.ref){
+					app.ref = embeddingSettigns.ref
+
+					$('.openapipromolink').each(function(){
+						var h = $(this).attr('href')
+
+						h += '?ref=' + app.ref 
+
+						$(this).attr('href', h)
+					})
+				}
+
+				
+				embeddingSettigns.openapi = true
+				
+				if (app.platform.papi[action] && (id || ids)){
+					app.platform.papi[action](id || ids.split(','), el, null, embeddingSettigns)
+				}
 			}
-
-			if (embeddingSettigns.ref){
-				app.ref = embeddingSettigns.ref
-
-				$('.openapipromolink').each(function(){
-					var h = $(this).attr('href')
-
-					h += '?ref=' + app.ref 
-
-					$(this).attr('href', h)
-				})
-			}
-
-			
-			embeddingSettigns.openapi = true
-			
-			if (app.platform.papi[action] && (id || ids)){
-				app.platform.papi[action](id || ids.split(','), el, null, embeddingSettigns)
-			}
-        }
-    });
-
+		});
+	})
 	
 
 }

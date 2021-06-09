@@ -21,18 +21,10 @@
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
         font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
         media-src blob: *">
-
-        <link rel="stylesheet" href="css/normalize.css?v=351441541498">
-        <link rel="stylesheet" href="css/tooltipster.core.min.css?v=900150716765">
-        <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=634317412002">
-        <link rel="stylesheet" href="css/main.css?v=815525481864">
-        <link rel="stylesheet" href="css/stblack.css?v=713491107122">
-        <link rel="stylesheet" href="css/plyr.css?v=484170703322">
-        <link rel="stylesheet" href="css/fontawesome/css/all.css">
-        <link rel="stylesheet" href="css/openapi.css?v=815525481864">
-        <link rel="stylesheet" href="peertube/video-embed.css">
-        <script src="js/vendor/device.min.js?v=136"></script>
-        <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
+        <link rel="stylesheet" href="css/openapi.css">
+        <style type="text/css">
+            #splashScreen{position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:#011621;z-index:5000;display:flex;justify-content:center;align-items:center;flex-direction:column}#splashScreen h1{color:#fff;margin-top:1em;margin-bottom:0;font-size:1em}#splashScreen h1.fade-in{-webkit-animation:fade-in .3s ease-out both;animation:fade-in .3s ease-out both}#splashScreen h1.fade-out{-webkit-animation:fade-out .2s ease-in both;animation:fade-out .2s ease-in both}#splashScreen img{max-height:6vh;max-width:10vw}#splashScreen img.zoom-in{-webkit-animation:zoom-in .5s ease-out both;animation:zoom-in .5s ease-out both}#splashScreen img.zoom-out{-webkit-animation:zoom-out .5s ease-in both;animation:zoom-out .5s ease-in both}#splashScreen img.rotate,#splashScreen.cssanimation img{-webkit-animation:rotate 1s ease-in-out infinite both;animation:rotate 1s ease-in-out infinite both}@media only screen and (max-width:768px){html.scrollmodedown #menu .menuWrapper{top:-65px}html.scrollmodedown #panelWrapper{padding-top:0;display:none}html.scrollmodedown #navigation{bottom:-60px}}@media only screen and (max-width:640px){#splashScreen{display:flex}}@-webkit-keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}100%{-webkit-transform:scale3d(5,5,5);transform:scale3d(5,5,5);opacity:0}}@keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}100%{-webkit-transform:scale3d(5,5,5);transform:scale3d(5,5,5);opacity:0}}@-webkit-keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@-webkit-keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes fade-out{0%{opacity:1}100%{opacity:0}}@keyframes fade-out{0%{opacity:1}100%{opacity:0}}@-webkit-keyframes fade-in{0%{opacity:0}100%{opacity:1}}@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+        </style>
        
     </head>
     
@@ -65,6 +57,11 @@
         <div class="topPreloader" id="_topPreloader">
         </div>
 
+        <div id="splashScreen" class="cssanimation">
+            <img src="img/splashscreen/pocketnet-logo-19.svg" class="zoom-in">
+        </div>
+
+
         <div id="globalpreloader">
             <div class="table">
                 <div>
@@ -83,89 +80,25 @@
             _Node = false;
             _OpenApi = true;
 
-            
-            topPreloader = function(percent){
-                var el = $('#_topPreloader');
-
-
-                var div = $("<div>");
-                    el.removeClass('complete');
-                    el.append(div);
-
-                    var inip = el.attr('percent') || 0;
-
-                    el.attr('percent', percent); 
-
-                    div.width((percent - inip) + "%")
-
-                if(percent <= 0 || percent >= 100){
-
-
-                    el.addClass('complete');
-                    el.attr('percent', 0); 
-
-                    setTimeout(function(){
-
-                        el.fadeOut(300);
-
-                        setTimeout(function(){
-
-
-                            el.html('');
-
-                        },300)
-
-                    },500)
-                    
-                }
-                else{
-                    el.fadeIn(1);
-                }
-                
-            }
-
-            topPreloader(15)
+           
             
         </script>
+        <script join src="js/vendor/iframeResizer.contentWindow.min.js"></script>
 
-        <script join src="js/vendor/underscore-min.js?v=5"></script>
-<script join src="js/vendor/tooltipster.core.js?v=5"></script>
-<script join src="js/vendor/tooltipster.bundle.js?v=5"></script>
-<script join src="js/vendor/jquery-ui.min.js?v=5"></script>
-<script join src="js/vendor/imagesloaded.pkgd.min.js?v=5"></script>
-<script join src="js/vendor/timer.js?v=5"></script>
-<script join src="js/vendor/aesjs.js?v=5"></script>
-<script join src="js/vendor/linkify.min.js?v=5"></script>
-<script join src="js/vendor/linkify-html.min.js?v=5"></script>
-<script join src="js/lib/client/system16.js?v=5"></script>
-<script join src="js/lib/client/api.js?v=5"></script>
-<script join src="js/vendor/jquery.md5.js?v=5"></script>
-<script join src="js/vendor/jquery.animate-number.js?v=5"></script>
-<script join src="js/vendor/plyr.js?v=5"></script>
-<script join src="js/vendor/reconnectingwebsocket.js?v=5"></script>
-<script join src="js/vendor/xss.min.js?v=5"></script>
-<script join src="js/vendor/pbkdf2.js?v=5"></script>
-<script join src="js/vendor/sha1.js?v=5"></script>
-<script join src="js/vendor/emojione.js?v=4"></script>
-<script join src="js/vendor/iframeResizer.contentWindow.min.js"></script>
+        __JSENV__
+
+        __VE__
+
+        __VAR__.test
+
+        __JS__
+
+        __CSS__
 
 
-__VAR__.test
 
 
-    <script>window.design = true;</script>
-        <script join src="js/functions.js?v=765516666905"></script>
-        <script join src="js/user.js?v=765548257891"></script>
-        <script join src="js/module.js?v=724804010968"></script>
-        <script join src="js/navn.js?v=237029943084"></script>
-        <script join src="js/validation.js?v=72109173672"></script>
-        <script join src="js/_map.js?v=638006872287"></script>
-        <script join src="js/localization.js?v=240327662162"></script>
-        <script join src="js/kit.js?v=352303477417"></script>
-        <script join src="js/satolist.js?v=155647307835"></script>
-        <script join src="peertube/video-embed.bundle.js?v=959966697702"></script>
-        <script join src="js/peertube-master.js?v=128971881959"></script>
-        <script join src="js/app.js?v=207344366825"></script>
+        <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
         <script join src="js/openapi.js?v=247873088062"></script>
         
         <link rel="stylesheet" href="css/fontawesome/css/all.css">

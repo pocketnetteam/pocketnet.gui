@@ -1,7 +1,8 @@
 if(typeof _Node == 'undefined') _Node = false;
+if(typeof _OpenApi == 'undefined') _OpenApi = false;
 if(typeof _SEO == 'undefined') 	_SEO = false;
 
-if(!_Node)
+if(!_Node && !_OpenApi)
 {
 
 	var _listofproxies =  [
