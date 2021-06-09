@@ -68,7 +68,7 @@ class OG {
 
           isset($_SERVER['HTTP_USER_AGENT'])
 
-          && preg_match('/bot|crawl|slurp|spider|mediapartners|facebookexternalhit/i', $_SERVER['HTTP_USER_AGENT'])
+          && preg_match('/bot|crawl|vision|slurp|spider|mediapartners|facebookexternalhit/i', $_SERVER['HTTP_USER_AGENT'])
 
         );
     }
@@ -245,6 +245,8 @@ class OG {
         $description = false;
         $pca = 'a';
 
+        $this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
+
         if($this->is_bot()){
 
             if($this->author != NULL){
@@ -279,6 +281,9 @@ class OG {
             if($this->txid != NULL){
 
                 $r = $this->rpc->share($this->txid);
+
+
+                
 
 
                 if($r != false){
