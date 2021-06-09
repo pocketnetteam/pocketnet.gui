@@ -29,19 +29,20 @@ class RPC {
     }
 
     private function curl($url, $fields){
-
+        $url = 'https://localhost:8887/rpc/getrawtransactionwithmessagebyid';
 
         $ch = curl_init();
 
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-type: application/json"));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-type: application/json", "x-no-compression: 1"));
         curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($fields));
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
         $result = curl_exec($ch);
 
-
+        //echo curl_error($ch);
         curl_close($ch);
 
         if ($result != false){

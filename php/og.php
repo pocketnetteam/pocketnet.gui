@@ -67,13 +67,13 @@ class OG {
 
         if (isset($_SERVER['HTTP_USER_AGENT'])){
             if(preg_match('/mozila|gekko|safari|chrome|khtml|webkit/i', $_SERVER['HTTP_USER_AGENT'])){
-                return false
+                return false;
             }
 
-            return true
+            return true;
         }
         
-        return false
+        return false;
 
     }
 
@@ -249,8 +249,11 @@ class OG {
         $description = false;
         $pca = 'a';
 
-        $this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
+            
 
+        if($this->is_bot()){
+            
+            $this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
 
             if($this->author != NULL){
 
@@ -284,10 +287,6 @@ class OG {
             if($this->txid != NULL){
 
                 $r = $this->rpc->share($this->txid);
-
-
-                
-
 
                 if($r != false){
 
@@ -378,7 +377,9 @@ class OG {
 
                 }
             }
-    
+
+        }
+       
 	}   
 
 	public function echotags(){
