@@ -183,7 +183,7 @@ var pkview = (function(){
 
 				if(isMobile()){
 
-					app.nav.api.load({
+					self.app.nav.api.load({
 		
 						open : true,
 						href : 'index',

@@ -159,8 +159,6 @@ var Node = function(options, manager){
         var err = null
         var time = performance.now()
 
-        //console.log('method', method, parsed)
-
         return self.rpc[method](parsed).catch(e => {
 
             err = e

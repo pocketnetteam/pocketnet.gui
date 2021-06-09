@@ -14,8 +14,6 @@ var categories = (function(){
 			showhideclear : function(){
 				var hasc = self.app.platform.sdk.categories.gettags().length
 
-				console.log('el.clearcategories', el.clearcategories, hasc)
-
 				if (hasc){
 					el.clearcategories.addClass('showed')
 				}

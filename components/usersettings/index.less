@@ -15,6 +15,26 @@
 			background: #FAFAFA;
 		}
 	}
+
+	.tokenResult{
+		display:inline-block; 
+		font-size:30px; 
+		padding: 5px; 
+		margin-left: @rhythm;
+
+		&.success{
+			color: @color-good;
+		}
+
+		&.failed{
+			color: @color-bad
+		}
+
+
+		i {
+			font-size: .8em;
+		}
+	}
 	
 	
 	.cacheContent{
@@ -89,6 +109,16 @@
 				.pInput{
 					font-weight: 700;
 					font-size: 0.8em;
+				}
+
+				.iWrapper{
+					display: table;
+					font-size: .8em;
+	
+					i{
+						display: table-cell;
+						vertical-align: middle;
+					}
 				}
 			}
 		}

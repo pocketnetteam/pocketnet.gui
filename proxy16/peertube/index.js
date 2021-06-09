@@ -107,15 +107,11 @@ var Peertube = function(settings){
 
             var keys = _.map(_roys, function(i, c){return c})
 
-            console.log('keys', keys)
-
             return keys[f.rand(0, keys.length - 1)]
         },
 
         best : function({roy}){
             if(!roy) roy = self.api.randroykey()
-
-            console.log("roy", roy)
 
             roy = getroy(roy)
 
@@ -137,7 +133,6 @@ var Peertube = function(settings){
             var cachekey = 'peertubevideo'
             var cacheparameters = _.clone(parsed)
 
-
             return new Promise((resolve, reject) => {
                 cache.wait(cachekey, cacheparameters, function (waitstatus) {
                     resolve(waitstatus);
@@ -154,6 +149,8 @@ var Peertube = function(settings){
                         return Promise.reject({error : true})
                     }
 
+                    console.log("HASCACHE")
+
                     return Promise.resolve(cached);
                 }
 
@@ -165,7 +162,6 @@ var Peertube = function(settings){
                 })
 
             }).catch(e => {
-
 
                 cache.set(cachekey, cacheparameters, {
                     error : true
@@ -185,7 +181,8 @@ var Peertube = function(settings){
                     result[url] = r.data
 
                     return Promise.resolve()
-                }).catch(e => {
+                }).catch(e => { 
+
 
                     return Promise.resolve()
 
@@ -247,6 +244,15 @@ var Peertube = function(settings){
                             data : r,
                             code: 200
                         })
+                    }).catch(e => {
+
+                        if(!e) e = {}
+
+                        return Promise.reject({
+                            error: e,
+                            code: e.code || 500
+                        });
+
                     })
 
                 }

@@ -15,7 +15,7 @@
         "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
         "rebuild": "electron-rebuild",
-        "minimize": "node minimize.js -prodaction=true -vendor=899 -path=/",
+        "minimize": "node minimize.js -prodaction=true -vendor=899 -path=/pocketnet/",
         "minimize:test": "node minimize.js -prodaction=true -vendor=899 -test=true -path=/",
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/"
@@ -96,7 +96,8 @@
         "swagger-ui-express": "^4.1.4",
         "tcp-port-used": "^1.0.1",
         "twilio": "^3.48.1",
-        "uglify-js": "^3.12.4",
+        "uglify-js": "",
+        "uglifycss": "0.0.29",
         "underscore": "",
         "yuicompressor": "^2.4.8"
     },
@@ -130,7 +131,7 @@
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
             "icon": "assets/icons/mac/icon.icns",
-            "entitlements" : "build/entitlements.mac.plist"
+            "entitlements": "build/entitlements.mac.plist"
         },
         "linux": {
             "target": [
@@ -165,8 +166,7 @@
             "license": "LICENSE",
             "include": "build/installer.nsh"
         },
-
-        "afterSign" : "build/notarize.js",
-        "appId" : "app.pocketnet.gui"
+        "afterSign": "build/notarize.js",
+        "appId": "app.pocketnet.gui"
     }
 }

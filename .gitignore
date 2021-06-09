@@ -13,11 +13,14 @@ messenger2/server/address.js
 css/master.css
 js/mdls.js
 js/join.js
+js/joinlast.min.js
+js/joinfirst.min.js
 js/vendor.js
 js/vendor.min.js
 js/join.min.js
 web.config
 publish.py
+manifest.json
 **/settings
 data/
 pocketcoind*/
@@ -28,3 +31,4 @@ index_el.html
 openapi.html
 embedVideo.php
 .htaccess
+service-worker.js

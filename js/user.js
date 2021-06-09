@@ -240,7 +240,7 @@ User = function(app, p) {
 		
 
 		if (keys.private.value && keys.public.value){
-			
+
 			state = 1;
 		}
 		else{

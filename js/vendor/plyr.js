@@ -5999,6 +5999,8 @@ typeof navigator === "object" && (function (global, factory) {
         youtube.ready.call(this);
       } else {
         // Load the API
+
+        console.log("LOADING YOUTUBE")
         loadScript(this.config.urls.youtube.sdk).catch(function (error) {
           _this.debug.warn('YouTube API failed to load', error);
         }); // Setup callback for the API
@@ -9127,6 +9129,7 @@ typeof navigator === "object" && (function (global, factory) {
         }
 
         return targets.map(function (t) {
+          console.log("IM HERE")
             return PlyrEx(t, options, clbk)
         });
       }
@@ -9167,23 +9170,37 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
       var host = target.getAttribute('data-plyr-host-name');
 
-      PeerTubeEmbeding.main(target, clear_peertube_id, {
-        host : host,
-        wautoplay : options.wautoplay
-      },{
+      retry(function(){
+        return typeof PeerTubeEmbeding != 'undefined'
+      }, function(){
 
-        playbackStatusChange : function(status){
-        },
-        volumeChange : options.volumeChange
+        PeerTubeEmbeding.main(target, clear_peertube_id, {
+          host : host,
+          wautoplay : options.wautoplay
+        },{
+  
+          playbackStatusChange : function(status){
+          },
+          volumeChange : options.volumeChange
+  
+        }).then(embed => {
 
-      }).then(embed => {
+          if(!embed || !embed.api){
+            if (clbk) clbk(null);
 
-        var api = embed.api
-          api.mute()
+            return
+          }
+  
+          var api = embed.api
+              api.mute()
+  
+          if (clbk) clbk(api);
+          if (readyCallback) readyCallback(api);
+        })
 
-        if (clbk) clbk(api);
-        if (readyCallback) readyCallback(api);
       })
+
+      
 
 
       return self

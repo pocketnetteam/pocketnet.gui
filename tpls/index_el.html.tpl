@@ -83,7 +83,7 @@
         <div class="topPreloader" id="_topPreloader">
         </div>
 
-        <div id="splashScreen">
+        <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" class="zoom-in">
             <h1 class="fade-in">POCKETNET</h1>
         </div>
@@ -182,7 +182,6 @@
         <script src="js/vendor/underscore-min.js?v=136"></script> 
         <script src="js/vendor/tooltipster.core.js"></script>
         <script src="js/vendor/tooltipster.bundle.js"></script>
-        <script src="js/vendor/jquery-ui.min.js"></script>
         
         <!--<script src="js/vendor/imagesloaded.pkgd.min.js"></script> -->
         <script src="js/vendor/timer.js"></script>
@@ -191,6 +190,9 @@
 
         <script src="js/vendor/linkify.min.js"></script>
         <script src="js/vendor/linkify-html.min.js"></script>
+        <script src="js/vendor/jquery.inputmask.bundle.js"></script>
+
+       
  
         <script join src="js/vendor/aesjs.js"></script>
         <script join src="js/lib/pocketnet/btc17.js?v=4"></script>
@@ -199,21 +201,22 @@
         <script join src="js/lib/client/api.js?v=4"></script>       
         <script src="js/vendor/pbkdf2.js"></script>
         <script src="js/vendor/sha1.js"></script>   
-        <!-- <script src="js/vendor/jdenticon.js"></script>
-        <script src="js/vendor/isotope.pkgd.js"></script>-->
 
         <script src="js/vendor/paste.js"></script> 
         <script src="js/vendor/jquery.md5.js?v=136"></script>
+        <script src="js/vendor/joypixels.min.js"></script>
+        
         <script src="js/vendor/plyr.js?v=1"></script>
         <script src="js/vendor/reconnectingwebsocket.js?v=136"></script>
         <script src="js/vendor/mark.js"></script>
         <script src="js/vendor/hc-sticky.js"></script>
-        <script join src="js/vendor/DateTimePicker.min.js?v=7"></script>
         <script join src="js/vendor/axios.js"></script>
 
         __VAR__.test
 
-        <script>window.design = true;</script><script join src="js/functions.js?v=138441565214"></script>
+        <script>window.design = true;</script>
+        <script join src="js/functionsfirst.js?v=138441565214"></script>
+        <script join src="js/functions.js?v=138441565214"></script>
         <script join src="js/kit.js"></script>
         <script join src="js/user.js?v=101388250711"></script>
         <script join src="js/module.js?v=908573389519"></script>

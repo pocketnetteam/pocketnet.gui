@@ -1,14 +1,13 @@
-
+/*
 if(typeof require != 'undefined' && typeof __map == 'undefined')
 {
 	var __map = require("./_map.js");
-}
+}*/
 
 if(typeof _Electron != 'undefined' && _Electron){
 
 	imagesLoaded = require('imagesloaded');
 
-	jdenticon = require('jdenticon')
 	emojione = require('emojione')
 
 	var Isotope = require('isotope-layout'); require('isotope-packery')
@@ -411,24 +410,17 @@ Application = function(p)
 		}
 	}
 
-	self.el = {
-		content : 		$('#content'),
-		app : 			$('#application'),
-		header : 		$('#headerWrapper'),
-		menu : 			$('#menuWrapper'),
-		toppanel : 		$('#panelWrapper'),
-		navigation : 	$('#navigationWrapper'),
-		footer : 		$('#footerWrapper'),
-		chats : 		$('.chats')
-	};
+	self.el = {}
+
+	
+
+	
 
 	self.id = makeid();
 	self.map = __map;
 	self.modules = {};
 
-	if (self.test){
-		$('html').addClass('testpocketnet')
-	}
+	
 
 	self.curation = function(){
 		if(typeof isios != 'undefined' && isios()) return true
@@ -477,10 +469,24 @@ Application = function(p)
 	if (typeof window != 'undefined')
 		self.options.address = window.location.protocol + "//" + window.location.host; 
 
+
+	self.preapi = function(){
+
+		console.log('self.preapi')
+
+		if(self.preapied) return
+			
+		self.api = new Api(self)
+		self.api.initIf()
+
+		self.localization = new Localization(self);
+		self.localization.init()
+
+		self.preapied = true
+		
+	}
 	
 	var newObjects = function(p){
-
-		
 		
 		self.settings = new settingsLocalstorage(self);
 		self.nav = new Nav(self);	
@@ -489,14 +495,7 @@ Application = function(p)
 		self.user = new User(self);	
 		self.ajax.set.user(self.user);
 
-		self.api = new Api(self)
-
-		
-
 		self.platform = new Platform(self, self.options.listofnodes);
-
-		
-			
 
 		self.options.platform = self.platform
 
@@ -600,6 +599,27 @@ Application = function(p)
 		})
 	}
 
+	self.showuikeysfirstloading = function(){
+
+		self.user.isState(function(state){
+
+			if(state && self.platform.sdk.address.pnet()){
+
+				var addr = self.platform.sdk.address.pnet().address
+				self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
+
+				var regs = self.platform.sdk.registrations.storage[addr];
+
+				if (regs && regs >= 5){
+					
+					self.platform.ui.showmykey()
+					
+				}
+			}
+
+		})
+	}
+
 	self.init = function(p){
 
 		if (navigator.webdriver) return
@@ -614,54 +634,42 @@ Application = function(p)
 
 		prepareMap();
 
-		self.localization = new Localization(self);
+		self.options.fingerPrint = hexEncode('fakefingerprint');
+
+		console.log("LOCINIT", Math.floor(Date.now()))
 
 		self.localization.init(function(){
-
 			newObjects(p);
 
-			self.realtime();
+			console.log("LOCINIT2", Math.floor(Date.now()))
 
-			self.options.fingerPrint = hexEncode('fakefingerprint');
+			lazyActions([
+				self.platform.prepare
+			], function(){
 
-			self.user.isState(function(state){
+				console.log("PRePARED", Math.floor(Date.now()))
 
-				self.platform.prepare(function(){
+				self.realtime();
 
+				if (typeof hideSplashScreen != 'undefined'){
+					hideSplashScreen();
+				}	
+				else{
+					$('#splashScreen').remove()
+				}
 				
-					if(state && self.platform.sdk.address.pnet()){
+				self.nav.init(p.nav);
 
-						var addr = self.platform.sdk.address.pnet().address
-						self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
+				if (p.clbk) 
+					p.clbk();
 
-						var regs = self.platform.sdk.registrations.storage[addr];
+				self.showuikeysfirstloading()
 
-						if (regs && regs >= 5){
-							
-							self.platform.ui.showmykey()
-							
-						}
-					}
-					if (typeof hideSplashScreen != 'undefined'){
-						hideSplashScreen();
-					}	
-					else{
-						$('#splashScreen').remove()
-					}
-					
-					self.nav.init(p.nav);
-
-					if (p.clbk) 
-						p.clbk();
-
-				}, state)
-				
 			})
-	
 		})
 
 		
-		
+
 	}
 
 
@@ -744,6 +752,21 @@ Application = function(p)
 
 	self.deviceReadyInit = function(p){
 
+		self.el = {
+			content : 		$('#content'),
+			app : 			$('#application'),
+			header : 		$('#headerWrapper'),
+			menu : 			$('#menuWrapper'),
+			toppanel : 		$('#panelWrapper'),
+			navigation : 	$('#navigationWrapper'),
+			footer : 		$('#footerWrapper'),
+			chats : 		$('.chats')
+		};
+	
+		if (self.test){
+			$('html').addClass('testpocketnet')
+		}
+
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
@@ -806,8 +829,9 @@ Application = function(p)
 	self.scrollRemoved = false;
 	var winScrollTop = 0;
 	self.actions = {
-		up : _scrollTop,
-
+		up : function(scrollTop, el, time){
+			_scrollTop(scrollTop, el, time)
+		},
 		wscroll : function(){
 
 			$(window).scrollTop(winScrollTop);
@@ -965,12 +989,11 @@ Application = function(p)
 	return self;
 }
 
+topPreloader(85);
+
 if(typeof module != "undefined")
 {
 	module.exports = Application;
 }
 
 
-
-
-topPreloader(85);

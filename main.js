@@ -103,6 +103,7 @@ function showHideWindow(show) {
     }
 }
 
+
 function createBadge() {
 
     if (badge) return
@@ -403,12 +404,7 @@ function createWindow() {
             ...(isMac ? [{
               label: app.name,
               submenu: [
-                {
-                    label: 'About',
-                    click: async () => {
-                        win.webContents.send('nav-message', { msg: 'about', type: 'action'})
-                    }
-                },
+              
                 { type: 'separator' },
                 { role: 'hide', accelerator: 'Cmd+W', },
                 { role: 'unhide' },

@@ -118,7 +118,7 @@ var WSS = function(admins, manage){
                         type : 'changenode',
                         data : data
 
-                    }, client.ws)
+                    }, client.ws).catch(e => {})
 
                 }
 
@@ -152,7 +152,7 @@ var WSS = function(admins, manage){
 
                 }
                 else{
-                    sendMessage(data, client.ws)
+                    sendMessage(data, client.ws).catch(e => {})
                 }
 
             })
@@ -254,7 +254,7 @@ var WSS = function(admins, manage){
                         state : state,
                         settings : settings
                     }
-                }, ws)
+                }, ws).catch(e => {})
     
             })
 			
@@ -304,7 +304,7 @@ var WSS = function(admins, manage){
                 msg : node ? "registered" : 'registererror',
                 addr : user.addr,
                 node : node.instance.export()
-            }, ws)
+            }, ws).catch(e => {})
 
             user.nodes[node.key] || (user.nodes[node.key] = node)
 
@@ -415,28 +415,40 @@ var WSS = function(admins, manage){
 
         if (wss && wss.clients)
             wss.clients.forEach((socket) => {
-                if (socket)
-                    socket.close();
+                try {
+                    if (socket)
+                        socket.close();
+                }
+                catch(e){
+                    
+                }
             });
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
 
-                if (wss && wss.clients)
-                    wss.clients.forEach((socket) => {
-                        if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
-                            socket.terminate();
-                        }
-                    });
+                try {
+                    if (wss && wss.clients)
+                        wss.clients.forEach((socket) => {
+                            if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
+                                socket.terminate();
+                            }
+                        });
 
-                if (server)
-                    server.close(function(){
+                    if (server)
+                        server.close(function(){
+                            resolve()
+                        })
+
+                    else{
                         resolve()
-                    })
-
-                else{
+                    }
+                }
+                catch (e) {
                     resolve()
                 }
+
+                
     
             }, 3000);
         })
