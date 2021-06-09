@@ -632,6 +632,17 @@ var Api = function(app){
                     return this.addlocalelectronproxy().then(r => {
 
                         this.addlist(deep(app, 'options.listofproxies') || [])
+
+                        /*setTimeout(() => {
+                            this.addlist([{
+                                host : 'pocketnet.app',
+                                port : 8899,
+                                wss : 8099
+                            }])
+
+                            current = 'pocketnet.app:8899:8099'
+                            console.log("ADDED")
+                        },5000)*/
                     
                         try{ this.addlist(JSON.parse(localStorage['listofproxies'] || "[]")) }
                         catch(e){}
@@ -641,6 +652,8 @@ var Api = function(app){
                     }).then(r => {
 
                         var oldc = localStorage['currentproxy']
+
+                        console.log('oldc', oldc)
 
                         if (oldc){
                             return self.set.current(oldc)
@@ -745,7 +758,9 @@ var Api = function(app){
 
         }).catch(e => {
 
-            if(e == 'TypeError: Failed to fetch' || (e.code == 408 || e.code == -28)){
+            console.log("ER", e)
+
+            if(e == 'TypeError: Failed to fetch' || e == 'proxy' || (e.code == 408 || e.code == -28)){
 
                 app.apiHandlers.error({
                     rpc : true

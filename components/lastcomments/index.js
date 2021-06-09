@@ -171,6 +171,8 @@ var lastcomments = (function(){
 		var make = function(){
 			load(function(comments, error){
 
+				if(!el.c) return
+
 				if (error){
 
 					self.iclbks.main = make

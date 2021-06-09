@@ -19186,7 +19186,9 @@ Platform = function (app, listofnodes) {
     
                 fail: function () {
                     resolve()
-                }
+                },
+
+                class : 'zindex'
             })
 
             self.app.api.wait.ready('useexternal').then(r => {
@@ -19236,10 +19238,12 @@ Platform = function (app, listofnodes) {
                 setTimeout(function(){
                     self.app.api.changeProxyIfNeed().then(l => {
 
+                        console.log("L", l)
+
                         if(!l){
                             var d = self.app.api.get.direct() 
 
-                            if(d){
+                            if (d){
 
                                 self.directdialog(d).then(resolve)
 
@@ -19435,6 +19439,8 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.init()
 
                     self.preparingUser = false;
+
+                    console.log('self.app.errors.state', self.app.errors.state, self.loadingWithErrors)
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 

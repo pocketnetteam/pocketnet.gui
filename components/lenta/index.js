@@ -473,7 +473,7 @@ var lenta = (function(){
 				})
 			},
 			destroyVideo : function(share){
-				if (!players[share.txid]){
+				if (!players[share.txid] || players[share.txid].error){
 					return
 				}
 				
@@ -487,7 +487,7 @@ var lenta = (function(){
 
 				if(!share) return
 
-				if (players[share.txid]){
+				if (players[share.txid] && !players[share.txid].error){
 
 					if(clbk) clbk(true)
 
@@ -522,22 +522,32 @@ var lenta = (function(){
 					};
 
 					var callback = (player) => {
-						players[share.txid] || (players[share.txid] = {})
-						players[share.txid].p = player
-						players[share.txid].initing = true
-						players[share.txid].el = vel
-						players[share.txid].id = vel.attr('pid')
 
+						if (player){
+							players[share.txid] || (players[share.txid] = {})
+							players[share.txid].p = player
+							players[share.txid].initing = true
+							players[share.txid].el = vel
+							players[share.txid].id = vel.attr('pid')
 
-						if (video){
-							players[share.txid].preview = true
+							if (video){
+								players[share.txid].preview = true
+							}
+
+							if (essenseData.enterFullScreenVideo){
+								essenseData.enterFullScreenVideo = false
+
+								actions.fullScreenVideo(share.txid)
+							}
 						}
 
-						if (essenseData.enterFullScreenVideo){
-							essenseData.enterFullScreenVideo = false
-
-							actions.fullScreenVideo(share.txid)
+						else{
+							players[share.txid] = {
+								error : true
+							}
 						}
+
+						
 
 						
 					};
@@ -1126,7 +1136,7 @@ var lenta = (function(){
 			videosInview : function(players, action, nvaction){				
 
 				var ap = _.filter(players, function(p){
-					if(p.inited && !p.playing && !p.stopped && p.el && !p.preview) return true
+					if(p.inited && !p.playing && !p.stopped && p.el && !p.preview && !p.error) return true
 				})
 
 				if(ap.length){
@@ -1472,6 +1482,8 @@ var lenta = (function(){
 				}, function(players){
 					
 					_.each(players, function(player){
+
+						if(player.error) return
 
 						player.p.muted = true;
 
@@ -2879,15 +2891,12 @@ var lenta = (function(){
 		
 								}
 
-								console.log(shares.length, pr.count, essenseData.ended)
-		
 								////// SHIT
 								if (!shares.length || shares.length < pr.count && (recommended || author || essenseData.search)){
 
 									if(essenseData.ended) {
 										ended = essenseData.ended(shares)
 
-										console.log('ended', ended)
 									}
 
 									else
@@ -3001,8 +3010,6 @@ var lenta = (function(){
 
 							var page = essenseData.page || parameters().page || 0
 
-
-							console.log("LOAD", page, essenseData)
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -3429,8 +3436,6 @@ var lenta = (function(){
 					self.app.platform.sdk.categories.clbks.tags.lenta =
 					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
 
-						console.log('getloader()', getloader(), essenseData, essenseData.second)
-
 						if(getloader() == 'hierarchical' && !essenseData.second){
 							actions.loadprev()
 						}
@@ -3795,7 +3800,10 @@ var lenta = (function(){
 				})
 
 				_.each(players, function(p){
-					p.p.destroy()
+
+					if (p.p)
+						p.p.destroy()
+
 				})
 
 				players = {}

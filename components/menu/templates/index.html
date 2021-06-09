@@ -157,19 +157,24 @@
 							</div>
 						</div>
 
+					<% } %>
 
-						<div class="items">
-							<div class="item table right state onlyicon" events="state">
-								
-									<div class="icon"><a href="userpage?id=system16">	
-										<div class="icn">
-											<i class="fas fa-wifi"></i>
-										</div></a>
-									</div>
-								
 
+					<div class="items">
+						<div class="item table right state onlyicon" events="state">
+							
+							<div class="icon"> <% if(state) {%> <a href="userpage?id=system16">	<% } else { %> <a href="system16"> <% } %>
+								<div class="icn">
+									<i class="fas fa-wifi"></i>
+								</div></a>
 							</div>
-						</div>					
+							
+						</div>
+					</div>		
+						
+					
+
+					<% if(state) { %>
 
 						<div class="items">
 							<div class="item table right user" events="userpage unselectable">
@@ -207,10 +212,10 @@
 							</div>
 						</div>
 
-						
+					<% } %>
 
 						
-					<% } else {%>
+					<% if(!state) { %>
 
 						
 						<div class="items">
