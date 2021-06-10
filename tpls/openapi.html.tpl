@@ -57,8 +57,8 @@
         <div class="topPreloader" id="_topPreloader">
         </div>
 
-        <div id="splashScreen" class="cssanimation">
-            <img src="img/splashscreen/pocketnet-logo-19.svg" class="zoom-in rotate">
+         <div id="splashScreen" class="cssanimation">
+            <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
         </div>
 
 
