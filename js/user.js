@@ -203,6 +203,8 @@ User = function(app, p) {
 
 		app.platform.matrixchat.destroy();
 
+		self.address.set()
+
 		if (tokenDialog)
 			tokenDialog.destroy();
 
@@ -290,6 +292,8 @@ User = function(app, p) {
 	}
 
 	self.validateVay = function(){
+
+		console.log('self', self)
 
 		if(!self.address.value) return 'fu';
 

@@ -1375,7 +1375,10 @@ html.stblack{
         }
 
         .table{
-            width : 1024px!important;
+            &:not(.errorTable){
+                width : 1024px!important;
+            }
+            
         }
     }
 

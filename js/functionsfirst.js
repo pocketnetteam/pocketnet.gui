@@ -529,7 +529,7 @@ importCss = function(src, _document) {
 
     link.setAttribute('href', src);
     
-    var appendTo = _document.getElementsByTagName('head')[0];
+    var appendTo = _document.getElementsByTagName('body')[0];
 
     appendTo.appendChild(link);
 }

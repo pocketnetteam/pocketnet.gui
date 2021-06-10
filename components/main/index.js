@@ -675,6 +675,8 @@ var main = (function(){
 
 			post : function(id){
 
+				if(!el || !el.c) return
+
 				if (!id){
 
 					if (openedpost){

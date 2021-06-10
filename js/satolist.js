@@ -1,4 +1,5 @@
 var electron = null
+if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
@@ -15,7 +16,7 @@ Platform = function (app, listofnodes) {
 
     self.app = app;
     
-
+    self.lasttimecheck = null
     self.real = {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
@@ -43,7 +44,7 @@ Platform = function (app, listofnodes) {
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
     self.focus = true;
-    self.currentBlock = 1165858;
+    self.currentBlock = 0 //1165858;
     self.online = undefined;
     self.avblocktime = 45;
     self.repost = true;
@@ -56,7 +57,7 @@ Platform = function (app, listofnodes) {
 
     var onlinetnterval;
     var unspentoptimizationInterval = null;
-    var blockps = self.currentBlock - 30000;
+   // var blockps = self.currentBlock - 30000;
     var nshowed = false;
     var TXFEE = 1;
 
@@ -315,7 +316,6 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.currnetBlock = 0;
 
     self.errorHandler = function (key, action, akey) {
 
@@ -353,6 +353,8 @@ Platform = function (app, listofnodes) {
         'money': {
 
             action: function (key, action, akey) {
+
+                console.log("HERE")
 
                 var adr = self.app.platform.sdk.address.pnet().address;
 
@@ -2990,7 +2992,27 @@ Platform = function (app, listofnodes) {
 
             add: function (address, value) {
 
+                /*if(self.sdk.registrations.storage[address] && self.sdk.registrations.storage[address] > value) return*/
+
                 self.sdk.registrations.storage[address] = value || true;
+                self.sdk.registrations.save()
+
+                _.each(this.clbks, function (c) { c(address) })
+            },
+
+            showprivate : function(address){
+                if (!address && self.sdk.address.pnet()) address = self.sdk.address.pnet().address
+
+                var regs = self.sdk.registrations.storage[address];
+
+                return (!self.sdk.registrations.storage[address + 'rm'] && regs && regs <= 5)
+             
+            },
+
+            donotshowprivate : function(address){
+                if (!address && self.sdk.address.pnet()) address = self.sdk.address.pnet().address
+
+                self.sdk.registrations.storage[address + 'rm'] = true;
                 self.sdk.registrations.save()
 
                 _.each(this.clbks, function (c) { c(address) })
@@ -4785,30 +4807,22 @@ Platform = function (app, listofnodes) {
             
             },
             load: function () {
-                this.clearlocalstorage()
 
                 var old = {}
 
-                try {
-                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}")
-                }
-                catch (e){}
+                try { old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}") } catch (e){}
 
                 this.import(old)
+
             },
             save: function () {
                 this.clearlocalstorage()
                 var e = this.export();
+                
 
+                console.log("SAVE")
 
-                var old = {}
-
-                try {
-                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}")
-                }
-                catch (e){}
-
-                if (e.notifications.length && e.block > blockps && this.inited == true) {
+                if (self.currentBlock && this.inited == true) {
 
                     e.notifications = _.uniq(e.notifications, function (n) {
 
@@ -4818,16 +4832,7 @@ Platform = function (app, listofnodes) {
 
                     })
                     
-                    e.notifications = firstEls(e.notifications, 100)
-
-
-                    if(old.block && e.block){
-                        if(old.block > e.block){
-
-
-                            return
-                        }
-                    }
+                    e.notifications = firstEls(e.notifications, 50)
 
                     localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
                 }
@@ -4839,7 +4844,7 @@ Platform = function (app, listofnodes) {
                 var n = this
 
                 _.each(n.storage.notifications, function (notification) {
-                    if (!notification.seen)
+                    if(!notification.seen)
                         notification.seen = self.app.platform.currentTime()
                 })
 
@@ -4852,7 +4857,6 @@ Platform = function (app, listofnodes) {
 
             seen: function (ids) {
                 var n = this
-
 
                 _.each(ids, function (id) {
 
@@ -4878,8 +4882,6 @@ Platform = function (app, listofnodes) {
                     var imp = {};
 
                     _.each(l, function (attr, i) {
-
-
                         if (attr.exported) {
                             var alias = new kits.alias[attr.type]()
 
@@ -4938,33 +4940,32 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            init: function (clbk) {
+            init: function () {
 
-
+                if(_OpenApi){
+                    return Promise.reject('openapi')
+                }
 
                 this.inited = false;
                 this.loading = true;
 
                 this.load();
-                this.storage.block || (this.storage.block = 1)
 
-                if (this.storage.block < blockps) this.storage.block = blockps;
-
+                this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
-                _.each(this.storage.notifications, function (n) {
+                
+                    return this.getNotifications()
+    
 
-                    if (n.seen && n.seen.length >= 15) {
-                        n.seen = self.currentTime();
-                    }
+                
 
-                })
-
-
-                this.getNotifications(clbk)
             },
 
             wsBlock: function (block) {
+
+                console.log("BLOCK FROM WS", block)
+
                 this.storage.block = block;
 
                 this.save()
@@ -5013,10 +5014,7 @@ Platform = function (app, listofnodes) {
                     return -Number(n.nblock)
                 })
 
-
-
-                notifications = firstEls(notifications, 100)
-
+                notifications = firstEls(notifications, 50)
 
                 lazyEach({
                     array: notifications,
@@ -5089,46 +5087,48 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            getNotifications: function (clbk) {
+            getNotifications: function () {
                 var n = this;
 
-                if (!n.inited && !n.loading) {
-                    n.init()
+                if(!n.inited && !n.loading) {
+                    return n.init()
                 }
                 else {
 
+                    console.log('n.storage', n.storage, n.storage.block)
 
-                    self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, n.storage.block]).then(d => {
+                    return self.sdk.node.get.timepr().then(r => {
 
-                        d || (d = [{ block: blockps, cntposts: 0 }])
+                        return self.sdk.missed.get(n.storage.block)
+                        
+                    })
 
-                        var notifications = (d || []).slice(1)
+                    .then(({block, notifications}) => {
 
-                            notifications = _.sortBy(notifications, function (n) {
-                                return -n.nblock
+                        n.storage.block = block.block
+
+                        return new Promise((resolve, reject) => {
+
+                            n.getNotificationsInfo(notifications, function () {
+
+                                n.inited = true;
+    
+                                n.save()
+    
+                                resolve()
+    
                             })
 
-
-                        n.getNotificationsInfo(notifications, function () {
-
-                            n.inited = true;
-
-                            n.storage.block = d[0].block
-
-                            n.save()
-
-                            if (clbk)
-                                clbk()
-
                         })
-        
+
+                        
+
                     }).catch(e => {
                         n.inited = false;
                         n.loading = false;
 
 
-                        if (clbk)
-                            clbk(e)
+                        return Promise.reject(e)
                     })
 
                 }
@@ -5139,6 +5139,51 @@ Platform = function (app, listofnodes) {
             find: function (txid) {
                 return _.find(this.storage.notifications, function (n) {
                     return n.txid == txid
+                })
+            }
+        },
+
+        missed : {
+            get : function(block){
+
+                var dummy = function(){
+                    return {
+                        block : {
+                            block : self.currentBlock,
+                            contentsLang : {},
+                            msg : 'newblocks'
+                        }
+                    }
+                }
+
+                if(!self.sdk.address.pnet()) return Promise.reject('address')
+                if(!self.currentBlock) return Promise.reject('currentblock')
+                if(!block) return Promise.reject('block')
+                if (self.currentBlock - block > 5000) block = self.currentBlock - 5000
+                if (self.currentBlock == block) return Promise.resolve(dummy())
+
+
+                console.log("LOAD MISSED FROM BLOCK:", block)
+
+                return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block]).then(d => {
+
+                    if(!d || !d.length){
+                        return Promise.resolve(dummy())
+                    }
+
+                    var notifications = d.slice(1) || []
+
+                        notifications = _.sortBy(notifications, function (n) {
+                            return -n.nblock
+                        })
+
+                    d[0].msg = 'newblocks'
+
+                    return Promise.resolve({
+                        block : d[0],
+                        notifications : notifications
+                    })
+    
                 })
             }
         },
@@ -8949,34 +8994,53 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                time: function (clbk) {
+                timepr : function(){
 
-                    self.app.api.rpc('getnodeinfo').then(d => {
+                    if (self.lasttimecheck){
+
+                        var d = new Date()
+
+                        if(self.lasttimecheck.addSeconds(10) > d){
+                            return Promise.resolve()
+                        }
+                    }
+
+                    return self.app.api.rpc('getnodeinfo').then(d => {
 
                         var t = deep(d, 'time') || 0
-                        self.currentBlock = localStorage['lastblock'] || deep(d, 'lastblock.height') || 0
-                        self.timeDifference = 0;
 
-                        blockps = self.currentBlock - 30000;
+                        self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
+                        self.timeDifference = 0;
+                        
+
+                        localStorage['lastblock'] = self.currentBlock
 
                         if (t) {
 
                             var d = new Date()
+
+                            self.lasttimecheck = d
 
                             self.timeDifference = t - Math.floor((d.getTime()) / 1000)
                             self.timeDifferenceTimeZone = t - Math.floor((d.getTime() + (d.getTimezoneOffset() * 60000)) / 1000);
 
                         }
 
-                        if (clbk)
-                            clbk(t)
+                        return Promise.resolve()
         
+                    })
+                },
+
+                time: function (clbk) {
+
+                    self.sdk.node.get.timepr().then(() => {
+                        if (clbk)
+                            clbk()
                     }).catch(e => {
                         if (clbk) {
                             clbk(null, e)
                         }
                     })
-
 
                 },
 
@@ -8988,52 +9052,7 @@ Platform = function (app, listofnodes) {
 
                     return self.nodes[1]
                 },
-                callNode: function (action, clbk, cashe) {
-
-                    if (cashe && self.sdk.node.loading[cashe]) {
-                        retry(function () {
-
-                            return !self.sdk.node.loading[cashe]
-
-                        }, function () {
-
-                            if (clbk)
-                                clbk(self.sdk.node.loading[cashe])
-
-                        })
-                    }
-                    else {
-                        if (cashe)
-                            self.sdk.node.loading[cashe] = true;
-
-                        self.app.api.rpc(action).then(d => {
-
-                            if (cashe) {
-                                self.sdk.node.storage[cashe] = d;
-                                self.sdk.node.loading[cashe] = false;
-                            }
-
-
-                            if (clbk)
-                                clbk(d)
-    
-                        }).catch(e => {
-                            if (clbk)
-                                clbk(null, e)
-                        })
-
-                        
-                    }
-
-                },
-
-                blockNumber: function (clbk) {
-                    this.callNode('getbestblockhash', function (num) {
-
-                        self.currnetBlock = num;
-
-                    }, 'blocknumber')
-                },
+           
 
                 balance: function (address, clbk) {
 
@@ -11262,8 +11281,8 @@ Platform = function (app, listofnodes) {
 
                             self.app.api.rpc('txunspent', [[address], 1, 9999999]).then(d => {
 
-                                if (!s.unspent)
-                                        s.unspent = {};
+                                if(!s.unspent)
+                                    s.unspent = {};
 
 
                                     s.unspent[address] = d || [];
@@ -11577,9 +11596,7 @@ Platform = function (app, listofnodes) {
                                 var regs = app.platform.sdk.registrations.storage[addr];
 
                                 if (regs && (regs == 4)) {
-
                                     self.sdk.registrations.add(addr, 5)
-
                                 }
 
                                 if (clbk) {
@@ -16673,16 +16690,24 @@ Platform = function (app, listofnodes) {
             'newblocks': {
                 loadMore: function (data, clbk) {
 
-                    var s = platform.sdk.node.transactions;
+                    if (data.block <= platform.currentBlock) {
 
-                    var dif = platform.currentBlock - data.block
+                        if(clbk) clbk(0)
 
-                    platform.currentBlock = data.block;
+                        return
 
-                    lost = data.block;
+                    }
+
+                        var s = platform.sdk.node.transactions;
+
+                        var dif = platform.currentBlock - data.block
+
+                        platform.currentBlock = data.block;
+                        platform.lasttimecheck = new Date()
+
+                        lost = data.block;
 
                     localStorage['lastblock'] = platform.currentBlock
-
 
                     if (dif)
                         platform.sdk.newmaterials.update(data)
@@ -16691,11 +16716,9 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.notifications.wsBlock(data.height)
 
-                    _.each(s.unspent, function (unspents, address) {
+                    _.each(s.unspent, function (unspents) {
                         _.each(unspents, function (txu) {
-
                             txu.confirmations = (txu.confirmations || 0) + (dif || 0)
-
                         })
                     })
 
@@ -16733,6 +16756,8 @@ Platform = function (app, listofnodes) {
                     var s = platform.sdk.node.transactions;
 
                     platform.currentBlock = data.height;
+
+                    platform.lasttimecheck = new Date()
 
                     localStorage['lastblock'] = platform.currentBlock
 
@@ -17421,23 +17446,13 @@ Platform = function (app, listofnodes) {
 
                     var jm = message;
 
-                    try {
-
-                        jm = JSON.parse(message || "{}");
-
-                    }
-                    catch (e) {
-                        console.log("E", e)
-                    }
+                    try { jm = JSON.parse(message || "{}"); } catch (e) {}
                     
                     if (jm){
 
                         if (jm.type == 'proxy-message-tick'){
 
-
-                            wss.proxy.system.tick(jm.data)
-
-                            return 
+                            return wss.proxy.system.tick(jm.data)
                         }
 
                         if (jm.type == 'changenode'){
@@ -17450,11 +17465,8 @@ Platform = function (app, listofnodes) {
 
                         if (jm.type == 'proxy-settings-changed'){
 
-                            var r = wss.proxy.changed(jm.data)
-
-
-
-                            return
+                            return wss.proxy.changed(jm.data)
+                            
                         }
 
 
@@ -17483,7 +17495,6 @@ Platform = function (app, listofnodes) {
                 }
 
                 wss.proxy.clbks.changed.wss = function(){
-
 
                     reconnect()
                 }
@@ -17608,29 +17619,28 @@ Platform = function (app, listofnodes) {
 
 		}
 
-        self.getMissed = function (clbk) {
+        self.getMissed = function () {
 
-            if (lost <= 1) return
-
-            if (self.loadingMissed) return
-
-            if (self.loadingWithErrors) return
+            if (lost < 1 || self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
-            platform.app.api.rpc('getmissedinfo', [platform.sdk.address.pnet().address, lost]).then(d => {
+            return platform.sdk.node.get.timepr().then(r => {
 
-                d || (d = [{ block: 1, cntposts: 0, cntsubscr: 0 }])
 
-                var notifications = (d || []).slice(1)
+                return platform.sdk.missed.get(lost)
 
-                var blockInfo = d[0]
+            }).then(({block, notifications}) => {
 
-                blockInfo.msg = 'newblocks'
+                console.log({block, notifications})
 
-                //lost = 0;
+                self.messageHandler(block, function () {
+                    self.loadingMissed = false;
 
-                self.messageHandler(blockInfo, function () {
+                    lost = 0;
+
+                    if(!notifications) return
+                    
                     lazyEach({
                         array: notifications,
                         action: function (p) {
@@ -17639,20 +17649,18 @@ Platform = function (app, listofnodes) {
 
                         all: {
                             success: function () {
-                                self.loadingMissed = false;
                             }
                         }
                     })
+
                 })
-
-                if (clbk)
-                    clbk()
-        
+                
             }).catch(e => {
-                if (clbk)
-                        clbk()
-            })
 
+                self.loadingMissed = false;
+
+                return Promise.reject(e)
+            })
 
             
         }
@@ -17768,18 +17776,7 @@ Platform = function (app, listofnodes) {
 
             data || (data = {})
 
-            /*if (data && data.msg == 'registered'){
-
-                                
-
-            }*/
-
-
             if (data.msg || data.mesType) {
-
-                /*var exkey = ''
-
-                if (data.mesType) exkey = '.' + data.mesType;*/
 
                 var m = null;
 
@@ -17946,10 +17943,10 @@ Platform = function (app, listofnodes) {
         }
 
         self.destroy = function () {
-
             self.close()
-            self.loadingMissed = false;
 
+            self.loadingMissed = false;
+            lost = 0;
         }
 
 
@@ -18100,18 +18097,22 @@ Platform = function (app, listofnodes) {
 
         self.init = function (clbk) {
 
-            closing = false;
-            self.onlineCheck = true;
+            if(!_OpenApi){
 
-            if (!_Node)
+                closing = false;
+                self.onlineCheck = true;
 
-                self.onlineCheck = deep(window, 'navigator.onLine') || false;
+                if (!_Node)
 
-            self.online = self.onlineCheck;
-            self.connected = {};
+                    self.onlineCheck = deep(window, 'navigator.onLine') || false;
 
-     
-            initconnection();
+                self.online = self.onlineCheck;
+                self.connected = {};
+
+        
+                initconnection();
+
+            }
 
             if (clbk)
                 clbk()
@@ -18951,23 +18952,7 @@ Platform = function (app, listofnodes) {
 
     }
 
-    self.autochange = function () {
-
-        var i = nextIndex(self.nodes, function (n) {
-            return n.host == self.nodeid.host && n.locally == self.nodeid.locally
-        })
-
-        if (i < 0) i = 0;
-
-        self.nodeid = self.nodes[i]
-
-        if (self.ws){
-            self.ws.destroy()
-            self.ws.init()
-        }
-
-    }
-
+   
 
     self.nodes = listofnodes || null
 
@@ -19052,6 +19037,8 @@ Platform = function (app, listofnodes) {
 
         self.sdk.node.transactions.clearUnspentoptimizationInterval()
 
+        self.sdk.node.transactions.unspentLoading = {}
+
         if (electron) {
             electron.ipcRenderer.send('update-badge', null);
             electron.ipcRenderer.send('update-badge-tray', null);
@@ -19070,6 +19057,11 @@ Platform = function (app, listofnodes) {
 
         if (onlinetnterval)
             clearInterval(onlinetnterval)
+
+        checkfeatures()
+
+
+        console.log("SELF", self, self.app.user, self.app)
     }
 
     self.restart = function (clbk) {
@@ -19079,14 +19071,11 @@ Platform = function (app, listofnodes) {
         self.clear();
 
         app.user.isState(function (state) {
-
-
             self.prepare(clbk, state)
         })
     }
 
     self.update = function (clbk) {
-
 
         if (self.updating || self.preparingUser || self.preparing) return;
 
@@ -19100,6 +19089,7 @@ Platform = function (app, listofnodes) {
         var methods = [
             'ustate.meUpdate',
             'user.meUpdate',
+            'node.get.time',
             'node.transactions.checkTemps',
             'node.transactions.get.allBalanceUpdate',
             'tempmessenger.getChats'
@@ -19131,7 +19121,6 @@ Platform = function (app, listofnodes) {
 
         if (self.loadingWithErrors && _.isEmpty(self.app.errors.state)) {
 
-
             self.loadingWithErrors = false;
             self.restart(function () {
                 self.prepareUserData(function(){
@@ -19141,32 +19130,6 @@ Platform = function (app, listofnodes) {
                
             })
         }
-    }
-
-    self.tst = function(){
-
-        return
-
-        console.log('6bfc49fae021294b3f899d7fb59cc16afb25dc2b7101a44076da30a1e3bdc23f')
-
-        self.app.api.rpc('getrawtransaction', ['823617ba029ae0f963df6b8b3e4d3bf6409b29f38ceaac896fd8e05f23c31a13', 1]).then(d => {
-
-
-            console.log("D", d)
-
-            /*var prev = _.clone(d.vout[0])
-
-            prev.txid = d.txid*/
-
-            /*self.sdk.node.transactions.htls.withdrawal([prev], 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 0.01, {
-                secret : '9adebcaac15d6158981434361e7a1a41f703af1d3689ebaa4491b9c75a5ded54'
-            })*/
-
-            
-
-
-        })
-
     }
 
     self.directdialog = function(proxy){
@@ -19203,35 +19166,28 @@ Platform = function (app, listofnodes) {
        
     }
 
-    self.prepare = function (clbk, state) {
+    self.prepare = function (clbk) {
 
         self.preparing = true;
-
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
-
         self.applications = self.__applications()
-
         self.sdk.theme.load()
-        self.app.platform.sdk.node.sys.load()
+        self.sdk.system16.init()
+
+        //self.app.platform.sdk.node.sys.load()
 
         setTimeout(function(){
             self.initSounds();
         }, 3000)
         
-
-        self.sdk.system16.init()
-
         if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate
         }
 
         initOnlineListener()
 
-
-
         self.app.api.wait.ready('use', 3000).then(r => {
-
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
@@ -19266,37 +19222,27 @@ Platform = function (app, listofnodes) {
 
             self.focusListener = self.FocusListener(self);
             self.focusListener.init();
-
-            self.sdk.node.update()
-
-            //self.m = new self.Marketing(self);
-
             self.titleManager = new self.TitleManager();
-
             self.sdk.captcha.load()
             self.sdk.tags.getfastsearch()
-            self.sdk.node.get.time() /// /?
-
-            self.tst()
+            self.sdk.node.get.time()
 
             self.preparing = false;
 
-            self.prepareUser(clbk, state);
+            self.prepareUser(clbk);
 
-
+            if (typeof PeerTubePocketnet != 'undefined'){
+                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+                self.app.peertubeHandler.init()
+            }
 
         }).catch(e => {
             console.log("ERROR", e)
         })
 
-        /*self.sdk.system.get.nodes(false, function () {
-
-        })*/
-
     }
 
     self.prepareUserData = function(clbk){
-
 
         lazyActions([
 
@@ -19304,15 +19250,127 @@ Platform = function (app, listofnodes) {
             self.sdk.ustate.meUpdate,
             self.firebase.init,
             self.sdk.tempmessenger.init,
-            self.sdk.exchanges.load,
             self.sdk.user.meUpdate,
             self.sdk.categories.load,
             self.sdk.activity.load,
             self.sdk.node.shares.parameters.load
 
         ], function () {
+
+            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+            if (self.loadingWithErrors)
+                self.sdk.notifications.init().catch(e => {})
+
             if(clbk) clbk()
         })
+    }
+
+    var checkfeatures = function(){
+        var pnet = self.app.platform.sdk.address.pnet()
+
+        self.app.user.features.telegram = 0;
+        self.enablePeertube = false
+
+        if (pnet){
+
+            var a = pnet.address;
+
+            var addresses = self.testchataddresses;
+
+            var peertubeAddresses = self.testaddresses;
+
+            if (peertubeAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
+
+                self.enablePeertube = true
+            }
+
+            if (addresses.indexOf(a) > -1) {
+                self.app.user.features.telegram = 1;
+            } else {
+                self.app.user.features.telegram = 0;
+            }
+        }
+    }
+
+    self.prepareUser = function (clbk) {
+
+        self.preparingUser = true;
+
+        self.matrixchat.destroy()
+
+        checkfeatures()
+
+        app.user.isState(function(state){
+
+            if (state) {
+
+                lazyActions([
+
+                    self.sdk.node.transactions.loadTemp,
+                    self.sdk.addresses.init,
+                    
+                    self.sdk.ustate.me,
+                    self.sdk.usersettings.init,
+                    self.sdk.imagesH.load,
+                    
+                    self.ws.init,
+                    self.firebase.init,
+                    
+                    //self.sdk.exchanges.load,
+                    self.sdk.categories.load,
+                    self.sdk.activity.load,
+                    self.sdk.node.shares.parameters.load,
+                    self.sdk.node.transactions.checkTemps,
+                    self.sdk.user.get
+                ], function () {
+
+                    self.sdk.node.transactions.setUnspentoptimizationInterval()
+
+                    self.sdk.relayTransactions.send()
+
+                    self.matrixchat.init()
+
+                    self.preparingUser = false;
+
+                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+                    if (clbk)
+                        clbk()
+
+                    setTimeout(function(){
+
+                        lazyActions([
+                            self.cryptography.prepare,
+                            self.sdk.pool.init,
+                            self.sdk.articles.init,
+                            self.sdk.tempmessenger.init,
+                            self.sdk.chats.load,
+                            self.sdk.user.subscribeRef
+                        ], function(){
+            
+                        })
+
+                        if (self.loadingWithErrors)
+                            self.sdk.notifications.init().catch(e => {})
+                        
+                    }, 2000)
+                    
+
+                })
+            }
+            else {
+
+                self.preparingUser = false;
+
+                if (clbk)
+                    clbk()
+            }
+
+        })
+
+        
+        
     }
 
     self.matrixchat = {
@@ -19375,109 +19433,6 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.prepareUser = function (clbk) {
-
-        self.preparingUser = true;
-
-        var pnet = self.app.platform.sdk.address.pnet()
-
-        self.matrixchat.destroy()
-
-        if (pnet){
-
-            var a = pnet.address;
-
-            var addresses = self.testchataddresses;
-
-            var peertubeAddresses = self.testaddresses;
-
-            if (peertubeAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
-
-                self.enablePeertube = true
-            }
-
-            if (addresses.indexOf(a) > -1) {
-                self.app.user.features.telegram = 1;
-            } else {
-                self.app.user.features.telegram = 0;
-            }
-        }
-
-        
-
-        app.user.isState(function(state){
-
-            if (state) {
-
-                lazyActions([
-
-                    self.sdk.node.transactions.loadTemp,
-                    self.sdk.addresses.init,
-                    
-                    self.sdk.ustate.me,
-                    self.sdk.usersettings.init,
-                    self.sdk.imagesH.load,
-                    self.sdk.user.subscribeRef,
-                    self.ws.init,
-                    self.firebase.init,
-                    
-                    //self.sdk.exchanges.load,
-                    self.sdk.categories.load,
-                    self.sdk.activity.load,
-                    self.sdk.node.shares.parameters.load,
-                    self.sdk.node.transactions.checkTemps,
-                    self.sdk.user.get
-                ], function () {
-
-                    self.sdk.node.transactions.setUnspentoptimizationInterval()
-
-                    self.sdk.relayTransactions.send()
-
-                    self.matrixchat.init()
-
-                    self.preparingUser = false;
-
-
-                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
-
-                    if (clbk)
-                        clbk()
-
-                    setTimeout(function(){
-                        lazyActions([
-                            self.cryptography.prepare,
-                            self.sdk.pool.init,
-                            self.sdk.articles.init,
-                            self.sdk.tempmessenger.init,
-                            self.sdk.chats.load
-                        ], function(){
-            
-                        })
-                        
-                    }, 2000)
-                    
-
-                })
-            }
-            else {
-
-                self.preparingUser = false;
-
-                if (clbk)
-                    clbk()
-            }
-
-        })
-
-        if (typeof PeerTubePocketnet != 'undefined'){
-			self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-			self.app.peertubeHandler.init()
-		}
-
-        
-    }
-
-
     self.initSounds = function () {
 
         if (typeof ion != 'undefined'){
@@ -19516,8 +19471,6 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
-
-
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
 
@@ -19527,7 +19480,7 @@ Platform = function (app, listofnodes) {
                 self.clearStorageLight()
 
                 self.sdk.node.transactions.get.allBalance(null, true)
-                self.sdk.notifications.getNotifications()
+                self.sdk.notifications.getNotifications().catch(e => {})
             }
 
             self.clbks.focus(time);

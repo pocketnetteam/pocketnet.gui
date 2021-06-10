@@ -18,6 +18,8 @@ var test = (function(){
 			language : self.app.localization.key || 'en'
 		}
 
+		var saving = false
+
 		var changedLoc = false;
 
 		var getrefname = function(clbk){
@@ -131,12 +133,17 @@ var test = (function(){
 			},
 			save : function(clbk){
 
+				if (saving) return
+
+					saving = true
+
 				var allclbk = function(){
 					el.upanel.removeClass('loading')
 
 					el.c.find('.userPanel').removeClass('loading')
 
 					topPreloader(100)
+					saving = false
 
 					if (primary){
 
@@ -164,12 +171,13 @@ var test = (function(){
 				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : "", function(resref, err){				
 
 					if(el.c.find('.userPanel').hasClass('loading')){
+						saving = false
 						return
 					}
 
 					if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
 						sitemessage(self.app.localization.e('uchanges'))
-
+						saving = false
 						return
 					}
 
@@ -193,7 +201,7 @@ var test = (function(){
 						}
 
 							
-
+						saving = false
 						return
 					}
 
@@ -240,7 +248,7 @@ var test = (function(){
 							pn.focus()
 
 							_scrollTo(pn)
-
+							saving = false
 						return false;
 					}
 
@@ -274,7 +282,7 @@ var test = (function(){
 										el.c.find('.userPanel').removeClass('loading')
 
 										sitemessage("An error occurred while loading images")
-
+										saving = false
 										return 
 									}
 
@@ -287,7 +295,7 @@ var test = (function(){
 										el.c.find('.userPanel').removeClass('loading')
 
 										ed.makeuser(userInfo)
-
+										saving = false
 										return
 
 									}
@@ -305,7 +313,7 @@ var test = (function(){
 
 										function(tx, error){
 
-											
+											console.log('error', error, tx)
 
 											if(!tx){
 
@@ -375,6 +383,7 @@ var test = (function(){
 						}
 						else
 						{
+							saving = false
 							el.upanel.removeClass('loading')
 
 							el.c.find('.userPanel').removeClass('loading')
@@ -1243,9 +1252,13 @@ var test = (function(){
 			destroy : function(){
 				el = {};
 
+				saving = false
 
+				tempInfo = {
+					language : self.app.localization.key || 'en'
+				}
 
-				if(self.app.platform.sdk.user.storage.me && !actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
+				/*if(self.app.platform.sdk.user.storage.me && !actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
 					
 					return function(clbk){
 
@@ -1276,7 +1289,7 @@ var test = (function(){
 
 					}
 
-				}
+				}*/
 
 				return null;
 			},

@@ -294,7 +294,6 @@ Application = function(p)
 
 				self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
 
-
 					if (self.platform.focus){
 						self.errors.check()
 					}

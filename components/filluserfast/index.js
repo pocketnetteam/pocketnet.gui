@@ -8,7 +8,7 @@ var filluserfast = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters;
+		var el, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
 
 		
 		var current = null;
@@ -45,6 +45,9 @@ var filluserfast = (function(){
 
 					var requested = self.app.settings.get(address, 'request') || "";
 
+
+					console.log("requested")
+
 					if (requested){
 						actions.next()
 
@@ -53,6 +56,8 @@ var filluserfast = (function(){
 
 
 					balance.check(function(result){
+
+						console.log('result', result)
 
 						if (result){
 							actions.next()
@@ -277,10 +282,50 @@ var filluserfast = (function(){
 	
 				after : function(el){
 
+					var address = self.sdk.address.pnet().address;
+
 					var b = function(){
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+							
 							el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " PKOIN")
+						
+							if(amount > 0){
+
+								var regs = app.platform.sdk.registrations.storage[address];
+
+                                if (regs && (regs == 2)) {
+                                    self.sdk.registrations.add(address, 3)
+                                }
+	
+								if (current == 'moneyfail'){
+									setTimeout(function(){
+										actions.to('welcome');	
+									}, 100)
+									
+
+								}
+									
+	
+								delete self.app.platform.sdk.node.transactions.clbks.moneyfail
+							}
 						})
+					}
+
+					var ch = function(){
+
+						console.log('allBalanceCheck')
+
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+							
+							topPreloader(100);
+
+
+							console.log('allBalance', amount)
+	
+							b()
+							
+	
+						}, true)
 					}
 					
 					b()
@@ -296,41 +341,10 @@ var filluserfast = (function(){
 					})
 	
 					el.find('.check').on('click', function(){
-	
-						topPreloader(20);
-	
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							
-							topPreloader(100);
-	
-							if(amount > 0){
-	
-								if (current == 'moneyfail')
-									actions.to('settings');
-	
-								delete self.app.platform.sdk.node.transactions.clbks.moneyfail
-							}
-	
-							b()
-	
-						})	
-	
-						self.app.platform.sdk.node.transactions.clbks.moneyfail = function(){
-	
-							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-	
-								if (amount > 0){
-	
-									if (current == 'moneyfail'){
-										actions.to('welcome');
-									}
-	
-									delete self.app.platform.sdk.node.transactions.clbks.moneyfail
-								}
-							})
-							
-						}
+						ch()
 					})
+
+					self.app.platform.sdk.node.transactions.clbks.moneyfail = b
 				}
 	
 			}
@@ -354,11 +368,12 @@ var filluserfast = (function(){
 
 				self.sdk.users.requestFreeMoney(function(res, err){
 
-					console.log('res, err', res, err)
+					//console.log('res, err', res, err)
 
 					var address = self.sdk.address.pnet().address;
 
 					var requested = self.app.settings.get(address, 'request') || "";
+				
 
 					if(!res && !requested){
 
@@ -430,10 +445,7 @@ var filluserfast = (function(){
 						if (result){							
 
 							if(current == 'money'){				
-
-	
 								actions.next()
-	
 							}
 
 						}	
@@ -613,10 +625,6 @@ var filluserfast = (function(){
 
 							k.mnemonicKey = key;
 
-							k.mnemonicMask = _.shuffle(indexArray(k.mnemonicKey.length));
-
-							k.mnemonicContent = k.mnemonicKey.split(' ')
-
 							var keys = self.app.user.keysFromMnemo(k.mnemonicKey)
 
 							k.mainAddress = app.platform.sdk.address.pnetsimple(keys.publicKey).address;
@@ -637,7 +645,7 @@ var filluserfast = (function(){
 
 				retry(function(){
 
-					if(k.mnemonicKey) return true;
+					if(k.mnemonicKey || k.mk) return true;
 
 				}, clbk, 40)
 
@@ -706,9 +714,6 @@ var filluserfast = (function(){
 					var m = '-' + (getindex(current) * w) + 'px'
 
 					line.css('margin-left', m)
-					/*line.animate({
-						'margin-left' : m
-					})*/
 					
 
 					s.closest('.step').addClass('active')
@@ -830,6 +835,8 @@ var filluserfast = (function(){
 			},
 
 			money : function(el, clbk){
+
+
 				self.shell({
 
 					name :  'money',
@@ -860,13 +867,30 @@ var filluserfast = (function(){
 
 						presave : function(clbk){
 
+
 							actions.waitgeneration(function(){
-								actions.signin(function(){
-									
+
+
+								self.app.user.isState(function(state){
+
 									self.sdk.registrations.add(k.mainAddress, 1)
 
-									if(clbk) clbk()
-								})	
+
+									if(!state){
+
+										actions.signin(function(){
+											if(clbk) clbk()
+										})	
+
+									}
+									else{
+										self.sdk.registrations.add(k.mainAddress, 1)
+
+										if(clbk) clbk()
+									}
+								})
+
+								
 							})
 
 
@@ -883,6 +907,9 @@ var filluserfast = (function(){
 							self.sdk.registrations.add(k.mainAddress, 2)
 
 							state.save()
+
+
+							console.log('actions.next()', userInfo)
 
 							actions.next()
 						}
@@ -933,6 +960,10 @@ var filluserfast = (function(){
 					k = {};
 
 					k.mainAddress = self.app.user.address.value
+					k.mk = self.app.user.private.value.toString('hex');
+
+
+					console.log(k.mainAddress)
 				}
 
 				actions.next();
@@ -947,7 +978,7 @@ var filluserfast = (function(){
 
 			getdata : function(clbk, p){
 
-				if (p.state && self.user.validateVay() != 'fuf'){
+				if (p.state && !self.user.validateVay()){
 
 					self.app.nav.api.load({
 						open : true,
@@ -960,6 +991,8 @@ var filluserfast = (function(){
 
 				needcaptcha = false;
 				gliperror = false;
+
+				k = {}
 
 				essenseData = deep(p, 'settings.essenseData') || {}
 
@@ -981,6 +1014,15 @@ var filluserfast = (function(){
 				delete self.app.platform.sdk.node.transactions.clbks.moneyfail
 				delete self.app.errors.clbks.filluserfast
 				delete self.app.platform.sdk.node.transactions.clbks.filluser
+
+				if(ext) ext.destroy()
+
+				ext = null
+
+				needcaptcha = false;
+				gliperror = false;
+
+				k = {}
 
 				el = {};
 			},

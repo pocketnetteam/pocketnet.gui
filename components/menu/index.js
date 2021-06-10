@@ -1256,10 +1256,7 @@ var menu = (function(){
 
 					var addr = self.sdk.address.pnet().address
 
-					var regs = self.app.platform.sdk.registrations.storage[addr];
-
-					if (regs && regs <= 5){
-						
+					if (self.app.platform.sdk.registrations.showprivate()){
 						data.key = true
 					}
 

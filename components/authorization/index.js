@@ -129,7 +129,7 @@ var authorization = (function(){
 								}
 
 								else{
-									return 'filluser'
+									return 'filluserfast'
 								}
 
 								

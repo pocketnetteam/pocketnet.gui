@@ -160,7 +160,8 @@ var pkview = (function(){
 			},
 
 			dontshowagain : function(){
-				el.c.find('.dontshowagain').addClass('active')
+				if (el && el.c)
+					el.c.find('.dontshowagain').addClass('active')
 			}
 		}
 
@@ -179,7 +180,7 @@ var pkview = (function(){
 
 				self.closeContainer()
 
-				self.app.platform.sdk.registrations.remove()
+				self.app.platform.sdk.registrations.donotshowprivate()
 
 				if(isMobile()){
 
@@ -212,7 +213,7 @@ var pkview = (function(){
 						if(!bitcoin.bip39.validateMnemonic(m)){
 
 							current.mk = m;
-							
+
 						}
 						else
 						{

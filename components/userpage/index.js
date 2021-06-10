@@ -463,11 +463,9 @@ var userpage = (function(){
 
 				if (self.app.platform.sdk.address.pnet()){
 
-					var addr = self.app.platform.sdk.address.pnet().address
+					
 
-					var regs = self.app.platform.sdk.registrations.storage[addr];
-
-					if (regs && regs <= 5){
+					if (self.app.platform.sdk.registrations.showprivate()){
 						
 						self.app.platform.ui.showmykey({
 							text : self.app.localization.e('e13188'),
