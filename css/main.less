@@ -5491,6 +5491,7 @@ input[type=radio].radio:checked + label {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    .transition(0.2s);
 
     h1 {
         color: white;
@@ -5502,36 +5503,49 @@ input[type=radio].radio:checked + label {
             -webkit-animation: fade-in 0.3s ease-out both;
             animation: fade-in 0.3s ease-out both;
         }
-        &.fade-out {
-            -webkit-animation: fade-out 0.2s ease-in both;
-            animation: fade-out 0.2s ease-in both;
-        }
+        
+    }
+
+    &.fade-out {
+        -webkit-animation: fade-out 0.2s ease-in both;
+        animation: fade-out 0.2s ease-in both;
+        background-color: #0098eb;
     }
 
     img {
         max-height: 6vh;
-        max-width: 10vw;
+        max-width: 100vw;
 
         &.zoom-in {
             -webkit-animation: zoom-in 0.5s ease-out both;
             animation: zoom-in 0.5s ease-out both;
         }
+
+
         &.zoom-out {
             -webkit-animation: zoom-out 0.5s ease-in both;
             animation: zoom-out 0.5s ease-in both;
         }
+
         &.rotate {
             -webkit-animation: rotate 1s ease-in-out infinite both;
             animation: rotate 1s ease-in-out infinite both;
         }
+
+        &.zoom-out-rotate {
+            -webkit-animation: zoom-out-rotate 0.5s ease-in both;
+            animation: zoom-out-rotate 0.5s ease-in both;
+        }
+
+        
     }
 
-    &.cssanimation{
+    /*&.cssanimation{
         img{
             -webkit-animation: rotate 1s ease-in-out infinite both;
             animation: rotate 1s ease-in-out infinite both;
         }
-    }
+    }*/
 }
 
 @media only screen and (max-width: 768px) {
@@ -5569,9 +5583,12 @@ input[type=radio].radio:checked + label {
         transform: scale3d(1, 1, 1);
         opacity: 1;
     }
+    50% {
+        opacity: 0.25;
+    }
     100% {
-        -webkit-transform: scale3d(5, 5, 5);
-        transform: scale3d(5, 5, 5);
+        -webkit-transform: scale3d(50, 50, 50);
+        transform: scale3d(50, 50, 50);
         opacity: 0;
     }
 }
@@ -5581,9 +5598,12 @@ input[type=radio].radio:checked + label {
         transform: scale3d(1, 1, 1);
         opacity: 1;
     }
+    50% {
+        opacity: 0.25;
+    }
     100% {
-        -webkit-transform: scale3d(5, 5, 5);
-        transform: scale3d(5, 5, 5);
+        -webkit-transform: scale3d(50, 50, 50);
+        transform: scale3d(50, 50, 50);
         opacity: 0;
     }
 }
@@ -5609,6 +5629,38 @@ input[type=radio].radio:checked + label {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
         opacity: 1;
+    }
+}
+
+@-webkit-keyframes zoom-out-rotate {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1) rotate(0);
+        transform: scale3d(1, 1, 1) rotate(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.25;
+    }
+    100% {
+        -webkit-transform: scale3d(75, 75, 75) rotate(310deg);
+        transform: scale3d(75, 75, 75) rotate(310deg);
+        opacity: 0;
+
+    }
+}
+@keyframes zoom-out-rotate {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1) rotate(0);
+        transform: scale3d(1, 1, 1) rotate(0);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.25;
+    }
+    100% {
+        -webkit-transform: scale3d(75, 75, 75) rotate(310deg);
+        transform: scale3d(75, 75, 75) rotate(310deg);
+        opacity: 0;
     }
 }
 

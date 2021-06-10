@@ -10392,69 +10392,74 @@ stringEqTrig = function(s1, s2){
 }
 /* */
 
-if(typeof window != 'undefined' && window.$){
+if(typeof window != 'undefined'){
 
 
 
-	var splashScreen = $('#splashScreen'),
-		splashScreenImg = splashScreen.find('img'),
-		splashScreenTitle = splashScreen.find('h1'),
-		stopRotation = false;
+	var splashScreen = document.getElementById('splashScreen');
 
-		splashScreen.removeClass('cssanimation')
-	// Logos variant color
-	var logos = ['img/splashscreen/pocketnet-logo-16.svg', 'img/splashscreen/pocketnet-logo-17.svg', 'img/splashscreen/pocketnet-logo-15.svg',
-					'img/splashscreen/pocketnet-logo-14.svg', 'img/splashscreen/pocketnet-logo-18.svg', 'img/splashscreen/pocketnet-logo-19.svg'];
-	// Index in the array for the next logo variant
-	var nextLogoIndex = 0;
-	// Duration of all animations (in ms)
-	var zoomInDuration = 500, rotatingDuration = 1000, zoomOutDuration = 500;
-	// Interval
-	var splashScreeninterval;
+	if (splashScreen) {
 
-	// Function to start the ending process of the splash screen
-	hideSplashScreen = function() {
-		// Set the boolean, so we can stop during the end of the next animation
-		stopRotation = true;
-	}
 
-	// Function triggered at the end of each rotating animation
-	rotatingAnimationEnded = function() {
-		if (!splashScreenImg || splashScreenImg.length <= 0)
-			return;
-		// Check if we need to stop rotating and fade out
-		if (stopRotation) {
-			splashScreenImg.removeClass('rotate');
-			splashScreenImg.addClass('zoom-out');
-			splashScreenTitle.addClass('fade-out');
-			// When zoom out animation is done, completely remove the splash screen
-			setTimeout(() => {
-				// Clear interval if needed
-				if (splashScreeninterval != undefined)
-					clearInterval(splashScreeninterval);
-				// Completely remove the splashscreen
-				splashScreen.remove();
-			}, zoomOutDuration);
+		var splashScreenImg = document.getElementById('splashScreenImg');
+		var stopRotation = false;
+
+		// Logos variant color
+		var logos = ['img/splashscreen/pocketnet-logo-16.svg', 'img/splashscreen/pocketnet-logo-17.svg', 'img/splashscreen/pocketnet-logo-15.svg',
+						'img/splashscreen/pocketnet-logo-14.svg', 'img/splashscreen/pocketnet-logo-18.svg', 'img/splashscreen/pocketnet-logo-19.svg'];
+		// Index in the array for the next logo variant
+		var nextLogoIndex = 0;
+		// Duration of all animations (in ms)
+		var zoomInDuration = 500, rotatingDuration = 1000, zoomOutDuration = 500;
+		// Interval
+		var splashScreeninterval;
+
+		// Function to start the ending process of the splash screen
+		hideSplashScreen = function() {
+			// Set the boolean, so we can stop during the end of the next animation
+			stopRotation = true;
 		}
-		// Wait until half the rotation is done
-		setTimeout(() => {
-			// Change the logo image
-			splashScreenImg[0].src = logos[nextLogoIndex];
-			// Increase index
-			nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
-		}, rotatingDuration * 0.5);
-	}
 
-	// Wait until the zoom in is done
-	setTimeout(() => {
-		if (!splashScreenImg)
-			return;
-		// Start rotating the logo
-		splashScreenImg.removeClass('zoom-in');
-		splashScreenImg.addClass('rotate');
-		// Triggered every times we reached the end of the rotating animation
-		rotatingAnimationEnded();
-		splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
-	}, zoomInDuration);
+		// Function triggered at the end of each rotating animation
+		rotatingAnimationEnded = function() {
+			if (!splashScreenImg || splashScreenImg.length <= 0)
+				return;
+			// Check if we need to stop rotating and fade out
+			if (stopRotation) {
+				splashScreenImg.classList.remove("rotate");
+				splashScreenImg.classList.add('zoom-out-rotate');
+				splashScreen.classList.add('fade-out');
+				// When zoom out animation is done, completely remove the splash screen
+				setTimeout(() => {
+					// Clear interval if needed
+					if (splashScreeninterval != undefined)
+						clearInterval(splashScreeninterval);
+					// Completely remove the splashscreen
+					splashScreen.remove();
+				}, zoomOutDuration * 2);
+			}
+			// Wait until half the rotation is done
+			setTimeout(() => {
+				// Change the logo image
+				splashScreenImg.src = logos[nextLogoIndex];
+				// Increase index
+				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
+			}, rotatingDuration * 0.5);
+		}
+
+		// Wait until the zoom in is done
+		setTimeout(() => {
+			if (!splashScreenImg)
+				return;
+			// Start rotating the logo
+			splashScreenImg.classList.remove('zoom-in');
+			splashScreenImg.classList.add('rotate');
+			// Triggered every times we reached the end of the rotating animation
+			rotatingAnimationEnded();
+			splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+		}, zoomInDuration);
+
+	}
+		
 
 }

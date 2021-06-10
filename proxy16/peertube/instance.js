@@ -77,7 +77,7 @@ var instance = function(host, Roy){
 
         if(typeof url == 'function') url = url(data)
 
-        return axios[p.type || 'get']('https://' + host + url, { 
+        return axios[p.type || 'get']('http://' + host + url, { 
 
             timeout: p.timeout || Roy.parent.timeout() || 10000 
 
