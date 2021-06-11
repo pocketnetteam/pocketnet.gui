@@ -392,7 +392,7 @@ var main = (function(){
 							if(isMobile() && share){
 								self.nav.api.load({
 									open : true,
-									href : 'author?address='+share.address+'&v=' + id,
+									href : 'post?&s=' + id,
 									history : true,
 									handler : true
 								})

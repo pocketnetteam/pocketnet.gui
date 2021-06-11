@@ -354,8 +354,6 @@ Platform = function (app, listofnodes) {
 
             action: function (key, action, akey) {
 
-                console.log("HERE")
-
                 var adr = self.app.platform.sdk.address.pnet().address;
 
                 topPreloader(10);
@@ -4819,9 +4817,6 @@ Platform = function (app, listofnodes) {
                 this.clearlocalstorage()
                 var e = this.export();
                 
-
-                console.log("SAVE")
-
                 if (self.currentBlock && this.inited == true) {
 
                     e.notifications = _.uniq(e.notifications, function (n) {
@@ -4964,8 +4959,6 @@ Platform = function (app, listofnodes) {
 
             wsBlock: function (block) {
 
-                console.log("BLOCK FROM WS", block)
-
                 this.storage.block = block;
 
                 this.save()
@@ -5095,8 +5088,6 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
-                    console.log('n.storage', n.storage, n.storage.block)
-
                     return self.sdk.node.get.timepr().then(r => {
 
                         return self.sdk.missed.get(n.storage.block)
@@ -5162,8 +5153,6 @@ Platform = function (app, listofnodes) {
                 if (self.currentBlock - block > 5000) block = self.currentBlock - 5000
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
-
-                console.log("LOAD MISSED FROM BLOCK:", block)
 
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block]).then(d => {
 
@@ -17632,8 +17621,6 @@ Platform = function (app, listofnodes) {
 
             }).then(({block, notifications}) => {
 
-                console.log({block, notifications})
-
                 self.messageHandler(block, function () {
                     self.loadingMissed = false;
 
@@ -19060,8 +19047,6 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-
-        console.log("SELF", self, self.app.user, self.app)
     }
 
     self.restart = function (clbk) {

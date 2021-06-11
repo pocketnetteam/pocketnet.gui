@@ -1514,7 +1514,17 @@ var lenta = (function(){
 
 						if (player.p.playing){
 							player.p.stop()
+
+							if (isMobile() && player.p.rebuild){
+
+								setTimeout(function(){
+									//player.p.rebuild()
+								}, 1000)
+
+								
+							}
 						}
+
 					})
 
 				})

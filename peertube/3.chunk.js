@@ -2217,6 +2217,7 @@ function initMediaElementJsPlayer(mediaElement) {
         }
     });
     mediaElement.addEventListener("hlsDestroying", () => Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+        console.log('hlsDestroying');
         const hls = mediaElement.hlsPlayer;
         if (hls && hls.config && hls.config.loader && typeof hls.config.loader.getEngine === "function") {
             const engine = hls.config.loader.getEngine();

@@ -237,7 +237,6 @@ class hls_plugin_Html5Hlsjs {
         }
         else {
             this.hls.destroy();
-            console.info('bubbling error up to VIDEOJS');
             this.tech.error = () => error;
             this.tech.trigger('error');
         }
