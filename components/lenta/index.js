@@ -3050,6 +3050,8 @@ var lenta = (function(){
 									loader = 'recommended'
 								}
 
+								else
+
 								if(recommended == 'hot'){
 								}
 
