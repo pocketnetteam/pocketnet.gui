@@ -2871,7 +2871,7 @@ var lenta = (function(){
 
 			begin : function(clbk){
 
-
+				console.log("beginbeginbeginbegin")
 				if(beginmaterial && !beginmaterialloaded && (!recommended || recommended == 'sub')){
 			
 					self.app.platform.sdk.node.shares.getbyid(beginmaterial, function(shares){
@@ -2883,6 +2883,8 @@ var lenta = (function(){
 				}
 				else
 				{
+					beginmaterialloaded = true;
+
 					clbk([])
 				}
 			},
@@ -3013,6 +3015,8 @@ var lenta = (function(){
 
 				loading = true;
 
+				console.log("LOADDADADDD", essenseData)
+
 				if (essenseData.loader){
 					essenseData.loader(function(shares, error, pr){
 						load.sstuff(shares, error, pr, clbk)
@@ -3024,7 +3028,11 @@ var lenta = (function(){
 
 					self.app.user.isState(function(state){
 
+						console.log('state', state)
+
 						load.begin(function(bshares){
+
+							console.log("HERE", essenseData.loaderkey, recommended)
 
 							var author = essenseData.author;
 
@@ -3040,6 +3048,9 @@ var lenta = (function(){
 
 								if(recommended == 'recommended'){
 									loader = 'recommended'
+								}
+
+								if(recommended == 'hot'){
 								}
 
 								else
@@ -3076,6 +3087,9 @@ var lenta = (function(){
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
 							var page = essenseData.page || parameters().page || 0
+
+
+							console.log('loaderloaderloaderloader', loader)
 
 
 							self.app.platform.sdk.node.shares[loader]({

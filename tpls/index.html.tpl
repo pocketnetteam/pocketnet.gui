@@ -123,7 +123,7 @@
 
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
-        <script src="js/pwa-service-worker.js"></script>
+        <script src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
 
     </body>
 </html>

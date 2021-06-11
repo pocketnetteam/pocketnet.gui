@@ -348,7 +348,7 @@ var main = (function(){
 
 			topvideos: function (show) {
 
-				
+				console.log("RENDER TOP", show)
 
 				var showmoreby = el.topvideos
 
@@ -380,6 +380,8 @@ var main = (function(){
 
 						},
 						hasshares : function(shares){
+
+							console.log('shares', shares)
 	
 							if (shares.length > 2){
 								showmoreby.addClass('hasshares')
@@ -865,6 +867,8 @@ var main = (function(){
 			makePanel()
 
 			renders.smallpanel()
+
+			console.log('currentMode', currentMode,videomain )
 
 			if (currentMode == 'common' && !videomain)
 				renders.topvideos(true)
