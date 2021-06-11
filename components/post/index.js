@@ -359,13 +359,15 @@ var post = (function () {
 
 				var pels = el.c.find('.js-player, [data-plyr-provider][data-plyr-embed-id]');
 
+				var wa = (share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1)) ? true : false
+
 				if (pels.length) {
 
 					var options = {
 						//autoplay : pels.length <= 1,
 						resetOnEnd: true,
 						muted: false,
-						wautoplay: ed.autoplay ? true : false
+						wautoplay: wa
 					};
 
 					$.each(pels, function (key, el) {
@@ -375,7 +377,7 @@ var post = (function () {
 
 						}, () => {
 
-							if (ed.autoplay) {
+							if (wa) {
 
 								console.log("PLAYER PLAY")
 

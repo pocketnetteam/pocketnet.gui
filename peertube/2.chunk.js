@@ -582,18 +582,15 @@ function renderMedia(file, elem, opts, callback) {
     }
     function useVideostream() {
         prepareElem();
-        console.log('useVideostream');
         preparedElem.addEventListener('error', function onError(err) {
             preparedElem.removeEventListener('error', onError);
             return callback(err);
         });
-        console.log('file', file);
         preparedElem.addEventListener('loadedmetadata', onLoadStart);
         return new videostream(file, preparedElem);
     }
     function useMediaSource(useVP9 = false) {
         const codecs = getCodec(file.name, useVP9);
-        console.log('useMediaSource');
         prepareElem();
         preparedElem.addEventListener('error', function onError(err) {
             preparedElem.removeEventListener('error', onError);
@@ -770,7 +767,6 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
                 return done();
             });
         }
-        console.log('updateVideoFile');
         this.addTorrent(this.currentVideoFile.magnetUri, previousVideoFile, options, () => {
             this.player.playbackRate(oldPlaybackRate);
             return done();
@@ -810,7 +806,6 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
             if (destroyRenderer === true && this.renderer && this.renderer.destroy)
                 this.renderer.destroy();
             this.webtorrent.remove(videoFile.magnetUri);
-            console.log('Removed ' + videoFile.magnetUri);
         }
     }
     enableAutoResolution() {
@@ -836,7 +831,6 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
     addTorrent(magnetOrTorrentUrl, previousVideoFile, options, done) {
         if (!magnetOrTorrentUrl)
             return this.fallbackToHttp(options, done);
-        console.log('Adding ' + magnetOrTorrentUrl + '.');
         const oldTorrent = this.torrent;
         const torrentOptions = {
             // Don't use arrow function: it breaks webtorrent (that uses `new` keyword)
@@ -847,7 +841,6 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
             }
         };
         this.torrent = this.webtorrent.add(magnetOrTorrentUrl, torrentOptions, torrent => {
-            console.log('Added ' + magnetOrTorrentUrl + '.');
             if (oldTorrent) {
                 // Pause the old torrent
                 this.stopTorrent(oldTorrent);
@@ -855,10 +848,8 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
                 if (options.delay)
                     this.renderFileInFakeElement(torrent.files[0], options.delay);
             }
-            console.log('options.delay', options.delay);
             // Render the video in a few seconds? (on resolution change for example, we wait some seconds of the new video resolution)
             this.addTorrentDelay = setTimeout(() => {
-                console.log("IMHERENOW");
                 // We don't need the fake renderer anymore
                 this.destroyFakeRenderer();
                 const paused = this.player.paused();
@@ -888,7 +879,6 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         });
         this.torrent.on('error', (err) => console.error(err));
         this.torrent.on('warning', (err) => {
-            console.log("WARNING", err);
             //// TEMP, TO DO
             /*if (err.message.indexOf('Error connecting to wss') !== -1 || err.message.indexOf('Unsupported tracker protocol') !== -1) {
               this.fallbackToHttp(options, done)
@@ -906,14 +896,12 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
             if (err.message.indexOf('incorrect info hash') !== -1) {
                 console.error('Incorrect info hash detected, falling back to torrent file.');
                 const newOptions = { forcePlay: true, seek: options.seek };
-                console.log("IM HERE");
                 return this.addTorrent(this.torrent['xs'], previousVideoFile, newOptions, done);
             }
             // Remote instance is down
             if (err.message.indexOf('from xs param') !== -1) {
                 this.handleError(err);
             }
-            console.warn(err);
         });
     }
     tryToPlay(done) {
@@ -1019,11 +1007,9 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
             let changeResolutionDelay = 0;
             // Lower resolution
             if (this.isPlayerWaiting() && file.resolution.id < this.currentVideoFile.resolution.id) {
-                console.log('Downgrading automatically the resolution to: %s', file.resolution.label);
                 changeResolution = true;
             }
             else if (file.resolution.id > this.currentVideoFile.resolution.id) { // Higher resolution
-                console.log('Upgrading automatically the resolution to: %s', file.resolution.label);
                 changeResolution = true;
                 changeResolutionDelay = this.CONSTANTS.AUTO_QUALITY_HIGHER_RESOLUTION_DELAY;
             }
@@ -1083,7 +1069,6 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         // We changed the source, so reinit captions
         this.player.trigger('sourcechange');
         return this.tryToPlay(err => {
-            console.log("TRYTOPLAYDONE", err, options);
             if (err && done)
                 return done(err);
             if (options.seek)

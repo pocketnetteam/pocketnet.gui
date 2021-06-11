@@ -10422,7 +10422,7 @@ if(typeof window != 'undefined'){
 
 		// Function triggered at the end of each rotating animation
 		rotatingAnimationEnded = function() {
-			if (!splashScreenImg || splashScreenImg.length <= 0)
+			if (!splashScreenImg)
 				return;
 			// Check if we need to stop rotating and fade out
 			if (stopRotation) {
