@@ -7966,7 +7966,7 @@ Platform = function (app, listofnodes) {
             getfastsearch: function (clbk) {
                 var s = this.storage;
 
-                this.retry(function(){
+                retry(function(){
                     return self.currentBlock
                 }, function(){
 
