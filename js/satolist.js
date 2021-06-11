@@ -7966,18 +7966,28 @@ Platform = function (app, listofnodes) {
             getfastsearch: function (clbk) {
                 var s = this.storage;
 
-                this.get('', 150, self.currentBlock - 20000, function (d) {
+                this.retry(function(){
+                    return self.currentBlock
+                }, function(){
 
-                    if (d && d.length) {
-                        s.all = _.map(d, function (t) {
-                            return t.tag
-                        })
-                    }
+                    var round = (a, b) => a - a % b
 
-                    if (clbk) {
-                        clbk()
-                    }
+                    this.get('', 150, round(self.currentBlock, 1000) - 20000, function (d) {
+
+                        if (d && d.length) {
+                            s.all = _.map(d, function (t) {
+                                return t.tag
+                            })
+                        }
+    
+                        if (clbk) {
+                            clbk()
+                        }
+                    })
+
                 })
+
+                
             },
 
             cloudUpdate: function (clbk) {
@@ -7997,7 +8007,9 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
-                    this.get('', 50, (self.currentBlock - 23700), function (d, error) {
+                    var round = (a, b) => a - a % b
+
+                    this.get('', 50, (round(self.currentBlock, 1000) - 23700), function (d, error) {
 
                         if (!error)
                             s.cloud = d
