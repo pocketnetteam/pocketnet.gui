@@ -7966,13 +7966,15 @@ Platform = function (app, listofnodes) {
             getfastsearch: function (clbk) {
                 var s = this.storage;
 
+                var t = this
+
                 retry(function(){
                     return self.currentBlock
                 }, function(){
 
                     var round = (a, b) => a - a % b
 
-                    this.get('', 150, round(self.currentBlock, 1000) - 20000, function (d) {
+                    t.get('', 150, round(self.currentBlock, 1000) - 20000, function (d) {
 
                         if (d && d.length) {
                             s.all = _.map(d, function (t) {
