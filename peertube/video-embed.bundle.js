@@ -39627,16 +39627,18 @@ class PeerTubeEmbedApi {
         this.ignoreChange = false;
     }
     play() {
-        return this.embed.player.play().catch((e) => {
-            if (e && e.toString) {
-                e = e.toString();
-                if (e && e.indexOf('request was interrupted') > -1) {
-                    console.log("HERER");
-                    this.mute();
-                    this.embed.player.play();
+        var pr = this.embed.player.play();
+        if (pr && pr.catch)
+            pr.catch((e) => {
+                if (e && e.toString) {
+                    e = e.toString();
+                    if (e && e.indexOf('request was interrupted') > -1) {
+                        console.log("HERER");
+                        this.mute();
+                        this.embed.player.play();
+                    }
                 }
-            }
-        });
+            });
     }
     pause() {
         return this.embed.player.pause();
