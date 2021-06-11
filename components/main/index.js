@@ -411,7 +411,7 @@ var main = (function(){
 							
 						},
 
-						compact : isMobile() ? true : false
+						compact : true
 	
 					})
 				}
@@ -870,7 +870,7 @@ var main = (function(){
 
 			console.log('currentMode', currentMode,videomain )
 
-			if (currentMode == 'common' && !videomain)
+			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 
 			/*
@@ -934,7 +934,7 @@ var main = (function(){
 					videomain = _vm
 				}
 
-				renders.topvideos(currentMode == 'common' && !videomain)
+				renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 
 				if (videomain){
 
@@ -1123,6 +1123,8 @@ var main = (function(){
 				var wordsRegExp = /[,.!?;:() \n\r]/g
 
 				initEvents();
+
+				
 
 				if(!p.goback){
 					searchvalue = parameters().ss || ''

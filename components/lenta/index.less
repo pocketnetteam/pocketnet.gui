@@ -836,7 +836,7 @@
 					padding : 0.5 * @rhythm @rhythm;
 					padding-top : 0;
 					text-shadow: 1px 1px 3px rgba(50, 50, 50, 1);
-					background: fade(#000, 30);
+					background: fade(#000, 60);
 
 					i,
 					span{
@@ -2056,14 +2056,14 @@
 				.iconWrapper{
 					padding : 0;
 					z-index: 12;
-					width: 32px;
+					width: 32px!important;
 
 					.icon{
 						width: auto;
-						height: 32px;
+						height: 32px!important;
 						.usericon{
-							width: 32px;
-							height: 32px;
+							width: 32px!important;
+							height: 32px!important;
 							font-size: 1.5em;
 						}
 					}
@@ -2215,7 +2215,7 @@
 			flex-direction: row;
 			.share{
 				flex-grow: 1;
-				width : 350px;
+				width : 300px;
 				margin : 0;
 				margin-right: @rhythm;
 				margin-bottom : @rhythm;
@@ -2241,7 +2241,7 @@
 		&.compact{
 			.shares{
 				.share{
-					width : 250px;
+					width : 230px;
 
 					.tags{
 						display: none;
@@ -2266,19 +2266,46 @@
 
 					.anothercntswrk{
 						position: absolute;
-						left: @rhythm;
-						top : 0;
+						left: 0;
+						bottom : 0;
+						height: 40px;
 						display: flex;
 						flex-wrap: nowrap;
 						overflow: hidden;
 						flex-direction: row;
-
+						align-items: center;
 					
 						>div{
-							&:not(.formeta){
-								display: none;
+							&.formeta{
+								width: 32px;
+								min-width: 32px;
 							}
 							
+
+							&:nth-last-child(1){
+								display: none;
+							}
+						}
+
+						.meta{
+							padding-top: 0.25 * @rhythm;
+							margin-bottom : 0;
+						}
+
+						.authorTable{
+							display: block;
+						}
+
+						.paddingWrapper{
+							margin-left: 0;
+							padding-right: 0;
+						}
+
+						.sharecaption{
+							max-height: 30px;
+							text-overflow: ellipsis;
+							overflow: hidden;
+							font-size: 0.8em!important;
 						}
 					}
 				}
@@ -2287,13 +2314,13 @@
 
 			&.mainvideo{
 				.shareTable{
-					height: 160px;
+					height: 180px;
 				}
 				.shares .share .forurl{
-					height: 160px;
+					height: 140px;
 
 					&.verticalVideo{
-						height: 160px;
+						height: 140px;
 					}
 				}
 			}
@@ -2311,8 +2338,7 @@
 			&.compact{
 				&.mainvideo{
 					.shares .cntswrk.formeta{
-						padding-top : 0;
-						margin-left: 0;
+						margin-left: 0.5 * @rhythm;
 					}
 				}
 			}
