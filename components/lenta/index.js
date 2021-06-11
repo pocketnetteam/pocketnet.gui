@@ -44,6 +44,7 @@ var lenta = (function(){
 			shareheights = {},
 			_reposts = {},
 			fixedblock = 0,
+			delay = null,
 			fullscreenvideoShowed = false;
 
 		var countshares = 0;
@@ -202,6 +203,31 @@ var lenta = (function(){
 				}, shareid)
 
 			},
+			cleardelay : function(){
+				if(delay){
+					clearTimeout(delay)
+					delay = null
+				}
+				
+
+				el.c.removeClass('rebuilding')
+			},
+			rebuilddelay : function(){
+				
+				el.c.addClass('rebuilding')
+
+				console.log('rebuilddelay')
+
+				delay = slowMade(function(){
+
+					_scrollToTop(el.shares, null, 10, -80)
+
+					actions.loadprev()
+				}, delay, 600)	
+
+					
+			},
+
 			loadprev : function(clbk){
 				el.c.find('.shares').html('<div class="bspacer"></div>')
 				el.c.removeClass('showprev')
@@ -3516,7 +3542,8 @@ var lenta = (function(){
 					self.app.platform.sdk.categories.clbks.selected.lenta = function(data){
 
 						if(getloader() == 'hierarchical' && !essenseData.second){
-							actions.loadprev()
+
+							actions.rebuilddelay()
 						}
 						
 					}
@@ -3595,6 +3622,8 @@ var lenta = (function(){
 		var make = function(clbk, _p){
 
 			making = true;
+
+			actions.cleardelay()
 
 			var cache = 'clear';
 			var clear = true;
@@ -3867,6 +3896,8 @@ var lenta = (function(){
 					el.shares.isotope('destroy')
 					
 				}
+
+				actions.cleardelay()
 
 				actions.scrollmode(false)
 
