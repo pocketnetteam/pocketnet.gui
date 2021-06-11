@@ -2086,20 +2086,29 @@ var share = (function(){
 								el.c.find('.emojionearea-editor').on('pasteImage', function (ev, data){
 		
 									topPreloader(100)
+
+									resize(data.dataURL, 1920, 1080, function(resized){
+										var r = resized.split(',');
+						
+										if (r[1]){
+						
+											var r  = currentShare.images.set(resized)
 		
-		
-									var r  = currentShare.images.set(data.dataURL)
-		
-									if(!r){
-										sitemessage(errors.images)
-									}
-									else
-									{
-										if (renders.images)
-											renders.images();
-									}
-		
+											if(!r){
+												sitemessage(errors.images)
+											}
+											else
+											{
+												if (renders.images)
+													renders.images();
+											}
+						
+										}
+										else{
+											sitemessage("Image upload error")
+										}
 									
+									})
 		
 		
 								}).on('pasteImageStart', function(){

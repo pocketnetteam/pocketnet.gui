@@ -498,16 +498,17 @@ Application = function(p)
 
 		self.options.platform = self.platform
 
-		self.platform.sdk.users.addressByName(self.ref, function(r){
-			if(r){
-				self.ref = r;
-				localStorage['ref'] = self.ref
-			}
+		if (self.ref)
+			self.platform.sdk.users.addressByName(self.ref, function(r){
+				if(r){
+					self.ref = r;
+					localStorage['ref'] = self.ref
+				}
 
-		})
+			})
 
 		self.nav.dynamic = function(p, clbk){
-
+			
 
 			self.platform.sdk.users.addressByName((p.href), function(r){
 

@@ -1700,7 +1700,7 @@
 
 				ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-			var url = canvas.toDataURL("image/" + format, 0.9);
+			var url = canvas.toDataURL("image/" + format, 0.75);
 
 			$(canvas).remove();
 

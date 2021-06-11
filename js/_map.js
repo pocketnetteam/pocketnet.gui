@@ -104,6 +104,7 @@ __map =  {
 		{ c : 'lastcomments', n : 'index' },
 		{ c : 'tagcloud', n : 'index' },
 		{ c : 'categories', n : 'index' },
+		{ c : 'categories', n : 'categories' },
 		{ c : 'lenta', n : 'share' },
 		{ c : 'lenta', n : 'shares' },
 		{ c : 'lenta', n : 'wholike' },
