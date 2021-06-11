@@ -7999,7 +7999,7 @@ Platform = function (app, listofnodes) {
             cloud: function (clbk, update) {
 
                 var s = this.storage;
-
+                var t = this
                 if (s.cloud && !update) {
                     if (clbk) {
 
@@ -8011,15 +8011,20 @@ Platform = function (app, listofnodes) {
 
                     var round = (a, b) => a - a % b
 
-                    this.get('', 50, (round(self.currentBlock, 1000) - 23700), function (d, error) {
+                    retry(function(){
+                        return self.currentBlock
+                    }, function(){
 
-                        if (!error)
-                            s.cloud = d
+                        t.get('', 50, (round(self.currentBlock, 1000) - 23700), function (d, error) {
 
-                        if (clbk) {
-                            clbk(s.cloud, error)
-                        }
+                            if (!error)
+                                s.cloud = d
 
+                            if (clbk) {
+                                clbk(s.cloud, error)
+                            }
+
+                        })
                     })
 
                 }
