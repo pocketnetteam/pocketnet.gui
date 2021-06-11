@@ -210,7 +210,8 @@ var lenta = (function(){
 				}
 				
 
-				el.c.removeClass('rebuilding')
+				if (el && el.c)
+					el.c.removeClass('rebuilding')
 			},
 			rebuilddelay : function(){
 				
