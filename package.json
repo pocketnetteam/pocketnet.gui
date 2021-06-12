@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.2.20",
+    "version": "0.2.21",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -15,8 +15,8 @@
         "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
         "rebuild": "electron-rebuild",
-        "minimize": "node minimize.js -prodaction=true -vendor=2899 -path=/",
-        "minimize:test": "node minimize.js -prodaction=true -vendor=899 -test=true -path=/",
+        "minimize": "node minimize.js -prodaction=true -vendor=2999 -path=/",
+        "minimize:test": "node minimize.js -prodaction=true -vendor=2999 -test=true -path=/",
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/"
     },
