@@ -337,22 +337,16 @@ var author = (function(){
 				var selected = parameters().mt
 
 				var pp = {
-
 					name :  'contents',
 					el :   el.contents,
-
 					data : {
 						contents : contents,
 						author : author,
 						selected : selected
 					},
-
 				}
 
-
 				self.shell(pp, function(p){
-
-
 
 					p.el.find('.hasmore .captiontable').on('click', function(){
 						$(this).closest('.hasmore').toggleClass('showedmore')
@@ -474,9 +468,10 @@ var author = (function(){
 
 					renders.menulight()
 
-					self.app.platform.sdk.contents.get(author.address, function(contents){
-						renders.contents(contents)	
-					})
+					if(!isMobile())
+						self.app.platform.sdk.contents.get(author.address, function(contents){
+							renders.contents(contents)	
+						})
 				}
 				
 			},
@@ -570,26 +565,32 @@ var author = (function(){
 
 			info : function(_el){
 
-				self.shell({
+				self.sdk.ustate.get(author.address, function(){
 
-					name :  'info',
-					el :   _el,
+					author.state = self.sdk.ustate.storage[author.address]
 
-					data : {
-						author : author
-					},
+					self.shell({
 
-					animation : 'fadeIn',
+						name :  'info',
+						el :   _el,
 
-				}, function(p){
+						data : {
+							author : author
+						},
 
-					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
+						animation : 'fadeIn',
 
-					p.el.find('.copyaddress').on('click', function(){
-						copyText($(this))
+					}, function(p){
 
-						sitemessage(self.app.localization.e('successcopied'))
+						p.el.find('.showmoreabout').on('click', actions.showmoreabout)
+
+						p.el.find('.copyaddress').on('click', function(){
+							copyText($(this))
+
+							sitemessage(self.app.localization.e('successcopied'))
+						})
 					})
+
 				})
 			},
 
@@ -1079,6 +1080,8 @@ var author = (function(){
 
 		var make = function(ini){
 
+			console.log("make!")
+
 			var r = parameters().report || 'shares'
 
 				reports[r].active = true;
@@ -1112,9 +1115,9 @@ var author = (function(){
 			})	
 
 
-			self.app.platform.sdk.contents.get(author.address, function(contents){
+			/*self.app.platform.sdk.contents.get(author.address, function(contents){
 				renders.contents(contents)	
-			})
+			})*/
 			
 
 			if(!isMobile())
@@ -1168,60 +1171,63 @@ var author = (function(){
 				result = null
 
 
+				console.log("GETDATA", p.address)
+
+
+
 				self.sdk.users.addressByName(p.address, function(address){
 
+					console.log("GETDATA2", address)
+
+				
 
 
 					if (address){
 						author.address = address
 
-						self.sdk.activity.adduser('visited', address)
 
 						self.sdk.users.get(author.address, function(){
 
-							self.sdk.ustate.get(author.address, function(){
+							if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+								reports.shares.name = self.app.localization.e('uposts')
 
-								if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
-									reports.shares.name = self.app.localization.e('uposts')
-
-									if(self.app.curation()){
-										self.nav.api.load({
-											open : true,
-											href : 'userpage',
-											history : true
-										})
-					
-										return
-									}
+								if(self.app.curation()){
+									self.nav.api.load({
+										open : true,
+										href : 'userpage',
+										history : true
+									})
+				
+									return
 								}
-								else
-								{
-									reports.shares.name = self.app.localization.e('myuposts')
+							}
+							else
+							{
+								reports.shares.name = self.app.localization.e('myuposts')
 
 
-									if(!self.app.user.validate()){
+								if(!self.app.user.validate()){
 
-										self.nav.api.go({
-											href : 'userpage?id=test',
-											history : true,
-											open : true
-										})
+									self.nav.api.go({
+										href : 'userpage?id=test',
+										history : true,
+										open : true
+									})
 
-										return;
-									}
+									return;
 								}
 							
+							}
 
-								author.data = self.sdk.users.storage[author.address]
-								author.state = self.sdk.ustate.storage[author.address]
+							author.data = self.sdk.users.storage[author.address]
+							//author.state = self.sdk.ustate.storage[author.address]
 
-								var data = {
-									author : author
-								};
+							var data = {
+								author : author
+							};
 
-								clbk(data);
+							clbk(data);
 
-							})
 						})
 					}
 
@@ -1270,20 +1276,6 @@ var author = (function(){
 
 				
 
-				/*setTimeout(function(){
-					var c = deep(self, 'app.modules.menu.module.initauthorsearch')
-
-					if (c && isMobile()){
-
-						author.clear = clearsearch
-
-						c(author)
-					}
-
-				}, 300)*/
-
-					
-
 				state.load();
 
 				el = {};
@@ -1301,8 +1293,11 @@ var author = (function(){
 
 				el.info = el.c.find('.authorinfoWrapper')
 
+
 				make(true);
 				initEvents();
+
+				self.sdk.activity.adduser('visited', author.address)
 
 				if(self.user.isItMe(author.address)){
 					self.app.nav.api.backChainClear()

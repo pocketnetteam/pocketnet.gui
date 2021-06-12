@@ -32,7 +32,7 @@
 		overflow: hidden;
 		height: 100%;
 		width: 100%;
-		padding-bottom: 60px;
+		padding-bottom: 0;
 
 		.imagesAbsWrapper{
 			width: 100%;
@@ -55,7 +55,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		height: 60px;
+		height: 40px;
 
 		.items{
 			height: 100%;
@@ -150,7 +150,12 @@
 	&.imageGallery{
 		z-index: 1101;
 		.wndcontent{
-			padding : 0;
+			padding : 2 * @rhythm;
+		}
+
+		.wndinner{
+			width: 100%;
+			height: 100%;
 		}
 	}
 	
@@ -164,7 +169,6 @@
 
 		.panel{
 			.items{
-				max-width: 1024px;
 			}
 		}
 

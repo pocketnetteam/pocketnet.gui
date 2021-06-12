@@ -896,9 +896,10 @@
 					vertical-align: middle;
 
 					&.authorCell{
-						padding-right: 2 * @rhythm;
+						padding-right: 0;
 					}
 				}
+
 			}
 
 			.metatable{
@@ -1559,9 +1560,10 @@
 				background: fade(@color-black2, 80);
 				overflow-y: scroll;
 				padding-top: 0;
-
+				scrollbar-width: none;
 				
 				&::-webkit-scrollbar{
+					
 					width: 0!important
 				}
 
@@ -2310,7 +2312,7 @@
 							max-height: 30px;
 							text-overflow: ellipsis;
 							overflow: hidden;
-							font-size: 0.8em!important;
+							font-size: 0.9em!important;
 						}
 					}
 				}

@@ -33,11 +33,14 @@ html {
         }
     }
 
+    scrollbar-width: none;
+    &::-webkit-scrollbar{
+        width: 0!important
+    }
+        
+
     &.electron{
-        &::-webkit-scrollbar{
-            width: 0!important
-        }
-            
+        
     }
 
     &.testpocketnet{
@@ -2240,7 +2243,7 @@ input[type=radio].radio:checked + label {
         padding: 2 * @rhythm;
         overflow-y: scroll; 
         padding-bottom: 0;
-
+        scrollbar-width: none;
         &::-webkit-scrollbar{
             width: 0!important
         }
@@ -4365,8 +4368,8 @@ input[type=radio].radio:checked + label {
         overflow: hidden;
         overflow-x: scroll;
     
-       
-    
+        scrollbar-width: none;
+        
         
     
         &::-webkit-scrollbar{
@@ -4404,7 +4407,7 @@ input[type=radio].radio:checked + label {
         }
     
         .showmorebywrapper{
-           
+            scrollbar-width: none;
             &::-webkit-scrollbar{
                 display: none!important;
             }

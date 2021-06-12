@@ -43034,7 +43034,7 @@ class embed_PeerTubeEmbed {
             this.api.clear();
         }
         this.playerElement = null;
-        this.wrapperElement.innerHTML = "";
+        //this.wrapperElement.innerHTML = "";
     }
     playNextVideo() {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {

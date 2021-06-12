@@ -262,12 +262,14 @@ var imagegallery = (function(){
 			
 			el.arrows.on('click', events.arrows);
 
-			el.c.on('click', events.body)
+
+			if(!isMobile() && !isTablet())
+				el.c.on('click', events.body)
 
 			var cc = el.c.find('.imagesTableWrapper').closest('.wnd')
 
 			var directions = {
-				up : {
+				/*up : {
 					trueshold : 150,
 
 					mintrueshold : 50,
@@ -289,14 +291,14 @@ var imagegallery = (function(){
 						self.closeContainer()
 						
 					}
-				}
+				}*/
 			}
 
 			if (essenseData.images.length > 1){
 				directions.left = {
-					trueshold : 100,
+					trueshold : 25,
 	
-					mintrueshold : 50,
+					mintrueshold : 0,
 	
 					cancellable : true,
 	
@@ -325,9 +327,9 @@ var imagegallery = (function(){
 				}
 	
 				directions.right = {
-					trueshold : 100,
+					trueshold : 25,
 	
-					mintrueshold : 50,
+					mintrueshold : 0,
 	
 					cancellable : true,
 	
@@ -353,15 +355,17 @@ var imagegallery = (function(){
 				}
 			}
 
+			if(isMobile() || isTablet()){
+				var parallax = new SwipeParallax({
+
+					el : el.c.find('.imagesTableWrapper'),
+	
+					directions : directions
+	
+				}).init()
+			}
+
 			
-
-			var parallax = new SwipeParallax({
-
-				el : el.c.find('.imagesTableWrapper'),
-
-				directions : directions
-
-			}).init()
 
 		}
 
