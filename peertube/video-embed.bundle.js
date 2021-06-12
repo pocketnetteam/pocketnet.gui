@@ -39653,13 +39653,17 @@ class PeerTubeEmbedApi {
         if (this.getVolume() != value) {
             this.ignoreChange = true;
         }
-        if (value) {
-            this.embed.player.muted(false);
-            return this.embed.player.volume(value);
+        try {
+            if (value) {
+                this.embed.player.muted(false);
+                return this.embed.player.volume(value);
+            }
+            else {
+                this.embed.player.muted(true);
+                return 0;
+            }
         }
-        else {
-            this.embed.player.muted(true);
-            return 0;
+        catch (e) {
         }
     }
     getVolume() {
@@ -43263,6 +43267,7 @@ class embed_PeerTubeEmbed {
             this.playerElement = document.createElement("video");
             this.playerElement.className = "video-js";
             this.playerElement.setAttribute("playsinline", "true");
+            this.playerElement.setAttribute('poster', this.composePath(videoInfo.previewPath));
             const isVideoEmbedded = document.querySelector(".standalone-video-embed");
             const paddingSize = 100 / (2 * videoSizeValue);
             if (videoInfo.aspectRatio < 0.9) {

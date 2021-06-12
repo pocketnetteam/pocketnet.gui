@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Security-Policy" content="
         default-src https: 'self' file:; 
         connect-src https: 'self' wss: file: data:;
-        img-src 'self' data: https: file:;
+        img-src 'self' data: https: file: android-webview-video-poster:;
         script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self' https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
         font-src 'self' data: https://fonts.gstatic.com https://use.fontawesome.com;
