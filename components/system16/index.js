@@ -254,7 +254,7 @@ var system16 = (function(){
 			},
 			updateNode : function(){
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'node.update',
 					data : {
 						all : 'all'
@@ -282,7 +282,7 @@ var system16 = (function(){
 			},
 			installNode : function(){
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'node.install',
 					data : {}
 				}).then(r => {
@@ -308,7 +308,7 @@ var system16 = (function(){
 			},
 			removeNode : function(all){
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'node.delete',
 					data : {
 						all : all
@@ -349,7 +349,7 @@ var system16 = (function(){
 			removeBot : function(address){
 				topPreloader(30);
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'bots.remove',
 					data : {
 						address : address
@@ -377,7 +377,7 @@ var system16 = (function(){
 			removeAdmin : function(address){
 				topPreloader(30);
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'set.admins.remove',
 					data : {
 						address : address
@@ -777,7 +777,7 @@ var system16 = (function(){
 						return {
 							text : scenario.name,
 							action : function(clbk){
-								proxy.fetch('nodes/test', {
+								proxy.fetchauth('nodes/test', {
 									scenario : scenario.key,
 									node : node.key
 								}).catch(e => {
@@ -1871,7 +1871,7 @@ var system16 = (function(){
 
 	        			topPreloader(30);
 
-						proxy.fetch('manage', {
+						proxy.fetchauth('manage', {
 							action : 'bots.addlist',
 							data : {
 								addresses : addresses
@@ -1938,7 +1938,7 @@ var system16 = (function(){
 
 	        			topPreloader(30);
 
-						proxy.fetch('manage', {
+						proxy.fetchauth('manage', {
 							action : 'bots.add',
 							data : {
 								address : address
@@ -2004,7 +2004,7 @@ var system16 = (function(){
 
 	        			topPreloader(30);
 
-						proxy.fetch('manage', {
+						proxy.fetchauth('manage', {
 							action : 'set.admins.add',
 							data : {
 								address : address
@@ -2325,7 +2325,7 @@ var system16 = (function(){
 								btn2text : self.app.localization.e('dno'),
 								success : function(){	
 
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 										
 										action : 'set.server.defaultssl',
 										data : {}
@@ -2360,7 +2360,7 @@ var system16 = (function(){
 
 								globalpreloader(true)
 
-								proxy.fetch('manage', {
+								proxy.fetchauth('manage', {
 									action : 'set.server.settings',
 									data : {
 										settings : changes.server
@@ -2618,7 +2618,7 @@ var system16 = (function(){
 			
 									topPreloader(30);
 			
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 										action : 'set.wallet.setkey',
 										data : {
 											key : key,
@@ -2658,7 +2658,7 @@ var system16 = (function(){
 								success : function(){	
 									topPreloader(30);
 			
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 										action : 'set.wallet.removeKey',
 										data : {
 											key : key
@@ -3081,7 +3081,7 @@ var system16 = (function(){
 			
 									topPreloader(30);
 			
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 
 										action : 'set.node.stacking.import',
 										data : {
@@ -3185,7 +3185,7 @@ var system16 = (function(){
 
 									globalpreloader(true)
 
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 
 										action : 'set.node.defaultPaths',
 										data : {}
@@ -3213,7 +3213,7 @@ var system16 = (function(){
 
 							globalpreloader(true)
 
-							proxy.fetch('manage', {
+							proxy.fetchauth('manage', {
 
 								action : 'set.node.check',
 								data : {}
@@ -3306,7 +3306,7 @@ var system16 = (function(){
 			stacking : function(update){
 				if(actions.admin() && (!stacking || update)){
 
-					proxy.fetch('manage', {
+					proxy.fetchauth('manage', {
 
 						action : 'set.node.stacking.addresses',
 						data : {}
