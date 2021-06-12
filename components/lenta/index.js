@@ -209,14 +209,13 @@ var lenta = (function(){
 					delay = null
 				}
 				
-
-				el.c.removeClass('rebuilding')
+				if (el.c)
+					el.c.removeClass('rebuilding')
 			},
 			rebuilddelay : function(){
-				
-				el.c.addClass('rebuilding')
 
-				console.log('rebuilddelay')
+				if (el.c)
+					el.c.addClass('rebuilding')
 
 				delay = slowMade(function(){
 
