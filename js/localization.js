@@ -207,7 +207,10 @@ Localization = function(app){
 	}
 
 	self.e = function(id, args){
-		var v = ____loclib[id] || deep(loclib, self.key + '.' + id) || deep(loclib, 'en.' + id) || "";
+		var v = deep(loclib, self.key + '.' + id) || deep(loclib, 'en.' + id) || "";
+
+
+		console.log('____loclib', ____loclib)
 
 		if(typeof v == 'function') v = v(args);
 
