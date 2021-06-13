@@ -783,6 +783,15 @@ var Api = function(app){
         })
     }
 
+    self.fetchauth = function(path, data, options){
+        if(!options) 
+            options = {}
+
+            options.auth  =true
+
+        return self.fetch(path, data, options)
+    }   
+
     self.fetch = function(path, data, options){
 
         if(!useproxy) return Promise.reject('useproxy')
@@ -791,11 +800,15 @@ var Api = function(app){
             options = {}
 
 
-            
+        var method = 'fetch'
+
+
+        if(options.auth) method = 'fetchauth'
+
 
         return getproxy(options.proxy).then(proxy => {
 
-            return proxy.fetch(path, data)
+            return proxy[method](path, data)
 
         }).then(r => {
 

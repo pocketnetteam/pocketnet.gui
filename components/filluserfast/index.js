@@ -210,6 +210,7 @@ var filluserfast = (function(){
 						else
 						{
 
+
 							self.nav.api.go({
 								href : 'index?r=recommended',
 								history : true,

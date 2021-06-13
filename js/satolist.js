@@ -5607,7 +5607,7 @@ Platform = function (app, listofnodes) {
                                 captcha: self.sdk.captcha.done
                             }
 
-                            self.app.api.fetch('free/registration', prms).then(d => {
+                            self.app.api.fetchauth('free/registration', prms).then(d => {
                                 if (clbk)
                                         clbk(true)
 
@@ -6156,7 +6156,7 @@ Platform = function (app, listofnodes) {
 
             make: function (text, clbk) {
 
-                self.app.api.fetch('makecaptcha', {
+                self.app.api.fetchauth('makecaptcha', {
                     captcha: this.current || null,
                     text: text
                 }).then(d => {
