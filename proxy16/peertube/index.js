@@ -149,8 +149,6 @@ var Peertube = function(settings){
                         return Promise.reject({error : true})
                     }
 
-                    console.log("HASCACHE")
-
                     return Promise.resolve(cached);
                 }
 

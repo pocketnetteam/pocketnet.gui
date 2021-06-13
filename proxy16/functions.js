@@ -484,6 +484,23 @@ f.validateHost = function(str){
 
 }
 
+
+f.rot13 = function(str){
+    var re = new RegExp("[a-z]", "i");
+    var min = 'A'.charCodeAt(0);
+    var max = 'Z'.charCodeAt(0);
+    var factor = 13;
+    var result = "";
+    str = str.toUpperCase();
+    
+    for (var i=0; i<str.length; i++) {
+        result += (re.test(str[i]) ?
+        String.fromCharCode((str.charCodeAt(i) - min + factor) % (max-min+1) + min) : str[i]);
+    }
+    
+    return result;
+}
+
 f.hash = function(str){
     return md5(str)
 }
