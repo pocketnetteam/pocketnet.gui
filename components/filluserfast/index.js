@@ -220,8 +220,15 @@ var filluserfast = (function(){
 						}
 
 
+						if(isMobile()){
+							self.app.platform.ui.showmykey()
+						}
+						else{
+							self.app.platform.ui.showmykeyfast()
+						}
+
 						
-						self.app.platform.ui.showmykeyfast()
+						
 						
 					}
 

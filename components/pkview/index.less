@@ -133,7 +133,7 @@
         background: @color-bright;
         color : #fff;
         .shadowSmall();
-        z-index: 10000;
+        z-index: 5000;
         opacity: 0;
         .transition(0.3s);
         cursor: pointer;
@@ -284,8 +284,10 @@ html.stblack{
         }
         
         .dontshowagain{
-            
+            width: 100%;
+            margin-left: 0;
             bottom : -10%;
+            left : 0;
            
             &.active{
                 bottom : 60px;
