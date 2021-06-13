@@ -144,11 +144,11 @@ var streampeertube = (function () {
         });
       });
 
-      el.dateInput.DateTimePicker({
-        settingValueOfElement: function (a, b) {
-          streamDate = moment.utc(b).format();
-        },
-      });
+      // el.dateInput.DateTimePicker({
+      //   settingValueOfElement: function (a, b) {
+      //     streamDate = moment.utc(b).format();
+      //   },
+      // });
     };
 
     return {
