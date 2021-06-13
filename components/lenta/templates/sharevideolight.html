@@ -75,7 +75,7 @@ var metadisplay = function(){ %>
                         
                         <div class="datetime">
                             <% if(share.time) {%>
-                                <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
+                                <span class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
                             <% } else { %> 
                                 <span><%=e('e13019')%></span>
                             <% } %>
@@ -105,18 +105,6 @@ var metadisplay = function(){ %>
 				</div>
 			</div>
 
-		<% } %>
-
-		<% if(typeof repost != 'undefined' && repost && !fromempty) { %> 
-
-			<div class="metapanel">
-				<div class="metapanelitem">
-					<a href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
-						<i class="fas fa-share"></i> 
-					</a>
-				</div>
-			</div>
-			
 		<% } %>
 		
 	</div>					
@@ -148,53 +136,8 @@ var metadisplay = function(){ %>
 
             if(typeof tplvideo != 'undefined' && tplvideo) return
 
-			m = (m)
-			
-			var nm = m;
-
-			if(typeof all == 'undefined' || !all){
-
-				nm = trimHtml(m, 750);
-
-				if(nm != m){
-					bigmessage = true;
-				}
-			}
-
-			nm = share.renders.xssmessage(nm)
-
 		%>
-			<div class="paddingWrapper hideOnFullVideo">
-				<div class="message canmark">
-
-					<%=joypixels.toImage((clearScripts(((nm)))))%>
-
-				</div>
-			</div>
-
-			<% if(bigmessage) {%>
-
-				<div class="paddingWrapper showMorePW">
-					<div class="showMore">
-						<div class="showmoretable table">
-							<!-- <div class="linecell">
-								<div class="line"></div>
-							</div> -->
-							<div class="buttoncell">
-								<button>
-									<%=e('showmore')%>
-								</button>
-							</div>
-							<!-- <div class="linecell">
-								<div class="line"></div>
-							</div> -->
-						</div>
-						
-
-					</div>
-				</div>
-
-			<% } %>
+			
 
 		<% } %>
 		
@@ -208,9 +151,7 @@ var metadisplay = function(){ %>
 	u : function(){	%> 
 		<% if(share.url) {
 
-			var h = ''
-			
-			%>
+			var h = '' %>
 
 			<div class="url">
 			</div>
@@ -275,7 +216,6 @@ var metadisplay = function(){ %>
 							<% if(share.tags && share.tags.length > 0) {
 
 								var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
-
 								
 								%>
 
@@ -284,12 +224,8 @@ var metadisplay = function(){ %>
 									
 									<% _.each(bycategories.categories, function(category){ %>
 
-										<div class="category">
-											<a href="index?sst=<%-category.tags.join(' ')%>">
-												<span><b><%-category.name%></b></span> 
-											</a>
-											<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
-									
+										<div class="tag">
+											<span><%-category.name%></span> 
 										</div>
 
 									<% }) %>
@@ -297,85 +233,12 @@ var metadisplay = function(){ %>
 									<% _.each(bycategories.tags, function(tag){ %>
 
 										<div class="tag">
-											<a href="index?sst=<%-tag%>">
-												<span>
-													#<%-tag%>
-												</span>
-											</a>
+											<span>
+												#<%-tag%>
+											</span>
 										</div>
 
 									<% }) %>
-								</div>
-
-							<% } %>
-
-						
-
-							<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
-								<div class="panel">
-									<div class="item forstars">
-
-										
-									</div>
-
-									
-									<% if(app.platform.repost && !my) {%>
-										<div class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
-
-											<div class="itemwr table">
-												<div class="iconwr">											
-													<div class="icon">
-														<i class="fas fa-share"></i>
-													</div>
-												</div>
-											</div>
-
-										</div>
-									<% } %>
-
-									
-
-									<div class="item sharesocial right unselectable">
-
-										<div class="itemwr table">
-											<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
-											<div class="iconwr">
-												
-												<div class="icon">
-													<i class="fas fa-share-alt"></i>
-												</div>
-											</div>
-										</div>
-										
-									</div>
-									
-								</div>
-
-								<div class="wholikes">
-									
-								</div>
-							<% } %>
-
-							<% if(share.temp) {%>
-
-								<div class="panel">
-									<div class="item right">
-
-										<div class="itemwr table tempPreloader">
-											
-											<div class="iconwr">
-												<div class="preloader5"><span></span><span></span><span></span></div>
-											</div>
-											
-											<div class="count">
-												<div class="label">
-
-													<span><%=e('postWaitConf')%></span>
-												</div>
-											</div>	
-										</div>
-									</div>
-									<div class="clearfix"></div>
 								</div>
 
 							<% } %>
@@ -383,14 +246,9 @@ var metadisplay = function(){ %>
 
 						</div>
 
-
-
-						
 					</div>
 
 				<% } %>
-
-
 
 			</div>
 		</div>
@@ -409,28 +267,6 @@ var metadisplay = function(){ %>
 			</div>
 		</div>
 	</div>
-
-	<div class="exitFull roundclosebutton">
-		<i class="fa fa-times" aria-hidden="true"></i>
-	</div>
-
-
-		<% if(!emptywithrepost) {%>
-
-			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
-
-				<div class="showmorelenta"></div>
-	
-				<div class="commentsWrapperHb">
-					
-					<div class="commentsWrapper">
-					</div>
-	
-				</div>
-	
-			<% } %>
-	
-		<% } %>
 
 
 <% } %>

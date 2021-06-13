@@ -13,16 +13,10 @@ var telements = function(address){ %>
 		
 		%>
 
-		<% if (me && me.relation(address, 'subscribes')){ 
-			
-			_class="following"
-			
-		%>
+		<% if (me && me.relation(address, 'subscribes')){ _class="following" } %>
 
-		<% } else { %> 
-						
-		<% } %>
-		
+		<% if (me && me.relation(address, 'blocking')){ _class="blocking" }	%>
+
 		
 		<span class="subscribebuttonstop <%-_class%>">
 
@@ -46,7 +40,7 @@ var telements = function(address){ %>
 
 		<span class="blockingWrapper">
 
-			<span class="unblocking funf">&middot; <%=e('blocked')%></span>	
+			<span class="unblocking funf"><%=e('unblock')%></span>	
 
 		</span>
 					
@@ -57,10 +51,14 @@ var telements = function(address){ %>
 
 _.each(addresses, function(address){ 
 
+	var _class=''
+
+	if (me && me.relation(address, 'blocking')){ _class="userblocking" }
+
 %>
 	<div class="wrk">
 
-		<div class="user" address="<%-address%>">
+		<div class="user <%-_class%>" address="<%-address%>">
 			<div class="addressTable table" address="<%-address%>">
 				<div class="iconWrapper">
 					<% if(!app.curation()) {%>

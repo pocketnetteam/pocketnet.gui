@@ -4334,7 +4334,12 @@ Platform = function (app, listofnodes) {
 
                 var adrref = localStorage[adr + 'subscribeRef'];
 
+                
+
                 if (adrref) {
+
+                    delete localStorage['ref'];
+                    
                     self.sdk.users.get(adrref, function () {
 
                         var r = self.sdk.usersl.storage[adrref]
@@ -9799,7 +9804,9 @@ Platform = function (app, listofnodes) {
                         else {
                             //var parameters = ['30', '259200', 600000, self.app.localization.key];
 
-                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '259200' ///self.sdk.node.shares.parameters.defaults.period 
+                            console.log(p.period, self.sdk.node.shares.parameters.defaults.period, self.sdk.node.shares.parameters.stor.period)
+
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period 
 
                             var page = p.page || 0
                             

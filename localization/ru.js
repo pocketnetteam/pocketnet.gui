@@ -228,6 +228,10 @@ ____loclib.aynofollowers = "У вас еще нет подписчиков";
 ____loclib.anofollowing = "этот пользователь еще ни на кого не подписан";
 ____loclib.aynofollowing = "Вы еще ни на кого не подписаны";
 
+____loclib.blockedusers = "Заблокированные";
+____loclib.anoblocked = "Этот пользователь еще никого не заблокировал";
+____loclib.aynoblocked = "Вы еще никого не заблокировали";
+
 //lenta
 ____loclib.lloadmore = "Загрузить больше публикаций!";
 ____loclib.lloadprev = "Загрузить свежие материалы"

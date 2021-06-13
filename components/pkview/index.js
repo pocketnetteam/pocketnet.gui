@@ -35,23 +35,29 @@ var pkview = (function(){
 
 				var s = '';
 
-				var index = (current.mnemonicMask.length * percent / 100).toFixed(0)
+				if(current.mnemonicMask){
+					var index = (current.mnemonicMask.length * percent / 100).toFixed(0)
 
-				_.each(current.mnemonicKey, function(l, curlindex){
+					_.each(current.mnemonicKey, function(l, curlindex){
 
-					var a = _.indexOf(current.mnemonicMask, curlindex);
+						var a = _.indexOf(current.mnemonicMask, curlindex);
 
-					if(a < index || l == ' '){
-						s = s + l;
-					}
+						if(a < index || l == ' '){
+							s = s + l;
+						}
 
-					else
-					{
-						s = s + self.app.platform.values.alph[rand(0, self.app.platform.values.alph.length - 1)]
-					}
+						else
+						{
+							s = s + self.app.platform.values.alph[rand(0, self.app.platform.values.alph.length - 1)]
+						}
 
-					
-				})
+						
+					})
+				}
+
+				else{
+					s = current.mnemonicKey
+				}
 
 				return s
 			},

@@ -228,8 +228,18 @@ var author = (function(){
 				render : 'followers',
 				history : true,
 				count : function(){
+
+					var u = _.map(deep(author, 'data.subscribers') || [], function(a){
+						return a
+					})
+	
+					var blocked = deep(author, 'data.blocking') || []
+	
+					u = _.filter(u, function(a){
+						return _.indexOf(blocked, a) == -1
+					})
 					
-					return deep(author, 'data.subscribers.length') || 0 
+					return u.length
 				
 				}
 			},
@@ -241,7 +251,35 @@ var author = (function(){
 				render : 'following',
 				history : true,
 				count : function(){
-					return deep(author, 'data.subscribes.length') || 0 
+
+					var u = _.map(deep(author, 'data.subscribes') || [], function(a){
+						return a.adddress
+					})
+	
+					var blocked = deep(author, 'data.blocking') || []
+	
+					u = _.filter(u, function(a){
+						return _.indexOf(blocked, a) == -1
+					})
+
+					return u.length
+				}
+			},
+
+			blocking : {
+				name : self.app.localization.e('blockedusers').toUpperCase(),
+				id : 'blocking',
+				mobile : '<i class="fas fa-user-slash"></i>',
+				render : 'blocking',
+				history : true,
+				if : function(){
+					if(self.user.isItMe(author.address)) return true
+				},
+				count : function(){
+
+					var blocked = deep(author, 'data.blocking') || []
+
+					return blocked.length
 				}
 			},
 
@@ -600,13 +638,19 @@ var author = (function(){
 					return a
 				})
 
+				var blocked = deep(author, 'data.blocking') || []
+
+				u = _.filter(u, function(a){
+					return _.indexOf(blocked, a) == -1
+				})
+
 				var e = self.app.localization.e('anofollowers');
 
 				if(self.user.isItMe(author.address)){
 					e = self.app.localization.e('aynofollowers')
 				}
 
-				renders.userslist(_el, u, e, "Followers", function(e, p){
+				renders.userslist(_el, u, e, self.app.localization.e('followers'), function(e, p){
 					report.module = p;
 				})
 			},
@@ -617,13 +661,36 @@ var author = (function(){
 					return a.adddress
 				})
 
+				var blocked = deep(author, 'data.blocking') || []
+
+				u = _.filter(u, function(a){
+					return _.indexOf(blocked, a) == -1
+				})
+
 				var e = self.app.localization.e('anofollowing');
 
 				if(self.user.isItMe(author.address)){
 					e = self.app.localization.e('aynofollowing')
 				}
 
-				renders.userslist(_el, u, e, "Following", function(e, p){
+				renders.userslist(_el, u, e, self.app.localization.e('following'), function(e, p){
+					report.module = p;
+				})
+			},
+
+			blocking : function(_el, report){
+
+				var u = _.map(deep(author, 'data.blocking') || [], function(a){
+					return a
+				})
+
+				var e = self.app.localization.e('anoblocked');
+
+				if(self.user.isItMe(author.address)){
+					e = self.app.localization.e('aynoblocked')
+				}
+
+				renders.userslist(_el, u, e, self.app.localization.e('blockedusers'), function(e, p){
 					report.module = p;
 				})
 			},

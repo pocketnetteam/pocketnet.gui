@@ -224,6 +224,10 @@ ____loclib.aynofollowers = "You have no followers";
 ____loclib.anofollowing = "This user is not following anyone";
 ____loclib.aynofollowing = "You are not following anyone";
 
+____loclib.blockedusers = "Blocked Users";
+____loclib.anoblocked = "This user is not blocked anyone";
+____loclib.aynoblocked = "You are not blocked anyone";
+
 //lenta
 ____loclib.lloadmore = "Load More Awesome Posts!";
 ____loclib.lloadprev = "Load New Awesome Posts";

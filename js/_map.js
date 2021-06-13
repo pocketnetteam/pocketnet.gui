@@ -110,6 +110,7 @@ __map =  {
 		{ c : 'lenta', n : 'wholike' },
 		{ c : 'lenta', n : 'index' },
 		{ c : 'lenta', n : 'sharevideo' },
+		{ c : 'lenta', n : 'sharevideolight' },
 		{ c : 'share', n : 'url' },
 		{ c : 'lenta', n : 'stars' },
 		{ c : 'lenta', n : 'groupshares' },

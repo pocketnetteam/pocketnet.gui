@@ -21,28 +21,26 @@ var userslist = (function(){
 			
 			
 			unblocking : function(address){
-				el.caption.find('.unblocking').on('click', function(){
 
-					dialog({
-						html : self.app.localization.e('e13023'),
-						btn1text : self.app.localization.e('unblock'),
-						btn2text : self.app.localization.e('ucancel'),
-	
-						class : 'zindex',
-	
-						success : function(){
-	
-							self.app.platform.api.actions.unblocking(address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
-	
-						}
-					})
-	
-					
+				dialog({
+					html : self.app.localization.e('e13023'),
+					btn1text : self.app.localization.e('unblock'),
+					btn2text : self.app.localization.e('ucancel'),
+
+					class : 'zindex',
+
+					success : function(){
+
+						self.app.platform.api.actions.unblocking(address, function(tx, error){
+							if(!tx){
+								self.app.platform.errorHandler(error, true)	
+							}
+						})
+
+					}
 				})
+
+				
 
 			},
 			unsubscribe : function(address){
@@ -255,12 +253,12 @@ var userslist = (function(){
 			self.app.platform.clbks.api.actions.unblocking.userlist = function(address){
 
 				el.c.find('.user[address="'+address+'"] .subscribebuttonstop').removeClass('blocking')				
-
+				el.c.find('.user[address="'+address+'"]').removeClass('userblocking')	
 			}
 
 			el.c.on('click', '.subscribe', events.subscribe)
 			el.c.on('click', '.unsubscribe', events.unsubscribe)
-			el.c.on('click', '.unblocking', events.unsubscribe)
+			el.c.on('click', '.unblocking', events.unblocking)
 			el.c.on('click', '.notificationturn', events.subscribePrivate)
 			
 		}

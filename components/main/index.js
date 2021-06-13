@@ -599,6 +599,15 @@ var main = (function(){
 						video : videomain && !isMobile(),
 						videomobile : videomain && isMobile(),
 						window : isMobile() ? el.c.find('.lentacell') : el.w,
+						page : 0,
+						afterload : function(ed, s, e){
+
+							if(!isMobile()) return
+
+							if(e || !s.length) return
+
+							ed.page++
+						},
 						opensvi : function(id){
 
 							lastscroll = el.w.scrollTop()
