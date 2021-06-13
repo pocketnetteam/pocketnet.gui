@@ -301,178 +301,8 @@ var share = (function(){
 			embeding : function(type, value){
 				var storage = currentShare.export(true)
 
-				
-
-				if (type === 'addVideo') {
-
-					if (external && external.id == 'uploadpeertube'){
-						external.container.show()
-
-						return
-					}
-
-					if (external) external.container.close();
-
-					globalpreloader(true);
-
-					self.app.peertubeHandler.api.proxy.bestChange().then(r => {
-						return self.app.peertubeHandler.api.user.auth(self.app.peertubeHandler.active(), true)
-					}).then(r => {
-
-						
-
-						globalpreloader(false);
-
-						self.nav.api.load({
-							open : true,
-							id : 'uploadpeertube',
-							inWnd : true,
-	
-							history : true,
-	
-							essenseData : {
-								storage : storage,
-								value : value,
-								actions : {
-									added : function(link, name){
-										var type = 'url';
-	
-										var result = currentShare[type].set(link)
-
-										currentShare.settings.a = ["i", "u", "cm", "p"]
-										currentShare.caption.set(name)
-										currentShare.images.set()
-										currentShare.repost.set()
-	
-										if(!essenseData.share){
-											state.save()
-										}
-	
-										if(!result && errors[type]){
-	
-											sitemessage(errors[type])
-	
-										}								
-	
-										make();										
-									}
-								},
-	
-								closeClbk : function() {
-
-									if(!self.app.peertubeHandler.checklink(currentShare.url.v)){
-										if (el.peertube && el.peertubeLiveStream) {
-										}
-									}
-
-									external = null
-
-									make();
-								}
-							},
-	
-							clbk : function(p, element){
-								external = element
-								videoUploadData = element.essenseData;
-
-							}
-						})
-
-					}).catch(e => {
-
-
-						globalpreloader(false);
-
-						return sitemessage(e.text || "Undefined Error");
-					})
-
-				
-				} 
-
-				if (type === 'addStream') {
-
-					if (external && external.id == 'streampeertube'){
-						external.container.show()
-
-						return;
-					}
-
-					if (external) external.container.close();
-
-					globalpreloader(true);
-
-					var serverLink = currentShare.url ? self.app.peertubeHandler.parselink(currentShare.url.v).host : null;
-
-					self.app.peertubeHandler.api.user.auth(serverLink || self.app.peertubeHandler.active(), true)
-					  .then(r => {
-						globalpreloader(false);
-
-						self.nav.api.load({
-							open : true,
-							id : 'streampeertube',
-							inWnd : true,
-	
-							history : false,
-	
-							essenseData : {
-								storage : storage,
-								value : value,
-								currentLink : currentShare.url ? currentShare.url.v : '',
-								actions : {
-									added : function(link, name){
-										var type = 'url';
-	
-										var result = currentShare[type].set(link)
-
-										currentShare.settings.a = ["i", "u", "cm", "p"]
-										currentShare.caption.set(name)
-										currentShare.images.set()
-										currentShare.repost.set()
-	
-										if(!essenseData.share){
-											state.save()
-										}
-	
-										if(!result && errors[type]){
-	
-											sitemessage(errors[type])
-	
-										}								
-	
-										make();	
-									}
-								},
-	
-								closeClbk : function() {
-									if(!self.app.peertubeHandler.checklink(currentShare.url.v)){
-										if (el.peertube && el.peertubeLiveStream) {
-										}
-									}
-
-									external = null
-
-									make();
-								}
-							},
-	
-							clbk : function(p, element){
-								external = element;
-
-								videoUploadData = element.essenseData;
-
-								console.log('external', element)
-							}
-						});
-
-
-					}).catch(e => {
-
-						console.log("E", e)
-
-						globalpreloader(false);
-
-						return sitemessage(e.text || "Undefined Error");
-					})
+				if (type === 'addVideo' || type === 'addStream') {
+					renders.streamPage({ value, storage, type });
 				} 
 
 				if(type == 'article'){
@@ -1657,6 +1487,100 @@ var share = (function(){
 				}
 			},
 
+			streamPage(p = {}) {
+
+				var typeDictionary = {
+					addVideo: 'uploadpeertube',
+					addStream: 'streampeertube',
+				};
+
+				var elName = typeDictionary[p.type];
+				
+				if (external && external.id == elName){
+					external.container.show()
+
+					return;
+				}
+
+				if (external) external.container.close();
+
+				globalpreloader(true);
+
+				var serverLink = currentShare.url ? self.app.peertubeHandler.parselink(currentShare.url.v).host : null;
+
+				self.app.peertubeHandler.api.user.auth(serverLink || self.app.peertubeHandler.active(), true)
+				  .then(r => {
+					globalpreloader(false);
+
+					self.nav.api.load({
+						open : true,
+						id : elName,
+						inWnd : true,
+
+						history : false,
+
+						essenseData : {
+							storage : p.storage,
+							value : p.value,
+							currentLink : currentShare.url ? currentShare.url.v : '',
+							actions : {
+								added : function(link, name){
+									var type = 'url';
+
+									var result = currentShare[type].set(link)
+
+									currentShare.settings.a = ["i", "u", "cm", "p"]
+									currentShare.caption.set(name)
+									currentShare.images.set()
+									currentShare.repost.set()
+
+									if(!essenseData.share){
+										state.save()
+									}
+
+									if(!result && errors[type]){
+
+										sitemessage(errors[type])
+
+									}								
+
+									make();	
+								}
+							},
+
+							closeClbk : function() {
+								if(!self.app.peertubeHandler.checklink(currentShare.url.v)){
+									if (el.peertube && el.peertubeLiveStream) {
+									}
+								}
+
+								external = null
+
+								make();
+							}
+						},
+
+						clbk : function(p, element){
+
+							external = element;
+
+							videoUploadData = element.essenseData;
+
+							console.log('external', element)
+						}
+					});
+
+
+				}).catch(e => {
+
+					console.log("E", e)
+
+					globalpreloader(false);
+
+					return sitemessage(e.text || "Undefined Error");
+				})
+			},
+
 			url : function(clbk){
 
 				var url = currentShare.url.v;
@@ -1709,6 +1633,12 @@ var share = (function(){
 
 								
 							})
+
+							p.el.find('.streaminfo').on('click', () => {
+								var storage = currentShare.export(true);
+
+								renders.streamPage({ storage, type: 'addStream' });
+							});
 
 							initUpload({
 								el : el.urlWrapper.find('.uploadpeertubewp'),

@@ -1041,3 +1041,4 @@ ____loclib["pdirectdialog"] = 'External proxies are not responding, would you li
 
 
 ____loclib.goLive = 'Go Live'
+____loclib.streamInfo = 'Stream Info'
