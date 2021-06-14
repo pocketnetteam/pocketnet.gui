@@ -574,6 +574,7 @@ PeerTubePocketnet = function (app) {
               privacy: 1,
               channelId: userInfo.channelId,
               name: videoName,
+              saveReplay: true,
             };
 
             if (parameters.image) {
