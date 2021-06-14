@@ -15147,6 +15147,7 @@ Platform = function (app, listofnodes) {
                             views : linkInfo.views,
                             duration : linkInfo.duration,
                             aspectRatio : linkInfo.aspectRatio || 1,
+                            isLive : linkInfo.isLive,
                         } : '';
 
                         window.peertubeglobalcache[link.meta.id] = linkInfo

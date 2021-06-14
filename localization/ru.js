@@ -859,3 +859,6 @@ ____loclib.pbp_11 = 'По вопросам обращайтесь'
 
 ____loclib["Top videos"] = 'Лучшие видео'
 ____loclib["More videos by this author"] = 'Другие видео от этого автора'
+
+____loclib.goLive = 'Начать Трансляцию'
+____loclib.streamInfo = 'Ключи Трансляции'

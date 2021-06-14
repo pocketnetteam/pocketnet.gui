@@ -26,13 +26,13 @@
             
             if (typeof u != 'undefined' && u && !u.trial && !share.itisvideo() && !share.aliasid) { %>
                 <div class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
-                    <i class="fas fa-video"></i> <span><%=e('peertubeAddVideo')%></span>
+                    <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                 </div>
-                <!--<div class="item peertubeLiveStream tooltip" embeding="addStream" title="<%=e('peertubeAddStream')%>">
-                    <i class="fas fa-dot-circle"></i> <span class="mobiledevice"><%=e('peertubeAddStream')%></span>
-                </div>-->
-            <%} %>
 
+                <div class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
+                    <i class="fas fa-dot-circle"></i> <span><%- e('goLive') %></span>
+                </div>
+            <%} %>
             <!--<div class="item language tooltip" embeding="language" title="<%=e('e14001')%>">
                 <%-(share.language.v || '').toUpperCase()%>
             </div>-->

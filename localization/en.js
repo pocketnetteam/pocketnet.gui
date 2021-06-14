@@ -1038,3 +1038,7 @@ ____loclib["Top Videos"] = 'Top Videos'
 ____loclib["More videos by this author"] = 'More videos by this author'
 
 ____loclib["pdirectdialog"] = 'External proxies are not responding, would you like to switch to a local proxy?'
+
+
+____loclib.goLive = 'Go Live'
+____loclib.streamInfo = 'Stream Info'
