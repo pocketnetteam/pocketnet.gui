@@ -10,7 +10,7 @@
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
 
 			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
-			var aspectRatio = (info.data || {}).aspectRatio || 0
+			var aspectRatio = (info.data || {}).aspectRatio || 0;
 	%>
 		<div class="videoWrapper <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
@@ -112,7 +112,12 @@
 							<div class="item uploadpeertubewp">
 								<i class="fas fa-camera"></i> <span><%- e('editWallpaper') %></span>
 							</div>
-						<% } %>
+							<% if (info.data.isLive) { %>
+							<div class="item streaminfo">
+								<i class="fas fa-broadcast-tower"></i> <span><%- e('streamInfo') %></span>
+							</div>
+						<% 	}
+						} %>
 
 						<div class="item removepeertube">
 							<i class="far fa-times-circle"></i> <span><%- e('removeVideo') %></span>

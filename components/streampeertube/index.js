@@ -80,67 +80,54 @@ var streampeertube = (function () {
 
           filesWrittenObject.image = videoWallpaperFile[0];
         }
-        if (!videoName) {
-          nameError.text('Name is empty');
-
-          return;
-        }
 
         filesWrittenObject.name = videoName;
 
-        filesWrittenObject.uploadFunction = function (percentComplete) {
-          var formattedProgress = percentComplete.toFixed(2);
+        self.app.peertubeHandler.api.videos
+          .live(filesWrittenObject)
+          .then((response) => {
+            var resultElement = wnd.find('.result-section');
 
-          el.uploadProgress
-            .find('.upload-progress-bar')
-            .css('width', formattedProgress + '%');
-          el.uploadProgress
-            .find('.upload-progress-percentage')
-            .text(formattedProgress + '%');
-        };
+            self.app.peertubeHandler.api.videos
+              .getLiveInfo({ id: response.uuid }, { host: response.host })
+              .then((res) => {
+                preloaderSection.addClass('hidden');
 
-        filesWrittenObject.successFunction = function (response) {
-          var resultElement = wnd.find('.result-section');
+                if (response.error) {
+                  var error = deep(response, 'error.responseJSON.errors') || {};
 
-          preloaderSection.addClass('hidden');
+                  var message = (Object.values(error)[0] || {}).msg;
 
-          if (response.error) {
-            var error = deep(response, 'error.responseJSON.errors') || {};
+                  sitemessage(message || 'Uploading error');
+                  contentSection.removeClass('hidden');
+                  el.streamButton.removeClass('disabledButton');
+                  el.streamButton.html(
+                    '<i class="fas fa-broadcast-tower"></i> Go Live',
+                  );
 
-            var message = (Object.values(error)[0] || {}).msg;
+                  return;
+                }
 
-            sitemessage(message || 'Uploading error');
-            contentSection.removeClass('hidden');
-            el.streamButton.removeClass('disabledButton');
-            el.streamButton.html(
-              '<i class="fas fa-broadcast-tower"></i> Go Live',
-            );
+                streamCreated = true;
 
-            return;
-          }
+                resultElement.removeClass('hidden');
+                el.streamButton.html(
+                  '<i class="fas fa-check"></i> Stream Created',
+                );
+                el.streamButton.removeClass('disabledButton');
+                el.streamButton.addClass('successButton');
 
-          streamCreated = true;
+                var rtmpInput = resultElement.find('.result-video-rtmp');
+                var streamKeyInput = resultElement.find(
+                  '.result-video-streamKey',
+                );
 
-          resultElement.removeClass('hidden');
-          el.streamButton.html('<i class="fas fa-check"></i> Stream Created');
-          el.streamButton.removeClass('disabledButton');
-          el.streamButton.addClass('successButton');
+                rtmpInput.val(res.rtmpUrl);
+                streamKeyInput.val(res.streamKey);
 
-          var rtmpInput = resultElement.find('.result-video-rtmp');
-          var streamKeyInput = resultElement.find('.result-video-streamKey');
-
-          rtmpInput.val(response.rtmpUrl);
-          streamKeyInput.val(response.streamKey);
-
-          actions.added(
-            `${response.video}?stream=true${
-              streamDate ? `&date=${streamDate}` : ''
-            }`,
-          );
-          // wndObj.close();
-        };
-
-        self.app.peertubeHandler.startLive(filesWrittenObject);
+                actions.added(response.formattedLink);
+              });
+          });
       });
 
       el.copyButton.each((index, button) => {
@@ -157,11 +144,11 @@ var streampeertube = (function () {
         });
       });
 
-      el.dateInput.DateTimePicker({
-        settingValueOfElement: function (a, b) {
-          streamDate = moment.utc(b).format();
-        },
-      });
+      // el.dateInput.DateTimePicker({
+      //   settingValueOfElement: function (a, b) {
+      //     streamDate = moment.utc(b).format();
+      //   },
+      // });
     };
 
     return {
@@ -173,20 +160,22 @@ var streampeertube = (function () {
         actions = ed.actions;
 
         if (self.app.peertubeHandler.checklink(ed.currentLink)) {
-
-
-
-          var videoId = self.app.peertubeHandler.parselink(ed.currentLink).id
+          var parsedLink = self.app.peertubeHandler.parselink(ed.currentLink);
+          var videoId = parsedLink.id;
 
           if (!videoId) {
             var data = {};
 
             clbk(data);
           } else {
-
-            
-            self.app.peertubeHandler.getLiveInfo(videoId, {
-              successFunction: (res) => {
+            self.app.peertubeHandler.api.videos
+              .getLiveInfo(
+                { id: videoId },
+                {
+                  host: parsedLink.host,
+                },
+              )
+              .then((res) => {
                 if (res.error) {
                   var error = deep(res, 'error.responseJSON.errors') || {};
 
@@ -205,8 +194,7 @@ var streampeertube = (function () {
                 var data = {};
 
                 clbk(data);
-              },
-            });
+              });
           }
         } else {
           var data = {};
