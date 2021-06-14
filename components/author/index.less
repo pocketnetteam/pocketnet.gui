@@ -26,7 +26,7 @@
 
 	.copyaddress{
 		cursor: pointer;
-		font-size: 0.7em;
+		text-overflow: ellipsis;
 	}
 	
 	.authorlentawrappermain{
@@ -276,10 +276,21 @@
 				.aboutwrapper{
 				}
 			}
+
+			
 		}
 
 		.item{
 			margin-bottom: 2 * @rhythm;
+		}
+
+		.postcnt{
+			cursor: pointer;
+			
+			.label{
+				text-transform: capitalize;
+				text-decoration: underline;
+			}
 		}
 
 		.name{
@@ -304,7 +315,9 @@
 		width : 240px;
 		padding : 5 * @rhythm 0;
 		padding-left: @rhythm;
-
+		padding-right: 3 * @rhythm;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		
 	}
 
@@ -562,16 +575,22 @@
 
 	.contents
 	{
-		padding-left: 2 * @rhythm;
+		background: #fff;
+		padding: 2 * @rhythm 4 * @rhythm;
+		
+
 		.cgroup{
 			padding-top : 2 * @rhythm;
 			padding-bottom : 2 * @rhythm;
 		}
 
 		.ccaption{
-			font-weight: 700;
-			color : @color-main;
+			font-weight: 100;
 			margin-bottom : 2 * @rhythm;
+
+			span{
+				font-size: 2em;
+			}
 		}
 
 		.gcontents{
@@ -581,15 +600,14 @@
 			
 			.citemtable{
 
-				width: auto;
 				
 				>div{
 					vertical-align: middle;
-					max-width: 130px;
 					overflow: hidden;
+					padding : @rhythm 0;
 
 					&.cscorecell{
-						width : 50px;
+						width : 150px;
 						text-align: right;
 						padding-right: 2 * @rhythm;
 					}
@@ -601,8 +619,12 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+			}
+
+			.cname{
 				span{
-					font-size: 0.8em;
+					font-size: 1.1em;
+					font-weight: 100;
 				}
 			}
 

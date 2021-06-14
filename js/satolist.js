@@ -15222,6 +15222,28 @@ Platform = function (app, listofnodes) {
                     return Promise.all(promises)
 
                 }
+            },
+
+            volume : 0.5,
+            save : function(){
+                localStorage['videovolume'] = self.sdk.videos.volume || 0.5
+            },
+            load : function(){
+
+                var _v = localStorage['videovolume']
+
+                if(typeof _v == 'undefined') _v = '0.5'
+
+
+                console.log("_v", _v)
+
+                self.sdk.videos.volume = Number(_v)
+            },
+            init : function(clbk){
+                console.log("LOADVIDEOS")
+                self.sdk.videos.load()
+
+                if(clbk) clbk()
             }
         }
     }
@@ -19218,6 +19240,7 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
             self.sdk.tags.getfastsearch()
             self.sdk.node.get.time()
+            self.sdk.videos.init()
 
             self.preparing = false;
 
@@ -19245,7 +19268,8 @@ Platform = function (app, listofnodes) {
             self.sdk.user.meUpdate,
             self.sdk.categories.load,
             self.sdk.activity.load,
-            self.sdk.node.shares.parameters.load
+            self.sdk.node.shares.parameters.load,
+            
 
         ], function () {
 

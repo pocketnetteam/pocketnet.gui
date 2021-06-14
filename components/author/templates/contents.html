@@ -25,18 +25,14 @@
 
         %>
 
-        <div class="cgroup <% if((g.items.length > 15 && selected && tgr == -1 && g.items.length > 3) || (tgr > -1 && tgr - tol.prev > -1) || (g.items.length > 15 && tgr > -1 && tgr + tol.next < g.items.length - 1) || (!selected && g.items.length > 15)) {%> hasmore <% } %>">
+        <div class="cgroup hasmore ">
 
             <div class="ccaption">
                 <div class="captiontable table">
                     
 
                     <div class="captionlabel">
-                        <%= superXSS(g.g.caption) %>
-                    </div>
-
-                    <div class="captionicon">
-                        <i class="fas fa-chevron-up"></i>
+                        <span><%= superXSS(g.g.caption) %></span>
                     </div>
 
                 </div>
@@ -44,23 +40,23 @@
 
             <div class="gcontents">
 
-                <% if((tgr > -1 && tgr - tol.prev > -1 && g.items.length > 15) || (selected && tgr == -1 && g.items.length > 3)) {%>
-                    <div class="citem dots">
-                        <div class="cname">
-                            <span>...</span>
-                        </div>
-                    </div>
-                <% } %>
+                <% _.each(g.items, function(cnt, index){  
+                    
+                    var label = superXSS(cnt.caption)
 
-                <% _.each(g.items, function(cnt, index){  %>
+                    if (label.indexOf("<") > -1 || label.indexOf('&lt;') > -1) return
 
-                    <div class="citem <% if(selected && selected == cnt.txid) {%> selected <% } %> <% if((g.items.length > 15 && tgr > -1 && tgr - index > tol.prev) || (tgr > -1 && index - tgr > tol.next && g.items.length > 15) || (selected && tgr == -1 && g.items.length > 3) || (!selected && index > 15)) {%> chidden <% } %>">
+                    console.log('label', label)
+
+                    %>
+
+                    <div class="citem ">
                         
                         <div class="citemtable table">
                             <div class="cnamecell">
                                 <div class="cname">
-                                    <a href="<%-app.platform.api.authorlink(author.address)%>?report=post&mt=<%- cnt.txid %>" handler="true">
-                                        <span><%= superXSS(cnt.caption) %></span>
+                                    <a href="<%-app.platform.api.authorlink(author.address)%>?report=shares&s=<%- cnt.txid %>&msh=1" handler="true">
+                                        <span><%= label %></span>
                                     </a>
                                 </div>
                             </div>
@@ -78,13 +74,7 @@
 
                 <% }) %>
 
-                <% if((tgr > -1 && tgr + tol.next < g.items.length - 1 && g.items.length > 15) || (!selected && g.items.length > 15)) {%>
-                    <div class="citem dots">
-                        <div class="cname">
-                            <span>...</span>
-                        </div>
-                    </div>
-                <% } %>
+          
 
             </div>
 

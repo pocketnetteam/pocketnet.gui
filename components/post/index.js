@@ -367,7 +367,17 @@ var post = (function () {
 						//autoplay : pels.length <= 1,
 						resetOnEnd: true,
 						muted: false,
-						wautoplay: wa
+						wautoplay: wa,
+
+						volumeChange : function(v){
+							videosVolume = v
+
+							console.log('v', v)
+
+							self.sdk.videos.volume = videosVolume 
+
+							self.sdk.videos.save()
+						}
 					};
 
 					$.each(pels, function (key, el) {
@@ -379,11 +389,12 @@ var post = (function () {
 
 							if (wa) {
 
-								console.log("PLAYER PLAY")
+								
 
 								player.play()
-								player.setVolume(1)
 								player.muted = false
+								player.setVolume(self.sdk.videos.volume)
+								//
 							}
 
 							//// autoplay

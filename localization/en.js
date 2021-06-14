@@ -212,7 +212,7 @@ ____loclib.aused = "This address is already use in another addresses pool";
 //author
 ____loclib.sub = "Follow";
 ____loclib.unsub = "Unfollow";
-____loclib.joined = "Joined Pocketnet";
+____loclib.joined = "Joined";
 ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";

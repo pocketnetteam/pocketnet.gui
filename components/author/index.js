@@ -244,6 +244,18 @@ var author = (function(){
 				}
 			},
 
+			contents : {
+				name : self.app.localization.e('followers').toUpperCase(),
+				mobile : '<i class="fas fa-users"></i>',
+				id : 'contents',
+				render : 'contents',
+				history : true,
+				if : function(){
+					return false
+				}
+				
+			},
+
 			following : {
 				name : self.app.localization.e('following').toUpperCase(),
 				id : 'following',
@@ -370,28 +382,23 @@ var author = (function(){
 		}
 
 		var renders = {
-			contents : function(contents, clbk){
+			contents : function(_el, report){
 
-				var selected = parameters().mt
+				self.app.platform.sdk.contents.get(author.address, function(contents){
 
-				var pp = {
-					name :  'contents',
-					el :   el.contents,
-					data : {
-						contents : contents,
-						author : author,
-						selected : selected
-					},
-				}
+					var selected = parameters().mt
 
-				self.shell(pp, function(p){
+					var pp = {
+						name :  'contents',
+						el :   _el,
+						data : {
+							contents : contents,
+							author : author,
+							selected : selected
+						},
+					}
 
-					p.el.find('.hasmore .captiontable').on('click', function(){
-						$(this).closest('.hasmore').toggleClass('showedmore')
-					})
-
-					if (clbk)
-						clbk();
+					self.shell(pp, function(p){})
 
 				})
 			},
@@ -506,10 +513,10 @@ var author = (function(){
 
 					renders.menulight()
 
-					if(!isMobile())
+					/*if(!isMobile())
 						self.app.platform.sdk.contents.get(author.address, function(contents){
 							renders.contents(contents)	
-						})
+						})*/
 				}
 				
 			},
@@ -627,6 +634,12 @@ var author = (function(){
 
 							sitemessage(self.app.localization.e('successcopied'))
 						})
+
+						p.el.find('.postcnt').on('click', function(){
+
+							renders.report(reports.contents)
+
+						})
 					})
 
 				})
@@ -699,7 +712,7 @@ var author = (function(){
 
 				var id = parameters().mt
 
-				self.app.platform.sdk.contents.get(author.address, function(contents){
+				//self.app.platform.sdk.contents.get(author.address, function(contents){
 
 					var _contents = self.app.platform.sdk.contents.getsorteditems(contents)
 
@@ -747,7 +760,7 @@ var author = (function(){
 						})
 	
 					})
-				})
+				//})
 
 				
 

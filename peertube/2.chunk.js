@@ -655,7 +655,7 @@ function getCodec(name, useVP9 = false) {
 
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
-var utils = __webpack_require__(4);
+var utils = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./src/assets/player/webtorrent/peertube-chunk-store.ts
 var peertube_chunk_store = __webpack_require__(507);
@@ -697,22 +697,21 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         this.isAutoResolutionObservation = false;
         this.playerRefusedP2P = false;
         this.downloadSpeeds = [];
-        this.startTime = Object(utils["i" /* timeToInt */])(options.startTime);
+        this.startTime = Object(utils["j" /* timeToInt */])(options.startTime);
         // Disable auto play on iOS
         this.autoplay = options.autoplay;
-        this.playerRefusedP2P = !Object(peertube_player_local_storage["d" /* getStoredP2PEnabled */])();
+        this.playerRefusedP2P = !Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])();
         this.videoFiles = options.videoFiles;
         this.videoDuration = options.videoDuration;
         this.savePlayerSrcFunction = this.player.src;
         this.playerElement = options.playerElement;
         this.player.ready(() => {
             const playerOptions = this.player.options_;
-            const volume = Object(peertube_player_local_storage["f" /* getStoredVolume */])();
-            if (volume !== undefined)
-                this.player.volume(volume);
-            const muted = playerOptions.muted !== undefined ? playerOptions.muted : Object(peertube_player_local_storage["c" /* getStoredMute */])();
-            if (muted !== undefined)
-                this.player.muted(muted);
+            /*const volume = getStoredVolume()
+            if (volume !== undefined) this.player.volume(volume)
+      
+            const muted = playerOptions.muted !== undefined ? playerOptions.muted : getStoredMute()
+            if (muted !== undefined) this.player.muted(muted)*/
             this.player.duration(options.videoDuration);
             this.initializePlayer();
             this.runTorrentInfoScheduler();
@@ -745,6 +744,19 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         }
         if (!videoFile) {
             throw Error(`Can't update video file since videoFile is undefined.`);
+            /*
+      
+            const error: { message: string, code?: number } = {
+              message: "Can't update video file since videoFile is undefined."
+            }
+      
+            this.player.tech(true).error = () => error as any
+            this.player.tech(true).trigger('error')
+      
+            return
+      
+      
+            */
         }
         // Don't add the same video file once again
         if (this.currentVideoFile !== undefined && this.currentVideoFile.magnetUri === videoFile.magnetUri) {
@@ -761,7 +773,7 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         this.currentVideoFile = videoFile;
         // Don't try on iOS that does not support MediaSource
         // Or don't use P2P if webtorrent is disabled
-        if (Object(utils["e" /* isIOS */])() || this.playerRefusedP2P) {
+        if (Object(utils["f" /* isIOS */])() || this.playerRefusedP2P) {
             return this.fallbackToHttp(options, () => {
                 this.player.playbackRate(oldPlaybackRate);
                 return done();
@@ -965,8 +977,8 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         });
         // If the download speed is too bad, return the lowest resolution we have
         if (filteredFiles.length === 0)
-            return Object(utils["l" /* videoFileMinByResolution */])(files);
-        return Object(utils["k" /* videoFileMaxByResolution */])(filteredFiles);
+            return Object(utils["m" /* videoFileMinByResolution */])(files);
+        return Object(utils["l" /* videoFileMaxByResolution */])(filteredFiles);
     }
     getAndSaveActualDownloadSpeed() {
         const start = Math.max(this.downloadSpeeds.length - this.CONSTANTS.BANDWIDTH_AVERAGE_NUMBER_OF_VALUES, 0);
@@ -976,7 +988,7 @@ class webtorrent_plugin_WebTorrentPlugin extends Plugin {
         const sum = lastDownloadSpeeds.reduce((a, b) => a + b);
         const averageBandwidth = Math.round(sum / lastDownloadSpeeds.length);
         // Save the average bandwidth for future use
-        Object(peertube_player_local_storage["g" /* saveAverageBandwidth */])(averageBandwidth);
+        Object(peertube_player_local_storage["e" /* saveAverageBandwidth */])(averageBandwidth);
         return averageBandwidth;
     }
     initializePlayer() {

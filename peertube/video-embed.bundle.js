@@ -27876,83 +27876,24 @@ module.exports = function (it) {
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(5);
-var getOwnPropertyDescriptor = __webpack_require__(20).f;
-var createNonEnumerableProperty = __webpack_require__(21);
-var redefine = __webpack_require__(26);
-var setGlobal = __webpack_require__(37);
-var copyConstructorProperties = __webpack_require__(81);
-var isForced = __webpack_require__(64);
-
-/*
-  options.target      - name of the target object
-  options.global      - target is the global object
-  options.stat        - export as static methods of target
-  options.proto       - export as prototype methods of target
-  options.real        - real prototype method for the `pure` version
-  options.forced      - export even if the native feature is available
-  options.bind        - bind methods to the target, required for the `pure` version
-  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
-  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
-  options.sham        - add a flag to not completely full polyfills
-  options.enumerable  - export as enumerable property
-  options.noTargetGet - prevent calling a getter on target
-*/
-module.exports = function (options, source) {
-  var TARGET = options.target;
-  var GLOBAL = options.global;
-  var STATIC = options.stat;
-  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
-  if (GLOBAL) {
-    target = global;
-  } else if (STATIC) {
-    target = global[TARGET] || setGlobal(TARGET, {});
-  } else {
-    target = (global[TARGET] || {}).prototype;
-  }
-  if (target) for (key in source) {
-    sourceProperty = source[key];
-    if (options.noTargetGet) {
-      descriptor = getOwnPropertyDescriptor(target, key);
-      targetProperty = descriptor && descriptor.value;
-    } else targetProperty = target[key];
-    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
-    // contained in target
-    if (!FORCED && targetProperty !== undefined) {
-      if (typeof sourceProperty === typeof targetProperty) continue;
-      copyConstructorProperties(sourceProperty, targetProperty);
-    }
-    // add a flag to not completely full polyfills
-    if (options.sham || (targetProperty && targetProperty.sham)) {
-      createNonEnumerableProperty(sourceProperty, 'sham', true);
-    }
-    // extend global
-    redefine(target, key, sourceProperty, options);
-  }
-};
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ getRtcConfig; });
-__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ toTitleCase; });
-__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ timeToInt; });
-__webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ secondsToTime; });
+__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ toTitleCase; });
+__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ timeToInt; });
+__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ secondsToTime; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ buildVideoLink; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ buildVideoOrPlaylistEmbed; });
-__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ videoFileMaxByResolution; });
-__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ videoFileMinByResolution; });
-__webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ isMobile; });
+__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ videoFileMaxByResolution; });
+__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ videoFileMinByResolution; });
+__webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ isMobile; });
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ bytes; });
-__webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ isIOS; });
-__webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ isSafari; });
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ isIOS; });
+__webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ isSafari; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ isAndroid; });
 
 // UNUSED EXPORTS: isWebRTCDisabled, buildPlaylistLink
 
@@ -28056,6 +27997,9 @@ function bytes(value) {
 }
 function isMobile() {
     return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+function isAndroid() {
+    return /Android/i.test(navigator.userAgent) && window.cordova;
 }
 function buildVideoLink(options = {}) {
     const { baseUrl } = options;
@@ -28200,6 +28144,66 @@ function getRtcConfig() {
 
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(5);
+var getOwnPropertyDescriptor = __webpack_require__(20).f;
+var createNonEnumerableProperty = __webpack_require__(21);
+var redefine = __webpack_require__(26);
+var setGlobal = __webpack_require__(37);
+var copyConstructorProperties = __webpack_require__(81);
+var isForced = __webpack_require__(64);
+
+/*
+  options.target      - name of the target object
+  options.global      - target is the global object
+  options.stat        - export as static methods of target
+  options.proto       - export as prototype methods of target
+  options.real        - real prototype method for the `pure` version
+  options.forced      - export even if the native feature is available
+  options.bind        - bind methods to the target, required for the `pure` version
+  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
+  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
+  options.sham        - add a flag to not completely full polyfills
+  options.enumerable  - export as enumerable property
+  options.noTargetGet - prevent calling a getter on target
+*/
+module.exports = function (options, source) {
+  var TARGET = options.target;
+  var GLOBAL = options.global;
+  var STATIC = options.stat;
+  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
+  if (GLOBAL) {
+    target = global;
+  } else if (STATIC) {
+    target = global[TARGET] || setGlobal(TARGET, {});
+  } else {
+    target = (global[TARGET] || {}).prototype;
+  }
+  if (target) for (key in source) {
+    sourceProperty = source[key];
+    if (options.noTargetGet) {
+      descriptor = getOwnPropertyDescriptor(target, key);
+      targetProperty = descriptor && descriptor.value;
+    } else targetProperty = target[key];
+    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
+    // contained in target
+    if (!FORCED && targetProperty !== undefined) {
+      if (typeof sourceProperty === typeof targetProperty) continue;
+      copyConstructorProperties(sourceProperty, targetProperty);
+    }
+    // add a flag to not completely full polyfills
+    if (options.sham || (targetProperty && targetProperty.sham)) {
+      createNonEnumerableProperty(sourceProperty, 'sham', true);
+    }
+    // extend global
+    redefine(target, key, sourceProperty, options);
+  }
+};
+
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28282,21 +28286,23 @@ module.exports = doccy;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return getStoredVolume; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getStoredP2PEnabled; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getStoredMute; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getStoredTheater; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return saveVolumeInStore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return saveMuteInStore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return saveTheaterInStore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return saveAverageBandwidth; });
+/* unused harmony export getStoredVolume */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getStoredP2PEnabled; });
+/* unused harmony export getStoredMute */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getStoredTheater; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return saveVolumeInStore; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return saveMuteInStore; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return saveTheaterInStore; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return saveAverageBandwidth; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getAverageBandwidthInStore; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return saveLastSubtitle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return saveLastSubtitle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getStoredLastSubtitle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return saveVideoWatchHistory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return saveVideoWatchHistory; });
 /* unused harmony export getStoredVideoWatchHistory */
 /* unused harmony export cleanupVideoWatch */
 function getStoredVolume() {
+    return undefined;
+    ////
     const value = getLocalStorage('volume');
     if (value !== null && value !== undefined) {
         const valueNumber = parseFloat(value);
@@ -29640,7 +29646,7 @@ module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
 
 "use strict";
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var global = __webpack_require__(5);
 var isForced = __webpack_require__(64);
 var redefine = __webpack_require__(26);
@@ -30369,6 +30375,7 @@ module.exports = {
 
 const maxRetries = 3;
 function segmentValidatorFactory(segmentsSha256Url, isLive) {
+    console.log('isLive', isLive, segmentsSha256Url);
     let segmentsJSON = fetchSha256Segments(segmentsSha256Url);
     const regex = /bytes=(\d+)-(\d+)/;
     return function segmentValidator(segment, _method, _peerId, retry = 1) {
@@ -32504,7 +32511,7 @@ module.exports = path.Reflect;
 /* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var getBuiltIn = __webpack_require__(18);
 var aFunction = __webpack_require__(29);
 var anObject = __webpack_require__(2);
@@ -32657,7 +32664,7 @@ exports.f = Object.getOwnPropertySymbols;
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var getBuiltIn = __webpack_require__(18);
 var aFunction = __webpack_require__(29);
 var anObject = __webpack_require__(2);
@@ -32795,7 +32802,7 @@ module.exports = Function.bind || function bind(that /* , ...args */) {
 /* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var DESCRIPTORS = __webpack_require__(13);
 var anObject = __webpack_require__(2);
 var toPrimitive = __webpack_require__(36);
@@ -32829,7 +32836,7 @@ $({ target: 'Reflect', stat: true, forced: ERROR_INSTEAD_OF_FALSE, sham: !DESCRI
 /* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 var getOwnPropertyDescriptor = __webpack_require__(20).f;
 
@@ -32847,7 +32854,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var isObject = __webpack_require__(6);
 var anObject = __webpack_require__(2);
 var has = __webpack_require__(8);
@@ -32877,7 +32884,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var DESCRIPTORS = __webpack_require__(13);
 var anObject = __webpack_require__(2);
 var getOwnPropertyDescriptorModule = __webpack_require__(20);
@@ -32895,7 +32902,7 @@ $({ target: 'Reflect', stat: true, sham: !DESCRIPTORS }, {
 /* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 var objectGetPrototypeOf = __webpack_require__(17);
 var CORRECT_PROTOTYPE_GETTER = __webpack_require__(66);
@@ -32913,7 +32920,7 @@ $({ target: 'Reflect', stat: true, sham: !CORRECT_PROTOTYPE_GETTER }, {
 /* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 
 // `Reflect.has` method
 // https://tc39.es/ecma262/#sec-reflect.has
@@ -32928,7 +32935,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 
 // eslint-disable-next-line es/no-object-isextensible -- safe
@@ -32948,7 +32955,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ownKeys = __webpack_require__(60);
 
 // `Reflect.ownKeys` method
@@ -32962,7 +32969,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var getBuiltIn = __webpack_require__(18);
 var anObject = __webpack_require__(2);
 var FREEZING = __webpack_require__(67);
@@ -32987,7 +32994,7 @@ $({ target: 'Reflect', stat: true, sham: !FREEZING }, {
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 var isObject = __webpack_require__(6);
 var has = __webpack_require__(8);
@@ -33039,7 +33046,7 @@ $({ target: 'Reflect', stat: true, forced: MS_EDGE_BUG }, {
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var anObject = __webpack_require__(2);
 var aPossiblePrototype = __webpack_require__(68);
 var objectSetPrototypeOf = __webpack_require__(46);
@@ -33064,7 +33071,7 @@ if (objectSetPrototypeOf) $({ target: 'Reflect', stat: true }, {
 /* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var global = __webpack_require__(5);
 var setToStringTag = __webpack_require__(30);
 
@@ -33136,7 +33143,7 @@ module.exports = NATIVE_SYMBOL
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33335,7 +33342,7 @@ module.exports = function ($this, dummy, Wrapper) {
 
 "use strict";
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var createIteratorConstructor = __webpack_require__(117);
 var getPrototypeOf = __webpack_require__(17);
 var setPrototypeOf = __webpack_require__(46);
@@ -33800,7 +33807,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33827,7 +33834,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(17);
@@ -33857,7 +33864,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 var Set = __webpack_require__(127);
 var ReflectMetadataModule = __webpack_require__(15);
@@ -33912,7 +33919,7 @@ module.exports = collection('Set', function (init) {
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33933,7 +33940,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33954,7 +33961,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(17);
@@ -33983,7 +33990,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -34004,7 +34011,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(3);
+var $ = __webpack_require__(4);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -39612,7 +39619,7 @@ class PeerTubeEmbedApi {
         return this.state == 'playing';
     }
     get element() {
-        return this.embed.playerElement;
+        return this.embed.getelement();
     }
     destroy() {
         this.embed.destroy();
@@ -40847,7 +40854,7 @@ core_default.a.registerPlugin('bezels', BezelsPlugin);
 
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
-var player_utils = __webpack_require__(4);
+var player_utils = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./src/assets/player/videojs-components/settings-menu-item.ts
 // Thanks to Yanko Shterev: https://github.com/yshterev/videojs-settings-menu
@@ -40867,7 +40874,7 @@ class settings_menu_item_SettingsMenuItem extends settings_menu_item_MenuItem {
         this.size = null;
         // keep state of what menu type is loading next
         this.menuToLoad = 'mainmenu';
-        const subMenuName = Object(player_utils["j" /* toTitleCase */])(options.entry);
+        const subMenuName = Object(player_utils["k" /* toTitleCase */])(options.entry);
         const SubMenuComponent = core_default.a.getComponent(subMenuName);
         if (!SubMenuComponent) {
             throw new Error(`Component ${subMenuName} does not exist`);
@@ -41289,7 +41296,7 @@ class settings_menu_button_SettingsButton extends Button {
                 core_default.a.dom.addClass(this.el_, 'open');
             }
         };
-        options.name = Object(player_utils["j" /* toTitleCase */])(entry);
+        options.name = Object(player_utils["k" /* toTitleCase */])(entry);
         const newOptions = Object.assign({}, options, { entry, menuButton: this });
         const settingsMenuItem = new settings_menu_item_SettingsMenuItem(this.player(), newOptions);
         this.menu.addChild(settingsMenuItem);
@@ -41363,18 +41370,17 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
                         this.handleResolutionChange(this.lastResolutionChange);
                 }, 0);
             });
-            const volume = Object(peertube_player_local_storage["f" /* getStoredVolume */])();
-            if (volume !== undefined)
-                this.player.volume(volume);
+            /*const volume = getStoredVolume()
+            if (volume !== undefined) this.player.volume(volume)*/
             /*const muted = playerOptions.muted !== undefined ? playerOptions.muted : getStoredMute()
             if (muted !== undefined) this.player.muted(muted)*/
             this.defaultSubtitle = options.subtitle || Object(peertube_player_local_storage["b" /* getStoredLastSubtitle */])();
             this.player.on('volumechange', () => {
-                Object(peertube_player_local_storage["l" /* saveVolumeInStore */])(this.player.volume());
-                Object(peertube_player_local_storage["i" /* saveMuteInStore */])(this.player.muted());
+                Object(peertube_player_local_storage["j" /* saveVolumeInStore */])(this.player.volume());
+                Object(peertube_player_local_storage["g" /* saveMuteInStore */])(this.player.muted());
             });
             if (options.stopTime) {
-                const stopTime = Object(player_utils["i" /* timeToInt */])(options.stopTime);
+                const stopTime = Object(player_utils["j" /* timeToInt */])(options.stopTime);
                 const self = this;
                 this.player.on('timeupdate', function onTimeUpdate() {
                     if (self.player.currentTime() > stopTime) {
@@ -41390,10 +41396,10 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
                     return t.kind === 'captions' && t.mode === 'showing';
                 });
                 if (!showing) {
-                    Object(peertube_player_local_storage["h" /* saveLastSubtitle */])('off');
+                    Object(peertube_player_local_storage["f" /* saveLastSubtitle */])('off');
                     return;
                 }
-                Object(peertube_player_local_storage["h" /* saveLastSubtitle */])(showing.language);
+                Object(peertube_player_local_storage["f" /* saveLastSubtitle */])(showing.language);
             });
             this.player.on('sourcechange', () => this.initCaptions());
             this.player.duration(options.videoDuration);
@@ -41417,7 +41423,7 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
         this.alterInactivity();
     }
     initializePlayer() {
-        if (Object(player_utils["f" /* isMobile */])())
+        if (Object(player_utils["g" /* isMobile */])())
             this.player.addClass('vjs-is-mobile');
         this.initSmoothProgressBar();
         this.initCaptions();
@@ -41458,7 +41464,7 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
                         .catch(err => console.error('Cannot notify user is watching.', err));
                 }
                 else {
-                    Object(peertube_player_local_storage["k" /* saveVideoWatchHistory */])(videoUUID, currentTime);
+                    Object(peertube_player_local_storage["i" /* saveVideoWatchHistory */])(videoUUID, currentTime);
                 }
             }
         }, this.CONSTANTS.USER_WATCHING_VIDEO_INTERVAL);
@@ -41717,7 +41723,7 @@ class pocketnet_link_button_PocketnetLinkButton extends MenuButton {
         el.classList.add("pocketnet-link-button");
         this.link = core_default.a.dom.createEl('a', {
             href: '',
-            innerHTML: 'Watch On Pocketnet',
+            innerHTML: 'Pocketnet',
             title: this.player().localize('Video page (new window)'),
             className: 'vjs-pocketnet-link',
             target: '_blank'
@@ -41969,7 +41975,7 @@ const theater_button_Button = core_default.a.getComponent('Button');
 class theater_button_TheaterButton extends theater_button_Button {
     constructor(player, options) {
         super(player, options);
-        const enabled = Object(peertube_player_local_storage["e" /* getStoredTheater */])();
+        const enabled = Object(peertube_player_local_storage["d" /* getStoredTheater */])();
         if (enabled === true) {
             this.player().addClass(theater_button_TheaterButton.THEATER_MODE_CLASS);
             this.handleTheaterChange();
@@ -41988,7 +41994,7 @@ class theater_button_TheaterButton extends theater_button_Button {
         else {
             this.controlText('Theater mode');
         }
-        Object(peertube_player_local_storage["j" /* saveTheaterInStore */])(theaterEnabled);
+        Object(peertube_player_local_storage["h" /* saveTheaterInStore */])(theaterEnabled);
         this.player_.trigger('theaterChange', theaterEnabled);
     }
     handleClick() {
@@ -42118,9 +42124,9 @@ class playlist_menu_item_PlaylistMenuItem extends playlist_menu_item_Component {
         if (videoElement.startTimestamp || videoElement.stopTimestamp) {
             let html = '';
             if (videoElement.startTimestamp)
-                html += Object(player_utils["h" /* secondsToTime */])(videoElement.startTimestamp);
+                html += Object(player_utils["i" /* secondsToTime */])(videoElement.startTimestamp);
             if (videoElement.stopTimestamp)
-                html += ' - ' + Object(player_utils["h" /* secondsToTime */])(videoElement.stopTimestamp);
+                html += ' - ' + Object(player_utils["i" /* secondsToTime */])(videoElement.stopTimestamp);
             const timestamps = super.createEl('div', {
                 innerHTML: html,
                 className: 'timestamps'
@@ -42380,16 +42386,18 @@ class peertube_player_manager_PeertubePlayerManager {
                 core_default()(options.common.playerElement, videojsOptions, function () {
                     const player = this;
                     let alreadyFallback = false;
-                    player.tech(true).one('error', () => {
-                        if (!alreadyFallback)
-                            self.maybeFallbackToWebTorrent(mode, player, options);
-                        alreadyFallback = true;
-                    });
-                    player.one('error', () => {
-                        if (!alreadyFallback)
-                            self.maybeFallbackToWebTorrent(mode, player, options);
-                        alreadyFallback = true;
-                    });
+                    if (!options.common.isLive) {
+                        player.tech(true).one('error', () => {
+                            if (!alreadyFallback)
+                                self.maybeFallbackToWebTorrent(mode, player, options);
+                            alreadyFallback = true;
+                        });
+                        player.one('error', () => {
+                            if (!alreadyFallback)
+                                self.maybeFallbackToWebTorrent(mode, player, options);
+                            alreadyFallback = true;
+                        });
+                    }
                     player.one('play', () => {
                         peertube_player_manager_PeertubePlayerManager.alreadyPlayed = true;
                     });
@@ -42436,8 +42444,22 @@ class peertube_player_manager_PeertubePlayerManager {
             const mode = 'webtorrent';
             const videojsOptions = this.getVideojsOptions(mode, options);
             const self = this;
+            const error = {
+                message: "Total Error",
+                code: 500
+            };
+            console.log('videojsOptions', videojsOptions);
+            console.log("HERE1");
             core_default()(newVideoElement, videojsOptions, function () {
                 const player = this;
+                player.tech(true).one('error', (e) => {
+                    if (options.error)
+                        options.error(error);
+                });
+                player.one('error', (e) => {
+                    if (options.error)
+                        options.error(error);
+                });
                 self.addContextMenu(mode, player, options.common.embedUrl, options.common.embedTitle);
                 peertube_player_manager_PeertubePlayerManager.onPlayerChange(player);
             });
@@ -42470,7 +42492,7 @@ class peertube_player_manager_PeertubePlayerManager {
         if (commonOptions.enableHotkeys === true) {
             peertube_player_manager_PeertubePlayerManager.addHotkeysOptions(plugins);
         }
-        if (isHLS) {
+        if (isHLS && options.p2pMediaLoader) {
             const { hlsjs } = peertube_player_manager_PeertubePlayerManager.addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule);
             Object.assign(html5, hlsjs.html5);
         }
@@ -42535,7 +42557,7 @@ class peertube_player_manager_PeertubePlayerManager {
                 rtcConfig: Object(player_utils["d" /* getRtcConfig */])(),
                 requiredSegmentsPriority: 1,
                 segmentUrlBuilder: segmentUrlBuilderFactory(redundancyUrlManager),
-                useP2P: Object(peertube_player_local_storage["d" /* getStoredP2PEnabled */])(),
+                useP2P: Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])(),
                 consumeOnly
             },
             segments: {
@@ -42776,7 +42798,7 @@ class peertube_player_manager_PeertubePlayerManager {
             return autoplay;
         // On first play, disable autoplay to avoid issues
         // But if the player already played videos, we can safely autoplay next ones
-        if (Object(player_utils["e" /* isIOS */])() || Object(player_utils["g" /* isSafari */])()) {
+        if (Object(player_utils["f" /* isIOS */])() || Object(player_utils["h" /* isSafari */])()) {
             return peertube_player_manager_PeertubePlayerManager.alreadyPlayed ? 'play' : false;
         }
         return 'play';
@@ -42798,6 +42820,7 @@ peertube_player_manager_PeertubePlayerManager.alreadyPlayed = false;
 
 
 __webpack_require__(133);
+
 
 class embed_PeerTubeEmbed {
     constructor(element) {
@@ -42824,6 +42847,11 @@ class embed_PeerTubeEmbed {
             });
         });
     }
+    getCurrentPosition() {
+        if (!this.currentPlaylistElement)
+            return -1;
+        return this.currentPlaylistElement.position;
+    }
     getInitialSettings(params) {
         //const params = new URL(window.location.toString()).searchParams
         this.host = "https://" + this.getParamString(params, "host", "");
@@ -42848,9 +42876,19 @@ class embed_PeerTubeEmbed {
         this.txid = this.getParamString(params, "txid", "");
         this.pocketnetLink = this.txid && this.isVideoEmbed ? `https://pocketnet.app/index?video=1&v=${this.txid}` : '';
     }
+    getParamToggle(params, name, defaultValue) {
+        return params[name] ? true : defaultValue;
+    }
+    getParamString(params, name, defaultValue) {
+        return params[name] ? params[name] : defaultValue;
+    }
     getVideoUrl(id) {
         return "/api/v1/videos/" + id;
     }
+    getPlaylistUrl(id) {
+        return "/api/v1/video-playlists/" + id;
+    }
+    /* LOADING */
     refreshFetch(url, options) {
         return fetch(this.composePath(url), options).then((res) => {
             if (res.status !== HttpStatusCode.UNAUTHORIZED_401)
@@ -42901,9 +42939,6 @@ class embed_PeerTubeEmbed {
                 .then(() => fetch(url, Object.assign(Object.assign({}, options), { headers: this.headers })));
         });
     }
-    getPlaylistUrl(id) {
-        return "/api/v1/video-playlists/" + id;
-    }
     loadVideoInfo(videoId) {
         return this.refreshFetch(this.getVideoUrl(videoId), {
             headers: this.headers,
@@ -42931,37 +42966,96 @@ class embed_PeerTubeEmbed {
             return json;
         });
     }
-    waitTranscoded(videoId) {
-        if (this.details && this.details.state && this.details.state.id == 2 && this.playerElement) {
-            return this.loadVideoTotal(videoId).then(details => {
+    /* WAIT */
+    checkInfo(ca) {
+        if (this.details && ca(this.details)) {
+            return this.loadVideoTotal(this.details.uuid).then(details => {
                 if (!details)
-                    return Promise.resolve(null);
-                if (details.state.id == 2) {
-                    return new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            return this.waitTranscoded(videoId);
-                        }, 3000);
-                    });
+                    return Promise.reject();
+                if (ca(details)) {
+                    return Promise.reject();
                 }
                 else {
-                    return this.loadVideoAndBuildPlayer(this.details.uuid).catch((err) => console.error(err));
+                    return Promise.resolve(true);
                 }
             }).catch(e => {
+                return Promise.reject();
             });
+        }
+        return Promise.resolve();
+    }
+    waitStatus(statuses) {
+        return this.checkInfo(function (details) {
+            if (!details || !details.state)
+                return true;
+            if (statuses.indexOf(details.state.id) > -1) {
+                return true;
+            }
+        });
+    }
+    initWaiting() {
+        console.log('initWaiting');
+        this.stopWaiting();
+        this.statusInterval = setInterval(() => {
+            // @ts-ignore
+            this.waitStatus([2, 4]).then((r) => {
+                clearInterval(this.statusInterval);
+                this.statusInterval = null;
+                if (r)
+                    this.loadVideoAndBuildPlayer(this.details.uuid).catch((err) => console.error(err));
+            }).catch((e) => {
+            });
+        }, 30000);
+    }
+    stopWaiting() {
+        if (this.statusInterval) {
+            clearInterval(this.statusInterval);
+            this.statusInterval = null;
+        }
+    }
+    /* DESTROY */
+    destroy() {
+        try {
+            this.player.dispose();
+        }
+        catch (e) {
+            console.log("ER", e);
+        }
+        if (this.api) {
+            this.api.clear();
+        }
+        this.playerElement = null;
+        this.stopWaiting();
+        //this.wrapperElement.innerHTML = "";
+    }
+    rebuild() {
+        this.destroy();
+        if (this.details && this.details.uuid) {
+            return this.loadVideoAndBuildPlayer(this.details.uuid);
         }
         return Promise.resolve();
     }
     removeElement(element) {
         element.parentElement.removeChild(element);
     }
-    displayError(text, translations) {
+    /* ERROR */
+    displayErrorWrapper(text, translations) {
+        try {
+            this.player.dispose();
+        }
+        catch (e) { }
+        this.playerElement = null;
+        this.wrapperElement.innerHTML = "";
+        this.displayError(text, translations, 'critical');
+    }
+    displayError(text, translations, style = "noncritical") {
         // Remove video element
-        if (this.playerElement) {
+        /*if (this.playerElement) {
             this.removeElement(this.playerElement);
             this.playerElement = undefined;
-        }
+        }*/
         const errorBlock = document.createElement("div");
-        errorBlock.className = "error-block";
+        errorBlock.className = "error-block " + style;
         const errorBlockWrapper = document.createElement("div");
         errorBlockWrapper.className = "error-block-wrapper";
         const errorTitle = document.createElement("div");
@@ -42978,19 +43072,14 @@ class embed_PeerTubeEmbed {
             errorReload.className = "error-reload";
             errorReload.innerHTML = '<i class="fas fa-redo"></i> Reload';
             errorReload.onclick = () => {
-                this.loadVideoAndBuildPlayer(this.details.uuid);
+                this.loadVideoTotal(this.details.uuid).then(r => {
+                    this.loadVideoAndBuildPlayer(this.details.uuid);
+                });
             };
             errorBlockWrapper.appendChild(errorReload);
         }
-        this.wrapperElement.innerHTML = "";
         this.wrapperElement.appendChild(errorBlock);
-    }
-    rebuild() {
-        this.destroy();
-        if (this.details && this.details.uuid) {
-            return this.loadVideoAndBuildPlayer(this.details.uuid);
-        }
-        return Promise.resolve();
+        this.wrapperElement.setAttribute('error', style);
     }
     displayWarning(text, translations) {
         this.player.overlay({
@@ -43007,63 +43096,19 @@ class embed_PeerTubeEmbed {
     }
     videoNotFound(translations) {
         const text = "This video does not exist.";
-        this.displayError(text, translations);
+        this.displayErrorWrapper(text);
     }
     videoFetchError(translations) {
         const text = "We cannot fetch the video. Please try again later.";
-        this.displayError(text, translations);
+        this.displayErrorWrapper(text, translations);
     }
     playlistNotFound(translations) {
         const text = "This playlist does not exist.";
-        this.displayError(text, translations);
+        this.displayErrorWrapper(text, translations);
     }
     playlistFetchError(translations) {
         const text = "We cannot fetch the playlist. Please try again later.";
-        this.displayError(text, translations);
-    }
-    getParamToggle(params, name, defaultValue) {
-        return params[name] ? true : defaultValue;
-    }
-    getParamString(params, name, defaultValue) {
-        return params[name] ? params[name] : defaultValue;
-    }
-    destroy() {
-        try {
-            this.player.dispose();
-        }
-        catch (e) {
-            console.log("ER", e);
-        }
-        if (this.api) {
-            this.api.clear();
-        }
-        this.playerElement = null;
-        //this.wrapperElement.innerHTML = "";
-    }
-    playNextVideo() {
-        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            const next = this.getNextPlaylistElement();
-            if (!next) {
-                return;
-            }
-            this.currentPlaylistElement = next;
-            return this.loadVideoAndBuildPlayer(this.currentPlaylistElement.video.uuid);
-        });
-    }
-    playPreviousVideo() {
-        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            const previous = this.getPreviousPlaylistElement();
-            if (!previous) {
-                return;
-            }
-            this.currentPlaylistElement = previous;
-            yield this.loadVideoAndBuildPlayer(this.currentPlaylistElement.video.uuid);
-        });
-    }
-    getCurrentPosition() {
-        if (!this.currentPlaylistElement)
-            return -1;
-        return this.currentPlaylistElement.position;
+        this.displayErrorWrapper(text, translations);
     }
     init(videoId, parameters, clbk) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
@@ -43098,8 +43143,8 @@ class embed_PeerTubeEmbed {
                     this.mode = "webtorrent";
             }
             else {
-                if (Array.isArray(video.streamingPlaylists) &&
-                    video.streamingPlaylists.length !== 0)
+                if ((Array.isArray(video.streamingPlaylists) &&
+                    video.streamingPlaylists.length !== 0) || video.isLive)
                     this.mode = "p2p-media-loader";
                 else
                     this.mode = "webtorrent";
@@ -43133,20 +43178,6 @@ class embed_PeerTubeEmbed {
             return { videoResponse };
         });
     }
-    buildPlaylistManager() {
-        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            this.player.upnext({
-                timeout: 10000,
-                headText: peertubeTranslate("Up Next", null),
-                cancelText: peertubeTranslate("Cancel", null),
-                suspendedText: peertubeTranslate("Autoplay is suspended", null),
-                getTitle: () => this.nextVideoTitle(),
-                next: () => this.playNextVideo(),
-                condition: () => !!this.getNextPlaylistElement(),
-                suspended: () => false,
-            });
-        });
-    }
     loadVideoAndBuildPlayer(uuid) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             const videoResponseJson = yield this.loadVideoInfoCache(uuid);
@@ -43156,14 +43187,18 @@ class embed_PeerTubeEmbed {
             if (videoResponseJson.from) {
                 this.host = 'https://' + videoResponseJson.from;
             }
-            if (!videoResponseJson.aspectRatio) {
-                videoResponseJson.aspectRatio = 1;
+            if (!Number(videoResponseJson.aspectRatio)) {
+                videoResponseJson.aspectRatio = 1.78;
             }
             if ((new Date(videoResponseJson.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()) {
                 videoResponseJson.aspectRatio = 1.78;
             }
             this.details = videoResponseJson;
-            this.waitTranscoded(uuid);
+            this.initWaiting();
+            var e = this.getelement();
+            if (e && e.currentTime) {
+                this.startTime = this.getelement().currentTime;
+            }
             return this.buildVideoPlayer(videoResponseJson);
         });
     }
@@ -43172,6 +43207,30 @@ class embed_PeerTubeEmbed {
         if (!next)
             return "";
         return next.video.name;
+    }
+    checkLiveStatus() {
+        if (!this.details)
+            return null;
+        if (this.details.isLive && this.details.state.id == 5) {
+            return {
+                error: true,
+                text: 'Live streaming has ended'
+            };
+        }
+        if (this.details.isLive && this.details.state.id == 4) {
+            return {
+                error: true,
+                text: 'Live streaming has not started yet'
+            };
+        }
+        return null;
+    }
+    liveStatusMessage() {
+        var liveerror = this.checkLiveStatus();
+        if (liveerror && liveerror.error) {
+            this.displayError(liveerror.text, null);
+            return true;
+        }
     }
     getNextPlaylistElement(position) {
         if (!position)
@@ -43197,61 +43256,66 @@ class embed_PeerTubeEmbed {
         }
         return prev;
     }
-    buildVideoPlayerContributos(videoId) {
+    initCore(videoId, parameters) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            /* @ts-ignore */
-            yield __webpack_require__.e(/* import() */ 11).then(__webpack_require__.t.bind(null, 518, 7));
-            if (this.player) {
-                try {
-                    this.player.dispose();
-                }
-                catch (e) {
-                }
-            }
-            this.playerElement = document.createElement("video");
-            this.playerElement.className = "video-js video-js-contributor";
-            this.playerElement.setAttribute("playsinline", "true");
-            if (this.contributor == 'youtube') {
-                var setupYoutube = {
-                    techOrder: ["youtube"],
-                    sources: [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=" + videoId }],
-                    youtube: { "iv_load_policy": 1 }
-                };
-                this.playerElement.setAttribute("data-setup", JSON.stringify(setupYoutube));
-                var paddingSize = 37.5;
-                this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
-            }
-            if (this.contributor == 'vimeo') {
-                var setupVimeo = {
-                    techOrder: ["vimeo"],
-                    sources: [{ "type": "video/vimeo", "src": "https://vimeo.com/" + videoId }],
-                    vimeo: { color: "#fbc51b" }
-                };
-                this.playerElement.setAttribute("data-setup", JSON.stringify(setupVimeo));
-            }
-            this.wrapperElement.innerHTML = "";
-            this.wrapperElement.appendChild(this.playerElement);
-            const options = {
-                autoplay: false,
-                controls: this.controls,
-                muted: true,
-                loop: this.loop,
-                language: this.language
-            };
-            this.player = yield peertube_player_manager_PeertubePlayerManager.initializeContributor(this.playerElement, options);
-            this.player.on("customError", (event, data) => this.handleError(data.err));
-            this.player.on("error", (error) => console.log(error));
-            this.initializeApi();
-            this.removePlaceholder();
-            /*this.runHook("action:embed.player.loaded", undefined, {
-              player: this.player,
-              videojs,
-              video: {},
-            });*/
+            if (this.userTokens)
+                this.setHeadersFromTokens();
+            if (this.contributor != 'peertube')
+                return this.buildVideoPlayerContributos(videoId);
+            return this.loadVideoAndBuildPlayer(videoId);
         });
+    }
+    handleError(err, translations) {
+        console.log('err.message', err);
+        var liveerror = this.checkLiveStatus();
+        if (liveerror && liveerror.error) {
+            this.displayErrorWrapper(liveerror.text);
+            return;
+        }
+        if (err.message.indexOf("from xs param") !== -1) {
+            this.displayErrorWrapper("This video is not available because the remote instance is not responding.");
+            return;
+        }
+        if (this.details.state.id == 2) {
+            this.loadVideoAndBuildPlayer(this.details.uuid);
+        }
+        if (this.details.state.id == 5) {
+            this.loadVideoAndBuildPlayer(this.details.uuid);
+        }
+    }
+    handleErrorCritical(err) {
+        this.player.dispose();
+        this.playerElement = null;
+        this.displayErrorWrapper("This video is not available because the remote instance is not responding.");
     }
     composePath(path = '') {
         return this.host + path;
+    }
+    setAcpectRatio(videoInfo) {
+        const videoSizeValue = videoInfo.aspectRatio;
+        const isVideoEmbedded = document.querySelector(".standalone-video-embed");
+        const paddingSize = 100 / (2 * videoSizeValue);
+        if (videoInfo.aspectRatio < 0.9) {
+            this.playerElement.classList.add("verticalVideo");
+            if (isVideoEmbedded)
+                document.querySelector('.video-js-wrapper').classList.add('vertcalVideoContainer');
+        }
+        if (videoInfo.aspectRatio >= 0.9 && videoInfo.aspectRatio < 1.25) {
+            this.playerElement.classList.add("squareVideo");
+            if (isVideoEmbedded)
+                document.querySelector('.video-js-wrapper').classList.add('squareVideoContainer');
+        }
+        if (!isVideoEmbedded) {
+            this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%; height: 1px!important;`;
+        }
+    }
+    getelement() {
+        var pel = this.playerElement;
+        try {
+            pel = this.player.tech_.el_;
+        }
+        catch (e) { }
+        return pel;
     }
     buildVideoPlayer(videoInfo) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
@@ -43263,26 +43327,11 @@ class embed_PeerTubeEmbed {
                     console.log("ER", e);
                 }
             }
-            const videoSizeValue = videoInfo.aspectRatio;
             this.playerElement = document.createElement("video");
             this.playerElement.className = "video-js";
             this.playerElement.setAttribute("playsinline", "true");
-            this.playerElement.setAttribute('poster', this.composePath(videoInfo.previewPath));
-            const isVideoEmbedded = document.querySelector(".standalone-video-embed");
-            const paddingSize = 100 / (2 * videoSizeValue);
-            if (videoInfo.aspectRatio < 0.9) {
-                this.playerElement.classList.add("verticalVideo");
-                if (isVideoEmbedded)
-                    document.querySelector('.video-js-wrapper').classList.add('vertcalVideoContainer');
-            }
-            if (videoInfo.aspectRatio >= 0.9 && videoInfo.aspectRatio < 1.25) {
-                this.playerElement.classList.add("squareVideo");
-                if (isVideoEmbedded)
-                    document.querySelector('.video-js-wrapper').classList.add('squareVideoContainer');
-            }
-            if (!isVideoEmbedded) {
-                this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%;`;
-            }
+            this.wrapperElement.setAttribute('error', '');
+            this.setAcpectRatio(videoInfo);
             this.wrapperElement.innerHTML = "";
             this.wrapperElement.appendChild(this.playerElement);
             this.loadParams(videoInfo);
@@ -43319,8 +43368,8 @@ class embed_PeerTubeEmbed {
                     isLive: videoInfo.isLive,
                     playerElement: this.playerElement,
                     onPlayerElementChange: (element) => {
-                        console.log("CHANGED?");
                         this.playerElement = element;
+                        this.setAcpectRatio(videoInfo);
                         /*if(this.api){
                           this.api.setupStateTracking()
                         }*/
@@ -43328,7 +43377,7 @@ class embed_PeerTubeEmbed {
                     videoDuration: videoInfo.duration,
                     enableHotkeys: false,
                     pocketnetLink: this.pocketnetLink,
-                    poster: this.wautoplay ? null : this.composePath(videoInfo.previewPath),
+                    poster: this.wautoplay && !videoInfo.isLive ? null : this.composePath(videoInfo.previewPath),
                     theaterButton: false,
                     serverUrl: this.host,
                     language: this.language,
@@ -43338,22 +43387,37 @@ class embed_PeerTubeEmbed {
                 webtorrent: {
                     videoFiles: videoInfo.files,
                 },
+                error: (e) => {
+                    console.log("E", e);
+                    this.handleError(e);
+                }
             };
             if (this.mode === "p2p-media-loader") {
                 const hlsPlaylist = videoInfo.streamingPlaylists.find((p) => p.type === 1 /* HLS */);
-                Object.assign(options, {
-                    p2pMediaLoader: {
-                        playlistUrl: hlsPlaylist.playlistUrl,
-                        segmentsSha256Url: hlsPlaylist.segmentsSha256Url,
-                        redundancyBaseUrls: hlsPlaylist.redundancies.map((r) => r.baseUrl),
-                        trackerAnnounce: videoInfo.trackerUrls,
-                        videoFiles: hlsPlaylist.files,
-                    },
-                });
+                if (hlsPlaylist) {
+                    Object.assign(options, {
+                        p2pMediaLoader: {
+                            playlistUrl: hlsPlaylist.playlistUrl,
+                            segmentsSha256Url: hlsPlaylist.segmentsSha256Url,
+                            redundancyBaseUrls: hlsPlaylist.redundancies.map((r) => r.baseUrl),
+                            trackerAnnounce: videoInfo.trackerUrls,
+                            videoFiles: hlsPlaylist.files,
+                        },
+                    });
+                }
             }
             this.player = yield peertube_player_manager_PeertubePlayerManager.initialize(this.mode, options, (player) => {
                 this.player = player;
             });
+            delete this.player.tagAttributes.style;
+            var pel = this.playerElement;
+            try {
+                pel = this.player.tech_.el_;
+            }
+            catch (e) { }
+            pel.removeAttribute('style');
+            if (Object(player_utils["e" /* isAndroid */])())
+                pel.setAttribute('poster', this.composePath(videoInfo.previewPath));
             this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
             const overlayString = this.isVideoEmbed
                 ? `<span class="icon icon-full-logo-transparent"></span>`
@@ -43369,6 +43433,9 @@ class embed_PeerTubeEmbed {
                     },
                 ],
             });
+            if (this.api && this.api.playing) {
+                this.player.play();
+            }
             this.initializeApi();
             this.removePlaceholder();
             /*this.runHook("action:embed.player.loaded", undefined, {
@@ -43379,33 +43446,82 @@ class embed_PeerTubeEmbed {
             if (this.details.state.id == 2) {
                 this.displayWarning('Video is being processed');
             }
+            this.liveStatusMessage();
         });
     }
-    initCore(videoId, parameters) {
+    buildVideoPlayerContributos(videoId) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            if (this.userTokens)
-                this.setHeadersFromTokens();
-            if (this.contributor != 'peertube')
-                return this.buildVideoPlayerContributos(videoId);
-            return this.loadVideoAndBuildPlayer(videoId);
+            /* @ts-ignore */
+            yield __webpack_require__.e(/* import() */ 11).then(__webpack_require__.t.bind(null, 518, 7));
+            if (this.player) {
+                try {
+                    this.player.dispose();
+                }
+                catch (e) {
+                }
+            }
+            this.playerElement = document.createElement("video");
+            this.playerElement.className = "video-js video-js-contributor";
+            this.playerElement.setAttribute("playsinline", "true");
+            if (this.contributor == 'youtube') {
+                var setupYoutube = {
+                    techOrder: ["youtube"],
+                    sources: [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=" + videoId }],
+                    youtube: { "iv_load_policy": 1 }
+                };
+                this.playerElement.setAttribute("data-setup", JSON.stringify(setupYoutube));
+                var paddingSize = 37.5;
+                this.playerElement.style.cssText = `padding-top: ${paddingSize}%; padding-bottom: ${paddingSize}%; `;
+            }
+            if (this.contributor == 'vimeo') {
+                var setupVimeo = {
+                    techOrder: ["vimeo"],
+                    sources: [{ "type": "video/vimeo", "src": "https://vimeo.com/" + videoId }],
+                    vimeo: { color: "#fbc51b" }
+                };
+                this.playerElement.setAttribute("data-setup", JSON.stringify(setupVimeo));
+            }
+            this.wrapperElement.innerHTML = "";
+            this.wrapperElement.appendChild(this.playerElement);
+            const options = {
+                autoplay: false,
+                controls: this.controls,
+                muted: true,
+                loop: this.loop,
+                language: this.language
+            };
+            this.player = yield peertube_player_manager_PeertubePlayerManager.initializeContributor(this.playerElement, options);
+            this.player.on("customError", (event, data) => this.handleError(data.err));
+            this.player.on("error", (error) => console.log(error));
+            this.player.tech().on("error", (error) => console.log(error));
+            this.initializeApi();
+            this.removePlaceholder();
         });
     }
-    handleError(err, translations) {
-        console.log('err.message', err.message);
-        if (err.message.indexOf("from xs param") !== -1) {
-            this.player.dispose();
-            this.playerElement = null;
-            this.displayError("This video is not available because the remote instance is not responding.", translations);
-            return;
-        }
-        if (this.details.state.id == 2) {
-            this.loadVideoAndBuildPlayer(this.details.uuid);
-        }
+    removePlaceholder() {
+        const placeholder = this.getPlaceholderElement();
+        if (placeholder)
+            placeholder.style.display = "none";
     }
-    handleErrorCritical(err) {
-        this.player.dispose();
-        this.playerElement = null;
-        this.displayError("This video is not available because the remote instance is not responding.");
+    getPlaceholderElement() {
+        return document.getElementById("placeholder-preview");
+    }
+    /* T */
+    setHeadersFromTokens() {
+        this.headers.set("Authorization", `${this.userTokens.tokenType} ${this.userTokens.accessToken}`);
+    }
+    removeTokensFromHeaders() {
+        this.headers.delete("Authorization");
+    }
+    /* DISABLED */
+    buildCSS() {
+        const body = document.getElementById("custom-css");
+        if (this.bigPlayBackgroundColor) {
+            body.style.setProperty("--embedBigPlayBackgroundColor", this.bigPlayBackgroundColor);
+        }
+        if (this.foregroundColor) {
+            body.style.setProperty("--embedForegroundColor", this.foregroundColor);
+        }
     }
     buildDock(videoInfo, config) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
@@ -43427,15 +43543,6 @@ class embed_PeerTubeEmbed {
                 });
             }
         });
-    }
-    buildCSS() {
-        const body = document.getElementById("custom-css");
-        if (this.bigPlayBackgroundColor) {
-            body.style.setProperty("--embedBigPlayBackgroundColor", this.bigPlayBackgroundColor);
-        }
-        if (this.foregroundColor) {
-            body.style.setProperty("--embedForegroundColor", this.foregroundColor);
-        }
     }
     buildCaptions(serverTranslations, captionsResponse) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
@@ -43462,25 +43569,6 @@ class embed_PeerTubeEmbed {
             }
         }
     }
-    removePlaceholder() {
-        const placeholder = this.getPlaceholderElement();
-        if (placeholder)
-            placeholder.style.display = "none";
-    }
-    getPlaceholderElement() {
-        return document.getElementById("placeholder-preview");
-    }
-    setHeadersFromTokens() {
-        this.headers.set("Authorization", `${this.userTokens.tokenType} ${this.userTokens.accessToken}`);
-    }
-    removeTokensFromHeaders() {
-        this.headers.delete("Authorization");
-    }
-    /*private getResourceId () {
-      const params = new URL(window.location.toString()).searchParams
-  
-      return this.getParamString(params, 'id', null)
-    }*/
     isPlaylistEmbed() {
         return window.location.pathname.split("/")[1] === "video-playlists";
     }
@@ -43541,6 +43629,40 @@ class embed_PeerTubeEmbed {
     }
     runHook(hookName, result, params) {
         return runHook(this.peertubeHooks, hookName, result, params);
+    }
+    buildPlaylistManager() {
+        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+            this.player.upnext({
+                timeout: 10000,
+                headText: peertubeTranslate("Up Next", null),
+                cancelText: peertubeTranslate("Cancel", null),
+                suspendedText: peertubeTranslate("Autoplay is suspended", null),
+                getTitle: () => this.nextVideoTitle(),
+                next: () => this.playNextVideo(),
+                condition: () => !!this.getNextPlaylistElement(),
+                suspended: () => false,
+            });
+        });
+    }
+    playNextVideo() {
+        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+            const next = this.getNextPlaylistElement();
+            if (!next) {
+                return;
+            }
+            this.currentPlaylistElement = next;
+            return this.loadVideoAndBuildPlayer(this.currentPlaylistElement.video.uuid);
+        });
+    }
+    playPreviousVideo() {
+        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+            const previous = this.getPreviousPlaylistElement();
+            if (!previous) {
+                return;
+            }
+            this.currentPlaylistElement = previous;
+            yield this.loadVideoAndBuildPlayer(this.currentPlaylistElement.video.uuid);
+        });
     }
 }
 /*PeerTubeEmbed.main()

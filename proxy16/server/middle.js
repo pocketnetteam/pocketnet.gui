@@ -142,6 +142,22 @@ var Middle = function(){
     }
     
     self.data = function(request, result, next){
+
+        /*var body = request.body
+
+
+        try{
+                body = JSON.parse(body)
+        }catch(e){
+
+            console.log("E", e)
+
+        }
+*/
+      
+
+        console.log('request.data', request.body, request.query)
+
         request.data = _.merge(request.query, request.body)
         
         _.each(request.data, function(v, key){

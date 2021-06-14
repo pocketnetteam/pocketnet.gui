@@ -103,7 +103,7 @@ var Cache = function(p){
     }
 
 
-    self.set = function(key, params, data, block){
+    self.set = function(key, params, data, block, ontime){
         
         if (ckeys[key]){
 
@@ -115,6 +115,10 @@ var Cache = function(p){
             storage[key][k] = {
                 data : data,
                 time : f.now()
+            }
+
+            if(ontime){
+                storage[key][k].ontime = ontime
             }
 
             if (typeof ckeys[key].block != undefined){
@@ -151,7 +155,7 @@ var Cache = function(p){
             var sd = f.deep(storage, key + "." + k)
 
             if (sd){
-                var t = f.date.addseconds(sd.time, ckeys[key].time)
+                var t = f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
 
                 if (t > f.now()){
                     return sd.data

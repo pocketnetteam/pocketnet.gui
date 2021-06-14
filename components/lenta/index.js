@@ -627,6 +627,12 @@ var lenta = (function(){
 
 						volumeChange : function(v){
 							videosVolume = v
+
+							console.log('v', v)
+
+							self.sdk.videos.volume = videosVolume 
+
+							self.sdk.videos.save()
 						}
 					}
 
@@ -918,6 +924,8 @@ var lenta = (function(){
 					}
 
 					//player.p.muted = false
+
+					console.log('videosVolume12', videosVolume)
 
 					actions.setVolume(players[id], videosVolume || 0.5)
 
@@ -1395,6 +1403,8 @@ var lenta = (function(){
 
 				if(typeof v == 'undefined') v = videosVolume
 
+				if(!player.p) return
+
 				if (v){
 					//player.p.muted = false;
 					player.p.setVolume(v)
@@ -1433,7 +1443,7 @@ var lenta = (function(){
 
 							if (_el.length){
 
-								if(st + 1500 > _el.offset().top){
+								if(st + 3500 > _el.offset().top){
 									actions.initVideo(_el, share)
 								}
 							}	
@@ -3112,6 +3122,11 @@ var lenta = (function(){
 
 							if(!author){
 								loader = 'hierarchical'
+								
+							}
+							else
+							{
+								_beginmaterial = beginmaterial
 							}
 
 							if (recommended){
@@ -3742,7 +3757,7 @@ var lenta = (function(){
 							var p = parameters()
 
 							if(!essenseData.second){
-								if (p.s){
+								if (p.s && !p.msh){
 									if(!isMobile())
 	
 										actions.openPost(p.s, function(){
@@ -3856,6 +3871,9 @@ var lenta = (function(){
 				actions.clear()				
 
 				var _s = parameters();
+
+				videosVolume = self.sdk.videos.volume
+
 
 				beginmaterial = _s.s || _s.i || _s.v || _s.p || null;
 

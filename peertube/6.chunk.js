@@ -1,39 +1,25 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[10],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[6],{
 
-/***/ 520:
+/***/ "./src/assets/player/p2p-media-loader/hls-plugin.ts":
+/*!**********************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/hls-plugin.ts ***!
+  \**********************************************************/
+/*! exports provided: Html5Hlsjs, registerSourceHandler, registerConfigPlugin */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "P2pMediaLoaderPlugin", function() { return /* binding */ p2p_media_loader_plugin_P2pMediaLoaderPlugin; });
-
-// EXTERNAL MODULE: ./node_modules/video.js/core.js
-var core = __webpack_require__(0);
-var core_default = /*#__PURE__*/__webpack_require__.n(core);
-
-// EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts + 3 modules
-var lib = __webpack_require__(516);
-
-// EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts + 8 modules
-var p2p_media_loader_core_lib = __webpack_require__(220);
-
-// EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
-var utils = __webpack_require__(3);
-
-// EXTERNAL MODULE: ./node_modules/hls.js/dist/hls.js
-var hls = __webpack_require__(330);
-var hls_default = /*#__PURE__*/__webpack_require__.n(hls);
-
-// CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/hls-plugin.ts
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Html5Hlsjs", function() { return Html5Hlsjs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerSourceHandler", function() { return registerSourceHandler; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "registerConfigPlugin", function() { return registerConfigPlugin; });
+/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hls.js */ "./node_modules/hls.js/dist/hls.js");
+/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(hls_js__WEBPACK_IMPORTED_MODULE_0__);
 // Thanks https://github.com/streamroot/videojs-hlsjs-plugin
 // We duplicated this plugin to choose the hls.js version we want, because streamroot only provide a bundled file
 //import * as HlsjsLigt from 'hls.js/dist/hls.light.js'
 
 const registerSourceHandler = function (vjs) {
-    if (!hls_default.a.isSupported()) {
+    if (!hls_js__WEBPACK_IMPORTED_MODULE_0___default.a.isSupported()) {
         console.warn('Hls.js is not supported in this browser!');
         return;
     }
@@ -57,12 +43,12 @@ const registerSourceHandler = function (vjs) {
             if (tech.hlsProvider) {
                 tech.hlsProvider.dispose();
             }
-            tech.hlsProvider = new hls_plugin_Html5Hlsjs(vjs, source, tech);
+            tech.hlsProvider = new Html5Hlsjs(vjs, source, tech);
             return tech.hlsProvider;
         }
     }, 0);
     // FIXME: typings
-    vjs.Html5Hlsjs = hls_plugin_Html5Hlsjs;
+    vjs.Html5Hlsjs = Html5Hlsjs;
 };
 function hlsjsConfigHandler(options) {
     const player = this;
@@ -86,7 +72,7 @@ const registerConfigPlugin = function (vjs) {
     const registerVjsPlugin = vjs.registerPlugin || vjs.plugin;
     registerVjsPlugin('hlsjs', hlsjsConfigHandler);
 };
-class hls_plugin_Html5Hlsjs {
+class Html5Hlsjs {
     constructor(vjs, source, tech) {
         this.errorCounts = {};
         this.hlsjsConfig = null;
@@ -157,40 +143,40 @@ class hls_plugin_Html5Hlsjs {
         this.hls.destroy();
     }
     static addHook(type, callback) {
-        hls_plugin_Html5Hlsjs.hooks[type] = this.hooks[type] || [];
-        hls_plugin_Html5Hlsjs.hooks[type].push(callback);
+        Html5Hlsjs.hooks[type] = this.hooks[type] || [];
+        Html5Hlsjs.hooks[type].push(callback);
     }
     static removeHook(type, callback) {
-        if (hls_plugin_Html5Hlsjs.hooks[type] === undefined)
+        if (Html5Hlsjs.hooks[type] === undefined)
             return false;
-        const index = hls_plugin_Html5Hlsjs.hooks[type].indexOf(callback);
+        const index = Html5Hlsjs.hooks[type].indexOf(callback);
         if (index === -1)
             return false;
-        hls_plugin_Html5Hlsjs.hooks[type].splice(index, 1);
+        Html5Hlsjs.hooks[type].splice(index, 1);
         return true;
     }
     _executeHooksFor(type) {
-        if (hls_plugin_Html5Hlsjs.hooks[type] === undefined) {
+        if (Html5Hlsjs.hooks[type] === undefined) {
             return;
         }
         // ES3 and IE < 9
-        for (let i = 0; i < hls_plugin_Html5Hlsjs.hooks[type].length; i++) {
-            hls_plugin_Html5Hlsjs.hooks[type][i](this.player, this.hls);
+        for (let i = 0; i < Html5Hlsjs.hooks[type].length; i++) {
+            Html5Hlsjs.hooks[type][i](this.player, this.hls);
         }
     }
     _handleMediaError(error) {
-        if (this.errorCounts[hls["ErrorTypes"].MEDIA_ERROR] === 1) {
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 1) {
             console.info('trying to recover media error');
             this.hls.recoverMediaError();
             return;
         }
-        if (this.errorCounts[hls["ErrorTypes"].MEDIA_ERROR] === 2) {
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] === 2) {
             console.info('2nd try to recover media error (by swapping audio codec');
             this.hls.swapAudioCodec();
             this.hls.recoverMediaError();
             return;
         }
-        if (this.errorCounts[hls["ErrorTypes"].MEDIA_ERROR] > 2) {
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR] > 2) {
             console.info('bubbling media error up to VIDEOJS');
             this.hls.destroy();
             this.tech.error = () => error;
@@ -200,13 +186,13 @@ class hls_plugin_Html5Hlsjs {
     }
     _handleNetworkError(error) {
         setTimeout(() => this.hls.startLoad(), 1000);
-        if (this.errorCounts[hls["ErrorTypes"].NETWORK_ERROR] <= 1) {
+        if (this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR] <= 1) {
             console.info('trying to recover network error');
             // Wait 1 second and retry
             setTimeout(() => this.hls.startLoad(), 1000);
             // Reset error count on success
-            this.hls.once(hls["Events"].FRAG_LOADED, () => {
-                this.errorCounts[hls["ErrorTypes"].NETWORK_ERROR] = 0;
+            this.hls.once(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].FRAG_LOADED, () => {
+                this.errorCounts[hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR] = 0;
             });
             return;
         }
@@ -226,11 +212,11 @@ class hls_plugin_Html5Hlsjs {
             this.errorCounts[data.type] = 1;
         if (!data.fatal)
             return;
-        if (data.type === hls["ErrorTypes"].NETWORK_ERROR) {
+        if (data.type === hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].NETWORK_ERROR) {
             error.code = 2;
             this._handleNetworkError(error);
         }
-        else if (data.type === hls["ErrorTypes"].MEDIA_ERROR && data.details !== 'manifestIncompatibleCodecsError') {
+        else if (data.type === hls_js__WEBPACK_IMPORTED_MODULE_0__["ErrorTypes"].MEDIA_ERROR && data.details !== 'manifestIncompatibleCodecsError') {
             error.code = 3;
             this._handleMediaError(error);
         }
@@ -510,12 +496,12 @@ class hls_plugin_Html5Hlsjs {
         this.hlsjsConfig.maxBufferLength = 30;
         this.hlsjsConfig.maxMaxBufferLength = 55;
         //this.hlsjsConfig.backBufferLength = 90
-        this.hls = new hls_default.a(this.hlsjsConfig);
+        this.hls = new hls_js__WEBPACK_IMPORTED_MODULE_0___default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
-        this.hls.on(hls["Events"].ERROR, (event, data) => this._onError(event, data));
-        this.hls.on(hls["Events"].AUDIO_TRACKS_UPDATED, () => this._onAudioTracks());
-        this.hls.on(hls["Events"].MANIFEST_PARSED, (event, data) => this._onMetaData(event, data)); // FIXME: typings
-        this.hls.on(hls["Events"].LEVEL_LOADED, (event, data) => {
+        this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].ERROR, (event, data) => this._onError(event, data));
+        this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].AUDIO_TRACKS_UPDATED, () => this._onAudioTracks());
+        this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].MANIFEST_PARSED, (event, data) => this._onMetaData(event, data)); // FIXME: typings
+        this.hls.on(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].LEVEL_LOADED, (event, data) => {
             // The DVR plugin will auto seek to "live edge" on start up
             if (this.hlsjsConfig.liveSyncDuration) {
                 this.edgeMargin = this.hlsjsConfig.liveSyncDuration;
@@ -527,7 +513,7 @@ class hls_plugin_Html5Hlsjs {
             this.dvrDuration = data.details.totalduration;
             this._duration = this.isLive ? Infinity : data.details.totalduration;
         });
-        this.hls.once(hls["Events"].FRAG_LOADED, () => {
+        this.hls.once(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].FRAG_LOADED, () => {
             // Emit custom 'loadedmetadata' event for parity with `videojs-contrib-hls`
             // Ref: https://github.com/videojs/videojs-contrib-hls#loadedmetadata
             this.tech.trigger('loadedmetadata');
@@ -539,7 +525,7 @@ class hls_plugin_Html5Hlsjs {
             //fmp4Data[data.type].push(data.data);
         });
         */
-        this.hls.once(hls["Events"].FRAG_BUFFERED, (e) => {
+        this.hls.once(hls_js__WEBPACK_IMPORTED_MODULE_0__["Events"].FRAG_BUFFERED, (e) => {
         });
         this.hls.attachMedia(this.videoElement);
         this.hls.loadSource(this.source.src);
@@ -548,20 +534,40 @@ class hls_plugin_Html5Hlsjs {
         this._initHlsjs();
     }
 }
-hls_plugin_Html5Hlsjs.hooks = {};
-
-
-// CONCATENATED MODULE: ./src/assets/player/p2p-media-loader/p2p-media-loader-plugin.ts
+Html5Hlsjs.hooks = {};
 
 
 
+/***/ }),
+
+/***/ "./src/assets/player/p2p-media-loader/p2p-media-loader-plugin.ts":
+/*!***********************************************************************!*\
+  !*** ./src/assets/player/p2p-media-loader/p2p-media-loader-plugin.ts ***!
+  \***********************************************************************/
+/*! exports provided: P2pMediaLoaderPlugin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P2pMediaLoaderPlugin", function() { return P2pMediaLoaderPlugin; });
+/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! video.js */ "./node_modules/video.js/core.js");
+/* harmony import */ var video_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(video_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _core_p2p_media_loader_master_p2p_media_loader_hlsjs_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-hlsjs/lib/index.ts");
+/* harmony import */ var _core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/p2p-media-loader-master/p2p-media-loader-core/lib */ "./src/assets/player/p2p-media-loader/core/p2p-media-loader-master/p2p-media-loader-core/lib/index.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils */ "./src/assets/player/utils.ts");
+/* harmony import */ var _hls_plugin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hls-plugin */ "./src/assets/player/p2p-media-loader/hls-plugin.ts");
+/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! hls.js */ "./node_modules/hls.js/dist/hls.js");
+/* harmony import */ var hls_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(hls_js__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
-registerConfigPlugin(core_default.a);
-registerSourceHandler(core_default.a);
-const Plugin = core_default.a.getPlugin('plugin');
-class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
+
+
+
+Object(_hls_plugin__WEBPACK_IMPORTED_MODULE_4__["registerConfigPlugin"])(video_js__WEBPACK_IMPORTED_MODULE_0___default.a);
+Object(_hls_plugin__WEBPACK_IMPORTED_MODULE_4__["registerSourceHandler"])(video_js__WEBPACK_IMPORTED_MODULE_0___default.a);
+const Plugin = video_js__WEBPACK_IMPORTED_MODULE_0___default.a.getPlugin('plugin');
+class P2pMediaLoaderPlugin extends Plugin {
     constructor(player, options) {
         super(player);
         this.CONSTANTS = {
@@ -582,7 +588,7 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         };
         this.options = options;
         // FIXME: typings https://github.com/Microsoft/TypeScript/issues/14080
-        if (!core_default.a.Html5Hlsjs) {
+        if (!video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs) {
             console.warn('HLS.js does not seem to be supported. Try to fallback to built in HLS.');
             if (!player.canPlayType('application/vnd.apple.mpegurl')) {
                 const message = 'Cannot fallback to built-in HLS';
@@ -593,13 +599,13 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         }
         else {
             // FIXME: typings https://github.com/Microsoft/TypeScript/issues/14080
-            core_default.a.Html5Hlsjs.addHook('beforeinitialize', (videojsPlayer, hlsjs) => {
+            video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs.addHook('beforeinitialize', (videojsPlayer, hlsjs) => {
                 this.hlsjs = hlsjs;
             });
-            Object(lib["initVideoJsContribHlsJsPlayer"])(player);
+            Object(_core_p2p_media_loader_master_p2p_media_loader_hlsjs_lib__WEBPACK_IMPORTED_MODULE_1__["initVideoJsContribHlsJsPlayer"])(player);
         }
         if (options) {
-            this.startTime = Object(utils["j" /* timeToInt */])(options.startTime);
+            this.startTime = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["timeToInt"])(options.startTime);
             player.src({
                 type: options.type,
                 src: options.src
@@ -607,7 +613,7 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         }
         player.ready(() => {
             this.initializeCore();
-            if (core_default.a.Html5Hlsjs) {
+            if (video_js__WEBPACK_IMPORTED_MODULE_0___default.a.Html5Hlsjs) {
                 if (options)
                     this.initializePlugin();
             }
@@ -634,14 +640,14 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         });
     }
     initializePlugin() {
-        Object(lib["initHlsJsPlayer"])(this.hlsjs);
+        Object(_core_p2p_media_loader_master_p2p_media_loader_hlsjs_lib__WEBPACK_IMPORTED_MODULE_1__["initHlsJsPlayer"])(this.hlsjs);
         // FIXME: typings
         const options = this.player.tech(true).options_;
         this.p2pEngine = options.hlsjsConfig.loader.getEngine();
-        this.hlsjs.on(hls["Events"].LEVEL_SWITCHING, (_, data) => {
+        this.hlsjs.on(hls_js__WEBPACK_IMPORTED_MODULE_5__["Events"].LEVEL_SWITCHING, (_, data) => {
             this.trigger('resolutionChange', { auto: this.hlsjs.autoLevelEnabled, resolutionId: data.height });
         });
-        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].SegmentError, (segment, err) => {
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].SegmentError, (segment, err) => {
             console.error('Segment error.', segment, err);
             this.options.redundancyUrlManager.removeBySegmentUrl(segment.requestUrl);
         });
@@ -649,18 +655,18 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         this.runStats();
     }
     runStats() {
-        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].PieceBytesDownloaded, (method, size) => {
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesDownloaded, (method, size) => {
             const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
             elem.pendingDownload.push(size);
             elem.totalDownload += size;
         });
-        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].PieceBytesUploaded, (method, size) => {
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PieceBytesUploaded, (method, size) => {
             const elem = method === 'p2p' ? this.statsP2PBytes : this.statsHTTPBytes;
             elem.pendingUpload.push(size);
             elem.totalUpload += size;
         });
-        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].PeerConnect, () => this.statsP2PBytes.numPeers++);
-        this.p2pEngine.on(p2p_media_loader_core_lib["a" /* Events */].PeerClose, () => this.statsP2PBytes.numPeers--);
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PeerConnect, () => this.statsP2PBytes.numPeers++);
+        this.p2pEngine.on(_core_p2p_media_loader_master_p2p_media_loader_core_lib__WEBPACK_IMPORTED_MODULE_2__["Events"].PeerClose, () => this.statsP2PBytes.numPeers--);
         this.networkInfoInterval = setInterval(() => {
             const p2pDownloadSpeed = this.arraySum(this.statsP2PBytes.pendingDownload);
             const p2pUploadSpeed = this.arraySum(this.statsP2PBytes.pendingUpload);
@@ -692,11 +698,11 @@ class p2p_media_loader_plugin_P2pMediaLoaderPlugin extends Plugin {
         return data.reduce((a, b) => a + b, 0);
     }
 }
-core_default.a.registerPlugin('p2pMediaLoader', p2p_media_loader_plugin_P2pMediaLoaderPlugin);
+video_js__WEBPACK_IMPORTED_MODULE_0___default.a.registerPlugin('p2pMediaLoader', P2pMediaLoaderPlugin);
 
 
 
 /***/ })
 
 }]);
-//# sourceMappingURL=10.chunk.js.map
+//# sourceMappingURL=6.chunk.js.map

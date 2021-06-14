@@ -123,7 +123,7 @@ var metadisplay = function(){ %>
 			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
 		%>
 			<div class="paddingWrapper">
-				<div class="sharecaption canmark opensviurl">
+				<div class="sharecaption canmark opensviurl"  title="<%-nl2br(trimrn(c))%>">
 					<div>
 						<%=joypixels.toImage(nl2br(trimrn(c)))%>
 					</div>
@@ -219,7 +219,7 @@ var metadisplay = function(){ %>
 								
 								%>
 
-								<div class="tags canmark ">
+								<div class="tags canmark">
 
 									
 									<% _.each(bycategories.categories, function(category){ %>
