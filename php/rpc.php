@@ -42,7 +42,7 @@ class RPC {
         
         $result = curl_exec($ch);
 
-        echo curl_error($ch);
+        //echo curl_error($ch);
         curl_close($ch);
 
         

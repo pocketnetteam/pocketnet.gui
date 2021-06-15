@@ -1596,13 +1596,17 @@
 		el.find('[image]').each(function(){
 
 			var _el = $(this);
+			var image = _el.attr('image')
 
-			if (_el.attr('image'))
+			if (image)
 			{
-				_el.css('background-image', 'url('+$(this).attr('image')+')');
-				_el.css('background-size', p.size || 'cover');
-				_el.css('background-position', p.position || 'center center');
-				_el.css('background-repeat', p.repeat || 'no-repeat');
+				_el.css({
+					'background-image': 'url('+image+')',
+					'background-size': p.size || 'cover',
+					'background-position': p.position || 'center center',
+					'background-repeat': p.repeat || 'no-repeat'
+				});
+
 				_el.attr('image', '')
 			}
 
@@ -1610,7 +1614,7 @@
 			{
 				_el.imagesLoaded({ background: true }, function(image) {
 
-					el.fadeIn(100);
+					el.fadeIn({queue: false, duration: 'fast'});
 
 				  	if(typeof p.clbk === 'function')
 				  		p.clbk(image);
@@ -7948,24 +7952,25 @@
 /* DOM */
 
 	before = function(el, h){
-		$(el).before(h);
+		el.before(h);
 	}
 	after = function(el, h){
-		$(el).after(h);
+		el.after(h);
 	}
 	html = function(el, h){
-		$(el).html(h);
+		//console.log("E", el)
+		el.html(h);
 	}
 	append = function(el, h){
-		$(el).append(h);
+		el.append(h);
 	}
 
 	replaceWith = function(el, h){
-		$(el).replaceWith(h);
+		el.replaceWith(h);
 	}
 
 	prepend = function(el, h){
-		$(el).prepend(h);
+		el.prepend(h);
 	}
 
 	offsetElement = function(elem) {

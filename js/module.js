@@ -106,8 +106,10 @@ nModule = function(){
 					
 				}
 
-
-				bgImages(p.el, p.bgImages)
+				window.requestAnimationFrame(function(){
+					bgImages(p.el, p.bgImages)
+				})
+				
 				
 			}
 

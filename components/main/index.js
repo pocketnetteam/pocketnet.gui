@@ -810,9 +810,11 @@ var main = (function(){
 					bottom : 122
 				});
 
+				hsready = true
+
 			}
 
-			hsready = true
+			
 
 		}
 
