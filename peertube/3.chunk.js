@@ -2137,6 +2137,7 @@ class SegmentManager {
                     }
                 }
                 if (content === undefined) {
+                    console.log('byteRangeString', byteRangeString);
                     const xhr = yield this.loadContent(url, "arraybuffer", byteRangeString);
                     content = xhr.response;
                 }
@@ -2294,7 +2295,8 @@ class SegmentManager {
                 const xhr = new XMLHttpRequest();
                 xhr.open("GET", url, true);
                 xhr.responseType = responseType;
-                if (range) {
+                console.log('range', range);
+                if (range && range != 'bytes=0--1') {
                     xhr.setRequestHeader("Range", range);
                 }
                 xhr.addEventListener("readystatechange", () => {
