@@ -1226,73 +1226,75 @@ var lenta = (function(){
 				if(ap.length){
 					playVideoTimer = slowMade(function(){
 
-						ap = _.filter(ap, function(p){
-							return p.el
-						})
+						window.requestAnimationFrame(function(){
 
-						var vs = _.map(ap, function(p){
-							return p.el[0]
-						})
-						
-						var inv = inView(el.c.find('.videoWrapper'), {
-						
-							offset : el.w.height() / 10,
-							mode : 'all'
-						})
-
-						var id = null;
-
-						if (inv.length > 0){
-
-							var vel = $(inv[0]);
-
-							id = vel.attr('pid')							
-
-
-							var player = _.find(ap, function(p){
-								return p.id == id
+							ap = _.filter(ap, function(p){
+								return p.el
 							})
 
-							if(!id || !player) return
-
+							var vs = _.map(ap, function(p){
+								return p.el[0]
+							})
 							
+							var inv = inView(el.c.find('.videoWrapper'), {
+							
+								offset : el.w.height() / 10,
+								mode : 'all'
+							})
 
-							if (player){
+							var id = null;
+
+							if (inv.length > 0){
+
+								var vel = $(inv[0]);
+
+								id = vel.attr('pid')							
+
+
+								var player = _.find(ap, function(p){
+									return p.id == id
+								})
+
+								if(!id || !player) return
 
 								
 
-								setTimeout(function(){
+								if (player){
 
-									var inv = inView(vel, {
-						
-										offset : -100,
-										mode : 'all'
-									})
+									
 
-									if(inv.length){
-										action(player, vel)
-									}
+									setTimeout(function(){
 
-								}, 320)
+										var inv = inView(vel, {
+							
+											offset : -100,
+											mode : 'all'
+										})
+
+										if(inv.length){
+											action(player, vel)
+										}
+
+									}, 320)
+
+									
+
+								}
 
 								
-
+								
 							}
 
-							
-							
-						}
+							var another = _.filter(ap, function(p){
+								return p.id != id
+							})
 
-						var another = _.filter(ap, function(p){
-							return p.id != id
+							if(another.length){
+								nvaction(another)
+							}
 						})
 
-						if(another.length){
-							nvaction(another)
-						}
-
-
-					}, playVideoTimer, 30)
+					}, playVideoTimer, 60)
 				}
 
 			},
@@ -1304,64 +1306,69 @@ var lenta = (function(){
 				if (shares.length && !mscrolling)
 
 					getPreviewTimer = slowMade(function(){
-						
-						var els = el.c.find('.share');
 
-						var _el = el.w; 
+						window.requestAnimationFrame(function(){
 
-						var h = el.w.height() / 4
-						
-						var inv = inView(els, {
-							inel : _el,
-							offsetTop : h,
-							offsetBottom : h,
-							//mode : 'line',
-						})
+							var els = el.c.find('.share');
 
+							var _el = el.w; 
 
-						if (inv.length > 0){
-
-							var invmap = {};
-						
-							var invshares = _.map(inv, function(el){
+							var h = el.w.height() / 4
 							
-								var id = $(el).attr('id');
-
-								invmap[id] = true
-
-								return _.find(shares, function(s){
-									return s.txid == id
-								});
-							})
-
-							invshares = _.filter(invshares, function(is){
-								if(is && !is.temp) return true
+							var inv = inView(els, {
+								inel : _el,
+								offsetTop : h,
+								offsetBottom : h,
+								//mode : 'line',
 							})
 
 
-							scrolling = true;
+							if (inv.length > 0){
 
-							action(invshares, inv, function(){
-
-								scrolling = false
-
-								if(nvaction){
-									var nvshares = _.filter(shares, function(s){
-										if(!invmap[s.txid]) return true
-									})
-
-									nvaction(nvshares)
-								}
-
-
-							})
-
+								var invmap = {};
+							
+								var invshares = _.map(inv, function(el){
 								
-							
-						}
+									var id = el.getAttribute('id');
+
+									invmap[id] = true
+
+									return _.find(shares, function(s){
+										return s.txid == id
+									});
+								})
+
+								invshares = _.filter(invshares, function(is){
+									if(is && !is.temp) return true
+								})
 
 
-					}, getPreviewTimer, 30)
+								scrolling = true;
+
+								action(invshares, inv, function(){
+
+									scrolling = false
+
+									if(nvaction){
+										var nvshares = _.filter(shares, function(s){
+											if(!invmap[s.txid]) return true
+										})
+
+										nvaction(nvshares)
+									}
+
+
+								})
+
+									
+								
+							}
+
+
+						});
+
+
+					}, getPreviewTimer, 60)
 
 			},
 
@@ -1405,7 +1412,7 @@ var lenta = (function(){
 
 				if(!player.p) return
 
-				if (v){
+				if (v && player.p.setVolume){
 					//player.p.muted = false;
 					player.p.setVolume(v)
 				}
@@ -1434,22 +1441,26 @@ var lenta = (function(){
 
 					sharesPreInitVideoTimer = slowMade(function(){
 
-						if(!el.c) return
+						window.requestAnimationFrame(function(){
 
-						var st = el.w.scrollTop()
+							if(!el.c) return
 
-						_.each(shadowShares, function(share){
-							var _el = el.c.find('#' + share.txid)
+							var st = el.w.scrollTop()
 
-							if (_el.length){
+							_.each(shadowShares, function(share){
+								var _el = el.share[share.txid]
 
-								if(st + 3500 > _el.offset().top){
-									actions.initVideo(_el, share)
-								}
-							}	
+								if (_el.length){
+
+									if(st + 3500 > _el.offset().top){
+										actions.initVideo(_el, share)
+									}
+								}	
+							})
+
 						})
 
-					}, sharesPreInitVideoTimer, 30)
+					}, sharesPreInitVideoTimer, 60)
 					
 				}
 
@@ -1480,7 +1491,7 @@ var lenta = (function(){
 
 					
 					_.each(invshares, function(s){
-						el.c.find('#' + s.txid).addClass('vstars')
+						el.share[s.txid].addClass('vstars')
 					})
 
 					
@@ -1490,7 +1501,7 @@ var lenta = (function(){
 				}, function(nvshares){
 					
 					_.each(nvshares, function(s){
-						el.c.find('#' + s.txid).removeClass('vstars')
+						el.share[s.txid].removeClass('vstars')
 					})
 
 				})
@@ -1577,6 +1588,9 @@ var lenta = (function(){
 				$(this).remove()
 
 				renders.sharesInview(sharesInview, function(shares){
+
+					events.sharesPreInitVideo()
+					events.videosInview()
 
 				}, function(){
 
@@ -2470,6 +2484,11 @@ var lenta = (function(){
 					sharesInview = _.uniq(sharesInview, function(s){
 						return s.txid
 					})
+
+
+					_.each(shares, function(s){
+						el.share[s.txid] = el.c.find('#' + s.txid)
+					})
 					
 					if (essenseData.renderclbk)
 						essenseData.renderclbk()
@@ -2512,7 +2531,7 @@ var lenta = (function(){
 
 			videoPreview : function(s, clbk){
 
-				var sel = el.c.find('#' + s.txid)
+				var sel = el.share[s.txid]
 
 				if(s.settings.v == "a"){
 					var pl = sel.find('[data-plyr-provider][data-plyr-embed-id]')
@@ -2545,7 +2564,7 @@ var lenta = (function(){
 
 				if(!el.c) return
 
-				var sel = el.c.find('#' + s.txid)
+				var sel =  el.share[s.txid] 
 
 				var _el = sel.find(".image");
 				var images = sel.find(".images");
@@ -2815,7 +2834,7 @@ var lenta = (function(){
 
 				if (url){
 
-					var _el = el.c.find('#' + share.txid + " .url");
+					var _el = el.share[share.txid].find('.url')
 
 					var meta = self.app.platform.parseUrl(url);
 					var og = self.app.platform.sdk.remote.storage[url];
@@ -4053,6 +4072,7 @@ var lenta = (function(){
 				el.lentacnt = el.c.find('.lentacell .cnt')
 				el.w = essenseData.window || $(window)
 
+				el.share = {}
 
 				if (essenseData.horizontal){
 					el.c.addClass('horizontal')

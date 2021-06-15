@@ -938,7 +938,7 @@ var menu = (function(){
 
 						    	numberStep: function(now, tween) {
 
-						    		actions.elswidth()
+						    		//actions.elswidth()
 
 						    		//el.addClass(c)
 
@@ -953,7 +953,7 @@ var menu = (function(){
 						    }, rand(400, 1200), function(){
 
 						    	el.removeClass(c)
-
+								actions.elswidth()
 						    });
 						}
 					

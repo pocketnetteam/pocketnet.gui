@@ -42,12 +42,19 @@
 									</div>
 								<% } %>
 
+								<% if(info.data.isLive) {%>
+									<div class="durationWrapper live">
+										<i class="fas fa-rss"></i> <span>Live</span>
+									</div>
+								<% } %>
+
 								<div class="statswrapper">
 									<% if(info.data.views) {%>
 										<div class="viewsWrapper">
 											<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
 										</div>
 									<% } %>
+
 		
 									<% if(share) {
 										
