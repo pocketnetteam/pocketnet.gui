@@ -866,3 +866,4 @@ ____loclib["More videos by this author"] = 'Другие видео от это�
 
 ____loclib.goLive = 'Начать Трансляцию'
 ____loclib.streamInfo = 'Ключи Трансляции'
+____loclib.streamCreating = 'Стрим Создается'
