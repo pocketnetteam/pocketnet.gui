@@ -525,7 +525,7 @@ ____loclib.e13128 = "Здесь будут отображаться сообще
 ____loclib.registration = "Регистрация"
 ____loclib.editpost = "Редактировать публикацию"
 ____loclib.removepost = "Удалить публикацию"
-
+____loclib.opennewwindow = "Открыть пост в новом окне"
 
 ____loclib.reportpost = "Пожаловаться"
 ____loclib.donate = "Пожертвование"

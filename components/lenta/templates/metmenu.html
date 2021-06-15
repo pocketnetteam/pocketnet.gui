@@ -10,6 +10,12 @@ var all = {
 		class : 'edit'
 	},
 
+	opennewwindow : {
+		icon : '<i class="fas fa-link"></i>',
+		text : e('opennewwindow'),
+		class : 'opennewwindow'
+	},
+
 	remove : {
 		icon : '<i class="far fa-times-circle"></i>',
 		text : e('removepost'),
@@ -108,6 +114,9 @@ if(share){
 	if (share.itisvideo()) {
 		m.push('shareBareVideoLink');
 	}
+
+	m.push('opennewwindow');
+	
 }
 
 

@@ -614,12 +614,9 @@ var main = (function(){
 
 							el.c.addClass('opensvishowed')
 
-							
-
 							if (upbutton) upbutton.destroy()
 							
 							if (upbackbutton) upbackbutton.destroy()
-
 
 							setTimeout(function(){
 								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
@@ -637,9 +634,6 @@ var main = (function(){
 									text : 'Back'
 								})	
 							}, 50)
-
-								
-
 								
 							setTimeout(function(){
 								upbackbutton.apply()

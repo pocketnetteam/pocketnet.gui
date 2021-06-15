@@ -2802,6 +2802,26 @@ Platform = function (app, listofnodes) {
 
                     }, function (el) {
 
+                        el.find('.opennewwindow').on('click', function(){
+
+                            var href = 'https://pocketnet.app/'
+
+                            if(d.share.itisvideo()){
+                                href += 'index?video=1&v=' + id
+                            }
+                            else
+                            {
+                                href += 'index?post?s=' + id
+                            }
+
+                            if(window.cordova){
+                                cordova.InAppBrowser.open(href, '_blank');
+                            }
+                            else{
+                                window.open(href, '_blank');
+                            }
+                        })
+
                         el.find('.htls').on('click', function () {
 
                             actions.htls(id)

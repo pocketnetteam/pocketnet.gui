@@ -1685,12 +1685,27 @@ html.stblack{
 			.commentpanel{
 				width: 100%;
 
+				span{
+					font-size: 0.9em;
+				}
+
 				.items{
 					padding-top : @rhythm;
 					>div{
 						float: left;
 						padding-left: 0;
-						padding-right: 4 * @rhythm;
+						padding-right: 0;
+						margin-right: 4 * @rhythm;
+
+						&.upvoteCommentWrapper{
+							margin-right: @rhythm;
+							padding-right: 0;
+						}
+
+						&:nth-last-child(1){
+							margin-right: 0;
+							padding-right: 0;
+						}
 					}	
 				}
 					
@@ -1706,7 +1721,11 @@ html.stblack{
 				
 			
 				>div{
-					padding-top: @rhythm!important;
+					padding-top: 1.5 * @rhythm!important;
+
+					span{
+						font-size: 1em;
+					}
 					
 					&.panelWrapper{
 
@@ -1727,11 +1746,14 @@ html.stblack{
 
 	
 		.showall{
-			padding : 2 * @rhythm;
+			padding : 3 * @rhythm;
 			padding-left:  @rhythm;
 			padding-right: @rhythm;
-			padding-bottom: 0;
+			padding-bottom: 2 * @rhythm;;
 			
+			span{
+				font-size: 0.9em;
+			}
 		}
 
 		.answer,
