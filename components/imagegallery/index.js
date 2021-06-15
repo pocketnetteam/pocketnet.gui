@@ -129,7 +129,7 @@ var imagegallery = (function(){
 
 				var ptop = (H - h) / 2;
 
-				el.css('padding-top', ptop + "px");
+				// el.css('padding-top', ptop + "px");
 
 				image.width = w;
 				image.height = h;

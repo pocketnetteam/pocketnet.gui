@@ -672,7 +672,13 @@ PeerTubePocketnet = function (app) {
           }
         }
 
-        return request('oauthClientsLocal')
+        return request(
+          'oauthClientsLocal',
+          {},
+          {
+            host,
+          },
+        )
           .then(({ client_id, client_secret }) => {
             if (!client_id || !client_secret) {
               return Promise.reject(error('oauthClientsLocal'));
@@ -684,7 +690,9 @@ PeerTubePocketnet = function (app) {
             return Promise.resolve();
           })
           .then(() => {
-            return request('pocketnetAuth');
+            return request('pocketnetAuth', {}, {
+              host,
+            });
           })
           .then(({ externalAuthToken, username }) => {
             if (!externalAuthToken || !username) {
