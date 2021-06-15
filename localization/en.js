@@ -985,8 +985,8 @@ ____loclib.showmoreusers = "Show more users"
 ____loclib.zeron = "Nothing found";
 ____loclib.maxtags = "Only 5 tags maximum allowed";
 
-____loclib.videotitle = "Enter video title";
-____loclib.videodesc = "Enter video description";
+____loclib.videotitle = "Enter video/stream title";
+____loclib.videodesc = "Enter video/stream description";
 ____loclib.entervideocaption = "Please, enter video title";
 
 ____loclib.period = "Period";

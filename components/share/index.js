@@ -1510,6 +1510,7 @@ var share = (function(){
 
 				self.app.peertubeHandler.api.user.auth(serverLink || self.app.peertubeHandler.active(), true)
 				  .then(r => {
+					  
 					globalpreloader(false);
 
 					self.nav.api.load({
@@ -1542,7 +1543,8 @@ var share = (function(){
 
 										sitemessage(errors[type])
 
-									}								
+									}			
+														
 
 									make();	
 								}
@@ -1556,7 +1558,10 @@ var share = (function(){
 
 								external = null
 
-								make();
+
+								if(elName != 'streampeertube')
+
+									make();
 							}
 						},
 

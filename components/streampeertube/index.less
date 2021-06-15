@@ -35,25 +35,24 @@
         .main-content-section {
             width: 100%;
             height: 100%;
-
+            padding : 2 * @rhythm;
+            padding-top : 6 * @rhythm;
             display: flex;
             align-items: center;
             justify-content: center;
-
             flex-direction: column;
         }
     }
 
     .result-section {
         .upload-field-container {
-            width: 80%;
+            width: 100%;
 
             display: flex;
             justify-content: flex-start;
 
             .result-video-info {
-                width: 80%;
-                margin-right: 0.5em;
+                width: 100%;
             }
         }
     }
@@ -80,14 +79,16 @@
 
         position: relative;
 
-        &:hover,
-        &:active {
-            color: @color-orange;
-        }
 
         .upload-peertube-label {
             text-decoration: underline;
         }
+    }
+
+    .closewindow{
+        padding : 2 * @rhythm;
+        text-align: left;
+        padding-bottom : 0;
     }
 
     .upload-file-container {
@@ -114,7 +115,7 @@
         }
 
         .upload-field-container:not(:first-child) {
-            margin-top: @rhythm * 4;
+            margin-top: @rhythm * 2;
         }
 
         .upload-field-container {
@@ -142,15 +143,11 @@
 
     .upload-video-field {
         border-width: 1px;
-        border-radius: 15px;
-        padding-left: 1em;
-
         width: 80%;
-
-        border-color: @color-orange;
+        /*border-color: @color-orange;*/
     }
 
-    .on-border-label {
+    /*.on-border-label {
         position: absolute;
         top: -10px;
         left: 15px;
@@ -158,7 +155,7 @@
         font-weight: 700;
         background-color: #fff;
         padding: 0 2px;
-    }
+    }*/
 
     .upload-progress-container {
         display: flex;
@@ -212,11 +209,7 @@
         width: 50%;
     }
 
-    .result-video-info {
-        border-color: @color-orange;
-        border-radius: 15px;
-    }
-
+  
     .preloader-section {
         display: flex;
         align-items: center;
@@ -261,7 +254,7 @@
         width: 50%;
         height: 100%;
 
-        max-height: 300px;
+        max-height: 230px;
 
         overflow: hidden;
 

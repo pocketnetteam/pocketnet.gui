@@ -46900,6 +46900,7 @@ class PeerTubeEmbed {
             this.wrapperElement.innerHTML = "";
             this.wrapperElement.appendChild(this.playerElement);
             this.loadParams(videoInfo);
+            this.liveStatusMessage();
             const options = {
                 common: {
                     // Autoplay in playlist mode
@@ -47011,7 +47012,6 @@ class PeerTubeEmbed {
             if (this.details.state.id == 2) {
                 this.displayWarning('Video is being processed');
             }
-            this.liveStatusMessage();
         });
     }
     buildVideoPlayerContributos(videoId) {

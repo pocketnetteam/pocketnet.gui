@@ -12,28 +12,32 @@
         <label for="result-video-rtmp">RTMP Url:</label>
         <input
           type="text"
-          class="result-video-rtmp result-video-info"
+          class="result-video-rtmp result-video-info copyStreamInfo"
           id="result-video-rtmp"
           readonly
+          linkType="result-video-rtmp"
         />
-        <button class="copyStreamInfo orange" linkType="result-video-rtmp">
-          <i class="fas fa-clipboard"></i>
-        </button>
+      
         <span class="type-error-field name-type-error"></span>
       </div>
       <div class="upload-field-container">
         <label for="result-video-streamKey">Stream Key:</label>
+
         <input
           type="text"
-          class="result-video-streamKey result-video-info"
+          class="result-video-streamKey result-video-info copyStreamInfo"
           id="result-video-streamKey"
+          linkType="result-video-streamKey"
           readonly
         />
-        <button class="copyStreamInfo orange" linkType="result-video-streamKey">
-          <i class="fas fa-clipboard"></i>
-        </button>
+       
         <span class="type-error-field name-type-error"></span>
       </div>
+
+      <div class="closewindow">
+        <button class="button medium closewindowaction">Close</button>
+      </div>
+
     </section>
   </section>
 

@@ -14,6 +14,10 @@
 		height: auto;
 	}
 
+	.emojionearea, .emojionearea.form-control{
+		font-size: 1em;
+	}
+
 	::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 	    color:    @placeholder;
 	}
@@ -826,11 +830,20 @@
 				position: relative;
 				float: left;
 				.transition(0.3s);
+
 				&:hover{
 					background: fade(#000, 50);
 
 					&.removepeertube{
 						background: fade(@color-bad, 50);
+					}
+				}
+
+				&.streaminfo{
+					background: fade(@color-main, 70);
+
+					&:hover{
+						background: fade(#000, 30);
 					}
 				}
 
