@@ -17,30 +17,10 @@ var streampeertube = (function () {
     var wnd;
     var wndObj;
 
-    var streamDate;
-
     var actions = {};
 
-    var events = {};
-
-    var renders = {};
-
-    var state = {
-      save: function () {},
-      load: function () {},
-    };
-
-    var initEvents = function () {
-      el.videoWallpaper.change(function (evt) {
-        var fileName = evt.target.files[0].name;
-
-        el.wallpaperError.text(
-          fileName.slice(0, 20) + (fileName.length > 20 ? '...' : ''),
-        );
-        el.wallpaperError.removeClass('error-message');
-      });
-
-      el.streamButton.on('click', function () {
+    var events = {
+      createStream(clbk = () => {}) {
         if (streamCreated) {
           streamCreated = false;
 
@@ -61,25 +41,7 @@ var streampeertube = (function () {
         var videoName = wnd.find('.upload-video-name').val();
         var nameError = wnd.find('.name-type-error');
 
-        nameError.text('');
-
         var filesWrittenObject = {};
-
-        if (videoWallpaperFile[0]) {
-          if (
-            videoWallpaperFile[0].type !== 'image/jpeg' &&
-            videoWallpaperFile[0].type !== 'image/jpg'
-          ) {
-            el.wallpaperError.text(
-              'Incorrect wallpaper format. Supported: .jpg, .jpeg',
-            );
-            el.wallpaperError.addClass('error-message');
-
-            return;
-          }
-
-          filesWrittenObject.image = videoWallpaperFile[0];
-        }
 
         filesWrittenObject.name = videoName;
 
@@ -99,11 +61,6 @@ var streampeertube = (function () {
                   var message = (Object.values(error)[0] || {}).msg;
 
                   sitemessage(message || 'Uploading error');
-                  contentSection.removeClass('hidden');
-                  el.streamButton.removeClass('disabledButton');
-                  el.streamButton.html(
-                    '<i class="fas fa-broadcast-tower"></i> Go Live',
-                  );
 
                   return;
                 }
@@ -126,10 +83,21 @@ var streampeertube = (function () {
                 streamKeyInput.val(res.streamKey);
 
                 actions.added(response.formattedLink);
+
+                clbk();
               });
           });
-      });
+      },
+    };
 
+    var renders = {};
+
+    var state = {
+      save: function () {},
+      load: function () {},
+    };
+
+    var initEvents = function () {
       el.copyButton.each((index, button) => {
         var buttonElement = $(button);
 
@@ -143,12 +111,6 @@ var streampeertube = (function () {
           sitemessage('Link was copied to clipboard');
         });
       });
-
-      // el.dateInput.DateTimePicker({
-      //   settingValueOfElement: function (a, b) {
-      //     streamDate = moment.utc(b).format();
-      //   },
-      // });
     };
 
     return {
@@ -204,13 +166,6 @@ var streampeertube = (function () {
 
           clbk(data);
         }
-
-        // var data = {};
-
-        //   streamInfo = null;
-        //   streamCreated = false;
-
-        //   clbk(data);
       },
 
       destroy: function () {
@@ -247,122 +202,22 @@ var streampeertube = (function () {
 
           el.streamButton.html('<i class="fas fa-check"></i> Stream Created');
           el.streamButton.addClass('successButton');
+
+          initEvents();
+
+          p.clbk(null, p);
+        } else {
+          events.createStream(() => {
+            initEvents();
+
+            p.clbk(null, p);
+          });
         }
-
-        initEvents();
-
-        p.clbk(null, p);
       },
 
       wnd: {
         header: '',
-        // buttons: {
-        //   close: {
-        //     class: 'close',
-        //     html: '<i class="fas fa-broadcast-tower"></i> Go live',
-        //     // fn: function (wnd, wndObj) {
-        //     //   if (streamCreated) {
-        //     //     streamCreated = false;
 
-        //     //     return wndObj.close();
-        //     //   }
-
-        //     //   var contentSection = wnd.find('.content-section');
-        //     //   var preloaderSection = wnd.find('.preloader-section');
-
-        //     //   closeButton.addClass('disabledButton');
-        //     //   closeButton.text('Starting...');
-
-        //     //   contentSection.addClass('hidden');
-        //     //   preloaderSection.removeClass('hidden');
-
-        //     //   var videoWallpaperFile = el.videoWallpaper.prop('files');
-
-        //     //   var videoName = wnd.find('.upload-video-name').val();
-        //     //   var nameError = wnd.find('.name-type-error');
-
-        //     //   nameError.text('');
-
-        //     //   var filesWrittenObject = {};
-
-        //     //   if (videoWallpaperFile[0]) {
-        //     //     if (
-        //     //       videoWallpaperFile[0].type !== 'image/jpeg' &&
-        //     //       videoWallpaperFile[0].type !== 'image/jpg'
-        //     //     ) {
-        //     //       el.wallpaperError.text(
-        //     //         'Incorrect wallpaper format. Supported: .jpg, .jpeg',
-        //     //       );
-        //     //       el.wallpaperError.addClass('error-message');
-
-        //     //       return;
-        //     //     }
-
-        //     //     filesWrittenObject.image = videoWallpaperFile[0];
-        //     //   }
-        //     //   if (!videoName) {
-        //     //     nameError.text('Name is empty');
-
-        //     //     return;
-        //     //   }
-
-        //     //   filesWrittenObject.name = videoName;
-
-        //     //   filesWrittenObject.uploadFunction = function (percentComplete) {
-        //     //     var formattedProgress = percentComplete.toFixed(2);
-
-        //     //     el.uploadProgress
-        //     //       .find('.upload-progress-bar')
-        //     //       .css('width', formattedProgress + '%');
-        //     //     el.uploadProgress
-        //     //       .find('.upload-progress-percentage')
-        //     //       .text(formattedProgress + '%');
-        //     //   };
-
-        //     //   filesWrittenObject.successFunction = function (response) {
-        //     //     var resultElement = wnd.find('.result-section');
-
-        //     //     preloaderSection.addClass('hidden');
-
-        //     //     if (response.error) {
-        //     //       var error = deep(response, 'error.responseJSON.errors') || {};
-
-        //     //       var message = (Object.values(error)[0] || {}).msg;
-
-        //     //       sitemessage(message || 'Uploading error');
-        //     //       contentSection.removeClass('hidden');
-        //     //       closeButton.removeClass('disabledButton');
-        //     //       closeButton.html(
-        //     //         '<i class="fas fa-broadcast-tower"></i> Go Live',
-        //     //       );
-
-        //     //       return;
-        //     //     }
-
-        //     //     streamCreated = true;
-
-        //     //     resultElement.removeClass('hidden');
-        //     //     closeButton.html('<i class="fas fa-check"></i> Stream Created');
-        //     //     closeButton.removeClass('disabledButton');
-        //     //     closeButton.addClass('successButton');
-
-        //     //     var rtmpInput = resultElement.find('.result-video-rtmp');
-        //     //     var streamKeyInput = resultElement.find(
-        //     //       '.result-video-streamKey',
-        //     //     );
-
-        //     //     rtmpInput.val(response.rtmpUrl);
-        //     //     streamKeyInput.val(response.streamKey);
-
-        //     //     actions.added(response.video);
-        //     //     // wndObj.close();
-        //     //   };
-
-        //     //   // el.uploadProgress.removeClass('hidden');
-        //     //   self.app.peertubeHandler.startLive(filesWrittenObject);
-        //     // },
-        //   },
-        // },
         close: function () {
           if (ed.closeClbk) {
             ed.closeClbk();
