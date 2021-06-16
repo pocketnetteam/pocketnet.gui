@@ -24,7 +24,7 @@
             <% 
 
             
-            if (typeof u != 'undefined' && u && !u.trial && !share.itisvideo() && !share.aliasid) { %>
+            if (typeof u != 'undefined' && u && ((!u.trial && !share.itisvideo() && !share.aliasid) || window.testpocketnet)) { %>
                 <div class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                     <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                 </div>

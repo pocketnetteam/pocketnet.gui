@@ -1002,3 +1002,6 @@
 [0601/210208.273:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
 [0602/072829.511:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
 [0602/072834.523:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0615/220611.630:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0616/082449.949:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0616/082450.143:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
