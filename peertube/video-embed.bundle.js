@@ -39633,6 +39633,9 @@ class PeerTubeEmbedApi {
         this.ignoreChange = false;
     }
     play() {
+        if (this.embed && this.embed.details && this.embed.details.state.id == 5) {
+            return;
+        }
         var pr = this.embed.player.play();
         if (pr && pr.catch)
             pr.catch((e) => {
@@ -43399,7 +43402,6 @@ class embed_PeerTubeEmbed {
         });
     }
     handleError(err, translations) {
-        console.log('err.message', err);
         var liveerror = this.checkLiveStatus();
         if (liveerror && liveerror.error) {
             this.displayErrorWrapper(liveerror.text);

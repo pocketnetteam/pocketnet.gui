@@ -2050,11 +2050,12 @@
 				.sharecaption{
 					color : @color-gray;
 					white-space: inherit;
+					padding-right: 2 * @rhythm;
 					div{
-						font-size: 0.9em;
-						font-weight: 700;
+						font-size: 1em;
+						font-weight: 500;
 						text-transform: capitalize;
-						padding-right: 2 * @rhythm;
+						
 					}
 				}
 
@@ -2144,12 +2145,17 @@
 				}
 			}
 
+			.spsp{
+				font-weight: 400;
+			}
+
 			.authorgroup{
 				float: left;
 				width: 33.3333%;
 				.share{
 					padding : 15px;
 				}
+				
 				
 
 				.anothercntswrk{
@@ -2160,6 +2166,8 @@
 				&:nth-child(3n + 1){
 					clear: left;
 				}
+
+				
 			}
 
 			.cntswrk{
@@ -2181,17 +2189,25 @@
 
 			.shareTable{
 				.authorTable{
+					
 					>div{
 	
 						&.authorCell{
 							padding-left: @rhythm;
 							padding-right: 0;
 							color : @color-gray;
+							
+						}
+
+						a{
+							font-size: 0.9em;
 						}
 
 						&.datetime{
 							padding-left: @rhythm;
 							opacity: 0.5;
+							white-space: nowrap;
+							text-overflow: ellipsis;
 
 							span{
 								color : #000;
@@ -2308,6 +2324,7 @@
 						overflow: hidden;
 						flex-direction: row;
 						align-items: center;
+						width: 100%;
 					
 						>div{
 							&.formeta{
@@ -2338,8 +2355,14 @@
 						.sharecaption{
 							max-height: 30px;
 							text-overflow: ellipsis;
+							white-space: nowrap;
 							overflow: hidden;
-							font-size: 0.9em!important;
+							flex-grow: 1;
+							max-width: 200px;
+							padding-right: 2 * @rhythm;
+							div{
+								font-size: 0.9em!important;
+							}
 						}
 					}
 				}

@@ -73,13 +73,7 @@ var metadisplay = function(){ %>
 							
 						</div>			
                         
-                        <div class="datetime">
-                            <% if(share.time) {%>
-                                <span class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-                            <% } else { %> 
-                                <span><%=e('e13019')%></span>
-                            <% } %>
-                        </div>
+                       
 						
 					</div>
 				</div>
@@ -212,6 +206,8 @@ var metadisplay = function(){ %>
 
 					<div class="cntswrk">
 						<div class="paddingWrapper">
+
+							
 							
 							<% if(share.tags && share.tags.length > 0) {
 
@@ -221,11 +217,19 @@ var metadisplay = function(){ %>
 
 								<div class="tags canmark">
 
+									<div class="datetime">
+										<% if(share.time) {%>
+											<span class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
+										<% } else { %> 
+											<span><%=e('e13019')%></span>
+										<% } %>
+									</div>
+
 									
 									<% _.each(bycategories.categories, function(category){ %>
 
 										<div class="tag">
-											<span><%-category.name%></span> 
+											<span>@<%-category.name%></span> 
 										</div>
 
 									<% }) %>
