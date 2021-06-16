@@ -111,6 +111,10 @@ var streampeertube = (function () {
           sitemessage('Link was copied to clipboard');
         });
       });
+
+      el.c.find('.closewindowaction').on('click', function(){
+        wndObj.close()
+      })
     };
 
     return {
@@ -203,9 +207,7 @@ var streampeertube = (function () {
           el.streamButton.html('<i class="fas fa-check"></i> Stream Created');
           el.streamButton.addClass('successButton');
 
-          el.c.find('.closewindowaction').on('click', function(){
-            self.closeContainer()
-          })
+          
 
           initEvents();
 

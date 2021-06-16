@@ -1503,7 +1503,7 @@ var share = (function(){
 				}
 
 				if (external) external.container.close();
-
+				
 				globalpreloader(true);
 
 				var serverLink = currentShare.url ? self.app.peertubeHandler.parselink(currentShare.url.v).host : null;
