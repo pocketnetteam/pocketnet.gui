@@ -1614,7 +1614,7 @@
 			{
 				_el.imagesLoaded({ background: true }, function(image) {
 
-					el.fadeIn({queue: false, duration: 'fast'});
+					el.fadeIn(100);
 
 				  	if(typeof p.clbk === 'function')
 				  		p.clbk(image);
