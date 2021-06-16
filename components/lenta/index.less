@@ -2030,6 +2030,7 @@
 					margin-bottom: 0;
 					white-space: nowrap;
 					text-overflow: ellipsis;
+
 				}
 
 				.tags{
@@ -2048,16 +2049,19 @@
 
 				.sharecaption{
 					color : @color-gray;
-
+					white-space: inherit;
 					div{
 						font-size: 0.9em;
 						font-weight: 700;
+						text-transform: capitalize;
+						padding-right: 2 * @rhythm;
 					}
 				}
 
 
 				.meta{
 					padding-top : @rhythm;
+					margin-bottom: 0;
 				}
 
 				.commentsWrapperHb{
@@ -2134,6 +2138,7 @@
 						span{
 							color : @color-gray-mlight;
 							opacity: 0.7;
+							text-decoration: none;
 						}
 					}
 				}
@@ -2172,6 +2177,8 @@
 				display: none;
 			}
 
+			
+
 			.shareTable{
 				.authorTable{
 					>div{
@@ -2183,8 +2190,12 @@
 						}
 
 						&.datetime{
-							padding-left: 2 * @rhythm;
+							padding-left: @rhythm;
 							opacity: 0.5;
+
+							span{
+								color : #000;
+							}
 						}
 						
 						span{
@@ -2451,50 +2462,7 @@
 	}
 }
 
-.sharepostmenu{
-	.menuitem{
-		cursor: pointer;
-		>div{
-			padding : 2*  @rhythm;
-			border-bottom: 1px solid @color-gray-slight;
-			.transition(0.3s);
 
-			span{
-				font-size: 0.9em;
-			}
-
-			&.icon{
-				width: 30px;
-				text-align: center;
-			}
-		}
-
-		&:nth-last-child(1){
-			>div{
-				border-bottom: 0;
-			}
-		}
-
-		&:hover{
-			>div{
-				color : @color-main;
-				border-color: @color-main;
-			}
-		}
-
-		&.block,
-		&.complain{
-			&:hover{
-				>div{
-					color : @color-contrast;
-					border-color: @color-contrast;
-				}
-			}
-		}
-
-
-	}
-}
 
 @keyframes vstars{
     0% {

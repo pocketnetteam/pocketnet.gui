@@ -3174,9 +3174,6 @@ var BaseStreamController = /*#__PURE__*/function (_TaskLoop) {
 
     var progressCallback = function progressCallback(data) {
       if (_this2.fragContextChanged(frag)) {
-
-        console.log('_this2', _this2, this)
-
         _this2.warn("Fragment " + frag.sn + (data.part ? ' p: ' + data.part.index : '') + " of level " + frag.level + " was dropped during download.");
 
         _this2.fragmentTracker.removeFragment(frag);

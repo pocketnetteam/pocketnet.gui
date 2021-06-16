@@ -4397,7 +4397,50 @@ input[type=radio].radio:checked + label {
     }
 }
 
+.sharepostmenu{
+	.menuitem{
+		cursor: pointer;
+		>div{
+			padding : 2*  @rhythm;
+			border-bottom: 1px solid @color-gray-slight;
+			.transition(0.3s);
 
+			span{
+				font-size: 0.9em;
+			}
+
+			&.icon{
+				width: 30px;
+				text-align: center;
+			}
+		}
+
+		&:nth-last-child(1){
+			>div{
+				border-bottom: 0;
+			}
+		}
+
+		&:hover{
+			>div{
+				color : @color-main;
+				border-color: @color-main;
+			}
+		}
+
+		&.block,
+		&.complain{
+			&:hover{
+				>div{
+					color : @color-contrast;
+					border-color: @color-contrast;
+				}
+			}
+		}
+
+
+	}
+}
 
 @media only screen and (max-width: 768px) {
     .horizontalLentaWrapper{

@@ -440,7 +440,7 @@
 		if (dateToStrSmall(n) == dateToStrSmall(date)) return ['today', addZero(date.getHours().toString()) + ":" + addZero(date.getMinutes().toString())]
 
 
-		return ['', convertDate(dateToStr(date))]
+		return ['', convertDate(dateToStrSmall(date))]
 		
 	}
 

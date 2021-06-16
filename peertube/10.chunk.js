@@ -74,6 +74,7 @@ function hlsjsConfigHandler(options) {
     if (!player.srOptions_.hlsjsConfig) {
         player.srOptions_.hlsjsConfig = options.hlsjsConfig;
     }
+    console.log('player.srOptions_.hlsjsConfig', options.hlsjsConfig);
     if (!player.srOptions_.captionConfig) {
         player.srOptions_.captionConfig = options.captionConfig;
     }
@@ -498,18 +499,15 @@ class hls_plugin_Html5Hlsjs {
             this.handlers.play = this._startLoad.bind(this);
             this.videoElement.addEventListener('play', this.handlers.play);
         }
-        var fmp4Data;
         // _notifyVideoQualities sometimes runs before the quality picker event handler is registered -> no video switcher
         this.handlers.playing = this._notifyVideoQualities.bind(this);
         this.videoElement.addEventListener('playing', this.handlers.playing);
-        //this.hlsjsConfig.debug = true
-        this.hlsjsConfig.maxBufferHole = 0.5;
-        this.hlsjsConfig.maxFragLookUpTolerance = 0;
-        this.hlsjsConfig.highBufferWatchdogPeriod = 1;
-        this.hlsjsConfig.lowLatencyMode = true;
-        this.hlsjsConfig.maxBufferLength = 30;
-        this.hlsjsConfig.maxMaxBufferLength = 55;
+        this.hlsjsConfig.debug = true;
+        //this.hlsjsConfig.liveSyncDurationCount = 4
+        //this.hlsjsConfig.maxMaxBufferLength = 55
         //this.hlsjsConfig.backBufferLength = 90
+        console.log('this.hlsjsConfig', this.hlsjsConfig);
+        ///// liveSyncPosition
         this.hls = new hls_default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');
         this.hls.on(hls["Events"].ERROR, (event, data) => this._onError(event, data));
@@ -532,13 +530,6 @@ class hls_plugin_Html5Hlsjs {
             // Ref: https://github.com/videojs/videojs-contrib-hls#loadedmetadata
             this.tech.trigger('loadedmetadata');
         });
-        /*this.hls.on(Hlsjs.Events.BUFFER_APPENDING, function (eventName, data) {
-    
-          console.log('BUFFER_APPENDING', data.type)
-    
-            //fmp4Data[data.type].push(data.data);
-        });
-        */
         this.hls.once(hls["Events"].FRAG_BUFFERED, (e) => {
         });
         this.hls.attachMedia(this.videoElement);
