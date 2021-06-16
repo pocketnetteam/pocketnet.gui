@@ -156,7 +156,7 @@ var Peertube = function(settings){
 
                     var ontime = null
 
-                    if (r && r.isLive) ontime = 60
+                    if (r && r.isLive || (r.state && r.state.id == 2)) ontime = 60
 
                     cache.set(cachekey, cacheparameters, r, null, ontime);
 
