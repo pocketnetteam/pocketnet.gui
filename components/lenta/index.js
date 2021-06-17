@@ -275,6 +275,7 @@ var lenta = (function(){
 				_reposts = {};
 
 				countshares = 0;
+				lastscroll = 0;
 
 				recomended = []
 
@@ -938,7 +939,9 @@ var lenta = (function(){
 
 					actions.setVolume(players[id], videosVolume || 0.5)
 					
-					//ovf = !self.app.actions.offScroll()
+
+					lastscroll = el.w.scrollTop()
+					ovf = !self.app.actions.offScroll()
 
 					if(!essenseData.comments){
 
@@ -1002,6 +1005,7 @@ var lenta = (function(){
 				self.app.nav.api.history.removeParameters(['v'])
 
 				self.app.actions.onScroll()
+				el.w.scrollTop(lastscroll || 0)
 
 				fullscreenvideoShowed = false;
 
