@@ -2578,99 +2578,108 @@ var lenta = (function(){
 
 				}
 
+				console.log('_el', _el)
 
-				_el.imagesLoaded({ background: true }, function(image) {
+				window.requestAnimationFrame(function(){
 
-					if(s.settings.v != "a"){
+					_el.imagesLoaded({ background: true }, function(image) {
 
-						_.each(image.images, function(img, n){
+						console.log("IMAGES LOADED", image)
 
-							var _img = img.img;
+						if(s.settings.v != "a"){
 
-							var el = $(image.elements[n]).closest('.imagesWrapper');
-							var ac = '';
+							_.each(image.images, function(img, n){
 
-							var _w = el.width();
-							var _h = el.height()
+								var _img = img.img;
 
-							if(_img.width > _img.height && (!isMobile() && window.innerWidth > 640)){
-								ac = 'w2'
+								var el = $(image.elements[n]).closest('.imagesWrapper');
+								var ac = '';
 
-								var w = _w * (_img.width / _img.height);
+								console.log('window.innerWidth', window.innerWidth)
 
-								if (w > images.width()){
-									w = images.width()
+								var _w = el.width();
+								var _h = el.height()
 
-									h = w * ( _img.height / _img.width) 
+								if(_img.width > _img.height && (!isMobile() && window.innerWidth > 768)){
+									ac = 'w2'
 
-									el.height(h);
+									var w = _w * (_img.width / _img.height);
+
+									if (w > images.width()){
+										w = images.width()
+
+										h = w * ( _img.height / _img.width) 
+
+										el.height(h);
+									}
+
+									el.width(w);
 								}
 
-								el.width(w);
-							}
+								if(_img.height > _img.width || isMobile() || window.innerWidth <= 768){
+									ac = 'h2'
 
-							if(_img.height > _img.width || isMobile() || window.innerWidth <= 640){
-								ac = 'h2'
+									el.height(_w * (_img.height / _img.width))
+								}
 
-								el.height(_w * (_img.height / _img.width))
-							}
+								if(ac){
+									el.addClass(ac)
+								}
+								
+							})
 
-							if(ac){
-								el.addClass(ac)
-							}
-							
-						})
+						}
 
-					}
-
-
-					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], sel)
-
-					var isclbk = function(){
-						images.addClass('active')
-
-						_el.addClass('active')
 
 						shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], sel)
 
-						if (essenseData.renderclbk)
-							essenseData.renderclbk()
+						var isclbk = function(){
+							images.addClass('active')
 
-						if (clbk)
-							clbk()
-					}
+							_el.addClass('active')
 
-					if(s.settings.v != 'a' && image.images.length > 1){
+							shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], sel)
 
-						var gutter = 20;
+							if (essenseData.renderclbk)
+								essenseData.renderclbk()
 
-						if (isMobile) gutter = 5
+							if (clbk)
+								clbk()
+						}
 
-						images.isotope({
+						if(s.settings.v != 'a' && image.images.length > 1){
 
-							layoutMode: 'packery',
-							itemSelector: '.imagesWrapper',
-							packery: {
-								gutter: gutter
-							},
-							initLayout: false
-						});
+							var gutter = 20;
 
-						images.on('arrangeComplete', function(){
+							if (isMobile) gutter = 5
+
+							images.isotope({
+
+								layoutMode: 'packery',
+								itemSelector: '.imagesWrapper',
+								packery: {
+									gutter: gutter
+								},
+								initLayout: false
+							});
+
+							images.on('arrangeComplete', function(){
+								isclbk()
+							});
+
+							images.isotope()
+
+							
+						}
+						else
+						{
 							isclbk()
-						});
+						}
+					
 
-						images.isotope()
+					});
 
-						
-					}
-					else
-					{
-						isclbk()
-					}
-				
-
-				});
+				})
 				
 			},
 

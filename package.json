@@ -1,6 +1,6 @@
 {
     "name": "pocketnet",
-    "version": "0.2.26",
+    "version": "0.2.29",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -99,6 +99,7 @@
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
+        "compression": "^1.7.4",
         "yuicompressor": "^2.4.8"
     },
     "build": {
