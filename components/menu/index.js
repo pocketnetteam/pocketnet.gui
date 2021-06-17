@@ -719,18 +719,11 @@ var menu = (function(){
 									href = 'index?ss=' + value
 								}
 
-								/*if (authorForSearch){
-									href = '?report=shares&ss=' + value.replace("#", 'tag:')
-
-									authorForSearch.clear(true)
-								}*/
-
 								var p = {
 									href : href,
 									history : true,
 									open : true
 								}
-
 
 								if (authorForSearch) p.handler = true
 

@@ -16,6 +16,55 @@ var imagegallery = (function(){
 		var making;
 		
 		var actions = {
+
+			swipe : function(phase, direction, distance){
+				
+
+				var tomode = null
+				var prs = 0
+				var c = 1
+
+				if (phase == 'move'){
+
+					if(direction == 'left' || direction == 'right'){
+						prs = 100 * (distance / 500)
+
+						if(direction == 'left') c = -1
+
+						el.images.css({'transform' : 'translateX(' + (c * prs) + "%)"})
+
+						return
+					}
+					
+				}
+
+				el.images.css({'transform' : 'translateX(0%)'})
+
+				if(phase == 'end'){
+
+					if(direction == 'right'){
+
+						actions.back()
+
+					}
+
+					if(direction == 'left'){
+
+						actions.next()
+
+					}
+
+					
+				}
+
+				if(phase == 'cancel'){
+					if(direction == 'left' || direction == 'right'){
+
+					}
+				}
+				
+			},
+
 			back : function(){
 
 				if(essenseData.images.length > 1){
@@ -268,103 +317,15 @@ var imagegallery = (function(){
 
 			var cc = el.c.find('.imagesTableWrapper').closest('.wnd')
 
-			var directions = {
-				/*up : {
-					trueshold : 150,
+			el.c.find('.imagesTableWrapper').swipe({
+				allowPageScroll: "auto", 
+				swipeStatus : function(e, phase, direction, distance){
 
-					mintrueshold : 50,
+					actions.swipe(phase, direction, distance)
 
-					cancellable : true,
-
-					positionclbk : function(px){
-						var percent = ((150 - Math.abs(px)) / 150);
-	
-						if (percent > 0){
-	
-							cc.css('opacity', percent) 
-						}
-	
-					},
-	
-					clbk : function(){
-	
-						self.closeContainer()
-						
-					}
-				}*/
-			}
-
-			if (essenseData.images.length > 1){
-				directions.left = {
-					trueshold : 25,
-	
-					mintrueshold : 0,
-	
-					cancellable : true,
-	
-					restrict : true,
-	
-					positionclbk : function(px){
-						var percent = ((100 - Math.abs(px)) / 100);
-	
-						if (percent > 0){
-	
-							//cc.css('opacity', percent) 
-						}
-	
-					},
-	
-					clbk : function(){
-
-						
-	
-						actions.next()	
-						
-	
-						setTimeout(parallax.renew, 200)
-						
-					}
-				}
-	
-				directions.right = {
-					trueshold : 25,
-	
-					mintrueshold : 0,
-	
-					cancellable : true,
-	
-					restrict : true,
-	
-					positionclbk : function(px){
-						var percent = ((100 - Math.abs(px)) / 100);
-	
-						if (percent > 0){
-	
-							//cc.css('opacity', percent) 
-						}
-	
-					},
-	
-					clbk : function(){
-	
-						actions.back()
-	
-						setTimeout(parallax.renew, 200)
-						
-					}
-				}
-			}
-
-			if(isMobile() || isTablet()){
-				var parallax = new SwipeParallax({
-
-					el : el.c.find('.imagesTableWrapper'),
-	
-					directions : directions
-	
-				}).init()
-			}
-
+					return true
+				},
+			})
 			
 
 		}

@@ -53,7 +53,7 @@ Nav = function(app)
 
 	self.wnds = {};
 
-	var externalexclusions = ['blockexplorer']
+	var externalexclusions = ['blockexplorer', 'pocketnet-crypto-challenge']
 
 	var module = {
 		find : function(href){

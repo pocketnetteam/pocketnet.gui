@@ -149,7 +149,6 @@ var main = (function(){
 				if (hsready){
 					el.panel.hcSticky('refresh');
 					el.leftpanel.hcSticky('refresh');
-					
 				}
 					
 			},
@@ -358,7 +357,7 @@ var main = (function(){
 					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
 
 						external = p
-	
+						actions.refreshSticky()
 					}, {
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
@@ -654,9 +653,11 @@ var main = (function(){
 					},
 					clbk : function(e, p){
 
-							renders.upbutton()
+						renders.upbutton()
 
-							lenta = p
+						actions.refreshSticky()
+
+						lenta = p
 
 						if (clbk)
 							clbk()
@@ -878,30 +879,7 @@ var main = (function(){
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 
-			/*
-			if(!isMobile()){
-
-				self.app.platform.sdk.user.get(function(u){
-
-					if(u.postcnt < 10){
-						setTimeout(function(){
-
-							if (el.c)
-
-								plissing = self.app.platform.api.plissing({
-									el : el.c.find('.addbutton'),
-									text : "Post something & earn Pocketcoin",
-									left : true,
-									white : true
-								})
-
-						}, 7000)
-					}
-
-					
-
-				})
-			}*/
+			
 				
 		}
 
@@ -968,6 +946,8 @@ var main = (function(){
 
 
 				makeShare()
+
+				actions.refreshSticky()
 
 				if (clbk)
 					clbk()
@@ -1172,12 +1152,6 @@ var main = (function(){
 
 							return true
 						},
-						/*pinchStatus : function(e, phase, direction, distance){
-
-							actions.swipe(phase, direction, distance)
-
-							return true
-						},*/
 					})
 	
 				}

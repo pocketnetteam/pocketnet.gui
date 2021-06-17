@@ -2649,9 +2649,9 @@ var lenta = (function(){
 
 						if(s.settings.v != 'a' && image.images.length > 1){
 
-							var gutter = 20;
+							var gutter = 5;
 
-							if (isMobile) gutter = 5
+							if (isMobile()) gutter = 0
 
 							images.isotope({
 
@@ -3609,7 +3609,7 @@ var lenta = (function(){
 
 				self.app.platform.clbks._focus.lenta = function(time){
 
-					if ((window.cordova || isInStandaloneMode()) && !essenseData.txids && !making && time > 120 && !essenseData.second){
+					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 120 && !essenseData.second){
 
 						actions.loadprev()
 						_scrollTop(0)

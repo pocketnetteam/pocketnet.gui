@@ -21,28 +21,30 @@
 
             <% } %>
 
-           
+            <% 
+
+            
+            if (typeof u != 'undefined' && u && (!u.trial || window.testpocketnet) && !share.itisvideo() && !share.aliasid) { %>
                 <div class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                     <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                 </div>
 
+                <% if(window.testpocketnet && !isMobile()) {%>
 
-             
+                <div class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
+                    <i class="fas fa-dot-circle"></i> <span><%- e('goLive') %></span>
+                </div>
 
-                <% if(window.testpocketnet || deep(app, 'platform.real.'+user.address.value.toString('hex'))) {%>
-
-                    <div class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
-                        <i class="fas fa-dot-circle"></i> <span><%- e('goLive') %></span>
-                    </div>
-
+                <% } %>
+            <%} %>
             <!--<div class="item language tooltip" embeding="language" title="<%=e('e14001')%>">
                 <%-(share.language.v || '').toUpperCase()%>
             </div>-->
 
             <% if(!share.aliasid) {%>
-            <div class="item times tooltip <% if(share.itisvideo()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
-                <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
-            </div>
+                <div class="item times tooltip <% if(share.itisvideo()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
+                    <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
+                </div>
             <% } %>
 
         </div>
