@@ -867,3 +867,7 @@ ____loclib["More videos by this author"] = 'Другие видео от это�
 ____loclib.goLive = 'Начать Трансляцию'
 ____loclib.streamInfo = 'Ключи Трансляции'
 ____loclib.streamCreating = 'Стрим Создается'
+
+____loclib.importFromExternal = 'или импортируйте видео из YouTube'
+
+____loclib.peertubeAddVideo = 'Загрузить Видео'
