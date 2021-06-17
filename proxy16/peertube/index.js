@@ -158,6 +158,8 @@ var Peertube = function(settings){
 
                     if (r && r.isLive || (r.state && r.state.id == 2)) ontime = 60
 
+                    if (r && r.isLive && !r.aspectRatio) r.aspectRatio = 1.78 
+
                     cache.set(cachekey, cacheparameters, r, null, ontime);
 
                     return Promise.resolve(r)
