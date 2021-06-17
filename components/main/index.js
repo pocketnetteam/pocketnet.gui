@@ -1145,6 +1145,8 @@ var main = (function(){
 						allowPageScroll: "auto", 
 						swipeStatus : function(e, phase, direction, distance){
 
+							if($('html').hasClass('fullvideoshowedanimblock')) return
+
 							if(el.topvideos.has(e.target).length > 0){
 								return true
 							}

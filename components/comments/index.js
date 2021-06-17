@@ -1870,28 +1870,31 @@ var comments = (function(){
 
 				}, function(_p){
 
-					el.list.find('.reply').off('click').on('click', events.replyandreplies);
-					el.list.find('.replies').off('click').on('click', events.replies);
-					el.list.find('.panel').off('click').on('click', events.metmenu);
-					el.list.find('.tocomment').off('click').on('click', events.tocomment)
+					if (el.list){
+						el.list.find('.reply').off('click').on('click', events.replyandreplies);
+						el.list.find('.replies').off('click').on('click', events.replies);
+						el.list.find('.panel').off('click').on('click', events.metmenu);
+						el.list.find('.tocomment').off('click').on('click', events.tocomment)
 
 
-					el.list.find('.imageCommentOpen').off('click').on('click', events.openGallery)
-				
-					setTimeout(function(){
-						if(el.list)
-							 el.list.find('.newcomments').removeClass('newcomments')
-					}, 600)
+						el.list.find('.imageCommentOpen').off('click').on('click', events.openGallery)
 					
-					bgImages(el.list)
+						setTimeout(function(){
+							if(el.list)
+								el.list.find('.newcomments').removeClass('newcomments')
+						}, 600)
+						
+						bgImages(el.list)
 
-					lazyEach({
-						array : p.comments,
+						lazyEach({
+							array : p.comments,
 
-						action : function(_p){
-							renders.commentimages(_p.item, _p.success)
-						}
-					})
+							action : function(_p){
+								renders.commentimages(_p.item, _p.success)
+							}
+						})
+					}
+					
 
 					if(ed.renderClbk) ed.renderClbk()
 

@@ -949,13 +949,22 @@ var lenta = (function(){
 							initedcommentes[id].changein(el.c.find("#" + id), 0)*/
 
 
-						if (initedcommentes[id]){
-							initedcommentes[id].destroy()
-							initedcommentes[id] = null
-						}
-						
+						retry(function(){
+							return initedcommentes[id] || !el.c
+						}, function(){
 
-						renders.comments(id, false, true)
+							if(el.c){
+								if (initedcommentes[id]){
+									initedcommentes[id].destroy()
+									initedcommentes[id] = null
+								}
+		
+								renders.comments(id, false, true)
+							}	
+							
+						})
+
+						
 					}
 						
 
@@ -980,8 +989,10 @@ var lenta = (function(){
 				if(el.c){
 					var _el = el.c.find("#" + id)
 
-					_el.removeClass('fullScreenVideo')
 
+					_el.scrollTop(0)
+					_el.removeClass('fullScreenVideo')	
+					
 					actions.videoPosition(_el)
 				}
 
@@ -1251,7 +1262,10 @@ var lenta = (function(){
 				
 			},
 
-			videosInview : function(players, action, nvaction){				
+			videosInview : function(players, action, nvaction){			
+				
+				
+				if(fullscreenvideoShowed) return
 
 				var ap = _.filter(players, function(p){
 					if(p.inited && !p.playing && !p.stopped && p.el && !p.preview && !p.error) return true
