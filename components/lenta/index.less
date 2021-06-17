@@ -2963,7 +2963,7 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 768px) {
 	#lenta{
 
 		.vjs-control-bar{
@@ -2984,7 +2984,7 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 768px) {
 #lenta{
 
 	.loader{
@@ -3043,12 +3043,12 @@ html.stblack{
 				left: 0;
 				right: 0;
 				top: 0;
-				bottom: 60px;
+				bottom: 75%;
 				cursor: pointer;
 				background: rgb(0,0,0);
 				background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
 				color : #fff;
-				opacity: 0;
+				opacity: 1;
 				.transition(0.3s);
 
 				.videoTip{
@@ -3078,9 +3078,9 @@ html.stblack{
 			max-width: none;
 		}
 
-		.videoTips{
+		/*.videoTips{
 			display: none;
-		}
+		}*/
 
 		
 		.ss{
@@ -3131,6 +3131,30 @@ html.stblack{
 				.edit .posttable>div.postCellWrapper .postaction, 
 				.post .posttable>div.postCellWrapper .postaction{
 					text-align: center;
+				}
+			}
+
+			&.fullScreenVideo{
+				#comments{
+					.caption{
+						padding-left: 1 * @rhythm;
+						padding-right: 1 * @rhythm;
+					}
+	
+					.commentPaddingWrapper,
+					.post{
+						padding-left: 1 * @rhythm;
+						padding-right:  @rhythm;
+					}
+	
+					.commentPaddingWrapper{
+						padding-right:  0;
+					}
+	
+					.list .answer .postbody{
+						padding-left: 1 * @rhythm;
+						padding-right: @rhythm;
+					}
 				}
 			}
 

@@ -63,7 +63,8 @@ var main = (function(){
 						if(direction == 'down'){
 							$('html').removeClass('scrollmodedown')
 						}
-						else{
+
+						if(direction == 'up'){
 							$('html').addClass('scrollmodedown')
 						}
 					}

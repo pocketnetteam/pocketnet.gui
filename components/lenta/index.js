@@ -291,6 +291,7 @@ var lenta = (function(){
 				fullscreenvideoShowed = false;
 
 				$('html').removeClass('fullvideoshowed')
+				$('html').removeClass('fullvideoshowedanimblock')
 
 				loading = false
 				ended = false
@@ -845,8 +846,13 @@ var lenta = (function(){
 				}
 
 				var h = $(window).height();
+				var add = 0
 
-				var wh = el.find('.videoWrapper').height() + 100;
+				if(!isMobile()) add = 100
+
+				var wh = el.find('.videoWrapper').height() + add;
+
+				console.log("WH", wh)
 
 				var d = (h - wh) / 2
 
@@ -897,9 +903,7 @@ var lenta = (function(){
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
 
-				_el.addClass('fullScreenVideo')
-
-				if (video) $('html').addClass('fullvideoshowed')
+				
 
 				actions.initVideo(_el, share, function(res){
 
@@ -910,6 +914,11 @@ var lenta = (function(){
 					}
 					
 					if(!players[id]) return;
+
+					_el.addClass('fullScreenVideo')
+
+					$('html').addClass('fullvideoshowed')
+					$('html').addClass('fullvideoshowedanimblock')
 
 					actions.videoPosition(_el)
 
@@ -932,11 +941,23 @@ var lenta = (function(){
 					
 					ovf = !self.app.actions.offScroll()
 
-					if (initedcommentes[id])
-						initedcommentes[id].changein(el.c.find("#" + id), 0)
+					
 
-					if(!essenseData.comments)
+					if(!essenseData.comments){
+
+						/*if (initedcommentes[id])
+							initedcommentes[id].changein(el.c.find("#" + id), 0)*/
+
+
+						if (initedcommentes[id]){
+							initedcommentes[id].destroy()
+							initedcommentes[id] = null
+						}
+						
+
 						renders.comments(id, false, true)
+					}
+						
 
 					fullscreenvideoShowed = true;
 
@@ -949,11 +970,20 @@ var lenta = (function(){
 
 			exitFullScreenVideo : function(id){
 
-				var _el = el.c.find("#" + id)
+				$('html').removeClass('fullvideoshowed')
 
-				_el.removeClass('fullScreenVideo')
+				setTimeout(function(){
+					$('html').removeClass('fullvideoshowedanimblock')
+				}, 300)
+				
 
-				actions.videoPosition(_el)
+				if(el.c){
+					var _el = el.c.find("#" + id)
+
+					_el.removeClass('fullScreenVideo')
+
+					actions.videoPosition(_el)
+				}
 
 				var player = players[id]
 
@@ -967,12 +997,15 @@ var lenta = (function(){
 
 				fullscreenvideoShowed = false;
 
-				$('html').removeClass('fullvideoshowed')
+				if(!essenseData.comments){
 
-				if (initedcommentes[id]){
-					initedcommentes[id].changein(null)	
+					if (initedcommentes[id]){
+						initedcommentes[id].destroy()
+						initedcommentes[id] = null
+					}
 
-					initedcommentes[id].hideall(true)
+					renders.comments(id, false, false, true)
+
 				}
 
 				if(video){
@@ -980,6 +1013,7 @@ var lenta = (function(){
 
 					actions.destroyVideo(share)
 				}
+
 			},
 			postscores : function(txid, clbk){
 
@@ -2025,97 +2059,99 @@ var lenta = (function(){
 
 				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 
+				self.fastTemplate('commentspreview', function(rendered){
 
-				setTimeout(function(){
+					if(!el.c) return
 
-					self.fastTemplate('commentspreview', function(rendered){
+					var e = el.c.find('#' + txid);
 
-						if(!el.c) return
+					var rf = ''
 
-						var rf = ''
+					if(self.app.platform.sdk.address.pnet()){
+						rf = '&ref=' + self.app.platform.sdk.address.pnet().address
+					}
 
-						if(self.app.platform.sdk.address.pnet()){
-							rf = '&ref=' + self.app.platform.sdk.address.pnet().address
-						}
+					var hr = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + rf
 
-						var hr = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + rf
+					if (parameters().address) hr += '&address=' + (parameters().address || '')
 
-						if (parameters().address) hr += '&address=' + (parameters().address || '')
+					self.nav.api.load({
+						open : true,
+						id : 'comments',
+						el : _el,
 
-						self.nav.api.load({
-							open : true,
-							id : 'comments',
-							el : _el,
-	
-							eid : txid + 'lenta',
-	
-							essenseData : {
-								close : function(){
-	
-									if (initedcommentes[txid]){
-										initedcommentes[txid].hideall(true)
-									}
-	
-									//_el.html('')
-	
-									_scrollToTop(_el, 0, 0, -65)
-									
-	
-									//renders.comments(txid, init, showall, preview)
-	
-								},
-								totop : el.c.find('#' + txid),
-								caption : rendered,
-								send : function(){
-									var c = el.c.find('#' + txid + " .commentsAction .count span");
-	
-									c.html(Number(c.html() || "0") + 1)
-								},
+						eid : txid + 'lenta',
 
-								txid : txid,
-								showall : essenseData.comments == 'all' || showall,	
-								fromtop: essenseData.comments == 'all' || false,
-								preview : essenseData.comments == 'all' ? false : preview,
-								lastComment : essenseData.comments != 'all' ? share.lastComment : null,
-								count : share.comments,
-								init : essenseData.comments == 'all' ? false : init,
-								hr : hr,
+						essenseData : {
+							close : function(){
 
-								renderClbk : function(){
-
-									//shareheights[txid] = actions.applyheightEl(shareheights[txid], _el, 'space')
-
-									if (essenseData.renderclbk)
-										essenseData.renderclbk()
+								if (initedcommentes[txid]){
+									initedcommentes[txid].hideall(true)
 								}
-							},
-	
-							clbk : function(e, p){
-	
-								if(!el.c) return
-	
-								var e = el.c.find('#' + txid);
+
+								//_el.html('')
+
+								_scrollToTop(_el, 0, 0, -65)
 								
-								if (e.hasClass('fullScreenVideo')){
 
-									p.changein(e, 0)
-								}
-	
-								if (p)
-	
-									initedcommentes[txid] = p
+								//renders.comments(txid, init, showall, preview)
 
+							},
+							totop : el.c.find('#' + txid),
+							//caption : rendered,
+							send : function(comment, last){
+
+								console.log('comment', comment)
+
+								var c = el.c.find('#' + txid + " .commentsAction .count span");
+
+								c.html(Number(c.html() || "0") + 1)
+
+								share.lastComment = last
+							},
+
+							txid : txid,
+							showall : essenseData.comments == 'all' || showall,	
+							fromtop: essenseData.comments == 'all' || e.hasClass('fullScreenVideo') || false,
+							preview : essenseData.comments == 'all' ? false : preview,
+							lastComment : essenseData.comments != 'all' ? share.lastComment : null,
+							count : share.comments,
+							init : essenseData.comments == 'all' ? false : init,
+							hr : hr,
+
+							renderClbk : function(){
+
+								//shareheights[txid] = actions.applyheightEl(shareheights[txid], _el, 'space')
 
 								if (essenseData.renderclbk)
 									essenseData.renderclbk()
 							}
-						})
-	
-					}, {
-						share : share
+						},
+
+						clbk : function(e, p){
+
+							if(!el.c) return
+
+							var e = el.c.find('#' + txid);
+							
+							/*if (e.hasClass('fullScreenVideo')){
+								p.changein(e, 0)
+							}*/
+
+							if (p)
+
+								initedcommentes[txid] = p
+
+
+							if (essenseData.renderclbk)
+								essenseData.renderclbk()
+						}
 					})
 
-				}, 30)
+				}, {
+					share : share
+				})
+
 				
 			},
 

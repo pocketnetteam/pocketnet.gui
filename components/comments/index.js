@@ -172,7 +172,7 @@ var comments = (function(){
 				})
 
 				if (!editid && ed.send){
-					ed.send(alias)
+					ed.send(alias, self.app.platform.sdk.comments.toLastComment(alias))
 				}
 
 				if(!editid){
