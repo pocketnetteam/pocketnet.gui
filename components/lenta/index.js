@@ -937,11 +937,8 @@ var lenta = (function(){
 					console.log('videosVolume12', videosVolume)
 
 					actions.setVolume(players[id], videosVolume || 0.5)
-
 					
-					ovf = !self.app.actions.offScroll()
-
-					
+					//ovf = !self.app.actions.offScroll()
 
 					if(!essenseData.comments){
 
@@ -986,14 +983,14 @@ var lenta = (function(){
 				}, 300)
 				
 
-				if(el.c){
+				if (el.c){
 					var _el = el.c.find("#" + id)
-
 
 					_el.scrollTop(0)
 					_el.removeClass('fullScreenVideo')	
 					
 					actions.videoPosition(_el)
+					
 				}
 
 				var player = players[id]
