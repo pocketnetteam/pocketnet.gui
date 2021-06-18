@@ -1049,3 +1049,9 @@ ____loclib.streamInfo = 'Stream Info'
 ____loclib.streamCreating = 'Creating Stream'
 
 ____loclib.importFromExternal = 'or import from YouTube'
+
+
+____loclib.importHeading = 'Import Video from YouTube'
+____loclib.importInputPlaceholder = 'Paste link to your YouTube video'
+____loclib.importInputLabel = 'Video Url'
+

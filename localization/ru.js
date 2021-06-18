@@ -871,3 +871,7 @@ ____loclib.streamCreating = 'Стрим Создается'
 ____loclib.importFromExternal = 'или импортируйте видео из YouTube'
 
 ____loclib.peertubeAddVideo = 'Загрузить Видео'
+
+____loclib.importHeading = 'Импортировать видео из YouTube'
+____loclib.importInputPlaceholder = 'Вставьте сюда ссылку на видео'
+____loclib.importInputLabel = 'Ссылка на видео'
