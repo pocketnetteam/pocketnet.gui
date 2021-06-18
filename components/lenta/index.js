@@ -882,9 +882,21 @@ var lenta = (function(){
 
 			opensvi : function(id){
 
-				if (essenseData.opensvi){
-					essenseData.opensvi(id, deep(self, 'app.platform.sdk.node.shares.storage.trx.' + id))
-				}
+				actions.openPost(id, function() {
+					setTimeout(() => {
+						var videoPlayers = $("div[stxid='" + id + "'] video");
+						if (videoPlayers && videoPlayers.length > 0) {
+							var videoPlayer = videoPlayers[0];
+							if (videoPlayer.play)
+								videoPlayer.play();
+							videoPlayer.muted = false;
+							videoPlayer.volume = videosVolume || 0.5;
+						}``
+					}, 500);
+				});
+				// if (essenseData.opensvi){
+					// essenseData.opensvi(id, deep(self, 'app.platform.sdk.node.shares.storage.trx.' + id))
+				// }
 			},
 
 			fullScreenVideo : function(id, clbk){
