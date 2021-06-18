@@ -241,6 +241,8 @@ var uploadpeertube = (function () {
                 videoId = response.split('/').pop();
 
                 actions.added(response, wnd.find('.upload-video-name').val());
+                ed.uploadInProgress = false;
+
                 wndObj.close();
               })
               .catch((e) => {
@@ -253,6 +255,8 @@ var uploadpeertube = (function () {
 
                 el.importUrl.removeClass('hidden');
                 el.videoInput.prop('disabled', false);
+
+                ed.uploadInProgress = false;
 
                 if (e.cancel) {
                   sitemessage('Uploading canceled');
