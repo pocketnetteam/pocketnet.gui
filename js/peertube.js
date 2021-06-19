@@ -247,6 +247,14 @@ PeerTubePocketnet = function (app) {
       authorization: true,
     },
 
+    importVideo: {
+      path: 'api/v1/videos/imports',
+      formdata: true,
+      renew: true,
+      method: 'POST',
+      authorization: true,
+    },
+
     startLive: {
       path: 'api/v1/videos/live',
       formdata: true,
@@ -563,6 +571,30 @@ PeerTubePocketnet = function (app) {
         });
       },
 
+      import: (parameters = {}, options = {}) =>
+        self.api.videos
+          .checkQuota(0)
+          .then((rme) => ({
+            ...parameters.data,
+            channelId: rme.channelId,
+            privacy: 1,
+          }))
+          .then((data) =>
+            request('importVideo', data, options)
+              .then((r) => {
+                if (!r.video) return Promise.reject(error('uploaderror'));
+
+                return Promise.resolve(
+                  self.composeLink(options.host, r.video.uuid),
+                );
+              })
+              .catch((e) => {
+                e.cancel = axios.isCancel(e);
+
+                return Promise.reject(e);
+              }),
+          ),
+
       live: (parameters = {}, options = {}) =>
         self.api.user
           .me()
@@ -690,9 +722,13 @@ PeerTubePocketnet = function (app) {
             return Promise.resolve();
           })
           .then(() => {
-            return request('pocketnetAuth', {}, {
-              host,
-            });
+            return request(
+              'pocketnetAuth',
+              {},
+              {
+                host,
+              },
+            );
           })
           .then(({ externalAuthToken, username }) => {
             if (!externalAuthToken || !username) {
