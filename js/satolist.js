@@ -7635,6 +7635,8 @@ Platform = function (app, listofnodes) {
                 if(!onlycategories)
                     tags = tags.concat(addedtags)
 
+                if(onlycategories === 'onlytags') tags = addedtags
+
                 return tags
             },  
 
@@ -7747,6 +7749,7 @@ Platform = function (app, listofnodes) {
                 _.each(self.sdk.categories.clbks.tags, function(f){
                     f(tag, s.tags[k][tag], k)
                 })
+                
 
                 return false
             },
@@ -7767,13 +7770,15 @@ Platform = function (app, listofnodes) {
 
             },
 
-            clear : function(_k){
+            clear : function(_k, onlytags){
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
                 if(!self.sdk.categories.data.all[k]) k = 'en'
 
-                s.selected[k] = {}
+                if(!onlytags)
+                    s.selected[k] = {}
+                    
                 s.tags[k] = {}
 
                 self.sdk.categories.save()

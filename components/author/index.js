@@ -496,7 +496,7 @@ var author = (function(){
 
 				if(!report.active && report.history){
 
-					var rem = ['mt']
+					var rem = ['mt', 's']
 
 					if (report.id != 'shares' || cl) rem.push('ss')
 
@@ -767,6 +767,9 @@ var author = (function(){
 				
 
 			},
+
+
+
 
 			lenta : function(_el, report){
 
