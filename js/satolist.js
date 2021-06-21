@@ -4171,6 +4171,112 @@ Platform = function (app, listofnodes) {
             }
         },
 
+
+        keys : {
+            clbks : {
+
+            },
+            haskeys : function(){
+                self.sdk.keys.need().then(r => {
+                    return Promise.reject('empty')
+                }).catch(err => {
+
+                    if(err == 'exist'){
+                        return Promise.resolve()
+                    }
+
+                    return Promise.reject(err)
+
+                })
+            },
+            init : function(){
+                return self.sdk.keys.need().then(me => {
+
+                    var userInfo = new UserInfo();
+
+						userInfo.name.set(me.name);
+						userInfo.language.set(me.language);
+						userInfo.about.set(me.about);
+						userInfo.site.set(me.site);
+						userInfo.image.set(me.image);
+						userInfo.addresses.set(me.addresses);
+						userInfo.ref.set(me.ref);
+
+                        userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
+                            return k.public
+                        }))
+
+                    var err = userInfo.validation()
+
+                    if (err){
+                        return Promise.reject(err)
+                    }
+
+                    return Promise.resolve('processing')
+
+                    self.sdk.node.transactions.create.commonFromUnspent(
+
+                        userInfo,
+
+                        function(tx, error){
+
+                            if(!tx){
+
+                                return Promise.reject(error)
+
+                            }
+
+                            self.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+                                return Promise.resolve('processing')
+                            })
+                        }
+                    )
+
+                }).catch(r => {
+
+                    console.log('err', err)
+
+                    return Promise.resolve(r)
+
+                })
+            },
+            need : function(){
+
+                return new Promise((resolve, reject) => {
+                    self.app.user.isState(function (state) {
+
+                        if (state) {
+
+                            var processing = _.toArray((self.sdk.node.transactions.temp.userInfo || {})).length > 0 || 
+				
+                            (self.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.sdk.address.pnet().address + '.userInfo.length') > 0 )
+
+                            if(processing) {
+                                return reject('processing')
+                            }
+
+                            var me = self.sdk.user.storage.me
+
+                            if(!me || _.isEmpty(me)){
+                                return reject('me')
+                            }   
+                            
+                            if(me.keys && me.keys.length){
+                                return reject('exist')
+                            }
+
+                            return resolve(me)
+                        }
+                        else
+                        {
+                            reject('state')
+                        }
+    
+                    })
+                })
+            }
+        },
+
         user: {
 
             storage: {

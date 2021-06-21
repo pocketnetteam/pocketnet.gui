@@ -1055,3 +1055,5 @@ ____loclib.importHeading = 'Import Video from YouTube'
 ____loclib.importInputPlaceholder = 'Paste link to your YouTube video'
 ____loclib.importInputLabel = 'Video Url'
 
+
+____loclib.keygeneration = 'Cryptography keys generation'
