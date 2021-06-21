@@ -828,7 +828,7 @@ var author = (function(){
 							})
 
 							new search(p.el.find('.authorsearch'), {
-								placeholder : 'SEARCH ON ' + author.data.name.toUpperCase(),
+								placeholder : 'Search on ' + author.data.name,
 		
 								clbk : function(_el){
 									

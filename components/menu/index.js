@@ -492,8 +492,7 @@ var menu = (function(){
 
 							_el.find('input').val('')
 							
-							el.c.removeClass('searchactive')
-
+							closesearch()
 							clearex()
 
 						}
@@ -1233,6 +1232,14 @@ var menu = (function(){
 			authorForSearch = null
 		}
 
+		var closesearch = function(){
+			if (el.c)
+				el.c.removeClass('searchactive')
+				
+			if (el.postssearch)
+				el.postssearch.find('.search').removeClass('fastSearchShow')
+		}
+
 		return {
 
 			getdata : function(clbk, p){
@@ -1310,10 +1317,8 @@ var menu = (function(){
 			},
 
 			closesearch : function(){
-				if (el.c)
-					el.c.removeClass('searchactive')
-				if (el.postssearch)
-					el.postssearch.find('.search').removeClass('fastSearchShow')
+
+				closesearch()
 					
 			},
 
