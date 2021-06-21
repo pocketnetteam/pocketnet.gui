@@ -7553,6 +7553,501 @@ Platform = function (app, listofnodes) {
                             id : 'c18'
                         }
                     ],
+                    cmn : [
+                        {
+                            name : "模因/幽默",
+                            tags : ['模因', '幽默'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "政治",
+                            tags : ['政治'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "加密貨幣",
+                            tags : ['加密貨幣'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "科學/技術",
+                            tags : ['技術', '科學'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "信仰/宗教",
+                            tags : ['信仰', '宗教'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "金融/投資",
+                            tags : ['金融', '投資'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "汽車/賽車",
+                            tags : ['汽車', '賽車'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "運動",
+                            tags : ['運動'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "遊戲",
+                            tags : ['遊戲'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "空間",
+                            tags : ['空間'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "藝術/音樂",
+                            tags : ['藝術', '音樂'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "新聞/評論",
+                            tags : ['新聞', '評論'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "歷史",
+                            tags : ['歷史'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "故事時間",
+                            tags : ['故事時間'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "電影/動畫",
+                            tags : ['電影', '動畫'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "自然/動物",
+                            tags : ['自然', '動物'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "旅遊/建築",
+                            tags : ['旅遊', '建築'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "自己做",
+                            tags : ['自己做'],
+                            id : 'c18'
+                        }
+                    ],
+                    kr : [
+                        {
+                            name : "밈/유머",
+                            tags : ['밈', '유머'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "정치",
+                            tags : ['정치'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "암호 화폐",
+                            tags : ['암호 화폐'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "과학/기술",
+                            tags : ['기술', '과학'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "신앙/종교",
+                            tags : ['신앙', '종교'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "금융/투자",
+                            tags : ['금융', '투자'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "자동차/레이싱 ",
+                            tags : ['자동차', '레이싱'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "스포츠",
+                            tags : ['스포츠'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "계략",
+                            tags : ['계략'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "우주",
+                            tags : ['우주'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "예술/음악",
+                            tags : ['예술', '음악'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "뉴스/댓글",
+                            tags : ['뉴스', '댓글'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "역사",
+                            tags : ['역사'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "이야기의 시간",
+                            tags : ['이야기의시간'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "영화/애니메이션",
+                            tags : ['영화', '애니메이션'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "자연/동물",
+                            tags : ['자연', '동물'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "여행/건축",
+                            tags : ['여행', '건축'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "너 스스로해라",
+                            tags : ['너스스로해라'],
+                            id : 'c18'
+                        }
+                    ],
+                    fr : [
+                        {
+                            name : "Mèmes/Humour",
+                            tags : ['mèmes', 'humour'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Politique",
+                            tags : ['politique'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Crypto-monnaie",
+                            tags : ['Crypto-monnaie'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Technologie/Scientifique",
+                            tags : ['technologie', 'scientifique'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Foi/Religion ",
+                            tags : ['foi', 'religion'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Finances/Investissements",
+                            tags : ['finances', 'investissements'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "Voitures/Courses",
+                            tags : ['voitures', 'courses'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Sport",
+                            tags : ['Sport'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Jeux",
+                            tags : ['jeux'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Espace",
+                            tags : ['espace'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Art/Musique",
+                            tags : ['art', 'musique'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Nouvelles/Commentaires",
+                            tags : ['nouvelles', 'commentaires'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "histoire",
+                            tags : ['histoire'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Le temps des histoires",
+                            tags : ['Letempsdeshistoires'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Cinéma/Animation",
+                            tags : ['cinéma', 'animation'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Nature/Animaux",
+                            tags : ['nature', 'animaux'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Voyage/Architecture",
+                            tags : ['voyage', 'architecture'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Fais le toi-même",
+                            tags : ['faisletoi-même'],
+                            id : 'c18'
+                        }
+                    ],
+                    es : [
+                        {
+                            name : "Memes/Humor ",
+                            tags : ['мемы', 'юмор'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Política",
+                            tags : ['política'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Criptomoneda",
+                            tags : ['criptomoneda'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Tecnología/Сientífica ",
+                            tags : ['tecnología', 'científica'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Fe/Religión ",
+                            tags : ['fe', 'religión'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Finanzas/Inversiones",
+                            tags : ['finanzas', 'inversiones'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "Coches/Carreras",
+                            tags : ['coches', 'carreras'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Deporte",
+                            tags : ['deporte'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Juegos",
+                            tags : ['juegos'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Espacio",
+                            tags : ['espacio'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Arte/Musical ",
+                            tags : ['arte', 'musical'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Noticias/Comentarios",
+                            tags : ['noticias', 'comentarios'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "Historia",
+                            tags : ['historia'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Tiempo de historias",
+                            tags : ['Tiempo de historias'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Cine/Animación",
+                            tags : ['cine', 'animación'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Naturaleza/Animales",
+                            tags : ['naturaleza', 'animales'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Viajes/Arquitectura",
+                            tags : ['viajes', 'arquitectura'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Hazlo tu mismo",
+                            tags : ['hazlotumismo'],
+                            id : 'c18'
+                        }
+                    ],
+                    de : [
+                        {
+                            name : "Meme/Humor ",
+                            tags : ['meme', 'hunor'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Politik",
+                            tags : ['politik'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Kryptowährung",
+                            tags : ['Kryptowährung'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Wissenschaft/Technologie ",
+                            tags : ['technologie', 'wissenschaft'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Glaube/Religion",
+                            tags : ['glaube', 'religion'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Finanzen/Investitionen ",
+                            tags : ['finanzen', 'investitionen'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "Autos/Rennen ",
+                            tags : ['autos', 'rennen'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Sport",
+                            tags : ['sport'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Spielen",
+                            tags : ['spielen'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Weltraum",
+                            tags : ['weltraum'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Kunst/Musik ",
+                            tags : ['kunst', 'music'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Neuigkeiten/Kommentare",
+                            tags : ['neuigkeiten', 'kommentare'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "Geschichte",
+                            tags : ['geschichte'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Zeit der Geschichten",
+                            tags : ['zeit der geschichten '],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Film/Animation ",
+                            tags : ['film', 'animation'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Natur/Tiere ",
+                            tags : ['natur', 'tiere'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Reisen/Architektur ",
+                            tags : ['reisen', 'architektur'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Mach es selbst",
+                            tags : ['machesselbst'],
+                            id : 'c18'
+                        }
+                    ],
                 },
             },
 
