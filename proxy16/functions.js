@@ -542,6 +542,20 @@ f.hexDecode= function(hex){
     return result;
 } 
 
+
+f.formatExchageKeys = function(obj) {
+    const obj_keys = Object.keys(obj)
+    let new_object = {}
+
+    for(item of obj_keys) {
+        const new_key = item.toUpperCase().replace('COIN-', '').replace('-', '_')
+
+        new_object[new_key] = obj[item]
+    }
+
+    return new_object
+}
+
 f.getPkoinPrice = function(array, arrkey) {
     var response_keys = Object.keys(array)
 
@@ -557,7 +571,7 @@ f.getPkoinPrice = function(array, arrkey) {
     var highest_price = pkoin_usd_price > pkoin_btc_price ? pkoin_usd_price : pkoin_btc_price
 
     //Берем пары с PKOIN, переводим цену за них из других валют в доллары
-    if(pkoin_pairs) {
+    if(pkoin_pairs.length !== 0) {
         pkoin_pairs.forEach(item => {
             var currency = item.split('_')[1]
             var pair = array[item][arrkey]  // наивысшая цена в паре валют
@@ -604,7 +618,7 @@ f.getPkoinPrice = function(array, arrkey) {
     if (typeof highest_price !== Number) {
         highest_price = parseFloat(highest_price, 10).toFixed(2)
     } 
-    // console.log('highest_price', highest_price)
+
     usd[arrkey] = highest_price
 
     slice.prices['USD'] = {
