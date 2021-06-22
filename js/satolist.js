@@ -20087,13 +20087,9 @@ Platform = function (app, listofnodes) {
     self.initSounds = function () {
 
         if (typeof ion != 'undefined'){
-
+            ion.prepare()
             ion.sound({
-                sounds: [
-                    {
-                    name: "water_droplet"
-                    }
-                ],
+                sounds: [ { name: "water_droplet"}, { name: "glass" } ],
                 volume: 0.5,
                 path: "js/vendor/ion.sound/sounds/",
                 preload: true

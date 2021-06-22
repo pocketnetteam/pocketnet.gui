@@ -190,7 +190,7 @@
 
     ion.prepare = function(){
 
-        if(!audio) return
+        if (audio) return
 
         console.log("SOUND prepare")
 
@@ -320,6 +320,7 @@
         },
 
         decode: function () {
+
             if (!audio) {
                 return;
             }
@@ -380,6 +381,8 @@
 
                 return;
             }
+
+            console.log(this)
 
             if (this.no_file || !this.decoded) {
                 return;
