@@ -43,7 +43,8 @@ __map =  {
 		"js/vendor/circular-progress.js", //
 		/*"js/vendor/swiper-bundle.min.js",*/ // very hard
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
-		"js/vendor/ion.sound/ion.sound.js" 
+		"js/vendor/ion.sound/ion.sound.js",
+		"js/vendor/hammer.min.js"
 	],
 
 	__sourcesfirst : [
