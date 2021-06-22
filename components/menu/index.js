@@ -492,8 +492,7 @@ var menu = (function(){
 
 							_el.find('input').val('')
 							
-							el.c.removeClass('searchactive')
-
+							closesearch()
 							clearex()
 
 						}
@@ -1203,7 +1202,7 @@ var menu = (function(){
 			self.app.user.isState(function(state){
 
 
-				if(parameters().ss && (isMobile() || self.app.nav.get.pathname() == 's')){
+				if((parameters().ss || parameters().sst) && (isMobile() || self.app.nav.get.pathname() == 's')){
 
 					el.c.addClass('searchactive')
 
@@ -1231,6 +1230,14 @@ var menu = (function(){
 				menusearch.placeholder(self.app.localization.e('e13139'))
 
 			authorForSearch = null
+		}
+
+		var closesearch = function(){
+			if (el.c)
+				el.c.removeClass('searchactive')
+				
+			if (el.postssearch)
+				el.postssearch.find('.search').removeClass('fastSearchShow')
 		}
 
 		return {
@@ -1310,20 +1317,20 @@ var menu = (function(){
 			},
 
 			closesearch : function(){
-				if (el.c)
-					el.c.removeClass('searchactive')
 
-				
+				closesearch()
+					
 			},
 
 			showsearch : function(v, _searchBackAction){
+
+				console.log('showsearch', v, _searchBackAction)
 
 				if(v){
 					el.c.addClass('searchactive')
 					el.postssearch.find('.search').addClass('searchFilled')
 				}
 				else{
-
 					el.postssearch.find('.search').removeClass('searchFilled')
 				}
 				

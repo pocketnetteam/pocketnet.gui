@@ -22,42 +22,11 @@ html.stblack{
         background: @color-main;
     }
 
-    ::-webkit-scrollbar {
-        background: @color-black;
-    }
+  
 
-    ::-webkit-scrollbar-track {
-        background: fade(@color-main, 20);
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: fade(@color-main, 20);
-    } 
-    
-    ::-webkit-scrollbar-button {
-        background: fade(@color-main, 20);
-    } 
-    
-    ::-webkit-scrollbar-corner {
-        background: fade(@color-main, 20);
-    }
-
-    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-        color:    @color-gray-mlight;
-    }
-    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-       color:    @color-gray-mlight;
-       opacity:  1;
-    }
-    ::-moz-placeholder { /* Mozilla Firefox 19+ */
-       color:    @color-gray-mlight;
-       opacity:  1;
-    }
-    :-ms-input-placeholder { /* Internet Explorer 10-11 */
-       color:    @color-gray-mlight;
-    }
-    :placeholder-shown { 
-      color:    @color-gray-mlight;
+    scrollbar-width: none;
+    &::-webkit-scrollbar{
+        width: 0!important;
     }
 
     textarea{
@@ -1389,7 +1358,7 @@ html.stblack{
             .searchPanelWrapper{
               
                 >div{
-                    color : @color-gray2;
+                    color : @color-gray;
                     &:hover{
                         color : @color-bright;
                     }

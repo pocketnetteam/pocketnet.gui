@@ -20,6 +20,9 @@ var main = (function(){
 
 		var lastscroll = 0
 
+
+		var wordsRegExp = /[,.!?;:() \n\r]/g
+
 		var mobilemodes = [{
 			mode : 'leftshow',
 			icon : 'fas fa-hashtag'
@@ -531,9 +534,6 @@ var main = (function(){
 							c('')
 						}
 
-						
-
-
 					}
 					
 
@@ -918,6 +918,16 @@ var main = (function(){
 					videomain = _vm
 				}
 
+				searchvalue = parameters().ss || ''
+
+				var tgsi = decodeURI(parameters().sst || '')
+
+				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
+					return r
+				}));
+
+				searchtags = words.length ? words : null
+
 				renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 
 				if (videomain){
@@ -1106,7 +1116,7 @@ var main = (function(){
 				if (isMobile())
 					$('html').addClass('nooverflow');
 
-				var wordsRegExp = /[,.!?;:() \n\r]/g
+				
 
 				initEvents();
 

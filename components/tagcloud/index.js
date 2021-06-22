@@ -11,7 +11,16 @@ var tagcloud = (function(){
 		var el, showed = false, essenseData;
 
 		var actions = {
+			showhideclear : function(){
+				var hasc = self.app.platform.sdk.categories.gettags(null, 'onlytags').length
 
+				if (hasc){
+					el.cleartags.addClass('showed')
+				}
+				else{
+					el.cleartags.removeClass('showed')
+				}
+			},
 		}
 
 		var events = {
@@ -19,6 +28,7 @@ var tagcloud = (function(){
 		}
 
 		var renders = {
+			
 			showhide : function(){
 				if(showed){
 					el.c.addClass('showedalltags')
@@ -156,9 +166,25 @@ var tagcloud = (function(){
 
 				var e = el.c.find('.tg[tag="'+id+'"]')
 
+				actions.showhideclear()
+
 				if(value) e.addClass('selected')
 				else e.removeClass('selected')
 			}	
+
+
+			el.cleartags.on('click', function(){
+				dialog({
+					class : 'zindex',
+					html : 'Do you really want to clear tags filters?',
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
+					success : function(){	
+						self.app.platform.sdk.categories.clear(null, true)
+						make()
+					}
+				})
+			})
 
 		}
 
@@ -193,7 +219,7 @@ var tagcloud = (function(){
 				}
 
 				renders.tags(tags)
-
+				actions.showhideclear()
 			})
 
 		}
@@ -226,7 +252,7 @@ var tagcloud = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.tags = el.c.find('.tags');
-
+				el.cleartags = el.c.find('.cleartags')
 				initEvents();
 
 				make()

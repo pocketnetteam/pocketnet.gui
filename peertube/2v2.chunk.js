@@ -1198,4 +1198,4 @@ core_default.a.registerPlugin('webtorrent', webtorrent_plugin_WebTorrentPlugin);
 /***/ })
 
 }]);
-//# sourceMappingURL=2.chunk.js.map
+//# sourceMappingURL=2v2.chunk.js.map

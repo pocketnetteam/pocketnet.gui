@@ -496,7 +496,7 @@ var author = (function(){
 
 				if(!report.active && report.history){
 
-					var rem = ['mt']
+					var rem = ['mt', 's']
 
 					if (report.id != 'shares' || cl) rem.push('ss')
 
@@ -768,6 +768,9 @@ var author = (function(){
 
 			},
 
+
+
+
 			lenta : function(_el, report){
 
 				var load = function(){			
@@ -825,7 +828,7 @@ var author = (function(){
 							})
 
 							new search(p.el.find('.authorsearch'), {
-								placeholder : 'SEARCH ON ' + author.data.name.toUpperCase(),
+								placeholder : 'Search on ' + author.data.name,
 		
 								clbk : function(_el){
 									

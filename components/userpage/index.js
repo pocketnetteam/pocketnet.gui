@@ -934,6 +934,13 @@ var userpage = (function(){
 					
 				}).init();	
 
+				/*self.app.platform.sdk.keys.init().then(r => {
+					console.log("RESULT", r)
+				})*/
+
+				//self.app.platform.ui.keygeneration()
+
+
 				initEvents();
 
 				make(function(){					

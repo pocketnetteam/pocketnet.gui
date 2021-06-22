@@ -1416,7 +1416,8 @@ UserInfo = function(){
 			{
 				if(_.isArray(_v)){
 					_.each(_v, function(__V){
-						mv.push(__V)
+						if (__V)
+							mv.push(__V)
 					})
 				}
 				else
@@ -1740,6 +1741,8 @@ pUserInfo = function(){
 		self.keys = (v.k || v.keys || '')
 
 		if(!_.isArray(self.keys)) self.keys = self.keys.split(',')
+
+		self.keys = _.filter(self.keys, function(k){ return k})
 
 		if (v.txid)
 			self.txid = v.txid;

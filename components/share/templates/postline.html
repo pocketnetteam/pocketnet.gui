@@ -29,7 +29,7 @@
                     <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                 </div>
 
-                <% if(window.testpocketnet && !isMobile()) {%>
+                <% if((deep(app, 'platform.real.'+user.address.value.toString('hex')) || window.testpocketnet) && !isMobile()) {%>
 
                 <div class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
                     <i class="fas fa-dot-circle"></i> <span><%- e('goLive') %></span>

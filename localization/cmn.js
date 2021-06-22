@@ -1,9 +1,9 @@
 if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
-loclib.en = {};
+loclib.cmn = {};
 
-var ____loclib = loclib.en;
+var ____loclib = loclib.cmn;
 
 //time
 
@@ -11,7 +11,7 @@ ____loclib.fewseconds = "几秒前";
 ____loclib.oneminute = "1分钟前";	
 
 ____loclib.minutes = function(v){
-return v + " minutes ago"
+return v + " 分鐘前"
 }
 
 ____loclib.tenminutes = "10分钟前";	
@@ -38,7 +38,7 @@ ____loclib.rtip1 = "请记住你的私人登录密钥!";
 ____loclib.rtip2 = function(mobile){
 var h = '以下为你的私钥密码，请将它记下并确保保存你的二维码' 
 
-if(mobile){ h += 'device' } else { h+='PC' }
+if(mobile){ h += '設備' } else { h+='電腦' }
 
 h+='务必保管好，勿丢失。我们将不会储存你的私人数据，私钥一旦丢失就无法找回！'
 
@@ -50,8 +50,8 @@ ____loclib.rtip3 = "请将此登录密钥记下并将其保存为二维码。我
 ____loclib.saveqrcode = "保存二维码" 
 ____loclib.copyprivkey = "复制私钥"
 ____loclib.rcontinue = "继续"
-____loclib.idle = "Idle for some time"
-____loclib.congratulations = 'Congratulations! You are in <span class="pnlabel">口袋网</span>'
+____loclib.idle = "閒置一段時間 "
+____loclib.congratulations = '恭喜！你在 <span class="pnlabel">口袋网</span>'
 ____loclib.creatingpreloader = '正在创建账号'
 ____loclib.removepaste = '我们删除了该输入的粘贴选项。'
 ____loclib.filedamaged = "文件中包含有效的私钥"
@@ -61,7 +61,7 @@ ____loclib.successfullycopied = "秘钥已成功复制"
 ____loclib.urlsuccesscopied = "链接已成功复制"
 ____loclib.successcopied = "文本已成功复制"
 
-____loclib.confirmkeyLabel = "请确认你的密钥。 Type Key in form or <b>upload QR code</b>"
+____loclib.confirmkeyLabel = "请确认你的密钥。 在表單中鍵入 <b>上傳二維碼 </b>"
 ____loclib.repeatetocreate = "重复一遍，再次创建私钥"
 ____loclib.confirmcreate = "创建账号"
 
@@ -97,8 +97,8 @@ ____loclib.signout = '退出';
 
 //send
 
-____loclib.postlabel = "Donation for post";	
-____loclib.donationlabel = "Donation";	
+____loclib.postlabel = "為帖子捐款";	
+____loclib.donationlabel = "捐款";	
 ____loclib.donationwel = "如果你想感谢作者，可使用口袋网交易";
 ____loclib.donationwela = "口袋网交易";	
 ____loclib.donationwelan = "或者你可使用其他加密支付系统";	
@@ -119,7 +119,7 @@ ____loclib.wbalance = "余额";
 ____loclib.wpercente = "百分比";	
 ____loclib.waddaddress = "探索新的钱包地址";	
 ____loclib.wrecieve = "接收";	
-____loclib.wrecieveon = "Receive on";	
+____loclib.wrecieveon = "接收";	
 ____loclib.wcopyshareorcreate = "复制并分享地址或创建付款链接";
 ____loclib.wdgetlink = "获取链接";	
 ____loclib.wdqrcode = "二维码";
@@ -168,7 +168,7 @@ ____loclib.wscalculatefees = '合计费用';
 ____loclib.wsaddressnotv = "地址无效";
 
 //user profile
-____loclib.uaddaddressdona = "Add address For Donations";
+____loclib.uaddaddressdona = "添加捐款地址";
 ____loclib.uaddaddressdonaplace = "输入地址";
 ____loclib.uchangeicon = "上传头像";
 ____loclib.utip1 = "使用口袋网之前你必须在区块链上创建名字和头像";
@@ -186,7 +186,7 @@ ____loclib.unickname = "昵称";
 ____loclib.ulanguage = "语言";
 ____loclib.uabout = "个人简介";
 ____loclib.uwebsite = "网站";
-____loclib.uaddresesd = "Addresses for Donations";
+____loclib.uaddresesd = "捐款地址";
 ____loclib.usavechanges = "是否保存你的修改？";
 
 //ustate
@@ -205,7 +205,7 @@ ____loclib.srep = "信誉";
 ____loclib.aaddedacc = "新增账号";
 ____loclib.acure = "当前";
 ____loclib.aaddacc = "添加账号";
-____loclib.ascheduler = "Scheduler";
+____loclib.ascheduler = "調度器";
 ____loclib.aused = "该地址已经在另外的地址库中被使用了";
 
 
@@ -260,7 +260,7 @@ ____loclib.snothing = "空空如也";
 ____loclib.sposttime = "定时发布";
 ____loclib.spostnow = "现在发布";
 ____loclib.stimenotselected = "未选定时间";
-____loclib.spost = "Post";
+____loclib.spost = "郵政";
 ____loclib.sdate = "日期";
 ____loclib.stime = "时间";
 ____loclib.snotags = "添加标签";
@@ -310,17 +310,17 @@ ____loclib.coinbaseSuccesscomment = function(v){
 return "恭喜，你因为最新发布的评论获得了" + v + " PKOIN！"
 }
 ____loclib.userSent = function(v){
-return "sent <b>" + v + " PKOIN</b> to you"
+return "發送 <b>" + v + " PKOIN</b> 給你"
 }
 
 ____loclib.coinbaseSuccesspostref = function(v){
-    return "Congrats, your referral just won " + v + " PKOIN for you!"
+    return "恭喜，您的推薦剛剛贏了  " + v + " PKOIN 為你!"
     }
 ____loclib.coinbaseSuccesscommentref = function(v){
-    return "Congrats, your referral just won " + v + " PKOIN for you!"
+    return "恭喜，您的推薦剛剛贏了  " + v + " PKOIN 為你!"
 }
 
-____loclib.refferalUserMessage = "恭喜！You rescued someone from the censored web. Some coins are on their way!"
+____loclib.refferalUserMessage = "恭喜！您從受審查的網絡中救出了某人。 一些硬幣正在路上！ "
 
 ____loclib.subscribeUserMessage = "关注了你"
 ____loclib.unsubscribeUserMessage = "取关了你"
@@ -418,7 +418,7 @@ ____loclib.e13024 = "你的私人登录密钥"
 ____loclib.e13025 = "创建一个新账号"
 ____loclib.e13026 = "加入口袋网-自由网络的未来"
 
-____loclib.e13027 = "Stay Signed"
+____loclib.e13027 = "保持簽名"
 ____loclib.e13028 = "你输入的私钥无效"
 ____loclib.e13029 = "信息为空"
 ____loclib.e13030 = "评论最多为1000字"
@@ -523,7 +523,7 @@ ____loclib.e13107 = "节点管理可通过应用程序进行"
 ____loclib.e13108 = "没有与Electron代理接口的连接"
 
 ____loclib.e13109 = "请输入图片中的字以接收口袋币并继续注册"
-____loclib.e13110 = "Enter words"
+____loclib.e13110 = "輸入單詞"
 ____loclib.poll = "创建投票"
 ____loclib.next = "下一步"
 ____loclib.refresh = "刷新"
@@ -537,7 +537,7 @@ ____loclib.e13116 = "以接收货币并开通账户"
 ____loclib.e13117 = "查看余额"
 ____loclib.joinnow = "现在加入"
 ____loclib.loading = "加载中"
-____loclib.e13118 = "Words doesn't match"
+____loclib.e13118 = "單詞不匹配"
 ____loclib.e13119 = "添加邮箱并继续"
 ____loclib.e13120 = "应用程序"
 ____loclib.e13121 = "此处没有图片"
@@ -555,19 +555,19 @@ ____loclib.removepost = "删除帖子"
 
 
 ____loclib.reportpost = "举报帖子"
-____loclib.donate = "Donate"
+____loclib.donate = "捐"
 ____loclib.blockuser = "屏蔽用户"
 ____loclib.more = "更多"
 ____loclib.showmore = "显示更多"
 ____loclib.e13129 = "附带图片"
 ____loclib.e13130 = "已编辑"
 ____loclib.e13131 = "你已屏蔽该用户"
-____loclib.e13132 = "rated"
+____loclib.e13132 = "額定"
 ____loclib.e13133 = "分享"
-____loclib.e13134 = "There aren't any results for this search string"
-____loclib.e13135 = "User haven't private key"
+____loclib.e13134 = "此搜索字符串沒有任何結果"
+____loclib.e13135 = "用戶沒有私鑰"
 ____loclib.e13136 = "所有帖子"
-____loclib.e13137 = "Your Pocket"
+____loclib.e13137 = "你的口袋"
 ____loclib.e13138 = "热门帖子"
 ____loclib.e13139 = "在口袋网上搜索"
 ____loclib.e13140 = "搜索"
@@ -595,13 +595,13 @@ ____loclib.userstx = "用户"
 ____loclib.user = "用户"
 ____loclib.postscount = "发帖数"
 ____loclib.about = "关于"
-____loclib.e13156 = "Next Results"
+____loclib.e13156 = "下一個結果"
 ____loclib.posts = "帖子"
-____loclib.e13157 = "Search by"
-____loclib.e13158 = "hasn't any results"
+____loclib.e13157 = "搜索方式"
+____loclib.e13158 = "沒有任何結果"
 ____loclib.e13159 = "搜索词组是空的"
 ____loclib.repost = "转发"
-____loclib.e13160 = "Hello Pocketeers!"
+____loclib.e13160 = "你好口袋小子!"
 
 ____loclib.e13161 = "为你的帖子添加标签"
 ____loclib.e13162 = "标签不超过5个"
@@ -625,10 +625,10 @@ ____loclib.e13177 = "上传图片"
 
 ____loclib.requiredfields = "必填项"
 ____loclib.e13178 = "未与你的个人资料绑定"
-____loclib.e13179 = "Unspent List"
+____loclib.e13179 = "未使用列表"
 ____loclib.e13180 = "你的发票已成功生成"
 ____loclib.e13181 = "在生成报价的过程中发生了错误"
-____loclib.e13182 = "Block Explorer"
+____loclib.e13182 = "塊瀏覽器"
 ____loclib.e13183 = "帮助中心"
 ____loclib.e13184 = "继续注册"
 ____loclib.e13185 = "连接中断"
@@ -642,7 +642,7 @@ ____loclib.e13192 = "等级"
 ____loclib.e13193 = "奖金"
 ____loclib.e13194 = "信誉与奖励"
 ____loclib.e13195 = "限制条款"
-____loclib.e13196 = "It much take up"
+____loclib.e13196 = "它佔用了很多"
 ____loclib.e13197 = "接收口袋币"
 ____loclib.e13198 = "大约需要等待的时间为"
 ____loclib.e13199 = "立即加入口袋网"
@@ -679,9 +679,9 @@ ____loclib.e13217 = "这笔交易的时间已过期"
 ____loclib.e13218 = "等待区块链确认"
 ____loclib.e13219 = "发送口袋币给你"
 ____loclib.e13220 = '口袋币已发送'
-____loclib.errorreload = "Something went wrong. Please reload page and try again"
-____loclib.e13221 = "Do you really want to delete information about this deal? Deal can't be stop"
-____loclib.e13222 = "下载桌面版-this is the most censorship resistant way to use 口袋网. Even if websites are shut down, desktop application will still run directly through the nodes."
+____loclib.errorreload = "出問題了。 請重新加載頁面並重試"
+____loclib.e13221 = "您確定要刪除有關此交易的信息嗎？ 交易不能停止"
+____loclib.e13222 = "下载桌面版-這是最抗審查的使用方式 口袋网. 即使網站關閉，桌面應用程序仍將直接通過節點運行。 "
 ____loclib.e13223 = "下载口袋网Windows版"
 ____loclib.e132232 = "下载口袋网macOs版"
 ____loclib.e13224 = "下载口袋网Linux版"
@@ -730,7 +730,7 @@ ____loclib.e13264 = "订阅但不开启消息提醒"
 ____loclib.e13265 = '你的名字已不可用，请选择其他名字'
 ____loclib.e13266 = "白色主题"
 ____loclib.e13267 = "暗黑主题"
-____loclib.e13268 = 'Coinstake win'
+____loclib.e13268 = '投幣 獲勝'
 ____loclib.e13269 = '收到的交易'
 ____loclib.e13270 = '收到的赞'
 ____loclib.e13271 = '收到的评论'
@@ -751,7 +751,7 @@ ____loclib.e13285 = '从电报中发帖前先询问'
 ____loclib.e13286 = '向电报发送前询问'
 ____loclib.e13287 = "发送至电报渠道"
 ____loclib.video = "视频"
-____loclib.e13288 = "Main Page Vidgets"
+____loclib.e13288 = "主頁小工具"
 ____loclib.e13289 = "电报整合"
 
 ____loclib.system = "系统"
@@ -763,7 +763,7 @@ ____loclib.e13293 = "内部错误"
 ____loclib.e13294 = '启用PGSQL数据库'
 ____loclib.e13295 = '数据库主机'
 ____loclib.e13296 = '数据库端口'
-____loclib.e13297 = 'DB Max'
+____loclib.e13297 = 'DB 最大'
 ____loclib.e13298 = '数据库空闲超时, ms'
 ____loclib.e13298 = '数据库名称'
 ____loclib.e13300 = '数据库用户名'
@@ -774,7 +774,7 @@ ____loclib.e13304 = 'wss代理服务器端口'
 ____loclib.e13305 = '服务器SSL证书密钥, pem'
 ____loclib.e13306 = '服务器SSL证书, pem'
 ____loclib.e13307 = '服务器SSL证书密码'
-____loclib.e13308 = 'Firebase admin SDK'
+____loclib.e13308 = 'Firebase 行政 SDK'
 ____loclib.e13309 = '你的Crane地址'
 ____loclib.e13310 = '启用验证码'
 ____loclib.e13311 = '启用IP限制器'
@@ -788,7 +788,7 @@ ____loclib.e13317 = '二进制路径'
 ____loclib.e13318 = '配置路径'
 ____loclib.e13319 = '数据路径'
 ____loclib.e13320 = '权益质押地址'
-____loclib.e13321 = 'Import the account address to the node for stacking'
+____loclib.e13321 = '將賬戶地址導入節點進行堆疊'
 ____loclib.e13322 = '状态'
 ____loclib.e13323 = '权益质押地址'
 ____loclib.e13324 = '最后的区块'
@@ -803,8 +803,8 @@ ____loclib.e13330 = "分享了你的帖子："
 ____loclib.e13331 = "分享了你的帖子："
 ____loclib.e13332 = "发布了一个新帖子："
 ____loclib.e13333 = "收到的交易"
-____loclib.e13334 = "Congratulations, you have won"
-____loclib.e13335 = "Pocketcoin for your latest"
+____loclib.e13334 = "恭喜你贏了"
+____loclib.e13335 = "Pocketcoin 為您提供最新信息"
 ____loclib.e13336 = "留言说："
 ____loclib.e13337 = "评论了你的帖子："
 ____loclib.e13338 = "回复了你的评论："
@@ -856,7 +856,7 @@ ____loclib.e14027 = '信誉是什么？它是如何计算的？'
 ____loclib.e14028 = '您的信誉是以下列方式计算的评分之和。请注意，信誉低于50的用户不会影响任何人的信誉和货币奖励。他们可以对内容进行评分，但不影响信誉。'
 ____loclib.e14029 = '因此，如果你有2个5星评分和1个1星评分，总评分会是'
 ____loclib.e14030 = '是否有办法删除或编辑一个帖子？'
-____loclib.e14031 = 'Not at this point, as it is baked into blockchain. However, we are working on a feature to create an overwrite transaction as well &#10075;hide&#10076; transaction, which would effectively translate to edit or delete.'
+____loclib.e14031 = '不是在這一點上，因為它已經融入了區塊鏈。 但是，我們正在開發一項功能來創建覆蓋交易 &#10075;隱藏&#10076; 事務，這將有效地轉換為編輯或刪除。'
 ____loclib.e14032 = '是否可以搜索用户？'
 ____loclib.e14033 = '点击顶部的搜索放大镜，按用户名或关键词进行搜索。'
 ____loclib.e14034 = '如何关注别人？'
@@ -930,7 +930,7 @@ ____loclib.e14098 = '口袋网的设计者Daniel Sachkov在2019年夏天改变�
 ____loclib.e14099 = '从那时起，一个由有能力、不断变化的开发人员和社区志愿者组成的团队一直在为实现他的愿景而努力。'
 
 ____loclib.e14100 = '帮助中心'
-____loclib.e14101 = 'Block Explorer'
+____loclib.e14101 = '塊瀏覽器'
 ____loclib.e14102 = '常见问题'
 ____loclib.e14103 = '路标规划'
 ____loclib.e14104 = '节点设置'
