@@ -418,15 +418,18 @@ var imagegallery = (function(){
 
 			var cc = el.c.find('.imagesTableWrapper').closest('.wnd')
 
-			el.c.find('.imagesTableWrapper').swipe({
-				allowPageScroll: "auto", 
-				swipeStatus : function(e, phase, direction, distance){
+			// Enable the swipe only if we have at least 2 images
+			if (essenseData.images && essenseData.images.length > 1) {
+				el.c.find('.imagesTableWrapper').swipe({
+					allowPageScroll: "auto", 
+					swipeStatus : function(e, phase, direction, distance){
 
-					actions.swipe(phase, direction, distance)
+						actions.swipe(phase, direction, distance)
 
-					return true
-				},
-			})
+						return true
+					},
+				})
+			}
 			
 
 		}
