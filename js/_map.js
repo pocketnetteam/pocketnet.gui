@@ -83,7 +83,7 @@ __map =  {
 		"css/stblack.css",
 		"css/plyr.css",
 		"js/vendor/DateTimePicker.min.css",
-		"css/swiper-bundle.min.css",
+		/*"css/swiper-bundle.min.css",*/
 		"peertube/video-embed.css",
 		"js/vendor/emojionearea.min.css"
 	],

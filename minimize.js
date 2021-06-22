@@ -150,6 +150,8 @@ fs.exists(mapJsPath, function (exists) {
 									passes: 2
 								}
 							})
+
+							
 							
 
 							if(!minified.error && uglify){
@@ -302,7 +304,7 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									currentcssdata = currentcssdata + '\n' + data;
+									currentcssdata = currentcssdata + "\n" + "/*" + path +"*/ \n" + data;
 
 									p.success();
 								});
@@ -326,7 +328,7 @@ fs.exists(mapJsPath, function (exists) {
 							exported.data = exported.data.split('\n')
 
 							exported.data = exported.data.map(item => {
-								return item.replace(/\(max-width:640px\)/g, '(max-width:1920px)')
+								return item.replace(/\(max-width:640px\)|\(max-width:768px\)|\(max-width:1024px\)/g, '(max-width:1920px)')
 							})
 
 							exported.data = exported.data.join('\n')
