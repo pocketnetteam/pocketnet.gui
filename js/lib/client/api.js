@@ -14,7 +14,7 @@ var ProxyRequest = function(app = {}, proxy){
 
         if (proxy && proxy.session) session = proxy.session
 
-        if (app.user && app.user.getstate() == 1){
+        if (app.user && (app.user.getstate && app.user.getstate() == 1)){
             try{ signature = app.user.signature(session) } catch(e){}
         }
 
@@ -91,7 +91,7 @@ var ProxyRequest = function(app = {}, proxy){
         if (p.auth)
             data = sign(data)
         else{
-            if (app.user && app.user.getstate() == 1){ data.state = 1 }
+            if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
         }
 
         return fetch(url, {

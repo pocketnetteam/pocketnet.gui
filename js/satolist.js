@@ -20052,23 +20052,29 @@ Platform = function (app, listofnodes) {
 
                     if (addresses.indexOf(a) > -1) {
 
-                        return
                         if (!isMobile()){
 
-                            self.matrixchat.inited = true
+
+                            importScript('chat/matrix-element.min.js', function(){
+
+                                self.matrixchat.inited = true
         
-                            var privatekey = self.app.user.private.value.toString('hex');
-                
-                            var matrix = `<div class="wrapper">
-                                <matrix-element
-                                    address="${a}"
-                                    privatekey="${privatekey}"
-                                    pocketnet="true"   
-                                >
-                                </matrix-element>
-                            </div>`
-        
-                            $('#matrix').append(matrix);         
+                                var privatekey = self.app.user.private.value.toString('hex');
+                    
+                                var matrix = `<div class="wrapper">
+                                    <matrix-element
+                                        address="${a}"
+                                        privatekey="${privatekey}"
+                                        pocketnet="true"   
+                                    >
+                                    </matrix-element>
+                                </div>`
+            
+                                $('#matrix').append(matrix);   
+                                
+                            }, null, app);
+
+                                  
                             
                         }
         

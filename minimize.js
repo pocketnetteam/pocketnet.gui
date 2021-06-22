@@ -344,14 +344,14 @@ fs.exists(mapJsPath, function (exists) {
 								clbk();				
 							});
 
-							fs.writeFile(exported.path, exported.data, function(err) {
+							/*fs.writeFile(exported.path, exported.data, function(err) {
 
 								if (err) {
 
 									console.log("Access not permitted (LESS) " +  exported.path) 
 								}
 										
-							});
+							});*/
 						}
 					}
 				})
