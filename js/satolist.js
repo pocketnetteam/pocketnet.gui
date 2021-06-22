@@ -20050,7 +20050,7 @@ Platform = function (app, listofnodes) {
 
                     var addresses = self.testchataddresses;
 
-                    if (addresses.indexOf(a) > -1) {
+                    if (addresses.indexOf(a) > -1 || window.testpocketnet) {
 
                         if (!isMobile()){
 
