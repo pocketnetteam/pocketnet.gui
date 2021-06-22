@@ -1189,8 +1189,7 @@ var lenta = (function(){
 						if (image.src == initialValue) return true;						
 	
 					})
-	
-					if(images.length > 1 || (share.url && images.length && parseVideo(share.url).type) || !isMobile()){
+					if(images.length >= 1 || (share.url && images.length && parseVideo(share.url).type) || !isMobile()){
 	
 						self.app.nav.api.load({
 							open : true,
