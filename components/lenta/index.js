@@ -2239,6 +2239,8 @@ var lenta = (function(){
 			},
 			share : function(share, clbk, all){
 
+				if(!share) return
+
 				console.log('share', share)
 
 				var _el = el.share[share.txid] //el.shares.find("#" + share.txid);
