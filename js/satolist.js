@@ -1855,7 +1855,8 @@ Platform = function (app, listofnodes) {
                     enterFullScreenVideo : p.fullscreenvideo,
                     openapi : p.openapi,
                     renderclbk : p.renderclbk,
-                    ready : p.ready
+                    ready : p.ready,
+                    second : true
                 },
                 
                 clbk : clbk
@@ -10064,6 +10065,8 @@ Platform = function (app, listofnodes) {
                     var storage = this.storage;
                     storage.trx || (storage.trx = {})
 
+                    var originaltxids = _.filter(txids, function(id){return id})
+
                     var loading = this.loading;
 
                     var loaded = [];
@@ -10078,10 +10081,11 @@ Platform = function (app, listofnodes) {
                         retry(function () {
 
                             anotherloading = _.filter(anotherloading, function (id) {
-                                if (!storage.trx[id])
-
-                                    return true;
+                                if (loading[id]) return true;
                             })
+
+
+                            console.log('anotherloading', anotherloading)
 
                             if (!anotherloading.length) return true;
 
@@ -10209,9 +10213,14 @@ Platform = function (app, listofnodes) {
                     }
                     else {
                         waianother(function () {
+
+                            var loaded = _.map(originaltxids, function(id){
+                                return storage.trx[id]
+                            })
+                         
                             if (clbk)
                                 clbk(loaded, null, {
-                                    count: anotherloadinglength
+                                    count: loaded.length
                                 }, true)
                         })
                     }

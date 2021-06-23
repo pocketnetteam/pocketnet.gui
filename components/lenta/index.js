@@ -15,6 +15,8 @@ var lenta = (function(){
 
 		var el;
 
+		console.log('p.mid', p.mid)
+
 		var mid = p.mid;
 
 		var making = false, ovf = false;
@@ -1572,7 +1574,7 @@ var lenta = (function(){
 
 						console.log("PLAY")
 
-						actions.initVideo(_el, share = self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')], function(){
+						actions.initVideo(_el, self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')], function(){
 
 							console.log("PLAY2")
 
@@ -2237,9 +2239,16 @@ var lenta = (function(){
 			},
 			share : function(share, clbk, all){
 
-				var _el = el.shares.find("#" + share.txid);
+				console.log('share', share)
+
+				var _el = el.share[share.txid] //el.shares.find("#" + share.txid);
+
+
+				//if(!_el) return
 
 				shareheights[share.txid] = 0;
+
+				
 				
 				if (_el[0])
 					shareheights[share.txid] = _el[0].offsetHeight
@@ -2285,9 +2294,10 @@ var lenta = (function(){
 								p.el.find('.canmark').mark(essenseData.searchValue);
 
 							}
+							
 
 							if(!video)
-								actions.initVideo(p.el, share, null, true)
+								actions.initVideo(p.el, share, null, !essenseData.openapi)
 
 
 							if(isotopeinited) el.shares.isotope()
@@ -2447,6 +2457,8 @@ var lenta = (function(){
 
 			txidall : function(txids){
 
+				console.log('txids', txids)
+
 				_.each(txids, function(txid){
 					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 					renders.share(share)
@@ -2456,28 +2468,22 @@ var lenta = (function(){
 
 			shares : function(shares, clbk, p){
 
+				console.log("RENDER SHARES", p)
+
 				if(!p) p = {};
 
 
 				if(!p.inner) {
 					p.inner = function(el, html){
 
-
 						if(isotopeinited){
-
 							var content = $(html)
 
-
 							el.append( content ).isotope( 'appended', content )
-
 						}
 						else
-
 						return append(el, html)
 					}
-
-
-
 				}
 
 				var tpl = 'groupshares';
@@ -2501,8 +2507,6 @@ var lenta = (function(){
 						})
 					})
 					
-
-				
 				
 				self.shell({
 					name :  tpl,
@@ -2540,6 +2544,8 @@ var lenta = (function(){
 					_.each(shares, function(s){
 						el.share[s.txid] = el.c.find('#' + s.txid)
 					})
+
+					console.log('el.share', el.share, shares)
 					
 					if (essenseData.renderclbk)
 						essenseData.renderclbk()
@@ -2612,6 +2618,8 @@ var lenta = (function(){
 			images : function(s, clbk){
 
 				var share = s
+
+				console.log('imagesshare', s)
 
 				if(!el.c) return
 
@@ -3080,7 +3088,9 @@ var lenta = (function(){
 
 						if(!error && !error2){
 
-							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){							
+							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){								
+
+								console.log('countshares', countshares)
 
 								if(!beginmaterial && !countshares){
 									el.c.addClass("sharesZero")
@@ -3088,7 +3098,7 @@ var lenta = (function(){
 								else
 								{
 		
-									if ( (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.search || essenseData.tags) ){
+									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.search || essenseData.tags) ){
 		
 										setTimeout(function(){
 											if (el.c)
@@ -3100,7 +3110,9 @@ var lenta = (function(){
 								}
 
 								////// SHIT
-								if (!shares.length || shares.length < pr.count && (recommended || author || essenseData.search)){
+								if ((!shares.length || shares.length < pr.count) && (recommended || author || essenseData.search)){
+
+									console.log("IM HERE", shares.length, pr.count)
 
 									if(essenseData.ended) {
 										ended = essenseData.ended(shares)
@@ -3199,6 +3211,8 @@ var lenta = (function(){
 
 							var _beginmaterial = ''//beginmaterial;
 
+							console.log("recommended", recommended)
+
 							if(!author){
 								loader = 'hierarchical'
 								
@@ -3209,6 +3223,8 @@ var lenta = (function(){
 							}
 
 							if (recommended){
+
+								
 
 								if(recommended == 'recommended'){
 									loader = 'recommended'
@@ -3230,6 +3246,8 @@ var lenta = (function(){
 								{
 									loader = 'common'
 									author = '1';
+
+									console.log("HERE")
 
 									if(!state){
 										load.sstuff([], null, {
@@ -3254,6 +3272,7 @@ var lenta = (function(){
 
 							var page = essenseData.page || parameters().page || 0
 
+							console.log('load', essenseData.txids)
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -3268,6 +3287,8 @@ var lenta = (function(){
 								period : essenseData.period
 
 							}, function(shares, error, pr){
+
+								console.log("SHARESLOADED", shares)
 
 								if(pr.blocknumber) fixedblock = pr.blocknumber
 
@@ -3768,8 +3789,6 @@ var lenta = (function(){
 				cache = 'cache'
 			}
 
-			
-
 			if (essenseData.contents){
 
 				el.c.find('.shares').html('')
@@ -3791,10 +3810,10 @@ var lenta = (function(){
 				}
 			}
 
-			
-
 
 			load.shares(function(shares, error){
+
+				console.log(shares, error)
 
 				if (error){
 					making = false;
@@ -3817,7 +3836,6 @@ var lenta = (function(){
 				}
 				else
 				{
-
 					
 
 					if (clear)
@@ -3893,7 +3911,6 @@ var lenta = (function(){
 							}
 
 							if(essenseData.notscrollloading && essenseData.txids){
-
 								renders.txidall(essenseData.txids)
 							}
 						
@@ -4028,6 +4045,8 @@ var lenta = (function(){
 
 			destroy : function(){
 
+				console.log("DESTROY")
+
 				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')
 					
@@ -4120,6 +4139,8 @@ var lenta = (function(){
 			},
 			
 			init : function(p){
+
+				console.log("INIT")
 				
 				w = $(window)
 

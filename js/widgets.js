@@ -46,11 +46,11 @@ var PNWIDGETS = function(){
     self.url = function(url){
 
         var parsed_url = new URL(url)
-
+        var postid = parsed_url.searchParams.get('s') || parsed_url.searchParams.get('v')
         var action = parsed_url.searchParams.get('commentid') ? 'commment' 
-                                                    : parsed_url.searchParams.get('s') ? 'post' : 'channel'
+                                                    : postid ? 'post' : 'channel'
 
-        var id = action === 'channel' ? parsed_url.pathname.replace('/', '') : parsed_url.searchParams.get('s')
+        var id = action === 'channel' ? parsed_url.pathname.replace('/', '') : postid
 
         var p = '7B22626C61636B223A66616C73652C22636F6D6D656E7473223A226C617374222C2266756C6C73637265656E766964656F223A66616C73657D'
 
