@@ -10065,7 +10065,7 @@ Platform = function (app, listofnodes) {
                     var storage = this.storage;
                     storage.trx || (storage.trx = {})
 
-                    var originaltxids = _.filter(txids, function(id){return id})
+                 
 
                     var loading = this.loading;
 
@@ -10075,6 +10075,8 @@ Platform = function (app, listofnodes) {
                     var anotherloadinglength = 0;
 
                     if (!_.isArray(txids)) txids = [txids];
+
+                    var originaltxids = _.filter(txids, function(id){return id})
 
                     var waianother = function (clbk) {
 
@@ -10217,6 +10219,8 @@ Platform = function (app, listofnodes) {
                             var loaded = _.map(originaltxids, function(id){
                                 return storage.trx[id]
                             })
+
+                            console.log("loaded", loaded)
                          
                             if (clbk)
                                 clbk(loaded, null, {
