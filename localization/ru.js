@@ -875,3 +875,7 @@ ____loclib.peertubeAddVideo = 'Загрузить Видео'
 ____loclib.importHeading = 'Импортировать видео из YouTube'
 ____loclib.importInputPlaceholder = 'Вставьте сюда ссылку на видео'
 ____loclib.importInputLabel = 'Ссылка на видео'
+
+____loclib.capitalWarning = 'ВНИМАНИЕ'
+____loclib.streamSettingsWarn = 'Для корректной работы трансляции используйте настройки изображения не выше, чем следующие: битрейт - 2000 кбит/с, разрешение - 1920х1080 точек'
+____loclib.streamSettingsResult = 'В противном случае ваш стрим может работать нестабильно.'
