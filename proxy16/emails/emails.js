@@ -129,8 +129,6 @@ var Emails = function(p){
 
         check : function(email){
 
-            console.log('check there', email);
-
             return new Promise((resolve, reject) => {
 
                 return db.find({email, check: true}, function (err, docs) {
@@ -206,8 +204,6 @@ var Emails = function(p){
 
         verify : function(email){
 
-            console.log('email!!!', email);
-
             if (!EmailValidator.validate(email)) return Promise.reject();
 
             var code = self.kit.makecode()
@@ -215,13 +211,11 @@ var Emails = function(p){
             var exdata = {
                 code: code,
                 from: {name: 'Pocketnet'},
-                to: {name: 'Cook'}
+                to: {name: 'User'}
             };
 
             var template = 'sendgiftcode';
             return self.email.send(template, exdata, email).then(function(result){
-
-                console.log('emails result', result);
 
                 self.dbapi.insert(email, code);
 
@@ -252,21 +246,17 @@ var Emails = function(p){
 
             var exdata = _.clone(data)
 
-            console.log('exdata', exdata, p);
+            // console.log('exdata', exdata, p);
 
             var created = emailCreator.create(template, exdata).then(t => {
                 t.from = p && p.login 
                 t.to = [to]
-
-                console.log('then', p, p.from, t);
 
                 return Promise.resolve(transporter.sendMail(t));
             }).catch(e => {
                 console.log("EMAIL SEND ERROR", e)
                 return Promise.reject(e)
             })
-
-            console.log('created', created);
 
             return Promise.resolve(created);
            
