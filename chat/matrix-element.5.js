@@ -1323,7 +1323,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       index_all["a" /* default */].mapObject(this.m_chat.currentState.members, function (val, key) {
         if (val.membership !== 'leave') {
           index_all["a" /* default */].map(pNetUsers, function (user) {
-            if ('@' + user.id + ':matrix.pocketnet.app' === val.userId) {
+            if ('@' + user.id + ':' + this.core.domain === val.userId) {
               return members.push({
                 id: val.userId,
                 image: user.image,
