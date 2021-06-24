@@ -1344,6 +1344,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       return this.membersList.length > 4;
     },
     membersList: function membersList() {
+      var self = this;
       var members = [];
       var pNetUsers = this.$store.state.users;
       this.currentUser = this.core.mtrx.client.credentials.userId;
@@ -1351,7 +1352,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       index_all["a" /* default */].mapObject(this.m_chat.currentState.members, function (val, key) {
         if (val.membership !== 'leave') {
           index_all["a" /* default */].map(pNetUsers, function (user) {
-            if ('@' + user.id + ':' + this.core.domain === val.userId) {
+            if ('@' + user.id + ':' + self.core.domain === val.userId) {
               return members.push({
                 id: val.userId,
                 image: user.image,

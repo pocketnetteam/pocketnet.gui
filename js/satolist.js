@@ -4299,7 +4299,7 @@ Platform = function (app, listofnodes) {
 				
                             (self.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.sdk.address.pnet().address + '.userInfo.length') > 0 )
 
-                            if(processing) {
+                            if (processing) {
                                 return reject('processing')
                             }
 

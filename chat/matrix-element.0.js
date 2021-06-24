@@ -1216,8 +1216,7 @@ var index_all = __webpack_require__("c46f");
       return state.auth;
     },
     keyword: function keyword() {
-      var _this$event$event,
-          _this = this;
+      var _this$event$event;
 
       var self = this;
       var pStateUsers = this.$store.state.users;
@@ -1229,7 +1228,7 @@ var index_all = __webpack_require__("c46f");
         var invitedName = '';
 
         index_all["a" /* default */].mapObject(pStateUsers, function (key, value) {
-          if ('@' + key.id + ':' + _this.core.domain === invitedUserID) {
+          if ('@' + key.id + ':' + self.core.domain === invitedUserID) {
             return invitedName = key.name;
           }
         });
@@ -1242,7 +1241,7 @@ var index_all = __webpack_require__("c46f");
         var _invitedName = '';
 
         index_all["a" /* default */].mapObject(pStateUsers, function (key, value) {
-          if ('@' + key.id + ':' + _this.core.domain === _invitedUserID) {
+          if ('@' + key.id + ':' + self.core.domain === _invitedUserID) {
             return _invitedName = key.name;
           }
         });
@@ -1268,7 +1267,7 @@ var index_all = __webpack_require__("c46f");
         var _name = '';
 
         index_all["a" /* default */].mapObject(pStateUsers, function (key, value) {
-          if ('@' + key.id + ':' + _this.core.domain === newModer) {
+          if ('@' + key.id + ':' + self.core.domain === newModer) {
             return _name = key.name;
           }
         });
