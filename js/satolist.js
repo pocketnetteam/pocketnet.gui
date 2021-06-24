@@ -1944,6 +1944,54 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+
+        images : function(allimages, initialValue, clbk){
+
+            if(!_.isArray(allimages)) allimages = [allimages]
+
+            if(!initialValue) initialValue = allimages[0]
+
+            if(!initialValue) return false
+
+            var gid = 'uiimages'
+
+            var images = _.map(allimages, function(i){
+                return {
+                    src : i
+                }
+            })
+
+            /*var num = findIndex(images, function(image){
+
+                if (image.src == initialValue) return true;						
+
+            })*/
+
+            self.app.nav.api.load({
+                open : true,
+                href : 'imagegallery',
+                inWnd : true,
+                history : true,
+
+                essenseData : {
+                    initialValue : initialValue,
+                    idName : 'src',
+                    images : images,
+
+                    gid : gid
+                },
+
+                clbk : function(){
+                    if (clbk)
+                        clbk()
+                }
+            })
+
+
+            return true
+
+        },
+
         share : function(p){
             if(!p) p = {}
 

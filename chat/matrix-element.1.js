@@ -1,981 +1,283 @@
 (window["matrixElement_jsonp"] = window["matrixElement_jsonp"] || []).push([[1],{
 
-/***/ "14fd":
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! PhotoSwipe Default UI - 4.1.3 - 2019-01-08
-* http://photoswipe.com
-* Copyright (c) 2019 Dmitry Semenov; */
-/**
-*
-* UI on top of main sliding area (caption, arrows, close button, etc.).
-* Built just using public methods/properties of PhotoSwipe.
-* 
-*/
-(function (root, factory) { 
-	if (true) {
-		!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
-})(this, function () {
-
-	'use strict';
-
-
-
-var PhotoSwipeUI_Default =
- function(pswp, framework) {
-
-	var ui = this;
-	var _overlayUIUpdated = false,
-		_controlsVisible = true,
-		_fullscrenAPI,
-		_controls,
-		_captionContainer,
-		_fakeCaptionContainer,
-		_indexIndicator,
-		_shareButton,
-		_shareModal,
-		_shareModalHidden = true,
-		_initalCloseOnScrollValue,
-		_isIdle,
-		_listen,
-
-		_loadingIndicator,
-		_loadingIndicatorHidden,
-		_loadingIndicatorTimeout,
-
-		_galleryHasOneSlide,
-
-		_options,
-		_defaultUIOptions = {
-			barsSize: {top:44, bottom:'auto'},
-			closeElClasses: ['item', 'caption', 'zoom-wrap', 'ui', 'top-bar'], 
-			timeToIdle: 4000, 
-			timeToIdleOutside: 1000,
-			loadingIndicatorDelay: 1000, // 2s
-			
-			addCaptionHTMLFn: function(item, captionEl /*, isFake */) {
-				if(!item.title) {
-					captionEl.children[0].innerHTML = '';
-					return false;
-				}
-				captionEl.children[0].innerHTML = item.title;
-				return true;
-			},
-
-			closeEl:true,
-			captionEl: true,
-			fullscreenEl: true,
-			zoomEl: true,
-			shareEl: true,
-			counterEl: true,
-			arrowEl: true,
-			preloaderEl: true,
-
-			tapToClose: false,
-			tapToToggleControls: true,
-
-			clickToCloseNonZoomable: true,
-
-			shareButtons: [
-				{id:'facebook', label:'Share on Facebook', url:'https://www.facebook.com/sharer/sharer.php?u={{url}}'},
-				{id:'twitter', label:'Tweet', url:'https://twitter.com/intent/tweet?text={{text}}&url={{url}}'},
-				{id:'pinterest', label:'Pin it', url:'http://www.pinterest.com/pin/create/button/'+
-													'?url={{url}}&media={{image_url}}&description={{text}}'},
-				{id:'download', label:'Download image', url:'{{raw_image_url}}', download:true}
-			],
-			getImageURLForShare: function( /* shareButtonData */ ) {
-				return pswp.currItem.src || '';
-			},
-			getPageURLForShare: function( /* shareButtonData */ ) {
-				return window.location.href;
-			},
-			getTextForShare: function( /* shareButtonData */ ) {
-				return pswp.currItem.title || '';
-			},
-				
-			indexIndicatorSep: ' / ',
-			fitControlsWidth: 1200
-
-		},
-		_blockControlsTap,
-		_blockControlsTapTimeout;
-
-
-
-	var _onControlsTap = function(e) {
-			if(_blockControlsTap) {
-				return true;
-			}
-
-
-			e = e || window.event;
-
-			if(_options.timeToIdle && _options.mouseUsed && !_isIdle) {
-				// reset idle timer
-				_onIdleMouseMove();
-			}
-
-
-			var target = e.target || e.srcElement,
-				uiElement,
-				clickedClass = target.getAttribute('class') || '',
-				found;
-
-			for(var i = 0; i < _uiElements.length; i++) {
-				uiElement = _uiElements[i];
-				if(uiElement.onTap && clickedClass.indexOf('pswp__' + uiElement.name ) > -1 ) {
-					uiElement.onTap();
-					found = true;
-
-				}
-			}
-
-			if(found) {
-				if(e.stopPropagation) {
-					e.stopPropagation();
-				}
-				_blockControlsTap = true;
-
-				// Some versions of Android don't prevent ghost click event 
-				// when preventDefault() was called on touchstart and/or touchend.
-				// 
-				// This happens on v4.3, 4.2, 4.1, 
-				// older versions strangely work correctly, 
-				// but just in case we add delay on all of them)	
-				var tapDelay = framework.features.isOldAndroid ? 600 : 30;
-				_blockControlsTapTimeout = setTimeout(function() {
-					_blockControlsTap = false;
-				}, tapDelay);
-			}
-
-		},
-		_fitControlsInViewport = function() {
-			return !pswp.likelyTouchDevice || _options.mouseUsed || screen.width > _options.fitControlsWidth;
-		},
-		_togglePswpClass = function(el, cName, add) {
-			framework[ (add ? 'add' : 'remove') + 'Class' ](el, 'pswp__' + cName);
-		},
-
-		// add class when there is just one item in the gallery
-		// (by default it hides left/right arrows and 1ofX counter)
-		_countNumItems = function() {
-			var hasOneSlide = (_options.getNumItemsFn() === 1);
-
-			if(hasOneSlide !== _galleryHasOneSlide) {
-				_togglePswpClass(_controls, 'ui--one-slide', hasOneSlide);
-				_galleryHasOneSlide = hasOneSlide;
-			}
-		},
-		_toggleShareModalClass = function() {
-			_togglePswpClass(_shareModal, 'share-modal--hidden', _shareModalHidden);
-		},
-		_toggleShareModal = function() {
-
-			_shareModalHidden = !_shareModalHidden;
-			
-			
-			if(!_shareModalHidden) {
-				_toggleShareModalClass();
-				setTimeout(function() {
-					if(!_shareModalHidden) {
-						framework.addClass(_shareModal, 'pswp__share-modal--fade-in');
-					}
-				}, 30);
-			} else {
-				framework.removeClass(_shareModal, 'pswp__share-modal--fade-in');
-				setTimeout(function() {
-					if(_shareModalHidden) {
-						_toggleShareModalClass();
-					}
-				}, 300);
-			}
-			
-			if(!_shareModalHidden) {
-				_updateShareURLs();
-			}
-			return false;
-		},
-
-		_openWindowPopup = function(e) {
-			e = e || window.event;
-			var target = e.target || e.srcElement;
-
-			pswp.shout('shareLinkClick', e, target);
-
-			if(!target.href) {
-				return false;
-			}
-
-			if( target.hasAttribute('download') ) {
-				return true;
-			}
-
-			window.open(target.href, 'pswp_share', 'scrollbars=yes,resizable=yes,toolbar=no,'+
-										'location=yes,width=550,height=420,top=100,left=' + 
-										(window.screen ? Math.round(screen.width / 2 - 275) : 100)  );
-
-			if(!_shareModalHidden) {
-				_toggleShareModal();
-			}
-			
-			return false;
-		},
-		_updateShareURLs = function() {
-			var shareButtonOut = '',
-				shareButtonData,
-				shareURL,
-				image_url,
-				page_url,
-				share_text;
-
-			for(var i = 0; i < _options.shareButtons.length; i++) {
-				shareButtonData = _options.shareButtons[i];
-
-				image_url = _options.getImageURLForShare(shareButtonData);
-				page_url = _options.getPageURLForShare(shareButtonData);
-				share_text = _options.getTextForShare(shareButtonData);
-
-				shareURL = shareButtonData.url.replace('{{url}}', encodeURIComponent(page_url) )
-									.replace('{{image_url}}', encodeURIComponent(image_url) )
-									.replace('{{raw_image_url}}', image_url )
-									.replace('{{text}}', encodeURIComponent(share_text) );
-
-				shareButtonOut += '<a href="' + shareURL + '" target="_blank" '+
-									'class="pswp__share--' + shareButtonData.id + '"' +
-									(shareButtonData.download ? 'download' : '') + '>' + 
-									shareButtonData.label + '</a>';
-
-				if(_options.parseShareButtonOut) {
-					shareButtonOut = _options.parseShareButtonOut(shareButtonData, shareButtonOut);
-				}
-			}
-			_shareModal.children[0].innerHTML = shareButtonOut;
-			_shareModal.children[0].onclick = _openWindowPopup;
-
-		},
-		_hasCloseClass = function(target) {
-			for(var  i = 0; i < _options.closeElClasses.length; i++) {
-				if( framework.hasClass(target, 'pswp__' + _options.closeElClasses[i]) ) {
-					return true;
-				}
-			}
-		},
-		_idleInterval,
-		_idleTimer,
-		_idleIncrement = 0,
-		_onIdleMouseMove = function() {
-			clearTimeout(_idleTimer);
-			_idleIncrement = 0;
-			if(_isIdle) {
-				ui.setIdle(false);
-			}
-		},
-		_onMouseLeaveWindow = function(e) {
-			e = e ? e : window.event;
-			var from = e.relatedTarget || e.toElement;
-			if (!from || from.nodeName === 'HTML') {
-				clearTimeout(_idleTimer);
-				_idleTimer = setTimeout(function() {
-					ui.setIdle(true);
-				}, _options.timeToIdleOutside);
-			}
-		},
-		_setupFullscreenAPI = function() {
-			if(_options.fullscreenEl && !framework.features.isOldAndroid) {
-				if(!_fullscrenAPI) {
-					_fullscrenAPI = ui.getFullscreenAPI();
-				}
-				if(_fullscrenAPI) {
-					framework.bind(document, _fullscrenAPI.eventK, ui.updateFullscreen);
-					ui.updateFullscreen();
-					framework.addClass(pswp.template, 'pswp--supports-fs');
-				} else {
-					framework.removeClass(pswp.template, 'pswp--supports-fs');
-				}
-			}
-		},
-		_setupLoadingIndicator = function() {
-			// Setup loading indicator
-			if(_options.preloaderEl) {
-			
-				_toggleLoadingIndicator(true);
-
-				_listen('beforeChange', function() {
-
-					clearTimeout(_loadingIndicatorTimeout);
-
-					// display loading indicator with delay
-					_loadingIndicatorTimeout = setTimeout(function() {
-
-						if(pswp.currItem && pswp.currItem.loading) {
-
-							if( !pswp.allowProgressiveImg() || (pswp.currItem.img && !pswp.currItem.img.naturalWidth)  ) {
-								// show preloader if progressive loading is not enabled, 
-								// or image width is not defined yet (because of slow connection)
-								_toggleLoadingIndicator(false); 
-								// items-controller.js function allowProgressiveImg
-							}
-							
-						} else {
-							_toggleLoadingIndicator(true); // hide preloader
-						}
-
-					}, _options.loadingIndicatorDelay);
-					
-				});
-				_listen('imageLoadComplete', function(index, item) {
-					if(pswp.currItem === item) {
-						_toggleLoadingIndicator(true);
-					}
-				});
-
-			}
-		},
-		_toggleLoadingIndicator = function(hide) {
-			if( _loadingIndicatorHidden !== hide ) {
-				_togglePswpClass(_loadingIndicator, 'preloader--active', !hide);
-				_loadingIndicatorHidden = hide;
-			}
-		},
-		_applyNavBarGaps = function(item) {
-			var gap = item.vGap;
-
-			if( _fitControlsInViewport() ) {
-				
-				var bars = _options.barsSize; 
-				if(_options.captionEl && bars.bottom === 'auto') {
-					if(!_fakeCaptionContainer) {
-						_fakeCaptionContainer = framework.createEl('pswp__caption pswp__caption--fake');
-						_fakeCaptionContainer.appendChild( framework.createEl('pswp__caption__center') );
-						_controls.insertBefore(_fakeCaptionContainer, _captionContainer);
-						framework.addClass(_controls, 'pswp__ui--fit');
-					}
-					if( _options.addCaptionHTMLFn(item, _fakeCaptionContainer, true) ) {
-
-						var captionSize = _fakeCaptionContainer.clientHeight;
-						gap.bottom = parseInt(captionSize,10) || 44;
-					} else {
-						gap.bottom = bars.top; // if no caption, set size of bottom gap to size of top
-					}
-				} else {
-					gap.bottom = bars.bottom === 'auto' ? 0 : bars.bottom;
-				}
-				
-				// height of top bar is static, no need to calculate it
-				gap.top = bars.top;
-			} else {
-				gap.top = gap.bottom = 0;
-			}
-		},
-		_setupIdle = function() {
-			// Hide controls when mouse is used
-			if(_options.timeToIdle) {
-				_listen('mouseUsed', function() {
-					
-					framework.bind(document, 'mousemove', _onIdleMouseMove);
-					framework.bind(document, 'mouseout', _onMouseLeaveWindow);
-
-					_idleInterval = setInterval(function() {
-						_idleIncrement++;
-						if(_idleIncrement === 2) {
-							ui.setIdle(true);
-						}
-					}, _options.timeToIdle / 2);
-				});
-			}
-		},
-		_setupHidingControlsDuringGestures = function() {
-
-			// Hide controls on vertical drag
-			_listen('onVerticalDrag', function(now) {
-				if(_controlsVisible && now < 0.95) {
-					ui.hideControls();
-				} else if(!_controlsVisible && now >= 0.95) {
-					ui.showControls();
-				}
-			});
-
-			// Hide controls when pinching to close
-			var pinchControlsHidden;
-			_listen('onPinchClose' , function(now) {
-				if(_controlsVisible && now < 0.9) {
-					ui.hideControls();
-					pinchControlsHidden = true;
-				} else if(pinchControlsHidden && !_controlsVisible && now > 0.9) {
-					ui.showControls();
-				}
-			});
-
-			_listen('zoomGestureEnded', function() {
-				pinchControlsHidden = false;
-				if(pinchControlsHidden && !_controlsVisible) {
-					ui.showControls();
-				}
-			});
-
-		};
-
-
-
-	var _uiElements = [
-		{ 
-			name: 'caption', 
-			option: 'captionEl',
-			onInit: function(el) {  
-				_captionContainer = el; 
-			} 
-		},
-		{ 
-			name: 'share-modal', 
-			option: 'shareEl',
-			onInit: function(el) {  
-				_shareModal = el;
-			},
-			onTap: function() {
-				_toggleShareModal();
-			} 
-		},
-		{ 
-			name: 'button--share', 
-			option: 'shareEl',
-			onInit: function(el) { 
-				_shareButton = el;
-			},
-			onTap: function() {
-				_toggleShareModal();
-			} 
-		},
-		{ 
-			name: 'button--zoom', 
-			option: 'zoomEl',
-			onTap: pswp.toggleDesktopZoom
-		},
-		{ 
-			name: 'counter', 
-			option: 'counterEl',
-			onInit: function(el) {  
-				_indexIndicator = el;
-			} 
-		},
-		{ 
-			name: 'button--close', 
-			option: 'closeEl',
-			onTap: pswp.close
-		},
-		{ 
-			name: 'button--arrow--left', 
-			option: 'arrowEl',
-			onTap: pswp.prev
-		},
-		{ 
-			name: 'button--arrow--right', 
-			option: 'arrowEl',
-			onTap: pswp.next
-		},
-		{ 
-			name: 'button--fs', 
-			option: 'fullscreenEl',
-			onTap: function() {  
-				if(_fullscrenAPI.isFullscreen()) {
-					_fullscrenAPI.exit();
-				} else {
-					_fullscrenAPI.enter();
-				}
-			} 
-		},
-		{ 
-			name: 'preloader', 
-			option: 'preloaderEl',
-			onInit: function(el) {  
-				_loadingIndicator = el;
-			} 
-		}
-
-	];
-
-	var _setupUIElements = function() {
-		var item,
-			classAttr,
-			uiElement;
-
-		var loopThroughChildElements = function(sChildren) {
-			if(!sChildren) {
-				return;
-			}
-
-			var l = sChildren.length;
-			for(var i = 0; i < l; i++) {
-				item = sChildren[i];
-				classAttr = item.className;
-
-				for(var a = 0; a < _uiElements.length; a++) {
-					uiElement = _uiElements[a];
-
-					if(classAttr.indexOf('pswp__' + uiElement.name) > -1  ) {
-
-						if( _options[uiElement.option] ) { // if element is not disabled from options
-							
-							framework.removeClass(item, 'pswp__element--disabled');
-							if(uiElement.onInit) {
-								uiElement.onInit(item);
-							}
-							
-							//item.style.display = 'block';
-						} else {
-							framework.addClass(item, 'pswp__element--disabled');
-							//item.style.display = 'none';
-						}
-					}
-				}
-			}
-		};
-		loopThroughChildElements(_controls.children);
-
-		var topBar =  framework.getChildByClass(_controls, 'pswp__top-bar');
-		if(topBar) {
-			loopThroughChildElements( topBar.children );
-		}
-	};
-
-
-	
-
-	ui.init = function() {
-
-		// extend options
-		framework.extend(pswp.options, _defaultUIOptions, true);
-
-		// create local link for fast access
-		_options = pswp.options;
-
-		// find pswp__ui element
-		_controls = framework.getChildByClass(pswp.scrollWrap, 'pswp__ui');
-
-		// create local link
-		_listen = pswp.listen;
-
-
-		_setupHidingControlsDuringGestures();
-
-		// update controls when slides change
-		_listen('beforeChange', ui.update);
-
-		// toggle zoom on double-tap
-		_listen('doubleTap', function(point) {
-			var initialZoomLevel = pswp.currItem.initialZoomLevel;
-			if(pswp.getZoomLevel() !== initialZoomLevel) {
-				pswp.zoomTo(initialZoomLevel, point, 333);
-			} else {
-				pswp.zoomTo(_options.getDoubleTapZoom(false, pswp.currItem), point, 333);
-			}
-		});
-
-		// Allow text selection in caption
-		_listen('preventDragEvent', function(e, isDown, preventObj) {
-			var t = e.target || e.srcElement;
-			if(
-				t && 
-				t.getAttribute('class') && e.type.indexOf('mouse') > -1 && 
-				( t.getAttribute('class').indexOf('__caption') > 0 || (/(SMALL|STRONG|EM)/i).test(t.tagName) ) 
-			) {
-				preventObj.prevent = false;
-			}
-		});
-
-		// bind events for UI
-		_listen('bindEvents', function() {
-			framework.bind(_controls, 'pswpTap click', _onControlsTap);
-			framework.bind(pswp.scrollWrap, 'pswpTap', ui.onGlobalTap);
-
-			if(!pswp.likelyTouchDevice) {
-				framework.bind(pswp.scrollWrap, 'mouseover', ui.onMouseOver);
-			}
-		});
-
-		// unbind events for UI
-		_listen('unbindEvents', function() {
-			if(!_shareModalHidden) {
-				_toggleShareModal();
-			}
-
-			if(_idleInterval) {
-				clearInterval(_idleInterval);
-			}
-			framework.unbind(document, 'mouseout', _onMouseLeaveWindow);
-			framework.unbind(document, 'mousemove', _onIdleMouseMove);
-			framework.unbind(_controls, 'pswpTap click', _onControlsTap);
-			framework.unbind(pswp.scrollWrap, 'pswpTap', ui.onGlobalTap);
-			framework.unbind(pswp.scrollWrap, 'mouseover', ui.onMouseOver);
-
-			if(_fullscrenAPI) {
-				framework.unbind(document, _fullscrenAPI.eventK, ui.updateFullscreen);
-				if(_fullscrenAPI.isFullscreen()) {
-					_options.hideAnimationDuration = 0;
-					_fullscrenAPI.exit();
-				}
-				_fullscrenAPI = null;
-			}
-		});
-
-
-		// clean up things when gallery is destroyed
-		_listen('destroy', function() {
-			if(_options.captionEl) {
-				if(_fakeCaptionContainer) {
-					_controls.removeChild(_fakeCaptionContainer);
-				}
-				framework.removeClass(_captionContainer, 'pswp__caption--empty');
-			}
-
-			if(_shareModal) {
-				_shareModal.children[0].onclick = null;
-			}
-			framework.removeClass(_controls, 'pswp__ui--over-close');
-			framework.addClass( _controls, 'pswp__ui--hidden');
-			ui.setIdle(false);
-		});
-		
-
-		if(!_options.showAnimationDuration) {
-			framework.removeClass( _controls, 'pswp__ui--hidden');
-		}
-		_listen('initialZoomIn', function() {
-			if(_options.showAnimationDuration) {
-				framework.removeClass( _controls, 'pswp__ui--hidden');
-			}
-		});
-		_listen('initialZoomOut', function() {
-			framework.addClass( _controls, 'pswp__ui--hidden');
-		});
-
-		_listen('parseVerticalMargin', _applyNavBarGaps);
-		
-		_setupUIElements();
-
-		if(_options.shareEl && _shareButton && _shareModal) {
-			_shareModalHidden = true;
-		}
-
-		_countNumItems();
-
-		_setupIdle();
-
-		_setupFullscreenAPI();
-
-		_setupLoadingIndicator();
-	};
-
-	ui.setIdle = function(isIdle) {
-		_isIdle = isIdle;
-		_togglePswpClass(_controls, 'ui--idle', isIdle);
-	};
-
-	ui.update = function() {
-		// Don't update UI if it's hidden
-		if(_controlsVisible && pswp.currItem) {
-			
-			ui.updateIndexIndicator();
-
-			if(_options.captionEl) {
-				_options.addCaptionHTMLFn(pswp.currItem, _captionContainer);
-
-				_togglePswpClass(_captionContainer, 'caption--empty', !pswp.currItem.title);
-			}
-
-			_overlayUIUpdated = true;
-
-		} else {
-			_overlayUIUpdated = false;
-		}
-
-		if(!_shareModalHidden) {
-			_toggleShareModal();
-		}
-
-		_countNumItems();
-	};
-
-	ui.updateFullscreen = function(e) {
-
-		if(e) {
-			// some browsers change window scroll position during the fullscreen
-			// so PhotoSwipe updates it just in case
-			setTimeout(function() {
-				pswp.setScrollOffset( 0, framework.getScrollY() );
-			}, 50);
-		}
-		
-		// toogle pswp--fs class on root element
-		framework[ (_fullscrenAPI.isFullscreen() ? 'add' : 'remove') + 'Class' ](pswp.template, 'pswp--fs');
-	};
-
-	ui.updateIndexIndicator = function() {
-		if(_options.counterEl) {
-			_indexIndicator.innerHTML = (pswp.getCurrentIndex()+1) + 
-										_options.indexIndicatorSep + 
-										_options.getNumItemsFn();
-		}
-	};
-	
-	ui.onGlobalTap = function(e) {
-		e = e || window.event;
-		var target = e.target || e.srcElement;
-
-		if(_blockControlsTap) {
-			return;
-		}
-
-		if(e.detail && e.detail.pointerType === 'mouse') {
-
-			// close gallery if clicked outside of the image
-			if(_hasCloseClass(target)) {
-				pswp.close();
-				return;
-			}
-
-			if(framework.hasClass(target, 'pswp__img')) {
-				if(pswp.getZoomLevel() === 1 && pswp.getZoomLevel() <= pswp.currItem.fitRatio) {
-					if(_options.clickToCloseNonZoomable) {
-						pswp.close();
-					}
-				} else {
-					pswp.toggleDesktopZoom(e.detail.releasePoint);
-				}
-			}
-			
-		} else {
-
-			// tap anywhere (except buttons) to toggle visibility of controls
-			if(_options.tapToToggleControls) {
-				if(_controlsVisible) {
-					ui.hideControls();
-				} else {
-					ui.showControls();
-				}
-			}
-
-			// tap to close gallery
-			if(_options.tapToClose && (framework.hasClass(target, 'pswp__img') || _hasCloseClass(target)) ) {
-				pswp.close();
-				return;
-			}
-			
-		}
-	};
-	ui.onMouseOver = function(e) {
-		e = e || window.event;
-		var target = e.target || e.srcElement;
-
-		// add class when mouse is over an element that should close the gallery
-		_togglePswpClass(_controls, 'ui--over-close', _hasCloseClass(target));
-	};
-
-	ui.hideControls = function() {
-		framework.addClass(_controls,'pswp__ui--hidden');
-		_controlsVisible = false;
-	};
-
-	ui.showControls = function() {
-		_controlsVisible = true;
-		if(!_overlayUIUpdated) {
-			ui.update();
-		}
-		framework.removeClass(_controls,'pswp__ui--hidden');
-	};
-
-	ui.supportsFullscreen = function() {
-		var d = document;
-		return !!(d.exitFullscreen || d.mozCancelFullScreen || d.webkitExitFullscreen || d.msExitFullscreen);
-	};
-
-	ui.getFullscreenAPI = function() {
-		var dE = document.documentElement,
-			api,
-			tF = 'fullscreenchange';
-
-		if (dE.requestFullscreen) {
-			api = {
-				enterK: 'requestFullscreen',
-				exitK: 'exitFullscreen',
-				elementK: 'fullscreenElement',
-				eventK: tF
-			};
-
-		} else if(dE.mozRequestFullScreen ) {
-			api = {
-				enterK: 'mozRequestFullScreen',
-				exitK: 'mozCancelFullScreen',
-				elementK: 'mozFullScreenElement',
-				eventK: 'moz' + tF
-			};
-
-			
-
-		} else if(dE.webkitRequestFullscreen) {
-			api = {
-				enterK: 'webkitRequestFullscreen',
-				exitK: 'webkitExitFullscreen',
-				elementK: 'webkitFullscreenElement',
-				eventK: 'webkit' + tF
-			};
-
-		} else if(dE.msRequestFullscreen) {
-			api = {
-				enterK: 'msRequestFullscreen',
-				exitK: 'msExitFullscreen',
-				elementK: 'msFullscreenElement',
-				eventK: 'MSFullscreenChange'
-			};
-		}
-
-		if(api) {
-			api.enter = function() { 
-				// disable close-on-scroll in fullscreen
-				_initalCloseOnScrollValue = _options.closeOnScroll; 
-				_options.closeOnScroll = false; 
-
-				if(this.enterK === 'webkitRequestFullscreen') {
-					pswp.template[this.enterK]( Element.ALLOW_KEYBOARD_INPUT );
-				} else {
-					return pswp.template[this.enterK](); 
-				}
-			};
-			api.exit = function() { 
-				_options.closeOnScroll = _initalCloseOnScrollValue;
-
-				return document[this.exitK](); 
-
-			};
-			api.isFullscreen = function() { return document[this.elementK]; };
-		}
-
-		return api;
-	};
-
-
-
-};
-return PhotoSwipeUI_Default;
-
-
-});
-
-
-/***/ }),
-
-/***/ "178d":
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAABYCAQAAACjBqE3AAAB6klEQVR4Ae3bsWpUQRTG8YkkanwCa7GzVotsI/gEgk9h4Vu4ySLYmMYgbJrc3lrwZbJwC0FMt4j7F6Y4oIZrsXtgxvx/1c0ufEX4cnbmLCmSJEmSJEmSJEmSJP3XCBPvbJU+8doWmDFwyZpLBmYlNJebz0KwzykwsuSYJSNwykEJreV2BaBMaLIQZ2xYcFgqDlmw4ayE/FwL0dDk4Qh4W37DAjgqIT+3HRbigjH+iikVdxgZStgyN0Su2sXIeTwTT+esdpcbIlfNAuZ/TxresG4zV8kYWSZNiKUTokMMSWeIwTNEn4fK2TW3gRNgVkJLuVksROA9G+bEvoATNlBCa7nZXEwdxEZxzpKRKFh+bsv8LmPFmhX1OwfIz81jIRJQ5eeqG9B+riRJkiRJkiRJkiRJkiRJkiRJUkvA/8RQoEpKlJWINFkJ62AlrEP/mNBibnv2yz/A3t7Uq3LcpoxP8COjC1T5vxoAD5VdoEqdDrd5QuW1swtUSaueh3zkiuBiqgtA2OlkeMcP/uDqugsJdbjHF65VdPMKwS0+WQc/MgKvrIOHysB9vgPwk8+85hmPbnQdvHZyDMAFD7L3EOpgMcVdvnHFS0/vlatrXvCVx0U9gt3fxvnA0/hB4nmRJEmSJEmSJEmSJGmHfgFLaDPoMu5xWwAAAABJRU5ErkJggg=="
-
-/***/ }),
-
-/***/ "1de5":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "0114":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1d419bb1_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("e139");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1d419bb1_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1d419bb1_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1d419bb1_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_1d419bb1_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
-
-module.exports = function (url, options) {
-  if (!options) {
-    // eslint-disable-next-line no-param-reassign
-    options = {};
-  } // eslint-disable-next-line no-underscore-dangle, no-param-reassign
-
-
-  url = url && url.__esModule ? url.default : url;
-
-  if (typeof url !== 'string') {
-    return url;
-  } // If url is already wrapped in quotes, remove them
-
-
-  if (/^['"].*['"]$/.test(url)) {
-    // eslint-disable-next-line no-param-reassign
-    url = url.slice(1, -1);
-  }
-
-  if (options.hash) {
-    // eslint-disable-next-line no-param-reassign
-    url += options.hash;
-  } // Should url be wrapped?
-  // See https://drafts.csswg.org/css-values-3/#urls
-
-
-  if (/["'() \t\n]/.test(url) || options.needQuotes) {
-    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, '\\n'), "\"");
-  }
-
-  return url;
-};
 
 /***/ }),
 
-/***/ "237b":
+/***/ "02f9":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__("1de5");
-var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__("178d");
-var ___CSS_LOADER_URL_IMPORT_1___ = __webpack_require__("f301");
-var ___CSS_LOADER_URL_IMPORT_2___ = __webpack_require__("76dc");
 exports = ___CSS_LOADER_API_IMPORT___(false);
-var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
-var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
-var ___CSS_LOADER_URL_REPLACEMENT_2___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_2___);
 // Module
-exports.push([module.i, "/*! PhotoSwipe Default UI CSS by Dmitry Semenov | photoswipe.com | MIT license */.pswp__button{width:44px;height:44px;position:relative;background:none;cursor:pointer;overflow:visible;-webkit-appearance:none;display:block;border:0;padding:0;margin:0;float:right;opacity:.75;transition:opacity .2s;box-shadow:none}.pswp__button:focus,.pswp__button:hover{opacity:1}.pswp__button:active{outline:none;opacity:.9}.pswp__button::-moz-focus-inner{padding:0;border:0}.pswp__ui--over-close .pswp__button--close{opacity:1}.pswp__button,.pswp__button--arrow--left:before,.pswp__button--arrow--right:before{background:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") 0 0 no-repeat;background-size:264px 88px;width:44px;height:44px}@media (-webkit-min-device-pixel-ratio:1.1),(-webkit-min-device-pixel-ratio:1.09375),(min-resolution:1.1dppx),(min-resolution:105dpi){.pswp--svg .pswp__button,.pswp--svg .pswp__button--arrow--left:before,.pswp--svg .pswp__button--arrow--right:before{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ")}.pswp--svg .pswp__button--arrow--left,.pswp--svg .pswp__button--arrow--right{background:none}}.pswp__button--close{background-position:0 -44px}.pswp__button--share{background-position:-44px -44px}.pswp__button--fs{display:none}.pswp--supports-fs .pswp__button--fs{display:block}.pswp--fs .pswp__button--fs{background-position:-44px 0}.pswp__button--zoom{display:none;background-position:-88px 0}.pswp--zoom-allowed .pswp__button--zoom{display:block}.pswp--zoomed-in .pswp__button--zoom{background-position:-132px 0}.pswp--touch .pswp__button--arrow--left,.pswp--touch .pswp__button--arrow--right{visibility:hidden}.pswp__button--arrow--left,.pswp__button--arrow--right{background:none;top:50%;margin-top:-50px;width:70px;height:100px;position:absolute}.pswp__button--arrow--left{left:0}.pswp__button--arrow--right{right:0}.pswp__button--arrow--left:before,.pswp__button--arrow--right:before{content:\"\";top:35px;background-color:rgba(0,0,0,.3);height:30px;width:32px;position:absolute}.pswp__button--arrow--left:before{left:6px;background-position:-138px -44px}.pswp__button--arrow--right:before{right:6px;background-position:-94px -44px}.pswp__counter,.pswp__share-modal{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.pswp__share-modal{display:block;background:rgba(0,0,0,.5);width:100%;height:100%;top:0;left:0;padding:10px;position:absolute;z-index:1600;opacity:0;transition:opacity .25s ease-out;-webkit-backface-visibility:hidden;will-change:opacity}.pswp__share-modal--hidden{display:none}.pswp__share-tooltip{z-index:1620;position:absolute;background:#fff;top:56px;border-radius:2px;display:block;width:auto;right:44px;box-shadow:0 2px 5px rgba(0,0,0,.25);transform:translateY(6px);transition:transform .25s;-webkit-backface-visibility:hidden;will-change:transform}.pswp__share-tooltip a{display:block;padding:8px 12px;font-size:14px;line-height:18px}.pswp__share-tooltip a,.pswp__share-tooltip a:hover{color:#000;text-decoration:none}.pswp__share-tooltip a:first-child{border-radius:2px 2px 0 0}.pswp__share-tooltip a:last-child{border-radius:0 0 2px 2px}.pswp__share-modal--fade-in{opacity:1}.pswp__share-modal--fade-in .pswp__share-tooltip{transform:translateY(0)}.pswp--touch .pswp__share-tooltip a{padding:16px 12px}a.pswp__share--facebook:before{content:\"\";display:block;width:0;height:0;position:absolute;top:-12px;right:15px;border:6px solid transparent;border-bottom-color:#fff;-webkit-pointer-events:none;-moz-pointer-events:none;pointer-events:none}a.pswp__share--facebook:hover{background:#3e5c9a;color:#fff}a.pswp__share--facebook:hover:before{border-bottom-color:#3e5c9a}a.pswp__share--twitter:hover{background:#55acee;color:#fff}a.pswp__share--pinterest:hover{background:#ccc;color:#ce272d}a.pswp__share--download:hover{background:#ddd}.pswp__counter{position:absolute;left:0;top:0;height:44px;font-size:13px;line-height:44px;color:#fff;opacity:.75;padding:0 10px}.pswp__caption{position:absolute;left:0;bottom:0;width:100%;min-height:44px}.pswp__caption small{font-size:11px;color:#bbb}.pswp__caption__center{text-align:left;max-width:420px;margin:0 auto;font-size:13px;padding:10px;line-height:20px;color:#ccc}.pswp__caption--empty{display:none}.pswp__caption--fake{visibility:hidden}.pswp__preloader{width:44px;height:44px;position:absolute;top:0;left:50%;margin-left:-22px;opacity:0;transition:opacity .25s ease-out;will-change:opacity;direction:ltr}.pswp__preloader__icn{width:20px;height:20px;margin:12px}.pswp__preloader--active{opacity:1}.pswp__preloader--active .pswp__preloader__icn{background:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ") 0 0 no-repeat}.pswp--css_animation .pswp__preloader--active{opacity:1}.pswp--css_animation .pswp__preloader--active .pswp__preloader__icn{-webkit-animation:clockwise .5s linear infinite;animation:clockwise .5s linear infinite}.pswp--css_animation .pswp__preloader--active .pswp__preloader__donut{-webkit-animation:donut-rotate 1s cubic-bezier(.4,0,.22,1) infinite;animation:donut-rotate 1s cubic-bezier(.4,0,.22,1) infinite}.pswp--css_animation .pswp__preloader__icn{background:none;opacity:.75;width:14px;height:14px;position:absolute;left:15px;top:15px;margin:0}.pswp--css_animation .pswp__preloader__cut{position:relative;width:7px;height:14px;overflow:hidden}.pswp--css_animation .pswp__preloader__donut{box-sizing:border-box;width:14px;height:14px;border:2px solid #fff;border-radius:50%;border-left-color:transparent;border-bottom-color:transparent;position:absolute;top:0;left:0;background:none;margin:0}@media screen and (max-width:1024px){.pswp__preloader{position:relative;left:auto;top:auto;margin:0;float:right}}@-webkit-keyframes clockwise{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes clockwise{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@-webkit-keyframes donut-rotate{0%{transform:rotate(0)}50%{transform:rotate(-140deg)}to{transform:rotate(0)}}@keyframes donut-rotate{0%{transform:rotate(0)}50%{transform:rotate(-140deg)}to{transform:rotate(0)}}.pswp__ui{-webkit-font-smoothing:auto;visibility:visible;opacity:1;z-index:1550}.pswp__top-bar{position:absolute;left:0;top:0;height:44px;width:100%}.pswp--has_mouse .pswp__button--arrow--left,.pswp--has_mouse .pswp__button--arrow--right,.pswp__caption,.pswp__top-bar{-webkit-backface-visibility:hidden;will-change:opacity;transition:opacity 333ms cubic-bezier(.4,0,.22,1)}.pswp--has_mouse .pswp__button--arrow--left,.pswp--has_mouse .pswp__button--arrow--right{visibility:visible}.pswp__caption,.pswp__top-bar{background-color:rgba(0,0,0,.5)}.pswp__ui--fit .pswp__caption,.pswp__ui--fit .pswp__top-bar{background-color:rgba(0,0,0,.3)}.pswp__ui--idle .pswp__button--arrow--left,.pswp__ui--idle .pswp__button--arrow--right,.pswp__ui--idle .pswp__top-bar{opacity:0}.pswp__ui--hidden .pswp__button--arrow--left,.pswp__ui--hidden .pswp__button--arrow--right,.pswp__ui--hidden .pswp__caption,.pswp__ui--hidden .pswp__top-bar{opacity:.001}.pswp__ui--one-slide .pswp__button--arrow--left,.pswp__ui--one-slide .pswp__button--arrow--right,.pswp__ui--one-slide .pswp__counter{display:none}.pswp__element--disabled{display:none!important}.pswp--minimal--dark .pswp__top-bar{background:none}", ""]);
+exports.push([module.i, "#matrix-root[theme=classic] .minimized .previewWrapper[data-v-4b36cd72]{transition:.3s}#matrix-root[theme=classic] .previewWrapper .dummyline[data-v-4b36cd72]{border-radius:5px;transition:.3s}#matrix-root[theme=classic] .previewWrapper .dummyicon[data-v-4b36cd72]{border-radius:50%;transition:.3s}#matrix-root[theme=classic] .emptyEvent span[data-v-4b36cd72]{color:#06823a}#matrix-root[theme=classic] .eventsLine .roomMuted i[data-v-4b36cd72],#matrix-root[theme=classic] .eventsLine[data-v-4b36cd72] span{color:#606369}", ""]);
 // Exports
 module.exports = exports;
 
 
 /***/ }),
 
-/***/ "2af0":
+/***/ "087d":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1107de26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=template&id=e8df92c6&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"my-gallery",attrs:{"itemscope":"","itemtype":"http://schema.org/ImageGallery"}},_vm._l((_vm.items),function(item,index){return _c('figure',{directives:[{name:"show",rawName:"v-show",value:(index === 0 || !_vm.singleThumbnail),expression:"index === 0 || !singleThumbnail"}],key:index,staticClass:"gallery-thumbnail",attrs:{"itemprop":"associatedMedia","itemscope":"","itemtype":"http://schema.org/ImageObject","src":item.src}},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.nbThumbnailsDisplayed === -1 || index < _vm.nbThumbnailsDisplayed),expression:"nbThumbnailsDisplayed === -1 || index < nbThumbnailsDisplayed"}],attrs:{"href":item.src,"itemprop":"contentUrl","data-size":'' + item.w + 'x' + item.h,"title":item.title}},[_c('img',{attrs:{"src":item.thumbnail,"alt":item.alt,"itemprop":"thumbnail"}})])])}),0),_c('div',{staticClass:"pswp",attrs:{"tabindex":"-1","role":"dialog","aria-hidden":"true"}},[_c('div',{staticClass:"pswp__bg"}),_c('div',{staticClass:"pswp__scroll-wrap"},[_vm._m(0),_c('div',{staticClass:"pswp__ui pswp__ui--hidden"},[_c('div',{staticClass:"pswp__top-bar"},[_c('div',{staticClass:"pswp__counter"}),_c('button',{staticClass:"pswp__button pswp__button--close",attrs:{"title":"Close (Esc)"}}),(_vm.options.rotationOn)?_c('button',{staticClass:"pswp__button pswp__button--rotate pswp__button--rotate--left",attrs:{"title":"Rotate left"},on:{"click":function($event){return _vm.rotate(-90)}}}):_vm._e(),(_vm.options.rotationOn)?_c('button',{staticClass:"pswp__button pswp__button--rotate pswp__button--rotate--right",attrs:{"title":"Rotate right"},on:{"click":function($event){return _vm.rotate(90)}}}):_vm._e(),_c('button',{staticClass:"pswp__button pswp__button--share",attrs:{"title":"Share"}}),_c('button',{staticClass:"pswp__button pswp__button--fs",attrs:{"title":"Toggle fullscreen"}}),_c('button',{staticClass:"pswp__button pswp__button--zoom",attrs:{"title":"Zoom in/out"}}),_vm._m(1)]),_vm._m(2),_c('button',{staticClass:"pswp__button pswp__button--arrow--left",attrs:{"title":"Previous (arrow left)"},on:{"click":_vm.resetAngle}}),_c('button',{staticClass:"pswp__button pswp__button--arrow--right",attrs:{"title":"Next (arrow right)"},on:{"click":_vm.resetAngle}}),_vm._m(3)])])])])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pswp__container"},[_c('div',{staticClass:"pswp__item"}),_c('div',{staticClass:"pswp__item"}),_c('div',{staticClass:"pswp__item"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pswp__preloader"},[_c('div',{staticClass:"pswp__preloader__icn"},[_c('div',{staticClass:"pswp__preloader__cut"},[_c('div',{staticClass:"pswp__preloader__donut"})])])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pswp__share-modal pswp__share-modal--hidden pswp__single-tap"},[_c('div',{staticClass:"pswp__share-tooltip"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pswp__caption"},[_c('div',{staticClass:"pswp__caption__center"})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1107de26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/preview/index.vue?vue&type=template&id=4b36cd72&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatsPreview",class:{minimized: _vm.minimized, active: _vm.active}},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"previewWrapper"},[_c('div',{staticClass:"iconWrapper"},[(!_vm.dummy)?_c('chatIcon',{attrs:{"chat":_vm.m_chat}}):_c('div',{staticClass:"dummyicon loadinggradient"})],1),_c('div',{staticClass:"infoWrapper"},[(!_vm.dummy)?_c('div',{staticClass:"summaryLine"},[_c('div',{staticClass:"caption flexBlock"},[_c('chatName',{attrs:{"preview":true,"chat":_vm.m_chat}}),(_vm.roomMuted)?_c('div',{staticClass:"roomMuted"},[_c('i',{staticClass:"fas fa-bell-slash"})]):_vm._e()],1),_c('div',{staticClass:"time"},[_c('chatTime',{attrs:{"chat":_vm.m_chat}})],1)]):_vm._e(),(!_vm.dummy)?_c('div',{staticClass:"eventsLine"},[(_vm.event)?_c('event',{attrs:{"event":_vm.event,"chat":_vm.m_chat,"preview":true}}):_c('div',{staticClass:"emptyEvent"},[_c('span',[_vm._v("Chat created")])])],1):_c('div',{staticClass:"eventsLine"},[_c('div',{staticClass:"dummyline loadinggradient"})])])])])])}
+var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=template&id=e8df92c6&scoped=true&
+// CONCATENATED MODULE: ./src/components/chats/preview/index.vue?vue&type=template&id=4b36cd72&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+var objectSpread2 = __webpack_require__("5530");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
+var es_array_iterator = __webpack_require__("e260");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
+var es_object_to_string = __webpack_require__("d3b7");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
+var es_promise = __webpack_require__("e6cf");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
+var es_string_iterator = __webpack_require__("3ca3");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
+var web_dom_collections_iterator = __webpack_require__("ddb0");
+
+// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
+var vuex_esm = __webpack_require__("2f62");
+
+// EXTERNAL MODULE: ./src/components/chats/assets/name.vue + 4 modules
+var assets_name = __webpack_require__("aa20");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1107de26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/time.vue?vue&type=template&id=0d0db9f0&scoped=true&
+var timevue_type_template_id_0d0db9f0_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatTime"},[(_vm.time)?_c('date',{attrs:{"date":_vm.time}}):_c('span',{staticClass:"new"},[_vm._v("New")])],1)}
+var timevue_type_template_id_0d0db9f0_scoped_true_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/chats/assets/time.vue?vue&type=template&id=0d0db9f0&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/time.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var timevue_type_script_lang_js_ = ({
+  name: 'chatTime',
+  props: {
+    chat: Object
+  },
+  computed: {
+    time: function time() {
+      var d = this.chat.getLastActiveTimestamp() || -1;
+      if (d < 0) return null;
+      return d;
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/chats/assets/time.vue?vue&type=script&lang=js&
+ /* harmony default export */ var assets_timevue_type_script_lang_js_ = (timevue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/components/chats/assets/time.vue
+
+
+
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__("3a9b")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  assets_timevue_type_script_lang_js_,
+  timevue_type_template_id_0d0db9f0_scoped_true_render,
+  timevue_type_template_id_0d0db9f0_scoped_true_staticRenderFns,
+  false,
+  injectStyles,
+  "0d0db9f0",
+  null
+  ,true
+)
+
+/* harmony default export */ var time = (component.exports);
+// EXTERNAL MODULE: ./src/components/chats/assets/icon.vue + 4 modules
+var icon = __webpack_require__("3094");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chats/preview?vue&type=script&lang=js&
+
+
+
+
+
+
+
+
+
+
+
+var preview_vue_type_script_lang_js_event = function event() {
+  return Promise.all(/* import() */[__webpack_require__.e(2), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, "6167"));
+};
+
+/* harmony default export */ var preview_vue_type_script_lang_js_ = ({
+  name: 'preview',
+  props: {
+    chat: Object,
+    dummy: Boolean
+  },
+  components: {
+    chatName: assets_name["a" /* default */],
+    chatTime: time,
+    chatIcon: icon["a" /* default */],
+    event: preview_vue_type_script_lang_js_event
+  },
+  data: function data() {
+    return {
+      loading: false,
+      roomMuted: false,
+      lastEvent: {}
+    };
+  },
+  computed: Object(vuex_esm["c" /* mapState */])(Object(objectSpread2["a" /* default */])({
+    auth: function auth(state) {
+      return state.auth;
+    },
+    m_chat: function m_chat() {
+      var pushRules = this.core.mtrx.client._pushProcessor.getPushRuleById(this.chat.roomId);
+
+      if (pushRules !== null) {
+        this.roomMuted = true;
+      }
+
+      if (this.chat.roomId) {
+        var m_chat = this.core.mtrx.client.getRoom(this.chat.roomId);
+        return m_chat || {};
+      }
+    },
+    event: function event() {
+      var self = this;
+
+      if (this.chat.roomId) {
+        var events = (this.m_chat || {}).timeline || [];
+
+        if (events.length) {
+          if (this.m_chat.currentState.getMembers().length <= 2 && events[events.length - 1].event.type === 'm.room.power_levels' && 'm.room.member') {
+            return;
+          }
+
+          return events[events.length - 1];
+        }
+      }
+    }
+  }, Object(vuex_esm["c" /* mapState */])(['minimized', 'active']))),
+  methods: {}
+});
+// CONCATENATED MODULE: ./src/components/chats/preview?vue&type=script&lang=js&
+ /* harmony default export */ var chats_preview_vue_type_script_lang_js_ = (preview_vue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/chats/preview/index.vue
+
+
+
+function preview_injectStyles (context) {
+  
+  var style0 = __webpack_require__("3e57")
+if (style0.__inject__) style0.__inject__(context)
+var style1 = __webpack_require__("f6f9")
+if (style1.__inject__) style1.__inject__(context)
+var style2 = __webpack_require__("a528")
+if (style2.__inject__) style2.__inject__(context)
+var style3 = __webpack_require__("629a")
+if (style3.__inject__) style3.__inject__(context)
+
+}
+
+/* normalize component */
+
+var preview_component = Object(componentNormalizer["a" /* default */])(
+  chats_preview_vue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  preview_injectStyles,
+  "4b36cd72",
+  null
+  ,true
+)
+
+/* harmony default export */ var preview = __webpack_exports__["a"] = (preview_component.exports);
+
+/***/ }),
+
+/***/ "0ebd":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "#matrix-root[theme=white] .minimized .previewWrapper[data-v-4b36cd72]{transition:.3s}#matrix-root[theme=white] .previewWrapper .dummyline[data-v-4b36cd72]{border-radius:5px;transition:.3s}#matrix-root[theme=white] .previewWrapper .dummyicon[data-v-4b36cd72]{border-radius:50%;transition:.3s}#matrix-root[theme=white] .emptyEvent span[data-v-4b36cd72]{color:#06823a}#matrix-root[theme=white] .eventsLine .roomMuted i[data-v-4b36cd72],#matrix-root[theme=white] .eventsLine[data-v-4b36cd72] span{color:#606369}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "3094":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1107de26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=1d419bb1&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatIcon"},[_c('userspic',{attrs:{"slidesPerView":_vm.slidesPerView,"users":_vm.users,"chat":_vm.chat,"invited":_vm.invited,"unseen":this.chat.getUnreadNotificationCount()}})],1)}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/chats/assets/icon.vue?vue&type=template&id=1d419bb1&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
 var es_number_constructor = __webpack_require__("a9e3");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
-var es_regexp_exec = __webpack_require__("ac1f");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
+var es_array_filter = __webpack_require__("4de4");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.split.js
-var es_string_split = __webpack_require__("1276");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
+var es_array_map = __webpack_require__("d81d");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
-var web_dom_collections_for_each = __webpack_require__("159b");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
+var es_function_name = __webpack_require__("b0c0");
 
-// EXTERNAL MODULE: ./node_modules/photoswipe/dist/photoswipe.js
-var photoswipe = __webpack_require__("b24f");
-var photoswipe_default = /*#__PURE__*/__webpack_require__.n(photoswipe);
+// EXTERNAL MODULE: ./node_modules/underscore/modules/index-all.js + 159 modules
+var index_all = __webpack_require__("c46f");
 
-// EXTERNAL MODULE: ./node_modules/photoswipe/dist/photoswipe-ui-default.js
-var photoswipe_ui_default = __webpack_require__("14fd");
-var photoswipe_ui_default_default = /*#__PURE__*/__webpack_require__.n(photoswipe_ui_default);
-
-// EXTERNAL MODULE: ./node_modules/photoswipe/dist/photoswipe.css
-var dist_photoswipe = __webpack_require__("343a");
-
-// EXTERNAL MODULE: ./node_modules/photoswipe/dist/default-skin/default-skin.css
-var default_skin = __webpack_require__("3fb5a");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=script&lang=js&
 
 
 
@@ -992,4359 +294,253 @@ var default_skin = __webpack_require__("3fb5a");
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-
-
-
-/* harmony default export */ var VuePictureSwipevue_type_script_lang_js_ = ({
+/* harmony default export */ var iconvue_type_script_lang_js_ = ({
+  name: 'chatIcon',
   props: {
-    items: {
-      default: [{
-        src: 'http://via.placeholder.com/600x400',
-        thumbnail: 'http://via.placeholder.com/64x64',
-        w: 600,
-        h: 400,
-        alt: 'some numbers on a grey background'
-      }, {
-        src: 'http://via.placeholder.com/1200x900',
-        thumbnail: 'http://via.placeholder.com/64x64',
-        w: 1200,
-        h: 900
-      }],
-      type: Array
-    },
-    options: {
-      default: function _default() {
-        return {};
-      },
-      type: Object
-    },
-    singleThumbnail: {
-      type: Boolean,
-      default: false
-    },
-    nbThumbnailsDisplayed: {
-      default: -1,
-      type: Number
-    }
+    chat: Object,
+    slidesPerView: Number
   },
-  data: function data() {
-    return {
-      pswp: null,
-      angle: 0
-    };
-  },
-  mounted: function mounted() {
-    var that = this;
+  computed: {
+    users: function users() {
+      var _this$chat,
+          _this = this;
 
-    var initPhotoSwipeFromDOM = function initPhotoSwipeFromDOM(gallerySelector) {
-      // parse slide data (url, title, size ...) from DOM elements
-      // (children of gallerySelector)
-      var parseThumbnailElements = function parseThumbnailElements(el) {
-        var thumbElements = el.childNodes,
-            numNodes = thumbElements.length,
-            items = [],
-            figureEl,
-            linkEl,
-            size,
-            item;
+      var users = index_all["a" /* default */].filter(index_all["a" /* default */].map(((_this$chat = this.chat) === null || _this$chat === void 0 ? void 0 : _this$chat.currentState.members) || {}, function (m) {
+        return _this.$f.deep(_this, '$store.state.users.' + _this.$f.getmatrixid(m.name)) || null;
+      }), function (m) {
+        var _this$core$user$useri;
 
-        for (var i = 0; i < numNodes; i++) {
-          figureEl = thumbElements[i]; // <figure> element
-          // include only element nodes
-
-          if (figureEl.nodeType !== 1) {
-            continue;
-          }
-
-          linkEl = figureEl.children[0]; // <a> element
-
-          size = linkEl.getAttribute('data-size').split('x'); // create slide object
-
-          item = {
-            src: linkEl.getAttribute('href'),
-            w: parseInt(size[0], 10),
-            h: parseInt(size[1], 10),
-            title: linkEl.getAttribute('title')
-          };
-
-          if (figureEl.children.length > 1) {
-            // <figcaption> content
-            item.title = figureEl.children[1].innerHTML;
-          }
-
-          if (linkEl.children.length > 0) {
-            // <img> thumbnail element, retrieving thumbnail url
-            item.msrc = linkEl.children[0].getAttribute('src');
-          }
-
-          item.el = figureEl; // save link to element for getThumbBoundsFn
-
-          items.push(item);
-        }
-
-        return items;
-      }; // find nearest parent element
-
-
-      var closest = function closest(el, fn) {
-        return el && (fn(el) ? el : closest(el.parentNode, fn));
-      }; // triggers when user clicks on thumbnail
-
-
-      var onThumbnailsClick = function onThumbnailsClick(e) {
-        e = e || window.event;
-        e.preventDefault ? e.preventDefault() : e.returnValue = false;
-        var eTarget = e.target || e.srcElement; // find root element of slide
-
-        var clickedListItem = closest(eTarget, function (el) {
-          return el.tagName && el.tagName.toUpperCase() === 'FIGURE';
-        });
-
-        if (!clickedListItem) {
-          return;
-        } // find index of clicked item by looping through all child nodes
-        // alternatively, you may define index via data- attribute
-
-
-        var clickedGallery = clickedListItem.parentNode,
-            childNodes = clickedListItem.parentNode.childNodes,
-            numChildNodes = childNodes.length,
-            nodeIndex = 0,
-            index;
-
-        for (var i = 0; i < numChildNodes; i++) {
-          if (childNodes[i].nodeType !== 1) {
-            continue;
-          }
-
-          if (childNodes[i] === clickedListItem) {
-            index = nodeIndex;
-            break;
-          }
-
-          nodeIndex++;
-        }
-
-        if (index >= 0) {
-          // open PhotoSwipe if valid index found
-          openPhotoSwipe(index, clickedGallery);
-        }
-
-        return false;
-      }; // parse picture index and gallery index from URL (#&pid=1&gid=2)
-
-
-      var photoswipeParseHash = function photoswipeParseHash() {
-        var hash = window.location.hash.substring(1),
-            params = {};
-
-        if (hash.length < 5) {
-          return params;
-        }
-
-        var vars = hash.split('&');
-
-        for (var i = 0; i < vars.length; i++) {
-          if (!vars[i]) {
-            continue;
-          }
-
-          var pair = vars[i].split('=');
-
-          if (pair.length < 2) {
-            continue;
-          }
-
-          params[pair[0]] = pair[1];
-        }
-
-        if (params.gid) {
-          params.gid = parseInt(params.gid, 10);
-        }
-
-        return params;
-      };
-
-      var openPhotoSwipe = function openPhotoSwipe(index, galleryElement, disableAnimation, fromURL) {
-        var pswpElement = galleryElement.parentElement.querySelector('.pswp'),
-            gallery,
-            options,
-            items;
-        items = parseThumbnailElements(galleryElement); // define options (if needed)
-
-        options = {
-          // define gallery index (for URL)
-          galleryUID: galleryElement.getAttribute('data-pswp-uid'),
-          getThumbBoundsFn: function getThumbBoundsFn(index) {
-            // See Options -> getThumbBoundsFn section of documentation for more info
-            var thumbnail = items[index].el.getElementsByTagName('img')[0],
-                // find thumbnail
-            pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
-                rect = thumbnail.getBoundingClientRect();
-            return {
-              x: rect.left,
-              y: rect.top + pageYScroll,
-              w: rect.width
-            };
-          }
-        }; // PhotoSwipe opened from URL
-
-        if (fromURL) {
-          if (options.galleryPIDs) {
-            // parse real index when custom PIDs are used
-            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
-            for (var j = 0; j < items.length; j++) {
-              if (items[j].pid == index) {
-                options.index = j;
-                break;
-              }
-            }
-          } else {
-            // in URL indexes start from 1
-            options.index = parseInt(index, 10) - 1;
-          }
-        } else {
-          options.index = parseInt(index, 10);
-        } // exit if index not found
-
-
-        if (isNaN(options.index)) {
-          return;
-        }
-
-        if (disableAnimation) {
-          options.showAnimationDuration = 0;
-        } // Pass data to PhotoSwipe and initialize it
-
-
-        gallery = new photoswipe_default.a(pswpElement, photoswipe_ui_default_default.a, items, Object.assign(options, that.options));
-        gallery.listen('gettingData', function (index, item) {
-          if (item.w < 1 || item.h < 1) {
-            // unknown size
-            var img = new Image();
-
-            img.onload = function () {
-              // will get size after load
-              item.w = this.width; // set image width
-
-              item.h = this.height; // set image height
-
-              gallery.invalidateCurrItems(); // reinit Items
-
-              gallery.updateSize(true); // reinit Items
-            };
-
-            img.src = item.src; // let's download image
-          }
-        });
-        gallery.init();
-        that.pswp = gallery; // trigger open event after swiper is opened
-
-        that.$emit('open'); // trigger close event after swiper is closed
-
-        gallery.listen('destroy', function () {
-          return that.$emit('close');
-        });
-      }; // loop through all gallery elements and bind events
-
-
-      var galleryElements = document.querySelectorAll(gallerySelector);
-
-      for (var i = 0, l = galleryElements.length; i < l; i++) {
-        galleryElements[i].setAttribute('data-pswp-uid', i + 1);
-        galleryElements[i].onclick = onThumbnailsClick;
-      } // Parse URL and open gallery if it contains #&pid=3&gid=1
-
-
-      var hashData = photoswipeParseHash();
-
-      if (hashData.pid && hashData.gid) {
-        openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
-      }
-    };
-
-    initPhotoSwipeFromDOM('.my-gallery');
-  },
-  methods: {
-    rotate: function rotate(newAngle) {
-      var _this = this;
-
-      this.angle = this.angle + newAngle;
-      this.$el.querySelectorAll('.pswp__img').forEach(function (i) {
-        return i.style.transform = "rotate(".concat(_this.angle, "deg)");
+        return m && (index_all["a" /* default */].toArray(_this.chat.currentState.members).length > 2 || m.id !== ((_this$core$user$useri = _this.core.user.userinfo) === null || _this$core$user$useri === void 0 ? void 0 : _this$core$user$useri.id));
       });
-    },
-    resetAngle: function resetAngle() {
-      var _this2 = this;
 
-      this.angle = 0;
-      this.$el.querySelectorAll('.pswp__img').forEach(function (i) {
-        return i.style.transform = "rotate(".concat(_this2.angle, "deg)");
+      return users;
+    },
+    invited: function invited() {
+      var _this$chat2,
+          _this2 = this;
+
+      var i = {};
+
+      index_all["a" /* default */].each((_this$chat2 = this.chat) === null || _this$chat2 === void 0 ? void 0 : _this$chat2.currentState.members, function (m) {
+        if (m.membership === 'invite') i[_this2.$f.getmatrixid(m.name)] = true;
       });
+
+      return i;
+    },
+    count: function count() {
+      // let currentUser = this.core.mtrx.client.credentials.userId
+      // let lastReaded = this.chat._receipts['m.read'][currentUser].eventId
+      // let events = this.chat.timeline
+      // let indexEvent = events.findIndex(event => event.event.event_id === lastReaded)
+      // console.log(lastReaded, "lastReaded event")
+      // console.log(events, "lastReaded event")
+      // console.log(indexEvent, "lastReaded index event")
+      // console.log(events.splice(indexEvent), "array not REaded")
+      return '';
     }
   }
 });
-// CONCATENATED MODULE: ./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_VuePictureSwipevue_type_script_lang_js_ = (VuePictureSwipevue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=style&index=0&id=e8df92c6&scoped=true&lang=css&
-var VuePictureSwipevue_type_style_index_0_id_e8df92c6_scoped_true_lang_css_ = __webpack_require__("db6a");
-
+// CONCATENATED MODULE: ./src/components/chats/assets/icon.vue?vue&type=script&lang=js&
+ /* harmony default export */ var assets_iconvue_type_script_lang_js_ = (iconvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue
+// CONCATENATED MODULE: ./src/components/chats/assets/icon.vue
 
 
 
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__("0114")
+if (style0.__inject__) style0.__inject__(context)
 
-
+}
 
 /* normalize component */
 
 var component = Object(componentNormalizer["a" /* default */])(
-  src_VuePictureSwipevue_type_script_lang_js_,
+  assets_iconvue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
-  null,
-  "e8df92c6",
+  injectStyles,
+  "1d419bb1",
   null
-  
+  ,true
 )
 
-/* harmony default export */ var VuePictureSwipe = (component.exports);
-// CONCATENATED MODULE: ./node_modules/vue-picture-swipe/src/main.js
-
-
-/* harmony default export */ var main = __webpack_exports__["a"] = (VuePictureSwipe);
-
+/* harmony default export */ var icon = __webpack_exports__["a"] = (component.exports);
 
 /***/ }),
 
-/***/ "2d7b":
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAAAsCAMAAACzFX2uAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAZJQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////2VbOugAAAIZ0Uk5TAICI/8BQCu6MIfoGBHf3A6zNHs6nT5Hl4SbkomLoH2F7Ap0SxgXHqniomAGFh5elGfamkxob+JDiDY0RkhAI8Vv1CV9RgklLipSPw0rFJNvdC/TyJdrcIkzEwovjSGljYFkM3xytr32jmoOZE658qepnB2Tm5+tY4Msd+ZXsiSDt77+GTr2+MLW1AAADE0lEQVR4nO2X+VsSQRjHV0Y8WgQlwYNQEAlztTRMUMkrTU2z1C677NAsszzCstOy+r+bd9hdFnauhZ6ep6feX5id9/3OZ3Z25p0XRfk3raJUoaskGioVh0rgVaDScc55mFYGzikPaOXgnPEIrSycE16Ohipd7iqnqCq3qzKnlt7YOg2suqbWCay2pjqvleRZaNhOuFRZmKfOWyCVWk9fPSq0Br8czX+ySFjvk5pkox4eCDaR3+YWGVlLMwluDQZ0eaNHbpq+ENJ3pnqKAMNtYlFbGCKb2lV9Z6KQ6N18EX0+0Q7zIMTI0nbGRbT4aYhLxKBNxB3RokFt1oXO6DOKdpvnTiPNHhGuF6LOaoqB6zZo51CErujrR+i8ztOS5jHX4P28A3zahUF4txwNcEnNpLG0KRyWHtIftGEzq4yksSPFx2VgR11UDNywTlOGQBukKUbHsGc8/+wyk1g7dkxM8mhVeGHQJePJeuDGsWNslCKZgglad9O00YjDFC/zcDOgNbfTtMXjg+PhpkhgPWbpowWxK8PDzeGAK3TXLGM153H/Al0Ck5/n4a6yX39BpLXbIpZc4wVcxwGOcjnXlvBoy7yAZRyw9NtwQ3i0lT+Hu4FHu8kLuIUDbjsbk7NV7og+9ypbC1vlLqU/yT4IGVZqsGoZeeceQztVcFStpt7Hrgc8HLxCmqolxzxAcUyuYMdDmmQNNiY/iU3gkEc0z2NWEiMrEn5i74+1snOGYZB30iOUeTxlfof1QeoVrG1gRX8fHzcARVG9ZutXn7Evr0303E6LvoDbcotPU5QeiHoZtfXHE6zrVfFEgOaJWfu2X8E4q8IqJ94JcRvb1r4YqDyvuVrPzu6eWVnuv8nCKAcSpV+uNMqu7Rsd6t5uQjhLH1R9b0PvoO2eOyBVzuGimIZTzyEJzibJ7RbIgHZHxDNKaGjrzffrMjRF+dBg14oKd3XrY6HEWydZneLv0OUt0m4KC0bF/2klL/n8RaKizdvR7Ne89ltKUL7pNjmVIQn5+PsPaj7gagO9x/D7s2ZG+q/Mf/s77BeC+E6Si7RktgAAAABJRU5ErkJggg=="
-
-/***/ }),
-
-/***/ "343a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("f76f");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("7351a541", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "3c35":
-/***/ (function(module, exports) {
-
-/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
-module.exports = __webpack_amd_options__;
-
-/* WEBPACK VAR INJECTION */}.call(this, {}))
-
-/***/ }),
-
-/***/ "3fb5a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("237b");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("64bc2a38", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "498a":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__("23e7");
-var $trim = __webpack_require__("58a8").trim;
-var forcedStringTrimMethod = __webpack_require__("c8d2");
-
-// `String.prototype.trim` method
-// https://tc39.es/ecma262/#sec-string.prototype.trim
-$({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
-  trim: function trim() {
-    return $trim(this);
-  }
-});
-
-
-/***/ }),
-
-/***/ "53ca":
+/***/ "3a9b":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _typeof; });
-/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("a4d3");
-/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("e01a");
-/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("d3b7");
-/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("d28b");
-/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("3ca3");
-/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("ddb0");
-/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_5__);
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_time_vue_vue_type_style_index_0_id_0d0db9f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("753f");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_time_vue_vue_type_style_index_0_id_0d0db9f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_time_vue_vue_type_style_index_0_id_0d0db9f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_time_vue_vue_type_style_index_0_id_0d0db9f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_time_vue_vue_type_style_index_0_id_0d0db9f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
-
-
-
-
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
 
 /***/ }),
 
-/***/ "71e5":
+/***/ "3e57":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("fe32");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "4839":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("e21c");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("2d543c83", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "629a":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_classic_sass_vue_type_style_index_3_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6bb0");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_classic_sass_vue_type_style_index_3_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_classic_sass_vue_type_style_index_3_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_classic_sass_vue_type_style_index_3_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_classic_sass_vue_type_style_index_3_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "6bb0":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("02f9");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("55b85f08", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "753f":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("89bb");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("545af394", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "76ed":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("0ebd");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("44cddb50", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "89bb":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".v-spinner{text-align:center}.v-spinner .v-clip{-webkit-animation:v-clipDelay .75s linear 0s infinite;animation:v-clipDelay .75s linear 0s infinite;-webkit-animation-fill-mode:both;animation-fill-mode:both;display:inline-block}@-webkit-keyframes v-clipDelay{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(.8)}to{transform:rotate(1turn) scale(1)}}@keyframes v-clipDelay{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(.8)}to{transform:rotate(1turn) scale(1)}}", ""]);
+exports.push([module.i, ".new[data-v-0d0db9f0]{color:#06823a}", ""]);
 // Exports
 module.exports = exports;
 
 
 /***/ }),
 
-/***/ "76dc":
-/***/ (function(module, exports) {
-
-module.exports = "data:image/gif;base64,R0lGODlhFAAUAPMIAIeHhz8/P1dXVycnJ8/Pz7e3t5+fn29vb////wAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFBwAIACwAAAAAFAAUAEAEUxDJSatFxtwaggWAdIyHJAhXoRYSQUhDPGx0TbmujahbXGWZWqdDAYEsp5NupLPkdDwE7oXwWVasimzWrAE1tKFHErQRK8eL8mMUlRBJVI307uoiACH5BAUHAAgALAEAAQASABIAAAROEMkpS6E4W5upMdUmEQT2feFIltMJYivbvhnZ3R0A4NMwIDodz+cL7nDEn5CH8DGZh8MtEMBEoxkqlXKVIgQCibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpjaE4W5spANUmFQX2feFIltMJYivbvhnZ3d1x4BNBIDodz+cL7nDEn5CH8DGZAsFtMMBEoxkqlXKVIgIBibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpAaA4W5vpOdUmGQb2feFIltMJYivbvhnZ3Z0g4FNRIDodz+cL7nDEn5CH8DGZgcCNQMBEoxkqlXKVIgYDibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpz6E4W5upENUmAQD2feFIltMJYivbvhnZ3V0Q4JNhIDodz+cL7nDEn5CH8DGZg8GtUMBEoxkqlXKVIggEibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkphaA4W5tpCNUmHQf2feFIltMJYivbvhnZ3d0w4BMAIDodz+cL7nDEn5CH8DGZBMLNYMBEoxkqlXKVIgoFibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpQ6A4W5vpGNUmCQL2feFIltMJYivbvhnZ3R1B4NNxIDodz+cL7nDEn5CH8DGZhcINAMBEoxkqlXKVIgwGibbK9YLBYvLtHH5K0J0IACH5BAUHAAcALAEAAQASABIAAANCeLo6wzA6FxkhbaoQ4L3ZxnXLh0EjWZ4RV71VUcCLIByyTNt2PsO8m452sBGJBsNxkUwuD03lAQBASqnUJ7aq5UYSADs="
-
-/***/ }),
-
-/***/ "8b3a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("71e5");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("d8be2e4e", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "9f15":
+/***/ "930f":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__("1de5");
-var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__("2d7b");
 exports = ___CSS_LOADER_API_IMPORT___(false);
-var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-exports.push([module.i, ".pswp__top-bar[data-v-e8df92c6]{text-align:right}.pswp__caption__center[data-v-e8df92c6]{text-align:center}.pswp__button--rotate[data-v-e8df92c6]{background:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") 0 0 no-repeat;background-size:62px 24px}.pswp__button--rotate--left[data-v-e8df92c6]{background-position:8px 10px}.pswp__button--rotate--right[data-v-e8df92c6]{background-position:-26px 10px}.gallery-thumbnail[data-v-e8df92c6]{display:inline;margin:5px}", ""]);
+exports.push([module.i, ".chatIcon[data-v-1d419bb1]{width:100%}", ""]);
 // Exports
 module.exports = exports;
 
 
 /***/ }),
 
-/***/ "b24f":
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! PhotoSwipe - v4.1.3 - 2019-01-08
-* http://photoswipe.com
-* Copyright (c) 2019 Dmitry Semenov; */
-(function (root, factory) { 
-	if (true) {
-		!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
-})(this, function () {
-
-	'use strict';
-	var PhotoSwipe = function(template, UiClass, items, options){
-
-/*>>framework-bridge*/
-/**
- *
- * Set of generic functions used by gallery.
- * 
- * You're free to modify anything here as long as functionality is kept.
- * 
- */
-var framework = {
-	features: null,
-	bind: function(target, type, listener, unbind) {
-		var methodName = (unbind ? 'remove' : 'add') + 'EventListener';
-		type = type.split(' ');
-		for(var i = 0; i < type.length; i++) {
-			if(type[i]) {
-				target[methodName]( type[i], listener, false);
-			}
-		}
-	},
-	isArray: function(obj) {
-		return (obj instanceof Array);
-	},
-	createEl: function(classes, tag) {
-		var el = document.createElement(tag || 'div');
-		if(classes) {
-			el.className = classes;
-		}
-		return el;
-	},
-	getScrollY: function() {
-		var yOffset = window.pageYOffset;
-		return yOffset !== undefined ? yOffset : document.documentElement.scrollTop;
-	},
-	unbind: function(target, type, listener) {
-		framework.bind(target,type,listener,true);
-	},
-	removeClass: function(el, className) {
-		var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-		el.className = el.className.replace(reg, ' ').replace(/^\s\s*/, '').replace(/\s\s*$/, ''); 
-	},
-	addClass: function(el, className) {
-		if( !framework.hasClass(el,className) ) {
-			el.className += (el.className ? ' ' : '') + className;
-		}
-	},
-	hasClass: function(el, className) {
-		return el.className && new RegExp('(^|\\s)' + className + '(\\s|$)').test(el.className);
-	},
-	getChildByClass: function(parentEl, childClassName) {
-		var node = parentEl.firstChild;
-		while(node) {
-			if( framework.hasClass(node, childClassName) ) {
-				return node;
-			}
-			node = node.nextSibling;
-		}
-	},
-	arraySearch: function(array, value, key) {
-		var i = array.length;
-		while(i--) {
-			if(array[i][key] === value) {
-				return i;
-			} 
-		}
-		return -1;
-	},
-	extend: function(o1, o2, preventOverwrite) {
-		for (var prop in o2) {
-			if (o2.hasOwnProperty(prop)) {
-				if(preventOverwrite && o1.hasOwnProperty(prop)) {
-					continue;
-				}
-				o1[prop] = o2[prop];
-			}
-		}
-	},
-	easing: {
-		sine: {
-			out: function(k) {
-				return Math.sin(k * (Math.PI / 2));
-			},
-			inOut: function(k) {
-				return - (Math.cos(Math.PI * k) - 1) / 2;
-			}
-		},
-		cubic: {
-			out: function(k) {
-				return --k * k * k + 1;
-			}
-		}
-		/*
-			elastic: {
-				out: function ( k ) {
-
-					var s, a = 0.1, p = 0.4;
-					if ( k === 0 ) return 0;
-					if ( k === 1 ) return 1;
-					if ( !a || a < 1 ) { a = 1; s = p / 4; }
-					else s = p * Math.asin( 1 / a ) / ( 2 * Math.PI );
-					return ( a * Math.pow( 2, - 10 * k) * Math.sin( ( k - s ) * ( 2 * Math.PI ) / p ) + 1 );
-
-				},
-			},
-			back: {
-				out: function ( k ) {
-					var s = 1.70158;
-					return --k * k * ( ( s + 1 ) * k + s ) + 1;
-				}
-			}
-		*/
-	},
-
-	/**
-	 * 
-	 * @return {object}
-	 * 
-	 * {
-	 *  raf : request animation frame function
-	 *  caf : cancel animation frame function
-	 *  transfrom : transform property key (with vendor), or null if not supported
-	 *  oldIE : IE8 or below
-	 * }
-	 * 
-	 */
-	detectFeatures: function() {
-		if(framework.features) {
-			return framework.features;
-		}
-		var helperEl = framework.createEl(),
-			helperStyle = helperEl.style,
-			vendor = '',
-			features = {};
-
-		// IE8 and below
-		features.oldIE = document.all && !document.addEventListener;
-
-		features.touch = 'ontouchstart' in window;
-
-		if(window.requestAnimationFrame) {
-			features.raf = window.requestAnimationFrame;
-			features.caf = window.cancelAnimationFrame;
-		}
-
-		features.pointerEvent = !!(window.PointerEvent) || navigator.msPointerEnabled;
-
-		// fix false-positive detection of old Android in new IE
-		// (IE11 ua string contains "Android 4.0")
-		
-		if(!features.pointerEvent) { 
-
-			var ua = navigator.userAgent;
-
-			// Detect if device is iPhone or iPod and if it's older than iOS 8
-			// http://stackoverflow.com/a/14223920
-			// 
-			// This detection is made because of buggy top/bottom toolbars
-			// that don't trigger window.resize event.
-			// For more info refer to _isFixedPosition variable in core.js
-
-			if (/iP(hone|od)/.test(navigator.platform)) {
-				var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
-				if(v && v.length > 0) {
-					v = parseInt(v[1], 10);
-					if(v >= 1 && v < 8 ) {
-						features.isOldIOSPhone = true;
-					}
-				}
-			}
-
-			// Detect old Android (before KitKat)
-			// due to bugs related to position:fixed
-			// http://stackoverflow.com/questions/7184573/pick-up-the-android-version-in-the-browser-by-javascript
-			
-			var match = ua.match(/Android\s([0-9\.]*)/);
-			var androidversion =  match ? match[1] : 0;
-			androidversion = parseFloat(androidversion);
-			if(androidversion >= 1 ) {
-				if(androidversion < 4.4) {
-					features.isOldAndroid = true; // for fixed position bug & performance
-				}
-				features.androidVersion = androidversion; // for touchend bug
-			}	
-			features.isMobileOpera = /opera mini|opera mobi/i.test(ua);
-
-			// p.s. yes, yes, UA sniffing is bad, propose your solution for above bugs.
-		}
-		
-		var styleChecks = ['transform', 'perspective', 'animationName'],
-			vendors = ['', 'webkit','Moz','ms','O'],
-			styleCheckItem,
-			styleName;
-
-		for(var i = 0; i < 4; i++) {
-			vendor = vendors[i];
-
-			for(var a = 0; a < 3; a++) {
-				styleCheckItem = styleChecks[a];
-
-				// uppercase first letter of property name, if vendor is present
-				styleName = vendor + (vendor ? 
-										styleCheckItem.charAt(0).toUpperCase() + styleCheckItem.slice(1) : 
-										styleCheckItem);
-			
-				if(!features[styleCheckItem] && styleName in helperStyle ) {
-					features[styleCheckItem] = styleName;
-				}
-			}
-
-			if(vendor && !features.raf) {
-				vendor = vendor.toLowerCase();
-				features.raf = window[vendor+'RequestAnimationFrame'];
-				if(features.raf) {
-					features.caf = window[vendor+'CancelAnimationFrame'] || 
-									window[vendor+'CancelRequestAnimationFrame'];
-				}
-			}
-		}
-			
-		if(!features.raf) {
-			var lastTime = 0;
-			features.raf = function(fn) {
-				var currTime = new Date().getTime();
-				var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-				var id = window.setTimeout(function() { fn(currTime + timeToCall); }, timeToCall);
-				lastTime = currTime + timeToCall;
-				return id;
-			};
-			features.caf = function(id) { clearTimeout(id); };
-		}
-
-		// Detect SVG support
-		features.svg = !!document.createElementNS && 
-						!!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect;
-
-		framework.features = features;
-
-		return features;
-	}
-};
-
-framework.detectFeatures();
-
-// Override addEventListener for old versions of IE
-if(framework.features.oldIE) {
-
-	framework.bind = function(target, type, listener, unbind) {
-		
-		type = type.split(' ');
-
-		var methodName = (unbind ? 'detach' : 'attach') + 'Event',
-			evName,
-			_handleEv = function() {
-				listener.handleEvent.call(listener);
-			};
-
-		for(var i = 0; i < type.length; i++) {
-			evName = type[i];
-			if(evName) {
-
-				if(typeof listener === 'object' && listener.handleEvent) {
-					if(!unbind) {
-						listener['oldIE' + evName] = _handleEv;
-					} else {
-						if(!listener['oldIE' + evName]) {
-							return false;
-						}
-					}
-
-					target[methodName]( 'on' + evName, listener['oldIE' + evName]);
-				} else {
-					target[methodName]( 'on' + evName, listener);
-				}
-
-			}
-		}
-	};
-	
-}
-
-/*>>framework-bridge*/
-
-/*>>core*/
-//function(template, UiClass, items, options)
-
-var self = this;
-
-/**
- * Static vars, don't change unless you know what you're doing.
- */
-var DOUBLE_TAP_RADIUS = 25, 
-	NUM_HOLDERS = 3;
-
-/**
- * Options
- */
-var _options = {
-	allowPanToNext:true,
-	spacing: 0.12,
-	bgOpacity: 1,
-	mouseUsed: false,
-	loop: true,
-	pinchToClose: true,
-	closeOnScroll: true,
-	closeOnVerticalDrag: true,
-	verticalDragRange: 0.75,
-	hideAnimationDuration: 333,
-	showAnimationDuration: 333,
-	showHideOpacity: false,
-	focus: true,
-	escKey: true,
-	arrowKeys: true,
-	mainScrollEndFriction: 0.35,
-	panEndFriction: 0.35,
-	isClickableElement: function(el) {
-        return el.tagName === 'A';
-    },
-    getDoubleTapZoom: function(isMouseClick, item) {
-    	if(isMouseClick) {
-    		return 1;
-    	} else {
-    		return item.initialZoomLevel < 0.7 ? 1 : 1.33;
-    	}
-    },
-    maxSpreadZoom: 1.33,
-	modal: true,
-
-	// not fully implemented yet
-	scaleMode: 'fit' // TODO
-};
-framework.extend(_options, options);
-
-
-/**
- * Private helper variables & functions
- */
-
-var _getEmptyPoint = function() { 
-		return {x:0,y:0}; 
-	};
-
-var _isOpen,
-	_isDestroying,
-	_closedByScroll,
-	_currentItemIndex,
-	_containerStyle,
-	_containerShiftIndex,
-	_currPanDist = _getEmptyPoint(),
-	_startPanOffset = _getEmptyPoint(),
-	_panOffset = _getEmptyPoint(),
-	_upMoveEvents, // drag move, drag end & drag cancel events array
-	_downEvents, // drag start events array
-	_globalEventHandlers,
-	_viewportSize = {},
-	_currZoomLevel,
-	_startZoomLevel,
-	_translatePrefix,
-	_translateSufix,
-	_updateSizeInterval,
-	_itemsNeedUpdate,
-	_currPositionIndex = 0,
-	_offset = {},
-	_slideSize = _getEmptyPoint(), // size of slide area, including spacing
-	_itemHolders,
-	_prevItemIndex,
-	_indexDiff = 0, // difference of indexes since last content update
-	_dragStartEvent,
-	_dragMoveEvent,
-	_dragEndEvent,
-	_dragCancelEvent,
-	_transformKey,
-	_pointerEventEnabled,
-	_isFixedPosition = true,
-	_likelyTouchDevice,
-	_modules = [],
-	_requestAF,
-	_cancelAF,
-	_initalClassName,
-	_initalWindowScrollY,
-	_oldIE,
-	_currentWindowScrollY,
-	_features,
-	_windowVisibleSize = {},
-	_renderMaxResolution = false,
-	_orientationChangeTimeout,
-
-
-	// Registers PhotoSWipe module (History, Controller ...)
-	_registerModule = function(name, module) {
-		framework.extend(self, module.publicMethods);
-		_modules.push(name);
-	},
-
-	_getLoopedId = function(index) {
-		var numSlides = _getNumItems();
-		if(index > numSlides - 1) {
-			return index - numSlides;
-		} else  if(index < 0) {
-			return numSlides + index;
-		}
-		return index;
-	},
-	
-	// Micro bind/trigger
-	_listeners = {},
-	_listen = function(name, fn) {
-		if(!_listeners[name]) {
-			_listeners[name] = [];
-		}
-		return _listeners[name].push(fn);
-	},
-	_shout = function(name) {
-		var listeners = _listeners[name];
-
-		if(listeners) {
-			var args = Array.prototype.slice.call(arguments);
-			args.shift();
-
-			for(var i = 0; i < listeners.length; i++) {
-				listeners[i].apply(self, args);
-			}
-		}
-	},
-
-	_getCurrentTime = function() {
-		return new Date().getTime();
-	},
-	_applyBgOpacity = function(opacity) {
-		_bgOpacity = opacity;
-		self.bg.style.opacity = opacity * _options.bgOpacity;
-	},
-
-	_applyZoomTransform = function(styleObj,x,y,zoom,item) {
-		if(!_renderMaxResolution || (item && item !== self.currItem) ) {
-			zoom = zoom / (item ? item.fitRatio : self.currItem.fitRatio);	
-		}
-			
-		styleObj[_transformKey] = _translatePrefix + x + 'px, ' + y + 'px' + _translateSufix + ' scale(' + zoom + ')';
-	},
-	_applyCurrentZoomPan = function( allowRenderResolution ) {
-		if(_currZoomElementStyle) {
-
-			if(allowRenderResolution) {
-				if(_currZoomLevel > self.currItem.fitRatio) {
-					if(!_renderMaxResolution) {
-						_setImageSize(self.currItem, false, true);
-						_renderMaxResolution = true;
-					}
-				} else {
-					if(_renderMaxResolution) {
-						_setImageSize(self.currItem);
-						_renderMaxResolution = false;
-					}
-				}
-			}
-			
-
-			_applyZoomTransform(_currZoomElementStyle, _panOffset.x, _panOffset.y, _currZoomLevel);
-		}
-	},
-	_applyZoomPanToItem = function(item) {
-		if(item.container) {
-
-			_applyZoomTransform(item.container.style, 
-								item.initialPosition.x, 
-								item.initialPosition.y, 
-								item.initialZoomLevel,
-								item);
-		}
-	},
-	_setTranslateX = function(x, elStyle) {
-		elStyle[_transformKey] = _translatePrefix + x + 'px, 0px' + _translateSufix;
-	},
-	_moveMainScroll = function(x, dragging) {
-
-		if(!_options.loop && dragging) {
-			var newSlideIndexOffset = _currentItemIndex + (_slideSize.x * _currPositionIndex - x) / _slideSize.x,
-				delta = Math.round(x - _mainScrollPos.x);
-
-			if( (newSlideIndexOffset < 0 && delta > 0) || 
-				(newSlideIndexOffset >= _getNumItems() - 1 && delta < 0) ) {
-				x = _mainScrollPos.x + delta * _options.mainScrollEndFriction;
-			} 
-		}
-		
-		_mainScrollPos.x = x;
-		_setTranslateX(x, _containerStyle);
-	},
-	_calculatePanOffset = function(axis, zoomLevel) {
-		var m = _midZoomPoint[axis] - _offset[axis];
-		return _startPanOffset[axis] + _currPanDist[axis] + m - m * ( zoomLevel / _startZoomLevel );
-	},
-	
-	_equalizePoints = function(p1, p2) {
-		p1.x = p2.x;
-		p1.y = p2.y;
-		if(p2.id) {
-			p1.id = p2.id;
-		}
-	},
-	_roundPoint = function(p) {
-		p.x = Math.round(p.x);
-		p.y = Math.round(p.y);
-	},
-
-	_mouseMoveTimeout = null,
-	_onFirstMouseMove = function() {
-		// Wait until mouse move event is fired at least twice during 100ms
-		// We do this, because some mobile browsers trigger it on touchstart
-		if(_mouseMoveTimeout ) { 
-			framework.unbind(document, 'mousemove', _onFirstMouseMove);
-			framework.addClass(template, 'pswp--has_mouse');
-			_options.mouseUsed = true;
-			_shout('mouseUsed');
-		}
-		_mouseMoveTimeout = setTimeout(function() {
-			_mouseMoveTimeout = null;
-		}, 100);
-	},
-
-	_bindEvents = function() {
-		framework.bind(document, 'keydown', self);
-
-		if(_features.transform) {
-			// don't bind click event in browsers that don't support transform (mostly IE8)
-			framework.bind(self.scrollWrap, 'click', self);
-		}
-		
-
-		if(!_options.mouseUsed) {
-			framework.bind(document, 'mousemove', _onFirstMouseMove);
-		}
-
-		framework.bind(window, 'resize scroll orientationchange', self);
-
-		_shout('bindEvents');
-	},
-
-	_unbindEvents = function() {
-		framework.unbind(window, 'resize scroll orientationchange', self);
-		framework.unbind(window, 'scroll', _globalEventHandlers.scroll);
-		framework.unbind(document, 'keydown', self);
-		framework.unbind(document, 'mousemove', _onFirstMouseMove);
-
-		if(_features.transform) {
-			framework.unbind(self.scrollWrap, 'click', self);
-		}
-
-		if(_isDragging) {
-			framework.unbind(window, _upMoveEvents, self);
-		}
-
-		clearTimeout(_orientationChangeTimeout);
-
-		_shout('unbindEvents');
-	},
-	
-	_calculatePanBounds = function(zoomLevel, update) {
-		var bounds = _calculateItemSize( self.currItem, _viewportSize, zoomLevel );
-		if(update) {
-			_currPanBounds = bounds;
-		}
-		return bounds;
-	},
-	
-	_getMinZoomLevel = function(item) {
-		if(!item) {
-			item = self.currItem;
-		}
-		return item.initialZoomLevel;
-	},
-	_getMaxZoomLevel = function(item) {
-		if(!item) {
-			item = self.currItem;
-		}
-		return item.w > 0 ? _options.maxSpreadZoom : 1;
-	},
-
-	// Return true if offset is out of the bounds
-	_modifyDestPanOffset = function(axis, destPanBounds, destPanOffset, destZoomLevel) {
-		if(destZoomLevel === self.currItem.initialZoomLevel) {
-			destPanOffset[axis] = self.currItem.initialPosition[axis];
-			return true;
-		} else {
-			destPanOffset[axis] = _calculatePanOffset(axis, destZoomLevel); 
-
-			if(destPanOffset[axis] > destPanBounds.min[axis]) {
-				destPanOffset[axis] = destPanBounds.min[axis];
-				return true;
-			} else if(destPanOffset[axis] < destPanBounds.max[axis] ) {
-				destPanOffset[axis] = destPanBounds.max[axis];
-				return true;
-			}
-		}
-		return false;
-	},
-
-	_setupTransforms = function() {
-
-		if(_transformKey) {
-			// setup 3d transforms
-			var allow3dTransform = _features.perspective && !_likelyTouchDevice;
-			_translatePrefix = 'translate' + (allow3dTransform ? '3d(' : '(');
-			_translateSufix = _features.perspective ? ', 0px)' : ')';	
-			return;
-		}
-
-		// Override zoom/pan/move functions in case old browser is used (most likely IE)
-		// (so they use left/top/width/height, instead of CSS transform)
-	
-		_transformKey = 'left';
-		framework.addClass(template, 'pswp--ie');
-
-		_setTranslateX = function(x, elStyle) {
-			elStyle.left = x + 'px';
-		};
-		_applyZoomPanToItem = function(item) {
-
-			var zoomRatio = item.fitRatio > 1 ? 1 : item.fitRatio,
-				s = item.container.style,
-				w = zoomRatio * item.w,
-				h = zoomRatio * item.h;
-
-			s.width = w + 'px';
-			s.height = h + 'px';
-			s.left = item.initialPosition.x + 'px';
-			s.top = item.initialPosition.y + 'px';
-
-		};
-		_applyCurrentZoomPan = function() {
-			if(_currZoomElementStyle) {
-
-				var s = _currZoomElementStyle,
-					item = self.currItem,
-					zoomRatio = item.fitRatio > 1 ? 1 : item.fitRatio,
-					w = zoomRatio * item.w,
-					h = zoomRatio * item.h;
-
-				s.width = w + 'px';
-				s.height = h + 'px';
-
-
-				s.left = _panOffset.x + 'px';
-				s.top = _panOffset.y + 'px';
-			}
-			
-		};
-	},
-
-	_onKeyDown = function(e) {
-		var keydownAction = '';
-		if(_options.escKey && e.keyCode === 27) { 
-			keydownAction = 'close';
-		} else if(_options.arrowKeys) {
-			if(e.keyCode === 37) {
-				keydownAction = 'prev';
-			} else if(e.keyCode === 39) { 
-				keydownAction = 'next';
-			}
-		}
-
-		if(keydownAction) {
-			// don't do anything if special key pressed to prevent from overriding default browser actions
-			// e.g. in Chrome on Mac cmd+arrow-left returns to previous page
-			if( !e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey ) {
-				if(e.preventDefault) {
-					e.preventDefault();
-				} else {
-					e.returnValue = false;
-				} 
-				self[keydownAction]();
-			}
-		}
-	},
-
-	_onGlobalClick = function(e) {
-		if(!e) {
-			return;
-		}
-
-		// don't allow click event to pass through when triggering after drag or some other gesture
-		if(_moved || _zoomStarted || _mainScrollAnimating || _verticalDragInitiated) {
-			e.preventDefault();
-			e.stopPropagation();
-		}
-	},
-
-	_updatePageScrollOffset = function() {
-		self.setScrollOffset(0, framework.getScrollY());		
-	};
-	
-
-
-	
-
-
-
-// Micro animation engine
-var _animations = {},
-	_numAnimations = 0,
-	_stopAnimation = function(name) {
-		if(_animations[name]) {
-			if(_animations[name].raf) {
-				_cancelAF( _animations[name].raf );
-			}
-			_numAnimations--;
-			delete _animations[name];
-		}
-	},
-	_registerStartAnimation = function(name) {
-		if(_animations[name]) {
-			_stopAnimation(name);
-		}
-		if(!_animations[name]) {
-			_numAnimations++;
-			_animations[name] = {};
-		}
-	},
-	_stopAllAnimations = function() {
-		for (var prop in _animations) {
-
-			if( _animations.hasOwnProperty( prop ) ) {
-				_stopAnimation(prop);
-			} 
-			
-		}
-	},
-	_animateProp = function(name, b, endProp, d, easingFn, onUpdate, onComplete) {
-		var startAnimTime = _getCurrentTime(), t;
-		_registerStartAnimation(name);
-
-		var animloop = function(){
-			if ( _animations[name] ) {
-				
-				t = _getCurrentTime() - startAnimTime; // time diff
-				//b - beginning (start prop)
-				//d - anim duration
-
-				if ( t >= d ) {
-					_stopAnimation(name);
-					onUpdate(endProp);
-					if(onComplete) {
-						onComplete();
-					}
-					return;
-				}
-				onUpdate( (endProp - b) * easingFn(t/d) + b );
-
-				_animations[name].raf = _requestAF(animloop);
-			}
-		};
-		animloop();
-	};
-	
-
-
-var publicMethods = {
-
-	// make a few local variables and functions public
-	shout: _shout,
-	listen: _listen,
-	viewportSize: _viewportSize,
-	options: _options,
-
-	isMainScrollAnimating: function() {
-		return _mainScrollAnimating;
-	},
-	getZoomLevel: function() {
-		return _currZoomLevel;
-	},
-	getCurrentIndex: function() {
-		return _currentItemIndex;
-	},
-	isDragging: function() {
-		return _isDragging;
-	},	
-	isZooming: function() {
-		return _isZooming;
-	},
-	setScrollOffset: function(x,y) {
-		_offset.x = x;
-		_currentWindowScrollY = _offset.y = y;
-		_shout('updateScrollOffset', _offset);
-	},
-	applyZoomPan: function(zoomLevel,panX,panY,allowRenderResolution) {
-		_panOffset.x = panX;
-		_panOffset.y = panY;
-		_currZoomLevel = zoomLevel;
-		_applyCurrentZoomPan( allowRenderResolution );
-	},
-
-	init: function() {
-
-		if(_isOpen || _isDestroying) {
-			return;
-		}
-
-		var i;
-
-		self.framework = framework; // basic functionality
-		self.template = template; // root DOM element of PhotoSwipe
-		self.bg = framework.getChildByClass(template, 'pswp__bg');
-
-		_initalClassName = template.className;
-		_isOpen = true;
-				
-		_features = framework.detectFeatures();
-		_requestAF = _features.raf;
-		_cancelAF = _features.caf;
-		_transformKey = _features.transform;
-		_oldIE = _features.oldIE;
-		
-		self.scrollWrap = framework.getChildByClass(template, 'pswp__scroll-wrap');
-		self.container = framework.getChildByClass(self.scrollWrap, 'pswp__container');
-
-		_containerStyle = self.container.style; // for fast access
-
-		// Objects that hold slides (there are only 3 in DOM)
-		self.itemHolders = _itemHolders = [
-			{el:self.container.children[0] , wrap:0, index: -1},
-			{el:self.container.children[1] , wrap:0, index: -1},
-			{el:self.container.children[2] , wrap:0, index: -1}
-		];
-
-		// hide nearby item holders until initial zoom animation finishes (to avoid extra Paints)
-		_itemHolders[0].el.style.display = _itemHolders[2].el.style.display = 'none';
-
-		_setupTransforms();
-
-		// Setup global events
-		_globalEventHandlers = {
-			resize: self.updateSize,
-
-			// Fixes: iOS 10.3 resize event
-			// does not update scrollWrap.clientWidth instantly after resize
-			// https://github.com/dimsemenov/PhotoSwipe/issues/1315
-			orientationchange: function() {
-				clearTimeout(_orientationChangeTimeout);
-				_orientationChangeTimeout = setTimeout(function() {
-					if(_viewportSize.x !== self.scrollWrap.clientWidth) {
-						self.updateSize();
-					}
-				}, 500);
-			},
-			scroll: _updatePageScrollOffset,
-			keydown: _onKeyDown,
-			click: _onGlobalClick
-		};
-
-		// disable show/hide effects on old browsers that don't support CSS animations or transforms, 
-		// old IOS, Android and Opera mobile. Blackberry seems to work fine, even older models.
-		var oldPhone = _features.isOldIOSPhone || _features.isOldAndroid || _features.isMobileOpera;
-		if(!_features.animationName || !_features.transform || oldPhone) {
-			_options.showAnimationDuration = _options.hideAnimationDuration = 0;
-		}
-
-		// init modules
-		for(i = 0; i < _modules.length; i++) {
-			self['init' + _modules[i]]();
-		}
-		
-		// init
-		if(UiClass) {
-			var ui = self.ui = new UiClass(self, framework);
-			ui.init();
-		}
-
-		_shout('firstUpdate');
-		_currentItemIndex = _currentItemIndex || _options.index || 0;
-		// validate index
-		if( isNaN(_currentItemIndex) || _currentItemIndex < 0 || _currentItemIndex >= _getNumItems() ) {
-			_currentItemIndex = 0;
-		}
-		self.currItem = _getItemAt( _currentItemIndex );
-
-		
-		if(_features.isOldIOSPhone || _features.isOldAndroid) {
-			_isFixedPosition = false;
-		}
-		
-		template.setAttribute('aria-hidden', 'false');
-		if(_options.modal) {
-			if(!_isFixedPosition) {
-				template.style.position = 'absolute';
-				template.style.top = framework.getScrollY() + 'px';
-			} else {
-				template.style.position = 'fixed';
-			}
-		}
-
-		if(_currentWindowScrollY === undefined) {
-			_shout('initialLayout');
-			_currentWindowScrollY = _initalWindowScrollY = framework.getScrollY();
-		}
-		
-		// add classes to root element of PhotoSwipe
-		var rootClasses = 'pswp--open ';
-		if(_options.mainClass) {
-			rootClasses += _options.mainClass + ' ';
-		}
-		if(_options.showHideOpacity) {
-			rootClasses += 'pswp--animate_opacity ';
-		}
-		rootClasses += _likelyTouchDevice ? 'pswp--touch' : 'pswp--notouch';
-		rootClasses += _features.animationName ? ' pswp--css_animation' : '';
-		rootClasses += _features.svg ? ' pswp--svg' : '';
-		framework.addClass(template, rootClasses);
-
-		self.updateSize();
-
-		// initial update
-		_containerShiftIndex = -1;
-		_indexDiff = null;
-		for(i = 0; i < NUM_HOLDERS; i++) {
-			_setTranslateX( (i+_containerShiftIndex) * _slideSize.x, _itemHolders[i].el.style);
-		}
-
-		if(!_oldIE) {
-			framework.bind(self.scrollWrap, _downEvents, self); // no dragging for old IE
-		}	
-
-		_listen('initialZoomInEnd', function() {
-			self.setContent(_itemHolders[0], _currentItemIndex-1);
-			self.setContent(_itemHolders[2], _currentItemIndex+1);
-
-			_itemHolders[0].el.style.display = _itemHolders[2].el.style.display = 'block';
-
-			if(_options.focus) {
-				// focus causes layout, 
-				// which causes lag during the animation, 
-				// that's why we delay it untill the initial zoom transition ends
-				template.focus();
-			}
-			 
-
-			_bindEvents();
-		});
-
-		// set content for center slide (first time)
-		self.setContent(_itemHolders[1], _currentItemIndex);
-		
-		self.updateCurrItem();
-
-		_shout('afterInit');
-
-		if(!_isFixedPosition) {
-
-			// On all versions of iOS lower than 8.0, we check size of viewport every second.
-			// 
-			// This is done to detect when Safari top & bottom bars appear, 
-			// as this action doesn't trigger any events (like resize). 
-			// 
-			// On iOS8 they fixed this.
-			// 
-			// 10 Nov 2014: iOS 7 usage ~40%. iOS 8 usage 56%.
-			
-			_updateSizeInterval = setInterval(function() {
-				if(!_numAnimations && !_isDragging && !_isZooming && (_currZoomLevel === self.currItem.initialZoomLevel)  ) {
-					self.updateSize();
-				}
-			}, 1000);
-		}
-
-		framework.addClass(template, 'pswp--visible');
-	},
-
-	// Close the gallery, then destroy it
-	close: function() {
-		if(!_isOpen) {
-			return;
-		}
-
-		_isOpen = false;
-		_isDestroying = true;
-		_shout('close');
-		_unbindEvents();
-
-		_showOrHide(self.currItem, null, true, self.destroy);
-	},
-
-	// destroys the gallery (unbinds events, cleans up intervals and timeouts to avoid memory leaks)
-	destroy: function() {
-		_shout('destroy');
-
-		if(_showOrHideTimeout) {
-			clearTimeout(_showOrHideTimeout);
-		}
-		
-		template.setAttribute('aria-hidden', 'true');
-		template.className = _initalClassName;
-
-		if(_updateSizeInterval) {
-			clearInterval(_updateSizeInterval);
-		}
-
-		framework.unbind(self.scrollWrap, _downEvents, self);
-
-		// we unbind scroll event at the end, as closing animation may depend on it
-		framework.unbind(window, 'scroll', self);
-
-		_stopDragUpdateLoop();
-
-		_stopAllAnimations();
-
-		_listeners = null;
-	},
-
-	/**
-	 * Pan image to position
-	 * @param {Number} x     
-	 * @param {Number} y     
-	 * @param {Boolean} force Will ignore bounds if set to true.
-	 */
-	panTo: function(x,y,force) {
-		if(!force) {
-			if(x > _currPanBounds.min.x) {
-				x = _currPanBounds.min.x;
-			} else if(x < _currPanBounds.max.x) {
-				x = _currPanBounds.max.x;
-			}
-
-			if(y > _currPanBounds.min.y) {
-				y = _currPanBounds.min.y;
-			} else if(y < _currPanBounds.max.y) {
-				y = _currPanBounds.max.y;
-			}
-		}
-		
-		_panOffset.x = x;
-		_panOffset.y = y;
-		_applyCurrentZoomPan();
-	},
-	
-	handleEvent: function (e) {
-		e = e || window.event;
-		if(_globalEventHandlers[e.type]) {
-			_globalEventHandlers[e.type](e);
-		}
-	},
-
-
-	goTo: function(index) {
-
-		index = _getLoopedId(index);
-
-		var diff = index - _currentItemIndex;
-		_indexDiff = diff;
-
-		_currentItemIndex = index;
-		self.currItem = _getItemAt( _currentItemIndex );
-		_currPositionIndex -= diff;
-		
-		_moveMainScroll(_slideSize.x * _currPositionIndex);
-		
-
-		_stopAllAnimations();
-		_mainScrollAnimating = false;
-
-		self.updateCurrItem();
-	},
-	next: function() {
-		self.goTo( _currentItemIndex + 1);
-	},
-	prev: function() {
-		self.goTo( _currentItemIndex - 1);
-	},
-
-	// update current zoom/pan objects
-	updateCurrZoomItem: function(emulateSetContent) {
-		if(emulateSetContent) {
-			_shout('beforeChange', 0);
-		}
-
-		// itemHolder[1] is middle (current) item
-		if(_itemHolders[1].el.children.length) {
-			var zoomElement = _itemHolders[1].el.children[0];
-			if( framework.hasClass(zoomElement, 'pswp__zoom-wrap') ) {
-				_currZoomElementStyle = zoomElement.style;
-			} else {
-				_currZoomElementStyle = null;
-			}
-		} else {
-			_currZoomElementStyle = null;
-		}
-		
-		_currPanBounds = self.currItem.bounds;	
-		_startZoomLevel = _currZoomLevel = self.currItem.initialZoomLevel;
-
-		_panOffset.x = _currPanBounds.center.x;
-		_panOffset.y = _currPanBounds.center.y;
-
-		if(emulateSetContent) {
-			_shout('afterChange');
-		}
-	},
-
-
-	invalidateCurrItems: function() {
-		_itemsNeedUpdate = true;
-		for(var i = 0; i < NUM_HOLDERS; i++) {
-			if( _itemHolders[i].item ) {
-				_itemHolders[i].item.needsUpdate = true;
-			}
-		}
-	},
-
-	updateCurrItem: function(beforeAnimation) {
-
-		if(_indexDiff === 0) {
-			return;
-		}
-
-		var diffAbs = Math.abs(_indexDiff),
-			tempHolder;
-
-		if(beforeAnimation && diffAbs < 2) {
-			return;
-		}
-
-
-		self.currItem = _getItemAt( _currentItemIndex );
-		_renderMaxResolution = false;
-		
-		_shout('beforeChange', _indexDiff);
-
-		if(diffAbs >= NUM_HOLDERS) {
-			_containerShiftIndex += _indexDiff + (_indexDiff > 0 ? -NUM_HOLDERS : NUM_HOLDERS);
-			diffAbs = NUM_HOLDERS;
-		}
-		for(var i = 0; i < diffAbs; i++) {
-			if(_indexDiff > 0) {
-				tempHolder = _itemHolders.shift();
-				_itemHolders[NUM_HOLDERS-1] = tempHolder; // move first to last
-
-				_containerShiftIndex++;
-				_setTranslateX( (_containerShiftIndex+2) * _slideSize.x, tempHolder.el.style);
-				self.setContent(tempHolder, _currentItemIndex - diffAbs + i + 1 + 1);
-			} else {
-				tempHolder = _itemHolders.pop();
-				_itemHolders.unshift( tempHolder ); // move last to first
-
-				_containerShiftIndex--;
-				_setTranslateX( _containerShiftIndex * _slideSize.x, tempHolder.el.style);
-				self.setContent(tempHolder, _currentItemIndex + diffAbs - i - 1 - 1);
-			}
-			
-		}
-
-		// reset zoom/pan on previous item
-		if(_currZoomElementStyle && Math.abs(_indexDiff) === 1) {
-
-			var prevItem = _getItemAt(_prevItemIndex);
-			if(prevItem.initialZoomLevel !== _currZoomLevel) {
-				_calculateItemSize(prevItem , _viewportSize );
-				_setImageSize(prevItem);
-				_applyZoomPanToItem( prevItem ); 				
-			}
-
-		}
-
-		// reset diff after update
-		_indexDiff = 0;
-
-		self.updateCurrZoomItem();
-
-		_prevItemIndex = _currentItemIndex;
-
-		_shout('afterChange');
-		
-	},
-
-
-
-	updateSize: function(force) {
-		
-		if(!_isFixedPosition && _options.modal) {
-			var windowScrollY = framework.getScrollY();
-			if(_currentWindowScrollY !== windowScrollY) {
-				template.style.top = windowScrollY + 'px';
-				_currentWindowScrollY = windowScrollY;
-			}
-			if(!force && _windowVisibleSize.x === window.innerWidth && _windowVisibleSize.y === window.innerHeight) {
-				return;
-			}
-			_windowVisibleSize.x = window.innerWidth;
-			_windowVisibleSize.y = window.innerHeight;
-
-			//template.style.width = _windowVisibleSize.x + 'px';
-			template.style.height = _windowVisibleSize.y + 'px';
-		}
-
-
-
-		_viewportSize.x = self.scrollWrap.clientWidth;
-		_viewportSize.y = self.scrollWrap.clientHeight;
-
-		_updatePageScrollOffset();
-
-		_slideSize.x = _viewportSize.x + Math.round(_viewportSize.x * _options.spacing);
-		_slideSize.y = _viewportSize.y;
-
-		_moveMainScroll(_slideSize.x * _currPositionIndex);
-
-		_shout('beforeResize'); // even may be used for example to switch image sources
-
-
-		// don't re-calculate size on inital size update
-		if(_containerShiftIndex !== undefined) {
-
-			var holder,
-				item,
-				hIndex;
-
-			for(var i = 0; i < NUM_HOLDERS; i++) {
-				holder = _itemHolders[i];
-				_setTranslateX( (i+_containerShiftIndex) * _slideSize.x, holder.el.style);
-
-				hIndex = _currentItemIndex+i-1;
-
-				if(_options.loop && _getNumItems() > 2) {
-					hIndex = _getLoopedId(hIndex);
-				}
-
-				// update zoom level on items and refresh source (if needsUpdate)
-				item = _getItemAt( hIndex );
-
-				// re-render gallery item if `needsUpdate`,
-				// or doesn't have `bounds` (entirely new slide object)
-				if( item && (_itemsNeedUpdate || item.needsUpdate || !item.bounds) ) {
-
-					self.cleanSlide( item );
-					
-					self.setContent( holder, hIndex );
-
-					// if "center" slide
-					if(i === 1) {
-						self.currItem = item;
-						self.updateCurrZoomItem(true);
-					}
-
-					item.needsUpdate = false;
-
-				} else if(holder.index === -1 && hIndex >= 0) {
-					// add content first time
-					self.setContent( holder, hIndex );
-				}
-				if(item && item.container) {
-					_calculateItemSize(item, _viewportSize);
-					_setImageSize(item);
-					_applyZoomPanToItem( item );
-				}
-				
-			}
-			_itemsNeedUpdate = false;
-		}	
-
-		_startZoomLevel = _currZoomLevel = self.currItem.initialZoomLevel;
-		_currPanBounds = self.currItem.bounds;
-
-		if(_currPanBounds) {
-			_panOffset.x = _currPanBounds.center.x;
-			_panOffset.y = _currPanBounds.center.y;
-			_applyCurrentZoomPan( true );
-		}
-		
-		_shout('resize');
-	},
-	
-	// Zoom current item to
-	zoomTo: function(destZoomLevel, centerPoint, speed, easingFn, updateFn) {
-		/*
-			if(destZoomLevel === 'fit') {
-				destZoomLevel = self.currItem.fitRatio;
-			} else if(destZoomLevel === 'fill') {
-				destZoomLevel = self.currItem.fillRatio;
-			}
-		*/
-
-		if(centerPoint) {
-			_startZoomLevel = _currZoomLevel;
-			_midZoomPoint.x = Math.abs(centerPoint.x) - _panOffset.x ;
-			_midZoomPoint.y = Math.abs(centerPoint.y) - _panOffset.y ;
-			_equalizePoints(_startPanOffset, _panOffset);
-		}
-
-		var destPanBounds = _calculatePanBounds(destZoomLevel, false),
-			destPanOffset = {};
-
-		_modifyDestPanOffset('x', destPanBounds, destPanOffset, destZoomLevel);
-		_modifyDestPanOffset('y', destPanBounds, destPanOffset, destZoomLevel);
-
-		var initialZoomLevel = _currZoomLevel;
-		var initialPanOffset = {
-			x: _panOffset.x,
-			y: _panOffset.y
-		};
-
-		_roundPoint(destPanOffset);
-
-		var onUpdate = function(now) {
-			if(now === 1) {
-				_currZoomLevel = destZoomLevel;
-				_panOffset.x = destPanOffset.x;
-				_panOffset.y = destPanOffset.y;
-			} else {
-				_currZoomLevel = (destZoomLevel - initialZoomLevel) * now + initialZoomLevel;
-				_panOffset.x = (destPanOffset.x - initialPanOffset.x) * now + initialPanOffset.x;
-				_panOffset.y = (destPanOffset.y - initialPanOffset.y) * now + initialPanOffset.y;
-			}
-
-			if(updateFn) {
-				updateFn(now);
-			}
-
-			_applyCurrentZoomPan( now === 1 );
-		};
-
-		if(speed) {
-			_animateProp('customZoomTo', 0, 1, speed, easingFn || framework.easing.sine.inOut, onUpdate);
-		} else {
-			onUpdate(1);
-		}
-	}
-
-
-};
-
-
-/*>>core*/
-
-/*>>gestures*/
-/**
- * Mouse/touch/pointer event handlers.
- * 
- * separated from @core.js for readability
- */
-
-var MIN_SWIPE_DISTANCE = 30,
-	DIRECTION_CHECK_OFFSET = 10; // amount of pixels to drag to determine direction of swipe
-
-var _gestureStartTime,
-	_gestureCheckSpeedTime,
-
-	// pool of objects that are used during dragging of zooming
-	p = {}, // first point
-	p2 = {}, // second point (for zoom gesture)
-	delta = {},
-	_currPoint = {},
-	_startPoint = {},
-	_currPointers = [],
-	_startMainScrollPos = {},
-	_releaseAnimData,
-	_posPoints = [], // array of points during dragging, used to determine type of gesture
-	_tempPoint = {},
-
-	_isZoomingIn,
-	_verticalDragInitiated,
-	_oldAndroidTouchEndTimeout,
-	_currZoomedItemIndex = 0,
-	_centerPoint = _getEmptyPoint(),
-	_lastReleaseTime = 0,
-	_isDragging, // at least one pointer is down
-	_isMultitouch, // at least two _pointers are down
-	_zoomStarted, // zoom level changed during zoom gesture
-	_moved,
-	_dragAnimFrame,
-	_mainScrollShifted,
-	_currentPoints, // array of current touch points
-	_isZooming,
-	_currPointsDistance,
-	_startPointsDistance,
-	_currPanBounds,
-	_mainScrollPos = _getEmptyPoint(),
-	_currZoomElementStyle,
-	_mainScrollAnimating, // true, if animation after swipe gesture is running
-	_midZoomPoint = _getEmptyPoint(),
-	_currCenterPoint = _getEmptyPoint(),
-	_direction,
-	_isFirstMove,
-	_opacityChanged,
-	_bgOpacity,
-	_wasOverInitialZoom,
-
-	_isEqualPoints = function(p1, p2) {
-		return p1.x === p2.x && p1.y === p2.y;
-	},
-	_isNearbyPoints = function(touch0, touch1) {
-		return Math.abs(touch0.x - touch1.x) < DOUBLE_TAP_RADIUS && Math.abs(touch0.y - touch1.y) < DOUBLE_TAP_RADIUS;
-	},
-	_calculatePointsDistance = function(p1, p2) {
-		_tempPoint.x = Math.abs( p1.x - p2.x );
-		_tempPoint.y = Math.abs( p1.y - p2.y );
-		return Math.sqrt(_tempPoint.x * _tempPoint.x + _tempPoint.y * _tempPoint.y);
-	},
-	_stopDragUpdateLoop = function() {
-		if(_dragAnimFrame) {
-			_cancelAF(_dragAnimFrame);
-			_dragAnimFrame = null;
-		}
-	},
-	_dragUpdateLoop = function() {
-		if(_isDragging) {
-			_dragAnimFrame = _requestAF(_dragUpdateLoop);
-			_renderMovement();
-		}
-	},
-	_canPan = function() {
-		return !(_options.scaleMode === 'fit' && _currZoomLevel ===  self.currItem.initialZoomLevel);
-	},
-	
-	// find the closest parent DOM element
-	_closestElement = function(el, fn) {
-	  	if(!el || el === document) {
-	  		return false;
-	  	}
-
-	  	// don't search elements above pswp__scroll-wrap
-	  	if(el.getAttribute('class') && el.getAttribute('class').indexOf('pswp__scroll-wrap') > -1 ) {
-	  		return false;
-	  	}
-
-	  	if( fn(el) ) {
-	  		return el;
-	  	}
-
-	  	return _closestElement(el.parentNode, fn);
-	},
-
-	_preventObj = {},
-	_preventDefaultEventBehaviour = function(e, isDown) {
-	    _preventObj.prevent = !_closestElement(e.target, _options.isClickableElement);
-
-		_shout('preventDragEvent', e, isDown, _preventObj);
-		return _preventObj.prevent;
-
-	},
-	_convertTouchToPoint = function(touch, p) {
-		p.x = touch.pageX;
-		p.y = touch.pageY;
-		p.id = touch.identifier;
-		return p;
-	},
-	_findCenterOfPoints = function(p1, p2, pCenter) {
-		pCenter.x = (p1.x + p2.x) * 0.5;
-		pCenter.y = (p1.y + p2.y) * 0.5;
-	},
-	_pushPosPoint = function(time, x, y) {
-		if(time - _gestureCheckSpeedTime > 50) {
-			var o = _posPoints.length > 2 ? _posPoints.shift() : {};
-			o.x = x;
-			o.y = y; 
-			_posPoints.push(o);
-			_gestureCheckSpeedTime = time;
-		}
-	},
-
-	_calculateVerticalDragOpacityRatio = function() {
-		var yOffset = _panOffset.y - self.currItem.initialPosition.y; // difference between initial and current position
-		return 1 -  Math.abs( yOffset / (_viewportSize.y / 2)  );
-	},
-
-	
-	// points pool, reused during touch events
-	_ePoint1 = {},
-	_ePoint2 = {},
-	_tempPointsArr = [],
-	_tempCounter,
-	_getTouchPoints = function(e) {
-		// clean up previous points, without recreating array
-		while(_tempPointsArr.length > 0) {
-			_tempPointsArr.pop();
-		}
-
-		if(!_pointerEventEnabled) {
-			if(e.type.indexOf('touch') > -1) {
-
-				if(e.touches && e.touches.length > 0) {
-					_tempPointsArr[0] = _convertTouchToPoint(e.touches[0], _ePoint1);
-					if(e.touches.length > 1) {
-						_tempPointsArr[1] = _convertTouchToPoint(e.touches[1], _ePoint2);
-					}
-				}
-				
-			} else {
-				_ePoint1.x = e.pageX;
-				_ePoint1.y = e.pageY;
-				_ePoint1.id = '';
-				_tempPointsArr[0] = _ePoint1;//_ePoint1;
-			}
-		} else {
-			_tempCounter = 0;
-			// we can use forEach, as pointer events are supported only in modern browsers
-			_currPointers.forEach(function(p) {
-				if(_tempCounter === 0) {
-					_tempPointsArr[0] = p;
-				} else if(_tempCounter === 1) {
-					_tempPointsArr[1] = p;
-				}
-				_tempCounter++;
-
-			});
-		}
-		return _tempPointsArr;
-	},
-
-	_panOrMoveMainScroll = function(axis, delta) {
-
-		var panFriction,
-			overDiff = 0,
-			newOffset = _panOffset[axis] + delta[axis],
-			startOverDiff,
-			dir = delta[axis] > 0,
-			newMainScrollPosition = _mainScrollPos.x + delta.x,
-			mainScrollDiff = _mainScrollPos.x - _startMainScrollPos.x,
-			newPanPos,
-			newMainScrollPos;
-
-		// calculate fdistance over the bounds and friction
-		if(newOffset > _currPanBounds.min[axis] || newOffset < _currPanBounds.max[axis]) {
-			panFriction = _options.panEndFriction;
-			// Linear increasing of friction, so at 1/4 of viewport it's at max value. 
-			// Looks not as nice as was expected. Left for history.
-			// panFriction = (1 - (_panOffset[axis] + delta[axis] + panBounds.min[axis]) / (_viewportSize[axis] / 4) );
-		} else {
-			panFriction = 1;
-		}
-		
-		newOffset = _panOffset[axis] + delta[axis] * panFriction;
-
-		// move main scroll or start panning
-		if(_options.allowPanToNext || _currZoomLevel === self.currItem.initialZoomLevel) {
-
-
-			if(!_currZoomElementStyle) {
-				
-				newMainScrollPos = newMainScrollPosition;
-
-			} else if(_direction === 'h' && axis === 'x' && !_zoomStarted ) {
-				
-				if(dir) {
-					if(newOffset > _currPanBounds.min[axis]) {
-						panFriction = _options.panEndFriction;
-						overDiff = _currPanBounds.min[axis] - newOffset;
-						startOverDiff = _currPanBounds.min[axis] - _startPanOffset[axis];
-					}
-					
-					// drag right
-					if( (startOverDiff <= 0 || mainScrollDiff < 0) && _getNumItems() > 1 ) {
-						newMainScrollPos = newMainScrollPosition;
-						if(mainScrollDiff < 0 && newMainScrollPosition > _startMainScrollPos.x) {
-							newMainScrollPos = _startMainScrollPos.x;
-						}
-					} else {
-						if(_currPanBounds.min.x !== _currPanBounds.max.x) {
-							newPanPos = newOffset;
-						}
-						
-					}
-
-				} else {
-
-					if(newOffset < _currPanBounds.max[axis] ) {
-						panFriction =_options.panEndFriction;
-						overDiff = newOffset - _currPanBounds.max[axis];
-						startOverDiff = _startPanOffset[axis] - _currPanBounds.max[axis];
-					}
-
-					if( (startOverDiff <= 0 || mainScrollDiff > 0) && _getNumItems() > 1 ) {
-						newMainScrollPos = newMainScrollPosition;
-
-						if(mainScrollDiff > 0 && newMainScrollPosition < _startMainScrollPos.x) {
-							newMainScrollPos = _startMainScrollPos.x;
-						}
-
-					} else {
-						if(_currPanBounds.min.x !== _currPanBounds.max.x) {
-							newPanPos = newOffset;
-						}
-					}
-
-				}
-
-
-				//
-			}
-
-			if(axis === 'x') {
-
-				if(newMainScrollPos !== undefined) {
-					_moveMainScroll(newMainScrollPos, true);
-					if(newMainScrollPos === _startMainScrollPos.x) {
-						_mainScrollShifted = false;
-					} else {
-						_mainScrollShifted = true;
-					}
-				}
-
-				if(_currPanBounds.min.x !== _currPanBounds.max.x) {
-					if(newPanPos !== undefined) {
-						_panOffset.x = newPanPos;
-					} else if(!_mainScrollShifted) {
-						_panOffset.x += delta.x * panFriction;
-					}
-				}
-
-				return newMainScrollPos !== undefined;
-			}
-
-		}
-
-		if(!_mainScrollAnimating) {
-			
-			if(!_mainScrollShifted) {
-				if(_currZoomLevel > self.currItem.fitRatio) {
-					_panOffset[axis] += delta[axis] * panFriction;
-				
-				}
-			}
-
-			
-		}
-		
-	},
-
-	// Pointerdown/touchstart/mousedown handler
-	_onDragStart = function(e) {
-
-		// Allow dragging only via left mouse button.
-		// As this handler is not added in IE8 - we ignore e.which
-		// 
-		// http://www.quirksmode.org/js/events_properties.html
-		// https://developer.mozilla.org/en-US/docs/Web/API/event.button
-		if(e.type === 'mousedown' && e.button > 0  ) {
-			return;
-		}
-
-		if(_initialZoomRunning) {
-			e.preventDefault();
-			return;
-		}
-
-		if(_oldAndroidTouchEndTimeout && e.type === 'mousedown') {
-			return;
-		}
-
-		if(_preventDefaultEventBehaviour(e, true)) {
-			e.preventDefault();
-		}
-
-
-
-		_shout('pointerDown');
-
-		if(_pointerEventEnabled) {
-			var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
-			if(pointerIndex < 0) {
-				pointerIndex = _currPointers.length;
-			}
-			_currPointers[pointerIndex] = {x:e.pageX, y:e.pageY, id: e.pointerId};
-		}
-		
-
-
-		var startPointsList = _getTouchPoints(e),
-			numPoints = startPointsList.length;
-
-		_currentPoints = null;
-
-		_stopAllAnimations();
-
-		// init drag
-		if(!_isDragging || numPoints === 1) {
-
-			
-
-			_isDragging = _isFirstMove = true;
-			framework.bind(window, _upMoveEvents, self);
-
-			_isZoomingIn = 
-				_wasOverInitialZoom = 
-				_opacityChanged = 
-				_verticalDragInitiated = 
-				_mainScrollShifted = 
-				_moved = 
-				_isMultitouch = 
-				_zoomStarted = false;
-
-			_direction = null;
-
-			_shout('firstTouchStart', startPointsList);
-
-			_equalizePoints(_startPanOffset, _panOffset);
-
-			_currPanDist.x = _currPanDist.y = 0;
-			_equalizePoints(_currPoint, startPointsList[0]);
-			_equalizePoints(_startPoint, _currPoint);
-
-			//_equalizePoints(_startMainScrollPos, _mainScrollPos);
-			_startMainScrollPos.x = _slideSize.x * _currPositionIndex;
-
-			_posPoints = [{
-				x: _currPoint.x,
-				y: _currPoint.y
-			}];
-
-			_gestureCheckSpeedTime = _gestureStartTime = _getCurrentTime();
-
-			//_mainScrollAnimationEnd(true);
-			_calculatePanBounds( _currZoomLevel, true );
-			
-			// Start rendering
-			_stopDragUpdateLoop();
-			_dragUpdateLoop();
-			
-		}
-
-		// init zoom
-		if(!_isZooming && numPoints > 1 && !_mainScrollAnimating && !_mainScrollShifted) {
-			_startZoomLevel = _currZoomLevel;
-			_zoomStarted = false; // true if zoom changed at least once
-
-			_isZooming = _isMultitouch = true;
-			_currPanDist.y = _currPanDist.x = 0;
-
-			_equalizePoints(_startPanOffset, _panOffset);
-
-			_equalizePoints(p, startPointsList[0]);
-			_equalizePoints(p2, startPointsList[1]);
-
-			_findCenterOfPoints(p, p2, _currCenterPoint);
-
-			_midZoomPoint.x = Math.abs(_currCenterPoint.x) - _panOffset.x;
-			_midZoomPoint.y = Math.abs(_currCenterPoint.y) - _panOffset.y;
-			_currPointsDistance = _startPointsDistance = _calculatePointsDistance(p, p2);
-		}
-
-
-	},
-
-	// Pointermove/touchmove/mousemove handler
-	_onDragMove = function(e) {
-
-		e.preventDefault();
-
-		if(_pointerEventEnabled) {
-			var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
-			if(pointerIndex > -1) {
-				var p = _currPointers[pointerIndex];
-				p.x = e.pageX;
-				p.y = e.pageY; 
-			}
-		}
-
-		if(_isDragging) {
-			var touchesList = _getTouchPoints(e);
-			if(!_direction && !_moved && !_isZooming) {
-
-				if(_mainScrollPos.x !== _slideSize.x * _currPositionIndex) {
-					// if main scroll position is shifted – direction is always horizontal
-					_direction = 'h';
-				} else {
-					var diff = Math.abs(touchesList[0].x - _currPoint.x) - Math.abs(touchesList[0].y - _currPoint.y);
-					// check the direction of movement
-					if(Math.abs(diff) >= DIRECTION_CHECK_OFFSET) {
-						_direction = diff > 0 ? 'h' : 'v';
-						_currentPoints = touchesList;
-					}
-				}
-				
-			} else {
-				_currentPoints = touchesList;
-			}
-		}	
-	},
-	// 
-	_renderMovement =  function() {
-
-		if(!_currentPoints) {
-			return;
-		}
-
-		var numPoints = _currentPoints.length;
-
-		if(numPoints === 0) {
-			return;
-		}
-
-		_equalizePoints(p, _currentPoints[0]);
-
-		delta.x = p.x - _currPoint.x;
-		delta.y = p.y - _currPoint.y;
-
-		if(_isZooming && numPoints > 1) {
-			// Handle behaviour for more than 1 point
-
-			_currPoint.x = p.x;
-			_currPoint.y = p.y;
-		
-			// check if one of two points changed
-			if( !delta.x && !delta.y && _isEqualPoints(_currentPoints[1], p2) ) {
-				return;
-			}
-
-			_equalizePoints(p2, _currentPoints[1]);
-
-
-			if(!_zoomStarted) {
-				_zoomStarted = true;
-				_shout('zoomGestureStarted');
-			}
-			
-			// Distance between two points
-			var pointsDistance = _calculatePointsDistance(p,p2);
-
-			var zoomLevel = _calculateZoomLevel(pointsDistance);
-
-			// slightly over the of initial zoom level
-			if(zoomLevel > self.currItem.initialZoomLevel + self.currItem.initialZoomLevel / 15) {
-				_wasOverInitialZoom = true;
-			}
-
-			// Apply the friction if zoom level is out of the bounds
-			var zoomFriction = 1,
-				minZoomLevel = _getMinZoomLevel(),
-				maxZoomLevel = _getMaxZoomLevel();
-
-			if ( zoomLevel < minZoomLevel ) {
-				
-				if(_options.pinchToClose && !_wasOverInitialZoom && _startZoomLevel <= self.currItem.initialZoomLevel) {
-					// fade out background if zooming out
-					var minusDiff = minZoomLevel - zoomLevel;
-					var percent = 1 - minusDiff / (minZoomLevel / 1.2);
-
-					_applyBgOpacity(percent);
-					_shout('onPinchClose', percent);
-					_opacityChanged = true;
-				} else {
-					zoomFriction = (minZoomLevel - zoomLevel) / minZoomLevel;
-					if(zoomFriction > 1) {
-						zoomFriction = 1;
-					}
-					zoomLevel = minZoomLevel - zoomFriction * (minZoomLevel / 3);
-				}
-				
-			} else if ( zoomLevel > maxZoomLevel ) {
-				// 1.5 - extra zoom level above the max. E.g. if max is x6, real max 6 + 1.5 = 7.5
-				zoomFriction = (zoomLevel - maxZoomLevel) / ( minZoomLevel * 6 );
-				if(zoomFriction > 1) {
-					zoomFriction = 1;
-				}
-				zoomLevel = maxZoomLevel + zoomFriction * minZoomLevel;
-			}
-
-			if(zoomFriction < 0) {
-				zoomFriction = 0;
-			}
-
-			// distance between touch points after friction is applied
-			_currPointsDistance = pointsDistance;
-
-			// _centerPoint - The point in the middle of two pointers
-			_findCenterOfPoints(p, p2, _centerPoint);
-		
-			// paning with two pointers pressed
-			_currPanDist.x += _centerPoint.x - _currCenterPoint.x;
-			_currPanDist.y += _centerPoint.y - _currCenterPoint.y;
-			_equalizePoints(_currCenterPoint, _centerPoint);
-
-			_panOffset.x = _calculatePanOffset('x', zoomLevel);
-			_panOffset.y = _calculatePanOffset('y', zoomLevel);
-
-			_isZoomingIn = zoomLevel > _currZoomLevel;
-			_currZoomLevel = zoomLevel;
-			_applyCurrentZoomPan();
-
-		} else {
-
-			// handle behaviour for one point (dragging or panning)
-
-			if(!_direction) {
-				return;
-			}
-
-			if(_isFirstMove) {
-				_isFirstMove = false;
-
-				// subtract drag distance that was used during the detection direction  
-
-				if( Math.abs(delta.x) >= DIRECTION_CHECK_OFFSET) {
-					delta.x -= _currentPoints[0].x - _startPoint.x;
-				}
-				
-				if( Math.abs(delta.y) >= DIRECTION_CHECK_OFFSET) {
-					delta.y -= _currentPoints[0].y - _startPoint.y;
-				}
-			}
-
-			_currPoint.x = p.x;
-			_currPoint.y = p.y;
-
-			// do nothing if pointers position hasn't changed
-			if(delta.x === 0 && delta.y === 0) {
-				return;
-			}
-
-			if(_direction === 'v' && _options.closeOnVerticalDrag) {
-				if(!_canPan()) {
-					_currPanDist.y += delta.y;
-					_panOffset.y += delta.y;
-
-					var opacityRatio = _calculateVerticalDragOpacityRatio();
-
-					_verticalDragInitiated = true;
-					_shout('onVerticalDrag', opacityRatio);
-
-					_applyBgOpacity(opacityRatio);
-					_applyCurrentZoomPan();
-					return ;
-				}
-			}
-
-			_pushPosPoint(_getCurrentTime(), p.x, p.y);
-
-			_moved = true;
-			_currPanBounds = self.currItem.bounds;
-			
-			var mainScrollChanged = _panOrMoveMainScroll('x', delta);
-			if(!mainScrollChanged) {
-				_panOrMoveMainScroll('y', delta);
-
-				_roundPoint(_panOffset);
-				_applyCurrentZoomPan();
-			}
-
-		}
-
-	},
-	
-	// Pointerup/pointercancel/touchend/touchcancel/mouseup event handler
-	_onDragRelease = function(e) {
-
-		if(_features.isOldAndroid ) {
-
-			if(_oldAndroidTouchEndTimeout && e.type === 'mouseup') {
-				return;
-			}
-
-			// on Android (v4.1, 4.2, 4.3 & possibly older) 
-			// ghost mousedown/up event isn't preventable via e.preventDefault,
-			// which causes fake mousedown event
-			// so we block mousedown/up for 600ms
-			if( e.type.indexOf('touch') > -1 ) {
-				clearTimeout(_oldAndroidTouchEndTimeout);
-				_oldAndroidTouchEndTimeout = setTimeout(function() {
-					_oldAndroidTouchEndTimeout = 0;
-				}, 600);
-			}
-			
-		}
-
-		_shout('pointerUp');
-
-		if(_preventDefaultEventBehaviour(e, false)) {
-			e.preventDefault();
-		}
-
-		var releasePoint;
-
-		if(_pointerEventEnabled) {
-			var pointerIndex = framework.arraySearch(_currPointers, e.pointerId, 'id');
-			
-			if(pointerIndex > -1) {
-				releasePoint = _currPointers.splice(pointerIndex, 1)[0];
-
-				if(navigator.msPointerEnabled) {
-					var MSPOINTER_TYPES = {
-						4: 'mouse', // event.MSPOINTER_TYPE_MOUSE
-						2: 'touch', // event.MSPOINTER_TYPE_TOUCH 
-						3: 'pen' // event.MSPOINTER_TYPE_PEN
-					};
-					releasePoint.type = MSPOINTER_TYPES[e.pointerType];
-
-					if(!releasePoint.type) {
-						releasePoint.type = e.pointerType || 'mouse';
-					}
-				} else {
-					releasePoint.type = e.pointerType || 'mouse';
-				}
-
-			}
-		}
-
-		var touchList = _getTouchPoints(e),
-			gestureType,
-			numPoints = touchList.length;
-
-		if(e.type === 'mouseup') {
-			numPoints = 0;
-		}
-
-		// Do nothing if there were 3 touch points or more
-		if(numPoints === 2) {
-			_currentPoints = null;
-			return true;
-		}
-
-		// if second pointer released
-		if(numPoints === 1) {
-			_equalizePoints(_startPoint, touchList[0]);
-		}				
-
-
-		// pointer hasn't moved, send "tap release" point
-		if(numPoints === 0 && !_direction && !_mainScrollAnimating) {
-			if(!releasePoint) {
-				if(e.type === 'mouseup') {
-					releasePoint = {x: e.pageX, y: e.pageY, type:'mouse'};
-				} else if(e.changedTouches && e.changedTouches[0]) {
-					releasePoint = {x: e.changedTouches[0].pageX, y: e.changedTouches[0].pageY, type:'touch'};
-				}		
-			}
-
-			_shout('touchRelease', e, releasePoint);
-		}
-
-		// Difference in time between releasing of two last touch points (zoom gesture)
-		var releaseTimeDiff = -1;
-
-		// Gesture completed, no pointers left
-		if(numPoints === 0) {
-			_isDragging = false;
-			framework.unbind(window, _upMoveEvents, self);
-
-			_stopDragUpdateLoop();
-
-			if(_isZooming) {
-				// Two points released at the same time
-				releaseTimeDiff = 0;
-			} else if(_lastReleaseTime !== -1) {
-				releaseTimeDiff = _getCurrentTime() - _lastReleaseTime;
-			}
-		}
-		_lastReleaseTime = numPoints === 1 ? _getCurrentTime() : -1;
-		
-		if(releaseTimeDiff !== -1 && releaseTimeDiff < 150) {
-			gestureType = 'zoom';
-		} else {
-			gestureType = 'swipe';
-		}
-
-		if(_isZooming && numPoints < 2) {
-			_isZooming = false;
-
-			// Only second point released
-			if(numPoints === 1) {
-				gestureType = 'zoomPointerUp';
-			}
-			_shout('zoomGestureEnded');
-		}
-
-		_currentPoints = null;
-		if(!_moved && !_zoomStarted && !_mainScrollAnimating && !_verticalDragInitiated) {
-			// nothing to animate
-			return;
-		}
-	
-		_stopAllAnimations();
-
-		
-		if(!_releaseAnimData) {
-			_releaseAnimData = _initDragReleaseAnimationData();
-		}
-		
-		_releaseAnimData.calculateSwipeSpeed('x');
-
-
-		if(_verticalDragInitiated) {
-
-			var opacityRatio = _calculateVerticalDragOpacityRatio();
-
-			if(opacityRatio < _options.verticalDragRange) {
-				self.close();
-			} else {
-				var initalPanY = _panOffset.y,
-					initialBgOpacity = _bgOpacity;
-
-				_animateProp('verticalDrag', 0, 1, 300, framework.easing.cubic.out, function(now) {
-					
-					_panOffset.y = (self.currItem.initialPosition.y - initalPanY) * now + initalPanY;
-
-					_applyBgOpacity(  (1 - initialBgOpacity) * now + initialBgOpacity );
-					_applyCurrentZoomPan();
-				});
-
-				_shout('onVerticalDrag', 1);
-			}
-
-			return;
-		}
-
-
-		// main scroll 
-		if(  (_mainScrollShifted || _mainScrollAnimating) && numPoints === 0) {
-			var itemChanged = _finishSwipeMainScrollGesture(gestureType, _releaseAnimData);
-			if(itemChanged) {
-				return;
-			}
-			gestureType = 'zoomPointerUp';
-		}
-
-		// prevent zoom/pan animation when main scroll animation runs
-		if(_mainScrollAnimating) {
-			return;
-		}
-		
-		// Complete simple zoom gesture (reset zoom level if it's out of the bounds)  
-		if(gestureType !== 'swipe') {
-			_completeZoomGesture();
-			return;
-		}
-	
-		// Complete pan gesture if main scroll is not shifted, and it's possible to pan current image
-		if(!_mainScrollShifted && _currZoomLevel > self.currItem.fitRatio) {
-			_completePanGesture(_releaseAnimData);
-		}
-	},
-
-
-	// Returns object with data about gesture
-	// It's created only once and then reused
-	_initDragReleaseAnimationData  = function() {
-		// temp local vars
-		var lastFlickDuration,
-			tempReleasePos;
-
-		// s = this
-		var s = {
-			lastFlickOffset: {},
-			lastFlickDist: {},
-			lastFlickSpeed: {},
-			slowDownRatio:  {},
-			slowDownRatioReverse:  {},
-			speedDecelerationRatio:  {},
-			speedDecelerationRatioAbs:  {},
-			distanceOffset:  {},
-			backAnimDestination: {},
-			backAnimStarted: {},
-			calculateSwipeSpeed: function(axis) {
-				
-
-				if( _posPoints.length > 1) {
-					lastFlickDuration = _getCurrentTime() - _gestureCheckSpeedTime + 50;
-					tempReleasePos = _posPoints[_posPoints.length-2][axis];
-				} else {
-					lastFlickDuration = _getCurrentTime() - _gestureStartTime; // total gesture duration
-					tempReleasePos = _startPoint[axis];
-				}
-				s.lastFlickOffset[axis] = _currPoint[axis] - tempReleasePos;
-				s.lastFlickDist[axis] = Math.abs(s.lastFlickOffset[axis]);
-				if(s.lastFlickDist[axis] > 20) {
-					s.lastFlickSpeed[axis] = s.lastFlickOffset[axis] / lastFlickDuration;
-				} else {
-					s.lastFlickSpeed[axis] = 0;
-				}
-				if( Math.abs(s.lastFlickSpeed[axis]) < 0.1 ) {
-					s.lastFlickSpeed[axis] = 0;
-				}
-				
-				s.slowDownRatio[axis] = 0.95;
-				s.slowDownRatioReverse[axis] = 1 - s.slowDownRatio[axis];
-				s.speedDecelerationRatio[axis] = 1;
-			},
-
-			calculateOverBoundsAnimOffset: function(axis, speed) {
-				if(!s.backAnimStarted[axis]) {
-
-					if(_panOffset[axis] > _currPanBounds.min[axis]) {
-						s.backAnimDestination[axis] = _currPanBounds.min[axis];
-						
-					} else if(_panOffset[axis] < _currPanBounds.max[axis]) {
-						s.backAnimDestination[axis] = _currPanBounds.max[axis];
-					}
-
-					if(s.backAnimDestination[axis] !== undefined) {
-						s.slowDownRatio[axis] = 0.7;
-						s.slowDownRatioReverse[axis] = 1 - s.slowDownRatio[axis];
-						if(s.speedDecelerationRatioAbs[axis] < 0.05) {
-
-							s.lastFlickSpeed[axis] = 0;
-							s.backAnimStarted[axis] = true;
-
-							_animateProp('bounceZoomPan'+axis,_panOffset[axis], 
-								s.backAnimDestination[axis], 
-								speed || 300, 
-								framework.easing.sine.out, 
-								function(pos) {
-									_panOffset[axis] = pos;
-									_applyCurrentZoomPan();
-								}
-							);
-
-						}
-					}
-				}
-			},
-
-			// Reduces the speed by slowDownRatio (per 10ms)
-			calculateAnimOffset: function(axis) {
-				if(!s.backAnimStarted[axis]) {
-					s.speedDecelerationRatio[axis] = s.speedDecelerationRatio[axis] * (s.slowDownRatio[axis] + 
-												s.slowDownRatioReverse[axis] - 
-												s.slowDownRatioReverse[axis] * s.timeDiff / 10);
-
-					s.speedDecelerationRatioAbs[axis] = Math.abs(s.lastFlickSpeed[axis] * s.speedDecelerationRatio[axis]);
-					s.distanceOffset[axis] = s.lastFlickSpeed[axis] * s.speedDecelerationRatio[axis] * s.timeDiff;
-					_panOffset[axis] += s.distanceOffset[axis];
-
-				}
-			},
-
-			panAnimLoop: function() {
-				if ( _animations.zoomPan ) {
-					_animations.zoomPan.raf = _requestAF(s.panAnimLoop);
-
-					s.now = _getCurrentTime();
-					s.timeDiff = s.now - s.lastNow;
-					s.lastNow = s.now;
-					
-					s.calculateAnimOffset('x');
-					s.calculateAnimOffset('y');
-
-					_applyCurrentZoomPan();
-					
-					s.calculateOverBoundsAnimOffset('x');
-					s.calculateOverBoundsAnimOffset('y');
-
-
-					if (s.speedDecelerationRatioAbs.x < 0.05 && s.speedDecelerationRatioAbs.y < 0.05) {
-
-						// round pan position
-						_panOffset.x = Math.round(_panOffset.x);
-						_panOffset.y = Math.round(_panOffset.y);
-						_applyCurrentZoomPan();
-						
-						_stopAnimation('zoomPan');
-						return;
-					}
-				}
-
-			}
-		};
-		return s;
-	},
-
-	_completePanGesture = function(animData) {
-		// calculate swipe speed for Y axis (paanning)
-		animData.calculateSwipeSpeed('y');
-
-		_currPanBounds = self.currItem.bounds;
-		
-		animData.backAnimDestination = {};
-		animData.backAnimStarted = {};
-
-		// Avoid acceleration animation if speed is too low
-		if(Math.abs(animData.lastFlickSpeed.x) <= 0.05 && Math.abs(animData.lastFlickSpeed.y) <= 0.05 ) {
-			animData.speedDecelerationRatioAbs.x = animData.speedDecelerationRatioAbs.y = 0;
-
-			// Run pan drag release animation. E.g. if you drag image and release finger without momentum.
-			animData.calculateOverBoundsAnimOffset('x');
-			animData.calculateOverBoundsAnimOffset('y');
-			return true;
-		}
-
-		// Animation loop that controls the acceleration after pan gesture ends
-		_registerStartAnimation('zoomPan');
-		animData.lastNow = _getCurrentTime();
-		animData.panAnimLoop();
-	},
-
-
-	_finishSwipeMainScrollGesture = function(gestureType, _releaseAnimData) {
-		var itemChanged;
-		if(!_mainScrollAnimating) {
-			_currZoomedItemIndex = _currentItemIndex;
-		}
-
-
-		
-		var itemsDiff;
-
-		if(gestureType === 'swipe') {
-			var totalShiftDist = _currPoint.x - _startPoint.x,
-				isFastLastFlick = _releaseAnimData.lastFlickDist.x < 10;
-
-			// if container is shifted for more than MIN_SWIPE_DISTANCE, 
-			// and last flick gesture was in right direction
-			if(totalShiftDist > MIN_SWIPE_DISTANCE && 
-				(isFastLastFlick || _releaseAnimData.lastFlickOffset.x > 20) ) {
-				// go to prev item
-				itemsDiff = -1;
-			} else if(totalShiftDist < -MIN_SWIPE_DISTANCE && 
-				(isFastLastFlick || _releaseAnimData.lastFlickOffset.x < -20) ) {
-				// go to next item
-				itemsDiff = 1;
-			}
-		}
-
-		var nextCircle;
-
-		if(itemsDiff) {
-			
-			_currentItemIndex += itemsDiff;
-
-			if(_currentItemIndex < 0) {
-				_currentItemIndex = _options.loop ? _getNumItems()-1 : 0;
-				nextCircle = true;
-			} else if(_currentItemIndex >= _getNumItems()) {
-				_currentItemIndex = _options.loop ? 0 : _getNumItems()-1;
-				nextCircle = true;
-			}
-
-			if(!nextCircle || _options.loop) {
-				_indexDiff += itemsDiff;
-				_currPositionIndex -= itemsDiff;
-				itemChanged = true;
-			}
-			
-
-			
-		}
-
-		var animateToX = _slideSize.x * _currPositionIndex;
-		var animateToDist = Math.abs( animateToX - _mainScrollPos.x );
-		var finishAnimDuration;
-
-
-		if(!itemChanged && animateToX > _mainScrollPos.x !== _releaseAnimData.lastFlickSpeed.x > 0) {
-			// "return to current" duration, e.g. when dragging from slide 0 to -1
-			finishAnimDuration = 333; 
-		} else {
-			finishAnimDuration = Math.abs(_releaseAnimData.lastFlickSpeed.x) > 0 ? 
-									animateToDist / Math.abs(_releaseAnimData.lastFlickSpeed.x) : 
-									333;
-
-			finishAnimDuration = Math.min(finishAnimDuration, 400);
-			finishAnimDuration = Math.max(finishAnimDuration, 250);
-		}
-
-		if(_currZoomedItemIndex === _currentItemIndex) {
-			itemChanged = false;
-		}
-		
-		_mainScrollAnimating = true;
-		
-		_shout('mainScrollAnimStart');
-
-		_animateProp('mainScroll', _mainScrollPos.x, animateToX, finishAnimDuration, framework.easing.cubic.out, 
-			_moveMainScroll,
-			function() {
-				_stopAllAnimations();
-				_mainScrollAnimating = false;
-				_currZoomedItemIndex = -1;
-				
-				if(itemChanged || _currZoomedItemIndex !== _currentItemIndex) {
-					self.updateCurrItem();
-				}
-				
-				_shout('mainScrollAnimComplete');
-			}
-		);
-
-		if(itemChanged) {
-			self.updateCurrItem(true);
-		}
-
-		return itemChanged;
-	},
-
-	_calculateZoomLevel = function(touchesDistance) {
-		return  1 / _startPointsDistance * touchesDistance * _startZoomLevel;
-	},
-
-	// Resets zoom if it's out of bounds
-	_completeZoomGesture = function() {
-		var destZoomLevel = _currZoomLevel,
-			minZoomLevel = _getMinZoomLevel(),
-			maxZoomLevel = _getMaxZoomLevel();
-
-		if ( _currZoomLevel < minZoomLevel ) {
-			destZoomLevel = minZoomLevel;
-		} else if ( _currZoomLevel > maxZoomLevel ) {
-			destZoomLevel = maxZoomLevel;
-		}
-
-		var destOpacity = 1,
-			onUpdate,
-			initialOpacity = _bgOpacity;
-
-		if(_opacityChanged && !_isZoomingIn && !_wasOverInitialZoom && _currZoomLevel < minZoomLevel) {
-			//_closedByScroll = true;
-			self.close();
-			return true;
-		}
-
-		if(_opacityChanged) {
-			onUpdate = function(now) {
-				_applyBgOpacity(  (destOpacity - initialOpacity) * now + initialOpacity );
-			};
-		}
-
-		self.zoomTo(destZoomLevel, 0, 200,  framework.easing.cubic.out, onUpdate);
-		return true;
-	};
-
-
-_registerModule('Gestures', {
-	publicMethods: {
-
-		initGestures: function() {
-
-			// helper function that builds touch/pointer/mouse events
-			var addEventNames = function(pref, down, move, up, cancel) {
-				_dragStartEvent = pref + down;
-				_dragMoveEvent = pref + move;
-				_dragEndEvent = pref + up;
-				if(cancel) {
-					_dragCancelEvent = pref + cancel;
-				} else {
-					_dragCancelEvent = '';
-				}
-			};
-
-			_pointerEventEnabled = _features.pointerEvent;
-			if(_pointerEventEnabled && _features.touch) {
-				// we don't need touch events, if browser supports pointer events
-				_features.touch = false;
-			}
-
-			if(_pointerEventEnabled) {
-				if(navigator.msPointerEnabled) {
-					// IE10 pointer events are case-sensitive
-					addEventNames('MSPointer', 'Down', 'Move', 'Up', 'Cancel');
-				} else {
-					addEventNames('pointer', 'down', 'move', 'up', 'cancel');
-				}
-			} else if(_features.touch) {
-				addEventNames('touch', 'start', 'move', 'end', 'cancel');
-				_likelyTouchDevice = true;
-			} else {
-				addEventNames('mouse', 'down', 'move', 'up');	
-			}
-
-			_upMoveEvents = _dragMoveEvent + ' ' + _dragEndEvent  + ' ' +  _dragCancelEvent;
-			_downEvents = _dragStartEvent;
-
-			if(_pointerEventEnabled && !_likelyTouchDevice) {
-				_likelyTouchDevice = (navigator.maxTouchPoints > 1) || (navigator.msMaxTouchPoints > 1);
-			}
-			// make variable public
-			self.likelyTouchDevice = _likelyTouchDevice; 
-			
-			_globalEventHandlers[_dragStartEvent] = _onDragStart;
-			_globalEventHandlers[_dragMoveEvent] = _onDragMove;
-			_globalEventHandlers[_dragEndEvent] = _onDragRelease; // the Kraken
-
-			if(_dragCancelEvent) {
-				_globalEventHandlers[_dragCancelEvent] = _globalEventHandlers[_dragEndEvent];
-			}
-
-			// Bind mouse events on device with detected hardware touch support, in case it supports multiple types of input.
-			if(_features.touch) {
-				_downEvents += ' mousedown';
-				_upMoveEvents += ' mousemove mouseup';
-				_globalEventHandlers.mousedown = _globalEventHandlers[_dragStartEvent];
-				_globalEventHandlers.mousemove = _globalEventHandlers[_dragMoveEvent];
-				_globalEventHandlers.mouseup = _globalEventHandlers[_dragEndEvent];
-			}
-
-			if(!_likelyTouchDevice) {
-				// don't allow pan to next slide from zoomed state on Desktop
-				_options.allowPanToNext = false;
-			}
-		}
-
-	}
-});
-
-
-/*>>gestures*/
-
-/*>>show-hide-transition*/
-/**
- * show-hide-transition.js:
- *
- * Manages initial opening or closing transition.
- *
- * If you're not planning to use transition for gallery at all,
- * you may set options hideAnimationDuration and showAnimationDuration to 0,
- * and just delete startAnimation function.
- * 
- */
-
-
-var _showOrHideTimeout,
-	_showOrHide = function(item, img, out, completeFn) {
-
-		if(_showOrHideTimeout) {
-			clearTimeout(_showOrHideTimeout);
-		}
-
-		_initialZoomRunning = true;
-		_initialContentSet = true;
-		
-		// dimensions of small thumbnail {x:,y:,w:}.
-		// Height is optional, as calculated based on large image.
-		var thumbBounds; 
-		if(item.initialLayout) {
-			thumbBounds = item.initialLayout;
-			item.initialLayout = null;
-		} else {
-			thumbBounds = _options.getThumbBoundsFn && _options.getThumbBoundsFn(_currentItemIndex);
-		}
-
-		var duration = out ? _options.hideAnimationDuration : _options.showAnimationDuration;
-
-		var onComplete = function() {
-			_stopAnimation('initialZoom');
-			if(!out) {
-				_applyBgOpacity(1);
-				if(img) {
-					img.style.display = 'block';
-				}
-				framework.addClass(template, 'pswp--animated-in');
-				_shout('initialZoom' + (out ? 'OutEnd' : 'InEnd'));
-			} else {
-				self.template.removeAttribute('style');
-				self.bg.removeAttribute('style');
-			}
-
-			if(completeFn) {
-				completeFn();
-			}
-			_initialZoomRunning = false;
-		};
-
-		// if bounds aren't provided, just open gallery without animation
-		if(!duration || !thumbBounds || thumbBounds.x === undefined) {
-
-			_shout('initialZoom' + (out ? 'Out' : 'In') );
-
-			_currZoomLevel = item.initialZoomLevel;
-			_equalizePoints(_panOffset,  item.initialPosition );
-			_applyCurrentZoomPan();
-
-			template.style.opacity = out ? 0 : 1;
-			_applyBgOpacity(1);
-
-			if(duration) {
-				setTimeout(function() {
-					onComplete();
-				}, duration);
-			} else {
-				onComplete();
-			}
-
-			return;
-		}
-
-		var startAnimation = function() {
-			var closeWithRaf = _closedByScroll,
-				fadeEverything = !self.currItem.src || self.currItem.loadError || _options.showHideOpacity;
-			
-			// apply hw-acceleration to image
-			if(item.miniImg) {
-				item.miniImg.style.webkitBackfaceVisibility = 'hidden';
-			}
-
-			if(!out) {
-				_currZoomLevel = thumbBounds.w / item.w;
-				_panOffset.x = thumbBounds.x;
-				_panOffset.y = thumbBounds.y - _initalWindowScrollY;
-
-				self[fadeEverything ? 'template' : 'bg'].style.opacity = 0.001;
-				_applyCurrentZoomPan();
-			}
-
-			_registerStartAnimation('initialZoom');
-			
-			if(out && !closeWithRaf) {
-				framework.removeClass(template, 'pswp--animated-in');
-			}
-
-			if(fadeEverything) {
-				if(out) {
-					framework[ (closeWithRaf ? 'remove' : 'add') + 'Class' ](template, 'pswp--animate_opacity');
-				} else {
-					setTimeout(function() {
-						framework.addClass(template, 'pswp--animate_opacity');
-					}, 30);
-				}
-			}
-
-			_showOrHideTimeout = setTimeout(function() {
-
-				_shout('initialZoom' + (out ? 'Out' : 'In') );
-				
-
-				if(!out) {
-
-					// "in" animation always uses CSS transitions (instead of rAF).
-					// CSS transition work faster here, 
-					// as developer may also want to animate other things, 
-					// like ui on top of sliding area, which can be animated just via CSS
-					
-					_currZoomLevel = item.initialZoomLevel;
-					_equalizePoints(_panOffset,  item.initialPosition );
-					_applyCurrentZoomPan();
-					_applyBgOpacity(1);
-
-					if(fadeEverything) {
-						template.style.opacity = 1;
-					} else {
-						_applyBgOpacity(1);
-					}
-
-					_showOrHideTimeout = setTimeout(onComplete, duration + 20);
-				} else {
-
-					// "out" animation uses rAF only when PhotoSwipe is closed by browser scroll, to recalculate position
-					var destZoomLevel = thumbBounds.w / item.w,
-						initialPanOffset = {
-							x: _panOffset.x,
-							y: _panOffset.y
-						},
-						initialZoomLevel = _currZoomLevel,
-						initalBgOpacity = _bgOpacity,
-						onUpdate = function(now) {
-							
-							if(now === 1) {
-								_currZoomLevel = destZoomLevel;
-								_panOffset.x = thumbBounds.x;
-								_panOffset.y = thumbBounds.y  - _currentWindowScrollY;
-							} else {
-								_currZoomLevel = (destZoomLevel - initialZoomLevel) * now + initialZoomLevel;
-								_panOffset.x = (thumbBounds.x - initialPanOffset.x) * now + initialPanOffset.x;
-								_panOffset.y = (thumbBounds.y - _currentWindowScrollY - initialPanOffset.y) * now + initialPanOffset.y;
-							}
-							
-							_applyCurrentZoomPan();
-							if(fadeEverything) {
-								template.style.opacity = 1 - now;
-							} else {
-								_applyBgOpacity( initalBgOpacity - now * initalBgOpacity );
-							}
-						};
-
-					if(closeWithRaf) {
-						_animateProp('initialZoom', 0, 1, duration, framework.easing.cubic.out, onUpdate, onComplete);
-					} else {
-						onUpdate(1);
-						_showOrHideTimeout = setTimeout(onComplete, duration + 20);
-					}
-				}
-			
-			}, out ? 25 : 90); // Main purpose of this delay is to give browser time to paint and
-					// create composite layers of PhotoSwipe UI parts (background, controls, caption, arrows).
-					// Which avoids lag at the beginning of scale transition.
-		};
-		startAnimation();
-
-		
-	};
-
-/*>>show-hide-transition*/
-
-/*>>items-controller*/
-/**
-*
-* Controller manages gallery items, their dimensions, and their content.
-* 
-*/
-
-var _items,
-	_tempPanAreaSize = {},
-	_imagesToAppendPool = [],
-	_initialContentSet,
-	_initialZoomRunning,
-	_controllerDefaultOptions = {
-		index: 0,
-		errorMsg: '<div class="pswp__error-msg"><a href="%url%" target="_blank">The image</a> could not be loaded.</div>',
-		forceProgressiveLoading: false, // TODO
-		preload: [1,1],
-		getNumItemsFn: function() {
-			return _items.length;
-		}
-	};
-
-
-var _getItemAt,
-	_getNumItems,
-	_initialIsLoop,
-	_getZeroBounds = function() {
-		return {
-			center:{x:0,y:0}, 
-			max:{x:0,y:0}, 
-			min:{x:0,y:0}
-		};
-	},
-	_calculateSingleItemPanBounds = function(item, realPanElementW, realPanElementH ) {
-		var bounds = item.bounds;
-
-		// position of element when it's centered
-		bounds.center.x = Math.round((_tempPanAreaSize.x - realPanElementW) / 2);
-		bounds.center.y = Math.round((_tempPanAreaSize.y - realPanElementH) / 2) + item.vGap.top;
-
-		// maximum pan position
-		bounds.max.x = (realPanElementW > _tempPanAreaSize.x) ? 
-							Math.round(_tempPanAreaSize.x - realPanElementW) : 
-							bounds.center.x;
-		
-		bounds.max.y = (realPanElementH > _tempPanAreaSize.y) ? 
-							Math.round(_tempPanAreaSize.y - realPanElementH) + item.vGap.top : 
-							bounds.center.y;
-		
-		// minimum pan position
-		bounds.min.x = (realPanElementW > _tempPanAreaSize.x) ? 0 : bounds.center.x;
-		bounds.min.y = (realPanElementH > _tempPanAreaSize.y) ? item.vGap.top : bounds.center.y;
-	},
-	_calculateItemSize = function(item, viewportSize, zoomLevel) {
-
-		if (item.src && !item.loadError) {
-			var isInitial = !zoomLevel;
-			
-			if(isInitial) {
-				if(!item.vGap) {
-					item.vGap = {top:0,bottom:0};
-				}
-				// allows overriding vertical margin for individual items
-				_shout('parseVerticalMargin', item);
-			}
-
-
-			_tempPanAreaSize.x = viewportSize.x;
-			_tempPanAreaSize.y = viewportSize.y - item.vGap.top - item.vGap.bottom;
-
-			if (isInitial) {
-				var hRatio = _tempPanAreaSize.x / item.w;
-				var vRatio = _tempPanAreaSize.y / item.h;
-
-				item.fitRatio = hRatio < vRatio ? hRatio : vRatio;
-				//item.fillRatio = hRatio > vRatio ? hRatio : vRatio;
-
-				var scaleMode = _options.scaleMode;
-
-				if (scaleMode === 'orig') {
-					zoomLevel = 1;
-				} else if (scaleMode === 'fit') {
-					zoomLevel = item.fitRatio;
-				}
-
-				if (zoomLevel > 1) {
-					zoomLevel = 1;
-				}
-
-				item.initialZoomLevel = zoomLevel;
-				
-				if(!item.bounds) {
-					// reuse bounds object
-					item.bounds = _getZeroBounds(); 
-				}
-			}
-
-			if(!zoomLevel) {
-				return;
-			}
-
-			_calculateSingleItemPanBounds(item, item.w * zoomLevel, item.h * zoomLevel);
-
-			if (isInitial && zoomLevel === item.initialZoomLevel) {
-				item.initialPosition = item.bounds.center;
-			}
-
-			return item.bounds;
-		} else {
-			item.w = item.h = 0;
-			item.initialZoomLevel = item.fitRatio = 1;
-			item.bounds = _getZeroBounds();
-			item.initialPosition = item.bounds.center;
-
-			// if it's not image, we return zero bounds (content is not zoomable)
-			return item.bounds;
-		}
-		
-	},
-
-	
-
-
-	_appendImage = function(index, item, baseDiv, img, preventAnimation, keepPlaceholder) {
-		
-
-		if(item.loadError) {
-			return;
-		}
-
-		if(img) {
-
-			item.imageAppended = true;
-			_setImageSize(item, img, (item === self.currItem && _renderMaxResolution) );
-			
-			baseDiv.appendChild(img);
-
-			if(keepPlaceholder) {
-				setTimeout(function() {
-					if(item && item.loaded && item.placeholder) {
-						item.placeholder.style.display = 'none';
-						item.placeholder = null;
-					}
-				}, 500);
-			}
-		}
-	},
-	
-
-
-	_preloadImage = function(item) {
-		item.loading = true;
-		item.loaded = false;
-		var img = item.img = framework.createEl('pswp__img', 'img');
-		var onComplete = function() {
-			item.loading = false;
-			item.loaded = true;
-
-			if(item.loadComplete) {
-				item.loadComplete(item);
-			} else {
-				item.img = null; // no need to store image object
-			}
-			img.onload = img.onerror = null;
-			img = null;
-		};
-		img.onload = onComplete;
-		img.onerror = function() {
-			item.loadError = true;
-			onComplete();
-		};		
-
-		img.src = item.src;// + '?a=' + Math.random();
-
-		return img;
-	},
-	_checkForError = function(item, cleanUp) {
-		if(item.src && item.loadError && item.container) {
-
-			if(cleanUp) {
-				item.container.innerHTML = '';
-			}
-
-			item.container.innerHTML = _options.errorMsg.replace('%url%',  item.src );
-			return true;
-			
-		}
-	},
-	_setImageSize = function(item, img, maxRes) {
-		if(!item.src) {
-			return;
-		}
-
-		if(!img) {
-			img = item.container.lastChild;
-		}
-
-		var w = maxRes ? item.w : Math.round(item.w * item.fitRatio),
-			h = maxRes ? item.h : Math.round(item.h * item.fitRatio);
-		
-		if(item.placeholder && !item.loaded) {
-			item.placeholder.style.width = w + 'px';
-			item.placeholder.style.height = h + 'px';
-		}
-
-		img.style.width = w + 'px';
-		img.style.height = h + 'px';
-	},
-	_appendImagesPool = function() {
-
-		if(_imagesToAppendPool.length) {
-			var poolItem;
-
-			for(var i = 0; i < _imagesToAppendPool.length; i++) {
-				poolItem = _imagesToAppendPool[i];
-				if( poolItem.holder.index === poolItem.index ) {
-					_appendImage(poolItem.index, poolItem.item, poolItem.baseDiv, poolItem.img, false, poolItem.clearPlaceholder);
-				}
-			}
-			_imagesToAppendPool = [];
-		}
-	};
-	
-
-
-_registerModule('Controller', {
-
-	publicMethods: {
-
-		lazyLoadItem: function(index) {
-			index = _getLoopedId(index);
-			var item = _getItemAt(index);
-
-			if(!item || ((item.loaded || item.loading) && !_itemsNeedUpdate)) {
-				return;
-			}
-
-			_shout('gettingData', index, item);
-
-			if (!item.src) {
-				return;
-			}
-
-			_preloadImage(item);
-		},
-		initController: function() {
-			framework.extend(_options, _controllerDefaultOptions, true);
-			self.items = _items = items;
-			_getItemAt = self.getItemAt;
-			_getNumItems = _options.getNumItemsFn; //self.getNumItems;
-
-
-
-			_initialIsLoop = _options.loop;
-			if(_getNumItems() < 3) {
-				_options.loop = false; // disable loop if less then 3 items
-			}
-
-			_listen('beforeChange', function(diff) {
-
-				var p = _options.preload,
-					isNext = diff === null ? true : (diff >= 0),
-					preloadBefore = Math.min(p[0], _getNumItems() ),
-					preloadAfter = Math.min(p[1], _getNumItems() ),
-					i;
-
-
-				for(i = 1; i <= (isNext ? preloadAfter : preloadBefore); i++) {
-					self.lazyLoadItem(_currentItemIndex+i);
-				}
-				for(i = 1; i <= (isNext ? preloadBefore : preloadAfter); i++) {
-					self.lazyLoadItem(_currentItemIndex-i);
-				}
-			});
-
-			_listen('initialLayout', function() {
-				self.currItem.initialLayout = _options.getThumbBoundsFn && _options.getThumbBoundsFn(_currentItemIndex);
-			});
-
-			_listen('mainScrollAnimComplete', _appendImagesPool);
-			_listen('initialZoomInEnd', _appendImagesPool);
-
-
-
-			_listen('destroy', function() {
-				var item;
-				for(var i = 0; i < _items.length; i++) {
-					item = _items[i];
-					// remove reference to DOM elements, for GC
-					if(item.container) {
-						item.container = null; 
-					}
-					if(item.placeholder) {
-						item.placeholder = null;
-					}
-					if(item.img) {
-						item.img = null;
-					}
-					if(item.preloader) {
-						item.preloader = null;
-					}
-					if(item.loadError) {
-						item.loaded = item.loadError = false;
-					}
-				}
-				_imagesToAppendPool = null;
-			});
-		},
-
-
-		getItemAt: function(index) {
-			if (index >= 0) {
-				return _items[index] !== undefined ? _items[index] : false;
-			}
-			return false;
-		},
-
-		allowProgressiveImg: function() {
-			// 1. Progressive image loading isn't working on webkit/blink 
-			//    when hw-acceleration (e.g. translateZ) is applied to IMG element.
-			//    That's why in PhotoSwipe parent element gets zoom transform, not image itself.
-			//    
-			// 2. Progressive image loading sometimes blinks in webkit/blink when applying animation to parent element.
-			//    That's why it's disabled on touch devices (mainly because of swipe transition)
-			//    
-			// 3. Progressive image loading sometimes doesn't work in IE (up to 11).
-
-			// Don't allow progressive loading on non-large touch devices
-			return _options.forceProgressiveLoading || !_likelyTouchDevice || _options.mouseUsed || screen.width > 1200; 
-			// 1200 - to eliminate touch devices with large screen (like Chromebook Pixel)
-		},
-
-		setContent: function(holder, index) {
-
-			if(_options.loop) {
-				index = _getLoopedId(index);
-			}
-
-			var prevItem = self.getItemAt(holder.index);
-			if(prevItem) {
-				prevItem.container = null;
-			}
-	
-			var item = self.getItemAt(index),
-				img;
-			
-			if(!item) {
-				holder.el.innerHTML = '';
-				return;
-			}
-
-			// allow to override data
-			_shout('gettingData', index, item);
-
-			holder.index = index;
-			holder.item = item;
-
-			// base container DIV is created only once for each of 3 holders
-			var baseDiv = item.container = framework.createEl('pswp__zoom-wrap'); 
-
-			
-
-			if(!item.src && item.html) {
-				if(item.html.tagName) {
-					baseDiv.appendChild(item.html);
-				} else {
-					baseDiv.innerHTML = item.html;
-				}
-			}
-
-			_checkForError(item);
-
-			_calculateItemSize(item, _viewportSize);
-			
-			if(item.src && !item.loadError && !item.loaded) {
-
-				item.loadComplete = function(item) {
-
-					// gallery closed before image finished loading
-					if(!_isOpen) {
-						return;
-					}
-
-					// check if holder hasn't changed while image was loading
-					if(holder && holder.index === index ) {
-						if( _checkForError(item, true) ) {
-							item.loadComplete = item.img = null;
-							_calculateItemSize(item, _viewportSize);
-							_applyZoomPanToItem(item);
-
-							if(holder.index === _currentItemIndex) {
-								// recalculate dimensions
-								self.updateCurrZoomItem();
-							}
-							return;
-						}
-						if( !item.imageAppended ) {
-							if(_features.transform && (_mainScrollAnimating || _initialZoomRunning) ) {
-								_imagesToAppendPool.push({
-									item:item,
-									baseDiv:baseDiv,
-									img:item.img,
-									index:index,
-									holder:holder,
-									clearPlaceholder:true
-								});
-							} else {
-								_appendImage(index, item, baseDiv, item.img, _mainScrollAnimating || _initialZoomRunning, true);
-							}
-						} else {
-							// remove preloader & mini-img
-							if(!_initialZoomRunning && item.placeholder) {
-								item.placeholder.style.display = 'none';
-								item.placeholder = null;
-							}
-						}
-					}
-
-					item.loadComplete = null;
-					item.img = null; // no need to store image element after it's added
-
-					_shout('imageLoadComplete', index, item);
-				};
-
-				if(framework.features.transform) {
-					
-					var placeholderClassName = 'pswp__img pswp__img--placeholder'; 
-					placeholderClassName += (item.msrc ? '' : ' pswp__img--placeholder--blank');
-
-					var placeholder = framework.createEl(placeholderClassName, item.msrc ? 'img' : '');
-					if(item.msrc) {
-						placeholder.src = item.msrc;
-					}
-					
-					_setImageSize(item, placeholder);
-
-					baseDiv.appendChild(placeholder);
-					item.placeholder = placeholder;
-
-				}
-				
-
-				
-
-				if(!item.loading) {
-					_preloadImage(item);
-				}
-
-
-				if( self.allowProgressiveImg() ) {
-					// just append image
-					if(!_initialContentSet && _features.transform) {
-						_imagesToAppendPool.push({
-							item:item, 
-							baseDiv:baseDiv, 
-							img:item.img, 
-							index:index, 
-							holder:holder
-						});
-					} else {
-						_appendImage(index, item, baseDiv, item.img, true, true);
-					}
-				}
-				
-			} else if(item.src && !item.loadError) {
-				// image object is created every time, due to bugs of image loading & delay when switching images
-				img = framework.createEl('pswp__img', 'img');
-				img.style.opacity = 1;
-				img.src = item.src;
-				_setImageSize(item, img);
-				_appendImage(index, item, baseDiv, img, true);
-			}
-			
-
-			if(!_initialContentSet && index === _currentItemIndex) {
-				_currZoomElementStyle = baseDiv.style;
-				_showOrHide(item, (img ||item.img) );
-			} else {
-				_applyZoomPanToItem(item);
-			}
-
-			holder.el.innerHTML = '';
-			holder.el.appendChild(baseDiv);
-		},
-
-		cleanSlide: function( item ) {
-			if(item.img ) {
-				item.img.onload = item.img.onerror = null;
-			}
-			item.loaded = item.loading = item.img = item.imageAppended = false;
-		}
-
-	}
-});
-
-/*>>items-controller*/
-
-/*>>tap*/
-/**
- * tap.js:
- *
- * Displatches tap and double-tap events.
- * 
- */
-
-var tapTimer,
-	tapReleasePoint = {},
-	_dispatchTapEvent = function(origEvent, releasePoint, pointerType) {		
-		var e = document.createEvent( 'CustomEvent' ),
-			eDetail = {
-				origEvent:origEvent, 
-				target:origEvent.target, 
-				releasePoint: releasePoint, 
-				pointerType:pointerType || 'touch'
-			};
-
-		e.initCustomEvent( 'pswpTap', true, true, eDetail );
-		origEvent.target.dispatchEvent(e);
-	};
-
-_registerModule('Tap', {
-	publicMethods: {
-		initTap: function() {
-			_listen('firstTouchStart', self.onTapStart);
-			_listen('touchRelease', self.onTapRelease);
-			_listen('destroy', function() {
-				tapReleasePoint = {};
-				tapTimer = null;
-			});
-		},
-		onTapStart: function(touchList) {
-			if(touchList.length > 1) {
-				clearTimeout(tapTimer);
-				tapTimer = null;
-			}
-		},
-		onTapRelease: function(e, releasePoint) {
-			if(!releasePoint) {
-				return;
-			}
-
-			if(!_moved && !_isMultitouch && !_numAnimations) {
-				var p0 = releasePoint;
-				if(tapTimer) {
-					clearTimeout(tapTimer);
-					tapTimer = null;
-
-					// Check if taped on the same place
-					if ( _isNearbyPoints(p0, tapReleasePoint) ) {
-						_shout('doubleTap', p0);
-						return;
-					}
-				}
-
-				if(releasePoint.type === 'mouse') {
-					_dispatchTapEvent(e, releasePoint, 'mouse');
-					return;
-				}
-
-				var clickedTagName = e.target.tagName.toUpperCase();
-				// avoid double tap delay on buttons and elements that have class pswp__single-tap
-				if(clickedTagName === 'BUTTON' || framework.hasClass(e.target, 'pswp__single-tap') ) {
-					_dispatchTapEvent(e, releasePoint);
-					return;
-				}
-
-				_equalizePoints(tapReleasePoint, p0);
-
-				tapTimer = setTimeout(function() {
-					_dispatchTapEvent(e, releasePoint);
-					tapTimer = null;
-				}, 300);
-			}
-		}
-	}
-});
-
-/*>>tap*/
-
-/*>>desktop-zoom*/
-/**
- *
- * desktop-zoom.js:
- *
- * - Binds mousewheel event for paning zoomed image.
- * - Manages "dragging", "zoomed-in", "zoom-out" classes.
- *   (which are used for cursors and zoom icon)
- * - Adds toggleDesktopZoom function.
- * 
- */
-
-var _wheelDelta;
-	
-_registerModule('DesktopZoom', {
-
-	publicMethods: {
-
-		initDesktopZoom: function() {
-
-			if(_oldIE) {
-				// no zoom for old IE (<=8)
-				return;
-			}
-
-			if(_likelyTouchDevice) {
-				// if detected hardware touch support, we wait until mouse is used,
-				// and only then apply desktop-zoom features
-				_listen('mouseUsed', function() {
-					self.setupDesktopZoom();
-				});
-			} else {
-				self.setupDesktopZoom(true);
-			}
-
-		},
-
-		setupDesktopZoom: function(onInit) {
-
-			_wheelDelta = {};
-
-			var events = 'wheel mousewheel DOMMouseScroll';
-			
-			_listen('bindEvents', function() {
-				framework.bind(template, events,  self.handleMouseWheel);
-			});
-
-			_listen('unbindEvents', function() {
-				if(_wheelDelta) {
-					framework.unbind(template, events, self.handleMouseWheel);
-				}
-			});
-
-			self.mouseZoomedIn = false;
-
-			var hasDraggingClass,
-				updateZoomable = function() {
-					if(self.mouseZoomedIn) {
-						framework.removeClass(template, 'pswp--zoomed-in');
-						self.mouseZoomedIn = false;
-					}
-					if(_currZoomLevel < 1) {
-						framework.addClass(template, 'pswp--zoom-allowed');
-					} else {
-						framework.removeClass(template, 'pswp--zoom-allowed');
-					}
-					removeDraggingClass();
-				},
-				removeDraggingClass = function() {
-					if(hasDraggingClass) {
-						framework.removeClass(template, 'pswp--dragging');
-						hasDraggingClass = false;
-					}
-				};
-
-			_listen('resize' , updateZoomable);
-			_listen('afterChange' , updateZoomable);
-			_listen('pointerDown', function() {
-				if(self.mouseZoomedIn) {
-					hasDraggingClass = true;
-					framework.addClass(template, 'pswp--dragging');
-				}
-			});
-			_listen('pointerUp', removeDraggingClass);
-
-			if(!onInit) {
-				updateZoomable();
-			}
-			
-		},
-
-		handleMouseWheel: function(e) {
-
-			if(_currZoomLevel <= self.currItem.fitRatio) {
-				if( _options.modal ) {
-
-					if (!_options.closeOnScroll || _numAnimations || _isDragging) {
-						e.preventDefault();
-					} else if(_transformKey && Math.abs(e.deltaY) > 2) {
-						// close PhotoSwipe
-						// if browser supports transforms & scroll changed enough
-						_closedByScroll = true;
-						self.close();
-					}
-
-				}
-				return true;
-			}
-
-			// allow just one event to fire
-			e.stopPropagation();
-
-			// https://developer.mozilla.org/en-US/docs/Web/Events/wheel
-			_wheelDelta.x = 0;
-
-			if('deltaX' in e) {
-				if(e.deltaMode === 1 /* DOM_DELTA_LINE */) {
-					// 18 - average line height
-					_wheelDelta.x = e.deltaX * 18;
-					_wheelDelta.y = e.deltaY * 18;
-				} else {
-					_wheelDelta.x = e.deltaX;
-					_wheelDelta.y = e.deltaY;
-				}
-			} else if('wheelDelta' in e) {
-				if(e.wheelDeltaX) {
-					_wheelDelta.x = -0.16 * e.wheelDeltaX;
-				}
-				if(e.wheelDeltaY) {
-					_wheelDelta.y = -0.16 * e.wheelDeltaY;
-				} else {
-					_wheelDelta.y = -0.16 * e.wheelDelta;
-				}
-			} else if('detail' in e) {
-				_wheelDelta.y = e.detail;
-			} else {
-				return;
-			}
-
-			_calculatePanBounds(_currZoomLevel, true);
-
-			var newPanX = _panOffset.x - _wheelDelta.x,
-				newPanY = _panOffset.y - _wheelDelta.y;
-
-			// only prevent scrolling in nonmodal mode when not at edges
-			if (_options.modal ||
-				(
-				newPanX <= _currPanBounds.min.x && newPanX >= _currPanBounds.max.x &&
-				newPanY <= _currPanBounds.min.y && newPanY >= _currPanBounds.max.y
-				) ) {
-				e.preventDefault();
-			}
-
-			// TODO: use rAF instead of mousewheel?
-			self.panTo(newPanX, newPanY);
-		},
-
-		toggleDesktopZoom: function(centerPoint) {
-			centerPoint = centerPoint || {x:_viewportSize.x/2 + _offset.x, y:_viewportSize.y/2 + _offset.y };
-
-			var doubleTapZoomLevel = _options.getDoubleTapZoom(true, self.currItem);
-			var zoomOut = _currZoomLevel === doubleTapZoomLevel;
-			
-			self.mouseZoomedIn = !zoomOut;
-
-			self.zoomTo(zoomOut ? self.currItem.initialZoomLevel : doubleTapZoomLevel, centerPoint, 333);
-			framework[ (!zoomOut ? 'add' : 'remove') + 'Class'](template, 'pswp--zoomed-in');
-		}
-
-	}
-});
-
-
-/*>>desktop-zoom*/
-
-/*>>history*/
-/**
- *
- * history.js:
- *
- * - Back button to close gallery.
- * 
- * - Unique URL for each slide: example.com/&pid=1&gid=3
- *   (where PID is picture index, and GID and gallery index)
- *   
- * - Switch URL when slides change.
- * 
- */
-
-
-var _historyDefaultOptions = {
-	history: true,
-	galleryUID: 1
-};
-
-var _historyUpdateTimeout,
-	_hashChangeTimeout,
-	_hashAnimCheckTimeout,
-	_hashChangedByScript,
-	_hashChangedByHistory,
-	_hashReseted,
-	_initialHash,
-	_historyChanged,
-	_closedFromURL,
-	_urlChangedOnce,
-	_windowLoc,
-
-	_supportsPushState,
-
-	_getHash = function() {
-		return _windowLoc.hash.substring(1);
-	},
-	_cleanHistoryTimeouts = function() {
-
-		if(_historyUpdateTimeout) {
-			clearTimeout(_historyUpdateTimeout);
-		}
-
-		if(_hashAnimCheckTimeout) {
-			clearTimeout(_hashAnimCheckTimeout);
-		}
-	},
-
-	// pid - Picture index
-	// gid - Gallery index
-	_parseItemIndexFromURL = function() {
-		var hash = _getHash(),
-			params = {};
-
-		if(hash.length < 5) { // pid=1
-			return params;
-		}
-
-		var i, vars = hash.split('&');
-		for (i = 0; i < vars.length; i++) {
-			if(!vars[i]) {
-				continue;
-			}
-			var pair = vars[i].split('=');	
-			if(pair.length < 2) {
-				continue;
-			}
-			params[pair[0]] = pair[1];
-		}
-		if(_options.galleryPIDs) {
-			// detect custom pid in hash and search for it among the items collection
-			var searchfor = params.pid;
-			params.pid = 0; // if custom pid cannot be found, fallback to the first item
-			for(i = 0; i < _items.length; i++) {
-				if(_items[i].pid === searchfor) {
-					params.pid = i;
-					break;
-				}
-			}
-		} else {
-			params.pid = parseInt(params.pid,10)-1;
-		}
-		if( params.pid < 0 ) {
-			params.pid = 0;
-		}
-		return params;
-	},
-	_updateHash = function() {
-
-		if(_hashAnimCheckTimeout) {
-			clearTimeout(_hashAnimCheckTimeout);
-		}
-
-
-		if(_numAnimations || _isDragging) {
-			// changing browser URL forces layout/paint in some browsers, which causes noticable lag during animation
-			// that's why we update hash only when no animations running
-			_hashAnimCheckTimeout = setTimeout(_updateHash, 500);
-			return;
-		}
-		
-		if(_hashChangedByScript) {
-			clearTimeout(_hashChangeTimeout);
-		} else {
-			_hashChangedByScript = true;
-		}
-
-
-		var pid = (_currentItemIndex + 1);
-		var item = _getItemAt( _currentItemIndex );
-		if(item.hasOwnProperty('pid')) {
-			// carry forward any custom pid assigned to the item
-			pid = item.pid;
-		}
-		var newHash = _initialHash + '&'  +  'gid=' + _options.galleryUID + '&' + 'pid=' + pid;
-
-		if(!_historyChanged) {
-			if(_windowLoc.hash.indexOf(newHash) === -1) {
-				_urlChangedOnce = true;
-			}
-			// first time - add new hisory record, then just replace
-		}
-
-		var newURL = _windowLoc.href.split('#')[0] + '#' +  newHash;
-
-		if( _supportsPushState ) {
-
-			if('#' + newHash !== window.location.hash) {
-				history[_historyChanged ? 'replaceState' : 'pushState']('', document.title, newURL);
-			}
-
-		} else {
-			if(_historyChanged) {
-				_windowLoc.replace( newURL );
-			} else {
-				_windowLoc.hash = newHash;
-			}
-		}
-		
-		
-
-		_historyChanged = true;
-		_hashChangeTimeout = setTimeout(function() {
-			_hashChangedByScript = false;
-		}, 60);
-	};
-
-
-
-	
-
-_registerModule('History', {
-
-	
-
-	publicMethods: {
-		initHistory: function() {
-
-			framework.extend(_options, _historyDefaultOptions, true);
-
-			if( !_options.history ) {
-				return;
-			}
-
-
-			_windowLoc = window.location;
-			_urlChangedOnce = false;
-			_closedFromURL = false;
-			_historyChanged = false;
-			_initialHash = _getHash();
-			_supportsPushState = ('pushState' in history);
-
-
-			if(_initialHash.indexOf('gid=') > -1) {
-				_initialHash = _initialHash.split('&gid=')[0];
-				_initialHash = _initialHash.split('?gid=')[0];
-			}
-			
-
-			_listen('afterChange', self.updateURL);
-			_listen('unbindEvents', function() {
-				framework.unbind(window, 'hashchange', self.onHashChange);
-			});
-
-
-			var returnToOriginal = function() {
-				_hashReseted = true;
-				if(!_closedFromURL) {
-
-					if(_urlChangedOnce) {
-						history.back();
-					} else {
-
-						if(_initialHash) {
-							_windowLoc.hash = _initialHash;
-						} else {
-							if (_supportsPushState) {
-
-								// remove hash from url without refreshing it or scrolling to top
-								history.pushState('', document.title,  _windowLoc.pathname + _windowLoc.search );
-							} else {
-								_windowLoc.hash = '';
-							}
-						}
-					}
-					
-				}
-
-				_cleanHistoryTimeouts();
-			};
-
-
-			_listen('unbindEvents', function() {
-				if(_closedByScroll) {
-					// if PhotoSwipe is closed by scroll, we go "back" before the closing animation starts
-					// this is done to keep the scroll position
-					returnToOriginal();
-				}
-			});
-			_listen('destroy', function() {
-				if(!_hashReseted) {
-					returnToOriginal();
-				}
-			});
-			_listen('firstUpdate', function() {
-				_currentItemIndex = _parseItemIndexFromURL().pid;
-			});
-
-			
-
-			
-			var index = _initialHash.indexOf('pid=');
-			if(index > -1) {
-				_initialHash = _initialHash.substring(0, index);
-				if(_initialHash.slice(-1) === '&') {
-					_initialHash = _initialHash.slice(0, -1);
-				}
-			}
-			
-
-			setTimeout(function() {
-				if(_isOpen) { // hasn't destroyed yet
-					framework.bind(window, 'hashchange', self.onHashChange);
-				}
-			}, 40);
-			
-		},
-		onHashChange: function() {
-
-			if(_getHash() === _initialHash) {
-
-				_closedFromURL = true;
-				self.close();
-				return;
-			}
-			if(!_hashChangedByScript) {
-
-				_hashChangedByHistory = true;
-				self.goTo( _parseItemIndexFromURL().pid );
-				_hashChangedByHistory = false;
-			}
-			
-		},
-		updateURL: function() {
-
-			// Delay the update of URL, to avoid lag during transition, 
-			// and to not to trigger actions like "refresh page sound" or "blinking favicon" to often
-			
-			_cleanHistoryTimeouts();
-			
-
-			if(_hashChangedByHistory) {
-				return;
-			}
-
-			if(!_historyChanged) {
-				_updateHash(); // first time
-			} else {
-				_historyUpdateTimeout = setTimeout(_updateHash, 800);
-			}
-		}
-	
-	}
-});
-
-
-/*>>history*/
-	framework.extend(self, publicMethods); };
-	return PhotoSwipe;
-});
-
-/***/ }),
-
-/***/ "c337":
+/***/ "a528":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_ClipLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8b3a");
-/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_ClipLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_ClipLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_black_sass_vue_type_style_index_2_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("4839");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_black_sass_vue_type_style_index_2_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_black_sass_vue_type_style_index_2_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_black_sass_vue_type_style_index_2_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_black_sass_vue_type_style_index_2_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ "c8d2":
-/***/ (function(module, exports, __webpack_require__) {
-
-var fails = __webpack_require__("d039");
-var whitespaces = __webpack_require__("5899");
-
-var non = '\u200B\u0085\u180E';
-
-// check that a method works with the correct list
-// of whitespaces and has a correct name
-module.exports = function (METHOD_NAME) {
-  return fails(function () {
-    return !!whitespaces[METHOD_NAME]() || non[METHOD_NAME]() != non || whitespaces[METHOD_NAME].name !== METHOD_NAME;
-  });
-};
-
-
-/***/ }),
-
-/***/ "ca58":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("9f15");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("b610a05a", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "da7a":
+/***/ "a54c":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1107de26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=template&id=7edc50d8&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.loading),expression:"loading"}],staticClass:"v-spinner"},[_c('div',{staticClass:"v-clip",style:(_vm.spinnerStyle)})])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1107de26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/dummypreviews/index.vue?vue&type=template&id=49154b50&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"dummypreviews"}},_vm._l((_vm.a),function(va){return _c('preview',{key:va.id,attrs:{"dummy":true}})}),1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=template&id=7edc50d8&
+// CONCATENATED MODULE: ./src/components/chats/dummypreviews/index.vue?vue&type=template&id=49154b50&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=script&lang=js&
+// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
+var vuex_esm = __webpack_require__("2f62");
+
+// EXTERNAL MODULE: ./src/components/chats/preview/index.vue + 9 modules
+var preview = __webpack_require__("087d");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/dummypreviews/index.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -5352,132 +548,284 @@ var staticRenderFns = []
 //
 //
 //
-/* harmony default export */ var ClipLoadervue_type_script_lang_js_ = ({
-  name: 'ClipLoader',
-  props: {
-    loading: {
-      type: Boolean,
-      default: true
-    },
-    color: {
-      type: String,
-      default: '#5dc596'
-    },
-    size: {
-      type: String,
-      default: '35px'
-    },
-    radius: {
-      type: String,
-      default: '100%'
-    }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ var dummypreviewsvue_type_script_lang_js_ = ({
+  name: 'dummypreviews',
+  data: function data() {
+    return {
+      messagesPreview: false
+    };
   },
-  computed: {
-    spinnerStyle: function spinnerStyle() {
-      return {
-        height: this.size,
-        width: this.size,
-        borderWidth: '2px',
-        borderStyle: 'solid',
-        borderColor: this.color + ' ' + this.color + ' transparent',
-        borderRadius: this.radius,
-        background: 'transparent'
-      };
+  props: {
+    data: Object
+  },
+  components: {
+    preview: preview["a" /* default */]
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    auth: function auth(state) {
+      return state.auth;
+    },
+    a: function a() {
+      if (this.messagesPreview) {
+        return [1];
+      } else {
+        return [1, 2, 3, 4, 5, 6];
+      }
     }
-  }
+  }),
+  methods: {}
 });
-// CONCATENATED MODULE: ./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_ClipLoadervue_type_script_lang_js_ = (ClipLoadervue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=style&index=0&lang=css&
-var ClipLoadervue_type_style_index_0_lang_css_ = __webpack_require__("c337");
-
+// CONCATENATED MODULE: ./src/components/chats/dummypreviews/index.vue?vue&type=script&lang=js&
+ /* harmony default export */ var chats_dummypreviewsvue_type_script_lang_js_ = (dummypreviewsvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/vue-spinner/src/ClipLoader.vue
+// CONCATENATED MODULE: ./src/components/chats/dummypreviews/index.vue
 
 
 
-
-
+function injectStyles (context) {
+  
+  
+}
 
 /* normalize component */
 
 var component = Object(componentNormalizer["a" /* default */])(
-  src_ClipLoadervue_type_script_lang_js_,
+  chats_dummypreviewsvue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
-  null,
-  null,
+  injectStyles,
+  "49154b50",
   null
-  
+  ,true
 )
 
-/* harmony default export */ var ClipLoader = __webpack_exports__["a"] = (component.exports);
+/* harmony default export */ var dummypreviews = __webpack_exports__["a"] = (component.exports);
 
 /***/ }),
 
-/***/ "db6a":
+/***/ "aa20":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_VuePictureSwipe_vue_vue_type_style_index_0_id_e8df92c6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ca58");
-/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_VuePictureSwipe_vue_vue_type_style_index_0_id_e8df92c6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_VuePictureSwipe_vue_vue_type_style_index_0_id_e8df92c6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
 
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1107de26-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=template&id=cf636cca&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.link)?_c('router-link',{attrs:{"to":_vm.link}},[_c('span',[_vm._v(_vm._s(_vm.name))])]):_c('div',[(this.chat.currentState.members.length > 2 && _vm.chat.name !== '#New Room')?_c('span',{staticClass:"nameline"},[_vm._v(" "+_vm._s(_vm.chat.name)+" ")]):_c('span',{staticClass:"nameline"},[_vm._v(" "+_vm._s(_vm.name)+" ")])])}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/chats/assets/name.vue?vue&type=template&id=cf636cca&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.filter.js
+var es_array_filter = __webpack_require__("4de4");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
+var es_function_name = __webpack_require__("b0c0");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
+var es_array_map = __webpack_require__("d81d");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.join.js
+var es_array_join = __webpack_require__("a15b");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=script&lang=js&
+
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var namevue_type_script_lang_js_ = ({
+  name: 'chatName',
+  props: {
+    chat: Object,
+    preview: Boolean
+  },
+  computed: {
+    link: function link() {
+      var _this$chat,
+          _this = this;
+
+      if (this.preview) return;
+
+      var members = _.filter(((_this$chat = this.chat) === null || _this$chat === void 0 ? void 0 : _this$chat.currentState.members) || {}, function (m) {
+        var _this$core$user$useri;
+
+        return _this.$f.getmatrixid(m.name) != ((_this$core$user$useri = _this.core.user.userinfo) === null || _this$core$user$useri === void 0 ? void 0 : _this$core$user$useri.id);
+      });
+
+      if (members.length == 1) {
+        return 'contact?id=' + this.$f.getmatrixid(members[0].name);
+      }
+    },
+    name: function name() {
+      var _this2 = this;
+
+      if (this.chat.name.indexOf("#") == 0) {
+        var _this$chat2;
+
+        var names = _.map(_.filter(_.map(((_this$chat2 = this.chat) === null || _this$chat2 === void 0 ? void 0 : _this$chat2.currentState.members) || {}, function (m) {
+          return _this2.$f.deep(_this2, '$store.state.users.' + _this2.$f.getmatrixid(m.name)) || null;
+        }), function (m) {
+          var _this2$core$user$user;
+
+          return m && m.name && (_.toArray(_this2.chat.currentState.members).length > 2 || m.id != ((_this2$core$user$user = _this2.core.user.userinfo) === null || _this2$core$user$user === void 0 ? void 0 : _this2$core$user$user.id));
+        }), function (m) {
+          return m.name;
+        });
+
+        if (names.length) return names.join(', ');
+        return 'New Chat';
+      } else {
+        return this.chat.name || "";
+      }
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/chats/assets/name.vue?vue&type=script&lang=js&
+ /* harmony default export */ var assets_namevue_type_script_lang_js_ = (namevue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/components/chats/assets/name.vue
+
+
+
+function injectStyles (context) {
+  
+  
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  assets_namevue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  injectStyles,
+  "cf636cca",
+  null
+  ,true
+)
+
+/* harmony default export */ var assets_name = __webpack_exports__["a"] = (component.exports);
 
 /***/ }),
 
-/***/ "dd40":
-/***/ (function(module, exports) {
-
-module.exports = function(originalModule) {
-	if (!originalModule.webpackPolyfill) {
-		var module = Object.create(originalModule);
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		Object.defineProperty(module, "exports", {
-			enumerable: true
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
-/***/ "f301":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "img/default-skin.b257fa9c.svg";
-
-/***/ }),
-
-/***/ "f76f":
+/***/ "bb94":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "/*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */.pswp{display:none;position:absolute;width:100%;height:100%;left:0;top:0;overflow:hidden;touch-action:none;z-index:1500;-webkit-text-size-adjust:100%;-webkit-backface-visibility:hidden;outline:none}.pswp *{box-sizing:border-box}.pswp img{max-width:none}.pswp--animate_opacity{opacity:.001;will-change:opacity;transition:opacity 333ms cubic-bezier(.4,0,.22,1)}.pswp--open{display:block}.pswp--zoom-allowed .pswp__img{cursor:-webkit-zoom-in;cursor:-moz-zoom-in;cursor:zoom-in}.pswp--zoomed-in .pswp__img{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}.pswp--dragging .pswp__img{cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}.pswp__bg{background:#000;opacity:0;transform:translateZ(0);-webkit-backface-visibility:hidden}.pswp__bg,.pswp__scroll-wrap{position:absolute;left:0;top:0;width:100%;height:100%}.pswp__scroll-wrap{overflow:hidden}.pswp__container,.pswp__zoom-wrap{touch-action:none;position:absolute;left:0;right:0;top:0;bottom:0}.pswp__container,.pswp__img{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}.pswp__zoom-wrap{position:absolute;width:100%;transform-origin:left top;transition:transform 333ms cubic-bezier(.4,0,.22,1)}.pswp__bg{will-change:opacity;transition:opacity 333ms cubic-bezier(.4,0,.22,1)}.pswp--animated-in .pswp__bg,.pswp--animated-in .pswp__zoom-wrap{transition:none}.pswp__container,.pswp__zoom-wrap{-webkit-backface-visibility:hidden}.pswp__item{right:0;bottom:0;overflow:hidden}.pswp__img,.pswp__item{position:absolute;left:0;top:0}.pswp__img{width:auto;height:auto}.pswp__img--placeholder{-webkit-backface-visibility:hidden}.pswp__img--placeholder--blank{background:#222}.pswp--ie .pswp__img{width:100%!important;height:auto!important;left:0;top:0}.pswp__error-msg{position:absolute;left:0;top:50%;width:100%;text-align:center;font-size:14px;line-height:16px;margin-top:-8px;color:#ccc}.pswp__error-msg a{color:#ccc;text-decoration:underline}", ""]);
+exports.push([module.i, ".minimized .previewWrapper[data-v-4b36cd72]{padding:0;padding-bottom:.5em;transition:.3s;-webkit-transition:all .2s}.minimized.active .previewWrapper[data-v-4b36cd72]{padding:.5em 0}.minimized.active .dummyline[data-v-4b36cd72]{height:44px;opacity:.3}.minimized.active .dummyicon[data-v-4b36cd72]{width:44px;height:44px;opacity:.3}.previewWrapper[data-v-4b36cd72]{cursor:pointer;display:flex;align-items:center;padding:.5em}.previewWrapper .dummyline[data-v-4b36cd72]{margin-top:.25em;height:22px;border-radius:5px;transition:.3s}.previewWrapper .dummyicon[data-v-4b36cd72]{width:22px;height:22px;border-radius:50%;margin:0 auto;transition:.3s}.previewWrapper .iconWrapper[data-v-4b36cd72]{width:44px;display:flex;align-items:center;margin-top:5px;min-width:44px}.previewWrapper .infoWrapper[data-v-4b36cd72]{padding-left:.5em;flex-grow:1;overflow:hidden;text-overflow:ellipsis}.emptyEvent span[data-v-4b36cd72]{color:#06823a;font-size:.8em}.eventsLine[data-v-4b36cd72]{position:relative}.eventsLine .roomMuted[data-v-4b36cd72]{position:absolute;right:8px;top:0}.eventsLine .roomMuted i[data-v-4b36cd72]{color:#606369}.eventsLine[data-v-4b36cd72] .messagePreview{max-width:90%;overflow:hidden;text-overflow:ellipsis}.eventsLine[data-v-4b36cd72] span{color:#606369;font-size:.9em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.roomMuted[data-v-4b36cd72]{position:relative;top:-3px;left:6px}.roomMuted i[data-v-4b36cd72]{font-size:.7em}.summaryLine[data-v-4b36cd72]{display:flex}.summaryLine .time[data-v-4b36cd72]{text-align:right;padding-top:.25em;white-space:nowrap;text-overflow:ellipsis;padding-right:.5em}.summaryLine .time[data-v-4b36cd72] span{font-size:.8em;display:block}.summaryLine .caption[data-v-4b36cd72]{padding-top:.25em;flex-grow:1;display:flex;align-items:center}.summaryLine .caption[data-v-4b36cd72] span{font-size:.9em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:700;display:inline-block;max-width:150px}", ""]);
 // Exports
 module.exports = exports;
 
+
+/***/ }),
+
+/***/ "e139":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("930f");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("0a3024d5", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "e21c":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "#matrix-root[theme=black] .minimized .previewWrapper[data-v-4b36cd72]{transition:.3s}#matrix-root[theme=black] .previewWrapper .dummyline[data-v-4b36cd72]{border-radius:5px;transition:.3s}#matrix-root[theme=black] .previewWrapper .dummyicon[data-v-4b36cd72]{border-radius:50%;transition:.3s}#matrix-root[theme=black] .emptyEvent span[data-v-4b36cd72]{color:#068222}#matrix-root[theme=black] .eventsLine .roomMuted i[data-v-4b36cd72],#matrix-root[theme=black] .eventsLine[data-v-4b36cd72] span{color:#92979d}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "f6f9":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_white_sass_vue_type_style_index_1_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("76ed");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_white_sass_vue_type_style_index_1_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_white_sass_vue_type_style_index_1_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_white_sass_vue_type_style_index_1_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_theme_white_sass_vue_type_style_index_1_id_4b36cd72_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "fe32":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("bb94");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("3c129933", content, shadowRoot)
+};
 
 /***/ })
 

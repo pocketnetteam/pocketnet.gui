@@ -2117,7 +2117,8 @@ var comments = (function(){
 
 				actions.showhideLabel()	
 
-				el.list.html('')
+				if (el.list)
+					el.list.html('')
 
 				renders.list(p, function(){
 
