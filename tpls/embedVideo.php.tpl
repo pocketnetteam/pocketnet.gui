@@ -36,12 +36,12 @@
 
         const [host, id, s] = [urlParams.get('host'), urlParams.get('id'), urlParams.get('s')];
 
-        if (!isVideEmbed || !host || !id || !s) return;
+        if (!isVideEmbed || !host || !id) return;
 
         PeerTubeEmbeding.main(elem, id, {
           host,
           videoEmbedded: true,
-          txid: s,
+          txid: s || '',
         });
       };
 
