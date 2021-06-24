@@ -456,7 +456,6 @@ PeerTubePocketnet = function (app) {
           .then((data) => {
             if (!data.host) return Promise.reject(error('host'));
 
-            data.host = 'pocketnetpeertube3.nohost.me'
             console.log('data.host', data.host)
 
             return Promise.resolve(data.host);
