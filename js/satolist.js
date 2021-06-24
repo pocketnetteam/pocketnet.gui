@@ -4284,8 +4284,6 @@ Platform = function (app, listofnodes) {
 
                 }).catch(r => {
 
-                    console.log('err', err)
-
                     return Promise.resolve(r)
 
                 })
