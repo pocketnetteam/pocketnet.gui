@@ -20090,6 +20090,21 @@ Platform = function (app, listofnodes) {
             self.matrixchat.inited = false
         },
 
+
+        import : function(clbk){
+
+            if (self.matrixchat.imported){
+                if(clbk) clbk()
+            }
+            else{
+                self.matrixchat.imported = true;
+
+                importScript('chat/matrix-element.min.js', clbk)
+            }
+
+            
+        },
+
         init : function(){
 
             if(self.matrixchat.inited) return
@@ -20114,7 +20129,7 @@ Platform = function (app, listofnodes) {
                         if (!isMobile()){
 
 
-                            importScript('chat/matrix-element.min.js', function(){
+                            self.matrixchat.import(function(){
 
                                 self.matrixchat.inited = true
         
