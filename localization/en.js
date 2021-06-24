@@ -1055,5 +1055,9 @@ ____loclib.importHeading = 'Import Video from YouTube'
 ____loclib.importInputPlaceholder = 'Paste link to your YouTube video'
 ____loclib.importInputLabel = 'Video Url'
 
+____loclib.capitalWarning = 'WARNING'
+____loclib.streamSettingsWarn = 'For optimal performance, please use streaming settings no higher than following: 2000 kb/s bitrate, 1920x1080p resolution'
+____loclib.streamSettingsResult = 'Otherwise your live could be terminated or unstable.'
+
 
 ____loclib.keygeneration = 'Cryptography keys generation'
