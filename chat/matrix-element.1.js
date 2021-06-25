@@ -17,7 +17,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4edc59fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/preview/index.vue?vue&type=template&id=0639c93c&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6cdd2157-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/preview/index.vue?vue&type=template&id=0639c93c&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatsPreview",class:{minimized: _vm.minimized, active: _vm.active}},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"previewWrapper"},[_c('div',{staticClass:"iconWrapper"},[(!_vm.dummy)?_c('chatIcon',{attrs:{"chat":_vm.m_chat}}):_c('div',{staticClass:"dummyicon loadinggradient"})],1),_c('div',{staticClass:"infoWrapper"},[(!_vm.dummy)?_c('div',{staticClass:"summaryLine"},[_c('div',{staticClass:"caption flexBlock"},[_c('chatName',{attrs:{"preview":true,"chat":_vm.m_chat}}),(_vm.roomMuted)?_c('div',{staticClass:"roomMuted"},[_c('i',{staticClass:"fas fa-bell-slash"})]):_vm._e()],1),_c('div',{staticClass:"time"},[_c('chatTime',{attrs:{"chat":_vm.m_chat}})],1)]):_vm._e(),(!_vm.dummy)?_c('div',{staticClass:"eventsLine"},[(_vm.event)?_c('event',{attrs:{"event":_vm.event,"chat":_vm.m_chat,"preview":true}}):_c('div',{staticClass:"emptyEvent"},[_c('span',[_vm._v("Invitation to chat")])])],1):_c('div',{staticClass:"eventsLine"},[_c('div',{staticClass:"dummyline loadinggradient"})])])])])])}
 var staticRenderFns = []
 
@@ -48,7 +48,7 @@ var vuex_esm = __webpack_require__("2f62");
 // EXTERNAL MODULE: ./src/components/chats/assets/name.vue + 4 modules
 var assets_name = __webpack_require__("aa20");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4edc59fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/time.vue?vue&type=template&id=0d0db9f0&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6cdd2157-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/time.vue?vue&type=template&id=0d0db9f0&scoped=true&
 var timevue_type_template_id_0d0db9f0_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatTime"},[(_vm.time)?_c('date',{attrs:{"date":_vm.time}}):_c('span',{staticClass:"new"},[_vm._v("New")])],1)}
 var timevue_type_template_id_0d0db9f0_scoped_true_staticRenderFns = []
 
@@ -277,7 +277,7 @@ module.exports.__inject__ = function (shadowRoot) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4edc59fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=1d419bb1&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6cdd2157-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=1d419bb1&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatIcon"},[_c('userspic',{attrs:{"slidesPerView":_vm.slidesPerView,"users":_vm.users,"chat":_vm.chat,"invited":_vm.invited,"unseen":this.chat.getUnreadNotificationCount()}})],1)}
 var staticRenderFns = []
 
@@ -328,12 +328,12 @@ var index_all = __webpack_require__("c46f");
       var _this$chat,
           _this = this;
 
-      var users = index_all["a" /* default */].filter(index_all["a" /* default */].map(((_this$chat = this.chat) === null || _this$chat === void 0 ? void 0 : _this$chat.currentState.members) || {}, function (m) {
+      var users = index_all["default"].filter(index_all["default"].map(((_this$chat = this.chat) === null || _this$chat === void 0 ? void 0 : _this$chat.currentState.members) || {}, function (m) {
         return _this.$f.deep(_this, '$store.state.users.' + _this.$f.getmatrixid(m.name)) || null;
       }), function (m) {
         var _this$core$user$useri;
 
-        return m && (index_all["a" /* default */].toArray(_this.chat.currentState.members).length > 2 || m.id !== ((_this$core$user$useri = _this.core.user.userinfo) === null || _this$core$user$useri === void 0 ? void 0 : _this$core$user$useri.id));
+        return m && (index_all["default"].toArray(_this.chat.currentState.members).length > 2 || m.id !== ((_this$core$user$useri = _this.core.user.userinfo) === null || _this$core$user$useri === void 0 ? void 0 : _this$core$user$useri.id));
       });
 
       return users;
@@ -344,7 +344,7 @@ var index_all = __webpack_require__("c46f");
 
       var i = {};
 
-      index_all["a" /* default */].each((_this$chat2 = this.chat) === null || _this$chat2 === void 0 ? void 0 : _this$chat2.currentState.members, function (m) {
+      index_all["default"].each((_this$chat2 = this.chat) === null || _this$chat2 === void 0 ? void 0 : _this$chat2.currentState.members, function (m) {
         if (m.membership === 'invite') i[_this2.$f.getmatrixid(m.name)] = true;
       });
 
@@ -557,7 +557,7 @@ module.exports = exports;
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4edc59fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/dummypreviews/index.vue?vue&type=template&id=49154b50&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6cdd2157-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/dummypreviews/index.vue?vue&type=template&id=49154b50&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"dummypreviews"}},_vm._l((_vm.a),function(va){return _c('preview',{key:va.id,attrs:{"dummy":true}})}),1)}
 var staticRenderFns = []
 
@@ -660,7 +660,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4edc59fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=template&id=cf636cca&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6cdd2157-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=template&id=cf636cca&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.link)?_c('router-link',{attrs:{"to":_vm.link}},[_c('span',[_vm._v(_vm._s(_vm.name))])]):_c('div',[(this.chat.currentState.members.length > 2 && _vm.chat.name !== '#New Room')?_c('span',{staticClass:"nameline"},[_vm._v(" "+_vm._s(_vm.chat.name)+" ")]):_c('span',{staticClass:"nameline"},[_vm._v(" "+_vm._s(_vm.name)+" ")])])}
 var staticRenderFns = []
 
