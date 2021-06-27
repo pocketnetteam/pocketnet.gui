@@ -1602,11 +1602,14 @@ var Proxy = function (settings, manage, test) {
 					return self.wallet
 						.addqueue(key || 'registration', address, ip, null, emailsClbk)
 						.then((r) => {
+
+							console.log('addqueue!!!', r);
 							return Promise.resolve({
 								data: r,
 							});
 						})
 						.catch((e) => {
+							console.log('addqueuerej!!!', e);
 							return Promise.reject(e);
 						});
 				},

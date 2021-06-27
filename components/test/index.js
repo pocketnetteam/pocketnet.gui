@@ -10,7 +10,7 @@ var test = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, lastTransaction, ed, ref, plissing, emailVerification; 
+		var el, lastTransaction, ed, ref, plissing, emailRequire, emailVerification; 
 
 		var firstTime = false;
 
@@ -210,7 +210,7 @@ var test = (function(){
 						return
 					}
 
-					if (!emailVerification){
+					if (emailRequire && !emailVerification){
 
 						sitemessage(self.app.localization.e('uemailverify'));
 
@@ -577,12 +577,12 @@ var test = (function(){
 							}
 						}
 
-						if (id === 'email'){
+
+						if (id === 'email' && emailRequire){
+
 
 							self.app.api.fetch('emails/check', {email: tempInfo[parameter.id]})
 							.then(function(result){
-
-								console.log('result!!!', result);
 								
 								if (!result || !result.newEmail){
 									
@@ -609,14 +609,10 @@ var test = (function(){
 							var emailVal = tempInfo['email'];
 							var codeVal =  tempInfo[parameter.id];
 
-							console.log('code!', emailVal, codeVal);
-
 							var dbData = {email: emailVal, code: Number(codeVal)}
 
 							self.app.api.fetch('emails/checkcode', dbData)
 							.then(function(result){
-
-								console.log('result!!!', result);
 
 								var inputCode = el.options.find('[parameter="code"] input');
 
@@ -670,7 +666,7 @@ var test = (function(){
 				name : 'Email',
 				id : 'email',
 				type : "EMAIL",
-				require : false
+				require : true
 			}),
 
 			code : new Parameter({
@@ -956,15 +952,15 @@ var test = (function(){
 		var setAddressType = null;
 
 		var renders = {
-			options : function(clbk, emailRequire){
+			options : function(clbk){
 
-				if (emailRequire){
+				if (!emailRequire){
 
 					userOptions.email = new Parameter({
 						name : 'Email',
 						id : 'email',
 						type : "EMAIL",
-						require : true
+						require : false
 					})
 
 				}
@@ -1121,7 +1117,7 @@ var test = (function(){
 			})
 		}
 
-		var make = function(emailRequire){
+		var make = function(){
 
 			renders.caption();
 
@@ -1168,7 +1164,7 @@ var test = (function(){
 	
 	
 	
-			}, emailRequire);
+			});
 
 			self.sdk.node.transactions.get.unspent(function(unspent){
 				renders.unspent(unspent)
@@ -1451,27 +1447,32 @@ var test = (function(){
 
 				el.signout = el.c.find('.signout')
 
+
 				initEvents();
 
 				actions.upanel();
-
 				
 				self.app.api.fetch('wallet/check', {key: 'registration'})
 				.then(function(result){
 
-					console.log('result!!!', result);
+					console.log('wallet/check result', result);
+					emailRequire = true;
+					make();
 
-					make(true);
+					p.clbk(null, p);
+
 
 				}).catch(function(err){
 
-					console.log('err!!!!', err);
+					console.log('wallet/check err',  err);
 
 					make();
 
+					p.clbk(null, p);
+
+
 				})
 
-				p.clbk(null, p);
 			},
 
 			wnd : {
