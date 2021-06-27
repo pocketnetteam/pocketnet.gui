@@ -6013,12 +6013,27 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
+                            /*if (!self.sdk.captcha.done && !_Node){
+                                if (clbk)
+                                    clbk(null, 'captcha')
+                            }
+                            else{*/
+
+                            console.log('self.app.platform.sdk.user.storage.emailVerification', self.app.platform.sdk.user.storage.emailVerification);
+
+                            
+
                             var prms = {
                                 address: a,
+                                emailVerification: self.app.platform.sdk.user.storage.emailVerification,
                                 captcha: self.sdk.captcha.done
                             }
 
+                            self.app.platform.sdk.user.storage.emailVerification = '';
+
                             self.app.api.fetchauth('free/registration', prms).then(d => {
+
+                                console.log('then!!', d);
                                 if (clbk)
                                         clbk(true)
 

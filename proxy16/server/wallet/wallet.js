@@ -7,6 +7,7 @@ var compensation = [
 ]
 
 var Wallet = function(p){
+
     var self = this
 
     var addresses = {}
@@ -37,6 +38,8 @@ var Wallet = function(p){
         },
 
         uniqAddress : function(queueobj, all){
+
+            conosle.log('uniqaddress!!!', queueobj, all)
             if(!queueobj.address) return Promise.reject('address')
 
             var f = _.find(all, function(obj){
@@ -121,7 +124,6 @@ var Wallet = function(p){
     }
 
     self.init = function(){
-     
         _.each(p.addresses, function(options, key){
 
             var kp = null

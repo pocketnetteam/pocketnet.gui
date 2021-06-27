@@ -2774,6 +2774,50 @@ var system16 = (function(){
 			},
 			webdistributionwallets : function(elc, clbk){
 
+				var registration = system.wallet.addresses.registration;
+				var dropdownCheck = new Parameter({
+					type: "VALUES",
+					name: 'checkUnique',
+					id: 'telegram',
+					placeholder: '',
+					value: registration.check,
+					possibleValues: ['uniqAddress', 'uniqEmails', 'ipAndUniqAddress'],
+					possibleValuesLabels: ['addresses', 'addresses and emails', 'addresses and ip'],
+					defaultValue: registration.check,
+
+					_onChange: function (value) {
+
+
+						globalpreloader(true)
+
+
+						proxy.fetch('manage', {
+							action : 'set.wallet.setcheck',
+							data : {
+								key: 'registration',
+								check: value
+							}
+
+						}).catch(e => {
+
+							
+							actions.refresh();
+
+							d.destroy();
+
+							globalpreloader(false)
+							return Promise.resolve()
+
+						}).then(r => {
+
+
+							globalpreloader(false)
+
+
+						})
+					}
+				});
+
 
 				self.shell({
 					inner : html,
@@ -2782,13 +2826,17 @@ var system16 = (function(){
 						wallets : info.wallet,
 						info : info,
 						proxy : proxy,
-						admin : actions.admin()
+						check: system.wallet.addresses.registration.check,
+						admin : actions.admin(),
+						dropdownCheck: dropdownCheck
 					},
 
 					el : elc.find('.webdistributionwalletsWrapper')
 
 				},
 				function(p){
+
+					ParametersLive([dropdownCheck], elc)
 
 					p.el.find('.coins').on('click', function(){
 						var key = $(this).closest('.wallet').attr('key')
@@ -2840,6 +2888,8 @@ var system16 = (function(){
 
 					p.el.find('.settings').on('click', function(){
 						var key = $(this).closest('.wallet').attr('key')
+
+						console.log('key!!!', key);
 
 						if (key){
 							var d = inputDialogNew({

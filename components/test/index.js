@@ -309,20 +309,11 @@ var test = (function(){
 
 									var email = tempInfo.email;
 
-									var emailClbk = function(){
-
-										self.app.api.fetch('emails/update', emailVerification)
-										.then(function(result){
-
-											console.log('result email', result);
-										})
-
-									}
-
 									if (email){
-										actions.saveemail(email, emailClbk);
+										actions.saveemail(email);
 									}
 
+									console.log('save!!!!');
 
 									self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -353,6 +344,8 @@ var test = (function(){
 
 
 												self.app.platform.sdk.user.storage.me = tx
+
+												self.app.platform.sdk.user.storage.emailVerification = emailVerification;
 												
 												tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
 												
@@ -677,7 +670,7 @@ var test = (function(){
 				name : 'Email',
 				id : 'email',
 				type : "EMAIL",
-				require : true
+				require : false
 			}),
 
 			code : new Parameter({
@@ -963,7 +956,18 @@ var test = (function(){
 		var setAddressType = null;
 
 		var renders = {
-			options : function(clbk){
+			options : function(clbk, emailRequire){
+
+				if (emailRequire){
+
+					userOptions.email = new Parameter({
+						name : 'Email',
+						id : 'email',
+						type : "EMAIL",
+						require : true
+					})
+
+				}
 
 				self.shell({
 
@@ -1117,52 +1121,54 @@ var test = (function(){
 			})
 		}
 
-		var make = function(){
+		var make = function(emailRequire){
 
 			renders.caption();
 
 			renders.icon();
 
 			renders.options(function(){
-				
-				console.log('optionsClbk', p.el.find('.send'));
-	
+					
 				var emailWrapper = el.options.find('[parameter="email"]');
 				var changeemail = emailWrapper.find('.changeemail');
 				var emialInput = emailWrapper.find('input');
 				var codeWrapper = el.c.find('[parameter="code"]');
 				var codeInput = codeWrapper.find('input');
-	
-				el.c.find('.confirmemail button').click(function(){
+
+				if (emailRequire){
+
+					el.c.find('.confirmemail button').click(function(){
 					
-					changeemail.show();
-					emialInput.prop('disabled', true);
-					codeWrapper.show();
-	
-					var email = emailWrapper.find('input').val();
-					console.log('input', email);
-	
-					self.app.api.fetch('emails/verify', {email})
-					.then(function(result){
-						console.log('result!', result);
+						changeemail.show();
+						emialInput.prop('disabled', true);
+						codeWrapper.show();
+		
+						var email = emailWrapper.find('input').val();
+						console.log('input', email);
+		
+						self.app.api.fetch('emails/verify', {email})
+						.then(function(result){
+							console.log('result!', result);
+						})
+		
+						
 					})
+		
+		
+					emailWrapper.find('.changeemail').click(function(){
+		
+						changeemail.hide();
+						emialInput.prop('disabled', false);
+						codeInput.val();
+						codeWrapper.hide();
+		
+					})
+
+				}
 	
-					
-				})
 	
 	
-				emailWrapper.find('.changeemail').click(function(){
-	
-					changeemail.hide();
-					emialInput.prop('disabled', false);
-					codeInput.val();
-					codeWrapper.hide();
-	
-				})
-	
-	
-			}
-			);
+			}, emailRequire);
 
 			self.sdk.node.transactions.get.unspent(function(unspent){
 				renders.unspent(unspent)
@@ -1449,7 +1455,21 @@ var test = (function(){
 
 				actions.upanel();
 
-				make();
+				
+				self.app.api.fetch('wallet/check', {key: 'registration'})
+				.then(function(result){
+
+					console.log('result!!!', result);
+
+					make(true);
+
+				}).catch(function(err){
+
+					console.log('err!!!!', err);
+
+					make();
+
+				})
 
 				p.clbk(null, p);
 			},
