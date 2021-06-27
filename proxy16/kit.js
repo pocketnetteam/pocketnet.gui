@@ -312,8 +312,6 @@ var state = {
 			var saving = state.export()
 				saving.nedbkey = nedbkey
 
-			console.log('insert', saving);
-
             db.insert(saving, function (err, newDoc) {
                 if(err){
                     reject(err)
@@ -656,7 +654,24 @@ var kit = {
 						return proxy.wallet.setPrivateKey(key, privatekey)
 					})
 
-				}
+				},
+
+
+				setcheck : function({key, check}){
+
+					if(!settings.wallet.addresses[key]) return Promise.reject('key')
+
+					if(settings.wallet.addresses[key].check == check) return Promise.resolve()
+
+					settings.wallet.addresses[key].check = check
+
+					return state.saverp().then(proxy => {
+						Promise.resolve()
+					})
+
+				},
+
+
 
 			},
 

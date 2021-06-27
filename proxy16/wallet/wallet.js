@@ -7,6 +7,8 @@ var compensation = [
 ]
 
 var Wallet = function(p){
+
+    console.log('wallet!!!', p);
     var self = this
 
     var addresses = {}
@@ -39,6 +41,7 @@ var Wallet = function(p){
         },
 
         uniqAddress : function(queueobj, all){
+
             if(!queueobj.address) return Promise.reject('address')
 
             var f = _.find(all, function(obj){
@@ -51,6 +54,41 @@ var Wallet = function(p){
             return Promise.resolve()
         },
 
+
+        uniqEmails : function(queueobj, all, emailsClbk){
+
+            console.log('queobj.all', emailsClbk);
+
+            if (emailsClbk){
+                
+                return emailsClbk()
+                .then((result) =>{
+    
+                    console.log('result email', result);
+
+                    if (result && result.updated){
+
+                        return self.patterns.uniqAddress(queueobj, all);
+
+                    }
+
+                    return Promise.reject('uniq');
+    
+    
+                })
+                .catch(e => Promise.reject('uniq'))
+            
+            } else {
+
+                return Promise.reject('uniq');
+
+            }
+            
+
+
+
+        },
+
         ipAndUniqAddress : function(queueobj, all){
             return self.patterns.ip(queueobj, all).then(r => {
                 return self.patterns.uniqAddress(queueobj, all)
@@ -58,7 +96,7 @@ var Wallet = function(p){
         }
     }
 
-    self.checking = function(queueobj){
+    self.checking = function(queueobj, emailsClbk){
 
         var addressobj = addresses[queueobj.key]
 
@@ -68,7 +106,7 @@ var Wallet = function(p){
 
 
         if (addressobj.check && self.patterns[addressobj.check]){
-            return self.patterns[addressobj.check](queueobj, all)
+            return self.patterns[addressobj.check](queueobj, all, emailsClbk)
         }
 
         return Promise.resolve()
@@ -384,6 +422,7 @@ var Wallet = function(p){
             })
 
         },
+
         send : function(key, tos){
 
             if(!addresses[key]) return Promise.reject('key')
@@ -421,7 +460,7 @@ var Wallet = function(p){
 
         },
 
-        addqueue : function(key, to, ip, amount){
+        addqueue : function(key, to, ip, amount, emailsClbk){
             
             if(!to) return Promise.reject('to')
             if(!addresses[key]) return Promise.reject('key')
@@ -445,9 +484,10 @@ var Wallet = function(p){
 
 
 
-            return self.checking(object).then(r => {
+            return self.checking(object, emailsClbk).then(r => {
                 return new Promise((resolve, reject) => {
 
+                    console.log('quee!!!', queue, object);
 
                     queue.push(object)
                     all.push(object)
@@ -604,7 +644,25 @@ var Wallet = function(p){
                 return self.unspents.getc(addresses[key])
             }
         
+        },
+
+        check : function(key){
+
+            var check = addresses[key].check;
+
+            if (check === "uniqEmails"){
+
+                return Promise.resolve({
+                    data : check
+                });
+
+            } 
+
+            return Promise.reject(check);
+
         }
+
+
     }
 
     self.transactions = {

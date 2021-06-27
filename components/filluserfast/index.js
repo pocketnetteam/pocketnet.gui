@@ -372,6 +372,7 @@ var filluserfast = (function(){
 		var balance = {
 
 			request : function(clbk){
+				console.log('requet!!!2', clbk)
 
 
 				self.sdk.users.requestFreeMoney(function(res, err){

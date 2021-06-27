@@ -46,9 +46,10 @@ var Proxy = function (settings, manage, test) {
 	var peertube = new Peertube()
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
-  var emails = new Emails(settings.emails)
+	var emails = new Emails(settings.emails)
 
 
+	console.log('Wallet!!!!', wallet);
 	self.userDataPath = null
 	self.session = 'pocketnetproxy'
 
@@ -328,8 +329,8 @@ var Proxy = function (settings, manage, test) {
 			return wallet.init()
 		},
 
-		addqueue: function (key, address, ip) {
-			return wallet.kit.addqueue(key, address, ip)
+		addqueue: function (key, address, ip, amount, emailsClbk) {
+			return wallet.kit.addqueue(key, address, ip, amount, emailsClbk)
 		},
 
 
@@ -341,6 +342,10 @@ var Proxy = function (settings, manage, test) {
 		},
 		setPrivateKey: function (key, private) {
 			return wallet.kit.setPrivateKey(key, private)
+		},
+
+		check : function(key){
+			return wallet.kit.check(key);
 		},
 
 		re: function () {
@@ -356,7 +361,9 @@ var Proxy = function (settings, manage, test) {
 
 		sendwithprivatekey: function ({ address, amount, key }) {
 			return wallet.kit.sendwithprivatekey(address, amount, key)
-		}
+		},
+
+
 	}
 
 	
@@ -1474,10 +1481,36 @@ var Proxy = function (settings, manage, test) {
 						});
 				},
 			},
+			check : {
+				path: '/wallet/check',
+				authorization: false, 
+				action: function({key}){
+
+					return self.wallet.check(key)
+
+				}
+			},
 			freeregistration: {
 				path: '/free/registration',
 				authorization: 'signature',
-				action: function ({ captcha, key, address, ip }) {
+				action: function ({ captcha, key, address, ip, emailVerification }) {
+
+					console.log('freeregistration', captcha, key, address, ip, emailVerification);
+
+					var emailsClbk = function(){
+
+						console.log('emailsClbk!!!');
+
+						if (emailVerification){
+							
+							var res = self.emails.update(emailVerification);
+							console.log('res!', res);
+							return res;
+						}
+
+						return Promise.reject('uniq')
+					}
+					
 					if (settings.server.captcha) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
@@ -1485,7 +1518,7 @@ var Proxy = function (settings, manage, test) {
 					}
 
 					return self.wallet
-						.addqueue(key || 'registration', address, ip)
+						.addqueue(key || 'registration', address, ip, null, emailsClbk)
 						.then((r) => {
 							return Promise.resolve({
 								data: r,

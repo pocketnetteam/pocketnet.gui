@@ -12,8 +12,6 @@ var Emails = function(p){
     var transporter = null
     var inited = false
 
-    var emails = {}
-
     var db = new Datastore(f.path(p.dbpath));
 
     var emailCreator = new EmailCreator()
@@ -144,7 +142,6 @@ var Emails = function(p){
                     } 
 
                     return resolve({newEmail: true})
-
 
                 })
 

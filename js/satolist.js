@@ -3773,11 +3773,7 @@ Platform = function (app, listofnodes) {
                             self.app.platform.sdk.system.get.telegramGetMe(value, true);
                             
                         }
-
                     }
-
-
-
                 },
 
                 tgfrom: {
@@ -5736,12 +5732,21 @@ Platform = function (app, listofnodes) {
                             }
                             else{*/
 
+                            console.log('self.app.platform.sdk.user.storage.emailVerification', self.app.platform.sdk.user.storage.emailVerification);
+
+                            
+
                             var prms = {
                                 address: a,
+                                emailVerification: self.app.platform.sdk.user.storage.emailVerification,
                                 captcha: self.sdk.captcha.done
                             }
 
+                            self.app.platform.sdk.user.storage.emailVerification = '';
+
                             self.app.api.fetchauth('free/registration', prms).then(d => {
+
+                                console.log('then!!', d);
                                 if (clbk)
                                         clbk(true)
 
