@@ -2590,9 +2590,6 @@ var system16 = (function(){
 
 							var _make = function(){
 
-								console.log('make!!!');
-
-
 								globalpreloader(true)
 
 								proxy.fetch('manage', {
@@ -2781,8 +2778,8 @@ var system16 = (function(){
 					id: 'telegram',
 					placeholder: '',
 					value: registration.check,
-					possibleValues: ['uniqAddress', 'uniqEmails', 'ipAndUniqAddress'],
-					possibleValuesLabels: ['addresses', 'addresses and emails', 'addresses and ip'],
+					possibleValues: ['uniqAddress', 'uniqEmails'],
+					possibleValuesLabels: ['addresses', 'addresses and emails'],
 					defaultValue: registration.check,
 
 					_onChange: function (value) {
@@ -2888,8 +2885,6 @@ var system16 = (function(){
 
 					p.el.find('.settings').on('click', function(){
 						var key = $(this).closest('.wallet').attr('key')
-
-						console.log('key!!!', key);
 
 						if (key){
 							var d = inputDialogNew({

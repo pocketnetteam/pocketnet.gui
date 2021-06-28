@@ -6019,10 +6019,6 @@ Platform = function (app, listofnodes) {
                             }
                             else{*/
 
-                            console.log('self.app.platform.sdk.user.storage.emailVerification', self.app.platform.sdk.user.storage.emailVerification);
-
-                            
-
                             var prms = {
                                 address: a,
                                 emailVerification: self.app.platform.sdk.user.storage.emailVerification,

@@ -624,7 +624,6 @@ var filluser = (function(){
 
 			request : function(clbk){
 
-				console.log('requet!!!', clbk)
 				self.sdk.users.requestFreeMoney(function(res, err){
 
 					var address = self.sdk.address.pnet().address;

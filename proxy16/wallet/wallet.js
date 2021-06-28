@@ -9,7 +9,6 @@ var compensation = [
 
 var Wallet = function(p){
 
-    console.log('wallet!!!', p);
     var self = this
 
     var addresses = {}
@@ -55,15 +54,11 @@ var Wallet = function(p){
 
         uniqEmails : function(queueobj, all, emailsClbk){
 
-            console.log('queobj.all', emailsClbk);
-
             if (emailsClbk){
                 
                 return emailsClbk()
                 .then((result) =>{
     
-                    console.log('result email', result);
-
                     if (result && result.updated){
 
                         return self.patterns.uniqAddress(queueobj, all);
@@ -502,8 +497,6 @@ var Wallet = function(p){
 
             return self.checking(object, emailsClbk).then(r => {
                 return new Promise((resolve, reject) => {
-
-                    console.log('quee!!!', queue, object);
 
                     queue.push(object)
                     all.push(object)

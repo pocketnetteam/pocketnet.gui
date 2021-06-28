@@ -313,8 +313,6 @@ var test = (function(){
 										actions.saveemail(email);
 									}
 
-									console.log('save!!!!');
-
 									self.sdk.node.transactions.create.commonFromUnspent(
 
 										userInfo,
