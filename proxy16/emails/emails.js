@@ -32,7 +32,6 @@ var Emails = function(p){
     }
 
     self.init = function(){
-        console.log('emails!!', p);
 
         if(!p || !p.emailshost)
             return Promise.reject('params')
@@ -53,8 +52,6 @@ var Emails = function(p){
 
 
         transporter = nodemailer.createTransport(emails);
-
-        console.log('transporter', emails, transporter);
 
         return new Promise((resolve, reject) => {
 
