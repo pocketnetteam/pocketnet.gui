@@ -620,6 +620,12 @@ fs.exists(mapJsPath, function (exists) {
 							if(args.path){
 								JSENV += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>';
 							}
+
+							console.log("___ _args.domain", VARS.domain)
+
+							if(VARS.domain){
+								JSENV += '<script>window.pocketnetdomain = "' + VARS.domain + '";</script>';
+							}
 	
 							if(args.prodaction)
 							{

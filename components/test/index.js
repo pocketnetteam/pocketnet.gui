@@ -250,7 +250,7 @@ var test = (function(){
 						}
 
 						if(err == 'pocketnet'){
-							
+
 							el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');
 							
 						}
