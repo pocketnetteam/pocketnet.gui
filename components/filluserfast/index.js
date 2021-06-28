@@ -373,7 +373,6 @@ var filluserfast = (function(){
 
 			request : function(clbk){
 
-
 				self.sdk.users.requestFreeMoney(function(res, err){
 
 					//console.log('res, err', res, err)

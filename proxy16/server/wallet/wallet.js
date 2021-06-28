@@ -16,8 +16,6 @@ var Wallet = function(p){
         unspentsInterval = null
 
     var inited = false
-    var TXFEE = 1
-    var smulti = 100000000
 
     self.kit = {
         
@@ -41,6 +39,7 @@ var Wallet = function(p){
 
         uniqAddress : function(queueobj, all){
 
+            conosle.log('uniqaddress!!!', queueobj, all)
             if(!queueobj.address) return Promise.reject('address')
 
             var f = _.find(all, function(obj){
@@ -53,37 +52,6 @@ var Wallet = function(p){
             return Promise.resolve()
         },
 
-
-        uniqEmails : function(queueobj, all, emailsClbk){
-
-            if (emailsClbk){
-                
-                return emailsClbk()
-                .then((result) =>{
-    
-                    if (result && result.updated){
-
-                        return self.patterns.uniqAddress(queueobj, all);
-
-                    }
-
-                    return Promise.reject('uniq');
-    
-    
-                })
-                .catch(e => Promise.reject('uniq'))
-            
-            } else {
-
-                return Promise.reject('uniq');
-
-            }
-            
-
-
-
-        },
-
         ipAndUniqAddress : function(queueobj, all){
             return self.patterns.ip(queueobj, all).then(r => {
                 return self.patterns.uniqAddress(queueobj, all)
@@ -91,7 +59,7 @@ var Wallet = function(p){
         }
     }
 
-    self.checking = function(queueobj, emailsClbk){
+    self.checking = function(queueobj){
 
         var addressobj = addresses[queueobj.key]
 
@@ -101,7 +69,7 @@ var Wallet = function(p){
 
 
         if (addressobj.check && self.patterns[addressobj.check]){
-            return self.patterns[addressobj.check](queueobj, all, emailsClbk)
+            return self.patterns[addressobj.check](queueobj, all)
         }
 
         return Promise.resolve()
@@ -156,12 +124,9 @@ var Wallet = function(p){
     }
 
     self.init = function(){
-     
         _.each(p.addresses, function(options, key){
 
-            addresses[key] = self.kit.addressobj(options, key)
-
-            /*var kp = null
+            var kp = null
             
             try{
                 kp = self.pocketnet.kit.keyPair(options.privatekey)
@@ -180,9 +145,9 @@ var Wallet = function(p){
                 all : [],
                 key : key,
                 check : options.check
-            }*/
+            }
 
-            if(!addresses[key].kp){
+            if(!kp){
                 _.each(self.clbks.error.ini, function(c){
                     c('privatekey', {
                         key : key
@@ -190,9 +155,16 @@ var Wallet = function(p){
                 })
             }
             else{
+
+
+               
+
                 self.unspents.getc(addresses[key]).catch(e => {
                 })
             }
+
+                
+                
 
         })
 
@@ -213,6 +185,19 @@ var Wallet = function(p){
 
                     })
 
+                   /* _.each(p.addresses, function(options, key){
+
+                        
+
+                        if(options.source == 'compensation'){
+
+                            _.each(compensation, function(tobj){
+                                self.kit.addqueue('compensation', tobj[0], "::1", tobj[2] / 100000000).catch(e => {
+                                })
+                            })
+                        }
+
+                    })*/
                 })
 
                 db.find({executed : '-'}).exec(function (err, docs) {
@@ -240,7 +225,6 @@ var Wallet = function(p){
 
     self.unspents = {
         waitSpend: function (unspent) {
-
             if (unspent.confirmations <= 11 && unspent.pockettx) {
                 return 11 - unspent.confirmations
             }
@@ -263,7 +247,7 @@ var Wallet = function(p){
         },
 
         canSpend: function (unspent) {
-            return !unspent.block && !unspent.cantspend && !self.unspents.waitSpend(unspent) && unspent.amount
+            return !unspent.cantspend && !self.unspents.waitSpend(unspent) && unspent.amount
         },
 
         total : function(unspents){
@@ -334,30 +318,6 @@ var Wallet = function(p){
     }
 
     self.kit = {
-
-        addressobj : function(options, key){
-            var kp = null
-            
-            try{
-                kp = self.pocketnet.kit.keyPair(options.privatekey)
-            }
-            catch(e){
-                
-            }
-          
-            return {
-                amount : options.amount,
-                outs : options.outs || 1,
-                keys : kp,
-                address : kp ? self.pocketnet.kit.addressByPublicKey(kp.publicKey) : null,
-                unspents : null,
-                queue : [],
-                all : [],
-                key : key,
-                check : options.check
-            }
-        },
-
         sendwithprivatekey : function(address, amount, key){
 
             if(!address) return Promise.reject('address')
@@ -417,7 +377,6 @@ var Wallet = function(p){
             })
 
         },
-
         send : function(key, tos){
 
             if(!addresses[key]) return Promise.reject('key')
@@ -443,6 +402,7 @@ var Wallet = function(p){
                 if (meta){
                     self.unspents.release(meta.inputs)
                 }
+                   
 
                 if((e == -26 || e == -25 || e == 16)){
                     return Promise.reject('sync')
@@ -455,7 +415,7 @@ var Wallet = function(p){
 
         },
 
-        addqueue : function(key, to, ip, amount, emailsClbk){
+        addqueue : function(key, to, ip, amount){
             
             if(!to) return Promise.reject('to')
             if(!addresses[key]) return Promise.reject('key')
@@ -479,8 +439,9 @@ var Wallet = function(p){
 
 
 
-            return self.checking(object, emailsClbk).then(r => {
+            return self.checking(object).then(r => {
                 return new Promise((resolve, reject) => {
+
 
                     queue.push(object)
                     all.push(object)
@@ -522,6 +483,8 @@ var Wallet = function(p){
             var queue = _.filter(addresses[key].queue, function(object, l){
                 return !object.executing & l < 50
             })
+
+
 
             if(!queue.length) return Promise.resolve()
 
@@ -637,25 +600,7 @@ var Wallet = function(p){
                 return self.unspents.getc(addresses[key])
             }
         
-        },
-
-        check : function(key){
-
-            var check = addresses[key].check;
-
-            if (check === "uniqEmails"){
-
-                return Promise.resolve({
-                    data : check
-                });
-
-            } 
-
-            return Promise.reject(check);
-
         }
-
-
     }
 
     self.transactions = {
@@ -758,7 +703,7 @@ var Wallet = function(p){
         build : function(inputs, outputs, keyPair){
 
             //var amount = 0;
-            var k = smulti;
+            var k = 100000000;
             var node = self.nodeManager.selectbest();
 
             if(!node) return Promise.reject('timeDifference')
@@ -802,202 +747,6 @@ var Wallet = function(p){
         },
         send : function(tx){
             return self.nodeManager.request('sendrawtransaction', [tx.toHex()])
-        },
-
-        common : function (address, obj, p) {
-
-            if (!address.keys) return Promise.reject('address.keys')
-
-            if (!p) p = {};
-
-            var unspents = self.unspents.available(address.unspents)
-
-            if(!unspents.length) return Promise.reject('unspent.length')
-
-            var inputs = [{
-                txId: unspents[unspents.length - 1].txid,
-                vout: unspents[unspents.length - 1].vout,
-                amount: unspents[unspents.length - 1].amount,
-                scriptPubKey: unspents[unspents.length - 1].scriptPubKey,
-            }]
-
-            return this.types[obj.type](address, inputs, obj, p).then(({alias, error, data}) => {
-
-                if (!alias && ((error == -26 || error == -25 || error == 16) && !p.update) ) {
-                    p.update = true;
-                    return self.transactions.common(address, obj, p)
-                }
-
-                if(!alias){
-                    return Promise.reject(error)
-                }
-
-                return Promise.resolve({alias, data})
-            })
-
-        },
-
-        types : {
-
-            common: function (address, inputs, obj, fees) {
-
-                if (!p) p = {};
-
-                var node = self.nodeManager.selectbest();
-
-                if(!node) return Promise.reject('timeDifference')
-
-                var error = obj.validation();
-
-                if (error) return Promise.reject(error)
-               
-                var keyPair = address.keys
-
-                var txb = new self.pocketnet.lib.TransactionBuilder();
-                    txb.addNTime(node.timeDifference || 0)
-
-                var amount = 0;
-
-                _.each(inputs, function (i, index) {
-
-                    txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
-
-                    amount = amount + Number(i.amount);
-                })
-
-                amount = amount * smulti;
-
-                var data = Buffer.from(self.pocketnet.lib.crypto.hash256(obj.serialize()), 'utf8');
-
-                var optype = obj.typeop ? obj.typeop(self) : obj.type
-                var optstype = optype
-
-                if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
-
-                var opreturnData = [Buffer.from(optype, 'utf8'), data];
-
-                var outputs = [];
-
-                if (obj.opreturn) {
-                    opreturnData.push(Buffer.from(obj.opreturn()))
-                }
-
-                var embed = self.pocketnet.lib.payments.embed({ data: opreturnData });
-                var i = 0;
-
-                txb.addOutput(embed.output, 0);
-
-                outputs.push({
-                    amount : 0,
-                    deleted : true,
-                    address : address.address
-                })
-
-                var uamount = Number((amount - (fees || 0)).toFixed(0))
-
-                txb.addOutput(address.address, uamount);
-
-                outputs.push({
-                    address: address.address,
-                    amount: uamount
-                })
-
-                _.each(inputs, function (input, index) {
-                    txb.sign(index, keyPair);
-                })
-
-                var tx = txb.build()
-
-                var hex = tx.toHex();
-
-                _.each(inputs, function (i) {
-                    var u = _.find(address.unspents, function(u){
-                        return u.vout == i.vout && u.txid == i.txId
-                    })
-                    
-                    if(u) u.cantspend = true
-                })
-
-                return self.nodeManager.request('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(data => {
-
-                    var alias = obj.export(true);
-                        alias.txid = data;
-                        alias.address = address.address;
-                        alias.type = obj.type
-                        alias.time = f.now()
-                        alias.timeUpd = alias.time
-                        alias.optype = optype
-                        alias.inputs = inputs
-                        alias.outputs = _.map(outputs, function(output){
-                            return {
-                                address : output.address,
-                                amount : output.amount / smulti,
-                                deleted : output.deleted
-                            }
-                        })
-
-                    return Promise.resolve({
-                        alias,
-                        data
-                    })
-
-                }).catch(e => {
-
-                    _.each(inputs, function (i) {
-                        var u = _.find(address.unspents, function(u){
-                            return u.vout == i.vout && u.txid == i.txId
-                        })
-                        
-                        if(u) u.cantspend = false
-                    })
-
-                    return Promise.reject({
-                        error : e.code
-                    })
-
-                })
-
-
-
-
-            },
-
-            share: function (address, inputs, share) {
-                return this.common(address, inputs, share, TXFEE)
-            },
-            userInfo: function (address, inputs, userInfo) {
-                return this.common(address, inputs, userInfo, TXFEE)
-            },
-            upvoteShare: function (address, inputs, upvoteShare) {
-                return this.common(address, inputs, upvoteShare, TXFEE)
-            },
-            complainShare: function (address, inputs, complainShare) {
-                return this.common(address, inputs, complainShare, TXFEE)
-            },
-            comment: function (address, inputs, comment) {
-                return this.common(address, inputs, comment, TXFEE)
-            },
-            commentShare: function (address, inputs, commentShare) {
-                return this.common(address, inputs, commentShare, TXFEE)
-            },
-            cScore: function (address, inputs, cScore) {
-                return this.common(address, inputs, cScore, TXFEE)
-            },
-            unsubscribe: function (address, inputs, unsubscribe) {
-                return this.common(address, inputs, unsubscribe, TXFEE)
-            },
-            subscribe: function (address, inputs, subscribe) {
-                return this.common(address, inputs, subscribe, TXFEE)
-            },
-            blocking: function (address, inputs, blocking) {
-                return this.common(address, inputs, blocking, TXFEE)
-            },
-            unblocking: function (address, inputs, unblocking) {
-                return this.common(address, inputs, unblocking, TXFEE)
-            },
-            subscribePrivate: function (address, inputs, subscribe) {
-                return this.common(address, inputs, subscribe, TXFEE)
-            }
         }
     }
 

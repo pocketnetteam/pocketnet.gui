@@ -1,0 +1,72 @@
+<%- from.name || 'Pocket user' %> sent you a confirmation code to use Pocketnet, the revolutionary anti-censorship decentralized publishing and social platform.
+<!--part-->
+<!--part-->
+<mjml>
+    <mj-body>
+        <mj-section>
+        <mj-column>
+
+            <mj-image width="100px" src="https://pocketnet.app/img/logosmallpadding.png"></mj-image>
+
+            <mj-divider border-color="#0059ff"></mj-divider>
+
+            <mj-text font-family="Segue, Arial" font-size="36px" font-weight="100">
+                The revolutionary anti-censorship decentralized publishing and social platform.
+            </mj-text>
+
+            <mj-text font-family="Segue, Arial">
+                Dear user,
+            </mj-text>
+
+            <mj-text font-family="Segue, Arial">
+                <%- from.name || 'Pocketnet' %> sent you a confirmation code to use Pocketnet, the revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity
+            </mj-text>
+              
+           </mj-column>
+        </mj-section>
+          <mj-section background-color="#b3b3b3">
+        <mj-column>    
+            <mj-text padding-top="20px" font-family="Segue, Arial">
+                <b>Confirmation code:</b>
+            </mj-text>
+
+
+            <mj-text color="#f1f1f1" padding-top="0px" font-family="Segue, Arial" font-size="24px" font-weight="100">
+                <%-code%>
+            </mj-text>
+              
+             </mj-column>
+        </mj-section>
+           
+
+        <mj-section>
+            <mj-column>
+                <mj-text font-family="Segue, Arial">
+
+                </mj-text>
+            </mj-column>
+        </mj-section>
+
+         <mj-section>
+            <mj-column>
+                <mj-text font-family="Segue, Arial">
+               Thank you,
+
+
+            </mj-text>
+            <mj-text font-family="Segue, Arial">
+              Pocketnet Team
+            </mj-text>
+            </mj-column>
+        </mj-section>
+
+         
+
+    </mj-body>
+</mjml>
+
+
+
+
+
+

@@ -623,6 +623,7 @@ var filluser = (function(){
 		var balance = {
 
 			request : function(clbk){
+
 				self.sdk.users.requestFreeMoney(function(res, err){
 
 					var address = self.sdk.address.pnet().address;

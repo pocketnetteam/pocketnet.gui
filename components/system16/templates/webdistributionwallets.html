@@ -1,4 +1,4 @@
-<% _.each(wallets.addresses, function(wallet, key){ %>
+<% _.each(wallets.addresses, function(wallet, key){ console.log('dropdownCheck', dropdownCheck)%>
 
     <div class="walletWrapper" >
         <div class="work">
@@ -55,6 +55,7 @@
                         <% if(wallet.ready && admin) {%> <span class="gray remove">Delete Private Key</span> <% } %>
                     
                     </div>
+                    <div class="emails"><%= dropdownCheck.input({init: true}) %></div>
                     <div class="queue"><%- wallet.queue %></div>
                     <div class="balance"><%- wallet.balance %> PKOIN</div>
                     <div class="unspents"><%- wallet.unspents %> </div>
