@@ -1945,6 +1945,54 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+
+        images : function(allimages, initialValue, clbk){
+
+            if(!_.isArray(allimages)) allimages = [allimages]
+
+            if(!initialValue) initialValue = allimages[0]
+
+            if(!initialValue) return false
+
+            var gid = 'uiimages'
+
+            var images = _.map(allimages, function(i){
+                return {
+                    src : i
+                }
+            })
+
+            /*var num = findIndex(images, function(image){
+
+                if (image.src == initialValue) return true;						
+
+            })*/
+
+            self.app.nav.api.load({
+                open : true,
+                href : 'imagegallery',
+                inWnd : true,
+                history : true,
+
+                essenseData : {
+                    initialValue : initialValue,
+                    idName : 'src',
+                    images : images,
+
+                    gid : gid
+                },
+
+                clbk : function(){
+                    if (clbk)
+                        clbk()
+                }
+            })
+
+
+            return true
+
+        },
+
         share : function(p){
             if(!p) p = {}
 
@@ -4175,6 +4223,8 @@ Platform = function (app, listofnodes) {
             clbks : {
 
             },
+
+
             haskeys : function(){
                 self.sdk.keys.need().then(r => {
                     return Promise.reject('empty')
@@ -4188,8 +4238,34 @@ Platform = function (app, listofnodes) {
 
                 })
             },
+
+            error : function(text){
+                dialog({
+                    html: "Pocketnet chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
+                    btn1text: 'Edit profile',
+                    class : 'one',
+                    success: function () {
+
+                        self.app.nav.api.load({
+                            open: true,
+                            href: 'userpage?id=test',
+                            history: true
+                        })
+
+                    }
+                })
+            },
+
             init : function(){
+
+
+                return Promise.reject('notnow')
+                
                 return self.sdk.keys.need().then(me => {
+
+                    if(self.loadingWithErrors){
+                        return Promise.reject('loadingWithErrors')
+                    }
 
                     var userInfo = new UserInfo();
 
@@ -4208,32 +4284,73 @@ Platform = function (app, listofnodes) {
                     var err = userInfo.validation()
 
                     if (err){
+
+                        var errtext = 'Undefined Error'
+                        
+						if(err == 'namelength'){
+							errtext = 'The name length can be more than 20 symbols'
+						}
+
+						if(err == 'pocketnet'){
+							errtext = 'To avoid user confusion using Pocketnet in name is reserved'
+						}
+
+                        self.sdk.keys.error(errtext)
+
                         return Promise.reject(err)
                     }
 
-                    return Promise.resolve('processing')
+                    return new Promise((resolve, reject) => {
 
-                    self.sdk.node.transactions.create.commonFromUnspent(
+                        dialog({
+                            html: "Pocketnet chat ask you to generate encryption keys. Do you want to proceed?",
+                            btn1text: 'Generate Encryption Keys',
+                            btn2text: self.app.localization.e('dno'),
 
-                        userInfo,
+                            success: function () {
 
-                        function(tx, error){
+                                self.sdk.node.transactions.create.commonFromUnspent(
 
-                            if(!tx){
+                                    userInfo,
+            
+                                    function(tx, error){
+            
+                                        if(!tx){
 
-                                return Promise.reject(error)
+                                            self.sdk.keys.error(self.sdk.errorHandler(error).text())
+            
+                                            reject(error)
+            
+                                        }
+                                        else
+                                        {
+                                            self.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+                                                resolve('processing')
+                                            })
+                                        }
+            
+                                        
+                                    }
+                                )
 
+                            },
+
+                            fail: function () {
+                                reject('no')
+                            },
+
+                            close: function () {
+                                reject('close')
                             }
+                        })
 
-                            self.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
-                                return Promise.resolve('processing')
-                            })
-                        }
-                    )
+                    })
+
+                    ///return Promise.resolve('processing')
+
+                    
 
                 }).catch(r => {
-
-                    console.log('err', err)
 
                     return Promise.resolve(r)
 
@@ -4250,7 +4367,7 @@ Platform = function (app, listofnodes) {
 				
                             (self.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.sdk.address.pnet().address + '.userInfo.length') > 0 )
 
-                            if(processing) {
+                            if (processing) {
                                 return reject('processing')
                             }
 
@@ -19903,6 +20020,8 @@ Platform = function (app, listofnodes) {
 
     self.prepareUserData = function(clbk){
 
+
+
         lazyActions([
 
             self.sdk.node.transactions.loadTemp,
@@ -19918,6 +20037,8 @@ Platform = function (app, listofnodes) {
         ], function () {
 
             self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+           
 
             if (self.loadingWithErrors)
                 self.sdk.notifications.init().catch(e => {})
@@ -20011,6 +20132,17 @@ Platform = function (app, listofnodes) {
             
                         })
 
+
+                        console.log("INITKEYS")
+
+                        /*self.sdk.keys.init().then(r => {
+                            console.log("RSUCCESS", r)
+                        }).catch(r => {
+                            console.log("RFAIL", r)
+                        })*/
+                        
+                    
+
                         if (self.loadingWithErrors)
                             self.sdk.notifications.init().catch(e => {})
                         
@@ -20046,6 +20178,23 @@ Platform = function (app, listofnodes) {
             self.matrixchat.inited = false
         },
 
+
+        import : function(clbk){
+
+            if (self.matrixchat.imported){
+                if(clbk) clbk()
+            }
+            else{
+                self.matrixchat.imported = true;
+
+                importScript('chat/matrix-element.min.js', clbk)
+            }
+
+            
+        },
+
+       
+
         init : function(){
 
             if(self.matrixchat.inited) return
@@ -20070,7 +20219,7 @@ Platform = function (app, listofnodes) {
                         if (!isMobile()){
 
 
-                            importScript('chat/matrix-element.min.js', function(){
+                            self.matrixchat.import(function(){
 
                                 self.matrixchat.inited = true
         
@@ -20096,6 +20245,28 @@ Platform = function (app, listofnodes) {
                     }
                 }
             })
+        },
+
+        link : function(core){
+
+
+            core.update({
+                block : self.currentBlock
+            })
+
+
+            self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
+            self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
+
+                core.update({
+                    block : self.currentBlock
+                })
+
+            }
+        },
+
+        unlink : function(){
+            delete self.app.platform.ws.messages["new block"].clbks.matrixchat
         }
     }
 

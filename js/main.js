@@ -20,16 +20,22 @@ if(!_Node)
 
 	]
 
+
+	var matrix = 'matrix.pocketnet.app'
+
 	if (window.testpocketnet){
 		_listofproxies = [{
 			host : 'test.pocketnet.app',
 			port : 8899,
 			wss : 8099
 	    }]
+
+		matrix = 'test.matrix.pocketnet.app'
 	}
 
 	app = new Application({
 		listofproxies : _listofproxies,
+		matrix : matrix
 	});
 
 	app.preapi()

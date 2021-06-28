@@ -38208,6 +38208,8 @@ const payments = require('./payments');
 exports.payments = payments;
 const script = require('./script');
 exports.script = script;
+const ecc = require('tiny-secp256k1');
+exports.ecc = ecc;
 var block_1 = require('./block');
 exports.Block = block_1.Block;
 var psbt_1 = require('./psbt');
@@ -38219,33 +38221,50 @@ exports.Transaction = transaction_1.Transaction;
 var transaction_builder_1 = require('./transaction_builder');
 exports.TransactionBuilder = transaction_builder_1.TransactionBuilder;
 
-},{"./address":139,"./block":140,"./crypto":143,"./ecpair":144,"./networks":146,"./payments":149,"./psbt":157,"./script":158,"./transaction":185,"./transaction_builder":186,"bip32":58,"bip39":60}],146:[function(require,module,exports){
+},{"./address":139,"./block":140,"./crypto":143,"./ecpair":144,"./networks":146,"./payments":149,"./psbt":157,"./script":158,"./transaction":185,"./transaction_builder":186,"bip32":58,"bip39":60,"tiny-secp256k1":131}],146:[function(require,module,exports){
+(function (process){(function (){
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.bitcoin = {
+// @ts-ignore
+exports.bitcoin =
+  (typeof process !== 'undefined' && process.argv.includes('--test')) ||
+  (typeof window !== 'undefined' && window.testpocketnet)
+    ? {
+        messagePrefix: '\x18Bitcoin Signed Message:\n',
+        bech32: 'bc',
+        bip32: {
+          public: 0x043587cf,
+          private: 0x04358394,
+        },
+        pubKeyHash: 0x37,
+        scriptHash: 0x50,
+        wif: 0x21,
+      }
+    : {
+        messagePrefix: '\x18Bitcoin Signed Message:\n',
+        bech32: 'bc',
+        bip32: {
+          public: 0x043587cf,
+          private: 0x04358394,
+        },
+        pubKeyHash: 0x37,
+        scriptHash: 0x50,
+        wif: 0x21,
+      };
+/*{
   messagePrefix: '\x18Bitcoin Signed Message:\n',
   bech32: 'bc',
   bip32: {
     public: 0x043587cf,
     private: 0x04358394,
   },
-  pubKeyHash: 0x37,
-  scriptHash: 0x50,
-  wif: 0x21,
-};
-exports.testnet = {
-  messagePrefix: '\x18Bitcoin Signed Message:\n',
-  bech32: 'tb',
-  bip32: {
-    public: 0x043587cf,
-    private: 0x04358394,
-  },
-  pubKeyHash: 0x6f,
-  scriptHash: 0xc4,
-  wif: 0xef,
-};
+  pubKeyHash: 0x41,
+  scriptHash: 0x4e,
+  wif: 0x1e,
+}*/
 
-},{}],147:[function(require,module,exports){
+}).call(this)}).call(this,require('_process'))
+},{"_process":8}],147:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 const networks_1 = require('../networks');
