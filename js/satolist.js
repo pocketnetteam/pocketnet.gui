@@ -4264,9 +4264,6 @@ Platform = function (app, listofnodes) {
 
             init : function(){
 
-
-                return Promise.reject('notnow')
-                
                 return self.sdk.keys.need().then(me => {
 
                     if(self.loadingWithErrors){
