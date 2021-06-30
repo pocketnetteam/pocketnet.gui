@@ -879,3 +879,5 @@ ____loclib.importInputLabel = 'Ссылка на видео'
 ____loclib.capitalWarning = 'ВНИМАНИЕ'
 ____loclib.streamSettingsWarn = 'Для корректной работы трансляции используйте настройки изображения не выше, чем следующие: битрейт - 2000 кбит/с, разрешение - 1920х1080 точек'
 ____loclib.streamSettingsResult = 'В противном случае ваш стрим может работать нестабильно.'
+
+____loclib.failedStreamGeneration = 'Unable to start stream'

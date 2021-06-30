@@ -269,6 +269,13 @@ PeerTubePocketnet = function (app) {
       authorization: true,
     },
 
+    getMyAccountVideos: {
+      path: 'api/v1/users/me/videos',
+      method: 'GET',
+      authorization: true,
+      axios: true,
+    },
+
     removeVideo: {
       path: function ({ id }) {
         return 'api/v1/videos/' + id;
@@ -375,6 +382,9 @@ PeerTubePocketnet = function (app) {
             headers: requestoptions.headers,
           };
 
+          if (requestoptions.method === 'GET')
+            data = { ...data, ...axiosoptions };
+
           if (meta.formdata) {
             axiosoptions.onUploadProgress = (evt) => {
               const percentCompleted = Math.round(
@@ -455,8 +465,6 @@ PeerTubePocketnet = function (app) {
           .fetch('peertube/best')
           .then((data) => {
             if (!data.host) return Promise.reject(error('host'));
-
-            console.log('data.host', data.host)
 
             return Promise.resolve(data.host);
           })
@@ -630,14 +638,41 @@ PeerTubePocketnet = function (app) {
               host: options.host,
             });
           })
-          .catch((e) => {
-            e.cancel = axios.isCancel(e);
+          .catch((e = {}) => {
+            const errorBody = e.response ? e.response.data : {};
 
-            return Promise.reject(e);
+            if (errorBody.code !== 3) {
+              e.cancel = axios.isCancel(e);
+
+              return Promise.reject(e);
+            }
+
+            return self.api.videos
+              .getMyAccountVideos({
+                isLive: true,
+                filter: 'local',
+              })
+              .then((video = []) => {
+                const existingStream = video[0];
+
+                if (!existingStream) {
+                  return Promise.reject(error('failedStreamGeneration'));
+                }
+
+                return Promise.resolve({
+                  id: existingStream.id,
+                  uuid: existingStream.uuid,
+                  host: options.host,
+                  formattedLink: self.composeLink(options.host, existingStream.uuid),
+                });
+              });
           }),
 
       getLiveInfo: (data = {}, options = {}) =>
-        request('getLiveInfo', data, options).then((res) => res),
+        request('getLiveInfo', data, options).then((res) => ({
+          ...res,
+          uuid: data.id,
+        })),
 
       checkQuota: function (size) {
         return self.api.user.me().then((rme) => {
@@ -667,6 +702,12 @@ PeerTubePocketnet = function (app) {
           return Promise.reject(error('videoQuotaUsedDaily'));
         });
       },
+
+      getMyAccountVideos(parameters = {}) {
+        return request('getMyAccountVideos', {
+          params: { ...parameters },
+        }).then((r = {}) => r.data || []);
+      },
     },
 
     user: {
@@ -676,6 +717,7 @@ PeerTubePocketnet = function (app) {
             channelId: deep(r, 'videoChannels.0.id'),
             videoQuotaDaily: deep(r, 'videoQuotaDaily'),
             videoQuota: deep(r, 'videoQuota'),
+            username: deep(r, 'username'),
           };
 
           if (!data.channelId || !data.videoQuotaDaily)
