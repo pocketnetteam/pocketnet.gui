@@ -208,7 +208,7 @@ ____loclib.aused = "Cette adresse est déjà utilisée dans un autre pool d'adre
 ____loclib.sub = "S'abonner";
 ____loclib.unsub = "Se désabonner";
 ____loclib.joined = "Rejoint Pocketnet";
-____loclib.shares = "ACTIONS";
+____loclib.shares = "PARUTIONS";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MES POSTS";
 ____loclib.followers = "SUIVEURS";
@@ -405,7 +405,7 @@ ____loclib.info = "Info"
 ____loclib.e13023 = "Voulez-vous vraiment débloquer l'utilisateur?"
 ____loclib.e13024 = "Votre clé de connexion privée"
 ____loclib.e13025 = "Créer un nouveau compte"
-____loclib.e13026 = "Rejoignez Pocketnet - L'avenir du Web gratuit"
+____loclib.e13026 = "Rejoignez Pocketnet"
 
 ____loclib.e13027 = "Restez signé"
 ____loclib.e13028 = "Vous avez entré une clé privée non valide"
