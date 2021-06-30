@@ -1563,7 +1563,7 @@ var lenta = (function(){
 
 					if(!el.closest('.share').hasClass('showAdditional')){
 
-						actions.initVideo(_el, share = self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')], function(){
+						actions.initVideo(_el, self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')], function(){
 
 							if(player.p.getState && player.p.getState() == 'ended') return
 
