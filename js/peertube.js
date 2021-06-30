@@ -655,24 +655,27 @@ PeerTubePocketnet = function (app) {
                 isLive: true,
                 filter: 'local',
               })
-              .then((video = {}) => {
-                const existingStreamId = video.uuid;
+              .then((video = []) => {
+                const existingStream = video[0];
 
-                if (!existingStreamId) {
+                if (!existingStream) {
                   return Promise.reject(error('failedStreamGeneration'));
                 }
 
-                return existingStreamId;
-              })
-              .then((streamId) =>
-                self.api.videos.getLiveInfo({ id: streamId }),
-              ).then(streamInfo => {
-                debugger;
+                return Promise.resolve({
+                  id: existingStream.id,
+                  uuid: existingStream.uuid,
+                  host: options.host,
+                  formattedLink: self.composeLink(options.host, existingStream.uuid),
+                });
               });
           }),
 
       getLiveInfo: (data = {}, options = {}) =>
-        request('getLiveInfo', data, options).then((res) => res),
+        request('getLiveInfo', data, options).then((res) => ({
+          ...res,
+          uuid: data.id,
+        })),
 
       checkQuota: function (size) {
         return self.api.user.me().then((rme) => {
