@@ -119,6 +119,19 @@
 
         </div>
 
+        <div class="work">
+            <div class="results">
+                Successfully sent emails:
+                <span class="count">
+                    <%=results.filter(result => result === 'success').length %> 
+                </span> 
+                <span>/</span> 
+                <span class="count">
+                    <%= results.length %>
+                </span>
+            </div>
+        </div>
+
         <% if(!_.isEmpty(emails)) {%>
 
             <div class="work">

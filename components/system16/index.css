@@ -255,6 +255,12 @@
   background: rgba(228, 221, 222, 0.12);
   margin-bottom: 1em;
 }
+#system16 .managepanel .results {
+  margin-top: 1em;
+}
+#system16 .managepanel .results .count {
+  color: #00a4ff;
+}
 #system16 .graphWrapper {
   padding: 1em 0;
 }

@@ -107,7 +107,11 @@ var Wallet = function(p){
         return Promise.resolve()
     }
 
+
     var db = new Datastore(f.path(p.dbpath));
+
+    console.log('p.dbpath', p.dbpath, db)
+
 
     var initProcess = function(){
 
@@ -156,6 +160,8 @@ var Wallet = function(p){
     }
 
     self.init = function(){
+
+        console.log('p!!', p);
      
         _.each(p.addresses, function(options, key){
 
@@ -654,6 +660,7 @@ var Wallet = function(p){
             return Promise.reject(check);
 
         }
+
 
 
     }

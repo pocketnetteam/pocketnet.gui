@@ -48,8 +48,6 @@ var Proxy = function (settings, manage, test) {
 	var systemnotify = new SystemNotify(settings.systemnotify)
 	var emails = new Emails(settings.emails)
 
-
-	console.log('Wallet!!!!', wallet);
 	self.userDataPath = null
 	self.session = 'pocketnetproxy'
 
@@ -348,6 +346,7 @@ var Proxy = function (settings, manage, test) {
 			return wallet.kit.check(key);
 		},
 
+
 		re: function () {
 			return this.destroy().then(r => {
 				this.init()
@@ -407,8 +406,6 @@ var Proxy = function (settings, manage, test) {
 		inited : function(){
 		  return emails.inited()
 		},
-  
-		
 	
 		destroy: function () {
 		  return emails.destroy()
@@ -1464,7 +1461,7 @@ var Proxy = function (settings, manage, test) {
 			},
 		},
 
-		wallet: {
+		wallet : {
 			sendwithprivatekey: {
 				path: '/wallet/sendwithprivatekey',
 				authorization: false,
@@ -1490,6 +1487,7 @@ var Proxy = function (settings, manage, test) {
 
 				}
 			},
+
 			freeregistration: {
 				path: '/free/registration',
 				authorization: 'signature',
@@ -1624,6 +1622,7 @@ var Proxy = function (settings, manage, test) {
 						})
 	
 					}).catch(e => {
+						console.log('catch err checkcode', e);
 	
 						return Promise.reject(e)
 					})
