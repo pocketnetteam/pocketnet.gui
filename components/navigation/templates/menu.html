@@ -1,4 +1,3 @@
-<% if(state) {%>
 
 
 <% if(typeof lentakey == 'undefined') lentakey = 'index' %>
@@ -25,14 +24,61 @@
 
 				<% } else { %> 
 
-					<% if(href == indexkey || !href) { %>
-					
-						<a href="userpage?id=wallet" fast="fast">
-							<div class="iconWrapper">
-								<i class="fas fa-wallet"></i>
-							</div>
-						</a>
+					<% if(href == indexkey || !href) { 
+						
+						if(state){ %>
 
+
+							<% if(typeof shw != 'undefined' && shw) {%>
+								<a href="index" fast="fast">
+									<div class="iconWrapper">
+										<i class="fas fa-rss"></i>
+									</div>
+								</a>
+
+								
+							<% } else { %>
+
+								<a href="index?video=1" fast="fast">
+									<div class="iconWrapper">
+										<i class="fas fa-play-circle"></i>
+									</div>
+								</a>
+
+								
+							<% } %>
+
+							<!--
+					
+							<a href="userpage?id=wallet" fast="fast">
+								<div class="iconWrapper">
+									<i class="fas fa-wallet"></i>
+								</div>
+							</a> -->
+
+						<% } else { %> 
+
+							<% if(typeof shw != 'undefined' && shw) {%>
+								<a href="index" fast="fast">
+									<div class="iconWrapper">
+										<i class="fas fa-rss"></i>
+									</div>
+								</a>
+
+								
+							<% } else { %>
+
+								<a href="index?video=1" fast="fast">
+									<div class="iconWrapper">
+										<i class="fas fa-play-circle"></i>
+									</div>
+								</a>
+
+								
+							<% } %>
+							
+						<% } %>
+				
 					<% } else { 
 						
 						%> 
@@ -69,24 +115,26 @@
 		if(href == 'share') { 
 			sharec = 'active' %>
 		<% } %>
-			<a href="share" fast="fast">
-				<div class="iconWrapper shr <%-sharec%>">
-					<i class="fas fa-plus-circle"></i>
-				</div>
-			</a>
 
-			<!--<div class="iconWrapper shr">
+			<% if(state){ %>
+
 				<a href="share" fast="fast">
-					<div class="pilsingshare">
-						<div class="pulsing"></div>
-						<div class="pulsing"></div>
-						<div class="cr"></div>
+					<div class="iconWrapper shr <%-sharec%>">
+						<i class="fas fa-plus-circle"></i>
 					</div>
-
 				</a>
-			</div>
 
-			-->
+			<% } else { %> 
+
+				<a href="registration" fast="fast">
+					<div class="iconWrapper reg">
+						<i class="fas fa-user-plus"></i>
+					</div>
+				</a>
+
+				
+				
+			<% } %>
 
 		
 		
@@ -107,5 +155,3 @@
 
 
 </div>
-
-<% } %>

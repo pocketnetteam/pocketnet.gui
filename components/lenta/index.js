@@ -630,8 +630,6 @@ var lenta = (function(){
 						volumeChange : function(v){
 							videosVolume = v
 
-							console.log('v', v)
-
 							self.sdk.videos.volume = videosVolume 
 
 							self.sdk.videos.save()
@@ -853,8 +851,6 @@ var lenta = (function(){
 
 				var wh = el.find('.videoWrapper').height() + add;
 
-				console.log("WH", wh)
-
 				var d = (h - wh) / 2
 
 				if (d > 0){
@@ -934,8 +930,6 @@ var lenta = (function(){
 					}
 
 					//player.p.muted = false
-
-					console.log('videosVolume12', videosVolume)
 
 					actions.setVolume(players[id], videosVolume || 0.5)
 					
@@ -1324,7 +1318,7 @@ var lenta = (function(){
 											action(player, vel)
 										}
 
-									}, 320)
+									}, 520)
 
 									
 
@@ -1569,12 +1563,7 @@ var lenta = (function(){
 
 					if(!el.closest('.share').hasClass('showAdditional')){
 
-
-						console.log("PLAY")
-
 						actions.initVideo(_el, share = self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')], function(){
-
-							console.log("PLAY2")
 
 							if(player.p.getState && player.p.getState() == 'ended') return
 
@@ -2116,8 +2105,6 @@ var lenta = (function(){
 							//caption : rendered,
 							send : function(comment, last){
 
-								console.log('comment', comment)
-
 								var c = el.c.find('#' + txid + " .commentsAction .count span");
 
 								c.html(Number(c.html() || "0") + 1)
@@ -2629,13 +2616,9 @@ var lenta = (function(){
 
 				}
 
-				console.log('_el', _el)
-
 				window.requestAnimationFrame(function(){
 
 					_el.imagesLoaded({ background: true }, function(image) {
-
-						console.log("IMAGES LOADED", image)
 
 						if(s.settings.v != "a"){
 
@@ -2645,8 +2628,6 @@ var lenta = (function(){
 
 								var el = $(image.elements[n]).closest('.imagesWrapper');
 								var ac = '';
-
-								console.log('window.innerWidth', window.innerWidth)
 
 								var _w = el.width();
 								var _h = el.height()
@@ -3369,7 +3350,11 @@ var lenta = (function(){
 
 		var initEvents = function(){			
 
+			
+
 			if(isMobile() && canloadprev && !essenseData.openapi){
+
+				
 
 				/*var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
@@ -3751,6 +3736,9 @@ var lenta = (function(){
 					addressEl.removeClass('blocking');
 				}
 
+
+			
+
 			}	
 			
 		}
@@ -4027,6 +4015,10 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+				/*if (essenseData.window){
+					essenseData.window.off('scroll')
+				}*/
 
 				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')

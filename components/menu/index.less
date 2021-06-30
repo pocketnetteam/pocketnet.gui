@@ -1320,6 +1320,10 @@ html.stblack{
 				width: auto;
 			}
 
+			&.searchWrapper{
+				padding-right: 3 * @rhythm;
+			}
+
 			.item{
 
                 &.signout,
@@ -1328,6 +1332,10 @@ html.stblack{
 					padding-right: 2 * @rhythm;
 				}
 
+
+				&.signin{
+					display: none;
+				}
 
 
 				&.sitename{
@@ -1500,6 +1508,7 @@ html.stblack{
 				&.searchWrapper{
 					width: 100%;
 					max-width: none;
+					padding-right: 0;
 
 					.postssearchwrapper{
 						padding : 1.5 * @rhythm @rhythm;

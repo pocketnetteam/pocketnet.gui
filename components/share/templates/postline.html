@@ -24,12 +24,20 @@
             <% 
 
             
-            if (typeof u != 'undefined' && u && (!u.trial || window.testpocketnet) && !share.itisvideo() && !share.aliasid) { %>
+            if (typeof u != 'undefined' && u && (
+                
+                (u.reputation > 50 || !u.trial || u.balance > 500000000)
+            
+            
+                    || window.testpocketnet) && !share.itisvideo() && !share.aliasid) { %>
                 <div class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                     <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                 </div>
 
-                <% if((deep(app, 'platform.real.'+user.address.value.toString('hex')) || window.testpocketnet) && !isMobile()) {%>
+                <% if(
+                    (deep(app, 'platform.real.'+user.address.value.toString('hex')) || 
+                    window.testpocketnet
+                    ) && !isMobile()) {%>
 
                 <div class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
                     <i class="fas fa-dot-circle"></i> <span><%- e('goLive') %></span>

@@ -198,7 +198,7 @@ var menu = (function(){
 
 					self.app.user.isState(function(state){
 
-						if(self.app.nav.get.pathname() != 'index'){
+						//if(self.app.nav.get.pathname() != 'index'){
 							var k = localStorage['lentakey'] || 'index';
 
 							if (parameters().r == k) k = 'index'
@@ -225,7 +225,7 @@ var menu = (function(){
 								open : true,
 								handler : true
 							})
-						}
+						//}
 
 					})
 

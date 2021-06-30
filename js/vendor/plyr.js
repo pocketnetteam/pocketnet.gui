@@ -9185,8 +9185,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
   
         }).then(embed => {
 
-          console.log('embed', embed)
-
           if(!embed || !embed.api){
             if (clbk) clbk(null);
 

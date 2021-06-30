@@ -37,7 +37,8 @@ Platform = function (app, listofnodes) {
         'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s' : true,
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' : true,
         'PUYo1a6LxjnnBVi6uBjHUsZQS4FnbUwdAN' : true,
-        'PLFtS8H7ATooK53xRTw7YHsuK7jsn5tHgi' : true
+        'PLFtS8H7ATooK53xRTw7YHsuK7jsn5tHgi' : true,
+        'PVJDtKPnxcaRDoQhqQj7FMNu46ZwB4nXVa' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
     
@@ -3868,6 +3869,7 @@ Platform = function (app, listofnodes) {
 
 
                     notifications: {
+                        class : 'notifications',
                         name: self.app.localization.e('notifications'),
                         options: {
 
@@ -3902,7 +3904,7 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                    vidgets: {
+                    /* vidgets: {
                         name: self.app.localization.e('e13288'),
                         options: {
 
@@ -3912,7 +3914,7 @@ Platform = function (app, listofnodes) {
                             vidgetstaking : options.vidgetstaking
 
                         }
-                    },
+                    },*/
 
                 }
 

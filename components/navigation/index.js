@@ -15,8 +15,18 @@ var navigation = (function(){
 		}
 
 		var events = {
+			scrollman : function(scroll){
+
+				if (scroll >= 250){
+					el.c.addClass('scrolled')
+				}
+				else{
+					el.c.removeClass('scrolled')
+				}
+			},
 			scroll : function(){
-				if (w.scrollTop() > 250){
+
+				if (w.scrollTop() >= 250){
 
 					el.c.addClass('scrolled')
 				}
@@ -26,6 +36,14 @@ var navigation = (function(){
 			},	
 
 			toup : function(){
+
+				var up = deep(self, 'app.modules.main.module.scrolltopall')
+
+				if(up) up()
+
+				if(self.app.modules.main.module){
+
+				}
 
 				_scrollTop(0, null, 0)
 			}
@@ -42,7 +60,7 @@ var navigation = (function(){
 				if (k == indexkey) k = indexkey + '?b=true'
 
 				if (k.indexOf('?') == -1) {
-					if(k == 'video'){
+					if (k == 'video'){
 						k = indexkey + '?video=1'
 					}
 					else{
@@ -50,6 +68,9 @@ var navigation = (function(){
 					}
 					
 				}
+
+
+				var shw = parameters().video
 
 
 				var back = self.app.nav.api.backChainGet()
@@ -64,7 +85,8 @@ var navigation = (function(){
 						back : back,
 						href : href,
 						lentakey : k,
-						indexkey : indexkey
+						indexkey : indexkey,
+						shw : shw
 					}
 					
 
@@ -101,12 +123,17 @@ var navigation = (function(){
 			
 			self.app.nav.clbks.history.navigation = function(href){
 
+				console.log("NAVI")
+
+
+				el.c.removeClass('scrolled')
 				renders.menu(self.app.nav.get.pathname())
 
 			}
 
 			
 			window.addEventListener('scroll', events.scroll)
+			events.scroll()
 
 			if(window.cordova){
 
@@ -114,6 +141,10 @@ var navigation = (function(){
 				window.addEventListener('keyboardWillShow', renders.hide);
 				window.addEventListener('keyboardWillHide', renders.show);
 
+			}
+
+			if (self.app.scrolling){
+				self.app.scrolling.clbks.navigation = events.scrollman
 			}
 		}
 
@@ -137,6 +168,9 @@ var navigation = (function(){
 
 			destroy : function(){
 				
+				if (self.app.scrolling){
+					delete self.app.scrolling.clbks.navigation
+				}
 
 				window.removeEventListener('scroll', events.scroll)
 
