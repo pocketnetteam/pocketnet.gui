@@ -20215,6 +20215,8 @@ Platform = function (app, listofnodes) {
 
                     var addresses = self.testchataddresses;
 
+                    return
+
                     if (addresses.indexOf(a) > -1 || window.testpocketnet) {
 
                         if (!isMobile()){
