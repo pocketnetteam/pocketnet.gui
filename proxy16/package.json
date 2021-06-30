@@ -38,6 +38,7 @@
         "svg-captcha": "^1.4.0",
         "swagger-ui-express": "^4.1.4",
         "tcp-port-used": "^1.0.1",
-        "underscore": "^1.12.1"
+        "underscore": "^1.12.1",
+        "iconv-lite": ""
     }
 }

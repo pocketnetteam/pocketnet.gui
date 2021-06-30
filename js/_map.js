@@ -43,7 +43,8 @@ __map =  {
 		"js/vendor/circular-progress.js", //
 		/*"js/vendor/swiper-bundle.min.js",*/ // very hard
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
-		"js/vendor/ion.sound/ion.sound.js" 
+		"js/vendor/ion.sound/ion.sound.js",
+		"js/vendor/hammer.min.js"
 	],
 
 	__sourcesfirst : [
@@ -83,7 +84,7 @@ __map =  {
 		"css/stblack.css",
 		"css/plyr.css",
 		"js/vendor/DateTimePicker.min.css",
-		"css/swiper-bundle.min.css",
+		/*"css/swiper-bundle.min.css",*/
 		"peertube/video-embed.css",
 		"js/vendor/emojionearea.min.css"
 	],

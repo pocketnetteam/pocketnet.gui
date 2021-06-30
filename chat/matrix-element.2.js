@@ -1,76 +1,710 @@
 (window["matrixElement_jsonp"] = window["matrixElement_jsonp"] || []).push([[2],{
 
-/***/ "1259":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "178d":
+/***/ (function(module, exports) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("3459");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("919c9172", content, shadowRoot)
-};
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAABYCAQAAACjBqE3AAAB6klEQVR4Ae3bsWpUQRTG8YkkanwCa7GzVotsI/gEgk9h4Vu4ySLYmMYgbJrc3lrwZbJwC0FMt4j7F6Y4oIZrsXtgxvx/1c0ufEX4cnbmLCmSJEmSJEmSJEmSJP3XCBPvbJU+8doWmDFwyZpLBmYlNJebz0KwzykwsuSYJSNwykEJreV2BaBMaLIQZ2xYcFgqDlmw4ayE/FwL0dDk4Qh4W37DAjgqIT+3HRbigjH+iikVdxgZStgyN0Su2sXIeTwTT+esdpcbIlfNAuZ/TxresG4zV8kYWSZNiKUTokMMSWeIwTNEn4fK2TW3gRNgVkJLuVksROA9G+bEvoATNlBCa7nZXEwdxEZxzpKRKFh+bsv8LmPFmhX1OwfIz81jIRJQ5eeqG9B+riRJkiRJkiRJkiRJkiRJkiRJUkvA/8RQoEpKlJWINFkJ62AlrEP/mNBibnv2yz/A3t7Uq3LcpoxP8COjC1T5vxoAD5VdoEqdDrd5QuW1swtUSaueh3zkiuBiqgtA2OlkeMcP/uDqugsJdbjHF65VdPMKwS0+WQc/MgKvrIOHysB9vgPwk8+85hmPbnQdvHZyDMAFD7L3EOpgMcVdvnHFS0/vlatrXvCVx0U9gt3fxvnA0/hB4nmRJEmSJEmSJEmSJGmHfgFLaDPoMu5xWwAAAABJRU5ErkJggg=="
 
 /***/ }),
 
-/***/ "3459":
+/***/ "237b":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__("1de5");
+var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__("178d");
+var ___CSS_LOADER_URL_IMPORT_1___ = __webpack_require__("f301");
+var ___CSS_LOADER_URL_IMPORT_2___ = __webpack_require__("76dc");
 exports = ___CSS_LOADER_API_IMPORT___(false);
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
+var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_2___);
 // Module
-exports.push([module.i, "@-webkit-keyframes v-pulseStretchDelay{0%,80%{transform:scale(1);-webkit-opacity:1;opacity:1}45%{transform:scale(.1);-webkit-opacity:.7;opacity:.7}}@keyframes v-pulseStretchDelay{0%,80%{transform:scale(1);-webkit-opacity:1;opacity:1}45%{transform:scale(.1);-webkit-opacity:.7;opacity:.7}}", ""]);
+exports.push([module.i, "/*! PhotoSwipe Default UI CSS by Dmitry Semenov | photoswipe.com | MIT license */.pswp__button{width:44px;height:44px;position:relative;background:none;cursor:pointer;overflow:visible;-webkit-appearance:none;display:block;border:0;padding:0;margin:0;float:right;opacity:.75;transition:opacity .2s;box-shadow:none}.pswp__button:focus,.pswp__button:hover{opacity:1}.pswp__button:active{outline:none;opacity:.9}.pswp__button::-moz-focus-inner{padding:0;border:0}.pswp__ui--over-close .pswp__button--close{opacity:1}.pswp__button,.pswp__button--arrow--left:before,.pswp__button--arrow--right:before{background:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") 0 0 no-repeat;background-size:264px 88px;width:44px;height:44px}@media (-webkit-min-device-pixel-ratio:1.1),(-webkit-min-device-pixel-ratio:1.09375),(min-resolution:1.1dppx),(min-resolution:105dpi){.pswp--svg .pswp__button,.pswp--svg .pswp__button--arrow--left:before,.pswp--svg .pswp__button--arrow--right:before{background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ")}.pswp--svg .pswp__button--arrow--left,.pswp--svg .pswp__button--arrow--right{background:none}}.pswp__button--close{background-position:0 -44px}.pswp__button--share{background-position:-44px -44px}.pswp__button--fs{display:none}.pswp--supports-fs .pswp__button--fs{display:block}.pswp--fs .pswp__button--fs{background-position:-44px 0}.pswp__button--zoom{display:none;background-position:-88px 0}.pswp--zoom-allowed .pswp__button--zoom{display:block}.pswp--zoomed-in .pswp__button--zoom{background-position:-132px 0}.pswp--touch .pswp__button--arrow--left,.pswp--touch .pswp__button--arrow--right{visibility:hidden}.pswp__button--arrow--left,.pswp__button--arrow--right{background:none;top:50%;margin-top:-50px;width:70px;height:100px;position:absolute}.pswp__button--arrow--left{left:0}.pswp__button--arrow--right{right:0}.pswp__button--arrow--left:before,.pswp__button--arrow--right:before{content:\"\";top:35px;background-color:rgba(0,0,0,.3);height:30px;width:32px;position:absolute}.pswp__button--arrow--left:before{left:6px;background-position:-138px -44px}.pswp__button--arrow--right:before{right:6px;background-position:-94px -44px}.pswp__counter,.pswp__share-modal{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.pswp__share-modal{display:block;background:rgba(0,0,0,.5);width:100%;height:100%;top:0;left:0;padding:10px;position:absolute;z-index:1600;opacity:0;transition:opacity .25s ease-out;-webkit-backface-visibility:hidden;will-change:opacity}.pswp__share-modal--hidden{display:none}.pswp__share-tooltip{z-index:1620;position:absolute;background:#fff;top:56px;border-radius:2px;display:block;width:auto;right:44px;box-shadow:0 2px 5px rgba(0,0,0,.25);transform:translateY(6px);transition:transform .25s;-webkit-backface-visibility:hidden;will-change:transform}.pswp__share-tooltip a{display:block;padding:8px 12px;font-size:14px;line-height:18px}.pswp__share-tooltip a,.pswp__share-tooltip a:hover{color:#000;text-decoration:none}.pswp__share-tooltip a:first-child{border-radius:2px 2px 0 0}.pswp__share-tooltip a:last-child{border-radius:0 0 2px 2px}.pswp__share-modal--fade-in{opacity:1}.pswp__share-modal--fade-in .pswp__share-tooltip{transform:translateY(0)}.pswp--touch .pswp__share-tooltip a{padding:16px 12px}a.pswp__share--facebook:before{content:\"\";display:block;width:0;height:0;position:absolute;top:-12px;right:15px;border:6px solid transparent;border-bottom-color:#fff;-webkit-pointer-events:none;-moz-pointer-events:none;pointer-events:none}a.pswp__share--facebook:hover{background:#3e5c9a;color:#fff}a.pswp__share--facebook:hover:before{border-bottom-color:#3e5c9a}a.pswp__share--twitter:hover{background:#55acee;color:#fff}a.pswp__share--pinterest:hover{background:#ccc;color:#ce272d}a.pswp__share--download:hover{background:#ddd}.pswp__counter{position:absolute;left:0;top:0;height:44px;font-size:13px;line-height:44px;color:#fff;opacity:.75;padding:0 10px}.pswp__caption{position:absolute;left:0;bottom:0;width:100%;min-height:44px}.pswp__caption small{font-size:11px;color:#bbb}.pswp__caption__center{text-align:left;max-width:420px;margin:0 auto;font-size:13px;padding:10px;line-height:20px;color:#ccc}.pswp__caption--empty{display:none}.pswp__caption--fake{visibility:hidden}.pswp__preloader{width:44px;height:44px;position:absolute;top:0;left:50%;margin-left:-22px;opacity:0;transition:opacity .25s ease-out;will-change:opacity;direction:ltr}.pswp__preloader__icn{width:20px;height:20px;margin:12px}.pswp__preloader--active{opacity:1}.pswp__preloader--active .pswp__preloader__icn{background:url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ") 0 0 no-repeat}.pswp--css_animation .pswp__preloader--active{opacity:1}.pswp--css_animation .pswp__preloader--active .pswp__preloader__icn{-webkit-animation:clockwise .5s linear infinite;animation:clockwise .5s linear infinite}.pswp--css_animation .pswp__preloader--active .pswp__preloader__donut{-webkit-animation:donut-rotate 1s cubic-bezier(.4,0,.22,1) infinite;animation:donut-rotate 1s cubic-bezier(.4,0,.22,1) infinite}.pswp--css_animation .pswp__preloader__icn{background:none;opacity:.75;width:14px;height:14px;position:absolute;left:15px;top:15px;margin:0}.pswp--css_animation .pswp__preloader__cut{position:relative;width:7px;height:14px;overflow:hidden}.pswp--css_animation .pswp__preloader__donut{box-sizing:border-box;width:14px;height:14px;border:2px solid #fff;border-radius:50%;border-left-color:transparent;border-bottom-color:transparent;position:absolute;top:0;left:0;background:none;margin:0}@media screen and (max-width:1024px){.pswp__preloader{position:relative;left:auto;top:auto;margin:0;float:right}}@-webkit-keyframes clockwise{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes clockwise{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@-webkit-keyframes donut-rotate{0%{transform:rotate(0)}50%{transform:rotate(-140deg)}to{transform:rotate(0)}}@keyframes donut-rotate{0%{transform:rotate(0)}50%{transform:rotate(-140deg)}to{transform:rotate(0)}}.pswp__ui{-webkit-font-smoothing:auto;visibility:visible;opacity:1;z-index:1550}.pswp__top-bar{position:absolute;left:0;top:0;height:44px;width:100%}.pswp--has_mouse .pswp__button--arrow--left,.pswp--has_mouse .pswp__button--arrow--right,.pswp__caption,.pswp__top-bar{-webkit-backface-visibility:hidden;will-change:opacity;transition:opacity 333ms cubic-bezier(.4,0,.22,1)}.pswp--has_mouse .pswp__button--arrow--left,.pswp--has_mouse .pswp__button--arrow--right{visibility:visible}.pswp__caption,.pswp__top-bar{background-color:rgba(0,0,0,.5)}.pswp__ui--fit .pswp__caption,.pswp__ui--fit .pswp__top-bar{background-color:rgba(0,0,0,.3)}.pswp__ui--idle .pswp__button--arrow--left,.pswp__ui--idle .pswp__button--arrow--right,.pswp__ui--idle .pswp__top-bar{opacity:0}.pswp__ui--hidden .pswp__button--arrow--left,.pswp__ui--hidden .pswp__button--arrow--right,.pswp__ui--hidden .pswp__caption,.pswp__ui--hidden .pswp__top-bar{opacity:.001}.pswp__ui--one-slide .pswp__button--arrow--left,.pswp__ui--one-slide .pswp__button--arrow--right,.pswp__ui--one-slide .pswp__counter{display:none}.pswp__element--disabled{display:none!important}.pswp--minimal--dark .pswp__top-bar{background:none}", ""]);
 // Exports
 module.exports = exports;
 
 
 /***/ }),
 
-/***/ "46e4":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "2af0":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-!function(e,n){ true?module.exports=n():undefined}(window,function(){return function(e){var n={};function t(o){if(n[o])return n[o].exports;var i=n[o]={i:o,l:!1,exports:{}};return e[o].call(i.exports,i,i.exports,t),i.l=!0,i.exports}return t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:o})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(t.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var i in e)t.d(o,i,function(n){return e[n]}.bind(null,i));return o},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="/dist/",t(t.s=5)}([function(e,n,t){"use strict";function o(e,n,t,o,i,a,r,s){var l=typeof(e=e||{}).default;"object"!==l&&"function"!==l||(e=e.default);var p,c="function"==typeof e?e.options:e;if(n&&(c.render=n,c.staticRenderFns=t,c._compiled=!0),o&&(c.functional=!0),a&&(c._scopeId=a),r?(p=function(e){(e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),i&&i.call(this,e),e&&e._registeredComponents&&e._registeredComponents.add(r)},c._ssrRegister=p):i&&(p=s?function(){i.call(this,this.$root.$options.shadowRoot)}:i),p)if(c.functional){c._injectStyles=p;var u=c.render;c.render=function(e,n){return p.call(n),u(e,n)}}else{var d=c.beforeCreate;c.beforeCreate=d?[].concat(d,p):[p]}return{exports:e,options:c}}t.d(n,"a",function(){return o})},function(e,n){e.exports=function(e){var n=[];return n.toString=function(){return this.map(function(n){var t=function(e,n){var t=e[1]||"",o=e[3];if(!o)return t;if(n&&"function"==typeof btoa){var i=(r=o,"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(r))))+" */"),a=o.sources.map(function(e){return"/*# sourceURL="+o.sourceRoot+e+" */"});return[t].concat(a).concat([i]).join("\n")}var r;return[t].join("\n")}(n,e);return n[2]?"@media "+n[2]+"{"+t+"}":t}).join("")},n.i=function(e,t){"string"==typeof e&&(e=[[null,e,""]]);for(var o={},i=0;i<this.length;i++){var a=this[i][0];"number"==typeof a&&(o[a]=!0)}for(i=0;i<e.length;i++){var r=e[i];"number"==typeof r[0]&&o[r[0]]||(t&&!r[2]?r[2]=t:t&&(r[2]="("+r[2]+") and ("+t+")"),n.push(r))}},n}},function(e,n,t){"use strict";function o(e,n){for(var t=[],o={},i=0;i<n.length;i++){var a=n[i],r=a[0],s={id:e+":"+i,css:a[1],media:a[2],sourceMap:a[3]};o[r]?o[r].parts.push(s):t.push(o[r]={id:r,parts:[s]})}return t}t.r(n),t.d(n,"default",function(){return f});var i="undefined"!=typeof document;if("undefined"!=typeof DEBUG&&DEBUG&&!i)throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");var a={},r=i&&(document.head||document.getElementsByTagName("head")[0]),s=null,l=0,p=!1,c=function(){},u=null,d="data-vue-ssr-id",m="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase());function f(e,n,t,i){p=t,u=i||{};var r=o(e,n);return h(r),function(n){for(var t=[],i=0;i<r.length;i++){var s=r[i];(l=a[s.id]).refs--,t.push(l)}n?h(r=o(e,n)):r=[];for(i=0;i<t.length;i++){var l;if(0===(l=t[i]).refs){for(var p=0;p<l.parts.length;p++)l.parts[p]();delete a[l.id]}}}}function h(e){for(var n=0;n<e.length;n++){var t=e[n],o=a[t.id];if(o){o.refs++;for(var i=0;i<o.parts.length;i++)o.parts[i](t.parts[i]);for(;i<t.parts.length;i++)o.parts.push(g(t.parts[i]));o.parts.length>t.parts.length&&(o.parts.length=t.parts.length)}else{var r=[];for(i=0;i<t.parts.length;i++)r.push(g(t.parts[i]));a[t.id]={id:t.id,refs:1,parts:r}}}}function w(){var e=document.createElement("style");return e.type="text/css",r.appendChild(e),e}function g(e){var n,t,o=document.querySelector("style["+d+'~="'+e.id+'"]');if(o){if(p)return c;o.parentNode.removeChild(o)}if(m){var i=l++;o=s||(s=w()),n=x.bind(null,o,i,!1),t=x.bind(null,o,i,!0)}else o=w(),n=function(e,n){var t=n.css,o=n.media,i=n.sourceMap;o&&e.setAttribute("media",o);u.ssrId&&e.setAttribute(d,n.id);i&&(t+="\n/*# sourceURL="+i.sources[0]+" */",t+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(i))))+" */");if(e.styleSheet)e.styleSheet.cssText=t;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(t))}}.bind(null,o),t=function(){o.parentNode.removeChild(o)};return n(e),function(o){if(o){if(o.css===e.css&&o.media===e.media&&o.sourceMap===e.sourceMap)return;n(e=o)}else t()}}var b,v=(b=[],function(e,n){return b[e]=n,b.filter(Boolean).join("\n")});function x(e,n,t,o){var i=t?"":o.css;if(e.styleSheet)e.styleSheet.cssText=v(n,i);else{var a=document.createTextNode(i),r=e.childNodes;r[n]&&e.removeChild(r[n]),r.length?e.insertBefore(a,r[n]):e.appendChild(a)}}},function(e,n,t){var o,i;
-/*! PhotoSwipe - v4.1.2 - 2017-04-05
-* http://photoswipe.com
-* Copyright (c) 2017 Dmitry Semenov; */void 0===(i="function"==typeof(o=function(){"use strict";return function(e,n,t,o){var i={features:null,bind:function(e,n,t,o){var i=(o?"remove":"add")+"EventListener";n=n.split(" ");for(var a=0;a<n.length;a++)n[a]&&e[i](n[a],t,!1)},isArray:function(e){return e instanceof Array},createEl:function(e,n){var t=document.createElement(n||"div");return e&&(t.className=e),t},getScrollY:function(){var e=window.pageYOffset;return void 0!==e?e:document.documentElement.scrollTop},unbind:function(e,n,t){i.bind(e,n,t,!0)},removeClass:function(e,n){var t=new RegExp("(\\s|^)"+n+"(\\s|$)");e.className=e.className.replace(t," ").replace(/^\s\s*/,"").replace(/\s\s*$/,"")},addClass:function(e,n){i.hasClass(e,n)||(e.className+=(e.className?" ":"")+n)},hasClass:function(e,n){return e.className&&new RegExp("(^|\\s)"+n+"(\\s|$)").test(e.className)},getChildByClass:function(e,n){for(var t=e.firstChild;t;){if(i.hasClass(t,n))return t;t=t.nextSibling}},arraySearch:function(e,n,t){for(var o=e.length;o--;)if(e[o][t]===n)return o;return-1},extend:function(e,n,t){for(var o in n)if(n.hasOwnProperty(o)){if(t&&e.hasOwnProperty(o))continue;e[o]=n[o]}},easing:{sine:{out:function(e){return Math.sin(e*(Math.PI/2))},inOut:function(e){return-(Math.cos(Math.PI*e)-1)/2}},cubic:{out:function(e){return--e*e*e+1}}},detectFeatures:function(){if(i.features)return i.features;var e=i.createEl(),n=e.style,t="",o={};if(o.oldIE=document.all&&!document.addEventListener,o.touch="ontouchstart"in window,window.requestAnimationFrame&&(o.raf=window.requestAnimationFrame,o.caf=window.cancelAnimationFrame),o.pointerEvent=navigator.pointerEnabled||navigator.msPointerEnabled,!o.pointerEvent){var a=navigator.userAgent;if(/iP(hone|od)/.test(navigator.platform)){var r=navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);r&&r.length>0&&(r=parseInt(r[1],10))>=1&&r<8&&(o.isOldIOSPhone=!0)}var s=a.match(/Android\s([0-9\.]*)/),l=s?s[1]:0;(l=parseFloat(l))>=1&&(l<4.4&&(o.isOldAndroid=!0),o.androidVersion=l),o.isMobileOpera=/opera mini|opera mobi/i.test(a)}for(var p,c,u=["transform","perspective","animationName"],d=["","webkit","Moz","ms","O"],m=0;m<4;m++){t=d[m];for(var f=0;f<3;f++)p=u[f],c=t+(t?p.charAt(0).toUpperCase()+p.slice(1):p),!o[p]&&c in n&&(o[p]=c);t&&!o.raf&&(t=t.toLowerCase(),o.raf=window[t+"RequestAnimationFrame"],o.raf&&(o.caf=window[t+"CancelAnimationFrame"]||window[t+"CancelRequestAnimationFrame"]))}if(!o.raf){var h=0;o.raf=function(e){var n=(new Date).getTime(),t=Math.max(0,16-(n-h)),o=window.setTimeout(function(){e(n+t)},t);return h=n+t,o},o.caf=function(e){clearTimeout(e)}}return o.svg=!!document.createElementNS&&!!document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect,i.features=o,o}};i.detectFeatures(),i.features.oldIE&&(i.bind=function(e,n,t,o){n=n.split(" ");for(var i,a=(o?"detach":"attach")+"Event",r=function(){t.handleEvent.call(t)},s=0;s<n.length;s++)if(i=n[s])if("object"==typeof t&&t.handleEvent){if(o){if(!t["oldIE"+i])return!1}else t["oldIE"+i]=r;e[a]("on"+i,t["oldIE"+i])}else e[a]("on"+i,t)});var a=this,r={allowPanToNext:!0,spacing:.12,bgOpacity:1,mouseUsed:!1,loop:!0,pinchToClose:!0,closeOnScroll:!0,closeOnVerticalDrag:!0,verticalDragRange:.75,hideAnimationDuration:333,showAnimationDuration:333,showHideOpacity:!1,focus:!0,escKey:!0,arrowKeys:!0,mainScrollEndFriction:.35,panEndFriction:.35,isClickableElement:function(e){return"A"===e.tagName},getDoubleTapZoom:function(e,n){return e?1:n.initialZoomLevel<.7?1:1.33},maxSpreadZoom:1.33,modal:!0,scaleMode:"fit"};i.extend(r,o);var s,l,p,c,u,d,m,f,h,w,g,b,v,x,_,y,A,I,C,k,M,T,S,D,E,L,N,z,F,Z,O,R,j,P,U,B,Y,H,G,J,W,K,V,Q,X,q,$,ee,ne,te,oe,ie,ae,re,se,le,pe={x:0,y:0},ce={x:0,y:0},ue={x:0,y:0},de={},me=0,fe={},he={x:0,y:0},we=0,ge=!0,be=[],ve={},xe=!1,_e=function(e,n){i.extend(a,n.publicMethods),be.push(e)},ye=function(e){var n=Bn();return e>n-1?e-n:e<0?n+e:e},Ae={},Ie=function(e,n){return Ae[e]||(Ae[e]=[]),Ae[e].push(n)},Ce=function(e){var n=Ae[e];if(n){var t=Array.prototype.slice.call(arguments);t.shift();for(var o=0;o<n.length;o++)n[o].apply(a,t)}},ke=function(){return(new Date).getTime()},Me=function(e){re=e,a.bg.style.opacity=e*r.bgOpacity},Te=function(e,n,t,o,i){(!xe||i&&i!==a.currItem)&&(o/=i?i.fitRatio:a.currItem.fitRatio),e[T]=b+n+"px, "+t+"px"+v+" scale("+o+")"},Se=function(e){ne&&(e&&(w>a.currItem.fitRatio?xe||(Xn(a.currItem,!1,!0),xe=!0):xe&&(Xn(a.currItem),xe=!1)),Te(ne,ue.x,ue.y,w))},De=function(e){e.container&&Te(e.container.style,e.initialPosition.x,e.initialPosition.y,e.initialZoomLevel,e)},Ee=function(e,n){n[T]=b+e+"px, 0px"+v},Le=function(e,n){if(!r.loop&&n){var t=c+(he.x*me-e)/he.x,o=Math.round(e-un.x);(t<0&&o>0||t>=Bn()-1&&o<0)&&(e=un.x+o*r.mainScrollEndFriction)}un.x=e,Ee(e,u)},Ne=function(e,n){var t=dn[e]-fe[e];return ce[e]+pe[e]+t-t*(n/g)},ze=function(e,n){e.x=n.x,e.y=n.y,n.id&&(e.id=n.id)},Fe=function(e){e.x=Math.round(e.x),e.y=Math.round(e.y)},Ze=null,Oe=function(){Ze&&(i.unbind(document,"mousemove",Oe),i.addClass(e,"pswp--has_mouse"),r.mouseUsed=!0,Ce("mouseUsed")),Ze=setTimeout(function(){Ze=null},100)},Re=function(e,n){var t=Wn(a.currItem,de,e);return n&&(ee=t),t},je=function(e){return e||(e=a.currItem),e.initialZoomLevel},Pe=function(e){return e||(e=a.currItem),e.w>0?r.maxSpreadZoom:1},Ue=function(e,n,t,o){return o===a.currItem.initialZoomLevel?(t[e]=a.currItem.initialPosition[e],!0):(t[e]=Ne(e,o),t[e]>n.min[e]?(t[e]=n.min[e],!0):t[e]<n.max[e]&&(t[e]=n.max[e],!0))},Be=function(e){var n="";r.escKey&&27===e.keyCode?n="close":r.arrowKeys&&(37===e.keyCode?n="prev":39===e.keyCode&&(n="next")),n&&(e.ctrlKey||e.altKey||e.shiftKey||e.metaKey||(e.preventDefault?e.preventDefault():e.returnValue=!1,a[n]()))},Ye=function(e){e&&(K||W||te||Y)&&(e.preventDefault(),e.stopPropagation())},He=function(){a.setScrollOffset(0,i.getScrollY())},Ge={},Je=0,We=function(e){Ge[e]&&(Ge[e].raf&&L(Ge[e].raf),Je--,delete Ge[e])},Ke=function(e){Ge[e]&&We(e),Ge[e]||(Je++,Ge[e]={})},Ve=function(){for(var e in Ge)Ge.hasOwnProperty(e)&&We(e)},Qe=function(e,n,t,o,i,a,r){var s,l=ke();Ke(e);var p=function(){if(Ge[e]){if((s=ke()-l)>=o)return We(e),a(t),void(r&&r());a((t-n)*i(s/o)+n),Ge[e].raf=E(p)}};p()},Xe={shout:Ce,listen:Ie,viewportSize:de,options:r,isMainScrollAnimating:function(){return te},getZoomLevel:function(){return w},getCurrentIndex:function(){return c},isDragging:function(){return G},isZooming:function(){return q},setScrollOffset:function(e,n){fe.x=e,Z=fe.y=n,Ce("updateScrollOffset",fe)},applyZoomPan:function(e,n,t,o){ue.x=n,ue.y=t,w=e,Se(o)},init:function(){if(!s&&!l){var t;a.framework=i,a.template=e,a.bg=i.getChildByClass(e,"pswp__bg"),N=e.className,s=!0,O=i.detectFeatures(),E=O.raf,L=O.caf,T=O.transform,F=O.oldIE,a.scrollWrap=i.getChildByClass(e,"pswp__scroll-wrap"),a.container=i.getChildByClass(a.scrollWrap,"pswp__container"),u=a.container.style,a.itemHolders=y=[{el:a.container.children[0],wrap:0,index:-1},{el:a.container.children[1],wrap:0,index:-1},{el:a.container.children[2],wrap:0,index:-1}],y[0].el.style.display=y[2].el.style.display="none",function(){if(T){var n=O.perspective&&!D;return b="translate"+(n?"3d(":"("),void(v=O.perspective?", 0px)":")")}T="left",i.addClass(e,"pswp--ie"),Ee=function(e,n){n.left=e+"px"},De=function(e){var n=e.fitRatio>1?1:e.fitRatio,t=e.container.style,o=n*e.w,i=n*e.h;t.width=o+"px",t.height=i+"px",t.left=e.initialPosition.x+"px",t.top=e.initialPosition.y+"px"},Se=function(){if(ne){var e=ne,n=a.currItem,t=n.fitRatio>1?1:n.fitRatio,o=t*n.w,i=t*n.h;e.width=o+"px",e.height=i+"px",e.left=ue.x+"px",e.top=ue.y+"px"}}}(),h={resize:a.updateSize,orientationchange:function(){clearTimeout(R),R=setTimeout(function(){de.x!==a.scrollWrap.clientWidth&&a.updateSize()},500)},scroll:He,keydown:Be,click:Ye};var o=O.isOldIOSPhone||O.isOldAndroid||O.isMobileOpera;for(O.animationName&&O.transform&&!o||(r.showAnimationDuration=r.hideAnimationDuration=0),t=0;t<be.length;t++)a["init"+be[t]]();if(n){var p=a.ui=new n(a,i);p.init()}Ce("firstUpdate"),c=c||r.index||0,(isNaN(c)||c<0||c>=Bn())&&(c=0),a.currItem=Un(c),(O.isOldIOSPhone||O.isOldAndroid)&&(ge=!1),e.setAttribute("aria-hidden","false"),r.modal&&(ge?e.style.position="fixed":(e.style.position="absolute",e.style.top=i.getScrollY()+"px")),void 0===Z&&(Ce("initialLayout"),Z=z=i.getScrollY());var m="pswp--open ";for(r.mainClass&&(m+=r.mainClass+" "),r.showHideOpacity&&(m+="pswp--animate_opacity "),m+=D?"pswp--touch":"pswp--notouch",m+=O.animationName?" pswp--css_animation":"",m+=O.svg?" pswp--svg":"",i.addClass(e,m),a.updateSize(),d=-1,we=null,t=0;t<3;t++)Ee((t+d)*he.x,y[t].el.style);F||i.bind(a.scrollWrap,f,a),Ie("initialZoomInEnd",function(){a.setContent(y[0],c-1),a.setContent(y[2],c+1),y[0].el.style.display=y[2].el.style.display="block",r.focus&&e.focus(),i.bind(document,"keydown",a),O.transform&&i.bind(a.scrollWrap,"click",a),r.mouseUsed||i.bind(document,"mousemove",Oe),i.bind(window,"resize scroll orientationchange",a),Ce("bindEvents")}),a.setContent(y[1],c),a.updateCurrItem(),Ce("afterInit"),ge||(x=setInterval(function(){Je||G||q||w!==a.currItem.initialZoomLevel||a.updateSize()},1e3)),i.addClass(e,"pswp--visible")}},close:function(){s&&(s=!1,l=!0,Ce("close"),i.unbind(window,"resize scroll orientationchange",a),i.unbind(window,"scroll",h.scroll),i.unbind(document,"keydown",a),i.unbind(document,"mousemove",Oe),O.transform&&i.unbind(a.scrollWrap,"click",a),G&&i.unbind(window,m,a),clearTimeout(R),Ce("unbindEvents"),Yn(a.currItem,null,!0,a.destroy))},destroy:function(){Ce("destroy"),On&&clearTimeout(On),e.setAttribute("aria-hidden","true"),e.className=N,x&&clearInterval(x),i.unbind(a.scrollWrap,f,a),i.unbind(window,"scroll",a),hn(),Ve(),Ae=null},panTo:function(e,n,t){t||(e>ee.min.x?e=ee.min.x:e<ee.max.x&&(e=ee.max.x),n>ee.min.y?n=ee.min.y:n<ee.max.y&&(n=ee.max.y)),ue.x=e,ue.y=n,Se()},handleEvent:function(e){e=e||window.event,h[e.type]&&h[e.type](e)},goTo:function(e){var n=(e=ye(e))-c;we=n,c=e,a.currItem=Un(c),me-=n,Le(he.x*me),Ve(),te=!1,a.updateCurrItem()},next:function(){a.goTo(c+1)},prev:function(){a.goTo(c-1)},updateCurrZoomItem:function(e){if(e&&Ce("beforeChange",0),y[1].el.children.length){var n=y[1].el.children[0];ne=i.hasClass(n,"pswp__zoom-wrap")?n.style:null}else ne=null;ee=a.currItem.bounds,g=w=a.currItem.initialZoomLevel,ue.x=ee.center.x,ue.y=ee.center.y,e&&Ce("afterChange")},invalidateCurrItems:function(){_=!0;for(var e=0;e<3;e++)y[e].item&&(y[e].item.needsUpdate=!0)},updateCurrItem:function(e){if(0!==we){var n,t=Math.abs(we);if(!(e&&t<2)){a.currItem=Un(c),xe=!1,Ce("beforeChange",we),t>=3&&(d+=we+(we>0?-3:3),t=3);for(var o=0;o<t;o++)we>0?(n=y.shift(),y[2]=n,Ee((++d+2)*he.x,n.el.style),a.setContent(n,c-t+o+1+1)):(n=y.pop(),y.unshift(n),Ee(--d*he.x,n.el.style),a.setContent(n,c+t-o-1-1));if(ne&&1===Math.abs(we)){var i=Un(A);i.initialZoomLevel!==w&&(Wn(i,de),Xn(i),De(i))}we=0,a.updateCurrZoomItem(),A=c,Ce("afterChange")}}},updateSize:function(n){if(!ge&&r.modal){var t=i.getScrollY();if(Z!==t&&(e.style.top=t+"px",Z=t),!n&&ve.x===window.innerWidth&&ve.y===window.innerHeight)return;ve.x=window.innerWidth,ve.y=window.innerHeight,e.style.height=ve.y+"px"}if(de.x=a.scrollWrap.clientWidth,de.y=a.scrollWrap.clientHeight,He(),he.x=de.x+Math.round(de.x*r.spacing),he.y=de.y,Le(he.x*me),Ce("beforeResize"),void 0!==d){for(var o,s,l,p=0;p<3;p++)o=y[p],Ee((p+d)*he.x,o.el.style),l=c+p-1,r.loop&&Bn()>2&&(l=ye(l)),(s=Un(l))&&(_||s.needsUpdate||!s.bounds)?(a.cleanSlide(s),a.setContent(o,l),1===p&&(a.currItem=s,a.updateCurrZoomItem(!0)),s.needsUpdate=!1):-1===o.index&&l>=0&&a.setContent(o,l),s&&s.container&&(Wn(s,de),Xn(s),De(s));_=!1}g=w=a.currItem.initialZoomLevel,(ee=a.currItem.bounds)&&(ue.x=ee.center.x,ue.y=ee.center.y,Se(!0)),Ce("resize")},zoomTo:function(e,n,t,o,a){n&&(g=w,dn.x=Math.abs(n.x)-ue.x,dn.y=Math.abs(n.y)-ue.y,ze(ce,ue));var r=Re(e,!1),s={};Ue("x",r,s,e),Ue("y",r,s,e);var l=w,p={x:ue.x,y:ue.y};Fe(s);var c=function(n){1===n?(w=e,ue.x=s.x,ue.y=s.y):(w=(e-l)*n+l,ue.x=(s.x-p.x)*n+p.x,ue.y=(s.y-p.y)*n+p.y),a&&a(n),Se(1===n)};t?Qe("customZoomTo",0,1,t,o||i.easing.sine.inOut,c):c(1)}},qe={},$e={},en={},nn={},tn={},on=[],an={},rn=[],sn={},ln=0,pn={x:0,y:0},cn=0,un={x:0,y:0},dn={x:0,y:0},mn={x:0,y:0},fn=function(e,n){return sn.x=Math.abs(e.x-n.x),sn.y=Math.abs(e.y-n.y),Math.sqrt(sn.x*sn.x+sn.y*sn.y)},hn=function(){V&&(L(V),V=null)},wn=function(){G&&(V=E(wn),Dn())},gn=function(e,n){return!(!e||e===document)&&!(e.getAttribute("class")&&e.getAttribute("class").indexOf("pswp__scroll-wrap")>-1)&&(n(e)?e:gn(e.parentNode,n))},bn={},vn=function(e,n){return bn.prevent=!gn(e.target,r.isClickableElement),Ce("preventDragEvent",e,n,bn),bn.prevent},xn=function(e,n){return n.x=e.pageX,n.y=e.pageY,n.id=e.identifier,n},_n=function(e,n,t){t.x=.5*(e.x+n.x),t.y=.5*(e.y+n.y)},yn=function(){var e=ue.y-a.currItem.initialPosition.y;return 1-Math.abs(e/(de.y/2))},An={},In={},Cn=[],kn=function(e){for(;Cn.length>0;)Cn.pop();return S?(le=0,on.forEach(function(e){0===le?Cn[0]=e:1===le&&(Cn[1]=e),le++})):e.type.indexOf("touch")>-1?e.touches&&e.touches.length>0&&(Cn[0]=xn(e.touches[0],An),e.touches.length>1&&(Cn[1]=xn(e.touches[1],In))):(An.x=e.pageX,An.y=e.pageY,An.id="",Cn[0]=An),Cn},Mn=function(e,n){var t,o,i,s,l=ue[e]+n[e],p=n[e]>0,c=un.x+n.x,u=un.x-an.x;if(t=l>ee.min[e]||l<ee.max[e]?r.panEndFriction:1,l=ue[e]+n[e]*t,(r.allowPanToNext||w===a.currItem.initialZoomLevel)&&(ne?"h"!==oe||"x"!==e||W||(p?(l>ee.min[e]&&(t=r.panEndFriction,ee.min[e],o=ee.min[e]-ce[e]),(o<=0||u<0)&&Bn()>1?(s=c,u<0&&c>an.x&&(s=an.x)):ee.min.x!==ee.max.x&&(i=l)):(l<ee.max[e]&&(t=r.panEndFriction,ee.max[e],o=ce[e]-ee.max[e]),(o<=0||u>0)&&Bn()>1?(s=c,u>0&&c<an.x&&(s=an.x)):ee.min.x!==ee.max.x&&(i=l))):s=c,"x"===e))return void 0!==s&&(Le(s,!0),Q=s!==an.x),ee.min.x!==ee.max.x&&(void 0!==i?ue.x=i:Q||(ue.x+=n.x*t)),void 0!==s;te||Q||w>a.currItem.fitRatio&&(ue[e]+=n[e]*t)},Tn=function(e){if(!("mousedown"===e.type&&e.button>0))if(Pn)e.preventDefault();else if(!H||"mousedown"!==e.type){if(vn(e,!0)&&e.preventDefault(),Ce("pointerDown"),S){var n=i.arraySearch(on,e.pointerId,"id");n<0&&(n=on.length),on[n]={x:e.pageX,y:e.pageY,id:e.pointerId}}var t=kn(e),o=t.length;X=null,Ve(),G&&1!==o||(G=ie=!0,i.bind(window,m,a),B=se=ae=Y=Q=K=J=W=!1,oe=null,Ce("firstTouchStart",t),ze(ce,ue),pe.x=pe.y=0,ze(nn,t[0]),ze(tn,nn),an.x=he.x*me,rn=[{x:nn.x,y:nn.y}],P=j=ke(),Re(w,!0),hn(),wn()),!q&&o>1&&!te&&!Q&&(g=w,W=!1,q=J=!0,pe.y=pe.x=0,ze(ce,ue),ze(qe,t[0]),ze($e,t[1]),_n(qe,$e,mn),dn.x=Math.abs(mn.x)-ue.x,dn.y=Math.abs(mn.y)-ue.y,$=fn(qe,$e))}},Sn=function(e){if(e.preventDefault(),S){var n=i.arraySearch(on,e.pointerId,"id");if(n>-1){var t=on[n];t.x=e.pageX,t.y=e.pageY}}if(G){var o=kn(e);if(oe||K||q)X=o;else if(un.x!==he.x*me)oe="h";else{var a=Math.abs(o[0].x-nn.x)-Math.abs(o[0].y-nn.y);Math.abs(a)>=10&&(oe=a>0?"h":"v",X=o)}}},Dn=function(){if(X){var e=X.length;if(0!==e)if(ze(qe,X[0]),en.x=qe.x-nn.x,en.y=qe.y-nn.y,q&&e>1){if(nn.x=qe.x,nn.y=qe.y,!en.x&&!en.y&&function(e,n){return e.x===n.x&&e.y===n.y}(X[1],$e))return;ze($e,X[1]),W||(W=!0,Ce("zoomGestureStarted"));var n=fn(qe,$e),t=Fn(n);t>a.currItem.initialZoomLevel+a.currItem.initialZoomLevel/15&&(se=!0);var o=1,i=je(),s=Pe();if(t<i)if(r.pinchToClose&&!se&&g<=a.currItem.initialZoomLevel){var l=i-t,p=1-l/(i/1.2);Me(p),Ce("onPinchClose",p),ae=!0}else(o=(i-t)/i)>1&&(o=1),t=i-o*(i/3);else t>s&&((o=(t-s)/(6*i))>1&&(o=1),t=s+o*i);o<0&&(o=0),_n(qe,$e,pn),pe.x+=pn.x-mn.x,pe.y+=pn.y-mn.y,ze(mn,pn),ue.x=Ne("x",t),ue.y=Ne("y",t),B=t>w,w=t,Se()}else{if(!oe)return;if(ie&&(ie=!1,Math.abs(en.x)>=10&&(en.x-=X[0].x-tn.x),Math.abs(en.y)>=10&&(en.y-=X[0].y-tn.y)),nn.x=qe.x,nn.y=qe.y,0===en.x&&0===en.y)return;if("v"===oe&&r.closeOnVerticalDrag&&"fit"===r.scaleMode&&w===a.currItem.initialZoomLevel){pe.y+=en.y,ue.y+=en.y;var c=yn();return Y=!0,Ce("onVerticalDrag",c),Me(c),void Se()}!function(e,n,t){if(e-P>50){var o=rn.length>2?rn.shift():{};o.x=n,o.y=t,rn.push(o),P=e}}(ke(),qe.x,qe.y),K=!0,ee=a.currItem.bounds;var u=Mn("x",en);u||(Mn("y",en),Fe(ue),Se())}}},En=function(e){if(O.isOldAndroid){if(H&&"mouseup"===e.type)return;e.type.indexOf("touch")>-1&&(clearTimeout(H),H=setTimeout(function(){H=0},600))}var n;if(Ce("pointerUp"),vn(e,!1)&&e.preventDefault(),S){var t=i.arraySearch(on,e.pointerId,"id");t>-1&&(n=on.splice(t,1)[0],navigator.pointerEnabled?n.type=e.pointerType||"mouse":(n.type={4:"mouse",2:"touch",3:"pen"}[e.pointerType],n.type||(n.type=e.pointerType||"mouse")))}var o,s=kn(e),l=s.length;if("mouseup"===e.type&&(l=0),2===l)return X=null,!0;1===l&&ze(tn,s[0]),0!==l||oe||te||(n||("mouseup"===e.type?n={x:e.pageX,y:e.pageY,type:"mouse"}:e.changedTouches&&e.changedTouches[0]&&(n={x:e.changedTouches[0].pageX,y:e.changedTouches[0].pageY,type:"touch"})),Ce("touchRelease",e,n));var p=-1;if(0===l&&(G=!1,i.unbind(window,m,a),hn(),q?p=0:-1!==cn&&(p=ke()-cn)),cn=1===l?ke():-1,o=-1!==p&&p<150?"zoom":"swipe",q&&l<2&&(q=!1,1===l&&(o="zoomPointerUp"),Ce("zoomGestureEnded")),X=null,K||W||te||Y)if(Ve(),U||(U=Ln()),U.calculateSwipeSpeed("x"),Y){var c=yn();if(c<r.verticalDragRange)a.close();else{var u=ue.y,d=re;Qe("verticalDrag",0,1,300,i.easing.cubic.out,function(e){ue.y=(a.currItem.initialPosition.y-u)*e+u,Me((1-d)*e+d),Se()}),Ce("onVerticalDrag",1)}}else{if((Q||te)&&0===l){var f=zn(o,U);if(f)return;o="zoomPointerUp"}te||("swipe"===o?!Q&&w>a.currItem.fitRatio&&Nn(U):Zn())}},Ln=function(){var e,n,t={lastFlickOffset:{},lastFlickDist:{},lastFlickSpeed:{},slowDownRatio:{},slowDownRatioReverse:{},speedDecelerationRatio:{},speedDecelerationRatioAbs:{},distanceOffset:{},backAnimDestination:{},backAnimStarted:{},calculateSwipeSpeed:function(o){rn.length>1?(e=ke()-P+50,n=rn[rn.length-2][o]):(e=ke()-j,n=tn[o]),t.lastFlickOffset[o]=nn[o]-n,t.lastFlickDist[o]=Math.abs(t.lastFlickOffset[o]),t.lastFlickDist[o]>20?t.lastFlickSpeed[o]=t.lastFlickOffset[o]/e:t.lastFlickSpeed[o]=0,Math.abs(t.lastFlickSpeed[o])<.1&&(t.lastFlickSpeed[o]=0),t.slowDownRatio[o]=.95,t.slowDownRatioReverse[o]=1-t.slowDownRatio[o],t.speedDecelerationRatio[o]=1},calculateOverBoundsAnimOffset:function(e,n){t.backAnimStarted[e]||(ue[e]>ee.min[e]?t.backAnimDestination[e]=ee.min[e]:ue[e]<ee.max[e]&&(t.backAnimDestination[e]=ee.max[e]),void 0!==t.backAnimDestination[e]&&(t.slowDownRatio[e]=.7,t.slowDownRatioReverse[e]=1-t.slowDownRatio[e],t.speedDecelerationRatioAbs[e]<.05&&(t.lastFlickSpeed[e]=0,t.backAnimStarted[e]=!0,Qe("bounceZoomPan"+e,ue[e],t.backAnimDestination[e],n||300,i.easing.sine.out,function(n){ue[e]=n,Se()}))))},calculateAnimOffset:function(e){t.backAnimStarted[e]||(t.speedDecelerationRatio[e]=t.speedDecelerationRatio[e]*(t.slowDownRatio[e]+t.slowDownRatioReverse[e]-t.slowDownRatioReverse[e]*t.timeDiff/10),t.speedDecelerationRatioAbs[e]=Math.abs(t.lastFlickSpeed[e]*t.speedDecelerationRatio[e]),t.distanceOffset[e]=t.lastFlickSpeed[e]*t.speedDecelerationRatio[e]*t.timeDiff,ue[e]+=t.distanceOffset[e])},panAnimLoop:function(){if(Ge.zoomPan&&(Ge.zoomPan.raf=E(t.panAnimLoop),t.now=ke(),t.timeDiff=t.now-t.lastNow,t.lastNow=t.now,t.calculateAnimOffset("x"),t.calculateAnimOffset("y"),Se(),t.calculateOverBoundsAnimOffset("x"),t.calculateOverBoundsAnimOffset("y"),t.speedDecelerationRatioAbs.x<.05&&t.speedDecelerationRatioAbs.y<.05))return ue.x=Math.round(ue.x),ue.y=Math.round(ue.y),Se(),void We("zoomPan")}};return t},Nn=function(e){if(e.calculateSwipeSpeed("y"),ee=a.currItem.bounds,e.backAnimDestination={},e.backAnimStarted={},Math.abs(e.lastFlickSpeed.x)<=.05&&Math.abs(e.lastFlickSpeed.y)<=.05)return e.speedDecelerationRatioAbs.x=e.speedDecelerationRatioAbs.y=0,e.calculateOverBoundsAnimOffset("x"),e.calculateOverBoundsAnimOffset("y"),!0;Ke("zoomPan"),e.lastNow=ke(),e.panAnimLoop()},zn=function(e,n){var t,o,s;if(te||(ln=c),"swipe"===e){var l=nn.x-tn.x,p=n.lastFlickDist.x<10;l>30&&(p||n.lastFlickOffset.x>20)?o=-1:l<-30&&(p||n.lastFlickOffset.x<-20)&&(o=1)}o&&((c+=o)<0?(c=r.loop?Bn()-1:0,s=!0):c>=Bn()&&(c=r.loop?0:Bn()-1,s=!0),s&&!r.loop||(we+=o,me-=o,t=!0));var u,d=he.x*me,m=Math.abs(d-un.x);return t||d>un.x==n.lastFlickSpeed.x>0?(u=Math.abs(n.lastFlickSpeed.x)>0?m/Math.abs(n.lastFlickSpeed.x):333,u=Math.min(u,400),u=Math.max(u,250)):u=333,ln===c&&(t=!1),te=!0,Ce("mainScrollAnimStart"),Qe("mainScroll",un.x,d,u,i.easing.cubic.out,Le,function(){Ve(),te=!1,ln=-1,(t||ln!==c)&&a.updateCurrItem(),Ce("mainScrollAnimComplete")}),t&&a.updateCurrItem(!0),t},Fn=function(e){return 1/$*e*g},Zn=function(){var e=w,n=je(),t=Pe();w<n?e=n:w>t&&(e=t);var o,r=re;return ae&&!B&&!se&&w<n?(a.close(),!0):(ae&&(o=function(e){Me((1-r)*e+r)}),a.zoomTo(e,0,200,i.easing.cubic.out,o),!0)};_e("Gestures",{publicMethods:{initGestures:function(){var e=function(e,n,t,o,i){I=e+n,C=e+t,k=e+o,M=i?e+i:""};(S=O.pointerEvent)&&O.touch&&(O.touch=!1),S?navigator.pointerEnabled?e("pointer","down","move","up","cancel"):e("MSPointer","Down","Move","Up","Cancel"):O.touch?(e("touch","start","move","end","cancel"),D=!0):e("mouse","down","move","up"),m=C+" "+k+" "+M,f=I,S&&!D&&(D=navigator.maxTouchPoints>1||navigator.msMaxTouchPoints>1),a.likelyTouchDevice=D,h[I]=Tn,h[C]=Sn,h[k]=En,M&&(h[M]=h[k]),O.touch&&(f+=" mousedown",m+=" mousemove mouseup",h.mousedown=h[I],h.mousemove=h[C],h.mouseup=h[k]),D||(r.allowPanToNext=!1)}}});var On,Rn,jn,Pn,Un,Bn,Yn=function(n,t,o,s){var l;On&&clearTimeout(On),Pn=!0,jn=!0,n.initialLayout?(l=n.initialLayout,n.initialLayout=null):l=r.getThumbBoundsFn&&r.getThumbBoundsFn(c);var u,d,m=o?r.hideAnimationDuration:r.showAnimationDuration,f=function(){We("initialZoom"),o?(a.template.removeAttribute("style"),a.bg.removeAttribute("style")):(Me(1),t&&(t.style.display="block"),i.addClass(e,"pswp--animated-in"),Ce("initialZoom"+(o?"OutEnd":"InEnd"))),s&&s(),Pn=!1};if(!m||!l||void 0===l.x)return Ce("initialZoom"+(o?"Out":"In")),w=n.initialZoomLevel,ze(ue,n.initialPosition),Se(),e.style.opacity=o?0:1,Me(1),void(m?setTimeout(function(){f()},m):f());u=p,d=!a.currItem.src||a.currItem.loadError||r.showHideOpacity,n.miniImg&&(n.miniImg.style.webkitBackfaceVisibility="hidden"),o||(w=l.w/n.w,ue.x=l.x,ue.y=l.y-z,a[d?"template":"bg"].style.opacity=.001,Se()),Ke("initialZoom"),o&&!u&&i.removeClass(e,"pswp--animated-in"),d&&(o?i[(u?"remove":"add")+"Class"](e,"pswp--animate_opacity"):setTimeout(function(){i.addClass(e,"pswp--animate_opacity")},30)),On=setTimeout(function(){if(Ce("initialZoom"+(o?"Out":"In")),o){var t=l.w/n.w,a={x:ue.x,y:ue.y},r=w,s=re,p=function(n){1===n?(w=t,ue.x=l.x,ue.y=l.y-Z):(w=(t-r)*n+r,ue.x=(l.x-a.x)*n+a.x,ue.y=(l.y-Z-a.y)*n+a.y),Se(),d?e.style.opacity=1-n:Me(s-n*s)};u?Qe("initialZoom",0,1,m,i.easing.cubic.out,p,f):(p(1),On=setTimeout(f,m+20))}else w=n.initialZoomLevel,ze(ue,n.initialPosition),Se(),Me(1),d?e.style.opacity=1:Me(1),On=setTimeout(f,m+20)},o?25:90)},Hn={},Gn=[],Jn={index:0,errorMsg:'<div class="pswp__error-msg"><a href="%url%" target="_blank">The image</a> could not be loaded.</div>',forceProgressiveLoading:!1,preload:[1,1],getNumItemsFn:function(){return Rn.length}},Wn=function(e,n,t){if(e.src&&!e.loadError){var o=!t;if(o&&(e.vGap||(e.vGap={top:0,bottom:0}),Ce("parseVerticalMargin",e)),Hn.x=n.x,Hn.y=n.y-e.vGap.top-e.vGap.bottom,o){var i=Hn.x/e.w,a=Hn.y/e.h;e.fitRatio=i<a?i:a;var s=r.scaleMode;"orig"===s?t=1:"fit"===s&&(t=e.fitRatio),t>1&&(t=1),e.initialZoomLevel=t,e.bounds||(e.bounds={center:{x:0,y:0},max:{x:0,y:0},min:{x:0,y:0}})}if(!t)return;return function(e,n,t){var o=e.bounds;o.center.x=Math.round((Hn.x-n)/2),o.center.y=Math.round((Hn.y-t)/2)+e.vGap.top,o.max.x=n>Hn.x?Math.round(Hn.x-n):o.center.x,o.max.y=t>Hn.y?Math.round(Hn.y-t)+e.vGap.top:o.center.y,o.min.x=n>Hn.x?0:o.center.x,o.min.y=t>Hn.y?e.vGap.top:o.center.y}(e,e.w*t,e.h*t),o&&t===e.initialZoomLevel&&(e.initialPosition=e.bounds.center),e.bounds}return e.w=e.h=0,e.initialZoomLevel=e.fitRatio=1,e.bounds={center:{x:0,y:0},max:{x:0,y:0},min:{x:0,y:0}},e.initialPosition=e.bounds.center,e.bounds},Kn=function(e,n,t,o,i,r){n.loadError||o&&(n.imageAppended=!0,Xn(n,o,n===a.currItem&&xe),t.appendChild(o),r&&setTimeout(function(){n&&n.loaded&&n.placeholder&&(n.placeholder.style.display="none",n.placeholder=null)},500))},Vn=function(e){e.loading=!0,e.loaded=!1;var n=e.img=i.createEl("pswp__img","img"),t=function(){e.loading=!1,e.loaded=!0,e.loadComplete?e.loadComplete(e):e.img=null,n.onload=n.onerror=null,n=null};return n.onload=t,n.onerror=function(){e.loadError=!0,t()},n.src=e.src,n},Qn=function(e,n){if(e.src&&e.loadError&&e.container)return n&&(e.container.innerHTML=""),e.container.innerHTML=r.errorMsg.replace("%url%",e.src),!0},Xn=function(e,n,t){if(e.src){n||(n=e.container.lastChild);var o=t?e.w:Math.round(e.w*e.fitRatio),i=t?e.h:Math.round(e.h*e.fitRatio);e.placeholder&&!e.loaded&&(e.placeholder.style.width=o+"px",e.placeholder.style.height=i+"px"),n.style.width=o+"px",n.style.height=i+"px"}},qn=function(){if(Gn.length){for(var e,n=0;n<Gn.length;n++)(e=Gn[n]).holder.index===e.index&&Kn(e.index,e.item,e.baseDiv,e.img,0,e.clearPlaceholder);Gn=[]}};_e("Controller",{publicMethods:{lazyLoadItem:function(e){e=ye(e);var n=Un(e);n&&(!n.loaded&&!n.loading||_)&&(Ce("gettingData",e,n),n.src&&Vn(n))},initController:function(){i.extend(r,Jn,!0),a.items=Rn=t,Un=a.getItemAt,Bn=r.getNumItemsFn,r.loop,Bn()<3&&(r.loop=!1),Ie("beforeChange",function(e){var n,t=r.preload,o=null===e||e>=0,i=Math.min(t[0],Bn()),s=Math.min(t[1],Bn());for(n=1;n<=(o?s:i);n++)a.lazyLoadItem(c+n);for(n=1;n<=(o?i:s);n++)a.lazyLoadItem(c-n)}),Ie("initialLayout",function(){a.currItem.initialLayout=r.getThumbBoundsFn&&r.getThumbBoundsFn(c)}),Ie("mainScrollAnimComplete",qn),Ie("initialZoomInEnd",qn),Ie("destroy",function(){for(var e,n=0;n<Rn.length;n++)(e=Rn[n]).container&&(e.container=null),e.placeholder&&(e.placeholder=null),e.img&&(e.img=null),e.preloader&&(e.preloader=null),e.loadError&&(e.loaded=e.loadError=!1);Gn=null})},getItemAt:function(e){return e>=0&&void 0!==Rn[e]&&Rn[e]},allowProgressiveImg:function(){return r.forceProgressiveLoading||!D||r.mouseUsed||screen.width>1200},setContent:function(e,n){r.loop&&(n=ye(n));var t=a.getItemAt(e.index);t&&(t.container=null);var o,l=a.getItemAt(n);if(l){Ce("gettingData",n,l),e.index=n,e.item=l;var p=l.container=i.createEl("pswp__zoom-wrap");if(!l.src&&l.html&&(l.html.tagName?p.appendChild(l.html):p.innerHTML=l.html),Qn(l),Wn(l,de),!l.src||l.loadError||l.loaded)l.src&&!l.loadError&&((o=i.createEl("pswp__img","img")).style.opacity=1,o.src=l.src,Xn(l,o),Kn(0,l,p,o));else{if(l.loadComplete=function(t){if(s){if(e&&e.index===n){if(Qn(t,!0))return t.loadComplete=t.img=null,Wn(t,de),De(t),void(e.index===c&&a.updateCurrZoomItem());t.imageAppended?!Pn&&t.placeholder&&(t.placeholder.style.display="none",t.placeholder=null):O.transform&&(te||Pn)?Gn.push({item:t,baseDiv:p,img:t.img,index:n,holder:e,clearPlaceholder:!0}):Kn(0,t,p,t.img,0,!0)}t.loadComplete=null,t.img=null,Ce("imageLoadComplete",n,t)}},i.features.transform){var u="pswp__img pswp__img--placeholder";u+=l.msrc?"":" pswp__img--placeholder--blank";var d=i.createEl(u,l.msrc?"img":"");l.msrc&&(d.src=l.msrc),Xn(l,d),p.appendChild(d),l.placeholder=d}l.loading||Vn(l),a.allowProgressiveImg()&&(!jn&&O.transform?Gn.push({item:l,baseDiv:p,img:l.img,index:n,holder:e}):Kn(0,l,p,l.img,0,!0))}jn||n!==c?De(l):(ne=p.style,Yn(l,o||l.img)),e.el.innerHTML="",e.el.appendChild(p)}else e.el.innerHTML=""},cleanSlide:function(e){e.img&&(e.img.onload=e.img.onerror=null),e.loaded=e.loading=e.img=e.imageAppended=!1}}});var $n,et,nt={},tt=function(e,n,t){var o=document.createEvent("CustomEvent"),i={origEvent:e,target:e.target,releasePoint:n,pointerType:t||"touch"};o.initCustomEvent("pswpTap",!0,!0,i),e.target.dispatchEvent(o)};_e("Tap",{publicMethods:{initTap:function(){Ie("firstTouchStart",a.onTapStart),Ie("touchRelease",a.onTapRelease),Ie("destroy",function(){nt={},$n=null})},onTapStart:function(e){e.length>1&&(clearTimeout($n),$n=null)},onTapRelease:function(e,n){var t,o;if(n&&!K&&!J&&!Je){var a=n;if($n&&(clearTimeout($n),$n=null,t=a,o=nt,Math.abs(t.x-o.x)<25&&Math.abs(t.y-o.y)<25))return void Ce("doubleTap",a);if("mouse"===n.type)return void tt(e,n,"mouse");var r=e.target.tagName.toUpperCase();if("BUTTON"===r||i.hasClass(e.target,"pswp__single-tap"))return void tt(e,n);ze(nt,a),$n=setTimeout(function(){tt(e,n),$n=null},300)}}}}),_e("DesktopZoom",{publicMethods:{initDesktopZoom:function(){F||(D?Ie("mouseUsed",function(){a.setupDesktopZoom()}):a.setupDesktopZoom(!0))},setupDesktopZoom:function(n){et={};var t="wheel mousewheel DOMMouseScroll";Ie("bindEvents",function(){i.bind(e,t,a.handleMouseWheel)}),Ie("unbindEvents",function(){et&&i.unbind(e,t,a.handleMouseWheel)}),a.mouseZoomedIn=!1;var o,r=function(){a.mouseZoomedIn&&(i.removeClass(e,"pswp--zoomed-in"),a.mouseZoomedIn=!1),w<1?i.addClass(e,"pswp--zoom-allowed"):i.removeClass(e,"pswp--zoom-allowed"),s()},s=function(){o&&(i.removeClass(e,"pswp--dragging"),o=!1)};Ie("resize",r),Ie("afterChange",r),Ie("pointerDown",function(){a.mouseZoomedIn&&(o=!0,i.addClass(e,"pswp--dragging"))}),Ie("pointerUp",s),n||r()},handleMouseWheel:function(e){if(w<=a.currItem.fitRatio)return r.modal&&(!r.closeOnScroll||Je||G?e.preventDefault():T&&Math.abs(e.deltaY)>2&&(p=!0,a.close())),!0;if(e.stopPropagation(),et.x=0,"deltaX"in e)1===e.deltaMode?(et.x=18*e.deltaX,et.y=18*e.deltaY):(et.x=e.deltaX,et.y=e.deltaY);else if("wheelDelta"in e)e.wheelDeltaX&&(et.x=-.16*e.wheelDeltaX),e.wheelDeltaY?et.y=-.16*e.wheelDeltaY:et.y=-.16*e.wheelDelta;else{if(!("detail"in e))return;et.y=e.detail}Re(w,!0);var n=ue.x-et.x,t=ue.y-et.y;(r.modal||n<=ee.min.x&&n>=ee.max.x&&t<=ee.min.y&&t>=ee.max.y)&&e.preventDefault(),a.panTo(n,t)},toggleDesktopZoom:function(n){n=n||{x:de.x/2+fe.x,y:de.y/2+fe.y};var t=r.getDoubleTapZoom(!0,a.currItem),o=w===t;a.mouseZoomedIn=!o,a.zoomTo(o?a.currItem.initialZoomLevel:t,n,333),i[(o?"remove":"add")+"Class"](e,"pswp--zoomed-in")}}});var ot,it,at,rt,st,lt,pt,ct,ut,dt,mt,ft,ht={history:!0,galleryUID:1},wt=function(){return mt.hash.substring(1)},gt=function(){ot&&clearTimeout(ot),at&&clearTimeout(at)},bt=function(){var e=wt(),n={};if(e.length<5)return n;var t,o=e.split("&");for(t=0;t<o.length;t++)if(o[t]){var i=o[t].split("=");i.length<2||(n[i[0]]=i[1])}if(r.galleryPIDs){var a=n.pid;for(n.pid=0,t=0;t<Rn.length;t++)if(Rn[t].pid===a){n.pid=t;break}}else n.pid=parseInt(n.pid,10)-1;return n.pid<0&&(n.pid=0),n},vt=function(){if(at&&clearTimeout(at),Je||G)at=setTimeout(vt,500);else{rt?clearTimeout(it):rt=!0;var e=c+1,n=Un(c);n.hasOwnProperty("pid")&&(e=n.pid);var t=pt+"&gid="+r.galleryUID+"&pid="+e;ct||-1===mt.hash.indexOf(t)&&(dt=!0);var o=mt.href.split("#")[0]+"#"+t;ft?"#"+t!==window.location.hash&&history[ct?"replaceState":"pushState"]("",document.title,o):ct?mt.replace(o):mt.hash=t,ct=!0,it=setTimeout(function(){rt=!1},60)}};_e("History",{publicMethods:{initHistory:function(){if(i.extend(r,ht,!0),r.history){mt=window.location,dt=!1,ut=!1,ct=!1,pt=wt(),ft="pushState"in history,pt.indexOf("gid=")>-1&&(pt=(pt=pt.split("&gid=")[0]).split("?gid=")[0]),Ie("afterChange",a.updateURL),Ie("unbindEvents",function(){i.unbind(window,"hashchange",a.onHashChange)});var e=function(){lt=!0,ut||(dt?history.back():pt?mt.hash=pt:ft?history.pushState("",document.title,mt.pathname+mt.search):mt.hash=""),gt()};Ie("unbindEvents",function(){p&&e()}),Ie("destroy",function(){lt||e()}),Ie("firstUpdate",function(){c=bt().pid});var n=pt.indexOf("pid=");n>-1&&"&"===(pt=pt.substring(0,n)).slice(-1)&&(pt=pt.slice(0,-1)),setTimeout(function(){s&&i.bind(window,"hashchange",a.onHashChange)},40)}},onHashChange:function(){if(wt()===pt)return ut=!0,void a.close();rt||(st=!0,a.goTo(bt().pid),st=!1)},updateURL:function(){gt(),st||(ct?ot=setTimeout(vt,800):vt())}}}),i.extend(a,Xe)}})?o.call(n,t,n,e):o)||(e.exports=i)},function(e,n,t){var o,i;
-/*! PhotoSwipe Default UI - 4.1.2 - 2017-04-05
-* http://photoswipe.com
-* Copyright (c) 2017 Dmitry Semenov; */void 0===(i="function"==typeof(o=function(){"use strict";return function(e,n){var t,o,i,a,r,s,l,p,c,u,d,m,f,h,w,g,b,v,x=this,_=!1,y=!0,A=!0,I={barsSize:{top:44,bottom:"auto"},closeElClasses:["item","caption","zoom-wrap","ui","top-bar"],timeToIdle:4e3,timeToIdleOutside:1e3,loadingIndicatorDelay:1e3,addCaptionHTMLFn:function(e,n){return e.title?(n.children[0].innerHTML=e.title,!0):(n.children[0].innerHTML="",!1)},closeEl:!0,captionEl:!0,fullscreenEl:!0,zoomEl:!0,shareEl:!0,counterEl:!0,arrowEl:!0,preloaderEl:!0,tapToClose:!1,tapToToggleControls:!0,clickToCloseNonZoomable:!0,shareButtons:[{id:"facebook",label:"Share on Facebook",url:"https://www.facebook.com/sharer/sharer.php?u={{url}}"},{id:"twitter",label:"Tweet",url:"https://twitter.com/intent/tweet?text={{text}}&url={{url}}"},{id:"pinterest",label:"Pin it",url:"http://www.pinterest.com/pin/create/button/?url={{url}}&media={{image_url}}&description={{text}}"},{id:"download",label:"Download image",url:"{{raw_image_url}}",download:!0}],getImageURLForShare:function(){return e.currItem.src||""},getPageURLForShare:function(){return window.location.href},getTextForShare:function(){return e.currItem.title||""},indexIndicatorSep:" / ",fitControlsWidth:1200},C=function(e){if(g)return!0;e=e||window.event,w.timeToIdle&&w.mouseUsed&&!c&&z();for(var t,o,i=e.target||e.srcElement,a=i.getAttribute("class")||"",r=0;r<R.length;r++)(t=R[r]).onTap&&a.indexOf("pswp__"+t.name)>-1&&(t.onTap(),o=!0);if(o){e.stopPropagation&&e.stopPropagation(),g=!0;var s=n.features.isOldAndroid?600:30;setTimeout(function(){g=!1},s)}},k=function(e,t,o){n[(o?"add":"remove")+"Class"](e,"pswp__"+t)},M=function(){var e=1===w.getNumItemsFn();e!==h&&(k(o,"ui--one-slide",e),h=e)},T=function(){k(l,"share-modal--hidden",A)},S=function(){return(A=!A)?(n.removeClass(l,"pswp__share-modal--fade-in"),setTimeout(function(){A&&T()},300)):(T(),setTimeout(function(){A||n.addClass(l,"pswp__share-modal--fade-in")},30)),A||E(),!1},D=function(n){var t=(n=n||window.event).target||n.srcElement;return e.shout("shareLinkClick",n,t),!(!t.href||!t.hasAttribute("download")&&(window.open(t.href,"pswp_share","scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=550,height=420,top=100,left="+(window.screen?Math.round(screen.width/2-275):100)),A||S(),1))},E=function(){for(var e,n,t,o,i,a="",r=0;r<w.shareButtons.length;r++)e=w.shareButtons[r],t=w.getImageURLForShare(e),o=w.getPageURLForShare(e),i=w.getTextForShare(e),n=e.url.replace("{{url}}",encodeURIComponent(o)).replace("{{image_url}}",encodeURIComponent(t)).replace("{{raw_image_url}}",t).replace("{{text}}",encodeURIComponent(i)),a+='<a href="'+n+'" target="_blank" class="pswp__share--'+e.id+'"'+(e.download?"download":"")+">"+e.label+"</a>",w.parseShareButtonOut&&(a=w.parseShareButtonOut(e,a));l.children[0].innerHTML=a,l.children[0].onclick=D},L=function(e){for(var t=0;t<w.closeElClasses.length;t++)if(n.hasClass(e,"pswp__"+w.closeElClasses[t]))return!0},N=0,z=function(){clearTimeout(v),N=0,c&&x.setIdle(!1)},F=function(e){var n=(e=e||window.event).relatedTarget||e.toElement;n&&"HTML"!==n.nodeName||(clearTimeout(v),v=setTimeout(function(){x.setIdle(!0)},w.timeToIdleOutside))},Z=function(e){m!==e&&(k(d,"preloader--active",!e),m=e)},O=function(t){var r=t.vGap;if(!e.likelyTouchDevice||w.mouseUsed||screen.width>w.fitControlsWidth){var s=w.barsSize;if(w.captionEl&&"auto"===s.bottom)if(a||((a=n.createEl("pswp__caption pswp__caption--fake")).appendChild(n.createEl("pswp__caption__center")),o.insertBefore(a,i),n.addClass(o,"pswp__ui--fit")),w.addCaptionHTMLFn(t,a,!0)){var l=a.clientHeight;r.bottom=parseInt(l,10)||44}else r.bottom=s.top;else r.bottom="auto"===s.bottom?0:s.bottom;r.top=s.top}else r.top=r.bottom=0},R=[{name:"caption",option:"captionEl",onInit:function(e){i=e}},{name:"share-modal",option:"shareEl",onInit:function(e){l=e},onTap:function(){S()}},{name:"button--share",option:"shareEl",onInit:function(e){s=e},onTap:function(){S()}},{name:"button--zoom",option:"zoomEl",onTap:e.toggleDesktopZoom},{name:"counter",option:"counterEl",onInit:function(e){r=e}},{name:"button--close",option:"closeEl",onTap:e.close},{name:"button--arrow--left",option:"arrowEl",onTap:e.prev},{name:"button--arrow--right",option:"arrowEl",onTap:e.next},{name:"button--fs",option:"fullscreenEl",onTap:function(){t.isFullscreen()?t.exit():t.enter()}},{name:"preloader",option:"preloaderEl",onInit:function(e){d=e}}];x.init=function(){var r;n.extend(e.options,I,!0),w=e.options,o=n.getChildByClass(e.scrollWrap,"pswp__ui"),(u=e.listen)("onVerticalDrag",function(e){y&&e<.95?x.hideControls():!y&&e>=.95&&x.showControls()}),u("onPinchClose",function(e){y&&e<.9?(x.hideControls(),r=!0):r&&!y&&e>.9&&x.showControls()}),u("zoomGestureEnded",function(){(r=!1)&&!y&&x.showControls()}),u("beforeChange",x.update),u("doubleTap",function(n){var t=e.currItem.initialZoomLevel;e.getZoomLevel()!==t?e.zoomTo(t,n,333):e.zoomTo(w.getDoubleTapZoom(!1,e.currItem),n,333)}),u("preventDragEvent",function(e,n,t){var o=e.target||e.srcElement;o&&o.getAttribute("class")&&e.type.indexOf("mouse")>-1&&(o.getAttribute("class").indexOf("__caption")>0||/(SMALL|STRONG|EM)/i.test(o.tagName))&&(t.prevent=!1)}),u("bindEvents",function(){n.bind(o,"pswpTap click",C),n.bind(e.scrollWrap,"pswpTap",x.onGlobalTap),e.likelyTouchDevice||n.bind(e.scrollWrap,"mouseover",x.onMouseOver)}),u("unbindEvents",function(){A||S(),b&&clearInterval(b),n.unbind(document,"mouseout",F),n.unbind(document,"mousemove",z),n.unbind(o,"pswpTap click",C),n.unbind(e.scrollWrap,"pswpTap",x.onGlobalTap),n.unbind(e.scrollWrap,"mouseover",x.onMouseOver),t&&(n.unbind(document,t.eventK,x.updateFullscreen),t.isFullscreen()&&(w.hideAnimationDuration=0,t.exit()),t=null)}),u("destroy",function(){w.captionEl&&(a&&o.removeChild(a),n.removeClass(i,"pswp__caption--empty")),l&&(l.children[0].onclick=null),n.removeClass(o,"pswp__ui--over-close"),n.addClass(o,"pswp__ui--hidden"),x.setIdle(!1)}),w.showAnimationDuration||n.removeClass(o,"pswp__ui--hidden"),u("initialZoomIn",function(){w.showAnimationDuration&&n.removeClass(o,"pswp__ui--hidden")}),u("initialZoomOut",function(){n.addClass(o,"pswp__ui--hidden")}),u("parseVerticalMargin",O),function(){var e,t,i,a=function(o){if(o)for(var a=o.length,r=0;r<a;r++){e=o[r],t=e.className;for(var s=0;s<R.length;s++)i=R[s],t.indexOf("pswp__"+i.name)>-1&&(w[i.option]?(n.removeClass(e,"pswp__element--disabled"),i.onInit&&i.onInit(e)):n.addClass(e,"pswp__element--disabled"))}};a(o.children);var r=n.getChildByClass(o,"pswp__top-bar");r&&a(r.children)}(),w.shareEl&&s&&l&&(A=!0),M(),w.timeToIdle&&u("mouseUsed",function(){n.bind(document,"mousemove",z),n.bind(document,"mouseout",F),b=setInterval(function(){2==++N&&x.setIdle(!0)},w.timeToIdle/2)}),w.fullscreenEl&&!n.features.isOldAndroid&&(t||(t=x.getFullscreenAPI()),t?(n.bind(document,t.eventK,x.updateFullscreen),x.updateFullscreen(),n.addClass(e.template,"pswp--supports-fs")):n.removeClass(e.template,"pswp--supports-fs")),w.preloaderEl&&(Z(!0),u("beforeChange",function(){clearTimeout(f),f=setTimeout(function(){e.currItem&&e.currItem.loading?(!e.allowProgressiveImg()||e.currItem.img&&!e.currItem.img.naturalWidth)&&Z(!1):Z(!0)},w.loadingIndicatorDelay)}),u("imageLoadComplete",function(n,t){e.currItem===t&&Z(!0)}))},x.setIdle=function(e){c=e,k(o,"ui--idle",e)},x.update=function(){y&&e.currItem?(x.updateIndexIndicator(),w.captionEl&&(w.addCaptionHTMLFn(e.currItem,i),k(i,"caption--empty",!e.currItem.title)),_=!0):_=!1,A||S(),M()},x.updateFullscreen=function(o){o&&setTimeout(function(){e.setScrollOffset(0,n.getScrollY())},50),n[(t.isFullscreen()?"add":"remove")+"Class"](e.template,"pswp--fs")},x.updateIndexIndicator=function(){w.counterEl&&(r.innerHTML=e.getCurrentIndex()+1+w.indexIndicatorSep+w.getNumItemsFn())},x.onGlobalTap=function(t){var o=(t=t||window.event).target||t.srcElement;if(!g)if(t.detail&&"mouse"===t.detail.pointerType){if(L(o))return void e.close();n.hasClass(o,"pswp__img")&&(1===e.getZoomLevel()&&e.getZoomLevel()<=e.currItem.fitRatio?w.clickToCloseNonZoomable&&e.close():e.toggleDesktopZoom(t.detail.releasePoint))}else if(w.tapToToggleControls&&(y?x.hideControls():x.showControls()),w.tapToClose&&(n.hasClass(o,"pswp__img")||L(o)))return void e.close()},x.onMouseOver=function(e){var n=(e=e||window.event).target||e.srcElement;k(o,"ui--over-close",L(n))},x.hideControls=function(){n.addClass(o,"pswp__ui--hidden"),y=!1},x.showControls=function(){y=!0,_||x.update(),n.removeClass(o,"pswp__ui--hidden")},x.supportsFullscreen=function(){var e=document;return!!(e.exitFullscreen||e.mozCancelFullScreen||e.webkitExitFullscreen||e.msExitFullscreen)},x.getFullscreenAPI=function(){var n,t=document.documentElement,o="fullscreenchange";return t.requestFullscreen?n={enterK:"requestFullscreen",exitK:"exitFullscreen",elementK:"fullscreenElement",eventK:o}:t.mozRequestFullScreen?n={enterK:"mozRequestFullScreen",exitK:"mozCancelFullScreen",elementK:"mozFullScreenElement",eventK:"moz"+o}:t.webkitRequestFullscreen?n={enterK:"webkitRequestFullscreen",exitK:"webkitExitFullscreen",elementK:"webkitFullscreenElement",eventK:"webkit"+o}:t.msRequestFullscreen&&(n={enterK:"msRequestFullscreen",exitK:"msExitFullscreen",elementK:"msFullscreenElement",eventK:"MSFullscreenChange"}),n&&(n.enter=function(){if(p=w.closeOnScroll,w.closeOnScroll=!1,"webkitRequestFullscreen"!==this.enterK)return e.template[this.enterK]();e.template[this.enterK](Element.ALLOW_KEYBOARD_INPUT)},n.exit=function(){return w.closeOnScroll=p,document[this.exitK]()},n.isFullscreen=function(){return document[this.elementK]}),n}}})?o.call(n,t,n,e):o)||(e.exports=i)},function(e,n,t){"use strict";t.r(n);var o=["beforeChange","afterChange","imageLoadComplete","resize","gettingData","mouseUsed","initialZoomIn","initialZoomInEnd","initialZoomOut","initialZoomOutEnd","parseVerticalMargin","close","unbindEvents","destroy","updateScrollOffset","preventDragEvent","shareLinkClick"],i=t(3),a=t.n(i),r=t(4),s=t.n(r),l=(t(6),t(8),{name:"v-photoswipe",props:{isOpen:{type:Boolean,default:!1},items:{type:Array,required:!0},options:{type:Object,default:{}}},watch:{items:{handler:function(e,n){this.pswp&&this.isOpen&&(this.pswp.invalidateCurrItems(),this.pswp.updateSize(!0))},deep:!0},isOpen:function(e,n){e?this.openPhotoSwipe(this.items,this.options):this.close()}},methods:{openPhotoSwipe:function(e,n){var t=this,i=this.$el;this.pswp=new a.a(i,s.a,e,n),o.forEach(function(e){t.pswp.listen(e,function(){for(var n=arguments.length,o=Array(n),i=0;i<n;i++)o[i]=arguments[i];o.unshift(t),t.$emit(e,[].concat(o))})}),this.pswp.init()},close:function(){this.pswp&&this.pswp.close()}},mounted:function(){this.isOpen&&this.openPhotoSwipe(this.items,this.options)},beforeDestroy:function(){this.close()}}),p=t(0),c=Object(p.a)(l,function(){this.$createElement;this._self._c;return this._m(0)},[function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",{staticClass:"pswp",attrs:{tabIndex:"-1",role:"dialog","aria-hidden":"true"}},[t("div",{staticClass:"pswp__bg"}),e._v(" "),t("div",{staticClass:"pswp__scroll-wrap"},[t("div",{staticClass:"pswp__container"},[t("div",{staticClass:"pswp__item"}),e._v(" "),t("div",{staticClass:"pswp__item"}),e._v(" "),t("div",{staticClass:"pswp__item"})]),e._v(" "),t("div",{staticClass:"pswp__ui pswp__ui--hidden"},[t("div",{staticClass:"pswp__top-bar"},[t("div",{staticClass:"pswp__counter"}),e._v(" "),t("button",{staticClass:"pswp__button pswp__button--close",attrs:{title:"关闭 (Esc)"}}),e._v(" "),t("button",{staticClass:"pswp__button pswp__button--share",attrs:{title:"分享"}}),e._v(" "),t("button",{staticClass:"pswp__button pswp__button--fs",attrs:{title:"全屏切换"}}),e._v(" "),t("button",{staticClass:"pswp__button pswp__button--zoom",attrs:{title:"放大/缩小"}}),e._v(" "),t("div",{staticClass:"pswp__preloader"},[t("div",{staticClass:"pswp__preloader__icn"},[t("div",{staticClass:"pswp__preloader__cut"},[t("div",{staticClass:"pswp__preloader__donut"})])])])]),e._v(" "),t("div",{staticClass:"pswp__share-modal pswp__share-modal--hidden pswp__single-tap"},[t("div",{staticClass:"pswp__share-tooltip"})]),e._v(" "),t("button",{staticClass:"pswp__button pswp__button--arrow--left",attrs:{title:"上一张 (arrow left)"}}),e._v(" "),t("button",{staticClass:"pswp__button pswp__button--arrow--right",attrs:{title:"下一张 (arrow right)"}}),e._v(" "),t("div",{staticClass:"pswp__caption"},[t("div",{staticClass:"pswp__caption__center"})])])])])}],!1,null,null,null).exports,u={name:"v-photoswipe-gallery",components:{"v-photoswipe":c},props:{items:{type:Array,required:!0},options:{type:Object,default:{}},isOpen:{type:Boolean,default:!1}},data:function(){return{opened:this.isOpen,opts:{}}},watch:{isOpen:function(e,n){e!==this.opened&&(this.opened=e)}},methods:{showPhotoSwipe:function(e,n){e.preventDefault(),this.opts=Object.assign(this.options,{index:n}),this.opened=!0},handleClose:function(){this.opened=!1}},mounted:function(){var e=this;o.forEach(function(n){e.$refs.pswp.$on(n,function(){for(var t=arguments.length,o=Array(t),i=0;i<t;i++)o[i]=arguments[i];o.unshift(e),e.$emit(n,[].concat(o))})})}};var d=function(e){t(14)},m=Object(p.a)(u,function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",{staticClass:"{className}",attrs:{id:"{id}"}},[t("div",{staticClass:"pswp-thumbnails"},e._l(e.items,function(n,o){return t("a",{key:o,staticClass:"pswp-thumbnail",attrs:{item:n},on:{click:function(n){e.showPhotoSwipe(n,o)}}},[e._t("default",[t("img",{attrs:{src:n.src,alt:"picture"}})],{item:n})],2)})),e._v(" "),t("v-photoswipe",{ref:"pswp",attrs:{isOpen:e.opened,items:e.items,options:e.options},on:{close:e.handleClose}})],1)},[],!1,d,null,null).exports;t.d(n,"PhotoSwipe",function(){return c}),t.d(n,"PhotoSwipeGallery",function(){return m})},function(e,n,t){var o=t(7);"string"==typeof o&&(o=[[e.i,o,""]]),o.locals&&(e.exports=o.locals);(0,t(2).default)("210db660",o,!0,{})},function(e,n,t){(e.exports=t(1)(!1)).push([e.i,"/*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */\n/*\n\tStyles for basic PhotoSwipe functionality (sliding area, open/close transitions)\n*/\n/* pswp = photoswipe */\n.pswp {\n  display: none;\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  overflow: hidden;\n  -ms-touch-action: none;\n  touch-action: none;\n  z-index: 1500;\n  -webkit-text-size-adjust: 100%;\n  /* create separate layer, to avoid paint on window.onscroll in webkit/blink */\n  -webkit-backface-visibility: hidden;\n  outline: none; }\n  .pswp * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box; }\n  .pswp img {\n    max-width: none; }\n\n/* style is added when JS option showHideOpacity is set to true */\n.pswp--animate_opacity {\n  /* 0.001, because opacity:0 doesn't trigger Paint action, which causes lag at start of transition */\n  opacity: 0.001;\n  will-change: opacity;\n  /* for open/close transition */\n  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp--open {\n  display: block; }\n\n.pswp--zoom-allowed .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-zoom-in;\n  cursor: -moz-zoom-in;\n  cursor: zoom-in; }\n\n.pswp--zoomed-in .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-grab;\n  cursor: -moz-grab;\n  cursor: grab; }\n\n.pswp--dragging .pswp__img {\n  /* autoprefixer: off */\n  cursor: -webkit-grabbing;\n  cursor: -moz-grabbing;\n  cursor: grabbing; }\n\n/*\n\tBackground is added as a separate element.\n\tAs animating opacity is much faster than animating rgba() background-color.\n*/\n.pswp__bg {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  background: #000;\n  opacity: 0;\n  -webkit-transform: translateZ(0);\n          transform: translateZ(0);\n  -webkit-backface-visibility: hidden;\n  will-change: opacity; }\n\n.pswp__scroll-wrap {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden; }\n\n.pswp__container,\n.pswp__zoom-wrap {\n  -ms-touch-action: none;\n  touch-action: none;\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0; }\n\n/* Prevent selection and tap highlights */\n.pswp__container,\n.pswp__img {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n      user-select: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none; }\n\n.pswp__zoom-wrap {\n  position: absolute;\n  width: 100%;\n  -webkit-transform-origin: left top;\n  -ms-transform-origin: left top;\n  transform-origin: left top;\n  /* for open/close transition */\n  -webkit-transition: -webkit-transform 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: transform 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp__bg {\n  will-change: opacity;\n  /* for open/close transition */\n  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n.pswp--animated-in .pswp__bg,\n.pswp--animated-in .pswp__zoom-wrap {\n  -webkit-transition: none;\n  transition: none; }\n\n.pswp__container,\n.pswp__zoom-wrap {\n  -webkit-backface-visibility: hidden; }\n\n.pswp__item {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  overflow: hidden; }\n\n.pswp__img {\n  position: absolute;\n  width: auto;\n  height: auto;\n  top: 0;\n  left: 0; }\n\n/*\n\tstretched thumbnail or div placeholder element (see below)\n\tstyle is added to avoid flickering in webkit/blink when layers overlap\n*/\n.pswp__img--placeholder {\n  -webkit-backface-visibility: hidden; }\n\n/*\n\tdiv element that matches size of large image\n\tlarge image loads on top of it\n*/\n.pswp__img--placeholder--blank {\n  background: #222; }\n\n.pswp--ie .pswp__img {\n  width: 100% !important;\n  height: auto !important;\n  left: 0;\n  top: 0; }\n\n/*\n\tError message appears when image is not loaded\n\t(JS option errorMsg controls markup)\n*/\n.pswp__error-msg {\n  position: absolute;\n  left: 0;\n  top: 50%;\n  width: 100%;\n  text-align: center;\n  font-size: 14px;\n  line-height: 16px;\n  margin-top: -8px;\n  color: #CCC; }\n\n.pswp__error-msg a {\n  color: #CCC;\n  text-decoration: underline; }\n",""])},function(e,n,t){var o=t(9);"string"==typeof o&&(o=[[e.i,o,""]]),o.locals&&(e.exports=o.locals);(0,t(2).default)("67193bae",o,!0,{})},function(e,n,t){var o=t(10);(e.exports=t(1)(!1)).push([e.i,'/*! PhotoSwipe Default UI CSS by Dmitry Semenov | photoswipe.com | MIT license */\n/*\n\n\tContents:\n\n\t1. Buttons\n\t2. Share modal and links\n\t3. Index indicator ("1 of X" counter)\n\t4. Caption\n\t5. Loading indicator\n\t6. Additional styles (root element, top bar, idle state, hidden state, etc.)\n\n*/\n/*\n\t\n\t1. Buttons\n\n */\n/* <button> css reset */\n.pswp__button {\n  width: 44px;\n  height: 44px;\n  position: relative;\n  background: none;\n  cursor: pointer;\n  overflow: visible;\n  -webkit-appearance: none;\n  display: block;\n  border: 0;\n  padding: 0;\n  margin: 0;\n  float: right;\n  opacity: 0.75;\n  -webkit-transition: opacity 0.2s;\n          transition: opacity 0.2s;\n  -webkit-box-shadow: none;\n          box-shadow: none; }\n  .pswp__button:focus, .pswp__button:hover {\n    opacity: 1; }\n  .pswp__button:active {\n    outline: none;\n    opacity: 0.9; }\n  .pswp__button::-moz-focus-inner {\n    padding: 0;\n    border: 0; }\n\n/* pswp__ui--over-close class it added when mouse is over element that should close gallery */\n.pswp__ui--over-close .pswp__button--close {\n  opacity: 1; }\n\n.pswp__button,\n.pswp__button--arrow--left:before,\n.pswp__button--arrow--right:before {\n  background: url('+o(t(11))+") 0 0 no-repeat;\n  background-size: 264px 88px;\n  width: 44px;\n  height: 44px; }\n\n@media (-webkit-min-device-pixel-ratio: 1.1), (-webkit-min-device-pixel-ratio: 1.09375), (min-resolution: 105dpi), (min-resolution: 1.1dppx) {\n  /* Serve SVG sprite if browser supports SVG and resolution is more than 105dpi */\n  .pswp--svg .pswp__button,\n  .pswp--svg .pswp__button--arrow--left:before,\n  .pswp--svg .pswp__button--arrow--right:before {\n    background-image: url("+o(t(12))+"); }\n  .pswp--svg .pswp__button--arrow--left,\n  .pswp--svg .pswp__button--arrow--right {\n    background: none; } }\n\n.pswp__button--close {\n  background-position: 0 -44px; }\n\n.pswp__button--share {\n  background-position: -44px -44px; }\n\n.pswp__button--fs {\n  display: none; }\n\n.pswp--supports-fs .pswp__button--fs {\n  display: block; }\n\n.pswp--fs .pswp__button--fs {\n  background-position: -44px 0; }\n\n.pswp__button--zoom {\n  display: none;\n  background-position: -88px 0; }\n\n.pswp--zoom-allowed .pswp__button--zoom {\n  display: block; }\n\n.pswp--zoomed-in .pswp__button--zoom {\n  background-position: -132px 0; }\n\n/* no arrows on touch screens */\n.pswp--touch .pswp__button--arrow--left,\n.pswp--touch .pswp__button--arrow--right {\n  visibility: hidden; }\n\n/*\n\tArrow buttons hit area\n\t(icon is added to :before pseudo-element)\n*/\n.pswp__button--arrow--left,\n.pswp__button--arrow--right {\n  background: none;\n  top: 50%;\n  margin-top: -50px;\n  width: 70px;\n  height: 100px;\n  position: absolute; }\n\n.pswp__button--arrow--left {\n  left: 0; }\n\n.pswp__button--arrow--right {\n  right: 0; }\n\n.pswp__button--arrow--left:before,\n.pswp__button--arrow--right:before {\n  content: '';\n  top: 35px;\n  background-color: rgba(0, 0, 0, 0.3);\n  height: 30px;\n  width: 32px;\n  position: absolute; }\n\n.pswp__button--arrow--left:before {\n  left: 6px;\n  background-position: -138px -44px; }\n\n.pswp__button--arrow--right:before {\n  right: 6px;\n  background-position: -94px -44px; }\n\n/*\n\n\t2. Share modal/popup and links\n\n */\n.pswp__counter,\n.pswp__share-modal {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n      user-select: none; }\n\n.pswp__share-modal {\n  display: block;\n  background: rgba(0, 0, 0, 0.5);\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  padding: 10px;\n  position: absolute;\n  z-index: 1600;\n  opacity: 0;\n  -webkit-transition: opacity 0.25s ease-out;\n          transition: opacity 0.25s ease-out;\n  -webkit-backface-visibility: hidden;\n  will-change: opacity; }\n\n.pswp__share-modal--hidden {\n  display: none; }\n\n.pswp__share-tooltip {\n  z-index: 1620;\n  position: absolute;\n  background: #FFF;\n  top: 56px;\n  border-radius: 2px;\n  display: block;\n  width: auto;\n  right: 44px;\n  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);\n          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);\n  -webkit-transform: translateY(6px);\n      -ms-transform: translateY(6px);\n          transform: translateY(6px);\n  -webkit-transition: -webkit-transform 0.25s;\n          transition: transform 0.25s;\n  -webkit-backface-visibility: hidden;\n  will-change: transform; }\n  .pswp__share-tooltip a {\n    display: block;\n    padding: 8px 12px;\n    color: #000;\n    text-decoration: none;\n    font-size: 14px;\n    line-height: 18px; }\n    .pswp__share-tooltip a:hover {\n      text-decoration: none;\n      color: #000; }\n    .pswp__share-tooltip a:first-child {\n      /* round corners on the first/last list item */\n      border-radius: 2px 2px 0 0; }\n    .pswp__share-tooltip a:last-child {\n      border-radius: 0 0 2px 2px; }\n\n.pswp__share-modal--fade-in {\n  opacity: 1; }\n  .pswp__share-modal--fade-in .pswp__share-tooltip {\n    -webkit-transform: translateY(0);\n        -ms-transform: translateY(0);\n            transform: translateY(0); }\n\n/* increase size of share links on touch devices */\n.pswp--touch .pswp__share-tooltip a {\n  padding: 16px 12px; }\n\na.pswp__share--facebook:before {\n  content: '';\n  display: block;\n  width: 0;\n  height: 0;\n  position: absolute;\n  top: -12px;\n  right: 15px;\n  border: 6px solid transparent;\n  border-bottom-color: #FFF;\n  -webkit-pointer-events: none;\n  -moz-pointer-events: none;\n  pointer-events: none; }\n\na.pswp__share--facebook:hover {\n  background: #3E5C9A;\n  color: #FFF; }\n  a.pswp__share--facebook:hover:before {\n    border-bottom-color: #3E5C9A; }\n\na.pswp__share--twitter:hover {\n  background: #55ACEE;\n  color: #FFF; }\n\na.pswp__share--pinterest:hover {\n  background: #CCC;\n  color: #CE272D; }\n\na.pswp__share--download:hover {\n  background: #DDD; }\n\n/*\n\n\t3. Index indicator (\"1 of X\" counter)\n\n */\n.pswp__counter {\n  position: absolute;\n  left: 0;\n  top: 0;\n  height: 44px;\n  font-size: 13px;\n  line-height: 44px;\n  color: #FFF;\n  opacity: 0.75;\n  padding: 0 10px; }\n\n/*\n\t\n\t4. Caption\n\n */\n.pswp__caption {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  min-height: 44px; }\n  .pswp__caption small {\n    font-size: 11px;\n    color: #BBB; }\n\n.pswp__caption__center {\n  text-align: left;\n  max-width: 420px;\n  margin: 0 auto;\n  font-size: 13px;\n  padding: 10px;\n  line-height: 20px;\n  color: #CCC; }\n\n.pswp__caption--empty {\n  display: none; }\n\n/* Fake caption element, used to calculate height of next/prev image */\n.pswp__caption--fake {\n  visibility: hidden; }\n\n/*\n\n\t5. Loading indicator (preloader)\n\n\tYou can play with it here - http://codepen.io/dimsemenov/pen/yyBWoR\n\n */\n.pswp__preloader {\n  width: 44px;\n  height: 44px;\n  position: absolute;\n  top: 0;\n  left: 50%;\n  margin-left: -22px;\n  opacity: 0;\n  -webkit-transition: opacity 0.25s ease-out;\n          transition: opacity 0.25s ease-out;\n  will-change: opacity;\n  direction: ltr; }\n\n.pswp__preloader__icn {\n  width: 20px;\n  height: 20px;\n  margin: 12px; }\n\n.pswp__preloader--active {\n  opacity: 1; }\n  .pswp__preloader--active .pswp__preloader__icn {\n    /* We use .gif in browsers that don't support CSS animation */\n    background: url("+o(t(13))+') 0 0 no-repeat; }\n\n.pswp--css_animation .pswp__preloader--active {\n  opacity: 1; }\n  .pswp--css_animation .pswp__preloader--active .pswp__preloader__icn {\n    -webkit-animation: clockwise 500ms linear infinite;\n            animation: clockwise 500ms linear infinite; }\n  .pswp--css_animation .pswp__preloader--active .pswp__preloader__donut {\n    -webkit-animation: donut-rotate 1000ms cubic-bezier(0.4, 0, 0.22, 1) infinite;\n            animation: donut-rotate 1000ms cubic-bezier(0.4, 0, 0.22, 1) infinite; }\n\n.pswp--css_animation .pswp__preloader__icn {\n  background: none;\n  opacity: 0.75;\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  left: 15px;\n  top: 15px;\n  margin: 0; }\n\n.pswp--css_animation .pswp__preloader__cut {\n  /* \n\t\t\tThe idea of animating inner circle is based on Polymer ("material") loading indicator \n\t\t\t by Keanu Lee https://blog.keanulee.com/2014/10/20/the-tale-of-three-spinners.html\n\t\t*/\n  position: relative;\n  width: 7px;\n  height: 14px;\n  overflow: hidden; }\n\n.pswp--css_animation .pswp__preloader__donut {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  width: 14px;\n  height: 14px;\n  border: 2px solid #FFF;\n  border-radius: 50%;\n  border-left-color: transparent;\n  border-bottom-color: transparent;\n  position: absolute;\n  top: 0;\n  left: 0;\n  background: none;\n  margin: 0; }\n\n@media screen and (max-width: 1024px) {\n  .pswp__preloader {\n    position: relative;\n    left: auto;\n    top: auto;\n    margin: 0;\n    float: right; } }\n\n@-webkit-keyframes clockwise {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n\n@keyframes clockwise {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n\n@-webkit-keyframes donut-rotate {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0); }\n  50% {\n    -webkit-transform: rotate(-140deg);\n            transform: rotate(-140deg); }\n  100% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0); } }\n\n@keyframes donut-rotate {\n  0% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0); }\n  50% {\n    -webkit-transform: rotate(-140deg);\n            transform: rotate(-140deg); }\n  100% {\n    -webkit-transform: rotate(0);\n            transform: rotate(0); } }\n\n/*\n\t\n\t6. Additional styles\n\n */\n/* root element of UI */\n.pswp__ui {\n  -webkit-font-smoothing: auto;\n  visibility: visible;\n  opacity: 1;\n  z-index: 1550; }\n\n/* top black bar with buttons and "1 of X" indicator */\n.pswp__top-bar {\n  position: absolute;\n  left: 0;\n  top: 0;\n  height: 44px;\n  width: 100%; }\n\n.pswp__caption,\n.pswp__top-bar,\n.pswp--has_mouse .pswp__button--arrow--left,\n.pswp--has_mouse .pswp__button--arrow--right {\n  -webkit-backface-visibility: hidden;\n  will-change: opacity;\n  -webkit-transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);\n          transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1); }\n\n/* pswp--has_mouse class is added only when two subsequent mousemove events occur */\n.pswp--has_mouse .pswp__button--arrow--left,\n.pswp--has_mouse .pswp__button--arrow--right {\n  visibility: visible; }\n\n.pswp__top-bar,\n.pswp__caption {\n  background-color: rgba(0, 0, 0, 0.5); }\n\n/* pswp__ui--fit class is added when main image "fits" between top bar and bottom bar (caption) */\n.pswp__ui--fit .pswp__top-bar,\n.pswp__ui--fit .pswp__caption {\n  background-color: rgba(0, 0, 0, 0.3); }\n\n/* pswp__ui--idle class is added when mouse isn\'t moving for several seconds (JS option timeToIdle) */\n.pswp__ui--idle .pswp__top-bar {\n  opacity: 0; }\n\n.pswp__ui--idle .pswp__button--arrow--left,\n.pswp__ui--idle .pswp__button--arrow--right {\n  opacity: 0; }\n\n/*\n\tpswp__ui--hidden class is added when controls are hidden\n\te.g. when user taps to toggle visibility of controls\n*/\n.pswp__ui--hidden .pswp__top-bar,\n.pswp__ui--hidden .pswp__caption,\n.pswp__ui--hidden .pswp__button--arrow--left,\n.pswp__ui--hidden .pswp__button--arrow--right {\n  /* Force paint & create composition layer for controls. */\n  opacity: 0.001; }\n\n/* pswp__ui--one-slide class is added when there is just one item in gallery */\n.pswp__ui--one-slide .pswp__button--arrow--left,\n.pswp__ui--one-slide .pswp__button--arrow--right,\n.pswp__ui--one-slide .pswp__counter {\n  display: none; }\n\n.pswp__element--disabled {\n  display: none !important; }\n\n.pswp--minimal--dark .pswp__top-bar {\n  background: none; }\n',""])},function(e,n){e.exports=function(e){return"string"!=typeof e?e:(/^['"].*['"]$/.test(e)&&(e=e.slice(1,-1)),/["'() \t\n]/.test(e)?'"'+e.replace(/"/g,'\\"').replace(/\n/g,"\\n")+'"':e)}},function(e,n){e.exports="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAABYCAQAAACjBqE3AAAB6klEQVR4Ae3bsWpUQRTG8YkkanwCa7GzVotsI/gEgk9h4Vu4ySLYmMYgbJrc3lrwZbJwC0FMt4j7F6Y4oIZrsXtgxvx/1c0ufEX4cnbmLCmSJEmSJEmSJEmSJP3XCBPvbJU+8doWmDFwyZpLBmYlNJebz0KwzykwsuSYJSNwykEJreV2BaBMaLIQZ2xYcFgqDlmw4ayE/FwL0dDk4Qh4W37DAjgqIT+3HRbigjH+iikVdxgZStgyN0Su2sXIeTwTT+esdpcbIlfNAuZ/TxresG4zV8kYWSZNiKUTokMMSWeIwTNEn4fK2TW3gRNgVkJLuVksROA9G+bEvoATNlBCa7nZXEwdxEZxzpKRKFh+bsv8LmPFmhX1OwfIz81jIRJQ5eeqG9B+riRJkiRJkiRJkiRJkiRJkiRJUkvA/8RQoEpKlJWINFkJ62AlrEP/mNBibnv2yz/A3t7Uq3LcpoxP8COjC1T5vxoAD5VdoEqdDrd5QuW1swtUSaueh3zkiuBiqgtA2OlkeMcP/uDqugsJdbjHF65VdPMKwS0+WQc/MgKvrIOHysB9vgPwk8+85hmPbnQdvHZyDMAFD7L3EOpgMcVdvnHFS0/vlatrXvCVx0U9gt3fxvnA0/hB4nmRJEmSJEmSJEmSJGmHfgFLaDPoMu5xWwAAAABJRU5ErkJggg=="},function(e,n){e.exports="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjY0IiBoZWlnaHQ9Ijg4IiB2aWV3Qm94PSIwIDAgMjY0IDg4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZT5kZWZhdWx0LXNraW4gMjwvdGl0bGU+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48Zz48cGF0aCBkPSJNNjcuMDAyIDU5LjV2My43NjhjLTYuMzA3Ljg0LTkuMTg0IDUuNzUtMTAuMDAyIDkuNzMyIDIuMjItMi44MyA1LjU2NC01LjA5OCAxMC4wMDItNS4wOThWNzEuNUw3MyA2NS41ODUgNjcuMDAyIDU5LjV6IiBpZD0iU2hhcGUiIGZpbGw9IiNmZmYiLz48ZyBmaWxsPSIjZmZmIj48cGF0aCBkPSJNMTMgMjl2LTVoMnYzaDN2MmgtNXpNMTMgMTVoNXYyaC0zdjNoLTJ2LTV6TTMxIDE1djVoLTJ2LTNoLTN2LTJoNXpNMzEgMjloLTV2LTJoM3YtM2gydjV6IiBpZD0iU2hhcGUiLz48L2c+PGcgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTYyIDI0djVoLTJ2LTNoLTN2LTJoNXpNNjIgMjBoLTV2LTJoM3YtM2gydjV6TTcwIDIwdi01aDJ2M2gzdjJoLTV6TTcwIDI0aDV2MmgtM3YzaC0ydi01eiIvPjwvZz48cGF0aCBkPSJNMjAuNTg2IDY2bC01LjY1Ni01LjY1NiAxLjQxNC0xLjQxNEwyMiA2NC41ODZsNS42NTYtNS42NTYgMS40MTQgMS40MTRMMjMuNDE0IDY2bDUuNjU2IDUuNjU2LTEuNDE0IDEuNDE0TDIyIDY3LjQxNGwtNS42NTYgNS42NTYtMS40MTQtMS40MTRMMjAuNTg2IDY2eiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xMTEuNzg1IDY1LjAzTDExMCA2My41bDMtMy41aC0xMHYtMmgxMGwtMy0zLjUgMS43ODUtMS40NjhMMTE3IDU5bC01LjIxNSA2LjAzeiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xNTIuMjE1IDY1LjAzTDE1NCA2My41bC0zLTMuNWgxMHYtMmgtMTBsMy0zLjUtMS43ODUtMS40NjhMMTQ3IDU5bDUuMjE1IDYuMDN6IiBmaWxsPSIjZmZmIi8+PGc+PHBhdGggaWQ9IlJlY3RhbmdsZS0xMSIgZmlsbD0iI2ZmZiIgZD0iTTE2MC45NTcgMjguNTQzbC0zLjI1LTMuMjUtMS40MTMgMS40MTQgMy4yNSAzLjI1eiIvPjxwYXRoIGQ9Ik0xNTIuNSAyN2MzLjAzOCAwIDUuNS0yLjQ2MiA1LjUtNS41cy0yLjQ2Mi01LjUtNS41LTUuNS01LjUgMi40NjItNS41IDUuNSAyLjQ2MiA1LjUgNS41IDUuNXoiIGlkPSJPdmFsLTEiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTUwIDIxaDV2MWgtNXoiLz48L2c+PGc+PHBhdGggZD0iTTExNi45NTcgMjguNTQzbC0xLjQxNCAxLjQxNC0zLjI1LTMuMjUgMS40MTQtMS40MTQgMy4yNSAzLjI1eiIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xMDguNSAyN2MzLjAzOCAwIDUuNS0yLjQ2MiA1LjUtNS41cy0yLjQ2Mi01LjUtNS41LTUuNS01LjUgMi40NjItNS41IDUuNSAyLjQ2MiA1LjUgNS41IDUuNXoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTA2IDIxaDV2MWgtNXoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMTA5LjA0MyAxOS4wMDhsLS4wODUgNS0xLS4wMTcuMDg1LTV6Ii8+PC9nPjwvZz48L2c+PC9zdmc+"},function(e,n){e.exports="data:image/gif;base64,R0lGODlhFAAUAPMIAIeHhz8/P1dXVycnJ8/Pz7e3t5+fn29vb////wAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFBwAIACwAAAAAFAAUAEAEUxDJSatFxtwaggWAdIyHJAhXoRYSQUhDPGx0TbmujahbXGWZWqdDAYEsp5NupLPkdDwE7oXwWVasimzWrAE1tKFHErQRK8eL8mMUlRBJVI307uoiACH5BAUHAAgALAEAAQASABIAAAROEMkpS6E4W5upMdUmEQT2feFIltMJYivbvhnZ3R0A4NMwIDodz+cL7nDEn5CH8DGZh8MtEMBEoxkqlXKVIgQCibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpjaE4W5spANUmFQX2feFIltMJYivbvhnZ3d1x4BNBIDodz+cL7nDEn5CH8DGZAsFtMMBEoxkqlXKVIgIBibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpAaA4W5vpOdUmGQb2feFIltMJYivbvhnZ3Z0g4FNRIDodz+cL7nDEn5CH8DGZgcCNQMBEoxkqlXKVIgYDibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpz6E4W5upENUmAQD2feFIltMJYivbvhnZ3V0Q4JNhIDodz+cL7nDEn5CH8DGZg8GtUMBEoxkqlXKVIggEibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkphaA4W5tpCNUmHQf2feFIltMJYivbvhnZ3d0w4BMAIDodz+cL7nDEn5CH8DGZBMLNYMBEoxkqlXKVIgoFibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpQ6A4W5vpGNUmCQL2feFIltMJYivbvhnZ3R1B4NNxIDodz+cL7nDEn5CH8DGZhcINAMBEoxkqlXKVIgwGibbK9YLBYvLtHH5K0J0IACH5BAUHAAcALAEAAQASABIAAANCeLo6wzA6FxkhbaoQ4L3ZxnXLh0EjWZ4RV71VUcCLIByyTNt2PsO8m452sBGJBsNxkUwuD03lAQBASqnUJ7aq5UYSADs="},function(e,n,t){var o=t(15);"string"==typeof o&&(o=[[e.i,o,""]]),o.locals&&(e.exports=o.locals);(0,t(2).default)("83e78ce4",o,!0,{})},function(e,n,t){(e.exports=t(1)(!1)).push([e.i,".pswp-thumbnails .pswp-thumbnail{font-size:0;cursor:pointer}",""])}])});
-//# sourceMappingURL=v-photoswipe.js.map
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6cdd2157-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=template&id=e8df92c6&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"my-gallery",attrs:{"itemscope":"","itemtype":"http://schema.org/ImageGallery"}},_vm._l((_vm.items),function(item,index){return _c('figure',{directives:[{name:"show",rawName:"v-show",value:(index === 0 || !_vm.singleThumbnail),expression:"index === 0 || !singleThumbnail"}],key:index,staticClass:"gallery-thumbnail",attrs:{"itemprop":"associatedMedia","itemscope":"","itemtype":"http://schema.org/ImageObject","src":item.src}},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.nbThumbnailsDisplayed === -1 || index < _vm.nbThumbnailsDisplayed),expression:"nbThumbnailsDisplayed === -1 || index < nbThumbnailsDisplayed"}],attrs:{"href":item.src,"itemprop":"contentUrl","data-size":'' + item.w + 'x' + item.h,"title":item.title}},[_c('img',{attrs:{"src":item.thumbnail,"alt":item.alt,"itemprop":"thumbnail"}})])])}),0),_c('div',{staticClass:"pswp",attrs:{"tabindex":"-1","role":"dialog","aria-hidden":"true"}},[_c('div',{staticClass:"pswp__bg"}),_c('div',{staticClass:"pswp__scroll-wrap"},[_vm._m(0),_c('div',{staticClass:"pswp__ui pswp__ui--hidden"},[_c('div',{staticClass:"pswp__top-bar"},[_c('div',{staticClass:"pswp__counter"}),_c('button',{staticClass:"pswp__button pswp__button--close",attrs:{"title":"Close (Esc)"}}),(_vm.options.rotationOn)?_c('button',{staticClass:"pswp__button pswp__button--rotate pswp__button--rotate--left",attrs:{"title":"Rotate left"},on:{"click":function($event){return _vm.rotate(-90)}}}):_vm._e(),(_vm.options.rotationOn)?_c('button',{staticClass:"pswp__button pswp__button--rotate pswp__button--rotate--right",attrs:{"title":"Rotate right"},on:{"click":function($event){return _vm.rotate(90)}}}):_vm._e(),_c('button',{staticClass:"pswp__button pswp__button--share",attrs:{"title":"Share"}}),_c('button',{staticClass:"pswp__button pswp__button--fs",attrs:{"title":"Toggle fullscreen"}}),_c('button',{staticClass:"pswp__button pswp__button--zoom",attrs:{"title":"Zoom in/out"}}),_vm._m(1)]),_vm._m(2),_c('button',{staticClass:"pswp__button pswp__button--arrow--left",attrs:{"title":"Previous (arrow left)"},on:{"click":_vm.resetAngle}}),_c('button',{staticClass:"pswp__button pswp__button--arrow--right",attrs:{"title":"Next (arrow right)"},on:{"click":_vm.resetAngle}}),_vm._m(3)])])])])}
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pswp__container"},[_c('div',{staticClass:"pswp__item"}),_c('div',{staticClass:"pswp__item"}),_c('div',{staticClass:"pswp__item"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pswp__preloader"},[_c('div',{staticClass:"pswp__preloader__icn"},[_c('div',{staticClass:"pswp__preloader__cut"},[_c('div',{staticClass:"pswp__preloader__donut"})])])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pswp__share-modal pswp__share-modal--hidden pswp__single-tap"},[_c('div',{staticClass:"pswp__share-tooltip"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pswp__caption"},[_c('div',{staticClass:"pswp__caption__center"})])}]
+
+
+// CONCATENATED MODULE: ./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=template&id=e8df92c6&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
+var es_number_constructor = __webpack_require__("a9e3");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
+var es_regexp_exec = __webpack_require__("ac1f");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.split.js
+var es_string_split = __webpack_require__("1276");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.assign.js
+var es_object_assign = __webpack_require__("cca6");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
+var web_dom_collections_for_each = __webpack_require__("159b");
+
+// EXTERNAL MODULE: ./node_modules/photoswipe/dist/photoswipe.js
+var photoswipe = __webpack_require__("b24f");
+var photoswipe_default = /*#__PURE__*/__webpack_require__.n(photoswipe);
+
+// EXTERNAL MODULE: ./node_modules/photoswipe/dist/photoswipe-ui-default.js
+var photoswipe_ui_default = __webpack_require__("14fd");
+var photoswipe_ui_default_default = /*#__PURE__*/__webpack_require__.n(photoswipe_ui_default);
+
+// EXTERNAL MODULE: ./node_modules/photoswipe/dist/photoswipe.css
+var dist_photoswipe = __webpack_require__("343a");
+
+// EXTERNAL MODULE: ./node_modules/photoswipe/dist/default-skin/default-skin.css
+var default_skin = __webpack_require__("3fb5a");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=script&lang=js&
+
+
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ var VuePictureSwipevue_type_script_lang_js_ = ({
+  props: {
+    items: {
+      default: [{
+        src: 'http://via.placeholder.com/600x400',
+        thumbnail: 'http://via.placeholder.com/64x64',
+        w: 600,
+        h: 400,
+        alt: 'some numbers on a grey background'
+      }, {
+        src: 'http://via.placeholder.com/1200x900',
+        thumbnail: 'http://via.placeholder.com/64x64',
+        w: 1200,
+        h: 900
+      }],
+      type: Array
+    },
+    options: {
+      default: function _default() {
+        return {};
+      },
+      type: Object
+    },
+    singleThumbnail: {
+      type: Boolean,
+      default: false
+    },
+    nbThumbnailsDisplayed: {
+      default: -1,
+      type: Number
+    }
+  },
+  data: function data() {
+    return {
+      pswp: null,
+      angle: 0
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+
+    var initPhotoSwipeFromDOM = function initPhotoSwipeFromDOM(gallerySelector) {
+      // parse slide data (url, title, size ...) from DOM elements
+      // (children of gallerySelector)
+      var parseThumbnailElements = function parseThumbnailElements(el) {
+        var thumbElements = el.childNodes,
+            numNodes = thumbElements.length,
+            items = [],
+            figureEl,
+            linkEl,
+            size,
+            item;
+
+        for (var i = 0; i < numNodes; i++) {
+          figureEl = thumbElements[i]; // <figure> element
+          // include only element nodes
+
+          if (figureEl.nodeType !== 1) {
+            continue;
+          }
+
+          linkEl = figureEl.children[0]; // <a> element
+
+          size = linkEl.getAttribute('data-size').split('x'); // create slide object
+
+          item = {
+            src: linkEl.getAttribute('href'),
+            w: parseInt(size[0], 10),
+            h: parseInt(size[1], 10),
+            title: linkEl.getAttribute('title')
+          };
+
+          if (figureEl.children.length > 1) {
+            // <figcaption> content
+            item.title = figureEl.children[1].innerHTML;
+          }
+
+          if (linkEl.children.length > 0) {
+            // <img> thumbnail element, retrieving thumbnail url
+            item.msrc = linkEl.children[0].getAttribute('src');
+          }
+
+          item.el = figureEl; // save link to element for getThumbBoundsFn
+
+          items.push(item);
+        }
+
+        return items;
+      }; // find nearest parent element
+
+
+      var closest = function closest(el, fn) {
+        return el && (fn(el) ? el : closest(el.parentNode, fn));
+      }; // triggers when user clicks on thumbnail
+
+
+      var onThumbnailsClick = function onThumbnailsClick(e) {
+        e = e || window.event;
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+        var eTarget = e.target || e.srcElement; // find root element of slide
+
+        var clickedListItem = closest(eTarget, function (el) {
+          return el.tagName && el.tagName.toUpperCase() === 'FIGURE';
+        });
+
+        if (!clickedListItem) {
+          return;
+        } // find index of clicked item by looping through all child nodes
+        // alternatively, you may define index via data- attribute
+
+
+        var clickedGallery = clickedListItem.parentNode,
+            childNodes = clickedListItem.parentNode.childNodes,
+            numChildNodes = childNodes.length,
+            nodeIndex = 0,
+            index;
+
+        for (var i = 0; i < numChildNodes; i++) {
+          if (childNodes[i].nodeType !== 1) {
+            continue;
+          }
+
+          if (childNodes[i] === clickedListItem) {
+            index = nodeIndex;
+            break;
+          }
+
+          nodeIndex++;
+        }
+
+        if (index >= 0) {
+          // open PhotoSwipe if valid index found
+          openPhotoSwipe(index, clickedGallery);
+        }
+
+        return false;
+      }; // parse picture index and gallery index from URL (#&pid=1&gid=2)
+
+
+      var photoswipeParseHash = function photoswipeParseHash() {
+        var hash = window.location.hash.substring(1),
+            params = {};
+
+        if (hash.length < 5) {
+          return params;
+        }
+
+        var vars = hash.split('&');
+
+        for (var i = 0; i < vars.length; i++) {
+          if (!vars[i]) {
+            continue;
+          }
+
+          var pair = vars[i].split('=');
+
+          if (pair.length < 2) {
+            continue;
+          }
+
+          params[pair[0]] = pair[1];
+        }
+
+        if (params.gid) {
+          params.gid = parseInt(params.gid, 10);
+        }
+
+        return params;
+      };
+
+      var openPhotoSwipe = function openPhotoSwipe(index, galleryElement, disableAnimation, fromURL) {
+        var pswpElement = galleryElement.parentElement.querySelector('.pswp'),
+            gallery,
+            options,
+            items;
+        items = parseThumbnailElements(galleryElement); // define options (if needed)
+
+        options = {
+          // define gallery index (for URL)
+          galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+          getThumbBoundsFn: function getThumbBoundsFn(index) {
+            // See Options -> getThumbBoundsFn section of documentation for more info
+            var thumbnail = items[index].el.getElementsByTagName('img')[0],
+                // find thumbnail
+            pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                rect = thumbnail.getBoundingClientRect();
+            return {
+              x: rect.left,
+              y: rect.top + pageYScroll,
+              w: rect.width
+            };
+          }
+        }; // PhotoSwipe opened from URL
+
+        if (fromURL) {
+          if (options.galleryPIDs) {
+            // parse real index when custom PIDs are used
+            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+            for (var j = 0; j < items.length; j++) {
+              if (items[j].pid == index) {
+                options.index = j;
+                break;
+              }
+            }
+          } else {
+            // in URL indexes start from 1
+            options.index = parseInt(index, 10) - 1;
+          }
+        } else {
+          options.index = parseInt(index, 10);
+        } // exit if index not found
+
+
+        if (isNaN(options.index)) {
+          return;
+        }
+
+        if (disableAnimation) {
+          options.showAnimationDuration = 0;
+        } // Pass data to PhotoSwipe and initialize it
+
+
+        gallery = new photoswipe_default.a(pswpElement, photoswipe_ui_default_default.a, items, Object.assign(options, that.options));
+        gallery.listen('gettingData', function (index, item) {
+          if (item.w < 1 || item.h < 1) {
+            // unknown size
+            var img = new Image();
+
+            img.onload = function () {
+              // will get size after load
+              item.w = this.width; // set image width
+
+              item.h = this.height; // set image height
+
+              gallery.invalidateCurrItems(); // reinit Items
+
+              gallery.updateSize(true); // reinit Items
+            };
+
+            img.src = item.src; // let's download image
+          }
+        });
+        gallery.init();
+        that.pswp = gallery; // trigger open event after swiper is opened
+
+        that.$emit('open'); // trigger close event after swiper is closed
+
+        gallery.listen('destroy', function () {
+          return that.$emit('close');
+        });
+      }; // loop through all gallery elements and bind events
+
+
+      var galleryElements = document.querySelectorAll(gallerySelector);
+
+      for (var i = 0, l = galleryElements.length; i < l; i++) {
+        galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+        galleryElements[i].onclick = onThumbnailsClick;
+      } // Parse URL and open gallery if it contains #&pid=3&gid=1
+
+
+      var hashData = photoswipeParseHash();
+
+      if (hashData.pid && hashData.gid) {
+        openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+      }
+    };
+
+    initPhotoSwipeFromDOM('.my-gallery');
+  },
+  methods: {
+    rotate: function rotate(newAngle) {
+      var _this = this;
+
+      this.angle = this.angle + newAngle;
+      this.$el.querySelectorAll('.pswp__img').forEach(function (i) {
+        return i.style.transform = "rotate(".concat(_this.angle, "deg)");
+      });
+    },
+    resetAngle: function resetAngle() {
+      var _this2 = this;
+
+      this.angle = 0;
+      this.$el.querySelectorAll('.pswp__img').forEach(function (i) {
+        return i.style.transform = "rotate(".concat(_this2.angle, "deg)");
+      });
+    }
+  }
+});
+// CONCATENATED MODULE: ./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_VuePictureSwipevue_type_script_lang_js_ = (VuePictureSwipevue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./node_modules/vue-picture-swipe/src/VuePictureSwipe.vue
+
+
+
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__("db6a")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  src_VuePictureSwipevue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  injectStyles,
+  "e8df92c6",
+  null
+  ,true
+)
+
+/* harmony default export */ var VuePictureSwipe = (component.exports);
+// CONCATENATED MODULE: ./node_modules/vue-picture-swipe/src/main.js
+
+
+/* harmony default export */ var main = __webpack_exports__["a"] = (VuePictureSwipe);
+
 
 /***/ }),
 
-/***/ "671b":
+/***/ "2d7b":
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAAAsCAMAAACzFX2uAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAZJQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////2VbOugAAAIZ0Uk5TAICI/8BQCu6MIfoGBHf3A6zNHs6nT5Hl4SbkomLoH2F7Ap0SxgXHqniomAGFh5elGfamkxob+JDiDY0RkhAI8Vv1CV9RgklLipSPw0rFJNvdC/TyJdrcIkzEwovjSGljYFkM3xytr32jmoOZE658qepnB2Tm5+tY4Msd+ZXsiSDt77+GTr2+MLW1AAADE0lEQVR4nO2X+VsSQRjHV0Y8WgQlwYNQEAlztTRMUMkrTU2z1C677NAsszzCstOy+r+bd9hdFnauhZ6ep6feX5id9/3OZ3Z25p0XRfk3raJUoaskGioVh0rgVaDScc55mFYGzikPaOXgnPEIrSycE16Ohipd7iqnqCq3qzKnlt7YOg2suqbWCay2pjqvleRZaNhOuFRZmKfOWyCVWk9fPSq0Br8czX+ySFjvk5pkox4eCDaR3+YWGVlLMwluDQZ0eaNHbpq+ENJ3pnqKAMNtYlFbGCKb2lV9Z6KQ6N18EX0+0Q7zIMTI0nbGRbT4aYhLxKBNxB3RokFt1oXO6DOKdpvnTiPNHhGuF6LOaoqB6zZo51CErujrR+i8ztOS5jHX4P28A3zahUF4txwNcEnNpLG0KRyWHtIftGEzq4yksSPFx2VgR11UDNywTlOGQBukKUbHsGc8/+wyk1g7dkxM8mhVeGHQJePJeuDGsWNslCKZgglad9O00YjDFC/zcDOgNbfTtMXjg+PhpkhgPWbpowWxK8PDzeGAK3TXLGM153H/Al0Ck5/n4a6yX39BpLXbIpZc4wVcxwGOcjnXlvBoy7yAZRyw9NtwQ3i0lT+Hu4FHu8kLuIUDbjsbk7NV7og+9ypbC1vlLqU/yT4IGVZqsGoZeeceQztVcFStpt7Hrgc8HLxCmqolxzxAcUyuYMdDmmQNNiY/iU3gkEc0z2NWEiMrEn5i74+1snOGYZB30iOUeTxlfof1QeoVrG1gRX8fHzcARVG9ZutXn7Evr0303E6LvoDbcotPU5QeiHoZtfXHE6zrVfFEgOaJWfu2X8E4q8IqJ94JcRvb1r4YqDyvuVrPzu6eWVnuv8nCKAcSpV+uNMqu7Rsd6t5uQjhLH1R9b0PvoO2eOyBVzuGimIZTzyEJzibJ7RbIgHZHxDNKaGjrzffrMjRF+dBg14oKd3XrY6HEWydZneLv0OUt0m4KC0bF/2klL/n8RaKizdvR7Ne89ltKUL7pNjmVIQn5+PsPaj7gagO9x/D7s2ZG+q/Mf/s77BeC+E6Si7RktgAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ "343a":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("f76f");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("7351a541", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "3c35":
+/***/ (function(module, exports) {
+
+/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
+module.exports = __webpack_amd_options__;
+
+/* WEBPACK VAR INJECTION */}.call(this, {}))
+
+/***/ }),
+
+/***/ "3fb5a":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("237b");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("64bc2a38", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "498a":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $trim = __webpack_require__("58a8").trim;
+var forcedStringTrimMethod = __webpack_require__("c8d2");
+
+// `String.prototype.trim` method
+// https://tc39.es/ecma262/#sec-string.prototype.trim
+$({ target: 'String', proto: true, forced: forcedStringTrimMethod('trim') }, {
+  trim: function trim() {
+    return $trim(this);
+  }
+});
+
+
+/***/ }),
+
+/***/ "53ca":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _typeof; });
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("a4d3");
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("e01a");
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("d3b7");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("d28b");
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("e260");
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("3ca3");
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("ddb0");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+
+
+
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+/***/ }),
+
+/***/ "71e5":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".v-spinner{text-align:center}.v-spinner .v-clip{-webkit-animation:v-clipDelay .75s linear 0s infinite;animation:v-clipDelay .75s linear 0s infinite;-webkit-animation-fill-mode:both;animation-fill-mode:both;display:inline-block}@-webkit-keyframes v-clipDelay{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(.8)}to{transform:rotate(1turn) scale(1)}}@keyframes v-clipDelay{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(.8)}to{transform:rotate(1turn) scale(1)}}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "76dc":
+/***/ (function(module, exports) {
+
+module.exports = "data:image/gif;base64,R0lGODlhFAAUAPMIAIeHhz8/P1dXVycnJ8/Pz7e3t5+fn29vb////wAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFBwAIACwAAAAAFAAUAEAEUxDJSatFxtwaggWAdIyHJAhXoRYSQUhDPGx0TbmujahbXGWZWqdDAYEsp5NupLPkdDwE7oXwWVasimzWrAE1tKFHErQRK8eL8mMUlRBJVI307uoiACH5BAUHAAgALAEAAQASABIAAAROEMkpS6E4W5upMdUmEQT2feFIltMJYivbvhnZ3R0A4NMwIDodz+cL7nDEn5CH8DGZh8MtEMBEoxkqlXKVIgQCibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpjaE4W5spANUmFQX2feFIltMJYivbvhnZ3d1x4BNBIDodz+cL7nDEn5CH8DGZAsFtMMBEoxkqlXKVIgIBibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpAaA4W5vpOdUmGQb2feFIltMJYivbvhnZ3Z0g4FNRIDodz+cL7nDEn5CH8DGZgcCNQMBEoxkqlXKVIgYDibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpz6E4W5upENUmAQD2feFIltMJYivbvhnZ3V0Q4JNhIDodz+cL7nDEn5CH8DGZg8GtUMBEoxkqlXKVIggEibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkphaA4W5tpCNUmHQf2feFIltMJYivbvhnZ3d0w4BMAIDodz+cL7nDEn5CH8DGZBMLNYMBEoxkqlXKVIgoFibbK9YLBYvLtHH5K0J0IACH5BAUHAAgALAEAAQASABIAAAROEMkpQ6A4W5vpGNUmCQL2feFIltMJYivbvhnZ3R1B4NNxIDodz+cL7nDEn5CH8DGZhcINAMBEoxkqlXKVIgwGibbK9YLBYvLtHH5K0J0IACH5BAUHAAcALAEAAQASABIAAANCeLo6wzA6FxkhbaoQ4L3ZxnXLh0EjWZ4RV71VUcCLIByyTNt2PsO8m452sBGJBsNxkUwuD03lAQBASqnUJ7aq5UYSADs="
+
+/***/ }),
+
+/***/ "8b3a":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("71e5");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("d8be2e4e", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "9f15":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__("1de5");
+var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__("2d7b");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
+// Module
+exports.push([module.i, ".pswp__top-bar[data-v-e8df92c6]{text-align:right}.pswp__caption__center[data-v-e8df92c6]{text-align:center}.pswp__button--rotate[data-v-e8df92c6]{background:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") 0 0 no-repeat;background-size:62px 24px}.pswp__button--rotate--left[data-v-e8df92c6]{background-position:8px 10px}.pswp__button--rotate--right[data-v-e8df92c6]{background-position:-26px 10px}.gallery-thumbnail[data-v-e8df92c6]{display:inline;margin:5px}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "c337":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_PulseLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("1259");
-/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_PulseLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_PulseLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_PulseLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_PulseLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_ClipLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8b3a");
+/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_ClipLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_ClipLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_ClipLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_ClipLoader_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ "8a5d":
+/***/ "c8d2":
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__("d039");
+var whitespaces = __webpack_require__("5899");
+
+var non = '\u200B\u0085\u180E';
+
+// check that a method works with the correct list
+// of whitespaces and has a correct name
+module.exports = function (METHOD_NAME) {
+  return fails(function () {
+    return !!whitespaces[METHOD_NAME]() || non[METHOD_NAME]() != non || whitespaces[METHOD_NAME].name !== METHOD_NAME;
+  });
+};
+
+
+/***/ }),
+
+/***/ "ca58":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("9f15");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("b610a05a", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "da7a":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"83506c0a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-spinner/src/PulseLoader.vue?vue&type=template&id=7dc0198c&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.loading),expression:"loading"}],staticClass:"v-spinner"},[_c('div',{staticClass:"v-pulse v-pulse1",style:([_vm.spinnerStyle,_vm.spinnerDelay1])}),_c('div',{staticClass:"v-pulse v-pulse2",style:([_vm.spinnerStyle,_vm.spinnerDelay2])}),_c('div',{staticClass:"v-pulse v-pulse3",style:([_vm.spinnerStyle,_vm.spinnerDelay3])})])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6cdd2157-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=template&id=7edc50d8&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.loading),expression:"loading"}],staticClass:"v-spinner"},[_c('div',{staticClass:"v-clip",style:(_vm.spinnerStyle)})])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./node_modules/vue-spinner/src/PulseLoader.vue?vue&type=template&id=7dc0198c&
+// CONCATENATED MODULE: ./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=template&id=7edc50d8&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-spinner/src/PulseLoader.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -78,10 +712,8 @@ var staticRenderFns = []
 //
 //
 //
-//
-//
-/* harmony default export */ var PulseLoadervue_type_script_lang_js_ = ({
-  name: 'PulseLoader',
+/* harmony default export */ var ClipLoadervue_type_script_lang_js_ = ({
+  name: 'ClipLoader',
   props: {
     loading: {
       type: Boolean,
@@ -93,56 +725,39 @@ var staticRenderFns = []
     },
     size: {
       type: String,
-      default: '15px'
-    },
-    margin: {
-      type: String,
-      default: '2px'
+      default: '35px'
     },
     radius: {
       type: String,
       default: '100%'
     }
   },
-  data: function data() {
-    return {
-      spinnerStyle: {
-        backgroundColor: this.color,
-        width: this.size,
+  computed: {
+    spinnerStyle: function spinnerStyle() {
+      return {
         height: this.size,
-        margin: this.margin,
+        width: this.size,
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderColor: this.color + ' ' + this.color + ' transparent',
         borderRadius: this.radius,
-        display: 'inline-block',
-        animationName: 'v-pulseStretchDelay',
-        animationDuration: '0.75s',
-        animationIterationCount: 'infinite',
-        animationTimingFunction: 'cubic-bezier(.2,.68,.18,1.08)',
-        animationFillMode: 'both'
-      },
-      spinnerDelay1: {
-        animationDelay: '0.12s'
-      },
-      spinnerDelay2: {
-        animationDelay: '0.24s'
-      },
-      spinnerDelay3: {
-        animationDelay: '0.36s'
-      }
-    };
+        background: 'transparent'
+      };
+    }
   }
 });
-// CONCATENATED MODULE: ./node_modules/vue-spinner/src/PulseLoader.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_PulseLoadervue_type_script_lang_js_ = (PulseLoadervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_ClipLoadervue_type_script_lang_js_ = (ClipLoadervue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/vue-spinner/src/PulseLoader.vue
+// CONCATENATED MODULE: ./node_modules/vue-spinner/src/ClipLoader.vue
 
 
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__("671b")
+  var style0 = __webpack_require__("c337")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -150,7 +765,7 @@ if (style0.__inject__) style0.__inject__(context)
 /* normalize component */
 
 var component = Object(componentNormalizer["a" /* default */])(
-  src_PulseLoadervue_type_script_lang_js_,
+  src_ClipLoadervue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
@@ -160,50 +775,70 @@ var component = Object(componentNormalizer["a" /* default */])(
   ,true
 )
 
-/* harmony default export */ var PulseLoader = __webpack_exports__["a"] = (component.exports);
+/* harmony default export */ var ClipLoader = __webpack_exports__["a"] = (component.exports);
 
 /***/ }),
 
-/***/ "a79d":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "db6a":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_VuePictureSwipe_vue_vue_type_style_index_0_id_e8df92c6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ca58");
+/* harmony import */ var _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_VuePictureSwipe_vue_vue_type_style_index_0_id_e8df92c6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_VuePictureSwipe_vue_vue_type_style_index_0_id_e8df92c6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_VuePictureSwipe_vue_vue_type_style_index_0_id_e8df92c6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _vue_style_loader_index_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_postcss_loader_src_index_js_ref_6_oneOf_1_3_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_VuePictureSwipe_vue_vue_type_style_index_0_id_e8df92c6_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
-var $ = __webpack_require__("23e7");
-var IS_PURE = __webpack_require__("c430");
-var NativePromise = __webpack_require__("fea9");
-var fails = __webpack_require__("d039");
-var getBuiltIn = __webpack_require__("d066");
-var speciesConstructor = __webpack_require__("4840");
-var promiseResolve = __webpack_require__("cdf9");
-var redefine = __webpack_require__("6eeb");
 
-// Safari bug https://bugs.webkit.org/show_bug.cgi?id=200829
-var NON_GENERIC = !!NativePromise && fails(function () {
-  NativePromise.prototype['finally'].call({ then: function () { /* empty */ } }, function () { /* empty */ });
-});
+/***/ }),
 
-// `Promise.prototype.finally` method
-// https://tc39.es/ecma262/#sec-promise.prototype.finally
-$({ target: 'Promise', proto: true, real: true, forced: NON_GENERIC }, {
-  'finally': function (onFinally) {
-    var C = speciesConstructor(this, getBuiltIn('Promise'));
-    var isFunction = typeof onFinally == 'function';
-    return this.then(
-      isFunction ? function (x) {
-        return promiseResolve(C, onFinally()).then(function () { return x; });
-      } : onFinally,
-      isFunction ? function (e) {
-        return promiseResolve(C, onFinally()).then(function () { throw e; });
-      } : onFinally
-    );
-  }
-});
+/***/ "dd40":
+/***/ (function(module, exports) {
 
-// patch native Promise.prototype for native async functions
-if (!IS_PURE && typeof NativePromise == 'function' && !NativePromise.prototype['finally']) {
-  redefine(NativePromise.prototype, 'finally', getBuiltIn('Promise').prototype['finally']);
-}
+module.exports = function(originalModule) {
+	if (!originalModule.webpackPolyfill) {
+		var module = Object.create(originalModule);
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		Object.defineProperty(module, "exports", {
+			enumerable: true
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
+/***/ "f301":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "img/default-skin.b257fa9c.svg";
+
+/***/ }),
+
+/***/ "f76f":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "/*! PhotoSwipe main CSS by Dmitry Semenov | photoswipe.com | MIT license */.pswp{display:none;position:absolute;width:100%;height:100%;left:0;top:0;overflow:hidden;touch-action:none;z-index:1500;-webkit-text-size-adjust:100%;-webkit-backface-visibility:hidden;outline:none}.pswp *{box-sizing:border-box}.pswp img{max-width:none}.pswp--animate_opacity{opacity:.001;will-change:opacity;transition:opacity 333ms cubic-bezier(.4,0,.22,1)}.pswp--open{display:block}.pswp--zoom-allowed .pswp__img{cursor:-webkit-zoom-in;cursor:-moz-zoom-in;cursor:zoom-in}.pswp--zoomed-in .pswp__img{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}.pswp--dragging .pswp__img{cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}.pswp__bg{background:#000;opacity:0;transform:translateZ(0);-webkit-backface-visibility:hidden}.pswp__bg,.pswp__scroll-wrap{position:absolute;left:0;top:0;width:100%;height:100%}.pswp__scroll-wrap{overflow:hidden}.pswp__container,.pswp__zoom-wrap{touch-action:none;position:absolute;left:0;right:0;top:0;bottom:0}.pswp__container,.pswp__img{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}.pswp__zoom-wrap{position:absolute;width:100%;transform-origin:left top;transition:transform 333ms cubic-bezier(.4,0,.22,1)}.pswp__bg{will-change:opacity;transition:opacity 333ms cubic-bezier(.4,0,.22,1)}.pswp--animated-in .pswp__bg,.pswp--animated-in .pswp__zoom-wrap{transition:none}.pswp__container,.pswp__zoom-wrap{-webkit-backface-visibility:hidden}.pswp__item{right:0;bottom:0;overflow:hidden}.pswp__img,.pswp__item{position:absolute;left:0;top:0}.pswp__img{width:auto;height:auto}.pswp__img--placeholder{-webkit-backface-visibility:hidden}.pswp__img--placeholder--blank{background:#222}.pswp--ie .pswp__img{width:100%!important;height:auto!important;left:0;top:0}.pswp__error-msg{position:absolute;left:0;top:50%;width:100%;text-align:center;font-size:14px;line-height:16px;margin-top:-8px;color:#ccc}.pswp__error-msg a{color:#ccc;text-decoration:underline}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ })
