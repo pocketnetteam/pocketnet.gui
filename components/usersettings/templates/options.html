@@ -1,5 +1,5 @@
 <% _.each(composed, function(group){ %>
-	<div class="settingsGroup">
+	<div class="settingsGroup <% if(group.class) {%> <%- group.class %> <% } %>">
 
 		<div class="mwork gk">
 			<div class="groupCaption"><%-group.name%></div>

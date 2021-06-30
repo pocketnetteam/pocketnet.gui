@@ -1397,7 +1397,6 @@ class hybrid_loader_HybridLoader extends events["EventEmitter"] {
             return performance.now();
         };
         this.settings = Object.assign(Object.assign({}, defaultSettings), settings);
-        console.log("P2p2 settings", this.settings);
         const { bufferedSegmentsCount } = settings;
         if (typeof bufferedSegmentsCount === "number") {
             if (settings.p2pDownloadMaxPriority === undefined) {

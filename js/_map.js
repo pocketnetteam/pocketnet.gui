@@ -402,10 +402,11 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			redirect : {
+			anonimus : true,
+			/*redirect : {
 				auth : 'authorization',
 				//validate : 'filluser'
-			},
+			},*/
 		
 		},
 
@@ -905,9 +906,10 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			redirect : {
+			anonimus : true,
+			/*redirect : {
 				auth : 'authorization'
-			}
+			}*/
 			
 		},
 		oldchat : {
@@ -1166,6 +1168,7 @@ __map =  {
 		},
 		now : true,
 		renew : true,
+		anonimus : true,
 		reload : true
 	},
 

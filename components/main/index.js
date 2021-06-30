@@ -161,7 +161,7 @@ var main = (function(){
 				self.app.platform.ui.share()
 			},
 			addbuttonscroll  : function(){
-				if(el.w.scrollTop() > 400){
+				if (el.w.scrollTop() > 400){
 					el.addbutton.addClass('scrollactive')
 				}
 				else{
@@ -209,8 +209,6 @@ var main = (function(){
 			backtolentaClear : function(){
 
 
-				console.log("backtolentaClear")
-				
 				self.nav.api.history.removeParameters(['v'])
 
 				el.c.removeClass('opensvishowed')
@@ -351,8 +349,6 @@ var main = (function(){
 
 			topvideos: function (show) {
 
-				console.log("RENDER TOP", show)
-
 				var showmoreby = el.topvideos
 
 				showmoreby.removeClass('hasshares')
@@ -384,8 +380,6 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							console.log('shares', shares)
-	
 							if (shares.length > 2){
 								showmoreby.addClass('hasshares')
 							}
@@ -548,7 +542,6 @@ var main = (function(){
 				var fp = false
 
 				if (lenta) {
-					console.log("HERE")
 					lenta.destroy()
 				}
 
@@ -815,8 +808,21 @@ var main = (function(){
 				hsready = true
 
 			}
+			else{
 
-			
+
+				if (self.app.scrolling){
+	
+					el.lentacell.on('scroll', function(){
+						_.each(self.app.scrolling.clbks, function(c){
+							if (el.lentacell)
+								c(el.lentacell.scrollTop())
+						})
+					})
+	
+				}
+			}
+
 
 		}
 
@@ -875,8 +881,6 @@ var main = (function(){
 
 			renders.smallpanel()
 
-			console.log('currentMode', currentMode,videomain )
-
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 
@@ -888,6 +892,16 @@ var main = (function(){
 		
 		return {
 			primary : primary,
+
+			scrolltopall : function(){
+
+				if(el.lentacell && isMobile()){
+
+					_scrollTop(0, el.lentacell, 200)
+
+					renders.mobilemode('mainshow')
+				}
+			},
 
 			parametersHandler : function(clbk){
 
@@ -945,7 +959,6 @@ var main = (function(){
 					makePanel()
 				}
 				
-				console.log("HANDLER!!!")
 				if (lenta) {
 					lenta.destroy()
 					lenta = null
@@ -1026,6 +1039,9 @@ var main = (function(){
 
 			destroy : function(){
 
+				el.w.off('scroll', actions.addbuttonscroll)
+
+
 				renders.post(null)
 
 				hsready = false
@@ -1050,7 +1066,6 @@ var main = (function(){
 
 
 				if (lenta){
-					console.log("lenta.destrlenta.destr")
 					lenta.destroy()
 				}
 
@@ -1083,6 +1098,16 @@ var main = (function(){
 				self.app.el.footer.removeClass('workstation')
 
 				$('html').removeClass('nooverflow');
+
+				el = {}
+				
+				if (self.app.scrolling){
+	
+					_.each(self.app.scrolling.clbks, function(c){
+						c(0)
+					})
+	
+				}
 			},
 			
 			init : function(p){
@@ -1098,6 +1123,7 @@ var main = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.share = el.c.find('.share');
 				el.lenta = el.c.find('.lentaWrapper');
+				el.lentacell =  el.c.find('.lentacell')
 				el.panel = el.c.find('.panel'); //00
 				el.leftpanel = el.c.find('.leftpanel');
 				el.up = el.c.find('.upbuttonwrapper')
@@ -1176,7 +1202,14 @@ var main = (function(){
 		}
 	};
 
+	self.scrolltopall = function(){
+		_.each(essenses, function(essense){
 
+			essense.scrolltopall();
+
+		})
+
+	}
 
 	self.run = function(p){
 

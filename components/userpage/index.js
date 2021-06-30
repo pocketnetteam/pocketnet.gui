@@ -22,24 +22,47 @@ var userpage = (function(){
 		var init = function(){
 			reports = []
 
-			console.log("self.app.user.validate()self.app.user.validate()self.app.user.validate()", self.app.user.validate())
+			if(!self.app.user.getstate()){
 
-			if(!self.app.user.validate()){
-
-				var h = self.app.localization.e('e13184');
-
-				if (self.app.errors.connection()){
-					h = self.app.localization.e('e13185')
-				}
+				
+				reports.push({
+					name : self.app.localization.e('signin'),
+					id : 'authorization',
+					report : 'authorization',
+					mobile : true,
+					rh : true
+				})
 
 				reports.push({
-					name : h,
-					id : 'test',
-					report : 'fillUser',
-					mobile : true
+					name : self.app.localization.e('createnew'),
+					id : 'registration',
+					report : 'registration',
+					mobile : true,
+					rh : true
 				})
-	
+		
+
 			}
+			else{
+				if(!self.app.user.validate()){
+
+					var h = self.app.localization.e('e13184');
+	
+					if (self.app.errors.connection()){
+						h = self.app.localization.e('e13185')
+					}
+	
+					reports.push({
+						name : h,
+						id : 'test',
+						report : 'fillUser',
+						mobile : true
+					})
+		
+				}
+			}
+			
+			
 
 			reports.push({
 				name : self.app.localization.e('notifications'),
@@ -145,15 +168,7 @@ var userpage = (function(){
 				}
 			})
 
-			reports.push({
-				name : 'Pocketcoin',
-				id : 'staking',
-				report : 'staking',
-				mobile : true,
-				if : function(){
-					return isMobile()
-				},
-			})
+		
 
 			if(self.app.user.validate()) {
 
@@ -188,6 +203,16 @@ var userpage = (function(){
 				id : 'system16',
 				report : 'system16',
 				mobile : false
+			})
+
+			reports.push({
+				name : 'Pocketcoin',
+				id : 'staking',
+				report : 'staking',
+				mobile : true,
+				if : function(){
+					return isMobile()
+				},
 			})
 
 		//	var address = app.user.address.value;
@@ -435,6 +460,11 @@ var userpage = (function(){
 				renders.report(id);
 
 
+				var report = helpers.findReport(id)
+
+				if (report && report.rh) return
+
+
 				if (addToHistory){
 
 					self.nav.api.history.addParameters({
@@ -586,22 +616,27 @@ var userpage = (function(){
 				}
 				else{
 
+					self.app.user.isState(function (state) { 
+
+						if(isMobile() && state){
+							self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+								var temp = self.app.platform.sdk.node.transactions.tempBalance()
+	
+								allbalance = amount + temp
+								
+	
+								r()
+							
+							})
+						}
+						else{
+							r()
+						}
+
+					})
 					
 
-					if(isMobile()){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							var temp = self.app.platform.sdk.node.transactions.tempBalance()
-
-							allbalance = amount + temp
-							
-
-							r()
-						
-						})
-					}
-					else{
-						r()
-					}
+					
 
 					
 
@@ -695,6 +730,22 @@ var userpage = (function(){
 				})
 			},
 
+			authorization : function(el, clbk){
+				self.nav.api.go({
+					href : 'authorization',
+					history : true,
+					open : true
+				})	
+			},
+
+			registration : function(el, clbk){
+				self.nav.api.go({
+					href : 'registration',
+					history : true,
+					open : true
+				})
+			},
+
 			report : function(id, clbk){
 
 				if (currentExternalEssense)
@@ -714,6 +765,12 @@ var userpage = (function(){
 					if (clbk)
 						clbk();
 				}
+
+				if(report.rh){
+					renders[report.report]()
+					return
+				}
+				
 				
 				self.shell({
 
@@ -789,33 +846,36 @@ var userpage = (function(){
 		var makerep = function(clbk){
 			var id = parameters().id;
 
-			if(!isMobile()){
-				if(!id) {
 
-					if(self.app.user.validate()){
-						id = 'ustate'	
+				if(!isMobile()){
+					if(!id) {
+
+						if(self.app.user.validate()){
+							id = 'ustate'	
+						}
+						else{
+							id = 'test'
+						}
+					}
+				}
+				
+				renders.contents(function(){
+
+					//self.app.actions.scrollBMenu()
+
+					if(id){
+						actions.openReport(id)
 					}
 					else{
-						id = 'test'
+						actions.closeReport()
 					}
-				}
-			}
-			
-			renders.contents(function(){
 
-				//self.app.actions.scrollBMenu()
+					if (clbk)
+						clbk();
 
-				if(id){
-					actions.openReport(id)
-				}
-				else{
-					actions.closeReport()
-				}
+				}, id);
 
-				if (clbk)
-					clbk();
 
-			}, id);
 			
 
 			

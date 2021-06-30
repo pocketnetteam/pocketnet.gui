@@ -1163,8 +1163,6 @@ var author = (function(){
 
 		var make = function(ini){
 
-			console.log("make!")
-
 			var r = parameters().report || 'shares'
 
 				reports[r].active = true;
@@ -1253,17 +1251,7 @@ var author = (function(){
 
 				result = null
 
-
-				console.log("GETDATA", p.address)
-
-
-
 				self.sdk.users.addressByName(p.address, function(address){
-
-					console.log("GETDATA2", address)
-
-				
-
 
 					if (address){
 						author.address = address
