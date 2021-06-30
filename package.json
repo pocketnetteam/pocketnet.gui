@@ -14,7 +14,6 @@
         "distl": "electron-builder -l --x64",
         "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
-        "rebuild": "electron-rebuild",
         "minimize": "node minimize.js -prodaction=true -vendor=2999 -path=/",
         "minimize:test": "node minimize.js -prodaction=true -vendor=2999 -test=true -path=/",
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
@@ -24,7 +23,6 @@
         "electron": "^11.4.5",
         "electron-builder": "",
         "electron-notarize": "^1.0.0",
-        "electron-rebuild": "",
         "electron-reload": "",
         "electron-reloader": "",
         "humanize": "0.0.9"
@@ -51,6 +49,7 @@
         "firebase-admin": "^9.3.0",
         "github-download": "^0.5.0",
         "hash-files": "^1.1.1",
+        "iconv-lite": "",
         "image-js": "^0.21.9",
         "image-type": "^4.1.0",
         "imagesloaded": "^4.1.4",
