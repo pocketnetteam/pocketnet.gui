@@ -7,6 +7,8 @@ if(user.address.value)
 
 var name = app.platform.api.name(author.address)
 
+console.log(app.localization)
+
 var telements = function(){ %>
 
 	<% if(!user.isItMe(author.address)) {

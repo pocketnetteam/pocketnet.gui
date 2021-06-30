@@ -1183,8 +1183,7 @@ var lenta = (function(){
 						if (image.src == initialValue) return true;						
 	
 					})
-	
-					if(images.length > 1 || (share.url && images.length && parseVideo(share.url).type) || !isMobile()){
+					if(images.length >= 1 || (share.url && images.length && parseVideo(share.url).type) || !isMobile()){
 	
 						self.app.nav.api.load({
 							open : true,
@@ -1318,7 +1317,7 @@ var lenta = (function(){
 											action(player, vel)
 										}
 
-									}, 320)
+									}, 520)
 
 									
 
@@ -3348,7 +3347,11 @@ var lenta = (function(){
 
 		var initEvents = function(){			
 
+			
+
 			if(isMobile() && canloadprev && !essenseData.openapi){
+
+				
 
 				/*var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
@@ -3730,6 +3733,9 @@ var lenta = (function(){
 					addressEl.removeClass('blocking');
 				}
 
+
+			
+
 			}	
 			
 		}
@@ -4000,6 +4006,10 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+
+				/*if (essenseData.window){
+					essenseData.window.off('scroll')
+				}*/
 
 				if (el.shares && isotopeinited){
 					el.shares.isotope('destroy')

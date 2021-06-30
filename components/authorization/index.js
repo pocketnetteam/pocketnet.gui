@@ -314,7 +314,7 @@ var authorization = (function(){
 					clbk : function(e, p){
 
 						/*setTimeout(function(){
-							_scrollToTop(el.c.find('.newCustomer'), el.c.find('.scrollmaketpart'))
+							_scrollToTop(el.c.find('.userpart'), el.c.find('.scrollmaketpart'))
 						}, 400)		*/				
 
 						ext = p

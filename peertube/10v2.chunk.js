@@ -74,7 +74,6 @@ function hlsjsConfigHandler(options) {
     if (!player.srOptions_.hlsjsConfig) {
         player.srOptions_.hlsjsConfig = options.hlsjsConfig;
     }
-    console.log('player.srOptions_.hlsjsConfig', options.hlsjsConfig);
     if (!player.srOptions_.captionConfig) {
         player.srOptions_.captionConfig = options.captionConfig;
     }
@@ -506,7 +505,6 @@ class hls_plugin_Html5Hlsjs {
         //this.hlsjsConfig.liveSyncDurationCount = 4
         //this.hlsjsConfig.maxMaxBufferLength = 55
         //this.hlsjsConfig.backBufferLength = 90
-        console.log('this.hlsjsConfig', this.hlsjsConfig);
         ///// liveSyncPosition
         this.hls = new hls_default.a(this.hlsjsConfig);
         this._executeHooksFor('beforeinitialize');

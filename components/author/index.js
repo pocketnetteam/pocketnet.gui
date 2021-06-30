@@ -198,188 +198,194 @@ var author = (function(){
 
 		}
 
-		var reports = {
-			shares : {
-				name : self.app.localization.e('uposts').toUpperCase(),
-				mobile : '<i class="fas fa-align-justify"></i>',
-				id : 'shares',
-				render : 'lenta',
-				history : true,
-				count : function(){
-					return 0
-				}
-			},
-
-			post : {
-				if : function(){
-					return false
+		var reports = {}
+		
+		var initreports = function(){
+			reports = {
+				shares : {
+					name : self.app.localization.e('uposts').toUpperCase(),
+					mobile : '<i class="fas fa-align-justify"></i>',
+					id : 'shares',
+					render : 'lenta',
+					history : true,
+					count : function(){
+						return 0
+					}
 				},
-				id : 'post',
-				render : 'post',
-				count : function(){
-					return 0
-				}
-			},
-
-			followers : {
-				name : self.app.localization.e('followers').toUpperCase(),
-				mobile : '<i class="fas fa-users"></i>',
-				id : 'followers',
-				render : 'followers',
-				history : true,
-				count : function(){
-
-					var u = _.map(deep(author, 'data.subscribers') || [], function(a){
-						return a
-					})
 	
-					var blocked = deep(author, 'data.blocking') || []
-	
-					u = _.filter(u, function(a){
-						return _.indexOf(blocked, a) == -1
-					})
-					
-					return u.length
-				
-				}
-			},
-
-			contents : {
-				name : self.app.localization.e('followers').toUpperCase(),
-				mobile : '<i class="fas fa-users"></i>',
-				id : 'contents',
-				render : 'contents',
-				history : true,
-				if : function(){
-					return false
-				}
-				
-			},
-
-			following : {
-				name : self.app.localization.e('following').toUpperCase(),
-				id : 'following',
-				mobile : '<i class="fas fa-user-plus"></i>',
-				render : 'following',
-				history : true,
-				count : function(){
-
-					var u = _.map(deep(author, 'data.subscribes') || [], function(a){
-						return a.adddress
-					})
-	
-					var blocked = deep(author, 'data.blocking') || []
-	
-					u = _.filter(u, function(a){
-						return _.indexOf(blocked, a) == -1
-					})
-
-					return u.length
-				}
-			},
-
-			blocking : {
-				name : self.app.localization.e('blockedusers').toUpperCase(),
-				id : 'blocking',
-				mobile : '<i class="fas fa-user-slash"></i>',
-				render : 'blocking',
-				history : true,
-				if : function(){
-					if(self.user.isItMe(author.address)) return true
+				post : {
+					if : function(){
+						return false
+					},
+					id : 'post',
+					render : 'post',
+					count : function(){
+						return 0
+					}
 				},
-				count : function(){
-
-					var blocked = deep(author, 'data.blocking') || []
-
-					return blocked.length
-				}
-			},
-
-			
-
-			share : {
-				name : self.app.localization.e('share').toUpperCase() + ' <i class="fas fa-share-alt"></i>',
-				mobile : '<i class="fas fa-share-alt"></i>',
-				id : 'share',
-				if : function(){
-					return true
-				},
-				events : {
-					click : function(){
-
-						self.nav.api.load({
-							open : true,
-							href : 'socialshare2',
-							history : true,
-							inWnd : true,
-							uid : "authorshare",
-							essenseData : {
-								caption : "Share this author",
-								sharing : author.data.social(self.app),
-								embedding : {
-									type : 'channel',
-									id : author.address
-								}
-							}
+	
+				followers : {
+					name : self.app.localization.e('followers').toUpperCase(),
+					mobile : '<i class="fas fa-users"></i>',
+					id : 'followers',
+					render : 'followers',
+					history : true,
+					count : function(){
+	
+						var u = _.map(deep(author, 'data.subscribers') || [], function(a){
+							return a
+						})
+		
+						var blocked = deep(author, 'data.blocking') || []
+		
+						u = _.filter(u, function(a){
+							return _.indexOf(blocked, a) == -1
 						})
 						
-					}
-				}
-			},
-
-			settings : {
-				name : self.app.localization.e('settings').toUpperCase() + ' <i class="fas fa-cog"></i>',
-				mobile : '<i class="fas fa-cog"></i>',
-				id : 'settings',
-				href : function(){
-
-					if(!self.app.user.validate()){
-						return 'userpage'
-					}
-					else{
-						return 'userpage?id=ustate'
-					}
-
+						return u.length
 					
-				}, 
-				class : 'tosettings',
-
-				if : function(){
-					if(self.user.isItMe(author.address) && !isMobile()) return true
-				}
-			},
-
-			more : {
-				name : '<i class="fas fa-ellipsis-h"></i>',
-				mobile : '<i class="fas fa-ellipsis-h"></i>',
-				id : 'more',
-				class : 'more',
-
-				if : function(){
-					if(!self.user.isItMe(author.address) && _state) return true
-				},
-
-				events : {
-					click : function(){
-						renders.metmenu($(this))
 					}
-				}
-			},
-
-
-			info : {
-				name : self.app.localization.e('info') +  ' <i class="fas fa-info-circle"></i>',
-				mobile : '<i class="fas fa-info-circle"></i>',
-				id : 'info',
-				class : 'info',
-				render : 'info',
-				history : true,
-				if : function(){
-					if(isMobile()) return true
-				}
-			},
-			
+				},
+	
+				contents : {
+					name : self.app.localization.e('followers').toUpperCase(),
+					mobile : '<i class="fas fa-users"></i>',
+					id : 'contents',
+					render : 'contents',
+					history : true,
+					if : function(){
+						return false
+					}
+					
+				},
+	
+				following : {
+					name : self.app.localization.e('following').toUpperCase(),
+					id : 'following',
+					mobile : '<i class="fas fa-user-plus"></i>',
+					render : 'following',
+					history : true,
+					count : function(){
+	
+						var u = _.map(deep(author, 'data.subscribes') || [], function(a){
+							return a.adddress
+						})
+		
+						var blocked = deep(author, 'data.blocking') || []
+		
+						u = _.filter(u, function(a){
+							return _.indexOf(blocked, a) == -1
+						})
+	
+						return u.length
+					}
+				},
+	
+				blocking : {
+					name : self.app.localization.e('blockedusers').toUpperCase(),
+					id : 'blocking',
+					mobile : '<i class="fas fa-user-slash"></i>',
+					render : 'blocking',
+					history : true,
+					if : function(){
+						if(self.user.isItMe(author.address)) return true
+					},
+					count : function(){
+	
+						var blocked = deep(author, 'data.blocking') || []
+	
+						return blocked.length
+					}
+				},
+	
+				
+	
+				share : {
+					name : self.app.localization.e('share').toUpperCase() + ' <i class="fas fa-share-alt"></i>',
+					mobile : '<i class="fas fa-share-alt"></i>',
+					id : 'share',
+					if : function(){
+						return true
+					},
+					events : {
+						click : function(){
+	
+							self.nav.api.load({
+								open : true,
+								href : 'socialshare2',
+								history : true,
+								inWnd : true,
+								uid : "authorshare",
+								essenseData : {
+									caption : "Share this author",
+									sharing : author.data.social(self.app),
+									embedding : {
+										type : 'channel',
+										id : author.address
+									}
+								}
+							})
+							
+						}
+					}
+				},
+	
+				settings : {
+					name : self.app.localization.e('settings').toUpperCase() + ' <i class="fas fa-cog"></i>',
+					mobile : '<i class="fas fa-cog"></i>',
+					id : 'settings',
+					href : function(){
+	
+						if(!self.app.user.validate()){
+							return 'userpage'
+						}
+						else{
+							return 'userpage?id=ustate'
+						}
+	
+						
+					}, 
+					class : 'tosettings',
+	
+					if : function(){
+						if(self.user.isItMe(author.address) && !isMobile()) return true
+					}
+				},
+	
+				more : {
+					name : '<i class="fas fa-ellipsis-h"></i>',
+					mobile : '<i class="fas fa-ellipsis-h"></i>',
+					id : 'more',
+					class : 'more',
+	
+					if : function(){
+						if(!self.user.isItMe(author.address) && _state) return true
+					},
+	
+					events : {
+						click : function(){
+							renders.metmenu($(this))
+						}
+					}
+				},
+	
+	
+				info : {
+					name : self.app.localization.e('info') +  ' <i class="fas fa-info-circle"></i>',
+					mobile : '<i class="fas fa-info-circle"></i>',
+					id : 'info',
+					class : 'info',
+					render : 'info',
+					history : true,
+					if : function(){
+						if(isMobile()) return true
+					}
+				},
+				
+			}
 		}
+		
+		
 
 		var renders = {
 			contents : function(_el, report){
@@ -1163,8 +1169,6 @@ var author = (function(){
 
 		var make = function(ini){
 
-			console.log("make!")
-
 			var r = parameters().report || 'shares'
 
 				reports[r].active = true;
@@ -1253,17 +1257,9 @@ var author = (function(){
 
 				result = null
 
-
-				console.log("GETDATA", p.address)
-
-
+				initreports()
 
 				self.sdk.users.addressByName(p.address, function(address){
-
-					console.log("GETDATA2", address)
-
-				
-
 
 					if (address){
 						author.address = address

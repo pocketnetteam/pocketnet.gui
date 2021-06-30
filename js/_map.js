@@ -43,7 +43,8 @@ __map =  {
 		"js/vendor/circular-progress.js", //
 		/*"js/vendor/swiper-bundle.min.js",*/ // very hard
 		"js/vendor/workbox-v6.1.5/workbox-sw.js",
-		"js/vendor/ion.sound/ion.sound.js" 
+		"js/vendor/ion.sound/ion.sound.js",
+		"js/vendor/hammer.min.js"
 	],
 
 	__sourcesfirst : [
@@ -401,10 +402,11 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			redirect : {
+			anonimus : true,
+			/*redirect : {
 				auth : 'authorization',
 				//validate : 'filluser'
-			},
+			},*/
 		
 		},
 
@@ -904,9 +906,10 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			redirect : {
+			anonimus : true,
+			/*redirect : {
 				auth : 'authorization'
-			}
+			}*/
 			
 		},
 		oldchat : {
@@ -1165,6 +1168,7 @@ __map =  {
 		},
 		now : true,
 		renew : true,
+		anonimus : true,
 		reload : true
 	},
 

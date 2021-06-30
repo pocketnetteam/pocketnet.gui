@@ -46,7 +46,7 @@
     ],
     "background_color": "#011621",
     "theme_color": "#011621",
-    "display": "fullscreen",
+    "display": "standalone",
     "start_url": "/index",
     "scope": "https://__VAR__.domain/",
     "orientation": "portrait"

@@ -421,8 +421,7 @@ ____loclib.info = "Info"
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
 ____loclib.e13025 = "Create a new account"
-____loclib.e13026 = "Join Pocketnet - The Future of the Free Web"
-____loclib.e133511 = 'Confirmation code'
+____loclib.e13026 = "Join Pocketnet"
 
 ____loclib.e13027 = "Stay Signed"
 ____loclib.e13028 = "You entered not valid private key"
@@ -1065,3 +1064,5 @@ ____loclib.streamSettingsResult = 'Otherwise your live could be terminated or un
 
 
 ____loclib.keygeneration = 'Cryptography keys generation'
+
+____loclib.failedStreamGeneration = 'Unable to start stream'

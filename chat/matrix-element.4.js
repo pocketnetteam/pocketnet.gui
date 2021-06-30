@@ -2846,7 +2846,7 @@ var enc = 'm.olm.v1.curve25519-aes-sha2';
 
             return _this4.core.mtrx.client.sendEvent(_this4.chat.roomId, 'm.room.message', r);
           }).catch(function (e) {
-            console.log("E", e);
+            console.error("E", e);
           }); //return this.encryptMove(t)
         }
 

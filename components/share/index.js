@@ -870,7 +870,7 @@ var share = (function(){
 
 					const options = {};
 
-					if (currentShare.message.v) options.description = currentShare.message.v;
+					if (currentShare.message.v) options.description = `Watch more exciting videos at https://pocketnet.app/! \n ${currentShare.message.v}`;
 					if (currentShare.caption.v) options.name = currentShare.caption.v;
 
 		

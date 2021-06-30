@@ -9,6 +9,10 @@
 		opacity: 0.3;
 	}
 
+	.error-reload {
+		display: none;
+	}
+
 	/***/
 
 	.webadminscontent{
@@ -1565,6 +1569,10 @@
 				overflow-y: scroll;
 				padding-top: 0;
 				scrollbar-width: none;
+
+				.error-reload {
+					display: block !important;
+				}
 				
 				&::-webkit-scrollbar{
 					
@@ -2966,10 +2974,10 @@ html.stblack{
 @media only screen and (max-width: 768px) {
 	#lenta{
 
-		.vjs-control-bar{
+		/*.vjs-control-bar{
 			visibility: visible!important;
 			opacity: 1!important;
-		}
+		}*/
 		
 		&.mainvideo{
 

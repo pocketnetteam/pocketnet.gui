@@ -1,4 +1,4 @@
-<div id="<%-module.map.id%>">
+<div id="<%-module.map.id%>" class="<% if(!state) {%> unathorized <% } %>">
 	<div class="mwork">
 		<div class="caption">
 			<span><%=e('rsettings')%></span>
@@ -8,9 +8,12 @@
 	<div class="options">
 	</div>
 
+	<% if(state) {%>
 
 	<div class="cache">
 		
 	</div>
+
+	<% } %>
 
 </div>

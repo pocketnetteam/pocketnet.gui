@@ -39633,7 +39633,7 @@ class PeerTubeEmbedApi {
         this.ignoreChange = false;
     }
     play() {
-        if (this.embed && this.embed.details && this.embed.details.state.id == 5) {
+        if (this.embed && this.embed.details && [2, 5].includes(this.embed.details.state.id)) {
             return;
         }
         var pr = this.embed.player.play();
@@ -43129,17 +43129,16 @@ class embed_PeerTubeEmbed {
         });
     }
     initWaiting() {
-        console.log('initWaiting');
         this.stopWaiting();
         this.statusInterval = setInterval(() => {
             // @ts-ignore
-            this.waitStatus([2, 4]).then((r) => {
+            this.waitStatus([2, 4, 5]).then((r) => {
                 clearInterval(this.statusInterval);
                 this.statusInterval = null;
-                console.log("RELOAD", r);
                 if (r)
                     this.loadVideoAndBuildPlayer(this.details.uuid).catch((err) => console.error(err));
             }).catch((e) => {
+                console.log('e', e);
             });
         }, 30000);
     }
@@ -43155,7 +43154,6 @@ class embed_PeerTubeEmbed {
             this.player.dispose();
         }
         catch (e) {
-            console.log("ER", e);
         }
         if (this.api) {
             this.api.clear();
@@ -43184,7 +43182,7 @@ class embed_PeerTubeEmbed {
         this.wrapperElement.innerHTML = "";
         this.displayError(text, translations, 'critical');
     }
-    displayError(text, translations, style = "noncritical") {
+    displayError(text, translations, style = "noncritical", is_transcoding) {
         // Remove video element
         /*if (this.playerElement) {
             this.removeElement(this.playerElement);
@@ -43206,9 +43204,10 @@ class embed_PeerTubeEmbed {
         if (this.details && this.details.uuid) {
             const errorReload = document.createElement("button");
             errorReload.className = "error-reload";
-            errorReload.innerHTML = '<i class="fas fa-redo"></i> Reload';
+            errorReload.innerHTML = `<i class="fas fa-redo"></i> ${is_transcoding ? "Keep watching" : "Reload"}`;
             errorReload.onclick = () => {
-                this.loadVideoTotal(this.details.uuid).then(r => {
+                this.playnottranscoded = true;
+                this.loadVideoTotal(this.details.uuid).then((r) => {
                     this.loadVideoAndBuildPlayer(this.details.uuid);
                 });
             };
@@ -43254,7 +43253,6 @@ class embed_PeerTubeEmbed {
                 yield this.initCore(videoId, parameters);
             }
             catch (e) {
-                console.error(e);
             }
         });
     }
@@ -43402,6 +43400,9 @@ class embed_PeerTubeEmbed {
         });
     }
     handleError(err, translations) {
+        let is_transcoding = this.isTranscodingStatusMessage();
+        if (is_transcoding)
+            return;
         var liveerror = this.checkLiveStatus();
         if (liveerror && liveerror.error) {
             this.displayErrorWrapper(liveerror.text);
@@ -43452,6 +43453,15 @@ class embed_PeerTubeEmbed {
         catch (e) { }
         return pel;
     }
+    isTranscodingStatusMessage() {
+        if (this.details &&
+            this.details.state.id === 2 &&
+            !this.details.isLive &&
+            !this.playnottranscoded) {
+            this.displayError("The video is being processed and is available only in high quality. You can continue playback or wait until the end of processing and watch with lower quality", null, undefined, true); // true is transcoding
+            return true;
+        }
+    }
     buildVideoPlayer(videoInfo) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             if (this.player) {
@@ -43471,6 +43481,7 @@ class embed_PeerTubeEmbed {
             this.wrapperElement.appendChild(this.playerElement);
             this.loadParams(videoInfo);
             this.liveStatusMessage();
+            this.isTranscodingStatusMessage();
             const options = {
                 common: {
                     // Autoplay in playlist mode
@@ -43545,6 +43556,7 @@ class embed_PeerTubeEmbed {
             this.player = yield peertube_player_manager_PeertubePlayerManager.initialize(this.mode, options, (player) => {
                 this.player = player;
             });
+            this.initTouchedEvents();
             delete this.player.tagAttributes.style;
             var pel = this.playerElement;
             try {
@@ -43582,6 +43594,48 @@ class embed_PeerTubeEmbed {
             if (this.details.state.id == 2) {
                 this.displayWarning('Video is being processed');
             }
+        });
+    }
+    initTouchedEvents() {
+        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+            let duration = 0;
+            var tapedTwice = false;
+            this.player.el_.addEventListener('touchstart', (e) => {
+                this.player.one("loadedmetadata", (response) => {
+                    duration = this.player.duration();
+                });
+                let playerWidth = this.player.el_.getBoundingClientRect().width;
+                let offsetX = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].pageX : null;
+                let is_control_bar_hidden = !this.player.paused() && this.player.el_.classList.contains('vjs-user-inactive');
+                if (!tapedTwice) {
+                    if (e.target.nodeName !== 'SPAN' && (0.66 * playerWidth > offsetX) && (offsetX > 0.33 * playerWidth)) {
+                        if (this.player.paused()) {
+                            this.player.play();
+                        }
+                        else if (!is_control_bar_hidden) {
+                            this.player.pause();
+                        }
+                    }
+                    if ((0.66 * playerWidth < offsetX) || (offsetX < 0.33 * playerWidth)) {
+                        tapedTwice = true;
+                    }
+                    setTimeout(() => {
+                        tapedTwice = false;
+                    }, 400);
+                    return false;
+                }
+                e.preventDefault();
+                //action on double tap goes below
+                let forwading_time = duration < 45 ? 5 : 15;
+                if (offsetX) {
+                    if (0.66 * playerWidth < offsetX) {
+                        this.player.currentTime(this.player.currentTime() + forwading_time);
+                    }
+                    else if (offsetX < 0.33 * playerWidth) {
+                        this.player.currentTime((this.player.currentTime() - forwading_time) < 0 ? 0 : (this.player.currentTime() - forwading_time));
+                    }
+                }
+            });
         });
     }
     buildVideoPlayerContributos(videoId) {
@@ -43629,6 +43683,7 @@ class embed_PeerTubeEmbed {
             this.player.on("customError", (event, data) => this.handleError(data.err));
             this.player.on("error", (error) => console.log(error));
             this.player.tech().on("error", (error) => console.log(error));
+            // this.initTouchedEvents()
             this.initializeApi();
             this.removePlaceholder();
         });

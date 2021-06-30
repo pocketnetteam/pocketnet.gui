@@ -436,10 +436,11 @@
 	
 				.reportCaption{
 
+					&[rid="followers"],
+					&[rid="following"],
 					&[rid="notifications"],
 					&[rid="ustate"],
 					&[rid="wallet"],
-					&[rid="usersettings"],
 					&[rid="accounts"]{
 						opacity : 0.5;
 					}
@@ -448,13 +449,28 @@
 	
 	
 			}
+		}
+	}
+
+	&.unathorized{
+		.maketsWrapper{
+	
+			.contents{
+				.reportCaption{
+
+					&[rid="followers"],
+					&[rid="following"],
+					&[rid="notifications"],
+					&[rid="ustate"],
+					&[rid="wallet"],
+					&[rid="accounts"]{
+						display: none;
+					}
+
+				}
 	
 	
-			
-			.report{
-				
 			}
-	
 		}
 	}
 }
@@ -631,7 +647,12 @@ html.stblack{
 					border-bottom : 1px solid @color-gray-light;
 				}
 
-				&[rid="staking"]{
+				/*&[rid="staking"]{
+					margin-top : @rhythm;
+					color : @color-orange;
+				}*/
+
+				&[rid="authorization"]{
 					margin-top : @rhythm;
 					color : @color-orange;
 				}
