@@ -47192,12 +47192,13 @@ class PeerTubeEmbed {
                 });
                 let playerWidth = this.player.el_.getBoundingClientRect().width;
                 let offsetX = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].pageX : null;
+                let is_control_bar_hidden = !this.player.paused() && this.player.el_.classList.contains('vjs-user-inactive');
                 if (!tapedTwice) {
                     if (e.target.nodeName !== 'SPAN' && (0.66 * playerWidth > offsetX) && (offsetX > 0.33 * playerWidth)) {
                         if (this.player.paused()) {
                             this.player.play();
                         }
-                        else {
+                        else if (!is_control_bar_hidden) {
                             this.player.pause();
                         }
                     }
@@ -47268,6 +47269,7 @@ class PeerTubeEmbed {
             this.player.on("customError", (event, data) => this.handleError(data.err));
             this.player.on("error", (error) => console.log(error));
             this.player.tech().on("error", (error) => console.log(error));
+            // this.initTouchedEvents()
             this.initializeApi();
             this.removePlaceholder();
         });

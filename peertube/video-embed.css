@@ -2523,7 +2523,7 @@ body {
 }
 .video-js .vjs-settings-dialog .vjs-settings-panel-child > .vjs-menu .vjs-menu-item,
 .video-js .vjs-settings-dialog .vjs-settings-panel-child > .vjs-settings-sub-menu .vjs-menu-item {
-  font-size: 1em;
+  font-size: 1.2em;
   text-transform: initial;
 }
 .video-js .vjs-settings-dialog .vjs-settings-panel-child > .vjs-menu .vjs-menu-item:hover,
@@ -3377,10 +3377,10 @@ video[src], .vjs-fullscreen {
   }
 }
 @media screen and (max-width: 640px) {
-  .video-js.video-js-contributor .vjs-fullscreen-control {
-    display: none;
+  .js-player .vjs-youtube .vjs-volume-panel {
+    position: unset !important;
+    width: 0 !important;
   }
-
   .js-player .video-js .vjs-settings-dialog {
     bottom: 4.2em;
   }
@@ -3406,6 +3406,7 @@ video[src], .vjs-fullscreen {
   .js-player .video-js .vjs-control-bar .vjs-mute-control {
     position: absolute;
     right: 30px;
+    height: 25px;
   }
   .js-player .video-js .vjs-control-bar .vjs-volume-control {
     display: none;
@@ -3419,6 +3420,7 @@ video[src], .vjs-fullscreen {
   .js-player .video-js .vjs-control-bar .vjs-fullscreen-control {
     position: absolute;
     right: 0;
+    height: 25px;
   }
   .js-player .video-js .vjs-control-bar .vjs-time-divider,
 .js-player .video-js .vjs-control-bar .vjs-time-control {
