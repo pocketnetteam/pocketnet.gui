@@ -393,7 +393,7 @@ var imagegallery = (function(){
 							helpers.updateZoomedImage(false);
 						});
 						hammertime.on('panend', function(e) {
-							zoomData.imageContainer.style.transition = "none";
+							zoomData.imageContainer.style.transition = (zoomData.current.z <= 1) ? "0.3s" : "none";
 							zoomData.last.x = zoomData.current.x;
 							zoomData.last.y = zoomData.current.y;
 							zoomData.lastEvent = 'panend';
