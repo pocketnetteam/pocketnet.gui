@@ -12530,9 +12530,9 @@ Platform = function (app, listofnodes) {
 
                     common: function (inputs, obj, fees, clbk, p, fromTG) {
 
-                        const savedObj = JSON.parse(JSON.stringify(obj));
+                        console.log('common!!!', inputs, obj, fees, clbk, p, fromTG);
 
-                        if (!fromTG && self.app.user.features.telegram) {
+                        if (!fromTG && self.app.user.features.telegram && !obj.aliasid) {
 
                             const {
                                 meta
@@ -12540,7 +12540,7 @@ Platform = function (app, listofnodes) {
 
                             if (obj.caption){
 
-                                if (!meta.tgtoask.value) {
+                                if (!meta.tgtoask.value ) {
 
                                     this.telegramSend(obj, meta)
     
@@ -12557,7 +12557,7 @@ Platform = function (app, listofnodes) {
     
                                         success: () => {
     
-                                            this.telegramSend(savedObj, meta)
+                                            this.telegramSend(obj, meta)
     
                                         }
                                     })
