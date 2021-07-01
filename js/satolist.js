@@ -20247,9 +20247,11 @@ Platform = function (app, listofnodes) {
 
         link : function(core){
 
-
+            console.log('core', core)
             core.update({
-                block : self.currentBlock
+                block : {
+                    height : self.currentBlock
+                }
             })
 
 
@@ -20257,7 +20259,9 @@ Platform = function (app, listofnodes) {
             self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
 
                 core.update({
-                    block : self.currentBlock
+                    block : {
+                        height : self.currentBlock
+                    }
                 })
 
             }
