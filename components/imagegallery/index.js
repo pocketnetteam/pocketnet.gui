@@ -404,7 +404,6 @@ var imagegallery = (function(){
 						hammertime.on('doubletap', function(e) {
 							// How much we want to zoom when doubletapping
 							var scaleFactor = (zoomData.current.z > 1) ? -zoomData.current.z + 1 : 2;
-							// Check scale factor limits
 							zoomData.imageContainer.style.transition = "0.3s";
 							// setTimeout(function() {
 							// 	zoomData.imageContainer.style.transition = "none";
@@ -447,13 +446,12 @@ var imagegallery = (function(){
 						});
 						hammertime.on('pinch', function(e) {
 							var d = helpers.scaleFrom(zoomData.pinchZoomOrigin, zoomData.last.z, zoomData.last.z * e.scale);
-							zoomData.current.x = d.x + zoomData.last.x + e.deltaX;
-							zoomData.current.y = d.y + zoomData.last.y + e.deltaY;
-							zoomData.current.z = d.z + zoomData.last.z;
-							if (zoomData.current.z > zoomData.maxZoomAllowed)
-								zoomData.current.z = zoomData.last.z = zoomData.maxZoomAllowed;
-							if (zoomData.current.z < zoomData.minZoomAllowed)
-								zoomData.current.z = zoomData.last.z = zoomData.minZoomAllowed;
+							// Update only if not reaching limits
+							if ((d.z + zoomData.last.z) <= zoomData.maxZoomAllowed && (d.z + zoomData.last.z) >= zoomData.minZoomAllowed) {
+								zoomData.current.x = d.x + zoomData.last.x;
+								zoomData.current.y = d.y + zoomData.last.y;
+								zoomData.current.z = d.z + zoomData.last.z;
+							}
 							zoomData.lastEvent = 'pinch';
 							helpers.updateZoomedImage();
 						});
@@ -462,6 +460,11 @@ var imagegallery = (function(){
 							zoomData.last.y = zoomData.current.y;
 							zoomData.last.z = zoomData.current.z;
 							zoomData.lastEvent = 'pinchend';
+							// Temporarily disable panning
+							hammertime.get('pan').set({ enable: false });
+							setTimeout(() => {
+								hammertime.get('pan').set({ enable: true });
+							}, 200);
 						});
 
 						// Event to zoom with mouse wheel
