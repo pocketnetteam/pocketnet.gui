@@ -86,13 +86,18 @@ var navigation = (function(){
 						href : href,
 						lentakey : k,
 						indexkey : indexkey,
-						shw : shw
+						shw : shw,
+						haschat : self.app.platform.matrixchat.core
 					}
 					
 
 				}, function(p){
 
 					p.el.find('.toup').on('click', events.toup)
+
+					p.el.find('.matrixchat').on('click', function(){
+						$('.matrixchatwrapper').addClass('active')
+					})
 					
 				})
 			},
@@ -122,9 +127,6 @@ var navigation = (function(){
 		var initEvents = function(){
 			
 			self.app.nav.clbks.history.navigation = function(href){
-
-				console.log("NAVI")
-
 
 				el.c.removeClass('scrolled')
 				renders.menu(self.app.nav.get.pathname())

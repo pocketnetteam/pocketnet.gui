@@ -52,7 +52,7 @@ html {
     }
 
 
-    
+
 }
 
 .joypixels,
@@ -4443,6 +4443,29 @@ input[type=radio].radio:checked + label {
 	}
 }
 
+html{
+    &.mobile{
+        .matrixchatwrapper{
+            position: fixed;
+            left : -100%;
+            top : 0;
+            right: 100%;
+            bottom : 0;
+            background: #fff;
+            .transition(0.3s);
+            z-index: 10000;
+            .shadowSmall();
+            opacity: 0.5;
+    
+            &.active{
+                left : 0;
+                right: 0;
+                opacity: 1;
+            }
+        }
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .horizontalLentaWrapper{
 
@@ -4458,6 +4481,9 @@ input[type=radio].radio:checked + label {
            
         }
     }
+
+
+   
     
 }
 

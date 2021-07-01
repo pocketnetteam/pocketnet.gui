@@ -20218,7 +20218,6 @@ Platform = function (app, listofnodes) {
 
                     if (addresses.indexOf(a) > -1 || window.testpocketnet) {
 
-                        if (!isMobile()){
 
 
                             self.matrixchat.import(function(){
@@ -20227,11 +20226,12 @@ Platform = function (app, listofnodes) {
         
                                 var privatekey = self.app.user.private.value.toString('hex');
                     
-                                var matrix = `<div class="wrapper">
+                                var matrix = `<div class="wrapper matrixchatwrapper">
                                     <matrix-element
                                         address="${a}"
                                         privatekey="${privatekey}"
-                                        pocketnet="true"   
+                                        pocketnet="`+(isMobile() ? '' : 'true')+`"
+                                        mobile="`+(isMobile() ? 'true' : '')+`" 
                                     >
                                     </matrix-element>
                                 </div>`
@@ -20242,7 +20242,6 @@ Platform = function (app, listofnodes) {
 
                                   
                             
-                        }
         
                     }
                 }
@@ -20251,12 +20250,17 @@ Platform = function (app, listofnodes) {
 
         link : function(core){
 
-            console.log('core', core)
             core.update({
                 block : {
                     height : self.currentBlock
                 }
             })
+
+            core.backtoapp = function(){
+                $('.matrixchatwrapper').removeClass('active')
+            }
+
+            self.matrixchat.core = core
 
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
@@ -20269,10 +20273,20 @@ Platform = function (app, listofnodes) {
                 })
 
             }
+
+
+            var c = deep(app, 'nav.clbks.history.navigation')
+
+            if (c) c()
         },
 
         unlink : function(){
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
+            delete self.matrixchat.core
+
+            var c = deep(app, 'nav.clbks.history.navigation')
+
+            if (c) c()
         }
     }
 
