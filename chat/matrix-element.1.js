@@ -1683,13 +1683,16 @@ var list_component = Object(componentNormalizer["a" /* default */])(
     };
   },
   mounted: function mounted() {
-    if (this.bin) {
-      this.container = $(this.$el).closest('.headerSpacer')[0];
-      this.c_bottomWndOffset = 90;
-      this.c_topWndOffset = 0;
+    this.container = $(this.$el).closest('.headerSpacer')[0];
+    this.c_bottomWndOffset = 90;
+    this.c_topWndOffset = 0;
+    /*if (this.bin) {
+      this.container = $(this.$el).closest('.headerSpacer')[0]
+      this.c_bottomWndOffset = 90
+      this.c_topWndOffset = 0
     } else {
-      this.container = window;
-    }
+      this.container = window
+    }*/
 
     this.init();
 
@@ -1750,7 +1753,7 @@ var list_component = Object(componentNormalizer["a" /* default */])(
     removeEvent: function removeEvent(event) {//this.chat.getLiveTimeline().removeEvent(event.event.event_id)*/
     },
     wh: function wh() {
-      return this.container ? this.container.clientHeight : 0;
+      return this.container ? this.container.clientHeight || this.container.innerHeight : 0;
     },
     getEvents: function getEvents() {
       var _this = this;
@@ -2847,7 +2850,7 @@ var enc = 'm.olm.v1.curve25519-aes-sha2';
             return _this4.core.mtrx.client.sendEvent(_this4.chat.roomId, 'm.room.message', r);
           }).catch(function (e) {
             console.error("E", e);
-          }); //return this.encryptMove(t)
+          });
         }
 
         return _this4.core.mtrx.client.sendMessage(_this4.chat.roomId, {
@@ -2865,22 +2868,20 @@ var enc = 'm.olm.v1.curve25519-aes-sha2';
               case 0:
                 keyData = new Uint8Array(32);
                 window.crypto.getRandomValues(keyData);
-                console.log("ecnrypted Message", text);
-                _context2.next = 5;
+                _context2.next = 4;
                 return release["SIV"].importKey(keyData, "AES-SIV");
 
-              case 5:
+              case 4:
                 key = _context2.sent;
                 uint8array = new TextEncoder().encode(text);
                 plaintext = new Uint8Array(uint8array);
                 nonce = new Uint8Array(32);
                 window.crypto.getRandomValues(nonce);
-                _context2.next = 12;
+                _context2.next = 11;
                 return key.seal(plaintext, nonce);
 
-              case 12:
+              case 11:
                 ciphertext = _context2.sent;
-                console.log(nonce, "sended nonce");
                 encryptObject = {
                   body: functions["a" /* default */]._arrayBufferToBase64(ciphertext.buffer),
                   nonce: functions["a" /* default */]._arrayBufferToBase64(nonce.buffer),
@@ -2890,7 +2891,7 @@ var enc = 'm.olm.v1.curve25519-aes-sha2';
                 };
                 return _context2.abrupt("return", this.core.mtrx.client.sendEvent(this.chat.roomId, 'm.room.message', encryptObject));
 
-              case 16:
+              case 14:
               case "end":
                 return _context2.stop();
             }
