@@ -375,11 +375,12 @@ var imagegallery = (function(){
 							},
 							pinchZoomOrigin: undefined
 						};
-						// Instantiate hammer instance for the panning, and configure it
+						// Instantiate hammer instance, and configure it
 						var hammertime = new Hammer(zoomData.imageContainer);
 						hammertime.get('pan').set({ threshold: 0 });
 						hammertime.get('pinch').set({ enable: true });
 						hammertime.get('tap').set({ taps: 2 });
+						hammertime.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 
 						// Events for panning
 						hammertime.on('pan', function(e) {
@@ -431,6 +432,13 @@ var imagegallery = (function(){
 								actions.next();
 							else
 								actions.back();
+						});
+						// Event for the swipe up and down
+						hammertime.on('swipeup swipedown', function(e) {
+							// If we can pan vertically, cancel the swipe
+							if (zoomData.imageContainerParent.height() < zoomData.current.height) return;
+							// Close the gallery
+							self.closeContainer();
 						});
 
 						// Events for the pinch zoom
