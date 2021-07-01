@@ -8,12 +8,10 @@ var menu = (function(){
 
 		var el,
 			searchBlurTimer = null,
-			autoUpdate = null,
 			sitenameToNav = null,
 			plissing = null,
 			authorForSearch = null,
-			menusearch = null,
-			autoUpdateWallet = null;
+			menusearch = null;
 
 		var loc = new Parameter({
 
@@ -60,21 +58,7 @@ var menu = (function(){
 		var balanceHash;
 
 		var actions = {
-			/*extraLinks : function(){
-				self.app.nav.clbks.history.menu = events.hambclose.click;
-			},*/
-			autoUpdate : function(){
-
-				self.app.user.isState(function(state){
-
-					if(state){
-
-
-					}
-
-				})
-
-			},
+			
 
 			elswidth : function(){
 
@@ -1132,7 +1116,6 @@ var menu = (function(){
 
 			ParametersLive([loc], el.c);
 
-			autoUpdate = setInterval(actions.autoUpdate, 100);
 
 
 
@@ -1298,12 +1281,6 @@ var menu = (function(){
 
 				delete self.app.platform.sdk.registrations.clbks.menu
 
-				if(autoUpdate){
-					clearInterval(autoUpdate);
-				}
-
-				if(autoUpdateWallet)
-					clearInterval(autoUpdateWallet);
 
 				_.each(events, function(e){
 

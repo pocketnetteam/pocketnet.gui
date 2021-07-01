@@ -2050,6 +2050,7 @@ var lenta = (function(){
 				
 			},
 			comments : function(txid, init, showall, preview){
+				
 				if(essenseData.comments == 'no') return
 
 				if(video) return
@@ -3806,6 +3807,7 @@ var lenta = (function(){
 					renders.shares(shares, function(){
 
 						renders.sharesInview(shares, function(){
+							
 
 							making = false;
 
@@ -4103,6 +4105,7 @@ var lenta = (function(){
 			},
 			
 			init : function(p){
+				
 
 				w = $(window)
 

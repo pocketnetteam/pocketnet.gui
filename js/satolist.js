@@ -10203,6 +10203,7 @@ Platform = function (app, listofnodes) {
 
                         retry(function () {
 
+
                             anotherloading = _.filter(anotherloading, function (id) {
                                 if (loading[id]) return true;
                             })
@@ -11967,7 +11968,7 @@ Platform = function (app, listofnodes) {
                         if (loadingAddresses.length) {
 
                             retry(function () {
-
+                                
                                 var _loadingAddresses = _.filter(addresses, function (address) {
                                     if (s.unspentLoading[address])
 
@@ -19962,7 +19963,7 @@ Platform = function (app, listofnodes) {
             self.app.errors.clbks.platform = self.appstate
         }
 
-        initOnlineListener()
+        initOnlineListener() // /remove for test
 
         self.app.api.wait.ready('use', 3000).then(r => {
 
@@ -20209,6 +20210,8 @@ Platform = function (app, listofnodes) {
                 self.matrixchat.initing = false
 
                 if (state) {
+
+                    
 
                     var pnet = self.app.platform.sdk.address.pnet()
 

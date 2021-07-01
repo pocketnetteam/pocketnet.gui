@@ -10443,8 +10443,9 @@ if(typeof window != 'undefined'){
 				// When zoom out animation is done, completely remove the splash screen
 				setTimeout(() => {
 					// Clear interval if needed
-					if (splashScreeninterval != undefined)
+					if (splashScreeninterval != undefined){
 						clearInterval(splashScreeninterval);
+					}
 					// Completely remove the splashscreen
 					splashScreen.remove();
 				}, zoomOutDuration * 2);
