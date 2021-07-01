@@ -496,6 +496,8 @@ var imagegallery = (function(){
 						hammertime2.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 						// Event for the swipe left and right outside the image
 						hammertime2.on('swipeleft swiperight', function(e) {
+							// If we can pan horizontally, cancel the swipe
+							if ((zoomData.imageContainerParent.width() * 1.2) < zoomData.current.width) return;
 							// Check if we need to go to previous or next image
 							if (e.deltaX < 0)
 								actions.next();
@@ -504,6 +506,8 @@ var imagegallery = (function(){
 						});
 						// Event for the swipe up and down outside the image
 						hammertime2.on('swipeup swipedown', function(e) {
+							// If we can pan vertically, cancel the swipe
+							if ((zoomData.imageContainerParent.height() * 1.2) < zoomData.current.height) return;
 							// Close the gallery
 							self.closeContainer();
 						});
