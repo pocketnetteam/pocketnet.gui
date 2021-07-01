@@ -339,6 +339,7 @@ var imagegallery = (function(){
 						var imageElement = p.el.find('img')[0];
 						// Prepare our main zoom object
 						zoomData = {
+							fullContainer: $(imageContainer).closest('.imageContainer')[0],
 							imageContainerParent: $(imageContainer).parent(),
 							imageContainer: imageContainer,
 							imageElement: imageElement,
@@ -489,6 +490,23 @@ var imagegallery = (function(){
 							zoomData.last.z = zoomData.current.z;
 							helpers.updateZoomedImage();
 						}, false);
+
+						// Instance a second hammer instance for the swipping outside of the image
+						var hammertime2 = new Hammer(zoomData.fullContainer);
+						hammertime2.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+						// Event for the swipe left and right outside the image
+						hammertime2.on('swipeleft swiperight', function(e) {
+							// Check if we need to go to previous or next image
+							if (e.deltaX < 0)
+								actions.next();
+							else
+								actions.back();
+						});
+						// Event for the swipe up and down outside the image
+						hammertime2.on('swipeup swipedown', function(e) {
+							// Close the gallery
+							self.closeContainer();
+						});
 
 					});
 
