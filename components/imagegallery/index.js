@@ -220,14 +220,8 @@ var imagegallery = (function(){
 			},
 			getCoords : function(elem) {
 				var box = elem.getBoundingClientRect();
-				var body = document.body;
-				var docEl = document.documentElement;
-				var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-				var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-				var clientTop = docEl.clientTop || body.clientTop || 0;
-				var clientLeft = docEl.clientLeft || body.clientLeft || 0;
-				var top  = box.top +  scrollTop - clientTop;
-				var left = box.left + scrollLeft - clientLeft;
+				var top  = box.top;
+				var left = box.left;
 				return { x: Math.round(left), y: Math.round(top) };
 			},
 			scaleFrom : function(zoomOrigin, currentScale, newScale) {
@@ -256,20 +250,22 @@ var imagegallery = (function(){
 				}
 			},
 			// Update the element passed in parameter
-			updateZoomedImage : function() {
+			updateZoomedImage : function(checkLimits = true) {
 				zoomData.current.height = zoomData.originalSize.height * zoomData.current.z;
 				zoomData.current.width = zoomData.originalSize.width * zoomData.current.z;
-				// Check limits
-				var limitY = (zoomData.imageContainerParent.height() < zoomData.current.height) ? Math.abs((zoomData.current.height - zoomData.imageContainerParent.height()) / 2) : 0;
-				var limitX = (zoomData.imageContainerParent.width() < zoomData.current.width) ? Math.abs((zoomData.current.width - zoomData.imageContainerParent.width()) / 2) : 0;
-				if (zoomData.current.y > limitY)
-					zoomData.current.y = zoomData.last.y = limitY;
-				else if (zoomData.current.y < -limitY)
-					zoomData.current.y = zoomData.last.y = -limitY;
-				if (zoomData.current.x > limitX)
-					zoomData.current.x = zoomData.last.x = limitX;
-				else if (zoomData.current.x < -limitX)
-					zoomData.current.x = zoomData.last.x = -limitX;
+				// Check limits if needed
+				if (checkLimits) {
+					var limitY = (zoomData.imageContainerParent.height() < zoomData.current.height) ? Math.abs((zoomData.current.height - zoomData.imageContainerParent.height()) / 2) : 0;
+					var limitX = (zoomData.imageContainerParent.width() < zoomData.current.width) ? Math.abs((zoomData.current.width - zoomData.imageContainerParent.width()) / 2) : 0;
+					if (zoomData.current.y > limitY)
+						zoomData.current.y = zoomData.last.y = limitY;
+					else if (zoomData.current.y < -limitY)
+						zoomData.current.y = zoomData.last.y = -limitY;
+					if (zoomData.current.x > limitX)
+						zoomData.current.x = zoomData.last.x = limitX;
+					else if (zoomData.current.x < -limitX)
+						zoomData.current.x = zoomData.last.x = -limitX;
+				}
 				zoomData.imageContainer.style.transform = "translate3d(" + zoomData.current.x + "px, " + zoomData.current.y + "px, 0) scale(" + zoomData.current.z + ")";
 			}
 		}
@@ -394,13 +390,14 @@ var imagegallery = (function(){
 							zoomData.current.x = zoomData.last.x + e.deltaX - zoomData.fixHammerjsDeltaIssue.x;
 							zoomData.current.y = zoomData.last.y + e.deltaY - zoomData.fixHammerjsDeltaIssue.y;
 							zoomData.lastEvent = 'pan';
-							helpers.updateZoomedImage();
+							helpers.updateZoomedImage(false);
 						});
 						hammertime.on('panend', function(e) {
 							zoomData.imageContainer.style.transition = "none";
 							zoomData.last.x = zoomData.current.x;
 							zoomData.last.y = zoomData.current.y;
 							zoomData.lastEvent = 'panend';
+							helpers.updateZoomedImage();
 						});
 
 						// Event for zooming with doubletap
