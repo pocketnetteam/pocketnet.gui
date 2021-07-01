@@ -12530,6 +12530,9 @@ Platform = function (app, listofnodes) {
 
                     common: function (inputs, obj, fees, clbk, p, fromTG) {
 
+                        const savedObj = JSON.parse(JSON.stringify(obj));
+
+
                         if (!fromTG && self.app.user.features.telegram && !obj.aliasid) {
 
                             const {
@@ -12555,7 +12558,7 @@ Platform = function (app, listofnodes) {
     
                                         success: () => {
     
-                                            this.telegramSend(obj, meta)
+                                            this.telegramSend(savedObj, meta)
     
                                         }
                                     })
@@ -12900,14 +12903,12 @@ Platform = function (app, listofnodes) {
 
                         fetch(query, {
                             method: 'POST',
-                            mode: 'cors', // no-cors, *cors, same-origin
-                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                            credentials: 'same-origin', // include, *same-origin, omit
+                            mode: 'cors', 
+                            cache: 'no-cache',
+                            credentials: 'same-origin',
                             headers: {
                               'Content-Type': 'application/json'
-                              // 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            redirect: 'follow', // manual, *follow, error
                             referrerPolicy: 'no-referrer',
                             body: JSON.stringify(parameters)
                         })
