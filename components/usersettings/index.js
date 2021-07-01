@@ -62,7 +62,6 @@ var usersettings = (function(){
 						var meta = self.sdk.usersettings.meta
 
 						var value = e.target.value;
-						console.log('composed1!!', composed, meta);
 
 						if (meta.tgfrom[value] && meta.tgfrom[value].possibleValues){
 
@@ -91,8 +90,6 @@ var usersettings = (function(){
 							
 						}
 						
-
-						console.log('meta!!', value, meta);
 						composed = self.app.platform.sdk.usersettings.compose(make)
 
 						self.sdk.usersettings.save();

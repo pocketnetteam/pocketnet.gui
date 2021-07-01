@@ -3661,8 +3661,6 @@
 							ParametersLive([parameter], el, p)
 
 							return
-
-							console.log('value', value, parameter.labelToInput(label))
 						}
 						else
 						{
@@ -4073,7 +4071,6 @@
 						_el.addClass('error')
 					}
 
-					console.log("VALUE", value)
 
 					parameter.set(value)
 				}

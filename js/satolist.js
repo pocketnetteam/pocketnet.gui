@@ -3834,18 +3834,6 @@ Platform = function (app, listofnodes) {
                     id: 'telegram',
                     placeholder: self.app.localization.e('e13282'),
                     value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
-                    _onChange: function (value) {
-
-                        if (value && self.app.user.features.telegram && value){
-
-                            // self.app.platform.sdk.system.get.telegramGetMe(value, true);
-
-                            console.log('self.sdk.usersettings.meta.tgfrom', self.sdk.usersettings);
-
-                        }
-
-                    }
-
                 },
 
                 tgfrom: {
@@ -4037,8 +4025,6 @@ Platform = function (app, listofnodes) {
 
                         if (m[i].type === "VALUES") {
 
-                            console.log('met!!a', m);
-
 
                             const idx = m[i].possibleValues.indexOf(String(v));
                             m[i].value = m[i].possibleValuesLabels[idx];
@@ -4121,8 +4107,6 @@ Platform = function (app, listofnodes) {
                                 
                             }
 
-                            console.log('save!!', tgToken, meta, o, values);
-
 
                         } else {
 
@@ -4175,10 +4159,7 @@ Platform = function (app, listofnodes) {
 
                     self.app.user.features.telegram = 0;
 
-                }
-
-                console.log('init!!!');
-                
+                }                
 
                 _.each(values, function (v, i) {
 
