@@ -16,18 +16,17 @@ var imagegallery = (function(){
 		var making;
 
 		// Used to zoom images with mouse wheel or mobile gestures
-		// Define the zoom limits
-		var zoomData = {};
-		zoomData.minScale = 1;
-		zoomData.maxScale = 4;
+		var zoomData = {
+			current: {
+				z: 1
+			}
+		};
 		
 		var actions = {
 
 			swipe : function(phase, direction, distance){
 				
-				// If user is zooming on a picture, disable the swipe
-				if (helpers.isZooming())
-					return;
+				return;
 
 				var tomode = null
 				var prs = 0
@@ -208,29 +207,66 @@ var imagegallery = (function(){
 
 				return num;
 			},
-			clamp : function(value, min, max) {
-				return Math.min(Math.max(min, value), max);
+			// ------------------------------------------
+			// Image zoom functions
+			// ------------------------------------------
+			getRelativePosition : function(element, point, originalSize, scale) {
+				var domCoords = helpers.getCoords(element);
+				var elementX = point.x - domCoords.x;
+				var elementY = point.y - domCoords.y;
+				var relativeX = elementX / (originalSize.width * scale / 2) - 1;
+				var relativeY = elementY / (originalSize.height * scale / 2) - 1;
+				return { x: relativeX, y: relativeY }
 			},
-			clampScale : function(newScale) {
-				return helpers.clamp(newScale, zoomData.minScale, zoomData.maxScale);
+			getCoords : function(elem) {
+				var box = elem.getBoundingClientRect();
+				var top  = box.top;
+				var left = box.left;
+				return { x: Math.round(left), y: Math.round(top) };
 			},
-			updateRange : function() {
-				zoomData.rangeX = Math.max(0, Math.round(zoomData.displayDefaultWidth * zoomData.displayImageCurrentScale) - zoomData.containerWidth);
-				zoomData.rangeY = Math.max(0, Math.round(zoomData.displayDefaultHeight * zoomData.displayImageCurrentScale) - zoomData.containerHeight);
-				zoomData.rangeMaxX = Math.round(zoomData.rangeX / 2);
-				zoomData.rangeMinX = 0 - zoomData.rangeMaxX;
-				zoomData.rangeMaxY = Math.round(zoomData.rangeY / 2);
-				zoomData.rangeMinY = 0 - zoomData.rangeMaxY;
+			scaleFrom : function(zoomOrigin, currentScale, newScale) {
+				var currentShift = helpers.getCoordinateShiftDueToScale(zoomData.originalSize, currentScale);
+				var newShift = helpers.getCoordinateShiftDueToScale(zoomData.originalSize, newScale)
+				var zoomDistance = newScale - currentScale
+				var shift = {
+					x: currentShift.x - newShift.x,
+					y: currentShift.y - newShift.y,
+				}
+				var output = {
+					x: zoomOrigin.x * shift.x,
+					y: zoomOrigin.y * shift.y,
+					z: zoomDistance
+				}
+				return output
 			},
-			updateDisplayImage : function(x, y, scale) {
-				const transform = 'translateX(' + x + 'px) translateY(' + y + 'px) translateZ(0px) scale(' + scale + ',' + scale + ')';
-				zoomData.displayImage.style.transform = transform;
-				zoomData.displayImage.style.WebkitTransform = transform;
-				zoomData.displayImage.style.msTransform = transform;
+			getCoordinateShiftDueToScale : function(size, scale) {
+				var newWidth = scale * size.width;
+				var newHeight = scale * size.height;
+				var dx = (newWidth - size.width) / 2
+				var dy = (newHeight - size.height) / 2
+				return {
+					x: dx,
+					y: dy
+				}
 			},
-			// Returns true if the user is currently zooming on a picture
-			isZooming : function() {
-				return (zoomData.displayImageCurrentScale > 1.1);
+			// Update the element passed in parameter
+			updateZoomedImage : function(checkLimits = true) {
+				zoomData.current.height = zoomData.originalSize.height * zoomData.current.z;
+				zoomData.current.width = zoomData.originalSize.width * zoomData.current.z;
+				// Check limits if needed
+				if (checkLimits) {
+					var limitY = (zoomData.imageContainerParent.height() < zoomData.current.height) ? Math.abs((zoomData.current.height - zoomData.imageContainerParent.height()) / 2) : 0;
+					var limitX = (zoomData.imageContainerParent.width() < zoomData.current.width) ? Math.abs((zoomData.current.width - zoomData.imageContainerParent.width()) / 2) : 0;
+					if (zoomData.current.y > limitY)
+						zoomData.current.y = zoomData.last.y = limitY;
+					else if (zoomData.current.y < -limitY)
+						zoomData.current.y = zoomData.last.y = -limitY;
+					if (zoomData.current.x > limitX)
+						zoomData.current.x = zoomData.last.x = limitX;
+					else if (zoomData.current.x < -limitX)
+						zoomData.current.x = zoomData.last.x = -limitX;
+				}
+				zoomData.imageContainer.style.transform = "translate3d(" + zoomData.current.x + "px, " + zoomData.current.y + "px, 0) scale(" + zoomData.current.z + ")";
 			}
 		}
 
@@ -248,7 +284,9 @@ var imagegallery = (function(){
 
 			body : function(e){
 
-				if(making || e.pageY < 80 || helpers.isZooming()) return;
+				return;
+
+				if(making || e.pageY < 80) return;
 
 				action = 'next'
 
@@ -295,73 +333,159 @@ var imagegallery = (function(){
 							$(window).on('resize', helpers.resize)
 						}
 
-						// Prepare image for the zoom feature
+						// Prepare the zoom feature
 						// Get the image and its container
 						var imageContainer = p.el.find('.imgWrapper')[0];
-						zoomData.displayImage = p.el.find('img')[0];
-						// Update other zoom data
-						zoomData.imageWidth = zoomData.displayImage.width;
-						zoomData.imageHeight = zoomData.displayImage.height;
-						zoomData.containerWidth = imageContainer.offsetWidth;
-						zoomData.containerHeight = imageContainer.offsetHeight;
-						zoomData.displayImageX = 0;
-						zoomData.displayImageY = 0;
-						zoomData.displayImageScale = 1;
-						zoomData.displayDefaultWidth = zoomData.displayImage.offsetWidth;
-						zoomData.displayDefaultHeight = zoomData.displayImage.offsetHeight;
-						zoomData.rangeX = 0;
-						zoomData.rangeMaxX = 0;
-						zoomData.rangeMinX = 0;
-						zoomData.rangeY = 0;
-						zoomData.rangeMaxY = 0;
-						zoomData.rangeMinY = 0;
-						zoomData.displayImageCurrentX = 0;
-						zoomData.displayImageCurrentY = 0;
-						zoomData.displayImageCurrentScale = 1;
-						zoomData.rangeX = Math.max(0, zoomData.displayDefaultWidth - zoomData.containerWidth);
-						zoomData.rangeY = Math.max(0, zoomData.displayDefaultHeight - zoomData.containerHeight);
-
-						if (zoomData.displayDefaultWidth !== undefined && zoomData.displayDefaultHeight !== undefined) {
-							zoomData.displayDefaultWidth = zoomData.displayImage.offsetWidth;
-							zoomData.displayDefaultHeight = zoomData.displayImage.offsetHeight;
-							helpers.updateRange();
-							zoomData.displayImageCurrentX = helpers.clamp( zoomData.displayImageX, zoomData.rangeMinX, zoomData.rangeMaxX );
-							zoomData.displayImageCurrentY = helpers.clamp( zoomData.displayImageY, zoomData.rangeMinY, zoomData.rangeMaxY );
-							helpers.updateDisplayImage(zoomData.displayImageCurrentX, zoomData.displayImageCurrentY, zoomData.displayImageCurrentScale);
-						}
-
-						// Wheel mouse zoom event
-						imageContainer.addEventListener('wheel', e => {
-							zoomData.displayImageScale = zoomData.displayImageCurrentScale = helpers.clampScale(zoomData.displayImageScale + (-e.deltaY / 800));
-							helpers.updateRange();
-							zoomData.displayImageCurrentX = helpers.clamp(zoomData.displayImageCurrentX, zoomData.rangeMinX, zoomData.rangeMaxX)
-							zoomData.displayImageCurrentY = helpers.clamp(zoomData.displayImageCurrentY, zoomData.rangeMinY, zoomData.rangeMaxY)
-							helpers.updateDisplayImage(zoomData.displayImageCurrentX, zoomData.displayImageCurrentY, zoomData.displayImageScale);  
-						}, false);
-
-						// Prepare to catch gesture for mobile
-						const hammertime = new Hammer(imageContainer);
+						var imageElement = p.el.find('img')[0];
+						// Prepare our main zoom object
+						zoomData = {
+							imageContainerParent: $(imageContainer).parent(),
+							imageContainer: imageContainer,
+							imageElement: imageElement,
+							minZoomAllowed: 1,
+							maxZoomAllowed: 5,
+							current: {
+								x: 0,
+								y: 0,
+								z: 1,
+								zooming: false,
+								width: imageElement.width,
+								height: imageElement.height
+							},
+							fixHammerjsDeltaIssue: undefined,
+							pinchStart: {
+								x: undefined,
+								y: undefined
+							},
+							last: {
+								x: 0,
+								y: 0,
+								z: 1
+							},
+							lastEvent: undefined,
+							originalSize: {
+								width: imageElement.width,
+								height: imageElement.height,
+								containerWidth: $(imageContainer).width(),
+								containerHeight: $(imageContainer).height()
+							},
+							pinchZoomOrigin: undefined
+						};
+						// Instantiate hammer instance, and configure it
+						var hammertime = new Hammer(zoomData.imageContainer);
+						hammertime.get('pan').set({ threshold: 0 });
 						hammertime.get('pinch').set({ enable: true });
-						hammertime.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+						hammertime.get('tap').set({ taps: 2 });
+						hammertime.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 
-						// Mobile gesture events
-						hammertime.on('pan', ev => {  
-							zoomData.displayImageCurrentX = helpers.clamp(zoomData.displayImageX + ev.deltaX, zoomData.rangeMinX, zoomData.rangeMaxX);
-							zoomData.displayImageCurrentY = helpers.clamp(zoomData.displayImageY + ev.deltaY, zoomData.rangeMinY, zoomData.rangeMaxY);
-							helpers.updateDisplayImage(zoomData.displayImageCurrentX, zoomData.displayImageCurrentY, zoomData.displayImageScale);
+						// Events for panning
+						hammertime.on('pan', function(e) {
+							zoomData.imageContainer.style.transition = "none";
+							if (zoomData.lastEvent !== 'pan') {
+								zoomData.fixHammerjsDeltaIssue = {
+									x: e.deltaX,
+									y: e.deltaY
+								}
+							}
+							zoomData.current.x = zoomData.last.x + e.deltaX - zoomData.fixHammerjsDeltaIssue.x;
+							zoomData.current.y = zoomData.last.y + e.deltaY - zoomData.fixHammerjsDeltaIssue.y;
+							zoomData.lastEvent = 'pan';
+							helpers.updateZoomedImage(false);
 						});
-						hammertime.on('pinch pinchmove', ev => {
-							zoomData.displayImageCurrentScale = helpers.clampScale(ev.scale * zoomData.displayImageScale);
-							helpers.updateRange();
-							zoomData.displayImageCurrentX = helpers.clamp(zoomData.displayImageX + ev.deltaX, zoomData.rangeMinX, zoomData.rangeMaxX);
-							zoomData.displayImageCurrentY = helpers.clamp(zoomData.displayImageY + ev.deltaY, zoomData.rangeMinY, zoomData.rangeMaxY);
-							helpers.updateDisplayImage(zoomData.displayImageCurrentX, zoomData.displayImageCurrentY, zoomData.displayImageCurrentScale);
+						hammertime.on('panend', function(e) {
+							zoomData.imageContainer.style.transition = (zoomData.current.z <= 1) ? "0.3s" : "none";
+							zoomData.last.x = zoomData.current.x;
+							zoomData.last.y = zoomData.current.y;
+							zoomData.lastEvent = 'panend';
+							helpers.updateZoomedImage();
 						});
-						hammertime.on('panend pancancel pinchend pinchcancel', () => {
-							zoomData.displayImageScale = zoomData.displayImageCurrentScale;
-							zoomData.displayImageX = zoomData.displayImageCurrentX;
-							zoomData.displayImageY = zoomData.displayImageCurrentY;
+
+						// Event for zooming with doubletap
+						hammertime.on('doubletap', function(e) {
+							// How much we want to zoom when doubletapping
+							var scaleFactor = (zoomData.current.z > 1) ? -zoomData.current.z + 1 : 2;
+							// Check scale factor limits
+							zoomData.imageContainer.style.transition = "0.3s";
+							// setTimeout(function() {
+							// 	zoomData.imageContainer.style.transition = "none";
+							// }, 300)
+							var zoomOrigin = helpers.getRelativePosition(zoomData.imageElement, { x: e.center.x, y: e.center.y }, zoomData.originalSize, zoomData.current.z);
+							var d = helpers.scaleFrom(zoomOrigin, zoomData.current.z, zoomData.current.z + scaleFactor)
+							zoomData.current.x += d.x;
+							zoomData.current.y += d.y;
+							zoomData.current.z += d.z;
+							zoomData.last.x = zoomData.current.x;
+							zoomData.last.y = zoomData.current.y;
+							zoomData.last.z = zoomData.current.z;
+							helpers.updateZoomedImage();
 						});
+
+						// Event for the swipe left and right
+						hammertime.on('swipeleft swiperight', function(e) {
+							// If we can pan horizontally, cancel the swipe
+							if (zoomData.imageContainerParent.width() < zoomData.current.width) return;
+							// Check if we need to go to previous or next image
+							if (e.deltaX < 0)
+								actions.next();
+							else
+								actions.back();
+						});
+						// Event for the swipe up and down
+						hammertime.on('swipeup swipedown', function(e) {
+							// If we can pan vertically, cancel the swipe
+							if (zoomData.imageContainerParent.height() < zoomData.current.height) return;
+							// Close the gallery
+							self.closeContainer();
+						});
+
+						// Events for the pinch zoom
+						hammertime.on('pinchstart', function(e) {
+							zoomData.pinchStart.x = e.center.x;
+							zoomData.pinchStart.y = e.center.y;
+							zoomData.pinchZoomOrigin = helpers.getRelativePosition(zoomData.imageContainer, { x: zoomData.pinchStart.x, y: zoomData.pinchStart.y }, zoomData.originalSize, zoomData.current.z);
+							zoomData.lastEvent = 'pinchstart';
+						});
+						hammertime.on('pinch', function(e) {
+							var d = helpers.scaleFrom(zoomData.pinchZoomOrigin, zoomData.last.z, zoomData.last.z * e.scale);
+							zoomData.current.x = d.x + zoomData.last.x + e.deltaX;
+							zoomData.current.y = d.y + zoomData.last.y + e.deltaY;
+							zoomData.current.z = d.z + zoomData.last.z;
+							if (zoomData.current.z > zoomData.maxZoomAllowed)
+								zoomData.current.z = zoomData.last.z = zoomData.maxZoomAllowed;
+							if (zoomData.current.z < zoomData.minZoomAllowed)
+								zoomData.current.z = zoomData.last.z = zoomData.minZoomAllowed;
+							zoomData.lastEvent = 'pinch';
+							helpers.updateZoomedImage();
+						});
+						hammertime.on('pinchend', function(e) {
+							zoomData.last.x = zoomData.current.x;
+							zoomData.last.y = zoomData.current.y;
+							zoomData.last.z = zoomData.current.z;
+							zoomData.lastEvent = 'pinchend';
+						});
+
+						// Event to zoom with mouse wheel
+						zoomData.imageElement.addEventListener('wheel', e => {
+							var scaleFactor = (e.deltaY > 0) ? -1 : 1;
+							// Check zoom limit
+							if (scaleFactor < 0 && (zoomData.current.z + scaleFactor) < zoomData.minZoomAllowed)
+								return;
+							if (scaleFactor > 0 && (zoomData.current.z + scaleFactor) > zoomData.maxZoomAllowed)
+								return;
+							zoomData.imageContainer.style.transition = "0.3s";
+							// setTimeout(function() {
+							// 	zoomData.imageContainer.style.transition = "none";
+							// }, 300)
+							var zoomOrigin = helpers.getRelativePosition(zoomData.imageElement, { x: e.x, y: e.y }, zoomData.originalSize, zoomData.current.z);
+							var d = helpers.scaleFrom(zoomOrigin, zoomData.current.z, zoomData.current.z + scaleFactor)
+							zoomData.current.x += d.x;
+							zoomData.current.y += d.y;
+							zoomData.current.z += d.z;
+							zoomData.last.x = zoomData.current.x;
+							zoomData.last.y = zoomData.current.y;
+							zoomData.last.z = zoomData.current.z;
+							helpers.updateZoomedImage();
+						}, false);
 
 					});
 
