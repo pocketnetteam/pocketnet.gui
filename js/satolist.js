@@ -45,7 +45,7 @@ Platform = function (app, listofnodes) {
     }
     
 
-    self.testaddresses = ['PJJbtb1AEcRopQuuBiRbQbiec7WHNtAEsF', 'PSmGDYWzcPrrhvqFnGVxnhPbpsTK6LCZYd', 'PDQaeB3fGY3en5qMaq8AKZvev34Hgyx5UE', 'PAdUsDtP9onjpwHHxhbxxRcjtxD9fsW9Su', 'PRaYPD2NAVMcEXcUu2GsEQwqsG8md8H2dr', 'PHr8g7b4gJdSkiJFmQeoND2X8tRUKvB2An', 'PEwL86dE6MuKKaGPxooGyFCKocUP8B6jw8', 'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2', 'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y', 'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux', 'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH', 'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW', 'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s', 'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+    self.testaddresses = ['PF1umexG4Kvm8bkow1JiRF3s1vcBkYvKeg', 'PJJbtb1AEcRopQuuBiRbQbiec7WHNtAEsF', 'PSmGDYWzcPrrhvqFnGVxnhPbpsTK6LCZYd', 'PDQaeB3fGY3en5qMaq8AKZvev34Hgyx5UE', 'PAdUsDtP9onjpwHHxhbxxRcjtxD9fsW9Su', 'PRaYPD2NAVMcEXcUu2GsEQwqsG8md8H2dr', 'PHr8g7b4gJdSkiJFmQeoND2X8tRUKvB2An', 'PEwL86dE6MuKKaGPxooGyFCKocUP8B6jw8', 'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2', 'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y', 'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux', 'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH', 'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW', 'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s', 'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
@@ -12530,8 +12530,6 @@ Platform = function (app, listofnodes) {
 
                     common: function (inputs, obj, fees, clbk, p, fromTG) {
 
-                        console.log('common!!!', inputs, obj, fees, clbk, p, fromTG);
-
                         if (!fromTG && self.app.user.features.telegram && !obj.aliasid) {
 
                             const {
@@ -12844,7 +12842,6 @@ Platform = function (app, listofnodes) {
                         const channel = Number(meta.tgto.possibleValues[channelIdx]);
 
                         const parameters = {
-                            method: 'POST',
                             chat_id: channel,
                             parse_mode: 'HTML'
                         }
@@ -12898,12 +12895,26 @@ Platform = function (app, listofnodes) {
                         // const parameters = `?chat_id=${channel}${media}&${captionName}=${caption}&parse_mode=HTML`
 
                         let query = `https://api.telegram.org/bot${token}/${action}`;
-                        const paramStr = $.param(parameters);
+                        // const paramStr = $.param(parameters);
 
 
-                        fetch(query + '?' + paramStr)
+                        fetch(query, {
+                            method: 'POST',
+                            mode: 'cors', // no-cors, *cors, same-origin
+                            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                            credentials: 'same-origin', // include, *same-origin, omit
+                            headers: {
+                              'Content-Type': 'application/json'
+                              // 'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            redirect: 'follow', // manual, *follow, error
+                            referrerPolicy: 'no-referrer',
+                            body: JSON.stringify(parameters)
+                        })
                             .then(data => data.json())
                             .then(result => {
+
+                                console.log('telegram result??', result);
                             })
 
                     },
