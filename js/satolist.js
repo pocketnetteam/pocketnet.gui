@@ -4266,6 +4266,8 @@ Platform = function (app, listofnodes) {
 
                 return self.sdk.keys.need().then(me => {
 
+                    console.log("MEW")
+
                     if(self.loadingWithErrors){
                         return Promise.reject('loadingWithErrors')
                     }
@@ -4285,6 +4287,8 @@ Platform = function (app, listofnodes) {
                         }))
 
                     var err = userInfo.validation()
+
+                    console.log("errerrerrerr", err)
 
                     if (err){
 
