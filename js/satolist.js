@@ -4108,7 +4108,6 @@ Platform = function (app, listofnodes) {
 
                             var tgToken = meta.telegram && meta.telegram.value;
 
-
                             if (tgToken){
 
                                 values[i] = {
@@ -15198,18 +15197,18 @@ Platform = function (app, listofnodes) {
                                 meta[dropdownName].possibleValues.push(String(channelId));
                                 meta[dropdownName].possibleValuesLabels.push(channelName);
 
-                                // if (!meta[dropdownName][tgToken] || !meta[dropdownName][tgToken].possibleValues){
+                                if (!meta[dropdownName][tgToken] || !meta[dropdownName][tgToken].possibleValues){
 
-                                //     meta[dropdownName][tgToken] = {};
-                                //     meta[dropdownName][tgToken].possibleValues = [String(channelId)];
-                                //     meta[dropdownName][tgToken].possibleValuesLabels = [channelName];
+                                    meta[dropdownName][tgToken] = {};
+                                    meta[dropdownName][tgToken].possibleValues = [String(channelId)];
+                                    meta[dropdownName][tgToken].possibleValuesLabels = [channelName];
 
-                                // } else {
+                                } else {
 
-                                //     meta[dropdownName][tgToken].possibleValues.push(String(channelId));
-                                //     meta[dropdownName][tgToken].possibleValuesLabels.push(String(channelId));
+                                    meta[dropdownName][tgToken].possibleValues.push(String(channelId));
+                                    meta[dropdownName][tgToken].possibleValuesLabels.push(String(channelName));
                                     
-                                // }
+                                }
 
                             }
 
@@ -15811,10 +15810,7 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                    const current = document.querySelector("div[parameter='telegram'].iWrapper");
-
-                    console.log('current', current);
-          
+                    const current = document.querySelector("div[parameter='telegram'].iWrapper");          
 
                     if (current) {
                         current.remove();
@@ -15858,7 +15854,6 @@ Platform = function (app, listofnodes) {
                 },
 
                 openedDialog: false
-
 
             },
 
