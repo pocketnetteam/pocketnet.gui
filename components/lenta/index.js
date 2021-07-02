@@ -3392,7 +3392,6 @@ var lenta = (function(){
 					directions : {
 						down : {
 							cancellable : true,
-							
 
 							positionclbk : function(px){
 								var percent = Math.abs(px) / trueshold;
