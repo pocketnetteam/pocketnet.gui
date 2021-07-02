@@ -12820,6 +12820,8 @@ Platform = function (app, listofnodes) {
                             return removeEmptyHref(sanitizedHtml);
                         }
 
+                        console.log('message', message);
+
                         const token = meta.telegram.value;
 
                         const channelIdx = meta.tgto.possibleValuesLabels.indexOf(meta.tgto.value);
@@ -12839,6 +12841,10 @@ Platform = function (app, listofnodes) {
                         caption = caption.replace(/<br>|<br\/>/g, '\n');
                         caption = caption.replace(/<\/p>/g, "</p>\n");
                         caption = filterHtml(caption);
+
+                        if (message.url.v && caption.indexOf(message.url.v) === -1){
+                            caption += '\n\n' + message.url.v;
+                        }
 
                         let action = 'sendMessage';
                         let captionName = 'text';
@@ -20574,7 +20580,9 @@ Platform = function (app, listofnodes) {
             }
 
             if (addresses.indexOf(a) > -1) {
+
                 self.app.user.features.telegram = 1;
+                
             } else {
                 self.app.user.features.telegram = 0;
             }
