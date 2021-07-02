@@ -6777,8 +6777,9 @@
 
 							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i)
 								mainDirection.clbk()
-							else
-								self.backup(mainDirection.i)	
+
+
+							self.backup(mainDirection.i)	
 							
 						}
 

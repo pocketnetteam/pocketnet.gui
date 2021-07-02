@@ -3354,7 +3354,7 @@ var lenta = (function(){
 
 				
 
-				/*var cc = el.c.find('.circularprogress');
+				var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
 
 				var progress = new CircularProgress({
@@ -3379,8 +3379,8 @@ var lenta = (function(){
 
 				var tp = el.c.find('.loadprev')
 
-				var trueshold = 200*/
-				/*
+				var trueshold = 50
+				
 				var parallax = new SwipeParallax({
 
 					el : el.c.find('.shares'),
@@ -3404,15 +3404,15 @@ var lenta = (function(){
 									};
 
 									progress.update(percent * 100);
-
-
+									cc.fadeIn(1)
 									cc.height((maxheight * percent)+ 'px')
-
-								
 
 									//el.shares.css('opacity', 1 - percent) 
 									tp.css('opacity', 1 -  (4 * percent))
 
+								}
+								else{
+									cc.fadeOut(1)
 								}
 
 							},
@@ -3430,6 +3430,8 @@ var lenta = (function(){
 							trueshold : trueshold,
 							clbk : function(){
 
+								progress.update(0);
+								cc.fadeOut(1)
 								self.app.platform.sdk.notifications.getNotifications()
 	
 								actions.loadprev(function(){
@@ -3444,7 +3446,7 @@ var lenta = (function(){
 					}
 					
 	
-				}).init()*/
+				}).init()
 			}
 
 			if(!essenseData.openapi){
