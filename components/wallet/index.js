@@ -2408,7 +2408,7 @@ var wallet = (function(){
 
 				el.c.find('.circularprogressWrapper').html(progress.el);
 
-				var trueshold = 50
+				var trueshold = 80
 
 				var w = $(window)
 
@@ -2425,6 +2425,9 @@ var wallet = (function(){
 							positionclbk : function(px){
 								var percent = Math.abs(px) / trueshold;
 
+
+								console.log("PX", px)
+
 								if (px >= 0){
 
 									progress.options.text = {
@@ -2440,6 +2443,7 @@ var wallet = (function(){
 
 								}
 								else{
+									progress.renew()
 									cc.fadeOut(1)
 								}
 

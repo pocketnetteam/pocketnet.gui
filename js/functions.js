@@ -6442,12 +6442,17 @@
 		var animation = function(ap, options, direction){
 
 			if(!options) options = {}
+
+			
+			if (self.animation){
+				self.animation.stop()
+			}
 			
 			if(p.prop == 'translate'){
 
 				var v = (ap.x || ap.y || 0);
 
-				p.el.css({transition: "transform " + animatedurations + " ease"});
+				/*p.el.css({transition: "transform " + animatedurations + " ease"});*/
 
 				if (ap.y){
 					p.el.css("transform","translate3d(0, "+ap.y+", 0)");
@@ -6457,7 +6462,7 @@
 				}
 				
 
-				var td = 16;
+				/*var td = 16;
 				var stepd = 16 / animateduration;
 				var step = 0;
 
@@ -6469,7 +6474,7 @@
 
 						if (options.step){
 
-							var s = v //ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
+							var s = z //ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
 
 							//s = s * p.directions[direction].trueshold
 
@@ -6487,31 +6492,28 @@
 							p.el.css({transition: ""});
 						}
 
-						
-
-						if(this.interval){
-							clearInterval(this.interval)
-							this.interval = null;
+						if(self.animation.interval){
+							clearInterval(self.animation.interval)
+							self.animation.interval = null;
 						}
 						
 					}
-				}
+				}*/
 
-				setTimeout(function(){
 
-					if (self.animation)
-
-						self.animation.stop();
+					/*if (self.animation)
+						self.animation.stop()*/;
 
 					if (options.complete)
 						options.complete()
 
-				}, animateduration)
 
 			}
-			else{
+
+
+			/*else{
 				self.animation = p.el.animate(ap, options);	
-			}
+			}*/
 		}
 
 		var parseStart = function(direction){
@@ -6569,7 +6571,10 @@
 				ap[css] =  upborder + 'px'
 
 			animation(ap, {
-				dontstop : true
+				dontstop : true,
+				compele : function(){
+					self.renew()
+				}
 			}, direction)
 		}
 
@@ -6602,8 +6607,7 @@
 					}
 				},
 				compele : function(){
-					self.lastDirection = null;
-					self.animation = null;
+					self.renew()
 				}
 			}, direction)
 		}
@@ -6614,7 +6618,13 @@
 		self.ended = false;
 
 		self.renew = function(){
+			self.lastDirection = null;
+			self.animation = null;
+
 			self.ended = false;
+
+			if (self.animation)
+				self.animation.stop();
 		}
 
 		self.opposite = function(dir, dir2){
@@ -6647,7 +6657,9 @@
 
 
 					if (self.ended) return false	
-					
+
+
+					console.log('phase', phase)
 
 					if (phase == 'start'){
 
@@ -6655,13 +6667,15 @@
 
 						startMargin = 0;
 
+						self.renew()
+
+						/*console.log('self.lastDirection', self.lastDirection)
 						if (self.lastDirection){
 							startMargin = parseStart(self.lastDirection) 
 
 							self.animation.stop();
-							self.lastDirection = null;
-							self.animation = null;
-						}
+							self.renew()
+						}*/
 
 						
 						return true
@@ -6774,10 +6788,16 @@
 						if (mainDirection){
 
 							console.log('_direction == mainDirection', _direction, mainDirection)
+							
 
-							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i)
+							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
+
+								
 								mainDirection.clbk()
-
+							}
+								
+							if (mainDirection.positionclbk)
+								mainDirection.positionclbk(0)
 
 							self.backup(mainDirection.i)	
 							

@@ -3379,7 +3379,7 @@ var lenta = (function(){
 
 				var tp = el.c.find('.loadprev')
 
-				var trueshold = 50
+				var trueshold = 80
 				
 				var parallax = new SwipeParallax({
 
@@ -3412,6 +3412,7 @@ var lenta = (function(){
 
 								}
 								else{
+									progress.renew()
 									cc.fadeOut(1)
 								}
 
