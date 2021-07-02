@@ -51,6 +51,7 @@ __map =  {
 		"js/vendor/underscore-min.js",  
 		"js/functionsfirst.js",  
 		"js/localization.js",
+		"js/notifications.js",
 		"js/lib/client/system16.js",
 		"js/lib/client/api.js",
 		"js/_map.js",

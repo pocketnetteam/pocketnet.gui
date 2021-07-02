@@ -20132,7 +20132,7 @@ Platform = function (app, listofnodes) {
                             self.sdk.chats.load,
                             self.sdk.user.subscribeRef
                         ], function(){
-            
+                            app.notifications.subscribe()
                         })
 
 
