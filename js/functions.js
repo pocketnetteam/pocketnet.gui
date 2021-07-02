@@ -639,26 +639,28 @@
 
 				var directions = {}
 
-				var tr = 100;
+				var c = wnd.find('.wndcontent')
+
+				var tr = 1;
 
 					directions[dir] = {
-						trueshold : tr,
+						trueshold : p.trueshold || tr,
 
-						mintrueshold : p.swipeMintrueshold || 0,
+						mintrueshold : p.swipeMintrueshold || 1,
 
 						positionclbk : function(px){
-							var percent = Math.abs((tr - Math.abs(px)) / tr);
+							
+							
 
-							//if (percent > 0){
+						},
 
-								wnd.css('opacity', percent) 
-							//}
-
+						constraints : function(){
+							if(c.scrollTop() == 0) return true
 						},
 
 						clbk : function(){
 
-							//wnd.fadeOut(tr)
+							wnd.fadeOut(tr)
 
 							setTimeout(function(){
 								actions.close(true)	
@@ -670,16 +672,23 @@
 
 					//if(dir == 'left' || dir == 'right') directions[dir].reverse = true
 					
-
 				var parallax = new SwipeParallax({
 
 					allowPageScroll : 'vertical',
 
-					el : wnd.find('.wndinner'),
+					el : c,
 
 					directions : directions
 
 				}).init()
+
+
+				/*wnd.find('.wndinner').swipe({
+					allowPageScroll: "auto", 
+					swipeDown : function(e, phase, direction, distance){
+						actions.close(true)	
+					},
+				})*/
 
 				/*wnd.swipe( {
 					
@@ -730,7 +739,6 @@
 				}
 
 				
-				$('#habla_beta_container_do_not_rely_on_div_classes_or_names').css('display', "block");
 			},
 
 			hide : function(cl, key) {
@@ -6403,6 +6411,7 @@
 		}
 
 		var findDirection = function(_d){
+
 			return _.max(p.directions, function(direction, i){
 				var d = nullbydirection(_d, i)	
 
@@ -6460,9 +6469,9 @@
 
 						if (options.step){
 
-							var s = ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
+							var s = v //ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
 
-							s = s * p.directions[direction].trueshold
+							//s = s * p.directions[direction].trueshold
 
 							options.step(s)	
 						}
@@ -6529,10 +6538,9 @@
 
 			var prop = directiontoprop(direction);
 
-			var value = ease.inOutCubic(_value / p.directions[direction].trueshold)
+			var value = _value// ease.inOutCubic(_value / p.directions[direction].trueshold)
 
-			value = value * p.directions[direction].trueshold
-
+			//value = value * p.directions[direction].trueshold
 
 			if (p.prop != 'translate'){
 				p.el.css(prop, value + 'px');	
@@ -6546,8 +6554,6 @@
 				if(prop == 'y'){
 					p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
 				}
-
-				
 			}
 		}
 
@@ -6625,7 +6631,7 @@
 			var mainDirection = null;
 
 			var mintruesholdGone = false;
-
+			console.log("p", p)
 			p.el.swipe({
 
 				allowPageScroll : p.allowPageScroll,
@@ -6671,17 +6677,15 @@
 							y : m.last.y - m.start.y + startMargin
 						}
 
-
 						if(!_d.x && !_d.y) return true
 
 						var direction = findDirection(_d)
-
 
 						if (direction){
 
 							if (direction.constraints && !direction.constraints()) {
 
-								if(mainDirection){
+								if (mainDirection){
 									self.backup(mainDirection.i)	
 									mainDirection = null;
 								}
@@ -6722,10 +6726,7 @@
 							mainDirection = direction
 							var d = nullbydirection(_d, direction.i)	
 
-							
-
 							var dp = (d.x || d.y || 0);
-
 
 							if (!mintruesholdGone && Math.abs(dp + startMargin) < (direction.mintrueshold || 0)){
 								return true
@@ -6733,7 +6734,7 @@
 
 							mintruesholdGone = true;
 
-							if (Math.abs(dp) >= (direction.trueshold || 90)){
+							/*if (Math.abs(dp) >= (direction.trueshold || 1)){
 
 								self.ended = true
 
@@ -6742,14 +6743,12 @@
 								else{
 									self.backup(mainDirection.i)
 								}
-
-								if (direction.clbk)
-									direction.clbk()
+								
 
 								mainDirection = null;
 
 								return false;
-							}
+							}*/
 
 							if (direction.positionclbk){
 								direction.positionclbk(dp)
@@ -6770,9 +6769,17 @@
 					}
 
 					if(phase == 'cancel' || phase == 'end'){
+
 						
 						if (mainDirection){
-							self.backup(mainDirection.i)							
+
+							console.log('_direction == mainDirection', _direction, mainDirection)
+
+							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i)
+								mainDirection.clbk()
+							else
+								self.backup(mainDirection.i)	
+							
 						}
 
 						else{
@@ -6791,8 +6798,6 @@
 
 			return self
 		}
-
-		self.init()
 
 		return self;
 	}

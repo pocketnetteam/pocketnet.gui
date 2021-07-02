@@ -20169,6 +20169,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.matrixchat = {
+        el : null,
         inited : false,
         initing : false,
         destroy : function(){
@@ -20178,6 +20179,7 @@ Platform = function (app, listofnodes) {
     
             $('#matrix').empty();
 
+            self.matrixchat.el = null
             self.matrixchat.inited = false
         },
 
@@ -20240,6 +20242,9 @@ Platform = function (app, listofnodes) {
                                 </div>`
             
                                 $('#matrix').append(matrix);   
+
+                                self.matrixchat.el = $('.matrixchatwrapper')
+                                self.matrixchat.initevents()
                                 
                             }, null, app);
 
@@ -20251,6 +20256,25 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        initevents : function(){
+            if (self.matrixchat.el){
+
+                if(isMobile()){
+
+					self.matrixchat.el.swipe({
+						allowPageScroll: "auto", 
+						swipeLeft : function(e, phase, direction, distance){
+
+                            if (self.matrixchat.core)
+                                self.matrixchat.core.backtoapp()
+						},
+					})
+	
+				}
+
+            }
+        },
+
         link : function(core){
 
             core.update({
@@ -20260,7 +20284,13 @@ Platform = function (app, listofnodes) {
             })
 
             core.backtoapp = function(){
-                $('.matrixchatwrapper').removeClass('active')
+                if (self.matrixchat.el)
+                    self.matrixchat.el.removeClass('active')
+            }
+
+            core.apptochat = function(){
+                if (self.matrixchat.el)
+                    self.matrixchat.el.addClass('active')
             }
 
             self.matrixchat.core = core

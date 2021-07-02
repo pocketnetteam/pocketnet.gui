@@ -96,7 +96,11 @@ var navigation = (function(){
 					p.el.find('.toup').on('click', events.toup)
 
 					p.el.find('.matrixchat').on('click', function(){
-						$('.matrixchatwrapper').addClass('active')
+
+						var show = deep(self, 'app.platform.matrixchat.core.apptochat')
+
+						if (show) show()
+
 					})
 					
 				})

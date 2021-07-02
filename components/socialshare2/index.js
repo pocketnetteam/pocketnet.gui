@@ -737,8 +737,9 @@ var socialshare2 = (function(){
 			},
 
 			wnd : {
-				swipeClose : false,
-				swipeMintrueshold : 30,
+				swipeClose : true,
+				trueshold : 1,
+				swipeCloseDir : 'down',
 				header : self.app.localization.e('e13174'),
 				class : 'sharingwindow2'
 			}

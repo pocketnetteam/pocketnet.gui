@@ -1266,6 +1266,7 @@ var index_all = __webpack_require__("c46f");
       return sortedChats.reverse();
     },
     activeuser: function activeuser() {
+      console.log(this.core.user.userinfo, "core user here");
       return this.core.user.userinfo;
     }
   })),
