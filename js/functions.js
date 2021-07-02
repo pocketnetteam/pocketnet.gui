@@ -6690,6 +6690,8 @@
 									mainDirection = null;
 								}
 
+								event.preventDefault()
+
 								return false
 							}
 

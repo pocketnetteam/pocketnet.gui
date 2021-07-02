@@ -2446,7 +2446,7 @@ var wallet = (function(){
 							},
 
 							constraints : function(){
-								if(w.scrollTop() == 0){
+								if(w.scrollTop() <= 0){
 									return true;
 								}
 							},

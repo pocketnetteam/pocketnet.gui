@@ -3418,7 +3418,7 @@ var lenta = (function(){
 							},
 
 							constraints : function(){
-								if(w.scrollTop() == 0 && !fullscreenvideoShowed){
+								if(w.scrollTop() <= 0 && !fullscreenvideoShowed){
 
 									return true;
 
