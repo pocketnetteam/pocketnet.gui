@@ -3426,7 +3426,7 @@ var lenta = (function(){
 							},
 
 							restrict : true,
-
+							dontstop : true,
 							trueshold : trueshold,
 							clbk : function(){
 
