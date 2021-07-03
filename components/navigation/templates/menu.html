@@ -10,11 +10,22 @@
 
 		<div class="linkButtonWrapper">
 
-			<% if(back) {   %>
+			<% if(back) {  
 				
-					<a href="<%- addtouri(back.href, 'back', 'true') %>" fast="fast" handler="true">
+				var ur = addtouri(back.href, 'back', 'true')
+
+				
+				
+				%>
+				
+					<a href="<%- ur %>" fast="fast" handler="true">
 						<div class="iconWrapper">
-							<i class="fas fa-chevron-left"></i>
+							<% if(ur.indexOf('index') > -1){ %>
+								<i class="fas fa-home"></i>
+							<% } else { %> 
+								<i class="fas fa-chevron-left"></i>
+							<% } %>
+							
 						</div>
 					</a>
 				
@@ -117,7 +128,7 @@
 
 						<a href="<%- lentakey %>" fast="fast">
 							<div class="iconWrapper">
-								<i class="fas fa-chevron-left"></i>
+								<i class="fas fa-home"></i>
 							</div>
 						</a>
 						

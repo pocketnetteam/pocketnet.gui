@@ -41,9 +41,6 @@ var navigation = (function(){
 
 				if(up) up()
 
-				if(self.app.modules.main.module){
-
-				}
 
 				_scrollTop(0, null, 0)
 			}
