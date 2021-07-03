@@ -6454,12 +6454,15 @@
 
 				/*p.el.css({transition: "transform " + animatedurations + " ease"});*/
 
-				if (ap.y){
+				/*if (ap.y){
 					p.el.css("transform","translate3d(0, "+ap.y+", 0)");
 				}
 				else{
 					p.el.css("transform","translate3d("+ap.x+", 0, 0)");
-				}
+				}*/
+
+				p.el.css({transform: ""});
+				p.el.css({transition: ""});
 				
 
 				/*var td = 16;
