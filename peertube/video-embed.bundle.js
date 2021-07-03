@@ -43600,7 +43600,11 @@ class embed_PeerTubeEmbed {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             let duration = 0;
             var tapedTwice = false;
+            if (this.player.el_.classList.contains('vjs-youtube')) {
+                this.player.el_.querySelector('iframe').style.pointerEvents = 'none';
+            }
             this.player.el_.addEventListener('touchstart', (e) => {
+                e.preventDefault();
                 this.player.one("loadedmetadata", (response) => {
                     duration = this.player.duration();
                 });
@@ -43608,6 +43612,12 @@ class embed_PeerTubeEmbed {
                 let offsetX = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].pageX : null;
                 let is_control_bar_hidden = !this.player.paused() && this.player.el_.classList.contains('vjs-user-inactive');
                 if (!tapedTwice) {
+                    if (is_control_bar_hidden && this.player.el_.classList.contains('vjs-youtube')) {
+                        let vjs_duration = this.player.el_.querySelector('.vjs-control-bar');
+                        if (vjs_duration) {
+                            vjs_duration.dispatchEvent(new Event('touchend'));
+                        }
+                    }
                     if (e.target.nodeName !== 'SPAN' && (0.66 * playerWidth > offsetX) && (offsetX > 0.33 * playerWidth)) {
                         if (this.player.paused()) {
                             this.player.play();
@@ -43624,7 +43634,6 @@ class embed_PeerTubeEmbed {
                     }, 400);
                     return false;
                 }
-                e.preventDefault();
                 //action on double tap goes below
                 let forwading_time = duration < 45 ? 5 : 15;
                 if (offsetX) {
@@ -43683,7 +43692,7 @@ class embed_PeerTubeEmbed {
             this.player.on("customError", (event, data) => this.handleError(data.err));
             this.player.on("error", (error) => console.log(error));
             this.player.tech().on("error", (error) => console.log(error));
-            // this.initTouchedEvents()
+            this.initTouchedEvents();
             this.initializeApi();
             this.removePlaceholder();
         });
