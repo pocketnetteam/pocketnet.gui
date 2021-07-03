@@ -378,6 +378,7 @@ var author = (function(){
 					render : 'info',
 					history : true,
 					if : function(){
+						return false
 						if(isMobile()) return true
 					}
 				},
@@ -1176,7 +1177,9 @@ var author = (function(){
 			renders.report(reports[r], null, ini)
 			renders.menu()
 
-		
+			if(isMobile()){
+				renders.info(el.c.find('.mobileinfo'))
+			}
 
 			self.app.user.isState(function(state){
 

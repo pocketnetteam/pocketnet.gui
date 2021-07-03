@@ -24,6 +24,10 @@
 		}
 	}
 
+	.mobileinfo{
+		display: none;
+	}
+
 	.copyaddress{
 		cursor: pointer;
 		text-overflow: ellipsis;
@@ -946,10 +950,8 @@ html.stblack{
 		}
 	}
 }
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	#content{
-
-		
 
 		#lenta{
 			.shares{
@@ -1109,7 +1111,9 @@ html.stblack{
 			.bgCaption{
 				margin-bottom : 0;
 				margin-top : 0;
-				height: 140px;
+				height: auto;
+				padding-bottom: 4 * @rhythm;
+				
 
 				.work{
 					padding-right: 0;
@@ -1138,15 +1142,20 @@ html.stblack{
 					overflow: hidden;
 					text-overflow: ellipsis;
 					text-align: left;
-					padding-left : 2.4 * @rhythm;
+					padding-left : 4.4 * @rhythm;
 					white-space: nowrap;
+					margin-top : 1 * @rhythm;
+
+					.adr{
+						font-size: 1.1em;
+					}
 				}
 				
 
 				.usermenu{
 					width: 100%;
 					.usermenuitem{
-						width: 16.666%;
+						width: 20%;
 						margin-right : 0;
 						padding-left: 0;
 						padding-right : 0;
@@ -1156,18 +1165,18 @@ html.stblack{
 				}
 
 				.cellforimage{
-					width: 45px;
+					width: 65px;
 
 					.usericon{
-						width: 45px;
-						height: 45px;
-						line-height: 43px;
+						width: 65px;
+						height: 65px;
+						line-height: 63px;
 					}
 				}
 
 
 				.infoWrapper{
-					position: absolute;
+					position: static;
 					left: 0;
 					right: 0;
 					top: 20px;
@@ -1175,6 +1184,25 @@ html.stblack{
 					z-index: 1;
 					.work{
 						padding :  0 @rhythm;
+					}
+				}
+
+				.infoWrapper{
+					
+					.mobileinfo{
+						display: block;
+					}
+				}
+
+				.authorinfo{
+					padding : @rhythm;
+					margin-bottom: 0;
+
+					.postcnt,
+					.foraddress,	
+					.date,
+					.name{
+						display: none;
 					}
 				}
 
