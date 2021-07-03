@@ -672,7 +672,7 @@
 
 					//if(dir == 'left' || dir == 'right') directions[dir].reverse = true
 					
-				var parallax = new SwipeParallax({
+				var parallax = new SwipeParallaxNew({
 
 					allowPageScroll : 'vertical',
 
@@ -6819,6 +6819,135 @@
 				},
 
 			});
+
+			return self
+		}
+
+		return self;
+	}
+
+
+	SwipeParallaxNew = function(p){
+		if(!p) p = {};
+
+			p.directions || (p.directions = {})
+
+			_.each(p.directions, function(d,i){
+				d.i = i
+			})
+
+		var self = this;
+		
+		var directiontoprop = function(direction, value){
+
+			if(direction == 'up') return 'y'
+			if(direction == 'down') return 'y'
+			if(direction == 'left') return 'x'
+			if(direction == 'right') return 'x'
+			
+		}
+		
+		var set = function(direction, value){
+
+			var prop = directiontoprop(direction);
+
+			if (prop == 'x'){
+				p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
+			}
+
+			if (prop == 'y'){
+				p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
+			}
+		}
+
+		var applyDirection = function(direction, v){
+			if (direction.positionclbk){
+				direction.positionclbk(v)
+			}
+		}
+
+		self.clear = function(){
+			p.el.css({transform: ""});
+			p.el.css({transition: ""});
+			
+			_.each(p.directions, function(d){
+				applyDirection(d, 0)
+			})
+		}
+
+		self.backfast = function(){
+
+			_.each(p.directions, function(d){
+				if (d.positionclbk)
+					d.positionclbk(0)
+			})
+		}
+
+		self.init = function(){
+
+			var mainDirection = null;
+
+			p.el.swipe({
+				allowPageScroll : p.allowPageScroll,
+				swipeStatus : function(e, phase, direction, distance){
+
+					console.log('direction', direction, phase)
+
+					if (mainDirection && mainDirection.i != direction){
+						phase = 'cancel'
+						direction = mainDirection.i
+					}
+
+					if(phase == 'cancel' || phase == 'end'){
+
+						if (mainDirection){
+
+							if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
+								mainDirection.clbk()
+							}
+							
+						}
+
+						self.clear()	
+
+					}
+
+					if(!direction) return
+
+					if(!p.directions[direction]){
+						return
+					}
+
+					var dir = p.directions[direction]
+
+					if (dir.constraints && !dir.constraints()) {
+
+						if (mainDirection){
+							mainDirection = null;
+						}
+
+						return false
+					}
+
+					if (phase == 'start'){
+						mainDirection = null
+					}
+					
+					if (phase == 'move'){
+						if (distance > 20){
+							mainDirection = dir
+
+							applyDirection(mainDirection, distance)
+
+							set(mainDirection.i, distance)
+						}
+					}
+
+					
+					
+
+				},
+			})
 
 			return self
 		}

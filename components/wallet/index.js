@@ -2412,7 +2412,7 @@ var wallet = (function(){
 
 				var w = $(window)
 
-				var parallax = new SwipeParallax({
+				var parallax = new SwipeParallaxNew({
 
 					el : el.c.find('.ntf'),
 
@@ -2465,7 +2465,6 @@ var wallet = (function(){
 
 								self.app.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
 									make()
-									parallax.renew()
 								})
 
 							}

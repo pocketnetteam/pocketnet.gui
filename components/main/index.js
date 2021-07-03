@@ -1196,8 +1196,6 @@ var main = (function(){
 				}
 				
 				
-				
-				
 			}
 		}
 	};

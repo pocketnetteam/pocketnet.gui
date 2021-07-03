@@ -3381,7 +3381,7 @@ var lenta = (function(){
 
 				var trueshold = 80
 				
-				var parallax = new SwipeParallax({
+				var parallax = new SwipeParallaxNew({
 
 					el : el.c.find('.shares'),
 
@@ -3436,7 +3436,6 @@ var lenta = (function(){
 	
 								actions.loadprev(function(){
 
-									parallax.renew()
 									
 								})
 								
