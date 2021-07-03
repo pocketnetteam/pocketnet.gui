@@ -28,6 +28,28 @@
 						
 						if(state){ %>
 
+							<% if(typeof shw != 'undefined' && shw) {%>
+
+								<a href="index" fast="fast">
+									<div class="iconWrapper">
+										<i class="fas fa-rss"></i>
+									</div>
+								</a>
+
+								
+							<% } else { %>
+
+								<a href="index?video=1" fast="fast">
+									<div class="iconWrapper">
+										<i class="fas fa-play-circle"></i>
+									</div>
+								</a>
+
+								
+							<% } %>
+
+							<!--
+
 							<% if(haschat) {%>
 
 								<div class="iconWrapper openchat matrixchat">
@@ -56,7 +78,7 @@
 									
 								<% } %>
 
-							<% } %>
+							<% } %>-->
 
 							<!--
 					

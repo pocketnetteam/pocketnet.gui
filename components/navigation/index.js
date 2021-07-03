@@ -52,7 +52,6 @@ var navigation = (function(){
 		var renders = {
 			menu : function(href){
 
-
 				var indexkey = self.app.nav.api.backChainIndex()
 				
 				var k = localStorage['lentakey'] || indexkey + '?b=true';
@@ -66,12 +65,9 @@ var navigation = (function(){
 					else{
 						k = indexkey + '?r=' + k
 					}
-					
 				}
 
-
 				var shw = parameters().video
-
 
 				var back = self.app.nav.api.backChainGet()
 

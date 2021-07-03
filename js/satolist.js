@@ -20172,6 +20172,10 @@ Platform = function (app, listofnodes) {
         el : null,
         inited : false,
         initing : false,
+
+        clbks : {
+            ALL_NOTIFICATIONS_COUNT : {}
+        },
         destroy : function(){
             if (window.matrixchat){
                 window.matrixchat.destroy()
@@ -20181,6 +20185,10 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.el = null
             self.matrixchat.inited = false
+
+            self.matrixchat.clbks = {
+                ALL_NOTIFICATIONS_COUNT : {}
+            }
         },
 
 
@@ -20286,15 +20294,21 @@ Platform = function (app, listofnodes) {
             core.backtoapp = function(){
                 if (self.matrixchat.el)
                     self.matrixchat.el.removeClass('active')
+
+                if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = true }
             }
 
             core.apptochat = function(){
                 if (self.matrixchat.el)
                     self.matrixchat.el.addClass('active')
+
+                if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = false }
             }
 
             self.matrixchat.core = core
+            self.matrixchat.core.hiddenInParent = true
 
+            core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
             self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
@@ -20307,15 +20321,31 @@ Platform = function (app, listofnodes) {
 
             }
 
+            var cm = deep(app, 'modules.menu.module.restart')
+
+            if (cm) cm()
 
             var c = deep(app, 'nav.clbks.history.navigation')
 
             if (c) c()
         },
 
-        unlink : function(){
+        unlink : function(){    
+
+            if (self.matrixchat.core){ 
+                self.matrixchat.core.hiddenInParent = false
+                self.matrixchat.core.destroyExternalLink()
+            
+            }
+
+
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
             delete self.matrixchat.core
+
+
+            var cm = deep(app, 'modules.menu.module.restart')
+
+            if (cm) cm()
 
             var c = deep(app, 'nav.clbks.history.navigation')
 

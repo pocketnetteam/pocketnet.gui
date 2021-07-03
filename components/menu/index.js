@@ -176,6 +176,24 @@ var menu = (function(){
 				}
 			},
 
+			chats : {
+				click : function(){
+
+					var show = deep(self, 'app.platform.matrixchat.core.apptochat')
+
+					if (show) show()
+
+				},
+
+				init : function(el){
+
+					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
+
+						actions.ah(el, count)
+					}
+				}
+			},
+
 			sitename : {
 
 				click : function(){
@@ -1234,6 +1252,7 @@ var menu = (function(){
 					data.loc = loc;
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
+					data.haschat = self.app.platform.matrixchat.core
 
 				if(p.state){
 

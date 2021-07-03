@@ -247,27 +247,48 @@
 
 			<div class="section leftpart">
 
-				<div class="items sitenames">
+				<% if(haschat && state) {%>
 
-					<div class="item table sitename" >
-						<div class="icon" events="sitename">
-							<img class="header_logo" src="img/logo20.svg">
-						</div>
-						<div class="label">
-							<div events="sitename"><% if(app.test){%>TESTNET<%} else {%>POCKETNET<% }%></div>
-							<div class="lang localization">
-								<% if(isMobile()) {%>
-									<%-(lkey.key || '').toLowerCase()%> 
-								<% } else { %>
-									<%-(lkey.name || '').toLowerCase()%> 
-								<% } %>
-								
-								<i class="fas fa-caret-down"></i>
+					<div class="items chat">
+
+						<div class="item table chatwr" events="chats">
+							<div class="icon">
+								<div class="icn">
+									<i class="far fa-comment"></i>
+								</div>
+								<div class="amount">
+								</div>
 							</div>
-						</div>						
-
+							
+						</div>
 					</div>
-				</div>
+
+
+				<% } else { %> 
+
+					<div class="items sitenames">
+
+						<div class="item table sitename" >
+							<div class="icon" events="sitename">
+								<img class="header_logo" src="img/logo20.svg">
+							</div>
+							<div class="label">
+								<div events="sitename"><% if(app.test){%>TESTNET<%} else {%>POCKETNET<% }%></div>
+								<div class="lang localization">
+									<% if(isMobile()) {%>
+										<%-(lkey.key || '').toLowerCase()%> 
+									<% } else { %>
+										<%-(lkey.name || '').toLowerCase()%> 
+									<% } %>
+									
+									<i class="fas fa-caret-down"></i>
+								</div>
+							</div>						
+
+						</div>
+					</div>
+
+				<% } %>
 
 				<% if(typeof _Electron == 'undefined' && !window.cordova){ %> 
 
