@@ -767,7 +767,7 @@ Application = function(p)
 
 		if(isMobile()){
 			self.el.app.swipe({
-				longTap : function(e, phase, direction, distance){
+				doubleTap : function(e, phase, direction, distance){
 
 					$('html').toggleClass('scrollmodedown')
 				},
