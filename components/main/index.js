@@ -62,7 +62,7 @@ var main = (function(){
 					}
 					
 
-					if(phase == 'end'){
+					if(phase == 'end' && window.cordova){
 						if(direction == 'down'){
 							$('html').removeClass('scrollmodedown')
 						}

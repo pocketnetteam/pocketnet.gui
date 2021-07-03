@@ -765,6 +765,17 @@ Application = function(p)
 			$('html').addClass('testpocketnet')
 		}
 
+		if(isMobile()){
+			self.el.app.swipe({
+				longTap : function(e, phase, direction, distance){
+
+					$('html').toggleClass('scrollmodedown')
+				},
+			})
+		}
+		
+		
+
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
