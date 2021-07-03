@@ -5,6 +5,8 @@ Notifications = function(app) {
     self.registration;
     // Boolean if the user has subscribed to the notifications
     self.subscribed = false;
+    // Timestamp when we start subscribing
+    self.subscribeTimestamp;
     // Watch for service worker registration
     navigator.serviceWorker.ready.then(function(registration) {
         self.registration = registration;
@@ -18,15 +20,29 @@ Notifications = function(app) {
         self.subscribed = true;
         // Subscribe to Matrix chat events
         if (window.client) {
+            self.subscribeTimestamp = Date.now();
             window.client.on("Room.timeline", (message) => {
-                if (message && message.event && message.event.type === "m.room.message" &&
-                    message.event.content && message.event.content.body) {
-                    self.sendDesktopNotification('New message', {
-                        body: message.event.content.body,
-                        icon: 'img/logobig.png',
-                        vibrate: [200, 100, 200, 100, 200, 100, 200],
-                        tag: message.event.room_id
-                    });
+                console.log(message);
+                // Ignore all the events for the first 3 seconds
+                if (Math.floor((Date.now() - self.subscribeTimestamp) / 1000) <= 3) return;
+                // Check we have an event
+                if (!message || !message.event) return;
+                // For each type of events
+                switch(message.event.type) {
+                    // Received a new message
+                    case 'm.room.message':
+                        if (message.event.decrypted && message.event.decrypted.body) {
+                            self.sendDesktopNotification('New message', {
+                                body: message.event.decrypted.body,
+                                icon: 'img/logobig.png',
+                                vibrate: [200, 100, 200, 100, 200, 100, 200],
+                                tag: message.event.room_id
+                            });
+                        }
+                        break;
+                    // Unknown event type
+                    default:
+                        console.log("Unknown event type: " + message.event.type);
                 }
             });
         }
@@ -37,6 +53,7 @@ Notifications = function(app) {
     // Unsubscribe from the notifications
     self.unsubscribe = function(clbk) {
         self.subscribed = true;
+        self.subscribeTimestamp = undefined;
         if (clbk)
 			clbk();
     }
@@ -45,8 +62,10 @@ Notifications = function(app) {
     // More info about options here: https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#parameters
     self.sendDesktopNotification = function(title, options) {
         self.canSendDesktopNotifications().then(() => {
-            if (self.registration)
+            if (self.registration) {
                 self.registration.showNotification(title, options);
+                console.log("Notification sent");
+            }
         });
     }
 
