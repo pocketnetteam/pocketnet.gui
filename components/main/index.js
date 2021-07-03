@@ -1040,7 +1040,7 @@ var main = (function(){
 			destroy : function(){
 
 				el.w.off('scroll', actions.addbuttonscroll)
-
+				$('html').removeClass('scrollmodedown')
 
 				renders.post(null)
 
