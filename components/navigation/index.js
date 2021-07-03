@@ -130,6 +130,10 @@ var navigation = (function(){
 
 			}
 
+			el.c.find('.fakem').on('click', function(){
+				$('html').removeClass('scrollmodedown')
+			})
+
 			
 			window.addEventListener('scroll', events.scroll)
 			events.scroll()
