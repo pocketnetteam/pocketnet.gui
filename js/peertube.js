@@ -674,16 +674,24 @@ PeerTubePocketnet = function (app) {
           uuid: data.id,
         })),
 
-      checkQuota: function (size) {
+      checkQuota: function (size = 0) {
         return self.api.user.me().then((rme) => {
           return self.api.videos.quota().then((rqu) => {
+            const sizeNumbered = Number(size) || 0;
+
+            const videoQuotaDaily = Number(rme.videoQuotaDaily) || 0;
+            const videoQuotaUsedDaily = Number(rqu.videoQuotaUsedDaily) || 0;
+
+            const videoQuota = Number(rme.videoQuota) || 0;
+            const videoQuotaUsed = Number(rqu.videoQuotaUsed) || 0;
+            debugger;
             if (
-              (size + rqu.videoQuotaUsedDaily <
-                rme.videoQuotaDaily + VIDEO_QUOTA_CORRECTION ||
-                rme.videoQuotaDaily < 0) &&
-              (size + rqu.videoQuotaUsed <
-                rme.videoQuota + VIDEO_QUOTA_CORRECTION ||
-                rme.videoQuota < 0)
+              (sizeNumbered + videoQuotaUsedDaily <
+                videoQuotaDaily + VIDEO_QUOTA_CORRECTION ||
+                videoQuotaDaily < 0) &&
+              (sizeNumbered + videoQuotaUsed <
+                videoQuota + VIDEO_QUOTA_CORRECTION ||
+                videoQuota < 0)
             ) {
               return Promise.resolve(rme);
             }
