@@ -16522,11 +16522,11 @@ Platform = function (app, listofnodes) {
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
-                if (app.curation()) {
+                /*if (app.curation()) {
                     link = ''
                     clink = ''
                     gotoprofile = false
-                }
+                }*/
 
 
                 h += '<div class="cwrapper table">\

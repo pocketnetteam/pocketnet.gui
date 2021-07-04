@@ -426,6 +426,7 @@ Application = function(p)
 	
 
 	self.curation = function(){
+
 		if(typeof isios != 'undefined' && isios()) return true
 		return false
 	}

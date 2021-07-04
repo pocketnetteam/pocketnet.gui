@@ -3201,6 +3201,7 @@ var vue_carousel_min = __webpack_require__("0a63");
 
  //
 
+
  //
 
 /* harmony default export */ var preview_vue_type_script_lang_js_ = ({
@@ -3237,12 +3238,17 @@ var vue_carousel_min = __webpack_require__("0a63");
       return state.auth;
     },
     members: function members() {
+      var me = functions["a" /* default */].getmatrixid(this.core.mtrx.client.credentials.userId);
       var self = this;
       var store = this.$store.state.users;
       var arr = [];
 
       _.filter(store, function (user) {
         _.map(self.room.members, function (member) {
+          if (member.id === me) {
+            return;
+          }
+
           if (user.id === member.id) {
             arr.push({
               id: member.id,
