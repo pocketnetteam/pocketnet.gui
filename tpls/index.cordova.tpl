@@ -66,6 +66,8 @@
         <div class="chats">
         </div>
 
+        <div id="matrix" class="matrix"></div>
+
         <div id="globalpreloader">
             <div class="table">
                 <div>
