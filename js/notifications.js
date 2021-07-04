@@ -8,9 +8,11 @@ Notifications = function(app) {
     // Timestamp when we start subscribing
     self.subscribeTimestamp;
     // Watch for service worker registration
-    navigator.serviceWorker.ready.then(function(registration) {
-        self.registration = registration;
-    });
+
+    if (navigator.serviceWorker)
+        navigator.serviceWorker.ready.then(function(registration) {
+            self.registration = registration;
+        });
 
     // ---------------------------------------------------------------
     // Public functions

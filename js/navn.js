@@ -576,7 +576,8 @@ Nav = function(app)
 
 						}
 						catch(e){
-							console.error("CANT DESTROY", p.href, current.module)
+							console.log("CANT DESTROY " + p.href)
+							console.error(e)
 						}
 					}
 
