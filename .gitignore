@@ -34,3 +34,4 @@ embedVideo.php
 service-worker.js
 css/master.css
 index.cordova
+.DS_Store
