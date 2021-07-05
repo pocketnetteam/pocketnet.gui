@@ -33,5 +33,14 @@ embedVideo.php
 .htaccess
 service-worker.js
 css/master.css
+cordova/platforms
+cordova/plugins
+cordova/node_modules
+cordova/www
+cordova/build.json
+cordova/google-services.json
+cordova/GoogleService-Info.plist
 index.cordova
 .DS_Store
+external/chat
+external/peertube

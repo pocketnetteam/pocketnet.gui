@@ -12326,7 +12326,7 @@ Platform = function (app, listofnodes) {
 
                                 }]
                             }
-
+                            //remove for donations
                             if (unspent.length > 60) {
                                 inputs.push({
                                     txId: unspent[unspent.length - 2].txid,
@@ -12336,6 +12336,8 @@ Platform = function (app, listofnodes) {
                                 })
 
                             }
+
+                            /// ++++
 
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, function (a, er, data) {
@@ -12543,12 +12545,13 @@ Platform = function (app, listofnodes) {
                             var i = 0;
 
                             txb.addOutput(embed.output, 0);
-
+                            ///?
                             outputs.push({
                                 amount : 0,
                                 deleted : true,
                                 address : address.address
                             })
+
 
                             self.sdk.node.transactions.get.unspent(function (unspents) {
 
@@ -12592,12 +12595,19 @@ Platform = function (app, listofnodes) {
                                 }
 
 
+                                ///// add donations
+
+
                                 txb.addOutput(address.address, Number((amount - (fees || 0)).toFixed(0)));
 
+
+                                ///// return funds
                                 outputs.push({
                                     address: address.address,
                                     amount: Number((amount - (fees || 0)).toFixed(0))
                                 })
+
+                                ///// add donations?
 
                                 _.each(inputs, function (input, index) {
                                     txb.sign(index, keyPair);
@@ -17833,6 +17843,18 @@ Platform = function (app, listofnodes) {
 
                                     delete me.temp
                                     delete me.relay
+
+
+                                    var cm = deep(app, 'modules.menu.module.restart')
+
+                                    if (cm) cm()
+
+                                    var c = deep(app, 'nav.clbks.history.navigation')
+
+                                    if (c) c()
+
+
+                                    
 
                                     me.rc++
                                 }

@@ -33,6 +33,7 @@
         "auto-launch": "^5.0.5",
         "body-parser": "^1.19.0",
         "clone-deep": "^4.0.1",
+        "compression": "^1.7.4",
         "deep-extend": "^0.6.0",
         "download-github-release": "^0.3.2",
         "electron-context-menu": "^2.4.0",
@@ -67,6 +68,7 @@
         "md5": "^2.3.0",
         "medium-editor": "^5.23.3",
         "mjml": "^4.6.3",
+        "ncp": "^2.0.0",
         "nedb": "^1.8.0",
         "node-autodetect-utf8-cp1251-cp866": "",
         "node-cmd": "^3.0.0",
@@ -97,11 +99,15 @@
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
-        "compression": "^1.7.4",
         "yuicompressor": "^2.4.8"
     },
     "build": {
         "productName": "Pocketnet",
+        "files": [
+            "**/*",
+            "!cordova${/*}",
+            "!external${/*}"
+        ],
         "extraFiles": [
             {
                 "from": "proxy16/cert",

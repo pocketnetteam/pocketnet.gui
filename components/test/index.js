@@ -213,13 +213,7 @@ var test = (function(){
 						userInfo.site.set(trim(tempInfo.site));
 						userInfo.image.set(tempInfo.image);
 						userInfo.addresses.set(tempInfo.addresses);
-
 						userInfo.ref.set(deep(ref, 'address') || '');
-
-						userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
-							return k.public
-						}))
-
 
 					var err  = userInfo.validation()
 
@@ -256,7 +250,6 @@ var test = (function(){
 					el.upanel.addClass('loading')
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
-
 						
 
 						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
@@ -264,6 +257,10 @@ var test = (function(){
 							topPreloader(50)
 
 							ed.presave(function(){
+
+								userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
+									return k.public
+								}))
 							
 								el.c.find('.errorname').fadeOut();
 

@@ -1252,7 +1252,11 @@ var menu = (function(){
 					data.loc = loc;
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
-					data.haschat = self.app.platform.matrixchat.core
+
+
+					var userinfo = deep(app, 'platform.sdk.user.storage.me')
+
+					data.haschat = self.app.platform.matrixchat.core && (userinfo && !(userinfo.temp && userinfo.relay))
 
 				if(p.state){
 

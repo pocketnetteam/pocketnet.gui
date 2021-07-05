@@ -43603,7 +43603,7 @@ class embed_PeerTubeEmbed {
             if (this.player.el_.classList.contains('vjs-youtube')) {
                 this.player.el_.querySelector('iframe').style.pointerEvents = 'none';
             }
-            this.player.el_.addEventListener('touchstart', (e) => {
+            this.player.el_.addEventListener('touchend', (e) => {
                 e.preventDefault();
                 this.player.one("loadedmetadata", (response) => {
                     duration = this.player.duration();

@@ -5,7 +5,9 @@ var package = require('./package.json');
 require('./js/functions.js');
 var uglifyJS = require("uglify-js");
 var uglifycss = require('uglifycss');
-
+var ncp = require('ncp').ncp;
+const _path = require('path');
+ncp.limit = 16;
 
 var args = {
 	test : false,
@@ -109,171 +111,184 @@ fs.exists(mapJsPath, function (exists) {
 			// path : './css/exported.less'
 		}
 
+		var cordova = {
+			path : './cordova/www',
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'index.cordova']
+		}
+
+
 		var _modules = _.filter(m, function(_m, mn){
 			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast') return true;
 			
 		})
 
+	
 
 		/*JOIN MODULES*/
 
-		lazyEach({
-			syncCallbacks : true,
-			array : _modules,
-			action : function(p){
-
-				var module = p.item;
-
-				var path = module.path || './';
-
-				var _csspath = (module.csspath || module.path) || './';
-
-				if(module.csspath) _csspath = "." + _csspath
-
-				path = path.replace("..", '.')
-				_csspath = _csspath.replace("..", '.')
-			
-				var modulepath = path + 'components/' + module.uri + '/index.js';
-				var csspath = _csspath + 'components/' + module.uri + '/index.css';
-
-				fs.exists(modulepath, function (exists) {
-					if(exists){
-
-
-						fs.readFile(modulepath, function read(err, data) {
-							if (err) {
-								throw err;
-							}
-
-							var minified = uglifyJS.minify(data.toString(), {
-								compress: {
-									passes: 2
+		var makePocketnet = function(_clbk){
+			lazyEach({
+				syncCallbacks : true,
+				array : _modules,
+				action : function(p){
+	
+					var module = p.item;
+	
+					var path = module.path || './';
+	
+					var _csspath = (module.csspath || module.path) || './';
+	
+					if(module.csspath) _csspath = "." + _csspath
+	
+					path = path.replace("..", '.')
+					_csspath = _csspath.replace("..", '.')
+				
+					var modulepath = path + 'components/' + module.uri + '/index.js';
+					var csspath = _csspath + 'components/' + module.uri + '/index.css';
+	
+					fs.exists(modulepath, function (exists) {
+						if(exists){
+	
+	
+							fs.readFile(modulepath, function read(err, data) {
+								if (err) {
+									throw err;
 								}
-							})
-
-							
-							
-
-							if(!minified.error && uglify){
-								data = minified.code
-							}
-							else
-							{
-								console.log('UglifyJS Fail: ' + minified.error, modulepath)
-							}
-							
-
-							modules.data = modules.data + "\n /*_____*/ \n" + data;
-
-							fs.exists(csspath, function (exists) {
-								if(exists){
-
-									console.log(csspath)
-
-									fs.readFile(csspath, function read(err, data) {
-										if (err) {
-											throw err;
-										}
-
-										data = data.toString().replaceAll("../..", "..");
-
-										cssmaster.data = cssmaster.data + "\n" + "/*" + csspath +"*/\n" + data;
-										exported.data = exported.data + "\n" + "/*" + csspath +"*/\n" + data;
-
-										p.success();
-									})
+	
+								var minified = uglifyJS.minify(data.toString(), {
+									compress: {
+										passes: 2
+									}
+								})
+	
+								
+								
+	
+								if(!minified.error && uglify){
+									data = minified.code
 								}
-
 								else
 								{
-									throw "notexist (CSS) " + module.csspath + ": " + csspath
-									p.success();
+									console.log('UglifyJS Fail: ' + minified.error, modulepath)
 								}
-							})
-
-
-							
-						});
-
-					}
-					else
-					{
-						console.log('module.uri', module.uri)
-						throw "notexist (CSS) " + module.uri
-					}
-				})
-
-			},
-			
-			all : {
-				success : function(){
-
-					console.log(modules.path)
-			
-					fs.writeFile(modules.path, modules.data, function(err) {
-
-						if(err) {
-
-							throw "Access not permitted " + modules.path
-						}
-
-						//console.log("Access permitted", item)
-
-						var arf = _.clone(m.__sourcesfirst || []);
-
-						var arl = _.clone(m.__sourceslast || []);
-
-						var ar = _.clone(m.__sources || []);
-
-						ar.push(modules.path.replace('./', ''));
-
-						var ver = _.clone(m.__vendor || []);
-
-						joinVendor(ver, function(){
-
-							console.log("joinVendor DONE")
-
-							joinScripts(arf, joinfirst, function(){
-
-								console.log("joinScriptsFirst DONE")
-
 								
-
-								joinTemplates(function(d){
-
-									join.data = join.data + "\n /*_____*/ \n" + d;
-
-									joinScripts(ar, join, function(){
-
-										console.log("joinScripts DONE")
-
-										joinScripts(arl, joinlast, function(){
-
-											console.log("joinScriptsLast DONE")
-
-											joinCss(function(){
-
-												console.log("joinCss DONE")
-
-												createTemplates()
-											})
-
+	
+								modules.data = modules.data + "\n /*_____*/ \n" + data;
+	
+								fs.exists(csspath, function (exists) {
+									if(exists){
+	
+										console.log(csspath)
+	
+										fs.readFile(csspath, function read(err, data) {
+											if (err) {
+												throw err;
+											}
+	
+											data = data.toString().replaceAll("../..", "..");
+	
+											cssmaster.data = cssmaster.data + "\n" + "/*" + csspath +"*/\n" + data;
+											exported.data = exported.data + "\n" + "/*" + csspath +"*/\n" + data;
+	
+											p.success();
 										})
-										
-									});
-
+									}
+	
+									else
+									{
+										throw "notexist (CSS) " + module.csspath + ": " + csspath
+										p.success();
+									}
 								})
-
-							})
+	
+	
+								
+							});
+	
+						}
+						else
+						{
+							console.log('module.uri', module.uri)
+							throw "notexist (CSS) " + module.uri
+						}
+					})
+	
+				},
+				
+				all : {
+					success : function(){
+	
+						console.log(modules.path)
+				
+						fs.writeFile(modules.path, modules.data, function(err) {
+	
+							if(err) {
+	
+								throw "Access not permitted " + modules.path
+							}
+	
+							//console.log("Access permitted", item)
+	
+							var arf = _.clone(m.__sourcesfirst || []);
+	
+							var arl = _.clone(m.__sourceslast || []);
+	
+							var ar = _.clone(m.__sources || []);
+	
+							ar.push(modules.path.replace('./', ''));
+	
+							var ver = _.clone(m.__vendor || []);
+	
+							joinVendor(ver, function(){
+	
+								console.log("joinVendor DONE")
+	
+								joinScripts(arf, joinfirst, function(){
+	
+									console.log("joinScriptsFirst DONE")
+	
+									
+	
+									joinTemplates(function(d){
+	
+										join.data = join.data + "\n /*_____*/ \n" + d;
+	
+										joinScripts(ar, join, function(){
+	
+											console.log("joinScripts DONE")
+	
+											joinScripts(arl, joinlast, function(){
+	
+												console.log("joinScriptsLast DONE")
+	
+												joinCss(function(){
+	
+													console.log("joinCss DONE")
+	
+													createTemplates().catch(e => {
+														
+													}).then( r => {
+														if(_clbk) _clbk()
+													})
+												})
+	
+											})
+											
+										});
+	
+									})
+	
+								})
+								
+							});
+	
 							
+													
 						});
-
-						
-												
-					});
+					}
 				}
-			}
-		})
+			})
+		}
 
 		var joinCss = function(clbk){
 			if(m.__css)
@@ -713,6 +728,11 @@ fs.exists(mapJsPath, function (exists) {
 			return Promise.all(promises)
 		}
 
+
+		makePocketnet(function(){
+			copycordova(cordova)
+		})
+
 		/**/
 	}
 	else
@@ -737,5 +757,60 @@ rand = function(min, max)
   max = parseInt(max);
   return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
+
+
+var helpers = {
+	clearfolder : function(directory, clbk){
+
+		fs.rmdir(directory, {
+			recursive : true
+		}, function(){
+
+
+			if (!fs.existsSync(directory)){
+				fs.mkdirSync(directory);
+			}
+
+			if(clbk) clbk()
+		})
+
+	}
+}
+
+var copycordova = function(options, clbk){
+	helpers.clearfolder(options.path, function(){
+		lazyEach({
+			sync : true,
+			array : options.copy,
+			action : function(p){
+	
+	
+				ncp(p.item, options.path + '/' + p.item, function (err) {
+	
+					if (err) {
+					  console.error(err);
+					}
+	
+					p.success();
+					
+				});
+	
+			},
+			
+			all : {
+				success : function(){
+	
+					console.log('cordova ready')
+	
+					if(clbk) clbk()
+	
+				}
+			}
+		})
+	})
+	
+	
+}
+
 
 String.prototype.replaceAll=function(a,b){return a?this.split(a).join(b):this};
