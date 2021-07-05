@@ -26,7 +26,7 @@ __map =  {
         "js/vendor/paste.js", //
         "js/vendor/jquery.md5.js",
 		"js/vendor/jquery.animate-number.js", //
-		"js/vendor/jquery.touchSwipe.min.js", //
+		"js/vendor/jquery.touchSwipe.js", //
         "js/vendor/joypixels.min.js", //
         "js/vendor/plyr.js", // later
         "js/vendor/reconnectingwebsocket.js", //
@@ -51,6 +51,7 @@ __map =  {
 		"js/vendor/underscore-min.js",  
 		"js/functionsfirst.js",  
 		"js/localization.js",
+		//"js/notifications.js",
 		"js/lib/client/system16.js",
 		"js/lib/client/api.js",
 		"js/_map.js",

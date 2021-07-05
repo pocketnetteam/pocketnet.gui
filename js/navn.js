@@ -576,7 +576,8 @@ Nav = function(app)
 
 						}
 						catch(e){
-							console.error("CANT DESTROY", p.href, current.module)
+							console.log("CANT DESTROY " + p.href)
+							console.error(e)
 						}
 					}
 
@@ -1225,7 +1226,7 @@ Nav = function(app)
 			pathname : function(){
 				var loc =  window.location; 
 
-				return loc.pathname.replace(options.navPrefix, '').replace(".html", "")
+				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "")
 			}
 
 		},

@@ -41,9 +41,6 @@ var navigation = (function(){
 
 				if(up) up()
 
-				if(self.app.modules.main.module){
-
-				}
 
 				_scrollTop(0, null, 0)
 			}
@@ -51,7 +48,6 @@ var navigation = (function(){
 
 		var renders = {
 			menu : function(href){
-
 
 				var indexkey = self.app.nav.api.backChainIndex()
 				
@@ -66,12 +62,9 @@ var navigation = (function(){
 					else{
 						k = indexkey + '?r=' + k
 					}
-					
 				}
 
-
 				var shw = parameters().video
-
 
 				var back = self.app.nav.api.backChainGet()
 
@@ -86,13 +79,22 @@ var navigation = (function(){
 						href : href,
 						lentakey : k,
 						indexkey : indexkey,
-						shw : shw
+						shw : shw,
+						haschat : self.app.platform.matrixchat.core
 					}
 					
 
 				}, function(p){
 
 					p.el.find('.toup').on('click', events.toup)
+
+					p.el.find('.matrixchat').on('click', function(){
+
+						var show = deep(self, 'app.platform.matrixchat.core.apptochat')
+
+						if (show) show()
+
+					})
 					
 				})
 			},
@@ -123,13 +125,14 @@ var navigation = (function(){
 			
 			self.app.nav.clbks.history.navigation = function(href){
 
-				console.log("NAVI")
-
-
 				el.c.removeClass('scrolled')
 				renders.menu(self.app.nav.get.pathname())
 
 			}
+
+			el.c.find('.fakem').on('click', function(){
+				$('html').removeClass('scrollmodedown')
+			})
 
 			
 			window.addEventListener('scroll', events.scroll)
@@ -158,7 +161,14 @@ var navigation = (function(){
 
 			getdata : function(clbk, p){
 
+				console.log("P", p)
+
+
+
+				
+
 				var data = {};
+
 
 				w = $(window)
 

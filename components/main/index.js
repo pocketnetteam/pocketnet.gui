@@ -62,12 +62,12 @@ var main = (function(){
 					}
 					
 
-					if(phase != 'move' && window.cordova){
+					if(phase == 'end'){
 						if(direction == 'down'){
 							$('html').removeClass('scrollmodedown')
 						}
 
-						if(direction == 'up'){
+						if(direction == 'up' && el.lentacell.scrollTop() > 200){
 							$('html').addClass('scrollmodedown')
 						}
 					}
@@ -814,6 +814,12 @@ var main = (function(){
 				if (self.app.scrolling){
 	
 					el.lentacell.on('scroll', function(){
+
+
+						if (!el.lentacell || el.lentacell.scrollTop() < 200){
+							$('html').removeClass('scrollmodedown')
+						}
+
 						_.each(self.app.scrolling.clbks, function(c){
 							if (el.lentacell)
 								c(el.lentacell.scrollTop())
@@ -1039,8 +1045,10 @@ var main = (function(){
 
 			destroy : function(){
 
-				el.w.off('scroll', actions.addbuttonscroll)
-
+				if (el.w)
+					el.w.off('scroll', actions.addbuttonscroll)
+					
+				$('html').removeClass('scrollmodedown')
 
 				renders.post(null)
 
@@ -1098,7 +1106,7 @@ var main = (function(){
 				self.app.el.footer.removeClass('workstation')
 
 				$('html').removeClass('nooverflow');
-
+				$('html').removeClass('showmain');
 				el = {}
 				
 				if (self.app.scrolling){
@@ -1142,7 +1150,7 @@ var main = (function(){
 				if (isMobile())
 					$('html').addClass('nooverflow');
 
-				
+					$('html').addClass('showmain');
 
 				initEvents();
 
@@ -1194,8 +1202,6 @@ var main = (function(){
 					})
 	
 				}
-				
-				
 				
 				
 			}

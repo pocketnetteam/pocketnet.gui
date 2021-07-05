@@ -2408,11 +2408,11 @@ var wallet = (function(){
 
 				el.c.find('.circularprogressWrapper').html(progress.el);
 
-				var trueshold = 200
+				var trueshold = 80
 
 				var w = $(window)
 
-				var parallax = new SwipeParallax({
+				var parallax = new SwipeParallaxNew({
 
 					el : el.c.find('.ntf'),
 
@@ -2425,12 +2425,15 @@ var wallet = (function(){
 							positionclbk : function(px){
 								var percent = Math.abs(px) / trueshold;
 
+
+								console.log("PX", px)
+
 								if (px >= 0){
 
 									progress.options.text = {
 										value: ''
 									};
-
+									cc.fadeIn(1)
 									progress.update(percent * 100);
 
 
@@ -2439,11 +2442,15 @@ var wallet = (function(){
 									//tp.css('opacity', 1 -  (4 * percent))
 
 								}
+								else{
+									progress.renew()
+									cc.fadeOut(1)
+								}
 
 							},
 
 							constraints : function(){
-								if(w.scrollTop() == 0){
+								if(w.scrollTop() <= 0){
 									return true;
 								}
 							},
@@ -2452,11 +2459,12 @@ var wallet = (function(){
 							trueshold : trueshold,
 							clbk : function(){
 
+								progress.update(0);
+								cc.fadeOut(1)
 								self.app.platform.sdk.notifications.getNotifications()
 
 								self.app.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
 									make()
-									parallax.renew()
 								})
 
 							}

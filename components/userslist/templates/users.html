@@ -61,9 +61,8 @@ _.each(addresses, function(address){
 		<div class="user <%-_class%>" address="<%-address%>">
 			<div class="addressTable table" address="<%-address%>">
 				<div class="iconWrapper">
-					<% if(!app.curation()) {%>
+					
 					<a href="<%-app.platform.api.authorlink(address)%>">
-					<% } %>
 						<div class="icon">
 
 							<% 
@@ -81,11 +80,11 @@ _.each(addresses, function(address){
 								<% } %>
 							</div>
 						</div>
-					<% if(!app.curation()) {%></a><% } %>
+					</a>
 				</div>
 
 				<div class="label">
-					<% if(!app.curation()) {%><a href="<%-app.platform.api.authorlink(address)%>"><% } %>
+					<a href="<%-app.platform.api.authorlink(address)%>">
 
 						<div class="name">						
 							<%- app.platform.api.name(address) || address %>							

@@ -10,11 +10,22 @@
 
 		<div class="linkButtonWrapper">
 
-			<% if(back) {   %>
+			<% if(back) {  
 				
-					<a href="<%- addtouri(back.href, 'back', 'true') %>" fast="fast" handler="true">
+				var ur = addtouri(back.href, 'back', 'true')
+
+				
+				
+				%>
+				
+					<a href="<%- ur %>" fast="fast" handler="true">
 						<div class="iconWrapper">
-							<i class="fas fa-chevron-left"></i>
+							<% if(ur.indexOf('index') > -1 && !self.app.curation()){ %>
+								<i class="fas fa-home"></i>
+							<% } else { %> 
+								<i class="fas fa-chevron-left"></i>
+							<% } %>
+							
 						</div>
 					</a>
 				
@@ -28,33 +39,45 @@
 						
 						if(state){ %>
 
+							<% if(self.app.curation()) {%>
 
-							<% if(typeof shw != 'undefined' && shw) {%>
-								<a href="index" fast="fast">
+								<a href="userpage?id=wallet" fast="fast">
 									<div class="iconWrapper">
-										<i class="fas fa-rss"></i>
+										<i class="fas fa-wallet"></i>
 									</div>
 								</a>
 
-								
-							<% } else { %>
+							<% } else { %> 
 
-								<a href="index?video=1" fast="fast">
-									<div class="iconWrapper">
-										<i class="fas fa-play-circle"></i>
-									</div>
-								</a>
+								<% if(typeof shw != 'undefined' && shw) {%>
 
+									<a href="index" fast="fast">
+										<div class="iconWrapper">
+											<i class="fas fa-rss"></i>
+										</div>
+									</a>
+	
+									
+								<% } else { %>
+	
+									<a href="index?video=1" fast="fast">
+										<div class="iconWrapper">
+											<i class="fas fa-play-circle"></i>
+										</div>
+									</a>
+	
+									
+								<% } %>
 								
 							<% } %>
 
+							
+
+							
+
 							<!--
 					
-							<a href="userpage?id=wallet" fast="fast">
-								<div class="iconWrapper">
-									<i class="fas fa-wallet"></i>
-								</div>
-							</a> -->
+							 -->
 
 						<% } else { %> 
 
@@ -80,14 +103,30 @@
 						<% } %>
 				
 					<% } else { 
+
+						
 						
 						%> 
 
-						<a href="<%- lentakey %>" fast="fast">
-							<div class="iconWrapper">
-								<i class="fas fa-chevron-left"></i>
-							</div>
-						</a>
+						<% if(self.app.curation()) {%>
+
+							<a href="userpage?id=wallet" fast="fast">
+								<div class="iconWrapper">
+									<i class="fas fa-wallet"></i>
+								</div>
+							</a>
+
+						<% } else { %> 
+
+							<a href="<%- lentakey %>" fast="fast">
+								<div class="iconWrapper">
+									<i class="fas fa-home"></i>
+								</div>
+							</a>
+							
+						<% } %>
+
+						
 						
 					<%}%>
 

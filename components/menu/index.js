@@ -8,12 +8,10 @@ var menu = (function(){
 
 		var el,
 			searchBlurTimer = null,
-			autoUpdate = null,
 			sitenameToNav = null,
 			plissing = null,
 			authorForSearch = null,
-			menusearch = null,
-			autoUpdateWallet = null;
+			menusearch = null;
 
 		var loc = new Parameter({
 
@@ -60,21 +58,7 @@ var menu = (function(){
 		var balanceHash;
 
 		var actions = {
-			/*extraLinks : function(){
-				self.app.nav.clbks.history.menu = events.hambclose.click;
-			},*/
-			autoUpdate : function(){
-
-				self.app.user.isState(function(state){
-
-					if(state){
-
-
-					}
-
-				})
-
-			},
+			
 
 			elswidth : function(){
 
@@ -189,6 +173,24 @@ var menu = (function(){
 					$(window).off('scroll', actions.sitenameToNav)
 
 					delete self.app.nav.clbks.history.menu
+				}
+			},
+
+			chats : {
+				click : function(){
+
+					var show = deep(self, 'app.platform.matrixchat.core.apptochat')
+
+					if (show) show()
+
+				},
+
+				init : function(el){
+
+					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
+
+						actions.ah(el, count)
+					}
 				}
 			},
 
@@ -1132,7 +1134,6 @@ var menu = (function(){
 
 			ParametersLive([loc], el.c);
 
-			autoUpdate = setInterval(actions.autoUpdate, 100);
 
 
 
@@ -1252,6 +1253,11 @@ var menu = (function(){
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
 
+
+					var userinfo = deep(app, 'platform.sdk.user.storage.me')
+
+					data.haschat = self.app.platform.matrixchat.core && (userinfo && !(userinfo.temp && userinfo.relay))
+
 				if(p.state){
 
 					var addr = self.sdk.address.pnet().address
@@ -1298,12 +1304,6 @@ var menu = (function(){
 
 				delete self.app.platform.sdk.registrations.clbks.menu
 
-				if(autoUpdate){
-					clearInterval(autoUpdate);
-				}
-
-				if(autoUpdateWallet)
-					clearInterval(autoUpdateWallet);
 
 				_.each(events, function(e){
 

@@ -1,0 +1,91 @@
+{
+  "name": "pocketnet.app",
+  "displayName": "Pocketnet",
+  "version": "1.0.0",
+  "description": "A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.",
+  "main": "index.js",
+  "scripts": {
+    "android-add" : "cordova platform add android",
+    "ios-add" : "cordova platform add ios@5.1.1",
+    "android-build": "cordova build android --prod --release --buildConfig build.json --verbose",
+    "android-run": "cordova run android --buildConfig build.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cordova-ios": "^5.1.1",
+    "cordova-plugin-badge": "0.8.8",
+    "cordova-plugin-gallery-refresh": "^1.0.61",
+    "cordova-plugin-inappbrowser": "3.0.0",
+    "cordova-plugin-keyboard": "^1.2.0",
+    "cordova-plugin-screen-orientation": "^3.0.1",
+    "cordova-support-android-plugin": "1.0.1",
+    "es6-promise-plugin": "^4.2.2"
+  },
+  "devDependencies": {
+    "cordova-android": "^9.0.0",
+    "cordova-plugin-androidx": "^3.0.0",
+    "cordova-plugin-androidx-adapter": "^1.1.3",
+    "cordova-plugin-camera": "^2.1.1",
+    "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-device-orientation": "^1.0.7",
+    "cordova-plugin-firebasex": "^11.0.3",
+    "cordova-plugin-network-information": "^1.2.1",
+    "cordova-plugin-splashscreen": "^3.2.2",
+    "cordova-plugin-vibration": "^2.1.6",
+    "cordova-plugin-whitelist": "^1.3.3"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-camera": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-device-orientation": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-vibration": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-screen-orientation": {},
+      "cordova-plugin-badge": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-gallery-refresh": {},
+      "cordova-plugin-keyboard": {},
+      "cordova-plugin-wkwebview-engine": {},
+      "cordova-plugin-wkwebview-file-xhr": {},
+      "cordova-plugin-wkwebviewxhrfix": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-firebasex": {
+        "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
+        "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
+        "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
+        "ANDROID_ICON_ACCENT": "#FF00FFFF",
+        "ANDROID_FIREBASE_PERFORMANCE_MONITORING": "false",
+        "ANDROID_PLAY_SERVICES_TAGMANAGER_VERSION": "17.0.0",
+        "ANDROID_PLAY_SERVICES_AUTH_VERSION": "18.1.0",
+        "ANDROID_FIREBASE_ANALYTICS_VERSION": "17.5.0",
+        "ANDROID_FIREBASE_MESSAGING_VERSION": "20.3.0",
+        "ANDROID_FIREBASE_CONFIG_VERSION": "19.2.0",
+        "ANDROID_FIREBASE_PERF_VERSION": "19.0.9",
+        "ANDROID_FIREBASE_AUTH_VERSION": "19.4.0",
+        "ANDROID_FIREBASE_INAPPMESSAGING_VERSION": "19.1.1",
+        "ANDROID_FIREBASE_FIRESTORE_VERSION": "21.7.0",
+        "ANDROID_FIREBASE_CRASHLYTICS_VERSION": "17.2.2",
+        "ANDROID_FIREBASE_CRASHLYTICS_NDK_VERSION": "17.2.2",
+        "ANDROID_GSON_VERSION": "2.8.6",
+        "ANDROID_FIREBASE_PERF_GRADLE_PLUGIN_VERSION": "1.3.1"
+      },
+      "cordova-plugin-x-socialsharing": {
+        "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
+      },
+      "cordova-plugin-androidx": {},
+      "cordova-plugin-androidx-adapter": {}
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}

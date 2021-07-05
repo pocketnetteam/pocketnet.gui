@@ -4264,10 +4264,9 @@ Platform = function (app, listofnodes) {
 
             init : function(){
 
-
-                return Promise.reject('notnow')
-                
                 return self.sdk.keys.need().then(me => {
+
+                    console.log("MEW")
 
                     if(self.loadingWithErrors){
                         return Promise.reject('loadingWithErrors')
@@ -4288,6 +4287,8 @@ Platform = function (app, listofnodes) {
                         }))
 
                     var err = userInfo.validation()
+
+                    console.log("errerrerrerr", err)
 
                     if (err){
 
@@ -10202,6 +10203,7 @@ Platform = function (app, listofnodes) {
 
                         retry(function () {
 
+
                             anotherloading = _.filter(anotherloading, function (id) {
                                 if (loading[id]) return true;
                             })
@@ -11966,7 +11968,7 @@ Platform = function (app, listofnodes) {
                         if (loadingAddresses.length) {
 
                             retry(function () {
-
+                                
                                 var _loadingAddresses = _.filter(addresses, function (address) {
                                     if (s.unspentLoading[address])
 
@@ -12289,7 +12291,16 @@ Platform = function (app, listofnodes) {
 
                         }
 
+                        console.log("obj", obj)
 
+                        if (obj.checkloaded && obj.checkloaded()){
+                            console.log("HERE")
+                            if (clbk) {
+                                clbk(null, 'resourses')
+                            }
+
+                            return;
+                        }
 
                         self.sdk.node.transactions.get.unspent(function (unspent) {
 
@@ -12324,7 +12335,7 @@ Platform = function (app, listofnodes) {
 
                                 }]
                             }
-
+                            //remove for donations
                             if (unspent.length > 60) {
                                 inputs.push({
                                     txId: unspent[unspent.length - 2].txid,
@@ -12334,6 +12345,8 @@ Platform = function (app, listofnodes) {
                                 })
 
                             }
+
+                            /// ++++
 
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, function (a, er, data) {
@@ -12541,12 +12554,13 @@ Platform = function (app, listofnodes) {
                             var i = 0;
 
                             txb.addOutput(embed.output, 0);
-
+                            ///?
                             outputs.push({
                                 amount : 0,
                                 deleted : true,
                                 address : address.address
                             })
+
 
                             self.sdk.node.transactions.get.unspent(function (unspents) {
 
@@ -12590,12 +12604,19 @@ Platform = function (app, listofnodes) {
                                 }
 
 
+                                ///// add donations
+
+
                                 txb.addOutput(address.address, Number((amount - (fees || 0)).toFixed(0)));
 
+
+                                ///// return funds
                                 outputs.push({
                                     address: address.address,
                                     amount: Number((amount - (fees || 0)).toFixed(0))
                                 })
+
+                                ///// add donations?
 
                                 _.each(inputs, function (input, index) {
                                     txb.sign(index, keyPair);
@@ -16520,11 +16541,11 @@ Platform = function (app, listofnodes) {
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
-                if (app.curation()) {
+                /*if (app.curation()) {
                     link = ''
                     clink = ''
                     gotoprofile = false
-                }
+                }*/
 
 
                 h += '<div class="cwrapper table">\
@@ -17831,6 +17852,18 @@ Platform = function (app, listofnodes) {
 
                                     delete me.temp
                                     delete me.relay
+
+
+                                    var cm = deep(app, 'modules.menu.module.restart')
+
+                                    if (cm) cm()
+
+                                    var c = deep(app, 'nav.clbks.history.navigation')
+
+                                    if (c) c()
+
+
+
 
                                     me.rc++
                                 }
@@ -19961,7 +19994,7 @@ Platform = function (app, listofnodes) {
             self.app.errors.clbks.platform = self.appstate
         }
 
-        initOnlineListener()
+        initOnlineListener() // /remove for test
 
         self.app.api.wait.ready('use', 3000).then(r => {
 
@@ -20130,7 +20163,7 @@ Platform = function (app, listofnodes) {
                             self.sdk.chats.load,
                             self.sdk.user.subscribeRef
                         ], function(){
-            
+                            //app.notifications.subscribe()
                         })
 
 
@@ -20167,8 +20200,13 @@ Platform = function (app, listofnodes) {
     }
 
     self.matrixchat = {
+        el : null,
         inited : false,
         initing : false,
+
+        clbks : {
+            ALL_NOTIFICATIONS_COUNT : {}
+        },
         destroy : function(){
             if (window.matrixchat){
                 window.matrixchat.destroy()
@@ -20176,7 +20214,12 @@ Platform = function (app, listofnodes) {
     
             $('#matrix').empty();
 
+            self.matrixchat.el = null
             self.matrixchat.inited = false
+
+            self.matrixchat.clbks = {
+                ALL_NOTIFICATIONS_COUNT : {}
+            }
         },
 
 
@@ -20215,12 +20258,7 @@ Platform = function (app, listofnodes) {
 
                     var addresses = self.testchataddresses;
 
-                    return
-
-                    if (addresses.indexOf(a) > -1 || window.testpocketnet) {
-
-                        if (!isMobile()){
-
+                    if (window.testpocketnet) {
 
                             self.matrixchat.import(function(){
 
@@ -20228,48 +20266,117 @@ Platform = function (app, listofnodes) {
         
                                 var privatekey = self.app.user.private.value.toString('hex');
                     
-                                var matrix = `<div class="wrapper">
+                                var matrix = `<div class="wrapper matrixchatwrapper">
                                     <matrix-element
                                         address="${a}"
                                         privatekey="${privatekey}"
-                                        pocketnet="true"   
+                                        pocketnet="`+(isMobile() ? '' : 'true')+`"
+                                        mobile="`+(isMobile() ? 'true' : '')+`" 
                                     >
                                     </matrix-element>
                                 </div>`
             
                                 $('#matrix').append(matrix);   
+
+                                self.matrixchat.el = $('.matrixchatwrapper')
+                                self.matrixchat.initevents()
                                 
                             }, null, app);
 
                                   
                             
-                        }
         
                     }
                 }
             })
         },
 
+        initevents : function(){
+            if (self.matrixchat.el){
+
+                if(isMobile()){
+
+					self.matrixchat.el.swipe({
+						allowPageScroll: "auto", 
+						swipeLeft : function(e, phase, direction, distance){
+
+                            if (self.matrixchat.core)
+                                self.matrixchat.core.backtoapp()
+						},
+					})
+	
+				}
+
+            }
+        },
+
         link : function(core){
 
-
             core.update({
-                block : self.currentBlock
+                block : {
+                    height : self.currentBlock
+                }
             })
 
+            core.backtoapp = function(){
+                if (self.matrixchat.el)
+                    self.matrixchat.el.removeClass('active')
+
+                if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = true }
+            }
+
+            core.apptochat = function(){
+                if (self.matrixchat.el)
+                    self.matrixchat.el.addClass('active')
+
+                if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = false }
+            }
+
+            self.matrixchat.core = core
+            self.matrixchat.core.hiddenInParent = true
+
+            core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
             self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
 
                 core.update({
-                    block : self.currentBlock
+                    block : {
+                        height : self.currentBlock
+                    }
                 })
 
             }
+
+            var cm = deep(app, 'modules.menu.module.restart')
+
+            if (cm) cm()
+
+            var c = deep(app, 'nav.clbks.history.navigation')
+
+            if (c) c()
         },
 
-        unlink : function(){
+        unlink : function(){    
+
+            if (self.matrixchat.core){ 
+                self.matrixchat.core.hiddenInParent = false
+                self.matrixchat.core.destroyExternalLink()
+            
+            }
+
+
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
+            delete self.matrixchat.core
+
+
+            var cm = deep(app, 'modules.menu.module.restart')
+
+            if (cm) cm()
+
+            var c = deep(app, 'nav.clbks.history.navigation')
+
+            if (c) c()
         }
     }
 

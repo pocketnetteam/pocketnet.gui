@@ -1378,6 +1378,11 @@ UserInfo = function(){
 		self.addresses.set()
 	}
 
+	self.checkloaded = function(){
+		//console.log("self.image.v.indexOf('data:image')", self.image.v.indexOf('data:image'))
+		return self.image.v.indexOf('data:image') > -1
+	}
+
 	self.addresses = {
 		set : function(_v){
 

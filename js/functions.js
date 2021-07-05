@@ -639,26 +639,28 @@
 
 				var directions = {}
 
-				var tr = 100;
+				var c = wnd.find('.wndcontent')
+
+				var tr = 1;
 
 					directions[dir] = {
-						trueshold : tr,
+						trueshold : p.trueshold || tr,
 
-						mintrueshold : p.swipeMintrueshold || 0,
+						mintrueshold : p.swipeMintrueshold || 1,
 
 						positionclbk : function(px){
-							var percent = Math.abs((tr - Math.abs(px)) / tr);
+							
+							
 
-							//if (percent > 0){
+						},
 
-								wnd.css('opacity', percent) 
-							//}
-
+						constraints : function(){
+							if(c.scrollTop() == 0) return true
 						},
 
 						clbk : function(){
 
-							//wnd.fadeOut(tr)
+							wnd.fadeOut(tr)
 
 							setTimeout(function(){
 								actions.close(true)	
@@ -670,16 +672,23 @@
 
 					//if(dir == 'left' || dir == 'right') directions[dir].reverse = true
 					
-
-				var parallax = new SwipeParallax({
+				var parallax = new SwipeParallaxNew({
 
 					allowPageScroll : 'vertical',
 
-					el : wnd.find('.wndinner'),
+					el : c,
 
 					directions : directions
 
 				}).init()
+
+
+				/*wnd.find('.wndinner').swipe({
+					allowPageScroll: "auto", 
+					swipeDown : function(e, phase, direction, distance){
+						actions.close(true)	
+					},
+				})*/
 
 				/*wnd.swipe( {
 					
@@ -730,7 +739,6 @@
 				}
 
 				
-				$('#habla_beta_container_do_not_rely_on_div_classes_or_names').css('display', "block");
 			},
 
 			hide : function(cl, key) {
@@ -6403,6 +6411,7 @@
 		}
 
 		var findDirection = function(_d){
+
 			return _.max(p.directions, function(direction, i){
 				var d = nullbydirection(_d, i)	
 
@@ -6433,22 +6442,30 @@
 		var animation = function(ap, options, direction){
 
 			if(!options) options = {}
+
+			
+			if (self.animation){
+				self.animation.stop()
+			}
 			
 			if(p.prop == 'translate'){
 
 				var v = (ap.x || ap.y || 0);
 
-				p.el.css({transition: "transform " + animatedurations + " ease"});
+				/*p.el.css({transition: "transform " + animatedurations + " ease"});*/
 
-				if (ap.y){
+				/*if (ap.y){
 					p.el.css("transform","translate3d(0, "+ap.y+", 0)");
 				}
 				else{
 					p.el.css("transform","translate3d("+ap.x+", 0, 0)");
-				}
+				}*/
+
+				p.el.css({transform: ""});
+				p.el.css({transition: ""});
 				
 
-				var td = 16;
+				/*var td = 16;
 				var stepd = 16 / animateduration;
 				var step = 0;
 
@@ -6460,9 +6477,9 @@
 
 						if (options.step){
 
-							var s = ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
+							var s = z //ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
 
-							s = s * p.directions[direction].trueshold
+							//s = s * p.directions[direction].trueshold
 
 							options.step(s)	
 						}
@@ -6478,31 +6495,28 @@
 							p.el.css({transition: ""});
 						}
 
-						
-
-						if(this.interval){
-							clearInterval(this.interval)
-							this.interval = null;
+						if(self.animation.interval){
+							clearInterval(self.animation.interval)
+							self.animation.interval = null;
 						}
 						
 					}
-				}
+				}*/
 
-				setTimeout(function(){
 
-					if (self.animation)
-
-						self.animation.stop();
+					/*if (self.animation)
+						self.animation.stop()*/;
 
 					if (options.complete)
 						options.complete()
 
-				}, animateduration)
 
 			}
-			else{
+
+
+			/*else{
 				self.animation = p.el.animate(ap, options);	
-			}
+			}*/
 		}
 
 		var parseStart = function(direction){
@@ -6529,10 +6543,9 @@
 
 			var prop = directiontoprop(direction);
 
-			var value = ease.inOutCubic(_value / p.directions[direction].trueshold)
+			var value = _value// ease.inOutCubic(_value / p.directions[direction].trueshold)
 
-			value = value * p.directions[direction].trueshold
-
+			//value = value * p.directions[direction].trueshold
 
 			if (p.prop != 'translate'){
 				p.el.css(prop, value + 'px');	
@@ -6546,8 +6559,6 @@
 				if(prop == 'y'){
 					p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
 				}
-
-				
 			}
 		}
 
@@ -6563,7 +6574,10 @@
 				ap[css] =  upborder + 'px'
 
 			animation(ap, {
-				dontstop : true
+				dontstop : true,
+				compele : function(){
+					self.renew()
+				}
 			}, direction)
 		}
 
@@ -6596,8 +6610,7 @@
 					}
 				},
 				compele : function(){
-					self.lastDirection = null;
-					self.animation = null;
+					self.renew()
 				}
 			}, direction)
 		}
@@ -6608,7 +6621,13 @@
 		self.ended = false;
 
 		self.renew = function(){
+			self.lastDirection = null;
+			self.animation = null;
+
 			self.ended = false;
+
+			if (self.animation)
+				self.animation.stop();
 		}
 
 		self.opposite = function(dir, dir2){
@@ -6625,7 +6644,7 @@
 			var mainDirection = null;
 
 			var mintruesholdGone = false;
-
+			console.log("p", p)
 			p.el.swipe({
 
 				allowPageScroll : p.allowPageScroll,
@@ -6641,7 +6660,9 @@
 
 
 					if (self.ended) return false	
-					
+
+
+					console.log('phase', phase)
 
 					if (phase == 'start'){
 
@@ -6649,13 +6670,15 @@
 
 						startMargin = 0;
 
+						self.renew()
+
+						/*console.log('self.lastDirection', self.lastDirection)
 						if (self.lastDirection){
 							startMargin = parseStart(self.lastDirection) 
 
 							self.animation.stop();
-							self.lastDirection = null;
-							self.animation = null;
-						}
+							self.renew()
+						}*/
 
 						
 						return true
@@ -6671,17 +6694,15 @@
 							y : m.last.y - m.start.y + startMargin
 						}
 
-
 						if(!_d.x && !_d.y) return true
 
 						var direction = findDirection(_d)
-
 
 						if (direction){
 
 							if (direction.constraints && !direction.constraints()) {
 
-								if(mainDirection){
+								if (mainDirection){
 									self.backup(mainDirection.i)	
 									mainDirection = null;
 								}
@@ -6722,10 +6743,7 @@
 							mainDirection = direction
 							var d = nullbydirection(_d, direction.i)	
 
-							
-
 							var dp = (d.x || d.y || 0);
-
 
 							if (!mintruesholdGone && Math.abs(dp + startMargin) < (direction.mintrueshold || 0)){
 								return true
@@ -6733,7 +6751,7 @@
 
 							mintruesholdGone = true;
 
-							if (Math.abs(dp) >= (direction.trueshold || 90)){
+							/*if (Math.abs(dp) >= (direction.trueshold || 1)){
 
 								self.ended = true
 
@@ -6742,14 +6760,12 @@
 								else{
 									self.backup(mainDirection.i)
 								}
-
-								if (direction.clbk)
-									direction.clbk()
+								
 
 								mainDirection = null;
 
 								return false;
-							}
+							}*/
 
 							if (direction.positionclbk){
 								direction.positionclbk(dp)
@@ -6770,9 +6786,24 @@
 					}
 
 					if(phase == 'cancel' || phase == 'end'){
+
 						
 						if (mainDirection){
-							self.backup(mainDirection.i)							
+
+							console.log('_direction == mainDirection', _direction, mainDirection)
+							
+
+							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
+
+								
+								mainDirection.clbk()
+							}
+								
+							if (mainDirection.positionclbk)
+								mainDirection.positionclbk(0)
+
+							self.backup(mainDirection.i)	
+							
 						}
 
 						else{
@@ -6792,7 +6823,134 @@
 			return self
 		}
 
-		self.init()
+		return self;
+	}
+
+
+	SwipeParallaxNew = function(p){
+		if(!p) p = {};
+
+			p.directions || (p.directions = {})
+
+			_.each(p.directions, function(d,i){
+				d.i = i
+			})
+
+		var self = this;
+		
+		var directiontoprop = function(direction, value){
+
+			if(direction == 'up') return 'y'
+			if(direction == 'down') return 'y'
+			if(direction == 'left') return 'x'
+			if(direction == 'right') return 'x'
+			
+		}
+		
+		var set = function(direction, value){
+
+			var prop = directiontoprop(direction);
+
+			if (prop == 'x'){
+				p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
+			}
+
+			if (prop == 'y'){
+				p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
+			}
+		}
+
+		var applyDirection = function(direction, v){
+			if (direction.positionclbk){
+				direction.positionclbk(v)
+			}
+		}
+
+		self.clear = function(){
+			p.el.css({transform: ""});
+			p.el.css({transition: ""});
+			
+			_.each(p.directions, function(d){
+				applyDirection(d, 0)
+			})
+		}
+
+		self.backfast = function(){
+
+			_.each(p.directions, function(d){
+				if (d.positionclbk)
+					d.positionclbk(0)
+			})
+		}
+
+		self.init = function(){
+
+			var mainDirection = null;
+
+			p.el.swipe({
+				allowPageScroll : p.allowPageScroll,
+				swipeStatus : function(e, phase, direction, distance){
+
+					console.log('direction', direction, phase)
+
+					if (mainDirection && mainDirection.i != direction){
+						phase = 'cancel'
+						direction = mainDirection.i
+					}
+
+					if(phase == 'cancel' || phase == 'end'){
+
+						if (mainDirection){
+
+							if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
+								mainDirection.clbk()
+							}
+							
+						}
+
+						self.clear()	
+
+					}
+
+					if(!direction) return
+
+					if(!p.directions[direction]){
+						return
+					}
+
+					var dir = p.directions[direction]
+
+					if (dir.constraints && !dir.constraints()) {
+
+						if (mainDirection){
+							mainDirection = null;
+						}
+
+						return false
+					}
+
+					if (phase == 'start'){
+						mainDirection = null
+					}
+					
+					if (phase == 'move'){
+						if (distance > 20){
+							mainDirection = dir
+
+							applyDirection(mainDirection, distance)
+
+							set(mainDirection.i, distance)
+						}
+					}
+
+					
+					
+
+				},
+			})
+
+			return self
+		}
 
 		return self;
 	}
@@ -10443,8 +10601,9 @@ if(typeof window != 'undefined'){
 				// When zoom out animation is done, completely remove the splash screen
 				setTimeout(() => {
 					// Clear interval if needed
-					if (splashScreeninterval != undefined)
+					if (splashScreeninterval != undefined){
 						clearInterval(splashScreeninterval);
+					}
 					// Completely remove the splashscreen
 					splashScreen.remove();
 				}, zoomOutDuration * 2);

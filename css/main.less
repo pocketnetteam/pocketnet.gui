@@ -52,7 +52,7 @@ html {
     }
 
 
-    
+
 }
 
 .joypixels,
@@ -1910,6 +1910,21 @@ input[type=radio].radio:checked + label {
         display: none;
     }
 }
+
+.is-top-left{
+    padding : @rhythm;
+
+    .notificationWrapper{
+        width: 100%;
+        box-shadow: 0 5px 7px -5px rgba(0,0,0,.4);
+
+        .m-message{
+            border : 0;
+        }
+    }
+    
+}
+    
 
 .editable{
     display: table;
@@ -4443,6 +4458,28 @@ input[type=radio].radio:checked + label {
 	}
 }
 
+html{
+    &.mobile{
+        .matrixchatwrapper{
+            position: fixed;
+            left : -100%;
+            top : 0;
+            right: 100%;
+            bottom : 0;
+            background: #fff;
+            .transition(0.3s);
+            z-index: 10000;
+            .shadowSmall();
+    
+            &.active{
+                left : 0;
+                right: 0;
+                opacity: 1;
+            }
+        }
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .horizontalLentaWrapper{
 
@@ -4458,6 +4495,9 @@ input[type=radio].radio:checked + label {
            
         }
     }
+
+
+   
     
 }
 
@@ -5598,6 +5638,26 @@ input[type=radio].radio:checked + label {
 @media only screen and (max-width: 768px) {
 
     html{
+
+        #panelWrapper{
+            position: absolute;
+            top : 65px;
+            left: 0;
+            right: 0;
+            padding-top : 0;
+            z-index: 1;
+        }
+
+        .contentWrapper{
+            padding-top : 65px;
+        }
+
+        &.toppanelshowed{
+            .contentWrapper{
+                padding-top : 110px;
+            }
+        }
+
         &.scrollmodedown{
 
             #menu .menuWrapper{
@@ -5607,10 +5667,26 @@ input[type=radio].radio:checked + label {
             #panelWrapper{
                 padding-top: 0;
                 display: none;
+                
             }
     
             #navigation{
-                bottom : -60px;
+                bottom : -90px;
+
+                .fakem{
+                    display: block;
+                    position: fixed;
+                    left : 0;
+                    bottom : 0;
+                    right: 0;
+                    height: 90px;
+                }
+            }
+        }
+
+        #navigation{
+            .fakem{
+                display: none;
             }
         }
     }

@@ -2050,6 +2050,7 @@ var lenta = (function(){
 				
 			},
 			comments : function(txid, init, showall, preview){
+				
 				if(essenseData.comments == 'no') return
 
 				if(video) return
@@ -3353,7 +3354,7 @@ var lenta = (function(){
 
 				
 
-				/*var cc = el.c.find('.circularprogress');
+				var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
 
 				var progress = new CircularProgress({
@@ -3378,9 +3379,9 @@ var lenta = (function(){
 
 				var tp = el.c.find('.loadprev')
 
-				var trueshold = 200*/
-				/*
-				var parallax = new SwipeParallax({
+				var trueshold = 80
+				
+				var parallax = new SwipeParallaxNew({
 
 					el : el.c.find('.shares'),
 
@@ -3391,7 +3392,6 @@ var lenta = (function(){
 					directions : {
 						down : {
 							cancellable : true,
-							
 
 							positionclbk : function(px){
 								var percent = Math.abs(px) / trueshold;
@@ -3403,21 +3403,22 @@ var lenta = (function(){
 									};
 
 									progress.update(percent * 100);
-
-
+									cc.fadeIn(1)
 									cc.height((maxheight * percent)+ 'px')
-
-								
 
 									//el.shares.css('opacity', 1 - percent) 
 									tp.css('opacity', 1 -  (4 * percent))
 
 								}
+								else{
+									progress.renew()
+									cc.fadeOut(1)
+								}
 
 							},
 
 							constraints : function(){
-								if(w.scrollTop() == 0 && !fullscreenvideoShowed){
+								if(el.w.scrollTop() <= 0 && !fullscreenvideoShowed){
 
 									return true;
 
@@ -3425,15 +3426,16 @@ var lenta = (function(){
 							},
 
 							restrict : true,
-
+							dontstop : true,
 							trueshold : trueshold,
 							clbk : function(){
 
+								progress.update(0);
+								cc.fadeOut(1)
 								self.app.platform.sdk.notifications.getNotifications()
 	
 								actions.loadprev(function(){
 
-									parallax.renew()
 									
 								})
 								
@@ -3443,7 +3445,7 @@ var lenta = (function(){
 					}
 					
 	
-				}).init()*/
+				}).init()
 			}
 
 			if(!essenseData.openapi){
@@ -3806,6 +3808,7 @@ var lenta = (function(){
 					renders.shares(shares, function(){
 
 						renders.sharesInview(shares, function(){
+							
 
 							making = false;
 
@@ -4103,6 +4106,7 @@ var lenta = (function(){
 			},
 			
 			init : function(p){
+				
 
 				w = $(window)
 

@@ -679,6 +679,12 @@ var userpage = (function(){
 						return a
 					})
 
+					var blocked = deep(author, 'blocking') || []
+
+					u = _.filter(u, function(a){
+						return _.indexOf(blocked, a) == -1
+					})
+
 					var e = self.app.localization.e('anofollowers');
 
 					if(self.user.isItMe(author.address)){
@@ -700,6 +706,12 @@ var userpage = (function(){
 
 					var u = _.map(deep(author, 'subscribes') || [], function(a){
 						return a.adddress
+					})
+
+					var blocked = deep(author, 'blocking') || []
+		
+					u = _.filter(u, function(a){
+						return _.indexOf(blocked, a) == -1
 					})
 
 					var e = self.app.localization.e('anofollowing');

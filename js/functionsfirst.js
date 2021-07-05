@@ -158,6 +158,41 @@ pretry = function(_function, time, totaltime){
     })
 }
 
+
+/*
+var ____setInterval = setInterval
+
+setInterval = function(f, t){
+    var i = ____setInterval(function(){
+        console.log('f', f)
+
+        f()
+    }, t)
+
+    return i
+}*/
+/*
+var ___requestAnimationFrame = window.requestAnimationFrame
+window.requestAnimationFrame = function(c){
+    console.log("C", c)
+    ___requestAnimationFrame(c)
+}*/
+
+/*
+var ____setTimeout = setTimeout
+
+setTimeout = function(f, t){
+    var i = ____setTimeout(function(){
+        console.log('f2', f)
+
+        f()
+    }, t)
+
+    return i
+}
+*/
+
+
 retryLazy = function(_function, clbk, time){
     if(!time) time = 200;
 
@@ -533,3 +568,7 @@ importCss = function(src, _document) {
 
     appendTo.appendChild(link);
 }
+
+
+
+

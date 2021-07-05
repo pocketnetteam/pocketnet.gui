@@ -208,6 +208,9 @@ var author = (function(){
 					id : 'shares',
 					render : 'lenta',
 					history : true,
+					if : function(){
+						return !self.app.curation() || self.user.isItMe(author.address)
+					},
 					count : function(){
 						return 0
 					}
@@ -378,6 +381,7 @@ var author = (function(){
 					render : 'info',
 					history : true,
 					if : function(){
+						return false
 						if(isMobile()) return true
 					}
 				},
@@ -779,6 +783,12 @@ var author = (function(){
 
 			lenta : function(_el, report){
 
+				if(self.app.curation() && !self.user.isItMe(author.address)){
+
+
+					return
+				}
+
 				var load = function(){			
 					
 					var pp = {
@@ -1176,7 +1186,9 @@ var author = (function(){
 			renders.report(reports[r], null, ini)
 			renders.menu()
 
-		
+			if(isMobile()){
+				renders.info(el.c.find('.mobileinfo'))
+			}
 
 			self.app.user.isState(function(state){
 
@@ -1270,7 +1282,7 @@ var author = (function(){
 							if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
 								reports.shares.name = self.app.localization.e('uposts')
 
-								if(self.app.curation()){
+								/*if(self.app.curation()){
 									self.nav.api.load({
 										open : true,
 										href : 'userpage',
@@ -1278,7 +1290,7 @@ var author = (function(){
 									})
 				
 									return
-								}
+								}*/
 							}
 							else
 							{

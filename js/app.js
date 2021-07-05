@@ -607,15 +607,11 @@ Application = function(p)
 
 			if(state && self.platform.sdk.address.pnet()){
 
-				var addr = self.platform.sdk.address.pnet().address
 				self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
 
-				var regs = self.platform.sdk.registrations.storage[addr];
 
-				if (regs && regs >= 5){
-					
+				if (self.platform.sdk.registrations.showprivate()){
 					self.platform.ui.showmykey()
-					
 				}
 			}
 
@@ -764,6 +760,17 @@ Application = function(p)
 		if (self.test){
 			$('html').addClass('testpocketnet')
 		}
+
+		/*if(isMobile()){
+			self.el.app.swipe({
+				longTap : function(e, phase, direction, distance){
+					$('html').toggleClass('scrollmodedown')
+					e.preventDefault()
+				},
+			})
+		}*/
+		
+		
 
 		if(typeof window.cordova != 'undefined')
 		{
