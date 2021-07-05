@@ -671,8 +671,6 @@ var comments = (function(){
 							if (clbk)
 								clbk()
 							
-							// Scroll comment section to top of the screen
-							actions.scrollToComment(c.find('.answer'));
 
 						}, id)
 
@@ -1006,7 +1004,10 @@ var comments = (function(){
 			replyandreplies : function(){
 				var id = $(this).closest('.firstcomment').attr('id')
 
-				actions.replies(id, true)
+				actions.replies(id, true, function() {
+					// Scroll comment section to top of the screen
+					actions.scrollToComment(el.list.find('.answer'));
+				});
 
 				var c = $(this).closest('.comment');
 				var cf = $(this).closest('.firstcomment');
