@@ -1,9 +1,22 @@
 <div id="<%-module.map.id%>">
 
 	<div class="hasaccount">
-		<a href="authorization">
-			<%=e('id0')%>
-		</a>
+		<div>
+			<a href="authorization">
+				<%=e('id0')%>
+			</a>
+		</div>
+	</div>
+
+	<div class="separators">
+		<hr class="separator"/>
+		<span><%=e('or')%></span>
+		<hr class="separator"/>
+	</div>
+
+	<div class="createNewAccountLabel">
+		<%=e('e13025')%>
+		<i class="fas fa-chevron-down"></i>
 	</div>
 	
 	<% if(typeof inauth == 'undefined' || !inauth) {%>
