@@ -684,7 +684,11 @@ PeerTubePocketnet = function (app) {
 
             const videoQuota = Number(rme.videoQuota) || 0;
             const videoQuotaUsed = Number(rqu.videoQuotaUsed) || 0;
-            debugger;
+            
+            if (!size || !videoQuotaDaily || !videoQuota) {
+              return Promise.resolve(rme);
+            }
+
             if (
               (sizeNumbered + videoQuotaUsedDaily <
                 videoQuotaDaily + VIDEO_QUOTA_CORRECTION ||
