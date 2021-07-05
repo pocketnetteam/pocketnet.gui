@@ -670,6 +670,9 @@ var comments = (function(){
 
 							if (clbk)
 								clbk()
+							
+							// Scroll comment section to top of the screen
+							actions.scrollToComment(c.find('.answer'));
 
 						}, id)
 
@@ -957,6 +960,10 @@ var comments = (function(){
 				})
 
 				
+			},
+			scrollToComment : function(el) {
+				if (el && el.length > 0 && el[0].scrollIntoView && isMobile() && $(window).width() <= 768)
+					el[0].scrollIntoView(true);
 			}
 		}
 
@@ -1237,7 +1244,8 @@ var comments = (function(){
 
 							return false;
 						}
-
+						// Scroll comment section to top of the screen
+						actions.scrollToComment(_p.el);
 					},
 					keyup : function(editor, e){
 						var char = String.fromCharCode(e.keyCode || e.which);
@@ -1268,17 +1276,6 @@ var comments = (function(){
 
 							_p.el.addClass('active')
 
-							// If we are on mobile, scroll to the comment section
-							/*if (isMobile()) {
-								var offsetTop = _p.el.offset().top - 65
-								offsetTop = (offsetTop < 0) ? 0 : offsetTop
-								window.scrollTo({
-									left: 0,
-									top: offsetTop,
-									behavior: 'smooth'
-								})
-							}*/
-
 							ed.init = false;
 						}
 
@@ -1299,6 +1296,9 @@ var comments = (function(){
 							}
 						}
 
+						// Scroll comment section to top of the screen
+						actions.scrollToComment(_p.el);
+
 						if (clbk)
 							clbk(this, _p.el.find('.emojionearea-editor'));
 
@@ -1311,17 +1311,6 @@ var comments = (function(){
 				actions.process(p.id || '0')	
 
 				 _p.el.addClass('active')
-				
-				// If we are on mobile, scroll to the comment section
-				/*if (isMobile()) {
-					var offsetTop = _p.el.offset().top - 65
-					offsetTop = (offsetTop < 0) ? 0 : offsetTop
-					window.scrollTo({
-						left: 0,
-						top: offsetTop,
-						behavior: 'smooth'
-					})
-				}*/
 			
 			})
 
