@@ -17854,7 +17854,7 @@ Platform = function (app, listofnodes) {
                                     if (c) c()
 
 
-                                    
+
 
                                     me.rc++
                                 }
@@ -20243,15 +20243,13 @@ Platform = function (app, listofnodes) {
 
                 if (state) {
 
-                    
-
                     var pnet = self.app.platform.sdk.address.pnet()
 
                     var a = pnet.address;
 
                     var addresses = self.testchataddresses;
 
-                    if (addresses.indexOf(a) > -1 || window.testpocketnet) {
+                    if (/*addresses.indexOf(a) > -1 || */window.testpocketnet) {
 
 
 
