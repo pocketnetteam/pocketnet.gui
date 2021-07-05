@@ -63,7 +63,9 @@ var main = (function(){
 					
 
 					if(phase == 'end'){
-						
+						if(direction == 'down'){
+							$('html').removeClass('scrollmodedown')
+						}
 
 						if(direction == 'up' && el.lentacell.scrollTop() > 200){
 							$('html').addClass('scrollmodedown')

@@ -614,7 +614,7 @@ html.testpocketnet #main.testpocketnetbg {
     background: #011621;
     position: absolute;
     left: 0;
-    top: 120px;
+    top: 0;
     bottom: 0;
   }
   #main .maincntwrapper > div.work {
@@ -629,6 +629,9 @@ html.testpocketnet #main.testpocketnetbg {
     -o-transition: 0.3s;
     -webkit-transition: 0.3s;
     transition: 0.3s;
+  }
+  #main .maincntwrapper > div.work > div {
+    padding-top: 120px;
   }
   #main .maincntwrapper .lentacell,
   #main .maincntwrapper .mainpanelcell,
