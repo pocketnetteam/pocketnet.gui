@@ -692,10 +692,11 @@ PeerTubePocketnet = function (app) {
             if (
               (sizeNumbered + videoQuotaUsedDaily <
                 videoQuotaDaily + VIDEO_QUOTA_CORRECTION ||
-                videoQuotaDaily < 0) &&
-              (sizeNumbered + videoQuotaUsed <
-                videoQuota + VIDEO_QUOTA_CORRECTION ||
-                videoQuota < 0)
+                videoQuotaDaily < 0) 
+              //   &&
+              // (sizeNumbered + videoQuotaUsed <
+              //   videoQuota + VIDEO_QUOTA_CORRECTION ||
+              //   videoQuota < 0)
             ) {
               return Promise.resolve(rme);
             }
