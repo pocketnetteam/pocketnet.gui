@@ -567,6 +567,9 @@ html.testpocketnet #main.testpocketnetbg {
   }
 }
 @media only screen and (max-width: 768px) {
+  html.toppanelshowed #main .maincntwrapper > div.work > div {
+    padding-top: 120px;
+  }
   #main .addbutton {
     display: none!important;
   }
@@ -631,7 +634,7 @@ html.testpocketnet #main.testpocketnetbg {
     transition: 0.3s;
   }
   #main .maincntwrapper > div.work > div {
-    padding-top: 120px;
+    padding-top: 65px;
   }
   #main .maincntwrapper .lentacell,
   #main .maincntwrapper .mainpanelcell,
