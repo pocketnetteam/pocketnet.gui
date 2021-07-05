@@ -218,7 +218,7 @@ User = function(app, p) {
 			app.platform.firebase.destroy(clbk);
 
 		// Unsubscribe from notifications
-		app.notifications.unsubscribe();
+		//app.notifications.unsubscribe();
 	}
 
 	self.getstate = function(){

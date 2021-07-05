@@ -12291,7 +12291,16 @@ Platform = function (app, listofnodes) {
 
                         }
 
+                        console.log("obj", obj)
 
+                        if (obj.checkloaded && obj.checkloaded()){
+                            console.log("HERE")
+                            if (clbk) {
+                                clbk(null, 'resourses')
+                            }
+
+                            return;
+                        }
 
                         self.sdk.node.transactions.get.unspent(function (unspent) {
 
@@ -20154,7 +20163,7 @@ Platform = function (app, listofnodes) {
                             self.sdk.chats.load,
                             self.sdk.user.subscribeRef
                         ], function(){
-                            app.notifications.subscribe()
+                            //app.notifications.subscribe()
                         })
 
 
