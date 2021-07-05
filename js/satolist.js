@@ -20521,6 +20521,12 @@ Platform = function (app, listofnodes) {
 
     var initOnlineListener = function () {
 
+        return
+
+        if(onlinetnterval){
+            clearInterval(onlinetnterval)
+        }
+
         onlinetnterval = retry(function () {
 
             var online = deep(window, 'navigator.onLine');
@@ -20549,7 +20555,7 @@ Platform = function (app, listofnodes) {
 
             initOnlineListener();
 
-        }, 50)
+        }, 500)
 
     }
 

@@ -1655,10 +1655,10 @@ var lenta = (function(){
 
 				if(!essenseData.horizontal){
 					if (
-
+						!loading && !ended && (recommended != 'recommended' || isMobile()) &&
 						(el.w.scrollTop() + el.w.height() > el.c.height() - 2000) 
 	
-						&& !loading && !ended && (recommended != 'recommended' || isMobile())) {
+						) {
 	
 						actions.loadmore()
 	
@@ -1667,10 +1667,10 @@ var lenta = (function(){
 				else{
 
 					if (
-
+						!loading &&  (!ended && recommended != 'recommended') && 
 						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 2000) 
 	
-						&& !loading &&  (!ended && recommended != 'recommended')  ) {
+						) {
 
 
 						actions.loadmore()
@@ -3380,72 +3380,76 @@ var lenta = (function(){
 				var tp = el.c.find('.loadprev')
 
 				var trueshold = 80
-				
-				var parallax = new SwipeParallaxNew({
 
-					el : el.c.find('.shares'),
+				if(!essenseData.second){
+					var parallax = new SwipeParallaxNew({
 
-					allowPageScroll : 'vertical',
-
-					//prop : 'padding',
+						el : el.c.find('.shares'),
 	
-					directions : {
-						down : {
-							cancellable : true,
-
-							positionclbk : function(px){
-								var percent = Math.abs(px) / trueshold;
-
-								if (px >= 0){
-
-									progress.options.text = {
-										value: ''
-									};
-
-									progress.update(percent * 100);
-									cc.fadeIn(1)
-									cc.height((maxheight * percent)+ 'px')
-
-									//el.shares.css('opacity', 1 - percent) 
-									tp.css('opacity', 1 -  (4 * percent))
-
-								}
-								else{
-									progress.renew()
+						allowPageScroll : 'vertical',
+	
+						//prop : 'padding',
+		
+						directions : {
+							down : {
+								cancellable : true,
+	
+								positionclbk : function(px){
+									var percent = Math.abs(px) / trueshold;
+	
+									if (px >= 0){
+	
+										progress.options.text = {
+											value: ''
+										};
+	
+										progress.update(percent * 100);
+										cc.fadeIn(1)
+										cc.height((maxheight * percent)+ 'px')
+	
+										//el.shares.css('opacity', 1 - percent) 
+										tp.css('opacity', 1 -  (4 * percent))
+	
+									}
+									else{
+										progress.renew()
+										cc.fadeOut(1)
+									}
+	
+								},
+	
+								constraints : function(){
+									if(el.w.scrollTop() <= 0 && !fullscreenvideoShowed){
+	
+										return true;
+	
+									}
+								},
+	
+								restrict : true,
+								dontstop : true,
+								trueshold : trueshold,
+								clbk : function(){
+	
+									progress.update(0);
 									cc.fadeOut(1)
-								}
-
-							},
-
-							constraints : function(){
-								if(el.w.scrollTop() <= 0 && !fullscreenvideoShowed){
-
-									return true;
-
-								}
-							},
-
-							restrict : true,
-							dontstop : true,
-							trueshold : trueshold,
-							clbk : function(){
-
-								progress.update(0);
-								cc.fadeOut(1)
-								self.app.platform.sdk.notifications.getNotifications()
+									self.app.platform.sdk.notifications.getNotifications()
+		
+									actions.loadprev(function(){
 	
-								actions.loadprev(function(){
-
+										
+									})
 									
-								})
-								
+								}
+		
 							}
-	
 						}
-					}
-					
-	
-				}).init()
+						
+		
+					}).init()
+				}
+				
+				
 			}
 
 			if(!essenseData.openapi){

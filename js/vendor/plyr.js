@@ -9168,10 +9168,12 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
 
       var host = target.getAttribute('data-plyr-host-name');
-
+      
       retry(function(){
         return typeof PeerTubeEmbeding != 'undefined'
       }, function(){
+
+        
 
         PeerTubeEmbeding.main(target, clear_peertube_id, {
           host : host,

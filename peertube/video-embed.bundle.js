@@ -27876,26 +27876,85 @@ module.exports = function (it) {
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(5);
+var getOwnPropertyDescriptor = __webpack_require__(20).f;
+var createNonEnumerableProperty = __webpack_require__(21);
+var redefine = __webpack_require__(26);
+var setGlobal = __webpack_require__(37);
+var copyConstructorProperties = __webpack_require__(81);
+var isForced = __webpack_require__(64);
+
+/*
+  options.target      - name of the target object
+  options.global      - target is the global object
+  options.stat        - export as static methods of target
+  options.proto       - export as prototype methods of target
+  options.real        - real prototype method for the `pure` version
+  options.forced      - export even if the native feature is available
+  options.bind        - bind methods to the target, required for the `pure` version
+  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
+  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
+  options.sham        - add a flag to not completely full polyfills
+  options.enumerable  - export as enumerable property
+  options.noTargetGet - prevent calling a getter on target
+*/
+module.exports = function (options, source) {
+  var TARGET = options.target;
+  var GLOBAL = options.global;
+  var STATIC = options.stat;
+  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
+  if (GLOBAL) {
+    target = global;
+  } else if (STATIC) {
+    target = global[TARGET] || setGlobal(TARGET, {});
+  } else {
+    target = (global[TARGET] || {}).prototype;
+  }
+  if (target) for (key in source) {
+    sourceProperty = source[key];
+    if (options.noTargetGet) {
+      descriptor = getOwnPropertyDescriptor(target, key);
+      targetProperty = descriptor && descriptor.value;
+    } else targetProperty = target[key];
+    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
+    // contained in target
+    if (!FORCED && targetProperty !== undefined) {
+      if (typeof sourceProperty === typeof targetProperty) continue;
+      copyConstructorProperties(sourceProperty, targetProperty);
+    }
+    // add a flag to not completely full polyfills
+    if (options.sham || (targetProperty && targetProperty.sham)) {
+      createNonEnumerableProperty(sourceProperty, 'sham', true);
+    }
+    // extend global
+    redefine(target, key, sourceProperty, options);
+  }
+};
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ getRtcConfig; });
-__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ toTitleCase; });
-__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ timeToInt; });
-__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ secondsToTime; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ getRtcConfig; });
+__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ toTitleCase; });
+__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ timeToInt; });
+__webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ secondsToTime; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ buildVideoLink; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ buildVideoOrPlaylistEmbed; });
-__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ videoFileMaxByResolution; });
-__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ videoFileMinByResolution; });
-__webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ isMobile; });
-__webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ bytes; });
-__webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ isIOS; });
-__webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ isSafari; });
-__webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ isAndroid; });
+__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ videoFileMaxByResolution; });
+__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ videoFileMinByResolution; });
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ isMobile; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ isIOS; });
+__webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ isSafari; });
+__webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ isAndroid; });
 
-// UNUSED EXPORTS: isWebRTCDisabled, buildPlaylistLink
+// UNUSED EXPORTS: isWebRTCDisabled, buildPlaylistLink, bytes
 
 // CONCATENATED MODULE: ../shared/core-utils/renderer/markdown.ts
 const TEXT_RULES = [
@@ -28141,66 +28200,6 @@ function getRtcConfig() {
 }
 // ---------------------------------------------------------------------------
 
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(5);
-var getOwnPropertyDescriptor = __webpack_require__(20).f;
-var createNonEnumerableProperty = __webpack_require__(21);
-var redefine = __webpack_require__(26);
-var setGlobal = __webpack_require__(37);
-var copyConstructorProperties = __webpack_require__(81);
-var isForced = __webpack_require__(64);
-
-/*
-  options.target      - name of the target object
-  options.global      - target is the global object
-  options.stat        - export as static methods of target
-  options.proto       - export as prototype methods of target
-  options.real        - real prototype method for the `pure` version
-  options.forced      - export even if the native feature is available
-  options.bind        - bind methods to the target, required for the `pure` version
-  options.wrap        - wrap constructors to preventing global pollution, required for the `pure` version
-  options.unsafe      - use the simple assignment of property instead of delete + defineProperty
-  options.sham        - add a flag to not completely full polyfills
-  options.enumerable  - export as enumerable property
-  options.noTargetGet - prevent calling a getter on target
-*/
-module.exports = function (options, source) {
-  var TARGET = options.target;
-  var GLOBAL = options.global;
-  var STATIC = options.stat;
-  var FORCED, target, key, targetProperty, sourceProperty, descriptor;
-  if (GLOBAL) {
-    target = global;
-  } else if (STATIC) {
-    target = global[TARGET] || setGlobal(TARGET, {});
-  } else {
-    target = (global[TARGET] || {}).prototype;
-  }
-  if (target) for (key in source) {
-    sourceProperty = source[key];
-    if (options.noTargetGet) {
-      descriptor = getOwnPropertyDescriptor(target, key);
-      targetProperty = descriptor && descriptor.value;
-    } else targetProperty = target[key];
-    FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
-    // contained in target
-    if (!FORCED && targetProperty !== undefined) {
-      if (typeof sourceProperty === typeof targetProperty) continue;
-      copyConstructorProperties(sourceProperty, targetProperty);
-    }
-    // add a flag to not completely full polyfills
-    if (options.sham || (targetProperty && targetProperty.sham)) {
-      createNonEnumerableProperty(sourceProperty, 'sham', true);
-    }
-    // extend global
-    redefine(target, key, sourceProperty, options);
-  }
-};
 
 
 /***/ }),
@@ -29646,7 +29645,7 @@ module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
 
 "use strict";
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var global = __webpack_require__(5);
 var isForced = __webpack_require__(64);
 var redefine = __webpack_require__(26);
@@ -32510,7 +32509,7 @@ module.exports = path.Reflect;
 /* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var getBuiltIn = __webpack_require__(18);
 var aFunction = __webpack_require__(29);
 var anObject = __webpack_require__(2);
@@ -32663,7 +32662,7 @@ exports.f = Object.getOwnPropertySymbols;
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var getBuiltIn = __webpack_require__(18);
 var aFunction = __webpack_require__(29);
 var anObject = __webpack_require__(2);
@@ -32801,7 +32800,7 @@ module.exports = Function.bind || function bind(that /* , ...args */) {
 /* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var DESCRIPTORS = __webpack_require__(13);
 var anObject = __webpack_require__(2);
 var toPrimitive = __webpack_require__(36);
@@ -32835,7 +32834,7 @@ $({ target: 'Reflect', stat: true, forced: ERROR_INSTEAD_OF_FALSE, sham: !DESCRI
 /* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var anObject = __webpack_require__(2);
 var getOwnPropertyDescriptor = __webpack_require__(20).f;
 
@@ -32853,7 +32852,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var isObject = __webpack_require__(6);
 var anObject = __webpack_require__(2);
 var has = __webpack_require__(8);
@@ -32883,7 +32882,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var DESCRIPTORS = __webpack_require__(13);
 var anObject = __webpack_require__(2);
 var getOwnPropertyDescriptorModule = __webpack_require__(20);
@@ -32901,7 +32900,7 @@ $({ target: 'Reflect', stat: true, sham: !DESCRIPTORS }, {
 /* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var anObject = __webpack_require__(2);
 var objectGetPrototypeOf = __webpack_require__(17);
 var CORRECT_PROTOTYPE_GETTER = __webpack_require__(66);
@@ -32919,7 +32918,7 @@ $({ target: 'Reflect', stat: true, sham: !CORRECT_PROTOTYPE_GETTER }, {
 /* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 
 // `Reflect.has` method
 // https://tc39.es/ecma262/#sec-reflect.has
@@ -32934,7 +32933,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var anObject = __webpack_require__(2);
 
 // eslint-disable-next-line es/no-object-isextensible -- safe
@@ -32954,7 +32953,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ownKeys = __webpack_require__(60);
 
 // `Reflect.ownKeys` method
@@ -32968,7 +32967,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var getBuiltIn = __webpack_require__(18);
 var anObject = __webpack_require__(2);
 var FREEZING = __webpack_require__(67);
@@ -32993,7 +32992,7 @@ $({ target: 'Reflect', stat: true, sham: !FREEZING }, {
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var anObject = __webpack_require__(2);
 var isObject = __webpack_require__(6);
 var has = __webpack_require__(8);
@@ -33045,7 +33044,7 @@ $({ target: 'Reflect', stat: true, forced: MS_EDGE_BUG }, {
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var anObject = __webpack_require__(2);
 var aPossiblePrototype = __webpack_require__(68);
 var objectSetPrototypeOf = __webpack_require__(46);
@@ -33070,7 +33069,7 @@ if (objectSetPrototypeOf) $({ target: 'Reflect', stat: true }, {
 /* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var global = __webpack_require__(5);
 var setToStringTag = __webpack_require__(30);
 
@@ -33142,7 +33141,7 @@ module.exports = NATIVE_SYMBOL
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33341,7 +33340,7 @@ module.exports = function ($this, dummy, Wrapper) {
 
 "use strict";
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var createIteratorConstructor = __webpack_require__(117);
 var getPrototypeOf = __webpack_require__(17);
 var setPrototypeOf = __webpack_require__(46);
@@ -33806,7 +33805,7 @@ module.exports = Array.isArray || function isArray(arg) {
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33833,7 +33832,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(17);
@@ -33863,7 +33862,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 // TODO: in core-js@4, move /modules/ dependencies to public entries for better optimization by tools like `preset-env`
 var Set = __webpack_require__(127);
 var ReflectMetadataModule = __webpack_require__(15);
@@ -33918,7 +33917,7 @@ module.exports = collection('Set', function (init) {
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33939,7 +33938,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -33960,7 +33959,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(17);
@@ -33989,7 +33988,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -34010,7 +34009,7 @@ $({ target: 'Reflect', stat: true }, {
 /* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(4);
+var $ = __webpack_require__(3);
 var ReflectMetadataModule = __webpack_require__(15);
 var anObject = __webpack_require__(2);
 
@@ -40857,7 +40856,7 @@ core_default.a.registerPlugin('bezels', BezelsPlugin);
 
 
 // EXTERNAL MODULE: ./src/assets/player/utils.ts + 3 modules
-var player_utils = __webpack_require__(3);
+var player_utils = __webpack_require__(4);
 
 // CONCATENATED MODULE: ./src/assets/player/videojs-components/settings-menu-item.ts
 // Thanks to Yanko Shterev: https://github.com/yshterev/videojs-settings-menu
@@ -40877,7 +40876,7 @@ class settings_menu_item_SettingsMenuItem extends settings_menu_item_MenuItem {
         this.size = null;
         // keep state of what menu type is loading next
         this.menuToLoad = 'mainmenu';
-        const subMenuName = Object(player_utils["k" /* toTitleCase */])(options.entry);
+        const subMenuName = Object(player_utils["j" /* toTitleCase */])(options.entry);
         const SubMenuComponent = core_default.a.getComponent(subMenuName);
         if (!SubMenuComponent) {
             throw new Error(`Component ${subMenuName} does not exist`);
@@ -41299,7 +41298,7 @@ class settings_menu_button_SettingsButton extends Button {
                 core_default.a.dom.addClass(this.el_, 'open');
             }
         };
-        options.name = Object(player_utils["k" /* toTitleCase */])(entry);
+        options.name = Object(player_utils["j" /* toTitleCase */])(entry);
         const newOptions = Object.assign({}, options, { entry, menuButton: this });
         const settingsMenuItem = new settings_menu_item_SettingsMenuItem(this.player(), newOptions);
         this.menu.addChild(settingsMenuItem);
@@ -41383,7 +41382,7 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
                 Object(peertube_player_local_storage["g" /* saveMuteInStore */])(this.player.muted());
             });
             if (options.stopTime) {
-                const stopTime = Object(player_utils["j" /* timeToInt */])(options.stopTime);
+                const stopTime = Object(player_utils["i" /* timeToInt */])(options.stopTime);
                 const self = this;
                 this.player.on('timeupdate', function onTimeUpdate() {
                     if (self.player.currentTime() > stopTime) {
@@ -41426,7 +41425,7 @@ class peertube_plugin_PeerTubePlugin extends peertube_plugin_Plugin {
         this.alterInactivity();
     }
     initializePlayer() {
-        if (Object(player_utils["g" /* isMobile */])())
+        if (Object(player_utils["f" /* isMobile */])())
             this.player.addClass('vjs-is-mobile');
         this.initSmoothProgressBar();
         this.initCaptions();
@@ -41606,7 +41605,6 @@ core_default.a.registerComponent('PreviousVideoButton', next_previous_video_butt
 
 // CONCATENATED MODULE: ./src/assets/player/videojs-components/p2p-info-button.ts
 
-
 const p2p_info_button_Button = core_default.a.getComponent('Button');
 class p2p_info_button_P2pInfoButton extends p2p_info_button_Button {
     createEl() {
@@ -41662,38 +41660,48 @@ class p2p_info_button_P2pInfoButton extends p2p_info_button_Button {
         });
         subDivHttp.appendChild(subDivHttpText);
         div.appendChild(subDivHttp);
-        this.player_.on('p2pInfo', (event, data) => {
-            // We are in HTTP fallback
-            if (!data) {
-                subDivHttp.className = 'vjs-peertube-displayed';
-                subDivWebtorrent.className = 'vjs-peertube-hidden';
-                return;
-            }
-            const p2pStats = data.p2p;
-            const httpStats = data.http;
-            const downloadSpeed = Object(player_utils["c" /* bytes */])(p2pStats.downloadSpeed + httpStats.downloadSpeed);
-            const uploadSpeed = Object(player_utils["c" /* bytes */])(p2pStats.uploadSpeed + httpStats.uploadSpeed);
-            const totalDownloaded = Object(player_utils["c" /* bytes */])(p2pStats.downloaded + httpStats.downloaded);
-            const totalUploaded = Object(player_utils["c" /* bytes */])(p2pStats.uploaded + httpStats.uploaded);
-            const numPeers = p2pStats.numPeers;
-            subDivWebtorrent.title = this.player().localize('Total downloaded: ') + totalDownloaded.join(' ') + '\n';
-            if (data.source === 'p2p-media-loader') {
-                const downloadedFromServer = Object(player_utils["c" /* bytes */])(httpStats.downloaded).join(' ');
-                const downloadedFromPeers = Object(player_utils["c" /* bytes */])(p2pStats.downloaded).join(' ');
-                subDivWebtorrent.title +=
-                    ' * ' + this.player().localize('From servers: ') + downloadedFromServer + '\n' +
-                        ' * ' + this.player().localize('From peers: ') + downloadedFromPeers + '\n';
-            }
-            subDivWebtorrent.title += this.player().localize('Total uploaded: ') + totalUploaded.join(' ');
-            downloadSpeedNumber.textContent = downloadSpeed[0];
-            downloadSpeedUnit.textContent = ' ' + downloadSpeed[1];
-            uploadSpeedNumber.textContent = uploadSpeed[0];
-            uploadSpeedUnit.textContent = ' ' + uploadSpeed[1];
-            peersNumber.textContent = numPeers.toString();
-            peersText.textContent = ' ' + (numPeers > 1 ? this.player().localize('peers') : this.player_.localize('peer'));
-            subDivHttp.className = 'vjs-peertube-hidden';
-            subDivWebtorrent.className = 'vjs-peertube-displayed';
-        });
+        /*this.player_.on('p2pInfo', (event: any, data: PlayerNetworkInfo) => {
+          // We are in HTTP fallback
+          if (!data) {
+            subDivHttp.className = 'vjs-peertube-displayed'
+            subDivWebtorrent.className = 'vjs-peertube-hidden'
+    
+            return
+          }
+    
+          const p2pStats = data.p2p
+          const httpStats = data.http
+    
+          const downloadSpeed = bytes(p2pStats.downloadSpeed + httpStats.downloadSpeed)
+          const uploadSpeed = bytes(p2pStats.uploadSpeed + httpStats.uploadSpeed)
+          const totalDownloaded = bytes(p2pStats.downloaded + httpStats.downloaded)
+          const totalUploaded = bytes(p2pStats.uploaded + httpStats.uploaded)
+          const numPeers = p2pStats.numPeers
+    
+          subDivWebtorrent.title = this.player().localize('Total downloaded: ') + totalDownloaded.join(' ') + '\n'
+    
+          if (data.source === 'p2p-media-loader') {
+            const downloadedFromServer = bytes(httpStats.downloaded).join(' ')
+            const downloadedFromPeers = bytes(p2pStats.downloaded).join(' ')
+    
+            subDivWebtorrent.title +=
+              ' * ' + this.player().localize('From servers: ') + downloadedFromServer + '\n' +
+              ' * ' + this.player().localize('From peers: ') + downloadedFromPeers + '\n'
+          }
+          subDivWebtorrent.title += this.player().localize('Total uploaded: ') + totalUploaded.join(' ')
+    
+          downloadSpeedNumber.textContent = downloadSpeed[ 0 ]
+          downloadSpeedUnit.textContent = ' ' + downloadSpeed[ 1 ]
+    
+          uploadSpeedNumber.textContent = uploadSpeed[ 0 ]
+          uploadSpeedUnit.textContent = ' ' + uploadSpeed[ 1 ]
+    
+          peersNumber.textContent = numPeers.toString()
+          peersText.textContent = ' ' + (numPeers > 1 ? this.player().localize('peers') : this.player_.localize('peer'))
+    
+          subDivHttp.className = 'vjs-peertube-hidden'
+          subDivWebtorrent.className = 'vjs-peertube-displayed'
+        })*/
         return div;
     }
 }
@@ -42129,9 +42137,9 @@ class playlist_menu_item_PlaylistMenuItem extends playlist_menu_item_Component {
         if (videoElement.startTimestamp || videoElement.stopTimestamp) {
             let html = '';
             if (videoElement.startTimestamp)
-                html += Object(player_utils["i" /* secondsToTime */])(videoElement.startTimestamp);
+                html += Object(player_utils["h" /* secondsToTime */])(videoElement.startTimestamp);
             if (videoElement.stopTimestamp)
-                html += ' - ' + Object(player_utils["i" /* secondsToTime */])(videoElement.stopTimestamp);
+                html += ' - ' + Object(player_utils["h" /* secondsToTime */])(videoElement.stopTimestamp);
             const timestamps = super.createEl('div', {
                 innerHTML: html,
                 className: 'timestamps'
@@ -42685,7 +42693,7 @@ class peertube_player_manager_PeertubePlayerManager {
             loader: {
                 trackerAnnounce,
                 segmentValidator: Object(segment_validator["a" /* segmentValidatorFactory */])(options.p2pMediaLoader.segmentsSha256Url, options.common.isLive),
-                rtcConfig: Object(player_utils["d" /* getRtcConfig */])(),
+                rtcConfig: Object(player_utils["c" /* getRtcConfig */])(),
                 requiredSegmentsPriority: 1,
                 segmentUrlBuilder: segmentUrlBuilderFactory(redundancyUrlManager),
                 useP2P: Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])(),
@@ -42934,7 +42942,7 @@ class peertube_player_manager_PeertubePlayerManager {
             return autoplay;
         // On first play, disable autoplay to avoid issues
         // But if the player already played videos, we can safely autoplay next ones
-        if (Object(player_utils["f" /* isIOS */])() || Object(player_utils["h" /* isSafari */])()) {
+        if (Object(player_utils["e" /* isIOS */])() || Object(player_utils["g" /* isSafari */])()) {
             return peertube_player_manager_PeertubePlayerManager.alreadyPlayed ? 'play' : false;
         }
         return 'play';
@@ -43566,7 +43574,7 @@ class embed_PeerTubeEmbed {
             }
             catch (e) { }
             pel.removeAttribute('style');
-            if (Object(player_utils["e" /* isAndroid */])())
+            if (Object(player_utils["d" /* isAndroid */])())
                 pel.setAttribute('poster', this.composePath(videoInfo.previewPath));
             this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
             const overlayString = this.isVideoEmbed
