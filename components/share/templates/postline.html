@@ -35,8 +35,10 @@
                 </div>
 
                 <% if(
-                    (deep(app, 'platform.real.'+user.address.value.toString('hex')) || 
-                    window.testpocketnet
+                    (
+                        (u.reputation > 100 || !u.trial || u.balance > 5000000000) || 
+                        deep(app, 'platform.real.'+user.address.value.toString('hex')) || window.testpocketnet
+
                     ) && !isMobile()) {%>
 
                 <div class="item peertubeLiveStream tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
