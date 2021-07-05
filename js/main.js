@@ -41,7 +41,7 @@ if(!_Node)
 	app.preapi()
 
 	// Prepare notifications
-	app.notifications = new Notifications(app);
+	//app.notifications = new Notifications(app);
 
 	retry(function(){
 		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || window.design

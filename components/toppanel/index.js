@@ -84,10 +84,13 @@ var toppanel = (function(){
 
 					if(state && isMobile() && pathname != 'index'){
 						el.c.addClass('hidden')
+						$('html').removeClass('toppanelshowed')
+						
 					}
 					else{
 
 						el.c.removeClass('hidden')
+						$('html').addClass('toppanelshowed')
 						self.shell({
 
 							name :  'menu',

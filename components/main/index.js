@@ -1106,7 +1106,7 @@ var main = (function(){
 				self.app.el.footer.removeClass('workstation')
 
 				$('html').removeClass('nooverflow');
-
+				$('html').removeClass('showmain');
 				el = {}
 				
 				if (self.app.scrolling){
@@ -1150,7 +1150,7 @@ var main = (function(){
 				if (isMobile())
 					$('html').addClass('nooverflow');
 
-				
+					$('html').addClass('showmain');
 
 				initEvents();
 
