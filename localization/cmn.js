@@ -29,6 +29,7 @@ ____loclib.signin = "注册";
 ____loclib.orcreate = "或创建一个新账号";
 ____loclib.createnew = "创建一个新账号";
 ____loclib.staysafe = "此操作不安全，是否继续?";
+____loclib.or = "或";
 
 // Register a New Account
 ____loclib.id71 = "创建一个新账号";

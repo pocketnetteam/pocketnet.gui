@@ -29,6 +29,7 @@ ____loclib.signin = "Se connecter";
 ____loclib.orcreate = "Ou créez un nouveau compte";
 ____loclib.createnew = "Créer un nouveau compte";
 ____loclib.staysafe = "Ce n'est pas sur. Voulez-vous continuer?";
+____loclib.or = "ou";
 
 // Register a New Account
 ____loclib.id71 = "Créer un nouveau compte";

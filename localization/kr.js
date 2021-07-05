@@ -29,6 +29,7 @@ ____loclib.signin = "로그인";
 ____loclib.orcreate = "또는 새 계정 생성";
 ____loclib.createnew = "새 계정 생성";
 ____loclib.staysafe = "안전하지 않습니다. 계속 하시겠습니까?";
+____loclib.or = "또는";
 
 // Register a New Account
 ____loclib.id71 = "새 계정 생성";
