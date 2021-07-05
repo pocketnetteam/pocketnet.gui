@@ -39675,6 +39675,8 @@ class PeerTubeEmbedApi {
         }
     }
     getVolume() {
+        if (!this.embed.player)
+            return 0;
         return this.embed.player.muted() ? 0 : this.embed.player.volume();
     }
     rebuild() {
