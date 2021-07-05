@@ -663,7 +663,10 @@ PeerTubePocketnet = function (app) {
                   id: existingStream.id,
                   uuid: existingStream.uuid,
                   host: options.host,
-                  formattedLink: self.composeLink(options.host, existingStream.uuid),
+                  formattedLink: self.composeLink(
+                    options.host,
+                    existingStream.uuid,
+                  ),
                 });
               });
           }),
@@ -684,15 +687,15 @@ PeerTubePocketnet = function (app) {
 
             const videoQuota = Number(rme.videoQuota) || 0;
             const videoQuotaUsed = Number(rqu.videoQuotaUsed) || 0;
-            
+
             if (!size || !videoQuotaDaily || !videoQuota) {
               return Promise.resolve(rme);
             }
 
             if (
-              (sizeNumbered + videoQuotaUsedDaily <
+              sizeNumbered + videoQuotaUsedDaily <
                 videoQuotaDaily + VIDEO_QUOTA_CORRECTION ||
-                videoQuotaDaily < 0) 
+              videoQuotaDaily < 0
               //   &&
               // (sizeNumbered + videoQuotaUsed <
               //   videoQuota + VIDEO_QUOTA_CORRECTION ||
@@ -754,7 +757,7 @@ PeerTubePocketnet = function (app) {
         if (host && sessions[host]) {
           if (renew) {
             if (sessions[host].date > utcnow().addMinutes(-15)) {
-              return self.api.user.getToken(sessions[host]);
+              return self.api.user.getToken(sessions[host], { host });
             }
           } else {
             return Promise.resolve(sessions[host]);
@@ -798,19 +801,17 @@ PeerTubePocketnet = function (app) {
             return Promise.resolve(data);
           })
           .then((data) => {
-            return self.api.user.getToken(data);
+            return self.api.user.getToken(data, {
+              host,
+            });
           });
       },
 
-      getToken: function (data) {
-        if (!data) data = {};
-
+      getToken: function (data = {}, options = {}) {
         data.response_type = 'code';
 
         if (data.refresh_token) data.grant_type = 'refresh_token';
         else data.grant_type = 'password';
-
-        var options = {};
 
         return request('getToken', data, options)
           .then(({ access_token, refresh_token }) => {
