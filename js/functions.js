@@ -6891,8 +6891,6 @@
 				allowPageScroll : p.allowPageScroll,
 				swipeStatus : function(e, phase, direction, distance){
 
-					console.log('direction', direction, phase)
-
 					if (mainDirection && mainDirection.i != direction){
 						phase = 'cancel'
 						direction = mainDirection.i
