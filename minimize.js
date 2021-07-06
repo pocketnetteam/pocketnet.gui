@@ -766,7 +766,9 @@ var helpers = {
 			fs.rmdirSync(directory, {
 				recursive : true
 			})
-	
+		}
+		catch(e){}
+		try{
 			if (!fs.existsSync(directory)){
 				fs.mkdirSync(directory);
 			}
