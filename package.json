@@ -14,7 +14,7 @@
         "distl": "electron-builder -l --x64",
         "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
-        "minimize": "node minimize.js -prodaction=true -vendor=3001 -path=/pocketnet/",
+        "minimize": "node minimize.js -prodaction=true -vendor=3001 -path=/",
         "minimize:test": "node minimize.js -prodaction=true -vendor=3001 -test=true -path=/",
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/"
