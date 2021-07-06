@@ -762,13 +762,18 @@ rand = function(min, max)
 var helpers = {
 	clearfolder : function(directory, clbk){
 
-		fs.rmdirSync(directory, {
-			recursive : true
-		})
-
-		if (!fs.existsSync(directory)){
-			fs.mkdirSync(directory);
+		try{
+			fs.rmdirSync(directory, {
+				recursive : true
+			})
+	
+			if (!fs.existsSync(directory)){
+				fs.mkdirSync(directory);
+			}
 		}
+		catch(e){}
+
+		
 
 		if(clbk) clbk()
 
