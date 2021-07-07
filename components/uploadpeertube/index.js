@@ -29,9 +29,11 @@ var uploadpeertube = (function () {
             // to bits and then to bitrate
             var averageBitrate = (8 * file.size) / video.duration;
 
-            return averageBitrate > 8000000 ? reject({
-              text: self.app.localization.e('videoBitrateError')
-            }) : resolve();
+            return averageBitrate > 8000000
+              ? reject({
+                  text: self.app.localization.e('videoBitrateError'),
+                })
+              : resolve();
           };
 
           video.src = URL.createObjectURL(file);
@@ -49,6 +51,13 @@ var uploadpeertube = (function () {
     };
 
     var initEvents = function () {
+      el.c.find('.tooltip').tooltipster({
+        theme: 'tooltipster-light',
+        maxWidth: 600,
+        zIndex: 1006,
+        position: 'bottom',
+      });
+
       el.videoInput.change(async function (evt) {
         var fileName = evt.target.files[0].name;
 

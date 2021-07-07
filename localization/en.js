@@ -1062,10 +1062,8 @@ ____loclib.importHeading = 'Import Video from YouTube'
 ____loclib.importInputPlaceholder = 'Paste link to your YouTube video'
 ____loclib.importInputLabel = 'Video Url'
 
-____loclib.capitalWarning = 'WARNING'
-____loclib.streamSettingsWarn = 'For optimal performance, please use streaming settings no higher than following: 2000 kb/s bitrate, 1920x1080p resolution'
-____loclib.streamSettingsResult = 'Otherwise your live could be terminated or unstable.'
-
+____loclib.capitalWarning = 'Stream quality limitations'
+____loclib.streamSettingsWarn = 'For optimal performance, please use streaming settings no higher than following: 2000 kb/s bitrate, 1920x1080p resolution. Otherwise your live could be terminated or unstable'
 
 ____loclib.keygeneration = 'Cryptography keys generation'
 
@@ -1090,3 +1088,5 @@ ____loclib.sumoftransaction = "Sum of transaction"
 
 
 ____loclib.videoBitrateError = 'Video bitrate is too high. Please, use file with lower quality/resolution'
+____loclib.videoQualityInfo = 'Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated.'
+____loclib.videoQualityCaption = 'Video quality limitations'

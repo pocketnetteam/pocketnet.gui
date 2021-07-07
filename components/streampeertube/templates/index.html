@@ -17,7 +17,7 @@
           readonly
           linkType="result-video-rtmp"
         />
-      
+
         <span class="type-error-field name-type-error"></span>
       </div>
       <div class="upload-field-container">
@@ -30,20 +30,21 @@
           linkType="result-video-streamKey"
           readonly
         />
-       
+
         <span class="type-error-field name-type-error"></span>
       </div>
 
-      <div class="stream-warning-section">
-        <span class="bold-warning"><%- e('capitalWarning') %>: </span>
-        <span><%- e('streamSettingsWarn') %>.</span>
-        <span><%- e('streamSettingsResult') %></span>
+      <div
+        class="stream-warning-section tooltip"
+        title="<%- e('streamSettingsWarn') %>"
+      >
+        <i class="fas fa-question-circle"></i>
+        <%- e('capitalWarning') %>
       </div>
 
       <div class="closewindow">
         <button class="button medium closewindowaction">Close</button>
       </div>
-
     </section>
   </section>
 

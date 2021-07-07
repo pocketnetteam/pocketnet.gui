@@ -879,9 +879,8 @@ ____loclib.importHeading = 'Импортировать видео из YouTube'
 ____loclib.importInputPlaceholder = 'Вставьте сюда ссылку на видео'
 ____loclib.importInputLabel = 'Ссылка на видео'
 
-____loclib.capitalWarning = 'ВНИМАНИЕ'
-____loclib.streamSettingsWarn = 'Для корректной работы трансляции используйте настройки изображения не выше, чем следующие: битрейт - 2000 кбит/с, разрешение - 1920х1080 точек'
-____loclib.streamSettingsResult = 'В противном случае ваш стрим может работать нестабильно.'
+____loclib.capitalWarning = 'Ограничения по качеству стримов'
+____loclib.streamSettingsWarn = 'Для корректной работы трансляции используйте настройки изображения не выше, чем следующие: битрейт - 2000 кбит/с, разрешение - 1920х1080 точек. В противном случае ваш стрим может работать нестабильно'
 
 ____loclib.failedStreamGeneration = 'Unable to start stream'
 
@@ -893,3 +892,5 @@ ____loclib.sumoftransaction = "Сумма транзакции"
 ____loclib.failedStreamGeneration = 'Невозможно начать стрим.'
 
 ____loclib.videoBitrateError = 'Битрейт видео слишком высокий. Пожалуйста, выберить файл с меньшим разрешением/битрейтом'
+____loclib.videoQualityInfo = 'Максимальный разрешенный битрейт видео - 8 Мбит/с. Если ваш файл превышает этот лимит, загрузка будет остановлена'
+____loclib.videoQualityCaption = 'Ограничения по качеству видео'
