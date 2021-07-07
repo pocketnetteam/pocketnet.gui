@@ -1090,3 +1090,8 @@ ____loclib.sumoftransaction = "Sum of transaction"
 ____loclib.videoBitrateError = 'Video bitrate is too high. Please, use file with lower quality/resolution'
 ____loclib.videoQualityInfo = 'Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated.'
 ____loclib.videoQualityCaption = 'Video quality limitations'
+
+____loclib.streamLinks = 'Streaming software links'
+____loclib.linkRTMP = 'RTMP Url'
+____loclib.linkStreamKey = 'Stream Key'
+
