@@ -688,7 +688,7 @@ PeerTubePocketnet = function (app) {
             const videoQuota = Number(rme.videoQuota) || 0;
             const videoQuotaUsed = Number(rqu.videoQuotaUsed) || 0;
 
-            if (!size || !videoQuotaDaily || !videoQuota) {
+            if (!sizeNumbered || !videoQuotaDaily || !videoQuota) {
               return Promise.resolve(rme);
             }
 
@@ -790,13 +790,13 @@ PeerTubePocketnet = function (app) {
               },
             );
           })
-          .then(({ externalAuthToken, username }) => {
-            if (!externalAuthToken || !username) {
+          .then((result = {}) => {
+            if (!result.externalAuthToken || !result.username) {
               return Promise.reject(error('pocketnetAuth'));
             }
 
-            data.externalAuthToken = externalAuthToken;
-            data.username = username;
+            data.externalAuthToken = result.externalAuthToken;
+            data.username = result.username;
 
             return Promise.resolve(data);
           })
