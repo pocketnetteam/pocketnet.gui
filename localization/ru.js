@@ -890,3 +890,6 @@ ____loclib.donated = 'прокомментировал вашу публикац
 ____loclib.incoins = "Недостаточно средств"
 ____loclib.yourbalance = "Ваш баланс"
 ____loclib.sumoftransaction = "Сумма транзакции"
+____loclib.failedStreamGeneration = 'Невозможно начать стрим.'
+
+____loclib.videoBitrateError = 'Битрейт видео слишком высокий. Пожалуйста, выберить файл с меньшим разрешением/битрейтом'

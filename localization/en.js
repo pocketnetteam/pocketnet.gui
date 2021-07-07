@@ -1087,3 +1087,6 @@ ____loclib.donated = 'commented your post and donated'
 ____loclib.incoins = "Enough coins"
 ____loclib.yourbalance = "Your balance"
 ____loclib.sumoftransaction = "Sum of transaction"
+
+
+____loclib.videoBitrateError = 'Video bitrate is too high. Please, use file with lower quality/resolution'
