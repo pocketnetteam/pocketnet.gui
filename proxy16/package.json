@@ -33,7 +33,6 @@
         "nodemon": "^2.0.7",
         "random": "^2.2.0",
         "request": "^2.88.2",
-        "request-promise-native": "^1.0.7",
         "string": "^3.3.3",
         "svg-captcha": "^1.4.0",
         "swagger-ui-express": "^4.1.4",
