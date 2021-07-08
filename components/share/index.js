@@ -2118,6 +2118,10 @@ var share = (function(){
 									actions.eTextChange(el.eMessage[0].emojioneArea)
 		
 								});
+
+								// Hide the emoji button for mobiles and tablets
+								if (isMobile() || isTablet())
+									$('.emojionearea-button').hide();
 		
 							}
 						}

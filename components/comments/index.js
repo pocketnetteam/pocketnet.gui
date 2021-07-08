@@ -1308,6 +1308,10 @@ var comments = (function(){
 							}
 						}
 
+						// Hide the emoji button for mobiles and tablets
+						if (isMobile() || isTablet())
+							$('.emojionearea-button').hide();
+
 						if (clbk)
 							clbk(this, _p.el.find('.emojionearea-editor'));
 
