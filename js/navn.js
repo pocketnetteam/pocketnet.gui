@@ -1226,7 +1226,7 @@ Nav = function(app)
 			pathname : function(){
 				var loc =  window.location; 
 
-				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "")
+				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "").replace('indexcordova', "index")
 			}
 
 		},

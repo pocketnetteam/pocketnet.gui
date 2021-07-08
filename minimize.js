@@ -44,7 +44,7 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'index.cordova', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json']
 	
 
 var vars = {
@@ -113,7 +113,7 @@ fs.exists(mapJsPath, function (exists) {
 
 		var cordova = {
 			path : './cordova/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'index.cordova']
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
 		}
 
 

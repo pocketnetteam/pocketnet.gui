@@ -17,10 +17,9 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "cordova-ios": "^5.1.1",
     "cordova-plugin-badge": "0.8.8",
+    "cordova-plugin-inappbrowser": "4.0.0",
     "cordova-plugin-gallery-refresh": "^1.0.61",
-    "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-keyboard": "^1.2.0",
     "cordova-plugin-screen-orientation": "^3.0.1",
     "cordova-support-android-plugin": "1.0.1",
@@ -28,21 +27,31 @@
   },
   "devDependencies": {
     "cordova-android": "^9.0.0",
+    "cordova-ios": "^5.1.1",
     "cordova-plugin-androidx": "^3.0.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-buildinfo": "^4.0.0",
     "cordova-plugin-camera": "^2.1.1",
+    "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-device-orientation": "^1.0.7",
     "cordova-plugin-firebasex": "^11.0.3",
     "cordova-plugin-network-information": "^1.2.1",
     "cordova-plugin-splashscreen": "^3.2.2",
+    "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-vibration": "^2.1.6",
-    "cordova-plugin-whitelist": "^1.3.3"
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-plugin-wkwebview-engine": "^1.2.2",
+    "cordova-plugin-wkwebview-file-xhr": "^3.0.0",
+    "cordova-plugin-wkwebviewxhrfix": "^0.1.0",
+    "cordova-plugin-x-socialsharing": "^6.0.3"
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-camera": {},
+      "cordova-plugin-camera": {
+        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
+      },
       "cordova-plugin-device": {},
       "cordova-plugin-device-orientation": {},
       "cordova-plugin-network-information": {},
@@ -51,8 +60,10 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-badge": {},
-      "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-gallery-refresh": {},
+      "cordova-plugin-gallery-refresh": {
+        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
+      },
       "cordova-plugin-keyboard": {},
       "cordova-plugin-wkwebview-engine": {},
       "cordova-plugin-wkwebview-file-xhr": {},
@@ -83,11 +94,12 @@
       },
       "cordova-plugin-androidx": {},
       "cordova-plugin-androidx-adapter": {},
-      "cordova-plugin-buildinfo": {}
+      "cordova-plugin-buildinfo": {},
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
