@@ -52,7 +52,7 @@ var Applications = function(settings) {
 
             if(l) return Promise.resolve(l)
 
-            Promise.reject('notfound')
+            return Promise.reject('notfound')
         })
            
     }
@@ -141,6 +141,7 @@ var Applications = function(settings) {
 
     self.install = function(dest){
         return new Promise((resolve, reject) => {
+
             return self.download().then(r => {
                 try{
                     fs.copyFile(r.path, dest, (e) => {
@@ -157,21 +158,24 @@ var Applications = function(settings) {
                     });
                 }
                 catch(e){
-                    reject({
-                        code : 500,
-                        error : 'cantcopy'
-                    })
+                    return Promise.reject()
                 }
                 
+            }).catch(e => {
+
+                reject({
+                    code : 500,
+                    error : 'cantcopy'
+                })
+
             })
+
         }).then(r => {
             return self.save(r.asset)
         })
     }
 
     self.download = function(){
-
-        console.log('self.download', self.download)
 
         var r = {}
 

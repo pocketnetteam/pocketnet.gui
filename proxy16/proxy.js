@@ -1243,7 +1243,8 @@ var Proxy = function (settings, manage, test) {
 					return Promise.resolve({
 						data: {
 							time: f.now(),
-							session : self.session
+							session : self.session,
+							v : '0807'
 						},
 					});
 				},

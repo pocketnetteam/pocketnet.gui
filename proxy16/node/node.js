@@ -147,11 +147,7 @@ var Node = function(options, manager){
 
     self.rpcs = function(method, parsed){
 
-        
-
-        if(!self.checkParameters()) return Promise.reject('nodeparameters') 
         if(!self.rpc[method]) return Promise.reject('method')
-        
 
         if(!parsed) parsed = []
         if(!_.isArray(parsed)) parsed = [parsed]
@@ -159,39 +155,45 @@ var Node = function(options, manager){
         var err = null
         var time = performance.now()
 
-        return self.rpc[method](parsed).catch(e => {
+        return self.checkParameters().then(r => {
 
-            err = e
+            return self.rpc[method](parsed).catch(e => {
 
-            return Promise.resolve(null)
-
-        }).then(data => {
-
-            var difference = performance.now() - time;
-            var code = 200;
-
-            if (err) {
-
-                code = 500;
-
-                if(!err.code || err.code == -28){
-                    code = 521
+                err = e
+    
+                return Promise.resolve(null)
+    
+            }).then(data => {
+    
+                var difference = performance.now() - time;
+                var code = 200;
+    
+                if (err) {
+    
+                    code = 500;
+    
+                    if(!err.code || err.code == -28){
+                        code = 521
+                    }
+    
+                }	
+    
+                self.statistic.add({
+                    code : code,
+                    difference : difference
+                })
+    
+                if(!err){
+                    return Promise.resolve(data.result)
                 }
-
-            }	
-
-            self.statistic.add({
-                code : code,
-                difference : difference
+    
+                return Promise.reject(err)
+    
             })
 
-            if(!err){
-                return Promise.resolve(data.result)
-            }
-
-            return Promise.reject(err)
-
         })
+
+        
     }
     
     self.events = []
