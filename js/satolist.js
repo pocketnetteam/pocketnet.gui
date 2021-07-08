@@ -4321,7 +4321,7 @@ Platform = function (app, listofnodes) {
             
                                         if(!tx){
 
-                                            self.sdk.keys.error(self.sdk.errorHandler(error).text())
+                                            self.sdk.keys.error(self.errorHandler(error).text())
             
                                             reject(error)
             
