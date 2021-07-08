@@ -16414,11 +16414,15 @@ Platform = function (app, listofnodes) {
 
         self.destroy = function (clbk) {
 
-            if(using){
-                return self.revokeall.then(clbk).catch(e => {})
+            currenttoken = null
+
+            if (using){
+                self.revokeall().then(clbk).catch(e => {})
+
+                return
             }
 
-            currenttoken = null
+            
 
             if (clbk)
                 clbk()
