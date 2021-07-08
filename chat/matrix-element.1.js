@@ -1956,11 +1956,11 @@ var list_component = Object(componentNormalizer["a" /* default */])(
       });
     },
     readAll: function readAll() {
-      if (this.chat && this.chat.getJoinedMemberCount() > 1 && this.chat.getUnreadNotificationCount() !== 0) console.log(this.chat.currentState.roomId, this.chat['_receipts']['m.read']);
-      console.log(this.chat.myUserId, "userID");
-      this.core.mtrx.client.setRoomReadMarkers(this.chat.currentState.roomId, this.chat['_receipts']['m.read'][this.chat.myUserId].eventId, this.chat.timeline[this.chat.timeline.length - 1]).then(function (r) {
-        return r;
-      });
+      if (this.chat && this.chat.getJoinedMemberCount() > 1 && this.chat.getUnreadNotificationCount() !== 0) // console.log(this.chat.currentState.roomId, this.chat['_receipts']['m.read'])
+        // console.log(this.chat.myUserId , "userID")
+        this.core.mtrx.client.setRoomReadMarkers(this.chat.currentState.roomId, this.chat['_receipts']['m.read'][this.chat.myUserId].eventId, this.chat.timeline[this.chat.timeline.length - 1]).then(function (r) {
+          return r;
+        });
     },
     //////////////
     scroll: function scroll() {
@@ -3252,29 +3252,12 @@ var vue_carousel_min = __webpack_require__("0a63");
     },
     members: function members() {
       var me = functions["a" /* default */].getmatrixid(this.core.mtrx.client.credentials.userId);
-      var self = this;
-      var store = this.$store.state.users;
-      var arr = [];
 
-      _.filter(store, function (user) {
-        _.map(self.room.members, function (member) {
-          if (member.id === me) {
-            return;
-          }
-
-          if (user.id === member.id) {
-            arr.push({
-              id: member.id,
-              image: user.id,
-              name: user.name,
-              status: member.status,
-              source: user.source
-            });
-          }
+      if (this.room.members) {
+        return this.room.members.filter(function (member) {
+          return member.id !== me;
         });
-      });
-
-      return arr;
+      }
     }
   }),
   mounted: function mounted() {
@@ -3344,10 +3327,6 @@ var preview_component = Object(componentNormalizer["a" /* default */])(
 
 
 
-
-
-
-
 /* harmony default export */ var join_vue_type_script_lang_js_ = ({
   name: 'chatJoin',
   props: {
@@ -3375,36 +3354,6 @@ var preview_component = Object(componentNormalizer["a" /* default */])(
     },
     pocketnet: function pocketnet(state) {
       return state.pocketnet;
-    },
-    users: function users() {
-      var _this = this;
-
-      var pStateUsers = this.$store.state.users;
-      var roomMembers = this.chat.currentState.members;
-      var pUsers = [];
-      var members = [];
-
-      index_all["default"].mapObject(roomMembers, function (val, key) {
-        pUsers.push({
-          id: functions["a" /* default */].getmatrixid(key)
-        });
-      });
-
-      index_all["default"].map(pStateUsers, function (id) {
-        members.push(id);
-      });
-
-      this.joinedMembers = functions["a" /* default */].filterByUserId(pUsers, members);
-
-      var users = index_all["default"].filter(index_all["default"].map(this.chat.currentState.members || [], function (m) {
-        return _this.$f.deep(_this, '$store.state.users.' + m.name) || null;
-      }), function (m) {
-        var _this$core$user$useri;
-
-        return m && m.id !== ((_this$core$user$useri = _this.core.user.userinfo) === null || _this$core$user$useri === void 0 ? void 0 : _this$core$user$useri.id);
-      });
-
-      return users;
     }
   }),
   mounted: function mounted() {},
@@ -3415,7 +3364,7 @@ var preview_component = Object(componentNormalizer["a" /* default */])(
       });
     },
     join: function join() {
-      var _this2 = this;
+      var _this = this;
 
       this.core.mtrx.client.joinRoom(this.chat.roomId).then(function () {
         /*var need = this.needEncryption()
@@ -3426,7 +3375,7 @@ var preview_component = Object(componentNormalizer["a" /* default */])(
           })
             return
         }*/
-        _this2.$emit('joined');
+        _this.$emit('joined');
       });
     },
     decline: function decline() {
