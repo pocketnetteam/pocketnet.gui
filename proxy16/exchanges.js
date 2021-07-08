@@ -168,7 +168,6 @@ var Exchanges = function(){
                     return Promise.resolve()
 
                 }).catch(e => {
-                    console.log('FAILED TO CALL A FUNCTION: ', e)
                     return Promise.resolve()
                 })
 

@@ -5,8 +5,8 @@
   "description": "A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.",
   "main": "index.js",
   "scripts": {
-    "android-add" : "cordova platform add android",
-    "ios-add" : "cordova platform add ios@5.1.1",
+    "android-add": "cordova platform add android",
+    "ios-add": "cordova platform add ios@5.1.1",
     "android-build": "cordova build android --prod --release --buildConfig build.json --verbose",
     "android-run": "cordova run android --buildConfig build.json",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -30,6 +30,7 @@
     "cordova-android": "^9.0.0",
     "cordova-plugin-androidx": "^3.0.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
+    "cordova-plugin-buildinfo": "^4.0.0",
     "cordova-plugin-camera": "^2.1.1",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-device-orientation": "^1.0.7",
@@ -81,7 +82,8 @@
         "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
       },
       "cordova-plugin-androidx": {},
-      "cordova-plugin-androidx-adapter": {}
+      "cordova-plugin-androidx-adapter": {},
+      "cordova-plugin-buildinfo": {}
     },
     "platforms": [
       "ios",

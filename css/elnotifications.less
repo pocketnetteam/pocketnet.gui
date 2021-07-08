@@ -216,10 +216,17 @@ html{
                 }
 
                 &.extra{
+                    width: 50px;
                     div{
                         font-size: 0.9em;
                         float: right;
                     }
+                }
+
+                .additionalcontent{
+                    font-size: 0.8em;
+                    padding-bottom: 0;
+                    opacity: 0.5;
                 }
             }
 
@@ -240,17 +247,18 @@ html{
         }
 
         .shareimages{
-            padding-top : @rhythm;
+            padding-top : 0.5 * @rhythm;
+            padding-bottom : 0.5 * @rhythm;
             .imagesContainer{
                 overflow: hidden;
 
                 >div{
                     float: left;
-                    margin-bottom : @rhythm;
-                    margin-right : @rhythm; 
-
-                    width: 80px;
-                    height: 80px;
+                    margin-right : 0.5 * @rhythm; 
+                    overflow: hidden;
+                    border-radius: 50%;
+                    width: 24px;
+                    height: 24px;
                     
                     .image{
                         width : 100%;

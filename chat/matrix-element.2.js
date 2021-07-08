@@ -798,7 +798,8 @@ var many = __webpack_require__("ecec");
     users: Array,
     unseen: Number,
     slidesPerView: Number,
-    chat: {}
+    chat: {},
+    m_chat: {}
   },
   data: function data() {
     return {};

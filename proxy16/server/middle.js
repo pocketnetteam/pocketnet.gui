@@ -154,9 +154,6 @@ var Middle = function(){
 
         }
 */
-      
-
-        console.log('request.data', request.body, request.query)
 
         request.data = _.merge(request.query, request.body)
         

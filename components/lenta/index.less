@@ -486,6 +486,10 @@
 					figure img{
 						max-width: 100%;
 					}
+
+					span{
+						font-size: 1em!important;
+					}
 				}
 			}
 
@@ -832,18 +836,18 @@
 				}
 
 				.statswrapper,
-
 				.durationWrapper{
 					position: absolute;
-					bottom : @rhythm;
-					right : @rhythm;
-					border-radius: 8px;
-					background: fade(@color-black, 0.5);
+					bottom : 0;
+					right : 0;
+					border-radius: 3px;
+					background: fade(@color-black, 0.8);
 					color : @color-gray-slight;
 					padding : 0.5 * @rhythm @rhythm;
 					padding-top : 0;
+					font-size: 0.9em;
 					text-shadow: 1px 1px 3px rgba(50, 50, 50, 1);
-					background: fade(#000, 60);
+					background: fade(#000, 40);
 
 					&.live{
 						background: fade(rgb(255, 17, 0), 80);
@@ -855,10 +859,18 @@
 					}
 				}
 
+				.durationWrapper{
+					border-bottom-left-radius: 6px;
+					border-bottom-right-radius: 0;
+					border-top-left-radius: 0;
+				}
+
 				.statswrapper{
 					right: auto;
-					left : @rhythm;
-
+					left :0;
+					border-bottom-right-radius: 6px;
+					border-bottom-left-radius: 0;
+					border-top-right-radius: 0;
 					>div{
 						float: left;
 						margin-right: @rhythm;
@@ -1563,7 +1575,7 @@
 				right: 0;
 				bottom: 0;
 				top: 0;
-				background: fade(@color-black2, 80);
+				background: fade(@color-black2, 95);
 				overflow-y: scroll;
 				padding-top: 0;
 				scrollbar-width: none;
@@ -2393,7 +2405,7 @@
 	
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
 	#lenta{
 		&.horizontal{
 			&.compact{
@@ -2967,7 +2979,7 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
 	#lenta{
 
 		/*.vjs-control-bar{
@@ -2988,7 +3000,7 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
 #lenta{
 
 	.loader{

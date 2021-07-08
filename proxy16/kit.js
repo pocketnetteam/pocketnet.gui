@@ -107,8 +107,6 @@ var nodes = activenodes
 
 if (test) nodes = testnodes
 
-console.log('nodes', nodes)
-
 var defaultSettings = {
 
 	admins : [],
@@ -146,7 +144,7 @@ var defaultSettings = {
 	firebase : {
 		key : "",
 		dbpath : 'data/firebase',
-		id : 'app.pocketnetcustom'
+		id : ''
 	},
 
 	wallet : {
@@ -591,6 +589,14 @@ var kit = {
 				},
 	
 				firebase : {
+					clear : function(){
+						settings.firebase = ''
+						settings.firebase.key = ''
+
+						return state.saverp().then(proxy => {
+							return proxy.firebase.re()
+						})
+					},
 					id : function(id){
 	
 						settings.firebase.id = id

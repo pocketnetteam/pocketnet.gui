@@ -38,7 +38,8 @@ Platform = function (app, listofnodes) {
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' : true,
         'PUYo1a6LxjnnBVi6uBjHUsZQS4FnbUwdAN' : true,
         'PLFtS8H7ATooK53xRTw7YHsuK7jsn5tHgi' : true,
-        'PVJDtKPnxcaRDoQhqQj7FMNu46ZwB4nXVa' : true
+        'PVJDtKPnxcaRDoQhqQj7FMNu46ZwB4nXVa' : true,
+        'PVjvMwapTA29biRTsksXUBuVVf2HVwY7ps' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
     
@@ -4056,12 +4057,12 @@ Platform = function (app, listofnodes) {
                             if (i == 'win' || i == 'transactions' || i == 'upvotes' || i == 'comments' || i == 'answers' || i == 'followers' || i == 'rescued') {
 
 
-                                if (m[i].value) {
+                                /*if (m[i].value) {
                                     self.firebase.api.subscribe(i)
                                 }
                                 else {
                                     self.firebase.api.unsubscribe(i)
-                                }
+                                }*/
 
                             }
                         }
@@ -4266,8 +4267,6 @@ Platform = function (app, listofnodes) {
 
                 return self.sdk.keys.need().then(me => {
 
-                    console.log("MEW")
-
                     if(self.loadingWithErrors){
                         return Promise.reject('loadingWithErrors')
                     }
@@ -4287,8 +4286,6 @@ Platform = function (app, listofnodes) {
                         }))
 
                     var err = userInfo.validation()
-
-                    console.log("errerrerrerr", err)
 
                     if (err){
 
@@ -10209,8 +10206,6 @@ Platform = function (app, listofnodes) {
                             })
 
 
-                            console.log('anotherloading', anotherloading)
-
                             if (!anotherloading.length) return true;
 
                         }, function () {
@@ -10342,8 +10337,6 @@ Platform = function (app, listofnodes) {
                                 return storage.trx[id]
                             })
 
-                            console.log("loaded", loaded)
-                         
                             if (clbk)
                                 clbk(loaded, null, {
                                     count: loaded.length
@@ -10566,8 +10559,6 @@ Platform = function (app, listofnodes) {
                         }
                         else {
                             //var parameters = ['30', '259200', 600000, self.app.localization.key];
-
-                            console.log(p.period, self.sdk.node.shares.parameters.defaults.period, self.sdk.node.shares.parameters.stor.period)
 
                             var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period 
 
@@ -12291,10 +12282,8 @@ Platform = function (app, listofnodes) {
 
                         }
 
-                        console.log("obj", obj)
 
                         if (obj.checkloaded && obj.checkloaded()){
-                            console.log("HERE")
                             if (clbk) {
                                 clbk(null, 'resourses')
                             }
@@ -16018,12 +16007,9 @@ Platform = function (app, listofnodes) {
                 if(typeof _v == 'undefined') _v = '0.5'
 
 
-                console.log("_v", _v)
-
                 self.sdk.videos.volume = Number(_v)
             },
             init : function(clbk){
-                console.log("LOADVIDEOS")
                 self.sdk.videos.load()
 
                 if(clbk) clbk()
@@ -16032,13 +16018,32 @@ Platform = function (app, listofnodes) {
     }
 
 
+    var FakeFirebasePlugin = function(){
+        var self = this;
+
+        self.unregister = function(){}
+        self.hasPermission = function(c){c(true)}
+        self.grantPermission = function(c){c(true)}
+        self.onMessageReceived = function(){}
+        self.getToken = function(c){
+            c('ba36b658-f9b7-8850-edc1-e53dcc2ebaf7')
+        }
+
+        return self
+    }
+
     self.Firebase = function (platform) {
 
         var self = this;
 
+        //var FirebasePlugin = new FakeFirebasePlugin()
+
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
 
         var currenttoken = null;
+
+        var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
+        if (appid == 'localhost') appid = 'pocketnet.app'
 
         var device = function () {
             var id = platform.app.options.device
@@ -16046,68 +16051,242 @@ Platform = function (app, listofnodes) {
             return id;
         }
 
-        self.api = {
+        var getaddress = function(){
+            if (platform.sdk.address.pnet())
+                return platform.sdk.address.pnet().address
 
-            revoke: function (token, clbk) {
-                platform.app.ajax.fb({
-                    action: 'firebase.revoke',
-
-                    data: {
-                        device: device(),
-                        address: platform.sdk.address.pnet().address
-                    },
-
-                    success: function () {
-                        if (clbk)
-                            clbk()
-                    }
-                })
-            },
-
-            revokeDevice: function (clbk) {
-                platform.app.ajax.fb({
-                    action: 'firebase.revokedevice',
-
-                    data: {
-                        device: device()
-                    },
-
-                    success: function () {
-                        if (clbk)
-                            clbk()
-                    }
-                })
-            },
-
-            setToken: function (token, clbk) {
-                platform.app.ajax.fb({
-                    action: 'firebase.set',
-
-                    data: {
-                        token: token,
-                        device: device(),
-                        address: platform.sdk.address.pnet().address
-                    },
-
-                    success: function () {
-                        if (clbk)
-                            clbk()
-                    }
-                })
-            },
-
-
-            subscribe: function (topic) {
-                if (using)
-                    FirebasePlugin.subscribe("latest_news");
-            },
-
-            unsubscribe: function (topic) {
-                if (using)
-                    FirebasePlugin.unsubscribe(topic);
-            },
+            return null
         }
 
+
+        self.storage = {
+            data : {},
+            key : 'firebasetokens_v1',
+            clear : function(){
+                self.storage.data = {}
+                this.save()
+            },
+            load: function () {
+                var storage = {};
+
+                var local = localStorage[self.storage.key] || "{}";
+
+                if (local) {
+                    try {
+                        storage = JSON.parse(local)
+                    }
+                    catch (e) {
+                    }
+                }
+
+                self.storage.data = storage;
+            },
+            save: function () {
+                localStorage[self.storage.key] = JSON.stringify(self.storage.data);
+            },
+
+            get : function(proxy, address, token){
+                
+                return deep(self.storage.data, appid + '.' + token + '.' + address + '.' + proxy)
+            },
+
+            set : function(proxy, address, token){
+                if(!self.storage.data[appid]) self.storage.data[appid] = {} 
+                if(!self.storage.data[appid][token]) self.storage.data[appid][token] = {}
+                if(!self.storage.data[appid][token][address]) self.storage.data[appid][token][address] = {} 
+
+                self.storage.data[appid][token][address][proxy] = true
+
+                this.save()
+            }
+
+        }
+
+        self.api = {
+            revoke: function (token, proxy) {
+
+                var address = getaddress()
+
+                if(!address) return Promise.reject()
+               
+            },
+
+            revokeDevice: function (proxy) {
+
+                return self.app.api.fetchauth('firebase/revokedevice', {
+                    device : device()
+                }, {
+                    proxy : proxy
+                })
+              
+            },
+
+            setToken: function (address, token, proxy) {
+
+                if(!address) return Promise.reject('address')
+
+                if(!proxy) return Promise.reject('proxy')
+
+                //var exist = self.storage.get(proxy, address, token)
+
+                return self.request.setToken(token, proxy).then(r => {
+
+                    self.storage.set(proxy, address, token)
+
+                    return Promise.resolve()
+
+                })
+
+            },
+
+            existanother : function(proxy, address){
+                var obj = self.storage.data[appid] || {}
+
+                var nf = function(obj, ii){
+                    return _.find(obj || {}, function(v, i){
+                        return i != ii 
+                    })
+                }
+
+                obj = nf(obj, proxy)
+
+                if(obj) return true
+
+                obj = nf(obj, address)
+
+                if(obj) return true
+
+                return false
+            },
+
+            exist : function(proxy, address, token){
+                var exist = self.storage.get(proxy, address, token)
+
+                if (exist){
+                    return Promise.resolve(true)
+                }
+
+                return self.request.mytokens(proxy).then(r => {
+
+                    var exist = _.find(r.tokens, function(t){
+                        return t.token == token && t.id == appid
+                    })
+
+                    if (exist){
+                        return Promise.resolve(exist)
+                    }
+
+                    return Promise.resolve(false)
+                })
+            },
+
+            checkProxy : function(proxy){
+                return self.request.info(proxy).then(r => {
+
+                    var apps = (r.id || "").split(',')
+
+                    if (apps.indexOf(appid) == -1){
+                        return Promise.reject('proxyfirebaseid')
+                    }
+
+                   
+                })
+            }
+        }
+
+        self.revokeall = function(){
+            FirebasePlugin.unregister();
+
+            self.storage.clear();
+
+            return self.request.revokeall()
+        }
+
+        self.set = function(proxy){
+
+            if(!currenttoken) return Promise.reject('emptytoken')
+
+            var address = getaddress()
+            var token = currenttoken
+
+
+            console.log('getaddress', getaddress())
+
+            return self.api.checkProxy(proxy).then(r => {
+                return  self.api.exist(proxy, address, token)
+            }).then(exist => {
+
+                if(exist) return Promise.resolve()
+
+                if(self.api.existanother(proxy, address)) return self.revokeall()
+
+            }).then(r => {
+                return self.api.setToken(address, token, proxy)
+            }).catch(e => {
+                console.log("E", e)
+                return Promise.resolve()
+            })
+            
+        }
+
+        self.request = {
+
+            revokeall : function(){
+
+                return platform.app.api.fetchauthall('firebase/revokedevice', {
+                    device : device()
+                })
+
+            },
+
+            info : function(proxy){
+                return platform.app.api.fetchauth('firebase/info', {}, {
+                    proxy : proxy
+                })
+            },
+
+            mytokens : function(proxy){
+                return platform.app.api.fetchauth('firebase/mytokens', {}, {
+                    proxy : proxy
+                })
+            },
+
+            revoke: function (token, proxy) {
+
+                return platform.app.api.fetchauth('firebase/revoke', {
+                    token
+                }, {
+                    proxy : proxy
+                })
+               
+            },
+
+            revokeDevice: function (proxy) {
+
+                return platform.app.api.fetchauth('firebase/revokedevice', {
+                    device : device()
+                }, {
+                    proxy : proxy
+                })
+                
+              
+            },
+
+            setToken: function (token, proxy) {
+
+
+                return platform.app.api.fetchauth('firebase/set', {
+                    device : device(),
+                    token : token,
+                    id : appid
+                }, {
+                    proxy : proxy
+                })
+
+            }
+        }
+
+       
         self.get = function (clbk) {
 
             if (!using) {
@@ -16116,16 +16295,18 @@ Platform = function (app, listofnodes) {
 
                 FirebasePlugin.getToken(function(token) {
 
-                    if (currenttoken == token) return
+                    currenttoken = token
 
-                        currenttoken = token
+                    console.log('currenttoken', currenttoken)
 
-                        self.api.setToken(token, function () {
-
-                    })
+                    if (clbk)
+                        clbk(currenttoken)
     
                 }, function(error) {
                     console.error(error, 'fcmToken not set on server');
+
+                    if (clbk)
+                        clbk()
                 });
 
 
@@ -16160,6 +16341,9 @@ Platform = function (app, listofnodes) {
 
                 if(!data) data = {}
 
+                if (data.data)
+                    platform.ws.messageHandler(data.data)
+
                 if (data.tap) {
 
                     platform.ws.destroyMessages()
@@ -16184,34 +16368,61 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                platform.ws.messageHandler(data)
+                
             });
 
         }
 
         self.init = function(clbk){
 
+            console.log('self.initself.init')
 
-			if(using) {
+            self.prepare(function(token){
+
+                if (token){
+
+                    var proxy = platform.app.api.get.current()
+
+                    if (proxy){
+                        self.set(proxy.id).catch(e => {
+                            console.log("error", e)
+                        })
+                    }
+
+                }
+
+            })
+
+            if(clbk) clbk()
+            
+        }
+
+        self.prepare = function(clbk){
+
+            self.storage.load()
+
+			if (using) {
 				self.events()
-
-				self.permissions()
+				self.permissions(clbk)
 			}
-
-			if (clbk)
-				clbk()
-
+            else{
+                if (clbk)
+				    clbk()
+            }
 
 		}
 
         self.destroy = function (clbk) {
-            if (!using) {
-                if (clbk)
-                    clbk()
+
+            if(using){
+                return self.revokeall.then(clbk).catch(e => {})
             }
-            else {
-                self.api.revokeDevice(clbk)
-            }
+
+            currenttoken = null
+
+            if (clbk)
+                clbk()
+           
         }
 
         return self;
@@ -16275,6 +16486,12 @@ Platform = function (app, listofnodes) {
                     symbols = 180;
                 }
 
+                var links = linkify.find(m);
+
+                _.each(links, function(l){
+                    m = m.replace(l.href, "")
+                })
+
                 var nm = filterXSS(trimHtml(m, symbols), {
                     stripIgnoreTag: true,
                     whiteList: {
@@ -16282,6 +16499,7 @@ Platform = function (app, listofnodes) {
                     }
                 });
 
+              
                 //nm = share.renders.xssmessage(nm)
 
 
@@ -16292,7 +16510,11 @@ Platform = function (app, listofnodes) {
                     }
                 });
 
-                if (share.url) {
+                var meta = parseVideo(share.url || "")
+
+              
+
+                /*if (share.url) {
 
                     var video = videoImage(share.url)
 
@@ -16302,13 +16524,13 @@ Platform = function (app, listofnodes) {
                             v: true
                         })
                     }
-                }
+                }*/
 
                 if(app.curation()) return ''
 
                 h = '<div class="sharepreview"><div class="shareprwrapper table">'
 
-                if (!extendedpreview && images.length) {
+                if (images.length && !extendedpreview) {
 
                     var img = images[0]
 
@@ -16327,33 +16549,69 @@ Platform = function (app, listofnodes) {
                 }
 
                 h += '<div class="tcell fortext">'
+                
+                if(nm.length > 2){
+                    h += '<div><span>' + nm + '</span></div>'
+                }
+                
 
-                h += '<span>' + nm + '</span>'
                 if (images.length && extendedpreview) {
 
 
                     h += '<div class="shareimages commentprev">'
                     h += '<div class="imagesContainer">'
-                    _.each(images, function (image) {
+                        _.each(images, function (image) {
 
-                        h += '<div class="imagesWrapper">'
-                        h += '<div class="image" image="' + clearStringXss(image.i) + '" i="' + clearStringXss(image.i) + '">'
+                            h += '<div class="imagesWrapper">'
+                            h += '<div class="image" image="' + clearStringXss(image.i) + '" i="' + clearStringXss(image.i) + '">'
 
-                        if (image.v) {
-                            h += '<div class="vstyle">'
-                            h += '<i class="fas fa-play"></i>'
+                            if (image.v) {
+                                h += '<div class="vstyle">'
+                                h += '<i class="fas fa-play"></i>'
+                                h += '</div>'
+                            }
+
                             h += '</div>'
-                        }
+                            h += '</div>'
 
-                        h += '</div>'
-                        h += '</div>'
-
-                    })
+                        })
 
                     h += '</div>'
                     h += '</div>'
 
                 }
+
+                if (images.length || links.length || share.tags.length || meta.type) {
+
+                    h += '<div class="additionalcontent">'
+                    
+                        if (!meta.type){
+                            if (images.length) {
+                                h +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
+                            }
+    
+                            if (links.length) {
+                                h +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
+                            }
+
+                            if (share.tags.length) {
+                                h +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
+                            }
+                        }
+
+                        else
+                        {
+                                h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                        }
+                        
+
+                        
+
+                    h += '</div>'
+                }
+
+              
+                
 
                 h += '</div>'
 
@@ -16409,9 +16667,9 @@ Platform = function (app, listofnodes) {
 
 
                 if (t) {
-                    h += '<div class="commenttext commentprev"><span>&ldquo;'
+                    h += '<div class="commenttext commentprev"><span>'
                     h += t
-                    h += '&rdquo;</span></div>'
+                    h += '</span></div>'
                 }
 
                 if (comment.images.length) {
@@ -16432,12 +16690,7 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                if (share) {
-                    h += '<div class="commentshare">'
-                    h += share
-                    h += '</div>'
-                }
-
+              
                 h += '</div>'
 
                 h += '</div>'
@@ -16458,23 +16711,20 @@ Platform = function (app, listofnodes) {
                 h += '<div class="tcell fortext">'
 
                 if (t) {
-                    h += '<div class="commenttext commentprev"><span>&ldquo;'
+                    h += '<div class="commenttext commentprev"><span>'
                     h += t
-                    h += '&rdquo;</span></div>'
+                    h += '</span></div>'
                 }
 
                 if (comment.images.length) {
 
-
                     h += '<div class="commentimages commentprev">'
                     h += '<div class="imagesContainer">'
                     _.each(comment.images, function (image) {
-
                         h += '<div class="imagesWrapper">'
                         h += '<div class="image imageCommentOpen" image="' + clearStringXss(image) + '" i="' + clearStringXss(image) + '">'
                         h += '</div>'
                         h += '</div>'
-
                     })
 
                     h += '</div>'
@@ -18544,28 +18794,18 @@ Platform = function (app, listofnodes) {
             })
 
             if (isMobile()) {
-                var parallax = new SwipeParallax({
+                var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
                     directions: {
-                        up: {
+                        up : {
                             trueshold: 50,
                             positionclbk: function (px) {
-                                var percent = Math.abs((70 + px) / 70);
-
-                                if (percent > 0) {
-
-                                    //progress.update(percent * 100);
-
-                                    message.el.css('opacity', percent)
-                                }
 
                             },
 
                             clbk: function () {
-
                                 message.el.remove()
-
                                 destroyMessage(message, 1, false, true);
 
                             }
@@ -18930,13 +19170,19 @@ Platform = function (app, listofnodes) {
 
         }
 
-        /*setTimeout(function(){
+        setTimeout(function(){
 
-			self.messageHandler(
-				{"addr":"PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82","msg":"event","txid":"87973d606381aa8d11dfd45b089ad441c0f9546ec16d58a413252c62ce603235","time":1613218605,"addrFrom":"PP582V47P8vCvXjdV3inwYNgxScZCuTWsq","mesType":"upvoteShare","posttxid":"f2c6f75ba47c6da07d375dc2d7e81f4ae57b63c9796adea027730bd9e694dd91","upvoteVal":"5","node":"185.148.147.15:38081:8087"}
-			)
+			/*self.messageHandler(
+				{addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+                addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
+                mesType: "postfromprivate",
+                msg: "event",
+                node: "51.174.99.18:38081:8087",
+                time: 1625723521,
+                txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"}
+			)*/
 
-		}, 4000)*/
+		}, 4000)
     }
 
     self.convertUTCSS = function (str) {
@@ -20039,6 +20285,7 @@ Platform = function (app, listofnodes) {
 
             self.preparing = false;
 
+
             self.prepareUser(clbk);
 
             if (typeof PeerTubePocketnet != 'undefined'){
@@ -20167,7 +20414,6 @@ Platform = function (app, listofnodes) {
                         })
 
 
-                        console.log("INITKEYS")
 
                         /*self.sdk.keys.init().then(r => {
                             console.log("RSUCCESS", r)

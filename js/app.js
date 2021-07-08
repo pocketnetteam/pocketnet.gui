@@ -991,7 +991,7 @@ Application = function(p)
 	}catch(e){}
 	
 
-	self.options.device = /*localStorage['device'] ||*/ makeid();
+	self.options.device = localStorage['device'] || makeid();
 
 	localStorage['device'] = self.options.device
 

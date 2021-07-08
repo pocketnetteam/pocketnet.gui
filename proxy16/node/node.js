@@ -266,8 +266,10 @@ var Node = function(options, manager){
             if (rate > 30 && rate <= 50) rate = 40
             if (rate > 50 && rate <= 100) rate = 75
 
+            var userski = 1 //_.toArray(wss.users).length + 1
+
             return  (s.percent  * (lastblock.height || 1) ) / 
-                    ( rate * (time) * (difference + 1) )
+                    ( userski * rate * (time) * (difference + 1) )
         },
 
         better : function(){
@@ -476,7 +478,8 @@ var Node = function(options, manager){
     }
 
     self.checkParameters = function(){
-        if(!f.validateHost(self.host)) return Promise.reject('validateHost')
+
+        if(!f.validateHost(self.host)) { return Promise.reject('validateHost')}
         if(!self.port) return Promise.reject('port')
         if(!self.ws) return Promise.reject('ws')
         
@@ -591,7 +594,8 @@ var Node = function(options, manager){
             stable : self.stable,
             canuse : (s.success > 0 && lastblock.height) ? true : false,
             local : self.local || false,
-            peer : self.peer
+            peer : self.peer,
+            wssusers : _.toArray(wss.users).length
         }
     }
 

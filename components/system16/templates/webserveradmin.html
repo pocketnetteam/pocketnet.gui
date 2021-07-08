@@ -142,8 +142,15 @@
                         <div class="icon">
                             <i class="far fa-times-circle" remove="firebase"></i>
                         </div>
-                    <% } %>
+                    <% } else { %> 
 
+                        <% if(deep(system, 'firebase.key') || deep(system, 'firebase.id')) {%>
+                            <div class="icon clearfirebase">
+                                <i class="far fa-times-circle"></i>
+                            </div>
+                        <% } %>
+                   
+                    <% } %>
                   
                 </div>
             </div>
