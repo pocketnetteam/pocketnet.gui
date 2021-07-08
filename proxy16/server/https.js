@@ -175,7 +175,7 @@ var Server = function(settings, admins, manage){
             server = null
         }
 
-        if(httpserver){
+        if (httpserver){
             httpserver.close()
             httpserver = null
         }

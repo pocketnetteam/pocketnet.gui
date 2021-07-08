@@ -95,7 +95,7 @@ var Proxy = function (settings, manage, test) {
 	}
 
 	var ini = {
-		ssl: function () {
+		ssl: function (def) {
 			var s = settings.server.ssl || {}
 			var sslsettings = {}
 
@@ -103,8 +103,15 @@ var Proxy = function (settings, manage, test) {
 			sslsettings.cert = s.certpath || s.cert
 			sslsettings.passphrase = s.passphrase
 
-			var options = {};
 
+			////default
+			if (def){
+				sslsettings.key = s.key
+				sslsettings.cert = s.cert
+				sslsettings.passphrase = 'password'
+			}
+
+			var options = {};
 
 			if (!sslsettings.key || !sslsettings.cert || typeof sslsettings.passphrase == 'undefined') return {
 
@@ -242,7 +249,14 @@ var Proxy = function (settings, manage, test) {
 				return server.init({
 					ssl: ini.ssl(),
 					port: f.deep(settings, 'server.ports.https')
-				});
+				}).catch(e => {
+					console.log("E", e)
+					return server.init({
+						ssl: ini.ssl('default'),
+						port: f.deep(settings, 'server.ports.https')
+					})
+
+				})
 
 			}
 
