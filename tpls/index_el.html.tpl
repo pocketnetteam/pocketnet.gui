@@ -185,7 +185,7 @@
         <!--<script src="js/vendor/imagesloaded.pkgd.min.js"></script> -->
         <script src="js/vendor/timer.js"></script>
         <script src="js/vendor/autosize.min.js"></script>
-        <script src="js/vendor/ion.sound/ion.sound.min.js"></script>   
+        <script src="js/vendor/ion.sound/ion.sound.js"></script>   
 
         <script src="js/vendor/linkify.min.js"></script>
         <script src="js/vendor/linkify-html.min.js"></script>
@@ -229,7 +229,7 @@
         <script join src="js/peertube.js"></script>
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
-       
-   
+        <script join src="chat/matrix-element.min.js"></script>    
+    
     </body>
 </html>

@@ -282,7 +282,7 @@ nModule = function(){
 		p.inner || (p.inner = html);	
 
 
-		if(p.animation)
+		if(p.animation )
 		{
 
 			if(!p.animation.timeouts)
@@ -290,6 +290,7 @@ nModule = function(){
 
 			if(p.animation == 'fadeIn')
 			{
+				console.log("P", p)
 				
 				p.el.fadeOut(100);
 

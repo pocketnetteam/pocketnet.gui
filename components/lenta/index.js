@@ -431,6 +431,7 @@ var lenta = (function(){
 			},
 			applyheight : function(iniH, curH, key){
 
+				return
 
 				var wn = w.scrollTop();
 				var b = wn + Number(curH - iniH)
@@ -442,6 +443,8 @@ var lenta = (function(){
 			},
 
 			applyheightEl : function(iniH, _el, key){
+
+				return
 
 				if(!el || !el.shares) return
 

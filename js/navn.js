@@ -867,8 +867,8 @@ Nav = function(app)
 
 			p.clbk || (p.clbk = emptyFunction);
 
-			if(typeof p.animation == 'undefined')
-				p.animation = 'fadeIn'
+			/*if(typeof p.animation == 'undefined')
+				p.animation = 'fadeIn'*/
 
 			if(p.href){
 

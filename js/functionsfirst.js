@@ -43,6 +43,8 @@ deep = function(obj, key){
 
 topPreloader = function(percent){
 
+    return
+
     if(!window.jQuery) return
 
     if(_Node) return
@@ -77,7 +79,6 @@ topPreloader = function(percent){
             el.fadeOut(300);
 
             setTimeout(function(){
-
 
                 el.html('');
 
@@ -489,10 +490,8 @@ importScript = function(src, callback, appendTo, app, module, _require) {
 
         var pref = '../';
 
-        
 
         if(typeof _Electron != 'undefined' && _Electron == true) pref = './'
-
 
 
         if(module) {

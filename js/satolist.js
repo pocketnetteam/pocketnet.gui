@@ -20481,7 +20481,22 @@ Platform = function (app, listofnodes) {
             else{
                 self.matrixchat.imported = true;
 
-                importScript('chat/matrix-element.min.js', clbk)
+                if(electron){
+                    console.log("HERE")
+                    /*try{
+                        require('./chat/matrix-element.min.js')
+                    }
+                    catch(e){
+                        console.error(e)
+                    }
+                    */
+
+                    if(clbk) clbk()
+                }
+                else{
+                    importScript('chat/matrix-element.min.js', clbk)
+                }
+                
             }
 
             
