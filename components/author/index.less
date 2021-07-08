@@ -950,7 +950,7 @@ html.stblack{
 		}
 	}
 }
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
 	#content{
 
 		#lenta{
@@ -1153,10 +1153,11 @@ html.stblack{
 					font-size: 1.1em;
 					overflow: hidden;
 					text-overflow: ellipsis;
-					text-align: left;
-					padding-left : 4.4 * @rhythm;
+					text-align: center;
+					padding-left :  0;
+					padding-right: 0;
 					white-space: nowrap;
-					margin-top : 1 * @rhythm;	
+					margin-top : 0;	
 					margin-bottom: 2 * @rhythm;
 
 					.adr{
@@ -1253,4 +1254,11 @@ html.stblack{
 		}
 	}
 		
+}
+
+@media only screen and (max-width: 640px){
+	#content #author .bgCaption .caption{
+		text-align: left;
+		padding-left: 4.5 * @rhythm;
+	}
 }

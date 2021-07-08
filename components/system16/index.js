@@ -94,6 +94,7 @@ var system16 = (function(){
 						return false
 	        		}
 	        	})
+
 			},
 			'certificate' : function(){
 				var v = changes.server.ssl || {};
@@ -2403,10 +2404,39 @@ var system16 = (function(){
 
 						})
 
+						p.el.find('.clearfirebase').on('click', function(){
+							
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to clear all firebase settings?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+
+									proxy.fetchauth('manage', {
+										action : 'set.server.firebase.clear',
+										data : {
+										}
+									}).then(r => {
+			
+										make(proxy || api.get.current());
+			
+									}).catch(e => {
+			
+										sitemessage(self.app.localization.e('e13293'))
+			
+									})
+
+								}
+							})
+							
+							
+						})
+
 						p.el.find('[remove]').on('click', function(){
 							var s = $(this).attr('remove')
 
-							if(s) delete changes.server[s]
+							if (s) delete changes.server[s]
 
 							renders.webserveradmin(elc)
 						})
@@ -3031,6 +3061,9 @@ var system16 = (function(){
 							p.el.find('.nodecontentmanage').addClass('lock')
 						}
 
+						console.log('info.nodeControl.state', info.nodeControl.state, info.nodeControl)
+
+						
 						makers.stacking()
 
 						actions.settings(p.el)
@@ -3304,7 +3337,7 @@ var system16 = (function(){
 		var makers = {
 
 			stacking : function(update){
-				if(actions.admin() && (!stacking || update)){
+				if (actions.admin() && (!stacking || update) && deep(info, 'nodeControl.enabled')){
 
 					proxy.fetchauth('manage', {
 
@@ -3403,6 +3436,10 @@ var system16 = (function(){
 
 			graphs = {}
 
+			var expanded = el.c.find('.collapsepart').map(function(){
+				return $(this).hasClass('expanded')
+			})
+
 			if (proxy){
 
 				proxy.clbks.changed.components = () => {
@@ -3461,6 +3498,12 @@ var system16 = (function(){
 						}).then(r => {
 							bots = r.bots || []
 							renders.bots(el.c)
+
+
+							el.c.find('.collapsepart').each(function(i){
+								if(expanded[i]) $(this).addClass('expanded')
+							})
+
 						})
 
 					}

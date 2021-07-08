@@ -94,6 +94,8 @@ var Wss = function(node, service){
 
         var path = `ws://${node.host}:${node.ws}/ws`;
 
+
+
         if(!ws){
             ws = new WebSocket(path);        
 
@@ -121,6 +123,7 @@ var Wss = function(node, service){
                     emit('disconnected')
                 }
                 else{
+                  
                     self.connect(user)
                 }
             };
@@ -135,7 +138,6 @@ var Wss = function(node, service){
                 if(_.isEmpty(data)){
                     return
                 }
-
 
                 if (data.msg == 'new block' && service){
                 

@@ -783,11 +783,24 @@ var Api = function(app){
         })
     }
 
+    self.fetchauthall = function(path, data){
+        var promises = _.map(proxies, function(proxy){
+            var options = {proxy : proxy.id}
+
+            return self.fetchauth(path, data, options)
+        })
+        return Promise.all(promises).catch(e => {
+            return Promise.resolve()
+        })
+
+       
+    }
+
     self.fetchauth = function(path, data, options){
         if(!options) 
             options = {}
 
-            options.auth  =true
+            options.auth = true
 
         return self.fetch(path, data, options)
     }   
@@ -806,21 +819,27 @@ var Api = function(app){
         if(options.auth) method = 'fetchauth'
 
 
+        var requestto = null
+
         return getproxy(options.proxy).then(proxy => {
+
+            requestto = proxy.id
 
             return proxy[method](path, data)
 
         }).then(r => {
 
-            app.apiHandlers.success({
-                api : true
-            })
+            if (requestto == current)
+
+                app.apiHandlers.success({
+                    api : true
+                })
 
             return Promise.resolve(r)
 
         }).catch(e => {
 
-            if (e == 'TypeError: Failed to fetch'){
+            if (requestto == current && e == 'TypeError: Failed to fetch'){
                 app.apiHandlers.error({
                     api : true
                 })

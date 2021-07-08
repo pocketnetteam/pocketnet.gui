@@ -4480,7 +4480,7 @@ html{
     }
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
     .horizontalLentaWrapper{
 
         .controlhor{
@@ -4971,7 +4971,7 @@ html{
 
         .shareprwrapper{
             >div{
-                vertical-align: middle;
+                vertical-align: top;
                 padding : @rhythm / 2;
 
                 &.forimage{
@@ -4994,6 +4994,12 @@ html{
                         float: right;
                     }
                 }
+
+                .additionalcontent{
+                    font-size: 0.8em;
+                    padding-bottom: 0;
+                    opacity: 0.5;
+                }
             }
 
             .img{
@@ -5013,17 +5019,18 @@ html{
         }
 
         .shareimages{
-            padding-top : @rhythm;
+            padding-top : 0.5 * @rhythm;
+            padding-bottom : 0.5 * @rhythm;
             .imagesContainer{
                 overflow: hidden;
 
                 >div{
                     float: left;
-                    margin-bottom : @rhythm;
-                    margin-right : @rhythm; 
-
-                    width: 80px;
-                    height: 80px;
+                    margin-right : 0.5 * @rhythm; 
+                    overflow: hidden;
+                    border-radius: 50%;
+                    width: 24px;
+                    height: 24px;
                     
                     .image{
                         width : 100%;
@@ -5090,7 +5097,7 @@ html{
             }
 
             &.extra{
-                width: 100px;
+                width: 80px;
             }
 
             .infomain{
@@ -5302,6 +5309,8 @@ html{
                     width: 40px;
                     height: 40px;
                     display: none;
+                    border-radius: 20px;
+                    overflow: hidden;
 
                     &:nth-child(1),
                     &:nth-child(2),
@@ -5635,7 +5644,7 @@ html{
     }*/
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
 
     html{
 
@@ -5692,7 +5701,7 @@ html{
     }
 
 }
-@media only screen and (max-width: 640px) {
+/*t*/ @media only screen and (max-width: 768px){
     #splashScreen{
         display: flex;
     }
@@ -6066,7 +6075,7 @@ html{
     }
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
     #menu{
     }
 
@@ -6082,7 +6091,7 @@ html{
     }
 } 
 }
-@media only screen and (max-width: 640px) {
+/*t*/ @media only screen and (max-width: 768px){
 
     button{
         &.medium{
@@ -6297,20 +6306,20 @@ html{
 
     .fastMessage{
         position: fixed;
-        left: 0px;
-        right: 0px;
-        top: 0px;
+        left: 0.5 * @rhythm;
+        right: 0.5 * @rhythm;
+        top: 0.5 * @rhythm;
         max-height: 210px;
-        width: 100%;
+        width: auto;
         min-width: 0;
         max-width: none;
-        border-radius: 0;
+        border-radius: 6px;
         bottom : auto;
 
         .fmCnt{
             width: 100%;
             height: 100%;
-            overflow : hidden;
+            overflow : visible;
             text-overflow: ellipsis;
             padding-right : 2 * @rhythm;
         }
@@ -6319,6 +6328,20 @@ html{
             padding : 2 * @rhythm;
            
 
+        }
+
+        .time{
+            display: none;
+        }
+
+        .tips{
+           display: none; 
+        }
+
+        .cwrapper.table{
+            >div{
+                vertical-align: middle;
+            }
         }
 
         .commentmessagewrapper>div, 

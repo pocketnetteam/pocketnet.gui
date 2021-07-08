@@ -331,7 +331,6 @@ var Nodemanager = function(p){
 
         _.each(self.nodes, function(node){
             self.api.peernodesTime(node).then(r => {
-                //console.log("SUCCESS NODE", node.host, r)
             }).catch(e => {
                 //console.log("E", e, node.host)
 
@@ -464,7 +463,6 @@ var Nodemanager = function(p){
         peernodesTime : function(node){
 
             var last = self.askedpeers[node.key]
-
 
             if(!last || f.date.addseconds(last, peernodesCheckTime / 1000) < new Date()){
 

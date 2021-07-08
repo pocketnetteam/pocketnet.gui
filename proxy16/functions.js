@@ -245,6 +245,10 @@ f.nowrev = function(date){
     return d
 }
 
+f.time = function(){
+    return Math.floor(Date.now() / 1000)
+}
+
 f.now = function(date){
     var now = date ||(new Date);
     var UTCseconds = (now.getTime() + now.getTimezoneOffset()*60*1000);

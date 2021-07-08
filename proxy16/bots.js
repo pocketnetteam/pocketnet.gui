@@ -15,8 +15,6 @@ var Bots = function(p){
 
         return new Promise((resolve, reject) => {
 
-            console.log('self.check(address)', self.check(address), address)
-
             if (self.check(address)){
 
                 addresses.push(address)

@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + "v3.chunk.js"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=2791"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43142,7 +43142,7 @@ class embed_PeerTubeEmbed {
         this.stopWaiting();
         this.statusInterval = setInterval(() => {
             // @ts-ignore
-            this.waitStatus([2, 4, 5]).then((r) => {
+            this.waitStatus([4, 5]).then((r) => {
                 clearInterval(this.statusInterval);
                 this.statusInterval = null;
                 if (r)
@@ -43410,9 +43410,8 @@ class embed_PeerTubeEmbed {
         });
     }
     handleError(err, translations) {
-        let is_transcoding = this.isTranscodingStatusMessage();
-        if (is_transcoding)
-            return;
+        /*let is_transcoding = this.isTranscodingStatusMessage();
+        if (is_transcoding) return*/
         var liveerror = this.checkLiveStatus();
         if (liveerror && liveerror.error) {
             this.displayErrorWrapper(liveerror.text);
@@ -43491,7 +43490,7 @@ class embed_PeerTubeEmbed {
             this.wrapperElement.appendChild(this.playerElement);
             this.loadParams(videoInfo);
             this.liveStatusMessage();
-            this.isTranscodingStatusMessage();
+            //this.isTranscodingStatusMessage()
             const options = {
                 common: {
                     // Autoplay in playlist mode

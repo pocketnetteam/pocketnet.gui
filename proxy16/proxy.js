@@ -237,9 +237,7 @@ var Proxy = function (settings, manage, test) {
 
 		init: function () {
 
-
 			if (settings.server.enabled) {
-
 
 				return server.init({
 					ssl: ini.ssl(),
@@ -309,11 +307,9 @@ var Proxy = function (settings, manage, test) {
 
 		events: function () {
 			wallet.clbks.error.queue.main = function (e, p) {
-				//console.log("ERROR QUEUE", e, p)
 			}
 
 			wallet.clbks.error.ini.main = function (e, p) {
-				//console.log("ERROR INI", e, p)
 			}
 		},
 
@@ -508,6 +504,9 @@ var Proxy = function (settings, manage, test) {
 
 	self.firebase = {
 		init: function () {
+
+			console.log('settings.firebase', settings.firebase)
+
 			return firebase.init(settings.firebase)
 		},
 
@@ -523,7 +522,11 @@ var Proxy = function (settings, manage, test) {
 
 		info: function (compact) {
 			return firebase.info(compact)
-		}
+		},
+
+		get kit() {
+			return firebase.kit
+		},
 	}
 
 	self.exchanges = {
@@ -555,8 +558,6 @@ var Proxy = function (settings, manage, test) {
 			if (test){
 				ins = {3 : ['pocketnetpeertube3.nohost.me']}
 			}
-
-			console.log('ins', ins)
 
 			return peertube.init({
 				roys : ins
@@ -1078,11 +1079,7 @@ var Proxy = function (settings, manage, test) {
 				authorization: 'signature',
 				action: function ({ node, scenario, A }) {
 
-					console.log("A")
-
 					if (!test) return Promise.reject('err');
-
-					console.log("Aa")
 
 					if (!A) return Promise.reject('admin');
 
@@ -1101,7 +1098,6 @@ var Proxy = function (settings, manage, test) {
 							},
 						});
 					}).catch(e => {
-						console.log("E", e)
 
 						return Promise.reject('err')
 					})
@@ -1272,6 +1268,48 @@ var Proxy = function (settings, manage, test) {
 				action: function (data) {
 					return self.firebase.kit.addToken(data).then((r) => {
 						return Promise.resolve({ data: r });
+					}).catch(e => {
+						console.error(e)
+
+						return Promise.reject(e)
+					})
+				},
+			},
+
+			test: {
+				path: '/firebase/test',
+				action: function (data) {
+
+					var _data = {
+						addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+						addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
+						mesType: "upvoteShare",
+						msg: "event",
+						node: "51.174.99.18:38081:8087",
+						posttxid: "12d6425dc5d23c0a4b28cc3605e95d7edaeae1e321ce835d29c89f30aa340cf0",
+						time: '1625658811',
+						txid: "af5a60167933ab5194bdbc0b08404cb20c0b40aa546f60e21f0d9f955f99ae22",
+						upvoteVal: "5"
+					}
+
+					return firebase.sendToDevice(_data, 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM').catch(e => {
+						console.error(e)
+
+						return Promise.reject(e)
+					})
+
+				},
+			},
+
+			revokedevice: {
+				path: '/firebase/revoke',
+				action: function (data) {
+					return self.firebase.kit.revokeToken(data).then((r) => {
+						return Promise.resolve({ data: r });
+					}).catch(e => {
+						console.error(e)
+
+						return Promise.reject(e)
 					});
 				},
 			},
@@ -1280,6 +1318,33 @@ var Proxy = function (settings, manage, test) {
 				path: '/firebase/revokedevice',
 				action: function (data) {
 					return self.firebase.kit.removeDevice(data).then((r) => {
+						return Promise.resolve({ data: r });
+					}).catch(e => {
+						console.error(e)
+
+						return Promise.reject(e)
+					});
+				},
+			},
+
+			info: {
+				path: '/firebase/info',
+				action: function (data) {
+					
+					return self.firebase.kit.info({}).then((r) => {
+						return Promise.resolve({ data: r });
+					});
+				},
+			},
+
+			mytokens: {
+				authorization: 'signature',
+				path: '/firebase/mytokens',
+				action: function (data) {
+
+					console.log("D", data)
+					
+					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
 				},

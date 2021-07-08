@@ -6851,6 +6851,8 @@
 
 			var prop = directiontoprop(direction);
 
+			if(direction == 'up' || direction == 'left') value = -value
+
 			if (prop == 'x'){
 				p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
 			}

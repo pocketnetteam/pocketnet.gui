@@ -65,7 +65,7 @@ var author = (function(){
 			},
 			panelTopPosition : function(){
 
-				if(!isMobile()){
+				if(!isTablet()){
 					var s = $(window).scrollTop();
 
 					if (el.caption.height() + 20 < s){
@@ -83,7 +83,7 @@ var author = (function(){
 
 			panelPosition : function(){
 
-				if(isMobile()){
+				if(isTablet()){
 					return 
 				}
 
@@ -351,7 +351,7 @@ var author = (function(){
 					class : 'tosettings',
 	
 					if : function(){
-						if(self.user.isItMe(author.address) && !isMobile()) return true
+						if(self.user.isItMe(author.address) && !isTablet()) return true
 					}
 				},
 	
@@ -382,7 +382,7 @@ var author = (function(){
 					history : true,
 					if : function(){
 						return false
-						if(isMobile()) return true
+						if(isTablet()) return true
 					}
 				},
 				
@@ -523,7 +523,7 @@ var author = (function(){
 
 					renders.menulight()
 
-					/*if(!isMobile())
+					/*if(!isTablet())
 						self.app.platform.sdk.contents.get(author.address, function(contents){
 							renders.contents(contents)	
 						})*/
@@ -574,7 +574,7 @@ var author = (function(){
 
 							_.each(r.events, function(e, i){
 
-								if(i == 'click' && isMobile()){
+								if(i == 'click' && isTablet()){
 
 									el.swipe({
 										tap : e
@@ -899,7 +899,7 @@ var author = (function(){
 								c.find('.search input').val(parameters().ssa)
 							}
 
-							if(isMobile()){
+							if(isTablet()){
 								c.addClass('searchactive')
 							}
 						}
@@ -1186,7 +1186,7 @@ var author = (function(){
 			renders.report(reports[r], null, ini)
 			renders.menu()
 
-			if(isMobile()){
+			if(isTablet()){
 				renders.info(el.c.find('.mobileinfo'))
 			}
 
@@ -1219,7 +1219,7 @@ var author = (function(){
 			})*/
 			
 
-			if(!isMobile())
+			if(!isTablet())
 				renders.info(el.info)
 		}
 
@@ -1356,7 +1356,7 @@ var author = (function(){
 
 				/*var c = deep(self, 'app.modules.menu.module.destroyauthorsearch')
 
-				if (c && isMobile()){
+				if (c && isTablet()){
 					c()
 				}*/
 				

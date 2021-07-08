@@ -2,7 +2,7 @@ var Datastore = require('nedb');
 var f = require('../functions');
 
 var Fbtoken = function({
-    token, device, address, id
+    token, device, address, id, app, date
 }){
     var self = this;
 
@@ -11,7 +11,7 @@ var Fbtoken = function({
     }
 
     self.check = function(){
-        return token && device && address && id
+        return token && device && address && id && date
     }
 
     self.export = function(){
@@ -20,6 +20,7 @@ var Fbtoken = function({
             device,
             address,
             id : id,
+            date : date,
             key : key()
         }
     }
@@ -35,15 +36,12 @@ var Firebase = function(p){
     var admin = require('firebase-admin');
     var serviceAccount = null;
     var db = new Datastore(f.path(p.dbpath));
-
     
-
     self.users = [];
     self.inited = false;
 
-    
-
     var loaddb = function(){
+
         return new Promise((resolve, reject) => {
 
             db.loadDatabase(err => {
@@ -72,17 +70,29 @@ var Firebase = function(p){
         })
     }
 
-    var finduser = function(user){
+    var finduser = function(_user){
         return _.find(self.users, function(user){
-            return user.address == address && user.device == user.device
+            return user.address == _user.address && user.device == _user.device
         })
     }
 
     var adduser = function(user){
-
         if(!finduser(user) && self.inited){
+
             self.users.push(user)
-            self.wss.clbks.firebase.addUser(user)
+
+            setTimeout(function(){
+
+                try{
+                    self.wss.clbks.firebase.addUser(user)
+                }
+                catch(e){
+                    console.error(e)
+                }
+                
+            }, f.rand(500, 5000))
+
+          
         }
         
     }
@@ -144,6 +154,7 @@ var Firebase = function(p){
                 title : "New Post From Pocketnet Team",
                 body : "Pocketnet team has a brand new post!"
             }
+            
             return m
         },
 
@@ -179,13 +190,29 @@ var Firebase = function(p){
 
     self.getall = function(){
         return new Promise((resolve, reject) => {
-            db.find({id : self.id}).exec(function (err, docs) {
+            db.find({}).exec(function (err, docs) {
                 var keys = docs || []
+
+                var apps = (self.id || "").split(',')
+
+                    docs = _.sortBy(docs, function(d){
+                        return - Number(d.date || '0')
+                    })
+
+                    docs = _.uniq(_.uniq(_.filter(docs, function(d){
+                        return apps.indexOf(d.id) > -1
+                    }), function(d){
+                        return d.token
+                    }), function(d){
+                        return d.address + d.device
+                    })
+
+
     
                 var users = _.map(keys, function(options){
-                    return new Fbtoken(options)
+                    return new Fbtoken(options).export()
                 })
-    
+
                 resolve(users)
             })
         })
@@ -194,30 +221,31 @@ var Firebase = function(p){
 
     self.kit = {
         addToken : function({
-            token, device, address, signature
+            token, device, U, id
         }){
+            var date = f.time()
+            var fbtoken = new Fbtoken({token, device, address : U, id, date})
 
-            var saddress = self.pocketnet.kit.authorization.signature(signature)
-
-            if(!saddress || saddress != address) return false
-
-            var fbtoken = new Fbtoken({token, device, address, id : self.id})
-
-            if(!fbtoken.check()) return
+            if(!fbtoken.check()) return Promise.reject('checkToken')
 
             return new Promise((resolve, reject) => {
-                db.insert(fbtoken.export()).exec(function(err, docs) {
-                    if(err) return reject(err)
+
+                db.insert(fbtoken.export(), function (err, docs) {
+                    if(err) {
+
+                        return reject(err)
+                    }
 
                     adduser(fbtoken)
 
                     resolve(docs)
-                })
+                });
+
             })
         },
 
-        revokeOtherTokens : function(device, token){
-
+        revokeOtherTokens : function({device, token}){
+            var address = U
             var removed = []
 
             self.users = _.filter(self.users, function(user){
@@ -234,7 +262,7 @@ var Firebase = function(p){
 
                     return {token : r.token}
 
-                })).exec(function(err, docs) {
+                }), function(err, docs) {
                     if(err) return reject(err)
 
                     _.each(removed, function(user){
@@ -260,7 +288,7 @@ var Firebase = function(p){
 
             return new Promise((resolve, reject) => {
 
-                db.remove({token}).exec(function(err, docs) {
+                db.remove({token}, function(err, docs) {
                     if(err) return reject(err)
 
                     _.each(removed, function(user){
@@ -272,7 +300,7 @@ var Firebase = function(p){
             })
         },
 
-        removeDevice : function(device){
+        removeDevice : function({device}){
 
             var removed = []
 
@@ -286,7 +314,7 @@ var Firebase = function(p){
 
             return new Promise((resolve, reject) => {
 
-                db.remove({device}).exec(function(err, docs) {
+                db.remove({device}, function(err, docs) {
                     if(err) return reject(err)
 
                     _.each(removed, function(user){
@@ -296,6 +324,35 @@ var Firebase = function(p){
                     resolve(docs)
                 })
             })
+        },
+
+        mytokens : function({address}){
+
+
+            return new Promise((resolve, reject) => {
+
+            
+                db.find({address : address}).exec(function (err, docs) {
+
+                    if(err){
+                        return reject(err)
+                    }
+
+                    var keys = docs || []
+        
+                    var tokens = _.map(keys, function(options){
+                        return new Fbtoken(options).export()
+                    })
+        
+                    resolve(tokens)
+                })
+
+            })
+
+        },
+
+        info : function(){
+            return Promise.resolve({id : self.id})
         }
     }
 
@@ -305,8 +362,13 @@ var Firebase = function(p){
 
         if(!data || !user) return Promise.reject('empty')
 
+        if(!self.app) return Promise.reject('app')
+
         if(!data.username){
-            return Promise.reject('username')
+
+            data.username = 'Somebody'
+
+            //return Promise.reject('username')
         }
 
         var m = null;
@@ -333,10 +395,21 @@ var Firebase = function(p){
                     android : { 
 
                         notification: {
+                            priority : "MAX",
+                            visibility : "PUBLIC",
                             icon: 'notification_icon',
-                            sound : 'default',
                             color : '#00A3F7',
-                            click_action:  "FCM_PLUGIN_ACTIVITY",
+                            defaultSound : "true",
+                            defaultVibrateTimings : "true",
+                            ticker : "Pocketnet"
+                        }
+                    },
+                    apns: {
+                        payload: {
+                            aps: {
+                                sound: 'default',
+                                'content-available': '1'
+                            }
                         }
                     }
 
@@ -347,9 +420,13 @@ var Firebase = function(p){
                 })
                 .catch((error) => {
 
-                    if (deep(error,'errorInfo.code') == 'messaging/registration-token-not-registered' || 
-                        deep(error,'errorInfo.code') == 'messaging/invalid-argument'){
+                    if (f.deep(error,'errorInfo.code') == 'messaging/registration-token-not-registered' || 
+                        f.deep(error,'errorInfo.code') == 'messaging/invalid-argument'){
+
                         self.kit.revokeToken(user.token)
+
+
+                        return Promise.resolve()
                     }
 
                     return Promise.reject(error)
@@ -364,8 +441,11 @@ var Firebase = function(p){
 
     self.sendToDevice = function(data, device, address){
         var user = getuser(address, device)
+
         return self.send({data, user})
     }
+
+     
 
     self.init = function(p){
 
@@ -374,16 +454,16 @@ var Firebase = function(p){
         if (p.key){
 
             try{
-                serviceAccount = require(p.key);
+                serviceAccount = require(f.path(p.key));
             } catch (e){ 
-
+                console.log("E", e)
             }
         }
 
         self.id = p.id
 
         if (serviceAccount){
-            admin.initializeApp({
+            self.app = admin.initializeApp({
                 credential: admin.credential.cert(serviceAccount)
             })
 
@@ -402,6 +482,21 @@ var Firebase = function(p){
         self.inited = false;
         self.users = [];
 
+        if(self.app) {
+
+            return self.app.delete().then(r => {
+                self.app = null
+
+                return Promise.resolve()
+            }).catch(e => {
+                self.app = null
+
+                admin = require('firebase-admin');
+
+                return Promise.resolve()
+            })
+        }
+
         return Promise.resolve()
     }
 
@@ -411,8 +506,6 @@ var Firebase = function(p){
             users : self.users.length
         }
     }
-
-    //self.admin = admin;
 
     return self;
 }

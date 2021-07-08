@@ -170,8 +170,6 @@ Localization = function(app){
 
 		var __k = _key || self.key
 
-		console.log(self.loaded[__k], self.loading[__k], __k)
-
 		if(self.loaded[__k])
 		{
 			if (clbk)

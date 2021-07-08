@@ -190,6 +190,10 @@ User = function(app, p) {
 	self.features = {};
 	self.signout = function(clbk){
 
+		if (app.platform.firebase){
+			app.platform.firebase.destroy();
+		}
+
 		state = 0;
 		self.data = {};
 		localStorage['mnemonic'] = ''
@@ -214,8 +218,7 @@ User = function(app, p) {
 		if (app.platform.rtc)
 			app.platform.rtc.destoryAll();
 
-		if (app.platform.firebase)
-			app.platform.firebase.destroy(clbk);
+		if (clbk) clbk()
 
 		// Unsubscribe from notifications
 		//app.notifications.unsubscribe();

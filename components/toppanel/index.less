@@ -164,15 +164,33 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px){
+
+	#toppanel{
+
+		.work{
+			width: 100%;
+			padding-right: 3 * @rhythm;
+		}
+	
+		.panelitems{
+
+			.panelitemCenter{
+				margin-left: 0;
+				margin-right: 0;
+			}
+
+		}
+	}
+}
+
+html.mobile{
 	#toppanel{
 		height: 55px;
 		.work{
 			width: 100%;
 		    padding-left: 0;
 			padding-right:0;
-			
-			
 		}
 
 		.panelitems{
@@ -277,7 +295,7 @@ html.stblack{
 		}
 	}	
 
-	html.stblack{
+ 	&.stblack{
 		#toppanel{
 			
 		
@@ -293,5 +311,20 @@ html.stblack{
 	
 			}
 		}	
+	}
+	
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape){
+	#toppanel{
+		
+		.vc_valuecustom{
+
+			.vc_inputWrapper{
+				padding-left: 6 * @rhythm;
+				padding-right: 6 * @rhythm;
+			}
+
+		}
 	}
 }

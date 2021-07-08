@@ -32,7 +32,7 @@
 }
 #main .topvideosWrapper .durationWrapper,
 #main .topvideosWrapper .statswrapper {
-  top: 0.5em;
+  top: 0;
   bottom: auto!important;
 }
 #main.videomain {
@@ -566,7 +566,12 @@ html.testpocketnet #main.testpocketnetbg {
     display: none!important;
   }
 }
+/*t*/
 @media only screen and (max-width: 768px) {
+  html.toppanelshowed #main .maincntwrapper > div.work {
+    max-width: none;
+    padding: 0;
+  }
   html.toppanelshowed #main .maincntwrapper > div.work > div {
     padding-top: 120px;
   }
@@ -587,6 +592,7 @@ html.testpocketnet #main.testpocketnetbg {
     padding-bottom: 0;
   }
   #main .topvideosWrapper .horizontalLentacaption {
+    display: none;
     padding: 1em;
   }
   #main .topvideosWrapper .horizontalLentacaption span {
