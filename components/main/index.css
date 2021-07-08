@@ -566,6 +566,17 @@ html.testpocketnet #main.testpocketnetbg {
     display: none!important;
   }
 }
+@media only screen and (max-width: 1024px) {
+  #main .mainpanelcell {
+    display: none;
+  }
+  #main .leftpanelcell {
+    float: right;
+  }
+  #main .lentacell {
+    margin-left: 0;
+  }
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   html.toppanelshowed #main .maincntwrapper > div.work {
@@ -574,6 +585,12 @@ html.testpocketnet #main.testpocketnetbg {
   }
   html.toppanelshowed #main .maincntwrapper > div.work > div {
     padding-top: 120px;
+  }
+  #main .mainpanelcell {
+    display: block;
+  }
+  #main .leftpanelcell {
+    float: left;
   }
   #main .addbutton {
     display: none!important;

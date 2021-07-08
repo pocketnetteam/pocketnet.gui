@@ -766,6 +766,22 @@ html {
 }
 }
 
+@media only screen and (max-width: 1024px){
+	#main{
+		.mainpanelcell{
+			display: none;
+		}
+
+		.leftpanelcell{
+			float: right;
+		}
+
+		.lentacell{
+			margin-left: 0;
+		}
+	}
+}
+
 /*t*/ @media only screen and (max-width: 768px){
 
 	html.toppanelshowed{
@@ -788,6 +804,17 @@ html {
 	}
 	
 	#main{
+
+		.mainpanelcell{
+			display: block;
+		}
+
+		.leftpanelcell{
+			float: left;
+		}
+
+		
+
 		.addbutton{
 			
 			display : none!important;
