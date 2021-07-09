@@ -2237,8 +2237,8 @@ var lenta = (function(){
 
 				
 				
-				if (_el[0])
-					shareheights[share.txid] = _el[0].offsetHeight
+				/*if (_el[0])
+					shareheights[share.txid] = _el[0].offsetHeight*/
 
 				var added = _el.find('.added')
 

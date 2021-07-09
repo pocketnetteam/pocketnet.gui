@@ -5639,12 +5639,30 @@
 		return true;
 	}
 
+	var ___mobile = undefined
+	var ___tablet = undefined
+
 	isMobile = function(){
-		return $('html').hasClass('mobile');
+
+		if(typeof ___mobile != 'undefined'){
+			return ___mobile
+		}
+
+		___mobile = $('html').hasClass('mobile');
+
+		return ___mobile
 	}
 
 	isTablet = function(){
-		return $('html').hasClass('mobile') || $('html').hasClass('tablet');
+
+		if(typeof ___tablet != 'undefined'){
+			return ___tablet
+		}
+
+		___tablet = $('html').hasClass('mobile') || $('html').hasClass('tablet');
+
+		return ___tablet
+
 	}
 
 	convertToBase64 = function(dataURI) {

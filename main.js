@@ -285,7 +285,7 @@ function closeNotification() {
     }
 }
 
-function notification(nhtml) {
+function notification(nhtml, p) {
     const screen = require('electron').screen;
     const mainScreen = screen.getPrimaryDisplay();
 
@@ -295,16 +295,20 @@ function notification(nhtml) {
         nwin = null;
     }
 
-    var w = Math.min(mainScreen.size.width / 3, 450)
-    var h = 150;
+    var w =  Math.min(mainScreen.size.width / 3, 510)
+    var h = 135;
+
+    if(!p) p = {}
+    if (p.size == 'medium') h = 110
+    if (p.size == 'small') h = 90
 
     nwin = new BrowserWindow({
         width: w,
         height: h,
         frame: false,
         title: 'New notification',
-        x: mainScreen.size.width - w - 20,
-        y: 20,
+        x: mainScreen.size.width - w - 5,
+        y: 5,
         skipTaskbar: true,
         useContentSize: true,
         resizable: false,
@@ -312,7 +316,8 @@ function notification(nhtml) {
         backgroundColor: '#020E1B',
         alwaysOnTop: true,
         show: false,
-
+        focusable: false,
+        parent : win,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true
@@ -328,7 +333,7 @@ function notification(nhtml) {
         if (nwin)
             nwin.show()
 
-        // nwin.webContents.toggleDevTools()
+       // nwin.webContents.toggleDevTools()
     }, 300)
 
     setTimeout(closeNotification, 15000)
@@ -549,9 +554,9 @@ function createWindow() {
 
     //
 
-    ipcMain.on('electron-notification', function(e, nhtml) {
+    ipcMain.on('electron-notification', function(e, p) {
 
-        notification(nhtml)
+        notification(p.html, p.settings || {})
 
     })
 

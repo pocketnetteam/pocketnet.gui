@@ -828,6 +828,7 @@ ____loclib.e13342 = "New Follower"
 ____loclib.e13343 = "upvoted your post"
 ____loclib.e13344 = "New Upvote"
 ____loclib.e13345 = "sent you private message"
+
 ____loclib.e13346 = "You have new messages"
 ____loclib.e13347 = "Updates to Pocketnet are available. Apply the updates now?"
 ____loclib.e13348 = "No, later"
@@ -1066,3 +1067,8 @@ ____loclib.streamSettingsResult = 'Otherwise your live could be terminated or un
 ____loclib.keygeneration = 'Cryptography keys generation'
 
 ____loclib.failedStreamGeneration = 'Unable to start stream'
+
+____loclib.hideallnotifications = "Hide all notifications"
+
+____loclib.e133452 = "sent you message"
+____loclib.e133453 = "invite you in chat"

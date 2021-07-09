@@ -90,7 +90,7 @@ var metadisplay = function(){ %>
 			<% } %>
 		
 		</div>
-
+		<!--
 		<% if(state && (typeof repost == 'undefined' || !repost)) { %>			
 
 			<div class="metapanel">
@@ -100,6 +100,7 @@ var metadisplay = function(){ %>
 			</div>
 
 		<% } %>
+		-->
 		
 	</div>					
 </div>
@@ -117,7 +118,7 @@ var metadisplay = function(){ %>
 			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
 		%>
 			<div class="paddingWrapper">
-				<div class="sharecaption canmark opensviurl"  title="<%-nl2br(trimrn(c))%>">
+				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
 					<div>
 						<%=joypixels.toImage(nl2br(trimrn(c)))%>
 					</div>
@@ -201,6 +202,7 @@ var metadisplay = function(){ %>
 					<% }) %>
 
 				</div>
+				<!--
 
 				<% if(!emptywithrepost) {%>
 
@@ -254,9 +256,11 @@ var metadisplay = function(){ %>
 
 				<% } %>
 
+				-->
+
 			</div>
 		</div>
-
+		<!--
 		<div class="blockAuthor">
 			<div class="blockTable table">
 				<div class="blockCell">
@@ -270,6 +274,7 @@ var metadisplay = function(){ %>
 				</div>
 			</div>
 		</div>
+		-->
 	</div>
 
 

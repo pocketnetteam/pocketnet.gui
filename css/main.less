@@ -4877,7 +4877,6 @@ html{
                 font-weight: 700;
                 text-align: right;
                 color : @color-good;
-                width : 100px;
                 font-size : 0.8em;
             }
         }
@@ -4988,7 +4987,7 @@ html{
                 }
 
                 &.extra{
-                    width: 50px;
+                    width: 100px;
                     div{
                         font-size: 0.9em;
                         float: right;
@@ -5061,6 +5060,7 @@ html{
 
     .subscribeWrapper{
         >div{
+            vertical-align: bottom;
             &.forsubscribe{
                 width: 80px;
                 text-align: right;
@@ -5068,6 +5068,7 @@ html{
                     text-align: right;
                     width: auto;
                     padding-top : 0;
+                    padding-bottom: 0;
 
                     i{
                         display : none;
@@ -5090,14 +5091,15 @@ html{
     }
     .cwrapper{
         >div{
-            vertical-align: top;
+            vertical-align: middle;
 
             &.cellforimage{
                 width: 50px;
+                vertical-align: top;
             }
 
             &.extra{
-                width: 80px;
+                width: 100px;
             }
 
             .infomain{
@@ -5236,36 +5238,58 @@ html{
     }
     
 }
+#hideallnotifications{
+    .hidenf{
+        position: fixed;
+        left: 5px;
+        bottom : 5px;
+        height: 45px;
+        line-height: 45px;
+        width: 390px;
+        background: fade(#022346, 90);
+        color : #fff;
+        text-align: center;
+        font-size: 0.9em;
+        z-index: 140;
+        cursor: pointer;
+
+        &:hover{
+            background: fade(#022346, 98);
+        }
+
+    }
+}
 .fastMessage{
     position: fixed;
-    left: 10px;
-    bottom: 20px;
+    left: 5px;
+    bottom: 5px;
     max-height: 170px;
     width: 480px;
     background: fade(#020E1B, 95);
     color : #fff;
-    padding : 2 * @rhythm;
+    padding : 1.5 * @rhythm;
     padding-left : 2 * @rhythm;
     font-size: 1em;
     z-index: 140;
     overflow: hidden;
-
+    button{
+        padding-right: 0;
+    }
     .messagestar{
         background: fade(#000, 30);
-        
     }
-
     .caption{
         font-size: 0.9em;
     }
-
     .fmCnt{
         width: 100%;
         height: 100%;
         overflow : hidden;
         text-overflow: ellipsis;
     }
-
+    .time{
+        display: none;
+    }
     .messagethumbs{
         width : 44px;
         height : 44px;
@@ -5430,7 +5454,7 @@ html{
     .cwrapper{
         >div{
             &.extra{
-                width: 50px;
+                width: 100px;
                 vertical-align: bottom;
             }
 
@@ -6353,6 +6377,10 @@ html{
         .notification .subscribeWrapper>div.forsubscribe{
             width : 80px;
             vertical-align: bottom;
+        }
+
+        .foramount{
+            width: auto!important;
         }
 
     }

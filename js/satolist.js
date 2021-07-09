@@ -5342,6 +5342,8 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.node.get.timepr().then(r => {
 
+                        console.log("GETMISSED", n.storage.block)
+
                         return self.sdk.missed.get(n.storage.block)
                         
                     })
@@ -5367,6 +5369,10 @@ Platform = function (app, listofnodes) {
                         
 
                     }).catch(e => {
+
+
+                        console.log("E", e)
+
                         n.inited = false;
                         n.loading = false;
 
@@ -5399,13 +5405,15 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
+                console.log('block', block, self.currentBlock)
+
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
                 if(!block) return Promise.reject('block')
-                if (self.currentBlock - block > 5000) block = self.currentBlock - 5000
+               // if (self.currentBlock - block > 5000) block = self.currentBlock - 5000
                 if (self.currentBlock == block) return Promise.resolve(dummy())
 
-
+                
                 return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block]).then(d => {
 
                     if(!d || !d.length){
@@ -16648,7 +16656,11 @@ Platform = function (app, listofnodes) {
 
                 h += '<div class="tcell foramount">'
 
-                h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount)) + " PKOIN"
+                h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount));
+                
+                if(!isMobile())
+                    h+= " PKOIN"
+
 
                 h += '</div>'
 
@@ -16931,6 +16943,9 @@ Platform = function (app, listofnodes) {
             ///
 
             cScore: {
+                electronSettings : {
+                    size : 'medium'
+                },
                 fastMessageEvents: function (data, message) {
 
                     message.el.find('.commentprev').on('click', function () {
@@ -17413,6 +17428,9 @@ Platform = function (app, listofnodes) {
             },
 
             "transaction": {
+                electronSettings : {
+                    size : 'small'
+                },
                 loadMore: function (data, clbk, wa) {
 
                     var _dataclbk = function (tx, err) {
@@ -17873,7 +17891,9 @@ Platform = function (app, listofnodes) {
             },
 
             comment: {
-
+                electronSettings : {
+                    size : 'medium'
+                },
                 fastMessageEvents: function (data, message) {
 
                     message.el.find('.commentprev').on('click', function () {
@@ -18088,6 +18108,9 @@ Platform = function (app, listofnodes) {
             },
 
             event: {
+                electronSettings : {
+                    size : 'small'
+                },
                 loadMore: function (data, clbk, wa) {
 
 
@@ -18138,6 +18161,8 @@ Platform = function (app, listofnodes) {
                                             data.share.scnt = Number(data.share.scnt) + 1
                                         }
                                     }
+
+                                    data.electronSettings.size = 'medium'
 
                                     clbk()
                                 })
@@ -18590,7 +18615,11 @@ Platform = function (app, listofnodes) {
 
             if (platform.focus) {
 
+              
+
                 message.timeout = setTimeout(function () {
+
+                    
 
                     message.el.fadeOut(300)
 
@@ -18623,16 +18652,38 @@ Platform = function (app, listofnodes) {
 
         }
 
+        var hideallnotifications = function(){
+            self.destroyMessages()
+            
+        }
+
+        var hideallnotificationselement = function(show){
+            if(self.hideallnotificationsel){
+
+                if(show){
+                    self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
+                    self.hideallnotificationsel.find('div').on('click', hideallnotifications)
+                    
+                }
+                else{
+                    self.hideallnotificationsel.html('')
+                }
+
+            }
+        }
+
         var arrangeMessages = function(){
 
 			var offset = 0;
 
 			var maxCount = 4;
+            var showremove = 2;
 
 			var boffset = 0;
 
 			if(isMobile()){
 				maxCount = 1;
+                showremove = 0;
 			}
 			else
 			{
@@ -18641,7 +18692,9 @@ Platform = function (app, listofnodes) {
                 }*/
 			}
 
-			offset = offset + boffset
+            
+
+			
 
 			var remove = self.fastMessages.length - maxCount;
 
@@ -18661,6 +18714,19 @@ Platform = function (app, listofnodes) {
 			}
 
 			setTimeout(function(){
+
+                if (showremove && self.fastMessages.length >= showremove){
+                    boffset = 50
+    
+                    hideallnotificationselement(true)
+                }
+                else{
+                    hideallnotificationselement(false)
+                }
+
+                offset = offset + boffset
+
+
 				_.each(self.fastMessages, function(m, i){
 
 					if(i < remove){
@@ -18670,7 +18736,7 @@ Platform = function (app, listofnodes) {
 					else
 					{
 						if(!isMobile()){
-							offset += 10;
+							offset += 5;
 						}
 
 						if(!isMobile())
@@ -18693,7 +18759,6 @@ Platform = function (app, listofnodes) {
             self.loadingMissed = true;
 
             return platform.sdk.node.get.timepr().then(r => {
-
 
                 return platform.sdk.missed.get(lost)
 
@@ -18732,8 +18797,11 @@ Platform = function (app, listofnodes) {
 
         self.destroyMessages = function () {
             _.each(self.fastMessages, function (message, i) {
-                destroyMessage(message, 1)
+                destroyMessage(message, 1, true)
             })
+            setTimeout(function(){
+                arrangeMessages()
+            }, 301)
         }
 
         self.fastMessage = function (html, destroyclbk) {
@@ -18768,10 +18836,6 @@ Platform = function (app, listofnodes) {
 
             destroyMessage(message, 5000, false, true);
 
-            message.el.on('mouseenter', function () {
-                clearTimeout(message.timeout);
-            })
-
             message.el.on('click', function(){
 
 				if(!message.expanded){
@@ -18789,12 +18853,18 @@ Platform = function (app, listofnodes) {
 
 			})
 
+            message.el.on('mouseenter', function () {
+                clearTimeout(message.timeout);
+            })
+
             message.el.on('mouseleave', function () {
                 destroyMessage(message, 5000, false, true);
             })
 
-            message.el.find('.close').on('click', function () {
+            message.el.find('.close').on('click', function (e) {
                 destroyMessage(message, 1, false, true);
+                e.preventDefault()
+                return false
             })
 
             if (isMobile()) {
@@ -18842,6 +18912,7 @@ Platform = function (app, listofnodes) {
 
                 if (data.mesType) m = self.messages[data.mesType]
                 if (data.msg && !m) m = self.messages[data.msg]
+                if(!data.electronSettings) data.electronSettings = {}
 
                 if (!m) m = {}
 
@@ -18851,7 +18922,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                if (data.txid) {
+                /*if (data.txid) {
 
                     if (txidstorage[data.txid]) return;
 
@@ -18859,7 +18930,7 @@ Platform = function (app, listofnodes) {
 
 
                     if (platform.sdk.notifications.find(data.txid)) return
-                }
+                }*/
 
 
 
@@ -18918,7 +18989,10 @@ Platform = function (app, listofnodes) {
                                     platform.sdk.notifications.addFromWs(data)
 
                                     if (typeof _Electron != 'undefined' && !platform.focus && message.html) {
-                                        electron.ipcRenderer.send('electron-notification', message.html);
+                                        electron.ipcRenderer.send('electron-notification', {
+                                            html : message.html,
+                                            settings : data.electronSettings
+                                        });
                                     }
 
                                 }
@@ -18951,6 +19025,8 @@ Platform = function (app, listofnodes) {
                         clbk()
 
                 }
+
+                if(m.electronSettings) data.electronSettings = _.clone(m.electronSettings)
 
                 if (m.loadMore) {
                     m.loadMore(data, clbks);
@@ -19152,6 +19228,8 @@ Platform = function (app, listofnodes) {
 
         self.init = function (clbk) {
 
+            
+
             if(!_OpenApi){
 
                 closing = false;
@@ -19167,6 +19245,8 @@ Platform = function (app, listofnodes) {
         
                 initconnection();
 
+                self.hideallnotificationsel = $('#hideallnotifications')
+
             }
 
             if (clbk)
@@ -19176,19 +19256,85 @@ Platform = function (app, listofnodes) {
 
         setTimeout(function(){
 
-			/*self.messageHandler(
-				{addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+            platform.matrixchat.notify.event()
+
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
+                mesType: "post",
+                msg: "comment",
+                nblock: 1154467,
+                posttxid: "37348021a565fa549dfae5e9fb855c40dadae4456bda1cb1bfd3d3398081db91",
+                reason: "post",
+                time: "1619697839",
+                txid: "60c46a7b6ce852cab2c168ad09293fcf4afbfc9f6c47ba1ec9ce5426184b6019"
+            })*/
+
+            /*self.messageHandler({
+                msg: "sharepocketnet",
+                nblock: 1115942,
+                time: "1617371657",
+                txid: "e7a7c9f84794ccac6dead944e4d6fffc06628030b1d5428010d585c8bf7e659c"
+            })*/
+
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
+                mesType: "upvoteShare",
+                msg: "event",
+                nblock: 1253143,
+                posttxid: "ea9ea91e8baf69f752470f55d146f4638bab0960ef55753a3c44df02c645798c",
+                time: "1625662971",
+                txid: "d2533c04f0ef7ca9ff95cb6746567cdac5e8eaf285a57ed0831e0afdd624ca92",
+                upvoteVal: 5
+            })*/
+
+           /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                amount: "99328000",
+                msg: "transaction",
+                node: "135.181.196.243:38081:8087",
+                nout: "0",
+                time: 1625762338,
+                txid: "948a79b01c050aaf0c4fe8cb6210e16f3001956180c2f33c6b01813788f52277"
+            })*/
+
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PMGPzPbZnYEbVtYY4sajELjpWnT71w1cN8",
+                mesType: "post",
+                msg: "comment",
+                nblock: 1154413,
+                posttxid: "37348021a565fa549dfae5e9fb855c40dadae4456bda1cb1bfd3d3398081db91",
+                reason: "post",
+                time: "1619694710",
+                txid: "670be9561196c76b68ec81948de2c39e03af0add79df1e236be49f359fd38626"
+            })*/
+
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+                mesType: "subscribe",
+                msg: "event",
+                node: "135.181.196.243:38081:8087",
+                time: 1625762423,
+                txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
+            })*/
+
+			/*self.messageHandler({
+                addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
                 msg: "event",
                 node: "51.174.99.18:38081:8087",
                 time: 1625723521,
-                txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"}
-			)*/
+                txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
+            })*/
 
-		}, 4000)
+		}, 6000)
     }
-
+    
+    
     self.convertUTCSS = function (str) {
 
         var d = utcStrToDate(str);
@@ -20455,7 +20601,8 @@ Platform = function (app, listofnodes) {
         initing : false,
 
         clbks : {
-            ALL_NOTIFICATIONS_COUNT : {}
+            ALL_NOTIFICATIONS_COUNT : {},
+            NOTIFICATION : {}
         },
         destroy : function(){
             if (window.matrixchat){
@@ -20468,7 +20615,8 @@ Platform = function (app, listofnodes) {
             self.matrixchat.inited = false
 
             self.matrixchat.clbks = {
-                ALL_NOTIFICATIONS_COUNT : {}
+                ALL_NOTIFICATIONS_COUNT : {},
+                NOTIFICATION : {}
             }
         },
 
@@ -20501,8 +20649,6 @@ Platform = function (app, listofnodes) {
 
             
         },
-
-       
 
         init : function(){
 
@@ -20545,6 +20691,8 @@ Platform = function (app, listofnodes) {
 
                                 self.matrixchat.el = $('.matrixchatwrapper')
                                 self.matrixchat.initevents()
+
+
                                 
                             }, null, app);
 
@@ -20572,6 +20720,76 @@ Platform = function (app, listofnodes) {
 	
 				}
 
+                self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
+
+            }
+        },
+
+        notify : {
+            tpl : function(matrixevent){
+
+                if(!self.ws) return
+
+                console.log("self.ws", self.ws)
+
+                var wsntemplates = self.ws.tempates
+
+                var html = ''
+
+                var ctypes = {
+                    encrypted : 'e13345',
+                    message : 'e133452',
+                    invite : 'e133451'
+                }
+
+                if(!matrixevent.ctype) return
+
+                var ctype = ctypes[matrixevent.ctype]
+
+                if(!ctype) return
+
+                html += wsntemplates.user({
+
+                    image : matrixevent.icon,
+                    name : matrixevent.title,
+                    address : ''
+
+                }, "", true, self.app.localization.e(ctype), '', dateNow())
+
+                var h = '<div class="fastMessage">\
+                <div class="fmCnt">' + html + '</div>\
+                <div class="close">\
+                    <i class="fa fa-times" aria-hidden="true"></i>\
+                </div>\
+                </div>'
+
+                return h;
+            },
+            event : function(matrixevent){
+
+                /*var matrixevent = matrixevent2 || {
+                    icon: "https://i.imgur.com/UZv3lZ9.jpg",
+                    ctype : 'encrypted',
+                    message: "eyI1MDUxMzg0MTY5NDM0ODRhNjE1NDVhNDE1NDY4NzIzMjU0NmU3MDZiNTE1OTQ0Nzk1NjY0MzE0ODY5NjQ3MTM0NTA0ZCI6eyJlbmNyeXB0ZWQiOiI1dHNyZEk4bGU3UGdWZ3l1YlhCRHBabTJNL1BiekE9PSIsIm5vbmNlIjoiTzJoN2c3N21XWWV2dEJzQmNqcFNqd2ZuTjZXM3dRMGpmMy91bW1KODRyOD0ifX0=",
+                    roomId: "!hRgwQYozShhabTUIAT:test.matrix.pocketnet.app",
+                    title: "Ttr"
+                }*/
+
+
+                if(typeof _Electron != 'undefined' && !self.focus){
+
+                    var html = self.matrixchat.notify.tpl(matrixevent)
+
+                    if (html)
+    
+                        electron.ipcRenderer.send('electron-notification', {
+                            html : html,
+                            settings : {
+                                size : 'small'
+                            }
+                        });
+    
+                }
             }
         },
 

@@ -16,30 +16,38 @@ html{
 .cnt{
     width: 100%;
     overflow: hidden;
-    position: absolute;
+    position: static;
     left : 0;
     right: 0;
     top : 0;
-    bottom : 33px;
+    bottom : 0;
     z-index: 5;
 }
 
+.extra{
+    position: absolute;
+    right: @rhythm;
+    bottom : @rhythm;
+}
+
+
 .appc{
     position: absolute;
-    left : 0;
-    right: 0;
-    bottom : 0;
+    left: @rhythm;
+    bottom : @rhythm;
+    height: 20px;
     width: 100%;
-    height: 33px;
+    opacity: 0.5;
     overflow: hidden;
-
+    .icon{
+        float: left;
+    }
     .aitm{
         float: left;
         font-size: 0.7em;
 
         .label{
             font-weight: 100;
-
         }
 
         .icon{
@@ -50,17 +58,19 @@ html{
             width: auto;
 
             >div{
-                padding : @rhythm 2 * @rhythm;
+                padding : 0 0;
                 padding-top: 0;
-                vertical-align: middle;
+                vertical-align: top;
                 color : #fff;
 
                 &.icon{
+                    padding-left: 0;
                     padding-right: 0;
-                    padding-top: 3px;
+                    padding-top: 0;
                 }
 
                 &.label{
+                    padding-top : 3px;
                     padding-left: @rhythm;
                 }
             }
@@ -79,7 +89,7 @@ html{
 }
 
 .fastMessage{
-
+    font-size: 0.9em;
     .time{
         display: none;
     }
@@ -145,7 +155,7 @@ html{
             vertical-align: top;
 
             &.foranswer{
-                width: 50px;
+                width: 100px;
 
                 text-align: right;
                 
@@ -196,7 +206,7 @@ html{
     }
     
     .sharepreview{
-        padding-top: @rhythm;
+
         .shareprwrapper{
             >div{
                 vertical-align: top;
@@ -209,14 +219,15 @@ html{
                 }
 
                 &.fortext{
+                    font-size: 0.9em;
                     padding-left:  0;
                     span{
-                        font-size: 0.8em;
+                        font-size: 0.9em;
                     }
                 }
 
                 &.extra{
-                    width: 50px;
+                    width: 100px;
                     div{
                         font-size: 0.9em;
                         float: right;
@@ -277,6 +288,14 @@ html{
                 }
             }
         }
+
+        &:nth-last-child(1){
+            border-bottom : 0;
+        }
+
+        &:nth-child(1){
+            padding-top: 0;
+        }
     }
 
     .foranswer{
@@ -293,16 +312,19 @@ html{
             }
         }
     }
+
     
     .cwrapper{
         >div{
-            vertical-align: top;
+            vertical-align: middle;
 
             &.cellforimage{
                 width: 50px;
+                vertical-align: top;
             }
+
             &.extra{
-                width: 50px;
+                width: 100px;
                 vertical-align: bottom;
 
                 button{
@@ -359,7 +381,7 @@ html{
     }
 
     .fmCnt{
-        padding : 2 * @rhythm 2 * @rhythm;
+        padding :  @rhythm @rhythm;
         padding-right : @rhythm;
         width: 100%;
         height: 100%;
@@ -371,9 +393,9 @@ html{
     }
     .close:before, .close:after {
       position: absolute;
-      left: 15px;
+      left: 9px;
       content: ' ';
-      height: 33px;
+      height: 21px;
       width: 2px;
       background-color: @color-gray-slight;
     }
@@ -388,8 +410,8 @@ html{
         position: absolute;
         right: @rhythm;
         top: @rhythm;
-        width: 32px;
-        height: 32px;
+        width: 21px;
+        height: 21px;
         opacity: 0.3;
 
         i{

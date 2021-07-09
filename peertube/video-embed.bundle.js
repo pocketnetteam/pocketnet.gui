@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=2791"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1113"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43142,7 +43142,7 @@ class embed_PeerTubeEmbed {
         this.stopWaiting();
         this.statusInterval = setInterval(() => {
             // @ts-ignore
-            this.waitStatus([4, 5]).then((r) => {
+            this.waitStatus([2, 4, 5]).then((r) => {
                 clearInterval(this.statusInterval);
                 this.statusInterval = null;
                 if (r)
@@ -43410,8 +43410,9 @@ class embed_PeerTubeEmbed {
         });
     }
     handleError(err, translations) {
-        /*let is_transcoding = this.isTranscodingStatusMessage();
-        if (is_transcoding) return*/
+        let is_transcoding = this.isTranscodingStatusMessage();
+        if (is_transcoding)
+            return;
         var liveerror = this.checkLiveStatus();
         if (liveerror && liveerror.error) {
             this.displayErrorWrapper(liveerror.text);
@@ -43463,13 +43464,31 @@ class embed_PeerTubeEmbed {
         return pel;
     }
     isTranscodingStatusMessage() {
-        if (this.details &&
-            this.details.state.id === 2 &&
-            !this.details.isLive &&
-            !this.playnottranscoded) {
-            this.displayError("The video is being processed and is available only in high quality. You can continue playback or wait until the end of processing and watch with lower quality", null, undefined, true); // true is transcoding
-            return true;
+        // @ts-ignore
+        let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        let type = connection.effectiveType;
+        if (type !== 'wifi') {
+            let exists_min_resolution = false;
+            let all_resolutions = [];
+            if (this.details && this.details.streamingPlaylists && this.details.streamingPlaylists[0] && this.details.streamingPlaylists[0].files && this.details.streamingPlaylists[0].files.length) {
+                this.details.streamingPlaylists[0].files.forEach((item) => {
+                    if (item.resolution.id < 720) {
+                        exists_min_resolution = true;
+                    }
+                });
+                all_resolutions = this.details.streamingPlaylists[0].files.map((item) => item.resolution.id).filter((res) => res >= 720);
+                var min = Math.min(...all_resolutions);
+            }
+            if (this.details &&
+                this.details.state.id === 2 &&
+                !this.details.isLive &&
+                !this.playnottranscoded &&
+                !exists_min_resolution) {
+                this.displayError(min ? `Video is only available in ${min} resolution` : `The video is being processed and is available only in high quality. You can continue playback or wait until the end of processing and watch with lower quality`, null, undefined, true); // true is transcoding
+                return true;
+            }
         }
+        return false;
     }
     buildVideoPlayer(videoInfo) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
@@ -43490,7 +43509,7 @@ class embed_PeerTubeEmbed {
             this.wrapperElement.appendChild(this.playerElement);
             this.loadParams(videoInfo);
             this.liveStatusMessage();
-            //this.isTranscodingStatusMessage()
+            this.isTranscodingStatusMessage();
             const options = {
                 common: {
                     // Autoplay in playlist mode
@@ -43605,53 +43624,58 @@ class embed_PeerTubeEmbed {
             }
         });
     }
+    mobileDetectMob() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    insertAfter(referenceNode, newNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
     initTouchedEvents() {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             let duration = 0;
-            var tapedTwice = false;
+            this.player.one("loadedmetadata", (response) => {
+                duration = this.player.duration();
+            });
+            let forwading_time = duration < 45 ? 5 : 15;
+            if (this.mobileDetectMob()) {
+                let forward_button = `<button type="button" title="Play Video" aria-disabled="true" disabled="disabled">
+									<span aria-hidden="true" class="vjs-icon-placeholder"><i style="text-shadow: 0px 0px 3px rgb(0 11 58 / 31%), 0 0 5px rgb(0 8 43 / 12%);font-size: 35px" class="vjs-forward-custom fas fa-forward" aria-hidden="true"></i></span>
+									<span class="vjs-control-text" aria-live="polite">Forward</span>
+								</button>`;
+                let rewind_button = `<button type="button" title="Play Video" aria-disabled="true" disabled="disabled">
+									<span aria-hidden="true" class="vjs-icon-placeholder"><i style="text-shadow: 0px 0px 3px rgb(0 11 58 / 31%), 0 0 5px rgb(0 8 43 / 12%);font-size: 35px" class="vjs-rewind-custom fas fa-backward" aria-hidden="true"></i></span>
+									<span class="vjs-control-text" aria-live="polite">Rewind</span>
+								</button>`;
+                let vjs_big_play_button = this.player.el_.querySelector('.vjs-big-play-button');
+                var el = document.createElement("div");
+                el.innerHTML = rewind_button;
+                el.id = 'vjs-rewind-button';
+                this.player.el_.insertBefore(el, vjs_big_play_button);
+                var el = document.createElement("div");
+                el.innerHTML = forward_button;
+                el.id = 'vjs-forward-button';
+                this.insertAfter(vjs_big_play_button, el);
+            }
             if (this.player.el_.classList.contains('vjs-youtube')) {
                 this.player.el_.querySelector('iframe').style.pointerEvents = 'none';
             }
+            let flag = false;
             this.player.el_.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                this.player.one("loadedmetadata", (response) => {
-                    duration = this.player.duration();
-                });
-                let playerWidth = this.player.el_.getBoundingClientRect().width;
-                let offsetX = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].pageX : null;
-                let is_control_bar_hidden = !this.player.paused() && this.player.el_.classList.contains('vjs-user-inactive');
-                if (!tapedTwice) {
-                    if (is_control_bar_hidden && this.player.el_.classList.contains('vjs-youtube')) {
-                        let vjs_duration = this.player.el_.querySelector('.vjs-control-bar');
-                        if (vjs_duration) {
-                            vjs_duration.dispatchEvent(new Event('touchend'));
-                        }
+                this.player.bigPlayButton.disable();
+                if (e.target.parentElement && e.target.parentElement.classList && e.target.parentElement.classList.contains('vjs-big-play-button')) {
+                    if (!this.player.paused() && flag) {
+                        this.player.pause();
                     }
-                    if (e.target.nodeName !== 'SPAN' && (0.66 * playerWidth > offsetX) && (offsetX > 0.33 * playerWidth)) {
-                        if (this.player.paused()) {
-                            this.player.play();
-                        }
-                        else if (!is_control_bar_hidden) {
-                            this.player.pause();
-                        }
+                    else {
+                        this.player.play();
                     }
-                    if ((0.66 * playerWidth < offsetX) || (offsetX < 0.33 * playerWidth)) {
-                        tapedTwice = true;
-                    }
-                    setTimeout(() => {
-                        tapedTwice = false;
-                    }, 400);
-                    return false;
+                    flag = true;
                 }
-                //action on double tap goes below
-                let forwading_time = duration < 45 ? 5 : 15;
-                if (offsetX) {
-                    if (0.66 * playerWidth < offsetX) {
-                        this.player.currentTime(this.player.currentTime() + forwading_time);
-                    }
-                    else if (offsetX < 0.33 * playerWidth) {
-                        this.player.currentTime((this.player.currentTime() - forwading_time) < 0 ? 0 : (this.player.currentTime() - forwading_time));
-                    }
+                if (e.target.classList.contains('vjs-rewind-custom')) {
+                    this.player.currentTime((this.player.currentTime() - forwading_time) < 0 ? 0 : (this.player.currentTime() - forwading_time));
+                }
+                if (e.target.classList.contains('vjs-forward-custom')) {
+                    this.player.currentTime(this.player.currentTime() + forwading_time);
                 }
             });
         });

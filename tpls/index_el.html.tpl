@@ -93,6 +93,7 @@
         </div>
             <div id="matrix" class="matrix">
         </div>
+        <div id="hideallnotifications"></div>
 
         <div id="globalpreloader">
             <div class="table">
@@ -136,6 +137,7 @@
             window.process.versions = {node: false};
 
             topPreloader = function(percent){
+                return
                 var el = $('#_topPreloader');
 
 
