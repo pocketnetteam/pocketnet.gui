@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1935"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43466,7 +43466,7 @@ class embed_PeerTubeEmbed {
     isTranscodingStatusMessage() {
         // @ts-ignore
         let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        let type = connection.effectiveType;
+        let type = connection && connection.effectiveType ? connection.effectiveType : '';
         if (type !== 'wifi') {
             let exists_min_resolution = false;
             let all_resolutions = [];
