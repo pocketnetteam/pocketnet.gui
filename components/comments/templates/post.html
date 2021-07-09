@@ -60,8 +60,10 @@ if(isMobile()) dplace = e('e13039')
 						<i class="fas fa-camera"></i>
 					</div>
 
-					<div class="embedEmojiPrivew">
-					</div>
+					<% if(!isMobile() && !isTablet()) { %> 
+						<div class="embedEmojiPrivew">
+						</div>
+					<% } %>
 
 				</div>
 
