@@ -2121,7 +2121,7 @@ var share = (function(){
 
 								// Hide the emoji button for mobiles and tablets
 								if (isMobile() || isTablet())
-									$('.emojionearea-button').hide();
+									el.c.find('.emojionearea-button').hide();
 		
 							}
 						}
