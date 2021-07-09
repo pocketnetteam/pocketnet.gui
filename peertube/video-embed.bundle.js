@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1113"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=6001"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43584,7 +43584,7 @@ class embed_PeerTubeEmbed {
             this.player = yield peertube_player_manager_PeertubePlayerManager.initialize(this.mode, options, (player) => {
                 this.player = player;
             });
-            this.initTouchedEvents();
+            //this.initTouchedEvents()
             delete this.player.tagAttributes.style;
             var pel = this.playerElement;
             try {
