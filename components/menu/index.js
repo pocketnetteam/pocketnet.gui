@@ -57,6 +57,8 @@ var menu = (function(){
 
 		var balanceHash;
 
+		var notifications = {}
+
 		var actions = {
 			
 
@@ -90,6 +92,35 @@ var menu = (function(){
 				}
 
 				
+			},
+			ahnotifyclear : function(){
+				notifications = {}
+
+				actions.ahnotify(null)
+			},
+			ahnotify : function(el, c, type){
+
+				if(!c) c = 0
+
+				if(type) notifications[type] = c
+
+				var cnt = _.reduce(notifications, function(s, i){
+					return s + (i || 0)
+				}, 0)
+
+				var cordovabadge = null;
+					
+				if(typeof cordova != 'undefined'){
+					cordovabadge = deep(cordova, 'plugins.notification.badge')
+				}
+
+				if (el)
+					actions.ah(el, cnt)
+
+				if (cordovabadge) cordovabadge.set(cnt)
+
+				self.app.platform.api.electron.notifications(cnt, 'notifications')
+
 			},
 
 			ah : function(el, c){
@@ -188,8 +219,7 @@ var menu = (function(){
 				init : function(el){
 
 					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
-
-						actions.ah(el, count)
+						actions.ahnotify(el, count, 'chat')
 					}
 				}
 			},
@@ -313,27 +343,12 @@ var menu = (function(){
 
 					}
 
-					var cordovabadge = null;
-					
-					if(typeof cordova != 'undefined'){
-						cordovabadge = deep(cordova, 'plugins.notification.badge')
-					}
 
 					self.app.platform.sdk.notifications.init(function(){
-						var l = unseen().length;
-
-						actions.ah(el, l)
-
-
-						if (cordovabadge)
-							cordovabadge.set(l)
-
-						self.app.platform.api.electron.notifications(l, 'notifications')
-
+						actions.ahnotify(el, unseen().length, 'notifications')
 					})
 
-					if(!isMobile())
-
+					if(!isMobile()){
 						self.nav.api.load({
 							eid : 'menu',
 							open : true,
@@ -341,17 +356,13 @@ var menu = (function(){
 							el : el,
 							inTooltip : true
 						})
+					}
+
+						
 
 					self.app.platform.sdk.notifications.clbks.added.menu =
 					self.app.platform.sdk.notifications.clbks.seen.menu = function(){
-						var l = unseen().length;
-
-						if (cordovabadge)
-							cordovabadge.set(l)
-
-						actions.ah(el, l)
-
-						self.app.platform.api.electron.notifications(l, 'notifications')
+						actions.ahnotify(el, unseen().length, 'notifications')
 					}
 				},
 
@@ -386,13 +397,11 @@ var menu = (function(){
 					}
 
 					self.app.platform.clientrtc.rtchttp.info.allchats(function(){
-
-						actions.ah(el, unread())
-
+						actions.ahnotify(el, unread(), 'chat')
 					})	
 
 					self.app.platform.sdk.messenger.clbks.menu = function(){
-						actions.ah(el, unread())
+						actions.ahnotify(el, unread(), 'chat')
 					}
 
 				},
@@ -1069,6 +1078,10 @@ var menu = (function(){
 
 		var initEvents = function(){
 
+			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2 = function(count){
+				actions.ahnotify(null, count, 'chat')
+			}
+
 			el.c.find('.localization').on('click', function(){
 
 				var items = []
@@ -1286,7 +1299,7 @@ var menu = (function(){
 			destroy : function(){
 
 				destroyauthorsearch()
-
+				actions.ahnotifyclear()
 				menusearch = null
 
 				$(window).off('resize', actions.elswidth)
@@ -1304,6 +1317,9 @@ var menu = (function(){
 
 				delete self.app.platform.sdk.registrations.clbks.menu
 
+
+				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
+				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
 
 				_.each(events, function(e){
 
@@ -1379,11 +1395,12 @@ var menu = (function(){
 				el.postssearch =  el.c.find('.postssearch')
 				el.nav = el.c.find('.menutoppanel')
 
+				actions.ahnotifyclear()
+
 				initEvents();
 
 				make();
 
-				
 
 				p.clbk(null, p);
 			}
