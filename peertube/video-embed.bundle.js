@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=6001"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43584,7 +43584,6 @@ class embed_PeerTubeEmbed {
             this.player = yield peertube_player_manager_PeertubePlayerManager.initialize(this.mode, options, (player) => {
                 this.player = player;
             });
-            //this.initTouchedEvents()
             delete this.player.tagAttributes.style;
             var pel = this.playerElement;
             try {
@@ -43622,6 +43621,7 @@ class embed_PeerTubeEmbed {
             if (this.details.state.id == 2) {
                 this.displayWarning('Video is being processed');
             }
+            this.initTouchedEvents();
         });
     }
     mobileDetectMob() {
@@ -43633,27 +43633,32 @@ class embed_PeerTubeEmbed {
     initTouchedEvents() {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             let duration = 0;
-            this.player.one("loadedmetadata", (response) => {
-                duration = this.player.duration();
-            });
+            yield this.player.one("loadedmetadata", () => { });
+            duration = this.player.duration();
             let forwading_time = duration < 45 ? 5 : 15;
             if (this.mobileDetectMob()) {
                 let forward_button = `<button type="button" title="Play Video" aria-disabled="true" disabled="disabled">
-									<span aria-hidden="true" class="vjs-icon-placeholder"><i style="text-shadow: 0px 0px 3px rgb(0 11 58 / 31%), 0 0 5px rgb(0 8 43 / 12%);font-size: 35px" class="vjs-forward-custom fas fa-forward" aria-hidden="true"></i></span>
+									<span aria-hidden="true" class="vjs-icon-placeholder"><i style="margin-bottom: -14px;text-shadow: 0px 0px 3px rgb(0 11 58 / 31%), 0 0 5px rgb(0 8 43 / 12%);font-size: 35px" class="vjs-forward-custom fas fa-redo" aria-hidden="true"></i><br><span style="font-size: 12px;">+ ${forwading_time} sec</span></span>
 									<span class="vjs-control-text" aria-live="polite">Forward</span>
 								</button>`;
                 let rewind_button = `<button type="button" title="Play Video" aria-disabled="true" disabled="disabled">
-									<span aria-hidden="true" class="vjs-icon-placeholder"><i style="text-shadow: 0px 0px 3px rgb(0 11 58 / 31%), 0 0 5px rgb(0 8 43 / 12%);font-size: 35px" class="vjs-rewind-custom fas fa-backward" aria-hidden="true"></i></span>
+									<span aria-hidden="true" class="vjs-icon-placeholder"><i style="margin-bottom: -14px;text-shadow: 0px 0px 3px rgb(0 11 58 / 31%), 0 0 5px rgb(0 8 43 / 12%);font-size: 35px" class="vjs-rewind-custom fa fa-undo" aria-hidden="true"></i><br><span style="font-size: 12px;">- ${forwading_time} sec</span></span>
 									<span class="vjs-control-text" aria-live="polite">Rewind</span>
 								</button>`;
                 let vjs_big_play_button = this.player.el_.querySelector('.vjs-big-play-button');
                 var el = document.createElement("div");
                 el.innerHTML = rewind_button;
                 el.id = 'vjs-rewind-button';
+                el.addEventListener('touchend', () => {
+                    this.player.currentTime((this.player.currentTime() - forwading_time) < 0 ? 0 : (this.player.currentTime() - forwading_time));
+                });
                 this.player.el_.insertBefore(el, vjs_big_play_button);
                 var el = document.createElement("div");
                 el.innerHTML = forward_button;
                 el.id = 'vjs-forward-button';
+                el.addEventListener('touchend', () => {
+                    this.player.currentTime(this.player.currentTime() + forwading_time);
+                });
                 this.insertAfter(vjs_big_play_button, el);
             }
             if (this.player.el_.classList.contains('vjs-youtube')) {
@@ -43662,6 +43667,7 @@ class embed_PeerTubeEmbed {
             let flag = false;
             this.player.el_.addEventListener('touchend', (e) => {
                 this.player.bigPlayButton.disable();
+                console.log('e', e);
                 if (e.target.parentElement && e.target.parentElement.classList && e.target.parentElement.classList.contains('vjs-big-play-button')) {
                     if (!this.player.paused() && flag) {
                         this.player.pause();
@@ -43671,12 +43677,10 @@ class embed_PeerTubeEmbed {
                     }
                     flag = true;
                 }
-                if (e.target.classList.contains('vjs-rewind-custom')) {
-                    this.player.currentTime((this.player.currentTime() - forwading_time) < 0 ? 0 : (this.player.currentTime() - forwading_time));
-                }
-                if (e.target.classList.contains('vjs-forward-custom')) {
-                    this.player.currentTime(this.player.currentTime() + forwading_time);
-                }
+                // if (e.target.classList.contains('vjs-rewind-custom')) {
+                // }
+                // if (e.target.classList.contains('vjs-forward-custom')) {
+                // }
             });
         });
     }
@@ -43725,9 +43729,9 @@ class embed_PeerTubeEmbed {
             this.player.on("customError", (event, data) => this.handleError(data.err));
             this.player.on("error", (error) => console.log(error));
             this.player.tech().on("error", (error) => console.log(error));
-            this.initTouchedEvents();
             this.initializeApi();
             this.removePlaceholder();
+            this.initTouchedEvents();
         });
     }
     removePlaceholder() {
