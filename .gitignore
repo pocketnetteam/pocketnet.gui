@@ -40,7 +40,7 @@ cordova/www
 cordova/build.json
 cordova/google-services.json
 cordova/GoogleService-Info.plist
-index.cordova
+indexcordova.html
 .DS_Store
 external/chat
 external/peertube
