@@ -12428,7 +12428,7 @@ Platform = function (app, listofnodes) {
 
                             }, p, telegram)
 
-                        }, deep(p, 'address.address'), p.update, telegram)
+                        }, deep(p, 'address.address'), p.update)
                     },
 
                     wallet: function (inputs, outputs, _kp, unfinalize, htlc) {
@@ -12509,47 +12509,7 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    common: function (inputs, obj, fees, clbk, p, fromTG) {
-
-                        const savedObj = JSON.parse(JSON.stringify(obj));
-
-
-                        if (!fromTG && self.app.user.features.telegram && !obj.aliasid) {
-
-                            const {
-                                meta
-                            } = self.sdk.usersettings;
-
-                            if (obj.caption){
-
-                                if (!meta.tgtoask.value ) {
-
-                                    this.telegramSend(obj, meta)
-    
-                                } else {
-    
-                                    // this.telegramSend = this.telegramSend.bind(this)
-    
-                                    dialog({
-                                        html: self.app.localization.e('e13291'),
-                                        btn1text: self.app.localization.e('send'),
-                                        btn2text:self.app.localization.e('ucancel'),
-    
-                                        class: 'zindex',
-    
-                                        success: () => {
-    
-                                            this.telegramSend(savedObj, meta)
-    
-                                        }
-                                    })
-    
-                                }
-                            }
-
-
-                        }
-
+                    common: function (inputs, obj, fees, clbk, p) {
 
                         if (!p) p = {};
 
@@ -12919,7 +12879,31 @@ Platform = function (app, listofnodes) {
 
                     share: function (inputs, share, clbk, p, fromTG) {
 
-                        this.common(inputs, share, TXFEE, clbk, p, fromTG)
+                        var savedShare = JSON.parse(JSON.stringify(share));
+                      
+                        if (!fromTG && self.app.user.features.telegram) {
+                            
+                          var meta = self.sdk.usersettings.meta;
+                      
+                          if (!meta.tgtoask.value) {
+
+                            this.telegramSend(share, meta);
+
+                          } else {
+                            // this.telegramSend = this.telegramSend.bind(this)
+                            dialog({
+                              html: "Do you really want send message to Telegram?",
+                              btn1text: "Send",
+                              btn2text: "Cancel",
+                              class: 'zindex',
+                              success: function success() {
+                                _this.telegramSend(savedShare, meta);
+                              }
+                            });
+                          }
+                        }
+
+                        this.common(inputs, share, TXFEE, clbk, p)
                     },
 
                     userInfo: function (inputs, userInfo, clbk, p) {
