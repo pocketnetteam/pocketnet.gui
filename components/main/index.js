@@ -1051,7 +1051,7 @@ var main = (function(){
 
 			destroy : function(){
 
-				if (el.w)
+				if (el && el.w)
 					el.w.off('scroll', actions.addbuttonscroll)
 					
 					self.app.el.html.removeClass('scrollmodedown')

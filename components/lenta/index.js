@@ -503,8 +503,6 @@ var lenta = (function(){
 								successHref : link,
 								signInClbk : function(){
 
-									
-
 									retry(function(){
 
 										return !authblock

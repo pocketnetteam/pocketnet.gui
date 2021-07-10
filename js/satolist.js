@@ -4380,6 +4380,10 @@ Platform = function (app, listofnodes) {
                             if(!me || _.isEmpty(me)){
                                 return reject('me')
                             }   
+
+                            if(me.temp || me.relay || me.fromstorage){
+                                return reject('temprelaystorage')
+                            }  
                             
                             if(me.keys && me.keys.length){
                                 return reject('exist')
@@ -4435,7 +4439,7 @@ Platform = function (app, listofnodes) {
                                 u.address = a
                                 u.regdate = new Date();
                                 u.regdate.setTime(info.regdate * 1000);
-
+                                u.fromstorage = true
 
                                 info = u
                                 self.sdk.usersl.storage[a] = u
@@ -5587,7 +5591,6 @@ Platform = function (app, listofnodes) {
             loading: {},
             storage: {},
 
-
             extend: function (u, state) {
 
                 var ext = function (temp) {
@@ -5640,7 +5643,6 @@ Platform = function (app, listofnodes) {
                     ext(temp)
                     ext(relay)
 
-
                 }
 
 
@@ -5658,7 +5660,7 @@ Platform = function (app, listofnodes) {
 
                     u._import(_.toArray(temp['userInfo'])[0])
                     u.regdate.setTime(self.currentTime() * 1000);
-
+                    u.temp = true
                 }
                 else {
 
@@ -5682,7 +5684,6 @@ Platform = function (app, listofnodes) {
                 }
 
                 u.address = a
-
 
                 if(self.real[a]) u.real = true
 
@@ -5776,6 +5777,9 @@ Platform = function (app, listofnodes) {
                     if (!a) return false
 
                     if (!s[a]) return true
+                    if (s[a].temp || s[a].relay || s[a].fromstorage) return true
+
+
                 })
 
                 addresses = _.uniq(addresses)
@@ -5855,12 +5859,6 @@ Platform = function (app, listofnodes) {
                                 clbk(null)
                         }
                         else {
-
-                            /*if (!self.sdk.captcha.done && !_Node){
-                                if (clbk)
-                                    clbk(null, 'captcha')
-                            }
-                            else{*/
 
                             var prms = {
                                 address: a,
@@ -12363,7 +12361,11 @@ Platform = function (app, listofnodes) {
                                 var regs = app.platform.sdk.registrations.storage[addr];
 
                                 if (regs && (regs == 4)) {
+
                                     self.sdk.registrations.add(addr, 5)
+
+                                    var cm = deep(app, 'modules.menu.module.restart')
+                                    if (cm) cm()
                                 }
 
                                 if (clbk) {
@@ -20669,7 +20671,10 @@ Platform = function (app, listofnodes) {
 
                     var addresses = self.testchataddresses;
 
-                    if (window.testpocketnet) {
+                    var userinfo = deep(app, 'platform.sdk.user.storage.me')
+
+
+                    if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
 
                             self.matrixchat.import(function(){
 
@@ -20801,11 +20806,23 @@ Platform = function (app, listofnodes) {
                 }
             })
 
-            core.backtoapp = function(){
+            core.backtoapp = function(link){
                 if (self.matrixchat.el)
                     self.matrixchat.el.removeClass('active')
 
                 if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = true }
+
+
+                if (link){
+
+                    link = link.replace('https://' + self.app.options.url + '/', '')
+
+                    self.app.nav.api.load({
+                        open: true,
+                        href: link,
+                        history: true
+                    })
+                }
             }
 
             core.apptochat = function(){

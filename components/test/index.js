@@ -904,7 +904,7 @@ var test = (function(){
 					initUpload({
 						el : _p.el.find('.pgroup'),
 			
-						ext : ['png', 'jpeg', 'jpg'],
+						ext : ['png', 'jpeg', 'jpg', 'webp'],
 
 						dropZone : el.c,
 

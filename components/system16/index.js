@@ -2585,8 +2585,11 @@ var system16 = (function(){
 					p.el.find('.coins').on('click', function(){
 						var key = $(this).closest('.wallet').attr('key')
 
+
+						console.log("key", key, info.wallet)
+
 						if (key){
-							var address = deep(info.wallet, key + '.address')
+							var address = deep(info.wallet, 'addresses.' + key + '.address')
 
 							if (address){
 

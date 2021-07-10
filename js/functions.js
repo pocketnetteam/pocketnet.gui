@@ -7710,7 +7710,11 @@
 				}
 
 				if (p.up1){
-					ap.url = app.imageServerup1;
+
+					ap.url = 'https://pocketnet.app:8092/up'
+
+
+					//ap.url = app.imageServerup1;
 					delete data.Action;
 
 					if(user){

@@ -1655,7 +1655,7 @@ var share = (function(){
 							initUpload({
 								el : el.urlWrapper.find('.uploadpeertubewp'),
 					
-								ext : ['png', 'jpeg', 'jpg'],
+								ext : ['png', 'jpeg', 'jpg', 'webp'],
 		
 								dropZone : el.urlWrapper,
 		

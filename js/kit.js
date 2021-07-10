@@ -1583,8 +1583,8 @@ UserInfo = function(){
 							},
 
 							success : function(data){
-
-								self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
+								self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+								//self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
 								if (clbk)
 									clbk();

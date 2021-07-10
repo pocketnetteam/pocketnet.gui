@@ -1072,3 +1072,6 @@ ____loclib.hideallnotifications = "Hide all notifications"
 
 ____loclib.e133452 = "sent you message"
 ____loclib.e133453 = "invite you in chat"
+
+
+____loclib.createnewcontinue = "Continue creating account";
