@@ -171,12 +171,9 @@ var WSS = function(admins, manage){
 
                 if (client.type == 'firebase'){
 
-                    
-
                     if (data.msg == 'new block') return     
 
                     if (self.firebase){
-
 
                         self.firebase.sendToDevice(fbdata, client.device, client.address).catch(e => {
                             console.error(e)
