@@ -27,9 +27,9 @@ var instance = function (host, Roy) {
   var statsRequest = function () {
     lastStat = null;
 
-        if (logs.length > 300){
-            logs.splice(0, 300)
-        }
+    if (logs.length > 300) {
+      logs.splice(0, 300);
+    }
 
     if (performanceBenchmarks.length > 300) {
       performanceBenchmarks.splice(0, 300);
@@ -108,7 +108,7 @@ var instance = function (host, Roy) {
       .catch((error) => {
         logs.push({
           url,
-          status: (error.response || {}).status || 500,
+          status: error.response.status || 500,
           time: performance.now() - responseTime,
           success: false,
         });
@@ -167,7 +167,14 @@ var instance = function (host, Roy) {
   self.init = function () {
     inited = true;
 
-    self.init = function(){
+    statsRequest();
+  };
+
+  self.export = function () {
+    return {
+      host,
+    };
+  };
 
   self.destroy = function () {
     inited = false;
