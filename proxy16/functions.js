@@ -73,7 +73,11 @@ f.saveFile = function(filepath, buffer){
 
         fs.unlink(f.path(filepath), function(err){
 
+            console.log("ERR", err)
+
             fs.writeFile(f.path(filepath), buffer, (err) => {
+
+                console.log("ERR2", err)
            
                 if(err){
                     reject(err)
