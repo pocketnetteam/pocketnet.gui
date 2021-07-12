@@ -64,10 +64,19 @@ var main = (function(){
 
 					if(phase == 'end'){
 						if(direction == 'down'){
+
+							
+							console.log('lenta.hasplayingvideos()', lenta.hasplayingvideos())
+
+							if(lenta && lenta.hasplayingvideos()) return
+							
 							self.app.el.html.removeClass('scrollmodedown')
 						}
 
 						if(direction == 'up' && el.lentacell.scrollTop() > 200){
+
+
+
 							self.app.el.html.addClass('scrollmodedown')
 						}
 					}
