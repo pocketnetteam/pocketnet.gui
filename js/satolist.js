@@ -12758,7 +12758,7 @@ Platform = function (app, listofnodes) {
                                 return newHtml;
                             }
 
-                            const allowedTags = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'a', 'code', 'pre'];
+                            const allowedTags = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'code', 'pre'];
 
 
                             const options = {
@@ -12884,6 +12884,7 @@ Platform = function (app, listofnodes) {
                         if (!fromTG && self.app.user.features.telegram) {
                             
                           var meta = self.sdk.usersettings.meta;
+
                       
                           if (!meta.tgtoask.value) {
 
@@ -12896,8 +12897,8 @@ Platform = function (app, listofnodes) {
                               btn1text: "Send",
                               btn2text: "Cancel",
                               class: 'zindex',
-                              success: function success() {
-                                _this.telegramSend(savedShare, meta);
+                              success: () => {
+                                this.telegramSend(savedShare, meta);
                               }
                             });
                           }
