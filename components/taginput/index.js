@@ -187,8 +187,6 @@ var taginput = (function(){
 				var tag = _el.attr('tag')
 				var category = _el.attr('category')
 
-				console.log('tag', tag, category)
-
 				if(category){
 
 					var c = self.app.platform.sdk.categories.getbyid(category, actions.language())
@@ -199,9 +197,11 @@ var taginput = (function(){
 					events.addTag(tag)
 				}
 
-				setTimeout(function(){
-					el.tagSearch.find('input').focus()
-				}, 500)
+				if (isMobile())
+					setTimeout(function(){
+						if (el.tagSearch)
+							el.tagSearch.find('input').focus()
+					}, 500)
 				
 			},
 			remove : function(){
