@@ -27,9 +27,9 @@ var instance = function (host, Roy) {
   var statsRequest = function () {
     lastStat = null;
 
-    if (logs.length > 300) {
-      logs.splice(0, 300);
-    }
+        if (logs.length > 300){
+            logs.splice(0, 300)
+        }
 
     if (performanceBenchmarks.length > 300) {
       performanceBenchmarks.splice(0, 300);
@@ -167,14 +167,7 @@ var instance = function (host, Roy) {
   self.init = function () {
     inited = true;
 
-    statsRequest();
-  };
-
-  self.export = function () {
-    return {
-      host,
-    };
-  };
+    self.init = function(){
 
   self.destroy = function () {
     inited = false;
