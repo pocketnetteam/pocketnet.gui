@@ -20834,7 +20834,7 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.el.removeClass('active')
 
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
+                    self.matrixchat.core.hiddenInParent = true
                 }
 
 
@@ -20858,7 +20858,7 @@ Platform = function (app, listofnodes) {
             }
 
             self.matrixchat.core = core
-            self.matrixchat.core.hiddenInParent = true
+            self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
 
             core.externalLink(self.matrixchat)
 
