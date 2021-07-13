@@ -116,6 +116,11 @@ fs.exists(mapJsPath, function (exists) {
 			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
 		}
 
+		var cordovaiosfast = {
+			path : './cordova/platforms/ios/www',
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+		}
+
 
 		var _modules = _.filter(m, function(_m, mn){
 			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast') return true;
@@ -730,7 +735,12 @@ fs.exists(mapJsPath, function (exists) {
 
 
 		makePocketnet(function(){
-			copycordova(cordova)
+
+			copycordova(cordova, function(){
+				copycordovaios(cordovaiosfast)
+			})
+			
+
 		})
 
 		/**/
@@ -814,6 +824,49 @@ var copycordova = function(options, clbk){
 		})
 	})
 	
+}
+
+var copycordovaios = function(options, clbk){
+
+	fs.exists(options.path, function (exists) { 
+		if(exists) {
+			console.log('cordova ios exists')
+
+			lazyEach({
+				sync : true,
+				array : options.copy,
+				action : function(p){
+		
+					ncp(p.item, options.path + '/' + p.item, function (err) {
+		
+						if (err) {
+						  console.error(err);
+						}
+		
+						p.success();
+						
+					});
+		
+				},
+				
+				all : {
+					success : function(){
+		
+						console.log('cordova ready')
+		
+						if(clbk) clbk()
+		
+					}
+				}
+			})
+		}
+		else
+		{
+			console.log('cordova ios skip')
+			if(clbk) clbk()
+		}
+
+	})
 	
 }
 
