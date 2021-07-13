@@ -990,6 +990,72 @@
               
             }
         }
+
+        .instanceWrapper {
+            .hasPerformanceInfo {
+                &:hover {
+                    color: @color-add;
+                    cursor: pointer;
+                }
+            }
+
+            .instancePerformance {
+                padding: 0 @rhythm * 2;
+
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+        }
+
+        .emptyHolder {
+            width: 40px;
+        }
+
+        .performancesWrapper {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            padding-left: 2 * @rhythm;
+        }
+
+        .performanceSection {
+            margin-right: 5 * @rhythm;
+
+            .statsHeader {
+                font-size: 0.8em;
+                font-weight: bold;
+            }
+
+            .statsMain {
+                font-size: 0.7em;
+
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+
+        .transcodingSpeedContainer {
+            padding-left: 4 * @rhythm;
+        }
+
+        .resolutionStats {
+            padding-left: 2 * @rhythm;
+        }
+
+        .waitingStat {
+            color: @color-main;
+        }
+
+        .activeStat {
+            color: @color-green;
+        }
+
+        .failedStat {
+            color: @color-bad;
+        }
     }
 }   
 

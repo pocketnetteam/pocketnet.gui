@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, info = null, stats = [], system = null, bots = [];
+		var el, api = null, proxy = null, info = null, stats = [], system = null, bots = [], peertubePerformance = {};
 
 		var graphs = {}
 
@@ -2777,8 +2777,6 @@ var system16 = (function(){
 			},
 			peertubeinstancestable : function(elc, clbk){
 
-				console.log("info", info)
-
 				self.shell({
 					inner : html,
 					name : 'peertubeinstancestable',
@@ -2787,13 +2785,26 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin(),
 						fixedinstance : null,
-						currentinstance : null
+						currentinstance : null,
+						peertubePerformance,
 					},
 
 					el : elc.find('.peertubeWrapper .instances')
 
 				},
 				function(p){
+
+					p.el.find('.instanceWrapper').each(function() {
+						const currentEl = $(this);
+						const performanceMetricsContainer = currentEl.find('.instancePerformance')
+						const baseInfoContainer = currentEl.find('.work')
+
+						baseInfoContainer.on('click', () =>
+						  performanceMetricsContainer.hasClass('hidden')
+						    ? performanceMetricsContainer.removeClass('hidden')
+						    : performanceMetricsContainer.addClass('hidden'),
+					    );
+					})
 
 
 					if (clbk)
@@ -3487,28 +3498,29 @@ var system16 = (function(){
 						renders.webserveradmin(el.c)
 					},500)	
 
-					if (actions.admin()){
-
-						return proxy.system.request('get.settings').then(r => {
-							system = r
-
-							renders.allsettings()
-
-							return Promise.resolve()
-						}).then(r => {
-							return proxy.system.request('bots.get')
-
-						}).then(r => {
-							bots = r.bots || []
-							renders.bots(el.c)
-
-
-							el.c.find('.collapsepart').each(function(i){
-								if(expanded[i]) $(this).addClass('expanded')
-							})
-
+					if (actions.admin()) {
+					  return proxy
+						.fetchauth('peertube/stats')
+						.then((data) => (peertubePerformance = { ...data }))
+						.then(() => proxy.system.request('get.settings'))
+						.then((r) => {
+						  system = r;
+		  
+						  renders.allsettings();
+		  
+						  return Promise.resolve();
 						})
-
+						.then((r) => {
+						  return proxy.system.request('bots.get');
+						})
+						.then((r) => {
+						  bots = r.bots || [];
+						  renders.bots(el.c);
+		  
+						  el.c.find('.collapsepart').each(function (i) {
+							if (expanded[i]) $(this).addClass('expanded');
+						  });
+						});
 					}
 					
 						
