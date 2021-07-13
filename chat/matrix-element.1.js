@@ -1727,6 +1727,7 @@ var list_component = Object(componentNormalizer["a" /* default */])(
     }*/
 
     this.init();
+    console.log("READING", this.chat);
 
     if (this.chat) {
       this.readAll();
@@ -1928,11 +1929,12 @@ var list_component = Object(componentNormalizer["a" /* default */])(
     readAll: function readAll() {
       var _this6 = this;
 
-      console.log('this.core.hiddenInParent', this.core.hiddenInParent);
-      if (!this.core.hiddenInParent && this.chat && this.chat.getJoinedMemberCount() > 1 && this.chat.getUnreadNotificationCount() !== 0) setTimeout(function () {
+      console.log('this.core.hiddenInParent', this.core.hiddenInParent, this.chat.getJoinedMemberCount(), this.chat.getUnreadNotificationCount());
+      if (!this.core.hiddenInParent && this.chat && this.chat.getJoinedMemberCount() > 0 && this.chat.getUnreadNotificationCount() !== 0) setTimeout(function () {
         if (!_this6.chat) return;
+        console.log("setRoomReadMarkers");
 
-        _this6.core.mtrx.client.setRoomReadMarkers(_this6.chat.currentState.roomId, _this6.chat['_receipts']['m.read'][_this6.chat.myUserId].eventId, _this6.chat.timeline[_this6.chat.timeline.length - 1]).then(function (r) {
+        _this6.core.mtrx.client.setRoomReadMarkers(_this6.chat.currentState.roomId, _this6.chat.timeline[_this6.chat.timeline.length - 1].eventId, _this6.chat.timeline[_this6.chat.timeline.length - 1]).then(function (r) {
           return r;
         });
       }, 1000);
