@@ -11,7 +11,7 @@ if (typeof _Electron != 'undefined') {
 
 /*
 
-Pocketnet[51792:5059590] [connection] nw_endpoint_handler_set_adaptive_write_handler [C6.1.1 64.235.46.85:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout
+Pocketnet[51792:5059590] [connection] nw_endpoint_handler_set_adaptive_write_handler [C6.1.1 64.235.46.85:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
 */
 
 
@@ -20833,7 +20833,9 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el)
                     self.matrixchat.el.removeClass('active')
 
-                if (self.matrixchat.core && isMobile()){ self.matrixchat.core.hiddenInParent = true }
+                if (self.matrixchat.core){ 
+                    self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
+                }
 
 
                 if (link){
