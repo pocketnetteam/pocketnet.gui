@@ -1,10 +1,12 @@
-<% _.each(info.peertube, function(instance){ 
-                
+<% 
+
+_.each(info.peertube, function(instance){
     
-    %>
+    const instancePerformance = peertubePerformance[instance.host];
+%>
 
     <div class="instanceWrapper">
-        <div class="work">
+        <div class="work <%- instancePerformance ? 'hasPerformanceInfo' : '' %>">
             <div class="tableovfWrapper">
                 <div class="instance table <%- !instance.canuse ? 'cantuse' : ''%>" instance="<%-instance.host%>">
                     <div class="use <% if(instance.host == currentinstance) {%> using <% } %> <% if(typeof fixedinstance != 'undefined' && fixedinstance == instance.key) {%> locked <% } %>">
@@ -41,6 +43,59 @@
                 </div>
             </div>
         </div>
+<% 
+
+    if (instancePerformance) { %>
+
+        <div class="instancePerformance hidden">
+            <section class="emptyHolder">
+                &nbsp;
+            </section>
+
+            <section class="performancesWrapper">
+                <section class="performanceSection transcodingSection">
+                    <header class="statsHeader"><i class="fas fa-microchip"></i> Transcoding:</header>
+                    <main class="statsMain">
+                        <div class="statContainer transcodingStatContainer">
+                            <p class="waitingStat"><i class="fas fa-ellipsis-h"></i> Waiting: <strong><%- instancePerformance.performance.waitTranscodingJobs %></strong></p>
+                            <p class="failedStat"><i class="fas fa-times"></i> Failed: <strong><%- instancePerformance.performance.failTranscodingJobs %></strong></p>
+                        </div>
+    
+                        <div class="statContainer transcodingStatContainer transcodingSpeedContainer">
+                            <header>
+                                <p><i class="fas fa-tachometer-alt"></i> Speed:</p>
+                            </header>
+                            <section class="resolutionStats">
+                                <% instancePerformance.performance.speedByResolution ? Object.entries(instancePerformance.performance.speedByResolution).map(([resolution, speed]) => { %>
+                                    <p><%- resolution %>p: <strong><%- speed.toFixed(2) %> Mbit/s</strong></p>
+                                <% }) : '-' %>
+                            </section>
+                        </div>
+                    </main>
+                </section>
+    
+                <section class="performanceSection livestreamSection">
+                    <header class="statsHeader"><i class="fas fa-satellite-dish"></i> Livestreaming:</header>
+                    <main class="statsMain">
+                        <div class="statContainer livestreamStatsContainer">
+                            <p class="activeStat">Active streams: <strong><%- instancePerformance.performance.activeLivestreams %></strong></p>
+                        </div>
+                    </main>
+                </section>
+    
+                <section class="performanceSection importsSection">
+                    <header class="statsHeader"><i class="fab fa-youtube"></i> Import:</header>
+                    <main class="statsMain">
+                        <div class="statContainer importStatsContainer">
+                            <p class="waitingStat"><i class="fas fa-ellipsis-h"></i> Waiting: <strong><%- instancePerformance.performance.waitImportsCount %></strong></p>
+                            <p class="failedStat"><i class="fas fa-times"></i> Failed: <strong><%- instancePerformance.performance.failImportsCount %></strong></p>
+                        </div>
+                    </main>
+                </section>
+            </section>
+        </div>
     </div>
 
-<% }) %>
+<%  } 
+
+}) %>

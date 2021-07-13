@@ -108,7 +108,7 @@ var instance = function (host, Roy) {
       .catch((error) => {
         logs.push({
           url,
-          status: error.response.status || 500,
+          status: (error.response || {}).status || 500,
           time: performance.now() - responseTime,
           success: false,
         });
