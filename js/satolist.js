@@ -9,6 +9,11 @@ if (typeof _Electron != 'undefined') {
     $('html').addClass('electron')
 }
 
+/*
+
+Pocketnet[51792:5059590] [connection] nw_endpoint_handler_set_adaptive_write_handler [C6.1.1 64.235.46.85:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister
+*/
+
 
 Platform = function (app, listofnodes) {
 
