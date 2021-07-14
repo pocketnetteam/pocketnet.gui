@@ -20741,7 +20741,7 @@ Platform = function (app, listofnodes) {
 						allowPageScroll: "none", 
 						swipeLeft : function(e, phase, direction, distance){
 
-                            if (self.matrixchat.core)
+                            if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
                                 self.matrixchat.core.backtoapp()
 						},
 					})
