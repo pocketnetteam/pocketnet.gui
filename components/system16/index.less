@@ -1000,11 +1000,13 @@
             }
 
             .instancePerformance {
-                padding: 0 @rhythm * 2;
+                padding: @rhythm * 2;
 
                 display: flex;
                 justify-content: flex-start;
                 align-items: flex-start;
+
+                background-color: #fafafa;
             }
         }
 
@@ -1016,37 +1018,33 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
+            flex-grow: 1;
 
             padding-left: 2 * @rhythm;
         }
 
         .performanceSection {
-            margin-right: 5 * @rhythm;
-
             .statsHeader {
-                font-size: 0.8em;
+                font-size: 1em;
                 font-weight: bold;
             }
 
             .statsMain {
-                font-size: 0.7em;
+                font-size: 0.9em;
 
                 display: flex;
-                justify-content: space-between;
+                justify-content: flex-start;
                 align-items: flex-start;
+                flex-direction: column;
             }
         }
 
-        .transcodingSpeedContainer {
-            padding-left: 4 * @rhythm;
-        }
-
-        .resolutionStats {
+        .extendedStats {
             padding-left: 2 * @rhythm;
         }
 
         .waitingStat {
-            color: @color-main;
+            color: #ffcb20;
         }
 
         .activeStat {
@@ -1055,6 +1053,19 @@
 
         .failedStat {
             color: @color-bad;
+        }
+
+        .iconStat {
+            display: flex;
+            align-items: center;
+
+            i {
+                width: 20px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
     }
 }   
