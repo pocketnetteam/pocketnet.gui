@@ -20629,6 +20629,7 @@ Platform = function (app, listofnodes) {
             ALL_NOTIFICATIONS_COUNT : {},
             NOTIFICATION : {}
         },
+
         destroy : function(){
             if (window.matrixchat){
                 window.matrixchat.destroy()
@@ -20821,6 +20822,25 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        share : {
+            url : function(url){
+                if(self.matrixchat.core){
+                    self.matrixchat.core.apptochat()
+
+                    return self.matrixchat.core.share({
+                        urls : [url]
+                    }).catch(e => {
+                        console.log("E", e)
+                        self.matrixchat.core.backtoapp()
+
+                        return Promise.reject(e)
+                    })
+                }
+
+                return Promise.reject('matrixchat.core')
+            }
+        },
+
         link : function(core){
 
             core.update({
@@ -20834,7 +20854,7 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.el.removeClass('active')
 
                 if (self.matrixchat.core){ 
-                    self.matrixchat.core.hiddenInParent = true
+                    self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
                 }
 
                 //self.app.actions.onScroll()

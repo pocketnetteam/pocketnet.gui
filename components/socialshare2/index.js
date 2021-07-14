@@ -598,9 +598,20 @@ var socialshare2 = (function(){
 
 		var initEvents = function(){
 
-			el.c.find('.url').on('click', function(){
+			el.c.find('.url button').on('click', function(){
 				copycleartext(ed.url)
 				sitemessage(self.app.localization.e('urlsuccesscopied'))
+			})
+
+			el.c.find('.chat button').on('click', function(){
+
+				var url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
+			
+				self.app.platform.matrixchat.share.url(url).catch(r => {
+					console.log("R", r)
+				})
+			
+				if(self.closeContainer) self.closeContainer()
 			})
 
 		}
