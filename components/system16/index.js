@@ -2799,10 +2799,22 @@ var system16 = (function(){
 						const performanceMetricsContainer = currentEl.find('.instancePerformance')
 						const baseInfoContainer = currentEl.find('.work')
 
-						baseInfoContainer.on('click', () =>
-						  performanceMetricsContainer.hasClass('hidden')
-						    ? performanceMetricsContainer.removeClass('hidden')
-						    : performanceMetricsContainer.addClass('hidden'),
+						baseInfoContainer.on('click', () => {
+							if (performanceMetricsContainer.hasClass('hidden')) {
+								performanceMetricsContainer.removeClass('hidden');
+								currentEl.find('.performancesWrapper').isotope({
+									layoutMode: 'packery',
+									itemSelector: '.performanceSection',
+									packery: {
+										gutter: 10
+									},
+									// initLayout: false
+								})
+
+							} else {
+								performanceMetricsContainer.addClass('hidden');
+							}
+						}
 					    );
 					});
 
