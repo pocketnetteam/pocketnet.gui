@@ -2776,7 +2776,7 @@ var system16 = (function(){
 				})
 			},
 			peertubeinstancestable : function(elc, clbk){
-
+								
 				self.shell({
 					inner : html,
 					name : 'peertubeinstancestable',
@@ -2804,7 +2804,13 @@ var system16 = (function(){
 						    ? performanceMetricsContainer.removeClass('hidden')
 						    : performanceMetricsContainer.addClass('hidden'),
 					    );
-					})
+					});
+
+					el.c.find('.tooltip').tooltipster({
+						theme: 'tooltipster-light',
+						maxWidth : 600,
+						zIndex : 20,
+					}); 
 
 
 					if (clbk)
