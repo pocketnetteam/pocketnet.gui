@@ -24,14 +24,15 @@ html {
 
     &.nooverflow{
         overflow-y: hidden;
+        pointer-events: none;
     }
-    &.mobile.nooverflow{
+    /*&.mobile.nooverflow{
         height: 100%;
 
         body{
             height: 100%;
         }
-    }
+    }*/
 
     scrollbar-width: none;
     &::-webkit-scrollbar{
@@ -4470,7 +4471,7 @@ html{
             .transition(0.3s);
             z-index: 300;
             .shadowSmall();
-    
+            -webkit-overflow-scrolling: touch;
             &.active{
                 left : 0;
                 right: 0;
