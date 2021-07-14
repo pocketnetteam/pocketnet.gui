@@ -3,16 +3,27 @@
 #socialshare2{
 	padding : 2 * @rhythm 0;
 
+
+
 	.flexWrapper{
-		display: flex;	
-		align-items: center;
+		display: block;	
+		overflow: hidden;
+
+		button{
+			font-size: 0.8em;
+			padding-left: 0;
+			padding-right: 0;
+			width: 100%;
+		}
 
 		>div{
 
-			max-width: 50%;
+			float: left;
+			width: 50%;
 
 			&.includeRefWrapper{
-				padding-left: 4 * @rhythm;
+				padding-left: 0 @rhythm;
+				padding-top : 2 * @rhythm;
 				span{
 					margin-right: 2 * @rhythm;
 					font-size: 0.8em;
