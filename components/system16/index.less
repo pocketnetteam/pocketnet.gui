@@ -1015,18 +1015,43 @@
         }
 
         .performancesWrapper {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
+            // display: flex;
+            // align-items: flex-start;
+            // justify-content: space-between;
             flex-grow: 1;
 
             padding-left: 2 * @rhythm;
+
+            overflow: hidden;
         }
 
         .performanceSection {
+
+            float: left;
+
+            width: 25%;
+
+            border: 1px solid @color-gray-mlight;
+            border-radius: 5px;
+
+            padding: 2 * @rhythm;
+
+            box-sizing: border-box;
+
+            background-color: #fff;
+
             .statsHeader {
                 font-size: 1em;
                 font-weight: bold;
+
+                display: flex;
+                align-items: center;
+
+                i {
+                    font-size: 0.75em;
+                    
+                    margin-right: 5px;
+                }
             }
 
             .statsMain {
@@ -1065,6 +1090,10 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+                margin-right: 5px;
+
+                cursor: pointer;
             }
         }
     }
