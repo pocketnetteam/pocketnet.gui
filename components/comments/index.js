@@ -1316,6 +1316,7 @@ var comments = (function(){
 							clbk(this, _p.el.find('.emojionearea-editor'));
 
 					}
+
 				}
 			});
 
@@ -1355,6 +1356,36 @@ var comments = (function(){
 			_p.el.find('.closeAnswer').on('click', function(){
 				actions.removeForm(p.id || '0')
 			})
+
+			console.log('p.el', _p.el.find('.leaveCommentPreview'));
+
+			_p.el.find('.emojionearea-editor').on('paste', function(event){
+				console.log('event', event);
+				// use event.originalEvent.clipboard for newer chrome versions
+				var items = (event.clipboardData  || event.originalEvent.clipboardData).items;
+				console.log(JSON.stringify(items));
+				var blob = null;
+				for (var i = 0; i < items.length; i++) {
+				  if (items[i].type.indexOf("image") === 0) {
+					blob = items[i].getAsFile();
+				  }
+				}
+				// load image if there is a pasted image
+				if (blob !== null) {
+				  var reader = new FileReader();
+				  reader.onload = function(event) {
+					console.log(event.target.result); 
+					
+					var img = document.createElement('img'); 
+					img.src = event.target.result
+					_p.el.find('.emojionearea-editor').append(img);// data url!
+				  };
+				  reader.readAsDataURL(blob);
+
+				}
+			})
+
+
 		}
 
 		var renders = {
@@ -2457,3 +2488,4 @@ else{
 	app.modules.comments.module = comments;
 
 }
+
