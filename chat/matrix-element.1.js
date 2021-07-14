@@ -2133,6 +2133,9 @@ var es_string_split = __webpack_require__("1276");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.for-each.js
 var web_dom_collections_for_each = __webpack_require__("159b");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.replace.js
+var es_string_replace = __webpack_require__("5319");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
 var es_object_to_string = __webpack_require__("d3b7");
 
@@ -2634,6 +2637,7 @@ var release = __webpack_require__("3db6");
 
 
 
+
 var enc = 'm.olm.v1.curve25519-aes-sha2';
 /* harmony default export */ var input_vue_type_script_lang_js_ = ({
   name: 'chatInput',
@@ -2846,17 +2850,23 @@ var enc = 'm.olm.v1.curve25519-aes-sha2';
                     chat = _chat;
                     _this3.$store.state.globalpreloader = false;
 
-                    _this3.$emit("newchat", chat);
-
                     var m_chat = _this3.core.mtrx.client.getRoom(_chat.room_id);
 
                     var event = m_chat.currentState.getStateEvents("m.room.power_levels");
-                    return _this3.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).then(function (r) {});
+                    return _this3.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).catch(function (e) {});
                   }).then(function (r) {
                     _this3.creating = false;
                   }).catch(function (e) {
                     _this3.creating = false;
                     _this3.$store.state.globalpreloader = false;
+
+                    if (e && e.errcode == 'M_ROOM_IN_USE') {
+                      return _this3.core.mtrx.client.joinRoom('#' + id + ':' + _this3.core.mtrx.baseUrl.replace("https://", "")).then(function () {
+                        console.log("JOINED");
+                      }).catch(function (e) {});
+                    }
+
+                    return Promise.resolve(e);
                   });
                 }
 
