@@ -113,6 +113,11 @@
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
             <string>This Application can allow your camera to make avatar or post photo, if you want, but we aren't recommended do this.</string>
         </config-file>
+        <preference name="NativeXHRLogging" value="full" />
+        <preference name="AllowUntrustedCerts"  value="true" />
+        <preference name="InterceptRemoteRequests" value="all" />
+        <preference name="allowFileAccessFromFileURLs" value="true" />
+        <preference name="allowUniversalAccessFromFileURLs" value="true" />
     </platform>
     <platform name="android">
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">

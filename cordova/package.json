@@ -88,7 +88,8 @@
       "cordova-plugin-androidx": {},
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-buildinfo": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "@globules-io/cordova-plugin-ios-xhr": {}
     },
     "platforms": [
       "android",
