@@ -2,6 +2,65 @@ var _ = require('underscore');
 var f = require('../functions');
 const Instance = require('./instance');
 
+const getBestByType = {
+  responseSpeed: (instance) => -instance.stats().k,
+  uploadVideo: (instance) => {
+    const performance = instance.performance();
+
+    if (!performance) return -10;
+
+    const serverData = performance.data;
+
+    if (!serverData.performance) return -10;
+
+    const ratings = [
+      {
+        value: serverData.performance.waitTranscodingJobs || 0,
+        name: 'Waiting Jobs',
+        weight: 0.6,
+        calculate() {
+          const { weight, value } = this;
+
+          return weight / (1 + Math.pow(value, 0.25));
+        },
+      },
+      {
+        value: serverData.totalLocalVideoFilesSize || 0,
+        name: 'Occupied Space',
+        weight: 0.3,
+        calculate() {
+          const { weight, value } = this;
+
+          let metricValue = 1 - value / 100000000000;
+
+          if (metricValue < 0) metricValue = 1 - value / 400000000000;
+
+          return weight * metricValue;
+        },
+      },
+      {
+        value: serverData.totalDailyActiveUsers,
+        name: 'Active Users',
+        weight: 0.1,
+        calculate() {
+          const { weight, value } = this;
+
+          return weight / (1 + Math.pow(value, 0.25));
+        },
+      },
+    ];
+
+    return ratings.reduce((accumulator, metric) => {
+      const currentRating = metric.calculate() || 0;
+
+      return accumulator + currentRating;
+    }, 0);
+  },
+  importVideo: (instance) => {},
+  watchVideo: (instance) => {},
+  liveStream: (instance) => {},
+};
+
 var Roy = function (parent) {
   var self = this;
 
@@ -48,18 +107,19 @@ var Roy = function (parent) {
     inited = false;
   };
 
-  self.bestlist = function () {
+  self.bestlist = function (type) {
     var _instances = _.filter(instances, function (instance) {
       return instance.canuse() || self.useall;
     });
 
-    return _.sortBy(_instances, function (instance) {
-      return -instance.stats().k;
+    return _.sortBy(_instances, (instance) => {
+      console.log(instance.host, getBestByType[type](instance));
+      return getBestByType[type](instance);
     });
   };
 
-  self.best = function () {
-    var bestlist = self.bestlist();
+  self.best = function (type = 'uploadVideo') {
+    var bestlist = self.bestlist(type);
 
     if (bestlist.length) return bestlist[0];
 
