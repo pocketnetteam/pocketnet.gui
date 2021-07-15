@@ -20720,12 +20720,9 @@ Platform = function (app, listofnodes) {
                                 self.matrixchat.el = $('.matrixchatwrapper')
                                 self.matrixchat.initevents()
 
-
                                 
                             }, null, app);
 
-                                  
-                            
         
                     }
                 }
