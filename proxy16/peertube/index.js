@@ -101,14 +101,15 @@ var Peertube = function (settings) {
       return keys[f.rand(0, keys.length - 1)];
     },
 
-    best: function ({ roy }) {
+    best: function ({ roy, type }) {
+
       if (!roy) roy = self.api.randroykey();
 
       roy = getroy(roy);
 
       if (!roy) return Promise.reject('roy');
 
-      var best = roy.best();
+      var best = roy.best(type);
 
       if (!best) return Promise.reject('best');
 

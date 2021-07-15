@@ -70,12 +70,11 @@ var Roy = function (parent) {
     });
 
     return _.sortBy(_instances, (instance) => {
-      console.log(instance.host, getBestByType[type].calculate(instance));
-      return getBestByType[type].calculate(instance);
+      return getBestByType[type] ?  getBestByType[type].calculate(instance) : -10;
     });
   };
 
-  self.best = function (type = 'uploadVideo') {
+  self.best = function (type = 'responseSpeed') {
     var bestlist = self.bestlist(type);
 
     if (bestlist.length) return [...bestlist].pop();
