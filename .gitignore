@@ -25,7 +25,7 @@ manifest.json
 data/
 pocketcoind*/
 .env
-index.html
+/index.html
 index.php
 index_el.html
 openapi.html
