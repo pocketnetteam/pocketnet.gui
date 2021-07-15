@@ -15,7 +15,6 @@ class PerformanceMetric {
 
     return calculatedRatings.reduce((accumulator, metric) => {
       const currentRating = metric.calculate() || 0;
-
       return accumulator + currentRating;
     }, 0);
   }
@@ -23,7 +22,7 @@ class PerformanceMetric {
   constructor(ratings = [], customCalculator) {
     this._ratings = ratings;
 
-    if (customCalculator) this._calculate = customCalculator;
+    if (customCalculator) this.calculate = customCalculator;
   }
 }
 

@@ -3,9 +3,9 @@ module.exports = {
   uploadVideo: {
     ratings: [
       (serverData) => ({
-        value: serverData.performance.waitTranscodingJobs || 0,
+        value: (serverData.performance || {}).waitTranscodingJobs || 0,
         name: 'Waiting Jobs',
-        weight: 0.6,
+        weight: 0.4,
         calculate() {
           const { weight, value } = this;
 
@@ -13,9 +13,23 @@ module.exports = {
         },
       }),
       (serverData) => ({
+        value: (serverData.performance || {}).speedByResolution || {},
+        name: 'Transcoding Speed',
+        weight: 0.3,
+        calculate() {
+          const { weight, value } = this;
+
+          const speedsArr = Object.values(value);
+          const speedValue =
+            speedsArr.reduce((acc, curr) => acc + curr, 0) / speedsArr.length;
+
+          return weight * (1 - 1 / (1 + Math.pow(speedValue, 0.25)));
+        },
+      }),
+      (serverData) => ({
         value: serverData.totalLocalVideoFilesSize || 0,
         name: 'Occupied Space',
-        weight: 0.3,
+        weight: 0.2,
         calculate() {
           const { weight, value } = this;
 
@@ -39,12 +53,79 @@ module.exports = {
     ],
   },
   importVideo: {
-    ratings: [],
-  },
-  watchVideo: {
-    ratings: [],
+    ratings: [
+      (serverData) => ({
+        value: (serverData.performance || {}).waitImportsCount || 0,
+        name: 'Waiting Imports',
+        weight: 0.6,
+        calculate() {
+          const { weight, value } = this;
+
+          return weight / (1 + Math.pow(value, 0.25));
+        },
+      }),
+      (serverData) => ({
+        value: (serverData.performance || {}).speedByResolution || {},
+        name: 'Transcoding Speed',
+        weight: 0.2,
+        calculate() {
+          const { weight, value } = this;
+
+          const speedsArr = Object.values(value);
+          const speedValue =
+            speedsArr.reduce((acc, curr) => acc + curr, 0) / speedsArr.length;
+
+          return weight * (1 - 1 / (1 + Math.pow(speedValue, 0.25)));
+        },
+      }),
+      (serverData) => ({
+        value: (serverData.performance || {}).waitTranscodingJobs || 0,
+        name: 'Waiting Transcodings',
+        weight: 0.1,
+        calculate() {
+          const { weight, value } = this;
+
+          return weight / (1 + Math.pow(value, 0.25));
+        },
+      }),
+      (serverData) => ({
+        value: serverData.totalDailyActiveUsers,
+        name: 'Active Users',
+        weight: 0.1,
+        calculate() {
+          const { weight, value } = this;
+
+          return weight / (1 + Math.pow(value, 0.25));
+        },
+      }),
+    ],
   },
   liveStream: {
-    ratings: [],
+    ratings: [
+      (serverData) => ({
+        value: (serverData.performance || {}).activeLivestreams || 0,
+        name: 'Active Streams',
+        weight: 0.7,
+        calculate() {
+          const { weight, value } = this;
+
+          return weight / (1 + Math.pow(value, 0.25));
+        },
+      }),
+      (serverData) => ({
+        value: (serverData.performance || {}).speedByResolution || {},
+        name: 'Transcoding Speed',
+        weight: 0.3,
+        calculate() {
+          const { weight, value } = this;
+
+          const speedsArr = Object.values(value);
+          const speedValue =
+            speedsArr.reduce((acc, curr) => acc + curr, 0) / speedsArr.length;
+
+          return weight * (1 - 1 / (1 + Math.pow(speedValue, 0.25)));
+        },
+      }),
+    ],
   },
 };
