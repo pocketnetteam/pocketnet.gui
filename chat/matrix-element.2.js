@@ -535,7 +535,7 @@ var icon = __webpack_require__("3094");
 // EXTERNAL MODULE: ./src/components/chats/assets/typing.vue + 9 modules
 var typing = __webpack_require__("0826");
 
-// EXTERNAL MODULE: ./src/components/contacts/index.vue + 19 modules
+// EXTERNAL MODULE: ./src/components/contacts/index.vue + 4 modules
 var contacts = __webpack_require__("71da");
 
 // EXTERNAL MODULE: ./src/application/functions.js

@@ -1928,6 +1928,20 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        transaction : function(txid, el, clbk, p){
+            app.nav.api.load({
+                open: true,
+                href: 'transactionview',
+                el: el,
+                eid: makeid(),
+                clbk: clbk,
+
+                essenseData: {
+                    txid : txid
+                }
+            })
+        },
+
         comment : function(id, el, clbk, p){
 
             app.nav.api.load({
@@ -2125,15 +2139,23 @@ Platform = function (app, listofnodes) {
                 p.action = p.htls ? 'htls' : 'send'
                 p.class = 'api'
                 p.api = true
+                
 
                 var es = null
 
                 return new Promise((resolve, reject) => {
                     
-                    p.sendclbk = function(p){
-                        resolve(p)
+                    p.sendclbk = function(d){
 
-                        if(es) es.closeContainer()
+                        console.log(d, p)
+
+                        if (p.roomid && d.txid){
+                            self.matrixchat.shareInChat.url(p.roomid, 'pocketnet://i?stx=' + d.txid)
+                        }
+
+                        resolve(d)
+
+                        if(es && es.container) es.container.close()
                     }
 
                     app.nav.api.load({
@@ -2145,13 +2167,17 @@ Platform = function (app, listofnodes) {
                         mid : id,
                         animation : false,
                         essenseData : p,
-                        clbk : function(e, p){
+                        clbk : function(e, _p){
 
-                            es = p
+                            console.log('dsdsds', _p)
+
+                            ////pocketnet://i?stx=
+
+                            es = _p
     
                             globalpreloader(false)
     
-                            if(clbk) clbk(e, p)
+                            if(clbk) clbk(e, _p)
                         }
                     })
 
@@ -2210,6 +2236,14 @@ Platform = function (app, listofnodes) {
             if (name) return encodeURIComponent(name.toLowerCase());
 
             else return 'author?address=' + address
+        },
+
+        authororexplorerlink: function (address) {
+            var name = deep(app, 'platform.sdk.usersl.storage.' + address + '.name');
+
+            if (name) return encodeURIComponent(name.toLowerCase());
+
+            else return 'https://pocketnet.app/blockexplorer/address/' + address
         },
 
         upbutton: function (el, p) {
@@ -17574,6 +17608,7 @@ Platform = function (app, listofnodes) {
 
                         data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address) 
 
+                        
 
 
 
@@ -20824,15 +20859,36 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        shareInChat : {
+            url : function(id, url){
+                if (self.matrixchat.core){
+
+                    self.matrixchat.core.apptochat()
+
+                    return self.matrixchat.core.mtrx.shareInChat(id, {
+                        urls : [url]
+                    }).catch(e => {
+                        
+                        self.matrixchat.core.backtoapp()
+
+                        return Promise.reject(e)
+                    })
+                }
+
+                return Promise.reject('matrixchat.core')
+            }
+        },
+
         share : {
             url : function(url){
-                if(self.matrixchat.core){
+                if (self.matrixchat.core){
+
                     self.matrixchat.core.apptochat()
 
                     return self.matrixchat.core.share({
                         urls : [url]
                     }).catch(e => {
-                        console.log("E", e)
+
                         self.matrixchat.core.backtoapp()
 
                         return Promise.reject(e)
