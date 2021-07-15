@@ -351,7 +351,7 @@ fs.exists(mapJsPath, function (exists) {
 								return item.replace(/\(max-width:640px\)|\(max-width:768px\)|\(max-width:1024px\)/g, '(max-width:1920px)')
 							})
 
-							exported.data = exported.data.join('\n')
+							exported.data = exported.data.join('\n').replaceAll('html.stblack', '#matrix-root[theme="black"]')
 
 							var pre = uglifycss.processString(cssmaster.data, {
 								cuteComments : true

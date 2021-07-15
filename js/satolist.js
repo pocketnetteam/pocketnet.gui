@@ -3712,6 +3712,8 @@ Platform = function (app, listofnodes) {
 
                     t.current = value
 
+                    self.matrixchat.changeTheme()
+
                     t.save()
                 }
             }
@@ -18186,7 +18188,7 @@ Platform = function (app, listofnodes) {
                                             data.share.scnt = Number(data.share.scnt) + 1
                                         }
                                     }
-
+                                    if(!data.electronSettings) data.electronSettings = {}
                                     data.electronSettings.size = 'medium'
 
                                     clbk()
@@ -18947,7 +18949,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                /*if (data.txid) {
+                if (data.txid) {
 
                     if (txidstorage[data.txid]) return;
 
@@ -18955,7 +18957,7 @@ Platform = function (app, listofnodes) {
 
 
                     if (platform.sdk.notifications.find(data.txid)) return
-                }*/
+                }
 
 
 
@@ -19281,7 +19283,7 @@ Platform = function (app, listofnodes) {
 
         setTimeout(function(){
 
-            platform.matrixchat.notify.event()
+            //platform.matrixchat.notify.event()
 
             /*self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
@@ -19358,6 +19360,7 @@ Platform = function (app, listofnodes) {
 
 		}, 6000)
     }
+    
     
     
     self.convertUTCSS = function (str) {
@@ -20657,13 +20660,6 @@ Platform = function (app, listofnodes) {
 
                 if(electron){
                     console.log("HERE")
-                    /*try{
-                        require('./chat/matrix-element.min.js')
-                    }
-                    catch(e){
-                        console.error(e)
-                    }
-                    */
 
                     if(clbk) clbk()
                 }
@@ -20712,6 +20708,7 @@ Platform = function (app, listofnodes) {
                                         privatekey="${privatekey}"
                                         pocketnet="`+(isMobile() ? '' : 'true')+`"
                                         mobile="`+(isMobile() ? 'true' : '')+`" 
+                                        ctheme="`+self.sdk.theme.current+`"
                                     >
                                     </matrix-element>
                                 </div>`
@@ -20732,6 +20729,12 @@ Platform = function (app, listofnodes) {
                 }
             })
         },
+        
+        changeTheme : function(){
+            if(self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
+            }
+        },
 
         initevents : function(){
             if (self.matrixchat.el){
@@ -20739,7 +20742,7 @@ Platform = function (app, listofnodes) {
                 if(isMobile()){
 
 					self.matrixchat.el.swipe({
-						allowPageScroll: "none", 
+						allowPageScroll: "vertical", 
 						swipeLeft : function(e, phase, direction, distance){
 
                             if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
