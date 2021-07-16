@@ -1510,86 +1510,88 @@ var share = (function(){
 
 				if (external) external.container.close();
 				
-				globalpreloader(true);
+				// globalpreloader(true);
 
 				var serverLink = currentShare.url ? self.app.peertubeHandler.parselink(currentShare.url.v).host : null;
 
-				self.app.peertubeHandler.api.user.auth(serverLink || self.app.peertubeHandler.active(), true)
-				  .then(r => {
-					  
-					globalpreloader(false);
+				// globalpreloader(false);
 
-					self.nav.api.load({
-						open : true,
-						id : elName,
-						inWnd : true,
+				self.nav.api.load({
+					open : true,
+					id : elName,
+					inWnd : true,
 
-						history : false,
+					history : false,
 
-						essenseData : {
-							storage : p.storage,
-							value : p.value,
-							currentLink : currentShare.url ? currentShare.url.v : '',
-							actions : {
-								added : function(link, name){
-									var type = 'url';
+					essenseData : {
+						storage : p.storage,
+						value : p.value,
+						currentLink : currentShare.url ? currentShare.url.v : '',
+						actions : {
+							added : function(link, name){
+								var type = 'url';
 
-									var result = currentShare[type].set(link)
+								var result = currentShare[type].set(link)
 
-									currentShare.settings.a = ["i", "u", "cm", "p"]
-									currentShare.caption.set(name)
-									currentShare.images.set()
-									currentShare.repost.set()
+								currentShare.settings.a = ["i", "u", "cm", "p"]
+								currentShare.caption.set(name)
+								currentShare.images.set()
+								currentShare.repost.set()
 
-									if(!essenseData.share){
-										state.save()
-									}
-
-									if(!result && errors[type]){
-
-										sitemessage(errors[type])
-
-									}			
-														
-
-									make();	
-								}
-							},
-
-							closeClbk : function() {
-								if(!self.app.peertubeHandler.checklink(currentShare.url.v)){
-									if (el.peertube && el.peertubeLiveStream) {
-									}
+								if(!essenseData.share){
+									state.save()
 								}
 
-								external = null
+								if(!result && errors[type]){
 
+									sitemessage(errors[type])
 
-								if(elName != 'streampeertube')
+								}			
+													
 
-									make();
+								make();	
 							}
 						},
 
-						clbk : function(p, element){
+						closeClbk : function() {
+							if(!self.app.peertubeHandler.checklink(currentShare.url.v)){
+								if (el.peertube && el.peertubeLiveStream) {
+								}
+							}
 
-							external = element;
+							external = null
 
-							videoUploadData = element.essenseData;
 
-							console.log('external', element)
+							if(elName != 'streampeertube')
+
+								make();
 						}
-					});
+					},
+
+					clbk : function(p, element){
+
+						external = element;
+
+						videoUploadData = element.essenseData;
+
+						console.log('external', element)
+					}
+				});
 
 
-				}).catch(e => {
+				// self.app.peertubeHandler.api.user.auth(serverLink || self.app.peertubeHandler.active(), true)
+				//   .then(r => {
+					  
+					
 
-					console.log("E", e)
+				// }).catch(e => {
 
-					globalpreloader(false);
+				// 	console.log("E", e)
 
-					return sitemessage(e.text || "Undefined Error");
-				})
+				// 	globalpreloader(false);
+
+				// 	return sitemessage(e.text || "Undefined Error");
+				// })
 			},
 
 			url : function(clbk){

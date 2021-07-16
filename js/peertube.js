@@ -321,7 +321,7 @@ PeerTubePocketnet = function (app) {
     if (!meta) return Promise.reject(error('meta'));
 
     return self.api.proxy
-      .bestIfNeed(options.host && !options.best ? false : true)
+      .bestIfNeed(options.host && !options.best ? false : true, options.type)
       .then((host) => {
         if (host) {
           options.host = host;
@@ -454,18 +454,19 @@ PeerTubePocketnet = function (app) {
     },
 
     proxy: {
-      bestIfNeed: function (need) {
+      bestIfNeed: function (need, type) {
         if (!need) return Promise.resolve();
 
-        return this.best();
+        return this.best(type);
       },
 
-      best: function () {
+      best: function (type) {
+        console.log(type);
         return app.api
           .fetch('peertube/best')
           .then((data) => {
             if (!data.host) return Promise.reject(error('host'));
-
+            activehost = data.host;
             return Promise.resolve(data.host);
           })
           .catch((e) => {
@@ -481,7 +482,7 @@ PeerTubePocketnet = function (app) {
         return self.api.proxy
           .best()
           .then((host) => {
-            setactive(host);
+            // setactive(host);
             return Promise.resolve();
           })
           .catch((e) => {
@@ -546,44 +547,45 @@ PeerTubePocketnet = function (app) {
 
         if (!parameters.video) return Promise.reject(error('videonotselected'));
 
-        return self.api.videos.checkQuota(parameters.video.size).then((rme) => {
-          var videoName =
-            parameters.name || `${this.userName}:${new Date().toISOString()}`;
+        return self.api.videos
+          .checkQuota(parameters.video.size, { type: options.type })
+          .then((rme) => {
+            var videoName =
+              parameters.name || `${this.userName}:${new Date().toISOString()}`;
 
-          var data = {
-            privacy: 1,
-            'scheduleUpdate[updateAt]': new Date().toISOString(),
-            channelId: rme.channelId,
-            name: videoName,
-            videofile: parameters.video,
-          };
+            var data = {
+              privacy: 1,
+              'scheduleUpdate[updateAt]': new Date().toISOString(),
+              channelId: rme.channelId,
+              name: videoName,
+              videofile: parameters.video,
+            };
 
-          if (parameters.image) {
-            data.thumbnailfile = data.previewfile = dataURLtoFile(
-              parameters.image.data,
-              parameters.image.name,
-            );
-          }
-
-          return request('uploadVideo', data, options)
-            .then((r) => {
-              if (!r.video) return Promise.reject(error('uploaderror'));
-
-              return Promise.resolve(
-                self.composeLink(options.host, r.video.uuid),
+            if (parameters.image) {
+              data.thumbnailfile = data.previewfile = dataURLtoFile(
+                parameters.image.data,
+                parameters.image.name,
               );
-            })
-            .catch((e) => {
-              e.cancel = axios.isCancel(e);
+            }
+            return request('uploadVideo', data, options)
+              .then((r) => {
+                if (!r.video) return Promise.reject(error('uploaderror'));
 
-              return Promise.reject(e);
-            });
-        });
+                return Promise.resolve(
+                  self.composeLink(options.host, r.video.uuid),
+                );
+              })
+              .catch((e) => {
+                e.cancel = axios.isCancel(e);
+
+                return Promise.reject(e);
+              });
+          });
       },
 
       import: (parameters = {}, options = {}) =>
         self.api.videos
-          .checkQuota(0)
+          .checkQuota(0, { type: options.type })
           .then((rme) => ({
             ...parameters.data,
             channelId: rme.channelId,
@@ -607,7 +609,7 @@ PeerTubePocketnet = function (app) {
 
       live: (parameters = {}, options = {}) =>
         self.api.user
-          .me()
+          .me({ type: options.type })
           .then((userInfo) => {
             const videoName =
               parameters.name || `Stream:${new Date().toISOString()}`;
@@ -677,9 +679,9 @@ PeerTubePocketnet = function (app) {
           uuid: data.id,
         })),
 
-      checkQuota: function (size = 0) {
-        return self.api.user.me().then((rme) => {
-          return self.api.videos.quota().then((rqu) => {
+      checkQuota: function (size = 0, options = {}) {
+        return self.api.user.me(options).then((rme) => {
+          return self.api.videos.quota(options).then((rqu) => {
             const sizeNumbered = Number(size) || 0;
 
             const videoQuotaDaily = Number(rme.videoQuotaDaily) || 0;
@@ -709,8 +711,8 @@ PeerTubePocketnet = function (app) {
         });
       },
 
-      quota: function () {
-        return request('quotaUsed').then((r) => {
+      quota: function (options = {}) {
+        return request('quotaUsed', {}, options).then((r) => {
           if (typeof r.videoQuotaUsedDaily != 'undefined') {
             return Promise.resolve(r);
           }
@@ -727,8 +729,8 @@ PeerTubePocketnet = function (app) {
     },
 
     user: {
-      me: function () {
-        return request('me').then((r) => {
+      me: function (options = {}) {
+        return request('me', {}, options).then((r) => {
           var data = {
             channelId: deep(r, 'videoChannels.0.id'),
             videoQuotaDaily: deep(r, 'videoQuotaDaily'),
