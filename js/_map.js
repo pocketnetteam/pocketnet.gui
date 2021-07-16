@@ -1055,6 +1055,16 @@ __map =  {
 			anonimus : true,
 		},	
 
+		transactionview : {
+			uri : "transactionview",
+			href : "transactionview",
+			add : {
+				el : 'content'
+			},
+		
+			anonimus : true,
+		},	
+
 		//search
 
 		s : {

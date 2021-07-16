@@ -4,7 +4,7 @@ EXPOSE 8899 8099
 
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm i
 COPY . .
 
 WORKDIR /usr/src/app

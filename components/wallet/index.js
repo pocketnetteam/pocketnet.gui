@@ -2006,7 +2006,7 @@ var wallet = (function(){
 												sitemessage(self.app.localization.e('wssuccessfully'))
 
 
-												self.app.platform.matrixchat.transaction(d, essenseData.roomid)
+												//self.app.platform.matrixchat.transaction(d, essenseData.roomid)
 
 												if(essenseData.sendclbk) essenseData.sendclbk({
 													txid : d
@@ -2495,6 +2495,7 @@ var wallet = (function(){
 			send.parameters.source.value = self.app.settings.get(self.map.uri, 'source') || send.parameters.source.defaultValue
 
 			send.parameters.reciever.value = ''
+			send.parameters.reciever.disabled = false
 
 			send.parameters.fees.value = self.app.settings.get(self.map.uri, 'feesMode') || send.parameters.fees.defaultValue
 
@@ -2680,6 +2681,7 @@ var wallet = (function(){
 
 				initEvents();
 
+
 				if(essenseData.class) el.c.addClass(essenseData.class)
 
 				var executor = make
@@ -2688,7 +2690,7 @@ var wallet = (function(){
 
 				renders.main(function(){
 					executor(function(){
-
+						
 
 						console.log('_p', _p)
 						
@@ -2700,6 +2702,11 @@ var wallet = (function(){
 								send.parameters.amount.value = Number((_p.amount || '0').replace(/,/g,''))
 								send.parameters.reciever.value = _p.address || ""
 								send.parameters.message.value = _p.message || ""
+
+								if(_p.address){
+									send.parameters.reciever.disabled = true
+									console.log('send.parameters.reciever.disabled', send.parameters.reciever)
+								}
 
 								send.parameters.amount._onChange();
 

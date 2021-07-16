@@ -3492,120 +3492,124 @@
 						}
 					}
 
-					if(parameter.type == 'valuescustom' || parameter.autoSearch)
-					{
-						_el.find('.vc_iconWrapper').on('click', function(){
-							open()
+					if(!parameter.disabled){
 
-							if (parameter.autoSearch){
+						if(parameter.type == 'valuescustom' || parameter.autoSearch)
+						{
+							_el.find('.vc_iconWrapper').on('click', function(){
+								open()
 
-								setTimeout(function(){
-									input.focus();
-									bkp = input.val()
-									input.val('')
+								if (parameter.autoSearch){
 
-								}, 200)
-								
-							}
-						})
+									setTimeout(function(){
+										input.focus();
+										bkp = input.val()
+										input.val('')
 
-						_el.find('input').on('focus', function(){
-							$(this).select();
-						})
+									}, 200)
+									
+								}
+							})
 
-						
-					}
+							_el.find('input').on('focus', function(){
+								$(this).select();
+							})
 
-					if(parameter.type == 'values' && !parameter.autoSearch)
-					{
-						_el.find('.vc_textInput').on('click', function(){
-							open()
-						})
-					}
+							
+						}
 
-
-					_el.find('.vc_value').on('click', function(){
-						bkp = null;
-
-						var value = $(this).attr('value');
-
-							input.val(value);
-							input.change();
-
-						take().removeClass('opened');
-						take().removeClass('error')
-					})
-
-					_el.find('.vc_selected_value_icon').on('click', function(){
-						var value = $(this).closest('.vc_selected_value').attr('value');
-
-						parameter.set(value);
-
-						_el.parent().html(parameter.input())
-
-						ParametersLive([parameter], el, p)
-					})
+						if(parameter.type == 'values' && !parameter.autoSearch)
+						{
+							_el.find('.vc_textInput').on('click', function(){
+								open()
+							})
+						}
 
 
-					if (parameter.autoSearch){
-
-						input.focus(function(){
-							this.select();
-						});
-
-						input.on('keyup', function(e){
+						_el.find('.vc_value').on('click', function(){
 							bkp = null;
 
-							var value = $(this).val().toLowerCase(); 
+							var value = $(this).attr('value');
 
-							if(!take().hasClass('opened')){
-								open();		
-							}
+								input.val(value);
+								input.change();
 
-							if ((e.keyCode || e.which) == 13) {
+							take().removeClass('opened');
+							take().removeClass('error')
+						})
 
-								var firstel = _el.find('.vc_value:not(.hidden)');
+						_el.find('.vc_selected_value_icon').on('click', function(){
+							var value = $(this).closest('.vc_selected_value').attr('value');
 
-								if (firstel.length > 0){
-									value = firstel.attr('value')
+							parameter.set(value);
+
+							_el.parent().html(parameter.input())
+
+							ParametersLive([parameter], el, p)
+						})
+
+
+						if (parameter.autoSearch){
+
+							input.focus(function(){
+								this.select();
+							});
+
+							input.on('keyup', function(e){
+								bkp = null;
+
+								var value = $(this).val().toLowerCase(); 
+
+								if(!take().hasClass('opened')){
+									open();		
 								}
 
-								$(this).val(value);
-								$(this).change();
+								if ((e.keyCode || e.which) == 13) {
 
+									var firstel = _el.find('.vc_value:not(.hidden)');
 
-								return false;
-								
-							}	
-
-							if(!value){
-								_el.find('.vc_value').removeClass('hidden')
-							}
-
-							else
-							{
-
-								$.each(_el.find('.vc_value'), function(){
-
-									var el = $(this);
-
-									var _value = el.attr('value').toLowerCase();
-									var text = el.text().toLowerCase();
-
-									if (_value.indexOf(value) > -1 || text.indexOf(value) > -1){
-										el.removeClass('hidden')
+									if (firstel.length > 0){
+										value = firstel.attr('value')
 									}
 
-									else
-									{
-										el.addClass('hidden')
-									}
+									$(this).val(value);
+									$(this).change();
+
+
+									return false;
+									
+								}	
+
+								if(!value){
+									_el.find('.vc_value').removeClass('hidden')
+								}
+
+								else
+								{
+
+									$.each(_el.find('.vc_value'), function(){
+
+										var el = $(this);
+
+										var _value = el.attr('value').toLowerCase();
+										var text = el.text().toLowerCase();
+
+										if (_value.indexOf(value) > -1 || text.indexOf(value) > -1){
+											el.removeClass('hidden')
+										}
+
+										else
+										{
+											el.addClass('hidden')
+										}
 
 
 
-								})
-							}
-						})
+									})
+								}
+							})
+						}
+
 					}
 
 					var _change = function(){
@@ -4600,9 +4604,9 @@
 				if (self.type == 'values' && !self.autoSearch)
 				{
 					disabled = 'disabled';
-
-					
 				}
+
+				if(self.disabled) disabled = 'disabled'
 
 				if (self.type == 'values' || self.type == 'valuescustom'){
 					displayValue = self.labelByValue(self.value)

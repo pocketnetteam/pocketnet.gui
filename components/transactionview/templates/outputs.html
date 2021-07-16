@@ -1,0 +1,30 @@
+
+<% if(!outputs.length) {%>
+
+    <div class="empty">
+        Empty
+    </div>
+
+<% } else { %> 
+
+    <% _.each(outputs, function(output){ 
+        
+        var address = actions.oaddress(output)
+
+        var h = ''
+        
+        if(adresses.inputs.indexOf(address) > -1 && adresses.another.length) h = 'hidden'
+        
+        %>
+        <div class="output <%-h%>">
+            <div class="info" address="<%- address %>">
+                
+            </div>
+
+            <div class="amount">
+                <i class="fas fa-plus-circle"></i> <%- app.platform.mp.coin(output.value) %> PKOIN
+            </div>
+        </div>
+    <% }) %>
+
+<% } %> 

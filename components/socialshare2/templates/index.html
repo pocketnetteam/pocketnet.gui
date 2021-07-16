@@ -13,15 +13,22 @@
 		<div class="directWrapper">
 			<div class="wrk">
 				<div class="flexWrapper">
-					<div class="url">
+
+					<div class="chat">
 						<button class="button bright medium">
+							Send via messenger
+						</button>
+					</div>
+
+
+					<div class="url">
+						<button class="button ghost medium">
 							Copy direct Link
 						</button>
 					</div>
 					<% if(typeof eparameters != 'undefined' && state) {%>
 						<div class="includeRefWrapper">
-							
-							<span><%= eparameters.reflink.name %></span> <%= eparameters.reflink.input({init : true}) %> 
+							<%= eparameters.reflink.input({init : true}) %>  <span><%= eparameters.reflink.name %></span>
 						</div>
 					<% } %>
 				</div>

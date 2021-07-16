@@ -1,0 +1,66 @@
+<div id="<%-module.map.id%>">
+
+	<div class="workd">
+		<div class="scaption">
+			<span><%=e('donationwela')%></span>
+		</div>
+
+		<% if(!tx) {%>
+
+			<div class="empty">
+				<div class="table">
+					<div>
+						<%=e('transactionnotfound')%>
+					</div>
+				</div>
+			</div>
+
+		<% } else { %> 
+			
+			<div class="transactionContent">
+
+				<!--<div class="type">
+					<span><%-type%></span>
+				</div>-->
+				<% if(tx.confirmations || tx.time) {%>
+					<div class="line">
+						<% if(tx.time) {%>
+						<div class="date">
+							<span  class="realtime" time="<%-new Date(Number(tx.time * 1000))%>"><%- app.reltime(new Date(Number(tx.time * 1000))) %></span>
+						</div>
+
+						<% } %>
+						<% if(tx.confirmations) {%>
+						<div class="confirmations">
+							<span><b><%- tx.confirmations %></b> confirmations</span> <i class="far fa-check-circle"></i>
+						</div>
+						
+						<% } %>
+
+					</div>
+				<% } %>
+
+				<div class="io">
+					<div class="inputs">
+					</div>
+
+					<div class="ioarrow">
+						<i class="far fa-arrow-alt-circle-down"></i>
+					</div>
+
+					<div class="outputs">
+					</div>
+				</div>
+
+				
+
+				<div class="txid">
+					<i class="fas fa-hashtag"></i> <span class="copytext"><%- tx.txid %></span> 
+					<a href="https://pocketnet.app/blockexplorer/transaction/<%- tx.txid %>" target="_blank"><i class="fas fa-link"></i></a>
+				</div>
+
+			</div>
+			
+		<% } %>
+	</div>
+</div>

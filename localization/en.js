@@ -1075,3 +1075,6 @@ ____loclib.e133453 = "invite you in chat"
 
 
 ____loclib.createnewcontinue = "Continue creating account";
+
+
+____loclib.transactionnotfound = "Transaction not found";	
