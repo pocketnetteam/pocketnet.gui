@@ -243,7 +243,7 @@ var Node = function(options, manager){
 
             ///
 
-            if (status.fork && difference > 5) return 0
+            if (status.fork && difference > 5 || difference > 100) return 0
             if(!s.success || !lastblock.height) return 0
             if (self.testing) return 0
             ///
