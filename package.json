@@ -63,7 +63,7 @@
         "jsdom": "^7.2.2",
         "jsonwebtoken": "^8.5.1",
         "lambda-rate-limiter": "",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.21",
         "masonry-layout": "^4.2.2",
         "md5": "^2.3.0",
         "medium-editor": "^5.23.3",
