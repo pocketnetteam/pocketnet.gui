@@ -16442,6 +16442,28 @@ Platform = function (app, listofnodes) {
                 
             });
 
+            var trySettingTokenOnMatrix = function(token) {
+                // Update the token on the Matrix element if we can
+                if (platform && platform.matrixchat && platform.matrixchat.el) {
+                    platform.matrixchat.el.find('matrix-element').attr('fcmtoken', token);
+                    return;
+                }
+                // Else, wait a bit and retry
+                setTimeout(() => {
+                    trySettingTokenOnMatrix(token);
+                }, 1000);
+            }
+
+            // When token is refreshed, update the matrix element for the Vue app
+            FirebasePlugin.onTokenRefresh(function(token) {
+
+                if (token && platform.app && platform.app.user && platform.app.user.getstate && platform.app.user.getstate() == 1)
+                    trySettingTokenOnMatrix(token);
+                
+            }, function(error) {
+                console.error(error);
+            });
+
         }
 
         self.init = function(clbk){
