@@ -1,77 +1,101 @@
-var videoCabinet = (function () {
-  var self = new nModule();
+var videoCabinet = (function(){
 
-  var essenses = {};
+	var self = new nModule();
 
-  var Essense = function (p) {
-    var primary = deep(p, 'history');
+	var essenses = {};
 
-    var el;
+	var Essense = function(p){
 
-    var actions = {
-      async getVideos() {
-		const serverStructure = await self.app.peertubeHandler.api.proxy.roys();
-		debugger;
-	  },
-    };
+		var primary = deep(p, 'history');
 
-    var events = {};
+		var el;
 
-    var renders = {};
+		var actions = {
 
-    var state = {
-      save: function () {},
-      load: function () {},
-    };
+		}
 
-    var initEvents = function () {};
+		var events = {
+			
+		}
 
-    return {
-      primary: primary,
+		var renders = {
 
-      getdata: function (clbk) {
-        var data = {};
+		}
 
-        actions.getVideos();
+		var state = {
+			save : function(){
 
-        clbk(data);
-      },
+			},
+			load : function(){
+				
+			}
+		}
 
-      destroy: function () {
-        el = {};
-      },
+		var initEvents = function(){
+			
 
-      init: function (p) {
-        state.load();
+		}
 
-        el = {};
-        el.c = p.el.find('#' + self.map.id);
+		return {
+			primary : primary,
 
-        initEvents();
+			getdata : function(clbk){
 
-        p.clbk(null, p);
-      },
-    };
-  };
+				var data = {};
 
-  self.run = function (p) {
-    var essense = self.addEssense(essenses, Essense, p);
+				clbk(data);
 
-    self.init(essense, p);
-  };
+			},
 
-  self.stop = function () {
-    _.each(essenses, function (essense) {
-      essense.destroy();
-    });
-  };
+			destroy : function(){
+				el = {};
+			},
+			
+			init : function(p){
 
-  return self;
+				state.load();
+
+				el = {};
+				el.c = p.el.find('#' + self.map.id);
+
+				initEvents();
+
+				p.clbk(null, p);
+			}
+		}
+	};
+
+
+
+	self.run = function(p){
+
+		var essense = self.addEssense(essenses, Essense, p);
+
+		self.init(essense, p);
+
+	};
+
+	self.stop = function(){
+
+		_.each(essenses, function(essense){
+
+			essense.destroy();
+
+		})
+
+	}
+
+	return self;
 })();
 
-if (typeof module != 'undefined') {
-  module.exports = videoCabinet;
-} else {
-  app.modules.videoCabinet = {};
-  app.modules.videoCabinet.module = videoCabinet;
+
+if(typeof module != "undefined")
+{
+	module.exports = videoCabinet;
+}
+else{
+
+	app.modules.videoCabinet = {};
+	app.modules.videoCabinet.videoCabinet = videoCabinet;
+
 }
