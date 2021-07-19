@@ -1,170 +1,101 @@
-var videoCabinet = (function () {
-  var self = new nModule();
+var videoCabinet = (function(){
 
-  var essenses = {};
+	var self = new nModule();
 
-  var videoServers = {};
+	var essenses = {};
 
-  var peertubeServers = {};
+	var Essense = function(p){
 
-  var perServerCounter = 10;
+		var primary = deep(p, 'history');
 
-  var startingPosition = 0;
+		var el;
 
-  var Essense = function (p) {
-    var primary = deep(p, 'history');
+		var actions = {
 
-    var el;
+		}
 
-    var actions = {
-      async getHosts() {
-        const serverStructureHosts = await self.app.peertubeHandler.api.proxy
-          .roys()
-          .catch(() => ({}));
+		var events = {
+			
+		}
 
-        Object.entries(serverStructureHosts).forEach(
-          ([name, bestHost]) =>
-            (videoServers[name] = { ...videoServers[name], bestHost }),
-        );
+		var renders = {
 
-        return Promise.resolve(serverStructureHosts);
-      },
+		}
 
-      async getVideos(server) {
-        const options = {
-          start: peertubeServers[server].start,
-          count: perServerCounter,
-        };
+		var state = {
+			save : function(){
 
-        return self.app.peertubeHandler.api.videos
-          .getMyAccountVideos(options, {
-            host: server,
-          })
-          .then((data = []) => {
-            peertubeServers[server].start += perServerCounter;
-            peertubeServers[server].videos = [...data];
+			},
+			load : function(){
+				
+			}
+		}
 
-            return data;
-          })
-          .catch(() => {
-            sitemessage(`Error loading ${server}`);
-            return [];
-          });
-      },
-    };
+		var initEvents = function(){
+			
 
-    var events = {};
+		}
 
-    var renders = {
-      videos() {
-        const videos = Object.values(peertubeServers)
-          .map((value) => value.videos)
-          .filter((video) => video)
-          .flat();
+		return {
+			primary : primary,
 
-        self.shell(
-          {
-            name: 'videoList',
-            el: el.videoContainer,
-            data: {
-              videos,
-            },
-          },
-          function (p) {},
-        );
-      },
+			getdata : function(clbk){
 
-      quota() {
-        self.shell(
-          {
-            name: 'quota',
-            el: el.quotaContainer,
-            data: {},
-          },
-          function (p) {},
-        );
-      },
-    };
+				var data = {};
 
-    var state = {
-      save: function () {},
-      load: function () {},
-    };
+				clbk(data);
 
-    var initEvents = function () {};
+			},
 
-    return {
-      primary: primary,
+			destroy : function(){
+				el = {};
+			},
+			
+			init : function(p){
 
-      getdata: function (clbk) {
-        var data = {};
+				state.load();
 
-        actions
-          .getHosts()
-          .then((hosts = {}) => {
-            const servers = Object.values(hosts).flat();
+				el = {};
+				el.c = p.el.find('#' + self.map.id);
 
-            servers.forEach(
-              (server) =>
-                (peertubeServers[server] = {
-                  videos: null,
-                  start: 0,
-                }),
-            );
+				initEvents();
 
-            const serverPromises = servers.map((server) =>
-              actions.getVideos(server),
-            );
+				p.clbk(null, p);
+			}
+		}
+	};
 
-            return Promise.allSettled(serverPromises);
-          })
-          .then((res) => {
-            clbk(data);
-          })
-          .catch(() => clbk(data));
-      },
 
-      destroy: function () {
-        el = {};
-      },
 
-      init: function (p) {
-        state.load();
+	self.run = function(p){
 
-        el = {};
-        el.c = p.el.find('#' + self.map.id);
+		var essense = self.addEssense(essenses, Essense, p);
 
-        el.videoContainer = el.c.find('.videoContainer');
-        el.quotaContainer = el.c.find('.quotaContainer');
+		self.init(essense, p);
 
-        initEvents();
+	};
 
-        renders.videos();
-        renders.quota();
+	self.stop = function(){
 
-        p.clbk(null, p);
-      },
-    };
-  };
+		_.each(essenses, function(essense){
 
-  self.run = function (p) {
-    var essense = self.addEssense(essenses, Essense, p);
+			essense.destroy();
 
-    self.init(essense, p);
-  };
+		})
 
-  self.stop = function () {
-    _.each(essenses, function (essense) {
-      essense.destroy();
-    });
-  };
+	}
 
-  return self;
+	return self;
 })();
 
-if (typeof module != 'undefined') {
-  module.exports = videoCabinet;
-} else {
-  app.modules.videoCabinet = {};
-  app.modules.videoCabinet.module = videoCabinet;
+
+if(typeof module != "undefined")
+{
+	module.exports = videoCabinet;
+}
+else{
+
+	app.modules.videoCabinet = {};
+	app.modules.videoCabinet.videoCabinet = videoCabinet;
+
 }
