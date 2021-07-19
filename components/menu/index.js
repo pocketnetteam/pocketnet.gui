@@ -100,6 +100,8 @@ var menu = (function(){
 			},
 			ahnotify : function(el, c, type){
 
+				console.log('el, c, type', el, c, type, notifications)
+
 				if(!c) c = 0
 
 				if(type) notifications[type] = c
@@ -115,7 +117,7 @@ var menu = (function(){
 				}
 
 				if (el)
-					actions.ah(el, cnt)
+					actions.ah(el, notifications[type])
 
 				if (cordovabadge) cordovabadge.set(cnt)
 
@@ -427,7 +429,7 @@ var menu = (function(){
 			savecross : {
 				init : function(el){
 
-					var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
+					/*var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
 
 					actions.ah(el, n)
 
@@ -439,7 +441,7 @@ var menu = (function(){
 							actions.ah(el, n)
 							
 						}
-					}
+					}*/
 
 
 					
