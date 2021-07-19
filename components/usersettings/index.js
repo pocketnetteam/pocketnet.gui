@@ -56,17 +56,52 @@ var usersettings = (function(){
 					var input = p.el.find('.parameterMaketWrapper[parameter=telegram] input')
 
 					
-					input.on('blur', function(){
+					input.on('change', function(e){
 
-						renders.options();
+
+						var meta = self.sdk.usersettings.meta
+
+						var value = e.target.value;
+
+						if (meta.tgfrom[value] && meta.tgfrom[value].possibleValues){
+
+							meta.tgfrom.possibleValues = meta.tgfrom[value].possibleValues;
+							meta.tgfrom.possibleValuesLabels = meta.tgfrom[value].possibleValuesLabels;
+							meta.tgfrom.value = meta.tgfrom[value].value;
+
+						} else {
+
+							meta.tgfrom.possibleValues = [];
+							meta.tgfrom.possibleValuesLabels = [];
+							meta.tgfrom.value = '';
+						}
+
+						if (meta.tgto[value] && meta.tgto[value].possibleValues){
+
+							meta.tgto.possibleValues = meta.tgto[value].possibleValues;
+							meta.tgto.possibleValuesLabels = meta.tgto[value].possibleValuesLabels;
+							meta.tgto.value = meta.tgto[value].value;
+
+						} else {
+
+							meta.tgto.possibleValues = [];
+							meta.tgto.possibleValuesLabels = [];
+							meta.tgto.value = '';
+							
+						}
+						
+						composed = self.app.platform.sdk.usersettings.compose(make)
+
+						self.sdk.usersettings.save();
+						make();
+
+						// make();
 
 					})
 
 					var value = input.val();
 
 					self.app.platform.sdk.system.get.telegramGetMe(value, true, make, add);
-
-
 
 					// const bot = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "no z"
 					// self.app.platform.sdk.system.get.telegramGetMe(bot);
@@ -183,13 +218,11 @@ var usersettings = (function(){
 				div.classList.add("iWrapper");
 				const i = document.createElement('i');
 				const telegramInputWrapper = document.querySelector("div[parameter='telegram']");
-				div.classList.add("iWrapper");
 
 				if (telegramInputWrapper) {
 
 					telegramInputWrapper.setAttribute("style", "display: flex");
 
-					// div.setAttribute("style", `color:${color}; display:inline-block; font-size:30px; padding: 5px; margin-left: 1em`);
 					div.classList = 'tokenResult ' + color
 					i.classList.add("fa");
 					i.classList.add(icon);

@@ -48,8 +48,6 @@ var comments = (function(){
 
 				if (address == self.app.platform.sdk.address.pnet().address){
 
-					console.log('value', value, err)
-
 					if(!value){
 
 						if(err != 40){
