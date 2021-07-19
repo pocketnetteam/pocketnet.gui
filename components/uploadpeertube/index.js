@@ -74,7 +74,9 @@ var uploadpeertube = (function () {
           data.name = videoName;
         }
 
-        var options = {};
+        var options = {
+          type: 'uploadVideo',
+        };
 
         options.progress = function (percentComplete) {
           var formattedProgress = (percentComplete * 0.9).toFixed(2);
@@ -116,7 +118,7 @@ var uploadpeertube = (function () {
         };
 
         el.importUrl.addClass('hidden');
-
+        
         self.app.peertubeHandler.api.videos
           .upload(data, options)
           .then((response) => {
@@ -181,7 +183,9 @@ var uploadpeertube = (function () {
             el.uploadButton.prop('disabled', true);
             el.uploadProgress.removeClass('hidden');
 
-            var options = {};
+            var options = {
+              type: 'importVideo',
+            };
 
             options.progress = function (percentComplete) {
               var formattedProgress = (percentComplete * 0.9).toFixed(2);
