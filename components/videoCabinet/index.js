@@ -96,6 +96,6 @@ if(typeof module != "undefined")
 else{
 
 	app.modules.videoCabinet = {};
-	app.modules.videoCabinet.videoCabinet = videoCabinet;
+	app.modules.videoCabinet.module = videoCabinet;
 
 }
