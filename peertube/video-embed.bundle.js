@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=9453"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=4263"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42337,129 +42337,7 @@ function segmentUrlBuilderFactory(redundancyUrlManager) {
 // EXTERNAL MODULE: ./src/assets/player/p2p-media-loader/segment-validator.ts
 var segment_validator = __webpack_require__(72);
 
-// CONCATENATED MODULE: ./src/assets/player/storage.ts
-
-function initIndexedDb() {
-    return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-        return new Promise((resolve, reject) => {
-            const request = window.indexedDB.open("assets", 1);
-            request.onupgradeneeded = (event) => {
-                console.info("Upgrading from", event.oldVersion, "to", event.newVersion);
-                const db = event.target.result;
-                switch (event.oldVersion) {
-                    case 0:
-                        {
-                            // create DB
-                            db.createObjectStore("assets", {
-                                keyPath: ["requestUri", "requestRange", "masterSwarmId"],
-                            });
-                            db.createObjectStore("segmentsData", { keyPath: ["id", "masterSwarmId"] });
-                            const segments = db.createObjectStore("segments", {
-                                keyPath: ["id", "masterSwarmId"],
-                            });
-                            segments.createIndex("masterSwarmId", "masterSwarmId", { multiEntry: true });
-                        }
-                        break;
-                    default:
-                        throw new Error("unknown database version: " + event.oldVersion);
-                }
-            };
-            request.onerror = (event) => reject(event);
-            request.onsuccess = (event) => resolve(event.target.result);
-        });
-    });
-}
-class IdbAssetsStorage {
-    constructor(db) {
-        this.db = db;
-    }
-    storeAsset(asset) {
-        return new Promise((resolve, reject) => {
-            const request = this.db
-                .transaction(["assets"], "readwrite")
-                .objectStore("assets")
-                .put(asset.requestRange === undefined ? Object.assign(Object.assign({}, asset), { requestRange: "" }) : asset);
-            request.onerror = (event) => reject(event);
-            request.onsuccess = (event) => resolve(event);
-        });
-    }
-    getAsset(requestUri, requestRange, masterSwarmId) {
-        return new Promise((resolve, reject) => {
-            const request = this.db
-                .transaction(["assets"])
-                .objectStore("assets")
-                .get([requestUri, requestRange === undefined ? "" : requestRange, masterSwarmId]);
-            request.onerror = (event) => reject(event);
-            request.onsuccess = (event) => resolve(event.target.result);
-        });
-    }
-    destroy() { }
-}
-class IdbSegmentsStorage {
-    constructor(db) {
-        this.db = db;
-    }
-    storeSegment(segment) {
-        return new Promise((resolve, reject) => {
-            const segmentWithoutData = Object.assign({}, segment);
-            delete segmentWithoutData.data;
-            const transaction = this.db.transaction(["segments", "segmentsData"], "readwrite");
-            transaction.objectStore("segments").put(segmentWithoutData).onsuccess = () => {
-                transaction.objectStore("segmentsData").put({
-                    id: segment.id,
-                    masterSwarmId: segment.masterSwarmId,
-                    data: segment.data,
-                });
-            };
-            transaction.onerror = (event) => reject(event);
-            transaction.oncomplete = (event) => resolve(event);
-        });
-    }
-    getSegmentsMap(masterSwarmId) {
-        return new Promise((resolve, reject) => {
-            const cursor = this.db
-                .transaction(["segments"])
-                .objectStore("segments")
-                .index("masterSwarmId")
-                .openCursor(IDBKeyRange.only(masterSwarmId));
-            const result = new Map();
-            cursor.onerror = (event) => reject(event);
-            cursor.onsuccess = (event) => {
-                const cursor = event.target.result;
-                if (cursor) {
-                    result.set(cursor.value.id, { segment: cursor.value });
-                    cursor.continue();
-                }
-                else {
-                    resolve(result);
-                }
-            };
-        });
-    }
-    getSegment(id, masterSwarmId) {
-        return new Promise((resolve, reject) => {
-            const transaction = this.db.transaction(["segments", "segmentsData"]);
-            let segment;
-            transaction.objectStore("segments").get([id, masterSwarmId]).onsuccess = (event) => {
-                segment = event.target.result;
-                if (segment === undefined) {
-                    return;
-                }
-                transaction.objectStore("segmentsData").get([id, masterSwarmId]).onsuccess = (event) => {
-                    segment.data = event.target.result.data;
-                };
-            };
-            transaction.onerror = (event) => reject(event);
-            transaction.oncomplete = () => resolve(segment);
-        });
-    }
-    clean() { }
-    destroy() { }
-}
-
-
 // CONCATENATED MODULE: ./src/assets/player/peertube-player-manager.ts
-
 
 
 
@@ -42515,7 +42393,7 @@ class peertube_player_manager_PeertubePlayerManager {
                 ]);
             }
             console.log('initvideo');
-            this.db = yield initIndexedDb();
+            //this.db = await initIndexedDb();
             const videojsOptions = this.getVideojsOptions(mode, options, p2pMediaLoader);
             // await TranslationsManager.loadLocaleInVideoJS(options.common.serverUrl, options.common.language, videojs)
             const self = this;
@@ -42688,8 +42566,8 @@ class peertube_player_manager_PeertubePlayerManager {
             console.log('We are on a cellular connection: disabling seeding.');
             consumeOnly = true;
         }
-        const assetsStorage = new IdbAssetsStorage(this.db);
-        const segmentsStorage = new IdbSegmentsStorage(this.db);
+        /*const assetsStorage = new IdbAssetsStorage(this.db);
+        const segmentsStorage = new IdbSegmentsStorage(this.db);*/
         console.log('p2pMediaLoaderModule', p2pMediaLoaderModule);
         const p2pMediaLoaderConfig = {
             loader: {
