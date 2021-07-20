@@ -685,6 +685,11 @@ var filluserfast = (function(){
 
 				line.width(w * _.toArray(steps).length)
 			
+			},
+			onLoginButtonClicked: function() {
+				setTimeout(() => {
+					if (el.closeButton) el.closeButton.click();
+				}, 100);
 			}
 		}
 
@@ -950,6 +955,8 @@ var filluserfast = (function(){
 		var initEvents = function(){
 			
 			window.addEventListener('resize', events.width)
+
+			if (el.loginButton) el.loginButton.addEventListener('click', events.onLoginButtonClicked);
 		}
 
 		var make = function(){
@@ -1042,6 +1049,8 @@ var filluserfast = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.panel = el.c.find('.panelWrapper')
+				el.loginButton = el.c.find('.hasaccount a')[0];
+				el.closeButton = p.el.closest('.authwindow').find('._close');
 
 				initialParameters = p;
 
