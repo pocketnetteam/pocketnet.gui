@@ -5976,6 +5976,8 @@
 							class : "one"
 						})
 
+						if(clbk) clbk(null, error)
+
 					});
 				}, function (error) {
 
@@ -5983,6 +5985,8 @@
 						html : "Error: Could not create file, " + error.code,
 						class : "one"
 					})
+
+					if(clbk) clbk(null, error)
 
 				});
 
@@ -5992,6 +5996,8 @@
 					html : "Error: access to download folder, " + error.code,
 					class : "one"
 				})
+
+				if(clbk) clbk(null, error)
 
 			})
 

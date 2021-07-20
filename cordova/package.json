@@ -36,6 +36,7 @@
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-device-orientation": "^1.0.7",
+    "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-firebasex": "^11.0.3",
     "cordova-plugin-network-information": "^1.2.1",
     "cordova-plugin-statusbar": "^2.4.3",
@@ -58,12 +59,7 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-badge": {},
-      "cordova-plugin-gallery-refresh": {
-        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
-        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
-        "CAMERA_USAGE_DESCRIPTION": " ",
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
-      },
+      "cordova-plugin-gallery-refresh": {},
       "cordova-plugin-keyboard": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-firebasex": {
@@ -95,7 +91,8 @@
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-buildinfo": {},
       "cordova-plugin-inappbrowser": {},
-      "@globules-io/cordova-plugin-ios-xhr": {}
+      "@globules-io/cordova-plugin-ios-xhr": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "android",

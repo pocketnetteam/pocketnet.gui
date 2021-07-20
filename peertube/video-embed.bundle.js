@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1922"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=5819"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -43465,13 +43465,9 @@ class embed_PeerTubeEmbed {
     }
     isTranscodingStatusMessage() {
         // @ts-ignore
-        let appconnection = window.checkConnection ? checkConnection() : '';
+        let appconnection = window.checkConnection ? window.checkConnection() : '';
         // @ts-ignore
         let type = appconnection || (navigator.connection || navigator.mozConnection || navigator.webkitConnection || {}).type || '';
-        console.log('type', type);
-        //let type = connection && connection.type ? connection.type : '';
-        //if (type == 'cellular') {
-        //let type = checkConnection ? checkConnection() : '' 
         if (type == '2G' || type == '3G' || type == '4G' || type == '4G' || type == 'cellular') {
             let exists_min_resolution = false;
             let all_resolutions = [];
@@ -43514,7 +43510,7 @@ class embed_PeerTubeEmbed {
             this.wrapperElement.appendChild(this.playerElement);
             this.loadParams(videoInfo);
             this.liveStatusMessage();
-            this.isTranscodingStatusMessage();
+            //this.isTranscodingStatusMessage()
             const options = {
                 common: {
                     // Autoplay in playlist mode
