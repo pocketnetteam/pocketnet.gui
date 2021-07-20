@@ -31,7 +31,7 @@ NFT.crypto = {
 
     aeswc : {
         keys : function(str){
-            var mypbkdf2 = new PBKDF2(key, 'NFT.crypto.aeswc', 64, 128);
+            var mypbkdf2 = new PBKDF2(str, 'NFT.crypto.aeswc', 64, 128);
 
             return new Promise((resolve, reject) => {
                 

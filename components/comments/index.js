@@ -48,8 +48,6 @@ var comments = (function(){
 
 				if (address == self.app.platform.sdk.address.pnet().address){
 
-					console.log('value', value, err)
-
 					if(!value){
 
 						if(err != 40){
@@ -1170,8 +1168,7 @@ var comments = (function(){
 
 				
 
-			},
-
+			}
 
 		}
 
@@ -1316,6 +1313,7 @@ var comments = (function(){
 							clbk(this, _p.el.find('.emojionearea-editor'));
 
 					}
+
 				}
 			});
 
@@ -1355,6 +1353,53 @@ var comments = (function(){
 			_p.el.find('.closeAnswer').on('click', function(){
 				actions.removeForm(p.id || '0')
 			})
+
+			_p.el.find('.emojionearea-editor').pastableContenteditable();
+
+			_p.el.find('.emojionearea-editor').on('pasteImage', function (ev, data){
+
+				var id = actions.getid(_p.el.find('.postbody'))
+
+				console.log('p.el', _p.el)
+				topPreloader(100)
+
+				resize(data.dataURL, 1920, 1080, function(resized){
+					var r = resized.split(',');
+	
+					if (r[1]){
+	
+						var r  = currents[id].images.set(resized)
+
+						if(!r){
+							sitemessage(errors.images)
+						}
+						else
+						{
+							if (renders.images)
+								renders.images(id, _p);
+						}
+	
+					}
+					else{
+						sitemessage("Image upload error")
+					}
+
+					
+				
+				})
+
+
+			}).on('pasteImageStart', function(){
+
+				topPreloader(30)
+
+			}).on('pasteImageError', function(ev, data){
+
+				 topPreloader(100)
+
+			})
+
+
 		}
 
 		var renders = {
@@ -2457,3 +2502,4 @@ else{
 	app.modules.comments.module = comments;
 
 }
+

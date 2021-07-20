@@ -3665,8 +3665,6 @@
 							ParametersLive([parameter], el, p)
 
 							return
-
-							console.log('value', value, parameter.labelToInput(label))
 						}
 						else
 						{
@@ -4077,7 +4075,6 @@
 						_el.addClass('error')
 					}
 
-					console.log("VALUE", value)
 
 					parameter.set(value)
 				}
@@ -5979,6 +5976,8 @@
 							class : "one"
 						})
 
+						if(clbk) clbk(null, error)
+
 					});
 				}, function (error) {
 
@@ -5986,6 +5985,8 @@
 						html : "Error: Could not create file, " + error.code,
 						class : "one"
 					})
+
+					if(clbk) clbk(null, error)
 
 				});
 
@@ -5995,6 +5996,8 @@
 					html : "Error: access to download folder, " + error.code,
 					class : "one"
 				})
+
+				if(clbk) clbk(null, error)
 
 			})
 
@@ -10608,6 +10611,18 @@ stringEqTrig = function(s1, s2){
 	return c / m;
 
 
+}
+
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 /* */
 
