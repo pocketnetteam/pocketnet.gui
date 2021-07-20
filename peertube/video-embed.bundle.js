@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3247"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=9453"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42514,6 +42514,7 @@ class peertube_player_manager_PeertubePlayerManager {
                     Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(9), __webpack_require__.e(3), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, 520))
                 ]);
             }
+            console.log('initvideo');
             this.db = yield initIndexedDb();
             const videojsOptions = this.getVideojsOptions(mode, options, p2pMediaLoader);
             // await TranslationsManager.loadLocaleInVideoJS(options.common.serverUrl, options.common.language, videojs)
@@ -42528,10 +42529,11 @@ class peertube_player_manager_PeertubePlayerManager {
                                 self.maybeFallbackToWebTorrent(mode, player, options);
                             alreadyFallback = true;
                         });
-                        player.one('error', () => {
+                        player.one('error', (e) => {
                             if (!alreadyFallback)
                                 self.maybeFallbackToWebTorrent(mode, player, options);
                             alreadyFallback = true;
+                            console.log('e', e);
                         });
                     }
                     player.one('play', () => {
@@ -43263,6 +43265,7 @@ class embed_PeerTubeEmbed {
                 yield this.initCore(videoId, parameters);
             }
             catch (e) {
+                console.log("ER", e);
             }
         });
     }
@@ -43410,6 +43413,7 @@ class embed_PeerTubeEmbed {
         });
     }
     handleError(err, translations) {
+        console.error(err);
         let is_transcoding = this.isTranscodingStatusMessage();
         if (is_transcoding)
             return;
