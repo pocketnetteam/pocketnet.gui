@@ -488,6 +488,15 @@ var Node = function(options, manager){
         return Promise.resolve()
     }
 
+    self.checkParametersS = function(){
+
+        if(!f.validateHost(self.host)) { return 'validateHost'}
+        if(!self.port) return 'port'
+        if(!self.ws) return 'ws'
+        
+        return null
+    }
+
     self.check = function(){
 
         return self.checkParameters().then(r => {
@@ -506,7 +515,6 @@ var Node = function(options, manager){
 
         return self.rpcs('getPeerInfo').then(result => {
 
-            console.log('result', result, self.export())
 
             var nodes = _.map(result || [], function(peer){
 
@@ -521,6 +529,10 @@ var Node = function(options, manager){
 
                 return node
 
+            })
+
+            nodes = _.filter(nodes, function(node){
+                return !node.checkParametersS()
             })
 
             nodes = _.uniq(nodes, function(n){
