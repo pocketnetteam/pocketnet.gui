@@ -167,7 +167,7 @@ var instance = function (host, Roy) {
   self.init = function () {
     inited = true;
 
-    statsRequest();
+    statsRequest().catch(e => {})
   };
 
   self.export = function () {
