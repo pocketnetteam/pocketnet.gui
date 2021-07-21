@@ -18,9 +18,6 @@ var Wallet = function(p){
     var TXFEE = 1
     var smulti = 100000000
 
-    self.kit = {
-        
-    }
 
     self.patterns = {
         ip : function(queueobj, all){
@@ -106,6 +103,8 @@ var Wallet = function(p){
             
     }
 
+    
+
     self.destroy = function(){
         addresses = {}
 
@@ -123,33 +122,16 @@ var Wallet = function(p){
     }
 
     self.init = function(){
+
+        console.log("INIT")
      
         _.each(p.addresses, function(options, key){
 
             addresses[key] = self.kit.addressobj(options, key)
 
-            /*var kp = null
-            
-            try{
-                kp = self.pocketnet.kit.keyPair(options.privatekey)
-            }
-            catch(e){
-                
-            }
-          
-            addresses[key] = {
-                amount : options.amount,
-                outs : options.outs || 1,
-                keys : kp,
-                address : kp ? self.pocketnet.kit.addressByPublicKey(kp.publicKey) : null,
-                unspents : null,
-                queue : [],
-                all : [],
-                key : key,
-                check : options.check
-            }*/
+            console.log('addresses[key]', addresses[key])
 
-            if(!addresses[key].kp){
+            if(!addresses[key].keys){
                 _.each(self.clbks.error.ini, function(c){
                     c('privatekey', {
                         key : key
@@ -157,7 +139,11 @@ var Wallet = function(p){
                 })
             }
             else{
+
+                console.log("GETADDR", key)
+
                 self.unspents.getc(addresses[key]).catch(e => {
+                    console.log("catch", e)
                 })
             }
 
@@ -301,6 +287,10 @@ var Wallet = function(p){
     }
 
     self.kit = {
+
+        apply : function(k){
+            return self.kit.makequeueE(k)
+        },
 
         addressobj : function(options, key){
             var kp = null
@@ -891,6 +881,8 @@ var Wallet = function(p){
                     })
 
                 }).catch(e => {
+
+                    console.log("E", e)
 
                     _.each(inputs, function (i) {
                         var u = _.find(address.unspents, function(u){

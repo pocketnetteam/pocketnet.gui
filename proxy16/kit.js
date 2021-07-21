@@ -633,6 +633,10 @@ var kit = {
 						return proxy.wallet.setPrivateKey(key, privatekey)
 					})
 
+				},
+
+				apply : function({key}){
+					return proxy.wallet.apply(key)
 				}
 
 			},

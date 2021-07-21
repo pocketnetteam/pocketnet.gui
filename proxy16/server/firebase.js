@@ -360,7 +360,6 @@ var Firebase = function(p){
         data, user
     }){
 
-        console.log("DATA, user", data, user)
 
         if(!data || !user) return Promise.reject('empty')
 

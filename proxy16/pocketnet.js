@@ -2,7 +2,6 @@ var bitcoin = require('./lib/btc16.js');
 var pkit = require('./lib/kit.js');
 
 
-console.log('bitcoin', bitcoin.networks);
 
 var Pocketnet = function(){
     var self = this
