@@ -32,6 +32,8 @@ var Proxy = function (settings, manage, test) {
 
 	var self = this;
 
+		self.test = test
+
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
