@@ -6613,6 +6613,9 @@
           }
       };
   }
+
+
+
   const HIGHEST_BIT = 0x80000000;
   const UINT31_MAX = Math.pow(2, 31) - 1;
   function BIP32Path(value) {
