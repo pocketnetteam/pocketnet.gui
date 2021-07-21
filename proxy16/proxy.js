@@ -349,6 +349,9 @@ var Proxy = function (settings, manage, test) {
 		setPrivateKey: function (key, private) {
 			return wallet.kit.setPrivateKey(key, private)
 		},
+		apply: function (key) {
+			return wallet.kit.apply(key)
+		},
 
 		re: function () {
 			return this.destroy().then(r => {
@@ -518,8 +521,6 @@ var Proxy = function (settings, manage, test) {
 
 	self.firebase = {
 		init: function () {
-
-			console.log('settings.firebase', settings.firebase)
 
 			return firebase.init(settings.firebase)
 		},
@@ -1357,7 +1358,6 @@ var Proxy = function (settings, manage, test) {
 				path: '/firebase/mytokens',
 				action: function (data) {
 
-					console.log("D", data)
 					
 					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
 						return Promise.resolve({ data: r });
