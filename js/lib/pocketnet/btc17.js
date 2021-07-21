@@ -38559,7 +38559,7 @@ exports.makeRandom = makeRandom;
 },{"../editedmodules/tiny-secp256k1":4,"./networks":148,"./types":189,"buffer":53,"randombytes":103,"typeforce":136,"wif":140}],147:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
-const = require('bip32');
+const bip32 = require('bip32');
 exports.bip32 = bip32;
 const bip39 = require('bip39');
 exports.bip39 = bip39;
