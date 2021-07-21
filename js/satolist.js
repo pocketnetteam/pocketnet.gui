@@ -87,14 +87,14 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    /*self.network = function(){
-        if(self.test){
-            return bitcoin.networks.testnet
-        }
-        else{
-            return bitcoin.networks.bitcoin
-        }
-    }*/
+    // self.network = function(){
+    //     if(self.test){
+    //         return bitcoin.networks.testnet
+    //     }
+    //     else{
+    //         return bitcoin.networks.bitcoin
+    //     }
+    // }
 
     self.mp = {
         dollars: function (value, p) {
@@ -12516,12 +12516,12 @@ Platform = function (app, listofnodes) {
                                 return
                             }
 
-                            if (i.address.indexOf("P") == 0) {
+                            if (i.address.indexOf("T") == 0) {
                                 txb.sign(inputindex, keyPair);
                                 return
                             }
 
-                            if (i.address.indexOf("Z") == 0) {
+                            if (i.address.indexOf("Y") == 0) {
                                 
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 
