@@ -6596,13 +6596,23 @@
           private: typeforce.UInt32,
       },
   });
-  const BITCOIN = {
-      wif: 0x21,
-      bip32: {
-          public: 0x043587cf,
-          private: 0x04358394,
-      }
+  var BITCOIN = {
+    wif: 0x21,
+    bip32: {
+        public: 0x043587cf,
+        private: 0x04358394,
+    }
   };
+
+  if((typeof process !== 'undefined' && process.argv.includes('--test')) || (typeof window !== 'undefined' && window.testpocketnet)){
+      BITCOIN = {
+          wif: 0x1e,
+          bip32: {
+              public: 0x043587cf,
+              private: 0x04358394,
+          }
+      };
+  }
   const HIGHEST_BIT = 0x80000000;
   const UINT31_MAX = Math.pow(2, 31) - 1;
   function BIP32Path(value) {
