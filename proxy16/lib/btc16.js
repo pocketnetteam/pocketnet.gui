@@ -6596,13 +6596,26 @@
           private: typeforce.UInt32,
       },
   });
-  const BITCOIN = {
-      wif: 0x21,
-      bip32: {
-          public: 0x043587cf,
-          private: 0x04358394,
-      }
+  var BITCOIN = {
+    wif: 0x21,
+    bip32: {
+        public: 0x043587cf,
+        private: 0x04358394,
+    }
   };
+
+  if((typeof process !== 'undefined' && process.argv.includes('--test')) || (typeof window !== 'undefined' && window.testpocketnet)){
+      BITCOIN = {
+          wif: 0x1e,
+          bip32: {
+              public: 0x043587cf,
+              private: 0x04358394,
+          }
+      };
+  }
+
+
+
   const HIGHEST_BIT = 0x80000000;
   const UINT31_MAX = Math.pow(2, 31) - 1;
   function BIP32Path(value) {
@@ -36468,30 +36481,31 @@
   // https://en.bitcoin.it/wiki/List_of_address_prefixes
   // Dogecoin BIP32 is a proposed standard: https://bitcointalk.org/index.php?topic=409731
   
-  module.exports = {
-    bitcoin: {
-      messagePrefix: '\x18Bitcoin Signed Message:\n',
-      bech32: 'bc',
-      bip32: {
-        public: 0x043587cf,
-        private: 0x04358394
-      },
-      pubKeyHash: 0x37,
-      scriptHash: 0x50,
-      wif: 0x21
-    },
-    testnet: {
-      messagePrefix: '\x18Bitcoin Signed Message:\n',
-      bech32: 'tb',
-      bip32: {
-        public: 0x043587cf,
-        private: 0x04358394
-      },
-      pubKeyHash: 0x6f,
-      scriptHash: 0xc4,
-      wif: 0xef
-    }
-  }
+  exports.bitcoin =
+  (typeof process !== 'undefined' && process.argv.includes('--test')) ||
+  (typeof window !== 'undefined' && window.testpocketnet)
+    ? {
+        messagePrefix: '\x18Bitcoin Signed Message:\n',
+        bech32: 'bc',
+        bip32: {
+          public: 0x043587cf,
+          private: 0x04358394,
+        },
+        pubKeyHash: 0x41,
+        scriptHash: 0x4e,
+        wif: 0x1e,
+      }
+    : {
+        messagePrefix: '\x18Bitcoin Signed Message:\n',
+        bech32: 'bc',
+        bip32: {
+          public: 0x043587cf,
+          private: 0x04358394,
+        },
+        pubKeyHash: 0x37,
+        scriptHash: 0x50,
+        wif: 0x21,
+      };
   
   },{}],147:[function(require,module,exports){
   'use strict';

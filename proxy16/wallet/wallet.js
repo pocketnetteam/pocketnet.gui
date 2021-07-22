@@ -1,5 +1,6 @@
 
 var Datastore = require('nedb');
+const { object } = require('underscore');
 var f = require('../functions');
 
 var compensation = [
@@ -18,9 +19,6 @@ var Wallet = function(p){
     var TXFEE = 1
     var smulti = 100000000
 
-    self.kit = {
-        
-    }
 
     self.patterns = {
         ip : function(queueobj, all){
@@ -39,7 +37,11 @@ var Wallet = function(p){
         },
 
         uniqAddress : function(queueobj, all){
-            if(!queueobj.address) return Promise.reject('address')
+            //if(!queueobj.address) return Promise.reject('address')
+
+            console.log("queueobj.address", queueobj.address, self.patterns.validAddress(queueobj.address))
+
+            if(!self.patterns.validAddress(queueobj.address)) return Promise.reject('address')
 
             var f = _.find(all, function(obj){
                 return obj.address == queueobj.address
@@ -55,6 +57,18 @@ var Wallet = function(p){
             return self.patterns.ip(queueobj, all).then(r => {
                 return self.patterns.uniqAddress(queueobj, all)
             })
+        },
+
+        validAddress : function(address){
+            if(!address || !address.indexOf) return false
+
+            if(self.proxy.test && address.indexOf('T') != 0) return false
+
+            if(!self.proxy.test && address.indexOf('P') != 0) return false
+
+            if(!self.pocketnet.kit.address.validation(address)) return false
+
+            return true
         }
     }
 
@@ -106,6 +120,8 @@ var Wallet = function(p){
             
     }
 
+    
+
     self.destroy = function(){
         addresses = {}
 
@@ -123,33 +139,16 @@ var Wallet = function(p){
     }
 
     self.init = function(){
+
+        console.log("INIT")
      
         _.each(p.addresses, function(options, key){
 
             addresses[key] = self.kit.addressobj(options, key)
 
-            /*var kp = null
-            
-            try{
-                kp = self.pocketnet.kit.keyPair(options.privatekey)
-            }
-            catch(e){
-                
-            }
-          
-            addresses[key] = {
-                amount : options.amount,
-                outs : options.outs || 1,
-                keys : kp,
-                address : kp ? self.pocketnet.kit.addressByPublicKey(kp.publicKey) : null,
-                unspents : null,
-                queue : [],
-                all : [],
-                key : key,
-                check : options.check
-            }*/
+            console.log('addresses[key]', addresses[key])
 
-            if(!addresses[key].kp){
+            if(!addresses[key].keys){
                 _.each(self.clbks.error.ini, function(c){
                     c('privatekey', {
                         key : key
@@ -157,7 +156,11 @@ var Wallet = function(p){
                 })
             }
             else{
+
+                console.log("GETADDR", key)
+
                 self.unspents.getc(addresses[key]).catch(e => {
+                    console.log("catch", e)
                 })
             }
 
@@ -184,7 +187,11 @@ var Wallet = function(p){
 
                 db.find({executed : '-'}).exec(function (err, docs) {
                     _.each(docs || [], function(obj){
-                        if (obj.key && addresses[obj.key]){
+
+                        if(!self.patterns.validAddress(object.address)) return
+
+
+                        if (obj.key && addresses[obj.key] ){
                             addresses[obj.key].queue.push(obj)
                         }
 
@@ -302,6 +309,10 @@ var Wallet = function(p){
 
     self.kit = {
 
+        apply : function(k){
+            return self.kit.makequeueE(k)
+        },
+
         addressobj : function(options, key){
             var kp = null
             
@@ -406,6 +417,8 @@ var Wallet = function(p){
                 
             }).catch(e => {
 
+                console.log("E", e)
+
                 if (meta){
                     self.unspents.release(meta.inputs)
                 }
@@ -425,13 +438,15 @@ var Wallet = function(p){
             
             if(!to) return Promise.reject('to')
             if(!addresses[key]) return Promise.reject('key')
-
+            if(!self.pocketnet.kit.address.validation(to)) return Promise.reject('address')
             var queue = addresses[key].queue
             var all = addresses[key].all
 
             if(_.find(queue, function(object){ return object.address == to && !object.executing})) return Promise.resolve()
 
             
+            
+
 
             var object = {
                 address : to,
@@ -487,6 +502,13 @@ var Wallet = function(p){
             if(!addresses[key]) return Promise.reject('key')
 
             var queue = _.filter(addresses[key].queue, function(object, l){
+
+                if(!self.pocketnet.kit.address.validation(object.address)) {
+                    return false
+                }
+
+                if(!self.patterns.validAddress(object.address)) return false
+
                 return !object.executing & l < 50
             })
 
@@ -891,6 +913,8 @@ var Wallet = function(p){
                     })
 
                 }).catch(e => {
+
+                    console.log("E", e)
 
                     _.each(inputs, function (i) {
                         var u = _.find(address.unspents, function(u){

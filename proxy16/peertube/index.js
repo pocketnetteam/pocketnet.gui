@@ -198,8 +198,7 @@ var Peertube = function (settings) {
 
     stats() {
       const servers = Object.values(roys).map((roy) => roy.performance());
-
-      return Promise.all(servers)
+return Promise.all(servers)
         .then((data) => {
           console.log(data.flat());
           return data.flat().reduce(

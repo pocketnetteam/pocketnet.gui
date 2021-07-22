@@ -2678,6 +2678,31 @@ var system16 = (function(){
 						}
 					})
 
+					p.el.find('.apply').on('click', function(){
+						var key = $(this).closest('.wallet').attr('key')
+
+						globalpreloader(true)
+
+						proxy.fetchauth('manage', {
+							action : 'set.wallet.apply',
+							data : {
+								key : key
+							}
+						}).then(r => {
+
+							actions.refresh()
+
+							globalpreloader(false)
+			
+						}).catch(e => {
+
+							sitemessage(self.app.localization.e('e13293'))
+
+							globalpreloader(false)
+
+						})
+					})
+
 					p.el.find('.remove').on('click', function(){
 						var key = $(this).closest('.wallet').attr('key')
 
