@@ -38,6 +38,7 @@
     "cordova-plugin-device-orientation": "^1.0.7",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-firebasex": "^11.0.3",
+    "cordova-plugin-media": "^5.0.3",
     "cordova-plugin-network-information": "^1.2.1",
     "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-vibration": "^2.1.6",
@@ -92,7 +93,10 @@
       "cordova-plugin-buildinfo": {},
       "cordova-plugin-inappbrowser": {},
       "@globules-io/cordova-plugin-ios-xhr": {},
-      "cordova-plugin-file": {}
+      "cordova-plugin-file": {},
+      "cordova-plugin-media": {
+        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
+      }
     },
     "platforms": [
       "android",
