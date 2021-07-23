@@ -21,11 +21,36 @@ var testApi = (function () {
           },
           (p) => {
             p.el.find('.removeHeaderButton').on('click', () => {
-
               p.el.remove();
             });
           },
         );
+      },
+      sendRequest() {
+        const headers = {};
+        const headersElements = el.c.find('.headerWrapper');
+        headersElements.each(function () {
+          const headerEl = $(this);
+          const headerName = headerEl.find('.headerInput').val();
+          const headerValue = headerEl.find('.headerValueInput').val();
+
+          if (headerName) headers[headerName] = headerValue;
+        });
+
+        const url = el.linkInput.val();
+
+        const method = el.testMethodSelect.val();
+
+        if (!url) el.linkInput.focus();
+
+        return axios({
+          method,
+          url,
+          headers,
+        }).then((result = {}) => {
+          const jsonStr = JSON.stringify(result.data || {}, undefined, 4);
+          el.responseOutput.html(syntaxHighlight(jsonStr));
+        });
       },
     };
 
@@ -40,6 +65,7 @@ var testApi = (function () {
 
     var initEvents = function () {
       el.addTestHeaderButton.on('click', actions.addHeader);
+      el.sendRequestButton.on('click', actions.sendRequest);
     };
 
     return {
@@ -65,6 +91,8 @@ var testApi = (function () {
         el.headersContainer = el.c.find('.headersContainer');
         el.addTestHeaderButton = el.c.find('.addTestHeader');
         el.responseOutput = el.c.find('.responseOutput');
+        el.sendRequestButton = el.c.find('.sendRequest');
+        el.testMethodSelect = el.c.find('.testMethodSelect');
 
         initEvents();
 
