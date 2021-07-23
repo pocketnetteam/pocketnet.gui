@@ -1,5 +1,5 @@
 class PerformanceMetric {
-  _ratings = [];
+  
 
   calculate(instance) {
     const { _ratings } = this;
