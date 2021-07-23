@@ -1,5 +1,73 @@
 @import "../../css/__cssvar";
 
-#testApi{
+#testApi {
+    .key {
+        color: rgb(252, 126, 9);
+    }
 
+    .number {
+        color: rgb(70, 131, 70);
+    }
+
+    .string {
+        color: @color-main;
+    }
+
+    .null {
+        color: @color-block;
+    }
+
+    .contentSection {
+        margin-bottom: @rhythm * 4;
+    }
+
+    .mainTestWrapper {
+        padding: @rhythm * 4;
+    }
+
+    .mainTestHeader {
+        padding: @rhythm * 4;
+
+        padding-bottom: 0;
+    }
+
+    h1 {
+        font-size: 1.2em;
+        color: @color-add;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+
+    h2 {
+        font-size: 1em;
+        font-weight: bold;
+    }
+
+    .fieldInput {
+        border: 0;
+        border-bottom: 1px solid @color-add;
+        font-size: 0.9em;
+    }
+
+    .testButton {
+        font-size: 0.8em;
+        padding: 2 * @rhythm;
+    }
+
+    .buttonIcon {
+        padding-right: @rhythm * 2;
+    }
+
+    .removeHeaderButton {
+        border-radius: 15px;
+
+        position: relative;
+
+        .absoluteIcon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
 }
