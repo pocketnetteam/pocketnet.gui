@@ -1747,6 +1747,38 @@ __map =  {
 		]
 	},
 
+	testApi : {
+		uri : "testApi",
+		href : "testApi",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+
+		relations : [
+			{src : 'js/validation.js',			   f : 'js'},	
+		]
+	},
+
 };
 
 
