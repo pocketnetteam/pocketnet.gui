@@ -12484,6 +12484,8 @@ Platform = function (app, listofnodes) {
                         var k = smulti;
 
 
+                        console.log("txb", txb, inputs, outputs)
+
                         _.each(inputs, function (i) {
 
                             if (i.type == 'htlc'){
@@ -12516,12 +12518,12 @@ Platform = function (app, listofnodes) {
                                 return
                             }
 
-                            if (i.address.indexOf("T") == 0) {
+                            if (i.address.indexOf("T") == 0 || i.address.indexOf("P") == 0) {
                                 txb.sign(inputindex, keyPair);
                                 return
                             }
 
-                            if (i.address.indexOf("Y") == 0) {
+                            if (i.address.indexOf("Z") == 0 || i.address.indexOf("Y") == 0) {
                                 
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 

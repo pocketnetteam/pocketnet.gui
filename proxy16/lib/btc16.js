@@ -36486,7 +36486,7 @@
   (typeof window !== 'undefined' && window.testpocketnet)
     ? {
         messagePrefix: '\x18Bitcoin Signed Message:\n',
-        bech32: 'bc',
+        bech32: 'tb',
         bip32: {
           public: 0x043587cf,
           private: 0x04358394,

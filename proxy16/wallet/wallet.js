@@ -188,7 +188,9 @@ var Wallet = function(p){
                 db.find({executed : '-'}).exec(function (err, docs) {
                     _.each(docs || [], function(obj){
 
-                        if(!self.patterns.validAddress(object.address)) return
+
+
+                        if(!self.patterns.validAddress(obj.address)) return
 
 
                         if (obj.key && addresses[obj.key] ){
@@ -417,7 +419,7 @@ var Wallet = function(p){
                 
             }).catch(e => {
 
-                console.log("E", e)
+                console.log("E", e, meta.inputs, outputs)
 
                 if (meta){
                     self.unspents.release(meta.inputs)

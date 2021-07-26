@@ -1,0 +1,37 @@
+<div id="<%-module.map.id%>">
+  <header class="mainTestHeader"><h1>Test API Calls</h1></header>
+  <main class="mainTestWrapper">
+    <section class="contentSection queryStringSection">
+      <header><h2>Link</h2></header>
+      <main>
+        <input placeholder="Link" id="testQueryInput" class="fieldInput testQueryInput" />
+      </main>
+    </section>
+    <section class="contentSection headersSection">
+      <header><h2>Headers</h2></header>
+      <main class="headerswrapper">
+        <div class="headersContainer"></div>
+        <button class="addTestHeader testButton">
+          <i class="fas fa-plus buttonIcon"></i>Add header
+        </button>
+      </main>
+    </section>
+    <section class="contentSection methodSection">
+      <select class="testMethodSelect">
+        <option value="get" selected>GET</option>
+        <option value="post">POST</option>
+      </select>
+    </section>
+    <section>
+      <button class="contentSection sendRequest testButton">
+        <i class="fas fa-paper-plane buttonIcon"></i>Send
+      </button>
+    </section>
+    <section class="contentSection responseSection">
+      <header><h2>Response</h2></header>
+      <main>
+        <pre class="responseOutput"></pre>
+      </main>
+    </section>
+  </main>
+</div>

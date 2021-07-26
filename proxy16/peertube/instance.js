@@ -69,7 +69,8 @@ var instance = function (host, Roy) {
       })
       .then(() => {
         return statsRequest();
-      });
+      })
+      .catch(() => Promise.resolve());
   };
 
   self.inited = function () {
@@ -167,7 +168,7 @@ var instance = function (host, Roy) {
   self.init = function () {
     inited = true;
 
-    statsRequest().catch(e => {})
+    statsRequest().catch((e) => {});
   };
 
   self.export = function () {
