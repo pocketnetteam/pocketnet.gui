@@ -21006,6 +21006,9 @@ Platform = function (app, listofnodes) {
             })
 
             core.backtoapp = function(link){
+
+                if(document.activeElement) document.activeElement.blur()
+
                 if (self.matrixchat.el)
                     self.matrixchat.el.removeClass('active')
 
@@ -21028,6 +21031,9 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(){
+
+                if(document.activeElement) document.activeElement.blur()
+                
                 if (self.matrixchat.el)
                     self.matrixchat.el.addClass('active')
 

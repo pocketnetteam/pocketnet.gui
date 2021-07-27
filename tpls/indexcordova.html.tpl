@@ -83,7 +83,11 @@
             <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
         </div>
 
-    
+         <script>
+
+            window.wFile = window.File
+
+        </script>
         <script src="cordova.js"></script>
                 
 
