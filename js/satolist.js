@@ -13023,7 +13023,7 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    share: function (inputs, share, clbk, p, fromTG) {
+                    share: function (inputs, share, fees, clbk, p, fromTG) {
 
                         var meta = self.sdk.usersettings.meta;
 
@@ -13049,7 +13049,7 @@ Platform = function (app, listofnodes) {
                           }
                         }
 
-                        this.common(inputs, share, TXFEE, clbk, p)
+                        this.common(inputs, share, fees, clbk, p)
                     },
 
                     userInfo: function (inputs, userInfo, clbk, p) {
@@ -13066,8 +13066,8 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, complainShare, TXFEE, clbk, p)
                     },
 
-                    comment: function (inputs, comment, clbk, p) {
-                        this.common(inputs, comment, TXFEE, clbk, p)
+                    comment: function (inputs, comment, fees, clbk, p) {
+                        this.common(inputs, comment, fees, clbk, p)
                     },
 
                     commentShare: function (inputs, commentShare, clbk, p) {
