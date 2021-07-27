@@ -341,6 +341,7 @@ var embeding = (function(){
 
 				sender = p.settings.essenseData.sender;
 				receiver = p.settings.essenseData.receiver;
+				balance = p.settings.essenseData.balance
 
 				ed = p.settings.essenseData;
 

@@ -13,7 +13,7 @@ var comments = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver;
+		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
 
 		var authblock = false;
 
@@ -393,54 +393,54 @@ var comments = (function(){
 						storage : storage,
 						sender: deep(app, 'platform.sdk.usersl.storage.' + self.sdk.address.pnet().address + '.image'), 
 						receiver: deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image'),
+						balance: balance,
 						on : {
 
 							added : function(value){
 
 								var result = Boolean(value);
 
-								self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-									if (Number(value) < amount){
+								if (Number(value) < balance){
 
-										if(!_.isArray(value)) value = [value]
+									if(!_.isArray(value)) value = [value]
 
-										currents[id].donate.remove();
+									currents[id].donate.remove();
 
-										currents[id].donate.set({
-											address: receiver,
-											amount: Number(value)
-										})
+									currents[id].donate.set({
+										address: receiver,
+										amount: Number(value)
+									})
 
-										if(!result && errors[type]){
+									if(!result && errors[type]){
 
-											sitemessage(errors[type])
+										sitemessage(errors[type])
 
-										}
+									}
 
-										console.log('recveiver image', deep(app, 'platform.sdk.usersl.storage.'+receiver+'.image') )
-										if (receiver === self.sdk.address.pnet().address){
+									console.log('recveiver image', deep(app, 'platform.sdk.usersl.storage.'+receiver+'.image') )
+									if (receiver === self.sdk.address.pnet().address){
 
-											sitemessage(self.app.localization.e('donateself'));
-
-										} else {
-
-
-											if (result){
-
-												renders.donate(id, p)
-
-											}	
-
-										}
-
+										sitemessage(self.app.localization.e('donateself'));
 
 									} else {
 
-										sitemessage(self.app.localization.e('incoins'))
+
+										if (result){
+
+											renders.donate(id, p)
+
+										}	
+
 									}
 
-								})
+
+								} else {
+
+									sitemessage(self.app.localization.e('incoins'))
+								}
+
+			
 
 							}
 						}
@@ -1804,20 +1804,29 @@ var comments = (function(){
 
 					_p.el.find('.embeddonate').off('click').on('click', function(){
 
-						var id = actions.getid(_p.el.find('.postbody'))
+						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-						if(state){
-							actions.embeddonate(id, p)
-							if(!p.answer && !p.editid){
+							balance = amount.toFixed(2);
+							
+							var id = actions.getid(_p.el.find('.postbody'))
 
-								ini()
+							if(state){
+								actions.embeddonate(id, p)
+								if(!p.answer && !p.editid){
+	
+									ini()
+	
+								}	
+							}
+							else{
+								actions.stateAction(function(){
+								})
+							}
 
-							}	
-						}
-						else{
-							actions.stateAction(function(){
-							})
-						}
+
+						})
+
+
 					})
 
 					_p.el.find('.embedimages').off('click').on('click', function(){
