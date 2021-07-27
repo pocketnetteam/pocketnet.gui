@@ -18323,7 +18323,16 @@ Platform = function (app, listofnodes) {
 
 
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + self.app.localization.e('e13338'), extra, data.time)
+
+                            var toptext = self.app.localization.e('e13337')
+
+                            if (data.donation == 'true' && data.amount){
+
+                                var amount = String(Number(data.amount) / smulti || 0);
+                                toptext = self.app.localization.e('donated') + ' ' + amount + ' PKOIN </span>';
+                            }   
+
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
                         }
                     }
 
@@ -19221,8 +19230,14 @@ Platform = function (app, listofnodes) {
 
                             if (html) {
 
-                                if(!self.showedIds[data.txid]) {
-                                    self.showedIds[data.txid] = true
+                                var txid = data.txid
+
+                                if (data.donation === 'true'){
+                                    txid += '_donation'
+                                }
+
+                                if(!self.showedIds[txid]) {
+                                    self.showedIds[txid] = true
 
 
                                     var message = self.fastMessage(html, function () {
