@@ -139,6 +139,12 @@ var commentpanel = function(comment, _class){  %>
 								&middot; <span class="edited"><i class="fas fa-pen-alt"></i></span>
 
 							<% } %>
+							<% if(comment.donation === 'true' && comment.amount) {%>
+
+								<span class="donate">
+									+<%=comment.amount / 100000000 %> PKOIN
+								</span>
+							<% } %>
 						</div>
 
 						

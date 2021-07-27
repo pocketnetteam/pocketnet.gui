@@ -22,6 +22,41 @@
 		white-space: nowrap;
 	}
 
+	.donateEmbWr{
+
+		.donatecntWrapper{
+			padding-top: @rhythm * 2;
+			padding-bottom: @rhythm * 2;
+
+			.removedonate{
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				.transition(0.3s);
+				color : @color-bad;
+
+				&:hover{
+					background : @color-gray-slight;
+				}
+			}
+
+			.donatecnt{
+				.value, .removeWrapper{
+					display: inline-block;
+				}
+
+				.removeWrapper{
+					position: relative; 
+					top: -10px
+				}
+			}
+
+		}
+	}
+
 	&.preview{
 		.post{
 			.txt{
@@ -437,6 +472,13 @@
 
 				&.author{
 					color : @color-gray;
+				}
+
+				.donate{
+					color: @color-good;
+					margin-left: @rhythm;
+					font-size: .9em;
+					font-weight: 500;
 				}
 
 				.date{	
@@ -1033,6 +1075,7 @@
 			padding : 8px;
 			padding-left : 2 * @rhythm;
 			padding-right : 66px;
+			padding-right : 94px;
 			outline: none;
 			border : 0;
 			min-height: 36px;
@@ -1046,6 +1089,20 @@
 		.embedimages{
 			position: absolute;
 			right : 12px;
+			top : 2px;
+			padding : 6px;
+			cursor: pointer;
+			color : @color-gray-light;
+			.transition(0.3s);
+
+			&:hover{
+				color : @color-black2;
+			}
+		}
+
+		.embeddonate{
+			position: absolute;
+			right : 70px;
 			top : 2px;
 			padding : 6px;
 			cursor: pointer;
@@ -1667,6 +1724,13 @@ html.stblack{
 							margin : 0;
 						}
 					}
+				}
+			}
+
+			&.commentBody{
+				.donate{
+					display: block;
+					margin-left: 0;
 				}
 			}
 
