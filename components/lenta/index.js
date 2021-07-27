@@ -2121,7 +2121,7 @@ var lenta = (function(){
 							count : share.comments,
 							init : essenseData.comments == 'all' ? false : init,
 							hr : hr,
-							address: share.address,
+							receiver: share.address,
 							
 							renderClbk : function(){
 

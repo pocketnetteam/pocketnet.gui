@@ -13,7 +13,7 @@ var comments = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false;
+		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver;
 
 		var authblock = false;
 
@@ -406,7 +406,7 @@ var comments = (function(){
 										currents[id].donate.remove();
 
 										currents[id].donate.set({
-											address: self.essenseData.address,
+											address: receiver,
 											amount: Number(value)
 										})
 
@@ -414,8 +414,10 @@ var comments = (function(){
 
 											sitemessage(errors[type])
 
-										}	
-										if (self.essenseData.address === self.sdk.address.pnet().address){
+										}
+
+										console.log('recveiver', receiver, self.sdk.address.pnet().address)
+										if (receiver === self.sdk.address.pnet().address){
 
 											sitemessage(self.app.localization.e('donateself'));
 
@@ -2487,7 +2489,10 @@ var comments = (function(){
 			
 			init : function(p){
 
+				console.log('p!!', p);
 				//state.load();
+
+				receiver = p.essenseData.receiver;
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
