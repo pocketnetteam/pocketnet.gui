@@ -16519,6 +16519,8 @@ Platform = function (app, listofnodes) {
             // When token is refreshed, update the matrix element for the Vue app
             FirebasePlugin.onTokenRefresh(function(token) {
 
+                platform.fcmtoken = token
+
                 if (token && platform.app && platform.app.user && platform.app.user.getstate && platform.app.user.getstate() == 1)
                     trySettingTokenOnMatrix(token);
                 
@@ -20824,6 +20826,8 @@ Platform = function (app, listofnodes) {
                                 self.matrixchat.inited = true
         
                                 var privatekey = self.app.user.private.value.toString('hex');
+
+                                console.log('localization', self.app.localization.key)
                     
                                 var matrix = `<div class="wrapper matrixchatwrapper">
                                     <matrix-element
@@ -20832,6 +20836,8 @@ Platform = function (app, listofnodes) {
                                         pocketnet="`+(isMobile() ? '' : 'true')+`"
                                         mobile="`+(isMobile() ? 'true' : '')+`" 
                                         ctheme="`+self.sdk.theme.current+`"
+                                        localization="`+self.app.localization.key+`"
+                                        fcmtoken="`+(self.fcmtoken || "")+`"
                                     >
                                     </matrix-element>
                                 </div>`
@@ -20853,6 +20859,12 @@ Platform = function (app, listofnodes) {
         changeTheme : function(){
             if(self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
+            }
+        },
+
+        changeLocalization : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('localization', self.app.localization.key)
             }
         },
 

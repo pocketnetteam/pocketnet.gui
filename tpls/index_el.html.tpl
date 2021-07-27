@@ -193,7 +193,7 @@
         <script src="js/vendor/linkify-html.min.js"></script>
         <script src="js/vendor/jquery.inputmask.bundle.js"></script>
 
-       
+        __VAR__.test
  
         <script join src="js/vendor/aesjs.js"></script>
         <script join src="js/lib/pocketnet/btc17.js?v=4"></script>
@@ -213,7 +213,7 @@
         <script src="js/vendor/hc-sticky.js"></script>
         <script join src="js/vendor/axios.js"></script>
 
-        __VAR__.test
+        
 
         <script>window.design = true;</script>
         <script join src="js/functionsfirst.js?v=138441565214"></script>
