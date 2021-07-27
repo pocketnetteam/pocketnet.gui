@@ -1080,5 +1080,4 @@ ____loclib.createnewcontinue = "Continue creating account";
 ____loclib.transactionnotfound = "Transaction not found";	
 
 ____loclib.donateself = "You can't donate yourself";
-____loclib.e131101 = "Enter donation amount"
 ____loclib.donated = 'donated'

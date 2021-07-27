@@ -2086,6 +2086,7 @@ var lenta = (function(){
 						el : _el,
 
 						eid : txid + 'lenta',
+						
 
 						essenseData : {
 							close : function(){

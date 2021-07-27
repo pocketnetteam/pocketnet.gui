@@ -108,10 +108,44 @@
 	<% if(type == 'donate') {%>
 		<div class="donate pg">
 			<div class="caption">
-				<%=e('e131101')%>
+				<%=e('e13096')%>
 			</div>
 
 			<div class="donateWrapper">
+				<div class="transaction">
+					<div class="user">
+						<div class="iconWrapper">
+							<div class="usericon" image="<%-sender || ''%>">
+							</div>
+						</div>					
+					</div>
+					<div class="step time" style="width:auto">
+						<div class="stepWrapper table">
+							<div class="timeline fixedwidth stepstatus" step="e0f90db5-7aa2-fd4a-14a2-ccff460823c9">
+								<div class="timelineWrapper table">
+									<div>
+										<div class="timelinebg">
+											<div class="timelinearrow">
+												<div class="timelinegill">
+
+												</div>
+												<i class="fa fa-chevron-right"></i>
+											</div>
+
+											<div class="balance">balance: 3.27 PKOIN</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="user">
+						<div class="iconWrapper">
+							<div class="usericon" image="<%-receiver || ''%>">
+							</div>
+						</div>					
+					</div>
+				</div>
 				<div class="inputWrapper">
 					<%= options.donate.input() %>
 				</div>		

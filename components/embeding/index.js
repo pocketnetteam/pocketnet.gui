@@ -339,6 +339,9 @@ var embeding = (function(){
 				type = p.settings.essenseData.type;
 				on = p.settings.essenseData.on;
 
+				sender = p.settings.essenseData.sender;
+				receiver = p.settings.essenseData.receiver;
+
 				ed = p.settings.essenseData;
 
 				subtype = p.settings.essenseData.subtype || null;

@@ -21,7 +21,6 @@
 				padding : @rhythm;
 
 				&.inputWrapper{
-
 					input{
 						width: 100%;
 					}
@@ -71,12 +70,85 @@
 		}
 	}
 	.donateWrapper{
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+
+		.stepWrapper{
+			height: 100%;
+			display: table;
+			table-layout: fixed;
+			.timeline{
+				display: table-cell;
+				position: relative;
+				vertical-align: middle;
+				.timelineWrapper{
+					height: 40px;
+					width: 90%;
+					margin-left: auto;
+					margin-right: auto;
+					>div{
+						vertical-align: middle;
+						display: table-cell;
+						
+						.timelinebg{
+							height: 1px;
+							position: relative;
+							background: #d0c9ca;
+
+							.timelinearrow{
+								background: #0084ff;
+
+								>i{
+									position: absolute;
+									right: -3px;
+									top: -5px;
+									font-size: .8em;
+									color: #0084ff;
+
+								}
+
+								.timelinegill{
+									display: inline-block;
+									height: 100%;
+									width: 100%;
+									position: absolute;
+									left: 0;
+									top: 0;
+									background: #0084ff;
+
+								}
+							}
+
+							.balance{
+								position: absolute;
+								width: 100%;
+								padding-top: .5em;
+								left: 0;
+								right: 0;
+								top: 0;
+								text-align: center;
+								font-size: .8em;
+								color: #bcb5b6;
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+		.transaction{
+			display: flex;
+			justify-content: space-between;
+			margin-top: 2 * @rhythm;
+		}
 
 		.inputWrapper{
+			margin-top: 2 * @rhythm;
 			padding: 2 * @rhythm;
 			margin-left: auto;
 			margin-right: auto;
-			width: 80%;
 
 			input{
 				width: 100%;
@@ -169,7 +241,7 @@
 		.wndinner{
 
 			width: 600px;
-			height: 200px;
+			height: 250px;
 		}
 	}
 

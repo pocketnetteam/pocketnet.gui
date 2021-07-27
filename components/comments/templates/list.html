@@ -106,7 +106,12 @@ var commentpanel = function(comment, _class){  %>
 
 						<div class="icon">
 							<div class="usericon" image="<%-src || ''%>">
+
+								<% if(comment.donation === 'true' && comment.amount) {%>
 							
+									<img src="/pocketnet/assets/icons/donated.svg">
+
+								<% } %>
 
 								<% if(deep(app, 'platform.real.'+comment.address)) {%>
 									<div class="realperson">
@@ -118,6 +123,8 @@ var commentpanel = function(comment, _class){  %>
 									</div>
 								<% } %>
 							</div>
+
+							
 						</div>
 					<% if(!app.curation()) {%></a><% } %>
 				
@@ -141,9 +148,9 @@ var commentpanel = function(comment, _class){  %>
 							<% } %>
 							<% if(comment.donation === 'true' && comment.amount) {%>
 
-								<span class="donate">
+								<div class="donate">
 									+<%=comment.amount / 100000000 %> PKOIN
-								</span>
+								</div>
 							<% } %>
 						</div>
 

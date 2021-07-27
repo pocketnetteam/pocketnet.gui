@@ -391,6 +391,8 @@ var comments = (function(){
 					essenseData : {
 						type : 'donate',
 						storage : storage,
+						sender: deep(app, 'platform.sdk.usersl.storage.' + self.sdk.address.pnet().address + '.image'), 
+						receiver: deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image'),
 						on : {
 
 							added : function(value){
@@ -416,7 +418,7 @@ var comments = (function(){
 
 										}
 
-										console.log('recveiver', receiver, self.sdk.address.pnet().address)
+										console.log('recveiver image', deep(app, 'platform.sdk.usersl.storage.'+receiver+'.image') )
 										if (receiver === self.sdk.address.pnet().address){
 
 											sitemessage(self.app.localization.e('donateself'));
