@@ -105,6 +105,19 @@
 			</div>
 		</div>
 	<% } %>
+	<% if(type == 'donate') {%>
+		<div class="donate pg">
+			<div class="caption">
+				<%=e('e131101')%>
+			</div>
+
+			<div class="donateWrapper">
+				<div class="inputWrapper">
+					<%= options.donate.input() %>
+				</div>		
+			</div>
+		</div>
+	<% } %>
 	
 
 	<div class="error">

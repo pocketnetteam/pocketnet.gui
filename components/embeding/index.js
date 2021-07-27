@@ -24,7 +24,17 @@ var embeding = (function(){
 					return true;
 				},
 				value : []
-			}
+			},
+
+			donate : new Parameter({
+				name : self.app.localization.e('wsamountof'),
+				type : "NUMBER",
+				id : 'amount',
+				placeholder : self.app.localization.e('wsamountof'),
+				format : {
+					Precision : 6
+				}
+			}),
 
 		}
 
@@ -80,6 +90,19 @@ var embeding = (function(){
 
 						on.added(images)
 						
+						self.closeContainer()
+					}
+				},
+
+
+
+				
+				donate : function(){
+
+					if(actions.check('donate')){
+
+						on.added(options.donate.value)
+
 						self.closeContainer()
 					}
 				},
