@@ -37,6 +37,7 @@
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-device-orientation": "^1.0.7",
     "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-file-opener2": "^3.0.5",
     "cordova-plugin-firebasex": "^11.0.3",
     "cordova-plugin-media": "^5.0.3",
     "cordova-plugin-network-information": "^1.2.1",
@@ -96,7 +97,8 @@
       "cordova-plugin-file": {},
       "cordova-plugin-media": {
         "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
-      }
+      },
+      "cordova-plugin-file-opener2": {}
     },
     "platforms": [
       "android",
