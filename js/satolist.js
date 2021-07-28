@@ -16317,7 +16317,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.revokeall = function(){
-            FirebasePlugin.unregister();
+            //FirebasePlugin.unregister();
 
             self.storage.clear();
 
@@ -16418,8 +16418,13 @@ Platform = function (app, listofnodes) {
                 FirebasePlugin.getToken(function(token) {
 
                     currenttoken = token
+                    platform.fcmtoken = token
 
-                    console.log('currenttoken', currenttoken)
+                    console.log("FCM TOKEN GET", token)
+
+                    platform.matrixchat.changeFcm()
+
+                    self.events()
 
                     if (clbk)
                         clbk(currenttoken)
@@ -16507,25 +16512,17 @@ Platform = function (app, listofnodes) {
                 
             });
 
-            var trySettingTokenOnMatrix = function(token) {
-                // Update the token on the Matrix element if we can
-                if (platform && platform.matrixchat && platform.matrixchat.el) {
-                    platform.matrixchat.el.find('matrix-element').attr('fcmtoken', token);
-                    return;
-                }
-                // Else, wait a bit and retry
-                setTimeout(() => {
-                    trySettingTokenOnMatrix(token);
-                }, 1000);
-            }
-
+         
             // When token is refreshed, update the matrix element for the Vue app
             FirebasePlugin.onTokenRefresh(function(token) {
 
-                platform.fcmtoken = token
+                console.log("FCM TOKEN REFRESH", token)
 
-                if (token && platform.app && platform.app.user && platform.app.user.getstate && platform.app.user.getstate() == 1)
-                    trySettingTokenOnMatrix(token);
+                platform.fcmtoken = token   
+                currenttoken = token
+                platform.matrixchat.changeFcm()
+
+                //prepareclbk(token)
                 
             }, function(error) {
                 console.error(error);
@@ -16533,28 +16530,31 @@ Platform = function (app, listofnodes) {
 
         }
 
-        self.init = function(clbk){
+        var prepareclbk = function(token){
 
-            console.log('self.initself.init')
+            if (token){
+
+                var proxy = platform.app.api.get.current()
+
+                if (proxy){
+                    self.set(proxy.id).catch(e => {
+                        console.log("error", e)
+                    })
+                }
+
+            }
+
+        }
+
+        self.init = function(clbk){
 
             self.prepare(function(token){
 
-                if (token){
-
-                    var proxy = platform.app.api.get.current()
-
-                    if (proxy){
-                        self.set(proxy.id).catch(e => {
-                            console.log("error", e)
-                        })
-                    }
-
-                }
+                prepareclbk(token)
 
             })
 
             if(clbk) clbk()
-            
         }
 
         self.prepare = function(clbk){
@@ -16562,7 +16562,7 @@ Platform = function (app, listofnodes) {
             self.storage.load()
 
 			if (using) {
-				self.events()
+				
 				self.permissions(clbk)
 			}
             else{
@@ -20875,6 +20875,12 @@ Platform = function (app, listofnodes) {
                 }
             })
         },
+
+        changeFcm : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('fcmtoken', self.fcmtoken)
+            }
+        },
         
         changeTheme : function(){
             if(self.matrixchat.el){
@@ -21115,6 +21121,8 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.core.updateUser()
         },
+
+       
 
         transaction : function(id, roomid){
 
