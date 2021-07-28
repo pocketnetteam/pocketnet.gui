@@ -16317,7 +16317,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.revokeall = function(){
-            //FirebasePlugin.unregister();
+            FirebasePlugin.unregister();
 
             self.storage.clear();
 
@@ -16340,7 +16340,7 @@ Platform = function (app, listofnodes) {
 
                 if(exist) return Promise.resolve()
 
-                if(self.api.existanother(proxy, address)) return self.revokeall()
+                if(self.api.existanother(proxy, address)) return self.request.revokeall()
 
             }).then(r => {
                 return self.api.setToken(address, token, proxy)
@@ -18010,16 +18010,19 @@ Platform = function (app, listofnodes) {
 
                     ////////////////
 
-                    var addr = self.sdk.address.pnet().address
+                    if(app.platform.sdk.address.pnet()){
+                        var addr = app.platform.sdk.address.pnet().address
 
-                    var regs = app.platform.sdk.registrations.storage[addr];
+                        var regs = app.platform.sdk.registrations.storage[addr];
 
-                    if (regs == 5) {
+                        if (regs == 5) {
 
-                        self.sdk.registrations.add(addr, 6)
+                            self.sdk.registrations.add(addr, 6)
 
-                        platform.matrixchat.update()
+                            platform.matrixchat.update()
+                        }
                     }
+                    
 
                     ////////
 
