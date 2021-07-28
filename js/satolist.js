@@ -21095,6 +21095,8 @@ Platform = function (app, listofnodes) {
             var c = deep(app, 'nav.clbks.history.navigation')
 
             if (c) c()
+
+            self.matrixchat.connect()
         },
 
         unlink : function(){    
@@ -21105,6 +21107,8 @@ Platform = function (app, listofnodes) {
             
             }
 
+
+            self.matrixchat.connectWith = null
 
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
             delete self.matrixchat.core
@@ -21125,8 +21129,6 @@ Platform = function (app, listofnodes) {
             self.matrixchat.core.updateUser()
         },
 
-       
-
         transaction : function(id, roomid){
 
             if(!self.matrixchat.core) return
@@ -21138,7 +21140,21 @@ Platform = function (app, listofnodes) {
             if(!roomid) return
 
             self.matrixchat.core.mtrx.transaction(roomid, id)
-        }
+        },
+
+        connect : function(){
+            if(!self.matrixchat.connectWith) return
+            if(!self.matrixchat.core) return
+
+            self.matrixchat.core.apptochat()
+            self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
+                self.matrixchat.connectWith = null
+            }).catch(e => {
+                console.log('e', e)
+                self.matrixchat.connectWith = null
+            })
+        },
+
     }
 
     self.initSounds = function () {
@@ -21408,7 +21424,6 @@ Platform = function (app, listofnodes) {
                 if (data.type == 'action') {
                     var route = data.msg
 
-
                     self.app.nav.api.load({
                         open: true,
                         href: route,
@@ -21421,7 +21436,32 @@ Platform = function (app, listofnodes) {
 
         }
        
+        if (window.cordova && typeof universalLinks != 'undefined'){
 
+            universalLinks.subscribe('nav-message', function (eventData) {
+
+                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '')
+
+                if (route){
+                    self.app.nav.api.load({
+                        open: true,
+                        href: route,
+                        history: true
+                    })
+                }
+
+                /////////////
+
+                var w = parameters(eventData.url, true).connect
+
+                self.matrixchat.connectWith = w || null
+
+                self.matrixchat.connect()
+
+                
+            });
+
+        }
     }
 
     self.navManager()
@@ -21435,7 +21475,7 @@ Platform = function (app, listofnodes) {
 
     self.autoUpdater()
 
-   
+    self.matrixchat.connectWith = parameters().connect
 
     return self;
 

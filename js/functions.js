@@ -8901,7 +8901,7 @@
 
 		var readFile = function(reader, error, file, files, clbk){
 
-			reader.onload = (function(theFile) {
+			reader.onloadend = (function(theFile) {
 				return function(e) {
 
 					var name = theFile.name.split('.');
@@ -9060,7 +9060,7 @@
 
 		var autorotation = function(file, image, clbk){
 
-			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif') && !p.notexif && typeof EXIF != 'undefined'){
+			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif') && !p.notexif && typeof EXIF != 'undefined' && !isios()){
 				EXIF.getData(file, function() {
 
 					
@@ -10186,6 +10186,10 @@
 
 		else return 0
 
+	}
+
+	isios = function () {
+		return (window.cordova && window.device && f.deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
 	}
 
 	numberToBool = function(v){

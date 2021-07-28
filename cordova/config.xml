@@ -128,4 +128,17 @@
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
     </platform>
+
+    <universal-links>
+
+        <host name="pocketnet.app" scheme="https">
+            <path url="*" event="nav-message" />
+        </host>
+
+        <host name="test.pocketnet.app" scheme="https">
+            <path url="*" event="nav-message" />
+        </host>
+
+    </universal-links>
+
 </widget>
