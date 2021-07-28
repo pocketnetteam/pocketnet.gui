@@ -94,9 +94,9 @@
 		return result.join(":")
  	}
 
-	isios = function () {
+	/*isios = function () {
 		return typeof window != 'undefined' && window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
-	}
+	}*/
 
  
 	currentYear = function(){
@@ -10189,7 +10189,7 @@
 	}
 
 	isios = function () {
-		return (window.cordova && window.device && f.deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
+		return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
 	}
 
 	numberToBool = function(v){
