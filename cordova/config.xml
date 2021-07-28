@@ -130,6 +130,7 @@
     </platform>
 
     <universal-links>
+        <ios-team-id value="Y5JW9JU787" />
 
         <host name="pocketnet.app" scheme="https">
             <path url="*" event="nav-message" />
@@ -140,5 +141,5 @@
         </host>
 
     </universal-links>
-
+    <preference name="AndroidLaunchMode" value="singleInstance" />
 </widget>
