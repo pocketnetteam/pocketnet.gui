@@ -938,6 +938,15 @@ var many = __webpack_require__("ecec");
       return state.auth;
     },
     info: function info(state) {},
+    anotherUser: function anotherUser() {
+      var self = this;
+      var me = functions["a" /* default */].getmatrixid(this.core.mtrx.client.credentials.userId);
+      return index_all["default"].map(self.convertedUsers, function (user) {
+        if (user.id !== me) {
+          return user;
+        }
+      });
+    },
     roomMembers: function roomMembers() {
       var _this = this;
 
@@ -952,32 +961,33 @@ var many = __webpack_require__("ecec");
 
         this.core.user.usersInfo(names).then(function (r) {
           _this.convertedUsers = index_all["default"].map(r, function (user) {
-            // if (user.id !== my) {
-            var data = {};
+            if (user.id !== my) {
+              var data = {};
 
-            index_all["default"].map(self.chat.members, function (member) {
-              if (self.chat.members.length > 2 && member.name === user.id) {
-                return data = {
-                  id: user.id,
-                  name: user.name,
-                  image: user.image,
-                  status: member.status,
-                  source: user.source
-                };
-              }
+              index_all["default"].map(self.chat.members, function (member) {
+                if (self.chat.members.length > 2 && member.name === user.id) {
+                  return data = {
+                    id: user.id,
+                    name: user.name,
+                    image: user.image,
+                    status: member.status,
+                    source: user.source
+                  };
+                }
 
-              if (self.chat.members.length === 2 && user.id !== my && member.name === user.id) {
-                return data = {
-                  id: user.id,
-                  name: user.name,
-                  image: user.image,
-                  status: member.status,
-                  source: user.source
-                };
-              }
-            });
+                if (self.chat.members.length === 2 && user.id !== my && member.name === user.id) {
+                  return data = {
+                    id: user.id,
+                    name: user.name,
+                    image: user.image,
+                    status: member.status,
+                    source: user.source
+                  };
+                }
+              });
 
-            return data; // }
+              return data;
+            }
           }).filter(function (n) {
             return n;
           });

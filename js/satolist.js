@@ -3136,7 +3136,7 @@ Platform = function (app, listofnodes) {
 
                 var regs = self.sdk.registrations.storage[address];
 
-                return (!self.sdk.registrations.storage[address + 'rm'] && regs && regs <= 5)
+                return (!self.sdk.registrations.storage[address + 'rm'] && regs > 2 /*&& regs <= 5*/)
              
             },
 
@@ -12459,6 +12459,9 @@ Platform = function (app, listofnodes) {
                                 if (regs && (regs == 4)) {
 
                                     self.sdk.registrations.add(addr, 5)
+                                    
+
+                                    platform.matrixchat.update()
 
                                     var cm = deep(app, 'modules.menu.module.restart')
                                     if (cm) cm()
@@ -17997,12 +18000,28 @@ Platform = function (app, listofnodes) {
 
                         })
                     })
+                    
 
                     platform.sdk.newmaterials.update(data)
 
                     platform.sdk.user.subscribeRef()
 
                     platform.matrixchat.init()
+
+                    ////////////////
+
+                    var addr = self.sdk.address.pnet().address
+
+                    var regs = app.platform.sdk.registrations.storage[addr];
+
+                    if (regs == 5) {
+
+                        self.sdk.registrations.add(addr, 6)
+
+                        platform.matrixchat.update()
+                    }
+
+                    ////////
 
                     setTimeout(function () {
                         platform.sdk.relayTransactions.send()
@@ -20818,8 +20837,9 @@ Platform = function (app, listofnodes) {
 
                     var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
+                    if (window.testpocketnet && state) {
 
-                    if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
+                    //if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
 
                             self.matrixchat.import(function(){
 
@@ -21090,6 +21110,11 @@ Platform = function (app, listofnodes) {
             if (c) c()
         },
 
+        update : function(){
+            if(!self.matrixchat.core) return
+
+            self.matrixchat.core.updateUser()
+        },
 
         transaction : function(id, roomid){
 
