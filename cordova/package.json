@@ -20,7 +20,6 @@
     "cordova-plugin-badge": "0.8.8",
     "cordova-plugin-inappbrowser": "4.0.0",
     "cordova-plugin-gallery-refresh": "^1.0.61",
-    "cordova-plugin-keyboard": "^1.2.0",
     "cordova-plugin-screen-orientation": "^3.0.1",
     "cordova-support-android-plugin": "1.0.1",
     "es6-promise-plugin": "^4.2.2"
@@ -40,6 +39,7 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-opener2": "^3.0.5",
     "cordova-plugin-firebasex": "^11.0.3",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-media": "^5.0.3",
     "cordova-plugin-network-information": "^1.2.1",
     "cordova-plugin-statusbar": "^2.4.3",
@@ -63,7 +63,6 @@
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-badge": {},
       "cordova-plugin-gallery-refresh": {},
-      "cordova-plugin-keyboard": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-firebasex": {
         "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
@@ -100,7 +99,8 @@
         "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
       },
       "cordova-plugin-file-opener2": {},
-      "cordova-plugin-contacts-x": {}
+      "cordova-plugin-contacts-x": {},
+      "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
       "android",
