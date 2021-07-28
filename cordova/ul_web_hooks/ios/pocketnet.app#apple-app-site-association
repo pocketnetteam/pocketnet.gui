@@ -3,9 +3,10 @@
     "apps": [],
     "details": [
       {
-        "appID": "<YOUR_TEAM_ID_FROM_MEMBER_CENTER>.app.pocketnet",
+        "appID": "<YOUR_TEAM_ID_FROM_MEMBER_CENTER>.pocketnet.app",
         "paths": [
-          "*"
+          "*",
+          "/"
         ]
       }
     ]
