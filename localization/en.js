@@ -1081,3 +1081,4 @@ ____loclib.transactionnotfound = "Transaction not found";
 
 ____loclib.donateself = "You can't donate yourself";
 ____loclib.donated = 'donated'
+____loclib.incoins = "Enough coins"

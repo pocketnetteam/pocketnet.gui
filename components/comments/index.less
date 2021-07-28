@@ -431,8 +431,9 @@
 							}
 						}
 
-						.donated{
+						.donater{
 							animation: rotation 3s infinite linear;
+							margin-bottom: 10px;
 						}
 					}
 				}
@@ -489,14 +490,16 @@
 
 				.donate{
 					display: inline;
+					background: #00a4ffd6;
 					border-radius: 25px;
 					padding: @rhythm;
+					padding-left: @rhythm * 2;
+					padding-right: @rhythm * 2;
 					color: white;
 					margin-left: @rhythm;
 					font-size: .8em;
 					font-weight: 500;
-					background: @color-main;
-					
+					white-space: nowrap;
 				}
 
 				.date{	
@@ -1809,6 +1812,12 @@ html.stblack{
 
 					span{
 						font-size: 1em;
+					}
+
+					.donate{
+						margin-left: 0;
+						position: relative;
+						top: 4px;
 					}
 					
 					&.panelWrapper{

@@ -501,6 +501,8 @@
 
 	wnd = function(p){
 
+		console.log('wnd!!!', p);
+
 		if(!p) p = {};
 
 		var self = this,

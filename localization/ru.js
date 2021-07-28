@@ -885,3 +885,4 @@ ____loclib.failedStreamGeneration = 'Unable to start stream'
 
 ____loclib.donateself = "Вы не можете отправить пожертвование самому себе";
 ____loclib.donated = 'пожертвовал'
+____loclib.incoins = "Недостаточно средств"

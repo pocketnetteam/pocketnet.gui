@@ -394,14 +394,19 @@ var embeding = (function(){
 				buttons : {
 
 					close : {
-						class : "close",
-						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('finish'),
+						class : "save",
+						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('add'),
 						fn : function(wnd, wndObj){
 
 							actions.add[type]()
 
 						}
-					}
+					},
+
+					discard : {
+						class : "close",
+						html : '<i class="fa fa-times"></i> ' + self.app.localization.e('close'),
+					},
 
 				},
 				close : function(){

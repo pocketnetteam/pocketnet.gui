@@ -467,6 +467,7 @@ var comments = (function(){
 					open : true,
 					id : 'embeding',
 					inWnd : true,
+					donate: true,
 
 					essenseData : {
 						type : 'images',
