@@ -38,7 +38,7 @@ class OG {
         if (isset($get['address'])) $this->author = $this->clean($get['address']);
         if (isset($get['connect'])) {
             $this->author = $this->clean($get['connect']);
-            $this->connect = TRUE
+            $this->connect = TRUE;
         }
 
         if ($this->author == NULL) {
