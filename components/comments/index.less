@@ -421,6 +421,19 @@
 					.usericon{
 						position: relative;
 						/*margin : 0 auto;*/
+
+						@keyframes rotation {
+							from {
+								transform: rotate(0deg);
+							}
+							to {
+								transform: rotate(359deg);
+							}
+						}
+
+						.donated{
+							animation: rotation 3s infinite linear;
+						}
 					}
 				}
 
@@ -905,6 +918,8 @@
 					float: none;
 					.usericon{
 						position: relative;
+												
+
 						/*margin : 0 auto;*/
 					}
 				}
