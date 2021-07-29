@@ -398,8 +398,6 @@ var comments = (function(){
 
 							added : function(value){
 
-								new Audio('sounds/donate.mp3').play();
-
 								var result = Boolean(value);
 
 
@@ -420,7 +418,6 @@ var comments = (function(){
 
 									}
 
-									console.log('recveiver image', deep(app, 'platform.sdk.usersl.storage.'+receiver+'.image') )
 									if (receiver === self.sdk.address.pnet().address){
 
 										sitemessage(self.app.localization.e('donateself'));
@@ -429,6 +426,8 @@ var comments = (function(){
 
 
 										if (result){
+
+											new Audio('sounds/donate.mp3').play();
 
 											renders.donate(id, p)
 

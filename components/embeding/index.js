@@ -31,9 +31,9 @@ var embeding = (function(){
 				name : self.app.localization.e('wsamountof'),
 				type : "NUMBER",
 				id : 'amount',
-				placeholder : self.app.localization.e('wsamountof'),
+				placeholder : '0',
 				format : {
-					Precision : 6
+					Precision : 3
 				}
 			}),
 

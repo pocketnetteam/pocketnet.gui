@@ -54,7 +54,6 @@
   font-weight: 700;
 }
 #embeding .donateWrapper {
-  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -121,7 +120,70 @@
 #embeding .donateWrapper .transaction {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 1em;
+}
+#embeding .donateWrapper .transaction .coinsWrapper {
+  display: flex;
+  justify-content: space-between;
+  height: 38px;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .sender,
+#embeding .donateWrapper .transaction .coinsWrapper .receiver {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 2px solid white;
+  padding: 0.5em;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .sender {
+  border-right: 0;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .receiver {
+  border-left: 0;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .receiver input {
+  width: 72%;
+  margin-left: 0;
+  border: 0;
+  text-align: right;
+  padding: 0;
+  padding-right: 5px;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .receiver .text {
+  margin-top: 1px;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .chevron-right {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 25px;
+  height: 42px;
+  border: 2px solid transparent;
+  border-radius: 100px;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .chevron-right.left {
+  left: 4px;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .chevron-right.center {
+  left: 12px;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .chevron-right.right {
+  left: 19px;
+}
+#embeding .donateWrapper .transaction .coinsWrapper .chevron-right::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 26.5px;
+  height: 26.5px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  transform: rotate(-45deg);
+  right: 3px;
+  top: 4px;
 }
 #embeding .donateWrapper .inputWrapper {
   margin-top: 1em;
