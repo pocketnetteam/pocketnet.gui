@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
-    "cc.fovea.cordova.openwith": "^2.0.0",
+    "cordova-android": "^9.1.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-androidx": "^3.0.0",
@@ -111,7 +111,8 @@
       "cordova-universal-links-plugin": {}
     },
     "platforms": [
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

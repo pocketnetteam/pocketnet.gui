@@ -137,13 +137,13 @@
         </array>
         </config-file>
 
-
     </platform>
     <platform name="android">
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" />
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
+
     </platform>
 
     <universal-links>
@@ -158,5 +158,4 @@
         </host>
 
     </universal-links>
-    <preference name="AndroidLaunchMode" value="singleInstance" />
 </widget>
