@@ -496,7 +496,7 @@ var typing = __webpack_require__("0826");
 // EXTERNAL MODULE: ./src/components/contacts/index.vue + 4 modules
 var contacts = __webpack_require__("71da");
 
-// EXTERNAL MODULE: ./src/application/functions.js + 1 modules
+// EXTERNAL MODULE: ./src/application/functions.js
 var functions = __webpack_require__("3139");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chat/topheader?vue&type=script&lang=js&

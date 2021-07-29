@@ -449,7 +449,7 @@ var typing = __webpack_require__("0826");
 // EXTERNAL MODULE: ./src/components/contacts/index.vue + 4 modules
 var contacts = __webpack_require__("71da");
 
-// EXTERNAL MODULE: ./src/application/functions.js + 1 modules
+// EXTERNAL MODULE: ./src/application/functions.js
 var functions = __webpack_require__("3139");
 
 // CONCATENATED MODULE: ./src/components/chat/topheader/index.js
