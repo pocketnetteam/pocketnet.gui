@@ -229,7 +229,13 @@ var Peertube = function (settings) {
 
     roys: () =>
       Promise.resolve(
-        Object.values(roys).map((roy) => roy.hosts().map((host) => host.host)),
+        Object.entries(roys).reduce(
+          (accumulator, [name, roy]) => ({
+            [name]: roy.hosts().map((host) => host.host),
+            ...accumulator,
+          }),
+          {},
+        ),
       ),
   };
 
