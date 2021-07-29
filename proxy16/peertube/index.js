@@ -226,6 +226,11 @@ var Peertube = function (settings) {
           }),
         );
     },
+
+    roys: () =>
+      Promise.resolve(
+        Object.values(roys).map((roy) => roy.hosts().map((host) => host.host)),
+      ),
   };
 
   self.addroy = function (urls, key) {

@@ -149,6 +149,8 @@ var Roy = function (parent) {
     return info;
   };
 
+  self.hosts = () => instances;
+
   self.performance = () => {
     const promises = instances.map((inst) => inst.performance());
 

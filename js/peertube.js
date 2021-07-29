@@ -489,6 +489,8 @@ PeerTubePocketnet = function (app) {
             return Promise.resolve();
           });
       },
+
+      roys: () => app.api.fetch('peertube/roys'),
     },
 
     videos: {
