@@ -121,7 +121,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1em;
+  margin-top: 2em;
 }
 #embeding .donateWrapper .transaction .coinsWrapper {
   display: flex;
@@ -323,6 +323,16 @@
   }
   #embeding .pg .imagesWrapper .upload .subtitle {
     display: none;
+  }
+  #embeding .pg .donateWrapper .coinsWrapper .sender {
+    display: none;
+  }
+  #embeding .pg .donateWrapper .coinsWrapper .chevron-right.left,
+  #embeding .pg .donateWrapper .coinsWrapper .chevron-right.center {
+    display: none;
+  }
+  #embeding .pg .donateWrapper .coinsWrapper .receiver {
+    margin-right: 25px;
   }
   .wnd.embeding .wndcontent {
     overflow-y: hidden;
