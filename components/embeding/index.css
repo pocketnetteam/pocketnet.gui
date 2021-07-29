@@ -207,7 +207,15 @@
 .wnd.embeding .wndinner.donate {
   background: #22b2a4;
   color: white;
-  height: 240px;
+  height: 270px;
+}
+.wnd.embeding .wndinner.donate .caption {
+  margin-bottom: 0!important;
+  font-size: 1.5em;
+}
+.wnd.embeding .wndinner.donate .subcaption {
+  text-align: center;
+  font-size: 0.8em;
 }
 .wnd.embeding .wndinner.donate .wndcontent,
 .wnd.embeding .wndinner.donate .buttons {

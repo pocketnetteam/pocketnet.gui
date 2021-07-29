@@ -515,6 +515,9 @@ ____loclib.e13093 = "Please choose donation way"
 ____loclib.e13094 = "Something went wrong. Please reload page and try again (error: 0001)"
 ____loclib.e13095 = 'Thank you for supporting our work for freedom. We will make sure every penny counts.'
 ____loclib.e13096 = 'Please fill amount of donation'
+____loclib.e130961 = 'How much do you want to send?'
+____loclib.e130962 = 'You can support this user and send PKOIN'
+
 ____loclib.e13097 = "Something went wrong. Please reload page and try again (error: 0002)"
 ____loclib.e13098 = "Add link to external site or resource"
 ____loclib.e13099 = "Upload Images"
