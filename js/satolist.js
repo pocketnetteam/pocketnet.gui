@@ -17041,7 +17041,7 @@ Platform = function (app, listofnodes) {
                 return filterXSS(deep(author, 'name') || author.address)
             },
 
-            user: function (author, html, gotoprofile, caption, extra, time) {
+            user: function (author, html, gotoprofile, caption, extra, time, donation) {
 
                 if (!author || !author.name) {
                     return html
@@ -17101,7 +17101,16 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (caption) {
-                    h += " " + clearStringXss(caption)
+
+                    if (donation){
+
+                        h += " " + caption;
+
+                    } else {
+
+                        h += " " + clearStringXss(caption)
+
+                    }
                 }
 
                 h += '</div>\
@@ -18288,6 +18297,8 @@ Platform = function (app, listofnodes) {
 
                 fastMessage: function (data) {
 
+                    console.log('fastMessage', data);
+
                     var text = '';
                     var html = '';
 
@@ -18300,6 +18311,7 @@ Platform = function (app, listofnodes) {
 
                         var me = platform.sdk.user.me()
                         if (me && me.relation(data.user.address, 'blocking')) {
+
                             return html
                         }
                         
@@ -18310,9 +18322,23 @@ Platform = function (app, listofnodes) {
 
                         text = self.tempates.comment(data.comment, self.tempates.share(data.share))
 
+                        var toptext = self.app.localization.e('e13337');
+
+                        if (data.donation && data.amount){
+
+                            var amount = String(Number(data.amount) / smulti || 0);
+                            toptext = '<span>' + self.app.localization.e('donated') + '</span>' + ' <span class="donate"> +' + amount + ' PKOIN </span>';
+                        }  
+
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + self.app.localization.e('e13337'), extra, data.time)
+                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
+
+                            console.log('toptext', toptext);
+                            html += toptext
                         }
+
+                                             
+
                     }
 
                     if (data.reason == 'answer' && data.comment && data.share && data.user &&
@@ -18320,22 +18346,13 @@ Platform = function (app, listofnodes) {
 
                         text = self.tempates.comment(data.comment/*, self.tempates.share(data.share)*/)
 
-
-
                         if (text) {
 
                             var toptext = self.app.localization.e('e13337')
 
-                            if (data.donation == 'true' && data.amount){
-
-                                var amount = String(Number(data.amount) / smulti || 0);
-                                toptext = self.app.localization.e('donated') + ' ' + amount + ' PKOIN </span>';
-                            }   
-
                             html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
                         }
                     }
-
 
                     return html;
 
@@ -19182,7 +19199,7 @@ Platform = function (app, listofnodes) {
 
                 if (data.txid) {
 
-                    if (txidstorage[data.txid]) return;
+                    if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
                     txidstorage[data.txid] = true
 
@@ -19231,10 +19248,6 @@ Platform = function (app, listofnodes) {
                             if (html) {
 
                                 var txid = data.txid
-
-                                if (data.donation === 'true'){
-                                    txid += '_donation'
-                                }
 
                                 if(!self.showedIds[txid]) {
                                     self.showedIds[txid] = true
