@@ -403,12 +403,6 @@ var es_array_filter = __webpack_require__("4de4");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.map.js
 var es_array_map = __webpack_require__("d81d");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
-var es_array_includes = __webpack_require__("caad");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.includes.js
-var es_string_includes = __webpack_require__("2532");
-
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
 var es_function_name = __webpack_require__("b0c0");
 
@@ -1454,8 +1448,6 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
 
 
 
-
-
 /* harmony default export */ var info_vue_type_script_lang_js_ = ({
   data: function data() {
     return {
@@ -1591,8 +1583,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
         return n;
       });
 
-      var blackList = this.core.mtrx.client.getIgnoredUsers();
-      return blackList.includes('@' + user[0] + this.core.domain);
+      return this.core.mtrx.client.isUserIgnored('@' + user[0] + ':' + this.core.domain);
     },
     users: function users() {
       var _this$chat,
@@ -1639,7 +1630,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       this.currentUser = this.core.mtrx.client.credentials.userId; // console.log(this.chat.members, "this chat from room info")
 
       if (this.m_chat._selfMembership === 'join') {
-        self.chatMembers = index_all["default"].map(self.chat.members, function (member) {
+        this.chatMembers = index_all["default"].map(self.chat.members, function (member) {
           var userInfo = {};
 
           index_all["default"].map(pNetUsers, function (user) {
@@ -1752,7 +1743,6 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       var self = this;
       var domain = this.core.domain;
       var blackList = this.core.mtrx.client.getIgnoredUsers();
-      console.log(blackList, "before set");
       var mId = functions["a" /* default */].getmatrixid(this.core.mtrx.client.credentials.userId);
 
       var user = index_all["default"].map(self.chatMembers, function (member) {
@@ -1764,7 +1754,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       });
 
       if (blackList.indexOf('@' + user[0] + ':' + domain) === -1) {
-        blackList.push(user[0]);
+        blackList.push('@' + user[0] + ':' + domain);
         this.core.mtrx.client.setIgnoredUsers(blackList).then(function (r) {
           console.log(_this3.core.mtrx.client.getIgnoredUsers(), "set ignored users");
           return r;

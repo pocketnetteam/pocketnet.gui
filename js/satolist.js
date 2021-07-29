@@ -47,7 +47,9 @@ Platform = function (app, listofnodes) {
         'PVjvMwapTA29biRTsksXUBuVVf2HVwY7ps' : true,
         'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR' : true,
         'PUqq6vksrmoMPRrRjZxCVQefqGLpuaqWii' : true,
-        'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs' : true
+        'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs' : true,
+        'PNUMTC5CTH3F5LfQpkmj3MXcDnGNKTU4ov' : true,
+        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
     
@@ -21007,6 +21009,23 @@ Platform = function (app, listofnodes) {
         },
 
         share : {
+
+            object : function(sharing){
+                if (self.matrixchat.core){
+
+                    self.matrixchat.core.apptochat()
+
+                    return self.matrixchat.core.share(sharing).catch(e => {
+
+                        self.matrixchat.core.backtoapp()
+
+                        return Promise.reject(e)
+                    })
+                }
+
+                return Promise.reject('matrixchat.core')
+            },
+
             url : function(url){
                 if (self.matrixchat.core){
 
@@ -21415,6 +21434,97 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.cordovaSetup = function(){
+
+        function setupOpenwith() {
+
+            if(!cordova.openwith) return
+
+            var mime = {
+
+                'image/jpeg' : 'images',
+                'image/jpg' : 'images',
+                'image/png' : 'images',
+                'image/webp' : 'images',
+                'application/pdf' : 'files',
+                'application/msword' : 'files',
+                'text/plain' : 'files'
+
+            }
+ 
+            cordova.openwith.init();
+            cordova.openwith.addHandler(function(intent){
+                var sharing = {}
+       
+                if (intent.exit) { cordova.openwith.exit(); }
+
+                var promises = _.map(intent.items || [], (item) => {
+                    return new Promise((resolve, reject) => {
+
+                        if(!item.type || !mime[item.type]){
+                            resolve()
+                        }
+                        else{
+                            cordova.openwith.load(item, function(data) {
+                            
+                                item.data = data
+    
+                                resolve()
+                                
+                            });
+                        }
+
+                        
+                    }).then(r => {
+                        
+                        if (item.text){
+                            if(!sharing.messages) sharing.messages = []
+
+                            sharing.messages.push(item.text)
+                        }
+
+                        if(item.type && mime[item.type] && item.data){
+                            if(!sharing[mime[item.type]]){
+                                sharing[mime[item.type]] = []
+                            }
+
+                            sharing[mime[item.type]].push(item.data)
+                        }
+                        
+                        return Promise.resolve()
+                    })
+                })
+
+
+                Promise.all(promises).then(r => {
+                    if(_.isEmpty(sharing)){
+                        sitemessage(self.app.localization.e('e13293'))
+                    }
+                    else{
+                        self.matrixchat.share.object(sharing).catch(r => {
+
+                            sitemessage(self.app.localization.e('e13293'))
+
+                            console.log("R", r)
+                        })
+                    }
+                })
+            });
+
+        }
+
+
+        ///////////
+
+
+        if(window.cordova){
+            setupOpenwith()
+        }
+
+        
+
+    }
+
 
     self.navManager = function(){
 
@@ -21474,6 +21584,7 @@ Platform = function (app, listofnodes) {
     self.cryptography = new self.Cryptography();
 
     self.autoUpdater()
+    self.cordovaSetup()
 
     self.matrixchat.connectWith = parameters().connect
 
