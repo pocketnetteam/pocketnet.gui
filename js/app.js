@@ -746,6 +746,10 @@ Application = function(p)
 
 	self.deviceReadyInit = function(p){
 
+		if (window.Keyboard){
+			window.Keyboard.disableScroll(false)
+		}
+
 		self.el = {
 			content : 		$('#content'),
 			app : 			$('#application'),
