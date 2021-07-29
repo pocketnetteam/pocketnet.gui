@@ -1125,12 +1125,31 @@
 
 		.embeddonate{
 			position: absolute;
-			right : 70px;
-			top : 2px;
+			right : 68px;
+			top : 0px;
 			padding : 6px;
 			cursor: pointer;
 			color : @color-gray-light;
 			.transition(0.3s);
+
+			img{
+				height: 15px;
+			}
+
+			.donate-hover{
+				display: none;
+			}
+
+			&:hover{
+				.donate-hover{
+					display: inline;
+				} 
+
+				.donate{
+					display: none;
+				}
+			}
+		
 
 			&:hover{
 				color : @color-black2;

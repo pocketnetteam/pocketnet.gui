@@ -935,8 +935,8 @@
 #comments .answer .embeddonate,
 #comments .post .embeddonate {
   position: absolute;
-  right: 70px;
-  top: 2px;
+  right: 68px;
+  top: 0px;
   padding: 6px;
   cursor: pointer;
   color: #d0c9ca;
@@ -944,6 +944,26 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+}
+#comments .edit .embeddonate img,
+#comments .answer .embeddonate img,
+#comments .post .embeddonate img {
+  height: 15px;
+}
+#comments .edit .embeddonate .donate-hover,
+#comments .answer .embeddonate .donate-hover,
+#comments .post .embeddonate .donate-hover {
+  display: none;
+}
+#comments .edit .embeddonate:hover .donate-hover,
+#comments .answer .embeddonate:hover .donate-hover,
+#comments .post .embeddonate:hover .donate-hover {
+  display: inline;
+}
+#comments .edit .embeddonate:hover .donate,
+#comments .answer .embeddonate:hover .donate,
+#comments .post .embeddonate:hover .donate {
+  display: none;
 }
 #comments .edit .embeddonate:hover,
 #comments .answer .embeddonate:hover,

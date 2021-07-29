@@ -398,6 +398,8 @@ var comments = (function(){
 
 							added : function(value){
 
+								new Audio('sounds/donate.mp3').play();
+
 								var result = Boolean(value);
 
 
