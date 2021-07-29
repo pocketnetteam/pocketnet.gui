@@ -47,7 +47,9 @@ Platform = function (app, listofnodes) {
         'PVjvMwapTA29biRTsksXUBuVVf2HVwY7ps' : true,
         'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR' : true,
         'PUqq6vksrmoMPRrRjZxCVQefqGLpuaqWii' : true,
-        'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs' : true
+        'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs' : true,
+        'PNUMTC5CTH3F5LfQpkmj3MXcDnGNKTU4ov' : true,
+        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
     
@@ -3147,7 +3149,7 @@ Platform = function (app, listofnodes) {
 
                 var regs = self.sdk.registrations.storage[address];
 
-                return (!self.sdk.registrations.storage[address + 'rm'] && regs && regs <= 5)
+                return (!self.sdk.registrations.storage[address + 'rm'] && regs > 2 /*&& regs <= 5*/)
              
             },
 
@@ -12526,6 +12528,9 @@ Platform = function (app, listofnodes) {
                                 if (regs && (regs == 4)) {
 
                                     self.sdk.registrations.add(addr, 5)
+                                    
+
+                                    platform.matrixchat.update()
 
                                     var cm = deep(app, 'modules.menu.module.restart')
                                     if (cm) cm()
@@ -16438,7 +16443,7 @@ Platform = function (app, listofnodes) {
 
                 if(exist) return Promise.resolve()
 
-                if(self.api.existanother(proxy, address)) return self.revokeall()
+                if(self.api.existanother(proxy, address)) return self.request.revokeall()
 
             }).then(r => {
                 return self.api.setToken(address, token, proxy)
@@ -16516,8 +16521,13 @@ Platform = function (app, listofnodes) {
                 FirebasePlugin.getToken(function(token) {
 
                     currenttoken = token
+                    platform.fcmtoken = token
 
-                    console.log('currenttoken', currenttoken)
+                    console.log("FCM TOKEN GET", token)
+
+                    platform.matrixchat.changeFcm()
+
+                    self.events()
 
                     if (clbk)
                         clbk(currenttoken)
@@ -16605,23 +16615,17 @@ Platform = function (app, listofnodes) {
                 
             });
 
-            var trySettingTokenOnMatrix = function(token) {
-                // Update the token on the Matrix element if we can
-                if (platform && platform.matrixchat && platform.matrixchat.el) {
-                    platform.matrixchat.el.find('matrix-element').attr('fcmtoken', token);
-                    return;
-                }
-                // Else, wait a bit and retry
-                setTimeout(() => {
-                    trySettingTokenOnMatrix(token);
-                }, 1000);
-            }
-
+         
             // When token is refreshed, update the matrix element for the Vue app
             FirebasePlugin.onTokenRefresh(function(token) {
 
-                if (token && platform.app && platform.app.user && platform.app.user.getstate && platform.app.user.getstate() == 1)
-                    trySettingTokenOnMatrix(token);
+                console.log("FCM TOKEN REFRESH", token)
+
+                platform.fcmtoken = token   
+                currenttoken = token
+                platform.matrixchat.changeFcm()
+
+                //prepareclbk(token)
                 
             }, function(error) {
                 console.error(error);
@@ -16629,28 +16633,31 @@ Platform = function (app, listofnodes) {
 
         }
 
-        self.init = function(clbk){
+        var prepareclbk = function(token){
 
-            console.log('self.initself.init')
+            if (token){
+
+                var proxy = platform.app.api.get.current()
+
+                if (proxy){
+                    self.set(proxy.id).catch(e => {
+                        console.log("error", e)
+                    })
+                }
+
+            }
+
+        }
+
+        self.init = function(clbk){
 
             self.prepare(function(token){
 
-                if (token){
-
-                    var proxy = platform.app.api.get.current()
-
-                    if (proxy){
-                        self.set(proxy.id).catch(e => {
-                            console.log("error", e)
-                        })
-                    }
-
-                }
+                prepareclbk(token)
 
             })
 
             if(clbk) clbk()
-            
         }
 
         self.prepare = function(clbk){
@@ -16658,7 +16665,7 @@ Platform = function (app, listofnodes) {
             self.storage.load()
 
 			if (using) {
-				self.events()
+				
 				self.permissions(clbk)
 			}
             else{
@@ -18105,12 +18112,31 @@ Platform = function (app, listofnodes) {
 
                         })
                     })
+                    
 
                     platform.sdk.newmaterials.update(data)
 
                     platform.sdk.user.subscribeRef()
 
                     platform.matrixchat.init()
+
+                    ////////////////
+
+                    if(app.platform.sdk.address.pnet()){
+                        var addr = app.platform.sdk.address.pnet().address
+
+                        var regs = app.platform.sdk.registrations.storage[addr];
+
+                        if (regs == 5) {
+
+                            self.sdk.registrations.add(addr, 6)
+
+                            platform.matrixchat.update()
+                        }
+                    }
+                    
+
+                    ////////
 
                     setTimeout(function () {
                         platform.sdk.relayTransactions.send()
@@ -20945,14 +20971,17 @@ Platform = function (app, listofnodes) {
 
                     var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
+                    if (window.testpocketnet && state) {
 
-                    if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
+                    //if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
 
                             self.matrixchat.import(function(){
 
                                 self.matrixchat.inited = true
         
                                 var privatekey = self.app.user.private.value.toString('hex');
+
+                                console.log('localization', self.app.localization.key)
                     
                                 var matrix = `<div class="wrapper matrixchatwrapper">
                                     <matrix-element
@@ -20961,6 +20990,8 @@ Platform = function (app, listofnodes) {
                                         pocketnet="`+(isMobile() ? '' : 'true')+`"
                                         mobile="`+(isMobile() ? 'true' : '')+`" 
                                         ctheme="`+self.sdk.theme.current+`"
+                                        localization="`+self.app.localization.key+`"
+                                        fcmtoken="`+(self.fcmtoken || "")+`"
                                     >
                                     </matrix-element>
                                 </div>`
@@ -20978,10 +21009,22 @@ Platform = function (app, listofnodes) {
                 }
             })
         },
+
+        changeFcm : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('fcmtoken', self.fcmtoken)
+            }
+        },
         
         changeTheme : function(){
             if(self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
+            }
+        },
+
+        changeLocalization : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('localization', self.app.localization.key)
             }
         },
 
@@ -21095,6 +21138,23 @@ Platform = function (app, listofnodes) {
         },
 
         share : {
+
+            object : function(sharing){
+                if (self.matrixchat.core){
+
+                    self.matrixchat.core.apptochat()
+
+                    return self.matrixchat.core.share(sharing).catch(e => {
+
+                        self.matrixchat.core.backtoapp()
+
+                        return Promise.reject(e)
+                    })
+                }
+
+                return Promise.reject('matrixchat.core')
+            },
+
             url : function(url){
                 if (self.matrixchat.core){
 
@@ -21123,6 +21183,9 @@ Platform = function (app, listofnodes) {
             })
 
             core.backtoapp = function(link){
+
+                if(document.activeElement) document.activeElement.blur()
+
                 if (self.matrixchat.el)
                     self.matrixchat.el.removeClass('active')
 
@@ -21145,6 +21208,9 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(){
+
+                if(document.activeElement) document.activeElement.blur()
+                
                 if (self.matrixchat.el)
                     self.matrixchat.el.addClass('active')
 
@@ -21177,6 +21243,8 @@ Platform = function (app, listofnodes) {
             var c = deep(app, 'nav.clbks.history.navigation')
 
             if (c) c()
+
+            self.matrixchat.connect()
         },
 
         unlink : function(){    
@@ -21187,6 +21255,8 @@ Platform = function (app, listofnodes) {
             
             }
 
+
+            self.matrixchat.connectWith = null
 
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
             delete self.matrixchat.core
@@ -21201,6 +21271,11 @@ Platform = function (app, listofnodes) {
             if (c) c()
         },
 
+        update : function(){
+            if(!self.matrixchat.core) return
+
+            self.matrixchat.core.updateUser()
+        },
 
         transaction : function(id, roomid){
 
@@ -21213,7 +21288,21 @@ Platform = function (app, listofnodes) {
             if(!roomid) return
 
             self.matrixchat.core.mtrx.transaction(roomid, id)
-        }
+        },
+
+        connect : function(){
+            if(!self.matrixchat.connectWith) return
+            if(!self.matrixchat.core) return
+
+            self.matrixchat.core.apptochat()
+            self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
+                self.matrixchat.connectWith = null
+            }).catch(e => {
+                console.log('e', e)
+                self.matrixchat.connectWith = null
+            })
+        },
+
     }
 
     self.initSounds = function () {
@@ -21474,6 +21563,97 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.cordovaSetup = function(){
+
+        function setupOpenwith() {
+
+            if(!cordova.openwith) return
+
+            var mime = {
+
+                'image/jpeg' : 'images',
+                'image/jpg' : 'images',
+                'image/png' : 'images',
+                'image/webp' : 'images',
+                'application/pdf' : 'files',
+                'application/msword' : 'files',
+                'text/plain' : 'files'
+
+            }
+ 
+            cordova.openwith.init();
+            cordova.openwith.addHandler(function(intent){
+                var sharing = {}
+       
+                if (intent.exit) { cordova.openwith.exit(); }
+
+                var promises = _.map(intent.items || [], (item) => {
+                    return new Promise((resolve, reject) => {
+
+                        if(!item.type || !mime[item.type]){
+                            resolve()
+                        }
+                        else{
+                            cordova.openwith.load(item, function(data) {
+                            
+                                item.data = data
+    
+                                resolve()
+                                
+                            });
+                        }
+
+                        
+                    }).then(r => {
+                        
+                        if (item.text){
+                            if(!sharing.messages) sharing.messages = []
+
+                            sharing.messages.push(item.text)
+                        }
+
+                        if(item.type && mime[item.type] && item.data){
+                            if(!sharing[mime[item.type]]){
+                                sharing[mime[item.type]] = []
+                            }
+
+                            sharing[mime[item.type]].push(item.data)
+                        }
+                        
+                        return Promise.resolve()
+                    })
+                })
+
+
+                Promise.all(promises).then(r => {
+                    if(_.isEmpty(sharing)){
+                        sitemessage(self.app.localization.e('e13293'))
+                    }
+                    else{
+                        self.matrixchat.share.object(sharing).catch(r => {
+
+                            sitemessage(self.app.localization.e('e13293'))
+
+                            console.log("R", r)
+                        })
+                    }
+                })
+            });
+
+        }
+
+
+        ///////////
+
+
+        if(window.cordova){
+            setupOpenwith()
+        }
+
+        
+
+    }
+
 
     self.navManager = function(){
 
@@ -21482,7 +21662,6 @@ Platform = function (app, listofnodes) {
             electron.ipcRenderer.on('nav-message', function (event, data) {
                 if (data.type == 'action') {
                     var route = data.msg
-
 
                     self.app.nav.api.load({
                         open: true,
@@ -21496,7 +21675,32 @@ Platform = function (app, listofnodes) {
 
         }
        
+        if (window.cordova && typeof universalLinks != 'undefined'){
 
+            universalLinks.subscribe('nav-message', function (eventData) {
+
+                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '')
+
+                if (route){
+                    self.app.nav.api.load({
+                        open: true,
+                        href: route,
+                        history: true
+                    })
+                }
+
+                /////////////
+
+                var w = parameters(eventData.url, true).connect
+
+                self.matrixchat.connectWith = w || null
+
+                self.matrixchat.connect()
+
+                
+            });
+
+        }
     }
 
     self.navManager()
@@ -21509,8 +21713,9 @@ Platform = function (app, listofnodes) {
     self.cryptography = new self.Cryptography();
 
     self.autoUpdater()
+    self.cordovaSetup()
 
-   
+    self.matrixchat.connectWith = parameters().connect
 
     return self;
 

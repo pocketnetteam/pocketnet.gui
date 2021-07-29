@@ -617,7 +617,7 @@ var registration = (function(){
 
 						var text = p.el.find('.qrcode img').attr('src')
 
-						saveAs({
+						p_saveAs({
 							file : text,
 							format : 'png',
 							name : 'pocketnetkey'
@@ -641,7 +641,7 @@ var registration = (function(){
 											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
 											
 
-											saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
+											p_saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
 												clbk()
 											})
 

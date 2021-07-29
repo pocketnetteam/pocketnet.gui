@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "Y5JW9JU787.pocketnet.app",
+        "paths": [
+          "*",
+          "/"
+        ]
+      }
+    ]
+  }
+}
