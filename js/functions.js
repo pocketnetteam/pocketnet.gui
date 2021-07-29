@@ -501,7 +501,7 @@
 
 	wnd = function(p){
 
-		console.log('wnd!!!', p);
+		console.log('p1!!', p);
 
 		if(!p) p = {};
 
@@ -555,8 +555,8 @@
 
 		var render = function(tpl){
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
-					 ';
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner ' + p.type + '">\
+			';
 
 			var closedbtnclass = ''
 

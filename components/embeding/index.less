@@ -94,7 +94,7 @@
 						.timelinebg{
 							height: 1px;
 							position: relative;
-							background: #d0c9ca;
+							background: white;
 
 							.timelinearrow{
 
@@ -104,7 +104,7 @@
 									margin-right: 3px;
 									left: -2px;
 									margin-top: -3px;
-									color: #0084ff;
+									color: white;
 
 								}
 
@@ -113,7 +113,7 @@
 									right: -3px;
 									top: -5px;
 									font-size: .8em;
-									color: #0084ff;
+									color: white;
 
 								}
 
@@ -124,7 +124,7 @@
 									position: absolute;
 									left: 0;
 									top: 0;
-									background: #0084ff;
+									background: white;
 
 								}
 							}
@@ -138,7 +138,7 @@
 								top: 0;
 								text-align: center;
 								font-size: .8em;
-								color: #bcb5b6;
+								color: white;
 							}
 
 						}
@@ -252,7 +252,35 @@
 		.wndinner{
 
 			width: 600px;
-			height: 230px;
+			height: 200px;
+
+			&.donate{
+				background: #22b2a4;
+				color: white;
+				height: 240px;
+
+				.wndcontent, .buttons{
+					background: inherit;
+				}
+
+				.buttons{
+					.close{
+						color: white;
+
+						&:hover{
+							color: white;
+						}
+					}
+					.save{
+						background: white;
+						color: #22b2a4;
+					}
+				}
+				input{
+					background: inherit;
+					color: white;
+				}
+			}
 		}
 	}
 
@@ -266,6 +294,7 @@
 			width: 100%;
 			height: 100%;
 			max-height: none;
+			
 		}
 
 		.wndcontent{

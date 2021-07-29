@@ -81,7 +81,7 @@
 #embeding .donateWrapper .stepWrapper .timeline .timelineWrapper > div .timelinebg {
   height: 1px;
   position: relative;
-  background: #d0c9ca;
+  background: white;
 }
 #embeding .donateWrapper .stepWrapper .timeline .timelineWrapper > div .timelinebg .timelinearrow .fa-circle {
   position: absolute;
@@ -89,14 +89,14 @@
   margin-right: 3px;
   left: -2px;
   margin-top: -3px;
-  color: #0084ff;
+  color: white;
 }
 #embeding .donateWrapper .stepWrapper .timeline .timelineWrapper > div .timelinebg .timelinearrow .fa-chevron-right {
   position: absolute;
   right: -3px;
   top: -5px;
   font-size: 0.8em;
-  color: #0084ff;
+  color: white;
 }
 #embeding .donateWrapper .stepWrapper .timeline .timelineWrapper > div .timelinebg .timelinearrow .timelinegill {
   display: inline-block;
@@ -105,7 +105,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: #0084ff;
+  background: white;
 }
 #embeding .donateWrapper .stepWrapper .timeline .timelineWrapper > div .timelinebg .balance {
   position: absolute;
@@ -116,7 +116,7 @@
   top: 0;
   text-align: center;
   font-size: 0.8em;
-  color: #bcb5b6;
+  color: white;
 }
 #embeding .donateWrapper .transaction {
   display: flex;
@@ -202,7 +202,30 @@
 }
 .wnd.embeding .wndinner {
   width: 600px;
-  height: 230px;
+  height: 200px;
+}
+.wnd.embeding .wndinner.donate {
+  background: #22b2a4;
+  color: white;
+  height: 240px;
+}
+.wnd.embeding .wndinner.donate .wndcontent,
+.wnd.embeding .wndinner.donate .buttons {
+  background: inherit;
+}
+.wnd.embeding .wndinner.donate .buttons .close {
+  color: white;
+}
+.wnd.embeding .wndinner.donate .buttons .close:hover {
+  color: white;
+}
+.wnd.embeding .wndinner.donate .buttons .save {
+  background: white;
+  color: #22b2a4;
+}
+.wnd.embeding .wndinner.donate input {
+  background: inherit;
+  color: white;
 }
 .wnd.loadimages ._close {
   right: 40px;

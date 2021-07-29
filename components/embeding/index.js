@@ -6,6 +6,7 @@ var embeding = (function(){
 
 	var Essense = function(p){
 
+
 		var primary = deep(p, 'history');
 
 		var el, type = null, subtype = null, on, maxImages = 6;
