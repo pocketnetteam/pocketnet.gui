@@ -50,7 +50,24 @@ var videoCabinet = (function () {
 
     var events = {};
 
-    var renders = {};
+    var renders = {
+      videos() {
+        const videos = Object.values(peertubeServers)
+          .map((value) => value.videos)
+          .flat();
+
+        self.shell(
+          {
+            name: 'videoList',
+            el: el.videoContainer,
+            data: {
+              videos,
+            },
+          },
+          function (p) {},
+        );
+      },
+    };
 
     var state = {
       save: function () {},
@@ -85,9 +102,9 @@ var videoCabinet = (function () {
             return Promise.all(serverPromises);
           })
           .then(() => {
-            debugger;
             clbk(data);
-          });
+          })
+          .catch(() => clbk(data));
       },
 
       destroy: function () {
@@ -100,7 +117,11 @@ var videoCabinet = (function () {
         el = {};
         el.c = p.el.find('#' + self.map.id);
 
+        el.videoContainer = el.c.find('.video-container');
+
         initEvents();
+
+        renders.videos();
 
         p.clbk(null, p);
       },
