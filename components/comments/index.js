@@ -1808,7 +1808,7 @@ var comments = (function(){
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
-							balance = amount.toFixed(2);
+							balance = amount.toFixed(3);
 							
 							var id = actions.getid(_p.el.find('.postbody'))
 
