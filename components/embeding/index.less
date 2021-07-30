@@ -228,6 +228,16 @@
 			
 		}
 
+		.subscription{
+			display: flex;
+			justify-content: space-between;
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 420px;
+			color: white;
+			opacity: 0.5;
+		}
+
 		.inputWrapper{
 			margin-top: 2 * @rhythm;
 			padding: 2 * @rhythm;
@@ -330,9 +340,9 @@
 			height: 200px;
 
 			&.donate{
-				background: #22b2a4;
+				background: #00a4ffd6;
 				color: white;
-				height: 270px;
+				height: 250px;
 
 				.caption{
 					margin-bottom: 0!important;
@@ -357,7 +367,7 @@
 					}
 					.save{
 						background: white;
-						color: #22b2a4;
+						color: #00a4ffd6;
 					}
 				}
 				input{
@@ -410,22 +420,36 @@
 		}
 
 		.donateWrapper{
-			.coinsWrapper{
+
+			.transaction{
+
+				.coinsWrapper{
+
+					.sender{
+						display: none;
+					}
+	
+					.chevron-right{
+						&.left, &.center{
+							display: none;
+						}
+					}
+	
+					.receiver{
+						margin-right: 25px;
+					}
+				}
+
+			}
+
+			.subscription{
+				justify-content: center;
 
 				.sender{
 					display: none;
 				}
-
-				.chevron-right{
-					&.left, &.center{
-						display: none;
-					}
-				}
-
-				.receiver{
-					margin-right: 25px;
-				}
 			}
+
 
 
 		}

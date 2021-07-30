@@ -182,6 +182,15 @@
   right: 3px;
   top: 4px;
 }
+#embeding .donateWrapper .subscription {
+  display: flex;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 420px;
+  color: white;
+  opacity: 0.5;
+}
 #embeding .donateWrapper .inputWrapper {
   margin-top: 1em;
   padding: 1em;
@@ -264,9 +273,9 @@
   height: 200px;
 }
 .wnd.embeding .wndinner.donate {
-  background: #22b2a4;
+  background: #00a4ffd6;
   color: white;
-  height: 270px;
+  height: 250px;
 }
 .wnd.embeding .wndinner.donate .caption {
   margin-bottom: 0!important;
@@ -288,7 +297,7 @@
 }
 .wnd.embeding .wndinner.donate .buttons .save {
   background: white;
-  color: #22b2a4;
+  color: #00a4ffd6;
 }
 .wnd.embeding .wndinner.donate input {
   background: inherit;
@@ -321,15 +330,21 @@
   #embeding .pg .imagesWrapper .upload .subtitle {
     display: none;
   }
-  #embeding .pg .donateWrapper .coinsWrapper .sender {
+  #embeding .pg .donateWrapper .transaction .coinsWrapper .sender {
     display: none;
   }
-  #embeding .pg .donateWrapper .coinsWrapper .chevron-right.left,
-  #embeding .pg .donateWrapper .coinsWrapper .chevron-right.center {
+  #embeding .pg .donateWrapper .transaction .coinsWrapper .chevron-right.left,
+  #embeding .pg .donateWrapper .transaction .coinsWrapper .chevron-right.center {
     display: none;
   }
-  #embeding .pg .donateWrapper .coinsWrapper .receiver {
+  #embeding .pg .donateWrapper .transaction .coinsWrapper .receiver {
     margin-right: 25px;
+  }
+  #embeding .pg .donateWrapper .subscription {
+    justify-content: center;
+  }
+  #embeding .pg .donateWrapper .subscription .sender {
+    display: none;
   }
   .wnd.embeding .wndcontent {
     overflow-y: hidden;
