@@ -3,16 +3,49 @@ var videoCabinet = (function () {
 
   var essenses = {};
 
+  var videoServers = {};
+
+  var peertubeServers = {};
+
+  var perServerCounter = 10;
+
+  var startingPosition = 0;
+
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
     var el;
 
     var actions = {
-      async getVideos() {
-		const serverStructure = await self.app.peertubeHandler.api.proxy.roys();
-		debugger;
-	  },
+      async getHosts() {
+        const serverStructureHosts = await self.app.peertubeHandler.api.proxy
+          .roys()
+          .catch(() => ({}));
+
+        Object.entries(serverStructureHosts).forEach(
+          ([name, hosts]) =>
+            (videoServers[name] = { ...videoServers[name], hosts }),
+        );
+
+        return Promise.resolve(serverStructureHosts);
+      },
+
+      async getVideos(server) {
+        const options = {
+          start: peertubeServers[server].start,
+          count: perServerCounter,
+        };
+
+        return self.app.peertubeHandler.api.videos
+          .getMyAccountVideos(options, {
+            host: server,
+          })
+          .then((data = []) => {
+            peertubeServers[server].start += perServerCounter;
+            peertubeServers[server].videos = [...data];
+          })
+          .catch((err) => sitemessage(`Error loading ${server}`));
+      },
     };
 
     var events = {};
@@ -32,9 +65,29 @@ var videoCabinet = (function () {
       getdata: function (clbk) {
         var data = {};
 
-        actions.getVideos();
+        actions
+          .getHosts()
+          .then((hosts = {}) => {
+            const servers = Object.values(hosts).flat();
 
-        clbk(data);
+            servers.forEach(
+              (server) =>
+                (peertubeServers[server] = {
+                  videos: null,
+                  start: 0,
+                }),
+            );
+
+            const serverPromises = servers.map((server) =>
+              actions.getVideos(server),
+            );
+
+            return Promise.all(serverPromises);
+          })
+          .then(() => {
+            debugger;
+            clbk(data);
+          });
       },
 
       destroy: function () {
