@@ -150,9 +150,6 @@
   padding: 0;
   padding-right: 5px;
 }
-#embeding .donateWrapper .transaction .coinsWrapper .receiver .text {
-  margin-top: 1px;
-}
 #embeding .donateWrapper .transaction .coinsWrapper .chevron-right {
   box-sizing: border-box;
   position: relative;
