@@ -723,10 +723,14 @@ PeerTubePocketnet = function (app) {
         });
       },
 
-      getMyAccountVideos(parameters = {}) {
-        return request('getMyAccountVideos', {
-          params: { ...parameters },
-        }).then((r = {}) => r.data || []);
+      getMyAccountVideos(parameters = {}, options = {}) {
+        return request(
+          'getMyAccountVideos',
+          {
+            params: { ...parameters },
+          },
+          options,
+        ).then((r = {}) => r.data || []);
       },
 
       getDirectVideoInfo(parameters = {}, options = {}) {
