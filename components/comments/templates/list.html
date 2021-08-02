@@ -107,15 +107,7 @@ var commentpanel = function(comment, _class){  %>
 						<div class="icon">
 							<div class="usericon" image="<%-src || ''%>">
 
-								<% if(comment.donation === 'true' && comment.amount) {%>
-							
-									<img 
-										class="donater"
-										src="css/fontawesome/svgs/solid/donater.svg"
-									>
-									
 
-								<% } %>
 
 								<% if(deep(app, 'platform.real.'+comment.address)) {%>
 									<div class="realperson">
@@ -127,6 +119,16 @@ var commentpanel = function(comment, _class){  %>
 									</div>
 								<% } %>
 							</div>
+
+							<% if(comment.donation === 'true' && comment.amount) {%>
+						
+								<img 
+									class="donater"
+									src="css/fontawesome/svgs/solid/donater.svg"
+								>
+								
+
+							<% } %>
 
 							
 						</div>
@@ -152,7 +154,7 @@ var commentpanel = function(comment, _class){  %>
 							<% } %>
 							<% if(comment.donation === 'true' && comment.amount) {%>
 
-								<div class="donate">
+								<div class="donateSum">
 									+<%=comment.amount / 100000000 %> PKOIN
 								</div>
 							<% } %>
