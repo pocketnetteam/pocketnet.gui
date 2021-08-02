@@ -531,6 +531,8 @@ var wallet = (function(){
 
 			sendParameters : function(){
 
+				console.log("sendParameterssendParameterssendParameterssendParameterssendParameters")
+
 				var v = send.parameters.source.value;
 
 				send.parameters.reciever.possibleValues = []
@@ -760,6 +762,12 @@ var wallet = (function(){
 						class : 'htls'
 					})
 				}
+
+			},
+
+			calculateSend : function(el){
+
+				renders.send(null, el.find('.actionbody'))
 
 			},
 
@@ -2025,9 +2033,15 @@ var wallet = (function(){
 					})
 
 				},
-				send : function(clbk, _el){
+				send : function(clbk, _el, nsp){
 
-					actions.sendParameters();
+					console.log('_el, nsp', _el, nsp)
+
+					if(!nsp){
+						console.log('actions.sendParameters();')
+						actions.sendParameters();
+					}
+						
 
 					self.shell({
 
@@ -2059,7 +2073,6 @@ var wallet = (function(){
 
 
 							self.app.platform.sdk.node.transactions.get.balance(function(amount){
-
 
 
 								if(send.parameters.amount.value < 0) send.parameters.amount.value = 0;
@@ -2172,7 +2185,6 @@ var wallet = (function(){
 
 							
 						})
-						
 						
 
 						changerActive()
@@ -2591,20 +2603,19 @@ var wallet = (function(){
 
 		var makesimple = function(clbk){
 
+			if(clbk) clbk()
+
+			return
+
 			var actions = [renders.send, renders.deposit, renders.addresses]
 
-			console.log("essenseData", essenseData)
-
-			if(essenseData.api && essenseData.action) actions = [renders[essenseData.action]]
+			if(essenseData.api && essenseData.action) actions = []
 
 			el.c.addClass('loading')
 
 			console.log('actions', actions)
 
 			lazyActions(actions, function(){
-
-				
-				
 				clbk()
 			})
 		}
@@ -2699,6 +2710,8 @@ var wallet = (function(){
 
 							if(_p.action == 'send'){
 
+								actions.sendParameters();
+
 								send.parameters.amount.value = Number((_p.amount || '0').replace(/,/g,''))
 								send.parameters.reciever.value = _p.address || ""
 								send.parameters.message.value = _p.message || ""
@@ -2707,19 +2720,35 @@ var wallet = (function(){
 									send.parameters.reciever.disabled = true
 									console.log('send.parameters.reciever.disabled', send.parameters.reciever)
 								}
+								if(send.parameters.amount._onChange)
+									send.parameters.amount._onChange();
 
-								send.parameters.amount._onChange();
+								console.log('_p.address ? true : false', _p.address ? true : false)
 
-								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'), function(){
+								//renders.send()
+
+								/*setTimeout(function(){
+									renders.step(function(__el){
+										renders.send(function(_el){
+	
+											el.c.removeClass('loading')
+	
+										}, __el, _p.address ? true : false)
+									}, 1, {
+										class : 'send'
+									})
+								},1000)*/
+
+								renders.send(null, null, true)
+
+								/*actions.showSendInStep('calculateSend', 0, self.app.localization.e('wscalculatefees'), function(){
 									el.c.removeClass('loading')
-								})
+								})*/
 
 
 							}
 
 							if(_p.action == 'htls'){
-
-								console.log('actions.showSendInStep')
 
 								actions.showHtlsInStep('calculateFeeHtls', 1, 'HTLS', function(){
 									el.c.removeClass('loading')

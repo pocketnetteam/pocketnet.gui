@@ -426,7 +426,7 @@ Application = function(p)
 	
 
 	self.curation = function(){
-		if(typeof isios != 'undefined' && isios()) return true
+		if(typeof isios != 'undefined' && isios() && window.cordova) return true
 		return false
 	}
 
@@ -787,7 +787,7 @@ Application = function(p)
 					navigator.splashscreen.hide();
 				}
 
-				if (window.Keyboard){
+				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
 				}
 

@@ -21055,6 +21055,10 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+                if (window.Keyboard && window.Keyboard.disableScroll){
+					window.Keyboard.disableScroll(false)
+				}
+
                 if(document.activeElement) document.activeElement.blur()
 
                 if (self.matrixchat.el)
@@ -21079,6 +21083,10 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(){
+
+                if (window.Keyboard && window.Keyboard.disableScroll){
+					window.Keyboard.disableScroll(true)
+				}
 
                 if(document.activeElement) document.activeElement.blur()
                 
