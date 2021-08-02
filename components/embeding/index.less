@@ -21,7 +21,6 @@
 				padding : @rhythm;
 
 				&.inputWrapper{
-
 					input{
 						width: 100%;
 					}
@@ -69,6 +68,190 @@
 				}
 			}
 		}
+	}
+	.donateWrapper{
+		margin-left: auto;
+		margin-right: auto;
+
+
+		.stepWrapper{
+			height: 100%;
+			display: table;
+			table-layout: fixed;
+			.timeline{
+				display: table-cell;
+				position: relative;
+				vertical-align: middle;
+				.timelineWrapper{
+					height: 40px;
+					width: 90%;
+					margin-left: auto;
+					margin-right: auto;
+					>div{
+						vertical-align: middle;
+						display: table-cell;
+						
+						.timelinebg{
+							height: 1px;
+							position: relative;
+							background: white;
+
+							.timelinearrow{
+
+								.fa-circle{
+									position: absolute;
+									font-size: .5em;
+									margin-right: 3px;
+									left: -2px;
+									margin-top: -3px;
+									color: white;
+
+								}
+
+								.fa-chevron-right{
+									position: absolute;
+									right: -3px;
+									top: -5px;
+									font-size: .8em;
+									color: white;
+
+								}
+
+								.timelinegill{
+									display: inline-block;
+									height: 100%;
+									width: 100%;
+									position: absolute;
+									left: 0;
+									top: 0;
+									background: white;
+
+								}
+							}
+
+							.balance{
+								position: absolute;
+								width: 100%;
+								padding-top: .5em;
+								left: 0;
+								right: 0;
+								top: 0;
+								text-align: center;
+								font-size: .8em;
+								color: white;
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+		.transaction{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 4 * @rhythm;
+
+			.coinsWrapper{
+				display: flex;
+				justify-content: space-between;
+				height: 38px;
+
+				.sender, .receiver{
+					display: flex;
+					align-items: center;
+					width: 100%;
+					border: 2px solid white;
+					padding: @rhythm;
+				}
+	
+				.sender{
+					border-right: 0;
+				}
+	
+				.receiver{
+					border-left: 0;
+	
+					input{
+						width: 72%;
+						margin-left: 0;
+						border: 0;
+						text-align: right;
+						padding: 0;
+						padding-right: 5px;
+					}
+					
+				}
+	
+				.chevron-right {
+					box-sizing: border-box;
+					position: relative;
+					display: block;
+					transform: scale(var(--ggs,1));
+					width: 25px;
+					height: 42px;
+					border: 2px solid transparent;
+					border-radius: 100px;
+	
+					&.left{
+						left: 5px;
+					}
+	
+					&.center{
+						left: 12px;
+					}
+	
+					&.right{
+						left: 19px;
+					}
+	
+	
+				}
+				.chevron-right::after {
+					content: "";
+					display: block;
+					box-sizing: border-box;
+					position: absolute;
+					width: 26.5px;
+					height: 26.5px;
+					border-bottom: 2px solid;
+					border-right: 2px solid;
+					transform: rotate(-45deg);
+					right: 3px;
+					top: 4px
+				}
+	
+			}
+
+
+			
+		}
+
+		.subscription{
+			display: flex;
+			justify-content: space-between;
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 420px;
+			color: white;
+			opacity: 0.5;
+		}
+
+		.inputWrapper{
+			margin-top: 2 * @rhythm;
+			padding: 2 * @rhythm;
+			margin-left: auto;
+			margin-right: auto;
+
+			input{
+				width: 100%;
+				border: 0;
+				text-align: center;
+
+			}
+		}
+
 	}
 
 	.imagesMi{
@@ -155,6 +338,43 @@
 
 			width: 600px;
 			height: 200px;
+
+			&.donate{
+				background: #00a4ffd6;
+				color: white;
+				height: 250px;
+
+				.caption{
+					margin-bottom: 0!important;
+					font-size: 1.5em;
+				}
+				.subcaption{
+					text-align: center;
+					font-size: .8em;
+				}
+
+				.wndcontent, .buttons{
+					background: inherit;
+				}
+
+				.buttons{
+					.close{
+						color: white;
+
+						&:hover{
+							color: white;
+						}
+					}
+					.save{
+						background: white;
+						color: #00a4ffd6;
+					}
+				}
+				input{
+					background: inherit;
+					color: white;
+				}
+			}
 		}
 	}
 
@@ -168,6 +388,7 @@
 			width: 100%;
 			height: 100%;
 			max-height: none;
+			
 		}
 
 		.wndcontent{
@@ -187,7 +408,7 @@
 		padding : 0;
 		padding-top : 8 * @rhythm;
 		.imagesWrapper{
-			.uploadWrapper{
+			.uploadWrapper, .donateWrapper{
 				padding-top: 8 * @rhythm;
 			}
 			.upload{
@@ -197,7 +418,43 @@
 				}
 			}
 		}
+
+		.donateWrapper{
+
+			.transaction{
+
+				.coinsWrapper{
+
+					.sender{
+						display: none;
+					}
+	
+					.chevron-right{
+						&.left, &.center{
+							display: none;
+						}
+					}
+	
+					.receiver{
+						margin-right: 25px;
+					}
+				}
+
+			}
+
+			.subscription{
+				justify-content: center;
+
+				.sender{
+					display: none;
+				}
+			}
+
+
+
+		}
 	}
+	
 }	
 .wnd{
 	&.embeding{
