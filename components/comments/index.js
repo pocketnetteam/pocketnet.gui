@@ -366,8 +366,6 @@ var comments = (function(){
 
 				comment.donate.remove()
 
-				console.log('comment.donate', comment.donate);
-
 				renders.donate(id, p);
 
 			},
@@ -572,8 +570,13 @@ var comments = (function(){
 					{
 						self.app.platform.errorHandler(err, true)
 
-						if (clbk)
+						if (clbk){
 							clbk(err, null)
+
+							if (err === 'tosmallamount'){
+								actions.removeDonate(id, p)
+							}
+						}
 					}
 
 				}, editid, id)
@@ -1004,8 +1007,6 @@ var comments = (function(){
 					if (image.src == initialValue) return true;						
 
 				})
-
-				console.log('comment', comment, initialValue, images)
 
 				self.app.nav.api.load({
 					open : true,
