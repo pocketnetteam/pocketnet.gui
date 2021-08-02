@@ -1,0 +1,1 @@
+#videoCabinet .videosWrapper{display:flex;flex-direction:column}#videoCabinet .singleVideoSection{display:flex;justify-content:space-between;align-items:center;padding:1em 2em;border:1px solid #d0c9ca;border-left-width:0;border-right-width:0}#videoCabinet .videoPreviewImage{max-width:150px;max-height:150px}#videoCabinet .videoItemPart{width:33%}

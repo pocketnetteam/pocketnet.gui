@@ -237,6 +237,37 @@ var Peertube = function (settings) {
           {},
         ),
       ),
+
+    accountVideos({ account, servers = [], start, count }, cahce) {
+      const requestServers = servers.length
+        ? [...servers]
+        : Object.values(roys)
+            .map((roy) => roy.hosts().map((host) => host.host))
+            .flat();
+
+      return Promise.all(
+        requestServers.map((server) =>
+          self.request('channelVideos', { account, start, count }, server, {
+            host: server,
+          }),
+        ),
+      )
+        .then((data) => {
+          const outputInfo = data
+            .map((serverData) => serverData.data)
+            .reduce(
+              (accum, currServer) => ({
+                total: accum.total + currServer.total,
+                data: accum.data.concat(currServer.data || []),
+              }),
+              { total: 0, data: [] },
+            );
+
+          console.log(outputInfo);
+          return outputInfo;
+        })
+        .catch(() => ({ total: 0, data: [] }));
+    },
   };
 
   self.addroy = function (urls, key) {

@@ -1,5 +1,30 @@
 @import "../../css/__cssvar";
 
-#videoCabinet{
+#videoCabinet {
+    .videosWrapper {
+        display: flex;
+        flex-direction: column;
+    }
 
+    .singleVideoSection {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: @rhythm * 2 @rhythm * 4;
+
+        border: 1px solid @color-gray-border;
+        border-left-width: 0;
+        border-right-width: 0;
+
+    }
+
+    .videoPreviewImage {
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .videoItemPart {
+        width: 33%;
+    }
 }

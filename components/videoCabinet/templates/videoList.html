@@ -1,7 +1,23 @@
+<section>
+    Video Controls
+</section>
 <sectiion class="videosWrapper">
   <% videos.map((video) => { %>
-  <section class="singleVideoSection">
-      <%- video.uuid %>
-  </section>
+  <div class="singleVideoSection">
+    <div class="videoItemPart videoAvatar">
+      <img
+        src="<%- `https://${video.account.host}${video.previewPath}` %>"
+        alt="Peertube Video"
+        class="videoPreviewImage"
+      />
+    </div>
+    <div class="videoItemPart videoName">
+      <p><%- video.name %></p>
+      <p><%- video.account.host %></p>
+    </div>
+    <div class="videoItemPart removeButtonWrapper">
+      <button class="removeVideo"><i class="fas fa-times-circle"></i></button>
+    </div>
+  </div>
   <% }) %>
 </sectiion>
