@@ -1515,9 +1515,10 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
     blockedCheck: function blockedCheck() {
       var users = this.core.mtrx.anotherChatUsers(this.chat.roomId);
+      console.log('users', users);
 
       if (users.length == 1) {
-        return this.core.mtrx.client.isUserIgnored(users[0].userId);
+        return this.core.mtrx.blockeduser(users[0].userId);
       }
     },
     membersCount: function membersCount() {
