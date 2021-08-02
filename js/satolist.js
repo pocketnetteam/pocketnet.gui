@@ -821,11 +821,11 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
-        "incorrectdonate" : {
+        "tosmallamount" : {
 
             message: function () {
 
-                return 'Incorrect donate'
+                return 'Too small amount'
 
             },
 
@@ -12762,7 +12762,7 @@ Platform = function (app, listofnodes) {
                                 if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
 
                                     if (clbk){
-                                        clbk(null, 'incorrectdonate')
+                                        clbk(null, 'tosmallamount')
                                     }
 
                                     return;
