@@ -1515,9 +1515,10 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
     blockedCheck: function blockedCheck() {
       var users = this.core.mtrx.anotherChatUsers(this.chat.roomId);
+      console.log('users', users);
 
       if (users.length == 1) {
-        return this.core.mtrx.client.isUserIgnored(users[0].userId);
+        return this.core.mtrx.blockeduser(users[0].userId);
       }
     },
     membersCount: function membersCount() {
@@ -1599,12 +1600,6 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       }
 
       this.core.mtrx.blockUser(users[0].userId).catch(function (e) {});
-      /* var blackList = this.core.mtrx.client.getIgnoredUsers()
-         blackList.push(  this.core.mtrx.user.matrixId(users[0].userId)  )
-         this.core.mtrx.client.setIgnoredUsers(blackList).then(r => {
-         console.log(this.core.mtrx.client.getIgnoredUsers(), "set ignored users")
-         return r
-       })*/
     },
     unblock: function unblock() {
       var users = this.core.mtrx.anotherChatUsers(this.chat.roomId);
