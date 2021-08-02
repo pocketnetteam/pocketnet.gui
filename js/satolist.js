@@ -11408,6 +11408,9 @@ Platform = function (app, listofnodes) {
 
                     if (a) {
                         self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp2') || "{}")
+
+
+                        console.log('self.sdk.node.transactions.temp', self.sdk.node.transactions.temp)
                     }
                     else {
                         self.sdk.node.transactions.temp = {};
@@ -11502,12 +11505,14 @@ Platform = function (app, listofnodes) {
 
                 checkTemps: function (clbk) {
 
+                    console.log("checkTemps", this.temp)
+
                     /*if (clbk)
                         clbk()
                     return*/
 
-                    var c = this.checkTemp
-                    var t = this.temp;
+                    var c = self.sdk.node.transactions.checkTemp
+                    var t = self.sdk.node.transactions.temp;
 
                     var temps = [];
 
@@ -11518,6 +11523,9 @@ Platform = function (app, listofnodes) {
                             temps.push(alias)
                         })
                     })
+
+
+                    console.log('temps', temps)
 
                     lazyEach({
                         array: temps,
