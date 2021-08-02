@@ -22,6 +22,41 @@
 		white-space: nowrap;
 	}
 
+	.donateEmbWr{
+
+		.donatecntWrapper{
+			padding-top: @rhythm * 2;
+			padding-bottom: @rhythm * 2;
+
+			.removedonate{
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				.transition(0.3s);
+				color : @color-bad;
+
+				&:hover{
+					background : @color-gray-slight;
+				}
+			}
+
+			.donatecnt{
+				.value, .removeWrapper{
+					display: inline-block;
+				}
+
+				.removeWrapper{
+					position: relative; 
+					top: -10px
+				}
+			}
+
+		}
+	}
+
 	&.preview{
 		.post{
 			.txt{
@@ -386,6 +421,20 @@
 					.usericon{
 						position: relative;
 						/*margin : 0 auto;*/
+
+						@keyframes rotation {
+							from {
+								transform: rotate(0deg);
+							}
+							to {
+								transform: rotate(359deg);
+							}
+						}
+
+						.donater{
+							animation: rotation 3s infinite linear;
+							margin-bottom: 10px;
+						}
 					}
 				}
 
@@ -437,6 +486,20 @@
 
 				&.author{
 					color : @color-gray;
+				}
+
+				.donate{
+					display: inline;
+					background: #00a4ffd6;
+					border-radius: 25px;
+					padding: @rhythm;
+					padding-left: @rhythm * 2;
+					padding-right: @rhythm * 2;
+					color: white;
+					margin-left: @rhythm;
+					font-size: .8em;
+					font-weight: 500;
+					white-space: nowrap;
 				}
 
 				.date{	
@@ -858,6 +921,8 @@
 					float: none;
 					.usericon{
 						position: relative;
+												
+
 						/*margin : 0 auto;*/
 					}
 				}
@@ -1033,6 +1098,7 @@
 			padding : 8px;
 			padding-left : 2 * @rhythm;
 			padding-right : 66px;
+			padding-right : 94px;
 			outline: none;
 			border : 0;
 			min-height: 36px;
@@ -1057,9 +1123,39 @@
 			}
 		}
 
-		.leaveComment{
+		.embeddonate{
+			position: absolute;
+			right : 68px;
+			top : 0px;
+			padding : 6px;
+			cursor: pointer;
+			color : @color-gray-light;
+			.transition(0.3s);
 
+			img{
+				height: 15px;
+			}
+
+			.donate-hover{
+				display: none;
+			}
+
+			&:hover{
+				.donate-hover{
+					display: inline;
+				} 
+
+				.donate{
+					display: none;
+				}
+			}
+		
+
+			&:hover{
+				color : @color-black2;
+			}
 		}
+
 
 		.commentPanel{
 
@@ -1670,6 +1766,13 @@ html.stblack{
 				}
 			}
 
+			&.commentBody{
+				.donate{
+					display: block;
+					margin-left: 0;
+				}
+			}
+
 			.commentcontenttable{
 				display: block;
 				>div{
@@ -1725,6 +1828,12 @@ html.stblack{
 
 					span{
 						font-size: 1em;
+					}
+
+					.donate{
+						margin-left: 0;
+						position: relative;
+						top: 4px;
 					}
 					
 					&.panelWrapper{
