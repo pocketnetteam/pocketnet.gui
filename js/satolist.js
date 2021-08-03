@@ -12466,7 +12466,7 @@ Platform = function (app, listofnodes) {
                             /// ++++
 
 
-                            /*var feerate = TXFEE;
+                            var feerate = TXFEE;
 
                             if (obj.donate && obj.donate.v.length){
 
@@ -12515,7 +12515,7 @@ Platform = function (app, listofnodes) {
                                 }
 
                                 feerate = Number((feerate * smulti).toFixed(0));
-                            } */
+                            } 
 
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
 
@@ -12765,6 +12765,8 @@ Platform = function (app, listofnodes) {
 
                                     
                                 var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
+
+                                console.log('totalReturn', totalReturn, fees);
 
 
                                 if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
