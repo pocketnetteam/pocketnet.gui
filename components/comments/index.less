@@ -330,7 +330,7 @@
 					}
 
 					.embedimages{
-						right: 40.5px;
+						right: 40px;
 					}
 
 					.embedEmojiPrivew, .emojionearea-button{
@@ -458,12 +458,78 @@
 					.donater{
 						position: absolute;
 						animation: rotation 3s infinite linear;
-						top: -3.5px;
-						left: -3.5px;
-						width: 45px;
-						height: 45px;
+						top: -2px;
+						left: -2px;
+						width: 41px;
+						height: 41px;
 						max-width: none;
 					}
+
+					.followers_arc_outer{
+						position: absolute;
+						border-radius: 100%;
+						border: 2px solid;
+					}
+					.followers_arc_start {
+						border-color:transparent #00a4ff #00a4ff #00a4ff;
+						-webkit-transform: rotate(45deg);
+						-moz-transform: rotate(45deg);
+						-ms-transform: rotate(45deg);
+						-o-transform: rotate(45deg);
+						transform: rotate(45deg);
+					}
+					.followers_arc_inner{
+						position:absolute;
+						top:18px;
+						left: 18px;
+						width: 280px;
+						height:280px;
+						border-radius:100%;
+						border:2px solid;
+						border-color:transparent #ecd201 #ecd201 #ecd201;
+					}
+					.o_circle {
+						animation-name: rotation;
+						animation-iteration-count:  infinite;
+						animation-timing-function: linear;
+						animation-duration: 3s; 
+
+
+					}
+
+					@-webkit-keyframes rotation {
+						0% {
+							-webkit-transform:rotate(0deg)
+						}
+						20% {
+							-webkit-transform:rotate(360deg)
+						}
+						100% {
+							-webkit-transform:rotate(360deg)
+						}
+						/*  100% { -webkit-transform:rotate(0deg) } */
+					}
+
+					@-webkit-keyframes rotation{
+						from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+						to   {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
+					}@keyframes rotation{
+						from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+						to   {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
+					}
+					.i_circle {
+						-webkit-animation: rotation2 2s infinite linear;
+					   animation: rotation2 2s infinite linear;
+					}
+					@-webkit-keyframes rotation2 {
+						from {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
+						to   {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+					}@keyframes rotation2 {
+						from {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
+						to   {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+					
+					}
+					
 				}
 
 				&.commentBody{
@@ -1139,7 +1205,7 @@
 
 		.embedimages{
 			position: absolute;
-			right : 40.5px;
+			right : 40px;
 			top : 3px;
 			padding : 6px;
 			cursor: pointer;
@@ -1718,7 +1784,7 @@ html.stblack{
 		}
 
 		.embeddonate{
-			right: 40.5px!important;
+			right: 40px!important;
 		}
 
 		.embedimages{
