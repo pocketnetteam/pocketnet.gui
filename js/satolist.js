@@ -12466,7 +12466,7 @@ Platform = function (app, listofnodes) {
                             /// ++++
 
 
-                            var feerate = TXFEE;
+                            /*var feerate = TXFEE;
 
                             if (obj.donate && obj.donate.v.length){
 
@@ -12515,9 +12515,9 @@ Platform = function (app, listofnodes) {
                                 }
 
                                 feerate = Number((feerate * smulti).toFixed(0));
-                            } 
+                            } */
 
-                            self.sdk.node.transactions.create[obj.type](inputs, obj, feerate, function (a, er, data) {
+                            self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
 
                                 if (!a) {
                                     if ((er == -26 || er == -25 || er == 16) && !p.update) {
@@ -12777,8 +12777,10 @@ Platform = function (app, listofnodes) {
 
                                 } else {
 
+                                    console.log("P", p, totalReturn, address)
+
                                     txb.addOutput(address.address, totalReturn);
-                                                                       outputs.push({
+                                    outputs.push({
                                         address: address.address,
                                         amount: totalReturn
                                     })
@@ -13036,7 +13038,7 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    share: function (inputs, share, fees, clbk, p, fromTG) {
+                    share: function (inputs, share, /*fees, */clbk, p, fromTG) {
 
                         var meta = self.sdk.usersettings.meta;
 
@@ -13062,7 +13064,7 @@ Platform = function (app, listofnodes) {
                           }
                         }
 
-                        this.common(inputs, share, fees, clbk, p)
+                        this.common(inputs, share, TXFEE, clbk, p)
                     },
 
                     userInfo: function (inputs, userInfo, clbk, p) {
@@ -13079,8 +13081,8 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, complainShare, TXFEE, clbk, p)
                     },
 
-                    comment: function (inputs, comment, fees, clbk, p) {
-                        this.common(inputs, comment, fees, clbk, p)
+                    comment: function (inputs, comment, /*fees, */clbk, p) {
+                        this.common(inputs, comment, TXFEE, clbk, p)
                     },
 
                     commentShare: function (inputs, commentShare, clbk, p) {
