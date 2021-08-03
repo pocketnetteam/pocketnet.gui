@@ -67,6 +67,18 @@ var videoCabinet = (function () {
           function (p) {},
         );
       },
+
+      quota() {
+        debugger;
+        self.shell(
+          {
+            name: 'quota',
+            el: el.quotaContainer,
+            data: {},
+          },
+          function (p) {},
+        );
+      },
     };
 
     var state = {
@@ -117,11 +129,13 @@ var videoCabinet = (function () {
         el = {};
         el.c = p.el.find('#' + self.map.id);
 
-        el.videoContainer = el.c.find('.video-container');
+        el.videoContainer = el.c.find('.videoContainer');
+        el.quotaContainer = el.c.find('.quotaContainer');
 
         initEvents();
 
         renders.videos();
+        renders.quota();
 
         p.clbk(null, p);
       },

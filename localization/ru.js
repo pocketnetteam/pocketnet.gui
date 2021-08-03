@@ -901,3 +901,4 @@ ____loclib.streamLinks = 'Информация о трансляции'
 ____loclib.linkRTMP = 'Ссылка на RTMP-сервер'
 ____loclib.linkStreamKey = 'Ключ трансляции'
 ____loclib.videoCabinet = "Мои Видео";	
+____loclib.uploadQuota = "Лимиты Загрузки";
