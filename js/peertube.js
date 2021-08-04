@@ -720,6 +720,14 @@ PeerTubePocketnet = function (app) {
         });
       },
 
+      getQuotaStatus: (options = {}) =>
+        self.api.user.me(options).then((rme) => {
+          return self.api.videos.quota(options).then((rqu) => ({
+            videoQuotaDaily: rme.videoQuotaDaily,
+            ...rqu,
+          }));
+        }),
+
       quota: function (options = {}) {
         return request('quotaUsed', {}, options).then((r) => {
           if (typeof r.videoQuotaUsedDaily != 'undefined') {

@@ -7,6 +7,8 @@ var videoCabinet = (function () {
 
   var peertubeServers = {};
 
+  var userQuota = {};
+
   var perServerCounter = 10;
 
   var startingPosition = 0;
@@ -50,6 +52,12 @@ var videoCabinet = (function () {
             sitemessage(`Error loading ${server}`);
             return [];
           });
+      },
+
+      async getQuota() {
+        return self.app.peertubeHandler.api.videos
+          .getQuotaStatus()
+          .then((res) => (userQuota = { ...res }));
       },
     };
 
@@ -143,6 +151,8 @@ var videoCabinet = (function () {
             renders.videos();
             renders.quota();
           });
+
+        actions.getQuota();
 
         p.clbk(null, p);
       },

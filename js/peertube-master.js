@@ -235,7 +235,6 @@ PeerTubeHandler = function (app) {
   };
 
   this.uploadVideo = async (parameters) => {
-    debugger;
     const { channelId, videoQuotaDaily } = await this.getChannel();
 
     const { videoQuotaUsedDaily } = await this.getUserQuota();
