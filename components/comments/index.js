@@ -1807,7 +1807,7 @@ var comments = (function(){
 
 					_p.el.find('.embeddonate').off('click').on('click', function(){
 
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
 							balance = amount.toFixed(3);
 							
