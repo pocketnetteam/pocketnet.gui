@@ -98,6 +98,23 @@ var videoCabinet = (function () {
 
       getdata: function (clbk) {
         var data = {};
+        clbk(data);
+      },
+
+      destroy: function () {
+        el = {};
+      },
+
+      init: function (p) {
+        state.load();
+
+        el = {};
+        el.c = p.el.find('#' + self.map.id);
+
+        el.videoContainer = el.c.find('.videoContainer');
+        el.quotaContainer = el.c.find('.quotaContainer');
+
+        initEvents();
 
         actions
           .getHosts()
@@ -119,28 +136,13 @@ var videoCabinet = (function () {
             return Promise.allSettled(serverPromises);
           })
           .then((res) => {
-            clbk(data);
+            renders.videos();
+            renders.quota();
           })
-          .catch(() => clbk(data));
-      },
-
-      destroy: function () {
-        el = {};
-      },
-
-      init: function (p) {
-        state.load();
-
-        el = {};
-        el.c = p.el.find('#' + self.map.id);
-
-        el.videoContainer = el.c.find('.videoContainer');
-        el.quotaContainer = el.c.find('.quotaContainer');
-
-        initEvents();
-
-        renders.videos();
-        renders.quota();
+          .catch(() => {
+            renders.videos();
+            renders.quota();
+          });
 
         p.clbk(null, p);
       },
