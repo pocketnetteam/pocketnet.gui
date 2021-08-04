@@ -87,7 +87,9 @@ var videoCabinet = (function () {
           {
             name: 'quota',
             el: el.quotaContainer,
-            data: {},
+            data: {
+              userQuota,
+            },
           },
           function (p) {},
         );
@@ -143,16 +145,13 @@ var videoCabinet = (function () {
 
             return Promise.allSettled(serverPromises);
           })
-          .then((res) => {
-            renders.videos();
-            renders.quota();
-          })
-          .catch(() => {
-            renders.videos();
-            renders.quota();
-          });
+          .then(() => renders.videos())
+          .catch(() => renders.videos());
 
-        actions.getQuota();
+        actions
+          .getQuota()
+          .then(() => renders.quota())
+          .catch(() => renders.quota());
 
         p.clbk(null, p);
       },

@@ -724,7 +724,8 @@ PeerTubePocketnet = function (app) {
         self.api.user.me(options).then((rme) => {
           return self.api.videos.quota(options).then((rqu) => ({
             videoQuotaDaily: rme.videoQuotaDaily,
-            ...rqu,
+            videoQuotaRemainingDaily: rme.videoQuotaDaily - rqu.videoQuotaUsedDaily,
+            videoQuotaUsed: rqu.videoQuotaUsed,
           }));
         }),
 
