@@ -101,7 +101,7 @@ var Peertube = function (settings) {
       return keys[f.rand(0, keys.length - 1)];
     },
 
-    best: function ({ roy, type }) {
+    best: function ({ roy, type, address }) {
       if (!roy) roy = self.api.randroykey();
 
       roy = getroy(roy);
