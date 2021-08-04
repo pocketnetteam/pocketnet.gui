@@ -16,8 +16,11 @@
               <div class="circular">
                 <div class="inner"></div>
                 <div class="number">
-                  <%- formatBytes(userQuota.videoQuotaRemainingDaily) %> / <%-
-                  formatBytes(userQuota.videoQuotaDaily) %>
+                  <span>
+                    <%- formatBytes(userQuota.videoQuotaRemainingDaily) %>
+                  </span>
+                  <span>/</span>
+                  <span><%- formatBytes(userQuota.videoQuotaDaily) %></span>
                 </div>
                 <div class="circle">
                   <div class="bar left">

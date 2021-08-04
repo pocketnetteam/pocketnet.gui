@@ -49,6 +49,7 @@
         >div {
             float: left;
             width: 25%;
+            min-width: 241px;
 
             &.connectionFailed {
                 width: 100%;
@@ -465,10 +466,10 @@
             z-index: 6;
             top: 50%;
             left: 50%;
-            height: 80px;
-            width: 80px;
-            margin: -40px 0 0 -40px;
-            background: #dde6f0;
+            height: 96px;
+            width: 96px;
+            margin: -48px 0 0 -48px;
+            background: rgb(238, 236, 236);
             border-radius: 100%;
 
         }
@@ -479,13 +480,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
+
+            font-weight: 200;
+            font-size: 0.8em;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .bar {
             position: absolute;
             height: 100%;
             width: 100%;
-            background: #fff;
+            background: rgb(238, 236, 236);
             -webkit-border-radius: 100%;
             clip: rect(0px, 100px, 100px, 50px);
         }
@@ -500,7 +509,7 @@
                 width: 100%;
                 -webkit-border-radius: 100%;
                 clip: rect(0px, 50px, 100px, 0px);
-                background: #4158d0;
+                background: @color-good;
             }
         }
 
@@ -508,7 +517,7 @@
         .left {
             .progress {
                 z-index: 1;
-                animation: left 4s linear both;
+                transform: rotate(180deg);
             }
         }
 
@@ -517,21 +526,8 @@
             z-index: 3;
 
             .progress {
-                animation: right 4s linear both;
-                animation-delay: 4s;
+                transform: rotate(90deg);
             }
-        }
-    }
-
-    @keyframes left {
-        100% {
-            transform: rotate(180deg);
-        }
-    }
-
-    @keyframes right {
-        100% {
-            transform: rotate(180deg);
         }
     }
 }
