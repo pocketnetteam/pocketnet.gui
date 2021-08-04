@@ -23,8 +23,8 @@ var videoCabinet = (function () {
           .catch(() => ({}));
 
         Object.entries(serverStructureHosts).forEach(
-          ([name, hosts]) =>
-            (videoServers[name] = { ...videoServers[name], hosts }),
+          ([name, bestHost]) =>
+            (videoServers[name] = { ...videoServers[name], bestHost }),
         );
 
         return Promise.resolve(serverStructureHosts);
@@ -43,8 +43,13 @@ var videoCabinet = (function () {
           .then((data = []) => {
             peertubeServers[server].start += perServerCounter;
             peertubeServers[server].videos = [...data];
+
+            return data;
           })
-          .catch((err) => sitemessage(`Error loading ${server}`));
+          .catch(() => {
+            sitemessage(`Error loading ${server}`);
+            return [];
+          });
       },
     };
 
@@ -54,6 +59,7 @@ var videoCabinet = (function () {
       videos() {
         const videos = Object.values(peertubeServers)
           .map((value) => value.videos)
+          .filter((video) => video)
           .flat();
 
         self.shell(
@@ -69,7 +75,6 @@ var videoCabinet = (function () {
       },
 
       quota() {
-        debugger;
         self.shell(
           {
             name: 'quota',
@@ -111,9 +116,9 @@ var videoCabinet = (function () {
               actions.getVideos(server),
             );
 
-            return Promise.all(serverPromises);
+            return Promise.allSettled(serverPromises);
           })
-          .then(() => {
+          .then((res) => {
             clbk(data);
           })
           .catch(() => clbk(data));

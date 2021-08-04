@@ -231,7 +231,7 @@ var Peertube = function (settings) {
       Promise.resolve(
         Object.entries(roys).reduce(
           (accumulator, [name, roy]) => ({
-            [name]: roy.hosts().map((host) => host.host),
+            [name]: roy.best().host,
             ...accumulator,
           }),
           {},
@@ -245,7 +245,7 @@ var Peertube = function (settings) {
             .map((roy) => roy.hosts().map((host) => host.host))
             .flat();
 
-      return Promise.all(
+      return Promise.allSettled(
         requestServers.map((server) =>
           self.request('channelVideos', { account, start, count }, server, {
             host: server,
