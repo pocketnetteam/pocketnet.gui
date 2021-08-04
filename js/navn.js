@@ -404,7 +404,7 @@ Nav = function(app)
 			if (history.state && history.state.lfox) { 
 
 				core.removeWindows(history.state.href)
-
+				var chh = core.removeChat(history.state.href)
 
 				if(history.state.href.split('?')[0] != current.href){
 
@@ -420,8 +420,9 @@ Nav = function(app)
 				}
 				else
 				{
-					core.removeWindows(history.state.href)
+					///core.removeWindows(history.state.href)
 
+					if(chh) return
 
 					if(!_.isEmpty(self.wnds)){
 						_.each(self.wnds, function(w){
@@ -458,6 +459,18 @@ Nav = function(app)
 				    clbk()
 			}
 		},	
+
+		removeChat : function(href){
+			if(!isMobile()) return
+ 
+			var p = parameters(href, true)
+
+			console.log('backtoapp', p['pc'])
+
+			if(!p['pc']){
+				return app.platform.matrixchat.backtoapp()
+			}
+		},
 
 		removeWindows : function(href){
 			var p = parameters(href, true)
@@ -520,6 +533,7 @@ Nav = function(app)
 							p.clbk(null, p);
 
 							core.removeWindows(p.completeHref)
+							core.removeChat(p.completeHref)
 
 						})
 
@@ -591,6 +605,7 @@ Nav = function(app)
 
 						p.clbk = function(a, b, d){
 							core.removeWindows(p.completeHref)
+							core.removeChat(p.completeHref)
 
 							if (p.goback){
 								_scrollTop(p.goback.scroll);

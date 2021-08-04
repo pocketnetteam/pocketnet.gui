@@ -1643,14 +1643,13 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
     ////// TODO
     changeName: function changeName() {
-      this.localRoomName = this.m_chat.name;
+      this.localRoomName = this.m_chat.name.replace(/@/g, "");
       this.localRoomName.replace('_', ' ');
     },
     saveRoomName: function saveRoomName() {
       this.nameEdit = false;
       this.inputActive = false;
-      this.roomName.replace(" ", "_");
-      this.core.mtrx.client.setRoomName(this.m_chat.roomId, '@' + this.roomName);
+      this.core.mtrx.client.setRoomName(this.m_chat.roomId, '@' + this.roomName.replace(/[@]*/g, ""));
     },
     ///////////////
     kickUser: function kickUser(user) {

@@ -13807,6 +13807,9 @@ Platform = function (app, listofnodes) {
         tempmessenger: {
             clbks: {},
             init: function (clbk) {
+
+                
+
                 var address = self.sdk.address.pnet().address
                 var id = bitcoin.crypto.hash256(address + self.app.options.fingerPrint).toString('hex')
 
@@ -20835,6 +20838,8 @@ Platform = function (app, listofnodes) {
 
             if (state) {
 
+                self.matrixchat.init()
+
                 lazyActions([
 
                     self.sdk.node.transactions.loadTemp,
@@ -20859,7 +20864,7 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.relayTransactions.send()
 
-                    self.matrixchat.init()
+                    
 
                     self.preparingUser = false;
 
@@ -21186,6 +21191,25 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        backtoapp : function(){
+
+            if (self.matrixchat.core){
+                console.log('self.matrixchat.core.hiddenInParent', self.matrixchat.core.hiddenInParent)
+            }
+
+            if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){ 
+                self.matrixchat.core.backtoapp()
+
+                return true
+            }
+        },
+
+        wait : function(){
+            return pretry(function(){
+                return self.matrixchat.core
+            })
+        },
+
         link : function(core){
 
             core.update({
@@ -21193,6 +21217,7 @@ Platform = function (app, listofnodes) {
                     height : self.currentBlock
                 }
             })
+            
 
             core.backtoapp = function(link){
 
@@ -21208,6 +21233,9 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.core){ 
                     self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
                 }
+
+                if(isMobile())
+                    app.nav.api.history.removeParameters(['pc'])
 
                 //self.app.actions.onScroll()
 
@@ -21236,6 +21264,10 @@ Platform = function (app, listofnodes) {
 
                     //self.app.actions.offScroll()
                     
+                if(isMobile())
+                    app.nav.api.history.addParameters({
+                        'pc' : '1'
+                    })
 
                 if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = false }
             }
@@ -21589,6 +21621,8 @@ Platform = function (app, listofnodes) {
 
             if(!cordova.openwith) return
 
+            cordova.openwith.setVerbosity(cordova.openwith.DEBUG);
+
             var mime = {
 
                 'image/jpeg' : 'images',
@@ -21596,8 +21630,7 @@ Platform = function (app, listofnodes) {
                 'image/png' : 'images',
                 'image/webp' : 'images',
                 'application/pdf' : 'files',
-                'application/msword' : 'files',
-                'text/plain' : 'files'
+                'application/msword' : 'files'
 
             }
  
@@ -21605,9 +21638,18 @@ Platform = function (app, listofnodes) {
             cordova.openwith.addHandler(function(intent){
                 var sharing = {}
        
-                if (intent.exit) { cordova.openwith.exit(); }
+                console.log('intent', intent)
 
-                var promises = _.map(intent.items || [], (item) => {
+                var promises = _.map(
+                    _.filter(intent.items || [], function(i){return i}), 
+                    (item) => {
+
+
+                        /*if (item.type == 'text/plain'){
+                            delete item.type
+                        }*/
+                        
+
                     return new Promise((resolve, reject) => {
 
                         if(!item.type || !mime[item.type]){
@@ -21646,16 +21688,24 @@ Platform = function (app, listofnodes) {
 
 
                 Promise.all(promises).then(r => {
+
+                    if (intent.exit) { cordova.openwith.exit(); }
+
                     if(_.isEmpty(sharing)){
                         sitemessage(self.app.localization.e('e13293'))
                     }
                     else{
-                        self.matrixchat.share.object(sharing).catch(r => {
+
+                        self.matrixchat.wait().then(r => {
+                            return self.matrixchat.share.object(sharing)
+                        }).catch(r => {
 
                             sitemessage(self.app.localization.e('e13293'))
 
                             console.log("R", r)
                         })
+
+                        
                     }
                 })
             });

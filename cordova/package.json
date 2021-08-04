@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
+    "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
     "cordova-android": "^9.1.0",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-add-swift-support": "^2.0.2",
@@ -108,7 +109,15 @@
       },
       "cordova-plugin-contacts-x": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-universal-links-plugin": {}
+      "cordova-universal-links-plugin": {},
+      "cc.fovea.cordova.openwith": {
+        "ANDROID_MIME_TYPE": "*",
+        "IOS_URL_SCHEME": "pocketnet",
+        "IOS_UNIFORM_TYPE_IDENTIFIER": "public.item",
+        "IOS_GROUP_IDENTIFIER": "group.app.pocketnet.chat",
+        "SHAREEXT_DEVELOPMENT_TEAM": "Y5JW9JU787",
+        "ANDROID_EXTRA_ACTIONS": " "
+      }
     },
     "platforms": [
       "ios",

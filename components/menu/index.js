@@ -1270,7 +1270,7 @@ var menu = (function(){
 
 					var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
-					data.haschat = self.app.platform.matrixchat.core && (userinfo && !(userinfo.temp || userinfo.relay || userinfo.fromstorage))
+					data.haschat = self.app.platform.matrixchat.core// && (userinfo && !(userinfo.temp || userinfo.relay || userinfo.fromstorage))
 
 				if(p.state){
 
