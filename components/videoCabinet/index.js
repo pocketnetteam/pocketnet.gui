@@ -16,6 +16,10 @@ var videoCabinet = (function () {
   const ROTATE_ONE_PERCENTAGE = 3.6;
   const HALF_CIRCLE_ROTATE_PERCENTAGE = 50;
   const HUDRED_PERC = 100;
+  const LAZYLOAD_PERCENTAGE = 0.9;
+  const POSITIVE_STATUS = 'fulfilled';
+
+  let newVideosAreUploading = false;
 
   var Essense = function (p) {
     var primary = deep(p, 'history');
@@ -48,8 +52,10 @@ var videoCabinet = (function () {
           })
           .then((data = {}) => {
             peertubeServers[server].start += perServerCounter;
-            peertubeServers[server].videos = [...(data.data || [])];
+            peertubeServers[server].videos.push(...(data.data || []));
             peertubeServers[server].total = data.total || 0;
+            peertubeServers[server].isFull =
+              peertubeServers[server].start > data.total;
 
             return data;
           })
@@ -66,24 +72,62 @@ var videoCabinet = (function () {
       },
     };
 
-    var events = {};
+    var events = {
+      onPageScroll() {
+        const scrollProgress = el.windowElement.scrollTop() / el.c.height();
+
+        if (scrollProgress >= LAZYLOAD_PERCENTAGE && !newVideosAreUploading) {
+          const activeServers = Object.keys(peertubeServers).filter(
+            (server) => !(peertubeServers[server] || {}).isFull,
+          );
+
+          if (!activeServers.length) return;
+
+          events.getAdditionalVideos(activeServers);
+          newVideosAreUploading = true;
+        }
+      },
+
+      getAdditionalVideos(activeServers = []) {
+        if (!activeServers.length) return;
+
+        return Promise.allSettled(
+          activeServers.map((server) => actions.getVideos(server)),
+        ).then((data = []) => {
+          const newVideos = data
+            .filter((item) => item.status === POSITIVE_STATUS)
+            .map((item) => item.value.data)
+            .flat();
+          newVideosAreUploading = false;
+          renders.videos(newVideos);
+        });
+      },
+    };
 
     var renders = {
-      videos() {
-        const videos = Object.values(peertubeServers)
-          .map((value) => value.videos)
-          .filter((video) => video)
-          .flat();
+      videos(videosForRender) {
+        const videos =
+          videosForRender ||
+          Object.values(peertubeServers)
+            .map((value) => value.videos)
+            .filter((video) => video)
+            .flat();
+
+        const videoProtionElement = $('<div class="videoPage"></div>');
 
         self.shell(
           {
             name: 'videoList',
-            el: el.videoContainer,
+            el: videoProtionElement,
             data: {
               videos,
             },
           },
-          function (p) {},
+          (p) => {
+            const videoElementsWrapper = p.el.find('.videosWrapper');
+
+            el.videoContainer.append(videoProtionElement);
+          },
         );
       },
 
@@ -131,7 +175,9 @@ var videoCabinet = (function () {
       load: function () {},
     };
 
-    var initEvents = function () {};
+    var initEvents = function () {
+      el.windowElement.on('scroll', events.onPageScroll);
+    };
 
     return {
       primary: primary,
@@ -143,6 +189,7 @@ var videoCabinet = (function () {
 
       destroy: function () {
         el = {};
+        el.windowElement.off('scroll', events.onPageScroll);
       },
 
       init: function (p) {
@@ -154,6 +201,8 @@ var videoCabinet = (function () {
         el.videoContainer = el.c.find('.videoContainer');
         el.quotaContainer = el.c.find('.quotaContainer');
 
+        el.windowElement = $(window);
+
         initEvents();
 
         actions
@@ -164,7 +213,7 @@ var videoCabinet = (function () {
             servers.forEach(
               (server) =>
                 (peertubeServers[server] = {
-                  videos: null,
+                  videos: [],
                   start: 0,
                 }),
             );
