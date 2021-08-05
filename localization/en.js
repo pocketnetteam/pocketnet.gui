@@ -1102,3 +1102,5 @@ ____loclib.linkStreamKey = "Stream Key"
 
 ____loclib.videoCabinet = "My Videos";	
 ____loclib.uploadQuota = "Daily Uploading Quota";
+____loclib.attachVideoToPost = "Create Post With This Video";
+

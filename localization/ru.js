@@ -902,3 +902,4 @@ ____loclib.linkRTMP = 'Ссылка на RTMP-сервер'
 ____loclib.linkStreamKey = 'Ключ трансляции'
 ____loclib.videoCabinet = "Мои Видео";	
 ____loclib.uploadQuota = "Дневные Лимиты Загрузки";
+____loclib.attachVideoToPost = "Создать Пост С Этим Видео";

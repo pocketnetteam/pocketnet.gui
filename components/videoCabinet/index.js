@@ -91,6 +91,12 @@ var videoCabinet = (function () {
       getAdditionalVideos(activeServers = []) {
         if (!activeServers.length) return;
 
+        const videoProtionElement = $(
+          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
+        );
+
+        el.videoContainer.append(videoProtionElement);
+
         return Promise.allSettled(
           activeServers.map((server) => actions.getVideos(server)),
         ).then((data = []) => {
@@ -99,21 +105,20 @@ var videoCabinet = (function () {
             .map((item) => item.value.data)
             .flat();
           newVideosAreUploading = false;
-          renders.videos(newVideos);
+
+          renders.videos(newVideos, videoProtionElement);
         });
       },
     };
 
     var renders = {
-      videos(videosForRender) {
+      videos(videosForRender, videoProtionElement) {
         const videos =
           videosForRender ||
           Object.values(peertubeServers)
             .map((value) => value.videos)
             .filter((video) => video)
             .flat();
-
-        const videoProtionElement = $('<div class="videoPage"></div>');
 
         self.shell(
           {
@@ -124,9 +129,12 @@ var videoCabinet = (function () {
             },
           },
           (p) => {
+            p.el.find('.tooltip').tooltipster({
+              theme: 'tooltipster-light',
+              maxWidth: 600,
+              zIndex: 20,
+            });
             const videoElementsWrapper = p.el.find('.videosWrapper');
-
-            el.videoContainer.append(videoProtionElement);
           },
         );
       },
@@ -205,6 +213,12 @@ var videoCabinet = (function () {
 
         initEvents();
 
+        const videoProtionElement = $(
+          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
+        );
+
+        el.videoContainer.append(videoProtionElement);
+
         actions
           .getHosts()
           .then((hosts = {}) => {
@@ -224,8 +238,8 @@ var videoCabinet = (function () {
 
             return Promise.allSettled(serverPromises);
           })
-          .then(() => renders.videos())
-          .catch(() => renders.videos());
+          .then(() => renders.videos(null, videoProtionElement))
+          .catch(() => renders.videos(null, videoProtionElement));
 
         actions
           .getQuota()
