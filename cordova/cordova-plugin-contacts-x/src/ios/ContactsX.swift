@@ -65,6 +65,9 @@ import ContactsUI
         if(options.emails) {
             keysToFetch.append(CNContactEmailAddressesKey);
         }
+        if(options.photo) {
+            keysToFetch.append(CNContactThumbnailImageDataKey);
+        }
         return keysToFetch;
     }
 

@@ -59,6 +59,9 @@ class ContactX {
         if(options.familyName) {
             result["familyName"] = self.contact.familyName;
         }
+        if(options.photo) {
+            result["photo"] = self.contact.thumbnailImageData.base64EncodedString();
+        }
 
         return result as NSDictionary;
     }
