@@ -21658,7 +21658,7 @@ Platform = function (app, listofnodes) {
                         else{
                             cordova.openwith.load(item, function(data) {
                             
-                                item.data = data
+                                item.data = 'data:' + item.type + ';base64,' + data
     
                                 resolve()
                                 
