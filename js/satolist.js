@@ -21621,7 +21621,7 @@ Platform = function (app, listofnodes) {
 
             if(!cordova.openwith) return
 
-            cordova.openwith.setVerbosity(cordova.openwith.DEBUG);
+            //cordova.openwith.setVerbosity(cordova.openwith.DEBUG);
 
             var mime = {
 
@@ -21632,6 +21632,10 @@ Platform = function (app, listofnodes) {
                 'application/pdf' : 'files',
                 'application/msword' : 'files'
 
+            }
+
+            var utitomime = {
+                'public.image' : 'image/jpeg'
             }
  
             cordova.openwith.init();
@@ -21654,6 +21658,10 @@ Platform = function (app, listofnodes) {
 
                         console.log('item.type', item.type)
                         console.log('item.data', item.base64)
+
+                        if(utitomime[item.type]) item.type = utitomime[item.type]
+
+                        if(item.base64 && isios()) item.data = 'data:' + item.type + ';base64,' + item.base64
 
                         if(!item.type || !mime[item.type] || item.data){
                             resolve()
