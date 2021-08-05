@@ -13,6 +13,10 @@ var videoCabinet = (function () {
 
   var startingPosition = 0;
 
+  const ROTATE_ONE_PERCENTAGE = 3.6;
+  const HALF_CIRCLE_ROTATE_PERCENTAGE = 50;
+  const HUDRED_PERC = 100;
+
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
@@ -42,9 +46,10 @@ var videoCabinet = (function () {
           .getMyAccountVideos(options, {
             host: server,
           })
-          .then((data = []) => {
+          .then((data = {}) => {
             peertubeServers[server].start += perServerCounter;
-            peertubeServers[server].videos = [...data];
+            peertubeServers[server].videos = [...(data.data || [])];
+            peertubeServers[server].total = data.total || 0;
 
             return data;
           })
@@ -91,7 +96,32 @@ var videoCabinet = (function () {
               userQuota,
             },
           },
-          function (p) {},
+          (p) => {
+            const freePercentage =
+              (
+                userQuota.videoQuotaRemainingDaily / userQuota.videoQuotaDaily
+              ).toFixed(0) * HUDRED_PERC;
+
+            const leftPercentageCircle = p.el.find('.left .progress');
+            const rightPercentageCircle = p.el.find('.right .progress');
+
+            if (freePercentage >= HALF_CIRCLE_ROTATE_PERCENTAGE) {
+              leftPercentageCircle.css(
+                'transform',
+                `rotate(${
+                  (freePercentage - HALF_CIRCLE_ROTATE_PERCENTAGE) *
+                  ROTATE_ONE_PERCENTAGE
+                }deg)`,
+              );
+              rightPercentageCircle.css('transform', 'rotate(180deg)');
+            } else {
+              rightPercentageCircle.css(
+                'transform',
+                `rotate(${freePercentage * ROTATE_ONE_PERCENTAGE}deg)`,
+              );
+              leftPercentageCircle.css('transform', 'rotate(0deg)');
+            }
+          },
         );
       },
     };

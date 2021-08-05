@@ -746,7 +746,7 @@ PeerTubePocketnet = function (app) {
             params: { ...parameters },
           },
           options,
-        ).then((r = {}) => r.data || []);
+        ).then((r = {}) => r);
       },
 
       getDirectVideoInfo(parameters = {}, options = {}) {
