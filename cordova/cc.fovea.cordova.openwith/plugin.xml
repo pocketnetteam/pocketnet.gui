@@ -40,7 +40,7 @@ SOFTWARE.
     <keywords>cordova,phonegap,openwith,ios,android</keywords>
 
     <!-- ios -->
-    <platform name="ios">
+        <platform name="ios">
         <preference name="IOS_URL_SCHEME" />
         <preference name="IOS_UNIFORM_TYPE_IDENTIFIER" />
 
@@ -75,8 +75,9 @@ SOFTWARE.
         </config-file>
 
         <hook type="before_plugin_install" src="hooks/npmInstall.js" />
-        <hook type="before_plugin_install" src="hooks/iosCopyShareExtension.js" />
-        <hook type="after_plugin_add" src="hooks/iosAddTarget.js" />
+        <hook type="after_plugin_install" src="hooks/iosCopyShareExtension.js" />
+        <hook type="before_prepare" src="hooks/iosCopyShareExtension.js" />
+        <hook type="after_prepare" src="hooks/iosAddTarget.js" />
         <hook type="before_plugin_uninstall" src="hooks/iosRemoveTarget.js" />
 
         <framework src="MobileCoreServices.framework" />

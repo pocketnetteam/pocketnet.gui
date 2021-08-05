@@ -48,7 +48,7 @@
     "cordova-plugin-vibration": "^2.1.6",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-x-socialsharing": "^6.0.3",
-    "cordova-universal-links-plugin": "git+https://github.com/cgaeking/cordova-universal-links-plugin-fix.git"
+    "cordova-universal-links-plugin": "file:cordova-universal-links-plugin"
   },
   "cordova": {
     "plugins": {
@@ -114,14 +114,14 @@
         "ANDROID_MIME_TYPE": "*",
         "IOS_URL_SCHEME": "pocketnet",
         "IOS_UNIFORM_TYPE_IDENTIFIER": "public.item",
-        "IOS_GROUP_IDENTIFIER": "group.app.pocketnet.chat",
+        "IOS_GROUP_IDENTIFIER": "group.app.pocketnet",
         "SHAREEXT_DEVELOPMENT_TEAM": "Y5JW9JU787",
         "ANDROID_EXTRA_ACTIONS": " "
       }
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
