@@ -1169,7 +1169,7 @@ var filesvue_type_template_id_8acf856c_scoped_true_staticRenderFns = []
 var es_regexp_to_string = __webpack_require__("25f0");
 
 // EXTERNAL MODULE: ./src/components/events/event/fileMessage/index.vue + 4 modules
-var fileMessage = __webpack_require__("696c");
+var fileMessage = __webpack_require__("696c2");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chatInfo/info/files/index.vue?vue&type=script&lang=js&
 
