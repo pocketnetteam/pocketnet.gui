@@ -1,0 +1,62 @@
+{
+  "_from": "cordova-plugin-contacts-x@^2.0.2",
+  "_id": "cordova-plugin-contacts-x@2.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-TfqDQTfh7Sv63gBv453+0V0Mw2b5jMDGDt05TC4nnd+nBktALp7v6Y7oWz++0Ca3Rc/ZOXrfwHsWbbc+yqsdYQ==",
+  "_location": "/cordova-plugin-contacts-x",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-plugin-contacts-x@^2.0.2",
+    "name": "cordova-plugin-contacts-x",
+    "escapedName": "cordova-plugin-contacts-x",
+    "rawSpec": "^2.0.2",
+    "saveSpec": null,
+    "fetchSpec": "^2.0.2"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-contacts-x/-/cordova-plugin-contacts-x-2.0.2.tgz",
+  "_shasum": "bcbcb7b3cbb3678aca6f2b50072a7f939aa063a6",
+  "_spec": "cordova-plugin-contacts-x@^2.0.2",
+  "_where": "C:\\Users\\Julien\\Desktop\\grewf",
+  "author": {
+    "name": "EinfachHans"
+  },
+  "bugs": {
+    "url": "https://github.com/EinfachHans/cordova-plugin-contacts-x/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-contacts-x",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova Plugins for managing contacts",
+  "homepage": "https://github.com/EinfachHans/cordova-plugin-contacts-x#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "contacts",
+    "contacts-x",
+    "contactsx"
+  ],
+  "license": "MIT",
+  "main": "./src/typescript/index.js",
+  "name": "cordova-plugin-contacts-x",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EinfachHans/cordova-plugin-contacts-x.git"
+  },
+  "scripts": {
+    "doctoc": "doctoc readme.md --github --title '**Table of Content**' --maxlevel 2"
+  },
+  "types": "./src/typescript/index.d.ts",
+  "version": "2.0.2"
+}
