@@ -1392,6 +1392,13 @@ var comments = (function(){
 							this.setText(p.value)
 						}
 
+						if (p.donation && p.amount && p.editid){
+
+							var comment = currents[p.editid]
+							comment.amount.set(p.amount);
+
+						}
+
 						if (p.images){
 
 							if(p.editid && p.images.length){
@@ -1735,7 +1742,9 @@ var comments = (function(){
 					pid : comment.parentid,
 					aid : comment.answerid,
 					id : comment.id,
-					editid : comment.id
+					editid : comment.id,
+					amount: comment.amount,
+					donation: comment.donation
 				}
 
 				renders.post(function(area, el){
