@@ -247,6 +247,22 @@ Comment = function(txid){
     self.parentid = ''
     self.answerid = ''
 
+	self.amount = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = 0
+			}
+			else
+
+				this.v = _v
+
+			if (self.on.change)
+				self.on.change('fees', this.v)
+		},
+		v : 0
+	}
+
 	self.fees = {
 		set : function(_v){
 
@@ -558,14 +574,13 @@ Comment = function(txid){
 			})
 		}
 
-		console.log('self.images.v', self.images.v)
-
 		if(self.id){
 			r.id = self.id
 		}
 
 		//included multi donates!!!
-		if (self.donate && self.donate.v.length){
+
+ 		if (self.donate && self.donate.v.length){
 
 			r.donation = 'true';
 			r.amount = self.donate.v.reduce(function(prev, next){
@@ -573,9 +588,19 @@ Comment = function(txid){
 			}, 0)
 
 			r.amount *= 100000000;
-		}
 
+		} else if (self.amount.v){
+
+			r.donation = 'true';
+			r.amount = self.amount.v;
+
+		}
+	
 		return r
+
+
+		
+
 	}
 
 	self.import = function(v){
@@ -591,8 +616,6 @@ Comment = function(txid){
 		self.images.set(_.map(v.msgparsed.images, function(i){
 			return decodeURIComponent(i)
 		}))
-
-		console.log("v.msgparsed", v.msgparsed)
 
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
@@ -2321,7 +2344,7 @@ pComment = function(){
 
 			try {	
 				self.url = decodeURIComponent(v.msgparsed.url || "");
-				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
+				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
 				self.images = _.map(v.msgparsed.images || [], function(i){
 
 					return decodeURIComponent(i)
