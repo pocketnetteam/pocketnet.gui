@@ -574,8 +574,6 @@ Comment = function(txid){
 			})
 		}
 
-		console.log('self.images.v', self.images.v)
-
 		if(self.id){
 			r.id = self.id
 		}
@@ -590,7 +588,7 @@ Comment = function(txid){
 			}, 0)
 
 			r.amount *= 100000000;
-			
+
 		} else if (self.amount.v){
 
 			r.donation = 'true';

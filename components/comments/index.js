@@ -381,48 +381,54 @@ var comments = (function(){
 
 				var storage = currents[id].export(true)
 
-				self.nav.api.load({
-					open : true,
-					id : 'embeding',
-					inWnd : true,
+				var sender = self.sdk.address.pnet().address;
 
-					essenseData : {
-						type : 'donate',
-						storage : storage,
-						sender: deep(app, 'platform.sdk.usersl.storage.' + self.sdk.address.pnet().address + '.image'), 
-						receiver: deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image'),
-						balance: balance,
-						on : {
+				var imgSender = deep(app, 'platform.sdk.usersl.storage.' + sender + '.image')
 
-							added : function(value){
+				var imgReceiver = deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image');
 
-								var result = Boolean(value);
+				if (sender === receiver){
 
+					sitemessage(self.app.localization.e('donateself'));
 
-								if (Number(value) < balance){
+				} else {
 
-									if(!_.isArray(value)) value = [value]
+					self.nav.api.load({
+						open : true,
+						id : 'embeding',
+						inWnd : true,
+	
+						essenseData : {
+							type : 'donate',
+							storage : storage,
+							sender: imgSender, 
+							receiver: imgReceiver,
+							balance: balance,
+							on : {
+	
+								added : function(value){
+	
+									var result = Boolean(value);
+	
+	
+									if (Number(value) < balance){
+	
+										if(!_.isArray(value)) value = [value]
+	
+										currents[id].donate.remove();
+	
+										currents[id].donate.set({
+											address: receiver,
+											amount: Number(value)
+										})
+	
+										if(!result && errors[type]){
+	
+											sitemessage(errors[type])
+	
+										}
 
-									currents[id].donate.remove();
-
-									currents[id].donate.set({
-										address: receiver,
-										amount: Number(value)
-									})
-
-									if(!result && errors[type]){
-
-										sitemessage(errors[type])
-
-									}
-
-									if (receiver === self.sdk.address.pnet().address){
-
-										sitemessage(self.app.localization.e('donateself'));
-
-									} else {
-
-
+	
 										if (result){
 
 											new Audio('sounds/donate.mp3').play();
@@ -431,24 +437,25 @@ var comments = (function(){
 
 										}	
 
+								
+	
+									} else {
+	
+										sitemessage(self.app.localization.e('incoins'))
 									}
-
-
-								} else {
-
-									sitemessage(self.app.localization.e('incoins'))
+	
+				
+	
 								}
-
-			
-
 							}
+						},
+	
+						clbk : function(s, p){
+							external = p
 						}
-					},
-
-					clbk : function(s, p){
-						external = p
-					}
-				})
+					})
+	
+				}
 
 			}, 
 
