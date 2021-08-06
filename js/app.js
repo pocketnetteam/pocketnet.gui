@@ -990,6 +990,150 @@ Application = function(p)
 
 	}
 
+	self.storage = {
+
+		getStorageLocation: function() {
+			if (!device || !device.platform || !cordova || !cordova.file)
+				return undefined;
+			var storageLocation = "";
+			switch (device.platform) {
+				case "Android":
+					storageLocation = 'file:///storage/emulated/0/';
+					break;
+				case "iOS":
+					storageLocation = cordova.file.cacheDirectory;
+					break;
+			}
+			return storageLocation;
+		},
+	
+		getStorageDirectory: function() {
+			return "Pocketnet";
+		},
+	
+		saveFile: function(url, file) {
+			return new Promise((resolve, reject) => {
+				var storageLocation = self.storage.getStorageLocation();
+				var blob = new Blob([file], { type: file.type });
+				var name = $.md5(url);
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+					function (directory) {
+						directory.getFile(name, { create: true, exclusive: false }, function (entry) {
+							var myFileUrl = entry.toURL();
+							entry.createWriter(function (writer) {
+								writer.onwriteend = function () {
+									return resolve(myFileUrl);
+								};
+								writer.seek(0);
+								writer.write(blob);
+							}, function (error) {
+								return reject(error);
+							});
+						}, function (error) {
+							return reject(error);
+						});
+					}, function (error) {
+						return reject(error);
+					});
+				}, function (evt) {
+					return reject(evt);
+				});
+			});
+		},
+	
+		loadFile: function(url) {
+			return new Promise((resolve, reject) => {
+				var storageLocation = self.storage.getStorageLocation();
+				var name = $.md5(url);
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+					function (directory) {
+						directory.getFile(name, { create: false }, function (entry) {
+							entry.file(function(file) {
+								return resolve(file);
+							}, function(error) {
+								return reject(error);
+							});
+						}, function (error) {
+							return reject(error);
+						});
+					}, function (error) {
+						return reject(error);
+					});
+				}, function (evt) {
+					return reject(evt);
+				});
+			});
+		},
+	
+		// Delete the file if it is older than the time passed as parameter
+		deleteFileIfTooOld: function(fileEntry, time) {
+			return new Promise((resolve, reject) => {
+				if (fileEntry.isFile) {
+					fileEntry.file((file) => {
+						// If file is older than the date passed as parameter
+						if (file.lastModifiedDate <= time.getTime()) {
+							// Delete the file
+							fileEntry.remove(function() {
+								return resolve();
+							}, function(error) {
+								return resolve();
+							});
+						} else
+							return resolve();
+					}, function(error) {
+						return resolve();
+					}); 
+				} else
+					return resolve();
+			});
+		},
+	
+		clearStorage: function(time) {
+			return new Promise((resolve, reject) => {
+				if (!time || !time.getTime)
+					return reject('Invalid date object');
+				var nbEntries, nbDone = 0;
+				var incrementAndCheckNbDone = function() {
+					nbDone += 1;
+					if (nbDone >= nbEntries)
+						resolve();
+				}
+				var storageLocation = self.storage.getStorageLocation();
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+					function (directory) {
+						var directoryReader = directory.createReader();
+						directoryReader.readEntries(function(entries) {
+							nbEntries = entries.length;
+							// For each file inside the directory
+							for (var i = 0; i < nbEntries; i++) {
+								self.storage.deleteFileIfTooOld(entries[i], time).then(() => {
+									incrementAndCheckNbDone();
+								});
+							}
+						}, function(error) {
+							return reject(error);
+						});
+					}, function (error) {
+						return reject(error);
+					});
+				});
+			});
+		}
+	
+	}
+
 	self.ref = null;
 	
 	try{
