@@ -544,35 +544,6 @@ var menu = (function(){
 									clearex()
 								});
 
-								/*el.find('.result').on('click', function(){
-
-									var r = $(this).attr('result')
-
-									_el.find('input').val(r)
-
-									var href = 'index?ss=' + r.replace("#", 'tag:')
-
-									if (authorForSearch){
-										href = '?report=shares&ss=' + r.replace("#", 'tag:')
-
-										authorForSearch.clear(true)
-									}
-
-									var p = {
-										href : href,
-										history : true,
-										open : true
-									};
-
-									if(authorForSearch) p. handler = true
-
-									self.nav.api.go(p)
-
-									helpers.closeResults()
-
-									clearex()
-
-								})*/
 
 								el.find('.user').on('click', function(){
 

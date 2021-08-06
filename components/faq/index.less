@@ -113,7 +113,7 @@
 
 	.faqcnt{
 		margin-left : 0;
-		padding : @rhythm;
+		padding : @rhythm 3 * @rhythm;
 
 		.group{
 			margin-bottom: 4 * @rhythm;
@@ -138,16 +138,18 @@
 
 					.answer{
 						font-size : 1em;
-						font-weight: 300;
+						font-weight: 400;
 
-						display: none;
+						display: none;	
+						padding : 2 * @rhythm 0;
+						text-align: left;
 
 					}
 
 					.share{
 						display: none;
 						font-size: 1em;
-						
+						margin-bottom: 4 * @rhythm;
 					}
 
 					&.opened{

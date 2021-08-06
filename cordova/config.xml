@@ -21,8 +21,7 @@
     <preference name="StatusBarBackgroundColor" value="#000000" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
-    <preference name="Fullscreen" value="false" />
-
+    <preference name="Fullscreen" value="true" />
   
 
     <platform name="android">

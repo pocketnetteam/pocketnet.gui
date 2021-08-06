@@ -16589,13 +16589,17 @@ Platform = function (app, listofnodes) {
                 if (data.data)
                     platform.ws.messageHandler(data.data)
 
-                if (data.tap == 'background' && data.room_id) {
+                if (data.room_id) {
 
                     // Wait until we can navigate Matrix
                     retry(function(){
+
                         return platform && platform.matrixchat && platform.matrixchat.core;
+
                     }, function(){
+
                         platform.matrixchat.core.goto(data.room_id);
+                        
                         if (platform.matrixchat.core.apptochat)
                             platform.matrixchat.core.apptochat();
                     });

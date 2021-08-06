@@ -442,16 +442,30 @@
 
 					.usericon{
 						position: relative;
-						/*margin : 0 auto;*/
-
-						@keyframes rotation {
-							from {
-								transform: rotate(0deg);
-							}
-							to {
-								transform: rotate(359deg);
+						
+						&.donated{
+							
+							&:after{
+								position: absolute;
+								left : -1px;
+								top : -1px;
+								right: -1px;
+								bottom : -1px;
+								animation: rotation 8s infinite linear;
+								border : 2px solid @color-main;
+								content : "";
+								border-radius: 50%;
+								border-image: linear-gradient(#0B0E7F , #0B95DD);
+								-moz-border-image: -moz-linear-gradient(#0B0E7F , #0B95DD);
+								-webkit-border-image: -webkit-linear-gradient(#0B0E7F , #0B95DD);
+								border-image-slice: 1;
+								filter: blur(5px);
 							}
 						}
+
+						
+
+						
 
 					}
 
@@ -463,6 +477,15 @@
 						width: 41px;
 						height: 41px;
 						max-width: none;
+					}
+
+					@keyframes rotation {
+						from {
+							transform: rotate(0deg);
+						}
+						to {
+							transform: rotate(359deg);
+						}
 					}
 
 					.followers_arc_outer{
@@ -1044,7 +1067,7 @@
 					
 					.closeEdit,
 					.postaction{
-						line-height: 36px;
+						line-height: 40px;
 						text-align: center;
 						
 						.preloaderWrapper{
@@ -1206,7 +1229,7 @@
 		.embedimages{
 			position: absolute;
 			right : 40px;
-			top : 3px;
+			top : 3.5px;
 			padding : 6px;
 			cursor: pointer;
 			color : @color-gray-light;
@@ -1214,6 +1237,10 @@
 
 			&:hover{
 				color : @color-black2;
+			}
+
+			i{
+				font-size: 1.1em;
 			}
 		}
 
@@ -1295,17 +1322,14 @@
 				>div{
 					&.postCellWrapper{
 						
-						.postaction{
-							
-							
-
-						}
+						
 					}
 				}
 			}
 			
 		}
 	}
+
 
 
 
@@ -1933,11 +1957,14 @@ html.stblack{
 
 					.donateSum{
 						margin-left: 0;
-						position: relative;
-						top: 4px;
+						margin-top: 2 * @rhythm;
+						margin-bottom: @rhythm;
+						display: block;
+						text-align: center;
 					}
 					
 					&.panelWrapper{
+						vertical-align: top;
 
 						.panel{
 							text-align: center;

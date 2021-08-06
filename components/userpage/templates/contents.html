@@ -87,11 +87,20 @@
             </div>
         </div>
 
+        <% if(state) {%>
         <div class="reportCaption">
             <div class="label">
                 <a href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
             </div>
         </div>
+        <% } else { %> 
+            
+            <div class="reportCaption">
+                <div class="label">
+                    <a href="about"><%=e('aboutus')%></a>
+                </div>
+            </div>
+        <% } %>
            
 
         <% if(!app.curation()) {%>

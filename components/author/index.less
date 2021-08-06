@@ -1038,7 +1038,18 @@ html.tablet{
 					padding-left: 0;
 					padding-right : 0;
 					text-align: center;
+					padding-bottom: 2 * @rhythm;
 					font-size: 0.8em;
+					border-bottom: 2px solid @color-gray;
+
+					&:hover{
+						border-bottom: 2px solid @color-raspberry;
+					}
+	
+					&.active{
+						border-bottom: 2px solid @color-raspberry;
+					}
+
 				}
 			}
 
@@ -1298,8 +1309,19 @@ html.tablet{
 						margin-right : 0;
 						padding-left: 0;
 						padding-right : 0;
+						padding-bottom: 2 * @rhythm;
 						text-align: center;
 						font-size: 0.8em;
+
+						border-bottom: 2px solid @color-gray;
+
+						&:hover{
+							border-bottom: 2px solid @color-raspberry;
+						}
+		
+						&.active{
+							border-bottom: 2px solid @color-raspberry;
+						}
 					}
 				}
 

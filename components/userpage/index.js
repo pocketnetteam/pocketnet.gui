@@ -24,6 +24,14 @@ var userpage = (function(){
 
 			if(!self.app.user.getstate()){
 
+
+				reports.push({
+					name : self.app.localization.e('createnew'),
+					id : 'registration',
+					report : 'registration',
+					mobile : true,
+					rh : true
+				})
 				
 				reports.push({
 					name : self.app.localization.e('signin'),
@@ -33,13 +41,7 @@ var userpage = (function(){
 					rh : true
 				})
 
-				reports.push({
-					name : self.app.localization.e('createnew'),
-					id : 'registration',
-					report : 'registration',
-					mobile : true,
-					rh : true
-				})
+				
 		
 
 			}

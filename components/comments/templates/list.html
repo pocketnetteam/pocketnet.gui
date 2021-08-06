@@ -105,7 +105,7 @@ var commentpanel = function(comment, _class){  %>
 						<% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
 
 						<div class="icon">
-							<div class="usericon" image="<%-src || ''%>">
+							<div class="usericon <% if(comment.donation === 'true' && comment.amount) {%> donated <% } %>" image="<%-src || ''%>">
 
 
 
@@ -120,10 +120,10 @@ var commentpanel = function(comment, _class){  %>
 								<% } %>
 							</div>
 
-							<% if(comment.donation === 'true' && comment.amount) {%>
+							<!--<% if(comment.donation === 'true' && comment.amount) {%>
 								<div class="donater followers_arc_outer followers_arc_start o_circle"></div>
 
-							<% } %>
+							<% } %>-->
 
 							
 						</div>

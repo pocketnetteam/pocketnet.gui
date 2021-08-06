@@ -195,10 +195,7 @@ var authorization = (function(){
 	        
 
 	        el.toRegistration.on('click', function(){
-
-
 	        	self.nav.api.loadSameThis('registration', p)
-
 			})
 			
 			el.c.find('.showformh').on('click', function(){

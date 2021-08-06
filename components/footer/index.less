@@ -9,6 +9,10 @@
         width: 20px;
         height: 20px;
     }
+
+    .fitem{
+        margin-bottom: @rhythm;
+    }
     
 
 	.footerCenterWrapper{
@@ -38,7 +42,12 @@
 
     .localization{
         position: relative;
-        color: @color-black;
+        padding-bottom : 2 * @rhythm;
+
+        i{
+            width: 24px;
+            text-align: center;
+        }
         
         .vc_valuecustom{
             float: right;
@@ -162,6 +171,10 @@
                     &:nth-last-child(1){
                         padding-right: 0;
                         text-align: right;
+                    }
+
+                    &:nth-child(1){
+                        padding-left: 0;
                     }
                 }
             }

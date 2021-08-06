@@ -2863,7 +2863,7 @@ input[type=radio].radio:checked + label {
     z-index: 30;
     .transition(0.6s);
     color: #fff;
-    background: #161619;
+    background: #060523;
 }
 
 .topPreloader{
@@ -3418,6 +3418,11 @@ input[type=radio].radio:checked + label {
 
     ._close{
         display: none;
+    }
+
+    .itemclose{
+        color : @color-add;
+        font-weight: 700;
     }
 
     z-index: 10000;
@@ -5695,7 +5700,7 @@ html{
 
         &.toppanelshowed{
             .contentWrapper{
-                padding-top : 110px;
+                padding-top : 120px;
             }
         }
 
@@ -6148,15 +6153,17 @@ html{
     }
     .sitemessage{    
         position: fixed;
-        width: 100%;
-        left: 0;
-        right: 0;
-        bottom: 0px;
-        padding : 2 * @rhythm @rhythm;
-        border-top: 1px solid #FF0060;
-        border-bottom: 0;
+        width: auto;
+        left: @rhythm;
+        right: @rhythm;
+        bottom: 25px;
+        padding : 4 * @rhythm;
+        
         z-index: 20100;
         min-height: 50px;
+        border-radius: 5px;
+        text-align: center;
+        border : 1px solid @color-gray-slight;
     }
 
     .workstation{
@@ -6895,5 +6902,56 @@ html{
     border-bottom: 1px solid #FF8C00;
   }
   
+
+  .dg-container{
+    font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    .dg-main-content{
+        padding : 3 * @rhythm;
+    }
+
+    .dg-main-content{
+        border : 0;
+        border-radius: 0;
+        background: @color-white;
+        color : @color-black ;
+    }
+
+    .dg-content-footer{
+        overflow: hidden;
+
+        button{
+            margin-left: @rhythm;
+            display: block;
+            float: right;
+            font-size: 1em;
+            font-weight: 400;
+            color : @color-main;
+            background: transparent;
+            border : 1px solid transparent;
+
+            &.dg-pull-right{
+                border : 1px solid @color-main;
+                background: @color-main;
+                color : #fff;
+            }
+        }
+
+    }
+
+    .dg-content-body{
+        border : 0;
+        padding-bottom: 0;
+        
+
+        .dg-content{
+            font-size: 2em;
+            font-weight: 100;
+        }
+
+    }
+  }
+
+    
   
   

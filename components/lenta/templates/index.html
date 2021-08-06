@@ -27,12 +27,13 @@
 				</div>-->
 
 			<% } else { %> 
-
+				<% if(state) {%>
 				<div class="ended">
 					<a href="index?r=recommended">
 						<button style="border-radius: 50px;"><%=e('e13124')%></button>
 					</a>
 				</div>
+				<% } %>
 
 			<% } %>
 
@@ -46,7 +47,7 @@
 			</div>
 
 
-		<% if(author) {%>
+		<% if(author && state) {%>
 
 			<div class="zero">
 				
@@ -104,13 +105,14 @@
 
 					
 
-				<% } else { %> 
-
+				<% } else { %> 	
+					<% if(state) {%>
 					<div class="zerocaption">
                         <span>
 							<%=e('e13128')%>
                         </span>
                     </div>
+					<% } %>
                     <div class="subc">
                         <a href="filluserfast">
                             <button><%=e('registration')%></button>

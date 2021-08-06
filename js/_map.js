@@ -860,7 +860,8 @@ __map =  {
 			href : "donations",
 			add : {
 				el : 'content'
-			}
+			},
+			anonimus : true,
 		},
 
 		faq : {
