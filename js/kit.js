@@ -2344,7 +2344,7 @@ pComment = function(){
 
 			try {	
 				self.url = decodeURIComponent(v.msgparsed.url || "");
-				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
+				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
 				self.images = _.map(v.msgparsed.images || [], function(i){
 
 					return decodeURIComponent(i)
