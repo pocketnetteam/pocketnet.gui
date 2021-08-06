@@ -779,7 +779,15 @@ Application = function(p)
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
-				window.screen.orientation.lock('portrait')
+
+				if(isTablet()){
+					window.screen.orientation.lock('landscape')
+				}
+				else{
+					window.screen.orientation.lock('portrait')
+				}
+
+				
 
 				p || (p = {});
 

@@ -21008,8 +21008,8 @@ Platform = function (app, listofnodes) {
                                     <matrix-element
                                         address="${a}"
                                         privatekey="${privatekey}"
-                                        pocketnet="`+(isMobile() ? '' : 'true')+`"
-                                        mobile="`+(isMobile() ? 'true' : '')+`" 
+                                        pocketnet="`+( (isMobile() || isTablet()) ? '' : 'true')+`"
+                                        mobile="`+( (isMobile() || isTablet()) ? 'true' : '')+`" 
                                         ctheme="`+self.sdk.theme.current+`"
                                         localization="`+self.app.localization.key+`"
                                         fcmtoken="`+(self.fcmtoken || "")+`"
@@ -21052,7 +21052,7 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(isMobile()){
+                if(isTablet()){
 
 					self.matrixchat.el.swipe({
 						allowPageScroll: "vertical", 

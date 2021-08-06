@@ -582,6 +582,25 @@ html.stblack{
 	}
 }
 
+#userpage{
+	.maketsWrapper{
+		.contents{
+			.reportCaption {
+
+				&[rid="registration"]{
+					margin-top : @rhythm;
+					color : @color-orange;
+				}
+
+				&[rid="authorization"]{
+					margin-bottom : 4 * @rhythm;
+				}
+			}
+		
+		}
+	}
+}
+
 
 /*t*/ @media only screen and (max-width: 768px){
 
@@ -774,4 +793,15 @@ html.stblack{
 
 
 }
+}
+
+html.tablet{
+	#userpage .maketsWrapper .maket.right{
+		margin-left: 150px;
+	}
+
+	#userpage .maketsWrapper .maket.left{
+		width: 150px;
+		float: left;
+	}
 }

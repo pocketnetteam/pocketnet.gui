@@ -4467,26 +4467,27 @@ input[type=radio].radio:checked + label {
     font-size: 16px;
 }
 
-html{
-    &.mobile{
-        .matrixchatwrapper{
-            position: fixed;
-            left : -100%;
-            top : 0;
-            right: 100%;
-            bottom : 0;
-            background: #fff;
-            .transition(0.3s);
-            z-index: 300;
-            .shadowSmall();
-            -webkit-overflow-scrolling: touch;
-            &.active{
-                left : 0;
-                right: 0;
-                opacity: 1;
-            }
+html.mobile,
+html.tablet{
+    
+    .matrixchatwrapper{
+        position: fixed;
+        left : -100%;
+        top : 0;
+        right: 100%;
+        bottom : 0;
+        background: #fff;
+        .transition(0.3s);
+        z-index: 300;
+        .shadowSmall();
+        -webkit-overflow-scrolling: touch;
+        &.active{
+            left : 0;
+            right: 0;
+            opacity: 1;
         }
     }
+    
 }
 
 /*t*/ @media only screen and (max-width: 768px){

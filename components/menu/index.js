@@ -349,7 +349,7 @@ var menu = (function(){
 						actions.ahnotify(el, unseen().length, 'notifications')
 					})
 
-					if(!isMobile()){
+					if(!isTablet()){
 						self.nav.api.load({
 							eid : 'menu',
 							open : true,
@@ -369,7 +369,7 @@ var menu = (function(){
 
 				click : function(el){
 
-					if(isMobile())
+					if(isTablet())
 						self.nav.api.go({
 							href : 'userpage?id=notifications&report=notifications',
 							history : true,
