@@ -131,7 +131,6 @@ var authorization = (function(){
 								else{
 									return 'filluserfast'
 								}
-
 								
 							}
 
@@ -147,6 +146,8 @@ var authorization = (function(){
 
 							if (close)
 								close();
+
+							
 
 							if (essenseData.signInClbk)
 								essenseData.signInClbk();

@@ -780,12 +780,14 @@ Application = function(p)
 		{
 			document.addEventListener('deviceready', function(){
 
-				if(isTablet()){
+				window.screen.orientation.lock('portrait')
+
+				/*if(isTablet()){
 					window.screen.orientation.lock('landscape')
 				}
 				else{
 					window.screen.orientation.lock('portrait')
-				}
+				}*/
 
 				
 
@@ -1064,11 +1066,34 @@ Application = function(p)
 					},
 					function (directory) {
 						directory.getFile(name, { create: false }, function (entry) {
+
+							console.log(entry)
+
 							entry.file(function(file) {
-								return resolve(file);
+
+								var reader = new FileReader();
+
+								console.log(file)
+
+								reader.onloadend = function() {
+						
+									var blob = new Blob([new Uint8Array(this.result)], { type: file.type || "file" });
+
+									console.log("BLOC", blob)
+
+									return resolve(blob);
+								};
+						
+								reader.readAsArrayBuffer(file);
+
+								
+
 							}, function(error) {
+								console.error(error)
 								return reject(error);
 							});
+
+
 						}, function (error) {
 							return reject(error);
 						});

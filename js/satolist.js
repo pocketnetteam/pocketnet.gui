@@ -4415,12 +4415,12 @@ Platform = function (app, listofnodes) {
 
                     return new Promise((resolve, reject) => {
 
-                        dialog({
+                        /*dialog({
                             html: "Pocketnet chat ask you to generate encryption keys. Do you want to proceed?",
                             btn1text: 'Generate Encryption Keys',
                             btn2text: self.app.localization.e('dno'),
 
-                            success: function () {
+                            success: function () {*/
 
                                 self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -4446,7 +4446,7 @@ Platform = function (app, listofnodes) {
                                     }
                                 )
 
-                            },
+                            /*},
 
                             fail: function () {
                                 reject('no')
@@ -4455,7 +4455,7 @@ Platform = function (app, listofnodes) {
                             close: function () {
                                 reject('close')
                             }
-                        })
+                        })*/
 
                     })
 
@@ -16589,6 +16589,8 @@ Platform = function (app, listofnodes) {
                 if (data.data)
                     platform.ws.messageHandler(data.data)
 
+                console.log("DATA", data)
+
                 if (data.room_id) {
 
                     // Wait until we can navigate Matrix
@@ -21021,7 +21023,7 @@ Platform = function (app, listofnodes) {
 
                                 self.matrixchat.el = $('.matrixchatwrapper')
                                 self.matrixchat.initevents()
-
+                                self.matrixchat.connect()
                                 
                             }, null, app);
 

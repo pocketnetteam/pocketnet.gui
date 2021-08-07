@@ -173,6 +173,8 @@ var registration = (function(){
 											href : essenseData.successHref || 'filluser',
 											nav : essenseData.nav
 										});
+
+										
 									}
 
 									

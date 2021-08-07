@@ -572,3 +572,7 @@
 [0511/072038.221:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
 [0511/072043.243:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
 [0511/072045.869:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0806/204902.463:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0807/094845.032:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0807/094845.120:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
+[0807/094845.141:WARNING:dns_config_service_win.cc(668)] Failed to read DnsConfig.
