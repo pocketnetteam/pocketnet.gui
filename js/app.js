@@ -1021,10 +1021,10 @@ Application = function(p)
 			return "Pocketnet";
 		},
 	
-		saveFile: function(url, file) {
+		saveFile: function(url, blob) {
 			return new Promise((resolve, reject) => {
 				var storageLocation = self.storage.getStorageLocation();
-				var blob = new Blob([file], { type: file.type });
+				// var blob = new Blob([file], { type: "image/png" });
 				var name = $.md5(url);
 				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
@@ -1078,8 +1078,6 @@ Application = function(p)
 								reader.onloadend = function() {
 						
 									var blob = new Blob([new Uint8Array(this.result)], { type: file.type || "file" });
-
-									console.log("BLOC", blob)
 
 									return resolve(blob);
 								};
