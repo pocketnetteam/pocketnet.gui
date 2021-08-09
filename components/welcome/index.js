@@ -72,12 +72,19 @@ var welcome = (function(){
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			getdata : function(clbk, p){
 
 				var data = {};
 
+				if(p.state){
+					self.nav.api.load({
+						open : true,
+						href : 'userpage',
+						history : true
+					})
 
-				
+					return
+				}
 
 				clbk(data);
 
