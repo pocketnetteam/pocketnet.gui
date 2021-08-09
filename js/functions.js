@@ -1298,8 +1298,8 @@
 		if(!p.fail) p.fail = false;
 
 
-		if(!p.btn1text) p.btn1text = "Accept";
-		if(!p.btn2text) p.btn2text = "Cancel";
+		if(!p.btn1text) p.btn1text = app.localization.e('daccept');
+		if(!p.btn2text) p.btn2text = app.localization.e('dcancel');
 
 		if(p.id)
 		{

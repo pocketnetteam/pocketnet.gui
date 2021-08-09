@@ -4,12 +4,12 @@
       <div class="logo-container">
         <img src="img/logo201.png" />
       </div>
-      <div><span>Streaming software links</span></div>
+      <div><span><%- e('streamLinks') %></span></div>
     </header>
 
     <section class="main-content-section">
       <div class="upload-field-container">
-        <label for="result-video-rtmp">RTMP Url:</label>
+        <label for="result-video-rtmp"><%- e('linkRTMP') %>:</label>
         <input
           type="text"
           class="result-video-rtmp result-video-info copyStreamInfo"
@@ -17,11 +17,11 @@
           readonly
           linkType="result-video-rtmp"
         />
-      
+
         <span class="type-error-field name-type-error"></span>
       </div>
       <div class="upload-field-container">
-        <label for="result-video-streamKey">Stream Key:</label>
+        <label for="result-video-streamKey"><%- e('linkStreamKey') %>:</label>
 
         <input
           type="text"
@@ -30,20 +30,21 @@
           linkType="result-video-streamKey"
           readonly
         />
-       
+
         <span class="type-error-field name-type-error"></span>
       </div>
 
-      <div class="stream-warning-section">
-        <span class="bold-warning"><%- e('capitalWarning') %>: </span>
-        <span><%- e('streamSettingsWarn') %>.</span>
-        <span><%- e('streamSettingsResult') %></span>
+      <div
+        class="stream-warning-section tooltip"
+        title="<%- e('streamSettingsWarn') %>"
+      >
+        <i class="fas fa-question-circle"></i>
+        <%- e('capitalWarning') %>
       </div>
 
       <div class="closewindow">
-        <button class="button medium closewindowaction">Close</button>
+        <button class="button medium closewindowaction"><%- e('close') %></button>
       </div>
-
     </section>
   </section>
 

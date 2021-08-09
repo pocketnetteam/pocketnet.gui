@@ -58,14 +58,23 @@
     }
 
     .stream-warning-section {
-        color: red;
+        text-align: center;
+
+        color: @color-gray-mlight;
         font-size: 0.8em;
 
-        margin-top: @rhythm * 2;
+        cursor: pointer;
 
-        .bold-warning {
-            font-weight: bold;
+        padding-top: 2 * @rhythm;
+
+        &:hover {
+            text-decoration: underline;
         }
+
+        position: absolute;
+
+        bottom: 1em;
+        left: 1em;
     }
 
     .type-error-field {
