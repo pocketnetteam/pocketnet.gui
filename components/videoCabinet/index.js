@@ -13,6 +13,8 @@ var videoCabinet = (function () {
 
   var startingPosition = 0;
 
+  var external = null;
+
   const ROTATE_ONE_PERCENTAGE = 3.6;
   const HALF_CIRCLE_ROTATE_PERCENTAGE = 50;
   const HUDRED_PERC = 100;
@@ -149,32 +151,78 @@ var videoCabinet = (function () {
             },
           },
           (p) => {
-            const freePercentage =
-              (
-                userQuota.videoQuotaRemainingDaily / userQuota.videoQuotaDaily
-              ).toFixed(0) * HUDRED_PERC;
+            const freePercentage = (
+              (userQuota.videoQuotaRemainingDaily / userQuota.videoQuotaDaily) *
+              HUDRED_PERC
+            ).toFixed(0);
 
             const leftPercentageCircle = p.el.find('.left .progress');
             const rightPercentageCircle = p.el.find('.right .progress');
 
             if (freePercentage >= HALF_CIRCLE_ROTATE_PERCENTAGE) {
-              leftPercentageCircle.css(
+              rightPercentageCircle.css(
                 'transform',
                 `rotate(${
                   (freePercentage - HALF_CIRCLE_ROTATE_PERCENTAGE) *
                   ROTATE_ONE_PERCENTAGE
                 }deg)`,
               );
-              rightPercentageCircle.css('transform', 'rotate(180deg)');
+              leftPercentageCircle.css('transform', 'rotate(180deg)');
             } else {
-              rightPercentageCircle.css(
+              leftPercentageCircle.css(
                 'transform',
                 `rotate(${freePercentage * ROTATE_ONE_PERCENTAGE}deg)`,
               );
-              leftPercentageCircle.css('transform', 'rotate(0deg)');
+              rightPercentageCircle.css('transform', 'rotate(0deg)');
             }
           },
         );
+      },
+
+      streamPage(p = {}) {
+        var typeDictionary = {
+          addVideo: 'uploadpeertube',
+          addStream: 'streampeertube',
+        };
+
+        var elName = typeDictionary[p.type];
+
+        if (external && external.id == elName) {
+          external.container.show();
+
+          return;
+        }
+
+        if (external) external.container.close();
+
+        self.nav.api.load({
+          open: true,
+          id: elName,
+          inWnd: true,
+
+          history: false,
+
+          essenseData: {
+            storage: p.storage,
+            value: p.value,
+            currentLink: '',
+            actions: {
+              added: function () {
+                actions.getVideos().then(() => renders.videos());
+              },
+            },
+
+            closeClbk: function () {
+              external = null;
+            },
+          },
+
+          clbk: function (p, element) {
+            external = element;
+
+            videoUploadData = element.essenseData;
+          },
+        });
       },
     };
 
@@ -185,6 +233,11 @@ var videoCabinet = (function () {
 
     var initEvents = function () {
       el.windowElement.on('scroll', events.onPageScroll);
+      el.videoButtons.on('click', function () {
+        const type = $(this).attr('rendersElement');
+
+        renders.streamPage({ type });
+      });
     };
 
     return {
@@ -196,8 +249,9 @@ var videoCabinet = (function () {
       },
 
       destroy: function () {
-        el = {};
         el.windowElement.off('scroll', events.onPageScroll);
+
+        el = {};
       },
 
       init: function (p) {
@@ -208,6 +262,7 @@ var videoCabinet = (function () {
 
         el.videoContainer = el.c.find('.videoContainer');
         el.quotaContainer = el.c.find('.quotaContainer');
+        el.videoButtons = el.c.find('.videoActiveButton');
 
         el.windowElement = $(window);
 

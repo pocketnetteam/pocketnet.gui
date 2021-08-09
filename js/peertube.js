@@ -560,7 +560,7 @@ PeerTubePocketnet = function (app) {
           .checkQuota(parameters.video.size, { type: options.type })
           .then((rme) => {
             var videoName =
-              parameters.name || `${this.userName}:${new Date().toISOString()}`;
+              parameters.name || `PocketVideo:${new Date().toISOString()}`;
 
             var data = {
               privacy: 1,

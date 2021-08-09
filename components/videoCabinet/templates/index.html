@@ -17,8 +17,17 @@
   <section class="videoContainer">
     <section>
       Video Controls
-      <button class="uploadVideo">
+      <button
+        class="uploadVideo videoActiveButton"
+        rendersElement="addVideo"
+      >
         <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
+      </button>
+      <button
+        class="startStream videoActiveButton"
+        rendersElement="addStream"
+      >
+        <i class="fas fa-dot-circle"></i><%- e('peertubeAddStream') %>
       </button>
     </section>
   </section>
