@@ -281,7 +281,9 @@
 
 			}
 
-			
+			.hasaccount{
+				display: none;
+			}
 
 			
 		}
@@ -481,12 +483,12 @@
 				padding-top : 2 * @rhythm;
 				min-height: 350px;
 
-				.parameterMaketWrapper{
+				/*.parameterMaketWrapper{
 					&[parameter="site"],
 					&[parameter="language"]{
 						display: none;
 					}
-				}
+				}*/
 
 				.parameter textarea {
 					min-height: 85px;
@@ -560,7 +562,7 @@ html.stblack{
 	
 					input{
 					
-						background: @color-black;
+						background: @color-gray;
 						color : @color-main;
 						border : 1px solid transparent;
 						
@@ -678,7 +680,7 @@ html.stblack{
 			}
 		
 			
-		
+			
 		}
 	}
 }
@@ -687,10 +689,10 @@ html.stblack{
 	#authorization{	
 		padding-bottom : 6 * @rhythm;
 		.work{
-			padding-top: 2 * @rhythm!important;
-			padding-bottom : 2 * @rhythm!important;
-			padding-left : @rhythm!important;
-			padding-right: @rhythm!important;
+			padding-top: 4 * @rhythm!important;
+			padding-bottom : 4 * @rhythm!important;
+			padding-left : 2 * @rhythm!important;
+			padding-right: 2 * @rhythm!important;
 		}
 		.maket{
 
@@ -699,7 +701,14 @@ html.stblack{
 			}
 		}
 		.caption{
-			font-size: 2.1em;
+			margin-top: .5em;
+			font-size: 3.1em;
+			font-weight: 100;
+			text-align: center;
+
+			&.cpt2{
+				font-size: 1.5em;
+			}
 		}
 
 		button{
@@ -711,14 +720,44 @@ html.stblack{
 			}
 		}
 
-		
-		.inputTable{
+		.formh{
+			text-align: center;
+		}
 
+		
+		.keytable{
+			display: block;
+			position: relative;
 
 			>div{
-
+				display: block;
 				&.fileUploaderWrapper{
-					width: 50%;
+					/*width: 50%;*/
+					width: 80px;
+					text-align: center;
+					display: block;
+					position: absolute;
+					right: 0;
+					bottom : 0;
+					top : 0;
+
+					.label{
+						display: none;
+					}
+
+					.icon{
+						font-size: 1.2em;
+						height: 100%;
+						line-height: 76px;
+					}
+
+					.uploadFile{
+						height: 100%;
+					}
+				}
+
+				input{
+					border-radius: 3px;
 				}
 			}
 
@@ -748,22 +787,27 @@ html.stblack{
 	
 			.topCaption{
 				padding-left: 2 * @rhythm;
+				margin-top : 0;
 				padding-right: 2 * @rhythm;
 			}
 	
 			.scrollmaketpart{
 				
 			}
+			
 	
 			
 			.work{
 				padding-top: 2 * @rhythm!important;
 				padding-bottom : 2 * @rhythm!important;
+				padding-left: 0!important;
+				padding-right: 0!important;
 			}
 		
 			.caption{
 				font-size: 1.3em;
 				margin-bottom : 0!important;
+				margin-top : 0!important;
 				text-align: center;
 				font-weight: 100;
 				color : @color-bright;
@@ -819,7 +863,8 @@ html.stblack{
 			
 			.sitelogin{
 				.form{
-					margin-top: 2 * @rhythm;
+					margin-top: 0;
+
 					.item{
 						margin-bottom: @rhythm;
 		

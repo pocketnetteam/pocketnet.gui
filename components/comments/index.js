@@ -13,7 +13,7 @@ var comments = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false;
+		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
 
 		var authblock = false;
 
@@ -119,7 +119,8 @@ var comments = (function(){
 
 						areas[id].setText('');
 
-					el.c.find('.post .newcommentimages').html('')
+					el.c.find('.post .newcommentimages').html('');
+					el.c.find('.post .newcommentdonate').html('');
 				}
 
 				else
@@ -357,6 +358,107 @@ var comments = (function(){
 
 
 			},
+
+
+			removeDonate : function(id, p){
+
+				var comment = currents[id]
+
+				comment.donate.remove()
+
+				renders.donate(id, p);
+
+			},
+
+			embeddonate : function(id, p){
+
+				id || (id = '0')
+
+				actions.process(id)
+
+				if (areas[id])
+					areas[id].___inited = true
+
+				var storage = currents[id].export(true)
+
+				var sender = self.sdk.address.pnet().address;
+
+				var imgSender = deep(app, 'platform.sdk.usersl.storage.' + sender + '.image')
+
+				var imgReceiver = deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image');
+
+				if (sender === receiver){
+
+					sitemessage(self.app.localization.e('donateself'));
+
+				} else {
+
+					self.nav.api.load({
+						open : true,
+						id : 'embeding',
+						inWnd : true,
+	
+						essenseData : {
+							type : 'donate',
+							storage : storage,
+							sender: imgSender, 
+							receiver: imgReceiver,
+							balance: balance,
+							on : {
+	
+								added : function(value){
+	
+									var result = Boolean(value);
+	
+	
+									if (Number(value) < balance){
+	
+										if(!_.isArray(value)) value = [value]
+	
+										currents[id].donate.remove();
+	
+										currents[id].donate.set({
+											address: receiver,
+											amount: Number(value)
+										})
+	
+										if(!result && errors[type]){
+	
+											sitemessage(errors[type])
+	
+										}
+
+	
+										if (result){
+
+											new Audio('sounds/donate.mp3').play();
+
+											renders.donate(id, p)
+
+										}	
+
+								
+	
+									} else {
+	
+										sitemessage(self.app.localization.e('incoins'))
+									}
+	
+				
+	
+								}
+							}
+						},
+	
+						clbk : function(s, p){
+							external = p
+						}
+					})
+	
+				}
+
+			}, 
+
 			embedimages : function(id, p){
 				id || (id = '0')
 
@@ -371,6 +473,7 @@ var comments = (function(){
 					open : true,
 					id : 'embeding',
 					inWnd : true,
+					donate: true,
 
 					essenseData : {
 						type : 'images',
@@ -407,6 +510,7 @@ var comments = (function(){
 					}
 				})
 			},
+			
 			removeForm : function(id){
 
 				console.log("ID", id)
@@ -473,8 +577,13 @@ var comments = (function(){
 					{
 						self.app.platform.errorHandler(err, true)
 
-						if (clbk)
+						if (clbk){
 							clbk(err, null)
+
+							if (err === 'tosmallamount'){
+								actions.removeDonate(id, p)
+							}
+						}
 					}
 
 				}, editid, id)
@@ -906,8 +1015,6 @@ var comments = (function(){
 
 				})
 
-				console.log('comment', comment, initialValue, images)
-
 				self.app.nav.api.load({
 					open : true,
 					href : 'imagegallery?s=' + txid + '&num=' + (num || 0) + "&com=" + comment.id,
@@ -1292,6 +1399,13 @@ var comments = (function(){
 							this.setText(p.value)
 						}
 
+						if (p.donation && p.amount && p.editid){
+
+							var comment = currents[p.editid]
+							comment.amount.set(p.amount);
+
+						}
+
 						if (p.images){
 
 							if(p.editid && p.images.length){
@@ -1403,6 +1517,34 @@ var comments = (function(){
 		}
 
 		var renders = {
+
+			donate : function(id, p){
+
+				var comment = currents[id];
+				var donate = comment.donate.v[0];
+
+				self.shell({
+					name :  'donate',
+					turi : 'embeding',
+					inner : html,
+					el : p.el.find('.newcommentdonate'),
+					data : {
+						donate : donate && donate.amount
+					},
+
+				}, function(_p){
+
+					_p.el.find('.removedonate').on('click', function(){
+
+						actions.removeDonate(id, p)
+					})
+
+
+				})
+
+
+
+			},
 
 			images : function(id, p, clbk){
 
@@ -1607,7 +1749,9 @@ var comments = (function(){
 					pid : comment.parentid,
 					aid : comment.answerid,
 					id : comment.id,
-					editid : comment.id
+					editid : comment.id,
+					amount: comment.amount,
+					donation: comment.donation
 				}
 
 				renders.post(function(area, el){
@@ -1676,6 +1820,33 @@ var comments = (function(){
 
 						postEvents(p, _p, __clbk)
 					}
+
+					_p.el.find('.embeddonate').off('click').on('click', function(){
+
+						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+							balance = amount.toFixed(3);
+							
+							var id = actions.getid(_p.el.find('.postbody'))
+
+							if(state){
+								actions.embeddonate(id, p)
+								if(!p.answer && !p.editid){
+	
+									ini()
+	
+								}	
+							}
+							else{
+								actions.stateAction(function(){
+								})
+							}
+
+
+						})
+
+
+					})
 
 					_p.el.find('.embedimages').off('click').on('click', function(){
 
@@ -2348,7 +2519,10 @@ var comments = (function(){
 			
 			init : function(p){
 
+				console.log('p!!', p);
 				//state.load();
+
+				receiver = p.essenseData.receiver;
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);

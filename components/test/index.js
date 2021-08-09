@@ -366,7 +366,6 @@ var test = (function(){
 
 										{
 											relay : ed.relay? ed.relay() : false
-											//pseudo : true
 										}
 									
 									)

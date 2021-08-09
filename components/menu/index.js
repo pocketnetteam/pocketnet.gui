@@ -100,7 +100,6 @@ var menu = (function(){
 			},
 			ahnotify : function(el, c, type){
 
-				console.log('el, c, type', el, c, type, notifications)
 
 				if(!c) c = 0
 
@@ -350,7 +349,7 @@ var menu = (function(){
 						actions.ahnotify(el, unseen().length, 'notifications')
 					})
 
-					if(!isMobile()){
+					if(!isTablet()){
 						self.nav.api.load({
 							eid : 'menu',
 							open : true,
@@ -370,7 +369,7 @@ var menu = (function(){
 
 				click : function(el){
 
-					if(isMobile())
+					if(isTablet())
 						self.nav.api.go({
 							href : 'userpage?id=notifications&report=notifications',
 							history : true,
@@ -545,35 +544,6 @@ var menu = (function(){
 									clearex()
 								});
 
-								/*el.find('.result').on('click', function(){
-
-									var r = $(this).attr('result')
-
-									_el.find('input').val(r)
-
-									var href = 'index?ss=' + r.replace("#", 'tag:')
-
-									if (authorForSearch){
-										href = '?report=shares&ss=' + r.replace("#", 'tag:')
-
-										authorForSearch.clear(true)
-									}
-
-									var p = {
-										href : href,
-										history : true,
-										open : true
-									};
-
-									if(authorForSearch) p. handler = true
-
-									self.nav.api.go(p)
-
-									helpers.closeResults()
-
-									clearex()
-
-								})*/
 
 								el.find('.user').on('click', function(){
 
@@ -1271,7 +1241,7 @@ var menu = (function(){
 
 					var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
-					data.haschat = self.app.platform.matrixchat.core && (userinfo && !(userinfo.temp || userinfo.relay || userinfo.fromstorage))
+					data.haschat = self.app.platform.matrixchat.core// && (userinfo && !(userinfo.temp || userinfo.relay || userinfo.fromstorage))
 
 				if(p.state){
 
@@ -1342,7 +1312,6 @@ var menu = (function(){
 
 			showsearch : function(v, _searchBackAction){
 
-				console.log('showsearch', v, _searchBackAction)
 
 				if(v){
 					el.c.addClass('searchactive')

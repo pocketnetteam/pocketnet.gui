@@ -247,6 +247,38 @@ Comment = function(txid){
     self.parentid = ''
     self.answerid = ''
 
+	self.amount = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = 0
+			}
+			else
+
+				this.v = _v
+
+			if (self.on.change)
+				self.on.change('fees', this.v)
+		},
+		v : 0
+	}
+
+	self.fees = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = 0
+			}
+			else
+
+				this.v = _v
+
+			if (self.on.change)
+				self.on.change('fees', this.v)
+		},
+		v : 0
+	};
+
 	self.message = {
 		set : function(_v){
 
@@ -317,6 +349,51 @@ Comment = function(txid){
 		v : []
 	}
 
+	self.donate = {
+		set : function(donate){
+
+			if(!donate){
+				this.v = []
+			}
+
+			else
+			{
+				if(_.isArray(donate)){
+
+					this.v = donate;
+				}
+
+				else{
+
+					if(!donate) return
+
+					this.v.push(donate)
+				}
+			}
+
+
+			if (self.on.change)
+				self.on.change('donate', this.v)
+
+			return true;
+		},
+		remove : function(donate){
+			if(!donate){
+				this.v = []
+			}
+			else
+			{
+				removeEqual(this.v, donate)
+			}
+		},
+		get : function(){
+			return _.map(this.v, function(donate){
+				return donate
+			})
+		},
+		v : []
+	};
+
 	self.url = {
 		set : function(_v){
 
@@ -337,6 +414,8 @@ Comment = function(txid){
 		self.message.set()
 		self.images.set()
 		self.url.set()
+		self.donate.set()
+		self.fees.set()
 	}
 
 	self.on = {}
@@ -495,13 +574,33 @@ Comment = function(txid){
 			})
 		}
 
-		console.log('self.images.v', self.images.v)
-
 		if(self.id){
 			r.id = self.id
 		}
 
+		//included multi donates!!!
+
+ 		if (self.donate && self.donate.v.length){
+
+			r.donation = 'true';
+			r.amount = self.donate.v.reduce(function(prev, next){
+				return prev + next.amount;
+			}, 0)
+
+			r.amount *= 100000000;
+
+		} else if (self.amount.v){
+
+			r.donation = 'true';
+			r.amount = self.amount.v;
+
+		}
+	
 		return r
+
+
+		
+
 	}
 
 	self.import = function(v){
@@ -517,8 +616,6 @@ Comment = function(txid){
 		self.images.set(_.map(v.msgparsed.images, function(i){
 			return decodeURIComponent(i)
 		}))
-
-		console.log("v.msgparsed", v.msgparsed)
 
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
@@ -2218,6 +2315,10 @@ pComment = function(){
 	self.timeUpd = 0;
 	self.children = 0;
 
+	self.donation = '';
+	self.amount = 0;
+
+
 	self.address = '';
 	self.parentid = '';
 	self.answerid = '';
@@ -2243,7 +2344,7 @@ pComment = function(){
 
 			try {	
 				self.url = decodeURIComponent(v.msgparsed.url || "");
-				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
+				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
 				self.images = _.map(v.msgparsed.images || [], function(i){
 
 					return decodeURIComponent(i)
@@ -2263,6 +2364,9 @@ pComment = function(){
 
 		self.scoreDown = Number(v.scoreDown || '0');
 		self.scoreUp = Number(v.scoreUp || '0');
+
+		self.donation = v.donation;
+		self.amount = Number(v.amount || '0');
 
 		if (v.myScore) self.myScore = v.myScore
 
@@ -2295,7 +2399,9 @@ pComment = function(){
 			scoreDown : self.scoreDown,
 			scoreUp : self.scoreUp,
 			myScore : self.myScore,
-			deleted : self.deleted
+			deleted : self.deleted,
+			donation: self.donation,
+			amount: self.amount
 		}
 
 		return r

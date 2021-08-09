@@ -860,7 +860,8 @@ __map =  {
 			href : "donations",
 			add : {
 				el : 'content'
-			}
+			},
+			anonimus : true,
 		},
 
 		faq : {
@@ -1718,6 +1719,38 @@ __map =  {
 	dust : {
 		uri : "dust",
 		href : "dust",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+
+		relations : [
+			{src : 'js/validation.js',			   f : 'js'},	
+		]
+	},
+
+	testApi : {
+		uri : "testApi",
+		href : "testApi",
 		add : function(settings, p){
 
 			if(p.inWnd)

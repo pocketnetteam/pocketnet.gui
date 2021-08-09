@@ -40,13 +40,13 @@
 										</div>
 
 
-
+										<% if(state) { %> 
 										<div class="pcenterCell">
 											<div class="pcenterLabel " r="sub">
 												<a href="index?r=sub"  handler="true"><%=e('e13137')%> <span class="lentaunseen " key="sub"></span></a>
 											</div>
 										</div>
-
+										<% } %>
 										
 										<% if(app.platform.videoenabled) {%>
 											<div class="pcenterCell">
@@ -56,11 +56,13 @@
 											</div>
 										<% } %>
 
+										
 										<div class="pcenterCell">
 											<div class="pcenterLabel toppost " r="recommended">
 												<a href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
 											</div>
 										</div>
+										
 										
 									</div>
 								</div>
@@ -247,7 +249,7 @@
 
 			<div class="section leftpart">
 
-				<% if(haschat && state && isMobile() && window.testpocketnet) {%>
+				<% if(haschat && state && (isMobile() || isTablet()) && window.testpocketnet) {%>
 
 					<div class="items chat">
 
@@ -278,6 +280,7 @@
 							<div class="label">
 								<div events="sitename"><% if(app.test){%>TESTNET<%} else {%>POCKETNET<% }%></div>
 								<div class="lang localization">
+									
 									<% if(isMobile()) {%>
 										<%-(lkey.key || '').toLowerCase()%> 
 									<% } else { %>

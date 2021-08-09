@@ -24,6 +24,14 @@ var userpage = (function(){
 
 			if(!self.app.user.getstate()){
 
+
+				reports.push({
+					name : self.app.localization.e('createnew'),
+					id : 'registration',
+					report : 'registration',
+					mobile : true,
+					rh : true
+				})
 				
 				reports.push({
 					name : self.app.localization.e('signin'),
@@ -33,13 +41,7 @@ var userpage = (function(){
 					rh : true
 				})
 
-				reports.push({
-					name : self.app.localization.e('createnew'),
-					id : 'registration',
-					report : 'registration',
-					mobile : true,
-					rh : true
-				})
+				
 		
 
 			}
@@ -760,11 +762,19 @@ var userpage = (function(){
 
 			report : function(id, clbk){
 
+				
+
 				if (currentExternalEssense)
 					currentExternalEssense.destroy();
 
 
 				var report = helpers.findReport(id)
+
+				if(!report){
+					if(clbk) clbk()
+
+					return
+				}
 
 				var _clbk = function(e, p){
 					_scrollTop(0)
@@ -859,7 +869,7 @@ var userpage = (function(){
 			var id = parameters().id;
 
 
-				if(!isMobile()){
+				if(!isMobile() && state){
 					if(!id) {
 
 						if(self.app.user.validate()){

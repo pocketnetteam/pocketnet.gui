@@ -9,6 +9,7 @@
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
         "start": "electron . --development",
+        "start:dev": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
         "dist": "electron-builder -w --x64 --ia32",
         "distl": "electron-builder -l --x64",

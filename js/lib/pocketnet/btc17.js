@@ -2686,7 +2686,7 @@ var BITCOIN = {
   }
 };
 
-if((typeof process !== 'undefined' && process.argv.includes('--test')) || (typeof window !== 'undefined' && window.testpocketnet)){
+if((typeof process !== 'undefined' && process.argv && process.argv.includes('--test')) || (typeof window !== 'undefined' && window.testpocketnet)){
   BITCOIN = {
       wif: 0x1e,
       bip32: {
@@ -38613,7 +38613,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 // @ts-ignore
 exports.bitcoin =
-  (typeof process !== 'undefined' && process.argv.includes('--test')) ||
+  (typeof process !== 'undefined' && process.argv && process.argv.includes('--test')) ||
   (typeof window !== 'undefined' && window.testpocketnet)
     ? {
         messagePrefix: '\x18Bitcoin Signed Message:\n',

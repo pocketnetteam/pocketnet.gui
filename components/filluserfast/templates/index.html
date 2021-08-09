@@ -1,29 +1,6 @@
 <div id="<%-module.map.id%>">
 
-	<% if (!state) {%>
-		<div class="mobiledevice">
-			<div class="hasaccount ">
-				<div>
-					<a href="authorization">
-						<%=e('id0')%>
-					</a>
-				</div>
-			</div>
-
-			<div class="separators ">
-				<hr class="separator"/>
-				<span><%=e('or')%></span>
-				<hr class="separator"/>
-			</div>
-
-			<div class="createNewAccountLabel ">
-				<%=e('e13025')%>
-				<i class="fas fa-chevron-down"></i>
-			</div>
-
-		</div>
-
-	<% } %>
+	
 	
 	<% if(typeof inauth == 'undefined' || !inauth) {%>
 
@@ -75,4 +52,16 @@
 	</div>
 
 	<div class="hidden hiddenqrcode"></div>
+
+
+	<% if (!state) {%>
+		<div class="">
+			<div class="hasaccount">
+				<a href="authorization">
+					<button class="button ghost "><%=e('id0')%></button>
+				</a>
+			</div>
+		</div>
+
+	<% } %>
 </div>

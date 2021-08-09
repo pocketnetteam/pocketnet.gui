@@ -131,7 +131,6 @@ var authorization = (function(){
 								else{
 									return 'filluserfast'
 								}
-
 								
 							}
 
@@ -147,6 +146,8 @@ var authorization = (function(){
 
 							if (close)
 								close();
+
+							
 
 							if (essenseData.signInClbk)
 								essenseData.signInClbk();
@@ -195,10 +196,7 @@ var authorization = (function(){
 	        
 
 	        el.toRegistration.on('click', function(){
-
-
 	        	self.nav.api.loadSameThis('registration', p)
-
 			})
 			
 			el.c.find('.showformh').on('click', function(){

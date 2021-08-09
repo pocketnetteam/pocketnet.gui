@@ -8,6 +8,7 @@ class OG {
 
     private $rpc = NULL;
     private $author = NULL;
+    private $connect = FALSE;
     private $txid = NULL;
     private $commentid = NULL;
     private $parentid = NULL;
@@ -35,6 +36,10 @@ class OG {
         $this->api = new API($proxypath);
         
         if (isset($get['address'])) $this->author = $this->clean($get['address']);
+        if (isset($get['connect'])) {
+            $this->author = $this->clean($get['connect']);
+            $this->connect = TRUE;
+        }
 
         if ($this->author == NULL) {
 
@@ -269,6 +274,8 @@ class OG {
 
                         if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
                         if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
+
+                        if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
                     }
 
                     if(!$description){
@@ -298,19 +305,15 @@ class OG {
 
                     $this->author = $r->address;
 
-                
-
                     if ($r->c != ''){
                         $this->currentOg['title']= urldecode($r->c);
                         $title = true;
                     }
                         
-                        
                     $this->currentOg['description'] = substr(strip_tags(urldecode($r->m)), 0, 130).'...';
                     $description = true;
 
                     $this->currentOg['type'] = 'article';
-
 
                     if (isset($r->u) && $r->u != ''){
                         $this->ogFromVideo(urldecode($r->u), $this->txid);

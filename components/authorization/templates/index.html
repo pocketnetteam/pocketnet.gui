@@ -30,7 +30,7 @@
 										</div>
 										<div class="fileUploaderWrapper">
 											<div class="uploadFile">
-												<div class="icon"><i class="fas fa-file-upload"></i></div>
+												<div class="icon"><i class="fas fa-qrcode"></i></div>
 												<div class="label"><%=e('loadqrcode')%></div>
 											</div>
 										</div>
@@ -38,6 +38,16 @@
 									
 									
 								</div>
+
+								<div class="item e buttons">
+									<button class="enter"><%=e('signin')%></button>
+								</div>
+
+								<% if(fast) {%>
+									<div class="item e buttons ">
+										<button class="showformh ghost"><i class="fas fa-chevron-circle-left"></i> <%=e('e13025')%></button>
+									</div>	
+								<% } %>
 
 								<div class="item">
 									
@@ -50,24 +60,8 @@
 											<%=e('stay')%>
 										</div>
 									</div>
-
-									
-									
 									
 								</div>
-
-								
-
-									<div class="item e buttons">
-										<button class="enter"><%=e('signin')%></button>
-									</div>
-
-
-								<% if(fast) {%>
-									<div class="item e buttons ">
-										<button class="showformh ghost"><i class="fas fa-chevron-circle-left"></i> <%=e('e13025')%></button>
-									</div>	
-								<% } %>
 
 							</div>
 
@@ -102,15 +96,17 @@
 		<div class="userpart section">
 
 			<div class="work">
+
 				<% if(!fast) {%> 
 					<div class="caption cpt2">
 						<%=e('orcreate')%>
 					</div>
-
 				<% } %>
 
 
 				<div class="createAccount buttons">
+					
+
 					<% if(!fast) {%> 
 						<button class="good toRegistration"><%=e('createnew')%></button>
 					<% } else { %>
@@ -137,6 +133,7 @@
 	<div class="maket topCaption">
 		<div class="work">
 			<div class="caption section">
+
 				<% if(!fast) {%> 
 
 					<%=e('id0')%> 
@@ -146,6 +143,7 @@
 					<%=e('e13026')%>
 
 				<% } %>
+
 			</div>
 		</div>
 	</div>

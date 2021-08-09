@@ -94,9 +94,9 @@
 		return result.join(":")
  	}
 
-	isios = function () {
+	/*isios = function () {
 		return typeof window != 'undefined' && window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
-	}
+	}*/
 
  
 	currentYear = function(){
@@ -501,6 +501,8 @@
 
 	wnd = function(p){
 
+		console.log('p1!!', p);
+
 		if(!p) p = {};
 
 		var self = this,
@@ -553,8 +555,8 @@
 
 		var render = function(tpl){
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
-					 ';
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner ' + p.type + '">\
+			';
 
 			var closedbtnclass = ''
 
@@ -5870,7 +5872,7 @@
 	    }
 	}
 
-	saveAs = function(p) {
+	p_saveAs = function(p) {
 		if (GetBrowser().toLowerCase() == 'msie') {
 			message('Internet Explorer does not support this operation.');
 			return false;
@@ -5921,7 +5923,7 @@
 		return blob;
 	}
 
-	saveAsWithCordova = function(file, name, clbk){
+	p_saveAsWithCordova = function(file, name, clbk){
 
 
 		var storageLocation = 'file:///storage/emulated/0/';
@@ -8901,7 +8903,7 @@
 
 		var readFile = function(reader, error, file, files, clbk){
 
-			reader.onload = (function(theFile) {
+			reader.onloadend = (function(theFile) {
 				return function(e) {
 
 					var name = theFile.name.split('.');
@@ -9060,7 +9062,7 @@
 
 		var autorotation = function(file, image, clbk){
 
-			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif') && !p.notexif && typeof EXIF != 'undefined'){
+			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif') && !p.notexif && typeof EXIF != 'undefined' && !isios()){
 				EXIF.getData(file, function() {
 
 					
@@ -10188,6 +10190,10 @@
 
 	}
 
+	isios = function () {
+		return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
+	}
+
 	numberToBool = function(v){
 
 		if(v) return true;
@@ -10623,6 +10629,28 @@ function formatBytes(bytes, decimals = 2) {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+         json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
 }
 /* */
 

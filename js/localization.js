@@ -124,6 +124,8 @@ Localization = function(app){
 						current : true
 					})
 					app.platform.clearlocal()
+
+					app.platform.matrixchat.changeLocalization()
 				}
 
 				else

@@ -70,7 +70,9 @@ var Roy = function (parent) {
     });
 
     return _.sortBy(_instances, (instance) => {
-      return getBestByType[type] ?  getBestByType[type].calculate(instance) : -10;
+      return getBestByType[type]
+        ? getBestByType[type].calculate(instance)
+        : -10;
     });
   };
 
@@ -123,7 +125,8 @@ var Roy = function (parent) {
         if (r.data) r.data.from = instance.host;
 
         return Promise.resolve(r);
-      });
+      })
+      .catch((e) => Promise.reject(e));
   };
 
   self.find = function (host) {
@@ -149,7 +152,7 @@ var Roy = function (parent) {
   self.performance = () => {
     const promises = instances.map((inst) => inst.performance());
 
-    return Promise.all(promises);
+    return Promise.all(promises).catch(() => Promise.resolve());
   };
 
   return self;
