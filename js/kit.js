@@ -1723,6 +1723,7 @@ UserInfo = function(){
 
 
 		if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
+		if (hash.indexOf('bastion') > -1) return 'bastion'
 		
 		return false
 
