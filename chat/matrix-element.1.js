@@ -1739,7 +1739,6 @@ var info_component = Object(componentNormalizer["a" /* default */])(
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chatInfo?vue&type=script&lang=js&
 
 
-
 /* harmony default export */ var chatInfo_vue_type_script_lang_js_ = ({
   name: 'chatInfo',
   components: {
@@ -1785,21 +1784,6 @@ var info_component = Object(componentNormalizer["a" /* default */])(
         var m_chat = this.core.mtrx.client.getRoom(this.chat.roomId);
         return m_chat || {};
       }
-    },
-    joinedMembers: function joinedMembers() {
-      var self = this;
-      return this.core.mtrx.client.getJoinedRoomMembers(self.chat.roomId).then(function (r) {
-        return index_all["default"].mapObject(r.joined, function (key, value) {
-          self.joinedRoomMembers.push(value);
-        });
-      });
-    },
-    downloadKeys: function downloadKeys() {
-      var self = this;
-      var accessToken = this.core.mtrx.access.accessToken;
-      return self.core.mtrx.client.downloadKeysForUsers(this.joinedMembers, accessToken).then(function (r) {
-        return r;
-      });
     }
   })
 });

@@ -20994,11 +20994,11 @@ Platform = function (app, listofnodes) {
 
                     var a = pnet.address;
 
-                    var addresses = self.testchataddresses;
+                    var addresses = self.testchataddresses || [];
 
                     var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
-                    if (window.testpocketnet && state) {
+                    if ((window.testpocketnet || addresses.indexOf(a) > -1) && state) {
 
                     //if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
 

@@ -239,6 +239,36 @@ __map =  {
 		relationsSunc : true,
 	},
 
+	welcome : {
+		uri : "welcome",
+		href : "welcome",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+		
+		anonimus : true
+	},
+
 	registration : {
 		uri : "registration",
 		href : "registration",

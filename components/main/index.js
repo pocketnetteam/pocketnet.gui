@@ -1028,8 +1028,20 @@ var main = (function(){
 
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
+				
+				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (window.cordova || self.app.platform.matrixchat.connectWith))){
+					
+					self.nav.api.load({
+						open : true,
+						href : 'welcome',
+						history : true
+					})
 
-				if(self.app.curation() || (!beginmaterial && !_s.ss && !_s.sst && !p.state && window.cordova /*window.cordova*/)){
+					return
+				}
+
+				if(self.app.curation()){
+					
 					self.nav.api.load({
 						open : true,
 						href : 'userpage',
