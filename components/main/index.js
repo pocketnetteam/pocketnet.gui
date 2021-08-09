@@ -162,6 +162,11 @@ var main = (function(){
 				if (hsready){
 					el.panel.hcSticky('refresh');
 					el.leftpanel.hcSticky('refresh');
+
+					setTimeout(function(){
+						if(el.panel) el.panel.hcSticky('refresh');
+						if(el.leftpanel) el.leftpanel.hcSticky('refresh');
+					}, 1000)
 				}
 					
 			},
