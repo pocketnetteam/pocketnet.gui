@@ -249,7 +249,13 @@ var menu = (function(){
 							if(!state) k = 'index'
 
 							if(self.app.curation()){
-								k = 'userpage'
+								if(!state){
+									k = 'welcome'
+								}
+								else{
+									k = 'userpage'
+								}
+								
 							}
 
 							self.nav.api.go({

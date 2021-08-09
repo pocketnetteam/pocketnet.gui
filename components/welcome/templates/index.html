@@ -23,7 +23,7 @@
 				</div>
 
 				<div class="invitation">
-					
+
 				</div>
 
 				<div class="signinpart">
@@ -49,6 +49,8 @@
 			<a href="https://<%-app.options.url%>/blockexplorer/">Block Explorer</a>
 			<span>&middot;</span>
 			<a href="help?page=faq">F.A.Q.</a>
+
+			<% if(!app.curation()) {%>
 			<span>&middot;</span>
 			<a href="help?page=roadmap">Roadmap</a>
 			<span>&middot;</span>
@@ -57,6 +59,7 @@
 			<a href="help?page=pkoin" data-anchor="pocketcoin">PKOIN</a>
 			<span>&middot;</span>
 			<a href="help?page=applications">Applications</a>
+			<% } %>
 		</div>
 	
 	</div>
