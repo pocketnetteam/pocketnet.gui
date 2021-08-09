@@ -1022,10 +1022,16 @@ Application = function(p)
 		},
 	
 		saveFile: function(url, blob) {
+
+			if(!window.resolveLocalFileSystemURL){
+				return Promise.resolve()
+			}
+
 			return new Promise((resolve, reject) => {
 				var storageLocation = self.storage.getStorageLocation();
 				// var blob = new Blob([file], { type: "image/png" });
 				var name = $.md5(url);
+
 				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
 						create: true,
@@ -1056,6 +1062,11 @@ Application = function(p)
 		},
 	
 		loadFile: function(url) {
+			
+			if(!window.resolveLocalFileSystemURL){
+				return Promise.reject()
+			}
+
 			return new Promise((resolve, reject) => {
 				var storageLocation = self.storage.getStorageLocation();
 				var name = $.md5(url);
