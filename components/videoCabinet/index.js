@@ -42,7 +42,9 @@ var videoCabinet = (function () {
         return Promise.resolve(serverStructureHosts);
       },
 
-      async getVideos(server) {
+      async getVideos(server = '') {
+        if (!server) return;
+
         const options = {
           start: peertubeServers[server].start,
           count: perServerCounter,
@@ -93,11 +95,11 @@ var videoCabinet = (function () {
       getAdditionalVideos(activeServers = []) {
         if (!activeServers.length) return;
 
-        const videoProtionElement = $(
+        const videoPortionElement = $(
           '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
         );
 
-        el.videoContainer.append(videoProtionElement);
+        el.videoContainer.append(videoPortionElement);
 
         return Promise.allSettled(
           activeServers.map((server) => actions.getVideos(server)),
@@ -108,13 +110,13 @@ var videoCabinet = (function () {
             .flat();
           newVideosAreUploading = false;
 
-          renders.videos(newVideos, videoProtionElement);
+          renders.videos(newVideos, videoPortionElement);
         });
       },
     };
 
     var renders = {
-      videos(videosForRender, videoProtionElement) {
+      videos(videosForRender, videoPortionElement) {
         const videos =
           videosForRender ||
           Object.values(peertubeServers)
@@ -125,7 +127,7 @@ var videoCabinet = (function () {
         self.shell(
           {
             name: 'videoList',
-            el: videoProtionElement,
+            el: videoPortionElement,
             data: {
               videos,
             },
@@ -207,9 +209,19 @@ var videoCabinet = (function () {
             value: p.value,
             currentLink: '',
             actions: {
-              added: function () {
-                debugger;
-                actions.getVideos().then(() => renders.videos());
+              added: function (resultLink) {
+                const { host } = self.app.peertubeHandler.parselink(resultLink);
+
+                const videoPortionElement = $(
+                  '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
+                );
+
+                el.videoContainer.html('');
+                el.videoContainer.append(videoPortionElement);
+
+                actions
+                  .getVideos(host)
+                  .then(() => renders.videos(null, videoPortionElement));
               },
             },
 
@@ -261,7 +273,7 @@ var videoCabinet = (function () {
         el = {};
         el.c = p.el.find('#' + self.map.id);
 
-        el.videoContainer = el.c.find('.videoContainer');
+        el.videoContainer = el.c.find('.userVideos');
         el.quotaContainer = el.c.find('.quotaContainer');
         el.videoButtons = el.c.find('.videoActiveButton');
 
@@ -269,11 +281,11 @@ var videoCabinet = (function () {
 
         initEvents();
 
-        const videoProtionElement = $(
+        const videoPortionElement = $(
           '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
         );
 
-        el.videoContainer.append(videoProtionElement);
+        el.videoContainer.append(videoPortionElement);
 
         actions
           .getHosts()
@@ -294,8 +306,8 @@ var videoCabinet = (function () {
 
             return Promise.allSettled(serverPromises);
           })
-          .then(() => renders.videos(null, videoProtionElement))
-          .catch(() => renders.videos(null, videoProtionElement));
+          .then(() => renders.videos(null, videoPortionElement))
+          .catch(() => renders.videos(null, videoPortionElement));
 
         actions
           .getQuota()

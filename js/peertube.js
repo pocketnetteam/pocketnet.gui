@@ -551,7 +551,7 @@ PeerTubePocketnet = function (app) {
         });
       },
 
-      upload: function (parameters, options) {
+      upload: function (parameters = {}, options = {}) {
         var rme = {};
 
         if (!parameters.video) return Promise.reject(error('videonotselected'));
@@ -663,8 +663,8 @@ PeerTubePocketnet = function (app) {
                 isLive: true,
                 filter: 'local',
               })
-              .then((video = []) => {
-                const existingStream = video[0];
+              .then((video = {}) => {
+                const existingStream = (video.data || [])[0];
 
                 if (!existingStream) {
                   return Promise.reject(error('failedStreamGeneration'));
@@ -724,7 +724,8 @@ PeerTubePocketnet = function (app) {
         self.api.user.me(options).then((rme) => {
           return self.api.videos.quota(options).then((rqu) => ({
             videoQuotaDaily: rme.videoQuotaDaily,
-            videoQuotaRemainingDaily: rme.videoQuotaDaily - rqu.videoQuotaUsedDaily,
+            videoQuotaRemainingDaily:
+              rme.videoQuotaDaily - rqu.videoQuotaUsedDaily,
             videoQuotaUsed: rqu.videoQuotaUsed,
           }));
         }),
