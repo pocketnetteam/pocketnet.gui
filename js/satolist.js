@@ -16593,18 +16593,22 @@ Platform = function (app, listofnodes) {
 
                 if (data.room_id) {
 
-                    // Wait until we can navigate Matrix
-                    retry(function(){
+                    if(data.tap){
+                         // Wait until we can navigate Matrix
+                        retry(function(){
 
-                        return platform && platform.matrixchat && platform.matrixchat.core;
+                            return platform && platform.matrixchat && platform.matrixchat.core;
 
-                    }, function(){
+                        }, function(){
 
-                        platform.matrixchat.core.goto(data.room_id);
-                        
-                        if (platform.matrixchat.core.apptochat)
-                            platform.matrixchat.core.apptochat();
-                    });
+                            platform.matrixchat.core.goto(data.room_id);
+                            
+                            if (platform.matrixchat.core.apptochat)
+                                platform.matrixchat.core.apptochat();
+                        });
+                    }
+
+                   
 
                     return;
                 }
