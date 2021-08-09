@@ -180,12 +180,12 @@ var videoCabinet = (function () {
       },
 
       streamPage(p = {}) {
-        var typeDictionary = {
+        const typeDictionary = {
           addVideo: 'uploadpeertube',
           addStream: 'streampeertube',
         };
 
-        var elName = typeDictionary[p.type];
+        const elName = typeDictionary[p.type];
 
         if (external && external.id == elName) {
           external.container.show();
@@ -208,6 +208,7 @@ var videoCabinet = (function () {
             currentLink: '',
             actions: {
               added: function () {
+                debugger;
                 actions.getVideos().then(() => renders.videos());
               },
             },
