@@ -16,6 +16,7 @@
       <button
         class="attachVideoToPost tooltip"
         title="<%- e('attachVideoToPost') %>"
+        videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
       >
         <i class="fas fa-signature"></i>
       </button>

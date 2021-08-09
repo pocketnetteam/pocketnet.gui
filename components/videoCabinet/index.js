@@ -138,7 +138,13 @@ var videoCabinet = (function () {
               maxWidth: 600,
               zIndex: 20,
             });
-            const videoElementsWrapper = p.el.find('.videosWrapper');
+            const attachVideoToPost = p.el.find('.attachVideoToPost');
+
+            attachVideoToPost.on('click', function () {
+              const videoLink = $(this).attr('videoLink');
+
+              renders.addButton(videoLink);
+            });
           },
         );
       },
@@ -222,6 +228,7 @@ var videoCabinet = (function () {
                 actions
                   .getVideos(host)
                   .then(() => renders.videos(null, videoPortionElement));
+                actions.getQuota().then(() => renders.quota());
               },
             },
 
@@ -236,6 +243,10 @@ var videoCabinet = (function () {
             videoUploadData = element.essenseData;
           },
         });
+      },
+
+      addButton: function (videoLink) {
+        self.app.platform.ui.share({ videoLink });
       },
     };
 
