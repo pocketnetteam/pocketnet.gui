@@ -1,0 +1,188 @@
+@import "../../css/__cssvar";
+
+#welcome{
+    position: absolute;
+    left : 0;
+    top : 0;
+    bottom : 0;
+    right: 0;
+    background: #fff;
+
+    .topbotder{
+        position: absolute;
+        top : 65px;
+        width: 100%;
+        left: 0;
+        height: 1px;
+        border-top: 1px solid fade(@color-gray-mlight, 30);
+
+    }
+
+    .navbottom{
+        position: absolute;
+        padding : 2 * @rhythm 4 * @rhythm;
+        bottom : 0;
+        right : 0;
+
+        div{
+            font-size: 0.8em;
+        }
+    }
+
+
+    .layout{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+
+        .imagepart{
+            width: 39%;
+            height: 100%;
+
+            .img{
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+       
+
+        .contentpart{
+            flex-grow: 1;
+            padding : 4 * @rhythm;
+            position: relative;
+
+            .invitationcontent{
+                padding : 2 * @rhythm 0;
+
+                .cancelinvite{
+                    opacity: 0.4;
+                    cursor: pointer;
+
+                    &:hover{
+                        opacity: 0.7;
+                    }
+                }
+            }
+
+            .logowrapper{
+                padding : 3 * @rhythm 0;
+                img{
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+
+            .features{
+                .feature{
+                    font-size: 1.5em;
+                }
+            }
+
+            .caption{
+                font-size: 4em;
+                font-weight: 700;
+                line-height: 1em;
+                padding-bottom: @rhythm;
+            }
+
+            .wrp{
+                max-width: 85%;
+            }
+
+            .signinpart{
+                padding : 3 * @rhythm 0;
+                padding-top : 5 * @rhythm;
+                .sin{
+                    width: 250px;
+                    border-radius: 30px;
+                }
+            }
+
+            .existing{
+                color : @color-main;
+                text-decoration: underline;
+                cursor: pointer;
+                font-size: 0.9em;
+            }
+        }
+    }
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+    #welcome{
+        position: static;
+        padding-bottom: 6 * @rhythm;
+    
+        .topbotder{
+            display: none;
+        }
+    
+        .navbottom{
+            position: static;
+            text-align: center;
+            padding-top : 8 * @rhythm;
+            div{
+                font-size: 1em;
+            }
+            a{
+                display: block;
+                padding-top: @rhythm;
+            }
+            span{
+                display: none;
+            }
+        }
+    
+    
+        .layout{
+            flex-direction: column-reverse;
+    
+            .imagepart{
+                width: 100%;
+                height: 300px;
+            }
+           
+    
+            .contentpart{
+                width: 100%;
+                padding : 2 * @rhythm;
+                padding-top: 6 * @rhythm;
+    
+                .logowrapper{
+                    padding : 3 * @rhythm 0;
+                    img{
+                        width: 30px;
+                        height: 30px;
+                    }
+                }
+    
+                .features{
+                    .feature{
+                        font-size: 1.2em;
+                    }
+                }
+
+                .existing{
+                    padding-bottom: 4 * @rhythm;
+                }
+    
+                .caption{
+                    font-size: 2.5em;
+                    padding-bottom: @rhythm;
+                }
+    
+                .wrp{
+                    max-width: 100%;
+                }
+    
+                .signinpart{
+                    padding : 3 * @rhythm 0;
+                    padding-top : 5 * @rhythm;
+                }
+    
+            }
+        }
+    }    
+}

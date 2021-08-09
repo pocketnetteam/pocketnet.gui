@@ -1,0 +1,12 @@
+
+<% 
+
+var user = deep(app, 'platform.sdk.users.storage.'+(address))
+
+if(user){ %>
+<div class="invitationcontent">
+    <div class="stext">
+        You will be connected with <b><%-user.name%></b> after registration. <span class="cancelinvite">(do not connect)</span>
+    </div>
+</div>
+<% } %>

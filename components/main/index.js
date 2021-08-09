@@ -1029,10 +1029,10 @@ var main = (function(){
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
 
-				if(self.app.curation() || (!beginmaterial && !_s.ss && !_s.sst && !p.state && window.cordova /*window.cordova*/)){
+				if(self.app.curation() || (!beginmaterial && !_s.ss && !_s.sst && !p.state && (window.cordova || self.app.platform.matrixchat.connectWith) /*window.cordova*/)){
 					self.nav.api.load({
 						open : true,
-						href : 'userpage',
+						href : 'welcome',
 						history : true
 					})
 
