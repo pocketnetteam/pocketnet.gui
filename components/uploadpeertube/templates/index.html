@@ -13,20 +13,6 @@
       <div class="main-upload-fields activeOnRolled">
         <div class="uploading uplsection activeOnRolled">
           <div class="scontent activeOnRolled">
-            <!-- <div class="video-title-container">
-              <label for="upload-video-name" class="on-border-input"
-                >Upload Video</label
-              >
-              <input
-                type="text"
-                class="upload-video-name upload-input"
-                id="upload-video-name"
-                placeholder="Enter video title"
-              />
-              <span
-                class="type-error-field name-type-error error-message"
-              ></span>
-            </div> -->
             <div class="uploadRow activeOnRolled">
               <div class="upload-field-container">
                 <div class="inputWrapper">
@@ -50,7 +36,7 @@
                 <% if((deep(app,
                 'platform.real.'+user.address.value.toString('hex')) ||
                 window.testpocketnet) && !isMobile()) {%>
-                <div class="import-container">
+                <div class="caption-container import-container">
                   <%- e('importFromExternal') %>
                 </div>
                 <% } %>
@@ -71,48 +57,17 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="upload-field-container">
-                <div class="inputWrapper">
-                  <div class="table">
-                    <div>
-                      <label
-                        for="upload-video-wallpaper"
-                        class="upload-peertube-label upload-video-wallpaper-label"
-                        >Select video preview wallpaper</label
-                      >
-                      <input
-                        type="file"
-                        class="upload-video-wallpaper hidden upload-input"
-                        id="upload-video-wallpaper"
-                        accept=".jpg,.jpeg"
-                      />
-                      <span
-                        class="type-error-field wallpaper-type-error"
-                      ></span>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </div>
           </div>
         </div>
 
-        <!-- <div class="importing uplsection">
-          <div class="scontent">
-            <div class="upload-field-container">
-              <label for="upload-video-name" class="on-border-input"
-                >Or Import From Other Sources</label
-              >
-              <input
-                type="text"
-                class="import-video-link upload-input"
-                id="import-video-link"
-                placeholder="Import video from YouTube etc."
-              />
-              <span class="type-error-field import-video-link-error"></span>
-            </div>
-          </div>
-        </div> -->
+        <div
+          class="caption-container quality-limit-container tooltip"
+          title="<%- e('videoQualityInfo') %>"
+        >
+          <i class="fas fa-question-circle"></i>
+          <%- e('videoQualityCaption') %>
+        </div>
       </div>
 
       <div class="challengeoffer" image="img/videoofferbg.jpg">
