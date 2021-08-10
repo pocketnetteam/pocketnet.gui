@@ -198,8 +198,11 @@ var Peertube = function (settings) {
 
     stats() {
       const servers = Object.values(roys).map((roy) => roy.performance());
+
+
         return Promise.all(servers)
         .then((data) => {
+
           return data.flat().reduce(
             (accumulator, currVal) => ({
               ...accumulator,
@@ -207,6 +210,8 @@ var Peertube = function (settings) {
             }),
             {},
           );
+
+
         })
         .catch((e = {}) =>
           Promise.reject({
@@ -263,6 +268,9 @@ var Peertube = function (settings) {
               });
             })
             .catch((e) => {
+
+              console.log("PEERTUBE ERROR", e)
+
               if (!e) e = {};
 
               return Promise.reject({
