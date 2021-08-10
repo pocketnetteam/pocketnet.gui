@@ -481,16 +481,20 @@ var Node = function(options, manager){
 
     self.checkParameters = function(){
 
-        if(!f.validateHost(self.host)) { return Promise.reject('validateHost')}
-        if(!self.port) return Promise.reject('port')
-        if(!self.ws) return Promise.reject('ws')
+        var e = self.checkParametersS()
+
+        if(e) return Promise.reject('validateHost')
         
         return Promise.resolve()
     }
 
     self.checkParametersS = function(){
+        if(!self.hostchecked){
+            if(!self.host || !f.validateHost(self.host)) { return 'validateHost'}
+        }
 
-        if(!f.validateHost(self.host)) { return 'validateHost'}
+        self.hostchecked = true
+
         if(!self.port) return 'port'
         if(!self.ws) return 'ws'
         
