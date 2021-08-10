@@ -27,14 +27,14 @@ var test = _.indexOf(process.argv, '--test') > -1
 var testnodes = [
 	{
 		host : '157.90.235.121',
-		port : 36061,
+		port : 39091,
 		ws : 6067,
 		name : 'test.1.pocketnet.app',
 		stable : true
 	},
 	{
 		host : '157.90.228.34',
-		port : 36061,
+		port : 39091,
 		ws : 6067,
 		name : 'test.2.pocketnet.app',
 		stable : true
