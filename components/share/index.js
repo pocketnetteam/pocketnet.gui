@@ -2362,8 +2362,6 @@ var share = (function(){
 
 				initEvents();
 
-				debugger;
-
 				if (essenseData.videoLink) {
 					currentShare.url.set(essenseData.videoLink);
 

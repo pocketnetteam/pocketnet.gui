@@ -139,11 +139,35 @@ var videoCabinet = (function () {
               zIndex: 20,
             });
             const attachVideoToPost = p.el.find('.attachVideoToPost');
+            const removeVideo = p.el.find('.removeVideo');
 
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
 
               renders.addButton(videoLink);
+            });
+
+            removeVideo.on('click', function () {
+              const videoLink = $(this).attr('videoLink');
+
+              const { host } = self.app.peertubeHandler.parselink(videoLink);
+
+              dialog({
+                html: self.app.localization.e('removeVideoDialog'),
+                btn1text: 'Remove',
+                btn2text: 'Cancel',
+
+                // class: 'zindex',
+
+                success: function () {
+                  self.app.peertubeHandler.api.video
+                    .remove(videoLink)
+                    .then(() => actions.getVideos(host))
+                    .then(() => renders.videos(null, videoPortionElement))
+                    .then(() => actions.getQuota())
+                    .then(() => renders.quota());
+                },
+              });
             });
           },
         );
@@ -227,8 +251,9 @@ var videoCabinet = (function () {
 
                 actions
                   .getVideos(host)
-                  .then(() => renders.videos(null, videoPortionElement));
-                actions.getQuota().then(() => renders.quota());
+                  .then(() => renders.videos(null, videoPortionElement))
+                  .then(() => actions.getQuota())
+                  .then(() => renders.quota());
               },
             },
 
