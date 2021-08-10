@@ -938,7 +938,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			anonimus : true,
+			//anonimus : true,
 			redirect : {
 				auth : 'welcome'
 			}
