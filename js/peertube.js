@@ -55,8 +55,6 @@ var PeertubeRequest = function (app = {}) {
       p.headers || {},
     );
 
-    console.log('RESPHEADERS', headers);
-
     var resp = {};
 
     var ps = {
@@ -78,7 +76,7 @@ var PeertubeRequest = function (app = {}) {
           return Promise.resolve(r.text());
         }
 
-        return r.json();
+        return r.text().then((data) => (data ? JSON.parse(data) : {}));
       })
       .then((result) => {
         if (resp.ok) {
@@ -512,11 +510,9 @@ PeerTubePocketnet = function (app) {
           id: parsed.id,
         };
 
-        return request('removeVideo', data, options).then((r) => {
-          if (!r.video) return Promise.reject(error('removeerror'));
-
-          return Promise.resolve();
-        });
+        return request('removeVideo', data, options)
+          .then((r) => Promise.resolve())
+          .catch(() => Promise.reject(error('removeerror')));
       },
 
       update: function (url, parameters = {}, options = {}) {
@@ -560,7 +556,7 @@ PeerTubePocketnet = function (app) {
           .checkQuota(parameters.video.size, { type: options.type })
           .then((rme) => {
             var videoName =
-              parameters.name || `${this.userName}:${new Date().toISOString()}`;
+              parameters.name || `PocketVideo:${new Date().toISOString()}`;
 
             var data = {
               privacy: 1,

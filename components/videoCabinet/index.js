@@ -74,6 +74,24 @@ var videoCabinet = (function () {
           .getQuotaStatus()
           .then((res) => (userQuota = { ...res }));
       },
+
+      resetHosts() {
+        const videoPortionElement = $(
+          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
+        );
+
+        el.videoContainer.html('');
+        el.videoContainer.append(videoPortionElement);
+
+        Object.keys(peertubeServers).forEach(server => {
+          peertubeServers[server] = {
+            videos: [],
+            start: 0,
+          }
+        })
+
+        return videoPortionElement;
+      },
     };
 
     var events = {
@@ -160,7 +178,9 @@ var videoCabinet = (function () {
                 // class: 'zindex',
 
                 success: function () {
-                  self.app.peertubeHandler.api.video
+                  const videoPortionElement = actions.resetHosts();
+
+                  self.app.peertubeHandler.api.videos
                     .remove(videoLink)
                     .then(() => actions.getVideos(host))
                     .then(() => renders.videos(null, videoPortionElement))
@@ -242,18 +262,13 @@ var videoCabinet = (function () {
               added: function (resultLink) {
                 const { host } = self.app.peertubeHandler.parselink(resultLink);
 
-                const videoPortionElement = $(
-                  '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
-                );
+                const videoPortionElement = actions.resetHosts();
 
-                el.videoContainer.html('');
-                el.videoContainer.append(videoPortionElement);
+                actions.getVideos(host).then(() => {
+                  renders.videos(null, videoPortionElement);
+                });
 
-                actions
-                  .getVideos(host)
-                  .then(() => renders.videos(null, videoPortionElement))
-                  .then(() => actions.getQuota())
-                  .then(() => renders.quota());
+                actions.getQuota().then(() => renders.quota());
               },
             },
 

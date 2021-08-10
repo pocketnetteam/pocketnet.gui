@@ -20,7 +20,11 @@
       >
         <i class="fas fa-signature"></i>
       </button>
-      <button class="removeVideo tooltip" title="<%- e('removeVideo') %>">
+      <button
+        class="removeVideo tooltip"
+        title="<%- e('removeVideo') %>"
+        videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
+      >
         <i class="fas fa-times-circle"></i>
       </button>
     </div>
