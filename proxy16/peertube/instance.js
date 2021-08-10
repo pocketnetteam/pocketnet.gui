@@ -182,7 +182,7 @@ var instance = function (host, Roy) {
   };
 
   self.performance = () => ({
-    data: [...performanceBenchmarks].pop(),
+    data: performanceBenchmarks.length ? performanceBenchmarks[performanceBenchmarks.length - 1] : null,
     host: self.host,
   });
 

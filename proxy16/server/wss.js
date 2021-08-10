@@ -538,6 +538,8 @@ var WSS = function(admins, manage){
             
             addUser : function(p){
 
+                return
+
                 if(!p.address || !p.device) return
 
                 var id = 'fb_' + p.device

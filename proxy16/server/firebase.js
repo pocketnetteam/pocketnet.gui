@@ -77,6 +77,7 @@ var Firebase = function(p){
     }
 
     var adduser = function(user){
+
         if(!finduser(user) && self.inited){
 
             self.users.push(user)

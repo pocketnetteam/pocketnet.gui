@@ -200,8 +200,14 @@ var Peertube = function (settings) {
       const servers = Object.values(roys).map((roy) => roy.performance());
 
 
-        return Promise.all(servers)
-        .then((data) => {
+        return Promise.all(servers).then((data) => {
+          var d = {}
+          console.log("data", data)
+          _.each(data.flat(), function(currVal){
+            d[currVal.host] = currVal.data
+          })
+
+          return d
 
           return data.flat().reduce(
             (accumulator, currVal) => ({
