@@ -202,10 +202,12 @@ var Peertube = function (settings) {
 
         return Promise.all(servers).then((data) => {
           var d = {}
-          console.log("data", data)
-          _.each(data.flat(), function(currVal){
-            d[currVal.host] = currVal.data
+          _.each(data, function(dd){
+            _.each(dd, function(currVal){
+              d[currVal.host] = currVal.data
+            })
           })
+          
 
           return d
 
