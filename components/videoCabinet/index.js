@@ -50,6 +50,21 @@ var videoCabinet = (function () {
           count: perServerCounter,
         };
 
+        // self.app.api
+        //   .rpc('search', [
+        //     encodeURIComponent('peertube://pocketnetpeertube5.nohost.me/3e431724-0f6d-4dbe-80d0-cbbe98e02e70'),
+        //     'videolinks',
+        //     0,
+        //     (0).toString(),
+        //     (10).toString(),
+        //   ])
+        //   .then((res) => {
+        //     debugger;
+        //   })
+        //   .catch((err) => {
+        //     debugger;
+        //   });
+
         return self.app.peertubeHandler.api.videos
           .getMyAccountVideos(options, {
             host: server,
@@ -83,12 +98,12 @@ var videoCabinet = (function () {
         el.videoContainer.html('');
         el.videoContainer.append(videoPortionElement);
 
-        Object.keys(peertubeServers).forEach(server => {
+        Object.keys(peertubeServers).forEach((server) => {
           peertubeServers[server] = {
             videos: [],
             start: 0,
-          }
-        })
+          };
+        });
 
         return videoPortionElement;
       },
@@ -172,10 +187,8 @@ var videoCabinet = (function () {
 
               dialog({
                 html: self.app.localization.e('removeVideoDialog'),
-                btn1text: 'Remove',
-                btn2text: 'Cancel',
-
-                // class: 'zindex',
+                btn1text: self.app.localization.e('remove'),
+                btn2text: self.app.localization.e('ucancel'),
 
                 success: function () {
                   const videoPortionElement = actions.resetHosts();
