@@ -108,7 +108,17 @@ function rpc(request, callback, obj) {
     var pst = posts[request.method]
 
     var self = obj;
-    request = JSON.stringify(request);
+    try{
+        request = JSON.stringify(request);
+    }
+    catch(e){
+        callback({
+            code : 499
+        });
+
+        return
+    }
+    
     var auth = new Buffer(self.user + ':' + self.pass).toString('base64');
 
 
@@ -195,13 +205,8 @@ function rpc(request, callback, obj) {
     });
 
     req.on('error', function(e) {
-        //var err = new Error(errorMessage + 'Request Error: ' + e.message);
-
-        //console.log("errorMessage + 'Request Error: ' + e.message", errorMessage + 'Request Error: ' + e.message)
-
+        
         if (!called) {
-
-            //err.code = /*e.code ||*/ 408
 
             called = true;
 

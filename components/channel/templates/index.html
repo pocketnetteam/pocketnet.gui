@@ -33,7 +33,7 @@ var name = app.platform.api.name(author.address)
 						<% if(report.href) {
 							
 							var h = report.href; if(typeof h == 'function') h = h() %>
-							<a href="<%-h%>">
+							<a href="https://<%-domain%>/<%-h%>">
 						<% } %>
 				
 							<%=report.icon%> 
@@ -54,9 +54,20 @@ var name = app.platform.api.name(author.address)
 			</div>
 
 			<div class="action">
-				<button class="button medium">
-					Follow <%-name || author.address%> on Pocketnet
-				</button>
+				<% if(!connect) {%>
+					<a href="https://<%-domain%>/<%-name%>">
+						<button class="button medium">
+							Follow <%-name || author.address%> on Pocketnet
+						</button>
+					</a>
+
+				<% } else { %> 
+					<a href="https://<%-domain%>/welcome?connect=<%-author.address%>">
+						<button class="button medium">
+							Connect with <%-name || author.address%>
+						</button>
+					</a>
+				<% } %>
 			</div>
 		</div>
 	</div>

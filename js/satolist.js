@@ -1925,6 +1925,25 @@ Platform = function (app, listofnodes) {
 
         },
 
+        connect : function(id, el, clbk, p){
+            self.sdk.users.get(id, function () {
+
+                app.nav.api.load({
+                    open: true,
+                    href: 'channel',
+                    el: el,
+                    eid: id + (p.eid || ""),
+                    clbk: clbk,
+
+                    essenseData: {
+                        id : id,
+                        connect : true
+                    }
+                })
+
+            })
+        },
+
         channel : function(id, el, clbk, p){
             self.sdk.users.get(id, function () {
 
@@ -2030,6 +2049,27 @@ Platform = function (app, listofnodes) {
 
             return true
 
+        },
+
+        socialshare : function(url, p){
+            if(!p) p = {}
+
+            url = 'https://'+app.options.url+'/' + url
+
+            app.nav.api.load({
+                open : true,
+                href : 'socialshare2',
+                history : true,
+                inWnd : true,
+
+                essenseData : {
+                    url : url,
+                    caption : app.localization.e('e13133'),
+                    sharing : p.sharing || null,
+                    embedding : p.embedding || null,
+                    notincludedRef : true,
+                }
+            })
         },
 
         share : function(p){
@@ -2203,6 +2243,8 @@ Platform = function (app, listofnodes) {
             }
         }
     }
+
+    
 
     self.api = {
 
@@ -21001,7 +21043,7 @@ Platform = function (app, listofnodes) {
 
                     var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
-                    if ((window.testpocketnet || addresses.indexOf(a) > -1) && state) {
+                    if ((window.testpocketnet || addresses.indexOf(a) > -1 || window.cordova) && state) {
 
                     //if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
 

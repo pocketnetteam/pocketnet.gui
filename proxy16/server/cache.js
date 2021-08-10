@@ -107,7 +107,17 @@ var Cache = function(p){
         
         if (ckeys[key]){
 
-            var k = f.rot13(JSON.stringify(params))
+            var ks = null
+
+            try{
+                ks = JSON.stringify(params)    
+            }catch(e){
+
+                return
+
+            }
+
+            var k = f.rot13(ks)
 
             if(!storage[key])
                 storage[key] = {}
@@ -150,7 +160,18 @@ var Cache = function(p){
                 return self.getsmart(key, params)
             }
 
-            var k = f.rot13(JSON.stringify(params))
+            var ks = null
+
+            try{
+                ks = JSON.stringify(params)    
+            }catch(e){
+
+                console.log('stringify error', params)
+
+                return
+            }
+
+            var k = f.rot13(ks)
 
             var sd = f.deep(storage, key + "." + k)
 
@@ -191,8 +212,17 @@ var Cache = function(p){
 
         var waitid = f.makeid()
 
-        var k = f.rot13(JSON.stringify(params))
+        var ks = null
 
+        try{
+            ks = JSON.stringify(params)    
+        }catch(e){
+            clbk('stringify')
+
+            return
+        }
+
+        var k = f.rot13(ks)
 
         if(!waiting[key])
             waiting[key] = {}
@@ -244,7 +274,14 @@ var Cache = function(p){
 
         _.each(ckeys, function(c, key){
 
-            var size = JSON.stringify(storage[key] || "").length / 1024;
+            var size = 0;
+            
+            
+            try{
+                size = JSON.stringify(storage[key] || "").length / 1024;
+            }
+            catch(e){}
+
             var length = _.toArray(storage[key] || {}).length /// ???
 
             meta[key] = {

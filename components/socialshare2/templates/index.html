@@ -32,7 +32,7 @@
 
 
 					
-					<% if(typeof eparameters != 'undefined' && state) {%>
+					<% if(typeof eparameters != 'undefined' && state && !notincludedRef) {%>
 						<div class="includeRefWrapper">
 							<%= eparameters.reflink.input({init : true}) %>  <span><%= eparameters.reflink.name %></span>
 						</div>

@@ -162,7 +162,9 @@ var channel = (function(){
 
 						var data = {
 							author : author,
-							reports : reports
+							reports : reports,
+							connect : ed.connect,
+							domain : window.location.hostname || window.pocketnetdomain
 						};
 
 						clbk(data);

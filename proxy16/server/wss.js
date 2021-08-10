@@ -264,7 +264,18 @@ var WSS = function(admins, manage){
 
         return new Promise((resolve, reject) => {
 
-            ws.send(JSON.stringify(message), (err) => {
+            var str = null
+
+            try{
+                str = JSON.stringify(message)
+            }
+            catch(e){
+                console.log("stringify error", message)
+
+                return
+            }
+
+            ws.send(str, (err) => {
                 if (err) reject(err)
                 else resolve()
             });
