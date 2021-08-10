@@ -488,8 +488,10 @@ var userpage = (function(){
 					self.app.user.signout();
 
 					self.app.reload({
-						href : 'authorization'
+						href : 'authorization',
 					});
+
+					self.app.nav.api.history.add('authorization')
 				}
 
 

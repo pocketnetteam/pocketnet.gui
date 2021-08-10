@@ -677,6 +677,7 @@ Application = function(p)
 			p.nav.reload = true;
 
 		if(p.href) p.nav.href = p.href;
+		if(p.history) p.nav.history = p.history;
 		if(p.current) p.nav.href = self.nav.get.href()
 
 		if (typeof _Electron != 'undefined' && _Electron) {
