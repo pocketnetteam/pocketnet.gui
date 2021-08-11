@@ -16668,6 +16668,7 @@ Platform = function (app, listofnodes) {
                         }, function(){
 
                             platform.matrixchat.core.goto(data.room_id);
+                            platform.matrixchat.core.mtrx.fastsync()
                             
                             if (platform.matrixchat.core.apptochat)
                                 platform.matrixchat.core.apptochat();
