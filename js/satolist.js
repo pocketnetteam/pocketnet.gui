@@ -4440,7 +4440,7 @@ Platform = function (app, listofnodes) {
 
                     var err = userInfo.validation()
 
-                    if (err){
+                    if (err && err != 'pocketnet'){
 
                         var errtext = 'Undefined Error'
                         
