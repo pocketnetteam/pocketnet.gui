@@ -10,6 +10,8 @@
 				</div>
 			</div>
 
+			<% if(!app.test) {%>
+
 			<div class="calculator">
 
 				
@@ -18,16 +20,30 @@
 				</div>
 
 				<div class="buycoin">
-					<a href="https://mercatox.com/exchange/PKOIN/USDT" cordovalink="_system" target="_blank">
-						<button class="button small yellow">
-							Mercatox
+
+					<a href="https://bilaxy.com/trade/PKOIN_USDT" cordovalink="_system" target="_blank">
+						<button class="button small yellow bright">
+							Bilaxy
 						</button>
 					</a>
+				
 					<a href="https://btcpop.co/Exchange/PKOIN" cordovalink="_system" target="_blank">
 						<button class="button small yellow">
 							BTCPOP
 						</button>
 					</a>
+
+					<a href="https://www.bitforex.com/en/spot/pkoin_usdt" cordovalink="_system" target="_blank">
+						<button class="button small yellow">
+							Bitforex
+						</button>
+					</a>
+					<!-- <a href="https://mercatox.com/exchange/PKOIN/USDT" cordovalink="_system" target="_blank">
+						<button class="button small yellow">
+							Mercatox
+						</button>
+					</a> -->
+
 				</div>
 
 				<!--
@@ -70,6 +86,17 @@
 
 				
 			</div>	
+
+			<% } else { %> 
+
+				<div class="calculatordummy">
+					<div class="calculatordummytext">
+						<span>Test Network: Test coin price is Zero</span>
+					</div>
+					
+				</div>
+				
+			<% } %>
 
 			<div class="earnlabel">
 				<span>How do I earn more Pocketcoin?</span>

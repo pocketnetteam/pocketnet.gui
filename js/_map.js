@@ -1,62 +1,80 @@
 __map =  { 
 
 	__vendor : [
-		"js/vendor/underscore-min.js", 
-		"js/vendor/fingerprint2.js",
-        "js/vendor/tooltipster.core.js",
-        "js/vendor/tooltipster.bundle.js",
-        "js/vendor/jquery-ui.min.js",
-        "js/vendor/imagesloaded.pkgd.min.js",
-        "js/vendor/timer.js",
-        "js/vendor/ion.sound/ion.sound.min.js" ,
-		"js/vendor/aesjs.js",
+		"js/vendor/device.min.js", //
+		"js/vendor/modernizr-2.8.3.min.js",//
+		"js/vendor/jquery-1.11.3.min.js",//
+        "js/vendor/tooltipster.core.js",//
+        "js/vendor/tooltipster.bundle.js",//
+        /*"js/vendor/jquery-ui.min.js",*/
+        "js/vendor/imagesloaded.pkgd.min.js",///
+        "js/vendor/timer.js",//
+        
+		"js/vendor/aesjs.js",//
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
 		
 		//new
-		"js/lib/pocketnet/btc17.js",
-		"js/lib/pocketnet/buffer.js",
-		"js/lib/client/system16.js",
-		"js/lib/client/api.js",
+		"js/lib/pocketnet/btc17.js", //
+		"js/lib/pocketnet/htls.js", //
+		"js/lib/pocketnet/buffer.js", //
+		
 		//
 
-        "js/vendor/pbkdf2.js",
-        "js/vendor/sha1.js",
-        "js/vendor/jdenticon.js",
-        "js/vendor/paste.js",
+        "js/vendor/pbkdf2.js", //
+        "js/vendor/sha1.js", //
+        "js/vendor/paste.js", //
         "js/vendor/jquery.md5.js",
-		"js/vendor/jquery.animate-number.js",
-		"js/vendor/jquery.touchSwipe.js",
-        "js/vendor/emojione.js",
-        "js/vendor/plyr.js",
-        "js/vendor/reconnectingwebsocket.js",
-        "js/vendor/rtc/db.js",
-        "js/vendor/xss.min.js",
-		"js/vendor/jquery.mark.js",
-		"js/vendor/hc-sticky.js",
+		"js/vendor/jquery.animate-number.js", //
+		"js/vendor/jquery.touchSwipe.js", //
+        "js/vendor/joypixels.min.js", //
+        "js/vendor/plyr.js", // later
+        "js/vendor/reconnectingwebsocket.js", //
+        "js/vendor/rtc/db.js", // later
+        "js/vendor/xss.min.js", //
+		"js/vendor/jquery.mark.js", //?
+		"js/vendor/hc-sticky.js", //
 
-		"js/vendor/DateTimePicker.min.js",
-		"js/vendor/moment.min.js",
+		/*"js/vendor/DateTimePicker.min.js",*/
+		"js/vendor/moment.min.js", //?
+		"js/vendor/jquery.inputmask.bundle.js",
+		"js/vendor/axios.js", //
+		"js/vendor/isotope.pkgd.js", //
+		"js/vendor/circular-progress.js", //
+		/*"js/vendor/swiper-bundle.min.js",*/ // very hard
+		"js/vendor/workbox-v6.1.5/workbox-sw.js",
+		"js/vendor/ion.sound/ion.sound.js",
+		"js/vendor/hammer.min.js"
+	],
 
-		"js/vendor/axios.js",
+	__sourcesfirst : [
+		"js/vendor/underscore-min.js",  
+		"js/functionsfirst.js",  
+		"js/localization.js",
+		//"js/notifications.js",
+		"js/lib/client/system16.js",
+		"js/lib/client/api.js",
+		"js/_map.js",
+		"js/app.js",
+		"js/main.js"
+	],
+
+	__sourceslast : [
+		"peertube/video-embed.bundle.js",
 	],
 
 	__sources : [
-
+	
 		"js/functions.js",     	
 		"js/user.js",
 		"js/module.js",
 		"js/navn.js",
 		"js/validation.js",
-		"js/_map.js",
-		"js/localization.js",
 		"js/kit.js",
 		"js/satolist.js",
 		"js/messenger2/clientrtc.js",
-		"peertube/video-embed.bundle.js",
-		"js/peertube-master.js",
-		"js/app.js",
-		"js/main.js",
+		"js/peertube.js",
+		"js/widgets.js"
 	],
 
 	__css : [
@@ -66,14 +84,53 @@ __map =  {
 		"css/main.css",
 		"css/stblack.css",
 		"css/plyr.css",
-		/*"css/jquery-ui.min.css",*/
-		"css/medium/medium-editor.css",
-        "css/medium/medium-editor-insert-plugin.css",
 		"js/vendor/DateTimePicker.min.css",
-        "css/medium/beagle.css"/* ,
-        "css/datetime.css?v=116"  */
+		/*"css/swiper-bundle.min.css",*/
+		"peertube/video-embed.css",
+		"js/vendor/emojionearea.min.css"
 	],
 
+
+	__templates : [
+		{ c : 'navigation', n : 'menu' },
+		{ c : 'menu', n : 'index' },
+
+		{ c : 'toppanel', n : 'index' },
+		{ c : 'navigation', n : 'index' },
+		{ c : 'footer', n : 'index' },
+		{ c : 'toppanel', n : 'menu' },
+		{ c : 'main', n : 'index' },
+		{ c : 'panel', n : 'index' },
+		{ c : 'leftpanel', n : 'index' },
+		{ c : 'panel', n : 'discussiondummy' },
+		{ c : 'lastcomments', n : 'index' },
+		{ c : 'tagcloud', n : 'index' },
+		{ c : 'categories', n : 'index' },
+		{ c : 'categories', n : 'categories' },
+		{ c : 'lenta', n : 'share' },
+		{ c : 'lenta', n : 'shares' },
+		{ c : 'lenta', n : 'wholike' },
+		{ c : 'lenta', n : 'index' },
+		{ c : 'lenta', n : 'sharevideo' },
+		{ c : 'lenta', n : 'sharevideolight' },
+		{ c : 'share', n : 'url' },
+		{ c : 'lenta', n : 'stars' },
+		{ c : 'lenta', n : 'groupshares' },
+		{ c : 'lenta', n : 'commentspreview' },
+		{ c : 'comments', n : 'index' },
+		{ c : 'lastcomments', n : 'lastcommentslist'}
+		/*,
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },
+		{ c : '', n : '' },*/
+		
+	],
 
     pkview  : {
 		uri : "pkview",
@@ -182,6 +239,36 @@ __map =  {
 		relationsSunc : true,
 	},
 
+	welcome : {
+		uri : "welcome",
+		href : "welcome",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+		
+		anonimus : true
+	},
+
 	registration : {
 		uri : "registration",
 		href : "registration",
@@ -212,7 +299,6 @@ __map =  {
 
 		relations : [
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
-			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
 			{src : 'js/validation.js',			   f : 'js'},		
 			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 				QRCode = require('./js/vendor/qrcode.min.js')
@@ -293,11 +379,12 @@ __map =  {
 
 			},
 
+			
+
 			anonimus : true,
 
 			relations : [
 				{src : 'js/vendor/qrscanner.js',			   f : 'js'},
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
 				{src : 'js/validation.js',			   f : 'js'},		
 				{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
 					QRCode = require('./js/vendor/qrcode.min.js')
@@ -334,13 +421,9 @@ __map =  {
 
 			},
 			redirect : {
-				auth : 'authorization'
+				auth : 'welcome'
 			},
-			relationsSunc : true,
-
-			relations : [
-				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
-			],
+			
 			
 		},
 
@@ -350,16 +433,12 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			redirect : {
+			anonimus : true,
+			/*redirect : {
 				auth : 'authorization',
 				//validate : 'filluser'
-			},
-			relations : [
-
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'}
-
-			],
-
+			},*/
+		
 		},
 
 		test : {
@@ -406,7 +485,6 @@ __map =  {
 
 				{src : 'js/vendor/picker.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/picker.date.js', 		f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 			],
 
 			
@@ -433,19 +511,6 @@ __map =  {
 
 		},
 
-		messenger : {
-			uri : "messenger",
-			href : "messenger",
-			add : {
-				el : 'content'
-			},
-			redirect : {
-				auth : 'authorization',
-				validate : 'filluser'
-			},
-			
-			
-		},
 
 		uploadpeertube : {
 			uri : "uploadpeertube",
@@ -473,6 +538,12 @@ __map =  {
 				}
 
 			},
+
+			/*relations : [
+				{src : 'js/vendor/ffmpeg.min.js',			   f : 'js'},	
+			],*/
+
+			
 		},
 
 		streampeertube : {
@@ -503,27 +574,7 @@ __map =  {
 			},
 		},
 
-		/*rep : {
-			uri : "rep",
-			href : "rep",
-			add : {
-				el : 'content'
-			},
-			redirect : {
-				auth : 'index'
-			}
-		},
-		addrep : {
-			uri : "addrep",
-			href : "addrep",
-			add : {
-				el : 'content'
-			},
-			redirect : {
-				auth : 'index'
-			}
-		},*/
-
+		
 		tagcloud : {
 			uri : "tagcloud",
 			href : "tagcloud",
@@ -615,7 +666,6 @@ __map =  {
 			uri : "staking",
 			href : "staking",
 			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 		
 				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
 					Highcharts = require('./js/vendor/highcharts.js')
@@ -755,8 +805,10 @@ __map =  {
 
 				}},	
 
+				{src : 'css/medium/medium-editor.css',			   f : 'css'},	
+				{src : 'css/medium/medium-editor-insert-plugin.css',			   f : 'css'},	
+				{src : 'css/medium/beagle.cs',			   f : 'css'},	
 
-				
 				
 			],
 			relationsSunc : true
@@ -774,18 +826,6 @@ __map =  {
 		},
 
 
-		esystem : {
-			uri : "esystem",
-			href : "esystem",
-			add : {
-				el : 'content'
-			},
-			anonimus : true,
-
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
-			],
-		},
 
 		system16: {
 			uri : "system16",
@@ -796,7 +836,6 @@ __map =  {
 			anonimus : true,
 
 			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 				{src : 'js/vendor/highcharts.js', 		f : 'js', require : function(){
 					Highcharts = require('./js/vendor/highcharts.js')
 				}},
@@ -813,12 +852,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			anonimus : true,
-
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
-		
-			],
+			anonimus : true
 		},
 
 		proxylogs : {
@@ -842,8 +876,6 @@ __map =  {
 			}
 		},
 
-		
-
 		help : {
 			uri : "help",
 			href : "help",
@@ -859,11 +891,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
-		
-			],
+			anonimus : true,
 		},
 
 		faq : {
@@ -875,39 +903,7 @@ __map =  {
 			anonimus : true,
 		},
 		
-		embeding20 : {
-			uri : "embeding20",
-			href : "embeding20",
-			add : function(settings, p){
-
-				if(p.inWnd)
-				{
-					return {
-						insert : 'wnd'
-					}
-				}
-				else
-				if(p.inTooltip)
-				{
-					return {
-						insert : 'tooltip'
-					}
-				}
-				else
-				{
-					return {
-						el : 'content'
-					}
-				}
-
-			},
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
-		
-			],
-
-			
-		},	
+	
 		embeding : {
 			uri : "embeding",
 			href : "embeding",
@@ -933,13 +929,7 @@ __map =  {
 					}
 				}
 
-			},
-			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},					
-		
-			],
-
-			
+			}
 		},
 
 		userpage : {
@@ -948,8 +938,9 @@ __map =  {
 			add : {
 				el : 'content'
 			},
+			anonimus : true,
 			redirect : {
-				auth : 'authorization'
+				auth : 'welcome'
 			}
 			
 		},
@@ -972,16 +963,34 @@ __map =  {
 		wallet : {
 			uri : "wallet",
 			href : "wallet",
-			add : {
-				el : 'content'
+			add : function(settings, p){
+
+				if(p.inWnd)
+				{
+					return {
+						insert : 'wnd'
+					}
+				}
+				else
+				if(p.inTooltip)
+				{
+					return {
+						insert : 'tooltip'
+					}
+				}
+				else
+				{
+					return {
+						el : 'content'
+					}
+				}
+
 			},
 
 			relations : [
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 				{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
 					Chart = require('./js/vendor/Chart.js')
-				}},			
-				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
+				}}
 			],
 
 			relationsSunc : true,
@@ -1025,8 +1034,7 @@ __map =  {
 						Sortable = require('sortablejs')
 
 				}},
-				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},			
-				
+			
 				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 
@@ -1049,7 +1057,7 @@ __map =  {
 						EXIF = require('./js/vendor/exif.js')
 
 				}},
-				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},		
+		
 				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
 
@@ -1065,13 +1073,7 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			relations : [
-
-				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
-				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},			
-			
-			],
-			anonimus : true,
+		
 		},
 
 		lenta : {
@@ -1080,12 +1082,17 @@ __map =  {
 			add : {
 				el : 'content'
 			},
-			relations : [
+		
+			anonimus : true,
+		},	
 
-				{src : 'js/vendor/circular-progress.js',			   f : 'js'},
-				{src : 'js/vendor/isotope.pkgd.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},			
-			
-			],
+		transactionview : {
+			uri : "transactionview",
+			href : "transactionview",
+			add : {
+				el : 'content'
+			},
+		
 			anonimus : true,
 		},	
 
@@ -1108,14 +1115,7 @@ __map =  {
 				el : 'content'
 			},
 
-			relations : [
-			
-				{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
-				
-			],
-			
-			
-
+		
 			anonimus : true,
 		},
 
@@ -1210,6 +1210,7 @@ __map =  {
 		},
 		now : true,
 		renew : true,
+		anonimus : true,
 		reload : true
 	},
 
@@ -1260,12 +1261,6 @@ __map =  {
 			}
 
 		},
-
-		relations : [
-			
-			{src : 'js/vendor/circular-progress.js',			   f : 'js'},		
-			
-		],
 
 		
 	},
@@ -1421,7 +1416,6 @@ __map =  {
 		relations : [
 
 			
-			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
 			{src : 'js/validation.js',			   f : 'js'},
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},				
 			
@@ -1457,8 +1451,7 @@ __map =  {
 		},
 		relations : [
 
-	
-			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},	
+		
 			{src : 'js/validation.js',			   f : 'js'},				
 			{src : 'js/vendor/qrscanner.js',			   f : 'js'},	
 			
@@ -1781,7 +1774,38 @@ __map =  {
 		},
 
 		relations : [
-			{src : 'js/vendor/jquery.inputmask.bundle.min.js',			   f : 'js'},
+			{src : 'js/validation.js',			   f : 'js'},	
+		]
+	},
+
+	testApi : {
+		uri : "testApi",
+		href : "testApi",
+		add : function(settings, p){
+
+			if(p.inWnd)
+			{
+				return {
+					insert : 'wnd'
+				}
+			}
+			else
+			if(p.inTooltip)
+			{
+				return {
+					insert : 'tooltip'
+				}
+			}
+			else
+			{
+				return {
+					el : 'content'
+				}
+			}
+
+		},
+
+		relations : [
 			{src : 'js/validation.js',			   f : 'js'},	
 		]
 	},

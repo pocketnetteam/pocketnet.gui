@@ -11,7 +11,16 @@ var tagcloud = (function(){
 		var el, showed = false, essenseData;
 
 		var actions = {
+			showhideclear : function(){
+				var hasc = self.app.platform.sdk.categories.gettags(null, 'onlytags').length
 
+				if (hasc){
+					el.cleartags.addClass('showed')
+				}
+				else{
+					el.cleartags.removeClass('showed')
+				}
+			},
 		}
 
 		var events = {
@@ -19,6 +28,7 @@ var tagcloud = (function(){
 		}
 
 		var renders = {
+			
 			showhide : function(){
 				if(showed){
 					el.c.addClass('showedalltags')
@@ -85,7 +95,6 @@ var tagcloud = (function(){
 					return t.tag
 				})
 
-				console.log("tags", el)
 
 				if(!tags.length){
 					el.c.addClass('hidden')
@@ -149,7 +158,6 @@ var tagcloud = (function(){
 		var initEvents = function(){
 			
 			self.app.platform.sdk.categories.clbks.selected.tagsmodule = function(id, value, l){
-				console.log("MAKE2")
 				make()
 				
 			}	
@@ -158,9 +166,25 @@ var tagcloud = (function(){
 
 				var e = el.c.find('.tg[tag="'+id+'"]')
 
+				actions.showhideclear()
+
 				if(value) e.addClass('selected')
 				else e.removeClass('selected')
 			}	
+
+
+			el.cleartags.on('click', function(){
+				dialog({
+					class : 'zindex',
+					html : 'Do you really want to clear tags filters?',
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
+					success : function(){	
+						self.app.platform.sdk.categories.clear(null, true)
+						make()
+					}
+				})
+			})
 
 		}
 
@@ -175,7 +199,6 @@ var tagcloud = (function(){
 
 				tags = self.app.platform.sdk.tags.filterEx(tags)
 
-				console.log('tags', tags, error)
 
 				if (clbk)
 					clbk(tags, error)
@@ -186,7 +209,6 @@ var tagcloud = (function(){
 
 		var make = function(){
 
-			console.log("MAKE1")
 
 			load(function(tags, error){
 
@@ -197,7 +219,7 @@ var tagcloud = (function(){
 				}
 
 				renders.tags(tags)
-
+				actions.showhideclear()
 			})
 
 		}
@@ -209,7 +231,6 @@ var tagcloud = (function(){
 				essenseData = p.settings.essenseData || {};
 				var data = {};
 
-				console.log("GETDATA1")
 
 				clbk(data);
 
@@ -225,14 +246,13 @@ var tagcloud = (function(){
 			
 			init : function(p){
 
-				console.log("INIT1")
 
 				state.load();
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.tags = el.c.find('.tags');
-
+				el.cleartags = el.c.find('.cleartags')
 				initEvents();
 
 				make()

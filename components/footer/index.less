@@ -9,6 +9,10 @@
         width: 20px;
         height: 20px;
     }
+
+    .fitem{
+        margin-bottom: @rhythm;
+    }
     
 
 	.footerCenterWrapper{
@@ -38,11 +42,16 @@
 
     .localization{
         position: relative;
-        color: @color-black;
+        padding-bottom : 2 * @rhythm;
+
+        i{
+            width: 24px;
+            text-align: center;
+        }
         
         .vc_valuecustom{
             float: right;
-            width: 140px;
+            width: 95px;
             position: relative;
 
             .vc_inputWrapper{
@@ -64,7 +73,7 @@
             }
 
             .vc_selectInput{
-                border: 1px solid @color-gray-slight;
+                color: @color-gray-mlight;
             }
 
             input{
@@ -163,6 +172,10 @@
                         padding-right: 0;
                         text-align: right;
                     }
+
+                    &:nth-child(1){
+                        padding-left: 0;
+                    }
                 }
             }
         }
@@ -184,7 +197,7 @@ html.stblack{
     }
 }
 
-@media only screen and (max-width: 640px) {
+/*t*/ @media only screen and (max-width: 768px){
 #footer{
    
     .footerCenterWrapper{

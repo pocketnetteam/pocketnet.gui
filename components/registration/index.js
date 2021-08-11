@@ -173,6 +173,8 @@ var registration = (function(){
 											href : essenseData.successHref || 'filluser',
 											nav : essenseData.nav
 										});
+
+										
 									}
 
 									
@@ -365,7 +367,7 @@ var registration = (function(){
 				var _os = os();
 
 
-				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova && !self.app.ref){
+				if (_os && self.app.platform.applications[_os] && typeof _Electron == 'undefined' && !window.cordova){
 
 					current.os = self.app.platform.applications[_os]
 
@@ -617,7 +619,7 @@ var registration = (function(){
 
 						var text = p.el.find('.qrcode img').attr('src')
 
-						saveAs({
+						p_saveAs({
 							file : text,
 							format : 'png',
 							name : 'pocketnetkey'
@@ -641,7 +643,7 @@ var registration = (function(){
 											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
 											
 
-											saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
+											p_saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
 												clbk()
 											})
 

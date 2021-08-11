@@ -247,6 +247,38 @@ Comment = function(txid){
     self.parentid = ''
     self.answerid = ''
 
+	self.amount = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = 0
+			}
+			else
+
+				this.v = _v
+
+			if (self.on.change)
+				self.on.change('fees', this.v)
+		},
+		v : 0
+	}
+
+	self.fees = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = 0
+			}
+			else
+
+				this.v = _v
+
+			if (self.on.change)
+				self.on.change('fees', this.v)
+		},
+		v : 0
+	};
+
 	self.message = {
 		set : function(_v){
 
@@ -317,6 +349,51 @@ Comment = function(txid){
 		v : []
 	}
 
+	self.donate = {
+		set : function(donate){
+
+			if(!donate){
+				this.v = []
+			}
+
+			else
+			{
+				if(_.isArray(donate)){
+
+					this.v = donate;
+				}
+
+				else{
+
+					if(!donate) return
+
+					this.v.push(donate)
+				}
+			}
+
+
+			if (self.on.change)
+				self.on.change('donate', this.v)
+
+			return true;
+		},
+		remove : function(donate){
+			if(!donate){
+				this.v = []
+			}
+			else
+			{
+				removeEqual(this.v, donate)
+			}
+		},
+		get : function(){
+			return _.map(this.v, function(donate){
+				return donate
+			})
+		},
+		v : []
+	};
+
 	self.url = {
 		set : function(_v){
 
@@ -337,6 +414,8 @@ Comment = function(txid){
 		self.message.set()
 		self.images.set()
 		self.url.set()
+		self.donate.set()
+		self.fees.set()
 	}
 
 	self.on = {}
@@ -413,7 +492,7 @@ Comment = function(txid){
 		
 									success : function(data){
 		
-										self.images.v[index] = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
 										console.log('self.images.v[index]', self.images.v[index])
 										p.success();
@@ -495,13 +574,33 @@ Comment = function(txid){
 			})
 		}
 
-		console.log('self.images.v', self.images.v)
-
 		if(self.id){
 			r.id = self.id
 		}
 
+		//included multi donates!!!
+
+ 		if (self.donate && self.donate.v.length){
+
+			r.donation = 'true';
+			r.amount = self.donate.v.reduce(function(prev, next){
+				return prev + next.amount;
+			}, 0)
+
+			r.amount *= 100000000;
+
+		} else if (self.amount.v){
+
+			r.donation = 'true';
+			r.amount = self.amount.v;
+
+		}
+	
 		return r
+
+
+		
+
 	}
 
 	self.import = function(v){
@@ -517,8 +616,6 @@ Comment = function(txid){
 		self.images.set(_.map(v.msgparsed.images, function(i){
 			return decodeURIComponent(i)
 		}))
-
-		console.log("v.msgparsed", v.msgparsed)
 
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
@@ -1156,7 +1253,7 @@ Share = function(lang){
 		
 									success : function(data){
 		
-										self.images.v[index] = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
 										p.success();
 		
@@ -1258,9 +1355,9 @@ Share = function(lang){
 
 		var meta = parseVideo(self.url.v)
 
-		if(meta.type) return true
+		//if(meta.type) return true
 
-		//if(meta.type == 'peertube') return true
+		if(meta.type == 'peertube') return true
 	}
 
 	self.export = function(extend){
@@ -1338,17 +1435,21 @@ Share = function(lang){
 		return share;
 	}
 
-	self.optstype = function(){
+	self.optstype = function(platform){
 
-		//if(self.itisvideo()) return 'video'
+		if(self.itisvideo()) return 'video'
 
 		return self.type	
 	}
 
-	self.typeop = function(){
 
-		if(self.aliasid){
-			return 'shareedit'
+
+	self.typeop = function(platform){
+
+		if (self.itisvideo()) return 'video'
+
+		if (self.aliasid){
+			return 'share'
 		}
 
 		return self.type
@@ -1374,6 +1475,11 @@ UserInfo = function(){
 		self.addresses.set()
 	}
 
+	self.checkloaded = function(){
+		//console.log("self.image.v.indexOf('data:image')", self.image.v.indexOf('data:image'))
+		return self.image.v.indexOf('data:image') > -1
+	}
+
 	self.addresses = {
 		set : function(_v){
 
@@ -1397,6 +1503,34 @@ UserInfo = function(){
 
 			if (self.on.change)
 				self.on.change('addresses', this.v)
+		},
+		v : []
+	}
+
+	self.keys = {
+		set : function(_v){
+
+			var mv = this.v;
+
+			if(!_v) this.v = [];
+
+			else
+			{
+				if(_.isArray(_v)){
+					_.each(_v, function(__V){
+						if (__V)
+							mv.push(__V)
+					})
+				}
+				else
+				{
+					this.v.push(_v)
+				}
+				
+			}
+
+			if (self.on.change)
+				self.on.change('keys', this.v)
 		},
 		v : []
 	}
@@ -1509,7 +1643,7 @@ UserInfo = function(){
 		v : ''
 	};
 
-	self.uploadImage = function(clbk){
+	self.uploadImage = function(app, clbk){
 
 		var image = self.image.v;
 
@@ -1546,8 +1680,8 @@ UserInfo = function(){
 							},
 
 							success : function(data){
-
 								self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
+								//self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
 
 								if (clbk)
 									clbk();
@@ -1576,9 +1710,6 @@ UserInfo = function(){
 
 	}
 
-	
-
-
 	self.on = {}
 	self.off = function(e){
 		delete self.on[e]
@@ -1592,6 +1723,7 @@ UserInfo = function(){
 
 
 		if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
+		if (hash.indexOf('bastion') > -1) return 'bastion'
 		
 		return false
 
@@ -1602,7 +1734,9 @@ UserInfo = function(){
 		 + encodeURIComponent(self.site.v)
 		 + self.language.v
 		 + encodeURIComponent(self.about.v)
-		 + self.image.v + JSON.stringify(self.addresses.v) + self.ref.v
+		 + self.image.v + JSON.stringify(self.addresses.v) 
+		 + self.ref.v
+		 + self.keys.v.join(',')
 	}
 
 	self.alias = function(txid){
@@ -1625,7 +1759,8 @@ UserInfo = function(){
 				language : self.language.v,				
 				image : self.image.v,
 				addresses : JSON.stringify(self.addresses.v || []),
-				ref : self.ref.v
+				ref : self.ref.v,
+				keys : self.keys.v.join(',')
 			} 
 		}
 
@@ -1636,7 +1771,8 @@ UserInfo = function(){
 			s : encodeURIComponent(self.site.v),
 			i : self.image.v,
 			b : JSON.stringify(self.addresses.v || []),
-			r : self.ref.v
+			r : self.ref.v,
+			k : self.keys.v.join(',')
 		}
 	}
 
@@ -1648,6 +1784,7 @@ UserInfo = function(){
 		self.image.set(v.i || v.image)
 		self.addresses.set( JSON.parse(v.b || v.addresses || "[]"))
 		self.ref.set(v.r || v.ref)
+		self.keys.set((v.k || v.keys || '').split(','))
 	}
 
 	
@@ -1670,6 +1807,8 @@ pUserInfo = function(){
 	self.ref = '';
 	self.postcnt = 0;
 	self.reputation = 0;
+	self.trial = true;
+	self.keys = []
 
 	self.subscribes = [];
 	self.subscribers = [];
@@ -1683,6 +1822,7 @@ pUserInfo = function(){
 
 
 	self._import = function(v){
+
 
 		self.name = decodeURIComponent(v.n || v.name || '');
 		self.image = v.i || v.image;
@@ -1701,6 +1841,12 @@ pUserInfo = function(){
 
 		if (v.blocking) self.blocking = v.blocking;
 
+		self.keys = (v.k || v.keys || '')
+
+		if(!_.isArray(self.keys)) self.keys = self.keys.split(',')
+
+		self.keys = _.filter(self.keys, function(k){ return k})
+
 		if (v.txid)
 			self.txid = v.txid;
 
@@ -1711,6 +1857,8 @@ pUserInfo = function(){
 		catch (e){
 			
 		}
+
+		if(typeof v.trial != 'undefined') self.trial = v.trial
 		
 
 		if (v.adr || v.address)
@@ -1734,6 +1882,7 @@ pUserInfo = function(){
 		v.b = JSON.stringify(self.addresses || [])
 
 		v.adr = self.address
+		v.k = self.keys.join(',')
 
 		return v
 	}
@@ -1849,7 +1998,7 @@ pShare = function(){
 
 		var meta = parseVideo(self.url)
 
-		if (meta.type) return true
+		if(meta.type == 'peertube') return true
 	}
 
 	self._import = function(v, notdecode){
@@ -2167,6 +2316,10 @@ pComment = function(){
 	self.timeUpd = 0;
 	self.children = 0;
 
+	self.donation = '';
+	self.amount = 0;
+
+
 	self.address = '';
 	self.parentid = '';
 	self.answerid = '';
@@ -2192,7 +2345,7 @@ pComment = function(){
 
 			try {	
 				self.url = decodeURIComponent(v.msgparsed.url || "");
-				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " "))
+				self.message = decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
 				self.images = _.map(v.msgparsed.images || [], function(i){
 
 					return decodeURIComponent(i)
@@ -2212,6 +2365,9 @@ pComment = function(){
 
 		self.scoreDown = Number(v.scoreDown || '0');
 		self.scoreUp = Number(v.scoreUp || '0');
+
+		self.donation = v.donation;
+		self.amount = Number(v.amount || '0');
 
 		if (v.myScore) self.myScore = v.myScore
 
@@ -2244,7 +2400,9 @@ pComment = function(){
 			scoreDown : self.scoreDown,
 			scoreUp : self.scoreUp,
 			myScore : self.myScore,
-			deleted : self.deleted
+			deleted : self.deleted,
+			donation: self.donation,
+			amount: self.amount
 		}
 
 		return r
@@ -2331,7 +2489,7 @@ pComment = function(){
 				stripIgnoreTag: true
 			})
 
-			var m = emojione.toImage(trimHtml(l, 90))
+			var m = joypixels.toImage(trimHtml(l, 90))
 
 			return nl2br(trimrn(m))
 		},
@@ -2391,100 +2549,3 @@ kits = {
 		comment : pComment,
 	}
 }
-
-/*
-tx hash problems
-
-var fields = {
-	name : ['4chan','Firefox', 'Google', 'KamalaHarris', 'CNN', 'kesh', 'discord', ''],
-	language : ['en', 'fr', 'ru', ''],
-	image : ['https://i.imgur.com/QxHjPZw.jpg', 'https://i.imgur.com/z5JU9A2.jpg', ''],
-	site : ['discord.gg/4chan', 'discord.gg%2F4chan', ''],
-	about : ['new', '!', 'discord.gg/4chan', ''],
-	addresses : [[],'[]',"['[]']", '["[]"]', ''],
-	ref : ['PDqCykN2o8SCGXfvPv87gVRXcomXKjFFGj', 'PUyqmPGdR4SezQnZ1sQtF3QzTtGHnRLQut', 'PArvZCGSoRd7y6b7zKJPyUVSaycVoyVqpc', 'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN', 'PCnispEKjKxVpi6fVDqp5LweoUrD3HZbnh', '']
-}
-
-
-_.each(fields, function(f, i){
-	_.each(f, function(fi){
-		fields[i].push(encodeURIComponent(fi))
-		fields[i].push(decodeURIComponent(fi))
-
-		if (fi.toLowerCase){
-			fields[i].push(decodeURIComponent(fi.toLowerCase()))
-			fields[i].push(encodeURIComponent(fi.toLowerCase()))
-			fields[i].push((fi.toLowerCase()))
-		}
-		
-	})
-})
-
-var lasthash = ''
-var lastexp = {}
-var fi = 'ce8933f33b85979bbca853f191542101cc108fb3887b21c937a0bcb0dadd1f3d'
-var c = 0
-
-do{
-
-	var testUI = new UserInfo();
-
-	_.each(fields, function(f, i){
-
-		var r = rand(0, f.length - 1)
-
-		testUI[i].set(f[r])
-		
-	})
-
-	lasthash = Buffer.from(bitcoin.crypto.hash256(testUI.serialize()), 'utf8').toString('hex');
-	lastexp = testUI.export()
-
-	c++
-
-}
-
-while(lasthash != fi && c < 500000)
-
-console.log(lasthash, lastexp, c)
-
-*/
-/*
-
-var testUI = new UserInfo();
-
-	
-	testUI.name.set('qwe1')
-	testUI.language.set('en')
-	testUI.image.set('https://i.imgur.com/NJsudvg.jpg')
-	testUI.site.set('qwe')
-	testUI.about.set('qwe')
-
-var buf = Buffer.from(bitcoin.crypto.hash256(testUI.serialize()), 'utf8');
-console.log('bu0', buf.toString('hex'))
-*/
-/*
-var optype = testUI.typeop ? testUI.typeop() : testUI.type
-var optstype = optype
-
-if (testUI.optstype && testUI.optstype()) optstype = testUI.optstype()
-
-console.log('testUI.export(), optstype', JSON.stringify(testUI.export()), optstype)
-console.log('bu0', buf.toString('hex'))*/
-
-/*
-var testUI2 = new UserInfo();
-
-	
-	testUI2.name.set('KamalaHarris')
-	testUI2.language.set('en')
-	testUI2.image.set('https://i.imgur.com/z5JU9A2.jpg')
-	testUI2.site.set('discord.gg/4chan')
-	testUI2.about.set('new')
-	
-
-var buf = Buffer.from(bitcoin.crypto.hash256(testUI2.serialize()), 'utf8');
-
-console.log('bu1', buf.toString('hex'))
-
-*/

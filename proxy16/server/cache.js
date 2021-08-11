@@ -5,12 +5,26 @@ var Cache = function(p){
 
     var storage = {}
     var waiting = {}
+    var smart = {}
 
 
     var ckeys = {
         getlastcomments : {
-            time : 160,
+            time : 960,
             block : 0
+        },
+
+        getcomments : {
+            time : 360,
+            block : 0
+        },
+
+        getuseraddress : {
+            time : 82000
+        },
+
+        search: {
+            time : 6000
         },
        
         gettags : {
@@ -21,29 +35,52 @@ var Cache = function(p){
             time : 160,
             block : 0
         },
-        
+
+        getrawtransactionwithmessagebyid: {
+            time : 460,
+            block : 0
+        },
+       
         getrawtransactionwithmessage: {
-            time : 160,
+            time : 460,
             block : 0
         },
 
+        getrawtransaction: {
+            time : 460,
+            block : 0
+        },
+        getusercontents: {
+            time : 760,
+        },
         gethierarchicalstrip: {
-            time : 160,
+            time : 460,
+            block : 0
+        },
+
+        gethotposts: {
+            time : 460,
             block : 0
         },
         
         getuserprofile: {
-            time : 160,
-            block : 0
+            time : 560,
+            block : 0,
+
+            /*smart : {
+                idin : '0',
+                idout : 'address',
+                type : 'collect'
+            }*/
         },
 
         getuserstate : {
-            time : 160,
+            time : 560,
             block : 0
         },
         
         getpagescores: {
-            time : 160,
+            time : 460,
             block : 0
         },
         
@@ -55,15 +92,32 @@ var Cache = function(p){
             time : 160,
             block : 0,
         },
+
+        peertubevideo: {
+            time : 300,
+        },
+
+        estimatesmartfee: {
+            time : 1600
+        },
     }
 
 
-    self.set = function(key, params, data, block){
+    self.set = function(key, params, data, block, ontime){
         
         if (ckeys[key]){
 
-            var k = f.hash(JSON.stringify(params))
+            var ks = null
 
+            try{
+                ks = JSON.stringify(params)    
+            }catch(e){
+
+                return
+
+            }
+
+            var k = f.hash(ks)
 
             if(!storage[key])
                 storage[key] = {}
@@ -71,6 +125,10 @@ var Cache = function(p){
             storage[key][k] = {
                 data : data,
                 time : f.now()
+            }
+
+            if(ontime){
+                storage[key][k].ontime = ontime
             }
 
             if (typeof ckeys[key].block != undefined){
@@ -83,7 +141,6 @@ var Cache = function(p){
 
             if (waiting[key][k]){
 
-
                 _.each(waiting[key][k].clbks, function(c){
                     c('waitedmake')
                 })
@@ -95,15 +152,36 @@ var Cache = function(p){
      
     }
 
-    self.get = function(key, params){
+    self.get = function(key, params, cachehash){
         if (ckeys[key]){
 
-            var k = f.hash(JSON.stringify(params))
+
+            if (ckeys[key].smart){
+                return self.getsmart(key, params)
+            }
+
+            if(!cachehash){
+                var ks = null
+
+                try{
+                    ks = JSON.stringify(params)    
+                }
+                catch(e){
+
+                    console.log('stringify error', params)
+
+                    return
+                }
+            }
+
+            
+
+            var k = cachehash || f.hash(ks)
 
             var sd = f.deep(storage, key + "." + k)
 
             if (sd){
-                var t = f.date.addseconds(sd.time, ckeys[key].time)
+                var t = f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
 
                 if (t > f.now()){
                     return sd.data
@@ -113,8 +191,18 @@ var Cache = function(p){
         }
     }
 
+    self.getsmart = function(key, params){
 
-    self.wait = function(key, params, clbk){
+        var c = ckeys[key]
+
+        var ids = _.map(f.deep(params, c.idin), (r)=>{return r})
+
+        if(!smart[key]) smart[key] = {}
+
+        _.each()
+    }
+
+    self.wait = function(key, params, clbk, cachehash){
 
         if (!ckeys[key]){
             clbk('nocache')
@@ -122,14 +210,26 @@ var Cache = function(p){
             return
         }
 
-        if(self.get(key, params)){
+        if(self.get(key, params, cachehash)){
             clbk('hascache')
             return
         }
 
         var waitid = f.makeid()
 
-        var k = f.hash(JSON.stringify(params))
+        if(!cachehash){
+            var ks = null
+
+            try{
+                ks = JSON.stringify(params)    
+            }catch(e){
+                clbk('stringify')
+    
+                return
+            }
+        }
+
+        var k = cachehash || f.hash(ks)
 
         if(!waiting[key])
             waiting[key] = {}
@@ -150,7 +250,6 @@ var Cache = function(p){
 
         waiting[key][k].clbks[waitid] = clbk
 
-
         setTimeout(function(){
 
             if(waiting[key] && waiting[key][k] && waiting[key][k].clbks[waitid]){
@@ -160,7 +259,7 @@ var Cache = function(p){
                 delete waiting[key][k].clbks[waitid]
             }
 
-        }, 3500)
+        }, 6500)
 
         
     }
@@ -169,7 +268,6 @@ var Cache = function(p){
 
         _.each(ckeys, function(k, key){
             if (typeof k.block != undefined){
-
 
                 if (k.block < block.height)
                     storage[key] = {}
@@ -183,7 +281,14 @@ var Cache = function(p){
 
         _.each(ckeys, function(c, key){
 
-            var size = JSON.stringify(storage[key] || "").length / 1024;
+            var size = 0;
+            
+            
+            try{
+                size = JSON.stringify(storage[key] || "").length / 1024;
+            }
+            catch(e){}
+
             var length = _.toArray(storage[key] || {}).length /// ???
 
             meta[key] = {

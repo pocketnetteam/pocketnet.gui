@@ -1,9 +1,10 @@
-<div id="<%-module.map.id%>">
+<div id="<%-module.map.id%>" class="<% if(!state) {%> unathorized <% } %>">
 
+	<% if(state) {%>
 	<div class="bgCaptionWrapper">
 		
 	</div>
-		
+	<% } %>
 
 	<div class="work">
 
@@ -29,13 +30,13 @@
 					<div class="cnt">
 						<div class="report">
 
-							<div class="preloaderWrapper">
+							<!--<div class="preloaderWrapper">
 								<div class="preloader5">
 									<span></span>
 									<span></span>
 									<span></span>
 								</div>
-							</div>
+							</div>-->
 							
 						</div>
 					</div>

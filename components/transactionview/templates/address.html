@@ -1,0 +1,35 @@
+<% if(!address) {%>
+    <div class="empty">&mdash;</div>
+<% } else { %> 
+
+    <% var user = deep(app, 'platform.sdk.users.storage.'+ address) || {} %>
+
+    <div class="userWrapper">
+        <div class="tableovfWrapper">
+            <div class="user table">
+
+                <div class="iconWrapper">
+
+                    <% var src = user.image  %>
+
+                    <div class="icon">
+                        <div class="usericon usericonsbsa another" image="<%-src || ''%>">
+                            <% if(!src) {%>
+                                <i class="fas fa-at"></i>
+                            <% } %>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="nameWrapper">
+                    <a href="<%-app.platform.api.authororexplorerlink(address)%>">
+                        <span><%- user.name || address %></span>
+                    </a>
+                </div>			
+                
+            </div>
+        </div>
+    </div>
+
+<% } %>

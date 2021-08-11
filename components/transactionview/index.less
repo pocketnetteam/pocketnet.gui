@@ -1,0 +1,136 @@
+@import "../../css/__cssvar";
+
+#transactionview{
+    .workd{
+        background: fade(@color-gray, 5);
+        border-radius: 10px;
+        padding : 2 * @rhythm;
+    }
+    .scaption{
+        padding : @rhythm 0;
+        span{
+            font-size: 0.9em;
+            font-weight:700;
+        }
+    }
+
+    .usericon{
+        width: 1.5em;
+        height: 1.5em;
+    }
+
+    .line{
+        display: flex;
+        align-items: center;
+        padding : @rhythm 0;
+        >div{
+            margin-right: 2 * @rhythm;
+
+            span{
+                font-size: 0.9em;
+            }
+        }
+    }
+
+    .user{
+        width: auto;
+        >div{
+            vertical-align: middle;
+
+            &.iconWrapper{
+                width: 1.5em;
+            }
+
+            &.nameWrapper{
+                padding-left: @rhythm;
+
+                span{
+                    font-size: 0.8em;
+                }
+            }
+        }
+    }
+
+    .date{
+        text-decoration: underline;
+        padding : @rhythm 0;
+    }
+
+    i{
+        font-size: 0.8em;
+    }
+
+    .amount{
+        color : @color-good;
+        
+    }
+
+
+    .io{
+        display: flex;
+        max-width: 640px;
+        align-items: center;
+        flex-direction: column;
+        >div{
+            margin-bottom: 2 * @rhythm;
+
+            &:nth-last-child(1){
+                margin-bottom: 0;
+            }
+        }
+        .ioarrow{
+            opacity: 0.7;
+        }
+
+        .inputs,
+        .outputs{
+            width: 100%;
+            border-radius: 3px;
+            padding : 2 * @rhythm;
+            border: 1px solid fade(@color-gray, 10) ;
+        }
+    }
+
+    .txid{
+        padding : 2 * @rhythm 0;
+        opacity: 0.7;   
+        align-items: center;
+
+        display: flex;
+
+        i{
+            width: 20px;
+            text-align: center;
+            font-size: 0.7em;
+        }
+
+
+        span{
+            font-size: 0.8em;
+            max-width: 310px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: inline-block;
+        }
+    }
+
+    .copytext{
+        cursor: pointer;
+    }
+
+    .output{
+        display: flex;
+        align-items: center;
+        margin-bottom : @rhythm;
+
+        &:nth-last-child(1){
+            margin-bottom : 0;
+        }
+        >div{
+
+            &.amount{
+                padding-left: 2 * @rhythm;
+            }
+        }
+    }
+}

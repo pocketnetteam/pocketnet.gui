@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-contacts-x" version="2.0.2" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+    <name>ContactsX</name>
+    <description>Cordova Plugins for managing contacts</description>
+
+    <repo>https://github.com/EinfachHans/cordova-plugin-contacts-x</repo>
+    <issue>https://github.com/EinfachHans/cordova-plugin-contacts-x/issues</issue>
+
+    <license>MIT</license>
+
+    <js-module name="ContactsX" src="www/contactsX.js">
+        <clobbers target="window.ContactsX"/>
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="ContactsX">
+                <param name="android-package" value="de.einfachhans.ContactsX.ContactsX"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.READ_CONTACTS" />
+            <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+        </config-file>
+
+        <source-file src="src/android/ContactsX.java" target-dir="src/de/einfachhans/ContactsX"/>
+        <source-file src="src/android/ContactsXErrorCodes.java" target-dir="src/de/einfachhans/ContactsX"/>
+        <source-file src="src/android/ContactsXFindOptions.java" target-dir="src/de/einfachhans/ContactsX"/>
+    </platform>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="ContactsX">
+                <param name="ios-package" value="ContactsX"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/ContactsX-Bridging-Header.h" />
+        <source-file src="src/ios/ContactsX.swift"  />
+        <source-file src="src/ios/ContactX.swift"  />
+        <source-file src="src/ios/ContactsXOptions.swift"  />
+
+        <config-file target="*-Info.plist" parent="NSContactsUsageDescription">
+            <string>This app requires access to the contacts to manage them.</string>
+        </config-file>
+
+        <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
+    </platform>
+</plugin>

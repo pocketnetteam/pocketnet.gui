@@ -47,7 +47,7 @@
 			position: absolute;
 			left: 0;
 			right: 0;
-			top: 0;
+			top: 65px;
 			bottom: 0;
 			padding :  4 * @rhythm 4 * @rhythm;
 			background: fade(#F7F7F7, 90);
@@ -245,7 +245,7 @@
 			input{
 				width: 100%;
 				padding: @rhythm;
-				border : 1px solid @color-gray-light;
+				// border : 1px solid @color-gray-light;
 				border-radius: 2px;
 
 				&.error{
@@ -255,6 +255,7 @@
 
 			textarea{
 				min-height: 105px;
+				border: 1px solid @color-gray-border;
 			}
 
 			.error{
@@ -314,6 +315,7 @@
 			&[parameter="ref"]{
 				display: none;
 			}
+
 		}
 		.subcaption{
 			margin-bottom : 2 * @rhythm;
@@ -768,7 +770,7 @@
 
 html.stblack{
 	#test{
-		background: @color-black3;
+		background: transparent;
 		.caption{
 			color : @color-main;
 	
@@ -865,7 +867,7 @@ html.stblack{
 				select,
 				textarea,
 				input{
-					border : 1px solid @color-black2;
+					// border: 1px solid @color-bright;
 	
 					&.error{
 						border : 1px solid @color-bad;
@@ -886,7 +888,7 @@ html.stblack{
 				.vc_valuecustom,
 				.vc_valuecustom_multibig{
 					.vc_textInput{
-						background: @color-black;
+						background: transparent;
 						color : @color-gray-mlight;
 					}
 				}
@@ -898,9 +900,9 @@ html.stblack{
 				>div{
 	
 					.save{
-						background: @color-black2;
-						border-color : @color-black2;
-						color: @color-gray;
+						background: @color-bright;
+						border-color : @color-bright;
+						color: @color-white;
 					}
 	
 					&.loadingToB{
@@ -949,8 +951,8 @@ html.stblack{
 		.adressesInput{
 	
 			.addaddress{
-				border : 1px solid @color-black2;
-				color : @color-gray;
+				border : 1px solid @color-bright;
+				color : @color-bright;
 				
 	
 				&:hover{
@@ -1067,7 +1069,7 @@ html.stblack{
 	}	
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
 	#test{
 
 		background: #fff;

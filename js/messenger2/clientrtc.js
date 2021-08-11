@@ -498,7 +498,7 @@ var platformRTC = function(p){
 		var initOnlineListener = function(){
 			if(self.onlineCheck && typeof window != 'undefined'){
 
-				onlinetnterval = retry(function(){
+				/*onlinetnterval = retry(function(){
 
 					var online = deep(window, 'navigator.onLine');
 
@@ -537,7 +537,7 @@ var platformRTC = function(p){
 						initOnlineListener();
 					}
 
-				}, 50)
+				}, 50)*/
 
 			}
 		}						

@@ -22,6 +22,42 @@
 		white-space: nowrap;
 	}
 
+	
+	.donateEmbWr{
+
+		.donatecntWrapper{
+			padding-top: @rhythm * 2;
+			padding-bottom: @rhythm * 2;
+
+			.removedonate{
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				.transition(0.3s);
+				color : @color-bad;
+
+				&:hover{
+					background : @color-gray-slight;
+				}
+			}
+
+			.donatecnt{
+				.value, .removeWrapper{
+					display: inline-block;
+				}
+
+				.removeWrapper{
+					position: relative; 
+					top: -10px
+				}
+			}
+
+		}
+	}
+
 	&.preview{
 		.post{
 			.txt{
@@ -288,6 +324,22 @@
 					border-top : 1px solid @color-gray-slight;
 					padding-left:  3 * @rhythm;
 					padding-right: 5 * @rhythm;
+
+					.embeddonate{
+						display: none;
+					}
+
+					.embedimages{
+						right: 40px;
+					}
+
+					.embedEmojiPrivew, .emojionearea-button{
+						right: 12px;
+					}
+
+
+
+					
 				}
 				
 				background: #fff;
@@ -377,16 +429,130 @@
 				vertical-align: top;
 
 				&.iconWrapper{
+					position: relative;
 					font-size: 0.8em;
 					width: 45px;
 					padding-top : 2 * @rhythm;
 					float: none;
 					padding-left: 0;
 
+					.icon{
+						position: relative;
+					}
+
 					.usericon{
 						position: relative;
-						/*margin : 0 auto;*/
+						
+						&.donated{
+							
+							&:after{
+								position: absolute;
+								left : -1px;
+								top : -1px;
+								right: -1px;
+								bottom : -1px;
+								animation: rotation 8s infinite linear;
+								border : 2px solid @color-main;
+								content : "";
+								border-radius: 50%;
+								border-image: linear-gradient(#0B0E7F , #0B95DD);
+								-moz-border-image: -moz-linear-gradient(#0B0E7F , #0B95DD);
+								-webkit-border-image: -webkit-linear-gradient(#0B0E7F , #0B95DD);
+								border-image-slice: 1;
+								filter: blur(5px);
+							}
+						}
+
+						
+
+						
+
 					}
+
+					.donater{
+						position: absolute;
+						animation: rotation 3s infinite linear;
+						top: -2px;
+						left: -2px;
+						width: 41px;
+						height: 41px;
+						max-width: none;
+					}
+
+					@keyframes rotation {
+						from {
+							transform: rotate(0deg);
+						}
+						to {
+							transform: rotate(359deg);
+						}
+					}
+
+					.followers_arc_outer{
+						position: absolute;
+						border-radius: 100%;
+						border: 2px solid;
+					}
+					.followers_arc_start {
+						border-color:transparent #00a4ff #00a4ff #00a4ff;
+						-webkit-transform: rotate(45deg);
+						-moz-transform: rotate(45deg);
+						-ms-transform: rotate(45deg);
+						-o-transform: rotate(45deg);
+						transform: rotate(45deg);
+					}
+					.followers_arc_inner{
+						position:absolute;
+						top:18px;
+						left: 18px;
+						width: 280px;
+						height:280px;
+						border-radius:100%;
+						border:2px solid;
+						border-color:transparent #ecd201 #ecd201 #ecd201;
+					}
+					.o_circle {
+						animation-name: rotation;
+						animation-iteration-count:  infinite;
+						animation-timing-function: linear;
+						animation-duration: 3s; 
+
+
+					}
+
+					@-webkit-keyframes rotation {
+						0% {
+							-webkit-transform:rotate(0deg)
+						}
+						20% {
+							-webkit-transform:rotate(360deg)
+						}
+						100% {
+							-webkit-transform:rotate(360deg)
+						}
+						/*  100% { -webkit-transform:rotate(0deg) } */
+					}
+
+					@-webkit-keyframes rotation{
+						from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+						to   {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
+					}@keyframes rotation{
+						from {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+						to   {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
+					}
+					.i_circle {
+						-webkit-animation: rotation2 2s infinite linear;
+					   animation: rotation2 2s infinite linear;
+					}
+					@-webkit-keyframes rotation2 {
+						from {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
+						to   {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+					}@keyframes rotation2 {
+						from {-webkit-transform: rotate(359deg);transform: rotate(359deg);}
+						to   {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+					
+					}
+					
 				}
 
 				&.commentBody{
@@ -437,6 +603,20 @@
 
 				&.author{
 					color : @color-gray;
+				}
+
+				.donateSum{
+					display: inline;
+					background: @color-main;
+					border-radius: 25px;
+					padding: @rhythm;
+					padding-left: @rhythm * 2;
+					padding-right: @rhythm * 2;
+					color: white;
+					margin-left: @rhythm;
+					font-size: .8em;
+					font-weight: 500;
+					white-space: nowrap;
 				}
 
 				.date{	
@@ -858,6 +1038,8 @@
 					float: none;
 					.usericon{
 						position: relative;
+												
+
 						/*margin : 0 auto;*/
 					}
 				}
@@ -885,7 +1067,7 @@
 					
 					.closeEdit,
 					.postaction{
-						line-height: 36px;
+						line-height: 40px;
 						text-align: center;
 						
 						.preloaderWrapper{
@@ -918,7 +1100,6 @@
 				}
 
 				.usericon{
-					background: @color-main;
 					color : #fff;
 				}
 
@@ -1022,7 +1203,7 @@
 			height: 24px;
 			position: absolute;
 			top: 7px;
-			right: 41px;
+			right: 12px;
 			background-position: 0 -24px;
 			background-image: url(data:image/png;base64,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)!important
 		}
@@ -1034,6 +1215,7 @@
 			padding : 8px;
 			padding-left : 2 * @rhythm;
 			padding-right : 66px;
+			padding-right : 94px;
 			outline: none;
 			border : 0;
 			min-height: 36px;
@@ -1041,13 +1223,13 @@
 
 		.emojionearea-button{
 			top : 6px;
-			right : 40px;
+			right : 12px;
 		}
 
 		.embedimages{
 			position: absolute;
-			right : 12px;
-			top : 2px;
+			right : 40px;
+			top : 3.5px;
 			padding : 6px;
 			cursor: pointer;
 			color : @color-gray-light;
@@ -1056,11 +1238,35 @@
 			&:hover{
 				color : @color-black2;
 			}
+
+			i{
+				font-size: 1.1em;
+			}
 		}
 
-		.leaveComment{
+		.embeddonate{
+			position: absolute;
+			right : 68px;
+			top : 1px;
+			padding : 6px;
+			cursor: pointer;
+			color : @color-gray-light;
+			.transition(0.3s);
 
+			img{
+				height: 15px;
+			}
+
+			.donate-hover{
+				display: none;
+			}
+		
+
+			&:hover{
+				color : @color-black2;
+			}
 		}
+
 
 		.commentPanel{
 
@@ -1116,11 +1322,7 @@
 				>div{
 					&.postCellWrapper{
 						
-						.postaction{
-							
-							
-
-						}
+						
 					}
 				}
 			}
@@ -1130,12 +1332,17 @@
 
 
 
+
 	.edit{
 		.postbody{
 			padding : 0;
 		}
 		.posttable{
 			>div{
+
+				.embeddonate{
+					display: none;
+				}
 
 				&.iconWrapper{
 					display: none;
@@ -1507,7 +1714,6 @@ html.stblack{
 					}
 	
 					.usericon{
-						background: @color-main;
 						color : @color-black;
 					}
 	
@@ -1594,8 +1800,28 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 640px) {
+html.tablet,
+html.mobile{
 	#comments{
+
+		.embedEmojiPrivew, .emojionearea-button{
+			display: none!important;
+		}
+
+		.embeddonate{
+			right: 40px!important;
+		}
+
+		.embedimages{
+			right: 12px!important;
+		}
+	}
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+	#comments{
+
+	
 
 		.repliesloaderWrapper,
 		.loaderWrapper{
@@ -1652,6 +1878,7 @@ html.stblack{
 						padding-left: @rhythm;
 						padding-right: 0;
 					}
+
 					
 				}
 
@@ -1672,6 +1899,13 @@ html.stblack{
 				}
 			}
 
+			&.commentBody{
+				.donate{
+					display: block;
+					margin-left: 0;
+				}
+			}
+
 			.commentcontenttable{
 				display: block;
 				>div{
@@ -1687,12 +1921,27 @@ html.stblack{
 			.commentpanel{
 				width: 100%;
 
+				span{
+					font-size: 0.9em;
+				}
+
 				.items{
 					padding-top : @rhythm;
 					>div{
 						float: left;
 						padding-left: 0;
-						padding-right: 4 * @rhythm;
+						padding-right: 0;
+						margin-right: 4 * @rhythm;
+
+						&.upvoteCommentWrapper{
+							margin-right: @rhythm;
+							padding-right: 0;
+						}
+
+						&:nth-last-child(1){
+							margin-right: 0;
+							padding-right: 0;
+						}
 					}	
 				}
 					
@@ -1708,9 +1957,22 @@ html.stblack{
 				
 			
 				>div{
-					padding-top: @rhythm!important;
+					padding-top: 1.5 * @rhythm!important;
+
+					span{
+						font-size: 1em;
+					}
+
+					.donateSum{
+						margin-left: 0;
+						margin-top: 2 * @rhythm;
+						margin-bottom: @rhythm;
+						display: block;
+						text-align: center;
+					}
 					
 					&.panelWrapper{
+						vertical-align: top;
 
 						.panel{
 							text-align: center;
@@ -1729,11 +1991,14 @@ html.stblack{
 
 	
 		.showall{
-			padding : 2 * @rhythm;
+			padding : 3 * @rhythm;
 			padding-left:  @rhythm;
 			padding-right: @rhythm;
-			padding-bottom: 0;
+			padding-bottom: 2 * @rhythm;;
 			
+			span{
+				font-size: 0.9em;
+			}
 		}
 
 		.answer,
@@ -1798,7 +2063,6 @@ html.stblack{
 
 			&.active{
 
-				height: 70px;
 
 				.newcommentimages.active {
 					display: none!important;
@@ -1806,13 +2070,13 @@ html.stblack{
 
 				.postbody{
 				
-					padding-left : @rhythm;
-					background: #fff;
-					position : fixed;
+					//padding-left : @rhythm;
+					//background: #fff;
+					/*position : absolute;
 					left: 0;
 					right: 0;
 					bottom: 0;
-					z-index: 1000;
+					z-index: 1000;*/
 
 					.posttable{
 						>div{
@@ -1825,7 +2089,7 @@ html.stblack{
 
 							&.iconWrapper{
 								.icon{
-									position: relative;
+									/*position: relative;
 									&:before{
 										color : @color-gray-light;
 										height: 38px;
@@ -1842,7 +2106,48 @@ html.stblack{
 
 									.usericon{
 										display: none;
-									}
+									}*/
+								}
+							}
+						}
+					}
+				}
+
+				
+			}
+		}
+
+		.answer{
+
+
+			
+
+			.postbody{
+
+				.closeAnswer{
+					position: absolute;
+					left : 0;
+					right: auto;
+					top : 0;
+					display: block!important;
+					padding : 2 * @rhythm @rhythm;
+					width: auto;
+					text-align: center;
+	
+					i{
+						line-height: 38px;
+						width: 38px;
+						height: 38px;
+					}
+				}
+
+				.posttable{
+					>div{
+
+						&.iconWrapper{
+							.icon{
+								.usericon{
+									display: none;
 								}
 							}
 						}

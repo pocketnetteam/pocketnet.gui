@@ -1,18 +1,21 @@
-
 var electron = null
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
 }
 
-var ProxyRequest = function(app = {}){
+var ProxyRequest = function(app = {}, proxy){
     var self = this
 
     var sign = function(data){
         var signature = null
 
-        if (app.user && app.user.getstate() == 1){
-            try{ signature = app.user.signature() } catch(e){}
+        var session = ''
+
+        if (proxy && proxy.session) session = proxy.session
+
+        if (app.user && (app.user.getstate && app.user.getstate() == 1)){
+            try{ signature = app.user.signature(session) } catch(e){}
         }
 
         if (signature){ data.signature = signature }
@@ -53,43 +56,55 @@ var ProxyRequest = function(app = {}){
         })
     }
 
-    var direct = function(url, data){
+    var direct = function(url, data, p){
         var controller = (new AbortController())
 
         var time = 30000
 
-        if (window.cordova){
+        if (window.cordova || isInStandaloneMode()){
             time = 55000
         }
 
 
-        return timeout(time, directclear(url, data, controller.signal), controller)
+        return timeout(time, directclear(url, data, controller.signal, p), controller)
     }
 
-    var directclear = function(url, data, signal){
+    var directclear = function(url, data, signal, p){
+
+        if(!p) p = {}
 
         if(!data) 
             data = {}
 
+        var headers = _.extend({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=utf-8'
+        }, p.headers || {})
+
+        /*if (data.bearer){
+            headers.Authorization = `Bearer ${data.bearer}`
+            delete data.bearer
+        }*/
+
         var er = false
 
-        
+        if (p.auth)
+            data = sign(data)
+        else{
+            if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
+        }
 
         return fetch(url, {
 
-            method: 'POST',
+            method: p.method || 'POST',
             mode: 'cors', 
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=utf-8'
-            },
+            headers: headers,
             signal : signal,
-            body: JSON.stringify(sign(data))
+            body: JSON.stringify(data)
 
         }).then(r => {
 
             signal.dontabortable = true
-
 
             if(!r.ok){
                 er = true
@@ -99,14 +114,13 @@ var ProxyRequest = function(app = {}){
 
         }).then(result => {
 
-
             if (er){
                 return Promise.reject(result.error)
             }
 
             return Promise.resolve(result.data || {})
-        }).catch(e => {
 
+        }).catch(e => {
 
             if (e.code == 20){
                 return Promise.reject({
@@ -129,15 +143,27 @@ var ProxyRequest = function(app = {}){
             data.parameters = parameters || []
             data.method = method
 
+            try{
+                data.cachehash = MD5(JSON.stringify(data.parameters))
+            }
+            catch(e){
+                
+            }
+            
+
             if (options)
                 data.options = options
 
-        return direct(url + '/rpc/' + method, data)
+        var route = 'rpc'
+
+        if (options.ex) route = 'rpc-ex'
+
+        return direct(url + '/'+route+'/' + method, data)
 
     }
 
-    self.fetch = function(url, path, data){
-        return direct(url + '/' + path, data)
+    self.fetch = function(url, path, data, p){
+        return direct(url + '/' + path, data, p)
     }
 
     return self
@@ -157,7 +183,7 @@ var Node = function(meta, app/*, proxy ??*/){
 
 var Proxy16 = function(meta, app, api){
     var self = this
-    var request = new ProxyRequest(app)
+    var request = new ProxyRequest(app, self)
 
     self.system = new System16(app, self, meta.direct)
 
@@ -277,6 +303,8 @@ var Proxy16 = function(meta, app, api){
             return self.fetch('ping').then(r => {
 
                 self.ping = new Date()
+                self.session = r.session
+
 
                 return Promise.resolve(r)
             }).catch(e => {
@@ -288,7 +316,7 @@ var Proxy16 = function(meta, app, api){
 
             var promise = null
 
-            if(!self.ping || self.ping.addSeconds(5) < new Date){
+            if(!self.ping || self.ping.addSeconds(50) < new Date){
                 promise = self.api.ping()
             }
             else{
@@ -367,8 +395,6 @@ var Proxy16 = function(meta, app, api){
             options.node = self.current.key
         }
 
-        
-
         var promise = null
 
         if (self.direct){
@@ -401,21 +427,28 @@ var Proxy16 = function(meta, app, api){
 
     var wait = {}
 
-    self.fetch = function(path, data, waiting){
+    self.fetch = function(path, data, p){
 
         var promise = null
 
         if (self.direct){
-            promise = self.system.fetch(path, data)
+            promise = self.system.fetch(path, data, p)
         }
         else{
-            promise = request.fetch(self.url.https(), path, data)
+            promise = request.fetch(self.url.https(), path, data, p)
         }
 
         return promise.then(r => {
             return Promise.resolve(r)
         })
        
+    }
+
+    self.fetchauth = function(path, data, p){
+        if(!p) p = {}
+        p.auth = true
+
+        return self.fetch(path, data, p)
     }
 
     self.get = {
@@ -428,11 +461,11 @@ var Proxy16 = function(meta, app, api){
         },
 
         info : function(){
-            return self.fetch('info')
+            return self.fetchauth('info')
         },
 
         stats : function(){
-            return self.fetch('stats')
+            return self.fetchauth('stats')
         }
     }
 
@@ -466,6 +499,11 @@ var Proxy16 = function(meta, app, api){
     }
 
     self.refreshNodes = function(){
+
+        return self.api.nodes.select().catch(e => {
+            return Promise.resolve()
+        })
+
         return self.api.nodes.get().then(r => {
             return self.api.nodes.select()
         }).catch(e => {
@@ -495,7 +533,7 @@ var Api = function(app){
     var proxies = [];
     var nodes = []
 
-    var current = null // 'localhost:8888:8088' //null;///'pocketnet.app:8899:8099'
+    var current = null
     var useproxy = true;
     var inited = false;
     var fixednode = null;
@@ -517,7 +555,7 @@ var Api = function(app){
 
     var getproxy = function(key){
 
-        var proxy = getproxyas()
+        var proxy = getproxyas(key)
 
         return proxy ? Promise.resolve(proxy) : Promise.reject('proxy')
     }
@@ -614,6 +652,17 @@ var Api = function(app){
                     return this.addlocalelectronproxy().then(r => {
 
                         this.addlist(deep(app, 'options.listofproxies') || [])
+
+                        /*setTimeout(() => {
+                            this.addlist([{
+                                host : 'pocketnet.app',
+                                port : 8899,
+                                wss : 8099
+                            }])
+
+                            current = 'pocketnet.app:8899:8099'
+                            console.log("ADDED")
+                        },5000)*/
                     
                         try{ this.addlist(JSON.parse(localStorage['listofproxies'] || "[]")) }
                         catch(e){}
@@ -623,6 +672,8 @@ var Api = function(app){
                     }).then(r => {
 
                         var oldc = localStorage['currentproxy']
+
+                        console.log('oldc', oldc)
 
                         if (oldc){
                             return self.set.current(oldc)
@@ -637,7 +688,7 @@ var Api = function(app){
                     }).then(() => {
 
                         if(!current && proxies.length){
-                            current = 'pocketnet.app:8899:8099' //proxies[0].id
+                            current = 'pocketnet.app:8899:8099' //proxies[0].id ??
                         }
 
                         inited = true
@@ -719,7 +770,6 @@ var Api = function(app){
 
         }).then(r => {
 
-
             app.apiHandlers.success({
                 rpc : true
             })
@@ -728,18 +778,40 @@ var Api = function(app){
 
         }).catch(e => {
 
+            console.log("ER", e)
 
-            if(e == 'TypeError: Failed to fetch' || (e.code == 408 || e.code == -28)){
+            if(e == 'TypeError: Failed to fetch' || e == 'proxy' || (e.code == 408 || e.code == -28)){
 
                 app.apiHandlers.error({
                     rpc : true
                 })
             }
 
-
             return Promise.reject(e)
         })
     }
+
+    self.fetchauthall = function(path, data){
+        var promises = _.map(proxies, function(proxy){
+            var options = {proxy : proxy.id}
+
+            return self.fetchauth(path, data, options)
+        })
+        return Promise.all(promises).catch(e => {
+            return Promise.resolve()
+        })
+
+       
+    }
+
+    self.fetchauth = function(path, data, options){
+        if(!options) 
+            options = {}
+
+            options.auth = true
+
+        return self.fetch(path, data, options)
+    }   
 
     self.fetch = function(path, data, options){
 
@@ -749,21 +821,33 @@ var Api = function(app){
             options = {}
 
 
+        var method = 'fetch'
+
+
+        if(options.auth) method = 'fetchauth'
+
+
+        var requestto = null
+
         return getproxy(options.proxy).then(proxy => {
 
-            return proxy.fetch(path, data)
+            requestto = proxy.id
+
+            return proxy[method](path, data)
 
         }).then(r => {
 
-            app.apiHandlers.success({
-                api : true
-            })
+            if (requestto == current)
+
+                app.apiHandlers.success({
+                    api : true
+                })
 
             return Promise.resolve(r)
 
         }).catch(e => {
 
-            if (e == 'TypeError: Failed to fetch'){
+            if (requestto == current && e == 'TypeError: Failed to fetch'){
                 app.apiHandlers.error({
                     api : true
                 })
@@ -780,10 +864,18 @@ var Api = function(app){
 
         use : () => {
 
+            return useproxy ? _.filter(proxies, proxy => { 
+                return proxy.ping
+            }).length || !proxies.length : false
+
+        },
+
+        useexternal : () => {
 
             return useproxy ? _.filter(proxies, proxy => { 
-                return proxy.ping && proxy.get.nodes().length 
+                return proxy.ping && !proxy.direct
             }).length || !proxies.length : false
+            
         },
     }
 
@@ -792,8 +884,7 @@ var Api = function(app){
 
             if(!key) key = 'use'
 
-
-            return pretry(self.ready[key], 50, total)
+            return pretry(self.ready[key], 20, total)
         }
     }
 
@@ -825,6 +916,7 @@ var Api = function(app){
             localStorage['fixednode'] = fixednode
         }   
     }
+
 
     self.get = {
         fixednode : function(){
@@ -869,7 +961,6 @@ var Api = function(app){
                 return !proxy.direct
             })
 
-
             var promises = _.map(_proxies, function(proxy){
                 return proxy.api.actualping()
             })
@@ -881,6 +972,16 @@ var Api = function(app){
                     }
                 })
             })
+        },
+
+        direct : function(){
+            var _proxies = _.filter(proxies, function(proxy){
+                return proxy.direct
+            })
+
+            if(_proxies.length){
+                return _proxies[0]
+            }
         }
     }
 
@@ -898,7 +999,7 @@ var Api = function(app){
 
         return promise.then(r => {
             if(r){
-                return Promise.resolve()
+                return Promise.resolve(1)
             }
             else{
                 return self.get.working().then(wproxies => {
@@ -908,7 +1009,7 @@ var Api = function(app){
 
                     }
 
-                    return Promise.resolve()
+                    return Promise.resolve(wproxies.length)
                 })
             }
         })

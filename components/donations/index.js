@@ -269,6 +269,7 @@ var donations = (function(){
 								url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
 								data: {
 									Action : 'ADDTOMAILLIST',
+									Lang : self.app.localization.key || 'en',
 									TemplateID : 100,
 									Email : self.app.platform.sdk.address.pnet().address,
 									Name : (curobj.name || 'NAN0') + ", " + (thankparameters.amount.value || 0)

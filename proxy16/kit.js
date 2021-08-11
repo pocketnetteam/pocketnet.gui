@@ -21,16 +21,27 @@ var settingsPath = 'data/settings'
 var settings = {};
 
 var pocketnet = new Pocketnet()
+var test = _.indexOf(process.argv, '--test') > -1
 
-var nodes = [
 
-	/*{
-		host : '192.168.0.33',
-		port : 37071,
-		ws : 8087,
-		nodename : 'Cryptoserver',
+var testnodes = [
+	{
+		host : '157.90.235.121',
+		port : 39091,
+		ws : 6067,
+		name : 'test.1.pocketnet.app',
 		stable : true
-	},*/
+	},
+	{
+		host : '157.90.228.34',
+		port : 39091,
+		ws : 6067,
+		name : 'test.2.pocketnet.app',
+		stable : true
+	}
+]
+
+var activenodes = [
 	{
 		host : '64.235.45.119',
 		port : 38081,
@@ -47,42 +58,41 @@ var nodes = [
 		stable : true
 	},
 
-	{
-		host : '64.235.35.173',
-		port : 38081,
-		ws : 8087,
-		name : 'CryptoserverSP4',
-		stable : true
-	},
-
-	{
-		host : '64.235.35.173',
-		port : 38081,
-		ws : 8087,
-		name : 'CryptoserverSP4',
-		stable : true
-	},
-
 	/*{
-		host : '188.187.45.218',
-		port : 31011,
-		ws : 8010,
-		name : 'CryptoserverTest',
+		host : '64.235.35.173',
+		port : 38081,
+		ws : 8087,
+		name : 'CryptoserverSP4',
 		stable : true
-	}*/
-	
+	},*/
+
 	{
 		host : '185.148.147.15',
 		port : 38081,
 		ws : 8087,
 		name : 'Cryptoserver',
 		stable : true
+	},
+
+	{
+		host : '135.181.196.243',
+		port : 38081,
+		ws : 8087,
+		name : 'Cryptoserver243',
+		stable : true
 	}
+	
 ]
+
+var nodes = activenodes
+
+if (test) nodes = testnodes
 
 var defaultSettings = {
 
 	admins : [],
+
+	testkeys : [],
 	
 	nodes : {
 		dbpath : 'data/nodes'
@@ -115,7 +125,7 @@ var defaultSettings = {
 	firebase : {
 		key : "",
 		dbpath : 'data/firebase',
-		id : 'app.pocketnetcustom'
+		id : ''
 	},
 
 	wallet : {
@@ -125,14 +135,8 @@ var defaultSettings = {
 				privatekey : "",
 				amount : 0.0002,
 				outs : 10,
-				check : 'uniqAddress'
-			},
-
-			/*compensation : {
-				privatekey : "",
-				check : 'uniqAddress',
-				source : 'compensation'
-			},*/
+				check : 'ipAndUniqAddress'
+			}
 		}
 	},
 
@@ -151,6 +155,12 @@ var defaultSettings = {
 	proxies : {
 		dbpath : 'data/proxies',
 		explore : true
+	},
+
+	systemnotify : {
+		token : '',
+		chatid : '',
+		parameters : {}
 	}
 
 	/*rsa : {
@@ -161,6 +171,23 @@ var defaultSettings = {
 
 
 var state = {
+
+	exportkeys : function(){
+		return _.filter(settings.testkeys, function(key){
+
+			var kp = null
+
+			try{
+                kp = pocketnet.kit.keyPair(key)
+
+				return true
+            }
+            catch(e){
+                return false
+            }
+
+		})
+	},
 
 	export : function(view){
 
@@ -182,13 +209,24 @@ var state = {
 			admins : settings.admins,
 			proxies : {
 				explore : settings.proxies.explore
-			}
+			},
+			testkeys : state.exportkeys(),
+			systemnotify : settings.systemnotify
 			//rsa : settings.rsa
 		}
 
 		exporting = cloneDeep(exporting)
 
 		if(view) {
+
+			exporting.testkeys = []
+
+			if (exporting.systemnotify.token)
+				exporting.systemnotify.token = "*"
+
+			if (exporting.systemnotify.chatid)
+				exporting.systemnotify.chatid = "*"
+
 			if (exporting.server.ssl.passphrase)
 				exporting.server.ssl.passphrase = "*"
 
@@ -202,7 +240,6 @@ var state = {
 		return exporting
 	},
 
-	
 
 	apply : function(cds){
 		settings = cds
@@ -287,7 +324,8 @@ var kit = {
 					if(settings.ports) notification.ports = settings.ports
 					if(typeof settings.enabled) notification.enabled = settings.enabled
 					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
-					if(settings.ssl) notification.ssl = true
+                    if(settings.ssl) notification.ssl = true
+                
 
 					return kit.proxy().then(proxy => {
 
@@ -532,6 +570,14 @@ var kit = {
 				},
 	
 				firebase : {
+					clear : function(){
+						settings.firebase.id = ''
+						settings.firebase.key = ''
+
+						return state.saverp().then(proxy => {
+							return proxy.firebase.re()
+						})
+					},
 					id : function(id){
 	
 						settings.firebase.id = id
@@ -587,6 +633,10 @@ var kit = {
 						return proxy.wallet.setPrivateKey(key, privatekey)
 					})
 
+				},
+
+				apply : function({key}){
+					return proxy.wallet.apply(key)
 				}
 
 			},
@@ -690,6 +740,38 @@ var kit = {
 
 				}
 			},
+
+			testkeys : {
+				add : function({
+					key
+				}){
+
+					if(!key) return Promise.reject("key")
+
+					var kp = pocketnet.kit.keyPair(key)
+
+					if(!kp) return Promise.reject("notvalidkey")
+
+					if(_.indexOf(settings.testkeys, key) > -1){
+						return Promise.resolve()
+					}
+	
+					settings.testkeys.push(key)
+	
+					return state.save()
+				},
+	
+				remove : function({
+					index
+				}){
+	
+					if (index < 0 || index > settings.testkeys.length - 1) return Promise.resolve()
+	
+					settings.testkeys.splice(index, 1)
+	
+					return state.save()
+				}
+			},
 	
 			admins : {
 				add : function({
@@ -729,10 +811,15 @@ var kit = {
 			settings : function(){
 				return Promise.resolve(state.export(true))
 			},
+			
 			state : function(compact){
 				return kit.proxy().then(proxy => {
 					return proxy.kit.info(compact)
 				})
+			},
+
+			testkey : function(index){
+				return settings.testkeys[index]
 			}
 		},
 
@@ -881,7 +968,8 @@ var kit = {
 	startproxy : function(hck){
 
 		if(!proxy){
-			proxy = new Proxy(settings, kit.manage)
+            
+			proxy = new Proxy(settings, kit.manage, test)
 
 			if (hck.userDataPath){
 				proxy.userDataPath = hck.userDataPath
@@ -910,10 +998,8 @@ var kit = {
 		if(!hck) hck = {}
 
 		settings = state.expand(environmentDefaultSettings, settings)
-
-		db = new Datastore(f.path(settingsPath));
-
-
+        db = new Datastore(f.path(settingsPath));
+        
 		return new Promise((resolve, reject) => {
 
 			var start = function(){
@@ -933,6 +1019,7 @@ var kit = {
 					resolve()
 
 				}).catch(e => {
+                    console.log(e)
 					reject(e)
 				})
 			}

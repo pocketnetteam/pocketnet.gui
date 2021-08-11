@@ -14,28 +14,31 @@
 
 		<div class="tspacer"></div>
 
-		<div class="loadmore"><button><%=e('lloadmore')%></button></div>
+		<% if(!app.curation()) {%>
 
-		<% if(recommended == 'recommended') {%>	
+			<div class="loadmore"><button><%=e('lloadmore')%></button></div>
 
-			<!--<div class="seemore">
-				<a href="index" handler="true">
-					<button><%=e('lloadmore')%></button>
-				</a>
-			</div>-->
+			<% if(recommended == 'recommended') {%>	
 
-		<% } else { %> 
+				<!--<div class="seemore">
+					<a href="index" handler="true">
+						<button><%=e('lloadmore')%></button>
+					</a>
+				</div>-->
 
-			<div class="ended">
-				<a href="index?r=recommended">
-					<button style="border-radius: 50px;"><%=e('e13124')%></button>
-				</a>
-			</div>
+			<% } else { %> 
+				<% if(state) {%>
+				<div class="ended">
+					<a href="index?r=recommended">
+						<button style="border-radius: 50px;"><%=e('e13124')%></button>
+					</a>
+				</div>
+				<% } %>
+
+			<% } %>
 
 		<% } %>
 
-
-		<% if(typeof filters != 'undefined' && filters) {%>
 
 			<div class="zero">
 				
@@ -43,9 +46,8 @@
 					
 			</div>
 
-		<% } %>
 
-		<% if(author) {%>
+		<% if(author && state) {%>
 
 			<div class="zero">
 				
@@ -64,15 +66,8 @@
 					%>
 
 					<a href="<%-h%>?newshare=1">
-
-
 						<div class="tou">
-
-
-
 							<i class="fas fa-share"></i> <%=e('zeroy')%> 
-
-						
 						</div>
 					</a>
 				<% } %>		
@@ -110,13 +105,14 @@
 
 					
 
-				<% } else { %> 
-
+				<% } else { %> 	
+					<% if(state) {%>
 					<div class="zerocaption">
                         <span>
 							<%=e('e13128')%>
                         </span>
                     </div>
+					<% } %>
                     <div class="subc">
                         <a href="filluserfast">
                             <button><%=e('registration')%></button>

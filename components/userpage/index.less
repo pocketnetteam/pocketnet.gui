@@ -239,7 +239,7 @@
 				&.openReport{
 					&.active{
 
-						color : @color-contrast;
+						color : @color-raspberry;
 						font-weight: 700!important;
 					}
 				}
@@ -436,10 +436,11 @@
 	
 				.reportCaption{
 
+					&[rid="followers"],
+					&[rid="following"],
 					&[rid="notifications"],
 					&[rid="ustate"],
 					&[rid="wallet"],
-					&[rid="usersettings"],
 					&[rid="accounts"]{
 						opacity : 0.5;
 					}
@@ -448,13 +449,28 @@
 	
 	
 			}
+		}
+	}
+
+	&.unathorized{
+		.maketsWrapper{
+	
+			.contents{
+				.reportCaption{
+
+					&[rid="followers"],
+					&[rid="following"],
+					&[rid="notifications"],
+					&[rid="ustate"],
+					&[rid="wallet"],
+					&[rid="accounts"]{
+						display: none;
+					}
+
+				}
 	
 	
-			
-			.report{
-				
 			}
-	
 		}
 	}
 }
@@ -526,6 +542,10 @@ html.stblack{
 							color : @color-contrast;
 						}
 					}
+
+					&[rid="registration"]{
+						color : @color-orange;
+					}
 				}
 	
 				.group{
@@ -551,10 +571,9 @@ html.stblack{
 	
 			
 			.report{
-				
 	
 				#notifications{
-					background: @color-black3;
+					background: @color-block;
 					
 				}
 			}
@@ -563,8 +582,27 @@ html.stblack{
 	}
 }
 
+#userpage{
+	.maketsWrapper{
+		.contents{
+			.reportCaption {
 
-@media only screen and (max-width: 768px) {
+				&[rid="registration"]{
+					margin-top : @rhythm;
+					color : @color-orange;
+				}
+
+				&[rid="authorization"]{
+					margin-bottom : 4 * @rhythm;
+				}
+			}
+		
+		}
+	}
+}
+
+
+/*t*/ @media only screen and (max-width: 768px){
 
 #userpage{
 
@@ -588,8 +626,7 @@ html.stblack{
 	}
 }
 }
-@media only screen and (max-width: 640px) {
-
+/*t*/ @media only screen and (max-width: 768px){
 #userpage{
 	min-height: 0;
 		
@@ -632,9 +669,18 @@ html.stblack{
 					border-bottom : 1px solid @color-gray-light;
 				}
 
-				&[rid="staking"]{
+				/*&[rid="staking"]{
 					margin-top : @rhythm;
 					color : @color-orange;
+				}*/
+
+				&[rid="registration"]{
+					margin-top : @rhythm;
+					color : @color-orange;
+				}
+
+				&[rid="authorization"]{
+					margin-bottom : 4 * @rhythm;
 				}
 			}
 		
@@ -747,4 +793,15 @@ html.stblack{
 
 
 }
+}
+
+html.tablet{
+	#userpage .maketsWrapper .maket.right{
+		margin-left: 150px;
+	}
+
+	#userpage .maketsWrapper .maket.left{
+		width: 150px;
+		float: left;
+	}
 }

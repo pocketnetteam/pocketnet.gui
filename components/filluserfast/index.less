@@ -9,6 +9,39 @@
 	}
 
 
+
+	.hasaccount{
+		text-align: center;
+		padding-top : 4 * @rhythm;
+		padding-bottom : 4 * @rhythm;
+	
+	}
+
+	.separators {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom : 2 * @rhythm;
+		text-transform: uppercase;
+		>.separator {
+			width: 100%;
+			margin: 0 (4 * @rhythm);
+		}
+	}
+
+	.createNewAccountLabel {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		font-size: 1.5em;
+		font-weight: 100;
+		margin-bottom: 2 * @rhythm;
+		.fa-chevron-down {
+			margin-top: @rhythm;
+		}
+	}
+
 	.upanelloader{
 		display: none;
 		position: absolute;
@@ -127,7 +160,7 @@
 
 		#test{
 			background: #fff;
-			width: 500px;
+			width: 550px;
 			margin : 0 auto;
 
 			.testPanel{
@@ -616,7 +649,7 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 640px) {
+/*t*/ @media only screen and (max-width: 768px){
 	#filluserfast .mWrapper #test {
 		width: 100%;
 	}

@@ -12,12 +12,14 @@
 	    max-width: 1280px;
 	    margin: 0 auto;
 		padding: 0 1em;
-		
 		padding-right: 0;
 	}
 
 	.panelitems{
 		height: 100%;
+		display: flex !important;
+		justify-content: space-between;
+		align-items: center;
 
 		.panelitem{
 			width: 120px;
@@ -25,20 +27,24 @@
 			
 			line-height: 45px;
 			float: left;
-			margin-right : 2 * @rhythm;
+			// margin-right : 2 * @rhythm;
 			color : #6A6A6A;
 
 			&.right{
 				margin-right : 0;
-				margin-left : 2 * @rhythm;
+				// margin-left : 2 * @rhythm;
 				float: right;
 				text-align: right;
+			}
+
+			.vc_textInput.table {
+				line-height: 36px;
 			}
 		} 
 
 		.panelitemCenter{
-			margin-right : 100px;
-			margin-left : 100px;
+			margin-right : 80px;
+			margin-left : 80px;
 			height: 100%;
 
 			.centerTable{
@@ -55,6 +61,7 @@
 					.transition(0.3s);
 					font-weight: 400;
 					text-align: center;
+					font-size: 0.9em;
 
 					/*&:nth-child(1){
 						border-right : 1px solid @color-gray-mlight;
@@ -72,11 +79,43 @@
 						&:hover,
 						&.active{
 							color : @color-black2;
+
+							a{
+								span{
+									background: fade(@color-black2, 70);
+								}
+							}
 						}
 					}
 
 					
+					a{
+						position: relative;
 
+						span{
+							position: absolute;
+							display: block;
+							opacity: 0;
+							width: 18px;
+							height: 18px;
+							border-radius: 50%;
+							line-height: 18px;
+							text-align: center;
+							background: fade(@color-gray-mlight, 60);
+							color : #fff;
+							left : 100%;
+							font-size: 0.7em;
+							top : 0;
+							margin-left : @rhythm / 2;
+							.transition(0.3s);
+
+							&.hasunseen{
+								opacity: 1;
+							}
+						}
+
+					
+					}
 					
 
 				}
@@ -90,7 +129,7 @@
 html.stblack{
 	#toppanel{
 
-		background: #00081b;
+		background: #152230;
 
 	
 		.panelitems{
@@ -125,15 +164,33 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px){
+
+	#toppanel{
+
+		.work{
+			width: 100%;
+			padding-right: 3 * @rhythm;
+		}
+	
+		.panelitems{
+
+			.panelitemCenter{
+				margin-left: 0;
+				margin-right: 0;
+			}
+
+		}
+	}
+}
+
+html.mobile{
 	#toppanel{
 		height: 55px;
 		.work{
 			width: 100%;
 		    padding-left: 0;
 			padding-right:0;
-			
-			
 		}
 
 		.panelitems{
@@ -150,7 +207,7 @@ html.stblack{
 				}
 
 				&.blexpl{
-					padding-left: 2 * @rhythm;
+					padding-left: 3 * @rhythm;
 				}
 			} 
 		}
@@ -218,6 +275,11 @@ html.stblack{
 						
 					}
 				}
+
+				.vc_selectInput{
+					position: fixed;
+					top : 120px;
+				}
 			}
 
 			.vc_selectInput {
@@ -233,7 +295,7 @@ html.stblack{
 		}
 	}	
 
-	html.stblack{
+ 	&.stblack{
 		#toppanel{
 			
 		
@@ -249,5 +311,20 @@ html.stblack{
 	
 			}
 		}	
+	}
+	
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape){
+	#toppanel{
+		
+		.vc_valuecustom{
+
+			.vc_inputWrapper{
+				padding-left: 6 * @rhythm;
+				padding-right: 6 * @rhythm;
+			}
+
+		}
 	}
 }

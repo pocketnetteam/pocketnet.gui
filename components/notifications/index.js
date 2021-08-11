@@ -299,11 +299,11 @@ var notifications = (function(){
 
 				el.c.find('.circularprogressWrapper').html(progress.el);
 
-				var trueshold = 200
+				var trueshold = 90
 
 				var w = $(window)
 
-				var parallax = new SwipeParallax({
+				var parallax = new SwipeParallaxNew({
 
 					el : el.c.find('.ntf'),
 
@@ -344,7 +344,6 @@ var notifications = (function(){
 							clbk : function(){
 
 								self.app.platform.sdk.notifications.getNotifications(function(){
-									parallax.renew()
 								})
 	
 							}

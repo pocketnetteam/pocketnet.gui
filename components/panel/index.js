@@ -85,7 +85,7 @@ var panel = (function(){
 			},
 
 
-			lastcomments : function(comments, clbk){
+			lastcomments : function(clbk){
 
 				self.nav.api.load({
 
@@ -104,8 +104,6 @@ var panel = (function(){
 							if(ed.renderclbk) ed.renderclbk()
 						}
 					},
-
-					
 
 				})
 
@@ -244,8 +242,6 @@ var panel = (function(){
 			},
 
 			discussions : function(clbk){
-
-				console.log('discussiondummydiscussiondummydiscussiondummydiscussiondummy')
 
 				self.shell({
 					name :  'discussiondummy',

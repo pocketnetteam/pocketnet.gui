@@ -2,14 +2,17 @@
 	
 	var meta = app.platform.parseUrl(url);
 
+
 	if(typeof share == 'undefined') share = {};
 
 	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
-
 		if(!app.platform.sdk.usersettings.meta.embedvideo || 
 			app.platform.sdk.usersettings.meta.embedvideo.value) {
+
+			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
+			var aspectRatio = (info.data || {}).aspectRatio || 0;
 	%>
-		<div class="videoWrapper" pid="<%- makeid() %>">
+		<div class="videoWrapper <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
 			<% if(meta.type == 'youtube' && window.cordova) {%>
 
@@ -27,25 +30,53 @@
 				
 				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					
-					<% if(typeof preview != 'undefined' && preview) {
-						
-						var info = app.platform.sdk.videos.storage[url]
-						
-						%>
+					<% if(typeof preview != 'undefined' && preview) {  %>
 
 						<div class="jsPlayerPreview">
-							<div class="wpl opensviurl" image="<%-info.data.image || ''%>">
-							</div>
-							<% if(info.data.duration) {%>
-								<div class="durationWrapper">
-									<span><%-secInTime(info.data.duration)%></span>
+							<% if(info.data) {%>
+								<div class="wpl opensviurl" image="<%-info.data.image || ''%>">
 								</div>
-							<% } %>
+								<% if(info.data.duration) {%>
+									<div class="durationWrapper">
+										<span><%-secInTime(info.data.duration)%></span>
+									</div>
+								<% } %>
 
-							<% if(info.data.views) {%>
-								<div class="viewsWrapper">
-									<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
+								<% if(info.data.isLive) {%>
+									<div class="durationWrapper live">
+										<i class="fas fa-rss"></i> <span>Live</span>
+									</div>
+								<% } %>
+
+								<div class="statswrapper">
+									<% if(info.data.views) {%>
+										<div class="viewsWrapper">
+											<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
+										</div>
+									<% } %>
+
+		
+									<% if(share) {
+										
+										var value = Number(share.score)
+
+										if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
+											value = value / Number(share.scnt)
+										}
+										else {
+											value = 0
+										}
+										
+										%>
+										<div class="starsRatingWrapper">
+											<i class="far fa-star"></i> <span><%-Number(value).toFixed(1)%></span>
+										</div>
+										<div class="commentsCountWrapper">
+											<i class="far fa-comment"></i> <span><%-compressedNumber(share.comments || 0)%></span>
+										</div>
+									<% } %>
 								</div>
+
 							<% } %>
 						</div>
 
@@ -61,13 +92,14 @@
 						</div>
 						
 					<% } %>
-					
-					
+
+				
 				</div>
 
-				<% if(typeof views != 'undefined' && views) {%>
+				<!--<% if(typeof views != 'undefined' && views) {%>
 					<div class="videoviews"><span class="label">Views:</span> <span class="number"><%-views%></span></div>
-				<% } %>
+				<% } %>-->
+
 				<% if(typeof video == 'undefined' || !video) { %> 
 					<div class="videoTips">
 						<div class="videoTip">
@@ -75,8 +107,40 @@
 						</div>
 					</div>
 				<% } %>
+
+				<% if(typeof remove != 'undefined' && share && share.itisvideo()) {
+					
+					
+					%>
+
+					<div class="peertubepanel">
+
+						<% if(info.data) {%>
+
+							<% if (info.data.isLive) { %>
+								<div class="item streaminfo">
+									<i class="fas fa-broadcast-tower"></i> <span><%- e('streamInfo') %></span>
+								</div>
+							<% 	} %>
+
+							
+							<div class="item uploadpeertubewp">
+								<i class="fas fa-camera"></i> <span><%- e('editWallpaper') %></span>
+							</div>
+							
+						<% } %>
+
+						<div class="item removepeertube">
+							<i class="far fa-times-circle"></i> <span><%- e('removeVideo') %></span>
+						</div>
+
+					</div>
+
+				<% } %>
 	
 			<% } %>
+
+
 			
 		</div>
 
@@ -126,7 +190,7 @@
 		
 	<% } %> 
 
-	<% if(typeof remove != 'undefined' || (!og || _.isEmpty(og))) {%>
+	<% if((typeof remove != 'undefined' || (!og || _.isEmpty(og))) && !share.itisvideo()) {%>
 
 	<div class="urlcnt">
 		<div class="urlcnttable table">

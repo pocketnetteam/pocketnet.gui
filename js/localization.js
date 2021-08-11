@@ -10,6 +10,7 @@ Localization = function(app){
 		self.key = (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 	}
 
+	self.loading = {}
 
 	//self.key = 'en'
 
@@ -42,6 +43,11 @@ Localization = function(app){
 		ru : {
 			name : "Русский",
 			key : 'ru'
+		},
+
+		cmn : {
+			name : "官話",
+			key : 'cmn'
 		}
 
 	}
@@ -50,7 +56,6 @@ Localization = function(app){
 
 	}
 
-	var ____loclib = {};
 
 	self.current = function(){
 		return self.available[self.key] || {}
@@ -119,6 +124,8 @@ Localization = function(app){
 						current : true
 					})
 					app.platform.clearlocal()
+
+					app.platform.matrixchat.changeLocalization()
 				}
 
 				else
@@ -143,39 +150,58 @@ Localization = function(app){
 
 	self.init = function(clbk){
 
-		if(typeof loclib == 'undefined' || !loclib)
-			loclib = {};
+		if(typeof loclib == 'undefined' || !loclib) loclib = {};
 
 		var prms = parameters();
-
 
 		self.key = prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 		
 		self.locSave();
 
-		self.import(function(){
-			self.import(clbk);
-		}, 'en')
-		
+		lazyActions([
+			self.import,
+			function(c){
+				self.import(c, 'en')
+			}
+		], clbk)
+
 
 	}
 
 	self.import = function(clbk, _key){
 
-		if(self.loaded[_key || self.key])
+		var __k = _key || self.key
+
+		if(self.loaded[__k])
 		{
 			if (clbk)
 				clbk();
 		}
 		else
 		{
-			var src = 'localization/' + (_key || self.key) + '.js?v=1'
+
+			if(self.loading[__k]){
+				retry(function(){
+					return !self.loading[__k]
+				}, function(){
+					
+					self.import(clbk, __k)
+					
+				})
+
+				return
+			}
+
+			var src = 'localization/' + (__k) + '.js?v=7'
+
+			self.loading[__k] = true
 
 			importScript(src, function(){
 
-				self.loaded[_key || self.key] == true;
+				self.loaded[__k] = true;
+				self.loading[__k] = false;
 
-				____loclib = loclib[_key || self.key] || {};
+				loclib[__k] || {};
 
 				if (clbk)
 					clbk();
@@ -185,7 +211,7 @@ Localization = function(app){
 	}
 
 	self.e = function(id, args){
-		var v = ____loclib[id] || deep(loclib, self.key + '.' + id) || deep(loclib, 'en.' + id) || "";
+		var v = deep(loclib, self.key + '.' + id) || deep(loclib, 'en.' + id) || "";
 
 		if(typeof v == 'function') v = v(args);
 

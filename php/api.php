@@ -4,9 +4,12 @@ class API {
 
     protected $api = 'https://pocketnet.app:8899/';
 
-	public function __construct ()
+	public function __construct ($proxypath)
 	{
-		
+        if (isset($proxypath)){
+            $this->api = $proxypath;
+        }
+            
 	}
 	public function __destruct ()
 	{
@@ -71,10 +74,18 @@ class API {
     }
 
     public function peertubeinfo($host, $id){
-        $action = 'peertube/video';
-        $params = array('host' => 'https://' . $host, 'id' => $id);
 
-        return $this->send($action, $params);
+
+        $action = 'peertube/video';
+        $params = array('url' => 'peertube://' . $host . '/' . $id);
+
+        $data = $this->send($action, $params);
+
+        if(isset($data->data)){
+            return $data->data;
+        }
+
+        return array();
     }
 	
 }

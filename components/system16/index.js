@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, info = null, stats = [], system = null, bots = [];
+		var el, api = null, proxy = null, info = null, stats = [], system = null, bots = [], peertubePerformance = {};
 
 		var graphs = {}
 
@@ -31,6 +31,10 @@ var system16 = (function(){
 				},
 				wallets : {
 					type : 'distribution'
+				},
+
+				peertube : {
+					type : 'allcount'
 				},
 			}
 		}
@@ -90,6 +94,7 @@ var system16 = (function(){
 						return false
 	        		}
 	        	})
+
 			},
 			'certificate' : function(){
 				var v = changes.server.ssl || {};
@@ -250,7 +255,7 @@ var system16 = (function(){
 			},
 			updateNode : function(){
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'node.update',
 					data : {
 						all : 'all'
@@ -278,7 +283,7 @@ var system16 = (function(){
 			},
 			installNode : function(){
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'node.install',
 					data : {}
 				}).then(r => {
@@ -304,7 +309,7 @@ var system16 = (function(){
 			},
 			removeNode : function(all){
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'node.delete',
 					data : {
 						all : all
@@ -345,7 +350,7 @@ var system16 = (function(){
 			removeBot : function(address){
 				topPreloader(30);
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'bots.remove',
 					data : {
 						address : address
@@ -373,7 +378,7 @@ var system16 = (function(){
 			removeAdmin : function(address){
 				topPreloader(30);
 
-				proxy.fetch('manage', {
+				proxy.fetchauth('manage', {
 					action : 'set.admins.remove',
 					data : {
 						address : address
@@ -457,6 +462,7 @@ var system16 = (function(){
 					if (el.c){
 						renders.nodecontentstate(el.c)
 						renders.nodescontenttable(el.c)
+						renders.peertubeinstancestable(el.c)
 						renders.webadminscontent(el.c)
 						renders.webdistributionwallets(el.c)
 						renders.webserverstatus(el.c)
@@ -763,13 +769,16 @@ var system16 = (function(){
 					var scenarios = [{
 						name : "Pageload",
 						key : 'pageload'
+					}, {
+						name : "Limits",
+						key : 'limits'
 					}]
 
 					var items = _.map(scenarios, function(scenario){
 						return {
-							text : "Pageload",
+							text : scenario.name,
 							action : function(clbk){
-								proxy.fetch('nodes/test', {
+								proxy.fetchauth('nodes/test', {
 									scenario : scenario.key,
 									node : node.key
 								}).catch(e => {
@@ -919,6 +928,52 @@ var system16 = (function(){
 						}
 					]
 				}
+			},
+
+			peertube : {
+				responsetime : {
+					caption : "Instance Median Response Time",
+
+					series : [
+						{
+							name : "Median Response Time",
+							path : "stats.averageTime",
+							id : 'sa'
+						}
+					]
+				},
+				
+				allcount : {
+					caption : "Count of requestes",
+
+					series : [
+						{
+							name : "Count of requestes",
+							path : "stats.count",
+							type : 'spline',
+							id : 'sc'
+						},
+						{
+							name : "Success Count",
+							path : "stats.success",
+							type: 'areaspline',
+							id : 'ss'
+						}
+					]
+				},
+
+				total : {
+					caption : "Total count of videos",
+
+					series : [
+						{
+							name : "Videos count",
+							path : "stats.total",
+							type : 'spline',
+							id : 'sc'
+						}
+					]
+				},
 			},
 
 			server : {
@@ -1130,6 +1185,51 @@ var system16 = (function(){
 						
 					})
 				}
+				
+
+				return {
+					meta : lmeta,
+					series : series
+				}
+			},
+
+			peertube : function(data){
+
+				var subtype = settings.charts.peertube.type
+
+				var meta = cpsub.peertube[subtype]
+
+				var lmeta = {
+					type : 'spline',
+					xtype : 'datetime',
+					caption : meta.caption
+				}
+
+
+				var series = {}
+				var i = 0
+
+				if (info.peertube){
+					_.each(info.peertube, function(instance, key){
+
+						_.each(meta.series, function(smeta){
+							series[smeta.id + key] = {
+	
+								name : smeta.name + ": " + key,
+								path : "peertube.'" + key + "'." + smeta.path,
+								color : colors[ i % colors.length ],
+								type : smeta.type
+		
+							}
+		
+							i++
+						})
+	
+						
+					})
+				}
+
+				console.log('series', series)
 				
 
 				return {
@@ -1772,7 +1872,7 @@ var system16 = (function(){
 
 	        			topPreloader(30);
 
-						proxy.fetch('manage', {
+						proxy.fetchauth('manage', {
 							action : 'bots.addlist',
 							data : {
 								addresses : addresses
@@ -1839,7 +1939,7 @@ var system16 = (function(){
 
 	        			topPreloader(30);
 
-						proxy.fetch('manage', {
+						proxy.fetchauth('manage', {
 							action : 'bots.add',
 							data : {
 								address : address
@@ -1905,7 +2005,7 @@ var system16 = (function(){
 
 	        			topPreloader(30);
 
-						proxy.fetch('manage', {
+						proxy.fetchauth('manage', {
 							action : 'set.admins.add',
 							data : {
 								address : address
@@ -2021,6 +2121,7 @@ var system16 = (function(){
 	
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
+						renders.peertubecontent(el.c)
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
 	
@@ -2225,7 +2326,7 @@ var system16 = (function(){
 								btn2text : self.app.localization.e('dno'),
 								success : function(){	
 
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 										
 										action : 'set.server.defaultssl',
 										data : {}
@@ -2260,7 +2361,7 @@ var system16 = (function(){
 
 								globalpreloader(true)
 
-								proxy.fetch('manage', {
+								proxy.fetchauth('manage', {
 									action : 'set.server.settings',
 									data : {
 										settings : changes.server
@@ -2303,10 +2404,39 @@ var system16 = (function(){
 
 						})
 
+						p.el.find('.clearfirebase').on('click', function(){
+							
+							dialog({
+								class : 'zindex',
+								html : "Do you really want to clear all firebase settings?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+
+									proxy.fetchauth('manage', {
+										action : 'set.server.firebase.clear',
+										data : {
+										}
+									}).then(r => {
+			
+										make(proxy || api.get.current());
+			
+									}).catch(e => {
+			
+										sitemessage(self.app.localization.e('e13293'))
+			
+									})
+
+								}
+							})
+							
+							
+						})
+
 						p.el.find('[remove]').on('click', function(){
 							var s = $(this).attr('remove')
 
-							if(s) delete changes.server[s]
+							if (s) delete changes.server[s]
 
 							renders.webserveradmin(elc)
 						})
@@ -2455,8 +2585,11 @@ var system16 = (function(){
 					p.el.find('.coins').on('click', function(){
 						var key = $(this).closest('.wallet').attr('key')
 
+
+						console.log("key", key, info.wallet)
+
 						if (key){
-							var address = deep(info.wallet, key + '.address')
+							var address = deep(info.wallet, 'addresses.' + key + '.address')
 
 							if (address){
 
@@ -2518,7 +2651,7 @@ var system16 = (function(){
 			
 									topPreloader(30);
 			
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 										action : 'set.wallet.setkey',
 										data : {
 											key : key,
@@ -2545,6 +2678,31 @@ var system16 = (function(){
 						}
 					})
 
+					p.el.find('.apply').on('click', function(){
+						var key = $(this).closest('.wallet').attr('key')
+
+						globalpreloader(true)
+
+						proxy.fetchauth('manage', {
+							action : 'set.wallet.apply',
+							data : {
+								key : key
+							}
+						}).then(r => {
+
+							actions.refresh()
+
+							globalpreloader(false)
+			
+						}).catch(e => {
+
+							sitemessage(self.app.localization.e('e13293'))
+
+							globalpreloader(false)
+
+						})
+					})
+
 					p.el.find('.remove').on('click', function(){
 						var key = $(this).closest('.wallet').attr('key')
 
@@ -2558,7 +2716,7 @@ var system16 = (function(){
 								success : function(){	
 									topPreloader(30);
 			
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 										action : 'set.wallet.removeKey',
 										data : {
 											key : key
@@ -2610,6 +2768,94 @@ var system16 = (function(){
 				})
 				
 			},
+
+
+			peertubecontent : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'peertubecontent',
+					data : {
+						info : info,
+						proxy : proxy,
+						admin : actions.admin(),
+						
+					},
+
+					el : elc.find('.peertubeWrapper')
+
+				},
+				function(){
+
+
+					renders.peertubeinstancestable(elc)
+
+					if (clbk)
+						clbk()
+				})
+			},
+			peertubeinstancestable : function(elc, clbk){
+								
+				self.shell({
+					inner : html,
+					name : 'peertubeinstancestable',
+					data : {
+						info : info,
+						proxy : proxy,
+						admin : actions.admin(),
+						fixedinstance : null,
+						currentinstance : null,
+						peertubePerformance,
+					},
+
+					el : elc.find('.peertubeWrapper .instances')
+
+				},
+				function(p){
+
+					p.el.find('.instanceWrapper').each(function() {
+						const currentEl = $(this);
+						const performanceMetricsContainer = currentEl.find('.instancePerformance')
+						const baseInfoContainer = currentEl.find('.work')
+
+						baseInfoContainer.on('click', () => {
+							if (performanceMetricsContainer.hasClass('hidden')) {
+								performanceMetricsContainer.removeClass('hidden');
+								currentEl.find('.performancesWrapper').isotope({
+									layoutMode: 'packery',
+									itemSelector: '.performanceSection',
+									packery: {
+										gutter: 10
+									},
+									// initLayout: false
+								})
+
+							} else {
+								performanceMetricsContainer.addClass('hidden');
+							}
+						}
+					    );
+					});
+
+					el.c.find('.tooltip').tooltipster({
+						theme: 'tooltipster-light',
+						maxWidth : 600,
+						zIndex : 20,
+					}); 
+
+
+					if (clbk)
+						clbk()
+				})
+			},
+
+
 			nodescontent : function(elc, clbk){
 
 				if(!info){
@@ -2681,6 +2927,10 @@ var system16 = (function(){
 					p.el.find('.use').on('click', function(){
 						var key = $(this).closest('.node').attr('node')
 						var node = find($(this).closest('.node').attr('node'))
+
+						var pkey = $(this).closest('.nodeWrapper').attr('key')
+
+						if(pkey == 'tmp') return
 
 						if(!node) return
 
@@ -2766,6 +3016,7 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
 			nodecontent : function(elc, clbk){
 
 				if(actions.admin()){
@@ -2867,6 +3118,9 @@ var system16 = (function(){
 							p.el.find('.nodecontentmanage').addClass('lock')
 						}
 
+						console.log('info.nodeControl.state', info.nodeControl.state, info.nodeControl)
+
+						
 						makers.stacking()
 
 						actions.settings(p.el)
@@ -2917,7 +3171,7 @@ var system16 = (function(){
 			
 									topPreloader(30);
 			
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 
 										action : 'set.node.stacking.import',
 										data : {
@@ -3021,7 +3275,7 @@ var system16 = (function(){
 
 									globalpreloader(true)
 
-									proxy.fetch('manage', {
+									proxy.fetchauth('manage', {
 
 										action : 'set.node.defaultPaths',
 										data : {}
@@ -3049,7 +3303,7 @@ var system16 = (function(){
 
 							globalpreloader(true)
 
-							proxy.fetch('manage', {
+							proxy.fetchauth('manage', {
 
 								action : 'set.node.check',
 								data : {}
@@ -3131,15 +3385,18 @@ var system16 = (function(){
 
 		var initEvents = function(){
 			
+			el.c.on('click', '.collapsepart .subcaption', function(){
+				$(this).closest('.collapsepart').toggleClass('expanded')
+			})
 
 		}
 
 		var makers = {
 
 			stacking : function(update){
-				if(actions.admin() && (!stacking || update)){
+				if (actions.admin() && (!stacking || update) && deep(info, 'nodeControl.enabled')){
 
-					proxy.fetch('manage', {
+					proxy.fetchauth('manage', {
 
 						action : 'set.node.stacking.addresses',
 						data : {}
@@ -3171,6 +3428,7 @@ var system16 = (function(){
 				renders.nodecontentmanage(el.c)
 				renders.nodecontentstate(el.c)
 				renders.nodescontenttable(el.c)
+				renders.peertubeinstancestable(el.c)
 				renders.webadminscontent(el.c)
 				renders.webdistributionwallets(el.c)
 				renders.webserveradmin(el.c)
@@ -3182,7 +3440,7 @@ var system16 = (function(){
 					chart.make('server', stats, null, update)
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
-
+					chart.make('peertube', stats, null, update)
 					
 				}
 
@@ -3235,6 +3493,10 @@ var system16 = (function(){
 
 			graphs = {}
 
+			var expanded = el.c.find('.collapsepart').map(function(){
+				return $(this).hasClass('expanded')
+			})
+
 			if (proxy){
 
 				proxy.clbks.changed.components = () => {
@@ -3279,22 +3541,29 @@ var system16 = (function(){
 						renders.webserveradmin(el.c)
 					},500)	
 
-					if (actions.admin()){
-
-						return proxy.system.request('get.settings').then(r => {
-							system = r
-
-							renders.allsettings()
-
-							return Promise.resolve()
-						}).then(r => {
-							return proxy.system.request('bots.get')
-
-						}).then(r => {
-							bots = r.bots || []
-							renders.bots(el.c)
+					if (actions.admin()) {
+					  return proxy
+						.fetchauth('peertube/stats')
+						.then((data) => (peertubePerformance = { ...data }))
+						.then(() => proxy.system.request('get.settings'))
+						.then((r) => {
+						  system = r;
+		  
+						  renders.allsettings();
+		  
+						  return Promise.resolve();
 						})
-
+						.then((r) => {
+						  return proxy.system.request('bots.get');
+						})
+						.then((r) => {
+						  bots = r.bots || [];
+						  renders.bots(el.c);
+		  
+						  el.c.find('.collapsepart').each(function (i) {
+							if (expanded[i]) $(this).addClass('expanded');
+						  });
+						});
 					}
 					
 						

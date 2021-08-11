@@ -1,4 +1,14 @@
-<div id="<%-module.map.id%>">
+
+<% if(app.curation() && !state) { %> 
+<% } else { %> 
+
+<div id="<%-module.map.id%>" class="<% if(!state) {%> transparent <% } %>">
 	<div class="nmenu">
 	</div>
+
+	<div class="fakem">
+		<i class="fas fa-chevron-up"></i>
+	</div>
 </div>
+
+<% } %>

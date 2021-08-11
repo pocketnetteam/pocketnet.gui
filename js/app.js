@@ -1,14 +1,15 @@
-
+/*
 if(typeof require != 'undefined' && typeof __map == 'undefined')
 {
 	var __map = require("./_map.js");
-}
+}*/
+
+if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if(typeof _Electron != 'undefined' && _Electron){
 
 	imagesLoaded = require('imagesloaded');
 
-	jdenticon = require('jdenticon')
 	emojione = require('emojione')
 
 	var Isotope = require('isotope-layout'); require('isotope-packery')
@@ -34,7 +35,6 @@ if(typeof _Electron != 'undefined' && _Electron){
 	emojionearea = require('./js/vendor/emojionearea.js')
 	filterXss = require('./js/vendor/xss.min.js')
 
-	//fuck
 	const contextMenu = require('electron-context-menu');
 
 	contextMenu({
@@ -62,11 +62,22 @@ Application = function(p)
 	var self = this;
 	var realtimeInterval = null;
 
+	var url = 'pocketnet.app'
+
+	if (window.testpocketnet){
+		url = 'test.pocketnet.app'
+
+		self.test = true
+	}
+
 	self.options = {
 		
+		url : url,
+
+		matrix : p.matrix,
 
 		nav : {
-			navPrefix : '/pocketnet/',
+			navPrefix : window.pocketnetpublicpath || '/pocketnet',
 		},
 
 		name : 'PCRB',
@@ -76,26 +87,26 @@ Application = function(p)
 		//////////////
 
 		//apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
-		apimproxy : p.apimproxy || 'https://pocketnet.app:8888',
+		//apimproxy : p.apimproxy || 'https://pocketnet.app:8888',
 		
-		server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations
+		server : p.server || 'https://'+url+'/Shop/AJAXMain.aspx', //donations will be removed
 
 		//////////////
 		
-		firebase : p.firebase || 'https://pocketnet.app:8888',
+		firebase : p.firebase || 'https://'+url+':8888', /// will be removed
 
 		//////////////
 
 		imageServer : p.imageServer || 'https://api.imgur.com/3/',
 		imageStorage : 'https://api.imgur.com/3/images/',
 
-		imageServerup1 : p.imageServerup1 || 'https://pocketnet.app:8092/up',
+		imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
 
 		////////////// Will remove with Matrix
 		//ws : p.ws || "wss://pocketnet.app:8088",
-		rtc : p.rtc || 'https://pocketnet.app:9001/',
-		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
-		rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
+		rtc : p.rtc || 'https://'+url+':9001/',
+		rtcws : p.rtcws || 'wss://'+url+':9090',
+		rtchttp : p.rtchttp || 'https://'+url+':9091',
 		
 		listofnodes : p.listofnodes || null,
 		listofproxies : p.listofproxies || null,
@@ -287,7 +298,6 @@ Application = function(p)
 
 				self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
 
-
 					if (self.platform.focus){
 						self.errors.check()
 					}
@@ -403,23 +413,20 @@ Application = function(p)
 		}
 	}
 
-	self.el = {
-		content : 		$('#content'),
-		app : 			$('#application'),
-		header : 		$('#headerWrapper'),
-		menu : 			$('#menuWrapper'),
-		toppanel : 		$('#panelWrapper'),
-		navigation : 	$('#navigationWrapper'),
-		footer : 		$('#footerWrapper'),
-		chats : 		$('.chats')
-	};
+	self.el = {}
+
+	
+
+	
 
 	self.id = makeid();
 	self.map = __map;
 	self.modules = {};
 
+	
+
 	self.curation = function(){
-		if(typeof isios != 'undefined' && isios()) return true
+		if(typeof isios != 'undefined' && isios() && window.cordova) return true
 		return false
 	}
 
@@ -443,7 +450,7 @@ Application = function(p)
 		},
 		userpage : {
 			href : 'userpage',
-			childrens : ['userpage', 'share', 'author', 'post']
+			childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration']
 		}
 
 	}
@@ -465,10 +472,22 @@ Application = function(p)
 	if (typeof window != 'undefined')
 		self.options.address = window.location.protocol + "//" + window.location.host; 
 
+
+	self.preapi = function(){
+
+		if(self.preapied) return
+			
+		self.api = new Api(self)
+		self.api.initIf()
+
+		self.localization = new Localization(self);
+		self.localization.init()
+
+		self.preapied = true
+		
+	}
 	
 	var newObjects = function(p){
-
-		
 		
 		self.settings = new settingsLocalstorage(self);
 		self.nav = new Nav(self);	
@@ -477,27 +496,21 @@ Application = function(p)
 		self.user = new User(self);	
 		self.ajax.set.user(self.user);
 
-		self.api = new Api(self)
-
-		
-
 		self.platform = new Platform(self, self.options.listofnodes);
-
-		if (typeof PeerTubeHandler != 'undefined')
-			self.peertubeHandler = new PeerTubeHandler(app);
 
 		self.options.platform = self.platform
 
-		self.platform.sdk.users.addressByName(self.ref, function(r){
-			if(r){
-				self.ref = r;
-				localStorage['ref'] = self.ref
-			}
+		if (self.ref)
+			self.platform.sdk.users.addressByName(self.ref, function(r){
+				if(r){
+					self.ref = r;
+					localStorage['ref'] = self.ref
+				}
 
-		})
+			})
 
 		self.nav.dynamic = function(p, clbk){
-
+			
 
 			self.platform.sdk.users.addressByName((p.href), function(r){
 
@@ -588,6 +601,23 @@ Application = function(p)
 		})
 	}
 
+	self.showuikeysfirstloading = function(){
+
+		self.user.isState(function(state){
+
+			if(state && self.platform.sdk.address.pnet()){
+
+				self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
+
+
+				if (self.platform.sdk.registrations.showprivate()){
+					self.platform.ui.showmykey()
+				}
+			}
+
+		})
+	}
+
 	self.init = function(p){
 
 		if (navigator.webdriver) return
@@ -602,49 +632,38 @@ Application = function(p)
 
 		prepareMap();
 
-		self.localization = new Localization(self);
+		self.options.fingerPrint = hexEncode('fakefingerprint');
 
 		self.localization.init(function(){
-
 			newObjects(p);
 
-			self.realtime();
 
-			self.options.fingerPrint = hexEncode('fakefingerprint');
+			lazyActions([
+				self.platform.prepare
+			], function(){
 
-			self.user.isState(function(state){
+				self.realtime();
 
-				self.platform.prepare(function(){
-
+				if (typeof hideSplashScreen != 'undefined'){
+					hideSplashScreen();
+				}	
+				else{
+					$('#splashScreen').remove()
+				}
 				
-					if(state && self.platform.sdk.address.pnet()){
+				self.nav.init(p.nav);
 
-						var addr = self.platform.sdk.address.pnet().address
-						self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
+				if (p.clbk) 
+					p.clbk();
 
-						var regs = self.platform.sdk.registrations.storage[addr];
+				if(!_OpenApi)
+					self.showuikeysfirstloading()
 
-						if (regs && regs >= 5){
-							
-							self.platform.ui.showmykey()
-							
-						}
-					}
-
-					
-					self.nav.init(p.nav);
-
-					if (p.clbk) 
-						p.clbk();
-
-				}, state)
-				
 			})
-	
 		})
 
 		
-		
+
 	}
 
 
@@ -658,6 +677,7 @@ Application = function(p)
 			p.nav.reload = true;
 
 		if(p.href) p.nav.href = p.href;
+		if(p.history) p.nav.history = p.history;
 		if(p.current) p.nav.href = self.nav.get.href()
 
 		if (typeof _Electron != 'undefined' && _Electron) {
@@ -727,15 +747,59 @@ Application = function(p)
 
 	self.deviceReadyInit = function(p){
 
+		
+
+		self.el = {
+			content : 		$('#content'),
+			app : 			$('#application'),
+			header : 		$('#headerWrapper'),
+			menu : 			$('#menuWrapper'),
+			toppanel : 		$('#panelWrapper'),
+			navigation : 	$('#navigationWrapper'),
+			footer : 		$('#footerWrapper'),
+			chats : 		$('.chats'),
+			html : 			$('html'),
+			window : 		$(window)
+		};
+	
+		if (self.test){
+			$('html').addClass('testpocketnet')
+		}
+
+		/*if(isMobile()){
+			self.el.app.swipe({
+				longTap : function(e, phase, direction, distance){
+					$('html').toggleClass('scrollmodedown')
+					e.preventDefault()
+				},
+			})
+		}*/
+		
+		
+
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
+
 				window.screen.orientation.lock('portrait')
+
+				/*if(isTablet()){
+					window.screen.orientation.lock('landscape')
+				}
+				else{
+					window.screen.orientation.lock('portrait')
+				}*/
+
+				
 
 				p || (p = {});
 
 				p.clbk = function(){
 					navigator.splashscreen.hide();
+				}
+
+				if (window.Keyboard && window.Keyboard.disableScroll){
+					window.Keyboard.disableScroll(false)
 				}
 
 				self.init(p)
@@ -789,8 +853,9 @@ Application = function(p)
 	self.scrollRemoved = false;
 	var winScrollTop = 0;
 	self.actions = {
-		up : _scrollTop,
-
+		up : function(scrollTop, el, time){
+			_scrollTop(scrollTop, el, time)
+		},
 		wscroll : function(){
 
 			$(window).scrollTop(winScrollTop);
@@ -806,6 +871,10 @@ Application = function(p)
 
 			self.scrollRemoved = true
 
+			$('html').addClass('nooverflow')
+
+			/*
+
 			if(!js){
 
 				$('html').addClass('nooverflow')
@@ -815,7 +884,7 @@ Application = function(p)
 				winScrollTop = $(window).scrollTop();
 
 				$(window).bind('scroll', self.actions.wscroll);
-			}
+			}*/
 
 			return true
 			
@@ -824,7 +893,7 @@ Application = function(p)
 		onScroll : function(){
 
 			$('html').removeClass('nooverflow')
-			$(window).unbind('scroll', self.actions.wscroll);
+			//$(window).unbind('scroll', self.actions.wscroll);
 
 
 			self.scrollRemoved = false;
@@ -872,6 +941,10 @@ Application = function(p)
 			}
 		})
 
+	}
+
+	self.scrolling = {
+		clbks : {}
 	}
 
 	self.name = self.options.name;
@@ -928,9 +1001,190 @@ Application = function(p)
 
 	}
 
-	self.ref = localStorage['ref'] || parameters().ref;
+	self.storage = {
 
-	self.options.device = /*localStorage['device'] ||*/ makeid();
+		getStorageLocation: function() {
+			if (!device || !device.platform || !cordova || !cordova.file)
+				return undefined;
+			var storageLocation = "";
+			switch (device.platform) {
+				case "Android":
+					storageLocation = 'file:///storage/emulated/0/';
+					break;
+				case "iOS":
+					storageLocation = cordova.file.cacheDirectory;
+					break;
+			}
+			return storageLocation;
+		},
+	
+		getStorageDirectory: function() {
+			return "Pocketnet";
+		},
+	
+		saveFile: function(url, blob) {
+
+			if(!window.resolveLocalFileSystemURL){
+				return Promise.resolve()
+			}
+
+			return new Promise((resolve, reject) => {
+				var storageLocation = self.storage.getStorageLocation();
+				// var blob = new Blob([file], { type: "image/png" });
+				var name = $.md5(url);
+
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+					function (directory) {
+						directory.getFile(name, { create: true, exclusive: false }, function (entry) {
+							var myFileUrl = entry.toURL();
+							entry.createWriter(function (writer) {
+								writer.onwriteend = function () {
+									return resolve(myFileUrl);
+								};
+								writer.seek(0);
+								writer.write(blob);
+							}, function (error) {
+								return reject(error);
+							});
+						}, function (error) {
+							return reject(error);
+						});
+					}, function (error) {
+						return reject(error);
+					});
+				}, function (evt) {
+					return reject(evt);
+				});
+			});
+		},
+	
+		loadFile: function(url) {
+			
+			if(!window.resolveLocalFileSystemURL){
+				return Promise.reject()
+			}
+
+			return new Promise((resolve, reject) => {
+				var storageLocation = self.storage.getStorageLocation();
+				var name = $.md5(url);
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+					function (directory) {
+						directory.getFile(name, { create: false }, function (entry) {
+
+							console.log(entry)
+
+							entry.file(function(file) {
+
+								var reader = new FileReader();
+
+								console.log(file)
+
+								reader.onloadend = function() {
+						
+									var blob = new Blob([new Uint8Array(this.result)], { type: file.type || "file" });
+
+									return resolve(blob);
+								};
+						
+								reader.readAsArrayBuffer(file);
+
+								
+
+							}, function(error) {
+								console.error(error)
+								return reject(error);
+							});
+
+
+						}, function (error) {
+							return reject(error);
+						});
+					}, function (error) {
+						return reject(error);
+					});
+				}, function (evt) {
+					return reject(evt);
+				});
+			});
+		},
+	
+		// Delete the file if it is older than the time passed as parameter
+		deleteFileIfTooOld: function(fileEntry, time) {
+			return new Promise((resolve, reject) => {
+				if (fileEntry.isFile) {
+					fileEntry.file((file) => {
+						// If file is older than the date passed as parameter
+						if (file.lastModifiedDate <= time.getTime()) {
+							// Delete the file
+							fileEntry.remove(function() {
+								return resolve();
+							}, function(error) {
+								return resolve();
+							});
+						} else
+							return resolve();
+					}, function(error) {
+						return resolve();
+					}); 
+				} else
+					return resolve();
+			});
+		},
+	
+		clearStorage: function(time) {
+			return new Promise((resolve, reject) => {
+				if (!time || !time.getTime)
+					return reject('Invalid date object');
+				var nbEntries, nbDone = 0;
+				var incrementAndCheckNbDone = function() {
+					nbDone += 1;
+					if (nbDone >= nbEntries)
+						resolve();
+				}
+				var storageLocation = self.storage.getStorageLocation();
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+					function (directory) {
+						var directoryReader = directory.createReader();
+						directoryReader.readEntries(function(entries) {
+							nbEntries = entries.length;
+							// For each file inside the directory
+							for (var i = 0; i < nbEntries; i++) {
+								self.storage.deleteFileIfTooOld(entries[i], time).then(() => {
+									incrementAndCheckNbDone();
+								});
+							}
+						}, function(error) {
+							return reject(error);
+						});
+					}, function (error) {
+						return reject(error);
+					});
+				});
+			});
+		}
+	
+	}
+
+	self.ref = null;
+	
+	try{
+		self.ref = localStorage['ref'] || parameters().ref;
+	}catch(e){}
+	
+
+	self.options.device = localStorage['device'] || makeid();
 
 	localStorage['device'] = self.options.device
 
@@ -939,12 +1193,11 @@ Application = function(p)
 	return self;
 }
 
+topPreloader(85);
+
 if(typeof module != "undefined")
 {
 	module.exports = Application;
 }
 
 
-
-
-topPreloader(85);

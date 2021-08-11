@@ -10,6 +10,98 @@
 		}
 	}
 
+	.topvideosWrapper{
+		display: none;
+		background: #fff;
+		margin-bottom : 10px;
+
+		&.hasshares{
+			display: block;
+			min-height: 160px;
+		}
+
+		.horizontalLentaWrapper{
+			padding : 2*  @rhythm;
+			padding-bottom: @rhythm;
+			padding-top : 0;
+		}
+
+		.horizontalLentacaption{
+			padding : 2 * @rhythm 0;
+			padding-bottom: @rhythm;
+
+			span{
+				font-weight: 700;
+				font-size: 0.8em;
+			}
+		}
+
+		#lenta.mainvideo .shares .authorgroup .share{
+			padding : 0;
+
+			
+		}
+
+		.durationWrapper,
+		.statswrapper{
+			top : 0;
+			bottom : auto!important;
+		}
+	}
+
+	&.videomain{
+		background: #fcfcfc;
+
+		#categories{
+			color : @color-gray;
+		}
+
+		.addbutton{
+			display: none!important;
+		}
+
+		.columnnavigation{
+			display: none;
+		}
+	}
+
+	.columnnavigation{
+		position: fixed;
+		bottom : 20%;
+		padding : @rhythm;
+		background: @color-white;
+		.shadowSmaller();
+		border : 1px solid fade(@color-gray, 30);
+		color : @color-gray;
+		border-radius: 50px;
+		text-align: center;
+		line-height: 0.7em;
+		min-width: 25px;
+		i{
+			font-size: 0.7em;
+		}
+	}
+
+	.columnnavigationleft{
+		left : 0;
+		border-left: 0;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		padding-left: 0;
+	}
+
+	.columnnavigationright{
+		right : 0;
+		border-right: 0;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		padding-right: 0;
+	}
+
+	
+
+	
+
 	.addbutton{
 		position: fixed;
 		left :  @rhythm;
@@ -78,7 +170,7 @@
 	}
 
 	.lentacellsvi{
-		margin-right : 256px;
+		margin-right : 0;
 		padding-top : 10px;
 		
 	}
@@ -89,6 +181,21 @@
 		}
 		.loadprev{
 			display: none!important;
+			width: 100%;
+			padding-left : 2 * @rhythm;
+
+			button{
+				background: @color-gray-slight;
+				border-color: @color-gray-slight;
+				color : @color-black2;
+				width: 450px;
+
+				&:hover{
+					background: @color-gray-slight;
+					border-color: @color-gray-slight;
+					color : @color-main;
+				}
+			}
 		}
 
 		.lentacell{
@@ -141,11 +248,14 @@
 	.leftpanelcell,
 	.upbuttonwrapper{
 		opacity: 1;
-		.transition(0.3s);
 		-webkit-transition-delay: 0.5s;
 		-o-transition-delay: 0.5s;
 		-moz-transition-delay: 0.5s;
 		transition-delay: 0.5s;
+	}
+
+	.upbuttonwrapper{
+		.transition(0.3s);
 	}
 
 	&.opensvishowed{
@@ -404,7 +514,11 @@
 
 html.stblack{
 	#main{
-		background: #0a1630;
+		background: @color-black5;
+
+		.topvideosWrapper{
+			background: @color-black3;
+		}
 		
 		.addbutton{
 			background: #00a3f7;
@@ -417,7 +531,14 @@ html.stblack{
 			}
 			
 		}
+		
 	
+		&.videomain{
+	
+			#categories{
+				color : @color-gray-light;
+			}
+		}
 		
 		.caption{
 			color : @color-main;
@@ -604,6 +725,16 @@ html.stblack{
 	
 	}
 }
+
+html {
+    &.testpocketnet{
+        #main.testpocketnetbg{
+            background-image: url(../../img/testbg.png);
+            background-position: center center;
+        }
+    }
+}
+
 @media only screen and (max-width: 1440px) {
 	#main{
 		.opensvi{
@@ -630,12 +761,64 @@ html.stblack{
 
 	}
 
+	/*.lentacell{
+		margin-right : 128px;
+		margin-left : 121px;
+	}*/
+
 }
 }
 
-
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px){
 	#main{
+		&:not(.videomain){
+			.mainpanelcell{
+				display: none;
+			}
+	
+			.leftpanelcell{
+				float: right;
+			}
+	
+			.lentacell{
+				margin-left: 0;
+			}
+		}
+		
+	}
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+
+	
+	
+	#main{
+
+		.mainpanelcell{
+			display: block;
+		}
+
+		.leftpanelcell{
+			float: left;
+		}
+
+		.lentacell{
+			margin-right: 0;
+		}
+
+		.leftpanelcell{
+			display: none;
+		}
+
+
+		&.videomain {
+			.lentacell{
+				margin-left: 0;
+			}
+			
+		}
+		
+
 		.addbutton{
 			
 			display : none!important;
@@ -645,33 +828,38 @@ html.stblack{
 			}
 	
 		}
+
+		.topvideosWrapper{
+			margin-bottom : @rhythm;
+	
+			&.hasshares{
+				display: block;
+			}
+	
+			.horizontalLentaWrapper{
+				padding : @rhythm 0;
+				padding-bottom: 0;
+			}
+	
+			.horizontalLentacaption{
+				display: none;
+				padding : 2 * @rhythm;
+	
+				span{
+					font-size: 1em;
+				}
+			}
+		}
 	}
+
 	#main{
-		min-height: 1024px;
+		min-height: 0;
 
 		.bgCaption{
 			display: none;
 		}
+
 		
-		.lentacell{
-			margin-left: 0;
-			margin-right: 0;
-			padding-top : 0;
-		}
-
-		.fxdsmall{
-			width: 100%;
-			position: static;
-			top : 0;
-		}
-
-		.fxd{
-			display: none;
-		}
-
-		.panel{
-			border-radius:3px;
-		}
 
 		.work{
 			&.mwork{
@@ -731,5 +919,223 @@ html.stblack{
 			}
 		}
 
+	}
+
+	
+}
+
+html.mobile,
+html.tablet{
+	#main{
+
+		.bgCaption{
+			display: none;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px){
+
+	html.toppanelshowed{
+		#main{
+	
+			.maincntwrapper{
+	
+				
+				>div{
+					&.work{
+						max-width: none;
+						padding: 0;
+						>div{
+							padding-top : 120px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	html{
+		&.scrollmodedown{
+			#main{
+				.maincntwrapper{
+					top : 0;
+				}
+			}
+		}
+		&.fullvideoshowedanimblock{
+
+			#main{
+				#maincntwrapper{
+					-moz-transition: 0s;
+					-o-transition: 0s;
+					-webkit-transition: 0s;
+					transition: 0s;
+					>div{
+						&.work{
+							-moz-transition: 0s;
+							-o-transition: 0s;
+							-webkit-transition: 0s;
+							transition: 0s;
+						}
+					}
+				}
+			}
+
+		}
+		&.fullvideoshowed{
+			#main{
+				#maincntwrapper{
+					transform:none!important;
+					>div{
+						&.work{
+							transform:none!important;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	#main{
+
+		
+
+		.fxdsmall{
+			width: 100%;
+			position: static;
+			top : 0;
+		}
+
+		.maincntwrapperOvf{
+			overflow: hidden;
+			width: 100%;
+		}
+
+		
+
+		.fxd{
+			padding-top : 0;
+		}
+
+		.panel{
+			border-radius:3px;
+		}
+		
+		.maincntwrapper{
+			width : 300%;
+			transform: translateX(-33.3333333%);
+			.transition(0.3s);
+			background: #011621;
+			position: absolute;
+			left : 0;
+			top : 0;
+			bottom : 0;
+			
+
+			
+			>div{
+				&.work{
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					left : 0;
+					bottom: 0;
+					right : 0;
+					top : 0;
+	
+					.transition(0.3s);
+					
+					>div{
+						padding-top : 65px;
+					}
+				}
+			}
+			
+
+			.lentacell,
+			.mainpanelcell,
+			.leftpanelcell{
+				height: 100%;
+				overflow: auto;
+				padding-bottom: 12 * @rhythm;
+			}
+		}
+
+		.mainpanelcell{
+			display: block!important;
+		}
+
+		.leftpanelcell{
+			float: left!important;
+		}
+
+
+		.lentacell{
+			margin-left: 33.333%!important;
+			margin-right: 33.333%;
+			padding-top : 0;
+			width : 33.333%;
+			min-height: 0;
+			padding-bottom: 0;
+		}
+
+		.leftpanelcell{
+			margin-left: 0;
+			margin-right: 0;
+			width : 33.333%;
+			display: block;
+		}
+
+		.mainpanelcell{
+			margin-left: 0;
+			margin-right: 0;
+			width : 33.333%;
+		}
+
+		&[mobilemode='leftshow']{
+			.maincntwrapper{
+				transform: translateX(0);
+			}
+		}
+
+		&[mobilemode='rightshow']{
+			.maincntwrapper{
+				transform: translateX(-66.66666%);
+			}
+		}
+
+		&.videomain{
+		
+			.columnnavigation{
+				display: none!important;
+			}
+
+			.lentacell{
+				margin-left: 33.333%;
+				margin-right: 33.333%;
+				padding-top : 0;
+				width : 33.333%;
+				padding-bottom: 0;
+			}
+			
+			.leftpanelcell{
+				margin-left: 0;
+				margin-right: 0;
+				width : 33.333%;
+			}
+	
+			.leftpanelsvicell{
+				display: none;
+			}
+
+			.lentacellsvi{
+				padding-top : 0;
+			}
+
+			/*.shares .authorgroup .share{
+				padding : 2 * @rhythm 0 ;
+			}*/
+		}
 	}
 }

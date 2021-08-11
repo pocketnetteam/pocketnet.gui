@@ -10,7 +10,8 @@ var wallet = (function(){
 
 		var el;
 
-		var charts = {};
+		var charts = {},
+			essenseData = {};
 
 		var craddress = 'PFF7PevK753eYTwWBScdEAbWQrgu36AdUA';
 		var first = true;
@@ -69,7 +70,49 @@ var wallet = (function(){
 					possibleValuesLabels : [],
 					possibleValues : [],
 					placeholder : self.app.localization.e('wsenter'),
-					onType : true
+					onType : true,
+
+					labelToInput : function(d){
+						if(_.isObject(d)){
+							return d.name
+						}
+						else{
+							return d
+						}
+					},
+					defaultValueTemplate : function(d, f, g, firstdef){
+						if(_.isObject(d)){
+
+							var h = ''
+
+								h+='<div class="table walletuservalue" firstdef="'+firstdef+'">'
+
+								h+='<div class="iconcell">'
+								h+='<img src="'+d.image+'">'
+								h+='</div>'
+
+								h+='<div class="namecell">'
+								h+=d.name
+								h+='</div>'
+
+								h+='</div>'
+
+							return h
+
+						}
+						else{
+
+							return '<div class="walletdfvalue"><span>' + d + '</span></div>'
+
+							if(!d){
+								return '<div class="walletempvalue"><span>' + self.app.localization.e('wsreciever') + '</span></div>'
+							}
+							else{
+								return '<div class="walletdfvalue"><span>' + d + '</span></div>'
+							}
+							
+						}
+					}
 				}),
 
 				amount : new Parameter({
@@ -91,6 +134,41 @@ var wallet = (function(){
 					
 					format : {
 						Length : 80
+					}
+				}),
+
+				fees : new Parameter({
+					name : self.app.localization.e('wsincludefees'),
+					type : "VALUES",
+					id : 'fees',
+					defaultValue : "include",
+					possibleValuesLabels : [self.app.localization.e('wsrecieverpay'), self.app.localization.e('wssenderpay')],
+					possibleValues : ['include', 'exclude']
+				}),
+			}
+		}
+
+		var htls = {
+			parameters : {
+
+				source : new Parameter({
+					name : self.app.localization.e('source'),
+					type : "VALUES",
+					id : 'source',
+					defaultValue : "pnetwallet",
+					possibleValuesLabels : [self.app.localization.e('twallet'), self.app.localization.e('tacaddress'), self.app.localization.e('tTotal')],
+					possibleValues : ['wallet', 'pnetwallet', 'total'],
+					placeholder : self.app.localization.e('wsselect')
+				}),
+
+				amount : new Parameter({
+					name : self.app.localization.e('wsamount'),
+					id : 'amount',
+					type : "NUMBER",
+					placeholder : self.app.localization.e('wsamountof'),
+
+					format : {
+						Precision : 6
 					}
 				}),
 
@@ -437,7 +515,23 @@ var wallet = (function(){
 				return null;
 			},
 
+			htlsParameters: function(){
+
+				var v = htls.parameters.source.value;
+
+				var addresses = actions.sendAddresses();
+
+				self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+					if(htls.parameters.amount.value > amount) htls.parameters.amount.value = amount
+					
+				}, addresses, null, true)
+
+			},
+
 			sendParameters : function(){
+
+				console.log("sendParameterssendParameterssendParameterssendParameterssendParameters")
 
 				var v = send.parameters.source.value;
 
@@ -462,6 +556,34 @@ var wallet = (function(){
 						send.parameters.reciever.value = ''
 					}
 				}
+				else{
+
+					
+				}
+
+				var c = 0
+
+				_.each(self.sdk.activity.latest, function(c, k){
+
+					_.each(c, function(v){
+
+						if(c > 7) return
+
+						if(v.type == 'user'){
+
+							if(v.id != self.app.platform.sdk.address.pnet().address){
+								c++
+
+								send.parameters.reciever.possibleValues.push(v.id)
+								send.parameters.reciever.possibleValuesLabels.push(v.data)
+							}
+
+							
+						}
+
+					})
+					
+				})
 
 				if (send.parameters.reciever.value == v || send.parameters.reciever.value == recv[v]){
 					send.parameters.reciever.value = send.parameters.reciever.possibleValuesLabels[0];
@@ -595,7 +717,7 @@ var wallet = (function(){
 				}
 			},
 
-			showSendInStep : function(action, step, name){
+			showSendInStep : function(action, step, name, clbk){
 				renders.step(function(el){
 					renders.send(function(_el){
 
@@ -603,11 +725,50 @@ var wallet = (function(){
 
 						renders.stepB(_el, name)
 
-
+						if(clbk) clbk()
 					}, el)
 				}, step, {
 					class : 'send'
 				})
+			},
+
+			showHtlsInStep : function(action, step, name, clbk){
+
+				var _el = el.c.find('.htlsnoredraw')
+
+				if(_el.length){
+
+					mode = step
+
+					console.log("ACTION", action)
+
+					actions[action](_el)
+	
+					renders.stepB(_el, name)
+
+					if(clbk) clbk()
+				}
+				else{
+					renders.step(function(el){
+						renders.htls(function(_el){
+	
+							actions[action](_el)
+	
+							renders.stepB(_el, name)
+	
+							if(clbk) clbk()
+						}, el)
+					}, step, {
+						class : 'htls'
+					})
+				}
+
+			},
+
+			calculateSend : function(el){
+
+				renders.send(null, el.find('.actionbody'))
+
 			},
 
 			calculateFee : function(el){
@@ -616,6 +777,33 @@ var wallet = (function(){
 					renders.sendFees(el.find('.actionbody'), fees)
 				})
 
+			},
+
+			calculateFeeHtls : function(el){
+
+				console.log('calculateFeeHtls')
+
+				self.app.platform.sdk.node.fee.estimate(function(fees){
+
+					console.log(el, fees)
+
+					renders.htlsFees(el.find('.actionbody'), fees)
+				})
+
+			},
+
+			validHtls : function(){
+				var amount = htls.parameters.amount.value;
+
+				console.log('htls.parameters.amount.value', htls.parameters.amount.value)
+
+				if (amount > 0){
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			},
 
 			validSend : function(){
@@ -632,7 +820,7 @@ var wallet = (function(){
 				}
 			},
 
-			prepareTransaction : function(feerate, clbk){
+			prepareTransactionCommon : function(amount, reciever, feesMode, feerate, message, clbk){
 
 				var prepareClbk = function(addresses, outputs, feesMode){
 
@@ -656,16 +844,9 @@ var wallet = (function(){
 
 				}
 
-
-				var amount = send.parameters.amount.value;
-				var feesMode = send.parameters.fees.value;
-				var message = send.parameters.message.value;
-
-
 				var addresses = actions.sendAddresses();
 				var outputs = [];
 
-				var reciever = send.parameters.reciever.value;
 
 				if(reciever == 'pnetwallet' || reciever == self.app.localization.e('tacaddress')){
 					outputs.push({
@@ -704,6 +885,57 @@ var wallet = (function(){
 				self.sdk.wallet.embed(outputs, message)
 
 				prepareClbk(addresses, outputs, feesMode)
+			},
+
+			prepareTransaction : function(feerate, clbk){
+
+				var amount = send.parameters.amount.value;
+				var feesMode = send.parameters.fees.value;
+				var message = send.parameters.message.value;
+				var reciever = send.parameters.reciever.value;
+
+				actions.prepareTransactionCommon(amount, reciever, feesMode, feerate, message, clbk)
+				
+			},
+
+			prepareTransactionHlts : function(feerate, fee, clbk){
+
+
+				var amount = htls.parameters.amount.value;
+				var feesMode = htls.parameters.fees.value;
+
+				var addresses = actions.sendAddresses();
+				var outputs = [];
+
+				var reciever = self.app.platform.sdk.address.pnet().address //// dummy
+
+				outputs.push({
+					amount : amount,
+					key : 'htlc'
+				})
+
+				self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), fee, feesMode, function(err, inputs, _outputs){
+
+					if (err){
+						sitemessage(err)
+						return
+					}
+
+
+					self.sdk.node.transactions.htls.plcreate(essenseData.htls, amount, inputs, _outputs, function(txb, meta){
+						
+						var tx = txb.build()
+
+						var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
+					
+						if (clbk)
+							clbk(addresses, outputs, inputs, totalFees, feesMode, meta, tx)
+
+					})
+
+					
+				})
+				
 			}
 		}
 
@@ -791,6 +1023,9 @@ var wallet = (function(){
 					el.send = el.c.find('.send');
 					el.deposit = el.c.find('.deposit');
 					el.crowdfunding = el.c.find('.crowdfunding');
+					el.htls = el.c.find('.htls')
+
+					console.log('el.htls', el.htls)
 
 					self.iclbks.main = function(){
 
@@ -843,8 +1078,6 @@ var wallet = (function(){
 					historyp[step] = _p;
 
 					renders.clearMain(function(){
-
-
 
 						_scrollToTop(el.step, 0, 200, -70)
 
@@ -1499,6 +1732,198 @@ var wallet = (function(){
 					})
 				},
 
+
+			////
+			//// HTLS
+
+			embeddingcode : function(id){
+				var p = {};
+
+				p.comments = 'no'
+				p.footer = 'no'
+
+				p = hexEncode(JSON.stringify(p))
+
+				var seed = rand(10000, 99999)
+
+				return '<div id="pocketnet_'+seed+'"></div><script src="https://'+self.app.options.url+'/js/widgets.js"></script><script type="text/javascript">(new window.PNWIDGETS()).make('+seed+', "lenta", "'+id+'", "'+p+'")</script>'
+			
+
+				
+			},
+
+			htlsFees : function(el, fees, clbk){
+
+				console.log('el, fees', el, fees)
+
+				if(!actions.validHtls()){
+					return;
+				}
+
+				var f = (fees.feerate || 0.000001)
+
+				console.log('htlsFees', f)
+
+				actions.prepareTransactionHlts(f, 0, function(addresses, outputs, inputs, totalFees, feesMode, meta){
+
+					console.log('prepareTransactionHlts', totalFees)
+
+					self.shell({
+
+						name :  'htlsFees',
+						el :   el,
+						data : {
+							fees : totalFees,
+							d : htls,
+							meta : meta
+						},
+
+					}, function(_p){
+
+						ParametersLive([htls.parameters.fees], _p.el)
+
+						htls.parameters.fees._onChange = function(v){
+							self.app.settings.set(self.map.uri, 'feesModehtls', v)
+						}
+
+						var sendpreloader = function(r){
+							if (r){
+								_p.el.find('.sendtransaction').addClass('loading')
+							}
+							else{
+								_p.el.find('.sendtransaction').removeClass('loading')
+							}
+							
+						}
+
+						_p.el.find('.sendtransaction').on('click', function(){
+
+							if($(this).hasClass('loading')) return
+
+							sendpreloader(true)
+
+							actions.prepareTransactionHlts(f, totalFees, function(addresses, outputs, inputs, totalFees, feesMode, meta, tx){
+
+								console.log("TX", tx)
+
+								_.each(inputs, function(t){
+									t.cantspend = true
+							    })
+
+							   self.app.platform.sdk.node.transactions.send(tx, function(d, err){
+
+								   console.log("err", err)
+
+								   if(err){
+									   self.app.platform.sdk.node.transactions.releaseCS(inputs)
+									   sendpreloader(false)
+									   self.app.platform.errorHandler(err, true)
+								   }
+
+								   else
+								   {
+									   var ids = _.map(inputs, function(i){
+										   return i.txid
+									   })
+
+									   self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+									   mode = 0;
+
+									   renders.mainWithClear()
+
+									   self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, outputs)
+									   sendpreloader(false)
+									   sitemessage(self.app.localization.e('wssuccessfully'))
+									   
+								   }
+							    })
+
+								
+
+							})
+
+						})
+
+
+						
+
+					})
+
+				})
+
+			},
+			htls : function(clbk, _el){
+
+				console.log("el.htls", el.htls)
+
+				actions.htlsParameters();
+
+				self.shell({
+
+					name :  'htls',
+					el :   _el ||  el.htls,
+					data : {
+						d : htls,
+						ed : essenseData
+					},
+
+				}, function(_p){
+
+					ParametersLive(_.toArray(htls.parameters), _p.el)
+
+					htls.parameters.amount._onChange = function(v){
+						
+						var addresses = actions.sendAddresses();
+
+
+						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+							if (htls.parameters.amount.value < 0) htls.parameters.amount.value = 0;
+
+							if (htls.parameters.amount.value > amount) 
+								htls.parameters.amount.value = amount
+
+
+							htls.parameters.amount.el.closest('.inputWrapper').html(htls.parameters.amount.input())
+
+							ParametersLive([htls.parameters.amount], _p.el)
+
+							console.log("MODE", mode)
+
+							if (mode == 1){
+								actions.showHtlsInStep('calculateFeeHtls', 1, 'htls')
+							}
+							
+						}, addresses, null, true)
+
+					}
+				
+					_p.el.find('.calculateFee').on('click', function(){
+
+						if (actions.validHtls()){
+							actions.showHtlsInStep('calculateFeeHtls', 1, 'htls')
+
+							_p.el.find('.required').addClass('hidden')
+						}
+						else
+						{
+							_p.el.find('.required').removeClass('hidden')
+						}
+
+						
+					})
+					
+					if (essenseData.htls){
+						_p.el.find('.htlsWrapper').html(renders.embeddingcode(essenseData.htls))
+					}
+
+					if (clbk)
+						clbk(_p.el)
+
+				})
+			},
+
 			////
 			//// SEND
 				sendFees : function(el, fees, clbk){
@@ -1550,7 +1975,7 @@ var wallet = (function(){
 
 										if(err){
 											sendpreloader(false)
-											sitemessage(err)
+											sitemessage(err.text || err)
 
 											return
 										}
@@ -1569,7 +1994,7 @@ var wallet = (function(){
 
 												self.app.platform.sdk.node.transactions.releaseCS(inputs)
 												sendpreloader(false)
-												sitemessage(err)
+												sitemessage(err.text || err)
 											}
 
 											else
@@ -1587,6 +2012,13 @@ var wallet = (function(){
 												self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, _outputs)
 												sendpreloader(false)
 												sitemessage(self.app.localization.e('wssuccessfully'))
+
+
+												//self.app.platform.matrixchat.transaction(d, essenseData.roomid)
+
+												if(essenseData.sendclbk) essenseData.sendclbk({
+													txid : d
+												})
 												
 											}
 										})	
@@ -1601,16 +2033,22 @@ var wallet = (function(){
 					})
 
 				},
-				send : function(clbk, _el){
+				send : function(clbk, _el, nsp){
 
-					actions.sendParameters();
+					console.log('_el, nsp', _el, nsp)
+
+					if(!nsp){
+						console.log('actions.sendParameters();')
+						actions.sendParameters();
+					}
+						
 
 					self.shell({
 
 						name :  'send',
 						el :   _el ||  el.send,
 						data : {
-							d : send
+							d : send,
 						},
 
 					}, function(_p){
@@ -1637,7 +2075,6 @@ var wallet = (function(){
 							self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
 
-
 								if(send.parameters.amount.value < 0) send.parameters.amount.value = 0;
 
 								if (send.parameters.amount.value > amount) 
@@ -1656,7 +2093,6 @@ var wallet = (function(){
 							}, addresses, null, true)
 
 						}
-						
 
 						send.parameters.source._onChange = function(v){
 							
@@ -1749,6 +2185,7 @@ var wallet = (function(){
 
 							
 						})
+						
 
 						changerActive()
 
@@ -1990,73 +2427,91 @@ var wallet = (function(){
 
 				el.c.find('.circularprogressWrapper').html(progress.el);
 
-				var trueshold = 200
+				var trueshold = 80
 
 				var w = $(window)
 
-				var parallax = new SwipeParallax({
+				if(!essenseData.api){
+					var parallax = new SwipeParallaxNew({
 
-					el : el.c.find('.ntf'),
-
-					allowPageScroll : 'vertical',
+						el : el.c.find('.ntf'),
 	
-					directions : {
-						down : {
-							cancellable : true,						
-
-							positionclbk : function(px){
-								var percent = Math.abs(px) / trueshold;
-
-								if (px >= 0){
-
-									progress.options.text = {
-										value: ''
-									};
-
-									progress.update(percent * 100);
-
-
-									cc.height((maxheight * percent)+ 'px')								
-
-									//tp.css('opacity', 1 -  (4 * percent))
-
+						allowPageScroll : 'vertical',
+		
+						directions : {
+							down : {
+								cancellable : true,						
+	
+								positionclbk : function(px){
+									var percent = Math.abs(px) / trueshold;
+	
+	
+									console.log("PX", px)
+	
+									if (px >= 0){
+	
+										progress.options.text = {
+											value: ''
+										};
+										cc.fadeIn(1)
+										progress.update(percent * 100);
+	
+	
+										cc.height((maxheight * percent)+ 'px')								
+	
+										//tp.css('opacity', 1 -  (4 * percent))
+	
+									}
+									else{
+										progress.renew()
+										cc.fadeOut(1)
+									}
+	
+								},
+	
+								constraints : function(){
+									if(w.scrollTop() <= 0){
+										return true;
+									}
+								},
+	
+								restrict : true,
+								trueshold : trueshold,
+								clbk : function(){
+	
+									progress.update(0);
+									cc.fadeOut(1)
+									self.app.platform.sdk.notifications.getNotifications()
+	
+									self.app.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
+										make()
+									})
+	
 								}
-
-							},
-
-							constraints : function(){
-								if(w.scrollTop() == 0){
-									return true;
-								}
-							},
-
-							restrict : true,
-							trueshold : trueshold,
-							clbk : function(){
-
-								self.app.platform.sdk.notifications.getNotifications()
-
-								self.app.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
-									make()
-									parallax.renew()
-								})
-
+		
 							}
-	
 						}
-					}
-					
-	
-				}).init()
+						
+		
+					}).init()
+				}
+
+				
 			}
 		}
 
 		var prepareOptions = function(){
+
 			deposit.parameters.deposit.value = self.app.settings.get(self.map.uri, 'deposit') || deposit.parameters.deposit.defaultValue
+
 			send.parameters.source.value = self.app.settings.get(self.map.uri, 'source') || send.parameters.source.defaultValue
+
 			send.parameters.reciever.value = ''
+			send.parameters.reciever.disabled = false
+
 			send.parameters.fees.value = self.app.settings.get(self.map.uri, 'feesMode') || send.parameters.fees.defaultValue
 
+			htls.parameters.fees.value = self.app.settings.get(self.map.uri, 'feesModehtls') || htls.parameters.fees.defaultValue
 
 			deposit.active = false;
 	
@@ -2146,18 +2601,39 @@ var wallet = (function(){
 			})
 		}
 
+		var makesimple = function(clbk){
+
+			if(clbk) clbk()
+
+			return
+
+			var actions = [renders.send, renders.deposit, renders.addresses]
+
+			if(essenseData.api && essenseData.action) actions = []
+
+			el.c.addClass('loading')
+
+			console.log('actions', actions)
+
+			lazyActions(actions, function(){
+				clbk()
+			})
+		}
+
 		var make = function(clbk){
 
 			el.total.html('')
 
 			drawCircles(function(){
 
-				lazyActions([renders.send, renders.deposit, /*renders.crowdfunding,*/ renders.addresses], clbk)
+				/*renders.crowdfunding,*/ 
+
+				var actions = [renders.send, renders.deposit, renders.addresses/*, renders.htls*/]
+
+				lazyActions(actions, clbk)
 
 				self.app.platform.sdk.node.transactions.clbks.circles = function(){
-
 					drawCircles(null, true)
-					
 				};
 
 
@@ -2174,11 +2650,13 @@ var wallet = (function(){
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			getdata : function(clbk, p){
 
 				var data = {};
 
 					data.p2pkh = self.app.platform.sdk.address.pnet()
+
+				 essenseData = p.settings.essenseData || {}
 
 
 				prepareOptions()
@@ -2199,7 +2677,10 @@ var wallet = (function(){
 			
 			init : function(p){
 
+				var _p = _.extend(parameters(), essenseData)
+
 				charts = {};
+
 
 				state.load();
 
@@ -2211,22 +2692,67 @@ var wallet = (function(){
 
 				initEvents();
 
+
+				if(essenseData.class) el.c.addClass(essenseData.class)
+
+				var executor = make
+
+				if(_p.api) executor = makesimple
+
 				renders.main(function(){
-					make(function(){
+					executor(function(){
+						
 
-						var _p = parameters()
+						console.log('_p', _p)
+						
 
-						if(_p.action){
+						if (_p.action){
 
 							if(_p.action == 'send'){
 
-								send.parameters.amount.value = Number(_p.amount.replace(/,/g,''))
-								send.parameters.reciever.value = _p.address
+								actions.sendParameters();
+
+								send.parameters.amount.value = Number((_p.amount || '0').replace(/,/g,''))
+								send.parameters.reciever.value = _p.address || ""
 								send.parameters.message.value = _p.message || ""
 
-								send.parameters.amount._onChange();
+								if(_p.address){
+									send.parameters.reciever.disabled = true
+									console.log('send.parameters.reciever.disabled', send.parameters.reciever)
+								}
+								if(send.parameters.amount._onChange)
+									send.parameters.amount._onChange();
 
-								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
+								console.log('_p.address ? true : false', _p.address ? true : false)
+
+								//renders.send()
+
+								/*setTimeout(function(){
+									renders.step(function(__el){
+										renders.send(function(_el){
+	
+											el.c.removeClass('loading')
+	
+										}, __el, _p.address ? true : false)
+									}, 1, {
+										class : 'send'
+									})
+								},1000)*/
+
+								renders.send(null, null, true)
+
+								/*actions.showSendInStep('calculateSend', 0, self.app.localization.e('wscalculatefees'), function(){
+									el.c.removeClass('loading')
+								})*/
+
+
+							}
+
+							if(_p.action == 'htls'){
+
+								actions.showHtlsInStep('calculateFeeHtls', 1, 'HTLS', function(){
+									el.c.removeClass('loading')
+								})
 
 
 							}
@@ -2249,6 +2775,10 @@ var wallet = (function(){
 				
 
 				
+			},
+
+			wnd : {
+				class : 'withoutButtons walletwindow'
 			}
 		}
 	};

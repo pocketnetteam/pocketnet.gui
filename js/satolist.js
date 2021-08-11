@@ -1,4 +1,5 @@
 var electron = null
+if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
@@ -8,6 +9,11 @@ if (typeof _Electron != 'undefined') {
     $('html').addClass('electron')
 }
 
+/*
+
+Pocketnet[51792:5059590] [connection] nw_endpoint_handler_set_adaptive_write_handler [C6.1.1 64.235.46.85:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
+*/
+
 
 Platform = function (app, listofnodes) {
 
@@ -15,21 +21,65 @@ Platform = function (app, listofnodes) {
 
     self.app = app;
     
+    self.lasttimecheck = null
+    self.real = {
+        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
+        'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
+        'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true,
+        'PCVt7H4vgjBDxifLz3uokbc1tD3MZwWwQh' : true,
+        'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X' : true,
+        'PLH8biT5rMdvE1zXFhsvNkzphVRK6cNM7p' : true,
+        'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux' : true,
+        'PXUYsENSv6QkQZEdiJTsfJmu3XxZvVmVfQ' : true,
+        'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw' : true,
+        'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2' : true,
+        'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt' : true,
+        'PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk' : true,
+        'PS4pYW4tpu6fwviz63CHLMxPA37fJ3GLvn' : true,
+        'PHmvLy9b5m2b7fvU7MSTw4mAkdshhdY4Nt' : true,
+        'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL' : true,
+        'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh' : true,
+        'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s' : true,
+        'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' : true,
+        'PUYo1a6LxjnnBVi6uBjHUsZQS4FnbUwdAN' : true,
+        'PLFtS8H7ATooK53xRTw7YHsuK7jsn5tHgi' : true,
+        'PVJDtKPnxcaRDoQhqQj7FMNu46ZwB4nXVa' : true,
+        'PVjvMwapTA29biRTsksXUBuVVf2HVwY7ps' : true,
+        'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR' : true,
+        'PUqq6vksrmoMPRrRjZxCVQefqGLpuaqWii' : true,
+        'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs' : true,
+        'PNUMTC5CTH3F5LfQpkmj3MXcDnGNKTU4ov' : true,
+        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta' : true
+        //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
+    }
+
+    self.nvadr = {
+        'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK' : true,
+        'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true
+    }
     
 
-    self.testaddresses = ['P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux', 'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH', 'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW', 'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s', 'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+    self.testaddresses = ['TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD', 'PGiQ8j6fdtAJSH2sA7rZMB17GzqBTUVLCm', 'PF1umexG4Kvm8bkow1JiRF3s1vcBkYvKeg', 'PJJbtb1AEcRopQuuBiRbQbiec7WHNtAEsF', 'PSmGDYWzcPrrhvqFnGVxnhPbpsTK6LCZYd', 'PDQaeB3fGY3en5qMaq8AKZvev34Hgyx5UE', 'PAdUsDtP9onjpwHHxhbxxRcjtxD9fsW9Su', 'PRaYPD2NAVMcEXcUu2GsEQwqsG8md8H2dr', 'PHr8g7b4gJdSkiJFmQeoND2X8tRUKvB2An', 'PEwL86dE6MuKKaGPxooGyFCKocUP8B6jw8', 'PFV4UT9fhHsqkmCGsWsSCr55Pr1SMX6NL2', 'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y', 'P92gc46iqLhCswPsbLxH7wjTfh9rhhNSux', 'PSWxzYS4Y37tmnZ9oxKfm9ffVqLRBbFbjH', 'PHvQEGtYYpDpmHYuUwA4gF4ey1YitF2NRW', 'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s', 'PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PQsvaeBWB5WX3BsdWcNFmP1wy61P3gpRKf', 'PKerxto9tFT8dZJrNWFsimA3sBdBAkXsrE', 'PHNKYionoaBRVudUhqWzNrJyqxVxaDYqT7', 'PVCUYATJxi4yNM2sqThPxd3P6jJDrvuWJs', 'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA', 'PShAyCoM32HEEHqrdEYvQ1wRjeqZsmWqDa', 'PKLWLXN6kwmdkbYG981gyPj5jb7bgzhstj', 'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5', 'P9jDYvkXHw4FtRZof661ddzmMyFRqGUjwN', 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PSRFH9Ctq4wV1THes39izo3J4dHybLyT32', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
-    self.testchataddresses = ['PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
+
+    /*self.testchataddresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PQvcVW7ZV4YPKC1QhxXdT8ppUakCejWYTA']*/
+    self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
     self.focus = true;
-    self.currentBlock = 1000000;
+    self.currentBlock = 0 //1165858;
     self.online = undefined;
     self.avblocktime = 45;
-    self.repost = true
+    self.repost = true;
+    self.videoenabled = true;
+
+
+    //////////////
+    self.test = false;
+    //////////////
 
     var onlinetnterval;
     var unspentoptimizationInterval = null;
-    var blockps = 1000000;
+   // var blockps = self.currentBlock - 30000;
     var nshowed = false;
     var TXFEE = 1;
 
@@ -45,6 +95,15 @@ Platform = function (app, listofnodes) {
             staking : true
         }
     }
+
+    // self.network = function(){
+    //     if(self.test){
+    //         return bitcoin.networks.testnet
+    //     }
+    //     else{
+    //         return bitcoin.networks.bitcoin
+    //     }
+    // }
 
     self.mp = {
         dollars: function (value, p) {
@@ -186,6 +245,7 @@ Platform = function (app, listofnodes) {
                 windows: {
     
                     appname: "Pocketnet",
+                    id: "#windows",
                     text: {
                         name: "Windows",
                         download: self.app.localization.e('e13222'),
@@ -198,15 +258,17 @@ Platform = function (app, listofnodes) {
                         name: "PocketnetSetup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                    }
+                    },
+                    
                 },
 
                 macos: {
                     appname: "Pocketnet",
+                    id: '#macos',
                     text: {
                         name: "macOS",
                         download: self.app.localization.e('e13222'),
-                        label: 'Download Pocketnet for macOS'
+                        label: self.app.localization.e('e132232')
                     },
         
                     icon: '<i class="fab fa-apple"></i>',
@@ -215,11 +277,12 @@ Platform = function (app, listofnodes) {
                         name: "PocketnetSetup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
-                    }
+                    },
                 },
         
-                linux: {
+                currentos: {
                     appname: "Pocketnet",
+                    id: "#linux",
                     text: {
                         name: "Linux",
                         download: self.app.localization.e('e13222'),
@@ -229,7 +292,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: "Pocketnet_linux_x64.AppImage",
+                        name: "PocketnetSetup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }
@@ -275,7 +338,6 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.currnetBlock = 0;
 
     self.errorHandler = function (key, action, akey) {
 
@@ -766,6 +828,17 @@ Platform = function (app, listofnodes) {
             relay: true
         },
 
+        "tosmallamount" : {
+
+            message: function () {
+
+                return 'Too small amount'
+
+            },
+
+
+        },
+
         "imageerror" : {
 
             message: function () {
@@ -859,7 +932,6 @@ Platform = function (app, listofnodes) {
         else {
 
         }
-        // console.log('META', meta)
         return meta;
     }
 
@@ -1714,31 +1786,114 @@ Platform = function (app, listofnodes) {
     }
 
     self.papi = {
-        lenta : function(ids, el, clbk, p){
+        horizontalLenta : function(el, clbk, p){
 
             if(!p) p = {}
+
+            p.horizontal = true
+
+            var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
+            <div class="controlleft controlhor" dir="left"><i class="fas fa-chevron-left"></i></div><div class="controlright controlhor"><i class="fas fa-chevron-right"></i></div>
+            </div>`
+
+            el.html(tpl)
+
+            p.window = el.find('.showmorebywrapper')
+
+            var _el = el.find('.showmoreby')
+
+            self.papi.clenta(_el, clbk, p)
+
+            el.find('.controlhor').on('click', function(){
+                var dir = $(this).attr('dir') || 'right'
+
+                var curscroll = p.window.scrollLeft()
+                var width = p.window.width()
+
+                var to = width * 0.9
+
+                if(dir == 'left') to = -to
+
+                to = curscroll + to
+
+                p.window.animate({ scrollLeft: to }, 100);
+            })
+        },
+        clenta : function(el, clbk, p){
+
+            if(!p) p = {}
+
+            var id = p.id || makeid()
 
             app.nav.api.load({
 
                 open : true,
                 id : 'lenta',
                 el : el,
-                eid : makeid(),
+                eid : id,
+                mid : id,
                 animation : false,
                 essenseData : {
-                    byauthor : true,
+
+                    author : p.author,
+                    video : p.video,
+                    comments : p.comments,
+                    enterFullScreenVideo : p.fullscreenvideo,
+                    openapi : p.openapi,
+                    renderclbk : p.renderclbk,
+                    ready : p.ready,
+                    window : p.window,
+                    horizontal : p.horizontal,
+                    second : true,
+                    loaderkey : p.loaderkey,
+                    hasshares : p.hasshares,
+                    opensvi : p.opensvi,
+                    from : p.from,
+                    compact : p.compact,
+                    r : p.r,
+                    shuffle : p.shuffle,
+                    page : p.page,
+                    period : p.period,
+                    filter : p.filter,
+                    ended : p.ended,
+                    afterload : p.afterload
+
+                },
+                
+                clbk : clbk
+            })
+        },
+        lenta : function(ids, el, clbk, p){
+
+            if(!p) p = {}
+            var id = makeid()
+
+            if(!_.isArray(ids)) ids = [ids]
+
+            app.nav.api.load({
+
+                open : true,
+                id : 'lenta',
+                el : el,
+                eid : id,
+                mid : id,
+                animation : false,
+                essenseData : {
+                    
                     notscrollloading : true,
                     txids : ids,
                     comments : p.comments,
                     enterFullScreenVideo : p.fullscreenvideo,
                     openapi : p.openapi,
                     renderclbk : p.renderclbk,
-                    ready : p.ready
+                    ready : p.ready,
+                    second : true
                 },
                 
                 clbk : clbk
             })
         },
+
         post: function (id, el, clbk, p) {
 
             if (!p) p = {}
@@ -1761,10 +1916,12 @@ Platform = function (app, listofnodes) {
                             repost: p.repost,
                             level: p.level,
                             fromempty: p.fromempty,
+                            nocommentcaption : p.nocommentcaption,
                             eid: id + (p.eid || ""),
                             comments : p.comments,
                             video : p.video,
-                            autoplay : p.autoplay
+                            autoplay : p.autoplay,
+                            opensvi : p.opensvi
                         }
                     })
 
@@ -1772,6 +1929,26 @@ Platform = function (app, listofnodes) {
             })
 
         },
+
+        connect : function(id, el, clbk, p){
+            self.sdk.users.get(id, function () {
+
+                app.nav.api.load({
+                    open: true,
+                    href: 'channel',
+                    el: el,
+                    eid: id + (p.eid || ""),
+                    clbk: clbk,
+
+                    essenseData: {
+                        id : id,
+                        connect : true
+                    }
+                })
+
+            })
+        },
+
         channel : function(id, el, clbk, p){
             self.sdk.users.get(id, function () {
 
@@ -1789,6 +1966,21 @@ Platform = function (app, listofnodes) {
 
             })
         },
+
+        transaction : function(txid, el, clbk, p){
+            app.nav.api.load({
+                open: true,
+                href: 'transactionview',
+                el: el,
+                eid: makeid(),
+                clbk: clbk,
+
+                essenseData: {
+                    txid : txid
+                }
+            })
+        },
+
         comment : function(id, el, clbk, p){
 
             app.nav.api.load({
@@ -1809,10 +2001,81 @@ Platform = function (app, listofnodes) {
 
                 clbk : clbk
             })
-        }
+        },
+
+        
     }
 
     self.ui = {
+
+
+        images : function(allimages, initialValue, clbk){
+
+            if(!_.isArray(allimages)) allimages = [allimages]
+
+            if(!initialValue) initialValue = allimages[0]
+
+            if(!initialValue) return false
+
+            var gid = 'uiimages'
+
+            var images = _.map(allimages, function(i){
+                return {
+                    src : i
+                }
+            })
+
+            /*var num = findIndex(images, function(image){
+
+                if (image.src == initialValue) return true;						
+
+            })*/
+
+            self.app.nav.api.load({
+                open : true,
+                href : 'imagegallery',
+                inWnd : true,
+                history : true,
+
+                essenseData : {
+                    initialValue : initialValue,
+                    idName : 'src',
+                    images : images,
+
+                    gid : gid
+                },
+
+                clbk : function(){
+                    if (clbk)
+                        clbk()
+                }
+            })
+
+
+            return true
+
+        },
+
+        socialshare : function(url, p){
+            if(!p) p = {}
+
+            url = 'https://'+app.options.url+'/' + url
+
+            app.nav.api.load({
+                open : true,
+                href : 'socialshare2',
+                history : true,
+                inWnd : true,
+
+                essenseData : {
+                    url : url,
+                    caption : app.localization.e('e13133'),
+                    sharing : p.sharing || null,
+                    embedding : p.embedding || null,
+                    notincludedRef : true,
+                }
+            })
+        },
 
         share : function(p){
             if(!p) p = {}
@@ -1921,8 +2184,72 @@ Platform = function (app, listofnodes) {
                 platfrom : self
             })*/
 
+        },
+
+        wallet : {
+            
+            send : function(p, clbk, el){
+
+                if(!p) p = {}
+
+                var id = 'papiwalletsend'
+
+                globalpreloader(true, true)
+
+                p.action = p.htls ? 'htls' : 'send'
+                p.class = 'api'
+                p.api = true
+                
+
+                var es = null
+
+                return new Promise((resolve, reject) => {
+                    
+                    p.sendclbk = function(d){
+
+                        console.log(d, p)
+
+                        if (p.roomid && d.txid){
+                            self.matrixchat.shareInChat.url(p.roomid, 'pocketnet://i?stx=' + d.txid)
+                        }
+
+                        resolve(d)
+
+                        if(es && es.container) es.container.close()
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'wallet',
+                        inWnd : el ? false : true,
+                        el : el ? el : null,
+                        eid : id,
+                        mid : id,
+                        animation : false,
+                        essenseData : p,
+                        clbk : function(e, _p){
+
+                            console.log('dsdsds', _p)
+
+                            ////pocketnet://i?stx=
+
+                            es = _p
+    
+                            globalpreloader(false)
+    
+                            if(clbk) clbk(e, _p)
+                        }
+                    })
+
+                })
+
+                
+                
+            }
         }
     }
+
+    
 
     self.api = {
 
@@ -1971,6 +2298,14 @@ Platform = function (app, listofnodes) {
             if (name) return encodeURIComponent(name.toLowerCase());
 
             else return 'author?address=' + address
+        },
+
+        authororexplorerlink: function (address) {
+            var name = deep(app, 'platform.sdk.usersl.storage.' + address + '.name');
+
+            if (name) return encodeURIComponent(name.toLowerCase());
+
+            else return 'https://pocketnet.app/blockexplorer/address/' + address
         },
 
         upbutton: function (el, p) {
@@ -2595,16 +2930,22 @@ Platform = function (app, listofnodes) {
                     }
                 )
             },
+
+            htls : function(id){
+                self.app.platform.ui.wallet.send({id : id}, function(){
+					
+				})
+            }
         },
 
         metmenu: function (_el, id, actions) {
-
             var share = self.sdk.node.shares.storage.trx[id]
 
             if (!share) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
                     return s.txid == id
                 })
+                
                 if (temp){
                     share = new pShare();
                     share._import(temp);
@@ -2635,6 +2976,33 @@ Platform = function (app, listofnodes) {
                         return template(d);
 
                     }, function (el) {
+
+                        el.find('.opennewwindow').on('click', function(){
+
+                            var href = 'https://pocketnet.app/'
+
+                            if(d.share.itisvideo()){
+                                href += 'index?video=1&v=' + id
+                            }
+                            else
+                            {
+                                href += 'index?post?s=' + id
+                            }
+
+                            if(window.cordova){
+                                cordova.InAppBrowser.open(href, '_blank');
+                            }
+                            else{
+                                window.open(href, '_blank');
+                            }
+                        })
+
+                        el.find('.htls').on('click', function () {
+
+                            actions.htls(id)
+
+                            _el.tooltipster('hide')
+                        })
 
                         el.find('.socialshare').on('click', function () {
 
@@ -2773,6 +3141,11 @@ Platform = function (app, listofnodes) {
 
                         })
 
+                        el.find('.videoshare').on('click', function () {
+                            actions.videoShare(share)
+
+                            _el.tooltipster('hide')
+                        })
                     })
 
                 }, d, 'components/lenta')
@@ -2812,7 +3185,27 @@ Platform = function (app, listofnodes) {
 
             add: function (address, value) {
 
+                /*if(self.sdk.registrations.storage[address] && self.sdk.registrations.storage[address] > value) return*/
+
                 self.sdk.registrations.storage[address] = value || true;
+                self.sdk.registrations.save()
+
+                _.each(this.clbks, function (c) { c(address) })
+            },
+
+            showprivate : function(address){
+                if (!address && self.sdk.address.pnet()) address = self.sdk.address.pnet().address
+
+                var regs = self.sdk.registrations.storage[address];
+
+                return (!self.sdk.registrations.storage[address + 'rm'] && regs > 2 /*&& regs <= 5*/)
+             
+            },
+
+            donotshowprivate : function(address){
+                if (!address && self.sdk.address.pnet()) address = self.sdk.address.pnet().address
+
+                self.sdk.registrations.storage[address + 'rm'] = true;
                 self.sdk.registrations.save()
 
                 _.each(this.clbks, function (c) { c(address) })
@@ -2828,7 +3221,6 @@ Platform = function (app, listofnodes) {
                         storage = JSON.parse(local)
                     }
                     catch (e) {
-                        console.log("ERR", e)
                     }
                 }
 
@@ -3053,7 +3445,6 @@ Platform = function (app, listofnodes) {
                         storage = JSON.parse(local)
                     }
                     catch (e) {
-                        console.log("ERR", e)
                     }
                 }
 
@@ -3090,7 +3481,6 @@ Platform = function (app, listofnodes) {
 
                 var chaincode = new Buffer('00000000000000000000000000000000')
 
-                //console.log('experiment', p, self.app.user.private.value, self.app.user.key.value)
 
                 var k = self.app.user.keys()
 
@@ -3349,7 +3739,6 @@ Platform = function (app, listofnodes) {
                         articles = JSON.parse(local)
                     }
                     catch (e) {
-                        console.log("ERR", e)
                     }
                 }
 
@@ -3370,7 +3759,7 @@ Platform = function (app, listofnodes) {
         theme: {
             all: {
                 white: {
-                    name: self.app.localization.e('e13266'),
+                    name: self.app.localization.e('e13266'), ////ch
                     class: "stwhite"
                 },
 
@@ -3420,6 +3809,8 @@ Platform = function (app, listofnodes) {
                     h.addClass(t.all[value].class)
 
                     t.current = value
+
+                    self.matrixchat.changeTheme()
 
                     t.save()
                 }
@@ -3548,19 +3939,6 @@ Platform = function (app, listofnodes) {
                     id: 'telegram',
                     placeholder: self.app.localization.e('e13282'),
                     value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
-                    _onChange: function (value) {
-
-                        if (value && self.app.user.features.telegram && value){
-
-
-                            self.app.platform.sdk.system.get.telegramGetMe(value, true);
-                            
-                        }
-
-                    }
-
-
-
                 },
 
                 tgfrom: {
@@ -3651,6 +4029,7 @@ Platform = function (app, listofnodes) {
 
 
                     notifications: {
+                        class : 'notifications',
                         name: self.app.localization.e('notifications'),
                         options: {
 
@@ -3685,7 +4064,7 @@ Platform = function (app, listofnodes) {
                         }
                     },
 
-                    vidgets: {
+                    /* vidgets: {
                         name: self.app.localization.e('e13288'),
                         options: {
 
@@ -3695,7 +4074,7 @@ Platform = function (app, listofnodes) {
                             vidgetstaking : options.vidgetstaking
 
                         }
-                    },
+                    },*/
 
                 }
 
@@ -3711,9 +4090,9 @@ Platform = function (app, listofnodes) {
                         options: {
 
                             telegram: options.telegram,
-                            tgfrom: options.tgfrom,
+                            // tgfrom: options.tgfrom,
                             tgto: options.tgto,
-                            tgfromask: options.tgfromask,
+                            // tgfromask: options.tgfromask,
                             tgtoask: options.tgtoask
 
 
@@ -3755,7 +4134,6 @@ Platform = function (app, listofnodes) {
                             const idx = m[i].possibleValues.indexOf(String(v));
                             m[i].value = m[i].possibleValuesLabels[idx];
                             m[i].valueId = Number(v);
-                            // setTimeout(() => {$(`div[pid=${i}] input`).val(m[i].possibleValuesLabels[idx])}, 0)
 
                         }
 
@@ -3788,12 +4166,12 @@ Platform = function (app, listofnodes) {
                             if (i == 'win' || i == 'transactions' || i == 'upvotes' || i == 'comments' || i == 'answers' || i == 'followers' || i == 'rescued') {
 
 
-                                if (m[i].value) {
+                                /*if (m[i].value) {
                                     self.firebase.api.subscribe(i)
                                 }
                                 else {
                                     self.firebase.api.unsubscribe(i)
-                                }
+                                }*/
 
                             }
                         }
@@ -3811,14 +4189,39 @@ Platform = function (app, listofnodes) {
 
                 var values = {};
 
-                _.each(self.sdk.usersettings.meta, function (o, i) {
+                var meta = self.sdk.usersettings.meta;
+
+                _.each(meta, function (o, i) {
 
                     if (o.type === "VALUES") {
 
-                        values[i] = {};
-                        values[i].possibleValues = o.possibleValues && o.possibleValues.map(i => String(i));
-                        values[i].possibleValuesLabels = o.possibleValuesLabels;
-                        values[i].value = o.value;
+                        if (i === 'tgto' || i === 'tgfrom'){
+
+                            var tgToken = meta.telegram && meta.telegram.value;
+
+                            if (tgToken){
+
+                                values[i] = {
+                                    ...meta[i],
+                                    [tgToken] : {
+                                        possibleValues : o.possibleValues && o.possibleValues.map(i => String(i)),
+                                        possibleValuesLabels : o.possibleValuesLabels,
+                                        value : o.value
+                                    }
+                                }
+                                
+                            }
+
+
+                        } else {
+
+                            values[i] = {};
+                            values[i].possibleValues = o.possibleValues && o.possibleValues.map(i => String(i));
+                            values[i].possibleValuesLabels = o.possibleValuesLabels;
+                            values[i].value = o.value;
+                            
+                        }
+
 
                     } else {
 
@@ -3853,6 +4256,15 @@ Platform = function (app, listofnodes) {
                 var values = self.sdk.usersettings.load();
                 var m = self.sdk.usersettings.meta;
 
+                if (self.app.platform.sdk.address.pnet() && self.istest()){
+
+                    self.app.user.features.telegram = 1;
+
+                } else {
+
+                    self.app.user.features.telegram = 0;
+
+                }                
 
                 _.each(values, function (v, i) {
 
@@ -3862,9 +4274,32 @@ Platform = function (app, listofnodes) {
 
                         if (m && m[i]){
 
-                            m[i].value = v.value;
-                            m[i].possibleValues = v.possibleValues && v.possibleValues.map(i => String(i));
-                            m[i].possibleValuesLabels = v.possibleValuesLabels;
+
+                            if (i === 'tgto' || i === 'tgfrom'){
+
+                                var tgToken = m.telegram && m.telegram.value;
+
+                                if (tgToken){
+
+                                    m[i] = v;
+                                    m[i].value = v[tgToken].value;
+                                    m[i].possibleValues = v[tgToken].possibleValues && v[tgToken].possibleValues.map(function(i){
+                                        return String(i);
+                                    })
+                                    m[i].possibleValuesLabels = v[tgToken].possibleValuesLabels;
+
+                                }
+
+                            } else {
+
+                                m[i].value = v.value;
+                                m[i].possibleValues = v.possibleValues && v.possibleValues.map(function(i){
+                                    return String(i);
+                                })
+                                m[i].possibleValuesLabels = v.possibleValuesLabels;
+
+                            }
+
                         }
 
 
@@ -3873,15 +4308,13 @@ Platform = function (app, listofnodes) {
 
                     }
 
+
                     if (i === "telegram") {
 
 
                         if(self.app.platform.sdk.address.pnet()){
-                            var a = self.app.platform.sdk.address.pnet().address
 
-                            if ((a == 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s') || (a == 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc')) {
-
-                                self.app.user.features.telegram = 1;
+                            if (self.istest()) {
 
                                 var href = location.href;
 
@@ -3891,12 +4324,6 @@ Platform = function (app, listofnodes) {
                                     self.app.platform.sdk.system.get.telegramGetMe(v.value);
 
                                 }
-
-
-                            } else {
-
-
-                                self.app.user.features.telegram = 0;
 
 
                             }
@@ -3956,6 +4383,191 @@ Platform = function (app, listofnodes) {
             }
         },
 
+
+        keys : {
+            clbks : {
+
+            },
+
+
+            haskeys : function(){
+                self.sdk.keys.need().then(r => {
+                    return Promise.reject('empty')
+                }).catch(err => {
+
+                    if(err == 'exist'){
+                        return Promise.resolve()
+                    }
+
+                    return Promise.reject(err)
+
+                })
+            },
+
+            error : function(text){
+                dialog({
+                    html: "Pocketnet chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
+                    btn1text: 'Edit profile',
+                    class : 'one',
+                    success: function () {
+
+                        self.app.nav.api.load({
+                            open: true,
+                            href: 'userpage?id=test',
+                            history: true
+                        })
+
+                    }
+                })
+            },
+
+            init : function(){
+
+                return self.sdk.keys.need().then(me => {
+
+                    if(self.loadingWithErrors){
+                        return Promise.reject('loadingWithErrors')
+                    }
+
+                    var userInfo = new UserInfo();
+
+						userInfo.name.set(me.name);
+						userInfo.language.set(me.language);
+						userInfo.about.set(me.about);
+						userInfo.site.set(me.site);
+						userInfo.image.set(me.image);
+						userInfo.addresses.set(me.addresses);
+						//userInfo.ref.set(me.ref);
+
+                        userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
+                            return k.public
+                        }))
+
+                    var err = userInfo.validation()
+
+                    var addr = self.app.platform.sdk.address.pnet()
+
+                    if (addr && self.nvadr[addr.address]){
+                        err = null
+                    }
+                    
+
+                    console.log("err", err)
+
+                    if (err){
+
+                        var errtext = 'Undefined Error'
+                        
+						if(err == 'namelength'){
+							errtext = 'The name length can be more than 20 symbols'
+						}
+
+						if(err == 'pocketnet'){
+							errtext = 'To avoid user confusion using Pocketnet in name is reserved'
+						}
+
+                        self.sdk.keys.error(errtext)
+
+                        return Promise.reject(err)
+                    }
+
+                    return new Promise((resolve, reject) => {
+
+                        /*dialog({
+                            html: "Pocketnet chat ask you to generate encryption keys. Do you want to proceed?",
+                            btn1text: 'Generate Encryption Keys',
+                            btn2text: self.app.localization.e('dno'),
+
+                            success: function () {*/
+
+                                self.sdk.node.transactions.create.commonFromUnspent(
+
+                                    userInfo,
+            
+                                    function(tx, error){
+            
+                                        if(!tx){
+
+                                            self.sdk.keys.error(self.errorHandler(error).text())
+            
+                                            reject(error)
+            
+                                        }
+                                        else
+                                        {
+                                            self.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+                                                resolve('processing')
+                                            })
+                                        }
+            
+                                        
+                                    }
+                                )
+
+                            /*},
+
+                            fail: function () {
+                                reject('no')
+                            },
+
+                            close: function () {
+                                reject('close')
+                            }
+                        })*/
+
+                    })
+
+                    ///return Promise.resolve('processing')
+
+                    
+
+                }).catch(r => {
+
+                    return Promise.resolve(r)
+
+                })
+            },
+            need : function(){
+
+                return new Promise((resolve, reject) => {
+                    self.app.user.isState(function (state) {
+
+                        if (state) {
+
+                            var processing = _.toArray((self.sdk.node.transactions.temp.userInfo || {})).length > 0 || 
+				
+                            (self.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.sdk.address.pnet().address + '.userInfo.length') > 0 )
+
+                            if (processing) {
+                                return reject('processing')
+                            }
+
+                            var me = self.sdk.user.storage.me
+
+                            if(!me || _.isEmpty(me)){
+                                return reject('me')
+                            }   
+
+                            if(me.temp || me.relay || me.fromstorage){
+                                return reject('temprelaystorage')
+                            }  
+                            
+                            if(me.keys && me.keys.length){
+                                return reject('exist')
+                            }
+
+                            return resolve(me)
+                        }
+                        else
+                        {
+                            reject('state')
+                        }
+    
+                    })
+                })
+            }
+        },
+
         user: {
 
             storage: {
@@ -3994,7 +4606,7 @@ Platform = function (app, listofnodes) {
                                 u.address = a
                                 u.regdate = new Date();
                                 u.regdate.setTime(info.regdate * 1000);
-
+                                u.fromstorage = true
 
                                 info = u
                                 self.sdk.usersl.storage[a] = u
@@ -4063,6 +4675,7 @@ Platform = function (app, listofnodes) {
                                 ui = relays[relays.length - 1]
 
                                 var u = new pUserInfo();
+
 
                                 u._import(ui)
 
@@ -4139,7 +4752,12 @@ Platform = function (app, listofnodes) {
 
                 var adrref = localStorage[adr + 'subscribeRef'];
 
+                
+
                 if (adrref) {
+
+                    delete localStorage['ref'];
+                    
                     self.sdk.users.get(adrref, function () {
 
                         var r = self.sdk.usersl.storage[adrref]
@@ -4610,30 +5228,19 @@ Platform = function (app, listofnodes) {
             
             },
             load: function () {
-                this.clearlocalstorage()
 
                 var old = {}
 
-                try {
-                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}")
-                }
-                catch (e){}
+                try { old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}") } catch (e){}
 
                 this.import(old)
+
             },
             save: function () {
                 this.clearlocalstorage()
                 var e = this.export();
-
-
-                var old = {}
-
-                try {
-                    old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}")
-                }
-                catch (e){}
-
-                if (e.notifications.length && e.block > blockps && this.inited == true) {
+                
+                if (self.currentBlock && this.inited == true) {
 
                     e.notifications = _.uniq(e.notifications, function (n) {
 
@@ -4643,16 +5250,7 @@ Platform = function (app, listofnodes) {
 
                     })
                     
-                    e.notifications = firstEls(e.notifications, 100)
-
-
-                    if(old.block && e.block){
-                        if(old.block > e.block){
-
-
-                            return
-                        }
-                    }
+                    e.notifications = firstEls(e.notifications, 50)
 
                     localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
                 }
@@ -4664,7 +5262,7 @@ Platform = function (app, listofnodes) {
                 var n = this
 
                 _.each(n.storage.notifications, function (notification) {
-                    if (!notification.seen)
+                    if(!notification.seen)
                         notification.seen = self.app.platform.currentTime()
                 })
 
@@ -4677,7 +5275,6 @@ Platform = function (app, listofnodes) {
 
             seen: function (ids) {
                 var n = this
-
 
                 _.each(ids, function (id) {
 
@@ -4703,8 +5300,6 @@ Platform = function (app, listofnodes) {
                     var imp = {};
 
                     _.each(l, function (attr, i) {
-
-
                         if (attr.exported) {
                             var alias = new kits.alias[attr.type]()
 
@@ -4763,33 +5358,30 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            init: function (clbk) {
+            init: function () {
 
-
+                if(_OpenApi){
+                    return Promise.reject('openapi')
+                }
 
                 this.inited = false;
                 this.loading = true;
 
                 this.load();
-                this.storage.block || (this.storage.block = 1)
 
-                if (this.storage.block < blockps) this.storage.block = blockps;
-
+                this.storage.block || (this.storage.block = self.currentBlock)
                 this.storage.notifications || (this.storage.notifications = [])
 
-                _.each(this.storage.notifications, function (n) {
+                
+                    return this.getNotifications()
+    
 
-                    if (n.seen && n.seen.length >= 15) {
-                        n.seen = self.currentTime();
-                    }
+                
 
-                })
-
-
-                this.getNotifications(clbk)
             },
 
             wsBlock: function (block) {
+
                 this.storage.block = block;
 
                 this.save()
@@ -4838,10 +5430,7 @@ Platform = function (app, listofnodes) {
                     return -Number(n.nblock)
                 })
 
-
-
-                notifications = firstEls(notifications, 100)
-
+                notifications = firstEls(notifications, 50)
 
                 lazyEach({
                     array: notifications,
@@ -4914,46 +5503,52 @@ Platform = function (app, listofnodes) {
                 })
             },
 
-            getNotifications: function (clbk) {
+            getNotifications: function () {
                 var n = this;
 
-                if (!n.inited && !n.loading) {
-                    n.init()
+                if(!n.inited && !n.loading) {
+                    return n.init()
                 }
                 else {
 
+                    return self.sdk.node.get.timepr().then(r => {
 
-                    self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, n.storage.block]).then(d => {
+                        console.log("GETMISSED", n.storage.block)
 
-                        d || (d = [{ block: blockps, cntposts: 0 }])
+                        return self.sdk.missed.get(n.storage.block)
+                        
+                    })
 
-                        var notifications = (d || []).slice(1)
+                    .then(({block, notifications}) => {
 
-                            notifications = _.sortBy(notifications, function (n) {
-                                return -n.nblock
+                        n.storage.block = block.block
+
+                        return new Promise((resolve, reject) => {
+
+                            n.getNotificationsInfo(notifications, function () {
+
+                                n.inited = true;
+    
+                                n.save()
+    
+                                resolve()
+    
                             })
 
-
-                        n.getNotificationsInfo(notifications, function () {
-
-                            n.inited = true;
-
-                            n.storage.block = d[0].block
-
-                            n.save()
-
-                            if (clbk)
-                                clbk()
-
                         })
-        
+
+                        
+
                     }).catch(e => {
+
+
+                        console.log("E", e)
+
                         n.inited = false;
                         n.loading = false;
 
 
-                        if (clbk)
-                            clbk(e)
+                        return Promise.reject(e)
                     })
 
                 }
@@ -4968,8 +5563,54 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        missed : {
+            get : function(block){
+
+                var dummy = function(){
+                    return {
+                        block : {
+                            block : self.currentBlock,
+                            contentsLang : {},
+                            msg : 'newblocks'
+                        }
+                    }
+                }
+
+                console.log('block', block, self.currentBlock)
+
+                if(!self.sdk.address.pnet()) return Promise.reject('address')
+                if(!self.currentBlock) return Promise.reject('currentblock')
+                if(!block) return Promise.reject('block')
+               // if (self.currentBlock - block > 5000) block = self.currentBlock - 5000
+                if (self.currentBlock == block) return Promise.resolve(dummy())
+
+                
+                return self.app.api.rpc('getmissedinfo', [self.sdk.address.pnet().address, block]).then(d => {
+
+                    if(!d || !d.length){
+                        return Promise.resolve(dummy())
+                    }
+
+                    var notifications = d.slice(1) || []
+
+                        notifications = _.sortBy(notifications, function (n) {
+                            return -n.nblock
+                        })
+
+                    d[0].msg = 'newblocks'
+
+                    return Promise.resolve({
+                        block : d[0],
+                        notifications : notifications
+                    })
+    
+                })
+            }
+        },
+
         contents: {
             storage: {},
+            loading : {},
 
             groups: [{
                 key: 'art',
@@ -5030,19 +5671,31 @@ Platform = function (app, listofnodes) {
 
             get: function (address, clbk) {
 
-                var st = this.storage
+                var st = self.sdk.contents.storage
+                var ld = self.sdk.contents.loading
+                var gt = self.sdk.contents.get
 
                 var timecache = deep(st, address + ".time")
 
-
-
-                if (timecache && timecache.addMinutes(10) > (new Date())) {
+                if (timecache && timecache.addMinutes(100) > (new Date())) {
 
                     if (clbk)
                         clbk(deep(this, 'storage.' + address + ".data"))
 
                     return
                 }
+
+                if (ld[address]){
+                    retry(function(){
+                        return !ld[address]
+                    }, function(){
+                        gt(address, clbk)
+                    })
+
+                    return
+                }
+
+                ld[address] = true
 
                 self.app.api.rpc('getcontents', [address]).then(d => {
 
@@ -5052,9 +5705,7 @@ Platform = function (app, listofnodes) {
 
                         if (!d.content) return
 
-
                         try {
-
 
                             var c = {
                                 caption: filterXSS(decodeURIComponent(d.content), {
@@ -5064,10 +5715,8 @@ Platform = function (app, listofnodes) {
                                 time: new Date(d.time),
                                 txid: d.txid,
                                 settings: JSON.parse(d.settings),
-
                                 scoreCnt: Number(d.scoreCnt),
                                 scoreSum: Number(d.scoreSum),
-
                             }
 
                             c.score = 0;
@@ -5088,6 +5737,8 @@ Platform = function (app, listofnodes) {
                         time: new Date()
                     }
 
+                    ld[address] = false
+
                     if (clbk)
                         clbk(list)
         
@@ -5095,15 +5746,6 @@ Platform = function (app, listofnodes) {
                     
                 })
 
-
-                /*self.app.ajax.rpc({
-                    method: 'getcontents',
-                    parameters: [address],
-                    success: function (d) {
-
-                        
-                    }
-                })*/
 
             }
         },
@@ -5115,7 +5757,6 @@ Platform = function (app, listofnodes) {
         users: {
             loading: {},
             storage: {},
-
 
             extend: function (u, state) {
 
@@ -5169,7 +5810,6 @@ Platform = function (app, listofnodes) {
                     ext(temp)
                     ext(relay)
 
-
                 }
 
 
@@ -5187,7 +5827,7 @@ Platform = function (app, listofnodes) {
 
                     u._import(_.toArray(temp['userInfo'])[0])
                     u.regdate.setTime(self.currentTime() * 1000);
-
+                    u.temp = true
                 }
                 else {
 
@@ -5211,6 +5851,8 @@ Platform = function (app, listofnodes) {
                 }
 
                 u.address = a
+
+                if(self.real[a]) u.real = true
 
                 self.sdk.users.extend(u, state)
 
@@ -5302,6 +5944,9 @@ Platform = function (app, listofnodes) {
                     if (!a) return false
 
                     if (!s[a]) return true
+                    if (s[a].temp || s[a].relay || s[a].fromstorage) return true
+
+
                 })
 
                 addresses = _.uniq(addresses)
@@ -5317,7 +5962,6 @@ Platform = function (app, listofnodes) {
                         }
 
                         self.app.api.rpc('getuserprofile', params).then(d => {
-
 
                             _.each(addresses || [], function (a) {
 
@@ -5383,18 +6027,12 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
-                            /*if (!self.sdk.captcha.done && !_Node){
-                                if (clbk)
-                                    clbk(null, 'captcha')
-                            }
-                            else{*/
-
                             var prms = {
                                 address: a,
                                 captcha: self.sdk.captcha.done
                             }
 
-                            self.app.api.fetch('free/registration', prms).then(d => {
+                            self.app.api.fetchauth('free/registration', prms).then(d => {
                                 if (clbk)
                                         clbk(true)
 
@@ -5745,8 +6383,14 @@ Platform = function (app, listofnodes) {
                 else {
 
                     var lf = _.find(self.sdk.usersl.storage, function (s) {
-                        if (s.name == name) return true
+                        if (s.name.toLowerCase() == name.toLowerCase()) return true
                     })
+
+                    if(!lf){
+                        lf = _.find(self.sdk.users.storage, function (s) {
+                            if (s.name.toLowerCase() == name.toLowerCase()) return true
+                        })
+                    }
 
                     if (lf) {
                         if (clbk)
@@ -5767,29 +6411,8 @@ Platform = function (app, listofnodes) {
                                 clbk(null, e)
                             }
                         })
-
-                        /*self.app.ajax.rpc({
-                            method: 'getuseraddress',
-                            parameters: [name],
-                            success: function (d) {
-
-
-                                var r = deep(d, '0.address');
-
-                                if (clbk)
-                                    clbk(r || null)
-                            },
-                            fail: function (d, e) {
-
-                                if (clbk) {
-                                    clbk(null, e)
-                                }
-
-                            }
-                        })*/
+                        
                     }
-
-
 
                 }
 
@@ -5842,6 +6465,52 @@ Platform = function (app, listofnodes) {
                     return str.replace(sreg, cname)
                 }
 
+            }
+        },
+
+        newmaterials : {
+            storage : {},
+
+            clbks : {
+                update : {}
+            },
+
+            update : function(data){
+
+                var counts = {
+                    sub : data['sharesSubscr'] || 0,
+                    video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
+                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0))
+                }
+
+                _.each(counts, function(c, i){
+                    // c = rand(1,3)
+                    self.sdk.newmaterials.storage[i] = (self.sdk.newmaterials.storage[i] || 0) + c
+                })
+
+                _.each(self.sdk.newmaterials.clbks.update, function(u){
+                    u(self.sdk.newmaterials.storage)
+                })
+
+
+            },
+
+            clear : function(){
+
+                self.sdk.newmaterials.storage = {}
+
+                _.each(self.sdk.newmaterials.clbks.update, function(u){
+                    u(self.sdk.newmaterials.storage)
+                })
+            },
+
+            see : function(key){
+
+                self.sdk.newmaterials.storage[key] = 0
+
+                _.each(self.sdk.newmaterials.clbks.update, function(u){
+                    u(self.sdk.newmaterials.storage)
+                })
             }
         },
 
@@ -5912,7 +6581,7 @@ Platform = function (app, listofnodes) {
 
             make: function (text, clbk) {
 
-                self.app.api.fetch('makecaptcha', {
+                self.app.api.fetchauth('makecaptcha', {
                     captcha: this.current || null,
                     text: text
                 }).then(d => {
@@ -6217,6 +6886,56 @@ Platform = function (app, listofnodes) {
         },
 
         wallet: {
+
+            txbaseFeesMeta: function (address, outputs, keyPair, feerate, create, clbk) {
+                self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
+
+                    if (err) {
+                        if (clbk)
+                            clbk(err)
+                    }
+
+                    else {
+                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
+                        var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
+
+                        create([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
+
+
+                            if (err) {
+                                if (clbk)
+                                    clbk(err)
+                            }
+                            else {
+                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
+
+                                self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
+
+                                    if (err) {
+                                        if (clbk)
+                                            clbk(err)
+                                    }
+
+                                    else {
+                                        var ids = _.map(inputs, function (i) {
+                                            return {
+                                                txid: i.txId,
+                                                vout: i.vout
+                                            }
+                                        })
+
+                                        self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+                                        if (clbk)
+                                            clbk(null, d, inputs, _outputs)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                }, true)
+            },
+
             txbase: function (adresses, outputs, fee, feeMode, clbk, update) {
 
 
@@ -6250,7 +6969,8 @@ Platform = function (app, listofnodes) {
                                 allunspents.push(unspent)
                         })
                     })
-                    
+
+
                     var totalInWallet = _.reduce(allunspents, function (m, u) {
                         return m + Number(u.amount)
                     }, 0)
@@ -6261,7 +6981,6 @@ Platform = function (app, listofnodes) {
 
                         return
                     }
-
 
                     if (totalInWallet < total) {
                         if (clbk)
@@ -6386,62 +7105,20 @@ Platform = function (app, listofnodes) {
                     }
 
                     else{
-                        
-
                         if (clbk)
-                            clbk(null, d)
+                            clbk(null, txid)
                     }
                 })  
             },  
 
             txbaseFees: function (address, outputs, keyPair, feerate, clbk) {
-                self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
 
-                    if (err) {
-                        if (clbk)
-                            clbk(err)
-                    }
-
-                    else {
-                        var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-                        var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
-
-                        self.app.platform.sdk.wallet.txbase([address], _.clone(outputs), totalFees, null, function (err, inputs, _outputs) {
-
-                            if (err) {
-                                if (clbk)
-                                    clbk(err)
-                            }
-                            else {
-                                var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
-
-                                    if (err) {
-                                        if (clbk)
-                                            clbk(err)
-                                    }
-
-                                    else {
-                                        var ids = _.map(inputs, function (i) {
-                                            return {
-                                                txid: i.txId,
-                                                vout: i.vout
-                                            }
-                                        })
-
-                                        self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                        if (clbk)
-                                            clbk(null, d, inputs, _outputs)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                }, true)
+                self.sdk.wallet.txbaseFeesMeta(
+                    address, outputs, keyPair, feerate, 
+                    self.sdk.wallet.txbase, 
+                clbk)
+               
             },
-
 
             embed: function (outputs, embdedtext) {
                 if (embdedtext) {
@@ -6450,13 +7127,11 @@ Platform = function (app, listofnodes) {
 
                     var embed = bitcoin.payments.embed({ data: opreturnData });
 
-                    console.log('embed', embed, opreturnData)
 
                     outputs.push({
                         address: embed.output,
                         amount: 0
                     })
-
 
                 }
             },
@@ -6748,6 +7423,9 @@ Platform = function (app, listofnodes) {
             path: function (n) {
                 return "m/44'/0'/0'/" + n + "'"
             },
+            path33: function (n) {
+                return "m/33'/0'/0'/" + n + "'"
+            },
             pnetsimple: function (pubkey) {
 
                 var type = 'p2pkh';
@@ -6832,6 +7510,8 @@ Platform = function (app, listofnodes) {
             },
 
             dumpPrivKey: function (n) {
+
+
                 var d = bitcoin.bip32.fromSeed(self.app.user.private.value).derivePath(app.platform.sdk.address.path(n)).toWIF()
 
                 var keyPair = bitcoin.ECPair.fromWIF(d)
@@ -6956,7 +7636,6 @@ Platform = function (app, listofnodes) {
                     value : value
                 }
 
-                console.log('value', info)
 
                 self.sdk.activity.add('search', 'tags', info)
 
@@ -6994,7 +7673,6 @@ Platform = function (app, listofnodes) {
 
                         var error = self.sdk.activity.add(key, 'user', info)
 
-                        console.log("ERROR", error, info)
                     }
 
                 })
@@ -7026,7 +7704,6 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                console.log('key, type, info', key, type, info)
 
                 if(type == 'str' || type == 'tags'){
                     if(!info.value){
@@ -7275,6 +7952,501 @@ Platform = function (app, listofnodes) {
                             id : 'c18'
                         }
                     ],
+                    cmn : [
+                        {
+                            name : "模因/幽默",
+                            tags : ['模因', '幽默'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "政治",
+                            tags : ['政治'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "加密貨幣",
+                            tags : ['加密貨幣'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "科學/技術",
+                            tags : ['技術', '科學'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "信仰/宗教",
+                            tags : ['信仰', '宗教'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "金融/投資",
+                            tags : ['金融', '投資'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "汽車/賽車",
+                            tags : ['汽車', '賽車'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "運動",
+                            tags : ['運動'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "遊戲",
+                            tags : ['遊戲'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "空間",
+                            tags : ['空間'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "藝術/音樂",
+                            tags : ['藝術', '音樂'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "新聞/評論",
+                            tags : ['新聞', '評論'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "歷史",
+                            tags : ['歷史'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "故事時間",
+                            tags : ['故事時間'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "電影/動畫",
+                            tags : ['電影', '動畫'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "自然/動物",
+                            tags : ['自然', '動物'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "旅遊/建築",
+                            tags : ['旅遊', '建築'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "自己做",
+                            tags : ['自己做'],
+                            id : 'c18'
+                        }
+                    ],
+                    kr : [
+                        {
+                            name : "밈/유머",
+                            tags : ['밈', '유머'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "정치",
+                            tags : ['정치'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "암호 화폐",
+                            tags : ['암호 화폐'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "과학/기술",
+                            tags : ['기술', '과학'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "신앙/종교",
+                            tags : ['신앙', '종교'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "금융/투자",
+                            tags : ['금융', '투자'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "자동차/레이싱 ",
+                            tags : ['자동차', '레이싱'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "스포츠",
+                            tags : ['스포츠'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "계략",
+                            tags : ['계략'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "우주",
+                            tags : ['우주'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "예술/음악",
+                            tags : ['예술', '음악'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "뉴스/댓글",
+                            tags : ['뉴스', '댓글'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "역사",
+                            tags : ['역사'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "이야기의 시간",
+                            tags : ['이야기의시간'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "영화/애니메이션",
+                            tags : ['영화', '애니메이션'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "자연/동물",
+                            tags : ['자연', '동물'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "여행/건축",
+                            tags : ['여행', '건축'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "너 스스로해라",
+                            tags : ['너스스로해라'],
+                            id : 'c18'
+                        }
+                    ],
+                    fr : [
+                        {
+                            name : "Mèmes/Humour",
+                            tags : ['mèmes', 'humour'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Politique",
+                            tags : ['politique'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Crypto-monnaie",
+                            tags : ['Crypto-monnaie'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Technologie/Scientifique",
+                            tags : ['technologie', 'scientifique'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Foi/Religion ",
+                            tags : ['foi', 'religion'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Finances/Investissements",
+                            tags : ['finances', 'investissements'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "Voitures/Courses",
+                            tags : ['voitures', 'courses'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Sport",
+                            tags : ['Sport'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Jeux",
+                            tags : ['jeux'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Espace",
+                            tags : ['espace'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Art/Musique",
+                            tags : ['art', 'musique'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Nouvelles/Commentaires",
+                            tags : ['nouvelles', 'commentaires'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "histoire",
+                            tags : ['histoire'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Le temps des histoires",
+                            tags : ['Letempsdeshistoires'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Cinéma/Animation",
+                            tags : ['cinéma', 'animation'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Nature/Animaux",
+                            tags : ['nature', 'animaux'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Voyage/Architecture",
+                            tags : ['voyage', 'architecture'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Fais le toi-même",
+                            tags : ['faisletoi-même'],
+                            id : 'c18'
+                        }
+                    ],
+                    es : [
+                        {
+                            name : "Memes/Humor ",
+                            tags : ['мемы', 'юмор'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Política",
+                            tags : ['política'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Criptomoneda",
+                            tags : ['criptomoneda'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Tecnología/Сientífica ",
+                            tags : ['tecnología', 'científica'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Fe/Religión ",
+                            tags : ['fe', 'religión'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Finanzas/Inversiones",
+                            tags : ['finanzas', 'inversiones'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "Coches/Carreras",
+                            tags : ['coches', 'carreras'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Deporte",
+                            tags : ['deporte'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Juegos",
+                            tags : ['juegos'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Espacio",
+                            tags : ['espacio'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Arte/Musical ",
+                            tags : ['arte', 'musical'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Noticias/Comentarios",
+                            tags : ['noticias', 'comentarios'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "Historia",
+                            tags : ['historia'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Tiempo de historias",
+                            tags : ['Tiempo de historias'],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Cine/Animación",
+                            tags : ['cine', 'animación'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Naturaleza/Animales",
+                            tags : ['naturaleza', 'animales'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Viajes/Arquitectura",
+                            tags : ['viajes', 'arquitectura'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Hazlo tu mismo",
+                            tags : ['hazlotumismo'],
+                            id : 'c18'
+                        }
+                    ],
+                    de : [
+                        {
+                            name : "Meme/Humor ",
+                            tags : ['meme', 'hunor'],
+                            id : 'c2'
+                        },
+                        {
+                            name : "Politik",
+                            tags : ['politik'],
+                            id : 'c3'
+                        },
+                        {
+                            name : "Kryptowährung",
+                            tags : ['Kryptowährung'],
+                            id : 'c4'
+                        },
+                        {
+                            name : "Wissenschaft/Technologie ",
+                            tags : ['technologie', 'wissenschaft'],
+                            id : 'c5'
+                        },
+                        {
+                            name : "Glaube/Religion",
+                            tags : ['glaube', 'religion'],
+                            id : 'c55'
+                        },
+                        {
+                            name : "Finanzen/Investitionen ",
+                            tags : ['finanzen', 'investitionen'],
+                            id : 'c6'
+                        },
+                        {
+                            name : "Autos/Rennen ",
+                            tags : ['autos', 'rennen'],
+                            id : 'c7'
+                        },
+                        {
+                            name : "Sport",
+                            tags : ['sport'],
+                            id : 'c8'
+                        },
+                        {
+                            name : "Spielen",
+                            tags : ['spielen'],
+                            id : 'c9'
+                        },
+                        {
+                            name : "Weltraum",
+                            tags : ['weltraum'],
+                            id : 'c10'
+                        },
+                        
+                        {
+                            name : "Kunst/Musik ",
+                            tags : ['kunst', 'music'],
+                            id : 'c11'
+                        },
+                        
+                        {
+                            name : "Neuigkeiten/Kommentare",
+                            tags : ['neuigkeiten', 'kommentare'],
+                            id : 'c12'
+                        },
+                        
+                        {
+                            name : "Geschichte",
+                            tags : ['geschichte'],
+                            id : 'c13'
+                        },
+                        {
+                            name : "Zeit der Geschichten",
+                            tags : ['zeit der geschichten '],
+                            id : 'c14'
+                        },
+                        
+                        {
+                            name : "Film/Animation ",
+                            tags : ['film', 'animation'],
+                            id : 'c15'
+                        },
+                        
+                        {
+                            name : "Natur/Tiere ",
+                            tags : ['natur', 'tiere'],
+                            id : 'c16'
+                        },
+                        
+                        {
+                            name : "Reisen/Architektur ",
+                            tags : ['reisen', 'architektur'],
+                            id : 'c17'
+                        },
+                        
+                        {
+                            name : "Mach es selbst",
+                            tags : ['machesselbst'],
+                            id : 'c18'
+                        }
+                    ],
                 },
             },
 
@@ -7356,6 +8528,8 @@ Platform = function (app, listofnodes) {
 
                 if(!onlycategories)
                     tags = tags.concat(addedtags)
+
+                if(onlycategories === 'onlytags') tags = addedtags
 
                 return tags
             },  
@@ -7469,6 +8643,7 @@ Platform = function (app, listofnodes) {
                 _.each(self.sdk.categories.clbks.tags, function(f){
                     f(tag, s.tags[k][tag], k)
                 })
+                
 
                 return false
             },
@@ -7489,13 +8664,15 @@ Platform = function (app, listofnodes) {
 
             },
 
-            clear : function(_k){
+            clear : function(_k, onlytags){
                 var s = self.sdk.categories.settings
                 var k = _k || self.app.localization.key
 
                 if(!self.sdk.categories.data.all[k]) k = 'en'
 
-                s.selected[k] = {}
+                if(!onlytags)
+                    s.selected[k] = {}
+                    
                 s.tags[k] = {}
 
                 self.sdk.categories.save()
@@ -7679,21 +8856,6 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-                /*self.app.ajax.rpc({
-                    method: 'gettags',
-                    parameters: parameters,
-                    success: function (d) {
-
-                        
-
-                    },
-                    fail: function (d, e) {
-
-                        
-
-                    }
-
-                })*/
             },
 
             filterEx: function (tags) {
@@ -7710,18 +8872,30 @@ Platform = function (app, listofnodes) {
             getfastsearch: function (clbk) {
                 var s = this.storage;
 
-                this.get('', 150, self.currentBlock - 20000, function (d) {
+                var t = this
 
-                    if (d && d.length) {
-                        s.all = _.map(d, function (t) {
-                            return t.tag
-                        })
-                    }
+                retry(function(){
+                    return self.currentBlock
+                }, function(){
 
-                    if (clbk) {
-                        clbk()
-                    }
+                    var round = (a, b) => a - a % b
+
+                    t.get('', 150, round(self.currentBlock, 1000) - 20000, function (d) {
+
+                        if (d && d.length) {
+                            s.all = _.map(d, function (t) {
+                                return t.tag
+                            })
+                        }
+    
+                        if (clbk) {
+                            clbk()
+                        }
+                    })
+
                 })
+
+                
             },
 
             cloudUpdate: function (clbk) {
@@ -7731,7 +8905,7 @@ Platform = function (app, listofnodes) {
             cloud: function (clbk, update) {
 
                 var s = this.storage;
-
+                var t = this
                 if (s.cloud && !update) {
                     if (clbk) {
 
@@ -7741,15 +8915,22 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
-                    this.get('', 50, (self.currentBlock - 23700), function (d, error) {
+                    var round = (a, b) => a - a % b
 
-                        if (!error)
-                            s.cloud = d
+                    retry(function(){
+                        return self.currentBlock
+                    }, function(){
 
-                        if (clbk) {
-                            clbk(s.cloud, error)
-                        }
+                        t.get('', 50, (round(self.currentBlock, 1000) - 23700), function (d, error) {
 
+                            if (!error)
+                                s.cloud = d
+
+                            if (clbk) {
+                                clbk(s.cloud, error)
+                            }
+
+                        })
                     })
 
                 }
@@ -8465,6 +9646,12 @@ Platform = function (app, listofnodes) {
 
                 var comment = deep(self.sdk, 'comments.storage.all.' + upvote.comment.v)
 
+                var ma = self.app.platform.sdk.address.pnet().address
+
+                _.each(self.sdk.comments.upvoteClbks, function (c) {
+                    c(null, comment, upvote.value.v, ma, true)
+                })
+
                 self.sdk.node.transactions.create.commonFromUnspent(
 
                     upvote,
@@ -8477,7 +9664,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(error)
+                                c(error, comment, null, ma)
                             })
                         }
                         else {
@@ -8501,7 +9688,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(null, comment, upvote.value.v, self.app.platform.sdk.address.pnet().address)
+                                c(null, comment, upvote.value.v, ma)
                             })
 
                         }
@@ -8653,321 +9840,6 @@ Platform = function (app, listofnodes) {
             }
         },
 
-        comments2: {
-            storage: {},
-
-            sendclbks: {
-            },
-
-            find: function (txid, id, pid) {
-                var s = self.sdk.comments.storage;
-
-                var comments = deep(s, txid + '.' + (pid || '0')) || [];
-
-                var comment = _.find(comments, function (c) {
-                    return c.id == id
-                })
-
-                return comment
-            },
-
-            address: function (txid, id, pid) {
-
-                var comment = self.sdk.comments.find(txid, id, pid);
-
-                if (comment) return comment.address
-
-                return ''
-            },
-
-            users: function (comments, clbk) {
-                var addresses = _.map(comments, function (r) {
-                    return r.address
-                })
-
-                self.sdk.users.get(addresses, function () {
-                    if (clbk)
-                        clbk()
-                }, true)
-            },
-
-            info: function (ids, clbk) {
-                var s = self.sdk.comments.storage;
-                var i = self.sdk.comments.ini;
-
-                self.app.api.rpc('getcomments', ['', '', ids]).then(d => {
-
-                    var m = i(d);
-
-                    if (clbk)
-                        clbk(null, m)
-        
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(e)
-                    }
-                })
-
-                
-            },
-
-            checkSign: function (comment, signature, pubkey) {
-
-                var verify = false
-
-                return true
-
-                try {
-                    var keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(pubkey, 'hex'))
-
-                    var str = comment.serialize();
-
-                    var hash = Buffer.from(bitcoin.crypto.hash256(str), 'utf8')
-
-                    verify = keyPair.verify(hash, Buffer.from(signature, 'hex'));
-
-                    if (!verify) {
-                        //console.log(comment)
-                        //console.log(str, signature, pubkey)
-                    }
-                }
-
-                catch (e) {
-
-                }
-
-                return verify
-
-            },
-
-            toLastComment: function (comment) {
-
-                var lc = {
-                    address: comment.address,
-                    answerid: comment.answerid,
-                    parentid: comment.parentid,
-                    id: comment.id,
-                    children: comment.children || 0,
-                    postid: comment.txid,
-                    block: self.currentBlock,
-                    msg: JSON.stringify({
-                        m: comment.message,
-                        i: comment.images
-                    }),
-                    time: comment.time,
-                    timeUpd: comment.timeUpd,
-                    pubkey: comment.pubkey,
-                    signature: comment.signature
-                }
-
-                return lc;
-            },
-
-            ini: function (d) {
-
-
-                var c = _.map(d || [], function (data) {
-                    var comment = new pComment();
-
-                    comment.setTime(data.time, data.timeUpd)
-
-                    comment.txid = data.postid
-                    comment.children = data.children
-                    comment.address = data.address;
-                    comment.id = data.id
-
-                    comment.parentid = data.parentid
-                    comment.answerid = data.answerid
-
-                    comment.signature = data.signature
-                    comment.pubkey = data.pubkey
-
-                    var msg = {};
-
-                    try {
-
-                        msg = JSON.parse(data.msg)
-
-                    }
-                    catch (e) {
-                        msg = {
-                            m: msg
-                        }
-                    }
-
-                    
-
-                    comment._import(msg)
-
-                    comment.verify = self.sdk.comments.checkSign(comment, data.signature, data.pubkey)
-
-                    return comment
-                })
-
-                c = _.filter(c, function (comment) {
-                    if (comment.verify) return true
-                })
-
-                return c
-            },
-
-            get: function (txid, pid, clbk, ccha) {
-
-                var s = self.sdk.comments.storage;
-                var i = self.sdk.comments.ini;
-
-                s[txid] || (s[txid] = {})
-
-
-                /*if(!ccha && ((!pid && s[txid]['0']) || s[txid][pid])){
-
-                    if (clbk)
-                        clbk(s[txid][pid])
-
-                    return
-                }*/
-
-                self.app.api.rpc('getcomments', [txid, pid || '']).then(d => {
-
-                    var c = i(d)
-
-                    s[txid][pid || '0'] = c
-
-                    self.sdk.comments.users(c, function () {
-
-                        if (clbk)
-                            clbk(c)
-
-                    })
-        
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(e)
-                    }
-                })
-
-               
-            },
-
-            last: function (clbk) {
-
-                var ini = this.ini
-
-                self.app.api.rpc('getlastcomments', ['5', '', self.app.localization.key]).then(d => {
-
-                    if (clbk)
-                        clbk(ini(d))
-        
-                }).catch(e => {
-                    if (clbk)
-                        clbk([])
-                })
-
-               
-            },
-
-            send: function (txid, comment, pid, aid, clbk, editid, fid) {
-
-                var s = self.sdk.comments.storage;
-
-                var keyPair = self.app.user.keys();
-
-                //comment.message.v = 'tst'
-                //
-
-
-
-                var signature = keyPair.sign(Buffer.from(bitcoin.crypto.hash256(comment.serialize()), 'utf8'));
-
-                var id = editid || makeid();
-
-                var parameters = [
-                    id,
-                    txid,
-                    self.app.platform.sdk.address.pnet().address,
-                    keyPair.publicKey.toString('hex'),
-                    signature.toString('hex'),
-                    JSON.stringify(comment.export()),
-                    pid || '',
-                    aid || ''
-                ];
-
-                var verify = keyPair.verify(
-                    bitcoin.crypto.hash256(comment.serialize()),
-                    Buffer.from(signature.toString('hex'), 'hex')
-                );
-
-                self.app.api.rpc('sendcomment', parameters).then(d => {
-
-                    var temptime = self.currentTime()
-
-                    var alias = comment.alias(id, temptime, temptime, 0, self.app.platform.sdk.address.pnet().address);
-
-                    var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid);
-
-                    if (share && (!pid || pid == '0')) share.comments++
-
-                    alias.parentid = pid || ''
-                    alias.answerid = aid || ''
-
-                    alias.pubkey = parameters[3]
-                    alias.signature = parameters[4]
-
-                    s[txid] || (s[txid] = {})
-
-                    s[txid][pid || '0'] || (s[txid][pid || '0'] = [])
-
-                    var i = findIndex(s[txid][pid || '0'], function (c) {
-                        if (c.id == editid) return true;
-                    })
-
-                    if (!editid || i == -1) {
-                        s[txid][pid || '0'].push(alias)
-                    }
-                    else {
-
-                        alias.children = s[txid][pid || '0'][i].children
-
-                        s[txid][pid || '0'][i] = alias
-
-                    }
-
-
-
-                    alias.verify = true
-
-                    if (clbk)
-                        clbk(null, alias)
-
-                    _.each(self.sdk.comments.sendclbks, function (c) {
-                        c(null, alias, txid, pid, aid, editid, fid)
-                    })
-        
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(e)
-                    }
-
-                    _.each(self.sdk.comments.sendclbks, function (c) {
-                        c(e)
-                    })
-                })
-
-                /*self.app.ajax.rpc({
-                    method: 'sendcomment',
-                    parameters: parameters,
-                    success: function (d) {
-
-                        
-
-                    },
-                    fail: function (d, e) {
-                        
-                    }
-                })*/
-            }
-        },
-
         node: {
             storage: {
                 balance: {
@@ -9036,34 +9908,53 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                time: function (clbk) {
+                timepr : function(){
 
-                    self.app.api.rpc('getnodeinfo').then(d => {
+                    if (self.lasttimecheck){
+
+                        var d = new Date()
+
+                        if(self.lasttimecheck.addSeconds(10) > d){
+                            return Promise.resolve()
+                        }
+                    }
+
+                    return self.app.api.rpc('getnodeinfo').then(d => {
 
                         var t = deep(d, 'time') || 0
-                        self.currentBlock = localStorage['lastblock'] || deep(d, 'lastblock.height') || 0
-                        self.timeDifference = 0;
 
-                        blockps = self.currentBlock - 30000;
+                        self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
+                        self.timeDifference = 0;
+                        
+
+                        localStorage['lastblock'] = self.currentBlock
 
                         if (t) {
 
                             var d = new Date()
+
+                            self.lasttimecheck = d
 
                             self.timeDifference = t - Math.floor((d.getTime()) / 1000)
                             self.timeDifferenceTimeZone = t - Math.floor((d.getTime() + (d.getTimezoneOffset() * 60000)) / 1000);
 
                         }
 
-                        if (clbk)
-                            clbk(t)
+                        return Promise.resolve()
         
+                    })
+                },
+
+                time: function (clbk) {
+
+                    self.sdk.node.get.timepr().then(() => {
+                        if (clbk)
+                            clbk()
                     }).catch(e => {
                         if (clbk) {
                             clbk(null, e)
                         }
                     })
-
 
                 },
 
@@ -9075,52 +9966,7 @@ Platform = function (app, listofnodes) {
 
                     return self.nodes[1]
                 },
-                callNode: function (action, clbk, cashe) {
-
-                    if (cashe && self.sdk.node.loading[cashe]) {
-                        retry(function () {
-
-                            return !self.sdk.node.loading[cashe]
-
-                        }, function () {
-
-                            if (clbk)
-                                clbk(self.sdk.node.loading[cashe])
-
-                        })
-                    }
-                    else {
-                        if (cashe)
-                            self.sdk.node.loading[cashe] = true;
-
-                        self.app.api.rpc(action).then(d => {
-
-                            if (cashe) {
-                                self.sdk.node.storage[cashe] = d;
-                                self.sdk.node.loading[cashe] = false;
-                            }
-
-
-                            if (clbk)
-                                clbk(d)
-    
-                        }).catch(e => {
-                            if (clbk)
-                                clbk(null, e)
-                        })
-
-                        
-                    }
-
-                },
-
-                blockNumber: function (clbk) {
-                    this.callNode('getbestblockhash', function (num) {
-
-                        self.currnetBlock = num;
-
-                    }, 'blocknumber')
-                },
+           
 
                 balance: function (address, clbk) {
 
@@ -9214,7 +10060,6 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
-                        console.log(meta, e)
 
                         return e
                     },
@@ -9511,6 +10356,8 @@ Platform = function (app, listofnodes) {
                     var storage = this.storage;
                     storage.trx || (storage.trx = {})
 
+                 
+
                     var loading = this.loading;
 
                     var loaded = [];
@@ -9520,15 +10367,17 @@ Platform = function (app, listofnodes) {
 
                     if (!_.isArray(txids)) txids = [txids];
 
+                    var originaltxids = _.filter(txids, function(id){return id})
+
                     var waianother = function (clbk) {
 
                         retry(function () {
 
-                            anotherloading = _.filter(anotherloading, function (id) {
-                                if (!storage.trx[id])
 
-                                    return true;
+                            anotherloading = _.filter(anotherloading, function (id) {
+                                if (loading[id]) return true;
                             })
+
 
                             if (!anotherloading.length) return true;
 
@@ -9656,9 +10505,14 @@ Platform = function (app, listofnodes) {
                     }
                     else {
                         waianother(function () {
+
+                            var loaded = _.map(originaltxids, function(id){
+                                return storage.trx[id]
+                            })
+
                             if (clbk)
                                 clbk(loaded, null, {
-                                    count: anotherloadinglength
+                                    count: loaded.length
                                 }, true)
                         })
                     }
@@ -9747,11 +10601,11 @@ Platform = function (app, listofnodes) {
                         var _u = data.userprofile
 
                         if (_u) {
-                            var u = self.sdk.users.prepareuser(_u, data.address, state)
+                            var u = self.sdk.users.prepareuser(_u, _u.address, state)
 
                             //self.sdk.users.storage[data.address] = u;
 
-                            self.sdk.usersl.storage[data.address] = u;
+                            self.sdk.usersl.storage[_u.address] = u;
 
                         }
 
@@ -9774,6 +10628,7 @@ Platform = function (app, listofnodes) {
 
                             var shares = self.sdk.node.shares.transform(d, state)
 
+                            
                             self.sdk.node.shares.takeusers(d, state)
 
                             if (clbk)
@@ -9795,17 +10650,50 @@ Platform = function (app, listofnodes) {
 
                     var storage = this.storage;
 
-
-
                     self.app.user.isState(function (state) {
 
-                        self.app.api.rpc(method, parameters).then(d => {
+                        self.app.api.rpc(method, parameters, {
+                            rpc : {
+                                ex : true
+                            }
+                        }).then(d => {
 
                             d.contents || (d.contents = [])
 
+                            var clear = d.contents
+
                             d.contents = self.sdk.node.shares.transform(d.contents, state)
 
-                            self.sdk.node.shares.takeusers(d.contents, state)
+                            self.sdk.node.shares.takeusers(clear, state)
+
+                            if (d.users)
+                                self.sdk.node.shares.takeusers(_.map(d.users, function(u){
+                                    return {
+                                        userprofile : u
+                                    }
+                                }), state)
+
+                            if(d.videos){
+
+                                var s = self.sdk.videos.storage
+                
+                                var lmap = _.map(d.videos, function(i, l){
+
+                                    var meta = parseVideo(l)
+
+                                    return {
+                                        meta : meta,
+                                        link : l
+                                    }
+                                })
+
+                                self.sdk.videos.catchPeertubeLinks(d.videos, lmap)
+
+                                _.each(lmap, function(l){
+                                    s[l.link] = s[l.meta.id] = l
+                                })
+
+                            }
 
                             if (clbk)
                                 clbk(d)
@@ -9845,27 +10733,59 @@ Platform = function (app, listofnodes) {
                         else {
                             //var parameters = ['30', '259200', 600000, self.app.localization.key];
 
-                            var period = self.sdk.node.shares.parameters.stor.period || '259200' ///self.sdk.node.shares.parameters.defaults.period 
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period 
 
                             var page = p.page || 0
                             
                             var parameters = []
                             
                             parameters = ['30', period, (period * page) || '', self.app.localization.key]
-
-                            console.log("['30', period, (period * page) || '', self.app.localization.key]", ['30', period, (period * page) || '', self.app.localization.key])
                             
-                            parameters = ['30', '259200', '', self.app.localization.key];
-                            //if (p.address) parameters.push("" /*p.address*/)
+                            //parameters = ['30', '259200', '', self.app.localization.key];
+
+                            if(p.video){
+                                parameters.push('video')
+                            }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
                                 if (shares) {
 
-                                    storage[key] = shares;
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
 
-                                    if (clbk)
-                                        clbk(storage[key], error, p)
+                                        if (state) {
+                                            _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                                _.each(shares, function (s) {
+                                                    if (s.address == block.address) s.blocking = true;
+                                                })
+                                            })
+                                        }
+
+
+
+                                        if(p.video){
+                                            shares = _.filter(shares, function(share){
+
+                                                if(!share.url) return
+
+                                                var meta = app.platform.parseUrl(share.url);
+
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
+
+                                                    if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
+                                                        return true
+                                                }
+                                            })
+                                        }
+
+                                        storage[key] = shares;
+
+                                        if (clbk)
+                                            clbk(storage[key], error, p)
+
+                                    })
+
+                                    
                                 }
 
                                 else {
@@ -10033,7 +10953,16 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                hierarchical: function (p, clbk, cache) {
+                getusercontents : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'getusercontents'
+                    })
+                },
+
+                hierarchical: function (p, clbk, cache, methodparams) {
+
+                    if(!methodparams) methodparams = {}
 
                     /*
 
@@ -10060,7 +10989,9 @@ Platform = function (app, listofnodes) {
                             p.address = self.sdk.address.pnet().address;
                         }
 
-                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + (p.height || "")  + "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.video ? "video" : '')
+                        var key = p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.video ? "video" : '')
+
+                        if(p.author) key = key + p.author
 
                         var storage = self.sdk.node.shares.storage;
                         var s = self.sdk.node.shares;
@@ -10090,6 +11021,8 @@ Platform = function (app, listofnodes) {
                         else {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
+          
+
                             if (!p.txid) {
                                 if (storage[key].length) {
 
@@ -10115,13 +11048,17 @@ Platform = function (app, listofnodes) {
 
                             /////temp
 
-                            if (p.video){
+                            if (p.video && !self.videoenabled){
                                 p.tagsfilter = ['video']
                             }
 
+
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter/*, p.video ? 'video' : ''*/];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.video && self.videoenabled ? 'video' : ''];
+
+                            if(p.author) parameters.unshift(p.author)
+
 
                             s.getex(parameters, function (data, error) {
 
@@ -10134,10 +11071,11 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                                console.log('data.contents', data.contents)
                                 p.blocknumber = blocknumber
 
+
                                 if (shares) {
+
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
 
@@ -10148,6 +11086,8 @@ Platform = function (app, listofnodes) {
                                                 })
                                             })
                                         }
+
+
 
                                         if(p.video){
                                             shares = _.filter(shares, function(share){
@@ -10163,6 +11103,8 @@ Platform = function (app, listofnodes) {
                                                 }
                                             })
                                         }
+
+
 
                                         _.each(shares || [], function (s) {
                                             if (p.count > 0) {
@@ -10186,7 +11128,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, 'gethierarchicalstrip')
+                            }, methodparams.method || 'gethierarchicalstrip')
 
 
                         }
@@ -10491,6 +11433,8 @@ Platform = function (app, listofnodes) {
                 send: function (tx, clbk) {
                     var hex = tx.toHex();
 
+                    ///02000000c461916001a051befc35b2b9e291351daf25d9cfe0a69804d04609f929b24715ffe8aaac72010000006a47304402201eaea2d4c04c416f7dbdd3745b29fc1d49eeb7c826cfddf249065193897e22a402205372a4be6a6c0b4a4f74ba86b2fe62c7895d83ab7c17049cc6d764f03d5cf4e0012102e854216811757649179139c8136c8d2e0bfadf92e71f8840752ba6e526e568e1ffffffff0280969800000000005e76a914aa66691afeeb4399803dcfb1ef47ed1024e1f9928763ad75a8207ca94ddc1031a8ce4fac4e3b8d61fd232b491a19d08e4b51f51d89f70a9eccf7886776a914b55078daf7f7b3311237309ddb1ba6af6d4ad4a888ad0311ba11b168bb750600000000001976a914b55078daf7f7b3311237309ddb1ba6af6d4ad4a888ac00000000
+
                     self.app.api.rpc('sendrawtransaction', [hex]).then(d => {
 
                         if (clbk)
@@ -10522,6 +11466,9 @@ Platform = function (app, listofnodes) {
 
                     if (a) {
                         self.sdk.node.transactions.temp = JSON.parse(self.app.settings.get(self.sdk.address.pnet().address, 'temp2') || "{}")
+
+
+                        console.log('self.sdk.node.transactions.temp', self.sdk.node.transactions.temp)
                     }
                     else {
                         self.sdk.node.transactions.temp = {};
@@ -10568,11 +11515,6 @@ Platform = function (app, listofnodes) {
                     var finded = null;
 
                     /*return*/
-
-
-                    if (dbg)
-                        console.log('txid, vout', txid, vout)
-
 
                     _.each(t, function (ts, w) {
                         
@@ -10621,12 +11563,14 @@ Platform = function (app, listofnodes) {
 
                 checkTemps: function (clbk) {
 
+                    console.log("checkTemps", this.temp)
+
                     /*if (clbk)
                         clbk()
                     return*/
 
-                    var c = this.checkTemp
-                    var t = this.temp;
+                    var c = self.sdk.node.transactions.checkTemp
+                    var t = self.sdk.node.transactions.temp;
 
                     var temps = [];
 
@@ -10637,6 +11581,9 @@ Platform = function (app, listofnodes) {
                             temps.push(alias)
                         })
                     })
+
+
+                    console.log('temps', temps)
 
                     lazyEach({
                         array: temps,
@@ -10814,7 +11761,7 @@ Platform = function (app, listofnodes) {
                         _.each(s.unspent, function (unspents) {
 
                             var r = _.find(unspents, function (u) {
-                                return u.txid == id
+                                return u.txid == id.txid && u.vout == id.vout
                             })
 
                             if (r) {
@@ -10839,7 +11786,7 @@ Platform = function (app, listofnodes) {
                         _.each(s.unspent, function (unspents) {
 
                             var r = _.find(unspents, function (u) {
-                                return u.txid == id
+                                return u.txid == id.txid && u.vout == id.vout
                             })
 
                             if (r) {
@@ -11156,6 +12103,7 @@ Platform = function (app, listofnodes) {
                                         clbk(a)
         
                                 }).catch(e => {
+
                                     if (!s.unspent)
                                         s.unspent = {};
 
@@ -11192,7 +12140,7 @@ Platform = function (app, listofnodes) {
                         if (loadingAddresses.length) {
 
                             retry(function () {
-
+                                
                                 var _loadingAddresses = _.filter(addresses, function (address) {
                                     if (s.unspentLoading[address])
 
@@ -11264,8 +12212,8 @@ Platform = function (app, listofnodes) {
 
                             self.app.api.rpc('txunspent', [[address], 1, 9999999]).then(d => {
 
-                                if (!s.unspent)
-                                        s.unspent = {};
+                                if(!s.unspent)
+                                    s.unspent = {};
 
 
                                     s.unspent[address] = d || [];
@@ -11348,6 +12296,153 @@ Platform = function (app, listofnodes) {
                     }
                 },
 
+                htls : {
+                    plcreate : function(id, amount, inputs, dummyoutputs, clbk){
+
+                        var lock = 0
+                        
+                        self.sdk.node.shares.getbyid(id, function() {
+                            var item = self.sdk.node.shares.storage.trx[id];
+
+                            if(!item) return clbk('item')
+
+                            //lock = 10
+
+                            var time = 965504 + 200 //item.time  self.currentBlock + lock
+
+                            var address = item.address
+
+                            var {txb, payment} = self.sdk.node.transactions.htls.create(inputs, dummyoutputs, id, address, amount, time)
+
+                            if (clbk) clbk(txb, {
+                                address,
+                                time,
+                                //lock,
+                                payment,
+                                htlc : payment.htlc,
+                                //hash,
+                                tdif : time - self.currentBlock
+                            })
+
+                        })
+                    },
+
+                    create : function(inputs, dummyoutputs, id, reciever, amount, time){
+
+                        var multisha = function(str, count){
+
+                            if(!count) count = 100
+                    
+                            var h = Buffer.from(str)
+                    
+                            for (var i = 0; i < count; i++){
+                                h = bitcoin.crypto.sha256(h)
+                            }
+                    
+                            return h.toString('hex')
+                        }
+                    
+                        var createhash = function(key, seed){
+                    
+                            var str = multisha(multisha(key) + '_' + seed, 10)
+                    
+                            return str
+                        }
+                    
+                        var crrc = function(key, txid){
+                            return createhash(key, txid)
+                        }
+
+                        var keyPair = self.app.user.keys()
+                        var privatekey = keyPair.privateKey
+                        var secret = crrc(privatekey.toString('hex'), id)
+
+                        var payment = bitcoin.payments.htlc({
+                            htlc : {
+                                secret,
+                                lock : time,
+                                reciever,
+                                sender : self.sdk.address.pnetsimple(keyPair.publicKey).address
+                            }
+                        });
+
+                        var htlcout = _.find(dummyoutputs, function(dout){
+                            return dout.key == 'htlc'
+                        })
+
+                        if(!htlcout){
+                            return Promise.reject('htlcout')
+                        }
+                        
+                        var outputs = [{ 
+                            scriptPubKey : payment.output, 
+                            amount : htlcout.amount
+                        }]
+
+                        var indexes = {}
+
+                        _.each(dummyoutputs, function(dop){
+                            if(dop.address) {
+                                indexes[outputs.push(dop) - 1] = true
+
+                                //dop.amount = dop.amount - 0.02
+                            }
+                        })
+
+                        console.log("htlc",{
+                            secret,
+                            lock : time,
+                            reciever,
+                            sender : self.sdk.address.pnetsimple(keyPair.publicKey).address
+                        })
+                        
+
+                        var txb = self.sdk.node.transactions.create.wallet(inputs, outputs, null, true)
+
+                        return {txb, payment, secret}
+                    },
+
+                    withdrawal : function(prevoutputs, destination, fees, htlc){
+                        if(!htlc) htlc = {}
+
+                        var total = 0
+
+                        if(!fees) fees = 0
+
+                        var inputs = _.map(prevoutputs, function(output){
+
+                            total += output.value
+
+                            return {
+                                vout : output.n,
+                                scriptPubKey : output.scriptPubKey.hex,
+                                amount : output.value,
+                                type : output.scriptPubKey.type,
+                                txid : output.txid
+                            }
+                        })
+
+                        var outputs = [{
+                            address : destination,
+                            amount : total - fees
+                        }]
+
+                        var tx = self.sdk.node.transactions.create.wallet(inputs, outputs, null, false, htlc)
+
+
+                        self.sdk.node.transactions.send(tx, function(d, err){
+
+
+                            if(err){
+                                sitemessage(err)
+                            }
+
+                        })
+
+
+                    }
+                },
+
                 create: {
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
@@ -11369,6 +12464,13 @@ Platform = function (app, listofnodes) {
                         }
 
 
+                        if (obj.checkloaded && obj.checkloaded()){
+                            if (clbk) {
+                                clbk(null, 'resourses')
+                            }
+
+                            return;
+                        }
 
                         self.sdk.node.transactions.get.unspent(function (unspent) {
 
@@ -11393,7 +12495,12 @@ Platform = function (app, listofnodes) {
 
                             var inputs = [];
 
-                            if (unspent.length) {
+                            var totalInputs = 0;
+
+                            if (unspent.length && !(obj.donate && obj.donate.v.length)) {
+
+                                totalInputs += unspent[unspent.length - 1].amount;
+
                                 inputs = [{
 
                                     txId: unspent[unspent.length - 1].txid,
@@ -11403,8 +12510,8 @@ Platform = function (app, listofnodes) {
 
                                 }]
                             }
-
-                            if (unspent.length > 60) {
+                            //remove for donations
+                            if (unspent.length > 60 && !(obj.donate && obj.donate.v.length)) {
                                 inputs.push({
                                     txId: unspent[unspent.length - 2].txid,
                                     vout: unspent[unspent.length - 2].vout,
@@ -11414,8 +12521,61 @@ Platform = function (app, listofnodes) {
 
                             }
 
+                            /// ++++
 
-                            self.sdk.node.transactions.create[obj.type](inputs, obj, function (a, er, data) {
+
+                            var feerate = TXFEE;
+
+                            if (obj.donate && obj.donate.v.length){
+
+                                feerate = 0.00001;
+
+                                var totalDonate = 0;
+
+                                obj.donate.v.forEach(function(d){
+
+                                    totalDonate += Number(d.amount);
+
+                                })
+
+                                var lastUnspent = _.clone(unspent).reverse();
+
+                                for (var u of lastUnspent){
+
+                                    if (totalDonate + feerate >= totalInputs){
+
+                                        totalInputs += u.amount;
+
+                                        inputs.push({
+                                            txId: u.txid,
+                                            vout: u.vout,
+                                            amount: u.amount,
+                                            scriptPubKey: u.scriptPubKey,
+                                        })
+
+                                    } else {
+
+                                        break;
+                                    }
+
+                                }  
+
+                                if (totalDonate >= totalInputs){
+
+                                    sitemessage(self.app.localization.e('e13117'))
+
+                                    if (clbk){
+                                        clbk(null, self.app.localization.e('e13117'));
+                                    }
+
+                                    return;
+
+                                }
+
+                                feerate = Number((feerate * smulti).toFixed(0));
+                            } 
+
+                            self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
 
                                 if (!a) {
                                     if ((er == -26 || er == -25 || er == 16) && !p.update) {
@@ -11434,7 +12594,12 @@ Platform = function (app, listofnodes) {
                                 if (regs && (regs == 4)) {
 
                                     self.sdk.registrations.add(addr, 5)
+                                    
 
+                                    platform.matrixchat.update()
+
+                                    var cm = deep(app, 'modules.menu.module.restart')
+                                    if (cm) cm()
                                 }
 
                                 if (clbk) {
@@ -11444,77 +12609,65 @@ Platform = function (app, listofnodes) {
 
                             }, p, telegram)
 
-                        }, deep(p, 'address.address'), p.update, telegram)
+                        }, deep(p, 'address.address'), p.update)
                     },
 
-                    wallet: function (inputs, ouputs, _kp) {
+                    wallet: function (inputs, outputs, _kp, unfinalize, htlc) {
+
+                        if(!htlc) htlc = {}
 
                         var keyPair = _kp || self.app.user.keys()
-
                         var txb = new bitcoin.TransactionBuilder();
-
-                        txb.addNTime(self.timeDifference || 0)
-
+                            txb.addNTime(self.timeDifference || 0)
                         var k = smulti;
+
+
+                        console.log("txb", txb, inputs, outputs)
 
                         _.each(inputs, function (i) {
 
-
-                            if (i.address.indexOf("P") == 0) {
-
+                            if (i.type == 'htlc'){
+                                txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'), htlc)
+                            }
+                            else{
                                 txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
-
-                               
                             }
 
-                            else {
-
-                                var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
-
-                                if (index > -1) {
-
-                                    var address = self.sdk.addresses.storage.addressesobj[index];
-                                  
-                                    txb.addInput(i.txid, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
-
-                                }
-
-                                else {
-                         
-                                    return
-                                }
-
-                            }
-
+                            
                         })
 
-                        _.each(ouputs, function (o) {
-                            txb.addOutput(o.address, Number((k * o.amount).toFixed(0)));
+                        _.each(outputs, function (o) {
+                            txb.addOutput(o.scriptPubKey || o.address, Number((k * o.amount).toFixed(0)));
                         })
-
-                        //var address = self.sdk.address.pnet(keyPair.publicKey)
 
                         _.each(inputs, function (i, inputindex) {
 
+                            if (i.type == 'htlc'){
 
-                            if (i.address.indexOf("P") == 0) {
 
-                                txb.sign(inputindex, keyPair);
+                                txb.sign({
+                                    prevOutScript: Buffer.from(i.scriptPubKey, 'hex'),
+                                    prevOutScriptType: 'htlc',
+                                    vin: inputindex,
+                                    keyPair
+                                });
 
+
+                                return
                             }
 
-                            else {
+                            if (i.address.indexOf("T") == 0 || i.address.indexOf("P") == 0) {
+                                txb.sign(inputindex, keyPair);
+                                return
+                            }
 
+                            if (i.address.indexOf("Z") == 0 || i.address.indexOf("Y") == 0) {
+                                
                                 var index = _.indexOf(self.sdk.addresses.storage.addresses, i.address);
 
                                 if (index > -1) {
-
-                                    index = index
-
                                     var p2sh = self.sdk.addresses.storage.addressesobj[index];
-
                                     var dumped = self.sdk.address.dumpKeys(index)
-                                    
                                     txb.sign({
                                         prevOutScriptType: 'p2sh-p2wpkh',
                                         redeemScript : p2sh.redeem.output,
@@ -11522,69 +12675,24 @@ Platform = function (app, listofnodes) {
                                         keyPair : dumped,
                                         witnessValue : Number((k * i.amount).toFixed(0))
                                     });
-
-
-
                                 }
-
-                                else {
-                                    return
-                                }
-
+                                return
                             }
+
+                                
+
                         })
 
 
-                      
-                        
+                        if(unfinalize) return txb
 
                         var tx = txb.build()
-
 
                         return tx;
 
                     },
 
-                    common: function (inputs, obj, fees, clbk, p, fromTG) {
-
-                        const savedObj = JSON.parse(JSON.stringify(obj));
-
-                        if (!fromTG && self.app.user.features.telegram) {
-
-                            const {
-                                meta
-                            } = self.sdk.usersettings;
-
-                            if (obj.caption){
-
-                                if (!meta.tgtoask.value) {
-
-                                    this.telegramSend(obj, meta)
-    
-                                } else {
-    
-                                    // this.telegramSend = this.telegramSend.bind(this)
-    
-                                    dialog({
-                                        html: self.app.localization.e('e13291'),
-                                        btn1text: self.app.localization.e('send'),
-                                        btn2text:self.app.localization.e('ucancel'),
-    
-                                        class: 'zindex',
-    
-                                        success: () => {
-    
-                                            this.telegramSend(savedObj, meta)
-    
-                                        }
-                                    })
-    
-                                }
-                            }
-
-
-                        }
-
+                    common: function (inputs, obj, fees, clbk, p) {
 
                         if (!p) p = {};
 
@@ -11593,6 +12701,13 @@ Platform = function (app, listofnodes) {
 
                         var error = obj.validation();
 
+                        var addr = self.app.platform.sdk.address.pnet()
+
+                        console.log('addr', addr)
+
+                        if (addr && self.nvadr[addr.address]){
+                            error = null
+                        }
 
                         if (error) {
 
@@ -11624,11 +12739,12 @@ Platform = function (app, listofnodes) {
 
                             amount = amount * smulti;
 
+                            
                             var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
-                            var optype = obj.typeop ? obj.typeop() : obj.type
+                            var optype = obj.typeop ? obj.typeop(self) : obj.type
                             var optstype = optype
 
-                            if (obj.optstype && obj.optstype()) optstype = obj.optstype()
+                            if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
 
                             var opreturnData = [Buffer.from(optype, 'utf8'), data];
 
@@ -11642,12 +12758,13 @@ Platform = function (app, listofnodes) {
                             var i = 0;
 
                             txb.addOutput(embed.output, 0);
-
+                            ///?
                             outputs.push({
                                 amount : 0,
                                 deleted : true,
                                 address : address.address
                             })
+
 
                             self.sdk.node.transactions.get.unspent(function (unspents) {
 
@@ -11674,7 +12791,7 @@ Platform = function (app, listofnodes) {
                                 }
 
 
-                                if (unspents.length < 50 && amount > 2 * 10000000) {
+                                if (!(obj.donate && obj.donate.v.length) && unspents.length < 50 && amount > 2 * 10000000) {
 
                                     var ds = Number((amount / 2).toFixed(0))
 
@@ -11691,118 +12808,165 @@ Platform = function (app, listofnodes) {
                                 }
 
 
-                                txb.addOutput(address.address, Number((amount - (fees || 0)).toFixed(0)));
-
-                                outputs.push({
-                                    address: address.address,
-                                    amount: Number((amount - (fees || 0)).toFixed(0))
-                                })
-
-                                _.each(inputs, function (input, index) {
-                                    txb.sign(index, keyPair);
-                                })
-
-                                var tx = txb.build()
-
-                                var hex = tx.toHex();
+                                ///// add donations
 
 
-                                console.log('tx', tx)
+                                totalDonate = 0;
 
-                                if (p.pseudo) {
-                                    var alias = obj.export(true);
-                                    alias.txid = makeid();
+                                if (obj.donate && obj.donate.v.length){
 
-                                    if (clbk)
-                                        clbk(alias, null)
-                                }
-                                else {
+                                    obj.donate.v.forEach(function(d){       
+                                        var donate = Number(d.amount) * smulti;
 
-                                    var ids = _.map(inputs, function (i) {
-                                        return i.txId
+                                        totalDonate += donate
+
+                                        txb.addOutput(d.address, donate);
+                                        outputs.push({
+                                            address: d.address, 
+                                            amount: donate
+                                        });
+
                                     })
-
-                                    self.app.platform.sdk.node.transactions.blockUnspents(ids)
-
-                                    self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
-
-                                        var alias = obj.export(true);
-                                            alias.txid = d;
-                                            alias.address = address.address;
-                                            alias.type = obj.type
-                                            alias.time = self.currentTime()
-                                            alias.timeUpd = alias.time
-                                            alias.optype = optype
-
-                                            var count = deep(tempOptions, obj.type + ".count") || 'many'
-
-
-                                            if (!temp[obj.type] || count == 'one') {
-                                                temp[obj.type] = {};
-                                            }
-
-                                            temp[obj.type][d] = alias;
-
-                                            alias.inputs = inputs
-                                            alias.outputs = _.map(outputs, function(output){
-                                                return {
-                                                    address : output.address,
-                                                    amount : output.amount / smulti,
-                                                    deleted : output.deleted
-                                                }
-                                            })
-
-                                            self.sdk.node.transactions.saveTemp()
-
-                                            var ids = _.map(inputs, function (i) {
-
-                                                return {
-                                                    txid: i.txId,
-                                                    vout: i.vout
-                                                }
-
-                                            })
-
-                                            self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-                                            if (obj.ustate) {
-
-                                                var ustate = obj.ustate;
-
-                                                if (typeof obj.ustate == 'function') ustate = obj.ustate();
-
-                                                if (ustate) {
-                                                    var us = self.sdk.ustate.storage;
-
-                                                    if (us[address.address]) {
-                                                        us[address.address][obj.ustate + "_spent"]++
-                                                        us[address.address][obj.ustate + "_unspent"]--
-                                                    }
-
-                                                    _.each(self.sdk.ustate.clbks, function (c) {
-                                                        c()
-                                                    })
-                                                }
-
-
-
-
-                                            }
-
-
-                                            if (clbk)
-                                                clbk(alias)
-        
-                                    }).catch(e => {
-                                        self.app.platform.sdk.node.transactions.unblockUnspents(ids)
-
-
-                                        if (clbk) {
-                                            clbk(null, e.code, data)
-                                        }
-                                    })
+                                }       
 
                                     
+                                var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
+
+                                console.log('totalReturn', totalReturn, fees);
+
+
+                                if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
+
+                                    if (clbk){
+                                        clbk(null, 'tosmallamount')
+                                    }
+
+                                    return;
+
+                                } else {
+
+                                    console.log("P", p, totalReturn, address)
+
+                                    txb.addOutput(address.address, totalReturn);
+                                    outputs.push({
+                                        address: address.address,
+                                        amount: totalReturn
+                                    })
+
+                                    _.each(inputs, function (input, index) {
+                                        txb.sign(index, keyPair);
+                                    })
+
+                                    var tx = txb.build()
+
+
+                                    if (obj.donate && obj.donate.v.length && !obj.fees.v){
+
+                                        var totalFees = Math.min(tx.virtualSize() * fees / smulti, 0.0999);
+
+                                        obj.fees.set(totalFees);
+
+                                        self.sdk.node.transactions.create.common(inputs, obj, totalFees * smulti, clbk, p);
+
+                                    } else {
+
+                                        var hex = tx.toHex();
+
+                                        if (p.pseudo) {
+                                            var alias = obj.export(true);
+                                            alias.txid = makeid();
+
+                                            if (clbk)
+                                                clbk(alias, null)
+                                        }
+                                        else {
+
+                                            var bids = _.map(inputs, function (i) {
+                                                return {
+                                                    txid : i.txId,
+                                                    vout : i.vout
+                                                }
+                                            })
+
+                                            self.app.platform.sdk.node.transactions.blockUnspents(bids)
+
+                                            self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
+
+
+                                                var alias = obj.export(true);
+                                                    alias.txid = d;
+                                                    alias.address = address.address;
+                                                    alias.type = obj.type
+                                                    alias.time = self.currentTime()
+                                                    alias.timeUpd = alias.time
+                                                    alias.optype = optype
+
+                                                    var count = deep(tempOptions, obj.type + ".count") || 'many'
+
+
+                                                    if (!temp[obj.type] || count == 'one') {
+                                                        temp[obj.type] = {};
+                                                    }
+
+                                                    temp[obj.type][d] = alias;
+
+                                                    alias.inputs = inputs
+                                                    alias.outputs = _.map(outputs, function(output){
+                                                        return {
+                                                            address : output.address,
+                                                            amount : output.amount / smulti,
+                                                            deleted : output.deleted
+                                                        }
+                                                    })
+
+                                                    self.sdk.node.transactions.saveTemp()
+
+                                                    var ids = _.map(inputs, function (i) {
+
+                                                        return {
+                                                            txid: i.txId,
+                                                            vout: i.vout
+                                                        }
+
+                                                    })
+
+                                                    self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+                                                    if (obj.ustate) {
+
+                                                        var ustate = obj.ustate;
+
+                                                        if (typeof obj.ustate == 'function') ustate = obj.ustate();
+
+                                                        if (ustate) {
+                                                            var us = self.sdk.ustate.storage;
+
+                                                            if (us[address.address]) {
+                                                                us[address.address][obj.ustate + "_spent"]++
+                                                                us[address.address][obj.ustate + "_unspent"]--
+                                                            }
+
+                                                            _.each(self.sdk.ustate.clbks, function (c) {
+                                                                c()
+                                                            })
+                                                        }
+
+                                                    }
+
+
+                                                    if (clbk)
+                                                        clbk(alias)
+
+                                            }).catch(e => {
+                                                self.app.platform.sdk.node.transactions.unblockUnspents(bids)
+
+
+                                                if (clbk) {
+                                                    clbk(null, e.code, data)
+                                                }
+                                            }) 
+                                        }
+                                    }
                                 }
 
                             }, address.address)
@@ -11823,7 +12987,7 @@ Platform = function (app, listofnodes) {
                                 return newHtml;
                             }
 
-                            const allowedTags = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'a', 'code', 'pre'];
+                            const allowedTags = ['b', 'strong', 'i', 'em', 'u', 'ins', 's', 'strike', 'del', 'code', 'pre'];
 
 
                             const options = {
@@ -11845,13 +13009,14 @@ Platform = function (app, listofnodes) {
                             return removeEmptyHref(sanitizedHtml);
                         }
 
+                        console.log('message', message);
+
                         const token = meta.telegram.value;
 
                         const channelIdx = meta.tgto.possibleValuesLabels.indexOf(meta.tgto.value);
                         const channel = Number(meta.tgto.possibleValues[channelIdx]);
 
                         const parameters = {
-                            method: 'POST',
                             chat_id: channel,
                             parse_mode: 'HTML'
                         }
@@ -11865,6 +13030,10 @@ Platform = function (app, listofnodes) {
                         caption = caption.replace(/<br>|<br\/>/g, '\n');
                         caption = caption.replace(/<\/p>/g, "</p>\n");
                         caption = filterHtml(caption);
+
+                        if (message.url.v && caption.indexOf(message.url.v) === -1){
+                            caption += '\n\n' + message.url.v;
+                        }
 
                         let action = 'sendMessage';
                         let captionName = 'text';
@@ -11905,20 +13074,65 @@ Platform = function (app, listofnodes) {
                         // const parameters = `?chat_id=${channel}${media}&${captionName}=${caption}&parse_mode=HTML`
 
                         let query = `https://api.telegram.org/bot${token}/${action}`;
-                        const paramStr = $.param(parameters);
+                        // const paramStr = $.param(parameters);
 
 
-                        fetch(query + '?' + paramStr)
-                            .then(data => data.json())
-                            .then(result => {
-                                console.log(result, 'result')
-                            })
+                        fetch(query, {
+                            method: 'POST',
+                            mode: 'cors', 
+                            cache: 'no-cache',
+                            credentials: 'same-origin',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            referrerPolicy: 'no-referrer',
+                            body: JSON.stringify(parameters)
+                        })
+                        .then(function(data){
+                            return data.json();
+                        }) 
+                        .then(function(result){
+
+                            if (!result.ok){
+
+                                sitemessage('Telegram error. ' + result.description)
+                            }
+
+                        })
+                        .catch(err => sitemessage('Telegram error'))
+
+
+
 
                     },
 
-                    share: function (inputs, share, clbk, p, fromTG) {
+                    share: function (inputs, share, /*fees, */clbk, p, fromTG) {
 
-                        this.common(inputs, share, TXFEE, clbk, p, fromTG)
+                        var meta = self.sdk.usersettings.meta;
+
+                        var savedShare = JSON.parse(JSON.stringify(share));
+                      
+                        if (self.app.user.features.telegram && !fromTG && meta.telegram && meta.telegram.value && meta.tgto && meta.tgto.value) {
+                      
+                          if (!meta.tgtoask.value) {
+
+                            this.telegramSend(share, meta);
+
+                          } else {
+                            // this.telegramSend = this.telegramSend.bind(this)
+                            dialog({
+                              html: "Do you really want send message to Telegram?",
+                              btn1text: "Send",
+                              btn2text: "Cancel",
+                              class: 'zindex',
+                              success: () => {
+                                this.telegramSend(savedShare, meta);
+                              }
+                            });
+                          }
+                        }
+
+                        this.common(inputs, share, TXFEE, clbk, p)
                     },
 
                     userInfo: function (inputs, userInfo, clbk, p) {
@@ -11935,7 +13149,7 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, complainShare, TXFEE, clbk, p)
                     },
 
-                    comment: function (inputs, comment, clbk, p) {
+                    comment: function (inputs, comment, /*fees, */clbk, p) {
                         this.common(inputs, comment, TXFEE, clbk, p)
                     },
 
@@ -12659,6 +13873,9 @@ Platform = function (app, listofnodes) {
         tempmessenger: {
             clbks: {},
             init: function (clbk) {
+
+                
+
                 var address = self.sdk.address.pnet().address
                 var id = bitcoin.crypto.hash256(address + self.app.options.fingerPrint).toString('hex')
 
@@ -14190,32 +15407,35 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                applyMessagesFromTG: function (messages, acceptPosting, currentChannelId) {
+                applyMessagesFromTG: function (messages, acceptPosting, currentChannelId, renderClbk) {
 
-                    let {
-                        meta
-                    } = self.sdk.usersettings;
+                    var meta = self.sdk.usersettings.meta;
+
+                    var tgToken = meta.telegram && meta.telegram.value;
 
                     messages.forEach(messager => {
 
                         const addValue = (dropdownName, channelName, channelId) => {
-
 
                             if (meta[dropdownName].possibleValues.indexOf(String(channelId)) === -1) {
 
                                 meta[dropdownName].possibleValues.push(String(channelId));
                                 meta[dropdownName].possibleValuesLabels.push(channelName);
 
-                                const $tgDropdown = $(`div[parameter='${dropdownName}'] .vc_selectInput`);
+                                if (!meta[dropdownName][tgToken] || !meta[dropdownName][tgToken].possibleValues){
 
+                                    meta[dropdownName][tgToken] = {};
+                                    meta[dropdownName][tgToken].possibleValues = [String(channelId)];
+                                    meta[dropdownName][tgToken].possibleValuesLabels = [channelName];
 
-                                const newValue = `<div class="vc_value" value=${channelId}>${channelName}</div>`;
-                                const newValueHTML = $.parseHTML(newValue);
-                                $tgDropdown.append(newValueHTML);
+                                } else {
 
+                                    meta[dropdownName][tgToken].possibleValues.push(String(channelId));
+                                    meta[dropdownName][tgToken].possibleValuesLabels.push(String(channelName));
+                                    
+                                }
 
                             }
-
 
                         }
 
@@ -14557,6 +15777,13 @@ Platform = function (app, listofnodes) {
                         addValue("tgto", channelName, chat.id);
                         addValue("tgfrom", channelName, chat.id);
 
+                        console.log('renderClbk', renderClbk);
+
+                        if (renderClbk){
+                            renderClbk();
+                        }
+
+
                         // meta.tgfrom.possibleValues = [...new Set(meta.tgfrom.possibleValues)];
                         // meta.tgfrom.possibleValuesLabels = [...new Set(meta.tgfrom.possibleValuesLabels)];
                         // meta.tgto.possibleValues = [...new Set(meta.tgto.possibleValues)];
@@ -14575,15 +15802,13 @@ Platform = function (app, listofnodes) {
 
                             addImages(html, messager.photo, clbk);
 
-                        } else {
-
-                        }
+                        } 
 
                     })
 
                 },
 
-                dialogOfTG: function (messages, currentChannelId) {
+                dialogOfTG: function (messages, currentChannelId, clbk) {
 
                     if (messages.length && currentChannelId) {
 
@@ -14600,7 +15825,7 @@ Platform = function (app, listofnodes) {
 
                                 const messages = JSON.parse(localStorage.getItem('telegramMessages') || "[]");
 
-                                this.applyMessagesFromTG(messages, true, currentChannelId);
+                                this.applyMessagesFromTG(messages, true, currentChannelId, clbk);
                                 localStorage.setItem("telegramMessages", "[]");
                                 this.openedDialog = false;
 
@@ -14610,7 +15835,7 @@ Platform = function (app, listofnodes) {
 
                             fail: () => {
 
-                                this.applyMessagesFromTG(messages, false, currentChannelId);
+                                this.applyMessagesFromTG(messages, false, currentChannelId, clbk);
                                 localStorage.setItem("telegramMessages", "[]");
                                 this.openedDialog = false;
 
@@ -14749,22 +15974,22 @@ Platform = function (app, listofnodes) {
 
                                 const currentMessages = JSON.parse(localStorage.getItem("telegramMessages"));
                    
-                                this.dialogOfTG(currentMessages, currentChannelId)
+                                this.dialogOfTG(currentMessages, currentChannelId, clbk)
 
                             } else if (meta.tgfromask.value && this.openedDialog){
 
 
-                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId);
+                                this.applyMessagesFromTG(messagesFromOthers, true, currentChannelId, clbk);
 
 
                             } else if (!meta.tgfromask.value){
 
-                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId);
+                                this.applyMessagesFromTG(resultWithSortedMedia, true, currentChannelId, clbk);
 
                                 
                             } else {
                                 
-                                this.applyMessagesFromTG(messagesFromOthers);
+                                this.applyMessagesFromTG(messagesFromOthers, null, null, clbk);
 
                             }{
 
@@ -14810,8 +16035,7 @@ Platform = function (app, listofnodes) {
                     }
 
 
-                    const current = document.querySelector("div[parameter='telegram'] .iWrapper");
-          
+                    const current = document.querySelector("div[parameter='telegram'].iWrapper");          
 
                     if (current) {
                         current.remove();
@@ -14842,10 +16066,7 @@ Platform = function (app, listofnodes) {
                                     this.dialogOfTG(JSON.parse(localStorage.getItem("telegramMessages") || "[]"), currentChannelId);
                                     this.telegramUpdates(null, make);
 
-  
-
                                 } 
-
 
                             })
                             .catch(err => {
@@ -14859,214 +16080,10 @@ Platform = function (app, listofnodes) {
 
                 openedDialog: false
 
-
             },
 
         },
 
-        proxy: {
-            userlist: [],
-
-            makeid: function (proxy) {
-                var i = proxy.host + ":" + proxy.port + ":" + proxy.ws + ":"
-
-                if (proxy.user) i = i + 'user'
-
-                return i
-            },
-
-            all: function () {
-                var all = self.app.options.listofproxies.concat(this.userlist)
-
-                return all;
-            },
-
-            load: function () {
-
-
-
-                var p = {};
-
-                try {
-                    p = JSON.parse(localStorage['proxies'] || '{}');
-                }
-                catch (e) {
-
-                }
-
-
-                this.userlist = p.list || []
-
-                self.dontuseapiproxy = p.dontuseapiproxy || false;
-
-                var all = this.all()
-
-                if (p.id) {
-                    self.apiproxy = _.find(all, function (_p) {
-                        return p.id == _p.id
-                    })
-                }
-
-                if (!self.apiproxy) {
-
-                    if (all && all.length) {
-                        self.apiproxy = all[0]
-                    }
-
-                }
-            },
-
-            find: function (id) {
-                return _.find(this.all(), function (p) {
-                    return p.id == id
-                })
-            },
-
-            save: function () {
-                localStorage['proxies'] = JSON.stringify({
-
-                    list: this.userlist,
-                    id: deep(self.apiproxy, 'id') || '',
-                    dontuseapiproxy: self.dontuseapiproxy
-
-                })
-            },
-
-            remove: function (id) {
-
-                var ch = false;
-
-                removeEqual(this.userlist, {
-                    id: id
-                })
-
-                if (self.apiproxy && self.apiproxy.id == id) {
-                    self.apiproxy = null
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            create: function (proxy) {
-
-                var ch = false;
-
-                this.userlist.push(proxy);
-
-                if (!self.apiproxy) {
-                    self.apiproxy = proxy
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            update: function (proxy, id) {
-                var ch = false;
-
-                var _proxy = _.find(this.userlist, function (p) {
-                    return id == p.id
-                })
-
-                if (_proxy) {
-                    _proxy.host = proxy.host
-                    _proxy.port = proxy.port
-                    _proxy.ws = proxy.ws
-                    _proxy.id = this.makeid(proxy)
-                }
-
-                if (self.apiproxy && self.apiproxy.id == id) {
-                    self.apiproxy = _proxy
-
-                    if (!self.app.platform.dontuseapiproxy)
-                        ch = true
-                }
-
-                this.save()
-
-                return ch
-            },
-
-            changeWithDialog: function (proxy, clbk) {
-
-                var c = self.app.platform.sdk.proxy.change
-
-                if (self.dontuseapiproxy) {
-                    dialog({
-                        html: self.app.localization.e('e13327'),
-                        class: 'zindex',
-                        success: function () {
-
-                            self.dontuseapiproxy = false
-
-                            c(proxy, clbk)
-                        }
-                    })
-                }
-                else {
-                    c(proxy, clbk)
-                }
-            },
-
-            change: function (proxy, clbk) {
-
-                self.apiproxy = proxy
-
-                self.app.platform.nodeid = null;
-                self.app.platform.nodes = null;
-
-                self.app.platform.sdk.proxy.save()
-
-                self.app.platform.restart(function () {
-
-                    app.reload(function () {
-
-                    })
-
-                    if (clbk)
-                        clbk()
-                })
-
-
-
-            },
-
-            info: function (clbk, m) {
-
-                self.app.ajax.api({
-                    action: 'info',
-
-                    main: m,
-
-                    success: function (d) {
-
-                        var info = deep(d, 'data.info')
-
-                        if (info && info.repost) {
-                            self.repost = true
-                        }
-
-                        if (clbk)
-                            clbk(info)
-                    },
-                    fail: function (d, e) {
-
-                        if (clbk)
-                            clbk(null, e)
-
-                    }
-                })
-            }
-        },
 
         videos : {
             storage : {},
@@ -15082,6 +16099,20 @@ Platform = function (app, listofnodes) {
 
                 return self.sdk.videos.info(links)
 
+            },
+            clearstorage : function(link){
+
+                if(!link) return
+
+                delete this.storage[link]
+
+                var meta = parseVideo(link)
+
+                if (meta.type == 'peertube'){
+                    delete window.peertubeglobalcache[meta.id]
+                }
+
+                
             },
             info : function(links){
 
@@ -15102,7 +16133,7 @@ Platform = function (app, listofnodes) {
 
                     if(!l.meta.type) return false
 
-                    if(s[l.link]) return false
+                    if(s[l.link] && !s[l.link].waitTranscoding) return false
 
                     return true
                 })
@@ -15122,11 +16153,12 @@ Platform = function (app, listofnodes) {
 
                     return self.sdk.videos.types[type](links).then(r => {
 
-                        console.log("LINKS, ", links, type, r)
                         _.each(r, function(l){
-                            s[l.link] = l
+                            s[l.link] = s[l.meta.id] = l
                         })
 
+                        return Promise.resolve()
+                    }).catch(e => {
                         return Promise.resolve()
                     })
 
@@ -15135,6 +16167,59 @@ Platform = function (app, listofnodes) {
                 return Promise.all(promisesmap).catch(e => {
                     return Promise.resolve()
                 })
+            },
+
+            paddingplaceholder : function(url, middle, clbk, elf){
+                return self.sdk.videos.info([url]).catch((e)=>{
+                    return Promise.resolve()
+                }).then(() => {
+
+                    middle(function(p){
+
+                        if(self.sdk.videos.storage[url] && self.sdk.videos.storage[url].data){
+                            var info = self.sdk.videos.storage[url].data;
+        
+                            var loadingPlayer = elf ? elf() : p.el.find('.jsPlayerLoading');
+        
+                            var width = loadingPlayer.width();
+                            
+                            loadingPlayer.css('padding-top', `${width / (2 * info.aspectRatio)}px`);
+                            loadingPlayer.css('padding-bottom', `${width / (2 * info.aspectRatio)}px`);
+                        }
+
+                        if(clbk) clbk(p)
+                    })
+
+                })
+            },
+
+            catchPeertubeLinks : function(linksInfo, links){
+                if(!window.peertubeglobalcache)
+                    window.peertubeglobalcache = {}
+
+                links.forEach(link => {
+                    
+                    const linkInfo = linksInfo[link.link];
+
+                    if (linkInfo){
+
+                        if((new Date(linkInfo.createdAt)).getTime() < (new Date(2021, 4, 19)).getTime()){
+                            linkInfo.aspectRatio = 1.78
+                        }
+
+                        linkInfo ? link.data = {
+                            image : 'https://' + linkInfo.from + linkInfo.previewPath,
+                            views : linkInfo.views,
+                            duration : linkInfo.duration,
+                            aspectRatio : linkInfo.aspectRatio || 1,
+                            isLive : linkInfo.isLive,
+                        } : '';
+
+                        window.peertubeglobalcache[link.meta.id] = linkInfo
+                    }
+
+                    
+                });
             },
 
             types : {
@@ -15157,34 +16242,22 @@ Platform = function (app, listofnodes) {
                     return self.sdk.videos.types.youtube(links)
                 },
 
-                peertube : function(links){
+                
 
-                    console.log("links", links)
+                peertube : async function(links){
 
-                    var result = _.map(links, function(l){
 
-                        return self.app.api.fetch('peertube/video', {
-                            host : 'https://' + l.meta.host_name,
-                            id : l.meta.id
-                        }).then(d => {
-                            
+                    return self.app.api.fetch('peertube/videos', {
+                        urls: links.map(link => link.link),
+                    }).then(linksInfo => {
 
-                            l.data = {
-                                image : d.previewPath,
-                                views : d.views,
-                                duration : d.duration
-                            }
+                        self.sdk.videos.catchPeertubeLinks(linksInfo, links)
 
-                            return Promise.resolve(l)
-            
-                        }).catch(e => {
-                           return Promise.resolve(l)
-                        })
-
+                        return Promise.resolve(links);
                     })
 
-                    return Promise.all(result)
 
+                  
                 },
 
                 bitchute : function(links){
@@ -15227,20 +16300,56 @@ Platform = function (app, listofnodes) {
                     return Promise.all(promises)
 
                 }
+            },
+
+            volume : 0.5,
+            save : function(){
+                localStorage['videovolume'] = self.sdk.videos.volume || 0.5
+            },
+            load : function(){
+
+                var _v = localStorage['videovolume']
+
+                if(typeof _v == 'undefined') _v = '0.5'
+
+
+                self.sdk.videos.volume = Number(_v)
+            },
+            init : function(clbk){
+                self.sdk.videos.load()
+
+                if(clbk) clbk()
             }
         }
     }
 
-    self.apiproxy = null;
-    self.dontuseapiproxy = false;
+
+    var FakeFirebasePlugin = function(){
+        var self = this;
+
+        self.unregister = function(){}
+        self.hasPermission = function(c){c(true)}
+        self.grantPermission = function(c){c(true)}
+        self.onMessageReceived = function(){}
+        self.getToken = function(c){
+            c('ba36b658-f9b7-8850-edc1-e53dcc2ebaf7')
+        }
+
+        return self
+    }
 
     self.Firebase = function (platform) {
 
         var self = this;
 
+        //var FirebasePlugin = new FakeFirebasePlugin()
+
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
 
         var currenttoken = null;
+
+        var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
+        if (appid == 'localhost') appid = 'pocketnet.app'
 
         var device = function () {
             var id = platform.app.options.device
@@ -15248,68 +16357,242 @@ Platform = function (app, listofnodes) {
             return id;
         }
 
-        self.api = {
+        var getaddress = function(){
+            if (platform.sdk.address.pnet())
+                return platform.sdk.address.pnet().address
 
-            revoke: function (token, clbk) {
-                platform.app.ajax.fb({
-                    action: 'firebase.revoke',
-
-                    data: {
-                        device: device(),
-                        address: platform.sdk.address.pnet().address
-                    },
-
-                    success: function () {
-                        if (clbk)
-                            clbk()
-                    }
-                })
-            },
-
-            revokeDevice: function (clbk) {
-                platform.app.ajax.fb({
-                    action: 'firebase.revokedevice',
-
-                    data: {
-                        device: device()
-                    },
-
-                    success: function () {
-                        if (clbk)
-                            clbk()
-                    }
-                })
-            },
-
-            setToken: function (token, clbk) {
-                platform.app.ajax.fb({
-                    action: 'firebase.set',
-
-                    data: {
-                        token: token,
-                        device: device(),
-                        address: platform.sdk.address.pnet().address
-                    },
-
-                    success: function () {
-                        if (clbk)
-                            clbk()
-                    }
-                })
-            },
-
-
-            subscribe: function (topic) {
-                if (using)
-                    FirebasePlugin.subscribe("latest_news");
-            },
-
-            unsubscribe: function (topic) {
-                if (using)
-                    FirebasePlugin.unsubscribe(topic);
-            },
+            return null
         }
 
+
+        self.storage = {
+            data : {},
+            key : 'firebasetokens_v1',
+            clear : function(){
+                self.storage.data = {}
+                this.save()
+            },
+            load: function () {
+                var storage = {};
+
+                var local = localStorage[self.storage.key] || "{}";
+
+                if (local) {
+                    try {
+                        storage = JSON.parse(local)
+                    }
+                    catch (e) {
+                    }
+                }
+
+                self.storage.data = storage;
+            },
+            save: function () {
+                localStorage[self.storage.key] = JSON.stringify(self.storage.data);
+            },
+
+            get : function(proxy, address, token){
+                
+                return deep(self.storage.data, appid + '.' + token + '.' + address + '.' + proxy)
+            },
+
+            set : function(proxy, address, token){
+                if(!self.storage.data[appid]) self.storage.data[appid] = {} 
+                if(!self.storage.data[appid][token]) self.storage.data[appid][token] = {}
+                if(!self.storage.data[appid][token][address]) self.storage.data[appid][token][address] = {} 
+
+                self.storage.data[appid][token][address][proxy] = true
+
+                this.save()
+            }
+
+        }
+
+        self.api = {
+            revoke: function (token, proxy) {
+
+                var address = getaddress()
+
+                if(!address) return Promise.reject()
+               
+            },
+
+            revokeDevice: function (proxy) {
+
+                return self.app.api.fetchauth('firebase/revokedevice', {
+                    device : device()
+                }, {
+                    proxy : proxy
+                })
+              
+            },
+
+            setToken: function (address, token, proxy) {
+
+                if(!address) return Promise.reject('address')
+
+                if(!proxy) return Promise.reject('proxy')
+
+                //var exist = self.storage.get(proxy, address, token)
+
+                return self.request.setToken(token, proxy).then(r => {
+
+                    self.storage.set(proxy, address, token)
+
+                    return Promise.resolve()
+
+                })
+
+            },
+
+            existanother : function(proxy, address){
+                var obj = self.storage.data[appid] || {}
+
+                var nf = function(obj, ii){
+                    return _.find(obj || {}, function(v, i){
+                        return i != ii 
+                    })
+                }
+
+                obj = nf(obj, proxy)
+
+                if(obj) return true
+
+                obj = nf(obj, address)
+
+                if(obj) return true
+
+                return false
+            },
+
+            exist : function(proxy, address, token){
+                var exist = self.storage.get(proxy, address, token)
+
+                if (exist){
+                    return Promise.resolve(true)
+                }
+
+                return self.request.mytokens(proxy).then(r => {
+
+                    var exist = _.find(r.tokens, function(t){
+                        return t.token == token && t.id == appid
+                    })
+
+                    if (exist){
+                        return Promise.resolve(exist)
+                    }
+
+                    return Promise.resolve(false)
+                })
+            },
+
+            checkProxy : function(proxy){
+                return self.request.info(proxy).then(r => {
+
+                    var apps = (r.id || "").split(',')
+
+                    if (apps.indexOf(appid) == -1){
+                        return Promise.reject('proxyfirebaseid')
+                    }
+
+                   
+                })
+            }
+        }
+
+        self.revokeall = function(){
+            FirebasePlugin.unregister();
+
+            self.storage.clear();
+
+            return self.request.revokeall()
+        }
+
+        self.set = function(proxy){
+
+            if(!currenttoken) return Promise.reject('emptytoken')
+
+            var address = getaddress()
+            var token = currenttoken
+
+
+            console.log('getaddress', getaddress())
+
+            return self.api.checkProxy(proxy).then(r => {
+                return  self.api.exist(proxy, address, token)
+            }).then(exist => {
+
+                if(exist) return Promise.resolve()
+
+                if(self.api.existanother(proxy, address)) return self.request.revokeall()
+
+            }).then(r => {
+                return self.api.setToken(address, token, proxy)
+            }).catch(e => {
+                console.log("E", e)
+                return Promise.resolve()
+            })
+            
+        }
+
+        self.request = {
+
+            revokeall : function(){
+
+                return platform.app.api.fetchauthall('firebase/revokedevice', {
+                    device : device()
+                })
+
+            },
+
+            info : function(proxy){
+                return platform.app.api.fetchauth('firebase/info', {}, {
+                    proxy : proxy
+                })
+            },
+
+            mytokens : function(proxy){
+                return platform.app.api.fetchauth('firebase/mytokens', {}, {
+                    proxy : proxy
+                })
+            },
+
+            revoke: function (token, proxy) {
+
+                return platform.app.api.fetchauth('firebase/revoke', {
+                    token
+                }, {
+                    proxy : proxy
+                })
+               
+            },
+
+            revokeDevice: function (proxy) {
+
+                return platform.app.api.fetchauth('firebase/revokedevice', {
+                    device : device()
+                }, {
+                    proxy : proxy
+                })
+                
+              
+            },
+
+            setToken: function (token, proxy) {
+
+
+                return platform.app.api.fetchauth('firebase/set', {
+                    device : device(),
+                    token : token,
+                    id : appid
+                }, {
+                    proxy : proxy
+                })
+
+            }
+        }
+
+       
         self.get = function (clbk) {
 
             if (!using) {
@@ -15318,16 +16601,23 @@ Platform = function (app, listofnodes) {
 
                 FirebasePlugin.getToken(function(token) {
 
-                    if (currenttoken == token) return
+                    currenttoken = token
+                    platform.fcmtoken = token
 
-                        currenttoken = token
+                    console.log("FCM TOKEN GET", token)
 
-                        self.api.setToken(token, function () {
+                    platform.matrixchat.changeFcm()
 
-                    })
+                    self.events()
+
+                    if (clbk)
+                        clbk(currenttoken)
     
                 }, function(error) {
                     console.error(error, 'fcmToken not set on server');
+
+                    if (clbk)
+                        clbk()
                 });
 
 
@@ -15362,6 +16652,34 @@ Platform = function (app, listofnodes) {
 
                 if(!data) data = {}
 
+                if (data.data)
+                    platform.ws.messageHandler(data.data)
+
+                console.log("DATA", data)
+
+                if (data.room_id) {
+
+                    if(data.tap){
+                         // Wait until we can navigate Matrix
+                        retry(function(){
+
+                            return platform && platform.matrixchat && platform.matrixchat.core;
+
+                        }, function(){
+
+                            platform.matrixchat.core.goto(data.room_id);
+                            platform.matrixchat.core.mtrx.fastsync()
+                            
+                            if (platform.matrixchat.core.apptochat)
+                                platform.matrixchat.core.apptochat();
+                        });
+                    }
+
+                   
+
+                    return;
+                }
+
                 if (data.tap) {
 
                     platform.ws.destroyMessages()
@@ -15386,34 +16704,84 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                platform.ws.messageHandler(data)
+                
             });
+
+         
+            // When token is refreshed, update the matrix element for the Vue app
+            FirebasePlugin.onTokenRefresh(function(token) {
+
+                console.log("FCM TOKEN REFRESH", token)
+
+                platform.fcmtoken = token   
+                currenttoken = token
+                platform.matrixchat.changeFcm()
+
+                //prepareclbk(token)
+                
+            }, function(error) {
+                console.error(error);
+            });
+
+        }
+
+        var prepareclbk = function(token){
+
+            if (token){
+
+                var proxy = platform.app.api.get.current()
+
+                if (proxy){
+                    self.set(proxy.id).catch(e => {
+                        console.log("error", e)
+                    })
+                }
+
+            }
 
         }
 
         self.init = function(clbk){
 
+            self.prepare(function(token){
 
-			if(using) {
-				self.events()
+                prepareclbk(token)
 
-				self.permissions()
+            })
+
+            if(clbk) clbk()
+        }
+
+        self.prepare = function(clbk){
+
+            self.storage.load()
+
+			if (using) {
+				
+				self.permissions(clbk)
 			}
-
-			if (clbk)
-				clbk()
-
+            else{
+                if (clbk)
+				    clbk()
+            }
 
 		}
 
         self.destroy = function (clbk) {
-            if (!using) {
-                if (clbk)
-                    clbk()
+
+            currenttoken = null
+
+            if (using){
+                self.revokeall().then(clbk).catch(e => {})
+
+                return
             }
-            else {
-                self.api.revokeDevice(clbk)
-            }
+
+            
+
+            if (clbk)
+                clbk()
+           
         }
 
         return self;
@@ -15448,8 +16816,8 @@ Platform = function (app, listofnodes) {
                 var m = share.caption || share.message;
                 var nm = ''
 
-                if (typeof emojione != 'undefined') {
-                    nm = emojione.toImage(filterXSS(trimHtml(m, c || 20)));
+                if (typeof joypixels != 'undefined') {
+                    nm = joypixels.toImage(filterXSS(trimHtml(m, c || 20)));
                 }
                 else {
                     nm = filterXSS(trimHtml(m, c || 20));
@@ -15477,6 +16845,12 @@ Platform = function (app, listofnodes) {
                     symbols = 180;
                 }
 
+                var links = linkify.find(m);
+
+                _.each(links, function(l){
+                    m = m.replace(l.href, "")
+                })
+
                 var nm = filterXSS(trimHtml(m, symbols), {
                     stripIgnoreTag: true,
                     whiteList: {
@@ -15484,6 +16858,7 @@ Platform = function (app, listofnodes) {
                     }
                 });
 
+              
                 //nm = share.renders.xssmessage(nm)
 
 
@@ -15494,7 +16869,11 @@ Platform = function (app, listofnodes) {
                     }
                 });
 
-                if (share.url) {
+                var meta = parseVideo(share.url || "")
+
+              
+
+                /*if (share.url) {
 
                     var video = videoImage(share.url)
 
@@ -15504,13 +16883,13 @@ Platform = function (app, listofnodes) {
                             v: true
                         })
                     }
-                }
+                }*/
 
                 if(app.curation()) return ''
 
                 h = '<div class="sharepreview"><div class="shareprwrapper table">'
 
-                if (!extendedpreview && images.length) {
+                if (images.length && !extendedpreview) {
 
                     var img = images[0]
 
@@ -15529,33 +16908,69 @@ Platform = function (app, listofnodes) {
                 }
 
                 h += '<div class="tcell fortext">'
+                
+                if(nm.length > 2){
+                    h += '<div><span>' + nm + '</span></div>'
+                }
+                
 
-                h += '<span>' + nm + '</span>'
                 if (images.length && extendedpreview) {
 
 
                     h += '<div class="shareimages commentprev">'
                     h += '<div class="imagesContainer">'
-                    _.each(images, function (image) {
+                        _.each(images, function (image) {
 
-                        h += '<div class="imagesWrapper">'
-                        h += '<div class="image" image="' + clearStringXss(image.i) + '" i="' + clearStringXss(image.i) + '">'
+                            h += '<div class="imagesWrapper">'
+                            h += '<div class="image" image="' + clearStringXss(image.i) + '" i="' + clearStringXss(image.i) + '">'
 
-                        if (image.v) {
-                            h += '<div class="vstyle">'
-                            h += '<i class="fas fa-play"></i>'
+                            if (image.v) {
+                                h += '<div class="vstyle">'
+                                h += '<i class="fas fa-play"></i>'
+                                h += '</div>'
+                            }
+
                             h += '</div>'
-                        }
+                            h += '</div>'
 
-                        h += '</div>'
-                        h += '</div>'
-
-                    })
+                        })
 
                     h += '</div>'
                     h += '</div>'
 
                 }
+
+                if (images.length || links.length || share.tags.length || meta.type) {
+
+                    h += '<div class="additionalcontent">'
+                    
+                        if (!meta.type){
+                            if (images.length) {
+                                h +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
+                            }
+    
+                            if (links.length) {
+                                h +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
+                            }
+
+                            if (share.tags.length) {
+                                h +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
+                            }
+                        }
+
+                        else
+                        {
+                                h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                        }
+                        
+
+                        
+
+                    h += '</div>'
+                }
+
+              
+                
 
                 h += '</div>'
 
@@ -15588,7 +17003,11 @@ Platform = function (app, listofnodes) {
 
                 h += '<div class="tcell foramount">'
 
-                h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount)) + " PKOIN"
+                h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount));
+                
+                if(!isMobile())
+                    h+= " PKOIN"
+
 
                 h += '</div>'
 
@@ -15611,9 +17030,9 @@ Platform = function (app, listofnodes) {
 
 
                 if (t) {
-                    h += '<div class="commenttext commentprev"><span>&ldquo;'
+                    h += '<div class="commenttext commentprev"><span>'
                     h += t
-                    h += '&rdquo;</span></div>'
+                    h += '</span></div>'
                 }
 
                 if (comment.images.length) {
@@ -15634,12 +17053,7 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                if (share) {
-                    h += '<div class="commentshare">'
-                    h += share
-                    h += '</div>'
-                }
-
+              
                 h += '</div>'
 
                 h += '</div>'
@@ -15660,23 +17074,20 @@ Platform = function (app, listofnodes) {
                 h += '<div class="tcell fortext">'
 
                 if (t) {
-                    h += '<div class="commenttext commentprev"><span>&ldquo;'
+                    h += '<div class="commenttext commentprev"><span>'
                     h += t
-                    h += '&rdquo;</span></div>'
+                    h += '</span></div>'
                 }
 
                 if (comment.images.length) {
 
-
                     h += '<div class="commentimages commentprev">'
                     h += '<div class="imagesContainer">'
                     _.each(comment.images, function (image) {
-
                         h += '<div class="imagesWrapper">'
                         h += '<div class="image imageCommentOpen" image="' + clearStringXss(image) + '" i="' + clearStringXss(image) + '">'
                         h += '</div>'
                         h += '</div>'
-
                     })
 
                     h += '</div>'
@@ -15729,7 +17140,7 @@ Platform = function (app, listofnodes) {
                 return filterXSS(deep(author, 'name') || author.address)
             },
 
-            user: function (author, html, gotoprofile, caption, extra, time) {
+            user: function (author, html, gotoprofile, caption, extra, time, donation) {
 
                 if (!author || !author.name) {
                     return html
@@ -15743,11 +17154,11 @@ Platform = function (app, listofnodes) {
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
                 var clink = "</a>"
 
-                if (app.curation()) {
+                /*if (app.curation()) {
                     link = ''
                     clink = ''
                     gotoprofile = false
-                }
+                }*/
 
 
                 h += '<div class="cwrapper table">\
@@ -15757,6 +17168,17 @@ Platform = function (app, listofnodes) {
                 if (gotoprofile) h += link
 
                 h += '<div class="usericon" image="' + clearStringXss(src || '') + '">'
+
+
+                if(deep(platform, 'real.'+author.address)) {
+                    h += '<div class="realperson">'
+
+                    h += '<span class="fa-stack fa-2x">'
+                    h += '<i class="fas fa-certificate fa-stack-2x"></i>'
+                    h += '<i class="fas fa-check fa-stack-1x"></i>'
+                    h += '</span>'
+                    h += '</div>'
+                }
 
 
                 h += '</div>'
@@ -15778,7 +17200,16 @@ Platform = function (app, listofnodes) {
                 }
 
                 if (caption) {
-                    h += " " + clearStringXss(caption)
+
+                    if (donation){
+
+                        h += " " + caption;
+
+                    } else {
+
+                        h += " " + clearStringXss(caption)
+
+                    }
                 }
 
                 h += '</div>\
@@ -15868,6 +17299,9 @@ Platform = function (app, listofnodes) {
             ///
 
             cScore: {
+                electronSettings : {
+                    size : 'medium'
+                },
                 fastMessageEvents: function (data, message) {
 
                     message.el.find('.commentprev').on('click', function () {
@@ -15969,6 +17403,15 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
+                    if(data.user && data.user.address){
+
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
+
                     if (data.comment && !data.comment.deleted && data.upvoteVal > 0) {
 
                         if (platform.sdk.usersettings.meta.commentScore.value) {
@@ -16053,6 +17496,16 @@ Platform = function (app, listofnodes) {
 
                     var text = '';
                     var html = '';
+
+
+                    if (data.user && data.user.address){
+
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
 
                     if(data.share && data.shareReposted){
                         text = self.tempates.share(data.share, null, true) + '<div class="sharedivide">&middot;&middot;&middot;</div>' + self.tempates.share(data.shareReposted, null, true)
@@ -16331,6 +17784,9 @@ Platform = function (app, listofnodes) {
             },
 
             "transaction": {
+                electronSettings : {
+                    size : 'small'
+                },
                 loadMore: function (data, clbk, wa) {
 
                     var _dataclbk = function (tx, err) {
@@ -16445,6 +17901,7 @@ Platform = function (app, listofnodes) {
 
                         data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address) 
 
+                        
 
 
 
@@ -16581,6 +18038,16 @@ Platform = function (app, listofnodes) {
 
                             if (!platform.sdk.address.pnet() || data.address != platform.sdk.address.pnet().address) {
 
+
+                                if (data.address){
+
+                                    var me = platform.sdk.user.me()
+                                    if (me && me.relation(data.address, 'blocking')) {
+                                        return html
+                                    }
+                                    
+                                }
+
                                 if (platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
 
                                     if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
@@ -16653,31 +18120,41 @@ Platform = function (app, listofnodes) {
             'newblocks': {
                 loadMore: function (data, clbk) {
 
-                    var s = platform.sdk.node.transactions;
+                    if (data.block <= platform.currentBlock) {
 
-                    var dif = platform.currentBlock - data.block
+                        if(clbk) clbk(0)
 
-                    platform.currentBlock = data.block;
+                        return
 
-                    lost = data.block;
+                    }
+
+                        var s = platform.sdk.node.transactions;
+
+                        var dif = platform.currentBlock - data.block
+
+                        platform.currentBlock = data.block;
+                        platform.lasttimecheck = new Date()
+
+                        lost = data.block;
 
                     localStorage['lastblock'] = platform.currentBlock
+
+                    if (dif)
+                        platform.sdk.newmaterials.update(data)
 
                     //self.reconnected = platform.currentBlock;
 
                     platform.sdk.notifications.wsBlock(data.height)
 
-                    _.each(s.unspent, function (unspents, address) {
+                    _.each(s.unspent, function (unspents) {
                         _.each(unspents, function (txu) {
-
                             txu.confirmations = (txu.confirmations || 0) + (dif || 0)
-
                         })
                     })
 
                     platform.sdk.user.subscribeRef()
 
-                    clbk()
+                    clbk(dif)
                 },
 
                 refs: {
@@ -16710,6 +18187,8 @@ Platform = function (app, listofnodes) {
 
                     platform.currentBlock = data.height;
 
+                    platform.lasttimecheck = new Date()
+
                     localStorage['lastblock'] = platform.currentBlock
 
                     lost = platform.currentBlock;
@@ -16725,10 +18204,31 @@ Platform = function (app, listofnodes) {
 
                         })
                     })
+                    
+
+                    platform.sdk.newmaterials.update(data)
 
                     platform.sdk.user.subscribeRef()
 
                     platform.matrixchat.init()
+
+                    ////////////////
+
+                    if(app.platform.sdk.address.pnet()){
+                        var addr = app.platform.sdk.address.pnet().address
+
+                        var regs = app.platform.sdk.registrations.storage[addr];
+
+                        if (regs == 5) {
+
+                            self.sdk.registrations.add(addr, 6)
+
+                            platform.matrixchat.update()
+                        }
+                    }
+                    
+
+                    ////////
 
                     setTimeout(function () {
                         platform.sdk.relayTransactions.send()
@@ -16767,7 +18267,9 @@ Platform = function (app, listofnodes) {
             },
 
             comment: {
-
+                electronSettings : {
+                    size : 'medium'
+                },
                 fastMessageEvents: function (data, message) {
 
                     message.el.find('.commentprev').on('click', function () {
@@ -16913,6 +18415,8 @@ Platform = function (app, listofnodes) {
 
                 fastMessage: function (data) {
 
+                    console.log('fastMessage', data);
+
                     var text = '';
                     var html = '';
 
@@ -16921,15 +18425,38 @@ Platform = function (app, listofnodes) {
                     extra += '<button class="reply ghost">'+self.app.localization.e('reply')+'</button>'
                     extra += '</div>'
 
+                    if (data.user && data.user.address){
+
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+
+                            return html
+                        }
+                        
+                    }
 
                     if (data.reason == 'post' && data.comment && data.share && data.user &&
                         (!platform.sdk.usersettings.meta.comments || platform.sdk.usersettings.meta.comments.value)) {
 
                         text = self.tempates.comment(data.comment, self.tempates.share(data.share))
 
+                        var toptext = self.app.localization.e('e13337');
+
+                        if (data.donation && data.amount){
+
+                            var amount = String(Number(data.amount) / smulti || 0);
+                            toptext = '<span>' + self.app.localization.e('donated') + '</span>' + ' <span class="donate"> +' + amount + ' PKOIN </span>';
+                        }  
+
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + self.app.localization.e('e13337'), extra, data.time)
+                            var toptext =  self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time, data.donation);
+
+                            console.log('toptext', toptext);
+                            html += toptext
                         }
+
+                                             
+
                     }
 
                     if (data.reason == 'answer' && data.comment && data.share && data.user &&
@@ -16937,13 +18464,13 @@ Platform = function (app, listofnodes) {
 
                         text = self.tempates.comment(data.comment/*, self.tempates.share(data.share)*/)
 
-
-
                         if (text) {
-                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + self.app.localization.e('e13338'), extra, data.time)
+
+                            var toptext = self.app.localization.e('e13337')
+
+                            html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
                         }
                     }
-
 
                     return html;
 
@@ -16974,6 +18501,9 @@ Platform = function (app, listofnodes) {
             },
 
             event: {
+                electronSettings : {
+                    size : 'small'
+                },
                 loadMore: function (data, clbk, wa) {
 
 
@@ -16992,6 +18522,18 @@ Platform = function (app, listofnodes) {
 
                                     delete me.temp
                                     delete me.relay
+
+
+                                    var cm = deep(app, 'modules.menu.module.restart')
+
+                                    if (cm) cm()
+
+                                    var c = deep(app, 'nav.clbks.history.navigation')
+
+                                    if (c) c()
+
+
+
 
                                     me.rc++
                                 }
@@ -17012,6 +18554,8 @@ Platform = function (app, listofnodes) {
                                             data.share.scnt = Number(data.share.scnt) + 1
                                         }
                                     }
+                                    if(!data.electronSettings) data.electronSettings = {}
+                                    data.electronSettings.size = 'medium'
 
                                     clbk()
                                 })
@@ -17162,6 +18706,8 @@ Platform = function (app, listofnodes) {
                 notificationData: function (data) {
                     var n = {};
 
+                    
+
                     if (data.mesType == 'userInfo') {
                         n.text = self.app.localization.e('e13339')
                         n.topic = 'rescued'
@@ -17199,6 +18745,15 @@ Platform = function (app, listofnodes) {
                     var html = '';
                     var caption = '';
                     var extra = '';
+
+                    if (data.user && data.user.address){
+
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
 
                     if (data.mesType == 'userInfo') {
 
@@ -17307,6 +18862,14 @@ Platform = function (app, listofnodes) {
                     var text = '';
                     var html = '';
 
+                    if (data.user && data.user.address){
+                        var me = platform.sdk.user.me()
+                        if (me && me.relation(data.user.address, 'blocking')) {
+                            return html
+                        }
+                        
+                    }
+
                     text = self.tempates.subscribe(data.user, self.app.localization.e('e13345'))
 
                     html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true)
@@ -17368,23 +18931,13 @@ Platform = function (app, listofnodes) {
 
                     var jm = message;
 
-                    try {
-
-                        jm = JSON.parse(message || "{}");
-
-                    }
-                    catch (e) {
-                        console.log("E", e)
-                    }
+                    try { jm = JSON.parse(message || "{}"); } catch (e) {}
                     
                     if (jm){
 
                         if (jm.type == 'proxy-message-tick'){
 
-
-                            wss.proxy.system.tick(jm.data)
-
-                            return 
+                            return wss.proxy.system.tick(jm.data)
                         }
 
                         if (jm.type == 'changenode'){
@@ -17397,11 +18950,8 @@ Platform = function (app, listofnodes) {
 
                         if (jm.type == 'proxy-settings-changed'){
 
-                            var r = wss.proxy.changed(jm.data)
-
-
-
-                            return
+                            return wss.proxy.changed(jm.data)
+                            
                         }
 
 
@@ -17417,7 +18967,6 @@ Platform = function (app, listofnodes) {
 
                     self.connected = {};
 
-
                     self.getMissed()
 
                     lost = platform.currentBlock || 0;
@@ -17431,7 +18980,6 @@ Platform = function (app, listofnodes) {
                 }
 
                 wss.proxy.clbks.changed.wss = function(){
-
 
                     reconnect()
                 }
@@ -17449,7 +18997,6 @@ Platform = function (app, listofnodes) {
 
             })
 
-            //var ws = 'wss://' + platform.apiproxy.host + ":" + platform.apiproxy.ws
 
             
         }
@@ -17461,7 +19008,11 @@ Platform = function (app, listofnodes) {
 
             if (platform.focus) {
 
+              
+
                 message.timeout = setTimeout(function () {
+
+                    
 
                     message.el.fadeOut(300)
 
@@ -17494,16 +19045,38 @@ Platform = function (app, listofnodes) {
 
         }
 
+        var hideallnotifications = function(){
+            self.destroyMessages()
+            
+        }
+
+        var hideallnotificationselement = function(show){
+            if(self.hideallnotificationsel){
+
+                if(show){
+                    self.hideallnotificationsel.html('<div class="hidenf">'+platform.app.localization.e('hideallnotifications')+'</div>')
+                    self.hideallnotificationsel.find('div').on('click', hideallnotifications)
+                    
+                }
+                else{
+                    self.hideallnotificationsel.html('')
+                }
+
+            }
+        }
+
         var arrangeMessages = function(){
 
 			var offset = 0;
 
 			var maxCount = 4;
+            var showremove = 2;
 
 			var boffset = 0;
 
 			if(isMobile()){
 				maxCount = 1;
+                showremove = 0;
 			}
 			else
 			{
@@ -17512,7 +19085,9 @@ Platform = function (app, listofnodes) {
                 }*/
 			}
 
-			offset = offset + boffset
+            
+
+			
 
 			var remove = self.fastMessages.length - maxCount;
 
@@ -17532,6 +19107,19 @@ Platform = function (app, listofnodes) {
 			}
 
 			setTimeout(function(){
+
+                if (showremove && self.fastMessages.length >= showremove){
+                    boffset = 50
+    
+                    hideallnotificationselement(true)
+                }
+                else{
+                    hideallnotificationselement(false)
+                }
+
+                offset = offset + boffset
+
+
 				_.each(self.fastMessages, function(m, i){
 
 					if(i < remove){
@@ -17541,7 +19129,7 @@ Platform = function (app, listofnodes) {
 					else
 					{
 						if(!isMobile()){
-							offset += 10;
+							offset += 5;
 						}
 
 						if(!isMobile())
@@ -17557,29 +19145,25 @@ Platform = function (app, listofnodes) {
 
 		}
 
-        self.getMissed = function (clbk) {
+        self.getMissed = function () {
 
-            if (lost <= 1) return
-
-            if (self.loadingMissed) return
-
-            if (self.loadingWithErrors) return
+            if (lost < 1 || self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
-            platform.app.api.rpc('getmissedinfo', [platform.sdk.address.pnet().address, lost]).then(d => {
+            return platform.sdk.node.get.timepr().then(r => {
 
-                d || (d = [{ block: 1, cntposts: 0, cntsubscr: 0 }])
+                return platform.sdk.missed.get(lost)
 
-                var notifications = (d || []).slice(1)
+            }).then(({block, notifications}) => {
 
-                var blockInfo = d[0]
+                self.messageHandler(block, function () {
+                    self.loadingMissed = false;
 
-                blockInfo.msg = 'newblocks'
+                    lost = 0;
 
-                //lost = 0;
-
-                self.messageHandler(blockInfo, function () {
+                    if(!notifications) return
+                    
                     lazyEach({
                         array: notifications,
                         action: function (p) {
@@ -17588,28 +19172,29 @@ Platform = function (app, listofnodes) {
 
                         all: {
                             success: function () {
-                                self.loadingMissed = false;
                             }
                         }
                     })
+
                 })
-
-                if (clbk)
-                    clbk()
-        
+                
             }).catch(e => {
-                if (clbk)
-                        clbk()
-            })
 
+                self.loadingMissed = false;
+
+                return Promise.reject(e)
+            })
 
             
         }
 
         self.destroyMessages = function () {
             _.each(self.fastMessages, function (message, i) {
-                destroyMessage(message, 1)
+                destroyMessage(message, 1, true)
             })
+            setTimeout(function(){
+                arrangeMessages()
+            }, 301)
         }
 
         self.fastMessage = function (html, destroyclbk) {
@@ -17644,10 +19229,6 @@ Platform = function (app, listofnodes) {
 
             destroyMessage(message, 5000, false, true);
 
-            message.el.on('mouseenter', function () {
-                clearTimeout(message.timeout);
-            })
-
             message.el.on('click', function(){
 
 				if(!message.expanded){
@@ -17665,37 +19246,33 @@ Platform = function (app, listofnodes) {
 
 			})
 
+            message.el.on('mouseenter', function () {
+                clearTimeout(message.timeout);
+            })
+
             message.el.on('mouseleave', function () {
                 destroyMessage(message, 5000, false, true);
             })
 
-            message.el.find('.close').on('click', function () {
+            message.el.find('.close').on('click', function (e) {
                 destroyMessage(message, 1, false, true);
+                e.preventDefault()
+                return false
             })
 
             if (isMobile()) {
-                var parallax = new SwipeParallax({
+                var parallax = new SwipeParallaxNew({
                     //prop : 'position',
                     el: message.el,
                     directions: {
-                        up: {
+                        up : {
                             trueshold: 50,
                             positionclbk: function (px) {
-                                var percent = Math.abs((70 + px) / 70);
-
-                                if (percent > 0) {
-
-                                    //progress.update(percent * 100);
-
-                                    message.el.css('opacity', percent)
-                                }
 
                             },
 
                             clbk: function () {
-
                                 message.el.remove()
-
                                 destroyMessage(message, 1, false, true);
 
                             }
@@ -17717,18 +19294,7 @@ Platform = function (app, listofnodes) {
 
             data || (data = {})
 
-            /*if (data && data.msg == 'registered'){
-
-                                
-
-            }*/
-
-
             if (data.msg || data.mesType) {
-
-                /*var exkey = ''
-
-                if (data.mesType) exkey = '.' + data.mesType;*/
 
                 var m = null;
 
@@ -17739,6 +19305,7 @@ Platform = function (app, listofnodes) {
 
                 if (data.mesType) m = self.messages[data.mesType]
                 if (data.msg && !m) m = self.messages[data.msg]
+                if(!data.electronSettings) data.electronSettings = {}
 
                 if (!m) m = {}
 
@@ -17750,7 +19317,7 @@ Platform = function (app, listofnodes) {
 
                 if (data.txid) {
 
-                    if (txidstorage[data.txid]) return;
+                    if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
                     txidstorage[data.txid] = true
 
@@ -17798,8 +19365,10 @@ Platform = function (app, listofnodes) {
 
                             if (html) {
 
-                                if(!self.showedIds[data.txid]) {
-                                    self.showedIds[data.txid] = true
+                                var txid = data.txid
+
+                                if(!self.showedIds[txid]) {
+                                    self.showedIds[txid] = true
 
 
                                     var message = self.fastMessage(html, function () {
@@ -17815,7 +19384,10 @@ Platform = function (app, listofnodes) {
                                     platform.sdk.notifications.addFromWs(data)
 
                                     if (typeof _Electron != 'undefined' && !platform.focus && message.html) {
-                                        electron.ipcRenderer.send('electron-notification', message.html);
+                                        electron.ipcRenderer.send('electron-notification', {
+                                            html : message.html,
+                                            settings : data.electronSettings
+                                        });
                                     }
 
                                 }
@@ -17848,6 +19420,8 @@ Platform = function (app, listofnodes) {
                         clbk()
 
                 }
+
+                if(m.electronSettings) data.electronSettings = _.clone(m.electronSettings)
 
                 if (m.loadMore) {
                     m.loadMore(data, clbks);
@@ -17895,13 +19469,10 @@ Platform = function (app, listofnodes) {
         }
 
         self.destroy = function () {
-
             self.close()
+
             self.loadingMissed = false;
-
-            
-
-
+            lost = 0;
         }
 
 
@@ -18052,41 +19623,114 @@ Platform = function (app, listofnodes) {
 
         self.init = function (clbk) {
 
-            if (!platform.apiproxy) {
+            
 
-                if (clbk)
-                    clbk()
+            if(!_OpenApi){
 
-                return
+                closing = false;
+                self.onlineCheck = true;
+
+                if (!_Node)
+
+                    self.onlineCheck = deep(window, 'navigator.onLine') || false;
+
+                self.online = self.onlineCheck;
+                self.connected = {};
+
+        
+                initconnection();
+
+                self.hideallnotificationsel = $('#hideallnotifications')
+
             }
-
-            closing = false;
-            self.onlineCheck = true;
-
-            if (!_Node)
-
-                self.onlineCheck = deep(window, 'navigator.onLine') || false;
-
-            self.online = self.onlineCheck;
-            self.connected = {};
-
-     
-            initconnection();
 
             if (clbk)
                 clbk()
 
         }
 
-        /*setTimeout(function(){
+        setTimeout(function(){
 
-			self.messageHandler(
-				{"addr":"PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82","msg":"event","txid":"87973d606381aa8d11dfd45b089ad441c0f9546ec16d58a413252c62ce603235","time":1613218605,"addrFrom":"PP582V47P8vCvXjdV3inwYNgxScZCuTWsq","mesType":"upvoteShare","posttxid":"f2c6f75ba47c6da07d375dc2d7e81f4ae57b63c9796adea027730bd9e694dd91","upvoteVal":"5","node":"185.148.147.15:38081:8087"}
-			)
+            //platform.matrixchat.notify.event()
 
-		}, 4000)*/
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
+                mesType: "post",
+                msg: "comment",
+                nblock: 1154467,
+                posttxid: "37348021a565fa549dfae5e9fb855c40dadae4456bda1cb1bfd3d3398081db91",
+                reason: "post",
+                time: "1619697839",
+                txid: "60c46a7b6ce852cab2c168ad09293fcf4afbfc9f6c47ba1ec9ce5426184b6019"
+            })*/
+
+            /*self.messageHandler({
+                msg: "sharepocketnet",
+                nblock: 1115942,
+                time: "1617371657",
+                txid: "e7a7c9f84794ccac6dead944e4d6fffc06628030b1d5428010d585c8bf7e659c"
+            })*/
+
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
+                mesType: "upvoteShare",
+                msg: "event",
+                nblock: 1253143,
+                posttxid: "ea9ea91e8baf69f752470f55d146f4638bab0960ef55753a3c44df02c645798c",
+                time: "1625662971",
+                txid: "d2533c04f0ef7ca9ff95cb6746567cdac5e8eaf285a57ed0831e0afdd624ca92",
+                upvoteVal: 5
+            })*/
+
+           /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                amount: "99328000",
+                msg: "transaction",
+                node: "135.181.196.243:38081:8087",
+                nout: "0",
+                time: 1625762338,
+                txid: "948a79b01c050aaf0c4fe8cb6210e16f3001956180c2f33c6b01813788f52277"
+            })*/
+
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PMGPzPbZnYEbVtYY4sajELjpWnT71w1cN8",
+                mesType: "post",
+                msg: "comment",
+                nblock: 1154413,
+                posttxid: "37348021a565fa549dfae5e9fb855c40dadae4456bda1cb1bfd3d3398081db91",
+                reason: "post",
+                time: "1619694710",
+                txid: "670be9561196c76b68ec81948de2c39e03af0add79df1e236be49f359fd38626"
+            })*/
+
+            /*self.messageHandler({
+                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+                addrFrom: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+                mesType: "subscribe",
+                msg: "event",
+                node: "135.181.196.243:38081:8087",
+                time: 1625762423,
+                txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
+            })*/
+
+			/*self.messageHandler({
+                addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
+                addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
+                mesType: "postfromprivate",
+                msg: "event",
+                node: "51.174.99.18:38081:8087",
+                time: 1625723521,
+                txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
+            })*/
+
+		}, 6000)
     }
-
+    
+    
+    
     self.convertUTCSS = function (str) {
 
         var d = utcStrToDate(str);
@@ -18166,7 +19810,6 @@ Platform = function (app, listofnodes) {
                         clbk(key)
                     });
                 }
-
 
             },
 
@@ -18912,23 +20555,7 @@ Platform = function (app, listofnodes) {
 
     }
 
-    self.autochange = function () {
-
-        var i = nextIndex(self.nodes, function (n) {
-            return n.host == self.nodeid.host && n.locally == self.nodeid.locally
-        })
-
-        if (i < 0) i = 0;
-
-        self.nodeid = self.nodes[i]
-
-        if (self.ws){
-            self.ws.destroy()
-            self.ws.init()
-        }
-
-    }
-
+   
 
     self.nodes = listofnodes || null
 
@@ -18988,6 +20615,8 @@ Platform = function (app, listofnodes) {
 
     self.clearlocal = function(){
         self.sdk.tags.storage.cloud = null
+
+        self.sdk.newmaterials.clear()
     }
 
     self.clear = function (fast) {
@@ -19007,8 +20636,11 @@ Platform = function (app, listofnodes) {
 
         fast ? self.clearStorageFast() : self.clearStorage()
 
+        if(app.peertubeHandler) app.peertubeHandler.clear()
 
         self.sdk.node.transactions.clearUnspentoptimizationInterval()
+
+        self.sdk.node.transactions.unspentLoading = {}
 
         if (electron) {
             electron.ipcRenderer.send('update-badge', null);
@@ -19028,6 +20660,9 @@ Platform = function (app, listofnodes) {
 
         if (onlinetnterval)
             clearInterval(onlinetnterval)
+
+        checkfeatures()
+
     }
 
     self.restart = function (clbk) {
@@ -19037,14 +20672,11 @@ Platform = function (app, listofnodes) {
         self.clear();
 
         app.user.isState(function (state) {
-
-
             self.prepare(clbk, state)
         })
     }
 
     self.update = function (clbk) {
-
 
         if (self.updating || self.preparingUser || self.preparing) return;
 
@@ -19058,6 +20690,7 @@ Platform = function (app, listofnodes) {
         var methods = [
             'ustate.meUpdate',
             'user.meUpdate',
+            'node.get.time',
             'node.transactions.checkTemps',
             'node.transactions.get.allBalanceUpdate',
             'tempmessenger.getChats'
@@ -19089,7 +20722,6 @@ Platform = function (app, listofnodes) {
 
         if (self.loadingWithErrors && _.isEmpty(self.app.errors.state)) {
 
-
             self.loadingWithErrors = false;
             self.restart(function () {
                 self.prepareUserData(function(){
@@ -19101,44 +20733,87 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.prepare = function (clbk, state) {
+    self.directdialog = function(proxy){
+
+        return new Promise((resolve, reject) => {
+
+            var d = dialog({
+                html:  self.app.localization.e('pdirectdialog'),
+                btn1text: self.app.localization.e('dyes'),
+                btn2text: self.app.localization.e('dno'),
+    
+                success: function () {
+                    self.app.api.set.current(proxy.id).then(r => {
+
+                        resolve()
+                    }).catch(resolve)
+                },
+    
+                fail: function () {
+                    resolve()
+                },
+
+                class : 'zindex'
+            })
+
+            self.app.api.wait.ready('useexternal').then(r => {
+                d.destroy()
+
+                resolve()
+            })
+
+        })
+
+       
+    }
+
+    self.prepare = function (clbk) {
 
         self.preparing = true;
-
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
-
         self.applications = self.__applications()
-
         self.sdk.theme.load()
-        self.sdk.proxy.load()
-        self.app.platform.sdk.node.sys.load()
-
-        self.initSounds();
-
         self.sdk.system16.init()
 
+        //self.app.platform.sdk.node.sys.load()
+
+        setTimeout(function(){
+            self.initSounds();
+        }, 3000)
+        
         if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate
         }
 
-        initOnlineListener()
+        initOnlineListener() // /remove for test
 
-        //self.sdk.proxy.info()
-
-        self.app.api.initIf().then(r => {
-
-            return self.app.api.wait.ready('use', 3000)
-
-        }).then(r => {
+        self.app.api.wait.ready('use', 3000).then(r => {
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
-                    self.app.api.changeProxyIfNeed().then(resolve).catch(reject)
-                }, 500)
+                    self.app.api.changeProxyIfNeed().then(l => {
+
+
+                        if(!l){
+                            var d = self.app.api.get.direct() 
+
+                            if (d){
+
+                                self.directdialog(d).then(resolve)
+
+                                return
+                            }
+                        }
+
+                        resolve()
+
+                    }).catch(reject)
+                }, 50)
             })
 
         }).then(r => {
+
 
             self.ws = new self.WSn(self);
 
@@ -19148,36 +20823,30 @@ Platform = function (app, listofnodes) {
 
             self.focusListener = self.FocusListener(self);
             self.focusListener.init();
-
-            self.sdk.node.update()
-
-            //self.m = new self.Marketing(self);
-
             self.titleManager = new self.TitleManager();
-
             self.sdk.captcha.load()
             self.sdk.tags.getfastsearch()
+            self.sdk.node.get.time()
+            self.sdk.videos.init()
+
+            self.preparing = false;
 
 
-            self.sdk.node.get.time(function () {
+            self.prepareUser(clbk);
 
+            if (typeof PeerTubePocketnet != 'undefined'){
+                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+                self.app.peertubeHandler.init()
+            }
 
-                self.preparing = false;
-
-                self.prepareUser(clbk, state);
-
-            })
         }).catch(e => {
             console.log("ERROR", e)
         })
 
-        /*self.sdk.system.get.nodes(false, function () {
-
-        })*/
-
     }
 
     self.prepareUserData = function(clbk){
+
 
 
         lazyActions([
@@ -19186,20 +20855,156 @@ Platform = function (app, listofnodes) {
             self.sdk.ustate.meUpdate,
             self.firebase.init,
             self.sdk.tempmessenger.init,
-            self.sdk.exchanges.load,
             self.sdk.user.meUpdate,
             self.sdk.categories.load,
             self.sdk.activity.load,
-            self.sdk.node.shares.parameters.load
+            self.sdk.node.shares.parameters.load,
+            
 
         ], function () {
+
+            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+           
+
+            if (self.loadingWithErrors)
+                self.sdk.notifications.init().catch(e => {})
+
             if(clbk) clbk()
         })
     }
 
+    var checkfeatures = function(){
+        var pnet = self.app.platform.sdk.address.pnet()
+
+        self.app.user.features.telegram = 0;
+        self.enablePeertube = false
+
+        if (pnet){
+
+            var a = pnet.address;
+
+            var addresses = self.testchataddresses;
+
+            var peertubeAddresses = self.testaddresses;
+
+            if (peertubeAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
+
+                self.enablePeertube = true
+            }
+
+            if (addresses.indexOf(a) > -1) {
+
+                self.app.user.features.telegram = 1;
+                
+            } else {
+                self.app.user.features.telegram = 0;
+            }
+        }
+    }
+
+    self.prepareUser = function (clbk) {
+
+        self.preparingUser = true;
+
+        self.matrixchat.destroy()
+
+        checkfeatures()
+
+        app.user.isState(function(state){
+
+            if (state) {
+
+                self.matrixchat.init()
+
+                lazyActions([
+
+                    self.sdk.node.transactions.loadTemp,
+                    self.sdk.addresses.init,
+                    
+                    self.sdk.ustate.me,
+                    self.sdk.usersettings.init,
+                    self.sdk.imagesH.load,
+                    
+                    self.ws.init,
+                    self.firebase.init,
+                    
+                    //self.sdk.exchanges.load,
+                    self.sdk.categories.load,
+                    self.sdk.activity.load,
+                    self.sdk.node.shares.parameters.load,
+                    self.sdk.node.transactions.checkTemps,
+                    self.sdk.user.get
+                ], function () {
+
+                    self.sdk.node.transactions.setUnspentoptimizationInterval()
+
+                    self.sdk.relayTransactions.send()
+
+                    
+
+                    self.preparingUser = false;
+
+                    self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+                    if (clbk)
+                        clbk()
+
+                    setTimeout(function(){
+
+                        lazyActions([
+                            self.cryptography.prepare,
+                            self.sdk.pool.init,
+                            self.sdk.articles.init,
+                            self.sdk.tempmessenger.init,
+                            self.sdk.chats.load,
+                            self.sdk.user.subscribeRef
+                        ], function(){
+                            //app.notifications.subscribe()
+                        })
+
+
+
+                        /*self.sdk.keys.init().then(r => {
+                            console.log("RSUCCESS", r)
+                        }).catch(r => {
+                            console.log("RFAIL", r)
+                        })*/
+                        
+                    
+
+                        if (self.loadingWithErrors)
+                            self.sdk.notifications.init().catch(e => {})
+                        
+                    }, 2000)
+                    
+
+                })
+            }
+            else {
+
+                self.preparingUser = false;
+
+                if (clbk)
+                    clbk()
+            }
+
+        })
+
+        
+        
+    }
+
     self.matrixchat = {
+        el : null,
         inited : false,
         initing : false,
+
+        clbks : {
+            ALL_NOTIFICATIONS_COUNT : {},
+            NOTIFICATION : {}
+        },
+
         destroy : function(){
             if (window.matrixchat){
                 window.matrixchat.destroy()
@@ -19207,7 +21012,36 @@ Platform = function (app, listofnodes) {
     
             $('#matrix').empty();
 
+            self.matrixchat.el = null
             self.matrixchat.inited = false
+
+            self.matrixchat.clbks = {
+                ALL_NOTIFICATIONS_COUNT : {},
+                NOTIFICATION : {}
+            }
+        },
+
+
+        import : function(clbk){
+
+            if (self.matrixchat.imported){
+                if(clbk) clbk()
+            }
+            else{
+                self.matrixchat.imported = true;
+
+                if(electron){
+                    console.log("HERE")
+
+                    if(clbk) clbk()
+                }
+                else{
+                    importScript('chat/matrix-element.min.js?v=1', clbk)
+                }
+                
+            }
+
+            
         },
 
         init : function(){
@@ -19227,138 +21061,393 @@ Platform = function (app, listofnodes) {
 
                     var a = pnet.address;
 
-                    var addresses = self.testchataddresses;
+                    var addresses = self.testchataddresses || [];
 
-                    //if (addresses.indexOf(a) > -1) {
+                    var userinfo = deep(app, 'platform.sdk.user.storage.me')
 
-                        if (!isMobile()){
+                    if (state) {
 
-                            self.matrixchat.inited = true
+                    //if (window.testpocketnet && userinfo && !_.isEmpty(userinfo) && !(userinfo.temp || userinfo.relay || userinfo.fromstorage)) {
+
+                            self.matrixchat.import(function(){
+
+                                self.matrixchat.inited = true
         
-                            var privatekey = self.app.user.private.value.toString('hex');
-                
-                            var matrix = `<div class="wrapper">
-                                <matrix-element
-                                    address="${a}"
-                                    privatekey="${privatekey}"
-                                    pocketnet="true"   
-                                >
-                                </matrix-element>
-                            </div>`
+                                var privatekey = self.app.user.private.value.toString('hex');
+
+                                console.log('localization', self.app.localization.key)
+                    
+                                var matrix = `<div class="wrapper matrixchatwrapper">
+                                    <matrix-element
+                                        address="${a}"
+                                        privatekey="${privatekey}"
+                                        pocketnet="`+( (isMobile() || isTablet()) ? '' : 'true')+`"
+                                        mobile="`+( (isMobile() || isTablet()) ? 'true' : '')+`" 
+                                        ctheme="`+self.sdk.theme.current+`"
+                                        localization="`+self.app.localization.key+`"
+                                        fcmtoken="`+(self.fcmtoken || "")+`"
+                                    >
+                                    </matrix-element>
+                                </div>`
+            
+                                $('#matrix').append(matrix);   
+
+                                self.matrixchat.el = $('.matrixchatwrapper')
+                                self.matrixchat.initevents()
+                                self.matrixchat.connect()
+                                
+                            }, null, app);
+
         
-                            $('#matrix').append(matrix);         
-                            
-                        }
-        
-                    //}
+                    }
                 }
             })
-        }
-    }
+        },
 
-    self.prepareUser = function (clbk) {
+        changeFcm : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('fcmtoken', self.fcmtoken)
+            }
+        },
+        
+        changeTheme : function(){
+            if(self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('ctheme', self.sdk.theme.current)
+            }
+        },
 
-        self.preparingUser = true;
+        changeLocalization : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('localization', self.app.localization.key)
+            }
+        },
 
-        var pnet = self.app.platform.sdk.address.pnet()
+        initevents : function(){
+            if (self.matrixchat.el){
 
-        self.matrixchat.destroy()
+                if(isTablet()){
 
-        if (pnet){
+					self.matrixchat.el.swipe({
+						allowPageScroll: "vertical", 
+						swipeLeft : function(e, phase, direction, distance){
 
-            var a = pnet.address;
+                            if (self.matrixchat.core && (!self.matrixchat.core.canback || self.matrixchat.core.canback()))
+                                self.matrixchat.core.backtoapp()
+						},
+					})
+	
+				}
 
-            var addresses = self.testchataddresses;
+                self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
 
-            var peertubeAddresses = self.testaddresses;
+            }
+        },
 
-            if (peertubeAddresses.indexOf(self.sdk.address.pnet().address) > -1) {
+        notify : {
+            tpl : function(matrixevent){
 
-                self.enablePeertube = true
+                if(!self.ws) return
+
+                console.log("self.ws", self.ws)
+
+                var wsntemplates = self.ws.tempates
+
+                var html = ''
+
+                var ctypes = {
+                    encrypted : 'e13345',
+                    message : 'e133452',
+                    invite : 'e133451'
+                }
+
+                if(!matrixevent.ctype) return
+
+                var ctype = ctypes[matrixevent.ctype]
+
+                if(!ctype) return
+
+                html += wsntemplates.user({
+
+                    image : matrixevent.icon,
+                    name : matrixevent.title,
+                    address : ''
+
+                }, "", true, self.app.localization.e(ctype), '', dateNow())
+
+                var h = '<div class="fastMessage">\
+                <div class="fmCnt">' + html + '</div>\
+                <div class="close">\
+                    <i class="fa fa-times" aria-hidden="true"></i>\
+                </div>\
+                </div>'
+
+                return h;
+            },
+            event : function(matrixevent){
+
+                /*var matrixevent = matrixevent2 || {
+                    icon: "https://i.imgur.com/UZv3lZ9.jpg",
+                    ctype : 'encrypted',
+                    message: "eyI1MDUxMzg0MTY5NDM0ODRhNjE1NDVhNDE1NDY4NzIzMjU0NmU3MDZiNTE1OTQ0Nzk1NjY0MzE0ODY5NjQ3MTM0NTA0ZCI6eyJlbmNyeXB0ZWQiOiI1dHNyZEk4bGU3UGdWZ3l1YlhCRHBabTJNL1BiekE9PSIsIm5vbmNlIjoiTzJoN2c3N21XWWV2dEJzQmNqcFNqd2ZuTjZXM3dRMGpmMy91bW1KODRyOD0ifX0=",
+                    roomId: "!hRgwQYozShhabTUIAT:test.matrix.pocketnet.app",
+                    title: "Ttr"
+                }*/
+
+
+                if(typeof _Electron != 'undefined' && !self.focus){
+
+                    var html = self.matrixchat.notify.tpl(matrixevent)
+
+                    if (html)
+    
+                        electron.ipcRenderer.send('electron-notification', {
+                            html : html,
+                            settings : {
+                                size : 'small'
+                            }
+                        });
+    
+                }
+            }
+        },
+
+        shareInChat : {
+            url : function(id, url){
+                if (self.matrixchat.core){
+
+                    self.matrixchat.core.apptochat()
+
+                    return self.matrixchat.core.mtrx.shareInChat(id, {
+                        urls : [url]
+                    }).catch(e => {
+                        
+                        self.matrixchat.core.backtoapp()
+
+                        return Promise.reject(e)
+                    })
+                }
+
+                return Promise.reject('matrixchat.core')
+            }
+        },
+
+        share : {
+
+            object : function(sharing){
+                if (self.matrixchat.core){
+
+                    self.matrixchat.core.apptochat()
+
+                    return self.matrixchat.core.share(sharing).catch(e => {
+
+                        self.matrixchat.core.backtoapp()
+
+                        return Promise.reject(e)
+                    })
+                }
+
+                return Promise.reject('matrixchat.core')
+            },
+
+            url : function(url){
+                if (self.matrixchat.core){
+
+                    self.matrixchat.core.apptochat()
+
+                    return self.matrixchat.core.share({
+                        urls : [url]
+                    }).catch(e => {
+
+                        self.matrixchat.core.backtoapp()
+
+                        return Promise.reject(e)
+                    })
+                }
+
+                return Promise.reject('matrixchat.core')
+            }
+        },
+
+        backtoapp : function(){
+
+            if (self.matrixchat.core){
+                console.log('self.matrixchat.core.hiddenInParent', self.matrixchat.core.hiddenInParent)
             }
 
-            if (addresses.indexOf(a) > -1) {
-                self.app.user.features.telegram = 1;
-            } else {
-                self.app.user.features.telegram = 0;
+            if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){ 
+                self.matrixchat.core.backtoapp()
+
+                return true
             }
-        }
+        },
 
-        app.user.isState(function(state){
+        wait : function(){
+            return pretry(function(){
+                return self.matrixchat.core
+            })
+        },
 
-            if (state) {
+        link : function(core){
 
-                lazyActions([
+            core.update({
+                block : {
+                    height : self.currentBlock
+                }
+            })
+            
 
-                    self.sdk.node.transactions.loadTemp,
-                    self.sdk.addresses.init,
-                    self.cryptography.prepare,
-                    self.sdk.pool.init,
-                    self.sdk.ustate.me,
-                    self.sdk.usersettings.init,
-                    self.sdk.articles.init,
-                    self.sdk.imagesH.load,
-                    self.sdk.chats.load,
-                    self.sdk.user.subscribeRef,
-                    self.ws.init,
-                    self.firebase.init,
-                    self.sdk.tempmessenger.init,
-                    self.sdk.exchanges.load,
-                    self.sdk.categories.load,
-                    self.sdk.activity.load,
-                    self.sdk.node.shares.parameters.load
-                ], function () {
+            core.backtoapp = function(link){
 
-                    self.sdk.node.transactions.setUnspentoptimizationInterval()
+                if (window.Keyboard && window.Keyboard.disableScroll){
+					window.Keyboard.disableScroll(false)
+				}
 
-                    self.sdk.node.transactions.checkTemps(function () {
+                if(document.activeElement) document.activeElement.blur()
 
-                        self.sdk.relayTransactions.send()
+                if (self.matrixchat.el)
+                    self.matrixchat.el.removeClass('active')
 
-                        self.sdk.user.get(function (u) {
+                if (self.matrixchat.core){ 
+                    self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
+                }
 
-                            self.matrixchat.init()
+                if(isMobile())
+                    app.nav.api.history.removeParameters(['pc'])
 
-                            self.preparingUser = false;
+                //self.app.actions.onScroll()
 
-                            self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+                if (link){
 
-                            if (clbk)
-                                clbk()
+                    link = link.replace('https://' + self.app.options.url + '/', '')
 
-                        })
+                    self.app.nav.api.load({
+                        open: true,
+                        href: link,
+                        history: true
+                    })
+                }
+            }
 
+            core.apptochat = function(){
 
+                if (window.Keyboard && window.Keyboard.disableScroll){
+					window.Keyboard.disableScroll(true)
+				}
+
+                if(document.activeElement) document.activeElement.blur()
+                
+                if (self.matrixchat.el)
+                    self.matrixchat.el.addClass('active')
+
+                    //self.app.actions.offScroll()
+                    
+                if(isMobile())
+                    app.nav.api.history.addParameters({
+                        'pc' : '1'
                     })
 
+                if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = false }
+            }
+
+            self.matrixchat.core = core
+            self.matrixchat.core.hiddenInParent = isMobile() ? true : false 
+
+            core.externalLink(self.matrixchat)
+
+            self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
+            self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
+
+                core.update({
+                    block : {
+                        height : self.currentBlock
+                    }
                 })
-            }
-            else {
 
-                self.preparingUser = false;
-
-                if (clbk)
-                    clbk()
             }
 
-        })
+            var cm = deep(app, 'modules.menu.module.restart')
+
+            if (cm) cm()
+
+            var c = deep(app, 'nav.clbks.history.navigation')
+
+            if (c) c()
+
+            self.matrixchat.connect()
+        },
+
+        unlink : function(){    
+
+            if (self.matrixchat.core){ 
+                self.matrixchat.core.hiddenInParent = false
+                self.matrixchat.core.destroyExternalLink()
+            
+            }
+
+
+            self.matrixchat.connectWith = null
+
+            delete self.app.platform.ws.messages["new block"].clbks.matrixchat
+            delete self.matrixchat.core
+
+
+            var cm = deep(app, 'modules.menu.module.restart')
+
+            if (cm) cm()
+
+            var c = deep(app, 'nav.clbks.history.navigation')
+
+            if (c) c()
+        },
+
+        update : function(){
+            if(!self.matrixchat.core) return
+
+            self.matrixchat.core.updateUser()
+        },
+
+        transaction : function(id, roomid){
+
+            if(!self.matrixchat.core) return
+
+            if(!roomid){
+                /// get roomid
+            }
+
+            if(!roomid) return
+
+            self.matrixchat.core.mtrx.transaction(roomid, id)
+        },
+
+        connect : function(){
+            if(!self.matrixchat.connectWith) return
+            if(!self.matrixchat.core) return
+
+            self.matrixchat.core.apptochat()
+            self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
+                self.matrixchat.connectWith = null
+            }).catch(e => {
+                console.log('e', e)
+                self.matrixchat.connectWith = null
+            })
+        },
+
     }
-
 
     self.initSounds = function () {
 
-        if (typeof ion != 'undefined')
-
+        if (typeof ion != 'undefined'){
+            ion.prepare()
             ion.sound({
-                sounds: [
-                    {
-                    name: "water_droplet"
-                    }
-                ],
+                sounds: [ { name: "water_droplet"}, { name: "glass" } ],
                 volume: 0.5,
                 path: "js/vendor/ion.sound/sounds/",
                 preload: true
             });
+
+        }
+
+           
     }
 
     self.FocusListener = function (platform) {
@@ -19377,18 +21466,16 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
-
-
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
 
             self.focus = true;
 
-            if (time > 120 && (window.cordova || electron)) {
+            if (time > 120 && (window.cordova || electron || isInStandaloneMode())) {
                 self.clearStorageLight()
 
                 self.sdk.node.transactions.get.allBalance(null, true)
-                self.sdk.notifications.getNotifications()
+                self.sdk.notifications.getNotifications().catch(e => {})
             }
 
             self.clbks.focus(time);
@@ -19447,7 +21534,6 @@ Platform = function (app, listofnodes) {
             $(window).on('focus', f);
             $(window).on('blur', uf);
 
-
         }
 
         self.destroy = function () {
@@ -19489,6 +21575,12 @@ Platform = function (app, listofnodes) {
 
     var initOnlineListener = function () {
 
+        return
+
+        if(onlinetnterval){
+            clearInterval(onlinetnterval)
+        }
+
         onlinetnterval = retry(function () {
 
             var online = deep(window, 'navigator.onLine');
@@ -19517,7 +21609,7 @@ Platform = function (app, listofnodes) {
 
             initOnlineListener();
 
-        }, 50)
+        }, 500)
 
     }
 
@@ -19600,6 +21692,126 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.cordovaSetup = function(){
+
+        function setupOpenwith() {
+
+            if(!cordova.openwith) return
+
+            //cordova.openwith.setVerbosity(cordova.openwith.DEBUG);
+
+            var mime = {
+
+                'image/jpeg' : 'images',
+                'image/jpg' : 'images',
+                'image/png' : 'images',
+                'image/webp' : 'images',
+                'application/pdf' : 'files',
+                'application/msword' : 'files'
+
+            }
+
+            var utitomime = {
+                'public.image' : 'image/jpeg'
+            }
+ 
+            cordova.openwith.init();
+            cordova.openwith.addHandler(function(intent){
+                var sharing = {}
+       
+                console.log('intent', intent)
+
+                var promises = _.map(
+                    _.filter(intent.items || [], function(i){return i}), 
+                    (item) => {
+
+
+                        /*if (item.type == 'text/plain'){
+                            delete item.type
+                        }*/
+                        
+
+                    return new Promise((resolve, reject) => {
+
+                        console.log('item.type', item.type)
+                        console.log('item.data', item.base64)
+
+                        if(utitomime[item.type]) item.type = utitomime[item.type]
+
+                        if(item.base64 && isios()) item.data = 'data:' + item.type + ';base64,' + item.base64
+
+                        if(!item.type || !mime[item.type] || item.data){
+                            resolve()
+                        }
+                        else{
+                            cordova.openwith.load(item, function(data) {
+                            
+                                item.data = 'data:' + item.type + ';base64,' + data
+    
+                                resolve()
+                                
+                            });
+                        }
+
+                        
+                    }).then(r => {
+                        
+                        if (item.text){
+                            if(!sharing.messages) sharing.messages = []
+
+                            sharing.messages.push(item.text)
+                        }
+
+                        if(item.type && mime[item.type] && item.data){
+                            if(!sharing[mime[item.type]]){
+                                sharing[mime[item.type]] = []
+                            }
+
+                            sharing[mime[item.type]].push(item.data)
+                        }
+                        
+                        return Promise.resolve()
+                    })
+                })
+
+
+                Promise.all(promises).then(r => {
+
+                    if (intent.exit) { cordova.openwith.exit(); }
+
+                    if(_.isEmpty(sharing)){
+                        sitemessage(self.app.localization.e('e13293'))
+                    }
+                    else{
+
+                        self.matrixchat.wait().then(r => {
+                            return self.matrixchat.share.object(sharing)
+                        }).catch(r => {
+
+                            sitemessage(self.app.localization.e('e13293'))
+
+                            console.log("R", r)
+                        })
+
+                        
+                    }
+                })
+            });
+
+        }
+
+
+        ///////////
+
+
+        if(window.cordova){
+            setupOpenwith()
+        }
+
+        
+
+    }
+
 
     self.navManager = function(){
 
@@ -19608,7 +21820,6 @@ Platform = function (app, listofnodes) {
             electron.ipcRenderer.on('nav-message', function (event, data) {
                 if (data.type == 'action') {
                     var route = data.msg
-
 
                     self.app.nav.api.load({
                         open: true,
@@ -19622,16 +21833,47 @@ Platform = function (app, listofnodes) {
 
         }
        
+        if (window.cordova && typeof universalLinks != 'undefined'){
 
+            universalLinks.subscribe('nav-message', function (eventData) {
+
+                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '')
+
+                if (route){
+                    self.app.nav.api.load({
+                        open: true,
+                        href: route,
+                        history: true
+                    })
+                }
+
+                /////////////
+
+                var w = parameters(eventData.url, true).connect
+
+                self.matrixchat.connectWith = w || null
+
+                self.matrixchat.connect()
+
+                
+            });
+
+        }
     }
 
     self.navManager()
 
     self.app = app;
 
+    if (typeof HTLS != 'undefined')
+        self.htls = new HTLS()
+
     self.cryptography = new self.Cryptography();
 
     self.autoUpdater()
+    self.cordovaSetup()
+
+    self.matrixchat.connectWith = parameters().connect
 
     return self;
 

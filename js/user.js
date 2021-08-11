@@ -43,36 +43,48 @@ User = function(app, p) {
 		}
 	}
 
-	self.signature = function(ojb){
+	self.signature = function(str, exp, old){
+		if(!str) str = 'pocketnetproxy'
+		if(!exp) exp = 360
 
 		var keyPair = self.keys()
 
-		var nonce = Math.round(new Date().getTime() / 1000);
+		const currentMomentInUTC = new Date().toISOString();
 
-		do{
-			nonce = nonce.toString() + '' + rand(0, 9).toString();
+		var nonce = 'date=' + currentMomentInUTC + ",exp=" + exp + ',s=' + hexEncode(str);
+
+		var signature = null; 	
+
+		if (old){
+
+			nonce = utcnow().getTime()
+
+			do{
+				nonce = nonce + '' + rand(0, 9).toString();
+			} while(nonce.length < 32)
+			
+			signature = keyPair.sign(Buffer.from(nonce))	
 		}
-		while(nonce.length < 32)
-
-		var signature = keyPair.sign(Buffer.from(nonce))		
+		else
+		{
+			signature = keyPair.sign(bitcoin.crypto.sha256(Buffer.from(nonce)))	
+		}
 
 		var sobj = {
 
 			nonce : nonce,
 			signature : signature.toString('hex'),
 			pubkey : keyPair.publicKey.toString('hex'),
-			address : self.address.value
+			address : self.address.value,
+			v : 1
 			
 		}
 
-		//var __keyPair = bitcoin.ECPair.fromPublicKey(Buffer.from(sobj.pubkey, 'hex'))
-		//var __hash = Buffer.from(sobj.nonce, 'utf8')
-
-		//var verify = __keyPair.verify(__hash, Buffer.from(sobj.signature, 'hex'));
-
+		if(old) delete sobj.v
 
 		return sobj
 	}
+
 
 	self.address = {
 		set : function(l){
@@ -178,6 +190,10 @@ User = function(app, p) {
 	self.features = {};
 	self.signout = function(clbk){
 
+		if (app.platform.firebase){
+			app.platform.firebase.destroy();
+		}
+
 		state = 0;
 		self.data = {};
 		localStorage['mnemonic'] = ''
@@ -189,6 +205,10 @@ User = function(app, p) {
 
 		app.platform.clear();
 
+		app.platform.matrixchat.destroy();
+
+		self.address.set()
+
 		if (tokenDialog)
 			tokenDialog.destroy();
 
@@ -198,8 +218,10 @@ User = function(app, p) {
 		if (app.platform.rtc)
 			app.platform.rtc.destoryAll();
 
-		if (app.platform.firebase)
-			app.platform.firebase.destroy(clbk);
+		if (clbk) clbk()
+
+		// Unsubscribe from notifications
+		//app.notifications.unsubscribe();
 	}
 
 	self.getstate = function(){
@@ -226,7 +248,7 @@ User = function(app, p) {
 		
 
 		if (keys.private.value && keys.public.value){
-			
+
 			state = 1;
 		}
 		else{
@@ -276,6 +298,8 @@ User = function(app, p) {
 	}
 
 	self.validateVay = function(){
+
+		console.log('self', self)
 
 		if(!self.address.value) return 'fu';
 
@@ -387,6 +411,9 @@ User = function(app, p) {
 			} 
 		}
 
+
+		
+
 		return keyPair
 
 	
@@ -440,6 +467,24 @@ User = function(app, p) {
 
 	self.keys = function(){
 		return bitcoin.ECPair.fromPrivateKey(keys.private.value)
+	}
+
+	self.cryptoKeys = function(){
+		var ckeys = [];
+		if(keys.private.value){
+			for(var i = 1; i < 13; i++){
+				var d = bitcoin.bip32.fromSeed(keys.private.value).derivePath(app.platform.sdk.address.path33(i)).toWIF()
+	
+				var keyPair = bitcoin.ECPair.fromWIF(d)
+	
+				ckeys.push({
+					pair : keyPair,
+					public : keyPair.publicKey.toString('hex')
+				})
+			}
+		}
+
+		return ckeys;
 	}
 
 	self.stay = Number(localStorage['stay'] || '1')

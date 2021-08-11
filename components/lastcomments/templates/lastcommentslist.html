@@ -19,6 +19,12 @@
         if(!share) return
 
         if(share.address == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82') return
+
+
+        var me = app.platform.sdk.user.me()
+        if (me && me.relation(share.address, 'blocking')) {
+            return
+        }
         
         var h = '';
 
@@ -91,6 +97,10 @@
                 <% _.each(group, function(comment){ 
                     
                     if(comment.deleted || !comment.message) return
+
+                    if (me && me.relation(comment.address, 'blocking')) {
+                        return
+                    }
                     
                     %> 
 
@@ -129,6 +139,13 @@
 
                                 <% } %>
 
+                                <% if(comment.donation === 'true' && comment.amount) {%>
+
+                                    <div class="donate">
+                                        +<%=comment.amount / 100000000 %> PKOIN
+                                    </div>
+                                <% } %>
+
                             </div>
                 
                             <div class="commentWrapper table">
@@ -151,7 +168,7 @@
                                                         stripIgnoreTag: true
                                                     }), true)
                 
-                                                    m = emojione.toImage(l)
+                                                    m = joypixels.toImage(l)
 
                                                 %>
                 

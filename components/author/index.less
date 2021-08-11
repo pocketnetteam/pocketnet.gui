@@ -24,9 +24,13 @@
 		}
 	}
 
+	.mobileinfo{
+		display: none;
+	}
+
 	.copyaddress{
 		cursor: pointer;
-		font-size: 0.7em;
+		text-overflow: ellipsis;
 	}
 	
 	.authorlentawrappermain{
@@ -276,10 +280,21 @@
 				.aboutwrapper{
 				}
 			}
+
+			
 		}
 
 		.item{
 			margin-bottom: 2 * @rhythm;
+		}
+
+		.postcnt{
+			cursor: pointer;
+			
+			.label{
+				text-transform: capitalize;
+				text-decoration: underline;
+			}
 		}
 
 		.name{
@@ -304,7 +319,9 @@
 		width : 240px;
 		padding : 5 * @rhythm 0;
 		padding-left: @rhythm;
-
+		padding-right: 3 * @rhythm;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		
 	}
 
@@ -324,7 +341,7 @@
 	.work{
 		&.mwork{
 			padding : 0!important;
-			overflow-y: hidden;
+			overflow: hidden;
 		}
 
 		.work{
@@ -475,19 +492,19 @@
 			.usermenuitem{
 				float: left;
 				margin-right : 2 * @rhythm;
-				font-size: 0.9em;
+				font-size: 0.8em;
 				font-weight: 500;
-				padding : 2 * @rhythm;
+				padding : @rhythm;
 				border-bottom: 2px solid transparent;
 				cursor: pointer;
 				.transition(0.3s);
 
 				&:hover{
-					border-bottom: 2px solid @color-contrast;
+					border-bottom: 2px solid @color-raspberry;
 				}
 
 				&.active{
-					border-bottom: 2px solid @color-contrast;
+					border-bottom: 2px solid @color-raspberry;
 				}
 
 				&:nth-child(1){
@@ -562,16 +579,22 @@
 
 	.contents
 	{
-		padding-left: 2 * @rhythm;
+		background: #fff;
+		padding: 2 * @rhythm 4 * @rhythm;
+		
+
 		.cgroup{
 			padding-top : 2 * @rhythm;
 			padding-bottom : 2 * @rhythm;
 		}
 
 		.ccaption{
-			font-weight: 700;
-			color : @color-main;
+			font-weight: 100;
 			margin-bottom : 2 * @rhythm;
+
+			span{
+				font-size: 2em;
+			}
 		}
 
 		.gcontents{
@@ -581,15 +604,14 @@
 			
 			.citemtable{
 
-				width: auto;
 				
 				>div{
 					vertical-align: middle;
-					max-width: 130px;
 					overflow: hidden;
+					padding : @rhythm 0;
 
 					&.cscorecell{
-						width : 50px;
+						width : 150px;
 						text-align: right;
 						padding-right: 2 * @rhythm;
 					}
@@ -601,8 +623,12 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+			}
+
+			.cname{
 				span{
-					font-size: 0.8em;
+					font-size: 1.1em;
+					font-weight: 100;
 				}
 			}
 
@@ -811,7 +837,7 @@ html.stblack{
 		}
 	
 		.mworkwrapper{
-			background: @color-black2;
+			background: @color-black5;
 		}
 		.subscribewrapperphones{
 			background: #20232A;			
@@ -915,8 +941,13 @@ html.stblack{
 }
 @media only screen and (max-width: 1024px) {
 	#author{
+
+		.leftpanelcell{
+			display: none;
+		}
 		.lentacell{
 			margin-right: 44px;
+			margin-left: 0;
 		}
 
 		.work.mwork{
@@ -924,10 +955,138 @@ html.stblack{
 		}
 	}
 }
-@media only screen and (max-width: 640px) {
-	#content{
 
-		
+html.tablet{
+	#author{
+
+		.leftpanelcell{
+			display: none;
+		}
+		.lentacell{
+			margin-right: 44px;
+			margin-left: 0;
+		}
+
+		.work.mwork{
+			width: 90%;
+		}
+
+		.bgCaption{
+			margin-bottom : 0;
+			margin-top : 0;
+			height: auto;
+			padding-bottom: 4 * @rhythm;
+			background: #263045;
+			
+			.cwrapper{
+				display: block;
+
+				>div{
+					display: block;
+				}
+
+				.cellforimage{
+					margin : 0 auto;
+				}
+			}
+
+			.work{
+				padding-right: 0;
+			}
+
+			.telements{
+				.telement{
+
+					width: 100%;
+					margin-right: 0;
+
+					&.sbscr{
+						display: none;
+						padding-left : 2 * @rhythm;
+						padding-right: 0;
+					}
+				}
+			}
+
+			.tips{
+				margin-top : @rhythm;
+			}
+
+			.caption{
+				font-size: 1.1em;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				text-align: center;
+				padding-left :  0;
+				padding-right: 0;
+				white-space: nowrap;
+				margin-top : 0;	
+				margin-bottom: 2 * @rhythm;
+
+				.adr{
+					font-size: 1em;
+				}
+
+			}
+			
+
+			.usermenu{
+				width: 100%;
+				.usermenuitem{
+					width: 20%;
+					margin-right : 0;
+					padding-left: 0;
+					padding-right : 0;
+					text-align: center;
+					padding-bottom: 2 * @rhythm;
+					font-size: 0.8em;
+					border-bottom: 2px solid @color-gray;
+
+					&:hover{
+						border-bottom: 2px solid @color-raspberry;
+					}
+	
+					&.active{
+						border-bottom: 2px solid @color-raspberry;
+					}
+
+				}
+			}
+
+			.cellforimage{
+				width: 100px;
+				padding-top : 4 * @rhythm;
+
+				.usericon{
+					width: 100px;
+					height: 100px;
+					line-height: 98px;
+				}
+			}
+
+
+			.infoWrapper{
+				position: static;
+				left: 0;
+				right: 0;
+				top: 20px;
+				bottom: 0;
+				z-index: 1;
+				.work{
+					padding :  0 @rhythm;
+				}
+			}
+
+			
+			.work{
+				position: relative;
+				overflow: hidden;
+			}
+		}
+	}
+}
+/*t*/ @media only screen and (max-width: 768px){
+	#content{
 
 		#lenta{
 			.shares{
@@ -1073,7 +1232,7 @@ html.stblack{
 			.work{
 				&.mwork{
 					padding : 0!important;
-					overflow-y: hidden;
+					overflow: hidden;
 				}
 
 				.work{
@@ -1087,7 +1246,21 @@ html.stblack{
 			.bgCaption{
 				margin-bottom : 0;
 				margin-top : 0;
-				height: 140px;
+				height: auto;
+				padding-bottom: 4 * @rhythm;
+				background: #263045;
+				
+				.cwrapper{
+					display: block;
+
+					>div{
+						display: block;
+					}
+
+					.cellforimage{
+						margin : 0 auto;
+					}
+				}
 
 				.work{
 					padding-right: 0;
@@ -1115,37 +1288,56 @@ html.stblack{
 					font-size: 1.1em;
 					overflow: hidden;
 					text-overflow: ellipsis;
-					text-align: left;
-					padding-left : 2.4 * @rhythm;
+					text-align: center;
+					padding-left :  0;
+					padding-right: 0;
 					white-space: nowrap;
+					margin-top : 0;	
+					margin-bottom: 2 * @rhythm;
+
+					.adr{
+						font-size: 1em;
+					}
+
 				}
 				
 
 				.usermenu{
 					width: 100%;
 					.usermenuitem{
-						width: 16.666%;
+						width: 20%;
 						margin-right : 0;
 						padding-left: 0;
 						padding-right : 0;
+						padding-bottom: 2 * @rhythm;
 						text-align: center;
 						font-size: 0.8em;
+
+						border-bottom: 2px solid @color-gray;
+
+						&:hover{
+							border-bottom: 2px solid @color-raspberry;
+						}
+		
+						&.active{
+							border-bottom: 2px solid @color-raspberry;
+						}
 					}
 				}
 
 				.cellforimage{
-					width: 45px;
+					width: 100px;
 
 					.usericon{
-						width: 45px;
-						height: 45px;
-						line-height: 43px;
+						width: 100px;
+						height: 100px;
+						line-height: 98px;
 					}
 				}
 
 
 				.infoWrapper{
-					position: absolute;
+					position: static;
 					left: 0;
 					right: 0;
 					top: 20px;
@@ -1153,6 +1345,25 @@ html.stblack{
 					z-index: 1;
 					.work{
 						padding :  0 @rhythm;
+					}
+				}
+
+				.infoWrapper{
+					
+					.mobileinfo{
+						display: block;
+					}
+				}
+
+				.authorinfo{
+					padding : @rhythm;
+					margin-bottom: 0;
+
+					.postcnt,
+					.foraddress,	
+					.date,
+					.name{
+						display: none;
 					}
 				}
 
@@ -1189,4 +1400,11 @@ html.stblack{
 		}
 	}
 		
+}
+
+@media only screen and (max-width: 640px){
+	#content #author .bgCaption .caption{
+		text-align: left;
+		padding-left: 4.5 * @rhythm;
+	}
 }

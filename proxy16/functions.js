@@ -73,7 +73,9 @@ f.saveFile = function(filepath, buffer){
 
         fs.unlink(f.path(filepath), function(err){
 
+
             fs.writeFile(f.path(filepath), buffer, (err) => {
+
            
                 if(err){
                     reject(err)
@@ -236,6 +238,18 @@ f.deep = function(obj, key){
     }
 }
 
+f.nowrev = function(date){
+    var now = date ||(new Date);
+    var UTCseconds = (now.getTime() - now.getTimezoneOffset()*60*1000);
+    var d = new Date(UTCseconds);
+        d.toString();	
+
+    return d
+}
+
+f.time = function(){
+    return Math.floor(Date.now() / 1000)
+}
 
 f.now = function(date){
     var now = date ||(new Date);
@@ -327,6 +341,24 @@ f.delay = function(time){
     return new Promise((resolve, reject) => {
         setTimeout(resolve, time)
     })
+}
+
+
+f.loop = function(obj, action){
+    const isObject = val =>
+        typeof val === 'object' && !Array.isArray(val);
+
+    const paths = (obj = {}) => {
+
+        _.each(obj, function(value, key)  {
+
+            isObject(value) ? f.loop(value, action) : action(obj, key)
+
+        });
+
+    }
+
+    return paths(obj);     
 }
 
 f.processArrayWithDelay = function(array, t, fn) {
@@ -440,6 +472,7 @@ f.slow = function(_function, timer, time){
 }
 
 f.lastelements = function(arr, length, eq){
+
     if(!length) length = 100
     if(!eq) eq = 0
 
@@ -448,7 +481,6 @@ f.lastelements = function(arr, length, eq){
     if (d > eq){
         arr.splice(0, d)
     }
-
     return arr
 }
 
@@ -456,6 +488,23 @@ f.validateHost = function(str){
 
     return /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$|^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$|^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/.test(str);
 
+}
+
+
+f.rot13 = function(str){
+    var re = new RegExp("[a-z]", "i");
+    var min = 'A'.charCodeAt(0);
+    var max = 'Z'.charCodeAt(0);
+    var factor = 13;
+    var result = "";
+    str = str.toUpperCase();
+    
+    for (var i=0; i<str.length; i++) {
+        result += (re.test(str[i]) ?
+        String.fromCharCode((str.charCodeAt(i) - min + factor) % (max-min+1) + min) : str[i]);
+    }
+    
+    return result;
 }
 
 f.hash = function(str){
@@ -471,6 +520,121 @@ f.date = {
 
         return d
     }
+}
+
+f.hexEncode= function(text){
+    var ch = 0;
+    var result = "";
+    for (var i = 0; i < text.length; i++)
+    {
+        ch = text.charCodeAt(i);
+        if (ch > 0xFF) ch -= 0x350;
+        ch = ch.toString(16);
+        while (ch.length < 2) ch = "0" + ch;
+        result += ch;
+    }
+    return result;
+}
+f.hexDecode= function(hex){
+    var ch = 0;
+    var result = "";
+    for (var i = 2; i <= hex.length; i += 2)
+    {
+        ch = parseInt(hex.substring(i - 2, i), 16);
+        if (ch >= 128) ch += 0x350;
+        ch = String.fromCharCode("0x" + ch.toString(16));
+        result += ch;
+    }
+    return result;
+} 
+
+
+f.formatExchageKeys = function(obj) {
+    const obj_keys = Object.keys(obj)
+    let new_object = {}
+
+    for(item of obj_keys) {
+        const new_key = item.toUpperCase().replace('COIN-', '').replace('-', '_')
+
+        new_object[new_key] = obj[item]
+    }
+
+    return new_object
+}
+
+f.getPkoinPrice = function(array, arrkey) {
+    var response_keys = Object.keys(array)
+
+    var pkoin_pairs = response_keys.filter(item => {
+        return item.includes('PKOIN_') && !item.includes('_USDT') && !item.includes('_BTC')
+    })
+
+    var btc_usd_price = array['BTC_USDT'] ? array['BTC_USDT'][arrkey] : 0
+
+    var pkoin_usd_price = array['PKOIN_USDT'] ? array['PKOIN_USDT'][arrkey] : 0
+    var pkoin_btc_price = array['PKOIN_BTC'] ? array['PKOIN_BTC'][arrkey] * btc_usd_price : 0
+
+    var highest_price = pkoin_usd_price > pkoin_btc_price ? pkoin_usd_price : pkoin_btc_price
+
+    //Берем пары с PKOIN, переводим цену за них из других валют в доллары
+    if(pkoin_pairs.length !== 0) {
+        pkoin_pairs.forEach(item => {
+            var currency = item.split('_')[1]
+            var pair = array[item][arrkey]  // наивысшая цена в паре валют
+            var price
+
+            if (array[currency + '_USDT']) {
+                price = array[currency + '_USDT'][arrkey] * pair
+
+            } else if(array[currency + '_BTC']) {
+                price = array[currency + '_BTC'] * btc_price * pair
+
+            } else {
+                price = 0
+            }
+             
+            if(price) highest_price = highest_price < price ? price : highest_price
+        })
+    }
+
+    var d = array
+    var slice = {
+        prices : {},
+        date : f.now()
+    }
+
+
+    _.each(d, function(pair, i){
+
+        if(i.indexOf("PKOIN_") > -1){
+
+            var currency = i.split("_")[1]
+
+            slice.prices[currency] = {
+                currency : currency,
+                data : pair
+            }
+        }
+
+    })
+    
+    //делаем объект для USD на основе USDT
+    var usd = _.clone(array['PKOIN_USDT'])
+
+    if (typeof highest_price !== Number) {
+        highest_price = parseFloat(highest_price, 10).toFixed(2)
+    } 
+
+    usd[arrkey] = highest_price
+
+    slice.prices['USD'] = {
+        currency : 'USD',
+        data : usd
+    }
+
+    if(!_.isEmpty(slice.prices)) return Promise.resolve(slice)
+
+    return Promise.reject('notfound')
 }
 
 module.exports = f

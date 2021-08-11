@@ -10,6 +10,12 @@ var all = {
 		class : 'edit'
 	},
 
+	opennewwindow : {
+		icon : '<i class="fas fa-link"></i>',
+		text : e('opennewwindow'),
+		class : 'opennewwindow'
+	},
+
 	remove : {
 		icon : '<i class="far fa-times-circle"></i>',
 		text : e('removepost'),
@@ -20,6 +26,12 @@ var all = {
 		icon : '<i class="fas fa-share-alt"></i>',
 		text : e('share'),
 		class : 'socialshare'
+	},
+
+	shareBareVideoLink : {
+		icon : '<i class="fas fa-video"></i>',
+		text : e('shareBareLink'),
+		class : 'videoshare'
 	},
 
 	subscribe : {
@@ -50,11 +62,18 @@ var all = {
 		icon : '<i class="fas fa-user-slash"></i>',
 		text : e('blockuser'),
 		class : 'block'
+	},
+
+	htls : {
+		icon : '<i class="fas fa-cubes"></i>',
+		text : 'HTLC BUY TEST',
+		class : 'htls'
 	}
 
 }
 
 m.push('share')
+
 
 if(share){
 	if(share.address && user.address.value){
@@ -71,6 +90,7 @@ if(share){
 		if(!my && me){
 
 			m.push('donation')
+			/*m.push('htls')*/
 
 			if(isMobile()){
 				if (!me.relation(share.address, 'subscribes')){
@@ -90,6 +110,13 @@ if(share){
 			m.push('block')
 		}
 	}
+
+	if (share.itisvideo()) {
+		m.push('shareBareVideoLink');
+	}
+
+	m.push('opennewwindow');
+	
 }
 
 

@@ -63,20 +63,38 @@ var WSS = function(admins, manage){
 
             if(!node){
 
+                return f.pretry(function(){
+                    node = self.nodeManager.selectProbability()
 
-                node = self.nodeManager.selectProbability()
-                auto = true
+                    if (node)
+                        auto = true
+
+                    return Promise.resolve(node)
+                }, 100, 5000).then(r => {
+
+                    if(node){
+                        return Promise.resolve({
+                            instance : node,
+                            ini : {},
+                            auto : auto,
+                            key : node.wskey
+                        })
+                    }
+                    else
+                    {
+                        return Promise.reject('empty')
+                    }
+
+                })
+                
             }
 
-
-            if(!node) return null
-
-            return {
+            return Promise.resolve({
                 instance : node,
                 ini : {},
                 auto : auto,
                 key : node.wskey
-            }
+            })
 
         }
     }
@@ -92,7 +110,14 @@ var WSS = function(admins, manage){
 
             if (node.auto) {
                 disconnectNode(user)
-                node = create.node()
+
+                create.node().then(node => {
+
+                    connectNode(user, node)
+
+                }).catch(e => {})
+
+                return
             }
 
             connectNode(user, node)
@@ -104,11 +129,12 @@ var WSS = function(admins, manage){
 
                 if (client.type == 'firebase'){
 
-                    disconnectNode(user)
+                    /*disconnectNode(user)
 
-                    node = create.node(data.node)
+                    create.node(data.node).then(node => {
+                        connectNode(user, node)
+                    }).catch(e => {})*/
 
-                    connectNode(user, node)
 
                 }
                 else{
@@ -118,7 +144,7 @@ var WSS = function(admins, manage){
                         type : 'changenode',
                         data : data
 
-                    }, client.ws)
+                    }, client.ws).catch(e => {})
 
                 }
 
@@ -142,17 +168,22 @@ var WSS = function(admins, manage){
                       
             _.each(node.ini, function(client){
 
+
                 if (client.type == 'firebase'){
 
-                    if(data.msg == 'new block') return     
+                    if (data.msg == 'new block') return     
 
                     if (self.firebase){
-                        self.firebase.send(fbdata, client.device, user.address) 
+
+                        self.firebase.sendToDevice(fbdata, client.device, client.address).catch(e => {
+                            console.error(e)
+                        })
+
                     }
 
                 }
                 else{
-                    sendMessage(data, client.ws)
+                    sendMessage(data, client.ws).catch(e => {})
                 }
 
             })
@@ -160,7 +191,7 @@ var WSS = function(admins, manage){
         });
 
         ws.on('error', (e) => {
-            console.log(e)
+            //console.log(e)
         })
 
     }
@@ -233,7 +264,18 @@ var WSS = function(admins, manage){
 
         return new Promise((resolve, reject) => {
 
-            ws.send(JSON.stringify(message), (err) => {
+            var str = null
+
+            try{
+                str = JSON.stringify(message)
+            }
+            catch(e){
+                console.log("stringify error", message)
+
+                return
+            }
+
+            ws.send(str, (err) => {
                 if (err) reject(err)
                 else resolve()
             });
@@ -254,7 +296,7 @@ var WSS = function(admins, manage){
                         state : state,
                         settings : settings
                     }
-                }, ws)
+                }, ws).catch(e => {})
     
             })
 			
@@ -269,8 +311,6 @@ var WSS = function(admins, manage){
             disconnectClient(ws)
         },
         registration : function(message, ws){
-
-            
             
             var address = message.address;
             var signature = message.signature;
@@ -296,29 +336,30 @@ var WSS = function(admins, manage){
             user.clients[ws.id] = ws
             user.devices.ws[ws.id] = device
 
-            var node = create.node(message.node)
+            create.node(message.node).then(node => {
 
-            if(!node) return
+                sendMessage({
+                    msg : node ? "registered" : 'registererror',
+                    addr : user.addr,
+                    node : node.instance.export()
+                }, ws).catch(e => {})
+    
+                user.nodes[node.key] || (user.nodes[node.key] = node)
+    
+                user.nodes[node.key].ini[ws.id] = {
+                    type : 'ws',
+                    ws : ws,
+                    ip : ws.ip
+                }
+    
+                if (user.admin){
+                    user.ticks[ws.id] = setInterval(() => {tick(ws)}, 5000)
+                }
+    
+                connectNode(user, user.nodes[node.key]);
+               
+            }).catch(e => {})
 
-            sendMessage({
-                msg : node ? "registered" : 'registererror',
-                addr : user.addr,
-                node : node.instance.export()
-            }, ws)
-
-            user.nodes[node.key] || (user.nodes[node.key] = node)
-
-            user.nodes[node.key].ini[ws.id] = {
-                type : 'ws',
-                ws : ws,
-                ip : ws.ip
-            }
-
-            if (user.admin){
-                user.ticks[ws.id] = setInterval(() => {tick(ws)}, 5000)
-            }
-
-            connectNode(user, user.nodes[node.key]);
         }
     }
 
@@ -415,28 +456,40 @@ var WSS = function(admins, manage){
 
         if (wss && wss.clients)
             wss.clients.forEach((socket) => {
-                if (socket)
-                    socket.close();
+                try {
+                    if (socket)
+                        socket.close();
+                }
+                catch(e){
+                    
+                }
             });
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
 
-                if (wss && wss.clients)
-                    wss.clients.forEach((socket) => {
-                        if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
-                            socket.terminate();
-                        }
-                    });
+                try {
+                    if (wss && wss.clients)
+                        wss.clients.forEach((socket) => {
+                            if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
+                                socket.terminate();
+                            }
+                        });
 
-                if (server)
-                    server.close(function(){
+                    if (server)
+                        server.close(function(){
+                            resolve()
+                        })
+
+                    else{
                         resolve()
-                    })
-
-                else{
+                    }
+                }
+                catch (e) {
                     resolve()
                 }
+
+                
     
             }, 3000);
         })
@@ -448,6 +501,9 @@ var WSS = function(admins, manage){
         firebase : {
 
             removeUser : function(p){
+
+
+                console.log("REMOVEING USER", p)
 
                 if(!p.address || !p.device) return
 
@@ -482,30 +538,40 @@ var WSS = function(admins, manage){
             
             addUser : function(p){
 
+                return
+
                 if(!p.address || !p.device) return
 
                 var id = 'fb_' + p.device
 
                 if(!users[p.address]) users[p.address] = create.user(p.address)
 
-                user = users[address]
+                user = users[p.address]
 
                 user.devices.fb[id] = p.device
 
-                var node = create.node(p.node)
+                create.node(p.node).then(node => {
 
-                if(!node) return
+                    if(!user.nodes[node.key]){
+                        user.nodes[node.key] = node
+                    }
+    
+                    user.nodes[node.key].ini[id] = {
+                        type : 'firebase',
+                        device : p.device,
+                        address : p.address
+                    }
+    
+                    connectNode(user, node);
+                    
+                }).catch(e => {
 
-                if(!user.node[node.key]){
-                    user.node[node.key] = node
-                }
+                    console.error("ERROR", e)
 
-                user.nodes[node.key].ini[id] = {
-                    type : 'firebase',
-                    device : p.device
-                }
+                })
 
-                connectNode(user, node);
+
+                
                 
 
             },

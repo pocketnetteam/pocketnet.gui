@@ -35,21 +35,34 @@
 
 										<div class="pcenterCell">
 											<div class="pcenterLabel fresh" r="empty">
-												<a href="index" handler="true"><%=e('e13136')%></a>
+												<a href="index" handler="true"><%=e('e13136')%> <span class="lentaunseen" key="common"></span></a>
 											</div>
 										</div>
 
+
+										<% if(state) { %> 
 										<div class="pcenterCell">
 											<div class="pcenterLabel " r="sub">
-												<a href="index?r=sub"  handler="true"><%=e('e13137')%></a>
+												<a href="index?r=sub"  handler="true"><%=e('e13137')%> <span class="lentaunseen " key="sub"></span></a>
 											</div>
 										</div>
+										<% } %>
+										
+										<% if(app.platform.videoenabled) {%>
+											<div class="pcenterCell">
+												<div class="pcenterLabel " r="video">
+													<a href="index?video=1"  handler="true"><%=e('video')%> <span class="lentaunseen" key="video"></span></a>
+												</div>
+											</div>
+										<% } %>
 
+										
 										<div class="pcenterCell">
 											<div class="pcenterLabel toppost " r="recommended">
 												<a href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
 											</div>
 										</div>
+										
 										
 									</div>
 								</div>
@@ -146,19 +159,24 @@
 							</div>
 						</div>
 
+					<% } %>
 
-						<div class="items">
-							<div class="item table right state onlyicon" events="state">
-								
-									<div class="icon"><a href="userpage?id=system16">	
-										<div class="icn">
-											<i class="fas fa-wifi"></i>
-										</div></a>
-									</div>
-								
 
+					<div class="items">
+						<div class="item table right state onlyicon" events="state">
+							
+							<div class="icon"> <% if(state) {%> <a href="userpage?id=system16">	<% } else { %> <a href="system16"> <% } %>
+								<div class="icn">
+									<i class="fas fa-wifi"></i>
+								</div></a>
 							</div>
-						</div>					
+							
+						</div>
+					</div>		
+						
+					
+
+					<% if(state) { %>
 
 						<div class="items">
 							<div class="item table right user" events="userpage unselectable">
@@ -175,7 +193,15 @@
 
 											<% } %>
 
-											
+											<% if(deep(app, 'platform.real.'+user.address.value.toString('hex'))) {%>
+												<div class="realperson">
+			
+													<span class="fa-stack fa-2x">
+														<i class="fas fa-certificate fa-stack-2x"></i>
+														<i class="fas fa-check fa-stack-1x"></i>
+													  </span>
+												</div>
+											<% } %>
 										
 										</div>
 									</a>
@@ -188,10 +214,10 @@
 							</div>
 						</div>
 
-						
+					<% } %>
 
 						
-					<% } else {%>
+					<% if(!state) { %>
 
 						
 						<div class="items">
@@ -223,27 +249,52 @@
 
 			<div class="section leftpart">
 
-				<div class="items sitenames">
+				<% if(haschat && state && (isMobile() || isTablet()) /*&& window.testpocketnet*/) {%>
 
-					<div class="item table sitename" >
-						<div class="icon" events="sitename">
-							<img class="header_logo" src="img/logo20.svg">
-						</div>
-						<div class="label">
-							<div events="sitename">POCKETNET</div>
-							<div class="lang localization">
-								<% if(isMobile()) {%>
-									<%-(lkey.key || '').toLowerCase()%> 
-								<% } else { %>
-									<%-(lkey.name || '').toLowerCase()%> 
-								<% } %>
-								
-								<i class="fas fa-caret-down"></i>
+					<div class="items chat">
+
+						<div class="item table chatwr" events="chats">
+							<div class="icon">
+								<div class="icn">
+
+									<i class="far fa-comment"></i>
+
+									
+								</div>
+								<div class="amount">
+								</div>
 							</div>
-						</div>						
-
+							
+						</div>
 					</div>
-				</div>
+
+
+				<% } else { %> 
+
+					<div class="items sitenames">
+
+						<div class="item table sitename" >
+							<div class="icon" events="sitename">
+								<img class="header_logo" src="img/logo20.svg">
+							</div>
+							<div class="label">
+								<div events="sitename"><% if(app.test){%>TESTNET<%} else {%>POCKETNET<% }%></div>
+								<div class="lang localization">
+									
+									<% if(isMobile()) {%>
+										<%-(lkey.key || '').toLowerCase()%> 
+									<% } else { %>
+										<%-(lkey.name || '').toLowerCase()%> 
+									<% } %>
+									
+									<i class="fas fa-caret-down"></i>
+								</div>
+							</div>						
+
+						</div>
+					</div>
+
+				<% } %>
 
 				<% if(typeof _Electron == 'undefined' && !window.cordova){ %> 
 

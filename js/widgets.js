@@ -5,8 +5,12 @@ var PNWIDGETS = function(){
 
     self.renders = {
         iframe : function(seed, action, id, p){
+
+            var domain = 'pocketnet.app'
+
+            if(window.testpocketnet) domain = 'test.pocketnet.app'
             
-            return '<iframe width="100%" src="https://pocketnet.app/openapi.html?action='+action+'&id='+id+'&embeddingSettigns='+p+'" id="pocketnet_iframe_'+seed+'" scrolling="no" style="border: none;" frameborder="0" marginheight="0" marginwidth="0" loading="lazy" allowfullscreen allowautoplay></iframe>'
+            return '<iframe width="100%" src="https://'+domain+'/openapi.html?action='+action+'&id='+id+'&embeddingSettigns='+p+'" id="pocketnet_iframe_'+seed+'" scrolling="no" style="border: none;" frameborder="0" marginheight="0" marginwidth="0" loading="lazy" allowfullscreen allowautoplay></iframe>'
         }
     }
 
@@ -42,14 +46,26 @@ var PNWIDGETS = function(){
     self.url = function(url){
 
         var parsed_url = new URL(url)
+        var postid = parsed_url.searchParams.get('s') || parsed_url.searchParams.get('v') 
+        var connect = parsed_url.searchParams.get('connect')
+        var action = parsed_url.searchParams.get('commentid') ? 'commment' : postid ? 'post' : 'channel'
 
-        var action = parsed_url.searchParams.get('commentid') ? 'commment' 
-                                                    : parsed_url.searchParams.get('s') ? 'post' : 'channel'
+        var id = action === 'channel' ? ( parsed_url.pathname.replace('/', '')) : postid
 
-        var id = action === 'channel' ? parsed_url.pathname.replace('/', '') : parsed_url.searchParams.get('s')
+        if (connect) {
+            action = 'connect'
+            id = connect
+        }
 
         var p = '7B22626C61636B223A66616C73652C22636F6D6D656E7473223A226C617374222C2266756C6C73637265656E766964656F223A66616C73657D'
 
+
+        var txid = parsed_url.searchParams.get('stx')
+
+        if (txid) {
+            id = txid
+            action = 'transaction'
+        }
 
         return {
             action : action,

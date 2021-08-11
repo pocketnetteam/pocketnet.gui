@@ -9,6 +9,7 @@
         top: 2 * @rhythm;
     }
 
+    
     .upload-header {
         display: flex;
         justify-content: flex-start;
@@ -53,11 +54,12 @@
 
     .uploadRow {
         display: flex;
+        flex-direction: column;
         align-items: center;
 
         .upload-field-container {
             flex-grow: 1;
-            width: 50%;
+            width: 80%;
             padding: @rhythm / 2;
             position: relative;
 
@@ -125,6 +127,7 @@
         flex-direction: row;
         justify-content: flex-start;
         align-items: flex-end;
+        padding: 2 * @rhythm 0;
     }
 
     .barWrapper {
@@ -181,7 +184,91 @@
         width: 250px;
     }
 
+    .challengeoffer{
 
+        color : #fff;
+        .pbg{
+            padding: 2 * @rhythm 4 * @rhythm;
+            
+        }
+        
+        .caption{
+            padding: 2 * @rhythm 0;
+            padding-top : 0;
+            background: linear-gradient(94.23deg,#770059 12.41%,#3700ff 52.55%,#1c1335 89.95%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            
+
+            span{
+                font-weight: 700;
+                font-size: 2em;
+                line-height: 1em;
+            }
+            
+        }
+
+        .offerpart{
+            padding: 2 * @rhythm 0;
+            background: fade(#000, 60);
+            overflow: hidden;
+            border-radius: 5px;
+            margin-bottom : 3 * @rhythm;
+
+            div{
+                font-size: 1.1em;
+            }
+
+            .table{
+                >div{
+                    vertical-align: top;
+                    padding-top : @rhythm;
+
+                    &.forlabel{
+                        padding-right: 2 * @rhythm;
+                        span{
+                            font-size: 0.8em;
+                        }
+                    }
+
+                    &.forvalue{
+                        width: 55%;
+                        span{
+                            font-size: 0.8em;
+                            font-weight: 700;
+                        }
+                    }
+                }
+            }
+        }
+
+        .infopart{
+            padding: 2 * @rhythm 0;
+            padding-bottom : 0;
+            div{
+                font-size: 0.8em;
+                position: relative;
+
+            }
+        }
+
+        .textpart{
+            color : #fff;
+
+            ol{
+                margin: 0;
+                padding-top : @rhythm;
+                padding-bottom : @rhythm;
+                padding-left: 0;
+
+                li{
+                    font-size: 0.9em;
+                    padding: @rhythm / 2 0;
+                }
+            }
+        }
+    }
 
     .controlButton {
         cursor: pointer;
@@ -193,6 +280,19 @@
 
     .cancelButton {
         margin-left: @rhythm * 2;
+        color: @color-bad;
+        .transition(0.3s);
+
+        span {
+            font-size: 0.8em;
+
+
+
+        }
+
+        &:hover {
+            color: @color-main;
+        }
     }
 
     .uploadButton {
@@ -212,7 +312,9 @@
         >div {
             vertical-align: middle;
         }
+        
     }
+
 
     .main-upload-fields {
 
@@ -259,7 +361,7 @@
     }
 
     .main-upload-fields {
-        width: 62%;
+        width: 38%;
     }
 
     .mainWrapper {
@@ -271,14 +373,56 @@
         right: 0;
     }
 
-    .verticalSection {
-        padding: @rhythm;
-    }
 
     .video-title-container {
         position: relative;
     }
 
+    .progressSection {
+        width: 80%;
+    }
+
+
+    .iconwr {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        font-weight: bold;
+        color: @color-gray-mlight;
+
+        background-color: rgba(255, 255, 255, 0.9);
+        transform: translate(-50%, -50%);
+    }
+
+    .caption-container {
+        text-align: center;
+
+        color: @color-gray-mlight;
+        font-size: 0.8em;
+
+        cursor: pointer;
+
+        padding-top: 2 * @rhythm;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .quality-limit-container {
+        position: absolute;
+
+        bottom: 1em;
+        left: 1em;
+    }
 }
 
 #uploadpeertube.rolledUp {
@@ -294,6 +438,16 @@
         }
     }
 
+    .uploadRow {
+        > :not(.activeOnRolled) {
+            display: none;
+        }
+    }
+
+    .uplsection {
+        padding: 0;
+    }
+
     .upload-button-section {
         > :not(.activeOnRolled) {
             display: none;
@@ -306,10 +460,6 @@
         padding: 0;
         width: 100%;
         height: 100%;
-
-        .progressSection {
-            width: 80%;
-        }
     }
 
     .upload-header-wrapper {
@@ -352,9 +502,9 @@
 
 .wnd.uploadpeertube {
     .wndinner {
-        max-width: 700px;
+        max-width: 900px;
         height: 100%;
-        max-height: 360px;
+        max-height: 485px;
         .transition(0.3s);
         overflow: hidden;
 
@@ -366,6 +516,10 @@
 
             overflow: hidden;
         }
+    }
+
+    .changeButton{
+        color : @color-main!important;
     }
 
     .wndcontent {
@@ -386,7 +540,7 @@
     }
 }
 
-@media only screen and (max-width: 640px) {
+/*t*/ @media only screen and (max-width: 768px){
     #uploadpeertube {
         .sectionsWrapper {
             display: flex;
@@ -397,10 +551,27 @@
 
         .main-upload-fields {
             width: 100%;
-            margin-top: 50px;
         }
 
         .upload-button-section {
+            width: 100%;
+        }
+
+        .challengeoffer{
+            display: none;
+        }
+
+        .uploadRow label{
+            font-size: 1em;
+        }
+    }
+}
+
+.importVideoDialog {
+    z-index: 1006;
+
+    .v {
+        input {
             width: 100%;
         }
     }

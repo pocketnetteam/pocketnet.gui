@@ -14,8 +14,6 @@ var categories = (function(){
 			showhideclear : function(){
 				var hasc = self.app.platform.sdk.categories.gettags().length
 
-				console.log('el.clearcategories', el.clearcategories, hasc)
-
 				if (hasc){
 					el.clearcategories.addClass('showed')
 				}
@@ -281,6 +279,7 @@ var categories = (function(){
 
 		var initEvents = function(){
 			
+			self.app.platform.sdk.categories.clbks.tags.mainmodule =
 			self.app.platform.sdk.categories.clbks.selected.mainmodule = function(id, value, l){
 
 
@@ -350,6 +349,8 @@ var categories = (function(){
 			getdata : function(clbk, p){
 				essenseData = p.settings.essenseData || {};
 				var data = {};
+
+				data.video = parameters().video ? true  :false
 
 				clbk(data);
 

@@ -1,5 +1,6 @@
 @import "../../css/__cssvar";
 
+
 #navigation{
 	display: none;
 	width: 100%;
@@ -7,9 +8,19 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	height: 60px;
+	padding-bottom : 30px;
+	height: 90px;
 	z-index: 200;
 	background: fade(#fff, 95);
+	.transition(0.3s);
+
+
+	.fakem{
+		color : #fff;
+		.shadowText();
+		text-align: center;
+		padding-top : 30px;
+	}
 
 	.nmenu{
 		height: 100%;
@@ -55,6 +66,10 @@
 				&.active{
 					color : @color-gray-light;
 				}
+			}
+
+			&.reg{
+				color : @color-bright;
 			}
 
 		}
@@ -109,7 +124,16 @@ html.stblack{
 	}	
 }
 
-@media only screen and (max-width: 768px) {
+.html{
+	.iphone{
+		#navigation{
+			padding-bottom : 30px;
+			height: 90px;
+		}
+	}
+}
+
+/*t*/ @media only screen and (max-width: 768px){
 	#navigation{
 		display: block;
 	}

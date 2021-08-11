@@ -20,6 +20,8 @@
 
 /* ______________________________ */
 
+
+
 /* DATE */
 	var dateFormat = function () {
 		var e = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g, t = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g, n = /[^-+\dA-Z]/g, r = function (e, t) {
@@ -74,7 +76,8 @@
 	    ].join(d || '');
  	};
 
-
+	
+	
  	secInTime = function(sec){
 
  		var h = sec/3600 ^ 0 ;
@@ -93,9 +96,9 @@
 		return result.join(":")
  	}
 
-	isios = function () {
+	/*isios = function () {
 		return typeof window != 'undefined' && window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
-	}
+	}*/
 
  
 	currentYear = function(){
@@ -439,7 +442,7 @@
 		if (dateToStrSmall(n) == dateToStrSmall(date)) return ['today', addZero(date.getHours().toString()) + ":" + addZero(date.getMinutes().toString())]
 
 
-		return ['', convertDate(dateToStr(date))]
+		return ['', convertDate(dateToStrSmall(date))]
 		
 	}
 
@@ -500,6 +503,8 @@
 
 	wnd = function(p){
 
+		console.log('p1!!', p);
+
 		if(!p) p = {};
 
 		var self = this,
@@ -552,8 +557,8 @@
 
 		var render = function(tpl){
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner">\
-					 ';
+			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'><div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div></div><div class="wndinner ' + p.type + '">\
+			';
 
 			var closedbtnclass = ''
 
@@ -638,26 +643,28 @@
 
 				var directions = {}
 
-				var tr = 100;
+				var c = wnd.find('.wndcontent')
+
+				var tr = 1;
 
 					directions[dir] = {
-						trueshold : tr,
+						trueshold : p.trueshold || tr,
 
-						mintrueshold : p.swipeMintrueshold || 0,
+						mintrueshold : p.swipeMintrueshold || 1,
 
 						positionclbk : function(px){
-							var percent = Math.abs((tr - Math.abs(px)) / tr);
+							
+							
 
-							//if (percent > 0){
+						},
 
-								wnd.css('opacity', percent) 
-							//}
-
+						constraints : function(){
+							if(c.scrollTop() == 0) return true
 						},
 
 						clbk : function(){
 
-							//wnd.fadeOut(tr)
+							wnd.fadeOut(tr)
 
 							setTimeout(function(){
 								actions.close(true)	
@@ -669,16 +676,23 @@
 
 					//if(dir == 'left' || dir == 'right') directions[dir].reverse = true
 					
-
-				var parallax = new SwipeParallax({
+				var parallax = new SwipeParallaxNew({
 
 					allowPageScroll : 'vertical',
 
-					el : wnd.find('.wndinner'),
+					el : c,
 
 					directions : directions
 
 				}).init()
+
+
+				/*wnd.find('.wndinner').swipe({
+					allowPageScroll: "auto", 
+					swipeDown : function(e, phase, direction, distance){
+						actions.close(true)	
+					},
+				})*/
 
 				/*wnd.swipe( {
 					
@@ -729,7 +743,6 @@
 				}
 
 				
-				$('#habla_beta_container_do_not_rely_on_div_classes_or_names').css('display', "block");
 			},
 
 			hide : function(cl, key) {
@@ -833,6 +846,7 @@
 		self.close = actions.close;
 		self.el = wnd;
 		self.hide = actions.hide;
+		self.show = actions.show;
 
 		return self;
 	}
@@ -1286,8 +1300,8 @@
 		if(!p.fail) p.fail = false;
 
 
-		if(!p.btn1text) p.btn1text = "Accept";
-		if(!p.btn2text) p.btn2text = "Cancel";
+		if(!p.btn1text) p.btn1text = app.localization.e('daccept');
+		if(!p.btn2text) p.btn2text = app.localization.e('dcancel');
 
 		if(p.id)
 		{
@@ -1594,13 +1608,17 @@
 		el.find('[image]').each(function(){
 
 			var _el = $(this);
+			var image = _el.attr('image')
 
-			if (_el.attr('image'))
+			if (image)
 			{
-				_el.css('background-image', 'url('+$(this).attr('image')+')');
-				_el.css('background-size', p.size || 'cover');
-				_el.css('background-position', p.position || 'center center');
-				_el.css('background-repeat', p.repeat || 'no-repeat');
+				_el.css({
+					'background-image': 'url('+image+')',
+					'background-size': p.size || 'cover',
+					'background-position': p.position || 'center center',
+					'background-repeat': p.repeat || 'no-repeat'
+				});
+
 				_el.attr('image', '')
 			}
 
@@ -1608,7 +1626,7 @@
 			{
 				_el.imagesLoaded({ background: true }, function(image) {
 
-					el.fadeIn(100);
+					el.fadeIn({queue: false, duration: 'fast'});
 
 				  	if(typeof p.clbk === 'function')
 				  		p.clbk(image);
@@ -1636,7 +1654,6 @@
 	  };
 
 	  xhr.onerror = function(){
-	  	console.log("ERROR")
 	  }
 
 	  xhr.open('GET', url);
@@ -1699,7 +1716,7 @@
 
 				ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 
-			var url = canvas.toDataURL("image/" + format, 0.9);
+			var url = canvas.toDataURL("image/" + format, 0.75);
 
 			$(canvas).remove();
 
@@ -2731,6 +2748,22 @@
 		return $.md5(JSON.stringify(v1)) === $.md5(JSON.stringify(v2))
 	}
 
+	rot13 = function(str){
+		var re = new RegExp("[a-z]", "i");
+		var min = 'A'.charCodeAt(0);
+		var max = 'Z'.charCodeAt(0);
+		var factor = 13;
+		var result = "";
+		str = str.toUpperCase();
+		
+		for (var i=0; i<str.length; i++) {
+			result += (re.test(str[i]) ?
+			String.fromCharCode((str.charCodeAt(i) - min + factor) % (max-min+1) + min) : str[i]);
+		}
+		
+		return result;
+	}
+
 	getMethods = function(obj){
 		var Obj = {};
 		for(prop in obj){
@@ -2752,48 +2785,7 @@
 		return _.toArray(obj).sort().join(".");
 	}
 
-	deep = function(obj, key){
-
-		var tkey = ''
-		var _key = []
-
-		if (key[0] == "'"){
-
-			key = key.substr(1)
-			_key = key.split("'")
-			tkey = _key[0]
-
-			if(_key[1]) _key[1] =  _key[1].substr(1)
-
-
-		}
-		else{	
-			_key = key.split(".");
-			tkey = _key[0];
-		}
-
-		
-
-		if(typeof obj == 'undefined' || !obj) return undefined;
-
-		if(typeof obj[tkey] != 'undefined')
-		{
-			_key.splice(0, 1);
-
-			if(_key.length == 0)
-			{
-				return obj[tkey];
-			}
-			else
-			{
-				return deep(obj[tkey], _key.join("."))
-			}
-		}
-		else
-		{
-			return undefined;
-		}
-	}
+	
 
 	deepInsert = function(obj, key, _insert){
 		if(!key) return;
@@ -3520,122 +3512,124 @@
 						}
 					}
 
-					if(parameter.type == 'valuescustom' || parameter.autoSearch)
-					{
-						_el.find('.vc_iconWrapper').on('click', function(){
-							open()
+					if(!parameter.disabled){
 
-							if (parameter.autoSearch){
+						if(parameter.type == 'valuescustom' || parameter.autoSearch)
+						{
+							_el.find('.vc_iconWrapper').on('click', function(){
+								open()
 
-								setTimeout(function(){
-									input.focus();
-									bkp = input.val()
-									input.val('')
+								if (parameter.autoSearch){
 
-								}, 200)
-								
-							}
-						})
+									setTimeout(function(){
+										input.focus();
+										bkp = input.val()
+										input.val('')
 
-						_el.find('input').on('focus', function(){
-							$(this).select();
-						})
+									}, 200)
+									
+								}
+							})
 
-						
-					}
+							_el.find('input').on('focus', function(){
+								$(this).select();
+							})
 
-					if(parameter.type == 'values' && !parameter.autoSearch)
-					{
-						_el.find('.vc_textInput').on('click', function(){
-							open()
-						})
-					}
+							
+						}
 
-
-					_el.find('.vc_value').on('click', function(){
-						bkp = null;
-
-						var value = $(this).attr('value');
-
-							input.val(value);
-							input.change();
-
-						take().removeClass('opened');
-						take().removeClass('error')
-					})
-
-					_el.find('.vc_selected_value_icon').on('click', function(){
-						var value = $(this).closest('.vc_selected_value').attr('value');
-
-						parameter.set(value);
-
-						_el.parent().html(parameter.input())
-
-						ParametersLive([parameter], el, p)
-					})
+						if(parameter.type == 'values' && !parameter.autoSearch)
+						{
+							_el.find('.vc_textInput').on('click', function(){
+								open()
+							})
+						}
 
 
-					if (parameter.autoSearch){
-
-						input.focus(function(){
-							this.select();
-						});
-
-						input.on('keyup', function(e){
+						_el.find('.vc_value').on('click', function(){
 							bkp = null;
 
-							var value = $(this).val().toLowerCase(); 
+							var value = $(this).attr('value');
 
-												
+								input.val(value);
+								input.change();
 
-							if(!take().hasClass('opened')){
-								open();		
-							}
+							take().removeClass('opened');
+							take().removeClass('error')
+						})
 
-							if ((e.keyCode || e.which) == 13) {
+						_el.find('.vc_selected_value_icon').on('click', function(){
+							var value = $(this).closest('.vc_selected_value').attr('value');
 
-								var firstel = _el.find('.vc_value:not(.hidden)');
+							parameter.set(value);
 
-								if (firstel.length > 0){
-									value = firstel.attr('value')
+							_el.parent().html(parameter.input())
+
+							ParametersLive([parameter], el, p)
+						})
+
+
+						if (parameter.autoSearch){
+
+							input.focus(function(){
+								this.select();
+							});
+
+							input.on('keyup', function(e){
+								bkp = null;
+
+								var value = $(this).val().toLowerCase(); 
+
+								if(!take().hasClass('opened')){
+									open();		
 								}
 
-								$(this).val(value);
-								$(this).change();
+								if ((e.keyCode || e.which) == 13) {
 
+									var firstel = _el.find('.vc_value:not(.hidden)');
 
-								return false;
-								
-							}	
-
-							if(!value){
-								_el.find('.vc_value').removeClass('hidden')
-							}
-
-							else
-							{
-
-								$.each(_el.find('.vc_value'), function(){
-
-									var el = $(this);
-
-									var _value = el.attr('value').toLowerCase();
-									var text = el.text().toLowerCase();
-
-									if (_value.indexOf(value) > -1 || text.indexOf(value) > -1){
-										el.removeClass('hidden')
+									if (firstel.length > 0){
+										value = firstel.attr('value')
 									}
 
-									else
-									{
-										el.addClass('hidden')
-									}
+									$(this).val(value);
+									$(this).change();
+
+
+									return false;
+									
+								}	
+
+								if(!value){
+									_el.find('.vc_value').removeClass('hidden')
+								}
+
+								else
+								{
+
+									$.each(_el.find('.vc_value'), function(){
+
+										var el = $(this);
+
+										var _value = el.attr('value').toLowerCase();
+										var text = el.text().toLowerCase();
+
+										if (_value.indexOf(value) > -1 || text.indexOf(value) > -1){
+											el.removeClass('hidden')
+										}
+
+										else
+										{
+											el.addClass('hidden')
+										}
 
 
 
-								})
-							}
-						})
+									})
+								}
+							})
+						}
+
 					}
 
 					var _change = function(){
@@ -3679,11 +3673,27 @@
 
 						}
 
-
-
 						parameter.set(value);
 
-						__el.val(parameter.labelByValue(value))
+						var label = parameter.labelByValue(value)
+
+						if (parameter.labelToInput){
+							__el.val(parameter.labelToInput(label))
+
+							_el.parent().html(parameter.input())
+
+							ParametersLive([parameter], el, p)
+
+							return
+						}
+						else
+						{
+							__el.val(label)
+						}
+
+						console.log('value', value, label)
+
+						
 
 						if (parameter.type == 'valuesmultibig'){							
 
@@ -4085,6 +4095,7 @@
 						_el.addClass('error')
 					}
 
+
 					parameter.set(value)
 				}
  
@@ -4133,7 +4144,8 @@
 			self.possibleValuesLabels = p.possibleValuesLabels || [];
 			self.value = p.value || null;
 			self.defaultValuesTemplate = p.defaultValuesTemplate || null;
-
+			self.defaultValueTemplate = p.defaultValueTemplate || null;
+			self.labelToInput = p.labelToInput || null; 
 			self.currency = p.currency || null;
 			self.disabled = p.disabled;
 
@@ -4516,6 +4528,14 @@
 				return self.possibleValuesLabels[index]
 			}
 
+			/*index = _.indexOf(self.possibleValues, function(_v){
+				if(_v && _v.address) return _v.address == v
+			});
+
+			if (index > -1){
+				return self.possibleValuesLabels[index]
+			}*/
+
 			return v;
 		}
 
@@ -4601,12 +4621,16 @@
 				if (self.type == 'values' && !self.autoSearch)
 				{
 					disabled = 'disabled';
-
-					
 				}
+
+				if(self.disabled) disabled = 'disabled'
 
 				if (self.type == 'values' || self.type == 'valuescustom'){
 					displayValue = self.labelByValue(self.value)
+
+					if(self.labelToInput){
+						displayValue = self.labelToInput(displayValue)
+					}
 				}
 
 				var caret = '';
@@ -4671,7 +4695,17 @@
 							var label = self.labelByValue(value);
 
 							input += '<div class="vc_value" value="' + value + '">';
-							input += label;
+
+							if (self.defaultValueTemplate)
+							{
+								input += self.defaultValueTemplate(label, value, self)
+
+							}
+							else{
+								input += label;
+							}
+							
+							
 							input += '</div>';
 
 					  	});
@@ -5611,40 +5645,7 @@
 		return self;
 	}
 
-	makeid = function(valid){
-
-		function s4() {
-		    return Math.floor((1 + Math.random()) * 0x10000)
-		      .toString(16)
-		      .substring(1);
-		}
-
-		if(!valid)
-		{
-			return  s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-		    		s4() + '-' + s4() + s4() + s4();
-		}
-
-	    var text = "";
-	    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-	    for( var i = 0; i < 32; i++ )
-	        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-	    return text;
-	}
-
-	makesystemid = function(valid){
-		var id = makeid(valid);
-
-		id = ('afafafaf' + id.substr(8)).replace(/-/g,'');
-
-		return id;
-
-	}
-
-	MD5 = function(d){result = M(V(Y(X(d),8*d.length)));return result.toLowerCase()};function M(d){for(var _,m="0123456789ABCDEF",f="",r=0;r<d.length;r++)_=d.charCodeAt(r),f+=m.charAt(_>>>4&15)+m.charAt(15&_);return f}function X(d){for(var _=Array(d.length>>2),m=0;m<_.length;m++)_[m]=0;for(m=0;m<8*d.length;m+=8)_[m>>5]|=(255&d.charCodeAt(m/8))<<m%32;return _}function V(d){for(var _="",m=0;m<32*d.length;m+=8)_+=String.fromCharCode(d[m>>5]>>>m%32&255);return _}function Y(d,_){d[_>>5]|=128<<_%32,d[14+(_+64>>>9<<4)]=_;for(var m=1732584193,f=-271733879,r=-1732584194,i=271733878,n=0;n<d.length;n+=16){var h=m,t=f,g=r,e=i;f=md5_ii(f=md5_ii(f=md5_ii(f=md5_ii(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_hh(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_gg(f=md5_ff(f=md5_ff(f=md5_ff(f=md5_ff(f,r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+0],7,-680876936),f,r,d[n+1],12,-389564586),m,f,d[n+2],17,606105819),i,m,d[n+3],22,-1044525330),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+4],7,-176418897),f,r,d[n+5],12,1200080426),m,f,d[n+6],17,-1473231341),i,m,d[n+7],22,-45705983),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+8],7,1770035416),f,r,d[n+9],12,-1958414417),m,f,d[n+10],17,-42063),i,m,d[n+11],22,-1990404162),r=md5_ff(r,i=md5_ff(i,m=md5_ff(m,f,r,i,d[n+12],7,1804603682),f,r,d[n+13],12,-40341101),m,f,d[n+14],17,-1502002290),i,m,d[n+15],22,1236535329),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+1],5,-165796510),f,r,d[n+6],9,-1069501632),m,f,d[n+11],14,643717713),i,m,d[n+0],20,-373897302),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+5],5,-701558691),f,r,d[n+10],9,38016083),m,f,d[n+15],14,-660478335),i,m,d[n+4],20,-405537848),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+9],5,568446438),f,r,d[n+14],9,-1019803690),m,f,d[n+3],14,-187363961),i,m,d[n+8],20,1163531501),r=md5_gg(r,i=md5_gg(i,m=md5_gg(m,f,r,i,d[n+13],5,-1444681467),f,r,d[n+2],9,-51403784),m,f,d[n+7],14,1735328473),i,m,d[n+12],20,-1926607734),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+5],4,-378558),f,r,d[n+8],11,-2022574463),m,f,d[n+11],16,1839030562),i,m,d[n+14],23,-35309556),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+1],4,-1530992060),f,r,d[n+4],11,1272893353),m,f,d[n+7],16,-155497632),i,m,d[n+10],23,-1094730640),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+13],4,681279174),f,r,d[n+0],11,-358537222),m,f,d[n+3],16,-722521979),i,m,d[n+6],23,76029189),r=md5_hh(r,i=md5_hh(i,m=md5_hh(m,f,r,i,d[n+9],4,-640364487),f,r,d[n+12],11,-421815835),m,f,d[n+15],16,530742520),i,m,d[n+2],23,-995338651),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+0],6,-198630844),f,r,d[n+7],10,1126891415),m,f,d[n+14],15,-1416354905),i,m,d[n+5],21,-57434055),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+12],6,1700485571),f,r,d[n+3],10,-1894986606),m,f,d[n+10],15,-1051523),i,m,d[n+1],21,-2054922799),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+8],6,1873313359),f,r,d[n+15],10,-30611744),m,f,d[n+6],15,-1560198380),i,m,d[n+13],21,1309151649),r=md5_ii(r,i=md5_ii(i,m=md5_ii(m,f,r,i,d[n+4],6,-145523070),f,r,d[n+11],10,-1120210379),m,f,d[n+2],15,718787259),i,m,d[n+9],21,-343485551),m=safe_add(m,h),f=safe_add(f,t),r=safe_add(r,g),i=safe_add(i,e)}return Array(m,f,r,i)}function md5_cmn(d,_,m,f,r,i){return safe_add(bit_rol(safe_add(safe_add(_,d),safe_add(f,i)),r),m)}function md5_ff(d,_,m,f,r,i,n){return md5_cmn(_&m|~_&f,d,_,r,i,n)}function md5_gg(d,_,m,f,r,i,n){return md5_cmn(_&f|m&~f,d,_,r,i,n)}function md5_hh(d,_,m,f,r,i,n){return md5_cmn(_^m^f,d,_,r,i,n)}function md5_ii(d,_,m,f,r,i,n){return md5_cmn(m^(_|~f),d,_,r,i,n)}function safe_add(d,_){var m=(65535&d)+(65535&_);return(d>>16)+(_>>16)+(m>>16)<<16|65535&m}function bit_rol(d,_){return d<<_|d>>>32-_}
-
+	
 
 	flb = function (str) {
 
@@ -5659,12 +5660,30 @@
 		return true;
 	}
 
+	var ___mobile = undefined
+	var ___tablet = undefined
+
 	isMobile = function(){
-		return $('html').hasClass('mobile');
+
+		if(typeof ___mobile != 'undefined'){
+			return ___mobile
+		}
+
+		___mobile = $('html').hasClass('mobile');
+
+		return ___mobile
 	}
 
 	isTablet = function(){
-		return $('html').hasClass('mobile') || $('html').hasClass('tablet');
+
+		if(typeof ___tablet != 'undefined'){
+			return ___tablet
+		}
+
+		___tablet = $('html').hasClass('mobile') || $('html').hasClass('tablet');
+
+		return ___tablet
+
 	}
 
 	convertToBase64 = function(dataURI) {
@@ -5690,55 +5709,7 @@
     }
 	
 
-	parameters = function(uri, split){
-
-		if(!uri && typeof window != 'undefined') {
-
-			if(_SEO)
-			{
-				uri = _SEOuri.split('?')[1];
-			}
-
-			else
-			{
-				uri = window.location.search.substr(1);
-			}
-
-			
-		}
-		else{
-			if(split){
-
-				var up = uri.split('?');
-
-				if (up[1]){
-					uri = up[1];
-				}
-				else{
-					uri = ''
-				}
-
-				
-			}
-		}
-
-		if(/^([A-Za-z0-9]*)$/.test(uri)) return uri || {};
-
-		var r = {};
-		uParts = uri.split('&');
-		for (p in uParts)
-		{	
-			uParts[p] = uParts[p].split('=');
-
-			var p2 = _.clone(uParts[p]);
-
-			p2.splice(0, 1);
-
-			r[uParts[p][0]] = decodeURI(p2.join("=").replace(/!!/g, "&"));
-		}
-
-		return r;
-	}
+	
 
 	collectParameters = function(uParts, exclude){
 		var uri ='?'; 
@@ -5894,118 +5865,6 @@
 
 /* LOADERS */
 
-	importScripts = function(src, storage, callback, appendTo, i, app){
-		if(typeof i == 'undefined' || i == null) 
-			i = 0;
-		else
-			i++;
-
-		if(i == src.length) callback();
-		else{
-
-			if(!storage[src[i].src])
-			{	
-
-				importScript(src[i].src, function(){
-					storage[src[i].src] = true;
-
-					importScripts(src, storage, callback, appendTo, i, app);
-
-				}, appendTo, app, src[i].module, src[i].require);
-			}
-			else
-			{
-				importScripts(src, storage, callback, appendTo, i, app);
-			}
-			
-		}
-	}
-
-	importScript = function(src, callback, appendTo, app, module, _require) {
-		if(_Node || (typeof _Electron != 'undefined' && _Electron == true)) {
-			src = src.split("?")[0];
-
-			var pref = '../';
-
-			
-
-			if(typeof _Electron != 'undefined' && _Electron == true) pref = './'
-
-
-
-			if(module) {
-				delete require.cache[require.resolve(pref + src)]
-				
-				var script = require(pref + src);
-
-				app.modules[module] = {
-					module : script
-				}
-
-				app.modules[module].module.app = app;
-			}
-			else
-			{
-
-				if (_require){
-					_require()
-				}
-				else
-				{
-					require(pref + src);
-				}
-
-				
-			}
-
-			callback();
-			return;
-		}
-
-
-	    var script = document.createElement('script');
-
-	    if (!appendTo) {
-	        appendTo = document.getElementsByTagName('head')[0];
-	    }
-
-	    if (script.readyState && !script.onload) {
-	        // IE, Opera
-	        script.onreadystatechange = function() {
-	            if (script.readyState == "loaded" || script.readyState == "complete") {
-	                script.onreadystatechange = null;
-	                callback();
-	            }
-	        }
-	    }
-	    else {
-	        // Rest
-	        script.onload = callback;
-	    }
-
-	    src += "?v=119"
-
-	    script.src = src;
-	    appendTo.appendChild(script);
-	}
-
-	importCss = function(src, _document) { 
-
-		if(!_document) _document = document
-
-	    var link = _document.createElement('link');
-	    link.rel = 'stylesheet';
-
-
-	    src += "?v=117"
-
-	    link.setAttribute('href', src);
-	    
-	    var appendTo = _document.getElementsByTagName('head')[0];
-
-	    appendTo.appendChild(link);
-	}
-
 	GetBrowser = function() {
 		var N = navigator.appName,
 			ua = navigator.userAgent,
@@ -6031,7 +5890,7 @@
 	    }
 	}
 
-	saveAs = function(p) {
+	p_saveAs = function(p) {
 		if (GetBrowser().toLowerCase() == 'msie') {
 			message('Internet Explorer does not support this operation.');
 			return false;
@@ -6082,7 +5941,7 @@
 		return blob;
 	}
 
-	saveAsWithCordova = function(file, name, clbk){
+	p_saveAsWithCordova = function(file, name, clbk){
 
 
 		var storageLocation = 'file:///storage/emulated/0/';
@@ -6137,6 +5996,8 @@
 							class : "one"
 						})
 
+						if(clbk) clbk(null, error)
+
 					});
 				}, function (error) {
 
@@ -6144,6 +6005,8 @@
 						html : "Error: Could not create file, " + error.code,
 						class : "one"
 					})
+
+					if(clbk) clbk(null, error)
 
 				});
 
@@ -6153,6 +6016,8 @@
 					html : "Error: access to download folder, " + error.code,
 					class : "one"
 				})
+
+				if(clbk) clbk(null, error)
 
 			})
 
@@ -6276,7 +6141,13 @@
 		{
 			var scrollTop = ofssetObj.top + offset;
 
-			if (el) scrollTop = scrollTop + el.scrollTop() - el.offset().top + offset
+			if (el) {
+				try{
+					scrollTop = scrollTop + el.scrollTop() - el.offset().top + offset
+				}
+				catch(e){}
+				
+			}
 
 			_scrollTop(scrollTop, el, time);
 		}
@@ -6585,6 +6456,7 @@
 		}
 
 		var findDirection = function(_d){
+
 			return _.max(p.directions, function(direction, i){
 				var d = nullbydirection(_d, i)	
 
@@ -6615,22 +6487,30 @@
 		var animation = function(ap, options, direction){
 
 			if(!options) options = {}
+
+			
+			if (self.animation){
+				self.animation.stop()
+			}
 			
 			if(p.prop == 'translate'){
 
 				var v = (ap.x || ap.y || 0);
 
-				p.el.css({transition: "transform " + animatedurations + " ease"});
+				/*p.el.css({transition: "transform " + animatedurations + " ease"});*/
 
-				if (ap.y){
+				/*if (ap.y){
 					p.el.css("transform","translate3d(0, "+ap.y+", 0)");
 				}
 				else{
 					p.el.css("transform","translate3d("+ap.x+", 0, 0)");
-				}
+				}*/
+
+				p.el.css({transform: ""});
+				p.el.css({transition: ""});
 				
 
-				var td = 16;
+				/*var td = 16;
 				var stepd = 16 / animateduration;
 				var step = 0;
 
@@ -6642,9 +6522,9 @@
 
 						if (options.step){
 
-							var s = ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
+							var s = z //ease.inOutCubic(step * stepd * z / p.directions[direction].trueshold)
 
-							s = s * p.directions[direction].trueshold
+							//s = s * p.directions[direction].trueshold
 
 							options.step(s)	
 						}
@@ -6660,31 +6540,28 @@
 							p.el.css({transition: ""});
 						}
 
-						
-
-						if(this.interval){
-							clearInterval(this.interval)
-							this.interval = null;
+						if(self.animation.interval){
+							clearInterval(self.animation.interval)
+							self.animation.interval = null;
 						}
 						
 					}
-				}
+				}*/
 
-				setTimeout(function(){
 
-					if (self.animation)
-
-						self.animation.stop();
+					/*if (self.animation)
+						self.animation.stop()*/;
 
 					if (options.complete)
 						options.complete()
 
-				}, animateduration)
 
 			}
-			else{
+
+
+			/*else{
 				self.animation = p.el.animate(ap, options);	
-			}
+			}*/
 		}
 
 		var parseStart = function(direction){
@@ -6711,10 +6588,9 @@
 
 			var prop = directiontoprop(direction);
 
-			var value = ease.inOutCubic(_value / p.directions[direction].trueshold)
+			var value = _value// ease.inOutCubic(_value / p.directions[direction].trueshold)
 
-			value = value * p.directions[direction].trueshold
-
+			//value = value * p.directions[direction].trueshold
 
 			if (p.prop != 'translate'){
 				p.el.css(prop, value + 'px');	
@@ -6728,8 +6604,6 @@
 				if(prop == 'y'){
 					p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
 				}
-
-				
 			}
 		}
 
@@ -6745,7 +6619,10 @@
 				ap[css] =  upborder + 'px'
 
 			animation(ap, {
-				dontstop : true
+				dontstop : true,
+				compele : function(){
+					self.renew()
+				}
 			}, direction)
 		}
 
@@ -6778,8 +6655,7 @@
 					}
 				},
 				compele : function(){
-					self.lastDirection = null;
-					self.animation = null;
+					self.renew()
 				}
 			}, direction)
 		}
@@ -6790,7 +6666,13 @@
 		self.ended = false;
 
 		self.renew = function(){
+			self.lastDirection = null;
+			self.animation = null;
+
 			self.ended = false;
+
+			if (self.animation)
+				self.animation.stop();
 		}
 
 		self.opposite = function(dir, dir2){
@@ -6807,7 +6689,7 @@
 			var mainDirection = null;
 
 			var mintruesholdGone = false;
-
+			console.log("p", p)
 			p.el.swipe({
 
 				allowPageScroll : p.allowPageScroll,
@@ -6823,7 +6705,9 @@
 
 
 					if (self.ended) return false	
-					
+
+
+					console.log('phase', phase)
 
 					if (phase == 'start'){
 
@@ -6831,13 +6715,15 @@
 
 						startMargin = 0;
 
+						self.renew()
+
+						/*console.log('self.lastDirection', self.lastDirection)
 						if (self.lastDirection){
 							startMargin = parseStart(self.lastDirection) 
 
 							self.animation.stop();
-							self.lastDirection = null;
-							self.animation = null;
-						}
+							self.renew()
+						}*/
 
 						
 						return true
@@ -6853,17 +6739,15 @@
 							y : m.last.y - m.start.y + startMargin
 						}
 
-
 						if(!_d.x && !_d.y) return true
 
 						var direction = findDirection(_d)
-
 
 						if (direction){
 
 							if (direction.constraints && !direction.constraints()) {
 
-								if(mainDirection){
+								if (mainDirection){
 									self.backup(mainDirection.i)	
 									mainDirection = null;
 								}
@@ -6904,10 +6788,7 @@
 							mainDirection = direction
 							var d = nullbydirection(_d, direction.i)	
 
-							
-
 							var dp = (d.x || d.y || 0);
-
 
 							if (!mintruesholdGone && Math.abs(dp + startMargin) < (direction.mintrueshold || 0)){
 								return true
@@ -6915,7 +6796,7 @@
 
 							mintruesholdGone = true;
 
-							if (Math.abs(dp) >= (direction.trueshold || 90)){
+							/*if (Math.abs(dp) >= (direction.trueshold || 1)){
 
 								self.ended = true
 
@@ -6924,14 +6805,12 @@
 								else{
 									self.backup(mainDirection.i)
 								}
-
-								if (direction.clbk)
-									direction.clbk()
+								
 
 								mainDirection = null;
 
 								return false;
-							}
+							}*/
 
 							if (direction.positionclbk){
 								direction.positionclbk(dp)
@@ -6946,29 +6825,30 @@
 						}
 						else{
 
-							/*console.log("YEEES", _direction, mainDirection.i, self.opposite(_direction, mainDirection.i))
-
-							if(self.opposite(_direction, mainDirection.i) && mainDirection.mintrueshold){
-
-								var d = nullbydirection(_d, mainDirection.i)
-
-								var dp = (d.x || d.y || 0);
-
-								if(Math.abs(dp) <= mainDirection.mintrueshold){
-									self.backup(mainDirection.i)	
-								}
-
-							}*/
-
 							mainDirection = null;
 						}
 
 					}
 
 					if(phase == 'cancel' || phase == 'end'){
+
 						
 						if (mainDirection){
-							self.backup(mainDirection.i)							
+
+							console.log('_direction == mainDirection', _direction, mainDirection)
+							
+
+							if(phase == 'end' && mainDirection.clbk && _direction == mainDirection.i){
+
+								
+								mainDirection.clbk()
+							}
+								
+							if (mainDirection.positionclbk)
+								mainDirection.positionclbk(0)
+
+							self.backup(mainDirection.i)	
+							
 						}
 
 						else{
@@ -6988,7 +6868,134 @@
 			return self
 		}
 
-		self.init()
+		return self;
+	}
+
+
+	SwipeParallaxNew = function(p){
+		if(!p) p = {};
+
+			p.directions || (p.directions = {})
+
+			_.each(p.directions, function(d,i){
+				d.i = i
+			})
+
+		var self = this;
+		
+		var directiontoprop = function(direction, value){
+
+			if(direction == 'up') return 'y'
+			if(direction == 'down') return 'y'
+			if(direction == 'left') return 'x'
+			if(direction == 'right') return 'x'
+			
+		}
+		
+		var set = function(direction, value){
+
+			var prop = directiontoprop(direction);
+
+			if(direction == 'up' || direction == 'left') value = -value
+
+			if (prop == 'x'){
+				p.el.css("transform","translate3d("+(value || 0)+"px, 0, 0)");
+			}
+
+			if (prop == 'y'){
+				p.el.css("transform","translate3d(0, "+(value || 0)+"px, 0)");
+			}
+		}
+
+		var applyDirection = function(direction, v){
+			if (direction.positionclbk){
+				direction.positionclbk(v)
+			}
+		}
+
+		self.clear = function(){
+			p.el.css({transform: ""});
+			p.el.css({transition: ""});
+			
+			_.each(p.directions, function(d){
+				applyDirection(d, 0)
+			})
+		}
+
+		self.backfast = function(){
+
+			_.each(p.directions, function(d){
+				if (d.positionclbk)
+					d.positionclbk(0)
+			})
+		}
+
+		self.init = function(){
+
+			var mainDirection = null;
+
+			p.el.swipe({
+				allowPageScroll : p.allowPageScroll,
+				swipeStatus : function(e, phase, direction, distance){
+
+					if (mainDirection && mainDirection.i != direction){
+						phase = 'cancel'
+						direction = mainDirection.i
+					}
+
+					if(phase == 'cancel' || phase == 'end'){
+
+						if (mainDirection){
+
+							if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
+								mainDirection.clbk()
+							}
+							
+						}
+
+						self.clear()	
+
+					}
+
+					if(!direction) return
+
+					if(!p.directions[direction]){
+						return
+					}
+
+					var dir = p.directions[direction]
+
+					if (dir.constraints && !dir.constraints()) {
+
+						if (mainDirection){
+							mainDirection = null;
+						}
+
+						return false
+					}
+
+					if (phase == 'start'){
+						mainDirection = null
+					}
+					
+					if (phase == 'move'){
+						if (distance > 20){
+							mainDirection = dir
+
+							applyDirection(mainDirection, distance)
+
+							set(mainDirection.i, distance)
+						}
+					}
+
+					
+					
+
+				},
+			})
+
+			return self
+		}
 
 		return self;
 	}
@@ -7620,7 +7627,6 @@
 				request(_d,
 			    function (_error, response, body) {
 
-					// console.log(url, _error)
 
 			    	if(_error)
 			    	{
@@ -7731,7 +7737,11 @@
 				}
 
 				if (p.up1){
-					ap.url = app.imageServerup1;
+
+					ap.url = 'https://pocketnet.app:8092/up'
+
+
+					//ap.url = app.imageServerup1;
 					delete data.Action;
 
 					if(user){
@@ -8149,24 +8159,25 @@
 /* DOM */
 
 	before = function(el, h){
-		$(el).before(h);
+		el.before(h);
 	}
 	after = function(el, h){
-		$(el).after(h);
+		el.after(h);
 	}
 	html = function(el, h){
-		$(el).html(h);
+		//console.log("E", el)
+		el.html(h);
 	}
 	append = function(el, h){
-		$(el).append(h);
+		el.append(h);
 	}
 
 	replaceWith = function(el, h){
-		$(el).replaceWith(h);
+		el.replaceWith(h);
 	}
 
 	prepend = function(el, h){
-		$(el).prepend(h);
+		el.prepend(h);
 	}
 
 	offsetElement = function(elem) {
@@ -8237,7 +8248,6 @@
 	        try {
 	            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
 	        } catch (ex) {
-	            console.warn("Copy to clipboard failed.", ex);
 	            return false;
 	        } finally {
 	            document.body.removeChild(textarea);
@@ -8911,7 +8921,7 @@
 
 		var readFile = function(reader, error, file, files, clbk){
 
-			reader.onload = (function(theFile) {
+			reader.onloadend = (function(theFile) {
 				return function(e) {
 
 					var name = theFile.name.split('.');
@@ -9070,7 +9080,7 @@
 
 		var autorotation = function(file, image, clbk){
 
-			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif') && !p.notexif && typeof EXIF != 'undefined'){
+			if((file.type == 'image/jpeg' || file.type == 'image/png'|| file.type == 'image/jfif') && !p.notexif && typeof EXIF != 'undefined' && !isios()){
 				EXIF.getData(file, function() {
 
 					
@@ -9123,6 +9133,7 @@
     			dropZone.removeClass('focus');
 
     			input.val('');
+				input[0].value = ''
 		    }
 
 		    _.each(files, function(file){
@@ -9389,54 +9400,7 @@
 		}
 	}	
 
-	topPreloader = function(percent){
-
-		if(_Node) return
-
-		var el = $('#_topPreloader');
-
-		var div = el.find('div');
-
-		if (div.length == 0) {
-
-			div = $("<div>");
-			el.append(div);
-
-		}
-
-		el.removeClass('complete');
-
-		var inip = el.attr('percent') || 0;
-
-		el.attr('percent', percent); 
-
-		div.width((percent - inip) + "%")
-
-		if(percent <= 0 || percent >= 100){
-
-
-			el.addClass('complete');
-			el.attr('percent', 0); 
-
-			setTimeout(function(){
-
-				el.fadeOut(300);
-
-				setTimeout(function(){
-
-
-					el.html('');
-
-				},300)
-
-			},500)
-			
-		}
-		else{
-			el.fadeIn(1);
-		}
-		
-	}
+	
 
 	onlyNumbers = function(event){
 
@@ -9583,73 +9547,7 @@
 /* ______________________________ */
 
 
-/* TIMEOUT, INTERVALS */
 
-	var retry = function(_function, clbk, time, totaltime){
-		if(!time) time = 20;
-
-		var totalTimeCounter = 0 
-
-		var interval = setInterval(function(){
-
-
-			if(_function() || (totaltime && totaltime <= totalTimeCounter)){
-
-				clearInterval(interval);
-
-				if(clbk) clbk();
-
-			}
-
-			totalTimeCounter += time
-
-		}, time);
-	}
-
-	pretry = function(_function, time, totaltime){
-		return new Promise((resolve, reject) => {
-	
-			retry(_function, resolve, time, totaltime)
-	
-		})
-	}
-
-	retryLazy = function(_function, clbk, time){
-		if(!time) time = 200;
-
-		var f = function(){
-			_function(function(result){
-
-				if(result){
-
-					if(clbk) clbk();
-
-				}
-
-				else
-
-				{
-					setTimeout(f, time)
-				}
-
-			})
-		}
-
-		f();
-	}
-
-	slowMade = function(_function, timer, time){
-
-		if (!time) time = 20
-
-		if (timer) 
-			clearTimeout(timer);
-
-			timer = setTimeout(_function, time);
-
-		return timer;
-	}
-/* ______________________________ */
 
 /* MOUSE */
 	mouse = {
@@ -9793,45 +9691,54 @@
 	if(typeof window != 'undefined')
 	{
 
-		;(function($){
+		retry(function(){
 
-		var $event = $.event, 
-		$special = $event.special,
+			return window.jQuery
 
-		dragout = $special.dragout = {
-			
-			current_elem: false,
-			
-			setup: function( data, namespaces, eventHandle ) {
-				$('body').on('dragover.dragout',dragout.update_elem)
-			},
-			
-			teardown: function( namespaces ) {
-				$('body').off('dragover.dragout')
-			},
-			
-			update_elem: function(event){
-				if( event.target == dragout.current_elem ) return
-				if( dragout.current_elem ) {
-					$(dragout.current_elem).parents().andSelf().each(function(){
-						if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
-					})
+		}, function(){
+
+			;(function($){
+
+				var $event = $.event, 
+				$special = $event.special,
+		
+				dragout = $special.dragout = {
+					
+					current_elem: false,
+					
+					setup: function( data, namespaces, eventHandle ) {
+						$('body').on('dragover.dragout',dragout.update_elem)
+					},
+					
+					teardown: function( namespaces ) {
+						$('body').off('dragover.dragout')
+					},
+					
+					update_elem: function(event){
+						if( event.target == dragout.current_elem ) return
+						if( dragout.current_elem ) {
+							$(dragout.current_elem).parents().andSelf().each(function(){
+								if($(this).find(event.target).size()==0) $(this).triggerHandler('dragout')
+							})
+						}
+						dragout.current_elem = event.target
+						event.stopPropagation()
+					}
+					
 				}
-				dragout.current_elem = event.target
-				event.stopPropagation()
-			}
-			
-		}
+		
+				if (!$.browser) {
+					$.browser = {};
+					$.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
+					$.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+					$.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+					$.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+				}
+		
+				})(window.jQuery);
+		})
 
-		if (!$.browser) {
-	        $.browser = {};
-	        $.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
-	        $.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
-	        $.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
-	        $.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
-	    }
-
-		})(window.jQuery);
+		
 	}
 
 /* ______________________________ */
@@ -9934,7 +9841,7 @@
 		}
 
 		if(v.type == 'peertube'){
-			return `https://${v.host_name}/static/thumbnails/${v.id}.jpg`;
+			return null
 		}
 	}
 
@@ -9997,7 +9904,6 @@
 			        id = `${test[9]}` //?${params}
 					host_name = test[4]
 
-					console.log(id, host_name)
 			    }
 			}
 			
@@ -10300,6 +10206,10 @@
 
 		else return 0
 
+	}
+
+	isios = function () {
+		return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
 	}
 
 	numberToBool = function(v){
@@ -10618,8 +10528,8 @@ getBase64 = function (file) {
 
 findResponseError = (response) => {
 	const ERRORS_PATHS = [
-		'error.response.data.errors',
-		'error.response.data.error',
+		'response.data.errors',
+		'response.data.error',
 	];
 
 	const error = ERRORS_PATHS.map(path => deep(response, path)).filter(error => error)[0] || {};
@@ -10635,6 +10545,30 @@ serialize = function (obj) {
 	return str.join('&');
   };
   
+
+checkConnection = function() {
+	if (typeof window != 'undefined') {
+		if (window.cordova && navigator.connection && navigator.connection.type) {
+			var networkState = navigator.connection.type;
+	
+			var states = {};
+			states[Connection.UNKNOWN]  = 'UNKNOWN';
+			states[Connection.ETHERNET] = 'ETHERNET';
+			states[Connection.WIFI]     = 'WIFI';
+			states[Connection.CELL_2G]  = '2G';
+			states[Connection.CELL_3G]  = '3G';
+			states[Connection.CELL_4G]  = '4G';
+			states[Connection.CELL]     = 'CELL';
+			states[Connection.NONE]     = 'NONE';
+	
+			return states[networkState]
+		} else if (!window.cordova && navigator.connection && navigator.connection.type) {
+			return navigator.connection.type
+		} else {
+			return ''
+		}
+	}
+}
 
 stringEqTrig = function(s1, s2){
 
@@ -10702,4 +10636,111 @@ stringEqTrig = function(s1, s2){
 
 
 }
+
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+         json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
 /* */
+
+if(typeof window != 'undefined'){
+
+
+
+	var splashScreen = document.getElementById('splashScreen');
+
+	if (splashScreen) {
+
+
+		var splashScreenImg = document.getElementById('splashScreenImg');
+		var stopRotation = false;
+
+		// Logos variant color
+		var logos = ['img/splashscreen/pocketnet-logo-16.svg', 'img/splashscreen/pocketnet-logo-17.svg', 'img/splashscreen/pocketnet-logo-15.svg',
+						'img/splashscreen/pocketnet-logo-14.svg', 'img/splashscreen/pocketnet-logo-18.svg', 'img/splashscreen/pocketnet-logo-19.svg'];
+		// Index in the array for the next logo variant
+		var nextLogoIndex = 0;
+		// Duration of all animations (in ms)
+		var zoomInDuration = 500, rotatingDuration = 1000, zoomOutDuration = 500;
+		// Interval
+		var splashScreeninterval;
+
+		// Function to start the ending process of the splash screen
+		hideSplashScreen = function() {
+			// Set the boolean, so we can stop during the end of the next animation
+			stopRotation = true;
+		}
+
+		// Function triggered at the end of each rotating animation
+		rotatingAnimationEnded = function() {
+			if (!splashScreenImg)
+				return;
+			// Check if we need to stop rotating and fade out
+			if (stopRotation) {
+				splashScreenImg.classList.remove("rotate");
+				splashScreenImg.classList.add('zoom-out-rotate');
+				splashScreen.classList.add('fade-out');
+				// When zoom out animation is done, completely remove the splash screen
+				setTimeout(() => {
+					// Clear interval if needed
+					if (splashScreeninterval != undefined){
+						clearInterval(splashScreeninterval);
+					}
+					// Completely remove the splashscreen
+					splashScreen.remove();
+				}, zoomOutDuration * 2);
+			}
+			// Wait until half the rotation is done
+			setTimeout(() => {
+				// Change the logo image
+				splashScreenImg.src = logos[nextLogoIndex];
+				// Increase index
+				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
+			}, rotatingDuration * 0.5);
+		}
+
+		// Wait until the zoom in is done
+		setTimeout(() => {
+			if (!splashScreenImg)
+				return;
+			// Start rotating the logo
+			splashScreenImg.classList.remove('zoom-in');
+			splashScreenImg.classList.add('rotate');
+			// Triggered every times we reached the end of the rotating animation
+			rotatingAnimationEnded();
+			splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
+		}, zoomInDuration);
+
+	}
+		
+
+}

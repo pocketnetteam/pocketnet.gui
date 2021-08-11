@@ -4,6 +4,40 @@
     position: relative;
     padding-bottom: 8 * @rhythm;
 
+    .collapsepart{
+        .collapsingpart{
+            display: none;
+        }
+
+        .subcaption{
+            cursor: pointer;
+            i{
+                width: 40px;
+                text-align: center;
+                .transition(0.3s)
+            }
+
+            &:hover{
+                i{
+                    transform: rotate(180deg);
+                }
+                
+            }
+        }
+
+        &.expanded{
+            .subcaption{
+                i{
+                    transform: rotate(180deg);
+                }
+            }
+            
+            .collapsingpart{
+                display: block;
+            }
+        }
+    }
+
     .systemreq{
 
         padding : @rhythm;
@@ -292,6 +326,10 @@
                 font-size: 0.9em;
             }
         }
+
+        .clearfirebase{
+            cursor: pointer;
+        }
     }
 
     .managepanel{
@@ -439,6 +477,14 @@
 
                     &:hover{
                         color : @color-good;
+                    }
+                }
+
+                .apply{
+                    cursor: pointer;
+
+                    &:hover{
+                        color : @color-main;
                     }
                 }
 
@@ -698,7 +744,18 @@
         }
     }
 
+    .keycaption{
+        padding : 4 * @rhythm;
+        text-align: center;
+
+        span{
+            font-size: 0.8em;
+        }
+    }
+
+    
     .nodescontent{
+        
         .nodeWrapper{
             border-bottom: 1px solid @color-gray-slight;
         }
@@ -824,6 +881,227 @@
                 }
 
               
+            }
+        }
+    }
+
+    .peertubecontent{
+        .peertubeWrapper{
+            border-bottom: 1px solid @color-gray-slight;
+        }
+        .good{
+            color : @color-good;
+        }
+        .instance{
+			   
+            &.active{
+                color : @color-good;
+
+                >div{
+                    
+                    &.use{
+                        color : @color-good;
+
+                        i{
+                            &:before{
+                                content : '\f058';
+                            }
+                        }
+                    }
+                }
+            }
+
+          
+            &.cantuse{
+                color : @color-gray-slight;
+
+                .use{
+                    i{
+                        display: none;
+                    }
+                }
+
+                .panelWrapper{
+                    .stable{
+                        display: none;
+                    }
+                }
+            }
+
+            >div{
+                vertical-align: middle;
+                padding :3 * @rhythm 2 * @rhythm;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
+                &.use{
+                    cursor: pointer;
+    
+                    &:hover{
+                        color : @color-main;
+                    }
+                }
+
+                &.use{
+                    width : 40px;
+                    text-align: center;
+                    color : @color-gray-slight;
+                    padding-right: 0;
+
+                    .hov{
+                        display: none;
+                    }
+
+                    &:hover{
+                        .hov{
+                            display: inline-block;
+                        }
+
+                        .unh{
+                            display: none;
+                        }
+                    }
+                }
+
+                &.panelWrapper{
+                    width : 140px;
+                    padding : 2 * @rhythm;
+                    padding-left: 0;
+
+                    .item{
+                        width: 40px;
+                        float: right;
+                        padding : @rhythm;
+                        color : @color-gray-mlight;
+                        margin-left : 4px;
+                        text-align: center;
+
+                        &.edit{
+                            cursor: pointer;
+                            &:hover{
+                                color : @color-main;
+                            }
+                        }
+
+                        &.stable{
+                            color : @color-good;
+                        }
+                       
+                    }
+                }
+
+                span{
+                    font-size: 0.9em;
+                }
+
+              
+            }
+        }
+
+        .instanceWrapper {
+            .hasPerformanceInfo {
+                &:hover {
+                    color: @color-add;
+                    cursor: pointer;
+                }
+            }
+
+            .instancePerformance {
+                padding: @rhythm * 2;
+
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+
+                background-color: #fafafa;
+            }
+        }
+
+        .emptyHolder {
+            width: 40px;
+        }
+
+        .performancesWrapper {
+            // display: flex;
+            // align-items: flex-start;
+            // justify-content: space-between;
+            flex-grow: 1;
+
+            padding-left: 2 * @rhythm;
+
+            overflow: hidden;
+        }
+
+        .performanceSection {
+
+            float: left;
+
+            width: 25%;
+
+            border: 1px solid @color-gray-mlight;
+            border-radius: 5px;
+
+            padding: 2 * @rhythm;
+
+            box-sizing: border-box;
+
+            background-color: #fff;
+
+            .statsHeader {
+                font-size: 1em;
+                font-weight: bold;
+
+                display: flex;
+                align-items: center;
+
+                i {
+                    font-size: 0.75em;
+                    
+                    margin-right: 5px;
+                }
+            }
+
+            .statsMain {
+                font-size: 0.9em;
+
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        .extendedStats {
+            padding-left: 2 * @rhythm;
+        }
+
+        .waitingStat {
+            color: #ffcb20;
+        }
+
+        .activeStat {
+            color: @color-green;
+        }
+
+        .failedStat {
+            color: @color-bad;
+        }
+
+        .iconStat {
+            display: flex;
+            align-items: center;
+
+            i {
+                width: 20px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                margin-right: 5px;
+
+                cursor: pointer;
             }
         }
     }
@@ -1127,13 +1405,11 @@
 
 html.stblack{
     #system16{
-      
+        
         .preloaderabs{
-           
             background: fade(@color-black,80);
-    
         }
-       
+    
         .subcaption{
          
             span{
@@ -1142,7 +1418,7 @@ html.stblack{
         }
     
         .ssubcaption{
-    
+            background: @color-block;
             span{
                 color : @color-gray-mlight;
             }
@@ -1168,7 +1444,7 @@ html.stblack{
     
        
         .tablecaption{
-            background: @color-black3;
+            background: @color-block;
         }
     
      
@@ -1204,7 +1480,7 @@ html.stblack{
     }
 }
 
-@media only screen and (max-width: 640px) {
+/*t*/ @media only screen and (max-width: 768px){
     #system16{
         .work{
             padding: 0 2 * @rhythm!important;
@@ -1217,7 +1493,10 @@ html.stblack{
         }
 
         .table{
-            width : 1024px!important;
+            &:not(.errorTable){
+                width : 1024px!important;
+            }
+            
         }
     }
 

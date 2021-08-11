@@ -375,7 +375,6 @@ var Control = function(settings) {
 
             self.autorun.destroy()
 
-            console.log("12")
 
             return this.stop().then(r => {
 
@@ -385,7 +384,6 @@ var Control = function(settings) {
 
                 hasupdates = false
 
-                console.log("installed")
 
                 self.autorun.init()
 
@@ -462,6 +460,8 @@ var Control = function(settings) {
         },
       
         autorun: function() {
+
+            return Promise.resolve()
 
             if(!self.kit.hasbin()) {
                 return Promise.resolve()

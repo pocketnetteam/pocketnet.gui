@@ -4,6 +4,13 @@
 	/*background: #F9F9F9;*/
 
 
+	&.rebuilding{
+		.transition(0.3s);
+		opacity: 0.3;
+	}
+
+
+
 	/***/
 
 	.webadminscontent{
@@ -183,7 +190,7 @@
 
 			&.another{
 
-				.transition(0.3s);
+				/*.transition(0.3s);*/
 				cursor: pointer;
 			}
 
@@ -255,7 +262,7 @@
 		}
 
 		.videoWrapper{
-			max-width: 700px;
+			max-width: 600px;
 			position : relative;
 
 			.videoTips{
@@ -291,6 +298,14 @@
 					opacity: 1;
 				}
 			}
+		}
+
+		.verticalVideo {
+			max-width: 350px;
+		}
+
+		.squareVideo {
+			max-width: 450px;
 		}
 
 		.commentsWrapper{			
@@ -471,6 +486,10 @@
 					figure img{
 						max-width: 100%;
 					}
+
+					span{
+						font-size: 1em!important;
+					}
 				}
 			}
 
@@ -620,11 +639,11 @@
 					height: 30px;
 					line-height: 28px;
 					border : 1px solid transparent;
-					.transition(0.3s);
+					/*.transition(0.3s);*/
 					font-size: 0.8em;
 
 					i{
-						.transition(0.3s, transform);
+						/*.transition(0.3s, transform);*/
 					}
 
 					&:hover{
@@ -656,7 +675,7 @@
 
 					span{
 						cursor: pointer;
-						.transition(0.3s);
+						/*.transition(0.3s);*/
 						i{
 							color : @color-good;
 						}
@@ -672,7 +691,7 @@
 						i{
 							text-align: center;
 							color : fade(@color-good, 80);
-							.transition(0.3s);
+							/*.transition(0.3s);*/
 						}
 		
 						&.turnon{
@@ -804,26 +823,35 @@
 				height: 100%;
 				width: 100%;
 				position : relative;
+				overflow: hidden;
+				border-radius: 3px;
 				.wpl{
 					width: 100%;
 					height: 100%;
 					cursor: pointer;
-					.transition(0.3s);
+					/*.transition(0.3s);*/
 					&:hover{
 						opacity: 0.9;
 					}
 				}
 
-				.viewsWrapper,
-
+				.statswrapper,
 				.durationWrapper{
 					position: absolute;
-					bottom : @rhythm;
-					right : @rhythm;
+					bottom : 0;
+					right : 0;
 					border-radius: 3px;
-					background: fade(@color-black, 0.5);
+					background: fade(@color-black, 0.8);
 					color : @color-gray-slight;
 					padding : 0.5 * @rhythm @rhythm;
+					padding-top : 0;
+					font-size: 0.9em;
+					text-shadow: 1px 1px 3px rgba(50, 50, 50, 1);
+					background: fade(#000, 40);
+
+					&.live{
+						background: fade(rgb(255, 17, 0), 80);
+					}
 
 					i,
 					span{
@@ -831,9 +859,26 @@
 					}
 				}
 
-				.viewsWrapper{
+				.durationWrapper{
+					border-bottom-left-radius: 6px;
+					border-bottom-right-radius: 0;
+					border-top-left-radius: 0;
+				}
+
+				.statswrapper{
 					right: auto;
-					left : @rhythm;
+					left :0;
+					border-bottom-right-radius: 6px;
+					border-bottom-left-radius: 0;
+					border-top-right-radius: 0;
+					>div{
+						float: left;
+						margin-right: @rhythm;
+
+						&:nth-last-child(1){
+							margin-right: 0;
+						}
+					}
 				}
 			}
 			
@@ -843,12 +888,19 @@
 				width: auto;
 				height: auto;
 				background: #000000;
+
+				position: relative;
 				
 
 				.jsPlayerLoadingD{
 					width: 100%;
 					height: 100%;
-					min-height: 200px;
+
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+
 					>div{
 						vertical-align: middle;
 						text-align: center;
@@ -862,9 +914,10 @@
 					vertical-align: middle;
 
 					&.authorCell{
-						padding-right: 2 * @rhythm;
+						padding-right: 0;
 					}
 				}
+
 			}
 
 			.metatable{
@@ -887,7 +940,7 @@
 							text-align: center;
 							border-radius: 50%;
 							color : @color-gray2;
-							.transition(0.3s);
+							/*.transition(0.3s);*/
 
 							&:hover{
 								color : #fff;
@@ -929,7 +982,7 @@
 					a{
 						font-weight: 700;
 						cursor: pointer;
-						.transition(0.3s);
+						/*.transition(0.3s);*/
 
 						&:hover{
 							color : @color-main;
@@ -1135,7 +1188,7 @@
 							img{
 								opacity: 0;
 								width: 100%;
-								.transition(0.3s);
+								/*.transition(0.3s);*/
 
 								&.active{
 									opacity: 1;
@@ -1304,7 +1357,7 @@
 
 
 							.label{
-								.transition(0.3s);
+								/*.transition(0.3s);*/
 							}
 						}
 
@@ -1359,7 +1412,7 @@
 						font-size: 0.9em;
 						color : @color-bright;
 						cursor: pointer;
-						.transition(0.3s);
+						/*.transition(0.3s);*/
 						border-radius : 40%;
 
 						
@@ -1425,7 +1478,7 @@
 
 						.label,
 						.icon{
-							color : #ff2f00;
+							color : @color-pink;
 						}
 
 						
@@ -1522,11 +1575,15 @@
 				right: 0;
 				bottom: 0;
 				top: 0;
-				background: fade(@color-black2, 80);
+				background: fade(@color-black2, 95);
 				overflow-y: scroll;
 				padding-top: 0;
+				scrollbar-width: none;
 
+				
+				
 				&::-webkit-scrollbar{
+					
 					width: 0!important
 				}
 
@@ -1663,11 +1720,38 @@
 
 					.videoWrapper{
 						max-width: none;
+						background: #000;
+					
+						&.squareVideo,
+						&.verticalVideo {
+							background: #000;
+							position: relative;
+							overflow: hidden;
+
+							.js-player{
+								margin : 0 auto;
+								max-width: 450px;
+								position : static;
+							}
+
+
+							.video-js{
+								position : static;
+		
+							}
+						}
+
+						&.squareVideo{
+							.js-player{
+								max-width: 500px;
+							}
+						}
 
 						.videoTips{
 							display: none;
 						}
 					}
+
 
 					.urlcnt{
 						display: none;
@@ -1738,7 +1822,7 @@
 			padding : 2 * @rhythm;
 			cursor: pointer;
 			font-size: 0.8em;
-			.transition(0.3s);
+			/*.transition(0.3s);*/
 			color : #fff;
 			margin-bottom :  @rhythm;
 
@@ -1855,6 +1939,7 @@
 		button{
 			border-radius: 30px;
 			width: 350px;
+			max-width: 90%;
 		}
 	}
 
@@ -1945,6 +2030,8 @@
 			background: transparent;
 		}
 
+		
+
 
 		.shares{
 			.share{
@@ -1956,16 +2043,42 @@
 				border-radius: 3px;
 
 				.sharecaption{
-					color : @color-gray-mlight;
+					margin-bottom: 0;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 
-					div{
-						font-size: 0.9em;
-						font-weight: 700;
+				}
+
+				.tags{
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					.tag{
+						float: none;
+						display: inline;
+						margin-right: 0;
 					}
 				}
 
+				&.hidden{
+					display: block!important;
+				}
+
+				.sharecaption{
+					color : @color-gray;
+					white-space: inherit;
+					padding-right: 2 * @rhythm;
+					div{
+						font-size: 1em;
+						font-weight: 500;
+						text-transform: capitalize;
+						
+					}
+				}
+
+
 				.meta{
 					padding-top : @rhythm;
+					margin-bottom: 0;
 				}
 
 				.commentsWrapperHb{
@@ -1987,14 +2100,15 @@
 				.iconWrapper{
 					padding : 0;
 					z-index: 12;
-					width: 24px;
+					width: 32px!important;
 
 					.icon{
 						width: auto;
-						height: 24px;
+						height: 32px!important;
 						.usericon{
-							width: 24px;
-							height: 24px;
+							width: 32px!important;
+							height: 32px!important;
+							font-size: 1.5em;
 						}
 					}
 				}
@@ -2002,6 +2116,12 @@
 				.forurl{
 					height: 200px;
 					position: relative;
+
+					&.verticalVideo{
+						height: 530px;
+					}
+
+				
 				}
 
 				.url{
@@ -2035,19 +2155,35 @@
 						span{
 							color : @color-gray-mlight;
 							opacity: 0.7;
+							text-decoration: none;
 						}
 					}
 				}
 			}
 
+			.spsp{
+				font-weight: 400;
+			}
+
 			.authorgroup{
 				float: left;
 				width: 33.3333%;
-				padding : @rhythm / 2;
+				.share{
+					padding : 15px;
+				}
+				
+				
+
+				.anothercntswrk{
+					height: 100px;
+					overflow: hidden;
+				}
 				
 				&:nth-child(3n + 1){
 					clear: left;
 				}
+
+				
 			}
 
 			.cntswrk{
@@ -2057,7 +2193,7 @@
 			}
 
 			.paddingWrapper{
-				margin-left: 24px;
+				margin-left: 32px;
 				padding-left: @rhythm;
 			}
 
@@ -2065,22 +2201,37 @@
 				display: none;
 			}
 
+			
+
 			.shareTable{
 				.authorTable{
+					
 					>div{
 	
 						&.authorCell{
 							padding-left: @rhythm;
 							padding-right: 0;
+							color : @color-gray;
+							
+						}
+
+						a{
+							font-size: 0.9em;
 						}
 
 						&.datetime{
-							padding-left: 2 * @rhythm;
+							padding-left: @rhythm;
 							opacity: 0.5;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+
+							span{
+								color : #000;
+							}
 						}
 						
 						span{
-							font-size: 0.8em;
+							font-size: 0.9em;
 							font-weight: 400;
 						}
 
@@ -2106,6 +2257,168 @@
 		}
 	}
 }
+
+#lenta{
+	.js-player .warning-overlay{
+		opacity: 0;
+	}
+	&.horizontal{
+		display: flex;
+		flex-grow: 1;
+		.mlwr{
+			display: flex;
+			flex-grow: 1;
+			align-items: center;
+
+			.ended{
+				padding : @rhythm;
+			}
+		}
+		.shares{
+			display: flex!important;
+			flex-wrap: nowrap;
+			flex-grow: 1;
+			flex-direction: row;
+			.share{
+				flex-grow: 1;
+				width : 300px;
+				margin : 0;
+				margin-right: @rhythm;
+				margin-bottom : @rhythm;
+				
+				&:nth-last-child(1){
+					margin-right: 0;
+				}
+			}
+		}
+
+		.loader,
+		.ended{
+			display: none!important;
+		}
+		
+
+		&.mainvideo{
+			.shares .share .forurl.verticalVideo{
+				height: 200px;
+			}
+		}
+
+		&.compact{
+			.shares{
+				.share{
+					width : 230px;
+
+					.tags{
+						display: none;
+					}
+				}
+
+				.shareTable{
+					position: relative;
+					.authorTable{
+						>div.datetime{
+							display: none;
+						}
+
+						>div.authorCell{
+							display: none;
+						}
+					}
+
+					.metatable>div.metapanel .metapanelitem{
+						display: none;
+					}
+
+					.anothercntswrk{
+						position: absolute;
+						left: 0;
+						bottom : 0;
+						height: 40px;
+						display: flex;
+						flex-wrap: nowrap;
+						overflow: hidden;
+						flex-direction: row;
+						align-items: center;
+						width: 100%;
+					
+						>div{
+							&.formeta{
+								width: 32px;
+								min-width: 32px;
+							}
+							
+
+							/*&:nth-last-child(1){
+								display: none;
+							}*/
+						}
+
+						.meta{
+							padding-top: 0.25 * @rhythm;
+							margin-bottom : 0;
+						}
+
+						.authorTable{
+							display: block;
+						}
+
+						.paddingWrapper{
+							margin-left: 0;
+							padding-right: 0;
+						}
+
+						.sharecaption{
+							max-height: 30px;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							overflow: hidden;
+							flex-grow: 1;
+							max-width: 200px;
+							padding-right: 2 * @rhythm;
+							div{
+								font-size: 0.9em!important;
+							}
+						}
+					}
+				}
+
+			}
+
+			&.mainvideo{
+				.shareTable{
+					height: 180px;
+				}
+				.shares .share .forurl{
+					height: 140px;
+
+					&.verticalVideo{
+						height: 140px;
+					}
+				}
+			}
+
+			
+		}
+	}
+
+	
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+	#lenta{
+		&.horizontal{
+			&.compact{
+				&.mainvideo{
+					.shares .cntswrk.formeta{
+						margin-left: 0.5 * @rhythm;
+					}
+				}
+			}
+		}
+	}
+}
+
 
 .dialog{
 	&.donation{
@@ -2169,7 +2482,7 @@
 							cursor: pointer;
 							text-align: center;
 							color : @color-gray-light;
-							.transition(0.3s);
+							/*.transition(0.3s);*/
 
 							&:hover{
 								color : @color-main;
@@ -2188,50 +2501,7 @@
 	}
 }
 
-.sharepostmenu{
-	.menuitem{
-		cursor: pointer;
-		>div{
-			padding : 2*  @rhythm;
-			border-bottom: 1px solid @color-gray-slight;
-			.transition(0.3s);
 
-			span{
-				font-size: 0.9em;
-			}
-
-			&.icon{
-				width: 30px;
-				text-align: center;
-			}
-		}
-
-		&:nth-last-child(1){
-			>div{
-				border-bottom: 0;
-			}
-		}
-
-		&:hover{
-			>div{
-				color : @color-main;
-				border-color: @color-main;
-			}
-		}
-
-		&.block,
-		&.complain{
-			&:hover{
-				>div{
-					color : @color-contrast;
-					border-color: @color-contrast;
-				}
-			}
-		}
-
-
-	}
-}
 
 @keyframes vstars{
     0% {
@@ -2283,7 +2553,7 @@ html.stblack{
 			}
 	
 			.commentsWrapper{			
-				background: @color-gray3;
+				background: #0a0c17;
 			}
 	
 	
@@ -2485,7 +2755,10 @@ html.stblack{
 				
 	
 					span{
-						color : @color-bright;
+						&.linkedstyle{
+							color : @color-bright;
+						}
+						
 					}
 					
 				
@@ -2557,7 +2830,7 @@ html.stblack{
 	
 							.label,
 							.icon{
-								color : #ff2f00;
+								color : @color-pink;
 							}
 	
 							&:hover{
@@ -2619,7 +2892,10 @@ html.stblack{
 		}	
 
 	
-		.zero,
+		.zero {
+			color : @color-gray-mlight;
+			background: @color-block;
+		}
 		.ended{
 			color : @color-gray-mlight;
 			background: @color-gray3;
@@ -2644,11 +2920,87 @@ html.stblack{
 				color : fade(@color-main, 15);
 			}
 		}
+
+		&.mainvideo{
+			.loader,
+			.zero,
+			.ended,
+			.seemore,
+			.loadprev,
+			.loadmore{
+				background: transparent;
+			}
+			
+			.shares{
+	
+			
+				.authorgroup{
+					
+					.share{
+						background: transparent;
+					}
+
+					.url span{
+						color : @color-gray-light;
+					}
+	
+					
+				}
+	
+				.shareTable{
+					.authorTable{
+						>div{
+							&.authorCell{
+								color : @color-gray-light; 
+							}
+						}
+					}
+				}
+			}
+
+	
+		}
 	
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 1024px) {
+	#lenta{
+		&.mainvideo{
+
+			
+			.shares{
+				
+				.authorgroup{
+					width: 50%;
+				}
+			}
+		}
+	}
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+	#lenta{
+
+		/*.vjs-control-bar{
+			visibility: visible!important;
+			opacity: 1!important;
+		}*/
+		
+		&.mainvideo{
+
+			
+			.shares{
+				
+				.authorgroup{
+					width: 50%;
+				}
+			}
+		}
+	}
+}
+
+/*t*/ @media only screen and (max-width: 768px){
 #lenta{
 
 	.loader{
@@ -2673,37 +3025,7 @@ html.stblack{
 
 
 		
-		/*.shareTable{
-			
-			display: block;
-			cursor: default;
-
-			>div{
-				display: block;
-				padding : 0;
-
-				&.iconWrapper{
-					float: left;
-					width: 60px;
-					padding-top:0;
-					padding-left: @rhythm;
-				
-				}
-
-				&.metawrapper{
-					margin-left : 60px;
-					padding-top : 12px;
-					padding-bottom : 12px;
-					padding-right: @rhythm;
-				}
-
-				&.shareWrapper{
-					margin-top : @rhythm;
-					width: 100%;
-				}
-
-			}
-		}*/
+		
 
 		.iconWrapper{
 			width: 8 * @rhythm;
@@ -2737,12 +3059,12 @@ html.stblack{
 				left: 0;
 				right: 0;
 				top: 0;
-				bottom: 60px;
+				bottom: 75%;
 				cursor: pointer;
 				background: rgb(0,0,0);
 				background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
 				color : #fff;
-				opacity: 0;
+				opacity: 1;
 				.transition(0.3s);
 
 				.videoTip{
@@ -2766,6 +3088,15 @@ html.stblack{
 				}
 			}
 		}
+
+		.squareVideo,
+		.verticalVideo {
+			max-width: none;
+		}
+
+		/*.videoTips{
+			display: none;
+		}*/
 
 		
 		.ss{
@@ -2816,6 +3147,30 @@ html.stblack{
 				.edit .posttable>div.postCellWrapper .postaction, 
 				.post .posttable>div.postCellWrapper .postaction{
 					text-align: center;
+				}
+			}
+
+			&.fullScreenVideo{
+				#comments{
+					.caption{
+						padding-left: 1 * @rhythm;
+						padding-right: 1 * @rhythm;
+					}
+	
+					.commentPaddingWrapper,
+					.post{
+						padding-left: 1 * @rhythm;
+						padding-right:  @rhythm;
+					}
+	
+					.commentPaddingWrapper{
+						padding-right:  0;
+					}
+	
+					.list .answer .postbody{
+						padding-left: 1 * @rhythm;
+						padding-right: @rhythm;
+					}
 				}
 			}
 
@@ -3024,30 +3379,31 @@ html.stblack{
 				}
 			}
 
-			.metatable{
-				>div{
-					width: 80%;
-					margin-right: 0;
+			.meta{
+				.metatable{
+					>div{
+						width: 80%;
+						margin-right: 0;
 					
-
-						
-				
-					&.metapanel{
-						width: 20%;
-						padding-right: @rhythm;
-
-						.metapanelitem{
-							opacity: 1;
-
-							&.complain{
-								&:hover{
-									color : @color-bad;
+						&.metapanel{
+							width: 20%;
+							padding-right: @rhythm;
+	
+							.metapanelitem{
+								opacity: 1;
+	
+								&.complain{
+									&:hover{
+										color : @color-bad;
+									}
 								}
 							}
 						}
 					}
 				}
 			}
+
+			
 
 			
 			.meta{
@@ -3069,8 +3425,6 @@ html.stblack{
 				.imagesWrapper{
 					width: 100%;
 					height: auto;
-					float: none;
-					margin-bottom : @rhythm;
 
 				}
 
@@ -3095,15 +3449,15 @@ html.stblack{
 					&.more,
 					&.four{
 						.imagesWrapper{
-							width: 48%;
+							width: 50%;
 							height: auto;
 
 							&.w2{
-								width: 48%;
+								width: 50%;
 							}
 
 							&.h2{
-								width: 48%;
+								width: 50%;
 							}
 						}
 					}
@@ -3273,7 +3627,69 @@ html.stblack{
 			width: 90%;
 		}
 	}
+
+	&.mainvideo{
+
+			
+		.shares{
+
+			.shareTable .authorTable>div span{
+				font-size: 1em;
+				&.adr{
+					font-size: 1.2em;
+				}
+				
+			}
+			
+			.authorgroup{
+				width: 100%;
+				padding : 0;
+				margin-bottom : 2 * @rhythm;
+				.share{
+					padding : 0;
+				}
+
+				
+
+				.anothercntswrk{
+					max-height: none;
+					height: auto;
+				}
+
+				
+			}
+
+			.cntswrk{
+				margin-left: 0;
+				padding-left : 0;
+				padding-right : 0;
+	
+				&.formeta{
+					padding-top : 2 * @rhythm;
+					margin-left: 2 * @rhythm;
+				}
+			}
+		}
+
+	}
+
+	
 }	
+
+	
+	html.tablet{
+		#lenta{
+			&.mainvideo{
+				.shares{
+					.authorgroup{
+						width: 50%;
+					}
+				}
+			}
+		}
+		
+	}
+
 .dialog{
 	&.donation{
 		.thwrapper{

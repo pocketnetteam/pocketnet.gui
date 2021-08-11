@@ -6,6 +6,7 @@ var embeding = (function(){
 
 	var Essense = function(p){
 
+
 		var primary = deep(p, 'history');
 
 		var el, type = null, subtype = null, on, maxImages = 6;
@@ -24,7 +25,17 @@ var embeding = (function(){
 					return true;
 				},
 				value : []
-			}
+			},
+
+			donate : new Parameter({
+				name : self.app.localization.e('wsamountof'),
+				type : "NUMBER",
+				id : 'amount',
+				placeholder : '0',
+				format : {
+					Precision : 3
+				}
+			}),
 
 		}
 
@@ -80,6 +91,19 @@ var embeding = (function(){
 
 						on.added(images)
 						
+						self.closeContainer()
+					}
+				},
+
+
+
+				
+				donate : function(){
+
+					if(actions.check('donate')){
+
+						on.added(options.donate.value)
+
 						self.closeContainer()
 					}
 				},
@@ -156,7 +180,7 @@ var embeding = (function(){
 
 									file.loading = false;
 
-									file.src = deep(data, 'data.link') || 'https://pocketnet.app/img/imagenotuploaded.jpg';
+									file.src = deep(data, 'data.link') || 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg';
 									
 									renders.images()
 									
@@ -166,7 +190,7 @@ var embeding = (function(){
 								},
 
 								fail : function(){
-									file.src = 'https://pocketnet.app/img/imagenotuploaded.jpg';
+									file.src = 'https://'+self.app.options.url+'/img/imagenotuploaded.jpg';
 
 									renders.images()
 									
@@ -316,6 +340,10 @@ var embeding = (function(){
 				type = p.settings.essenseData.type;
 				on = p.settings.essenseData.on;
 
+				sender = p.settings.essenseData.sender;
+				receiver = p.settings.essenseData.receiver;
+				balance = p.settings.essenseData.balance
+
 				ed = p.settings.essenseData;
 
 				subtype = p.settings.essenseData.subtype || null;
@@ -367,14 +395,19 @@ var embeding = (function(){
 				buttons : {
 
 					close : {
-						class : "close",
-						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('finish'),
+						class : "save",
+						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('add'),
 						fn : function(wnd, wndObj){
 
 							actions.add[type]()
 
 						}
-					}
+					},
+
+					discard : {
+						class : "close",
+						html : '<i class="fa fa-times"></i> ' + self.app.localization.e('close'),
+					},
 
 				},
 				close : function(){

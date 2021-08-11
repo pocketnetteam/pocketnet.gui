@@ -36,7 +36,7 @@ var Node = function(options, manager){
     var lastinfoTime = f.now()
     var maxevents = 10000
 
-    var test = new Test(self)
+    var test = new Test(self, manager)
 
     var wss = {
         service : null,
@@ -147,11 +147,7 @@ var Node = function(options, manager){
 
     self.rpcs = function(method, parsed){
 
-        
-
-        if(!self.checkParameters()) return Promise.reject('nodeparameters') 
         if(!self.rpc[method]) return Promise.reject('method')
-        
 
         if(!parsed) parsed = []
         if(!_.isArray(parsed)) parsed = [parsed]
@@ -159,39 +155,45 @@ var Node = function(options, manager){
         var err = null
         var time = performance.now()
 
-        return self.rpc[method](parsed).catch(e => {
+        return self.checkParameters().then(r => {
 
-            err = e
+            return self.rpc[method](parsed).catch(e => {
 
-            return Promise.resolve(null)
-
-        }).then(data => {
-
-            var difference = performance.now() - time;
-            var code = 200;
-
-            if (err) {
-
-                code = 500;
-
-                if(!err.code || err.code == -28){
-                    code = 521
+                err = e
+    
+                return Promise.resolve(null)
+    
+            }).then(data => {
+    
+                var difference = performance.now() - time;
+                var code = 200;
+    
+                if (err) {
+    
+                    code = 500;
+    
+                    if(!err.code || err.code == -28){
+                        code = 521
+                    }
+    
+                }	
+    
+                self.statistic.add({
+                    code : code,
+                    difference : difference
+                })
+    
+                if(!err){
+                    return Promise.resolve(data.result)
                 }
-
-            }	
-
-            self.statistic.add({
-                code : code,
-                difference : difference
+    
+                return Promise.reject(err)
+    
             })
 
-            if(!err){
-                return Promise.resolve(data.result)
-            }
-
-            return Promise.reject(err)
-
         })
+
+        
     }
     
     self.events = []
@@ -241,7 +243,7 @@ var Node = function(options, manager){
 
             ///
 
-            if (status.fork && difference > 5) return 0
+            if (status.fork && difference > 5 || difference > 100) return 0
             if(!s.success || !lastblock.height) return 0
             if (self.testing) return 0
             ///
@@ -266,8 +268,10 @@ var Node = function(options, manager){
             if (rate > 30 && rate <= 50) rate = 40
             if (rate > 50 && rate <= 100) rate = 75
 
+            var userski = 1 //_.toArray(wss.users).length + 1
+
             return  (s.percent  * (lastblock.height || 1) ) / 
-                    ( rate * (time) * (difference + 1) )
+                    ( userski * rate * (time) * (difference + 1) )
         },
 
         better : function(){
@@ -476,11 +480,25 @@ var Node = function(options, manager){
     }
 
     self.checkParameters = function(){
-        if(!f.validateHost(self.host)) return Promise.reject('validateHost')
-        if(!self.port) return Promise.reject('port')
-        if(!self.ws) return Promise.reject('ws')
+
+        var e = self.checkParametersS()
+
+        if(e) return Promise.reject('validateHost')
         
         return Promise.resolve()
+    }
+
+    self.checkParametersS = function(){
+        if(!self.hostchecked){
+            if(!self.host || !f.validateHost(self.host)) { return 'validateHost'}
+        }
+
+        self.hostchecked = true
+
+        if(!self.port) return 'port'
+        if(!self.ws) return 'ws'
+        
+        return null
     }
 
     self.check = function(){
@@ -501,6 +519,7 @@ var Node = function(options, manager){
 
         return self.rpcs('getPeerInfo').then(result => {
 
+
             var nodes = _.map(result || [], function(peer){
 
                 var pr = peer.addr.split(":")
@@ -514,6 +533,10 @@ var Node = function(options, manager){
 
                 return node
 
+            })
+
+            nodes = _.filter(nodes, function(node){
+                return !node.checkParametersS()
             })
 
             nodes = _.uniq(nodes, function(n){
@@ -591,7 +614,8 @@ var Node = function(options, manager){
             stable : self.stable,
             canuse : (s.success > 0 && lastblock.height) ? true : false,
             local : self.local || false,
-            peer : self.peer
+            peer : self.peer,
+            wssusers : _.toArray(wss.users).length
         }
     }
 

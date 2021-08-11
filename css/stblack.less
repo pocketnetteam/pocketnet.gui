@@ -3,7 +3,7 @@
 html.stblack{
     
 
-    background: @color-black;
+    background: transparent;
 
     body{
         background: @color-black;
@@ -22,53 +22,40 @@ html.stblack{
         background: @color-main;
     }
 
-    ::-webkit-scrollbar {
-        background: @color-black;
+    
+    .emojionearea .emojionearea-editor{
+        color : @color-gray-slight;
     }
 
-    ::-webkit-scrollbar-track {
-        background: fade(@color-main, 20);
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: fade(@color-main, 20);
-    } 
-    
-    ::-webkit-scrollbar-button {
-        background: fade(@color-main, 20);
-    } 
-    
-    ::-webkit-scrollbar-corner {
-        background: fade(@color-main, 20);
-    }
-
-    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-        color:    @color-gray-mlight;
-    }
-    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-       color:    @color-gray-mlight;
-       opacity:  1;
-    }
-    ::-moz-placeholder { /* Mozilla Firefox 19+ */
-       color:    @color-gray-mlight;
-       opacity:  1;
-    }
-    :-ms-input-placeholder { /* Internet Explorer 10-11 */
-       color:    @color-gray-mlight;
-    }
-    :placeholder-shown { 
-      color:    @color-gray-mlight;
+    scrollbar-width: none;
+    &::-webkit-scrollbar{
+        width: 0!important;
     }
 
     textarea{
-        background: @color-black;
+        background: transparent;
+        border: 1px solid @color-bright !important;
         color : @color-gray-mlight;
+    }
+
+    #test{
+        .userPanel{
+            .parameter{
+                textarea {
+                    border: 1px solid @color-bright !important;
+                }
+            }
+        }
+    }
+
+    .sitemessage {
+        background: @color-block;
     }
 
 
     body{
         color: @color-gray-mlight;
-        background:  @color-black;
+        background:  @color-black5;
     }
 
     button,
@@ -77,9 +64,9 @@ html.stblack{
     input[type="password"],
     input[type="number"]
     {
-        background:  @color-black;
+        background:  @color-black5;
         color: #fff;
-        border: 1px solid @color-add;
+        border: 1px solid @color-bright;
         
     }
 
@@ -106,7 +93,6 @@ html.stblack{
         }
     
         &.shadowWhite{
-            background: transparent;
             color : @color-black3;
             border : 1px solid @color-black3;
     
@@ -150,13 +136,13 @@ html.stblack{
         }
     
         &.orange{
-            background: fade(#FF4800, 70);
-            border: 1px solid fade(#FF4800, 70);
+            background: fade(@color-main, 70);
+            border: 1px solid fade(@color-main, 70);
             color: #FFF;
     
             &:hover{
-                background : fade(#FF4800, 20);
-                color: fade(#FF4800, 70);
+                background : fade(@color-dark-blue, 20);
+                color: fade(@color-dark-blue, 70);
             }
         }
     
@@ -178,6 +164,12 @@ html.stblack{
             &:hover{
                 color : @color-main;
             }
+        }
+    }
+
+    &.mobile{
+        .matrixchatwrapper{
+            background: @color-black;
         }
     }
     
@@ -691,12 +683,11 @@ html.stblack{
     
             .vc_inputWrapper{
     
-                border : 1px solid  @color-black2;
+                border : 1px solid @color-bright;
                 border-right: 0;
     
                 input{
                     background: transparent;
-                    border : 0!important;
     
                     &[disabled]{
                         color : @color-gray-light;
@@ -706,7 +697,7 @@ html.stblack{
 
     
             .vc_iconWrapper{
-                border : 1px solid @color-black2;
+                border : 1px solid @color-bright;
                 border-left: 0;
                 color : fade(@color-main, 40);
     
@@ -737,8 +728,7 @@ html.stblack{
             .vc_textInput{
                
                 .vc_inputWrapper{
-    
-                    border : 1px solid  @color-bad;
+
                     border-right: 0;
                 }
     
@@ -966,6 +956,24 @@ html.stblack{
             span{
                 color : @color-contrast;
             }
+        }
+    }
+
+    .horizontalLentaWrapper{
+
+        .controlhor{
+            background: @color-black3;
+        }
+    
+        .showmorebywrapper{
+        
+            &::-webkit-scrollbar{
+                background: rgb(45, 49, 54);
+            }
+            &::-webkit-scrollbar-thumb:horizontal{
+                background: #000;
+            }
+            
         }
     }
 
@@ -1359,7 +1367,7 @@ html.stblack{
             .searchPanelWrapper{
               
                 >div{
-                    color : @color-gray2;
+                    color : @color-gray;
                     &:hover{
                         color : @color-bright;
                     }
@@ -1390,5 +1398,63 @@ html.stblack{
         }
           
     }
+
+    .video-js{
+        div{
+            span{
+                color : #ffffff!important;
+            }
+            
+        }
+        button{
+            background: none;
+            border: none;
+            color: inherit;
+            display: inline-block;
+            font-size: inherit;
+            line-height: inherit;
+            text-transform: none;
+            text-decoration: none;
+            transition: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            span{
+                color : #ffffff!important;
+            }   
+            
+        }
+    }
+
+    .vjs-controls-disabled .vjs-big-play-button, .vjs-has-started .vjs-big-play-button, .vjs-using-native-controls .vjs-big-play-button, .vjs-error .vjs-big-play-button{
+        display: none;
+    }
+
+    .dg-container{
+
+
+        .dg-main-content{
+            background: @color-black3;
+            color : @color-gray;
+        }
+    
+        .dg-content-footer{
+    
+            button{
+             
+                color : @color-main;
+    
+                &.dg-pull-right{
+                    border : 1px solid @color-main;
+                    background: @color-main;
+                    color : #fff;
+                }
+            }
+    
+        }
+    
+    }
     
 }
+

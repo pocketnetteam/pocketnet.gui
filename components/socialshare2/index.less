@@ -3,19 +3,39 @@
 #socialshare2{
 	padding : 2 * @rhythm 0;
 
+
+
 	.flexWrapper{
-		display: flex;	
-		align-items: center;
+		display: block;	
+		overflow: hidden;
+
+		button{
+			font-size: 0.8em;
+			padding-left: 0;
+			padding-right: 0;
+			width: 100%;
+		}
 
 		>div{
+
+			float: left;
+			width: 50%;
+
 			&.includeRefWrapper{
-				padding-left: 4 * @rhythm;
+				padding-left: 0 @rhythm;
+				padding-top : 2 * @rhythm;
 				span{
 					margin-right: 2 * @rhythm;
 					font-size: 0.8em;
 				}
 			}
 		}
+	}
+
+	iframe{
+		outline: none;
+		border : 0;
+		width: 100%!important;
 	}
 
 	.contentShareWrapper{
@@ -133,12 +153,13 @@
 			
 		}
 
+		
+
 		select,
 		textarea,
 		input{
 			width: 100%;
 			padding: @rhythm;
-			border : 1px solid @color-gray-light;
 			border-radius: 2px;
 
 			&.error{
@@ -242,7 +263,7 @@
 
 	.captionearn{
 		font-weight: 700;
-		color : #ff2f00;
+		color : @color-pink;
 	}
 
 	.requestwhocaption{
@@ -346,7 +367,7 @@
 
 		.labelWrapper{
 			text-align: center;
-			color : @color-black3;
+			// color : @color-black3;
 			span{
 				font-size: 0.8em;
 				font-weight: 500;
@@ -398,6 +419,7 @@
 
 .wnd.sharingwindow2{
 	
+	z-index: 5000;
 	&.textshowedwnd{
 		.wndinner{
 			max-height: 600px;
@@ -405,7 +427,7 @@
 	}
 
 	.wndinner{
-		max-height: 570px;
+		max-height: 642px;
 		width : auto;
 		max-width: 450px;
 		.wndheader{
@@ -430,8 +452,28 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+/*t*/ @media only screen and (max-width: 768px){
 #socialshare2{
+
+	.flexWrapper{
+		display: block;	
+		overflow: hidden;
+
+		button{
+			font-size: 0.8em;
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		>div{
+			float: left;
+			width: 50%;
+
+			&.includeRefWrapper{
+				padding : 2 * @rhythm 0;
+			}
+		}
+	}
 
 	.button.medium{
 		width: 100%;

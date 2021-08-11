@@ -2,6 +2,8 @@ var socialshare2 = (function(){
 
 	var self = new nModule();
 
+	console.log('@@@@@@', localStorage.getItem('usertheme') === 'black' ? true : false)
+
 	var essenses = {};
 
 	var Essense = function(p){
@@ -35,8 +37,9 @@ var socialshare2 = (function(){
 				name: "Black Theme",
 				id: 'black',
 				type: "BOOLEAN",
-				value: false
+				value: localStorage.getItem('usertheme') === 'black' ? true : false
 			}),
+
 
 			autoplayvideo : new Parameter({
 				name: "Autoplay Video",
@@ -46,8 +49,15 @@ var socialshare2 = (function(){
 			}),
 
 			fullscreenvideo : new Parameter({
-				name: "Fullscreen Video",
+				name: "Remove Description",
 				id: 'fullscreenvideo',
+				type: "BOOLEAN",
+				value: false
+			}),
+
+			onlyvideo : new Parameter({
+				name: "Only video",
+				id: 'onlyvideo',
 				type: "BOOLEAN",
 				value: false
 			}),
@@ -83,6 +93,12 @@ var socialshare2 = (function(){
 							if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
 								s.push('fullscreenvideo')
 							}
+
+							
+						}
+
+						if(share.itisvideo()){
+							s = ['onlyvideo']
 						}
 					}
 
@@ -90,6 +106,16 @@ var socialshare2 = (function(){
 				},
 				action : function(settings, id){
 					return Promise.resolve('lenta')
+				}
+			},
+
+			connect: {
+				
+				settings : function(id){
+					return Promise.resolve(['black'])
+				},
+				action : function(settings, id){
+					return Promise.resolve('connect')
 				}
 			},
 
@@ -148,14 +174,26 @@ var socialshare2 = (function(){
 				var emeta = embedding[ed.embedding.type]
 				var settings = []
 
-				console.log('emeta', emeta)
-
 				emeta.settings(ed.embedding.id).then(settingsm => {
 					settings = {}
 					
 					_.each(settingsm, function(i){
 						settings[i] = embeddingSettings[i]
 					})
+
+					console.log('settings', settings)
+
+					/*if(settings.onlyvideo && settings.onlyvideo.value){
+						_.each(settings, function(s){
+							if (s.id != 'onlyvideo')
+								s.hidden = true
+						})
+					}
+					else{
+						_.each(settings, function(s){
+							s.hidden = false
+						})
+					}*/
 
 					return Promise.resolve()
 				}).then(() => {
@@ -199,7 +237,7 @@ var socialshare2 = (function(){
 						})
 
 						_p.el.find('.copycode').on('click', function(){
-							copycleartext(renders.embeddingcode(action, ed.embedding.id, settings))
+							copycleartext(renders.embeddingcode(action, ed.embedding.id, settings, embeddingSettings))
 							sitemessage(self.app.localization.e('successcopied'))
 						})
 					})
@@ -211,7 +249,8 @@ var socialshare2 = (function(){
 			},
 
 			embeddingcode : function(action, actionid, settings){
-				console.log('action', action)
+
+		
 				var p = {};
 
 				_.each(settings, function(s, i){
@@ -234,10 +273,32 @@ var socialshare2 = (function(){
 				}
 				
 
+				if(settings.onlyvideo){
+
+					var share = self.app.platform.sdk.node.shares.storage.trx[actionid];
+
+					if (share && share.url && action && actionid){
+
+						var hid = app.peertubeHandler.parselink(share.url)
+
+						var info = self.app.platform.sdk.videos.storage[share.url] || self.app.platform.sdk.videos.storage[hid.id] || {}
+
+						var aspectRatio = (info.data || {}).aspectRatio || 1.77
+
+						var width = 640
+						var height = (width / aspectRatio).toFixed(0)
+
+						return '<iframe width="'+width+'" height="'+height+'" src="https://pocketnet.app/embedVideo.php?embed=true&s='+actionid+'&host='+hid.host+'&id='+hid.id+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+					}	
+					
+					return ''
+
+				}
+
 				p = hexEncode(JSON.stringify(p))
 
 				if(action && actionid){
-					return '<div id="pocketnet_'+seed+'"></div><script src="https://pocketnet.app/js/widgets.js"></script><script type="text/javascript">(new window.PNWIDGETS()).make('+seed+', "'+action+'", "'+actionid+'", "'+p+'")</script>'
+					return '<div id="pocketnet_'+seed+'"></div><script src="https://'+self.app.options.url+'/js/widgets.js"></script><script type="text/javascript">(new window.PNWIDGETS()).make('+seed+', "'+action+'", "'+actionid+'", "'+p+'")</script>'
 				}	
 				else{
 					return ''
@@ -547,9 +608,20 @@ var socialshare2 = (function(){
 
 		var initEvents = function(){
 
-			el.c.find('.url').on('click', function(){
+			el.c.find('.url button').on('click', function(){
 				copycleartext(ed.url)
 				sitemessage(self.app.localization.e('urlsuccesscopied'))
+			})
+
+			el.c.find('.chat button').on('click', function(){
+
+				var url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
+			
+				self.app.platform.matrixchat.share.url(url).catch(r => {
+					console.log("R", r)
+				})
+			
+				if(self.closeContainer) self.closeContainer()
 			})
 
 		}
@@ -615,7 +687,6 @@ var socialshare2 = (function(){
 				st = p.state
 
 				ed = p.settings.essenseData || {}
-				console.log('ed.sharing', ed.sharing)
 				state.load()
 
 				ed.title || (ed.title = 'Pocketnet')
@@ -624,7 +695,7 @@ var socialshare2 = (function(){
 
 				prepareParameters()
 
-				console.log('eparameters.reflink', eparameters.reflink, notincludedRef)
+				if(ed.notincludedRef) notincludedRef = ed.notincludedRef
 
 			    if(!ed.url){
 
@@ -634,12 +705,14 @@ var socialshare2 = (function(){
 
 			    		var pn = p[p.length - 1]
 
-						ed.url = 'https://pocketnet.app/' +  pn + window.location.search
+						if(!pn) pn = 'index'
+
+						ed.url = 'https://'+self.app.options.url+'/' +  pn + window.location.search
 						
 				    }
 				    else
 				    {
-				    	ed.url = 'https://pocketnet.app/' + self.app.nav.get.href()
+				    	ed.url = 'https://'+self.app.options.url+'/' + self.app.nav.get.href() || 'index'
 				    }
 
 				}
@@ -651,7 +724,8 @@ var socialshare2 = (function(){
 				var data = {
 					caption : ed.caption,
 					style : ed.style || "",
-					eparameters : eparameters
+					eparameters : eparameters,
+					notincludedRef : ed.notincludedRef
 				};
 
 				clbk(data);
@@ -686,8 +760,9 @@ var socialshare2 = (function(){
 			},
 
 			wnd : {
-				swipeClose : false,
-				swipeMintrueshold : 30,
+				swipeClose : true,
+				trueshold : 1,
+				swipeCloseDir : 'down',
 				header : self.app.localization.e('e13174'),
 				class : 'sharingwindow2'
 			}

@@ -1,0 +1,19 @@
+
+<% if(!inputs.length) {%>
+
+    <div class="empty">
+        Empty
+    </div>
+
+<% } else { %> 
+    
+    <% _.each(inputs, function(input){ %>
+        <div class="input">
+            <div class="info" address="<%-actions.iaddress(input)%>">
+                
+            </div>
+        </div>
+    <% }) %>
+    
+<% } %>
+

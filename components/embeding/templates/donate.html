@@ -1,0 +1,23 @@
+<% 
+
+
+if(donate){ %>
+
+<div class="donateEmbWr">
+
+	<div class="donatecntWrapper">
+		<div class="donatecnt">
+			<div class="value">
+				<%= app.platform.mp.coinwithsmall(donate) %>
+			</div>
+			<div class="removeWrapper">
+				<div class="removedonate">
+					<i class="fas fa-times-circle"></i>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<% } %>

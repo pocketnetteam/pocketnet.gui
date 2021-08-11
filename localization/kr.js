@@ -29,6 +29,7 @@ ____loclib.signin = "로그인";
 ____loclib.orcreate = "또는 새 계정 생성";
 ____loclib.createnew = "새 계정 생성";
 ____loclib.staysafe = "안전하지 않습니다. 계속 하시겠습니까?";
+____loclib.or = "또는";
 
 // Register a New Account
 ____loclib.id71 = "새 계정 생성";
@@ -386,7 +387,7 @@ ____loclib.addaccount = "계정 추가"
 ____loclib.entermnimo = "연상단어 또는 개인 키 입력"
 ____loclib.add = "추가"
 ____loclib.e13011 = "Pocketnet Desktop을 설치한 후 등록을 계속합니다."
-____loclib.e13012 = "Windows 용 Pocketnet이 다운로드를 시작하지 않은 경우 여기를 클릭하여 설치하십시오."
+____loclib.e13012 = "Pocketnet이 다운로드를 시작하지 않은 경우 여기를 클릭하여 설치하십시오."
 ____loclib.e13013 = "이미지 캡션 입력 (선택 사항)"
 ____loclib.e13014 = "이 파일은 지원되는 형식이 아닙니다:"
 ____loclib.e13015 = "이 파일이 너무 큽니다:"
@@ -409,7 +410,7 @@ ____loclib.info = "정보"
 ____loclib.e13023 = "정말 사용자 차단을 해제 하시겠습니까?"
 ____loclib.e13024 = "개인 로그인 키"
 ____loclib.e13025 = "새 계정 생성"
-____loclib.e13026 = "Pocketnet 가입-무료 웹의 미래"
+____loclib.e13026 = "Pocketnet 가입"
 
 ____loclib.e13027 = "서명 유지"
 ____loclib.e13028 = "유효하지 않은 개인 키를 입력했습니다."
@@ -675,6 +676,7 @@ ____loclib.errorreload = "문제가 발생했습니다. 페이지를 새로 고�
 ____loclib.e13221 = "정말로 이 거래에 대한 정보를 삭제 하시겠습니까? 거래를 중단할 수 없습니다."
 ____loclib.e13222 = "데스크탑 앱 다운로드-이것은 Pocketnet을 사용하는 가장 검열에 강한 방법입니다. 웹 사이트가 종료 되더라도 데스크탑 응용 프로그램은 여전히 ​​노드를 통해 직접 실행됩니다."
 ____loclib.e13223 = "Windows 용 Pocketnet 다운로드"
+____loclib.e132232 = "macOS 용 Pocketnet 다운로드"
 ____loclib.e13224 = "Linux 용 Pocketnet 다운로드"
 ____loclib.e13225 = "Pocketnet 노드"
 ____loclib.e13226 = '노드 다운로드'

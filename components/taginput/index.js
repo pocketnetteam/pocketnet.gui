@@ -183,9 +183,9 @@ var taginput = (function(){
 		}
 
 		var events = {
-			add : function(el){
-				var tag = el.attr('tag')
-				var category = el.attr('category')
+			add : function(_el){
+				var tag = _el.attr('tag')
+				var category = _el.attr('category')
 
 				if(category){
 
@@ -196,6 +196,13 @@ var taginput = (function(){
 				else{
 					events.addTag(tag)
 				}
+
+				if (isMobile())
+					setTimeout(function(){
+						if (el.tagSearch)
+							el.tagSearch.find('input').focus()
+					}, 500)
+				
 			},
 			remove : function(){
 				var tag = $(this).closest('.wrps').attr('tag')

@@ -16,129 +16,171 @@ var main = (function(){
 
 		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
-		var currentMode = 'common', hsready = false;
+		var currentMode = 'common', hsready = false, fixeddirection = null, external = null;
 
 		var lastscroll = 0
+
+
+		var wordsRegExp = /[,.!?;:() \n\r]/g
+
+		var mobilemodes = [{
+			mode : 'leftshow',
+			icon : 'fas fa-hashtag'
+		},{
+			mode : 'mainshow',
+			icon : 'fas fa-home'
+		},{
+			mode : 'rightshow',
+			icon : 'fas fa-arrow-right'
+		}]
+
+		var mobilemode = 'mainshow'
 
 		var helpers = {
 			
 		}
 		
 		var actions = {
+			swipe : function(phase, direction, distance){
+
+
+				if(!direction || !distance) return
+
+				if (phase != 'move'){
+					fixeddirection = null
+				}
+
+				if (direction != 'left' && direction != 'right') {
+					//
+						el.slwork.css({'transform' : 'translateX(0%)'})
+					//}
+
+					if (phase == 'move'){
+						if (distance > 20){
+							fixeddirection = direction
+						}
+					}
+					
+
+					if(phase == 'end'){
+						if(direction == 'down'){
+
+							
+							console.log('lenta.hasplayingvideos()', lenta.hasplayingvideos())
+
+							if(lenta && lenta.hasplayingvideos()) return
+							
+							self.app.el.html.removeClass('scrollmodedown')
+						}
+
+						if(direction == 'up' && el.lentacell.scrollTop() > 200){
+
+
+
+							self.app.el.html.addClass('scrollmodedown')
+						}
+					}
+					
+					return
+				}
+
+				if(fixeddirection) return
+
+				var currentindex = _.findIndex(mobilemodes, function(m){
+					return m.mode == mobilemode
+				})
+
+				var tomode = null
+				var prs = 0
+				var c = 1
+
+				if (phase == 'move'){
+
+					if(direction == 'left' || direction == 'right'){
+						prs = 100 * (distance / el.w.width())
+
+						if(prs > 10) prs = 10
+
+						if(direction == 'left') c = -1
+
+						el.slwork.css({'transform' : 'translateX(' + (c * prs) + "%)"})
+
+						return
+					}
+					
+				}
+
+				el.slwork.css({'transform' : 'translateX(0%)'})
+
+				if(phase == 'end'){
+
+					if(direction == 'right'){
+
+						if (currentindex > 0){
+
+							tomode = mobilemodes[currentindex - 1].mode
+						}
+						else{
+							phase = 'cancel'
+						}
+
+					}
+
+					if(direction == 'left'){
+
+						if (currentindex < mobilemodes.length - 1){
+
+							tomode = mobilemodes[currentindex + 1].mode
+						}
+						else{
+							phase = 'cancel'
+						}
+
+					}
+
+					if(!tomode){
+						phase = 'cancel'
+					}
+					else{
+						renders.mobilemode(tomode)
+						return
+					}
+				}
+
+				if(phase == 'cancel'){
+					if(direction == 'left' || direction == 'right'){
+
+					}
+				}
+
+				
+
+				
+			},
 			refreshSticky : function(){
 
 				if (hsready){
 					el.panel.hcSticky('refresh');
 					el.leftpanel.hcSticky('refresh');
-					
+
+					setTimeout(function(){
+						if(el.panel) el.panel.hcSticky('refresh');
+						if(el.leftpanel) el.leftpanel.hcSticky('refresh');
+					}, 1000)
 				}
 					
 			},
 			addbutton : function(){
 
 				self.app.platform.ui.share()
-
-				/*globalpreloader(true, true)
-
-				setTimeout(function(){
-					self.nav.api.load({
-
-						open : true,
-						id : 'share',
-						inWnd : true,
-	
-						eid : 'postin',
-						
-						clbk : function(e, p){
-							globalpreloader(false)
-						},
-	
-						essenseData : {
-							close : function(){
-	
-								share.make()
-	
-							},
-							post : function(){
-								share.make()
-	
-	
-								if (plissing)
-									plissing.destroy()
-								
-							},	
-							absolute : true
-						}
-	
-					})
-				}, 50)*/
-				
-				
 			},
 			addbuttonscroll  : function(){
-				if($(window).scrollTop() > 400){
+				if (el.w.scrollTop() > 400){
 					el.addbutton.addClass('scrollactive')
 				}
 				else{
 					el.addbutton.removeClass('scrollactive')
 				}
-			},
-			panelTopPosition : function(){
-
-				return
-
-				if(!isMobile()){
-					var s = $(window).scrollTop();
-
-					if (s > 45){
-						el.panel.closest('.fxd').addClass('dfxd')
-					}
-					else
-					{
-						el.panel.closest('.fxd').removeClass('dfxd')
-					}
-
-					actions.panelPosition()
-				}
-
-			},
-			panelPosition : function(){
-
-				return
-
-				var cnt = el.panel.closest('.fxd');
-				var mwork = el.panel.closest('.mwork');
-				var width = $(window).width();
-
-				if(!cnt.hasClass('dfxd')){
-
-					cnt.removeAttr('style')
-
-
-					/*cnt.css('right', "0px")
-					cnt.css('left', "0px")*/
-
-					return
-				}
-
-
-
-				var maxWidth = 1280;
-
-				var paddingR = 0;
-				var paddingL = 0;
-
-				var over = (width - maxWidth) / 2;
-
-				if (over < 0) over = 0;
-
-				var right = width - (mwork.offset().left + mwork.width()) + paddingR;
-
-				var left = width - right - 350 + paddingL + paddingR
-
-
-				cnt.css('right', right + "px")
-				cnt.css('left', left + "px")
 			},
 
 			currentMode : function(){
@@ -172,13 +214,20 @@ var main = (function(){
 			},
 
 			backtolenta : function(){
+				actions.backtolentaClear()
+				_scrollTop(lastscroll, null, 5)
+				
+
+			},
+
+			backtolentaClear : function(){
+
+
 				self.nav.api.history.removeParameters(['v'])
 
 				el.c.removeClass('opensvishowed')
 
 				renders.post(null)
-
-				_scrollTop(lastscroll, null, 5)
 
 				setTimeout(function(){
 
@@ -186,10 +235,10 @@ var main = (function(){
 					
 					actions.refreshSticky()
 
-				}, 500)
+				}, 350)
 
-				
-			}
+				if(lenta && lenta.update) lenta.update()
+			}	
 		}
 
 		var events = {
@@ -312,6 +361,85 @@ var main = (function(){
 				}
 			},
 
+			topvideos: function (show) {
+
+				var showmoreby = el.topvideos
+
+				showmoreby.removeClass('hasshares')
+
+				if (show){
+					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
+
+						external = p
+						actions.refreshSticky()
+					}, {
+						caption : self.app.localization.e("Top videos") ,
+						video: true,
+						r : 'hot',
+						loaderkey : 'recommended',
+						shuffle : true,
+						period : '4320',
+						page : 0,
+						afterload : function(ed, s, e){
+
+							if(e || !s.length) return
+
+							ed.page++
+						},
+						ended : function(s){
+
+							if(!s.length) return true
+							return false
+
+						},
+						hasshares : function(shares){
+
+							if (shares.length > 2){
+								showmoreby.addClass('hasshares')
+							}
+							
+						},
+	
+						opensvi : function(id, share){
+
+							if(isMobile() && share){
+								self.nav.api.load({
+									open : true,
+									href : 'post?&s=' + id,
+									history : true,
+									handler : true
+								})
+							}
+							else{
+								self.nav.api.load({
+									open : true,
+									href : 'index?video=1&v=' + id,
+									history : true,
+									handler : true
+								})
+							}
+
+							
+						},
+
+						compact : true
+	
+					})
+				}
+
+				else{
+					if(external){
+						external.destroy()
+						external = null
+					}
+
+					showmoreby.html('')
+					showmoreby.removeClass('hasshares')
+				}
+
+				
+			},
+
 			leftpanel: function(){
 
 				self.nav.api.load({
@@ -342,7 +470,7 @@ var main = (function(){
 
 			panel : function(){
 
-				if(videomain) return
+				if(videomain && !isMobile()) return
 
 				self.nav.api.load({
 
@@ -389,8 +517,6 @@ var main = (function(){
 							posts : r
 						};
 
-						console.log('result11', result)
-
 						renders.lenta(clbk, p)
 					})
 
@@ -408,7 +534,6 @@ var main = (function(){
 
 							c(val)
 
-							console.log('addtagsearch', val)
 
 							self.app.platform.sdk.activity.addtagsearch(val)
 
@@ -416,9 +541,6 @@ var main = (function(){
 						else{
 							c('')
 						}
-
-						
-
 
 					}
 					
@@ -432,6 +554,10 @@ var main = (function(){
 
 				var loader = null
 				var fp = false
+
+				if (lenta) {
+					lenta.destroy()
+				}
 
 				renders.addpanel();
 
@@ -447,8 +573,6 @@ var main = (function(){
 						}
 
 						if(!fp){
-
-							console.log('result', result)
 
 							fp = true
 
@@ -479,11 +603,21 @@ var main = (function(){
 						searchValue : searchvalue || null,
 						search : searchvalue ? true : false,
 						tags : searchtags,
-						video : videomain,
+						video : videomain && !isMobile(),
+						videomobile : videomain && isMobile(),
+						window : isMobile() ? el.c.find('.lentacell') : el.w,
+						page : 0,
+						afterload : function(ed, s, e){
 
+							if(!isMobile()) return
+
+							if(e || !s.length) return
+
+							ed.page++
+						},
 						opensvi : function(id){
 
-							lastscroll = $(window).scrollTop()
+							lastscroll = el.w.scrollTop()
 
 							el.c.addClass('opensvishowed')
 
@@ -491,6 +625,7 @@ var main = (function(){
 							
 							if (upbackbutton) upbackbutton.destroy()
 
+							setTimeout(function(){
 								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
 									top : function(){
 										return '65px'
@@ -505,6 +640,7 @@ var main = (function(){
 									class : 'bright',
 									text : 'Back'
 								})	
+							}, 50)
 								
 							setTimeout(function(){
 								upbackbutton.apply()
@@ -525,9 +661,11 @@ var main = (function(){
 					},
 					clbk : function(e, p){
 
-							renders.upbutton()
+						renders.upbutton()
 
-							lenta = p
+						actions.refreshSticky()
+
+						lenta = p
 
 						if (clbk)
 							clbk()
@@ -551,9 +689,9 @@ var main = (function(){
 
 			post : function(id){
 
-				if (!id){
+				if(!el || !el.c) return
 
-					console.log('openedpostdestory', openedpost)
+				if (!id){
 
 					if (openedpost){
 						
@@ -566,15 +704,85 @@ var main = (function(){
 				}
 
 				else{
+					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
 					}, {
 						video : true,
-						autoplay : true
+						autoplay : true,
+						nocommentcaption : true,
+						r : 'recommended',
+						
+						opensvi : function(id){
+
+
+							if (openedpost){
+						
+								openedpost.destroy()
+								openedpost = null
+							}
+		
+							el.c.find('.renderposthere').html('')
+
+							renders.post(id)
+
+							_scrollTop(0)
+						}
 					})
 				}
 
 				
+			},
+
+			mobilemode : function(mode){
+
+				if (mode){
+
+					if (mobilemode == 'mainshow'){
+						lastscroll = el.w.scrollTop()
+						_scrollTop(0, null, 0)
+					}
+
+					mobilemode = mode
+				}
+
+				el.c.attr('mobilemode', mobilemode)
+
+				renders.columnnavigation()
+
+				setTimeout(function(){
+					self.app.el.html.removeClass('scrollmodedown')
+				}, 300)
+				
+
+				if (mobilemode == 'mainshow' && lastscroll){
+					_scrollTop(lastscroll, null, 0)
+				}
+			},
+
+			columnnavigation : function(){
+
+				return
+
+
+				self.shell({
+					name :  'columnnavigation',
+					el : el.columnnavigationWrapper,
+					data : {
+						mobilemode : mobilemode,
+						mobilemodes : mobilemodes
+					},
+
+				}, function(_p){
+
+					_p.el.find('.columnnavigation').on('click', function(){
+						var mode = $(this).attr('mode')
+
+						renders.mobilemode(mode)
+						
+					})
+
+				})
 			}
 		}
 
@@ -589,7 +797,7 @@ var main = (function(){
 
 		var initEvents = function(){
 			
-			window.addEventListener('scroll', actions.addbuttonscroll)
+			el.w.on('scroll', actions.addbuttonscroll)
 
 			el.smallpanel.find('.item').on('click', events.currentMode)
 
@@ -597,19 +805,50 @@ var main = (function(){
 
 			el.addbutton.on('click', actions.addbutton)
 
-			el.leftpanel.hcSticky({
-				stickTo: '#main',
-				top : 64,
-				bottom : 122
-			});
+			if(!isMobile()){
 
-			el.panel.hcSticky({
-				stickTo: '#main',
-				top : 76,
-				bottom : 122
-			});
+				el.leftpanel.hcSticky({
+					stickTo: '#main',
+					top : 64,
+					bottom : 122
+				});
 
-			hsready = true
+				el.panel.hcSticky({
+					stickTo: '#main',
+					top : 76,
+					bottom : 122
+				});
+
+				hsready = true
+
+			}
+			else{
+
+
+				if (self.app.scrolling){
+	
+					el.lentacell.on('scroll', function(){
+
+						if (el.lentacell){
+
+							var st = el.lentacell.scrollTop()
+
+							if (st < 200){
+								self.app.el.html.removeClass('scrollmodedown')
+							}
+	
+							_.each(self.app.scrolling.clbks, function(c){
+								c(st)
+							})
+						}
+
+
+						
+					})
+	
+				}
+			}
+
 
 		}
 
@@ -617,16 +856,8 @@ var main = (function(){
 			self.app.user.isState(function(state){
 				//if(state){
 
-					if(!isMobile()){
-						renders.panel()
-
-					}
-
-					if(!isMobile()){
-						renders.leftpanel()
-
-					}
-
+					renders.panel();
+					renders.leftpanel();
 					renders.addpanel();
 				//}
 			})
@@ -663,6 +894,10 @@ var main = (function(){
 		var make = function(clbk, p){
 
 			localStorage['lentakey'] = parameters().r || 'index'
+			
+			if (parameters().video){
+				localStorage['lentakey'] = 'video'
+			}
 
 			renders.lentawithsearch(clbk, p)
 
@@ -672,31 +907,10 @@ var main = (function(){
 
 			renders.smallpanel()
 
+			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
+				renders.topvideos(true)
 
-			/*
-			if(!isMobile()){
-
-				self.app.platform.sdk.user.get(function(u){
-
-					if(u.postcnt < 10){
-						setTimeout(function(){
-
-							if (el.c)
-
-								plissing = self.app.platform.api.plissing({
-									el : el.c.find('.addbutton'),
-									text : "Post something & earn Pocketcoin",
-									left : true,
-									white : true
-								})
-
-						}, 7000)
-					}
-
-					
-
-				})
-			}*/
+			
 				
 		}
 
@@ -705,11 +919,25 @@ var main = (function(){
 		return {
 			primary : primary,
 
+			scrolltopall : function(){
+
+				if(el.lentacell && isMobile()){
+
+					_scrollTop(0, el.lentacell, 200)
+
+					renders.mobilemode('mainshow')
+				}
+			},
+
 			parametersHandler : function(clbk){
 
 				var ncurrentMode = currentMode
 
 				localStorage['lentakey'] = parameters().r || 'index'
+
+				if (parameters().video){
+					localStorage['lentakey'] = 'video'
+				}
 
 				if (parameters().r){
 					ncurrentMode = parameters().r
@@ -721,8 +949,6 @@ var main = (function(){
 				if (currentMode != ncurrentMode){
 
 					currentMode = ncurrentMode
-
-					
 				}
 
 				var _vm = parameters().video ? true : false
@@ -730,24 +956,39 @@ var main = (function(){
 
 				if(_vm != videomain){
 					videomain = _vm
+				}
 
-					if(videomain){
-						el.c.addClass('videomain')
+				searchvalue = parameters().ss || ''
 
-						if(!parameters().v){
-							actions.backtolenta()
-							makePanel()
-						}
-					}
-					else{
-						el.c.removeClass('videomain')
+				var tgsi = decodeURI(parameters().sst || '')
+
+				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
+					return r
+				}));
+
+				searchtags = words.length ? words : null
+
+				renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
+
+				if (videomain){
+
+					el.c.addClass('videomain')
+
+					if(!parameters().v){
 						actions.backtolenta()
 						makePanel()
 					}
 				}
+				else{
+					el.c.removeClass('videomain')
+					actions.backtolentaClear()
+					makePanel()
+				}
 				
-
-				if(lenta) lenta.destroy()
+				if (lenta) {
+					lenta.destroy()
+					lenta = null
+				}
 
 				renders.lentawithsearch()
 
@@ -755,6 +996,8 @@ var main = (function(){
 
 
 				makeShare()
+
+				actions.refreshSticky()
 
 				if (clbk)
 					clbk()
@@ -790,8 +1033,20 @@ var main = (function(){
 
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
+				
+				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (window.cordova || self.app.platform.matrixchat.connectWith))){
+					
+					self.nav.api.load({
+						open : true,
+						href : 'welcome',
+						history : true
+					})
+
+					return
+				}
 
 				if(self.app.curation()){
+					
 					self.nav.api.load({
 						open : true,
 						href : 'userpage',
@@ -821,6 +1076,11 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
+				if (el && el.w)
+					el.w.off('scroll', actions.addbuttonscroll)
+					
+					self.app.el.html.removeClass('scrollmodedown')
 
 				renders.post(null)
 
@@ -857,23 +1117,45 @@ var main = (function(){
 					panel.destroy()
 				}
 
+				if (external){
+					external.destroy()
+					external = null
+				}
+
 				if (leftpanel){
 					leftpanel.destroy()
 				}
 
 				lastscroll = 0
-				
+				mobilemode = 'mainshow'
 				leftpanel = null
 				panel = null
 				roller = null
 				lenta = null
+				share = null
 				videomain = false
+				fixeddirection = null
+				self.app.el.footer.removeClass('workstation')
+
+				self.app.el.html.removeClass('nooverflow');
+				self.app.el.html.removeClass('showmain');
+				el = {}
+				
+				if (self.app.scrolling){
+	
+					_.each(self.app.scrolling.clbks, function(c){
+						c(0)
+					})
+	
+				}
 			},
 			
 			init : function(p){
+				
 
 				roller = null
 				lenta = null
+				fixeddirection = null
 
 				state.load();
 
@@ -881,18 +1163,30 @@ var main = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.share = el.c.find('.share');
 				el.lenta = el.c.find('.lentaWrapper');
-				el.panel = el.c.find('.panel');
+				el.lentacell =  el.c.find('.lentacell')
+				el.panel = el.c.find('.panel'); //00
 				el.leftpanel = el.c.find('.leftpanel');
 				el.up = el.c.find('.upbuttonwrapper')
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
 				el.smallpanel = el.c.find('.smallpanell')
 				el.addbutton = el.c.find('.addbutton')
-
+				el.columnnavigationWrapper = el.c.find('.columnnavigationWrapper')
+				el.slwork = el.c.find('.maincntwrapper >div.work')
+				el.topvideos = el.c.find('.topvideosWrapper')
 				el.w = $(window)
 
-				var wordsRegExp = /[,.!?;:() \n\r]/g
+				self.app.el.footer.addClass('workstation')
+
+				// Add a specific class to hide overflow on mobile
+				// (for iOS mobile devices)
+				if (isMobile())
+					self.app.el.html.addClass('nooverflow');
+
+					self.app.el.html.addClass('showmain');
 
 				initEvents();
+
+				
 
 				if(!p.goback){
 					searchvalue = parameters().ss || ''
@@ -903,9 +1197,7 @@ var main = (function(){
 						return r
 					}));
 
-					searchtags = words.length? words  :null
-
-					console.log('searchtags', searchtags)
+					searchtags = words.length ? words : null
 
 					fixedBlock = null
 					result = {}
@@ -913,19 +1205,49 @@ var main = (function(){
 
 				videomain = parameters().video ? true : false
 
-				if(videomain){
+				if(videomain && !isMobile()){
 					el.c.addClass('videomain')
 				}
+
+				renders.mobilemode()
 
 				make(function(){
 					p.clbk(null, p);
 				}, p)
+
+				if(isMobile()){
+
+					el.c.find('.maincntwrapper').swipe({
+						allowPageScroll: "auto", 
+						swipeStatus : function(e, phase, direction, distance){
+
+							if(self.app.el.html.hasClass('fullvideoshowedanimblock')) return
+
+							if(el.topvideos.has(e.target).length > 0){
+								return true
+							}
+
+							actions.swipe(phase, direction, distance)
+
+							return true
+						},
+					})
+	
+				}
+				
 				
 			}
 		}
 	};
 
+	self.scrolltopall = function(){
+		_.each(essenses, function(essense){
 
+			essense.scrolltopall();
+
+		})
+
+	}
 
 	self.run = function(p){
 

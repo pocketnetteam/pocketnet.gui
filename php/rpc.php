@@ -4,9 +4,11 @@ class RPC {
 
     protected $node = 'https://pocketnet.app:8899/rpc/';
 
-	public function __construct ()
+	public function __construct ($proxypath)
 	{
-		
+		if (isset($proxypath)){
+            $this->node = $proxypath;
+        }
 	}
 	public function __destruct ()
 	{
@@ -33,13 +35,17 @@ class RPC {
 
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-type: application/json"));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-type: application/json", "x-no-compression: 1"));
         curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($fields));
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
         $result = curl_exec($ch);
 
+        //echo curl_error($ch);
         curl_close($ch);
+
+        
 
         if ($result != false){
             $result = JSON_decode($result);
@@ -58,7 +64,7 @@ class RPC {
 	public function send($action, $params){
         $fields = $this->prepareRequest($action, $params);
         
-        $url = $this->node.$action;
+        $url = $this->node."rpc/".$action;
 
         return $this->curl($url, $fields);
     }

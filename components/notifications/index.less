@@ -162,7 +162,6 @@
 #content{
 
 	#notifications{
-		max-width: 900px;
 
 		.ncaption{
 			padding-bottom: 3 * @rhythm;
@@ -374,7 +373,9 @@
 html.stblack{
 	#notifications{
 		
-	
+		.nabsWrapper{
+			background: @color-block;
+		}
 		.error{
 			color : @color-main;
 		}
@@ -432,7 +433,7 @@ html.stblack{
 	
 		.tooltipster-box{
 			box-shadow: 0 0 5000px 3000px fade(@color-black, 70);
-			background: transparent;
+			background: transpanent;
 			border : 0;
 		}
 
@@ -476,7 +477,7 @@ html.stblack{
 	}	
 }
 
-@media only screen and (max-width: 640px) {
+/*t*/ @media only screen and (max-width: 768px){
 #notifications{
 	
 	.wrk{

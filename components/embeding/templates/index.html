@@ -95,12 +95,52 @@
 						<div class="title">
 							<%=e('e13100')%>
 						</div>
-						<div class="subtitle">
+						<!--<div class="subtitle">
 							<%=e('e13101')%>
-						</div>
+						</div>-->
 					</div>
 				</div>
 				<div class="imagesMi">
+				</div>
+			</div>
+		</div>
+	<% } %>
+	<% if(type == 'donate') {%>
+		<div class="donate pg">
+			<div class="caption">
+				<%=e('e130961')%>
+			</div>
+			<div class="subcaption">
+				<%=e('e130962')%> <%-balance || 0%> PKOIN
+			</div>
+
+			<div class="donateWrapper">
+
+				<div class="transaction">
+					<div class="user">
+						<div class="iconWrapper">
+							<div class="usericon" image="<%-sender || ''%>">
+							</div>
+						</div>					
+					</div>
+					<div class="coinsWrapper">
+						<div class="chevron-right right"></div>
+						<div class="receiver">
+							<%= options.donate.input() %> 
+							<span class="text">PKOIN</span>
+						</div>
+					</div>
+					<div class="user">
+						<div class="iconWrapper">
+							<div class="usericon" image="<%-receiver || ''%>">
+							</div>
+						</div>					
+					</div>
+				</div>	
+				<div class="subscription">
+					<div class="receiver">
+						<%=e('sumoftransaction')%>
+					</div>
 				</div>
 			</div>
 		</div>

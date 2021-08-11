@@ -29,6 +29,7 @@ ____loclib.signin = "Sign In";
 ____loclib.orcreate = "Or create a new account";
 ____loclib.createnew = "Create a new account";
 ____loclib.staysafe = "It is not safe. Do you want to proceed?";
+____loclib.or = "or";
 
 // Register a New Account
 ____loclib.id71 = "Create a New Account";
@@ -212,7 +213,7 @@ ____loclib.aused = "This address is already use in another addresses pool";
 //author
 ____loclib.sub = "Follow";
 ____loclib.unsub = "Unfollow";
-____loclib.joined = "Joined Pocketnet";
+____loclib.joined = "Joined";
 ____loclib.shares = "SHARES";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MY POSTS";
@@ -223,6 +224,10 @@ ____loclib.anofollowers = "This user has no followers";
 ____loclib.aynofollowers = "You have no followers";
 ____loclib.anofollowing = "This user is not following anyone";
 ____loclib.aynofollowing = "You are not following anyone";
+
+____loclib.blockedusers = "Blocked Users";
+____loclib.anoblocked = "This user is not blocked anyone";
+____loclib.aynoblocked = "You are not blocked anyone";
 
 //lenta
 ____loclib.lloadmore = "Load More Awesome Posts!";
@@ -276,6 +281,7 @@ ____loclib.timenotselected = 'Time Not Selected';
 ____loclib.addtags = 'Add tags';
 ____loclib.tnews = "news";
 ____loclib.timages = "images";
+____loclib.tlinks = "links";
 ____loclib.tvideos = "videos";
 ____loclib.tmarket = "market";
 ____loclib.tsport = "sports";
@@ -367,7 +373,7 @@ ____loclib.noMoneyError  = "You can't doing actions with zero account balance";
 
 ____loclib.waitConf = "You have to wait for your previous transaction to clear in the blockchain";
 ____loclib.postWaitConf = "Post is waiting for a blockchain confirmation";
-
+____loclib.actionWaitConf = "Action is waiting for a blockchain confirmation";
 
 
 // notifications
@@ -393,7 +399,7 @@ ____loclib.addaccount = "Add Account"
 ____loclib.entermnimo = "Enter Mnemonic Phrase or Private Key"
 ____loclib.add = "Add"
 ____loclib.e13011 = "You will now continue your registration after you install Pocketnet Desktop."
-____loclib.e13012 = "If Pocketnet for Windows did not start downloading, please click here to install it."
+____loclib.e13012 = "If Pocketnet did not start downloading, please click here to install it."
 ____loclib.e13013 = "Type caption for image (optional)"
 ____loclib.e13014 = "This file is not in a supported format:"
 ____loclib.e13015 = "This file is too big:"
@@ -416,7 +422,7 @@ ____loclib.info = "Info"
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
 ____loclib.e13025 = "Create a new account"
-____loclib.e13026 = "Join Pocketnet - The Future of the Free Web"
+____loclib.e13026 = "Join Pocketnet"
 
 ____loclib.e13027 = "Stay Signed"
 ____loclib.e13028 = "You entered not valid private key"
@@ -509,6 +515,9 @@ ____loclib.e13093 = "Please choose donation way"
 ____loclib.e13094 = "Something went wrong. Please reload page and try again (error: 0001)"
 ____loclib.e13095 = 'Thank you for supporting our work for freedom. We will make sure every penny counts.'
 ____loclib.e13096 = 'Please fill amount of donation'
+____loclib.e130961 = 'How much do you want to send?'
+____loclib.e130962 = 'Available balance:'
+
 ____loclib.e13097 = "Something went wrong. Please reload page and try again (error: 0002)"
 ____loclib.e13098 = "Add link to external site or resource"
 ____loclib.e13099 = "Upload Images"
@@ -552,7 +561,7 @@ ____loclib.e13128 = "Posts from people you follow will be shown here"
 ____loclib.registration = "Registration"
 ____loclib.editpost = "Edit Post"
 ____loclib.removepost = "Remove Post"
-
+____loclib.opennewwindow = "Open Post in New Window"
 
 ____loclib.reportpost = "Report Post"
 ____loclib.donate = "Donate"
@@ -567,13 +576,17 @@ ____loclib.e13133 = "Share"
 ____loclib.e13134 = "There aren't any results for this search string"
 ____loclib.e13135 = "User haven't private key"
 ____loclib.e13136 = "All Posts"
-____loclib.e13137 = "Your Pocket"
+____loclib.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of Pocketnet.
 ____loclib.e13138 = "Top posts"
+____loclib["Top Posts Over"] = "Top Posts Over"
+____loclib.topnext = "Next"
+____loclib.topprevious = "Previous"
+____loclib.topactual = "Return to the latest"
 ____loclib.e13139 = "Search on Pocketnet"
 ____loclib.e13140 = "Search on"
 ____loclib.notifications = "Notifications"
 ____loclib.showall = "Show all"
-____loclib.e13141 = "You haven't notifications"
+____loclib.e13141 = "You have no notifications"
 
 ____loclib.recommendations = "Recommendations"
 ____loclib.e13142 = "I saved my key, do not remind me anymore"
@@ -604,7 +617,7 @@ ____loclib.repost = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
 ____loclib.e13161 = "Add Tags For Your Post"
-____loclib.e13162 = "You can enter less that 5 tags"
+____loclib.e13162 = "You can enter less than 5 tags"
 ____loclib.e13163 = "There aren't changes in Post"
 ____loclib.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
 ____loclib.e13165 = 'Your link to video is invalid. Please load valid video URL.'
@@ -642,7 +655,7 @@ ____loclib.e13192 = "Level"
 ____loclib.e13193 = "BONUS"
 ____loclib.e13194 = "Reputation and Rewards"
 ____loclib.e13195 = "Limitations"
-____loclib.e13196 = "It much take up"
+____loclib.с= "It much take up"
 ____loclib.e13197 = "Recieve Pocketcoins"
 ____loclib.e13198 = "Approximate waiting time is"
 ____loclib.e13199 = "Join Pocketnet Now"
@@ -751,7 +764,7 @@ ____loclib.e13285 = 'Ask before post from telegram'
 ____loclib.e13286 = 'Ask before send to telegram'
 ____loclib.e13287 = "Send to telegram channel"
 ____loclib.video = "Video"
-____loclib.e13288 = "Main Page Vidgets"
+____loclib.e13288 = "Main Widgets Page"
 ____loclib.e13289 = "Integration with Telegram"
 
 ____loclib.system = "System"
@@ -799,15 +812,16 @@ ____loclib.e13326 = "Post"
 ____loclib.e13327 = 'Do you really want use proxy again?'
 ____loclib.e13328 = 'liked your comment!'
 ____loclib.e13329 = "New Comment Like"
-____loclib.e13330 = "shared your post:"
-____loclib.e13331 = "shared your post:"
-____loclib.e13332 = "has a brand new post:"
+____loclib.e13330 = "shared your post"
+____loclib.e13331 = "shared your post"
+____loclib.e13332 = "has a brand new post"
+____loclib.e13332v = "has a brand new video"
 ____loclib.e13333 = "Incoming transaction"
 ____loclib.e13334 = "Congratulations, you have won"
 ____loclib.e13335 = "Pocketcoin for your latest"
-____loclib.e13336 = "with message:"
-____loclib.e13337 = "commented your post:"
-____loclib.e13338 = "answered on your comment:"
+____loclib.e13336 = "with message"
+____loclib.e13337 = "commented your post"
+____loclib.e13338 = "answered on your comment"
 ____loclib.reply = "Reply"
 ____loclib.e13339 = "You rescued someone from the censored web. Some coins are on their way!"
 ____loclib.e13340 = 'Congrats!'
@@ -817,6 +831,7 @@ ____loclib.e13342 = "New Follower"
 ____loclib.e13343 = "upvoted your post"
 ____loclib.e13344 = "New Upvote"
 ____loclib.e13345 = "sent you private message"
+
 ____loclib.e13346 = "You have new messages"
 ____loclib.e13347 = "Updates to Pocketnet are available. Apply the updates now?"
 ____loclib.e13348 = "No, later"
@@ -849,12 +864,12 @@ ____loclib.e14020 = 'Yes! It is in the works 2-3 weeks as the beta test progress
 ____loclib.e14021 = 'Where do you save the video content?'
 ____loclib.e14022 = 'We are working on video storage, in the meantime you can share from Bitchute, Youtube, Vimeo and other video sources.'
 ____loclib.e14023 = 'Is there a mobile app?'
-____loclib.e14024 = 'Mobile app is not ready yet. We plan it for July 2019. But we strongly encourage everyone to also download the desktop app, since, unlike Android or iPhone app, it cannot be taken away from you by Google or Apple.'
+____loclib.e14024 = 'Yes. But we strongly encourage everyone to also download the desktop app, since, unlike Android or iPhone app, it cannot be taken away from you by Google or Apple.'
 ____loclib.e14025 = 'Can you tell me what is the limit for posting each day or hour?'
 ____loclib.e14026 = 'We do have some limitations, but after testing it we have increased our limits. At the outset you can make 15 posts and issue 100 ratings every 24 hours. Once your reputation grows above 50, you will be able to make up to 30 posts and 200 ratings every 24 hours.'
 ____loclib.e14027 = 'What is reputation and how is it calculated?'
 ____loclib.e14028 = 'Your reputation is the sum of your ratings calculated in the following way. Note, that users with reputation below 50 do not affect anyone`s reputation or coin winnings. They can rate the content, but it does not affect reputation.'
-____loclib.e14029 = 'So, if you have two 5 start ratings and one 1 star rating, the total will be'
+____loclib.e14029 = 'So, if you have two 5 star ratings and one 1 star rating, the total will be'
 ____loclib.e14030 = 'Is there a way to delete or edit a post?'
 ____loclib.e14031 = 'Not at this point, as it is baked into blockchain. However, we are working on a feature to create an overwrite transaction as well &#10075;hide&#10076; transaction, which would effectively translate to edit or delete.'
 ____loclib.e14032 = 'Is there a way to search for a user?'
@@ -938,9 +953,11 @@ ____loclib.e14105 = 'Videos'
 ____loclib.e14106 = 'Applications'
 ____loclib.e14107 = 'Check for updates'
 ____loclib.e14108 = 'Share answer'
+____loclib.e14109 = 'Where do I download the Android App?'
+____loclib.e14110 = 'Google Play Market'
 
 
-____loclib.peertubeAddVideo = 'Add video to post'
+____loclib.peertubeAddVideo = 'Upload Video'
 ____loclib.peertubeAddStream = 'Add live stream to post'
 
 ____loclib.e14111 = "There was a problem with loading images"
@@ -975,8 +992,8 @@ ____loclib.showmoreusers = "Show more users"
 ____loclib.zeron = "Nothing found";
 ____loclib.maxtags = "Only 5 tags maximum allowed";
 
-____loclib.videotitle = "Enter video title";
-____loclib.videodesc = "Enter video description";
+____loclib.videotitle = "Enter video/stream title";
+____loclib.videodesc = "Enter video/stream description";
 ____loclib.entervideocaption = "Please, enter video title";
 
 ____loclib.period = "Period";
@@ -985,3 +1002,96 @@ ____loclib.period3day = "Three Days";
 ____loclib.period7day = "One week";
 ____loclib.period31day = "One Month";
 ____loclib.period182day = "Half of year";
+
+____loclib.shareBareLink = "Share Video Link";
+____loclib.videoCopied = "Video link successfully copied to clipboard";
+
+____loclib.editWallpaper = "Change Preview Image";
+____loclib.removeVideo = "Remove Video";
+
+____loclib.removeVideoDialog = 'Are you sure you want to delete this video?'
+
+____loclib.pterror_meta = 'Peertube: Undefined request'
+____loclib.pterror_host = 'Peertube: Peertube server not found'
+____loclib.pterror_link = 'Peertube: Unknown Peertube link'
+____loclib.pterror_removeerror = 'Peertube: Unable to remove video. Pleasy try again'
+____loclib.pterror_updateempty = 'Peertube: No changes found to update'
+____loclib.pterror_uploaderror = 'Peertube: Video has not been uploaded'
+____loclib.pterror_dailyquotalimit = 'Peertube: You have reached your video upload limit'
+____loclib.pterror_videoQuotaUsedDaily = 'Peertube: Failed to get channel information (quota)'
+____loclib.pterror_usersMe = 'Peertube: Failed to get channel information'
+____loclib.pterror_oauthClientsLocal = 'Peertube: Failed to get oAuth information from server'
+____loclib.pterror_pocketnetAuth = 'Peertube: Peertube-Pocketnet authorization failed'
+____loclib.pterror_getToken = 'Peertube: Unable to get Token'
+____loclib.pterror_videonotselected = 'Peertube: Video not Selected'
+
+
+____loclib.videoUploadingFinish = 'Finishing uploading...'
+____loclib.uploadNewVideo = 'Upload New Pocketvideo'
+____loclib.selectVideoFile = 'Select video file'
+____loclib.uploadVideoProgress = 'Progress:'
+
+
+____loclib.pbp_1 = 'Pocketnet Bonus Program'
+____loclib.pbp_2 = 'Criteria for Receiving Bonus:'
+____loclib.pbp_3 = 'Every 10K views + 500 ratings'
+____loclib.pbp_4 = 'PKOIN Equivalent:'
+____loclib.pbp_5 = '1,000 USDT'
+____loclib.pbp_6 = 'How You Can Increase Your Views?'
+____loclib.pbp_7 = 'Embed your Pocketnet video to external websites (click Share and choose Embed)'
+____loclib.pbp_8 = 'Share your video to social networks and via email'
+____loclib.pbp_9 = 'Share the link to your personal page (go to your profile and click Share)'
+____loclib.pbp_10 = 'If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings.'
+____loclib.pbp_11 = 'For any questions, email'
+
+
+____loclib["Top Videos"] = 'Top Videos'
+____loclib["More videos by this author"] = 'More videos by this author'
+
+____loclib["pdirectdialog"] = 'External proxies are not responding, would you like to switch to a local proxy?'
+
+
+____loclib.goLive = 'Go Live'
+____loclib.streamInfo = 'Stream Info'
+____loclib.streamCreating = 'Creating Stream'
+
+____loclib.importFromExternal = 'or import from YouTube'
+
+
+____loclib.importHeading = 'Import Video from YouTube'
+____loclib.importInputPlaceholder = 'Paste link to your YouTube video'
+____loclib.importInputLabel = 'Video Url'
+
+____loclib.capitalWarning = 'Stream quality limitations'
+____loclib.streamSettingsWarn = 'For optimal performance, please use streaming settings no higher than following: 2000 kb/s bitrate, 1920x1080p resolution. Otherwise your live could be terminated or unstable'
+
+____loclib.keygeneration = 'Cryptography keys generation'
+
+____loclib.failedStreamGeneration = 'Unable to start stream'
+
+____loclib.hideallnotifications = "Hide all notifications"
+
+____loclib.e133452 = "sent you message"
+____loclib.e133453 = "invite you in chat"
+
+
+____loclib.createnewcontinue = "Continue creating account";
+
+
+____loclib.transactionnotfound = "Transaction not found";	
+
+____loclib.donateself = "You can't donate yourself";
+____loclib.donated = 'commented your post and donated'
+____loclib.incoins = "Enough coins"
+____loclib.yourbalance = "Your balance"
+____loclib.sumoftransaction = "Sum of transaction"
+
+
+____loclib.videoBitrateError = 'Video bitrate is too high. Please, use file with lower quality/resolution'
+____loclib.videoQualityInfo = 'Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated.'
+____loclib.videoQualityCaption = 'Video quality limitations'
+
+____loclib.streamLinks = 'Streaming software links'
+____loclib.linkRTMP = 'RTMP Url'
+____loclib.linkStreamKey = 'Stream Key'
+

@@ -44,7 +44,7 @@ var video = (function(){
 				var _p = {
 					Email : email,
 					Name : name,
-					Lang : self.app.localization.key
+					Lang : self.app.localization.key || 'en',
 				}
 
 				_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -52,7 +52,7 @@ var video = (function(){
 
 				$.ajax({
 					type: 'POST',
-					url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+					url: 'https://'+self.app.options.url+'/Shop/AJAXMain.aspx',
 					data: _p,
 					dataType: 'json',
 					success : function(){

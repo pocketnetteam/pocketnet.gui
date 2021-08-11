@@ -46,9 +46,16 @@ var metadisplay = function(){ %>
         
                                 <div class="icon">
                                     <div class="usericon usericonsbsa another" image="<%-src || ''%>">
-                                        <% if(!src) {%>
-                                            <svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
-                                        <% } %>
+                                     
+										<% if(deep(app, 'platform.real.'+share.address)) {%>
+											<div class="realperson">
+		
+												<span class="fa-stack fa-2x">
+													<i class="fas fa-certificate fa-stack-2x"></i>
+													<i class="fas fa-check fa-stack-1x"></i>
+												  </span>
+											</div>
+										<% } %>
                                     </div>
                                 </div>
         
@@ -128,9 +135,9 @@ var metadisplay = function(){ %>
 			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
 		%>
 			<div class="paddingWrapper">
-				<div class="sharecaption canmark">
+				<div class="sharecaption canmark opensviurl">
 					<div>
-						<%=emojione.toImage(nl2br(trimrn(c)))%>
+						<%=joypixels.toImage(nl2br(trimrn(c)))%>
 					</div>
 				</div>
 			</div>
@@ -160,7 +167,7 @@ var metadisplay = function(){ %>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="message canmark">
 
-					<%=emojione.toImage((clearScripts(((nm)))))%>
+					<%=joypixels.toImage((clearScripts(((nm)))))%>
 
 				</div>
 			</div>
@@ -170,17 +177,17 @@ var metadisplay = function(){ %>
 				<div class="paddingWrapper showMorePW">
 					<div class="showMore">
 						<div class="showmoretable table">
-							<div class="linecell">
+							<!-- <div class="linecell">
 								<div class="line"></div>
-							</div>
+							</div> -->
 							<div class="buttoncell">
 								<button>
 									<%=e('showmore')%>
 								</button>
 							</div>
-							<div class="linecell">
+							<!-- <div class="linecell">
 								<div class="line"></div>
-							</div>
+							</div> -->
 						</div>
 						
 
@@ -214,11 +221,19 @@ var metadisplay = function(){ %>
 
 } %>
 
+
 	<div class="work">
 
-		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<% 
 
-			<div class="cntswrk forurl">
+			var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
+			var aspectRatio = deep(info, 'data.aspectRatio') || 0
+
+		%>
+
+		<div class="shareTable  <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+
+			<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
 
 				<% var a = ["u"] %>
 
@@ -271,7 +286,7 @@ var metadisplay = function(){ %>
 
 										<div class="category">
 											<a href="index?sst=<%-category.tags.join(' ')%>">
-												<span><b><%-category.name%></b></span> 
+												<span><b>@<%-category.name%></b></span> 
 											</a>
 											<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
 									
@@ -364,11 +379,18 @@ var metadisplay = function(){ %>
 								</div>
 
 							<% } %>
+							
 
 						</div>
+
+
+
+						
 					</div>
 
 				<% } %>
+
+
 
 			</div>
 		</div>
@@ -392,17 +414,23 @@ var metadisplay = function(){ %>
 		<i class="fa fa-times" aria-hidden="true"></i>
 	</div>
 
-	<% if(!emptywithrepost) {%>
 
-		<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+		<% if(!emptywithrepost) {%>
 
-			<div class="commentsWrapperHb">
-				<div class="commentsWrapper">
+			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+
+				<div class="showmorelenta"></div>
+	
+				<div class="commentsWrapperHb">
+					
+					<div class="commentsWrapper">
+					</div>
+	
 				</div>
-			</div>
-
+	
+			<% } %>
+	
 		<% } %>
 
-	<% } %>
 
 <% } %>

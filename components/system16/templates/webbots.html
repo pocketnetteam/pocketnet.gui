@@ -1,25 +1,34 @@
-<div class="webdistributioncontent">
+<div class="webdistributioncontent collapsepart">
 
-    <div class="caption">
-        <span>Bots</span>
+    <div class="work">
+        <div class="subcaption">
+            <span>Bots</span> <i class="fas fa-angle-down"></i>
+        </div>
     </div>
 
-    <% if(admin) {%>
+    <div class="collapsingpart">
 
-        <div class="panel">
-            <button class="addbot medium">Add bot account</button>
-            <button class="addbotlist medium ghost">Import Bot List</button>
-        </div>
-        
-    <% } %>
-   
-    <div class="bots">
+        <div class="work">
 
-        <div class="webbotsContentWrapper">
-    
+        <% if(admin) {%>
+
+                <div class="panel">
+                    <button class="addbot medium">Add bot account</button>
+                    <button class="addbotlist medium ghost">Import Bot List</button>
+                </div>
+                
+            <% } %>
         
+            <div class="bots">
+
+                <div class="webbotsContentWrapper">
+            
+                
+                </div>
+                
+            </div>
+
         </div>
-        
     </div>
 
 </div>

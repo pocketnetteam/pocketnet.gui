@@ -106,8 +106,10 @@ nModule = function(){
 					
 				}
 
-
-				bgImages(p.el, p.bgImages)
+				window.requestAnimationFrame(function(){
+					bgImages(p.el, p.bgImages)
+				})
+				
 				
 			}
 
@@ -172,6 +174,16 @@ nModule = function(){
 							
 
 						};
+
+						console.log('insert', p, options);
+
+						var type = p.essenseData && p.essenseData.type
+
+						if (type){
+
+							options.type = type;
+
+						}
 
 						self .container = new insert.obj(options);
 							p.container = self.container;
@@ -280,7 +292,7 @@ nModule = function(){
 		p.inner || (p.inner = html);	
 
 
-		if(p.animation)
+		if(p.animation )
 		{
 
 			if(!p.animation.timeouts)
@@ -288,6 +300,7 @@ nModule = function(){
 
 			if(p.animation == 'fadeIn')
 			{
+				console.log("P", p)
 				
 				p.el.fadeOut(100);
 
@@ -467,7 +480,9 @@ nModule = function(){
 		}
 		else
 		{
+
 			p.inner(p.el, _html);
+
 
 			if(!p.notdisplay){
 				p.display || (p.display = "block")
@@ -524,6 +539,8 @@ nModule = function(){
 			return
 		}
 
+		
+		
 		if(self.storage.templates[p.name] || p.clear)
 		{			
 			if (clbk)
@@ -531,13 +548,29 @@ nModule = function(){
 		}
 		else
 		{
+
+			if (self.map && self.map.id){
+				var pretemplate = deep(window, 'pocketnetTemplates.' + (p.turi || self.map.uri) + '.' + p.name)
+
+				if(pretemplate){
+					self.storage.templates[p.name] = _.template(pretemplate);
+	
+					if (clbk)
+						clbk(self.storage.templates[p.name]);
+		
+					return
+				}
+
+				
+			}
+
 			loading.templates[p.name] = true;
 
 			var url;
 			var appPath = (self.map.pathtpl || self.map.path || "");	
 
 			if (_Node){
-				appPath = 'https://getbitcoins.io/'
+				appPath = 'https://pocketnet.app/'
 			}		
 
 			if(p.common){

@@ -5999,6 +5999,8 @@ typeof navigator === "object" && (function (global, factory) {
         youtube.ready.call(this);
       } else {
         // Load the API
+
+        console.log("LOADING YOUTUBE")
         loadScript(this.config.urls.youtube.sdk).catch(function (error) {
           _this.debug.warn('YouTube API failed to load', error);
         }); // Setup callback for the API
@@ -9166,17 +9168,58 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
 
       var host = target.getAttribute('data-plyr-host-name');
+      
+      retry(function(){
+        return typeof PeerTubeEmbeding != 'undefined'
+      }, function(){
+
+        
+
+        PeerTubeEmbeding.main(target, clear_peertube_id, {
+          host : host,
+          wautoplay : options.wautoplay
+        },{
+  
+          playbackStatusChange : function(status){
+            
+          },
+          volumeChange : options.volumeChange
+  
+        }).then(embed => {
+
+          if(!embed || !embed.api){
+            if (clbk) clbk(null);
+
+            return
+          }
+  
+          var api = embed.api
+              api.mute()
+  
+          if (clbk) clbk(api);
+          if (readyCallback) readyCallback(api);
+        })
+
+      })
+
+      
+
+
+      return self
+    }
+
+    if (provider == 'youtube') {
+
+      
 
       PeerTubeEmbeding.main(target, clear_peertube_id, {
-        host : host,
+        contributor : 'youtube',
         wautoplay : options.wautoplay
       },{
 
         playbackStatusChange : function(status){
-          console.log('status', status)
         },
         volumechange : function(volume){
-          console.log('volume', volume)
         },
 
       }).then(embed => {
@@ -9188,77 +9231,35 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         if (readyCallback) readyCallback(api);
       })
 
-
-      return self
+      return
     }
 
-    if (provider == 'peertube') {
+    /*if (provider == 'vimeo') {
 
-      return self;
-      setFunctions = function (player) {
-        // Set the mandatory/missing functions
-        player.stop = player.pause;
-        player.mute = async () => {
-          player.savedVolume = await player.getVolume();
-          player.setVolume(0);
-        };
-        player.unmute = () => {
-          player.setVolume(player.savedVolume || 1);
-        };
+      console.log('video_id', video_id)
 
-        player._peertubeMuted = false;
+      PeerTubeEmbeding.main(target, clear_peertube_id, {
+        contributor : 'vimeo',
+        wautoplay : options.wautoplay
+      },{
 
-        Object.defineProperty(player, 'muted', {
-          get: function() {
-            return this._peertubeMuted;
-          },
-          set: function(mutedFlag) {
-            if (mutedFlag) {
-              this._peertubeMuted = true;
-              return this.mute();
-            } else {
-              this._peertubeMuted = false;
-              return this.unmute();
-            }
-          },
-        });
-        // Add status event to update the playing boolean
-        player.addEventListener('playbackStatusChange', function (status) {
-          player.playing = status == 'playing';
-        });
-      };
+        playbackStatusChange : function(status){
+        },
+        volumechange : function(volume){
+        },
 
-      // Get the video URL
-      var videoUrl = target.getAttribute('data-plyr-embed-id'); /*'https://localhost/client/en-US/index.html?' + clear_peertube_id*/ ///target.getAttribute('data-plyr-embed-id');
-      // Prepare a new <iframe> tag for the PeerTube player
-      var playerIFrame = document.createElement('iframe');
-      playerIFrame.setAttribute(
-        'src',
-        videoUrl + `api=1&autoplay=${(video_options || {}).denyPeertubeAutoPlay ? 0 : 1}&peertubeLink=0&title=0&warningTitle=0`,
-      );
-      playerIFrame.setAttribute('frameborder', '0');
-      playerIFrame.setAttribute('allowfullscreen', 'allowfullscreen');
-      playerIFrame.setAttribute('allow', 'autoplay');
-      playerIFrame.setAttribute('style', 'min-height: 400px; width: 100%');
-      // Replace the HTML element
-      if (target.parentNode)
-        target.parentNode.replaceChild(playerIFrame, target);
-      // Get the PeerTube instance
-      const PeerTubePlayer = window['PeerTubePlayer'];
-      var player = new PeerTubePlayer(playerIFrame);
-      // Run created callback
-      if (clbk) clbk(player);
-      // Wait for the video player to be ready
-      player.ready.then(() => {
-        setFunctions(player);
-        // Mute the player
-        player.mute();
-        // Run ready callback
-        if (readyCallback) readyCallback(player);
-      });
+      }).then(embed => {
 
-      return self;
-    }
+        var api = embed.api
+          api.mute()
+
+        if (clbk) clbk(api);
+        if (readyCallback) readyCallback(api);
+      })
+
+      return
+    }*/
+
 
     var _plyr = function(video_url, preview_url, title) {
         var new_target = document.createElement('video');
@@ -9290,7 +9291,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         target = new_target
     }
 
-    console.log("provider", provider)
 
     if ('bitchute' == provider) {
 
@@ -9307,7 +9307,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
                     _plyr(response.data.video.as, response.data.video.preview || '', response.data.video.title || '');
 
-                    console.log('video_options', video_options)
 
                     var plyrPlayer = newPlyr(target, video_options);
 
@@ -9332,3 +9331,5 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     return self;
 }
+
+

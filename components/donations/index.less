@@ -10,15 +10,7 @@
 		position: relative;
 
 		&.bright{
-			&:before{
-				content : '';
-				position : absolute;
-				left: 2px;
-				top : 110%;
-				height: 6px;
-				width: 160px;
-				background: #FF4800;
-			}
+
 		}
 
 	}
@@ -59,12 +51,13 @@
 		margin-top: 3 * @rhythm;
 		background: #fafafa;
 		padding : 6 * @rhythm 0;
-		padding-bottom: 22 * @rhythm;
+		padding-bottom: 33 * @rhythm;
 		.caption{
 		}
 
 		.users{
 			margin-top: 8 * @rhythm;
+			overflow: hidden;
 		}
 
 		.user{
@@ -298,8 +291,8 @@
 
 		.status{
 			padding : 2 * @rhythm 0;
-			border-top : 1px solid #FF4800;
-			border-bottom : 1px solid #FF4800;
+			// border-top : 1px solid #FF4800;
+			// border-bottom : 1px solid #FF4800;
 			margin-bottom: 2 * @rhythm;
 			margin-top: 2 * @rhythm;
 			text-align: center;
@@ -358,15 +351,15 @@ html.stblack{
 		}
 	
 		.ways{
-			background: @color-black;
+			background: @color-block;
 		
 			.way{
 			
 				border-bottom : 1px solid transparent;
 	
 				&:hover{
-					color : #FF4800;
-					border-bottom : 1px solid #FF4800;
+					color : @color-main;
+					border-bottom : 1px solid @color-main;
 				}
 	
 			}
@@ -384,7 +377,7 @@ html.stblack{
 		}
 	
 		.thankyou{
-			background: @color-black;
+			background: @color-block;
 	
 	
 			a{
@@ -417,17 +410,14 @@ html.stblack{
 	
 			.next{
 				span{
-					color : #FF4800;
-					&:hover{
-						color : @color-main;
-					}
+					color : @color-main;
 				}
 			}
 		}
 	
 		.address{
 	
-			background: @color-black;
+			background: @color-block;
 	
 			.back{
 	
@@ -462,8 +452,8 @@ html.stblack{
 		
 	
 			.status{
-				border-top : 1px solid #FF4800;
-				border-bottom : 1px solid #FF4800;
+				// border-top : 1px solid #FF4800;
+				// border-bottom : 1px solid #FF4800;
 			}
 	
 			.addressline{
@@ -474,7 +464,7 @@ html.stblack{
 	}	
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
 #donations{
 	padding : 2 * @rhythm @rhythm;
 	

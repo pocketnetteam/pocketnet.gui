@@ -4,7 +4,7 @@
 
     color : @color-gray-mlight;
     
-    .tcaption{
+    .tcaptionwrapper{
        
         padding : 2 * @rhythm;
         padding-top : 2 * @rhythm;
@@ -15,6 +15,60 @@
         span{
             font-size : 0.8em;
             font-weight: 700;
+        }
+
+        i{
+            font-size : 0.6em;
+        }
+    }
+
+    .tcaptiontable{
+        width : auto;
+
+        >div{
+
+            &.tcaption{
+                padding-right: 2 * @rhythm;
+            }
+           
+            &.ticon{
+                cursor: pointer;
+                width: 33px;
+                text-align: center;
+                .transition(0.3s);
+
+                &:hover{
+                    i{
+                        color : @color-main;
+                    }
+                    
+                }
+            }
+
+            &.mlab{
+                opacity: 0.5;
+                width: 33px;
+                cursor: pointer;
+                .transition(0.3s);
+
+                span{
+                    font-weight: 100;
+                    font-size: 0.8em;
+                }
+
+                &:hover{
+                    opacity: 1;
+                    color : @color-bad;
+                }
+            }
+
+            &.cleartags{
+                display: none;
+
+                &.showed{
+                    display: table-cell;
+                }
+            }
         }
     }
 

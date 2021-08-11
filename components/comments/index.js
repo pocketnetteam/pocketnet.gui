@@ -13,7 +13,7 @@ var comments = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false;
+		var el, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
 
 		var authblock = false;
 
@@ -35,9 +35,9 @@ var comments = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var clbks = {
-			upvote : function(err, comment, value, address){
+			upvote : function(err, comment, value, address, temp){
 
-
+				console.log("CLBK")
 				if(!comment) return
 
 				if (comment.txid != txid) return
@@ -48,24 +48,37 @@ var comments = (function(){
 
 				if (address == self.app.platform.sdk.address.pnet().address){
 
-					_el.addClass('rated')
+					if(!value){
 
-					if(value > 0){
-						d_el.find('.scoreUp').addClass('ratedScore')
+						if(err != 40){
+							_el.removeClass('rated')
+							d_el.find('.scoreUp').removeClass('ratedScore')
+							d_el.find('.scoreDown').removeClass('ratedScore')
+						}
+						
 					}
+					else{
+						_el.addClass('rated')
 
-					if(value < 0)
-					{
-						d_el.find('.scoreDown').addClass('ratedScore')
+						if(value > 0){
+							d_el.find('.scoreUp').addClass('ratedScore')
+						}
+
+						if(value < 0)
+						{
+							d_el.find('.scoreDown').addClass('ratedScore')
+						}
 					}
 
 				}
 
-				if (comment.scoreUp)
-					d_el.find('.scoreUp .commentScore').html(compressedNumber(comment.scoreUp, 1))
+				var cs = {
+					scoreUp : (comment.scoreUp || 0) + ((temp && value > 0) ? 1 : 0),
+					scoreDown : (comment.scoreDown || 0) + ((temp && value < 0) ? 1 : 0)
+				}
 
-				if (comment.scoreDown)
-					d_el.find('.scoreDown .commentScore').html(compressedNumber(comment.scoreDown, 1))
+				d_el.find('.scoreUp .commentScore').html(comment.scoreUp ? compressedNumber(cs.scoreUp, 1) : '')
+				d_el.find('.scoreDown .commentScore').html(cs.scoreDown ? compressedNumber(cs.scoreDown, 1) : '')
 			},
 
 			post : function(err, alias, _txid, pid, aid, editid, id, manual){
@@ -106,7 +119,8 @@ var comments = (function(){
 
 						areas[id].setText('');
 
-					el.c.find('.post .newcommentimages').html('')
+					el.c.find('.post .newcommentimages').html('');
+					el.c.find('.post .newcommentdonate').html('');
 				}
 
 				else
@@ -157,7 +171,7 @@ var comments = (function(){
 				})
 
 				if (!editid && ed.send){
-					ed.send(alias)
+					ed.send(alias, self.app.platform.sdk.comments.toLastComment(alias))
 				}
 
 				if(!editid){
@@ -185,7 +199,7 @@ var comments = (function(){
 
 				if (_OpenApi){
 
-					var phref = 'https://pocketnet.app/post?openapi=true&s=' + txid
+					var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
 
 					if (self.app.ref){
 						phref += '&ref=' + self.app.ref
@@ -344,6 +358,107 @@ var comments = (function(){
 
 
 			},
+
+
+			removeDonate : function(id, p){
+
+				var comment = currents[id]
+
+				comment.donate.remove()
+
+				renders.donate(id, p);
+
+			},
+
+			embeddonate : function(id, p){
+
+				id || (id = '0')
+
+				actions.process(id)
+
+				if (areas[id])
+					areas[id].___inited = true
+
+				var storage = currents[id].export(true)
+
+				var sender = self.sdk.address.pnet().address;
+
+				var imgSender = deep(app, 'platform.sdk.usersl.storage.' + sender + '.image')
+
+				var imgReceiver = deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image');
+
+				if (sender === receiver){
+
+					sitemessage(self.app.localization.e('donateself'));
+
+				} else {
+
+					self.nav.api.load({
+						open : true,
+						id : 'embeding',
+						inWnd : true,
+	
+						essenseData : {
+							type : 'donate',
+							storage : storage,
+							sender: imgSender, 
+							receiver: imgReceiver,
+							balance: balance,
+							on : {
+	
+								added : function(value){
+	
+									var result = Boolean(value);
+	
+	
+									if (Number(value) < balance){
+	
+										if(!_.isArray(value)) value = [value]
+	
+										currents[id].donate.remove();
+	
+										currents[id].donate.set({
+											address: receiver,
+											amount: Number(value)
+										})
+	
+										if(!result && errors[type]){
+	
+											sitemessage(errors[type])
+	
+										}
+
+	
+										if (result){
+
+											new Audio('sounds/donate.mp3').play();
+
+											renders.donate(id, p)
+
+										}	
+
+								
+	
+									} else {
+	
+										sitemessage(self.app.localization.e('incoins'))
+									}
+	
+				
+	
+								}
+							}
+						},
+	
+						clbk : function(s, p){
+							external = p
+						}
+					})
+	
+				}
+
+			}, 
+
 			embedimages : function(id, p){
 				id || (id = '0')
 
@@ -358,6 +473,7 @@ var comments = (function(){
 					open : true,
 					id : 'embeding',
 					inWnd : true,
+					donate: true,
 
 					essenseData : {
 						type : 'images',
@@ -394,7 +510,10 @@ var comments = (function(){
 					}
 				})
 			},
+			
 			removeForm : function(id){
+
+				console.log("ID", id)
 
 				delete areas[id]
 
@@ -458,8 +577,13 @@ var comments = (function(){
 					{
 						self.app.platform.errorHandler(err, true)
 
-						if (clbk)
+						if (clbk){
 							clbk(err, null)
+
+							if (err === 'tosmallamount'){
+								actions.removeDonate(id, p)
+							}
+						}
 					}
 
 				}, editid, id)
@@ -653,6 +777,7 @@ var comments = (function(){
 
 							if (clbk)
 								clbk()
+							
 
 						}, id)
 
@@ -890,8 +1015,6 @@ var comments = (function(){
 
 				})
 
-				console.log('comment', comment, initialValue, images)
-
 				self.app.nav.api.load({
 					open : true,
 					href : 'imagegallery?s=' + txid + '&num=' + (num || 0) + "&com=" + comment.id,
@@ -940,6 +1063,16 @@ var comments = (function(){
 				})
 
 				
+			},
+			scrollToComment : function(el) {
+				if (el && el.length > 0 && el[0].scrollIntoView && isMobile() && $(window).width() <= 768) {
+					el[0].scrollIntoView(true);
+					// Scroll until the comment section is at 120 px from the top
+					var container = ($('html').hasClass('showmain')) ? $('.lentacell') : $('html');
+					var offset = 120 - el[0].getBoundingClientRect().top;
+					if (offset > 0)
+						container.animate({scrollTop: '-=' + offset + 'px'}, 0);
+				}
 			}
 		}
 
@@ -982,7 +1115,10 @@ var comments = (function(){
 			replyandreplies : function(){
 				var id = $(this).closest('.firstcomment').attr('id')
 
-				actions.replies(id, true)
+				actions.replies(id, true, function() {
+					// Scroll comment section to top of the screen
+					actions.scrollToComment(el.list.find('.answer.active'));
+				});
 
 				var c = $(this).closest('.comment');
 				var cf = $(this).closest('.firstcomment');
@@ -1049,6 +1185,7 @@ var comments = (function(){
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
+					txid : id
 				};
 
 				if (listpreview && ed.lastComment && !pid){
@@ -1138,8 +1275,7 @@ var comments = (function(){
 
 				
 
-			},
-
+			}
 
 		}
 
@@ -1219,7 +1355,8 @@ var comments = (function(){
 
 							return false;
 						}
-
+						// Scroll comment section to top of the screen
+						actions.scrollToComment(_p.el);
 					},
 					keyup : function(editor, e){
 						var char = String.fromCharCode(e.keyCode || e.which);
@@ -1240,6 +1377,11 @@ var comments = (function(){
 						
 					},
 
+					focus : function() {
+						// Scroll comment section to top of the screen
+						actions.scrollToComment(_p.el);
+					},
+
 					onLoad : function(c, d){
 
 						var a = this
@@ -1248,14 +1390,20 @@ var comments = (function(){
 
 							_p.el.find('.emojionearea-editor').focus()
 
-							_p.el.addClass('active')	
-							
+							_p.el.addClass('active')
 
 							ed.init = false;
 						}
 
 						if (p.value) {
 							this.setText(p.value)
+						}
+
+						if (p.donation && p.amount && p.editid){
+
+							var comment = currents[p.editid]
+							comment.amount.set(p.amount);
+
 						}
 
 						if (p.images){
@@ -1271,10 +1419,15 @@ var comments = (function(){
 							}
 						}
 
+						// Hide the emoji button for mobiles and tablets
+						if (isMobile() || isTablet())
+							_p.el.find('.emojionearea-button').hide();
+
 						if (clbk)
 							clbk(this, _p.el.find('.emojionearea-editor'));
 
 					}
+
 				}
 			});
 
@@ -1282,7 +1435,7 @@ var comments = (function(){
 			_p.el.find('.emojionearea-editor').on('focus', function(){
 				actions.process(p.id || '0')	
 
-				_p.el.addClass('active')
+				 _p.el.addClass('active')
 			
 			})
 
@@ -1314,9 +1467,84 @@ var comments = (function(){
 			_p.el.find('.closeAnswer').on('click', function(){
 				actions.removeForm(p.id || '0')
 			})
+
+			_p.el.find('.emojionearea-editor').pastableContenteditable();
+
+			_p.el.find('.emojionearea-editor').on('pasteImage', function (ev, data){
+
+				var id = actions.getid(_p.el.find('.postbody'))
+
+				console.log('p.el', _p.el)
+				topPreloader(100)
+
+				resize(data.dataURL, 1920, 1080, function(resized){
+					var r = resized.split(',');
+	
+					if (r[1]){
+	
+						var r  = currents[id].images.set(resized)
+
+						if(!r){
+							sitemessage(errors.images)
+						}
+						else
+						{
+							if (renders.images)
+								renders.images(id, _p);
+						}
+	
+					}
+					else{
+						sitemessage("Image upload error")
+					}
+
+					
+				
+				})
+
+
+			}).on('pasteImageStart', function(){
+
+				topPreloader(30)
+
+			}).on('pasteImageError', function(ev, data){
+
+				 topPreloader(100)
+
+			})
+
+
 		}
 
 		var renders = {
+
+			donate : function(id, p){
+
+				var comment = currents[id];
+				var donate = comment.donate.v[0];
+
+				self.shell({
+					name :  'donate',
+					turi : 'embeding',
+					inner : html,
+					el : p.el.find('.newcommentdonate'),
+					data : {
+						donate : donate && donate.amount
+					},
+
+				}, function(_p){
+
+					_p.el.find('.removedonate').on('click', function(){
+
+						actions.removeDonate(id, p)
+					})
+
+
+				})
+
+
+
+			},
 
 			images : function(id, p, clbk){
 
@@ -1521,7 +1749,9 @@ var comments = (function(){
 					pid : comment.parentid,
 					aid : comment.answerid,
 					id : comment.id,
-					editid : comment.id
+					editid : comment.id,
+					amount: comment.amount,
+					donation: comment.donation
 				}
 
 				renders.post(function(area, el){
@@ -1564,7 +1794,9 @@ var comments = (function(){
 						answer : p.answer || '',
 						edit : p.edit || '',
 						preview : _preview,
-						mestate : mestate
+						mestate : mestate,
+						sender : self.app.platform.sdk.address.pnet().address,
+						receiver: receiver
 					},
 
 				}, function(_p){				
@@ -1590,6 +1822,33 @@ var comments = (function(){
 
 						postEvents(p, _p, __clbk)
 					}
+
+					_p.el.find('.embeddonate').off('click').on('click', function(){
+
+						self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+							balance = amount.toFixed(3);
+							
+							var id = actions.getid(_p.el.find('.postbody'))
+
+							if(state){
+								actions.embeddonate(id, p)
+								if(!p.answer && !p.editid){
+	
+									ini()
+	
+								}	
+							}
+							else{
+								actions.stateAction(function(){
+								})
+							}
+
+
+						})
+
+
+					})
 
 					_p.el.find('.embedimages').off('click').on('click', function(){
 
@@ -1831,28 +2090,31 @@ var comments = (function(){
 
 				}, function(_p){
 
-					el.list.find('.reply').off('click').on('click', events.replyandreplies);
-					el.list.find('.replies').off('click').on('click', events.replies);
-					el.list.find('.panel').off('click').on('click', events.metmenu);
-					el.list.find('.tocomment').off('click').on('click', events.tocomment)
+					if (el.list){
+						el.list.find('.reply').off('click').on('click', events.replyandreplies);
+						el.list.find('.replies').off('click').on('click', events.replies);
+						el.list.find('.panel').off('click').on('click', events.metmenu);
+						el.list.find('.tocomment').off('click').on('click', events.tocomment)
 
 
-					el.list.find('.imageCommentOpen').off('click').on('click', events.openGallery)
-				
-					setTimeout(function(){
-						if(el.list)
-							 el.list.find('.newcomments').removeClass('newcomments')
-					}, 600)
+						el.list.find('.imageCommentOpen').off('click').on('click', events.openGallery)
 					
-					bgImages(el.list)
+						setTimeout(function(){
+							if(el.list)
+								el.list.find('.newcomments').removeClass('newcomments')
+						}, 600)
+						
+						bgImages(el.list)
 
-					lazyEach({
-						array : p.comments,
+						lazyEach({
+							array : p.comments,
 
-						action : function(_p){
-							renders.commentimages(_p.item, _p.success)
-						}
-					})
+							action : function(_p){
+								renders.commentimages(_p.item, _p.success)
+							}
+						})
+					}
+					
 
 					if(ed.renderClbk) ed.renderClbk()
 
@@ -2075,7 +2337,8 @@ var comments = (function(){
 
 				actions.showhideLabel()	
 
-				el.list.html('')
+				if (el.list)
+					el.list.html('')
 
 				renders.list(p, function(){
 
@@ -2258,7 +2521,10 @@ var comments = (function(){
 			
 			init : function(p){
 
+				console.log('p!!', p);
 				//state.load();
+
+				receiver = p.essenseData.receiver;
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
@@ -2412,3 +2678,4 @@ else{
 	app.modules.comments.module = comments;
 
 }
+

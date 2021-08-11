@@ -35,23 +35,29 @@ var pkview = (function(){
 
 				var s = '';
 
-				var index = (current.mnemonicMask.length * percent / 100).toFixed(0)
+				if(current.mnemonicMask){
+					var index = (current.mnemonicMask.length * percent / 100).toFixed(0)
 
-				_.each(current.mnemonicKey, function(l, curlindex){
+					_.each(current.mnemonicKey, function(l, curlindex){
 
-					var a = _.indexOf(current.mnemonicMask, curlindex);
+						var a = _.indexOf(current.mnemonicMask, curlindex);
 
-					if(a < index || l == ' '){
-						s = s + l;
-					}
+						if(a < index || l == ' '){
+							s = s + l;
+						}
 
-					else
-					{
-						s = s + self.app.platform.values.alph[rand(0, self.app.platform.values.alph.length - 1)]
-					}
+						else
+						{
+							s = s + self.app.platform.values.alph[rand(0, self.app.platform.values.alph.length - 1)]
+						}
 
-					
-				})
+						
+					})
+				}
+
+				else{
+					s = current.mnemonicKey
+				}
 
 				return s
 			},
@@ -115,7 +121,7 @@ var pkview = (function(){
 
 						var text = p.el.find('.qrcode img').attr('src')
 
-						saveAs({
+						p_saveAs({
 							file : text,
 							format : 'png',
 							name : 'pocketnetkey'
@@ -139,7 +145,7 @@ var pkview = (function(){
 											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
 											
 
-											saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
+											p_saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
 												clbk()
 											})
 
@@ -160,7 +166,8 @@ var pkview = (function(){
 			},
 
 			dontshowagain : function(){
-				el.c.find('.dontshowagain').addClass('active')
+				if (el && el.c)
+					el.c.find('.dontshowagain').addClass('active')
 			}
 		}
 
@@ -179,11 +186,11 @@ var pkview = (function(){
 
 				self.closeContainer()
 
-				self.app.platform.sdk.registrations.remove()
+				self.app.platform.sdk.registrations.donotshowprivate()
 
 				if(isMobile()){
 
-					app.nav.api.load({
+					self.app.nav.api.load({
 		
 						open : true,
 						href : 'index',
@@ -212,7 +219,7 @@ var pkview = (function(){
 						if(!bitcoin.bip39.validateMnemonic(m)){
 
 							current.mk = m;
-							
+
 						}
 						else
 						{

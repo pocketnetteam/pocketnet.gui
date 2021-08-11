@@ -85,6 +85,7 @@ var publics = {
     getaddressinfo: true,
     getaddresstransactions: true,
     gettransactions: true,
+    getblock: true,
     getblocks: true,
     getlastblocks: true,
     checkstringtype: true,
@@ -95,7 +96,8 @@ var publics = {
     estimatefee: true,
     estimatesmartfee: true,
     gettransaction : true,
-    gethierarchicalstrip : true
+    gethierarchicalstrip : true,
+    getusercontents : true
 }
 
 function rpc(request, callback, obj) {
@@ -106,7 +108,17 @@ function rpc(request, callback, obj) {
     var pst = posts[request.method]
 
     var self = obj;
-    request = JSON.stringify(request);
+    try{
+        request = JSON.stringify(request);
+    }
+    catch(e){
+        callback({
+            code : 499
+        });
+
+        return
+    }
+    
     var auth = new Buffer(self.user + ':' + self.pass).toString('base64');
 
 
@@ -147,6 +159,7 @@ function rpc(request, callback, obj) {
 
             if (res.statusCode === 401) {
 
+
                 var exceededError = new Error(errorMessage + 'Connection Rejected: 401 Unnauthorized');
                     exceededError.code = 401;
 
@@ -163,6 +176,8 @@ function rpc(request, callback, obj) {
             }
             if (res.statusCode === 500 && buf.toString('utf8') === 'Work queue depth exceeded') {
 
+               
+
                 var exceededError = new Error('Bitcoin JSON-RPC: ' + buf.toString('utf8'));
 
                 exceededError.code = 429;
@@ -176,7 +191,7 @@ function rpc(request, callback, obj) {
                 parsedBuf = JSON.parse(buf);
             } catch (e) {
 
-                var exceededError = new Error(errorMessage + 'Error Parsing JSON: ' + e.message);
+                var exceededError = (new Error(errorMessage + 'Error Parsing JSON: ' + e.message)) || {};
                     exceededError.code = res.statusCode
 
                 callback(exceededError);
@@ -190,14 +205,14 @@ function rpc(request, callback, obj) {
     });
 
     req.on('error', function(e) {
-        var err = new Error(errorMessage + 'Request Error: ' + e.message);
-
+        
         if (!called) {
 
-            err.code = /*e.code ||*/ 408
-
             called = true;
-            callback(err);
+
+            callback({
+                code : 408
+            });
         }
     });
 
@@ -312,7 +327,8 @@ RpcClient.callspec = {
     getaddressscores: 'str',
     getpostscores: 'str',
     getpagescores: 'obj str',
-    gethierarchicalstrip : 'int str int str obj',
+    gethierarchicalstrip : 'int str int str obj str',
+    getusercontents : 'str int str int obj str',
 
     // BlockExplorer
     getblocktransactions: 'str int int',
@@ -419,7 +435,7 @@ function generateRPCMethods(constructor, apiCalls, rpc) {
 }
 
 function getRandomId() {
-    return parseInt(Math.random() * 100000);
+    return parseInt(Math.random() * 1000000000);
 }
 
 generateRPCMethods(RpcClient, RpcClient.callspec, rpc);

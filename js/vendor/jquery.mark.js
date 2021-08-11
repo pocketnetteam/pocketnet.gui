@@ -8,7 +8,6 @@ window = ( typeof global !== "undefined" ? global : typeof self !== "undefined" 
 
 (function (global, factory) {
 
-  console.log(global.$)
 
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(global.$) :
   typeof define === 'function' && define.amd ? define(['jquery'], factory) :

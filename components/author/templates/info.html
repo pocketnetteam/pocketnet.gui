@@ -10,44 +10,25 @@
 
 <% } %>
 
-
+	<div class="item foraddress">
+		<div class="itemtable table">
+			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+			<div class="label">
+			
+				<span class="copyaddress"><%-deep(author, 'address')%></span>
+			</div>
+		</div>
+	</div>
 
 	<div class="item reputation">
 		<div class="itemtable table">
 			<div class="icon"><i class="far fa-star"></i></div>
-			<div class="label"><%=e('rstate')%><br><b><%- (deep(author, 'state.reputation') || 0).toFixed(1) %></b></div>
+			<div class="label"><%=e('rstate')%> <b><%- (deep(author, 'state.reputation') || 0).toFixed(1) %></b></div>
 		</div>
 	</div>
 
 	
-	<div class="item address">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
-			<div class="label">
-				<div class="c">
-					<%=e('pnetAddress')%>
-				</div>
-				<div>
-					<span class="copyaddress"><%-deep(author, 'address')%></span>
-				</div>
-			</div>
-		</div>
-	</div>
 	
-
-<!--
-<div class="item address">
-	<div class="itemtable table">
-		<div class="icon"><i class="far fa-id-badge"></i></div>
-		<div class="label">
-			<span class="copythis">
-				<%-deep(author, 'address')%>
-			</span>
-		</div>
-	</div>
-</div>-->
-
-
 <% 
 
 var _d = deep(author, 'state.user_reg_date')
@@ -64,18 +45,7 @@ if(_d && _d > -1) {
 	<div class="item date">
 		<div class="itemtable table">
 			<div class="icon"><i class="far fa-calendar"></i></div>
-			<div class="label"><%=e('joined')%><br><b><%-d.yyyymmdd('.')%></b></div>
-		</div>
-	</div>
-
-<% } %>
-
-<% if(deep(author, 'data.site')) {%>
-
-	<div class="item site">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-link"></i></div>
-			<div class="label"><a href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
+			<div class="label"><%=e('joined')%> <b><%-d.yyyymmdd('.')%></b></div>
 		</div>
 	</div>
 
@@ -85,7 +55,7 @@ if(_d && _d > -1) {
 
 	var a = deep(author, 'data.about');
 
-	var am = trimHtml(a, 200);
+	var am = trimHtml(a, 1500);
 
 %>
 
@@ -104,6 +74,30 @@ if(_d && _d > -1) {
 	</div>
 
 <% } %>
+
+<% if(deep(author, 'data.postcnt')) {%>
+
+	<div class="item postcnt">
+		<div class="itemtable table">
+			<div class="icon"><i class="fas fa-rss"></i></div>
+			<div class="label"><%=e('shares').toLowerCase()%> <span><%-deep(author, 'data.postcnt')%></span></div>
+		</div>
+	</div>
+
+<% } %>
+
+<% if(deep(author, 'data.site')) {%>
+
+	<div class="item site">
+		<div class="itemtable table">
+			<div class="icon"><i class="fas fa-link"></i></div>
+			<div class="label"><a href="<%-deep(author, 'data.site')%>"><%-filterXSS(deep(author, 'data.site'))%></a></div>
+		</div>
+	</div>
+
+<% } %>
+
+
 
 
 </div>

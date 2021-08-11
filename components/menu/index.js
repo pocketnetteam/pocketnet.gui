@@ -8,12 +8,10 @@ var menu = (function(){
 
 		var el,
 			searchBlurTimer = null,
-			autoUpdate = null,
 			sitenameToNav = null,
 			plissing = null,
 			authorForSearch = null,
-			menusearch = null,
-			autoUpdateWallet = null;
+			menusearch = null;
 
 		var loc = new Parameter({
 
@@ -37,24 +35,32 @@ var menu = (function(){
 
 		})
 
+		var updateNew = function(){
+
+			var s = self.app.platform.sdk.newmaterials.storage
+
+			if(!el.c) return
+
+			_.each(s, function(v, k){
+
+				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
+
+				if(v > 99) v = '99'
+
+				_el.html(v)
+
+				if(v) _el.addClass('hasunseen')
+				else _el.removeClass('hasunseen')
+
+			})
+		}
+
 		var balanceHash;
 
+		var notifications = {}
+
 		var actions = {
-			/*extraLinks : function(){
-				self.app.nav.clbks.history.menu = events.hambclose.click;
-			},*/
-			autoUpdate : function(){
-
-				self.app.user.isState(function(state){
-
-					if(state){
-
-
-					}
-
-				})
-
-			},
+			
 
 			elswidth : function(){
 
@@ -86,6 +92,36 @@ var menu = (function(){
 				}
 
 				
+			},
+			ahnotifyclear : function(){
+				notifications = {}
+
+				actions.ahnotify(null)
+			},
+			ahnotify : function(el, c, type){
+
+
+				if(!c) c = 0
+
+				if(type) notifications[type] = c
+
+				var cnt = _.reduce(notifications, function(s, i){
+					return s + (i || 0)
+				}, 0)
+
+				var cordovabadge = null;
+					
+				if(typeof cordova != 'undefined'){
+					cordovabadge = deep(cordova, 'plugins.notification.badge')
+				}
+
+				if (el)
+					actions.ah(el, notifications[type])
+
+				if (cordovabadge) cordovabadge.set(cnt)
+
+				self.app.platform.api.electron.notifications(cnt, 'notifications')
+
 			},
 
 			ah : function(el, c){
@@ -125,8 +161,14 @@ var menu = (function(){
 
 						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
 
-						if (pn == 'index')
+						var video = parameters(self.app.nav.current.completeHref, true).video;
+
+						if (video) r = 'video'
+
+						if (pn == 'index'){
 							el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
+						}
+							
 					}
 					else
 					{
@@ -166,23 +208,54 @@ var menu = (function(){
 				}
 			},
 
+			chats : {
+				click : function(){
+
+					var show = deep(self, 'app.platform.matrixchat.core.apptochat')
+
+					if (show) show()
+
+				},
+
+				init : function(el){
+
+					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
+						actions.ahnotify(el, count, 'chat')
+					}
+				}
+			},
+
 			sitename : {
 
 				click : function(){
 
 					self.app.user.isState(function(state){
 
-						if(self.app.nav.get.pathname() != 'index'){
+						//if(self.app.nav.get.pathname() != 'index'){
 							var k = localStorage['lentakey'] || 'index';
 
 							if (parameters().r == k) k = 'index'
 
-							if (k != 'index') k = 'index?r=' + k
+							if (k != 'index') {
+								if (k == 'video'){
+									k = 'index?video=1'
+								}
+								else{
+									k = 'index?r=' + k
+								}
+								
+							}
 
 							if(!state) k = 'index'
 
 							if(self.app.curation()){
-								k = 'userpage'
+								if(!state){
+									k = 'welcome'
+								}
+								else{
+									k = 'userpage'
+								}
+								
 							}
 
 							self.nav.api.go({
@@ -191,7 +264,7 @@ var menu = (function(){
 								open : true,
 								handler : true
 							})
-						}
+						//}
 
 					})
 
@@ -277,27 +350,12 @@ var menu = (function(){
 
 					}
 
-					var cordovabadge = null;
-					
-					if(typeof cordova != 'undefined'){
-						cordovabadge = deep(cordova, 'plugins.notification.badge')
-					}
 
 					self.app.platform.sdk.notifications.init(function(){
-						var l = unseen().length;
-
-						actions.ah(el, l)
-
-
-						if (cordovabadge)
-							cordovabadge.set(l)
-
-						self.app.platform.api.electron.notifications(l, 'notifications')
-
+						actions.ahnotify(el, unseen().length, 'notifications')
 					})
 
-					if(!isMobile())
-
+					if(!isTablet()){
 						self.nav.api.load({
 							eid : 'menu',
 							open : true,
@@ -305,23 +363,19 @@ var menu = (function(){
 							el : el,
 							inTooltip : true
 						})
+					}
+
+						
 
 					self.app.platform.sdk.notifications.clbks.added.menu =
 					self.app.platform.sdk.notifications.clbks.seen.menu = function(){
-						var l = unseen().length;
-
-						if (cordovabadge)
-							cordovabadge.set(l)
-
-						actions.ah(el, l)
-
-						self.app.platform.api.electron.notifications(l, 'notifications')
+						actions.ahnotify(el, unseen().length, 'notifications')
 					}
 				},
 
 				click : function(el){
 
-					if(isMobile())
+					if(isTablet())
 						self.nav.api.go({
 							href : 'userpage?id=notifications&report=notifications',
 							history : true,
@@ -350,13 +404,11 @@ var menu = (function(){
 					}
 
 					self.app.platform.clientrtc.rtchttp.info.allchats(function(){
-
-						actions.ah(el, unread())
-
+						actions.ahnotify(el, unread(), 'chat')
 					})	
 
 					self.app.platform.sdk.messenger.clbks.menu = function(){
-						actions.ah(el, unread())
+						actions.ahnotify(el, unread(), 'chat')
 					}
 
 				},
@@ -382,7 +434,7 @@ var menu = (function(){
 			savecross : {
 				init : function(el){
 
-					var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
+					/*var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
 
 					actions.ah(el, n)
 
@@ -394,7 +446,7 @@ var menu = (function(){
 							actions.ah(el, n)
 							
 						}
-					}
+					}*/
 
 
 					
@@ -458,8 +510,7 @@ var menu = (function(){
 
 							_el.find('input').val('')
 							
-							el.c.removeClass('searchactive')
-
+							closesearch()
 							clearex()
 
 						}
@@ -499,35 +550,6 @@ var menu = (function(){
 									clearex()
 								});
 
-								/*el.find('.result').on('click', function(){
-
-									var r = $(this).attr('result')
-
-									_el.find('input').val(r)
-
-									var href = 'index?ss=' + r.replace("#", 'tag:')
-
-									if (authorForSearch){
-										href = '?report=shares&ss=' + r.replace("#", 'tag:')
-
-										authorForSearch.clear(true)
-									}
-
-									var p = {
-										href : href,
-										history : true,
-										open : true
-									};
-
-									if(authorForSearch) p. handler = true
-
-									self.nav.api.go(p)
-
-									helpers.closeResults()
-
-									clearex()
-
-								})*/
 
 								el.find('.user').on('click', function(){
 
@@ -607,14 +629,11 @@ var menu = (function(){
 									return r
 								}
 
-								console.log('getresults', getresults())
-
 								return getresults();
 
 							},
 
 							tpl : function(result, clbk){
-								console.log('result', result)
 								render(result, '', clbk)
 							}
 						},
@@ -653,8 +672,6 @@ var menu = (function(){
 										r = r.concat(result[k] || [])
 									})
 
-									console.log('e', r)
-
 									return r
 								}
 
@@ -690,18 +707,11 @@ var menu = (function(){
 									href = 'index?ss=' + value
 								}
 
-								/*if (authorForSearch){
-									href = '?report=shares&ss=' + value.replace("#", 'tag:')
-
-									authorForSearch.clear(true)
-								}*/
-
 								var p = {
 									href : href,
 									history : true,
 									open : true
 								}
-
 
 								if (authorForSearch) p.handler = true
 
@@ -909,7 +919,7 @@ var menu = (function(){
 
 						    	numberStep: function(now, tween) {
 
-						    		actions.elswidth()
+						    		//actions.elswidth()
 
 						    		//el.addClass(c)
 
@@ -924,7 +934,7 @@ var menu = (function(){
 						    }, rand(400, 1200), function(){
 
 						    	el.removeClass(c)
-
+								actions.elswidth()
 						    });
 						}
 					
@@ -934,8 +944,6 @@ var menu = (function(){
 					var setValue = function(){						
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-							console.log("amount", amount)
 
 							var t = self.app.platform.sdk.node.transactions.tempBalance()
 
@@ -1048,6 +1056,10 @@ var menu = (function(){
 
 		var initEvents = function(){
 
+			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2 = function(count){
+				actions.ahnotify(null, count, 'chat')
+			}
+
 			el.c.find('.localization').on('click', function(){
 
 				var items = []
@@ -1077,6 +1089,9 @@ var menu = (function(){
 				})
 				
 			})
+
+			if (self.app.platform.sdk.newmaterials.clbks)
+				self.app.platform.sdk.newmaterials.clbks.update.menu = updateNew
 
 			el.c.find('[events]').each(function(){
 
@@ -1110,7 +1125,6 @@ var menu = (function(){
 
 			ParametersLive([loc], el.c);
 
-			autoUpdate = setInterval(actions.autoUpdate, 100);
 
 
 
@@ -1158,7 +1172,6 @@ var menu = (function(){
 			results : function(results, value, clbk, p){
 
 				if(!p) p = {}
-				console.log("p", p)
 
 				self.shell({
 					name :  'results',
@@ -1181,7 +1194,7 @@ var menu = (function(){
 			self.app.user.isState(function(state){
 
 
-				if(parameters().ss && (isMobile() || self.app.nav.get.pathname() == 's')){
+				if((parameters().ss || parameters().sst) && (isMobile() || self.app.nav.get.pathname() == 's')){
 
 					el.c.addClass('searchactive')
 
@@ -1211,6 +1224,14 @@ var menu = (function(){
 			authorForSearch = null
 		}
 
+		var closesearch = function(){
+			if (el.c)
+				el.c.removeClass('searchactive')
+				
+			if (el.postssearch)
+				el.postssearch.find('.search').removeClass('fastSearchShow')
+		}
+
 		return {
 
 			getdata : function(clbk, p){
@@ -1223,14 +1244,16 @@ var menu = (function(){
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
 
+
+					var userinfo = deep(app, 'platform.sdk.user.storage.me')
+
+					data.haschat = self.app.platform.matrixchat.core// && (userinfo && !(userinfo.temp || userinfo.relay || userinfo.fromstorage))
+
 				if(p.state){
 
 					var addr = self.sdk.address.pnet().address
 
-					var regs = self.app.platform.sdk.registrations.storage[addr];
-
-					if (regs && regs <= 5){
-						
+					if (self.app.platform.sdk.registrations.showprivate()){
 						data.key = true
 					}
 
@@ -1254,10 +1277,12 @@ var menu = (function(){
 			destroy : function(){
 
 				destroyauthorsearch()
-
+				actions.ahnotifyclear()
 				menusearch = null
 
 				$(window).off('resize', actions.elswidth)
+
+				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
 				delete self.app.platform.sdk.node.transactions.clbks.menu
 				delete self.app.platform.ws.messages.event.clbks.menusave
@@ -1270,12 +1295,9 @@ var menu = (function(){
 
 				delete self.app.platform.sdk.registrations.clbks.menu
 
-				if(autoUpdate){
-					clearInterval(autoUpdate);
-				}
 
-				if(autoUpdateWallet)
-					clearInterval(autoUpdateWallet);
+				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
+				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
 
 				_.each(events, function(e){
 
@@ -1289,21 +1311,19 @@ var menu = (function(){
 			},
 
 			closesearch : function(){
-				if (el.c)
-					el.c.removeClass('searchactive')
 
-				
+				closesearch()
+					
 			},
 
 			showsearch : function(v, _searchBackAction){
 
-				console.log('showsearch', v)
+
 				if(v){
 					el.c.addClass('searchactive')
 					el.postssearch.find('.search').addClass('searchFilled')
 				}
 				else{
-
 					el.postssearch.find('.search').removeClass('searchFilled')
 				}
 				
@@ -1352,11 +1372,12 @@ var menu = (function(){
 				el.postssearch =  el.c.find('.postssearch')
 				el.nav = el.c.find('.menutoppanel')
 
+				actions.ahnotifyclear()
+
 				initEvents();
 
 				make();
 
-				
 
 				p.clbk(null, p);
 			}

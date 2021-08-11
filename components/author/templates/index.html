@@ -7,6 +7,8 @@ if(user.address.value)
 
 var name = app.platform.api.name(author.address)
 
+console.log(app.localization)
+
 var telements = function(){ %>
 
 	<% if(!user.isItMe(author.address)) {
@@ -25,6 +27,8 @@ var telements = function(){ %>
 						
 		<% }%>
 		
+		<% if(state) {%>
+
 		&middot;
 		<span class="subscribebuttonstop <%-_class%>">
 
@@ -37,7 +41,7 @@ var telements = function(){ %>
 			%>
 				<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot;<i class="far fa-bell-slash"></i></span>
 			<% } %>
-
+				
 			<span class="subscribe funf"><%=e('follow')%></span>	
 
 		</span>
@@ -47,6 +51,8 @@ var telements = function(){ %>
 			<span class="unblocking funf"><%=e('blocked')%></span>	
 
 		</span>
+
+		<% } %>
 					
 				
 	<% } %>
@@ -71,41 +77,46 @@ var telements = function(){ %>
 									<i class="far fa-user"></i>
 
 								<% } %>
+
+								<% if(deep(app, 'platform.real.'+author.address)) {%>
+									<div class="realperson">
+
+										<span class="fa-stack fa-2x">
+											<i class="fas fa-certificate fa-stack-2x"></i>
+											<i class="fas fa-check fa-stack-1x"></i>
+										  </span>
+									</div>
+								<% } %>
 							</div>
 						</div>
 					</div>
 
 					<div class="ccell">
 						<div class="infomain">
+
 							<div class="caption">
-
-
-								
 								<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+author.address+'.reputation') || 0 %>
 
 								<b class="adr"><%-name || author.address%></b>
 
-								
-
 								<% telements() %>
 								
 							</div>
-							<div class="tips">
+
+							<div class="mobileinfo">
 								
+							</div>
+
+							<div class="tips">
 								<div class="telements">
-
-									
-
 									<div class="telement">
 										<div class="usermenu">
-											
 
 										</div>
 									</div>
 								</div>
-								
-								
 							</div>
+
 						</div>
 
 					</div>

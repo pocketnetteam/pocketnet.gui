@@ -53,7 +53,7 @@ Nav = function(app)
 
 	self.wnds = {};
 
-	var externalexclusions = ['blockexplorer']
+	var externalexclusions = ['blockexplorer', 'pocketnet-crypto-challenge']
 
 	var module = {
 		find : function(href){
@@ -404,7 +404,7 @@ Nav = function(app)
 			if (history.state && history.state.lfox) { 
 
 				core.removeWindows(history.state.href)
-
+				var chh = core.removeChat(history.state.href)
 
 				if(history.state.href.split('?')[0] != current.href){
 
@@ -420,8 +420,9 @@ Nav = function(app)
 				}
 				else
 				{
-					core.removeWindows(history.state.href)
+					///core.removeWindows(history.state.href)
 
+					if(chh) return
 
 					if(!_.isEmpty(self.wnds)){
 						_.each(self.wnds, function(w){
@@ -458,6 +459,18 @@ Nav = function(app)
 				    clbk()
 			}
 		},	
+
+		removeChat : function(href){
+			if(!isMobile()) return
+ 
+			var p = parameters(href, true)
+
+			console.log('backtoapp', p['pc'])
+
+			if(!p['pc']){
+				return app.platform.matrixchat.backtoapp()
+			}
+		},
 
 		removeWindows : function(href){
 			var p = parameters(href, true)
@@ -520,6 +533,7 @@ Nav = function(app)
 							p.clbk(null, p);
 
 							core.removeWindows(p.completeHref)
+							core.removeChat(p.completeHref)
 
 						})
 
@@ -555,21 +569,29 @@ Nav = function(app)
 
 					if (current.module && !p.inWnd){
 
-						var stop = current.module.stop(p.href);
+						try{
 
-						if (stop && _.isObject(stop)){
+							var stop = current.module.stop(p.href);
 
-							if (stop.action){
-								stop.action(function(){
-									core.open(p)
-								})
+							if (stop && _.isObject(stop)){
+
+								if (stop.action){
+									stop.action(function(){
+										core.open(p)
+									})
+								}
+
+								return
 							}
 
-							return
-						}
+							if (stop && typeof stop == 'function'){
+								p.preshell = stop;
+							}
 
-						if (stop && typeof stop == 'function'){
-							p.preshell = stop;
+						}
+						catch(e){
+							console.log("CANT DESTROY " + p.href)
+							console.error(e)
 						}
 					}
 
@@ -583,6 +605,7 @@ Nav = function(app)
 
 						p.clbk = function(a, b, d){
 							core.removeWindows(p.completeHref)
+							core.removeChat(p.completeHref)
 
 							if (p.goback){
 								_scrollTop(p.goback.scroll);
@@ -859,7 +882,7 @@ Nav = function(app)
 
 			p.clbk || (p.clbk = emptyFunction);
 
-			if(typeof p.animation == 'undefined')
+			if(typeof p.animation == 'undefined' && !isMobile())
 				p.animation = 'fadeIn'
 
 			if(p.href){
@@ -957,7 +980,7 @@ Nav = function(app)
 
 			var host = self.get.hostname()
 
-			if (host == 'localhost/' || electron || window.cordova) host = 'pocketnet.app/'
+			if (host == 'localhost/' || electron || window.cordova) host = app.options.url + '/'
 
 				host = 'https://' + host
 		
@@ -993,7 +1016,7 @@ Nav = function(app)
 			if (href.indexOf('http') == -1){
 
 				if(_OpenApi) {
-					href = 'pocketnet.app/' + href
+					href = app.options.url + '/' + href
 
 					if (app.ref)
 						href = self.api.history.addParametersToHref(href, {
@@ -1027,7 +1050,7 @@ Nav = function(app)
 
 			var host = self.get.hostname()
 
-			if (host == 'localhost/' || electron || window.cordova) host = 'pocketnet.app/'
+			if (host == 'localhost/' || electron || window.cordova) host = app.options.url + '/'
 
 				host = 'https://' + host
 
@@ -1218,7 +1241,7 @@ Nav = function(app)
 			pathname : function(){
 				var loc =  window.location; 
 
-				return loc.pathname.replace(options.navPrefix, '').replace(".html", "")
+				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "").replace('indexcordova', "index")
 			}
 
 		},
@@ -1309,11 +1332,14 @@ Nav = function(app)
 			if(!p.href)
 				p.href = self.get.pathnameSearch() || defaultpathname;
 
-			if (p.href == 'blank')
+
+			var fpt = p.href.split("?")[0]
+
+			if (p.href == 'blank' || !fpt)
 				p.href  = defaultpathname
 
 
-			if(p.href.split("?")[0] == defaultpathname){
+			if (fpt == defaultpathname){
 				backManager.clearAll()	
 			}
 

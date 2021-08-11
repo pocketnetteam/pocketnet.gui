@@ -24,7 +24,7 @@
         .amredits{
             background: @color-yellow;
             padding: 0.5 * @rhythm @rhythm;
-            border : 1px solid #ff0090;
+            border : 1px solid @color-pink;
             border-radius: 10px;
             outline: none;
         }
@@ -64,8 +64,23 @@
         }
     }
 
+    .calculatordummy,
     .calculator{
         position: relative;
+    }
+
+    .calculatordummy{
+        min-height: 80px;
+
+        .calculatordummytext{
+            padding : 2 * @rhythm;
+
+            span{
+                font-size: 0.8em;
+                font-weight: 700;
+                color : @color-contrast;
+            }
+        }
     }
     .chwr{
         position: absolute;
@@ -82,7 +97,7 @@
     .earnlabel{
         padding : 1.5 * @rhythm 2 * @rhythm;
         font-weight: 700;
-        color : @color-orange;
+        color : @color-brick;
         cursor: pointer;
 
         span{
@@ -106,14 +121,16 @@
         padding : 0 2 * @rhythm;
         button{
             border-radius: 20px;
-            background: #ff0090;
-            border-color : #ff0090;
+            background: @color-raspberry;
+            border-color : @color-raspberry;
+            font-size: .7em;
+            margin-bottom: 0.5 * @rhythm;
 
-            &:hover{
-                color : #fff;
-                background: #b70067;
-                border-color : #b70067;
-            }
+            // &:hover{
+            //     color : #fff;
+            //     background: #b70067;
+            //     border-color : #b70067;
+            // }
         }
     }
 
@@ -232,6 +249,18 @@
 
 html.stblack{
     #staking{
+
+        .earnlabel{
+            color: @color-azure;
+        }
+
+        .buycoin{
+            button{
+                background: @color-green;
+                border-color: @color-green;
+            }
+        }
+
         .lastpriceCnt{
             color : @color-gray-slight;
             
@@ -270,7 +299,7 @@ html.stblack{
     }    
 }
 
-@media only screen and (max-width: 768px) {
+/*t*/ @media only screen and (max-width: 768px){
     #staking{
     
 

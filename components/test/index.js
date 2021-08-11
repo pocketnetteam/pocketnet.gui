@@ -18,6 +18,8 @@ var test = (function(){
 			language : self.app.localization.key || 'en'
 		}
 
+		var saving = false
+
 		var changedLoc = false;
 
 		var getrefname = function(clbk){
@@ -42,7 +44,8 @@ var test = (function(){
 			
 
 				var _p = {
-					Email : email
+					Email : email,
+					Lang : self.app.localization.key || 'en'
 				}
 
 				_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -60,7 +63,7 @@ var test = (function(){
 						
 						_p.ref += name
 	
-						body += '<p><a href="https://pocketnet.app/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+						body += '<p><a href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
 					}							
 	
 					var r = deep(document, 'referrer')
@@ -73,7 +76,7 @@ var test = (function(){
 	
 					$.ajax({
 						type: 'POST',
-						url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+						url: 'https://'+self.app.options.url+'/Shop/AJAXMain.aspx',
 						data: _p,
 						dataType: 'json',
 						success : function(){
@@ -130,12 +133,17 @@ var test = (function(){
 			},
 			save : function(clbk){
 
+				if (saving) return
+
+					saving = true
+
 				var allclbk = function(){
 					el.upanel.removeClass('loading')
 
 					el.c.find('.userPanel').removeClass('loading')
 
 					topPreloader(100)
+					saving = false
 
 					if (primary){
 
@@ -163,12 +171,13 @@ var test = (function(){
 				self.sdk.users.checkFreeRef(self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : "", function(resref, err){				
 
 					if(el.c.find('.userPanel').hasClass('loading')){
+						saving = false
 						return
 					}
 
 					if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
 						sitemessage(self.app.localization.e('uchanges'))
-
+						saving = false
 						return
 					}
 
@@ -192,7 +201,7 @@ var test = (function(){
 						}
 
 							
-
+						saving = false
 						return
 					}
 
@@ -204,10 +213,7 @@ var test = (function(){
 						userInfo.site.set(trim(tempInfo.site));
 						userInfo.image.set(tempInfo.image);
 						userInfo.addresses.set(tempInfo.addresses);
-
 						userInfo.ref.set(deep(ref, 'address') || '');
-
-					
 
 					var err  = userInfo.validation()
 
@@ -222,7 +228,7 @@ var test = (function(){
 						}
 
 						if(err == 'pocketnet'){
-							
+
 							el.c.find('.errorname span').html('To avoid user confusion using Pocketnet in name is reserved');
 							
 						}
@@ -233,7 +239,7 @@ var test = (function(){
 							pn.focus()
 
 							_scrollTo(pn)
-
+							saving = false
 						return false;
 					}
 
@@ -244,7 +250,6 @@ var test = (function(){
 					el.upanel.addClass('loading')
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
-
 						
 
 						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
@@ -252,13 +257,17 @@ var test = (function(){
 							topPreloader(50)
 
 							ed.presave(function(){
+
+								userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
+									return k.public
+								}))
 							
 								el.c.find('.errorname').fadeOut();
 
 								topPreloader(70)
 								
 
-								userInfo.uploadImage(function(err){
+								userInfo.uploadImage(self.app, function(err){
 
 									if (err){
 										topPreloader(100)
@@ -267,7 +276,7 @@ var test = (function(){
 										el.c.find('.userPanel').removeClass('loading')
 
 										sitemessage("An error occurred while loading images")
-
+										saving = false
 										return 
 									}
 
@@ -280,7 +289,7 @@ var test = (function(){
 										el.c.find('.userPanel').removeClass('loading')
 
 										ed.makeuser(userInfo)
-
+										saving = false
 										return
 
 									}
@@ -298,7 +307,7 @@ var test = (function(){
 
 										function(tx, error){
 
-											
+											console.log('error', error, tx)
 
 											if(!tx){
 
@@ -357,7 +366,6 @@ var test = (function(){
 
 										{
 											relay : ed.relay? ed.relay() : false
-											//pseudo : true
 										}
 									
 									)
@@ -368,6 +376,7 @@ var test = (function(){
 						}
 						else
 						{
+							saving = false
 							el.upanel.removeClass('loading')
 
 							el.c.find('.userPanel').removeClass('loading')
@@ -894,7 +903,7 @@ var test = (function(){
 					initUpload({
 						el : _p.el.find('.pgroup'),
 			
-						ext : ['png', 'jpeg', 'jpg'],
+						ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 
 						dropZone : el.c,
 
@@ -1095,7 +1104,8 @@ var test = (function(){
 
 		var testletter = function(clbk){
 			var _p = {
-				Email : 'maxgrishkov@gmail.com'
+				Email : 'maxgrishkov@gmail.com',
+				Lang : self.app.localization.key || 'en',
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -1141,7 +1151,7 @@ var test = (function(){
 					
 					_p.ref += ', ' + name
 
-					body += '<p><a href="https://pocketnet.app/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
+					body += '<p><a href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
 				}
 
 				var r = deep(document, 'referrer')
@@ -1235,9 +1245,13 @@ var test = (function(){
 			destroy : function(){
 				el = {};
 
+				saving = false
 
+				tempInfo = {
+					language : self.app.localization.key || 'en'
+				}
 
-				if(self.app.platform.sdk.user.storage.me && !actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
+				/*if(self.app.platform.sdk.user.storage.me && !actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
 					
 					return function(clbk){
 
@@ -1268,7 +1282,7 @@ var test = (function(){
 
 					}
 
-				}
+				}*/
 
 				return null;
 			},

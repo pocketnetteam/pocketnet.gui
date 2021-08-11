@@ -102,6 +102,7 @@ var leftpanel = (function(){
 
 				if (page < 0) page = 0
 
+
 				self.shell({
 					name :  'top',
 					data : {
@@ -112,7 +113,7 @@ var leftpanel = (function(){
 
 				}, function(_p){
 
-					/*ParametersLive(_.toArray(ps), _p.el)
+					ParametersLive(_.toArray(ps), _p.el)
 
 					ps.period.onChange = function(){
 
@@ -123,7 +124,7 @@ var leftpanel = (function(){
 
 						if(ed.changed) ed.changed()
 
-					}*/
+					}
 
 					if(clbk) clbk()
 				})

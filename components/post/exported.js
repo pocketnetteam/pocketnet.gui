@@ -213,7 +213,7 @@ var post = function(nModule){
 
 			sharesocial : function(clbk){
 		
-				var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
+				var url = 'https://'+self.app.options.url+'/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + '&ref=' + self.app.platform.sdk.address.pnet().address
 
 				if (parameters().address){
 					url += '&address=' + (parameters().address || '')
@@ -548,6 +548,18 @@ var post = function(nModule){
 					}
 				})
 			},
+
+			videoShare : function(share) {
+				if (!share.url || !share.itisvideo()) return sitemessage('Unable to parse a video in the post');
+
+				const metaInfo = self.app.platform.parseUrl(share.url);
+
+				const peertubeLink = `https://`+self.app.options.url+`/embedVideo.php?host=${metaInfo.host_name}&id=${metaInfo.id}&embed=true&s=${share.txid}`;
+
+				(metaInfo.type === 'peertube') ? copycleartext(peertubeLink) : copycleartext(share.url);
+
+				return sitemessage(self.app.localization.e('videoCopied'));
+			},
 		}
 
 		var events = {
@@ -739,7 +751,7 @@ var post = function(nModule){
 						}
 
 	
-						var url = 'https://pocketnet.app/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + rf
+						var url = 'https://'+self.app.options.url+'/' + (ed.hr || 'index?') + 's='+share.txid+'&mpost=true' + rf
 	
 						if (parameters().address){
 							url += '&address=' + (parameters().address || '')
