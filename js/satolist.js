@@ -6369,12 +6369,12 @@ Platform = function (app, listofnodes) {
                 else {
 
                     var lf = _.find(self.sdk.usersl.storage, function (s) {
-                        if (s.name == name) return true
+                        if (s.name.toLowerCase() == name.toLowerCase()) return true
                     })
 
                     if(!lf){
                         lf = _.find(self.sdk.users.storage, function (s) {
-                            if (s.name == name) return true
+                            if (s.name.toLowerCase() == name.toLowerCase()) return true
                         })
                     }
 

@@ -143,6 +143,15 @@ var ProxyRequest = function(app = {}, proxy){
             data.parameters = parameters || []
             data.method = method
 
+            try{
+                if(typeof rot13 != 'undefined')
+                    data.cachehash = rot13(JSON.stringify(data.parameters))
+            }
+            catch(e){
+                
+            }
+            
+
             if (options)
                 data.options = options
 

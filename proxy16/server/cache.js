@@ -152,7 +152,7 @@ var Cache = function(p){
      
     }
 
-    self.get = function(key, params){
+    self.get = function(key, params, cachehash){
         if (ckeys[key]){
 
 
@@ -160,18 +160,23 @@ var Cache = function(p){
                 return self.getsmart(key, params)
             }
 
-            var ks = null
+            if(!cachehash){
+                var ks = null
 
-            try{
-                ks = JSON.stringify(params)    
-            }catch(e){
+                try{
+                    ks = JSON.stringify(params)    
+                }
+                catch(e){
 
-                console.log('stringify error', params)
+                    console.log('stringify error', params)
 
-                return
+                    return
+                }
             }
 
-            var k = f.rot13(ks)
+            
+
+            var k = cachehash || f.rot13(ks)
 
             var sd = f.deep(storage, key + "." + k)
 
@@ -197,7 +202,7 @@ var Cache = function(p){
         _.each()
     }
 
-    self.wait = function(key, params, clbk){
+    self.wait = function(key, params, clbk, cachehash){
 
         if (!ckeys[key]){
             clbk('nocache')
@@ -205,24 +210,26 @@ var Cache = function(p){
             return
         }
 
-        if(self.get(key, params)){
+        if(self.get(key, params, cachehash)){
             clbk('hascache')
             return
         }
 
         var waitid = f.makeid()
 
-        var ks = null
+        if(!cachehash){
+            var ks = null
 
-        try{
-            ks = JSON.stringify(params)    
-        }catch(e){
-            clbk('stringify')
-
-            return
+            try{
+                ks = JSON.stringify(params)    
+            }catch(e){
+                clbk('stringify')
+    
+                return
+            }
         }
 
-        var k = f.rot13(ks)
+        var k = cachehash || f.rot13(ks)
 
         if(!waiting[key])
             waiting[key] = {}

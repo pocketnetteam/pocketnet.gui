@@ -20,6 +20,8 @@
 
 /* ______________________________ */
 
+
+
 /* DATE */
 	var dateFormat = function () {
 		var e = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g, t = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g, n = /[^-+\dA-Z]/g, r = function (e, t) {
@@ -2744,6 +2746,22 @@
 
 	equalhash = function(v1, v2){
 		return $.md5(JSON.stringify(v1)) === $.md5(JSON.stringify(v2))
+	}
+
+	rot13 = function(str){
+		var re = new RegExp("[a-z]", "i");
+		var min = 'A'.charCodeAt(0);
+		var max = 'Z'.charCodeAt(0);
+		var factor = 13;
+		var result = "";
+		str = str.toUpperCase();
+		
+		for (var i=0; i<str.length; i++) {
+			result += (re.test(str[i]) ?
+			String.fromCharCode((str.charCodeAt(i) - min + factor) % (max-min+1) + min) : str[i]);
+		}
+		
+		return result;
 	}
 
 	getMethods = function(obj){

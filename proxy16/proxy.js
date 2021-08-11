@@ -892,7 +892,7 @@ var Proxy = function (settings, manage, test) {
 			rpc: {
 				path: '/rpc/*',
 				authorization: 'signaturelight',
-				action: function ({ method, parameters, options, U }) {
+				action: function ({ method, parameters, options, U, cachehash }) {
 					if (!method) {
 						return Promise.reject({
 							error: 'method',
@@ -913,10 +913,10 @@ var Proxy = function (settings, manage, test) {
 								console.log('waitstatus', waitstatus)
 							}
 							resolve(waitstatus);
-						});
+						}, cachehash);
 					})
 					.then((waitstatus) => {
-						var cached = server.cache.get(method, _.clone(parameters));
+						var cached = server.cache.get(method, _.clone(parameters), cachehash);
 
 						if (log) {
 							console.log('cached', cached ? true : false)
