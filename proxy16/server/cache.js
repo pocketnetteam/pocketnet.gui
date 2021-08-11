@@ -117,7 +117,7 @@ var Cache = function(p){
 
             }
 
-            var k = f.rot13(ks)
+            var k = f.hash(ks)
 
             if(!storage[key])
                 storage[key] = {}
@@ -176,7 +176,7 @@ var Cache = function(p){
 
             
 
-            var k = cachehash || f.rot13(ks)
+            var k = cachehash || f.hash(ks)
 
             var sd = f.deep(storage, key + "." + k)
 
@@ -229,7 +229,7 @@ var Cache = function(p){
             }
         }
 
-        var k = cachehash || f.rot13(ks)
+        var k = cachehash || f.hash(ks)
 
         if(!waiting[key])
             waiting[key] = {}
