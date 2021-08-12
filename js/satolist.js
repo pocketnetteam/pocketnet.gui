@@ -1981,7 +1981,7 @@ Platform = function (app, listofnodes) {
             if(r){ c() }
 
             else{
-                self.platform.sdk.users.addressByName(id, function(_id){
+                self.sdk.users.addressByName(id, function(_id){
                     id = _id
 
                     c()
