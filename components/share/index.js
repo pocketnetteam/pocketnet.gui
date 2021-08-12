@@ -96,23 +96,30 @@ var share = (function(){
 					server: metaInfo.host_name,
 				}*/
 
+				var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
+
+				var host = urlMeta.host || null;
+
 				return self.app.platform.sdk.videos.info([shareUrl])
 
 				  .then(() => (self.app.platform.sdk.videos.storage[shareUrl] || {}).data)
 				  .then((res = {}) => {
-					settingsObject.aspectRatio = res.aspectRatio || 1.68;
+					  if (res.aspectRatio) {
+						settingsObject.aspectRatio = res.aspectRatio;
 
-					return toDataURL(image)					
-
-				}).then((fileBase64) => {
+						return;
+					  } 
+					
+					  return self.app.peertubeHandler.api.videos.getDirectVideoInfo({ id: urlMeta.id }, { host }).then(res => {
+						  settingsObject.aspectRatio = res.aspectRatio;
+					  });
+				})
+				.then(() => toDataURL(image))
+				.then((fileBase64) => {
 
 					return actions.resizeImage(fileBase64, settingsObject)
 
 				}).then(img => {
-
-					var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
-
-					var host = urlMeta.host || null;
 
 					parameters.image = {
 						data : img
