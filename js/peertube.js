@@ -726,6 +726,10 @@ PeerTubePocketnet = function (app) {
           params: { ...parameters },
         }).then((r = {}) => r.data || []);
       },
+
+      getDirectVideoInfo(parameters = {}, options = {}) {
+        return request('video', parameters, options)
+      }
     },
 
     user: {

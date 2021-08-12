@@ -1,5 +1,4 @@
 <% if(url){ 
-	
 	var meta = app.platform.parseUrl(url);
 
 
@@ -115,20 +114,15 @@
 
 					<div class="peertubepanel">
 
-						<% if(info.data) {%>
-
-							<% if (info.data.isLive) { %>
-								<div class="item streaminfo">
-									<i class="fas fa-broadcast-tower"></i> <span><%- e('streamInfo') %></span>
-								</div>
-							<% 	} %>
-
-							
-							<div class="item uploadpeertubewp">
-								<i class="fas fa-camera"></i> <span><%- e('editWallpaper') %></span>
+						<% if(info.data && info.data.isLive) {%>
+							<div class="item streaminfo">
+								<i class="fas fa-broadcast-tower"></i> <span><%- e('streamInfo') %></span>
 							</div>
-							
 						<% } %>
+
+						<div class="item uploadpeertubewp">
+							<i class="fas fa-camera"></i> <span><%- e('editWallpaper') %></span>
+						</div>
 
 						<div class="item removepeertube">
 							<i class="far fa-times-circle"></i> <span><%- e('removeVideo') %></span>
