@@ -100,8 +100,7 @@ var share = (function(){
 
 				  .then(() => (self.app.platform.sdk.videos.storage[shareUrl] || {}).data)
 				  .then((res = {}) => {
-
-					settingsObject.aspectRatio = res.aspectRatio;
+					settingsObject.aspectRatio = res.aspectRatio || 1.68;
 
 					return toDataURL(image)					
 
