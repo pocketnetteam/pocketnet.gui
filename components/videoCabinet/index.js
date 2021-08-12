@@ -50,21 +50,6 @@ var videoCabinet = (function () {
           count: perServerCounter,
         };
 
-        // self.app.api
-        //   .rpc('search', [
-        //     encodeURIComponent('peertube://pocketnetpeertube5.nohost.me/3e431724-0f6d-4dbe-80d0-cbbe98e02e70'),
-        //     'videolinks',
-        //     0,
-        //     (0).toString(),
-        //     (10).toString(),
-        //   ])
-        //   .then((res) => {
-        //     debugger;
-        //   })
-        //   .catch((err) => {
-        //     debugger;
-        //   });
-
         return self.app.peertubeHandler.api.videos
           .getMyAccountVideos(options, {
             host: server,
@@ -89,6 +74,22 @@ var videoCabinet = (function () {
           .getQuotaStatus()
           .then((res) => (userQuota = { ...res }));
       },
+
+      getBlockchainPostByVideos: (videoString = '') =>
+        self.app.api
+          .rpc('search', [
+            videoString,
+            'videolink',
+            // '0',
+            // '0',
+            // '10',
+          ])
+          .then((res) => {
+            debugger;
+          })
+          .catch((err) => {
+            debugger;
+          }),
 
       resetHosts() {
         const videoPortionElement = $(
@@ -202,6 +203,12 @@ var videoCabinet = (function () {
                 },
               });
             });
+
+            const blockchainStrings = videos.map(
+              (video) => `peertube://${video.account.host}/${video.uuid}`,
+            );
+            debugger;
+            actions.getBlockchainPostByVideos([`peertube://${videos[0].account.host}/${videos[0].uuid}`, `peertube://${videos[2].account.host}/${videos[2].uuid}`]);
           },
         );
       },

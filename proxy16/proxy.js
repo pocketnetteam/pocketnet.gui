@@ -969,13 +969,13 @@ var Proxy = function (settings, manage, test) {
 						if (log) {
 							console.log('load', method, parameters)
 						}
-
 						return node
 							.checkParameters()
 							.then((r) => {
 								return node.rpcs(method, _.clone(parameters));
 							})
 							.then((data) => {
+
 								server.cache.set(method, _.clone(parameters), data, node.height());
 
 								return Promise.resolve({
