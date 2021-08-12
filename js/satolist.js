@@ -1950,21 +1950,47 @@ Platform = function (app, listofnodes) {
         },
 
         channel : function(id, el, clbk, p){
-            self.sdk.users.get(id, function () {
 
-                app.nav.api.load({
-                    open: true,
-                    href: 'channel',
-                    el: el,
-                    eid: id + (p.eid || ""),
-                    clbk: clbk,
+            var r = false
 
-                    essenseData: {
-                        id : id
-                    }
+            try {
+                r = bitcoin.address.fromBase58Check(v);
+            }
+            catch (e) {
+
+            }
+
+            var c = function(){
+                self.sdk.users.get(id, function () {
+
+                    app.nav.api.load({
+                        open: true,
+                        href: 'channel',
+                        el: el,
+                        eid: id + (p.eid || ""),
+                        clbk: clbk,
+    
+                        essenseData: {
+                            id : id
+                        }
+                    })
+    
                 })
+            }
 
-            })
+            if(r){ c() }
+
+            else{
+                self.platform.sdk.users.addressByName(id, function(_id){
+                    id = _id
+
+                    c()
+                })
+            }
+
+            
+
+            
         },
 
         transaction : function(txid, el, clbk, p){
