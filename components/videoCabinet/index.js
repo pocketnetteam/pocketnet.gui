@@ -9,6 +9,8 @@ var videoCabinet = (function () {
 
   var userQuota = {};
 
+  var blockChainInfo = [];
+
   var perServerCounter = 10;
 
   var startingPosition = 0;
@@ -77,19 +79,17 @@ var videoCabinet = (function () {
 
       getBlockchainPostByVideos: (videoArray = []) =>
         self.app.api
-          .rpc('searchlinks', [
-            videoArray,
-            'video',
-            // '0',
-            // '0',
-            // '10',
-          ])
-          .then((res) => {
-            // debugger;
+          .rpc('searchlinks', [videoArray, 'video', 0, videoArray.length])
+          .then((res = {}) => {
+            if (!res.contents) return;
+
+            res.contents.forEach((post) => {
+              const postUrl = decodeURIComponent(post.u);
+
+              blockChainInfo[postUrl] = { ...post };
+            });
           })
-          .catch((err) => {
-            // debugger;
-          }),
+          .catch((err) => {}),
 
       resetHosts() {
         const videoPortionElement = $(
@@ -208,7 +208,19 @@ var videoCabinet = (function () {
               (video) => `peertube://${video.account.host}/${video.uuid}`,
             );
 
-            actions.getBlockchainPostByVideos(blockchainStrings);
+            actions.getBlockchainPostByVideos(blockchainStrings).then(() => {
+              p.el.find('.postingStatusWrapper').each(function () {
+                const currentElement = $(this);
+
+                const link = currentElement.attr('video');
+
+                if (blockChainInfo[link])
+                  return renders.postLink(currentElement, link);
+
+                currentElement.find('.attachVideoToPost').removeClass('hidden');
+                currentElement.find('.preloaderwr').addClass('hidden');
+              });
+            });
           },
         );
       },
@@ -305,8 +317,20 @@ var videoCabinet = (function () {
         });
       },
 
-      addButton: function (videoLink) {
+      addButton(videoLink) {
         self.app.platform.ui.share({ videoLink });
+      },
+
+      postLink(element, link) {
+        const linkInfo = blockChainInfo[link];
+
+        element.html(
+          `<a class="videoPostLink" href="https://${self.app.options.url}/index?s=${
+            linkInfo.txid
+          }"><i class="far fa-check-circle"></i>${self.app.localization.e(
+            'linkToPost',
+          )}</a>`,
+        );
       },
     };
 

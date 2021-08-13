@@ -1104,3 +1104,5 @@ ____loclib.videoCabinet = "My Videos";
 ____loclib.uploadQuota = "Daily Uploading Quota";
 ____loclib.attachVideoToPost = "Create Post With This Video";
 
+____loclib.linkToPost = "Link to Post";
+____loclib.attachVideoToPostShort = "Post";

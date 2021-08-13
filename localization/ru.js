@@ -903,3 +903,6 @@ ____loclib.linkStreamKey = 'Ключ трансляции'
 ____loclib.videoCabinet = "Мои Видео";	
 ____loclib.uploadQuota = "Дневные Лимиты Загрузки";
 ____loclib.attachVideoToPost = "Создать Пост С Этим Видео";
+
+____loclib.linkToPost = "Перейти к посту";
+____loclib.attachVideoToPostShort = "Опубликовать";

@@ -26,11 +26,37 @@
 
     .videoName {
         width: 25%;
+
+        font-size: 0.9em;
     }
 
     .videoTextContainer {
         text-overflow: ellipsis;
         overflow: hidden;
+        max-width: 200px;
+        white-space: nowrap;
+
+        margin: 0;
+    }
+
+    .videoNameText {
+        font-weight: bold;
+
+        margin-bottom: @rhythm;
+    }
+
+    .postingStatusWrapper {
+        min-width: 100px;
+        width: 15%;
+
+        font-size: 0.8em;
+    }
+
+    .videoPostLink {
+        &:hover {
+            color: @color-good;
+            text-decoration: underline;
+        }
     }
 
     .videoAvatar {
@@ -53,7 +79,7 @@
         font-weight: 100;
     }
 
-    .removeVideo {
+    .ghostButton {
         background-color: transparent;
         color: rgba(0, 0, 0, 0.5);
         border: none;

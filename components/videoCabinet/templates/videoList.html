@@ -8,21 +8,32 @@
       "
     ></div>
     <div class="videoItemPart videoName">
-      <p class="videoTextContainer"><%- video.name %></p>
+      <p class="videoTextContainer videoNameText"><%- video.name %></p>
       <p class="videoTextContainer"><%- video.account.host %></p>
     </div>
-    <div class="videoItemPart postingStatusWrapper">
+    <div class="videoItemPart videoStatsWrapper">
+      <div class="preloaderwr">
+        <div class="preloader5"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <div
+      class="videoItemPart postingStatusWrapper"
+      video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
+    >
+      <div class="preloaderwr">
+        <div class="preloader5"><span></span><span></span><span></span></div>
+      </div>
       <button
-        class="attachVideoToPost tooltip"
+        class="attachVideoToPost tooltip hidden ghostButton"
         title="<%- e('attachVideoToPost') %>"
         videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
       >
-        <i class="fas fa-signature"></i>
+        <i class="fas fa-signature"></i> <%- e('attachVideoToPostShort') %>
       </button>
     </div>
     <div class="videoItemPart removeButtonWrapper">
       <button
-        class="removeVideo tooltip"
+        class="removeVideo tooltip ghostButton"
         title="<%- e('removeVideo') %>"
         videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
       >
