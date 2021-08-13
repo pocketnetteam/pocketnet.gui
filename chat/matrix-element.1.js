@@ -1553,6 +1553,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       return this.core.mtrx.chatUsers(this.chat.roomId);
     },
     tetatet: function tetatet() {
+      console.log('this.m_chat', this.m_chat);
       return this.core.mtrx.kit.tetatetchat(this.m_chat);
     },
     changeRoomName: function changeRoomName() {
