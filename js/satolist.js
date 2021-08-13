@@ -2037,7 +2037,7 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
-        
+
 
         images : function(allimages, initialValue, clbk){
 
@@ -21066,7 +21066,7 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=1', clbk)
+                    importScript('chat/matrix-element.min.js?v=3', clbk)
                 }
                 
             }
