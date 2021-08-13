@@ -127,6 +127,17 @@ var pkview = (function(){
 							name : 'pocketnetkey'
 						})
 
+						/*if(window.cordova){
+							p_saveAsWithCordova(b64toBlob(text, 'image/png'), 'pocketnet_' + rand(1000, 9999) + '.png')
+						}
+						else{
+							p_saveAs({
+								file : text,
+								format : 'png',
+								name : 'pocketnetkey'
+							})
+						}*/
+
 					})
 
 					if(window.cordova){
@@ -143,9 +154,8 @@ var pkview = (function(){
 
 
 											var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
-											
 
-											p_saveAsWithCordova(image, 'pkey'+self.app.platform.currentTime()+'.png', function(){
+											p_saveAsWithCordova(image, 'pkey_'+self.app.platform.currentTime()+'.png', function(){
 												clbk()
 											})
 

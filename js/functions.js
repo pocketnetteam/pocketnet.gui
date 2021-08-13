@@ -5944,7 +5944,16 @@
 	p_saveAsWithCordova = function(file, name, clbk){
 
 
-		var storageLocation = 'file:///storage/emulated/0/';
+		var storageLocation = "";
+
+		switch (device.platform) {
+			case "Android":
+				storageLocation = 'file:///storage/emulated/0/';
+				break;
+			case "iOS":
+				storageLocation = cordova.file.cacheDirectory;
+				break;
+		}
 	
 
 

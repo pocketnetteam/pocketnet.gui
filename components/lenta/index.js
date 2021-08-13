@@ -1567,7 +1567,9 @@ var lenta = (function(){
 
 							if(player.p.getState && player.p.getState() == 'ended') return
 
-							if(!player.p.playing){
+							
+
+							if(!player.p.playing && !self.app.platform.matrixchat.showed()){
 								player.p.play()
 
 								actions.setVolume(player)

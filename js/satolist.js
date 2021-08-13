@@ -49,7 +49,10 @@ Platform = function (app, listofnodes) {
         'PUqq6vksrmoMPRrRjZxCVQefqGLpuaqWii' : true,
         'PMtmtctmBD9nHJFzmfXJR1G2busp8CjASs' : true,
         'PNUMTC5CTH3F5LfQpkmj3MXcDnGNKTU4ov' : true,
-        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta' : true
+        'PSWR1jHNocGVVVFE3aoxFh8G85SQK3G9Ta' : true,
+        'PJuW8LKT7LZY88fP7WM35NJURh3rAaeU3o' : true,
+        'PGCTymXHcEydV8SSmoABTB8YEchJbDoRJn' : true,
+        'PDXGoy43t5RSqJY1UJBgswBu6phtW8Knwa' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -2034,6 +2037,7 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        
 
         images : function(allimages, initialValue, clbk){
 
@@ -21296,9 +21300,7 @@ Platform = function (app, listofnodes) {
 
         backtoapp : function(){
 
-            if (self.matrixchat.core){
-                console.log('self.matrixchat.core.hiddenInParent', self.matrixchat.core.hiddenInParent)
-            }
+          
 
             if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){ 
                 self.matrixchat.core.backtoapp()
@@ -21311,6 +21313,18 @@ Platform = function (app, listofnodes) {
             return pretry(function(){
                 return self.matrixchat.core
             })
+        },
+
+        showed : function(){
+            if(!self.matrixchat.core){ return false }
+
+            if(isMobile()){
+                return !self.matrixchat.core.hiddenInParent
+            }
+
+            console.log('self.matrixchat.core.isactive()', self.matrixchat.core.isactive())
+
+            return self.matrixchat.core.isactive()
         },
 
         link : function(core){
