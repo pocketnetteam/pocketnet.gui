@@ -75,20 +75,20 @@ var videoCabinet = (function () {
           .then((res) => (userQuota = { ...res }));
       },
 
-      getBlockchainPostByVideos: (videoString = '') =>
+      getBlockchainPostByVideos: (videoArray = []) =>
         self.app.api
-          .rpc('search', [
-            videoString,
-            'videolink',
+          .rpc('searchlinks', [
+            videoArray,
+            'video',
             // '0',
             // '0',
             // '10',
           ])
           .then((res) => {
-            debugger;
+            // debugger;
           })
           .catch((err) => {
-            debugger;
+            // debugger;
           }),
 
       resetHosts() {
@@ -207,8 +207,8 @@ var videoCabinet = (function () {
             const blockchainStrings = videos.map(
               (video) => `peertube://${video.account.host}/${video.uuid}`,
             );
-            debugger;
-            actions.getBlockchainPostByVideos([`peertube://${videos[0].account.host}/${videos[0].uuid}`, `peertube://${videos[2].account.host}/${videos[2].uuid}`]);
+
+            actions.getBlockchainPostByVideos(blockchainStrings);
           },
         );
       },

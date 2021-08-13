@@ -1,18 +1,17 @@
 <sectiion class="videosWrapper">
   <% videos.map((video) => { %>
   <div class="singleVideoSection">
-    <div class="videoItemPart videoAvatar">
-      <img
-        src="<%- `https://${video.account.host}${video.previewPath}` %>"
-        alt="Peertube Video"
-        class="videoPreviewImage"
-      />
-    </div>
+    <div
+      class="videoAvatar"
+      style="
+        background-image: url(<%- `https://${video.account.host}${video.previewPath}` %>);
+      "
+    ></div>
     <div class="videoItemPart videoName">
-      <p><%- video.name %></p>
-      <p><%- video.account.host %></p>
+      <p class="videoTextContainer"><%- video.name %></p>
+      <p class="videoTextContainer"><%- video.account.host %></p>
     </div>
-    <div class="videoItemPart removeButtonWrapper">
+    <div class="videoItemPart postingStatusWrapper">
       <button
         class="attachVideoToPost tooltip"
         title="<%- e('attachVideoToPost') %>"
@@ -20,6 +19,8 @@
       >
         <i class="fas fa-signature"></i>
       </button>
+    </div>
+    <div class="videoItemPart removeButtonWrapper">
       <button
         class="removeVideo tooltip"
         title="<%- e('removeVideo') %>"

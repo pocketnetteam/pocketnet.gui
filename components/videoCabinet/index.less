@@ -17,19 +17,29 @@
 
         padding: @rhythm * 2 @rhythm * 4;
 
-        border: 1px solid @color-gray-border;
-        border-left-width: 0;
-        border-right-width: 0;
+        border-bottom: 1px solid @color-gray-border;
 
+        &:hover {
+            background-color: fade(@color-gray-light, 15);
+        }
     }
 
-    .videoPreviewImage {
-        max-width: 150px;
-        max-height: 150px;
+    .videoName {
+        width: 25%;
     }
 
-    .videoItemPart {
-        width: 33%;
+    .videoTextContainer {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .videoAvatar {
+        width: 100px;
+        height: 60px;
+
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
     .moduleHeader {
@@ -41,6 +51,16 @@
         padding-top: 1em;
         font-size: 2em;
         font-weight: 100;
+    }
+
+    .removeVideo {
+        background-color: transparent;
+        color: rgba(0, 0, 0, 0.5);
+        border: none;
+
+        &:hover {
+            color: rgba(0, 0, 0, 1);
+        }
     }
 
     .reputation {
@@ -451,7 +471,11 @@
     }
 
     .statsSection {
-        padding: 0 4em 2em;
+        padding: 0 8 * @rhythm 4 * @rhythm;
+    }
+
+    .videoContainer {
+        padding: 0 8 * @rhythm;
     }
 
     .circular {

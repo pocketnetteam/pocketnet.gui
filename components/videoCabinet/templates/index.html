@@ -15,21 +15,22 @@
     </div>
   </section>
   <section class="videoContainer">
-    <section>
-      Video Controls
-      <button
-        class="uploadVideo videoActiveButton"
-        rendersElement="addVideo"
-      >
+    <section class="videoControls">
+      <div class="videoSearchWrapper">
+        <input type="text" id="videoSearchInput" class="videoSearchInput" />
+        <label for="videoSearchInput">Video Search</label>
+        <button class="videoSearchButton"><i class="fas fa-search"></i></button>
+      </div>
+      <button class="uploadVideo videoActiveButton" rendersElement="addVideo">
         <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
       </button>
-      <button
+      <!-- <button
         class="startStream videoActiveButton"
         rendersElement="addStream"
       >
         <i class="fas fa-dot-circle"></i><%- e('peertubeAddStream') %>
-      </button>
+      </button> -->
     </section>
-	<section class="userVideos"></section>
+    <section class="userVideos"></section>
   </section>
 </div>
