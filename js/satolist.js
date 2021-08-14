@@ -9,10 +9,6 @@ if (typeof _Electron != 'undefined') {
     $('html').addClass('electron')
 }
 
-/*
-
-Pocketnet[51792:5059590] [connection] nw_endpoint_handler_set_adaptive_write_handler [C6.1.1 64.235.46.85:443 ready channel-flow (satisfied (Path is satisfied), viable, interface: pdp_ip0, ipv4, dns, expensive)] unregister notification for write_timeout failed
-*/
 
 
 Platform = function (app, listofnodes) {
@@ -2241,7 +2237,7 @@ Platform = function (app, listofnodes) {
                         console.log(d, p)
 
                         if (p.roomid && d.txid){
-                            self.matrixchat.shareInChat.url(p.roomid, 'pocketnet://i?stx=' + d.txid)
+                            self.matrixchat.shareInChat.url(p.roomid, 'pocketnet://i?stx=' + d.txid) /// change protocol
                         }
 
                         resolve(d)
@@ -2261,8 +2257,6 @@ Platform = function (app, listofnodes) {
                         clbk : function(e, _p){
 
                             console.log('dsdsds', _p)
-
-                            ////pocketnet://i?stx=
 
                             es = _p
     
@@ -3010,7 +3004,7 @@ Platform = function (app, listofnodes) {
 
                         el.find('.opennewwindow').on('click', function(){
 
-                            var href = 'https://pocketnet.app/'
+                            var href = 'https://'+window.location.hostname+'/' /// domain
 
                             if(d.share.itisvideo()){
                                 href += 'index?video=1&v=' + id
@@ -4178,8 +4172,9 @@ Platform = function (app, listofnodes) {
                             if(!is.macOS()){
 
                                 const AutoLaunch = require('auto-launch');
+
                                 let autoLaunch = new AutoLaunch({
-                                    name: 'Pocketnet',
+                                    name: 'Pocketnet', // app name
                                     path: electron.remote.app.getPath('exe'),
                                     isHidden: true
                                 });
@@ -4372,7 +4367,7 @@ Platform = function (app, listofnodes) {
 
                         const AutoLaunch = require('auto-launch');
                         let autoLaunch = new AutoLaunch({
-                            name: 'Pocketnet',
+                            name: 'Pocketnet', // app name
                             path: electron.remote.app.getPath('exe'),
                             isHidden: true
                         });
@@ -4495,6 +4490,10 @@ Platform = function (app, listofnodes) {
 
 						if(err == 'pocketnet'){
 							errtext = 'To avoid user confusion using Pocketnet in name is reserved'
+						}
+
+                        if(err == 'bastyon'){
+							errtext = 'To avoid user confusion using Bastyon in name is reserved'
 						}
 
                         self.sdk.keys.error(errtext)
@@ -16380,7 +16379,7 @@ Platform = function (app, listofnodes) {
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
-        if (appid == 'localhost') appid = 'pocketnet.app'
+        if (appid == 'localhost') appid = 'pocketnet.app' /// url
 
         var device = function () {
             var id = platform.app.options.device
@@ -21216,14 +21215,6 @@ Platform = function (app, listofnodes) {
             },
             event : function(matrixevent){
 
-                /*var matrixevent = matrixevent2 || {
-                    icon: "https://i.imgur.com/UZv3lZ9.jpg",
-                    ctype : 'encrypted',
-                    message: "eyI1MDUxMzg0MTY5NDM0ODRhNjE1NDVhNDE1NDY4NzIzMjU0NmU3MDZiNTE1OTQ0Nzk1NjY0MzE0ODY5NjQ3MTM0NTA0ZCI6eyJlbmNyeXB0ZWQiOiI1dHNyZEk4bGU3UGdWZ3l1YlhCRHBabTJNL1BiekE9PSIsIm5vbmNlIjoiTzJoN2c3N21XWWV2dEJzQmNqcFNqd2ZuTjZXM3dRMGpmMy91bW1KODRyOD0ifX0=",
-                    roomId: "!hRgwQYozShhabTUIAT:test.matrix.pocketnet.app",
-                    title: "Ttr"
-                }*/
-
 
                 if(typeof _Electron != 'undefined' && !self.focus){
 
@@ -21668,7 +21659,7 @@ Platform = function (app, listofnodes) {
                 clearInterval(interval);
 
             if(!initial) {
-                initial = document.title || "Pocketnet"
+                initial = document.title || "Pocketnet" //fullName
             }
 
             var i = 0;
@@ -21878,7 +21869,7 @@ Platform = function (app, listofnodes) {
 
             universalLinks.subscribe('nav-message', function (eventData) {
 
-                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '')
+                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '') //// getroutefunction
 
                 if (route){
                     self.app.nav.api.load({

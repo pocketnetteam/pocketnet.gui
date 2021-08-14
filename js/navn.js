@@ -1396,9 +1396,6 @@ Nav = function(app)
 			return decodeSeoLinks(pathnameSearch).replace("#!", "");
 		},
 		hostname : function(){
-
-			//return 'pocketnet.app/'
-
 			return window.location.hostname + '/'
 		}
 	}

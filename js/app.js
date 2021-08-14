@@ -62,6 +62,25 @@ Application = function(p)
 	var self = this;
 	var realtimeInterval = null;
 
+
+	self.meta = {
+		pocketnet : {
+			url : "pocketnet.app",
+			turl : "test.pocketnet.app",
+			fullName : "Pocketnet",
+			protocol : 'pocketnet',
+			blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		},
+
+		bastyon : {
+			fullName : "Bastyon",
+			url : "bastyon.com",
+			turl : "test.pocketnet.app",
+			protocol : 'bastyon',
+			blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		}
+	}
+
 	var url = 'pocketnet.app'
 
 	if (window.testpocketnet){
@@ -69,6 +88,8 @@ Application = function(p)
 
 		self.test = true
 	}
+
+	
 
 	self.options = {
 		
@@ -84,10 +105,6 @@ Application = function(p)
 		fullName : "pocketnet",
 		localStoragePrefix : 'pocketnet',
 
-		//////////////
-
-		//apiproxy : p.apiproxy || 'https://pocketnet.app:8888',
-		//apimproxy : p.apimproxy || 'https://pocketnet.app:8888',
 		
 		server : p.server || 'https://'+url+'/Shop/AJAXMain.aspx', //donations will be removed
 
@@ -102,8 +119,6 @@ Application = function(p)
 
 		imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
 
-		////////////// Will remove with Matrix
-		//ws : p.ws || "wss://pocketnet.app:8088",
 		rtc : p.rtc || 'https://'+url+':9001/',
 		rtcws : p.rtcws || 'wss://'+url+':9090',
 		rtchttp : p.rtchttp || 'https://'+url+':9091',
@@ -763,7 +778,7 @@ Application = function(p)
 		};
 	
 		if (self.test){
-			$('html').addClass('testpocketnet')
+			$('html').addClass('testpocketnet') /// bstn
 		}
 
 		/*if(isMobile()){
