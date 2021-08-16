@@ -124,7 +124,7 @@ Application = function(p)
 		imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
 
 		rtc : p.rtc || 'https://'+url+':9001/',
-		rtcws : p.rtcws || 'wss://'+url+':9090',
+		rtcws : p.rtcws || 'wss://pocketnet.app:9090',
 		rtchttp : p.rtchttp || 'https://'+url+':9091',
 		
 		listofnodes : p.listofnodes || null,

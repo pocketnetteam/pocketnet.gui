@@ -20,7 +20,7 @@ class OG {
 
     private $maphrefs = array('about', 'applications', 'terms', 'page404', 'registration', 'anothersite', 'token', 'filluser', 'usersettings', 'test', 'accounts', 'messenger', 'articles', 'article', 'video', 'help', 'donations', 'faq', 'embeding20', 'embeding', 'userpage', 'chat', 'mchat', 'wallet', 'share', 'comments', 'lenta', 's', 'imagesEdit', 'imagegallery', 'aboutus', 'menu', 'toppanel', 'navigation', 'footer', 'support', 'notifications', 'panel', 'discussions', 'authorization', 'addaccount', 'complain', 'scheduler', 'surveyiframe', 'socialshare', 'index', 'post', 'userslist', 'ustate', 'welcome');
 
-    public $defaultOg = NULL;
+    private $defaultOg = NULL;
 
     public $currentOg = array();
 
@@ -36,7 +36,7 @@ class OG {
         $this->project = $project;
         $this->domain = $domain;
 
-        $this->$defaultOg = array(
+        $this->defaultOg = array(
             'title' => $this->project.': First Fully Decentralized Social Network on Blockchain', 
             'site_name' => $this->project, 
             'type' => 'website',
