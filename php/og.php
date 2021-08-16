@@ -14,15 +14,13 @@ class OG {
     private $parentid = NULL;
     private $imageNum = 0;
 
-    private $maphrefs = array('about', 'applications', 'terms', 'page404', 'registration', 'anothersite', 'token', 'filluser', 'usersettings', 'test', 'accounts', 'messenger', 'articles', 'article', 'video', 'help', 'donations', 'faq', 'embeding20', 'embeding', 'userpage', 'chat', 'mchat', 'wallet', 'share', 'comments', 'lenta', 's', 'imagesEdit', 'imagegallery', 'aboutus', 'menu', 'toppanel', 'navigation', 'footer', 'support', 'notifications', 'panel', 'discussions', 'authorization', 'addaccount', 'complain', 'scheduler', 'surveyiframe', 'socialshare', 'index', 'post', 'userslist', 'ustate');
+    private $domain = NULL;
+    private $project = NULL;
+    
 
-    public $defaultOg = array(
-        'title' => 'Pocketnet: First Fully Decentralized Social Network on Blockchain', 
-        'site_name' => 'Pocketnet', 
-        'type' => 'website',
-        'image' => 'https://pocketnet.app/img/logosmallpadding.png',
-        'description' => 'A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.',
-    );
+    private $maphrefs = array('about', 'applications', 'terms', 'page404', 'registration', 'anothersite', 'token', 'filluser', 'usersettings', 'test', 'accounts', 'messenger', 'articles', 'article', 'video', 'help', 'donations', 'faq', 'embeding20', 'embeding', 'userpage', 'chat', 'mchat', 'wallet', 'share', 'comments', 'lenta', 's', 'imagesEdit', 'imagegallery', 'aboutus', 'menu', 'toppanel', 'navigation', 'footer', 'support', 'notifications', 'panel', 'discussions', 'authorization', 'addaccount', 'complain', 'scheduler', 'surveyiframe', 'socialshare', 'index', 'post', 'userslist', 'ustate', 'welcome');
+
+    public $defaultOg = NULL;
 
     public $currentOg = array();
 
@@ -30,10 +28,21 @@ class OG {
    
     
 
-	public function __construct ($get, $proxypath)
+	public function __construct ($get, $proxypath, $domain, $project)
 	{
         $this->rpc = new RPC($proxypath);
         $this->api = new API($proxypath);
+
+        $this->project = $project;
+        $this->domain = $domain;
+
+        $this->$defaultOg = array(
+            'title' => $this->project.': First Fully Decentralized Social Network on Blockchain', 
+            'site_name' => $this->project, 
+            'type' => 'website',
+            'image' => 'img/logosmallpadding.png',
+            'description' => 'A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.',
+        );
         
         if (isset($get['address'])) $this->author = $this->clean($get['address']);
         if (isset($get['connect'])) {
@@ -143,7 +152,7 @@ class OG {
 
             $ci = 'https://'.$v['host_name'].'/lazy-static/previews/'. $v['id'] . '.jpg';
             $cu = 'https://'.$v['host_name'].'/download/videos/'. $v['id'] . '-480.mp4';
-            $u = 'https://pocketnet.app/openapi.html?action=lenta&id='.$txid.'&embeddingSettigns=7b22626c61636b223a312c22636f6d6d656e7473223a226e6f222c2266756c6c73637265656e766964656f223a312c22726566223a2250523773727a5a74344566634e62337332376772676d69473861423976594e563832227d';
+            $u = 'https://'.$this->domain.'/openapi.html?action=lenta&id='.$txid.'&embeddingSettigns=7b22626c61636b223a312c22636f6d6d656e7473223a226e6f222c2266756c6c73637265656e766964656f223a312c22726566223a2250523773727a5a74344566634e62337332376772676d69473861423976594e563832227d';
 
             $this->currentOg['video:url'] = $u;
             $this->currentOg['video:secure_url'] = $u;
@@ -153,7 +162,7 @@ class OG {
 
                 $peertubeinfo = $this->api->peertubeinfo($v['host_name'], $v['id']);
 
-                $this->currentOg['twitter:site'] = 'pocketnet.app';
+                $this->currentOg['twitter:site'] = $this->domain;
                 $this->currentOg['twitter:card'] = 'player';
 
                 if(isset($peertubeinfo->previewPath)){
