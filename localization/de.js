@@ -3,7 +3,7 @@ loclib = {};
 
 loclib.de = {};
 
-var appname = ((app || {}).meta || {}).fullName || "Pocketnet"
+var appname = window.pocketnetproject || "Pocketnet"
 
 var ____loclib = loclib.de;
 

@@ -2,8 +2,8 @@ if(typeof loclib == "undefined" || !loclib)
 	loclib = {};
 
 	loclib.es = {};
-
-var appname = ((app || {}).meta || {}).fullName || "Pocketnet"
+	
+	var appname = window.pocketnetproject || "Pocketnet"
 
 var ____loclib = loclib.es;
 

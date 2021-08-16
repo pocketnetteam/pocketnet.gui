@@ -5,6 +5,7 @@ loclib.kr = {};
 
 var ____loclib = loclib.kr;
 
+var appname = window.pocketnetproject || "Pocketnet"
 //time
 
 ____loclib.fewseconds = "몇 초 전";

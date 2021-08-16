@@ -3,7 +3,9 @@
 
 	loclib.ru = {};
 
-var appname = ((app || {}).meta || {}).fullName || "Pocketnet"
+var appname = window.pocketnetproject || "Pocketnet"
+
+
 
 var ____loclib = loclib.ru;
 
@@ -541,7 +543,7 @@ ____loclib.e13129 = "Прикрепленные изображения"
 ____loclib.e13130 = "Редактировано"
 ____loclib.e13131 = "Вы заблокировали этого пользователя"
 ____loclib.e13132 = "оценили"
-____loclib.e13133 = "Поделиться этим"
+____loclib.e13133 = "Поделиться"
 ____loclib.e13134 = "По этой строке поиска нет результатов"
 ____loclib.e13135 = "У пользователя нет закрытого ключа"
 ____loclib.e13136 = "Вся лента"

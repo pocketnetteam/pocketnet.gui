@@ -1,0 +1,3 @@
+This is a Brave Rewards publisher verification file.
+Domain: pocketnet.app
+Token: 7ba29d119e61e9c5f073a926cc733b1f8975f7eab9993399cce960d17bb2e299

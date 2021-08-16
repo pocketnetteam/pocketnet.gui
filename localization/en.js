@@ -1,6 +1,5 @@
-﻿console.log(app)
-
-var appname = ((app || {}).meta || {}).fullName || "Pocketnet"
+﻿
+var appname = window.pocketnetproject || "Pocketnet"
 
 if(typeof loclib == "undefined" || !loclib)
 loclib = {};

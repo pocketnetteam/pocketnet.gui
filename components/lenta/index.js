@@ -744,7 +744,7 @@ var lenta = (function(){
 
 						essenseData : {
 							url : url,
-							caption : self.app.localization.e('e13133') + ' ' + n,
+							caption : self.app.localization.e('e13133'),
 
 							sharing : share.social(self.app),
 							embedding : {

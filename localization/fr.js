@@ -2,7 +2,7 @@ if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
 loclib.fr = {};
-var appname = ((app || {}).meta || {}).fullName || "Pocketnet"
+var appname = window.pocketnetproject || "Pocketnet"
 var ____loclib = loclib.fr;
 
 //time
