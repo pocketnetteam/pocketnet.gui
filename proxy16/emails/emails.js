@@ -209,13 +209,19 @@ var Emails = function(p){
             };
 
             var template = 'sendgiftcode';
+            
             return self.email.send(template, exdata, email).then(function(result){
 
                 self.dbapi.insert(email, code);
 
                 return Promise.resolve(result);
 
-            });
+            })
+            .catch((err) => {
+
+                console.log('sendcode err!!!', err);
+                return Promise.reject(err);
+            })
 
         },
 
@@ -230,6 +236,8 @@ var Emails = function(p){
             
             return self.dbapi.update(email, code);
         },
+
+        
 
 
     }
@@ -248,11 +256,11 @@ var Emails = function(p){
 
                 return Promise.resolve(transporter.sendMail(t));
             }).catch(e => {
-                console.log("EMAIL SEND ERROR", e)
+                console.log("EMAIL SEND ERROR", e.code);
                 return Promise.reject(e)
             })
 
-            return Promise.resolve(created);
+            return created;
            
         },
         

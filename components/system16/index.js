@@ -2329,7 +2329,8 @@ var system16 = (function(){
 						data : {
 							system : system,
 							proxy : proxy,
-							emails : changes.emails
+							emails : changes.emails,
+							results : system.emails.results || []
 						},
 
 						el : elc.find('.emailsPanelWrapper')
@@ -2403,16 +2404,16 @@ var system16 = (function(){
 									changes.emails = {}
 
 									make(proxy || api.get.current());
+				
+									topPreloader(100);
 
 									globalpreloader(false)
 
-				
-									topPreloader(100);
 		
 								})
 							}
 
-							if(typeof changes.emails.enabled != 'undefined' || changes.emails.https || changes.emails.wss || changes.emails.ssl){
+							if(typeof changes.emails.emailshost != 'undefined' || changes.emails.port || changes.emails.secure || changes.emails.login || changes.emails.password){
 
 
 								dialog({

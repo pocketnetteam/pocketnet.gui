@@ -47,7 +47,6 @@ var test = (function(){
 
 			saveemail : function(email, clbk){
 			
-
 				var _p = {
 					Email : email,
 					Lang : self.app.localization.key || 'en'
@@ -578,7 +577,6 @@ var test = (function(){
 
 						if (id === 'email' && emailRequire){
 
-
 							self.app.api.fetch('emails/check', {email: tempInfo[parameter.id]})
 							.then(function(result){
 								
@@ -591,12 +589,17 @@ var test = (function(){
 
 								} else {
 
-	
 									el.c.find('.erroremail').fadeOut();
 
 									el.c.find('.confirmemail').show();
 
 								}
+
+							})
+							.catch(function(err){
+
+								el.c.find('.erroremail').fadeIn();
+								el.c.find('.erroremail span').html('Internal error');	
 
 							})
 
@@ -627,6 +630,10 @@ var test = (function(){
 									emailVerification = null;
 
 								}
+							})
+							.catch(function(err){
+
+								console.log('checcode err', err);
 							})
 
 							
@@ -921,11 +928,9 @@ var test = (function(){
 				actions.signout()
 			},
 			save : function(){
-
 			
-					actions.save()
-				
-				
+				actions.save()
+							
 			},
 			cancel : function(){
 				actions.cancel()
@@ -1092,6 +1097,8 @@ var test = (function(){
 		}
 
 		var initEvents = function(){
+
+
 			el.import.on('click', events.importAddress)
 			el.showhidetestpanel.on('click', function(){
 				$(this).closest('.testPanel').toggleClass('active')
@@ -1135,15 +1142,59 @@ var test = (function(){
 					
 						changeemail.show();
 						emialInput.prop('disabled', true);
-						codeWrapper.show();
 		
 						var email = emailWrapper.find('input').val();
-						console.log('input', email);
+						
+
+						var lastVerifyDate = localStorage.getItem('lastVerifyDate');
+						var verifyDate = new Date().getTime();
+						var verifyInterval = verifyDate - Number(lastVerifyDate);
+
+						if (lastVerifyDate && verifyInterval < 40000){
+
+							console.log('verifyDate', verifyInterval)
+
+							sitemessage("Please, wait " + (Math.round(40 - verifyInterval / 1000)) + " seconds to send mail again");
+
+
+						} else {
+
+							localStorage.setItem('lastVerifyDate', String(verifyDate));
 		
-						self.app.api.fetch('emails/verify', {email})
-						.then(function(result){
-							console.log('result!', result);
-						})
+							self.app.api.fetch('emails/verify', {email})
+							.then(function(result){
+	
+								codeWrapper.show();
+								el.c.find('.errorconfirmemail').fadeOut();
+	
+								console.log('result emails/verify', result);
+	
+								self.app.api.fetchauth('manage', {
+									action : 'set.emailsresults',
+									data : {
+										result: 'success'
+									}
+								})
+							})
+							.catch(function(err){
+	
+								codeWrapper.hide();
+	
+								el.c.find('.errorconfirmemail').fadeIn();
+								el.c.find('.errorconfirmemail span').html('Email configuration error');	
+	
+								console.log('err emails/verify', err, Object.keys(err), Object.values(err));
+	
+								self.app.api.fetchauth('manage', {
+									action : 'set.emailsresults',
+									data : {
+										result: err
+									}
+								})
+	
+							})
+						}
+
 		
 						
 					})

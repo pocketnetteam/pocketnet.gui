@@ -117,7 +117,11 @@ var Wallet = function(p){
         return Promise.resolve()
     }
 
+
     var db = new Datastore(f.path(p.dbpath));
+
+    console.log('p.dbpath', p.dbpath, db)
+
 
     var initProcess = function(){
 

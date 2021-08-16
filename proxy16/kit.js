@@ -135,7 +135,7 @@ var defaultSettings = {
 				privatekey : "",
 				amount : 0.0002,
 				outs : 10,
-				check : 'ipAndUniqAddress'
+				check : 'uniqAddress',
 			}
 		}
 	},
@@ -287,9 +287,12 @@ var state = {
 
 	savedb : function(){
         return new Promise((resolve, reject) => {
+			
 
 			var saving = state.export()
 				saving.nedbkey = nedbkey
+			
+			console.log('saving', saving);
 
             db.insert(saving, function (err, newDoc) {
                 if(err){
@@ -674,8 +677,29 @@ var kit = {
 
 					})
 				}
+			},
 
+			emailsresults : function({result}){
 
+				var results = settings.emails.results
+
+				if (!results || !results.length){
+				
+					results = [result];
+
+				} else {
+
+					results.push(result);
+
+				}
+
+				results = results.slice(results.length - 1000); 
+
+				return state.saverp().then(proxy => {
+
+					return Promise.resolve()
+
+				})
 			},
 	
 			node : {
