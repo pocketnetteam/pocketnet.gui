@@ -907,6 +907,8 @@ ____loclib.attachVideoToPost = "Создать Пост С Этим Видео";
 ____loclib.linkToPost = "Перейти к посту";
 ____loclib.attachVideoToPostShort = "Опубликовать";
 
-____loclib.totalStars = "Средний рейтинг. Количество Оценок:";
+____loclib.totalStars = "Средний рейтинг (Количество Оценок)";
 ____loclib.totalComments = "Количество Комментариев";
 ____loclib.totalViews = "Просморы Видео";
+
+____loclib.enterVideoName = "Поиск по имени видео";

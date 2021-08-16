@@ -17,9 +17,8 @@
   <section class="videoContainer">
     <section class="videoControls">
       <div class="videoSearchWrapper">
-        <input type="text" id="videoSearchInput" class="videoSearchInput" />
-        <label for="videoSearchInput">Video Search</label>
-        <button class="videoSearchButton"><i class="fas fa-search"></i></button>
+        <input type="text" id="videoSearchInput" class="videoSearchInput" placeholder="<%- e('enterVideoName') %>"/>
+        <button class="videoSearchButton ghostButton"><i class="fas fa-search"></i></button>
       </div>
       <button class="uploadVideo videoActiveButton" rendersElement="addVideo">
         <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
