@@ -278,7 +278,7 @@
 								<img class="header_logo" src="img/logo20.svg">
 							</div>
 							<div class="label">
-								<div events="sitename"><% if(app.test){%>TESTNET<%} else {%>POCKETNET<% }%></div>
+								<div events="sitename"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
 								<div class="lang localization">
 									
 									<% if(isMobile()) {%>

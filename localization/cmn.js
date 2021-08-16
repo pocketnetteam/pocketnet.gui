@@ -4,7 +4,7 @@ loclib = {};
 loclib.cmn = {};
 
 var ____loclib = loclib.cmn;
-
+var appname = ((app || {}).meta || {}).fullName || "Pocketnet"
 //time
 
 ____loclib.fewseconds = "几秒前";	

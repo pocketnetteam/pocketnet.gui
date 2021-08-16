@@ -9,7 +9,7 @@
 
       
 
-        <title>POCKETNET</title>
+        <title>__VAR__.project</title>
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
@@ -81,7 +81,7 @@
 
         <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in">
-            <h1 class="fade-in">POCKETNET</h1>
+            <h1 class="fade-in">__VAR__.project</h1>
         </div>
 
         <div class="chats">

@@ -233,6 +233,12 @@ var test = (function(){
 							
 						}
 
+						if(err == 'bastyon'){
+
+							el.c.find('.errorname span').html('To avoid user confusion using Bastyon in name is reserved');
+							
+						}
+
 
 						var pn = el.c.find('[parameter="name"] input')
 
@@ -384,7 +390,7 @@ var test = (function(){
 							topPreloader(100)
 
 							el.c.find('.errorname').fadeIn();
-							el.c.find('.errorname span').html('This username is taken in Pocketnet');									
+							el.c.find('.errorname span').html('This username is taken in ' + self.app.meta.fullname);									
 						}
 					})
 
@@ -538,6 +544,14 @@ var test = (function(){
 
 								return
 							}
+
+							if (hash.indexOf('bastyon') > -1) {
+
+								el.c.find('.errorname').fadeIn();
+								el.c.find('.errorname span').html('To avoid user confusion using Bastyon in name is reserved');	
+
+								return
+							}
 							
 							if (tempInfo[parameter.id].length > 20){
 								el.c.find('.errorname').fadeIn();
@@ -555,7 +569,7 @@ var test = (function(){
 									else
 									{
 										el.c.find('.errorname').fadeIn();
-										el.c.find('.errorname span').html('This username is taken in Pocketnet');									
+										el.c.find('.errorname span').html('This username is taken in ' + self.app.meta.fullname);									
 									}
 								})	
 							}

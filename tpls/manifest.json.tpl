@@ -1,5 +1,5 @@
 {
-    "name": "Pocketnet",
+    "name": "__VAR__.project",
     "icons": [
         {
             "src": "img/res/drawable-ldpi-icon.png",

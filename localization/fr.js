@@ -2,7 +2,7 @@ if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
 loclib.fr = {};
-
+var appname = ((app || {}).meta || {}).fullName || "Pocketnet"
 var ____loclib = loclib.fr;
 
 //time
@@ -48,7 +48,7 @@ ____loclib.saveqrcode = "Enregistrer le code Qr"
 ____loclib.copyprivkey = "Copier la clé privée"
 ____loclib.rcontinue = "Continuer"
 ____loclib.idle = "Inactif depuis un certain temps"
-____loclib.congratulations = 'Toutes nos félicitations! Tu es dans <span class="pnlabel">Pocketnet</span>'
+____loclib.congratulations = 'Toutes nos félicitations! Tu es dans <span class="pnlabel">'+appname+'</span>'
 ____loclib.creatingpreloader = 'La création du compte'
 ____loclib.removepaste = "Nous avons supprimé l'option coller pour cette entrée."
 ____loclib.filedamaged = "Le fichier ne contient pas de clé privée valide"
@@ -75,7 +75,7 @@ ____loclib.funetworkproblems = "Il y a quelques problémes avec la connexion. Me
 
 ____loclib.pleasewait = "S'il vous plaît, attendez";	
 ____loclib.next = "Suivant";	
-____loclib.welcometopocketnet = "Bienvenue sur Pocketnet";	
+____loclib.welcometopocketnet = "Bienvenue sur "+appname+"";	
 ____loclib.continue = "continuer";	
 
 //user page
@@ -87,7 +87,7 @@ ____loclib.rwallet = 'Portefeuille';
 ____loclib.raccounts = 'Comptes';	
 ____loclib.rsystem = 'Système';
 ____loclib.rconnection = 'Connexion';
-____loclib.pnetAddress = 'Adresse Pocketnet';	
+____loclib.pnetAddress = "Adresse "+appname+"";	
 ____loclib.profile = 'Profil';	
 ____loclib.signout = 'Déconnexion';
 
@@ -95,8 +95,8 @@ ____loclib.signout = 'Déconnexion';
 
 ____loclib.postlabel = "Don pour poste";	
 ____loclib.donationlabel = "Don";	
-____loclib.donationwel = "Si vous souhaitez remercier l'auteur, vous pouvez utiliser une transaction Pocketnet";
-____loclib.donationwela = "Transaction Pocketnet";	
+____loclib.donationwel = "Si vous souhaitez remercier l'auteur, vous pouvez utiliser une transaction "+appname+"";
+____loclib.donationwela = "Transaction "+appname+"";	
 ____loclib.donationwelan = "Ou vous pouvez utiliser un autre système de paiement cryptè";	
 ____loclib.successfullycopiedaddress = "Adresse copiée avec succès";	
 
@@ -167,7 +167,7 @@ ____loclib.wsaddressnotv = "L'adresse n'est pas valide";
 ____loclib.uaddaddressdona = "Ajouter une adresse pour les dons";
 ____loclib.uaddaddressdonaplace = "Mettre l'adresse";
 ____loclib.uchangeicon = "Importer une image de profil";
-____loclib.utip1 = "Vous devez créer un nom et un avatar sur la blockchain avant d'utiliser Pocketnet";
+____loclib.utip1 = "Vous devez créer un nom et un avatar sur la blockchain avant d'utiliser "+appname+"";
 ____loclib.utip2 = "Il ne vous reste plus qu'un pas";
 ____loclib.upicset = "Definir l'icone de profil";
 ____loclib.upic = "Icone de Profil";
@@ -208,7 +208,7 @@ ____loclib.aused = "Cette adresse est déjà utilisée dans un autre pool d'adre
 //author
 ____loclib.sub = "S'abonner";
 ____loclib.unsub = "Se désabonner";
-____loclib.joined = "Rejoint Pocketnet";
+____loclib.joined = "Rejoint "+appname+"";
 ____loclib.shares = "PARUTIONS";
 ____loclib.uposts = "POSTS";
 ____loclib.myuposts = "MES POSTS";
@@ -240,7 +240,7 @@ ____loclib.lpublic = "Public";
 
 //share
 ____loclib.newShare = "Nouveau post";
-____loclib.firstShare = "Partagez votre premier message dans Pocketnet";
+____loclib.firstShare = "Partagez votre premier message dans "+appname+"";
 ____loclib.scaption = "Caption";
 ____loclib.whatsnew = "Quoi de neuf?";
 ____loclib.saddlink = "Ajouter un lien vers un site externe ou une vidéo";
@@ -322,7 +322,7 @@ ____loclib.upvoteCommentMessage = " a aimé votre commentaire"
 // Errors
 
 ____loclib.error = "Erreur";
-____loclib.checkScoreError = "Vous devez remplir les informations de profil requises avant d'utiliser Pocketnet. Voulez-vous le faire maintenant?";
+____loclib.checkScoreError = "Vous devez remplir les informations de profil requises avant d'utiliser "+appname+". Voulez-vous le faire maintenant?";
 ____loclib.checkScoreErrorLight = "Le compte n'est pas activé.";
 ____loclib.timestamperror = "L'heure dans l'application et dans le nœud ne correspond pas";
 
@@ -382,8 +382,8 @@ ____loclib.qrcode = "Code QR"
 ____loclib.addaccount = "Ajouter un compte"
 ____loclib.entermnimo = "Entrez une phrase mnémotechnique ou une clé privée"
 ____loclib.add = "Ajouter"
-____loclib.e13011 = "Vous allez maintenant continuer votre enregistrement après avoir installé Pocketnet Desktop."
-____loclib.e13012 = "Si Pocketnet n'a pas changé le téléchargement, veuillez cliquer ici pour l'installateur."
+____loclib.e13011 = "Vous allez maintenant continuer votre enregistrement après avoir installé "+appname+" Desktop."
+____loclib.e13012 = "Si "+appname+" n'a pas changé le téléchargement, veuillez cliquer ici pour l'installateur."
 ____loclib.e13013 = "Saisissez la légende de l'image (facultatif)"
 ____loclib.e13014 = "Ce fichier n'est pas dans un format pris en charge:"
 ____loclib.e13015 = "Ce fichier est trop gros:"
@@ -406,7 +406,7 @@ ____loclib.info = "Info"
 ____loclib.e13023 = "Voulez-vous vraiment débloquer l'utilisateur?"
 ____loclib.e13024 = "Votre clé de connexion privée"
 ____loclib.e13025 = "Créer un nouveau compte"
-____loclib.e13026 = "Rejoignez Pocketnet"
+____loclib.e13026 = "Rejoignez "+appname+""
 
 ____loclib.e13027 = "Restez signé"
 ____loclib.e13028 = "Vous avez entré une clé privée non valide"
@@ -427,10 +427,10 @@ ____loclib.e13040 = "Vous n'avez pas de priviléges de commentaire"
 ____loclib.complain = "Se plaindre"
 ____loclib.next = "Suivant"
 ____loclib.post = "Poster"
-____loclib.e13041 = "Connexion Pocketnet"
-____loclib.e13042 = "Proxy Pocketnet"
+____loclib.e13041 = "Connexion "+appname+""
+____loclib.e13042 = "Proxy "+appname+""
 
-____loclib.e13043 = "Nœuds Pocketnet"
+____loclib.e13043 = "Nœuds "+appname+""
 ____loclib.e13044 = "Ajouter un nœud"
 ____loclib.e13045 = "Nœuds introuvables"
 ____loclib.e13046 = "Adresse"
@@ -478,19 +478,19 @@ ____loclib.e13076 = "Scannez ce code pour envoyer"
 ____loclib.back = "Avant"
 ____loclib.e13077 = "Ajoutez votre profil a la liste des donateurs"
 ____loclib.e13078 = "Pourquoi demandons-nous des dons?"
-____loclib.e13079 = "Nous avons passé plus de 14 mois de temps libre à partir d'emplois à temps plein à apporter Pocketnet aux gens. En plus du temps et des efforts, nous avons investi notre propre argent pour aider au lancement de la plateforme. Maintenant, nous avons besoin de la communauté pour nous aider à grandir."
+____loclib.e13079 = "Nous avons passé plus de 14 mois de temps libre à partir d'emplois à temps plein à apporter "+appname+" aux gens. En plus du temps et des efforts, nous avons investi notre propre argent pour aider au lancement de la plateforme. Maintenant, nous avons besoin de la communauté pour nous aider à grandir."
 ____loclib.e13080 = "Comment les fonds seront-ils utilisés?"
-____loclib.e13081 = "Les fonds seront utilisés pour acheter de la publicité et embaucher des experts en la matière pour rendre Pocketnet encore plus sûr. L'équipe de développement actuelle ne reçoit aucun de ces dons. Dans la mesure du possible, nous publierons ici comment nous avons utilisé les fonds. "
+____loclib.e13081 = "Les fonds seront utilisés pour acheter de la publicité et embaucher des experts en la matière pour rendre "+appname+" encore plus sûr. L'équipe de développement actuelle ne reçoit aucun de ces dons. Dans la mesure du possible, nous publierons ici comment nous avons utilisé les fonds. "
 ____loclib.e13082 = "Ce que vous obtiendrez pour votre don en plus de savoir que vous avez soutenu la liberté "
 ____loclib.e13083 = "En signe de gratitude pour le don, vous recevez un cadeau d'une certaine quantité de Pocketcoin"
-____loclib.e13084 = "De plus, lorsque nous construisons une discussion de groupe, vous serez membre d'un groupe spécial de donateurs qui ont un accès direct à l'équipe Pocketnet, même si la plate-forme se développe."
-____loclib.e13085 = "Le lien vers votre profil Pocketnet sera répertorié ci-dessous, attirant plus de personnes vers vos publications (sauf si vous nous demandez de ne pas le faire)"
+____loclib.e13084 = "De plus, lorsque nous construisons une discussion de groupe, vous serez membre d'un groupe spécial de donateurs qui ont un accès direct à l'équipe "+appname+", même si la plate-forme se développe."
+____loclib.e13085 = "Le lien vers votre profil "+appname+" sera répertorié ci-dessous, attirant plus de personnes vers vos publications (sauf si vous nous demandez de ne pas le faire)"
 ____loclib.e13086 = "Soutenez maintenant le Webm décentralisé"
 ____loclib.e13087 = "Bitcoin, Litecoin, Monero"
 
-____loclib.e13088 = "Membres Pocketnet qui ont fait un don pour soutenir Pocketnet"
+____loclib.e13088 = "Membres "+appname+" qui ont fait un don pour soutenir "+appname+""
 ____loclib.thankyou = "Merci!"
-____loclib.e13089 = "Si vous souhaitez que nous inscrivions votre profil Pocketnet dans la liste des donateurs, veuillez nous envoyer des informations sur votre don"
+____loclib.e13089 = "Si vous souhaitez que nous inscrivions votre profil "+appname+" dans la liste des donateurs, veuillez nous envoyer des informations sur votre don"
 ____loclib.e13090 = "Ajoutez-moi a la liste des donateurs"
 ____loclib.e13091 = "Ou vous pouvez nous envoyer un e-mail à"
 ____loclib.e13092 = "avec votre clé publique et votre montant."
@@ -508,7 +508,7 @@ ____loclib.e13102 = "Ajouter un lien vers un site externe"
 ____loclib.e13103 = "L'URL n'est pas valide"
 ____loclib.e13104 = "Max 6 images autorisèes"
 ____loclib.e13105 = "Gestion des nœuds"
-____loclib.e13106 = "Nœud Pocketnet"
+____loclib.e13106 = "Nœud "+appname+""
 ____loclib.e13107 = "La gestion des nœuds peut ètre effectuèe avec Application"
 ____loclib.e13108 = "Il n'y a pas de connexion avec l'interface proxy Electron"
 
@@ -516,7 +516,7 @@ ____loclib.e13109 = "Veuillez entrer les mots dans l'image pour recevoir Pocketc
 ____loclib.e13110 = "Entrez les mots"
 ____loclib.next = "Suivant"
 ____loclib.refresh = "Rafraîchir"
-____loclib.e13111 = "Ajoutez votre e-mail pour obtenir les dernières mises à jour Pocketnet"
+____loclib.e13111 = "Ajoutez votre e-mail pour obtenir les dernières mises à jour "+appname+""
 ____loclib.e13112 = "Entrer votre email"
 ____loclib.e13113 = "Ajouter un email"
 ____loclib.skip = "Passer"
@@ -533,7 +533,7 @@ ____loclib.e13121 = "Il n'y a pas d'images ici"
 ____loclib.e13122 = "Derniers Commentaires"
 
 ____loclib.e13123 = "Afficher plus de messages"
-____loclib.e13124 = "Plus de messages Pocketnet impressionnants!"
+____loclib.e13124 = "Plus de messages "+appname+" impressionnants!"
 ____loclib.e13125 = "La section des meilleurs messages est vide!"
 ____loclib.e13126 = "Les messages des personnes que vous suivez seront affichés icis"
 ____loclib.e13127 = "Les messages des personnes que vous suivez seront affichés icis "
@@ -578,7 +578,7 @@ ____loclib.e13151 = "Personne n'a vu ce message"
 ____loclib.e13152 = "Scores des utilisateurs"
 ____loclib.e13153 = "Passer et accéder au site Web"
 ____loclib.e13154 = "Vos informations de connexion"
-____loclib.e13155 = "Pour utiliser Pocketnet, vous devez générer votre clé cryptographique privée qui remplace l'identifiant et le mot de passe des réseaux sociaux centralisés."
+____loclib.e13155 = "Pour utiliser "+appname+", vous devez générer votre clé cryptographique privée qui remplace l'identifiant et le mot de passe des réseaux sociaux centralisés."
 ____loclib.users = "Utilisateurs"
 ____loclib.userstx = "Utilisateurs"
 ____loclib.user = "Utilisateurs"
@@ -602,10 +602,10 @@ ____loclib.e13167 = "internautes censurés"
 ____loclib.e13168 = "Gagnez Pocketcoin pour chaque inscription via votre lien"
 ____loclib.e13169 = "Lien direct"
 ____loclib.copy = "Copier"
-____loclib.e13170 = "Incluez un appel à l'action pour l'inscription Pocketnet "
+____loclib.e13170 = "Incluez un appel à l'action pour l'inscription "+appname+" "
 ____loclib.more = "Plus"
 ____loclib.e13171 = "Bonnes nouvelles. J'ai gagné mon indépendance des monopoles des réseaux sociaux, venez me rejoindre sur pocketnet.app pour que nous puissions partager et discuter de manière indépendante sur la blockchain. Rejoignez-moi ici"
-____loclib.e13172 = "Je souhaite partager cela à partir d'une plate-forme de blockchain Pocketnet décentralisée avec vous. J'espère que vous le trouverez utile et si vous vous inscrivez, nous obtiendrons tous les deux des bonus de crypto-monnaie Pocketcoin!"
+____loclib.e13172 = "Je souhaite partager cela à partir d'une plate-forme de blockchain "+appname+" décentralisée avec vous. J'espère que vous le trouverez utile et si vous vous inscrivez, nous obtiendrons tous les deux des bonus de crypto-monnaie Pocketcoin!"
 ____loclib.e13173 = "Envoyé par e-mail"
 ____loclib.e13174 = "Partage social"
 ____loclib.e13175 = "Etiquettes populaires"
@@ -625,7 +625,7 @@ ____loclib.e13186 = "Editer le profil"
 ____loclib.e13187 = "Contenus"
 ____loclib.e13188 = "Veuillez enregistrer votre clé cryptographique privée qui remplace l'identifiant et le mot de passe des réseaux sociaux centralisés"
 ____loclib.e13189 = "Laissez et perdez ma clè pour toujours!"
-____loclib.e13190 = "Thème Pocketnet"
+____loclib.e13190 = "Thème "+appname+""
 ____loclib.e13191 = "Définissez le thème"
 ____loclib.e13192 = "Niveau"
 ____loclib.e13193 = "BONUS"
@@ -634,13 +634,13 @@ ____loclib.e13195 = "Limitations"
 ____loclib.e13196 = "Cela prend beaucoup de temps"
 ____loclib.e13197 = "Recevoir des Pocketcoins"
 ____loclib.e13198 = "Le temps d'attente approximatif est"
-____loclib.e13199 = "Rejoignez Pocketnet maintenant"
+____loclib.e13199 = "Rejoignez "+appname+" maintenant"
 
-____loclib.e13200 = "Retour à Pocketnet"
+____loclib.e13200 = "Retour à "+appname+""
 ____loclib.e13201 = "REJOIGNEZ BETA"
-____loclib.e13202 = "Le test bêta de Pocketnet démarre le 24 janvier"
-____loclib.e13203 = "Merci d'avoir rejoint la liste de diffusion du test bêta de Pocketnet. Il n'est pas nécessaire d'utiliser Pocketnet, cependant, nous utilisons cet e-mail pour envoyer vos sondages afin d'améliorer la plateforme. Merci d'avoir contribué à façonner l'avenir d'Internet."
-____loclib.e13204 = "Adresse de reception Pocketnet"
+____loclib.e13202 = "Le test bêta de "+appname+" démarre le 24 janvier"
+____loclib.e13203 = "Merci d'avoir rejoint la liste de diffusion du test bêta de "+appname+". Il n'est pas nécessaire d'utiliser "+appname+", cependant, nous utilisons cet e-mail pour envoyer vos sondages afin d'améliorer la plateforme. Merci d'avoir contribué à façonner l'avenir d'Internet."
+____loclib.e13204 = "Adresse de reception "+appname+""
 ____loclib.e13205 = "Parametres"
 ____loclib.e13206 = "Recevoir un montant Pocketcoin"
 ____loclib.e13207 = "Envoyer le montant"
@@ -670,14 +670,14 @@ ____loclib.e13219 = "Vous envoyer des Pocketcoins"
 ____loclib.e13220 = 'Pocketcoins livrès'
 ____loclib.errorreload = "Un problème est survenu. Veuillez actualiser la page et réessayer"
 ____loclib.e13221 = "Voulez-vous vraiment supprimer les informations relatives à cette offre? L'accord ne peut pas être arrêté"
-____loclib.e13222 = "Téléchargez l'application de bureau - c'est le moyen le plus résistant à la censure d'utiliser Pocketnet. Même si les sites Web sont fermés, l'application de bureau fonctionnera toujours directement via les nœuds."
-____loclib.e13223 = "Tèlèchargez Pocketnet pour Windows"
-____loclib.e132232 = "Tèlèchargez Pocketnet pour macOS"
-____loclib.e13224 = "Tèlèchargez Pocketnet pour Linux"
-____loclib.e13225 = "Nœud Pocketnet"
+____loclib.e13222 = "Téléchargez l'application de bureau - c'est le moyen le plus résistant à la censure d'utiliser "+appname+". Même si les sites Web sont fermés, l'application de bureau fonctionnera toujours directement via les nœuds."
+____loclib.e13223 = "Tèlèchargez "+appname+" pour Windows"
+____loclib.e132232 = "Tèlèchargez "+appname+" pour macOS"
+____loclib.e13224 = "Tèlèchargez "+appname+" pour Linux"
+____loclib.e13225 = "Nœud "+appname+""
 ____loclib.e13226 = 'Tèlèchargez le nœud'
-____loclib.e13227 = "Tèlèchargez Pocketnet Node pour Windows"
-____loclib.e13228 = "Tèlèchargez Pocketnet Node pour Linux"
+____loclib.e13227 = "Tèlèchargez "+appname+" Node pour Windows"
+____loclib.e13228 = "Tèlèchargez "+appname+" Node pour Linux"
 ____loclib.e13229 = 'Clè privèe non valide'
 ____loclib.e13230 = 'Erreur de connexion non dèfinie'
 
@@ -707,7 +707,7 @@ ____loclib.e13253 = 'Vous ne pouvez pas vous référer à vous-même'
 ____loclib.e13254 = "Ce nom d'utilisateur est trop long"
 ____loclib.e13255 = "Ce nom d'utilisateur est déjà utilisé"
 ____loclib.e13256 = 'Ce message est trop long, veuillez le séparer.'
-____loclib.e13257 = "Votre score de réputation Pocketnet ne permet pas encore l'enregistrement des réclamations"
+____loclib.e13257 = "Votre score de réputation "+appname+" ne permet pas encore l'enregistrement des réclamations"
 ____loclib.e13258 = 'Vous avez atteint la limite de réclamation dans un délai de 24 heures'
 
 ____loclib.e13259 = 'Je ne peux pas me plaindre de votre propre message'
@@ -729,7 +729,7 @@ ____loclib.e13274 = 'Utilisateurs enregistrés'
 ____loclib.e13275 = 'Score du commentaire'
 ____loclib.e13276 = 'Afficher les vidéos intégrées'
 ____loclib.e13277 = 'Vidéos en lecture automatique'
-____loclib.e13278 = 'Démarrez Pocketnet automatiquement'
+____loclib.e13278 = 'Démarrez '+appname+' automatiquement'
 ____loclib.e13279 = 'Chat'
 ____loclib.e13280 = 'Etiquettes'
 ____loclib.e13281 = 'Derniers commentaires'
@@ -807,8 +807,8 @@ ____loclib.e13343 = "un vote pour votre message"
 ____loclib.e13344 = "Nouveau vote favorable"
 ____loclib.e13345 = "vous a envoyé un message privé"
 ____loclib.e13346 = "Vous avez de nouveaux messages"
-____loclib.e13347 = "Des mises à jour Pocketnet sont disponibles. Appliquer les mises à jour maintenant?"
+____loclib.e13347 = "Des mises à jour "+appname+" sont disponibles. Appliquer les mises à jour maintenant?"
 ____loclib.e13348 = "Au plus tard"
-____loclib.e13349 = "Des mises à jour Pocketnet sont disponibles. Allez sur la page pour télécharger la nouvelle version?"
-____loclib.e13350 = 'Rejoignez Pocketnet et gagnez Pocketcoin maintenant'
+____loclib.e13349 = "Des mises à jour "+appname+" sont disponibles. Allez sur la page pour télécharger la nouvelle version?"
+____loclib.e13350 = 'Rejoignez '+appname+' et gagnez Pocketcoin maintenant'
 ____loclib.e133512 = 'Please write a few words about yourself to help people decide if they want to follow you'

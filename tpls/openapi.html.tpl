@@ -7,7 +7,7 @@
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv='expires' content='0'>
 
-        <title>POCKETNET</title>
+        <title>__VAR__.project</title>
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
@@ -45,7 +45,7 @@
             <div class="buttonWrapper">
                 <a href="https://__VAR__.domain/registration"  class="openapipromolink" target="_blank">
                     <button class="orange small">
-                        Join Pocketnet
+                        Join __VAR__.project
                     </button>
                 </a>
             </div> 

@@ -14,7 +14,8 @@ var args = {
 	prodaction : true,
 	vendor : 89,
     path : '/',
-    makewebnode: false
+    makewebnode: false,
+	project : "Pocketnet"
 }
 
 var uglify = true
@@ -45,21 +46,34 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
 	
+var _meta = {
+	Pocketnet : {
+		url : "pocketnet.app",
+		turl : "test.pocketnet.app"
+	},
+
+	Bastyon : {
+		url : "bastyon.com",
+		turl : "test.pocketnet.app"
+	}
+}
 
 var vars = {
 	test : {
 		proxypath : '"https://test.pocketnet.app:8899/"',
-		domain : 'test.pocketnet.app',
+		domain : _meta[args.project].turl,
 		test : '<script>window.testpocketnet = true;</script>',
-		path : args.path
+		path : args.path,
+		project : args.project
 	},
 	prod : {
 		proxypath : '"https://pocketnet.app:8899/"',
-		domain : 'pocketnet.app',
+		domain : _meta[args.project].url,
 		test : '',
-		path : args.path
+		path : args.path,
+		project : args.project
 	}
 }
 
@@ -647,10 +661,12 @@ fs.exists(mapJsPath, function (exists) {
 								JSENV += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>';
 							}
 
-							console.log("___ _args.domain", VARS.domain)
-
 							if(VARS.domain){
 								JSENV += '<script>window.pocketnetdomain = "' + VARS.domain + '";</script>';
+							}
+
+							if(VARS.project){
+								JSENV += '<script>window.pocketnetproject = "' + VARS.project + '";</script>';
 							}
 	
 							if(args.prodaction)

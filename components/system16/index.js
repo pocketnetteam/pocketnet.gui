@@ -161,7 +161,7 @@ var system16 = (function(){
 				if (system.node.enabled){
 
 					var items = [{
-						text : "Disable Pocketnet Node",
+						text : "Disable "+self.app.meta.fullname+" Node",
 						action : function (clbk) {
 
 							return proxy.system.request('set.node.enabled', {enabled : false}).then(r => {
@@ -183,7 +183,7 @@ var system16 = (function(){
 				else{
 
 					var items = [{
-						text : "Enable Pocketnet Node",
+						text : "Enable "+self.app.meta.fullname+" Node",
 						action : function (clbk) {
 
 							return proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
@@ -1838,7 +1838,7 @@ var system16 = (function(){
 	        		values : [{
 	        			defValue : '',
 	        			validate : 'empty',
-	        			placeholder : "Pocketnet Addresses",
+	        			placeholder : ""+self.app.meta.fullname+" Addresses",
 	        			label : "Bots addresses",
 						text : true
 	        		}],
@@ -1909,7 +1909,7 @@ var system16 = (function(){
 	        		values : [{
 	        			defValue : '',
 	        			validate : 'empty',
-	        			placeholder : "Pocketnet Address",
+	        			placeholder : ""+self.app.meta.fullname+" Address",
 	        			label : "Bot address"
 	        		}],
 
@@ -1975,7 +1975,7 @@ var system16 = (function(){
 	        		values : [{
 	        			defValue : '',
 	        			validate : 'empty',
-	        			placeholder : "Pocketnet Address",
+	        			placeholder : ""+self.app.meta.fullname+" Address",
 	        			label : "Admin address"
 	        		}],
 
@@ -2945,7 +2945,7 @@ var system16 = (function(){
 							else{
 								dialog({
 									class : 'zindex',
-									html : "Do you really want to fix selected Pocketnet Node?",
+									html : "Do you really want to fix selected "+self.app.meta.fullname+" Node?",
 									btn1text : self.app.localization.e('dyes'),
 									btn2text : self.app.localization.e('dno'),
 									success : function(){	
@@ -2963,7 +2963,7 @@ var system16 = (function(){
 
 							dialog({
 								class : 'zindex',
-								html : "Do you really want reconnect to selected Pocketnet Node?",
+								html : "Do you really want reconnect to selected "+self.app.meta.fullname+" Node?",
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){	
@@ -3204,7 +3204,7 @@ var system16 = (function(){
 						p.el.find('.updatenode').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to Stop Pocketnet Node and Update It?",
+								html : "Do you really want to Stop "+self.app.meta.fullname+" Node and Update It?",
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -3220,7 +3220,7 @@ var system16 = (function(){
 						p.el.find('.removenodeall').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to remove Pocketnet Node and All Blockchain Data?",
+								html : "Do you really want to remove "+self.app.meta.fullname+" Node and All Blockchain Data?",
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -3234,7 +3234,7 @@ var system16 = (function(){
 						p.el.find('.removenode').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to remove Pocketnet Node Daemon?",
+								html : "Do you really want to remove "+self.app.meta.fullname+" Node Daemon?",
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -3251,7 +3251,7 @@ var system16 = (function(){
 
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to install Pocketnet Node?",
+								html : "Do you really want to install "+self.app.meta.fullname+" Node?",
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){
@@ -3268,7 +3268,7 @@ var system16 = (function(){
 						p.el.find('.toDefaultPath').on('click', function(){
 							dialog({
 								class : 'zindex',
-								html : "Do you really want to set Pocketnet Node Path to Default path?",
+								html : "Do you really want to set "+self.app.meta.fullname+" Node Path to Default path?",
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){

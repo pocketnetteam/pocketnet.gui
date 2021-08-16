@@ -8,7 +8,7 @@
         <meta http-equiv='expires' content='0'>
         
 
-        <!-- <title>POCKETNET</title> -->
+        <!-- <title>__VAR__.project</title> -->
         <meta name="description" content="">
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
@@ -110,7 +110,7 @@
             <div class="table">
                 <div>
                     <div class="text">
-                        <span>Please be Patient: Major Release of Pocketnet is Being Prepared</span>
+                        <span>Please be Patient: Major Release of __VAR__.project is Being Prepared</span>
                     </div>
 
                     <div class="icon">

@@ -139,7 +139,7 @@ function createTray() {
     tray = new Tray(defaultImage)
 
     tray.setImage(defaultImage)
-    tray.setToolTip('Pocketnet'); ///
+    tray.setToolTip('__VAR__.project'); ///
 
     var contextMenu = Menu.buildFromTemplate([{
         label: 'Open',
@@ -349,7 +349,7 @@ function createWindow() {
         width: mainScreen.size.width,
         height: mainScreen.size.height,
 
-        title: "Pocketnet", ///
+        title: "__VAR__.project", ///
         webSecurity: false,
 
         icon: defaultIcon,
@@ -547,14 +547,7 @@ function createWindow() {
     });
 
 
-    // console.log('process.argv', process.argv);
-    
-    // var href = process.argv[process.argv.length - 1].replace(/.+pocketnet\//, '');
-
-    // win.webContents.send('nav-message', { msg: href, type: 'action'})
-
-
-    //
+   
 
     ipcMain.on('electron-notification', function(e, p) {
 
@@ -658,14 +651,11 @@ if(!r) {
 
     // If we are running a non-packaged version of the app && on windows
 
+    _.each(protocols, function(protocol){
+        app.setAsDefaultProtocolClient(protocol, process.execPath, [path.resolve(process.argv[1] || '.') ]); 
+    })
 
-    app.setAsDefaultProtocolClient('pocketnet', process.execPath, [path.resolve(process.argv[1] || '.') ]);  
-    app.setAsDefaultProtocolClient('bastyon', process.execPath, [path.resolve(process.argv[1] || '.') ]); 
 
-
-    // Этот метод будет вызываться, когда Electron закончит 
-    // инициализацию и готов к созданию окон браузера.
-    // Некоторые интерфейсы API могут использоваться только после возникновения этого события.
     app.on('ready', initApp)
 
     // Выйти, когда все окна будут закрыты.

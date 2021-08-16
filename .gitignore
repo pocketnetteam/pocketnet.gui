@@ -26,10 +26,11 @@ data/
 pocketcoind*/
 .env
 /index.html
-index.php
-index_el.html
-openapi.html
-embedVideo.php
+/index.php
+/index_el.html
+/openapi.html
+/embedVideo.php
+/main.js
 .htaccess
 service-worker.js
 css/master.css

@@ -335,7 +335,7 @@ var socialshare = (function(){
 
 				state.load()
 
-				ed.title || (ed.title = 'Pocketnet')
+				ed.title || (ed.title = self.app.meta.fullname)
 			    ed.text || (ed.text = self.app.localization.e('e13171'))
 			    ed.image || (ed.image = 'https://'+self.app.options.url+'/img/logobigpadding.png') 
 			   

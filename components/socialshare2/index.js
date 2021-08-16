@@ -528,7 +528,7 @@ var socialshare2 = (function(){
 					
 					_el.on('click', function(){
 
-						var t = actions.shareText() +  '\r\n\r\n' + trimHtml(ed.sharing.text.body, 500).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...') + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on Pocketnet');
+						var t = actions.shareText() +  '\r\n\r\n' + trimHtml(ed.sharing.text.body, 500).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...') + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname);
 
 						if (deep(app, 'platform.sdk.user.storage.me.name')){
 							t += '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
@@ -547,7 +547,7 @@ var socialshare2 = (function(){
 				}
 				else{
 
-					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on Pocketnet')
+					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname)
 
 					var type = _el.data('type');
 					var b = findsocial(type)
@@ -579,7 +579,7 @@ var socialshare2 = (function(){
 
 						if (_el.hasClass('s_gmail')){
 
-							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on Pocketnet');
+							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname);
 
 							if (deep(app, 'platform.sdk.user.storage.me.name')){
 								text += '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
@@ -689,7 +689,7 @@ var socialshare2 = (function(){
 				ed = p.settings.essenseData || {}
 				state.load()
 
-				ed.title || (ed.title = 'Pocketnet')
+				ed.title || (ed.title = self.app.meta.fullname)
 
 				seed = rand(10000, 99999)
 

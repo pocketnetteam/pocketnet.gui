@@ -63,17 +63,17 @@ Application = function(p)
 	var realtimeInterval = null;
 
 
-	self.meta = {
-		pocketnet : {
+	self._meta = {
+		Pocketnet : {
 			url : "pocketnet.app",
 			turl : "test.pocketnet.app",
-			fullName : "Pocketnet",
+			fullname : "Pocketnet",
 			protocol : 'pocketnet',
 			blockexplorer : 'https://pocketnet.app/blockexplorer/'
 		},
 
-		bastyon : {
-			fullName : "Bastyon",
+		Bastyon : {
+			fullname : "Bastyon",
 			url : "bastyon.com",
 			turl : "test.pocketnet.app",
 			protocol : 'bastyon',
@@ -81,11 +81,16 @@ Application = function(p)
 		}
 	}
 
-	var url = 'pocketnet.app'
+	self.meta = self._meta.Pocketnet
+
+	if (window.pocketnetproject && self._meta[window.pocketnetproject]){
+		self.meta = self._meta[window.pocketnetproject]
+	}
+
+	var url = window.pocketnetdomain
 
 	if (window.testpocketnet){
-		url = 'test.pocketnet.app'
-
+		//url = 'test.pocketnet.app'
 		self.test = true
 	}
 
@@ -102,8 +107,8 @@ Application = function(p)
 		},
 
 		name : 'PCRB',
-		fullName : "pocketnet",
-		localStoragePrefix : 'pocketnet',
+		fullName : self.meta.protocol,
+		localStoragePrefix : self.meta.protocol,
 
 		
 		server : p.server || 'https://'+url+'/Shop/AJAXMain.aspx', //donations will be removed
@@ -1034,7 +1039,7 @@ Application = function(p)
 		},
 	
 		getStorageDirectory: function() {
-			return "Pocketnet";
+			return self.meta.fullName;
 		},
 	
 		saveFile: function(url, blob) {

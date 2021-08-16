@@ -52,7 +52,7 @@ var help = (function(){
 			
 			{
 				d : 'August 2019',
-				n : 'Personal link '+self.app.options.url+'/username plus history of personal posts and ability to search users’ posts (decentralized free blog hosting on Pocketnet blockchain)',
+				n : 'Personal link '+self.app.options.url+'/username plus history of personal posts and ability to search users’ posts (decentralized free blog hosting on '+self.app.meta.fullname+' blockchain)',
 				r : true,
 			},
 
@@ -73,7 +73,7 @@ var help = (function(){
 			},
 			{
 				d : 'May 2021',	
-				n : 'Integration of PeerTube into Pocketnet, upload of videos and live streams',
+				n : 'Integration of PeerTube into '+self.app.meta.fullname+', upload of videos and live streams',
 				r : false,
 			},
 			{
@@ -98,7 +98,7 @@ var help = (function(){
 			},
 			{
 				d : 'July 2021',
-				n : 'Pocketnet NFT 3.0',
+				n : ''+self.app.meta.fullname+' NFT 3.0',
 				r : false,
 			},
 			{
@@ -113,7 +113,7 @@ var help = (function(){
 			},
 			{
 				d : '2022',
-				n : 'Ability to fork Pocketcoin to create a diverse set of Dapps for users using Pocketnet platform i.e. Pocketnet as an alternative Appstore',
+				n : 'Ability to fork Pocketcoin to create a diverse set of Dapps for users using '+self.app.meta.fullname+' platform i.e. '+self.app.meta.fullname+' as an alternative Appstore',
 				r : false,
 			}
 
