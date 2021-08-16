@@ -46,7 +46,11 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+
+var tplspath = {
+
+}
 	
 var _meta = {
 	Pocketnet : {
@@ -129,6 +133,11 @@ fs.exists(mapJsPath, function (exists) {
 		var cordova = {
 			path : './cordova/www',
 			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+		}
+
+		var cordovaconfig = {
+			path : './cordova',
+			copy : ['config.xml']
 		}
 
 		var cordovaiosfast = {
@@ -759,7 +768,9 @@ fs.exists(mapJsPath, function (exists) {
 		makePocketnet(function(){
 
 			copycontent(cordova, function(){
-				copycordovaios(cordovaiosfast)
+			})
+
+			copycontent(cordovaconfig, function(){
 			})
             
             if(args.makewebnode)

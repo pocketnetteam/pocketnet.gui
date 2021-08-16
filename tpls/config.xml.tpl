@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget android-versionCode="10065" id="pocketnet.app" version="1.1.65" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Pocketnet</name>
+    <name>__VAR__.project</name>
     <description>
-        Pocketnet Application
+        __VAR__.project Application
     </description>
-    <author email="maxgrishkov@gmail.com" href="https://pocketnet.app">
+    <author email="maxgrishkov@gmail.com" href="https://__VAR__.domain">
         Pocketnet Team
     </author>
     <content src="indexcordova.html" />
@@ -113,7 +113,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
-            <string>This Application can allow your camera to make avatar or post photo, if you want, but we aren't recommended do this.</string>
+            <string>This Application can allow your camera to make avatar or post photo, if you want.</string>
         </config-file>
         <preference name="NativeXHRLogging" value="full" />
         <preference name="AllowUntrustedCerts"  value="true" />
@@ -153,6 +153,14 @@
         </host>
 
         <host name="test.pocketnet.app" scheme="https">
+            <path url="*" event="nav-message" />
+        </host>
+
+        <host name="bastyon.com" scheme="https">
+            <path url="*" event="nav-message" />
+        </host>
+
+        <host name="bastyon.com" scheme="https">
             <path url="*" event="nav-message" />
         </host>
 

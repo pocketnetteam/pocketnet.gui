@@ -38,6 +38,7 @@ cordova/platforms
 cordova/plugins
 cordova/node_modules
 cordova/www
+cordova/config.xml
 cordova/build.json
 cordova/google-services.json
 cordova/GoogleService-Info.plist
