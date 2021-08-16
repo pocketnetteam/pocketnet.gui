@@ -11,7 +11,12 @@
       <p class="videoTextContainer videoNameText"><%- video.name %></p>
       <p class="videoTextContainer"><%- video.account.host %></p>
     </div>
-    <div class="videoItemPart videoStatsWrapper">
+    <div
+      class="videoItemPart videoStatsWrapper"
+      video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
+      host="<%- deep(video, 'account.host') %>"
+      uuid="<%- video.uuid %>"
+    >
       <div class="preloaderwr">
         <div class="preloader5"><span></span><span></span><span></span></div>
       </div>

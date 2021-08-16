@@ -220,6 +220,16 @@ var videoCabinet = (function () {
                 currentElement.find('.attachVideoToPost').removeClass('hidden');
                 currentElement.find('.preloaderwr').addClass('hidden');
               });
+
+              p.el.find('.videoStatsWrapper').each(function () {
+                const currentElement = $(this);
+
+                const link = currentElement.attr('video');
+                const host = currentElement.attr('host');
+                const uuid = currentElement.attr('uuid');
+
+                return renders.videoStats(currentElement, link, host, uuid);
+              });
             });
           },
         );
@@ -325,11 +335,40 @@ var videoCabinet = (function () {
         const linkInfo = blockChainInfo[link];
 
         element.html(
-          `<a class="videoPostLink" href="https://${self.app.options.url}/index?s=${
+          `<a class="videoPostLink" href="https://${
+            self.app.options.url
+          }/index?s=${
             linkInfo.txid
           }"><i class="far fa-check-circle"></i>${self.app.localization.e(
             'linkToPost',
           )}</a>`,
+        );
+      },
+
+      videoStats(element, link, host, uuid) {
+        const linkInfo = blockChainInfo[link] || {};
+        const videoInfo = peertubeServers[host].videos.find(
+          (video) => video.uuid === uuid,
+        );
+
+        self.shell(
+          {
+            name: 'videoStats',
+            el: element,
+            data: {
+              views: +videoInfo.views || '-',
+              starsCount: +linkInfo.scoreSum || 0,
+              starsSum: +linkInfo.scoreCnt || '-',
+              comments: +linkInfo.comments || '-',
+            },
+          },
+          (p) => {
+            p.el.find('.tooltip').tooltipster({
+              theme: 'tooltipster-light',
+              maxWidth: 600,
+              zIndex: 20,
+            });
+          },
         );
       },
     };

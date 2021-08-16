@@ -1106,3 +1106,7 @@ ____loclib.attachVideoToPost = "Create Post With This Video";
 
 ____loclib.linkToPost = "Link to Post";
 ____loclib.attachVideoToPostShort = "Post";
+
+____loclib.totalStars = "Average rating. Total Votes:";
+____loclib.totalComments = "Total Comments";
+____loclib.totalViews = "Video Views";
