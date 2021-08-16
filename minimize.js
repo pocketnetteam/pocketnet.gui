@@ -727,6 +727,8 @@ fs.exists(mapJsPath, function (exists) {
 							index = index.replace("__CSS__" , CSS);
 							index = index.replace("__CACHED-FILES__", CACHED_FILES);
 							index = index.replace("__PACKAGE-VERSION__", package.version);
+							index = index.replace("__PACKAGE-CORDOVAVERSIONCODE__", package.cordovaversioncode);
+							index = index.replace("__PACKAGE-CORDOVAVERSION__", package.cordovaversion);
 
 							_.each(VARS, function(v, i){
 								index = index.replaceAll("__VAR__." + i, v);
