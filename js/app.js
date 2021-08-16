@@ -90,7 +90,6 @@ Application = function(p)
 	var url = window.pocketnetdomain
 
 	if (window.testpocketnet){
-		//url = 'test.pocketnet.app'
 		self.test = true
 	}
 

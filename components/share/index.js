@@ -880,7 +880,7 @@ var share = (function(){
 
 					const options = {};
 
-					if (currentShare.message.v) options.description = `Watch more exciting videos at https://pocketnet.app/! \n ${currentShare.message.v}`;
+					if (currentShare.message.v) options.description = `Watch more exciting videos at https://`+self.app.options.url+`/! \n ${currentShare.message.v}`;
 					if (currentShare.caption.v) options.name = currentShare.caption.v;
 
 					var urlMeta = self.app.peertubeHandler.parselink(currentShare.url.v);

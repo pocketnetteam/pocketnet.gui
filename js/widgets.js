@@ -7,8 +7,6 @@ var PNWIDGETS = function(){
         iframe : function(seed, action, id, p){
 
             var domain = window.pocketnetdomain || 'pocketnet.app'
-
-            //if(window.testpocketnet) domain = 'test.pocketnet.app'
             
             return '<iframe width="100%" src="https://'+domain+'/openapi.html?action='+action+'&id='+id+'&embeddingSettigns='+p+'" id="pocketnet_iframe_'+seed+'" scrolling="no" style="border: none;" frameborder="0" marginheight="0" marginwidth="0" loading="lazy" allowfullscreen allowautoplay></iframe>'
         }

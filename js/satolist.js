@@ -50,7 +50,9 @@ Platform = function (app, listofnodes) {
         'PGCTymXHcEydV8SSmoABTB8YEchJbDoRJn' : true,
         'PDXGoy43t5RSqJY1UJBgswBu6phtW8Knwa' : true,
         'PHqNLuNEwrw8nzj71ELVGp7w1eEp8p2pKA' : true,
-        'PR3BcnBziYoDgckdyaARgFayiZUiA7agSx' : true
+        'PR3BcnBziYoDgckdyaARgFayiZUiA7agSx' : true,
+        'PEbSS6Fu9fCSEzFcrW5a3ztjx5ekoYvpjx' : true,
+        'PKZNLmxpsiW9H77beXt7pNWK7rTbG6Qu5h' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -246,7 +248,7 @@ Platform = function (app, listofnodes) {
             ui: {
                 windows: {
     
-                    appname: "Pocketnet",
+                    appname: app.meta.fullname,
                     id: "#windows",
                     text: {
                         name: "Windows",
@@ -257,7 +259,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-windows"></i>',
         
                     github: {
-                        name: "PocketnetSetup.exe",
+                        name: app.meta.fullname + "Setup.exe",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
@@ -265,7 +267,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 macos: {
-                    appname: "Pocketnet",
+                    appname: app.meta.fullname,
                     id: '#macos',
                     text: {
                         name: "macOS",
@@ -276,14 +278,14 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-apple"></i>',
         
                     github: {
-                        name: "PocketnetSetup.dmg",
+                        name: app.meta.fullname + "Setup.dmg",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     },
                 },
         
                 currentos: {
-                    appname: "Pocketnet",
+                    appname: app.meta.fullname,
                     id: "#linux",
                     text: {
                         name: "Linux",
@@ -294,7 +296,7 @@ Platform = function (app, listofnodes) {
                     icon: '<i class="fab fa-linux"></i>',
         
                     github: {
-                        name: "PocketnetSetup.deb",
+                        name: app.meta.fullname + "Setup.deb",
                         url: 'https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest',
                         page: 'https://github.com/pocketnetteam/pocketnet.gui/releases/latest'
                     }
@@ -2239,7 +2241,7 @@ Platform = function (app, listofnodes) {
                         console.log(d, p)
 
                         if (p.roomid && d.txid){
-                            self.matrixchat.shareInChat.url(p.roomid, 'pocketnet://i?stx=' + d.txid) /// change protocol
+                            self.matrixchat.shareInChat.url(p.roomid, app.meta.protocol + '://i?stx=' + d.txid) /// change protocol
                         }
 
                         resolve(d)
@@ -2332,7 +2334,7 @@ Platform = function (app, listofnodes) {
 
             if (name) return encodeURIComponent(name.toLowerCase());
 
-            else return 'https://pocketnet.app/blockexplorer/address/' + address
+            else return app.meta.blockexplorer + 'address/' + address
         },
 
         upbutton: function (el, p) {
@@ -4176,7 +4178,7 @@ Platform = function (app, listofnodes) {
                                 const AutoLaunch = require('auto-launch');
 
                                 let autoLaunch = new AutoLaunch({
-                                    name: 'Pocketnet', // app name
+                                    name: app.meta.fullname, // app name
                                     path: electron.remote.app.getPath('exe'),
                                     isHidden: true
                                 });
@@ -4369,7 +4371,7 @@ Platform = function (app, listofnodes) {
 
                         const AutoLaunch = require('auto-launch');
                         let autoLaunch = new AutoLaunch({
-                            name: 'Pocketnet', // app name
+                            name: app.meta.fullname, // app name
                             path: electron.remote.app.getPath('exe'),
                             isHidden: true
                         });
@@ -4434,7 +4436,7 @@ Platform = function (app, listofnodes) {
 
             error : function(text){
                 dialog({
-                    html: "Pocketnet chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
+                    html: app.meta.fullname + " chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
                     btn1text: 'Edit profile',
                     class : 'one',
                     success: function () {
@@ -4491,7 +4493,7 @@ Platform = function (app, listofnodes) {
 						}
 
 						if(err == 'pocketnet'){
-							errtext = 'To avoid user confusion using Pocketnet in name is reserved'
+							errtext = 'To avoid user confusion using '+app.meta.fullname+' in name is reserved'
 						}
 
                         if(err == 'bastyon'){
@@ -4506,7 +4508,7 @@ Platform = function (app, listofnodes) {
                     return new Promise((resolve, reject) => {
 
                         /*dialog({
-                            html: "Pocketnet chat ask you to generate encryption keys. Do you want to proceed?",
+                            html: app.meta.fullname + " chat ask you to generate encryption keys. Do you want to proceed?",
                             btn1text: 'Generate Encryption Keys',
                             btn2text: self.app.localization.e('dno'),
 
@@ -21661,7 +21663,7 @@ Platform = function (app, listofnodes) {
                 clearInterval(interval);
 
             if(!initial) {
-                initial = document.title || "Pocketnet" //fullName
+                initial = document.title || app.meta.fullname //fullName
             }
 
             var i = 0;
@@ -21871,7 +21873,7 @@ Platform = function (app, listofnodes) {
 
             universalLinks.subscribe('nav-message', function (eventData) {
 
-                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '') //// getroutefunction
+                var route = (eventData.url || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
 
                 if (route){
                     self.app.nav.api.load({

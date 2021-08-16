@@ -25,7 +25,7 @@ var faq = (function(){
 						q : 'Where do I download the client?',
 						a : '<div><a href="https://github.com/pocketnetteam/pocketnet.gui/releases/latest">https://github.com/pocketnetteam/pocketnet.gui/releases/latest</a></div><div>Click on '+self.app.meta.fullname+'Setup.exe</div>',
 					},
-			
+					
 					{
 						id : 'downloadclient',
 						q : 'Where do I download the node?',
@@ -115,7 +115,7 @@ var faq = (function(){
 					{
 						id : 'otherbrowsers',
 						q : 'Can it be used on Brave or Duck Duck go browsers?',
-						a : '<div>'+self.app.meta.fullname+' should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab '+self.app.meta.fullname+'Setup.exe here: https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.0.33-beta). It cannot be blocked ever (even if pocketnet.app is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe.</div>',
+						a : '<div>'+self.app.meta.fullname+' should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab '+self.app.meta.fullname+'Setup.exe here: https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.0.33-beta). It cannot be blocked ever (even if <%- app.meta.url %> is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe.</div>',
 					},
 			
 					{

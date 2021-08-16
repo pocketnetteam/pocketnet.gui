@@ -288,7 +288,7 @@ var socialshare2 = (function(){
 						var width = 640
 						var height = (width / aspectRatio).toFixed(0)
 
-						return '<iframe width="'+width+'" height="'+height+'" src="https://pocketnet.app/embedVideo.php?embed=true&s='+actionid+'&host='+hid.host+'&id='+hid.id+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+						return '<iframe width="'+width+'" height="'+height+'" src="https://'+self.app.options.url+'/embedVideo.php?embed=true&s='+actionid+'&host='+hid.host+'&id='+hid.id+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
 					}	
 					
 					return ''

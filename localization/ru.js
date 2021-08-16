@@ -54,7 +54,7 @@ ____loclib.saveqrcode = "Сохранить QR код"
 ____loclib.copyprivkey = "Скопировать приватный ключ"
 ____loclib.rcontinue = "Продолжить"
 ____loclib.idle = "Задержка не непродолжительное время"
-____loclib.congratulations = "Поздравляем! Вы в <span class='pnlabel'>POCKETNET</span>"
+____loclib.congratulations = "Поздравляем! Вы в <span class='pnlabel'>"+appname+"</span>"
 ____loclib.creatingpreloader = "Аккаунт в процессе создания"
 ____loclib.removepaste = "Мы убрали возможность вставки в эту форму."
 ____loclib.filedamaged = "Файл поврежден"
@@ -79,7 +79,7 @@ ____loclib.funetworkproblems = "Возникли некоторые пробле
 
 ____loclib.pleasewait = "Пожалуйста подождите";	
 ____loclib.next = "Далее";	
-____loclib.welcometopocketnet = "Приветствуем вас в POCKETNET";	
+____loclib.welcometopocketnet = "Приветствуем вас в "+appname+"";	
 ____loclib.continue = "Продолжить";	
 
 //user page
@@ -91,7 +91,7 @@ ____loclib.rwallet = "Кошелек";
 ____loclib.raccounts = "Аккаунты";	
 ____loclib.rsystem = "Система";
 ____loclib.rconnection = "Подключение";
-____loclib.pnetAddress = "Адрес POCKETNET";	
+____loclib.pnetAddress = "Адрес "+appname+"";	
 ____loclib.profile = "Профиль";	
 ____loclib.signout = "Выйти";
 
@@ -176,7 +176,7 @@ ____loclib.wsaddressnotv = "Адрес введен неверно";
 ____loclib.uaddaddressdona = "Добавить адрес для пожертвований";
 ____loclib.uaddaddressdonaplace = "Введите адрес";
 ____loclib.uchangeicon = "Изменить иконку пользователя";
-____loclib.utip1 = "Вы должны ввести имя пользователя и установить иконку прежде чем пользоваться POCKETNET";
+____loclib.utip1 = "Вы должны ввести имя пользователя и установить иконку прежде чем пользоваться "+appname+"";
 ____loclib.utip2 = "Остался последний шаг";
 ____loclib.upicset = "Установить иконку пользователя";
 ____loclib.upic = "Иконка пользователя";
