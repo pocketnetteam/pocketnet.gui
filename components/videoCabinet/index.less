@@ -36,6 +36,14 @@
         max-width: 200px;
         white-space: nowrap;
 
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        i {
+            width: 20px;
+        }
+
         margin: 0;
     }
 
@@ -96,6 +104,22 @@
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
+
+        position: relative;
+
+        .videoDuration {
+            position: absolute;
+
+            font-size: 0.7em;
+            font-weight: bold;
+            color: #fff;
+
+            background-color: rgba(0, 0, 0, 0.5);
+
+            bottom: 0;
+
+            padding: @rhythm;
+        }
     }
 
     .moduleHeader {
@@ -117,6 +141,10 @@
         &:hover {
             color: rgba(0, 0, 0, 1);
         }
+    }
+
+    .removeVideo {
+        color: @color-bad;
     }
 
     .reputation {
@@ -619,12 +647,18 @@
 
     .uploadVideo {
         margin-left: 2 * @rhythm;
+
+        .fas {
+            margin-right: @rhythm / 2;
+        }
     }
 
     .videoSearchWrapper {
         position: relative;
 
-        max-width: 350px;
+        max-width: 550px;
+
+        width: 40%;
     }
 
     .videoSearchInput {
@@ -636,6 +670,13 @@
     .videoSearchButton {
         position: absolute;
         right: 0;
+    }
+
+    .transcodingPreloader {
+        background-color: rgba(0, 0, 0, 0.8);
+
+        width: 100%;
+        height: 100%;
     }
 }
 

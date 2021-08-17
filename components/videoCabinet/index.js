@@ -44,12 +44,13 @@ var videoCabinet = (function () {
         return Promise.resolve(serverStructureHosts);
       },
 
-      async getVideos(server = '') {
+      async getVideos(server = '', parameters = {}) {
         if (!server) return;
 
         const options = {
           start: peertubeServers[server].start,
           count: perServerCounter,
+          ...parameters,
         };
 
         return self.app.peertubeHandler.api.videos
@@ -92,12 +93,9 @@ var videoCabinet = (function () {
           .catch((err) => {}),
 
       resetHosts() {
-        const videoPortionElement = $(
-          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
-        );
-
         el.videoContainer.html('');
-        el.videoContainer.append(videoPortionElement);
+
+        const videoPortionElement = renders.newVideoContainer();
 
         Object.keys(peertubeServers).forEach((server) => {
           peertubeServers[server] = {
@@ -107,6 +105,16 @@ var videoCabinet = (function () {
         });
 
         return videoPortionElement;
+      },
+
+      updateAllHosts(parameters = {}) {
+        const servers = Object.keys(peertubeServers);
+
+        const serverPromises = servers.map((server) =>
+          actions.getVideos(server, parameters),
+        );
+
+        return Promise.allSettled(serverPromises);
       },
     };
 
@@ -129,11 +137,7 @@ var videoCabinet = (function () {
       getAdditionalVideos(activeServers = []) {
         if (!activeServers.length) return;
 
-        const videoPortionElement = $(
-          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
-        );
-
-        el.videoContainer.append(videoPortionElement);
+        const videoPortionElement = renders.newVideoContainer();
 
         return Promise.allSettled(
           activeServers.map((server) => actions.getVideos(server)),
@@ -146,6 +150,21 @@ var videoCabinet = (function () {
 
           renders.videos(newVideos, videoPortionElement);
         });
+      },
+
+      onSearchVideo() {
+        const searchString = el.searchInput.val();
+
+        const videoPortionElement = actions.resetHosts();
+
+        actions
+          .updateAllHosts({ search: searchString })
+          .then(() => {
+            renders.videos(null, videoPortionElement);
+          })
+          .catch(() => {
+            renders.videos(null, videoPortionElement);
+          });
       },
     };
 
@@ -371,6 +390,16 @@ var videoCabinet = (function () {
           },
         );
       },
+
+      newVideoContainer() {
+        const videoPortionElement = $(
+          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
+        );
+
+        el.videoContainer.append(videoPortionElement);
+
+        return videoPortionElement;
+      },
     };
 
     var state = {
@@ -385,6 +414,8 @@ var videoCabinet = (function () {
 
         renders.streamPage({ type });
       });
+
+      el.searchButton.on('click', events.onSearchVideo);
     };
 
     return {
@@ -411,15 +442,14 @@ var videoCabinet = (function () {
         el.quotaContainer = el.c.find('.quotaContainer');
         el.videoButtons = el.c.find('.videoActiveButton');
 
+        el.searchInput = el.c.find('.videoSearchInput');
+        el.searchButton = el.c.find('.videoSearchButton');
+
         el.windowElement = $(window);
 
         initEvents();
 
-        const videoPortionElement = $(
-          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
-        );
-
-        el.videoContainer.append(videoPortionElement);
+        const videoPortionElement = renders.newVideoContainer();
 
         actions
           .getHosts()

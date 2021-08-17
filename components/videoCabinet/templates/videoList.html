@@ -6,10 +6,19 @@
       style="
         background-image: url(<%- `https://${video.account.host}${video.previewPath}` %>);
       "
-    ></div>
+    >
+      <div class="preloaderwr transcodingPreloader">
+        <div class="preloader5"><span></span><span></span><span></span></div>
+      </div>
+      <div class="videoDuration"><%- secInTime(video.duration) %></div>
+    </div>
     <div class="videoItemPart videoName">
       <p class="videoTextContainer videoNameText"><%- video.name %></p>
-      <p class="videoTextContainer"><%- video.account.host %></p>
+      <p class="videoTextContainer">
+        <i class="far fa-calendar"></i
+        ><span><%- moment(video.createdAt).format('hh:mm MM-DD-YYYY') %></span>
+      </p>
+      <!-- <p class="videoTextContainer"><%- video.account.host %></p> -->
     </div>
     <div
       class="videoItemPart videoStatsWrapper"
