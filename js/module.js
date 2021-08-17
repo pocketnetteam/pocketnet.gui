@@ -175,8 +175,6 @@ nModule = function(){
 
 						};
 
-						console.log('insert', p, options);
-
 						var type = p.essenseData && p.essenseData.type
 
 						if (type){
@@ -300,8 +298,6 @@ nModule = function(){
 
 			if(p.animation == 'fadeIn')
 			{
-				console.log("P", p)
-				
 				p.el.fadeOut(100);
 
 				setTimeout(function(){
@@ -583,7 +579,7 @@ nModule = function(){
 				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
 			}
 
-				url += '/templates/' + p.name + '.html?v=122';
+				url += '/templates/' + p.name + '.html?v=124';
 			
 			self.ajax.run({
 				url : url,

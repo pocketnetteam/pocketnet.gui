@@ -368,6 +368,7 @@ var post = (function () {
 						resetOnEnd: true,
 						muted: false,
 						wautoplay: wa,
+						logoType : self.app.meta.fullname,
 
 						volumeChange : function(v){
 							videosVolume = v

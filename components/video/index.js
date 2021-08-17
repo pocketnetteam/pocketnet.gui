@@ -21,7 +21,7 @@ var video = (function(){
 				en : {
 					title : self.app.meta.fullname + " - Decentralized Social Network on the Blockchain",
 					id : "gMrKZfHJSxA",
-					description : self.app.meta.fullname + " is a fully decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity.No corporation behind it to take fruits of your labor. All advertising revenue is split equally between node operators and those who publish highly rated content. Your subscribers always see your content, unless they decide to unsubscribe. "+self.app.meta.fullname+" is self-policed by the platform participants with good reputation. Nobody records your keystrokes, viewing habits or searches. Join The New Peer-To-Peer Internet: Go to pocketnet.app and join for free now"
+					description : self.app.meta.fullname + " is a fully decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity.No corporation behind it to take fruits of your labor. All advertising revenue is split equally between node operators and those who publish highly rated content. Your subscribers always see your content, unless they decide to unsubscribe. "+self.app.meta.fullname+" is self-policed by the platform participants with good reputation. Nobody records your keystrokes, viewing habits or searches. Join The New Peer-To-Peer Internet: Go to "+self.app.meta.url+" and join for free now"
 				}
 			}
 

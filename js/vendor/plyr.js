@@ -9162,7 +9162,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var video_id = target.getAttribute('data-plyr-embed-id');
     var clear_peertube_id = target.getAttribute('data-plyr-video-id');
 
-
     if (provider == 'peertube') {
 
 
@@ -9177,7 +9176,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
         PeerTubeEmbeding.main(target, clear_peertube_id, {
           host : host,
-          wautoplay : options.wautoplay
+          wautoplay : options.wautoplay,
+          logoType : options.logoType
         },{
   
           playbackStatusChange : function(status){
@@ -9219,8 +9219,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
         playbackStatusChange : function(status){
         },
-        volumechange : function(volume){
-        },
+        volumechange : options.volumeChange,
 
       }).then(embed => {
 
@@ -9274,10 +9273,18 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
 
     // Return a new instance of Plyr
     var newPlyr = function(target, video_options) {
+
+
+      console.log("video_options", video_options)
+
       var newPlayer = new Plyr(target, video_options);
       // Set the mandatory/missing functions
       newPlayer.mute = () => newPlayer.muted = true;
       newPlayer.unmute = () => newPlayer.muted = false;
+
+
+      
+
       return newPlayer;
     }
 
@@ -9311,6 +9318,12 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
                     var plyrPlayer = newPlyr(target, video_options);
 
                     plyrPlayer.on('ready', readyCallback)
+
+                    plyrPlayer.on('volumechange', function(v){
+
+                      if(video_options.volumeChange)
+                        video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
+                    })
 
                     if (clbk) clbk(plyrPlayer);
                 } else {

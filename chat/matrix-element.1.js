@@ -1714,11 +1714,13 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
     ///////////////
     banUser: function banUser(user) {
+      var _this4 = this;
+
       console.log(user, "ussseeer");
 
       if (user.membership === 'ban') {
         this.core.mtrx.client.unban(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain)).then(function (r) {
-          return;
+          _this4.core.mtrx.client.invite(_this4.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, _this4.core.domain)).then(function (r) {});
         });
       } else {
         this.core.mtrx.client.ban(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain), 'admin ban').then(function (r) {

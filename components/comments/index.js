@@ -37,7 +37,6 @@ var comments = (function(){
 		var clbks = {
 			upvote : function(err, comment, value, address, temp){
 
-				console.log("CLBK")
 				if(!comment) return
 
 				if (comment.txid != txid) return
@@ -512,8 +511,6 @@ var comments = (function(){
 			},
 			
 			removeForm : function(id){
-
-				console.log("ID", id)
 
 				delete areas[id]
 
@@ -1106,7 +1103,6 @@ var comments = (function(){
 				if (listpreview && ed.lastComment){
 					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
 
-					console.log('ed.lastComment', ed.lastComment)
 				}
 
 
@@ -1213,7 +1209,6 @@ var comments = (function(){
 						__el.find('.block').on('click', function(){
 
 							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
-								console.log(tx, error)
                                 if (!tx) {
                                     self.app.platform.errorHandler(error, true)
                                 }
@@ -1474,7 +1469,6 @@ var comments = (function(){
 
 				var id = actions.getid(_p.el.find('.postbody'))
 
-				console.log('p.el', _p.el)
 				topPreloader(100)
 
 				resize(data.dataURL, 1920, 1080, function(resized){
@@ -2521,7 +2515,6 @@ var comments = (function(){
 			
 			init : function(p){
 
-				console.log('p!!', p);
 				//state.load();
 
 				receiver = p.essenseData.receiver;

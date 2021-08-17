@@ -593,6 +593,7 @@ var lenta = (function(){
 						if (player){
 							players[share.txid] || (players[share.txid] = {})
 							players[share.txid].p = player
+							//players[share.txid].volume = videosVolume
 							players[share.txid].initing = true
 							players[share.txid].el = vel
 							players[share.txid].id = vel.attr('pid')
@@ -629,6 +630,10 @@ var lenta = (function(){
 						},
 
 						volumeChange : function(v){
+
+
+							console.log("VVV", v)
+
 							videosVolume = v
 
 							self.sdk.videos.volume = videosVolume 
@@ -645,6 +650,8 @@ var lenta = (function(){
 					if(isMobile()){
 						s.controls = ['play', 'progress', 'current-time', 'fullscreen']
 					}	
+
+					s.logoType = self.app.meta.fullname
 
 					PlyrEx(pels[0], s, callback, readyCallback)
 
@@ -932,6 +939,8 @@ var lenta = (function(){
 
 					//player.p.muted = false
 
+					console.log("videosVolume", videosVolume)
+
 					actions.setVolume(players[id], videosVolume || 0.5)
 					
 
@@ -994,6 +1003,8 @@ var lenta = (function(){
 				var player = players[id]
 
 				//player.p.muted = true;
+
+				console.log('videosVolume', videosVolume)
 
 				actions.setVolume(players[id], videosVolume)
 
@@ -1453,15 +1464,29 @@ var lenta = (function(){
 
 				if(typeof v == 'undefined') v = videosVolume
 
+				var cvv = videosVolume
+
 				if(!player.p) return
 
-				if (v && player.p.setVolume){
-					//player.p.muted = false;
-					player.p.setVolume(v)
+				///console.log("player.p", player.p)
+
+				if(player.p.setVolume){
+					if (v){
+						player.p.setVolume(v)
+					}
+					else{
+						player.p.muted = true;
+					}
 				}
 				else{
-					player.p.muted = true;
+					player.p.volume = v
+
+					setTimeout(function(){
+						videosVolume = cvv
+					})
 				}
+
+				
 			},
 		}
 
@@ -2254,7 +2279,8 @@ var lenta = (function(){
 						ed : essenseData,
 						mestate : mestate,
 						all : all || false,
-						tplvideo : video 
+						tplvideo : video ,
+						openapi : essenseData.openapi
 					}					
 
 				}, function(p){

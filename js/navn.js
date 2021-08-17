@@ -1000,7 +1000,7 @@ Nav = function(app)
 				|| href == "#")
 				
 				
-				&& (href.indexOf(host) == -1)
+				&& (href.indexOf(host) == -1) && (href.indexOf('pocketnet://') == -1) && (href.indexOf('bastyon://') == -1)
 			)
 
 			if (!e && ex) e = true; 
@@ -1096,9 +1096,8 @@ Nav = function(app)
 							.on('click', function(){
 								var href = $(this).attr('href');	
 
-								
 
-								if (href.indexOf('http') == -1) href = 'http://' + href						
+								if (href.indexOf('http') == -1) href = 'https://' + href						
 
 								self.api.load({
 									open : true,
@@ -1143,6 +1142,8 @@ Nav = function(app)
 
 					var eve = function(e){
 						var href = core.thisSiteLink($(this).attr('href'));
+
+						//href = href.replace('pocketnet://', 'https://' + window.location.hostname).replace('bastyon://', 'https://' + window.location.hostname)
 
 						var handler = $(this).attr('handler') || null
 

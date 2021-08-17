@@ -42,6 +42,7 @@
           host,
           videoEmbedded: true,
           txid: s || '',
+          logoType : "__VAR__.project"
         });
       };
 

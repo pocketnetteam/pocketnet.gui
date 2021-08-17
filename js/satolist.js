@@ -1953,6 +1953,14 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        route : function(href, el, clbk, p){
+            el.html('<div class="internalpocketnetlink"><a href="https://'+app.options.url+'/'+href+'"><i class="fas fa-link"></i> https://'+app.options.url+'/'+href+'</a></div>')
+
+            app.nav.api.links(null, el);
+
+            if(clbk) clbk()
+        },
+
         channel : function(id, el, clbk, p){
 
             var r = false
@@ -1985,11 +1993,23 @@ Platform = function (app, listofnodes) {
             if(r){ c() }
 
             else{
-                self.sdk.users.addressByName(id, function(_id){
-                    id = _id
 
-                    c()
+                var f = _.find(__map, function(m, i){
+                    return m.href && (m.href.toLowerCase() == id.toLowerCase())
                 })
+
+                if(f){
+                    self.papi.route(f.href, el, clbk, p)
+                }
+                else{
+
+                    self.sdk.users.addressByName(id, function(_id){
+                        id = _id
+                        c()
+                    })
+                }
+
+                
             }
 
             
