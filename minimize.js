@@ -773,7 +773,7 @@ fs.exists(mapJsPath, function (exists) {
 			})
 
 			copycontent(cordovaconfig, function(){
-			})
+			}, true)
             
             if(args.makewebnode)
             {
