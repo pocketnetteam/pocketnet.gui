@@ -831,8 +831,9 @@ var helpers = {
 	}
 }
 
-var copycontent = function(options, clbk) {
-	helpers.clearfolder(options.path, function() {
+var copycontent = function(options, clbk, nac) {
+
+	var ac = function(){
 		lazyEach({
 			sync : true,
 			array : options.copy,
@@ -852,7 +853,15 @@ var copycontent = function(options, clbk) {
 				}
 			}
 		})
-	})
+	}
+		
+	if(!nac)
+		helpers.clearfolder(options.path, function() {
+			ac()
+		})
+	else{
+		ac()
+	}
 }
 
 var copycordovaios = function(options, clbk){
