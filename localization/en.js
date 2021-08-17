@@ -1112,3 +1112,6 @@ ____loclib.totalComments = "Total Comments";
 ____loclib.totalViews = "Video Views";
 
 ____loclib.enterVideoName = "Search by video name";
+
+____loclib.videoTranscoding = "Video is being processed and may not work properly / induce extended traffic consumption. Do you still want to post it?";
+____loclib.waitForTranscoding = "Wait for processing";

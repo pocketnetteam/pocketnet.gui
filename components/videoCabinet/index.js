@@ -196,8 +196,21 @@ var videoCabinet = (function () {
 
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
+              const transcodingInProgress = $(this).attr('videoTranscoding');
 
-              renders.addButton(videoLink);
+              if (transcodingInProgress) {
+                dialog({
+                  html: self.app.localization.e('videoTranscoding'),
+                  btn1text: self.app.localization.e('spostnow'),
+                  btn2text: self.app.localization.e('waitForTranscoding'),
+
+                  success: function () {
+                    renders.addButton(videoLink);
+                  },
+                });
+              } else {
+                renders.addButton(videoLink);
+              }
             });
 
             removeVideo.on('click', function () {
