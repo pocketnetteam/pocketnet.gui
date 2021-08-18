@@ -1115,3 +1115,7 @@ ____loclib.enterVideoName = "Search by video name";
 
 ____loclib.videoTranscoding = "Video is being processed and may not work properly / induce extended traffic consumption. Do you still want to post it?";
 ____loclib.waitForTranscoding = "Wait for processing";
+
+____loclib.bonusProgram = "Bonus Program Status";
+____loclib.bonusProgramViews = "Total Video Views";
+____loclib.bonusProgramRatings = "Total Ratings";

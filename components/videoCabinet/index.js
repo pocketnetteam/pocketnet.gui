@@ -413,6 +413,17 @@ var videoCabinet = (function () {
 
         return videoPortionElement;
       },
+
+      bonusProgram() {
+        self.shell(
+          {
+            name: 'bonusProgram',
+            el: el.bonusProgramContainer,
+            data: {},
+          },
+          (p) => {},
+        );
+      },
     };
 
     var state = {
@@ -458,6 +469,8 @@ var videoCabinet = (function () {
         el.searchInput = el.c.find('.videoSearchInput');
         el.searchButton = el.c.find('.videoSearchButton');
 
+        el.bonusProgramContainer = el.c.find('.leaderBoardContainer');
+
         el.windowElement = $(window);
 
         initEvents();
@@ -490,6 +503,8 @@ var videoCabinet = (function () {
           .getQuota()
           .then(() => renders.quota())
           .catch(() => renders.quota());
+
+        renders.bonusProgram();
 
         p.clbk(null, p);
       },
