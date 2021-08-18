@@ -96,7 +96,7 @@ var test = (function(){
 			valid : function(v1, v2){
 				if(!actions.equal((v1), (v2))){
 
-					if(trim(v1.name) && v1.image) return true
+					if(trim(v1.name)) return true
 
 				}
 			},
