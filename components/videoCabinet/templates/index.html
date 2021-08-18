@@ -19,10 +19,37 @@
   <section class="videoContainer">
     <section class="videoControls">
       <div class="videoSearchWrapper">
-        <input type="text" id="videoSearchInput" class="videoSearchInput" placeholder="<%- e('enterVideoName') %>"/>
-        <button class="videoSearchButton ghostButton"><i class="fas fa-search"></i></button>
+        <input
+          type="text"
+          id="videoSearchInput"
+          class="videoSearchInput"
+          placeholder="<%- e('enterVideoName') %>"
+        />
+        <button class="videoSearchButton ghostButton">
+          <i class="fas fa-search"></i>
+        </button>
       </div>
-      <button class="uploadVideo videoActiveButton ghostButton" rendersElement="addVideo">
+      <div class="videoSortWrapper">
+        <div class="sortTypeSelectWrapper">
+          <select class="sortTypeSelect">
+            <option value="name">Name</option>
+            <option value="createdAt">Creation Date</option>
+            <option value="duration">duration</option>
+            <option value="views">views</option>
+          </select>
+        </div>
+
+        <div class="sortDirectionSelectWrapper">
+          <select class="sortDirectionSelect">
+            <option value="">Asc</option>
+            <option value="-">Desc</option>
+          </select>
+        </div>
+      </div>
+      <button
+        class="uploadVideo videoActiveButton ghostButton"
+        rendersElement="addVideo"
+      >
         <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
       </button>
       <!-- <button

@@ -166,6 +166,21 @@ var videoCabinet = (function () {
             renders.videos(null, videoPortionElement);
           });
       },
+
+      onVideoSort() {
+        const sort = `${el.sortDirectionSelect.val()}${el.sortTypeSelect.val()}`;
+
+        const videoPortionElement = actions.resetHosts();
+
+        actions
+          .updateAllHosts({ sort })
+          .then(() => {
+            renders.videos(null, videoPortionElement);
+          })
+          .catch(() => {
+            renders.videos(null, videoPortionElement);
+          });
+      },
     };
 
     var renders = {
@@ -440,6 +455,9 @@ var videoCabinet = (function () {
       });
 
       el.searchButton.on('click', events.onSearchVideo);
+
+      el.sortTypeSelect.on('change', events.onVideoSort);
+      el.sortDirectionSelect.on('change', events.onVideoSort);
     };
 
     return {
@@ -470,6 +488,9 @@ var videoCabinet = (function () {
         el.searchButton = el.c.find('.videoSearchButton');
 
         el.bonusProgramContainer = el.c.find('.leaderBoardContainer');
+
+        el.sortTypeSelect = el.c.find('.sortTypeSelect');
+        el.sortDirectionSelect = el.c.find('.sortDirectionSelect');
 
         el.windowElement = $(window);
 
