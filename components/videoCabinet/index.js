@@ -116,6 +116,10 @@ var videoCabinet = (function () {
 
         return Promise.allSettled(serverPromises);
       },
+
+      getTotalViews() {
+        
+      }
     };
 
     var events = {
@@ -211,7 +215,7 @@ var videoCabinet = (function () {
 
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
-              const transcodingInProgress = $(this).attr('videoTranscoding');
+              const transcodingInProgress = $(this).attr('videoTranscoding') === true;
 
               if (transcodingInProgress) {
                 dialog({

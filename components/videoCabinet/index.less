@@ -702,6 +702,73 @@
 
         }
     }
+
+    .sortSelectWrapper {
+        position: relative;
+
+        margin-left: @rhythm * 2;
+
+        &:hover {
+
+            .selectBorderCaption,
+            .selectIcon {
+                color: black;
+            }
+        }
+    }
+
+    .videoSortWrapper {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .videoSelect {
+            background-color: transparent;
+
+            padding: @rhythm * 2.5 0 @rhythm @rhythm * 2;
+
+            border: none;
+            border-bottom: 1px solid @color-gray-border;
+
+            font-weight: bold;
+            font-size: 0.8em;
+
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            background: none;
+
+            cursor: pointer;
+
+            position: relative;
+
+            color: rgba(0, 0, 0, 0.5);
+
+            &:hover {
+                color: black;
+                border-bottom: 1px solid black;
+            }
+        }
+    }
+
+    .selectBorderCaption {
+        position: absolute;
+
+        font-size: 0.55em;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .selectIcon {
+        position: absolute;
+
+        font-size: 0.55em;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.5);
+
+        top: 1.85em;
+    }
 }
 
 html.stblack {
