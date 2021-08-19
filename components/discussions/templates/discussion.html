@@ -2,17 +2,31 @@
 
 	<% if(discussion.author) {
 
-		var n = deep(app, 'platform.sdk.usersl.storage.'+discussion.author+'.name') || discussion.author
+		var n = deep(app, 'platform.sdk.usersl.storage.'+discussion.author+'.name') || discussion.author;
 
-		var src = deep(app, 'platform.sdk.usersl.storage.'+discussion.author+'.image')
+		var src = deep(app, 'platform.sdk.usersl.storage.'+discussion.author+'.image');
+		var name = deep(app, 'platform.sdk.usersl.storage.'+discussion.author+'.name');
+		var letter = name ? name[0] : '';
+
+	}
 	%>
 
 		<div class="author">
 			<div class="icon">
 				<div class="usericon" image="<%-src || ''%>">
 
-					<% if(!src) {%>
+					<% if(!src && letter) { %>
+
+						<span 
+							class="letter"
+						>
+							<%-letter.toUpperCase()%>
+						</span>
+
+					<% } else if (!src) { %>
+
 						<svg width="25" height="25" data-jdenticon-value="<%-discussion.author%>"></svg>
+
 					<% } %>
 					
 				</div>
