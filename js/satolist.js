@@ -52,7 +52,8 @@ Platform = function (app, listofnodes) {
         'PHqNLuNEwrw8nzj71ELVGp7w1eEp8p2pKA' : true,
         'PR3BcnBziYoDgckdyaARgFayiZUiA7agSx' : true,
         'PEbSS6Fu9fCSEzFcrW5a3ztjx5ekoYvpjx' : true,
-        'PKZNLmxpsiW9H77beXt7pNWK7rTbG6Qu5h' : true
+        'PKZNLmxpsiW9H77beXt7pNWK7rTbG6Qu5h' : true,
+        'PNoR5LNLAZP3VGiNcK2wn4xxAFT6yQAMqj' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -21090,7 +21091,7 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=3', clbk)
+                    importScript('chat/matrix-element.min.js?v=4', clbk)
                 }
                 
             }

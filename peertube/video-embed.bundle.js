@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=5810"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3954"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -41709,8 +41709,8 @@ core_default.a.registerComponent('P2PInfoButton', p2p_info_button_P2pInfoButton)
 
 // CONCATENATED MODULE: ./src/assets/player/videojs-components/pocketnet-link-button.ts
 
-const pocketnet_link_button_Button = core_default.a.getComponent('Button');
-const MenuButton = core_default.a.getComponent('MenuButton');
+const pocketnet_link_button_Button = core_default.a.getComponent("Button");
+const MenuButton = core_default.a.getComponent("MenuButton");
 class pocketnet_link_button_PocketnetLinkButton extends MenuButton {
     constructor(player, options) {
         console.log("options2", options);
@@ -41723,29 +41723,29 @@ class pocketnet_link_button_PocketnetLinkButton extends MenuButton {
         return this.buildElement();
     }
     updateHref() {
-        this.link.setAttribute('href', this.buildVideoLink());
+        this.link.setAttribute("href", this.buildVideoLink());
     }
     handleClick() {
         this.player().pause();
     }
     buildVideoLink() {
-        return this.voptions.href || 'https://pocketnet.app';
+        return this.voptions.href || "https://pocketnet.app";
     }
     buildElement() {
         const el = super.createEl();
         el.classList.add("pocketnet-link-button");
-        this.link = core_default.a.dom.createEl('a', {
-            href: '',
-            innerHTML: 'Pocketnet',
-            title: this.player().localize('Video page (new window)'),
-            className: 'vjs-pocketnet-link',
-            target: '_blank'
+        this.link = core_default.a.dom.createEl("a", {
+            href: "",
+            innerHTML: this.voptions.logoType,
+            title: this.player().localize("Video page (new window)"),
+            className: "vjs-pocketnet-link",
+            target: "_blank",
         });
         el.appendChild(this.link);
         return el;
     }
 }
-core_default.a.registerComponent('pocketnetLinkButton', pocketnet_link_button_PocketnetLinkButton);
+core_default.a.registerComponent("pocketnetLinkButton", pocketnet_link_button_PocketnetLinkButton);
 
 // CONCATENATED MODULE: ./src/assets/player/videojs-components/peertube-load-progress-bar.ts
 
@@ -42369,12 +42369,13 @@ var segment_validator = __webpack_require__(72);
 
 
 // Change 'Playback Rate' to 'Speed' (smaller for our settings menu)
-core_default.a.getComponent('PlaybackRateMenuButton').prototype.controlText_ = 'Speed';
-const CaptionsButton = core_default.a.getComponent('CaptionsButton');
+core_default.a.getComponent("PlaybackRateMenuButton").prototype.controlText_ =
+    "Speed";
+const CaptionsButton = core_default.a.getComponent("CaptionsButton");
 // Change Captions to Subtitles/CC
-CaptionsButton.prototype.controlText_ = 'Subtitles/CC';
+CaptionsButton.prototype.controlText_ = "Subtitles/CC";
 // We just want to display 'Off' instead of 'captions off', keep a space so the variable == true (hacky I know)
-CaptionsButton.prototype.label_ = ' ';
+CaptionsButton.prototype.label_ = " ";
 class peertube_player_manager_PeertubePlayerManager {
     static initState() {
         peertube_player_manager_PeertubePlayerManager.alreadyPlayed = false;
@@ -42384,12 +42385,12 @@ class peertube_player_manager_PeertubePlayerManager {
             let p2pMediaLoader;
             this.onPlayerChange = onPlayerChange;
             this.playerElementClassName = options.common.playerElement.className;
-            if (mode === 'webtorrent')
+            if (mode === "webtorrent")
                 yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 519));
-            if (mode === 'p2p-media-loader') {
+            if (mode === "p2p-media-loader") {
                 [p2pMediaLoader] = yield Promise.all([
                     Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, 516)),
-                    Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(9), __webpack_require__.e(3), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, 520))
+                    Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(9), __webpack_require__.e(3), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, 520)),
                 ]);
             }
             console.log('initvideo');
@@ -42397,28 +42398,39 @@ class peertube_player_manager_PeertubePlayerManager {
             const videojsOptions = this.getVideojsOptions(mode, options, p2pMediaLoader);
             // await TranslationsManager.loadLocaleInVideoJS(options.common.serverUrl, options.common.language, videojs)
             const self = this;
-            return new Promise(res => {
+            return new Promise((res) => {
                 core_default()(options.common.playerElement, videojsOptions, function () {
                     const player = this;
                     let alreadyFallback = false;
                     if (!options.common.isLive) {
-                        player.tech(true).one('error', () => {
+                        player.tech(true).one("error", () => {
                             if (!alreadyFallback)
                                 self.maybeFallbackToWebTorrent(mode, player, options);
                             alreadyFallback = true;
                         });
-                        player.one('error', (e) => {
+                        player.one("error", () => {
                             if (!alreadyFallback)
                                 self.maybeFallbackToWebTorrent(mode, player, options);
                             alreadyFallback = true;
-                            console.log('e', e);
                         });
                     }
-                    player.one('play', () => {
+                    player.one("play", () => {
                         peertube_player_manager_PeertubePlayerManager.alreadyPlayed = true;
                     });
                     self.addContextMenu(mode, player, options.common.embedUrl, options.common.embedTitle);
                     player.bezels();
+                    /*if(!options.common.isLive){
+                      player.tech(true).one('error', () => {
+                        if (!alreadyFallback) self.maybeFallbackToWebTorrent(mode, player, options)
+                        alreadyFallback = true
+                      })
+              
+                      player.one('error', (e) => {
+                        if (!alreadyFallback) self.maybeFallbackToWebTorrent(mode, player, options)
+                        alreadyFallback = true
+            
+                        console.log('e', e)
+                      })*/ // ???? 
                     return res(player);
                 });
             });
@@ -42428,11 +42440,11 @@ class peertube_player_manager_PeertubePlayerManager {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             // await TranslationsManager.loadLocaleInVideoJS(options.common.serverUrl, options.common.language, videojs)
             const self = this;
-            return new Promise(res => {
+            return new Promise((res) => {
                 core_default()(el, options, function () {
                     const player = this;
                     let alreadyFallback = false;
-                    player.one('play', () => {
+                    player.one("play", () => {
                         peertube_player_manager_PeertubePlayerManager.alreadyPlayed = true;
                     });
                     /*player.bezels()*/
@@ -42443,9 +42455,9 @@ class peertube_player_manager_PeertubePlayerManager {
     }
     static maybeFallbackToWebTorrent(currentMode, player, options) {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            if (currentMode === 'webtorrent')
+            if (currentMode === "webtorrent")
                 return;
-            const newVideoElement = document.createElement('video');
+            const newVideoElement = document.createElement("video");
             newVideoElement.className = this.playerElementClassName;
             // VideoJS wraps our video element inside a div
             let currentParentPlayerElement = options.common.playerElement.parentNode;
@@ -42457,22 +42469,22 @@ class peertube_player_manager_PeertubePlayerManager {
             options.common.onPlayerElementChange(newVideoElement);
             player.dispose();
             yield Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 519));
-            const mode = 'webtorrent';
+            const mode = "webtorrent";
             const videojsOptions = this.getVideojsOptions(mode, options);
             const self = this;
             const error = {
                 message: "Total Error",
-                code: 500
+                code: 500,
             };
-            console.log('videojsOptions', videojsOptions);
+            console.log("videojsOptions", videojsOptions);
             console.log("HERE1");
             core_default()(newVideoElement, videojsOptions, function () {
                 const player = this;
-                player.tech(true).one('error', (e) => {
+                player.tech(true).one("error", (e) => {
                     if (options.error)
                         options.error(error);
                 });
-                player.one('error', (e) => {
+                player.one("error", (e) => {
                     if (options.error)
                         options.error(error);
                 });
@@ -42483,10 +42495,10 @@ class peertube_player_manager_PeertubePlayerManager {
     }
     static getVideojsOptions(mode, options, p2pMediaLoaderModule) {
         const commonOptions = options.common;
-        const isHLS = mode === 'p2p-media-loader';
+        const isHLS = mode === "p2p-media-loader";
         let autoplay = this.getAutoPlayValue(commonOptions.autoplay);
         let html5 = {
-            preloadTextTracks: false
+            preloadTextTracks: false,
         };
         const plugins = {
             peertube: {
@@ -42499,8 +42511,8 @@ class peertube_player_manager_PeertubePlayerManager {
                 videoCaptions: commonOptions.videoCaptions,
                 stopTime: commonOptions.stopTime,
                 isLive: commonOptions.isLive,
-                videoUUID: commonOptions.videoUUID
-            }
+                videoUUID: commonOptions.videoUUID,
+            },
         };
         if (commonOptions.playlist) {
             plugins.playlist = commonOptions.playlist;
@@ -42512,7 +42524,7 @@ class peertube_player_manager_PeertubePlayerManager {
             const { hlsjs } = peertube_player_manager_PeertubePlayerManager.addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule);
             Object.assign(html5, hlsjs.html5);
         }
-        if (mode === 'webtorrent') {
+        if (mode === "webtorrent") {
             peertube_player_manager_PeertubePlayerManager.addWebTorrentOptions(plugins, options);
             // WebTorrent plugin handles autoplay, because we do some hackish stuff in there
             autoplay = false;
@@ -42523,9 +42535,7 @@ class peertube_player_manager_PeertubePlayerManager {
             textTrackSettings: false,
             controls: commonOptions.controls !== undefined ? commonOptions.controls : true,
             loop: commonOptions.loop !== undefined ? commonOptions.loop : false,
-            muted: commonOptions.muted !== undefined
-                ? commonOptions.muted
-                : undefined,
+            muted: commonOptions.muted !== undefined ? commonOptions.muted : undefined,
             autoplay: this.getAutoPlayValue(autoplay),
             poster: commonOptions.poster,
             inactivityTimeout: commonOptions.inactivityTimeout,
@@ -42535,13 +42545,14 @@ class peertube_player_manager_PeertubePlayerManager {
                 children: this.getControlBarChildren(mode, {
                     captions: commonOptions.captions,
                     pocketnetLink: commonOptions.pocketnetLink,
+                    logoType: commonOptions.logoType,
                     theaterButton: commonOptions.theaterButton,
                     nextVideo: commonOptions.nextVideo,
                     hasNextVideo: commonOptions.hasNextVideo,
                     previousVideo: commonOptions.previousVideo,
-                    hasPreviousVideo: commonOptions.hasPreviousVideo
-                }) // FIXME: typings
-            }
+                    hasPreviousVideo: commonOptions.hasPreviousVideo,
+                }),
+            },
         };
         if (commonOptions.language && !isDefaultLocale(commonOptions.language)) {
             Object.assign(videojsOptions, { language: commonOptions.language });
@@ -42551,24 +42562,24 @@ class peertube_player_manager_PeertubePlayerManager {
     static addP2PMediaLoaderOptions(plugins, options, p2pMediaLoaderModule) {
         const p2pMediaLoaderOptions = options.p2pMediaLoader;
         const commonOptions = options.common;
-        const trackerAnnounce = p2pMediaLoaderOptions.trackerAnnounce
-            .filter(t => t.startsWith('ws'));
+        const trackerAnnounce = p2pMediaLoaderOptions.trackerAnnounce.filter((t) => t.startsWith("ws"));
         const redundancyUrlManager = new redundancy_url_manager_RedundancyUrlManager(options.p2pMediaLoader.redundancyBaseUrls);
         const p2pMediaLoader = {
             redundancyUrlManager,
-            type: 'application/x-mpegURL',
+            type: "application/x-mpegURL",
             startTime: commonOptions.startTime,
-            src: p2pMediaLoaderOptions.playlistUrl
+            src: p2pMediaLoaderOptions.playlistUrl,
         };
         let consumeOnly = false;
         // FIXME: typings
-        if (navigator && navigator.connection && navigator.connection.type === 'cellular') {
-            console.log('We are on a cellular connection: disabling seeding.');
+        if (navigator &&
+            navigator.connection &&
+            navigator.connection.type === "cellular") {
+            console.log("We are on a cellular connection: disabling seeding.");
             consumeOnly = true;
         }
         /*const assetsStorage = new IdbAssetsStorage(this.db);
         const segmentsStorage = new IdbSegmentsStorage(this.db);*/
-        console.log('p2pMediaLoaderModule', p2pMediaLoaderModule);
         const p2pMediaLoaderConfig = {
             loader: {
                 trackerAnnounce,
@@ -42581,12 +42592,12 @@ class peertube_player_manager_PeertubePlayerManager {
             },
             segments: {
                 swarmId: p2pMediaLoaderOptions.playlistUrl,
-            }
+            },
         };
         const hlsjs = {
             levelLabelHandler: (level) => {
                 const resolution = Math.min(level.height || 0, level.width || 0);
-                const file = p2pMediaLoaderOptions.videoFiles.find(f => f.resolution.id === resolution);
+                const file = p2pMediaLoaderOptions.videoFiles.find((f) => f.resolution.id === resolution);
                 // We don't have files for live videos
                 if (!file)
                     return level.height;
@@ -42607,9 +42618,9 @@ class peertube_player_manager_PeertubePlayerManager {
                     //liveSyncDurationCount: 4,
                     maxBufferLength: 30,
                     maxMaxBufferLength: 55,
-                    loader: new p2pMediaLoaderModule.Engine(p2pMediaLoaderConfig).createLoaderClass()
-                }
-            }
+                    loader: new p2pMediaLoaderModule.Engine(p2pMediaLoaderConfig).createLoaderClass(),
+                },
+            },
         };
         const toAssign = { p2pMediaLoader, hlsjs };
         Object.assign(plugins, toAssign);
@@ -42618,150 +42629,154 @@ class peertube_player_manager_PeertubePlayerManager {
     static addWebTorrentOptions(plugins, options) {
         const commonOptions = options.common;
         const webtorrentOptions = options.webtorrent;
-        const autoplay = this.getAutoPlayValue(commonOptions.autoplay) === 'play'
-            ? true
-            : false;
+        const autoplay = this.getAutoPlayValue(commonOptions.autoplay) === "play" ? true : false;
         const webtorrent = {
             autoplay,
             videoDuration: commonOptions.videoDuration,
             playerElement: commonOptions.playerElement,
             videoFiles: webtorrentOptions.videoFiles,
-            startTime: commonOptions.startTime
+            startTime: commonOptions.startTime,
         };
         Object.assign(plugins, { webtorrent });
     }
     static getControlBarChildren(mode, options) {
         const settingEntries = [];
-        const loadProgressBar = mode === 'webtorrent' ? 'peerTubeLoadProgressBar' : 'loadProgressBar';
+        const loadProgressBar = mode === "webtorrent" ? "peerTubeLoadProgressBar" : "loadProgressBar";
         // Keep an order
-        settingEntries.push('playbackRateMenuButton');
+        settingEntries.push("playbackRateMenuButton");
         if (options.captions === true)
-            settingEntries.push('captionsButton');
-        settingEntries.push('resolutionMenuButton');
+            settingEntries.push("captionsButton");
+        settingEntries.push("resolutionMenuButton");
         const children = {};
         if (options.previousVideo) {
             const buttonOptions = {
-                type: 'previous',
+                type: "previous",
                 handler: options.previousVideo,
                 isDisabled: () => {
                     if (!options.hasPreviousVideo)
                         return false;
                     return !options.hasPreviousVideo();
-                }
+                },
             };
             Object.assign(children, {
-                'previousVideoButton': buttonOptions
+                previousVideoButton: buttonOptions,
             });
         }
         Object.assign(children, { playToggle: {} });
         if (options.nextVideo) {
             const buttonOptions = {
-                type: 'next',
+                type: "next",
                 handler: options.nextVideo,
                 isDisabled: () => {
                     if (!options.hasNextVideo)
                         return false;
                     return !options.hasNextVideo();
-                }
+                },
             };
             Object.assign(children, {
-                'nextVideoButton': buttonOptions
+                nextVideoButton: buttonOptions,
             });
         }
         Object.assign(children, {
-            'currentTimeDisplay': {},
-            'timeDivider': {},
-            'durationDisplay': {},
-            'liveDisplay': {},
-            'flexibleWidthSpacer': {},
-            'progressControl': {
+            currentTimeDisplay: {},
+            timeDivider: {},
+            durationDisplay: {},
+            liveDisplay: {},
+            flexibleWidthSpacer: {},
+            progressControl: {
                 children: {
-                    'seekBar': {
+                    seekBar: {
                         children: {
                             [loadProgressBar]: {},
-                            'mouseTimeDisplay': {},
-                            'playProgressBar': {}
-                        }
-                    }
-                }
-            },
-            'p2PInfoButton': {},
-            'muteToggle': {},
-            'volumeControl': {},
-            'settingsButton': {
-                setup: {
-                    maxHeightOffset: 40
+                            mouseTimeDisplay: {},
+                            playProgressBar: {},
+                        },
+                    },
                 },
-                entries: settingEntries
-            }
+            },
+            p2PInfoButton: {},
+            muteToggle: {},
+            volumeControl: {},
+            settingsButton: {
+                setup: {
+                    maxHeightOffset: 40,
+                },
+                entries: settingEntries,
+            },
         });
         if (options.pocketnetLink) {
             Object.assign(children, {
-                'pocketnetLinkButton': {
-                    href: options.pocketnetLink
-                }
+                pocketnetLinkButton: {
+                    href: options.pocketnetLink,
+                    logoType: options.logoType,
+                },
             });
         }
         if (options.theaterButton === true) {
             Object.assign(children, {
-                'theaterButton': {}
+                theaterButton: {},
             });
         }
         Object.assign(children, {
-            'fullscreenToggle': {
+            fullscreenToggle: {
                 handler: function (e) {
-                    console.log('handler', e, this);
-                }
-            }
+                    console.log("handler", e, this);
+                },
+            },
         });
         return children;
     }
     static addContextMenu(mode, player, videoEmbedUrl, videoEmbedTitle) {
         const content = () => {
-            const isLoopEnabled = player.options_['loop'];
+            const isLoopEnabled = player.options_["loop"];
             const items = [
                 {
-                    icon: 'repeat',
-                    label: player.localize('Play in loop') + (isLoopEnabled ? '<span class="vjs-icon-tick-white"></span>' : ''),
+                    icon: "repeat",
+                    label: player.localize("Play in loop") +
+                        (isLoopEnabled ? '<span class="vjs-icon-tick-white"></span>' : ""),
                     listener: function () {
-                        player.options_['loop'] = !isLoopEnabled;
-                    }
+                        player.options_["loop"] = !isLoopEnabled;
+                    },
                 },
                 {
-                    label: player.localize('Copy the video URL'),
+                    label: player.localize("Copy the video URL"),
                     listener: function () {
                         Object(utils["a" /* copyToClipboard */])(Object(player_utils["a" /* buildVideoLink */])());
-                    }
+                    },
                 },
                 {
-                    label: player.localize('Copy the video URL at the current time'),
+                    label: player.localize("Copy the video URL at the current time"),
                     listener: function () {
                         Object(utils["a" /* copyToClipboard */])(Object(player_utils["a" /* buildVideoLink */])({ startTime: this.currentTime() }));
-                    }
+                    },
                 },
                 {
-                    icon: 'code',
-                    label: player.localize('Copy embed code'),
+                    icon: "code",
+                    label: player.localize("Copy embed code"),
                     listener: () => {
                         Object(utils["a" /* copyToClipboard */])(Object(player_utils["b" /* buildVideoOrPlaylistEmbed */])(videoEmbedUrl, videoEmbedTitle));
-                    }
-                }
+                    },
+                },
             ];
-            if (mode === 'webtorrent') {
+            if (mode === "webtorrent") {
                 items.push({
-                    label: player.localize('Copy magnet URI'),
+                    label: player.localize("Copy magnet URI"),
                     listener: function () {
                         Object(utils["a" /* copyToClipboard */])(this.webtorrent().getCurrentVideoFile().magnetUri);
-                    }
+                    },
                 });
             }
-            return items.map(i => (Object.assign(Object.assign({}, i), { label: `<span class="vjs-icon-${i.icon || 'link-2'}"></span>` + i.label })));
+            return items.map((i) => (Object.assign(Object.assign({}, i), { label: `<span class="vjs-icon-${i.icon || "link-2"}"></span>` + i.label })));
         };
         // adding the menu
         //player.contextmenuUI({ content })
     }
     static addHotkeysOptions(plugins) {
-        const isNaked = (event, key) => (!event.ctrlKey && !event.altKey && !event.metaKey && !event.shiftKey && event.key === key);
+        const isNaked = (event, key) => !event.ctrlKey &&
+            !event.altKey &&
+            !event.metaKey &&
+            !event.shiftKey &&
+            event.key === key;
         Object.assign(plugins, {
             hotkeys: {
                 skipInitialFocus: true,
@@ -42769,52 +42784,53 @@ class peertube_player_manager_PeertubePlayerManager {
                 captureDocumentHotkeys: true,
                 documentHotkeysFocusElementFilter: (e) => {
                     const tagName = e.tagName.toLowerCase();
-                    return e.id === 'content' || tagName === 'body' || tagName === 'video';
+                    return (e.id === "content" || tagName === "body" || tagName === "video");
                 },
                 enableVolumeScroll: false,
                 enableModifiersForNumbers: false,
                 rewindKey: function (event) {
-                    return isNaked(event, 'ArrowLeft');
+                    return isNaked(event, "ArrowLeft");
                 },
                 forwardKey: function (event) {
-                    return isNaked(event, 'ArrowRight');
+                    return isNaked(event, "ArrowRight");
                 },
                 fullscreenKey: function (event) {
                     // fullscreen with the f key or Ctrl+Enter
-                    return isNaked(event, 'f') || (!event.altKey && event.ctrlKey && event.key === 'Enter');
+                    return (isNaked(event, "f") ||
+                        (!event.altKey && event.ctrlKey && event.key === "Enter"));
                 },
                 customKeys: {
                     increasePlaybackRateKey: {
                         key: function (event) {
-                            return isNaked(event, '>');
+                            return isNaked(event, ">");
                         },
                         handler: function (player) {
                             const newValue = Math.min(player.playbackRate() + 0.1, 5);
                             player.playbackRate(parseFloat(newValue.toFixed(2)));
-                        }
+                        },
                     },
                     decreasePlaybackRateKey: {
                         key: function (event) {
-                            return isNaked(event, '<');
+                            return isNaked(event, "<");
                         },
                         handler: function (player) {
-                            const newValue = Math.max(player.playbackRate() - 0.1, 0.10);
+                            const newValue = Math.max(player.playbackRate() - 0.1, 0.1);
                             player.playbackRate(parseFloat(newValue.toFixed(2)));
-                        }
+                        },
                     },
                     frameByFrame: {
                         key: function (event) {
-                            return isNaked(event, '.');
+                            return isNaked(event, ".");
                         },
                         handler: function (player) {
                             player.pause();
                             // Calculate movement distance (assuming 30 fps)
                             const dist = 1 / 30;
                             player.currentTime(player.currentTime() + dist);
-                        }
-                    }
-                }
-            }
+                        },
+                    },
+                },
+            },
         });
     }
     static getAutoPlayValue(autoplay) {
@@ -42823,9 +42839,9 @@ class peertube_player_manager_PeertubePlayerManager {
         // On first play, disable autoplay to avoid issues
         // But if the player already played videos, we can safely autoplay next ones
         if (Object(player_utils["e" /* isIOS */])() || Object(player_utils["g" /* isSafari */])()) {
-            return peertube_player_manager_PeertubePlayerManager.alreadyPlayed ? 'play' : false;
+            return peertube_player_manager_PeertubePlayerManager.alreadyPlayed ? "play" : false;
         }
-        return 'play';
+        return "play";
     }
 }
 peertube_player_manager_PeertubePlayerManager.alreadyPlayed = false;
@@ -42899,7 +42915,7 @@ class embed_PeerTubeEmbed {
         this.modeParam = this.getParamString(params, "mode");
         this.isVideoEmbed = this.getParamString(params, "videoEmbedded", "");
         this.txid = this.getParamString(params, "txid", "");
-        this.pocketnetLink = this.txid && this.isVideoEmbed ? `https://pocketnet.app/index?video=1&v=${this.txid}` : '';
+        this.pocketnetLink = this.txid && this.isVideoEmbed ? `https://${this.logoType === 'Pocketnet' ? 'pocketnet.app' : 'bastyon.com'}/index?video=1&v=${this.txid}` : '';
     }
     getParamToggle(params, name, defaultValue) {
         return params[name] ? true : defaultValue;
@@ -43291,7 +43307,6 @@ class embed_PeerTubeEmbed {
         });
     }
     handleError(err, translations) {
-        console.error(err);
         let is_transcoding = this.isTranscodingStatusMessage();
         if (is_transcoding)
             return;
@@ -43417,7 +43432,7 @@ class embed_PeerTubeEmbed {
                     hasNextVideo: this.playlist
                       ? () => !!this.getNextPlaylistElement()
                       : undefined,
-            
+    
                     previousVideo: this.playlist
                       ? () => this.playPreviousVideo()
                       : undefined,
@@ -43440,6 +43455,7 @@ class embed_PeerTubeEmbed {
                     videoDuration: videoInfo.duration,
                     enableHotkeys: false,
                     pocketnetLink: this.pocketnetLink,
+                    logoType: this.logoType || 'Pocketnet',
                     poster: this.wautoplay && !videoInfo.isLive ? null : this.composePath(videoInfo.previewPath),
                     theaterButton: false,
                     serverUrl: this.host,
@@ -43472,6 +43488,9 @@ class embed_PeerTubeEmbed {
             this.player = yield peertube_player_manager_PeertubePlayerManager.initialize(this.mode, options, (player) => {
                 this.player = player;
             });
+            if (window === null || window === void 0 ? void 0 : window.cordova) {
+                this.initOrienationEvents();
+            }
             delete this.player.tagAttributes.style;
             var pel = this.playerElement;
             try {
@@ -43482,9 +43501,9 @@ class embed_PeerTubeEmbed {
             if (Object(player_utils["d" /* isAndroid */])())
                 pel.setAttribute('poster', this.composePath(videoInfo.previewPath));
             this.player.on("customError", (event, data) => this.handleError(data.err /*, serverTranslations*/));
-            const overlayString = this.isVideoEmbed
-                ? `<span class="icon icon-full-logo-transparent"></span>`
-                : '<span class="icon icon-full-logo-transparent"></span>';
+            const overlayString = this.logoType === 'Pocketnet'
+                ? '<span class="icon icon-full-logo-transparent"></span>'
+                : '<span class="icon logo-bastyon"></span>';
             this.player.overlay({
                 overlays: [
                     {
@@ -43517,6 +43536,18 @@ class embed_PeerTubeEmbed {
     }
     insertAfter(referenceNode, newNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+    initOrienationEvents() {
+        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
+            this.player.on('fullscreenchange', () => {
+                if (this.player.isFullscreen()) {
+                    window.screen.orientation.unlock();
+                }
+                else {
+                    window.screen.orientation.lock('portrait');
+                }
+            });
+        });
     }
     initTouchedEvents() {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
@@ -43555,7 +43586,6 @@ class embed_PeerTubeEmbed {
             let flag = false;
             this.player.el_.addEventListener('touchend', (e) => {
                 this.player.bigPlayButton.disable();
-                console.log('e', e);
                 if (e.target.parentElement && e.target.parentElement.classList && e.target.parentElement.classList.contains('vjs-big-play-button')) {
                     if (!this.player.paused() && flag) {
                         this.player.pause();
@@ -43565,10 +43595,6 @@ class embed_PeerTubeEmbed {
                     }
                     flag = true;
                 }
-                // if (e.target.classList.contains('vjs-rewind-custom')) {
-                // }
-                // if (e.target.classList.contains('vjs-forward-custom')) {
-                // }
             });
         });
     }

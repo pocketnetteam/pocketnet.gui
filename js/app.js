@@ -1038,7 +1038,7 @@ Application = function(p)
 		},
 	
 		getStorageDirectory: function() {
-			return self.meta.fullName;
+			return 'Pocketnet';
 		},
 	
 		saveFile: function(url, blob) {
