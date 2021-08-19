@@ -21058,7 +21058,8 @@ Platform = function (app, listofnodes) {
 
         clbks : {
             ALL_NOTIFICATIONS_COUNT : {},
-            NOTIFICATION : {}
+            NOTIFICATION : {},
+            SHOWING : {}
         },
 
         destroy : function(){
@@ -21073,7 +21074,8 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.clbks = {
                 ALL_NOTIFICATIONS_COUNT : {},
-                NOTIFICATION : {}
+                NOTIFICATION : {},
+                SHOWING : {}
             }
         },
 
@@ -21384,6 +21386,10 @@ Platform = function (app, listofnodes) {
                         history: true
                     })
                 }
+
+                _.each(self.matrixchat.clbks.SHOWING, function(c){
+                    c(false)
+                })
             }
 
             core.apptochat = function(){
@@ -21405,6 +21411,10 @@ Platform = function (app, listofnodes) {
                     })
 
                 if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = false }
+
+                _.each(self.matrixchat.clbks.SHOWING, function(c){
+                    c(true)
+                })
             }
 
             self.matrixchat.core = core

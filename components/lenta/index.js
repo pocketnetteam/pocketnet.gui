@@ -933,13 +933,12 @@ var lenta = (function(){
 
 					var player = players[id]
 
-					if(!player.p.playing){
-						player.p.play()
+					if(!essenseData.openapi && !essenseData.second){
+						if(!player.p.playing){
+							player.p.play()
+						}
 					}
-
-					//player.p.muted = false
-
-					console.log("videosVolume", videosVolume)
+					
 
 					actions.setVolume(players[id], videosVolume || 0.5)
 					
@@ -1592,7 +1591,9 @@ var lenta = (function(){
 
 							if(player.p.getState && player.p.getState() == 'ended') return
 
-							
+							if(essenseData.openapi || essenseData.second){
+								return
+							}
 
 							if(!player.p.playing && !self.app.platform.matrixchat.showed()){
 								player.p.play()
@@ -3573,6 +3574,22 @@ var lenta = (function(){
 			if(!essenseData.openapi && !essenseData.second){
 
 				if(!essenseData.txids){
+
+					self.app.platform.matrixchat.clbks.SHOWING.lenta = function(v){
+						if(v){
+							_.each(players, function(player){
+								if (player.error || !player.p) return
+								if (player.p.playing){
+									player.p.stop()
+								}
+		
+							})
+						}
+						else{
+							
+						}
+					}
+
 					self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
 	
 	
@@ -4116,7 +4133,13 @@ var lenta = (function(){
 					delete self.app.platform.clbks.api.actions.unblocking.lenta
 
 					delete self.app.platform.clbks._focus.lenta
+
+
+					delete self.app.platform.matrixchat.clbks.SHOWING.lenta
 				}
+
+
+
 
 				self.app.platform.sdk.chats.removeTemp()
 				video = false					
