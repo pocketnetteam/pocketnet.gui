@@ -1,6 +1,6 @@
 <% 
 
-var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex') )
+var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
 var letter = name ? name[0] : ''
 
 %>
