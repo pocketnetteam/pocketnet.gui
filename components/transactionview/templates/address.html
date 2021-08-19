@@ -10,12 +10,24 @@
 
                 <div class="iconWrapper">
 
-                    <% var src = user.image  %>
+                    <% 
+                        var src = user.image; 
+                        var name = user.name;
+                        var letter = name ? name[0] : '';
+                    %>
 
                     <div class="icon">
                         <div class="usericon usericonsbsa another" image="<%-src || ''%>">
-                            <% if(!src) {%>
-                                <i class="fas fa-at"></i>
+                            <% if(!src && letter) {%>
+
+                                <span class="letter">
+                                    <%-letter.toUpperCase()%>
+                                </span>
+        
+                            <% } else if (!src) { %>
+        
+                                <i class="far fa-user"></i>
+        
                             <% } %>
                         </div>
                     </div>
