@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=467"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=4539"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -41724,6 +41724,7 @@ class pocketnet_link_button_PocketnetLinkButton extends MenuButton {
     }
     updateHref() {
         this.link.setAttribute("href", this.buildVideoLink());
+        this.link.innerHTML = this.buildVideoLogo();
     }
     handleClick() {
         this.player().pause();
@@ -41731,12 +41732,15 @@ class pocketnet_link_button_PocketnetLinkButton extends MenuButton {
     buildVideoLink() {
         return this.voptions.href || "https://pocketnet.app";
     }
+    buildVideoLogo() {
+        return this.voptions.logoType || "Pocketnet";
+    }
     buildElement() {
         const el = super.createEl();
         el.classList.add("pocketnet-link-button");
         this.link = core_default.a.dom.createEl("a", {
             href: "",
-            innerHTML: this.voptions.logoType,
+            innerHTML: "Pocketnet",
             title: this.player().localize("Video page (new window)"),
             className: "vjs-pocketnet-link",
             target: "_blank",
@@ -42424,13 +42428,13 @@ class peertube_player_manager_PeertubePlayerManager {
                         if (!alreadyFallback) self.maybeFallbackToWebTorrent(mode, player, options)
                         alreadyFallback = true
                       })
-              
+            
                       player.one('error', (e) => {
                         if (!alreadyFallback) self.maybeFallbackToWebTorrent(mode, player, options)
                         alreadyFallback = true
             
                         console.log('e', e)
-                      })*/ // ???? 
+                      })*/ // ????
                     return res(player);
                 });
             });
@@ -42915,6 +42919,7 @@ class embed_PeerTubeEmbed {
         this.modeParam = this.getParamString(params, "mode");
         this.isVideoEmbed = this.getParamString(params, "videoEmbedded", "");
         this.txid = this.getParamString(params, "txid", "");
+        this.logoType = this.getParamString(params, "logoType", "");
         this.pocketnetLink = this.txid && this.isVideoEmbed ? `https://${this.logoType === 'Pocketnet' ? 'pocketnet.app' : 'bastyon.com'}/index?video=1&v=${this.txid}` : '';
     }
     getParamToggle(params, name, defaultValue) {
