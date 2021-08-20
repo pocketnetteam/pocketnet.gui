@@ -199,7 +199,14 @@ var filluserfast = (function(){
 
 				after : function(el){
 
+					var c = false
+
 					var clbk = function(){
+
+						if(c) return
+
+						c = true
+
 						if (deep(essenseData, 'successHref') == '_this'){
 							var close = deep(initialParameters, 'container.close')
 							if (close)
@@ -226,9 +233,6 @@ var filluserfast = (function(){
 						else{
 							self.app.platform.ui.showmykeyfast()
 						}
-
-						
-						
 						
 					}
 

@@ -3866,6 +3866,8 @@ Platform = function (app, listofnodes) {
 
                     t.save()
                 }
+
+                app.mobile.statusbar.background()
             }
         },
 
@@ -21391,6 +21393,8 @@ Platform = function (app, listofnodes) {
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(false)
                 })
+
+                $('html').removeClass('chatshowed')
             }
 
             core.apptochat = function(){
@@ -21416,6 +21420,8 @@ Platform = function (app, listofnodes) {
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(true)
                 })
+
+                $('html').addClass('chatshowed')
             }
 
             self.matrixchat.core = core

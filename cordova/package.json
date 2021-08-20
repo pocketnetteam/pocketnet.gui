@@ -14,7 +14,7 @@
   "keywords": [
     "ecosystem:cordova"
   ],
-  "author": "Apache Cordova Team",
+  "author": "Pocketnet Team",
   "license": "Apache-2.0",
   "dependencies": {
     "cordova-plugin-badge": "0.8.8",
@@ -41,10 +41,13 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-opener2": "^3.0.5",
     "cordova-plugin-firebasex": "^11.0.3",
+    "cordova-plugin-insomnia": "git+https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-media": "^5.0.3",
+    "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-network-information": "^1.2.1",
     "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
+    "cordova-plugin-taptic-engine": "^2.2.0",
     "cordova-plugin-vibration": "^2.1.6",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-x-socialsharing": "^6.0.3",
@@ -117,11 +120,14 @@
         "IOS_GROUP_IDENTIFIER": "group.app.pocketnet",
         "SHAREEXT_DEVELOPMENT_TEAM": "Y5JW9JU787",
         "ANDROID_EXTRA_ACTIONS": " "
-      }
+      },
+      "cordova-plugin-navigationbar-color": {},
+      "cordova-plugin-insomnia": {},
+      "cordova-plugin-taptic-engine": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

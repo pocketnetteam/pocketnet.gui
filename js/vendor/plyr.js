@@ -9183,7 +9183,10 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
           playbackStatusChange : function(status){
             
           },
-          volumeChange : options.volumeChange
+          volumeChange : options.volumeChange,
+          fullscreenchange : options.fullscreenchange,
+          play : options.play,
+          pause : options.pause
   
         }).then(embed => {
 
@@ -9220,6 +9223,9 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         playbackStatusChange : function(status){
         },
         volumechange : options.volumeChange,
+        fullscreenchange : options.fullscreenchange,
+        play : options.play,
+        pause : options.pause
 
       }).then(embed => {
 
@@ -9281,9 +9287,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       // Set the mandatory/missing functions
       newPlayer.mute = () => newPlayer.muted = true;
       newPlayer.unmute = () => newPlayer.muted = false;
-
-
-      
 
       return newPlayer;
     }

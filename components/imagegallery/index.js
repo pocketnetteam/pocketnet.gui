@@ -620,9 +620,13 @@ var imagegallery = (function(){
 
 				el = {};
 
+				self.app.mobile.fullscreenmode(false)
+
 			},
 			clearparameters : ['i', 'num', 's', 'com'],
 			init : function(p){
+				
+				self.app.mobile.fullscreenmode(true)
 
 				currentImage = null;
 				making = false;

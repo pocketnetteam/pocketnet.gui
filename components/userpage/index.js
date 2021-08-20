@@ -79,9 +79,9 @@ var userpage = (function(){
 				report : 'ustate',
 				mobile : true,
 
-				/*if : function(){
-					if(mestate) return true
-				},*/
+				if : function(){
+					if(!self.app.curation()) return true
+				},
 
 				add : function(){
 
@@ -884,7 +884,13 @@ var userpage = (function(){
 					if(!id) {
 
 						if(self.app.user.validate()){
-							id = 'ustate'	
+
+							if(self.app.curation()){
+								id = 'wallet'	
+							}
+							else{
+								id = 'ustate'	
+							}
 						}
 						else{
 							id = 'test'
