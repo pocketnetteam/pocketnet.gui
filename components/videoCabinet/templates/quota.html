@@ -13,14 +13,17 @@
             </div>
 
             <div class="vidgetIconWrapper">
-              <div class="circular">
+              <span class="quotaValue">
+                <%- formatBytes(userQuota.videoQuotaRemainingDaily) %> / <%-
+                formatBytes(userQuota.videoQuotaDaily) %>
+              </span>
+              <!-- <div class="circular">
                 <div class="inner"></div>
                 <div class="number">
                   <span>
-                    <%- formatBytes(userQuota.videoQuotaRemainingDaily) %>
+                    <%- formatBytes(userQuota.videoQuotaRemainingDaily) %> / <%-
+                    formatBytes(userQuota.videoQuotaDaily) %>
                   </span>
-                  <span>/</span>
-                  <span><%- formatBytes(userQuota.videoQuotaDaily) %></span>
                 </div>
                 <div class="circle">
                   <div class="bar left">
@@ -30,7 +33,7 @@
                     <div class="progress"></div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

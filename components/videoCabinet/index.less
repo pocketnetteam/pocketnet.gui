@@ -154,7 +154,7 @@
 
         >div {
             float: left;
-            width: 25%;
+            width: 33%;
             min-width: 241px;
 
             &.connectionFailed {
@@ -245,7 +245,7 @@
             .blockWrapper {
                 position: relative;
                 width: 100%;
-                padding-bottom: 100%;
+                padding-bottom: 50%;
             }
 
             .blockContentWrapper {
@@ -282,6 +282,9 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+                font-size: 2em;
+                font-weight: 200;
             }
 
             .vidgetNameWrapper {
@@ -594,10 +597,10 @@
             font-weight: 200;
             font-size: 0.8em;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+            // justify-content: space-between;
         }
 
         .bar {
@@ -688,10 +691,20 @@
     .metricsContainer {
         font-size: 0.8em;
 
-        .metricsContainerHeader {
-            margin-bottom: @rhythm * 4;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .metricsMain {
+            flex-grow: 1;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        
+
         .progressBar {
             margin: @rhythm * 4 0;
 

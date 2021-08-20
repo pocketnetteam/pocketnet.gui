@@ -440,12 +440,12 @@ var videoCabinet = (function () {
         return videoPortionElement;
       },
 
-      bonusProgram() {
+      bonusProgram(parameters = {}, element) {
         self.shell(
           {
             name: 'bonusProgram',
-            el: el.bonusProgramContainer,
-            data: {},
+            el: element,
+            data: { ...parameters },
           },
           (p) => {},
         );
@@ -506,7 +506,10 @@ var videoCabinet = (function () {
         el.searchInput = el.c.find('.videoSearchInput');
         el.searchButton = el.c.find('.videoSearchButton');
 
-        el.bonusProgramContainer = el.c.find('.leaderBoardContainer');
+        el.bonusProgramContainerViews = el.c.find('.leaderBoardContainerViews');
+        el.bonusProgramContainerStars = el.c.find(
+          '.leaderBoardContainerRatings',
+        );
 
         el.sortTypeSelect = el.c.find('.sortTypeSelect');
         el.sortDirectionSelect = el.c.find('.sortDirectionSelect');
@@ -517,10 +520,12 @@ var videoCabinet = (function () {
 
         const videoPortionElement = renders.newVideoContainer();
 
+        //getting sort parameters from local storage
         const videoParameters = {
           sort: `${ed.selectedDirection}${ed.selectedType}`,
         };
 
+        //getting and rendering videos
         actions
           .getHosts()
           .then((hosts = {}) => {
@@ -543,12 +548,26 @@ var videoCabinet = (function () {
           .then(() => renders.videos(null, videoPortionElement))
           .catch(() => renders.videos(null, videoPortionElement));
 
+        //getting and rendering video quota information
         actions
           .getQuota()
           .then(() => renders.quota())
           .catch(() => renders.quota());
 
-        renders.bonusProgram();
+        //getting and rendering bonus program status for views and ratings (same template)
+        renders.bonusProgram(
+          {
+            parameterName: 'bonusProgramViews',
+          },
+          el.bonusProgramContainerStars,
+        );
+
+        renders.bonusProgram(
+          {
+            parameterName: 'bonusProgramRatings',
+          },
+          el.bonusProgramContainerViews,
+        );
 
         p.clbk(null, p);
       },
