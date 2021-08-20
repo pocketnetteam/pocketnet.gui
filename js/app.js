@@ -1229,7 +1229,7 @@ Application = function(p)
 					black : "#030F1B"
 				}
 
-				if(window.StatusBar) {
+				if (window.StatusBar) {
 					self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
 					window.StatusBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF");
 				}
@@ -1238,7 +1238,7 @@ Application = function(p)
 					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current == 'black');
 			},
 			hide : function(){
-				if(window.StatusBar) {
+				if (window.StatusBar) {
 					window.StatusBar.hide()
 					window.StatusBar.overlaysWebView(true);
 				}
@@ -1263,7 +1263,7 @@ Application = function(p)
 
 		unsleep : function(t){
 
-			if (window.plugins.insomnia){
+			if (window.plugins && window.plugins.insomnia){
 
 				if(t) window.plugins.insomnia.keepAwake()
 				else window.plugins.insomnia.allowSleepAgain()

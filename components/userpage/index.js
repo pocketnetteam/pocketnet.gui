@@ -79,9 +79,9 @@ var userpage = (function(){
 				report : 'ustate',
 				mobile : true,
 
-				/*if : function(){
-					if(mestate) return true
-				},*/
+				if : function(){
+					if(!self.app.curation()) return true
+				},
 
 				add : function(){
 
