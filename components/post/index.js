@@ -378,6 +378,10 @@ var post = (function () {
 							self.sdk.videos.volume = videosVolume 
 
 							self.sdk.videos.save()
+						},
+
+						fullscreenchange : function(v){
+							self.app.mobile.fullscreenmode(v)
 						}
 					};
 
@@ -389,8 +393,6 @@ var post = (function () {
 						}, () => {
 
 							if (wa) {
-
-								
 
 								player.play()
 								player.muted = false
@@ -1249,7 +1251,19 @@ var post = (function () {
 
 		var initEvents = function () {
 
+			self.app.platform.matrixchat.clbks.SHOWING.post = function(v){
+				if(v && player){
 
+					if (player.error) return
+					if (player.playing){
+						player.stop()
+					}
+
+				}
+				else{
+					
+				}
+			}
 
 			self.app.platform.ws.messages.transaction.clbks.temppost = function (data) {
 
@@ -1455,6 +1469,7 @@ var post = (function () {
 				delete self.app.platform.clbks.api.actions.subscribePrivate.post
 				delete self.app.platform.clbks.api.actions.unsubscribe.post
 				delete self.app.platform.clbks.api.actions.subscribe.post
+				delete self.app.platform.matrixchat.clbks.SHOWING.post
 
 				authblock = false;
 

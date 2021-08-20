@@ -110,9 +110,8 @@
 							</div>
 						</div>-->
 						
-						<% if(typeof key!= 'undefined' && key) {%>
 
-							<div class="items keyexportWrapper">
+							<div class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
 								<div class="item table right onlyicon keyexport" events="keyexport">
 
 									<div class="icon">
@@ -128,7 +127,6 @@
 								</div>
 							</div>
 
-						<% } %>
 
 						<div class="items notificationsWrapper">
 							<div class="item table right onlyicon notifications" events="notifications">

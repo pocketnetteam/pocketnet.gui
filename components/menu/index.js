@@ -305,19 +305,16 @@ var menu = (function(){
 
 					self.app.platform.sdk.registrations.clbks.menu = function(){
 
-						if (self.sdk.address.pnet()){
-							var addr = self.sdk.address.pnet().address
+						if (!self.app.platform.sdk.registrations.showprivate()){
+							
+							el.closest('.keyexportWrapper').addClass('hidden')
 
-							var regs = self.app.platform.sdk.registrations.storage[addr];
-
-							if (regs && regs <= 4){
-								return
-							}
+						}
+						else
+						{
+							el.closest('.keyexportWrapper').removeClass('hidden')
 						}
 
-						el.closest('.keyexportWrapper').remove()
-
-						delete self.app.platform.sdk.registrations.clbks.menu
 						
 					}
 

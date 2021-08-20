@@ -800,7 +800,9 @@ Application = function(p)
 		{
 			document.addEventListener('deviceready', function(){
 
-				window.screen.orientation.lock('portrait')
+				self.mobile.screen.lock()
+
+				//window.screen.orientation.lock('portrait')
 
 				/*if(isTablet()){
 					window.screen.orientation.lock('landscape')
@@ -1194,6 +1196,121 @@ Application = function(p)
 			});
 		}
 	
+	}
+
+	self.mobile = {
+		vibration : {
+            small : function(time){
+
+				if(!window.cordova) return
+
+                if(isios()){
+
+                    if(typeof TapticEngine != 'undefined')
+                        TapticEngine.impact({
+                            style: "medium"
+                        });
+
+                    return
+                }
+
+                
+
+                if (navigator.vibrate){
+                    navigator.vibrate(time || 200)
+                }
+            }
+        },
+		statusbar : {
+			background : function(){
+
+				var colors = {
+					white : "#FFF",
+					black : "#030F1B"
+				}
+
+				if(window.StatusBar) {
+					self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
+					window.StatusBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF");
+				}
+
+				if (window.NavigationBar)
+					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current == 'black');
+			},
+			hide : function(){
+				if(window.StatusBar) {
+					window.StatusBar.hide()
+					window.StatusBar.overlaysWebView(true);
+				}
+
+				if (window.NavigationBar){
+					window.NavigationBar.hide()
+				}
+			},
+			show : function(){
+				if(window.StatusBar) {
+					window.StatusBar.show()
+					window.StatusBar.overlaysWebView(false);
+				}
+
+				if (window.NavigationBar){
+					window.NavigationBar.show()
+				}
+
+				self.mobile.statusbar.background()
+			},	
+		},
+
+		unsleep : function(t){
+
+			if (window.plugins.insomnia){
+
+				if(t) window.plugins.insomnia.keepAwake()
+				else window.plugins.insomnia.allowSleepAgain()
+			}
+				
+		},
+
+		fullscreenmode : function(v){
+			v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
+			v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+
+			self.mobile.unsleep(v)
+		},
+
+		screen : {
+
+			lock : function(){
+
+				if (window.cordova)
+					window.screen.orientation.lock('portrait')
+			},
+			unlock : function(){
+				if (window.cordova)
+					window.screen.orientation.unlock()
+			},
+
+			destroy : function(){
+				if (window.cordova)
+					window.screen.orientation.removeEventListener('change')
+				self.mobile.screen.clbks = {}
+			},
+
+			init : function(){
+				self.mobile.screen.clbks = {}
+
+				if (window.cordova)
+					window.screen.orientation.addEventListener('change', function(){
+
+						_.each(self.mobile.screen.clbks, function(c){
+							c(screen.orientation.type)
+						})
+
+					});
+			},
+
+			clbks : {}
+		}
 	}
 
 	self.ref = null;

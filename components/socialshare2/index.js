@@ -547,7 +547,7 @@ var socialshare2 = (function(){
 				}
 				else{
 
-					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname)
+					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + 'Сontinue on ' + self.app.meta.fullname
 
 					var type = _el.data('type');
 					var b = findsocial(type)
@@ -581,6 +581,7 @@ var socialshare2 = (function(){
 
 							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname);
 
+							
 							if (deep(app, 'platform.sdk.user.storage.me.name')){
 								text += '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
 							}

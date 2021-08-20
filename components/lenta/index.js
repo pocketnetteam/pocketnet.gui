@@ -46,6 +46,7 @@ var lenta = (function(){
 			_reposts = {},
 			fixedblock = 0,
 			delay = null,
+			videopaused = false,
 			fullscreenvideoShowed = false;
 
 		var countshares = 0;
@@ -204,6 +205,7 @@ var lenta = (function(){
 				}, shareid)
 
 			},
+
 			cleardelay : function(){
 				if(delay){
 					clearTimeout(delay)
@@ -213,6 +215,7 @@ var lenta = (function(){
 				if (el.c)
 					el.c.removeClass('rebuilding')
 			},
+
 			rebuilddelay : function(){
 
 				if (el.c)
@@ -251,6 +254,7 @@ var lenta = (function(){
 
 				make(clbk);
 			},
+
 			clear : function(){
 
 				_.each(shareInitedMap, function(s, id){
@@ -401,6 +405,7 @@ var lenta = (function(){
 
 				})
 			},
+
 			removeAdditionalByScroll : function(){
 
 				if(ascrollel){
@@ -412,6 +417,7 @@ var lenta = (function(){
 				}
 
 			},
+
 			additional : function(el, show){
 				if(show){
 					el.addClass('showAdditional')
@@ -428,41 +434,6 @@ var lenta = (function(){
 					el.w.on('scroll', actions.removeAdditionalByScroll);
 				}
 				
-			},
-			applyheight : function(iniH, curH, key){
-
-				return
-
-				var wn = w.scrollTop();
-				var b = wn + Number(curH - iniH)
-
-				if (wn == b || iniH < curH) return
-
-				w.scrollTop(b);	
-				
-			},
-
-			applyheightEl : function(iniH, _el, key){
-
-				return
-
-				if(!el || !el.shares) return
-
-				if(!iniH || !_el.length) return
-
-				if(essenseData.openapi) return
-
-				var hc = _el[0].offsetHeight
-				
-				if(_el.length && w.scrollTop() > _el.offset().top) {
-
-					actions.applyheight(iniH, hc, key)
-				
-
-					return hc;
-				}
-
-				return hc;
 			},
 
 			stateAction : function(link, clbk, txid){
@@ -520,6 +491,7 @@ var lenta = (function(){
 
 				})
 			},
+
 			destroyVideo : function(share){
 				if (!players[share.txid]){
 					return
@@ -532,6 +504,7 @@ var lenta = (function(){
 
 				renders.urlContent(share)
 			},
+
 			initVideo : function(el, share, clbk, shadow){
 
 				if(!share || !share.txid) return
@@ -631,14 +604,27 @@ var lenta = (function(){
 
 						volumeChange : function(v){
 
-
-							console.log("VVV", v)
-
 							videosVolume = v
 
 							self.sdk.videos.volume = videosVolume 
 
 							self.sdk.videos.save()
+						},
+
+						fullscreenchange : function(v){
+							self.app.mobile.fullscreenmode(v)
+						},
+
+						play : function(){
+							console.log("play")
+
+							videopaused = false
+						},
+
+						pause : function(){
+							console.log("pause")
+
+							videopaused = true
 						}
 					}
 
@@ -657,7 +643,6 @@ var lenta = (function(){
 
 				}
 			},
-			
 
 			openPost : function(id, clbk){
 
@@ -1032,6 +1017,7 @@ var lenta = (function(){
 				}
 
 			},
+
 			postscores : function(txid, clbk){
 
 				self.app.nav.api.load({
@@ -1143,7 +1129,6 @@ var lenta = (function(){
 					}
 				)
 			},			
-
 			
 			openGalleryRec : function(share, initialValue, clbk){
 
@@ -1534,7 +1519,6 @@ var lenta = (function(){
 			},
 
 			sharesInview : function(e){
-
 				
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
@@ -1580,9 +1564,6 @@ var lenta = (function(){
 
 				actions.videosInview(players, function(player, el, clbk){	
 
-					if (self.app.platform.sdk.usersettings.meta.videoautoplay && !
-						self.app.platform.sdk.usersettings.meta.videoautoplay.value) return
-
 					var _el = el.closest('.share')
 
 					if(!el.closest('.share').hasClass('showAdditional')){
@@ -1591,11 +1572,14 @@ var lenta = (function(){
 
 							if(player.p.getState && player.p.getState() == 'ended') return
 
+							if (self.app.platform.sdk.usersettings.meta.videoautoplay && !
+								self.app.platform.sdk.usersettings.meta.videoautoplay.value) return
+
 							if(essenseData.openapi || essenseData.second){
 								return
 							}
 
-							if(!player.p.playing && !self.app.platform.matrixchat.showed()){
+							if(!player.p.playing && !self.app.platform.matrixchat.showed() && !videopaused){
 								player.p.play()
 
 								actions.setVolume(player)
@@ -1623,6 +1607,10 @@ var lenta = (function(){
 
 						if (player.p.playing){
 							player.p.stop()
+
+							setTimeout(function(){
+								videopaused = false
+							}, 100)
 
 							if (isMobile() && player.p.rebuild){
 
@@ -2154,7 +2142,6 @@ var lenta = (function(){
 							
 							renderClbk : function(){
 
-								//shareheights[txid] = actions.applyheightEl(shareheights[txid], _el, 'space')
 
 								if (essenseData.renderclbk)
 									essenseData.renderclbk()
@@ -2218,41 +2205,7 @@ var lenta = (function(){
 
 			},
 
-			shareSpacers : function(shares){
-
-				_.each(shares, function(s){
-					renders.shareSpacer(s)
-				})
-			},
-			shareSpacer : function(share){
-
-				if(shareInitedMap[share.txid] && !shareInitingMap[share.txid]/* && !deep(players, share.txid + '.initing')*/){
-
-					var _el = el.shares.find("#" + share.txid);
-
-					var hw = _el.find('.work').outerHeight()
-
-					if (players[share.txid] && players[share.txid].inited){
-						
-						players[share.txid].p.destroy()
-						players[share.txid].el = null
-						players[share.txid].inited = false
-					}
-
-
-					shareInitedMap[share.txid] = false;
-				
-					el.shares.css('height', el.shares.outerHeight())
-
-					_el.html('<div class="shareSpacer added"></div>')	
-
-					_el.find('.shareSpacer').outerHeight(hw)					
-
-					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'space')
-				}
-
-				
-			},
+			
 			share : function(share, clbk, all){
 
 				if(!share) return
@@ -2291,7 +2244,6 @@ var lenta = (function(){
 				
 					shareInitedMap[share.txid] = true;	
 					
-					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'share')
 
 					renders.stars(share)
 
@@ -2691,15 +2643,10 @@ var lenta = (function(){
 
 						}
 
-
-						shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], sel)
-
 						var isclbk = function(){
 							images.addClass('active')
 
 							_el.addClass('active')
-
-							shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], sel)
 
 							if (essenseData.renderclbk)
 								essenseData.renderclbk()
@@ -2823,7 +2770,6 @@ var lenta = (function(){
 						event.stopPropagation()
 					})
 
-					shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
 
 					var images = _p.el.find('img');
 
@@ -2849,7 +2795,6 @@ var lenta = (function(){
 							}
 						})
 
-						shareheights[share.txid] = actions.applyheightEl(shareheights[share.txid], _el, 'url')
 
 						if (essenseData.renderclbk)
 							essenseData.renderclbk()

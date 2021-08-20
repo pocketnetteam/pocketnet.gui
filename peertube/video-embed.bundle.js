@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=4539"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1053"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -1590,12 +1590,13 @@ function findPosition(el) {
  */
 
 function getPointerPosition(el, event) {
+  console.log("SAD")
   var translated = {
     x: 0,
     y: 0
   };
 
-  if (IS_IOS) {
+  if (IS_IOS || window.cordova) {
     var item = el;
 
     while (item && item.nodeName.toLowerCase() !== 'html') {
@@ -1628,7 +1629,7 @@ function getPointerPosition(el, event) {
     offsetX = event.changedTouches[0].pageX - box.left;
     offsetY = event.changedTouches[0].pageY + box.top;
 
-    if (IS_IOS) {
+    if (IS_IOS|| window.cordova) {
       offsetX -= translated.x;
       offsetY -= translated.y;
     }
@@ -39687,6 +39688,11 @@ class PeerTubeEmbedApi {
             return this.stop();
         });
     }
+    requestFullScreen() {
+        if (this.embed.player) {
+            this.embed.player.requestFullScreen();
+        }
+    }
     mute() {
         this.savedVolume = this.getVolume();
         this.setVolume(0);
@@ -39767,14 +39773,23 @@ class PeerTubeEmbedApi {
         this.embed.player.on('play', function (ev) {
             currentState = 'playing';
             slf.answer({ method: 'playbackStatusChange', params: 'playing' });
+            slf.answer({ method: 'play', params: true });
         });
         this.embed.player.on('pause', function (ev) {
             currentState = 'paused';
             slf.answer({ method: 'playbackStatusChange', params: 'paused' });
+            slf.answer({ method: 'pause', params: true });
         });
         this.embed.player.on('ended', function (ev) {
             currentState = 'ended';
             slf.answer({ method: 'playbackStatusChange', params: 'ended' });
+            slf.answer({ method: 'pause', params: true });
+        });
+        this.embed.player.on('fullscreenchange', () => {
+            this.answer({
+                method: 'fullscreenchange',
+                params: this.embed.player.isFullscreen()
+            });
         });
         this.embed.player.on('volumechange', () => {
             if (this.ignoreChange) {
@@ -43493,9 +43508,9 @@ class embed_PeerTubeEmbed {
             this.player = yield peertube_player_manager_PeertubePlayerManager.initialize(this.mode, options, (player) => {
                 this.player = player;
             });
-            if (window === null || window === void 0 ? void 0 : window.cordova) {
-                this.initOrienationEvents();
-            }
+            /*if (window?.cordova) {
+                this.initOrienationEvents()
+            }*/
             delete this.player.tagAttributes.style;
             var pel = this.playerElement;
             try {
@@ -43542,18 +43557,18 @@ class embed_PeerTubeEmbed {
     insertAfter(referenceNode, newNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
     }
-    initOrienationEvents() {
-        return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
-            this.player.on('fullscreenchange', () => {
-                if (this.player.isFullscreen()) {
-                    window.screen.orientation.unlock();
-                }
-                else {
-                    window.screen.orientation.lock('portrait');
-                }
-            });
-        });
-    }
+    /*private async initOrienationEvents() {
+
+        this.player.on('fullscreenchange', () => {
+
+            if (this.player.isFullscreen()) {
+                window.screen.orientation.unlock()
+            } else {
+                window.screen.orientation.lock('portrait')
+            }
+        })
+
+    }*/
     initTouchedEvents() {
         return Object(tslib_es6["a" /* __awaiter */])(this, void 0, void 0, function* () {
             let duration = 0;
