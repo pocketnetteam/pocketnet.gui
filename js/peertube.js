@@ -295,6 +295,13 @@ PeerTubePocketnet = function (app) {
       authorization: true,
       renew: true,
     },
+
+    totalViews: {
+      path: 'api/v1/users/me/video-views',
+      method: 'GET',
+      authorization: true,
+      axios: true,
+    },
   };
 
   var getmeta = function (method, data) {
@@ -747,8 +754,13 @@ PeerTubePocketnet = function (app) {
       },
 
       getDirectVideoInfo(parameters = {}, options = {}) {
-        return request('video', parameters, options)
-      }
+        return request('video', parameters, options);
+      },
+
+      totalViews: (parameters = {}, options = {}) =>
+        request('totalViews', parameters, options)
+          .then((r) => Promise.resolve(r))
+          .catch(() => Promise.reject()),
     },
 
     user: {

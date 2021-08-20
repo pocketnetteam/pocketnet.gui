@@ -119,7 +119,46 @@ var videoCabinet = (function () {
         return Promise.allSettled(serverPromises);
       },
 
-      getTotalViews() {},
+      getTotalViews(parameters = {}, options = {}) {
+        const servers = Object.keys(peertubeServers);
+
+        const serverPromises = servers.map((host) =>
+          self.app.peertubeHandler.api.videos.totalViews({}, { host }),
+        );
+
+        return Promise.allSettled(serverPromises);
+      },
+
+      getFullPageInfo(videoPortionElement) {
+        renders.videos(null, videoPortionElement);
+
+        //getting and rendering bonus program status for views and ratings (same template)
+        actions
+          .getTotalViews()
+          .then(() =>
+            renders.bonusProgram(
+              {
+                parameterName: 'bonusProgramViews',
+              },
+              el.bonusProgramContainerStars,
+            ),
+          )
+          .catch(() =>
+            renders.bonusProgram(
+              {
+                parameterName: 'bonusProgramViews',
+              },
+              el.bonusProgramContainerStars,
+            ),
+          );
+
+        renders.bonusProgram(
+          {
+            parameterName: 'bonusProgramRatings',
+          },
+          el.bonusProgramContainerViews,
+        );
+      },
     };
 
     var events = {
@@ -545,29 +584,14 @@ var videoCabinet = (function () {
 
             return Promise.allSettled(serverPromises);
           })
-          .then(() => renders.videos(null, videoPortionElement))
-          .catch(() => renders.videos(null, videoPortionElement));
+          .then(() => actions.getFullPageInfo(videoPortionElement))
+          .catch(() => actions.getFullPageInfo(videoPortionElement));
 
         //getting and rendering video quota information
         actions
           .getQuota()
           .then(() => renders.quota())
           .catch(() => renders.quota());
-
-        //getting and rendering bonus program status for views and ratings (same template)
-        renders.bonusProgram(
-          {
-            parameterName: 'bonusProgramViews',
-          },
-          el.bonusProgramContainerStars,
-        );
-
-        renders.bonusProgram(
-          {
-            parameterName: 'bonusProgramRatings',
-          },
-          el.bonusProgramContainerViews,
-        );
 
         p.clbk(null, p);
       },
