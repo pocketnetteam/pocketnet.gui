@@ -726,12 +726,16 @@ nModule = function(){
 
 	self.restart = function(p){
 
-		if(!p) p = {};
+		if (self.user){
+			if(!p) p = {};
 
-		p.restartModule = true
+			p.restartModule = true
 
-		self.stop(p);
-		self.run(p);
+			self.stop(p);
+			self.run(p);
+		}	
+
+		
 	}
 
 	self.addEssense = function(essenses, Essense, p){

@@ -21441,8 +21441,6 @@ Platform = function (app, listofnodes) {
 
             var cm = deep(app, 'modules.menu.module.restart')
 
-            console.log("RESTART MENU", cm)
-
             if (cm) cm()
 
             var c = deep(app, 'nav.clbks.history.navigation')
