@@ -1037,6 +1037,10 @@ var author = (function(){
 
 		var initEvents = function(){
 
+
+			self.app.platform.api.plissing({
+				el : el.c.find('.usericon'),
+			})
 			el.up.on('click', events.up)
 
 			el.subscribe.find('.subscribe').on('click', events.subscribe)
