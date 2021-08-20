@@ -15,6 +15,8 @@ var videoCabinet = (function () {
 
   var ed = {};
 
+  var transcodingIntervals = {};
+
   var startingPosition = 0;
 
   var external = null;
@@ -28,6 +30,7 @@ var videoCabinet = (function () {
     bonusProgramViews: 10000,
     bonusProgramRatings: 500,
   };
+  const TRANSCODING_CHECK_INTERVAL = 20000;
 
   let newVideosAreUploading = false;
 
@@ -179,6 +182,28 @@ var videoCabinet = (function () {
           el.bonusProgramContainerViews,
         );
       },
+
+      checkTranscodingStatus(meta) {
+        const { id, host } = meta;
+        self.app.peertubeHandler.api.videos
+          .getDirectVideoInfo({ id }, { host })
+          .then((video) => {
+            if (video.state.id === 1) {
+              actions.videoFinishedTranscoding(id);
+            }
+          })
+          .catch(() => actions.videoFinishedTranscoding(id));
+      },
+
+      videoFinishedTranscoding(id) {
+        clearInterval(transcodingIntervals[id]);
+        const videoElement = el.videoContainer.find(`[uuid="${id}"]`);
+
+        videoElement.find('.transcodingPreloader').addClass('hidden');
+        videoElement
+          .find('.attachVideoToPost')
+          .attr('videoTranscoding', 'false');
+      },
     };
 
     var events = {
@@ -261,6 +286,7 @@ var videoCabinet = (function () {
     };
 
     var renders = {
+      //table with video elements
       videos(videosForRender, videoPortionElement) {
         const videos =
           videosForRender ||
@@ -286,6 +312,7 @@ var videoCabinet = (function () {
             const attachVideoToPost = p.el.find('.attachVideoToPost');
             const removeVideo = p.el.find('.removeVideo');
 
+            //button for creating post with video
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
               const transcodingInProgress =
@@ -305,7 +332,7 @@ var videoCabinet = (function () {
                 renders.addButton(videoLink);
               }
             });
-
+            //botton for video removing
             removeVideo.on('click', function () {
               const videoLink = $(this).attr('videoLink');
 
@@ -332,7 +359,7 @@ var videoCabinet = (function () {
             const blockchainStrings = videos.map(
               (video) => `peertube://${video.account.host}/${video.uuid}`,
             );
-
+            //get information about videos being published to blockchain
             actions.getBlockchainPostByVideos(blockchainStrings).then(() => {
               p.el.find('.postingStatusWrapper').each(function () {
                 const currentElement = $(this);
@@ -356,10 +383,21 @@ var videoCabinet = (function () {
                 return renders.videoStats(currentElement, link, host, uuid);
               });
             });
+
+            p.el.find('[videoTranscoding="true"]').each(function () {
+              const videoLink = $(this).attr('videoLink');
+
+              const meta = self.app.peertubeHandler.parselink(videoLink);
+
+              transcodingIntervals[meta.id] = setInterval(
+                () => actions.checkTranscodingStatus(meta),
+                TRANSCODING_CHECK_INTERVAL,
+              );
+            });
           },
         );
       },
-
+      //video upload quota section
       quota() {
         self.shell(
           {
@@ -397,7 +435,7 @@ var videoCabinet = (function () {
           },
         );
       },
-
+      // render upload video window/start steram window
       streamPage(p = {}) {
         const typeDictionary = {
           addVideo: 'uploadpeertube',
@@ -451,11 +489,11 @@ var videoCabinet = (function () {
           },
         });
       },
-
+      //button in video table for adding post with video to blockchain
       addButton(videoLink) {
         self.app.platform.ui.share({ videoLink });
       },
-
+      //get link to existing video post
       postLink(element, link) {
         const linkInfo = blockChainInfo[link];
 
@@ -469,7 +507,7 @@ var videoCabinet = (function () {
           )}</a>`,
         );
       },
-
+      //render single video stats column in video table
       videoStats(element, link, host, uuid) {
         const linkInfo = blockChainInfo[link] || {};
         const videoInfo = peertubeServers[host].videos.find(
@@ -496,7 +534,7 @@ var videoCabinet = (function () {
           },
         );
       },
-
+      //add new container for a protion of videos (lazyload)
       newVideoContainer() {
         const videoPortionElement = $(
           '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
@@ -506,7 +544,7 @@ var videoCabinet = (function () {
 
         return videoPortionElement;
       },
-
+      //render bonus program stats (rating or views)
       bonusProgram(parameters = {}, element) {
         self.shell(
           {
@@ -542,11 +580,12 @@ var videoCabinet = (function () {
       primary: primary,
 
       getdata: function (clbk) {
+        //get video sorting params from localstorageƒ
         var data = {
           selectedType:
             localStorage.getItem('videoCabinetSortType') || 'createdAt',
           selectedDirection:
-            localStorage.getItem('videoCabinetSortDirection') || '',
+            localStorage.getItem('videoCabinetSortDirection') || '-',
         };
 
         ed = { ...data, sort: `${data.selectedDirection}${data.selectedType}` };
