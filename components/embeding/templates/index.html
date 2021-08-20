@@ -105,7 +105,15 @@
 			</div>
 		</div>
 	<% } %>
-	<% if(type == 'donate') {%>
+	<% if(type == 'donate') {
+		var senderImg = deep(app, 'platform.sdk.usersl.storage.' + sender + '.image');
+		var senderName = deep(app, 'platform.sdk.usersl.storage.' + sender + '.name');
+		var senderLetter = senderName ? senderName[0] : '';
+		var receiverImg = deep(app, 'platform.sdk.usersl.storage.' + receiver + '.image');	
+		var receiverName = deep(app, 'platform.sdk.usersl.storage.' + receiverName + '.image');	
+		var receiverLetter = receiverName ? receiverName[0] : '';
+
+	%>
 		<div class="donate pg">
 			<div class="caption">
 				<%=e('e130961')%>
@@ -119,7 +127,17 @@
 				<div class="transaction">
 					<div class="user">
 						<div class="iconWrapper">
-							<div class="usericon" image="<%-sender || ''%>">
+							<div class="usericon" image="<%-senderImg || ''%>">
+								
+								<% if(!senderImg && senderLetter) { %>
+
+									<span 
+										class="letter"
+									>
+										<%-senderLetter.toUpperCase()%>
+									</span>
+				
+								<% } %>
 							</div>
 						</div>					
 					</div>
@@ -132,7 +150,16 @@
 					</div>
 					<div class="user">
 						<div class="iconWrapper">
-							<div class="usericon" image="<%-receiver || ''%>">
+							<div class="usericon" image="<%-receiverImg || ''%>">
+								<% if(!receiverImg && receiverLetter) { %>
+
+									<span 
+										class="letter"
+									>
+										<%-receiverLetter.toUpperCase()%>
+									</span>
+				
+								<% } %>
 							</div>
 						</div>					
 					</div>

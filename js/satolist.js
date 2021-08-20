@@ -4940,7 +4940,9 @@ Platform = function (app, listofnodes) {
 
                                         delete localStorage[adr + 'subscribeRef'];
 
-                                        var src = r.image
+                                        var src = r.image;
+                                        var name = r.name;
+                                        var letter = name ? name[0] : '';
 
                                         var h = '<div class="refaddWrapper">'
 
@@ -4953,8 +4955,14 @@ Platform = function (app, listofnodes) {
 
                                         h += '<div class="usericon" image="' + (src || '') + '">'
 
-                                        if (!src) {
+                                        if (!src && letter) {
+
+                                            h += '<span class="letter">' + letter.toUpperCase() + '</span>';
+
+                                        } else if (!src){
+
                                             h += '<svg width="40" height="40" data-jdenticon-value="' + adrref + '"></svg>'
+
                                         }
 
                                         h += '</div>'
@@ -17323,7 +17331,9 @@ Platform = function (app, listofnodes) {
 
                 var h = '';
 
-                var src = deep(author, 'image')
+                var src = deep(author, 'image');
+                var name = deep(author, 'name');
+                var letter = name ? name[0] : '';
 
 
                 var link = '<a href="' + encodeURI(clearStringXss(author.name.toLowerCase())) + '">'
@@ -17343,6 +17353,11 @@ Platform = function (app, listofnodes) {
                 if (gotoprofile) h += link
 
                 h += '<div class="usericon" image="' + clearStringXss(src || '') + '">'
+
+                if (!src && letter){
+
+                    h += '<span class="letter">' + letter.toUpperCase() + '</span>';
+                }
 
 
                 if(deep(platform, 'real.'+author.address)) {
