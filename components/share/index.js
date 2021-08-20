@@ -2362,6 +2362,15 @@ var share = (function(){
 
 				initEvents();
 
+				if (essenseData.videoLink) {
+					currentShare.url.set(essenseData.videoLink);
+
+					currentShare.settings.a = ['i', 'u', 'cm', 'p'];
+					currentShare.caption.set('');
+					currentShare.images.set();
+					currentShare.repost.set();
+				}
+
 				make();
 
 				//p.noscroll = self.app.actions.scrollBMenu()

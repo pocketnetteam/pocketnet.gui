@@ -1,0 +1,77 @@
+<div id="<%-module.map.id%>">
+  <header class="moduleHeader">
+    <h1 class="cabinetName"><%- e('videoCabinet') %></h1>
+  </header>
+  <section class="statsSection">
+    <div class="reputation">
+      <div class="reputationblock quotaContainer">
+        <div class="preloaderwr">
+          <div class="preloader5"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="leaderBoardContainer leaderBoardContainerViews">
+        <div class="preloaderwr">
+          <div class="preloader5"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="leaderBoardContainer leaderBoardContainerRatings">
+        <div class="preloaderwr">
+          <div class="preloader5"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="videoContainer">
+    <section class="videoControls">
+      <div class="videoSearchWrapper">
+        <input
+          type="text"
+          id="videoSearchInput"
+          class="videoSearchInput"
+          placeholder="<%- e('enterVideoName') %>"
+        />
+        <button class="videoSearchButton ghostButton">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      <div class="videoSortWrapper">
+        <div class="sortTypeSelectWrapper sortSelectWrapper">
+          <div class="selectBorderCaption"><%- e('sortBy') %></div>
+          <div class="selectIcon">
+            <i class="fas fa-sort-amount-down-alt"></i>
+          </div>
+          <select class="videoSelect sortTypeSelect">
+            <option value="name" <%- selectedType === 'name' ? 'selected' : '' %>><%- e('sortByName') %></option>
+            <option value="createdAt" <%- selectedType === 'createdAt' ? 'selected' : '' %>><%- e('sortByCreatedAt') %></option>
+            <option value="duration" <%- selectedType === 'duration' ? 'selected' : '' %>><%- e('sortByDuration') %></option>
+            <option value="views" <%- selectedType === 'views' ? 'selected' : '' %>><%- e('sortByViews') %></option>
+          </select>
+        </div>
+
+        <div class="sortDirectionSelectWrapper sortSelectWrapper">
+          <div class="selectBorderCaption"><%- e('sortDirection') %></div>
+          <div class="selectIcon">
+            <i class="fas fa-sort-amount-down-alt"></i>
+          </div>
+          <select class="videoSelect sortDirectionSelect">
+            <option value="" <%- selectedDirection === '' ? 'selected' : '' %>><%- e('sortDirectionAsc') %></option>
+            <option value="-" <%- selectedDirection === '-' ? 'selected' : '' %>><%- e('sortDirectionDesc') %></option>
+          </select>
+        </div>
+      </div>
+      <button
+        class="uploadVideo videoActiveButton ghostButton"
+        rendersElement="addVideo"
+      >
+        <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
+      </button>
+      <!-- <button
+        class="startStream videoActiveButton"
+        rendersElement="addStream"
+      >
+        <i class="fas fa-dot-circle"></i><%- e('peertubeAddStream') %>
+      </button> -->
+    </section>
+    <section class="userVideos"></section>
+  </section>
+</div>

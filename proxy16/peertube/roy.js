@@ -76,6 +76,8 @@ var Roy = function (parent) {
     });
   };
 
+  self.findInstanceByName = (name) => instances.find((server) => server.host === name);
+
   self.best = function (type = 'responseSpeed') {
     var bestlist = self.bestlist(type);
 
@@ -105,11 +107,15 @@ var Roy = function (parent) {
     return instance.request(method, data, p);
   };
 
-  self.request = function (method, data, p, list, index) {
-    if (!list) list = self.bestlist();
-    if (!index) index = 0;
-
-    var instance = list[index];
+  self.request = function (method, data = {}, p = {}, list, index) {
+    if (p.host) {
+      var instance = self.findInstanceByName(p.host);
+    } else {
+      if (!list) list = self.bestlist();
+      if (!index) index = 0;
+  
+      var instance = list[index];
+    }
 
     if (!instance) return Promise.reject('failed');
 
@@ -148,6 +154,8 @@ var Roy = function (parent) {
 
     return info;
   };
+
+  self.hosts = () => instances;
 
   self.performance = () => {
     const promises = instances.map((inst) => inst.performance());

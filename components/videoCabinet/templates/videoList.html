@@ -1,0 +1,62 @@
+<sectiion class="videosWrapper">
+  <% videos.map((video) => { %>
+  <div class="singleVideoSection" uuid="<%- video.uuid %>">
+    <div
+      class="videoAvatar"
+      style="
+        background-image: url(<%- `https://${video.account.host}${video.previewPath}` %>);
+      "
+    >
+      <% if (video.state.id !== 1) { %>
+      <div class="preloaderwr transcodingPreloader">
+        <div class="preloader5"><span></span><span></span><span></span></div>
+      </div>
+      <% } %>
+      <div class="videoDuration"><%- secInTime(video.duration) %></div>
+    </div>
+    <div class="videoItemPart videoName">
+      <p class="videoTextContainer videoNameText"><%- video.name %></p>
+      <p class="videoTextContainer videoNameDate">
+        <i class="far fa-calendar"></i
+        ><span><%- moment(video.createdAt).format('hh:mm MM-DD-YYYY') %></span>
+      </p>
+      <!-- <p class="videoTextContainer"><%- video.account.host %></p> -->
+    </div>
+    <div
+      class="videoItemPart videoStatsWrapper"
+      video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
+      host="<%- deep(video, 'account.host') %>"
+      uuid="<%- video.uuid %>"
+    >
+      <div class="preloaderwr">
+        <div class="preloader5"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <div
+      class="videoItemPart postingStatusWrapper"
+      video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
+    >
+      <div class="preloaderwr">
+        <div class="preloader5"><span></span><span></span><span></span></div>
+      </div>
+      <button
+        class="attachVideoToPost tooltip hidden ghostButton"
+        title="<%- e('attachVideoToPost') %>"
+        videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
+        videoTranscoding="<%- video.state.id !== 1 %>"
+      >
+        <i class="fas fa-signature"></i> <%- e('attachVideoToPostShort') %>
+      </button>
+    </div>
+    <div class="videoItemPart removeButtonWrapper">
+      <button
+        class="removeVideo tooltip ghostButton"
+        title="<%- e('removeVideo') %>"
+        videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
+      >
+        <i class="fas fa-times-circle"></i>
+      </button>
+    </div>
+  </div>
+  <% }) %>
+</sectiion>

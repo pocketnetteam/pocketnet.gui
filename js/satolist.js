@@ -2152,7 +2152,8 @@ Platform = function (app, listofnodes) {
                         post : function(){
                         },	
                         absolute : true,
-                        repost  : p.repost
+                        repost  : p.repost,
+                        videoLink: p.videoLink,
                     }
                 })
             }, 50)
@@ -20888,13 +20889,13 @@ Platform = function (app, listofnodes) {
             self.preparing = false;
 
 
-            self.prepareUser(clbk);
-
-            if (typeof PeerTubePocketnet != 'undefined'){
-                self.app.peertubeHandler = new PeerTubePocketnet(self.app);
-                self.app.peertubeHandler.init()
-            }
-
+            self.prepareUser(function() {
+                if (typeof PeerTubePocketnet != 'undefined'){
+                    self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+                    self.app.peertubeHandler.init()
+                }
+                clbk();
+            });
         }).catch(e => {
             console.log("ERROR", e)
         })

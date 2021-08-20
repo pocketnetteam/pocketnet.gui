@@ -570,10 +570,10 @@ var Proxy = function (settings, manage, test) {
 	self.peertube = {
 		init: function () {
 
-			var ins = {1 : ['pocketnetpeertube1.nohost.me'], 5 : ['pocketnetpeertube5.nohost.me'], 6 : ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me']}
+			var ins = {0 : ['pocketnetpeertube1.nohost.me', 'pocketnetpeertube2.nohost.me'], 1 : ['pocketnetpeertube5.nohost.me'], 2 : ['pocketnetpeertube4.nohost.me', 'pocketnetpeertube6.nohost.me']}
 
 			if (test){
-				ins = {3 : ['pocketnetpeertube3.nohost.me']}
+				ins = {0 : ['pocketnetpeertube3.nohost.me']}
 			}
 
 			return peertube.init({
@@ -969,13 +969,13 @@ var Proxy = function (settings, manage, test) {
 						if (log) {
 							console.log('load', method, parameters)
 						}
-
 						return node
 							.checkParameters()
 							.then((r) => {
 								return node.rpcs(method, _.clone(parameters));
 							})
 							.then((data) => {
+
 								server.cache.set(method, _.clone(parameters), data, node.height());
 
 								return Promise.resolve({

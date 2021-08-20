@@ -1,0 +1,13 @@
+<p class="singleStat tooltip" title="<%- e('totalStars') %>">
+  <i class="far fa-star"></i
+  ><span class="statNumber"
+    ><%- starsSum === '-' ? '-' : `${(starsSum / starsCount).toFixed(1)}
+    (${starsCount})` %></span
+  >
+</p>
+<p class="singleStat tooltip" title="<%- e('totalComments') %>">
+  <i class="far fa-comment"></i><span class="statNumber"><%- comments %></span>
+</p>
+<p class="singleStat tooltip" title="<%- e('totalViews') %>">
+  <i class="far fa-eye"></i><span class="statNumber"><%- views %></span>
+</p>
