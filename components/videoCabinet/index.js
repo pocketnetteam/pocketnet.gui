@@ -182,8 +182,14 @@ var videoCabinet = (function () {
 
         const videoPortionElement = renders.newVideoContainer();
 
+        const videoParameters = { sort: ed.sort };
+
+        if (ed.search) videoParameters.search = ed.search;
+
         return Promise.allSettled(
-          activeServers.map((server) => actions.getVideos(server)),
+          activeServers.map((server) =>
+            actions.getVideos(server, videoParameters),
+          ),
         ).then((data = []) => {
           const newVideos = data
             .filter((item) => item.status === POSITIVE_STATUS)
@@ -197,6 +203,8 @@ var videoCabinet = (function () {
 
       onSearchVideo() {
         const searchString = el.searchInput.val();
+
+        ed.search = searchString;
 
         const videoPortionElement = actions.resetHosts();
 
@@ -521,7 +529,7 @@ var videoCabinet = (function () {
             localStorage.getItem('videoCabinetSortDirection') || '',
         };
 
-        ed = { ...data };
+        ed = { ...data, sort: `${data.selectedDirection}${data.selectedType}` };
 
         clbk(data);
       },
@@ -561,7 +569,7 @@ var videoCabinet = (function () {
 
         //getting sort parameters from local storage
         const videoParameters = {
-          sort: `${ed.selectedDirection}${ed.selectedType}`,
+          sort: ed.sort,
         };
 
         //getting and rendering videos
