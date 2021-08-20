@@ -5,10 +5,15 @@
         <div class="blockWrapper">
           <div class="blockContentWrapper">
             <div class="metricsContainer">
-              <header class="metricsContainerHeader"><%- e(parameterName) %></header>
+              <header class="metricsContainerHeader">
+                <%- e(parameterName) %>
+              </header>
               <main class="metricsMain">
                 <section class="metricSection">
-                  <div class="progressBar videoViewsBar"></div>
+                  <!-- <div class="progressBar videoViewsBar"></div> -->
+                  <span>
+                    <%- value %> / <%- requiredValue %>
+                  </span>
                 </section>
               </main>
             </div>

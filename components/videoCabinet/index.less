@@ -245,7 +245,7 @@
             .blockWrapper {
                 position: relative;
                 width: 100%;
-                padding-bottom: 50%;
+                padding-bottom: 30%;
             }
 
             .blockContentWrapper {
@@ -280,7 +280,7 @@
                 position: relative;
 
                 display: flex;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
 
                 font-size: 2em;
@@ -689,13 +689,15 @@
     }
 
     .metricsContainer {
-        font-size: 0.8em;
-
         height: 100%;
 
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+
+        .metricsContainerHeader {
+            font-size: 0.8em;
+        }
 
         .metricsMain {
             flex-grow: 1;
@@ -703,6 +705,15 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            .metricSection {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                font-size: 2em;
+                font-weight: 200;
+            }
         }
 
         .progressBar {

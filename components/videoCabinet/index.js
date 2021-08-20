@@ -24,6 +24,10 @@ var videoCabinet = (function () {
   const HUDRED_PERC = 100;
   const LAZYLOAD_PERCENTAGE = 0.9;
   const POSITIVE_STATUS = 'fulfilled';
+  const BONUS_PROGRAM_REQUIREMENTS = {
+    bonusProgramViews: 10000,
+    bonusProgramRatings: 500,
+  };
 
   let newVideosAreUploading = false;
 
@@ -119,14 +123,24 @@ var videoCabinet = (function () {
         return Promise.allSettled(serverPromises);
       },
 
-      getTotalViews(parameters = {}, options = {}) {
+      getTotalViews() {
         const servers = Object.keys(peertubeServers);
 
         const serverPromises = servers.map((host) =>
           self.app.peertubeHandler.api.videos.totalViews({}, { host }),
         );
 
-        return Promise.allSettled(serverPromises);
+        //aggregating video views from different servers into one number
+        return Promise.allSettled(serverPromises).then((data) =>
+          data
+            .filter((promise) => promise.status === POSITIVE_STATUS)
+            .map((info) => info.value)
+            .reduce(
+              (accumulator, currServer) =>
+                (accumulator += Number(currServer.total_views || 0)),
+              0,
+            ),
+        );
       },
 
       getFullPageInfo(videoPortionElement) {
@@ -135,18 +149,22 @@ var videoCabinet = (function () {
         //getting and rendering bonus program status for views and ratings (same template)
         actions
           .getTotalViews()
-          .then(() =>
+          .then((result) => {
             renders.bonusProgram(
               {
                 parameterName: 'bonusProgramViews',
+                value: result,
+                requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramViews,
               },
               el.bonusProgramContainerStars,
-            ),
-          )
+            );
+          })
           .catch(() =>
             renders.bonusProgram(
               {
                 parameterName: 'bonusProgramViews',
+                value: 0,
+                requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramViews,
               },
               el.bonusProgramContainerStars,
             ),
@@ -155,6 +173,8 @@ var videoCabinet = (function () {
         renders.bonusProgram(
           {
             parameterName: 'bonusProgramRatings',
+            value: 0,
+            requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramRatings,
           },
           el.bonusProgramContainerViews,
         );
