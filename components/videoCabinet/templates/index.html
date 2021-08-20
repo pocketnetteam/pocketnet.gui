@@ -36,10 +36,10 @@
             <i class="fas fa-sort-amount-down-alt"></i>
           </div>
           <select class="videoSelect sortTypeSelect">
-            <option value="name"><%- e('sortByName') %></option>
-            <option value="createdAt"><%- e('sortByCreatedAt') %></option>
-            <option value="duration"><%- e('sortByDuration') %></option>
-            <option value="views"><%- e('sortByViews') %></option>
+            <option value="name" <%- selectedType === 'name' ? 'selected' : '' %>><%- e('sortByName') %></option>
+            <option value="createdAt" <%- selectedType === 'createdAt' ? 'selected' : '' %>><%- e('sortByCreatedAt') %></option>
+            <option value="duration" <%- selectedType === 'duration' ? 'selected' : '' %>><%- e('sortByDuration') %></option>
+            <option value="views" <%- selectedType === 'views' ? 'selected' : '' %>><%- e('sortByViews') %></option>
           </select>
         </div>
 
@@ -49,8 +49,8 @@
             <i class="fas fa-sort-amount-down-alt"></i>
           </div>
           <select class="videoSelect sortDirectionSelect">
-            <option value=""><%- e('sortDirectionAsc') %></option>
-            <option value="-"><%- e('sortDirectionDesc') %></option>
+            <option value="" <%- selectedDirection === '' ? 'selected' : '' %>><%- e('sortDirectionAsc') %></option>
+            <option value="-" <%- selectedDirection === '-' ? 'selected' : '' %>><%- e('sortDirectionDesc') %></option>
           </select>
         </div>
       </div>

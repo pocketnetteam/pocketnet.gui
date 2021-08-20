@@ -13,6 +13,8 @@ var videoCabinet = (function () {
 
   var perServerCounter = 10;
 
+  var ed = {};
+
   var startingPosition = 0;
 
   var external = null;
@@ -117,9 +119,7 @@ var videoCabinet = (function () {
         return Promise.allSettled(serverPromises);
       },
 
-      getTotalViews() {
-        
-      }
+      getTotalViews() {},
     };
 
     var events = {
@@ -174,6 +174,12 @@ var videoCabinet = (function () {
       onVideoSort() {
         const sort = `${el.sortDirectionSelect.val()}${el.sortTypeSelect.val()}`;
 
+        localStorage.setItem('videoCabinetSortType', el.sortTypeSelect.val());
+        localStorage.setItem(
+          'videoCabinetSortDirection',
+          el.sortDirectionSelect.val(),
+        );
+
         const videoPortionElement = actions.resetHosts();
 
         actions
@@ -215,7 +221,8 @@ var videoCabinet = (function () {
 
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
-              const transcodingInProgress = $(this).attr('videoTranscoding') === true;
+              const transcodingInProgress =
+                $(this).attr('videoTranscoding') === true;
 
               if (transcodingInProgress) {
                 dialog({
@@ -468,7 +475,15 @@ var videoCabinet = (function () {
       primary: primary,
 
       getdata: function (clbk) {
-        var data = {};
+        var data = {
+          selectedType:
+            localStorage.getItem('videoCabinetSortType') || 'createdAt',
+          selectedDirection:
+            localStorage.getItem('videoCabinetSortDirection') || '',
+        };
+
+        ed = { ...data };
+
         clbk(data);
       },
 
@@ -502,6 +517,10 @@ var videoCabinet = (function () {
 
         const videoPortionElement = renders.newVideoContainer();
 
+        const videoParameters = {
+          sort: `${ed.selectedDirection}${ed.selectedType}`,
+        };
+
         actions
           .getHosts()
           .then((hosts = {}) => {
@@ -516,7 +535,7 @@ var videoCabinet = (function () {
             );
 
             const serverPromises = servers.map((server) =>
-              actions.getVideos(server),
+              actions.getVideos(server, videoParameters),
             );
 
             return Promise.allSettled(serverPromises);
