@@ -30,19 +30,27 @@
         </button>
       </div>
       <div class="videoSortWrapper">
-        <div class="sortTypeSelectWrapper">
-          <select class="sortTypeSelect">
-            <option value="name">Name</option>
-            <option value="createdAt">Creation Date</option>
-            <option value="duration">duration</option>
-            <option value="views">views</option>
+        <div class="sortTypeSelectWrapper sortSelectWrapper">
+          <div class="selectBorderCaption"><%- e('sortBy') %></div>
+          <div class="selectIcon">
+            <i class="fas fa-sort-amount-down-alt"></i>
+          </div>
+          <select class="videoSelect sortTypeSelect">
+            <option value="name"><%- e('sortByName') %></option>
+            <option value="createdAt"><%- e('sortByCreatedAt') %></option>
+            <option value="duration"><%- e('sortByDuration') %></option>
+            <option value="views"><%- e('sortByViews') %></option>
           </select>
         </div>
 
-        <div class="sortDirectionSelectWrapper">
-          <select class="sortDirectionSelect">
-            <option value="">Asc</option>
-            <option value="-">Desc</option>
+        <div class="sortDirectionSelectWrapper sortSelectWrapper">
+          <div class="selectBorderCaption"><%- e('sortDirection') %></div>
+          <div class="selectIcon">
+            <i class="fas fa-sort-amount-down-alt"></i>
+          </div>
+          <select class="videoSelect sortDirectionSelect">
+            <option value=""><%- e('sortDirectionAsc') %></option>
+            <option value="-"><%- e('sortDirectionDesc') %></option>
           </select>
         </div>
       </div>

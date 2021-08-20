@@ -919,3 +919,12 @@ ____loclib.waitForTranscoding = "Дождаться конца обработк�
 ____loclib.bonusProgram = "Статистика Бонусной Программы";
 ____loclib.bonusProgramViews = "Просмотры Видео";
 ____loclib.bonusProgramRatings = "Количество Рейтингов";
+
+____loclib.sortBy = "Сортировать по:";
+____loclib.sortDirection = "Порядок сортировки:";
+____loclib.sortDirectionAsc = "Возрастанию";
+____loclib.sortDirectionDesc = "Убыванию";
+____loclib.sortByName = "Имени";
+____loclib.sortByCreatedAt = "Дате Создания";
+____loclib.sortByDuration = "Длительности";
+____loclib.sortByViews = "Количеству просмотров";

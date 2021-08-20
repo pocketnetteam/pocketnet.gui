@@ -1119,3 +1119,12 @@ ____loclib.waitForTranscoding = "Wait for processing";
 ____loclib.bonusProgram = "Bonus Program Status";
 ____loclib.bonusProgramViews = "Total Video Views";
 ____loclib.bonusProgramRatings = "Total Ratings";
+
+____loclib.sortBy = "Sort by:";
+____loclib.sortDirection = "Sort direction:";
+____loclib.sortDirectionAsc = "Ascending";
+____loclib.sortDirectionDesc = "Descending";
+____loclib.sortByName = "Name";
+____loclib.sortByCreatedAt = "Creation Date";
+____loclib.sortByDuration = "Duration";
+____loclib.sortByViews = "Views";
