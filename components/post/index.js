@@ -359,9 +359,10 @@ var post = (function () {
 
 				var pels = el.c.find('.js-player, [data-plyr-provider][data-plyr-embed-id]');
 
-				var wa = (share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1)) ? true : false
+				var wa =  !share.repost && !ed.repost && ((share.itisvideo() && isMobile() || (ed.autoplay && pels.length <= 1))) ? true : false
 
 				if (pels.length) {
+					
 
 					var options = {
 						//autoplay : pels.length <= 1,

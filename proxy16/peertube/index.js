@@ -131,10 +131,10 @@ var Peertube = function (settings) {
         .then((waitstatus) => {
           var cached = cache.get(cachekey, cacheparameters);
 
-          if (cached) {
-            if (cached.error) {
+          if (cached && !cached.error) {
+            /*if (cached.error) {
               return Promise.reject({ error: true });
-            }
+            }*/
 
             return Promise.resolve(cached);
           }
@@ -160,6 +160,7 @@ var Peertube = function (settings) {
           });
         })
         .catch((e) => {
+          
           cache.set(cachekey, cacheparameters, {
             error: true,
           });
