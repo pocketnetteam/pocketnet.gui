@@ -131,10 +131,11 @@ var Peertube = function (settings) {
         .then((waitstatus) => {
           var cached = cache.get(cachekey, cacheparameters);
 
-          if (cached && !cached.error) {
-            /*if (cached.error) {
+          if (cached) {
+
+            if (cached.error) {
               return Promise.reject({ error: true });
-            }*/
+            }
 
             return Promise.resolve(cached);
           }
@@ -160,10 +161,14 @@ var Peertube = function (settings) {
           });
         })
         .catch((e) => {
-          
-          cache.set(cachekey, cacheparameters, {
-            error: true,
-          });
+
+          if(e && e.status == '404'){
+
+            cache.set(cachekey, cacheparameters, {
+              error: true,
+            });
+
+          }
 
           return Promise.reject(e);
         });
@@ -190,12 +195,13 @@ var Peertube = function (settings) {
         .then(() => {
           return Promise.resolve(result);
         })
-        .catch((e = {}) =>
-          Promise.reject({
+        .catch((e = {}) => {
+          console.log("E", e)
+          return Promise.reject({
             error: e,
             code: e.code || 500,
-          }),
-        );
+          })
+        });
     },
 
     stats() {
