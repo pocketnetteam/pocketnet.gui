@@ -20995,11 +20995,11 @@ Platform = function (app, listofnodes) {
                     self.sdk.user.get
                 ], function () {
 
+                    //self.ui.showmykey()
+
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 
                     self.sdk.relayTransactions.send()
-
-                    
 
                     self.preparingUser = false;
 
