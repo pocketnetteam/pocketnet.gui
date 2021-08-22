@@ -103,21 +103,22 @@ var Cache = function(p){
     }
 
 
-    self.set = function(key, params, data, block, ontime){
+    self.set = function(key, params, data, block, ontime, cachehash){
         
         if (ckeys[key]){
 
             var ks = null
 
-            try{
-                ks = JSON.stringify(params)    
-            }catch(e){
+            if(!cachehash){
 
-                return
-
+                try{
+                    ks = JSON.stringify(params)    
+                }catch(e){
+                    return
+                }
             }
 
-            var k = f.hash(ks)
+            var k = cachehash || f.hash(ks)
 
             if(!storage[key])
                 storage[key] = {}

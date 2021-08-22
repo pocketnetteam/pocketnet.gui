@@ -121,17 +121,27 @@ var Peertube = function (settings) {
       if (!parsed.id) return Promise.reject('No id info received');
 
       var cachekey = 'peertubevideo';
+      var cachehash = parsed.id
       var cacheparameters = _.clone(parsed);
 
       return new Promise((resolve, reject) => {
+
         cache.wait(cachekey, cacheparameters, function (waitstatus) {
           resolve(waitstatus);
-        });
+        }, cachehash);
+
+
       })
         .then((waitstatus) => {
-          var cached = cache.get(cachekey, cacheparameters);
+
+          
+          var cached = cache.get(cachekey, cacheparameters, cachehash);
+
+          console.log("GET", cachehash, cached)
 
           if (cached) {
+
+            console.log("VIDEO FROM CACHE", cachehash)
 
             if (cached.error) {
               return Promise.reject({ error: true });
@@ -155,7 +165,9 @@ var Peertube = function (settings) {
                 fr.aspectRatio = 1.78;
             }
 
-            cache.set(cachekey, cacheparameters, r, null, ontime);
+            console.log('cachehash', cachehash, ontime)
+
+            cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
 
             return Promise.resolve(r);
           });
