@@ -131,17 +131,16 @@ var Peertube = function (settings) {
         }, cachehash);
 
 
-      })
-        .then((waitstatus) => {
+      }).then((waitstatus) => {
 
           
           var cached = cache.get(cachekey, cacheparameters, cachehash);
 
-          console.log("GET", cachehash, cached)
+          //console.log("GET", cachehash, cached)
 
           if (cached) {
 
-            console.log("VIDEO FROM CACHE", cachehash)
+            //console.log("VIDEO FROM CACHE", cachehash)
 
             if (cached.error) {
               return Promise.reject({ error: true });
@@ -165,7 +164,7 @@ var Peertube = function (settings) {
                 fr.aspectRatio = 1.78;
             }
 
-            console.log('cachehash', cachehash, ontime)
+            //console.log('cachehash', cachehash, ontime)
 
             cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
 
@@ -173,6 +172,11 @@ var Peertube = function (settings) {
           });
         })
         .catch((e) => {
+
+
+          if(e && !e.data){
+            console.log("E video", e, url)
+          }
 
           if(e && e.status == '404'){
 
@@ -190,25 +194,27 @@ var Peertube = function (settings) {
       var result = {};
 
       return Promise.all(
-        _.map(urls, function (url) {
-          return self.api
-            .video({ url }, cache)
-            .then((r) => {
+
+          _.map(urls, function (url) {
+
+            return self.api.video({ url }, cache).then((r) => {
               result[url] = r.data;
 
               return Promise.resolve();
             })
             .catch((e) => {
-              result.errors ? result.errors.push(e) : (result.errors = [e]);
+
+              result.errors ? result.errors.push(e) : (result.errors = ["error"]);
+
               return Promise.resolve();
             });
-        }),
-      )
-        .then(() => {
+
+          })
+
+        ).then(() => {
           return Promise.resolve(result);
         })
         .catch((e = {}) => {
-          console.log("E", e)
           return Promise.reject({
             error: e,
             code: e.code || 500,
@@ -285,6 +291,7 @@ var Peertube = function (settings) {
         path: '/peertube/' + i,
 
         action: function (data) {
+         
           return f(data, cache)
             .then((r) => {
               return Promise.resolve({
@@ -293,7 +300,6 @@ var Peertube = function (settings) {
               });
             })
             .catch((e) => {
-              console.log('PEERTUBE ERROR', e);
 
               if (!e) e = {};
 

@@ -509,8 +509,6 @@ f.rot13 = function(str){
 
 f.hash = function(str){
 
-    console.log("HASH", str)
-
     return md5(str)
 }
 

@@ -175,7 +175,6 @@ var Cache = function(p){
                 }
             }
 
-            
 
             var k = cachehash || f.hash(ks)
 

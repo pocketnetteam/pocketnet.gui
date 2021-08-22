@@ -848,20 +848,26 @@ var Proxy = function (settings, manage, test) {
 					return Promise.resolve()
 				})
 
-				var videosPr = videosapi({
+				/*var videosPr = videosapi({
 					urls : videos
 				}).then(videos => {
 					result.data.videos = videos.data
 
 					return Promise.resolve()
-				})
+				}).catch(e => {
+					console.log("ERROR", e)
+					return Promise.resolve()
+				})*/
 
-				return Promise.all([userPr, videosPr])
+				return Promise.all([userPr/*, videosPr*/])
 
 			}).then(videos => {
 
 				return Promise.resolve(result)
 			}).catch(e => {
+
+
+				console.log("ERROR", e)
 
 				return Promise.reject(e)
 			})
