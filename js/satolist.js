@@ -4575,7 +4575,7 @@ Platform = function (app, listofnodes) {
 
                         self.app.nav.api.load({
                             open: true,
-                            href: 'userpage?id=test',
+                            href: 'userpage?id=test&opeanimage=true',
                             history: true
                         })
 

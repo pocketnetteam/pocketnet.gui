@@ -277,8 +277,6 @@ var test = (function(){
 								el.c.find('.errorname').fadeOut();
 
 								topPreloader(70)
-								
-
 								userInfo.uploadImage(self.app, function(err){
 
 									if (err){
@@ -1010,6 +1008,7 @@ var test = (function(){
 
 				el.c.find('.referalMaketWrapper').remove()
 			})
+			
 		}
 
 		var make = function(){
