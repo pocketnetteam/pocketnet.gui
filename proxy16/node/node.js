@@ -230,13 +230,6 @@ var Node = function(options, manager){
         },
 
         rating : function(){
-            var s = self.statistic.get() 
-
-            var lastblock = self.lastblock() || {}
-
-            var status = self.chainStatus()
-
-            console.log("rating")
 
             if(cachedrating){
 
@@ -245,7 +238,13 @@ var Node = function(options, manager){
                 }
             }
 
-            console.log("ratingCalc")
+            var s = self.statistic.get() 
+
+            var lastblock = self.lastblock() || {}
+
+            var status = self.chainStatus()
+
+            
 
             ///
 

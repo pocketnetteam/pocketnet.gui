@@ -190,7 +190,6 @@ var Nodemanager = function(p){
         if(!self.nodes.length) return null
 
         if(cachedchain){
-
             if(f.date.addseconds(cachedchain.time, 60) > new Date()){
                 return cachedchain.result
             }

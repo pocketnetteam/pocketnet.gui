@@ -199,7 +199,6 @@ var Cache = function(p){
 
         if(!smart[key]) smart[key] = {}
 
-        _.each()
     }
 
     self.wait = function(key, params, clbk, cachehash){

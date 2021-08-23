@@ -44,6 +44,8 @@ var Server = function(settings, admins, manage){
 
         signature : function(request, result, next){
 
+            console.log("CHECK SIGNATURE")
+
             var authorized = self.proxy.authorization.signature(request.data || {})
 
             if (authorized){
