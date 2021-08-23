@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
     "version": "0.4.12",
-    "cordovaversion" : "1.1.78",
-    "cordovaversioncode" : "10078",
+    "cordovaversion": "1.1.78",
+    "cordovaversioncode": "10078",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -17,17 +17,14 @@
         "distl": "electron-builder -l --x64",
         "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
-
         "minimize": "node minimize.js -prodaction=true -vendor=3001 -path=/",
         "minimize:test": "node minimize.js -prodaction=true -vendor=3001 -test=true -path=/",
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/",
-
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=3001 -path=/ -project=Bastyon",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=3001 -test=true -path=/ -project=Bastyon",
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
-
         "node:embedding": "node minimize.js -prodaction=true -vendor=3001 -path=/web/"
     },
     "devDependencies": {
@@ -161,7 +158,8 @@
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
-            "description": "${productName} Desktop Browser"
+            "description": "${productName} Desktop Browser",
+            "license": "Apache-2.0"
         },
         "win": {
             "target": "nsis",
