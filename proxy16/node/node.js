@@ -10,6 +10,7 @@ var Node = function(options, manager){
 
     var self = this
     var lastinfo = null
+    var cachedrating = null
 
     self.updating = ['rpcuser', 'rpcpass', 'ws', 'name']
 
@@ -235,6 +236,17 @@ var Node = function(options, manager){
 
             var status = self.chainStatus()
 
+            console.log("rating")
+
+            if(cachedrating){
+
+                if(f.date.addseconds(cachedrating.time, 5) > new Date()){
+                    return cachedrating.result
+                }
+            }
+
+            console.log("ratingCalc")
+
             ///
 
             var difference = status.difference || 0
@@ -270,8 +282,15 @@ var Node = function(options, manager){
 
             var userski = 1 //_.toArray(wss.users).length + 1
 
-            return  (s.percent  * (lastblock.height || 1) ) / 
-                    ( userski * rate * (time) * (difference + 1) )
+            var result = (s.percent  * (lastblock.height || 1) ) / 
+            ( userski * rate * (time) * (difference + 1) )
+    
+            cachedrating = {
+                result : result,
+                time : new Date()
+            }
+
+            return  result
         },
 
         better : function(){

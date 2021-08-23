@@ -242,7 +242,7 @@ var Nodemanager = function(p){
         }
 
         cachedchain = {
-            chain : result,
+            result : result,
             time : new Date()
         }
 
