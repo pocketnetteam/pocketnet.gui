@@ -204,7 +204,7 @@ var Peertube = function (settings) {
             })
             .catch((e) => {
 
-              result.errors ? result.errors.push(e) : (result.errors = ["error"]);
+              result.errors ? result.errors.push(url) : (result.errors = [url]);
 
               return Promise.resolve();
             });
