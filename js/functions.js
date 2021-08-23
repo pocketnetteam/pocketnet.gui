@@ -6698,7 +6698,6 @@
 			var mainDirection = null;
 
 			var mintruesholdGone = false;
-			console.log("p", p)
 			p.el.swipe({
 
 				allowPageScroll : p.allowPageScroll,
@@ -6716,7 +6715,6 @@
 					if (self.ended) return false	
 
 
-					console.log('phase', phase)
 
 					if (phase == 'start'){
 

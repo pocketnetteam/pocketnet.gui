@@ -289,6 +289,7 @@ nModule = function(){
 
 		p.inner || (p.inner = html);	
 
+		delete p.animation
 
 		if(p.animation )
 		{

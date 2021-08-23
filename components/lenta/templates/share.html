@@ -141,9 +141,7 @@ var metadisplay = function(){ %>
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="sharecaption canmark">
-					<div>
-						<%=joypixels.toImage(nl2br(trimrn(c)))%>
-					</div>
+					<%=joypixels.toImage(nl2br(trimrn(c)))%>
 				</div>
 			</div>
 
@@ -172,32 +170,16 @@ var metadisplay = function(){ %>
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="message canmark">
-
 					<%=joypixels.toImage((clearScripts(((nm)))))%>
-
 				</div>
 			</div>
 
 			<% if(bigmessage) {%>
 
-				<div class="paddingWrapper showMorePW">
-					<div class="showMore">
-						<div class="showmoretable table">
-							<!-- <div class="linecell">
-								<div class="line"></div>
-							</div> -->
-							<div class="buttoncell">
-								<button>
-									<%=e('showmore')%>
-								</button>
-							</div>
-							<!-- <div class="linecell">
-								<div class="line"></div>
-							</div> -->
-						</div>
-						
-
-					</div>
+				<div class="showMore">
+					<button>
+						<%=e('showmore')%>
+					</button>
 				</div>
 
 			<% } %>
@@ -254,11 +236,9 @@ var metadisplay = function(){ %>
 						<% if(imageFromVideo) {%>
 
 							<div class="imagesWrapper forvideo">
-
 								<div class="image videoOpen" image="<%-imageFromVideo%>">
 									<div class="playicon"><i class="fas fa-play"></i></div>
 								</div>
-
 							</div>
 
 						<% } %>
@@ -290,6 +270,8 @@ var metadisplay = function(){ %>
 
 } %>
 
+<div class="sharecnt">
+
 	<div class="work">
 
 		<div class="shareTable <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
@@ -312,11 +294,10 @@ var metadisplay = function(){ %>
 
 								<% if(deep(app, 'platform.real.'+share.address)) {%>
 									<div class="realperson">
-
 										<span class="fa-stack fa-2x">
 											<i class="fas fa-certificate fa-stack-2x"></i>
 											<i class="fas fa-check fa-stack-1x"></i>
-										  </span>
+										</span>
 									</div>
 								<% } %>
 							</div>
@@ -371,10 +352,8 @@ var metadisplay = function(){ %>
 
 									<div class="category">
 										<a href="index?sst=<%-category.tags.join(' ')%>">
-											<span><b>@<%-category.name%></b></span> 
+											<span>@<%-category.name%></span> 
 										</a>
-										<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
-								
 									</div>
 
 								<% }) %>
@@ -398,13 +377,9 @@ var metadisplay = function(){ %>
 						<% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="sys hideOnFullVideo">
 								<% if(share.time) {%>
-
 									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-
 								<% } else { %> 
-
 									<span><%=e('e13019')%></span>
-
 								<% } %>
 
 								<% if(share.edit == 'true') {%>	
@@ -416,7 +391,6 @@ var metadisplay = function(){ %>
 						<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="panel">
 								<div class="item forstars">
-
 									
 								</div>
 
@@ -522,19 +496,12 @@ var metadisplay = function(){ %>
 		</div>
 
 		<div class="blockAuthor">
-			<div class="blockTable table">
-				<div class="blockCell">
-					<div class="label"><%=e('e13131')%></div>
-
-					<div class="unblockWrapper">
-						<button class="button small unblockbutton">
-							Unblock
-						</button>
-					</div>
-				</div>
-				
+			<div class="blockCell">
+				<div class="label"><%=e('e13131')%></div>
+				<button class="button small unblockbutton">
+					Unblock
+				</button>
 			</div>
-			
 		</div>
 		
 	</div>
@@ -562,54 +529,6 @@ var metadisplay = function(){ %>
 
 	<% } %>
 
-	
-
-	<% if(app.platform.istest && app.platform.istest() && share.info && !_.isEmpty(share.info)) {%>
-		<div class='debuginfo'>
-
-			<div class="icon">
-				<i class="fas fa-sort-down"></i>
-			</div>
-
-			<div class="info">
-				
-				<% _.each(share.info, function(k, v){
-					
-					if(v == 'LAST5RADRS' || v == 'PREPRADRS'){
-						
-						var ids = _.map(k, function(a){
-							return a.address + '_' + a.value
-						}).join(',')
-
-						if(!ids.length) return
-						%>
-
-						<div class="lll"><b><%-v%></b>:</div>
-
-						<div class="testusersprofiles" ids="<%-ids%>">
-
-						</div>
-
-						<div class="">
-							___________________
-						</div>
-
-					<%	return 
-				
-					} %>
-					<div>
-						<span><%-v %></span>
-						<b><%- Number(k || 0).toFixed(2) %></b>
-					</div>
-				<% }) %>
-				<div>
-					<span>TXID:</span>
-					<b><%-share.txid%></b><br>
-				</div>	
-
-			</div>
-			
-		</div>
-	<% } %>
+</div>	
 
 <% } %>

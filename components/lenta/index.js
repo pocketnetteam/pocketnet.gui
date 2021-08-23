@@ -12,41 +12,33 @@ var lenta = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-
 		var el;
-
 		var mid = p.mid;
-
 		var making = false, ovf = false;
-
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0;
 
 
-		var commentsInited = {},
-			shareInitedMap = {},
+		var shareInitedMap = {},
 			shareInitingMap = {},
 			loading = false,
 			ended = false,
 			players = {},
 			sharesInview = [],
-			scrolling = false,
 			mscrolling = false,
-			rendering = false,
-			prevscroll = 0,
 			lastscroll = 0,
 			playVideoTimer,
 			sharesPreInitVideoTimer,
 			ascroll = 0,
 			ascrollel = null,
 			newmaterials = 0,
-			tempTimer,
 			getPreviewTimer,
 			shareheights = {},
 			_reposts = {},
 			fixedblock = 0,
 			delay = null,
 			videopaused = false,
+			optimized = {},
 			fullscreenvideoShowed = false;
 
 		var countshares = 0;
@@ -56,25 +48,6 @@ var lenta = (function(){
 
 		var authblock = false;
 
-		var errors = {
-			comments : {
-				content : "message empty",
-				share : "hasn't share",
-				messagelength : ">140",
-				money : "hasn't money",
-				network : "network error"
-			},
-
-			upvote : {
-				share : "hasn't share",
-				network : "network error"
-			},
-
-			complain : {
-				share : "hasn't share",
-				network : "network error"
-			}
-		}
 
 		var actions = {
 			newmaterials : function(data){
@@ -188,20 +161,7 @@ var lenta = (function(){
 					self.app.platform.ui.share({
 						repost : shareid
 					})
-
-					/*var href = 'index';
-
-					if(isMobile()) href = 'share'
-
-					self.nav.api.load({
-						open : true,
-						href : href + '?repost=' + shareid,
-						history : true,
-						handler : true,
-						essenseData : {
-							
-						}
-					})*/
+					
 				}, shareid)
 
 			},
@@ -616,13 +576,11 @@ var lenta = (function(){
 						},
 
 						play : function(){
-							console.log("play")
 
 							videopaused = false
 						},
 
 						pause : function(){
-							console.log("pause")
 
 							videopaused = true
 						}
@@ -701,6 +659,15 @@ var lenta = (function(){
 					var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 					delete initedcommentes[id]
+
+					if(players[id]){
+						if (players[id].p){
+							players[id].p.destroy()
+						}
+
+						delete players[id]
+					}
+
 
 					renders.share(share, null, true)
 				}
@@ -988,8 +955,6 @@ var lenta = (function(){
 
 				//player.p.muted = true;
 
-				console.log('videosVolume', videosVolume)
-
 				actions.setVolume(players[id], videosVolume)
 
 				self.app.nav.api.history.removeParameters(['v'])
@@ -1092,9 +1057,6 @@ var lenta = (function(){
 
 			block : function(address, clbk){
 				
-
-
-
 			},
 
 			complain : function(obj, clbk){
@@ -1349,17 +1311,14 @@ var lenta = (function(){
 
 							var els = el.c.find('.share');
 
-							var _el = el.w; 
-
-							var h = el.w.height() / 4
-							
 							var inv = inView(els, {
-								inel : _el,
-								offsetTop : h,
-								offsetBottom : h,
-								//mode : 'line',
+								inel : el.w,
+								offset : 0,
+								mode : 'partall'
 							})
 
+
+							console.log('els', els.length)
 
 							if (inv.length > 0){
 
@@ -1444,6 +1403,29 @@ var lenta = (function(){
 				return sitemessage(self.app.localization.e('videoCopied'));
 			},
 
+			stopPlayers : function(){
+				_.each(players, function(player, id){
+					actions.stopPlayer(id)
+				})
+			},
+
+			stopPlayer : function(id){
+
+				var player = players[id]
+
+				if(!player || player.error) return
+
+				player.p.muted = true;
+
+				if (player.p.playing){
+					player.p.stop()
+
+					setTimeout(function(){
+						videopaused = false
+					}, 100)
+				}
+			},
+
 			setVolume : function(player, v){
 
 				if(typeof v == 'undefined') v = videosVolume
@@ -1452,7 +1434,6 @@ var lenta = (function(){
 
 				if(!player.p) return
 
-				///console.log("player.p", player.p)
 
 				if(player.p.setVolume){
 					if (v){
@@ -1472,9 +1453,95 @@ var lenta = (function(){
 
 				
 			},
+
+			shareOptimization : function(share){
+				if(optimized[share.txid] || !el.share[share.txid] || shareInitingMap[share.txid] || !shareInitedMap[share.txid]) return
+
+				var __el = el.share[share.txid]
+
+				//actions.destroyVideo(share)
+
+				optimized[share.txid] = true
+
+				var last = __el.find('.sharecnt')
+
+				if (last.length){
+
+					var h = last.height(),
+						w = last.width()
+
+					__el.html('<div class="shareSpacerOptimized" style="height:'+h+'px;width:'+w+'px"></div>')
+
+				}
+
+				
+			},
+
+			shareReturnAfterOptimization : function(share){
+				if(!optimized[share.txid] || !el.share[share.txid]) return
+
+				
+
+				/*delete shareInitedMap[share.txid]
+				delete shareInitingMap[share.txid]*/
+				delete players[share.txid]
+				delete initedcommentes[share.txid]
+
+				renders.share(share, function(){
+					delete optimized[share.txid]
+				})
+				
+				
+			},
+
+			sharesOptimization : function(currentShare){
+
+				var arranged = [];
+
+				el.c.find('.share').each(function(){
+
+					var s = self.app.platform.sdk.node.shares.storage.trx[this.getAttribute('id')]
+
+					if (s)
+
+						arranged.push( s )
+				})
+
+				console.log('arranged', arranged)
+
+				var index = _.findIndex(arranged, function(s){
+					return s.txid == currentShare.txid
+				})
+
+				console.log('index', index, currentShare.txid, arranged)
+
+				if(index == -1) return
+
+				var willoptimized = []
+				var willshowed = []
+
+				_.each(arranged, function(share, i){
+					if(i > index + 5 || i < index - 5){
+						willoptimized.push(share)
+					}
+					else{
+						willshowed.push(share)
+					}
+				})
+
+				_.each(willoptimized, function(share){
+					actions.shareOptimization(share)
+				})
+
+				_.each(willshowed, function(share){
+					actions.shareReturnAfterOptimization(share)
+				})
+			}
+
 		}
 
 		var events = {
+
 			sharesPreInitVideo : function(){
 
 				var shadowVideos = {} 
@@ -1523,7 +1590,7 @@ var lenta = (function(){
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
 
-					var invsharesload = _.filter(invshares, function(s){
+					/*var invsharesload = _.filter(invshares, function(s){
 						return !shareInitedMap[s.txid]
 					})
 					
@@ -1534,12 +1601,15 @@ var lenta = (function(){
 						load.shares(function(shares){
 							renders.sharesInview(shares, function(){
 
-								
-
 							})
 						})
-					}
+					}*/
 
+					console.log('invshares', invshares)
+
+					/*if(invshares.length){
+						actions.sharesOptimization(invshares[0])
+					}*/
 					
 					_.each(invshares, function(s){
 						el.share[s.txid].addClass('vstars')
@@ -1566,7 +1636,7 @@ var lenta = (function(){
 
 					var _el = el.closest('.share')
 
-					if(!el.closest('.share').hasClass('showAdditional')){
+					if(!_el.hasClass('showAdditional') && !_el.hasClass('blocking')){
 
 						actions.initVideo(_el, self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')], function(){
 
@@ -1578,6 +1648,7 @@ var lenta = (function(){
 							if(essenseData.openapi || essenseData.second){
 								return
 							}
+
 
 							if(!player.p.playing && !self.app.platform.matrixchat.showed() && !videopaused){
 								player.p.play()
@@ -1651,6 +1722,7 @@ var lenta = (function(){
 				})
 
 			},
+
 			metmenu : function(){
 				var _el = $(this);
 				var id = $(this).closest('.share').attr('id');
@@ -1658,6 +1730,7 @@ var lenta = (function(){
 				self.app.platform.api.metmenu(_el, id, actions)
 
 			},
+
 			resize : function(){
 
 				var _el = el.c.find('.fullScreenVideo');
@@ -1668,6 +1741,7 @@ var lenta = (function(){
 
 				
 			},	
+
 			loadmorescroll : function(){
 
 				if(!essenseData.horizontal){
@@ -1698,18 +1772,13 @@ var lenta = (function(){
 				
 			},
 
-
-			
-
 			commentLike : function(){
-				
 				var id = $(this).closest('.comment').attr('id');
 				var shareId = $(this).closest('.share').attr('id');
 
 					actions.like(self.app.platform.sdk.node.shares.storage.trx[shareId].findComment(id))
 
 					$(this).addClass('active')
-
 
 			},
 
@@ -1734,14 +1803,6 @@ var lenta = (function(){
 			},
 
 			like : function(){
-
-				/*if (essenseData.authAction) {
-
-					essenseData.authAction('like')
-
-					return
-
-				}*/
 
 				var p = $(this).closest('.stars');
 
@@ -1929,6 +1990,7 @@ var lenta = (function(){
 
 					actions.exitFullScreenVideo(shareId)
 			},
+
 			fullScreenVideo : function(){
 
 				var shareId = $(this).closest('.share').attr('id');
@@ -2026,8 +2088,9 @@ var lenta = (function(){
 
 				actions.loadprev();
 
-			}
+			},
 
+			
 		}	
 
 		var renders = {
@@ -2046,6 +2109,7 @@ var lenta = (function(){
 						self.app.platform.sdk.users.get(idsadr, function(){
 
 							self.shell({
+								animation : false,
 								inner : html,
 								name : 'testusers',
 								data : {
@@ -2228,6 +2292,7 @@ var lenta = (function(){
 				self.shell({
 					name : video ? 'sharevideolight' :  'share',
 					el : _el,
+					animation : false,
 					data : {
 						share : share,
 						ed : essenseData,
@@ -2324,6 +2389,7 @@ var lenta = (function(){
 					var wholikes = share.who;
 
 					self.shell({
+						animation : false,
 						name :  'wholike',
 						el : _el.find('.wholikes'),
 						data : {
@@ -2355,7 +2421,8 @@ var lenta = (function(){
 						el : _el.find('.forstars'),
 						data : {
 							share : share
-						}					
+						},
+						animation : false,				
 
 					}, function(p){
 
@@ -2694,6 +2761,7 @@ var lenta = (function(){
 			repost : function(el, repostid, txid, empty, clbk){
 				if(repostid){
 					self.shell({
+						animation : false,
 						name :  'repost',
 						el : el.find('.repostWrapper'),
 						data : {
@@ -2808,6 +2876,7 @@ var lenta = (function(){
 				var rndr = function(res){
 
 					self.shell({
+						animation : false,
 						turi : 'share',
 						name :  'url',
 						el : el,
@@ -3164,8 +3233,6 @@ var lenta = (function(){
 							}
 
 							if (recommended){
-
-								
 
 								if(recommended == 'recommended'){
 									loader = 'recommended'
@@ -3723,6 +3790,8 @@ var lenta = (function(){
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
 
 					addressEl.addClass('blocking');
+
+					actions.stopPlayers()
 				}
 
 				self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
@@ -3730,6 +3799,8 @@ var lenta = (function(){
 					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
 
 					addressEl.removeClass('blocking');
+
+					actions.stopPlayers()
 				}
 
 
@@ -4011,9 +4082,6 @@ var lenta = (function(){
 					if(player.p && player.el && player.inited && player.p.playing) return true
 
 				})
-
-				console.log('players', ap)
-
 				return ap.length
 			},
 

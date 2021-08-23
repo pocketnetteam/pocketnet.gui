@@ -12,6 +12,7 @@ var Nodemanager = function(p){
 
     var self = this;
     var inited = false;
+    var cachedchain = null
 
 
     self.tempnodes = {};
@@ -184,8 +185,16 @@ var Nodemanager = function(p){
     }
 
     self.currentChainCommon = function(){
+        
 
         if(!self.nodes.length) return null
+
+        if(cachedchain){
+
+            if(f.date.addseconds(cachedchain.time, 60) > new Date()){
+                return cachedchain.result
+            }
+        }
 
         var commonHeight = 0,
             commonBlockHash = '',
@@ -225,12 +234,19 @@ var Nodemanager = function(p){
             return s + (n.chain() || []).length
         }, 0) / self.nodes.length
 
-        return {
+        var result = {
             commonHeight : commonHeight,
             maxHeight : maxHeight,
             commonBlockHash : commonBlockHash,
             chainlength : c
         }
+
+        cachedchain = {
+            chain : result,
+            time : new Date()
+        }
+
+        return result
 
     }
 
@@ -353,6 +369,8 @@ var Nodemanager = function(p){
 
         self.nodes = []
         self.remap()
+
+        cachedchain = null
 
         if (findInterval) {
             clearInterval(findInterval)
