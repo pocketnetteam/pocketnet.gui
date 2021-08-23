@@ -251,9 +251,13 @@ var Proxy = function (settings, manage, test) {
 			if (settings.server.enabled) {
 
 				return server.init({
+
 					ssl: ini.ssl(),
 					port: f.deep(settings, 'server.ports.https')
+
 				}).catch(e => {
+
+					console.log(e)
 				
 					return server.init({
 						ssl: ini.ssl('default'),
@@ -865,7 +869,6 @@ var Proxy = function (settings, manage, test) {
 
 					return Promise.resolve()
 				}).catch(e => {
-					console.log("ERROR", e)
 					return Promise.resolve()
 				})
 
@@ -875,9 +878,6 @@ var Proxy = function (settings, manage, test) {
 
 				return Promise.resolve(result)
 			}).catch(e => {
-
-
-				console.log("ERROR", e)
 
 				return Promise.reject(e)
 			})

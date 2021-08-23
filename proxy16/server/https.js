@@ -135,6 +135,9 @@ var Server = function(settings, admins, manage){
     self.https = function(settings){
         return new Promise((resolve, reject) => {
             try{
+                
+
+                
 
                 if (_.isEmpty(settings.ssl)){
                     reject('sslerror')
@@ -142,8 +145,11 @@ var Server = function(settings, admins, manage){
                     return
                 }
 
+                var cloned = _.clone(settings.ssl)
 
-                server = https.createServer(settings.ssl, app)
+                if (cloned.passphrase === "*") delete cloned.passphrase
+
+                server = https.createServer(cloned, app)
 
                 server.on('listening',function(){
 
