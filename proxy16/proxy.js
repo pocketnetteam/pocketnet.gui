@@ -11,7 +11,7 @@ var svgCaptcha = require('svg-captcha');
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
 */
-
+var os = require('os');
 var Server = require('./server/https.js');
 var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
@@ -232,9 +232,11 @@ var Proxy = function (settings, manage, test) {
 
 	self.users = function () {
 
-		var i = self.kit.info()
+		var i = {
+			wss: self.wss.info(true)
+		}
 
-		var count = Math.max(f.deep(i, 'wss.users.length') || 1, f.deep(i, 'server.middle.requestsIp') || 1)
+		var count = Math.max(f.deep(i, 'wss.users.length') || 1)
 
 		if (count < 1) count = 1
 
@@ -252,7 +254,7 @@ var Proxy = function (settings, manage, test) {
 					ssl: ini.ssl(),
 					port: f.deep(settings, 'server.ports.https')
 				}).catch(e => {
-					console.log("E", e)
+				
 					return server.init({
 						ssl: ini.ssl('default'),
 						port: f.deep(settings, 'server.ports.https')
@@ -627,6 +629,9 @@ var Proxy = function (settings, manage, test) {
 
 			var mem = process.memoryUsage()
 
+			
+			var loads = os.loadavg();
+
 			_.each(mem, function (v, i) {
 				mem[i] = v / (1024 * 1024)
 			})
@@ -648,7 +653,12 @@ var Proxy = function (settings, manage, test) {
 					all: _.toArray(captchas).length
 				},
 
-				memory: mem
+				memory: mem,
+				loadavg : {
+					'1' : loads[0],
+					'5' : loads[1],
+					'15' : loads[2]
+				}
 			}
 		},
 
