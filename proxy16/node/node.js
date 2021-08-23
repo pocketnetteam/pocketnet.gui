@@ -35,7 +35,7 @@ var Node = function(options, manager){
     var checkEventsLength = 100 
     var getinfointervaltime = 60000 
     var lastinfoTime = f.now()
-    var maxevents = 10000
+    var maxevents = 1000
 
     var test = new Test(self, manager)
 
@@ -501,7 +501,7 @@ var Node = function(options, manager){
 
         var e = self.checkParametersS()
 
-        if(e) return Promise.reject('validateHost')
+        if(e) return Promise.reject(e)
         
         return Promise.resolve()
     }
@@ -686,8 +686,8 @@ var Node = function(options, manager){
 
         serviceConnection()
 
-        if(!changeNodeUsersInterval)
-            changeNodeUsersInterval = setInterval(changeNodeUsers, 10000)
+        /*if(!changeNodeUsersInterval)
+            changeNodeUsersInterval = setInterval(changeNodeUsers, 100000)*/
 
         return self
     }
