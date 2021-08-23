@@ -377,6 +377,12 @@ var Remote = function(app){
 
 				if (error){
 					errors[uri] = 'nc'
+
+					if (clbk){
+						clbk({})
+					}
+
+					return
 				}
 
 				var d = {}
