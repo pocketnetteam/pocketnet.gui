@@ -14,8 +14,8 @@
 
             <div class="vidgetIconWrapper">
               <span class="quotaValue">
-                <%- formatBytes(userQuota.videoQuotaRemainingDaily) %> / <%-
-                formatBytes(userQuota.videoQuotaDaily) %>
+                <%- userQuota.videoQuotaDaily ? formatBytes(userQuota.videoQuotaRemainingDaily) : '-' %> / <%-
+                userQuota.videoQuotaDaily ? formatBytes(userQuota.videoQuotaDaily) : '-' %>
               </span>
               <!-- <div class="circular">
                 <div class="inner"></div>
