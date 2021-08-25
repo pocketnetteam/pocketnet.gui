@@ -196,7 +196,9 @@ var menu = (function(){
 					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
 						actions.ahnotify(el, count, 'chat')
 					}
-				}
+				},
+
+				fast : true
 			},
 
 			sitename : {
@@ -440,6 +442,7 @@ var menu = (function(){
 			},
 
 			search : {
+				fast : true,
 				click : function(){
 					el.c.addClass('searchactive')
 
@@ -1051,15 +1054,24 @@ var menu = (function(){
 
 					_.each(events[ekey], function(action, event){
 
-						if(event == 'init')
-						{
-							action(element)
-						}
-						else
-						{
-							element.on(event, action)
-						}
+						if(typeof action == 'function'){
+							if (event == 'init')
+							{
+								action(element)
+							}
+							else
+							{
 
+								if(event == 'click' && events[ekey].fast){
+									element.on(clickAction(), action)
+								}
+								else{
+									element.on(event, action)
+								}
+
+								
+							}
+						}
 
 					})
 

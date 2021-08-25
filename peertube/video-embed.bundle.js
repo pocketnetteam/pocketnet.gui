@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=499"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3279"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42620,6 +42620,10 @@ class peertube_player_manager_PeertubePlayerManager {
                 swarmId: p2pMediaLoaderOptions.playlistUrl,
             },
         };
+        var capLevelToPlayerSize = true;
+        /* @ts-ignore */
+        if (typeof window.isMobile != 'undefined' && window.isMobile())
+            capLevelToPlayerSize = false;
         const hlsjs = {
             levelLabelHandler: (level) => {
                 const resolution = Math.min(level.height || 0, level.width || 0);
@@ -42639,7 +42643,7 @@ class peertube_player_manager_PeertubePlayerManager {
                     highBufferWatchdogPeriod: 1,
                     lowLatencyMode: true,
                     enableWorker: true,
-                    capLevelToPlayerSize: true,
+                    capLevelToPlayerSize: capLevelToPlayerSize,
                     autoStartLoad: false,
                     //liveSyncDurationCount: 4,
                     maxBufferLength: 30,

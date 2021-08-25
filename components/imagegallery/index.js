@@ -28,48 +28,7 @@ var imagegallery = (function(){
 				
 				return;
 
-				var tomode = null
-				var prs = 0
-				var c = 1
-
-				if (phase == 'move'){
-
-					if(direction == 'left' || direction == 'right'){
-						prs = 100 * (distance / 500)
-
-						if(direction == 'left') c = -1
-
-						el.images.css({'transform' : 'translateX(' + (c * prs) + "%)"})
-
-						return
-					}
-					
-				}
-
-				el.images.css({'transform' : 'translateX(0%)'})
-
-				if(phase == 'end'){
-
-					if(direction == 'right'){
-
-						actions.back()
-
-					}
-
-					if(direction == 'left'){
-
-						actions.next()
-
-					}
-
-					
-				}
-
-				if(phase == 'cancel'){
-					if(direction == 'left' || direction == 'right'){
-
-					}
-				}
+				
 				
 			},
 
@@ -255,8 +214,14 @@ var imagegallery = (function(){
 				zoomData.current.width = zoomData.originalSize.width * zoomData.current.z;
 				// Check limits if needed
 				if (checkLimits) {
-					var limitY = (zoomData.imageContainerParent.height() < zoomData.current.height) ? Math.abs((zoomData.current.height - zoomData.imageContainerParent.height()) / 2) : 0;
-					var limitX = (zoomData.imageContainerParent.width() < zoomData.current.width) ? Math.abs((zoomData.current.width - zoomData.imageContainerParent.width()) / 2) : 0;
+
+					var h = isMobile() ? self.app.height : zoomData.imageContainerParent.height(),
+						w = isMobile() ? self.app.width : zoomData.imageContainerParent.width()
+
+					var limitY = (h < zoomData.current.height) ? Math.abs((zoomData.current.height - h) / 2) : 0;
+					var limitX = (w < zoomData.current.width) ? Math.abs((zoomData.current.width - w) / 2) : 0;
+
+
 					if (zoomData.current.y > limitY)
 						zoomData.current.y = zoomData.last.y = limitY;
 					else if (zoomData.current.y < -limitY)
@@ -565,10 +530,10 @@ var imagegallery = (function(){
 			if(!isMobile() && !isTablet())
 				el.c.on('click', events.body)
 
-			var cc = el.c.find('.imagesTableWrapper').closest('.wnd')
+			//var cc = el.c.find('.imagesTableWrapper').closest('.wnd')
 
 			// Enable the swipe only if we have at least 2 images
-			if (essenseData.images && essenseData.images.length > 1) {
+			/*if (essenseData.images && essenseData.images.length > 1) {
 				el.c.find('.imagesTableWrapper').swipe({
 					allowPageScroll: "auto", 
 					swipeStatus : function(e, phase, direction, distance){
@@ -578,7 +543,7 @@ var imagegallery = (function(){
 						return true
 					},
 				})
-			}
+			}*/
 			
 
 		}

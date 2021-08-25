@@ -26,12 +26,9 @@ var lenta = (function(){
 			players = {},
 			sharesInview = [],
 			lastscroll = 0,
-			playVideoTimer,
-			sharesPreInitVideoTimer,
 			ascroll = 0,
 			ascrollel = null,
 			newmaterials = 0,
-			getPreviewTimer,
 			shareheights = {},
 			_reposts = {},
 			fixedblock = 0,
@@ -263,23 +260,6 @@ var lenta = (function(){
 				scrolling = false
 				rendering = false
 				prevscroll = 0
-
-				if(getPreviewTimer){
-					clearTimeout(getPreviewTimer)
-					getPreviewTimer = null
-				}
-
-				if(playVideoTimer){
-					clearTimeout(playVideoTimer)
-					playVideoTimer = null
-				}
-
-				if(sharesPreInitVideoTimer){
-					clearTimeout(sharesPreInitVideoTimer)
-					sharesPreInitVideoTimer = null
-					
-				}
-
 
 				ascroll = 0
 				ascrollel = null
@@ -760,7 +740,7 @@ var lenta = (function(){
 
 							clbk : function(el,d ){
 
-								el.find('.pnetdnt').on(clickAction(), function(){
+								el.find('.pnetdnt').on('click', function(){
 									self.nav.api.load({
 										open : true,
 										href : link,
@@ -770,7 +750,7 @@ var lenta = (function(){
 									d.destroy()
 								})
 
-								el.find('.copy').on(clickAction(), function(){
+								el.find('.copy').on('click', function(){
 									var a = $(this).closest('.address').find('.addr')
 
 									copyText(a)
@@ -801,7 +781,8 @@ var lenta = (function(){
 					return
 				}
 
-				var h = $(window).height();
+				var h = self.app.height;
+
 				var add = 0
 
 				if(!isMobile()) add = 100
@@ -1231,7 +1212,7 @@ var lenta = (function(){
 					
 					var inv = inView(el.c.find('.videoWrapper'), {
 					
-						offset : el.w.height() / 10,
+						offset : self.app.height / 10,
 						mode : 'all',
 						cache : isMobile()
 					})
@@ -1500,7 +1481,6 @@ var lenta = (function(){
 					}
 				})
 
-				console.log(willoptimized, willshowed)
 
 				_.each(willoptimized, function(share){
 					actions.shareOptimization(share)
@@ -1515,7 +1495,10 @@ var lenta = (function(){
 
 		var events = {
 
-			sharesPreInitVideo : function(){
+			sharesPreInitVideo : function(e, block){
+
+				
+				if(block) return
 
 				var shadowVideos = {} 
 				
@@ -1529,7 +1512,7 @@ var lenta = (function(){
 					return shadowVideos[s.txid]
 				})
 
-				console.log('shadowShares', shadowShares, players)
+				
 
 				if(shadowShares.length){
 
@@ -1552,12 +1535,13 @@ var lenta = (function(){
 
 			},
 
-			sharesInview : function(e){
+			sharesInview : function(s, block){
+
 				
+				if(block) return
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
 
-					console.log('invshares.length', invshares.length)
 
 					if(invshares.length && isMobile()){
 						actions.sharesOptimization(invshares[0])
@@ -1582,7 +1566,9 @@ var lenta = (function(){
 				
 			},
 
-			videosInview : function(e){
+			videosInview : function(e, block){
+
+				if(block) return
 
 				actions.videosInview(players, function(player, el, clbk){	
 
@@ -1660,6 +1646,7 @@ var lenta = (function(){
 
 			showmorebyauthor : function(){
 
+
 				$(this).closest('.authorgroup').find('.share').removeClass('hidden')
 
 				$(this).remove()
@@ -1684,7 +1671,6 @@ var lenta = (function(){
 			},
 
 			resize : function(){
-
 				if (fullscreenvideoShowed){
 					actions.videoPosition(fullscreenvideoShowed)
 				}
@@ -1692,6 +1678,8 @@ var lenta = (function(){
 			},	
 
 			loadmorescroll : function(){
+
+
 				if(!essenseData.horizontal){
 					if (
 						!loading && !ended && (recommended != 'recommended' || isMobile()) &&
@@ -1710,7 +1698,6 @@ var lenta = (function(){
 						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 2000) 
 	
 						) {
-
 
 						actions.loadmore()
 	
@@ -2002,10 +1989,11 @@ var lenta = (function(){
 			
 
 			loadmore : function(){
+
+
 				actions.loadmore()
 			},
 			loadprev : function(){
-
 				actions.loadprev();
 
 			},
@@ -3283,30 +3271,30 @@ var lenta = (function(){
 
 		var initEvents = function(){			
 
-			el.c.on(clickAction(), '.wholikesTable', events.postscores)
-			el.c.on(clickAction(), '.stars i', events.like)
-			el.c.on(clickAction(), '.complain', events.complain)
+			el.c.on('click', '.wholikesTable', events.postscores)
+			el.c.on('click', '.stars i', events.like)
+			el.c.on('click', '.complain', events.complain)
 			el.c.on('click', '.imageOpen', events.openGallery)
-			el.c.on(clickAction(), '.txid', events.getTransaction)
-			el.c.on(clickAction(), '.showMore', events.openPost)
-			el.c.on(clickAction(), '.forrepost', events.repost)
-			el.c.on(clickAction(), '.unblockbutton', events.unblock)
-			el.c.on(clickAction(), '.videoTips', events.fullScreenVideo)
-			el.c.on(clickAction(), '.videoOpen', events.fullScreenVideo)
-			el.c.on(clickAction(), '.opensviurl', events.opensvi)
-			el.c.on(clickAction(), '.exitFull', events.exitFullScreenVideo)
-			el.c.on(clickAction(), '.additional', events.additional)
-			el.c.on(clickAction(), '.asubscribe', events.asubscribe)
-			el.c.on(clickAction(), '.aunsubscribe', events.aunsubscribe)
-			el.c.on(clickAction(), '.notificationturn', events.subscribePrivate)
-			el.c.on(clickAction(), '.donate', events.donate)
-			el.c.on(clickAction(), '.sharesocial', events.sharesocial)
-			el.c.on(clickAction(), '.metmenu', events.metmenu)
-			el.c.on(clickAction(), '.showmorebyauthor', events.showmorebyauthor)
-			el.c.on(clickAction(), '.commentsAction', events.toComments)
+			el.c.on('click', '.txid', events.getTransaction)
+			el.c.on('click', '.showMore', events.openPost)
+			el.c.on('click', '.forrepost', events.repost)
+			el.c.on('click', '.unblockbutton', events.unblock)
+			el.c.on('click', '.videoTips', events.fullScreenVideo)
+			el.c.on('click', '.videoOpen', events.fullScreenVideo)
+			el.c.on('click', '.opensviurl', events.opensvi)
+			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
+			el.c.on('click', '.additional', events.additional)
+			el.c.on('click', '.asubscribe', events.asubscribe)
+			el.c.on('click', '.aunsubscribe', events.aunsubscribe)
+			el.c.on('click', '.notificationturn', events.subscribePrivate)
+			el.c.on('click', '.donate', events.donate)
+			el.c.on('click', '.sharesocial', events.sharesocial)
+			el.c.on('click', '.metmenu', events.metmenu)
+			el.c.on('click', '.showmorebyauthor', events.showmorebyauthor)
+			el.c.on('click', '.commentsAction', events.toComments)
 
-			el.c.find('.loadmore button').on(clickAction(), events.loadmore)
-			el.c.find('.loadprev button').on(clickAction(), events.loadprev)
+			el.c.find('.loadmore button').on('click', events.loadmore)
+			el.c.find('.loadprev button').on('click', events.loadprev)
 
 
 			//////////////////////
@@ -3428,7 +3416,7 @@ var lenta = (function(){
 
 				if(!essenseData.notscrollloading){
 
-					el.w.on('scroll', events.sharesInview);
+					//el.w.on('scroll', events.sharesInview);
 
 					if (essenseData.horizontal){
 						el.w.on('scroll', events.loadmorescroll);
@@ -3565,7 +3553,7 @@ var lenta = (function(){
 
 				self.app.platform.clbks._focus.lenta = function(time){
 
-					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 120 && !essenseData.second){
+					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 1200 && !essenseData.second){
 
 						actions.loadprev()
 						self.app.actions.scroll(0)
@@ -4060,6 +4048,8 @@ var lenta = (function(){
 				el.share = {}
 
 				if (essenseData.horizontal){
+
+
 					el.c.addClass('horizontal')
 				}
 

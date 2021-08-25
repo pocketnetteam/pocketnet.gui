@@ -109,6 +109,7 @@ nModule = function(){
 				//}
 
 				window.requestAnimationFrame(function(){
+
 					bgImages(p.el, p.bgImages)
 				})
 				

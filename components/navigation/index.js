@@ -41,7 +41,7 @@ var navigation = (function(){
 			},	
 
 			toup : function(){
-
+				self.app.mobile.vibration.small()
 				self.app.actions.scroll(0)
 			}
 		}
@@ -131,6 +131,9 @@ var navigation = (function(){
 			}
 
 			el.c.find('.fakem').on('click', function(){
+
+				app.mobile.vibration()
+
 				$('html').removeClass('scrollmodedown')
 			})
 

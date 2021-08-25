@@ -530,6 +530,8 @@ var userpage = (function(){
 
 				if(isMobile()){
 
+					self.app.mobile.vibration.small()
+
 					renders.contents(null, id)
 
 				}
@@ -592,9 +594,9 @@ var userpage = (function(){
 	
 					}, function(_p){
 	
-						_p.el.find('.groupNamePanelWrapper').on(clickAction(), events.closeGroup);
+						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
 						//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
-						_p.el.find('.openReport').on(clickAction(), events.openReport);
+						_p.el.find('.openReport').on('click', events.openReport);
 	
 						ParametersLive([s], _p.el)
 
@@ -855,8 +857,11 @@ var userpage = (function(){
 
 		var initEvents = function(){
 			
-			el.c.on(clickAction(), '.signout', function(){
+			el.c.on('click', '.signout', function(){
+
+				self.app.mobile.vibration.small()
 				actions.signout()
+
 			})
 
 		}

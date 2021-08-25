@@ -22,6 +22,8 @@ Nav = function(app)
 		links : true,
 	}
 
+	var blockclick = false
+
 	var defaultpathname = 'index'
 
 	if (_OpenApi){
@@ -467,8 +469,6 @@ Nav = function(app)
 			if(!isMobile()) return
  
 			var p = parameters(href, true)
-
-			console.log('backtoapp', p['pc'])
 
 			if(!p['pc']){
 				return app.platform.matrixchat.backtoapp()
@@ -1038,7 +1038,7 @@ Nav = function(app)
 
 			if(typeof window != 'undefined' && typeof window.cordova != 'undefined' && cordova.InAppBrowser){
 
-				link.off(clickAction()).on(clickAction(), function(){
+				link.off('click').on('click', function(){
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_blank');
 
@@ -1072,8 +1072,6 @@ Nav = function(app)
 
 		links : function(action, _el, additionalActions){
 
-			console.log("LINKS", _el)
-
 			if(!options.links) return;	
 
 			var _links = null;
@@ -1096,12 +1094,12 @@ Nav = function(app)
 				{
 					if(link.attr('donottrust'))
 					{
-						if (clickAction() != 'click')
-							link.off('click').on('click', function(){return false})
+						
 
-						link.off(clickAction()).on(clickAction(), function(){
+						link.off('click').on('click', function(){
 							var href = $(this).attr('href');	
 
+							app.mobile.vibration.small()
 
 							if (href.indexOf('http') == -1) href = 'https://' + href						
 
@@ -1147,6 +1145,10 @@ Nav = function(app)
 
 					var eve = function(e){
 
+						if(blockclick) return false
+
+						console.log("CLICK")
+
 						var href = core.thisSiteLink($(this).attr('href'));
 
 						var handler = $(this).attr('handler') || null
@@ -1154,6 +1156,8 @@ Nav = function(app)
 						if (additionalActions){
 							additionalActions(e);
 						}	
+
+						app.mobile.vibration.small()
 
 						core.go({
 							action : action,
@@ -1163,15 +1167,17 @@ Nav = function(app)
 							handler : handler
 						})
 
-						
+						blockclick = true
+
+						setTimeout(function(){
+							blockclick = false
+						}, 800)
 
 						return false
 					}
 					
-					if (clickAction() != 'click')
-						link.off('click').on('click', function(){return false})
 						
-					link.off(clickAction()).on(clickAction(), eve)
+					link.off('click').on('click', eve)
 					
 				}
 

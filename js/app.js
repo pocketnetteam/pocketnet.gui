@@ -942,11 +942,9 @@ Application = function(p)
 
 		window.addEventListener('scroll', function(){
 
-			if (blockScroll) return
-
-			if(!body.classList.contains('disable-hover')) {
+			/*if(!body.classList.contains('disable-hover')) {
 				body.classList.add('disable-hover')
-			}
+			}*/
 
 			delayscroll = slowMade(function(){
 
@@ -958,7 +956,7 @@ Application = function(p)
 					var scrollTop = self.actions.getScroll()
 
 					_.each(self.events.scroll, function(s){
-						s(scrollTop)
+						s(scrollTop, blockScroll)
 					})
 
 					//body.classList.remove('disable-hover')
@@ -976,23 +974,22 @@ Application = function(p)
 
 			}, delayscroll, 60)
 
-			delayscrollopt = slowMade(function(){
+			/*delayscrollopt = slowMade(function(){
 
 				window.requestAnimationFrame(function(){
 					body.classList.remove('disable-hover')
 				})
 
-			}, delayscrollopt, 300)
+			}, delayscrollopt, 300)*/
 		})
 
         window.addEventListener('resize', function(){
 
-			delayresize = slowMade(function(){
 
+			delayresize = slowMade(function(){
 				window.requestAnimationFrame(function(){
 
 					if(!self.el.window) return
-
 					var scrollTop = self.actions.getScroll(),
 						height = self.el.window.height(),
 						width = self.el.window.width();
@@ -1000,7 +997,7 @@ Application = function(p)
 						self.height = height
 						self.width = width
 
-					_.each(self.events.scroll, function(s){
+					_.each(self.events.resize, function(s){
 						s({
 							scrollTop : scrollTop,
 							height : height,
@@ -1297,7 +1294,7 @@ Application = function(p)
                 
 
                 if (navigator.vibrate){
-                    navigator.vibrate(time || 200)
+                    navigator.vibrate(time || 50)
                 }
             }
         },

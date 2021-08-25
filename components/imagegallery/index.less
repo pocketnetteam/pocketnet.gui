@@ -124,7 +124,8 @@
 
 			.imgWrapper{
 				margin : 0 auto;
-				position: relative;
+				position: absolute;
+				will-change: transform;
 			}
 
 			
@@ -152,7 +153,7 @@
 	&.imageGallery{
 		z-index: 1101;
 		.wndback{
-			background: fade(@color-black, 97);
+			background: @color-black;
 		}
 		.wndcontent{
 			padding : 2 * @rhythm;

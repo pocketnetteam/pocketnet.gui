@@ -503,8 +503,6 @@
 
 	wnd = function(p){
 
-		console.log('p1!!', p);
-
 		if(!p) p = {};
 
 		var self = this,
@@ -512,10 +510,10 @@
 			content = p.content || null,
 
 			id = 'w' + makeid().split('-')[0],
-			nooverflow = p.nooverflow || $('html').hasClass('nooverflow'),
+			nooverflow = p.nooverflow || app.scrollRemoved,
 			el = p.el || $('#windowsContainer');
 
-		var _w = $(window);
+		//var _w = $(window);
 
 		var wnd;
 
@@ -550,7 +548,7 @@
 		}
 
 		var wndfixed = function(){
-			wnd.css('top', _w.scrollTop())
+			wnd.css('top', app.lastScrollTop)
 		}
 
 		var render = function(tpl){
@@ -579,19 +577,19 @@
 					h+=	 '</div>';
 				}
 
-			wnd = $("<div>",{
-			   "class" 	: "wnd",
-			   "html"	: h
-			   });
-			   
-			   wnd.css('top', _w.scrollTop())
-			   wnd.css('height', _w.height())
+				wnd = $("<div>",{
+					"class" 	: "wnd",
+					"html"	: h
+				});
+
+				wnd.css('top', app.lastScrollTop)
+			   	wnd.css('height', app.height)
 
 		   	if(!p.header) wnd.addClass('noheader')
 
 			el.append(wnd);		
 
-			wnd.find("._close").on(clickAction(), function(){
+			wnd.find("._close").on('click', function(){
 				actions["close"](true);
 			});
 
@@ -604,43 +602,42 @@
 				wnd.find(".wndinner>div.buttons").append(button.el);
 
 				var fn = button.fn || actions[button.action] || actions["close"];
-				button.el.on(clickAction(), function(){fn(wnd, self)});
+				button.el.on('click', function(){fn(wnd, self)});
 
 			})
-
-			
 
 			if(p.class) wnd.addClass(p.class);
 
 		    if(!nooverflow){
-				nooverflow = !app.actions.offScroll(p.offScroll);
+				nooverflow = !app.actions.offScroll();
 			}
-			
 
 			wnd.css("display", "block");
 		}
 
 		var resize = function(){
-			wnd.css('top', _w.scrollTop())
-			wnd.css('height', _w.height())
+			wnd.css('top', app.lastScrollTop)
+			wnd.css('height', app.height)
 		}
 
 		var initevents = function(){
 
 			if(!p.noCloseBack)
-				wnd.find('.wndback').one(clickAction(), function(){
+				wnd.find('.wndback').one('click', function(){
 					actions.close(true)
 				});
 
 			if (p.allowHide) {
-				wnd.find('.hideButton').on(clickAction(), actions.hide);
-				wnd.find('.closeButton').on(clickAction(), actions.close);
-				wnd.find('.expandButton').on(clickAction(), actions.show);
+				wnd.find('.hideButton').on('click', actions.hide);
+				wnd.find('.closeButton').on('click', actions.close);
+				wnd.find('.expandButton').on('click', actions.show);
 			}
 
-			_w.on('resize', resize)
 
-			_w[0].addEventListener('scroll', wndfixed);
+			app.events.resize[id] = resize
+			app.events.scroll[id] = wndfixed
+
+			
 		}
 
 		var actions = {
@@ -658,9 +655,8 @@
 				
 				wnd.remove();
 
-				_w.off('resize', resize)
-
-				_w[0].removeEventListener('scroll', wndfixed);
+				delete app.events.resize[id]
+				delete app.events.scroll[id]
 
 			},
 
@@ -794,7 +790,7 @@
 		p.html = ehtml()
 
 		p.clbk = function(el){
-			el.find('.item').on(clickAction(), function(){
+			el.find('.item').on('click', function(){
 
 				var i = $(this).attr('item')
 
@@ -816,7 +812,7 @@
 
 			})
 
-			el.on(clickAction(), function(){
+			el.on('click', function(){
 				self.destroy()
 			})
 		}
@@ -1285,14 +1281,14 @@
 
 			$el.find
 
-			$el.find('.btn1').on(clickAction(), function(){ response(p.success)});
-			$el.find('.btn2').on(clickAction(), function(){ response(p.fail, true)});
-			$el.find('._close').on(clickAction(), function(){ response(p.close, true)});
+			$el.find('.btn1').on('click', function(){ response(p.success)});
+			$el.find('.btn2').on('click', function(){ response(p.fail, true)});
+			$el.find('._close').on('click', function(){ response(p.close, true)});
 
 			
 			var title = $el.find('.poll .title');
 				
-			title.find('i').on(clickAction(), function(){
+			title.find('i').on('click', function(){
 
 				title.find('.input').val('');
 			})
@@ -1301,7 +1297,7 @@
 				
 				let item = $el.find(`#poll-item-${i + 1}`);
 
-				item.find('i').on(clickAction(), function(){
+				item.find('i').on('click', function(){
 
 
 					item.find('.input').val('');
@@ -4027,7 +4023,7 @@
 			$.each(el.find('input'), function(){
 				var i = $(this);
 
-				if(!i.attr('notmasked')){
+				if (i.attr('data-inputmask') && !i.attr('notmasked')){
 					i.inputmask({});
 				}
 			})
@@ -5599,8 +5595,9 @@
 		return ___tablet
 
 	}
-
+	
 	clickAction = function(){
+
 		if(isTablet()) return 'touchend'
 
 		return 'click'
@@ -8681,7 +8678,7 @@
 				edit.find('input').maskMoney(mmp);
 			}
 
-			edit.find('.edt').on(clickAction(), function(){
+			edit.find('.edt').on('click', function(){
 
 				prevText = el.text();
 
@@ -8700,7 +8697,7 @@
 
 			})
 
-			edit.find('.success').on(clickAction(), function(){
+			edit.find('.success').on('click', function(){
 				var val = edit.find('input').val();
 
 				if(!p.synk)
@@ -8720,7 +8717,7 @@
 				if(p.success) p.success(val);
 			})
 
-			edit.find('.fail').on(clickAction(), function(){
+			edit.find('.fail').on('click', function(){
 
 				el.text(prevText);
 

@@ -2429,6 +2429,9 @@ Platform = function (app, listofnodes) {
 
             var events = {
                 resize: function () {
+
+                    console.log("resize")
+
                     var mode = getmode();
 
                     if (mode != currentmode) {
@@ -2478,7 +2481,7 @@ Platform = function (app, listofnodes) {
             var initEvents = function () {
 
                 app.events.scroll[id] = events.scroll
-                app.events.resize[id] = events.scroll
+                app.events.resize[id] = events.resize
 
                /**window.addEventListener('scroll', events.scroll)
                 window.addEventListener('resize', events.resize)*/
