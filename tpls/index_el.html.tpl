@@ -56,6 +56,9 @@
     </head>
     <body id="application" class="menu-hide">
 
+        <div id="windowsContainer">
+        </div>
+
         <div id="headerWrapper">
         </div>
 

@@ -64,35 +64,9 @@ var menu = (function(){
 
 			elswidth : function(){
 
-
-				el.c.find('.autowidth.active').each(function(){
-					actions.setWidth($(this))
-				})
-
 			},
 
-			setWidth : function(_el){
-
-				return
-
-				
-
-				if(_el.offset()){
-					
-					var left = _el.offset().left;
-
-					var w = _el.width()
-
-					var right = el.c.width() - left - w;
-
-					var d = left - right;	
-
-					_el.width(w + d)
-
-				}
-
-				
-			},
+		
 			ahnotifyclear : function(){
 				notifications = {}
 
@@ -140,45 +114,41 @@ var menu = (function(){
 
 				if(!events.navinit.el) return
 
-				sitenameToNav = slowMade(function(){
+				if (menusearch && menusearch.active || parameters().ss) return
 
+				var pn = self.app.nav.current.href
+				
+				if ((pn == 'index' || pn == 'author') && self.app.lastScrollTop > 45){
 
-					if (menusearch && menusearch.active || parameters().ss) return
+					el.nav.addClass('active')
+					el.c.addClass('menupanelactive')
 
-					var pn = self.app.nav.current.href
-					
-					if ((pn == 'index' || pn == 'author') && $(window).scrollTop() > 45){
+					el.nav.find('.pcenterLabel').removeClass('active')
 
-						el.nav.addClass('active')
-						el.c.addClass('menupanelactive')
+					el.postssearch.find('input').blur()
 
-						el.nav.find('.pcenterLabel').removeClass('active')
+					if (menusearch)
+						menusearch.blur()
 
-						el.postssearch.find('input').blur()
+					var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
 
-						if (menusearch)
-							menusearch.blur()
+					var video = parameters(self.app.nav.current.completeHref, true).video;
 
-						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
+					if (video) r = 'video'
 
-						var video = parameters(self.app.nav.current.completeHref, true).video;
-
-						if (video) r = 'video'
-
-						if (pn == 'index'){
-							el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
-						}
-							
+					if (pn == 'index'){
+						el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
 					}
-					else
-					{
-						el.c.removeClass('menupanelactive')
-						el.nav.removeClass('active')
-					}
+						
+				}
+				else
+				{
+					el.c.removeClass('menupanelactive')
+					el.nav.removeClass('active')
+				}
 
-					actions.elswidth()
+				actions.elswidth()
 
-				}, sitenameToNav, 10)
 				
 			}
 		}
@@ -189,7 +159,10 @@ var menu = (function(){
 				init : function(el){
 
 					if(!isTablet()){
-						$(window).on('scroll', actions.sitenameToNav)
+
+						self.app.events.scroll.menu = actions.sitenameToNav
+
+						//$(window).on('scroll', actions.sitenameToNav)
 
 						self.app.nav.clbks.history.menu = function(href){
 
@@ -202,9 +175,10 @@ var menu = (function(){
 				},
 
 				destroy : function(){
-					$(window).off('scroll', actions.sitenameToNav)
 
+					delete self.app.events.scroll.menu
 					delete self.app.nav.clbks.history.menu
+
 				}
 			},
 
@@ -1023,32 +997,7 @@ var menu = (function(){
 				}
 			},
 
-			/*hamb : {
-				click : function(){
-					var _cl = el.c.hasClass('active');
-
-					if (_cl)
-					{
-						el.c.removeClass('active');
-						self.app.actions.onScroll();
-
-					}
-					else
-					{
-						el.c.addClass('active');
-						self.app.actions.offScroll();
-						
-					}
-				}
-			},
-			hambclose : {
-				click : function(){
-
-					el.c.removeClass('active');
-
-					self.app.actions.onScroll();
-				}
-			}*/
+		
 		}
 
 		var initEvents = function(){
@@ -1118,7 +1067,8 @@ var menu = (function(){
 
 			})
 
-			$(window).on('resize', actions.elswidth)
+			self.app.events.resize.menu = actions.elswidth
+
 
 			ParametersLive([loc], el.c);
 
@@ -1277,7 +1227,8 @@ var menu = (function(){
 				actions.ahnotifyclear()
 				menusearch = null
 
-				$(window).off('resize', actions.elswidth)
+
+				delete self.app.events.resize.menu
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 

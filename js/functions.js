@@ -513,7 +513,7 @@
 
 			id = 'w' + makeid().split('-')[0],
 			nooverflow = p.nooverflow || $('html').hasClass('nooverflow'),
-			el = p.el || $('body');
+			el = p.el || $('#windowsContainer');
 
 		var _w = $(window);
 
@@ -550,9 +550,7 @@
 		}
 
 		var wndfixed = function(){
-
 			wnd.css('top', _w.scrollTop())
-
 		}
 
 		var render = function(tpl){
@@ -593,7 +591,7 @@
 
 			el.append(wnd);		
 
-			wnd.find("._close").on('click', function(){
+			wnd.find("._close").on(clickAction(), function(){
 				actions["close"](true);
 			});
 
@@ -606,7 +604,7 @@
 				wnd.find(".wndinner>div.buttons").append(button.el);
 
 				var fn = button.fn || actions[button.action] || actions["close"];
-				button.el.on('click', function(){fn(wnd, self)});
+				button.el.on(clickAction(), function(){fn(wnd, self)});
 
 			})
 
@@ -615,10 +613,7 @@
 			if(p.class) wnd.addClass(p.class);
 
 		    if(!nooverflow){
-
 				nooverflow = !app.actions.offScroll(p.offScroll);
-				
-				
 			}
 			
 
@@ -633,84 +628,14 @@
 		var initevents = function(){
 
 			if(!p.noCloseBack)
-				wnd.find('.wndback').one('click', function(){
+				wnd.find('.wndback').one(clickAction(), function(){
 					actions.close(true)
 				});
 
-			if(p.swipeClose && isMobile()){
-
-				var dir = p.swipeCloseDir || 'up';
-
-				var directions = {}
-
-				var c = wnd.find('.wndcontent')
-
-				var tr = 1;
-
-					directions[dir] = {
-						trueshold : p.trueshold || tr,
-
-						mintrueshold : p.swipeMintrueshold || 1,
-
-						positionclbk : function(px){
-							
-							
-
-						},
-
-						constraints : function(){
-							if(c.scrollTop() == 0) return true
-						},
-
-						clbk : function(){
-
-							wnd.fadeOut(tr)
-
-							setTimeout(function(){
-								actions.close(true)	
-							}, 400)
-							
-						}
-
-					};
-
-					//if(dir == 'left' || dir == 'right') directions[dir].reverse = true
-					
-				var parallax = new SwipeParallaxNew({
-
-					allowPageScroll : 'vertical',
-
-					el : c,
-
-					directions : directions
-
-				}).init()
-
-
-				/*wnd.find('.wndinner').swipe({
-					allowPageScroll: "auto", 
-					swipeDown : function(e, phase, direction, distance){
-						actions.close(true)	
-					},
-				})*/
-
-				/*wnd.swipe( {
-					
-					swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
-
-						if(direction == 'up' && distance > 70){
-							actions.close(true)	
-						}
-					},
-
-					threshold:0
-				});*/
-			}
-
 			if (p.allowHide) {
-				wnd.find('.hideButton').on('click', actions.hide);
-				wnd.find('.closeButton').on('click', actions.close);
-				wnd.find('.expandButton').on('click', actions.show);
+				wnd.find('.hideButton').on(clickAction(), actions.hide);
+				wnd.find('.closeButton').on(clickAction(), actions.close);
+				wnd.find('.expandButton').on(clickAction(), actions.show);
 			}
 
 			_w.on('resize', resize)
@@ -732,17 +657,11 @@
 					self.essenseDestroy(key)
 				
 				wnd.remove();
+
 				_w.off('resize', resize)
 
 				_w[0].removeEventListener('scroll', wndfixed);
 
-				if(!p.noblur)
-				{
-					/*if(app.el.content) app.el.content.removeClass("blur");
-					if(app.el.menu) app.el.menu.removeClass("blur");*/
-				}
-
-				
 			},
 
 			hide : function(cl, key) {
@@ -750,8 +669,8 @@
 
 				wnd.find('.buttons').addClass('hidden');
 				wnd.addClass('hiddenState');
-				wnd.find('.wndcontent > div').addClass('rolledUp');
 
+				wnd.find('.wndcontent > div').addClass('rolledUp');
 				wnd.find('.expandButton').removeClass('hidden');
 				wnd.find('.closeButton').addClass('hidden');
 				wnd.find('.hideButton').addClass('hidden');
@@ -830,11 +749,6 @@
 				} 
 			}
 
-			if(!p.noblur)
-			{
-				/*if(app.el.content) app.el.content.addClass("blur");
-				if(app.el.menu) app.el.menu.addClass("blur");*/
-			}
 
 			if(content) success();
 			
@@ -880,7 +794,7 @@
 		p.html = ehtml()
 
 		p.clbk = function(el){
-			el.find('.item').on('click', function(){
+			el.find('.item').on(clickAction(), function(){
 
 				var i = $(this).attr('item')
 
@@ -902,7 +816,7 @@
 
 			})
 
-			el.on('click', function(){
+			el.on(clickAction(), function(){
 				self.destroy()
 			})
 		}
@@ -1371,14 +1285,14 @@
 
 			$el.find
 
-			$el.find('.btn1').on('click', function(){ response(p.success)});
-			$el.find('.btn2').on('click', function(){ response(p.fail, true)});
-			$el.find('._close').on('click', function(){ response(p.close, true)});
+			$el.find('.btn1').on(clickAction(), function(){ response(p.success)});
+			$el.find('.btn2').on(clickAction(), function(){ response(p.fail, true)});
+			$el.find('._close').on(clickAction(), function(){ response(p.close, true)});
 
 			
 			var title = $el.find('.poll .title');
 				
-			title.find('i').on('click', function(){
+			title.find('i').on(clickAction(), function(){
 
 				title.find('.input').val('');
 			})
@@ -1387,7 +1301,7 @@
 				
 				let item = $el.find(`#poll-item-${i + 1}`);
 
-				item.find('i').on('click', function(){
+				item.find('i').on(clickAction(), function(){
 
 
 					item.find('.input').val('');
@@ -3142,7 +3056,7 @@
 				if(parameter.type == 'valuesmultitree'){
 
 					var inieve = function(__el){
-						_el.on('click', '.vmt_panel_wrapper', function(){
+						_el.on(clickAction(), '.vmt_panel_wrapper', function(){
 
 							var id = $(this).closest('[groupid]').attr('groupid')
 							
@@ -3334,12 +3248,12 @@
 
 					
 
-					_el.find('.vmt_showMore').on('click', function(){
+					_el.find('.vmt_showMore').on(clickAction(), function(){
 
 						_el.addClass('showedMore')
 					})
 
-					_el.find('.vmt_hideMore').on('click', function(){
+					_el.find('.vmt_hideMore').on(clickAction(), function(){
 
 						_el.removeClass('showedMore')
 					})
@@ -3439,12 +3353,12 @@
 						_el.removeClass('error')
 					})
 
-					_el.find('.vm_showMore').on('click', function(){
+					_el.find('.vm_showMore').on(clickAction(), function(){
 
 						_el.addClass('showedMore')
 					})
 
-					_el.find('.vm_hideMore').on('click', function(){
+					_el.find('.vm_hideMore').on(clickAction(), function(){
 
 						_el.removeClass('showedMore')
 					})
@@ -3476,7 +3390,7 @@
 
 
 						if(take().hasClass('opened')){
-							$('html').on('click', closeclick)
+							$('html').on(clickAction(), closeclick)
 
 							window.addEventListener('scroll', close);
 
@@ -3496,7 +3410,7 @@
 
 						take().removeClass('opened');
 
-						$('html').off('click', closeclick)
+						$('html').off(clickAction(), closeclick)
 						
 						window.removeEventListener('scroll', close);
 					}
@@ -3516,7 +3430,7 @@
 
 						if(parameter.type == 'valuescustom' || parameter.autoSearch)
 						{
-							_el.find('.vc_iconWrapper').on('click', function(){
+							_el.find('.vc_iconWrapper').on(clickAction(), function(){
 								open()
 
 								if (parameter.autoSearch){
@@ -3540,13 +3454,13 @@
 
 						if(parameter.type == 'values' && !parameter.autoSearch)
 						{
-							_el.find('.vc_textInput').on('click', function(){
+							_el.find('.vc_textInput').on(clickAction(), function(){
 								open()
 							})
 						}
 
 
-						_el.find('.vc_value').on('click', function(){
+						_el.find('.vc_value').on(clickAction(), function(){
 							bkp = null;
 
 							var value = $(this).attr('value');
@@ -3558,7 +3472,7 @@
 							take().removeClass('error')
 						})
 
-						_el.find('.vc_selected_value_icon').on('click', function(){
+						_el.find('.vc_selected_value_icon').on(clickAction(), function(){
 							var value = $(this).closest('.vc_selected_value').attr('value');
 
 							parameter.set(value);
@@ -3969,7 +3883,7 @@
 				if (parameter.type == 'category'){
 
 
-					_el.on('click', function(){
+					_el.on(clickAction(), function(){
 
 
 						parameter.app.nav.api.load({
@@ -5665,7 +5579,7 @@
 
 	isMobile = function(){
 
-		if(typeof ___mobile != 'undefined'){
+		if (typeof ___mobile != 'undefined'){
 			return ___mobile
 		}
 
@@ -5676,7 +5590,7 @@
 
 	isTablet = function(){
 
-		if(typeof ___tablet != 'undefined'){
+		if (typeof ___tablet != 'undefined'){
 			return ___tablet
 		}
 
@@ -5684,6 +5598,12 @@
 
 		return ___tablet
 
+	}
+
+	clickAction = function(){
+		if(isTablet()) return 'touchend'
+
+		return 'click'
 	}
 
 	convertToBase64 = function(dataURI) {
@@ -6047,56 +5967,7 @@
 
 /* NAVIGATION */
 
-	initUp = function(el, p){
-
-		if(!p) p = {};
-
-		var self = this;
-		var w = $(window);
-
-		var actions = {
-			up : function(){
-				if (p.scrollTop){
-					p.scrollTop()
-				}
-				else
-				{
-					_scrollTop(0);
-				}
-			}
-		}
-
-		var events = {
-			up : actions.up,
-
-			view : function(){
-				if(w.scrollTop() > 200){
-					el.fadeIn(100);
-				}
-				else
-				{
-					el.fadeOut(100);
-				}
-			}
-		}
-
-			self.destroy = function(){
-				el.off('click', events.up)
-
-				window.removeEventListener('scroll', events.view);
-			}
-
-			self.init = function(){
-				el.on('click', events.up)
-
-				window.addEventListener('scroll', events.view);
-
-				return self;
-			}
-
-		return self;
-
-	}
+	
 
 	_scrollTop = function(scrollTop, el, time){
 
@@ -6182,29 +6053,29 @@
 
 	}
 
-	offScroll = function(){
-		if(typeof window == 'undefined') return;
 
-		var winScrollTop = $(window).scrollTop();
 
-		$(window).bind('scroll', function(){
+	inViewClear = function(){
 
-			$(window).scrollTop(winScrollTop);
-
-		});
-	}
-
-	onScroll = function(){
-	
-		if(typeof window == 'undefined') return;
-		$(window).unbind('scroll');
 	}
 
 	inView = function(els, p){
 
 		if(!p) p = {};
 
-		if(!p.inel) p.inel = window;
+		if(!p.inel) {
+			p.inel = $(window);
+		}
+
+		else{
+			try{
+				p.elOffset = p.inel[p.f]().top
+			}
+			catch (e){
+				p.elOffset = 0;
+			}
+		}
+		
 		if(!p.offset) {
 			p.offset = 0;
 		}
@@ -6213,16 +6084,11 @@
 
 		p.elOffset = 0;
 
-		try{
-			p.elOffset = p.inel[p.f]().top
-		}
-		catch (e){
-			p.elOffset = 0;
-		}
+		
 
 		if(!p.mode) p.mode = "part";
 
-		var inel = $(p.inel);
+		var inel = p.inel // $(p.inel);
 
 		var st = inel.scrollTop()
 		var sh = inel.height()
@@ -6241,9 +6107,12 @@
 
 			var el = $(this);
 
-			var offsetTop = el[p.f]().top,
-				height = el.height(),
+			var offsetTop = p.cache && el.data('c_' + p.f) ? el.data('c_' + p.f) : el[p.f]().top,
+				height = p.cache && el.data('c_height') ? el.data('c_height') : el.height(),
 				bottom = offsetTop + height;
+
+			el.data('c_' + p.f, offsetTop)
+			el.data('c_height', height)
 
 			var _part = offsetTop >= range.top && offsetTop < range.bottom || 
 				bottom <= range.bottom && bottom > range.top;
@@ -6289,7 +6158,7 @@
 			}
 		})
 
-		if(p.mode == 'partall')
+		/*if(p.mode == 'partall')
 		{
 			_fels = _fels.sort(function(a, b){
 
@@ -6302,7 +6171,7 @@
 
 				if(a.data('inView') == 'part') return 1;
 			})
-		}
+		}*/
 
 		return _fels;
 	}
@@ -7186,7 +7055,7 @@
 
 	Caption = function (p) {
 
-		
+		console.log("CaptionCaptionCaptionCaptionCaptionCaptionCaptionCaption")
 		
 		var container = p.container,
 			caption = p.caption,
@@ -8507,13 +8376,13 @@
 				if(!searchEl.hasClass('fastSearchShow')){
 					searchEl.addClass('fastSearchShow');
 
-					$('html').on('click', helpers.closeclickResults)
+					$('html').on(clickAction(), helpers.closeclickResults)
 				}
 
 				
 			},
 			closeResults : function(){
-				$('html').off('click', helpers.closeclickResults);
+				$('html').off(clickAction(), helpers.closeclickResults);
 				searchEl.removeClass('fastSearchShow');
 			},
 			closeclickResults : function(e){
@@ -8725,7 +8594,7 @@
 	        });
 
 	        searchEl.find('.searchIconLabel')
-	        	.on('click', function(){
+	        	.on(clickAction(), function(){
 
 	        		if(!searchInput.val() && p.events.blank){
 	        			p.events.blank()
@@ -8736,7 +8605,7 @@
 
 	        	})
 
-	        searchEl.find('.searchPanelItem').on('click', function(){
+	        searchEl.find('.searchPanelItem').on(clickAction(), function(){
 
 	        	var panelItem = $(this)
 
@@ -8776,7 +8645,7 @@
 				'1'  : '0',
 				'0'  : '-1'
 			}
-			_el.on('click', function(){
+			_el.on(clickAction(), function(){
 				var value = $(this).attr('value');
 
 				$(this).attr('value', map[value]);
@@ -8812,7 +8681,7 @@
 				edit.find('input').maskMoney(mmp);
 			}
 
-			edit.find('.edt').on('click', function(){
+			edit.find('.edt').on(clickAction(), function(){
 
 				prevText = el.text();
 
@@ -8831,7 +8700,7 @@
 
 			})
 
-			edit.find('.success').on('click', function(){
+			edit.find('.success').on(clickAction(), function(){
 				var val = edit.find('input').val();
 
 				if(!p.synk)
@@ -8851,7 +8720,7 @@
 				if(p.success) p.success(val);
 			})
 
-			edit.find('.fail').on('click', function(){
+			edit.find('.fail').on(clickAction(), function(){
 
 				el.text(prevText);
 
@@ -9336,7 +9205,7 @@
 			dropZone[0].ondrop = upload;
 			input.on('change', upload);
 
-			input.on('click', function(){
+			input.on(clickAction(), function(){
 				if (p.onStart)
 					p.onStart();
 			});

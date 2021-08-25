@@ -110,7 +110,6 @@
 		left : 0;
 		right : 0;
 		top : 0;
-		
 
 		.circularprogressWrapper{
 			padding : 2 * @rhythm;
@@ -230,20 +229,10 @@
 			}
 		}
 
-		/*.shareTable{
-			>div{
-				vertical-align: top;
-				padding : 2 * @rhythm;
-
-				&.iconWrapper{
-					width: 6 * @rhythm;
-					padding-top: 2.3 * @rhythm;
-					padding-left: 0;
-					padding-right: 0;
-				}
-			}
-		}*/
-
+		.repostWrapper{
+			position: relative;
+		}
+	
 		.iconWrapper{
 			width: 8 * @rhythm;
 			padding-top: @rhythm;
@@ -312,8 +301,6 @@
 		.commentsWrapper{			
 			background: #FAFAFA;
 		}
-
-		
 
 		.ss{
 			padding : 2 * @rhythm;
@@ -454,10 +441,6 @@
 						padding-right: 4 * @rhythm;
 					}
 				}
-
-				
-
-				
 			
 				.cntswrk{
 					margin-left: 7 * @rhythm;
@@ -468,18 +451,14 @@
 		
 				}
 			}
-			
 
-			>div{
-				
-			}
-			
 			img{
 				max-width: 100%;
 			}
 
 			.article{
 				.message{
+					
 					p img{
 						max-width: 100%;
 					}
@@ -492,10 +471,6 @@
 						font-size: 1em!important;
 					}
 				}
-			}
-
-			.medium-insert-images{
-				/*display: none;*/
 			}
 
 			.medium-insert-embeds{
@@ -597,8 +572,6 @@
 
 			.shareContent{
 				position: relative;
-
-				
 			}
 
 			.tempPreloader{
@@ -640,12 +613,7 @@
 					height: 30px;
 					line-height: 28px;
 					border : 1px solid transparent;
-					/*.transition(0.3s);*/
 					font-size: 0.8em;
-
-					i{
-						/*.transition(0.3s, transform);*/
-					}
 
 					&:hover{
 						.shadowSmall();
@@ -672,11 +640,8 @@
 						display : none;
 					}
 
-					
-
 					span{
 						cursor: pointer;
-						/*.transition(0.3s);*/
 						i{
 							color : @color-good;
 						}
@@ -882,8 +847,6 @@
 					}
 				}
 			}
-			
-
 			.jsPlayerLoading{
 				
 				width: auto;
@@ -969,13 +932,10 @@
 
 			.meta{
 				padding-top: 2.7 * @rhythm;
-	
 				margin-bottom: @rhythm;
 
 				>div{
 					margin-right: 2 * @rhythm;
-
-					
 				}
 
 				.authorCell{
@@ -1020,7 +980,6 @@
 						opacity: 0;
 						width: 100%;
 						height: 100%;
-						.transition(0.3s);
 						cursor: pointer;
 
 						&.active{
@@ -1085,6 +1044,7 @@
 						}
 					}
 				}
+
 				.videoOpen{
 					position: relative;
 
@@ -1132,22 +1092,15 @@
 					text-decoration: underline;
 					color : @color-main;
 				}
-			}
 
-			/*.showmoretable{
-				>div{
-					vertical-align: middle;
-
-					&.buttoncell{
-						width: 250px;
-					}
-
-					.line{
-						height: 1px;
-						background: @color-main;
-					}
+				a{
+					white-space: nowrap;
+					max-width: 70%;
+					text-overflow: ellipsis;
+					overflow: hidden;
+					display: inline-block;
 				}
-			}*/
+			}
 
 			.showMore{
 				padding : 3 * @rhythm 0;
@@ -1230,7 +1183,6 @@
 						color : @color-main;
 						text-decoration: underline;
 					}
-					
 				}
 
 				.videoviews{
@@ -1261,7 +1213,6 @@
 							}
 						}
 					}
-					
 
 				}
 
@@ -1318,7 +1269,6 @@
 			}
 
 			.sys{
-
 				margin-bottom : 2 * @rhythm;
 				
 				span{
@@ -1348,16 +1298,10 @@
 
 						&.labelwr{
 							padding-left : @rhythm;
-							
 							cursor: pointer;
 							span{
 								font-weight: 700;
 								font-size: 0.8em;
-							}
-
-
-							.label{
-								/*.transition(0.3s);*/
 							}
 						}
 
@@ -1389,16 +1333,6 @@
 						text-align: center;
 						color : @color-bright;
 						cursor: pointer;
-
-						i{
-
-						}
-						
-
-						&.active,
-						&:hover{
-							
-						}
 					}
 
 					.count{
@@ -1414,8 +1348,6 @@
 						cursor: pointer;
 						/*.transition(0.3s);*/
 						border-radius : 40%;
-
-						
 					}
 
 					&.right{
@@ -1481,8 +1413,6 @@
 							color : @color-pink;
 						}
 
-						
-
 						&:hover{
 							.label{
 								color : @color-main;	
@@ -1514,6 +1444,7 @@
 
 				}
 			}
+
 			.pollWrapper {
 				margin-top: 1.5em;
 				margin-bottom: 1em;
@@ -1559,9 +1490,7 @@
 
 			.exitFull{
 				display: none;
-
 				position : fixed;
-
 				right: 4 * @rhythm;
 				top: 2 * @rhythm;
 			}
@@ -1579,18 +1508,14 @@
 				overflow-y: scroll;
 				padding-top: 0;
 				scrollbar-width: none;
-
-				
 				
 				&::-webkit-scrollbar{
-					
 					width: 0!important
 				}
 
 				.videoviews{
 					padding-left: 2 * @rhythm;
 				}
-
 				
 				#comments{
 					.caption{
@@ -1619,7 +1544,6 @@
 							padding-left: 0;
 						}
 					}	
-
 				}
 
 				.exitFull{
@@ -1661,11 +1585,9 @@
 				}
 
 				.hideOnFullVideo,
-
 				.metawrapper{
 					display: none;
 				}
-
 
 				.repostWrapper{
 					display: none;
@@ -1676,10 +1598,6 @@
 					max-width: 960px;
 					background: #fff;
 					padding : 0;
-
-					.shareTable{
-						
-					}
 
 					.iconWrapper{
 						display: none;
@@ -1767,8 +1685,6 @@
 						padding-bottom : 2 * @rhythm;
 					}
 
-					.discussion{
-					}
 				}
 			}
 
@@ -1822,7 +1738,6 @@
 			padding : 2 * @rhythm;
 			cursor: pointer;
 			font-size: 0.8em;
-			/*.transition(0.3s);*/
 			color : #fff;
 			margin-bottom :  @rhythm;
 
@@ -1859,26 +1774,6 @@
 					}
 				}
 
-				/*.blockTable{
-					height: 100%;
-					>div{
-						vertical-align: middle;
-						text-align: center;
-					}
-
-					.label{
-					}
-
-					.unblockWrapper{
-						margin-top : 3 * @rhythm;
-
-						button{
-							width : 180px;
-							border-radius: 30px;
-							font-size: 0.8em;
-						}
-					}
-				}*/
 			}
 	
 
@@ -1893,33 +1788,6 @@
 				}
 
 			}
-		}
-	}
-
-	.icon.savecrossIcon{
-		padding: 0;
-		padding-left: @rhythm;
-		padding-right: @rhythm;
-		position: relative;
-		cursor: pointer;
-		color : #008833;
-		
-
-		.amount{
-			position: absolute;
-			left: 50%;
-			top : 50%;
-			padding : 0 @rhythm;
-			min-width: 16px;
-			height: 16px;
-			line-height: 16px;
-			text-align: center;
-			font-size: 0.5em;
-			background: fade(@color-contrast, 80);
-			color : #fff;
-			.shadowSmaller();
-			z-index: 1;
-			border-radius: 50%;
 		}
 	}
 
@@ -2737,6 +2605,8 @@ html.stblack{
 					a{
 						color : @color-bright;
 					}
+
+					
 				}
 	
 				.showmoretable{
@@ -3000,228 +2870,146 @@ html.stblack{
 /*t*/ @media only screen and (max-width: 768px){
 	#lenta{
 
-		/*.vjs-control-bar{
-			visibility: visible!important;
-			opacity: 1!important;
-		}*/
+		.loader{
+			padding : 2 * @rhythm;
+			text-align: center;
+		}
 		
-		&.mainvideo{
+		.shares{
+			overflow: hidden; 
+			.work{
+				padding : 0;
+			}
+			
+			.loadmore{
+				padding : 2 * @rhythm 0;
+				padding-bottom : 2 * @rhythm;
+
+				button{
+					width: 100%;
+				}
+			}
+
 
 			
-			.shares{
-				
-				.authorgroup{
-					width: 50%;
+			
+
+			.iconWrapper{
+				width: 8 * @rhythm;
+				padding-top: @rhythm;
+				padding-left: @rhythm;
+			}
+
+			.cntswrk{
+				margin-left: 0;
+				padding-left : 0;
+				padding-right : 0;
+
+				&.formeta{
+					margin-left: 8 * @rhythm;
+					padding-bottom: 2 * @rhythm;
 				}
 			}
-		}
-	}
-}
 
-/*t*/ @media only screen and (max-width: 768px){
-#lenta{
-
-	.loader{
-		padding : 2 * @rhythm;
-		text-align: center;
-	}
-	
-	.shares{
-		overflow: hidden; 
-		.work{
-			padding : 0;
-		}
-		
-		.loadmore{
-			padding : 2 * @rhythm 0;
-			padding-bottom : 2 * @rhythm;
-
-			button{
-				width: 100%;
+			.work{
+				padding-left: 0;
 			}
-		}
 
 
-		
-		
+			.videoWrapper{
+				max-width: 700px;
+				position : relative;
 
-		.iconWrapper{
-			width: 8 * @rhythm;
-			padding-top: @rhythm;
-			padding-left: @rhythm;
-		}
-
-		.cntswrk{
-			margin-left: 0;
-			padding-left : 0;
-			padding-right : 0;
-
-			&.formeta{
-				margin-left: 8 * @rhythm;
-				padding-bottom: 2 * @rhythm;
-			}
-		}
-
-		.work{
-			padding-left: 0;
-		}
-
-
-		.videoWrapper{
-			max-width: 700px;
-			position : relative;
-
-			.videoTips{
-				cursor: default;
-				position : absolute;
-				left: 0;
-				right: 0;
-				top: 0;
-				bottom: 75%;
-				cursor: pointer;
-				background: rgb(0,0,0);
-				background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
-				color : #fff;
-				opacity: 1;
-				.transition(0.3s);
-
-				.videoTip{
+				.videoTips{
+					cursor: default;
 					position : absolute;
-					top: 0;
 					left: 0;
 					right: 0;
-					text-align: center;
-					padding : 2 * @rhythm;
-
-					span{
-						font-size: 0.8em;
-						color : #fff;
-					}
-				}
-			}
-
-			&:hover{
-				.videoTips{
+					top: 0;
+					bottom: 75%;
+					cursor: pointer;
+					background: rgb(0,0,0);
+					background: linear-gradient(180deg, rgba(0,0,0,0.9528186274509804) 0%, rgba(0,0,0,0.9472163865546218) 6%, rgba(0,0,0,0.21612394957983194) 76%, rgba(0,0,0,0.09007352941176472) 82%, rgba(0,0,0,0) 100%);
+					color : #fff;
 					opacity: 1;
-				}
-			}
-		}
+					.transition(0.3s);
 
-		.squareVideo,
-		.verticalVideo {
-			max-width: none;
-		}
+					.videoTip{
+						position : absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						text-align: center;
+						padding : 2 * @rhythm;
 
-		/*.videoTips{
-			display: none;
-		}*/
-
-		
-		.ss{
-			padding : 2 * @rhythm;
-
-			span{
-				font-size: 2em;
-			}
-		}
-		
-		.share{
-			padding : 2 * @rhythm 0;
-			background: #fff;
-			margin-bottom: @rhythm;
-			cursor: default;
-			padding-bottom : 0;
-
-			#comments{			
-				
-				.caption{
-					padding-left: 1 * @rhythm;
-					padding-right: 2 * @rhythm;
-				}
-
-				.commentPaddingWrapper,
-				.post{
-					padding-left: 1 * @rhythm;
-					padding-right:  @rhythm;
-				}
-
-				.commentPaddingWrapper{
-					padding-right:  @rhythm;
-				}
-
-				.list .answer .postbody{
-					padding-left: 1 * @rhythm;
-					padding-right: @rhythm;
-				}
-
-				.answers{
-					.commentPaddingWrapper{
-						padding-right: 0;
-						padding-left: 0;
+						span{
+							font-size: 0.8em;
+							color : #fff;
+						}
 					}
-				}				
+				}
 
-				.answer .posttable>div.postCellWrapper .postaction, 
-				.edit .posttable>div.postCellWrapper .postaction, 
-				.post .posttable>div.postCellWrapper .postaction{
-					text-align: center;
+				&:hover{
+					.videoTips{
+						opacity: 1;
+					}
 				}
 			}
 
-			&.fullScreenVideo{
-				#comments{
+			.squareVideo,
+			.verticalVideo {
+				max-width: none;
+			}
+
+			/*.videoTips{
+				display: none;
+			}*/
+
+			
+			.ss{
+				padding : 2 * @rhythm;
+
+				span{
+					font-size: 2em;
+				}
+			}
+			
+			.share{
+				padding : 2 * @rhythm 0;
+				background: #fff;
+				margin-bottom: @rhythm;
+				cursor: default;
+				padding-bottom : 0;
+
+				#comments{			
+					
 					.caption{
 						padding-left: 1 * @rhythm;
-						padding-right: 1 * @rhythm;
+						padding-right: 2 * @rhythm;
 					}
-	
+
 					.commentPaddingWrapper,
 					.post{
 						padding-left: 1 * @rhythm;
 						padding-right:  @rhythm;
 					}
-	
+
 					.commentPaddingWrapper{
-						padding-right:  0;
+						padding-right:  @rhythm;
 					}
-	
+
 					.list .answer .postbody{
 						padding-left: 1 * @rhythm;
 						padding-right: @rhythm;
 					}
-				}
-			}
 
-			#post{
-
-				#comments{
-					.caption{
-						padding-left: @rhythm;
-						padding-right: @rhythm;
-					}
-					
-					.commentPaddingWrapper,
-					.post{
-						padding-left: 0;
-						padding-right: @rhythm;
-					}
-	
-					.commentPaddingWrapper{
-						padding-right: @rhythm;
-					}
-	
-					.list .answer .postbody{
-						padding-left: 0;
-						padding-right: @rhythm;
-					}
-	
 					.answers{
 						.commentPaddingWrapper{
 							padding-right: 0;
 							padding-left: 0;
 						}
 					}				
-	
+
 					.answer .posttable>div.postCellWrapper .postaction, 
 					.edit .posttable>div.postCellWrapper .postaction, 
 					.post .posttable>div.postCellWrapper .postaction{
@@ -3229,472 +3017,534 @@ html.stblack{
 					}
 				}
 
-				.share{
-					.work{
-						border-left : 0.5 * @rhythm solid @color-black3;
-					}
-					.sharecaption{
-						font-size: 1em;
-					}
-				} 
-
-				
-				
-
-				.iconWrapper{
-					width: 7 * @rhythm;
-					padding-left: 1.5 * @rhythm;
-
-					.usericon{
-						width: 5 * @rhythm;
-						height: 5 * @rhythm;
-					}
-				}
-			
-				.cntswrk{
-					margin-left: 0 * @rhythm;
-
-					&.formeta{
-						margin-left: 7 * @rhythm;
-						padding-left : 0.5 * @rhythm;
+				&.fullScreenVideo{
+					#comments{
+						.caption{
+							padding-left: 1 * @rhythm;
+							padding-right: 1 * @rhythm;
+						}
+		
+						.commentPaddingWrapper,
+						.post{
+							padding-left: 1 * @rhythm;
+							padding-right:  @rhythm;
+						}
+		
+						.commentPaddingWrapper{
+							padding-right:  0;
+						}
+		
+						.list .answer .postbody{
+							padding-left: 1 * @rhythm;
+							padding-right: @rhythm;
+						}
 					}
 				}
-
-				.meta{
-					padding-top: 2.3 * @rhythm;
-				}
-
 
 				#post{
+
+					#comments{
+						.caption{
+							padding-left: @rhythm;
+							padding-right: @rhythm;
+						}
+						
+						.commentPaddingWrapper,
+						.post{
+							padding-left: 0;
+							padding-right: @rhythm;
+						}
+		
+						.commentPaddingWrapper{
+							padding-right: @rhythm;
+						}
+		
+						.list .answer .postbody{
+							padding-left: 0;
+							padding-right: @rhythm;
+						}
+		
+						.answers{
+							.commentPaddingWrapper{
+								padding-right: 0;
+								padding-left: 0;
+							}
+						}				
+		
+						.answer .posttable>div.postCellWrapper .postaction, 
+						.edit .posttable>div.postCellWrapper .postaction, 
+						.post .posttable>div.postCellWrapper .postaction{
+							text-align: center;
+						}
+					}
+
+					.share{
+						.work{
+							border-left : 0.5 * @rhythm solid @color-black3;
+						}
+						.sharecaption{
+							font-size: 1em;
+						}
+					} 
+
+					
+					
+
+					.iconWrapper{
+						width: 7 * @rhythm;
+						padding-left: 1.5 * @rhythm;
+
+						.usericon{
+							width: 5 * @rhythm;
+							height: 5 * @rhythm;
+						}
+					}
+				
 					.cntswrk{
 						margin-left: 0 * @rhythm;
-	
+
 						&.formeta{
 							margin-left: 7 * @rhythm;
 							padding-left : 0.5 * @rhythm;
 						}
+					}
 
-						padding-right: 0;
+					.meta{
+						padding-top: 2.3 * @rhythm;
+					}
+
+
+					#post{
+						.cntswrk{
+							margin-left: 0 * @rhythm;
+		
+							&.formeta{
+								margin-left: 7 * @rhythm;
+								padding-left : 0.5 * @rhythm;
+							}
+
+							padding-right: 0;
+						}
 					}
 				}
-			}
 
-			.medium-insert-embeds{
-				position: relative;
+				.medium-insert-embeds{
+					position: relative;
 
-				&:after{
-					display : none;
-				}
-				
-				figure{
-					margin-left: 0;
-					margin-right: 0;
-				}
-			}
-
-			.shareWrapper,
-			.shareContent{
-				cursor: default;
-			}
-
-			.paddingWrapper{
-				padding : 0 @rhythm;
-			}
-
-			.work{
-				overflow : hidden;
-			}
-
-			.shareWrapper{
-				position: relative;
-			}
-
-			.iconWrapper{
-
-				.icon{
-					height: 45px;
-				}
-				.notificationturn,
-				.aunsubscribe,
-				.additional,
-				.subscribe{
-					display: none;
+					&:after{
+						display : none;
+					}
+					
+					figure{
+						margin-left: 0;
+						margin-right: 0;
+					}
 				}
 
-				.aitem{
-
+				.shareWrapper,
+				.shareContent{
+					cursor: default;
 				}
-			}
 
-			.shareTable{
-				&.subscribed{
-					.iconWrapper{
+				.paddingWrapper{
+					padding : 0 @rhythm;
+				}
+
+				.work{
+					overflow : hidden;
+				}
+
+				.shareWrapper{
+					position: relative;
+				}
+
+				.iconWrapper{
+
+					.icon{
+						height: 45px;
+					}
+					.notificationturn,
+					.aunsubscribe,
+					.additional,
+					.subscribe{
+						display: none;
+					}
+
+					.aitem{
+
+					}
+				}
+
+				.shareTable{
+					&.subscribed{
+						.iconWrapper{
 
 
-						.aunsubscribe{
-							display: block;
-						}
-						.asubscribe{
-							display: none;
-						}
+							.aunsubscribe{
+								display: block;
+							}
+							.asubscribe{
+								display: none;
+							}
 
-						.notificationturn{
-							display: block;
-						}
+							.notificationturn{
+								display: block;
+							}
 
-						.additional{
-							i{
-								&:before{
-									content : '\f068';
+							.additional{
+								i{
+									&:before{
+										content : '\f068';
+									}
 								}
 							}
 						}
-					}
 
-					.subscribeWrapper{
+						.subscribeWrapper{
 
-						.subscribeevent{
-							display: none;
-						}
+							.subscribeevent{
+								display: none;
+							}
 
-						.unsubscribeevent{
-							display: block;
-						}
-						
-					}
-				}
-
-
-				&.emptywithrepost{
-					
-					.meta{
-
-						.repostCaption{
-							padding-left : 2 * @rhythm;
+							.unsubscribeevent{
+								display: block;
+							}
 							
 						}
 					}
-				}
-			}
 
-			&.fullScreenVideo{
-				background: @color-black;
-			}
 
-			.jsPlayerLoading{
-				
-				width: 100%;
-				height: 300px;
-				background: #000000;
+					&.emptywithrepost{
+						
+						.meta{
 
-				.jsPlayerLoadingD{
-					width: 100%;
-					height: 100%;
-					>div{
-						vertical-align: middle;
-						text-align: center;
+							.repostCaption{
+								padding-left : 2 * @rhythm;
+								
+							}
+						}
 					}
 				}
-			}
 
-			.meta{
-				.metatable{
-					>div{
-						width: 80%;
-						margin-right: 0;
+				&.fullScreenVideo{
+					background: @color-black;
+				}
+
+				.jsPlayerLoading{
 					
-						&.metapanel{
-							width: 20%;
-							padding-right: @rhythm;
-	
-							.metapanelitem{
-								opacity: 1;
-	
-								&.complain{
-									&:hover{
-										color : @color-bad;
+					width: 100%;
+					height: 300px;
+					background: #000000;
+
+					.jsPlayerLoadingD{
+						width: 100%;
+						height: 100%;
+						>div{
+							vertical-align: middle;
+							text-align: center;
+						}
+					}
+				}
+
+				.meta{
+					.metatable{
+						>div{
+							width: 80%;
+							margin-right: 0;
+						
+							&.metapanel{
+								width: 20%;
+								padding-right: @rhythm;
+		
+								.metapanelitem{
+									opacity: 1;
+		
+									&.complain{
+										&:hover{
+											color : @color-bad;
+										}
 									}
 								}
 							}
 						}
 					}
 				}
-			}
 
-			
-
-			
-			.meta{
-				margin-top: 0;
-				margin-bottom: 0;
-				>div{
-					margin-right : 0;
-				}
-			}
-
-			.imagecaption{
-				padding : @rhythm;
-			}
-
-			.images{
-				max-width: 700px;
 				
 
-				.imagesWrapper{
-					width: 100%;
-					height: auto;
-
-				}
-
-				.imagesContainer{
-					&.one{
-						.imagesWrapper{
-							width: 100%;
-							height: auto;
-
-							&.w2{
-								width: 100%;
-							}
-
-							&.h2{
-								width: 100%;
-							}
-						}
-					}
-
-					&.two,
-					&.three,
-					&.more,
-					&.four{
-						.imagesWrapper{
-							width: 50%;
-							height: auto;
-
-							&.w2{
-								width: 50%;
-							}
-
-							&.h2{
-								width: 50%;
-							}
-						}
-					}
-
-					&.articleImages{
-						padding : @rhythm;
-						.imagesWrapper{
-							float: left;
-						}
-					}
-				}
-			}
-
-			.sharecaption{
-				margin-bottom: @rhythm;
-
-				div{
-					font-size: 1.9em;
-					font-weight: 100;
-				}
-
-
-			}
-			.urlhtmlcontent{
-				font-size: 0.8em;
-				.ogtable{
-
-					display: block;
-
+				
+				.meta{
+					margin-top: 0;
+					margin-bottom: 0;
 					>div{
-						display: block;
-						padding : @rhythm 0;
-
-						&.image{
-							width: 100%;
-							padding-right : 0;
-						}
-
-						&.cnt{
-							padding : 0 @rhythm;
-							.title{
-								max-width: none;
-							}
-
-							.description{
-								max-width: none;
-								margin-top : @rhythm;
-							}
-						}
-					}
-				}
-			}
-
-			.message{
-				
-			}
-
-
-			.url{
-				
-				
-				.urlcnt{
-					padding : 0 @rhythm;
-				
-					
-					
-
-				}
-			}
-
-			
-			
-			.panel{
-				
-				>div{
-					&.donate,
-					&.promote{
-
-						.count{
-							display: none;
-							
-						}
-					}
-
-					&.donate{
-						float: left;
-						margin-right : 2 * @rhythm;
-					}
-
-					&.discussion{
 						margin-right : 0;
-						position: relative;
-						display: block;
+					}
+				}
+
+				.imagecaption{
+					padding : @rhythm;
+				}
+
+				.images{
+					max-width: 700px;
 					
+
+					.imagesWrapper{
+						width: 100%;
+						height: auto;
+
+					}
+
+					.imagesContainer{
+						&.one{
+							.imagesWrapper{
+								width: 100%;
+								height: auto;
+
+								&.w2{
+									width: 100%;
+								}
+
+								&.h2{
+									width: 100%;
+								}
+							}
+						}
+
+						&.two,
+						&.three,
+						&.more,
+						&.four{
+							.imagesWrapper{
+								width: 50%;
+								height: auto;
+
+								&.w2{
+									width: 50%;
+								}
+
+								&.h2{
+									width: 50%;
+								}
+							}
+						}
+
+						&.articleImages{
+							padding : @rhythm;
+							.imagesWrapper{
+								float: left;
+							}
+						}
+					}
+				}
+
+				.sharecaption{
+					margin-bottom: @rhythm;
+
+					div{
+						font-size: 1.9em;
+						font-weight: 100;
+					}
+
+
+				}
+				.urlhtmlcontent{
+					font-size: 0.8em;
+					.ogtable{
+
+						display: block;
+
 						>div{
 							display: block;
+							padding : @rhythm 0;
+
+							&.image{
+								width: 100%;
+								padding-right : 0;
+							}
+
+							&.cnt{
+								padding : 0 @rhythm;
+								.title{
+									max-width: none;
+								}
+
+								.description{
+									max-width: none;
+									margin-top : @rhythm;
+								}
+							}
+						}
+					}
+				}
+
+				.message{
+					
+				}
+
+
+				.url{
+					
+					
+					.urlcnt{
+						padding : 0 @rhythm;
+					
+						
+						
+
+					}
+				}
+
+				
+				
+				.panel{
+					
+					>div{
+						&.donate,
+						&.promote{
+
+							.count{
+								display: none;
+								
+							}
 						}
 
-						.count{
-							position: absolute;
-							right: 5px;
-							bottom: 5px;
-							padding : 0;
+						&.donate{
+							float: left;
+							margin-right : 2 * @rhythm;
+						}
 
-							b{
+						&.discussion{
+							margin-right : 0;
+							position: relative;
+							display: block;
+						
+							>div{
 								display: block;
-								font-size: 0.7em;
-								color : @color-contrast;
-								
-								background: fade(#fff,90);
 							}
 
-							span{
-								display: none;
+							.count{
+								position: absolute;
+								right: 5px;
+								bottom: 5px;
+								padding : 0;
+
+								b{
+									display: block;
+									font-size: 0.7em;
+									color : @color-contrast;
+									
+									background: fade(#fff,90);
+								}
+
+								span{
+									display: none;
+								}
 							}
+
+							
+						}
+
+					}
+				}
+
+				.exitFull{
+
+					right: 2 * @rhythm;
+				}
+
+				&.fullScreenVideo{
+					
+
+					.work{
+						.metawrapper{
+							margin-left : 0;
+							display: none;
+						}
+
+						.iconWrapper{
+							display: none;
+						}
+
+						.shareWrapper{
+							margin-top : 0;
+							
 						}
 
 						
-					}
+						.sys,
+						.tags{
+							padding : 0 @rhythm;
+						}
 
+						.panel{
+							padding : @rhythm;
+						}
+					}
 				}
 			}
 
-			.exitFull{
+			
 
-				right: 2 * @rhythm;
+			
+		}
+
+		.loadprev{
+			button{
+				width: 90%;
 			}
+		}
 
-			&.fullScreenVideo{
+		&.mainvideo{
+
 				
+			.shares{
 
-				.work{
-					.metawrapper{
-						margin-left : 0;
-						display: none;
+				.authorgroup{
+					width: 50%;
+				}
+
+				.shareTable .authorTable>div span{
+					font-size: 1em;
+					&.adr{
+						font-size: 1.2em;
 					}
-
-					.iconWrapper{
-						display: none;
-					}
-
-					.shareWrapper{
-						margin-top : 0;
-						
+					
+				}
+				
+				.authorgroup{
+					width: 100%;
+					padding : 0;
+					margin-bottom : 2 * @rhythm;
+					.share{
+						padding : 0;
 					}
 
 					
-					.sys,
-					.tags{
-						padding : 0 @rhythm;
+
+					.anothercntswrk{
+						max-height: none;
+						height: auto;
 					}
 
-					.panel{
-						padding : @rhythm;
+					
+				}
+
+				.cntswrk{
+					margin-left: 0;
+					padding-left : 0;
+					padding-right : 0;
+		
+					&.formeta{
+						padding-top : 2 * @rhythm;
+						margin-left: 2 * @rhythm;
 					}
 				}
 			}
-		}
 
-		
-
-		
-	}
-
-	.loadprev{
-		button{
-			width: 90%;
 		}
 	}
 
-	&.mainvideo{
-
-			
-		.shares{
-
-			.shareTable .authorTable>div span{
-				font-size: 1em;
-				&.adr{
-					font-size: 1.2em;
-				}
-				
-			}
-			
-			.authorgroup{
-				width: 100%;
-				padding : 0;
-				margin-bottom : 2 * @rhythm;
-				.share{
-					padding : 0;
-				}
-
-				
-
-				.anothercntswrk{
-					max-height: none;
-					height: auto;
-				}
-
-				
-			}
-
-			.cntswrk{
-				margin-left: 0;
-				padding-left : 0;
-				padding-right : 0;
-	
-				&.formeta{
-					padding-top : 2 * @rhythm;
-					margin-left: 2 * @rhythm;
-				}
-			}
-		}
-
-	}
-
-	
-}	
-
-	
 	html.tablet{
 		#lenta{
 			&.mainvideo{
@@ -3708,18 +3558,18 @@ html.stblack{
 		
 	}
 
-.dialog{
-	&.donation{
-		.thwrapper{
-			padding-left: 0;
-			padding-right: 0;
+	.dialog{
+		&.donation{
+			.thwrapper{
+				padding-left: 0;
+				padding-right: 0;
 
-			.addr{
-				font-size: 0.9em;
+				.addr{
+					font-size: 0.9em;
+				}
 			}
 		}
 	}
-}
 }
 
 

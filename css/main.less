@@ -25,13 +25,13 @@ html {
     &.nooverflow{
         overflow-y: hidden;
     }
-    &.mobile.nooverflow{
+    /*&.mobile.nooverflow{
         height: 100%;
 
         body{
             height: 100%;
         }
-    }
+    }*/
 
     scrollbar-width: none;
     &::-webkit-scrollbar{
@@ -63,6 +63,12 @@ html {
 body{
     overflow-x: hidden;
     /*overflow-anchor: none;*/
+}
+
+
+.disable-hover,
+.disable-hover * {
+  pointer-events: none !important;
 }
 
 h1{
@@ -4485,13 +4491,18 @@ html.tablet{
         z-index: 300;
         .shadowSmall();
         -webkit-overflow-scrolling: touch;
+        
         &.active{
-            left : 0;
-            right: 0;
+            -webkit-transform: translateX(100%);
+            transform: translateX(100%);
             opacity: 1;
         }
     }
     
+}
+
+.windowsContainer{
+    position: relative;
 }
 
 /*t*/ @media only screen and (max-width: 768px){
@@ -5709,7 +5720,7 @@ html.stblack{
         }*/
 
         #panelWrapper{
-            position: absolute;
+            position: fixed;
             top : 65px;
             left: 0;
             right: 0;
@@ -6154,9 +6165,9 @@ html.stblack{
 /*t*/ @media only screen and (max-width: 768px){
 
     html.chatshowed{
-        #main{
+        /*#main{
             display: none;
-        }
+        }*/
     }
 
     button{

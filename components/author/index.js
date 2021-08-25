@@ -53,62 +53,7 @@ var author = (function(){
 				el.c.find('.aboutwrapper').html(a)
 				el.c.find('.showmoreabout').remove()
 			},
-			showHideUp : function(){
-
-				if (el.w.scrollTop() > 200){
-					el.up.addClass('active')
-				}
-				else
-				{
-					el.up.removeClass('active')
-				}
-			},
-			panelTopPosition : function(){
-
-				if(!isTablet()){
-					var s = $(window).scrollTop();
-
-					if (el.caption.height() + 20 < s){
-						el.fxd.addClass('dfxd')
-					}
-					else
-					{
-						el.fxd.removeClass('dfxd')
-					}
-
-					actions.panelPosition()
-				}
-
-			},
-
-			panelPosition : function(){
-
-				if(isTablet()){
-					return 
-				}
-
-				var cnt = el.fxd;
-				var mwork = el.panel.closest('.mwork');
-				var width = $(window).width();
-
-				var maxWidth = 1280;
-
-				var paddingR = 0;
-				var paddingL = 0;
-
-				var over = (width - maxWidth) / 2;
-
-				if (over < 0) over = 0;
-
-				var right = width - (mwork.offset().left + mwork.width()) + paddingR;
-
-				var left = width - right - 350 + paddingL + paddingR
-
-
-
-				cnt.css('right', right + "px")
-				cnt.css('left', left + "px")
-			},
+			
 			destroy : function(){
 				_.each(reports, function(r){
 					r.active = false;
@@ -120,15 +65,7 @@ var author = (function(){
 		}
 
 		var events = {
-			showHideUp : function(){
-				uptimer = slowMade(function(){
-					actions.showHideUp()
-				}, uptimer, 30)			
-			},
-
-			up : function(){
-				_scrollTop(0)
-			},
+		
 
 			unsubscribe : function(){
 
@@ -489,41 +426,7 @@ var author = (function(){
 				}, d)
 
 			},
-			panel : function(){
-
-				var discussions = {};
-
-				if(!self.user.isItMe(author.address)){
-					discussions.author = author.address
-				}
-
-				self.nav.api.load({
-
-					open : true,
-					id : 'panel',
-					el : el.panel,
-					animation : false,
-
-					essenseData : {
-						discussions : discussions
-					},
-					
-					clbk : function(e, p){
-
-						panel = p;
-
-						actions.panelPosition()
-
-						window.addEventListener('resize', events.panelPosition)
-
-						window.addEventListener('scroll', actions.panelTopPosition)
-
-					}
-
-				})
-				
-				
-			},
+			
 
 			report : function(report, cl, npsh){
 
@@ -1116,7 +1019,6 @@ var author = (function(){
 				
 			})
 
-			//window.addEventListener('scroll', events.showHideUp);
 
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
@@ -1368,9 +1270,7 @@ var author = (function(){
 				if (panel)
 					panel.destroy();
 
-				window.removeEventListener('resize', events.panelPosition)
-				window.removeEventListener('scroll', actions.panelTopPosition)
-				window.removeEventListener('scroll', events.showHideUp);
+
 
 				delete self.app.platform.ws.messages.event.clbks.author
 				delete self.app.platform.clbks.api.actions.subscribe.author

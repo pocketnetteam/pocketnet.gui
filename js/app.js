@@ -93,8 +93,6 @@ Application = function(p)
 		self.test = true
 	}
 
-	
-
 	self.options = {
 		
 		url : url,
@@ -434,15 +432,9 @@ Application = function(p)
 
 	self.el = {}
 
-	
-
-	
-
 	self.id = makeid();
 	self.map = __map;
 	self.modules = {};
-
-	
 
 	self.curation = function(){
 		if(typeof isios != 'undefined' && isios() && window.cordova) return true
@@ -652,10 +644,10 @@ Application = function(p)
 		prepareMap();
 
 		self.options.fingerPrint = hexEncode('fakefingerprint');
-
+		
 		self.localization.init(function(){
-			newObjects(p);
 
+			newObjects(p);
 
 			lazyActions([
 				self.platform.prepare
@@ -684,7 +676,6 @@ Application = function(p)
 		
 
 	}
-
 
 	self.reload = function(p){
 		if(!p) p = {};
@@ -766,8 +757,6 @@ Application = function(p)
 
 	self.deviceReadyInit = function(p){
 
-		
-
 		self.el = {
 			content : 		$('#content'),
 			app : 			$('#application'),
@@ -785,33 +774,14 @@ Application = function(p)
 			$('html').addClass('testpocketnet') /// bstn
 		}
 
-		/*if(isMobile()){
-			self.el.app.swipe({
-				longTap : function(e, phase, direction, distance){
-					$('html').toggleClass('scrollmodedown')
-					e.preventDefault()
-				},
-			})
-		}*/
-		
-		
+		initevents()
+
 
 		if(typeof window.cordova != 'undefined')
 		{
 			document.addEventListener('deviceready', function(){
 
 				self.mobile.screen.lock()
-
-				//window.screen.orientation.lock('portrait')
-
-				/*if(isTablet()){
-					window.screen.orientation.lock('landscape')
-				}
-				else{
-					window.screen.orientation.lock('portrait')
-				}*/
-
-				
 
 				p || (p = {});
 
@@ -872,40 +842,67 @@ Application = function(p)
 	self.logger = function(Function, Message){}
 
 	self.scrollRemoved = false;
-	var winScrollTop = 0;
+	self.scrollTop = 0
+	self.lastScrollTop = 0
+
+	self.height = 0
+	self.width = 0
+
+	var blockScroll = false
+
 	self.actions = {
+
 		up : function(scrollTop, el, time){
 			_scrollTop(scrollTop, el, time)
 		},
-		wscroll : function(){
 
-			$(window).scrollTop(winScrollTop);
+		wscroll : function(){
+			self.actions.scroll(self.scrollTop)
+		},
+
+		scrollToTop: function(){
+			self.actions.scroll(0)
+		},
+
+		scroll : function(to){
+
+			blockScroll = true
+
+			self.el.window.scrollTop(to)
+			self.scrollTop = to
+
+			setTimeout(function(){
+				blockScroll = false
+			}, 100)
 			
 		},
 
-		offScroll : function(js){
+		getScroll : function(){
+			self.lastScrollTop = self.el.window.scrollTop()
+			return self.lastScrollTop
+		},
 
+		offScroll : function(){
 
 			if (self.scrollRemoved){
 				return false
 			}
 
-			self.scrollRemoved = true
+			blockScroll = true
 
-			$('html').addClass('nooverflow')
+			///
+			//self.scrollTop = self.el.window.scrollTop();
+			///
 
-			/*
+			self.el.html.addClass('nooverflow')
 
-			if(!js){
-
-				$('html').addClass('nooverflow')
+			if (window.Keyboard && window.Keyboard.disableScroll){
+				window.Keyboard.disableScroll(true)
 			}
-			else
-			{
-				winScrollTop = $(window).scrollTop();
 
-				$(window).bind('scroll', self.actions.wscroll);
-			}*/
+			setTimeout(function(){
+				blockScroll = false
+			}, 100)
 
 			return true
 			
@@ -913,27 +910,114 @@ Application = function(p)
 
 		onScroll : function(){
 
-			$('html').removeClass('nooverflow')
-			//$(window).unbind('scroll', self.actions.wscroll);
+			///
+			self.el.html.removeClass('nooverflow')
+			///
 
+			if (window.Keyboard && window.Keyboard.disableScroll){
+				window.Keyboard.disableScroll(false)
+			}
 
 			self.scrollRemoved = false;
 		},
 
-		scrollBMenu : function(){
+	}
 
-			if(isMobile()){
-				var h = $('#toppanel').height()
+	var initevents = function(){
+
+		var delayscroll = null,
+			delayscrollopt = null,
+			delayresize = null
+
+		var body = document.body
+
+		self.height = self.el.window.height()
+		self.width = self.el.window.width()
+
+		/*window.removeEventListener('scroll')
+		window.removeEventListener('resize')*/
 
 
-				if (h > 0){
-					$(window).scrollTop(h);
+		
 
-					return true
-				}
+		window.addEventListener('scroll', function(){
+
+			if (blockScroll) return
+
+			if(!body.classList.contains('disable-hover')) {
+				body.classList.add('disable-hover')
 			}
 
-		}
+			delayscroll = slowMade(function(){
+
+				window.requestAnimationFrame(function(){
+
+					if(!self.el.window) return
+
+					var lastScrollTop = self.lastScrollTop
+					var scrollTop = self.actions.getScroll()
+
+					_.each(self.events.scroll, function(s){
+						s(scrollTop)
+					})
+
+					//body.classList.remove('disable-hover')
+
+					/*if(mobile){
+						if(scrollTop > 200 && lastScrollTop - 100 < self.lastScrollTop){
+							self.el.html.addClass('scrollmodedown')
+						}
+						else{
+							self.el.html.removeClass('scrollmodedown')
+						}
+					}*/
+
+				})
+
+			}, delayscroll, 60)
+
+			delayscrollopt = slowMade(function(){
+
+				window.requestAnimationFrame(function(){
+					body.classList.remove('disable-hover')
+				})
+
+			}, delayscrollopt, 300)
+		})
+
+        window.addEventListener('resize', function(){
+
+			delayresize = slowMade(function(){
+
+				window.requestAnimationFrame(function(){
+
+					if(!self.el.window) return
+
+					var scrollTop = self.actions.getScroll(),
+						height = self.el.window.height(),
+						width = self.el.window.width();
+
+						self.height = height
+						self.width = width
+
+					_.each(self.events.scroll, function(s){
+						s({
+							scrollTop : scrollTop,
+							height : height,
+							width : width
+						})
+					})
+
+				})
+
+			}, delayresize, 30)
+
+		})
+	}
+
+	self.events = {
+		scroll : {},
+		resize : {}
 	}
 
 	self.loadModules = function(p){
@@ -962,10 +1046,6 @@ Application = function(p)
 			}
 		})
 
-	}
-
-	self.scrolling = {
-		clbks : {}
 	}
 
 	self.name = self.options.name;

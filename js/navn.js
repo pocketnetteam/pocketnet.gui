@@ -65,11 +65,14 @@ Nav = function(app)
 		},
 		run : function(p){
 
-			p.clbk = addToFunction(p.clbk, function(){
+			/*p.clbk = addToFunction(p.clbk, function(){
 
-				core.links(null, p.el);
+				console.log(p, p.el)
 
-			})
+				if (p.el)
+					core.links(null, p.el);
+
+			})*/
 
 			p.module.nav = self;
 			p.module.app = app;
@@ -524,7 +527,8 @@ Nav = function(app)
 						current.completeHref = p.completeHref;
 
 						if(!p.goback){
-							_scrollTop(0, null, 50);
+							app.actions.scrollToTop()
+				
 						}
 							
 
@@ -558,7 +562,7 @@ Nav = function(app)
 				{
 
 
-					p.lastScroll = $(window).scrollTop();
+					p.lastScroll = app.lastScrollTop // $(window).scrollTop();
 
 					
 
@@ -608,9 +612,8 @@ Nav = function(app)
 							core.removeChat(p.completeHref)
 
 							if (p.goback){
-								_scrollTop(p.goback.scroll);
+								app.actions.scroll(p.goback.scroll)
 							}
-							
 
 							c(a, b, d)
 						}
@@ -1035,7 +1038,7 @@ Nav = function(app)
 
 			if(typeof window != 'undefined' && typeof window.cordova != 'undefined' && cordova.InAppBrowser){
 
-				link.off('click').on('click', function(){
+				link.off(clickAction()).on(clickAction(), function(){
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_blank');
 
@@ -1069,6 +1072,8 @@ Nav = function(app)
 
 		links : function(action, _el, additionalActions){
 
+			console.log("LINKS", _el)
+
 			if(!options.links) return;	
 
 			var _links = null;
@@ -1091,26 +1096,28 @@ Nav = function(app)
 				{
 					if(link.attr('donottrust'))
 					{
+						if (clickAction() != 'click')
+							link.off('click').on('click', function(){return false})
 
-						link.off('click')
-							.on('click', function(){
-								var href = $(this).attr('href');	
+						link.off(clickAction()).on(clickAction(), function(){
+							var href = $(this).attr('href');	
 
 
-								if (href.indexOf('http') == -1) href = 'https://' + href						
+							if (href.indexOf('http') == -1) href = 'https://' + href						
 
-								self.api.load({
-									open : true,
-									id : 'anothersite',
-									inWnd : true,
+							self.api.load({
+								open : true,
+								id : 'anothersite',
+								inWnd : true,
 
-									essenseData : {
-										link : href
-									}
-								})
-
-								return false;
+								essenseData : {
+									link : href
+								}
 							})
+
+							return false;
+						})
+
 					}
 					else
 					{
@@ -1120,9 +1127,7 @@ Nav = function(app)
 				}
 				else
 				{
-
-
-					if (_SEO){
+					/*if (_SEO){
 
 						var _href = link.attr('href');
 							_href = decodeSeoLinks(_href).replace("#!", "");
@@ -1138,12 +1143,11 @@ Nav = function(app)
 							_href = "#!" + _href;
 
 							link.attr('href', encodeSeoLinks(_href));
-					}
+					}*/
 
 					var eve = function(e){
-						var href = core.thisSiteLink($(this).attr('href'));
 
-						//href = href.replace('pocketnet://', 'https://' + window.location.hostname).replace('bastyon://', 'https://' + window.location.hostname)
+						var href = core.thisSiteLink($(this).attr('href'));
 
 						var handler = $(this).attr('handler') || null
 
@@ -1163,22 +1167,11 @@ Nav = function(app)
 
 						return false
 					}
-
-					if (link.attr('fast')){
-						link.swipe({
-							tap : eve
-						})
-
-						link.off('click')
-							.on('click', function(){
-
-								return false;
-							})
-					}
-
-					else{
-						link.off('click').on('click', eve)
-					}
+					
+					if (clickAction() != 'click')
+						link.off('click').on('click', function(){return false})
+						
+					link.off(clickAction()).on(clickAction(), eve)
 					
 				}
 

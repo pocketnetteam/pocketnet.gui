@@ -100,11 +100,13 @@ nModule = function(){
 			if(p.el)
 			{
 
-				if(!fromModule){
+				//if(!fromModule){
 
-					self.nav.api.links(null, p.el, p.additionalActions || null);
 					
-				}
+
+				self.nav.api.links(null, p.el, p.additionalActions || null);
+					
+				//}
 
 				window.requestAnimationFrame(function(){
 					bgImages(p.el, p.bgImages)
@@ -658,9 +660,7 @@ nModule = function(){
 					p.clbk = addToFunction(p.clbk, function(){
 
 						if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
-
-
-							_scrollTop(0, null, 50);
+							self.app.actions.scrollToTop()
 						}
 
 						if (settings.auto){
