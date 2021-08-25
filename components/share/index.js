@@ -849,7 +849,7 @@ var share = (function(){
 											})
 										}
 										else{
-											_scrollTop(0);
+											self.app.actions.scroll(0)
 										}
 	
 										

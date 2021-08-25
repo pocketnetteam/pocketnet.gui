@@ -799,25 +799,39 @@ html {
 		}
 
 		.leftpanelcell{
-			float: left;
+			float: none;
+			width: 100%;
+			position: fixed;
+			left : 100%;
+			top : 0;
+			bottom : 0;
+			right : -100%;
+			z-index: 201;
+			background: #fff;
+			color : #011621;
+			padding-top : 75px;
+			overflow-y: scroll;
+			padding-bottom: 90px;
+			.transition(0.3s);
+		}
+
+		&.leftshowed{
+			.leftpanelcell{
+				transform: translateX(-100%);
+			}
 		}
 
 		.lentacell{
 			margin-right: 0;
 		}
 
-		.leftpanelcell{
-			display: none;
-		}
-
-
+	
 		&.videomain {
 			.lentacell{
 				margin-left: 0;
 			}
 			
 		}
-		
 
 		.addbutton{
 			
@@ -934,12 +948,12 @@ html.tablet{
 	}
 }
 
-@media only screen and (max-width: 640px){
+@media only screen and (max-width: 768px){
 
 	html.toppanelshowed{
 		#main{
 	
-			.maincntwrapper{
+			/*.maincntwrapper{
 	
 				
 				>div{
@@ -951,7 +965,7 @@ html.tablet{
 						}
 					}
 				}
-			}
+			}*/
 		}
 	}
 
@@ -1012,7 +1026,10 @@ html.tablet{
 			width: 100%;
 		}
 
-		
+		.lentacell{
+			padding-top : 0;
+			padding-bottom : 90px;
+		}
 
 		.fxd{
 			padding-top : 0;
@@ -1021,7 +1038,7 @@ html.tablet{
 		.panel{
 			border-radius:3px;
 		}
-		
+		/*	
 		.maincntwrapper{
 			width : 300%;
 			transform: translateX(-33.3333333%);
@@ -1133,9 +1150,9 @@ html.tablet{
 				padding-top : 0;
 			}
 
-			/*.shares .authorgroup .share{
-				padding : 2 * @rhythm 0 ;
-			}*/
-		}
+		
+		}*/
 	}
+
+
 }

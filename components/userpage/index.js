@@ -12,7 +12,6 @@ var userpage = (function(){
 
 		var currentExternalEssense = null;
 		var roller = null;
-		var caption = null;
 		var hcready = false;
 
 		var mestate = null, allbalance;
@@ -540,6 +539,8 @@ var userpage = (function(){
 
 				if(isMobile()){
 
+					self.app.mobile.vibration.small()
+
 					renders.contents(null, id)
 
 				}
@@ -551,7 +552,6 @@ var userpage = (function(){
 		var renders = {
 			bgcaption : function(clbk){
 
-				var s = helpers.selector();
 
 				if(!el || !el.bgcaption) return
 
@@ -569,7 +569,7 @@ var userpage = (function(){
 	
 					}, function(_p){
 						console.log(_p.el)
-						_p.el.find('.copyaddress').on('click', function(){
+						_p.el.find('.copyaddress').on(clickAction(), function(){
 							copyText($(this))
 
 							sitemessage(self.app.localization.e('successcopied'))
@@ -604,12 +604,12 @@ var userpage = (function(){
 					}, function(_p){
 	
 						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
-						//_p.el.find('.groupName').on('click', events.closeGroup);
+						//_p.el.find('.groupName').on(clickAction(), events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
 	
 						ParametersLive([s], _p.el)
 
-						_scrollTop(0)
+						self.app.actions.scroll(0)
 
 						if (hcready)
 							el.contents.hcSticky('refresh');
@@ -788,7 +788,7 @@ var userpage = (function(){
 				}
 
 				var _clbk = function(e, p){
-					_scrollTop(0)
+					self.app.actions.scroll(0)
 	
 					currentExternalEssense = p;
 
@@ -867,7 +867,10 @@ var userpage = (function(){
 		var initEvents = function(){
 			
 			el.c.on('click', '.signout', function(){
+
+				self.app.mobile.vibration.small()
 				actions.signout()
+
 			})
 
 		}
@@ -1026,12 +1029,7 @@ var userpage = (function(){
 
 				$('#menu').addClass('abs')
 
-				caption = new Caption({
-					container: el.c,
-					caption: el.c.find('.captionfwrapper'),
-					offset: [0, 0],
-					
-				}).init();	
+				
 
 				/*self.app.platform.sdk.keys.init().then(r => {
 					console.log("RESULT", r)

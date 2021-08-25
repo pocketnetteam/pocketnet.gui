@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1053"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3279"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -42597,8 +42597,15 @@ class peertube_player_manager_PeertubePlayerManager {
             console.log("We are on a cellular connection: disabling seeding.");
             consumeOnly = true;
         }
-        /*const assetsStorage = new IdbAssetsStorage(this.db);
-        const segmentsStorage = new IdbSegmentsStorage(this.db);*/
+        var assetsStorage = null, segmentsStorage = null;
+        /*try{
+          assetsStorage = new IdbAssetsStorage(this.db)
+          segmentsStorage = new IdbSegmentsStorage(this.db)
+        }
+        catch(e){
+  
+        }*/
+        console.log('getStoredP2PEnabled', Object(peertube_player_local_storage["c" /* getStoredP2PEnabled */])());
         const p2pMediaLoaderConfig = {
             loader: {
                 trackerAnnounce,
@@ -42613,6 +42620,10 @@ class peertube_player_manager_PeertubePlayerManager {
                 swarmId: p2pMediaLoaderOptions.playlistUrl,
             },
         };
+        var capLevelToPlayerSize = true;
+        /* @ts-ignore */
+        if (typeof window.isMobile != 'undefined' && window.isMobile())
+            capLevelToPlayerSize = false;
         const hlsjs = {
             levelLabelHandler: (level) => {
                 const resolution = Math.min(level.height || 0, level.width || 0);
@@ -42632,7 +42643,7 @@ class peertube_player_manager_PeertubePlayerManager {
                     highBufferWatchdogPeriod: 1,
                     lowLatencyMode: true,
                     enableWorker: true,
-                    capLevelToPlayerSize: true,
+                    capLevelToPlayerSize: capLevelToPlayerSize,
                     autoStartLoad: false,
                     //liveSyncDurationCount: 4,
                     maxBufferLength: 30,
@@ -43599,23 +43610,23 @@ class embed_PeerTubeEmbed {
                     this.player.currentTime(this.player.currentTime() + forwading_time);
                 });
                 this.insertAfter(vjs_big_play_button, el);
+                this.player.bigPlayButton.disable();
+                ///let flag = false
+                this.player.el_.addEventListener('touchend', (e) => {
+                    //
+                    if (e.target.parentElement && e.target.parentElement.classList && e.target.parentElement.classList.contains('vjs-big-play-button')) {
+                        if (!this.player.paused()) {
+                            this.player.pause();
+                        }
+                        else {
+                            this.player.play();
+                        }
+                    }
+                });
             }
             if (this.player.el_.classList.contains('vjs-youtube')) {
                 this.player.el_.querySelector('iframe').style.pointerEvents = 'none';
             }
-            let flag = false;
-            this.player.el_.addEventListener('touchend', (e) => {
-                this.player.bigPlayButton.disable();
-                if (e.target.parentElement && e.target.parentElement.classList && e.target.parentElement.classList.contains('vjs-big-play-button')) {
-                    if (!this.player.paused() && flag) {
-                        this.player.pause();
-                    }
-                    else {
-                        this.player.play();
-                    }
-                    flag = true;
-                }
-            });
         });
     }
     buildVideoPlayerContributos(videoId) {

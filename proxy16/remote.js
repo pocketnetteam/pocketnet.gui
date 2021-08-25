@@ -375,6 +375,16 @@ var Remote = function(app){
 				type : "POST"
 			}, function(error, response, body){
 
+				if (error){
+					errors[uri] = 'nc'
+
+					if (clbk){
+						clbk({})
+					}
+
+					return
+				}
+
 				var d = {}
 
 				try{

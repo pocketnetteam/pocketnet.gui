@@ -90,18 +90,7 @@ var metadisplay = function(){ %>
 			<% } %>
 		
 		</div>
-		<!--
-		<% if(state && (typeof repost == 'undefined' || !repost)) { %>			
-
-			<div class="metapanel">
-				<div class="metapanelitem metmenu">
-					<i class="fas fa-ellipsis-h"></i>
-				</div>
-			</div>
-
-		<% } %>
-		-->
-		
+	
 	</div>					
 </div>
 	
@@ -202,79 +191,11 @@ var metadisplay = function(){ %>
 					<% }) %>
 
 				</div>
-				<!--
-
-				<% if(!emptywithrepost) {%>
-
-					<div class="cntswrk">
-						<div class="paddingWrapper">
-
-							
-							
-							<% if(share.tags && share.tags.length > 0) {
-
-								var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
-								
-								%>
-
-								<div class="tags canmark">
-
-									<div class="datetime">
-										<% if(share.time) {%>
-											<span class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-										<% } else { %> 
-											<span><%=e('e13019')%></span>
-										<% } %>
-									</div>
-
-									
-									<% _.each(bycategories.categories, function(category){ %>
-
-										<div class="tag">
-											<span>@<%-category.name%></span> 
-										</div>
-
-									<% }) %>
-
-									<% _.each(bycategories.tags, function(tag){ %>
-
-										<div class="tag">
-											<span>
-												#<%-tag%>
-											</span>
-										</div>
-
-									<% }) %>
-								</div>
-
-							<% } %>
-							
-
-						</div>
-
-					</div>
-
-				<% } %>
-
-				-->
+				
 
 			</div>
 		</div>
-		<!--
-		<div class="blockAuthor">
-			<div class="blockTable table">
-				<div class="blockCell">
-					<div class="label"><%=e('e13131')%></div>
-
-					<div class="unblockWrapper">
-						<button class="button small unblockbutton">
-							Unblock
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		-->
+		
 	</div>
 
 

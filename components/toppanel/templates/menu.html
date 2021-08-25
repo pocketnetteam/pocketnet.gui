@@ -1,84 +1,88 @@
-<% 
+<div class="panelItemsWrapper">
+	<% 
 
-var r = parameters(app.nav.current.completeHref, true).r;
-var video = parameters(app.nav.current.completeHref, true).video;
-%>
+	var r = parameters(app.nav.current.completeHref, true).r;
+	var video = parameters(app.nav.current.completeHref, true).video;
+	%>
 
-<% if(!app.curation()) {%> 
+	<% if(!app.curation()) {%> 
 
-	<% if(!state && !(pathname == 'index' && mobile)) {%>
+		<% if(!state && !(pathname == 'index' && mobile)) {%>
 
-	<div class="panelitem blexpl">
-		<a href="https://<%-app.options.url%>/blockexplorer/"><i class="fas fa-th"></i> <%=e('e13182')%></a>
-	</div>
-
-	<% } %>
-
-
-	<% if(state || (pathname == 'index' && mobile)) {%>
-
-	<% if(pathname == 'index' && mobile) {%>
-		<div class="panelitem">
-			<%= selector.input() %>
+		<div class="panelitem blexpl">
+			<a href="https://<%-app.options.url%>/blockexplorer/"><i class="fas fa-th"></i> <%=e('e13182')%></a>
 		</div>
 
-	<% } else { %>
-		<div class="panelitem">
-			<a href="donations"><i class="fas fa-money-bill-wave"></i> <%=e('donate')%></a>
-			<!--<i class="fas fa-sync"></i> Exchange-->
-		</div>
-	<% } %>
-
-	<% } %>
-
-<% } %>
+		<% } %>
 
 
-<% if(!mobile) { %>
+		<% if(state || (pathname == 'index' && mobile)) {%>
 
-	<div class="panelitemCenter">
-		<div class="centerTable table">
+			<% if(pathname == 'index' && mobile) {%>
+				<div class="panelitem icon showcategories">
+					<i class="fas fa-filter"></i>
+				</div>
+				<div class="panelitem nfl">
+					<%= selector.input() %>
+				</div>
 
-			<div class="pcenterCell">
-				<span class="pcenterLabel fresh <% if(!r && !video && pathname=='index') {%> active <% } %> ">
-					<a href="index" handler="true"><%=e('e13136')%> <span class="lentaunseen" key="common"></span></a>
-				</span>
-				
-			</div>
-			<% if(state) { %> 
-			<div class="pcenterCell">
-				<span class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
-					<a href="index?r=sub"  handler="true"><%=e('e13137')%> <span class="lentaunseen " key="sub"></span></a>
-				</span>
-				
-			</div>
+			<% } else { %>
+				<div class="panelitem">
+					<a href="donations"><i class="fas fa-money-bill-wave"></i> <%=e('donate')%></a>
+					<!--<i class="fas fa-sync"></i> Exchange-->
+				</div>
 			<% } %>
-			<% if(app.platform.videoenabled) {%>
-			<div class="pcenterCell">
-				<span class="pcenterLabel <% if(video && pathname=='index') {%> active <% } %>">
-					<a href="index?video=1"  handler="true"><%=e('video')%> <span class="lentaunseen" key="video"></span></a>
+
+		<% } %>
+
+	<% } %>
+
+
+	<% if(!mobile) { %>
+
+		<div class="panelitemCenter">
+			<div class="centerTable table">
+
+				<div class="pcenterCell">
+					<span class="pcenterLabel fresh <% if(!r && !video && pathname=='index') {%> active <% } %> ">
+						<a href="index" handler="true"><%=e('e13136')%> <span class="lentaunseen" key="common"></span></a>
+					</span>
 					
-				</span>
+				</div>
+				<% if(state) { %> 
+				<div class="pcenterCell">
+					<span class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
+						<a href="index?r=sub"  handler="true"><%=e('e13137')%> <span class="lentaunseen " key="sub"></span></a>
+					</span>
+					
+				</div>
+				<% } %>
+				<% if(app.platform.videoenabled) {%>
+				<div class="pcenterCell">
+					<span class="pcenterLabel <% if(video && pathname=='index') {%> active <% } %>">
+						<a href="index?video=1"  handler="true"><%=e('video')%> <span class="lentaunseen" key="video"></span></a>
+						
+					</span>
+					
+				</div>
+				<% } %>
+
+				
+				<div class="pcenterCell">
+					<span class="pcenterLabel toppost <% if(!video && r == 'recommended' && pathname=='index') {%> active <% } %>">
+						<a href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
+					</span>
+				</div>
 				
 			</div>
-			<% } %>
-
-			
-			<div class="pcenterCell">
-				<span class="pcenterLabel toppost <% if(!video && r == 'recommended' && pathname=='index') {%> active <% } %>">
-					<a href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
-				</span>
-			</div>
-
-			
-			
 		</div>
-	</div>
-<% } %>
+
+	<% } %>
 
 
-<% if(!app.curation()) {%> 
-	<div class="panelitem right">
-		<a href="help"><i class="fas fa-question-circle"></i> <%=e('e13183')%></a>
-	</div>
-<% } %>
+	<% if(!app.curation()) {%> 
+		<div class="panelitem right">
+			<a href="help"><i class="fas fa-question-circle"></i> <%=e('e13183')%></a>
+		</div>
+	<% } %>
+</div>

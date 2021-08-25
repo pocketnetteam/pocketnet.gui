@@ -54,7 +54,10 @@ Platform = function (app, listofnodes) {
         'PEbSS6Fu9fCSEzFcrW5a3ztjx5ekoYvpjx' : true,
         'PKZNLmxpsiW9H77beXt7pNWK7rTbG6Qu5h' : true,
         'PNoR5LNLAZP3VGiNcK2wn4xxAFT6yQAMqj' : true,
-        'PL1wziiaQj7FLnoktuQQ1MKweYYbdcekRB' : true
+        'PL1wziiaQj7FLnoktuQQ1MKweYYbdcekRB' : true,
+        'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp' : true,
+        'PQ3hdiozrxtTf1UhuVfhUb9bcvrUzbzwRJ' : true,
+        'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -2367,8 +2370,10 @@ Platform = function (app, listofnodes) {
             if (!p) p = {};
 
             var self = this;
-            var w = $(window);
+            var w = app.el.window;
             var up = null;
+
+            var id = makeid()
 
             var currentmode = null;
 
@@ -2425,6 +2430,9 @@ Platform = function (app, listofnodes) {
 
             var events = {
                 resize: function () {
+
+                    console.log("resize")
+
                     var mode = getmode();
 
                     if (mode != currentmode) {
@@ -2448,14 +2456,13 @@ Platform = function (app, listofnodes) {
                 },
                 scroll: function () {
 
-
-
-                    if (w.scrollTop() >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
+                    if (app.lastScrollTop >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
                         up.addClass('active')
                     }
                     else {
                         up.removeClass('active')
                     }
+
                 },
 
                 click: function () {
@@ -2464,7 +2471,8 @@ Platform = function (app, listofnodes) {
                         p.click(up.hasClass('active'))
                     }
                     else{
-                        _scrollTop(0)
+                        app.actions.scroll(0)
+                        //_scrollTop(0)
                     }
 
                    
@@ -2473,8 +2481,11 @@ Platform = function (app, listofnodes) {
 
             var initEvents = function () {
 
-                window.addEventListener('scroll', events.scroll)
-                window.addEventListener('resize', events.resize)
+                app.events.scroll[id] = events.scroll
+                app.events.resize[id] = events.resize
+
+               /**window.addEventListener('scroll', events.scroll)
+                window.addEventListener('resize', events.resize)*/
 
                 up.swipe({
                     tap: events.click
@@ -2482,8 +2493,10 @@ Platform = function (app, listofnodes) {
             }
 
             var removeEvents = function () {
-                window.removeEventListener('scroll', events.scroll)
-                window.removeEventListener('resize', events.resize)
+                delete app.events.scroll[id]
+                delete app.events.resize[id]
+                /*window.removeEventListener('scroll', events.scroll)
+                window.removeEventListener('resize', events.resize)*/
             }
 
             self.init = function () {
@@ -19712,6 +19725,20 @@ Platform = function (app, listofnodes) {
 
             //platform.matrixchat.notify.event()
 
+            /* 
+            self.messageHandler({
+                addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+                amount: "166666"
+                msg: "transaction"
+                node: "64.235.45.119:38081:8087"
+                nout: "7"
+                time: 1629883584
+                txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
+            })
+            
+
+            */
+
             /*self.messageHandler({
                 addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
                 addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
@@ -20996,11 +21023,11 @@ Platform = function (app, listofnodes) {
                     self.sdk.user.get
                 ], function () {
 
+                    //self.ui.showmykey()
+
                     self.sdk.node.transactions.setUnspentoptimizationInterval()
 
                     self.sdk.relayTransactions.send()
-
-                    
 
                     self.preparingUser = false;
 
@@ -21361,10 +21388,6 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                if (window.Keyboard && window.Keyboard.disableScroll){
-					window.Keyboard.disableScroll(false)
-				}
-
                 if(document.activeElement) document.activeElement.blur()
 
                 if (self.matrixchat.el)
@@ -21377,7 +21400,7 @@ Platform = function (app, listofnodes) {
                 if(isMobile())
                     app.nav.api.history.removeParameters(['pc'])
 
-                //self.app.actions.onScroll()
+                self.app.actions.onScroll()
 
                 if (link){
 
@@ -21394,21 +21417,17 @@ Platform = function (app, listofnodes) {
                     c(false)
                 })
 
-                $('html').removeClass('chatshowed')
+                
             }
 
             core.apptochat = function(){
-
-                if (window.Keyboard && window.Keyboard.disableScroll){
-					window.Keyboard.disableScroll(true)
-				}
 
                 if(document.activeElement) document.activeElement.blur()
                 
                 if (self.matrixchat.el)
                     self.matrixchat.el.addClass('active')
 
-                    //self.app.actions.offScroll()
+                self.app.actions.offScroll()
                     
                 if(isMobile())
                     app.nav.api.history.addParameters({
@@ -21420,8 +21439,6 @@ Platform = function (app, listofnodes) {
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(true)
                 })
-
-                $('html').addClass('chatshowed')
             }
 
             self.matrixchat.core = core

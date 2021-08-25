@@ -1065,7 +1065,11 @@ var comments = (function(){
 				if (el && el.length > 0 && el[0].scrollIntoView && isMobile() && $(window).width() <= 768) {
 					el[0].scrollIntoView(true);
 					// Scroll until the comment section is at 120 px from the top
-					var container = ($('html').hasClass('showmain')) ? $('.lentacell') : $('html');
+
+
+					var container =  $('html');
+					
+					
 					var offset = 120 - el[0].getBoundingClientRect().top;
 					if (offset > 0)
 						container.animate({scrollTop: '-=' + offset + 'px'}, 0);

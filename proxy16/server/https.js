@@ -44,6 +44,8 @@ var Server = function(settings, admins, manage){
 
         signature : function(request, result, next){
 
+            console.log("CHECK SIGNATURE")
+
             var authorized = self.proxy.authorization.signature(request.data || {})
 
             if (authorized){
@@ -133,6 +135,9 @@ var Server = function(settings, admins, manage){
     self.https = function(settings){
         return new Promise((resolve, reject) => {
             try{
+                
+
+                
 
                 if (_.isEmpty(settings.ssl)){
                     reject('sslerror')
@@ -140,8 +145,11 @@ var Server = function(settings, admins, manage){
                     return
                 }
 
+                var cloned = _.clone(settings.ssl)
 
-                server = https.createServer(settings.ssl, app)
+                if (cloned.passphrase === "*") delete cloned.passphrase
+
+                server = https.createServer(cloned, app)
 
                 server.on('listening',function(){
 
@@ -234,6 +242,7 @@ var Server = function(settings, admins, manage){
                         meta.action(request.data).then(d => {
                             result._success(d.data, d.code)
                         }).catch(e => {
+
                             result._fail(e, e.code)
                         })
                     

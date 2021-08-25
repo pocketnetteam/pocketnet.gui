@@ -9211,7 +9211,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       return self
     }
 
-    if (provider == 'youtube') {
+    /*if (provider == 'youtube') {
 
       
 
@@ -9237,7 +9237,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       })
 
       return
-    }
+    }*/
 
     /*if (provider == 'vimeo') {
 
@@ -9281,7 +9281,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var newPlyr = function(target, video_options) {
 
 
-      console.log("video_options", video_options)
 
       var newPlayer = new Plyr(target, video_options);
       // Set the mandatory/missing functions
@@ -9340,6 +9339,8 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       var plyrPlayer = newPlyr(target, video_options);
 
       plyrPlayer.on('ready', readyCallback)
+      plyrPlayer.on('play', video_options.play)
+      plyrPlayer.on('pause', video_options.pause)
 
       if (clbk) clbk(plyrPlayer);
 

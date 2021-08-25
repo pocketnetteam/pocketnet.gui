@@ -1008,6 +1008,30 @@ var system16 = (function(){
 						}
 					]
 				},
+
+				loadavg : {
+					caption : "CPU",
+
+
+					series : [
+
+						{
+							path : 'loadavg.1',
+							name : "1 minute",
+							id : '1'
+						},
+						{
+							path : 'loadavg.5',
+							name : "5 minutes",
+							id : '5'
+						},
+						{
+							path : 'loadavg.15',
+							name : "15 minutes",
+							id : '15'
+						}
+					]
+				},
 				
 
 				signatures : {

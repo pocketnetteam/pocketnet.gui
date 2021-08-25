@@ -83,6 +83,7 @@ var toppanel = (function(){
 				self.app.user.isState(function(state){
 
 					if(state && isMobile() && pathname != 'index'){
+
 						el.c.addClass('hidden')
 						$('html').removeClass('toppanelshowed')
 						
@@ -90,7 +91,9 @@ var toppanel = (function(){
 					else{
 
 						el.c.removeClass('hidden')
+
 						$('html').addClass('toppanelshowed')
+
 						self.shell({
 
 							name :  'menu',
@@ -108,6 +111,15 @@ var toppanel = (function(){
 							updateNew()
 	
 							ParametersLive([selector], _p.el)
+
+							el.menu.find('.showcategories').on(clickAction(), function(){
+
+								var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
+				
+								console.log(self.app.modules)
+				
+								if (mainmoduleAction) mainmoduleAction(true)
+							})
 	
 						})
 					}
@@ -153,6 +165,9 @@ var toppanel = (function(){
 			self.app.nav.clbks.history.toppanel = function(href){
 				renders.menu(app.nav.current.href)
 			}
+
+
+			
 
 			if (self.app.platform.sdk.newmaterials.clbks)
 				self.app.platform.sdk.newmaterials.clbks.update.toppanel = updateNew

@@ -304,7 +304,7 @@ var help = (function(){
 					c.pkoin.loading = true;
 
 					console.log('this.page', _el)
-					var explorerBase = 'https://explorer.'+self.app.options.url+'/rest/';
+					var explorerBase = 'https://explorer.pocketnet.app/rest/';
 
 
 					var endpoints = [c.pkoin.blockhash.api, c.pkoin.emission.api, c.pkoin.emission2.api, c.pkoin.topaddresses.api];
