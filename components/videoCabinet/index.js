@@ -580,17 +580,31 @@ var videoCabinet = (function () {
       primary: primary,
 
       getdata: function (clbk) {
-        //get video sorting params from localstorageƒ
-        var data = {
-          selectedType:
-            localStorage.getItem('videoCabinetSortType') || 'createdAt',
-          selectedDirection:
-            localStorage.getItem('videoCabinetSortDirection') || '-',
-        };
+        //check if user has access to videos
+        self.app.peertubeHandler.api.user
+          .me()
+          .then((res) => {
+            //get video sorting params from localstorage
+            var data = {
+              selectedType:
+                localStorage.getItem('videoCabinetSortType') || 'createdAt',
+              selectedDirection:
+                localStorage.getItem('videoCabinetSortDirection') || '-',
+              hasAccess: true,
+            };
 
-        ed = { ...data, sort: `${data.selectedDirection}${data.selectedType}` };
+            ed = {
+              ...data,
+              sort: `${data.selectedDirection}${data.selectedType}`,
+              hasAccess: true,
+            };
 
-        clbk(data);
+            clbk(data);
+          })
+          .catch((err) => {
+            ed = { hasAccess: false };
+            clbk({ hasAccess: false });
+          });
       },
 
       destroy: function () {
@@ -604,6 +618,10 @@ var videoCabinet = (function () {
 
         el = {};
         el.c = p.el.find('#' + self.map.id);
+        el.windowElement = $(window);
+
+        //do nothing if user has no access to videos
+        if (!ed.hasAccess) return p.clbk(null, p);
 
         el.videoContainer = el.c.find('.userVideos');
         el.quotaContainer = el.c.find('.quotaContainer');
@@ -619,8 +637,6 @@ var videoCabinet = (function () {
 
         el.sortTypeSelect = el.c.find('.sortTypeSelect');
         el.sortDirectionSelect = el.c.find('.sortDirectionSelect');
-
-        el.windowElement = $(window);
 
         initEvents();
 

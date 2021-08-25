@@ -40,9 +40,6 @@
     }
 
     .videoNameDate {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
 
         i {
             width: 20px;
@@ -571,6 +568,18 @@
         padding: 0 8 * @rhythm;
     }
 
+    .videoErrorContainer {
+        .videoErrorHeading {
+            font-size: 1.5em;
+            font-weight: 200;
+            color: @color-bad;
+        }
+
+        .videoErrorBody {
+            font-weight: 200;
+        }
+    }
+
     .circular {
         height: 100px;
         width: 100px;
@@ -800,8 +809,75 @@
 }
 
 html.stblack {
-    #usersettings {
-        background: transparent;
+    #videoCabinet {
+        background-color: #112035;
+
+        .vidgetNameWrapper,
+        .vidgetIconWrapper,
+        .metricsContainerHeader,
+        .metricSection,
+        .cabinetName {
+            color: whitesmoke;
+        }
+
+        .videoSearchInput::placeholder,
+        .videoSelect,
+        .selectIcon,
+        .selectBorderCaption {
+            color: @color-bright;
+        }
+
+        .ghostButton {
+            color: @color-bright;
+
+            &:hover {
+                color: whitesmoke;
+            }
+        }
+
+        .videoSelect {
+            border-bottom-color: @color-bright;
+
+            &:hover {
+                color: whitesmoke;
+                border-bottom-color: whitesmoke;
+            }
+        }
+
+        .sortSelectWrapper {
+            &:hover {
+
+                .selectBorderCaption,
+                .selectIcon {
+                    color: whitesmoke;
+                }
+            }
+        }
+
+        .singleVideoSection {
+            color: whitesmoke;
+        }
+
+        .videoPostLink {
+            color: @color-bright;
+
+            &:hover {
+                color: whitesmoke;
+                text-decoration: underline;
+            }
+        }
+
+        .videoStatsWrapper {
+            .singleStat {
+                color: whitesmoke;
+
+                &:hover {
+                    text-decoration: underline;
+                    color: whitesmoke;
+                    cursor: pointer;
+                }
+            }
+        }
     }
 }
 
@@ -863,6 +939,62 @@ html.stblack {
                 }
             }
 
+        }
+
+        .videoControls {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .uploadVideo {
+            margin-left: 0;
+        }
+
+        .videoControlItem {
+            margin-top: @rhythm * 2;
+            width: 100%;
+
+            font-size: 1.2em;
+        }
+
+        .videoSortWrapper {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .sortSelectWrapper {
+            margin-left: 0;
+            width: 100%;
+
+            margin-top: @rhythm * 2;
+        }
+
+        .videoSelect {
+            width: 100%;
+        }
+
+        .videoContainer {
+            padding: 0 2 * @rhythm;
+        }
+
+        .statsSection {
+            padding: 0 2 * @rhythm @rhythm;
+        }
+
+        .moduleHeader {
+            padding: 0 2 * @rhythm;
+        }
+
+        .postingStatusWrapper {
+            min-width: 10px;
+        }
+
+        .videoStatsWrapper {
+            min-width: 20px;
+        }
+
+        .videoTextContainer {
+            white-space: normal;
         }
     }
 
