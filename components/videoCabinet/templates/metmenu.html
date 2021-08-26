@@ -13,6 +13,7 @@ var all = {
 		icon : '<i class="far fa-image"></i>',
 		text : e('editWallpaper'),
 		class : 'editPreview',
+		inputMenu: true,
 	},
 
 	editText : {
@@ -24,15 +25,17 @@ var all = {
 
 %>
 
-<div class="sharepostmenu">
+<div class="sharepostmenu handleVideoMenu">
 
 	<% _.each(m, function(m){ var mo = all[m] %>
 
-	<div class="menuitem <%-mo.class||''%> table">
+	<div class="menuitem <%-mo.class||''%>">
 		
 		<div class="icon"><span><%=mo.icon%></span></div>
 		<div class="label"><span><%-mo.text%></span></div>
-
+		<% if (mo.inputMenu) { %>
+			<div class="inputMenuWrapper"></div>
+		<% }%>
 	</div>
 		
 	<% }) %>
