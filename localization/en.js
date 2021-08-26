@@ -1138,5 +1138,4 @@ ____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authen
 
 ____loclib.emptyDescription = "Description is empty";
 ____loclib.transcodingShort = "Processing";
-
-
+____loclib.editVideoDescription = "Edit video name/description";

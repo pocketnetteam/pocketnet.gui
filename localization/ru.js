@@ -937,3 +937,4 @@ ____loclib.unableToAuthorizeBody = "К сожалению, у приложени
 
 ____loclib.emptyDescription = "Описание отсутствует";
 ____loclib.transcodingShort = "Обработка";
+____loclib.editVideoDescription = "Изменить название/описание видео";
