@@ -1,6 +1,12 @@
 <div id="<%-module.map.id%>">
   <header class="moduleHeader">
     <h1 class="cabinetName"><%- e('videoCabinet') %></h1>
+    <button
+        class="uploadVideo videoActiveButton ghostButton"
+        rendersElement="addVideo"
+      >
+        <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
+      </button>
   </header>
   <% if (hasAccess) { %>
   <section class="statsSection">
@@ -23,7 +29,7 @@
     </div>
   </section>
   <section class="videoContainer">
-    <section class="videoControls videoControlItem">
+    <section class="videoControls">
       <div class="videoSearchWrapper videoControlItem">
         <input
           type="text"
@@ -60,12 +66,6 @@
           </select>
         </div>
       </div>
-      <button
-        class="uploadVideo videoActiveButton ghostButton videoControlItem"
-        rendersElement="addVideo"
-      >
-        <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
-      </button>
       <!-- <button
         class="startStream videoActiveButton"
         rendersElement="addStream"
