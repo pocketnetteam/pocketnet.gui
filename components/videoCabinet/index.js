@@ -295,6 +295,24 @@ var videoCabinet = (function () {
             .filter((video) => video)
             .flat();
 
+        videos.forEach((video) => {
+          if (video.description) {
+            video.description = video.description
+              .replace(
+                `Watch more exciting videos at https://test.pocketnet.app/!`,
+                '',
+              )
+              .replace(
+                `Watch more exciting videos at https://pocketnet.app/!`,
+                '',
+              )
+              .replace(
+                `Watch more exciting videos at https://bastyon.com/!`,
+                '',
+              );
+          }
+        });
+
         self.shell(
           {
             name: 'videoList',
@@ -519,10 +537,10 @@ var videoCabinet = (function () {
             name: 'videoStats',
             el: element,
             data: {
-              views: +videoInfo.views || '-',
+              views: +videoInfo.views || 0,
               starsCount: +linkInfo.scoreSum || 0,
-              starsSum: +linkInfo.scoreCnt || '-',
-              comments: +linkInfo.comments || '-',
+              starsSum: +linkInfo.scoreCnt || 0,
+              comments: +linkInfo.comments || 0,
             },
           },
           (p) => {
