@@ -7,17 +7,18 @@
         background-image: url(<%- `https://${video.account.host}${video.previewPath}` %>);
       "
     >
-      <% if (video.state.id !== 1) { %>
-      <div class="preloaderwr transcodingPreloader">
-        <div class="preloader5"><span></span><span></span><span></span></div>
-      </div>
-      <% } %>
       <div class="videoDuration"><%- secInTime(video.duration) %></div>
     </div>
     <div class="videoItemPart videoName">
       <p class="videoTextContainer videoNameText"><%- video.name %></p>
-      <p class="videoTextContainer videoDescriptionText <%- video.description ? '' : 'emptyDescription'  %>">
-        <%- video.description %>
+      <p
+        class="
+          videoTextContainer
+          videoDescriptionText
+          <%- video.description ? '' : 'emptyDescription' %>
+        "
+      >
+        <%= video.description ? video.description : `<span>${e('emptyDescription')}</span>` %>
       </p>
       <!-- <p class="videoTextContainer"><%- video.account.host %></p> -->
     </div>
@@ -43,14 +44,15 @@
       <div class="preloaderwr">
         <div class="preloader5"><span></span><span></span><span></span></div>
       </div>
+      <% if (video.state.id !== 1) { %> Transcoding <% } else {%>
       <button
         class="attachVideoToPost tooltip hidden ghostButton"
         title="<%- e('attachVideoToPost') %>"
         videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
-        videoTranscoding="<%- video.state.id !== 1 %>"
       >
         <i class="fas fa-signature"></i> <%- e('attachVideoToPostShort') %>
       </button>
+      <%}%>
     </div>
     <div class="videoItemPart removeButtonWrapper">
       <button

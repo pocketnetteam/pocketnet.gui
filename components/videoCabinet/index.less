@@ -13,7 +13,7 @@
     .singleVideoSection {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
 
         padding: @rhythm * 2 0;
 
@@ -28,6 +28,8 @@
 
     .videoName {
         width: 25%;
+
+        position: relative;
 
         font-size: 0.9em;
     }
@@ -45,8 +47,9 @@
 
     .videoDescriptionText {
         white-space: normal;
-        width: 200px;
         height: 60px;
+
+        position: relative;
 
         line-height: 20px;
         display: -webkit-box;
@@ -65,7 +68,14 @@
     }
 
     .emptyDescription {
+        border-radius: 5px;
 
+        color: rgba(14, 28, 43, 0.4);
+        background-color: #fafafa;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .videoNameDate {
@@ -754,17 +764,6 @@
         top: 2px;
 
         color: rgba(14, 28, 43, 0.4);
-    }
-
-    .transcodingPreloader {
-        background-color: rgba(0, 0, 0, 0.8);
-
-        width: 100%;
-        height: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
 
     .metricsContainer {

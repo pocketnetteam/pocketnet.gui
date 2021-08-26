@@ -199,10 +199,9 @@ var videoCabinet = (function () {
         clearInterval(transcodingIntervals[id]);
         const videoElement = el.videoContainer.find(`[uuid="${id}"]`);
 
-        videoElement.find('.transcodingPreloader').addClass('hidden');
-        videoElement
-          .find('.attachVideoToPost')
-          .attr('videoTranscoding', 'false');
+        // videoElement
+        //   .find('.attachVideoToPost')
+        //   .attr('videoTranscoding', 'false');
       },
     };
 
@@ -333,22 +332,8 @@ var videoCabinet = (function () {
             //button for creating post with video
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
-              const transcodingInProgress =
-                $(this).attr('videoTranscoding') === true;
 
-              if (transcodingInProgress) {
-                dialog({
-                  html: self.app.localization.e('videoTranscoding'),
-                  btn1text: self.app.localization.e('spostnow'),
-                  btn2text: self.app.localization.e('waitForTranscoding'),
-
-                  success: function () {
-                    renders.addButton(videoLink);
-                  },
-                });
-              } else {
-                renders.addButton(videoLink);
-              }
+              renders.addButton(videoLink);
             });
             //botton for video removing
             removeVideo.on('click', function () {
