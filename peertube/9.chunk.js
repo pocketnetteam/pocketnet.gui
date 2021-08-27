@@ -5293,6 +5293,9 @@ var CapLevelController = /*#__PURE__*/function () {
   };
 
   _proto.getDimensions = function getDimensions() {
+
+    console.log("getDimensions")
+
     if (this.clientRect) {
       return this.clientRect;
     }

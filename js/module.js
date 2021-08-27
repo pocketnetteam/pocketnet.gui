@@ -625,6 +625,45 @@ nModule = function(){
 		return p.history && p.el
 	}
 
+	var beforegetdata = function(settings, clbk){
+
+		if (self.map.preshell && settings.el && isMobile()){
+
+			self.shell({
+
+				name :  'preshell',
+				el :   settings.el,
+				data : {},
+
+				animation: settings.animation,
+				fast : settings.fast
+
+			},
+
+			function(p){
+
+				if (primary(settings) && !settings.inWnd && !settings.noscroll && !settings.goback) {
+					self.app.actions.scrollToTop()
+				}
+
+				delete settings.animation
+
+				settings.fast = true
+
+				if (clbk)
+					clbk()
+
+			}, true)
+
+		}
+		else{
+
+			if (clbk)
+				clbk()
+
+		}
+	}
+
 	self.add = function(_settings, p){
 
 		topPreloader(10);
@@ -643,44 +682,47 @@ nModule = function(){
 		settings = _.extend(settings, add);
 		settings = _.extend(settings, p);	
 
+		beforegetdata(settings, function(){
+			self.user.isState(function(state){	
+				
+				
+				settings.getdata(function(data){
+					
 
-		self.user.isState(function(state){	
-			
-			settings.getdata(function(data){
+					topPreloader(45);
 
-				topPreloader(45);
+					settings.data = data || {};
 
-				settings.data = data || {};
+					if(p.preshell) p.preshell();
 
-				if(p.preshell) p.preshell();
+					self.shell(settings, function(p){
 
-				self.shell(settings, function(p){
+						topPreloader(100);	
 
-					topPreloader(100);	
+						p.clbk = addToFunction(p.clbk, function(){
 
-					p.clbk = addToFunction(p.clbk, function(){
+							if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+								self.app.actions.scrollToTop()
+							}
 
-						if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
-							self.app.actions.scrollToTop()
-						}
+							if (settings.auto){
+								settings.auto(p)
+							}
 
-						if (settings.auto){
-							settings.auto(p)
-						}
-
-					})				
+						})				
 
 
-					if (settings.init)
-						settings.init(p)
+						if (settings.init)
+							settings.init(p)
 
-				}, frommodule)
+					}, frommodule)
 
-			}, {
-				state : state,
-				settings : settings
-			});	
+				}, {
+					state : state,
+					settings : settings
+				});	
 
+			})
 		})
 	}
 

@@ -266,7 +266,9 @@ var author = (function(){
 										embedding : {
 											type : 'channel',
 											id : author.address
-										}
+										},
+
+										url : 'https://'+self.app.options.url+'/' + self.app.platform.api.authorlink(author.address, true)
 									}
 								})
 								
@@ -392,7 +394,8 @@ var author = (function(){
 
 							actions.donate(id)
 
-							_el.tooltipster('hide')	
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
 
 						})
 
@@ -404,7 +407,8 @@ var author = (function(){
 								}
 							})
 
-							_el.tooltipster('hide')	
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
 
 						})
 						
@@ -416,7 +420,8 @@ var author = (function(){
 								}
 							})
 
-							_el.tooltipster('hide')	
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
 
 						})
 						
@@ -548,7 +553,9 @@ var author = (function(){
 
 			info : function(_el){
 
-				self.sdk.ustate.get(author.address, function(){
+				
+
+				
 
 					author.state = self.sdk.ustate.storage[author.address]
 
@@ -561,7 +568,7 @@ var author = (function(){
 							author : author
 						},
 
-						animation : 'fadeIn',
+						animation : false,
 
 					}, function(p){
 
@@ -580,7 +587,7 @@ var author = (function(){
 						})
 					})
 
-				})
+			
 			},
 
 			followers : function(_el, report){
@@ -1110,12 +1117,12 @@ var author = (function(){
 
 				reports[r].active = true;
 
-			renders.report(reports[r], null, ini)
-			renders.menu()
-
-			if(isTablet()){
+			if (isTablet()){
 				renders.info(el.c.find('.mobileinfo'))
 			}
+
+			renders.report(reports[r], null, ini)
+			renders.menu()
 
 			self.app.user.isState(function(state){
 
@@ -1131,14 +1138,15 @@ var author = (function(){
 
 			})
 			
-			upbutton = self.app.platform.api.upbutton(el.up, {
-				top : function(){
+			if(!isMobile())
+				upbutton = self.app.platform.api.upbutton(el.up, {
+					top : function(){
 
-					return '65px'
-				},
-				class : 'light',
-				rightEl : el.c.find('.leftpanelcell')
-			})	
+						return '65px'
+					},
+					class : 'light',
+					rightEl : el.c.find('.leftpanelcell')
+				})	
 
 
 			/*self.app.platform.sdk.contents.get(author.address, function(contents){
@@ -1198,63 +1206,72 @@ var author = (function(){
 
 				initreports()
 
-				self.sdk.users.addressByName(p.address, function(address){
+				self.loadTemplate({
+					name : 'info'
+				}, function(){
 
-					if (address){
-						author.address = address
+					self.sdk.users.addressByName(p.address, function(address){
 
-
-						self.sdk.users.get(author.address, function(){
-
-							if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
-								reports.shares.name = self.app.localization.e('uposts')
-
-								/*if(self.app.curation()){
-									self.nav.api.load({
-										open : true,
-										href : 'userpage',
-										history : true
-									})
-				
-									return
-								}*/
-							}
-							else
-							{
-								reports.shares.name = self.app.localization.e('myuposts')
-
-
-								if(!self.app.user.validate()){
-
-									self.nav.api.go({
-										href : 'userpage?id=test',
-										history : true,
-										open : true
-									})
-
-									return;
-								}
-							
-							}
-
-							author.data = self.sdk.users.storage[author.address]
-							//author.state = self.sdk.ustate.storage[author.address]
-
-							var data = {
-								author : author
-							};
-
-							clbk(data);
-
-						})
-					}
-
-					else
-					{
 						
-					}
 
-					
+						if (address){
+							author.address = address
+
+							self.sdk.ustate.get(author.address, function(){
+								self.sdk.users.get(author.address, function(){
+
+									if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+										reports.shares.name = self.app.localization.e('uposts')
+
+										/*if(self.app.curation()){
+											self.nav.api.load({
+												open : true,
+												href : 'userpage',
+												history : true
+											})
+						
+											return
+										}*/
+									}
+									else
+									{
+										reports.shares.name = self.app.localization.e('myuposts')
+
+
+										if(!self.app.user.validate()){
+
+											self.nav.api.go({
+												href : 'userpage?id=test',
+												history : true,
+												open : true
+											})
+
+											return;
+										}
+									
+									}
+
+									author.data = self.sdk.users.storage[author.address]
+									//author.state = self.sdk.ustate.storage[author.address]
+
+									var data = {
+										author : author
+									};
+
+									clbk(data);
+
+								})
+							})
+						}
+
+						else
+						{
+							
+						}
+
+						
+					})
+
 				})
 				
 
@@ -1290,8 +1307,6 @@ var author = (function(){
 			
 			init : function(p){
 
-				
-
 				state.load();
 
 				el = {};
@@ -1308,7 +1323,6 @@ var author = (function(){
 				el.contents = el.c.find('.contentswrapper')
 
 				el.info = el.c.find('.authorinfoWrapper')
-
 
 				make(true);
 				initEvents();

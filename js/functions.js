@@ -548,7 +548,7 @@
 		}
 
 		var wndfixed = function(){
-			wnd.css('top', app.lastScrollTop)
+			/*wnd.css('top', app.lastScrollTop)*/
 		}
 
 		var render = function(tpl){
@@ -582,8 +582,8 @@
 					"html"	: h
 				});
 
-				wnd.css('top', app.lastScrollTop)
-			   	wnd.css('height', app.height)
+				/*wnd.css('top', app.lastScrollTop)
+			   	wnd.css('height', app.height)*/
 
 		   	if(!p.header) wnd.addClass('noheader')
 
@@ -613,11 +613,13 @@
 			}
 
 			wnd.css("display", "block");
+
+			app.actions.playingvideo(null);
 		}
 
 		var resize = function(){
-			wnd.css('top', app.lastScrollTop)
-			wnd.css('height', app.height)
+			/*wnd.css('top', app.lastScrollTop)
+			wnd.css('height', app.height)*/
 		}
 
 		var initevents = function(){
@@ -761,6 +763,32 @@
 		return self;
 	}
 
+	tooltipMobileDialog = function(p){
+		if(!p) p = {};
+
+		p.wrap = true;
+
+		p.class = 'tooltipMobileDialog';
+
+		p.html = '<div class="mobiledialogcontent">'+(p.html || '')+'</div><div class="closeButton"><button class="button ghost"><i class="far fa-times-circle"></i> Close</button></div>'
+
+
+		var c = p.clbk || function(){}
+
+		p.clbk = function(el){
+			
+			el.on('click', function(){
+				self.destroy()
+			})
+
+			c(el)
+		}
+
+		var self = new dialog(p);
+
+		return self;
+	}
+
 	menuDialog = function(p){
 		if(!p) p = {};
 
@@ -778,9 +806,7 @@
 
 			_.each(p.items, function(item, i){
 				h += '<div class="item ' + item.class + '" item="'+i+'">'
-
 					h += item.text
-
 				h += '</div>'
 			})
 
@@ -1305,6 +1331,7 @@
 
 			}
 
+			console.log('p', p)
 
 			if(p.clbk) p.clbk($el, self);
 
@@ -3992,8 +4019,14 @@
 					if(parameter.type == 'boolean') 
 						value = $(this).is(":checked") ? 1 : 0;
 
-					if(parameter.type == 'email'){
+					if (parameter.type == 'email'){
 						if(value == '_@_._') value = ''
+					}
+
+					if (parameter.type == 'nickname'){
+						value = pstranslit(value)
+
+						$(this).val(value); 	
 					}
 
 					if (parameter.isValid(value))
@@ -4029,6 +4062,37 @@
 			})
 
 		}
+	}
+
+	var pstranslit = function(word){
+		var answer = '';
+		var converter = {
+			'а': 'a',    'б': 'b',    'в': 'v',    'г': 'g',    'д': 'd',
+			'е': 'e',    'ё': 'e',    'ж': 'zh',   'з': 'z',    'и': 'i',
+			'й': 'y',    'к': 'k',    'л': 'l',    'м': 'm',    'н': 'n',
+			'о': 'o',    'п': 'p',    'р': 'r',    'с': 's',    'т': 't',
+			'у': 'u',    'ф': 'f',    'х': 'h',    'ц': 'c',    'ч': 'ch',
+			'ш': 'sh',   'щ': 'sch',  'ь': '',     'ы': 'y',    'ъ': '',
+			'э': 'e',    'ю': 'yu',   'я': 'ya',
+	 
+			'А': 'A',    'Б': 'B',    'В': 'V',    'Г': 'G',    'Д': 'D',
+			'Е': 'E',    'Ё': 'E',    'Ж': 'Zh',   'З': 'Z',    'И': 'I',
+			'Й': 'Y',    'К': 'K',    'Л': 'L',    'М': 'M',    'Н': 'N',
+			'О': 'O',    'П': 'P',    'Р': 'R',    'С': 'S',    'Т': 'T',
+			'У': 'U',    'Ф': 'F',    'Х': 'H',    'Ц': 'C',    'Ч': 'Ch',
+			'Ш': 'Sh',   'Щ': 'Sch',  'Ь': '',     'Ы': 'Y',    'Ъ': '',
+			'Э': 'E',    'Ю': 'Yu',   'Я': 'Ya'
+		};
+	 
+		for (var i = 0; i < word.length; ++i ) {
+			if (converter[word[i]] == undefined){
+				answer += word[i];
+			} else {
+				answer += converter[word[i]];
+			}
+		}
+	 
+		return answer;
 	}
 
 
@@ -4388,7 +4452,7 @@
 				if (self.require) limits[0] = 1;
 				if (self.format.Length) limits[1] = self.format.Length;
 
-				mask.regex = "[a-zA-Z0-9_]{"+limits.join(',')+"}";
+				mask.regex = "[а-яА-Яa-zA-Z0-9_]{"+limits.join(',')+"}";
 
 				masked = true;
 				
@@ -6058,10 +6122,17 @@
 
 	inView = function(els, p){
 
+		console.log('inView', els.length)
+
+		var st = 0,
+			sh = 0;
+
 		if(!p) p = {};
 
 		if(!p.inel) {
 			p.inel = $(window);
+			st = p.app.lastScrollTop;
+			sh = app.height;
 		}
 
 		else{
@@ -6071,6 +6142,9 @@
 			catch (e){
 				p.elOffset = 0;
 			}
+
+			st = inel.scrollTop()
+			sh = inel.height()
 		}
 		
 		if(!p.offset) {
@@ -6081,14 +6155,9 @@
 
 		p.elOffset = 0;
 
-		
-
 		if(!p.mode) p.mode = "part";
 
 		var inel = p.inel // $(p.inel);
-
-		var st = inel.scrollTop()
-		var sh = inel.height()
 
 		var range = {
 			top : st - p.offset,
@@ -6117,12 +6186,8 @@
 			var _all = offsetTop >= range.top && 
 				bottom <= range.bottom 
 
-				
-
 			if (p.mode == 'line'){
-
 				var line = offsetTop - st < rangeLine.top && offsetTop + height > rangeLine.bottom
-
 				return line
 			}
 
@@ -6141,7 +6206,6 @@
 
 			if(p.mode == "part")
 			{
-
 				if (_part)
 
 					return true;
@@ -6755,6 +6819,7 @@
 			})
 
 		var self = this;
+		var needclear = false
 		
 		var directiontoprop = function(direction, value){
 
@@ -6782,30 +6847,42 @@
 
 		var applyDirection = function(direction, v){
 			if (direction.positionclbk){
+				console.log("positionclbk", v)
+				needclear = true
 				direction.positionclbk(v)
 			}
 		}
 
 		self.clear = function(){
-			p.el.css({transform: ""});
-			p.el.css({transition: ""});
+
+			if (needclear){
+
+				console.log("CLEARED")
+
+				p.el.css({transform: ""});
+				p.el.css({transition: ""});
+				
+				_.each(p.directions, function(d){
+					applyDirection(d, 0)
+				})
+			}
 			
-			_.each(p.directions, function(d){
-				applyDirection(d, 0)
-			})
+
+			needclear = false
 		}
 
-		self.backfast = function(){
+		/*self.backfast = function(){
 
 			_.each(p.directions, function(d){
 				if (d.positionclbk)
 					d.positionclbk(0)
 			})
-		}
+		}*/
 
 		self.init = function(){
 
 			var mainDirection = null;
+			
 
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
@@ -6823,10 +6900,12 @@
 							if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
 								mainDirection.clbk()
 							}
-							
 						}
 
-						self.clear()	
+						self.clear()
+							
+
+						return
 
 					}
 
@@ -8591,7 +8670,7 @@
 	        });
 
 	        searchEl.find('.searchIconLabel')
-	        	.on(clickAction(), function(){
+	        	.on('click', function(){
 
 	        		if(!searchInput.val() && p.events.blank){
 	        			p.events.blank()

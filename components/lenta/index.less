@@ -315,6 +315,8 @@
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
+			content-visibility: auto;
+			contain-intrinsic-size: 800px;
 
 			.commentsWrapperHb{
 				min-height: 2 * @rhythm;
@@ -1139,7 +1141,6 @@
 							}
 
 							img{
-								opacity: 0;
 								width: 100%;
 								/*.transition(0.3s);*/
 
@@ -1544,6 +1545,13 @@
 							padding-left: 0;
 						}
 					}	
+
+					.list{
+						.comment{
+							content-visibility: auto;
+							contain-intrinsic-size: 200px;
+						}
+					}
 				}
 
 				.exitFull{
@@ -1699,7 +1707,7 @@
 					&:not(.liked){
 						.starWrapper{
 
-							&:nth-child(1){
+							/*&:nth-child(1){
 								
 								animation: vstars 0.9s ease  0.1s infinite ;
 							}
@@ -1722,7 +1730,7 @@
 							&:nth-child(5){
 								
 								animation: vstars 0.9s ease  0.9s infinite ;
-							}
+							}*/
 
 						}
 					}
@@ -2169,6 +2177,7 @@
 				margin : 0;
 				margin-right: @rhythm;
 				margin-bottom : @rhythm;
+				content-visibility:visible;
 				
 				&:nth-last-child(1){
 					margin-right: 0;

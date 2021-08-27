@@ -186,8 +186,6 @@ var post = (function () {
 			},
 			next: function () {
 
-				el.wnd.off('scroll')
-
 				var nextel = el.c.find('.nextpost');
 
 				nextel.html('<div class="loader"><div class="preloader5"><span></span><span></span><span></span></div></div>')
@@ -383,10 +381,20 @@ var post = (function () {
 
 						fullscreenchange : function(v){
 							self.app.mobile.fullscreenmode(v)
+						},
+
+						play : function(){
+							self.app.actions.playingvideo(player)
+						},
+
+						pause : function(){
+							self.app.actions.playingvideo(null)
 						}
 					};
 
 					$.each(pels, function (key, el) {
+
+
 						PlyrEx(el, options, (_player) => {
 
 							player = _player
@@ -1456,6 +1464,8 @@ var post = (function () {
 					external = null
 
 				}
+
+				self.app.actions.playingvideo(null)
 
 				self.app.el.menu.find('#menu').removeClass('static')
 

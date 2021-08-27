@@ -11,9 +11,10 @@
 	}
 
 	.topvideosWrapper{
-		display: none;
+		display: block;
 		background: #fff;
 		margin-bottom : 10px;
+		min-height: 160px;
 
 		&.hasshares{
 			display: block;
@@ -845,6 +846,9 @@ html {
 
 		.topvideosWrapper{
 			margin-bottom : @rhythm;
+			height: 195px;
+			content-visibility: auto;
+			contain-intrinsic-size: 195px;
 	
 			&.hasshares{
 				display: block;
@@ -941,7 +945,7 @@ html {
 html.mobile,
 html.tablet{
 	#main{
-
+		padding-top : 55px;
 		.bgCaption{
 			display: none;
 		}

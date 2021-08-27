@@ -935,6 +935,7 @@ __map =  {
 		userpage : {
 			uri : "userpage",
 			href : "userpage",
+			preshell : true,
 			add : {
 				el : 'content'
 			},
@@ -1648,6 +1649,7 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+		preshell : true
 		
 	},
 
@@ -1664,6 +1666,7 @@ __map =  {
 	post : {
 		uri : "post",
 		href : "post",
+		preshell : true,
 		add : function(settings, p){
 
 			if(p.inWnd)

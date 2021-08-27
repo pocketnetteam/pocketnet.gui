@@ -147,7 +147,7 @@ var main = (function(){
 			},
 
 			up : function(){
-				self.actions.scroll(0)
+				self.app.actions.scroll(0)
 				lastscroll = 0
 			}
 
@@ -255,12 +255,13 @@ var main = (function(){
 
 			topvideos: function (show) {
 				
-
 				var showmoreby = el.topvideos
 
-				showmoreby.removeClass('hasshares')
+				//showmoreby.removeClass('hasshares')
 
 				if (show){
+
+					showmoreby.removeClass('hidden')
 					self.app.platform.papi.horizontalLenta(showmoreby, function (e,p) {
 
 						external = p
@@ -287,8 +288,8 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
-							if (shares.length > 2){
-								showmoreby.addClass('hasshares')
+							if (shares.length <= 2){
+								showmoreby.addClass('hidden')
 							}
 							
 						},
@@ -321,13 +322,16 @@ var main = (function(){
 				}
 
 				else{
+
 					if(external){
 						external.destroy()
 						external = null
 					}
 
 					showmoreby.html('')
-					showmoreby.removeClass('hasshares')
+					//showmoreby.removeClass('hasshares')
+
+					showmoreby.addClass('hidden')
 				}
 
 				
@@ -393,6 +397,7 @@ var main = (function(){
 			},
 			lentawithsearch : function(clbk, p){
 
+				
 				if(searchvalue){
 
 					var value = searchvalue.replace('tag:', "#");
@@ -575,6 +580,8 @@ var main = (function(){
 
 			upbutton : function(){
 				if(upbutton) upbutton.destroy()
+
+				if(isMobile()) return
 
 				upbutton = self.app.platform.api.upbutton(el.up, {
 					top : function(){
@@ -779,6 +786,9 @@ var main = (function(){
 
 			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 				renders.topvideos(true)
+			else{
+				renders.topvideos(false)
+			}
 
 			
 				
@@ -786,6 +796,8 @@ var main = (function(){
 
 		var showCategories = function(t){
 			if (el.c && isMobile()){
+
+				self.app.mobile.vibration.small()
 
 				if (t){
 					el.c.addClass('leftshowed')
@@ -961,8 +973,6 @@ var main = (function(){
 				renders.post(null)
 
 				hsready = false
-
-				
 
 				//searchvalue = '', searchtags = null
 

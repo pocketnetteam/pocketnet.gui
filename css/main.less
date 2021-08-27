@@ -81,6 +81,47 @@ h3{
     font-size: 1em;
 }
 
+.preshell{
+    .blur{
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        filter: blur(5px);
+    }
+
+    .spacertable{
+        background: fade(@color-black2, 2);
+        height: 22 * @rhythm;
+        margin-bottom : 4 * @rhythm;
+    }
+
+    .textline{
+        background: fade(@color-black2, 4);
+        height: 21px;
+        margin-bottom : @rhythm;
+        border-radius: 3px;
+
+        &.light{
+            background: fade(@color-black2, 2);
+        }
+
+        &.slight{
+            background: fade(@color-gray-slight, 6);
+        }
+
+        &.colored{
+            background: fade(@color-main, 7);
+        }
+
+        &.contrast{
+            background: fade(@color-contrast, 7);
+        }
+
+        &.yellow{
+            background: fade(#FFAE00, 7);
+        }
+    }
+}
+
 mark {
     background: fade(@color-contrast, 90);
     color : #fff;
@@ -2117,9 +2158,11 @@ input[type=radio].radio:checked + label {
 }
 
 .wnd{
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
+    bottom : 0;
+    right : 0;
     width : 100%;
     display: none;
     z-index: 1005;
@@ -2128,6 +2171,7 @@ input[type=radio].radio:checked + label {
         z-index: 2005; 
     }
 
+    
     .wndback{
         width: 100%;
         height: 100%;
@@ -2769,6 +2813,12 @@ input[type=radio].radio:checked + label {
                 }
             }
         }
+
+        &.optimized{
+            >div{
+                display: none!important;
+            }
+        }
     }
 }
 
@@ -2919,49 +2969,58 @@ input[type=radio].radio:checked + label {
     }
 }
 .preloader5 {
-   display:inline-block;
-   font-size:0px;
-   padding:0px;
+   display: block;
+   margin : 0 auto;
+   position: relative;
+   width: 30px;
+   height: 12px;
+   content-visibility : auto;
 
    &.maincolor{
     span{
         background: @color-main;
     }
-    
    }
 
    &.goldcolor{
     span{
         background: #FFAE00;
     }
-    
    }
+}
+
+.vjs-play-progress{
+    content-visibility : auto;
+    backface-visibility: hidden;
 }
 .preloader5 span {
    vertical-align:middle;
    border-radius:50%;
    background: @color-gray-light;
-   display:inline-block;
+   display:block;
    width:6px;
    height:6px;
-   margin:3px 2px;
+   position: absolute;
    -webkit-animation:preloader5 0.8s linear infinite alternate;
    animation:preloader5 0.8s linear infinite alternate;
-
-
+   top : 3px;
    
+   content-visibility : auto;
 }
 .preloader5 span:nth-child(1) {
    -webkit-animation-delay:-0.8;
    animation-delay:-0.8s;
+   left : 3px;
 }
 .preloader5 span:nth-child(2) {
    -webkit-animation-delay:-0.53333s;
    animation-delay:-0.53333s;
+   left : 12px;
 }
 .preloader5 span:nth-child(3) {
    -webkit-animation-delay:-0.26666s;
    animation-delay:-0.26666s;
+   left : 21px;
 }
 @keyframes preloader5 {
    from {transform: scale(0, 0);}
@@ -3436,6 +3495,32 @@ input[type=radio].radio:checked + label {
     }
 
     z-index: 10000;
+}
+
+.tooltipMobileDialog{
+    z-index: 25000;
+    font-size: 1.1em;
+
+    .buttons{
+        display: none;
+    }
+
+    .menuitem{
+        margin-top : 1.5 * @rhythm;
+    }
+
+    .mobiledialogcontent{
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .closeButton{
+        margin-top : 3 * @rhythm;
+
+        button{
+            width: 100%;
+        }
+    }
 }
 
 .refadd{
@@ -4398,14 +4483,11 @@ input[type=radio].radio:checked + label {
     .showmorebywrapper{
         overflow: hidden;
         overflow-x: scroll;
-        
+            
         scrollbar-width: none;
 
-        /*>div{
-            will-change: transform;
-        }*/
-        
-        
+        >div{
+        }
     
         &::-webkit-scrollbar{
             height: 4px;
@@ -4495,14 +4577,32 @@ html.tablet{
         z-index: 300;
         .shadowSmall();
         -webkit-overflow-scrolling: touch;
-        
+
         &.active{
             -webkit-transform: translateX(100%);
             transform: translateX(100%);
             opacity: 1;
+
         }
     }
     
+}
+html.tablet.fullscreen,
+html.mobile.fullscreen{
+
+    /*background: #000;*/
+
+    .matrixchatwrapper{
+        display: none!important;
+    }
+
+    #menuWrapper{
+        display: none!important;
+    }
+
+    #navigationWrapper{
+        display: none!important;
+    }
 }
 
 .windowsContainer{
@@ -4774,25 +4874,19 @@ html.tablet{
         position : absolute;
         bottom : -4%;
         right : -4%;
-        .transition(0.3s);
         .shadowText();
-       
         line-height: 0.25em;
         font-size: 0.25em;
-        
         opacity: 1;
 
         .fa-certificate{
             color : fade(@color-main, 100);
-            animation: realperson-color-change-bg 3s infinite;
         }
 
         .fa-check{
             color : #fff;
             box-shadow: none;
         }
-
-       
     }
 
     &:hover{
@@ -4804,12 +4898,6 @@ html.tablet{
 }
 
 
-@keyframes realperson-color-change-bg {
-    0% { color: fade(@color-bright, 80);  }
-    50% { color: fade(@color-main, 100); }
-    100% { color: fade(@color-bright, 80);}
-}
-
 .userpic{
     width: 40px;
     height: 40px;
@@ -4818,26 +4906,12 @@ html.tablet{
     text-align: center;
     background: transparent;
     font-weight: 200;
-                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#6e6e6e+0,6e6e6e+41,035075+100 */
-    background: #6e6e6e; /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #6e6e6e 0%, #6e6e6e 41%, #035075 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #6e6e6e 0%,#6e6e6e 41%,#035075 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #6e6e6e 0%,#6e6e6e 41%,#035075 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6e6e6e', endColorstr='#035075',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: #a0a0a0; /* Old browsers */
     color: #fff;
     cursor: pointer;
-    .transition(0.3s);
     .shadowSmall();
 
-    &:hover{
-        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#046da1+0,046da1+42,035075+100 */
-        background: #046da1; /* Old browsers */
-        background: -moz-linear-gradient(-45deg, #046da1 0%, #046da1 42%, #035075 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(-45deg, #046da1 0%,#046da1 42%,#035075 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(135deg, #046da1 0%,#046da1 42%,#035075 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#046da1', endColorstr='#035075',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */    
-    }
-    }
+}
 
 
 
@@ -5745,21 +5819,24 @@ html.stblack{
         &.scrollmodedown{
 
             #menu .menuWrapper{
-                top : -65px;
+                transform:  translateY(-65px);
             }
     
             #panelWrapper{
-                padding-top: 0;
-                display: none!important;
+                transform:  translateY(-165px);
                 
             }
     
             #navigation{
-                bottom : -90px;
+                
+
+                .nmenu{
+                    transform: translateY(90px);
+                }
 
                 .fakem{
                     display: block;
-                    position: fixed;
+                    position: absolute;
                     left : 0;
                     bottom : 0;
                     right: 0;
@@ -6168,11 +6245,7 @@ html.stblack{
 }
 /*t*/ @media only screen and (max-width: 768px){
 
-    html.chatshowed{
-        /*#main{
-            display: none;
-        }*/
-    }
+
 
     button{
         &.medium{

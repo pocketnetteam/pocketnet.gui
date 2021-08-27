@@ -644,6 +644,8 @@ Application = function(p)
 		prepareMap();
 
 		self.options.fingerPrint = hexEncode('fakefingerprint');
+
+		
 		
 		self.localization.init(function(){
 
@@ -847,10 +849,61 @@ Application = function(p)
 
 	self.height = 0
 	self.width = 0
+	self.fullscreenmode = false
+	self.playingvideo = null
 
 	var blockScroll = false
+	var optimizeTimeout = null
 
 	self.actions = {
+
+		restore : function(){
+
+			if (optimizeTimeout) clearTimeout(optimizeTimeout)
+
+				optimizeTimeout = null
+			
+			window.requestAnimationFrame(function(){
+				self.el.content.css('width', 'auto')
+				self.el.content.css('height', 'auto')
+				self.el.content.removeClass('optimized')
+			})
+		},
+
+		optimize : function(){
+
+			if (optimizeTimeout) clearTimeout(optimizeTimeout)
+
+				optimizeTimeout = setTimeout(function(){
+					var w = self.el.content.width()
+					var h = self.el.content.height()
+
+					window.requestAnimationFrame(function(){
+						self.el.content.width(w + 'px')
+						self.el.content.height(h + 'px')
+						self.el.content.addClass('optimized')
+					})
+				}, 300)
+
+			
+		},
+
+		playingvideo : function(v){
+
+			if (self.playingvideo && self.playingvideo.playing){
+
+				try{
+					self.playingvideo.pause()
+				}
+				catch(e){
+
+				}
+				
+			}
+
+			self.playingvideo = v
+
+		},
 
 		up : function(scrollTop, el, time){
 			_scrollTop(scrollTop, el, time)
@@ -862,6 +915,10 @@ Application = function(p)
 
 		scrollToTop: function(){
 			self.actions.scroll(0)
+		},
+
+		backupscroll : function(){
+			self.actions.scroll(self.lastScrollTop)
 		},
 
 		scroll : function(to){
@@ -878,8 +935,14 @@ Application = function(p)
 		},
 
 		getScroll : function(){
-			self.lastScrollTop = self.el.window.scrollTop()
-			return self.lastScrollTop
+
+			var s = self.el.window.scrollTop()
+
+			if(!self.fullscreenmode){
+				self.lastScrollTop = s
+			}
+
+			return s
 		},
 
 		offScroll : function(){
@@ -930,6 +993,7 @@ Application = function(p)
 			delayresize = null
 
 		var body = document.body
+		var mobile = isMobile()
 
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
@@ -938,49 +1002,60 @@ Application = function(p)
 		window.removeEventListener('resize')*/
 
 
-		
+		//self.el.content.css('width', self.width + 'px')
+
+		var scrolling = _.throttle(function(){
+			window.requestAnimationFrame(function(){
+
+				if(!self.el.window) return
+				if (self.fullscreenmode) return
+
+				var lastScrollTop = self.lastScrollTop
+
+				var scrollTop = self.actions.getScroll()
+
+				_.each(self.events.scroll, function(s){
+					s(scrollTop, blockScroll)
+				})
+
+				if(mobile){
+					var cs = (lastScrollTop + 400 < scrollTop || lastScrollTop - 400 < scrollTop)
+
+					if (scrollTop > 900 && cs ){
+
+						if(!self.el.html.hasClass('scrollmodedown') && lastScrollTop + 400 < scrollTop)
+							self.el.html.addClass('scrollmodedown')
+
+					}
+					else{
+
+						if (self.el.html.hasClass('scrollmodedown'))
+							self.el.html.removeClass('scrollmodedown')
+						
+						
+					}
+				}
+
+			})
+		}, 100)
 
 		window.addEventListener('scroll', function(){
 
-			/*if(!body.classList.contains('disable-hover')) {
-				body.classList.add('disable-hover')
-			}*/
+			scrolling()
 
 			delayscroll = slowMade(function(){
-
 				window.requestAnimationFrame(function(){
 
 					if(!self.el.window) return
-
-					var lastScrollTop = self.lastScrollTop
-					var scrollTop = self.actions.getScroll()
-
-					_.each(self.events.scroll, function(s){
-						s(scrollTop, blockScroll)
+					if (self.fullscreenmode) return
+					
+					_.each(self.events.delayedscroll, function(s){
+						s(self.lastScrollTop, blockScroll)
 					})
-
-					//body.classList.remove('disable-hover')
-
-					/*if(mobile){
-						if(scrollTop > 200 && lastScrollTop - 100 < self.lastScrollTop){
-							self.el.html.addClass('scrollmodedown')
-						}
-						else{
-							self.el.html.removeClass('scrollmodedown')
-						}
-					}*/
-
 				})
 
-			}, delayscroll, 60)
+			}, delayscroll, 100)
 
-			/*delayscrollopt = slowMade(function(){
-
-				window.requestAnimationFrame(function(){
-					body.classList.remove('disable-hover')
-				})
-
-			}, delayscrollopt, 300)*/
 		})
 
         window.addEventListener('resize', function(){
@@ -990,6 +1065,8 @@ Application = function(p)
 				window.requestAnimationFrame(function(){
 
 					if(!self.el.window) return
+					if (self.fullscreenmode) return
+
 					var scrollTop = self.actions.getScroll(),
 						height = self.el.window.height(),
 						width = self.el.window.width();
@@ -1014,7 +1091,8 @@ Application = function(p)
 
 	self.events = {
 		scroll : {},
-		resize : {}
+		resize : {},
+		delayedscroll : {}
 	}
 
 	self.loadModules = function(p){
@@ -1353,6 +1431,20 @@ Application = function(p)
 			v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
 
 			self.mobile.unsleep(v)
+
+			//v ? self.el.html.addClass('fullscreen') : self.el.html.removeClass('fullscreen')
+
+			
+
+			if(!v){
+				setTimeout(function(){
+					self.fullscreenmode = v
+					self.actions.scroll(self.lastScrollTop)
+				}, 10)
+			}
+			else{
+				self.fullscreenmode = v
+			}
 		},
 
 		screen : {
