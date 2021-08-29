@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0;
+		video = false, isotopeinited = false, videosVolume = 0, downloadMenus = {};
 
 
 		var shareInitedMap = {},
@@ -509,6 +509,17 @@ var lenta = (function(){
 							players[share.txid].id = vel.attr('pid')
 							players[share.txid].shadow = false
 
+							var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
+							if (videoId && self.sdk.local.videos.get(videoId) != undefined) {
+								el.find('.metapanelitem.canBeDownloaded.' + share.txid).hide();
+								el.find('.metapanelitem.downloading.' + share.txid).hide();
+								el.find('.metapanelitem.downloaded.' + share.txid).show();
+							} else {
+								el.find('.metapanelitem.canBeDownloaded.' + share.txid).show();
+								el.find('.metapanelitem.downloading.' + share.txid).hide();
+								el.find('.metapanelitem.downloaded.' + share.txid).hide();
+							}
+
 							actions.setVolume(players[share.txid])
 
 							if (video){
@@ -573,6 +584,10 @@ var lenta = (function(){
 					}	
 
 					s.logoType = self.app.meta.fullname
+
+					el.find('.metapanelitem.canBeDownloaded.' + share.txid).hide();
+					el.find('.metapanelitem.downloading.' + share.txid).show();
+					el.find('.metapanelitem.downloaded.' + share.txid).hide();
 
 					PlyrEx(pels[0], s, callback, readyCallback)
 
@@ -646,7 +661,7 @@ var lenta = (function(){
 					}
 
 
-					renders.share(share, null, true)
+					renders.share(share, clbk, true)
 				}
 				
 
@@ -1735,6 +1750,146 @@ var lenta = (function(){
 				var id = $(this).closest('.share').attr('id');
 
 				actions.postscores(id)
+			},
+
+			downloadVideo : function() {
+				var id = $(this).closest('.share').attr('id');
+				var dwnloadBtn = el.c.find('.downloadBtn.' + id);
+				if (downloadMenus[id] && downloadMenus[id].useLocal == true) return;
+				if (downloadMenus[id] && dwnloadBtn.length == 1)
+					downloadMenus[id].tooltip.tooltipster('show');
+				else {
+					if (!players[id] || !players[id].p || !players[id].p.embed) return;
+					var embed = players[id].p.embed;
+					if (!embed.details || !embed.details.uuid || !embed.details.streamingPlaylists || embed.details.streamingPlaylists.length <= 0) return;
+					var streamingPlaylist = embed.details.streamingPlaylists[0];
+					if (!streamingPlaylist || !streamingPlaylist.files || streamingPlaylist.files.length <= 0) return;
+					// Generate the HTML menu
+					var menuContent = '<div class="sharepostmenu downloadMenu">';
+					_.each(streamingPlaylist.files, function(file) {
+						if (!file || !file.resolution || !file.resolution.label || !file.fileDownloadUrl) return;
+						menuContent += `<div class="menuitem table"><div class="label download${file.resolution.id}"><span>${file.resolution.label}</span>`;
+						if (file.size)
+							menuContent += `<span class="lightColor">${formatBytes(file.size)}</span>`;
+						menuContent += `</div></div>`;
+					});
+					menuContent += "</div>";
+					// Open the menu
+					downloadMenus[id] = { tooltip: dwnloadBtn, events: false };
+					downloadMenus[id].tooltip.tooltipster({
+						content: $(menuContent),
+						theme: 'lighttooltip',
+						maxWidth : 200,
+						zIndex : 9999999,
+						trigger : 'click',
+						position: 'left',
+						interactive: true,
+						functionReady: function() {
+							// Menu is now open, add events if needed
+							if (!downloadMenus[id].events) {
+								_.each(streamingPlaylist.files, function(file) {
+									if (!file || !file.resolution || !file.resolution.id) return;
+									$('.label.download' + file.resolution.id).on('click', function() {
+										events.downloadVideoFromUrl(embed.details.uuid, file, embed.details, id);
+										downloadMenus[id].tooltip.tooltipster('hide');
+									});
+								});
+								downloadMenus[id].events = true;
+							}
+						}
+					});
+					downloadMenus[id].tooltip.tooltipster('show');
+				}
+			},
+
+			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
+				if (!video || !video.fileDownloadUrl) return;
+				// Mobile
+				if (isMobile() && window.cordova && window.cordova.file) {
+					// Check if external storage is available, if not, use the internal
+					var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+					// open target file for download
+					window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+						// Create a downloads folder
+						dirEntry.getDirectory('Downloads', { create: true }, function (dirEntry2) {
+							// Get/create a folder for this video
+							dirEntry2.getDirectory(id, { create: true }, function (dirEntry3) {
+								var infos = {
+									thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
+								}
+								// Create JSON file for informations
+								dirEntry3.getFile('info.json', { create: true }, function (infoFile) {
+									// Write into file
+									infoFile.createWriter(function (fileWriter) {
+										fileWriter.write(infos);
+									});
+								});
+								// Download the video
+								dirEntry3.getFile(video.resolution.id + '.mp4', { create: true }, function (targetFile) {
+									var downloader = new BackgroundTransfer.BackgroundDownloader();
+									// Create a new download operation.
+									var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
+									var canDownload = el.c.find('.metapanelitem.canBeDownloaded.' + shareId),
+										downloading = el.c.find('.metapanelitem.downloading.' + shareId),
+										downloaded = el.c.find('.metapanelitem.downloaded.' + shareId);
+									canDownload.hide();
+									downloading.show();
+									downloaded.hide();
+									// Start the download and persist the promise to be able to cancel the download.
+									app.downloadPromise = download.startAsync().then(function(e) {
+										// Success
+										console.log("success");
+										// Resolve internal URL
+										window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+											targetFile.internalURL = entry.toInternalURL();
+											self.sdk.local.videos.add(id, { video: targetFile,  infos: infos });
+											downloadMenus[shareId].useLocal = true;
+											actions.openPost(shareId, function() {
+												setTimeout(() => {
+													canDownload.hide();
+													downloading.hide();
+													downloaded.show();
+												}, 200);
+											});
+										});
+									}, function(e) {
+										// Error
+										console.log("error");
+										console.log(e);
+										canDownload.show();
+										downloading.hide();
+										downloaded.hide();
+									}, function(e) {
+										// Progress
+										// console.log("progress");
+										// console.log(e);
+									});
+								});
+							});
+						});
+					});
+				}
+				// Desktop
+				else {
+					var a = document.createElement("a");
+					a.href = video.fileDownloadUrl;
+					a.setAttribute("download", video.resolution.id + '.mp4');
+					a.click();
+				}
+			},
+
+			deleteVideo : function(){
+				var id = $(this).closest('.share').attr('id');
+				if (!players[id] || !players[id].p || !players[id].p.localVideoId) return;
+				self.sdk.local.videos.delete(players[id].p.localVideoId);
+				delete downloadMenus[id];
+				actions.openPost(id, function() {
+					setTimeout(() => {
+						el.c.find('.metapanelitem.canBeDownloaded.' + id).show();
+						el.c.find('.metapanelitem.downloading.' + id).hide();
+						el.c.find('.metapanelitem.downloaded.' + id).hide();
+					}, 200);
+				});
 			},
 
 			like : function(){
@@ -3292,6 +3447,8 @@ var lenta = (function(){
 			el.c.on('click', '.metmenu', events.metmenu)
 			el.c.on('click', '.showmorebyauthor', events.showmorebyauthor)
 			el.c.on('click', '.commentsAction', events.toComments)
+			el.c.on('click', '.downloadBtn', events.downloadVideo)
+			el.c.on('click', '.deleteBtn', events.deleteVideo)
 
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)

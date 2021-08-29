@@ -105,6 +105,31 @@ var metadisplay = function(){ %>
 						
 					</div>
 				<% } %>
+
+				<% if(share.itisvideo()) { %>
+					<div class="metapanelitem canBeDownloaded <%-share.txid%>">
+						<div class="downloadBtn <%-share.txid%>">
+							<i class="fas fa-download"></i>
+						</div>
+					</div>
+
+					<div class="metapanelitem downloading <%-share.txid%> hide">
+						<div class="downloadLoader">Downloading...</div>
+					</div>
+
+					<div class="metapanelitem downloaded <%-share.txid%> hide">
+						<div class="downloadDone">
+							<i class="fas fa-check-circle"></i>
+						</div>
+					</div>
+					<div class="metapanelitem downloaded <%-share.txid%> hide">
+						<div class="deleteBtn <%-share.txid%>">
+							<i class="fas fa-trash"></i>
+						</div>
+					</div>
+				<% } %>
+
+
 			</div>
 			
 

@@ -3221,6 +3221,105 @@ Platform = function (app, listofnodes) {
 
     self.sdk = {
 
+        local: {
+
+            videos: {
+
+                allVideos: {},
+
+                init: function() {
+
+                    var v = self.sdk.local.videos.allVideos;
+
+                    if (window.cordova && window.cordova.file) {
+                        // Check if external storage is available, if not, use the internal
+                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+                        // open target file for download
+                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                            // Create a downloads folder
+                            dirEntry.getDirectory('Downloads', { create: true }, function (dirEntry2) {
+                                var directoryReader = dirEntry2.createReader();
+                                directoryReader.readEntries(function(videoFolders) {
+                                    _.each(videoFolders, function(videoFolder) {
+                                        if (videoFolder.isDirectory) {
+                                            videoFolder.createReader().readEntries(function(files) {
+                                                var videoFile, infoFile;
+                                                _.each(files, function(file) {
+                                                    if (file.isFile && file.name.endsWith('.mp4')) 
+                                                        videoFile = file;
+                                                    if (file.isFile && file.name == 'info.json')
+                                                        infoFile = file;
+                                                });
+                                                if (videoFile) {
+                                                    // Resolve internal URL
+                                                    window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
+                                                        videoFile.internalURL = entry.toInternalURL();
+                                                        // Read info file
+                                                        if (infoFile)  {
+                                                            infoFile.file(function (infoFileBlob) {
+                                                                var reader = new FileReader();
+                                                                reader.onloadend = function() {
+                                                                    try {
+                                                                        v[videoFolder.name] = { video: videoFile,  infos: JSON.parse(this.result) };
+                                                                    } catch(err){
+                                                                        v[videoFolder.name] = { video: videoFile };
+                                                                    }
+                                                                };
+                                                                reader.readAsText(infoFileBlob);
+                                                            }, function() {
+                                                                v[videoFolder.name] = { video: videoFile };
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+
+                                });
+                            });
+                        });
+                    }
+
+                },
+
+                get: function(videoId) {
+                    var v = self.sdk.local.videos.allVideos;
+                    return v[videoId];
+                },
+
+                delete: function(videoId) {
+
+                    var v = self.sdk.local.videos.allVideos;
+
+                    if (window.cordova && window.cordova.file) {
+                        // Check if external storage is available, if not, use the internal
+                        var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+                        // open target file for download
+                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                            // Create a downloads folder
+                            dirEntry.getDirectory('Downloads', { create: true }, function (dirEntry2) {
+                                dirEntry2.getDirectory(videoId, { create: false}, function(dirToDelete) {
+                                    dirToDelete.removeRecursively(function() {
+                                        // Success
+                                        delete v[videoId];
+                                        console.log(v);
+                                    });
+                                });
+                            });
+                        });
+                    }
+                },
+
+                add : function(videoId, video){
+                    var v = self.sdk.local.videos.allVideos;
+                    v[videoId] = video;
+                    console.log(v);
+                }
+            }
+
+        },
+
         registrations: {
             storage: {},
             clbks: {},
@@ -21898,6 +21997,7 @@ Platform = function (app, listofnodes) {
 
         if(window.cordova){
             setupOpenwith()
+            self.sdk.local.videos.init();
         }
 
         
