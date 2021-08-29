@@ -998,6 +998,8 @@ Application = function(p)
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
+		var showPanel = '1' // 2 // 3
+
 		/*window.removeEventListener('scroll')
 		window.removeEventListener('resize')*/
 
@@ -1019,25 +1021,46 @@ Application = function(p)
 				})
 
 				if(mobile){
-					var cs = (lastScrollTop + 400 < scrollTop || lastScrollTop - 400 < scrollTop)
 
-					if (scrollTop > 900 && cs ){
+					var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 
-						if(!self.el.html.hasClass('scrollmodedown') && lastScrollTop + 400 < scrollTop)
-							self.el.html.addClass('scrollmodedown')
+					if (scrollTop < 900){
 
-					}
-					else{
+						showPanel = '1'
 
 						if (self.el.html.hasClass('scrollmodedown'))
 							self.el.html.removeClass('scrollmodedown')
-						
-						
+
+						return
 					}
+
+					if (scrollTop > 900 && cs){
+						if(lastScrollTop + 40 < scrollTop){
+							showPanel = '2'
+						}
+					}
+					else{
+						showPanel = '3'
+					}
+
 				}
 
 			})
 		}, 100)
+
+		var t = false
+
+		window.addEventListener('touchstart', function(e){
+			t = true
+		})
+
+		window.addEventListener('touchend', function(e){
+			t = false
+		})
+
+		window.addEventListener('touchcancel', function(e){
+			t = false
+		})
 
 		window.addEventListener('scroll', function(){
 
@@ -1052,6 +1075,22 @@ Application = function(p)
 					_.each(self.events.delayedscroll, function(s){
 						s(self.lastScrollTop, blockScroll)
 					})
+
+					if(!t){
+
+						if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
+							self.el.html.addClass('scrollmodedown')
+						}
+			
+						if (showPanel == '3' && self.el.html.hasClass('scrollmodedown'))
+							self.el.html.removeClass('scrollmodedown')
+							
+						showPanel = '1'
+					}
+
+					
+		
+					
 				})
 
 			}, delayscroll, 100)
@@ -1403,7 +1442,7 @@ Application = function(p)
 				}
 			},
 			show : function(){
-				if(window.StatusBar) {
+				if (window.StatusBar) {
 					window.StatusBar.show()
 					window.StatusBar.overlaysWebView(false);
 				}

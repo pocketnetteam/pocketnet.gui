@@ -122,8 +122,12 @@
 
 	.shares{
 		overflow: hidden; 
+		display: flex;
+		flex-direction: column;
 
 		.authorgroup{
+			display: flex;
+			flex-direction: column;
 			&.blocking{
 				display: none;
 			}
@@ -315,8 +319,8 @@
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
-			content-visibility: auto;
-			contain-intrinsic-size: 800px;
+			/*content-visibility: auto;
+			contain-intrinsic-size: 800px;*/
 
 			.commentsWrapperHb{
 				min-height: 2 * @rhythm;
@@ -3581,4 +3585,24 @@ html.stblack{
 	}
 }
 
+html.tablet,
+html.mobile{
+	#lenta{
+		.fullScreenVideo{
+			will-change: transform;
+			-webkit-backface-visibility: hidden;
+		}
+	}
+}
 
+html.tablet.fullscreen,
+html.mobile.fullscreen{
+	#lenta{
+		.fullScreenVideo{
+			#comments{
+				display: none;
+			}
+			
+		}
+	}
+}

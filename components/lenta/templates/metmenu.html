@@ -64,6 +64,12 @@ var all = {
 		class : 'block'
 	},
 
+	startchat : {
+		icon : '<i class="far fa-comment"></i>',
+		text : e('startchat'),
+		class : 'startchat'
+	},
+
 	htls : {
 		icon : '<i class="fas fa-cubes"></i>',
 		text : 'HTLC BUY TEST',
@@ -76,6 +82,13 @@ m.push('share')
 
 
 if(share){
+
+	if (share.itisvideo()) {
+		m.push('shareBareVideoLink');
+	}
+
+	m.push('opennewwindow');
+	
 	if(share.address && user.address.value){
 
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
@@ -88,6 +101,10 @@ if(share){
 		}
 
 		if(!my && me){
+
+			if(app.platform.matrixchat.core){
+				m.push('startchat')
+			}
 
 			m.push('donation')
 			/*m.push('htls')*/
@@ -108,14 +125,12 @@ if(share){
 			}
 
 			m.push('block')
+
+			
 		}
 	}
 
-	if (share.itisvideo()) {
-		m.push('shareBareVideoLink');
-	}
-
-	m.push('opennewwindow');
+	
 	
 }
 

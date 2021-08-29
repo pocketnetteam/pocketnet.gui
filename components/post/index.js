@@ -284,8 +284,7 @@ var post = (function () {
 					addresses: []
 				}
 
-				var link = 'send?address=' + share.address + '&amount=1&message='
-					+ hexEncode(self.app.localization.e('postlabel') + ' &mdash; ' + (share.caption || share.message).substr(0, 20) + "...")
+				var link = 'send?address=' + share.address + '&amount=1'
 					+ '&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
 
 

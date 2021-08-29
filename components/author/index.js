@@ -69,6 +69,8 @@ var author = (function(){
 
 			unsubscribe : function(){
 
+				self.app.mobile.vibration.small()
+
 				dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text :  self.app.localization.e('unfollow'),
@@ -97,6 +99,8 @@ var author = (function(){
 			},
 
 			subscribe : function(){
+				self.app.mobile.vibration.small()
+
 				self.app.platform.api.actions.subscribeWithDialog(author.address, function(tx, err){
 
 					if(tx){
@@ -109,7 +113,17 @@ var author = (function(){
 				})
 			},
 
+			startchat: function(){
+				self.app.mobile.vibration.small()
+
+				if (self.app.platform.matrixchat.core)
+                    self.app.platform.matrixchat.core.apptochat('contact?id=' + hexEncode(author.address))
+				
+			},
+
 			subscribePrivate : function(){
+
+				self.app.mobile.vibration.small()
 
 				var off = $(this).hasClass('turnon')
 
@@ -391,7 +405,7 @@ var author = (function(){
 					}, function(el){
 
 						el.find('.donate').on('click', function(){
-
+							self.app.mobile.vibration.small()
 							actions.donate(id)
 
 							if (_el.tooltipster)
@@ -400,7 +414,7 @@ var author = (function(){
 						})
 
 						el.find('.block').on('click', function(){
-
+							self.app.mobile.vibration.small()
 							self.app.platform.api.actions.blocking(author.address, function(tx, error){
 								if(!tx){
 									self.app.platform.errorHandler(error, true)	
@@ -411,9 +425,17 @@ var author = (function(){
 								_el.tooltipster('hide')	
 
 						})
+
+						el.find('.startchat').on('click', function(){
+
+							events.startchat()
+
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
+						})
 						
 						el.find('.unblock').on('click', function(){
-
+							self.app.mobile.vibration.small()
 							self.app.platform.api.actions.unblocking(author.address, function(tx, error){
 								if(!tx){
 									self.app.platform.errorHandler(error, true)	
@@ -422,6 +444,24 @@ var author = (function(){
 
 							if (_el.tooltipster)
 								_el.tooltipster('hide')	
+
+						})
+
+						el.find('.unsubscribe').on('click', function(){
+
+							self.app.mobile.vibration.small()
+
+							events.unsubscribe()
+
+                            /*self.app.platform.api.actions.unsubscribe(author.address, function (tx, error) {
+                                if (!tx) {
+                                    self.errorHandler(error, true)
+                                }
+                            })*/
+
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
+
 
 						})
 						
@@ -1002,6 +1042,8 @@ var author = (function(){
 			el.subscribe.find('.subscribe').on('click', events.subscribe)
 			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
 			el.c.find('.notificationturn').on('click', events.subscribePrivate)
+
+			el.caption.find('.startchat').on('click', events.startchat)
 
 			el.caption.find('.unblocking').on('click', function(){
 

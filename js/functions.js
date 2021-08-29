@@ -6883,7 +6883,6 @@
 
 			var mainDirection = null;
 			
-
 			p.el.swipe({
 				allowPageScroll : p.allowPageScroll,
 				swipeStatus : function(e, phase, direction, distance){
@@ -6947,6 +6946,10 @@
 			})
 
 			return self
+		}
+
+		self.destroy = function(){
+			p.el.swipe('destroy')
 		}
 
 		return self;

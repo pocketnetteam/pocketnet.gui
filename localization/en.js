@@ -199,6 +199,7 @@ ____loclib.sdisconnected = "Disconnected from node";
 ____loclib.suseractivation = "User Activation";
 ____loclib.sprofile = "Profile";
 ____loclib.spc = "Post count";
+____loclib.spv = "Video Post count";
 ____loclib.ssc = "Stars count";
 ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
@@ -566,6 +567,9 @@ ____loclib.editpost = "Edit Post"
 ____loclib.removepost = "Remove Post"
 ____loclib.opennewwindow = "Open Post in New Window"
 
+
+____loclib.unsubscribe = "Unsubscribe"
+____loclib.startchat = "Start chat"
 ____loclib.reportpost = "Report Post"
 ____loclib.donate = "Donate"
 ____loclib.blockuser = "Block User"

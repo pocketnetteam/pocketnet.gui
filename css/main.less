@@ -4604,7 +4604,42 @@ html.mobile.fullscreen{
         display: none!important;
     }
 }
+/*
+html.cordova{
 
+    .cordovatop{
+        position : fixed;
+        left : 0;
+        right : 0;
+        top : 0;
+        height: 31px;
+        z-index: 5;
+        background: #fff;
+    }
+
+    #menu .menuWrapper{
+        top : 30px;
+    }
+
+    #panelWrapper{
+        top : 95px;
+    }
+
+    .contentWrapper{
+        padding-top : 95px;
+    }
+
+    .matrixchatwrapper{
+        top : 30px;
+    }
+
+    &.stblack{
+        .cordovatop{
+            background: @color-black5;
+        }
+    }
+}
+*/
 .windowsContainer{
     position: relative;
 }
@@ -5803,7 +5838,8 @@ html.stblack{
             left: 0;
             right: 0;
             padding-top : 0;
-            z-index: 1;
+            z-index: 3;
+            
         }
 
         .contentWrapper{
@@ -5814,6 +5850,23 @@ html.stblack{
             .contentWrapper{
                 padding-top : 120px;
             }
+        }
+
+        #menu .menuWrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+
+        #panelWrapper{
+            will-change: transform;
+            .transition(0.3s, transform);
+            -webkit-backface-visibility: hidden;
+        }
+
+        #navigation{
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
         }
 
         &.scrollmodedown{
@@ -5828,8 +5881,6 @@ html.stblack{
             }
     
             #navigation{
-                
-
                 .nmenu{
                     transform: translateY(90px);
                 }

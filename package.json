@@ -21,6 +21,7 @@
         "minimize:test": "node minimize.js -prodaction=true -vendor=3001 -test=true -path=/",
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/",
+        "minimize:cordova": "node minimize.js -prodaction=true -vendor=3001 -path=/pocketnet/ -project=Bastyon",
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=3001 -path=/ -project=Bastyon",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=3001 -test=true -path=/ -project=Bastyon",
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",

@@ -1072,6 +1072,8 @@
 
         if (phase == PHASE_END && validateSwipe()) {
 
+          if(!$element) return
+
           //Cancel any taps that were in progress...
           clearTimeout(singleTapTimeout);
           clearTimeout(holdTimeout);

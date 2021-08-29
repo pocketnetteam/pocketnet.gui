@@ -21,6 +21,7 @@ var lenta = (function(){
 
 		var shareInitedMap = {},
 			shareInitingMap = {},
+			fullScreenVideoParallax = null,
 			loading = false,
 			ended = false,
 			players = {},
@@ -257,9 +258,6 @@ var lenta = (function(){
 				initedcommentes = {}
 
 				fullscreenvideoShowed = null
-
-				$('html').removeClass('fullvideoshowed')
-				$('html').removeClass('fullvideoshowedanimblock')
 
 				loading = false
 				ended = false
@@ -739,9 +737,10 @@ var lenta = (function(){
 
 					var t = (share.caption || share.message)
 
-					var link = 'send?address=' + share.address + '&amount=1&message='
-					+hexEncode(self.app.localization.e('postlabel') + ' - ' + t.substr(0, 20) + ((t.length <= 20) ? "" : "..."))
+					var link = 'send?address=' + share.address + '&amount=1'
 					+'&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
+
+					console.log("link", link)
 					
 
 					self.fastTemplate('donation', function(rendered){
@@ -836,6 +835,53 @@ var lenta = (function(){
 				}
 			},
 
+			fullScreenVideoParallax : function(_el, id){
+
+				if(!_el || !isMobile()){
+
+					if (fullScreenVideoParallax) fullScreenVideoParallax.destroy()
+
+						fullScreenVideoParallax = null
+
+					return
+				}
+
+				fullScreenVideoParallax = new SwipeParallaxNew({
+
+					el : _el,
+
+					allowPageScroll : 'vertical',
+
+					//prop : 'padding',
+	
+					directions : {
+						down : {
+							cancellable : true,
+
+							positionclbk : function(px){
+
+							},
+
+							constraints : function(){
+								if (_el.scrollTop() == 0 && !self.app.fullscreenmode){
+									return true;
+								}
+							},
+
+							restrict : true,
+							dontstop : true,
+							trueshold : 20,
+							clbk : function(){
+								actions.exitFullScreenVideo(id)
+							}
+	
+						}
+					}
+					
+	
+				}).init()
+			},
+
 			fullScreenVideo : function(id, clbk){
 
 				var _el = el.c.find("#" + id)
@@ -852,8 +898,7 @@ var lenta = (function(){
 					share.temp = true;
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
-
-				
+			
 
 				actions.initVideo(_el, share, function(res){
 
@@ -867,10 +912,10 @@ var lenta = (function(){
 
 					_el.addClass('fullScreenVideo')
 
-					$('html').addClass('fullvideoshowed')
-					$('html').addClass('fullvideoshowedanimblock')
-
+				
 					actions.videoPosition(_el)
+
+					actions.fullScreenVideoParallax(_el, id)
 
 					self.app.nav.api.history.addParameters({
 						v : id
@@ -883,7 +928,6 @@ var lenta = (function(){
 							player.p.play()
 						}
 					}
-					
 
 					actions.setVolume(players[id], videosVolume || 0.5)
 					
@@ -923,15 +967,10 @@ var lenta = (function(){
 
 			},
 
+
 			exitFullScreenVideo : function(id){
 
-				$('html').removeClass('fullvideoshowed')
-
-				setTimeout(function(){
-					$('html').removeClass('fullvideoshowedanimblock')
-				}, 300)
 				
-
 				if (el.c){
 					var _el = el.c.find("#" + id)
 
@@ -947,6 +986,8 @@ var lenta = (function(){
 				//player.p.muted = true;
 
 				actions.setVolume(players[id], videosVolume)
+
+				actions.fullScreenVideoParallax(null)
 
 				self.app.nav.api.history.removeParameters(['v'])
 
@@ -2448,7 +2489,8 @@ var lenta = (function(){
 						video : video || essenseData.videomobile
 					},
 					animation : false,
-					delayRender : isotopeinited
+					delayRender : isotopeinited,
+					display : 'flex'
 
 				}, function(_p){
 
@@ -3396,6 +3438,9 @@ var lenta = (function(){
 								},
 	
 								constraints : function(){
+
+									if (fullScreenVideoParallax) return false
+
 									if (self.app.lastScrollTop <= 0 && !self.app.fullscreenmode && self.app.el.window.scrollTop() == 0){
 										return true;
 									}
@@ -3984,6 +4029,11 @@ var lenta = (function(){
 						p.p.destroy()
 
 				})
+
+				if (fullScreenVideoParallax) {
+					fullScreenVideoParallax.destroy()
+					fullScreenVideoParallax = null
+				}
 
 				players = {}
 

@@ -118,7 +118,9 @@ __map =  {
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'comments', n : 'index' },
-		{ c : 'lastcomments', n : 'lastcommentslist'}
+		{ c : 'lastcomments', n : 'lastcommentslist'},
+		{ c : 'author', n : 'preshell'},
+		{ c : 'post', n : 'preshell'}
 		/*,
 		{ c : '', n : '' },
 		{ c : '', n : '' },

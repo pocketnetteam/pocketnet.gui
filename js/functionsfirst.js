@@ -547,6 +547,7 @@ importScript = function(src, callback, appendTo, app, module, _require) {
     src += "?v=119"
 
     script.src = src;
+    
     appendTo.appendChild(script);
 }
 

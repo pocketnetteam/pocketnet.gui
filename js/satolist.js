@@ -3056,8 +3056,6 @@ Platform = function (app, listofnodes) {
 
             d.share = share
 
-           
-
             self.app.platform.sdk.ustate.me(function (_mestate) {
 
                 sm.fastTemplate('metmenu', function (rendered, template) {
@@ -3077,16 +3075,35 @@ Platform = function (app, listofnodes) {
 
                             var href = 'https://'+window.location.hostname+'/' /// domain
 
-                            if(d.share.itisvideo()){
-                                href += 'index?video=1&v=' + id
+                            var path = ''
+
+                            if(d.share.itisvideo() && !window.cordova){
+                                path = 'index?video=1&v=' + id
                             }
                             else
                             {
-                                href += 'index?post?s=' + id
+                                path = 'post?s=' + id
                             }
 
-                            if(window.cordova){
-                                cordova.InAppBrowser.open(href, '_blank');
+                            href += path
+
+                            app.nav
+
+                            if (window.cordova){
+
+                                if(!app.nav.current || app.nav.current.href != 'post'){
+                                    app.nav.api.load({
+                                        open: true,
+                                        href: path,
+                                        history: true,
+                                    })
+                                }
+                                else
+                                {
+                                    cordova.InAppBrowser.open(href, '_blank');
+                                }
+                                
+                               
                             }
                             else{
                                 window.open(href, '_blank');
@@ -3105,6 +3122,17 @@ Platform = function (app, listofnodes) {
 
                             self.app.mobile.vibration.small()
                             actions.sharesocial(id)
+
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
+                        })
+
+                        el.find('.startchat').on('click', function () {
+
+                            self.app.mobile.vibration.small()
+
+                            if (self.matrixchat.core)
+                                self.matrixchat.core.apptochat('contact?id=' + hexEncode(address))
 
                             if (_el.tooltipster)
                                 _el.tooltipster('hide')
@@ -3145,7 +3173,13 @@ Platform = function (app, listofnodes) {
 
                         el.find('.donate').on('click', function () {
                             self.app.mobile.vibration.small()
-                            actions.donate(id)
+                            //actions.donate(id)
+
+                            self.ui.wallet.send({
+                                address : address
+                            })
+
+                            //f.deep(window, 'POCKETNETINSTANCE.platform.ui.wallet.send')
 
                             if (_el.tooltipster)
                                 _el.tooltipster('hide')
@@ -5169,6 +5203,15 @@ Platform = function (app, listofnodes) {
 
                             return
                         }
+
+                        /*if (info.video_unspent <= num) {
+                            if (clbk)
+                                clbk('videounspent')
+
+                            return
+                        }*/
+
+                        
 
                         if (info.score_unspent <= num) {
                             if (clbk)
@@ -21473,7 +21516,7 @@ Platform = function (app, listofnodes) {
                 
             }
 
-            core.apptochat = function(){
+            core.apptochat = function(link){
 
                 if(document.activeElement) document.activeElement.blur()
                 
@@ -21489,11 +21532,20 @@ Platform = function (app, listofnodes) {
                         'pc' : '1'
                     })
 
-                if (self.matrixchat.core){ self.matrixchat.core.hiddenInParent = false }
+                if (self.matrixchat.core){ 
+                    self.matrixchat.core.hiddenInParent = false 
+
+                    if(link){
+                        self.matrixchat.core.gotoRoute(link)
+                    }
+                
+                }
 
                 _.each(self.matrixchat.clbks.SHOWING, function(c){
                     c(true)
                 })
+
+
             }
 
             self.matrixchat.core = core

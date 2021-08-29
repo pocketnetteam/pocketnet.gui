@@ -964,6 +964,8 @@ var main = (function(){
 
 			destroy : function(){
 
+				if(el.c) el.c.html('')
+
 				showCategories(false)
 
 				delete self.app.events.scroll.main
@@ -1091,31 +1093,11 @@ var main = (function(){
 					el.c.addClass('videomain')
 				}
 
-				//renders.mobilemode()
-
 				make(function(){
 					p.clbk(null, p);
 				}, p)
 
-				/*if(isMobile()){
-
-					el.c.find('.maincntwrapper').swipe({
-						allowPageScroll: "auto", 
-						swipeStatus : function(e, phase, direction, distance){
-
-							if(self.app.el.html.hasClass('fullvideoshowedanimblock')) return
-
-							if(el.topvideos.has(e.target).length > 0){
-								return true
-							}
-
-							actions.swipe(phase, direction, distance)
-
-							return true
-						},
-					})
-	
-				}*/
+				
 				
 			}
 		}

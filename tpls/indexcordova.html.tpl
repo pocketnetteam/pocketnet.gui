@@ -42,6 +42,9 @@
         <div id="headerWrapper">
         </div>
 
+        <!--<div class="cordovatop">
+        </div>-->
+
         <div id="menuWrapper">
         </div> 
 

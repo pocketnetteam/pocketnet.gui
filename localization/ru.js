@@ -202,6 +202,7 @@ ____loclib.sdisconnected = "Отсоединен от ноды";
 ____loclib.suseractivation = "Активация пользователя";
 ____loclib.sprofile = "Профиль";
 ____loclib.spc = "Количество постов";
+____loclib.spv = "Количество постов c видео";
 ____loclib.ssc = "Количество звезд";
 ____loclib.ccc = "Количество комментариев";
 ____loclib.crc = "Количество оценок комментариев";
@@ -534,6 +535,8 @@ ____loclib.editpost = "Редактировать публикацию"
 ____loclib.removepost = "Удалить публикацию"
 ____loclib.opennewwindow = "Открыть пост в новом окне"
 
+____loclib.unsubscribe = "Отписаться"
+____loclib.startchat = "Начать чат"
 ____loclib.reportpost = "Пожаловаться"
 ____loclib.donate = "Пожертвование"
 ____loclib.blockuser = "Заблокировать пользователя"

@@ -156,6 +156,8 @@ Localization = function(app){
 
 		self.key = prms.loc || localStorage['loc'] || (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0];
 		
+		if(!self.available[self.key]) self.key = 'en'
+
 		self.locSave();
 
 		lazyActions([
