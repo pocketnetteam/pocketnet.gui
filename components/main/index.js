@@ -24,6 +24,8 @@ var main = (function(){
 
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
+		var lastStickyRefresh = 0
+
 		/*var mobilemodes = [{
 			mode : 'leftshow',
 			icon : 'fas fa-hashtag'
@@ -43,16 +45,25 @@ var main = (function(){
 		
 		var actions = {
 			
-			refreshSticky : function(){
+			refreshSticky : function(alv){
 
-				if (hsready){
+				
+
+				var ns = self.app.lastScrollTop
+
+				if (hsready && (ns != lastStickyRefresh || alv)){
+
+					console.log("UPDATE")
+
+					lastStickyRefresh = ns
+
 					el.panel.hcSticky('refresh');
 					el.leftpanel.hcSticky('refresh');
 
-					setTimeout(function(){
+					/*setTimeout(function(){
 						if(el.panel) el.panel.hcSticky('refresh');
 						if(el.leftpanel) el.leftpanel.hcSticky('refresh');
-					}, 1000)
+					}, 1000)*/
 				}
 					
 			},
@@ -557,7 +568,11 @@ var main = (function(){
 							events.up()
 						},
 
-						renderclbk : function(){
+						renderClbk : function(){
+
+							console.log("renderclbk")
+							
+							actions.refreshSticky()
 						},
 						loader : loader
 					},
@@ -679,6 +694,13 @@ var main = (function(){
 
 
 			self.app.events.scroll.main = actions.addbuttonscroll
+
+			self.app.events.resize.mainpage = function(){
+				console.log("RESIZE")
+				setTimeout(function(){
+					actions.refreshSticky(true)
+				}, 500)
+			}
 
 
 			el.c.find('.backtolenta').on('click', actions.backtolenta)
@@ -969,12 +991,15 @@ var main = (function(){
 				showCategories(false)
 
 				delete self.app.events.scroll.main
+				delete self.app.events.resize.mainpage
 					
 				self.app.el.html.removeClass('scrollmodedown')
 
 				renders.post(null)
 
 				hsready = false
+
+
 
 				//searchvalue = '', searchtags = null
 
@@ -1051,6 +1076,7 @@ var main = (function(){
 				roller = null
 				lenta = null
 				fixeddirection = null
+				lastStickyRefresh = 0
 
 				state.load();
 

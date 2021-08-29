@@ -942,12 +942,26 @@ html {
 	
 }
 
+html.mobile{
+	#main{
+		padding-top : 55px;
+		
+	}
+}
+
 html.mobile,
 html.tablet{
 	#main{
-		padding-top : 55px;
 		.bgCaption{
 			display: none;
+		}
+	}
+}
+
+@media only screen and (max-width: 768px){
+	html.tablet{
+		#main{
+			padding-top : 55px;
 		}
 	}
 }

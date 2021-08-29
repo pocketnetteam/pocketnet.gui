@@ -1113,6 +1113,8 @@ Application = function(p)
 						self.height = height
 						self.width = width
 
+					console.log('self.events.resize', self.events.resize)
+
 					_.each(self.events.resize, function(s){
 						s({
 							scrollTop : scrollTop,

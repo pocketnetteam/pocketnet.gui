@@ -116,8 +116,8 @@ var author = (function(){
 			startchat: function(){
 				self.app.mobile.vibration.small()
 
-				if (self.app.platform.matrixchat.core)
-                    self.app.platform.matrixchat.core.apptochat('contact?id=' + hexEncode(author.address))
+				self.app.platform.matrixchat.startchat(author.address)
+
 				
 			},
 

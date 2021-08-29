@@ -3129,10 +3129,10 @@ Platform = function (app, listofnodes) {
 
                         el.find('.startchat').on('click', function () {
 
+                            self.matrixchat.startchat(address)
+
                             self.app.mobile.vibration.small()
 
-                            if (self.matrixchat.core)
-                                self.matrixchat.core.apptochat('contact?id=' + hexEncode(address))
 
                             if (_el.tooltipster)
                                 _el.tooltipster('hide')
@@ -21224,6 +21224,23 @@ Platform = function (app, listofnodes) {
             
         },
 
+        startchat : function(address){
+            
+            if (self.matrixchat.core){
+
+                var link = 'contact?id=' + hexEncode(address)
+
+                if(isMobile()){
+                    self.matrixchat.core.apptochat(link)
+                }
+                else{
+                    self.matrixchat.core.gotoRoute(link)
+                }
+            }
+                
+
+        },
+
         init : function(){
 
             if(self.matrixchat.inited) return
@@ -21442,8 +21459,6 @@ Platform = function (app, listofnodes) {
         },
 
         backtoapp : function(){
-
-          
 
             if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){ 
                 self.matrixchat.core.backtoapp()

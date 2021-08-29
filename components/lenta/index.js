@@ -740,8 +740,6 @@ var lenta = (function(){
 					var link = 'send?address=' + share.address + '&amount=1'
 					+'&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
 
-					console.log("link", link)
-					
 
 					self.fastTemplate('donation', function(rendered){
 						dialog({
