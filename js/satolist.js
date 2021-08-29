@@ -21216,7 +21216,7 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }
                 else{
-                    importScript('chat/matrix-element.min.js?v=4', clbk)
+                    importScript('chat/matrix-element.min.js?v=6', clbk)
                 }
                 
             }
