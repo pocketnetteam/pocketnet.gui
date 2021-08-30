@@ -199,9 +199,8 @@ var videoCabinet = (function () {
         clearInterval(transcodingIntervals[id]);
         const videoElement = el.videoContainer.find(`[uuid="${id}"]`);
 
-        // videoElement
-        //   .find('.attachVideoToPost')
-        //   .attr('videoTranscoding', 'false');
+        videoElement.find('.attachVideoToPost').removeClass('hidden');
+        videoElement.find('.transcodingPreloader').addClass('hidden');
       },
     };
 
@@ -367,13 +366,19 @@ var videoCabinet = (function () {
               p.el.find('.postingStatusWrapper').each(function () {
                 const currentElement = $(this);
 
+                const isTranscoding = currentElement.attr('isTranscoding');
+
                 const link = currentElement.attr('video');
 
                 if (blockChainInfo[link])
                   return renders.postLink(currentElement, link);
 
-                currentElement.find('.attachVideoToPost').removeClass('hidden');
-                currentElement.find('.preloaderwr').addClass('hidden');
+                if (!isTranscoding) {
+                  currentElement
+                    .find('.attachVideoToPost')
+                    .removeClass('hidden');
+                  currentElement.find('.preloaderwr').addClass('hidden');
+                }
               });
 
               p.el.find('.videoStatsWrapper').each(function () {
@@ -388,7 +393,7 @@ var videoCabinet = (function () {
             });
 
             p.el.find('[videoTranscoding="true"]').each(function () {
-              const videoLink = $(this).attr('videoLink');
+              const videoLink = $(this).attr('video');
 
               const meta = self.app.peertubeHandler.parselink(videoLink);
 
