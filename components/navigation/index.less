@@ -11,8 +11,8 @@
 	padding-bottom : 30px;
 	height: 90px;
 	z-index: 200;
-	background: fade(#fff, 95);
-	.transition(0.3s);
+	
+	
 
 
 	.fakem{
@@ -23,10 +23,18 @@
 	}
 
 	.nmenu{
+		background: #fff;
 		height: 100%;
+		position: absolute;
+		left : 0;
+		top : 0;
+		bottom : 0;
+		right: 0;
+		.transition(0.3s);
 	}
 
 	.items{
+		height: 60px;
 		.item{
 			vertical-align: middle;
 			text-align: center;
@@ -101,10 +109,17 @@
 
 }
 
+html.mobile{
+	.nmenu{
+	}
+}
+
 html.stblack{
 	#navigation{
-		background: fade(@color-black4, 95);
-	
+		
+		.nmenu{
+			background: @color-black4;
+		}
 	
 		.items{
 			

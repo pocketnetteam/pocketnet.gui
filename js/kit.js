@@ -1018,6 +1018,10 @@ Share = function(lang){
 			return ''
 		}
 
+		if(self.itisvideo()){
+			return 'video'
+		}
+
 		return 'post'
 	} 
 

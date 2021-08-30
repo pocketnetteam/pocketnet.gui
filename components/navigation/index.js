@@ -28,13 +28,15 @@ var navigation = (function(){
 
 			scroll : function(){
 
+
 				if (self.app.lastScrollTop >= 250){
 
-					el.c.addClass('scrolled')
+					if(!el.c.hasClass('scrolled'))
+						el.c.addClass('scrolled')
 
 				}
 				else{
-
+					if (el.c.hasClass('scrolled'))
 						el.c.removeClass('scrolled')
 
 				}
@@ -131,8 +133,6 @@ var navigation = (function(){
 			}
 
 			el.c.find('.fakem').on('click', function(){
-
-				app.mobile.vibration()
 
 				$('html').removeClass('scrollmodedown')
 			})

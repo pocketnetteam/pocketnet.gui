@@ -1022,16 +1022,16 @@ var membersvue_type_template_id_2d6bb622_scoped_true_staticRenderFns = []
       }
 
       if (user.powerLevel === 0 && this.me.powerLevel >= 50 && this.core.user.userinfo.id !== user.id) {
-        menu = [items.kick, items.ban];
+        menu = [items.ban];
       }
 
       if (user.powerLevel === 0 && this.me.powerLevel === 100 && this.core.user.userinfo.id !== user.id) {
-        menu = [items.setAdmin, items.kick, items.ban];
+        menu = [items.setAdmin, items.ban];
       }
 
       if (user.powerLevel === 50 && this.core.user.userinfo.id !== user.id && this.me.powerLevel === 100) {
         items.setAdmin.title = this.$i18n.t("caption.cancelModeration");
-        menu = [items.setAdmin, items.kick, items.ban];
+        menu = [items.setAdmin, items.ban];
       }
 
       return menu;

@@ -21,6 +21,7 @@ var lenta = (function(){
 
 		var shareInitedMap = {},
 			shareInitingMap = {},
+			fullScreenVideoParallax = null,
 			loading = false,
 			ended = false,
 			players = {},
@@ -29,12 +30,12 @@ var lenta = (function(){
 			ascroll = 0,
 			ascrollel = null,
 			newmaterials = 0,
-			shareheights = {},
 			_reposts = {},
 			fixedblock = 0,
 			delay = null,
 			videopaused = false,
 			optimized = {},
+			cachedHeight = 0,
 			fullscreenvideoShowed = null;
 
 		var countshares = 0;
@@ -43,6 +44,14 @@ var lenta = (function(){
 		var beginmaterialloaded = false;
 
 		var authblock = false;
+
+		var essenserenderclbk = function(){
+			if(!essenseData.horizontal){
+				cachedHeight = el.c.height()
+			}
+			
+			if(essenseData.renderClbk) essenseData.renderClbk()
+		}
 
 
 		var actions = {
@@ -179,9 +188,10 @@ var lenta = (function(){
 
 				delay = slowMade(function(){
 
-					_scrollToTop(el.shares, null, 10, -80)
+					self.app.actions.scroll(80)
 
 					actions.loadprev()
+
 				}, delay, 600)	
 
 					
@@ -205,8 +215,7 @@ var lenta = (function(){
 
 				actions.clear()
 				
-				if (essenseData.renderclbk)
-					essenseData.renderclbk()
+				essenserenderclbk()
 
 				make(clbk);
 			},
@@ -244,14 +253,11 @@ var lenta = (function(){
 				shareInitedMap = {}
 				shareInitingMap = {}
 
-				shareheights = {}
+				cachedHeight = 0
 
 				initedcommentes = {}
 
 				fullscreenvideoShowed = null
-
-				$('html').removeClass('fullvideoshowed')
-				$('html').removeClass('fullvideoshowedanimblock')
 
 				loading = false
 				ended = false
@@ -328,8 +334,7 @@ var lenta = (function(){
 						renders.shares(shares, function(){
 
 							renders.sharesInview(shares, function(){
-								if (essenseData.renderclbk)
-									essenseData.renderclbk()
+								essenserenderclbk()
 							})
 
 						}, {
@@ -344,6 +349,7 @@ var lenta = (function(){
 			},
 
 			removeAdditionalByScroll : function(){
+
 
 				if(ascrollel){
 					var s = self.app.lastScrollTop;
@@ -539,6 +545,7 @@ var lenta = (function(){
 							options: [1]
 						},
 
+
 						volumeChange : function(v){
 
 							videosVolume = v
@@ -553,13 +560,15 @@ var lenta = (function(){
 						},
 
 						play : function(){
-
 							videopaused = false
+
+							self.app.actions.playingvideo(players[share.txid].p)
 						},
 
 						pause : function(){
-
 							videopaused = true
+
+							self.app.actions.playingvideo(null)
 						}
 					}
 
@@ -574,6 +583,8 @@ var lenta = (function(){
 
 					s.logoType = self.app.meta.fullname
 
+					//https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4
+					
 					PlyrEx(pels[0], s, callback, readyCallback)
 
 				}
@@ -595,15 +606,13 @@ var lenta = (function(){
 							next : actions.next,
 
 							close : function(){
-								if (essenseData.renderclbk)
-									essenseData.renderclbk()
+								essenserenderclbk()
 							}
 						}
 
 						var c = function(){		
 								
-							if (essenseData.renderclbk)
-								essenseData.renderclbk()
+							essenserenderclbk()
 	
 							if (clbk)
 								clbk();
@@ -637,7 +646,7 @@ var lenta = (function(){
 
 					delete initedcommentes[id]
 
-					if(players[id]){
+					if (players[id]){
 						if (players[id].p){
 							players[id].p.destroy()
 						}
@@ -647,6 +656,8 @@ var lenta = (function(){
 
 
 					renders.share(share, null, true)
+
+					
 				}
 				
 
@@ -726,10 +737,9 @@ var lenta = (function(){
 
 					var t = (share.caption || share.message)
 
-					var link = 'send?address=' + share.address + '&amount=1&message='
-					+hexEncode(self.app.localization.e('postlabel') + ' - ' + t.substr(0, 20) + ((t.length <= 20) ? "" : "..."))
+					var link = 'send?address=' + share.address + '&amount=1'
 					+'&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
-					
+
 
 					self.fastTemplate('donation', function(rendered){
 						dialog({
@@ -775,7 +785,6 @@ var lenta = (function(){
 				var work = el.find('.work');
 
 				if(!el.hasClass('fullScreenVideo')){
-
 					work.css('margin-top', '0px')
 
 					return
@@ -821,6 +830,53 @@ var lenta = (function(){
 				}
 			},
 
+			fullScreenVideoParallax : function(_el, id){
+
+				if(!_el || !isMobile()){
+
+					if (fullScreenVideoParallax) fullScreenVideoParallax.destroy()
+
+						fullScreenVideoParallax = null
+
+					return
+				}
+
+				fullScreenVideoParallax = new SwipeParallaxNew({
+
+					el : _el,
+
+					allowPageScroll : 'vertical',
+
+					//prop : 'padding',
+	
+					directions : {
+						down : {
+							cancellable : true,
+
+							positionclbk : function(px){
+
+							},
+
+							constraints : function(){
+								if (_el.scrollTop() == 0 && !self.app.fullscreenmode){
+									return true;
+								}
+							},
+
+							restrict : true,
+							dontstop : true,
+							trueshold : 20,
+							clbk : function(){
+								actions.exitFullScreenVideo(id)
+							}
+	
+						}
+					}
+					
+	
+				}).init()
+			},
+
 			fullScreenVideo : function(id, clbk){
 
 				var _el = el.c.find("#" + id)
@@ -837,8 +893,7 @@ var lenta = (function(){
 					share.temp = true;
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
-
-				
+			
 
 				actions.initVideo(_el, share, function(res){
 
@@ -852,10 +907,10 @@ var lenta = (function(){
 
 					_el.addClass('fullScreenVideo')
 
-					$('html').addClass('fullvideoshowed')
-					$('html').addClass('fullvideoshowedanimblock')
-
+				
 					actions.videoPosition(_el)
+
+					actions.fullScreenVideoParallax(_el, id)
 
 					self.app.nav.api.history.addParameters({
 						v : id
@@ -868,7 +923,6 @@ var lenta = (function(){
 							player.p.play()
 						}
 					}
-					
 
 					actions.setVolume(players[id], videosVolume || 0.5)
 					
@@ -908,15 +962,10 @@ var lenta = (function(){
 
 			},
 
+
 			exitFullScreenVideo : function(id){
 
-				$('html').removeClass('fullvideoshowed')
-
-				setTimeout(function(){
-					$('html').removeClass('fullvideoshowedanimblock')
-				}, 300)
 				
-
 				if (el.c){
 					var _el = el.c.find("#" + id)
 
@@ -932,6 +981,8 @@ var lenta = (function(){
 				//player.p.muted = true;
 
 				actions.setVolume(players[id], videosVolume)
+
+				actions.fullScreenVideoParallax(null)
 
 				self.app.nav.api.history.removeParameters(['v'])
 
@@ -1192,12 +1243,14 @@ var lenta = (function(){
 
 
 
-			videosInview : function(players, action, nvaction){			
+			videosInview : function(players, action, nvaction){	
 				
 				if(fullscreenvideoShowed) return
 
 				var ap = _.filter(players, function(p){
+
 					if(p.inited && !p.playing && !p.stopped && p.el && !p.preview && !p.error) return true
+
 				})
 
 				if(ap.length){
@@ -1214,7 +1267,8 @@ var lenta = (function(){
 					
 						offset : self.app.height / 10,
 						mode : 'all',
-						cache : isMobile()
+						cache : isMobile(),
+						app : self.app
 					})
 
 					var id = null;
@@ -1224,7 +1278,6 @@ var lenta = (function(){
 						var vel = $(inv[0]);
 
 						id = vel.attr('pid')							
-
 
 						var player = _.find(ap, function(p){
 							return p.id == id
@@ -1239,7 +1292,8 @@ var lenta = (function(){
 								var inv = inView(vel, {
 					
 									offset : -100,
-									mode : 'all'
+									mode : 'all',
+									app : self.app
 								})
 
 								if(inv.length){
@@ -1537,7 +1591,6 @@ var lenta = (function(){
 
 			sharesInview : function(s, block){
 
-				
 				if(block) return
 				
 				actions.sharesInview(sharesInview, function(invshares, els, clbk){
@@ -1576,17 +1629,20 @@ var lenta = (function(){
 
 					if(!_el.hasClass('showAdditional') && !_el.hasClass('blocking')){
 
-						actions.initVideo(_el, self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')], function(){
+						var share = self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')]
+
+						actions.initVideo(_el, share, function(){
 
 							if(player.p.getState && player.p.getState() == 'ended') return
 
-							if (self.app.platform.sdk.usersettings.meta.videoautoplay && !
-								self.app.platform.sdk.usersettings.meta.videoautoplay.value) return
+							if (self.app.platform.sdk.usersettings.meta.videoautoplay2 && !
+								self.app.platform.sdk.usersettings.meta.videoautoplay2.value) return
 
 							if(essenseData.openapi || essenseData.second){
 								return
 							}
 
+							if(!share.itisvideo()) return
 
 							if(!player.p.playing && !self.app.platform.matrixchat.showed() && !videopaused){
 								player.p.play()
@@ -1641,11 +1697,14 @@ var lenta = (function(){
 			repost : function(){
 				var shareId = $(this).closest('.share').attr('id');
 
+				self.app.mobile.vibration.small()
+
 				actions.repost(shareId);
 			},
 
 			showmorebyauthor : function(){
 
+				self.app.mobile.vibration.small()
 
 				$(this).closest('.authorgroup').find('.share').removeClass('hidden')
 
@@ -1683,9 +1742,10 @@ var lenta = (function(){
 				if(!essenseData.horizontal){
 					if (
 						!loading && !ended && (recommended != 'recommended' || isMobile()) &&
-						(self.app.lastScrollTop + self.app.height > el.c.height() - 2000) 
+						(self.app.lastScrollTop + self.app.height > cachedHeight - 2000) 
 	
 						) {
+
 	
 						actions.loadmore()
 	
@@ -1708,6 +1768,9 @@ var lenta = (function(){
 			},
 
 			commentLike : function(){
+
+				self.app.mobile.vibration.small()
+
 				var id = $(this).closest('.comment').attr('id');
 				var shareId = $(this).closest('.share').attr('id');
 
@@ -1750,6 +1813,8 @@ var lenta = (function(){
 
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 
+				self.app.mobile.vibration.small()
+
 				actions.stateAction('_this', function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
@@ -1773,7 +1838,6 @@ var lenta = (function(){
 								s.score = Number(s.score || 0) + Number(value);
 
 								var v = Number(s.score) / Number(s.scnt) 
-
 
 								p.find('.tstarsov').css('width', ((v / 5) * 100) + '%')
 								p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
@@ -1800,6 +1864,8 @@ var lenta = (function(){
 				var p = $(this).closest('.share')
 				
 				var id = p.attr('id');
+
+				self.app.mobile.vibration.small()
 
 				actions.complain(id)
 					
@@ -1831,7 +1897,7 @@ var lenta = (function(){
 					share.address = self.app.platform.sdk.address.pnet().address
 				}
 
-
+				self.app.mobile.vibration.small()
 				actions.openGalleryRec(share, src)
 			},
 
@@ -1929,7 +1995,7 @@ var lenta = (function(){
 			fullScreenVideo : function(){
 
 				var shareId = $(this).closest('.share').attr('id');
-
+				self.app.mobile.vibration.small()
 
 					actions.fullScreenVideo(shareId)
 			},
@@ -1953,14 +2019,14 @@ var lenta = (function(){
 				if (islink) return		
 
 				var shareId = $(this).closest('.shareinlenta').attr('id');
-
+				self.app.mobile.vibration.small()
 					actions.openPost(shareId)
 			},
 
 			sharesocial : function(){
 				var shareId = $(this).closest('.shareinlenta').attr('id');
 
-
+				self.app.mobile.vibration.small()
 					actions.sharesocial(shareId)
 			},
 
@@ -2040,6 +2106,7 @@ var lenta = (function(){
 			},
 			comments : function(txid, init, showall, preview){
 				
+
 				if(essenseData.comments == 'no') return
 
 				if(video) return
@@ -2116,8 +2183,7 @@ var lenta = (function(){
 							renderClbk : function(){
 
 
-								if (essenseData.renderclbk)
-									essenseData.renderclbk()
+								essenserenderclbk()
 							}
 						},
 
@@ -2136,8 +2202,7 @@ var lenta = (function(){
 								initedcommentes[txid] = p
 
 
-							if (essenseData.renderclbk)
-								essenseData.renderclbk()
+								essenserenderclbk()
 						}
 					})
 
@@ -2153,18 +2218,7 @@ var lenta = (function(){
 
 				if(!share) return
 
-				var _el = el.share[share.txid] //el.shares.find("#" + share.txid);
-
-				//if(!_el) return
-
-				shareheights[share.txid] = 0;
-
-				
-				
-				/*if (_el[0])
-					shareheights[share.txid] = _el[0].offsetHeight*/
-
-				var added = _el.find('.added')
+				var _el = el.share[share.txid] 
 
 				shareInitingMap[share.txid] = true;
 
@@ -2184,10 +2238,8 @@ var lenta = (function(){
 				}, function(p){
 
 					var work = _el.find('.work');
-
 				
 					shareInitedMap[share.txid] = true;	
-					
 
 					renders.stars(share)
 
@@ -2226,6 +2278,8 @@ var lenta = (function(){
 					renders.images(share, function(){
 						
 					})
+
+					
 					
 				})
 
@@ -2428,7 +2482,8 @@ var lenta = (function(){
 						video : video || essenseData.videomobile
 					},
 					animation : false,
-					delayRender : isotopeinited
+					delayRender : isotopeinited,
+					display : 'flex'
 
 				}, function(_p){
 
@@ -2455,8 +2510,7 @@ var lenta = (function(){
 						el.share[s.txid] = el.c.find('#' + s.txid)
 					})
 
-					if (essenseData.renderclbk)
-						essenseData.renderclbk()
+					essenserenderclbk()
 
 					//events.sharesInview()		
 					
@@ -2475,6 +2529,7 @@ var lenta = (function(){
 							});
 		
 							el.shares.on('arrangeComplete', function(){
+								essenserenderclbk()
 							});
 	
 							isotopeinited = true
@@ -2486,7 +2541,6 @@ var lenta = (function(){
 	
 						
 					}
-					
 					
 
 					if (clbk)
@@ -2549,36 +2603,44 @@ var lenta = (function(){
 
 						if(s.settings.v != "a"){
 
+							var imageswidth = images.width()
+							var el = images.find('.imagesWrapper')
+
+							var imagesWrapperWidth = el.width(),
+								imagesWrapperHeight = el.height();
+
 							_.each(image.images, function(img, n){
 
 								var _img = img.img;
 
-								var el = $(image.elements[n]).closest('.imagesWrapper');
 								var ac = '';
 
-								var _w = el.width();
-								var _h = el.height()
+								var _w = imagesWrapperWidth;
+								var _h = imagesWrapperHeight
 
-								if(_img.width > _img.height && (!isMobile() && window.innerWidth > 768)){
+								if(_img.width > _img.height && (!isMobile() && self.app.width > 768)){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);
 
-									if (w > images.width()){
-										w = images.width()
+									if (w > imageswidth){
+										w = imageswidth
 
 										h = w * ( _img.height / _img.width) 
 
 										el.height(h);
+										imagesWrapperHeight = h
 									}
 
 									el.width(w);
+									imagesWrapperWidth = w
 								}
 
-								if(_img.height > _img.width || isMobile() || window.innerWidth <= 768){
+								if(_img.height > _img.width || isMobile() || self.app.width <= 768){
 									ac = 'h2'
 
 									el.height(_w * (_img.height / _img.width))
+									imagesWrapperHeight = _w * (_img.height / _img.width)
 								}
 
 								if(ac){
@@ -2587,6 +2649,7 @@ var lenta = (function(){
 								
 							})
 
+
 						}
 
 						var isclbk = function(){
@@ -2594,8 +2657,8 @@ var lenta = (function(){
 
 							_el.addClass('active')
 
-							if (essenseData.renderclbk)
-								essenseData.renderclbk()
+
+							essenserenderclbk()
 
 							if (clbk)
 								clbk()
@@ -2700,14 +2763,9 @@ var lenta = (function(){
 						aspectRatio = info.data.aspectRatio || 0
 					}
 
-					
-					
-
-					if (aspectRatio) {
+					if (aspectRatio && !essenseData.horizontal) {
 						var playerContainer = _p.el.find('.jsPlayerLoading');
-
 						var paddingvalue = 100 / (2 * aspectRatio);
-
 						playerContainer.css('padding-top', `${paddingvalue}%`);
 						playerContainer.css('padding-bottom', `${paddingvalue}%`);
 					}
@@ -2720,31 +2778,29 @@ var lenta = (function(){
 
 					var images = _p.el.find('img');
 
-					if (essenseData.renderclbk)
-						essenseData.renderclbk()
-
+					essenserenderclbk()
 					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
 
 						_.each(image.images, function(i, index){
 
 
-							if(i.isLoaded){
-								$(images[index]).addClass('active')
+							if (i.isLoaded){
+								//$(images[index]).addClass('active')
+
 
 								if(i.img.naturalWidth > 500){
-									_p.el.addClass('bigimageinlink')
 								}
 								
 							}
 							else
 							{
 								$(images[index]).closest('.image').css('display', 'none')
+
 							}
 						})
 
 
-						if (essenseData.renderclbk)
-							essenseData.renderclbk()
+						essenserenderclbk()
 						  
 					});
 
@@ -3263,14 +3319,13 @@ var lenta = (function(){
 
 					el.c.find('.countnew').html( "(" + newmaterials + ")" )
 
-					if (essenseData.renderclbk)
-						essenseData.renderclbk()
+					essenserenderclbk()
 				}
 			}
 		}
 
-		var initEvents = function(){			
-
+		var initEvents = function(){	
+			
 			el.c.on('click', '.wholikesTable', events.postscores)
 			el.c.on('click', '.stars i', events.like)
 			el.c.on('click', '.complain', events.complain)
@@ -3330,7 +3385,7 @@ var lenta = (function(){
 
 				var trueshold = 80
 
-				if(!essenseData.second){
+				if(!essenseData.second && !essenseData.horizontal){
 					var parallax = new SwipeParallaxNew({
 
 						el : el.c.find('.shares'),
@@ -3355,6 +3410,7 @@ var lenta = (function(){
 										progress.update(percent * 100);
 										cc.fadeIn(1)
 										cc.height((maxheight * percent)+ 'px')
+
 	
 										//el.shares.css('opacity', 1 - percent) 
 										tp.css('opacity', 1 -  (4 * percent))
@@ -3369,11 +3425,10 @@ var lenta = (function(){
 	
 								constraints : function(){
 
+									if (fullScreenVideoParallax) return false
 
-									if(self.app.lastScrollTop <= 0 && !fullscreenvideoShowed){
-	
+									if (self.app.lastScrollTop <= 0 && !self.app.fullscreenmode && self.app.el.window.scrollTop() == 0){
 										return true;
-	
 									}
 								},
 	
@@ -3407,19 +3462,21 @@ var lenta = (function(){
 
 				self.app.events.resize[mid] = events.resize
 				
-					if(!essenseData.horizontal){
+				if(!essenseData.horizontal){
 
-						self.app.events.scroll['videos' + mid] = events.videosInview
-						self.app.events.scroll['videosinit' + mid] = events.sharesPreInitVideo
+					self.app.events.delayedscroll['videos' + mid] = events.videosInview
+					self.app.events.delayedscroll['videosinit' + mid] = events.sharesPreInitVideo
 
-					}
+				}
 
 				if(!essenseData.notscrollloading){
 
 					//el.w.on('scroll', events.sharesInview);
 
 					if (essenseData.horizontal){
-						el.w.on('scroll', events.loadmorescroll);
+						el.w.on('scroll', function(){
+							events.loadmorescroll()
+						});
 					}
 					else{
 						self.app.events.scroll['loadmore' + mid] = events.loadmorescroll
@@ -3561,7 +3618,6 @@ var lenta = (function(){
 					}
 				}
 			
-
 				if(!essenseData.txids){
 
 					self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta = 
@@ -3713,7 +3769,6 @@ var lenta = (function(){
 				}
 				else
 				{
-					
 
 					if (clear)
 						el.c.find('.shares').html('')
@@ -3721,7 +3776,6 @@ var lenta = (function(){
 					renders.shares(shares, function(){
 
 						renders.sharesInview(shares, function(){
-							
 
 							making = false;
 
@@ -3936,8 +3990,8 @@ var lenta = (function(){
 					essenseData.window.off('scroll')
 				}*/
 
-				delete self.app.events.scroll['videos' + mid]
-				delete self.app.events.scroll['videosinit' + mid]
+				delete self.app.events.delayedscroll['videos' + mid]
+				delete self.app.events.delayedscroll['videosinit' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
 
 				if (el.shares && isotopeinited){
@@ -3962,7 +4016,14 @@ var lenta = (function(){
 
 				})
 
+				if (fullScreenVideoParallax) {
+					fullScreenVideoParallax.destroy()
+					fullScreenVideoParallax = null
+				}
+
 				players = {}
+
+				app.actions.playingvideo(null);
 
 				if (ovf)
 					self.app.actions.onScroll()

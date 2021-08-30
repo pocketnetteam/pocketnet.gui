@@ -32,12 +32,11 @@ var telements = function(){ %>
 		&middot;
 		<span class="subscribebuttonstop <%-_class%>">
 
-			<span class="unsubscribe funf"><%=e('youarefollowing')%></span>	
+			<!--<span class="unsubscribe funf"><%=e('youarefollowing')%></span>	-->
 
+			<span class="startchat funf"><%=e('startchat')%></span>
 			<% if (me){ 
-				
 				var r = me.relation(author.address, 'subscribes') 
-				
 			%>
 				<span class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot;<i class="far fa-bell-slash"></i></span>
 			<% } %>

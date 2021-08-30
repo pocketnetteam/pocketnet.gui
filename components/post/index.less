@@ -10,6 +10,9 @@
 		}
 	}
 }
+#post.preshell{
+	background: transparent;
+}
 #post{
 
 	background: #f6f6f6;
@@ -72,46 +75,14 @@
 	}
 
 	#comments{
-		.answer,
-		.post{
-			padding-left:  7 * @rhythm;
-			padding-right: 11 * @rhythm;
-		}
-		.caption{
-			padding-left:  6.5 * @rhythm;
-			padding-right: 11 * @rhythm;
-		}
 		.answer{
 			padding : 0;
 		}
 
-
-
 		.list{
 			.comment{
-
-				.commentPaddingWrapper{
-					padding-left:  3.5 * @rhythm;
-				}
-			}
-
-			
-
-			.answer{
-				.postbody{
-					padding-left:  7 * @rhythm;
-					padding-right: 12 * @rhythm;
-				}
-			}
-		}
-
-		.answers{		
-			.comment{
-				.commentPaddingWrapper{
-					padding-left:  0;
-					padding-right: 0;
-				}
-				
+				content-visibility: auto;
+        		contain-intrinsic-size: 200px;
 			}
 		}
 	}
@@ -322,7 +293,7 @@
 				padding-right : 10 * @rhythm;
 			}
 
-			#comments{
+			/*#comments{
 
 					
 				.commentPaddingWrapper,
@@ -348,7 +319,7 @@
 				}
 
 				
-			}
+			}*/
 		
 
 			#post{
@@ -1056,33 +1027,6 @@
 		}
 	}
 
-	.icon.savecrossIcon{
-		padding: 0;
-		padding-left: @rhythm;
-		padding-right: @rhythm;
-		position: relative;
-		cursor: pointer;
-		color : #008833;
-		
-		.amount{
-			position: absolute;
-			left: 50%;
-			top : 50%;
-			padding : 0 @rhythm;
-			min-width: 16px;
-			height: 16px;
-			line-height: 16px;
-			text-align: center;
-			font-size: 0.5em;
-			background: fade(@color-contrast, 80);
-			color : #fff;
-			.shadowSmaller();
-			z-index: 1;
-			border-radius: 50%;
-		}
-	}
-
-
 	&.videomainpost{
 
 		
@@ -1300,7 +1244,14 @@
 	}
 }
 
-
+html.tablet.fullscreen,
+html.mobile.fullscreen{
+	#post{
+		#comments{
+			display: none;
+		}
+	}
+}
 
 .wnd.postwindow{
 	z-index: 1000;
@@ -1714,8 +1665,9 @@ html.stblack{
 	}
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 768px) {
 #post{
+	border-top: 1px solid fade(@color-gray-slight,0.3);
 
 	.nextpost{
 		display: none;
@@ -1730,13 +1682,18 @@ html.stblack{
 
 	.cntswrk{
 		margin-left: 0;
-		padding-left : @rhythm;
-		padding-right : @rhythm;
+		padding-left : 0;
+		padding-right : 0;
 
 		&.formeta{
 			margin-left: 8 * @rhythm;
 			padding-left : @rhythm;
 			padding-bottom: 2 * @rhythm;
+		}
+
+		.paddingWrapper{
+			padding-left:  @rhythm;
+			padding-right: @rhythm;
 		}
 	}
 
@@ -2002,6 +1959,13 @@ html.stblack{
 			img{
 				width: 100%;
 			}
+		}
+
+		.jsPlayerLoading{
+			
+			width: 100%;
+			height: 210px;
+			
 		}
 	}
 }

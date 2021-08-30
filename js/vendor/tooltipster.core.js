@@ -690,7 +690,7 @@ $.Tooltipster.prototype = {
 			
 			$target = $('img[usemap="#'+ mapName +'"]');
 		}
-		
+		console.log("HERE")
 		var bcr = $target[0].getBoundingClientRect(),
 			$document = $(env.window.document),
 			$window = $(env.window),
@@ -1237,7 +1237,7 @@ $.Tooltipster.prototype = {
 								overflowY = $el.css('overflow-y');
 							
 							if (overflowX != 'visible' || overflowY != 'visible') {
-								
+								console.log("HERE")
 								var bcr = el.getBoundingClientRect();
 								
 								if (overflowX != 'visible') {
@@ -1362,6 +1362,8 @@ $.Tooltipster.prototype = {
 		
 		// get the initial content size
 		if (self.__options.trackTooltip) {
+
+			console.log("HERE")
 			self.__contentBcr = $content[0].getBoundingClientRect();
 		}
 		
@@ -1415,7 +1417,7 @@ $.Tooltipster.prototype = {
 				}
 				
 				if (self.__options.trackTooltip) {
-					
+					console.log("HERE")
 					var currentBcr = $content[0].getBoundingClientRect();
 					
 					if (	currentBcr.height !== self.__contentBcr.height
@@ -3209,7 +3211,7 @@ Ruler.prototype = {
 	measure: function() {
 		
 		this.__forceRedraw();
-		
+		console.log("HERE")
 		var tooltipBcr = this.__$tooltip[0].getBoundingClientRect(),
 			result = { size: {
 				// bcr.width/height are not defined in IE8- but in this
@@ -3231,7 +3233,7 @@ Ruler.prototype = {
 			// their widths one against the other (below) surprisingly returned
 			// equality. Happened only once in Chrome 48, was not able to reproduce
 			// => just having fun with float position values...
-			
+			console.log("HERE")
 			var $content = this.__$tooltip.find('.tooltipster-content'),
 				height = this.__$tooltip.outerHeight(),
 				contentBcr = $content[0].getBoundingClientRect(),

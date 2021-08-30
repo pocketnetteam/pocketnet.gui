@@ -14,13 +14,15 @@ var test = (function(){
 
 		var firstTime = false;
 
+		var checkusernameTimer = null
+
 		var tempInfo = {
 			language : self.app.localization.key || 'en'
 		}
 
 		var saving = false
 
-		var changedLoc = false;
+		var namereg = /[a-zA-Z0-9_]{1,20}/
 
 		var getrefname = function(clbk){
 			if (self.app.ref){
@@ -131,6 +133,7 @@ var test = (function(){
 					})
 				}*/
 			},
+
 			save : function(clbk){
 
 				if (saving) return
@@ -204,6 +207,9 @@ var test = (function(){
 						saving = false
 						return
 					}
+
+
+				
 
 					var userInfo = new UserInfo();
 
@@ -520,8 +526,6 @@ var test = (function(){
 							tempInfo[parameter.id] = trim(value);
 						}
 
-						
-
 						actions.upanel()
 
 						if (id == 'language'){
@@ -536,6 +540,8 @@ var test = (function(){
 						if (id == 'name'){
 
 							var hash = tempInfo[parameter.id].toLowerCase().replace(/[^a-z]/g,'')
+
+							namereg
 
 							if (hash.indexOf('pocketnet') > -1) {
 
@@ -559,19 +565,26 @@ var test = (function(){
 							}
 							else
 							{
+
+								checkusernameTimer =  slowMade(function(){
+
+									self.app.platform.sdk.users.nameExist(tempInfo[parameter.id], function(exist){
+
+										if(!el.c) return
+	
+										if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
+											el.c.find('.errorname').fadeOut();
+										}
+										else
+										{
+											el.c.find('.errorname').fadeIn();
+											el.c.find('.errorname span').html('This username is taken in ' + self.app.meta.fullname);									
+										}
+									})	
+
+								}, checkusernameTimer, 300)
 								
-
-								self.app.platform.sdk.users.nameExist(tempInfo[parameter.id], function(exist){
-
-									if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
-										el.c.find('.errorname').fadeOut();
-									}
-									else
-									{
-										el.c.find('.errorname').fadeIn();
-										el.c.find('.errorname span').html('This username is taken in ' + self.app.meta.fullname);									
-									}
-								})	
+								
 							}
 						}
 					}
@@ -598,14 +611,14 @@ var test = (function(){
 				name : self.app.localization.e('unickname'),
 				id : 'name',
 				type : "NICKNAME",
-				//onType : true,
+				onType : true,
 				require : true
 			}),
 
 			email : new Parameter({
 				name : 'Email',
 				id : 'email',
-				type : "EMAIL",
+				type : "STRINGANY",
 				onType : true,
 			}),
 
@@ -824,26 +837,9 @@ var test = (function(){
 				return _self
 			},
 
-			/*ref : new Parameter({
-				name : "Referal",
-				id : 'ref',
-				type : "BOOLEAN",
-				onType : true,
-				value : ''
-			}),*/
-			
+		
 		}
 
-		var privateInformation = {
-			/*sex : new Parameter({
-				name : "Sex",
-				id : 'sex',
-				type : "VALUES",
-				defaultValue : 'notspecified',
-				possibleValues : ['men', 'woman', 'notspecified'],
-				possibleValuesLabels : ['Not Specified', 'Man', 'Woman'],
-			})*/
-		}
 
 		var events = {
 			signout : function(){
@@ -977,21 +973,6 @@ var test = (function(){
 
 				return
 
-				self.shell({
-
-					name :  'caption',
-					el :   el.caption,
-					data : {
-						p2pkh : self.app.platform.sdk.address.pnet(),
-						tempInfo : tempInfo
-					},
-
-				}, function(_p){					
-
-					if (clbk)
-						clbk();
-
-				})
 			},
 
 			address : function(){
@@ -1109,80 +1090,7 @@ var test = (function(){
 
 		}
 
-		var freeMoney = function(){			
-
-			self.app.platform.sdk.users.checkFreeMoney(self.app.platform.sdk.address.pnet().address, function(res){
-				
-			})
-		}
-
-		var testletter = function(clbk){
-			var _p = {
-				Email : 'maxgrishkov@gmail.com',
-				Lang : self.app.localization.key || 'en',
-			}
-
-			_p.Action || (_p.Action = 'ADDTOMAILLIST');
-			_p.TemplateID = '1005'
-
-			_p.ref = ''
-
-			var getrefname = function(clbk){
-				if (self.app.ref){
-					self.sdk.users.get(self.app.ref, function(){
-
-						var name = deep(self, 'sdk.users.storage.' + self.app.ref + '.name');
-
-						if (clbk)
-							clbk(name)
-					})
-				}
-				else{
-					if (clbk)
-						clbk(null)	
-				}
-			}
-
-			var gettype = function(){
-				var fref = self.app.ref || '';
-
-
-				var type = 'Overall'
-
-				if(fref.indexOf('author') > -1) type='Account'
-				if(fref.indexOf('&s=') > -1 || fref.indexOf('&v=') > -1) type='Post'
-
-				return type
-			}
-
-			getrefname(function(name){
-
-				var body = ''
-
-				_p.ref += gettype()
-
-				if (name) {
-					
-					_p.ref += ', ' + name
-
-					body += '<p><a href="https://'+self.app.options.url+'/author?address='+self.app.ref+'">Referrer: '+name+'</a></p>'
-				}
-
-				var r = deep(document, 'referrer')
-
-				if (r) {
-					body += '<p><a href="'+r+'">From: '+r+'</a></p>'
-				}
-
-				_p.body = encodeURIComponent(body)
-
-
-				
-			})
-
-			
-			
-		}
+		
 		
 		return {
 			primary : primary,
@@ -1265,38 +1173,6 @@ var test = (function(){
 					language : self.app.localization.key || 'en'
 				}
 
-				/*if(self.app.platform.sdk.user.storage.me && !actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
-					
-					return function(clbk){
-
-
-						var locF = function(){
-
-							delete self.app.platform.ws.messages.transaction.clbks.utemp
-							
-							clbk()
-
-						}
-
-						dialog({
-							html : self.app.localization.e('usavechanges'),
-							btn1text : self.app.localization.e('dyes'),
-							btn2text : self.app.localization.e('dno'),
-							success : function(){
-								actions.save(locF)
-							},
-
-							fail : function(){
-
-								tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
-								
-								locF()
-							}
-						})
-
-					}
-
-				}*/
 
 				return null;
 			},

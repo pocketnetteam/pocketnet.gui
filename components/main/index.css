@@ -6,9 +6,10 @@
   display: none;
 }
 #main .topvideosWrapper {
-  display: none;
+  display: block;
   background: #fff;
   margin-bottom: 10px;
+  min-height: 160px;
 }
 #main .topvideosWrapper.hasshares {
   display: block;
@@ -620,6 +621,9 @@ html.testpocketnet #main.testpocketnetbg {
   }
   #main .topvideosWrapper {
     margin-bottom: 0.5em;
+    height: 195px;
+    content-visibility: auto;
+    contain-intrinsic-size: 195px;
   }
   #main .topvideosWrapper.hasshares {
     display: block;
@@ -678,9 +682,17 @@ html.testpocketnet #main.testpocketnetbg {
     display: none;
   }
 }
+html.mobile #main {
+  padding-top: 55px;
+}
 html.mobile #main .bgCaption,
 html.tablet #main .bgCaption {
   display: none;
+}
+@media only screen and (max-width: 768px) {
+  html.tablet #main {
+    padding-top: 55px;
+  }
 }
 @media only screen and (max-width: 768px) {
   html.toppanelshowed #main {
@@ -700,24 +712,6 @@ html.tablet #main .bgCaption {
   }
   html.scrollmodedown #main .maincntwrapper {
     top: 0;
-  }
-  html.fullvideoshowedanimblock #main #maincntwrapper {
-    -moz-transition: 0s;
-    -o-transition: 0s;
-    -webkit-transition: 0s;
-    transition: 0s;
-  }
-  html.fullvideoshowedanimblock #main #maincntwrapper > div.work {
-    -moz-transition: 0s;
-    -o-transition: 0s;
-    -webkit-transition: 0s;
-    transition: 0s;
-  }
-  html.fullvideoshowed #main #maincntwrapper {
-    transform: none!important;
-  }
-  html.fullvideoshowed #main #maincntwrapper > div.work {
-    transform: none!important;
   }
   #main {
     /*	
