@@ -1825,7 +1825,7 @@ var lenta = (function(){
 									});
 								});
 								// Download the video
-								dirEntry3.getFile(video.resolution.id + '.mp4', { create: true }, function (targetFile) {
+								dirEntry3.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
 									var downloader = new BackgroundTransfer.BackgroundDownloader();
 									// Create a new download operation.
 									var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
@@ -1849,6 +1849,10 @@ var lenta = (function(){
 													canDownload.hide();
 													downloading.hide();
 													downloaded.show();
+													events.sharesPreInitVideo();
+													events.videosInview();
+													events.sharesInview();
+													events.resize();
 												}, 200);
 											});
 										});
@@ -1888,6 +1892,10 @@ var lenta = (function(){
 						el.c.find('.metapanelitem.canBeDownloaded.' + id).show();
 						el.c.find('.metapanelitem.downloading.' + id).hide();
 						el.c.find('.metapanelitem.downloaded.' + id).hide();
+						events.sharesPreInitVideo();
+						events.videosInview();
+						events.sharesInview();
+						events.resize();
 					}, 200);
 				});
 			},

@@ -3244,34 +3244,32 @@ Platform = function (app, listofnodes) {
                                         if (videoFolder.isDirectory) {
                                             videoFolder.createReader().readEntries(function(files) {
                                                 var videoFile, infoFile;
+                                                v[videoFolder.name] = {};
                                                 _.each(files, function(file) {
-                                                    if (file.isFile && file.name.endsWith('.mp4')) 
-                                                        videoFile = file;
-                                                    if (file.isFile && file.name == 'info.json')
-                                                        infoFile = file;
-                                                });
-                                                if (videoFile) {
-                                                    // Resolve internal URL
-                                                    window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
-                                                        videoFile.internalURL = entry.toInternalURL();
-                                                        // Read info file
-                                                        if (infoFile)  {
-                                                            infoFile.file(function (infoFileBlob) {
+                                                    if (file.isFile && file.file) {
+                                                        file.file(function(fileDetails) {
+                                                            if (!videoFile && fileDetails.type == null) {
+                                                                videoFile = file;
+                                                                // Resolve internal URL
+                                                                window.resolveLocalFileSystemURL(videoFile.nativeURL, function(entry) {
+                                                                    videoFile.internalURL = entry.toInternalURL();
+                                                                    v[videoFolder.name].video = videoFile;
+                                                                });
+                                                            }
+                                                            if (!infoFile && file.name == 'info.json') {
+                                                                infoFile = file;
+                                                                // Read info file
                                                                 var reader = new FileReader();
                                                                 reader.onloadend = function() {
                                                                     try {
-                                                                        v[videoFolder.name] = { video: videoFile,  infos: JSON.parse(this.result) };
-                                                                    } catch(err){
-                                                                        v[videoFolder.name] = { video: videoFile };
-                                                                    }
+                                                                        v[videoFolder.name].infos = JSON.parse(this.result);
+                                                                    } catch(err){ }
                                                                 };
-                                                                reader.readAsText(infoFileBlob);
-                                                            }, function() {
-                                                                v[videoFolder.name] = { video: videoFile };
-                                                            });
-                                                        }
-                                                    });
-                                                }
+                                                                reader.readAsText(fileDetails);
+                                                            }
+                                                        });
+                                                    }
+                                                });
                                             });
                                         }
                                     });
