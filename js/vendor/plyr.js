@@ -9178,7 +9178,7 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
       var host = target.getAttribute('data-plyr-host-name');
 
       // Check if we have downloaded the video already
-      var localVideo = self.app.platform.sdk.local.videos.get(clear_peertube_id);
+      var localVideo = self.app.platform.sdk.local.shares.getVideo(clear_peertube_id);
 
       if (localVideo != undefined) {
 

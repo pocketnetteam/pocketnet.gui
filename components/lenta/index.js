@@ -510,7 +510,7 @@ var lenta = (function(){
 							players[share.txid].shadow = false
 
 							var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
-							if (videoId && self.sdk.local.videos.get(videoId) != undefined) {
+							if (videoId && self.sdk.local.shares.getVideo(videoId, share.txid) != undefined) {
 								el.find('.metapanelitem.canBeDownloaded.' + share.txid).hide();
 								el.find('.metapanelitem.downloading.' + share.txid).hide();
 								el.find('.metapanelitem.downloaded.' + share.txid).show();
@@ -1804,69 +1804,89 @@ var lenta = (function(){
 
 			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
 				if (!video || !video.fileDownloadUrl) return;
+				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 				// Mobile
 				if (isMobile() && window.cordova && window.cordova.file) {
 					// Check if external storage is available, if not, use the internal
 					var storage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
 					// open target file for download
 					window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-						// Create a downloads folder
-						dirEntry.getDirectory('Downloads', { create: true }, function (dirEntry2) {
-							// Get/create a folder for this video
-							dirEntry2.getDirectory(id, { create: true }, function (dirEntry3) {
-								var infos = {
-									thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
+						// Create a posts folder
+						dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
+							dirEntry11.getDirectory(shareId, { create: true }, function (dirEntry2) {
+								// Create share.json file
+								var shareInfos = {
+									share: share.export()
 								}
-								// Create JSON file for informations
-								dirEntry3.getFile('info.json', { create: true }, function (infoFile) {
+								// Create JSON file for share informations
+								dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
 									// Write into file
-									infoFile.createWriter(function (fileWriter) {
-										fileWriter.write(infos);
+									shareFile.createWriter(function (fileWriter) {
+										fileWriter.write(shareInfos);
 									});
 								});
-								// Download the video
-								dirEntry3.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
-									var downloader = new BackgroundTransfer.BackgroundDownloader();
-									// Create a new download operation.
-									var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-									var canDownload = el.c.find('.metapanelitem.canBeDownloaded.' + shareId),
-										downloading = el.c.find('.metapanelitem.downloading.' + shareId),
-										downloaded = el.c.find('.metapanelitem.downloaded.' + shareId);
-									canDownload.hide();
-									downloading.show();
-									downloaded.hide();
-									// Start the download and persist the promise to be able to cancel the download.
-									app.downloadPromise = download.startAsync().then(function(e) {
-										// Success
-										console.log("success");
-										// Resolve internal URL
-										window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
-											targetFile.internalURL = entry.toInternalURL();
-											self.sdk.local.videos.add(id, { video: targetFile,  infos: infos });
-											downloadMenus[shareId].useLocal = true;
-											actions.openPost(shareId, function() {
-												setTimeout(() => {
-													canDownload.hide();
-													downloading.hide();
-													downloaded.show();
-													events.sharesPreInitVideo();
-													events.videosInview();
-													events.sharesInview();
-													events.resize();
-												}, 200);
+
+
+								dirEntry2.getDirectory('videos', { create: true }, function (dirEntry3) {
+									// Get/create a folder for this video
+									dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+										var infos = {
+											thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath
+										}
+										// Create JSON file for video informations
+										dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
+											// Write into file
+											infoFile.createWriter(function (fileWriter) {
+												fileWriter.write(infos);
 											});
 										});
-									}, function(e) {
-										// Error
-										console.log("error");
-										console.log(e);
-										canDownload.show();
-										downloading.hide();
-										downloaded.hide();
-									}, function(e) {
-										// Progress
-										// console.log("progress");
-										// console.log(e);
+										// Download the video
+										dirEntry4.getFile(video.resolution.id + '', { create: true }, function (targetFile) {
+											var downloader = new BackgroundTransfer.BackgroundDownloader();
+											// Create a new download operation.
+											var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
+											var canDownload = el.c.find('.metapanelitem.canBeDownloaded.' + shareId),
+												downloading = el.c.find('.metapanelitem.downloading.' + shareId),
+												downloaded = el.c.find('.metapanelitem.downloaded.' + shareId);
+											canDownload.hide();
+											downloading.show();
+											downloaded.hide();
+											// Start the download and persist the promise to be able to cancel the download.
+											app.downloadPromise = download.startAsync().then(function(e) {
+												// Success
+												console.log("success");
+												// Resolve internal URL
+												window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+													targetFile.internalURL = entry.toInternalURL();
+													shareInfos.videos = {};
+													shareInfos.videos[id] = { video: targetFile,  infos: infos };
+													self.sdk.local.shares.add(shareId, shareInfos);
+													downloadMenus[shareId].useLocal = true;
+													actions.openPost(shareId, function() {
+														setTimeout(() => {
+															canDownload.hide();
+															downloading.hide();
+															downloaded.show();
+															events.sharesPreInitVideo();
+															events.videosInview();
+															events.sharesInview();
+															events.resize();
+														}, 200);
+													});
+												});
+											}, function(e) {
+												// Error
+												console.log("error");
+												console.log(e);
+												canDownload.show();
+												downloading.hide();
+												downloaded.hide();
+											}, function(e) {
+												// Progress
+												// console.log("progress");
+												// console.log(e);
+											});
+										});
 									});
 								});
 							});
@@ -1885,18 +1905,20 @@ var lenta = (function(){
 			deleteVideo : function(){
 				var id = $(this).closest('.share').attr('id');
 				if (!players[id] || !players[id].p || !players[id].p.localVideoId) return;
-				self.sdk.local.videos.delete(players[id].p.localVideoId);
-				delete downloadMenus[id];
-				actions.openPost(id, function() {
-					setTimeout(() => {
-						el.c.find('.metapanelitem.canBeDownloaded.' + id).show();
-						el.c.find('.metapanelitem.downloading.' + id).hide();
-						el.c.find('.metapanelitem.downloaded.' + id).hide();
-						events.sharesPreInitVideo();
-						events.videosInview();
-						events.sharesInview();
-						events.resize();
-					}, 200);
+				players[id].p.destroy();
+				self.sdk.local.shares.delete(id, function() {
+					delete downloadMenus[id];
+					actions.openPost(id, function() {
+						setTimeout(() => {
+							el.c.find('.metapanelitem.canBeDownloaded.' + id).show();
+							el.c.find('.metapanelitem.downloading.' + id).hide();
+							el.c.find('.metapanelitem.downloaded.' + id).hide();
+							events.sharesPreInitVideo();
+							events.videosInview();
+							events.sharesInview();
+							events.resize();
+						}, 200);
+					});
 				});
 			},
 
