@@ -2,7 +2,7 @@
 
 #videoCabinet {
     min-height: 600px;
-    background: #F7F7F7;
+    background: transparent;
     padding-bottom: 8 * @rhythm;
 
     .videosWrapper {
@@ -15,17 +15,17 @@
         justify-content: space-between;
         align-items: center;
 
-        padding: @rhythm * 2 @rhythm * 4;
+        padding: @rhythm * 2 0;
 
         border-bottom: 1px solid @color-gray-border;
 
-        &:hover {
-            background-color: fade(@color-gray-light, 15);
-        }
+        font-size: 1.1em;
     }
 
     .videoName {
         width: 25%;
+
+        position: relative;
 
         font-size: 0.9em;
     }
@@ -33,16 +33,67 @@
     .videoTextContainer {
         text-overflow: ellipsis;
         overflow: hidden;
-        max-width: 200px;
+        max-width: 250px;
         white-space: nowrap;
 
         margin: 0;
     }
 
+    .videoDescriptionText {
+        white-space: normal;
+        height: 60px;
+
+        font-size: 0.9em;
+
+        position: relative;
+
+        line-height: 20px;
+        display: -webkit-box;
+
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -ms-box-orient: vertical;
+        box-orient: vertical;
+
+        -webkit-line-clamp: 3;
+        -moz-line-clamp: 3;
+        -ms-line-clamp: 3;
+        line-clamp: 3;
+
+        overflow: hidden;
+    }
+
+    .transcodingPreloader {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .emptyDescription {
+        border-radius: 5px;
+
+        color: rgba(14, 28, 43, 0.4);
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
     .videoNameDate {
+        color: rgba(14, 28, 43, 0.4);
+        font-size: 0.8em;
+        font-weight: bold;
 
         i {
             width: 20px;
+        }
+    }
+
+    .menuActivator {
+        cursor: pointer;
+
+        color: rgba(0, 0, 0, 0.5);
+
+        &:hover {
+            color: black;
         }
     }
 
@@ -59,6 +110,12 @@
         font-size: 0.8em;
     }
 
+    .videoStatsContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     .videoStatsWrapper {
         p {
             margin: 0;
@@ -73,20 +130,20 @@
         }
 
         .singleStat {
-            color: rgba(0, 0, 0, 0.5);
+            color: rgba(14, 28, 43, 0.4);
 
-            &:hover {
-                text-decoration: underline;
-                color: #000000;
-                cursor: pointer;
-            }
+            cursor: pointer;
+        }
+
+        .starIcon {
+            color: #FFAE00;
         }
 
         font-size: 0.8em;
 
 
         min-width: 50px;
-        width: 10%;
+        width: 15%;
     }
 
     .videoPostLink {
@@ -101,14 +158,16 @@
     }
 
     .videoAvatar {
-        width: 100px;
-        height: 60px;
+        width: 150px;
+        height: 90px;
 
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
 
         position: relative;
+
+        border-radius: 5px;
 
         .videoDuration {
             position: absolute;
@@ -119,6 +178,8 @@
 
             background-color: rgba(0, 0, 0, 0.5);
 
+            border-bottom-left-radius: 5px;
+
             bottom: 0;
 
             padding: @rhythm;
@@ -127,6 +188,10 @@
 
     .moduleHeader {
         padding: 0 8 * @rhythm;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .cabinetName {
@@ -138,7 +203,7 @@
 
     .ghostButton {
         background-color: transparent;
-        color: rgba(0, 0, 0, 0.5);
+        color: rgba(14, 28, 43, 0.4);
         border: none;
 
         &:hover {
@@ -246,7 +311,7 @@
             .blockWrapper {
                 position: relative;
                 width: 100%;
-                padding-bottom: 30%;
+                padding-bottom: 20%;
             }
 
             .blockContentWrapper {
@@ -284,7 +349,7 @@
                 justify-content: flex-start;
                 align-items: center;
 
-                font-size: 2em;
+                font-size: 1.5em;
                 font-weight: 200;
             }
 
@@ -660,11 +725,21 @@
     .videoControls {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between;
+
+        padding-bottom: 4 * @rhythm;
+
+        font-size: 1.2em;
     }
 
     .uploadVideo {
-        margin-left: 2 * @rhythm;
+        font-size: 1em;
+
+        margin: 1.34em 0;
+
+        padding-top: 4 * @rhythm;
+
+        font-weight: normal;
 
         .fas {
             margin-right: @rhythm / 2;
@@ -680,25 +755,27 @@
     }
 
     .videoSearchInput {
-        border-radius: 15px;
-
+        border-radius: 25px;
         width: 100%;
+
+        background-color: #fafafa;
+        border-color: rgba(14, 28, 43, 0.05);
+        color: rgba(14, 28, 43, 0.4);
+
+        padding-left: 20px;
+        -webkit-box-sizing: border-box;
+        /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;
+        /* Firefox, other Gecko */
+        box-sizing: border-box;
     }
 
     .videoSearchButton {
         position: absolute;
-        right: 0;
-    }
+        right: 10px;
+        top: 2px;
 
-    .transcodingPreloader {
-        background-color: rgba(0, 0, 0, 0.8);
-
-        width: 100%;
-        height: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        color: rgba(14, 28, 43, 0.4);
     }
 
     .metricsContainer {
@@ -724,7 +801,7 @@
                 align-items: center;
                 justify-content: flex-start;
 
-                font-size: 2em;
+                font-size: 1.5em;
                 font-weight: 200;
             }
         }
@@ -756,7 +833,7 @@
 
     .videoSortWrapper {
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-evenly;
         align-items: center;
 
         .videoSelect {
@@ -1019,5 +1096,24 @@ html.stblack {
             }
 
         }
+    }
+}
+
+//tooltip elements
+
+.handleVideoMenu {
+    .menuitem {
+        display: flex;
+    }
+}
+
+.editPreview {
+    position: relative;
+
+    .inputMenuWrapper {
+        position: absolute;
+
+        width: 100%;
+        height: 100%;
     }
 }
