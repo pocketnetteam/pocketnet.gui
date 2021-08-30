@@ -16,7 +16,7 @@
     </div>
     <div class="videoItemPart videoName">
       <p class="videoTextContainer videoNameText"><%- video.name %></p>
-      <p class="videoTextContainer videoDescriptionText">
+      <p class="videoTextContainer videoDescriptionText <%- video.description ? '' : 'emptyDescription'  %>">
         <%- video.description %>
       </p>
       <!-- <p class="videoTextContainer"><%- video.account.host %></p> -->
@@ -33,7 +33,7 @@
     </div>
     <div class="videoItemPart">
       <p class="videoTextContainer videoNameDate">
-        <span><%- moment(video.createdAt).format('hh:mm MM-DD-YYYY') %></span>
+        <span><%- app.reltime(new Date(video.createdAt)) %></span>
       </p>
     </div>
     <div
