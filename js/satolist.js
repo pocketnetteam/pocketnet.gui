@@ -57,7 +57,8 @@ Platform = function (app, listofnodes) {
         'PL1wziiaQj7FLnoktuQQ1MKweYYbdcekRB' : true,
         'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp' : true,
         'PQ3hdiozrxtTf1UhuVfhUb9bcvrUzbzwRJ' : true,
-        'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA' : true
+        'PCSxAFQCRZphi9W6nrV4tSQXKFfsxdxERA' : true,
+        'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ' : true
         //'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' : true // test
     }
 
@@ -10458,7 +10459,6 @@ Platform = function (app, listofnodes) {
 
                     if (!s.ids) s.ids = {};
                     if (!s.ids[key] || refresh) s.ids[key] = [];
-
 
                     if (!txids.length) {
 

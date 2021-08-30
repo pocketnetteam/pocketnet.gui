@@ -53,8 +53,6 @@ var main = (function(){
 
 				if (hsready && (ns != lastStickyRefresh || alv)){
 
-					console.log("UPDATE")
-
 					lastStickyRefresh = ns
 
 					el.panel.hcSticky('refresh');
@@ -121,7 +119,11 @@ var main = (function(){
 
 			backtolenta : function(){
 				actions.backtolentaClear()
-				_scrollTop(lastscroll, null, 5)
+
+				console.log('backtolenta', lastscroll)
+
+				self.app.actions.scroll(lastscroll)
+				//_scrollTop(lastscroll, null, 5)
 				
 
 			},
@@ -159,7 +161,7 @@ var main = (function(){
 
 			up : function(){
 				self.app.actions.scroll(0)
-				lastscroll = 0
+				//lastscroll = 0
 			}
 
 		}
@@ -530,6 +532,8 @@ var main = (function(){
 						},
 						opensvi : function(id){
 
+							console.log('self.app.lastScrollTop', self.app.lastScrollTop)
+
 							lastscroll = self.app.lastScrollTop
 
 							el.c.addClass('opensvishowed')
@@ -570,7 +574,6 @@ var main = (function(){
 
 						renderClbk : function(){
 
-							console.log("renderclbk")
 							
 							actions.refreshSticky()
 						},
@@ -696,7 +699,6 @@ var main = (function(){
 			self.app.events.scroll.main = actions.addbuttonscroll
 
 			self.app.events.resize.mainpage = function(){
-				console.log("RESIZE")
 				setTimeout(function(){
 					actions.refreshSticky(true)
 				}, 500)

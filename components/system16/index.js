@@ -2851,14 +2851,19 @@ var system16 = (function(){
 						baseInfoContainer.on('click', () => {
 							if (performanceMetricsContainer.hasClass('hidden')) {
 								performanceMetricsContainer.removeClass('hidden');
-								currentEl.find('.performancesWrapper').isotope({
-									layoutMode: 'packery',
-									itemSelector: '.performanceSection',
-									packery: {
-										gutter: 10
-									},
-									// initLayout: false
-								})
+
+								if(!isMobile()){
+									currentEl.find('.performancesWrapper').isotope({
+										layoutMode: 'packery',
+										itemSelector: '.performanceSection',
+										packery: {
+											gutter: 10
+										},
+										// initLayout: false
+									})
+								}
+
+								
 
 							} else {
 								performanceMetricsContainer.addClass('hidden');

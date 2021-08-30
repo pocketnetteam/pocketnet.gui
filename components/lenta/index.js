@@ -785,7 +785,6 @@ var lenta = (function(){
 				var work = el.find('.work');
 
 				if(!el.hasClass('fullScreenVideo')){
-					console.log('fullScreenVideo')
 					work.css('margin-top', '0px')
 
 					return
@@ -802,12 +801,10 @@ var lenta = (function(){
 				var d = (h - wh) / 2
 
 				if (d > 0){
-					console.log('css')
 					work.css('margin-top', d + 'px')
 				}
 				else
 				{
-					console.log('css2')
 					work.css('margin-top', 0 + 'px')
 				}
 
@@ -1755,8 +1752,6 @@ var lenta = (function(){
 					}
 				}
 				else{
-
-					console.log("IMHERE")
 
 					if (
 						!loading &&  (!ended && recommended != 'recommended') && 
@@ -2773,8 +2768,6 @@ var lenta = (function(){
 						var paddingvalue = 100 / (2 * aspectRatio);
 						playerContainer.css('padding-top', `${paddingvalue}%`);
 						playerContainer.css('padding-bottom', `${paddingvalue}%`);
-
-						console.log("CSS CHANGE")
 					}
 
 					self.app.nav.api.links(null, _p.el, function(event){
@@ -2794,10 +2787,8 @@ var lenta = (function(){
 							if (i.isLoaded){
 								//$(images[index]).addClass('active')
 
-								console.log("Class CHANGE")
 
 								if(i.img.naturalWidth > 500){
-									console.log("Class2 CHANGE")
 								}
 								
 							}
@@ -2805,7 +2796,6 @@ var lenta = (function(){
 							{
 								$(images[index]).closest('.image').css('display', 'none')
 
-								console.log("CSS2 CHANGE")
 							}
 						})
 
@@ -3421,14 +3411,12 @@ var lenta = (function(){
 										cc.fadeIn(1)
 										cc.height((maxheight * percent)+ 'px')
 
-										console.log("ASD")
 	
 										//el.shares.css('opacity', 1 - percent) 
 										tp.css('opacity', 1 -  (4 * percent))
 	
 									}
 									else{
-										console.log("ASDASDD")
 										progress.renew()
 										cc.fadeOut(1)
 									}
