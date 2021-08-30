@@ -202,6 +202,57 @@ var videoCabinet = (function () {
         videoElement.find('.attachVideoToPost').removeClass('hidden');
         videoElement.find('.transcodingPreloader').addClass('hidden');
       },
+
+      uploadVideoWallpaper: function (image, shareUrl) {
+        const parameters = {
+          thumbnailfile: image,
+        };
+
+        const settingsObject = {};
+
+        const urlMeta = self.app.peertubeHandler.parselink(shareUrl);
+
+        const host = urlMeta.host || null;
+
+        return self.app.platform.sdk.videos
+          .info([shareUrl])
+          .then(
+            () => (self.app.platform.sdk.videos.storage[shareUrl] || {}).data,
+          )
+          .then((res = {}) => {
+            if (res.aspectRatio) {
+              settingsObject.aspectRatio = res.aspectRatio;
+
+              return;
+            }
+
+            return self.app.peertubeHandler.api.videos
+              .getDirectVideoInfo({ id: urlMeta.id }, { host })
+              .then((res) => {
+                settingsObject.aspectRatio = res.aspectRatio;
+              });
+          })
+          .then(() => toDataURL(image))
+          .then((fileBase64) => {
+            return actions.resizeImage(fileBase64, settingsObject);
+          })
+          .then((img) => {
+            parameters.image = {
+              data: img,
+            };
+
+            return self.app.peertubeHandler.api.videos.update(
+              shareUrl,
+              parameters,
+              { host },
+            );
+          })
+          .catch((e) => {
+            const message = e.text || findResponseError(e) || 'Updating error';
+
+            sitemessage(message);
+          });
+      },
     };
 
     var events = {
@@ -327,7 +378,7 @@ var videoCabinet = (function () {
             });
             const attachVideoToPost = p.el.find('.attachVideoToPost');
             // const removeVideo = p.el.find('.removeVideo');
-            const menuActivator = p.el.find('.menuActivator')
+            const menuActivator = p.el.find('.menuActivator');
 
             //button for creating post with video
             attachVideoToPost.on('click', function () {
@@ -335,34 +386,12 @@ var videoCabinet = (function () {
 
               renders.addButton(videoLink);
             });
-            //botton for video removing
-            // removeVideo.on('click', function () {
-            //   const videoLink = $(this).attr('videoLink');
 
-            //   const { host } = self.app.peertubeHandler.parselink(videoLink);
+            menuActivator.on('click', function () {
+              const videoLink = $(this).attr('videoLink');
 
-            //   dialog({
-            //     html: self.app.localization.e('removeVideoDialog'),
-            //     btn1text: self.app.localization.e('remove'),
-            //     btn2text: self.app.localization.e('ucancel'),
-
-            //     success: function () {
-            //       const videoPortionElement = actions.resetHosts();
-
-            //       self.app.peertubeHandler.api.videos
-            //         .remove(videoLink)
-            //         .then(() => actions.getVideos(host))
-            //         .then(() => renders.videos(null, videoPortionElement))
-            //         .then(() => actions.getQuota())
-            //         .then(() => renders.quota());
-            //     },
-            //   });
-            // });
-
-            menuActivator.on('click', function() {
-              return renders.metmenu($(this));
-            })
-
+              return renders.metmenu($(this), videoLink);
+            });
 
             const blockchainStrings = videos.map(
               (video) => `peertube://${video.account.host}/${video.uuid}`,
@@ -569,7 +598,8 @@ var videoCabinet = (function () {
           (p) => {},
         );
       },
-      metmenu: function (_el) {
+      //render menu with video controls
+      metmenu: function (_el, videoLink) {
         const data = {};
 
         self.fastTemplate(
@@ -578,7 +608,57 @@ var videoCabinet = (function () {
             self.app.platform.api.tooltip(
               _el,
               () => template(data),
-              (el) => {},
+              (el) => {
+                //remove user video (popup menu)
+                el.find('.remove').on('click', function () {
+                  _el.tooltipster('hide');
+
+                  const { host } =
+                    self.app.peertubeHandler.parselink(videoLink);
+
+                  dialog({
+                    html: self.app.localization.e('removeVideoDialog'),
+                    btn1text: self.app.localization.e('remove'),
+                    btn2text: self.app.localization.e('ucancel'),
+
+                    success: function () {
+                      const videoPortionElement = actions.resetHosts();
+                      //update servers info after removing
+                      self.app.peertubeHandler.api.videos
+                        .remove(videoLink)
+                        .then(() => actions.getVideos(host))
+                        .then(() => renders.videos(null, videoPortionElement))
+                        .then(() => actions.getQuota())
+                        .then(() => renders.quota());
+                    },
+                  });
+                });
+
+                //edit wallpaper in menu
+                initUpload({
+                  el: el.find('.editPreview .inputMenuWrapper'),
+
+                  ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
+
+                  dropZone: el.find('.editPreview'),
+
+                  multiple: false,
+
+                  action: function (file, clbk) {
+                    _el.tooltipster('hide');
+
+                    actions
+                      .uploadVideoWallpaper(file.file, videoLink)
+                      .then((r) => {
+                        debugger;
+                      });
+                  },
+
+                  onError: function (er, file, text) {
+                    sitemessage(text);
+                  },
+                });
+              },
             );
           },
           data,

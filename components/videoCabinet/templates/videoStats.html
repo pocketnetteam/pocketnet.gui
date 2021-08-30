@@ -1,17 +1,17 @@
 <div class="videoStatsContainer">
   <p class="singleStat tooltip" title="<%- e('totalStars') %>">
-    <i class="far fa-star"></i
+    <i class="fas fa-star starIcon"></i
     ><span class="statNumber"
       ><%- starsCount ? `${(starsSum / starsCount).toFixed(1)} (${starsCount})`
       : '-' %></span
     >
   </p>
   <p class="singleStat tooltip" title="<%- e('totalComments') %>">
-    <i class="far fa-comment"></i
+    <i class="fas fa-comment"></i
     ><span class="statNumber"><%- compressedNumber(comments) %></span>
   </p>
   <p class="singleStat tooltip" title="<%- e('totalViews') %>">
-    <i class="far fa-eye"></i
+    <i class="fas fa-eye"></i
     ><span class="statNumber"><%- compressedNumber(views) %></span>
   </p>
 </div>
