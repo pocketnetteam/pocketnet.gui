@@ -61,13 +61,14 @@
       </button>
     </div>
     <div class="videoItemPart removeButtonWrapper">
-      <button
+      <i class="fas fa-ellipsis-h menuActivator"></i>
+      <!-- <button
         class="removeVideo tooltip ghostButton"
         title="<%- e('removeVideo') %>"
         videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
       >
         <i class="fas fa-times-circle"></i>
-      </button>
+      </button> -->
     </div>
   </div>
   <% }) %>

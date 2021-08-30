@@ -326,7 +326,8 @@ var videoCabinet = (function () {
               zIndex: 20,
             });
             const attachVideoToPost = p.el.find('.attachVideoToPost');
-            const removeVideo = p.el.find('.removeVideo');
+            // const removeVideo = p.el.find('.removeVideo');
+            const menuActivator = p.el.find('.menuActivator')
 
             //button for creating post with video
             attachVideoToPost.on('click', function () {
@@ -335,28 +336,33 @@ var videoCabinet = (function () {
               renders.addButton(videoLink);
             });
             //botton for video removing
-            removeVideo.on('click', function () {
-              const videoLink = $(this).attr('videoLink');
+            // removeVideo.on('click', function () {
+            //   const videoLink = $(this).attr('videoLink');
 
-              const { host } = self.app.peertubeHandler.parselink(videoLink);
+            //   const { host } = self.app.peertubeHandler.parselink(videoLink);
 
-              dialog({
-                html: self.app.localization.e('removeVideoDialog'),
-                btn1text: self.app.localization.e('remove'),
-                btn2text: self.app.localization.e('ucancel'),
+            //   dialog({
+            //     html: self.app.localization.e('removeVideoDialog'),
+            //     btn1text: self.app.localization.e('remove'),
+            //     btn2text: self.app.localization.e('ucancel'),
 
-                success: function () {
-                  const videoPortionElement = actions.resetHosts();
+            //     success: function () {
+            //       const videoPortionElement = actions.resetHosts();
 
-                  self.app.peertubeHandler.api.videos
-                    .remove(videoLink)
-                    .then(() => actions.getVideos(host))
-                    .then(() => renders.videos(null, videoPortionElement))
-                    .then(() => actions.getQuota())
-                    .then(() => renders.quota());
-                },
-              });
-            });
+            //       self.app.peertubeHandler.api.videos
+            //         .remove(videoLink)
+            //         .then(() => actions.getVideos(host))
+            //         .then(() => renders.videos(null, videoPortionElement))
+            //         .then(() => actions.getQuota())
+            //         .then(() => renders.quota());
+            //     },
+            //   });
+            // });
+
+            menuActivator.on('click', function() {
+              return renders.metmenu($(this));
+            })
+
 
             const blockchainStrings = videos.map(
               (video) => `peertube://${video.account.host}/${video.uuid}`,
@@ -561,6 +567,21 @@ var videoCabinet = (function () {
             data: { ...parameters },
           },
           (p) => {},
+        );
+      },
+      metmenu: function (_el) {
+        const data = {};
+
+        self.fastTemplate(
+          'metmenu',
+          (rendered, template) => {
+            self.app.platform.api.tooltip(
+              _el,
+              () => template(data),
+              (el) => {},
+            );
+          },
+          data,
         );
       },
     };
