@@ -13,21 +13,28 @@
     .singleVideoSection {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-
+        align-items: top;
         padding: @rhythm * 2 0;
-
         border-bottom: 1px solid @color-gray-border;
-
         font-size: 1.1em;
+
+        >div{
+            padding : 0 2 * @rhythm;
+
+            &:nth-last-child(1){
+                padding-right: 0;
+            }
+
+            &:nth-child(1){
+                padding-left: 0;
+            }
+        }
     }
 
     .videoName {
-        width: 25%;
-
+        flex-grow: 1;
         position: relative;
-
-        font-size: 0.9em;
+        padding-left: @rhythm;
     }
 
     .videoTextContainer {
@@ -41,26 +48,21 @@
 
     .videoDescriptionText {
         white-space: normal;
-        height: 60px;
-
+        max-height: 60px;
         font-size: 0.9em;
-
         position: relative;
-
         line-height: 20px;
         display: -webkit-box;
-
         -webkit-box-orient: vertical;
         -moz-box-orient: vertical;
         -ms-box-orient: vertical;
         box-orient: vertical;
-
         -webkit-line-clamp: 3;
         -moz-line-clamp: 3;
         -ms-line-clamp: 3;
         line-clamp: 3;
-
         overflow: hidden;
+        overflow-y: auto;
     }
 
     .transcodingPreloader {
@@ -106,14 +108,21 @@
     .postingStatusWrapper {
         min-width: 100px;
         width: 15%;
-
         font-size: 0.8em;
+
+        button{
+            padding : 0;
+        }
     }
 
     .videoStatsContainer {
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        >div{
+            white-space: nowrap;
+        }
     }
 
     .videoStatsWrapper {
@@ -171,32 +180,29 @@
 
         .videoDuration {
             position: absolute;
-
             font-size: 0.7em;
-            font-weight: bold;
             color: #fff;
-
             background-color: rgba(0, 0, 0, 0.5);
-
             border-bottom-left-radius: 5px;
-
             bottom: 0;
-
             padding: @rhythm;
         }
     }
 
     .moduleHeader {
-        padding: 0 8 * @rhythm;
-
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
 
+    .statsdiv{
+        padding-bottom : 2 * @rhythm;
+    }
+
     .cabinetName {
         max-width: 700px;
-        padding-top: 1em;
+        padding-top: 2 * @rhythm;
+        padding-bottom : 2 * @rhythm;
         font-size: 2em;
         font-weight: 100;
     }
@@ -220,8 +226,7 @@
 
         >div {
             float: left;
-            width: 33%;
-            min-width: 241px;
+            width: 33.33333333333%;
 
             &.connectionFailed {
                 width: 100%;
@@ -230,27 +235,14 @@
             &.reputationblock {
                 .metricablock {
 
-                    /*.blockContentWrapper {
-                        background: @color-black2;
-                        color : #fff;
-                    }
-
-                    .vidgetIconWrapper{
-            
-                        .vidgetIcon{
-                            color : #fff;
-                        }
-                    }
-        
-            
-                    .vidgetAboutWrapper{
-                        color : #fff;
-                    }*/
-
                 }
             }
 
-
+            &:nth-last-child(1){
+                .metricablockwrapper{
+                    padding-right: 0;
+                }
+            }
 
             &.levelsblock {
                 width: 75%;
@@ -298,8 +290,6 @@
         }
 
         .metricablockwrapper {
-            width: 100%;
-            float: left;
             padding-bottom: @rhythm;
             padding-right: @rhythm;
         }
@@ -308,22 +298,10 @@
             color: @color-gray;
             cursor: pointer;
 
-            .blockWrapper {
-                position: relative;
-                width: 100%;
-                padding-bottom: 20%;
-            }
-
             .blockContentWrapper {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
                 padding: 0.5em;
                 background: fade(@color-gray-light, 15);
                 .transition(0.3s);
-
 
                 &.forchart {
                     background: transparent;
@@ -333,9 +311,7 @@
 
             .blockContent {
                 position: relative;
-                width: 100%;
-                height: 100%;
-
+               
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -625,13 +601,13 @@
 
     }
 
-    .statsSection {
+    /*.statsSection {
         padding: 0 8 * @rhythm 4 * @rhythm;
     }
 
     .videoContainer {
         padding: 0 8 * @rhythm;
-    }
+    }*/
 
     .videoErrorContainer {
         .videoErrorHeading {
@@ -726,19 +702,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         padding-bottom: 4 * @rhythm;
 
-        font-size: 1.2em;
     }
 
     .uploadVideo {
         font-size: 1em;
-
-        margin: 1.34em 0;
-
-        padding-top: 4 * @rhythm;
-
+        margin-top: 4 * @rhythm;
+        padding-right: 0;
         font-weight: normal;
 
         .fas {
@@ -748,26 +719,17 @@
 
     .videoSearchWrapper {
         position: relative;
-
         max-width: 550px;
-
-        width: 40%;
+        min-width: 270px;
     }
 
     .videoSearchInput {
-        border-radius: 25px;
+        border-radius: 35px;
         width: 100%;
-
         background-color: #fafafa;
         border-color: rgba(14, 28, 43, 0.05);
         color: rgba(14, 28, 43, 0.4);
-
-        padding-left: 20px;
-        -webkit-box-sizing: border-box;
-        /* Safari/Chrome, other WebKit */
-        -moz-box-sizing: border-box;
-        /* Firefox, other Gecko */
-        box-sizing: border-box;
+        padding-left: 2  * @rhythm;
     }
 
     .videoSearchButton {
@@ -779,27 +741,12 @@
     }
 
     .metricsContainer {
-        height: 100%;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-
         .metricsContainerHeader {
             font-size: 0.8em;
         }
-
         .metricsMain {
-            flex-grow: 1;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
 
             .metricSection {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
 
                 font-size: 1.5em;
                 font-weight: 200;
@@ -976,7 +923,54 @@ html.stblack {
             }
         }
 
-        .ustatecontentrep {
+        .videoAvatar{
+            height: 150px;
+        }
+
+        .videosWrapper{
+            >div{
+                &.work{
+                    &:nth-last-child(1){
+                        .singleVideoSection{
+                            border-bottom: 0;
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        .singleVideoSection{
+
+            flex-wrap: wrap;
+
+            >div{
+                width: 100%;
+                padding : @rhythm 0;
+
+                &.videoName{
+                    order : -1;
+                }
+
+                &.postingStatusWrapper{
+                    width: 75%;
+                    font-size: 1em;
+                }
+
+                &.removeButtonWrapper{
+                    width: 25%;
+                    text-align: right;
+                }
+            }
+
+            .videoTextContainer{
+                max-width: none;
+            }
+
+           
+        }
+
+        .statsdiv {
 
             .reputation {
 
@@ -984,12 +978,22 @@ html.stblack {
 
                 >div {
                     width: 100%;
+                    margin-bottom: @rhythm;
+               
 
-                    &.levelsblock {
-                        width: 100%;
+                    .metricablockwrapper{
+                        padding: 0;
                     }
                 }
             }
+
+            .metricablock{
+                .blockContentWrapper{
+                    padding : @rhythm 2 * @rhythm;
+                }
+            }
+
+            
 
             .levelsblock {
                 .metricablockwrapper {
@@ -1025,6 +1029,7 @@ html.stblack {
 
         .uploadVideo {
             margin-left: 0;
+            margin-top: @rhythm;
         }
 
         .videoControlItem {
@@ -1051,7 +1056,12 @@ html.stblack {
         }
 
         .videoContainer {
-            padding: 0 2 * @rhythm;
+            padding: 0 ;
+
+            .work{
+                padding-left: @rhythm;
+                padding-right: @rhythm;
+            }
         }
 
         .statsSection {
