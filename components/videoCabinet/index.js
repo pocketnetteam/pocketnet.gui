@@ -640,7 +640,7 @@ var videoCabinet = (function () {
         );
       },
       //render menu with video controls
-      metmenu: function (_el, videoLink) {
+      metmenu(_el, videoLink) {
         const data = {};
 
         const meta = self.app.peertubeHandler.parselink(videoLink);
@@ -708,17 +708,23 @@ var videoCabinet = (function () {
                 });
 
                 //render edit description form
-                element.find('.editVideoDescription').on('click', function () {
-                  const dest = $(this);
+                element.find('.editText').on('click', function () {
+                  _el.tooltipster('hide');
 
-                  debugger;
+                  self.fastTemplate('editDescription', (rendered) => {
+                    dialog({
+                      html: rendered,
 
-                  self.fastTemplate('editDescription', (rendered, template) => {
-                    self.app.platform.api.tooltip(
-                      dest,
-                      () => template({}),
-                      () => {},
-                    );
+                      wrap: true,
+
+                      success: function (d) {},
+
+                      clbk: function (editDialogEl) {
+                        renders.tags(editDialogEl.find('.videoTagsWrapper'));
+                      },
+
+                      class: 'editVideoDialog',
+                    });
                   });
                 });
               },
@@ -726,6 +732,41 @@ var videoCabinet = (function () {
           },
           data,
         );
+      },
+      //render tagline
+      tags(element) {
+        self.nav.api.load({
+          open: true,
+          id: 'taginput',
+          el: element,
+          eid: 'articletags',
+          animation: false,
+          essenseData: {
+            tags: [],
+
+            removeTag: function (tag) {
+              // actions.removeTag(tag)
+              // renders.tgs()
+            },
+
+            removeTags: function (tag) {
+              // actions.removeTags(tag)
+              // renders.tgs()
+            },
+
+            addTag: function (tag) {
+              // actions.addTag(tag)
+              // renders.tgs()
+            },
+
+            addTags: function (tags) {
+              // actions.addTags(tags)
+              // renders.tgs()
+            },
+          },
+
+          clbk: function (e, p) {},
+        });
       },
     };
 
