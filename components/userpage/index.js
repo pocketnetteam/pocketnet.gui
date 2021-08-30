@@ -216,12 +216,12 @@ var userpage = (function(){
 				},
 			})
 
-			reports.push({
+			/*reports.push({
 				name : self.app.localization.e('videoCabinet'),
 				id : 'videoCabinet',
 				report : 'videoCabinet',
 				mobile : true,
-			})
+			})*/
 
 
 
