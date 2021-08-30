@@ -16,9 +16,8 @@
     </div>
     <div class="videoItemPart videoName">
       <p class="videoTextContainer videoNameText"><%- video.name %></p>
-      <p class="videoTextContainer videoNameDate">
-        <i class="far fa-calendar"></i
-        ><span><%- moment(video.createdAt).format('hh:mm MM-DD-YYYY') %></span>
+      <p class="videoTextContainer videoDescriptionText">
+        <%- video.description %>
       </p>
       <!-- <p class="videoTextContainer"><%- video.account.host %></p> -->
     </div>
@@ -31,6 +30,11 @@
       <div class="preloaderwr">
         <div class="preloader5"><span></span><span></span><span></span></div>
       </div>
+    </div>
+    <div class="videoItemPart">
+      <p class="videoTextContainer videoNameDate">
+        <span><%- moment(video.createdAt).format('hh:mm MM-DD-YYYY') %></span>
+      </p>
     </div>
     <div
       class="videoItemPart postingStatusWrapper"

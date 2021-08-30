@@ -2,7 +2,7 @@
 
 #videoCabinet {
     min-height: 600px;
-    background: #F7F7F7;
+    background: transparent;
     padding-bottom: 8 * @rhythm;
 
     .videosWrapper {
@@ -13,11 +13,13 @@
     .singleVideoSection {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
 
-        padding: @rhythm * 2 @rhythm * 4;
+        padding: @rhythm * 2 0;
 
         border-bottom: 1px solid @color-gray-border;
+
+        font-size: 1.1em;
 
         &:hover {
             background-color: fade(@color-gray-light, 15);
@@ -37,6 +39,8 @@
         white-space: nowrap;
 
         margin: 0;
+
+        padding-left: 5px;
     }
 
     .videoNameDate {
@@ -101,8 +105,8 @@
     }
 
     .videoAvatar {
-        width: 100px;
-        height: 60px;
+        width: 150px;
+        height: 90px;
 
         background-position: center center;
         background-repeat: no-repeat;
@@ -127,6 +131,10 @@
 
     .moduleHeader {
         padding: 0 8 * @rhythm;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .cabinetName {
@@ -246,7 +254,7 @@
             .blockWrapper {
                 position: relative;
                 width: 100%;
-                padding-bottom: 30%;
+                padding-bottom: 20%;
             }
 
             .blockContentWrapper {
@@ -284,7 +292,7 @@
                 justify-content: flex-start;
                 align-items: center;
 
-                font-size: 2em;
+                font-size: 1.5em;
                 font-weight: 200;
             }
 
@@ -660,11 +668,21 @@
     .videoControls {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between;
+
+        padding-bottom: 4 * @rhythm;
+
+        font-size: 1.2em;
     }
 
     .uploadVideo {
-        margin-left: 2 * @rhythm;
+        font-size: 1em;
+
+        margin: 1.34em 0;
+
+        padding-top: 4 * @rhythm;
+
+        font-weight: normal;
 
         .fas {
             margin-right: @rhythm / 2;
@@ -680,14 +698,27 @@
     }
 
     .videoSearchInput {
-        border-radius: 15px;
-
+        border-radius: 25px;
         width: 100%;
+
+        background-color: #fafafa;
+        border-color: rgba(14, 28, 43, 0.05);
+        color: rgba(14, 28, 43, 0.4);
+
+        padding-left: 20px;
+        -webkit-box-sizing: border-box;
+        /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;
+        /* Firefox, other Gecko */
+        box-sizing: border-box;
     }
 
     .videoSearchButton {
         position: absolute;
-        right: 0;
+        right: 10px;
+        top: 2px;
+
+        color: rgba(14, 28, 43, 0.4);
     }
 
     .transcodingPreloader {
@@ -724,7 +755,7 @@
                 align-items: center;
                 justify-content: flex-start;
 
-                font-size: 2em;
+                font-size: 1.5em;
                 font-weight: 200;
             }
         }
@@ -756,7 +787,7 @@
 
     .videoSortWrapper {
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-evenly;
         align-items: center;
 
         .videoSelect {
