@@ -101,6 +101,7 @@ var defaultSettings = {
 	server : {
 		enabled : false,
 
+        dontCache: false,
 		captcha : true,
 		host : '',
 		iplimiter : {

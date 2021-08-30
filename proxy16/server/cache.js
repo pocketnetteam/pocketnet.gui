@@ -8,100 +8,104 @@ var Cache = function(p){
     var smart = {}
 
 
-    var ckeys = {
-        getlastcomments : {
-            time : 960,
-            block : 0
-        },
+    var ckeys = {}
+    
+    if (!p.dontCache)
+    {
+        ckeys = {
+            getlastcomments : {
+                time : 960,
+                block : 0
+            },
 
-        getcomments : {
-            time : 360,
-            block : 0
-        },
+            getcomments : {
+                time : 360,
+                block : 0
+            },
 
-        getuseraddress : {
-            time : 82000
-        },
+            getuseraddress : {
+                time : 82000
+            },
 
-        search: {
-            time : 6000
-        },
-       
-        gettags : {
-            time : 82000
-        },
-
-        getnodeinfo : {
-            time : 160,
-            block : 0
-        },
-
-        getrawtransactionwithmessagebyid: {
-            time : 460,
-            block : 0
-        },
-       
-        getrawtransactionwithmessage: {
-            time : 460,
-            block : 0
-        },
-
-        getrawtransaction: {
-            time : 460,
-            block : 0
-        },
-        getusercontents: {
-            time : 760,
-        },
-        gethierarchicalstrip: {
-            time : 460,
-            block : 0
-        },
-
-        gethotposts: {
-            time : 460,
-            block : 0
-        },
+            search: {
+                time : 6000
+            },
         
-        getuserprofile: {
-            time : 560,
-            block : 0,
+            gettags : {
+                time : 82000
+            },
 
-            /*smart : {
-                idin : '0',
-                idout : 'address',
-                type : 'collect'
-            }*/
-        },
+            getnodeinfo : {
+                time : 160,
+                block : 0
+            },
 
-        getuserstate : {
-            time : 560,
-            block : 0
-        },
+            getrawtransactionwithmessagebyid: {
+                time : 460,
+                block : 0
+            },
         
-        getpagescores: {
-            time : 460,
-            block : 0
-        },
-        
-        getcontents: {
-            time : 82000,
-        },
+            getrawtransactionwithmessage: {
+                time : 460,
+                block : 0
+            },
 
-        getmissedinfo: {
-            time : 160,
-            block : 0,
-        },
+            getrawtransaction: {
+                time : 460,
+                block : 0
+            },
+            getusercontents: {
+                time : 760,
+            },
+            gethierarchicalstrip: {
+                time : 460,
+                block : 0
+            },
 
-        peertubevideo: {
-            time : 300,
-        },
+            gethotposts: {
+                time : 460,
+                block : 0
+            },
+            
+            getuserprofile: {
+                time : 560,
+                block : 0,
 
-        estimatesmartfee: {
-            time : 1600
-        },
+                /*smart : {
+                    idin : '0',
+                    idout : 'address',
+                    type : 'collect'
+                }*/
+            },
+
+            getuserstate : {
+                time : 560,
+                block : 0
+            },
+            
+            getpagescores: {
+                time : 460,
+                block : 0
+            },
+            
+            getcontents: {
+                time : 82000,
+            },
+
+            getmissedinfo: {
+                time : 160,
+                block : 0,
+            },
+
+            peertubevideo: {
+                time : 300,
+            },
+
+            estimatesmartfee: {
+                time : 1600
+            },
+        }
     }
-
 
     self.set = function(key, params, data, block, ontime, cachehash){
         
