@@ -241,11 +241,9 @@ var videoCabinet = (function () {
               data: img,
             };
 
-            return self.app.peertubeHandler.api.videos.update(
-              shareUrl,
-              parameters,
-              { host },
-            ).then(() => img);
+            return self.app.peertubeHandler.api.videos
+              .update(shareUrl, parameters, { host })
+              .then(() => img);
           })
           .catch((e) => {
             const message = e.text || findResponseError(e) || 'Updating error';
@@ -697,13 +695,31 @@ var videoCabinet = (function () {
                         const previewContainer = el.videoContainer.find(
                           `.singleVideoSection[uuid="${meta.id}"] .videoAvatar`,
                         );
-                        previewContainer.attr('style', `background-image: url("${img}")`);
+                        previewContainer.attr(
+                          'style',
+                          `background-image: url("${img}")`,
+                        );
                       });
                   },
 
                   onError: function (er, file, text) {
                     sitemessage(text);
                   },
+                });
+
+                //render edit description form
+                element.find('.editVideoDescription').on('click', function () {
+                  const dest = $(this);
+
+                  debugger;
+
+                  self.fastTemplate('editDescription', (rendered, template) => {
+                    self.app.platform.api.tooltip(
+                      dest,
+                      () => template({}),
+                      () => {},
+                    );
+                  });
                 });
               },
             );
