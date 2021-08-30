@@ -1136,3 +1136,5 @@ ____loclib.sortByViews = "Views";
 ____loclib.unableToAuthorize = "Unable to authorize";
 ____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos. If you do, please try again later";
 
+____loclib.emptyDescription = "Description is empty";
+
