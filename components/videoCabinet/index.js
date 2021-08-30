@@ -245,13 +245,56 @@ var videoCabinet = (function () {
               shareUrl,
               parameters,
               { host },
-            );
+            ).then(() => img);
           })
           .catch((e) => {
             const message = e.text || findResponseError(e) || 'Updating error';
 
             sitemessage(message);
           });
+      },
+
+      resizeImage: function (base64, settings = {}) {
+        const images = [
+          {
+            original: base64,
+            index: 0,
+          },
+        ];
+
+        return new Promise((resolve, reject) => {
+          self.nav.api.load({
+            open: true,
+            id: 'imageGalleryEdit',
+            inWnd: true,
+
+            essenseData: {
+              edit: true,
+              initialValue: 0,
+              images: images,
+              apply: true,
+              crop: {
+                aspectRatio: settings.aspectRatio || 16 / 9,
+                style: 'apply',
+                autoCropArea: 0.95,
+              },
+
+              success: function (i, editclbk) {
+                resize(images[0].original, 1920, 1080, function (resized) {
+                  const r = resized.split(',');
+
+                  if (r[1]) {
+                    editclbk();
+
+                    resolve(resized);
+                  } else {
+                    reject('error');
+                  }
+                });
+              },
+            },
+          });
+        });
       },
     };
 
@@ -602,19 +645,20 @@ var videoCabinet = (function () {
       metmenu: function (_el, videoLink) {
         const data = {};
 
+        const meta = self.app.peertubeHandler.parselink(videoLink);
+
         self.fastTemplate(
           'metmenu',
           (rendered, template) => {
             self.app.platform.api.tooltip(
               _el,
               () => template(data),
-              (el) => {
+              (element) => {
                 //remove user video (popup menu)
-                el.find('.remove').on('click', function () {
+                element.find('.remove').on('click', function () {
                   _el.tooltipster('hide');
 
-                  const { host } =
-                    self.app.peertubeHandler.parselink(videoLink);
+                  const { host } = meta;
 
                   dialog({
                     html: self.app.localization.e('removeVideoDialog'),
@@ -636,11 +680,11 @@ var videoCabinet = (function () {
 
                 //edit wallpaper in menu
                 initUpload({
-                  el: el.find('.editPreview .inputMenuWrapper'),
+                  el: element.find('.editPreview .inputMenuWrapper'),
 
                   ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 
-                  dropZone: el.find('.editPreview'),
+                  dropZone: element.find('.editPreview'),
 
                   multiple: false,
 
@@ -649,8 +693,11 @@ var videoCabinet = (function () {
 
                     actions
                       .uploadVideoWallpaper(file.file, videoLink)
-                      .then((r) => {
-                        debugger;
+                      .then((img) => {
+                        const previewContainer = el.videoContainer.find(
+                          `.singleVideoSection[uuid="${meta.id}"] .videoAvatar`,
+                        );
+                        previewContainer.attr('style', `background-image: url("${img}")`);
                       });
                   },
 
