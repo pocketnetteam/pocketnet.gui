@@ -768,6 +768,68 @@ var videoCabinet = (function () {
           clbk: function (e, p) {},
         });
       },
+      //tag-related funcitons
+      tagsFromText: function (text) {
+        var words = text.split(wordsRegExp);
+
+        var tags = _.filter(words, function (w) {
+          if (w[0] == '#') {
+            w = w.replace(/#/g, '');
+
+            if (!w) return false;
+
+            return true;
+          }
+        });
+
+        _.each(tags, function (tag, i) {
+          tags[i] = tag.replace(/\#/g, '');
+        });
+
+        return tags;
+      },
+
+      _addtag: function (tag) {
+        if (art.tags.length < 5) {
+          removeEqual(art.tags, tag);
+          art.tags.push(tag);
+          return true;
+        }
+
+        return false;
+      },
+
+      addTags: function (tags) {
+        _.find(tags, function (tag) {
+          if (!actions._addtag(tag)) {
+            sitemessage(self.app.localization.e('e13162'));
+
+            return true;
+          }
+        });
+
+      },
+      addTag: function (tag) {
+        //tag = tag.replace(/#/g, '')
+
+        if (!actions._addtag(tag)) {
+          sitemessage(self.app.localization.e('e13162'));
+        }
+      },
+
+      _removetag: function (tag) {
+        removeEqual(art.tags, tag);
+      },
+
+      removeTags: function (tags) {
+        _.each(tags, function (tag) {
+          actions._removetag(tag);
+        });
+      },
+
+      removeTag: function (tag) {
+        actions._removetag(tag);
+      },
     };
 
     var state = {
