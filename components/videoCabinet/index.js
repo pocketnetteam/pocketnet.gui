@@ -594,19 +594,19 @@ var videoCabinet = (function () {
       //render single video stats column in video table
       videoStats(element, link, host, uuid) {
         const linkInfo = blockChainInfo[link] || {};
-        const videoInfo = peertubeServers[host].videos.find(
-          (video) => video.uuid === uuid,
-        ) || {};
+        const videoInfo =
+          peertubeServers[host].videos.find((video) => video.uuid === uuid) ||
+          {};
 
         self.shell(
           {
             name: 'videoStats',
             el: element,
             data: {
-              views: + videoInfo.views || 0,
-              starsCount: + linkInfo.scoreSum || 0,
-              starsSum: + linkInfo.scoreCnt || 0,
-              comments: + linkInfo.comments || 0,
+              views: +videoInfo.views || 0,
+              starsCount: +linkInfo.scoreSum || 0,
+              starsSum: +linkInfo.scoreCnt || 0,
+              comments: +linkInfo.comments || 0,
             },
           },
           (p) => {
@@ -717,7 +717,45 @@ var videoCabinet = (function () {
 
                       wrap: true,
 
-                      success: function (d) {},
+                      success: function (d) {
+                        const name = d.el.find('.videoNameInput').val();
+                        const description = d.el
+                          .find('.videoDescriptionInput')
+                          .val();
+
+                        const parameters = {};
+
+                        if (name) parameters.name = name;
+                        if (description) parameters.description = description;
+
+                        const { host } = videoLink;
+
+                        return self.app.peertubeHandler.api.videos
+                          .update(videoLink, parameters, { host })
+                          .then(() => {
+                            const textContainert = el.videoContainer.find(
+                              `.singleVideoSection[uuid="${meta.id}"]`,
+                            );
+
+                            if (name)
+                              textContainert.find('.videoNameText').text(name);
+                            if (description)
+                              textContainert
+                                .find('.videoDescriptionText')
+                                .text(description);
+
+                            d.close();
+                          })
+                          .catch(() => {
+                            d.close();
+
+                            sitemessage(
+                              self.app.localization.e(
+                                'errorChangingDescription',
+                              ),
+                            );
+                          });
+                      },
 
                       clbk: function (editDialogEl) {
                         renders.tags(editDialogEl.find('.videoTagsWrapper'));
@@ -742,7 +780,7 @@ var videoCabinet = (function () {
           eid: 'articletags',
           animation: false,
           essenseData: {
-            tags: [],
+            tags: () => [],
 
             removeTag: function (tag) {
               // actions.removeTag(tag)
@@ -807,8 +845,8 @@ var videoCabinet = (function () {
             return true;
           }
         });
-
       },
+
       addTag: function (tag) {
         //tag = tag.replace(/#/g, '')
 
