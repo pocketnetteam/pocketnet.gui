@@ -1140,3 +1140,6 @@ ____loclib.emptyDescription = "Description is empty";
 ____loclib.transcodingShort = "Processing";
 ____loclib.editVideoDescription = "Edit video name/description";
 ____loclib.errorChangingDescription = "Unable to change video name/description";
+
+____loclib.enterVideoName = "Enter video name";
+____loclib.enterVideoDescription = "Enter video description";

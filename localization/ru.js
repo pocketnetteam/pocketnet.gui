@@ -939,3 +939,6 @@ ____loclib.emptyDescription = "Описание отсутствует";
 ____loclib.transcodingShort = "Обработка";
 ____loclib.editVideoDescription = "Изменить название/описание видео";
 ____loclib.errorChangingDescription = "Ошибка изменения видео";
+
+____loclib.enterVideoName = "Введите название видео";
+____loclib.enterVideoDescription = "Введите описание видео";
