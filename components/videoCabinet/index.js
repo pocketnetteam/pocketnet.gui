@@ -128,7 +128,7 @@ var videoCabinet = (function () {
 
           ], {
             rpc : {
-              node : window.testpocketnet ? '157.90.235.121:39091' : '157.90.235.121:39091'
+              node : window.testpocketnet ? '157.90.235.121:39091' : '216.108.231.40'
             }
             
           }).then(r => {

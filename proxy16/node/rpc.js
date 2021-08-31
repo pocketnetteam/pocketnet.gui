@@ -210,8 +210,6 @@ function rpc(request, callback, obj) {
         
         if (!called) {
 
-            console.log("E", e)
-
             called = true;
 
             callback({
