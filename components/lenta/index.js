@@ -3302,16 +3302,17 @@ var lenta = (function(){
 									loader = 'recommended'
 								}
 
-								else
-
-								if(recommended == 'hot'){
+								else if(recommended == 'hot'){
 								}
 
-								else
-
-								if(recommended == 'b'){
+								else if(recommended == 'b'){
 									loader = 'getbyidsp'
 									_beginmaterial = essenseData.beginmaterial
+								}
+
+								else if(recommended == 'saved'){
+									loader = 'getsavedbyids';
+									essenseData.txids = self.app.platform.sdk.local.shares.getAllIds();
 								}
 
 								else
@@ -3399,10 +3400,12 @@ var lenta = (function(){
 					loader = 'recommended'
 				}
 
-				else
-
-				if(recommended == 'b'){
+				else if(recommended == 'b'){
 					loader = 'getbyidsp'
+				}
+
+				else if(recommended == 'saved'){
+					loader = 'getsavedbyids';
 				}
 
 				else
@@ -4056,6 +4059,10 @@ var lenta = (function(){
 
 					recommended = false;
 
+				}
+
+				if (essenseData.saved || _s.saved){
+					recommended = 'saved';
 				}
 
 				canloadprev = !!!essenseData.txids || false

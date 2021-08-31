@@ -3309,6 +3309,14 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                // Returns an array of all the shares ID
+                getAllIds: function() {
+                    res = [];
+                    for (const shareId in self.sdk.local.shares.allShares)
+                        res.push(shareId);
+                    return res;
+                },
+
                 get: function(shareId) {
                     var v = self.sdk.local.shares.allShares;
                     return v[shareId];
@@ -10511,6 +10519,9 @@ Platform = function (app, listofnodes) {
                     this.getbyid(p.txids, clbk, refresh)
                 },
                 getbyidsp: function (p, clbk, refresh) {
+                    this.getbyids(p.txids, p.begin, 10, clbk, refresh)
+                },
+                getsavedbyids: function (p, clbk, refresh) {
                     this.getbyids(p.txids, p.begin, 10, clbk, refresh)
                 },
                 getbyids: function (txids, begin, cnt, clbk, refresh) {

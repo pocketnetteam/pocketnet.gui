@@ -789,3 +789,6 @@ ____loclib.e13350 = "Únase a "+appname+" y gane Pocketcoin ahora"
 ____loclib.e13351 = "Escribe porfavor brevemente sobre ti para hacerles saber a los usuarios que deberían seguirte"
 ____loclib.e13351 = "Charla de "+appname+""
 ____loclib.e13352 = "No tienes permiso para chatear"
+
+____loclib.downloaded = "Descargado";
+____loclib.downloadedEmpty = "Los mensajes descargados se mostrarán aquí";
