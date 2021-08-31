@@ -674,14 +674,19 @@ var videoCabinet = (function () {
                     btn2text: self.app.localization.e('ucancel'),
 
                     success: function () {
-                      const videoPortionElement = actions.resetHosts();
-                      //update servers info after removing
+                      // const videoPortionElement = actions.resetHosts();
+                      // //update servers info after removing
                       self.app.peertubeHandler.api.videos
                         .remove(videoLink)
-                        .then(() => actions.getVideos(host))
-                        .then(() => renders.videos(null, videoPortionElement))
-                        .then(() => actions.getQuota())
-                        .then(() => renders.quota());
+                        .then(() => {
+                          el.videoContainer
+                            .find(`.singleVideoSection[uuid="${meta.id}"]`)
+                            .addClass('hidden');
+                        });
+                      //   .then(() => actions.getVideos(host))
+                      //   .then(() => renders.videos(null, videoPortionElement))
+                      //   .then(() => actions.getQuota())
+                      //   .then(() => renders.quota());
                     },
                   });
                 });
