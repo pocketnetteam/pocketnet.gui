@@ -3293,7 +3293,6 @@ Platform = function (app, listofnodes) {
                                                     reader.onloadend = function() {
                                                         try {
                                                             v[shareFolder.name].share = JSON.parse(this.result);
-                                                            console.log(v);
                                                         } catch(err){ }
                                                     };
                                                     reader.readAsText(shareFileDetails);
@@ -10521,8 +10520,43 @@ Platform = function (app, listofnodes) {
                 getbyidsp: function (p, clbk, refresh) {
                     this.getbyids(p.txids, p.begin, 10, clbk, refresh)
                 },
-                getsavedbyids: function (p, clbk, refresh) {
-                    this.getbyids(p.txids, p.begin, 10, clbk, refresh)
+                getsavedbyids: function (p, clbk) {
+                    if (!p.txids.length) {
+                        if (clbk)
+                            clbk([], null, p);
+                        return;
+                    }
+                    var loadedShares = [];
+                    _.each(p.txids, function (txid) {
+                        var curShare = self.sdk.local.shares.get(txid);
+                        if (curShare) {
+
+                            // Prepare user
+                            var newUser = self.sdk.users.prepareuser(curShare.share.user, curShare.share.user.adr);
+                            self.sdk.usersl.storage[newUser.address] = newUser;
+
+                            // Prepare share
+                            var newShare = new pShare();
+                            newShare._import(curShare.share.share);
+                            newShare.txid = txid;
+                            newShare.address = newUser.address;
+
+                            loadedShares.push(newShare);
+
+                            if (!self.sdk.node.shares.storage.trx)
+                                self.sdk.node.shares.storage.trx = {};
+
+                            self.sdk.node.shares.storage.trx[txid] = newShare;
+
+                        }
+                    });
+
+                    if (clbk) {
+                        clbk(loadedShares, null, {
+                            count: p.txids.length
+                        });
+                    }
+
                 },
                 getbyids: function (txids, begin, cnt, clbk, refresh) {
 

@@ -1805,6 +1805,7 @@ var lenta = (function(){
 			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
 				if (!video || !video.fileDownloadUrl) return;
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+				var user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address);
 				// Mobile
 				if (isMobile() && window.cordova && window.cordova.file) {
 					// Check if external storage is available, if not, use the internal
@@ -1816,7 +1817,8 @@ var lenta = (function(){
 							dirEntry11.getDirectory(shareId, { create: true }, function (dirEntry2) {
 								// Create share.json file
 								var shareInfos = {
-									share: share.export()
+									share: share.export(),
+									user: user.export()
 								}
 								// Create JSON file for share informations
 								dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
@@ -3310,11 +3312,6 @@ var lenta = (function(){
 									_beginmaterial = essenseData.beginmaterial
 								}
 
-								else if(recommended == 'saved'){
-									loader = 'getsavedbyids';
-									essenseData.txids = self.app.platform.sdk.local.shares.getAllIds();
-								}
-
 								else
 								{
 									loader = 'common'
@@ -3332,6 +3329,11 @@ var lenta = (function(){
 
 							if(essenseData.txids && recommended != 'b'){
 								loader = 'txids'
+							}
+
+							if(recommended == 'saved'){
+								loader = 'getsavedbyids';
+								essenseData.txids = self.app.platform.sdk.local.shares.getAllIds();
 							}
 
 							if (essenseData.loaderkey) loader = essenseData.loaderkey
