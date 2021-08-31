@@ -3,24 +3,6 @@ var videoCabinet = (function () {
 
   var essenses = {};
 
-  var videoServers = {};
-
-  var peertubeServers = {};
-
-  var userQuota = {};
-
-  var blockChainInfo = [];
-
-  var perServerCounter = 10;
-
-  var ed = {};
-
-  var transcodingIntervals = {};
-
-  var startingPosition = 0;
-
-  var external = null;
-
   const ROTATE_ONE_PERCENTAGE = 3.6;
   const HALF_CIRCLE_ROTATE_PERCENTAGE = 50;
   const HUDRED_PERC = 100;
@@ -32,15 +14,22 @@ var videoCabinet = (function () {
   };
   const TRANSCODING_CHECK_INTERVAL = 20000;
 
-  let newVideosAreUploading = false;
-
-  let tagElement;
-  let tagArray = [];
 
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
     var el;
+    var transcodingIntervals = {};
+    var ed = {};
+    let tagElement;
+    let tagArray = [];
+    let newVideosAreUploading = false;
+    var videoServers = {};
+    var peertubeServers = {};
+    var userQuota = {};
+    var blockChainInfo = [];
+    var external = null;
+    var perServerCounter = 10;
 
     var actions = {
       async getHosts() {
@@ -200,6 +189,7 @@ var videoCabinet = (function () {
 
       videoFinishedTranscoding(id) {
         clearInterval(transcodingIntervals[id]);
+        delete transcodingIntervals[id]
         const videoElement = el.videoContainer.find(`[uuid="${id}"]`);
 
         videoElement.find('.attachVideoToPost').removeClass('hidden');
@@ -593,21 +583,53 @@ var videoCabinet = (function () {
       postLink(element, link) {
         const linkInfo = blockChainInfo[link];
 
-        element.html(
-          `<a class="videoPostLink" href="https://${
-            self.app.options.url
-          }/index?s=${
-            linkInfo.txid
-          }"><i class="far fa-check-circle"></i>${self.app.localization.e(
-            'linkToPost',
-          )}</a>`,
-        );
+        if(isMobile()){
+          element.html(
+            `<a class="videoPostLink" href="index?video=1&v=${
+              linkInfo.txid
+            }"><i class="far fa-check-circle"></i>${self.app.localization.e(
+              'linkToPost',
+            )}</a>`,
+          );
+  
+          self.nav.api.links(null, element);
+        }
+
+        else{
+
+
+          element.html(
+            `<span class="videoPostLinkinWindow"><i class="far fa-check-circle"></i>${self.app.localization.e(
+              'linkToPost',
+            )}</span>`,
+          );
+
+          element.find('.videoPostLinkinWindow').on('click', function(){
+            var ed = {
+              share : linkInfo.txid,
+              close : function(){
+              }
+            }
+            self.nav.api.load({
+              open : true,
+              href : 'post?s=' + linkInfo.txid,
+              inWnd : true,
+              history : true,
+              essenseData : ed
+            })
+          })
+
+          
+        }
+
+
+
       },
       //render single video stats column in video table
       videoStats(element, link, host, uuid) {
         const linkInfo = blockChainInfo[link] || {};
         const videoInfo =
-          peertubeServers[host].videos.find((video) => video.uuid === uuid) ||
+          (peertubeServers[host].videos || []).find((video) => video.uuid === uuid) ||
           {};
 
         self.shell(
@@ -972,6 +994,12 @@ var videoCabinet = (function () {
 
       destroy: function () {
         el.windowElement.off('scroll', events.onPageScroll);
+
+        _.each(transcodingIntervals, function(i){
+          clearInterval(i)
+        })
+
+        transcodingIntervals = {}
 
         el = {};
       },
