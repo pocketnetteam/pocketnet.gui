@@ -900,6 +900,54 @@ html.stblack {
     }
 }
 
+
+//tooltip elements
+
+.handleVideoMenu {
+    .menuitem {
+        display: flex;
+    }
+}
+
+.editPreview {
+    position: relative;
+
+    .inputMenuWrapper {
+        position: absolute;
+
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.editVideoDialog {
+    .dialogheader{
+        padding : 2 * @rhythm 0;
+        padding-top : 0;
+        span{
+            font-weight: 700;
+        }
+    }
+    .videoNameInput, 
+    .videoDescriptionInput {
+        border-radius: 3px;
+        width: 80%;
+        box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+        border: none;
+    }
+
+    .videoDescriptionInput{
+        padding-top : @rhythm;
+        padding-bottom : @rhythm;
+        padding : @rhythm;
+        min-height: 110px;
+    }
+
+    .videoNameWrapper, .videoDescriptionWrapper {
+        margin-bottom: @rhythm * 2;
+    }
+}
+
 @media only screen and (max-width: 768px) {
     #videoCabinet {
         background: #fff;
@@ -1084,6 +1132,20 @@ html.stblack {
         }
     }
 
+    
+    
+
+    .editVideoDialog {
+       
+        .videoNameInput, 
+        .videoDescriptionInput {
+            width: 100%;
+           
+        }
+
+        
+    }
+
     html.stblack {
         #videoCabinet {
 
@@ -1105,38 +1167,5 @@ html.stblack {
             }
 
         }
-    }
-}
-
-//tooltip elements
-
-.handleVideoMenu {
-    .menuitem {
-        display: flex;
-    }
-}
-
-.editPreview {
-    position: relative;
-
-    .inputMenuWrapper {
-        position: absolute;
-
-        width: 100%;
-        height: 100%;
-    }
-}
-
-.editVideoDialog {
-    .videoNameInput, .videoDescriptionInput {
-        width: 80%;
-        
-        box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
-
-        border: none;
-    }
-
-    .videoNameWrapper, .videoDescriptionWrapper {
-        margin-bottom: @rhythm * 2;
     }
 }

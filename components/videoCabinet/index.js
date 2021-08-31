@@ -79,7 +79,7 @@ var videoCabinet = (function () {
             return data;
           })
           .catch(() => {
-            sitemessage(`Error loading ${server}`);
+            console.log(`Error loading ${server}`);
             return [];
           });
       },
@@ -666,7 +666,7 @@ var videoCabinet = (function () {
               (element) => {
                 //remove user video (popup menu)
                 element.find('.remove').on('click', function () {
-                  _el.tooltipster('hide');
+                  
 
                   const { host } = meta;
 
@@ -685,6 +685,9 @@ var videoCabinet = (function () {
                         });
                     },
                   });
+
+                  if(_el.tooltipster)
+                    _el.tooltipster('hide');
                 });
 
                 //edit wallpaper in menu
@@ -698,7 +701,7 @@ var videoCabinet = (function () {
                   multiple: false,
 
                   action: function (file, clbk) {
-                    _el.tooltipster('hide');
+                    
 
                     actions
                       .uploadVideoWallpaper(file.file, videoLink)
@@ -711,6 +714,9 @@ var videoCabinet = (function () {
                           `background-image: url("${img}")`,
                         );
                       });
+
+                    if(_el.tooltipster)
+                      _el.tooltipster('hide');
                   },
 
                   onError: function (er, file, text) {
@@ -720,7 +726,7 @@ var videoCabinet = (function () {
 
                 //render edit description form
                 element.find('.editText').on('click', function () {
-                  _el.tooltipster('hide');
+                  
 
                   self.app.peertubeHandler.api.videos
                     .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
@@ -802,6 +808,9 @@ var videoCabinet = (function () {
                         self.app.localization.e('errorChangingDescription'),
                       ),
                     );
+
+                    if(_el.tooltipster)
+                    _el.tooltipster('hide');
                 });
               },
             );
