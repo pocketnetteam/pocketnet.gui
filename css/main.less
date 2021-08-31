@@ -2814,11 +2814,7 @@ input[type=radio].radio:checked + label {
             }
         }
 
-        &.optimized{
-            >div{
-                display: none!important;
-            }
-        }
+        
     }
 }
 
@@ -5920,6 +5916,20 @@ html.stblack{
     #splashScreen{
         display: flex;
     }
+
+    html.mobile,
+    html.tablet{
+        #content{
+        
+
+            &.optimized{
+                >div{
+                    display: none!important;
+                }
+            }
+        }
+    }
+    
 
     
 }
