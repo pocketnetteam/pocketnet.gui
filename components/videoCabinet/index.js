@@ -428,7 +428,14 @@ var videoCabinet = (function () {
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
 
-              renders.addButton(videoLink);
+              const meta = self.app.peertubeHandler.parselink(videoLink);
+
+              self.app.peertubeHandler.api.videos
+                .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
+                .then((info) => {
+                  const { name, description, tags } = info;
+                  renders.addButton({ videoLink, name, description, tags });
+                });
             });
 
             menuActivator.on('click', function () {
@@ -577,8 +584,8 @@ var videoCabinet = (function () {
         });
       },
       //button in video table for adding post with video to blockchain
-      addButton(videoLink) {
-        self.app.platform.ui.share({ videoLink });
+      addButton(parameters) {
+        self.app.platform.ui.share(parameters);
       },
       //get link to existing video post
       postLink(element, link) {
@@ -717,7 +724,6 @@ var videoCabinet = (function () {
                   self.app.peertubeHandler.api.videos
                     .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
                     .then((videoData) => {
-                      debugger;
                       self.fastTemplate('editDescription', (rendered) => {
                         dialog({
                           html: rendered,
