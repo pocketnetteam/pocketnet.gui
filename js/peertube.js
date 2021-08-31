@@ -424,7 +424,6 @@ PeerTubePocketnet = function (app) {
             });
         }
 
-        console.log('requestoptions', requestoptions);
 
         return proxyRequest.fetch(
           'https://' + options.host,
@@ -798,7 +797,6 @@ PeerTubePocketnet = function (app) {
       auth: function (host, renew) {
         var data = {};
 
-        console.log('CHECK HOST', sessions, host, sessions[host]);
 
         if (host && sessions[host]) {
           if (renew) {

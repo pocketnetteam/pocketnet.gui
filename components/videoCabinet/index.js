@@ -118,6 +118,37 @@ var videoCabinet = (function () {
         return Promise.allSettled(serverPromises);
       },
 
+      getTotalRatings(){
+        console.log("getTotalRatings")
+        if(self.app.platform.sdk.address.pnet()){
+          var address = self.app.platform.sdk.address.pnet().address
+          return self.app.api.rpc('getcontentsstatistic', [
+
+            [address], 'video'
+
+          ], {
+            rpc : {
+              node : window.testpocketnet ? '157.90.235.121:39091' : '157.90.235.121:39091'
+            }
+            
+          }).then(r => {
+
+            console.log("RE", r)
+
+            var d = _.find(r || [], function(obj){
+              return address == obj.address
+            }) || {}
+
+            return Promise.resolve(d)
+          })
+        }
+        else{
+          return Promise.reject()
+        }
+
+        
+      },
+
       getTotalViews() {
         const servers = Object.keys(peertubeServers);
 
@@ -165,14 +196,39 @@ var videoCabinet = (function () {
             ),
           );
 
-        renders.bonusProgram(
-          {
-            parameterName: 'bonusProgramRatings',
-            value: 0,
-            requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramRatings,
-          },
-          el.bonusProgramContainerViews,
-        );
+        actions
+          .getTotalRatings()
+          .then((result) => {
+
+            var rendering = "&mdash;"
+
+            if(result.scoreCnt && result.scoreSum){
+              rendering  = (result.scoreSum / result.scoreCnt).toFixed(1) + " ("+result.scoreCnt+")"
+            }
+
+            renders.bonusProgram(
+              {
+                parameterName: 'bonusProgramRatings',
+                value: rendering,
+                requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramRatings,
+              },
+              el.bonusProgramContainerViews,
+            );
+
+          }).catch(e => {
+
+            renders.bonusProgram(
+              {
+                parameterName: 'bonusProgramRatings',
+                value: 0,
+                requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramRatings,
+              },
+              el.bonusProgramContainerViews,
+            );
+
+          })
+
+        
       },
 
       checkTranscodingStatus(meta) {

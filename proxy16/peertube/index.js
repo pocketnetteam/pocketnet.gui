@@ -248,7 +248,7 @@ var Peertube = function (settings) {
       Promise.resolve(
         Object.entries(roys).reduce(
           (accumulator, [name, roy]) => ({
-            [name]: roy.best().host,
+            [name]: roy.best() ? roy.best().host : null,
             ...accumulator,
           }),
           {},
