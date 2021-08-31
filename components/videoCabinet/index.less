@@ -18,14 +18,14 @@
         border-bottom: 1px solid @color-gray-border;
         font-size: 1.1em;
 
-        >div{
-            padding : 0 2 * @rhythm;
+        >div {
+            padding: 0 2 * @rhythm;
 
-            &:nth-last-child(1){
+            &:nth-last-child(1) {
                 padding-right: 0;
             }
 
-            &:nth-child(1){
+            &:nth-child(1) {
                 padding-left: 0;
             }
         }
@@ -110,8 +110,8 @@
         width: 15%;
         font-size: 0.8em;
 
-        button{
-            padding : 0;
+        button {
+            padding: 0;
         }
     }
 
@@ -120,7 +120,7 @@
         align-items: center;
         justify-content: space-between;
 
-        >div{
+        >div {
             white-space: nowrap;
         }
     }
@@ -144,7 +144,7 @@
             color: #FFAE00;
         }
 
-        
+
 
         font-size: 0.8em;
         min-width: 60px;
@@ -191,14 +191,14 @@
         justify-content: space-between;
     }
 
-    .statsdiv{
-        padding-bottom : 2 * @rhythm;
+    .statsdiv {
+        padding-bottom: 2 * @rhythm;
     }
 
     .cabinetName {
         max-width: 700px;
         padding-top: 2 * @rhythm;
-        padding-bottom : 2 * @rhythm;
+        padding-bottom: 2 * @rhythm;
         font-size: 2em;
         font-weight: 100;
     }
@@ -229,13 +229,11 @@
             }
 
             &.reputationblock {
-                .metricablock {
-
-                }
+                .metricablock {}
             }
 
-            &:nth-last-child(1){
-                .metricablockwrapper{
+            &:nth-last-child(1) {
+                .metricablockwrapper {
                     padding-right: 0;
                 }
             }
@@ -307,7 +305,7 @@
 
             .blockContent {
                 position: relative;
-               
+
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -725,7 +723,7 @@
         background-color: #fafafa;
         border-color: rgba(14, 28, 43, 0.05);
         color: rgba(14, 28, 43, 0.4);
-        padding-left: 2  * @rhythm;
+        padding-left: 2 * @rhythm;
     }
 
     .videoSearchButton {
@@ -740,6 +738,7 @@
         .metricsContainerHeader {
             font-size: 0.8em;
         }
+
         .metricsMain {
 
             .metricSection {
@@ -919,51 +918,51 @@ html.stblack {
             }
         }
 
-        .videoAvatar{
+        .videoAvatar {
             height: 150px;
         }
 
-        .videosWrapper{
-            >div{
-                &.work{
-                    &:nth-last-child(1){
-                        .singleVideoSection{
+        .videosWrapper {
+            >div {
+                &.work {
+                    &:nth-last-child(1) {
+                        .singleVideoSection {
                             border-bottom: 0;
                         }
-                        
+
                     }
                 }
             }
         }
 
-        .singleVideoSection{
+        .singleVideoSection {
 
             flex-wrap: wrap;
 
-            >div{
+            >div {
                 width: 100%;
-                padding : @rhythm 0;
+                padding: @rhythm 0;
 
-                &.videoName{
-                    order : -1;
+                &.videoName {
+                    order: -1;
                 }
 
-                &.postingStatusWrapper{
+                &.postingStatusWrapper {
                     width: 75%;
                     font-size: 1em;
                 }
 
-                &.removeButtonWrapper{
+                &.removeButtonWrapper {
                     width: 25%;
                     text-align: right;
                 }
             }
 
-            .videoTextContainer{
+            .videoTextContainer {
                 max-width: none;
             }
 
-           
+
         }
 
         .statsdiv {
@@ -975,21 +974,21 @@ html.stblack {
                 >div {
                     width: 100%;
                     margin-bottom: @rhythm;
-               
 
-                    .metricablockwrapper{
+
+                    .metricablockwrapper {
                         padding: 0;
                     }
                 }
             }
 
-            .metricablock{
-                .blockContentWrapper{
-                    padding : @rhythm 2 * @rhythm;
+            .metricablock {
+                .blockContentWrapper {
+                    padding: @rhythm 2 * @rhythm;
                 }
             }
 
-            
+
 
             .levelsblock {
                 .metricablockwrapper {
@@ -1052,9 +1051,9 @@ html.stblack {
         }
 
         .videoContainer {
-            padding: 0 ;
+            padding: 0;
 
-            .work{
+            .work {
                 padding-left: @rhythm;
                 padding-right: @rhythm;
             }
@@ -1075,7 +1074,7 @@ html.stblack {
         .videoStatsWrapper {
             min-width: 20px;
 
-            .singleStat{
+            .singleStat {
                 margin-right: 0;
             }
         }
@@ -1125,5 +1124,19 @@ html.stblack {
 
         width: 100%;
         height: 100%;
+    }
+}
+
+.editVideoDialog {
+    .videoNameInput, .videoDescriptionInput {
+        width: 80%;
+        
+        box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.4);
+
+        border: none;
+    }
+
+    .videoNameWrapper, .videoDescriptionWrapper {
+        margin-bottom: @rhythm * 2;
     }
 }

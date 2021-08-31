@@ -2144,6 +2144,8 @@ Platform = function (app, listofnodes) {
 
             globalpreloader(true, true)
 
+            const { name, description, tags } = p;
+
             setTimeout(function(){
                 app.nav.api.load({
                     open : true,
@@ -2163,6 +2165,9 @@ Platform = function (app, listofnodes) {
                         absolute : true,
                         repost  : p.repost,
                         videoLink: p.videoLink,
+                        name,
+                        description,
+                        tags,
                     }
                 })
             }, 50)

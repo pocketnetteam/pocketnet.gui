@@ -34,6 +34,9 @@ var videoCabinet = (function () {
 
   let newVideosAreUploading = false;
 
+  let tagElement;
+  let tagArray = [];
+
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
@@ -325,15 +328,17 @@ var videoCabinet = (function () {
           activeServers.map((server) =>
             actions.getVideos(server, videoParameters),
           ),
-        ).then((data = []) => {
-          const newVideos = data
-            .filter((item) => item.status === POSITIVE_STATUS)
-            .map((item) => item.value.data)
-            .flat();
-          newVideosAreUploading = false;
+        )
+          .then((data = []) => {
+            const newVideos = data
+              .filter((item) => item.status === POSITIVE_STATUS)
+              .map((item) => item.value.data)
+              .flat();
+            newVideosAreUploading = false;
 
-          renders.videos(newVideos, videoPortionElement);
-        });
+            renders.videos(newVideos, videoPortionElement);
+          })
+          .catch(() => videoPortionElement.addClass('hidden'));
       },
 
       onSearchVideo() {
@@ -425,7 +430,14 @@ var videoCabinet = (function () {
             attachVideoToPost.on('click', function () {
               const videoLink = $(this).attr('videoLink');
 
-              renders.addButton(videoLink);
+              const meta = self.app.peertubeHandler.parselink(videoLink);
+
+              self.app.peertubeHandler.api.videos
+                .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
+                .then((info) => {
+                  const { name, description, tags } = info;
+                  renders.addButton({ videoLink, name, description, tags });
+                });
             });
 
             menuActivator.on('click', function () {
@@ -574,8 +586,8 @@ var videoCabinet = (function () {
         });
       },
       //button in video table for adding post with video to blockchain
-      addButton(videoLink) {
-        self.app.platform.ui.share({ videoLink });
+      addButton(parameters) {
+        self.app.platform.ui.share(parameters);
       },
       //get link to existing video post
       postLink(element, link) {
@@ -594,19 +606,19 @@ var videoCabinet = (function () {
       //render single video stats column in video table
       videoStats(element, link, host, uuid) {
         const linkInfo = blockChainInfo[link] || {};
-        const videoInfo = peertubeServers[host].videos.find(
-          (video) => video.uuid === uuid,
-        ) || {};
+        const videoInfo =
+          peertubeServers[host].videos.find((video) => video.uuid === uuid) ||
+          {};
 
         self.shell(
           {
             name: 'videoStats',
             el: element,
             data: {
-              views: + videoInfo.views || 0,
-              starsCount: + linkInfo.scoreSum || 0,
-              starsSum: + linkInfo.scoreCnt || 0,
-              comments: + linkInfo.comments || 0,
+              views: +videoInfo.views || 0,
+              starsCount: +linkInfo.scoreSum || 0,
+              starsSum: +linkInfo.scoreCnt || 0,
+              comments: +linkInfo.comments || 0,
             },
           },
           (p) => {
@@ -640,7 +652,7 @@ var videoCabinet = (function () {
         );
       },
       //render menu with video controls
-      metmenu: function (_el, videoLink) {
+      metmenu(_el, videoLink) {
         const data = {};
 
         const meta = self.app.peertubeHandler.parselink(videoLink);
@@ -663,15 +675,14 @@ var videoCabinet = (function () {
                     btn1text: self.app.localization.e('remove'),
                     btn2text: self.app.localization.e('ucancel'),
 
-                    success: function () {
-                      const videoPortionElement = actions.resetHosts();
-                      //update servers info after removing
+                    success() {
                       self.app.peertubeHandler.api.videos
                         .remove(videoLink)
-                        .then(() => actions.getVideos(host))
-                        .then(() => renders.videos(null, videoPortionElement))
-                        .then(() => actions.getQuota())
-                        .then(() => renders.quota());
+                        .then(() => {
+                          el.videoContainer
+                            .find(`.singleVideoSection[uuid="${meta.id}"]`)
+                            .addClass('hidden');
+                        });
                     },
                   });
                 });
@@ -708,24 +719,195 @@ var videoCabinet = (function () {
                 });
 
                 //render edit description form
-                element.find('.editVideoDescription').on('click', function () {
-                  const dest = $(this);
+                element.find('.editText').on('click', function () {
+                  _el.tooltipster('hide');
 
-                  debugger;
+                  self.app.peertubeHandler.api.videos
+                    .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
+                    .then((videoData) => {
+                      self.fastTemplate('editDescription', (rendered) => {
+                        dialog({
+                          html: rendered,
 
-                  self.fastTemplate('editDescription', (rendered, template) => {
-                    self.app.platform.api.tooltip(
-                      dest,
-                      () => template({}),
-                      () => {},
+                          wrap: true,
+
+                          success: function (d) {
+                            const name = d.el.find('.videoNameInput').val();
+                            const description = d.el
+                              .find('.videoDescriptionInput')
+                              .val();
+
+                            const parameters = {};
+
+                            if (name) parameters.name = name;
+                            if (description)
+                              parameters.description = description;
+
+                            parameters.tags = tagArray;
+
+                            const { host } = videoLink;
+
+                            return self.app.peertubeHandler.api.videos
+                              .update(videoLink, parameters, { host })
+                              .then(() => {
+                                const textContainert = el.videoContainer.find(
+                                  `.singleVideoSection[uuid="${meta.id}"]`,
+                                );
+
+                                if (name)
+                                  textContainert
+                                    .find('.videoNameText')
+                                    .text(name);
+                                if (description)
+                                  textContainert
+                                    .find('.videoDescriptionText')
+                                    .text(description);
+
+                                d.close();
+                                tagElement = {};
+                                tagArray = [];
+                              })
+                              .catch((err) => {
+                                tagElement = {};
+                                tagArray = [];
+                                d.close();
+
+                                sitemessage(
+                                  self.app.localization.e(
+                                    'errorChangingDescription',
+                                  ),
+                                );
+                              });
+                          },
+
+                          clbk: function (editDialogEl) {
+                            tagElement = editDialogEl.find('.videoTagsWrapper');
+                            tagArray = [...videoData.tags];
+                            renders.tags(tagElement, tagArray);
+
+                            editDialogEl
+                              .find('.videoNameInput')
+                              .val(videoData.name);
+                            editDialogEl
+                              .find('.videoDescriptionInput')
+                              .val(videoData.description);
+                          },
+
+                          class: 'editVideoDialog',
+                        });
+                      });
+                    })
+                    .catch(() =>
+                      sitemessage(
+                        self.app.localization.e('errorChangingDescription'),
+                      ),
                     );
-                  });
                 });
               },
             );
           },
           data,
         );
+      },
+      //render tagline
+      tags(element, tagArray) {
+        const tagActions = {
+          //tag-related funcitons
+          tagsFromText(text) {
+            var words = text.split(wordsRegExp);
+
+            var tags = _.filter(words, function (w) {
+              if (w[0] == '#') {
+                w = w.replace(/#/g, '');
+
+                if (!w) return false;
+
+                return true;
+              }
+            });
+
+            _.each(tags, function (tag, i) {
+              tags[i] = tag.replace(/\#/g, '');
+            });
+
+            return tags;
+          },
+
+          _addtag(tag) {
+            if (tagArray.length < 5) {
+              removeEqual(tagArray, tag);
+              tagArray.push(tag);
+              return true;
+            }
+
+            return false;
+          },
+
+          addTags(tags) {
+            _.find(tags, function (tag) {
+              if (!tagActions._addtag(tag)) {
+                sitemessage(self.app.localization.e('e13162'));
+
+                return true;
+              }
+            });
+          },
+
+          addTag(tag) {
+            //tag = tag.replace(/#/g, '')
+
+            if (!tagActions._addtag(tag)) {
+              sitemessage(self.app.localization.e('e13162'));
+            }
+          },
+
+          _removetag(tag) {
+            removeEqual(tagArray, tag);
+          },
+
+          removeTags(tags) {
+            _.each(tags, function (tag) {
+              tagActions._removetag(tag);
+            });
+          },
+
+          removeTag(tag) {
+            tagActions._removetag(tag);
+          },
+        };
+
+        self.nav.api.load({
+          open: true,
+          id: 'taginput',
+          el: element,
+          eid: 'articletags',
+          animation: false,
+          essenseData: {
+            tags: () => tagArray,
+
+            removeTag: function (tag) {
+              tagActions.removeTag(tag);
+              renders.tags(tagElement, tagArray);
+            },
+
+            removeTags: function (tag) {
+              tagActions.removeTags(tag);
+              renders.tags(tagElement, tagArray);
+            },
+
+            addTag: function (tag) {
+              tagActions.addTag(tag);
+              renders.tags(tagElement, tagArray);
+            },
+
+            addTags: function (tags) {
+              tagActions.addTags(tags);
+              renders.tags(tagElement, tagArray);
+            },
+          },
+
+          clbk: function (e, p) {},
+        });
       },
     };
 
