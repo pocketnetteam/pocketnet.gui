@@ -328,15 +328,17 @@ var videoCabinet = (function () {
           activeServers.map((server) =>
             actions.getVideos(server, videoParameters),
           ),
-        ).then((data = []) => {
-          const newVideos = data
-            .filter((item) => item.status === POSITIVE_STATUS)
-            .map((item) => item.value.data)
-            .flat();
-          newVideosAreUploading = false;
+        )
+          .then((data = []) => {
+            const newVideos = data
+              .filter((item) => item.status === POSITIVE_STATUS)
+              .map((item) => item.value.data)
+              .flat();
+            newVideosAreUploading = false;
 
-          renders.videos(newVideos, videoPortionElement);
-        });
+            renders.videos(newVideos, videoPortionElement);
+          })
+          .catch(() => videoPortionElement.addClass('hidden'));
       },
 
       onSearchVideo() {
@@ -673,9 +675,7 @@ var videoCabinet = (function () {
                     btn1text: self.app.localization.e('remove'),
                     btn2text: self.app.localization.e('ucancel'),
 
-                    success: function () {
-                      // const videoPortionElement = actions.resetHosts();
-                      // //update servers info after removing
+                    success() {
                       self.app.peertubeHandler.api.videos
                         .remove(videoLink)
                         .then(() => {
@@ -683,10 +683,6 @@ var videoCabinet = (function () {
                             .find(`.singleVideoSection[uuid="${meta.id}"]`)
                             .addClass('hidden');
                         });
-                      //   .then(() => actions.getVideos(host))
-                      //   .then(() => renders.videos(null, videoPortionElement))
-                      //   .then(() => actions.getQuota())
-                      //   .then(() => renders.quota());
                     },
                   });
                 });
