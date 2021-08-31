@@ -19,7 +19,7 @@
 		<% if(state || (pathname == 'index' && mobile)) {%>
 
 			<% if(pathname == 'index' && mobile) {%>
-				<div class="panelitem icon showcategories">
+				<div class="panelitem icon showcategories <% if(tagsSelected) {%> active <% } %>">
 					<i class="fas fa-filter"></i>
 				</div>
 				<div class="panelitem nfl">

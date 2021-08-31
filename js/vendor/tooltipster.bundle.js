@@ -1237,7 +1237,7 @@ $.Tooltipster.prototype = {
 								overflowY = $el.css('overflow-y');
 							
 							if (overflowX != 'visible' || overflowY != 'visible') {
-								
+								console.log("HERE")
 								var bcr = el.getBoundingClientRect();
 								
 								if (overflowX != 'visible') {

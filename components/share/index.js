@@ -2371,6 +2371,18 @@ var share = (function(){
 					currentShare.repost.set();
 				}
 
+				if (essenseData.name) {
+					currentShare.caption.set(essenseData.name);
+				}
+
+				if (essenseData.description) {
+					currentShare.message.set(essenseData.description);
+				}
+
+				if (essenseData.tags) {
+					essenseData.tags.map(tag => currentShare.tags.set(tag));
+				}
+
 				make();
 
 				//p.noscroll = self.app.actions.scrollBMenu()

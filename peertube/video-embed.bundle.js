@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=3279"
+/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".chunk.js?v=1123"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -1487,6 +1487,9 @@ function unblockTextSelection() {
  */
 
 function getBoundingClientRect(el) {
+
+  console.log('getBoundingClientRect')
+
   if (el && el.getBoundingClientRect && el.parentNode) {
     var rect = el.getBoundingClientRect();
     var result = {};
@@ -1590,13 +1593,12 @@ function findPosition(el) {
  */
 
 function getPointerPosition(el, event) {
-  console.log("SAD")
   var translated = {
     x: 0,
     y: 0
   };
 
-  if (IS_IOS || window.cordova) {
+  if (IS_IOS) {
     var item = el;
 
     while (item && item.nodeName.toLowerCase() !== 'html') {
@@ -13608,9 +13610,9 @@ var SeekBar = /*#__PURE__*/function (_Slider) {
       } // update the progress bar time tooltip with the current time
 
 
-      if (_this2.bar) {
+      /*if (_this2.bar) {
         _this2.bar.update(getBoundingClientRect(_this2.el()), _this2.getProgress());
-      }
+      }*/
     });
     return percent;
   }
@@ -39677,7 +39679,12 @@ class PeerTubeEmbedApi {
     getVolume() {
         if (!this.embed.player)
             return 0;
-        return this.embed.player.muted() ? 0 : this.embed.player.volume();
+        try {
+            return this.embed.player.muted() ? 0 : this.embed.player.volume();
+        }
+        catch (e) {
+            return 0;
+        }
     }
     rebuild() {
         var volume = this.getVolume();
@@ -42620,10 +42627,9 @@ class peertube_player_manager_PeertubePlayerManager {
                 swarmId: p2pMediaLoaderOptions.playlistUrl,
             },
         };
-        var capLevelToPlayerSize = true;
+        var capLevelToPlayerSize = false;
         /* @ts-ignore */
-        if (typeof window.isMobile != 'undefined' && window.isMobile())
-            capLevelToPlayerSize = false;
+        //if(typeof window.isMobile != 'undefined' && window.isMobile()) capLevelToPlayerSize = false
         const hlsjs = {
             levelLabelHandler: (level) => {
                 const resolution = Math.min(level.height || 0, level.width || 0);

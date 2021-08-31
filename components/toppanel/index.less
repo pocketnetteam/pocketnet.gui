@@ -184,9 +184,7 @@ html.stblack{
 	
 		.panelitems{
 
-			.panelItemsWrapper{
-				display: block;
-			}
+			
 
 			.panelitemCenter{
 				margin-left: 0;
@@ -209,6 +207,15 @@ html.mobile{
 		.panelitems{
 			height: 100%;
 			display: block;
+
+			.panelItemsWrapper{
+				display: block;
+			}
+
+			.panelitemCenter{
+				margin-left: 0;
+				margin-right: 0;
+			}
 
 			.panelitem{
 				width: 100%;
@@ -233,6 +240,10 @@ html.mobile{
 
 				&.blexpl{
 					padding-left: 3 * @rhythm;
+				}
+
+				&.active{
+					color : @color-orange;
 				}
 			} 
 		}
@@ -303,7 +314,7 @@ html.mobile{
 
 				.vc_selectInput{
 					position: fixed;
-					top : 120px;
+					top : 55px;
 				}
 			}
 

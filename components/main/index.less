@@ -11,9 +11,12 @@
 	}
 
 	.topvideosWrapper{
-		display: none;
+		display: block;
 		background: #fff;
 		margin-bottom : 10px;
+		min-height: 160px;
+		position: relative;
+		
 
 		&.hasshares{
 			display: block;
@@ -24,6 +27,7 @@
 			padding : 2*  @rhythm;
 			padding-bottom: @rhythm;
 			padding-top : 0;
+			
 		}
 
 		.horizontalLentacaption{
@@ -845,6 +849,9 @@ html {
 
 		.topvideosWrapper{
 			margin-bottom : @rhythm;
+			height: 195px;
+			content-visibility: auto;
+			contain-intrinsic-size: 195px;
 	
 			&.hasshares{
 				display: block;
@@ -853,6 +860,11 @@ html {
 			.horizontalLentaWrapper{
 				padding : @rhythm 0;
 				padding-bottom: 0;
+				position: absolute;
+				left : 0;
+				top : 0;
+				right : 0;
+				bottom : 0;
 			}
 	
 			.horizontalLentacaption{
@@ -938,12 +950,26 @@ html {
 	
 }
 
+html.mobile{
+	#main{
+		padding-top : 55px;
+		
+	}
+}
+
 html.mobile,
 html.tablet{
 	#main{
-
 		.bgCaption{
 			display: none;
+		}
+	}
+}
+
+@media only screen and (max-width: 768px){
+	html.tablet{
+		#main{
+			padding-top : 55px;
 		}
 	}
 }
@@ -977,38 +1003,7 @@ html.tablet{
 				}
 			}
 		}
-		&.fullvideoshowedanimblock{
-
-			#main{
-				#maincntwrapper{
-					-moz-transition: 0s;
-					-o-transition: 0s;
-					-webkit-transition: 0s;
-					transition: 0s;
-					>div{
-						&.work{
-							-moz-transition: 0s;
-							-o-transition: 0s;
-							-webkit-transition: 0s;
-							transition: 0s;
-						}
-					}
-				}
-			}
-
-		}
-		&.fullvideoshowed{
-			#main{
-				#maincntwrapper{
-					transform:none!important;
-					>div{
-						&.work{
-							transform:none!important;
-						}
-					}
-				}
-			}
-		}
+		
 	}
 
 	#main{

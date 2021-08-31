@@ -1,0 +1,43 @@
+<%
+
+var m = ['editPreview', 'editText', 'remove'];
+
+var all = {
+	remove : {
+		icon : '<i class="fas fa-times-circle"></i>',
+		text : e('removeVideo'),
+		class : 'remove',
+	},
+
+	editPreview : {
+		icon : '<i class="far fa-image"></i>',
+		text : e('editWallpaper'),
+		class : 'editPreview',
+		inputMenu: true,
+	},
+
+	editText : {
+		icon : '<i class="fas fa-pen"></i>',
+		text : e('editVideoDescription'),
+		class : 'editText',
+	},
+}
+
+%>
+
+<div class="sharepostmenu handleVideoMenu">
+
+	<% _.each(m, function(m){ var mo = all[m] %>
+
+	<div class="menuitem <%-mo.class||''%>">
+		
+		<div class="icon"><span><%=mo.icon%></span></div>
+		<div class="label"><span><%-mo.text%></span></div>
+		<% if (mo.inputMenu) { %>
+			<div class="inputMenuWrapper"></div>
+		<% }%>
+	</div>
+		
+	<% }) %>
+
+</div>

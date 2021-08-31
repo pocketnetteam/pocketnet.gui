@@ -186,11 +186,9 @@ var post = (function () {
 			},
 			next: function () {
 
-				el.wnd.off('scroll')
-
 				var nextel = el.c.find('.nextpost');
 
-				nextel.html('<div class="loader"><div class="preloader5"><span></span><span></span><span></span></div></div>')
+				nextel.html('<div class="loader"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div>')
 
 				ed.next(share.txid, function (txid) {
 
@@ -286,8 +284,7 @@ var post = (function () {
 					addresses: []
 				}
 
-				var link = 'send?address=' + share.address + '&amount=1&message='
-					+ hexEncode(self.app.localization.e('postlabel') + ' &mdash; ' + (share.caption || share.message).substr(0, 20) + "...")
+				var link = 'send?address=' + share.address + '&amount=1'
 					+ '&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
 
 
@@ -383,10 +380,20 @@ var post = (function () {
 
 						fullscreenchange : function(v){
 							self.app.mobile.fullscreenmode(v)
+						},
+
+						play : function(){
+							self.app.actions.playingvideo(player)
+						},
+
+						pause : function(){
+							self.app.actions.playingvideo(null)
 						}
 					};
 
 					$.each(pels, function (key, el) {
+
+
 						PlyrEx(el, options, (_player) => {
 
 							player = _player
@@ -1456,6 +1463,8 @@ var post = (function () {
 					external = null
 
 				}
+
+				self.app.actions.playingvideo(null)
 
 				self.app.el.menu.find('#menu').removeClass('static')
 

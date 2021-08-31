@@ -1034,36 +1034,27 @@
         }
 
         .performanceSection {
-
             float: left;
-
-            width: 25%;
-
-            border: 1px solid @color-gray-mlight;
+            width: 22%;
             border-radius: 5px;
-
             padding: 2 * @rhythm;
-
             box-sizing: border-box;
-
             background-color: #fff;
 
             .statsHeader {
-                font-size: 1em;
-                font-weight: bold;
-
-                display: flex;
+                font-size: 0.8em;
                 align-items: center;
+                text-align: center;
+                color : @color-gray-light;
 
                 i {
                     font-size: 0.75em;
-                    
-                    margin-right: 5px;
+                    margin-right: 0;
                 }
             }
 
             .statsMain {
-                font-size: 0.9em;
+                font-size: 0.8em;
 
                 display: flex;
                 justify-content: flex-start;
@@ -1072,9 +1063,6 @@
             }
         }
 
-        .extendedStats {
-            padding-left: 2 * @rhythm;
-        }
 
         .waitingStat {
             color: #ffcb20;
@@ -1456,7 +1444,10 @@ html.stblack{
             }
         }
     
-      
+        .performanceSection{
+            background-color: @color-black2;
+            color : @color-gray-slight;
+        }
     }   
     
     .addnode,
@@ -1497,6 +1488,50 @@ html.stblack{
                 width : 1024px!important;
             }
             
+        }
+
+        .botsWrapper{
+
+            .panel{
+                button{
+                    width: 100%;
+                }
+            }
+    
+            .botslist{
+    
+                >div{
+                    width: 100%;
+                }
+            }
+    
+            
+        }
+
+        .instanceWrapper {
+            .hasPerformanceInfo {
+                &:hover {
+                    color: @color-add;
+                    cursor: pointer;
+                }
+            }
+
+            .instancePerformance {
+                padding: @rhythm;
+               
+            }
+
+           
+        }
+
+        .peertubecontent {
+            .performancesWrapper{
+                padding-left: 0;
+            }
+            .performanceSection{
+                width: 100%;
+                margin-bottom: @rhythm;
+            }
         }
     }
 

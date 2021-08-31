@@ -11,7 +11,7 @@
 			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
 			var aspectRatio = (info.data || {}).aspectRatio || 0;
 	%>
-		<div class="videoWrapper <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
+		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
 
 			<% if(meta.type == 'youtube' && window.cordova) {%>
 
@@ -85,7 +85,7 @@
 						<div class="jsPlayerLoading">
 							<div class="jsPlayerLoadingD table">
 								<div>
-									<div class="preloader5"><span></span><span></span><span></span></div>
+									<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 								</div>
 							</div>
 						</div>

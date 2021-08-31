@@ -69,6 +69,8 @@ var author = (function(){
 
 			unsubscribe : function(){
 
+				self.app.mobile.vibration.small()
+
 				dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text :  self.app.localization.e('unfollow'),
@@ -97,6 +99,8 @@ var author = (function(){
 			},
 
 			subscribe : function(){
+				self.app.mobile.vibration.small()
+
 				self.app.platform.api.actions.subscribeWithDialog(author.address, function(tx, err){
 
 					if(tx){
@@ -109,7 +113,17 @@ var author = (function(){
 				})
 			},
 
+			startchat: function(){
+				self.app.mobile.vibration.small()
+
+				self.app.platform.matrixchat.startchat(author.address)
+
+				
+			},
+
 			subscribePrivate : function(){
+
+				self.app.mobile.vibration.small()
 
 				var off = $(this).hasClass('turnon')
 
@@ -266,7 +280,9 @@ var author = (function(){
 										embedding : {
 											type : 'channel',
 											id : author.address
-										}
+										},
+
+										url : 'https://'+self.app.options.url+'/' + self.app.platform.api.authorlink(author.address, true)
 									}
 								})
 								
@@ -389,34 +405,63 @@ var author = (function(){
 					}, function(el){
 
 						el.find('.donate').on('click', function(){
-
+							self.app.mobile.vibration.small()
 							actions.donate(id)
 
-							_el.tooltipster('hide')	
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
 
 						})
 
 						el.find('.block').on('click', function(){
-
+							self.app.mobile.vibration.small()
 							self.app.platform.api.actions.blocking(author.address, function(tx, error){
 								if(!tx){
 									self.app.platform.errorHandler(error, true)	
 								}
 							})
 
-							_el.tooltipster('hide')	
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
 
+						})
+
+						el.find('.startchat').on('click', function(){
+
+							events.startchat()
+
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
 						})
 						
 						el.find('.unblock').on('click', function(){
-
+							self.app.mobile.vibration.small()
 							self.app.platform.api.actions.unblocking(author.address, function(tx, error){
 								if(!tx){
 									self.app.platform.errorHandler(error, true)	
 								}
 							})
 
-							_el.tooltipster('hide')	
+							if (_el.tooltipster)
+								_el.tooltipster('hide')	
+
+						})
+
+						el.find('.unsubscribe').on('click', function(){
+
+							self.app.mobile.vibration.small()
+
+							events.unsubscribe()
+
+                            /*self.app.platform.api.actions.unsubscribe(author.address, function (tx, error) {
+                                if (!tx) {
+                                    self.errorHandler(error, true)
+                                }
+                            })*/
+
+                            if (_el.tooltipster)
+                                _el.tooltipster('hide')
+
 
 						})
 						
@@ -548,7 +593,9 @@ var author = (function(){
 
 			info : function(_el){
 
-				self.sdk.ustate.get(author.address, function(){
+				
+
+				
 
 					author.state = self.sdk.ustate.storage[author.address]
 
@@ -561,7 +608,7 @@ var author = (function(){
 							author : author
 						},
 
-						animation : 'fadeIn',
+						animation : false,
 
 					}, function(p){
 
@@ -580,7 +627,7 @@ var author = (function(){
 						})
 					})
 
-				})
+			
 			},
 
 			followers : function(_el, report){
@@ -996,6 +1043,8 @@ var author = (function(){
 			el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
 			el.c.find('.notificationturn').on('click', events.subscribePrivate)
 
+			el.caption.find('.startchat').on('click', events.startchat)
+
 			el.caption.find('.unblocking').on('click', function(){
 
 				dialog({
@@ -1110,12 +1159,12 @@ var author = (function(){
 
 				reports[r].active = true;
 
-			renders.report(reports[r], null, ini)
-			renders.menu()
-
-			if(isTablet()){
+			if (isTablet()){
 				renders.info(el.c.find('.mobileinfo'))
 			}
+
+			renders.report(reports[r], null, ini)
+			renders.menu()
 
 			self.app.user.isState(function(state){
 
@@ -1131,14 +1180,15 @@ var author = (function(){
 
 			})
 			
-			upbutton = self.app.platform.api.upbutton(el.up, {
-				top : function(){
+			if(!isMobile())
+				upbutton = self.app.platform.api.upbutton(el.up, {
+					top : function(){
 
-					return '65px'
-				},
-				class : 'light',
-				rightEl : el.c.find('.leftpanelcell')
-			})	
+						return '65px'
+					},
+					class : 'light',
+					rightEl : el.c.find('.leftpanelcell')
+				})	
 
 
 			/*self.app.platform.sdk.contents.get(author.address, function(contents){
@@ -1198,63 +1248,72 @@ var author = (function(){
 
 				initreports()
 
-				self.sdk.users.addressByName(p.address, function(address){
+				self.loadTemplate({
+					name : 'info'
+				}, function(){
 
-					if (address){
-						author.address = address
+					self.sdk.users.addressByName(p.address, function(address){
 
-
-						self.sdk.users.get(author.address, function(){
-
-							if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
-								reports.shares.name = self.app.localization.e('uposts')
-
-								/*if(self.app.curation()){
-									self.nav.api.load({
-										open : true,
-										href : 'userpage',
-										history : true
-									})
-				
-									return
-								}*/
-							}
-							else
-							{
-								reports.shares.name = self.app.localization.e('myuposts')
-
-
-								if(!self.app.user.validate()){
-
-									self.nav.api.go({
-										href : 'userpage?id=test',
-										history : true,
-										open : true
-									})
-
-									return;
-								}
-							
-							}
-
-							author.data = self.sdk.users.storage[author.address]
-							//author.state = self.sdk.ustate.storage[author.address]
-
-							var data = {
-								author : author
-							};
-
-							clbk(data);
-
-						})
-					}
-
-					else
-					{
 						
-					}
 
-					
+						if (address){
+							author.address = address
+
+							self.sdk.ustate.get(author.address, function(){
+								self.sdk.users.get(author.address, function(){
+
+									if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+										reports.shares.name = self.app.localization.e('uposts')
+
+										/*if(self.app.curation()){
+											self.nav.api.load({
+												open : true,
+												href : 'userpage',
+												history : true
+											})
+						
+											return
+										}*/
+									}
+									else
+									{
+										reports.shares.name = self.app.localization.e('myuposts')
+
+
+										if(!self.app.user.validate()){
+
+											self.nav.api.go({
+												href : 'userpage?id=test',
+												history : true,
+												open : true
+											})
+
+											return;
+										}
+									
+									}
+
+									author.data = self.sdk.users.storage[author.address]
+									//author.state = self.sdk.ustate.storage[author.address]
+
+									var data = {
+										author : author
+									};
+
+									clbk(data);
+
+								})
+							})
+						}
+
+						else
+						{
+							
+						}
+
+						
+					})
+
 				})
 				
 
@@ -1290,8 +1349,6 @@ var author = (function(){
 			
 			init : function(p){
 
-				
-
 				state.load();
 
 				el = {};
@@ -1308,7 +1365,6 @@ var author = (function(){
 				el.contents = el.c.find('.contentswrapper')
 
 				el.info = el.c.find('.authorinfoWrapper')
-
 
 				make(true);
 				initEvents();

@@ -1,84 +1,92 @@
 <div id="<%-module.map.id%>">
-  <header class="moduleHeader">
-    <h1 class="cabinetName"><%- e('videoCabinet') %></h1>
-  </header>
+  <div class="work">
+    <div class="moduleHeader">
+      <div class="cabinetName"><%- e('videoCabinet') %></div>
+        <button
+          class="uploadVideo videoActiveButton ghostButton"
+          rendersElement="addVideo"
+        >
+          <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
+        </button>
+    </div>
+  </div>
   <% if (hasAccess) { %>
-  <section class="statsSection">
-    <div class="reputation">
-      <div class="reputationblock quotaContainer">
-        <div class="preloaderwr">
-          <div class="preloader5"><span></span><span></span><span></span></div>
+  <div class="work">
+    <div class="statsdiv">
+      <div class="reputation">
+        <div class="reputationblock quotaContainer">
+          <div class="preloaderwr">
+            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+          </div>
         </div>
-      </div>
-      <div class="leaderBoardContainer leaderBoardContainerViews">
-        <div class="preloaderwr">
-          <div class="preloader5"><span></span><span></span><span></span></div>
+        <div class="leaderBoardContainer leaderBoardContainerViews">
+          <div class="preloaderwr">
+            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+          </div>
         </div>
-      </div>
-      <div class="leaderBoardContainer leaderBoardContainerRatings">
-        <div class="preloaderwr">
-          <div class="preloader5"><span></span><span></span><span></span></div>
+        <div class="leaderBoardContainer leaderBoardContainerRatings">
+          <div class="preloaderwr">
+            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-  <section class="videoContainer">
-    <section class="videoControls videoControlItem">
-      <div class="videoSearchWrapper videoControlItem">
-        <input
-          type="text"
-          id="videoSearchInput"
-          class="videoSearchInput"
-          placeholder="<%- e('enterVideoName') %>"
-        />
-        <button class="videoSearchButton ghostButton">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-      <div class="videoSortWrapper videoControlItem">
-        <div class="sortTypeSelectWrapper sortSelectWrapper">
-          <div class="selectBorderCaption"><%- e('sortBy') %></div>
-          <div class="selectIcon">
-            <i class="fas fa-sort-amount-down-alt"></i>
-          </div>
-          <select class="videoSelect sortTypeSelect">
-            <option value="name" <%- selectedType === 'name' ? 'selected' : '' %>><%- e('sortByName') %></option>
-            <option value="createdAt" <%- selectedType === 'createdAt' ? 'selected' : '' %>><%- e('sortByCreatedAt') %></option>
-            <option value="duration" <%- selectedType === 'duration' ? 'selected' : '' %>><%- e('sortByDuration') %></option>
-            <option value="views" <%- selectedType === 'views' ? 'selected' : '' %>><%- e('sortByViews') %></option>
-          </select>
+  </div>
+  <div class="videoContainer">
+    <div class="work">
+      <div class="videoControls">
+        <div class="videoSearchWrapper videoControlItem">
+          <input
+            type="text"
+            id="videoSearchInput"
+            class="videoSearchInput"
+            placeholder="<%- e('enterVideoName') %>"
+          />
+          <button class="videoSearchButton ghostButton">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
+        <div class="videoSortWrapper videoControlItem">
+          <div class="sortTypeSelectWrapper sortSelectWrapper">
+            <div class="selectBorderCaption"><%- e('sortBy') %></div>
+            <div class="selectIcon">
+              <i class="fas fa-sort-amount-down-alt"></i>
+            </div>
+            <select class="videoSelect sortTypeSelect">
+              <option value="name" <%- selectedType === 'name' ? 'selected' : '' %>><%- e('sortByName') %></option>
+              <option value="createdAt" <%- selectedType === 'createdAt' ? 'selected' : '' %>><%- e('sortByCreatedAt') %></option>
+              <option value="duration" <%- selectedType === 'duration' ? 'selected' : '' %>><%- e('sortByDuration') %></option>
+              <option value="views" <%- selectedType === 'views' ? 'selected' : '' %>><%- e('sortByViews') %></option>
+            </select>
+          </div>
 
-        <div class="sortDirectionSelectWrapper sortSelectWrapper">
-          <div class="selectBorderCaption"><%- e('sortDirection') %></div>
-          <div class="selectIcon">
-            <i class="fas fa-sort-amount-down-alt"></i>
+          <div class="sortDirectionSelectWrapper sortSelectWrapper">
+            <div class="selectBorderCaption"><%- e('sortDirection') %></div>
+            <div class="selectIcon">
+              <i class="fas fa-sort-amount-down-alt"></i>
+            </div>
+            <select class="videoSelect sortDirectionSelect">
+              <option value="" <%- selectedDirection === '' ? 'selected' : '' %>><%- e('sortDirectionAsc') %></option>
+              <option value="-" <%- selectedDirection === '-' ? 'selected' : '' %>><%- e('sortDirectionDesc') %></option>
+            </select>
           </div>
-          <select class="videoSelect sortDirectionSelect">
-            <option value="" <%- selectedDirection === '' ? 'selected' : '' %>><%- e('sortDirectionAsc') %></option>
-            <option value="-" <%- selectedDirection === '-' ? 'selected' : '' %>><%- e('sortDirectionDesc') %></option>
-          </select>
         </div>
+        <!-- <button
+          class="startStream videoActiveButton"
+          rendersElement="addStream"
+        >
+          <i class="fas fa-dot-circle"></i><%- e('peertubeAddStream') %>
+        </button> -->
       </div>
-      <button
-        class="uploadVideo videoActiveButton ghostButton videoControlItem"
-        rendersElement="addVideo"
-      >
-        <i class="fas fa-video"></i><%- e('peertubeAddVideo') %>
-      </button>
-      <!-- <button
-        class="startStream videoActiveButton"
-        rendersElement="addStream"
-      >
-        <i class="fas fa-dot-circle"></i><%- e('peertubeAddStream') %>
-      </button> -->
-    </section>
-    <section class="userVideos"></section>
-  </section>
+    </div>
+    <div class="userVideos"></div>
+  </div>
   <% } else { %>
-    <section class="videoContainer videoErrorContainer">
-      <h2 class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></h2>
-      <p class="videoErrorBody"><%- e('unableToAuthorizeBody') %></p>
-    </section>
+    <div class="videoContainer videoErrorContainer">
+      <div class="work">
+        <div class="videoErrorHeading"><i class="fas fa-exclamation-circle"></i> <%- e('unableToAuthorize') %></div>
+        <div class="videoErrorBody"><%- e('unableToAuthorizeBody') %></div>
+      </div>
+    </div>
   <% } %>
 </div>

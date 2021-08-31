@@ -120,8 +120,12 @@
 
 	.shares{
 		overflow: hidden; 
+		display: flex;
+		flex-direction: column;
 
 		.authorgroup{
+			display: flex;
+			flex-direction: column;
 			&.blocking{
 				display: none;
 			}
@@ -313,6 +317,8 @@
 			background: #fff;
 			margin-bottom: @rhythm;
 			padding-bottom : 0;
+			/*content-visibility: auto;
+			contain-intrinsic-size: 800px;*/
 
 			.commentsWrapperHb{
 				min-height: 2 * @rhythm;
@@ -1148,7 +1154,6 @@
 							}
 
 							img{
-								opacity: 0;
 								width: 100%;
 								/*.transition(0.3s);*/
 
@@ -1553,6 +1558,13 @@
 							padding-left: 0;
 						}
 					}	
+
+					.list{
+						.comment{
+							content-visibility: auto;
+							contain-intrinsic-size: 200px;
+						}
+					}
 				}
 
 				.exitFull{
@@ -1708,7 +1720,7 @@
 					&:not(.liked){
 						.starWrapper{
 
-							&:nth-child(1){
+							/*&:nth-child(1){
 								
 								animation: vstars 0.9s ease  0.1s infinite ;
 							}
@@ -1731,7 +1743,7 @@
 							&:nth-child(5){
 								
 								animation: vstars 0.9s ease  0.9s infinite ;
-							}
+							}*/
 
 						}
 					}
@@ -2178,6 +2190,7 @@
 				margin : 0;
 				margin-right: @rhythm;
 				margin-bottom : @rhythm;
+				content-visibility:visible;
 				
 				&:nth-last-child(1){
 					margin-right: 0;
@@ -3652,4 +3665,24 @@ html.stblack{
 	}
 }
 
+html.tablet,
+html.mobile{
+	#lenta{
+		.fullScreenVideo{
+			will-change: transform;
+			-webkit-backface-visibility: hidden;
+		}
+	}
+}
 
+html.tablet.fullscreen,
+html.mobile.fullscreen{
+	#lenta{
+		.fullScreenVideo{
+			#comments{
+				display: none;
+			}
+			
+		}
+	}
+}
