@@ -209,12 +209,27 @@ var userpage = (function(){
 				},
 			})
 
-			reports.push({
-				name : self.app.localization.e('videoCabinet'),
-				id : 'videoCabinet',
-				report : 'videoCabinet',
-				mobile : true,
-			})
+			if(self.app.user.validate()) {
+
+				reports.push({
+					name : self.app.localization.e('videoCabinet'),
+					id : 'videoCabinet',
+					report : 'videoCabinet',
+					mobile : true,
+
+					if : function(){
+
+						if (typeof mestate != 'undefined' && mestate && (
+					
+							(mestate.reputation > 50 || !mestate.trial || mestate.balance > 500000000)
+
+						)){
+							return true
+						}
+					}
+				})
+
+			}
 
 
 
