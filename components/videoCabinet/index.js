@@ -714,67 +714,87 @@ var videoCabinet = (function () {
                 element.find('.editText').on('click', function () {
                   _el.tooltipster('hide');
 
-                  self.fastTemplate('editDescription', (rendered) => {
-                    dialog({
-                      html: rendered,
+                  self.app.peertubeHandler.api.videos
+                    .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
+                    .then((videoData) => {
+                      debugger;
+                      self.fastTemplate('editDescription', (rendered) => {
+                        dialog({
+                          html: rendered,
 
-                      wrap: true,
+                          wrap: true,
 
-                      success: function (d) {
-                        const name = d.el.find('.videoNameInput').val();
-                        const description = d.el
-                          .find('.videoDescriptionInput')
-                          .val();
+                          success: function (d) {
+                            const name = d.el.find('.videoNameInput').val();
+                            const description = d.el
+                              .find('.videoDescriptionInput')
+                              .val();
 
-                        const parameters = {};
+                            const parameters = {};
 
-                        if (name) parameters.name = name;
-                        if (description) parameters.description = description;
-
-                        parameters.tags = tagArray;
-
-                        const { host } = videoLink;
-
-                        return self.app.peertubeHandler.api.videos
-                          .update(videoLink, parameters, { host })
-                          .then(() => {
-                            const textContainert = el.videoContainer.find(
-                              `.singleVideoSection[uuid="${meta.id}"]`,
-                            );
-
-                            if (name)
-                              textContainert.find('.videoNameText').text(name);
+                            if (name) parameters.name = name;
                             if (description)
-                              textContainert
-                                .find('.videoDescriptionText')
-                                .text(description);
+                              parameters.description = description;
 
-                            d.close();
-                            tagElement = {};
-                            tagArray = [];
-                          })
-                          .catch((err) => {
-                            tagElement = {};
-                            tagArray = [];
-                            d.close();
+                            parameters.tags = tagArray;
 
-                            sitemessage(
-                              self.app.localization.e(
-                                'errorChangingDescription',
-                              ),
-                            );
-                          });
-                      },
+                            const { host } = videoLink;
 
-                      clbk: function (editDialogEl) {
-                        tagElement = editDialogEl.find('.videoTagsWrapper');
+                            return self.app.peertubeHandler.api.videos
+                              .update(videoLink, parameters, { host })
+                              .then(() => {
+                                const textContainert = el.videoContainer.find(
+                                  `.singleVideoSection[uuid="${meta.id}"]`,
+                                );
 
-                        renders.tags(tagElement, tagArray);
-                      },
+                                if (name)
+                                  textContainert
+                                    .find('.videoNameText')
+                                    .text(name);
+                                if (description)
+                                  textContainert
+                                    .find('.videoDescriptionText')
+                                    .text(description);
 
-                      class: 'editVideoDialog',
-                    });
-                  });
+                                d.close();
+                                tagElement = {};
+                                tagArray = [];
+                              })
+                              .catch((err) => {
+                                tagElement = {};
+                                tagArray = [];
+                                d.close();
+
+                                sitemessage(
+                                  self.app.localization.e(
+                                    'errorChangingDescription',
+                                  ),
+                                );
+                              });
+                          },
+
+                          clbk: function (editDialogEl) {
+                            tagElement = editDialogEl.find('.videoTagsWrapper');
+                            tagArray = [...videoData.tags];
+                            renders.tags(tagElement, tagArray);
+
+                            editDialogEl
+                              .find('.videoNameInput')
+                              .val(videoData.name);
+                            editDialogEl
+                              .find('.videoDescriptionInput')
+                              .val(videoData.description);
+                          },
+
+                          class: 'editVideoDialog',
+                        });
+                      });
+                    })
+                    .catch(() =>
+                      sitemessage(
+                        self.app.localization.e('errorChangingDescription'),
+                      ),
+                    );
                 });
               },
             );
