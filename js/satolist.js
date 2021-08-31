@@ -2037,7 +2037,11 @@ Platform = function (app, listofnodes) {
             })
         },
 
-        comment : function(id, el, clbk, p){
+        comment : function(id, el, clbk, p, additional){
+
+            if(!additional) additional = {}
+
+            console.log('id, el, clbk, p, additional', id, el, clbk, p, additional)
 
             app.nav.api.load({
                 open : true,
@@ -2051,8 +2055,9 @@ Platform = function (app, listofnodes) {
                     init : true,
                     preview : false,
                     fromtop : true,
-                    commentPs : p.commentPs,
-                    openapi : p.openapi
+                    commentPs : additional.commentPs || p.commentPs,
+                    openapi : p.openapi,
+                  
                 },
 
                 clbk : clbk
@@ -18375,7 +18380,7 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.user.subscribeRef()
 
-                    platform.matrixchat.init()
+                    
 
                     ////////////////
 
@@ -18401,6 +18406,10 @@ Platform = function (app, listofnodes) {
 
 
                     clbk()
+
+                    setTimeout(function(){
+                        platform.matrixchat.init()
+                    }, 100)
                 },
 
                 refs: {
@@ -18951,7 +18960,7 @@ Platform = function (app, listofnodes) {
 
                         if (
 
-                            (data.upvoteVal <= 2 && platform.sdk.usersettings.meta.downvotes.value && 2 == 1) ||
+                            (data.upvoteVal <= 2 && platform.sdk.usersettings.meta.downvotes.value) ||
                             
                             (data.upvoteVal > 2 &&  platform.sdk.usersettings.meta.upvotes.value) 
                             

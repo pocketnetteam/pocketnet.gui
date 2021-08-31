@@ -2971,7 +2971,7 @@ input[type=radio].radio:checked + label {
 .preloader5 {
    display: block;
    margin : 0 auto;
-   position: relative;
+   /*position: relative;
    width: 30px;
    height: 12px;
    content-visibility : auto;
@@ -2986,12 +2986,24 @@ input[type=radio].radio:checked + label {
     span{
         background: #FFAE00;
     }
-   }
+   }*/
 }
 
 .vjs-play-progress{
     content-visibility : auto;
     backface-visibility: hidden;
+}
+
+.preloader6{
+   img{
+       width: 30px;
+   }
+}
+.preloader5{
+    img{
+        width: 30px;
+        will-change: transform;
+    }
 }
 .preloader5 span {
    vertical-align:middle;
@@ -3001,8 +3013,8 @@ input[type=radio].radio:checked + label {
    width:6px;
    height:6px;
    position: absolute;
-   -webkit-animation:preloader5 0.8s linear infinite alternate;
-   animation:preloader5 0.8s linear infinite alternate;
+   /*-webkit-animation:preloader5 0.8s linear infinite alternate;
+   animation:preloader5 0.8s linear infinite alternate;*/
    top : 3px;
    
    content-visibility : auto;

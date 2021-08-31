@@ -48,7 +48,7 @@
         "electron-context-menu": "^2.4.0",
         "electron-is": "^3.0.0",
         "electron-localshortcut": "^3.2.1",
-        "electron-log": "",
+        "electron-log": "^4.4.1",
         "electron-updater": "^4.3.5",
         "email-validator": "^2.0.4",
         "emojione": "^4.5.0",
@@ -108,6 +108,7 @@
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
+        "v8-compile-cache": "^2.3.0",
         "yuicompressor": "^2.4.8"
     },
     "build": {

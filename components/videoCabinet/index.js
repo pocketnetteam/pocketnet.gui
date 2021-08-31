@@ -596,17 +596,17 @@ var videoCabinet = (function () {
         const linkInfo = blockChainInfo[link] || {};
         const videoInfo = peertubeServers[host].videos.find(
           (video) => video.uuid === uuid,
-        );
+        ) || {};
 
         self.shell(
           {
             name: 'videoStats',
             el: element,
             data: {
-              views: +videoInfo.views || 0,
-              starsCount: +linkInfo.scoreSum || 0,
-              starsSum: +linkInfo.scoreCnt || 0,
-              comments: +linkInfo.comments || 0,
+              views: + videoInfo.views || 0,
+              starsCount: + linkInfo.scoreSum || 0,
+              starsSum: + linkInfo.scoreCnt || 0,
+              comments: + linkInfo.comments || 0,
             },
           },
           (p) => {
@@ -621,7 +621,7 @@ var videoCabinet = (function () {
       //add new container for a protion of videos (lazyload)
       newVideoContainer() {
         const videoPortionElement = $(
-          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><span></span><span></span><span></span></div></div></div>',
+          '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div></div>',
         );
 
         el.videoContainer.append(videoPortionElement);

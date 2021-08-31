@@ -10,6 +10,7 @@
   background: #fff;
   margin-bottom: 10px;
   min-height: 160px;
+  position: relative;
 }
 #main .topvideosWrapper.hasshares {
   display: block;
@@ -631,6 +632,11 @@ html.testpocketnet #main.testpocketnetbg {
   #main .topvideosWrapper .horizontalLentaWrapper {
     padding: 0.5em 0;
     padding-bottom: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
   }
   #main .topvideosWrapper .horizontalLentacaption {
     display: none;

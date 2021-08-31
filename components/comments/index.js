@@ -2096,17 +2096,15 @@ var comments = (function(){
 
 				}, function(_p){
 
+					if(ed.renderClbk) ed.renderClbk()
+
+					if (clbk)
+						clbk();
+
 					if (el.list){
-						el.list.find('.reply').off('click').on('click', events.replyandreplies);
-						el.list.find('.replies').off('click').on('click', events.replies);
-						el.list.find('.panel').off('click').on('click', events.metmenu);
-						el.list.find('.tocomment').off('click').on('click', events.tocomment)
-
-
-						el.list.find('.imageCommentOpen').off('click').on('click', events.openGallery)
 					
 						setTimeout(function(){
-							if(el.list)
+							if (el.list)
 								el.list.find('.newcomments').removeClass('newcomments')
 						}, 600)
 						
@@ -2122,10 +2120,7 @@ var comments = (function(){
 					}
 					
 
-					if(ed.renderClbk) ed.renderClbk()
-
-					if (clbk)
-						clbk();
+					
 					
 				})
 			}
@@ -2542,6 +2537,13 @@ var comments = (function(){
 				el.showall = el.c.find('.showall')
 
 				_in = el.c.closest('.wndcontent');
+
+
+				el.list.on('click', '.reply', events.replyandreplies);
+				el.list.on('click', '.replies', events.replies);
+				el.list.on('click', '.panel', events.metmenu);
+				el.list.on('click', '.tocomment', events.tocomment)
+				el.list.on('click', '.imageCommentOpen', events.openGallery)
 
 				if(!_in.length) {
 					_in = null

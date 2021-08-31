@@ -141,7 +141,7 @@ var metadisplay = function(){ %>
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="sharecaption canmark">
-					<%=joypixels.toImage(nl2br(trimrn(c)))%>
+					<%=app.actions.emoji(nl2br(trimrn(c)))%>
 				</div>
 			</div>
 
@@ -170,7 +170,7 @@ var metadisplay = function(){ %>
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="message canmark">
-					<%=joypixels.toImage((clearScripts(((nm)))))%>
+					<%=app.actions.emoji((clearScripts(((nm)))))%>
 				</div>
 			</div>
 
@@ -404,11 +404,7 @@ var metadisplay = function(){ %>
 													<i class="fas fa-share"></i>
 												</div>
 											</div>
-											<!--<% if(share.reposted || my) {%> 
-												<div class="labelwr">
-													<span class="label"><%-share.reposted || 0%></span>
-												</div>
-											<% } %>-->
+										
 										</div>
 
 									</div>
@@ -445,7 +441,7 @@ var metadisplay = function(){ %>
 									<div class="itemwr table tempPreloader">
 										
 										<div class="iconwr">
-											<div class="preloader5"><span></span><span></span><span></span></div>
+											<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 										</div>
 										
 										<div class="count">

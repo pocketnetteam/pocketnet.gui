@@ -779,11 +779,12 @@ var menu = (function(){
 						action()
 					}
 
-					el.tooltipster({
-						theme: 'tooltipster-light',
-						maxWidth : 300,
-						zIndex : 200,
-					});
+					if(!isMobile())
+						el.tooltipster({
+							theme: 'tooltipster-light',
+							maxWidth : 300,
+							zIndex : 200,
+						});
 				}
 			},
 

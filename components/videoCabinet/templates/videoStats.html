@@ -2,7 +2,7 @@
   <div class="singleStat tooltip" title="<%- e('totalStars') %>">
     <i class="fas fa-star starIcon"></i
     ><span class="statNumber"
-      ><%- starsCount ? `${(starsSum / starsCount).toFixed(1)} (${starsCount})`
+      ><%- starsCount ? `${(starsCount / starsSum).toFixed(1)} (${starsSum})`
       : '-' %></span
     >
   </div>

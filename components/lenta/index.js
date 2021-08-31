@@ -45,12 +45,20 @@ var lenta = (function(){
 
 		var authblock = false;
 
+		var renderclbkSlowMade = null
+
 		var essenserenderclbk = function(){
-			if(!essenseData.horizontal){
-				cachedHeight = el.c.height()
-			}
+
+			renderclbkSlowMade = slowMade(function(){
+
+				if(!essenseData.horizontal && el.c){
+					cachedHeight = el.c.height()
+				}
+				
+				if(essenseData.renderClbk) essenseData.renderClbk()
+
+			}, renderclbkSlowMade, isMobile() ? 500 : 100)
 			
-			if(essenseData.renderClbk) essenseData.renderClbk()
 		}
 
 
@@ -1566,7 +1574,6 @@ var lenta = (function(){
 					return shadowVideos[s.txid]
 				})
 
-				
 
 				if(shadowShares.length){
 
@@ -1579,7 +1586,13 @@ var lenta = (function(){
 
 						if (_el.length){
 
-							if(st + 3500 > _el.offset().top){ /// optimize ?
+							var offsetTop = 0
+
+							offsetTop = isMobile() ? (_el.data('offsetTop') || _el.offset().top) : _el.offset().top
+							console.log(share.txid, offsetTop, _el.data('offsetTop'))
+							_el.data('offsetTop', offsetTop)
+
+							if(st + 3500 > offsetTop){ /// optimize ?
 								actions.initVideo(_el, share)
 							}
 						}	
@@ -2191,7 +2204,7 @@ var lenta = (function(){
 
 							if(!el.c) return
 
-							var e = el.c.find('#' + txid);
+							//var e = el.c.find('#' + txid);
 							
 							/*if (e.hasClass('fullScreenVideo')){
 								p.changein(e, 0)

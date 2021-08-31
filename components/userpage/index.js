@@ -91,14 +91,7 @@ var userpage = (function(){
 				}
 			})
 
-			/*reports.push({
-				name : "Messenger",
-				id : 'messenger',
-				report : 'messenger',
-				mobile : true
-			})*/
-
-			
+		
 
 			reports.push({
 				name : self.app.localization.e('rwallet'),
@@ -225,18 +218,6 @@ var userpage = (function(){
 
 
 
-		//	var address = app.user.address.value;
-				
-                
-		   
-		    /*if(_.indexOf(['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd'], address) > -1) {
-				reports.push({
-					name : self.app.localization.e('rconnection'),
-					id : 'connection',
-					report : 'connection',
-					mobile : false
-				})
-			}*/
 				
 		}
 

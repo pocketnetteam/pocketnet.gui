@@ -6136,6 +6136,9 @@
 		}
 
 		else{
+
+			inel = p.inel
+
 			try{
 				p.elOffset = p.inel[p.f]().top
 			}
@@ -6219,7 +6222,7 @@
 			}
 		})
 
-		/*if(p.mode == 'partall')
+		if(p.mode == 'partall')
 		{
 			_fels = _fels.sort(function(a, b){
 
@@ -6232,7 +6235,7 @@
 
 				if(a.data('inView') == 'part') return 1;
 			})
-		}*/
+		}
 
 		return _fels;
 	}

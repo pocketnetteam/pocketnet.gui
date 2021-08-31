@@ -857,6 +857,12 @@ Application = function(p)
 
 	self.actions = {
 
+		emoji : function(text){
+			if(isMobile()) return text
+
+			return joypixels.toImage(text)
+		},
+
 		restore : function(){
 
 			if (optimizeTimeout) clearTimeout(optimizeTimeout)
@@ -936,7 +942,9 @@ Application = function(p)
 
 		getScroll : function(){
 
-			var s = self.el.window.scrollTop()
+			var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+			var s = scrollTop //self.el.window.scrollTop()
 
 			if(!self.fullscreenmode){
 				self.lastScrollTop = s
