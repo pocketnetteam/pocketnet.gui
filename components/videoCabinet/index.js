@@ -128,7 +128,7 @@ var videoCabinet = (function () {
 
           ], {
             rpc : {
-              node : window.testpocketnet ? '157.90.235.121:39091' : '216.108.231.40'
+              fnode : window.testpocketnet ? '157.90.235.121:39091' : '216.108.231.40:38081'
             }
             
           }).then(r => {
@@ -203,7 +203,7 @@ var videoCabinet = (function () {
             var rendering = "&mdash;"
 
             if(result.scoreCnt && result.scoreSum){
-              rendering  = (result.scoreSum / result.scoreCnt).toFixed(1) + " ("+result.scoreCnt+")"
+              rendering  = (result.scoreSum / result.scoreCnt).toFixed(1) + ' ('+result.scoreCnt+") " + '<i class="fas fa-star"></i> ' + result.countLikers + ' <i class="fas fa-users"></i>'
             }
 
             renders.bonusProgram(
@@ -685,7 +685,7 @@ var videoCabinet = (function () {
       videoStats(element, link, host, uuid) {
         const linkInfo = blockChainInfo[link] || {};
         const videoInfo =
-          (peertubeServers[host].videos || []).find((video) => video.uuid === uuid) ||
+          ((peertubeServers[host] || {}).videos || []).find((video) => video.uuid === uuid) ||
           {};
 
         self.shell(
