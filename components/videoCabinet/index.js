@@ -73,7 +73,7 @@ var videoCabinet = (function () {
           })
           .catch(() => {
             peertubeServers[server].isFull = true;
-            
+
             sitemessage(`Error loading ${server}`);
             return [];
           });
@@ -379,7 +379,6 @@ var videoCabinet = (function () {
           ),
         )
           .then((data = []) => {
-            debugger;
 
             const newVideos = data
               .filter((item) => item.status === POSITIVE_STATUS)
