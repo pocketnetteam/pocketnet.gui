@@ -1,78 +1,73 @@
 <sectiion class="videosWrapper">
-  <% videos.map((video) => { 
-    console.log("C", video)
-    
-    
-    %>
-    <div class="work">
-      <div class="singleVideoSection" uuid="<%- video.uuid %>">
+  <% videos.map((video) => { console.log("C", video) %>
+  <div class="work">
+    <div class="singleVideoSection" uuid="<%- video.uuid %>">
+      <div
+        class="videoAvatar"
+        style="
+          background-image: url('https://<%- video.server %><%-video.previewPath %>');
+        "
+      >
+        <div class="videoDuration"><%- secInTime(video.duration) %></div>
+      </div>
+      <div class="videoItemPart videoName">
+        <div class="videoTextContainer videoNameText"><%- video.name %></div>
         <div
-          class="videoAvatar"
-          style="
-            background-image: url('https://<%- video.account.host %><%-video.previewPath %>');
+          class="
+            videoTextContainer
+            videoDescriptionText
+            <%-
+            video.description
+            ?
+            ''
+            :
+            'emptyDescription'
+            %>
           "
         >
-          <div class="videoDuration"><%- secInTime(video.duration) %></div>
+          <%= video.description ? video.description :
+          `<span>${e('emptyDescription')}</span>` %>
         </div>
-        <div class="videoItemPart videoName">
-          <div class="videoTextContainer videoNameText"><%- video.name %></div>
-          <div
-            class="
-              videoTextContainer
-              videoDescriptionText
-              <%-
-                video.description
-                ?
-                ''
-                :
-                'emptyDescription'
-              %>
-            "
-          >
-            <%= video.description ? video.description :
-            `<span>${e('emptyDescription')}</span>` %>
-          </div>
-          <!-- <p class="videoTextContainer"><%- video.account.host %></p> -->
-        </div>
-        <div
-          class="videoItemPart videoStatsWrapper"
-          video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
-          host="<%- deep(video, 'account.host') %>"
-          uuid="<%- video.uuid %>"
-        >
-          <div class="preloaderwr">
-            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
-          </div>
-        </div>
-        <div class="videoItemPart">
-          <div class="videoTextContainer videoNameDate">
-            <span><%- app.reltime(new Date(video.createdAt)) %></span>
-          </div>
-        </div>
-        <div
-          class="videoItemPart postingStatusWrapper"
-          video="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
-          videoTranscoding="<%- (video.state.id !== 1) ? 'true' : '' %>"
-        >
-          <div class="preloaderwr transcodingPreloader">
-            <i class="fas fa-sync fa-spin"></i> <%- e('transcodingShort') %>
-          </div>
-          <button
-            class="attachVideoToPost tooltip hidden ghostButton"
-            title="<%- e('attachVideoToPost') %>"
-            videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
-          >
-            <i class="fas fa-signature"></i> <%- e('attachVideoToPostShort') %>
-          </button>
-        </div>
-        <div class="videoItemPart removeButtonWrapper">
-          <i
-            class="fas fa-ellipsis-h menuActivator"
-            videoLink="<%- `peertube://${deep(video, 'account.host')}/${video.uuid}` %>"
-          ></i>
-        
+        <!-- <p class="videoTextContainer"><%- video.server %></p> -->
+      </div>
+      <div
+        class="videoItemPart videoStatsWrapper"
+        video="<%- `peertube://${video.server}/${video.uuid}` %>"
+        host="<%- video.server %>"
+        uuid="<%- video.uuid %>"
+      >
+        <div class="preloaderwr">
+          <div class="preloader5"><img src="./img/three-dots.svg" /></div>
         </div>
       </div>
+      <div class="videoItemPart">
+        <div class="videoTextContainer videoNameDate">
+          <span><%- app.reltime(new Date(video.createdAt)) %></span>
+        </div>
+      </div>
+      <div
+        class="videoItemPart postingStatusWrapper"
+        video="<%- `peertube://${video.server}/${video.uuid}` %>"
+        videoTranscoding="<%- (video.state.id !== 1) ? 'true' : '' %>"
+      >
+        <div class="preloaderwr transcodingPreloader">
+          <i class="fas fa-sync fa-spin"></i> <%- e('transcodingShort') %>
+        </div>
+        <button
+          class="attachVideoToPost tooltip hidden ghostButton"
+          title="<%- e('attachVideoToPost') %>"
+          videoLink="<%- `peertube://${video.server}/${video.uuid}` %>"
+        >
+          <i class="fas fa-signature"></i> <%- e('attachVideoToPostShort') %>
+        </button>
+      </div>
+      <div class="videoItemPart removeButtonWrapper">
+        <i
+          class="fas fa-ellipsis-h menuActivator"
+          videoLink="<%- `peertube://${video.server}/${video.uuid}` %>"
+        ></i>
+      </div>
     </div>
+  </div>
   <% }) %>
 </sectiion>
