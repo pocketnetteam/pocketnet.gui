@@ -74,7 +74,7 @@ var videoCabinet = (function () {
           .catch(() => {
             peertubeServers[server].isFull = true;
 
-            sitemessage(`Error loading ${server}`);
+            console.log(`Error loading ${server}`);
             return [];
           });
       },
