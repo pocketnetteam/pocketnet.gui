@@ -395,6 +395,9 @@
   display: block;
   padding-left: 54px;
 }
+.addcategorydialog {
+  z-index: 1500;
+}
 html.stblack #main {
   background: #041726;
 }
