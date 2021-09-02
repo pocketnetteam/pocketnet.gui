@@ -291,7 +291,8 @@ var Peertube = function (settings) {
 
     var roy = new Roy(self);
 
-    roy.fake = true
+    if(fake)
+      roy.fake = true
 
     roy.init(urls);
 
