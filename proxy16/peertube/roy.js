@@ -53,6 +53,9 @@ var Roy = function (parent) {
 
   self.init = function (urls) {
     _.each(urls, function (host) {
+
+      console.log("HOST", host)
+
       self.addInstance(host);
     });
   };
