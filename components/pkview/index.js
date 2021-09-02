@@ -130,7 +130,9 @@ var pkview = (function(){
 
 					var qr = renders.qrcode(p.el.find('.qrcode'), current.mk)
 
-					p.el.find('.qrcode img').attr('save', name + '.png')
+					p.el.find('.qrcode img').attr('save', name + '.png').attr('removesharing', 'true')
+
+					
 
 					self.app.mobile.saveImages.init(p.el.find('.qrcode img'))
 

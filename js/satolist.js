@@ -19916,8 +19916,22 @@ Platform = function (app, listofnodes) {
                 txid: "b52f38b272b7a18c0947b853ee35fee2aa0e0105aa86daa9cd1efcb35b54f036"
             })*/
 
+            /*
+            addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM"
+            blockhash: "12ba464105e4b29bef43f3b893d60348fe056488834cbb2d43780c1432477bf6"
+            contentsLang: {}
+            height: 1334998
+            msg: "new block"
+            node: "216.108.231.40:38081:8087"
+            shares: 0
+            time: "1630599808"
+
+            */
+
+
 		}, 6000)
     }
+    
     
     
     

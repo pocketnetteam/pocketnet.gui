@@ -10,15 +10,7 @@
 
 <% } %>
 
-	<div class="item foraddress">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
-			<div class="label">
-			
-				<span class="copyaddress"><%-deep(author, 'address')%></span>
-			</div>
-		</div>
-	</div>
+	
 
 	<% if(!app.curation()) { %>
 
@@ -29,7 +21,42 @@
 		</div>
 	</div>
 	<% } %>
+
+	<% if(deep(author, 'data.about')) {
+
+		var a = deep(author, 'data.about');
 	
+		var am = a; /*trimHtml(a, 1500);*/
+	
+	%>
+	
+		<div class="item about">
+			<div class="itemtable table">
+				<div class="icon"><i class="fas fa-pen"></i></div>
+				<div class="label">
+					<div class="aboutwrapper"> <%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%></div>
+					<% if(am != a){ %> 
+						<div class="showmoreabout">
+							<%=e('e13021')%>
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	
+	<% } %>
+	
+	
+
+	<div class="item foraddress">
+		<div class="itemtable table">
+			<div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+			<div class="label">
+			
+				<span class="copyaddress"><%-deep(author, 'address')%></span>
+			</div>
+		</div>
+	</div>
 	
 <% 
 
@@ -53,29 +80,6 @@ if(_d && _d > -1) {
 
 <% } %>
 
-<% if(deep(author, 'data.about')) {
-
-	var a = deep(author, 'data.about');
-
-	var am = trimHtml(a, 1500);
-
-%>
-
-	<div class="item about">
-		<div class="itemtable table">
-			<div class="icon"><i class="fas fa-pen"></i></div>
-			<div class="label">
-				<div class="aboutwrapper"> <%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%></div>
-				<% if(am != a){ %> 
-					<div class="showmoreabout">
-						<%=e('e13021')%>
-					</div>
-				<% } %>
-			</div>
-		</div>
-	</div>
-
-<% } %>
 
 <% if(deep(author, 'data.postcnt')) {%>
 
