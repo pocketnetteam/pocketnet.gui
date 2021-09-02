@@ -525,13 +525,9 @@ var lenta = (function(){
 
 							var videoId = (player.embed && player.embed.details && player.embed.details.uuid) ? player.embed.details.uuid : player.localVideoId;
 							if (videoId && self.sdk.local.shares.getVideo(videoId, share.txid) != undefined) {
-								el.find('.metapanelitem.canBeDownloaded.' + share.txid).hide();
-								el.find('.metapanelitem.downloading.' + share.txid).hide();
-								el.find('.metapanelitem.downloaded.' + share.txid).show();
+								renders.setShareDownload(share.txid, 'downloaded');
 							} else {
-								el.find('.metapanelitem.canBeDownloaded.' + share.txid).show();
-								el.find('.metapanelitem.downloading.' + share.txid).hide();
-								el.find('.metapanelitem.downloaded.' + share.txid).hide();
+								renders.setShareDownload(share.txid, 'canDownload');
 							}
 
 							actions.setVolume(players[share.txid])
@@ -602,9 +598,7 @@ var lenta = (function(){
 
 					s.logoType = self.app.meta.fullname
 
-					el.find('.metapanelitem.canBeDownloaded.' + share.txid).hide();
-					el.find('.metapanelitem.downloading.' + share.txid).show();
-					el.find('.metapanelitem.downloaded.' + share.txid).hide();
+					renders.setShareDownload(share.txid, 'invisible');
 
 					PlyrEx(pels[0], s, callback, readyCallback)
 
@@ -1920,12 +1914,7 @@ var lenta = (function(){
 											var downloader = new BackgroundTransfer.BackgroundDownloader();
 											// Create a new download operation.
 											var download = downloader.createDownload(video.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-											var canDownload = el.c.find('.metapanelitem.canBeDownloaded.' + shareId),
-												downloading = el.c.find('.metapanelitem.downloading.' + shareId),
-												downloaded = el.c.find('.metapanelitem.downloaded.' + shareId);
-											canDownload.hide();
-											downloading.show();
-											downloaded.hide();
+											renders.setShareDownload(shareId, 'downloading');
 											// Start the download and persist the promise to be able to cancel the download.
 											app.downloadPromise = download.startAsync().then(function(e) {
 												// Success
@@ -1939,9 +1928,8 @@ var lenta = (function(){
 													downloadMenus[shareId].useLocal = true;
 													actions.openPost(shareId, function() {
 														setTimeout(() => {
-															canDownload.hide();
-															downloading.hide();
-															downloaded.show();
+															delete el[shareId];
+															renders.setShareDownload(shareId, 'downloaded');
 															events.sharesPreInitVideo();
 															events.videosInview();
 															events.sharesInview();
@@ -1953,9 +1941,7 @@ var lenta = (function(){
 												// Error
 												console.log("error");
 												console.log(e);
-												canDownload.show();
-												downloading.hide();
-												downloaded.hide();
+												renders.setShareDownload(shareId, 'canDownload');
 											}, function(e) {
 												// Progress
 												// console.log("progress");
@@ -1985,9 +1971,8 @@ var lenta = (function(){
 					delete downloadMenus[id];
 					actions.openPost(id, function() {
 						setTimeout(() => {
-							el.c.find('.metapanelitem.canBeDownloaded.' + id).show();
-							el.c.find('.metapanelitem.downloading.' + id).hide();
-							el.c.find('.metapanelitem.downloaded.' + id).hide();
+							delete el[id];
+							renders.setShareDownload(id, 'canDownload');
 							events.sharesPreInitVideo();
 							events.videosInview();
 							events.sharesInview();
@@ -3139,6 +3124,37 @@ var lenta = (function(){
 				this.shares(shares, clbk, {
 					noview : true
 				})
+			},
+
+			// Update the download button for this share
+			// {shareId}: The tx ID of the share
+			// {action}:
+			//		canDownload: Show the download button
+			//		downloading: Show the spinner
+			//		downloaded: Show the green check and delete button
+			//		invisible: Hide everything
+			setShareDownload : function(shareId, action){
+				// Check if we have the HTML elements for this share
+				if (!el[shareId])
+					el[shareId] = el.c.find('.metapanel.' + shareId);
+				switch (action) {
+					case 'canDownload':
+						console.log('canDownload');
+						el[shareId].removeClass('downloading downloaded invisible').addClass('canDownload');
+						break;
+					case 'downloading':
+						console.log('downloading');
+						el[shareId].removeClass('canDownload downloaded invisible').addClass('downloading');
+						break;
+					case 'downloaded':
+						console.log('downloaded');
+						el[shareId].removeClass('downloading canDownload invisible').addClass('downloaded');
+						break;
+					case 'invisible':
+						console.log('invisible');
+						el[shareId].removeClass('downloading downloaded canDownload').addClass('invisible');
+						break;
+				}
 			}
 		}
 

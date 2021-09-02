@@ -10642,6 +10642,9 @@ Platform = function (app, listofnodes) {
                         var curShare = self.sdk.local.shares.get(txid);
                         if (curShare) {
 
+                            if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share)
+                                return;
+
                             // Prepare user
                             var newUser = self.sdk.users.prepareuser(curShare.share.user, curShare.share.user.adr);
                             self.sdk.usersl.storage[newUser.address] = newUser;
