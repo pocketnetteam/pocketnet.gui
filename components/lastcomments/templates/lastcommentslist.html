@@ -111,10 +111,25 @@
                             <div class="icons">
 
                                 <div class="iconWrapper">
-                                    <% var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image')  %>
+                                    <% 
+                                        var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image');
+                                        var name = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name');
+                                        var letter = name ? name[0] : '';
+                                    %>
             
                                     <div class="icon">
                                         <div class="usericon" image="<%-src || ''%>">
+
+                                            <% if(!src && letter) { %>
+
+                                                <span 
+                                                    class="letter"
+                                                >
+                                                    <%-letter.toUpperCase()%>
+                                                </span>
+                            
+                                            <% } %>
+
                                         </div>
                                     </div>
             
@@ -127,11 +142,23 @@
                                 </div>
 
                                 <div class="iconWrapper">
-                                    <% var src2 = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
+                                    <% 
+                                        var src2 = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')
+                                        var name2 = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
+                                        var letter2 = name ? name[0] : '';    
+                                    %>
             
                                     <div class="icon">
                                         <div class="usericon" image="<%-src2 || ''%>">
-                                   
+                                            <% if(!src2 && letter2) { %>
+
+                                                <span 
+                                                    class="letter"
+                                                >
+                                                    <%-letter2.toUpperCase()%>
+                                                </span>
+                            
+                                            <% } %>
                                         </div>
                                     </div>
             

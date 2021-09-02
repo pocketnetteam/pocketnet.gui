@@ -42,7 +42,12 @@ var metadisplay = function(){ %>
                             <a href="<%-app.platform.api.authorlink(share.address)%>">
         
         
-                                <% var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')  %>
+                                <% 
+									var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
+									var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
+									var letter = name ? name[0] : '';
+
+								%>
         
                                 <div class="icon">
                                     <div class="usericon usericonsbsa another" image="<%-src || ''%>">
@@ -55,6 +60,14 @@ var metadisplay = function(){ %>
 													<i class="fas fa-check fa-stack-1x"></i>
 												  </span>
 											</div>
+										<% } else if (!src && letter) {%>
+
+											<span 
+												class="letter"
+											>
+												<%-letter.toUpperCase()%>
+											</span>
+						
 										<% } %>
                                     </div>
                                 </div>

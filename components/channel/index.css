@@ -1,1 +1,70 @@
-#channel .channel{background:#fff;padding:1em 0}#channel .channel .userinfo{text-align:center;padding:.5em 0}#channel .channel .userinfo span{font-size:2em;font-weight:200}#channel .channel .userinfo .name{padding:.5em 0}#channel .channel .userinfo .adr{max-width:500px;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;display:inline-block}#channel .channel .panel{margin:0 auto;max-width:600px;display:flex;align-items:center;justify-content:center}#channel .channel .panel .usermenuitem{padding:.5em;cursor:pointer;white-space:nowrap}#channel .channel .panel>div i,#channel .channel .panel>div span{font-size:.8em}#channel .channel .panel>div i{text-align:center;width:30px}#channel .channel .usericon{width:80px;height:80px;line-height:80px;margin:0 auto}#channel .channel .action{padding:1em;text-align:center}html.stblack #channel .channel{color:#e4ddde;background:#112035}@media only screen and (max-width:768px){#channel .channel .panel{display:block;max-width:480px;padding-left:4em}#channel .channel .panel>div{margin:0 auto}}
+#channel .channel {
+  background: #fff;
+  padding: 1em 0;
+}
+#channel .channel .userinfo {
+  text-align: center;
+  padding: 0.5em 0;
+}
+#channel .channel .userinfo span {
+  font-size: 2em;
+  font-weight: 200;
+}
+#channel .channel .userinfo .name {
+  padding: 0.5em 0;
+}
+#channel .channel .userinfo .adr {
+  max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  display: inline-block;
+}
+#channel .channel .panel {
+  margin: 0 auto;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#channel .channel .panel .usermenuitem {
+  padding: 0.5em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+#channel .channel .panel > div span,
+#channel .channel .panel > div i {
+  font-size: 0.8em;
+}
+#channel .channel .panel > div i {
+  text-align: center;
+  width: 30px;
+}
+#channel .channel .usericon {
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto;
+}
+#channel .channel .usericon.letter {
+  font-size: 1.5em;
+}
+#channel .channel .action {
+  padding: 1em;
+  text-align: center;
+}
+html.stblack #channel .channel {
+  color: #e4ddde;
+  background: #112035;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  #channel .channel .panel {
+    display: block;
+    max-width: 480px;
+    padding-left: 4em;
+  }
+  #channel .channel .panel > div {
+    margin: 0 auto;
+  }
+}
