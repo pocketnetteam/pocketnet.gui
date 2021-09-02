@@ -25,8 +25,7 @@ var Peertube = function (settings) {
     var roy = null;
 
     if (host) {
-      roy =
-        roys[host] ||
+      roy = roys[host] ||
         _.find(roys, function (roy) {
           return roy.find(host);
         });
@@ -243,11 +242,11 @@ var Peertube = function (settings) {
       const output = {};
 
       var _roys = _.filter(roys, function(r){
-        return !r.fake
+        return !r.auto
       })
 
       Object.keys(_roys).map((roy) => {
-        roys[roy].best() ? (output[roy] = roys[roy].best().host) : null;
+        _roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
       });
 
       return Promise.resolve(output);
@@ -285,14 +284,11 @@ var Peertube = function (settings) {
     },
   };
 
-  self.addroy = function (urls, key, fake) {
+  self.addroy = function (urls, key) {
 
     if(!urls.length) return
 
     var roy = new Roy(self);
-
-    if(fake)
-      roy.fake = true
 
     roy.init(urls);
 
