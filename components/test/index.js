@@ -395,8 +395,18 @@ var test = (function(){
 
 							topPreloader(100)
 
+							var txt = 'This username is taken in ' + self.app.meta.fullname
+
 							el.c.find('.errorname').fadeIn();
-							el.c.find('.errorname span').html('This username is taken in ' + self.app.meta.fullname);									
+							el.c.find('.errorname span').html(txt);
+
+							var pn = el.c.find('[parameter="name"] input')
+
+								pn.focus()
+
+								_scrollTo(pn)
+							
+							sitemessage(txt)
 						}
 					})
 

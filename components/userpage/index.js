@@ -607,6 +607,14 @@ var userpage = (function(){
 
 						self.app.actions.scroll(0)
 
+						_p.el.find('.showprivatekey').on('click', function(){
+							self.app.platform.ui.showmykey({
+								text : self.app.localization.e('doyouwantseepk'),
+								successLabel : self.app.localization.e('dyes'),
+								faillabel : self.app.localization.e('dno')
+							})
+						})
+
 						if (hcready)
 							el.contents.hcSticky('refresh');
 	

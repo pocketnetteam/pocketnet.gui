@@ -100,13 +100,7 @@ nModule = function(){
 			if(p.el)
 			{
 
-				//if(!fromModule){
-
-					
-
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-					
-				//}
 
 				window.requestAnimationFrame(function(){
 
@@ -539,9 +533,7 @@ nModule = function(){
 			return
 		}
 
-		
-		
-		if(self.storage.templates[p.name] || p.clear)
+		if (self.storage.templates[p.name] || p.clear)
 		{			
 			if (clbk)
 				clbk(self.storage.templates[p.name]);
@@ -597,6 +589,13 @@ nModule = function(){
 						clbk(self.storage.templates[p.name]);
 
 					loading.templates[p.name] = false;
+
+				},
+				fail : function(){
+
+					if (p.fail){
+						p.fail()
+					}
 
 				}
 			});

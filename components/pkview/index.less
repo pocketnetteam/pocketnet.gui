@@ -38,6 +38,21 @@
     
     
     }
+
+    .buttonWrapper{
+        padding : 2 * @rhythm;
+        text-align: center;
+    }
+
+    .next{
+        padding : 4 * @rhythm;
+        text-align: center;
+
+        button{
+            border-radius: 30px;
+            min-width: 140px;
+        }
+    }
    
     .key{
         
@@ -70,12 +85,14 @@
             text-align: center;
             font-size: 0.8em;
             color : @color-main;
+            margin-bottom : @rhythm;
         }
 
 		.mnemonicKey{
 			font-size : 1em;
             font-weight: 700;
             text-align: center;
+            min-height: 80px;
 		}
 
 		.mnemonicKeyTable{
@@ -90,8 +107,8 @@
                 word-wrap: break-word;
 
 				&.iconWrapper{
-					padding: 40px; 
-                    width: 340px;
+					padding: 15px; 
+                    width: 286px;
                     margin : 0 auto;
 				}
 
@@ -102,7 +119,7 @@
         }
         
         .mnemonicKeyCell{
-            margin-top : @rhythm;
+            margin-top : 4 * @rhythm;
         }
 
         .qrcode{
@@ -139,7 +156,7 @@
         cursor: pointer;
 
         &.active{
-            bottom : 10%;
+            bottom : 2%;
             display: block;
             opacity: 1;
             
@@ -149,20 +166,24 @@
             }
         }
     }
+
+    .abswndwrapper{
+        padding : 8 * @rhythm 0;
+    }
 }
 
 .wnd.pkviewwnd{
     .wndinner{
         width : 100%;
         height: 100%;
+        max-width: 500px;
+    }
+
+    .wndcontent{
+        overflow-y: scroll;
     }
     #pkview{
         .abswndwrapper{
-            position: absolute;
-            left : 0;
-            right : 0;
-            top : 0;
-            bottom : 0;
 
             .tablewrapper{
                 >div{
@@ -233,6 +254,12 @@ html.stblack{
         padding : 2 * @rhythm;
         padding-top : 4 * @rhythm;
 
+        .abswndwrapper{
+            padding : 0;
+        }
+
+       
+
 
         .key{			
 
@@ -250,6 +277,9 @@ html.stblack{
                 }
             }
 
+            .mnemonicKeyCell{
+                margin-top : 4 * @rhythm;
+            }
             
 
             .panel{
@@ -329,20 +359,7 @@ html.stblack{
         }
         
         #pkview{
-            .abswndwrapper{
-                position: absolute;
-                left : 0;
-                right : 0;
-                top : 0;
-                bottom : 0;
-    
-                .tablewrapper{
-                    >div{
-                        vertical-align: middle;
-                    }
-                }
-            }
-
+           
             .dontshowagain{
                 bottom : 0;
             }

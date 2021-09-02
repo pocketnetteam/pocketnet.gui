@@ -2724,6 +2724,8 @@ var lenta = (function(){
 
 					});
 
+					self.app.mobile.saveImages.init(_el)
+
 				})
 				
 			},
@@ -2807,6 +2809,7 @@ var lenta = (function(){
 					var images = _p.el.find('img');
 
 					essenserenderclbk()
+					
 					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
 
 						_.each(image.images, function(i, index){
@@ -3644,8 +3647,10 @@ var lenta = (function(){
 
 					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 1200 && !essenseData.second){
 
-						actions.loadprev()
-						self.app.actions.scroll(0)
+						if(!self.app.errors.connection()){
+							actions.loadprev()
+							self.app.actions.scroll(0)
+						}
 						
 					}
 				}

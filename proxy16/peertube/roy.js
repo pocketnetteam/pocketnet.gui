@@ -29,6 +29,9 @@ var Roy = function (parent) {
   self.useall = false;
 
   self.addInstance = function (url) {
+
+    if(!url) return
+
     var instance = new Instance(url, self);
 
     instance.init();

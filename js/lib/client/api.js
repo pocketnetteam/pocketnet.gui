@@ -46,7 +46,7 @@ var ProxyRequest = function(app = {}, proxy){
                 resolve(value)
 
             }).catch(reason => {
-
+                
 
                 clearTimeout(timer)
 
@@ -121,6 +121,8 @@ var ProxyRequest = function(app = {}, proxy){
             return Promise.resolve(result.data || {})
 
         }).catch(e => {
+
+            console.error("E", e, e.code)
 
             if (e.code == 20){
                 return Promise.reject({

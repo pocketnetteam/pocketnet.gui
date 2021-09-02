@@ -50,7 +50,7 @@ return h
 }
 
 ____loclib.generatepkey = "Generate Private Key";
-____loclib.rtip3 = "Write this login key down and save it as a QR code. We do not store your personal data. It cannot be recovered if lost! ";
+____loclib.rtip3 = "Write this login key down or save it as a QR code. We do not store your personal data. It cannot be recovered if lost! ";
 ____loclib.saveqrcode = "Save Qr Code" 
 ____loclib.copyprivkey = "Copy Private Key"
 ____loclib.rcontinue = "Continue"
@@ -1143,3 +1143,9 @@ ____loclib.errorChangingDescription = "Unable to change video name/description";
 
 ____loclib.enterVideoName = "Enter video name";
 ____loclib.enterVideoDescription = "Enter video description";
+
+
+____loclib.doyouwantseepk = "Do you really want to see your private key?";
+____loclib.copycode = "Copy Private Key";
+____loclib.privatekeyqr = "Private key QR code";
+____loclib.saveimage = "Save image";

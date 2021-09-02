@@ -3466,6 +3466,10 @@ input[type=radio].radio:checked + label {
     .thwrapper{
         padding : 0;
         max-width: 450px;
+        background: transparent;
+        width: 93%;
+        margin : 0 auto;
+        border : 0;
     }
 
     .buttons{
@@ -3480,11 +3484,18 @@ input[type=radio].radio:checked + label {
         .item{
             padding : 4 * @rhythm 2 * @rhythm;
             text-align: center;
-            border-bottom : 1px solid @color-gray-slight;
+            background: #fff;
             cursor: pointer;
+            border-radius: 3px;
 
             &.itemmain{
                 color : @color-main;
+            }
+
+            &.itemclose{
+                margin-top : 2 * @rhythm;
+                background: fade(@color-gray-mlight, 10);
+                backdrop-filter: blur(4px);
             }
 
             &:nth-last-child(1){

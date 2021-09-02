@@ -2194,14 +2194,14 @@ Platform = function (app, listofnodes) {
 
             dialog({
                 html: p.text || self.app.localization.e('e13188'),
-                btn1text: self.app.localization.e('e13261'),
+                btn1text: p.successLabel || self.app.localization.e('e13261'),
                 btn2text: p.faillabel || self.app.localization.e('e13262'),
 
                 class: 'zindex accepting accepting2 ',
 
                 success: function () {
 
-                    if (!isMobile()) {
+                   /* if (!isMobile()) {
 
                         app.nav.api.load({
 
@@ -2219,7 +2219,7 @@ Platform = function (app, listofnodes) {
                             }
                         })
 
-                    }
+                    }*/
 
                     app.nav.api.load({
 
@@ -2229,7 +2229,9 @@ Platform = function (app, listofnodes) {
                         href: 'pkview',
 
                         essenseData: {
-                            dumpkey: true
+                            dumpkey: true,
+                            showsavelabel : p.showsavelabel,
+                            afterregistration : p.afterregistration
                         },
 
                         clbk: function (p, s) {
@@ -7954,6 +7956,11 @@ Platform = function (app, listofnodes) {
                             id : 'c7'
                         },
                         {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
                             name : "Sports",
                             tags : ['sports'],
                             id : 'c8'
@@ -8051,6 +8058,11 @@ Platform = function (app, listofnodes) {
                             name : "Автомобили/Гонки",
                             tags : ['auto', 'racing'],
                             id : 'c7'
+                        },
+                        {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
                         },
                         {
                             name : "Спорт",
@@ -8152,6 +8164,11 @@ Platform = function (app, listofnodes) {
                             id : 'c7'
                         },
                         {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
                             name : "運動",
                             tags : ['運動'],
                             id : 'c8'
@@ -8249,6 +8266,11 @@ Platform = function (app, listofnodes) {
                             name : "자동차/레이싱 ",
                             tags : ['자동차', '레이싱'],
                             id : 'c7'
+                        },
+                        {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
                         },
                         {
                             name : "스포츠",
@@ -8350,6 +8372,11 @@ Platform = function (app, listofnodes) {
                             id : 'c7'
                         },
                         {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
                             name : "Sport",
                             tags : ['Sport'],
                             id : 'c8'
@@ -8449,6 +8476,11 @@ Platform = function (app, listofnodes) {
                             id : 'c7'
                         },
                         {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
+                        },
+                        {
                             name : "Deporte",
                             tags : ['deporte'],
                             id : 'c8'
@@ -8546,6 +8578,11 @@ Platform = function (app, listofnodes) {
                             name : "Autos/Rennen ",
                             tags : ['autos', 'rennen'],
                             id : 'c7'
+                        },
+                        {
+                            name : "Bastyon/Pocketnet",
+                            tags : ['bastyon', 'pocketnet'],
+                            id : 'c71'
                         },
                         {
                             name : "Sport",

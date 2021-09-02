@@ -511,8 +511,6 @@ Nav = function(app)
 
 			var run = true;
 
-		
-
 			if((p.history || p.loadDefault) && options.history)
 			{
 
@@ -550,9 +548,6 @@ Nav = function(app)
 					}
 				}
 
-				
-				
-
 				if(p.completeHref == current.completeHref && !p.loadDefault)
 				{
 					run = false;
@@ -565,8 +560,15 @@ Nav = function(app)
 
 					
 
-					if(!p.reload)
+					if(!p.reload){
+
 						historyManager.add(p.completeHref, p);
+
+						p.fail = function(){
+							sitemessage('<i class="fas fa-wifi"></i>')
+						}
+					}
+						
 
 					
 
@@ -630,6 +632,9 @@ Nav = function(app)
 						
 					})
 				}
+
+
+				
 			}
 
 

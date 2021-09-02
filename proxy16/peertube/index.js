@@ -288,6 +288,9 @@ var Peertube = function (settings) {
   };
 
   self.addroy = function (urls, key) {
+
+    if(!urls.length) return
+
     var roy = new Roy(self);
 
     roy.init(urls);
