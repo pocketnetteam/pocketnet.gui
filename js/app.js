@@ -1433,21 +1433,31 @@ Application = function(p)
 					})
 				}
 			},
-			dialog : function(name, src, removesharing){
-				srcToData(src, function(base64){
+			dialog : function(name, src, dar){
+				
 
-					var items = [
-						{
-							text : app.localization.e('saveimage'),
-							class : 'itemmain',
-							action : function(clbk){
+				var items = [
+					{
+						text : app.localization.e('saveimage'),
+						class : 'itemmain',
+						action : function(clbk){
+
+							globalpreloader(true, true)
+
+							srcToData(src, function(base64){
 
 								self.mobile.saveImages.save(base64, name)
-							}
-						}
-					]
 
-					if(!removesharing){
+								successCheck()
+
+								globalpreloader(false)
+
+							})
+						}
+					}
+				]
+
+					/*if(!removesharing){
 						if (window.cordova && window.plugins && window.plugins.socialsharing){
 
 							items.push({
@@ -1465,7 +1475,7 @@ Application = function(p)
 							})
 	
 						}
-					}
+					}*/
 					
 
 					
@@ -1473,7 +1483,7 @@ Application = function(p)
 					menuDialog({
 						items : items
 					})
-				})
+				
 			},
 			init : function(_el){
 
