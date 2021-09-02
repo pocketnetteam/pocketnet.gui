@@ -33,6 +33,9 @@ var Peertube = function (settings) {
     }
 
     if (!roy && host) {
+
+
+      
       roy = self.addroy([host], host);
       roy.useall = true;
       roy.auto = true;
@@ -306,7 +309,7 @@ var Peertube = function (settings) {
   self.init = function ({ urls, roys }) {
 
     if (roys) {
-      
+
       _.each(roys, function (urls, i) {
         self.addroy(urls, i);
       });
