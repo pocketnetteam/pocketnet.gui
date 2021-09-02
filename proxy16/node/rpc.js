@@ -98,7 +98,8 @@ var publics = {
     estimatesmartfee: true,
     gettransaction : true,
     gethierarchicalstrip : true,
-    getusercontents : true
+    getusercontents : true,
+    getcontentsstatistic : true
 }
 
 function rpc(request, callback, obj) {
@@ -331,7 +332,7 @@ RpcClient.callspec = {
     getpagescores: 'obj str',
     gethierarchicalstrip : 'int str int str obj str',
     getusercontents : 'str int str int obj str',
-
+    getcontentsstatistic : 'obj str int int',
     // BlockExplorer
     getblocktransactions: 'str int int',
     getaddressinfo: 'str',

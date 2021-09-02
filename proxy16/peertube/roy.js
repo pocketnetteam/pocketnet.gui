@@ -29,6 +29,9 @@ var Roy = function (parent) {
   self.useall = false;
 
   self.addInstance = function (url) {
+
+    if(!url) return
+
     var instance = new Instance(url, self);
 
     instance.init();
@@ -50,6 +53,13 @@ var Roy = function (parent) {
 
   self.init = function (urls) {
     _.each(urls, function (host) {
+
+      if(!host || !host.split) return
+
+      if (host.split('.').length != 3) return
+
+      console.log("HOST", host)
+
       self.addInstance(host);
     });
   };

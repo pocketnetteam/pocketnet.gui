@@ -49,15 +49,30 @@ var lenta = (function(){
 
 		var essenserenderclbk = function(){
 
-			renderclbkSlowMade = slowMade(function(){
-
+			var rc = function(){
 				if(!essenseData.horizontal && el.c){
 					cachedHeight = el.c.height()
 				}
 				
 				if(essenseData.renderClbk) essenseData.renderClbk()
+			}
 
-			}, renderclbkSlowMade, isMobile() ? 500 : 100)
+			if(isMobile()){
+				renderclbkSlowMade = slowMade(function(){
+
+					if(!essenseData.horizontal && el.c){
+						cachedHeight = el.c.height()
+					}
+					
+					if(essenseData.renderClbk) essenseData.renderClbk()
+	
+				}, renderclbkSlowMade, 500)
+			}
+			else{
+				rc()
+			}
+
+			
 			
 		}
 
@@ -2878,6 +2893,8 @@ var lenta = (function(){
 
 					});
 
+					self.app.mobile.saveImages.init(_el)
+
 				})
 				
 			},
@@ -2961,6 +2978,7 @@ var lenta = (function(){
 					var images = _p.el.find('img');
 
 					essenserenderclbk()
+					
 					_p.el.find('img').imagesLoaded({ background: true }, function(image) {
 
 						_.each(image.images, function(i, index){
@@ -3283,6 +3301,10 @@ var lenta = (function(){
 										ended = true
 
 								}
+
+								if(!shares.length && !essenseData.ended){
+									ended = true
+								}
 		
 									
 							}
@@ -3317,12 +3339,12 @@ var lenta = (function(){
 							}
 							
 
-							if (shares.length){
+							//if (shares.length){
 
 								if (essenseData.hasshares){
 									essenseData.hasshares(shares)
 								}
-							}
+							//}
 
 
 
@@ -3830,8 +3852,10 @@ var lenta = (function(){
 
 					if ((window.cordova || isInStandaloneMode()) && !fullscreenvideoShowed && !essenseData.txids && !making && time > 1200 && !essenseData.second){
 
-						actions.loadprev()
-						self.app.actions.scroll(0)
+						if(!self.app.errors.connection()){
+							actions.loadprev()
+							self.app.actions.scroll(0)
+						}
 						
 					}
 				}
@@ -3934,6 +3958,9 @@ var lenta = (function(){
 			making = true;
 
 			actions.cleardelay()
+
+			if (self.app.fullscreenmode)
+				self.app.mobile.fullscreenmode(false)
 
 			var cache = 'clear';
 			var clear = true;

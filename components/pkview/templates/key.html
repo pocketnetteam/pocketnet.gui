@@ -15,27 +15,34 @@
 
                     <div class="mnemonicKeyCell">
 
-                            <div class="pklabel">
-                                Private Key:
-                            </div>
-                            
-                            <div class="mnemonicKey">
-                            
-                            </div>
-                            
+                        <div class="pklabel">
+                            <%=e('privatekey')%>
+                        </div>
+                        
+                        <div class="mnemonicKey">
+                        
                         </div>
 
+                        <div class="buttonWrapper">
+                            <button class="copy button"><i class="fas fa-copy"></i> <%=e('copycode')%></button>
+                        </div>
+                        
+                    </div>
+
                 <div class="iconWrapper">
+
+                    <div class="pklabel">
+                        <%=e('privatekeyqr')%> 
+                    </div>
                 
                     <div class="qrcode"></div>
 
+                    <div class="buttonWrapper">
+                        <button class="save ghost"><i class="fas fa-save"></i> <%=e('saveqrcode')%></button>
+                    </div>
+
                 </div>
 
-                
-
-                <div class="item mobiledevice">
-                    <button class="copy ghost"><i class="fas fa-copy"></i> <%=e('e13144')%></button>
-                </div>
                 
             </div>
 
@@ -43,18 +50,7 @@
                 <%-mnemonicKey%>
             </div>
 
-            <div class="panel">
-
-                <div class="item  workstation">
-                    <button class="save ghost"><i class="fas fa-save"></i> <%=e('saveqrcode')%></button>
-                </div>
-
-                <div class="item workstation right">
-                    <button class="copy ghost"><i class="fas fa-copy"></i> <%=e('e13144')%></button>
-                </div>
-
-                
-            </div>
+           
 
         </div>
     </div>
