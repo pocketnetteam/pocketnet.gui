@@ -34,9 +34,7 @@ var Peertube = function (settings) {
 
     if (!roy && host) {
 
-
-      
-      roy = self.addroy([host], host);
+      roy = self.addroy([host], host, true);
       roy.useall = true;
       roy.auto = true;
     }
@@ -244,7 +242,11 @@ var Peertube = function (settings) {
     roys: () => {
       const output = {};
 
-      Object.keys(roys).map((roy) => {
+      var _roys = _.filter(roys, function(r){
+        return !r.fake
+      })
+
+      Object.keys(_roys).map((roy) => {
         roys[roy].best() ? (output[roy] = roys[roy].best().host) : null;
       });
 
@@ -283,11 +285,13 @@ var Peertube = function (settings) {
     },
   };
 
-  self.addroy = function (urls, key) {
+  self.addroy = function (urls, key, fake) {
 
     if(!urls.length) return
 
     var roy = new Roy(self);
+
+    roy.fake = true
 
     roy.init(urls);
 
