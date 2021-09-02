@@ -154,10 +154,13 @@
         width: 17%;
     }
 
+    .videoPostLinkinWindow,
     .videoPostLink {
         i {
             width: 20px;
         }
+
+        cursor: pointer;
 
         &:hover {
             color: @color-good;
@@ -748,6 +751,18 @@
 
                 font-size: 1.5em;
                 font-weight: 200;
+
+                i{
+                    font-size: 0.5em;
+
+                    color : @color-gray-mlight;
+
+                    &.fa-star{
+                        color :#FFAE00;
+                    }
+                }
+
+                
             }
         }
 

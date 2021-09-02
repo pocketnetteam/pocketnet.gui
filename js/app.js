@@ -461,7 +461,7 @@ Application = function(p)
 		},
 		userpage : {
 			href : 'userpage',
-			childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration']
+			childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
 		}
 
 	}
@@ -1401,6 +1401,99 @@ Application = function(p)
 	}
 
 	self.mobile = {
+		saveImages : {
+			save : function(base64, nms){
+				var nm = nms.split('.')
+
+				var name = nm[0],
+					format = nm[1]
+
+				var mt = {
+					png : 'image/png',
+					jpg : 'image/jpeg'
+				}
+
+				var ms = mt[format] || 'image/' + format
+
+				if (window.cordova){
+
+					var image = b64toBlob(base64.split(',')[1], 'image/' + ms, 512);	
+
+					p_saveAsWithCordova(image, name + '.' + format, function(){
+						clbk()
+					})
+
+				}
+
+				else{
+					p_saveAs({
+						file : base64,
+						format : format,
+						name : name
+					})
+				}
+			},
+			dialog : function(name, src){
+				srcToData(src, function(base64){
+
+					var items = [
+						{
+							text : app.localization.e('saveimage'),
+							class : 'itemmain',
+							action : function(clbk){
+
+								self.mobile.saveImages.save(base64, name)
+							}
+						}
+					]
+
+					if (window.cordova && window.plugins && window.plugins.socialsharing){
+
+						items.push({
+							text : app.localization.e('share'),
+							class : 'itemmain',
+							action : function(clbk){
+
+								var options = {
+									files : [base64]
+								}
+
+								window.plugins.socialsharing.shareWithOptions(options);
+	
+							}
+						})
+
+					}
+
+					
+
+					menuDialog({
+						items : items
+					})
+				})
+			},
+			init : function(_el){
+
+				if(isMobile()){
+					_el.swipe({
+						longTap : function(){
+
+							self.mobile.vibration.small()
+
+							var name = this.attr('save')
+							var src = this.attr('src') || this.attr('i')
+	
+							self.mobile.saveImages.dialog(name, src)
+
+							return false
+							
+						}
+					})
+				}
+
+				
+			}
+		},
 		vibration : {
             small : function(time){
 

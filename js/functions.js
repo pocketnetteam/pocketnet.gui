@@ -798,7 +798,7 @@
 
 		p.items.push({
 			class : 'itemclose',
-			text : 'Close'
+			text : '<i class="fas fa-times-circle"></i>'
 		})
 		
 		var ehtml = function(){
@@ -1542,10 +1542,13 @@
 
 		if(!p) p = {};
 
-		el.find('[image]').each(function(){
+		var els = el.find('[image]')
+
+		els.each(function(){
 
 			var _el = $(this);
 			var image = _el.attr('image')
+			//var save = _el.attr('save')
 
 			if (image)
 			{
@@ -1557,6 +1560,14 @@
 				});
 
 				_el.attr('image', '')
+
+				/*if(save){
+					_el.swipe({
+						longTap : function(){
+
+						}
+					})
+				}*/
 			}
 
 			if(p.clbk)
@@ -1571,13 +1582,18 @@
 			}
 		})
 
-		
 			
 	}
 
 	pathFromMD5Name = function(name){
 
 		return name.substr(0, 2) + "/" + name.substr(2, 2) + "/" + name.substr(4) + ".jpg";
+	}
+
+	nameFromScr = function(src){
+		var srcs = src.split('/')
+
+		return srcs[srcs.length - 1]
 	}
 
 	srcToData = function(url, callback) {

@@ -287,6 +287,8 @@ var imagegallery = (function(){
 					},
 
 				}, function(p){
+
+					
 					
 					p.el.find('img').imagesLoaded(function(image){
 
@@ -302,6 +304,7 @@ var imagegallery = (function(){
 
 							self.app.events.resize.imagegallery = helpers.resize
 
+							self.app.mobile.saveImages.init(p.el.find('img'))
 						}
 
 						// Prepare the zoom feature

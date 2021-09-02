@@ -956,6 +956,7 @@ var Proxy = function (settings, manage, test) {
 							node = nodeManager.nodesmap[options.node];
 						}
 
+
 						if (!node || options.auto)
 							node = nodeManager.selectProbability(); //nodeManager.selectbest()
 
@@ -1121,8 +1122,6 @@ var Proxy = function (settings, manage, test) {
 					if (!_node) {
 						return Promise.reject('cantselect');
 					}
-
-					console.log('_node.test(scenario)', scenario)
 
 					return _node.test(scenario).then(r => {
 						return Promise.resolve({

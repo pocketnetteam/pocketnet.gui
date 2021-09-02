@@ -3,24 +3,6 @@ var videoCabinet = (function () {
 
   var essenses = {};
 
-  var videoServers = {};
-
-  var peertubeServers = {};
-
-  var userQuota = {};
-
-  var blockChainInfo = [];
-
-  var perServerCounter = 10;
-
-  var ed = {};
-
-  var transcodingIntervals = {};
-
-  var startingPosition = 0;
-
-  var external = null;
-
   const ROTATE_ONE_PERCENTAGE = 3.6;
   const HALF_CIRCLE_ROTATE_PERCENTAGE = 50;
   const HUDRED_PERC = 100;
@@ -32,15 +14,21 @@ var videoCabinet = (function () {
   };
   const TRANSCODING_CHECK_INTERVAL = 20000;
 
-  let newVideosAreUploading = false;
-
-  let tagElement;
-  let tagArray = [];
-
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
     var el;
+    var transcodingIntervals = {};
+    var ed = {};
+    let tagElement;
+    let tagArray = [];
+    let newVideosAreUploading = false;
+    var videoServers = {};
+    var peertubeServers = {};
+    var userQuota = {};
+    var blockChainInfo = [];
+    var external = null;
+    var perServerCounter = 10;
 
     var actions = {
       async getHosts() {
@@ -70,15 +58,22 @@ var videoCabinet = (function () {
             host: server,
           })
           .then((data = {}) => {
+            const formattedVideos = (data.data || []).map((video) => ({
+              ...video,
+              server,
+            }));
+
             peertubeServers[server].start += perServerCounter;
-            peertubeServers[server].videos.push(...(data.data || []));
+            peertubeServers[server].videos.push(...formattedVideos);
             peertubeServers[server].total = data.total || 0;
             peertubeServers[server].isFull =
               peertubeServers[server].start > data.total;
 
-            return data;
+            return { ...data, data: formattedVideos };
           })
           .catch(() => {
+            peertubeServers[server].isFull = true;
+
             console.log(`Error loading ${server}`);
             return [];
           });
@@ -129,6 +124,32 @@ var videoCabinet = (function () {
         return Promise.allSettled(serverPromises);
       },
 
+      getTotalRatings() {
+        if (self.app.platform.sdk.address.pnet()) {
+          var address = self.app.platform.sdk.address.pnet().address;
+          return self.app.api
+            .rpc('getcontentsstatistic', [[address], 'video'], {
+              rpc: {
+                fnode: window.testpocketnet
+                  ? '157.90.235.121:39091'
+                  : '216.108.231.40:38081',
+              },
+            })
+            .then((r) => {
+              console.log('RE', r);
+
+              var d =
+                _.find(r || [], function (obj) {
+                  return address == obj.address;
+                }) || {};
+
+              return Promise.resolve(d);
+            });
+        } else {
+          return Promise.reject();
+        }
+      },
+
       getTotalViews() {
         const servers = Object.keys(peertubeServers);
 
@@ -176,14 +197,41 @@ var videoCabinet = (function () {
             ),
           );
 
-        renders.bonusProgram(
-          {
-            parameterName: 'bonusProgramRatings',
-            value: 0,
-            requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramRatings,
-          },
-          el.bonusProgramContainerViews,
-        );
+        actions
+          .getTotalRatings()
+          .then((result) => {
+            var rendering = '&mdash;';
+
+            if (result.scoreCnt && result.scoreSum) {
+              rendering =
+                (result.scoreSum / result.scoreCnt).toFixed(1) +
+                ' (' +
+                result.scoreCnt +
+                ') ' +
+                '<i class="fas fa-star"></i> ' +
+                result.countLikers +
+                ' <i class="fas fa-users"></i>';
+            }
+
+            renders.bonusProgram(
+              {
+                parameterName: 'bonusProgramRatings',
+                value: rendering,
+                requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramRatings,
+              },
+              el.bonusProgramContainerViews,
+            );
+          })
+          .catch((e) => {
+            renders.bonusProgram(
+              {
+                parameterName: 'bonusProgramRatings',
+                value: 0,
+                requiredValue: BONUS_PROGRAM_REQUIREMENTS.bonusProgramRatings,
+              },
+              el.bonusProgramContainerViews,
+            );
+          });
       },
 
       checkTranscodingStatus(meta) {
@@ -200,13 +248,14 @@ var videoCabinet = (function () {
 
       videoFinishedTranscoding(id) {
         clearInterval(transcodingIntervals[id]);
+        delete transcodingIntervals[id];
         const videoElement = el.videoContainer.find(`[uuid="${id}"]`);
 
         videoElement.find('.attachVideoToPost').removeClass('hidden');
         videoElement.find('.transcodingPreloader').addClass('hidden');
       },
 
-      uploadVideoWallpaper: function (image, shareUrl) {
+      uploadVideoWallpaper(image, shareUrl) {
         const parameters = {
           thumbnailfile: image,
         };
@@ -255,7 +304,7 @@ var videoCabinet = (function () {
           });
       },
 
-      resizeImage: function (base64, settings = {}) {
+      resizeImage(base64, settings = {}) {
         const images = [
           {
             original: base64,
@@ -330,10 +379,13 @@ var videoCabinet = (function () {
           ),
         )
           .then((data = []) => {
+
             const newVideos = data
               .filter((item) => item.status === POSITIVE_STATUS)
               .map((item) => item.value.data)
-              .flat();
+              .flat()
+              .filter((video) => video);
+
             newVideosAreUploading = false;
 
             renders.videos(newVideos, videoPortionElement);
@@ -593,22 +645,45 @@ var videoCabinet = (function () {
       postLink(element, link) {
         const linkInfo = blockChainInfo[link];
 
-        element.html(
-          `<a class="videoPostLink" href="https://${
-            self.app.options.url
-          }/index?s=${
-            linkInfo.txid
-          }"><i class="far fa-check-circle"></i>${self.app.localization.e(
-            'linkToPost',
-          )}</a>`,
-        );
+        if (isMobile()) {
+          element.html(
+            `<a class="videoPostLink" href="index?video=1&v=${
+              linkInfo.txid
+            }"><i class="far fa-check-circle"></i>${self.app.localization.e(
+              'linkToPost',
+            )}</a>`,
+          );
+
+          self.nav.api.links(null, element);
+        } else {
+          element.html(
+            `<span class="videoPostLinkinWindow"><i class="far fa-check-circle"></i>${self.app.localization.e(
+              'linkToPost',
+            )}</span>`,
+          );
+
+          element.find('.videoPostLinkinWindow').on('click', function () {
+            var ed = {
+              share: linkInfo.txid,
+              close: function () {},
+            };
+            self.nav.api.load({
+              open: true,
+              href: 'post?s=' + linkInfo.txid,
+              inWnd: true,
+              history: true,
+              essenseData: ed,
+            });
+          });
+        }
       },
       //render single video stats column in video table
       videoStats(element, link, host, uuid) {
         const linkInfo = blockChainInfo[link] || {};
         const videoInfo =
-          peertubeServers[host].videos.find((video) => video.uuid === uuid) ||
-          {};
+          ((peertubeServers[host] || {}).videos || []).find(
+            (video) => video.uuid === uuid,
+          ) || {};
 
         self.shell(
           {
@@ -666,8 +741,6 @@ var videoCabinet = (function () {
               (element) => {
                 //remove user video (popup menu)
                 element.find('.remove').on('click', function () {
-                  
-
                   const { host } = meta;
 
                   dialog({
@@ -686,8 +759,7 @@ var videoCabinet = (function () {
                     },
                   });
 
-                  if(_el.tooltipster)
-                    _el.tooltipster('hide');
+                  if (_el.tooltipster) _el.tooltipster('hide');
                 });
 
                 //edit wallpaper in menu
@@ -701,8 +773,6 @@ var videoCabinet = (function () {
                   multiple: false,
 
                   action: function (file, clbk) {
-                    
-
                     actions
                       .uploadVideoWallpaper(file.file, videoLink)
                       .then((img) => {
@@ -715,8 +785,7 @@ var videoCabinet = (function () {
                         );
                       });
 
-                    if(_el.tooltipster)
-                      _el.tooltipster('hide');
+                    if (_el.tooltipster) _el.tooltipster('hide');
                   },
 
                   onError: function (er, file, text) {
@@ -726,8 +795,6 @@ var videoCabinet = (function () {
 
                 //render edit description form
                 element.find('.editText').on('click', function () {
-                  
-
                   self.app.peertubeHandler.api.videos
                     .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
                     .then((videoData) => {
@@ -809,8 +876,7 @@ var videoCabinet = (function () {
                       ),
                     );
 
-                    if(_el.tooltipster)
-                    _el.tooltipster('hide');
+                  if (_el.tooltipster) _el.tooltipster('hide');
                 });
               },
             );
@@ -972,6 +1038,12 @@ var videoCabinet = (function () {
 
       destroy: function () {
         el.windowElement.off('scroll', events.onPageScroll);
+
+        _.each(transcodingIntervals, function (i) {
+          clearInterval(i);
+        });
+
+        transcodingIntervals = {};
 
         el = {};
       },
