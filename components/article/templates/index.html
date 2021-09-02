@@ -18,16 +18,28 @@
 			</div>
 
 			<div class="item uic">
-				<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
+				<% 
+					var src = deep(app, 'platform.sdk.user.storage.me.image');
+					var name = deep(app, 'platform.sdk.user.storage.me.name');
+					var letter = name ? name[0] : '';	
+				%>
 									
 				<div class="icon">
 					<a href="author?address=<%-user.address.value.toString('hex')%>">
 						<div class="usericon" image="<%-src || ''%>">
 
-							<% if(!src) {%>
+							<% if(!src && letter) { %>
 
+								<span 
+									class="letter"
+								>
+									<%-letter.toUpperCase()%>
+								</span>
+	
+							<% } else if (!src) { %>
+	
 								<svg width="30" height="30" data-jdenticon-value="<%-user.address.value.toString('hex')%>"></svg>
-
+	
 							<% } %>
 						
 						</div>

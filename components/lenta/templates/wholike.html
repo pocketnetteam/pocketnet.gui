@@ -5,7 +5,9 @@
     %>
 
     <div class="wholikesTable">
-        <% _.each(wholikes, function(whl, i){ %> 
+        <% _.each(wholikes, function(whl, i){
+                console.log('whl!!!', whl);
+            %> 
             <div class="wholikeAuthorTable table">
                 <div class="uiconcell">
                     <div class="usericon usericonsbsa another" image="<%-whl.avatar%>">

@@ -61,13 +61,24 @@ if (firstTime){
 							<div class="refNameTable table">
 								<div class="refAv">
 									
-									<% var src = deep(ref, 'image')  %>
+									<% 
+										var src = deep(ref, 'image');
+										var name = deep(ref, 'name');
+										var letter = name ? name[0] : '';
+									%>
 
 									<div class="usericon" image="<%-src || ''%>">
 
-										<% if(!src) {%>
-											<svg width="40" height="40" data-jdenticon-value="<%-ref.address%>"></svg>
+										<% if(!src && letter) {%>
 
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
+					
+										<% } else if (!src) { %>
+					
+											<svg width="40" height="40" data-jdenticon-value="<%-ref.address%>"></svg>
+					
 										<% } %>
 									</div>
 

@@ -33,7 +33,9 @@ var postline = function(){ %>
 
 				<% 
 				
-					var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || ''  
+					var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || '' 
+					var name = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.name') || ''   
+					var letter = name ? name[0] : '';
 
 					if(!src && !essenseData.daddress){
 						src = deep(app, 'platform.sdk.user.storage.me.image') || ''
@@ -43,8 +45,16 @@ var postline = function(){ %>
 		
 				<div class="icon">
 					<div class="usericon" image="<%-src%>">
-						<% if(!src) {%>
+						<% if(!src && letter) {%>
+
+							<span class="letter">
+								<%-letter.toUpperCase()%>
+							</span>
+	
+						<% } else if (!src) { %>
+	
 							<i class="far fa-user"></i>
+	
 						<% } %>
 					</div>
 				</div>

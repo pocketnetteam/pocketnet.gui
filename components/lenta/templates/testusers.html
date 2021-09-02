@@ -18,12 +18,25 @@
                             <div class="iconWrapper">
                                 <% if(!app.curation()) {%> <a href="<%-app.platform.api.authorlink(uadmin)%>"> <% } %>
     
-                                    <% var src = user.image  %>
+                                    <% 
+                                        var src = user.image;
+                                        var name = user.name;
+                                        var letter = name ? name[0] : '';    
+                                    %>
     
                                     <div class="icon">
                                         <div class="usericon usericonsbsa another" image="<%-src || ''%>">
-                                            <% if(!src) {%>
+
+                                            <% if(!src && letter) { %>
+
+                                                <span class="letter">
+                                                    <%-letter.toUpperCase()%>
+                                                </span>
+                            
+                                            <% } else if (!src) { %>
+                            
                                                 <svg width="30" height="30" data-jdenticon-value="<%-uadmin%>"></svg>
+                            
                                             <% } %>
                                         </div>
                                     </div>
