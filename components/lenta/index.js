@@ -2685,6 +2685,7 @@ var lenta = (function(){
 
 							_el.addClass('active')
 
+							self.app.mobile.saveImages.init(_el)
 
 							essenserenderclbk()
 
@@ -2724,7 +2725,7 @@ var lenta = (function(){
 
 					});
 
-					self.app.mobile.saveImages.init(_el)
+					
 
 				})
 				
