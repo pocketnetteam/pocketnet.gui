@@ -18666,6 +18666,22 @@ Platform = function (app, listofnodes) {
                         }
                     }
 
+                    if (data.reason == 'system') {
+
+                        // text = self.tempates.comment(data.comment/*, self.tempates.share(data.share)*/)
+
+                        // if (text) {
+
+                        //     var toptext = self.app.localization.e('e13337')
+
+                        //     html += self.tempates.user(data.user, '<div class="text">' + text + '</div>', true, ' ' + toptext, extra, data.time)
+                        // }
+
+                        console.log('data!!', data, data.text);
+                        html += `<div><b>System notification</b></div><div class="text">${data.text}</div>`;
+                    }
+
+
                     return html;
 
                 },
@@ -19486,6 +19502,7 @@ Platform = function (app, listofnodes) {
 
         self.messageHandler = function (data, clbk) {
 
+
             data || (data = {})
 
             if (data.msg || data.mesType) {
@@ -19502,6 +19519,7 @@ Platform = function (app, listofnodes) {
                 if(!data.electronSettings) data.electronSettings = {}
 
                 if (!m) m = {}
+
 
                 if (m.checkHandler) {
                     if (!m.checkHandler(data, m)) {
@@ -19520,13 +19538,12 @@ Platform = function (app, listofnodes) {
                 }
 
 
-
                 var clbks = function (loadedData) {
 
                     data.loadedData = true;
 
                     var audio = deep(m, 'audio')
-
+                    
                     _.each(m.clbks, function (clbk) {
                         clbk(data, loadedData);
                     })
@@ -19552,10 +19569,10 @@ Platform = function (app, listofnodes) {
 
                         }
 
+
                         if (m.fastMessage && !m.refs.all && !m.refs[data.RefID]) {
 
                             var html = m.fastMessage(data, loadedData);
-
 
                             if (html) {
 
@@ -19589,9 +19606,6 @@ Platform = function (app, listofnodes) {
                                     return
                                 }
 
-
-
-
                             }
 
 
@@ -19614,6 +19628,7 @@ Platform = function (app, listofnodes) {
                         clbk()
 
                 }
+
 
                 if(m.electronSettings) data.electronSettings = _.clone(m.electronSettings)
 
@@ -19847,31 +19862,16 @@ Platform = function (app, listofnodes) {
 
             //platform.matrixchat.notify.event()
 
-            /* 
-            self.messageHandler({
-                addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
-                amount: "166666"
-                msg: "transaction"
-                node: "64.235.45.119:38081:8087"
-                nout: "7"
-                time: 1629883584
-                txid: "4e73740eba080aae73aceb80636dcf8f3fe8aed1a9c8c7de417a59ee2d54d357"
-            })
-            
+            // self.messageHandler({
+            //     addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
+            //     addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
+            //     mesType: "post",
+            //     msg: "comment",
+            //     text: "Please, set avatar",
+            //     reason: "system",
+            //     time: "1619697839",
+            // })
 
-            */
-
-            /*self.messageHandler({
-                addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
-                addrFrom: "PKpdrwDVGfuBaSBvboAAMwhovFmGX8qf8S",
-                mesType: "post",
-                msg: "comment",
-                nblock: 1154467,
-                posttxid: "37348021a565fa549dfae5e9fb855c40dadae4456bda1cb1bfd3d3398081db91",
-                reason: "post",
-                time: "1619697839",
-                txid: "60c46a7b6ce852cab2c168ad09293fcf4afbfc9f6c47ba1ec9ce5426184b6019"
-            })*/
 
             /*self.messageHandler({
                 msg: "sharepocketnet",
