@@ -523,7 +523,14 @@ PeerTubePocketnet = function (app) {
 
         return request('removeVideo', data, options)
           .then((r) => Promise.resolve())
-          .catch(() => Promise.reject(error('removeerror')));
+          .catch((e) => {
+
+            return Promise.reject(error('removeerror'))
+
+            return Promise.resolve()
+
+            //Promise.reject(error('removeerror'))
+          });
       },
 
       update: function (url, parameters = {}, options = {}) {
