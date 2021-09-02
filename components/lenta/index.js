@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, downloadMenus = {};
+		video = false, isotopeinited = false, videosVolume = 0;
 
 
 		var shareInitedMap = {},
@@ -1837,51 +1837,32 @@ var lenta = (function(){
 			downloadVideo : function() {
 				var id = $(this).closest('.share').attr('id');
 				var dwnloadBtn = el.c.find('.downloadBtn.' + id);
-				if (downloadMenus[id] && downloadMenus[id].useLocal == true) return;
-				if (downloadMenus[id] && dwnloadBtn.length == 1)
-					downloadMenus[id].tooltip.tooltipster('show');
-				else {
-					if (!players[id] || !players[id].p || !players[id].p.embed) return;
-					var embed = players[id].p.embed;
-					if (!embed.details || !embed.details.uuid || !embed.details.streamingPlaylists || embed.details.streamingPlaylists.length <= 0) return;
-					var streamingPlaylist = embed.details.streamingPlaylists[0];
-					if (!streamingPlaylist || !streamingPlaylist.files || streamingPlaylist.files.length <= 0) return;
-					// Generate the HTML menu
-					var menuContent = '<div class="sharepostmenu downloadMenu">';
+				if (!players[id] || !players[id].p || !players[id].p.embed) return;
+				var embed = players[id].p.embed;
+				if (!embed.details || !embed.details.uuid || !embed.details.streamingPlaylists || embed.details.streamingPlaylists.length <= 0) return;
+				var streamingPlaylist = embed.details.streamingPlaylists[0];
+				if (!streamingPlaylist || !streamingPlaylist.files || streamingPlaylist.files.length <= 0) return;
+				// Generate the HTML menu
+				var menuContent = '<div class="sharepostmenu downloadMenu">';
+				_.each(streamingPlaylist.files, function(file) {
+					if (!file || !file.resolution || !file.resolution.label || !file.fileDownloadUrl) return;
+					menuContent += `<div class="menuitem table"><div class="label download${file.resolution.id}"><span>${file.resolution.label}</span>`;
+					if (file.size)
+						menuContent += `<span class="lightColor">${formatBytes(file.size)}</span>`;
+					menuContent += `</div></div>`;
+				});
+				menuContent += "</div>";
+				// Open the menu
+				self.app.platform.api.tooltip(dwnloadBtn, function() {
+					return menuContent;
+				}, function(tooltip)  {
 					_.each(streamingPlaylist.files, function(file) {
-						if (!file || !file.resolution || !file.resolution.label || !file.fileDownloadUrl) return;
-						menuContent += `<div class="menuitem table"><div class="label download${file.resolution.id}"><span>${file.resolution.label}</span>`;
-						if (file.size)
-							menuContent += `<span class="lightColor">${formatBytes(file.size)}</span>`;
-						menuContent += `</div></div>`;
+						if (!file || !file.resolution || !file.resolution.id) return;
+						tooltip.find('.label.download' + file.resolution.id).on('click', function() {
+							events.downloadVideoFromUrl(embed.details.uuid, file, embed.details, id);
+						});
 					});
-					menuContent += "</div>";
-					// Open the menu
-					downloadMenus[id] = { tooltip: dwnloadBtn, events: false };
-					downloadMenus[id].tooltip.tooltipster({
-						content: $(menuContent),
-						theme: 'lighttooltip',
-						maxWidth : 200,
-						zIndex : 9999999,
-						trigger : 'click',
-						position: 'left',
-						interactive: true,
-						functionReady: function() {
-							// Menu is now open, add events if needed
-							if (!downloadMenus[id].events) {
-								_.each(streamingPlaylist.files, function(file) {
-									if (!file || !file.resolution || !file.resolution.id) return;
-									$('.label.download' + file.resolution.id).on('click', function() {
-										events.downloadVideoFromUrl(embed.details.uuid, file, embed.details, id);
-										downloadMenus[id].tooltip.tooltipster('hide');
-									});
-								});
-								downloadMenus[id].events = true;
-							}
-						}
-					});
-					downloadMenus[id].tooltip.tooltipster('show');
-				}
+				});
 			},
 
 			downloadVideoFromUrl: function(id, video, videoDetails, shareId) {
@@ -1940,7 +1921,6 @@ var lenta = (function(){
 													shareInfos.videos = {};
 													shareInfos.videos[id] = { video: targetFile,  infos: infos };
 													self.sdk.local.shares.add(shareId, shareInfos);
-													downloadMenus[shareId].useLocal = true;
 													actions.openPost(shareId, function() {
 														setTimeout(() => {
 															delete el[shareId];
@@ -1983,7 +1963,6 @@ var lenta = (function(){
 				if (!players[id] || !players[id].p || !players[id].p.localVideoId) return;
 				players[id].p.destroy();
 				self.sdk.local.shares.delete(id, function() {
-					delete downloadMenus[id];
 					actions.openPost(id, function() {
 						setTimeout(() => {
 							delete el[id];
