@@ -474,9 +474,8 @@ PeerTubePocketnet = function (app) {
           .then((data = {}) => {
             const roysAmount = Object.keys(data).length;
             const royId =
-              self.helpers.base58.decode(app.user.address.value) % roysAmount;
-
-            return royId;
+              self.helpers.base58.decode('PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt') % roysAmount;
+            return  data[royId];
           })
           .catch(() => 0)
           .then((roy) => app.api.fetch('peertube/best', { roy, type }))
