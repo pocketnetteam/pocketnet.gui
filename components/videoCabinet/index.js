@@ -30,6 +30,8 @@ var videoCabinet = (function () {
     var external = null;
     var perServerCounter = 10;
 
+    const descriptionCache = {};
+
     var actions = {
       async getHosts() {
         const serverStructureHosts = await self.app.peertubeHandler.api.proxy
@@ -346,6 +348,15 @@ var videoCabinet = (function () {
           });
         });
       },
+
+      replaceNetLinks: (str) =>
+        str
+          .replace(
+            `Watch more exciting videos at https://test.pocketnet.app/!`,
+            '',
+          )
+          .replace(`Watch more exciting videos at https://pocketnet.app/!`, '')
+          .replace(`Watch more exciting videos at https://bastyon.com/!`, ''),
     };
 
     var events = {
@@ -443,19 +454,7 @@ var videoCabinet = (function () {
 
         videos.forEach((video) => {
           if (video.description) {
-            video.description = video.description
-              .replace(
-                `Watch more exciting videos at https://test.pocketnet.app/!`,
-                '',
-              )
-              .replace(
-                `Watch more exciting videos at https://pocketnet.app/!`,
-                '',
-              )
-              .replace(
-                `Watch more exciting videos at https://bastyon.com/!`,
-                '',
-              );
+            video.description = actions.replaceNetLinks(video.description);
           }
         });
 
@@ -544,6 +543,45 @@ var videoCabinet = (function () {
                 () => actions.checkTranscodingStatus(meta),
                 TRANSCODING_CHECK_INTERVAL,
               );
+            });
+
+            //hide / show full video description
+            p.el.find('.videoDescriptionText').each(function () {
+              const element = $(this);
+
+              const uuid = element.attr('uuid');
+              const host = element.attr('host');
+
+              const content = element.find('.descriptionContent');
+              const originalDescription = content.text();
+              const hideShowButton = element.find('.showAllDescriptionButton');
+
+              const applyDescription = (description) => {
+                content.text(actions.replaceNetLinks(description));
+                element.css('height', 'auto');
+                hideShowButton
+                  .addClass('descriptionExpanded')
+                  .text(self.app.localization.e('hideAllButton'));
+              };
+
+              hideShowButton.on('click', () => {
+                if (hideShowButton.hasClass('descriptionExpanded')) {
+                  content.text(originalDescription);
+                  hideShowButton
+                    .removeClass('descriptionExpanded')
+                    .text(self.app.localization.e('showAllButton'));
+                } else {
+                  descriptionCache[uuid]
+                    ? applyDescription(descriptionCache[uuid])
+                    : self.app.peertubeHandler.api.videos
+                        .getFullDescription({ id: uuid }, { host })
+                        .then((description) => {
+                          descriptionCache[uuid] = description;
+
+                          applyDescription(description);
+                        });
+                }
+              });
             });
           },
         );

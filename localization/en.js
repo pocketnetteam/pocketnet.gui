@@ -1149,3 +1149,6 @@ ____loclib.doyouwantseepk = "Do you really want to see your private key?";
 ____loclib.copycode = "Copy Private Key";
 ____loclib.privatekeyqr = "Private key QR code";
 ____loclib.saveimage = "Save image";
+
+____loclib.showAllButton = "Show all";
+____loclib.hideAllButton = "Hide";
