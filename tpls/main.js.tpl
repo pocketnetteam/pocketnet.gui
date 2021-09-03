@@ -5,7 +5,6 @@ if (setupEvents.handleSquirrelEvent()) {
   return;
 }*/
 
-require('v8-compile-cache');
 const {protocol} = require('electron');
 //const ProxyInterface = require('./proxy/mainserver.js')
 

@@ -108,7 +108,6 @@
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
-        "v8-compile-cache": "^2.3.0",
         "yuicompressor": "^2.4.8"
     },
     "build": {
