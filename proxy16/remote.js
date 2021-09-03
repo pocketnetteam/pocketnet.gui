@@ -11,7 +11,7 @@ var ogParser = require("./lib/og-parser-edited.js");
 
 //const phantom = require('phantom');
 var iconv = require('iconv-lite');
-const fetch = require('node-fetch'); 
+//const fetch = require('node-fetch'); 
 const autoenc = require('node-autodetect-utf8-cp1251-cp866');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 var Remote = function(app){
