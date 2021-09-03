@@ -2613,8 +2613,8 @@ var lenta = (function(){
 
 				var sel =  el.share[s.txid] 
 
-				var _el = sel.find(".image");
-				var images = sel.find(".images");
+				var _el = sel.find(".shareImages .image");
+				var images = sel.find(".shareImages");
 
 				if(images.hasClass('active') || !_el.length || !images.length){
 
@@ -2636,6 +2636,8 @@ var lenta = (function(){
 
 							var imagesWrapperWidth = el.width(),
 								imagesWrapperHeight = el.height();
+
+								console.log(el.height(), el, image.images)
 
 							_.each(image.images, function(img, n){
 
@@ -2664,8 +2666,10 @@ var lenta = (function(){
 									imagesWrapperWidth = w
 								}
 
-								if(_img.height > _img.width || isMobile() || self.app.width <= 768){
+								if(_img.height > _img.width || (isMobile() || self.app.width <= 768)){
 									ac = 'h2'
+
+									console.log("_w * (_img.height / _img.width)", _w * (_img.height / _img.width))
 
 									el.height(_w * (_img.height / _img.width))
 									imagesWrapperHeight = _w * (_img.height / _img.width)
@@ -2724,7 +2728,7 @@ var lenta = (function(){
 
 					});
 
-					self.app.mobile.saveImages.init(_el)
+					
 
 				})
 				

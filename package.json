@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.4.16",
-    "cordovaversion": "1.1.83",
-    "cordovaversioncode": "10083",
+    "version": "0.4.21",
+    "cordovaversion": "1.1.88",
+    "cordovaversioncode": "10088",
     "description": "Pocketnet desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -108,7 +108,6 @@
         "uglify-js": "",
         "uglifycss": "0.0.29",
         "underscore": "",
-        "v8-compile-cache": "^2.3.0",
         "yuicompressor": "^2.4.8"
     },
     "build": {
@@ -160,8 +159,7 @@
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
             "executableName": "Pocketnet",
-            "description": "${productName} Desktop Browser",
-            "license": "Apache-2.0"
+            "description": "${productName} Desktop Browser"
         },
         "win": {
             "target": "nsis",
