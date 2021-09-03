@@ -130,11 +130,12 @@ var pkview = (function(){
 
 					var qr = renders.qrcode(p.el.find('.qrcode'), current.mk)
 
-					p.el.find('.qrcode img').attr('save', name + '.png').attr('removesharing', 'true')
+					p.el.find('.qrcode').attr('save', name + '.png').attr('src', qr._oDrawing._elImage.currentSrc)
 
-					
 
-					self.app.mobile.saveImages.init(p.el.find('.qrcode img'))
+					console.log('asdasdasd', p.el.find('.qrcode img').length)
+
+					self.app.mobile.saveImages.init(p.el.find('.qrcode'))
 
 					p.el.find('.copy').on('click', function(){
 						copyText(p.el.find('.hiddenMnemonicKey'))
@@ -144,7 +145,7 @@ var pkview = (function(){
 
 					p.el.find('.save').on('click', function(){
 
-						actions.saveqr(clbk)
+						actions.saveqr(qr, clbk)
 
 						/*var text = p.el.find('.qrcode img').attr('src')
 
@@ -167,36 +168,7 @@ var pkview = (function(){
 
 					})
 
-					if(window.cordova){
-
-						p.el.find('.qrcode').on('click', function(){
-
-							menuDialog({
-								items : [
-	
-									{
-										text : self.app.localization.e('e13145'),
-										class : 'itemmain',
-										action : function(clbk){
-
-											actions.saveqr(qr, clbk)
-
-											/*var image = b64toBlob(qr._oDrawing._elImage.currentSrc.split(',')[1], 'image/png', 512);		
-
-											p_saveAsWithCordova(image, 'pkey_'+self.app.platform.currentTime()+'.png', function(){
-												clbk()
-											})*/
-
-											
-										}
-									}
-	
-								]
-							})
-	
-						})
-
-					}
+					
 
 					if (clbk)
 						clbk(p);

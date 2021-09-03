@@ -115,7 +115,7 @@ var Peertube = function (settings) {
       return Promise.resolve(best.export());
     },
 
-    video: function ({ url }, cache) {
+    video: function ({ url, fast }, cache) {
       var parsed = parselink(url);
 
       if (!parsed.id) return Promise.reject('No id info received');
@@ -123,6 +123,8 @@ var Peertube = function (settings) {
       var cachekey = 'peertubevideo';
       var cachehash = parsed.id;
       var cacheparameters = _.clone(parsed);
+
+      console.log("url get", url)
 
       return new Promise((resolve, reject) => {
         cache.wait(
@@ -137,10 +139,8 @@ var Peertube = function (settings) {
         .then((waitstatus) => {
           var cached = cache.get(cachekey, cacheparameters, cachehash);
 
-          //console.log("GET", cachehash, cached)
 
           if (cached) {
-            //console.log("VIDEO FROM CACHE", cachehash)
 
             if (cached.error) {
               return Promise.reject({ error: true });
@@ -172,27 +172,29 @@ var Peertube = function (settings) {
           });
         })
         .catch((e) => {
+
           if (e && !e.data) {
             console.log('E video', e, url);
           }
 
           if (e && e.status == '404') {
+
             cache.set(cachekey, cacheparameters, {
               error: true,
-            });
+            }, null, 120, cachehash);
           }
 
           return Promise.reject(e);
         });
     },
 
-    videos: function ({ urls }, cache) {
+    videos: function ({ urls, fast }, cache) {
       var result = {};
 
       return Promise.all(
         _.map(urls, function (url) {
           return self.api
-            .video({ url }, cache)
+            .video({ url, fast }, cache)
             .then((r) => {
               result[url] = r.data;
 

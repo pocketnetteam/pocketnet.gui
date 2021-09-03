@@ -863,7 +863,8 @@ var Proxy = function (settings, manage, test) {
 				})
 
 				var videosPr = videosapi({
-					urls : videos
+					urls : videos,
+					fast : true
 				}).then(videos => {
 					result.data.videos = videos.data
 

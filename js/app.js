@@ -1491,11 +1491,12 @@ Application = function(p)
 					_el.swipe({
 						longTap : function(){
 
+							console.log("longtap")
+
 							self.mobile.vibration.small()
 
 							var name = this.attr('save')
 							var src = this.attr('src') || this.attr('i')
-							var removesharing = this.attr('removesharing')
 	
 							self.mobile.saveImages.dialog(name, src)
 
