@@ -27,8 +27,8 @@
           host="<%- video.server %>"
         >
           <span class="descriptionContent"
-            ><%- video.description ? (video.description.length >= 100 ?
-            `${video.description.slice(0, 100)}...` : video.description) :
+            ><%- video.description ? (video.description.length >= 80 ?
+            `${video.description.slice(0, 80)}...` : video.description) :
             e('emptyDescription') %></span
           >
           <button
@@ -40,14 +40,14 @@
               ||
               '').length
               >=
-              100
+              80
               ?
               ''
               :
               'hidden'%>
             "
           >
-            Show all
+            <%- e('showAllButton') %>
           </button>
         </div>
         <!-- <p class="videoTextContainer"><%- video.server %></p> -->

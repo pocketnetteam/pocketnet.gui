@@ -30,6 +30,8 @@ var videoCabinet = (function () {
     var external = null;
     var perServerCounter = 10;
 
+    const descriptionCache = {};
+
     var actions = {
       async getHosts() {
         const serverStructureHosts = await self.app.peertubeHandler.api.proxy
@@ -554,18 +556,30 @@ var videoCabinet = (function () {
               const originalDescription = content.text();
               const hideShowButton = element.find('.showAllDescriptionButton');
 
+              const applyDescription = (description) => {
+                content.text(actions.replaceNetLinks(description));
+                element.css('height', 'auto');
+                hideShowButton
+                  .addClass('descriptionExpanded')
+                  .text(self.app.localization.e('hideAllButton'));
+              };
+
               hideShowButton.on('click', () => {
                 if (hideShowButton.hasClass('descriptionExpanded')) {
                   content.text(originalDescription);
-                  hideShowButton.removeClass('descriptionExpanded');
+                  hideShowButton
+                    .removeClass('descriptionExpanded')
+                    .text(self.app.localization.e('showAllButton'));
                 } else {
-                  self.app.peertubeHandler.api.videos
-                    .getFullDescription({ id: uuid }, { host })
-                    .then((description) => {
-                      content.text(actions.replaceNetLinks(description));
-                      element.css('height', 'auto');
-                      hideShowButton.addClass('descriptionExpanded');
-                    });
+                  descriptionCache[uuid]
+                    ? applyDescription(descriptionCache[uuid])
+                    : self.app.peertubeHandler.api.videos
+                        .getFullDescription({ id: uuid }, { host })
+                        .then((description) => {
+                          descriptionCache[uuid] = description;
+
+                          applyDescription(description);
+                        });
                 }
               });
             });
