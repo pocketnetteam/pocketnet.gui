@@ -6,7 +6,7 @@ var jsdom  	= require('jsdom');
 var _ = require('underscore')
 
 var path = require("path");
-var jquery = path.resolve(__dirname, "lib/jquery-1.11.3.min.js")
+var jquery = {}// path.resolve(__dirname, "lib/jquery-1.11.3.min.js")
 var ogParser = require("./lib/og-parser-edited.js");
 
 //const phantom = require('phantom');
