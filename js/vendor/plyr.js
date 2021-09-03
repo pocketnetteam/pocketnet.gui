@@ -9165,46 +9165,91 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
     var video_id = target.getAttribute('data-plyr-embed-id');
     var clear_peertube_id = target.getAttribute('data-plyr-video-id');
 
+
+    // Return a new instance of Plyr
+    var newPlyr = function(target, video_options) {
+      var newPlayer = new Plyr(target, video_options);
+      // Set the mandatory/missing functions
+      newPlayer.mute = () => newPlayer.muted = true;
+      newPlayer.unmute = () => newPlayer.muted = false;
+      return newPlayer;
+    }
+
+
     if (provider == 'peertube') {
 
-
-
       var host = target.getAttribute('data-plyr-host-name');
-      
-      retry(function(){
-        return typeof PeerTubeEmbeding != 'undefined'
-      }, function(){
 
-        PeerTubeEmbeding.main(target, clear_peertube_id, {
-          host : host,
-          wautoplay : options.wautoplay,
-          logoType : options.logoType
-        },{
-  
-          playbackStatusChange : function(status){
-            
-          },
-          volumeChange : options.volumeChange,
-          fullscreenchange : options.fullscreenchange,
-          play : options.play,
-          pause : options.pause
-  
-        }).then(embed => {
+      // Check if we have downloaded the video already
+      var localVideo = self.app.platform.sdk.local.shares.getVideo(clear_peertube_id);
 
-          if(!embed || !embed.api){
-            if (clbk) clbk(null);
+      if (localVideo != undefined) {
 
-            return
-          }
+        var new_target = document.createElement('video');
+        target.parentNode.replaceChild(new_target, target);
+        target = new_target
+
+        var plyrPlayer = newPlyr(target, video_options);
+        plyrPlayer.source = {
+          type: 'video',
+          sources: [
+            {
+              src: localVideo.video.internalURL,
+              type: 'video/mp4',
+              size: parseInt(localVideo.video.name.split('.').slice(0, -1).join('.'))
+            }
+          ]
+        };
+        plyrPlayer.poster = localVideo.infos.thumbnail;
+        plyrPlayer.on('ready', readyCallback)
+        plyrPlayer.on('play', video_options.play)
+        plyrPlayer.on('pause', video_options.pause)
+
+        plyrPlayer.localVideoId = clear_peertube_id;
+
+        if (clbk) clbk(plyrPlayer);
+
+      }
+      else {
+
+        retry(function(){
+          return typeof PeerTubeEmbeding != 'undefined'
+        }, function(){
   
-          var api = embed.api
-              api.mute()
+          
   
-          if (clbk) clbk(api);
-          if (readyCallback) readyCallback(api);
+          PeerTubeEmbeding.main(target, clear_peertube_id, {
+            host : host,
+            wautoplay : options.wautoplay,
+            logoType : options.logoType
+          },{
+    
+            playbackStatusChange : function(status){
+              
+            },
+            volumeChange : options.volumeChange,
+            fullscreenchange : options.fullscreenchange,
+            play : options.play,
+            pause : options.pause
+    
+          }).then(embed => {
+  
+            if(!embed || !embed.api){
+              if (clbk) clbk(null);
+  
+              return
+            }
+    
+            var api = embed.api
+                api.mute()
+    
+            if (clbk) clbk(api);
+            if (readyCallback) readyCallback(api);
+          })
+  
         })
 
-      })
+      }
 
       return self
     }
@@ -9274,19 +9319,6 @@ var PlyrEx = function(target, options, clbk, readyCallback) {
         target.parentNode.replaceChild(new_target, target);
         target = new_target
     };
-
-    // Return a new instance of Plyr
-    var newPlyr = function(target, video_options) {
-
-
-
-      var newPlayer = new Plyr(target, video_options);
-      // Set the mandatory/missing functions
-      newPlayer.mute = () => newPlayer.muted = true;
-      newPlayer.unmute = () => newPlayer.muted = false;
-
-      return newPlayer;
-    }
 
     var _error = function(errorMessage) {
         var new_target = document.createElement('div');

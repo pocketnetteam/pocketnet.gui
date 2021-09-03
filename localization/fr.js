@@ -812,3 +812,6 @@ ____loclib.e13348 = "Au plus tard"
 ____loclib.e13349 = "Des mises à jour "+appname+" sont disponibles. Allez sur la page pour télécharger la nouvelle version?"
 ____loclib.e13350 = 'Rejoignez '+appname+' et gagnez Pocketcoin maintenant'
 ____loclib.e133512 = 'Please write a few words about yourself to help people decide if they want to follow you'
+
+____loclib.downloaded = "Téléchargés";
+____loclib.downloadedEmpty = "Les posts téléchargés s'afficheront ici";
